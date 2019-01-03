@@ -44,16 +44,23 @@
                         <div class="widget-box slider1">
                             <div class="slider-box">
                                 <ul class="slider">
+                                    <% for (var index in banners.topBanners) { %>
                                     <li>
-                                        <a href="/product/roaming/info/secure-troaming">
-                                            <img src="<%= CDN %>/img/product/rm_banner_01.png" alt="로밍, 하나부터 열까지 새로고침. 자동안심 T로밍 해외 음성 매일 3분 무료+30분 음성 통화 1만원에 제공 데이터 종량 아무리 써도 일 상환 5,000원">
+                                        <a href="<%- banners.topBanners[index].imgLinkUrl %>">
+                                            <img src="<%= CDN %><%- banners.topBanners[index].bnnrFilePathNm %>" alt="<%- banners.topBanners[index].bnnrImgAltCtt %>">
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="/product/callplan/NA00005900">
-                                            <img src="<%= CDN %>/img/product/rm_banner_02.png" alt="아세아 여행 대표 요금제. T로밍 아시아패스 아시아 27개국에서 5일간 데이터 2GB+속도제어로 안심하고 이용할수 있는 요금제입니다.">
-                                        </a>
-                                    </li>
+                                    <% } %>
+                                    <!--<li>-->
+                                        <!--<a href="/product/roaming/info/secure-troaming">-->
+                                            <!--<img src="<%= CDN %>/img/product/rm_banner_01.png" alt="로밍, 하나부터 열까지 새로고침. 자동안심 T로밍 해외 음성 매일 3분 무료+30분 음성 통화 1만원에 제공 데이터 종량 아무리 써도 일 상환 5,000원">-->
+                                        <!--</a>-->
+                                    <!--</li>-->
+                                    <!--<li>-->
+                                        <!--<a href="/product/callplan/NA00005900">-->
+                                            <!--<img src="<%= CDN %>/img/product/rm_banner_02.png" alt="아세아 여행 대표 요금제. T로밍 아시아패스 아시아 27개국에서 5일간 데이터 2GB+속도제어로 안심하고 이용할수 있는 요금제입니다.">-->
+                                        <!--</a>-->
+                                    <!--</li>-->
                                 </ul>
                             </div>
                         </div>
@@ -70,10 +77,10 @@
                     <div class="widget-box horizontal">
                         <div class="horizontal-slide">
                             <ul class="horizontal-list info-link-box">
-                                <% for (var index in alpaList) { %>
+                                <% for (var index in banners.centerBanners) { %>
                                 <li>
                                     <button class="info-link-inner" data-index="<%=index%>">
-                                        <em class="mark">“</em><%-alpaList[index].alpaNaviKwdNm%>
+                                        <em class="mark">“</em><%-banners.centerBanners[index].titleNm%>
                                     </button>
                                 </li>
                                 <% } %>
@@ -97,11 +104,11 @@
                 <ul class="category-infoarealist">
                     <li class="category-type">
                         <div class="category-typetitle">
-                            <h3 class="title">로밍 카드/쿠폰</h3>
+                            <h3 class="title">로밍 카드&middot;쿠폰</h3>
                             <div class="more"><a class="link" href="/product/roaming/coupon">더보기</a></div>
                         </div>
                         <div class="category-infobox type-internet">
-                            <h4 class="title">로밍 요금제 이용 및 선물!</h4>
+                            <h4 class="title">T로밍 요금제 이용</h4>
                             <p class="text">T로밍 OnePass 요금제(기간형 포함) 1일 이용 가능</p>
                         </div>
                     </li>
@@ -111,8 +118,8 @@
                             <div class="more"><a class="link" href="/product/roaming/fi/guide">더보기</a></div>
                         </div>
                         <div class="category-infobox type-tel">
-                            <h4 class="title">70여개국 무선인터넷 가능!</h4>
-                            <p class="text">전 세계 70여개국에서 무선인터넷이 가능한 T로밍 전용 Wi-Fi 기기 임대</p>
+                            <h4 class="title">70여 개국 무선인터넷 가능!</h4>
+                            <p class="text">전세계 70여 개국에서 무선인터넷이 가능한 T로밍 전용 와이파이 기기 임대</p>
                         </div>
                     </li>
                     <li class="category-type">
@@ -121,8 +128,8 @@
                             <div class="more"><a class="link" href="/product/roaming/planadd">더보기</a></div>
                         </div>
                         <div class="category-infobox type-tv">
-                            <h4 class="title">로밍 부가서비스를 무료로!</h4>
-                            <p class="text">신청하면 유용한 로밍 부가서비스를 무료로 이용해보세요.</p>
+                            <h4 class="title">로밍 부가서비스를 무료로 이용</h4>
+                            <p class="text">신청하면 좋은 로밍 부가서비스를 무료로 이용</p>
                         </div>
                     </li>
                 </ul>
@@ -134,51 +141,28 @@
             <!-- cont-box-->
             <div class="cont-box nogaps-hoz">
                 <div class="roaming-product">
-                    <h3><strong>인기 로밍 요금제</strong></h3>
+                    <h3><strong><%- sprateProds.expsTitNm %></strong></h3>
                     <ul class="recommendedrate-list">
                         <!-- 왼쪽 상품 이미지가 이미지로 들어갈경우, 왼쪽 상품 이미지가 bg로 들어갈경우(아래전체 type[n]으로 처리) -->
+                        <% for (var index in sprateProds.prodList) { %>
                         <li class="type01">
-                            <a class="product-infolink" href="/product/callplan/NA00005900">
-                                <div class="img-box"><img class="lte" src="<%= CDN %>/img/dummy/img_sample01.png" alt="명칭"></div>
+                            <a class="product-infolink" href="/product/callplan/<%- sprateProds.prodList[index].prodId %>">
+                                <% if ( sprateProds.prodList[index].prodIconImgUrl ) { %>
+                                <div class="img-box"><img class="lte" src="<%- sprateProds.prodList[index].prodIconImgUrl %>" alt="명칭"></div>
+                                <% } %>
                                 <div class="products-titleinfo">
-                                    <h5 class="title">T로밍 아시아패스</h5>
-                                    <p class="info">월<span class="money">25,000</span>원</p>
+                                    <h5 class="title"><%- sprateProds.prodList[index].prodNm %></h5>
+                                    <p class="info"><span class="money"><%- sprateProds.prodList[index].basFeeInfo %></span>원</p>
                                 </div>
                                 <div class="taglist-wrap">
-                                    <span class="tag-text">#추천하는</span>
-                                    <span class="tag-text">#데이터</span>
+                                    <% for (var indexFilter in sprateProds.prodList[index].prodFltList) { %>
+                                    <span class="tag-text">#<%- sprateProds.prodList[index].prodFltList[indexFilter].prodFltNm %></span>
+                                    <% } %>
                                 </div>
-                                <p class="products-detailinfo">아시아 26개국에서 5일 동안 25,000원으로<br>데이터(2GB)를 부담 없이 이용 가능한 요금제!</p>
+                                <p class="products-detailinfo"><%- sprateProds.prodList[index].prodSmryDesc %></p>
                             </a>
                         </li>
-                        <li class="type01">
-                            <a class="product-infolink" href="/product/callplan/NA00005699">
-                                <div class="img-box"><img class="lte" src="<%= CDN %>/img/dummy/img_sample01.png" alt="명칭"></div>
-                                <div class="products-titleinfo">
-                                    <h5 class="title">T로밍 한중일 패스</h5>
-                                    <p class="info">월<span class="money">25,000</span>원</p>
-                                </div>
-                                <div class="taglist-wrap">
-                                    <span class="tag-text">#추천하는</span>
-                                    <span class="tag-text">#데이터</span>
-                                </div>
-                                <p class="products-detailinfo">중국·일본에서 5일 간 데이터 2GB, 음성 3.6원/초, 문자 기본 제공</p>
-                            </a>
-                        </li>
-                        <li class="type01">
-                            <a class="product-infolink" href="/product/callplan/NA00006038">
-                                <div class="img-box"><img class="lte" src="<%= CDN %>/img/dummy/img_sample01.png" alt="명칭"></div>
-                                <div class="products-titleinfo">
-                                    <h5 class="title">T로밍 미주패스 3GB</h5>
-                                    <p class="info">월<span class="money">33,000</span>원</p>
-                                </div>
-                                <div class="taglist-wrap">
-                                    <span class="tag-text">#추천하는</span>
-                                    <span class="tag-text">#데이터</span>
-                                </div>
-                                <p class="products-detailinfo">미주 15개국에서 30일 간 LTE/3G 데이터 3GB 제공</p>
-                            </a>
-                        </li>
+                        <% } %>
                     </ul>
                     <a href="/product/roaming/fee" class="b-more">전체 로밍 요금제</a>
                 </div>
@@ -191,13 +175,13 @@
                 <div class="submain-findyourplan-wrap">
                     <a class="submain-findyourplan" href="/product/roaming/info/guide">
                         <h3 class="title">로밍 안내</h3>
-                        <p class="text">출국 전 알아두면 유용한 로밍 정보</p>
+                        <p class="text">출국 전 알아두면 좋은 로밍 정보</p>
                     </a>
                 </div>
                 <div class="submain-findyourplan-wrap">
                     <a class="submain-findyourplan" href="/product/roaming/do/search-before">
                         <h3 class="title">국가별 로밍 요금 조회</h3>
-                        <p class="text">사용 중인 휴대폰 정보와 출국 국가명을<br>입력하시고, 로밍 요금 관련 각종 정보를<br>한 번에 확인하세요.</p>
+                        <p class="text">사용 중인 휴대폰 정보와 출국 국가명을 입력하시고, 로밍 이용요금 관련 각종 정보를 한번에 확인하세요.</p>
                     </a>
                 </div>
                 <div class="submain-findyourplan-wrap">
@@ -212,10 +196,10 @@
 
             <ul class="shortcutslist-wrap">
                 <li class="category-type">
-                    <a class="link" href="/product/roaming/info/center">공항 내 로밍센터 안내</a>
+                    <a class="link" href="/product/roaming/info/center">로밍센터 안내</a>
                 </li>
                 <li class="category-type">
-                    <a class="link" href="/customer/faq/category?id=1400000&title=%EB%A1%9C%EB%B0%8D">자주찾는 질문</a>
+                    <a class="link" href="/customer/faq/category?id=1400000&title=%EB%A1%9C%EB%B0%8D">자주하는 질문</a>
                 </li>
             </ul>
 
@@ -286,7 +270,7 @@
 <script>
   $(document).ready(function () {
     new Tw.ProductRoaming($('#productRoaming'), {
-      alpaList: <%-JSON.stringify(alpaList)%>
+      banners: <%-JSON.stringify(banners)%>
     });
   });
 </script>
