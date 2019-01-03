@@ -35,6 +35,14 @@ Tw.PopupService.prototype = {
       this._sendOpenCallback($currentPopup);
     }
   },
+  _onFailPopup: function(option) {
+    if (Tw.BrowserHelper.isApp()) {
+      Tw.Native.send(Tw.NTV_CMD.OPEN_NETWORK_ERROR_POP, {}, $.proxy(this._onRetry, this, option));
+    }
+  },
+  _onRetry: function(option) {
+    this._open(option);
+  },
   _popupClose: function (closeCallback) {
     this._confirmCallback = null;
     if ( !Tw.FormatHelper.isEmpty(closeCallback) ) {
@@ -96,7 +104,7 @@ Tw.PopupService.prototype = {
       url: Tw.Environment.cdn + '/hbs/',
       cdn: Tw.Environment.cdn
     });
-    skt_landing.action.popup.open(option, $.proxy(this._onOpenPopup, this));
+    skt_landing.action.popup.open(option, $.proxy(this._onOpenPopup, this), $.proxy(this._onFailPopup, this, option));
   },
   open: function (option, openCallback, closeCallback, hashName) {
     this._setOpenCallback(openCallback);
