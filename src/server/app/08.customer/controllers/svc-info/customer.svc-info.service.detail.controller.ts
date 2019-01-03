@@ -82,7 +82,7 @@ class CustomerUseguideService extends TwViewController {
       // 주석제거
       html = html.replace(/<!--(.*?)-->/gmi, '')
       // 이미지경로 변경
-      .replace(/\/mpoc\/img\/center/gi, EnvHelper.getEnvironment('CDN') + '/img/service');
+      .replace(/{{cdn}}/gi, EnvHelper.getEnvironment('CDN'));
     return html;
   }
 

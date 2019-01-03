@@ -9,12 +9,18 @@ import {Request, Response, NextFunction} from 'express';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 
 import FormatHelper from '../../../../utils/format.helper';
-import { CUSTOMER_SITE_SEQNUM_TO_DETAIL_URL } from '../../../../types/bff.type';
 import EnvHelper from '../../../../utils/env.helper';
+import { CUSTOMER_STIE_OPTION_TYPE } from '../../../../types/string.type';
 
 interface Query {
   current: string;
   isQueryEmpty: boolean;
+}
+
+interface Content {
+  cat: string;
+  title: string;
+  code: string;
 }
 
 class CustomerSvcInfoSite extends TwViewController {
@@ -28,14 +34,14 @@ class CustomerSvcInfoSite extends TwViewController {
       isQueryEmpty: FormatHelper.isEmpty(req.query),
       current: req.path.split('/').splice(-1)[0] || req.path.split('/').splice(-2)[0]
     };
+    const {code} = req.query; 
+    const curContent = this.findCurContent(code);
 
-    const page = req.params ? (req.params.page || null) : null;
-
-    if (this.isExistingPage(page)) {
+    if (FormatHelper.isEmpty(curContent)) {
       return res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
     }
 
-    this.apiService.request(API_CMD.BFF_08_0057, {svcDvcClCd: 'G'}).subscribe(resp => {
+    this.apiService.request(API_CMD.BFF_08_0064, {}, {}, [code]).subscribe(resp => {
       if ( resp.code !== API_CODE.CODE_00) {
         return this.error.render(res, {
           code: resp.code,
@@ -44,54 +50,37 @@ class CustomerSvcInfoSite extends TwViewController {
         });
       }
 
-      const curPageContents = this.findCurPage(resp.result, page);
-
       res.render('svc-info/customer.svc-info.site.detail.html', {
         svcInfo: svcInfo, 
         pageInfo: pageInfo, 
-        contentHTML: this.modifyHTML(curPageContents['cntsCmmnt']),
+        contentHTML: this.modifyHTML(resp.icntsCtt),
         data: {
-          type: page === '001' ? 'A' : 'B', 
-          content: this.exceptHTML(curPageContents)
+          type: code === '001' ? 'A' : 'B',  // 가려진 타입 예외 하나만 적용
+          title: curContent.title
         }
       });
     });
   }
 
-  // 전송된 데이터 준 html 따로 관리
-  private exceptHTML = (obj: object): object => {
-    return Object.assign(obj, {cntsCmmnt: ''});
+  private findCurContent = (code: string): Content | any => {
+    return CUSTOMER_STIE_OPTION_TYPE.reduce((prev, cur) => {
+      if (cur.code === code) {
+        return cur;
+      } else {
+        return prev;
+      }
+    }, {});
   }
 
   // 전송된 html 수정 변경
   private modifyHTML = (html: string): string => {
       // 대문자 엘리먼트 소문자로
-    html = html.replace(/<\/?[A-Z]+/gm, (s: string) => s.replace(/[A-Z]+/gi, (i: string) => i.toLowerCase()))
+      // html = html.replace(/<\/?[A-Z]+/gm, (s: string) => s.replace(/[A-Z]+/gi, (i: string) => i.toLowerCase()))
       // 주석제거
-      .replace(/<!--(.*?)-->/gmi, '')
+      html = html.replace(/<!--(.*?)-->/gmi, '')
       // 이미지경로 변경
-      .replace(/\/mpoc\/img\/common/gi, EnvHelper.getEnvironment('CDN') + '/img/customer');
+      .replace(/{{cdn}}/gi, EnvHelper.getEnvironment('CDN'));
     return html;
-  }
-
-  // 쿼리스트링으로 받아온 detail(:000) 페이지가 존재하는지 여부
-  private isExistingPage = (page: string): boolean => {
-    return FormatHelper.isEmpty(
-      Object.keys(CUSTOMER_SITE_SEQNUM_TO_DETAIL_URL).filter((key) => {
-        return FormatHelper.leadingZeros(CUSTOMER_SITE_SEQNUM_TO_DETAIL_URL[key], 3) === page;
-      })
-    );
-  }
-
-  // 조회된 리스트로부터 쿼리스트링으로 받아온 id 값에 해당하는 데이터콘텐츠 구하기
-  private findCurPage = (list: Array<any>, page: string): object => {
-    return list.reduce((prev, next) => {
-      if (FormatHelper.isEmpty(prev)) {
-        return FormatHelper.leadingZeros(CUSTOMER_SITE_SEQNUM_TO_DETAIL_URL[next.seqNo], 3) === page ? next : prev;
-      } else {
-        return prev;
-      }
-    }, {});
   }
 }
 

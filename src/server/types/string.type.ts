@@ -616,6 +616,45 @@ export const MEMBERSHIP_DELIVERY_CODE = {
   '9': '반송'
 };
 
+// 고객센터 > 사이트 이용안내 온리안 T 월드 제목과 컨텐츠 아이디 번호
+export const CUSTOMER_STIE_OPTION_TYPE = [
+  {
+    cat: '기타',
+    title: '가려진 정보 확인 방법',
+    code: ''
+  },
+  {
+    cat: 'myT',
+    title: '소액결제 현명하게 관리하기',
+    code: ''
+  },
+  {
+    cat: '회원',
+    title: '개인명의 휴대폰 태블릿 다회선 등록하기',
+    code: ''
+  },
+  {
+    cat: '회원',
+    title: '법인명의 휴대폰번호 삭제방법',
+    code: ''
+  },
+  {
+    cat: '회원',
+    title: '법인명의 태블릿 다회선 등록하기',
+    code: ''
+  },
+  {
+    cat: '기타',
+    title: '모두에게 평등한 웹 접근성 안내',
+    code: ''
+  },
+  {
+    cat: '기타',
+    title: 'T월드의 모든 메뉴 꼼꼼히 살펴보기',
+    code: ''
+  }
+];
+
 export const CUSTOMER_SERVICE_OPTION_TYPE = [
   {
     title: '휴대폰 가입·변경에 대한 안내',

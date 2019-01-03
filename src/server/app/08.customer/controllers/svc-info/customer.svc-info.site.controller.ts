@@ -8,7 +8,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import {Request, Response, NextFunction} from 'express';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
-import { CUSTOMER_SITE_SEQNUM_TO_DETAIL_URL } from '../../../../types/bff.type';
+import { CUSTOMER_STIE_OPTION_TYPE } from '../../../../types/string.type';
 
 interface Query {
   current: string;
@@ -27,39 +27,16 @@ class CustomerSvcInfoSite extends TwViewController {
       isQueryEmpty: FormatHelper.isEmpty(req.query),
       current: req.path.split('/').splice(-1)[0] || req.path.split('/').splice(-2)[0]
     };
-
-    this.apiService.request(API_CMD.BFF_08_0057, {svcDvcClCd: 'G'}).subscribe(resp => {
-      if ( resp.code !== API_CODE.CODE_00) {
-        return this.error.render(res, {
-          code: resp.code,
-          msg: resp.msg,
-          svcInfo
-        });
-      }
-
-      res.render('svc-info/customer.svc-info.site.html', {
-        svcInfo: svcInfo, 
-        pageInfo: pageInfo, 
-        data: this.setListUp(resp.result || [])
-      });
-    });
-
     
-
+    res.render('svc-info/customer.svc-info.site.html', {
+      svcInfo: svcInfo, 
+      pageInfo: pageInfo, 
+      data: this.setListUp(CUSTOMER_STIE_OPTION_TYPE)
+    });
   }
 
   private setListUp = (list) => {
-    list.map((o, index) => {
-      // 순서 적용
-      o.listIndex = CUSTOMER_SITE_SEQNUM_TO_DETAIL_URL[o.seqNo] || null;
-      // detail000 주소로 입력됨
-      o.linkNum = FormatHelper.leadingZeros(
-        CUSTOMER_SITE_SEQNUM_TO_DETAIL_URL[o.seqNo], 3); // 000 
-    });
-
-    // listIndex 로 오름차순 정렬
-    FormatHelper.sortObjArrAsc(list, 'listIndex');
-    return list;
+    return list.map((o, listIndex) => Object.assign(o, {listIndex}));
   }
 
 }
