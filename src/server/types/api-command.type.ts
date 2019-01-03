@@ -122,7 +122,7 @@ export const API_CMD = {
   // MainHome T-Notify
   BFF_04_0001: { path: '/core-membership/:version/card/homeinfo', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_04_0002: { path: '/core-product/:version/t-notice/prod-chg-hst', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
-  BFF_04_0003: { path: '//core-modification/:version/quick-menu/saveInfo', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_04_0003: { path: '/core-modification/:version/quick-menu/saveInfo', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_04_0004: { path: '/core-auth/:version/get-fcm-push-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_04_0005: { path: '/core-modification/:version/quick-menu/getMbrCond', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   // MYT

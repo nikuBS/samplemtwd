@@ -96,7 +96,6 @@ class RedisService {
             resp.msg = NODE_API_ERROR[API_CODE.REDIS_ERROR];
           }
         }
-
         observer.next(resp);
         observer.complete();
       });

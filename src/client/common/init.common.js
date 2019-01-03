@@ -31,6 +31,7 @@ Tw.Init.prototype = {
     new Tw.MenuComponent();
     new Tw.MaskingComponent();
     new Tw.ShareComponent();
+    new Tw.QuickMenuComponent();
   },
 
   _getEnvironment: function () {

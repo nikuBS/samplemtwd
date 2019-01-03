@@ -405,7 +405,9 @@ Tw.ALERT_MSG_HOME = {
   A61: '',
   A62: '',
   A63: '',
-  A64: ''
+  A64: '',
+  QUICK_ADD: 'MY 바로가기에 추가되었습니다.',
+  QUICK_REMOVE: 'MY 바로가기에서 제거되었습니다.'
 };
 
 Tw.ALERT_MSG_MYT_DATA = {
