@@ -76,35 +76,46 @@ Tw.ProductRoamingSearchResult.prototype = {
         this.$container.find('.fe-search-input').val(this._srchInfo.countryNm);
         this.manageType = [];
         this.typeTxt = [];
-        if(this._rateInfo.lte > 0){
-            this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.lte].txt);
-            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.lte]);
-        }
-        if(this._rateInfo.wcdma > 0){
+
+        if (this._rateInfo.eqpMthdCd === 'W') {
             this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma].txt);
             this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma]);
-        }
-        if(this._rateInfo.cdma > 0){
-            this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma].txt);
-            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma]);
-        }
-        if(this._rateInfo.gsm > 0){
             this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm].txt);
             this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm]);
-        }
-        if(this._rateInfo.rent > 0){
-            this.reqParams.showDailyPrice = 'Y';
-            this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.R].txt);
-            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.R]);
-        }else {
-            this.reqParams.showDailyPrice = 'N';
-            if(this._svcInfo === null && this._srchInfo.eqpMdlNm === ''){
-                this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent].txt);
-                this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent]);
-            } else {
-                if(this._srchInfo.eqpMdlNm === ''){
+        } else if (this._rateInfo.eqpMthdCd === 'D') {
+            this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma].txt);
+            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma]);
+        } else {
+            if(this._rateInfo.lte > 0){
+                this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.lte].txt);
+                this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.lte]);
+            }
+            if(this._rateInfo.wcdma > 0){
+                this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma].txt);
+                this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma]);
+            }
+            if(this._rateInfo.cdma > 0){
+                this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma].txt);
+                this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma]);
+            }
+            if(this._rateInfo.gsm > 0){
+                this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm].txt);
+                this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm]);
+            }
+            if(this._rateInfo.rent > 0){
+                this.reqParams.showDailyPrice = 'Y';
+                this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.R].txt);
+                this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.R]);
+            }else {
+                this.reqParams.showDailyPrice = 'N';
+                if(this._svcInfo === null && this._srchInfo.eqpMdlNm === ''){
                     this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent].txt);
                     this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent]);
+                } else {
+                    if(this._srchInfo.eqpMdlNm === ''){
+                        this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent].txt);
+                        this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent]);
+                    }
                 }
             }
         }
