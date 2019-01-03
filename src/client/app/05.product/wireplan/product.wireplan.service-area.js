@@ -8,7 +8,6 @@ Tw.ProductWireServiceArea = function(rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._historyService = new Tw.HistoryService(rootEl);
 
   this._cachedElement();
   this._bindEvent();
@@ -22,6 +21,26 @@ Tw.ProductWireServiceArea.prototype = {
 
   _cachedElement: function() {
     this.$submitBtn = this.$container.find('#fe-submit');
+  },
+
+  _openPostcode: function() {
+    new Tw.CommonPostcodeMain(this.$container, $.proxy(this._handleChangeAddress, this));
+  },
+
+  _handleChangeAddress: function(result) {
+    this._addr = {
+      bas_addr: result.main,
+      dtl_addr: result.detail,
+      addr_id: result.addrId
+    };
+
+    var $addr = this.$container.find('#fe-addr');
+    $addr.removeClass('none');
+    $addr.find('#fe-post').text('[' + result.zip + ']');
+    $addr.find('#fe-base-addr').text(result.main);
+    $addr.find('#fe-detail-addr').text(result.detail);
+
+    this.$submitBtn.removeAttr('disabled');
   },
 
   _handleSearchArea: function() {
@@ -58,29 +77,25 @@ Tw.ProductWireServiceArea.prototype = {
         address: resp.result.full_ADDRESS,
         services: services
       },
-      undefined,
-      undefined,
+      $.proxy(this._handleOpenResult, this),
+      $.proxy(this._handleCloseResult, this),
       'result'
     );
   },
 
-  _openPostcode: function() {
-    new Tw.CommonPostcodeMain(this.$container, $.proxy(this._handleChangeAddress, this));
+  _handleOpenResult: function($layer) {
+    $layer.on('click', '#fe-search-zip', $.proxy(this._handleResearch, this));
   },
 
-  _handleChangeAddress: function(result) {
-    this._addr = {
-      bas_addr: result.main,
-      dtl_addr: result.detail,
-      addr_id: result.addrId
-    };
+  _handleResearch: function() {
+    this._ressearch = true;
+    this._popupService.close();
+  },
 
-    var $addr = this.$container.find('#fe-addr');
-    $addr.removeClass('none');
-    $addr.find('#fe-post').text('[' + result.zip + ']');
-    $addr.find('#fe-base-addr').text(result.main);
-    $addr.find('#fe-detail-addr').text(result.detail);
-
-    this.$submitBtn.removeAttr('disabled');
+  _handleCloseResult: function() {
+    if (this._ressearch) {
+      delete this._ressearch;
+      this._openPostcode();
+    }
   }
 };
