@@ -50,7 +50,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
     this.$container.on('keyup', '.fe-card-number', $.proxy(this._resetCardInfo, this));
-    this.$container.on('keypress', '.required-input-field', $.proxy(this._setMaxValue, this));
+    this.$container.on('input', '.required-input-field', $.proxy(this._setMaxValue, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-select-card-type', $.proxy(this._selectCardType, this));
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
@@ -73,7 +73,12 @@ Tw.MyTFareBillPrepayPay.prototype = {
   },
   _setMaxValue: function (event) {
     var $target = $(event.currentTarget);
-    return $target.val().length < $target.attr('maxLength');
+    var maxLength = $target.attr('maxLength');
+    if ($target.attr('maxLength')) {
+      if ($target.val().length >= maxLength) {
+        $target.val($target.val().slice(0, maxLength));
+      }
+    }
   },
   _selectCardType: function (event) {
     var $target = $(event.currentTarget);
