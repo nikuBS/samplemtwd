@@ -420,9 +420,12 @@ Tw.MenuComponent.prototype = {
 
         // Edit: Kim inhwan
         var menu_url = item.menuUrl;
-        if ( menu_url && menu_url.indexOf('/myt-join/submain') > -1 && menu_url.replace('/myt-join/submain', '').length === 0 ) {
-          if ( userInfo.svcAttr.indexOf('S') > -1 ) {
-            item.menuUrl = item.menuUrl.replace('submain', 'submain_w');
+        var checkUrl = '/myt-join/submain';
+        if (menu_url) {
+          if (menu_url.indexOf(checkUrl) > -1 && menu_url.replace(checkUrl, '').length === 0) {
+            if ( !!userInfo && userInfo.svcAttr.indexOf('S') > -1 ) {
+              item.menuUrl = item.menuUrl.replace('submain', 'submain_w');
+            }
           }
         }
 
