@@ -125,6 +125,8 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center; }
+    .inputbox .bt-box.type01 {
+      min-width: 6rem; }
     .inputbox .bt-box button {
       border-radius: 0.3125rem;
       padding: 0 0.5rem;
