@@ -587,9 +587,9 @@ export enum LOGIN_TYPE {
 }
 
 export const MEMBERSHIP_TYPE = {
-  '0': '리더스클럽',
-  '3': '티플',
-  '4': '커플'
+  '0': 'Leaders Club',
+  '3': 'T`PLE',
+  '4': 'COUPLE'
 };
 
 export const REFILL_USAGE_DATA_CODES = ['AAA10', 'AAA30'];
