@@ -251,7 +251,7 @@ Tw.ProductList.prototype = {
       this._popupService.openConfirmButton(
         ALERT.MSG,
         ALERT.TITLE,
-        $.proxy(this._handleSelectTag, this, e.currentTarget),
+        $.proxy(this._handleConfirmSelectTag, this, e.currentTarget),
         null,
         Tw.BUTTON_LABEL.CLOSE
       );
@@ -324,12 +324,17 @@ Tw.ProductList.prototype = {
     }
   },
 
+  _handleConfirmSelectTag: function(target) {
+    this._popupService.close();
+    this._handleSelectTag(target);
+  },
+
   _handleSelectTag: function(target) {
     var selectedTag = target.getAttribute('data-tag-id'),
       originParams = this._params;
 
-    this._popupService.close();
     if (this._params.searchTagId === selectedTag) {
+      this._popupService.close();
       return;
     }
 
