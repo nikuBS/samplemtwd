@@ -77,9 +77,9 @@
                                 <li>
                                     <dl class="type03">
                                         <dt>찾아오시는길</dt>
-                                        <dd>
-                                            <%= detail.talkMap %>
-                                        </dd>
+                                        <% for (let i = 0; i < detail.talkMapArr.length; i += 1) { %>
+                                        <dd><%= detail.talkMapArr[i] %></dd>
+                                        <% } %>
                                     </dl>
                                 </li>
                             </ul>
