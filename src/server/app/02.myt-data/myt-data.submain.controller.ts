@@ -12,7 +12,6 @@ import { API_CMD, API_CODE, API_T_FAMILY_ERROR } from '../../types/api-command.t
 import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
 import { CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE } from '../../types/string.type';
-import { MYT_DATA_SUBMAIN_TITLE } from '../../types/title.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { UNIT, UNIT_E } from '../../types/bff.type';
 import { REDIS_BANNER_ADMIN } from '../../types/redis.type';
@@ -52,18 +51,9 @@ class MytDataSubmainController extends TwViewController {
       this._getRefillUsedBreakdown(),
       this.redisService.getData(REDIS_BANNER_ADMIN + pageInfo.menuId),
     ).subscribe(([remnant, present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern, banner]) => {
-      if ( !svcInfo.svcMgmtNum || remnant.info ) {
-        // 비정상 진입 또는 API 호출 오류
-        this.error.render(res, {
-          title: MYT_DATA_SUBMAIN_TITLE.MAIN,
-          code: remnant.info.code,
-          msg: remnant.info.msg,
-          svcInfo: svcInfo
-        });
-        return false;
-      }
-
-      if ( remnant ) {
+      if ( remnant.info ) {
+        data.remnant = remnant;
+      } else {
         data.remnantData = this.parseRemnantData(remnant);
         if ( data.remnantData.gdata && data.remnantData.gdata.length > 0 ) {
           data.isDataShow = true;
