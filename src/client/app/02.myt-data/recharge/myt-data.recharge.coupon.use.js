@@ -25,7 +25,7 @@ Tw.MyTDataRechargeCouponUse = function (rootEl, couponNo) {
 Tw.MyTDataRechargeCouponUse.prototype = {
   _cacheElements: function () {
     this.$btnUse = this.$container.find('.fe-btn-use');
-    this.$numberInput = this.$container.find('input[type=text]');
+    this.$numberInput = this.$container.find('input[type=tel]');
   },
   _bindEvent: function () {
     this.$container.on('change', 'input[type=radio]', $.proxy(this._onOptionSelected, this));
@@ -61,8 +61,10 @@ Tw.MyTDataRechargeCouponUse.prototype = {
     }
   },
   _onNumberChanged: function () {
-    var number = this.$numberInput.val();
-    if (Tw.FormatHelper.isEmpty(number.trim())) {
+    this.$numberInput.val(Tw.StringHelper.phoneStringToDash(this.$numberInput.val()).trim());
+    var number = Tw.StringHelper.phoneStringToDash(this.$numberInput.val()).trim();
+
+    if (Tw.FormatHelper.isEmpty(number)) {
       this.$btnUse.attr('disabled', true);
     } else {
       this.$btnUse.attr('disabled', false);
@@ -74,8 +76,10 @@ Tw.MyTDataRechargeCouponUse.prototype = {
   _onClickContacts: function () {
     this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(function (res) {
       if (res.resultCode === Tw.NTV_CODE.CODE_00) {
-        var number = res.params.phoneNumber;
+        var number = res.params.phoneNumber.replace(/[^0-9]/gi, '').trim();
+        number = Tw.FormatHelper.getDashedCellPhoneNumber(number);
         this.$numberInput.val(number);
+        this._onNumberChanged();
       }
     }, this));
   },
@@ -140,7 +144,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
     this._popupService.close();
     var reqData = {
       copnIsueNum: this._couponNo,
-      befrSvcNum: this.$numberInput.val()
+      befrSvcNum: this.$numberInput.val().replace(/[^0-9]/gi, '').trim()
     };
 
     this._apiService.request(Tw.API_CMD.BFF_06_0008, reqData)
