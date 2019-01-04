@@ -9,6 +9,7 @@ Tw.ProductCommonConfirm = function(isPopup, rootEl, data, applyCallback) {
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
+  this._comparePlans = new Tw.ProductMobilePlanComparePlans();
   this._data = this._convData(data);
   this._isApply = false;
   this._isPopup = isPopup;
@@ -258,7 +259,7 @@ Tw.ProductCommonConfirm.prototype = {
   },
 
   _openComparePlans: function() {
-    new Tw.ProductMobilePlanComparePlans().openCompare(this._data.preinfo.toProdInfo.prodId);
+    this._comparePlans.openCompare(this._data.preinfo.toProdInfo.prodId);
   },
 
   _setAgreeAndclosePop: function($wrap) {
