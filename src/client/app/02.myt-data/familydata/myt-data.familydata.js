@@ -93,6 +93,7 @@ Tw.MyTDataFamily.prototype = {
 
     if (inputId === 'sradio2') {
       $btn.attr('disabled', value.length === 0);
+      this._limitation = value;
     } else {
       $btn.attr('disabled', false);
       this._limitation = false;
