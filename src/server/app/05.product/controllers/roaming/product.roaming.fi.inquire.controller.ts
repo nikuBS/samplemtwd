@@ -13,7 +13,7 @@ import FormatHelper from '../../../../utils/format.helper';
 
 export default class ProductRoamingFiInquire extends TwViewController {
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
 
     this.apiService.request(API_CMD.BFF_10_0060, {keyword : ''}).subscribe((resp) => {
       let countryCode = {};
@@ -26,7 +26,8 @@ export default class ProductRoamingFiInquire extends TwViewController {
 
       res.render('roaming/product.roaming.fi.inquire.html', {
         countryCode: countryCode,
-        svcInfo: svcInfo
+        svcInfo: svcInfo,
+        pageInfo: pageInfo
       });
     });
   }

@@ -20,6 +20,6 @@ export default class ProductRoamingReservation extends TwViewController {
 
      svcInfo.showSvcNum =  FormatHelper.conTelFormatWithDash(svcInfo.svcNum);
 
-     res.render('roaming/product.roaming.fi.reservation.html', { svcInfo : svcInfo , formatDate : formatDate });
+     res.render('roaming/product.roaming.fi.reservation.html', { svcInfo : svcInfo , pageInfo : pageInfo, formatDate : formatDate });
   }
 }
