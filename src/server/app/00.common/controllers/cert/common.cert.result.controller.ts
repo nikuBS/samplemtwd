@@ -31,9 +31,9 @@ class CommonCertResult extends TwViewController {
       }
     } else if ( certType === NICE_TYPE.NICE ) {
       if ( certKind === AUTH_CERTIFICATION_KIND.F ) {
-        this.sendResult(req, res, API_CMD.BFF_01_0050, { encodeData: req.body.encodeData });
+        this.sendResult(req, res, API_CMD.BFF_01_0050, { EncodeData: req.body.encodeData });
       } else {
-        this.sendResult(req, res, API_CMD.BFF_01_0023, { encodeData: req.body.encodeData });
+        this.sendResult(req, res, API_CMD.BFF_01_0025, { encodeData: req.body.encodeData });
       }
     } else {
       // error
