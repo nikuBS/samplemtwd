@@ -139,7 +139,7 @@ Tw.MyTDataTing.prototype = {
     var sPhone = this.$input_ting_receiver.val().match(/\d+/g) ? this.$input_ting_receiver.val().match(/\d+/g).join('') : '';
 
     if ( sPhone.length < 10 ) {
-      Tw.Error(null, Tw.VALIDATE_MSG_MYT_DATA.V18).pop();
+      // Tw.Error(null, Tw.VALIDATE_MSG_MYT_DATA.V18).pop();
       this.$error_text.addClass('blind');
       $(this.$error_text.get(0)).removeClass('blind');
       return false;
