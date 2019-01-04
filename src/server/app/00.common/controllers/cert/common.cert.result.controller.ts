@@ -22,7 +22,6 @@ class CommonCertResult extends TwViewController {
   }
 
   private checkCertKind(req, res, certType, certKind) {
-
     if ( certType === NICE_TYPE.IPIN ) {
       if ( certKind === AUTH_CERTIFICATION_KIND.F ) {
         this.sendResult(req, res, API_CMD.BFF_01_0048, { enc_data: req.body.enc_data });
@@ -31,9 +30,9 @@ class CommonCertResult extends TwViewController {
       }
     } else if ( certType === NICE_TYPE.NICE ) {
       if ( certKind === AUTH_CERTIFICATION_KIND.F ) {
-        this.sendResult(req, res, API_CMD.BFF_01_0050, { EncodeData: req.body.encodeData });
+        this.sendResult(req, res, API_CMD.BFF_01_0050, { EncodeData: req.body.EncodeData });
       } else {
-        this.sendResult(req, res, API_CMD.BFF_01_0025, { encodeData: req.body.encodeData });
+        this.sendResult(req, res, API_CMD.BFF_01_0025, { EncodeData: req.body.EncodeData });
       }
     } else {
       // error
