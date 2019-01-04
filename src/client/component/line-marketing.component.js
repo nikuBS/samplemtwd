@@ -60,7 +60,7 @@ Tw.LineMarketingComponent.prototype = {
       agr201Yn: this._agr201Yn,
       agr203Yn: this._agr203Yn
     };
-    this._apiService.request(Tw.API_CMD.BFF_03_0015, params, {}, this._svcMgmtNum)
+    this._apiService.request(Tw.API_CMD.BFF_03_0015, params, {}, [this._svcMgmtNum])
       .done($.proxy(this._successAgreeMarketing, this));
   },
   _onClickDisagree: function () {
