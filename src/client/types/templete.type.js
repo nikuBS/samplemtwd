@@ -228,9 +228,9 @@ Tw.POPUP_TPL = {
   FARE_PAYMENT_BANK_DATE: [
     {
       'list': [
-        { 'label-attr': 'id="0"', 'radio-attr': 'id="0" name="r2"', txt: '15일' },
-        { 'label-attr': 'id="3"', 'radio-attr': 'id="3" name="r2"', txt: '21일' },
-        { 'label-attr': 'id="1"', 'radio-attr': 'id="1" name="r2"', txt: '23일' }
+        { 'label-attr': 'id="0"', 'radio-attr': 'id="0" data-value="15" name="r2"', txt: '15일' },
+        { 'label-attr': 'id="3"', 'radio-attr': 'id="3" data-value="21" name="r2"', txt: '21일' },
+        { 'label-attr': 'id="1"', 'radio-attr': 'id="1" data-value="23" name="r2"', txt: '23일' }
       ]
     }
   ],

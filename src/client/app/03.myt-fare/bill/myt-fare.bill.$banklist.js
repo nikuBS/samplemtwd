@@ -28,6 +28,10 @@ Tw.MyTFareBillBankList.prototype = {
     }
   },
   _onOpenList: function ($layer) {
+    var $id = this.$currentTarget.attr('id');
+    if (!Tw.FormatHelper.isEmpty($id)) {
+      $layer.find('input#' + $id).attr('checked', 'checked');
+    }
     $layer.on('change', '.ac-list', $.proxy(this._getSelectedBank, this));
     $layer.on('click', '.fe-popup-close', $.proxy(this._checkSelected, this));
   },
