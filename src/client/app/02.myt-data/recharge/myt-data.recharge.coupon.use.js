@@ -169,7 +169,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
             }],
             bt: [{
               style_class: 'tw-popup-closeBtn',
-              txt: Tw.BUTTON_LABEL.CLOSE
+              txt: Tw.BUTTON_LABEL.CONFIRM
             }]
           });
           return;
