@@ -80,6 +80,18 @@ Tw.MyTFareBillSetChange.prototype = {
     }
   },
 
+  _disabledOptions: function (context, disabled) {
+    if (disabled) {
+      context.find('.btn-switch')
+        .find('.switch-style').attr('aria-disabled', true)
+        .find('input').prop('disabled', true);
+    } else {
+      context.find('.btn-switch')
+        .find('.switch-style').removeAttr('aria-disabled')
+        .find('input').prop('disabled', false);
+    }
+  },
+
   // 스위치 체크박스 disabled / enabled
   _toggleDisabledCheckbox: function (context, disabled) {
     if (disabled) {
@@ -242,6 +254,10 @@ Tw.MyTFareBillSetChange.prototype = {
               this._changeCcurNotiYn(this._options.eq(3).find('[name="ccurNotiYn"]'));
             } else {
               this._checkedSlideCheckbox('ccurNotiYn', _data.ccurNotiYn); // 법정대리인 함께 수령
+              // 법정대리인 함께 수령 Y 이면 disabled
+              if ('Y' === _data.ccurNotiYn) {
+                this._disabledOptions(this._options.eq(3),true, true);
+              }
             }
           }
         }
@@ -406,10 +422,12 @@ Tw.MyTFareBillSetChange.prototype = {
               break;
             case 'hp' :
               var _hpValue = _value.replace(/[^0-9]/g, '');
+              // 법정 대리인 번호 확인
               if ('ccurNotiSvcNum' === _this.attr('name')) {
-                _result = _valid.checkEmpty(_hpValue);
-                if (!_result){
-                  Tw.Popup.openAlert(Tw.ALERT_MSG_MYT_FARE.V41);
+                // 입력한 번호와 법정 대리인 번호가 다르면 알럿
+                if (_hpValue !== $this._data.ccurNotiSvcNum) {
+                  _result = false;
+                  Tw.Popup.openAlert(Tw.ALERT_MSG_MYT_FARE.V47);
                   return false;
                 }
               }
@@ -444,6 +462,7 @@ Tw.MyTFareBillSetChange.prototype = {
         }
       }// if end..
     });
+
 
     _reqData.toBillTypeCd = this._convertBillType();
     // 'T world 확인' 일 때
