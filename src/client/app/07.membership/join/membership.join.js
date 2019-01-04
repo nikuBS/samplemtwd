@@ -39,15 +39,10 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     this.$isCashbagCheckbox = this.$container.find('[data-id=usage_cashbag]');
     this.$cashbagList = this.$container.find('[data-id=cashbag_list]');
     this.$agreeViewBtn = this.$container.find('button.more-vw');
-    if ( this.data.type === 'corporate' ) {
+    if ( this.data.isCorporateBody ) {
       this.$copListBtn = this.$container.find('[data-id=cop-list]');
       this.$emailAddr = this.$container.find('[data-id=email-addr]');
-    }
-    else if ( this.data.type === 'feature' ) {
-      this.$zipCodeInput = this.$container.find('[data-id=zip-code-input]');
-      this.$zipCodeBtn = this.$container.find('[data-id=zip-code]');
-      this.$zipCodeInputDetail_1 = this.$container.find('[data-id=zip-code-input-detail1]');
-      this.$zipCodeInputDetail_2 = this.$container.find('[data-id=zip-code-input-detail2]');
+      this.$emailError = this.$container.find('[data-id=email-error]');
     }
   },
 
@@ -60,11 +55,9 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     this.$cAgreeItems.on('click', $.proxy(this._onClickCAgreeItems, this));
     this.$agreeViewBtn.on('click', $.proxy(this._onItemsAgreeView, this));
     this.$isCashbagCheckbox.on('click', $.proxy(this._onClickCashbagCheckbox, this));
-    if ( this.data.type === 'corporate' ) {
+    if ( this.data.isCorporateBody ) {
       this.$copListBtn.on('click', $.proxy(this._onClickCorporateList, this));
-    }
-    else if ( this.data.type === 'feature' ) {
-      this.$zipCodeBtn.on('click', $.proxy(this._onClickZipCodeBtn, this));
+      this.$emailAddr.on('focusout', $.proxy(this._checkEmailValidation, this));
     }
   },
 
@@ -72,9 +65,24 @@ Tw.MyTBenefitMembershipJoin.prototype = {
 
     this.svcNominalRelCd = '010'; // default 본인
     this.addrCd = '03'; // 주소구분코드: 자택
-    if ( this.data.type === 'corporate' && this.data.isCorporateBody ) {
+    if ( this.data.isCorporateBody ) {
       this.svcNominalRelCd = this.$copListBtn.attr('data-type');
       this.addrCd = '04'; // 직장
+    }
+  },
+
+  // 이메일 포커스 아웃 시 밸리데이션 추가
+  _checkEmailValidation: function (event) {
+    var $target = $(event.currentTarget);
+    var value = $target.val();
+    var isVaild = Tw.ValidationHelper.isEmail(value) || Tw.FormatHelper.isEmpty(value);
+    if ( isVaild ) {
+      if ( !this.$emailAddr.hasClass('blind') ) {
+        this.$emailError.addClass('blind');
+      }
+    }
+    else {
+      this.$emailError.removeClass('blind');
     }
   },
 
@@ -100,10 +108,6 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     this.$copListBtn.text($selectedValue.text());
     this.svcNominalRelCd = id;
     this._popupService.close();
-  },
-
-  _onClickZipCodeBtn: function () {
-    new Tw.CommonPostcodeMain(this.$container);
   },
 
   _onClickTAgreeCheckbox: function (event) {
@@ -222,14 +226,8 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       addr_cd: this.addrCd
     };
 
-    if ( this.data.type === 'corporate' ) {
+    if ( this.data.isCorporateBody ) {
       params.cust_email_addr = this.$emailAddr.val(); // email 주소
-    }
-
-    if ( this.data.type === 'feature' ) {
-      params.zip = this.$zipCodeInput.val();
-      params.bas_addr = this.$zipCodeInputDetail_1.val();
-      params.dtl_addr = this.$zipCodeInputDetail_2.val();
     }
 
     for ( var i = 0; i < $items.length; i++ ) {
