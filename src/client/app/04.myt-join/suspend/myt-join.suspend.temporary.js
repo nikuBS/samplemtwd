@@ -179,6 +179,9 @@ Tw.MyTJoinSuspendTemporary.prototype = {
       var desc = Tw.MYT_JOIN_SUSPEND.SUCCESS_SUSPEND_MESSAGE.replace('{DURATION}', duration)
         .replace('{SUSPEND_TYPE}', type);
       this._popupService.afterRequestSuccess('/myt-join/submain', '/myt-join/submain', null, Tw.MYT_JOIN_SUSPEND.APPLY, desc);
+
+      // update svcInfo
+      this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
     } else if ( res.code === 'MOD0022' ) { // 월 5회 이상 신청 시
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ALERT_EXCEED.MESSAGE, Tw.MYT_JOIN_SUSPEND.ALERT_EXCEED.TITLE);
     } else {
@@ -191,6 +194,9 @@ Tw.MyTJoinSuspendTemporary.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._popupService.afterRequestSuccess('/myt-join/submain/suspend#temporary', '/myt-join/submain',
         null, Tw.MYT_JOIN_SUSPEND.RESET);
+
+      // update svcInfo
+      this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
