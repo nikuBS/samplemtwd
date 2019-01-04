@@ -681,6 +681,7 @@ export const API_CMD = {
   BFF_10_0097: { path: '/core-product/:version/ledger/:args0/tapps', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_10_0121: { path: '/core-product/:version/services/roaming/add-count', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0122: { path: '/core-product/:version/services/roaming/prod-count', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0123: { path: '/core-product/:version/submain/roaming-sprateprods', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0141: { path: '/core-product/:version/services/t-roam-tog/members', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // MEMBERSHIP
