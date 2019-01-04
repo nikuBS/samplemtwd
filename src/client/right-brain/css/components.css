@@ -12642,21 +12642,26 @@ a.bt-link-tx.underline.small {
     .productinfoscroll-box .product-info .type {
       position: absolute;
       bottom: 0.625rem;
+      height: 16px;
       padding-left: 1.25rem;
       background: url(/img/product/icon_32px_data.png) no-repeat 0 2px;
       background-size: 0.875rem 0.875rem;
       color: #178bce;
       font-size: 0.8125rem; }
     .productinfoscroll-box .product-info .money-type {
-      margin-top: 0.9375rem;
+      position: absolute;
+      bottom: 0.625rem;
       padding-left: 1.0625rem;
+      height: 16px;
       background: url(/img/svg/icon_40px_call.svg) no-repeat 0 50%;
       background-size: 0.875rem 0.875rem;
       color: #178bce;
       font-size: 0.8125rem; }
     .productinfoscroll-box .product-info .sms {
-      margin-top: 0.9375rem;
+      position: absolute;
+      bottom: 0.625rem;
       padding-left: 1.25rem;
+      height: 16px;
       background: url(/img/svg/icon_40px_sms.svg) no-repeat 0 50%;
       background-size: 0.875rem 0.875rem;
       color: #178bce;
@@ -12665,8 +12670,9 @@ a.bt-link-tx.underline.small {
         display: inline-block;
         margin: 0 0.0625rem 0 0.125rem; }
     .productinfoscroll-box .product-info .text-type {
+      position: absolute;
+      bottom: 0.625rem;
       overflow: hidden;
-      margin-top: 0.9375rem;
       white-space: nowrap;
       text-overflow: ellipsis;
       color: #178bce;
@@ -19239,20 +19245,21 @@ a.bt-link-tx.underline.small {
     .card-box .card-inner .card-name {
       display: inline-block;
       position: relative;
-      margin-left: 0.4375rem;
-      padding-left: 0.625rem;
+      /*(margin-left:rem(7px);
+            padding-left:rem(10px);*/
       font-size: 0.875rem;
-      vertical-align: middle; }
-      .card-box .card-inner .card-name:before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 0;
-        width: 0.0625rem;
-        height: 0.9375rem;
-        margin-top: -0.5rem;
-        background: #fff;
-        opacity: .5; }
+      vertical-align: middle;
+      /*&:before {
+                content:'';
+                position:absolute;
+                top:50%;
+                left:0;
+                width:rem(1px);
+                height:rem(15px);
+                margin-top:rem(-8px);
+                background:$white1;
+                opacity:.5;
+            }*/ }
     .card-box .card-inner .card-name2 {
       display: block;
       margin-top: 0.3125rem;
@@ -31306,3 +31313,13 @@ body.apphome {
 
 .productinfoscroll-box.type01 .product-info .type, .shop-info .shop-txt .productinfoscroll-box.type02 .product-info .type, .shop-info .shop-txt .productinfoscroll-box.type03 .product-info .type {
   font-weight: 700; }
+
+/* 박지우 */
+.plan-cont {
+  padding: 0 0 0 2.8125rem; }
+  .plan-cont .tx-msg {
+    font-size: 0.75rem;
+    margin-top: 0.625rem;
+    height: 1rem; }
+    .plan-cont .tx-msg .tx-point {
+      color: #178bce; }
