@@ -28,9 +28,9 @@
                 <div class="cont-box">
                     <!-- .poll-title -->
                     <div class="poll-title">
-                        <span class="poll-question">SKT 중고 거래 앱 서비스는 무엇일까요?</span>
-                        <span class="poll-date">2018.5.21.<span class="blind">에서</span><span class="vt" aria-hidden="true">~</span>2018.5.30.</span>
-                        <em class="poll-condition">진행 중</em>
+                        <span class="poll-question"><%= result.bnnrRsrchTitleNm %></span>
+                        <span class="poll-date"><%= result.staDtm %><span class="blind">에서</span><span class="vt" aria-hidden="true">~</span><%= result.endDtm %></span>
+                        <em class="poll-condition"><%= result.isProceeding ? '진행 중' : '종료'%></em>
                     </div>
                     <!-- // .poll-title -->
                 </div>
@@ -40,66 +40,25 @@
                 <div class="cont-box">
                     <!-- poll-chart-box -->
                     <div class="poll-chart-box">
+                        <% result.examples.map(exam => { %>
                         <div class="poll-chart-sbox">
-                            <dl class="poll-chart-txt">
-                                <dt>T map</dt>
-                                <dd>58표(2%)</dd>
+                            <dl class="poll-chart-txt <%= exam.isAnswer ? 'correct' : '' %>">
+                                <dt>
+                                    <% if (exam.isAnswer) { %>
+                                        <span class="tx-bold">[정답]</span>
+                                    <% } %>
+                                    <%= exam.content === 'QSTNETC' ? '기타' : exam.content %>
+                                </dt>
+                                <dd><%= exam.count %>표(<%= exam.rate %>%)</dd>
                             </dl>
                             <div class="bar-chart-hoz">
-                                <span class="data-bar gray1" style="width:52%"></span>
+                                <span class="data-bar <%= exam.isAnswer ? 'red' : 'gray1' %>" style="width:<%= exam.rate %>%"></span>
                             </div><br/>
                         </div>
-                        <div class="poll-chart-sbox">
-                            <dl class="poll-chart-txt">
-                                <dt>T freemium</dt>
-                                <dd>1,293표(10%)</dd>
-                            </dl>
-                            <div class="bar-chart-hoz">
-                                <span class="data-bar gray1" style="width:10%"></span>
-                            </div><br/>
-                        </div>
-                        <div class="poll-chart-sbox">
-                            <dl class="poll-chart-txt correct"><!-- 정답 .correct -->
-                                <dt><span class="tx-bold">[정답]</span> 딜라이트딜라이트</dt>
-                                <dd>159,200표(80%)</dd>
-                            </dl>
-                            <div class="bar-chart-hoz">
-                                <span class="data-bar red" style="width:80%"></span>
-                            </div><br/>
-                        </div>
-                        <div class="poll-chart-sbox">
-                            <dl class="poll-chart-txt">
-                                <dt>T가이드</dt>
-                                <dd>0표(0%)</dd>
-                            </dl>
-                            <div class="bar-chart-hoz">
-                                <span class="data-bar gray1" style="width:0%"></span>
-                            </div><br/>
-                        </div>
-                        <div class="poll-chart-sbox">
-                            <dl class="poll-chart-txt">
-                                <dt>T월드</dt>
-                                <dd>7,800표(8%)</dd>
-                            </dl>
-                            <div class="bar-chart-hoz">
-                                <span class="data-bar gray1" style="width:0%"></span>
-                            </div><br/>
-                        </div>
-                    </div>
+                        <% }); %>
                     <!-- // poll-chart-box -->
                     <!-- delight -->
-                    <div class="delight">
-                        <ul>
-                            <li>정답은 빠르게 팔고, 제대로 살 수 있는 초간편안심 중고거래 <strong>'딜라이트'</strong>입니다.</li>
-                            <li>이제 SK텔레콤이 보장하는 딜라이트에서 빠르게 팔고 합리적으로 구매하세요!</li>
-                        </ul>
-                        <button class="bt-link-tx underline">자세히보기</button>
-                        <ul class="bt-slice ">
-                            <li class="bt-white2">
-                                <button>딜라이트 앱 설치하러 가기</button>
-                            </li>
-                        </ul>
-                    </div>
+                    <% if (result.motMsgHtmlCtt) { %><%- result.motMsgHtmlCtt %><% } %>
                     <!-- // delight -->
                 </div>
                 <!-- // .cont-box -->
