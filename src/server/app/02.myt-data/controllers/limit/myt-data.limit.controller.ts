@@ -46,7 +46,6 @@ class MyTDataLimit extends TwViewController {
   }
 
   getLimitUserInfo = () => this.apiService.request(API_CMD.BFF_06_0034, {}).map((resp) => {
-
     if ( resp.code === API_CODE.CODE_00 ) {
       const response = Object.assign(
         {},
