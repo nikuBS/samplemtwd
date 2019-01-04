@@ -355,7 +355,8 @@ Tw.MYT_FARE_PAYMENT_NAME = {
   AUTO_CANCEL: '자동납부 해지',
   GO_CHANGE_HISTORY: '변경내역 보기',
   RAINBOW_MESSAGE: '1,000점 이상 보유시 매월 자동 차감',
-  SMS_MESSAGE: '문자 알림서비스(무료) 신청하시고,' + '<br/>' + '매월 문자로 입금안내 서비스 받으세요.'
+  SMS_MESSAGE: '문자 알림서비스(무료) 신청하시고,' + '<br/>' + '매월 문자로 입금안내 서비스 받으세요.',
+  USING: '사용 중'
 };
 
 Tw.MYT_FARE_PAYMENT_TYPE = {
