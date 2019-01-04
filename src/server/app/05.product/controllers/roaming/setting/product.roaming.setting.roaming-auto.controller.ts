@@ -18,7 +18,7 @@ class ProductRoamingSettingRoamingAuto extends TwViewController {
     constructor() {
         super();
     }
-    render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
         const prodId = req.query.prod_id || null;
         let expireDate = '';
 
@@ -55,7 +55,8 @@ class ProductRoamingSettingRoamingAuto extends TwViewController {
                 prodRedisInfo : prodRedisInfo.summary,
                 prodBffInfo : prodBffInfo.result,
                 prodId : prodId,
-                expireDate : expireDate
+                expireDate : expireDate,
+                pageInfo : pageInfo
             });
         });
 

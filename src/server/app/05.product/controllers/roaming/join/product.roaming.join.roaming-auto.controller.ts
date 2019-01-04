@@ -18,7 +18,7 @@ class ProductRoamingJoinRoamingAuto extends TwViewController {
     constructor() {
         super();
     }
-    render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
 
         const prodId = req.query.prod_id || null;
         let expireDate = '';
@@ -35,6 +35,7 @@ class ProductRoamingJoinRoamingAuto extends TwViewController {
             this.apiService.request(API_CMD.BFF_10_0017, {'joinTermCd' : '01'}, {}, [prodId]),
             this.apiService.request(API_CMD.BFF_10_0091, {}, {}, [prodId])
         ).subscribe(([ prodRedisInfo, prodApiInfo, prodServiceTimeInfo ]) => {
+            console.log(JSON.stringify(pageInfo))
 
             if (FormatHelper.isEmpty(prodRedisInfo) || (prodApiInfo.code !== API_CODE.CODE_00) || (prodServiceTimeInfo.code !== API_CODE.CODE_00)) {
                 return this.error.render(res, {
@@ -57,7 +58,8 @@ class ProductRoamingJoinRoamingAuto extends TwViewController {
                 prodRedisInfo : prodRedisInfo.result.summary,
                 prodApiInfo : prodApiInfo.result,
                 prodId : prodId,
-                expireDate : expireDate
+                expireDate : expireDate,
+                pageInfo : pageInfo
             });
         });
 

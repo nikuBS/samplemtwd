@@ -5,13 +5,13 @@
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import { Request, Response } from 'express';
+import {NextFunction, Request, Response} from 'express';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import {PRODUCT_TYPE_NM} from '../../../../types/string.type';
 
 class ProductRoamingLookup extends TwViewController {
-  render(req: Request, res: Response, svcInfo: any) {
+    render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
 
   const prodId = req.query.prod_id || null;
 
@@ -33,7 +33,8 @@ class ProductRoamingLookup extends TwViewController {
       res.render( 'roaming/product.roaming.lookup.html', {
           svcInfo : svcInfo,
           prodBffInfo : prodBffInfo.result,
-          prodId : prodId
+          prodId : prodId,
+          pageInfo : pageInfo
         }
       );
   });

@@ -17,7 +17,7 @@ class ProductRoamingJoinRoamingBeginSetup extends TwViewController {
     constructor() {
         super();
     }
-    render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
 
         const prodId = req.query.prod_id || null;
 
@@ -48,7 +48,8 @@ class ProductRoamingJoinRoamingBeginSetup extends TwViewController {
                 svcInfo : this.loginService.getSvcInfo(),
                 prodRedisInfo : prodRedisInfo.result.summary,
                 prodApiInfo : prodApiInfo.result,
-                prodId : prodId
+                prodId : prodId,
+                pageInfo : pageInfo
             });
         });
 

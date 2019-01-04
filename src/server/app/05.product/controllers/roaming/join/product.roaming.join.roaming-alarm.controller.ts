@@ -18,7 +18,7 @@ class ProductRoamingJoinRoamingAlarm extends TwViewController {
     constructor() {
         super();
     }
-    render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
         const prodId = req.query.prod_id || null;
 
 
@@ -48,7 +48,8 @@ class ProductRoamingJoinRoamingAlarm extends TwViewController {
                 prodRedisInfo : prodRedisInfo.result.summary,
                 prodApiInfo : prodApiInfo.result,
                 prodId : prodId,
-                phoneNum : StringHelper.phoneStringToDash(svcInfo.svcNum)
+                phoneNum : StringHelper.phoneStringToDash(svcInfo.svcNum),
+                pageInfo : pageInfo
             });
         });
 
