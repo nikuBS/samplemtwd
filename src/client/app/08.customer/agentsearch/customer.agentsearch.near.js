@@ -107,7 +107,7 @@ Tw.CustomerAgentsearchNear.prototype = {
   _askCurrentLocation: function () {
     if (Tw.BrowserHelper.isApp()) {
       this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function (res) {
-        if (res.resultCode === 401) {
+        if (res.resultCode === 401 || res.resultCode === 400 || res.resultCode === -1) {
           this._historyService.goBack();
           return;
         } else {
