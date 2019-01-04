@@ -229,7 +229,11 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     return point;
   },
   fail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+    if (err.code === 'BIL0006') {
+      this._popupService.openAlert(err.msg, Tw.POPUP_TITLE.NOTIFY);
+    } else {
+      Tw.Error(err.code, err.msg).pop();
+    }
   },
   _makeRequestDataForOne: function () {
     var reqData = {
