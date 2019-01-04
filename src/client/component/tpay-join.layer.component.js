@@ -23,6 +23,8 @@ Tw.TPayJoinLayerPopup.prototype = {
 
   _openCallback: function ($element) {
     this.$setupBtn = $element.find('button[data-id=tpay-setup]');
+    this.$closeBtn = $element.find('button.popup-closeBtn');
+    this.$closeBtn.on('click', $.proxy(this._onCloseBtn,this));
     this.$setupBtn.on('click', $.proxy(this._onClickSetup, this));
   },
 
@@ -35,5 +37,10 @@ Tw.TPayJoinLayerPopup.prototype = {
   _onClickSetup: function () {
     // T Apps로 이동
     this._historyService.goLoad('/product/apps');
+  },
+  _onCloseBtn: function(event) {
+    this._popupService.close();
+    event.preventDefault();
+    return false;
   }
 };

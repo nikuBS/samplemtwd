@@ -10,7 +10,7 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { CUSTOMER_NOTICE_CATEGORY } from '../../../../types/string.type';
 
-class MembershipJoin extends TwViewController {
+class MembershipJoinController extends TwViewController {
   constructor() {
     super();
   }
@@ -55,4 +55,4 @@ class MembershipJoin extends TwViewController {
 }
 
 
-export default MembershipJoin;
+export default MembershipJoinController;

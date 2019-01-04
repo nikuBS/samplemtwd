@@ -1,5 +1,5 @@
 import TwRouter from '../../common/route/tw.router';
-import MembershipJoin from './controllers/join/membership.join';
+import MembershipJoinController from './controllers/join/membership.join.controller';
 import MembershipBenefitBrandList from './controllers/benefit/membership.benefit.brand.list.controller';
 import MembershipBenefitBrandMap from './controllers/benefit/membership.benefit.brand.map.controller';
 import MembershipBenefitMovieculture from './controllers/benefit/membership.benefit.movieculture';
@@ -16,7 +16,7 @@ import MembershipMyHistory from './controllers/my/membership.my.history.controll
 class MembershipRouter extends TwRouter {
   constructor() {
     super();
-    this.controllers.push({ url: '/join', controller: MembershipJoin });
+    this.controllers.push({ url: '/join', controller: MembershipJoinController });
     this.controllers.push({ url: '/benefit/brand', controller: MembershipBenefitBrand });
     this.controllers.push({ url: '/benefit/brand-benefit', controller: MembershipBenefitBrandBenefit });
     this.controllers.push({ url: '/benefit/map', controller: MembershipBenefitBrandMap });
