@@ -621,37 +621,37 @@ export const CUSTOMER_STIE_OPTION_TYPE = [
   {
     cat: '기타',
     title: '가려진 정보 확인 방법',
-    code: ''
+    code: 'D00007'
   },
   {
     cat: 'myT',
     title: '소액결제 현명하게 관리하기',
-    code: ''
+    code: 'D00002'
   },
   {
     cat: '회원',
     title: '개인명의 휴대폰 태블릿 다회선 등록하기',
-    code: ''
+    code: 'D00001'
   },
   {
     cat: '회원',
     title: '법인명의 휴대폰번호 삭제방법',
-    code: ''
+    code: 'D00009'
   },
   {
     cat: '회원',
     title: '법인명의 태블릿 다회선 등록하기',
-    code: ''
+    code: 'D00005'
   },
   {
     cat: '기타',
     title: '모두에게 평등한 웹 접근성 안내',
-    code: ''
+    code: 'D00008'
   },
   {
     cat: '기타',
     title: 'T월드의 모든 메뉴 꼼꼼히 살펴보기',
-    code: ''
+    code: 'D00009'
   }
 ];
 
@@ -671,17 +671,17 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           {
             dep_title: '기기 자급제도',
             type: 'A1',
-            code: '3305'
+            code: 'C00023'
           },
           {
             dep_title: '번호 이동',
             type: 'A1',
-            code: '3304'
+            code: 'C00013'
           },
           {
             dep_title: '번호관리제도',
             type: 'A1',
-            code: '3308'
+            code: 'C00018'
           }
         ]
       },
@@ -692,12 +692,12 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           {
             dep_title: '미성년자 가입',
             type: 'A1',
-            code: '3306'
+            code: 'C00015'
           },
           {
             dep_title: '미성년자 보호 서비스',
             type: 'A1',
-            code: '3307'
+            code: 'C00017'
           }
         ]
       },
@@ -708,22 +708,22 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           {
             dep_title: '유심 잠금해제',
             type: 'A1',
-            code: '-'
+            code: 'C00019'
           },
           {
             dep_title: '내 유심으로 SK텔레콤 기기 사용',
             type: 'A1',
-            code: '-'
+            code: 'C00016'
           },
           {
             dep_title: '내 유심으로 타사 기기 사용',
             type: 'A1',
-            code: '-'
+            code: 'C00012'
           },
           {
             dep_title: '타사 유심으로 SK텔레콤 기기 사용',
             type: 'A2',
-            code: '-'
+            code: 'C00025'
           }
         ]
       }
@@ -736,19 +736,19 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
         sub_title: '요금 기준',
         sub_text: '일반∙스마트폰 요금 기준이 궁금하다면',
         type: 'B1',
-        code: '3315'
+        code: 'C00031'
       },
       {
         sub_title: 'LTE데이터 사용요금',
         sub_text: 'LTE 요금 기준이 궁금하다면',
         type: 'B1',
-        code: '3316'
+        code: 'C00029'
       },
       {
         sub_title: 'band LTE',
         sub_text: 'band LTE 요금 기준이 궁금하다면',
         type: 'B2',
-        code: '-'
+        code: 'C00029'
       },
       {
         sub_title: '데이터 사용요금',
@@ -757,12 +757,12 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           {
             dep_title: '데이터 사용요금 안내',
             type: 'A1',
-            code: '231'
+            code: 'C00032'
           },
           {
             dep_title: '데이터 사용 유의사항',
             type: 'A1',
-            code: '3319'
+            code: 'C00034'
           }
         ]
       },
@@ -770,13 +770,13 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
         sub_title: '부가세 포함',
         sub_text: '부가세 포함 요금정책이 궁금하다면',
         type: 'B1',
-        code: '3320'
+        code: 'C00030'
       },
       {
         sub_title: '영상통화 요금',
         sub_text: '영상통화 요금정책이 궁금하다면',
         type: 'B1',
-        code: '3321'
+        code: 'C00033'
       },
     ]
   },
@@ -794,17 +794,17 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           {
             dep_title: '요금약정할인',
             type: 'A1',
-            code: '212'
+            code: 'C00001'
           },
           {
             dep_title: '결합할인',
             type: 'A1',
-            code: '222'
+            code: 'C00007'
           },
           {
             dep_title: 'T월드 다이렉트 혜택',
             type: 'A2',
-            code: '224'
+            code: 'C00009'
           }
         ]
       },
@@ -815,27 +815,27 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           {
             dep_title: '구매 전 꿀팁',
             type: 'A2',
-            code: '224'
+            code: 'C00017'
           },
           {
             dep_title: '다이렉트샵구매가이드',
             type: 'A2',
-            code: '219'
+            code: 'C00010'
           },
           {
             dep_title: '가입유형',
             type: 'A1',
-            code: '220'
+            code: 'C00005'
           },
           {
             dep_title: '휴대폰분할상환수수료',
             type: 'A2',
-            code: '221'
+            code: 'C00006'
           },
           {
             dep_title: '구매유의사항',
             type: 'A2',
-            code: '223'
+            code: 'C00008'
           }
         ]
       },
@@ -846,17 +846,17 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           {
             dep_title: '배송방법',
             type: 'A2',
-            code: '216'
+            code: 'C00002'
           },
           {
             dep_title: '개통방법',
             type: 'A1',
-            code: '217'
+            code: 'C00003'
           },
           {
             dep_title: '반품교환',
             type: 'A1',
-            code: '218'
+            code: 'C00004'
           }
         ]
       },
@@ -877,17 +877,17 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           {
             dep_title: 'T멤버십 이용',
             type: 'A2',
-            code: '3719'
+            code: 'C00037'
           },
           {
             dep_title: '초콜릿 이용',
             type: 'A1',
-            code: '3720'
+            code: 'C00035'
           },
           {
             dep_title: '모바일 T멤버십',
             type: 'A2',
-            code: '3721'
+            code: 'C00036'
           }
         ]
       },
@@ -895,7 +895,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
         sub_title: 'T로밍 이용안내',
         sub_text: '',
         type: 'B1',
-        code: '3727'
+        code: 'C00020'
       }
     ]
   },
@@ -906,7 +906,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
         sub_title: '데이터 리필하기',
         sub_text: '',
         type: 'B1',
-        code: '3722'
+        code: 'C00040'
       },
       { 
         sub_title: 'T끼리 데이터 선물하기',
@@ -915,12 +915,12 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           {
             dep_title: 'T끼리 데이터 선물하기',
             type: 'A1',
-            code: '3723'
+            code: 'C00041'
           },
           {
             dep_title: 'T끼리 자동선물 신청',
             type: 'A1',
-            code: '3724'
+            code: 'C00042'
           }
         ]
       },
@@ -928,7 +928,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
         sub_title: 'T 기본약정 요금정책',
         sub_text: '',
         type: 'B1',
-        code: '215'
+        code: 'C00039'
       }
     ]
   },
@@ -942,17 +942,17 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           {
             dep_title: '버튼식 ARS',
             type: 'A3',
-            code: ''
+            code: 'C00038'
           },
           {
             dep_title: '보이는 ARS',
             type: 'A2',
-            code: ''
+            code: 'C00021'
           },
           {
             dep_title: '음성인식 ARS',
             type: 'A2',
-            code: ''
+            code: 'C00022'
           }
         ]
       },
@@ -963,12 +963,12 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           {
             dep_title: '목소리 인증',
             type: 'A2',
-            code: ''
+            code: 'C00024'
           },
           {
             dep_title: '목소리 등록 문자받기',
             type: 'A2',
-            code: ''
+            code: 'C00026'
           }
         ]
       }

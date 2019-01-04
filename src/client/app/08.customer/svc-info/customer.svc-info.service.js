@@ -34,19 +34,17 @@ Tw.CustomerSvcinfoService.prototype = {
   },
 
   _typeActionSheetOpen: function (e) {
-    var listIndex = $(e.currentTarget).data('listIndex');
-    var subIndex =  $(e.currentTarget).data('subIndex');
     var selectIndex = $(e.currentTarget).data('selectIndex');
     var selectSubdex =  $(e.currentTarget).data('selectSubdex');
     
-    if(Tw.FormatHelper.isEmpty(listIndex) || Tw.FormatHelper.isEmpty(subIndex)) {
+    if(Tw.FormatHelper.isEmpty(selectIndex) || Tw.FormatHelper.isEmpty(selectSubdex)) {
       return ;
     }
     this.$curConfirmBtn = this.$selectConfirm.filter(function(){
-      return $(this).data('listIndex') === listIndex && $(this).data('subIndex') === subIndex;
+      return $(this).data('selectIndex') === selectIndex && $(this).data('selectSubdex') === selectSubdex;
     });
     this.$curSelectBtn = this.$selectBtn.filter(function(){
-      return $(this).data('listIndex') === listIndex && $(this).data('subIndex') === subIndex;
+      return $(this).data('selectIndex') === selectIndex && $(this).data('selectSubdex') === selectSubdex;
     })
     this._popupService.open({
       hbs: 'actionsheet01',// hbs의 파일명
@@ -107,17 +105,12 @@ Tw.CustomerSvcinfoService.prototype = {
   },
 
   _moveEvent: function (e) {
-    this._moveDetailPage(
-      $(e.currentTarget).data('listIndex'),
-      $(e.currentTarget).data('subIndex'),
-      $(e.currentTarget).data('listCode')
-    );
+    this._moveDetailPage( $(e.currentTarget).data('listCode') );
   },
 
-  _moveDetailPage: function (listIndex, subIndex, code) {
+  _moveDetailPage: function (code) {
     // TODO code 값이 url 일때를 고려
     var targetURL = this.rootPathName.slice(-1) === '/' ? this.rootPathName.split('/').slice(0, -1).join('/') : this.rootPathName;
-    console.log(targetURL + '/detail?listIndex='+ listIndex +'&subIndex='+ subIndex +'&code=' + code);
-    this._historyService.goLoad(targetURL + '/detail?listIndex='+ listIndex +'&subIndex='+ subIndex +'&code=' + code);
+    this._historyService.goLoad(targetURL + '/detail?code=' + code);
   }
 };

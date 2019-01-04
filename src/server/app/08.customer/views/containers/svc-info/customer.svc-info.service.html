@@ -53,16 +53,14 @@
                                         aria-haspopup="true"
                                         data-select-index="<%=selectIndex%>"
                                         data-select-subdex="<%=selectSubdex%>"
-                                        data-list-index="<%=sub.listIndex%>"
-                                        data-sub-index="<%=sub.subIndex%>"
                                     ><%=sub.dep_list[0].dep_title %></button>
                                 </span>
                                 <span class="bt-box">
                                     <button 
                                         type="button" 
                                         class="fe-select-btn"
-                                        data-list-index="<%=sub.listIndex%>"
-                                        data-sub-index="<%=sub.subIndex%>"
+                                        data-select-index="<%=selectIndex%>"
+                                        data-select-subdex="<%=selectSubdex%>"
                                         data-list-code="<%=sub.dep_list[0].code %>"
                                     >확인</button>
                                 </span>
@@ -71,8 +69,8 @@
                         <% } else { %>
                         <button 
                             class="servicecenter-wrap01 link-type fe-move-btn"
-                            data-list-index="<%=sub.listIndex%>"
-                            data-sub-index="<%=sub.subIndex%>"
+                            data-select-index="<%=selectIndex%>"
+                            data-select-subdex="<%=selectSubdex%>"
                             data-list-code="<%=sub.code %>"
                         >
                             <dl class="textinfo-wrap">
