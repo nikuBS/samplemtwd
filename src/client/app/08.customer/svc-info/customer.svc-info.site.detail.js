@@ -29,6 +29,8 @@ Tw.CustomerSvcInfoSiteDetail.prototype = {
   _bindEvent: function () {
     this.$InfoBtn.on('click', $.proxy(this._typeActionSheetOpen, this));
     this.$InfoBtn.text(Tw.CUSTOMER_SITE_INFO_TYPEA_CHOICE.options[0].list[0].value).attr('value', 'A'); 
+
+    this._bindUIEvent();
   },
 
   // 타입 A 일 경우에만 실행되게 됨 : 셀렉트박스 실행 start
@@ -69,8 +71,60 @@ Tw.CustomerSvcInfoSiteDetail.prototype = {
     // 선택된 텍스트
     this.$InfoBtn.attr('value', value);
     if(text) this.$InfoBtn.text(text); 
-  }
-
+  },
   // 타입 A 일 경우에만 실행되게 됨 : 셀렉트박스 실행 end
+
+  _bindUIEvent: function () {
+    $('.idpt-tab', this.$container).each(function(){
+      var tabBtn = $(this).find('li');
+      $(tabBtn).click(function(){
+        var i = $(this).index();
+        $('.idpt-tab > li', this.$container).removeClass('on').eq(i).addClass('on');
+        $('.idpt-tab-content', this.$container).removeClass('show').eq(i).addClass('show');
+      });
+    });
+  
+    // popup
+    $('.idpt-popup-open', this.$container).click(function(){
+      var popId = $(this).attr('href');
+      $('.idpt-popup-wrap', this.$container).removeClass('show');
+      $(popId).addClass('show');
+      $('.idpt-popup', this.$container).show();
+    });
+    $('.idpt-popup-close', this.$container).click(function(){
+      $('.idpt-popup', this.$container).hide();
+    });
+  
+    // tooltip
+    $('.info-tooltip', this.$container).each(function(){
+      $('.btn-tooltip-open', this.$container).on('click', function(){
+        var remStandard = $('body').css('font-size').replace('px','');
+        var btnLeft = $(this).offset().left - 28;
+        var btnRem = btnLeft/remStandard
+        $('.idpt-tooltip-layer', this.$container).css('left', btnRem + 'rem');
+        $(this).next('div').show();
+      });
+    });
+    $('.btn-tooltip-close', this.$container).on('click', function(){
+      $('.idpt-tooltip-layer', this.$container).hide();
+    });
+  
+    //accordian
+    $('.idpt-accordian > li > a', this.$container).on('click', function(){
+      $('.idpt-accordian > li > a', this.$container).removeClass('open');
+      $('.idpt-accordian-cont', this.$container).slideUp();
+      if ($(this).parent().find('.idpt-accordian-cont').is(':hidden')){
+        $(this).addClass('open');
+        $(this).parent().find('.idpt-accordian-cont').slideDown();
+      }
+    });
+  
+    //toggle (FAQ)
+    $('.idpt-toggle-btn', this.$container).each(function(){
+      $(this).click(function(){
+        $(this).toggleClass('open').next('.idpt-toggle-cont').slideToggle();
+      })
+    });
+  },
 
 };

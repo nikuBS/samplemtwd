@@ -636,7 +636,7 @@ export const CUSTOMER_STIE_OPTION_TYPE = [
   {
     cat: '회원',
     title: '법인명의 휴대폰번호 삭제방법',
-    code: 'D00009'
+    code: 'D00006'
   },
   {
     cat: '회원',
@@ -815,7 +815,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           {
             dep_title: '구매 전 꿀팁',
             type: 'A2',
-            code: 'C00017'
+            code: 'C00011'
           },
           {
             dep_title: '다이렉트샵구매가이드',

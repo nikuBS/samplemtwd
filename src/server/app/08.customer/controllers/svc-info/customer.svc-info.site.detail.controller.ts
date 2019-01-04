@@ -53,9 +53,9 @@ class CustomerSvcInfoSite extends TwViewController {
       res.render('svc-info/customer.svc-info.site.detail.html', {
         svcInfo: svcInfo, 
         pageInfo: pageInfo, 
-        contentHTML: this.modifyHTML(resp.icntsCtt),
+        contentHTML: this.modifyHTML(resp.result.icntsCtt),
         data: {
-          type: code === '001' ? 'A' : 'B',  // 가려진 타입 예외 하나만 적용
+          type: code === 'D00007' ? 'A' : 'B',  // 가려진 타입 예외 하나만 적용
           title: curContent.title
         }
       });
