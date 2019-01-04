@@ -77,8 +77,6 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
   },
 
   _setActionSheetValue: function (e) {
-    var listIndex = this.queryParams.listIndex, 
-      subIndex = this.queryParams.subIndex;
     // check
     this.$selectButtons.find('input').prop('checked', false);
     $(e.currentTarget).find('input').prop('checked', true);
@@ -87,17 +85,13 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     this._popupService.close();
 
     // move 
-    this._moveDetailPage(
-      listIndex,
-      subIndex,
-      $(e.currentTarget).find('input').val()
-    );
+    this._moveDetailPage( $(e.currentTarget).find('input').val() );
   },
 
-  _moveDetailPage: function (listIndex, subIndex, code) {
+  _moveDetailPage: function (code) {
     // TODO code 값이 url 일때를 고려
     var targetURL = this.rootPathName.slice(-1) === '/' ? this.rootPathName.split('/').slice(0, -1).join('/') : this.rootPathName;
-    this._historyService.goLoad(targetURL + '?listIndex='+ listIndex +'&subIndex='+ subIndex +'&code=' + code);
+    this._historyService.goLoad(targetURL + '?code=' + code);
   },
 
   _bindUIEvent: function () {

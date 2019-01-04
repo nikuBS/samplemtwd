@@ -20,13 +20,15 @@ class CustomerUseguideService extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
-    
-    const { listIndex, subIndex, code } = req.query;
-    
-    if (FormatHelper.isEmpty(listIndex) || 
-    FormatHelper.isEmpty(subIndex) || 
-    FormatHelper.isEmpty(code)) {
+    const { listIndex, subIndex, code } = {
+      code: req.query.code,
+      listIndex: this.findIndex(req.query.code, 'listIndex'),
+      subIndex: this.findIndex(req.query.code, 'subIndex')
+    };
+    if (FormatHelper.isEmpty(code) || FormatHelper.isEmpty(listIndex) || 
+    FormatHelper.isEmpty(subIndex)) {
       // 페이지가 존재하지 않으면
+      return res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
     }
     this.apiService.request(API_CMD.BFF_08_0064, {}, {}, [code] ).subscribe(resp => {
       if ( resp.code !== API_CODE.CODE_00) {
@@ -38,12 +40,12 @@ class CustomerUseguideService extends TwViewController {
       }
 
       // 셀렉트 박스에 쓰일 리스트
-      const list = CUSTOMER_SERVICE_OPTION_TYPE[listIndex].sub_list[subIndex].dep_list || [];
+      const list = CUSTOMER_SERVICE_OPTION_TYPE[listIndex as any].sub_list[subIndex as any].dep_list || [];
       
       // 제목 구하기
       const result = Object.assign(resp.result, {
-        title: CUSTOMER_SERVICE_OPTION_TYPE[listIndex].title,
-        sub_title: CUSTOMER_SERVICE_OPTION_TYPE[listIndex].sub_list[subIndex].sub_title,
+        title: CUSTOMER_SERVICE_OPTION_TYPE[listIndex as any].title,
+        sub_title: CUSTOMER_SERVICE_OPTION_TYPE[listIndex as any].sub_list[subIndex as any].sub_title,
         dep_title: this.getCurTitleFromDeps(list, code)
       });
 
@@ -56,11 +58,42 @@ class CustomerUseguideService extends TwViewController {
           // 코드를 제외한 데이터
           contents: this.exceptHTML(result),
           // 하위메뉴들이 있을경우 세부페이지에서 콤보박스 노출
-          list
+          list,
+          listIndex,
+          subIndex
         }
       });
     });
   }
+
+  private findIndex = (code: string, returnKey: string): string | null => {
+    if (FormatHelper.isEmpty(code)) {
+      return null;
+    }
+    let result = {listIndex: '', subIndex: ''};
+    CUSTOMER_SERVICE_OPTION_TYPE.map((list, listIndex) => {
+      list.sub_list.map((sub_list, subIndex) => {
+        if (sub_list.code && sub_list.code === code) {
+          result = Object.assign(result, {
+            listIndex,
+            subIndex
+          });
+        }
+        if (sub_list.dep_list && sub_list.dep_list.length) {
+          sub_list.dep_list.map((dep_list) => {
+            if (dep_list.code === code) {
+              result = Object.assign(result, {
+                listIndex,
+                subIndex
+              });
+            }
+          });
+        }
+      });
+    });
+    return result[returnKey].toString();
+  }
+
   // 해당 리스트에서 같은 코드 찾기
   private getCurTitleFromDeps = (list, code: string) => {
     const content = list.reduce((prev, next) => {
@@ -82,7 +115,7 @@ class CustomerUseguideService extends TwViewController {
       // 주석제거
       html = html.replace(/<!--(.*?)-->/gmi, '')
       // 이미지경로 변경
-      .replace(/\/mpoc\/img\/center/gi, EnvHelper.getEnvironment('CDN') + '/img/service');
+      .replace(/{{cdn}}/gi, EnvHelper.getEnvironment('CDN'));
     return html;
   }
 
