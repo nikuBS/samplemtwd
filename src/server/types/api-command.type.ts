@@ -20,10 +20,11 @@ export enum API_VERSION {
 
 export const API_CMD = {
 
-  // test search
-  TEST_SEARCH : { path: '/search/tworld/mobile-app', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
-  TEST_RELATED_KEYWORD : { path: '/search/tworld/recommend', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
-  TEST_GET_POPULAR_KEYWORD : { path : '/search/tworld/popword', method : API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
+  // search
+  SEARCH_APP : { path: '/search/tworld/mobile-app', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
+  SEARCH_WEB : { path: '/search/tworld/mobile-web', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
+  RELATED_KEYWORD : { path: '/search/tworld/recommend', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
+  POPULAR_KEYWORD : { path : '/search/tworld/popword', method : API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
   BFF_12_0010: { path: '/core-modification/:version/search/keyword', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // SPRINT #3
@@ -494,6 +495,11 @@ export const API_CMD = {
   BFF_08_0064: { path: '/core-modification/:version/guide/contents-detail/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0065: { path: '/core-modification/:version/guide/contents-view-count-up/:args0', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_08_0066: { path: '/core-modification/:version/center/banner', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0069: { path: '/core-modification/:version/search/invst-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+
+  // SEARCH SURVEY
+  BFF_08_0070: { path: '/core-modification/v1/search/invst-append', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0071: { path: '/core-modification/v1/search/invst-insert', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/:version/event/ing-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
