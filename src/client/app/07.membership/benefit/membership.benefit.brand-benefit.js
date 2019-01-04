@@ -21,7 +21,6 @@ Tw.MembershipBenefitBrandBenefit = function (rootEl, options) {
   this._options.area2 = Tw.MEMBERSHIP.BENEFIT.DEFAULT_AREA.AREA2;
   this._options.mapX = Tw.MEMBERSHIP.BENEFIT.DEFAULT_AREA.MAP_X;
   this._options.mapY = Tw.MEMBERSHIP.BENEFIT.DEFAULT_AREA.MAP_Y;
-  this._setArea();
 
   if ( Tw.BrowserHelper.isApp() ) {
     this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(this._onCurrentLocation, this));
@@ -44,24 +43,31 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
     if(result && result.code === Tw.NTV_CODE.CODE_00){
       this._options.mapX = result.params.latitude;
       this._options.mapY = result.params.longitude;
+      this._getAreaByMapXY(this._options.mapX, this._options.mapY);
     }
 
-    // 위경도로 지역명 조회 api 호출??
-
-    this._reqeustNearShopList();
   },
 
-  _setArea: function(area1, area2, mapX, mapY){
+  /**
+   * 위경도로 주소가져오기
+   * @private
+   */
+  _getAreaByMapXY: function(x,y){
+    this._apiService.request(Tw.API_CMD.BFF_11_0026, { mapX: x, mapY: y })
+      .done($.proxy(function(resp){
+        if(resp.result){
+          this._setArea(resp.result.cityDo, resp.result.guGun);
+          this._reqeustNearShopList();
+        }
+      }, this));
+  },
+
+  _setArea: function(area1, area2){
     if(area1 && area2) {
       this._options.area1 = area1;
       this._options.area2 = area2;
+      $('#fe-area-name').text(this._options.area1 + ' ' + this._options.area2);
     }
-    if(mapX && mapY){
-      this._options.mapX = mapX;
-      this._options.mapY = mapY;
-    }
-
-    $('#fe-area-name').text(this._options.area1 + ' ' + this._options.area2);
   },
 
 
@@ -103,18 +109,20 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
         }
         // skt_landing.widgets.widget_slider1를 쓰려고 했지만 안먹혀서 그냥 slick함수를 사용
         $('.slider').slick('unslick');
-        $('.slider').slick({
-          dots: true,
-          arrows: true,
-          infinite: false,
-          speed : 300,
-          centerMode: false,
-          focusOnSelect: false,
-          touchMove : true,
-          customPaging: function(slider, i) {
-            return $('<span />').text(i + 1);
-          }
-        });
+        if(list.length > 6){
+          $('.slider').slick({
+            dots: true,
+            arrows: true,
+            infinite: false,
+            speed : 300,
+            centerMode: false,
+            focusOnSelect: false,
+            touchMove : true,
+            customPaging: function(slider, i) {
+              return $('<span />').text(i + 1);
+            }
+          });
+        }
 
       }, this))
       .fail(function (err) {
@@ -201,6 +209,7 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
   _goFrchAllView: function(){
     var param = {
       brandCd: this._options.brandCd,
+      brandNm: $('.brand-tit').text(),
       cateCd: this._options.cateCd
     };
 
