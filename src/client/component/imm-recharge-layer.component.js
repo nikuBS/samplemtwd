@@ -34,7 +34,6 @@ Tw.ImmediatelyRechargeLayer.prototype = {
       'NA00005173', 'NA00005205', 'NA00005246', 'NA00005306', 'NA00005307', 'NA00005326', 'NA00005330', 'NA00005381',
       'NA00005382', 'NA00005509', 'NA00005510', 'NA00005511', 'NA00005723', 'NA00005736', 'NA00005806', 'NA00005848',
       'NA00005849', 'NA00005876', 'NA00005880'];
-    this._isLimited = (this._readOnlyProductIdList.indexOf(this._prodId) > -1);
     this._immediatelyChargeRequest();
   },
   // api request
@@ -43,10 +42,11 @@ Tw.ImmediatelyRechargeLayer.prototype = {
       { command: Tw.API_CMD.BFF_06_0001, params: {} },
       { command: Tw.API_CMD.BFF_06_0020, params: {} },
       { command: Tw.API_CMD.BFF_06_0028, params: {} },
-      { command: Tw.API_CMD.BFF_06_0034, params: {} }
+      { command: Tw.API_CMD.BFF_06_0034, params: {} },
+      { command: Tw.API_CMD.BFF_05_0136, params: {} }
     ];
     this._apiService.requestArray(apiList)
-      .done($.proxy(function (refill, ting, etc, limit) {
+      .done($.proxy(function (refill, ting, etc, limit, optSvc) {
         if ( refill.code === Tw.API_CODE.CODE_00 ) {
           this.immChargeData.refill = refill.result;
         }
@@ -64,6 +64,16 @@ Tw.ImmediatelyRechargeLayer.prototype = {
         }
         else {
           this.immChargeData.etc = null;
+        }
+        if ( optSvc.code === Tw.API_CODE.CODE_00 ) {
+          if ( optSvc.result.optProdList && optSvc.result.optProdList.length > 0 ) {
+            _.filter(optSvc.result.optProdList, $.proxy(function (item) {
+              // 부가서비스
+              if ( !this._isLimited ) {
+                this._isLimited = (this._readOnlyProductIdList.indexOf(item.prodId) > -1);
+              }
+            }, this));
+          }
         }
         // 해당요금제에 속해 있는 경우만 노출
         if ( this._isLimited ) {
