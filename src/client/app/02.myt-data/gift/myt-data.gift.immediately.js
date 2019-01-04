@@ -158,11 +158,11 @@ Tw.MyTDataGiftImmediately.prototype = {
     this._popupService.close();
 
     // MOCK DATA
-    this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
+    // this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
 
     // API DATA
-    // this._apiService.request(Tw.API_CMD.BFF_06_0016, { befrSvcMgmtNum: this.paramData.befrSvcMgmtNum })
-    //   .done($.proxy(this._onRequestSuccessGiftData, this));
+    this._apiService.request(Tw.API_CMD.BFF_06_0016, { befrSvcMgmtNum: this.paramData.befrSvcMgmtNum })
+      .done($.proxy(this._onRequestSuccessGiftData, this));
   },
 
   _onRequestSuccessGiftData: function (res) {
