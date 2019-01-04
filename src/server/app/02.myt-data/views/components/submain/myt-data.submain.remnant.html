@@ -11,7 +11,7 @@
 <!-- Phone -->
 <!-- .cont-box -->
     <div class="cont-box pt0" data-id="remnant-container">
-        <% if (data.remnant.info) { %>
+        <% if (data.remnant && data.remnant.info) { %>
             <% if (data.remnant.info.code === 'BLN0001') { %>
             <div class="main-chart-box">
                 <div class="main-error-box">
@@ -236,7 +236,7 @@
 <% } else if (data.svcInfo.svcAttrCd === 'M2') { %>
 <!-- PPS -->
     <div class="cont-box pt0" data-id="remnant-container">
-        <% if (data.remnant.info) { %>
+        <% if (data.remnant && data.remnant.info) { %>
             <% if (data.remnant.info.code === 'BLN0001') { %>
             <div class="main-chart-box">
                 <div class="main-error-box">
@@ -459,7 +459,7 @@
 <% } else if (data.svcInfo.svcAttrCd === 'M3' || data.svcInfo.svcAttrCd === 'M4') { %>
     <!-- T-PocketFi & T-Login -->
     <div class="cont-box pt0" data-id="remnant-container">
-        <% if (data.remnant.info) { %>
+        <% if (data.remnant && data.remnant.info) { %>
             <% if (data.remnant.info.code === 'BLN0001') { %>
             <div class="main-chart-box">
                 <div class="main-error-box">
