@@ -73,10 +73,10 @@ Tw.MyTFareBill.prototype = {
   },
   _setAutoField: function () {
     if (this._isAutoTarget) {
-      this.$layer.find('.fe-auto').parents('div.cont-box').show();
+      this.$layer.find('.fe-auto').parent().show();
       this.$layer.on('click', '.fe-auto', $.proxy(this._setEvent, this, 'auto'));
     } else {
-      this.$layer.find('.fe-auto').parents('div.cont-box').hide();
+      this.$layer.find('.fe-auto').parent().hide();
     }
   },
   _setPointInfo: function () {
