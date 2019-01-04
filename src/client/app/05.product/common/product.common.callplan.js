@@ -262,8 +262,7 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _focusContentsDetail: function(contentsIndex, $popupContainer) {
-    $popupContainer.find('.container-wrap')
-      .scrollTop($popupContainer.find('[data-anchor="contents_' + contentsIndex + '"]').offset().top - 60);
+    $popupContainer.scrollTop($popupContainer.find('[data-anchor="contents_' + contentsIndex + '"]').offset().top - 60);
   },
 
   _openSettingPop: function() {
