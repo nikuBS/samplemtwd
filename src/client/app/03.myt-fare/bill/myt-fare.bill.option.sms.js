@@ -38,9 +38,9 @@ Tw.MyTFareBillOptionSms.prototype = {
 
       for (var i = 0; i < bankList.length; i++) {
         var obj = {
-          'option': 'bank-name',
-          'attr': 'id="' + bankList[i].bankCd + '"',
-          'value': bankList[i].sBankNm + ' ' + bankList[i].sVirtualBankNum
+          'label-attr': 'id="' + bankList[i].bankCd + '"',
+          'radio-attr': 'id="' + bankList[i].bankCd + '" name="r2"',
+          'txt': bankList[i].sBankNm + ' ' + bankList[i].sVirtualBankNum
         };
         listObj.list.push(obj);
       }
@@ -64,6 +64,10 @@ Tw.MyTFareBillOptionSms.prototype = {
     }, $.proxy(this._selectPopupCallback, this, $target));
   },
   _selectPopupCallback: function ($target, $layer) {
+    var $id = $target.attr('id');
+    if (!Tw.FormatHelper.isEmpty($id)) {
+      $layer.find('input#' + $id).attr('checked', 'checked');
+    }
     $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
   },
   _setSelectedValue: function ($target, event) {
