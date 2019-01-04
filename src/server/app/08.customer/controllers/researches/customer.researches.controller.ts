@@ -8,14 +8,13 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
+// import { of } from 'rxjs/observable/of';
 // import { Researches, StepResearch } from '../../../../mock/server/customer.researches.mock';
 
 export default class CustomerResearches extends TwViewController {
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    if (req.params.researchId) {
-      this.getResearch(req.params.researchId).subscribe(research => {
-        // const research: any = this.getResearch('');
-
+    if (req.query.id) {
+      this.getResearch(req.query.id).subscribe(research => {
         if (research.code) {
           return this.error.render(res, {
             svcInfo,
@@ -26,7 +25,6 @@ export default class CustomerResearches extends TwViewController {
         res.render('researches/customer.researches.research.html', { svcInfo, pageInfo, research });
       });
     } else {
-      // const researches: any = this.getResearches();
       this.getResearches().subscribe(researches => {
         if (researches.code) {
           return this.error.render(res, {
@@ -40,7 +38,7 @@ export default class CustomerResearches extends TwViewController {
   }
 
   private getResearches = () => {
-    // const resp = Researches;
+    // return of(Researches).map(resp => {
     return this.apiService.request(API_CMD.BFF_08_0023, {}).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
@@ -49,34 +47,38 @@ export default class CustomerResearches extends TwViewController {
         };
       }
 
-      return resp.result.map(research => {
-        const examples: Array<{}> = [];
-        const count = Number(research.exCttCnt);
+      return resp.result
+        .map(research => {
+          const examples: Array<{}> = [];
+          let i = 1;
 
-        for (let i = 0; i < count; i++) {
-          const idx = i + 1;
-          const isEtc = idx === count && research['exCtt' + idx] === 'QSTNETC';
+          while (research['exCtt' + i]) {
+            const isEtc = research['exCtt' + i] === 'QSTNETC';
 
-          examples.push({
-            content: research['exCtt' + idx] || '',
-            image: research['exImgFilePathNm' + idx],
-            motHtml: research['motExCtt' + idx],
-            isEtc
-          });
-        }
+            examples.push({
+              content: research['exCtt' + i] || '',
+              image: research['exImgFilePathNm' + i],
+              motHtml: research['motExCtt' + i],
+              isEtc
+            });
+            i++;
+          }
 
-        return {
-          ...research,
-          examples,
-          isProceeding: DateHelper.getDifference(research.endDtm.replace(/\./g, '')) > 0
-        };
-      });
+          return {
+            ...research,
+            examples,
+            staDtm: DateHelper.getShortDate(research.staDtm),
+            endDtm: DateHelper.getShortDate(research.endDtm),
+            isProceeding: DateHelper.getDifference(research.endDtm.replace(/\./g, '')) > 0
+          };
+        })
+        .filter((research: any) => research.isProceeding || research.bnnrRsrchTypCd !== 'R');
     });
   }
 
   private getResearch = id => {
+    // return of(StepResearch).map(resp => {
     return this.apiService.request(API_CMD.BFF_08_0038, { qstnId: id }).map(resp => {
-      // const resp = StepResearch;
       if (resp.code !== API_CODE.CODE_00) {
         return resp;
       }

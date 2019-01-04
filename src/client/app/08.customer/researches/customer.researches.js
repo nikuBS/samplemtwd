@@ -11,6 +11,7 @@ Tw.CustomerResearches.prototype = {
   _bnidEvent: function() {
     this.$container.on('click', '.item-two > .bt-blue1', $.proxy(this._handleSubmit, this));
     this.$container.on('click', 'ul.select-list > li', $.proxy(this._setEnableSubmit, this));
+    this.$container.on('click', '.fe-hint', $.proxy(this._goHint, this));
   },
 
   _handleSubmit: function(e) {
@@ -68,5 +69,10 @@ Tw.CustomerResearches.prototype = {
     } else if ($btn.attr('disabled')) {
       $btn.attr('disabled', false);
     }
+  },
+
+  _goHint: function(e) {
+    var url = e.target.getAttribute('data-hint-url');
+    Tw.CommonHelper.openUrlExternal(url);
   }
 };

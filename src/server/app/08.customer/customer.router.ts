@@ -33,6 +33,7 @@ import CustomerAgentsearchRepairManufacturer from './controllers/agentsearch/cus
 import CustomerSvcInfoNotice from './controllers/svc-info/customer.svc-info.notice.controller';
 import CustomerFaqDoLikeThis from './controllers/faq/customer.faq.do-like-this.controller';
 import CustomerDocument from './controllers/document/customer.document.controller';
+import CustomerResearchesResult from './controllers/researches/customer.researches.result.controller';
 
 class CustomerRouter extends TwRouter {
   constructor() {
@@ -41,11 +42,10 @@ class CustomerRouter extends TwRouter {
     // old IA
     this.controllers.push({ url: '/', controller: CustomerMain });
     this.controllers.push({ url: '/document', controller: CustomerDocument });
-    this.controllers.push({ url: '/helpline', controller: CustomerHelpline });
     this.controllers.push({ url: '/useguide/site-use', controller: CustomerGuideSiteUse });
-    this.controllers.push({ url: '/researches(/:researchId)?', controller: CustomerResearches });
 
     // new IA
+    this.controllers.push({ url: '/helpline', controller: CustomerHelpline });
     this.controllers.push({ url: '/emailconsult(/:page)?', controller: CustomerEmail });
     this.controllers.push({ url: '/svc-info/service', controller: CustomerSvcInfoService });
     this.controllers.push({ url: '/svc-info/service/detail', controller: CustomerSvcInfoServiceDetail });
@@ -74,7 +74,8 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/faq/category', controller: CustomerFaqCategory });
     this.controllers.push({ url: '/faq/do-like-this', controller: CustomerFaqDoLikeThis });
     this.controllers.push({ url: '/svc-info/praise', controller: CustomerPraise });
-    this.controllers.push({ url: '/svc-info/researches(/:researchId)?', controller: CustomerResearches });
+    this.controllers.push({ url: '/svc-info/researches', controller: CustomerResearches });
+    this.controllers.push({ url: '/svc-info/researches/result', controller: CustomerResearchesResult });
   }
 }
 

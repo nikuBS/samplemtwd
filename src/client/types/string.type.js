@@ -709,7 +709,7 @@ Tw.ALERT_MSG_CUSTOMER = {
     TITLE: '입력하신 정보는 모두 취소됩니다.<br>창을 닫으시겠습니까?'
   },
   ALERT_RESEARCHES_A01: '이미 참여하신 설문입니다.',
-  ALERT_RESEARCHES_A02: '설문에 참여해주셔서 감사합니다.'
+  ALERT_RESEARCHES_A02: '설문에 참여해 주셔서 감사합니다.'
 };
 
 Tw.ALERT_MSG_TEVENT = {};

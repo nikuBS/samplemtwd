@@ -28,7 +28,7 @@
                 <div class="cont-box nogaps">
                     <!-- .poll-info -->
                     <div class="poll-info">
-                        <h3 class="poll-tit">설문으로<strong>고객님의 의견</strong>을<br /> 들려주세요!</h3>
+                        <h3 class="poll-tit">설문으로<strong>고객님의 의견</strong>을<br /> 들려 주세요</h3>
                     </div>
                     <!-- // .poll-info -->
                     <!-- .widget -->
@@ -46,12 +46,12 @@
                                                 <span class="poll-question"><%= research.bnnrRsrchTitleNm %></span>
                                                 <span class="poll-date"><%= research.staDtm %><span class="blind">에서</span><span
                                                         class="vt" aria-hidden="true">-</span> <%= research.endDtm %></span>
-                                                <em class="poll-condition"><%= research.isProceeding? '진행중':'종료' %></em>
+                                                <em class="poll-condition"><%= research.isProceeding? '진행 중':'종료' %></em>
                                                 <button role="button" aria-pressed="true"></button>
                                             </div>
                                             <div class="acco-cont">
                                                 <div class="cont-box">
-                                                    <% if (research.bnnrRsrchTypCd === 'Q' && research.hintExUrl) { %><div class="mb20"><button class="bt-link-tx underline">힌트보기</button></div><% }
+                                                    <% if (research.bnnrRsrchTypCd === 'Q' && research.hintExUrl) { %><div class="mb20"><button class="bt-link-tx underline fe-hint" data-hint-url="<%= research.hintExUrl %>">힌트 보기</button></div><% }
                                                     const examCount = research.examples.length;
                                                     if (examCount > 0) { %>
                                                         <!-- .widget -->
@@ -99,16 +99,16 @@
                                                         <% if (research.motMsgHtmlCtt) { %><div class="mb20"><%- research.motMsgHtmlCtt %></div><% } %>
                                                     <% } %>
                                                     <% if (research.isProceeding) { %>
-                                                        <% if (research.bnnrRsrchRpsTypCd === "R") { %>
+                                                        <% if (research.bnnrRsrchTypCd === "R") { %>
                                                             <ul class="bt-slice">
                                                                 <li class="bt-blue1">
-                                                                    <a href="/customer/svc-info/researches/<%= research.hintExUrl %>">설문 시작하기</a>
+                                                                    <a href="/customer/svc-info/researches?id=<%= research.hintExUrl %>">설문 시작하기</a>
                                                                 </li>
                                                             </ul>
                                                         <% } else { %>
                                                             <ul class="bt-slice item-two">
                                                                 <li class="bt-white2">
-                                                                    <a href="/customer/svc-info/researches/result?researchId=<%= research.bnnrRsrchId %>">결과보기</a>
+                                                                    <a href="/customer/svc-info/researches/result?id=<%= research.bnnrRsrchId %>">결과보기</a>
                                                                 </li>
                                                                 <li class="bt-blue1">
                                                                     <button disabled>참여하기</button>
@@ -118,7 +118,7 @@
                                                     <% } else { %>
                                                         <ul class="bt-slice">
                                                             <li class="bt-blue1">
-                                                                <a href="/customer/svc-info/researches/result?researchId=<%= research.bnnrRsrchId %>">결과보기</a>
+                                                                <a href="/customer/svc-info/researches/result?id=<%= research.bnnrRsrchId %>">결과보기</a>
                                                             </li>
                                                         </ul>
                                                     <% } %>
