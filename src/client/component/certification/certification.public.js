@@ -82,7 +82,7 @@ Tw.CertificationPublic.prototype = {
     } else {
       this._callback({
         code: Tw.API_CODE.CERT_FAIL
-      }, this._deferred, this._command);
+      });
     }
   },
   _setAppMsg: function (result) {

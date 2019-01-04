@@ -12,9 +12,6 @@ Tw.BiometricsCert = function (target) {
   this._popupService = Tw.Popup;
 
   this._biometiricsRegister = new Tw.BiometricsRegister(this._target);
-  this._certSk = new Tw.CertificationSk();
-  this._certPublic = new Tw.CertificationPublic();
-  this._certNice = new Tw.CertificationNice();
 
   this._svcInfo = null;
   this._authUrl = 'GET|/v1/dummy/auth';
@@ -59,22 +56,27 @@ Tw.BiometricsCert.prototype = {
 
   },
   _onClickSkSms: function () {
+    this._certSk = new Tw.CertificationSk();
     this._certSk.open(
       this._svcInfo, this._authUrl, this._authKind, '', $.proxy(this._completeIdentification, this), '', '', false, 1);
   },
   _onClickKtSms: function () {
+    this._certNice = new Tw.CertificationNice();
     this._certNice.open(
       this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, Tw.AUTH_CERTIFICATION_NICE.KT, null, $.proxy(this._completeIdentification, this));
   },
   _onClickLgSms: function () {
+    this._certNice = new Tw.CertificationNice();
     this._certNice.open(
       this._authUrl, this._authKind, Tw.NICE_TYPE.NICE, Tw.AUTH_CERTIFICATION_NICE.LG, null, $.proxy(this._completeIdentification, this));
   },
   _onClickIpin: function () {
+    this._certNice = new Tw.CertificationNice();
     this._certNice.open(this._authUrl, this._authKind, Tw.NICE_TYPE.IPIN, this._niceKind, null, $.proxy(this._completeIdentification, this));
   },
   _onClickPublic: function () {
-    this._certPublic.open(this._authUrl, this._authKind, null, $.proxy(this._completeIdentification, this));
+    this._certPublic = new Tw.CertificationPublic();
+    this._certPublic.open(this._authUrl, this._authKind, null, null, $.proxy(this._completeIdentification, this));
   },
   _completeIdentification: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
