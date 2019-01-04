@@ -42,12 +42,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     if ( this.data.type === 'corporate' ) {
       this.$copListBtn = this.$container.find('[data-id=cop-list]');
       this.$emailAddr = this.$container.find('[data-id=email-addr]');
-    }
-    else if ( this.data.type === 'feature' ) {
-      this.$zipCodeInput = this.$container.find('[data-id=zip-code-input]');
-      this.$zipCodeBtn = this.$container.find('[data-id=zip-code]');
-      this.$zipCodeInputDetail_1 = this.$container.find('[data-id=zip-code-input-detail1]');
-      this.$zipCodeInputDetail_2 = this.$container.find('[data-id=zip-code-input-detail2]');
+      this.$emailError = this.$container.find('[data-id=email-error]');
     }
   },
 
@@ -62,9 +57,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     this.$isCashbagCheckbox.on('click', $.proxy(this._onClickCashbagCheckbox, this));
     if ( this.data.type === 'corporate' ) {
       this.$copListBtn.on('click', $.proxy(this._onClickCorporateList, this));
-    }
-    else if ( this.data.type === 'feature' ) {
-      this.$zipCodeBtn.on('click', $.proxy(this._onClickZipCodeBtn, this));
+      this.$emailAddr.on('focusout', $.proxy(this._checkEmailValidation, this));
     }
   },
 
@@ -75,6 +68,21 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     if ( this.data.type === 'corporate' && this.data.isCorporateBody ) {
       this.svcNominalRelCd = this.$copListBtn.attr('data-type');
       this.addrCd = '04'; // 직장
+    }
+  },
+
+  // 이메일 포커스 아웃 시 밸리데이션 추가
+  _checkEmailValidation: function (event) {
+    var $target = $(event.currentTarget);
+    var value = $target.val();
+    var isVaild = Tw.ValidationHelper.isEmail(value) || Tw.FormatHelper.isEmpty(value);
+    if ( isVaild ) {
+      if(!this.$emailAddr.hasClass('blind')) {
+        this.$emailError.addClass('blind');
+      }
+    }
+    else {
+      this.$emailError.removeClass('blind');
     }
   },
 
@@ -100,10 +108,6 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     this.$copListBtn.text($selectedValue.text());
     this.svcNominalRelCd = id;
     this._popupService.close();
-  },
-
-  _onClickZipCodeBtn: function () {
-    new Tw.CommonPostcodeMain(this.$container);
   },
 
   _onClickTAgreeCheckbox: function (event) {
