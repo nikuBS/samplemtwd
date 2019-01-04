@@ -61,7 +61,7 @@ Tw.ApiService.prototype = {
       pathParams: pathParams,
       version: version
     };
-    var authUrl = command.method + '|' + command.path;
+    var authUrl = command.method + '|' + this._makePath(command.path, pathParams, version);
     if ( resp.code === Tw.API_CODE.BFF_0008 || resp.code === Tw.API_CODE.BFF_0009 || resp.code === Tw.API_CODE.BFF_0010 ) {
       Tw.Logger.info('[API Cert]', command);
       if ( resp.code === Tw.API_CODE.BFF_0010 ) {

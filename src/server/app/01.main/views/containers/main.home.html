@@ -950,7 +950,7 @@
 <% include ../components/smart-card/micro-pay.component.html %>
 <%- include('../components/smart-card/recharge.component.html', { usageData: homeData.usageData }); %>
 <%- include('../components/home/home.welcome.component.html', { svcInfo: svcInfo }); %>
-<% include ../components/home/home.quick-menu.component.html %>
+<%- include('../components/home/home.quick-menu.component.html', { cdn: CDN }); %>
 <% } %>
 <script>
   $(document).ready(function () {

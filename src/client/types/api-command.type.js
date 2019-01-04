@@ -89,7 +89,7 @@ Tw.API_CMD = {
 
   // HOME
   BFF_04_0001: { path: '/core-membership/:version/card/home', method: Tw.API_METHOD.GET },
-  BFF_04_0003: { path: '//core-modification/:version/quick-menu/saveInfo', method: Tw.API_METHOD.POST },
+  BFF_04_0003: { path: '/core-modification/:version/quick-menu/saveInfo', method: Tw.API_METHOD.POST },
   BFF_04_0004: { path: '/core-auth/:version/get-fcm-push-list', method: Tw.API_METHOD.GET },
 
   // MYT

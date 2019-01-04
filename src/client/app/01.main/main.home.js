@@ -35,7 +35,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
     this._cachedElement();
     this._getWelcomeMsg();
     this._bindEvent();
-    // this._getQuickMenu();
+    this._getQuickMenu();
     this._initScroll();
   } else {
     setTimeout($.proxy(function () {
@@ -669,7 +669,25 @@ Tw.MainHome.prototype = {
     $('.fe-bt-quick-edit').on('click', $.proxy(this._onClickQuickEdit, this));
   },
   _parseQuickMenu: function (quickMenu) {
-    return [];
+    var menuId = quickMenu.menuIdStr.indexOf('|') !== -1 ? quickMenu.menuIdStr.split('|') :
+      Tw.FormatHelper.isEmpty(quickMenu.menuIdStr) || quickMenu.menuIdStr === 'null' ? [] : [quickMenu.menuIdStr.trim()];
+    var iconPath = quickMenu.iconPathStr.indexOf('|') !== -1 ? quickMenu.iconPathStr.split('|') :
+      Tw.FormatHelper.isEmpty(quickMenu.iconPathStr) || quickMenu.iconPathStr === 'null' ? [] : [quickMenu.iconPathStr.trim()];
+    var menuNm = quickMenu.menuNmStr.indexOf('|') !== -1 ? quickMenu.menuNmStr.split('|') :
+      Tw.FormatHelper.isEmpty(quickMenu.menuNmStr) || quickMenu.menuNmStr === 'null' ? [] : [quickMenu.menuNmStr.trim()];
+    var menuUrl = quickMenu.menuUrlStr.indexOf('|') !== -1 ? quickMenu.menuUrlStr.split('|') :
+      Tw.FormatHelper.isEmpty(quickMenu.menuUrlStr) || quickMenu.menuUrlStr === 'null' ? [] : [quickMenu.menuUrlStr.trim()];
+    var result = [];
+    _.map(menuId, $.proxy(function (id, index) {
+      var menu = {
+        menuId: id,
+        iconPath: iconPath[index],
+        menuNm: menuNm[index],
+        menuUrl: menuUrl[index]
+      };
+      result.push(menu);
+    }, this));
+    return result;
   },
   _onClickQuickEdit: function () {
     this._popupService.open({

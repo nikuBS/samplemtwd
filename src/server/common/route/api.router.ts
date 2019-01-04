@@ -226,7 +226,7 @@ class ApiRouter {
   }
 
   private getQuickMenu(req: Request, res: Response, next: NextFunction) {
-    const svcInfo = this.loginService.getSvcInfo();
+    const svcInfo = this.loginService.getSvcInfo(req);
     if ( FormatHelper.isEmpty(svcInfo) ) {
       return res.json({
         code: API_CODE.NODE_1001,
@@ -234,7 +234,7 @@ class ApiRouter {
       });
     }
     this.apiService.setCurrentReq(req, res);
-    const svcMgmtNum = this.loginService.getSvcInfo(req).svcMgmtNum;
+    const svcMgmtNum = svcInfo.svcMgmtNum;
     this.redisService.getData(REDIS_QUICK_MENU + svcMgmtNum)
       .switchMap((resp) => {
         if ( resp.code === API_CODE.REDIS_SUCCESS ) {
@@ -253,6 +253,8 @@ class ApiRouter {
       })
       .subscribe((resp) => {
         return res.json(resp);
+      }, (err) => {
+        return res.json(err);
       });
   }
 
