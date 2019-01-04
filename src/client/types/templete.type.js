@@ -335,12 +335,12 @@ Tw.POPUP_TPL = {
   ROAMING_RETURN_PLACE: [
     {
       'list': [
-        { 'radio-attr': 'id="00" name="r2"', 'label-attr':'id="00" data-center="A100110000" value="인천공항 1터미널 1층 로밍 센터"', txt: '인천공항 1터미널 1층 로밍 센터' },
-        { 'radio-attr': 'id="01" name="r2"', 'label-attr':'id="01" data-center="1430456896" value="인천공항 2터미널 1층 로밍 센터"', txt: '인천공항 2터미널 1층 로밍 센터' },
-        { 'radio-attr': 'id="02" name="r2"', 'label-attr':'id="02" data-center="A100140000" value="김포공항 1층 로밍 센터"', txt: '김포공항 1층 로밍 센터' },
-        { 'radio-attr': 'id="03" name="r2"', 'label-attr':'id="03" data-center="A900100000" value="제주공항 국제선 1층 로밍 센터"', txt: '제주공항 국제선 1층 로밍 센터' },
-        { 'radio-attr': 'id="04" name="r2"', 'label-attr':'id="04" data-center="A200130000" value="김해공항 3층 로밍 센터"', txt: '김해공항 3층 로밍 센터' },
-        { 'radio-attr': 'id="05" name="r2"', 'label-attr':'id="05" data-center="C399900000" value="대구공항 2층 로밍 센터"', txt: '대구공항 2층 로밍 센터' },
+        { 'radio-attr': 'id="00" name="r2"', 'label-attr':'id="00" data-center="A100110000" value="인천공항 1터미널 1층 로밍센터"', txt: '인천공항 1터미널 1층 로밍센터' },
+        { 'radio-attr': 'id="01" name="r2"', 'label-attr':'id="01" data-center="1430456896" value="인천공항 2터미널 1층 로밍센터"', txt: '인천공항 2터미널 1층 로밍센터' },
+        { 'radio-attr': 'id="02" name="r2"', 'label-attr':'id="02" data-center="A100140000" value="김포공항 1층 로밍센터"', txt: '김포공항 1층 로밍센터' },
+        { 'radio-attr': 'id="03" name="r2"', 'label-attr':'id="03" data-center="A900100000" value="제주공항 국제선 1층 로밍센터"', txt: '제주공항 국제선 1층 로밍센터' },
+        { 'radio-attr': 'id="04" name="r2"', 'label-attr':'id="04" data-center="A200130000" value="김해공항 3층 로밍센터"', txt: '김해공항 3층 로밍센터' },
+        { 'radio-attr': 'id="05" name="r2"', 'label-attr':'id="05" data-center="C399900000" value="대구공항 2층 로밍센터"', txt: '대구공항 2층 로밍센터' },
         { 'radio-attr': 'id="14" name="r2"', 'label-attr':'id="14" data-center="1430452300" value="대구 SKT 황금점 매장"', txt: '대구 SKT 황금점 매장' }
       ]
     }
@@ -357,13 +357,13 @@ Tw.POPUP_TPL = {
   ROAMING_RECEIVE_PLACE: [
     {
       'list': [
-        { 'radio-attr': 'name="r2"', 'label-attr':'id="06" data-center="A100110000" data-booth="1000004045" value="인천공항 1터미널 3층 로밍 센터(E-F 카운터)"', txt: '인천공항 1터미널 3층 로밍 센터(E-F 카운터)' },
-        { 'radio-attr': 'name="r2"', 'label-attr':'id="07" data-center="A100110000" data-booth="1000004047" value="인천공항 1터미널 3층 로밍 센터(G-H 카운터)"', txt: '인천공항 1터미널 3층 로밍 센터(G-H 카운터)' },
-        { 'radio-attr': 'name="r2"', 'label-attr':'id="08" data-center="1430456896" data-booth="1430456957" value="인천공항 2터미널 3층 로밍 센터(D-E 카운터)"', txt: '인천공항 2터미널 3층 로밍 센터(D-E 카운터)' },
-        { 'radio-attr': 'name="r2"', 'label-attr':'id="09" data-center="A100140000" data-booth="1000004055" value="김포공항 1층 로밍 센터"', txt: '김포공항 1층 로밍 센터' },
-        { 'radio-attr': 'name="r2"', 'label-attr':'id="10" data-center="A900100000" data-booth="1000004057" value="제주공항 국제선 1층 로밍 센터"', txt: '제주공항 국제선 1층 로밍 센터' },
-        { 'radio-attr': 'name="r2"', 'label-attr':'id="11" data-center="A200130000" data-booth="1000012532" value="김해공항 3층 로밍 센터"', txt: '김해공항 3층 로밍 센터' },
-        { 'radio-attr': 'name="r2"', 'label-attr':'id="12" data-center="C399900000" data-booth="1430455436" value="대구공항 2층 로밍 센터"', txt: '대구공항 2층 로밍 센터' },
+        { 'radio-attr': 'name="r2"', 'label-attr':'id="06" data-center="A100110000" data-booth="1000004045" value="인천공항 1터미널 3층 로밍센터(E-F 카운터)"', txt: '인천공항 1터미널 3층 로밍센터(E-F 카운터)' },
+        { 'radio-attr': 'name="r2"', 'label-attr':'id="07" data-center="A100110000" data-booth="1000004047" value="인천공항 1터미널 3층 로밍센터(G-H 카운터)"', txt: '인천공항 1터미널 3층 로밍센터(G-H 카운터)' },
+        { 'radio-attr': 'name="r2"', 'label-attr':'id="08" data-center="1430456896" data-booth="1430456957" value="인천공항 2터미널 3층 로밍센터(D-E 카운터)"', txt: '인천공항 2터미널 3층 로밍센터(D-E 카운터)' },
+        { 'radio-attr': 'name="r2"', 'label-attr':'id="09" data-center="A100140000" data-booth="1000004055" value="김포공항 1층 로밍센터"', txt: '김포공항 1층 로밍센터' },
+        { 'radio-attr': 'name="r2"', 'label-attr':'id="10" data-center="A900100000" data-booth="1000004057" value="제주공항 국제선 1층 로밍센터"', txt: '제주공항 국제선 1층 로밍센터' },
+        { 'radio-attr': 'name="r2"', 'label-attr':'id="11" data-center="A200130000" data-booth="1000012532" value="김해공항 3층 로밍센터"', txt: '김해공항 3층 로밍센터' },
+        { 'radio-attr': 'name="r2"', 'label-attr':'id="12" data-center="C399900000" data-booth="1430455436" value="대구공항 2층 로밍센터"', txt: '대구공항 2층 로밍센터' },
         { 'radio-attr': 'name="r2"', 'label-attr':'id="13" data-center="1430452300" data-booth="1430452300" value="대구 SKT 황금점 매장"', txt: '대구 SKT 황금점 매장' }
       ]
     }
