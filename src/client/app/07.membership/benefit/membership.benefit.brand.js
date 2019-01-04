@@ -150,8 +150,8 @@ Tw.MembershipBenefitBrand.prototype = {
     $.extend(this._reqOptions, options);
     var totalCnt = resp.result.totalCnt;
     var list = this._getBrandList(resp);
-    this._setCatetory();
-    this._setCatetoryInLayer();
+    this._setCategory();
+    this._setCategoryInLayer();
     this._setKeywords();
     this._setGrade();
     if (list.length <= 0) {
@@ -175,13 +175,13 @@ Tw.MembershipBenefitBrand.prototype = {
     }
   },
 
-  _setCatetory: function () {
+  _setCategory: function () {
     var $buttons = this.$categoryList.find('button');
     $buttons.removeClass('on');
     $buttons.filter('[cate-cd="' + this._reqOptions.cateCd + '"]').addClass('on');
   },
 
-  _setCatetoryInLayer: function () {
+  _setCategoryInLayer: function () {
     var $lis = this.$categoryListInLayer.find('li');
     var $imgs = this.$categoryListInLayer.find('img');
     $lis.removeClass('checked');
