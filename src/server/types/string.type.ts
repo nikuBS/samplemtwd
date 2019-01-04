@@ -449,6 +449,10 @@ export const MY_BENEFIT_RAINBOW_POINT_TRANSFER = {
   }
 };
 
+export const T_MEMBERSHIP_BENEFIT_BRAND = {
+  TITLE: '제휴 브랜드'
+};
+
 export enum SELECT_POINT {
   DEFAULT = '납부할 포인트 선택'
 }

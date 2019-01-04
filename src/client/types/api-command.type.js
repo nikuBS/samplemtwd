@@ -464,6 +464,7 @@ Tw.API_CMD = {
   BFF_11_0013: { path: '/core-membership/:version/card/cancel-info', method: Tw.API_METHOD.GET },
   BFF_11_0014: { path: '/core-membership/:version/card/cancel', method: Tw.API_METHOD.PUT },
   BFF_11_0015: { path: '/core-membership/:version/card/create-check', method: Tw.API_METHOD.GET },
+  BFF_11_0016: { path: '/core-membership/:version/tmembership/cate-list', method: Tw.API_METHOD.GET },
   BFF_11_0017: { path: '/core-membership/:version/tmembership/brand-list', method: Tw.API_METHOD.GET },
   BFF_11_0019: { path: '/core-membership/:version/tmembership/brand-like', method: Tw.API_METHOD.POST },
   BFF_11_0020: { path: '/core-membership/:version/tmembership/brand-dislike', method: Tw.API_METHOD.POST },

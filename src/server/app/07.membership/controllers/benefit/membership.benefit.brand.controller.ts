@@ -1,19 +1,129 @@
 /**
  * FileName: membership.benefit.brand.controller.ts
- * Author: Hakjoon sim (hakjoon.sim@sk.com)
- * Date: 2018.11.05
+ * Author: 이정민 (skt.p130713@partner.sk.com)
+ * Date: 2018.12.21
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
+import FormatHelper from '../../../../utils/format.helper';
+import { T_MEMBERSHIP_BENEFIT_BRAND } from '../../../../types/string.type';
+import { API_CMD } from '../../../../types/api-command.type';
+import { Observable } from 'rxjs/Observable';
 
 class MembershipBenefitBrand extends TwViewController {
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any,
-         allSvc: any, childInfo: any, pageInfo: any) {
-    res.render('benefit/membership.benefit.brand.html', {
-      svcInfo,
-      pageInfo
+  private VIEW = {
+    DEFAULT: 'benefit/membership.benefit.brand.html'
+  };
+  private ICO_GRD_CHK_CD = {
+    V: 'vip',
+    G: 'gold',
+    S: 'silver',
+    A: 'all'
+  };
+  private PAGE_NO: number = 1;
+  private PAGE_SIZE: number = 20;
+  private cateCd;
+  private ordCol;
+
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    this.cateCd = req.query.cateCd || '00'; // 전체순
+    this.ordCol = req.query.ordCol || 'L';  // 좋아요순
+
+    Observable.combineLatest(
+      this.reqCateList(),
+      this.reqBrandList(),
+      this.reqMembershipInfo()
+    ).subscribe(([respCateList, respBrandList, respMembershipInfo]) => {
+      const apiError = this.error.apiError([
+        respCateList, respBrandList
+      ]);
+
+      if ( !FormatHelper.isEmpty(apiError) ) {
+        return this.renderErr(res, apiError, svcInfo);
+      }
+
+      const cateList = this.getCateList(respCateList);
+      const brandResult = this.getBrandResult(respBrandList);
+      const brandList = brandResult.list;
+      const brandTotalCnt = brandResult.totalCnt;
+      const hasMore = brandResult.hasMore;
+
+      const options = {
+        svcInfo,
+        pageInfo,
+        cateList,
+        brandList,
+        brandTotalCnt,
+        hasMore,
+        isLogin: !FormatHelper.isEmpty(svcInfo),
+        selectedCateCd: this.cateCd,
+        noMembership: false
+      };
+
+      if ( respMembershipInfo.code === 'MBR0001' || respMembershipInfo.code === 'MBR0002' ) {
+        options['noMembership'] = true;
+      }
+
+      res.render(this.VIEW.DEFAULT, options);
+    }, (resp) => {
+      return this.renderErr(res, resp, svcInfo);
     });
+  }
+
+  private getResult(resp: any): any {
+    return resp.result;
+  }
+
+  private reqCateList(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_11_0016, {});
+  }
+
+  private reqBrandList(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_11_0017, {
+      pageNo: this.PAGE_NO,
+      pageSize: this.PAGE_SIZE,
+      cateCd: this.cateCd,
+      ordCol: this.ordCol
+    });
+  }
+
+  private reqMembershipInfo(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_11_0001, {});
+  }
+
+  private renderErr(res, err, svcInfo): any {
+    return this.error.render(res, {
+      title: T_MEMBERSHIP_BENEFIT_BRAND.TITLE,
+      code: err.code,
+      msg: err.msg,
+      svcInfo
+    });
+  }
+
+  private getCateList(resp: any): any {
+    const result = this.getResult(resp);
+    return result;
+  }
+
+  private getBrandResult(resp: any): any {
+    const self = this;
+    const result = this.getResult(resp);
+    const list = result.list;
+    const charsToArr = (chars) => {
+      return chars.split('').map((char) => {
+        return self.ICO_GRD_CHK_CD[char];
+      });
+    };
+    list.map((item) => {
+      item.showIcoGrdChk1 = charsToArr(item.icoGrdChk1);
+      item.showIcoGrdChk2 = charsToArr(item.icoGrdChk2);
+      item.showIcoGrdChk3 = charsToArr(item.icoGrdChk3);
+      item.showIcoGrdChk4 = charsToArr(item.icoGrdChk4);
+      item.showTotLikeCount = FormatHelper.addComma(item.totLikeCount);
+    });
+    result.hasMore = parseInt(result.totalCnt, 10) > this.PAGE_SIZE * this.PAGE_NO;
+    return result;
   }
 }
 

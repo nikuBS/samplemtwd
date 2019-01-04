@@ -698,6 +698,7 @@ export const API_CMD = {
   BFF_11_0013: { path: '/core-membership/:version/card/cancel-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_11_0014: { path: '/core-membership/:version/card/cancel', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_11_0015: { path: '/core-membership/:version/card/create-check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_11_0016: { path: '/core-membership/:version/tmembership/cate-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_11_0017: { path: '/core-membership/:version/tmembership/brand-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_11_0018: { path: '/core-membership/:version/tmembership/brand-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_11_0019: { path: '/core-membership/:version/tmembership/brand-like', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
