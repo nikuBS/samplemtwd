@@ -14,9 +14,20 @@ class MembershipBenefitBrandList extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
          allSvc: any, child: any, pageInfo: any) {
 
+    if ( !req.query.brandNm || !req.query.brandCd ) {
+
+      this.error.render(res, {
+        code: '',
+        msg: 'not found brand name or brand code',
+        svcInfo
+      });
+      return;
+    }
+
     // Mocked resposne
     const data = {
-      totalCnt: '121'
+      brandCd : req.query.brandCd ,   // 2012001524 파리바게트(임시)
+      brandNm : req.query.brandNm    // 파리바게트(임시)
     };
 
     res.render('benefit/membership.benefit.brand.list.html', {
@@ -26,22 +37,6 @@ class MembershipBenefitBrandList extends TwViewController {
     });
   }
 
-  // TODO: Joon Once api spec done, retrieve list from the BFF
-  private getFranchiseeList(res: Response, svcInfo: any): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_11_0022, {
-
-    }).map((resp) => {
-      if (resp.code === API_CODE.CODE_00) {
-
-      } else {
-        this.error.render(res, {
-          code: resp.code,
-          msg: resp.msg,
-          svcInfo
-        });
-      }
-    });
-  }
 }
 
 export default MembershipBenefitBrandList;

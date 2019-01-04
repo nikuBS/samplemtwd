@@ -4,42 +4,264 @@
  * Date: 2018.11.06
  */
 
-Tw.MembershipBenefitBrandList = function (rootEl) {
+Tw.MembershipBenefitBrandList = function (rootEl, options) {
   this.$container = rootEl;
+  this._options = options;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
 
+  this._area1List = [];         // 시도 actionsheet list
+  this._area2List = [];         // 시군구 actionsheet list
+  this._selectedArea1 = null;   // 선택 시도
+  this._selectedArea2 = null;   // 선택 시군구
+  this._currentPage = 1;        // 조회 페이지no
+  this._lastSchParam = null;    // 마지막 조회 parameter
+
+  this.DEFAULT_SIGUNGU_TXT = $('#fe-btn-gu').text();
+
+  this._registHbsHelper();
   this._cacheElements();
   this._bindEvent();
+
+  this._requestArea1();
+  // 초기데이터는 전체로..
+  this._onSearchRequested();
 };
 
 Tw.MembershipBenefitBrandList.prototype = {
   _cacheElements: function () {
-    this.$btnSearch = this.$container.find('#fe-search');
+    this.$btnSearch = this.$container.find('#fe-frch-search');
+    this._feFrchListItem = Handlebars.compile($('#fe-franchisee-list-item').html());
   },
   _bindEvent: function () {
     this.$container.on('click', '#fe-btn-city', $.proxy(this._onClickCity, this));
     this.$container.on('click', '#fe-btn-gu', $.proxy(this._onClickGu, this));
+    this.$container.on('click', '#fe-btn-odr-n', $.proxy(this._onSearchRequested, this));
+    this.$container.on('click', '#fe-btn-odr-r', $.proxy(this._onSearchRequested, this));
     this.$btnSearch.on('click', $.proxy(this._onSearchRequested, this));
+    this.$container.on('click', '#frchs-bt-more', $.proxy(this._onClickMoreBtn, this));
+    this.$container.on('click', '.franchisee-list .bt-map', $.proxy(this._goMap, this));
   },
-  _onClickCity: function () {
+
+  _registHbsHelper: function(){
+    Handlebars.registerHelper('tel', Tw.StringHelper.phoneStringToDash);
+  },
+
+  /**
+   * 시도 조회
+   * @private
+   */
+  _requestArea1: function(){
+    this._apiService.request(Tw.API_CMD.BFF_11_0021, {})
+      .done($.proxy(function(resp){
+        this._area1List = this._getActionSheet01List('rbt_area1', resp.result);
+      }, this))
+      .fail(function (err) {
+        Tw.Error(err.status, err.statusText).pop();
+      });
+  },
+
+  /**
+   * 시군구 조회
+   * @private
+   */
+  _requestArea2: function(){
+    this._apiService.request(Tw.API_CMD.BFF_11_0022, {area1: encodeURI(this._selectedArea1) })
+      .done($.proxy(function(resp){
+        this._area2List = this._getActionSheet01List('rbt_area2', resp.result);
+      }, this))
+      .fail(function (err) {
+        Tw.Error(err.status, err.statusText).pop();
+      });
+  },
+
+  /**
+   * 시도, 시군구 조회 결과를 actionsheet에 맞는 list로 변환
+   * @param radioName
+   * @param list
+   * @returns {Array}
+   * @private
+   */
+  _getActionSheet01List: function(radioName, list){
+    var arr = [];
+    for(var i = 0; i < list.length; i++){
+      arr.push({
+        txt : list[i].area,
+        'label-attr': 'id="ra'+i+'"',
+        'radio-attr': 'id="ra'+i+'" name="'+radioName+'" value=' + list[i].area
+      });
+    }
+    return arr;
+  },
+
+  _onClickCity: function (event) {
+    var $target = $(event.currentTarget);
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
-      layer: true,
-      title: '광역시/도 선택',
-      data: ''
-    });
+        hbs: 'actionsheet01',
+        layer: true,
+        data: [{list: this._area1List }],
+        btnfloating : { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE }
+      },
+      $.proxy(this._onOpenArea1Actsht, this, $target)
+      );
   },
+
+  /**
+   * 시도 actionsheet open
+   * @param $target
+   * @param $layer
+   * @private
+   */
+  _onOpenArea1Actsht: function($target, $layer){
+    if(this._selectedArea1){
+      $layer.find('[value="' + this._selectedArea1 + '"]').prop('checked', true);
+    }
+
+    $layer.one('click', 'li.type1', $.proxy(function($target, event){
+      var rbt = $(event.currentTarget).find('input[type=radio]');
+      if(this._selectedArea1 !== rbt.val()){
+        this._selectedArea1 = rbt.val();
+        $target.text(this._selectedArea1);
+        this._requestArea2();
+        $('#fe-btn-gu').text(this.DEFAULT_SIGUNGU_TXT);
+        $('#fe-btn-gu').attr('disabled', false);
+        this.$btnSearch.attr('disabled', true);
+      }
+      this._popupService.close();
+    }, this, $target));
+  },
+
+
   _onClickGu: function () {
+    var $target = $(event.currentTarget);
+
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
-      layer: true,
-      title: '시/군/구 선택',
-      data: ''
-    });
+        hbs: 'actionsheet01',
+        layer: true,
+        data: [{list: this._area2List }],
+        btnfloating : { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE }
+      },
+      $.proxy(this._onOpenArea2Actsht, this, $target)
+    );
   },
-  _onSearchRequested: function () {
-    // TODO: Joon api request
+
+
+  /**
+   * 시구군 actionsheet open
+   * @private
+   */
+  _onOpenArea2Actsht: function($target, $layer){
+
+    if(this._selectedArea2){
+      $layer.find('[value="' + this._selectedArea2 + '"]').prop('checked', true);
+    }
+
+    $layer.one('click', 'li.type1', $.proxy(function($target, event){
+
+      var rbt = $(event.currentTarget).find('input[type=radio]');
+      if(this._selectedArea2 !== rbt.val()){
+        this._selectedArea2 = rbt.val();
+        $('#fe-btn-gu').text(this._selectedArea2);
+        this.$btnSearch.attr('disabled', false);
+      }
+      this._popupService.close();
+    }, this, $target));
+  },
+
+  /**
+   * 더보기 버튼 클릭시
+   * @private
+   */
+  _onClickMoreBtn: function(){
+    this._currentPage = this._currentPage + 1;
+    this._onSearchRequested();
+  },
+
+  /**
+   * 가맹점 조회
+   * @param event
+   * @private
+   */
+  _onSearchRequested: function (event) {
+
+    if(event){
+      var $btn = $(event.currentTarget);
+      if($btn.attr('id') === 'fe-btn-odr-n' || $btn.attr('id') === 'fe-btn-odr-r' ){
+        $('#fe-odr-btn-box button').removeClass('on');
+        $btn.addClass('on');
+      }
+    }
+    var ord = $('#fe-odr-btn-box .on').attr('id') === 'fe-btn-odr-n' ? 'N' : 'R';
+
+    var param = {
+      ordCol: ord,
+      area1: encodeURI(this._selectedArea1 || ''),
+      area2: encodeURI(this._selectedArea2 || ''),
+      brandCd: this._options.brandCd,
+      pageNo: String(this._currentPage),
+      pageSize: '20'
+    };
+    if(this._lastSchParam && (
+      this._lastSchParam.ordCol !== param.ordCol ||
+      this._lastSchParam.area1 !== param.area1 ||
+      this._lastSchParam.area2 !== param.area2 ) ){
+
+      this._currentPage = 1;
+      param.pageNo = String(this._currentPage);
+    }
+
+    this._apiService.request(Tw.API_CMD.BFF_11_0023, param)
+      .done($.proxy(function(resp){
+        this._lastSchParam = param;
+
+        if(resp.result){
+          var list = resp.result.list;
+          var tmp = '';
+          var $frchsBox = $('.franchisee-list');
+          for(var i = 0; i < list.length; i++){
+            tmp += this._feFrchListItem(list[i]);
+          }
+          $('.t-point').text(Tw.FormatHelper.addComma(resp.result.totalCnt));
+
+          if(this._lastSchParam.pageNo === '1'){
+            $frchsBox.html(tmp);
+          }else {
+            $frchsBox.append(tmp);
+          }
+
+          if(parseInt(this._lastSchParam.pageNo,10) * 20 < parseInt(resp.result.totalCnt, 10)){
+            $('#frchs-bt-more').show();
+          }else {
+            $('#frchs-bt-more').hide();
+          }
+        }
+      }, this))
+      .fail(function (err) {
+        Tw.Error(err.status, err.statusText).pop();
+      });
+  },
+
+
+  /**
+   * 지도보기로 이동
+   * @param event
+   * @private
+   */
+  _goMap: function(event){
+    var $bt = $(event.currentTarget);
+    var param = {
+      cdCd: $bt.data('cocd'),
+      joinCd: $bt.data('joincd'),
+      mapX: $bt.data('mapx'),
+      mapY: $bt.data('mapy'),
+      brandCd: this._options.brandCd,
+      cateCd: this._options.cateCd
+    };
+    this._historyService.goLoad('/membership/benefit/map?' + $.param(param));
   }
+
+
+
 };

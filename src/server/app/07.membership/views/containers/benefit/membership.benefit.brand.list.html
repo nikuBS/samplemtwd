@@ -18,7 +18,7 @@
     </div>
     <!--// #skip_navigation -->
     <div class="wrap">
-        <%- include('../../../../common/views/components/header.component.html', { title: '가맹점 전체보기', svcInfo: svcInfo, option: { line: true } }); %>
+        <%- include('../../../../common/views/components/header.component.html', { title: '가맹점 전체보기', svcInfo: svcInfo }); %>
         <!-- #contents -->
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
@@ -26,7 +26,7 @@
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <div class="franchisee-search">
-                        <h3 class="franchisee-tit">파리바게트</h3>
+                        <h3 class="franchisee-tit"><%= data.brandNm %></h3>
                         <h4 class="search-stit">가맹점 검색</h4>
                         <div class="input-wrap-half">
                             <span class="inputbox">
@@ -42,7 +42,7 @@
                         </div>
                         <ul class="bt-slice">
                             <li class="bt-blue1">
-                                <button id="fe-search" disabled="disabled">조회하기</button>
+                                <button id="fe-frch-search" disabled="disabled">조회하기</button>
                             </li>
                         </ul>
                     </div>
@@ -50,16 +50,33 @@
                 <!--// .cont-box -->
 
                 <div class="add-prd-top-wrap add-top-type">
-                    <span class="counts type-l">가맹점 <em class="t-point"><%= data.totalCnt %></em></span>
-                    <span class="select type-r">
-                        <button class="on">가나다순</button>
-                        <button>최근 등록 순</button>
+                    <span class="counts type-l">가맹점 <em class="t-point"></em></span>
+                    <span class="select type-r" id="fe-odr-btn-box">
+                        <button id="fe-btn-odr-n" class="on">가나다순</button>
+                        <button id="fe-btn-odr-r" >최근 등록 순</button>
                     </span>
                 </div>
 
                 <!-- .cont-box -->
                 <div class="cont-box nogaps">
                     <ul class="franchisee-list">
+                        <script id="fe-franchisee-list-item" type="text/x-handlebars-template">
+                            <li>
+                                <button class="tit-addr">
+                                    <strong class="tit">{{ coPtnrNm }}</strong>
+                                    <span class="addr">{{ mrchtNm }}</span>
+                                </button>
+                                <em class="address">{{ addr }}</em>
+                                <a href="tel:{{ telNo }}" class="bt-link-tx underline" title="전화걸기">{{ tel telNo }}</a>
+                                <button class="bt-map"
+                                        data-mapx="{{ googleMapCoordX }}"
+                                        data-mapy="{{ googleMapCoordY }}"
+                                        data-brandcd="{{ brandCd }}"
+                                        data-cocd="{{ coCd }}"
+                                        data-joincd="{{ joinCd }}">지도보기</button>
+                            </li>
+                        </script>
+                        <!--
                         <li>
                             <button class="tit-addr">
                                 <strong class="tit">파리바게트</strong>
@@ -87,22 +104,25 @@
                             <a href="tel:02-2268-8203" class="bt-link-tx underline" title="전화걸기">02-2268-8203</a>
                             <button class="bt-map">지도보기</button>
                         </li>
+                        -->
                     </ul>
+                    <div class="bt-more" id="frchs-bt-more" style="display: none;">
+                        <button>더 보기</button>
+                    </div>
+
                 </div>
                 <!--// .cont-box -->
             </div>
         </div>
         <!--// #contents -->
-        <footer id="fe-all-menu">
-            <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
-            <%- include('../../../../../common/views/components/masking.component.html', { pageInfo: pageInfo }); %>
-        </footer>
+
+        <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
     </div>
 </body>
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MembershipBenefitBrandList($('.wrap'));
+    new Tw.MembershipBenefitBrandList($('.wrap'), <%- JSON.stringify(data) %>);
   });
 </script>
 <% include ../../components/end.component.html %>

@@ -705,6 +705,7 @@ export const API_CMD = {
   BFF_11_0023: { path: '/core-membership/:version/tmembership/mrcht-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_11_0024: { path: '/core-membership/:version/tmembership/mrcht-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_11_0025: { path: '/core-membership/:version/tmembership/near-brand', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_11_0026: { path: '/core-membership/:version/tmembership/area-by-geo', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // TID
   OIDC: { path: '/auth/authorize.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },
