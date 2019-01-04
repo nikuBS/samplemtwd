@@ -4,11 +4,11 @@ Tw.CustomerResearches = function(rootEl) {
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
 
-  this._bnidEvent();
+  this._bindEvent();
 };
 
 Tw.CustomerResearches.prototype = {
-  _bnidEvent: function() {
+  _bindEvent: function() {
     this.$container.on('click', '.item-two > .bt-blue1', $.proxy(this._handleSubmit, this));
     this.$container.on('click', 'ul.select-list > li', $.proxy(this._setEnableSubmit, this));
     this.$container.on('click', '.fe-hint', $.proxy(this._goHint, this));
