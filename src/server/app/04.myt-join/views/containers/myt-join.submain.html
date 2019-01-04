@@ -159,6 +159,18 @@
                             <i class="icon-my-40"><span class="blind">discount</span></i>나의 가입 정보 &gt; 사은품 조회
                         </a>
                     </li>
+                    <% } else if (data.type === 1) { %>
+                    <!-- DV001-10531 -->
+                    <li>
+                        <a href="/common/member/line">
+                            <i class="icon-member-40"><span class="blind">member</span></i>회원정보관리 &gt; 회선관리
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/benefit/my">
+                            <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 &middot; 할인 &gt; 나의 혜택
+                        </a>
+                    </li>
                     <% } else { %>
                     <li>
                         <a href="/common/member/line">
