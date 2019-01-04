@@ -3,7 +3,11 @@
     <div class="productdetails-wrap">
         <h3 class="productdetails-title">
             <% if (( isMobileplan || isDiscount ) && prodRedisInfo.summary.prodSmryDesc ) { %>
-            <span class="sub"><%= prodRedisInfo.summary.prodSmryDesc %></span>
+            <div class="sub">
+                <p class="pro-sub-area">
+                    <span class="pro-sub-text"><%= prodRedisInfo.summary.prodSmryDesc %></span>
+                </p>
+            </div>
             <% } %>
             <% if ( prodRedisInfo.summary.prodNm ) { %>
             <div class="title"><%= prodRedisInfo.summary.prodNm %></div>
