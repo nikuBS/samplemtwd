@@ -1,210 +1,343 @@
 /**
  * FileName: membership.benefit.brand.js
- * Author: Hakjoon Sim (hakjoon.sim@sk.com)
- * Date: 2018.11.05
+ * Author: 이정민 (skt.p130713@partner.sk.com)
+ * Date: 2018. 12. 21.
  */
 
 Tw.MembershipBenefitBrand = function (rootEl, options) {
-
+  this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
   this.$container = rootEl;
   this._options = options;
-  this._historyService = new Tw.HistoryService();
-  this._nativeService = Tw.Native;
-  this._apiService = Tw.Api;
-
-  this._registHbsHelper();
   this._cacheElements();
   this._bindEvnets();
-
-  // default
-  this._options.area1 = Tw.MEMBERSHIP.BENEFIT.DEFAULT_AREA.AREA1;
-  this._options.area2 = Tw.MEMBERSHIP.BENEFIT.DEFAULT_AREA.AREA2;
-  this._options.mapX = Tw.MEMBERSHIP.BENEFIT.DEFAULT_AREA.MAP_X;
-  this._options.mapY = Tw.MEMBERSHIP.BENEFIT.DEFAULT_AREA.MAP_Y;
-  this._setArea();
-
-  if ( Tw.BrowserHelper.isApp() ) {
-    this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(this._onCurrentLocation, this));
-  }else {
-    this._reqeustNearShopList();
-  }
-  this._reqeustPopBrandList();
+  this._init();
 };
 
 Tw.MembershipBenefitBrand.prototype = {
-
-  /**
-   * app location 파악
-   * @param result
-   * @private
-   */
-  _onCurrentLocation: function(result){
-    // console.log('location 파악  result');
-
-    if(result && result.code === Tw.NTV_CODE.CODE_00){
-      this._options.mapX = result.params.latitude;
-      this._options.mapY = result.params.longitude;
-    }
-
-    // 위경도로 지역명 조회 api 호출??
-
-    this._reqeustNearShopList();
+  _ICO_GRD_CHK_CD: {
+    V: 'vip',
+    G: 'gold',
+    S: 'silver',
+    A: 'all'
   },
-
-  _setArea: function(area1, area2, mapX, mapY){
-    if(area1 && area2) {
-      this._options.area1 = area1;
-      this._options.area2 = area2;
-    }
-    if(mapX && mapY){
-      this._options.mapX = mapX;
-      this._options.mapY = mapY;
-    }
-
-    $('#fe-area-name').text(this._options.area1 + ' ' + this._options.area2);
+  _CATE_CD: {
+    ALL: '00'         // ALL
   },
-
+  _ORD_COL_CD: {
+    LIKE: 'L',        // 좋아요
+    LATEST: 'R'       // 최신순
+  },
+  _SUB_TAB_CD: {
+    A: 'A',           // 전체 등급
+    V: 'V',           // VIP 혜택 등급
+    M: 'M'            // 내 등급
+  },
+  _ACTION_SHEET_HBS: 'actionsheet_select_a_type',
+  _reqOptions: {
+    pageSize: 20,
+    pageNo: 1,
+    cateCd: '',
+    ordCol: '',
+    coPtnrNm: ''
+  },
+  _gradeCd: [
+    {
+      list: [
+        { value: Tw.MEMBERSHIP.BENEFIT.BRAND.GRADE.A, attr: 'sub-tab-cd="A"', subTabCd: 'A', option: 'checked' },
+        { value: Tw.MEMBERSHIP.BENEFIT.BRAND.GRADE.V, attr: 'sub-tab-cd="V"', subTabCd: 'V' }
+      ]
+    }
+  ],
 
   _cacheElements: function () {
-    this._feFrchListItem = Handlebars.compile($('#fe-franchisee-list-item').html());
-    this._feBrandList = $('#fe-brand-list').html();
-    this._feBrandListItem = Handlebars.compile($('#fe-brand-list-item').html());
+    this.$btnShowCategories = this.$container.find('.fe-btn-show-categories');
+    this.$btnCloseCategories = this.$container.find('.fe-btn-close-categories');
+    this.$contLayer = this.$container.find('.fe-cont-layer');
+    this.$grade = this.$container.find('.fe-grade');
+    this.$categoryList = this.$container.find('.fe-category-list');
+    this.$categoryListInLayer = this.$container.find('.fe-category-list-in-layer');
+    this.$brandList = this.$container.find('.fe-brand-list');
+    this.$brandItemTmpl = this.$container.find('#fe-brand-item-tmpl');
+    this.$btnMore = this.$container.find('.fe-btn-more');
+    this.$inputCoPtnrNm = this.$container.find('.fe-input-co-ptnr-nm');
+    this.$contentsEmpty = this.$container.find('.fe-contents-empty');
+    // this.$orders = this.$container.find('.fe-orders');
   },
 
   _bindEvnets: function () {
-    this.$container.on('click', '.franchisee-list .bt-map', $.proxy(this._goMap, this));
-    this.$container.on('click', '.brand-logo-list .bt-logo', $.proxy(this._goBrandView, this));
-    this.$container.on('click', '#frchs-bt-all', $.proxy(this._goFrchAllView, this));
+    this.$btnShowCategories.on('click', $.proxy(this._toggleCategoryLayer, this, true));
+    this.$btnCloseCategories.on('click', $.proxy(this._toggleCategoryLayer, this, false));
+    this.$contLayer.on('click', '.fe-category-list-in-layer input[type="radio"]', $.proxy(this._onClickBtnCategoryInLayer, this));
+    this.$container.on('click', '.fe-btn-category', $.proxy(this._onClickBtnCategory, this));
+    this.$container.on('click', '.fe-btn-more', $.proxy(this._onClickBtnMore, this));
+    this.$container.on('click', '.fe-grade', $.proxy(this._onClickBtnSelectGrade, this));
+    this.$container.on('click', '.fe-btn-search', $.proxy(this._onClickBtnSearch, this));
+    this.$container.on('keyup', '.fe-input-co-ptnr-nm', $.proxy(this._onKeyupInputCoPtnrNm, this));
+    // this.$container.on('click', '.fe-orders button', $.proxy(this._onClickBtnOrder, this));
   },
 
-  _registHbsHelper: function(){
-    Handlebars.registerHelper('tel', Tw.StringHelper.phoneStringToDash);
-  },
+  _init: function () {
+    this._reqOptions.cateCd = this._options.cateCd || this._CATE_CD.ALL;
+    this._reqOptions.ordCol = this._options.ordCol || this._ORD_COL_CD.LIKE;
+    this._reqOptions.subTabCd = this._options.subTabCd || this._SUB_TAB_CD.A;
+    this._isLogin = JSON.parse(this._options.isLogin);
+    this._noMembership = JSON.parse(this._options.noMembership);
 
-  /**
-   * 카테고리 내 인기 브랜드 조회
-   */
-  _reqeustPopBrandList: function(){
-    var param = {
-      ordCol: 'L',    // 'L' 고정값
-      cateCd: this._options.cateCd
-    };
-    this._apiService.request(Tw.API_CMD.BFF_11_0017, param)
-      .done($.proxy(function(resp){
-        var list = resp.result.list;
-        var $boxBrand = $('#fe-pop-brand-box', this.$container);
-        var tmp = '';
-        for(var i = 0; i < list.length; i++){
-          if(i % 6 === 0){
-            $boxBrand.append(this._feBrandList);
-          }
-          tmp = this._feBrandListItem(list[i]);
-          $('.brand-logo-list').last().append(tmp);
-        }
-        // skt_landing.widgets.widget_slider1를 쓰려고 했지만 안먹혀서 그냥 slick함수를 사용
-        $('.slider').slick('unslick');
-        $('.slider').slick({
-          dots: true,
-          arrows: true,
-          infinite: false,
-          speed : 300,
-          centerMode: false,
-          focusOnSelect: false,
-          touchMove : true,
-          customPaging: function(slider, i) {
-            return $('<span />').text(i + 1);
-          }
-        });
-
-      }, this))
-      .fail(function (err) {
-        Tw.Error(err.status, err.statusText).pop();
+    if ( this._isLogin && !this._noMembership) {
+      this._gradeCd[0].list.push({
+        value: Tw.MEMBERSHIP.BENEFIT.BRAND.GRADE.M, attr: 'sub-tab-cd="M"', subTabCd: 'M'
       });
+    }
+    this._gradeList = this._gradeCd[0].list;
+
+    this._setGrade();
   },
 
-  /**
-   * 내 주변 가맹점 조회 - 3개만 조회
-   * @private
-   */
-  _reqeustNearShopList: function(){
-    var param = {
-      ordCol: 'D',    // 'D' 고정값
-      area1: encodeURI(this._options.area1),
-      area2: encodeURI(this._options.area2),
-      mapX: this._options.mapX,
-      mapY: this._options.mapY,
-      brandCd: this._options.brandCd,
-      pageNo: '1',
-      pageSize: '3'
-    };
+  _toggleCategoryLayer: function (open) {
+    if ( open ) {
+      this.$contLayer.show();
+    } else {
+      this.$contLayer.hide();
+    }
+  },
 
-    this._apiService.request(Tw.API_CMD.BFF_11_0023, param)
-      .done($.proxy(function(resp){
-        var list = resp.result.list;
-        var tmp = '';
-        var $frchsBox = $('.franchisee-list');
-        for(var i = 0; i < list.length; i++){
-          tmp = this._feFrchListItem(list[i]);
-          $frchsBox.append(tmp);
-          // 3개반 노출
-          if(i > 3) {
-            break;
-          }
-        }
-
-      }, this))
-      .fail(function (err) {
-        Tw.Error(err.status, err.statusText).pop();
+  _setGrade: function () {
+    var self = this;
+    if ( this._reqOptions.cateCd === this._CATE_CD.ALL ) {
+      _.each(this._gradeList, function (item) {
+        item.option = item.subTabCd === self._reqOptions.subTabCd ? 'checked' : '';
       });
-
+      var selectedSubTab = _.find(this._gradeList, {
+        subTabCd: self._reqOptions.subTabCd
+      });
+      var subTabValue = selectedSubTab ? selectedSubTab.value : this._gradeList[0].value;
+      this.$grade.find('button').text(subTabValue);
+      this.$grade.show();
+    } else {
+      this.$grade.hide();
+    }
   },
 
-  /**
-   * 지도보기로 이동
-   * @param event
-   * @private
-   */
-  _goMap: function(event){
-    var $bt = $(event.currentTarget);
-    var param = {
-      cdCd: $bt.data('cocd'),
-      joinCd: $bt.data('joincd'),
-      mapX: $bt.data('mapx'),
-      mapY: $bt.data('mapy'),
-      brandCd: this._options.brandCd,
-      cateCd: this._options.cateCd
+  _selectCategory: function (cateCd) {
+    var option = {
+      pageNo: 1,
+      ordCol: this._ORD_COL_CD.LIKE,
+      cateCd: cateCd
     };
-    this._historyService.goLoad('/membership/benefit/map?' + $.param(param));
+    if ( cateCd === this._CATE_CD.ALL ) {
+      option.subTabCd = this._SUB_TAB_CD.A;
+    } else {
+      delete this._reqOptions.subTabCd;
+    }
+    this._reqBrandList(option);
   },
 
-  /**
-   * 인기 브랜드 혜택보기로 이동
-   * @param event
-   * @private
-   */
-  _goBrandView: function(event){
-    var $bt = $(event.currentTarget);
-
-    var param = {
-      brandCd: $bt.data('brandcd'),
-      cateCd: $bt.data('catecd')
-    };
-
-    this._historyService.goLoad('/membership/benefit/brand-benefit?' + $.param(param));
+  _reqBrandList: function (options) {
+    if ( Tw.FormatHelper.isEmpty(options.coPtnrNm) ) {
+      delete this._reqOptions.coPtnrNm;
+    }
+    this._apiService.request(Tw.API_CMD.BFF_11_0017, $.extend({}, this._reqOptions, options))
+      .done($.proxy(this._onDoneReqBrandList, this, options))
+      .fail($.proxy(this._onFailReq, this));
   },
 
-  /**
-   * 가맹점 전체보기
-   * @param event
-   * @private
-   */
-  _goFrchAllView: function(){
-    var param = {
-      brandCd: this._options.brandCd,
-      cateCd: this._options.cateCd
-    };
+  _onDoneReqBrandList: function (options, resp) {
+    if ( resp.code !== Tw.API_CODE.CODE_00 ) {
+      this._popupService.openAlert(resp.msg, resp.code);
+      return;
+    }
+    $.extend(this._reqOptions, options);
+    var totalCnt = resp.result.totalCnt;
+    var list = this._getBrandList(resp);
+    this._setCategory();
+    this._setCategoryInLayer();
+    this._setKeywords();
+    this._setGrade();
+    if (list.length <= 0) {
+      this._showEmptyResult();
+    } else {
+      this._setBrandList(list);
+    }
+    this._setBtnMore(totalCnt);
+    // this._setOrder();
+  },
 
-    this._historyService.goLoad('/membership/benefit/brand/list?' + $.param(param));
+  _onFailReq: function (err) {
+    this._popupService.openAlert(err.msg, err.code);
+  },
+
+  _setBtnMore: function (totalCnt) {
+    if ( parseInt(totalCnt, 10) > this._reqOptions.pageSize * this._reqOptions.pageNo ) {
+      this.$btnMore.show();
+    } else {
+      this.$btnMore.hide();
+    }
+  },
+
+  _setCategory: function () {
+    var $buttons = this.$categoryList.find('button');
+    $buttons.removeClass('on');
+    $buttons.filter('[cate-cd="' + this._reqOptions.cateCd + '"]').addClass('on');
+  },
+
+  _setCategoryInLayer: function () {
+    var $lis = this.$categoryListInLayer.find('li');
+    var $imgs = this.$categoryListInLayer.find('img');
+    $lis.removeClass('checked');
+    $imgs.each(function () {
+      $(this).attr('src', $(this).attr('offSrc'));
+    });
+    var $selectedli = $lis.filter('li[cate-cd="' + this._reqOptions.cateCd + '"]');
+    $selectedli.addClass('checked');
+    var $img = $selectedli.find('img');
+    $img.attr('src', $img.attr('onSrc'));
+  },
+
+  _setKeywords: function () {
+    if ( Tw.FormatHelper.isEmpty(this._reqOptions.coPtnrNm) ) {
+      this.$inputCoPtnrNm.val('');
+    }
+  },
+
+  _setBrandList: function (list) {
+    var source = this.$brandItemTmpl.html();
+    var template = Handlebars.compile(source);
+    if ( this._reqOptions.pageNo === 1 ) {
+      this.$brandList.empty();
+    }
+    _.each(list, $.proxy(function (item) {
+      var $item = template(item);
+      this.$brandList.append($item);
+    }, this));
+    this.$brandList.show();
+    this.$contentsEmpty.hide();
+  },
+
+  _getResult: function (resp) {
+    return resp.result;
+  },
+
+  _getBrandList: function (resp) {
+    var self = this;
+    var result = this._getResult(resp);
+    var list = result.list;
+    var strToArr = function (characters) {
+      return _.map(characters.split(''), function (character) {
+        return self._ICO_GRD_CHK_CD[character];
+      });
+    };
+    return _.map(list, function (item) {
+      item.showIcoGrdChk1 = strToArr(item.icoGrdChk1);
+      item.showIcoGrdChk2 = strToArr(item.icoGrdChk2);
+      item.showIcoGrdChk3 = strToArr(item.icoGrdChk3);
+      item.showIcoGrdChk4 = strToArr(item.icoGrdChk4);
+      item.showTotLikeCount = Tw.FormatHelper.addComma(item.totLikeCount);
+      return item;
+    });
+  },
+
+  _setScrollLeft: function (cateCd) {
+    var $buttons = this.$categoryList.find('button');
+    var $target = $buttons.filter('[cate-cd="' + cateCd + '"]').parent();
+    var x = parseInt($target.position().left, 10);
+    this.$categoryList.scrollLeft(x);
+  },
+
+  _searchWithKeyword: function () {
+    var inputVal = this.$inputCoPtnrNm.val();
+    var regExp = /^[가-힣a-zA-Z\s]+$/; //한글완성형, 영문, 공백
+    if (!Tw.FormatHelper.isEmpty(inputVal) && !regExp.test(inputVal)) {
+      this._showEmptyResult();
+      return;
+    }
+    this.$contentsEmpty.hide();
+    this.$brandList.show();
+    var options = {
+      pageNo: 1
+    };
+    if ( !Tw.FormatHelper.isEmpty(inputVal) ) {
+      options.coPtnrNm = encodeURIComponent(this.$inputCoPtnrNm.val());
+    }
+    this._reqBrandList(options);
+  },
+
+  _showEmptyResult: function() {
+    var inputVal = this.$inputCoPtnrNm.val();
+    this.$brandList.empty();
+    this.$contentsEmpty.find('.t-point').text(inputVal);
+    this.$contentsEmpty.show();
+    this.$brandList.hide();
+  },
+
+  _onOpenGradeActionSheet: function ($container) {
+    $container.find('li button').click($.proxy(function (event) {
+      var subTabCd = $(event.currentTarget).attr('sub-tab-cd');
+      var options = {
+        pageNo: 1,
+        subTabCd: subTabCd
+      };
+      if ( !Tw.FormatHelper.isEmpty(this.$inputCoPtnrNm.val()) ) {
+        options.coPtnrNm = encodeURIComponent(this.$inputCoPtnrNm.val());
+      }
+      this._reqBrandList(options);
+      this._popupService.close();
+    }, this));
+  },
+
+  _onClickBtnCategory: function (event) {
+    var dataCd = $(event.currentTarget).attr('cate-cd');
+    this._selectCategory(dataCd);
+    this._setScrollLeft(dataCd);
+  },
+
+  _onClickBtnMore: function () {
+    this._reqBrandList({
+      pageNo: ++this._reqOptions.pageNo
+    });
+  },
+
+  _onClickBtnCategoryInLayer: function (event) {
+    var $currentTarget = $(event.currentTarget);
+    this._selectCategory($currentTarget.val());
+    this._toggleCategoryLayer(false);
+    this._setScrollLeft($currentTarget.val());
+  },
+
+  _onClickBtnSelectGrade: function () {
+    this._popupService.open({
+      hbs: this._ACTION_SHEET_HBS,
+      layer: true,
+      data: this._gradeCd
+    }, $.proxy(this._onOpenGradeActionSheet, this), null, 'select-grade');
+  },
+
+  _onClickBtnSearch: function () {
+    this._searchWithKeyword();
+  },
+
+  _onKeyupInputCoPtnrNm: function (event) {
+    var isEnter = 13;
+    if ( event.keyCode === isEnter ) {
+      this._searchWithKeyword();
+    }
   }
 
+  // _onClickBtnOrder: function (event) {
+  //   var $currentTarget = $(event.currentTarget);
+  //   var options = {
+  //     pageNo: 1,
+  //     ordCol: $currentTarget.attr('ord-col')
+  //   };
+  //   if ( !Tw.FormatHelper.isEmpty(this.$inputCoPtnrNm.val()) ) {
+  //     options.coPtnrNm = encodeURIComponent(this.$inputCoPtnrNm.val());
+  //   }
+  //   this._reqBrandList(options);
+  // },
+
+  // _setOrder: function () {
+  //   var $buttons = this.$orders.find('button');
+  //   $buttons.removeClass('on');
+  //   $buttons.filter('[ord-col="' + this._reqOptions.ordCol + '"]').addClass('on');
+  // }
 };

@@ -1,7 +1,7 @@
 <%#
-* FileName: membership.benefit.brand.html (BE_03_01)
-* Author: Hakjoon Sim (hakjoon.sim@sk.com)
-* Date: 2018.10.29
+* FileName: membership.benefit.brand.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.12.21
 %>
 
 <% include ../../components/start.component.html %>
@@ -15,120 +15,176 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div class="wrap">
-        <%- include('../../../../common/views/components/header.component.html', { title: '제휴브랜드', svcInfo, option: { line: true } }); %>
+    <div id="fe-membership-benefit-brand" class="wrap">
+        <!-- #header -->
+        <%- include('../../../../../common/views/components/header.component.html', { title: '제휴브랜드', svcInfo: svcInfo }); %>
+        <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
-
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-hoz">
-                    <div class="category-box-wrap">
-                        <h3 class="link-long">
-                            <button id="fe-open-category" title="전체 카테고리 보기">전체 카테고리
-                                <span class="tx-sub">
-                                    <span class="ico"></span>
-                                </span>
+                    <div class="category-box-wrap tab-type01">
+                        <h3 class="link-long type01">
+                            <button title="전체 카테고리 보기" class="fe-btn-show-categories">
+								<span class="tx-sub">
+									<span class="ico"></span>
+								</span>
                             </button>
                         </h3>
                         <!-- .widget -->
                         <div class="widget">
                             <div class="widget-box horizontal">
-                                <div class="horizontal-slide">
-                                    <!-- .widget -->
-                                    <div class="widget">
-                                        <div class="widget-box radio">
-                                            <ul class="select-list horizontal-list" role="radiogroup">
-                                                <li class="radiobox type05 ico-type01 checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                    <input type="radio" name="radio1" value="" title="All" checked /><!-- 체크상태일 경우 checked="checked" -->
-                                                    All
-                                                </li>
-                                                <li class="radiobox type05 ico-type02" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="radio" name="radio1" value="" title="베이커리" /><!-- 체크상태일 경우 checked="false" -->
-                                                    베이커리
-                                                </li>
-                                                <li class="radiobox type05 ico-type03" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="radio" name="radio1" value="" title="편의점" /><!-- 체크상태일 경우 checked="false" -->
-                                                    편의점
-                                                </li>
-                                                <li class="radiobox type05 ico-type04" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="radio" name="radio1" value="" title="영화관" /><!-- 체크상태일 경우 checked="false" -->
-                                                    영화관
-                                                </li>
-                                                <li class="radiobox type05 ico-type05" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="radio" name="radio1" value="" title="피자" /><!-- 체크상태일 경우 checked="false" -->
-                                                    피자
-                                                </li>
-                                                <li class="radiobox type05 ico-type05" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="radio" name="radio1" value="" title="커피" /><!-- 체크상태일 경우 checked="false" -->
-                                                    커피
-                                                </li>
-                                                <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="radio" name="radio1" value="" title="패밀리<br>레스토랑" /><!-- 체크상태일 경우 checked="false" -->
-                                                    패밀리<br>레스토랑
-                                                </li>
-                                                <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="radio" name="radio1" value="" title="F&B" /><!-- 체크상태일 경우 checked="false" -->
-                                                    F&B
-                                                </li>
-                                                <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="radio" name="radio1" value="" title="테마파크" /><!-- 체크상태일 경우 checked="false" -->
-                                                    테마파크
-                                                </li>
-                                                <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="radio" name="radio1" value="" title="모바일<br>&미디어" /><!-- 체크상태일 경우 checked="false" -->
-                                                    모바일<br>&미디어
-                                                </li>
-                                                <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="radio" name="radio1" value="" title="쇼핑" /><!-- 체크상태일 경우 checked="false" -->
-                                                    쇼핑
-                                                </li>
-                                                <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="radio" name="radio1" value="" title="교통" /><!-- 체크상태일 경우 checked="false" -->
-                                                    교통
-                                                </li>
-                                                <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="radio" name="radio1" value="" title="공연" /><!-- 체크상태일 경우 checked="false" -->
-                                                    공연
-                                                </li>
-                                                <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="radio" name="radio1" value="" title="여행" /><!-- 체크상태일 경우 checked="false" -->
-                                                    여행
-                                                </li>
-                                                <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="radio" name="radio1" value="" title="교육" /><!-- 체크상태일 경우 checked="false" -->
-                                                    교육
-                                                </li>
-                                                <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="radio" name="radio1" value="" title="금융" /><!-- 체크상태일 경우 checked="false" -->
-                                                    금융
-                                                </li>
-                                                <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="radio" name="radio1" value="" title="뷰티&패션" /><!-- 체크상태일 경우 checked="false" -->
-                                                    뷰티&패션
-                                                </li>
-                                                <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="radio" name="radio1" value="" title="스포츠" /><!-- 체크상태일 경우 checked="false" -->
-                                                    스포츠
-                                                </li>
-                                                <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="radio" name="radio1" value="" title="제주도" /><!-- 체크상태일 경우 checked="false" -->
-                                                    제주도
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <!--// .widget -->
+                                <div class="horizontal-slide fe-category-list">
+                                    <ul class="horizontal-list brand_link">
+                                        <% for (var i = 0; i < cateList.length; i++) { %>
+                                        <li>
+                                            <button type="button" class="unit fe-btn-category <%= selectedCateCd === cateList[i].cateCd ? 'on': '' %>" cate-cd="<%= cateList[i].cateCd %>"><%= cateList[i].cateName %></button>
+                                        </li>
+                                        <% } %>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                        <!--// .widget -->
-
-                        <div class="cont-layer none" id="fe-all-category"><!-- 전체 카테고리 영역 -->
+                        <!-- .widget -->
+                        <div class="cont-box inborder">
+							<span class="inputbox brand-search-warap">
+								<span class="input">
+									<input type="text" title="제휴 브랜드명을 검색" placeholder="제휴 브랜드명을 검색해 보세요" class="fe-input-co-ptnr-nm">
+									<button class="cancel"><span class="blind">삭제</span></button>
+									<button class="bt-search fe-btn-search">검색</button>
+								</span>
+							</span>
+                        </div>
+                        <div class="cont-box nogaps">
+                            <div class="add-prd-top-wrap add-top-type">
+                                <span class="counts type-l fe-grade"><button>전체 등급</button></span>
+                                <!--<span class="select type-r fe-orders">-->
+									<!--<button class="on" ord-col="L">좋아요 순</button>-->
+									<!--<button ord-col="R">최신순</button>-->
+								<!--</span>-->
+                            </div>
+                            <!-- .cont-box -->
+                            <div class="cont-box nogaps">
+                                <script id="fe-brand-item-tmpl" type="text/x-handlebars-template">
+                                    <li>
+                                        <a href="/membership/benefit/brand-benefit?cateCd={{ cateCd }}&brandCd={{ brandCd }}" class="brand-inner" style="margin-right: 0;">
+											<span class="inner">
+												<span class="logo">
+                                                    <img src="{{ appIcoImgUrl }}" alt="{{ coPtnrNm }}">
+                                                </span>
+												<span class="intro">
+													<span class="category">{{ cateName }}</span>
+													<strong class="brand-name">{{ coPtnrNm }}</strong>
+                                                    {{#if showIcoGrdChk1}}
+													    <span class="section">
+                                                        {{#each showIcoGrdChk1}}
+														    <em class="ico-s {{this}}-tag">{{this}}</em>
+                                                        {{/each}}
+                                                        {{ icoCont1 }}
+                                                        </span>
+                                                    {{/if}}
+                                                    {{#if showIcoGrdChk2}}
+													    <span class="section">
+                                                        {{#each showIcoGrdChk2}}
+														    <em class="ico-s {{this}}-tag">{{this}}</em>
+                                                        {{/each}}
+                                                        {{ icoCont2 }}
+                                                        </span>
+                                                    {{/if}}
+                                                    {{#if showIcoGrdChk3}}
+													    <span class="section">
+                                                        {{#each showIcoGrdChk3}}
+														    <em class="ico-s {{this}}-tag">{{this}}</em>
+                                                        {{/each}}
+                                                        {{ icoCont3 }}
+                                                        </span>
+                                                    {{/if}}
+                                                    {{#if showIcoGrdChk4}}
+													    <span class="section">
+                                                        {{#each showIcoGrdChk4}}
+														    <em class="ico-s {{this}}-tag">{{this}}</em>
+                                                        {{/each}}
+                                                        {{ icoCont4 }}
+                                                        </span>
+                                                    {{/if}}
+												</span>
+											</span>
+                                        </a>
+                                        <!--<button class="bt-like on">{{!&#45;&#45; showTotLikeCount &#45;&#45;}}</button>-->
+                                    </li>
+                                </script>
+                                <ul class="coalition-brand-list type-like fe-brand-list">
+                                    <% for (var i = 0; i < brandList.length; i++) { %>
+                                    <li>
+                                        <a href="/membership/benefit/brand-benefit?cateCd=<%= brandList[i].cateCd %>&brandCd=<%= brandList[i].brandCd %>" class="brand-inner" style="margin-right: 0;">
+											<span class="inner">
+												<span class="logo">
+                                                    <img src="<%= brandList[i].appIcoImgUrl %>" alt="<%= brandList[i].coPtnrNm %>">
+                                                </span>
+												<span class="intro">
+													<span class="category"><%= brandList[i].cateName %></span>
+													<strong class="brand-name"><%= brandList[i].coPtnrNm %></strong>
+                                                    <% if (brandList[i].showIcoGrdChk1.length > 0) { %>
+													    <span class="section">
+                                                        <% for (var j = 0; j < brandList[i].showIcoGrdChk1.length; j++) { %>
+														<em class="ico-s <%= brandList[i].showIcoGrdChk1[j] %>-tag"><%= brandList[i].showIcoGrdChk1[j] %></em>
+                                                        <% } %>
+                                                        <%= brandList[i].icoCont1 %>
+													    </span>
+                                                    <% } %>
+                                                    <% if (brandList[i].showIcoGrdChk2.length > 0) { %>
+													    <span class="section">
+                                                        <% for (var j = 0; j < brandList[i].showIcoGrdChk2.length; j++) { %>
+														<em class="ico-s <%= brandList[i].showIcoGrdChk2[j] %>-tag"><%= brandList[i].showIcoGrdChk2[j] %></em>
+                                                        <% } %>
+                                                        <%= brandList[i].icoCont2 %>
+													    </span>
+                                                    <% } %>
+                                                    <% if (brandList[i].showIcoGrdChk3.length > 0) { %>
+													    <span class="section">
+                                                        <% for (var j = 0; j < brandList[i].showIcoGrdChk3.length; j++) { %>
+														<em class="ico-s <%= brandList[i].showIcoGrdChk3[j] %>-tag"><%= brandList[i].showIcoGrdChk3[j] %></em>
+                                                        <% } %>
+                                                        <%= brandList[i].icoCont3 %>
+													    </span>
+                                                    <% } %>
+                                                    <% if (brandList[i].showIcoGrdChk4.length > 0) { %>
+													    <span class="section">
+                                                        <% for (var j = 0; j < brandList[i].showIcoGrdChk4.length; j++) { %>
+														<em class="ico-s <%= brandList[i].showIcoGrdChk4[j] %>-tag"><%= brandList[i].showIcoGrdChk4[j] %></em>
+                                                        <% } %>
+                                                        <%= brandList[i].icoCont4 %>
+													    </span>
+                                                    <% } %>
+												</span>
+											</span>
+                                        </a>
+                                        <!--<button class="bt-like on"><%#= brandList[i].showTotLikeCount %></button>-->
+                                    </li>
+                                    <% } %>
+                                </ul>
+                                <div class="contents-empty type-search fe-contents-empty" style="display: none;">
+                                    <span class="ico type1"></span>
+                                    <p class="desc">
+                                        <strong class="t-point"></strong>에 해당하는<br>
+                                        검색결과가 없습니다.
+                                    </p>
+                                    <p class="desc-s">* 제휴 브랜드명의 철자가 맞는지 다시 확인 후 검색해 주세요.</p>
+                                </div>
+                                <% if (hasMore) { %>
+                                <div class="bt-more">
+                                    <button class="fe-btn-more">더 보기</button>
+                                </div>
+                                <% } %>
+                            </div>
+                            <!--// .cont-box -->
+                        </div>
+                        <div class="cont-layer fe-cont-layer" style="display:none;"><!-- 전체 카테고리 영역 -->
                             <div class="cont-layer-info">
                                 <h3 class="link-long">
-                                    <button id="fe-close-category" title="전체 카테고리 보기">전체 카테고리
+                                    <button title="전체 카테고리 보기" class="fe-btn-close-categories">전체 카테고리
                                         <span class="tx-sub">
                                             <span class="ico"></span>
                                         </span>
@@ -136,84 +192,23 @@
                                 </h3>
                                 <!-- .widget -->
                                 <div class="widget">
-                                    <div class="widget-box radio">
+                                    <div class="widget-box radio fe-category-list-in-layer">
                                         <ul class="select-list horizontal-list" role="radiogroup">
-                                            <li class="radiobox type05 ico-type01 checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                <input type="radio" name="radio01" value="" title="All" checked /><!-- 체크상태일 경우 checked="checked" -->
-                                                All
-                                            </li>
-                                            <li class="radiobox type05 ico-type02" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="radio" name="radio01" value="" title="베이커리" /><!-- 체크상태일 경우 checked="false" -->
-                                                베이커리
-                                            </li>
-                                            <li class="radiobox type05 ico-type03" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="radio" name="radio01" value="" title="편의점" /><!-- 체크상태일 경우 checked="false" -->
-                                                편의점
-                                            </li>
-                                            <li class="radiobox type05 ico-type04" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="radio" name="radio01" value="" title="영화관" /><!-- 체크상태일 경우 checked="false" -->
-                                                영화관
-                                            </li>
-                                            <li class="radiobox type05 ico-type05" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="radio" name="radio01" value="" title="피자" /><!-- 체크상태일 경우 checked="false" -->
-                                                피자
-                                            </li>
-                                            <li class="radiobox type05 ico-type05" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="radio" name="radio01" value="" title="커피" /><!-- 체크상태일 경우 checked="false" -->
-                                                커피
-                                            </li>
-                                            <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="radio" name="radio01" value="" title="패밀리<br>레스토랑" /><!-- 체크상태일 경우 checked="false" -->
-                                                패밀리<br>레스토랑
-                                            </li>
-                                            <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="radio" name="radio01" value="" title="F&B" /><!-- 체크상태일 경우 checked="false" -->
-                                                F&B
-                                            </li>
-                                            <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="radio" name="radio01" value="" title="테마파크" /><!-- 체크상태일 경우 checked="false" -->
-                                                테마파크
-                                            </li>
-                                            <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="radio" name="radio01" value="" title="모바일<br>&미디어" /><!-- 체크상태일 경우 checked="false" -->
-                                                모바일<br>&미디어
-                                            </li>
-                                            <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="radio" name="radio01" value="" title="쇼핑" /><!-- 체크상태일 경우 checked="false" -->
-                                                쇼핑
-                                            </li>
-                                            <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="radio" name="radio01" value="" title="교통" /><!-- 체크상태일 경우 checked="false" -->
-                                                교통
-                                            </li>
-                                            <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="radio" name="radio01" value="" title="공연" /><!-- 체크상태일 경우 checked="false" -->
-                                                공연
-                                            </li>
-                                            <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="radio" name="radio01" value="" title="여행" /><!-- 체크상태일 경우 checked="false" -->
-                                                여행
-                                            </li>
-                                            <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="radio" name="radio01" value="" title="교육" /><!-- 체크상태일 경우 checked="false" -->
-                                                교육
-                                            </li>
-                                            <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="radio" name="radio01" value="" title="금융" /><!-- 체크상태일 경우 checked="false" -->
-                                                금융
-                                            </li>
-                                            <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="radio" name="radio01" value="" title="뷰티&패션" /><!-- 체크상태일 경우 checked="false" -->
-                                                뷰티&패션
-                                            </li>
-                                            <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="radio" name="radio01" value="" title="스포츠" /><!-- 체크상태일 경우 checked="false" -->
-                                                스포츠
-                                            </li>
-                                            <li class="radiobox type05 ico-type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="radio" name="radio01" value="" title="제주도" /><!-- 체크상태일 경우 checked="false" -->
-                                                제주도
-                                            </li>
+                                            <% for (var i = 0; i < cateList.length; i++) { %>
+                                                <% if (selectedCateCd === cateList[i].cateCd) { %>
+                                                <li class="radiobox type05 ico-type01 checked" role="radio" aria-checked="true" cate-cd="<%= cateList[i].cateCd %>">
+                                                    <img src="<%= cateList[i].onImgUrl %>" class="ico" alt="all" onSrc="<%= cateList[i].onImgUrl %>" offSrc="<%= cateList[i].imgUrl %>"/>
+                                                    <input type="radio" name="radio01" value="<%= cateList[i].cateCd %>" title="<%= cateList[i].cateName %>" checked="checked">
+                                                    <%= cateList[i].cateName %>
+                                                </li>
+                                                <% } else { %>
+                                                <li class="radiobox type05 ico-type01" role="radio" cate-cd="<%= cateList[i].cateCd %>">
+                                                    <img src="<%= cateList[i].imgUrl %>" class="ico" alt="all" onSrc="<%= cateList[i].onImgUrl %>" offSrc="<%= cateList[i].imgUrl %>" />
+                                                    <input type="radio" name="radio01" value="<%= cateList[i].cateCd %>" title="<%= cateList[i].cateName %>">
+                                                    <%= cateList[i].cateName %>
+                                                </li>
+                                                <% } %>
+                                            <% } %>
                                         </ul>
                                     </div>
                                 </div>
@@ -224,149 +219,22 @@
                     </div>
                 </div>
                 <!--// .cont-box -->
-
-                <hr class="cont-sp type1" aria-hidden="true"/>
-
-                <!-- .cont-box -->
-                <div class="cont-box nogaps">
-                    <!-- .component -->
-                    <div class="component">
-                        <div class="component-box tabs">
-                            <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
-                                <div class="tab-linker">
-                                    <ul role="tablist">
-                                        <li role="tab" aria-selected="true"><a href="">전체보기</a></li>
-                                        <li role="tab" aria-selected="false"><a href="">VIP 혜택</a></li>
-                                        <li role="tab" aria-selected="false"><a href="">내 혜택</a></li>
-                                    </ul>
-                                </div>
-                                <div class="tab-contents">
-                                    <ul>
-                                        <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
-                                            <!-- .cont-box -->
-                                            <div class="cont-box inborder">
-                                                <span class="inputbox brand-search-warap">
-                                                    <span class="input">
-                                                        <input type="text" title="제휴브랜드명을 검색" placeholder="제휴브랜드명을 검색해보세요.">
-                                                        <button class="cancel"><span class="blind">삭제</span></button>
-                                                        <button class="bt-search">검색</button>
-                                                    </span>
-                                                </span>
-                                            </div>
-                                            <!--// .cont-box -->
-
-                                            <!-- .cont-box -->
-                                            <div class="cont-box nogaps">
-                                                <div class="add-prd-top-wrap add-top-type">
-                                                    <span class="counts type-l">제휴브랜드 <em class="t-point">121</em></span>
-                                                    <span class="select type-r">
-                                                        <button class="on">좋아요순</button>
-                                                        <button>최신순</button>
-                                                    </span>
-                                                </div>
-
-                                                <!-- .cont-box -->
-                                                <div class="cont-box nogaps">
-                                                    <ul class="coalition-brand-list type-like">
-                                                        <li>
-                                                            <button class="brand-inner">
-                                                                <span class="inner">
-                                                                    <span class="logo"><img src="<%= CDN %>/img/benefit/coalition-brand02.png" alt="CU(구)훼미리마트"></span>
-                                                                    <span class="intro">
-                                                                        <span class="category">베이커리</span>
-                                                                        <strong class="brand-name">CU(구)훼미리마트 CU(구)훼미리마트</strong>
-                                                                        <span class="section">
-                                                                            <em class="ico-s">s</em>
-                                                                            <em class="ico-s">s</em>
-                                                                            천원당 100원 할인
-                                                                        </span>
-                                                                        <span class="section">
-                                                                            <em class="ico-s">s</em>
-                                                                            혜택 안내
-                                                                        </span>
-                                                                    </span>
-                                                                </span>
-                                                            </button>
-                                                            <button class="bt-like on">10,312</button>
-                                                        </li>
-                                                        <li>
-                                                            <button class="brand-inner">
-                                                                <span class="inner">
-                                                                    <span class="logo"><img src="<%= CDN %>/img/benefit/coalition-brand01.png" alt="CU(구)훼미리마트"></span>
-                                                                    <span class="intro">
-                                                                        <span class="category">편의점</span>
-                                                                        <strong class="brand-name">CU(구)훼미리마트</strong>
-                                                                        <span class="section">
-                                                                            <em class="ico-s">s</em>
-                                                                            <em class="ico-s">s</em>
-                                                                            천원당 100원 할인
-                                                                        </span>
-                                                                    </span>
-                                                                </span>
-                                                            </button>
-                                                            <button class="bt-like">1,312</button>
-                                                        </li>
-                                                        <li>
-                                                            <button class="brand-inner">
-                                                                <span class="inner">
-                                                                    <span class="logo"><img src="<%= CDN %>/img/benefit/coalition-brand03.png" alt="CU(구)훼미리마트"></span>
-                                                                    <span class="intro">
-                                                                        <span class="category">편의점</span>
-                                                                        <strong class="brand-name">CU(구)훼미리마트</strong>
-                                                                        <span class="section">
-                                                                            <em class="ico-s">s</em>
-                                                                            <em class="ico-s">s</em>
-                                                                            천원당 100원 할인
-                                                                        </span>
-                                                                        <span class="section">
-                                                                            <em class="ico-s">s</em>
-                                                                            천원당 100원 할인
-                                                                        </span>
-                                                                    </span>
-                                                                </span>
-                                                            </button>
-                                                            <button class="bt-like">312</button>
-                                                        </li>
-                                                    </ul>
-                                                    <div class="bt-more">
-                                                        <button>더보기</button>
-                                                    </div>
-                                                </div>
-                                                <!--// .cont-box -->
-                                            </div>
-                                            <!--// .cont-box -->
-                                        </li>
-                                        <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
-                                            <div class="cont-box">
-                                                tab2
-                                            </div>
-                                        </li>
-                                        <li role="tabpanel" id="tab3-tab" aria-labelledby="tab3">
-                                            <div class="cont-box">
-                                                tab3
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--// .component -->
-                </div>
-                <!--// .cont-box -->
             </div>
         </div>
         <!--// #contents -->
-        <footer id="fe-all-menu">
-            <%- include('../../../../../common/views/components/footer.component.html', { svcInfo }); %>
-            <%- include('../../../../../common/views/components/masking.component.html', { pageInfo }); %>
-        </footer>
+        <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
     </div>
+
+
 </body>
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MembershipBenefitBrand($('.wrap'));
+    new Tw.MembershipBenefitBrand($('#fe-membership-benefit-brand'), {
+      cateCd: '<%= selectedCateCd %>',
+      isLogin: '<%= isLogin %>',
+      noMembership: '<%= noMembership %>'
+    });
   });
 </script>
 <% include ../../components/end.component.html %>

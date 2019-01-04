@@ -1520,6 +1520,13 @@ Tw.MEMBERSHIP = {
     MESSAGE: '예매·조회는 T멤버십 앱에서 가능합니다.'
   },
   BENEFIT : {
+    BRAND: {
+      GRADE: {
+        A: '전체 등급',
+        V: 'VIP 등급',
+        M: '내 등급'
+      }
+    },
     DEFAULT_AREA: {
       AREA1: '서울',
       AREA2: '중구',
