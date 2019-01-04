@@ -175,10 +175,6 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
   },
 
   _onSuccessUscanUpload: function (res) {
-    // 현재 USCAN 테스트 불가
-    // this._requestSuspend();
-    // return;
-
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._requestSuspend();
     } else {
