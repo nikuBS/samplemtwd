@@ -66,8 +66,11 @@ class CustomerSvcInfoNoticeTworld extends TwViewController {
   /**
    * @private
    */
-  private _getReqParams(page): any {
-    let params = { page: page, size: 20 };
+  private _getReqParams(page: any): any {
+    let params = {
+      page: (page - 1) < 0 ? 0 : page - 1,
+      size: 20
+    };
 
     if (this._category === 'tworld') {
       params = Object.assign({ expsChnlCd: 'M' }, params);
