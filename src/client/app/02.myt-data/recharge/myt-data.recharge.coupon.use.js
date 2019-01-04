@@ -42,6 +42,9 @@ Tw.MyTDataRechargeCouponUse.prototype = {
     this._hashService.initHashNav($.proxy(this._onTabChanged, this));
     this._currentTab =
       this.$container.find('#tab1').attr('aria-selected') === 'true' ? 'refill' : 'gift';
+    if (!Tw.BrowserHelper.isApp()) {
+      this.$container.find('#fe-btn-contacts').hide();
+    }
   },
   _onTabChanged: function (hash) {
     if (hash.raw === 'refill') {
