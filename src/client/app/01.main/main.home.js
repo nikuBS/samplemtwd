@@ -592,17 +592,34 @@ Tw.MainHome.prototype = {
   },
   _successWelcomeMsg: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._welcomeList = this._filterShowMsg(resp.result.welcomeMsgList);
-      this._drawWelcomeMsg(this._welcomeList);
+      if ( Tw.BrowserHelper.isApp() ) {
+        this._nativeSrevice.send(Tw.NTV_CMD.LOAD, {
+          key: Tw.NTV_STORAGE.HOME_WELCOME
+        }, $.proxy(this._onHomeWelcomeForDraw, this, resp.result.welcomeMsgList));
+      } else {
+        var nonShow = Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.HOME_WELCOME) || '';
+        this._handleDrawNoti(resp.result.welcomeMsgList, nonShow);
+      }
     }
   },
-  _filterShowMsg: function (list) {
-    var nonShow = Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.HOME_WELCOME) || '';
+  _onHomeWelcomeForDraw: function (list, resp) {
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      this._handleDrawNoti(list, resp.params.value);
+    } else {
+      this._handleDrawNoti(list, '');
+    }
+  },
+  _handleDrawNoti: function (list, nonShow) {
+    this._welcomeList = this._filterShowMsg(list, nonShow);
+    this._drawWelcomeMsg(this._welcomeList);
+  },
+  _filterShowMsg: function (list, nonShow) {
     return _.filter(list, $.proxy(function (msg) {
       var startTime = Tw.DateHelper.convDateFormat(msg.expsStaDtm).getTime();
       var endTime = Tw.DateHelper.convDateFormat(msg.expsEndDtm).getTime();
       var today = new Date().getTime();
       return (nonShow.indexOf(msg.wmsgId) === -1 && startTime < today && endTime > today);
+      // return nonShow.indexOf(msg.wmsgId) === -1;
     }, this));
   },
   _drawWelcomeMsg: function (list) {
@@ -620,15 +637,38 @@ Tw.MainHome.prototype = {
     }
   },
   _onClickCloseNoti: function () {
-    var nonShow = Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.HOME_WELCOME) || '';
+    if ( Tw.BrowserHelper.isApp() ) {
+      this._nativeSrevice.send(Tw.NTV_CMD.LOAD, {
+        key: Tw.NTV_STORAGE.HOME_WELCOME
+      }, $.proxy(this._onHomeWelcomeForClose, this));
+    } else {
+      var nonShow = Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.HOME_WELCOME) || '';
+      this._handleClosedNoti(nonShow);
+    }
+  },
+  _onHomeWelcomeForClose: function (resp) {
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      this._handleClosedNoti(resp.params.value);
+    } else {
+      this._handleClosedNoti('');
+    }
+  },
+  _handleClosedNoti: function (nonShow) {
     if ( nonShow === '' ) {
       nonShow = this._welcomeList[0].wmsgId;
     } else {
       nonShow = nonShow + ',' + this._welcomeList[0].wmsgId;
     }
-    Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.HOME_WELCOME, nonShow);
-    this._welcomeList = this._filterShowMsg(this._welcomeList);
-    this._drawWelcomeMsg(this._welcomeList);
+    if ( Tw.BrowserHelper.isApp() ) {
+      this._nativeSrevice.send(Tw.NTV_CMD.SAVE, {
+        key: Tw.NTV_STORAGE.HOME_WELCOME,
+        value: nonShow
+      });
+    } else {
+      Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.HOME_WELCOME, nonShow);
+    }
+
+    this._handleDrawNoti(this._welcomeList, nonShow);
   },
   _onClickGoNoti: function () {
 
@@ -669,14 +709,14 @@ Tw.MainHome.prototype = {
     $('.fe-bt-quick-edit').on('click', $.proxy(this._onClickQuickEdit, this));
   },
   _parseQuickMenu: function (quickMenu) {
-    var menuId = quickMenu.menuIdStr.indexOf('|') !== -1 ? quickMenu.menuIdStr.split('|') :
-      Tw.FormatHelper.isEmpty(quickMenu.menuIdStr) || quickMenu.menuIdStr === 'null' ? [] : [quickMenu.menuIdStr.trim()];
-    var iconPath = quickMenu.iconPathStr.indexOf('|') !== -1 ? quickMenu.iconPathStr.split('|') :
-      Tw.FormatHelper.isEmpty(quickMenu.iconPathStr) || quickMenu.iconPathStr === 'null' ? [] : [quickMenu.iconPathStr.trim()];
-    var menuNm = quickMenu.menuNmStr.indexOf('|') !== -1 ? quickMenu.menuNmStr.split('|') :
-      Tw.FormatHelper.isEmpty(quickMenu.menuNmStr) || quickMenu.menuNmStr === 'null' ? [] : [quickMenu.menuNmStr.trim()];
-    var menuUrl = quickMenu.menuUrlStr.indexOf('|') !== -1 ? quickMenu.menuUrlStr.split('|') :
-      Tw.FormatHelper.isEmpty(quickMenu.menuUrlStr) || quickMenu.menuUrlStr === 'null' ? [] : [quickMenu.menuUrlStr.trim()];
+    var menuId = Tw.FormatHelper.isEmpty(quickMenu.menuIdStr) || quickMenu.menuIdStr === 'null' || quickMenu.menuIdStr === ' ' ? [] :
+      quickMenu.menuIdStr.indexOf('|') !== -1 ? quickMenu.menuIdStr.split('|') : [quickMenu.menuIdStr.trim()];
+    var iconPath = Tw.FormatHelper.isEmpty(quickMenu.iconPathStr) || quickMenu.iconPathStr === 'null' || quickMenu.iconPathStr === ' ' ? [] :
+      quickMenu.iconPathStr.indexOf('|') !== -1 ? quickMenu.iconPathStr.split('|') : [quickMenu.iconPathStr.trim()];
+    var menuNm = Tw.FormatHelper.isEmpty(quickMenu.menuNmStr) || quickMenu.menuNmStr === 'null' || quickMenu.menuNmStr === ' ' ? [] :
+      quickMenu.menuNmStr.indexOf('|') !== -1 ? quickMenu.menuNmStr.split('|') : [quickMenu.menuNmStr.trim()];
+    var menuUrl = Tw.FormatHelper.isEmpty(quickMenu.menuUrlStr) || quickMenu.menuUrlStr === 'null' || quickMenu.menuUrlStr === ' ' ? [] :
+      quickMenu.menuUrlStr.indexOf('|') !== -1 ? quickMenu.menuUrlStr.split('|') : [quickMenu.menuUrlStr.trim()];
     var result = [];
     _.map(menuId, $.proxy(function (id, index) {
       var menu = {
