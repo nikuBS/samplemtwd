@@ -636,7 +636,7 @@ export const CUSTOMER_STIE_OPTION_TYPE = [
   {
     cat: '회원',
     title: '법인명의 휴대폰번호 삭제방법',
-    code: 'D00009'
+    code: 'D00006'
   },
   {
     cat: '회원',
@@ -784,7 +784,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     unitedTitle: 'T월드 다이렉트∙T멤버십∙T로밍에 대한 안내',
     united: '_3T',
     title: 'T월드 다이렉트 이용안내',
-    text: '',
+    text: 'T월드 다이렉트에서 구매를 원한다면',
     upperCat: true, 
     sub_list: [
       {
@@ -815,7 +815,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           {
             dep_title: '구매 전 꿀팁',
             type: 'A2',
-            code: 'C00017'
+            code: 'C00011'
           },
           {
             dep_title: '다이렉트샵구매가이드',
@@ -872,7 +872,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     sub_list: [
       {
         sub_title: 'T멤버십 이용안내',
-        sub_text: '',
+        sub_text: 'T멤버십 이용이 궁금하다면',
         dep_list: [
           {
             dep_title: 'T멤버십 이용',
@@ -893,7 +893,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
       },
       {
         sub_title: 'T로밍 이용안내',
-        sub_text: '',
+        sub_text: '해외여행을 준비하고 계신다면',
         type: 'B1',
         code: 'C00020'
       }
@@ -904,13 +904,13 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     sub_list: [
       { 
         sub_title: '데이터 리필하기',
-        sub_text: '',
+        sub_text: '데이터 리필하기 정책과 제도가 궁금하다면',
         type: 'B1',
         code: 'C00040'
       },
       { 
         sub_title: 'T끼리 데이터 선물하기',
-        sub_text: '',
+        sub_text: '데이터 선물하기 정책과 제도가 궁금하다면',
         dep_list: [
           {
             dep_title: 'T끼리 데이터 선물하기',
@@ -926,7 +926,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
       },
       { 
         sub_title: 'T 기본약정 요금정책',
-        sub_text: '',
+        sub_text: 'T기본약정 요금정책과 제도가 궁금하다면',
         type: 'B1',
         code: 'C00039'
       }
@@ -937,7 +937,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     sub_list: [
       { 
         sub_title: 'ARS상담 이용안내',
-        sub_text: '',
+        sub_text: 'ARS로 직접 상담받고 싶다면',
         dep_list: [
           {
             dep_title: '버튼식 ARS',
@@ -958,7 +958,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
       },
       { 
         sub_title: '목소리 인증 이용안내',
-        sub_text: '',
+        sub_text: '더 안전한 ARS이용을 원하신다면',
         dep_list: [
           {
             dep_title: '목소리 인증',

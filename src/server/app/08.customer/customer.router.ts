@@ -51,7 +51,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/svc-info/service/detail', controller: CustomerSvcInfoServiceDetail });
     this.controllers.push({ url: '/svc-info/site/mcenter', controller: CustomerSvcInfoMcenter });
     this.controllers.push({ url: '/svc-info/site', controller: CustomerSvcInfoSite });
-    this.controllers.push({ url: '/svc-info/site/detail(:page)', controller: CustomerSvcInfoSiteDetail });
+    this.controllers.push({ url: '/svc-info/site/detail', controller: CustomerSvcInfoSiteDetail });
     this.controllers.push({ url: '/svc-info/voice(/:page)?', controller: CustomerVoice });
     this.controllers.push({ url: '/svc-info/notice', controller: CustomerSvcInfoNotice });
     this.controllers.push({ url: '/damage-info', controller: CustomerDamageInfo });
