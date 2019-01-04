@@ -16,10 +16,10 @@ class MyTDataPrepaidAlarm extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    const page = req.params.page;
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const responseData = {
       svcInfo: svcInfo,
+      pageInfo: pageInfo,
       isApp: BrowserHelper.isApp(req)
     };
 

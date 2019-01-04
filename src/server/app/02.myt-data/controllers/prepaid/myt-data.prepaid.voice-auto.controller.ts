@@ -19,19 +19,17 @@ class MyTDataPrepaidVoiceAuto extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    // if ( BrowserHelper.isApp(req) ) {
-    //   this.renderPrepaidVocie(req, res, next, svcInfo);
-    // } else {
-    //   res.render('share/common.share.app-install.info.html', {
-    //     svcInfo: svcInfo, isAndroid: BrowserHelper.isAndroid(req)
-    //   });
-    // }
-
-    this.renderPrepaidVoiceAuto(req, res, next, svcInfo);
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    if ( BrowserHelper.isApp(req) ) {
+      this.renderPrepaidVoiceAuto(req, res, next, svcInfo, pageInfo);
+    } else {
+      res.render('share/common.share.app-install.info.html', {
+        svcInfo: svcInfo, isAndroid: BrowserHelper.isAndroid(req)
+      });
+    }
   }
 
-  public renderPrepaidVoiceAuto = (req: Request, res: Response, next: NextFunction, svcInfo: any) =>     Observable.combineLatest(
+  public renderPrepaidVoiceAuto = (req: Request, res: Response, next: NextFunction, svcInfo, pageInfo) =>     Observable.combineLatest(
     this.getPPSInfo(),
     this.getAutoPPSInfo()
   ).subscribe(([PPSInfo, AutoInfo]) => {
@@ -40,6 +38,7 @@ class MyTDataPrepaidVoiceAuto extends TwViewController {
         PPSInfo: PPSInfo.result,
         AutoInfo: this.parseAuto(AutoInfo),
         svcInfo: svcInfo,
+        pageInfo: pageInfo,
         isApp: BrowserHelper.isApp(req),
         convertDate: this.convertDate,
         convertAmount: this.convertAmount

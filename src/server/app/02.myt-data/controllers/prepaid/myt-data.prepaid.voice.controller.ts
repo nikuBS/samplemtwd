@@ -16,37 +16,39 @@ class MyTDataPrepaidVoice extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    // if ( BrowserHelper.isApp(req) ) {
-    //   this.renderPrepaidVocie(req, res, next, svcInfo);
-    // } else {
-    //   res.render('share/common.share.app-install.info.html', {
-    //     svcInfo: svcInfo, isAndroid: BrowserHelper.isAndroid(req)
-    //   });
-    // }
-    this.renderPrepaidVoice(req, res, next, svcInfo);
-  }
-
-  public renderPrepaidVoice = (req: Request, res: Response, next: NextFunction, svcInfo: any) => this.getPPSInfo().subscribe((resp) => {
-    if ( resp.code === API_CODE.CODE_00 ) {
-      const result = resp.result;
-      res.render('prepaid/myt-data.prepaid.voice.html', {
-        PPSInfo: result,
-        svcInfo: svcInfo,
-        isApp: BrowserHelper.isApp(req),
-        convertDate: this.convertDate,
-        convertAmount: this.convertAmount
-      });
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    if ( BrowserHelper.isApp(req) ) {
+      this.renderPrepaidVoice(req, res, next, svcInfo, pageInfo);
     } else {
-      this.error.render(res, {
-        code: resp.code,
-        msg: resp.msg,
-        svcInfo: svcInfo
+      res.render('share/common.share.app-install.info.html', {
+        svcInfo: svcInfo, isAndroid: BrowserHelper.isAndroid(req)
       });
     }
-  }, (err) => {
-    this.error.render(res, { code: err.code, msg: err.msg, svcInfo });
-  })
+  }
+
+  public renderPrepaidVoice = (req: Request, res: Response, next: NextFunction, svcInfo, pageInfo) =>
+    this.getPPSInfo()
+      .subscribe((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          const result = resp.result;
+          res.render('prepaid/myt-data.prepaid.voice.html', {
+            PPSInfo: result,
+            svcInfo: svcInfo,
+            pageInfo: pageInfo,
+            isApp: BrowserHelper.isApp(req),
+            convertDate: this.convertDate,
+            convertAmount: this.convertAmount
+          });
+        } else {
+          this.error.render(res, {
+            code: resp.code,
+            msg: resp.msg,
+            svcInfo: svcInfo
+          });
+        }
+      }, (err) => {
+        this.error.render(res, { code: err.code, msg: err.msg, svcInfo });
+      })
 
   public getPPSInfo = () => this.apiService.request(API_CMD.BFF_05_0013, {});
 
