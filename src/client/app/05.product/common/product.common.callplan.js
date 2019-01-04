@@ -12,6 +12,7 @@ Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, i
 
   this._popupService = Tw.Popup;
   this._tidLanding = new Tw.TidLandingComponent();
+  this._comparePlans = new Tw.ProductMobilePlanComparePlans();
   this._apiService = Tw.Api;
 
   this._prodId = prodId;
@@ -85,7 +86,7 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _openComparePlans: function() {
-    new Tw.ProductMobilePlanComparePlans().openCompare(this._prodId);
+    this._comparePlans.openCompare(this._prodId);
   },
 
   _onBannerLink: function(e) {
