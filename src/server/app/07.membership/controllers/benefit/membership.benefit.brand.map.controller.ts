@@ -58,23 +58,6 @@ class MembershipBenefitBrandMap extends TwViewController {
 
   private getInfo(input: Input, res: Response, svcInfo: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_11_0024, input).map((resp) => {
-      // Mock response
-      resp = {
-        code: '00',
-        msg: 'success',
-        result: {
-          coCd: 'C111',
-          joinCd: 'B187',
-          mrchtNm: '명동역남산',
-          brandCd: '2012001524',
-          coPtnrNm: '파리바게뜨',
-          telNo: '0277147734',
-          addr: '서울 중구 퇴계로 118 (남산동1가)',
-          googleMapCoordX: '126.9826639',
-          googleMapCoordY: '37.5633736'
-        }
-      };
-
       if (resp.code === API_CODE.CODE_00) {
         return resp.result;
       }
