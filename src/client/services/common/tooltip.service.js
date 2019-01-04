@@ -50,13 +50,13 @@ Tw.TooltipService.prototype = {
     }
   },
   _setTitle: function ($result) {
-    var $target = $('#' + $result.mtwdTtipId);
-    var cloneTarget = $target.clone();
+    var $target = $('button[id="' + $result.mtwdTtipId + '"]');
+    var cloneTarget = $target.first().clone();
     var parentTarget = $target.parent();
     parentTarget.text($result.ttipTitNm);
     parentTarget.append(cloneTarget);
 
-    cloneTarget.on('click', $.proxy(this._openTip, this, $result));
+    parentTarget.on('click', 'button', $.proxy(this._openTip, this, $result));
   },
   _openTip: function ($result) {
     this._popupService.open({

@@ -49,16 +49,21 @@ Tw.MyTFareBillOption.prototype = {
   _cancelAutoPayment: function () {
     this._historyService.goLoad('/myt-fare/bill/option/cancel');
   },
-  _changePaymentDate: function () {
+  _changePaymentDate: function (event) {
+    var $target = $(event.currentTarget);
     this._popupService.open({
       url: '/hbs/',
       hbs: 'actionsheet01',
       layer: true,
       data: Tw.POPUP_TPL.FARE_PAYMENT_BANK_DATE,
       btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
-    }, $.proxy(this._selectDatePopupCallback, this));
+    }, $.proxy(this._selectDatePopupCallback, this, $target));
   },
-  _selectDatePopupCallback: function ($layer) {
+  _selectDatePopupCallback: function ($target, $layer) {
+    var $id = $target.attr('id');
+    if (!Tw.FormatHelper.isEmpty($id)) {
+      $layer.find('input[data-value="' + $id + '"]').attr('checked', 'checked');
+    }
     $layer.on('change', '.ac-list', $.proxy(this._setSelectedDate, this));
   },
   _setSelectedDate: function (event) {
