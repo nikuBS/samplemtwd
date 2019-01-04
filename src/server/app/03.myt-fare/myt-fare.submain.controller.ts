@@ -168,11 +168,11 @@ class MyTFareSubmainController extends TwViewController {
       // 납부/청구 정보
       if ( paymentInfo ) {
         data.paymentInfo = paymentInfo;
-        // 자동납부인 경우
-        if ( paymentInfo.payMthdCd === '01' || paymentInfo.payMthdCd === '02' || paymentInfo.payMthdCd === 'G1' ) {
-          // 은행자동납부, 카드자동납부, 은행지로자동납부
-          data.isNotAutoPayment = false;
-        }
+        // 자동납부인 경우에도 버튼 노출하도록 변경 [DV001-10531]
+        // if ( paymentInfo.payMthdCd === '01' || paymentInfo.payMthdCd === '02' || paymentInfo.payMthdCd === 'G1' ) {
+        //   // 은행자동납부, 카드자동납부, 은행지로자동납부
+        //   data.isNotAutoPayment = false;
+        // }
       }
       // 최근납부내역
       if ( totalPayment ) {
@@ -233,11 +233,11 @@ class MyTFareSubmainController extends TwViewController {
         // 납부/청구 정보
         if ( paymentInfo ) {
           data.paymentInfo = paymentInfo;
-          // 자동납부인 경우
-          if ( paymentInfo.payMthdCd === '01' || paymentInfo.payMthdCd === '02' || paymentInfo.payMthdCd === 'G1' ) {
-            // 은행자동납부, 카드자동납부, 은행지로자동납부
-            data.isNotAutoPayment = false;
-          }
+          // 자동납부인 경우에도 버튼 노출하도록 변경 [DV001-10531]
+          // if ( paymentInfo.payMthdCd === '01' || paymentInfo.payMthdCd === '02' || paymentInfo.payMthdCd === 'G1' ) {
+          //   // 은행자동납부, 카드자동납부, 은행지로자동납부
+          //   data.isNotAutoPayment = false;
+          // }
         }
         // 소액결제
         if ( microPay ) {
