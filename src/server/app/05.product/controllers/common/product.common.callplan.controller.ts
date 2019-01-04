@@ -11,7 +11,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { REDIS_PRODUCT_INFO, REDIS_PRODUCT_CONTETNS, REDIS_PRODUCT_COMPARISON } from '../../../../types/redis.type';
 import {
   DATA_UNIT,
-  PRODUCT_CALLPLAN_FEEPLAN,
+  PRODUCT_CALLPLAN_FEEPLAN, PRODUCT_REQUIRE_DOCUMENT, PRODUCT_REQUIRE_DOCUMENT_APPLY_RESULT, PRODUCT_REQUIRE_DOCUMENT_CALLPLAN_RESULT,
   PRODUCT_SIMILAR_PRODUCT,
   PRODUCT_TYPE_NM
 } from '../../../../types/string.type';
@@ -509,16 +509,39 @@ class ProductCommonCallplan extends TwViewController {
       return null;
     }
 
-    const latestItem = requireDocumentInfo.result.necessaryDocumentInspectInfoList[0],
-      nextSchdDtTime = FormatHelper.isEmpty(latestItem.nextSchddt) ? null :
-        DateHelper.getUnixTimeStamp(new Date(DateHelper.getAddDay(latestItem.nextSchddt))),
-      currentTime = new Date().getTime() / 1000;
+    const latestItem = requireDocumentInfo.result.necessaryDocumentInspectInfoList[0];
 
-    return Object.assign(latestItem, {
-      isNeedDocument: nextSchdDtTime && (latestItem.ciaInsptRslt === PRODUCT_CALLPLAN.CIA_INSPT_RSLT && currentTime < nextSchdDtTime),
-      isExpired: nextSchdDtTime && (latestItem.abnSaleOpClCd === '000' && currentTime > nextSchdDtTime),
-      isProcess: nextSchdDtTime && (FormatHelper.isEmpty(latestItem.abnSaleOpClCd) && currentTime < nextSchdDtTime)
-    });
+    if (FormatHelper.isEmpty(latestItem.ciaInsptRslt) ||
+      latestItem.ciaInsptRslt !== PRODUCT_REQUIRE_DOCUMENT.NORMAL &&
+      latestItem.ciaInsptRslt !== PRODUCT_REQUIRE_DOCUMENT.ABNORMAL) {
+      return {
+        text: PRODUCT_REQUIRE_DOCUMENT_CALLPLAN_RESULT.WORKING,
+        btnText: PRODUCT_REQUIRE_DOCUMENT.HISTORY,
+        page: 'history'
+      };
+    }
+
+    if (latestItem.ciaInsptRslt === PRODUCT_REQUIRE_DOCUMENT.ABNORMAL && !FormatHelper.isEmpty(latestItem.ciaInsptRsnCd)) {
+      return {
+        text: PRODUCT_REQUIRE_DOCUMENT_CALLPLAN_RESULT.NEED_DOCUMENT,
+        btnText: PRODUCT_REQUIRE_DOCUMENT.APPLY,
+        page: 'apply'
+      };
+    }
+
+    if (latestItem.ciaInsptRslt === PRODUCT_REQUIRE_DOCUMENT.ABNORMAL && FormatHelper.isEmpty(latestItem.ciaInsptRsnCd)) {
+      return {
+        text: PRODUCT_REQUIRE_DOCUMENT_CALLPLAN_RESULT.EXPIRE_DOCUMENT,
+        btnText: PRODUCT_REQUIRE_DOCUMENT.HISTORY,
+        page: 'history'
+      };
+    }
+
+    return {
+      text: PRODUCT_REQUIRE_DOCUMENT_CALLPLAN_RESULT.COMPLETE,
+      btnText: PRODUCT_REQUIRE_DOCUMENT.HISTORY,
+      page: 'history'
+    };
   }
 
   /**
