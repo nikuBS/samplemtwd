@@ -18,7 +18,7 @@ class ProductRoamingJoinConfirmInfo extends TwViewController {
     constructor() {
         super();
     }
-    render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
 
         const prodId = req.query.prod_id || null;
 
@@ -48,7 +48,8 @@ class ProductRoamingJoinConfirmInfo extends TwViewController {
                 prodRedisInfo : prodRedisInfo.result.summary,
                 prodBffInfo : prodBffInfo.result,
                 prodId : prodId,
-                maskingNum : StringHelper.phoneStringToDash(svcInfo.svcNum)
+                maskingNum : StringHelper.phoneStringToDash(svcInfo.svcNum),
+                pageInfo : pageInfo
             });
         });
 

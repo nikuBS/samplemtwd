@@ -218,7 +218,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
         this._historyService.goLoad('/product/roaming/my-use');
     },
     _goBack : function(){
-        this._historyService.goLoad('/product/callplan/'+this._prodId);
+        this._historyService.goBack();
     },
     _confirmInformationSetting : function () {
         var startDtIdx = parseInt(this.$container.find('#start_date').attr('data-idx'),10);

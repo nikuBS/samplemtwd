@@ -18,7 +18,7 @@ class ProductRoamingJoinRoamingCombine extends TwViewController {
     constructor() {
         super();
     }
-    render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
 
 
 
@@ -52,7 +52,8 @@ class ProductRoamingJoinRoamingCombine extends TwViewController {
                 prodRedisInfo : prodRedisInfo.result.summary,
                 prodBffInfo : prodBffInfo.result,
                 prodId : prodId,
-                phoneNum : StringHelper.phoneStringToDash(svcInfo.svcNum)
+                phoneNum : StringHelper.phoneStringToDash(svcInfo.svcNum),
+                pageInfo : pageInfo
             });
         });
 
