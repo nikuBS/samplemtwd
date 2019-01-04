@@ -34,7 +34,7 @@ Tw.PopupService.prototype = {
     if ( !Tw.FormatHelper.isEmpty(this._openCallback) ) {
       this._sendOpenCallback($currentPopup);
     }
-    Tw.Tooltip.popInit($popups.attr('data-menuId'));
+    Tw.Tooltip.popInit($popups.last().attr('data-menuId'));
   },
   _onFailPopup: function(option) {
     if (Tw.BrowserHelper.isApp()) {
