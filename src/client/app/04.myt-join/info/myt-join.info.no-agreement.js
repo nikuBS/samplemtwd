@@ -70,7 +70,7 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
   },
 
   _dateForamt : function (date) {
-    return Tw.DateHelper.getShortDate(date);
+    return Tw.FormatHelper.isEmpty(date) ? date:Tw.DateHelper.getShortDate(date);
   },
 
   _dateForamtConvert : function (date, format) {
@@ -98,7 +98,7 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
 
   _setData : function (resp) {
     this.$usablePoint.text(resp.usablePt);
-    if (resp.extnSchdDt !== '') {
+    if (Number(resp.extnSchdPt) > 0 && resp.extnSchdDt !== '') {
       this.$removeDate.text(resp.extnSchdDt).parent().removeClass('none');
     }
     this.$removePoint.text(resp.extnSchdPt);
