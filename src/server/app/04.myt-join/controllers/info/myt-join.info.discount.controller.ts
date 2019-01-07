@@ -246,6 +246,12 @@ class MytJoinInfoDiscount extends TwViewController {
       tInstallment.titNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_C.TITNM;
       tInstallment.agreeNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_C.AGREE_NM;
 
+      // 약정 위약금2와 함께 가입한 경우 상품명 변경
+      if ( this.getSizeObjOrArr(rsvPenTAgree) > 0 ) {
+        tInstallment.titNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_C.TITNM2;
+        tInstallment.agreeNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_C.AGREE_NM2;
+      }
+      
       tInstallment.agreeTotMonth = tInstallment.allotMthCnt; // 약정 전체 개월수
       tInstallment.agreePay = FormatHelper.addComma(tInstallment.totAgrmtAmt); // 약정 금액
       tInstallment.penalty = FormatHelper.addComma(tInstallment.penAmt2); // 위약금
@@ -288,6 +294,13 @@ class MytJoinInfoDiscount extends TwViewController {
             sucesAgreeList[i].typeStr = 'suc_type_A';
             sucesAgreeList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.SUC_TYPE_A.TITNM + sucesAgreeList[i].bfEqpDcClNm;
             sucesAgreeList[i].agreeNm = sucesAgreeList[i].bfEqpDcClNm;
+            // 약정위약금2가 존재하면 이름 변경
+            for ( let j = 0; j < sucesAgreeList.length; j++ ) {
+              if ( sucesAgreeList[i].bfEqpDcClCd === '3' ) {
+                sucesAgreeList[i].agreeNm = MYT_JOIN_CONTRACT_TERMINAL.JOIN_TYPE_C.AGREE_NM2;
+                sucesAgreeList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.SUC_TYPE_A.TITNM + sucesAgreeList[i].agreeNm;
+              }
+            }
             break;
 
           case '2':

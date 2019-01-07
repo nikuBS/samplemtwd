@@ -310,7 +310,9 @@ export const MYT_JOIN_CONTRACT_TERMINAL = {
   },
   JOIN_TYPE_C: {
     TITNM: '가입 / T 약정 할부지원',
-    AGREE_NM: 'T 약정 할부지원'
+    AGREE_NM: 'T 약정 할부지원',
+    TITNM2: '가입 / T 약정할부지원프로그램',
+    AGREE_NM2: 'T 약정할부지원프로그램'
   },
   JOIN_TYPE_D: {
     TITNM: '가입 / 약정 위약금2',
