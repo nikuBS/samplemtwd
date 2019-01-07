@@ -52,8 +52,6 @@ Tw.ProductRoamingSearchResult.prototype = {
             'showDailyPrice': 'N'
         };
 
-        console.log('this._phoneInfo :' + JSON.stringify(this._phoneInfo));
-
         this._rmPhoneInfoTmpl = Handlebars.compile($('#fe-phone-info').html());
         this._rmPhoneSelectTmpl = Handlebars.compile($('#fe-phone-select').html());
         if(this._svcInfo !== null){
