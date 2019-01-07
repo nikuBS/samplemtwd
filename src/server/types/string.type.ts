@@ -495,7 +495,7 @@ export enum SELECT_POINT {
 
 export const PRODUCT_WIRE_CATEGORIES = {
   internet: '인터넷',
-  phone: '전화',
+  phone: '집전화',
   tv: 'TV'
 };
 
@@ -820,7 +820,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
         sub_text: '영상통화 요금정책이 궁금하다면',
         type: 'B1',
         code: 'C00033'
-      },
+      }
     ]
   },
   {
@@ -828,7 +828,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     united: '_3T',
     title: 'T월드 다이렉트 이용안내',
     text: 'T월드 다이렉트에서 구매를 원한다면',
-    upperCat: true, 
+    upperCat: true,
     sub_list: [
       {
         sub_title: '할인∙혜택',
@@ -902,8 +902,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
             code: 'C00004'
           }
         ]
-      },
-      
+      }
     ]
   },
   {
@@ -911,7 +910,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     united: '_3T',
     title: 'T멤버십∙T로밍에 대한 안내',
     text: '',
-    upperCat: false, 
+    upperCat: false,
     sub_list: [
       {
         sub_title: 'T멤버십 이용안내',
@@ -945,13 +944,13 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
   {
     title: '서비스 정책∙제도에 대한 안내',
     sub_list: [
-      { 
+      {
         sub_title: '데이터 리필하기',
         sub_text: '데이터 리필하기 정책과 제도가 궁금하다면',
         type: 'B1',
         code: 'C00040'
       },
-      { 
+      {
         sub_title: 'T끼리 데이터 선물하기',
         sub_text: '데이터 선물하기 정책과 제도가 궁금하다면',
         dep_list: [
@@ -967,7 +966,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           }
         ]
       },
-      { 
+      {
         sub_title: 'T 기본약정 요금정책',
         sub_text: 'T기본약정 요금정책과 제도가 궁금하다면',
         type: 'B1',
@@ -978,7 +977,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
   {
     title: '목소리 인증∙ARS상담에 대한 안내',
     sub_list: [
-      { 
+      {
         sub_title: 'ARS상담 이용안내',
         sub_text: 'ARS로 직접 상담받고 싶다면',
         dep_list: [
@@ -999,7 +998,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           }
         ]
       },
-      { 
+      {
         sub_title: '목소리 인증 이용안내',
         sub_text: '더 안전한 ARS이용을 원하신다면',
         dep_list: [

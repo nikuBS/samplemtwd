@@ -18,7 +18,7 @@
     <!--// #skip_navigation -->
     <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <!-- #header -->
-        <%- include('../../../common/views/components/header.component.html', { title: '인터넷/전화/TV', svcInfo: svcInfo }); %>
+        <%- include('../../../common/views/components/header.component.html', { title: '인터넷 · 집전화 · IPTV', svcInfo: svcInfo }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
@@ -40,8 +40,8 @@
                 <% } %>
 
                 <hr class="cont-sp type1" aria-hidden="true"/>
-                <div class="cont-box nogaps noborder">
-                    <div class="main-slide-banner slide-pagingtype">
+                <div class="cont-box nogaps">
+                    <div class="main-charge-box advice section-swiper-box main-banner-img">
                         <!-- .widget -->
                         <div class="widget">
                             <div class="widget-box slider1">
@@ -56,73 +56,76 @@
                 <!-- //스와이프 -->
 
                 <hr class="cont-sp type1" aria-hidden="true"/>
-                <div class="cont-box nogaps-hoz">
-                    <ul class="category-infoarealist">
-                        <li class="category-type">
-                            <a href="/product/wireplan/internet">
-                                <div class="category-typetitle">
-                                    <h3 class="title">인터넷</h3>
-                                    <div class="more"><button class="link">더보기</button></div>
-                                </div>
-                                <div class="category-infobox type-internet">
-                                    <h4 class="title">최대 10배 빠른 Giga 인터넷</h4>
-                                    <p class="text">내게 더 이상 기다림은 없다! 터치 한번에 OK</p>
-                                </div>
-                            </a>
+                <div class="cont-box nogaps">
+                    <div class="category-info-guide">
+                        <ul>
+                            <li>
+                                <a href="/product/wireplan/internet" class="link icon1">
+									<span class="stit">인터넷</span>
+									<span class="text-type1">최대 10배 빠른 Giga 인터넷</span>
+									<p class="text-type2">내게 더 이상 기다림은 없다!<br/>터치 한 번에 OK</p>
+                                </a>
+                            </li>
+                            <li class="category-type">
+                                <a href="/product/wireplan/phone"class="link icon2">
+									<span class="stit">집전화</span>
+									<span class="text-type1">프리미엄 통화품질 SK브로드밴드</span>
+									<p class="text-type2">이보다 더 저렴할 수 없다!<br/>집전화&middot;인터넷 전화는 SK브로드밴드</p>
+                                </a>
+                            </li>
+                            <li class="category-type">
+                                <a href="/product/wireplan/tv" class="link icon3">
+									<span class="stit">IPTV</span>
+									<span class="text-type1">최신 VOD는 역시 Btv</span>
+									<p class="text-type2">나보다 나를 잘 아는 스마트 무비!<br/>가족 모두 행복한 채널 Btv</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <hr class="cont-sp type1" aria-hidden="true" />
+                <div class="cont-box nogaps">
+                    <ul class="link-long-list ntype01">
+                        <li>
+                            <div class="link-long">
+                                <a href="/product/wireplan/join/reservation">
+                                    가입상담예약 신청 · 조회
+                                    <span class="tx-sub"><span class="ico"><span class="blind">보기</span></span></span>
+                                </a>
+                            </div>
                         </li>
-                        <li class="category-type">
-                            <a href="/product/wireplan/phone">
-                                <div class="category-typetitle">
-                                    <h3 class="title">전화</h3>
-                                    <div class="more"><button class="link">더보기</button></div>
-                                </div>
-                                <div class="category-infobox type-tel">
-                                    <h4 class="title">프리미엄 통화품질 SKT 전화</h4>
-                                    <p class="text">이보다 더 저렴할 없다! 전화 / 인터넷 전화는 SKT</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="category-type">
-                            <a href="/product/wireplan/tv">
-                                <div class="category-typetitle">
-                                    <h3 class="title">TV</h3>
-                                    <div class="more"><button class="link">더보기</button></div>
-                                </div>
-                                <div class="category-infobox type-tv">
-                                    <h4 class="title">최신 VOD는 역시 Btv</h4>
-                                    <p class="text">나보다 나를 잘 아는 스마트 무비! 가족 모두 행복한 채널 Btv</p>
-                                </div>
-                            </a>
+                        <li>
+                            <div class="link-long">
+                                <a href="/product/wireplan/service-area">
+                                    서비스가능지역 조회
+                                    <span class="tx-sub"><span class="ico"><span class="blind">보기</span></span></span>
+                                </a>
+                            </div>
                         </li>
                     </ul>
                 </div>
 
                 <hr class="cont-sp type1" aria-hidden="true" />
 
-
-                <ul class="shortcutslist-wrap">
-                    <li class="category-type">
-                        <a href="/product/wireplan/join/reservation" class="link">가입상담예약 신청/조회</a>
-                    </li>
-                    <li class="category-type">
-                        <a href="/product/wireplan/service-area" class="link">서비스 가능지역 조회</a>
-                    </li>
-                </ul>
-
-                <hr class="cont-sp type1" aria-hidden="true" />
-
                 <!-- 결합혜택 정보 안내 영역 -->
-                <div class="cont-box nogaps noborder">
-                    <div class="main-slide-banner dot-btm slide-pagingtype">
-                        <!-- .widget -->
-                        <div class="widget">
-                            <div class="widget-box slider1">
-                                <div class="slider-box">
-                                    <ul class="slider" data-location="C"></ul>
+                <div class="cont-box nogaps bgnone">
+                    <div class="combine-benefit-wrap">
+                        <h2 class="stit">모이면 모일수록 커지는 결합혜택</h2>
+                        <p class="stit-txt">T 가족회선, 인터넷, 집전화, IPTV 결합하고 할인받으세요 </p>
+                    </div>
+                    <div class="section-box type01 nogaps">
+                        <div class="main-charge-box advice section-swiper-box main-banner-img">
+                            <!-- .widget -->
+                            <div class="widget">
+                                <div class="widget-box slider1">
+                                    <div class="slider-box">
+                                        <ul class="slider" data-location="C"></ul>
+                                    </div>
                                 </div>
                             </div>
+                            <!--// .widget -->
                         </div>
-                        <!--// .widget -->
                     </div>
                 </div>
                 <!-- //결합혜택 정보 안내 영역 -->
@@ -136,32 +139,32 @@
                     <ul class="pg-link-list">
                         <li>
                             <a href="/product/mobileplan">
-                                <i class="icon-price-plan-40"><span class="blind">price plan</span></i>
+                                <i class="icon-price-plan-40"><span class="blind">요금제</span></i>
                                 요금제
                             </a>
                         </li>
                         <li>
                             <a href="/product/mobileplan-add">
-                                <i class="icon-price-plan-40"><span class="blind">price plan</span></i>
+                                <i class="icon-vas-40"><span class="blind">부가서비스</span></i>
                                 부가서비스
                             </a>
                         </li>
                         <li>
                             <a href="/product/roaming">
-                                <i class="icon-roaming-40"><span class="blind">my</span></i>
+                                <i class="icon-roaming-40"><span class="blind">T로밍</span></i>
                                 T로밍
                             </a>
                         </li>
                         <li>
                             <a href="/benefit/submain/discount">
-                                <i class="icon-discount-40"><span class="blind">discount</span></i>
-                                혜택 &middot; 할인 &gt; 요금 할인
+                                <i class="icon-discount-40"><span class="blind">혜택 · 할인 &gt; 요금 할인</span></i>
+                                혜택 · 할인 &gt; 요금 할인
                             </a>
                         </li>
                         <li>
                             <a href="/benefit/submain/combinations">
-                                <i class="icon-discount-40"><span class="blind">discount</span></i>
-                                혜택 &middot; 할인 &gt; 결합 할인  
+                                <i class="icon-discount-40"><span class="blind">혜택 · 할인 &gt; 결합 할인</span></i>
+                                혜택 · 할인 &gt; 결합 할인  
                             </a>
                         </li>
                     </ul>
