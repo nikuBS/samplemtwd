@@ -79,11 +79,11 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
       }
 
       const BADGE = {
-        '00': 'fam-members2',
+        '00': 'f-delegate',
         '01': 'partner',
-        '02': 'fam',
+        '02': 'children',
         '03': 'parents',
-        '04': 'siblings'
+        '04': 'brother'
       };
 
       return {
