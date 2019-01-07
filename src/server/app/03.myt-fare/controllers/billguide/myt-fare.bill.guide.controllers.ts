@@ -247,6 +247,11 @@ class MyTFareBillGuide extends TwViewController {
       });
     }, function(err) {
       thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
+      if ( err.code === 'BIL0076' ) {
+        return res.render( 'billguide/myt-fare.bill.guide.nopay6month.html',
+          { svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
+      }
+
       return thisMain.error.render(res, {
         title: 'title',
         code: err.code,
@@ -298,6 +303,11 @@ class MyTFareBillGuide extends TwViewController {
       });
     }, function(err) {
       thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
+      if ( err.code === 'BIL0076' ) {
+        return res.render( 'billguide/myt-fare.bill.guide.nopay6month.html',
+          { svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
+      }
+
       return thisMain.error.render(res, {
         title: 'title',
         code: err.code,
@@ -355,6 +365,11 @@ class MyTFareBillGuide extends TwViewController {
       });
     }, function(err) {
       thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
+      if ( err.code === 'BIL0076' ) {
+        return res.render( 'billguide/myt-fare.bill.guide.nopay6month.html',
+          { svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
+      }
+
       return thisMain.error.render(res, {
         title: 'title',
         code: err.code,

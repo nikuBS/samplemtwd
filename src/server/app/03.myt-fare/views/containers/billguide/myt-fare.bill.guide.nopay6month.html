@@ -1,0 +1,85 @@
+<%#
+* FileName: myt-fare.bill.guide.nopay6month.html
+* Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
+* Date: 2019.01.07
+%>
+
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
+
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+<div id="fe-wrap" class="wrap" data-menuId="<%= pageInfo.menuId %>">
+
+    <%- include('../../../../common/views/components/header.component.html', { svcInfo: svcInfo, title: '요금안내서' }); %>
+
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+
+        <div class="container">
+
+            <!--<div class="user-greeting">-->
+                <!--<i class="icon-dialog-emoji-56"><span class="blind">dialog emoji</span></i>-->
+                <!--<p class="msg"><%= svcInfo.mbrNm %>님,<br /><span class="str">SK텔레콤과 함께해 주셔서 감사합니다.</span></p>-->
+            <!--</div>-->
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="calling-plan">
+                    <a href="/product/callplan/<%= svcInfo.prodId %>">
+                    <button class="wrap-link">
+                        <i class="icon-badge-plan-my mr8"><span class="blind">my</span></i>
+                        <span class="stit"><%= svcInfo.prodNm %></span>
+                    </button>
+                    </a>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="user-month-bill">
+                    <div class="this-month-bill">
+                        <p class="msg">
+                            최근 6개월 내 청구된<br/>
+                            요금이 없습니다.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-btm">
+                <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                <ul class="noti-list">
+                    <li>이용요금 <button id="MF_02_01_tip_01" type="button" class="tip-view">TIP</button></li>
+                    <li>로밍 이용요금 안내 <button id="MF_02_01_tip_02" type="button" class="tip-view">TIP</button></li>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+
+            <!-- TBD
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <img src="<%= CDN %>/img/dummy/DC_02_TBD3.jpg" alt="페이지 바로가기 노출 영역" style="width:100%;vertical-align:top;"/>
+             -->
+
+        </div>
+    </div>
+    <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+</div>
+
+<% include ../../components/end.component.html %>
