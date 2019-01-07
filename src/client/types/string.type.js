@@ -151,7 +151,7 @@ Tw.WEEKDAYS = ['월', '화', '수', '목', '금', '토', '일'];
 
 Tw.REFILL_COUPON_CONFIRM = {
   TITLE_REFILL: '리필 하시겠습니까?',
-  CONTENTS_REFILL: '리필 음성/데이터는 이번 달까지만 사용 가능합니다.',
+  CONTENTS_REFILL: '리필 음성/데이터는 이번 달까지만 사용할 수 있습니다.',
   CONFIRM_REFILL: '리필하기',
   TITLE_GIFT: '가족에게 선물하시겠습니까?',
   CONTENTS_GIFT: '가족에게 선물하시려면 문자 인증을 해야하며, 인증하고 나면 선물을 취소할 수 없습니다.',
