@@ -156,15 +156,22 @@ Tw.CustomerEmail.prototype = {
   },
 
   _stepBack: function () {
-    this._popupService.openConfirmButton(Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG, Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+    var confirmed = false;
+    this._popupService.openConfirmButton(
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
       $.proxy(function () {
+        confirmed = true;
         this._popupService.close();
-        setTimeout($.proxy(this._goBack, this), 500);
-      }, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-  },
-
-  _goBack: function () {
-    this._history.goBack();
+      }, this),
+      $.proxy(function () {
+        if (confirmed) {
+          this._historyService.goBack();
+        }
+      }, this),
+      Tw.BUTTON_LABEL.NO,
+      Tw.BUTTON_LABEL.YES
+    );
   },
 
   _openTermLayer: function (sCode) {
