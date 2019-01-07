@@ -859,3 +859,15 @@ Tw.CUSTOMER_SITE_INFO_TYPEA_CHOICE = {
     ]
   }]
 }
+
+
+Tw.CUSTOMER_SERVICE_INFO_USIM_DEFINE = {
+  data:{
+    list: [
+      {txt: '유심 관련 용어', 'radio-attr': 'name="usimDefineTab" value="1"'},
+      {txt: '기변(기기변경) 관련 용어', 'radio-attr': 'name="usimDefineTab" value="2"'},
+      {txt: '기기 관련 용어', 'radio-attr': 'name="usimDefineTab" value="3"'},
+      {txt: '서비스 관련 기타 용어', 'radio-attr': 'name="usimDefineTab" value="4"'}
+    ]
+  }
+}

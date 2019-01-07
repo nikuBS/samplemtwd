@@ -43,7 +43,7 @@
                                         <p class="site-informationuse-text">T월드 웹사이트를 이용하면서 어려운 점을 아래 이용안내에서 확인해 보세요.</p>
                                         <ul class="site-informationuse-list">
                                             <% data.forEach(function(el, index){ %>
-                                            <li class="amount">
+                                            <li class="amount <%=el.className%>">
                                                 <a href="/customer/svc-info/site/detail?code=<%=el.code%>" class="link">
                                                     <h3 class="title"><%=el.cat %></h3>
                                                     <p class="text"><%=el.title %></p>

@@ -20,6 +20,7 @@ Tw.CustomerSvcinfoServiceDetail = function (rootEl, data) {
 Tw.CustomerSvcinfoServiceDetail.prototype = {
   _cachedElement: function () {
     this.$selectBtn = this.$container.find('.btn-dropdown'); // type A
+    this.$defineUSIMBtn = this.$container.find('.fe-btn-define-usim'); //용어정리 버튼(유심)
   },
   _init: function () {
     this.rootPathName = this._historyService.pathname;
@@ -27,6 +28,8 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
   },
   _bindEvent: function () {
     this.$selectBtn.on('click', $.proxy(this._typeActionSheetOpen, this));
+    // from html DOM 주요용어 바로가기
+    this.$defineUSIMBtn.on('click', $.proxy(this._USIMInfoCall, this));
 
     // from idpt
     this._bindUIEvent();
@@ -94,6 +97,57 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     this._historyService.goLoad(targetURL + '?code=' + code);
   },
 
+  // 유심용어 정리 바로가기 액션시트 start
+  _USIMInfoCall: function () {
+    this._apiService.request(Tw.API_CMD.BFF_08_0064, {}, {}, ['C00014']) // TODO 유심 컨텐츠 ID 전달 되면 바꾸어주기
+    .done($.proxy(this._USIMActionSheetOpen, this)).fail($.proxy(this._apiError, this));
+  },
+
+  _USIMActionSheetOpen: function (data) {
+    this._popupService.open({
+      hbs: 'CS_07_02',
+      contentHTML: data.result.icntsCtt
+    },
+    $.proxy(this._USIMActionSheetEvent, this), null, 'usimDefine');
+  },
+
+  _USIMActionSheetEvent: function ($container) {
+    this.$USIMSelectBtn = $container.find('.btn-dropdown'); // 유심정리 탭 선택
+    this.$USIMSelectBtn.text(Tw.CUSTOMER_SERVICE_INFO_USIM_DEFINE.data.list[0].txt);
+    this.$USIMSelectBtn.on('click', $.proxy(this._USIMSelect, this));
+  },
+
+  // 용어정리 탭 내 셀렉트 박스 클릭 이벤트
+  _USIMSelect: function () {
+    this._popupService.open({
+      hbs: 'actionsheet01',// hbs의 파일명
+      layer: true,
+      title: null,
+      data: Tw.CUSTOMER_SERVICE_INFO_USIM_DEFINE,
+      btnfloating: {
+        txt: Tw.BUTTON_LABEL.CLOSE,
+        class: 'tw-popup-closeBtn'
+      }
+    }, $.proxy(this._USIMSelectBindEvent, this), null);
+  },
+
+  _USIMSelectBindEvent: function ($selectContainer) {
+    this.$USIMSelectLists = $selectContainer.find('.ac-list>li');
+    this.$USIMSelectClostBtn = $selectContainer.find('.tw-popup-closeBtn');
+    this.$USIMSelectLists.on('click', $.proxy(this._selectUSIMmenu, this));
+  },
+
+  _selectUSIMmenu: function (e) {
+    this.$USIMSelectLists.find('input').prop('checked', false);
+    $(e.currentTarget).find('input').prop('checked', true);
+    this.$USIMSelectBtn.text($(e.currentTarget).find('.txt').text());
+    // TODO 해당 컨텐츠 내용을 가리고 보이기 처리
+    
+    // 팝업닫기
+    this.$USIMSelectClostBtn.click();
+  },
+  // 유심용어 정리 바로가기 액션시트 end
+
   _bindUIEvent: function () {
     $('.idpt-tab', this.$container).each(function(){
       var tabBtn = $(this).find('li');
@@ -146,4 +200,10 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
       })
     });
   },
+
+  _apiError: function (err) {
+    Tw.Logger.error(err.code, err.msg);
+    this._popupService.openAlert(Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.code + ' : ' + err.msg);
+    return false;
+  }
 };

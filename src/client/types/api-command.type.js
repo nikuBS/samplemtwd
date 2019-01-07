@@ -376,6 +376,9 @@ Tw.API_CMD = {
   BFF_08_0061: { path: '/core-modification/:version/email-inquiry-detail', method: Tw.API_METHOD.GET },
   BFF_08_0062: { path: '/core-modification/:version/email-inquiry', method: Tw.API_METHOD.DELETE },
 
+  BFF_08_0064: { path: '/core-modification/:version/guide/contents-detail/:args0', method: Tw.API_METHOD.GET },
+
+
   //SEARCH SURVEY
   BFF_08_0070: { path: '/core-modification/v1/search/invst-append', method: Tw.API_METHOD.POST },
   BFF_08_0071: { path: '/core-modification/v1/search/invst-insert', method: Tw.API_METHOD.POST },
