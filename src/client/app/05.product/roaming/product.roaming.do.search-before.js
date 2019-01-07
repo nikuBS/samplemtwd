@@ -143,6 +143,7 @@ Tw.ProductRoamingSearchBefore.prototype = {
   },
   _onChangeModel: function () {
     this._phoneInfo.eqpMdlNm = '';
+    this._phoneInfo.eqpMdlCd = '';
     this.modelValue = '';
     this.modelCode = '';
     this.cdName = '';

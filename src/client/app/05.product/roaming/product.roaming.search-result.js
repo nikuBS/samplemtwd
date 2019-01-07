@@ -55,10 +55,10 @@ Tw.ProductRoamingSearchResult.prototype = {
         this._rmPhoneInfoTmpl = Handlebars.compile($('#fe-phone-info').html());
         this._rmPhoneSelectTmpl = Handlebars.compile($('#fe-phone-select').html());
         if(this._svcInfo !== null){
-            if(this._svcInfo.eqpMdlNm !== ''){
+            if(this._phoneInfo.eqpMdlNm !== ''){
                 this.$userPhoneInfo.append(this._rmPhoneInfoTmpl({ items: this._phoneInfo }));
             }else {
-                if(this._srchInfo.eqpMdlNm !== ''){
+                if(this._phoneInfo.eqpMdlNm !== ''){
                     this.$userPhoneInfo.append(this._rmPhoneInfoTmpl({ items: this._srchInfo }));
                 }else {
                     this.$userPhoneInfo.append(this._rmPhoneSelectTmpl({ items: this._svcInfo }));
@@ -86,7 +86,7 @@ Tw.ProductRoamingSearchResult.prototype = {
             this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma].txt);
             this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma]);
         } else {
-            if(this._rateInfo.lte > 0){
+            if(this._rateInfo.lte > 0 && this._rateInfo.iLtePhone !== 'N'){
                 this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.lte].txt);
                 this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.lte]);
             }
@@ -518,8 +518,8 @@ Tw.ProductRoamingSearchResult.prototype = {
 
             var eqpMdlNm = '';
             var eqpMdlCd = this._phoneInfo.eqpMdlCd;
-            if(this._srchInfo.eqpMdlNm !== ''){
-                eqpMdlNm = encodeURIComponent(this._srchInfo.eqpMdlNm);
+            if(this._phoneInfo.eqpMdlNm !== ''){
+                eqpMdlNm = encodeURIComponent(this._phoneInfo.eqpMdlNm);
             }
             var resultUrl = '/product/roaming/search-result?code=' + countryCode + '&nm=' + countryNm + '&eqpNm=' + eqpMdlNm + '&eqpCd=' + eqpMdlCd;
 
