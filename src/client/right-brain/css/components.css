@@ -6999,12 +6999,15 @@
   .contract-dc-list .info-view-ic {
     vertical-align: top;
     margin-top: -0.1875rem; }
+  .contract-dc-list ul + .amountdata-num {
+    margin-top: 0.625rem; }
   .contract-dc-list li {
     border-top: 1px solid #e1e1e1; }
     .contract-dc-list li:first-child {
       border-top: 0; }
     .contract-dc-list li dl {
-      overflow: hidden; }
+      overflow: hidden;
+      width: 100%; }
       .contract-dc-list li dl dt {
         float: left;
         padding: 0.9375rem 0; }
@@ -7106,11 +7109,11 @@
         padding: 0.9375rem 0; }
       .contract-dc-list.type2 li:first-child dd {
         padding: 0.9375rem 0; }
-    .contract-dc-list.type2 li:last-child {
+    .contract-dc-list.type2 li:nth-child(5) {
       border-top: 1px solid #e1e1e1; }
-      .contract-dc-list.type2 li:last-child dt {
+      .contract-dc-list.type2 li:nth-child(5) dt {
         padding: 0.9375rem 0; }
-      .contract-dc-list.type2 li:last-child dd {
+      .contract-dc-list.type2 li:nth-child(5) dd {
         padding: 0.9375rem 0; }
   .contract-dc-list.type3 li:last-child {
     border-top: 0; }
@@ -7118,6 +7121,24 @@
       padding: 0 0 0.9375rem; }
     .contract-dc-list.type3 li:last-child dd {
       padding: 0 0 0.9375rem; }
+  .contract-dc-list.type4 li {
+    border-top: 0; }
+    .contract-dc-list.type4 li dt {
+      padding: 0 0 0.9375rem; }
+    .contract-dc-list.type4 li dd {
+      padding: 0 0 0.9375rem; }
+    .contract-dc-list.type4 li:first-child {
+      border-top: 0; }
+      .contract-dc-list.type4 li:first-child dt {
+        padding: 0.9375rem 0; }
+      .contract-dc-list.type4 li:first-child dd {
+        padding: 0.9375rem 0; }
+    .contract-dc-list.type4 li:nth-child(2) {
+      border-top: 1px solid #e1e1e1; }
+      .contract-dc-list.type4 li:nth-child(2) dt {
+        padding: 0.9375rem 0; }
+      .contract-dc-list.type4 li:nth-child(2) dd {
+        padding: 0.9375rem 0; }
 
 .extra-txt {
   margin-top: 1.0625rem;
@@ -14679,6 +14700,33 @@ a.bt-link-tx.underline.small {
 .search-content {
   margin-top: 4.125rem; }
 
+.cstitle-wrap {
+  margin-top: 2.5rem;
+  color: #666;
+  font-size: 0.875rem; }
+
+.cslist-wrap {
+  overflow: hidden;
+  width: 100%;
+  margin-top: 1.25rem;
+  padding-bottom: 0.1875rem; }
+  .cslist-wrap .title {
+    clear: both;
+    float: left;
+    padding-bottom: 0.75rem;
+    color: #666;
+    font-size: 0.8125rem; }
+  .cslist-wrap .text {
+    float: right;
+    padding-bottom: 0.75rem;
+    color: #000;
+    font-size: 0.8125rem;
+    text-align: right; }
+  .cslist-wrap + .cstitle-wrap {
+    margin-top: 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid #e1e1e1; }
+
 .badge.badge-fam-members2 {
   background-position: 0 -13.75rem;
   background-size: 4.6875rem;
@@ -17501,6 +17549,9 @@ a.bt-link-tx.underline.small {
 .shop-info .shop-filter {
   margin-bottom: 0.625rem; }
 
+.shop-info + .btn-more button {
+  padding: 0.6875rem 0 0.75rem; }
+
 /* CS_03_01_L01 : AS 센터 찾기 > 유상 및 무상 서비스 안내 풀팝업 */
 .service-box .service-ti-case {
   margin-bottom: 1.25rem;
@@ -17754,6 +17805,9 @@ a.bt-link-tx.underline.small {
         color: #000; }
       .search-point .bn-search .inner .txt .bt-link-tx {
         font-size: 0.75rem; }
+      .search-point .bn-search .inner .txt p {
+        font-size: 0.75rem;
+        margin-bottom: 0.625rem; }
     .search-point .bn-search .inner .ico {
       position: absolute;
       right: 0.875rem;
@@ -17765,6 +17819,12 @@ a.bt-link-tx.underline.small {
       height: 4.4375rem;
       background: url(/img/customer/bg_cs_02_01.png) no-repeat 0 0;
       background-size: 100% 100%; }
+      .search-point .bn-search .inner .ico.ico-paper {
+        right: 1.375rem;
+        width: 3rem;
+        height: 3.75rem;
+        background: url(/img/ico/ico-paper.png) no-repeat 0 0;
+        background-size: 100% 100%; }
 
 .search-point .hours-of-business .tit {
   padding: 1.25rem 0 0 0;
@@ -17773,6 +17833,13 @@ a.bt-link-tx.underline.small {
 .search-point .hours-of-business .as-time-list {
   padding-top: 1.25rem;
   margin-bottom: 1.25rem; }
+  .search-point .hours-of-business .as-time-list.type2 {
+    padding: 2.375rem 0 1.0625rem 0;
+    border-bottom: 1px solid #e1e1e1; }
+    .search-point .hours-of-business .as-time-list.type2 dl {
+      border-bottom: 0; }
+    .search-point .hours-of-business .as-time-list.type2 dd {
+      font-size: 0.875rem; }
   .search-point .hours-of-business .as-time-list dl {
     padding: 1.25rem 0;
     border-bottom: 1px solid #e1e1e1;
@@ -17792,6 +17859,20 @@ a.bt-link-tx.underline.small {
     .search-point .hours-of-business .as-time-list dd .tx-notice {
       margin-top: 0.625rem;
       display: block; }
+  .search-point .hours-of-business .as-time-list .stitle {
+    margin: 1.25rem 0 0.9375rem; }
+  .search-point .hours-of-business .as-time-list .subtext-dl {
+    padding: 0.3125rem 0;
+    border-bottom: none; }
+    .search-point .hours-of-business .as-time-list .subtext-dl .title {
+      color: #666;
+      font-size: 0.8125rem; }
+    .search-point .hours-of-business .as-time-list .subtext-dl .text {
+      color: #000;
+      font-size: 0.8125rem; }
+    .search-point .hours-of-business .as-time-list .subtext-dl:last-child {
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid #e1e1e1; }
 
 .search-point .hours-of-business .dot {
   font-size: 0.75rem;
@@ -20462,6 +20543,8 @@ a.bt-link-tx.underline.small {
 .brand-benefit-wrap .stit {
   margin-top: 1.875rem;
   font-size: 0.9375rem; }
+  .brand-benefit-wrap .stit.type01, .brand-benefit-wrap .shop-info .shop-txt .stit.type02, .shop-info .shop-txt .brand-benefit-wrap .stit.type02, .brand-benefit-wrap .shop-info .shop-txt .stit.type03, .shop-info .shop-txt .brand-benefit-wrap .stit.type03 {
+    margin-top: 4.5625rem; }
 
 .brand-benefit-wrap .sstit {
   margin-top: 0.9375rem;
@@ -23312,6 +23395,133 @@ a.bt-link-tx.underline.small {
         background-size: 100% 100%; }
   .ac-list .type4 .txt {
     background-color: transparent; }
+
+.statement-detail .accordion .acco-list .acco-box.on .acco-cont .in-cont .basic-list.type2 .inner-top ul li {
+  border: 0;
+  padding: .5rem 0; }
+
+.basic-list.type2 ul li .inner-top ul li .title {
+  font-size: 0.875rem;
+  color: #000; }
+
+.list-comp-thumnail .comp-box .list-box {
+  position: relative; }
+  .list-comp-thumnail .comp-box .list-box .list-ico .ico.type-img {
+    position: absolute;
+    display: inline-block;
+    top: 1.5rem;
+    left: 0;
+    width: 2rem;
+    height: 2rem;
+    background: url(/img/ico/ico-none-user.png);
+    background-size: 2rem; }
+
+.list-comp-thumnail .comp-box .list-box .list-text.type2 .gray-tx {
+  color: #959595 !important;
+  font-size: 0.875rem !important; }
+
+.list-comp-thumnail .comp-box .list-box .list-text.type2 .stext {
+  padding: 0 !important; }
+  .list-comp-thumnail .comp-box .list-box .list-text.type2 .stext span {
+    float: left; }
+  .list-comp-thumnail .comp-box .list-box .list-text.type2 .stext span:after {
+    vertical-align: 1px;
+    margin: 0 0.5rem 0 0.5rem !important; }
+
+.list-comp-thumnail .comp-box .list-box .list-text.type2 .stext-b {
+  font-size: 1rem !important; }
+
+.fusion-family.type2 {
+  display: table-cell; }
+
+.list-comp-thumnail .list-text .entry {
+  color: #959595;
+  font-size: 0.75rem;
+  font-weight: 500;
+  display: block; }
+  .list-comp-thumnail .list-text .entry .pnum {
+    position: relative;
+    right: 0;
+    margin-right: 1.0625rem; }
+    .list-comp-thumnail .list-text .entry .pnum:before {
+      position: absolute;
+      right: -0.5rem;
+      top: 0.25rem;
+      content: '';
+      display: inline-block;
+      width: 0.0625rem;
+      height: 0.625rem;
+      background: #e5e5e5; }
+
+.list-box .r-text {
+  text-align: right; }
+  .list-box .r-text strong {
+    display: block;
+    font-size: 0.875rem; }
+  .list-box .r-text .gray {
+    display: block;
+    color: #959595;
+    font-weight: 500; }
+
+.pg-member {
+  padding: 1.5625rem 1rem 0;
+  text-align: center; }
+  .pg-member.join-able .member-tit {
+    font-size: 1.6875rem;
+    font-weight: 500; }
+  .pg-member.join-able dl dt {
+    font-size: 0.8125rem;
+    color: #666666;
+    font-weight: 700;
+    font-weight: 500; }
+  .pg-member.join-able dl dd {
+    font-size: 0.875rem;
+    color: #000000;
+    padding: 0.25rem 0 0.625rem;
+    font-weight: 700; }
+  .pg-member.join-able .txt {
+    font-weight: 700;
+    font-size: 1.125rem;
+    padding: 0.625rem 0; }
+  .pg-member.join-able .txt2 {
+    font-size: 0.9375rem; }
+
+.type-lease .acco-list {
+  padding: 0; }
+  .type-lease .acco-list .acco-box:after {
+    left: 1rem !important;
+    right: 1rem !important; }
+  .type-lease .acco-list .acco-tit button {
+    padding: 1rem 2.5rem 1rem 1rem !important;
+    font-size: 0.875rem !important;
+    line-height: 1.25rem !important; }
+  .type-lease .acco-list .acco-cont {
+    position: relative;
+    background: none !important;
+    font-size: 0.8125rem;
+    line-height: 1.1875rem; }
+    .type-lease .acco-list .acco-cont:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 1rem;
+      right: 1rem;
+      border-top: 1px solid #e1e1e1; }
+    .type-lease .acco-list .acco-cont .txt-d {
+      margin-top: 0.625rem;
+      padding-left: 0.5rem;
+      text-indent: -0.5rem;
+      font-size: 0.75rem;
+      line-height: 1rem; }
+      .type-lease .acco-list .acco-cont .txt-d + .txt-d {
+        margin-top: 0.1875rem; }
+    .type-lease .acco-list .acco-cont .link {
+      color: #4a9fe4; }
+
+.cancel-btn {
+  display: inline-block !important;
+  width: 2.75rem !important;
+  margin-left: 0.75rem; }
 
 .btn-style1 {
   background: #f76252;
@@ -28649,6 +28859,26 @@ body.apphome {
   width: 100%;
   vertical-align: top; }
 
+.type-qa.qa-lease .acco-list .acco-box .acco-cont {
+  background: #f0eeeb !important;
+  color: #666; }
+  .type-qa.qa-lease .acco-list .acco-box .acco-cont .tit {
+    color: #000;
+    padding-bottom: 0.3125rem; }
+  .type-qa.qa-lease .acco-list .acco-box .acco-cont ul li {
+    color: #666;
+    position: relative;
+    padding: 0.1875rem 0 0 0.5rem; }
+    .type-qa.qa-lease .acco-list .acco-box .acco-cont ul li:after {
+      content: "";
+      position: absolute;
+      top: 0.625rem;
+      left: 0;
+      border-radius: 0.09375rem;
+      width: 0.1875rem;
+      height: 0.1875rem;
+      background-color: #666; }
+
 .type-qa .acco-list {
   padding: 0; }
   .type-qa .acco-list .acco-box:after {
@@ -30396,6 +30626,9 @@ body.apphome {
   font-size: 0.9375rem;
   color: #000000; }
 
+.recently-tel-box .txt-c3 {
+  margin-left: 0.3125rem; }
+
 .announcement-notice li {
   position: relative;
   padding: 0 0 0 0.5rem;
@@ -30573,6 +30806,8 @@ body.apphome {
     color: #f76252; }
   .input-txt-type01 .txt-c2 {
     color: #178bce; }
+  .input-txt-type01 .txt-c3 {
+    color: #b2b2b2; }
 
 .input-txt-type02 {
   font-size: 0.75rem;
@@ -30706,6 +30941,14 @@ body.apphome {
     display: inline-block;
     margin-right: 0.1875rem;
     /* font-family:$ff-tgothic-black; */ }
+  .data-list-type1 .use .modify {
+    display: block;
+    text-align: right; }
+  .data-list-type1 .use .bt-link-tx {
+    display: block;
+    text-align: right;
+    font-size: 0.875rem;
+    padding-top: 0.1875rem; }
 
 .data-list-type1 .type1 li:first-child {
   padding-top: 0;
@@ -31323,3 +31566,117 @@ body.apphome {
     height: 1rem; }
     .plan-cont .tx-msg .tx-point {
       color: #178bce; }
+
+/* 상품상세 */
+.pro-sub-area {
+  position: relative; }
+  .pro-sub-area:after {
+    content: 'space';
+    font-size: 0; }
+  .pro-sub-area .pro-sub-text {
+    position: absolute;
+    line-height: 1.2;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    color: #fff;
+    font-size: 0.8125rem;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis; }
+
+/* 가족할인 */
+.list-comp-thumnail.flex-full .list-text {
+  width: 60%; }
+  .list-comp-thumnail.flex-full .list-text .mtext.certi-no strong {
+    color: #959595; }
+  .list-comp-thumnail.flex-full .list-text .mtext .ps-name {
+    font-weight: 300; }
+  .list-comp-thumnail.flex-full .list-text .mtext .icon-me {
+    vertical-align: middle;
+    margin-left: 0.125rem;
+    margin-bottom: 0.125rem; }
+  .list-comp-thumnail.flex-full .list-text .mtext .icon-f-delegate {
+    vertical-align: middle;
+    margin-bottom: 0.125rem; }
+  .list-comp-thumnail.flex-full .list-text .entry {
+    margin-top: 0.25rem;
+    color: #959595;
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    display: -webkit-box; }
+
+.list-comp-thumnail.flex-full .r-text .certi-check {
+  font-size: 0.8125rem;
+  height: 1.5rem; }
+
+.list-comp-thumnail.flex-full .r-text .certi-time {
+  font-size: 0.8125rem;
+  color: #959595;
+  vertical-align: baseline; }
+  .list-comp-thumnail.flex-full .r-text .certi-time button {
+    vertical-align: baseline; }
+
+.list-comp-thumnail .list-text .entry .pnum:before {
+  top: 0.0625rem; }
+
+.list-comp-thumnail .list-text .icon-me {
+  vertical-align: middle;
+  margin-bottom: 0.125rem; }
+
+.list-comp-thumnail .list-text .ps-name {
+  font-weight: 300; }
+
+.list-comp-thumnail .list-text .cate-check {
+  display: inline-block;
+  position: relative;
+  padding-left: 1.0625rem;
+  margin-left: 0.75rem;
+  margin-bottom: 0.1875rem; }
+  .list-comp-thumnail .list-text .cate-check:before {
+    position: absolute;
+    left: 0;
+    top: 0.3125rem;
+    content: '';
+    display: inline-block;
+    width: 0.0625rem;
+    height: 0.8125rem;
+    background: #e1e1e1; }
+  .list-comp-thumnail .list-text .cate-check input[type=checkbox].formcheck-small + .cate-name {
+    right: 0;
+    margin-right: 1.0625rem;
+    color: #c1c1c1;
+    font-size: 0.875rem;
+    overflow: initial;
+    background-position: -1.5rem 0; }
+  .list-comp-thumnail .list-text .cate-check input[type=checkbox].formcheck-small:disabled + .cate-name {
+    right: 0;
+    margin-right: 1.0625rem;
+    color: #c5c5c5;
+    font-size: 0.875rem; }
+  .list-comp-thumnail .list-text .cate-check input[type=checkbox].formcheck-small:checked + .cate-name {
+    right: 0;
+    margin-right: 1.0625rem;
+    color: #000;
+    font-size: 0.875rem; }
+  .list-comp-thumnail .list-text .cate-check .cate-name {
+    right: 0;
+    margin-right: 1.0625rem;
+    color: #000;
+    font-size: 0.875rem;
+    text-indent: -1.25rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    padding-left: 3.125rem; }
+
+.pg-member.join-able dl .tit-goods {
+  font-weight: normal; }
+
+/* 임대폰 제공 매장 */
+.type-qa .acco-list .info-service .txt-d {
+  margin-top: 0.25rem;
+  line-height: 1.6; }
