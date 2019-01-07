@@ -11,10 +11,10 @@
                 <button class="bt action" id="fe-open-btn">앱실행하기</button>
             {{else}}
                 {{#if isIos}}
-                    <a class="bt apple" href="{{stores.appStore}}">앱스토어</a>
+                    {{#if stores.appStore}}<button class="bt apple" data-market-url="{{stores.appStore}}">앱스토어</button>{{/if}}
                 {{else}}
-                    <a class="bt google" href="{{stores.playStore}}">구글 Play 스토어</a>
-                    {{#if stores.oneStore}}<a class="bt one-store" href="{{stores.oneStore}}">원스토어</a>{{/if}}
+                    {{#if stores.playStore}}<button class="bt google" data-market-url="{{stores.playStore}}">구글 Play 스토어</button>{{/if}}
+                    {{#if stores.oneStore}}<button class="bt one-store" data-market-url="{{stores.oneStore}}">원스토어</button>{{/if}}
                 {{/if}}
             {{/if}}
         {{else}}
