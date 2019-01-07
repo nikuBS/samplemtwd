@@ -97,6 +97,8 @@ Tw.ProductRoamingFiInquire.prototype = {
     if(res.code === Tw.API_CODE.CODE_00){
       res = res.result;
       this._renderListOne(res);
+    }else{
+      this._onFail(res);
     }
   },
 
@@ -267,6 +269,8 @@ Tw.ProductRoamingFiInquire.prototype = {
       setTimeout(function(){
         self._cancleCompletePop();
       },100);
+    }else{
+      this._onFail(res);
     }
   },
 
@@ -294,6 +298,8 @@ Tw.ProductRoamingFiInquire.prototype = {
         },
         $.proxy(this._onEditPopOpened, this), null, 'edit'
       );
+    }else{
+      this._onFail(res);
     }
   },
 
@@ -426,6 +432,8 @@ Tw.ProductRoamingFiInquire.prototype = {
     if(res.code === Tw.API_CODE.CODE_00) {
       var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A27;
         this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, $.proxy(this._getTfiResponse, this, 'edit'));
+    }else{
+      this._onFail(res);
     }
   },
 
@@ -435,6 +443,10 @@ Tw.ProductRoamingFiInquire.prototype = {
 
   _goRoamingCenter: function() {
     this._historyService.goLoad('/product/roaming/info/center');
+  },
+
+  _onFail: function (err) {
+    Tw.Error(err.code, err.msg).pop();
   }
 
 };

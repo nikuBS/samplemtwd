@@ -58,6 +58,8 @@ Tw.ProductRoamingFiReservation.prototype = {
       });
 
       this._handleFiReservation(countyArr);
+    }else{
+      this._onFail(res);
     }
   },
 
@@ -108,6 +110,8 @@ Tw.ProductRoamingFiReservation.prototype = {
   _handleSuccessFiReservation: function(res){
     if(res.code === Tw.API_CODE.CODE_00) {
       this._historyService.replaceURL('/product/roaming/fi/reservation-complete?selectIdx=' + this.selectIdx);
+    }else{
+      this._onFail(res);
     }
   },
 
@@ -260,5 +264,10 @@ Tw.ProductRoamingFiReservation.prototype = {
 
   _goRoamingGuide: function() {
     this._historyService.replaceURL('/product/roaming/fi/guide');
+  },
+
+  // API Fail
+  _onFail: function (err) {
+    Tw.Error(err.code, err.msg).pop();
   }
 };
