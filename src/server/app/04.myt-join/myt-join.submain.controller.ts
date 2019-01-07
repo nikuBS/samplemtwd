@@ -15,6 +15,7 @@ import { NEW_NUMBER_MSG } from '../../types/string.type';
 import { MYT_JOIN_SUBMAIN_TITLE } from '../../types/title.type';
 import { REDIS_BANNER_ADMIN } from '../../types/redis.type';
 import { SVC_ATTR_NAME } from '../../types/bff.type';
+import StringHelper from '../../utils/string.helper';
 
 class MyTJoinSubmainController extends TwViewController {
   private _svcType: number = -1;
@@ -62,14 +63,16 @@ class MyTJoinSubmainController extends TwViewController {
     // 70: 비밀번호 잠김 -> 지점에서만 초기화 가능
     // 비밀번호 조회 시 최초 설정이 안되어있는 경우와 등록이 된 경우로 구분
     // 비밀번호 사용중 및 등록완료인 상태에서만 노
-    if ( svcInfo.pwdStCd === '20' || svcInfo.pwdStCd === '21') {
+    if ( svcInfo.pwdStCd === '20' || svcInfo.pwdStCd === '21' ) {
       this.isPwdSt = true;
     }
     // PPS, 휴대폰이 아닌 경우는 서비스명 노출
     if ( ['M1', 'M2'].indexOf(data.svcInfo.svcAttrCd) === -1 ) {
       data.svcInfo.nickNm = SVC_ATTR_NAME[data.svcInfo.svcAttrCd];
     }
-
+    if ( ['S1', 'S2'].indexOf(data.svcInfo.svcAttrCd) === -1 ) {
+      data.svcInfo.svcNum = StringHelper.phoneStringToDash(data.svcInfo.svcNum);
+    }
     Observable.combineLatest(
       this._getMyLine(),
       this._getMyInfo(),
@@ -85,8 +88,8 @@ class MyTJoinSubmainController extends TwViewController {
       this.redisService.getData(REDIS_BANNER_ADMIN + pageInfo.menuId)
     ).subscribe(([myline, myif, myhs, myap, mycpp, myinsp, myps, mylps, wirefree, oldnum, numSvc, banner]) => {
       // 가입정보가 없는 경우에는 에러페이지 이동 (PPS는 가입정보 API로 조회불가하여 무선이력으로 확인)
-      if (this.type === 1) {
-        if (myhs.info) {
+      if ( this.type === 1 ) {
+        if ( myhs.info ) {
           this.error.render(res, {
             title: MYT_JOIN_SUBMAIN_TITLE.MAIN,
             code: myhs.info.code,
@@ -144,7 +147,7 @@ class MyTJoinSubmainController extends TwViewController {
 
       // 개통일자
       if ( data.myHistory ) {
-        if (data.myHistory.length > 0) {
+        if ( data.myHistory.length > 0 ) {
           data.hsDate = DateHelper.getShortDateNoDot(data.myHistory[0].chgDt);
         } else {
           data.hsDate = null;
@@ -348,6 +351,7 @@ class MyTJoinSubmainController extends TwViewController {
           if ( ['M1', 'M2'].indexOf(item.svcAttrCd) === -1 ) {
             item.nickNm = SVC_ATTR_NAME[item.svcAttrCd];
           }
+          item.svcNum = StringHelper.phoneStringToDash(item.svcNum);
           item.className = clsNm;
           list.push(item);
         }
