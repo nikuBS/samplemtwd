@@ -80,13 +80,15 @@
                             <ul class="form-data-list">
                                 <li class="type2">
                                     <label class="tit">기준 금액</label>
-                                    <button id="<%= autoPrepayInfo.autoChrgStrdAmt %>" class="bt-dropdown big fe-standard-amount" title="기준 금액" aria-haspopup="true">
+                                    <button id="<%= autoPrepayInfo.autoChrgStrdAmt %>" data-origin-id="<%= autoPrepayInfo.autoChrgStrdAmt %>"
+                                            class="bt-dropdown big fe-standard-amount" title="기준 금액" aria-haspopup="true">
                                         <%= autoPrepayInfo.comboStandardAmount %>만원<span class="ico"></span>
                                     </button>
                                 </li>
                                 <li class="type2">
                                     <label class="tit">선결제 금액</label>
-                                    <button id="<%= autoPrepayInfo.autoChrgAmt %>" class="bt-dropdown big fe-prepay-amount" title="선결제 금액" aria-haspopup="true">
+                                    <button id="<%= autoPrepayInfo.autoChrgAmt %>" data-origin-id="<%= autoPrepayInfo.autoChrgAmt %>"
+                                            class="bt-dropdown big fe-prepay-amount" title="선결제 금액" aria-haspopup="true">
                                         <%= autoPrepayInfo.comboChargeAmount %>만원<span class="ico"></span>
                                     </button>
                                     <span class="error-txt fe-error-msg" style="display:none;">
@@ -185,7 +187,7 @@
             </div>
             <!--// #contents -->
             <!-- .popup-closeBtn -->
-            <button class="prev-step fe-common-back">취소</button>
+            <button class="prev-step fe-close">취소</button>
             <!--// .popup-closeBtn -->
         </div>
         <footer id="fe-all-menu">

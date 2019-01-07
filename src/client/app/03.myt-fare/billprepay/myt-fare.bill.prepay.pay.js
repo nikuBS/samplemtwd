@@ -39,7 +39,6 @@ Tw.MyTFareBillPrepayPay.prototype = {
     this.$isCardValid = false;
 
     this._isPaySuccess = false;
-    this._isClose = false;
   },
   _bindEvent: function () {
     this.$container.on('blur', '.fe-prepay-amount', $.proxy(this._checkAmount, this));
@@ -54,6 +53,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-select-card-type', $.proxy(this._selectCardType, this));
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
+    this.$container.on('click', '.fe-popup-close', $.proxy(this._onClose, this));
   },
   _checkIsAbled: function () {
     if (this.$prepayAmount.val() !== '' && this.$cardNumber.val() !== '' &&
@@ -108,6 +108,22 @@ Tw.MyTFareBillPrepayPay.prototype = {
     if (this.$isValid && this.$isCardValid) {
       this._goCheck();
     }
+  },
+  _onClose: function () {
+    if (this._isChanged()) {
+      this._popupService.openConfirmButton(null, Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_CANCEL.TITLE,
+        $.proxy(this._closePop, this));
+    } else {
+      this._historyService.goBack();
+    }
+  },
+  _isChanged: function () {
+    return !Tw.FormatHelper.isEmpty(this.$prepayAmount.val()) || this.$cardTypeSelector.attr('id') !== '00' ||
+      !Tw.FormatHelper.isEmpty(this.$cardNumber.val()) || !Tw.FormatHelper.isEmpty(this.$cardY.val()) ||
+      !Tw.FormatHelper.isEmpty(this.$cardM.val()) || !Tw.FormatHelper.isEmpty(this.$cardPw.val());
+  },
+  _closePop: function () {
+    this._popupService.closeAll();
   },
   _checkAmount: function () {
     var isValid = false;
@@ -220,16 +236,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
   },
   _close: function () {
     this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A100.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A100.TITLE,
-      $.proxy(this._closePop, this), $.proxy(this._afterClose, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A100.BUTTON);
-  },
-  _closePop: function () {
-    this._isClose = true;
-    this._popupService.closeAll();
-  },
-  _afterClose: function () {
-    if (this._isClose) {
-      this._popupService.close();
-    }
+      $.proxy(this._closePop, this), null, null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A100.BUTTON);
   },
   _pay: function ($layer) {
     var apiName = this._getApiName();

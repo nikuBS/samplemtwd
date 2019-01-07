@@ -56,6 +56,7 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     this.$container.on('click', '.fe-prepay-amount', $.proxy(this._selectAmount, this, this._prepayAmountList));
     this.$container.on('click', '.fe-amount-info', $.proxy(this._openAmountInfo, this));
     this.$container.on('click', '.fe-pay', $.proxy(this._autoPrepay, this));
+    this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
   },
   _changeType: function (event) {
     var $target = $(event.target);
@@ -306,6 +307,30 @@ Tw.MyTFareBillPrepayAuto.prototype = {
       this._popupService.openAlert(err.msg, Tw.POPUP_TITLE.NOTIFY);
     } else {
       Tw.Error(err.code, err.msg).pop();
+    }
+  },
+  _onClose: function () {
+    if (this._isChanged()) {
+      this._popupService.openConfirmButton(null, Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_CANCEL.TITLE,
+        $.proxy(this._closePop, this), $.proxy(this._afterClose, this));
+    } else {
+      this._historyService.goBack();
+    }
+  },
+  _isChanged: function () {
+    return this.$standardAmount.attr('id') !== this.$standardAmount.attr('data-origin-id') ||
+      this.$prepayAmount.attr('id') !== this.$prepayAmount.attr('data-origin-id') ||
+      !Tw.FormatHelper.isEmpty(this.$cardBirth.val()) || !Tw.FormatHelper.isEmpty(this.$cardNumber.val()) ||
+      !Tw.FormatHelper.isEmpty(this.$cardY.val()) || !Tw.FormatHelper.isEmpty(this.$cardM.val()) ||
+      !Tw.FormatHelper.isEmpty(this.$cardPw.val()) || this.$changeType !== 'A';
+  },
+  _closePop: function () {
+    this._isClose = true;
+    this._popupService.close();
+  },
+  _afterClose: function () {
+    if (this._isClose) {
+      this._historyService.goBack();
     }
   }
 };
