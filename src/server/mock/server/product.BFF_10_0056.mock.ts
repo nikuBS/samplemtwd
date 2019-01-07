@@ -1,41 +1,62 @@
 const BFF_10_0056_mock = {
   "code": "00",
-  "msg": "",
+  "msg": "success",
   "result": {
     "roamingProdList": [
       {
-        "prodId": "NA00005901",
-        "prodNm": "T로밍 아시아패스2",
-        "basFeeTxt": "25000",
-        "scrbDt": "20170915",
-
+        "prodId": "NA00004088",
+        "prodNm": "T로밍 OnePass300기간형",
+        "scrbDt": "20180826",
+        "basFeeTxt": "9900",
+        "prodLinkYn": "N",
         "btnList": [
           {
-            "btnLinkTypCd": "SC",
-            "btnNm": "서비스 기간보기",
-            "btnLinkUrl": ""
+            "btnTypCd": "SE",
+            "btnNm": "기간 확인",
+            "btnLinkUrl": "/product/roaming/lookup/"
           }
         ]
       },
       {
-        "prodId": "NA00005501",
-        "prodNm": "T로밍 OnePass400",
-        "basFeeTxt": "13200",
-        "scrbDt": "20160721",
-
-        "btnList": []
-      },
-      {
-        "prodId": "NA00005690",
-        "prodNm": "T로밍 함께쓰기 3GB",
-        "basFeeTxt": "55000",
-        "scrbDt": "20160530",
-
+        "prodId": "NA00005900",
+        "prodNm": "T로밍 아시아패스",
+        "scrbDt": "20180826",
+        "basFeeTxt": "25000",
+        "prodLinkYn": "Y",
         "btnList": [
           {
-            "btnLinkTypCd": "SC",
-            "btnNm": "서비스 기간보기",
-            "btnLinkUrl": ""
+            "btnTypCd": "SC",
+            "btnNm": "가입",
+            "btnLinkUrl": "/product/roaming/join/confirm-info/"
+          },
+          {
+            "btnTypCd": "SE",
+            "btnNm": "가입 내역 조회",
+            "btnLinkUrl": "/product/roaming/setting/roaming-auto/"
+          },
+          {
+            "btnTypCd": "TE",
+            "btnNm": "해지",
+            "btnLinkUrl": "/product/roaming/terminate"
+          },
+          {
+            "btnTypCd": "SE",
+            "btnNm": "설정 변경",
+            "btnLinkUrl": "/product/roaming/setting/roaming-auto/"
+          }
+        ]
+      },
+      {
+        "prodId": "NA00004684",
+        "prodNm": "00700 프리 10",
+        "scrbDt": "20150915",
+        "basFeeTxt": "11000",
+        "prodLinkYn": "Y",
+        "btnList": [
+          {
+            "btnTypCd": "TE",
+            "btnNm": "해지",
+            "btnLinkUrl": "/product/mobileplan-add/terminate"
           }
         ]
       }
