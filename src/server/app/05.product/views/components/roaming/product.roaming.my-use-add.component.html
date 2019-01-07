@@ -12,7 +12,11 @@
             <% var prodList = roamingAdd.roamingProdList %>
             <% for (var keyProd in prodList) { %>
             <li>
+                <% if (prodList[keyProd].prodLinkYn === 'Y') { %>
                 <a class="btn-type" href="/product/callplan/<%= prodList[keyProd].prodId %>">
+                <% } else { %>
+                <a class="btn-type not-link" href="#" onclick="return false;">
+                <% } %>
                         <span class="lineinfo-user">
                             <span class="info-title"><%= prodList[keyProd].prodNm %></span>
                             <span class="info-sub">가입일 <%= prodList[keyProd].scrbDt %></span>
