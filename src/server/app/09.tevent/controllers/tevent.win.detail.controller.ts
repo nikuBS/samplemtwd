@@ -37,9 +37,9 @@ class TeventWinDetail extends TwViewController {
 
   private parseData(result: any): any {
     if (!FormatHelper.isEmpty(result)) {
-      result.startDate = DateHelper.getShortDateNoDot(result.prStaDt);
-      result.endDate = DateHelper.getShortDateNoDot(result.prEndDt);
-      result.winDate = DateHelper.getShortDateNoDot(result.winDt);
+      result.startDate = DateHelper.getShortDate(result.prStaDt);
+      result.endDate = DateHelper.getShortDate(result.prEndDt);
+      result.winDate = DateHelper.getShortDate(result.winDt);
       result.height = result.winUrlHSize + 'px';
     }
     return result;

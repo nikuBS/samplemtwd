@@ -37,8 +37,8 @@ class TeventDetail extends TwViewController {
 
   private parseData(result: any): any {
     if (!FormatHelper.isEmpty(result)) {
-      result.startDate = DateHelper.getShortDateNoDot(result.prStaDt);
-      result.endDate = DateHelper.getShortDateNoDot(result.prEndDt);
+      result.startDate = DateHelper.getShortDate(result.prStaDt);
+      result.endDate = DateHelper.getShortDate(result.prEndDt);
       result.height = result.prUrlHSize + 'px';
     }
     return result;
