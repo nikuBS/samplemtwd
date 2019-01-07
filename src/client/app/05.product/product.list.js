@@ -89,6 +89,12 @@ Tw.ProductList.prototype = {
     item.basOfrVcallTmsCtt = this._isEmptyAmount(item.basOfrVcallTmsCtt) ? null : Tw.FormatHelper.appendVoiceUnit(item.basOfrVcallTmsCtt);
     item.basOfrCharCntCtt = this._isEmptyAmount(item.basOfrCharCntCtt) ? null : Tw.FormatHelper.appendSMSUnit(item.basOfrCharCntCtt);
 
+    if (this.CODE === 'F01100') {
+      item.filters = _.filter(item.filters, function(filter) {
+        return /^F011[2|3|6]/.test(filter.prodFltId);
+      });
+    }
+
     return item;
   },
 
