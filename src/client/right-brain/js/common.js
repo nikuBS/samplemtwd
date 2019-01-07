@@ -320,7 +320,7 @@ skt_landing.action = {
       }
   },
   popup: { //popup 
-    open: function (popup_info,callback_open) {
+    open: function (popup_info,callback_open,callback_fail) {
       var _this = this;
       popup_info.hbs = popup_info.hbs ? popup_info.hbs : 'popup';
       $.get(popup_info.url+popup_info.hbs+'.hbs', function (text) {
@@ -361,6 +361,10 @@ skt_landing.action = {
             'height':layer_h,
             'bottom':0
           });
+        }
+      }).fail(function() {
+        if(callback_fail){
+          callback_fail();
         }
       });
     },
