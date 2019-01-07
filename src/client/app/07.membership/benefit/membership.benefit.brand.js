@@ -183,15 +183,15 @@ Tw.MembershipBenefitBrand.prototype = {
 
   _setCategoryInLayer: function () {
     var $lis = this.$categoryListInLayer.find('li');
-    var $imgs = this.$categoryListInLayer.find('img');
+    // var $imgs = this.$categoryListInLayer.find('img');
     $lis.removeClass('checked');
-    $imgs.each(function () {
-      $(this).attr('src', $(this).attr('offSrc'));
-    });
+    // $imgs.each(function () {
+    //   $(this).attr('src', $(this).attr('offSrc'));
+    // });
     var $selectedli = $lis.filter('li[cate-cd="' + this._reqOptions.cateCd + '"]');
     $selectedli.addClass('checked');
-    var $img = $selectedli.find('img');
-    $img.attr('src', $img.attr('onSrc'));
+    // var $img = $selectedli.find('img');
+    // $img.attr('src', $img.attr('onSrc'));
   },
 
   _setKeywords: function () {

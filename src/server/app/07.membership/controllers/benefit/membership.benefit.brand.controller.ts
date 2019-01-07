@@ -102,8 +102,12 @@ class MembershipBenefitBrand extends TwViewController {
   }
 
   private getCateList(resp: any): any {
-    const result = this.getResult(resp);
-    return result;
+    const categories = this.getResult(resp);
+    categories.map((category, _idx) => {
+      const idx = FormatHelper.leadingZeros(++_idx, 2);
+      category.showImgUrl = '/img/benefit/ico-category' + idx + '.png';
+    });
+    return categories;
   }
 
   private getBrandResult(resp: any): any {
