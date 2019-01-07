@@ -45,8 +45,8 @@ class TeventLastList extends TwViewController {
   private parseData(content: any): any {
     if (!FormatHelper.isEmpty(content)) {
       content.map((data) => {
-        data.startDate = DateHelper.getShortDateNoDot(data.prStaDt);
-        data.endDate = DateHelper.getShortDateNoDot(data.prEndDt);
+        data.startDate = DateHelper.getShortDate(data.prStaDt);
+        data.endDate = DateHelper.getShortDate(data.prEndDt);
         data.promotionType = data.prTypCd === 'E' ? PROMOTION_TYPE[data.prTypCd] : null;
       });
     }

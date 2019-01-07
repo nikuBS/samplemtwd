@@ -45,9 +45,9 @@ class TeventWinList extends TwViewController {
   private parseData(content: any): any {
     if (!FormatHelper.isEmpty(content)) {
       content.map((data) => {
-        data.startDate = DateHelper.getShortDateNoDot(data.prStaDt);
-        data.endDate = DateHelper.getShortDateNoDot(data.prEndDt);
-        data.winDate = DateHelper.getShortDateNoDot(data.winDt);
+        data.startDate = DateHelper.getShortDate(data.prStaDt);
+        data.endDate = DateHelper.getShortDate(data.prEndDt);
+        data.winDate = DateHelper.getShortDate(data.winDt);
         data.promotionType = data.prTypCd === 'E' ? PROMOTION_TYPE[data.prTypCd] : null;
       });
     }
