@@ -42,3 +42,9 @@ Tw.REDIS_DEVICE_CODE = {
   ANDROID: '03',
   MOBILE: '05'
 };
+
+Tw.REDIS_TOOLTIP_CODE = {
+  TEXT: '1',
+  ICON: '2',
+  ALL: '3'
+};
