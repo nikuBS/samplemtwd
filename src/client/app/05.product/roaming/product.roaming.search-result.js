@@ -77,7 +77,6 @@ Tw.ProductRoamingSearchResult.prototype = {
         this.manageType = [];
         this.typeTxt = [];
 
-        console.log('this._rateInfo : ' + JSON.stringify(this._rateInfo));
         if (this._rateInfo.eqpMthdCd === 'W') {
             this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma].txt);
             this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma]);
