@@ -21,8 +21,8 @@ Tw.ProductAppsDetail.prototype = {
 
   _bindEvent: function() {
     this.$container.on('click', '#fe-images', $.proxy(this._handleOpenImgDetail, this));
-    this.$container.on('click', '.fe-exe-btn', $.proxy(this._handleCheckAndOpenApp, this));
-    this.$container.on('click', '.fe-open-btn', $.proxy(this._handleOpenApp, this));
+    this.$container.on('click', '#fe-exe-btn', $.proxy(this._handleCheckAndOpenApp, this));
+    this.$container.on('click', '#fe-open-btn', $.proxy(this._handleOpenApp, this));
   },
 
   _cachedElement: function() {
