@@ -76,7 +76,7 @@ export default class ProductRoamingMyUse extends TwViewController {
           return {
             ...prod,
             basFeeTxt: (prod.basFeeTxt === "" || prod.basFeeTxt === "무료") ? "0" : prod.basFeeTxt,
-            scrbDt: DateHelper.getShortDateNoDot(prod.scrbDt)
+            scrbDt: DateHelper.getShortDate(prod.scrbDt)
           };
         })
       };
@@ -102,7 +102,7 @@ export default class ProductRoamingMyUse extends TwViewController {
           return {
             ...prod,
             basFeeTxt: (prod.basFeeTxt === "" || prod.basFeeTxt === "무료") ? "0" : prod.basFeeTxt,
-            scrbDt: DateHelper.getShortDateNoDot(prod.scrbDt)
+            scrbDt: DateHelper.getShortDate(prod.scrbDt)
           };
         })
       };
