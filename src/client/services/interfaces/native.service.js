@@ -2,7 +2,7 @@ Tw.NativeService = function () {
   this._bridge = null;
   this._callbackList = [];
   this._randomCode = 0;
-  this._popupService = new Tw.PopupService();
+  this._popupService = Tw.Popup;
   this._gnb = null;
 
   this._init();

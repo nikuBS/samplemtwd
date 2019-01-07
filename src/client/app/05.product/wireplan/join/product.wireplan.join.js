@@ -23,7 +23,7 @@ Tw.ProductWireplanJoin = function(rootEl, prodId, confirmOptions, btnData) {
 Tw.ProductWireplanJoin.prototype = {
 
   _bindEvent: function() {
-    $(window).on('env', $.proxy(this._getJoinConfirmContext, this));
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._getJoinConfirmContext, this));
   },
 
   _getJoinConfirmContext: function() {
@@ -49,7 +49,8 @@ Tw.ProductWireplanJoin.prototype = {
       toProdDesc: this._confirmOptions.preinfo.reqProdInfo.prodSmryDesc,
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
       isNumberBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
-      svcNumMask: this._confirmOptions.preinfo.svcNumMask,
+      svcNumMask: Tw.FormatHelper.conTelFormatWithDash(this._confirmOptions.preinfo.svcNumMask),
+      noticeList: this._confirmOptions.noticeList,
       isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0)
     });
   },
@@ -57,7 +58,6 @@ Tw.ProductWireplanJoin.prototype = {
   _callConfirmCommonJs: function() {
     new Tw.ProductCommonConfirm(false, this.$container, {
       isWireplan: true,
-      noticeList: this._confirmOptions.noticeList,
       isWidgetInit: true,
       isJoin: true
     }, $.proxy(this._prodConfirmOk, this));
@@ -72,7 +72,7 @@ Tw.ProductWireplanJoin.prototype = {
       addSvcAddYn: this._btnData.addSvcAddYn,
       cntcPlcInfoRgstYn: this._btnData.cntcPlcInfoRgstYn,
       svcProdGrpCd: this._btnData.svcProdGrpCd
-    }, {}, this._prodId).done($.proxy(this._procJoinRes, this));
+    }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this));
   },
 
   _procJoinRes: function(resp) {

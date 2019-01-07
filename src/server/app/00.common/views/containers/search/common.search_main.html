@@ -1,0 +1,134 @@
+<%#
+* FileName: common.search.result.html
+* Author: Hyunkuk Lee (max5500@pineone.com)
+* Date: 2018.12.11
+%>
+
+<% include ../../components/start.component.html %>
+<!-- body -->
+<body data-gr-c-s-loaded="true">
+
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+<div class="searchbox-header">
+    <div class="sch-form">
+            <span class="inputbox">
+                <span class="input">
+                    <!--<form action="/common/search" method="get">-->
+                    <input type="text" name="keyword" id="search_input" placeholder="<%= recommendKeyword.keywordDs %>" title="검색" value="">
+                    <input type="hidden" id="selected_keyword" value="<%= recommendKeyword.keywordNm %>">
+                    <!--</form>-->
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </span>
+            </span>
+        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+        <div class="searchbox-close"><button class="close-area">취소</button></div>
+    </div>
+</div>
+<!-- 자동완성 폼 -->
+<div class="searchbox-layer01" id="auto_complete_layer">
+    <div class="cont-box nogaps-hoz">
+        <div class="rec-list">
+            <ul class="popularsearchword-list search-keyword" id="auto_complete_list">
+                <script type="text/x-handlebars-template" id="auto_complete_template">
+                <li>
+                    <a href="/common/search?keyword={{listData.linkStr}}" class="category-type">
+                        <p class="text">{{{listData.showStr}}}</p>
+                    </a>
+                </li>
+                </script>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!--  최근검색어 -->
+
+<div class="searchbox-layer02" id="recently_keyword_layer">
+    <div class="lately-searchtext">
+        <p class="text">최근검색어</p>
+        <div class="btn">
+            <button type="button" class="bt-link-tx underline remove-recently-list" data-index="all" >전체삭제</button>
+        </div>
+    </div>
+    <div class="latelylist-wrap">
+        <ul class="list" id="recently_keyword_list">
+            <script type="text/x-handlebars-template" id="recently_keyword_template">
+            <li>
+                <a data-param="{{data.keyword}}" class="searchword-text search-element">{{data.keyword}}</a>
+                <div class="date">
+                    <span class="str">{{data.searchTime}}</span>
+                    <button class="del remove-recently-list" data-index="{{index}}">삭제</button>
+                </div>
+            </li>
+            </script>
+        </ul>
+    </div>
+    <div class="lately-searchclose">
+
+        <a class="close"><span class="str">닫기</span></a>
+    </div>
+</div>
+
+<div class="cont-layer-blind02 close" style="display:none;" id="blind_layer"></div>
+
+<div class="search-content">
+    <div class="cont-box nogaps-hoz">
+        <div class="rec-list">
+            <h3 class="searchlist-title">인기 검색어</h3>
+            <ul class="popularsearchword-list linklist-type">
+                <% if(popularKeyword.result&&popularKeyword.result.Query){ %>
+                    <% for(var i=0;i<popularKeyword.result.Query.length;i++){ %>
+                    <li>
+                        <a data-param="<%= popularKeyword.result.Query[i].content %>" class="category-type search-element">
+                            <strong class="number"><%= i+1 %></strong>
+                            <span class="text"><%= popularKeyword.result.Query[i].content %></span>
+                        </a>
+                    </li>
+                    <% } %>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+
+    <hr class="cont-sp type1" aria-hidden="true">
+    <!--
+    <div class="banner-area">
+        <a><img src="/img/dummy/dummy-banner02.jpg" alt="내게 맞는 요금제 찾기 내 사용패턴, 할인 정보 등에 딱 맞는 요금제를 추천해드려요!"></a>
+    </div>
+    -->
+    <div class="cont-box nogaps">
+        <ul class="plantype-list">
+            <li class="category-type">
+                <a href="" class="link">
+                    모바일 요금제
+                </a>
+            </li>
+            <li class="category-type">
+                <button type="button" class="link">
+                    부가서비스 요금제
+                </button>
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+
+</div>
+</body>
+<% include ../../components/javascript.component.html %>
+<script>
+    $(document).ready(function () {
+
+        new Tw.CommonSearchMain($('.wrap'),<%- JSON.stringify(svcInfo)%>);
+
+    });
+</script>
+<% include ../../components/end.component.html %>

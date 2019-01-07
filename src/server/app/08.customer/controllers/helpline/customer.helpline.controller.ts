@@ -27,7 +27,7 @@ export default class CustomerHelpline extends TwViewController {
       }
 
       const timeInfo = {
-        curDate: DateHelper.getShortDateNoDot(resp.result.curDate),
+        curDate: DateHelper.getKoreanDate(resp.result.curDate),
         availHours: resp.result.availHours.map(time => time.slice(0, -2))
       };
 

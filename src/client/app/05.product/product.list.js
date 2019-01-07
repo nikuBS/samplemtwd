@@ -37,7 +37,7 @@ Tw.ProductList.prototype = {
 
   bindEvent: function() {
     this.$moreBtn.on('click', $.proxy(this._handleLoadMore, this));
-    this.$container.on('click', '.fe-select-order', $.proxy(this._openOrderPopup, this));
+    this.$orderBtn.on('click', $.proxy(this._openOrderPopup, this));
     this.$container.on('click', '.fe-select-filter', $.proxy(this._handleClickChangeFilters, this));
   },
 
@@ -45,6 +45,8 @@ Tw.ProductList.prototype = {
     this.$total = this.$container.find('.number-text');
     this.$moreBtn = this.$container.find('.extraservice-more > button');
     this.$list = this.$container.find('ul.extraservice-list');
+    this.$orderBtn = this.$container.find('.fe-select-order');
+    this.$filters = this.$container.find('.fe-select-filter');
   },
 
   _handleLoadMore: function() {
@@ -63,8 +65,10 @@ Tw.ProductList.prototype = {
     this._leftCount = (this._leftCount || resp.result.productCount) - items.length;
 
     var hasNone = this.$moreBtn.hasClass('none');
-    if (this._leftCount > 0 && hasNone) {
-      this.$moreBtn.removeClass('none');
+    if (this._leftCount > 0) {
+      if (hasNone) {
+        this.$moreBtn.removeClass('none');
+      }
     } else if (!hasNone) {
       this.$moreBtn.addClass('none');
     }
@@ -128,7 +132,7 @@ Tw.ProductList.prototype = {
     this._params.searchOrder = orderType;
     delete this._params.searchLastProdId;
     delete this._leftCount;
-    this.$container.find('.fe-select-order').text($target.find('.txt').text());
+    this.$orderBtn.text($target.find('.txt').text());
     this.$list.empty();
 
     this._handleLoadMore();
@@ -210,7 +214,13 @@ Tw.ProductList.prototype = {
     if (this._hasSelectedTag) {
       $target.removeClass('checked').attr('aria-checked', false);
       var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A17;
-      this._popupService.openConfirm(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleResetSelectedTag, this, $layer, $target));
+      this._popupService.openConfirmButton(
+        ALERT.MSG,
+        ALERT.TITLE,
+        $.proxy(this._handleResetSelectedTag, this, $layer, $target),
+        null,
+        Tw.BUTTON_LABEL.CLOSE
+      );
     }
   },
 
@@ -238,7 +248,13 @@ Tw.ProductList.prototype = {
   _openSelectTagPopup: function($layer, e) {
     if ($layer.find('li[aria-checked="true"]').length > 0) {
       var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A16;
-      this._popupService.openConfirm(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleSelectTag, this, e.currentTarget));
+      this._popupService.openConfirmButton(
+        ALERT.MSG,
+        ALERT.TITLE,
+        $.proxy(this._handleConfirmSelectTag, this, e.currentTarget),
+        null,
+        Tw.BUTTON_LABEL.CLOSE
+      );
     } else {
       this._handleSelectTag(e.currentTarget);
     }
@@ -275,22 +291,32 @@ Tw.ProductList.prototype = {
         this.$total.text(resp.result.productCount);
       }
 
-      if (resp.result.searchOption && resp.result.searchOption.searchFltIds) {
-        var filters = resp.result.searchOption.searchFltIds,
-          $filters = this.$container.find('.fe-select-filter'),
-          data = {},
-          DEFAILT_COUNT = 2;
-        data.filters = _.map(filters.slice(0, DEFAILT_COUNT), function(filter, index) {
-          if (index === 0) {
-            return filter.prodFltNm + ',';
-          }
-          return filter.prodFltNm;
-        });
+      this.$orderBtn.text(Tw.PRODUCT_LIST_ORDER[this.ORDER['recommand']].txt);
 
-        if (filters.length > DEFAILT_COUNT) {
-          data.leftCount = filters.length - DEFAILT_COUNT;
+      if (resp.result.searchOption) {
+        if (resp.result.searchOption.searchFltIds) {
+          var filters = resp.result.searchOption.searchFltIds,
+            data = {},
+            DEFAILT_COUNT = 2;
+          data.filters = _.map(filters.slice(0, DEFAILT_COUNT), function(filter, index) {
+            if (index === 0) {
+              return filter.prodFltNm;
+            }
+            return ',' + filter.prodFltNm;
+          });
+
+          if (filters.length > DEFAILT_COUNT) {
+            data.leftCount = filters.length - DEFAILT_COUNT;
+          }
+          this.$filters.html(this._filterTmpl(data));
+        } else if (resp.result.searchOption.searchProdTagNm) {
+          this.$filters.html(
+            this._filterTmpl({
+              leftCount: 0,
+              filters: [resp.result.searchOption.searchProdTagNm]
+            })
+          );
         }
-        $filters.html(this._filterTmpl(data));
       }
 
       this._popupService.close();
@@ -298,15 +324,23 @@ Tw.ProductList.prototype = {
     }
   },
 
+  _handleConfirmSelectTag: function(target) {
+    this._popupService.close();
+    this._handleSelectTag(target);
+  },
+
   _handleSelectTag: function(target) {
-    var selectedTag = target.getAttribute('data-tag-id');
+    var selectedTag = target.getAttribute('data-tag-id'),
+      originParams = this._params;
 
     if (this._params.searchTagId === selectedTag) {
       this._popupService.close();
       return;
     }
 
-    window.location.href = window.location.pathname + '?tag=' + selectedTag;
+    this._params = { idxCtgCd: this.CODE };
+    this._params.searchTagId = selectedTag;
+    this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params).done($.proxy(this._handleLoadDataWithNewFilters, this, originParams));
   },
 
   _isEmptyAmount: function(value) {

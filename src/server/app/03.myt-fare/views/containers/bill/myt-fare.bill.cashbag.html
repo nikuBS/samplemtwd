@@ -41,13 +41,13 @@
                                     </span>
                                 </div>
                                 <ul class="round-dot-list type01 mb20">
-                                    <li>1회 납부는  최소 1,000점 이상 입력 가능합니다.</li>
-                                    <li>자동 납부는 500점 단위로 신청 가능합니다.</li>
+                                    <li>1회 납부는  최소 1,000점 이상 입력하실 수 있습니다.</li>
+                                    <li>자동 납부는 500점 단위로 신청하실 수 있습니다.</li>
                                 </ul>
                                 <% if (autoInfo.isAuto) { %>
                                 <ul class="bt-slice mb20 fe-auto-info">
                                     <li class="bt-white2">
-                                        <button class="fe-cancel">자동 납부 해지</button>
+                                        <button class="fe-cancel">자동납부 해지</button>
                                     </li>
                                 </ul>
                                 <% } %>
@@ -80,19 +80,21 @@
 																<span class="input">
 																	<input id="formInput01" class="fe-point required-input-field fe-only-number"
                                                                            inputmode="numeric" min="0" pattern="[0-9]*"
-                                                                           type="text" maxlength="8" placeholder="최소 1,000포인트 이상" />
+                                                                           type="number" maxlength="8" placeholder="최소 1,000포인트 이상" />
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
+                                                                    <span class="error-txt fe-error-msg" style="display:none;"></span>
 																</span>
-																<p class="comm-indent-txt mt20">* OK캐쉬백은 1,000점 이상 10원 단위로 납부가 가능합니다.</p>
+																<p class="comm-indent-txt mt20">* OK캐쉬백은 1,000점 이상 10원 단위로 납부하실 수 있습니다.</p>
 															</span>
                                                         </li>
                                                         <li>
-                                                            <label class="tit" for="formInput02">OK캐쉬백 카드 번호</label>
+                                                            <label class="tit" for="formInput02">OK캐쉬백 카드번호</label>
                                                             <span class="inputbox">
 																<span class="input">
 																	<input id="formInput02" class="fe-point-card required-input-field fe-only-number" maxlength="16"
                                                                            inputmode="numeric" min="0" pattern="[0-9]*" type="number" placeholder="숫자만 입력" />
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
+                                                                    <span class="error-txt fe-error-msg" style="display:none;">카드번호가 올바르지 않습니다.</span>
 																</span>
 															</span>
                                                         </li>
@@ -103,6 +105,7 @@
 																	<input id="formInput03" class="fe-point-pw required-input-field"
                                                                            type="password" maxlength="16" placeholder="비밀번호 입력" />
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
+                                                                    <span class="error-txt fe-error-msg" style="display:none;">비밀번호가 올바르지 않습니다.</span>
 																</span>
 																<p class="mt10"><button class="bt-link-tx underline fs-13 fe-find-password">OK캐쉬백 비밀번호 찾기</button></p>
 															</span>
@@ -114,32 +117,33 @@
                                                 <div class="cont-box">
                                                     <ul class="form-data-list">
                                                         <li>
-                                                            <label class="tit" for="formInput01">납부할 포인트
-                                                                <button id="MF_01_05_tip_04" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button>
-                                                            </label>
+                                                            <label class="tit" for="formInput01">납부할 포인트</label>
                                                             <span class="inputbox">
 																<span class="input">
-																	<button id="<%= autoInfo.amtId %>" class="bt-dropdown big fe-select-point" title="납부할 포인트" aria-haspopup="true">
+																	<button id="<%= autoInfo.amtId %>" data-origin-id="<%= autoInfo.amtId %>" class="bt-dropdown big fe-select-point"
+                                                                            title="납부할 포인트" aria-haspopup="true">
                                                                         <%= autoInfo.amtText %><span class="ico"></span>
                                                                     </button>
+                                                                    <span class="error-txt fe-error-msg" style="display:none;">납부할 포인트를 선택해 주세요.</span>
 																</span>
 																<p class="comm-indent-txt mt10">자동 납부 종료예정일<span class="pl10"><%= autoInfo.endDate %></span></p>
-																<p class="comm-indent-txt mt20">* 본인 명의로 이동전화를 등록한 회원에 한해 포인트로 이동전화 요금 납부가 가능합니다.</p>
+																<p class="comm-indent-txt mt20">* 본인 명의로 이동전화를 등록한 고객님에 한해 포인트로 이동전화요금을 납부하실 수 있습니다.</p>
 															</span>
                                                         </li>
                                                         <li>
-                                                            <label class="tit" for="formInput02">OK캐쉬백 카드 번호</label>
+                                                            <label class="tit" for="formInput02">OK캐쉬백 카드번호</label>
                                                             <span class="inputbox">
 																<span class="input">
-																	<input id="<%= cashbag.ocbCcno %>" class="fe-point-card required-input-field fe-only-number"
-                                                                           <% if (autoInfo.isAuto) { %>
-                                                                                value="<%= cashbag.cardNumber %>"
-                                                                                type="text" readOnly
-                                                                            <% } else { %>
-                                                                                inputmode="numeric" min="0" pattern="[0-9]*" type="number"
-                                                                            <% } %>
+                                                                    <% if (autoInfo.isAuto) { %>
+                                                                    <input id="<%= cashbag.ocbCcno %>" class="fe-point-card"
+                                                                           value="<%= cashbag.cardNumber %>" type="text" readOnly />
+                                                                    <% } else { %>
+                                                                    <input id="<%= cashbag.ocbCcno %>" class="fe-point-card required-input-field fe-only-number"
+                                                                           inputmode="numeric" min="0" pattern="[0-9]*" type="number"
                                                                            maxlength="16" placeholder="숫자만 입력" />
+                                                                    <% } %>
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
+                                                                    <span class="error-txt fe-error-msg" style="display:none;">카드번호가 올바르지 않습니다.</span>
 																</span>
 															</span>
                                                         </li>
@@ -193,7 +197,7 @@
                     <div class="cont-box nogaps-btm">
                         <h3 class="tx-bold">꼭 확인해 주세요</h3>
                         <ul class="noti-list">
-                            <li>포인트 요금 납부 이용안내 <button id="MF_01_05_tip_01" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                            <li>포인트 요금납부 이용안내 <button id="MF_01_05_tip_01" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                             <li>미납금액 <button id="MF_01_05_tip_02" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                         </ul>
                     </div>
@@ -215,7 +219,7 @@
             </div>
             <!-- // .container-wrap -->
             <!-- .popup-closeBtn -->
-            <button class="prev-step fe-common-back">취소</button>
+            <button class="prev-step fe-close">취소</button>
             <!--// .popup-closeBtn -->
         </div>
         <footer id="fe-all-menu">

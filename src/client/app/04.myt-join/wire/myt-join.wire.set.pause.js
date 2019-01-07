@@ -10,7 +10,6 @@ Tw.MytJoinWireSetPause = function (rootEl, options) {
   this._popupService = Tw.Popup;
   this._options = options;
   this._historyService = new Tw.HistoryService();
-
   this._cachedElement();
   this._bindEvent();
   this._init();
@@ -35,6 +34,23 @@ Tw.MytJoinWireSetPause.prototype = {
   _endDate: null, // 정지 종료일
   _isDirty: false,
 
+  _openErrorAlert: function () {
+    Tw.Popup.openOneBtTypeB(
+      Tw.MYT_JOIN.BROADBAND_ERROR.TITLE,
+      Tw.MYT_JOIN.BROADBAND_ERROR.CONTENTS,
+      [{
+        style_class: 'link',
+        txt: Tw.MYT_JOIN.BROADBAND_ERROR.LINK_TXT
+      }],
+      'type1',
+      $.proxy(function ($layer) {
+        $layer.on('click', '.link', $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.MYT_JOIN.BROADBAND_ERROR.LINK));
+      }, this), $.proxy(function () {
+        this._historyService.goBack();
+      }, this)
+    );
+  },
+
   _cachedElement: function () {
     this._$inputEndDate = this.$container.find('.fe-input-end-date');
     this._$pauseRangeInfo = this.$container.find('.fe-pause-range-info');
@@ -42,6 +58,7 @@ Tw.MytJoinWireSetPause.prototype = {
   },
 
   _bindEvent: function () {
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._checkBroadbancJoined, this));
     this.$container.on('change', '.fe-input-start-date', $.proxy(this._onChangeInputStartDate, this));
     this.$container.on('change', '.fe-input-end-date', $.proxy(this._onChangeInputEndDate, this));
     this.$container.on('click', '.fe-btn-submit', $.proxy(this._onClickBtnSubmit, this));
@@ -51,6 +68,12 @@ Tw.MytJoinWireSetPause.prototype = {
   _init: function () {
     this._setStartDate();
     this._setEndDateRange();
+  },
+
+  _checkBroadbancJoined: function() {
+    if ( this._options.isBroadbandJoined === 'Y' ) {
+      this._openErrorAlert();
+    }
   },
 
   _setStartDate: function () {

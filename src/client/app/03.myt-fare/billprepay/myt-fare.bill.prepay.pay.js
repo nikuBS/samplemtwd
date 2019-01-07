@@ -35,19 +35,25 @@ Tw.MyTFareBillPrepayPay.prototype = {
     this.$cardY = this.$container.find('.fe-card-y');
     this.$cardM = this.$container.find('.fe-card-m');
     this.$cardPw = this.$container.find('.fe-card-pw');
+    this.$isValid = false;
+    this.$isCardValid = false;
 
     this._isPaySuccess = false;
-    this._isClose = false;
   },
   _bindEvent: function () {
-    this.$container.on('blur', '.fe-card-number', $.proxy(this._getCardCode, this));
+    this.$container.on('blur', '.fe-prepay-amount', $.proxy(this._checkAmount, this));
+    this.$container.on('blur', '.fe-card-number', $.proxy(this._checkCardNumber, this));
+    this.$container.on('blur', '.fe-card-y', $.proxy(this._checkCardExpiration, this));
+    this.$container.on('blur', '.fe-card-m', $.proxy(this._checkCardExpiration, this));
+    this.$container.on('blur', '.fe-card-pw', $.proxy(this._checkPassword, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
     this.$container.on('keyup', '.fe-card-number', $.proxy(this._resetCardInfo, this));
-    this.$container.on('keypress', '.required-input-field', $.proxy(this._setMaxValue, this));
+    this.$container.on('input', '.required-input-field', $.proxy(this._setMaxValue, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-select-card-type', $.proxy(this._selectCardType, this));
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
+    this.$container.on('click', '.fe-popup-close', $.proxy(this._onClose, this));
   },
   _checkIsAbled: function () {
     if (this.$prepayAmount.val() !== '' && this.$cardNumber.val() !== '' &&
@@ -67,50 +73,94 @@ Tw.MyTFareBillPrepayPay.prototype = {
   },
   _setMaxValue: function (event) {
     var $target = $(event.currentTarget);
-    return $target.val().length < $target.attr('maxLength');
+    var maxLength = $target.attr('maxLength');
+    if ($target.attr('maxLength')) {
+      if ($target.val().length >= maxLength) {
+        $target.val($target.val().slice(0, maxLength));
+      }
+    }
   },
   _selectCardType: function (event) {
     var $target = $(event.currentTarget);
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
+      url: '/hbs/',
+      hbs: 'actionsheet01',
       layer: true,
-      title: Tw.POPUP_TITLE.SELECT_CARD_TYPE,
-      data: Tw.POPUP_TPL.FARE_PAYMENT_CARD_TYPE_LIST
+      data: Tw.POPUP_TPL.FARE_PAYMENT_CARD_TYPE_LIST,
+      btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectPopupCallback, this, $target));
   },
   _selectPopupCallback: function ($target, $layer) {
-    $layer.on('click', '.hbs-card-type', $.proxy(this._setSelectedValue, this, $target));
+    var $id = $target.attr('id');
+    if (!Tw.FormatHelper.isEmpty($id)) {
+      $layer.find('input#' + $id).attr('checked', 'checked');
+    }
+    $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
   },
   _setSelectedValue: function ($target, event) {
-    var $selectedValue = $(event.currentTarget);
+    var $selectedValue = $(event.target);
     $target.attr('id', $selectedValue.attr('id'));
-    $target.text($selectedValue.text());
+    $target.text($selectedValue.parents('label').text());
 
     this._popupService.close();
   },
   _checkPay: function () {
-    if (this._isValid()) {
+    if (this.$isValid && this.$isCardValid) {
       this._goCheck();
     }
   },
-  _isValid: function () {
+  _onClose: function () {
+    if (this._isChanged()) {
+      this._popupService.openConfirmButton(null, Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_CANCEL.TITLE,
+        $.proxy(this._closePop, this));
+    } else {
+      this._historyService.goBack();
+    }
+  },
+  _isChanged: function () {
+    return !Tw.FormatHelper.isEmpty(this.$prepayAmount.val()) || this.$cardTypeSelector.attr('id') !== '00' ||
+      !Tw.FormatHelper.isEmpty(this.$cardNumber.val()) || !Tw.FormatHelper.isEmpty(this.$cardY.val()) ||
+      !Tw.FormatHelper.isEmpty(this.$cardM.val()) || !Tw.FormatHelper.isEmpty(this.$cardPw.val());
+  },
+  _closePop: function () {
+    this._popupService.closeAll();
+  },
+  _checkAmount: function () {
+    var isValid = false;
+    var $message = this.$prepayAmount.siblings('.fe-error-msg');
+    $message.empty();
+
     var _prepayAmount = this.$prepayAmount.val();
-    return (
-      this._validation.checkIsAvailablePoint(_prepayAmount, this._maxAmount, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V10) &&
-      this._validation.checkIsMore(_prepayAmount, 9999, Tw.ALERT_MSG_MYT_FARE.TEN_THOUSAND) &&
-      this._validation.checkMultiple(_prepayAmount, 10000, Tw.ALERT_MSG_MYT_FARE.TEN_THOUSAND) &&
-      this._validation.checkMoreLength(this.$cardNumber.val(), 15, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4) &&
-      this._validation.checkLength(this.$cardY.val(), 4, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
-      this._validation.checkLength(this.$cardM.val(), 2, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
-      this._validation.checkYear(this.$cardY.val(), this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6) &&
-      this._validation.checkMonth(this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6));
+    if (!this._validation.checkIsAvailablePoint(_prepayAmount, this._maxAmount)) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V10);
+    } else if (!this._validation.checkIsMore(_prepayAmount, 9999)) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.TEN_THOUSAND);
+    } else if (!this._validation.checkMultiple(_prepayAmount, 10000)) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.TEN_THOUSAND);
+    } else {
+      isValid = true;
+    }
+
+    this.$isValid = this._validation.showAndHideErrorMsg(this.$prepayAmount, isValid);
+  },
+  _checkCardNumber: function (event) {
+    var $target = $(event.currentTarget);
+    this.$isValid = this._isEmpty($target, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V60) &&
+      this._validation.showAndHideErrorMsg(this.$cardNumber,
+        this._validation.checkMoreLength(this.$cardNumber, 15),
+        Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4);
+
+    if (this.$isValid) {
+      this._getCardCode();
+    }
+  },
+  _isEmpty: function ($target, message) {
+    return this._validation.showAndHideErrorMsg($target, this._validation.checkEmpty($target.val()), message);
   },
   _getCardCode: function () {
-    if (this.$cardNumber.val() !== '') {
-      this._apiService.request(Tw.API_CMD.BFF_07_0024, { cardNum: $.trim(this.$cardNumber.val()).substr(0, 6) })
-        .done($.proxy(this._getSuccess, this))
-        .fail($.proxy(this._getFail, this));
-    }
+    this._apiService.request(Tw.API_CMD.BFF_07_0024, { cardNum: $.trim(this.$cardNumber.val()).substr(0, 6) })
+      .done($.proxy(this._getSuccess, this))
+      .fail($.proxy(this._getFail, this));
   },
   _getSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
@@ -118,6 +168,8 @@ Tw.MyTFareBillPrepayPay.prototype = {
       var cardName = res.result.prchsCardName;
 
       this.$cardNumber.attr({ 'data-code': cardCode, 'data-name': cardName });
+      this.$cardNumber.siblings('.fe-error-msg').hide();
+      this.$isCardValid = true;
 
       if (Tw.FormatHelper.isEmpty(cardCode)) {
         this._getFail();
@@ -127,7 +179,36 @@ Tw.MyTFareBillPrepayPay.prototype = {
     }
   },
   _getFail: function () {
-    this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4);
+    this.$cardNumber.siblings('.fe-error-msg').empty().text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V28).show();
+    this.$cardNumber.focus();
+    this.$isCardValid = false;
+  },
+  _checkCardExpiration: function (event) {
+    var $target = $(event.currentTarget);
+    var message = Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5;
+
+    this.$isValid = this._validation.checkEmpty($target.val());
+
+    if (this.$isValid) {
+      if ($target.hasClass('fe-card-y')) {
+        this.$isValid = this._validation.checkYear(this.$cardY);
+      } else {
+        this.$isValid = this._validation.checkMonth(this.$cardM, this.$cardY);
+      }
+      message = Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6;
+    }
+
+    if (this.$isValid) {
+      $target.parents('.fe-exp-wrap').siblings('.fe-error-msg').hide();
+    } else {
+      $target.parents('.fe-exp-wrap').siblings('.fe-error-msg').text(message).show();
+      $target.focus();
+    }
+  },
+  _checkPassword: function (event) {
+    var $target = $(event.currentTarget);
+    this.$isValid = this._isEmpty($target, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V58) &&
+      this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 2), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V7);
   },
   _goCheck: function () {
     this._popupService.open({
@@ -155,16 +236,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
   },
   _close: function () {
     this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A100.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A100.TITLE,
-      $.proxy(this._closePop, this), $.proxy(this._afterClose, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A100.BUTTON);
-  },
-  _closePop: function () {
-    this._isClose = true;
-    this._popupService.closeAll();
-  },
-  _afterClose: function () {
-    if (this._isClose) {
-      this._popupService.close();
-    }
+      $.proxy(this._closePop, this), null, null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A100.BUTTON);
   },
   _pay: function ($layer) {
     var apiName = this._getApiName();
@@ -206,6 +278,10 @@ Tw.MyTFareBillPrepayPay.prototype = {
     }
   },
   _payFail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+    if (err.code === 'BIL0006') {
+      this._popupService.openAlert(err.msg, Tw.POPUP_TITLE.NOTIFY);
+    } else {
+      Tw.Error(err.code, err.msg).pop();
+    }
   }
 };

@@ -25,13 +25,13 @@ Tw.MyTDataRechargeCouponUse = function (rootEl, couponNo) {
 Tw.MyTDataRechargeCouponUse.prototype = {
   _cacheElements: function () {
     this.$btnUse = this.$container.find('.fe-btn-use');
-    this.$numberInput = this.$container.find('input[type=text]');
+    this.$numberInput = this.$container.find('input[type=tel]');
   },
   _bindEvent: function () {
     this.$container.on('change', 'input[type=radio]', $.proxy(this._onOptionSelected, this));
     this.$numberInput.on('keyup', $.proxy(this._onNumberChanged, this));
     this.$container.on('click', '.cancel', $.proxy(this._onNumberCancel, this));
-    this.$container.on('click', '.fe-btn-contacts', $.proxy(this._onClickContacts, this));
+    this.$container.on('click', '#fe-btn-contacts', $.proxy(this._onClickContacts, this));
     this.$btnUse.on('click', $.proxy(this._onSubmitClicked, this));
   },
   _init: function () {
@@ -42,6 +42,9 @@ Tw.MyTDataRechargeCouponUse.prototype = {
     this._hashService.initHashNav($.proxy(this._onTabChanged, this));
     this._currentTab =
       this.$container.find('#tab1').attr('aria-selected') === 'true' ? 'refill' : 'gift';
+    if (!Tw.BrowserHelper.isApp()) {
+      this.$container.find('#fe-btn-contacts').hide();
+    }
   },
   _onTabChanged: function (hash) {
     if (hash.raw === 'refill') {
@@ -61,8 +64,10 @@ Tw.MyTDataRechargeCouponUse.prototype = {
     }
   },
   _onNumberChanged: function () {
-    var number = this.$numberInput.val();
-    if (Tw.FormatHelper.isEmpty(number.trim())) {
+    this.$numberInput.val(Tw.StringHelper.phoneStringToDash(this.$numberInput.val()).trim());
+    var number = Tw.StringHelper.phoneStringToDash(this.$numberInput.val()).trim();
+
+    if (Tw.FormatHelper.isEmpty(number)) {
       this.$btnUse.attr('disabled', true);
     } else {
       this.$btnUse.attr('disabled', false);
@@ -74,8 +79,10 @@ Tw.MyTDataRechargeCouponUse.prototype = {
   _onClickContacts: function () {
     this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(function (res) {
       if (res.resultCode === Tw.NTV_CODE.CODE_00) {
-        var number = res.params.phoneNumber;
+        var number = res.params.phoneNumber.replace(/[^0-9]/gi, '').trim();
+        number = Tw.FormatHelper.getDashedCellPhoneNumber(number);
         this.$numberInput.val(number);
+        this._onNumberChanged();
       }
     }, this));
   },
@@ -91,12 +98,32 @@ Tw.MyTDataRechargeCouponUse.prototype = {
         );
         break;
       case 'gift':
+        var $errorSpan = this.$container.find('.fe-number-error');
+        $errorSpan.addClass('none');
+
+        var number = this.$numberInput.val().trim();
+        if (number.length < 10) {
+          $errorSpan.removeClass('none');
+          // $errorSpan.children().addClass('none');
+          // $errorSpan.find('#fe-2-v18').removeClass('none');
+          return;
+        }
+
+        var confirmed = false;
         this._popupService.openModalTypeA(
           Tw.REFILL_COUPON_CONFIRM.TITLE_GIFT,
           Tw.REFILL_COUPON_CONFIRM.CONTENTS_GIFT,
           Tw.REFILL_COUPON_CONFIRM.CONFIRM_GIFT,
           null,
-          $.proxy(this._gift, this)
+          $.proxy(function () {
+            confirmed = true;
+            this._popupService.close();
+          }, this),
+          $.proxy(function () {
+            if (confirmed) {
+              this._gift();
+            }
+          }, this)
         );
         break;
       default:
@@ -120,36 +147,56 @@ Tw.MyTDataRechargeCouponUse.prototype = {
     this._popupService.close();
     var reqData = {
       copnIsueNum: this._couponNo,
-      befrSvcNum: this.$numberInput.val()
+      befrSvcNum: this.$numberInput.val().replace(/[^0-9]/gi, '').trim()
     };
+
+    this._success('gift', { code: '00'});
+    /*
     this._apiService.request(Tw.API_CMD.BFF_06_0008, reqData)
       .done($.proxy(this._success, this, 'gift'))
       .fail($.proxy(this._fail, this));
+      */
   },
   _success: function (type, res) {
     if (res.code !== Tw.API_CODE.CODE_00) {
-      if (res.code === Tw.API_CODE.NOT_FAMILY) {
-        this._popupService.open({
-          ico: 'type1',
-          title: Tw.POPUP_TITLE.NOT_FAMILY,
-          contents: Tw.POPUP_CONTENTS.REFILL_COUPON_FAMILY,
-          link_list: [{
-            style_class: 'fe-link-more-detail',
-            txt: Tw.POPUP_CONTENTS.MORE_DETAIL
-          }],
-          bt: [{
-            style_class: 'bt-blue1 fe-btn-close',
-            txt: Tw.BUTTON_LABEL.CLOSE
-          }]
-        },
-        $.proxy(function ($container) {
-          $container.on('click', '.fe-btn-close', $.proxy(function () {
-            this._popupService.close();
-          }, this));
-          // TODO: 더 알아보기 link 설정, SB에 추후 추가 예정으로.....
-        }, this));
+      if (type === 'gift') {
+        if (res.code === Tw.API_CODE.NOT_FAMILY || res.code === 'RCG3004') {
+          this._popupService.open({
+            title: Tw.POPUP_TITLE.NOT_FAMILY,
+            title_type: 'sub',
+            cont_align: 'tl',
+            contents: Tw.POPUP_CONTENTS.REFILL_COUPON_FAMILY,
+            infocopy: [{
+              info_contents: Tw.POPUP_CONTENTS.REFILL_COUPON_FAMILY_INFO,
+              bt_class: 'none'
+            }],
+            bt: [{
+              style_class: 'tw-popup-closeBtn',
+              txt: Tw.BUTTON_LABEL.CONFIRM
+            }]
+          });
+          return;
+        }
+
+        if (res.code === Tw.API_CODE.RECEIVER_LIMIT || res.code === 'RCG3005') {
+          this._popupService.openAlert(Tw.POPUP_CONTENTS.COUPON_RECEIVER_LIMIT);
+          return;
+        }
+
+        if (res.code === 'RCG3003') {
+          this._popupService.openAlert(Tw.REFILL_COUPON_ALERT.A211);
+          return;
+        }
+
+        if (res.code === 'RCG3006') {
+          this._popupService.openAlert(Tw.REFILL_COUPON_ALERT.A212);
+          return;
+        }
+
+        this._popupService.openAlert(Tw.REFILL_COUPON_ALERT.A213);
         return;
       }
+
       Tw.Error(res.code, res.msg).pop();
       return;
     }
@@ -163,7 +210,8 @@ Tw.MyTDataRechargeCouponUse.prototype = {
         this._historyService.replaceURL('/myt-data/recharge/coupon/complete?category=voice');
         break;
       case 'gift':
-        var number = Tw.FormatHelper.getFormattedPhoneNumber(this.$numberInput.val());
+        var number = this.$numberInput.val();
+        number = Tw.FormatHelper.getFormattedPhoneNumber(number.replace(/[^0-9]/gi, ''));
         this._historyService.replaceURL(
           '/myt-data/recharge/coupon/complete?category=gift&number=' + number);
         break;

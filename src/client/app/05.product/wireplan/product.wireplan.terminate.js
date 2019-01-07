@@ -22,7 +22,7 @@ Tw.ProductWireplanTerminate = function(rootEl, prodId, confirmOptions, btnData) 
 Tw.ProductWireplanTerminate.prototype = {
 
   _bindEvent: function() {
-    $(window).on('env', $.proxy(this._getJoinConfirmContext, this));
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._getJoinConfirmContext, this));
   },
 
   _getJoinConfirmContext: function() {
@@ -49,7 +49,7 @@ Tw.ProductWireplanTerminate.prototype = {
       toProdDesc: this._confirmOptions.preinfo.reqProdInfo.prodSmryDesc,
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
       isNumberBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
-      svcNumMask: this._confirmOptions.preinfo.svcNumMask,
+      svcNumMask: Tw.FormatHelper.conTelFormatWithDash(this._confirmOptions.preinfo.svcNumMask),
       isAgreement: this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.isTermStplAgree
     });
   },
@@ -85,7 +85,7 @@ Tw.ProductWireplanTerminate.prototype = {
           termRsnCd: callbackParams.termRsnCd
         },
         {},
-        this._prodId
+        [this._prodId]
       )
       .done($.proxy(this._procTerminateRes, this));
   },
@@ -97,7 +97,7 @@ Tw.ProductWireplanTerminate.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0038, {}, {}, this._prodId).done($.proxy(this._isVasTerm, this));
+    this._apiService.request(Tw.API_CMD.BFF_10_0038, {}, {}, [this._prodId]).done($.proxy(this._isVasTerm, this));
   },
 
   _isVasTerm: function(resp) {
@@ -157,8 +157,8 @@ Tw.ProductWireplanTerminate.prototype = {
 
     if (respResult.prodTmsgTypCd === 'I') {
       popupOptions = $.extend(popupOptions, {
-        img_url: Tw.FormatHelper.isEmpty(respResult.rgstImgUrl) ? null : Tw.Environment.cdn + respResult.rgstImgUrl,
-        img_src: respResult.imgFilePathNm
+        img_url: respResult.rgstImgUrl,
+        img_src: Tw.Environment.cdn + respResult.imgFilePathNm
       });
     }
 

@@ -104,11 +104,11 @@ const isGoodFamily = prodId === 'TW20000009' || prodId === 'NA00004211' %>
                                             <div>
                                                 <% if (isMine) { %>
                                                     <strong class="me"><%= member.custNm %></strong>
-                                                    <i class="badge badge-<%= member.badge %>"><span class="blind"><%= member.relClNm %></span></i>
-                                                    <i class="badge badge-me2"><span class="blind">나</span></i><!-- 뱃지-나 -->
+                                                    <i class="icon-<%= member.badge %> ml9"><span class="blind"><%= member.relClNm %></span></i>
+                                                    <i class="icon-me ml5"><span class="blind">나</span></i><!-- 뱃지-나 -->
                                                 <% } else { %>
                                                     <em class="me"><%= member.custNm %></em>
-                                                    <i class="badge badge-<%= member.badge %>"><span class="blind"><%= member.relClNm %></span></i>
+                                                    <i class="icon-<%= member.badge %> ml9"><span class="blind"><%= member.relClNm %></span></i>
                                                 <% } %>
                                             </div>
                                             <div class="num"><%= member.svcNum %></div>

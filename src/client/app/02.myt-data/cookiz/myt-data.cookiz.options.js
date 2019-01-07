@@ -30,15 +30,19 @@ Tw.MyTDataCookizOptions.prototype = {
   },
 
   _getRequestGift: function () {
+    // request Gift by SMS
     this._onDataPesterDetail();
   },
 
-  // 데이터 조르기
   _onDataPesterDetail: function () {
     if ( Tw.BrowserHelper.isApp() ) {
-      //  2_A17 Alert 호출
-      this._popupService.openModalTypeA(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A18.TITLE, Tw.ALERT_MSG_MYT_DATA.ALERT_2_A18.MSG,
-        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A18.BUTTON, null, $.proxy(this._pesterDetailConfirm, this), null);
+      this._popupService.openModalTypeA(
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A18.TITLE,
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A18.MSG,
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A18.BUTTON,
+        null,
+        $.proxy(this._pesterDetailConfirm, this),
+        null);
     }
     else {
       Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.MOBILE_TWORLD);
@@ -47,9 +51,12 @@ Tw.MyTDataCookizOptions.prototype = {
 
   _pesterDetailConfirm: function () {
     this._popupService.close();
-    // excel 기준 (조르기 : OS 내 페이지 공유화면 제공)
+
     var content = Tw.ALERT_MSG_MYT_DATA.TING_PESTER.TITLE +
-      Tw.FormatHelper.conTelFormatWithDash(this.svcInfo.svcNum) + Tw.ALERT_MSG_MYT_DATA.TING_PESTER.CONTENT + Tw.OUTLINK.MOBILE_TWORLD;
+      Tw.FormatHelper.conTelFormatWithDash(this.svcInfo.svcNum) +
+      Tw.ALERT_MSG_MYT_DATA.TING_PESTER.CONTENT +
+      Tw.OUTLINK.MOBILE_TWORLD;
+
     Tw.CommonHelper.share(content);
   },
 

@@ -48,6 +48,9 @@ Tw.MyTJoinSuspendStatus.prototype = {
     if ( diff < 0 ) {
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE);
       return;
+    } else if ( diff > 30 ) {
+      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE_01);
+      return;
     }
 
     Tw.CommonHelper.startLoading('body', 'grey', true);
@@ -133,6 +136,9 @@ Tw.MyTJoinSuspendStatus.prototype = {
     Tw.CommonHelper.endLoading('body');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._popupService.afterRequestSuccess('', '/myt-join/submain', null, Tw.MYT_JOIN_SUSPEND.RESET, null);
+
+      // update svcInfo
+      this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
     } else if ( res.code === 'MOD0022' ) {
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ALERT_EXCEED.MESSAGE, Tw.MYT_JOIN_SUSPEND.ALERT_EXCEED.TITLE);
     } else {

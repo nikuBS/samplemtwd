@@ -15,17 +15,17 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap step">
+<div class="wrap">
     <div class="popup-page tw-popup fixed-bottom">
-        <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>이메일 상담</h1>
-                </div>
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>이메일 상담</h1>
             </div>
         </div>
-        <!--// #header -->
+    </div>
+    <!--// #header -->
     <!-- .container-wrap -->
     <div class="container-wrap">
         <h2 class="blind">내용</h2>
@@ -142,6 +142,7 @@
         <!-- .popup-closeBtn -->
         <button class="popup-closeBtn fe-close_faq"><span class="blind">팝업 페이지 닫기</span></button>
         <!--// .popup-closeBtn -->
+    </div>
     </div>
 </div>
 <% include ../../components/javascript.component.html %>
@@ -269,14 +270,15 @@
 <script>
   $(document).ready(function () {
     new Tw.CustomerEmail($('.wrap'));
-    new Tw.CustomerEmailService($('.wrap'));
-    new Tw.CustomerEmailServiceOption($('.wrap'));
-    new Tw.CustomerEmailQuality($('.wrap'));
+    new Tw.CustomerEmailService($('.wrap'), { allSvc: JSON.parse('<%-JSON.stringify(allSvc)%>') });
+    new Tw.CustomerEmailServiceOption($('.wrap'), { allSvc: JSON.parse('<%-JSON.stringify(allSvc)%>') });
+    new Tw.CustomerEmailQuality($('.wrap'), { allSvc: JSON.parse('<%-JSON.stringify(allSvc)%>') });
     new Tw.CustomerEmailQualityOption($('.wrap'), { allSvc: JSON.parse('<%-JSON.stringify(allSvc)%>') });
     new Tw.CustomerEmailTemplate($('.wrap'), { allSvc: JSON.parse('<%-JSON.stringify(allSvc)%>') });
     new Tw.CustomerEmailCategory($('.wrap'));
     new Tw.CustomerEmailUpload($('.wrap'));
   });
+  var allSvc = JSON.parse('<%-JSON.stringify(allSvc)%>')
 </script>
 </body>
 <% include ../../components/end.component.html %>

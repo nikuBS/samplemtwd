@@ -1,174 +1,240 @@
 <%#
-* FileName: membership.benefit.brand.html (BE_03_01)
+* FileName: membership.benefit.brand-benefit.html (BE_03_01_01)
 * Author: Hakjoon Sim (hakjoon.sim@sk.com)
 * Date: 2018.10.29
 %>
 
 <% include ../../components/start.component.html %>
 <body>
-    <!-- #skip_navigation -->
-    <div id="skipNav" class="skip_navi">
-        <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
-            <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
-        </ul>
-    </div>
-    <!--// #skip_navigation -->
-    <div class="wrap">
-        <%- include('../../../../common/views/components/header.component.html', { title: '혜택보기', svcInfo, option: { line: true } }); %>
-        <!-- #contents -->
-        <div id="contents" class="container-wrap">
-            <h2 class="blind">내용</h2>
-            <div class="container">
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+    <%- include('../../../../common/views/components/header.component.html', { title: '혜택보기', svcInfo }); %>
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
 
-                <!-- .cont-box -->
-                <div class="cont-box">
-                    <div class="brand-benefit-wrap">
-                        <span class="logo"><img src="<%= CDN %>/img/benefit/brand-logo.jpg" alt="PARIS BAGUETTE"></span>
-                        <strong class="brand-tit">파리바게뜨</strong>
-                        <p class="bramd-txt">대한민국 베이커리 문화를 선도하는 건강한 베이커리</p>
-                        <button class="bt-like on">10,312</button>
-                        <h3 class="stit">혜택정보</h3>
-                        <h4 class="sstit">혜택</h4>
-                        <ul class="benefit-list">
-                            <li>
-                                VIP고객
-                                <p>예) 이용금액 1000원 당 150원 할인 (최대 15% 할인)</p>
-                            </li>
-                            <li>
-                                GOLD/SILVER/일반 고객
-                                <p>예) 이용금액 1000원 당 100원 할인 (최대 10% 할인)</p>
-                            </li>
-                        </ul>
-                        <h4 class="sstit">유의사항</h4>
-                        <ul class="benefit-list">
-                            <li>1일 1회 사용가능</li>
-                            <li>최소 구매금액 1천원 이상 시 할인 가능</li>
-                            <li>결제 전 직원에게 T멤버십 카드 제시</li>
-                            <li>타 할인 및 쿠폰과 동시에 사용 불가</li>
-                            <li>파리크라상 멤버십 적립과 중복 적용 불가<br>(단, 사전 협의한 경우 제외)</li>
-                            <li>제외 매장: 파리바게트 홈페이지 참조</li>
-                        </ul>
-                        <h4 class="sstit">문의 및 상담</h4>
-                        <ul class="benefit-list">
-                            <li>TEL : 080-731-2027</li>
-                            <li>HOME : <a class="bt-link-tx underline" href="http://www.paris.co.kr" title="새창으로 열림">WWW.PARIS.CO.KR</a></li>
-                        </ul>
-                        <ul class="bt-slice">
-                            <li class="bt-blue1">
-                                <button>내맘대로 플러스 혜택 신청하기</button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!--// .cont-box -->
-
-                <div class="add-prd-top-wrap add-top-type">
-                    <span class="counts type-l">내 주변 가맹점 <em class="t-point">46</em></span>
-                    <button class="bt-gps type-r" title="내 주변 가맹점 보기">
-                        <strong>서울 중구</strong>
-                    </button>
-                </div>
-
-                <!-- .cont-box -->
-                <div class="cont-box nogaps">
-                    <ul class="franchisee-list">
-                        <li>
-                            <button class="tit-addr">
-                                <strong class="tit">파리바게트</strong>
-                                <span class="addr">충무로 진양점</span>
-                            </button>
-                            <em class="address">서울 중구 퇴계로 217</em>
-                            <a href="tel:02-2268-8203" class="bt-link-tx underline" title="전화걸기">02-2268-8203</a>
-                            <button class="bt-map">지도보기</button>
-                        </li>
-                        <li>
-                            <button class="tit-addr">
-                                <strong class="tit">파리바게트</strong>
-                                <span class="addr">충무로 진양점</span>
-                            </button>
-                            <em class="address">서울 중구 퇴계로 217</em>
-                            <a href="tel:02-2268-8203" class="bt-link-tx underline" title="전화걸기">02-2268-8203</a>
-                            <button class="bt-map">지도보기</button>
-                        </li>
-                        <li>
-                            <button class="tit-addr">
-                                <strong class="tit">파리바게트</strong>
-                                <span class="addr">충무로 진양점</span>
-                            </button>
-                            <em class="address">서울 중구 퇴계로 217</em>
-                            <a href="tel:02-2268-8203" class="bt-link-tx underline" title="전화걸기">02-2268-8203</a>
-                            <button class="bt-map">지도보기</button>
-                        </li>
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="brand-benefit-wrap">
+                    <span class="logo"><img src="<%= data.appLogoImgUrl %>" alt="<%= data.appLogoImgAlt %>"></span>
+                    <strong class="brand-tit"><%= data.coPtnrNm %></strong>
+                    <p class="bramd-txt"><%= data.brandSubtitleMob %></p>
+                    <button class="bt-like on" data-mylikecount="<%= data.myLikeCount %>"><%= data.totLikeCount %></button>
+                    <h3 class="stit">혜택 정보</h3>
+                    <h4 class="sstit">혜택</h4>
+                    <div><%- data.coBenefitDtl %></div>
+                    <!--<ul class="benefit-list">-->
+                    <!--<li>-->
+                    <!--VIP고객-->
+                    <!--<p>예) 이용금액 1000원 당 150원 할인 (최대 15% 할인)</p>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                    <!--GOLD/SILVER/일반 고객-->
+                    <!--<p>예) 이용금액 1000원 당 100원 할인 (최대 10% 할인)</p>-->
+                    <!--</li>-->
+                    <!--</ul>-->
+                    <h4 class="sstit">유의사항</h4>
+                    <div><%- data.appCoUseInfo %></div>
+                    <!--<ul class="benefit-list">-->
+                    <!--<li>1일 1회 사용가능</li>-->
+                    <!--<li>최소 구매금액 1천원 이상 시 할인 가능</li>-->
+                    <!--<li>결제 전 직원에게 T멤버십 카드 제시</li>-->
+                    <!--<li>타 할인 및 쿠폰과 동시에 사용 불가</li>-->
+                    <!--<li>파리크라상 멤버십 적립과 중복 적용 불가<br>(단, 사전 협의한 경우 제외)</li>-->
+                    <!--<li>제외 매장: 파리바게트 홈페이지 참조</li>-->
+                    <!--</ul>-->
+                    <% if ( !(data.cateCd === '3' && data.brandCd === '2012001689') ) { %>
+                    <h4 class="sstit">문의 및 상담</h4>
+                    <ul class="benefit-list">
+                        <li>TEL : <%= data.reptTelNo %></li>
                     </ul>
-                    <div class="bt-more">
-                        <button>전체보기</button>
-                    </div>
+                    <% } %>
                 </div>
-                <!--// .cont-box -->
+            </div>
+            <!--// .cont-box -->
 
-                <hr class="cont-sp type1" aria-hidden="true"/>
+            <div class="add-prd-top-wrap add-top-type">
+                <span class="counts type-l">내 주변 가맹점 <!--<em class="t-point">46</em>--></span>
+                <button class="bt-gps type-r" title="내 주변 가맹점 보기">
+                    <strong id="fe-area-name">서울 중구</strong>
+                </button>
+            </div>
 
-                <!-- .cont-box -->
-                <div class="cont-box nogaps">
-                    <div class="popularity-brand">
-                        <h3>베이커리 인기 제휴브랜드</h3>
-                        <!-- .widget -->
-                        <div class="widget">
-                            <div class="widget-box slider1">
-                                <div class="slider-box">
-                                    <ul class="slider">
-                                        <li>
-                                            <ul class="brand-logo-list">
-                                                <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo01.jpg" alt="SHILLA"></button></li>
-                                                <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo02.jpg" alt="bread & co. DAILY - NEW"></button></li>
-                                                <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo03.jpg" alt="TOUS LES JOURS"></button></li>
-                                                <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo04.jpg" alt="PARIS BAGUETTE"></button></li>
-                                                <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo05.jpg" alt="PARIS CROISSANT"></button></li>
-                                                <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo06.jpg" alt="ERIC KAYSER"></button></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <ul class="brand-logo-list">
-                                                <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo01.jpg" alt="SHILLA"></button></li>
-                                                <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo02.jpg" alt="bread & co. DAILY - NEW"></button></li>
-                                                <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo03.jpg" alt="TOUS LES JOURS"></button></li>
-                                                <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo04.jpg" alt="PARIS BAGUETTE"></button></li>
-                                                <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo05.jpg" alt="PARIS CROISSANT"></button></li>
-                                                <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo06.jpg" alt="ERIC KAYSER"></button></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <ul class="brand-logo-list">
-                                                <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo01.jpg" alt="SHILLA"></button></li>
-                                                <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo02.jpg" alt="bread & co. DAILY - NEW"></button></li>
-                                                <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo03.jpg" alt="TOUS LES JOURS"></button></li>
-                                                <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo04.jpg" alt="PARIS BAGUETTE"></button></li>
-                                                <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo05.jpg" alt="PARIS CROISSANT"></button></li>
-                                                <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo06.jpg" alt="ERIC KAYSER"></button></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <ul class="franchisee-list">
+                    <script id="fe-franchisee-list-item" type="text/x-handlebars-template">
+                        <li>
+                            <button class="tit-addr">
+                                <strong class="tit">{{ coPtnrNm }}</strong>
+                                <span class="addr">{{ mrchtNm }}</span>
+                            </button>
+                            <em class="address">{{ addr }}</em>
+                            <a href="tel:{{ telNo }}" class="bt-link-tx underline" title="전화걸기">{{ tel telNo }}</a>
+                            <button class="bt-map"
+                                    data-mapx="{{ googleMapCoordX }}"
+                                    data-mapy="{{ googleMapCoordY }}"
+                                    data-brandcd="{{ brandCd }}"
+                                    data-cocd="{{ coCd }}"
+                                    data-joincd="{{ joinCd }}">지도보기</button>
+                        </li>
+                    </script>
+                    <!--<li>
+                        <button class="tit-addr">
+                            <strong class="tit">파리바게트</strong>
+                            <span class="addr">충무로 진양점</span>
+                        </button>
+                        <em class="address">서울 중구 퇴계로 217</em>
+                        <a href="tel:02-2268-8203" class="bt-link-tx underline" title="전화걸기">02-2268-8203</a>
+                        <button class="bt-map">지도보기</button>
+                    </li>
+                    <li>
+                        <button class="tit-addr">
+                            <strong class="tit">파리바게트</strong>
+                            <span class="addr">충무로 진양점</span>
+                        </button>
+                        <em class="address">서울 중구 퇴계로 217</em>
+                        <a href="tel:02-2268-8203" class="bt-link-tx underline" title="전화걸기">02-2268-8203</a>
+                        <button class="bt-map">지도보기</button>
+                    </li>
+                    <li>
+                        <button class="tit-addr">
+                            <strong class="tit">파리바게트</strong>
+                            <span class="addr">충무로 진양점</span>
+                        </button>
+                        <em class="address">서울 중구 퇴계로 217</em>
+                        <a href="tel:02-2268-8203" class="bt-link-tx underline" title="전화걸기">02-2268-8203</a>
+                        <button class="bt-map">지도보기</button>
+                    </li>
+                    -->
+                </ul>
+                <div class="bt-more" id="frchs-bt-all">
+                    <button>전체 보기</button>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="popularity-brand">
+
+                    <% if ( data.cateCd === '3' ) { %>
+                    <h3><i class="ico-brand-bakery"><span class="blind">베이커리</span></i>베이커리 인기 제휴 브랜드</h3>
+                    <% } else if ( data.cateCd === '43' ) { %>
+                    <h3><i class="ico-brand-store"><span class="blind">편의점</span></i>편의점 인기 제휴 브랜드</h3>
+                    <% } else if ( data.cateCd === '6' ) { %>
+                    <h3><i class="ico-brand-cinema"><span class="blind">영화관</span></i>영화관 인기 제휴 브랜드</h3>
+                    <% } else if ( data.cateCd === '4' ) { %>
+                    <h3><i class="ico-brand-pizza"><span class="blind">피자</span></i>피자 인기 제휴 브랜드</h3>
+                    <% } else if ( data.cateCd === '5' ) { %>
+                    <h3><i class="ico-brand-coffee"><span class="blind">커피</span></i>커피 인기 제휴 브랜드</h3>
+                    <% } else if ( data.cateCd === '2' ) { %>
+                    <h3><i class="ico-brand-restaurant"><span class="blind">패밀리레스토랑</span></i>패밀리레스토랑 인기 제휴 브랜드</h3>
+                    <% } else if ( data.cateCd === '44' ) { %>
+                    <h3><i class="ico-brand-fb"><span class="blind">F&B</span></i>F&B 인기 제휴 브랜드</h3>
+                    <% } else if ( data.cateCd === '15' ) { %>
+                    <h3><i class="ico-brand-theme"><span class="blind">테마파크</span></i>테마파크 인기 제휴 브랜드</h3>
+                    <% } else if ( data.cateCd === '37' ) { %>
+                    <h3><i class="ico-brand-mobile"><span class="blind">모바일&미디어</span></i>모바일&미디어 인기 제휴 브랜드</h3>
+                    <% } else if ( data.cateCd === '11' ) { %>
+                    <h3><i class="ico-brand-shopping"><span class="blind">쇼핑</span></i>쇼핑 인기 제휴 브랜드</h3>
+                    <% } else if ( data.cateCd === '30' ) { %>
+                    <h3><i class="ico-brand-traffic"><span class="blind">교통</span></i>교통 인기 제휴 브랜드</h3>
+                    <% } else if ( data.cateCd === '45' ) { %>
+                    <h3><i class="ico-brand-show"><span class="blind">공연</span></i>공연 인기 제휴 브랜드</h3>
+                    <% } else if ( data.cateCd === '46' ) { %>
+                    <h3><i class="ico-brand-travel"><span class="blind">여행</span></i>여행 인기 제휴 브랜드</h3>
+                    <% } else if ( data.cateCd === '20' ) { %>
+                    <h3><i class="ico-brand-education"><span class="blind">교육</span></i>교육 인기 제휴 브랜드</h3>
+                    <% } else if ( data.cateCd === '21' ) { %>
+                    <h3><i class="ico-brand-finance"><span class="blind">금융</span></i>금융 인기 제휴 브랜드</h3>
+                    <% } else if ( data.cateCd === '7' ) { %>
+                    <h3><i class="ico-brand-beauty"><span class="blind">뷰티/패션</span></i>뷰티/패션 인기 제휴 브랜드</h3>
+                    <% } else if ( data.cateCd === '48' ) { %>
+                    <h3><i class="ico-brand-sports"><span class="blind">스포츠</span></i>스포츠 인기 제휴 브랜드</h3>
+                    <% } else if ( data.cateCd === '49' ) { %>
+                    <h3><i class="ico-brand-jeju"><span class="blind">제주도</span></i>제주도 인기 제휴 브랜드</h3>
+                    <% } %>
+
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box slider1">
+                            <div class="slider-box">
+                                <script id="fe-brand-list" type="text/x-handlebars-template">
+                                    <li>
+                                        <ul class="brand-logo-list">
+                                        </ul>
+                                    </li>
+                                </script>
+                                <script id="fe-brand-list-item" type="text/x-handlebars-template">
+                                    <li><button class="bt-logo" data-catecd="{{ cateCd }}" data-brandcd="{{ brandCd }}">
+                                        <img src="{{ appLogoImgUrl }}" alt="{{ appLogoImgAlt }}">
+                                    </button></li>
+                                </script>
+
+                                <ul class="slider" id="fe-pop-brand-box">
+                                    <!--
+                                                                            <li>
+                                                                                <ul class="brand-logo-list">
+                                                                                    <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo01.jpg" alt="SHILLA"></button></li>
+                                                                                    <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo02.jpg" alt="bread & co. DAILY - NEW"></button></li>
+                                                                                    <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo03.jpg" alt="TOUS LES JOURS"></button></li>
+                                                                                    <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo04.jpg" alt="PARIS BAGUETTE"></button></li>
+                                                                                    <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo05.jpg" alt="PARIS CROISSANT"></button></li>
+                                                                                    <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo06.jpg" alt="ERIC KAYSER"></button></li>
+                                                                                </ul>
+                                                                            </li>
+                                                                            <li>
+                                                                                <ul class="brand-logo-list">
+                                                                                    <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo01.jpg" alt="SHILLA"></button></li>
+                                                                                    <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo02.jpg" alt="bread & co. DAILY - NEW"></button></li>
+                                                                                    <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo03.jpg" alt="TOUS LES JOURS"></button></li>
+                                                                                    <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo04.jpg" alt="PARIS BAGUETTE"></button></li>
+                                                                                    <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo05.jpg" alt="PARIS CROISSANT"></button></li>
+                                                                                    <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo06.jpg" alt="ERIC KAYSER"></button></li>
+                                                                                </ul>
+                                                                            </li>
+                                                                            <li>
+                                                                                <ul class="brand-logo-list">
+                                                                                    <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo01.jpg" alt="SHILLA"></button></li>
+                                                                                    <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo02.jpg" alt="bread & co. DAILY - NEW"></button></li>
+                                                                                    <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo03.jpg" alt="TOUS LES JOURS"></button></li>
+                                                                                    <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo04.jpg" alt="PARIS BAGUETTE"></button></li>
+                                                                                    <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo05.jpg" alt="PARIS CROISSANT"></button></li>
+                                                                                    <li><button class="bt-logo"><img src="<%= CDN %>/img/benefit/brand-logo06.jpg" alt="ERIC KAYSER"></button></li>
+                                                                                </ul>
+                                                                            </li>-->
+                                </ul>
                             </div>
                         </div>
-                        <!--// .widget -->
                     </div>
+                    <!--// .widget -->
                 </div>
-                <!--// .cont-box -->
             </div>
+            <!--// .cont-box -->
         </div>
-        <!--// #contents -->
-        <footer id="fe-all-menu">
-            <%- include('../../../../../common/views/components/footer.component.html', { svcInfo }); %>
-            <%- include('../../../../../common/views/components/masking.component.html', { pageInfo }); %>
-        </footer>
     </div>
+    <!--// #contents -->
+
+    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+
+</div>
 </body>
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
+    new Tw.MembershipBenefitBrandBenefit($('.container'), <%- JSON.stringify(data) %>);
   });
 </script>
 <% include ../../components/end.component.html %>

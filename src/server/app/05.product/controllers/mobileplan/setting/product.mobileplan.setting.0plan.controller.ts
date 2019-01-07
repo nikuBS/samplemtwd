@@ -30,7 +30,7 @@ class ProductMobileplanSetting0plan extends TwViewController {
       return this.error.render(res, renderCommonInfo);
     }
 
-    this.apiService.request(API_CMD.BFF_10_0034, {}, {}, prodId)
+    this.apiService.request(API_CMD.BFF_10_0034, {}, {})
       .subscribe((ZeroPlanInfo) => {
         if (ZeroPlanInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, Object.assign(renderCommonInfo, {

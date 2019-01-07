@@ -9,35 +9,15 @@
 </div>
 <% } %>
 
-<% if (combineRequireDocumentInfo && combineRequireDocumentInfo.isNeedDocument) { %>
+<% if (combineRequireDocumentInfo) { %>
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <div class="joinconsulting-wrap">
-    <p class="text">가입서류를 제출해주세요.</p>
+    <p class="text"><%= combineRequireDocumentInfo.text %></p>
     <div class="btn">
-        <a href="/product/wireplan/join/require-document/apply" class="btn-round3 btn-style3">제출</a>
-    </div>
-</div>
-<% } %>
-
-<% if (combineRequireDocumentInfo && combineRequireDocumentInfo.isExpired) { %>
-<hr class="cont-sp type1" aria-hidden="true"/>
-
-<div class="joinconsulting-wrap">
-    <p class="text">서류제출기한이 종료되었습니다.</p>
-    <div class="btn">
-        <a href="/product/wireplan/join/require-document/apply" class="btn-round3 btn-style3">제출</a>
-    </div>
-</div>
-<% } %>
-
-<% if (combineRequireDocumentInfo && combineRequireDocumentInfo.isProcess) { %>
-<hr class="cont-sp type1" aria-hidden="true"/>
-
-<div class="joinconsulting-wrap">
-    <p class="text">제출한 서류를 검토 중입니다.</p>
-    <div class="btn">
-        <a href="/product/wireplan/join/require-document/history" class="btn-round3 btn-style3">조회</a>
+        <a href="/product/wireplan/join/require-document/<%= combineRequireDocumentInfo.page %>" class="btn-round3 btn-style3">
+            <%= combineRequireDocumentInfo.btnText %>
+        </a>
     </div>
 </div>
 <% } %>
@@ -51,20 +31,13 @@ if (( isMobileplan || isWireplan ) && (svcInfo && svcInfo.prodId === prodId) ||
     <p class="text">이용중인 상품 입니다.</p>
     <% if ( basicInfo.linkBtnList.setting && basicInfo.linkBtnList.setting.length > 0 ) { %>
     <div class="btn">
-        <div class="bt-alone">
-            <button class="fe-btn_setting bt-line-blue1">
-                <% if ( basicInfo.linkBtnList.setting && basicInfo.linkBtnList.setting.length > 1 ) { %>
-                설정
-                <% } else { %>
-                <%= basicInfo.linkBtnList.setting[0].linkNm %>
-                <% } %>
-            </button>
-        </div>
-        <ul class="fe-setting_btn_list" style="display: none">
-            <% for (var i in basicInfo.linkBtnList.setting) { %>
-            <li data-url="<%= basicInfo.linkBtnList.setting[i].linkUrl %>"><%= basicInfo.linkBtnList.setting[i].linkNm %></li>
+        <button class="fe-btn_setting btn-round3 btn-style3">
+            <% if ( basicInfo.linkBtnList.setting && basicInfo.linkBtnList.setting.length > 1 ) { %>
+            설정
+            <% } else { %>
+            <%= basicInfo.linkBtnList.setting[0].linkNm %>
             <% } %>
-        </ul>
+        </button>
     </div>
     <% } %>
 </div>
@@ -74,7 +47,7 @@ if (( isMobileplan || isWireplan ) && (svcInfo && svcInfo.prodId === prodId) ||
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <div class="plansaving-wrap">
-    <button data-href="/product/mobileplan/compare-plans?prodId=<%= prodId %>" class="link fe-compare_plans">
+    <button class="link fe-compare_plans">
         <p class="text02"><%= mobilePlanCompareInfo.titleNm %></p>
     </button>
 </div>

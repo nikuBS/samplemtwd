@@ -13,12 +13,15 @@ Tw.ProductRoamingJoinRoamingBeginSetup = function (rootEl,prodRedisInfo,prodApiI
   this._prodApiInfo = prodApiInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
+  this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
+  this._tooltipInit(prodId);
 };
 
 Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
     _bindBtnEvents: function () {
       this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
       this.$container.on('click','.bt-fixed-area #do_confirm',$.proxy(this._confirmInformationSetting, this));
+        this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._goBack,this));
     },
     _getDateArrFromToDay : function(range,format){
         var dateFormat = 'YYYY-MM-DD';
@@ -47,10 +50,10 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
         ];
         return returnActionSheetData;
     },
-    _btnDateEvent : function($this){
-        var nowValue = $($this.currentTarget).text().trim();
+    _btnDateEvent : function(eventObj){
+        var nowValue = $(eventObj.currentTarget).text().trim();
         var dateArr = this._getDateArrFromToDay(30);
-        var convertedArr = this._convertDateArrForActionSheet(dateArr,'data-name="'+$($this.currentTarget).attr('id')+'"',nowValue);
+        var convertedArr = this._convertDateArrForActionSheet(dateArr,'data-name="'+$(eventObj.currentTarget).attr('id')+'"',nowValue);
         var actionSheetData = this._makeActionSheetDate(convertedArr);
         if(nowValue.length<10){
             actionSheetData[0].list[0].option = 'checked';
@@ -62,14 +65,15 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
 
     _bindActionSheetElementEvt : function($layer){
         $layer.on('click', '.chk-link-list button', $.proxy(this._actionSheetElementEvt, this));
-        $layer.on('click', '.popup-closeBtn', $.proxy(this._actionSheetCloseEvt, this));
+        //$layer.on('click', '.popup-closeBtn', $.proxy(this._actionSheetCloseEvt, this));
     },
-    _actionSheetElementEvt : function($this){
-        $($this.delegateTarget).find('button').removeClass('checked');
-        $($this.currentTarget).addClass('checked');
+    _actionSheetElementEvt : function(eventObj){
+        $(eventObj.delegateTarget).find('button').removeClass('checked');
+        $(eventObj.currentTarget).addClass('checked');
+        this._actionSheetCloseEvt(eventObj);
     },
-    _actionSheetCloseEvt : function($layer){
-        var $selectedTarget = $($layer.delegateTarget).find('.chk-link-list button.checked');
+    _actionSheetCloseEvt : function(eventObj){
+        var $selectedTarget = $(eventObj.delegateTarget).find('.chk-link-list button.checked');
         var dateValue = $selectedTarget.text().trim().substr(0,10);
         var dateAttr = $selectedTarget.attr('data-name');
         var changeTarget = this.$container.find('#'+dateAttr);
@@ -78,6 +82,7 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
         changeTarget.attr('data-number',dateValue.replace(/-/g, ''));
         changeTarget.attr('data-idx',$selectedTarget.parent().index());
         this._validateDateValue();
+        this._popupService.close();
     },
     _validateDateValue : function(){
         var startDate = this.$container.find('#start_date').attr('data-number');
@@ -151,7 +156,7 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
         this._historyService.goLoad('/product/roaming/my-use');
     },
     _goBack : function(){
-        this._historyService.goLoad('/product/callplan/'+this._prodId);
+        this._historyService.goBack();
     },
     _confirmInformationSetting : function () {
 
@@ -168,7 +173,7 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
                         popupTitle : Tw.PRODUCT_TYPE_NM.JOIN,
                         userJoinInfo : userJoinInfo,
                         prodId : this._prodId,
-                        svcNum : Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.showSvc),
+                        svcNum : Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.svcNum),
                         processNm : Tw.PRODUCT_TYPE_NM.JOIN,
                         prodType : Tw.NOTICE.ROAMING+' '+Tw.PRODUCT_CTG_NM.PLANS,
                         svcType : Tw.PRODUCT_CTG_NM.ADDITIONS,
@@ -182,6 +187,19 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
 
         new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,null,'confirm_data',this);
 
+    },
+    _tooltipInit : function (prodId) {
+        switch (prodId) {
+            case 'NA00003015':
+                this.$container.find('.cont-box.nogaps-btm').css('display','block');
+                this.$serviceTipElement.attr('id','RM_11_01_02_03_tip_01_01');
+                break;
+            case 'NA00004229':
+            case 'NA00004230':
+            case 'NA00004231':
+                this.$serviceTipElement.attr('id','RM_11_01_02_03_tip_01_02');
+                break;
+        }
     }
 
 

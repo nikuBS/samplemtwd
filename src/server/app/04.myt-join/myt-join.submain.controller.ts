@@ -15,6 +15,7 @@ import { NEW_NUMBER_MSG } from '../../types/string.type';
 import { MYT_JOIN_SUBMAIN_TITLE } from '../../types/title.type';
 import { REDIS_BANNER_ADMIN } from '../../types/redis.type';
 import { SVC_ATTR_NAME } from '../../types/bff.type';
+import StringHelper from '../../utils/string.helper';
 
 class MyTJoinSubmainController extends TwViewController {
   private _svcType: number = -1;
@@ -57,16 +58,21 @@ class MyTJoinSubmainController extends TwViewController {
       // 다른 회선 항목
       otherLines: this.convertOtherLines(svcInfo, allSvc)
     };
+    // 10: 신청/60: 초기화 -> 비밀번호 설정 유도
+    // 20: 사용중/21:신청+등록완료 -> 회선 변경 시 비번 입력 필요, 비밀번호 변경 가능
+    // 70: 비밀번호 잠김 -> 지점에서만 초기화 가능
     // 비밀번호 조회 시 최초 설정이 안되어있는 경우와 등록이 된 경우로 구분
-    if ( svcInfo.pwdStCd && (svcInfo.pwdStCd === '10' || svcInfo.pwdStCd === '60') ) {
-      // 10 -> 신청, 60 -> 초기화 -- 설정가능한상태
+    // 비밀번호 사용중 및 등록완료인 상태에서만 노
+    if ( svcInfo.pwdStCd === '20' || svcInfo.pwdStCd === '21' ) {
       this.isPwdSt = true;
     }
     // PPS, 휴대폰이 아닌 경우는 서비스명 노출
     if ( ['M1', 'M2'].indexOf(data.svcInfo.svcAttrCd) === -1 ) {
       data.svcInfo.nickNm = SVC_ATTR_NAME[data.svcInfo.svcAttrCd];
     }
-
+    if ( ['S1', 'S2'].indexOf(data.svcInfo.svcAttrCd) === -1 ) {
+      data.svcInfo.svcNum = StringHelper.phoneStringToDash(data.svcInfo.svcNum);
+    }
     Observable.combineLatest(
       this._getMyLine(),
       this._getMyInfo(),
@@ -82,8 +88,8 @@ class MyTJoinSubmainController extends TwViewController {
       this.redisService.getData(REDIS_BANNER_ADMIN + pageInfo.menuId)
     ).subscribe(([myline, myif, myhs, myap, mycpp, myinsp, myps, mylps, wirefree, oldnum, numSvc, banner]) => {
       // 가입정보가 없는 경우에는 에러페이지 이동 (PPS는 가입정보 API로 조회불가하여 무선이력으로 확인)
-      if (this.type === 1) {
-        if (myhs.info) {
+      if ( this.type === 1 ) {
+        if ( myhs.info ) {
           this.error.render(res, {
             title: MYT_JOIN_SUBMAIN_TITLE.MAIN,
             code: myhs.info.code,
@@ -140,8 +146,12 @@ class MyTJoinSubmainController extends TwViewController {
       data.myLongPausedState = mylps; // 장기일시정지
 
       // 개통일자
-      if ( data.myHistory && data.myHistory.length > 0 ) {
-        data.hsDate = DateHelper.getShortDateNoDot(data.myHistory[0].chgDt);
+      if ( data.myHistory ) {
+        if ( data.myHistory.length > 0 ) {
+          data.hsDate = DateHelper.getShortDateNoDot(data.myHistory[0].chgDt);
+        } else {
+          data.hsDate = null;
+        }
       }
       // 부가, 결합상품 노출여부
       if ( data.myAddProduct && Object.keys(data.myAddProduct).length > 0 ) {
@@ -195,18 +205,21 @@ class MyTJoinSubmainController extends TwViewController {
       }
 
       if ( numSvc ) {
-        data.numberSvc = numSvc;
-        if ( data.numberSvc.code === API_CODE.CODE_00 ) {
+        if ( numSvc.code === API_CODE.CODE_00 ) {
+          data.numberSvc = numSvc;
           data.isNotChangeNumber = true;
-          if ( data.numberSvc.extnsPsblYn === 'Y' ) {
+          if ( data.numberSvc.result.extnsPsblYn === 'Y' ) {
             data.numberChanged = true;
           } else {
             const curDate = new Date();
-            const endDate = DateHelper.convDateFormat(data.numberSvc.notiEndDt);
+            const endDate = DateHelper.convDateFormat(data.numberSvc.result.notiEndDt);
             const betweenDay = this.daysBetween(curDate, endDate);
-            if ( betweenDay > 28 ) {
+            if ( betweenDay < 28 ) {
+              // 신청 중에는 연장 및 해지
+              data.numberChanged = true;
+            } else {
               // (번호변경안내서비스 종료 날짜 - 현재 날짜) 기준으로 28일이 넘으면 신청불가
-              data.isNotChangeNumber = false;
+              data.numberChanged = false;
             }
           }
         }
@@ -274,7 +287,7 @@ class MyTJoinSubmainController extends TwViewController {
     const date2_ms = date2.getTime();
 
     // Calculate the difference in milliseconds
-    const difference_ms = Math.abs(date1_ms - date2_ms);
+    const difference_ms = (date1_ms - date2_ms);
     // Convert back to days and return
     return Math.round(difference_ms / ONE_DAY);
   }
@@ -288,14 +301,43 @@ class MyTJoinSubmainController extends TwViewController {
     return result;
   }
 
+  recompare(a, b) {
+    const codeA = a.svcAttrCd.toUpperCase();
+    const codeB = b.svcAttrCd.toUpperCase();
+
+    let comparison = 0;
+    if ( codeA < codeB ) {
+      comparison = 1;
+    } else if ( codeA > codeB ) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
+  compare(a, b) {
+    const codeA = a.svcAttrCd.toUpperCase();
+    const codeB = b.svcAttrCd.toUpperCase();
+
+    let comparison = 0;
+    if ( codeA > codeB ) {
+      comparison = 1;
+    } else if ( codeA < codeB ) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
   convertOtherLines(target, items): any {
     const MOBILE = (items && items['m']) || [];
-    const OTHER = (items && items['o']) || [];
     const SPC = (items && items['s']) || [];
+    const OTHER = (items && items['o']) || [];
     const list: any = [];
+    MOBILE.sort(this.compare);
+    SPC.sort(this.recompare);
+    OTHER.sort(this.recompare);
     if ( MOBILE.length > 0 || OTHER.length > 0 || SPC.length > 0 ) {
       let nOthers: any = [];
-      nOthers = nOthers.concat(MOBILE, OTHER, SPC);
+      nOthers = nOthers.concat(MOBILE, SPC, OTHER);
       nOthers.filter((item) => {
         if ( target.svcMgmtNum !== item.svcMgmtNum ) {
           let clsNm = 'cellphone';
@@ -309,6 +351,7 @@ class MyTJoinSubmainController extends TwViewController {
           if ( ['M1', 'M2'].indexOf(item.svcAttrCd) === -1 ) {
             item.nickNm = SVC_ATTR_NAME[item.svcAttrCd];
           }
+          item.svcNum = StringHelper.phoneStringToDash(item.svcNum);
           item.className = clsNm;
           list.push(item);
         }
@@ -372,11 +415,7 @@ class MyTJoinSubmainController extends TwViewController {
   _getMyHistory() {
     return this.apiService.request(API_CMD.BFF_05_0061, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        if ( resp.result && resp.result.length > 0 ) {
-          return resp.result;
-        } else {
-          return null;
-        }
+        return resp.result;
       } else {
         // error
         return null;

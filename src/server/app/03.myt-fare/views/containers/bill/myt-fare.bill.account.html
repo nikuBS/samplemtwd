@@ -72,7 +72,7 @@
                                                         </span>
                                                     </label>
                                                 </li>
-                                                <li class="fe-manual-input fe-account-input">
+                                                <li class="fe-manual-input fe-account-input fe-bank-wrap">
                                                     <span class="custom-form"><input type="radio" id="radio2" name="radio"><span class="r-type1"></span></span>
                                                     <label for="radio2">
                                                         <span class="tx-tit">직접입력</span>
@@ -87,8 +87,14 @@
                                                                     <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" maxlength="20"
                                                                            title="계좌정보 숫자만 입력" disabled="" class="fe-account-number required-input-field" />
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
+                                                                    <span class="error-txt fe-error-msg" style="display:none;">
+                                                                        계좌번호를 입력해 주세요.
+                                                                    </span>
                                                                 </span>
                                                             </span>
+                                                        </span>
+                                                        <span class="error-txt fe-bank-error-msg" style="display:none;">
+                                                            은행을 선택해 주세요.
                                                         </span>
                                                     </label>
                                                 </li>
@@ -99,7 +105,7 @@
                                     <div class="tx-cont2 pt20">
                                         <div class="input-list">
                                             <ul>
-                                                <li class="pt0 fe-account-input checked">
+                                                <li class="pt0 fe-account-input checked fe-bank-wrap">
                                                     <span class="form-wrap half-type">
                                                         <span class="select">
                                                             <button class="bt-dropdown big select-bank fe-select-bank" title="계좌정보 은행 선택" aria-haspopup="true">
@@ -111,8 +117,14 @@
                                                                 <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" maxlength="20"
                                                                        title="계좌정보 숫자만 입력" class="fe-account-number required-input-field" />
                                                                 <button class="cancel"><span class="blind">삭제</span></button>
+                                                                <span class="error-txt fe-error-msg" style="display:none;">
+                                                                    계좌번호를 입력해 주세요.
+                                                                </span>
                                                             </span>
                                                         </span>
+                                                    </span>
+                                                    <span class="error-txt fe-bank-error-msg" style="display:none;">
+                                                        은행을 선택해 주세요.
                                                     </span>
                                                 </li>
                                             </ul>
@@ -150,7 +162,7 @@
                                                 </span>
                                             </label>
                                         </li>
-                                        <li class="fe-manual-input fe-refund-input">
+                                        <li class="fe-manual-input fe-refund-input fe-bank-wrap">
                                             <span class="custom-form"><input type="radio" id="radio4" name="radio-1"><span class="r-type1"></span></span>
                                             <label for="radio4">
                                                 <span class="tx-tit">직접입력</span>
@@ -165,15 +177,21 @@
                                                             <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" maxlength="20"
                                                                    title="환불계좌 숫자만 입력" disabled="" class="fe-refund-account-number required-input-field" />
                                                             <button class="cancel"><span class="blind">삭제</span></button>
+                                                            <span class="error-txt fe-error-msg" style="display:none;">
+                                                                계좌번호를 입력해 주세요.
+                                                            </span>
                                                         </span>
                                                     </span>
+                                                </span>
+                                                <span class="error-txt fe-bank-error-msg" style="display:none;">
+                                                    은행을 선택해 주세요.
                                                 </span>
                                             </label>
                                         </li>
                                     </ul>
                                     <% } else { %>
                                     <ul>
-                                        <li class="pt20 fe-refund-input checked">
+                                        <li class="pt20 fe-refund-input checked fe-bank-wrap ">
                                             <span class="form-wrap half-type">
                                                 <span class="select">
                                                     <button class="bt-dropdown big select-bank fe-select-refund-bank" title="환불계좌 은행 선택" aria-haspopup="true">
@@ -185,8 +203,14 @@
                                                         <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" maxlength="20"
                                                                title="환불계좌 숫자만 입력" class="fe-refund-account-number required-input-field" />
                                                         <button class="cancel"><span class="blind">삭제</span></button>
+                                                        <span class="error-txt fe-error-msg" style="display:none;">
+                                                            계좌번호를 입력해 주세요.
+                                                        </span>
                                                     </span>
                                                 </span>
+                                            </span>
+                                            <span class="error-txt fe-bank-error-msg" style="display:none;">
+                                                은행을 선택해 주세요.
                                             </span>
                                         </li>
                                     </ul>
@@ -219,7 +243,7 @@
             </div>
             <!-- // .container-wrap -->
             <!-- .popup-closeBtn -->
-            <button class="popup-closeBtn fe-common-back"><span class="blind">팝업 페이지 닫기</span></button>
+            <button class="prev-step fe-close"><span class="blind">팝업 페이지 닫기</span></button>
             <!--// .popup-closeBtn -->
         </div>
         <footer id="fe-all-menu">

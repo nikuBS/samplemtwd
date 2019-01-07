@@ -31,9 +31,22 @@ Tw.MyTJoinPhoneNumChgAlarm.prototype = {
     this.$container.on('change', this.$radioAlarmType, $.proxy(this._onchangeUiCondition, this));
     this.$container.on('click', '#btn-period', $.proxy(this._onclickBtnPrd, this));
     this.$container.on('click', '#btn-ok', $.proxy(this._onclickBtnOk, this));
+    this.$container.on('click', '#fe-prev-step', $.proxy(this._onclickBtnClose, this));
   },
 
+  _onclickBtnClose: function(){
+    if(this.$inputPrd.val() || this.$radioAlarmType.checkedVal()) {
 
+      this._popupService.openConfirm(
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+        $.proxy(function(){
+          this._historyService.goLoad('/myt-join/submain');
+        }, this));
+    } else {
+      this._historyService.goBack();
+    }
+  },
 
   /**
    * 알림 기간 선택 버튼 클릭

@@ -118,6 +118,14 @@ class DateHelper {
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018년 12월 31일
+   */
+  static getKoreanDate(date: any): string {
+    return moment(this.convDateFormat(date)).format('LL');
+  }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 18년 12월 31일
    */
   static getShortKoreanDate(date: any): string {
@@ -173,6 +181,14 @@ class DateHelper {
     return moment(this.convDateFormat(date)).format('YYYY.M.DD.');
   }
 
+   /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018.6.1.
+   */
+  static getShortMonthDate(date: any): string {
+    return moment(this.convDateFormat(date)).format('YYYY.M.D.');
+  }
+
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 2018.06.01
@@ -201,6 +217,16 @@ class DateHelper {
     return moment(firstDate).format('YYYY.M.DD.');
   }
 
+    /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018.06.01 (first date of this month)
+   */
+  static getShortFirstShortDate(date: any): string {
+    const curDate = this.convDateFormat(date);
+    const firstDate = new Date(curDate.setDate(1));
+    return moment(firstDate).format('YYYY.M.D.');
+  }
+
    /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 2018.05
@@ -227,6 +253,14 @@ class DateHelper {
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018.6.1 12:00
+   */
+  static getShortMonthDateAndTime(date) {
+    return moment(this.convDateFormat(date)).format('YYYY.M.D hh:mm');
+  }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 2018.06.01 12:00:00
    */
   static getFullDateAndTime(date) {
@@ -239,6 +273,14 @@ class DateHelper {
    */
   static getFullDateAndTimeWithDot(date) {
     return moment(this.convDateFormat(date)).format('YYYY.M.DD. hh:mm:ss');
+  }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018.6.1 12:00:00
+   */
+  static getShortDateAndTimeWithDot(date) {
+    return moment(this.convDateFormat(date)).format('YYYY.M.D. hh:mm:ss');
   }
 
   /**

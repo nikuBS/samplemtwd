@@ -44,7 +44,7 @@ export default class ProductRoaming extends TwViewController {
     }
     private getRoamingData(): Observable<any> {
         let roamingData = null;
-        return this.apiService.request(API_CMD.BFF_10_0055, {}).map((resp) => {
+        return this.apiService.request(API_CMD.BFF_10_0122, {}).map((resp) => {
             if ( resp.code === API_CODE.CODE_00 ) {
                 roamingData = resp.result;
                 this.logger.info(this, 'roamingData', roamingData);

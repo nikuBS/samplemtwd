@@ -16,7 +16,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div class="wrap" data-menuId ="<%= pageInfo.menuId?pageInfo.menuId:'M000478' %>">
     <!-- .popup hbs -->
     <div class="popup-page tw-popup fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
         <!-- #header -->
@@ -38,7 +38,7 @@
                         <span class="blind">현재 선택된 회선정보 및 사용중인 요금제 정보 노출</span>
                         <span class="ico"><span class="blind">선택된 회선정보 아이콘</span></span>
                         <div class="in-info oneline">
-                            <span class="number"><span class="blind">회선번호</span><%= svcInfo.showSvc %></span>
+                            <span class="number"><span class="blind">회선번호</span><%= maskingNum %></span>
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,13 @@
 									<span class="elem">가입할 요금제 (부가서비스)</span>
 								</span>
                             <span class="tit-tx"><%= prodRedisInfo.prodNm %></span>
-                            <span class="sub-disc03"><span class="tx-bold vbl">월 <%= prodRedisInfo.basFeeInfo%>원</span> 부가세포함</span>
+                            <span class="sub-disc03">
+                                <% if(prodRedisInfo.basFeeInfo!=='무료'){ %>
+                                    <span class="tx-bold vbl">월 <%= prodRedisInfo.basFeeInfo%>원</span> 부가세포함
+                                <% }else{ %>
+                                    <span class="tx-bold vbl"><%= prodRedisInfo.basFeeInfo%></span>
+                                <% } %>
+                            </span>
                             <div class="cont-noti pt36">
                                 <span class="type3"><%= prodRedisInfo.prodSmryDesc %></span>
                             </div>
@@ -63,9 +69,10 @@
                 </div>
                 <!--// .cont-box -->
 
-                <hr class="cont-sp type1" aria-hidden="true">
+
 
                 <!-- .cont-box
+                <hr class="cont-sp type1" aria-hidden="true">
                 <div class="cont-box nogaps-hoz">
                     <ul class="link-list set-info">
                         <li>
@@ -240,15 +247,15 @@
 
 
                 <hr class="cont-sp type1" aria-hidden="true">
-                <% if(prodBffInfo.preinfo.joinNoticeList.length<=0){ %>
+                <% if(prodBffInfo.preinfo.joinNoticeList.length>0){ %>
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해주세요!</h3>
                     <ul class="noti-list">
                         <% for(var i=0;i<prodBffInfo.preinfo.joinNoticeList.length;i++){ %>
                         <li>
-                            <%= prodBffInfo.preinfo.joinNoticeList[i].prodNm %>
-                            <button type="button" class="tip-view" title="정보보기" data-txt="<%= prodBffInfo.preinfo.joinNoticeList[i].noticeTxt %>" aria-haspopup="true">TIP</button>
+                            <%= prodBffInfo.preinfo.joinNoticeList[i].noticeTit %>
+                            <button type="button" class="tip-view fe-btn_tip_view" title="정보보기" page-id="M000478" id="<%= prodId=='NA00000294'?'MV_01_02_01_tip_02':'MV_01_02_01_tip_06'%>" data-txt="<%= prodBffInfo.preinfo.joinNoticeList[i].noticeTxt %>" aria-haspopup="true">TIP</button>
                         </li>
                         <% } %>
                     </ul>

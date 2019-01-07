@@ -8,6 +8,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
+import BrowserHelper from '../../../../utils/browser.helper';
 
 class MyTFareBillSmallAutoChange extends TwViewController {
   constructor() {
@@ -15,21 +16,27 @@ class MyTFareBillSmallAutoChange extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    this.getAutoPrepayInfo().subscribe((resp) => {
-      if (resp.code === API_CODE.CODE_00) {
-        res.render('billsmall/myt-fare.bill.small.auto.change.html', {
-          autoPrepayInfo: this.parseData(resp.result),
-          svcInfo: svcInfo,
-          pageInfo: pageInfo
-        });
-      } else {
-        this.error.render(res, {
-          code: resp.code,
-          msg: resp.msg,
-          svcInfo: svcInfo
-        });
-      }
-    });
+    if (BrowserHelper.isApp(req)) {
+      this.getAutoPrepayInfo().subscribe((resp) => {
+        if (resp.code === API_CODE.CODE_00) {
+          res.render('billsmall/myt-fare.bill.small.auto.change.html', {
+            autoPrepayInfo: this.parseData(resp.result),
+            svcInfo: svcInfo,
+            pageInfo: pageInfo
+          });
+        } else {
+          this.error.render(res, {
+            code: resp.code,
+            msg: resp.msg,
+            svcInfo: svcInfo
+          });
+        }
+      });
+    } else {
+      res.render('share/common.share.app-install.info.html', {
+        svcInfo: svcInfo, isAndroid: BrowserHelper.isAndroid(req)
+      });
+    }
   }
 
   private getAutoPrepayInfo(): Observable<any> {

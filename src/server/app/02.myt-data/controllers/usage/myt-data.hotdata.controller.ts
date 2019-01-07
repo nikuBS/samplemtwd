@@ -46,7 +46,9 @@ class MyTDataHotdata extends TwViewController {
         const option = {
           svcInfo,
           pageInfo,
-          ppsInfo: null
+          usageData: {},
+          balanceAddOns: {},
+          ppsInfo: {}
         };
 
         switch ( svcInfo.svcAttrCd ) {
@@ -136,6 +138,8 @@ class MyTDataHotdata extends TwViewController {
       if (!FormatHelper.isEmpty(defaultData.skipId)) {
         dataArr.unshift(defaultData);
         usageData.hasDefaultData = true;
+      } else {
+        usageData.hasDefaultData = false;
       }
     }
 

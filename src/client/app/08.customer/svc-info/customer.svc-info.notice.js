@@ -4,13 +4,15 @@
  * Date: 2018.10.23
  */
 
-Tw.CustomerSvcInfoNotice = function(rootEl) {
+Tw.CustomerSvcInfoNotice = function(rootEl, category, ntcId) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._history = new Tw.HistoryService();
+  this._historyService = new Tw.HistoryService();
+
   this._template = Handlebars.compile($('#tpl_notice_list_item').html());
-  this._category = this.$container.data('category');
+  this._category = category;
+  this._ntcId = ntcId;
   this._setContentsList = [];
   this._page = 1;
 
@@ -48,24 +50,26 @@ Tw.CustomerSvcInfoNotice.prototype = {
   },
 
   _init: function() {
-    var hashNtcId = location.hash.replace('#', '');
-    if (Tw.FormatHelper.isEmpty(hashNtcId)) {
+    if (Tw.FormatHelper.isEmpty(this._ntcId)) {
       return;
     }
 
-    var item = this.$list.find('[data-ntc_id="' + hashNtcId  + '"]');
+    var item = this.$list.find('[data-ntc_id="' + this._ntcId  + '"]');
     if (item.length > 0) {
       setTimeout(function() {
-        item.trigger('click');
-      }, 0);
+        $.when(item.find('button').trigger('click'))
+          .then(function() {
+            console.log(item.offset().top - $("#header").height());
+            $(window).scrollTop(item.offset().top - $("#header").height());
+          });
+      }, 100);
     }
-
-    this._history.pathname += this._history.search;
-    this._history.replace();
   },
 
   _setContentsReq: function(e) {
     var ntcId = parseInt($(e.currentTarget).data('ntc_id'), 10);
+    this._historyService.replacePathName(window.location.pathname + '?ntcId=' + ntcId);
+
     if (this._category !== 'tworld' || this._setContentsList.indexOf(ntcId) !== -1) {
       return;
     }
@@ -91,17 +95,23 @@ Tw.CustomerSvcInfoNotice.prototype = {
 
   _openCategorySelectPopup: function() {
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
-      layer: true,
-      title: Tw.NOTICE.TITLE,
-      data: [{
-        'list': [
-          { value: 'T world', option: (this._category === 'tworld') ? 'checked' : '', attr: 'data-category="tworld"' },
-          { value: Tw.NOTICE.DIRECTSHOP, option: (this._category === 'directshop') ? 'checked' : '', attr: 'data-category="directshop"' },
-          { value: Tw.NOTICE.MEMBERSHIP, option: (this._category === 'membership') ? 'checked' : '', attr: 'data-category="membership"' },
-          { value: Tw.NOTICE.ROAMING, option: (this._category === 'roaming') ? 'checked' : '', attr: 'data-category="roaming"' }
-        ]
-      }]
+      hbs:'actionsheet01',
+      layer:true,
+      data:[
+        {
+          'list':[
+            { 'label-attr': 'id="ra1"', 'txt': 'T world',
+              'radio-attr':'id="ra1" data-category="tworld" ' + (this._category === 'tworld' ? 'checked' : '') },
+            { 'label-attr': 'id="ra2"', 'txt': Tw.NOTICE.DIRECTSHOP,
+              'radio-attr':'id="ra2" data-category="directshop" ' + (this._category === 'directshop' ? 'checked' : '') },
+            { 'label-attr': 'id="ra3"', 'txt': Tw.NOTICE.MEMBERSHIP,
+              'radio-attr':'id="ra3" data-category="membership" ' + (this._category === 'membership' ? 'checked' : '') },
+            { 'label-attr': 'id="ra4"', 'txt': Tw.NOTICE.ROAMING,
+              'radio-attr':'id="ra4" data-category="roaming" ' + (this._category === 'roaming' ? 'checked' : '') }
+          ]
+        }
+      ],
+      btnfloating : {'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE}
     }, $.proxy(this._categoryPopupBindEvent, this), $.proxy(this._goCategory, this), 'notice_category');
   },
 
@@ -110,7 +120,7 @@ Tw.CustomerSvcInfoNotice.prototype = {
       return;
     }
 
-    this._history.goLoad('/customer/svc-info/notice?category=' + this._category);
+    this._historyService.goLoad('/customer/svc-info/notice?category=' + this._category);
   },
 
   _categoryPopupBindEvent: function($layer) {

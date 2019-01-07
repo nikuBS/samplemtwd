@@ -11,104 +11,211 @@
 <!-- Phone -->
 <!-- .cont-box -->
     <div class="cont-box pt0" data-id="remnant-container">
-        <% if (data.isDataInfo) { %>
-        <% var totalData = data.remnantData.total; %>
-        <ul class="date-graph-list b-line">
-            <li>
-                <div class="left">
-                    <!-- .donut-chart.small -->
-                    <div class="donut-chart small">
-                        <div class="donut-chart-area">
-                            <!-- loop -->
-                            <div class="c100 p<%= totalData.totalRemainedRatio %>"><!-- .p+(0~100) // -->
-                                <div class="blue"><!-- red, yellow, green, blue, comet // -->
-                                    <div class="slice">
-                                        <div class="bar"></div>
-                                        <div class="fill"></div>
+        <% if (data.remnant && data.remnant.info) { %>
+            <% if (data.remnant.info.code === 'BLN0001') { %>
+            <div class="main-chart-box">
+                <div class="main-error-box">
+                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                    <strong class="ti">잠시 후 다시 이용해 주세요</strong>
+                    <p class="tx">안정적으로 실시간 조회를 하실 수 있도록<br>조회 횟수를 제한하고 있습니다.</p>
+                    <p class="desc">2시간 동안 최대 12회 조회 가능</p>
+                </div>
+            </div>
+            <% } else if (data.remnant.info.code === 'BLN0003') { %>
+            <div class="main-chart-box">
+                <div class="main-error-box">
+                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
+                    <p class="tx">정지 이력이 있어 잔여량 조회 서비스를<br>이용하실 수 없습니다.<br>자세한 사항은 고객센터나 <button class="bt">이메일</button>로<br> 문의해 주시기 바랍니다</p>
+                </div>
+            </div>
+            <% } else { %>
+            <div class="main-chart-box">
+                <div class="main-error-box">
+                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
+                    <p class="tx"><%= data.remnant.info.code %><br><%= data.remnant.info.msg %></p>
+                </div>
+
+            </div>
+            <% } %>
+        <% } else { %>
+            <% if (data.isDataShow) { %>
+            <% var totalData = data.remnantData.total; %>
+            <ul class="date-graph-list b-line">
+                <li>
+                    <div class="left">
+                        <!-- .donut-chart.small -->
+                        <div class="donut-chart small">
+                            <div class="donut-chart-area">
+                                <!-- loop -->
+                                <div class="c100 p<%= totalData.totalRemainedRatio %>"><!-- .p+(0~100) // -->
+                                    <div class="blue"><!-- red, yellow, green, blue, comet // -->
+                                        <div class="slice">
+                                            <div class="bar"></div>
+                                            <div class="fill"></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- // loop -->
-                            <!-- loop -->
-                            <div class="c100 p<%= totalData.etcRemainedRatio %>"><!-- .p+(0~100) // -->
-                                <div class="red"><!-- red, yellow, green, blue, comet // -->
-                                    <div class="slice">
-                                        <div class="bar"></div>
-                                        <div class="fill"></div>
+                                <!-- // loop -->
+                                <!-- loop -->
+                                <div class="c100 p<%= totalData.etcRemainedRatio %>"><!-- .p+(0~100) // -->
+                                    <div class="red"><!-- red, yellow, green, blue, comet // -->
+                                        <div class="slice">
+                                            <div class="bar"></div>
+                                            <div class="fill"></div>
+                                        </div>
                                     </div>
                                 </div>
+                                <!-- // loop -->
                             </div>
-                            <!-- // loop -->
+                        </div>
+                        <!-- // .donut-chart.small -->
+                    </div>
+                    <div class="cont">
+                        <span class="txt1">나의 데이터</span>
+                        <div class="date">
+                            <span class="remain">
+                                <% if (data.remnantData.totalLimit) { %>
+                                <strong>무제한</strong>
+                                <% } else { %>
+                                <strong><%= totalData.showRemained.data %><%= totalData.showRemained.unit %></strong> 남음
+                                <% } %>
+                            </span>
                         </div>
                     </div>
-                    <!-- // .donut-chart.small -->
-                </div>
-                <div class="cont">
-                    <span class="txt1">나의 데이터</span>
-                    <div class="date">
-                        <span class="remain">
-                            <% if (data.remnantData.totalLimit) { %>
-                            <strong>무제한</strong>
-                            <% } else { %>
-                            <strong><%= totalData.showRemained.data %><%= totalData.showRemained.unit %></strong> 남음
-                            <% } %>
-                        </span>
-                    </div>
-                </div>
-                <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
-            </li>
-        </ul>
-        <% } %>
-        <div class="user-month-bill mt16">
-            <div class="detail-bill type1">
-                <ul>
-                    <% if (data.remnantData && data.remnantData.gdata.length > 0) { %>
-                    <% var rdata = data.remnantData.gdata[0]; %>
+                    <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
+                </li>
+            </ul>
+            <% } else if (data.isVoiceShow || data.isSmsShow) { %>
+            <ul class="date-graph-list">
+                    <% if (data.isVoiceShow) { %>
+                    <% var rvoice = data.remnantData.voice[0]; %>
                     <li>
-                        <span class="tit"><%= rdata.skipNm %></span>
-                        <span class="value type1">
-                            <% if (data.remnantData.totalLimit) { %>
-                            <strong>무제한</strong>
-                            <% } else { %>
-                            <strong><%= rdata.showRemained.data %><%= rdata.showRemained.unit %></strong> 남음
-                            <% } %>
-                        </span>
+                        <div class="left">
+                            <!-- .donut-chart.small -->
+                            <div class="donut-chart small">
+                                <div class="donut-chart-area">
+                                    <!-- loop -->
+                                    <div class="c100 p<%= rvoice.remainedRatio %>"><!-- .p+(0~100) // -->
+                                        <div class="green"><!-- red, yellow, green, blue, comet // -->
+                                            <div class="slice">
+                                                <div class="bar"></div>
+                                                <div class="fill"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- // loop -->
+                                </div>
+                            </div>
+                            <!-- // .donut-chart.small -->
+                        </div>
+                        <div class="cont">
+                            <span class="txt1"><%= rvoice.skipNm %></span>
+                            <div class="date">
+                            <span class="remain">
+                                <strong>
+                                    <% if (rvoice.isUnlimit) { %>
+                                    무제한 </strong>
+                                    <% } else { %>
+                                    <%= rvoice.showRemained.hours %>시간
+                                    <%= rvoice.showRemained.min %>분
+                                    </strong>남음
+                                    <% } %>
+                            </span>
+                            </div>
+                        </div>
+                        <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
                     </li>
-                    <% } %>
-                    <!-- (T가족모아옵션)  -->
-                    <% if (data.family) { %>
+                    <% } else if (data.isSmsShow) { %>
+                    <% var rsms = data.remnantData.sms[0]; %>
                     <li>
-                        <span class="tit">
-                            <% if (data.family.impossible) { %>
-                            T가족모아데이터를
-                            <a class="bt-link-tx underline" href="/product/callplan/NA00006031">가입</a>
-                            해보세요!
-                            <% } else { %>
-                            T가족모아데이터
-                                <% if (data.family.noshare) { %>
-                                <span class="ml8"><a class="bt-link-tx small underline" href="/myt-data/familydata">자세히</a></span>
+                        <div class="left">
+                            <!-- .donut-chart.small -->
+                            <div class="donut-chart small">
+                                <div class="donut-chart-area">
+                                    <!-- loop -->
+                                    <div class="c100 p<%= rsms.remainedRatio %>"><!-- .p+(0~100) // -->
+                                        <div class="yellow"><!-- red, yellow, green, blue, comet // -->
+                                            <div class="slice">
+                                                <div class="bar"></div>
+                                                <div class="fill"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- // loop -->
+                                </div>
+                            </div>
+                            <!-- // .donut-chart.small -->
+                        </div>
+                        <div class="cont">
+                            <span class="txt1"><%= rsms.skipNm %></span>
+                            <div class="date">
+                            <span class="remain">
+                                <strong>
+                                <% if (rsms.isUnlimit) { %>
+                                    <%= rsms.total %> </strong>
                                 <% } else { %>
-                                <button type="button" class="ml10 btn-round3 btn-style3" data-id="family-moa">공유</button>
+                                    <%= rsms.showRemained %></strong>남음
                                 <% } %>
-                            <% } %>
-                        </span>
-                        <% if (!data.family.impossible) { %>
-                        <% if (data.family.remained === 0) { %>
-                        <% if (data.family.limitedYn === 'Y' && data.family.limitation === 0 ) { %>
-                        <span class="value type2"><strong>0GB</strong> 남음</span>
-                        <% } else { %>
-                        <span class="value type3">한도 소진</span>
-                        <% } %>
-                        <% } else { %>
-                        <span class="value type2"><strong><%= data.family.remained %>GB</strong> 남음</span>
-                        <% } %>
-                        <% } %>
+                            </span>
+                            </div>
+                        </div>
+                        <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
                     </li>
                     <% } %>
                 </ul>
+            <% } %>
+            <div class="user-month-bill mt16">
+                <div class="detail-bill type1">
+                    <ul>
+                        <% if (data.remnantData && data.remnantData.gdata.length > 0) { %>
+                        <% var rdata = data.remnantData.gdata[0]; %>
+                        <li>
+                            <span class="tit"><%= rdata.skipNm %></span>
+                            <span class="value type1">
+                                <% if (data.remnantData.totalLimit) { %>
+                                <strong>무제한</strong>
+                                <% } else { %>
+                                <strong><%= rdata.showRemained.data %><%= rdata.showRemained.unit %></strong> 남음
+                                <% } %>
+                            </span>
+                        </li>
+                        <% } %>
+                        <!-- (T가족모아옵션)  -->
+                        <% if (data.family) { %>
+                        <li>
+                            <span class="tit">
+                                <% if (data.family.impossible) { %>
+                                T가족모아데이터를
+                                <a class="bt-link-tx underline" href="/product/callplan/NA00006031">가입</a>
+                                해보세요!
+                                <% } else { %>
+                                T가족모아데이터
+                                    <% if (data.family.noshare) { %>
+                                    <span class="ml8"><a class="bt-link-tx small underline" href="/myt-data/familydata">자세히</a></span>
+                                    <% } else { %>
+                                    <button type="button" class="ml10 btn-round3 btn-style3" data-id="family-moa">공유</button>
+                                    <% } %>
+                                <% } %>
+                            </span>
+                            <% if (!data.family.impossible) { %>
+                            <% if (data.family.remained === 0) { %>
+                            <% if (data.family.limitedYn === 'Y' && data.family.limitation === 0 ) { %>
+                            <span class="value type2"><strong>0GB</strong> 남음</span>
+                            <% } else { %>
+                            <span class="value type3">한도 소진</span>
+                            <% } %>
+                            <% } else { %>
+                            <span class="value type2"><strong><%= data.family.remained %><%= data.family.remained === '0'? 'KB' : '' %></strong> 남음</span>
+                            <% } %>
+                            <% } %>
+                        </li>
+                        <% } %>
+                    </ul>
+                </div>
             </div>
-        </div>
-
+        <% } %>
         <% var twoItem = data.immCharge && data.present; %>
         <% if(data.immCharge || data.present) { %>
         <ul class="bt-slice <%= twoItem? 'item-two': 'solid' %> mt20">
@@ -125,156 +232,220 @@
         </ul>
         <% } %>
     </div>
-    <% if (data.remnantData && (data.remnantData.voice.length > 0 || remnantData.sms.length > 0)) { %>
-    <hr class="cont-sp type1" aria-hidden="true" />
-    <div class="cont-box nogaps-hoz">
-        <ul class="date-graph-list">
-            <% if (data.remnantData && data.remnantData.voice.length > 0) { %>
-            <% var rvoice = data.remnantData.voice[0]; %>
-            <li>
-                <div class="left">
-                    <!-- .donut-chart.small -->
-                    <div class="donut-chart small">
-                        <div class="donut-chart-area">
-                            <!-- loop -->
-                            <div class="c100 p<%= rvoice.remainedRatio %>"><!-- .p+(0~100) // -->
-                                <div class="green"><!-- red, yellow, green, blue, comet // -->
-                                    <div class="slice">
-                                        <div class="bar"></div>
-                                        <div class="fill"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- // loop -->
-                        </div>
-                    </div>
-                    <!-- // .donut-chart.small -->
-                </div>
-                <div class="cont">
-                    <span class="txt1"><%= rvoice.skipNm %></span>
-                    <div class="date">
-                        <span class="remain">
-                            <strong>
-                                <% if (rvoice.isUnlimit) { %>
-                                무제한 </strong>
-                                <% } else { %>
-                                <%= rvoice.showRemained.hours %>시간
-                                <%= rvoice.showRemained.min %>분
-                                </strong>남음
-                                <% } %>
-                        </span>
-                    </div>
-                </div>
-                <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
-            </li>
-            <% } %>
-            <% if (data.remnantData && data.remnantData.sms.length > 0) { %>
-            <% var rsms = data.remnantData.sms[0]; %>
-            <li>
-                <div class="left">
-                    <!-- .donut-chart.small -->
-                    <div class="donut-chart small">
-                        <div class="donut-chart-area">
-                            <!-- loop -->
-                            <div class="c100 p<%= rsms.remainedRatio %>"><!-- .p+(0~100) // -->
-                                <div class="yellow"><!-- red, yellow, green, blue, comet // -->
-                                    <div class="slice">
-                                        <div class="bar"></div>
-                                        <div class="fill"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- // loop -->
-                        </div>
-                    </div>
-                    <!-- // .donut-chart.small -->
-                </div>
-                <div class="cont">
-                    <span class="txt1"><%= rsms.skipNm %></span>
-                    <div class="date">
-                        <span class="remain">
-                            <strong>
-                            <% if (rsms.isUnlimit) { %>
-                                <%= rsms.total %> </strong>
-                            <% } else { %>
-                                <%= rsms.showRemained %></strong>남음
-                            <% } %>
-                        </span>
-                    </div>
-                </div>
-                <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
-            </li>
-            <% } %>
-        </ul>
-    </div>
-    <% } %>
 <!-- Phone -->
 <% } else if (data.svcInfo.svcAttrCd === 'M2') { %>
 <!-- PPS -->
     <div class="cont-box pt0" data-id="remnant-container">
-        <% if (data.isDataInfo) { %>
-        <% var totalData = data.remnantData.total; %>
-        <ul class="date-graph-list b-line">
-            <li>
-                <div class="left">
-                    <!-- .donut-chart.small -->
-                    <div class="donut-chart small">
-                        <div class="donut-chart-area">
-                            <!-- loop -->
-                            <div class="c100 p<%= totalData.totalRemainedRatio %>"><!-- .p+(0~100) // -->
-                                <div class="blue"><!-- red, yellow, green, blue, comet // -->
-                                    <div class="slice">
-                                        <div class="bar"></div>
-                                        <div class="fill"></div>
+        <% if (data.remnant && data.remnant.info) { %>
+            <% if (data.remnant.info.code === 'BLN0001') { %>
+            <div class="main-chart-box">
+                <div class="main-error-box">
+                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                    <strong class="ti">잠시 후 다시 이용해 주세요</strong>
+                    <p class="tx">안정적으로 실시간 조회를 하실 수 있도록<br>조회 횟수를 제한하고 있습니다.</p>
+                    <p class="desc">2시간 동안 최대 12회 조회 가능</p>
+                </div>
+            </div>
+            <% } else if (data.remnant.info.code === 'BLN0003') { %>
+            <div class="main-chart-box">
+                <div class="main-error-box">
+                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
+                    <p class="tx">정지 이력이 있어 잔여량 조회 서비스를<br>이용하실 수 없습니다.<br>자세한 사항은 고객센터나 <button class="bt">이메일</button>로<br> 문의해 주시기 바랍니다</p>
+                </div>
+            </div>
+            <% } else { %>
+            <div class="main-chart-box">
+                <div class="main-error-box">
+                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
+                    <p class="tx"><%= data.remnant.info.code %><br><%= data.remnant.info.msg %></p>
+                </div>
+
+            </div>
+            <% } %>
+        <% } else { %>
+            <% if (data.isDataShow) { %>
+            <% var totalData = data.remnantData.total; %>
+            <ul class="date-graph-list b-line">
+                <li>
+                    <div class="left">
+                        <!-- .donut-chart.small -->
+                        <div class="donut-chart small">
+                            <div class="donut-chart-area">
+                                <!-- loop -->
+                                <div class="c100 p<%= totalData.totalRemainedRatio %>"><!-- .p+(0~100) // -->
+                                    <div class="blue"><!-- red, yellow, green, blue, comet // -->
+                                        <div class="slice">
+                                            <div class="bar"></div>
+                                            <div class="fill"></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- // loop -->
-                            <!-- loop -->
-                            <div class="c100 p<%= totalData.etcRemainedRatio %>"><!-- .p+(0~100) // -->
-                                <div class="red"><!-- red, yellow, green, blue, comet // -->
-                                    <div class="slice">
-                                        <div class="bar"></div>
-                                        <div class="fill"></div>
+                                <!-- // loop -->
+                                <!-- loop -->
+                                <div class="c100 p<%= totalData.etcRemainedRatio %>"><!-- .p+(0~100) // -->
+                                    <div class="red"><!-- red, yellow, green, blue, comet // -->
+                                        <div class="slice">
+                                            <div class="bar"></div>
+                                            <div class="fill"></div>
+                                        </div>
                                     </div>
                                 </div>
+                                <!-- // loop -->
                             </div>
-                            <!-- // loop -->
+                        </div>
+                        <!-- // .donut-chart.small -->
+                    </div>
+                    <div class="cont">
+                        <span class="txt1">나의 데이터</span>
+                        <div class="date">
+                            <span class="remain">
+                                <% if (data.remnantData.totalLimit) { %>
+                                <strong>무제한</strong>
+                                <% } else { %>
+                                <strong><%= totalData.showRemained.data %><%= totalData.showRemained.unit %></strong> 남음
+                                <% } %>
+                            </span>
                         </div>
                     </div>
-                    <!-- // .donut-chart.small -->
-                </div>
-                <div class="cont">
-                    <span class="txt1">나의 데이터</span>
-                    <div class="date">
-                        <span class="remain">
-                            <% if (data.remnantData.totalLimit) { %>
-                            <strong>무제한</strong>
-                            <% } else { %>
-                            <strong><%= totalData.showRemained.data %><%= totalData.showRemained.unit %></strong> 남음
-                            <% } %>
-                        </span>
+                    <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
+                </li>
+            </ul>
+            <% } else if (data.isSpDataShow || data.isVoiceShow || data.isSmsShow) { %>
+            <ul class="date-graph-list">
+                <% if (data.isSpDataShow) { %>
+                <% var sdata = data.remnantData.sdata[0]; %>
+                <li>
+                    <div class="left">
+                        <!-- .donut-chart.small -->
+                        <div class="donut-chart small">
+                            <div class="donut-chart-area">
+                                <!-- loop -->
+                                <div class="c100 p<%= sdata.remainedRatio %>"><!-- .p+(0~100) // -->
+                                    <div class="green"><!-- red, yellow, green, blue, comet // -->
+                                        <div class="slice">
+                                            <div class="bar"></div>
+                                            <div class="fill"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- // loop -->
+                            </div>
+                        </div>
+                        <!-- // .donut-chart.small -->
                     </div>
+                    <div class="cont">
+                        <span class="txt1"><%= sdata.skipNm %></span>
+                        <div class="date">
+                                <span class="remain">
+                                    <strong>
+                                        <% if (sdata.isUnlimit) { %>
+                                        무제한 </strong>
+                                        <% } else { %>
+                                        <%= sdata.showRemained.data %><%= sdata.showRemained.unit %></strong> 남음
+                                    </strong>남음
+                                        <% } %>
+                                </span>
+                        </div>
+                    </div>
+                    <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
+                </li>
+                <% } else if (data.isVoiceShow) { %>
+                <% var rvoice = data.remnantData.voice[0]; %>
+                <li>
+                    <div class="left">
+                        <!-- .donut-chart.small -->
+                        <div class="donut-chart small">
+                            <div class="donut-chart-area">
+                                <!-- loop -->
+                                <div class="c100 p<%= rvoice.remainedRatio %>"><!-- .p+(0~100) // -->
+                                    <div class="green"><!-- red, yellow, green, blue, comet // -->
+                                        <div class="slice">
+                                            <div class="bar"></div>
+                                            <div class="fill"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- // loop -->
+                            </div>
+                        </div>
+                        <!-- // .donut-chart.small -->
+                    </div>
+                    <div class="cont">
+                        <span class="txt1"><%= rvoice.skipNm %></span>
+                        <div class="date">
+                            <span class="remain">
+                                <strong>
+                                    <% if (rvoice.isUnlimit) { %>
+                                    무제한 </strong>
+                                    <% } else { %>
+                                    <%= rvoice.showRemained.hours %>시간
+                                    <%= rvoice.showRemained.min %>분
+                                </strong>남음
+                                    <% } %>
+                            </span>
+                        </div>
+                    </div>
+                    <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
+                </li>
+                <% } else if (data.isSmsShow) { %>
+                <% var rsms = data.remnantData.sms[0]; %>
+                <li>
+                    <div class="left">
+                        <!-- .donut-chart.small -->
+                        <div class="donut-chart small">
+                            <div class="donut-chart-area">
+                                <!-- loop -->
+                                <div class="c100 p<%= rsms.remainedRatio %>"><!-- .p+(0~100) // -->
+                                    <div class="yellow"><!-- red, yellow, green, blue, comet // -->
+                                        <div class="slice">
+                                            <div class="bar"></div>
+                                            <div class="fill"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- // loop -->
+                            </div>
+                        </div>
+                        <!-- // .donut-chart.small -->
+                    </div>
+                    <div class="cont">
+                        <span class="txt1"><%= rsms.skipNm %></span>
+                        <div class="date">
+                            <span class="remain">
+                                <strong>
+                                <% if (rsms.isUnlimit) { %>
+                                    <%= rsms.total %> </strong>
+                                <% } else { %>
+                                    <%= rsms.showRemained %></strong>남음
+                                <% } %>
+                            </span>
+                        </div>
+                    </div>
+                    <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
+                </li>
+                <% } %>
+            </ul>
+            <% } %>
+            <% if (!data.emptyData) { %>
+            <div class="user-month-bill mt16">
+                <div class="detail-bill type1">
+                    <ul>
+                        <% if (data.remnantData && data.remnantData.gdata.length > 0) { %>
+                        <% var rdata = data.remnantData.gdata[0]; %>
+                        <li>
+                            <span class="tit"><%= rdata.skipNm %></span>
+                            <span class="value type1">
+                                <strong><%= rdata.showRemained.data %><%= rdata.showRemained.unit %></strong> 남음
+                            </span>
+                        </li>
+                        <% } %>
+                    </ul>
                 </div>
-                <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
-            </li>
-        </ul>
-        <% } %>
-        <div class="user-month-bill mt16">
-            <div class="detail-bill type1">
-                <ul>
-                    <% if (data.remnantData && data.remnantData.gdata.length > 0) { %>
-                    <% var rdata = data.remnantData.gdata[0]; %>
-                    <li>
-                        <span class="tit"><%= rdata.skipNm %></span>
-                        <span class="value type1">
-                            <strong><%= rdata.showRemained.data %><%= rdata.showRemained.unit %></strong> 남음
-                        </span>
-                    </li>
-                    <% } %>
-                </ul>
             </div>
-        </div>
+            <% } %>
+        <% } %>
         <ul class="bt-slice item-two mt20">
             <li data-id="immCharge">
                 <button class="btn-round1 btn-style1">즉시 충전</button>
@@ -284,157 +455,104 @@
             </li>
         </ul>
     </div>
-    <% if (data.remnantData && (data.remnantData.voice.length > 0 || remnantData.sms.length > 0)) { %>
-    <hr class="cont-sp type1" aria-hidden="true" />
-    <div class="cont-box nogaps-hoz">
-    <ul class="date-graph-list">
-        <% if (data.remnantData && data.remnantData.voice.length > 0) { %>
-        <% var rvoice = data.remnantData.voice[0]; %>
-        <li>
-            <div class="left">
-                <!-- .donut-chart.small -->
-                <div class="donut-chart small">
-                    <div class="donut-chart-area">
-                        <!-- loop -->
-                        <div class="c100 p<%= rvoice.remainedRatio %>"><!-- .p+(0~100) // -->
-                            <div class="green"><!-- red, yellow, green, blue, comet // -->
-                                <div class="slice">
-                                    <div class="bar"></div>
-                                    <div class="fill"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- // loop -->
-                    </div>
-                </div>
-                <!-- // .donut-chart.small -->
-            </div>
-            <div class="cont">
-                <span class="txt1"><%= rvoice.skipNm %></span>
-                <div class="date">
-                        <span class="remain">
-                            <strong>
-                                <% if (rvoice.isUnlimit) { %>
-                                무제한 </strong>
-                                <% } else { %>
-                                <%= rvoice.showRemained.hours %>시간
-                                <%= rvoice.showRemained.min %>분
-                            </strong>남음
-                                <% } %>
-                        </span>
-                </div>
-            </div>
-            <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
-        </li>
-        <% } %>
-        <% if (data.remnantData && data.remnantData.sms.length > 0) { %>
-        <% var rsms = data.remnantData.sms[0]; %>
-        <li>
-            <div class="left">
-                <!-- .donut-chart.small -->
-                <div class="donut-chart small">
-                    <div class="donut-chart-area">
-                        <!-- loop -->
-                        <div class="c100 p<%= rsms.remainedRatio %>"><!-- .p+(0~100) // -->
-                            <div class="yellow"><!-- red, yellow, green, blue, comet // -->
-                                <div class="slice">
-                                    <div class="bar"></div>
-                                    <div class="fill"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- // loop -->
-                    </div>
-                </div>
-                <!-- // .donut-chart.small -->
-            </div>
-            <div class="cont">
-                <span class="txt1"><%= rsms.skipNm %></span>
-                <div class="date">
-                        <span class="remain">
-                            <strong>
-                            <% if (rsms.isUnlimit) { %>
-                                <%= rsms.total %> </strong>
-                            <% } else { %>
-                                <%= rsms.showRemained %></strong>남음
-                            <% } %>
-                        </span>
-                </div>
-            </div>
-            <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
-        </li>
-        <% } %>
-    </ul>
-    </div>
-    <% } %>
 <!-- PPS -->
 <% } else if (data.svcInfo.svcAttrCd === 'M3' || data.svcInfo.svcAttrCd === 'M4') { %>
     <!-- T-PocketFi & T-Login -->
     <div class="cont-box pt0" data-id="remnant-container">
-        <% if (data.isDataInfo) { %>
-        <% var totalData = data.remnantData.total; %>
-        <ul class="date-graph-list b-line">
-            <li>
-                <div class="left">
-                    <!-- .donut-chart.small -->
-                    <div class="donut-chart small">
-                        <div class="donut-chart-area">
-                            <!-- loop -->
-                            <div class="c100 p<%= totalData.totalRemainedRatio %>"><!-- .p+(0~100) // -->
-                                <div class="blue"><!-- red, yellow, green, blue, comet // -->
-                                    <div class="slice">
-                                        <div class="bar"></div>
-                                        <div class="fill"></div>
+        <% if (data.remnant && data.remnant.info) { %>
+            <% if (data.remnant.info.code === 'BLN0001') { %>
+            <div class="main-chart-box">
+                <div class="main-error-box">
+                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                    <strong class="ti">잠시 후 다시 이용해 주세요</strong>
+                    <p class="tx">안정적으로 실시간 조회를 하실 수 있도록<br>조회 횟수를 제한하고 있습니다.</p>
+                    <p class="desc">2시간 동안 최대 12회 조회 가능</p>
+                </div>
+            </div>
+            <% } else if (data.remnant.info.code === 'BLN0003') { %>
+            <div class="main-chart-box">
+                <div class="main-error-box">
+                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
+                    <p class="tx">정지 이력이 있어 잔여량 조회 서비스를<br>이용하실 수 없습니다.<br>자세한 사항은 고객센터나 <button class="bt">이메일</button>로<br> 문의해 주시기 바랍니다</p>
+                </div>
+            </div>
+            <% } else { %>
+            <div class="main-chart-box">
+                <div class="main-error-box">
+                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
+                    <p class="tx"><%= data.remnant.info.code %><br><%= data.remnant.info.msg %></p>
+                </div>
+
+            </div>
+            <% } %>
+        <% } else { %>
+            <% if (data.isDataShow) { %>
+            <% var totalData = data.remnantData.total; %>
+            <ul class="date-graph-list b-line">
+                <li>
+                    <div class="left">
+                        <!-- .donut-chart.small -->
+                        <div class="donut-chart small">
+                            <div class="donut-chart-area">
+                                <!-- loop -->
+                                <div class="c100 p<%= totalData.totalRemainedRatio %>"><!-- .p+(0~100) // -->
+                                    <div class="blue"><!-- red, yellow, green, blue, comet // -->
+                                        <div class="slice">
+                                            <div class="bar"></div>
+                                            <div class="fill"></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- // loop -->
-                            <!-- loop -->
-                            <div class="c100 p<%= totalData.etcRemainedRatio %>"><!-- .p+(0~100) // -->
-                                <div class="red"><!-- red, yellow, green, blue, comet // -->
-                                    <div class="slice">
-                                        <div class="bar"></div>
-                                        <div class="fill"></div>
+                                <!-- // loop -->
+                                <!-- loop -->
+                                <div class="c100 p<%= totalData.etcRemainedRatio %>"><!-- .p+(0~100) // -->
+                                    <div class="red"><!-- red, yellow, green, blue, comet // -->
+                                        <div class="slice">
+                                            <div class="bar"></div>
+                                            <div class="fill"></div>
+                                        </div>
                                     </div>
                                 </div>
+                                <!-- // loop -->
                             </div>
-                            <!-- // loop -->
+                        </div>
+                        <!-- // .donut-chart.small -->
+                    </div>
+                    <div class="cont">
+                        <span class="txt1">나의 데이터</span>
+                        <div class="date">
+                            <% if (data.remnantData.totalLimit) { %>
+                            <strong>무제한</strong>
+                            <% } else { %>
+                            <strong><%= totalData.showRemained.data %><%= totalData.showRemained.unit %></strong> 남음
+                            <% } %>
                         </div>
                     </div>
-                    <!-- // .donut-chart.small -->
-                </div>
-                <div class="cont">
-                    <span class="txt1">나의 데이터</span>
-                    <div class="date">
-                        <% if (data.remnantData.totalLimit) { %>
-                        <strong>무제한</strong>
-                        <% } else { %>
-                        <strong><%= totalData.showRemained.data %><%= totalData.showRemained.unit %></strong> 남음
+                    <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
+                </li>
+            </ul>
+            <% } %>
+            <div class="user-month-bill mt16">
+                <div class="detail-bill type1">
+                    <ul>
+                        <% if (data.remnantData && data.remnantData.gdata.length > 0) { %>
+                        <% var rdata = data.remnantData.gdata[0]; %>
+                        <li>
+                            <span class="tit"><%= rdata.skipNm %></span>
+                            <span class="value type1">
+                                <strong><%= rdata.showRemained.data %><%= rdata.showRemained.unit %></strong> 남음
+                            </span>
+                        </li>
                         <% } %>
-                    </div>
+                    </ul>
                 </div>
-                <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
-            </li>
-        </ul>
-        <% } %>
-        <div class="user-month-bill mt16">
-            <div class="detail-bill type1">
-                <ul>
-                    <% if (data.remnantData && data.remnantData.gdata.length > 0) { %>
-                    <% var rdata = data.remnantData.gdata[0]; %>
-                    <li>
-                        <span class="tit"><%= rdata.skipNm %></span>
-                        <span class="value type1">
-                            <strong><%= rdata.showRemained.data %><%= rdata.showRemained.unit %></strong> 남음
-                        </span>
-                    </li>
-                    <% } %>
-                </ul>
             </div>
-        </div>
-        <ul class="bt-slice solid mt20">
-            <li data-id="immCharge"><button type="button" class="btn-round1 btn-style1">즉시 충전</button></li>
-        </ul>
+            <ul class="bt-slice solid mt20">
+                <li data-id="immCharge"><button type="button" class="btn-round1 btn-style1">즉시 충전</button></li>
+            </ul>
+        <% } %>
     </div>
     <!-- T-PocketFi & T-Login -->
 <% } %>

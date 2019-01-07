@@ -284,29 +284,40 @@ Tw.MyTFareInfoHistory.prototype = {
   // 분류선택 
   _typeActionSheetOpen: function () {
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',// hbs의 파일명
+      hbs: 'actionsheet01',// hbs의 파일명
       layer: true,
       title: Tw.POPUP_TITLE.SELECT_PAYMENT_TYPE,
-      data: Tw.POPUP_TPL.PAYMENT_HISTORY_TYPE
+      data: Tw.POPUP_TPL.PAYMENT_HISTORY_TYPE,
+      btnfloating: {
+        txt: '닫기',
+        class: 'tw-popup-closeBtn'
+      }
     }, $.proxy(this._openTypeSelectHandler, this), $.proxy(this._closeTypeSelect, this));
   },
 
   _openTypeSelectHandler: function ($container) {
-    this.$typeSelectActionsheetButtons = $container.find('.chk-link-list button');
-    $(this.$typeSelectActionsheetButtons[0]).removeClass('checked');
-    $(this.$typeSelectActionsheetButtons[this.currentActionsheetIndex]).addClass('checked');
+    this.$typeSelectActionsheetButtons = $container.find('.ac-list>li');
+    $(this.$typeSelectActionsheetButtons[0]).find('input').prop('checked', false);
+    $(this.$typeSelectActionsheetButtons[this.currentActionsheetIndex]).find('input').prop('checked', true);
     this.$typeSelectActionsheetButtons.on('click', $.proxy(this._moveByPaymentType, this));
   },
   _moveByPaymentType: function (e) {
     var target    = $(e.currentTarget),
-        targetURL = this.rootPathName.slice(-1) === '/' ? this.rootPathName.split('/').slice(0, -1).join('/') : this.rootPathName
+        targetURL = this.rootPathName.slice(-1) === '/' ? this.rootPathName.split('/').slice(0, -1).join('/') : this.rootPathName;
 
-    this._popupService.close();
-    if (!target.hasClass('checked')) {
+    
+    if (!target.find('input').prop('checked')) {
+      this.$typeSelectActionsheetButtons.find('input').prop('checked', false);
+      target.find('input').prop('checked', true);
       targetURL = !Tw.MYT_PAYMENT_HISTORY_TYPE[this.$typeSelectActionsheetButtons.index(target)] ?
           targetURL : targetURL + '?sortType=' + Tw.MYT_PAYMENT_HISTORY_TYPE[this.$typeSelectActionsheetButtons.index(target)];
 
+      this._popupService.close();
+      
       this._historyService.goLoad(targetURL);
+      
+    } else {
+      this._popupService.close();
     }
   },
 

@@ -5,12 +5,11 @@ Tw.HashService = function () {
 
 Tw.HashService.prototype = {
   initHashNav: function (callback) {
-    if ( !callback ) return false;
-    this._callbackList.push(callback);
-
-    if ( typeof callback !== 'function' ) {
-      throw 'hashnav.js requires a callback function that does something with the hash.';
+    if ( !callback || typeof callback !== 'function' ) {
+      return false;
     }
+
+    this._callbackList.push(callback);
 
     if ( 'onhashchange' in window ) {
       window.onhashchange = $.proxy(this._checkHash, this);
@@ -23,7 +22,7 @@ Tw.HashService.prototype = {
   },
   _checkHash: function () {
     var hash = window.location.hash.replace(/^#/i, '');
-    // if ( hash === '' || hash !== this._currentHashNav ) {
+    if ( hash !== this._currentHashNav ) {
       var newHash = hash;
 
       var chopped = this._chopHash(newHash);
@@ -32,7 +31,7 @@ Tw.HashService.prototype = {
       });
 
       this._currentHashNav = newHash;
-    // }
+    }
   },
 
   _chopHash: function (hash) {

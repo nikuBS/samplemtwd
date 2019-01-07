@@ -16,7 +16,7 @@
 <!--// #skip_navigation -->
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- #header -->
-    <%- include('../../../../../common/views/components/header.component.html', { title: '신청 현황' }); %>
+    <%- include('../../../../../common/views/components/header.component.html', { svcInfo: svcInfo, title: '신청 현황' }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -127,12 +127,8 @@
                             </div>
                             <div class="price"><span class="tx-price">{{ stNm }}</span></div>
                         </button>
-                        <p class="txt-type">
-                            요금상품 변경 <button id="MS_04_01_01_tip_03" aria-haspopup="true" class="tip-view mr6" title="정보보기">TIP</button>
-                        </p>
+                        <p class="txt-type">요금제 변경</p>
                         <dl class="changetype-box">
-                            <dt class="title"></dt>
-                            <dd class="text"></dd>
                             <dt class="title">변경 후</dt>
                             <dd class="text str">{{ prodNm }}</dd>
                         </dl>

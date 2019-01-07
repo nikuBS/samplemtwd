@@ -15,9 +15,27 @@ class LoginService {
   }
 
   public setCurrentReq(req, res) {
-    this.logger.info(this, '[setCurrentReq]', req.session, req.cookies[COOKIE_KEY.TWM], req.baseUrl + req.path);
     this.request = req;
     this.response = res;
+    this.logger.info(this, '[setCurrentReq]', req.session, req.cookies[COOKIE_KEY.TWM], this.getSessionId(req), req.baseUrl + req.path);
+    // console.log('[[[[[[cookie]]]]]]]', req.cookies[COOKIE_KEY.TWM], req.baseUrl + req.path);
+    // console.log(req.session);
+    // console.log(req.cookies);
+    // console.log('[[[[[Session Id]]]]]', this.getSessionId(req));
+  }
+
+  public sessionGenerate(req): Observable<any> {
+    return Observable.create((observer) => {
+      req.session.regenerate((error) => {
+        this.logger.info(this, '[Session Generate]', error);
+        observer.next();
+        observer.complete();
+      });
+    });
+  }
+
+  public getSessionId(req) {
+    return req.session.id;
   }
 
   public isLogin(session): boolean {
@@ -35,11 +53,12 @@ class LoginService {
   }
 
 
-  public getSvcInfo(): any {
-    this.logger.debug(this, '[getSvcInfo]', this.request.session);
-    if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.svcInfo) ) {
-      this.logger.debug(this, '[getSvcInfo]', this.request.session.svcInfo);
-      return this.request.session.svcInfo;
+  public getSvcInfo(req?): any {
+    const request = req || this.request;
+    this.logger.debug(this, '[getSvcInfo]', request.session);
+    if ( !FormatHelper.isEmpty(request.session) && !FormatHelper.isEmpty(request.session.svcInfo) ) {
+      this.logger.debug(this, '[getSvcInfo]', request.session.svcInfo);
+      return request.session.svcInfo;
     }
     return null;
   }
@@ -60,10 +79,11 @@ class LoginService {
     });
   }
 
-  public getAllSvcInfo(): any {
-    if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.allSvcInfo) ) {
-      this.logger.debug(this, '[getAllSvcInfo]', this.request.session.allSvcInfo);
-      return this.request.session.allSvcInfo;
+  public getAllSvcInfo(req?): any {
+    const request = req || this.request;
+    if ( !FormatHelper.isEmpty(request.session) && !FormatHelper.isEmpty(request.session.allSvcInfo) ) {
+      this.logger.debug(this, '[getAllSvcInfo]', request.session.allSvcInfo);
+      return request.session.allSvcInfo;
     }
     return null;
   }
@@ -79,10 +99,11 @@ class LoginService {
     });
   }
 
-  public getChildInfo(): any {
-    if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.childInfo) ) {
-      this.logger.debug(this, '[getChildInfo]', this.request.session.childInfo);
-      return this.request.session.childInfo;
+  public getChildInfo(req?): any {
+    const request = req || this.request;
+    if ( !FormatHelper.isEmpty(request.session) && !FormatHelper.isEmpty(request.session.childInfo) ) {
+      this.logger.debug(this, '[getChildInfo]', request.session.childInfo);
+      return request.session.childInfo;
     }
     return null;
   }
@@ -112,6 +133,7 @@ class LoginService {
         this.request.session.serverSession = serverSession;
         this.request.session.save(() => {
           this.logger.debug(this, '[setServerSession]', this.request.session);
+          console.log(this.request.session);
           observer.next(this.request.session.serverSession);
           observer.complete();
         });
@@ -165,8 +187,8 @@ class LoginService {
 
   public logoutSession(): Observable<any> {
     return Observable.create((observer) => {
-      this.request.session.destroy(() => {
-        this.logger.debug(this, '[logoutSession]', this.request.session);
+      this.request.session.destroy((error) => {
+        this.logger.debug(this, '[logoutSession]', this.request.session, error);
         this.response.clearCookie(COOKIE_KEY.TWM);
         this.response.clearCookie(COOKIE_KEY.TWM_LOGIN);
         observer.next();

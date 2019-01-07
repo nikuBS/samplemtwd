@@ -52,14 +52,16 @@ Tw.UIService.prototype = {
   },
 
   setInputEvent: function () {
-    $('input').on('keypress', $.proxy(this.setMaxValue, this));
+    $('input').on('input', $.proxy(this.setMaxValue, this));
   },
 
   setMaxValue: function (event) {
     var $target = $(event.currentTarget);
+    var maxLength = $target.attr('maxLength');
     if ($target.attr('maxLength')) {
-      if ( event.keyCode === 8 ) { return true; }
-      return $target.val().length < $target.attr('maxLength');
+      if ($target.val().length >= maxLength) {
+        $target.val($target.val().slice(0, maxLength));
+      }
     }
   }
 };

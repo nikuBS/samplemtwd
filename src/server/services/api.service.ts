@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Observable } from 'rxjs/Observable';
-import { API_CMD, API_CODE, API_METHOD, API_SERVER } from '../types/api-command.type';
+import { API_CMD, API_CODE, API_METHOD, API_SERVER, API_VERSION } from '../types/api-command.type';
 import ParamsHelper from '../utils/params.helper';
 import LoginService from './login.service';
 import LoggerService from './logger.service';
@@ -10,6 +10,7 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
 import { BUILD_TYPE, COOKIE_KEY } from '../types/common.type';
 import { LINE_NAME, LOGIN_TYPE } from '../types/bff.type';
+import { SvcInfoModel } from '../models/svc-info.model';
 
 class ApiService {
   static instance;
@@ -29,9 +30,10 @@ class ApiService {
     this.res = res;
   }
 
-  public request(command: any, params: any, header?: any, ...args: any[]): Observable<any> {
+  public request(command: any, params: any, header?: any, pathParams?: any[], version?: string): Observable<any> {
+    pathParams = pathParams || [];
     const apiUrl = this.getServerUri(command);
-    const options = this.getOption(command, apiUrl, params, header, args);
+    const options = this.getOption(command, apiUrl, params, header, pathParams, version);
     this.logger.info(this, '[API_REQ]', options);
 
     return Observable.create((observer) => {
@@ -58,9 +60,9 @@ class ApiService {
     return EnvHelper.getEnvironment(command.server + buildType);
   }
 
-  private getOption(command: any, apiUrl: any, params: any, header: any, args: any[]): any {
+  private getOption(command: any, apiUrl: any, params: any, header: any, args: any[], version): any {
     let option = {
-      url: apiUrl + this.makePath(command.path, command.method, params, args),
+      url: apiUrl + this.makePath(command.path, command.method, params, args, version),
       method: command.method,
       headers: this.makeHeader(command, header, params),
       data: params
@@ -91,15 +93,11 @@ class ApiService {
             this.makeCookie() : this.makeNativeCookie(header.cookie)
           // 'cookie': this.makeCookie()
         });
+      case API_SERVER.SEARCH:
       case API_SERVER.TID:
         return Object.assign(header, {
           'content-type': 'application/x-www-form-urlencoded; charset-UTF-8',
           'Content-Length': JSON.stringify(params).length
-        });
-      case API_SERVER.TEST:
-        return Object.assign(header, {
-           'content-type': 'application/x-www-form-urlencoded; charset-UTF-8',
-           'Content-Length': JSON.stringify(params).length
         });
       default:
         return Object.assign(header, {
@@ -118,12 +116,14 @@ class ApiService {
     return cookie + ';' + COOKIE_KEY.SESSION + '=' + this.loginService.getServerSession() + ';';
   }
 
-  private makePath(path: string, method: API_METHOD, params: any, args: any[]): string {
+  private makePath(path: string, method: API_METHOD, params: any, args: any[], version): string {
+    version = version || API_VERSION.V1;
     if ( args.length > 0 ) {
       args.map((argument, index) => {
         path = path.replace(`:args${index}`, argument);
       });
     }
+    path = path.replace(':version', version);
     if ( !FormatHelper.isEmpty(params) ) {
       path = method === API_METHOD.GET ? path + ParamsHelper.setQueryParams(params) : path;
     }
@@ -234,23 +234,20 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           const category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
-          let currentSvcInfo = null;
+          const currentSvcInfo = {
+            userId: resp.result.userId,
+            xtUserId: resp.result.xtUserId,
+            totalSvcCnt: resp.result.totalSvcCnt,
+            expsSvcCnt: resp.result.expsSvcCnt
+          };
           category.map((line) => {
             const curLine = resp.result[LINE_NAME[line]];
             if ( !FormatHelper.isEmpty(curLine) ) {
               curLine.map((target) => {
                 if ( target.expsSeq === '1' ) {
-                  currentSvcInfo = target;
+                  Object.assign(currentSvcInfo, target);
                 }
               });
-              if ( !FormatHelper.isEmpty(currentSvcInfo) ) {
-                Object.assign(currentSvcInfo, {
-                  userId: resp.result.userId,
-                  xtUserId: resp.result.xtUserId,
-                  totalSvcCnt: resp.result.totalSvcCnt,
-                  expsSvcCnt: resp.result.expsSvcCnt
-                });
-              }
               // delete resp.result.userId;
               // delete resp.result.xtUserId;
               // delete resp.result.totalSvcCnt;
@@ -285,26 +282,46 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           result = resp.result;
-          return this.loginService.setSvcInfo({ mbrNm: resp.result.mbrNm, noticeType: resp.result.noticeTypCd });
+          return this.loginService.setSvcInfo({
+            mbrNm: resp.result.mbrNm,
+            noticeType: resp.result.noticeTypCd,
+            loginType: LOGIN_TYPE.TID
+          });
         } else {
           throw resp;
-        }
-      })
-      .switchMap((resp) => this.request(API_CMD.BFF_01_0005, {}))
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          resp.result.loginType = LOGIN_TYPE.TID;
-          return this.loginService.setSvcInfo(resp.result);
-        } else {
-          return this.loginService.setSvcInfo(null);
         }
       })
       .switchMap((resp) => this.request(API_CMD.BFF_01_0002, {}))
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          return this.loginService.setAllSvcInfo(resp.result);
+          const category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
+          const currentSvcInfo = {
+            userId: resp.result.userId,
+            xtUserId: resp.result.xtUserId,
+            totalSvcCnt: resp.result.totalSvcCnt,
+            expsSvcCnt: resp.result.expsSvcCnt
+          };
+          category.map((line) => {
+            const curLine = resp.result[LINE_NAME[line]];
+            if ( !FormatHelper.isEmpty(curLine) ) {
+              curLine.map((target) => {
+                if ( target.expsSeq === '1' ) {
+                  Object.assign(currentSvcInfo, target);
+                }
+              });
+              // delete resp.result.userId;
+              // delete resp.result.xtUserId;
+              // delete resp.result.totalSvcCnt;
+              // delete resp.result.expsSvcCnt;
+            }
+          });
+          return Observable.combineLatest(
+            this.loginService.setSvcInfo(currentSvcInfo),
+            this.loginService.setAllSvcInfo(resp.result));
         } else {
-          return this.loginService.setAllSvcInfo(null);
+          return Observable.combineLatest(
+            this.loginService.setSvcInfo(null),
+            this.loginService.setAllSvcInfo(null));
         }
       })
       .map((resp) => {
@@ -371,24 +388,49 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           result = resp.result;
-          return this.request(API_CMD.BFF_01_0005, {});
+          const svcInfo = this.loginService.getSvcInfo();
+          const newSvc = new SvcInfoModel({
+            mbrNm: svcInfo.mbrNm,
+            noticeType: svcInfo.noticeType,
+            loginType: svcInfo.loginType
+          });
+          return this.loginService.setSvcInfo(newSvc);
+          // return this.request(API_CMD.BFF_01_0005, {});
         } else {
           throw resp;
-        }
-      })
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          return this.loginService.setSvcInfo(resp.result);
-        } else {
-          return this.loginService.setSvcInfo(null);
         }
       })
       .switchMap((resp) => this.request(API_CMD.BFF_01_0002, {}))
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          return this.loginService.setAllSvcInfo(resp.result);
+          const category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
+          const currentSvcInfo = {
+            userId: resp.result.userId,
+            xtUserId: resp.result.xtUserId,
+            totalSvcCnt: resp.result.totalSvcCnt,
+            expsSvcCnt: resp.result.expsSvcCnt
+          };
+          category.map((line) => {
+            const curLine = resp.result[LINE_NAME[line]];
+            if ( !FormatHelper.isEmpty(curLine) ) {
+              curLine.map((target) => {
+                if ( target.expsSeq === '1' ) {
+                  Object.assign(currentSvcInfo, target);
+                }
+              });
+              // delete resp.result.userId;
+              // delete resp.result.xtUserId;
+              // delete resp.result.totalSvcCnt;
+              // delete resp.result.expsSvcCnt;
+            }
+          });
+          return Observable.combineLatest(
+            this.loginService.setSvcInfo(currentSvcInfo),
+            this.loginService.setAllSvcInfo(resp.result));
         } else {
-          return this.loginService.setAllSvcInfo(null);
+          return Observable.combineLatest(
+            this.loginService.setSvcInfo(null),
+            this.loginService.setAllSvcInfo(null));
         }
       }).map(() => {
         return { code: API_CODE.CODE_00, result: result };

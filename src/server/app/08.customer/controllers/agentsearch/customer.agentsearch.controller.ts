@@ -38,6 +38,7 @@ class CustomerAgentsearch extends TwViewController {
           }
           res.render('agentsearch/customer.agentsearch.html', {
             isSearch: true,
+            type,
             keyword,
             optionsText: this.makeOptionsText(storeType, optionsString),
             result,

@@ -6,7 +6,7 @@
 
 <% include ../../components/start.component.html %>
 <!-- body -->
-<body data-gr-c-s-loaded="true">
+<body data-gr-c-s-loaded="true" class="">
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
@@ -16,548 +16,539 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <div id="header" class="header-wrap rescan"><!-- .header-wrap min-height:52px .rescan시 min-height:97px -->
+    <div id="header" class="header-wrap search-height"><!-- .header-wrap min-height:52px .rescan시 min-height:97px -->
         <div class="h-belt"><!-- border-bottom : 1px -->
-            <div class="h-global-search">
-                <!-- height : 51px -->
-                <div class="h-result">
-                    <div class="h-back">
-                        <button type="button"><i class="icon-historyback-40"><span class="blind">historyback</span></i></button>
-                    </div>
-                    <div class="h-keyword">
-                            <span class="inputbox">
-                                <span class="input">
-                                    <input id="keyword" type="text" value="<%= keyword %>">
-                                    <button class="cancel" style="display: inline-block;"><span class="blind">삭제</span></button>
-                                </span>
-                            </span>
-                    </div>
-                    <div class="h-cancel">
-                        <button>취소</button>
-                    </div>
-                </div>
-                <!-- // height : 51px -->
-                <!-- height : 45px -->
-                <div class="h-rescan">
-                    <span class="custom-form"><input id="in_result" type="checkbox" id="oka" name="r1"><span class="c-type1"></span></span><label class="label" for="oka">결과 내 재 검색</label>
-                </div>
-                <!-- // height : 45px -->
+            <div class="sch-form">
+                    <span class="inputbox">
+                        <span class="input">
+                            <input id="keyword" type="text" value="<%= keyword===inKeyword?keyword:inKeyword.replace(keyword,'').trim() %>">
+                            <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                        </span>
+                    </span>
+                <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                <div class="searchbox-close"><button class="close-area">취소</button></div>
+            </div>
+            <div class="resultsearch-box">
+                <span class="custom-form">
+                    <% if(keyword===inKeyword){ %>
+                        <input type="checkbox" id="resultsearch" name="resultsearch">
+                    <% }else{ %>
+                        <input type="checkbox" id="resultsearch" checked="checked" name="resultsearch">
+                    <% } %>
+                    <span class="c-type1"></span></span>
+                <label for="resultsearch">결과 내 재검색</label>
+                <!-- <label for="resultsearch" class="on">결과 내 재검색</label> -->
             </div>
         </div>
-
     </div>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <div class="container">
+            <% if(searchInfo.suggestQuery.length>0){ %>
+            <div class="cont-box noborder gaps-style03">
+                <p class="re-searchword">
+                    혹시 이것을 찾으시나요? <a data-param="<%= searchInfo.suggestQuery %>"class="re-searchword-text search-element"><%= searchInfo.suggestQuery %>로 검색하기</a>
+                </p>
+            </div>
+            <% } %>
+
+            <% if(relatedKeyword.result&&relatedKeyword.result.Word&&relatedKeyword.result.Word.length>0){ %>
+            <div class="connection-searchword">
+                <dl class="searchword-list">
+                    <dt class="tit">연관</dt>
+                    <% for(var i=0;i<relatedKeyword.result.Word.length;i++){ %>
+                    <dd><a data-param="<%= relatedKeyword.result.Word[i] %>" class="link search-element"><%= relatedKeyword.result.Word[i] %></a></dd>
+                    <% } %>
+                </dl>
+            </div>
+            <% } %>
+            <% if(searchInfo.suggestQuery.length>0||(relatedKeyword.result&&relatedKeyword.result.Word&&relatedKeyword.result.Word.length>0)){ %>
             <hr class="cont-sp type1" aria-hidden="true">
+            <% } %>
+
+            <% if(searchInfo.search[0].immediate.data.length>0){ %>
+            <!--<hr class="cont-sp type1" aria-hidden="true">-->
+            <% if(searchInfo.search[0].immediate.data[0].DOCID==1){  %>
+            <p class="paymentcharge-box type01">
+                이용하고 계신 <span class="phonnumber"><%= searchInfo.search[0].immediate.data[0].mainData %></span>회선의<br>요금제는
+                <span class="str"><strong class="money"><%= searchInfo.search[0].immediate.data[0].subData %></strong>입니다.</span>
+            </p>
+            <% } else if(searchInfo.search[0].immediate.data[0].DOCID==2){ %>
+            <p class="paymentcharge-box type02">
+                이용하고 계신 <span class="phonnumber"><%= searchInfo.search[0].immediate.data[0].mainData %></span>회선의<br>총 데이터 잔여량은
+                <span class="str"><strong class="money"><%= searchInfo.search[0].immediate.data[0].subData %>MB</strong>입니다.</span>
+            </p>
+            <% } else if(searchInfo.search[0].immediate.data[0].DOCID==3){ %>
+            <p class="paymentcharge-box type03">
+                이용하고 계신 <span class="phonnumber"><%= searchInfo.search[0].immediate.data[0].mainData %></span>회선의<br>실시간 이용요금은
+                <span class="str"><strong class="money"><%= searchInfo.search[0].immediate.data[0].subData %>원</strong>입니다.</span>
+            </p>
+            <% } else if(searchInfo.search[0].immediate.data[0].DOCID==4){ %>
+            <p class="paymentcharge-box type04">
+                이용하고 계신 <a href="" class="phonnumber"><%= searchInfo.search[0].immediate.data[0].mainData %></a>회선의<br>소액결제 이용요금은
+                <span class="str"><a class="money" href=""><%= searchInfo.search[0].immediate.data[0].subData %>원</a>입니다.</span>
+            </p>
+            <% } else if(searchInfo.search[0].immediate.data[0].DOCID==5){ %>
+            <p class="paymentcharge-box type05">
+                고객님의 T멤버십 등급은 <span class="phonnumber"><%= searchInfo.search[0].immediate.data[0].mainData %></span>이며<br>올해 받으신 총 혜택은
+                <span class="str"><strong class="money"><%= searchInfo.search[0].immediate.data[0].subData %>원</strong>입니다.</span>
+            </p>
+            <div class="search-barcode">
+                <img src="/img/search/img_bac.png" alt="">
+            </div>
+            <% } %>
+            <% } %>
+
+
+            <!--// .cont-box -->
+            <% if(searchInfo.search[1].smart.data.length>0){ %>
+            <% if(searchInfo.search[1].smart.data[0].BNNR_IOS320_URL.length>0){ %>
+            <div class="search-banner">
+                <a class="list-data" data-link="<%= searchInfo.search[1].smart.data[0].SMART_SRCH_URL %>"><img src="<%= CDN + searchInfo.search[1].smart.data[0].BNNR_IOS320_URL %>" alt="<%= searchInfo.search[1].smart.data[0].SMART_SRCH_NM %>"></a>
+            </div>
+            <% } %>
+            <!-- .cont-box -->
+            <% if(searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM1+searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM2+searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM3!=='' ){ %>
+            <div class="cont-box nogaps">
+                <ul class="btn-link-list col3">
+                    <% if(searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM1.length>0){ %>
+                    <li class="last-line"><a class="list-data" data-link="<%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_URL1 %>" ><%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM1 %></a></li>
+                    <% } %>
+                    <% if(searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM2.length>0){ %>
+                    <li class="last-line"><a class="list-data" data-link="<%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_URL2 %>" ><%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM2 %></a></li>
+                    <% } %>
+                    <% if(searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM3.length>0){ %>
+                    <li class="last-line"><a class="list-data" data-link="<%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_URL3 %>" ><%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM3 %></a></li>
+                    <% } %>
+                </ul>
+            </div>
+            <% } %>
+            <% } %>
+
+            <hr class="cont-sp type1 shortcut" aria-hidden="true">
 
             <!-- .cont-box -->
-            <% if(relatedKeyword.Data.Word){ %>
-            <div class="cont-box nogaps">
-                <div class="connection-wrap">
-                    <span class="title">연관</span>
-                    <div class="connec-txt">
-                        <% for(var i=0;i<relatedKeyword.Data.Word.length;i++){ %>
-                            <button><%= relatedKeyword.Data.Word[i] %></button>
+            <div class="cont-box nogaps-btm shortcut">
+                <div class="searchnumbox-wrap">
+                    <h2 class="tit">바로가기</h2>
+                    <div class="numberbox"><span class="num"><%= searchInfo.search[2].shortcut.count %></span>건
+                        <% if(searchInfo.search[2].shortcut.count>=10){ %>
+                        <a href="/common/search/more?category=shortcut&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="morelink">더보기</a>
+                        <% } %>
+                    </div>
+                </div>
+                <div class="keyword-search-list">
+                    <ul id="shortcut_list">
+
+                    </ul>
+                </div>
+            </div>
+
+
+
+            <!-- <hr class="cont-sp type1" aria-hidden="true"/>                 -->
+            <div class="cont-box bgnone noborder nogaps-btm rate">
+                <div class="searchnumbox-wrap">
+                    <h2 class="tit">요금제</h2>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.search[3].rate.count %></span>건
+                        <% if(searchInfo.search[3].rate.count>=10){%>
+                        <a  href="/common/search/more?category=rate&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="morelink">더보기</a>
                         <% } %>
                     </div>
                 </div>
             </div>
-            <% } %>
-            <!--// .cont-box -->
 
-            <hr class="cont-sp type1" aria-hidden="true">
-
-            <!-- .cont-box -->
-            <div class="cont-box">
-                <p class="bill-quick-info">이용하고 계신<br><button class="btn-qinfo">010-12**-34**</button>회선의 소액결제 이용요금은<br><button class="btn-qinfo">298,000원</button>입니다.</p>
-            </div>
-            <!--// .cont-box -->
-
-            <hr class="cont-sp type1" aria-hidden="true">
-                <% if(searchInfo.search[1].smart.data.length>0&&searchInfo.search[1].smart.data[0].SMART_SRCH_URL.length>0){ %>
-                <div class="search-banner">
-                    <a href="#"><img src="<%= searchInfo.search[1].smart.data[0].BNNR_LINK_URL %>" alt="분실폰 찾기"></a>
-                </div>
-                <% } %>
-
-
-
-            <!-- .cont-box -->
-            <% if(searchInfo.search[1].smart.data.length>0 ){ %>
-            <hr class="cont-sp type1" aria-hidden="true">
-            <div class="cont-box nogaps">
-                <ul class="btn-link-list col3">
-                    <li class="last-line"><a href="<%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_URL1 %>" ><%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM1 %></a></li>
-                    <li class="last-line"><a href="<%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_URL2 %>" ><%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM2 %></a></li>
-                    <li class="last-line"><a href="<%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_URL3 %>" ><%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM3 %></a></li>
-                </ul>
-            </div>
-            <% } %>
-
-            <!--// .cont-box -->
-
-
-
-            <hr class="cont-sp type1" aria-hidden="true">
-
-            <!-- .cont-box -->
-            <div class="cont-box nogaps-btm">
-                <div class="tit-caption-type pb16">
-                    <h2 class="tit">바로가기</h2>
-                    <span class="num"><%= searchInfo.search[2].shortcut.count %></span>
-                    <a href="/common/search/more?category=shortcut&keyword=<%= keyword %>" class="btn-txt">더보기</a>
-                </div>
-                <div class="keyword-search-list">
-                    <ul id="shortcut_list">
-                        <script type="text/x-handlebars-template" id="shortcut_template">
-                            <li>
-                                <a href="{{listData.MENU_URL}}">
-                                    <span class="main-category">{{{listData.MENU_NM}}}</span>
-                                    <span class="sub-category">my T &gt; {{{listData.DEPTH_PATH}}}</span>
-                                </a>
-                            </li>
-                        </script>
-                    </ul>
-                </div>
-            </div>
-            <!--// .cont-box -->
-
-
-            <div class="plan-compact-wrap noborder">
-                <div class="tit-caption-type">
-                    <h2 class="tit">요금제</h2>
-                    <span class="num"><%= searchInfo.search[3].rate.count %></span>
-                    <p class="sub-text">이용요금(부가세 포함)</p>
-                    <a  href="/common/search/more?category=rate&keyword=<%= keyword %>" class="btn-txt">더보기</a>
-                </div>
-            </div>
-
-            <div class="cont-box bgnone gaps-style01">
+            <div class="cont-box list bgnone  gaps-style05 rate">
                 <ul class="extraservice-list" id="rate_list">
-                    <script type="text/x-handlebars-template" id="rate_template">
-                    <li class="category-type">
+                    <!--<li class="category-type">
                         <button class="link">
                             <div class="products-titleinfo">
-                                <p class="title">{{{listData.PROD_NM}}}</p>
-                                <p class="info">월<span class="money">{{listData.BAS_FEE_INFO}}</span>원</p>
+                                <p class="title">뉴 T끼리 <span class="highlight-text">맞춤형</span>(100분+6GB)</p>
+                                <p class="info">월<span class="money">43,175</span>원</p>
                             </div>
                             <div class="taglist-wrap">
-                                {{#each listData.METATAG}}
-                                    {{#ifCond this '!==' ''}}
-                                    <p class="tag-text">#{{{this}}}</p>
-                                    {{/ifCond}}
-                                {{/each}}
+                                <p class="tag-text">#LTE</p>
+                                <p class="tag-text">#<span class="highlight-text">5~8G</span>B</p>
+                                <p class="tag-text">#실버</p>
+                                <!--
+                                #데이터 한줄 유형입니다. 말줄임 (..) <span class="highlight-text">처리일때난</span> span태그로 감싸지 않고 텍스트만 뿌려주시면 됩니다.
+                                --><!--
                             </div>
 
-                            <p class="products-detailinfo">{{{listData.PROD_SMRY_DESC}}}</p>
+                            <ul class="products-detailinfo02">
+                                <li class="category-type type01">
+                                    <p class="gb"><span>20</span>GB</p>
+                                </li>
+                                <li class="category-type type02">
+                                    <p class="type">
+                                        집,이동전화 무제한
+                                    </p>
+                                </li>
+                                <li class="category-type type03">
+                                    <p class="basic">
+                                        기본제공
+                                    </p>
+                                </li>
+                            </ul>
                         </button>
-                    </li>
-                    </script>
+                    </li>-->
                 </ul>
             </div>
 
-
-            <div class="search-banner">
-                <a href=""><img src="/img/dummy/banner-search2.jpg" alt="내게 맞는 요금제 찾기"></a>
-            </div>
-
-            <div class="plan-compact-wrap noborder">
-                <div class="tit-caption-type">
-                    <h2 class="tit">부가서비스 </h2>
-                    <span class="num"><%= searchInfo.search[4].service.count %></span>
-                    <p class="sub-text">이용요금(부가세 포함)</p>
-                    <a  href="/common/search/more?category=service&keyword=<%= keyword %>" class="btn-txt">더보기</a>
-                </div>
-            </div>
-
-            <div class="cont-box bgnone gaps-style04">
-                <ul class="extraservice-list" id="service_list">
-                    <script type="text/x-handlebars-template" id="service_template">
-                        <li class="category-type">
-                            <button class="link">
-                                <div class="products-titleinfo">
-                                    <p class="title">{{{listData.PROD_NM}}}</p>
-                                    <p class="info">월<span class="money">{{listData.BAS_FEE_INFO}}</span>원</p>
-                                </div>
-                                <div class="taglist-wrap">
-                                    {{#each listData.METATAG}}
-                                    {{#ifCond this '!==' ''}}
-                                    <p class="tag-text">#{{{this}}}</p>
-                                    {{/ifCond}}
-                                    {{/each}}
-                                </div>
-
-                                <p class="products-detailinfo">{{{listData.PROD_SMRY_DESC}}}</p>
-                            </button>
-                        </li>
-                    </script>
-                </ul>
-            </div>
-
-            <div class="plan-compact-wrap noborder">
-                <div class="tit-caption-type">
-                    <h2 class="tit">인터넷 · 전화 · TV</h2>
-                    <span class="num"><%= searchInfo.search[5].tv.count %></span>
-                    <p class="sub-text">이용요금(부가세 포함)</p>
-                    <a  href="/common/search/more?category=tv&keyword=<%= keyword %>" class="btn-txt">더보기</a>
-                </div>
-            </div>
-
-            <div class="cont-box bgnone gaps-style04">
-                <ul class="extraservice-list" id="tv_list">
-                    <script type="text/x-handlebars-template" id="tv_template">
-                    <li class="category-type">
-                        <a href="" class="link">
-                            <div class="products-titleinfo">
-                                <p class="title">{{{listData.PROD_NM}}}</p>
-                                <p class="info">월<span class="money">{{{listData.BAS_FEE_INFO}}}</span>원</p>
-                            </div>
-                            <p class="products-detailinfo">{{{listData.PROD_SMRY_DESC}}}</p>
-                        </a>
-                    </li>
-                    </script>
-                </ul>
-            </div>
-
-            <div class="plan-compact-wrap noborder">
-                <div class="tit-caption-type">
-                    <h2 class="tit">T로밍</h2>
-                    <span class="num"><%= searchInfo.search[6].roaming.count %></span>
-                    <p class="sub-text">이용요금(부가세 포함)</p>
-                    <a href="/common/search/more?category=roaming&keyword=<%= keyword %>" class="btn-txt">더보기</a>
-                </div>
-            </div>
-
-            <div class="cont-box bgnone gaps-style04">
-                <ul class="extraservice-list" id="roaming_list">
-                    <script type="text/x-handlebars-template" id="roaming_template">
-                    <li class="category-type">
-                        <button class="link">
-                            <div class="products-titleinfo">
-                                <p class="title">{{{listData.PROD_NM}}}</p>
-                                <p class="info">월<span class="money">{{listData.BAS_FEE_INFO}}</span>원</p>
-                            </div>
-                            <div class="taglist-wrap">
-                                {{#each listData.METATAG}}
-                                {{#ifCond this '!==' ''}}
-                                <p class="tag-text">#{{{this}}}</p>
-                                {{/ifCond}}
-                                {{/each}}
-                            </div>
-                            <p class="products-detailinfo">{{{listData.PROD_SMRY_DESC}}}</p>
-                        </button>
-                    </li>
-                    </script>
-                </ul>
-            </div>
-
-            <!-- .cont-box -->
-
-            <div class="cont-box nogaps-btm">
-                <div class="tit-caption-type pb16">
-                    <h2 class="tit">T앱</h2>
-                    <span class="num"><%= searchInfo.search[7].app.count %></span>
-                </div>
-                <div class="app-list-menu">
-                    <ul id="app_list">
-                        <script type="text/x-handlebars-template" id="app_template">
-                        <li>
-                            <button>
-                                <span class="app-img"><img src="{{listData.IMG}}" alt=""></span>
-                                <span class="txt">{{{listData.PROD_NM}}}</span>
-                            </button>
-                        </li>
-                        </script>
-                    </ul>
-                    <div class="btn-wrap">
-                        <button class="btn">T앱 전체보기</button>
+            <div class="cont-box bgnone noborder nogaps-btm service">
+                <div class="searchnumbox-wrap">
+                    <h2 class="tit">부가서비스</h2>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.search[4].service.count %></span>건
+                        <% if(searchInfo.search[4].service.count>=10){ %>
+                        <a  href="/common/search/more?category=service&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="morelink">더보기</a>
+                        <% } %>
                     </div>
                 </div>
             </div>
 
-            <hr class="cont-sp type1" aria-hidden="true">
+            <div class="cont-box list bgnone noborder gaps-style06 service">
+                <ul class="extraservice-list" id="service_list">
+
+                </ul>
+            </div>
+
+            <div class="cont-box bgnone noborder nogaps-btm tv">
+                <div class="searchnumbox-wrap">
+                    <h2 class="tit">인터넷 · 집전화 · IPTV</h2>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.search[5].tv.count %></span>건
+                        <% if(searchInfo.search[5].tv.count>=10){ %>
+                        <a  href="/common/search/more?category=tv&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="morelink">더보기</a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cont-box list bgnone noborder gaps-style06 tv">
+                <ul class="extraservice-list" id="tv_list">
+
+                </ul>
+            </div>
+
+            <div class="cont-box bgnone noborder nogaps-btm roaming">
+                <div class="searchnumbox-wrap">
+                    <h2 class="tit">T로밍</h2>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.search[6].roaming.count %></span>건
+                        <% if(searchInfo.search[6].roaming.count>=10){ %>
+                        <a href="/common/search/more?category=roaming&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="morelink">더보기</a>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cont-box list bgnone noborder gaps-style07 roaming">
+                <ul class="extraservice-list" id="roaming_list">
+
+                </ul>
+            </div>
 
             <!-- .cont-box -->
-            <div class="cont-box pb0">
-                <div class="tit-caption-type">
-                    <h2 class="tit">다이렉트샵</h2>
-                    <span class="num"><%= searchInfo.search[8].direct.count %></span>
-                    <a href="/common/search/more?category=direct&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+            <hr class="cont-sp type1 app" aria-hidden="true">
+            <div class="cont-box list nogaps-btm app">
+                <div class="searchnumbox-wrap">
+                    <h2 class="tit">T앱</h2>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.search[7].app.count %></span>건
+                    </div>
+                </div>
+                <div class="tapplist-wrap">
+                    <ul class="list" id="app_list">
+
+                    </ul>
+                    <div class="tappbtn-wrap">
+                        <button class="btn list-data" data-link="/product/apps">T앱 전체보기</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- .cont-box -->
+            <hr class="cont-sp type1 direct" aria-hidden="true">
+            <div class="cont-box list pb0 direct">
+                <div class="searchnumbox-wrap">
+                    <h2 class="tit">T월드 다이렉트</h2>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.search[8].direct.count %></span>건
+                        <% if(searchInfo.search[8].direct.count>=10){ %>
+                        <a href="/common/search/more?category=direct&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="morelink">더보기</a>
+                        <% } %>
+                    </div>
                 </div>
                 <div class="direct-shop-wrap">
                     <ul id="direct_list">
-                        <script id="direct_template" type="text/x-handlebars-template">
-                        <li>
-                            <div class="img"><img src="{{listData.IMG}}" alt="{{listData.IMG_ALT}}"></div>
-                            <div class="cont">
-                                <div class="tit">{{{listData.PRODUCT_NM}}}</div>
-                                <div class="price">{{listData.PRODUCT_PRICE}}원~/월</div>
-
-                                <span class="price2">{{listData.SALE_PRICE}}원</span>
-
-                            </div>
-                        </li>
-                        </script>
+                        <!--<li>
+                            <a href="" class="link">
+                                <div class="img"><img src="/img/etc/img-phone03.png" alt="샤오미 포코폰"></div>
+                                <div class="cont">
+                                    <div class="tit">[타거스]<span class="highlight-text">링버클</span> 충전/싱크 라이트닝 USB 8핀 케이블 9cm</div>
+                                    <div class="price">17,900원~/월<span class="price2">18,900원</span></div>
+                                </div>
+                            </a>
+                        </li> -->
                     </ul>
                     <div class="btn-more">
-                        <button>다이렉트샵 전체보기</button>
+                        <a class="list-data direct-element home">다이렉트샵 가기</a>
                     </div>
                 </div>
             </div>
             <!--// .cont-box -->
 
 
-            <hr class="cont-sp type1" aria-hidden="true">
 
             <!-- .cont-box -->
-            <div class="cont-box pb0">
-                <div class="tit-caption-type">
+            <hr class="cont-sp type1 membership" aria-hidden="true">
+            <div class="cont-box list pb0 membership">
+                <div class="searchnumbox-wrap">
                     <h2 class="tit">T멤버십</h2>
-                    <span class="num"><%= searchInfo.search[9].membership.count %></span>
-                    <a href="/common/search/more?category=membership&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.search[9].membership.count %></span>건
+                        <% if(searchInfo.search[9].membership.count>=10){ %>
+                        <a href="/common/search/more?category=membership&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="morelink">더보기</a>
+                        <% } %>
+                    </div>
                 </div>
                 <div class="t-membership-wrap">
                     <ul id="membership_list">
-                        <script type="text/x-handlebars-template" id="membership_template">
-                        <li>
+                        <!--<li>
                             <button class="link" title="T멤버십 상세보기">
-                                <div class="img"><img src="{{{listData.TITLE_IMG_URL}}}" alt="{{listData.CATE_NAME}}"></div>
+                                <div class="img"><img src="/img/search/img_t01.png" alt="CGV"></div>
                                 <div class="cont">
-                                    <div class="tit">{{{listData.BRAND_NM}}}</div>
-                                    <div class="txt1">{{{listData.CATE_NAME}}}</div>
+                                    <div class="tit"><span class="highlight-text">CU(구)훼미리마트</span></div>
+                                    <div class="txt1">영화관</div>
                                 </div>
                             </button>
-                        </li>
-                        </script>
+                        </li>-->
                     </ul>
                 </div>
             </div>
             <!--// .cont-box -->
 
             <!-- .cont-box -->
-            <div class="cont-box nogaps-btm bgnone noborder">
-                <div class="tit-caption-type pb0">
+            <div class="cont-box list nogaps-btm bgnone noborder event">
+                <div class="searchnumbox-wrap">
                     <h2 class="tit">진행 중인 이벤트</h2>
-                    <span class="num"><%= searchInfo.search[10].event.count %></span>
-                    <a href="/common/search/more?category=event&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.search[10].event.count %></span>건
+                        <% if(searchInfo.search[10].event.count>=10){ %>
+                        <a href="/common/search/more?category=event&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="morelink">더보기</a>
+                        <% } %>
+                    </div>
                 </div>
-                <div class="card-visual-list">
-                    <ul class="type1" id="event_list">
-                        <script id="event_template" type="text/x-handlebars-template">
-                        <li>
-                            <button class="btn-cvl" title="진행중인 이벤트 상세페이지 보기"><img src="/img/dummy/img-cardvisual01-1.jpg" alt="키자니아 X T 멤버십 키자니아 서울 &amp; 부산최대 40% 할인"></button>
-                            <div class="extra-info">
-                                <div class="tit">{{{listData.PR_NM}}}</div>
-                                <div class="txt1">기간 {{{listData.PR_STA_DT}}}~{{{listData.PR_END_DT}}}</div>
+                <div class="event-list">
+                    <ul id="event_list">
+                        <!--<li>
+                            <button class="event-datail" title="이벤트 상세페이지 보기"><img src="/img/dummy/img-event02.jpg" alt="SK텔레콤 중고생이라면? O틴 위크에서 데이터&amp;인싸템 받자!"></button>
+                            <div class="event-info">
+                                <span class="info-date">2018.10.15.~2018.11.30.</span>
+                                <span class="info-type">응모형</span>
+                                <span class="info-day"></span>
                             </div>
-                        </li>
-                        </script>
+                        </li>-->
                     </ul>
                 </div>
             </div>
             <!--// .cont-box -->
 
             <!-- 혜택 · 할인 -->
-
-            <div class="cont-box nogaps-btm">
-                <div class="tit-caption-type pb14">
-                    <h2 class="tit">혜택 · 할인</h2>
-                    <span class="num"><%= searchInfo.search[11].sale.count %></span>
-                    <a href="/common/search/more?category=sale&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+            <hr class="cont-sp type1 sale" aria-hidden="true">
+            <div class="cont-box list nogaps-btm noborder sale">
+                <div class="searchnumbox-wrap">
+                    <h2 class="tit">혜택·할인</h2>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.search[11].sale.count %></span>건
+                        <% if(searchInfo.search[11].sale.count>=10){ %>
+                        <a href="/common/search/more?category=sale&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="morelink">더보기</a>
+                        <% } %>
+                    </div>
                 </div>
-                <ul class="service-guide-s" id="sale_list">
-                    <script type="text/x-handlebars-template" id="sale_template">
-                    <li>
-                        <button class="b-cont">
-                            <strong class="ti">{{{listData.PROD_NM}}} <i class="icon-whole3"><span class="blind">전체</span></i></strong>
-                            <span class="tx">{{{listData.PROD_SMRY_DESC}}}</span>
-                        </button>
-                    </li>
-                    </script>
-                </ul>
-                <div class="search-banner-box">
-                    <button class="bt"><img src="/img/etc/search-banner.png" alt="시험 끝, 0틴 위크 드디어 시험 끝! 진정한 인싸가 될 시간! 무료 데이터 2GB와 인싸템 100% 받자"></button>
+                <div class="benefit-productfilter-type line-none ml0 mr0 mb0">
+                    <ul id="sale_list">
+
+                    </ul>
                 </div>
             </div>
             <!-- //혜택 · 할인 -->
 
             <hr class="cont-sp type1" aria-hidden="true">
 
+            <!--<div class="search-banner">-->
+            <!--<a href=""><img src="http://localhost:3001/img/search/img_banner02.png" alt="내게 맞는 요금제 찾기"></a>-->
+            <!--</div>-->
+
+            <!--<hr class="cont-sp type1" aria-hidden="true">-->
 
             <!-- 지점 · 대리점, A/S센터 -->
-            <div class="cont-box nogaps-btm">
-                <div class="tit-caption-type pb14">
+            <div class="cont-box list nogaps-btm as">
+                <div class="searchnumbox-wrap">
                     <h2 class="tit">지점 · 대리점, A/S센터</h2>
-                    <span class="num"><%= searchInfo.search[12].as.count %></span>
-                    <a href="/common/search/more?category=as&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.search[12].as.count %></span>건
+                        <% if(searchInfo.search[12].as.count>=10){ %>
+                        <a href="/common/search/more?category=as&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="morelink">더보기</a>
+                        <% } %>
+                    </div>
                 </div>
                 <ul class="service-guide-s" id="as_list">
-                    <script type="text/x-handlebars-template" id="as_template">
-                    <li>
-                        <div class="b-cont">
-                            <button class="bt-t">
-                                <strong class="ti">{{{listData.STORE_NAME}}}</strong>
-                                <span class="tx">{{{listData.SEARCH_ADDR}}}<br>({{{listData.JIBUN_ADDR}}})</span>
-                                <span class="tel">{{{listData.TEL}}}</span>
-                            </button>
-                            <a href="tel:{{listData.TEL}}" class="bt-tel">전화걸기</a>
-                        </div>
-                    </li>
-                    </script>
+
                 </ul>
             </div>
+            <hr class="cont-sp type1 as" aria-hidden="true">
             <!-- //지점 · 대리점, A/S센터 -->
 
-            <hr class="cont-sp type1" aria-hidden="true">
-
-
-
             <!-- 자주하는 질문 -->
-            <div class="cont-box nogaps-btm">
-                <div class="tit-caption-type pb14">
-                    <h2 class="tit">자주하는 질문</h2>
-                    <span class="num"><%= searchInfo.search[15].question.count %></span>
-                    <a href="/common/search/more?category=question&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+            <div class="cont-box list nogaps-btm question">
+                <div class="searchnumbox-wrap">
+                    <h2 class="tit">자주 하는 질문</h2>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.search[15].question.count %></span>건
+                        <%if(searchInfo.search[15].question.count>=10){ %>
+                        <a href="/common/search/more?category=question&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="morelink">더보기</a>
+                        <% } %>
+                    </div>
                 </div>
                 <ul class="service-guide-s" id="question_list">
-                    <script type="text/x-handlebars-template" id="question_template">
-                    <li>
+                    <!--<li>
                         <button class="b-cont">
-                            <strong class="ti">{{{listData.INQ_CTT}}}</strong>
-                            <span class="tx">{{{listData.CATEGORY}}}</span>
+                            <strong class="ti">[임대폰] 임대한 <em class="highlight-text">휴대폰</em>을 <em class="highlight-text">분실</em>하면 어떻게 변상해야 하나요?</strong>
+                            <span class="tx"><strong>휴대폰 분실</strong>/습득</span>
                         </button>
-                    </li>
-                    </script>
+                    </li>-->
                 </ul>
             </div>
             <!-- //자주하는 질문 -->
 
-            <hr class="cont-sp type1" aria-hidden="true">
+            <hr class="cont-sp type1 question" aria-hidden="true">
 
             <!-- 공지사항 -->
-            <div class="cont-box nogaps-btm">
-                <div class="tit-caption-type pb14">
+            <div class="cont-box list nogaps-btm notice">
+                <div class="searchnumbox-wrap">
                     <h2 class="tit">공지사항</h2>
-                    <span class="num"><%= searchInfo.search[13].notice.count %></span>
-                    <a href="/common/search/more?category=notice&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.search[13].notice.count %></span>건
+                        <% if(searchInfo.search[13].notice.count>=10){  %>
+                        <a href="/common/search/more?category=notice&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="morelink">더보기</a>
+                        <% } %>
+                    </div>
                 </div>
                 <ul class="service-guide-s" id="notice_list">
-                    <script id="notice_template" type="text/x-handlebars-template">
-                    <li>
-                        <button class="b-cont">
-                            {{{listData.NTC_TIT_NM}}}
-                        </button>
-                    </li>
-                    </script>
+
                 </ul>
             </div>
             <!-- //공지사항 -->
 
-            <hr class="cont-sp type1" aria-hidden="true">
+            <hr class="cont-sp type1 notice" aria-hidden="true">
 
             <!-- 이용자 피해예방 주의보 -->
-
-            <div class="cont-box nogaps-btm">
-                <div class="tit-caption-type pb14">
+            <div class="cont-box list nogaps-btm prevent">
+                <div class="searchnumbox-wrap">
                     <h2 class="tit">이용자 피해예방 주의보</h2>
-                    <span class="num"><%= searchInfo.search[14].prevent.count %></span>
-                    <a href="/common/search/more?category=prevent&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.search[14].prevent.count %></span>건
+                        <% if(searchInfo.search[14].prevent.count>=10){ %>
+                        <a href="/common/search/more?category=prevent&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="morelink">더보기</a>
+                        <% } %>
+                    </div>
                 </div>
                 <ul class="service-guide-s" id="prevent_list">
-                    <script type="text/x-handlebars-template" id="prevent_template">
-                    <li>
-                        <button class="b-cont">
-                            {{{listData.ICNTS_TIT_NM}}}
-                        </button>
-                    </li>
-                    </script>
+
                 </ul>
             </div>
-
             <!-- //이용자 피해예방 주의보 -->
 
-            <hr class="cont-sp type1" aria-hidden="true">
+            <hr class="cont-sp type1 prevent" aria-hidden="true">
 
             <!-- 이럴 땐 이렇게 하세요 -->
-            <div class="cont-box nogaps-btm">
-                <div class="tit-caption-type pb14">
+            <div class="cont-box list nogaps-btm manner">
+                <div class="searchnumbox-wrap">
                     <h2 class="tit">이럴 땐 이렇게 하세요</h2>
-                    <span class="num"><%= searchInfo.search[16].manner.count %></span>
-                    <a href="/common/search/more?category=manner&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.search[16].manner.count %></span>건
+                        <% if(searchInfo.search[16].manner.count>=10){ %>
+                        <a href="/common/search/more?category=manner&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="morelink">더보기</a>
+                        <% } %>
+                    </div>
                 </div>
                 <ul class="service-guide-s" id="manner_list">
-                    <script type="text/x-handlebars-template" id="manner_template">
-                    <li>
-                        <button class="b-cont">
-                            {{{listData.ICNTS_TIT_NM}}}
-                        </button>
-                    </li>
-                    </script>
+
                 </ul>
             </div>
-
             <!-- //이럴 땐 이렇게 하세요 -->
 
-            <hr class="cont-sp type1" aria-hidden="true">
+            <hr class="cont-sp type1 manner" aria-hidden="true">
 
             <!-- 서비스 이용안내 -->
-            <div class="cont-box nogaps-btm">
-                <div class="tit-caption-type pb14">
+            <div class="cont-box list nogaps-btm serviceInfo">
+                <div class="searchnumbox-wrap">
                     <h2 class="tit">서비스 이용안내</h2>
-                    <span class="num"><%= searchInfo.search[17].serviceInfo.count %></span>
-                    <a href="/common/search/more?category=serviceInfo&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.search[17].serviceInfo.count %></span>건
+                        <% if(searchInfo.search[17].serviceInfo.count>=10){ %>
+                        <a href="/common/search/more?category=serviceInfo&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="morelink">더보기</a>
+                        <% } %>
+                    </div>
                 </div>
                 <ul class="service-guide-s" id="serviceInfo_list">
-                    <script type="text/x-handlebars-template" id="serviceInfo_template">
-                    <li>
-                        <button class="b-cont">
-                            <strong class="ti">{{{listData.ICNTS_TIT_NM}}}</strong>
-                            <span class="tx">{{{listData.ICNTS_TIT_NM}}}</span>
-                        </button>
-                    </li>
-                    </script>
+
                 </ul>
             </div>
             <!-- //서비스 이용안내 -->
 
-            <hr class="cont-sp type1" aria-hidden="true">
+            <hr class="cont-sp type1 serviceInfo" aria-hidden="true">
 
             <!-- 사이트 이용안내 -->
-            <div class="cont-box nogaps-btm">
-                <div class="tit-caption-type pb20">
-                    <h2 class="tit">사이트 이용안내</h2>
-                    <span class="num"><%= searchInfo.search[18].siteInfo.count %></span>
-                    <a href="/common/search/more?category=siteInfo&keyword=<%= keyword %>" class="btn-txt">더보기</a>
+            <div class="cont-box list nogaps-btm siteInfo">
+                <div class="searchnumbox-wrap">
+                    <h2 class="tit">사이트 이용방법</h2>
+                    <div class="numberbox">
+                        <span class="num"><%= searchInfo.search[18].siteInfo.count %></span>건
+                        <% if(searchInfo.search[18].siteInfo.count>=10){ %>
+                        <a href="/common/search/more?category=siteInfo&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="morelink">더보기</a>
+                        <% } %>
+                    </div>
                 </div>
                 <ul class="site-guide-s" id="siteInfo_list">
-                    <script id="siteInfo_template" type="text/x-handlebars-template">
-                    <li>
+                    <!--<li>
                         <button class="b-cont">
-                            <span class="img-box"><img class="lte" src="/img/dummy/dmy_product.png" alt="샘플이미지"></span>
-                            <strong class="ti">{{{listData.ICNTS_TIT_NM}}}</strong>
-                            <span class="tx">{{{listData.ICTG_PATH}}}</span>
+                            <span class="img-box"><img class="type01" src="http://localhost:3001/img/search/img_site01.png" alt=""></span>
+                            <strong class="ti">[회원] T world에 등록된 법인명의 <em class="highlight-text">휴대폰</em>번호 삭제방법</strong>
+                            <span class="tx">온라인 T world</span>
                         </button>
                     </li>
-                    </script>
+                    <li>
+                        <button class="b-cont">
+                            <span class="img-box"><img class="type02" src="http://localhost:3001/img/search/img_site02.png" alt=""></span>
+                            <strong class="ti">내 손안에 <em class="highlight-text">모바일</em> T world 고객센터 활용하기</strong>
+                            <span class="tx">모바일 T world</span>
+                        </button>
+                    </li>-->
                 </ul>
             </div>
             <!-- //사이트 이용안내 -->
 
+
+
+            <!--// #contents -->
         </div>
+
+
     </div>
-    <!--// #contents -->
 </div>
-
-
 </body>
 <% include ../../components/javascript.component.html %>
+<% include ../../components/search/search.template.component.html %>
 <script>
     $(document).ready(function () {
-
-        new Tw.CommonSearch($('.wrap'),'<%- JSON.stringify(searchInfo) %>');
-
+        new Tw.CommonSearch($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>,<%- JSON.stringify(svcInfo) %>,'<%- CDN %>');
     });
 </script>
 <% include ../../components/end.component.html %>

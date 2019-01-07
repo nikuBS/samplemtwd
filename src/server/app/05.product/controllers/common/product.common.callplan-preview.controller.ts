@@ -42,7 +42,6 @@ class ProductCommonCallplanPreview extends TwViewController {
       },
       this._convertRedisInfo('E1000', {
         summary: prodInfo.summary,
-        contents: prodInfo.contentsList,
         banner: prodInfo.bannerList
       })
     ].reduce((a, b) => {
@@ -113,7 +112,6 @@ class ProductCommonCallplanPreview extends TwViewController {
         return Object.assign(a, b);
       }),
       summaryCase: this._getSummaryCase(prodRedisInfo.summary),
-      contents: this._convertContents(prodStCd, prodRedisInfo.contents),
       banner: this._convertBanners(prodRedisInfo.banner)
     });
   }
@@ -161,6 +159,79 @@ class ProductCommonCallplanPreview extends TwViewController {
   }
 
   /**
+   * @param data
+   * @private
+   * @see prodGrpYn 그룹형 상품 여부
+   * @see repProdId 대표상품 ID
+   * @see repVslAplyYn 대표소개 페이지 설정 여부
+   * @see prodGrpRepYn 대표상품 여부
+   * @see grpProdScrnConsCd 그룹상품화면구성코드
+   */
+  private _convertContentsInfo (data): any {
+    let contentsResult: any = {
+      LIST: [],
+      LA: null,
+      R: null,
+      FIRST: null
+    };
+
+    // 그룹형 상품 아닐때 case0
+    if (FormatHelper.isEmpty(data.prodGrpYn) || data.prodGrpYn !== 'Y') {
+      return data.convContents;
+    }
+
+    // 대표상품 & 대표소개 미사용 (컨텐츠만 사용) case1
+    if (data.prodGrpRepYn === 'Y' && data.repVslAplyYn === 'N') {
+      contentsResult = {
+        LIST: data.convContents.LIST,
+        LA: data.convContents.LA,
+        FIRST: data.convContents.FIRST
+      };
+    }
+
+    // 대표상품 && 대표소개 및 컨텐츠 사용 case2
+    if (data.prodGrpRepYn === 'Y' && data.repVslAplyYn === 'Y' && data.grpProdScrnConsCd === 'RRRL') {
+      contentsResult = data.convContents;
+    }
+
+    // 대표상품 && 대표소개만 사용 case3
+    if (data.prodGrpRepYn === 'Y' && data.repVslAplyYn === 'Y' && data.grpProdScrnConsCd === 'RRN') {
+      contentsResult.R = data.convContents.R;
+    }
+
+    // 종속상품 && 종속 컨텐츠 사용 case4
+    if (data.prodGrpRepYn === 'N' && data.repVslAplyYn === 'N') {
+      contentsResult = {
+        LIST: data.convContents.LIST,
+        LA: data.convContents.LA,
+        FIRST: data.convContents.FIRST
+      };
+    }
+
+    // 종속상품 && 대표상품의 대표소개 / 대표상품의 컨텐츠 사용 case 5
+    if (data.prodGrpRepYn === 'N' && data.repVslAplyYn === 'Y' && data.grpProdScrnConsCd === 'SRRL') {
+      contentsResult = data.convRepContents;
+    }
+
+    // 종속상품 && 대표상품의 대표소개 / 종속상품의 컨텐츠 사용 case 6
+    if (data.prodGrpRepYn === 'N' && data.repVslAplyYn === 'Y' && data.grpProdScrnConsCd === 'SRSL') {
+      contentsResult = {
+        R: data.convRepContents.R,
+        LIST: data.convContents.LIST,
+        LA: data.convContents.LA,
+        FIRST: data.convContents.FIRST
+      };
+    }
+
+    // 종속상품 && 대표상품의 대표소개 / 원장 노출 없음
+    if (data.prodGrpRepYn === 'N' && data.repVslAplyYn === 'Y' && data.grpProdScrnConsCd === 'SRN') {
+      contentsResult.R = data.convRepContents.R;
+    }
+
+    return contentsResult;
+  }
+
+  /**
    * @param prodStCd
    * @param contentsInfo
    * @private
@@ -187,6 +258,7 @@ class ProductCommonCallplanPreview extends TwViewController {
       if (FormatHelper.isEmpty(contentsResult.FIRST)) {
         contentsResult.FIRST = {
           vslClass: item.vslYn && item.vslYn === 'Y' ? 'prVisual' : 'plm',
+          paddingClass: item.vslYn && item.vslYn === 'Y' ? 'nogaps noborder' : '',
           ledItmDesc: EnvHelper.replaceCdnUrl(this._removePcImgs(item.ledItmDesc))
         };
 
@@ -238,21 +310,25 @@ class ProductCommonCallplanPreview extends TwViewController {
   }
 
   /**
-   * @param prodTypCd
    * @param list
    * @private
    */
-  private _convertSeriesAndRecommendInfo (prodTypCd, list): any {
+  private _convertSeriesAndRecommendInfo (list): any {
     if (FormatHelper.isEmpty(list)) {
       return null;
     }
 
     return list.map((item) => {
-      const convResult = ProductHelper.convProductSpecifications(item.basFeeInfo, item.basOfrDataQtyCtt,
-        item.basOfrVcallTmsCtt, item.basOfrCharCntCtt),
+      const basDataGbTxt = FormatHelper.getValidVars(item.basOfrGbDataQtyCtt),
+        basDataMbTxt = FormatHelper.getValidVars(item.basOfrMbDataQtyCtt),
+        basDataTxt = this._getBasDataTxt(basDataGbTxt, basDataMbTxt);
+
+      const convResult = ProductHelper.convProductSpecifications(item.basFeeInfo, basDataTxt.txt,
+        item.basOfrVcallTmsCtt, item.basOfrCharCntCtt, basDataTxt.unit, false),
         isSeeContents = convResult.basFeeInfo.value === PRODUCT_CALLPLAN.SEE_CONTENTS;
 
-      return [item, convResult, this._getDisplayFlickSlideCondition(prodTypCd, isSeeContents, convResult)]
+      return [item, convResult, this._getIsCategory(item.prodTypCd),
+        this._getDisplayFlickSlideCondition(item.prodTypCd, isSeeContents, convResult)]
         .reduce((a, b) => {
           return Object.assign(a, b);
         });
@@ -293,7 +369,7 @@ class ProductCommonCallplanPreview extends TwViewController {
     }
 
     let prodIdsLength: any = 0;
-    if (prodTypCd === 'G') {
+    if (prodTypCd === 'G' && similarProductInfo.similarsList) {
       let prodIds: any = [];
 
       similarProductInfo.similarsList.forEach((item) => {
@@ -362,7 +438,7 @@ class ProductCommonCallplanPreview extends TwViewController {
     }
 
     Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_10_0116, {}, {}, prodId),
+      this.apiService.request(API_CMD.BFF_10_0116, {}, {}, [prodId]),
       this.redisService.getData(REDIS_PRODUCT_FILTER + 'F01230')
     ).subscribe(([prodInfo, additionsProdFilterInfo]) => {
         if (prodInfo.code !== API_CODE.CODE_00) {
@@ -377,6 +453,24 @@ class ProductCommonCallplanPreview extends TwViewController {
             prodInfo.result.summary.feeManlSetTitNm : PRODUCT_CALLPLAN_FEEPLAN,
           convertedProdInfo = this._convertProdInfo(prodInfo.result);
 
+        const seriesResult = FormatHelper.isEmpty(prodInfo.result.series) ? null : {
+            prodGrpNm : FormatHelper.isEmpty(prodInfo.result.series.prodGrpNm) ? null : prodInfo.result.series.prodGrpNm,
+            list: this._convertSeriesAndRecommendInfo(prodInfo.result.series.seriesProdList)
+          };
+
+        const convContents = FormatHelper.isEmpty(prodInfo.result.contentsList) ? null :
+            this._convertContents(prodInfo.result.baseInfo.prodStCd, prodInfo.result.contentsList),
+          convRepContents = FormatHelper.isEmpty(prodInfo.result.contentsRepList) ? null :
+            this._convertContents(prodInfo.result.baseInfo.prodStCd, prodInfo.result.contentsRepList),
+          contentsResult = this._convertContentsInfo({
+            convContents,
+            convRepContents,
+            prodGrpYn: prodInfo.result.baseInfo.prodGrpYn,
+            repVslAplyYn: prodInfo.result.baseInfo.repVslAplyYn,
+            prodGrpRepYn: prodInfo.result.baseInfo.prodGrpRepYn,
+            grpProdScrnConsCd: prodInfo.result.baseInfo.grpProdScrnConsCd
+          });
+
         res.render('common/callplan/product.common.callplan.html', [renderCommonInfo, isCategory, {
           isPreview: true,
           prodId: prodId,
@@ -385,14 +479,13 @@ class ProductCommonCallplanPreview extends TwViewController {
           prodRedisInfo: {
             summary: Object.assign(convertedProdInfo.baseInfo, convertedProdInfo.summary),
             summaryCase: convertedProdInfo.summaryCase,
-            contents: convertedProdInfo.contents,
             banner: convertedProdInfo.banner
           }, // 상품 정보 by Redis
           relateTags: convertedProdInfo.relateTags, // 연관 태그
-          series: FormatHelper.isEmpty(prodInfo.result.seriesProdList) ? null :
-            this._convertSeriesAndRecommendInfo(convertedProdInfo.prodTypCd, prodInfo.result.seriesProdList), // 시리즈 상품
+          series: seriesResult, // 시리즈 상품
+          contents: contentsResult, // 상품 콘텐츠
           recommends: FormatHelper.isEmpty(prodInfo.result.recommendProdList) ? null :
-            this._convertSeriesAndRecommendInfo(convertedProdInfo.prodTypCd, prodInfo.result.recommendProdList),  // 함께하면 유용한 상품
+            this._convertSeriesAndRecommendInfo(prodInfo.result.recommendProdList),  // 함께하면 유용한 상품
           recommendApps: FormatHelper.isEmpty(convertedProdInfo.recommendAppList) ? null : { recommendAppList: convertedProdInfo.recommendAppList },
           mobilePlanCompareInfo: null, // 요금제 비교하기
           similarProductInfo: convertedProdInfo.similar,  // 모바일 요금제 유사한 상품

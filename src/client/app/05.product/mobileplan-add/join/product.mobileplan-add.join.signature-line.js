@@ -61,6 +61,8 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
     }
 
     this.$inputNumber.val(res.params.phoneNumber);
+    this._toggleClearBtn();
+    this._toggleNumAddBtn();
   },
 
   _addNum: function() {
@@ -100,7 +102,7 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
   },
 
   _detectInputNumber: function() {
-    this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9.]/g, ''));
+    this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9]/g, ''));
     if (this.$inputNumber.val().length > 11) {
       this.$inputNumber.val(this.$inputNumber.val().substr(0, 11));
     }
@@ -114,7 +116,7 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
   },
 
   _toggleNumAddBtn: function() {
-    if (this.$inputNumber.val().length > 0) {
+    if (this.$inputNumber.val().length > 9) {
       this.$btnAddNum.removeAttr('disabled').prop('disabled', false);
     } else {
       this.$btnAddNum.attr('disabled', 'disabled').prop('disabled', true);
@@ -179,7 +181,7 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
 
   _convConfirmOptions: function() {
     this._confirmOptions = $.extend(this._confirmOptions, {
-      svcNumMask: this._confirmOptions.preinfo.svcNumMask,
+      svcNumMask: Tw.FormatHelper.conTelFormatWithDash(this._confirmOptions.preinfo.svcNumMask),
       toProdName: this._confirmOptions.preinfo.reqProdInfo.prodNm,
       toProdDesc: this._confirmOptions.preinfo.reqProdInfo.prodSmryDesc,
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
@@ -194,7 +196,7 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
   _procConfirm: function() {
     new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
       isMobilePlan: false,
-      noticeList: this._confirmOptions.prodNoticeList,
+      noticeList: this._confirmOptions.preinfo.joinNoticeList,
       joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
       typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
       settingSummaryTexts: [{
@@ -209,7 +211,7 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_10_0018, {
       svcNumList: this._getSvcNumList()
-    }, {}, this._prodId).done($.proxy(this._procJoinRes, this));
+    }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this));
   },
 
   _procJoinRes: function(resp) {
@@ -232,25 +234,17 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
         prodId: this._prodId,
         prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
         typeNm: Tw.PRODUCT_TYPE_NM.JOIN,
-        isBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
-        basFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo ?
-          this._confirmOptions.preinfo.reqProdInfo.basFeeInfo + Tw.CURRENCY_UNIT.WON : ''
+        isBasFeeInfo: this._confirmOptions.isNumberBasFeeInfo,
+        basFeeInfo: this._confirmOptions.isNumberBasFeeInfo ?
+          this._confirmOptions.toProdBasFeeInfo + Tw.CURRENCY_UNIT.WON : ''
       }
-    }, $.proxy(this._bindJoinResPopup, this), $.proxy(this._onClosePop, this), 'join_success');
+    }, null, $.proxy(this._onClosePop, this), 'join_success');
 
     this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
   },
 
-  _bindJoinResPopup: function($popupContainer) {
-    $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
-  },
-
-  _closePop: function() {
-    this._popupService.close();
-  },
-
   _onClosePop: function() {
-    this._historyService.go(-2);
+    this._historyService.goBack();
   }
 
 };

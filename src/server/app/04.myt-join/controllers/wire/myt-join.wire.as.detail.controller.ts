@@ -18,12 +18,12 @@ class MyTJoinWireASDetail extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    if ( svcInfo.svcAttrCd.indexOf('S') === -1 ) {
-      return this.error.render(res, {
-        title: MYT_JOIN_WIRE.AS_DETAIL.TITLE,
-        svcInfo: svcInfo
-      });
-    }
+    // if ( svcInfo.svcAttrCd.indexOf('S') === -1 ) {
+    //   return this.error.render(res, {
+    //     title: MYT_JOIN_WIRE.AS_DETAIL.TITLE,
+    //     svcInfo: svcInfo
+    //   });
+    // }
 
     const troubleNum = req.query.troubleNum;
     const troubleDt = req.query.troubleDt;
@@ -61,11 +61,11 @@ class MyTJoinWireASDetail extends TwViewController {
         if ( resp.code === API_CODE.CODE_00 ) {
           const data = resp.result;
           data['troubleNum'] = troubleNum;
-          data['troubleDt'] = DateHelper.getShortDateNoDot(troubleDt);
+          data['troubleDt'] = DateHelper.getShortDate(troubleDt);
           data['svcNm'] = svcNm;
           data['stNm'] = stNm;
           data['troubleDetail'] = troubleDetail;
-          data['operSchdDtm'] = DateHelper.getFullDateAndTime(data['operSchdDtm']);
+          data['operSchdDtm'] = DateHelper.getFullDateAndTimeWithDot(data['operSchdDtm']);
           data['cntcNum'] = StringHelper.phoneStringToDash(data['cntcNum']);
 
           const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: data};

@@ -22,7 +22,7 @@ Tw.ProductRoaming.prototype = {
     this.$formInfoBtnList.on('click', $.proxy(this._onClickFormInfo, this));
   },
   _init : function() {
-    this.nMax = this._options.alpaList.length - 1;
+    this.nMax = this._options.banners.centerBanners.length - 1;
 
     this.$container.show();
   },
@@ -49,7 +49,7 @@ Tw.ProductRoaming.prototype = {
     this._popupService.open({
       hbs: hbsName,
       data: {
-        alpaList: this._options.alpaList
+        banners: this._options.banners
       }
     }, $.proxy(this._onOpenFormInfo, this), null, 'info');
   },

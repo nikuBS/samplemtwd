@@ -22,7 +22,7 @@ class MyTFareBillOption extends TwViewController {
       this.getPaymentOption(),
       this.getAddrInfo()
     ).subscribe(([paymentOption, addrInfo]) => {
-      if (paymentOption.code === API_CODE.CODE_00) {
+      if (paymentOption.code === API_CODE.CODE_00 && addrInfo.code === API_CODE.CODE_00) {
         res.render('bill/myt-fare.bill.option.html', {
           svcInfo: this.getSvcInfo(svcInfo),
           pageInfo: pageInfo,
@@ -31,8 +31,8 @@ class MyTFareBillOption extends TwViewController {
         });
       } else {
         this.error.render(res, {
-          code: paymentOption.code,
-          msg: paymentOption.msg,
+          code: paymentOption.code === API_CODE.CODE_00 ? addrInfo.code : paymentOption.code,
+          msg: paymentOption.code === API_CODE.CODE_00 ? addrInfo.msg : paymentOption.msg,
           svcInfo: svcInfo
         });
       }

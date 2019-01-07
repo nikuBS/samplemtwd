@@ -24,7 +24,6 @@ import ProductMobileplanSettingCouple from './controllers/mobileplan/lookup/prod
 import ProductMobileplanSettingLocation from './controllers/mobileplan/setting/product.mobileplan.setting.location.controller';
 import ProductMobileplanLookupTplan from './controllers/mobileplan/lookup/product.mobileplan.lookup.tplan.controller';
 import ProductMobileplanLookupTing from './controllers/mobileplan/lookup/product.mobileplan.lookup.ting.controller';
-import ProductMobileplanComparePlans from './controllers/mobileplan/product.mobileplan.compare-plans.controller';
 
 import ProductAddition from './controllers/mobileplan-add/product.mobileplan-add.controller';
 import ProductAdditions from './controllers/mobileplan-add/product.mobileplan-add.list.controller';
@@ -60,10 +59,8 @@ import ProductRoamingPlanAdd from './controllers/roaming/product.roaming.planadd
 import ProductRoamingCoupon from './controllers/roaming/product.roaming.coupon.controller';
 import ProductRoamingFiGuide from './controllers/roaming/product.roaming.fi.guide.controller';
 import ProductRoamingFiInquire from './controllers/roaming/product.roaming.fi.inquire.controller';
-import ProductRoamingFiInquireAuth from './controllers/roaming/product.roaming.fi.inquire-auth.controller';
-import ProductRoamingFiReservation1step from './controllers/roaming/product.roaming.fi.reservation1step.controller';
-import ProductRoamingFiReservation2step from './controllers/roaming/product.roaming.fi.reservation2step.controller';
-import ProductRoamingFiReservation3step from './controllers/roaming/product.roaming.fi.reservation3step.controller';
+import ProductRoamingFiReservation from './controllers/roaming/product.roaming.fi.reservation.controller';
+import ProductRoamingFiReservationComplete from './controllers/roaming/product.roaming.fi.reservation-complete.controller';
 import ProductRoamingInfoCenter from './controllers/roaming/product.roaming.info.center.controller';
 import ProductRoamingJoinRoamingSetup from './controllers/roaming/join/product.roaming.join.roaming-setup.controller';
 import ProductRoamingJoinRoamingBeginSetup from './controllers/roaming/join/product.roaming.join.roaming-begin-setup.controller';
@@ -103,7 +100,6 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/mobileplan/lookup/tplan', controller: ProductMobileplanLookupTplan });
     this.controllers.push({ url: '/mobileplan/lookup/ting', controller: ProductMobileplanLookupTing });
     this.controllers.push({ url: '/mobileplan/find', controller: ProductMobileplanFind });
-    this.controllers.push({ url: '/mobileplan/compare-plans', controller: ProductMobileplanComparePlans });
 
     this.controllers.push({ url: '/mobileplan-add', controller: ProductAddition });
     this.controllers.push({ url: '/mobileplan-add/list', controller: ProductAdditions });
@@ -140,11 +136,9 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/roaming/planadd', controller: ProductRoamingPlanAdd });
     this.controllers.push({ url: '/roaming/fi/guide', controller: ProductRoamingFiGuide });
     this.controllers.push({ url: '/roaming/fi/inquire', controller: ProductRoamingFiInquire });
-    this.controllers.push({ url: '/roaming/fi/inquire-auth', controller: ProductRoamingFiInquireAuth });
     this.controllers.push({ url: '/roaming/coupon', controller: ProductRoamingCoupon });
-    this.controllers.push({ url: '/roaming/fi/reservation1step', controller: ProductRoamingFiReservation1step });
-    this.controllers.push({ url: '/roaming/fi/reservation2step', controller: ProductRoamingFiReservation2step });
-    this.controllers.push({ url: '/roaming/fi/reservation3step', controller: ProductRoamingFiReservation3step });
+    this.controllers.push({ url: '/roaming/fi/reservation', controller: ProductRoamingFiReservation });
+    this.controllers.push({ url: '/roaming/fi/reservation-complete', controller: ProductRoamingFiReservationComplete });
     this.controllers.push({ url: '/roaming/info/center', controller: ProductRoamingInfoCenter });
     this.controllers.push({ url: '/roaming/join/roaming-setup', controller: ProductRoamingJoinRoamingSetup });
     this.controllers.push({ url: '/roaming/join/roaming-begin-setup', controller: ProductRoamingJoinRoamingBeginSetup });

@@ -26,9 +26,7 @@ Tw.REDIS_KEY = {
 
 Tw.BANNER_LINK_TYPE = {
   CHANNEL_APP: '1',
-  CHANNEL_WEB: '2',
-  OTHER_APP: '3',
-  OTHER_WEB: '4'
+  OTHER_WEB: '2'
 };
 
 Tw.NOTI_POPUP_TYPE = {
@@ -43,4 +41,10 @@ Tw.REDIS_DEVICE_CODE = {
   IOS: '02',
   ANDROID: '03',
   MOBILE: '05'
+};
+
+Tw.REDIS_TOOLTIP_CODE = {
+  TEXT: '1',
+  ICON: '2',
+  ALL: '3'
 };

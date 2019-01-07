@@ -24,23 +24,30 @@ Tw.MyTFareBillSms.prototype = {
   },
   _bindEvent: function () {
     this.$container.on('click', '.fe-account-selector', $.proxy(this._selectAccountList, this));
+    this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
     this.$container.on('click', '.fe-pay', $.proxy(this._pay, this));
   },
   _selectAccountList: function (event) {
     var $target = $(event.currentTarget);
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
+      url: '/hbs/',
+      hbs: 'actionsheet01',
       layer: true,
-      title: Tw.POPUP_TITLE.SELECT_ACCOUNT,
-      data: this._getAccountList()
+      data: this._getAccountList(),
+      btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectPopupCallback, this, $target));
   },
   _selectPopupCallback: function ($target, $layer) {
-    $layer.on('click', '.account', $.proxy(this._setSelectedValue, this, $target));
+    var $id = $target.attr('id');
+    if (!Tw.FormatHelper.isEmpty($id)) {
+      $layer.find('input#' + $id).attr('checked', 'checked');
+    }
+    $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
   },
   _setSelectedValue: function ($target, event) {
-    var $selectedValue = $(event.currentTarget);
-    $target.text($selectedValue.text());
+    var $selectedValue = $(event.target);
+    $target.attr('id', $selectedValue.attr('id'));
+    $target.text($selectedValue.parents('label').text());
 
     this._popupService.close();
   },
@@ -52,15 +59,35 @@ Tw.MyTFareBillSms.prototype = {
     this.$accountList.find('li').each(function () {
       var $this = $(this);
       var obj = {
-        'option': 'account',
-        'attr': 'id="' + $this.attr('id') + '"',
-        'value': $this.text()
+        'label-attr': 'id="' + $this.attr('id') + '"',
+        'radio-attr': 'id="' + $this.attr('id') + '" name="r2"',
+        'txt': $this.text()
       };
       listObj.list.push(obj);
     });
     accountList.push(listObj);
 
     return accountList;
+  },
+  _onClose: function () {
+    if (this._isChanged()) {
+      this._popupService.openConfirmButton(null, Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_CANCEL.TITLE,
+        $.proxy(this._closePop, this), $.proxy(this._afterClose, this));
+    } else {
+      this._historyService.goBack();
+    }
+  },
+  _isChanged: function () {
+    return this.$accountSelector.attr('id') !== this.$accountSelector.attr('data-origin-id');
+  },
+  _closePop: function () {
+    this._isClose = true;
+    this._popupService.closeAll();
+  },
+  _afterClose: function () {
+    if (this._isClose) {
+      this._popupService.close();
+    }
   },
   _pay: function () {
     this._apiService.request(Tw.API_CMD.BFF_07_0027, { msg: $.trim(this.$accountSelector.text()) })

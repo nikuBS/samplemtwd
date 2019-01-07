@@ -18,7 +18,7 @@ class TeventDetail extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any): void {
     const id = req.url.split('/')[2];
 
-    this.apiService.request(API_CMD.BFF_09_0002, {}, {}, id).subscribe((resp) => {
+    this.apiService.request(API_CMD.BFF_09_0002, {}, {}, [id]).subscribe((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         res.render('tevent.detail.html', {
           result: this.parseData(resp.result),
@@ -37,8 +37,8 @@ class TeventDetail extends TwViewController {
 
   private parseData(result: any): any {
     if (!FormatHelper.isEmpty(result)) {
-      result.startDate = DateHelper.getShortDateNoDot(result.prStaDt);
-      result.endDate = DateHelper.getShortDateNoDot(result.prEndDt);
+      result.startDate = DateHelper.getShortDate(result.prStaDt);
+      result.endDate = DateHelper.getShortDate(result.prEndDt);
       result.height = result.prUrlHSize + 'px';
     }
     return result;

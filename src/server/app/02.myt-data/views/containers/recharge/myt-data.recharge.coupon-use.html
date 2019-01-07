@@ -13,7 +13,7 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div class="wrap">
+    <div class="wrap" data-menuId="M000218">
         <!-- #header -->
         <div id="header" class="header-wrap">
         </div>
@@ -50,7 +50,7 @@
 										<span class="txt1">유효기간 <%= period %></span>
 									</div>
 									<span class="btn-r">
-                                        <div class="bt-alone"><a href="/myt-data/recharge/coupon" class="bt-line-gray1">다시 선택</a></div>
+                                        <div class="bt-alone"><button class="bt-line-gray1 fe-common-back">다시 선택</a></div>
 									</span>
 								</li>
 							</ul>
@@ -69,7 +69,10 @@
 										<ul role="tablist">
 											<li role="tab" aria-selected="<%= tab === 'refill' ? true : false %>" aria-controls="tab1-tab" id="tab1"><a href="#refill" class="fe-replace-history">나에게 리필하기</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
 											<% if (!isGift) { %>
-											<li role="tab" aria-selected="<%= tab === 'gift' ? true : false %>" aria-controls="tab2-tab" id="tab2"><a href="#gift" class="fe-replace-history">가족에게 선물하기</a></li>
+											<li role="tab" aria-selected="<%= tab === 'gift' ? true : false %>" aria-controls="tab2-tab" id="tab2">
+												<a href="#gift" class="fe-replace-history">가족에게 선물하기</a>
+												<button class="btn-tip" id="DC_05_01_tip_01"><i class="icon-badge-tip"><span class="blind">tip</span></i></button>
+										    </li>
 											<% } %>
 										</ul>
 									</div>
@@ -82,7 +85,7 @@
 													<div class="list-input-type1">
 														<ul class="input-middle01">
                                                             <% for (let i = 0; i < options.length; i++) { %>
-															<li>
+															<li <%= options[i].isTplan ? 'class=type01' : '' %>>
 																<span class="form">
 																	<input type="radio" name="sradio1" id="sradio<%= i + 1 %>" class="formradio-small" value="<%= options[i].ofrRt %>::<%= options[i].copnDtlClCd %>::<%= options[i].dataVoiceClCd %>">
 																	<label for="sradio<%= i + 1 %>">라디오박스</label>
@@ -91,11 +94,13 @@
                                                                     <span class="stit"><%= options[i].copnDtlClNm %></span>
                                                                     <% if (options[i].qttText !== '0') { %>
                                                                     <p class="stxt1"><%= options[i].qttText %></p>
-                                                                    <% } %>
+																	<% } %>
+																	<% if (options[i].isTplan) { %>
+																	<span class="stext02">T플랜 라지·패밀리·Data인피니티요금제의 경우에는 별도의 기준을 적용합니다.</span>
+																	<% } %>
 																</div>
                                                             </li>
                                                             <% } %>
-															</li>
 														</ul>
 													</div>
 
@@ -108,12 +113,18 @@
                                                     <div class="recently-tel-box">
                                                         <div class="inputbox bt-add">
                                                             <span class="input new">
-                                                                <input type="text" placeholder="숫자만 입력" title="받는 분 번호" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1">
+                                                                <input type="tel" maxlength="13" placeholder="숫자만 입력" title="받는 분 번호" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1">
                                                                 <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                                             </span>
                                                             <span class="r-btn">
                                                                 <button type="button" id="fe-btn-contacts" class="btn-round2 btn-style3">주소록</button>
-                                                            </span>
+															</span>
+															<span class="tx-box fe-number-error none">
+								       							<!-- 입력값 전체 자릿수가 10자리 미만일 경우 -->
+								       							<span id="fe-2-v18" class="error-txt fe-number-error-item">휴대폰번호 자릿수를 확인해주세요. (10~11자리)</span>
+								       							<!-- 휴대폰 번호가 올바르지 않은 경우 -->
+								       							<!-- <span id="fe-2-v9" class="error-txt fe-number-error-item none">휴대폰 번호가 올바르지 않습니다.</span> -->
+															</span>
                                                         </div>
                                                     </div>
 												</div>

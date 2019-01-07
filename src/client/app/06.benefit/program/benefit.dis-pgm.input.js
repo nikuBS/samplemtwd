@@ -38,7 +38,7 @@ Tw.BenefitDisPgmInput.prototype = {
   },
 
   _bindEvent: function () {
-    $(window).on('env', $.proxy(this._getJoinConfirmContext, this));
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._getJoinConfirmContext, this));
   },
 
   _getJoinConfirmContext: function () {
@@ -64,7 +64,7 @@ Tw.BenefitDisPgmInput.prototype = {
       toProdDesc: this._confirmOptions.preinfo.reqProdInfo.prodSmryDesc,
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
       isNumberBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
-      svcNumMask: this._confirmOptions.preinfo.svcNumMask,
+      svcNumMask: Tw.FormatHelper.conTelFormatWithDash(this._confirmOptions.preinfo.svcNumMask),
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
       autoTermList: this._confirmOptions.preinfo.autoTermList,
       isAutoJoinTermList: (this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0),
@@ -81,6 +81,7 @@ Tw.BenefitDisPgmInput.prototype = {
         isContractPlan: this._confirmOptions.isContractPlan,
         isAutoJoinTermList: true,
         setInfo: 'set-info',
+        isTerm: true,
         confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2,
         settingSummaryTexts: [
           {
@@ -107,7 +108,7 @@ Tw.BenefitDisPgmInput.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_10_0035, {
       addCd: '2'
-    }, {}, this._prodId).done($.proxy(this._procJoinRes, this));
+    }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this));
   },
 
   _procJoinRes: function (resp) {

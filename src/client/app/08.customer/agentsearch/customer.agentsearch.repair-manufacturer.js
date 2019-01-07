@@ -21,16 +21,16 @@ Tw.CustomerAgentsearchRepairManufacturer.prototype = {
     this.$container.on('click', 'a[target="_blank"]', $.proxy(this._onExternalLink, this));
   },
   _onExternalLink: function (e) {
-    this._popupService.openConfirm(
-      Tw.POPUP_CONTENTS.NO_WIFI,
-      Tw.POPUP_TITLE.EXTERNAL_LINK,
+    var confirmed = false;
+    Tw.CommonHelper.showDataCharge(
+      function () {
+        confirmed = true;
+      },
       $.proxy(function () {
-        this._popupService.close();
-        var url = $(e.currentTarget).attr('href');
-        this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
-          type: Tw.NTV_BROWSER.EXTERNAL,
-          url: url
-        });
+        if (confirmed) {
+          var url = $(e.currentTarget).attr('href');
+          Tw.CommonHelper.openUrlExternal(url);
+        }
       }, this)
     );
 

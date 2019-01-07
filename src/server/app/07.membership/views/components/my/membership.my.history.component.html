@@ -1,0 +1,17 @@
+<%#
+* FileName: membership.my.history.component.html
+* Author: 김승규 (ksk4788@pineone.com)
+* Date: 2018.12.27
+%>
+<li>
+    <p class="info-title">T멤버십 재발급 신청</p>
+    <p class="info-sub">2018.5.23.</p>
+</li>
+<script id="tmplList" type="text/x-handlebars-template">
+    {{#each list}}
+    <li>
+        <p class="info-title">{{mbr_chg_nm_cnt2}}</p>
+        <p class="info-sub">{{show_chg_dt_cnt2}}</p>
+    </li>
+    {{/each}}
+</script>

@@ -41,10 +41,10 @@
                                 <p class="mline-manage-ti">이용중인 회선 <span class="mline-num red"><span id="fe-txt-used" class="num"><%= expsY.length %></span>개</span></p>
                                 <ul id="sortable-enabled" class="connectedSortable enabled">
                                     <% expsY.map((line) => { %>
-                                    <li class="ui-state-default fe-item fe-item-active" data-svcMgmtNum="<%= line.svcMgmtNum %>" data-showName="<%= line.showName %>" data-svcNum="<%= line.svcNum %>">
+                                    <li class="ui-state-default fe-item fe-item-active" data-svcmgmtnum="<%= line.svcMgmtNum %>" data-showname="<%= line.showName %>" data-svcnum="<%= line.svcNum %>">
                                         <div class="state-box">
                                             <p class="ti"><%= line.showName %><!--<span class="ico-like" role="img" aria-label="기준회선"><span class="blind">기준회선</span></span>--></p>
-                                            <% if(category !== 'S') { %>
+                                            <% if(category !== 's') { %>
                                             <span class="ph"><%= line.svcNum %></span>
                                             <% } else { %>
                                             <span class="ph"><%= line.addr %></span>
@@ -66,10 +66,10 @@
                                 <p class="mline-manage-ti">추가 가능한 회선 <span class="mline-num blue"><span id="fe-txt-unused" class="num"><%= expsN.length %></span>개</span></p>
                                 <ul id="sortable-disabled" class="connectedSortable disabled">
                                     <% expsN.map((line) => { %>
-                                    <li class="ui-state-default fe-item fe-item-inactive" data-svcMgmtNum="<%= line.svcMgmtNum %>" data-showName="<%= line.showName %>" data-svcNum="<%= line.svcNum %>">
+                                    <li class="ui-state-default fe-item fe-item-inactive" data-svcmgmtnum="<%= line.svcMgmtNum %>" data-showname="<%= line.showName %>" data-svcnum="<%= line.svcNum %>">
                                         <div class="state-box">
                                             <p class="ti"><%= line.showName %></p>
-                                            <% if(category !== 'S') { %>
+                                            <% if(category !== 's') { %>
                                             <span class="ph"><%= line.svcNum %></span>
                                             <% } else { %>
                                             <span class="ph"><%= line.addr %></span>

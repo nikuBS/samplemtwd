@@ -1,20 +1,34 @@
 /**
  * FileName: product.roaming.fi.inquire.controller.ts
  * Author: Seungkyu Kim (ksk4788@pineone.com)
- * Date: 2018.11.07
+ * Date: 2018.11.14
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
 // import { Observable } from 'rxjs/Observable';
+import { API_CODE } from '../../../../types/api-command.type';
+import FormatHelper from '../../../../utils/format.helper';
 
 export default class ProductRoamingFiInquire extends TwViewController {
 
-  render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    res.render('roaming/product.roaming.fi.inquire.html', { svcInfo : svcInfo });
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
+
+    this.apiService.request(API_CMD.BFF_10_0060, {keyword : ''}).subscribe((resp) => {
+      let countryCode = {};
+      if ( resp.code === API_CODE.CODE_00 ) {
+        countryCode = resp.result;
+      } else {
+        countryCode = resp;
+      }
+      svcInfo.showSvcNum =  FormatHelper.conTelFormatWithDash(svcInfo.svcNum);
+
+      res.render('roaming/product.roaming.fi.inquire.html', {
+        countryCode: countryCode,
+        svcInfo: svcInfo,
+        pageInfo: pageInfo
+      });
+    });
   }
 }
-
-
-

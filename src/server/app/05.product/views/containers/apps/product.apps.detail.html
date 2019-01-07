@@ -22,13 +22,9 @@
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
-            <h2 class="blind">내용</h2>
             <div class="container">
-
-                <!-- .cont-box -->
-                <div class="cont-box" id="fe-app">
+                <div class="t-apps-box" id="fe-app">
                 </div>
-                <!-- // .cont-box -->
                 <% const topBanner = prodInfo && prodInfo.banners && prodInfo.banners.top; %>
                 <% if (topBanner) { %>
                     <hr class="cont-sp type1" aria-hidden="true"/>
@@ -40,14 +36,13 @@
                 <% } %>
 
                 <% if (app && app.images && app.images.length > 0) { %>
-                <hr class="cont-sp type1" aria-hidden="true"/>
-                <div class="cont-box nogaps">
-                    <div class="slide-show">
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <div class="cont-box nogaps">
                         <!-- .widget -->
-                        <div class="widget">
-                            <div class="widget-box slider1">
-                                <div class="slider-box">
-                                    <ul class="slider" id="fe-images">
+                        <div class="widget"> 
+                            <div class="widget-box horizontal">
+                                <div class="horizontal-slide">
+                                    <ul class="horizontal-list screen-img-box" id="fe-images">
                                         <% app.images.map(image => { %>
                                         <li>
                                             <div class="item"><img src="<%= image %>" alt="" class="thum" /></div>
@@ -57,9 +52,8 @@
                                 </div>
                             </div>
                         </div>
-                        <!--// .widget -->
+                        <!-- .widget -->
                     </div>
-                </div>
                 <% } %>
 
                 <% const contents = prodInfo && prodInfo.contents;
@@ -77,21 +71,22 @@
                         <div class="ad-banner"><%- centerBanner.bnnrDtlHtmlCtt %></div>
                     <% } %>
                 <% } %>
-                <!-- .cont-box -->
+                
                 <% if (apps && apps.length > 0) { %>
                 <hr class="cont-sp type1" aria-hidden="true"/>
-                <div class="cont-box">
-                    <h3>함께하면 더욱 스마트한 앱서비스</h3>
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <h3>함께하면 더욱 좋은 앱</h3>
                     <!-- .widget -->
                     <div class="widget"> 
                         <div class="widget-box horizontal">
                             <div class="horizontal-slide">
-                                <ul class="horizontal-list smart-app">
+                                <ul class="horizontal-list">
                                     <% apps.map(app => { %>
                                         <li>
                                             <div>
-                                                <a href="/product/apps/app?appId=<%= app.prodId %>">
-                                                    <img src="<%= app.prodIconImgUrl %>" alt="<%= app.prodNm %>" class="ico">
+                                                <a class="bt" href="/product/apps/app?appId=<%= app.prodId %>">
+                                                    <img src="<%= app.appIconImgUrl %>" alt="<%= app.prodNm %>">
                                                     <span><%= app.prodNm %></span>
                                                 </a>
                                             </div>

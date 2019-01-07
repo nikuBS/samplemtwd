@@ -53,7 +53,7 @@ class BenefitTerminateTbCombination extends TwViewController {
       return this.error.render(res, renderCommonInfo);
     }
 
-    this.apiService.request(API_CMD.BFF_10_0114, {}, {}, prodId)
+    this.apiService.request(API_CMD.BFF_10_0114, {}, {}, [prodId])
       .subscribe((termInfo) => {
         if (termInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, Object.assign(renderCommonInfo, {

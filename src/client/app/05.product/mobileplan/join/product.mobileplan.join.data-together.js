@@ -57,10 +57,11 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
     }
 
     this.$inputNumber.val(res.params.phoneNumber);
+    this._toggleClearBtn();
   },
 
   _detectInputNumber: function() {
-    this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9.]/g, ''));
+    this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9]/g, ''));
     if (this.$inputNumber.val().length > 11) {
       this.$inputNumber.val(this.$inputNumber.val().substr(0, 11));
     }
@@ -100,7 +101,7 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
 
   _convConfirmOptions: function() {
     this._confirmOptions = $.extend(this._confirmOptions, {
-      svcNumMask: this._confirmOptions.preinfo.svcNumMask,
+      svcNumMask: Tw.FormatHelper.conTelFormatWithDash(this._confirmOptions.preinfo.svcNumMask),
       svcProdNm: this._confirmOptions.preinfo.frProdInfo.prodNm,
       svcProdBasFeeInfo: this._confirmOptions.preinfo.frProdInfo.basFeeInfo,
       toProdName: this._confirmOptions.preinfo.toProdInfo.prodNm,
@@ -110,8 +111,8 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
       isAutoJoinTermList: (this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0),
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
       autoTermList: this._confirmOptions.preinfo.autoTermList,
-      autoJoinBenefitList: this._confirmOptions.preinfo.frProdInfo.chgSktProdBenfCtt,
-      autoTermBenefitList: this._confirmOptions.preinfo.toProdInfo.chgSktProdBenfCtt,
+      autoJoinBenefitList: this._confirmOptions.preinfo.toProdInfo.chgSktProdBenfCtt,
+      autoTermBenefitList: this._confirmOptions.preinfo.frProdInfo.chgSktProdBenfCtt,
       isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0)
     });
   },
@@ -185,10 +186,10 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_10_0012, {
-      asgnNumList: [this.$inputNumber.val().replace(/[^0-9.]/g, '')],
+      asgnNumList: [this.$inputNumber.val().replace(/[^0-9]/g, '')],
       optProdId: '',
       svcProdGrpId: ''
-    }, {}, this._prodId).done($.proxy(this._procJoinRes, this));
+    }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this));
   },
 
   _procJoinRes: function(resp) {
@@ -211,25 +212,17 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
         prodId: this._prodId,
         prodNm: this._confirmOptions.preinfo.toProdInfo.prodNm,
         typeNm: Tw.PRODUCT_TYPE_NM.JOIN,
-        isBasFeeInfo: this._confirmOptions.preinfo.toProdInfo.isNumberBasFeeInfo,
-        basFeeInfo: this._confirmOptions.preinfo.toProdInfo.isNumberBasFeeInfo ?
-          this._confirmOptions.preinfo.toProdInfo.basFeeInfo + Tw.CURRENCY_UNIT.WON : ''
+        isBasFeeInfo: this._confirmOptions.isNumberBasFeeInfo,
+        basFeeInfo: this._confirmOptions.isNumberBasFeeInfo ?
+          this._confirmOptions.toProdBasFeeInfo + Tw.CURRENCY_UNIT.WON : ''
       }
-    }, $.proxy(this._bindJoinResPopup, this), $.proxy(this._onClosePop, this), 'join_success');
+    }, null, $.proxy(this._onClosePop, this), 'join_success');
 
     this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
   },
 
-  _bindJoinResPopup: function($popupContainer) {
-    $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
-  },
-
-  _closePop: function() {
-    this._popupService.close();
-  },
-
   _onClosePop: function() {
-    this._historyService.go(-2);
+    this._historyService.goBack();
   }
 
 };

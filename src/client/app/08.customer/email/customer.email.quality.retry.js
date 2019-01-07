@@ -17,9 +17,6 @@ Tw.CustomerEmailQualityRetry = function (rootEl) {
 
 Tw.CustomerEmailQualityRetry.prototype = {
   _init: function () {
-    // var htParams = Tw.UrlHelper.getQueryParams();
-    // this.qualityCategory = Tw.CUSTOMER_EMAIL_QUALITY_CATEGORY;
-    // $('.fe-category_depth1');
   },
 
   _cachedElement: function () {
@@ -93,11 +90,28 @@ Tw.CustomerEmailQualityRetry.prototype = {
   },
 
   _stepBack: function () {
-    this._popupService.openConfirmButton(Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG, Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-      $.proxy($.proxy(function () {
+    // this._popupService.openConfirmButton(Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG, Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+    //   $.proxy($.proxy(function () {
+    //     this._popupService.close();
+    //     this._history.goBack();
+    //   }, this), this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+
+    var confirmed = false;
+    this._popupService.openConfirmButton(
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+      $.proxy(function () {
+        confirmed = true;
         this._popupService.close();
-        this._history.goBack();
-      }, this), this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+      }, this),
+      $.proxy(function () {
+        if (confirmed) {
+          this._historyService.goBack();
+        }
+      }, this),
+      Tw.BUTTON_LABEL.NO,
+      Tw.BUTTON_LABEL.YES
+    );
   }
 };
 

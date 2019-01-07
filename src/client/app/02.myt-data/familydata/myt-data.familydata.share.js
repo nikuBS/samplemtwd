@@ -26,7 +26,7 @@ Tw.MyTDataFamilyShare.prototype = {
   _bindEvent: function() {
     this.$container.on('click', '.btn-type01', $.proxy(this._addShareData, this));
     this.$amountInput.on('focusout', $.proxy(this._validateShareAmount, this));
-    this.$amountInput.on('keyup', $.proxy(this._handleChangeAmount, this));
+    this.$amountInput.on('keyup', $.proxy(this._validateShareAmount, this));
   },
 
   _addShareData: function(e) {
@@ -39,8 +39,6 @@ Tw.MyTDataFamilyShare.prototype = {
     }
 
     this._validateShareAmount();
-
-    this.$submitBtn.attr('disabled', false);
   },
 
   _validateShareAmount: function() {
@@ -49,23 +47,20 @@ Tw.MyTDataFamilyShare.prototype = {
     if (!value) {
       this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.V17);
       this.$error.removeClass('none');
+      this._setDisableSubmit(true);
     } else if (value > this._shareAmount) {
       this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.V16);
       this.$error.removeClass('none');
+      this._setDisableSubmit(true);
     } else {
       if (!this.$error.hasClass('none')) {
         this.$error.addClass('none');
       }
+      this._setDisableSubmit(false);
     }
   },
 
-  _handleChangeAmount: function(e) {
-    var value = e.currentTarget.value;
-
-    if (!value || value == 0) {
-      this.$submitBtn.attr('disabled', true);
-    } else {
-      this.$submitBtn.attr('disabled', false);
-    }
+  _setDisableSubmit: function(disable) {
+    disable !== !!this.$submitBtn.attr('disabled') && this.$submitBtn.attr('disabled', disable);
   }
 };

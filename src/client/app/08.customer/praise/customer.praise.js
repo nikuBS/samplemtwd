@@ -251,7 +251,8 @@ Tw.CustomerPraise.prototype = {
             url: '/main/home'
           }
         },
-        $.proxy(this._openCompletePopup, this)
+        $.proxy(this._openCompletePopup, this),
+        this._historyService.goBack
       );
     }
   },

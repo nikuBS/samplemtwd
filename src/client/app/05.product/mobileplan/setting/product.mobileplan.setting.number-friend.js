@@ -55,6 +55,8 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
     }
 
     this.$inputNumber.val(res.params.phoneNumber);
+    this._toggleClearBtn();
+    this._toggleNumAddBtn();
   },
 
   _addNum: function() {
@@ -63,6 +65,10 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
     if (!Tw.ValidationHelper.isCellPhone(number)) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
+    }
+
+    if (this.$lineList.find('li').length > 3) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A38.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A38.TITLE);
     }
 
     Tw.CommonHelper.startLoading('.container', 'grey', true);
@@ -85,12 +91,16 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
   _delNum: function(e) {
     var $elem = $(e.currentTarget).parents('li');
 
-    if ($elem.data('number') === this._frBestAsgnNum) { // @todo 절친 해지 안되도록 alert
-      return;
+    if ($elem.data('number') === this._frBestAsgnNum) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A45.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A45.TITLE);
     }
 
-    this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON, null,
+    if ($elem.parent().find('li').length < 2) {
+      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_NUMBER_MIN);
+    }
+
+    this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON, Tw.BUTTON_LABEL.CLOSE, null,
       $.proxy(this._delNumReq, this, $elem.data('number'), $elem.data('audit_dtm')));
   },
 
@@ -106,7 +116,7 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
   },
 
   _detectInputNumber: function() {
-    this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9.]/g, ''));
+    this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9]/g, ''));
     if (this.$inputNumber.val().length > 11) {
       this.$inputNumber.val(this.$inputNumber.val().substr(0, 11));
     }
@@ -120,8 +130,8 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
   },
 
   _toggleFriend: function(e) {
-    if ($(e.currentTarget).hasClass('on')) {  // @todo 절친 해제 기능은 없음 alert
-      return;
+    if ($(e.currentTarget).hasClass('on')) {
+      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A44.TITLE);
     }
 
     var $elem = $(e.currentTarget).parents('li'),
@@ -149,7 +159,7 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
   },
 
   _toggleNumAddBtn: function() {
-    if (this.$inputNumber.val().length > 0 && this.$lineList.find('li').length < 4) {
+    if (this.$inputNumber.val().length > 9) {
       this.$btnAddNum.removeAttr('disabled').prop('disabled', false);
     } else {
       this.$btnAddNum.attr('disabled', 'disabled').prop('disabled', true);

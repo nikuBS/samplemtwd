@@ -21,7 +21,7 @@ Tw.ProductMobileplanAddTerminate = function(rootEl, prodId, confirmOptions) {
 Tw.ProductMobileplanAddTerminate.prototype = {
 
   _bindEvent: function() {
-    $(window).on('env', $.proxy(this._getJoinConfirmContext, this));
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._getJoinConfirmContext, this));
   },
 
   _getJoinConfirmContext: function() {
@@ -47,9 +47,11 @@ Tw.ProductMobileplanAddTerminate.prototype = {
       toProdDesc: this._confirmOptions.preinfo.reqProdInfo.prodSmryDesc,
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
       isNumberBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
-      svcNumMask: this._confirmOptions.preinfo.svcNumMask,
+      svcNumMask: Tw.FormatHelper.conTelFormatWithDash(this._confirmOptions.preinfo.svcNumMask),
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
       autoTermList: this._confirmOptions.preinfo.autoTermList,
+      noticeList: this._confirmOptions.preinfo.termNoticeList,
+      isNoticeList: this._confirmOptions.preinfo.termNoticeList && this._confirmOptions.preinfo.termNoticeList.length > 0,
       isAutoJoinTermList: this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0,
       isAgreement: this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.isTermStplAgree
     });
@@ -60,8 +62,8 @@ Tw.ProductMobileplanAddTerminate.prototype = {
       false,
       this.$container,
       {
+        isTerm: true,
         confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A4,
-        noticeList: this._confirmOptions.prodNoticeList,
         isWidgetInit: true
       },
       $.proxy(this._prodConfirmOk, this)
@@ -71,7 +73,7 @@ Tw.ProductMobileplanAddTerminate.prototype = {
   _prodConfirmOk: function() {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0036, {}, {}, this._prodId).done($.proxy(this._procTerminateRes, this));
+    this._apiService.request(Tw.API_CMD.BFF_10_0036, {}, {}, [this._prodId]).done($.proxy(this._procTerminateRes, this));
   },
 
   _procTerminateRes: function(resp) {
@@ -81,7 +83,7 @@ Tw.ProductMobileplanAddTerminate.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0038, {}, {}, this._prodId).done($.proxy(this._isVasTerm, this));
+    this._apiService.request(Tw.API_CMD.BFF_10_0038, {}, {}, [this._prodId]).done($.proxy(this._isVasTerm, this));
   },
 
   _isVasTerm: function(resp) {
@@ -141,8 +143,8 @@ Tw.ProductMobileplanAddTerminate.prototype = {
 
     if (respResult.prodTmsgTypCd === 'I') {
       popupOptions = $.extend(popupOptions, {
-        img_url: Tw.FormatHelper.isEmpty(respResult.rgstImgUrl) ? null : Tw.Environment.cdn + respResult.rgstImgUrl,
-        img_src: respResult.imgFilePathNm
+        img_url: respResult.rgstImgUrl,
+        img_src: Tw.Environment.cdn + respResult.imgFilePathNm
       });
     }
 

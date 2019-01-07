@@ -45,16 +45,17 @@ Tw.CustomerEmailTemplate.prototype = {
   _changeServiceTemplate: function (e, serviceCategory) {
     switch ( serviceCategory.depth1 ) {
       case 'CELL':
-        this.$wrap_tpl_service.html(this.tpl_service_cell());
+        var templatePlaceholder = this._setTemplatePlaceholder(serviceCategory);
+        this.$wrap_tpl_service.html(this.tpl_service_cell({ placeHolder: templatePlaceholder }));
         break;
       case 'INTERNET':
         this.$wrap_tpl_service.html(this.tpl_service_internet());
         break;
       case 'DIRECT':
-        if ( serviceCategory.depth2 === '08' || serviceCategory.depth2 === '09' || serviceCategory.depth2 === '12' ) {
-          this.$wrap_tpl_service.html(this.tpl_service_direct());
-        } else {
+        if ( serviceCategory.depth2 === '07' || serviceCategory.depth2 === '10' ) {
           this.$wrap_tpl_service.html(this.tpl_service_direct_brand());
+        } else {
+          this.$wrap_tpl_service.html(this.tpl_service_direct());
         }
         break;
       case 'CHOCO':
@@ -80,5 +81,13 @@ Tw.CustomerEmailTemplate.prototype = {
     }
 
     skt_landing.widgets.widget_init();
+  },
+
+  _setTemplatePlaceholder: function (serviceCategory) {
+    if ( serviceCategory.depth2 === '5000275' ) {
+      return Tw.CUSTOMER_EMAIL.MEMBERSHIP_PLACEHOLDER;
+    }else{
+      return Tw.CUSTOMER_EMAIL.DEFAULT_PLACEHOLDER;
+    }
   }
 };

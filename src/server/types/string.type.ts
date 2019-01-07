@@ -15,20 +15,20 @@ export enum SKIP_NAME {
 
 export const UNLIMIT_NAME = {
   '1': '무제한',
-  'B': '기본제공',
-  'M': '무제한'
+  B: '기본제공',
+  M: '무제한'
 };
 
 // 요금 안내서 설정 > 안내서 유형(복합은 컨트롤러에서 만들고 단수만 표현한다)
 export const MYT_FARE_BILL_TYPE = {
-  P: 'T world 확인',
+  P: 'T월드 확인',
   H: 'Bill Letter', // 무선 case
   J: 'Bill Letter', // 유선 case
   B: '문자',
   '2': '이메일',
   '1': '기타(우편)',
-  X: '선택안함',
-  NO: '받지않음',
+  X: '선택 안 함',
+  NO: '받지 않음',
   YES: '받음'
 };
 
@@ -72,7 +72,7 @@ export const MYT_FARE_BILL_GUIDE = {
   DATE_FORMAT: {
     YYYYMM_TYPE: 'YYYY년 M월'
   },
-  FIRST_SVCTYPE: '서비스 전체',
+  FIRST_SVCTYPE: '전체',
   PHONE_SVCTYPE: '휴대폰',
   PHONE_TYPE_0: '이동전화',
   PHONE_TYPE_1: '휴대폰'
@@ -114,6 +114,7 @@ export enum CURRENCY_UNIT {
 }
 
 export enum TIME_UNIT {
+  MONTH = '개월',
   HOURS = '시간',
   MINUTE = '분',
   SECOND = '초'
@@ -124,9 +125,14 @@ export enum MYT_DATA_CHARGE_TYPE_NAMES {
   LIMIT_CHARGE = '데이터 한도 요금',
   TING_CHARGE = '팅 쿠키즈 안심요금',
   TING_GIFT = '팅 요금 선물',
-  REFILL_USAGE = '리필 쿠폰 사용',
-  REFILL_GIFT = '리필 쿠폰 선물',
+  REFILL_USAGE = '리필쿠폰 사용',
+  REFILL_GIFT = '리필쿠폰 선물',
   ALL = '전체'
+}
+
+export enum MYT_DATA_REFILL_TYPES {
+  DATA = '데이터리필',
+  VOICE = '음성리필'
 }
 
 export enum MYT_DATA_CHARGE_TYPES {
@@ -140,6 +146,12 @@ export enum MYT_DATA_RECHARGE_MSG {
   SELECT_DATA = '데이터 선택',
   REGISTER = '충전 신청하기',
   CHANGE = '변경하기'
+}
+
+export enum MYT_DATA_RECHARGE_COUPON {
+  A10 = '장기가입 리필쿠폰',
+  A14 = '10년주기 리필쿠폰',
+  A20 = '선물받은 리필쿠폰'
 }
 
 export enum PRODUCT_INFINITY_BENEFIT {
@@ -175,13 +187,47 @@ export enum PRODUCT_RESERVATION_COMBINE_NM {
   NA00002040 = '온가족할인',
   NH00000133 = 'New온가족플랜',
   NH00000084 = 'TB끼리 온가족프리',
-  NONE = '결합상품을 선택해 주세요',
+  NONE = '결합상품을 선택해 주세요.',
   ETC = '그 외 결합상품'
 }
 
 export enum PRODUCT_REQUIRE_DOCUMENT_TYPE_NM {
-  apply = '구비서류 제출/조회',
+  apply = '필요서류 제출',
   history = '가입신청 내역 조회'
+}
+
+export enum PRODUCT_REQUIRE_DOCUMENT {
+  NORMAL = '정상',
+  ABNORMAL = '비정상',
+  APPLY = '제출',
+  HISTORY = '조회'
+}
+
+export enum PRODUCT_REQUIRE_DOCUMENT_RS {
+  R000 = '필요서류 제출기한이 지났습니다.\n(제출기한 : YYYYMDD)',
+  R059 = '본인 이외 타인의 서류는 제출이 불가능합니다.',
+  R173 = '가족간 명의변경 및 주민(인,외국인)등록번호 정정내용 확인이 가능한 서류(행정기관 발급용)를 제출해주세요.',
+  R174 = '가족관계 입증이 가능한 서류를 제출해주세요.',
+  R175 = '서류에서 신청하신 가족 정보를 식별할 수 없습니다.\n가족관계 식별이 가능한 서류를 제출해주세요.',
+  R176 = '서류에서 신청하신 가족 정보를 확인할 수 없습니다.\n가족관계 입증이 가능한 서류를 제출해주세요.',
+  R177 = '개명(개칭) 확인이 가능한 서류를 제출해주세요.',
+  R999 = '상세 신청결과는 SK텔레콤 전문 상담원(114)에게 문의해주세요.'
+}
+
+export enum PRODUCT_REQUIRE_DOCUMENT_APPLY_RESULT {
+  WORKING = '신청하신 내용을 검토 중입니다.',
+  NEED_DOCUMENT = '필요서류를 첨부해주세요.',
+  NEED_DOCUMENT_RETRY = '필요서류를 다시 첨부해주세요.',
+  EXPIRE_DOCUMENT = '필요서류 제출기한이 지났습니다',
+  COMPLETE = '검토가 완료 되었습니다.\nSK텔레콤 전문상담원을 통해서 상품 가입이 가능합니다.',
+  COMPLETE_ADDITIONAL = '검토가 완료 되었습니다.'
+}
+
+export enum PRODUCT_REQUIRE_DOCUMENT_CALLPLAN_RESULT {
+  WORKING = '신청하신 내용을 검토 중입니다.',
+  NEED_DOCUMENT = '현재 서류 미비 상태입니다.',
+  EXPIRE_DOCUMENT = '필요서류 제출기한이 지났습니다',
+  COMPLETE = '검토가 완료 되었습니다.'
 }
 
 export const MYT_FARE_BILL_REISSUE = {
@@ -213,7 +259,7 @@ export const MYT_FARE_PAYMENT_HISTORY_TYPE = {
   all: '전체',
   direct: '즉시납부',
   auto: '자동납부',
-  autoAll: '자동납부 통합 인출',
+  autoAll: '자동 납부 통합 인출',
   microPrepay: '소액 선결제',
   contentPrepay: '콘텐츠 선결제',
   pointReserve: '포인트 납부 예약',
@@ -237,7 +283,7 @@ export const MYT_FARE_HISTORY_MICRO_TYPE = {
 
 export const MYT_JOIN_CONTRACT_TERMINAL = {
   FEE_TYPE_A: {
-    TIT_NM: '요금약정할인24 (730일)'
+    TIT_NM: '요금약정할인제도'
   },
   FEE_TYPE_B: {
     TIT_NM: '테블릿 약정할인 12'
@@ -264,7 +310,9 @@ export const MYT_JOIN_CONTRACT_TERMINAL = {
   },
   JOIN_TYPE_C: {
     TITNM: '가입 / T 약정 할부지원',
-    AGREE_NM: 'T 약정 할부지원'
+    AGREE_NM: 'T 약정 할부지원',
+    TITNM2: '가입 / T 약정할부지원프로그램',
+    AGREE_NM2: 'T 약정할부지원프로그램'
   },
   JOIN_TYPE_D: {
     TITNM: '가입 / 약정 위약금2',
@@ -297,7 +345,7 @@ export const MYT_JOIN_CONTRACT_TERMINAL = {
 };
 
 export const MYT_PAYMENT_DETAIL_TITLE = {
-  DI: '납부 상세 내역',
+  DI: '납부 상세내역',
   TPOINT: 'T포인트 납부 상세내역',
   OCB: 'OK캐쉬백 납부 상세 내역',
   BANK: '계좌이체 납부 상세 내역',
@@ -319,14 +367,14 @@ export const MYT_FARE_PAYMENT_ERROR = {
 };
 
 export const MYT_FARE_POINT_MSG = {
-  CASHBAG: 'OK캐쉬백 포인트',
+  CASHBAG: 'OK캐쉬백포인트',
   TPOINT: 'T포인트',
   RAINBOW: '레인보우포인트',
   RESERVATION: '납부 예약 완료',
   AUTO: '자동납부 신청 완료',
   CHANGE: '자동납부 변경 완료',
   CANCEL: '자동납부 해지 완료',
-  REGISTER_POINT: '납부 신청 포인트',
+  REGISTER_POINT: '납부신청 포인트',
   RESERVATION_POINT: '납부 예약 포인트',
   RAINBOW_MSG: '1,000점 이상 보유 시 매월 자동 차감'
 };
@@ -437,13 +485,17 @@ export const MY_BENEFIT_RAINBOW_POINT_TRANSFER = {
   }
 };
 
+export const T_MEMBERSHIP_BENEFIT_BRAND = {
+  TITLE: '제휴 브랜드'
+};
+
 export enum SELECT_POINT {
   DEFAULT = '납부할 포인트 선택'
 }
 
 export const PRODUCT_WIRE_CATEGORIES = {
   internet: '인터넷',
-  phone: '전화',
+  phone: '집전화',
   tv: 'TV'
 };
 
@@ -504,10 +556,7 @@ export const FEE_PLAN_TIP_TXT = {
   MS_05_tip_01: '요금제 안내',
   MS_05_tip_02: '선불 휴대폰 요금제 변경',
   MS_05_tip_03: 'SK텔레콤을 통해 가입한 상품',
-  MS_05_tip_04: '요금제 변경',
-  MS_05_tip_05: '2009년 11월 2일 이후 신규가입 중단',
-  MS_05_tip_06: '2009년 11월 2일 이후 신규가입 중단',
-  MS_05_tip_07: '2009년 11월 2일 이후 신규가입 중단'
+  MS_05_tip_04: '요금제 안내'
 };
 
 export const MAIN_MENU_REFUND_STATE = {
@@ -548,7 +597,7 @@ export const PRODUCT_MOBILEPLAN_COMPARE_PLANS = {
   USAGE_TXT: '사용량',
   MONTH_TXT: '{0}개월',
   RECENT_AVG_TXT: '최근 {0} 평균',
-  RECENT_MAX_TXT: '최근 {0} 최대',
+  RECENT_MAX_TXT: '최근 {0} 최대'
 };
 
 export const CUSTOMER_DAMAGEINFO_CONTENTS_TITLE = {
@@ -567,7 +616,9 @@ export const CUSTOMER_DAMAGEINFO_CONTENTS_TITLE = {
   page013: '명의도용 피해예방법',
   page014: '결합상품 피해예방법',
   page015: '소액결제 피해예방법',
-  page016: '해외 로밍 피해예방법'
+  page016: '해외 로밍 피해예방법',
+  page017: 'SNS 개인정보 보호 꿀팁! (2단계 인증설정)',
+  page018: 'SNS 개인정보 보호 꿀팁! (사진 속 개인정보 확인)'
 };
 
 export const ROAMING_RECEIVE_CENTER = {
@@ -586,3 +637,380 @@ export const NODE_API_ERROR = {
   '01': '해당 값이 없습니다.',
   '02': '잘못된 형식입니다.'
 };
+
+export const MEMBERSHIP_DELIVERY_CODE = {
+  '1': '신청완료',
+  '2': '발송',
+  '3': '배송중',
+  '4': '발송완료',
+  '5': '즉시발급완료',
+  '6': '2년내 카드신청이력 없음',
+  '8': '정보오류',
+  '9': '반송'
+};
+
+// 고객센터 > 사이트 이용안내 온리안 T 월드 제목과 컨텐츠 아이디 번호
+export const CUSTOMER_STIE_OPTION_TYPE = [
+  {
+    cat: '기타',
+    title: '가려진 정보 확인 방법',
+    code: 'D00007',
+    className: 'ico-etc'
+  },
+  {
+    cat: 'myT',
+    title: '소액결제 현명하게 관리하기',
+    code: 'D00002',
+    className: 'ico-myt'
+  },
+  {
+    cat: '회원',
+    title: '개인명의 휴대폰 태블릿 다회선 등록하기',
+    code: 'D00001',
+    className: 'ico-member'
+  },
+  {
+    cat: '회원',
+    title: '법인명의 휴대폰번호 삭제방법',
+    code: 'D00006',
+    className: 'ico-member'
+  },
+  {
+    cat: '회원',
+    title: '법인명의 태블릿 다회선 등록하기',
+    code: 'D00005',
+    className: 'ico-member'
+  },
+  {
+    cat: '기타',
+    title: '모두에게 평등한 웹 접근성 안내',
+    code: 'D00008',
+    className: 'ico-etc'
+  },
+  {
+    cat: '기타',
+    title: 'T월드의 모든 메뉴 꼼꼼히 살펴보기',
+    code: 'D00009',
+    className: 'ico-etc'
+  }
+];
+
+export const CUSTOMER_SERVICE_OPTION_TYPE = [
+  {
+    title: '휴대폰 가입·변경에 대한 안내',
+    sub_list: [
+      {
+        sub_title: '휴대폰 가입',
+        sub_text: '가입·번호이동·기기 안내를 원한다면',
+        dep_list: [
+          {
+            dep_title: '휴대폰 가입',
+            type: 'A1',
+            code: 'C00014'
+          },
+          {
+            dep_title: '기기 자급제도',
+            type: 'A1',
+            code: 'C00023'
+          },
+          {
+            dep_title: '번호 이동',
+            type: 'A1',
+            code: 'C00013'
+          },
+          {
+            dep_title: '번호관리제도',
+            type: 'A1',
+            code: 'C00018'
+          }
+        ]
+      },
+      {
+        sub_title: '미성년자 가입',
+        sub_text: '가입방법·부모동의 절차가 궁금하다면',
+        dep_list: [
+          {
+            dep_title: '미성년자 가입',
+            type: 'A1',
+            code: 'C00015'
+          },
+          {
+            dep_title: '미성년자 보호 서비스',
+            type: 'A1',
+            code: 'C00017'
+          }
+        ]
+      },
+      {
+        sub_title: '유심 변경',
+        sub_text: '유심을 변경하여 사용하고 싶다면',
+        dep_list: [
+          {
+            dep_title: '유심 잠금해제',
+            type: 'A1',
+            code: 'C00019'
+          },
+          {
+            dep_title: '내 유심으로 SK텔레콤 기기 사용',
+            type: 'A1',
+            code: 'C00016'
+          },
+          {
+            dep_title: '내 유심으로 타사 기기 사용',
+            type: 'A1',
+            code: 'C00012'
+          },
+          {
+            dep_title: '타사 유심으로 SK텔레콤 기기 사용',
+            type: 'A2',
+            code: 'C00025'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    title: '휴대폰 요금 기준에 대한 안내',
+    sub_list: [
+      {
+        sub_title: '요금 기준',
+        sub_text: '일반∙스마트폰 요금 기준이 궁금하다면',
+        type: 'B1',
+        code: 'C00031'
+      },
+      {
+        sub_title: 'LTE데이터 사용요금',
+        sub_text: 'LTE 요금 기준이 궁금하다면',
+        type: 'B1',
+        code: 'C00029'
+      },
+      {
+        sub_title: 'band LTE',
+        sub_text: 'band LTE 요금 기준이 궁금하다면',
+        type: 'B2',
+        code: 'C00029'
+      },
+      {
+        sub_title: '데이터 사용요금',
+        sub_text: '데이터 사용요금 부과 기준이 궁금하다면',
+        dep_list: [
+          {
+            dep_title: '데이터 사용요금 안내',
+            type: 'A1',
+            code: 'C00032'
+          },
+          {
+            dep_title: '데이터 사용 유의사항',
+            type: 'A1',
+            code: 'C00034'
+          }
+        ]
+      },
+      {
+        sub_title: '부가세 포함',
+        sub_text: '부가세 포함 요금정책이 궁금하다면',
+        type: 'B1',
+        code: 'C00030'
+      },
+      {
+        sub_title: '영상통화 요금',
+        sub_text: '영상통화 요금정책이 궁금하다면',
+        type: 'B1',
+        code: 'C00033'
+      }
+    ]
+  },
+  {
+    unitedTitle: 'T월드 다이렉트∙T멤버십∙T로밍에 대한 안내',
+    united: '_3T',
+    title: 'T월드 다이렉트 이용안내',
+    text: 'T월드 다이렉트에서 구매를 원한다면',
+    upperCat: true,
+    sub_list: [
+      {
+        sub_title: '할인∙혜택',
+        sub_text: '',
+        dep_list: [
+          {
+            dep_title: '요금약정할인',
+            type: 'A1',
+            code: 'C00001'
+          },
+          {
+            dep_title: '결합할인',
+            type: 'A1',
+            code: 'C00007'
+          },
+          {
+            dep_title: 'T월드 다이렉트 혜택',
+            type: 'A2',
+            code: 'C00009'
+          }
+        ]
+      },
+      {
+        sub_title: '구매',
+        sub_text: '',
+        dep_list: [
+          {
+            dep_title: '구매 전 꿀팁',
+            type: 'A2',
+            code: 'C00011'
+          },
+          {
+            dep_title: '다이렉트샵구매가이드',
+            type: 'A2',
+            code: 'C00010'
+          },
+          {
+            dep_title: '가입유형',
+            type: 'A1',
+            code: 'C00005'
+          },
+          {
+            dep_title: '휴대폰분할상환수수료',
+            type: 'A2',
+            code: 'C00006'
+          },
+          {
+            dep_title: '구매유의사항',
+            type: 'A2',
+            code: 'C00008'
+          }
+        ]
+      },
+      {
+        sub_title: '배송∙개통',
+        sub_text: '',
+        dep_list: [
+          {
+            dep_title: '배송방법',
+            type: 'A2',
+            code: 'C00002'
+          },
+          {
+            dep_title: '개통방법',
+            type: 'A1',
+            code: 'C00003'
+          },
+          {
+            dep_title: '반품교환',
+            type: 'A1',
+            code: 'C00004'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    unitedTitle: 'T월드 다이렉트∙T멤버십∙T로밍에 대한 안내',
+    united: '_3T',
+    title: 'T멤버십∙T로밍에 대한 안내',
+    text: '',
+    upperCat: false,
+    sub_list: [
+      {
+        sub_title: 'T멤버십 이용안내',
+        sub_text: 'T멤버십 이용이 궁금하다면',
+        dep_list: [
+          {
+            dep_title: 'T멤버십 이용',
+            type: 'A2',
+            code: 'C00037'
+          },
+          {
+            dep_title: '초콜릿 이용',
+            type: 'A1',
+            code: 'C00035'
+          },
+          {
+            dep_title: '모바일 T멤버십',
+            type: 'A2',
+            code: 'C00036'
+          }
+        ]
+      },
+      {
+        sub_title: 'T로밍 이용안내',
+        sub_text: '해외여행을 준비하고 계신다면',
+        type: 'B1',
+        code: 'C00020'
+      }
+    ]
+  },
+  {
+    title: '서비스 정책∙제도에 대한 안내',
+    sub_list: [
+      {
+        sub_title: '데이터 리필하기',
+        sub_text: '데이터 리필하기 정책과 제도가 궁금하다면',
+        type: 'B1',
+        code: 'C00040'
+      },
+      {
+        sub_title: 'T끼리 데이터 선물하기',
+        sub_text: '데이터 선물하기 정책과 제도가 궁금하다면',
+        dep_list: [
+          {
+            dep_title: 'T끼리 데이터 선물하기',
+            type: 'A1',
+            code: 'C00041'
+          },
+          {
+            dep_title: 'T끼리 자동선물 신청',
+            type: 'A1',
+            code: 'C00042'
+          }
+        ]
+      },
+      {
+        sub_title: 'T 기본약정 요금정책',
+        sub_text: 'T기본약정 요금정책과 제도가 궁금하다면',
+        type: 'B1',
+        code: 'C00039'
+      }
+    ]
+  },
+  {
+    title: '목소리 인증∙ARS상담에 대한 안내',
+    sub_list: [
+      {
+        sub_title: 'ARS상담 이용안내',
+        sub_text: 'ARS로 직접 상담받고 싶다면',
+        dep_list: [
+          {
+            dep_title: '버튼식 ARS',
+            type: 'A3',
+            code: 'C00038'
+          },
+          {
+            dep_title: '보이는 ARS',
+            type: 'A2',
+            code: 'C00021'
+          },
+          {
+            dep_title: '음성인식 ARS',
+            type: 'A2',
+            code: 'C00022'
+          }
+        ]
+      },
+      {
+        sub_title: '목소리 인증 이용안내',
+        sub_text: '더 안전한 ARS이용을 원하신다면',
+        dep_list: [
+          {
+            dep_title: '목소리 인증',
+            type: 'A2',
+            code: 'C00024'
+          },
+          {
+            dep_title: '목소리 등록 문자받기',
+            type: 'A2',
+            code: 'C00026'
+          }
+        ]
+      }
+    ]
+  }
+];

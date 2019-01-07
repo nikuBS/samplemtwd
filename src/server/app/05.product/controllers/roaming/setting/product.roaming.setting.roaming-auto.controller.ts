@@ -18,7 +18,7 @@ class ProductRoamingSettingRoamingAuto extends TwViewController {
     constructor() {
         super();
     }
-    render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
         const prodId = req.query.prod_id || null;
         let expireDate = '';
 
@@ -31,7 +31,7 @@ class ProductRoamingSettingRoamingAuto extends TwViewController {
 
         Observable.combineLatest(
             this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
-            this.apiService.request(API_CMD.BFF_10_0091, {}, {}, prodId)
+            this.apiService.request(API_CMD.BFF_10_0091, {}, {}, [prodId])
         ).subscribe(([ prodRedisInfo, prodBffInfo ]) => {
 
             if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00)) {
@@ -55,7 +55,8 @@ class ProductRoamingSettingRoamingAuto extends TwViewController {
                 prodRedisInfo : prodRedisInfo.summary,
                 prodBffInfo : prodBffInfo.result,
                 prodId : prodId,
-                expireDate : expireDate
+                expireDate : expireDate,
+                pageInfo : pageInfo
             });
         });
 

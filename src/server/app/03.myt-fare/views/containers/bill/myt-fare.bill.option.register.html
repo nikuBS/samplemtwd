@@ -79,17 +79,26 @@
                                         <input id="flab04" class="fe-phone-number required-input-field" type="number" maxlength="11"
                                                inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
+                                        <span class="error-txt fe-error-msg" style="display:none;">
+                                            휴대폰번호 자릿수를 확인해주세요. (10~11자리)
+                                        </span>
                                     </span>
                                 </span>
                             </li>
-                            <li>
+                            <li class="fe-bank-wrap">
                                 <label class="tit" for="flab07">계좌정보 <button id="MF_05_01_01_tip_02" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></label>
                                 <button class="bt-dropdown big fe-select-bank" title="은행선택" aria-haspopup="true">은행선택<span class="ico"></span></button>
+                                <span class="error-txt fe-bank-error-msg" style="display:none;">
+                                    은행을 선택해 주세요.
+                                </span>
                                 <span class="inputbox mt6">
                                     <span class="input">
                                         <input id="flab07" class="fe-account-number required-input-field" type="number" maxlength="20"
                                                inputmode="numeric" min="0" pattern="[0-9]*" placeholder="계좌번호(숫자만 입력)" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
+                                        <span class="error-txt fe-error-msg" style="display:none;">
+                                            계좌번호를 입력해 주세요.
+                                        </span>
                                     </span>
                                 </span>
                             </li>
@@ -104,6 +113,9 @@
                                         <input id="flab01" class="fe-phone-number required-input-field" type="number" maxlength="11"
                                                inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
+                                        <span class="error-txt fe-error-msg" style="display:none;">
+                                            휴대폰번호 자릿수를 확인해주세요. (10~11자리)
+                                        </span>
                                     </span>
                                 </span>
                             </li>
@@ -114,13 +126,16 @@
                                         <input id="flab02" class="fe-card-number required-input-field" type="number" maxlength="16"
                                                inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
+                                        <span class="error-txt fe-error-msg" style="display:none;">
+                                            카드번호를 입력해 주세요.
+                                        </span>
                                     </span>
                                 </span>
                             </li>
                             <li>
                                 <label class="tit" for="flab03">유효기간</label>
                                 <div class="input-wrap-half">
-                                    <span class="inputbox">
+                                    <span class="inputbox fe-exp-wrap">
                                         <span class="input">
                                             <input id="flab03" class="fe-card-y required-input-field" type="number"
                                                    inputmode="numeric" min="0" pattern="[0-9]*" placeholder="YYYY"
@@ -128,13 +143,16 @@
                                             <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                         </span>
                                     </span>
-                                    <span class="inputbox">
+                                    <span class="inputbox fe-exp-wrap">
                                         <span class="input">
                                             <input class="fe-card-m required-input-field" type="number"
                                                    inputmode="numeric" min="0" pattern="[0-9]*" placeholder="MM"
                                                    title="유효 월" maxlength="2">
                                             <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                         </span>
+                                    </span>
+                                    <span class="error-txt fe-error-msg" style="display:none;">
+                                        유효기간이 올바르지 않습니다.
                                     </span>
                                 </div>
                             </li>

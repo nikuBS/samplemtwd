@@ -1,4 +1,7 @@
-Tw.Environment = { cdn: '' };
+Tw.Environment = {
+  init: false,
+  cdn: ''
+};
 Tw.Init = function () {
   this._apiService = null;
   this._nativeService = null;
@@ -14,8 +17,8 @@ Tw.Init.prototype = {
   _initService: function () {
     Tw.Ui = new Tw.UIService();
     Tw.Logger = new Tw.LoggerService();
-    Tw.Native = new Tw.NativeService();
     Tw.Popup = new Tw.PopupService();
+    Tw.Native = new Tw.NativeService();
     Tw.Api = new Tw.ApiService();
     Tw.Error = new Tw.ErrorService();
     Tw.Tooltip = new Tw.TooltipService();
@@ -28,7 +31,7 @@ Tw.Init.prototype = {
     new Tw.MenuComponent();
     new Tw.MaskingComponent();
     new Tw.ShareComponent();
-    new Tw.SearchComponent();
+    new Tw.QuickMenuComponent();
   },
 
   _getEnvironment: function () {
@@ -40,14 +43,17 @@ Tw.Init.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var result = resp.result;
       Tw.Environment = result;
-      Tw.Logger.info('[Version]', result.version);
-      Tw.Popup = new Tw.PopupService();
-      $(window).trigger('env');
+      Tw.Environment.init = true;
+      Tw.Logger.info('[Version]', Tw.Environment.version);
+      $(window).trigger(Tw.INIT_COMPLETE);
 
-      if ( (result.environment === 'development' || result.environment === 'staging') && /\/home/.test(location.href) ) {
-        /* jshint undef: false */
-        alert(result.version);
-        /* jshint undef: false */
+      // if ( (result.environment === 'development' || result.environment === 'staging') && /\/home/.test(location.href) ) {
+      //   /* jshint undef: false */
+      //   alert(result.version);
+      //   /* jshint undef: false */
+      // }
+      if ( Tw.Environment.environment !== 'local' && /\/home/.test(location.href) ) {
+        Tw.Popup.toast( Tw.Environment.version);
       }
     }
   },

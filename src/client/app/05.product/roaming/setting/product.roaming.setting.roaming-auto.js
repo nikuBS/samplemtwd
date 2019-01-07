@@ -16,6 +16,8 @@ Tw.ProductRoamingSettingRoamingAuto = function (rootEl,prodRedisInfo,prodBffInfo
   this._expireDate = expireDate;
   this._apiService = Tw.Api;
   this._init();
+  this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
+  this._tooltipInit(prodId);
 };
 
 Tw.ProductRoamingSettingRoamingAuto.prototype = {
@@ -39,6 +41,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
       this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
       this.$container.on('click', '.bt-dropdown.time', $.proxy(this._btnTimeEvent, this));
       this.$container.on('click','.bt-fixed-area #do_setting',$.proxy(this._settingInformationSetting, this));
+      this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._goBack,this));
     },
     _getDateArrFromToDay : function(range,format){
         var dateFormat = 'YYYY. MM. DD';
@@ -74,10 +77,10 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
         ];
         return returnActionSheetData;
     },
-    _btnDateEvent : function($this){
-        var nowValue = $($this.currentTarget).text().trim();
+    _btnDateEvent : function(eventObj){
+        var nowValue = $(eventObj.currentTarget).text().trim();
         var dateArr = this._getDateArrFromToDay(30);
-        var convertedArr = this._convertDateArrForActionSheet(dateArr,'data-name="'+$($this.currentTarget).attr('id')+'"',nowValue);
+        var convertedArr = this._convertDateArrForActionSheet(dateArr,'data-name="'+$(eventObj.currentTarget).attr('id')+'"',nowValue);
         var actionSheetData = this._makeActionSheetDate(convertedArr);
         if(nowValue.length<10){
             actionSheetData[0].list[0].option = 'checked';
@@ -85,24 +88,25 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
         actionSheetData[0].list[0].value+= ' ('+Tw.SELECTED_DATE_STRING.TODAY+')';
         this._openSelectDatePop(actionSheetData,'');
     },
-    _btnTimeEvent : function($this){
-        var nowValue = $($this.currentTarget).text().trim();
+    _btnTimeEvent : function(eventObj){
+        var nowValue = $(eventObj.currentTarget).text().trim();
         var timeArr = this._getTimeArr();
-        var convertedArr = this._convertDateArrForActionSheet(timeArr,'data-name="'+$($this.currentTarget).attr('id')+'"',nowValue);
+        var convertedArr = this._convertDateArrForActionSheet(timeArr,'data-name="'+$(eventObj.currentTarget).attr('id')+'"',nowValue);
         var actionSheetData = this._makeActionSheetDate(convertedArr);
         this._openSelectDatePop(actionSheetData,'');
     },
 
     _bindActionSheetElementEvt : function($layer){
         $layer.on('click', '.chk-link-list button', $.proxy(this._actionSheetElementEvt, this));
-        $layer.on('click', '.popup-closeBtn', $.proxy(this._actionSheetCloseEvt, this));
+        //$layer.on('click', '.popup-closeBtn', $.proxy(this._actionSheetCloseEvt, this));
     },
-    _actionSheetElementEvt : function($this){
-        $($this.delegateTarget).find('button').removeClass('checked');
-        $($this.currentTarget).addClass('checked');
+    _actionSheetElementEvt : function(eventObj){
+        $(eventObj.delegateTarget).find('button').removeClass('checked');
+        $(eventObj.currentTarget).addClass('checked');
+        this._actionSheetCloseEvt(eventObj);
     },
-    _actionSheetCloseEvt : function($layer){
-        var $selectedTarget = $($layer.delegateTarget).find('.chk-link-list button.checked');
+    _actionSheetCloseEvt : function(eventObj){
+        var $selectedTarget = $(eventObj.delegateTarget).find('.chk-link-list button.checked');
         var dateValue = $selectedTarget.text().trim().substr(0,12);
         var dateAttr = $selectedTarget.attr('data-name');
         var changeTarget = this.$container.find('#'+dateAttr);
@@ -111,6 +115,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
         changeTarget.attr('data-number',dateValue.replace(/\.\ /g, ''));
         changeTarget.attr('data-idx',$selectedTarget.parent().index());
         this._validateDateValue();
+        this._popupService.close();
     },
     _validateDateValue : function(){
         var startDateElement = this.$container.find('#start_date');
@@ -197,6 +202,44 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     },
     _goBack : function () {
         this._historyService.goBack();
+    },
+    _tooltipInit : function (prodId) {
+        switch (prodId) {
+            case 'NA00005252':
+            case 'NA00005300':
+            case 'NA00005505':
+                this.$serviceTipElement.attr('id','RM_11_01_02_05_tip_01_02');
+                break;
+            case 'NA00003178':
+            case 'NA00003177':
+            case 'NA00004226':
+                this.$serviceTipElement.attr('id','RM_11_01_02_05_tip_01_03');
+                break;
+            case 'NA00006046':
+            case 'NA00006048':
+            case 'NA00006038':
+            case 'NA00006040':
+            case 'NA00005900':
+            case 'NA00006050':
+            case 'NA00006052':
+            case 'NA00006042':
+            case 'NA00006044':
+            case 'NA00005902':
+            case 'NA00005699':
+            case 'NA00005898':
+            case 'NA00006226':
+            case 'NA00006229':
+                this.$serviceTipElement.attr('id','RM_11_01_02_05_tip_01_04');
+                break;
+            case 'NA00005691':
+            case 'NA00005694':
+            case 'NA00005690':
+            case 'NA00005693':
+            case 'NA00005692':
+            case 'NA00005695':
+                this.$serviceTipElement.attr('id','RM_11_01_02_05_tip_01_01');
+                break;
+        }
     }
 
 

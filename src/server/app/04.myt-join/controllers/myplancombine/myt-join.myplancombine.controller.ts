@@ -70,7 +70,7 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
   }
 
   private getCombination = (id, svcInfo) => {
-    return this.apiService.request(API_CMD.BFF_05_0134, {}, {}, id).map(resp => {
+    return this.apiService.request(API_CMD.BFF_05_0134, {}, {}, [id]).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
           code: resp.code,
@@ -79,11 +79,11 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
       }
 
       const BADGE = {
-        '00': 'fam-members2',
+        '00': 'f-delegate',
         '01': 'partner',
-        '02': 'fam',
+        '02': 'children',
         '03': 'parents',
-        '04': 'siblings'
+        '04': 'brother'
       };
 
       return {

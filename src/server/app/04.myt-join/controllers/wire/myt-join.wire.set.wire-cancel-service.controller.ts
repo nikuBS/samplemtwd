@@ -35,12 +35,12 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
   };
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    if ( svcInfo.svcAttrCd.indexOf('S') === -1 ) {
-      return this.error.render(res, {
-        title: MYT_JOIN_WIRE.SET_WIRE_CANCEL.TITLE,
-        svcInfo: svcInfo
-      });
-    }
+    // if ( svcInfo.svcAttrCd.indexOf('S') === -1 ) {
+    //   return this.error.render(res, {
+    //     title: MYT_JOIN_WIRE.SET_WIRE_CANCEL.TITLE,
+    //     svcInfo: svcInfo
+    //   });
+    // }
 
     this._svcInfo = svcInfo;
     const thisMain = this;
@@ -50,7 +50,48 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
     this.logger.info(this, '[ allSvc ] : ', allSvc);
     this.logger.info(this, '[ reqQuery ] : ', req.query);
 
+
+    this.apiService.request(API_CMD.BFF_05_0198, {})
+      .subscribe(function(resp) {
+        if ( resp.code === API_CODE.CODE_00 && resp.result ) {
+
+          const data = resp.result;
+          // const data = {
+          //   'svcName': '인터넷',
+          //   'svcTechMthdNm': '광랜FTTH',
+          //   'visitCntcNum': '01011112222',
+          //   'termPrefrDtmFront': '20180104112233',
+          //   'rcvOperStNm': '일반해지 접수'
+          // };
+
+
+          data['visitCntcNum'] = StringHelper.phoneStringToDash(data['visitCntcNum']);  // 연락처
+          data['termPrefrDtmFront'] = DateHelper.getShortDate(data['termPrefrDtmFront']);      // 해지 신청일
+          // data['termPrefrDy'] = DateHelper.getShortDateNoDot(data[i]['termPrefrDy']);      // 해지 요청일?
+
+          return res.render(
+            'wire/myt-join.wire.set.wire-cancel-service.info.html',
+            {
+              svcInfo: svcInfo,
+              pageInfo: thisMain.pageInfo,
+              data: data
+            }
+          );
+        } else {
+          thisMain._goSvcCancelView(res, svcInfo, allSvc, pageInfo);
+        }
+      });
+
+    // thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
+    //   reqQuery: thisMain.reqQuery,
+    //   svcInfo: svcInfo,
+    // });
+  }
+
+  private _goSvcCancelView(res: Response, svcInfo: any, allSvc: any, pageInfo: any) {
+
     // this._typeInit();
+    const thisMain = this;
 
     const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0172, {}), 'p1');
 
@@ -153,14 +194,14 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
         ]
       };*/
 
-      thisMain._dataInit();
+      // thisMain._dataInit();
 
       thisMain.logger.info(thisMain, '[_urlTplInfo.pageRenderView] : ', thisMain._urlTplInfo.pageRenderView);
 
       thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
         reqQuery: thisMain.reqQuery,
         svcInfo: svcInfo,
-        pageInfo: thisMain.pageInfo,
+        pageInfo: pageInfo,
         allSvc: allSvc,
         commDataInfo: thisMain._commDataInfo,
         resDataInfo: thisMain._resDataInfo
@@ -175,17 +216,8 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
       });
     });
 
-
-    // thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
-    //   reqQuery: thisMain.reqQuery,
-    //   svcInfo: svcInfo,
-    // });
   }
 
-
-  private _dataInit() {
-
-  }
 
   // -------------------------------------------------------------[SVC]
 

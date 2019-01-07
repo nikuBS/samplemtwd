@@ -28,6 +28,8 @@ Tw.MyTFareBillPoint.prototype = {
     this.$pointPw = this.$container.find('.fe-point-pw');
     this.$getPointBtn = this.$container.find('.fe-get-point-wrapper');
     this.$pointBox = this.$container.find('.fe-point-box');
+    this.$isValid = false;
+    this.$isChanged = false;
 
     this._pointCardNumber = null;
     this._isPaySuccess = false;
@@ -36,9 +38,12 @@ Tw.MyTFareBillPoint.prototype = {
     this.$container.on('click', '.fe-get-point', $.proxy(this._openGetPoint, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.fe-only-number', $.proxy(this._checkNumber, this));
+    this.$container.on('blur', '.fe-point', $.proxy(this._checkValidation, this));
+    this.$container.on('blur', '.fe-point-pw', $.proxy(this._checkPassword, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-select-point', $.proxy(this._selectPoint, this));
     this.$container.on('click', '.fe-find-password', $.proxy(this._goCashbagSite, this));
+    this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
   },
   _checkIsPopup: function () {
@@ -56,10 +61,11 @@ Tw.MyTFareBillPoint.prototype = {
   },
   _setPoint: function ($layer) {
     $layer.on('keyup', '.fe-point-card-number', $.proxy(this._checkIsLayerAbled, this, $layer));
-    $layer.on('keypress', '.fe-point-card-number', $.proxy(this._setMaxValue, this));
+    $layer.on('input', '.fe-point-card-number', $.proxy(this._setMaxValue, this));
+    $layer.on('blur', '.fe-point-card-number', $.proxy(this._checkCardNumber, this, $layer));
     $layer.on('change', '.fe-cashbag-agree', $.proxy(this._checkIsLayerAbled, this, $layer));
     $layer.on('click', '.cancel', $.proxy(this._checkIsLayerAbled, this, $layer));
-    $layer.on('click', '.fe-get', $.proxy(this._getPoint, this, $layer));
+    $layer.on('click', '.fe-get', $.proxy(this._getPoint, this));
   },
   _checkIsLayerAbled: function ($layer) {
     if ($layer.find('.fe-point-card-number').val() !== '' &&
@@ -71,13 +77,20 @@ Tw.MyTFareBillPoint.prototype = {
   },
   _setMaxValue: function (event) {
     var $target = $(event.currentTarget);
-    return $target.val().length < $target.attr('maxLength');
+    var maxLength = $target.attr('maxLength');
+    if ($target.attr('maxLength')) {
+      if ($target.val().length >= maxLength) {
+        $target.val($target.val().slice(0, maxLength));
+      }
+    }
   },
-  _getPoint: function ($layer) {
-    this._pointCardNumber = $.trim($layer.find('.fe-point-card-number').val());
-    var isValid = this._validation.checkMoreLength(this._pointCardNumber, 16, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4);
-
-    if (isValid) {
+  _checkCardNumber: function ($layer) {
+    var $pointCardNumber = $layer.find('.fe-point-card-number');
+    this._pointCardNumber = $.trim($pointCardNumber.val());
+    this.$isValid = this._validation.showAndHideErrorMsg($pointCardNumber, this._validation.checkMoreLength($pointCardNumber, 16));
+  },
+  _getPoint: function () {
+    if (this.$isValid) {
       this._apiService.request(Tw.API_CMD.BFF_07_0043, { 'ocbCcno': this._pointCardNumber })
         .done($.proxy(this._getSuccess, this))
         .fail($.proxy(this._getFail, this));
@@ -90,6 +103,8 @@ Tw.MyTFareBillPoint.prototype = {
 
       this.$pointBox.show();
       this.$getPointBtn.hide();
+
+      this.$isChanged = true;
     } else {
       this._getFail(res);
     }
@@ -115,27 +130,40 @@ Tw.MyTFareBillPoint.prototype = {
   _selectPoint: function (event) {
     var $target = $(event.currentTarget);
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
+      url: '/hbs/',
+      hbs: 'actionsheet01',
       layer: true,
-      title: Tw.POPUP_TITLE.SELECT_POINT,
-      data: Tw.POPUP_TPL.FARE_PAYMENT_POINT_LIST
+      data: Tw.POPUP_TPL.FARE_PAYMENT_POINT_LIST,
+      btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectPopupCallback, this, $target));
   },
   _selectPopupCallback: function ($target, $layer) {
-    $layer.on('click', '.point-type', $.proxy(this._setSelectedValue, this, $target));
+    var $id = $target.attr('id');
+    if (!Tw.FormatHelper.isEmpty($id)) {
+      $layer.find('input#' + $id).attr('checked', 'checked');
+    }
+    $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
   },
   _setSelectedValue: function ($target, event) {
-    var $selectedValue = $(event.currentTarget);
+    var $selectedValue = $(event.target);
     $target.attr({
       'id': $selectedValue.attr('id'),
       'data-code': $selectedValue.attr('data-code')
     });
-    $target.text($selectedValue.text());
+    $target.text($selectedValue.parents('label').text());
 
     this._popupService.close();
   },
   _goCashbagSite: function () {
     Tw.CommonHelper.openUrlExternal(Tw.URL_PATH.OKCASHBAG);
+  },
+  _onClose: function () {
+    if (this.$isChanged || this.$pointPw.val() !== '') {
+      this._popupService.openConfirmButton(null, Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_CANCEL.TITLE,
+        $.proxy(this._closePop, this), $.proxy(this._afterClose, this));
+    } else {
+      this._historyService.goBack();
+    }
   },
   _checkPay: function () {
     if (this._isValid()) {
@@ -154,6 +182,7 @@ Tw.MyTFareBillPoint.prototype = {
     this._setData($layer);
     this._paymentCommon.getListData($layer);
 
+    $layer.on('click', '.fe-popup-close', $.proxy(this._checkClose, this));
     $layer.on('click', '.fe-pay', $.proxy(this._pay, this));
   },
   _setData: function ($layer) {
@@ -169,23 +198,55 @@ Tw.MyTFareBillPoint.prototype = {
       this._historyService.replaceURL('/myt-fare/bill/pay-complete');
     }
   },
-  _isValid: function () {
+  _checkValidation: function () {
     var $isSelectedPoint = this.$pointSelector.attr('id');
     var className = '.fe-cashbag-point';
     if ( $isSelectedPoint === Tw.PAYMENT_POINT_VALUE.T_POINT ) {
       className = '.fe-t-point';
     }
-    return (this._validation.checkIsAvailablePoint(this.$point.val(),
-        parseInt(this.$pointBox.find(className).attr('id'), 10),
-        Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27) &&
-      this._validation.checkIsMore(this.$point.val(), 1000, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V8) &&
-      this._validation.checkIsTenUnit(this.$point.val(), Tw.ALERT_MSG_MYT_FARE.TEN_POINT));
+
+    var isValid = false;
+    var $message = this.$point.siblings('.fe-error-msg');
+    $message.empty();
+
+    if (!this._validation.checkIsAvailablePoint(this.$point.val(),
+        parseInt(this.$pointBox.find(className).attr('id'), 10))) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27);
+    } else if (!this._validation.checkIsMore(this.$point.val(), 1000)) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V8);
+    } else if (!this._validation.checkIsTenUnit(this.$point.val())) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.TEN_POINT);
+    } else {
+      isValid = true;
+    }
+
+    this.$isValid = this._validation.showAndHideErrorMsg(this.$point, isValid);
+  },
+  _checkPassword: function (event) {
+    var $target = $(event.currentTarget);
+    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 6));
+  },
+  _checkClose: function () {
+    this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.TITLE,
+      $.proxy(this._closePop, this), $.proxy(this._afterClose, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.BUTTON);
+  },
+  _closePop: function () {
+    this._isClose = true;
+    this._popupService.closeAll();
+  },
+  _afterClose: function () {
+    if (this._isClose) {
+      this._popupService.close();
+    }
   },
   _pay: function () {
-    var reqData = this._makeRequestData();
-    this._apiService.request(Tw.API_CMD.BFF_07_0087, reqData)
-      .done($.proxy(this._paySuccess, this))
-      .fail($.proxy(this._payFail, this));
+    if (this.$isValid) {
+      var reqData = this._makeRequestData();
+
+      this._apiService.request(Tw.API_CMD.BFF_07_0087, reqData)
+        .done($.proxy(this._paySuccess, this))
+        .fail($.proxy(this._payFail, this));
+    }
   },
   _makeRequestData: function () {
     var reqData = {

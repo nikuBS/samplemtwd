@@ -18,7 +18,7 @@ Tw.PopupService.prototype = {
   },
   _onHashChange: function (hash) {
     var lastHash = this._prevHashList[this._prevHashList.length - 1];
-    // Tw.Logger.log('[Popup] Hash Change', '#' + hash.base, lastHash);
+    Tw.Logger.log('[Popup] Hash Change', '#' + hash.base, lastHash);
     if ( !Tw.FormatHelper.isEmpty(lastHash) && ('#' + hash.base) === lastHash.curHash ) {
       var closeCallback = lastHash.closeCallback;
       this._prevHashList.pop();
@@ -34,6 +34,15 @@ Tw.PopupService.prototype = {
     if ( !Tw.FormatHelper.isEmpty(this._openCallback) ) {
       this._sendOpenCallback($currentPopup);
     }
+    Tw.Tooltip.popInit($popups.last().attr('data-menuId'));
+  },
+  _onFailPopup: function(option) {
+    if (Tw.BrowserHelper.isApp()) {
+      Tw.Native.send(Tw.NTV_CMD.OPEN_NETWORK_ERROR_POP, {}, $.proxy(this._onRetry, this, option));
+    }
+  },
+  _onRetry: function(option) {
+    this._open(option);
   },
   _popupClose: function (closeCallback) {
     this._confirmCallback = null;
@@ -57,11 +66,12 @@ Tw.PopupService.prototype = {
         hashName = '#' + hashName + '_P';
       }
 
-      // location.hash = 'popup' + this._prevHashList.length;
-      history.pushState(this._popupObj, 'popup', hashName);
+      location.hash = hashName;
+      // history.pushState(this._popupObj, 'popup', hashName);
     }, this), 0);
   },
   _bindEvent: function ($container) {
+    $('.popup-blind').on('click', $.proxy(this.close, this));
     $container.on('click', '.popup-closeBtn', $.proxy(this.close, this));
     $container.on('click', '.tw-popup-closeBtn', $.proxy(this.close, this));
     $container.on('click', '.tw-popup-confirm', $.proxy(this._confirm, this));
@@ -95,7 +105,7 @@ Tw.PopupService.prototype = {
       url: Tw.Environment.cdn + '/hbs/',
       cdn: Tw.Environment.cdn
     });
-    skt_landing.action.popup.open(option, $.proxy(this._onOpenPopup, this));
+    skt_landing.action.popup.open(option, $.proxy(this._onOpenPopup, this), $.proxy(this._onFailPopup, this, option));
   },
   open: function (option, openCallback, closeCallback, hashName) {
     this._setOpenCallback(openCallback);
@@ -105,10 +115,11 @@ Tw.PopupService.prototype = {
   openAlert: function (contents, title, btName, closeCallback) {
     var option = {
       title: title || Tw.POPUP_TITLE.NOTIFY,
-      title_type: 'sub-c',
+      title_type: 'sub',
+      cont_align: 'tl',
       contents: contents,
-      bt: [{
-        style_class: 'bt-blue1 tw-popup-closeBtn',
+      bt_b: [{
+        style_class: 'bt-red1 pos-right tw-popup-closeBtn',
         txt: btName || Tw.BUTTON_LABEL.CONFIRM
       }]
     };

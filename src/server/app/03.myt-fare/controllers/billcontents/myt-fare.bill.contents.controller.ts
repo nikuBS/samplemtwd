@@ -39,19 +39,29 @@ class MyTFareBillContents extends TwViewController {
     return this.getRemainLimit('Request', '0')
       .switchMap((resp) => {
         if (resp.code === API_CODE.CODE_00) {
-          return this.getRemainLimit('Done', '1')
-            .switchMap((next) => {
-              if (next.code === API_CODE.CODE_00) {
-                return Observable.of(next);
-              } else {
-                return Observable.timer(3000)
-                  .switchMap(() => {
-                    return this.getRemainLimit('Retry', '2');
-                  });
-              }
-            });
+          return this.getRemainLimit('Done', '1');
         } else {
           throw resp;
+        }
+      })
+      .switchMap((next) => {
+        if (next.code === API_CODE.CODE_00) {
+          return Observable.of(next);
+        } else {
+          return Observable.timer(3000)
+            .switchMap(() => {
+              return this.getRemainLimit('Done', '2');
+            });
+        }
+      })
+      .switchMap((next) => {
+        if (next.code === API_CODE.CODE_00) {
+          return Observable.of(next);
+        } else {
+          return Observable.timer(3000)
+            .switchMap(() => {
+              return this.getRemainLimit('Done', '3');
+            });
         }
       });
   }

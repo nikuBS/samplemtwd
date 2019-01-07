@@ -4,72 +4,69 @@
  * Date: 2018.12.11
  */
 
-Tw.CommonSearch = function (rootEl,searchInfo) {
-
+Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn) {
+    this._cdn = cdn;
     this.$container = rootEl;
     this._historyService = new Tw.HistoryService();
-    this._searchInfo = JSON.parse(this._decodeEscapeChar(searchInfo));
+    this._svcInfo = svcInfo;
+    this._searchInfo = searchInfo;
+    this._accessKeyword = this._searchInfo.query;
     this._init(this._searchInfo);
-    this.$container.on('keyup','#keyword',$.proxy(this._inputChangeEvent,this));
 };
 
 Tw.CommonSearch.prototype = {
     _init : function (searchInfo) {
-       this._immediateData =this._arrangeData(searchInfo.search[0].immediate.data);
-       this._smartData = this._arrangeData(searchInfo.search[1].smart.data);
-       this._shortcutData = this._arrangeData(searchInfo.search[2].shortcut.data);
-       this._rateData = this._arrangeData(searchInfo.search[3].rate.data);
-       this._serviceData = this._arrangeData(searchInfo.search[4].service.data);
-       this._tvData = this._arrangeData(searchInfo.search[5].tv.data);
-       this._roamingData = this._arrangeData(searchInfo.search[6].roaming.data);
-       this._appData = this._arrangeData(searchInfo.search[7].app.data);
-       this._directData = this._arrangeData(searchInfo.search[8].direct.data);
-       this._membershipData = this._arrangeData(searchInfo.search[9].membership.data);
-       this._eventData = this._arrangeData(searchInfo.search[10].event.data);
-       this._saleData = this._arrangeData(searchInfo.search[11].sale.data);
-       this._asData  = this._arrangeData(searchInfo.search[12].as.data);
-       this._noticeData = this._arrangeData(searchInfo.search[13].notice.data);
-       this._preventData = this._arrangeData(searchInfo.search[14].prevent.data);
-       this._questionData = this._arrangeData(searchInfo.search[15].question.data);
-       this._mannerData = this._arrangeData(searchInfo.search[16].manner.data);
-       this._serviceInfoData = this._arrangeData(searchInfo.search[17].serviceInfo.data);
-       this._siteInfoData = this._arrangeData(searchInfo.search[18].siteInfo.data);
-       this._bannerData = this._arrangeData(searchInfo.search[19].banner.data);
-
-        this._showShortcutList(this._shortcutData,this.$container.find('#shortcut_template'),this.$container.find('#shortcut_list'));
-        this._showShortcutList(this._rateData,this.$container.find('#rate_template'),this.$container.find('#rate_list'));
-        this._showShortcutList(this._serviceData,this.$container.find('#service_template'),this.$container.find('#service_list'));
-        this._showShortcutList(this._tvData,this.$container.find('#tv_template'),this.$container.find('#tv_list'));
-        this._showShortcutList(this._roamingData,this.$container.find('#roaming_template'),this.$container.find('#roaming_list'));
-        this._showShortcutList(this._appData,this.$container.find('#app_template'),this.$container.find('#app_list'));
-        this._showShortcutList(this._directData,this.$container.find('#direct_template'),this.$container.find('#direct_list'));
-        this._showShortcutList(this._saleData,this.$container.find('#sale_template'),this.$container.find('#sale_list'));
-        this._showShortcutList(this._asData,this.$container.find('#as_template'),this.$container.find('#as_list'));
-        this._showShortcutList(this._preventData,this.$container.find('#prevent_template'),this.$container.find('#prevent_list'));
-        this._showShortcutList(this._questionData,this.$container.find('#question_template'),this.$container.find('#question_list'));
-        this._showShortcutList(this._mannerData,this.$container.find('#manner_template'),this.$container.find('#manner_list'));
-        this._showShortcutList(this._serviceInfoData,this.$container.find('#serviceInfo_template'),this.$container.find('#serviceInfo_list'));
-        this._showShortcutList(this._siteInfoData,this.$container.find('#siteInfo_template'),this.$container.find('#siteInfo_list'));
-        this._showShortcutList(this._membershipData,this.$container.find('#membership_template'),this.$container.find('#membership_list'));
-        this._showShortcutList(this._eventData,this.$container.find('#event_template'),this.$container.find('#event_list'));
-        this._showShortcutList(this._noticeData,this.$container.find('#notice_template'),this.$container.find('#notice_list'));
-
+        if(searchInfo.totalcount===0){
+            return;
+        }
+        var keyName,contentsCnt;
+        for(var i=0;i<searchInfo.search.length;i++){
+          keyName =  Object.keys(searchInfo.search[i])[0];
+          contentsCnt = Number(searchInfo.search[i][keyName].count);
+          if(keyName==='smart'||keyName==='immediate'||keyName==='banner'||contentsCnt<=0){
+              if(contentsCnt<=0){
+                  this.$container.find('.'+keyName).hide();
+              }
+              if(keyName==='banner'){
+                  this._showBanner(this._arrangeData(searchInfo.search[i][keyName].data,keyName));
+              }
+              continue;
+          }
+          if(keyName==='direct'){
+              this.$container.find('.direct-element.home').data('link',Tw.OUTLINK.DIRECT_HOME);
+          }
+          this._showShortcutList(this._arrangeData(searchInfo.search[i][keyName].data,keyName),keyName,this._cdn);
+        }
+        this.$container.on('keyup','#keyword',$.proxy(this._inputChangeEvent,this));
+        this.$container.on('click','.icon-historyback-40',$.proxy(this._historyService.goBack,this));
+        this.$container.on('click','.close-area',$.proxy(this._historyService.goBack,this));
+        this.$container.on('click','.search-element',$.proxy(this._searchRelatedKeyword,this));
+        this.$container.on('click','.list-data',$.proxy(this._goLink,this));
     },
-    _arrangeData : function (data) {
-        if(!data){
 
+    _arrangeData : function (data,category) {
+        if(!data){
             return [];
         }
         for(var i=0;i<data.length;i++){
             for (var key in data[i]) {
                 if(typeof (data[i][key])==='string'){
-                    data[i][key] = data[i][key].replace('<!HE>', '</span>');
-                    data[i][key] = data[i][key].replace('<!HS>', '<span class="highlight-text">');
+                    data[i][key] = data[i][key].replace(/<!HE>/g, '</span>');
+                    data[i][key] = data[i][key].replace(/<!HS>/g, '<span class="highlight-text">');
                 }
                 if(key==='DEPTH_PATH'){
                     data[i][key] = data[i][key].replace(/\|/g,'/');
                     data[i][key] = data[i][key].replace(/\ /g,' > ');
-
+                }
+                if(key==='MENU_URL'){
+                    data[i][key] = data[i][key].replace('https://app.tworld.co.kr','');
+                }
+                if(category==='prevent'&&key==='DOCID'){
+                    data[i][key] = Number(data[i][key].replace(/[A-Za-z]/g,''));
+                }
+                if(category==='direct'&&key==='ALIAS'){
+                    data[i][key] = data[i][key].replace('shopacc',Tw.OUTLINK.DIRECT_ACCESSORY);
+                    data[i][key] = data[i][key].replace('shopmobile',Tw.OUTLINK.DIRECT_PHONE);
                 }
                 if(key==='METATAG'){
                     data[i][key] = data[i][key].split('#');
@@ -85,26 +82,94 @@ Tw.CommonSearch.prototype = {
         }
         return data;
     },
-    _showShortcutList : function (data,template,parent) {
-        var shortcutTemplate = template.html();
+    _showShortcutList : function (data,dataKey,cdn) {
+        var $template = $('#'+dataKey+'_template');
+        var $list = this.$container.find('#'+dataKey+'_list');
+        var shortcutTemplate = $template.html();
         var templateData = Handlebars.compile(shortcutTemplate);
         if(data.length<=0){
-            parent.hide();
+            $list.hide();
         }
-         _.each(data,function (listData) {
-             parent.append(templateData({listData : listData}));
+         _.each(data,function (listData,index) {
+             if(index>=3){
+                 return;
+             }
+             $list.append(templateData({listData : listData , CDN : cdn}));
          });
     },
     _decodeEscapeChar : function (targetString) {
-        var returnStr = targetString.replace(/\\/gi,'/');
-        returnStr = returnStr.replace(/\n/g,'');
+        var returnStr = targetString.replace(/\\/gi,'/').replace(/\n/g,'');
         return returnStr;
     },
     _inputChangeEvent : function (args) {
-
+        var inResult = this.$container.find('#resultsearch').is(':checked');
         if(args.keyCode===13){
-            var requestUrl = '/common/search?keyword='+args.currentTarget.value;
-            this._historyService.goLoad(requestUrl);
+            var requestUrl = inResult?'/common/search?keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
+            this._addRecentlyKeyword(args.currentTarget.value);
+            this._historyService.goLoad(requestUrl+args.currentTarget.value);
+        }
+    },
+    _showBanner : function (data) {
+        var bannerPositionObj = {
+            AGN	 : 'as',
+            APP	: 'app',
+            BENF : 'sale',
+            CUG	 : 'manner',
+            EVT	 : 'event',
+            FAQ	: 'question',
+            FEE	: 'rate',
+            IUG	: 'siteInfo',
+            MBR	: 'membership',
+            NOTI : 'notice',
+            ROM	: 'raoming',
+            SVC	: 'service',
+            TWD	: 'direct',
+            VUG	: 'serviceInfo',
+            WIRE : 'tv'
+        };
+        var bannerTemplate = Handlebars.compile($('#banner_template').html());
+        _.each(data,$.proxy(function (bannerData) {
+            this.$container.find('.cont-box.list.'+bannerPositionObj[bannerData.SUBM_MENU_ID1])
+                .after(bannerTemplate({listData : bannerData, CDN : this._cdn}));
+        },this));
+
+    },
+    _addRecentlyKeyword : function (keyword) {
+        var recentlyKeywordData = JSON.parse(Tw.CommonHelper.getLocalStorage('recentlySearchKeyword'));
+        var userId = Tw.FormatHelper.isEmpty(this._svcInfo)?'logOutUser':this._svcInfo.svcMgmtNum;
+        if(Tw.FormatHelper.isEmpty(recentlyKeywordData)){
+            //making recentlySearchKeyword
+            recentlyKeywordData = {};
+        }
+        if(Tw.FormatHelper.isEmpty(recentlyKeywordData[userId])){
+            //makin nowUser's recentlySearchKeyword based on svcMgmtNum
+            recentlyKeywordData[userId] = [];
+        }
+        recentlyKeywordData[userId].push({ keyword : keyword, searchTime : moment().format('YY.M.D.')});
+        while (recentlyKeywordData[userId].length>10){
+            recentlyKeywordData[userId].shift();
+        }
+        Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(recentlyKeywordData));
+    },
+    _searchRelatedKeyword : function (targetEvt) {
+        var keyword = $(targetEvt.currentTarget).data('param');
+        var goUrl = '/common/search?keyword='+keyword;
+        this._addRecentlyKeyword(keyword);
+        this._historyService.goLoad(goUrl);
+    },
+    _goLink : function (linkEvt) {
+        var $linkData = $(linkEvt.currentTarget);
+        var linkUrl = $linkData.data('link');
+        if(Tw.FormatHelper.isEmpty(linkUrl)){
+            return;
+        }
+        //TODO User Click Ajax event call
+        if($linkData.hasClass('direct-element')){
+            Tw.CommonHelper.openUrlExternal(linkUrl);
+        }else{
+            this._historyService.goLoad(linkUrl);
         }
     }
+
+
 };

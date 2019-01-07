@@ -54,7 +54,7 @@
                                     <% }
                                     if (filters.length > 2) { %>
                                         <span class="text">외</span> 
-                                        <span class="number">외 <%= filters.length - 2 %></span>
+                                        <span class="number"><%= filters.length - 2 %></span>
                                         <span class="text">건</span>
                                     <% }
                                 } else if (plans.searchOption && plans.searchOption.searchProdTagNm) { %>
@@ -78,7 +78,7 @@
                     <ul class="extraservice-list">
                         <% products.map(plan => { %>
                             <li class="category-type">
-                                <a href="/product/callplan/<%= plan.prodId %>">
+                                <a href="/product/callplan/<%= plan.prodId %>" class="link">
                                     <div class="products-titleinfo">
                                         <p class="title"><%= plan.prodNm %></p>
                                         <% if (plan.basFeeAmt.isNaN) { %>
@@ -120,9 +120,9 @@
                         <% }); %>
                     </ul>
 
-                    <% const leftCount = plans.productCount - products.length; %>
+                    <% const leftCount = plans.productCount - products.length, last = products[products.length - 1]; %>
                     <div class="extraservice-more">
-                        <button class="<%= leftCount ? '' : 'none' %> btn" data-last-product="<%= products[products.length - 1].prodId %>" data-left-count="<%= leftCount %>">
+                        <button class="<%= leftCount ? '' : 'none' %> btn" data-last-product="<%= last && last.prodId %>" data-left-count="<%= leftCount %>">
                             더 보기
                         </button>
                     </div>
@@ -166,13 +166,13 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/benefit/submain">
+                            <a href="/benefit/submain/discount">
                                 <i class="icon-discount-40"><span class="blind">discount</span></i>
                                 혜택 &middot; 할인 &gt; 요금 할인
                             </a>
                         </li>
                         <li>
-                            <a href="/benefit/submain">
+                            <a href="/benefit/submain/combinations">
                                 <i class="icon-discount-40"><span class="blind">discount</span></i>
                                 혜택 &middot; 할인 &gt; 결합 할인  
                             </a>

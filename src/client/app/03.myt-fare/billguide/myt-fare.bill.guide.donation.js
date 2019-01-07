@@ -5,7 +5,7 @@
  */
 Tw.MyTFareBillGuideDonation = function (rootEl, resData) {
   this.resData = resData;
-  Tw.Logger.info('[Server Res Data]', resData);
+  // Tw.Logger.info('[Server Res Data]', resData);
 
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -73,7 +73,7 @@ Tw.MyTFareBillGuideDonation.prototype = {
 
   _proData: function () { //데이터 가공
     var thisMain = this;
-    Tw.Logger.info('[ _proData ]');
+    // Tw.Logger.info('[ _proData ]');
     this.detailListObj.listData = $.extend(true, [], this.bffListData); // deep copy array
     this.detailListObj.curLen = this.detailListObj.listData.length;
 
@@ -82,7 +82,7 @@ Tw.MyTFareBillGuideDonation.prototype = {
       item.sponAmt = thisMain._comComma(item.sponAmt);
       return item;
     });
-    Tw.Logger.info('[ _proData end ]', this.detailListObj);
+    // Tw.Logger.info('[ _proData end ]', this.detailListObj);
   },
   _ctrlInit: function () {
     this._cachedElement();
@@ -107,7 +107,7 @@ Tw.MyTFareBillGuideDonation.prototype = {
 
     this.$curNum.html('( ' + this.detailListObj.curLen + ' )');
 
-    Tw.Logger.info('[ detailListObj.curLen 2 ]', this.detailListObj.curLen);
+    // Tw.Logger.info('[ detailListObj.curLen 2 ]', this.detailListObj.curLen);
     if ( this.detailListObj.curLen <= 0 ) {
       this.$addBtnArea.hide();
     }
@@ -122,7 +122,7 @@ Tw.MyTFareBillGuideDonation.prototype = {
       });
   },
   _getDonationInfoInit: function ( param, res ) {
-    // Tw.Logger.info('[결과] _getRoamingInfoInit', param, res );
+    // // Tw.Logger.info('[결과] _getRoamingInfoInit', param, res );
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var dataArr = res.result.donationList;
@@ -179,7 +179,7 @@ Tw.MyTFareBillGuideDonation.prototype = {
     var spliceData = tempListData.splice(0, tempCount);
     this.detailListObj.viewData = spliceData;
     this.detailListObj.curLen = this.detailListObj.listData.length;
-    Tw.Logger.info('[ _dataSplice end ]', this.detailListObj);
+    // Tw.Logger.info('[ _dataSplice end ]', this.detailListObj);
   },
   _getPeriod: function ($selectVal, formatStr) {
 
@@ -214,22 +214,22 @@ Tw.MyTFareBillGuideDonation.prototype = {
 
     // switch( selectVal ) {
     //   case 0:
-    //     Tw.Logger.info('[전일]', 0);
+    //     // Tw.Logger.info('[전일]', 0);
     //     break;
     //   case 1:
-    //     Tw.Logger.info('[1주일]', 1);
+    //     // Tw.Logger.info('[1주일]', 1);
     //     break;
     //   case 2:
-    //     Tw.Logger.info('[3주일]', 2);
+    //     // Tw.Logger.info('[3주일]', 2);
     //     break;
     //   case 3:
-    //     Tw.Logger.info('[1개월]', 3);
+    //     // Tw.Logger.info('[1개월]', 3);
     //     break;
     //   case 4:
-    //     Tw.Logger.info('[3개월]', 4);
+    //     // Tw.Logger.info('[3개월]', 4);
     //     break;
     //   case 5:
-    //     Tw.Logger.info('[6개월]', 5);
+    //     // Tw.Logger.info('[6개월]', 5);
     //     break;
     //
     // }

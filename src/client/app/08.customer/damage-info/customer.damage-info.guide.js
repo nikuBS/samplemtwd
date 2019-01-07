@@ -30,16 +30,21 @@ Tw.CustomerDamageInfoGuide.prototype = {
 
   _openCategorySelectPopup: function() {
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
-      layer: true,
-      title: Tw.PROTECT_GUIDE.TITLE,
-      data: [{
-        'list': [
-          { value: Tw.PROTECT_GUIDE.VIDEO, option: (this._category === 'video') ? 'checked' : '', attr: 'data-category="video"' },
-          { value: Tw.PROTECT_GUIDE.WEBTOON, option: (this._category === 'webtoon') ? 'checked' : '', attr: 'data-category="webtoon"' },
-          { value: Tw.PROTECT_GUIDE.LATEST, option: (this._category === 'latest') ? 'checked' : '', attr: 'data-category="latest"' }
-        ]
-      }]
+      hbs:'actionsheet01',
+      layer:true,
+      data:[
+        {
+          'list':[
+            { 'label-attr': 'id="ra1"', 'txt': Tw.PROTECT_GUIDE.VIDEO,
+              'radio-attr':'id="ra1" data-category="video" ' + (this._category === 'video' ? 'checked' : '') },
+            { 'label-attr': 'id="ra2"', 'txt': Tw.PROTECT_GUIDE.WEBTOON,
+              'radio-attr':'id="ra2" data-category="webtoon" ' + (this._category === 'webtoon' ? 'checked' : '') },
+            { 'label-attr': 'id="ra3"', 'txt': Tw.PROTECT_GUIDE.LATEST,
+              'radio-attr':'id="ra3" data-category="latest" ' + (this._category === 'latest' ? 'checked' : '') }
+          ]
+        }
+      ],
+      btnfloating : {'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE}
     }, $.proxy(this._categoryPopupBindEvent, this), $.proxy(this._goCategory, this), 'guide_category');
   },
 
@@ -83,7 +88,7 @@ Tw.CustomerDamageInfoGuide.prototype = {
       return this._openExternalUrl($(e.currentTarget).attr('href'));
     }
 
-    this._popupService.openAlert(Tw.MSG_COMMON.DATA_CONFIRM, null, $.proxy(this._openExternalUrl, this, $(e.currentTarget).attr('href')));
+    Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, $(e.currentTarget).attr('href')));
   },
 
   _openExternalUrl: function(href) {

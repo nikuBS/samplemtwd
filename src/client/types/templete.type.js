@@ -143,103 +143,103 @@ Tw.POPUP_TPL = {
   FARE_PAYMENT_CARD_TYPE_LIST: [
     {
       'list': [
-        { 'option': 'hbs-card-type', 'attr': 'id="00"', value: '일시불' },
-        { 'option': 'hbs-card-type', 'attr': 'id="01"', value: '1개월 할부' },
-        { 'option': 'hbs-card-type', 'attr': 'id="02"', value: '2개월 할부' },
-        { 'option': 'hbs-card-type', 'attr': 'id="03"', value: '3개월 할부' },
-        { 'option': 'hbs-card-type', 'attr': 'id="04"', value: '4개월 할부' },
-        { 'option': 'hbs-card-type', 'attr': 'id="05"', value: '5개월 할부' },
-        { 'option': 'hbs-card-type', 'attr': 'id="06"', value: '6개월 할부' },
-        { 'option': 'hbs-card-type', 'attr': 'id="07"', value: '7개월 할부' },
-        { 'option': 'hbs-card-type', 'attr': 'id="08"', value: '8개월 할부' },
-        { 'option': 'hbs-card-type', 'attr': 'id="09"', value: '9개월 할부' },
-        { 'option': 'hbs-card-type', 'attr': 'id="10"', value: '10개월 할부' },
-        { 'option': 'hbs-card-type', 'attr': 'id="11"', value: '11개월 할부' },
-        { 'option': 'hbs-card-type', 'attr': 'id="12"', value: '12개월 할부' },
-        { 'option': 'hbs-card-type', 'attr': 'id="24"', value: '24개월 할부' }
+        { 'label-attr': 'id="00"', 'radio-attr': 'id="00" name="r2"', txt: '일시불' },
+        { 'label-attr': 'id="01"', 'radio-attr': 'id="01" name="r2"', txt: '1개월 할부' },
+        { 'label-attr': 'id="02"', 'radio-attr': 'id="02" name="r2"', txt: '2개월 할부' },
+        { 'label-attr': 'id="03"', 'radio-attr': 'id="03" name="r2"', txt: '3개월 할부' },
+        { 'label-attr': 'id="04"', 'radio-attr': 'id="04" name="r2"', txt: '4개월 할부' },
+        { 'label-attr': 'id="05"', 'radio-attr': 'id="05" name="r2"', txt: '5개월 할부' },
+        { 'label-attr': 'id="06"', 'radio-attr': 'id="06" name="r2"', txt: '6개월 할부' },
+        { 'label-attr': 'id="07"', 'radio-attr': 'id="07" name="r2"', txt: '7개월 할부' },
+        { 'label-attr': 'id="08"', 'radio-attr': 'id="08" name="r2"', txt: '8개월 할부' },
+        { 'label-attr': 'id="09"', 'radio-attr': 'id="09" name="r2"', txt: '9개월 할부' },
+        { 'label-attr': 'id="10"', 'radio-attr': 'id="10" name="r2"', txt: '10개월 할부' },
+        { 'label-attr': 'id="11"', 'radio-attr': 'id="11" name="r2"', txt: '11개월 할부' },
+        { 'label-attr': 'id="12"', 'radio-attr': 'id="12" name="r2"', txt: '12개월 할부' },
+        { 'label-attr': 'id="24"', 'radio-attr': 'id="24" name="r2"', txt: '24개월 할부' }
       ]
     }
   ],
   FARE_PAYMENT_POINT_LIST: [
     {
       'list': [
-        { 'option': 'point-type', 'attr': 'id="10" data-code="CPT"', value: 'OK캐쉬백' },
-        { 'option': 'point-type', 'attr': 'id="11" data-code="TPT"', value: 'T포인트' }
+        { 'label-attr': 'id="10"', 'radio-attr': 'id="10" name="r2" data-code="CPT"', txt: 'OK캐쉬백' },
+        { 'label-attr': 'id="11"', 'radio-attr': 'id="11" name="r2" data-code="TPT"', txt: 'T포인트' }
       ]
     }
   ],
   FARE_PAYMENT_POINT: [
     {
       'list': [
-        { 'option': 'point-type', 'attr': 'id="500"', value: '500P' },
-        { 'option': 'point-type', 'attr': 'id="1000"', value: '1,000P' },
-        { 'option': 'point-type', 'attr': 'id="1500"', value: '1,500P' },
-        { 'option': 'point-type', 'attr': 'id="2000"', value: '2,000P' },
-        { 'option': 'point-type', 'attr': 'id="2500"', value: '2,500P' },
-        { 'option': 'point-type', 'attr': 'id="3000"', value: '3,000P' },
-        { 'option': 'point-type', 'attr': 'id="3500"', value: '3,500P' },
-        { 'option': 'point-type', 'attr': 'id="4000"', value: '4,000P' },
-        { 'option': 'point-type', 'attr': 'id="4500"', value: '4,500P' },
-        { 'option': 'point-type', 'attr': 'id="5000"', value: '5,000P' },
-        { 'option': 'point-type', 'attr': 'id="5500"', value: '5,500P' },
-        { 'option': 'point-type', 'attr': 'id="6000"', value: '6,000P' },
-        { 'option': 'point-type', 'attr': 'id="6500"', value: '6,500P' },
-        { 'option': 'point-type', 'attr': 'id="7000"', value: '7,000P' },
-        { 'option': 'point-type', 'attr': 'id="7500"', value: '7,500P' },
-        { 'option': 'point-type', 'attr': 'id="8000"', value: '8,000P' },
-        { 'option': 'point-type', 'attr': 'id="8500"', value: '8,500P' },
-        { 'option': 'point-type', 'attr': 'id="9000"', value: '9,000P' },
-        { 'option': 'point-type', 'attr': 'id="9500"', value: '9,500P' },
-        { 'option': 'point-type', 'attr': 'id="10000"', value: '10,000P' }
+        { 'label-attr': 'id="500"', 'radio-attr': 'name="r2" id="500"', txt: '500P' },
+        { 'label-attr': 'id="1000"', 'radio-attr': 'name="r2" id="1000"', txt: '1,000P' },
+        { 'label-attr': 'id="1500"', 'radio-attr': 'name="r2" id="1500"', txt: '1,500P' },
+        { 'label-attr': 'id="2000"', 'radio-attr': 'name="r2" id="2000"', txt: '2,000P' },
+        { 'label-attr': 'id="2500"', 'radio-attr': 'name="r2" id="2500"', txt: '2,500P' },
+        { 'label-attr': 'id="3000"', 'radio-attr': 'name="r2" id="3000"', txt: '3,000P' },
+        { 'label-attr': 'id="3500"', 'radio-attr': 'name="r2" id="3500"', txt: '3,500P' },
+        { 'label-attr': 'id="4000"', 'radio-attr': 'name="r2" id="4000"', txt: '4,000P' },
+        { 'label-attr': 'id="4500"', 'radio-attr': 'name="r2" id="4500"', txt: '4,500P' },
+        { 'label-attr': 'id="5000"', 'radio-attr': 'name="r2" id="5000"', txt: '5,000P' },
+        { 'label-attr': 'id="5500"', 'radio-attr': 'name="r2" id="5500"', txt: '5,500P' },
+        { 'label-attr': 'id="6000"', 'radio-attr': 'name="r2" id="6000"', txt: '6,000P' },
+        { 'label-attr': 'id="6500"', 'radio-attr': 'name="r2" id="6500"', txt: '6,500P' },
+        { 'label-attr': 'id="7000"', 'radio-attr': 'name="r2" id="7000"', txt: '7,000P' },
+        { 'label-attr': 'id="7500"', 'radio-attr': 'name="r2" id="7500"', txt: '7,500P' },
+        { 'label-attr': 'id="8000"', 'radio-attr': 'name="r2" id="8000"', txt: '8,000P' },
+        { 'label-attr': 'id="8500"', 'radio-attr': 'name="r2" id="8500"', txt: '8,500P' },
+        { 'label-attr': 'id="9000"', 'radio-attr': 'name="r2" id="9000"', txt: '9,000P' },
+        { 'label-attr': 'id="9500"', 'radio-attr': 'name="r2" id="9500"', txt: '9,500P' },
+        { 'label-attr': 'id="10000"', 'radio-attr': 'name="r2" id="10000"', txt: '10,000P' }
       ]
     }
   ],
   FARE_PAYMENT_TPOINT: [
     {
       'list': [
-        { 'option': 'point-type', 'attr': 'id="10000"', value: '10,000P' },
-        { 'option': 'point-type', 'attr': 'id="20000"', value: '20,000P' },
-        { 'option': 'point-type', 'attr': 'id="50000"', value: '50,000P' },
-        { 'option': 'point-type', 'attr': 'id="100000"', value: '100,000P' }
+        { 'label-attr': 'id="10000"', 'radio-attr': 'id="10000" name="r2"', txt: '10,000P' },
+        { 'label-attr': 'id="20000"', 'radio-attr': 'id="20000" name="r2"', txt: '20,000P' },
+        { 'label-attr': 'id="50000"', 'radio-attr': 'id="50000" name="r2"', txt: '50,000P' },
+        { 'label-attr': 'id="100000"', 'radio-attr': 'id="100000" name="r2"', txt: '100,000P' }
       ]
     }
   ],
   FARE_PAYMENT_RAINBOW: [
     {
       'list': [
-        { 'option': 'point-type', 'attr': 'id="CCBBAE0"', value: '국내 음성 통화료' },
-        { 'option': 'point-type', 'attr': 'id="CCRPDDC"', value: '국내 데이터 통화료' },
-        { 'option': 'point-type', 'attr': 'id="CCBCOE0"', value: '부가서비스(컬러링)' },
-        { 'option': 'point-type', 'attr': 'id="CCPCRBE"', value: '부가서비스(퍼펙트콜)' },
-        { 'option': 'point-type', 'attr': 'id="CCPLRBE"', value: '부가서비스(퍼펙트콜 라이트)' },
-        { 'option': 'point-type', 'attr': 'id="CCRPGDC"', value: '기본료 및 월정액' },
-        { 'option': 'point-type', 'attr': 'id="CCRMRBE"', value: '로밍사용요금' }
+        { 'label-attr': 'id="CCBBAE0"', 'radio-attr': 'id="CCBBAE0" name="r2"', txt: '국내 음성통화료' },
+        { 'label-attr': 'id="CCRPDDC"', 'radio-attr': 'id="CCRPDDC" name="r2"', txt: '국내 데이터 사용요금' },
+        { 'label-attr': 'id="CCBCOE0"', 'radio-attr': 'id="CCBCOE0" name="r2"', txt: '부가서비스(컬러링)' },
+        { 'label-attr': 'id="CCPCRBE"', 'radio-attr': 'id="CCPCRBE" name="r2"', txt: '부가서비스(퍼팩트콜)' },
+        { 'label-attr': 'id="CCPLRBE"', 'radio-attr': 'id="CCPLRBE" name="r2"', txt: '부가서비스(퍼팩트콜라이트)' },
+        { 'label-attr': 'id="CCRPGDC"', 'radio-attr': 'id="CCRPGDC" name="r2"', txt: '기본료∙월정액' },
+        { 'label-attr': 'id="CCRMRBE"', 'radio-attr': 'id="CCRMRBE" name="r2"', txt: '로밍 이용요금' }
       ]
     }
   ],
   FARE_PAYMENT_MICRO_HISTORY_LIST: [
     {
       'list': [
-        { 'option': 'go-history', 'attr': 'data-link="/myt-fare/bill/small/history"', value: '소액결제 이용내역' },
-        { 'option': 'go-history', 'attr': 'data-link="/myt-fare/bill/small/block"', value: '자동결제 차단내역' }
+        { 'label-attr': 'data-link="/myt-fare/bill/small/history"', 'radio-attr': 'data-link="/myt-fare/bill/small/history"', txt: '소액결제 이용내역' },
+        { 'label-attr': 'data-link="/myt-fare/bill/small/block"', 'radio-attr': 'data-link="/myt-fare/bill/small/block"', txt: '자동결제 차단내역' }
       ]
     }
   ],
   FARE_PAYMENT_BANK_DATE: [
     {
       'list': [
-        { 'option': 'date', 'attr': 'id="0"', value: '15일' },
-        { 'option': 'date', 'attr': 'id="3"', value: '21일' },
-        { 'option': 'date', 'attr': 'id="1"', value: '23일' }
+        { 'label-attr': 'id="0"', 'radio-attr': 'id="0" data-value="15" name="r2"', txt: '15일' },
+        { 'label-attr': 'id="3"', 'radio-attr': 'id="3" data-value="21" name="r2"', txt: '21일' },
+        { 'label-attr': 'id="1"', 'radio-attr': 'id="1" data-value="23" name="r2"', txt: '23일' }
       ]
     }
   ],
   FARE_PAYMENT_CARD_DATE: [
     {
       'list': [
-        { 'option': 'date', 'attr': 'id="1"', value: '11일' },
-        { 'option': 'date', 'attr': 'id="2"', value: '18일' },
-        { 'option': 'date', 'attr': 'id="3"', value: '26일' }
+        { 'label-attr': 'id="1"', 'radio-attr': 'id="1" name="r2"', txt: '11일' },
+        { 'label-attr': 'id="2"', 'radio-attr': 'id="2" name="r2"', txt: '18일' },
+        { 'label-attr': 'id="3"', 'radio-attr': 'id="3" name="r2"', txt: '26일' }
       ]
     }
   ],
@@ -277,29 +277,29 @@ Tw.POPUP_TPL = {
   FARE_PAYMENT_LIMIT: [
     {
       'list': [
-        { 'option': 'limit', 'attr': 'id="500000"', value: '50만원' },
-        { 'option': 'limit', 'attr': 'id="300000"', value: '30만원' },
-        { 'option': 'limit', 'attr': 'id="200000"', value: '20만원' },
-        { 'option': 'limit', 'attr': 'id="150000"', value: '15만원' },
-        { 'option': 'limit', 'attr': 'id="120000"', value: '12만원' },
-        { 'option': 'limit', 'attr': 'id="60000"', value: '6만원' },
-        { 'option': 'limit', 'attr': 'id="50000"', value: '5만원' },
-        { 'option': 'limit', 'attr': 'id="30000"', value: '3만원' },
-        { 'option': 'limit', 'attr': 'id="10000"', value: '1만원' }
+        { 'label-attr': 'id="500000"', 'radio-attr': 'name="r2" id="500000"', txt: '50만원' },
+        { 'label-attr': 'id="300000"', 'radio-attr': 'name="r2" id="300000"', txt: '30만원' },
+        { 'label-attr': 'id="200000"', 'radio-attr': 'name="r2" id="200000"', txt: '20만원' },
+        { 'label-attr': 'id="150000"', 'radio-attr': 'name="r2" id="150000"', txt: '15만원' },
+        { 'label-attr': 'id="120000"', 'radio-attr': 'name="r2" id="120000"', txt: '12만원' },
+        { 'label-attr': 'id="60000"', 'radio-attr': 'name="r2" id="60000"', txt: '6만원' },
+        { 'label-attr': 'id="50000"', 'radio-attr': 'name="r2" id="50000"', txt: '5만원' },
+        { 'label-attr': 'id="30000"', 'radio-attr': 'name="r2" id="30000"', txt: '3만원' },
+        { 'label-attr': 'id="10000"', 'radio-attr': 'name="r2" id="10000"', txt: '1만원' }
       ]
     }
   ],
   PAYMENT_HISTORY_TYPE: [
     {
       list: [
-        { value: '전체', option: 'checked' },
-        { value: '즉시납부' },
-        { value: '자동납부' },
-        { value: '자동납부 통합인출' },
-        { value: '소액결제 선결제' },
-        { value: '콘텐츠 이용요금 선결제' },
-        { value: '포인트 납부 예약' },
-        { value: '포인트 자동납부' }
+        { txt: '전체', 'radio-attr': 'name="myTHistory" value="0" checked' },
+        { txt: '즉시납부', 'radio-attr': 'name="myTHistory" value="1"' },
+        { txt: '자동납부', 'radio-attr': 'name="myTHistory" value="2"' },
+        { txt: '자동 납부 통합인출', 'radio-attr': 'name="myTHistory" value="3"' },
+        { txt: '소액결제 선결제', 'radio-attr': 'name="myTHistory" value="4"' },
+        { txt: '콘텐츠 이용요금 선결제', 'radio-attr': 'name="myTHistory" value="5"' },
+        { txt: '포인트 납부 예약', 'radio-attr': 'name="myTHistory" value="6"' },
+        { txt: '포인트 자동납부', 'radio-attr': 'name="myTHistory" value="7"' }
       ]
     }
   ],
@@ -335,12 +335,12 @@ Tw.POPUP_TPL = {
   ROAMING_RETURN_PLACE: [
     {
       'list': [
-        { 'radio-attr': 'id="00" name="r2"', 'label-attr':'id="00" data-center="A100110000" value="인천공항 1터미널 1층 로밍 센터"', txt: '인천공항 1터미널 1층 로밍 센터' },
-        { 'radio-attr': 'id="01" name="r2"', 'label-attr':'id="01" data-center="1430456896" value="인천공항 2터미널 1층 로밍 센터"', txt: '인천공항 2터미널 1층 로밍 센터' },
-        { 'radio-attr': 'id="02" name="r2"', 'label-attr':'id="02" data-center="A100140000" value="김포공항 1층 로밍 센터"', txt: '김포공항 1층 로밍 센터' },
-        { 'radio-attr': 'id="03" name="r2"', 'label-attr':'id="03" data-center="A900100000" value="제주공항 국제선 1층 로밍 센터"', txt: '제주공항 국제선 1층 로밍 센터' },
-        { 'radio-attr': 'id="04" name="r2"', 'label-attr':'id="04" data-center="A200130000" value="김해공항 3층 로밍 센터"', txt: '김해공항 3층 로밍 센터' },
-        { 'radio-attr': 'id="05" name="r2"', 'label-attr':'id="05" data-center="C399900000" value="대구공항 2층 로밍 센터"', txt: '대구공항 2층 로밍 센터' },
+        { 'radio-attr': 'id="00" name="r2"', 'label-attr':'id="00" data-center="A100110000" value="인천공항 1터미널 1층 로밍센터"', txt: '인천공항 1터미널 1층 로밍센터' },
+        { 'radio-attr': 'id="01" name="r2"', 'label-attr':'id="01" data-center="1430456896" value="인천공항 2터미널 1층 로밍센터"', txt: '인천공항 2터미널 1층 로밍센터' },
+        { 'radio-attr': 'id="02" name="r2"', 'label-attr':'id="02" data-center="A100140000" value="김포공항 1층 로밍센터"', txt: '김포공항 1층 로밍센터' },
+        { 'radio-attr': 'id="03" name="r2"', 'label-attr':'id="03" data-center="A900100000" value="제주공항 국제선 1층 로밍센터"', txt: '제주공항 국제선 1층 로밍센터' },
+        { 'radio-attr': 'id="04" name="r2"', 'label-attr':'id="04" data-center="A200130000" value="김해공항 3층 로밍센터"', txt: '김해공항 3층 로밍센터' },
+        { 'radio-attr': 'id="05" name="r2"', 'label-attr':'id="05" data-center="C399900000" value="대구공항 2층 로밍센터"', txt: '대구공항 2층 로밍센터' },
         { 'radio-attr': 'id="14" name="r2"', 'label-attr':'id="14" data-center="1430452300" value="대구 SKT 황금점 매장"', txt: '대구 SKT 황금점 매장' }
       ]
     }
@@ -348,22 +348,22 @@ Tw.POPUP_TPL = {
   TEVENT_LIST: [
     {
       'list': [
-        { 'option': 'event-type', 'attr': 'id="ing"', value: '진행중 이벤트' },
-        { 'option': 'event-type', 'attr': 'id="last"', value: '지난 이벤트' },
-        { 'option': 'event-type', 'attr': 'id="win"', value: '당첨자 발표' }
+        { 'label-attr': 'id="ing"', 'radio-attr': 'id="ing" name="r2"', txt: '진행중 이벤트' },
+        { 'label-attr': 'id="last"', 'radio-attr': 'id="last" name="r2"', txt: '지난 이벤트' },
+        { 'label-attr': 'id="win"', 'radio-attr': 'id="win"', txt: '당첨자 발표' }
       ]
     }
   ],
   ROAMING_RECEIVE_PLACE: [
     {
       'list': [
-        { 'radio-attr': 'name="r2"', 'label-attr':'id="06" data-center="A100110000" data-booth="1000004045" value="인천공항 1터미널 3층 로밍 센터(E-F 카운터)"', txt: '인천공항 1터미널 3층 로밍 센터(E-F 카운터)' },
-        { 'radio-attr': 'name="r2"', 'label-attr':'id="07" data-center="A100110000" data-booth="1000004047" value="인천공항 1터미널 3층 로밍 센터(G-H 카운터)"', txt: '인천공항 1터미널 3층 로밍 센터(G-H 카운터)' },
-        { 'radio-attr': 'name="r2"', 'label-attr':'id="08" data-center="1430456896" data-booth="1430456957" value="인천공항 2터미널 3층 로밍 센터(D-E 카운터)"', txt: '인천공항 2터미널 3층 로밍 센터(D-E 카운터)' },
-        { 'radio-attr': 'name="r2"', 'label-attr':'id="09" data-center="A100140000" data-booth="1000004055" value="김포공항 1층 로밍 센터"', txt: '김포공항 1층 로밍 센터' },
-        { 'radio-attr': 'name="r2"', 'label-attr':'id="10" data-center="A900100000" data-booth="1000004057" value="제주공항 국제선 1층 로밍 센터"', txt: '제주공항 국제선 1층 로밍 센터' },
-        { 'radio-attr': 'name="r2"', 'label-attr':'id="11" data-center="A200130000" data-booth="1000012532" value="김해공항 3층 로밍 센터"', txt: '김해공항 3층 로밍 센터' },
-        { 'radio-attr': 'name="r2"', 'label-attr':'id="12" data-center="C399900000" data-booth="1430455436" value="대구공항 2층 로밍 센터"', txt: '대구공항 2층 로밍 센터' },
+        { 'radio-attr': 'name="r2"', 'label-attr':'id="06" data-center="A100110000" data-booth="1000004045" value="인천공항 1터미널 3층 로밍센터(E-F 카운터)"', txt: '인천공항 1터미널 3층 로밍센터(E-F 카운터)' },
+        { 'radio-attr': 'name="r2"', 'label-attr':'id="07" data-center="A100110000" data-booth="1000004047" value="인천공항 1터미널 3층 로밍센터(G-H 카운터)"', txt: '인천공항 1터미널 3층 로밍센터(G-H 카운터)' },
+        { 'radio-attr': 'name="r2"', 'label-attr':'id="08" data-center="1430456896" data-booth="1430456957" value="인천공항 2터미널 3층 로밍센터(D-E 카운터)"', txt: '인천공항 2터미널 3층 로밍센터(D-E 카운터)' },
+        { 'radio-attr': 'name="r2"', 'label-attr':'id="09" data-center="A100140000" data-booth="1000004055" value="김포공항 1층 로밍센터"', txt: '김포공항 1층 로밍센터' },
+        { 'radio-attr': 'name="r2"', 'label-attr':'id="10" data-center="A900100000" data-booth="1000004057" value="제주공항 국제선 1층 로밍센터"', txt: '제주공항 국제선 1층 로밍센터' },
+        { 'radio-attr': 'name="r2"', 'label-attr':'id="11" data-center="A200130000" data-booth="1000012532" value="김해공항 3층 로밍센터"', txt: '김해공항 3층 로밍센터' },
+        { 'radio-attr': 'name="r2"', 'label-attr':'id="12" data-center="C399900000" data-booth="1430455436" value="대구공항 2층 로밍센터"', txt: '대구공항 2층 로밍센터' },
         { 'radio-attr': 'name="r2"', 'label-attr':'id="13" data-center="1430452300" data-booth="1430452300" value="대구 SKT 황금점 매장"', txt: '대구 SKT 황금점 매장' }
       ]
     }
@@ -502,20 +502,24 @@ Tw.MYT_FARE_BILL_GUIDE_TPL = {
   }
 };
 
-Tw.HELPLINE_TYPES = [{ value: '일반' }, { value: '로밍' }, { value: '통화품질 상담' }];
+Tw.HELPLINE_TYPES = [
+  { txt: '일반', 'radio-attr': 'data-type-idx="0"' },
+  { txt: '로밍', 'radio-attr': 'data-type-idx="1"' },
+  { txt: '통화품질 상담', 'radio-attr': 'data-type-idx="2"' }
+];
 
 Tw.CUSTOMER_HELPLINE_AREAS = [
-  { value: '수도권 (서울, 경기, 인천, 강원)', attr: 'data-area-code="1"' },
-  { value: '중부 (충남, 충북, 대전)', attr: 'data-area-code="5"' },
-  { value: '서부 (전남, 전북, 광주, 제주)', attr: 'data-area-code="4"' },
-  { value: '대구 (경북, 대구)', attr: 'data-area-code="3"' },
-  { value: '부산 (경남, 울산, 부산)', attr: 'data-area-code="2"' }
+  { txt: '수도권 (서울, 경기, 인천, 강원)', 'radio-attr': 'data-area-code="1"' },
+  { txt: '중부 (충남, 충북, 대전)', 'radio-attr': 'data-area-code="5"' },
+  { txt: '서부 (전남, 전북, 광주, 제주)', 'radio-attr': 'data-area-code="4"' },
+  { txt: '대구 (경북, 대구)', 'radio-attr': 'data-area-code="3"' },
+  { txt: '부산 (경남, 울산, 부산)', 'radio-attr': 'data-area-code="2"' }
 ];
 
 Tw.CUSTOMER_PRAISE_SUBJECT_TYPES = [
   { txt: '지점', 'radio-attr': 'data-index="0" data-code="T40"' },
   { txt: '대리점', 'radio-attr': 'data-index="1" data-code="T10"' },
-  { txt: '이용안내', 'radio-attr': 'data-index="2" data-code="T30"' },
+  { txt: '고객센터', 'radio-attr': 'data-index="2" data-code="T30"' },
   { txt: '통화품질 기준 매니저', 'radio-attr': 'data-index="3" data-code="T50"' },
   { txt: 'AS센터', 'radio-attr': 'data-index="4" data-code="T20"' },
   { txt: '행복기사(SK브로드밴드)', 'radio-attr': 'data-index="5" data-code="T60"' }
@@ -662,11 +666,11 @@ Tw.MYT_PREPAID_RECHARGE_AMOUNT = {
 Tw.MYT_PREPAID_RECHARGE_DATA_ADD = [
   {
     list: [
-      { 'option': 'data-type', 'attr': 'id="005G12S" data-value="5120" data-amount="33000"', value: '5GB (33,000원)' },
-      { 'option': 'data-type', 'attr': 'id="002G12S" data-value="2048" data-amount="19000"', value: '2GB (19,000원)' },
-      { 'option': 'data-type', 'attr': 'id="001G12S" data-value="1024" data-amount="15000"', value: '1GB (15,000원)' },
-      { 'option': 'data-type', 'attr': 'id="500M12S" data-value="500" data-amount="10000"', value: '500MB (10,000원)' },
-      { 'option': 'data-type', 'attr': 'id="100M12S" data-value="100" data-amount="2000"', value: '100MB (2,000원)' }
+      { 'label-attr': 'id="005G12S"', 'radio-attr': 'name="r2" id="005G12S" data-value="5120" data-amount="33000"', txt: '5GB (33,000원)' },
+      { 'label-attr': 'id="002G12S"', 'radio-attr': 'name="r2" id="002G12S" data-value="2048" data-amount="19000"', txt: '2GB (19,000원)' },
+      { 'label-attr': 'id="001G12S"', 'radio-attr': 'name="r2" id="001G12S" data-value="1024" data-amount="15000"', txt: '1GB (15,000원)' },
+      { 'label-attr': 'id="500M12S"', 'radio-attr': 'name="r2" id="500M12S" data-value="500" data-amount="10000"', txt: '500MB (10,000원)' },
+      { 'label-attr': 'id="100M12S"', 'radio-attr': 'name="r2" id="100M12S" data-value="100" data-amount="2000"', txt: '100MB (2,000원)' }
     ]
   }
 ];
@@ -674,12 +678,12 @@ Tw.MYT_PREPAID_RECHARGE_DATA_ADD = [
 Tw.MYT_PREPAID_RECHARGE_DATA = [
   {
     list: [
-      { 'option': 'data-type', 'attr': 'id="004G090" data-value="4096" data-amount="33000"', value: '4GB / 90일 (33,000원)' },
-      { 'option': 'data-type', 'attr': 'id="002G090" data-value="2048" data-amount="27500"', value: '2GB / 90일 (27,500원)' },
-      { 'option': 'data-type', 'attr': 'id="002G030" data-value="2048" data-amount="24200"', value: '2GB / 30일 (24,200원)' },
-      { 'option': 'data-type', 'attr': 'id="001G090" data-value="1024" data-amount="22000"', value: '1GB / 90일 (22,000원)' },
-      { 'option': 'data-type', 'attr': 'id="001G030" data-value="1024" data-amount="18700"', value: '1GB / 30일 (18,700원)' },
-      { 'option': 'data-type', 'attr': 'id="300M030" data-value="300" data-amount="8800"', value: '300MB / 30일 (8,800원)' }
+      { 'label-attr': 'id="004G090"', 'radio-attr': 'name="r2" id="004G090" data-value="4096" data-amount="33000"', txt: '4GB / 90일 (33,000원)' },
+      { 'label-attr': 'id="002G090"', 'radio-attr': 'name="r2" id="002G090" data-value="2048" data-amount="27500"', txt: '2GB / 90일 (27,500원)' },
+      { 'label-attr': 'id="002G030"', 'radio-attr': 'name="r2" id="002G030" data-value="2048" data-amount="24200"', txt: '2GB / 30일 (24,200원)' },
+      { 'label-attr': 'id="001G090"', 'radio-attr': 'name="r2" id="001G090" data-value="1024" data-amount="22000"', txt: '1GB / 90일 (22,000원)' },
+      { 'label-attr': 'id="001G030"', 'radio-attr': 'name="r2" id="001G030" data-value="1024" data-amount="18700"', txt: '1GB / 30일 (18,700원)' },
+      { 'label-attr': 'id="300M030"', 'radio-attr': 'name="r2" id="300M030" data-value="300" data-amount="8800"', txt: '300MB / 30일 (8,800원)' }
     ]
   }
 ];
@@ -814,3 +818,56 @@ Tw.PRODUCT_ROAMING_ORDER = [
   { txt: '높은 가격순', 'radio-attr': 'id="ra1" name="r2" data-oder-name="highprice"', 'label-attr': 'id="ra1"' },
   { txt: '낮은 가격순', 'radio-attr': 'id="ra2" name="r2" data-oder-name="lowprice"', 'label-attr': 'id="ra2"' }
 ];
+
+Tw.PHONE_NUMS = [
+  {
+    list: [
+      { option: 'hbs-card', value: '010', attr: 'data-phone="010" data-type="ph"' },
+      { option: 'hbs-card', value: '011', attr: 'data-phone="011" data-type="ph"' },
+      { option: 'hbs-card', value: '016', attr: 'data-phone="016" data-type="ph"' },
+      { option: 'hbs-card', value: '017', attr: 'data-phone="017" data-type="ph"' },
+      { option: 'hbs-card', value: '018', attr: 'data-phone="018" data-type="ph"' },
+      { option: 'hbs-card', value: '019', attr: 'data-phone="019" data-type="ph"' },
+      { option: 'hbs-card', value: '02',  attr: 'data-tel="02" data-type="area"'  },
+      { option: 'hbs-card', value: '031', attr: 'data-tel="031" data-type="area"' },
+      { option: 'hbs-card', value: '032', attr: 'data-tel="032" data-type="area"' },
+      { option: 'hbs-card', value: '033', attr: 'data-tel="033" data-type="area"' },
+      { option: 'hbs-card', value: '041', attr: 'data-tel="041" data-type="area"' },
+      { option: 'hbs-card', value: '042', attr: 'data-tel="042" data-type="area"' },
+      { option: 'hbs-card', value: '043', attr: 'data-tel="043" data-type="area"' },
+      { option: 'hbs-card', value: '044', attr: 'data-tel="044" data-type="area"' },
+      { option: 'hbs-card', value: '051', attr: 'data-tel="051" data-type="area"' },
+      { option: 'hbs-card', value: '052', attr: 'data-tel="052" data-type="area"' },
+      { option: 'hbs-card', value: '053', attr: 'data-tel="053" data-type="area"' },
+      { option: 'hbs-card', value: '054', attr: 'data-tel="054" data-type="area"' },
+      { option: 'hbs-card', value: '055', attr: 'data-tel="055" data-type="area"' },
+      { option: 'hbs-card', value: '061', attr: 'data-tel="061" data-type="area"' },
+      { option: 'hbs-card', value: '062', attr: 'data-tel="062" data-type="area"' },
+      { option: 'hbs-card', value: '063', attr: 'data-tel="063" data-type="area"' },
+      { option: 'hbs-card', value: '064', attr: 'data-tel="064" data-type="area"' },
+      { option: 'hbs-card', value: '070', attr: 'data-tel="070" data-type="area"' }
+    ]
+  }
+];
+
+Tw.CUSTOMER_SITE_INFO_TYPEA_CHOICE = {
+  title: "가려진 정보",
+  options:[{
+    list:[
+      { value: '고객님의 정보를 가리는 이유', attr: 'value="A"', option:'A' },
+      { value: '가려진 정보를 보는 방법', attr: 'value="B"', option:'B'}
+    ]
+  }]
+}
+
+
+Tw.CUSTOMER_SERVICE_INFO_USIM_DEFINE = {
+  data:{
+    list: [
+      {txt: '유심 관련 용어', 'radio-attr': 'name="usimDefineTab" value="1"'},
+      {txt: '기변(기기변경) 관련 용어', 'radio-attr': 'name="usimDefineTab" value="2"'},
+      {txt: '기기 관련 용어', 'radio-attr': 'name="usimDefineTab" value="3"'},
+      {txt: '서비스 관련 기타 용어', 'radio-attr': 'name="usimDefineTab" value="4"'}
+    ]
+  }
+}

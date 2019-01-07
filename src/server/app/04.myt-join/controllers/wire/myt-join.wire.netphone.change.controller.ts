@@ -16,12 +16,12 @@ class MyTJoinWireInetPhoneNumChange extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    if ( svcInfo.svcAttrCd.indexOf('S') === -1 ) {
-      return this.error.render(res, {
-        title: MYT_JOIN_WIRE.NETPHONE_CHANGE.TITLE,
-        svcInfo: svcInfo
-      });
-    }
+    // if ( svcInfo.svcAttrCd.indexOf('S') === -1 ) {
+    //   return this.error.render(res, {
+    //     title: MYT_JOIN_WIRE.NETPHONE_CHANGE.TITLE,
+    //     svcInfo: svcInfo
+    //   });
+    // }
     res.render('wire/myt-join.wire.inetphone-num.change.html', {svcInfo: svcInfo, pageInfo: pageInfo});
   }
 }

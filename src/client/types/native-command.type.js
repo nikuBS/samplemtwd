@@ -5,6 +5,7 @@ Tw.NTV_CMD = {
   GET_LOCATION: 'currentLocation',
   OPEN_URL: 'openUrl',
   CLOSE_INAPP: 'closeInApp',
+  SIGN_UP: 'signUp',
   LOGIN: 'login',
   LOGOUT: 'logout',
   FIND_ID: 'findId',
@@ -34,7 +35,11 @@ Tw.NTV_CMD = {
   IS_INSTALLED: 'isAppInstall',
   FREE_SMS: 'freeSMS',
   SET_XTVID: 'setXtvId',
-  OPEN_APP: 'openApp'
+  OPEN_APP: 'openApp',
+  SAVE: 'save',
+  LOAD: 'load',
+  IS_APP_CREATED: 'isAppCreated',
+  OPEN_NETWORK_ERROR_POP: 'openNetworkErrorPop'
 };
 
 Tw.NTV_CODE = {
@@ -59,5 +64,6 @@ Tw.NTV_LOG_T = {
 
 Tw.NTV_STORAGE = {
   MOST_RECENT_PUSH_SEQ: 'mostRecentPushSeq',
-  LAST_READ_PUSH_SEQ: 'lastReadPushSeq'
+  LAST_READ_PUSH_SEQ: 'lastReadPushSeq',
+  HOME_WELCOME: 'homeWelcome',
 };

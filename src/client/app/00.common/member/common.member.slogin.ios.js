@@ -39,6 +39,9 @@ Tw.CommonMemberSloginIos = function (rootEl) {
   this.$errorLoginCert = null;
   this.$errorLoginTime = null;
 
+  this._addTimer = null;
+  this._addTime = null;
+  window.onRefresh = $.proxy(this._onRefreshCallback, this);
   this._bindEvent();
 };
 
@@ -64,6 +67,7 @@ Tw.CommonMemberSloginIos.prototype = {
     this.$inputMdn = this.$container.find('#fe-input-mdn');
     this.$inputCert = this.$container.find('#fe-input-cert');
     this.$btCert = this.$container.find('#fe-bt-cert');
+    this.$btReCert = this.$container.find('#fe-bt-recert');
     this.$btCertAdd = this.$container.find('#fe-bt-cert-add');
     this.$btLogin = this.$container.find('#fe-bt-login');
 
@@ -80,16 +84,20 @@ Tw.CommonMemberSloginIos.prototype = {
     this.$validAddCert = this.$container.find('#aria-cert-num1');
     this.$errorCertTime = this.$container.find('#aria-cert-num3');
     this.$errorCertCount = this.$container.find('#aria-cert-num4');
+    this.$errorCertAddTime = this.$container.find('#aria-cert-num5');
     this.$errorLoginCert = this.$container.find('#aria-phone-err1');
     this.$errorLoginTime = this.$container.find('#aria-phone-err2');
 
     this.$btCert.on('click', $.proxy(this._onClickCert, this));
+    this.$btReCert.on('click', $.proxy(this._onClickReCert, this));
     this.$btCertAdd.on('click', $.proxy(this._onClickCertAdd, this));
     this.$btLogin.on('click', $.proxy(this._onClickLogin, this));
     this.$inputMdn.on('keyup', $.proxy(this._onKeyupMdn, this));
     this.$inputGender.on('click', $.proxy(this._onClickGender, this));
     this.$inputBirth.on('input', $.proxy(this._onInputBirth, this));
     this.$inputCert.on('input', $.proxy(this._onInputCert, this));
+
+    this.$container.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
   },
   _onKeyupMdn: function () {
     var mdnLength = this.$inputMdn.val().length;
@@ -109,6 +117,9 @@ Tw.CommonMemberSloginIos.prototype = {
     var inputCert = this.$inputCert.val();
     if ( inputCert.length >= Tw.DEFAULT_CERT_LEN ) {
       this.$inputCert.val(inputCert.slice(0, Tw.DEFAULT_CERT_LEN));
+      this.$btLogin.attr('disabled', false);
+    } else {
+      this.$btLogin.attr('disabled', true);
     }
   },
   _onClickGender: function ($event) {
@@ -121,6 +132,12 @@ Tw.CommonMemberSloginIos.prototype = {
     $currentTarget.attr('aria-checked', true);
   },
   _onClickCert: function () {
+    this._sendCert();
+  },
+  _onClickReCert: function () {
+    this._sendCert(true);
+  },
+  _sendCert: function(reCert) {
     if ( this._checkCertValidation() ) {
       this.mdn = this.$inputMdn.val();
       var params = {
@@ -128,32 +145,45 @@ Tw.CommonMemberSloginIos.prototype = {
         birthDt: this.$inputBirth.val(),
         gender: this.GENDER_CODE[this.$inputGender.filter(':checked').val()]
       };
-      this._apiService.request(Tw.API_CMD.BFF_03_0019, params, {}, this.mdn)
-        .done($.proxy(this._successRequestCert, this));
+      this._apiService.request(Tw.API_CMD.BFF_03_0019, params, {}, [this.mdn])
+        .done($.proxy(this._successRequestCert, this, reCert));
     }
   },
   _onClickCertAdd: function () {
     this._apiService.request(Tw.API_CMD.BFF_03_0027, { seqNo: this.certSeq })
       .done($.proxy(this._successRequestCertAdd, this));
   },
-  _successRequestCert: function (resp) {
+  _successRequestCert: function (reCert, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._clearCertError();
       this.certSeq = resp.result.seqNo;
-      this.$btLogin.attr('disabled', false);
-      this.$btCert.addClass('none');
-      this.$btCertAdd.removeClass('none');
       this.$validSendCert.removeClass('none');
+      if ( !reCert ) {
+        this.$btReCert.addClass('none');
+        this.$btCert.addClass('none');
+        this.$btCertAdd.removeClass('none');
+        this._addTimer = setTimeout($.proxy(this._expireAddTime, this), 5 * 60 * 1000);
+        this._addTime = new Date().getTime();
+      }
     } else {
       this._checkCertError(resp.code);
     }
+  },
+  _expireAddTime: function () {
+    this.$btReCert.parent().removeClass('none');
+    this.$btCertAdd.parent().addClass('none');
   },
   _successRequestCertAdd: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._clearCertError();
       this.$btCertAdd.addClass('none');
-      this.$btCert.text(Tw.BUTTON_LABEL.RETRY);
-      this.$btCert.removeClass('none');
+      this.$btReCert.removeClass('none');
       this.$validAddCert.removeClass('none');
+    } else if ( resp.code === this.ERROR_CODE.ATH1221 ) {
+      this._clearCertError();
+      this.$btCertAdd.parent().addClass('none');
+      this.$btReCert.parent().removeClass('none');
+      this.$errorCertAddTime.removeClass('none');
     } else {
       this._checkCertError(resp.code, resp.msg);
     }
@@ -235,6 +265,16 @@ Tw.CommonMemberSloginIos.prototype = {
     input.attr('aria-describedby', '');
     error.addClass('none');
   },
+  _onRefreshCallback: function () {
+    var interval = new Date().getTime() - this._addTime;
+
+    clearTimeout(this._addTimer);
+    if ( interval > 5 * 60 * 1000 ) {
+      this._expireAddTime();
+    } else {
+      this._addTimer = setTimeout($.proxy(this._expireAddTime, this), 5 * 60 * 1000 - interval);
+    }
+  },
   _clearAllError: function () {
     this._clearError(this.$inputboxName, this.$inputName, this.$errorName);
     this._clearError(this.$inputboxName, this.$inputName, this.$errorNameMismatch);
@@ -247,6 +287,7 @@ Tw.CommonMemberSloginIos.prototype = {
     this.$validAddCert.addClass('none');
     this.$errorCertTime.addClass('none');
     this.$errorCertCount.addClass('none');
+    this.$errorCertAddTime.addClass('none');
   },
   _clearLoginError: function () {
     this.$errorLoginCert.addClass('none');
@@ -254,7 +295,7 @@ Tw.CommonMemberSloginIos.prototype = {
   },
   _checkLoginValidation: function (inputCert) {
     if ( Tw.FormatHelper.isEmpty(inputCert) ) {
-      this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_L61);
+      this._popupService.openAlert(Tw.SMS_VALIDATION.EMPTY_CERT);
       return false;
     }
     return true;

@@ -13,25 +13,27 @@ Tw.CustomerAgentsearchRepairDetail = function (rootEl, location) {
 
   this._dataChargeConfirmed = false;
 
-  this._showDataChargePopupIfNeeded();
+  $(window).on(Tw.INIT_COMPLETE, $.proxy(function () {
+    this._showDataChargePopupIfNeeded();
+  }, this));
 };
 
 Tw.CustomerAgentsearchRepairDetail.prototype = {
   _showDataChargePopupIfNeeded: function () {
     if (Tw.BrowserHelper.isApp()) {
-      this._popupService.openConfirm(
-        Tw.POPUP_CONTENTS.NO_WIFI,
-        Tw.POPUP_TITLE.EXTERNAL_LINK,
+      var confirmed = false;
+      Tw.CommonHelper.showDataCharge(
         $.proxy(function () {
-          this._dataChargeConfirmed = true;
-          this._popupService.close();
-          this._cacheElements();
-          this._showMap();
+          confirmed = true;
         }, this),
         $.proxy(function () {
-          if (!this._dataChargeConfirmed) {
+          if (!confirmed) {
             this._historyService.goBack();
+            return;
           }
+
+          this._cacheElements();
+          this._showMap();
         }, this)
       );
     } else {
@@ -46,7 +48,8 @@ Tw.CustomerAgentsearchRepairDetail.prototype = {
     var map = new Tmap.Map({
       div: this.$tmapBox.attr('id'),
       width: '100%',
-      height: this.$tmapBox.width() + 'px'
+      height: this.$tmapBox.width() + 'px',
+      httpsMode: true
     });
     map.setCenter(new Tmap.LonLat(this._location.longitude, this._location.latitude)
       .transform('EPSG:4326', 'EPSG:3857'), 15);

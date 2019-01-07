@@ -6,11 +6,13 @@
 
 Tw.CertificationBio = function () {
   this._nativeService = Tw.Native;
+  this._popupService = Tw.Popup;
 
   this._callback = null;
   this._authUrl = null;
   this._authKind = null;
   this._prodAuthKey = null;
+  this._register = false;
 };
 
 
@@ -31,9 +33,25 @@ Tw.CertificationBio.prototype = {
     if ( isRegister ) {
       this._fidoAuth();
     } else {
-      // 등록
-      this._biometricsTerm.open($.proxy(this._onFidoRegister, this));
+      this._openRegisterPopup();
     }
+  },
+  _openRegisterPopup: function () {
+    this._popupService.openConfirmButton(Tw.POPUP_CONTENTS.BIO_REGISTER, null,
+      $.proxy(this._onConfirmRegister, this), $.proxy(this._onCloseRegister, this),
+      Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+  },
+  _onConfirmRegister: function () {
+    this._register = true;
+    this._popupService.close();
+  },
+  _onCloseRegister: function () {
+    if ( this._register ) {
+      this._goBioRegister();
+    }
+  },
+  _goBioRegister: function () {
+    this._biometricsTerm.open($.proxy(this._onFidoRegister, this));
   },
   _fidoAuth: function () {
     this._nativeService.send(Tw.NTV_CMD.FIDO_AUTH, {
@@ -43,12 +61,15 @@ Tw.CertificationBio.prototype = {
     }, $.proxy(this._onFidoAuth, this));
   },
   _onFidoAuth: function (resp) {
-    this._callback(resp);
-    // if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
-    //   this._callback(resp);
-    // } else {
-    //
-    // }
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      this._callback({
+        code: Tw.API_CODE.CODE_00
+      });
+    } else {
+      this._callback({
+        code: Tw.API_CODE.CERT_FAIL
+      });
+    }
   },
   _onFidoRegister: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {

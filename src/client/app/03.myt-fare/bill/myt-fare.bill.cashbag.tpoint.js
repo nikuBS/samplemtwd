@@ -34,19 +34,26 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
 
     this.$payBtn.show();
     this.$payBtn.siblings().hide();
+
+    this.$isValid = false;
+    this.$isSelectValid = true;
   },
   _bindEvent: function () {
     this.$container.on('click', '.fe-tab-selector > li', $.proxy(this._changeTab, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.fe-only-number', $.proxy(this._checkNumber, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
+    this.$container.on('blur', '.fe-point', $.proxy(this._checkPoint, this));
+    this.$container.on('blur', '.fe-point-card', $.proxy(this._checkCardNumber, this));
+    this.$container.on('blur', '.fe-point-pw', $.proxy(this._checkPassword, this));
     this.$container.on('change', '.fe-agree', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-cancel', $.proxy(this._cancel, this));
     this.$container.on('click', '.fe-select-point', $.proxy(this._selectPoint, this));
     this.$container.on('click', '.fe-find-password', $.proxy(this._goCashbagSite, this));
-    this.$container.on('click', '.fe-agree-box', $.proxy(this._openAgreePop, this));
+    this.$container.on('click', '.fe-agree-view', $.proxy(this._openAgreePop, this));
     this.$container.on('click', '.fe-tab1-pay', $.proxy(this._onePay, this));
     this.$container.on('click', '.fe-tab2-pay', $.proxy(this._autoPay, this));
+    this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
   },
   _changeTab: function (event) {
     var $targetId = $(event.currentTarget).attr('id');
@@ -74,6 +81,36 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     var target = event.target;
     Tw.InputHelper.inputNumberOnly(target);
   },
+  _checkPoint: function () {
+    var isValid = false;
+    var $message = this.$point.siblings('.fe-error-msg');
+    $message.empty();
+
+    if (!this._validation.checkEmpty(this.$point.val())) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V65);
+    } else if (!this._validation.checkIsMore(this.$point.val(), 1000)) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V8);
+    } else if (!this._validation.checkIsAvailablePoint(this.$point.val(),
+        parseInt(this.$standardPoint.attr('id'), 10))) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27);
+    } else if (!this._validation.checkIsTenUnit(this.$point.val())) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.TEN_POINT);
+    } else {
+      isValid = true;
+    }
+
+    this.$isValid = this._validation.showAndHideErrorMsg(this.$point, isValid);
+  },
+  _checkCardNumber: function (event) {
+    var $target = $(event.currentTarget);
+    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkEmpty($target.val()), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V60) &&
+      this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 16), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V26);
+  },
+  _checkPassword: function (event) {
+    var $target = $(event.currentTarget);
+    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkEmpty($target.val()), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V58) &&
+      this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 6), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V7);
+  },
   _cancel: function () {
     this._popupService.openConfirm(null, Tw.AUTO_PAY_CANCEL.CONFIRM_MESSAGE, $.proxy(this._autoCancel, this));
   },
@@ -93,17 +130,12 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     var $target = $(event.currentTarget);
 
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
+      url: '/hbs/',
+      hbs: 'actionsheet01',
       layer: true,
-      title: this._getTitle(),
-      data: this._getData()
+      data: this._getData(),
+      btnfloating: { 'class': 'fe-popup-close', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectPopupCallback, this, $target));
-  },
-  _getTitle: function () {
-    if (this.$pointType === 'CPT') {
-      return Tw.POPUP_TITLE.SELECT_POINT;
-    }
-    return Tw.POPUP_TITLE.SELECT_TPOINT;
   },
   _getData: function () {
     if (this.$pointType === 'CPT') {
@@ -112,32 +144,30 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     return Tw.POPUP_TPL.FARE_PAYMENT_TPOINT;
   },
   _selectPopupCallback: function ($target, $layer) {
-    $layer.on('click', '.point-type', $.proxy(this._setSelectedValue, this, $target));
+    $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
+    $layer.on('click', '.fe-popup-close', $.proxy(this._checkSelected, this));
   },
   _setSelectedValue: function ($target, event) {
-    var $selectedValue = $(event.currentTarget);
+    var $selectedValue = $(event.target);
     $target.attr('id', $selectedValue.attr('id'));
-    $target.text($.trim($selectedValue.text()));
+    $target.text($.trim($selectedValue.parents('label').text()));
+
+    this.$pointSelector.siblings('.fe-error-msg').hide();
+    this.$isSelectValid = true;
 
     this._checkIsAbled();
     this._popupService.close();
   },
+  _checkSelected: function () {
+    if (Tw.FormatHelper.isEmpty(this.$pointSelector.attr('id'))) {
+      this.$pointSelector.siblings('.fe-error-msg').show();
+      this.$pointSelector.focus();
+      this.$isSelectValid = false;
+    }
+    this._popupService.close();
+  },
   _goCashbagSite: function () {
     Tw.CommonHelper.openUrlExternal(Tw.URL_PATH.OKCASHBAG);
-  },
-  _isValidForOne: function () {
-    return (this._validation.checkIsAvailablePoint(this.$point.val(),
-      parseInt(this.$standardPoint.attr('id'), 10),
-      Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27) &&
-      this._validation.checkIsMore(this.$point.val(), 1000, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V8) &&
-      this._validation.checkIsTenUnit(this.$point.val(), Tw.ALERT_MSG_MYT_FARE.TEN_POINT) &&
-      this._validation.checkMoreLength(this.$pointCardNumber.val(), 16, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V26));
-  },
-  _isValidForAuto: function () {
-    return (this._validation.checkIsAvailablePoint(this.$pointSelector.attr('id'),
-      parseInt(this.$standardPoint.attr('id'), 10),
-      Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27) &&
-      this._validation.checkMoreLength(this.$pointCardNumber.val(), 16, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V26));
   },
   _openAgreePop: function (event) {
     event.stopPropagation();
@@ -163,7 +193,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     }
   },
   _onePay: function () {
-    if (this._isValidForOne()) {
+    if (this.$isValid && this.$isSelectValid) {
       var reqData = this._makeRequestDataForOne();
       this._apiService.request(Tw.API_CMD.BFF_07_0045, reqData)
         .done($.proxy(this._paySuccess, this, ''))
@@ -171,7 +201,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     }
   },
   _autoPay: function () {
-    if (this._isValidForAuto()) {
+    if (this.$isValid && this.$isSelectValid) {
       var reqData = this._makeRequestDataForAuto();
       var type = 'auto';
       if (this.$autoInfo.is(':visible')) {
@@ -199,7 +229,11 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     return point;
   },
   fail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+    if (err.code === 'BIL0006') {
+      this._popupService.openAlert(err.msg, Tw.POPUP_TITLE.NOTIFY);
+    } else {
+      Tw.Error(err.code, err.msg).pop();
+    }
   },
   _makeRequestDataForOne: function () {
     var reqData = {
@@ -231,5 +265,34 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
       return 2;
     }
     return 1;
+  },
+  _onClose: function () {
+    if (this._isChanged()) {
+      this._popupService.openConfirmButton(null, Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_CANCEL.TITLE,
+        $.proxy(this._closePop, this), $.proxy(this._afterClose, this));
+    } else {
+      this._historyService.goBack();
+    }
+  },
+  _isChanged: function () {
+    if (this.$selectedTab.attr('id') === 'tab1-tab') {
+      return !Tw.FormatHelper.isEmpty(this.$point.val()) || !Tw.FormatHelper.isEmpty(this.$pointCardNumber.val()) ||
+        !Tw.FormatHelper.isEmpty(this.$pointPw.val());
+    } else {
+      if (this.$autoInfo.is(':visible')) {
+        return (this.$pointSelector.attr('id') !== this.$pointSelector.attr('data-origin-id'));
+      } else {
+        return !Tw.FormatHelper.isEmpty(this.$pointSelector.attr('id')) || !Tw.FormatHelper.isEmpty(this.$pointCardNumber.val());
+      }
+    }
+  },
+  _closePop: function () {
+    this._isClose = true;
+    this._popupService.closeAll();
+  },
+  _afterClose: function () {
+    if (this._isClose) {
+      this._popupService.close();
+    }
   }
 };

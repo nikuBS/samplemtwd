@@ -90,7 +90,6 @@ export const URL = {
 
   // Product
   '/product/mobileplan': { login: false, id: 'MP', title: '모바일 요금제' },
-  '/product/mobileplan/compare-plans': { login: true, id: 'MP_02_02_01', title: '요금제 비교하기' },
   '/product/mobileplan-add': { login: false, id: 'MV', title: '부가서비스' },
   '/product/mobileplan/list': { login: false, id: 'MP_02', title: '모바일 요금제' },
   '/product/mobileplan-add/list': { login: false, id: 'MV_01', title: '부가서비스' },
@@ -154,6 +153,8 @@ export const URL = {
 
   // Benefit
   '/benefit/submain': { login: false, id: 'BS', title: '혜택.할인 Index' },
+  '/benefit/submain/fare/info/restrict-law': { login: false, id: 'BS_03_01_01_01', title: '단통법관련문의안내 팝업' },
+  '/benefit/submain/fare/info/joinable-product': { login: false, id: 'BS_03_01_01_02', title: '가입가능한 요금제 안내' },
   '/benefit/my': { login: false, id: 'BS_01', title: '나의 혜택 · 할인정보' },
   '/benefit/my/rainbowpoint': { login: true, id: 'BS_01_01', title: '레인보우 포인트' },
   '/benefit/my/rainbowpoint/adjustment': { login: true, id: 'BS_01_01_03', title: '포인트 합산' },

@@ -14,7 +14,7 @@ class CustomerDamageInfoContents extends TwViewController {
   }
 
   private readonly _allowedPageNo = ['page001', 'page002', 'page003', 'page004', 'page005', 'page006', 'page007',
-    'page008', 'page009', 'page010', 'page011', 'page012', 'page013', 'page014', 'page015', 'page016'];
+    'page008', 'page009', 'page010', 'page011', 'page012', 'page013', 'page014', 'page015', 'page016', 'page017', 'page018'];
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const pageNo = req.params.pageNo,

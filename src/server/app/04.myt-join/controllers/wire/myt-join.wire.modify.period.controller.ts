@@ -29,7 +29,7 @@ class MyTJoinWireModifyPeriod extends TwViewController {
       ]);
 
       if ( !FormatHelper.isEmpty(apiError) ) {
-        return this.renderErr(res, apiError, svcInfo);
+        return this.renderErr(res, apiError, svcInfo, pageInfo);
       }
 
       const wireAgreementsInfo = this.getWireAgreementsInfo(wireAgreementsInfoResp);
@@ -44,15 +44,7 @@ class MyTJoinWireModifyPeriod extends TwViewController {
 
       res.render(this._VIEW.DEFAULT, options);
     }, (resp) => {
-      if (resp.code === 'MOD0014') { // SK브로드밴드 가입자
-        return res.render(this._VIEW.DEFAULT, {
-          svcInfo,
-          pageInfo,
-          wireAgreementsInfo: {},
-          isBroadbandJoined: 'Y'
-        });
-      }
-      return this.renderErr(res, resp, svcInfo);
+      return this.renderErr(res, resp, svcInfo, pageInfo);
     });
   }
 
@@ -92,7 +84,15 @@ class MyTJoinWireModifyPeriod extends TwViewController {
     return wireAgreementsInfo;
   }
 
-  private renderErr(res, err, svcInfo): any {
+  private renderErr(res, err, svcInfo, pageInfo): any {
+    if (err.code === 'MOD0014') { // SK브로드밴드 가입자
+      return res.render(this._VIEW.DEFAULT, {
+        svcInfo,
+        pageInfo,
+        wireAgreementsInfo: {},
+        isBroadbandJoined: 'Y'
+      });
+    }
     return this.error.render(res, {
       title: MYT_JOIN_WIRE_MODIFY_PERIOD.TITLE,
       code: err.code,

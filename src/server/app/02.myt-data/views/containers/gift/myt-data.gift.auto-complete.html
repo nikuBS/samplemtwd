@@ -16,7 +16,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div class="wrap" data-menuId="M000204">
     <!-- #contents -->
     <!--<div id="contents" class="container-wrap">-->
         <!--<div class="container">-->
@@ -63,12 +63,12 @@
                 <div class="complete-wrap">
                     <div class="title-box">
                         <i class="icon-complete-120"><span class="blind">complete</span></i>
-                        <p class="tx-tit"><%-params.custNm%> (<%-convertTelNumber(params.befrSvcNum)%>) 님께<br>
+                        <p class="tx-tit"><%-params.custNm%> (<%-convertMaskTelNumber(params.befrSvcNum)%>) 님께<br>
                             <span class="tx-highlight pt10"><em><%-convertTDataSet(params.dataQty).data%><%-convertTDataSet(params.dataQty).unit%></em> 자동 선물 신청 완료</span></p>
                     </div>
                     <div class="tx-contents">
                         <ul class="bt-slice">
-                            <li><button type="button" class="btn-round2 btn-style3">선물내역 보기</button></li>
+                            <li><button type="button" class="btn-round2 btn-style3 fe-btn_gift_history">선물내역 보기</button></li>
                         </ul>
                     </div>
                 </div>

@@ -49,7 +49,7 @@ Tw.CertificationSkSmsRefund.prototype = {
     this.$inputCaptcha.on('keyup', $.proxy(this._enableConfirmIfPossible, this));
     this.$inputNumber.on('keyup', $.proxy(this._enableCertBtnIfPossible, this));
     this.$inputCert.on('keyup', $.proxy(this._enableConfirmIfPossible, this));
-    this.$btConfirm.on('click', $.proxy(this._requestCaptchaConfirm, this));
+    this.$btConfirm.on('click', $.proxy(this._requestCertConfirm, this));
 
     this._requestCaptchaImg();
   },
@@ -65,33 +65,37 @@ Tw.CertificationSkSmsRefund.prototype = {
     this._enableConfirmIfPossible();
   },
   _onCert: function () {
-    var data = {
-      name: this.$inputName.val().trim(),
-      birthDay: this.$inputBirth.val().trim(),
-      gender: this._gender,
-      svcNum: this.$inputNumber.val().trim()
+    var onCaptchaSuccess = function () {
+      var data = {
+        name: this.$inputName.val().trim(),
+        birthDay: this.$inputBirth.val().trim(),
+        gender: this._gender,
+        svcNum: this.$inputNumber.val().trim()
+      };
+
+      this._apiService.request(Tw.API_CMD.BFF_01_0051, data)
+        .done($.proxy(function (res) {
+          if (res.code === Tw.API_CODE.CODE_00) {
+            this._isCertRequestSuccess = true;
+            this._showCertSuccess();
+          } else {
+            this._isCertRequestSuccess = true;
+            if (!!this.SMS_CERT_ERROR[res.code]) {
+              this._showCertError(res.code);
+            } else {
+              Tw.Error(res.code, res.msg).pop();
+            }
+          }
+          this._enableConfirmIfPossible();
+        }, this))
+        .fail($.proxy(function (err) {
+          this._isCertRequestSuccess = true;
+          this._enableConfirmIfPossible();
+          Tw.Error(err.code, err.msg).pop();
+        }, this));
     };
 
-    this._apiService.request(Tw.API_CMD.BFF_01_0051, data)
-      .done($.proxy(function (res) {
-        if (res.code === Tw.API_CODE.CODE_00) {
-          this._isCertRequestSuccess = true;
-          this._showCertSuccess();
-        } else {
-          this._isCertRequestSuccess = true;
-          if (!!this.SMS_CERT_ERROR[res.code]) {
-            this._showCertError(res.code);
-          } else {
-            Tw.Error(res.code, res.msg).pop();
-          }
-        }
-        this._enableConfirmIfPossible();
-      }, this))
-      .fail($.proxy(function (err) {
-        this._isCertRequestSuccess = true;
-        this._enableConfirmIfPossible();
-        Tw.Error(err.code, err.msg).pop();
-      }, this));
+    this._requestCaptchaConfirm($.proxy(onCaptchaSuccess, this));
   },
   _enableCertBtnIfPossible: function () {
     if (Tw.FormatHelper.isEmpty(this.$inputNumber.val())) {
@@ -121,11 +125,19 @@ Tw.CertificationSkSmsRefund.prototype = {
 
     this.$btConfirm.removeAttr('disabled');
   },
-  _requestCaptchaConfirm: function () {
-    this._apiService.request(Tw.API_CMD.BFF_01_0055, {}, {}, this.$inputCaptcha.val())
+  _requestCaptchaConfirm: function (callback) {
+    this.$captchaError.addClass('none');
+
+    var answer = this.$inputCaptcha.val().trim();
+    if (answer === '') {
+      this.$captchaError.removeClass('none');
+      return;
+    }
+
+    this._apiService.request(Tw.API_CMD.BFF_01_0055, {}, {}, [answer])
       .done($.proxy(function (res) {
         if (res.code === Tw.API_CODE.CODE_00) {
-          this._requestCertConfirm();
+          callback();
         } else {
           this.$captchaError.removeClass('none');
         }

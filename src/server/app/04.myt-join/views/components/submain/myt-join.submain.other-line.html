@@ -13,7 +13,11 @@
         </span>
         <span class="cont">
             <span class="info-title"><%= data.nickNm %></span>
+            <%  if ( ['S1', 'S2'].indexOf(data.svcAttrCd) > -1 ) { %>
+            <span class="info-sub"><%= data.addr %></span>
+            <% } else { %>
             <span class="info-sub"><%= data.svcNum %></span>
+            <% } %>
         </span>
     </button>
 </li>

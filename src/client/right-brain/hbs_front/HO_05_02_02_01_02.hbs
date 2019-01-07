@@ -1,0 +1,44 @@
+<!-- .popup hbs -->
+<div class="popup-page tw-popup fixed-btn fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>검색의견 신청</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box noborder">
+                <p class="infoplus-search">{{data.title}}</p>
+                <form id="claim_list">
+                    <ul class="tworld-searchword">
+                        {{#each data.invstAnsw}}
+                            <li>
+                                <span class="custom-form"><input type="radio" name="r1" value="{{this.inqNum}}"><span class="r-type1"></span></span>
+                                <label for="ok1">{{this.inqCtt}}</label>
+                            </li>
+                        {{/each}}
+                    </ul>
+                </form>
+            </div>
+            <!--// .cont-box -->
+
+            <ul class="bt-slice full">
+                <li class="bt-red1">
+                    <button disabled="" class="request_claim">신청하기</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>
+<!--// .popup hbs -->

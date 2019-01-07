@@ -15,12 +15,12 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div class="wrap">
+    <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <%- include('../../../../common/views/components/header.component.html', { title: '지도보기', svcInfo, option: { line: true } }); %>
         <!-- #contents -->
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
-            <div class="container">
+            <div class="container" id="fe-map-container">
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-top">
                     <div class="map-box-wrap">
@@ -51,19 +51,20 @@
             </div>
         </div>
         <!--// #contents -->
-        <footer id="fe-all-menu">
-            <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
-            <%- include('../../../../../common/views/components/masking.component.html', { pageInfo: pageInfo }); %>
-        </footer>
+        <%- include('../../../../../common/views/components/footer.component.html', { pageInfo: pageInfo }); %>
     </div>
 </body>
 <% include ../../components/javascript.component.html %>
 <% include ../../components/tmap.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MembershipBenefitBrandMap($('#fe-tmap-box'), {
+    new Tw.MembershipBenefitBrandMap($('#fe-map-container'), {
       lon: '<%= result.googleMapCoordX %>',
       lat: '<%= result.googleMapCoordY %>'
+    },{
+      brandCd: '<%= result.brandCd %>',
+      brandNm: '<%= result.coPtnrNm %>',
+      cateCd: '00',
     });
   });
 </script>

@@ -12,6 +12,7 @@ Tw.BenefitMyBenefitRainbowPointTransfer = function () {
 };
 Tw.BenefitMyBenefitRainbowPointTransfer.prototype = $.extend({}, Tw.BenefitMyBenefitRainbowPointCommon.prototype, {
   _URL: {
+    ROOT: '/benefit/my',
     COMPLETE: '/benefit/my/rainbowpoint/transfer/complete'
   },
   _PREVIEW_POPUP_HBS: 'BS_01_01_04_01',
@@ -36,7 +37,7 @@ Tw.BenefitMyBenefitRainbowPointTransfer.prototype = $.extend({}, Tw.BenefitMyBen
 
   _cancelTransfer: function (serNum) {
     this._popupService.close();
-    this._apiService.request(Tw.API_CMD.BFF_05_0105, {}, {}, serNum)
+    this._apiService.request(Tw.API_CMD.BFF_05_0105, {}, {}, [serNum])
       .done($.proxy(this._cancelTransferDone, this))
       .fail($.proxy(this._reqFail, this));
   },

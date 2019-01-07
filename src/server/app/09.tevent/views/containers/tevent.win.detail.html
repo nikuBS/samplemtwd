@@ -27,7 +27,7 @@
                 <div class="cont-box">
                     <div class="evt-desc">
                         <div class="evt-tit"><%= result.prNm %></div>
-                        <div class="evt-cont"><%= result.startDate %> ~ <%= result.endDate %></div>
+                        <div class="evt-cont">기간 <%= result.startDate %> ~ <%= result.endDate %></div>
                         <div class="evt-cont">당첨자 발표 <%= result.winDate %></div>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <!-- .cont-box -->
                 <div class="cont-box nogaps">
-                    <iframe src="<%= result.prUrl %>" height="<%= result.height %>"></iframe>
+                    <iframe src="<%= result.winUrl %>" height="<%= result.height %>"></iframe>
                 </div>
                 <!--// .cont-box -->
             </div>

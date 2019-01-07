@@ -80,7 +80,7 @@ Tw.NicknameComponent.prototype = {
       var params = {
         nickNm: nickname
       };
-      this._apiService.request(Tw.API_CMD.BFF_03_0006, params, {}, this._svcMgmtNum)
+      this._apiService.request(Tw.API_CMD.BFF_03_0006, params, {}, [this._svcMgmtNum])
         .done($.proxy(this._successChangeNickname, this, nickname));
 
     } else {

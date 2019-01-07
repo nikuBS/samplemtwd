@@ -13,7 +13,6 @@ import DateHelper from '../../utils/date.helper';
 import { API_ADD_SVC_ERROR, API_CMD, API_CODE, API_MYT_ERROR, API_TAX_REPRINT_ERROR } from '../../types/api-command.type';
 import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
 import { MYT_FARE_PAYMENT_ERROR } from '../../types/string.type';
-import { BANNER_MOCK } from '../../mock/server/radis.banner.mock';
 import { REDIS_BANNER_ADMIN } from '../../types/redis.type';
 import { SVC_ATTR_NAME } from '../../types/bff.type';
 
@@ -52,72 +51,77 @@ class MyTFareSubmainController extends TwViewController {
         data.svcCount = parseInt(req.query.count, 10);
       }
     }
-    this.apiService.request(API_CMD.BFF_05_0036, {}).subscribe((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        const claim = resp.result;
-        if ( claim.repSvcYn === 'N' ) {
-          // 청구요금화면에서 대표청구번호 아닌 경우 사용요금으로 조회
-          if ( data.type !== 'UF' ) {
-            res.redirect('/myt-fare/submain/usagefee?count=' + claim.paidAmtMonthSvcCnt);
+    if ( svcInfo.svcAttrCd === 'M2' ) {
+      data.type = 'UF';
+      this._requestPPS(req, res, data, svcInfo);
+    } else {
+      this.apiService.request(API_CMD.BFF_05_0036, {}).subscribe((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          const claim = resp.result;
+          if ( claim.repSvcYn === 'N' ) {
+            // 청구요금화면에서 대표청구번호 아닌 경우 사용요금으로 조회
+            if ( data.type !== 'UF' ) {
+              res.redirect('/myt-fare/submain/usagefee?count=' + claim.paidAmtMonthSvcCnt);
+            }
+          } else {
+            if ( data.type === 'UF' ) {
+              // 사용요금화면에서 대표청구회선인 경우에는 청구화면으로 조회
+              res.redirect('/myt-fare/submain');
+            }
+            if ( claim.coClCd === 'B' ) {
+              // 사업자 브로드밴드 경우
+              this.error.render(res, {
+                title: MYT_FARE_SUBMAIN_TITLE.MAIN,
+                code: API_MYT_ERROR.BIL0011,
+                msg: MYT_FARE_PAYMENT_ERROR.COM_CODE_B,
+                svcInfo: svcInfo
+              });
+            }
+            if ( claim.invDt.length === 0 ) {
+              // no data
+              this.error.render(res, {
+                title: MYT_FARE_SUBMAIN_TITLE.MAIN,
+                code: '',
+                msg: MYT_FARE_PAYMENT_ERROR.DEFAULT,
+                svcInfo: svcInfo
+              });
+            }
           }
-        } else {
+          this.bannerUrl = REDIS_BANNER_ADMIN + pageInfo.menuId;
+          // PPS, 휴대폰이 아닌 경우는 서비스명 노출
+          if ( ['M1', 'M2'].indexOf(data.svcInfo.svcAttrCd) === -1 ) {
+            data.svcInfo.nickNm = SVC_ATTR_NAME[data.svcInfo.svcAttrCd];
+          }
           if ( data.type === 'UF' ) {
-            // 사용요금화면에서 대표청구회선인 경우에는 청구화면으로 조회
-            res.redirect('/myt-fare/submain');
+            this._requestUsageFee(req, res, data, svcInfo);
+          } else {
+            // 청구요금
+            if ( claim ) {
+              data.claim = claim;
+              data.claimFirstDay = DateHelper.getMonthFirstDay(claim.invDt);
+              data.claimLastDay = DateHelper.getMonthLastDay(claim.invDt);
+              // 사용요금
+              const usedAmt = parseInt(claim.useAmtTot, 10);
+              data.claimUseAmt = FormatHelper.addComma(usedAmt.toString());
+              // 할인요금
+              const disAmt = Math.abs(claim.deduckTotInvAmt);
+              data.claimDisAmt = FormatHelper.addComma(disAmt.toString());
+              // Total
+              data.claimPay = FormatHelper.addComma((usedAmt + disAmt).toString());
+            }
+            this._requestClaim(req, res, data, svcInfo);
           }
-          if ( claim.coClCd === 'B' ) {
-            // 사업자 브로드밴드 경우
-            this.error.render(res, {
-              title: MYT_FARE_SUBMAIN_TITLE.MAIN,
-              code: API_MYT_ERROR.BIL0011,
-              msg: MYT_FARE_PAYMENT_ERROR.COM_CODE_B,
-              svcInfo: svcInfo
-            });
-          }
-          if ( claim.invDt.length === 0 ) {
-            // no data
-            this.error.render(res, {
-              title: MYT_FARE_SUBMAIN_TITLE.MAIN,
-              code: '',
-              msg: MYT_FARE_PAYMENT_ERROR.DEFAULT,
-              svcInfo: svcInfo
-            });
-          }
-        }
-        this.bannerUrl = REDIS_BANNER_ADMIN + pageInfo.menuId;
-        // PPS, 휴대폰이 아닌 경우는 서비스명 노출
-        if ( ['M1', 'M2'].indexOf(data.svcInfo.svcAttrCd) === -1 ) {
-          data.svcInfo.nickNm = SVC_ATTR_NAME[data.svcInfo.svcAttrCd];
-        }
-        if ( data.type === 'UF' ) {
-          this._requestUsageFee(req, res, data, svcInfo);
-        } else {
-          // 청구요금
-          if ( claim ) {
-            data.claim = claim;
-            data.claimFirstDay = DateHelper.getMonthFirstDay(claim.invDt);
-            data.claimLastDay = DateHelper.getMonthLastDay(claim.invDt);
-            // 사용요금
-            const usedAmt = parseInt(claim.useAmtTot, 10);
-            data.claimUseAmt = FormatHelper.addComma(usedAmt.toString());
-            // 할인요금
-            const disAmt = Math.abs(claim.deduckTotInvAmt);
-            data.claimDisAmt = FormatHelper.addComma(disAmt.toString());
-            // Total
-            data.claimPay = FormatHelper.addComma((usedAmt + disAmt).toString());
-          }
-          this._requestClaim(req, res, data, svcInfo);
-        }
 
-      } else {
-        this.error.render(res, {
-          title: MYT_FARE_SUBMAIN_TITLE.MAIN,
-          code: resp.code,
-          msg: resp.msg,
-          svcInfo: svcInfo
-        });
-      }
-    });
+        } else {
+          this.error.render(res, {
+            title: MYT_FARE_SUBMAIN_TITLE.MAIN,
+            code: resp.code,
+            msg: resp.msg,
+            svcInfo: svcInfo
+          });
+        }
+      });
+    }
   }
 
   /**
@@ -164,11 +168,11 @@ class MyTFareSubmainController extends TwViewController {
       // 납부/청구 정보
       if ( paymentInfo ) {
         data.paymentInfo = paymentInfo;
-        // 자동납부인 경우
-        if ( paymentInfo.payMthdCd === '01' || paymentInfo.payMthdCd === '02' || paymentInfo.payMthdCd === 'G1' ) {
-          // 은행자동납부, 카드자동납부, 은행지로자동납부
-          data.isNotAutoPayment = false;
-        }
+        // 자동납부인 경우에도 버튼 노출하도록 변경 [DV001-10531]
+        // if ( paymentInfo.payMthdCd === '01' || paymentInfo.payMthdCd === '02' || paymentInfo.payMthdCd === 'G1' ) {
+        //   // 은행자동납부, 카드자동납부, 은행지로자동납부
+        //   data.isNotAutoPayment = false;
+        // }
       }
       // 최근납부내역
       if ( totalPayment ) {
@@ -229,11 +233,11 @@ class MyTFareSubmainController extends TwViewController {
         // 납부/청구 정보
         if ( paymentInfo ) {
           data.paymentInfo = paymentInfo;
-          // 자동납부인 경우
-          if ( paymentInfo.payMthdCd === '01' || paymentInfo.payMthdCd === '02' || paymentInfo.payMthdCd === 'G1' ) {
-            // 은행자동납부, 카드자동납부, 은행지로자동납부
-            data.isNotAutoPayment = false;
-          }
+          // 자동납부인 경우에도 버튼 노출하도록 변경 [DV001-10531]
+          // if ( paymentInfo.payMthdCd === '01' || paymentInfo.payMthdCd === '02' || paymentInfo.payMthdCd === 'G1' ) {
+          //   // 은행자동납부, 카드자동납부, 은행지로자동납부
+          //   data.isNotAutoPayment = false;
+          // }
         }
         // 소액결제
         if ( microPay ) {
@@ -263,6 +267,23 @@ class MyTFareSubmainController extends TwViewController {
     });
   }
 
+  _requestPPS(req, res, data, svcInfo) {
+    Observable.combineLatest(
+      this.redisService.getData(this.bannerUrl),
+    ).subscribe(([paymentInfo, microPay, contentPay, banner]) => {
+      // 납부/청구 정보
+      if ( banner && (banner.code === API_CODE.REDIS_SUCCESS) ) {
+        if ( !FormatHelper.isEmpty(banner.result) ) {
+          data.banner = this.parseBanner(banner.result);
+        }
+      }
+      data.isNotAutoPayment = false;
+      data.isPPS = true;
+      res.render('myt-fare.submain.html', { data });
+
+    });
+  }
+
   parseBanner(data: any) {
     const banners = data.banners;
     const sort = {};
@@ -283,14 +304,43 @@ class MyTFareSubmainController extends TwViewController {
     return result;
   }
 
+  recompare(a, b) {
+    const codeA = a.svcAttrCd.toUpperCase();
+    const codeB = b.svcAttrCd.toUpperCase();
+
+    let comparison = 0;
+    if ( codeA < codeB ) {
+      comparison = 1;
+    } else if ( codeA > codeB ) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
+  compare(a, b) {
+    const codeA = a.svcAttrCd.toUpperCase();
+    const codeB = b.svcAttrCd.toUpperCase();
+
+    let comparison = 0;
+    if ( codeA > codeB ) {
+      comparison = 1;
+    } else if ( codeA < codeB ) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
   convertOtherLines(target, items): any {
     const MOBILE = (items && items['m']) || [];
-    const OTHER = (items && items['o']) || [];
     const SPC = (items && items['s']) || [];
+    const OTHER = (items && items['o']) || [];
     const list: any = [];
+    MOBILE.sort(this.compare);
+    SPC.sort(this.recompare);
+    OTHER.sort(this.recompare);
     if ( MOBILE.length > 0 || OTHER.length > 0 || SPC.length > 0 ) {
       let nOthers: any = [];
-      nOthers = nOthers.concat(MOBILE, OTHER, SPC);
+      nOthers = nOthers.concat(MOBILE, SPC, OTHER);
       nOthers.filter((item) => {
         if ( target.svcMgmtNum !== item.svcMgmtNum ) {
           item.nickNm = item.eqpMdlNm || item.nickNm;
@@ -424,13 +474,6 @@ class MyTFareSubmainController extends TwViewController {
       } else {
         return null;
       }
-    });
-  }
-
-  _getBannerMock(): Observable<any> {
-    return Observable.create((obs) => {
-      obs.next(BANNER_MOCK);
-      obs.complete();
     });
   }
 }

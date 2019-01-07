@@ -158,17 +158,11 @@ skt_landing.widgets = {
           itemsW += radioItems.eq(i).outerWidth(true);
         }
         radioSlide.find('.select-list').css('width',itemsW + 1);
-        /*
-        if(itemsW <= skt_landing.util.win_info.get_winW()){
-          radioSlide.find('.select-list').css('width','100%');
-        }else if(itemsW > skt_landing.util.win_info.get_winW()){
-          radioSlide.find('.select-list').css('width',itemsW);
-        }
-        */
       }
 
       $(this).is(':checked') ? box.addClass('checked').attr('aria-checked',true) : box.removeClass('checked').attr('aria-checked',false);
       $(this).is(':disabled') ? box.addClass('disabled').attr('aria-disabled',true) : box.removeClass('disabled');
+      
       $(this).on('change', function () {
         if ($(this).prop('disabled')) return;
         var nameGroup = $('[name=' + $(this).attr('name') + ']').not(this);
@@ -280,6 +274,10 @@ skt_landing.widgets = {
         arrows: true,
         infinite: false,
         speed : 300,
+        // useTransform : false,
+        // mobileFirst : true,
+        // useCSS : false,
+        // useTransform : false,
         centerMode: false,
         focusOnSelect: false,
         touchMove : true,
@@ -298,19 +296,60 @@ skt_landing.widgets = {
       });
       _this.on('beforeChange', function (e) {
         setTimeout(function () {
-          $slides.eq(slideIndex).triggerHandler('click');
+          $slides.eq($slick.slickCurrentSlide()).triggerHandler('click');
         }, 0);
       });
       if($('.home-slider').length > 0){
-        _this.on('swipe', function () {
-          $('.home-slider .home-slider-belt')[0].slick.setOption({
-            swipe: false
-          })
-        })
-        _this.on('afterChange', function () {
-          $('.home-slider .home-slider-belt')[0].slick.setOption({
-            swipe: true
-          })
+        _this.on({
+          'mousedown' : function(){
+            $('.home-slider .home-slider-belt')[0].slick.setOption({
+              swipe: false
+            })
+          },
+          'touchstart' : function(){
+            $('.home-slider .home-slider-belt')[0].slick.setOption({
+              swipe: false
+            })
+          },
+          'mouseup' : function(){
+            setTimeout(function(){
+              $('.home-slider .home-slider-belt')[0].slick.setOption({
+                swipe: true
+              })
+            },200)
+          },
+          'edge' : function(){
+            setTimeout(function(){
+              $('.home-slider .home-slider-belt')[0].slick.setOption({
+                swipe: true
+              })
+            },200)
+          },
+          'setPosition' : function(){
+            setTimeout(function(){
+              $('.home-slider .home-slider-belt')[0].slick.setOption({
+                swipe: true
+              })
+            },200)
+          },
+          'beforeChange' : function(){
+            setTimeout(function(){
+              $('.home-slider .home-slider-belt')[0].slick.setOption({
+                swipe: true
+              })
+            },200)
+          },
+          'afterChange' : function(){
+            setTimeout(function(){
+              $('.home-slider .home-slider-belt')[0].slick.setOption({
+                swipe: true
+              })
+            },200)
+          },
+          'mousemove' : function(){
+          },
+          'swipe' : function(){
+          }
         })
       }
     });
@@ -573,9 +612,8 @@ skt_landing.widgets = {
         var items = tabList.find('li');
         var itemsW = parseInt(items.closest('ul').css('padding-left'))*2;
         for(var i=0,leng=items.length; i<leng; ++i){
-          itemsW += items.eq(i).outerWidth(true);
+          itemsW += Math.ceil(items.eq(i).outerWidth(true));
         }
-        // items.closest('ul').css('width',itemsW);
         if(skt_landing.util.win_info.get_winW() > itemsW){
           items.closest('ul').css('width','100%');
         }else{
@@ -647,9 +685,9 @@ skt_landing.widgets = {
           items = belt.find('> li'),
           itemsW = 0;
       for(var i=0; items.length > i; ++i){
-        itemsW += items.eq(i).outerWidth(true);
+        itemsW += Math.ceil(items.eq(i).outerWidth(true));
       }
-      belt.css('width', itemsW + 1);
+      belt.css('width', itemsW + 3);
       /*
       if(itemsW <= slide.width()){
         belt.css('width','100%');

@@ -35,14 +35,18 @@ Tw.CustomerEmail.prototype = {
     this.$btn_faq.on('click', $.proxy(this._openFaq, this));
     this.$close_faq.on('click', $.proxy(this._closeFaq, this));
     this.$container.on('click', '.cancel', $.proxy(this._onChangeContent, this));
-    this.$container.on('keyup', '.fe-text_title', $.proxy(this._onChangeContent, this));
-    this.$container.on('keyup', '.fe-text_content', $.proxy(this._onChangeContent, this));
+    this.$container.on('keyup blur change', '.fe-text_title', $.proxy(this._onChangeTitle, this));
+    this.$container.on('keyup blur change', '.fe-text_content', $.proxy(this._onChangeContent, this));
     this.$container.on('keyup', '.fe-service_phone', $.proxy(this._onKeyUpPhoneNumber, this));
     this.$container.on('keyup', '.fe-quality_phone', $.proxy(this._onKeyUpPhoneNumber, this));
+    this.$container.on('keyup', '.fe-service_email', $.proxy(this._onKeyUpEmail, this));
+    this.$container.on('keyup', '.fe-quality_email', $.proxy(this._onKeyUpEmail, this));
     this.$container.on('click', '.fe-btn_addr', $.proxy(this._onClickBtnAddr, this));
     this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
     this.$container.on('click', '.fe-service_sms', $.proxy(this._openSMSAlert, this));
     this.$container.on('click', '.fe-quality_sms', $.proxy(this._openSMSAlert, this));
+    this.$container.on('click', '.fe-term-private-collect', $.proxy(this._openTermLayer, this, '55'));
+    this.$container.on('click', '.fe-term-private-agree', $.proxy(this._openTermLayer, this, '37'));
   },
 
   _onClickBtnAddr: function (e) {
@@ -60,16 +64,59 @@ Tw.CustomerEmail.prototype = {
   _onKeyUpPhoneNumber: function (e) {
     var $elPhone = $(e.currentTarget);
     $elPhone.val(Tw.StringHelper.phoneStringToDash($elPhone.val()));
+    var $elErrorPhone = $elPhone.closest('.inputbox').siblings('.fe-error-phone');
+
+    if ( this._isValidPhone($elPhone.val()) ) {
+      $elErrorPhone.addClass('blind');
+    } else {
+      $elErrorPhone.removeClass('blind');
+    }
   },
 
-  _onChangeContent: function (e) {
+  _onKeyUpEmail: function (e) {
+    var $elEmail = $(e.currentTarget);
+    var $elErrorEmail = $elEmail.closest('.inputbox').siblings('.fe-error-email');
+
+    if ( this._isValidEmail($elEmail.val()) ) {
+      $elErrorEmail.addClass('blind');
+    } else {
+      $elErrorEmail.removeClass('blind');
+    }
+  },
+
+  _isValidPhone: function (sPhoneNumber) {
+    return Tw.ValidationHelper.isTelephone(sPhoneNumber) || Tw.ValidationHelper.isCellPhone(sPhoneNumber);
+
+  },
+
+  _isValidEmail: function (sEmail) {
+    return Tw.ValidationHelper.isEmail(sEmail);
+  },
+
+  _onChangeTitle: function (e) {
+    var nMaxTitle = 20;
     var $elTarget = $(e.currentTarget);
-    var len = $elTarget.val().length;
+    var sMaxValue = !!$elTarget.val() ? $elTarget.val().slice(0, nMaxTitle) : $elTarget.val();
     var $elLength = $elTarget
       .closest('.inputbox')
       .find('.byte-current');
 
-    $elLength.text(len);
+    $elTarget.val(sMaxValue);
+    $elLength.text(Tw.FormatHelper.convNumFormat(sMaxValue.length));
+
+    this.$container.trigger('validateForm');
+  },
+
+  _onChangeContent: function (e) {
+    var nMaxContent = 12000;
+    var $elTarget = $(e.currentTarget);
+    var sMaxValue = !!$elTarget.val() ? $elTarget.val().slice(0, nMaxContent) : $elTarget.val();
+    var $elLength = $elTarget
+      .closest('.inputbox')
+      .find('.byte-current');
+
+    $elTarget.val(sMaxValue);
+    $elLength.text(Tw.FormatHelper.convNumFormat(sMaxValue.length));
 
     this.$container.trigger('validateForm');
   },
@@ -109,11 +156,27 @@ Tw.CustomerEmail.prototype = {
   },
 
   _stepBack: function () {
-    this._popupService.openConfirmButton(Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG, Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-      $.proxy($.proxy(function () {
+    var confirmed = false;
+    this._popupService.openConfirmButton(
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+      $.proxy(function () {
+        confirmed = true;
         this._popupService.close();
-        this._history.goBack();
-      }, this), this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+      }, this),
+      $.proxy(function () {
+        if (confirmed) {
+          this._historyService.goBack();
+        }
+      }, this),
+      Tw.BUTTON_LABEL.NO,
+      Tw.BUTTON_LABEL.YES
+    );
+  },
+
+  _openTermLayer: function (sCode) {
+    // this._popupService.close();
+    Tw.CommonHelper.openTermLayer(sCode);
   }
 };
 

@@ -52,7 +52,7 @@
                         <% if(locals.cntcNum) { %>
                         <span class="block"><%= cntcNum %></span>
                         <% } %>
-                        <% if(locals.cntcNumRelNm) { %>
+                        <% if(locals.cntcNumRelNm && locals.cntcNumRelNm !== 'null') { %>
                         <span class="block">(관계 : <%= cntcNumRelNm %>)</span>
                          <% } %>
                     </span>

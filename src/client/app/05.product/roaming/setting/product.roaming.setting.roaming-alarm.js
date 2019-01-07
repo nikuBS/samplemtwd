@@ -35,6 +35,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       this.$addBtn = this.$container.find('#add_list');
       this.$confirmBtn = this.$container.find('#confirm_info');
       this.$alarmTemplate = this.$container.find('#alarm_template');
+      this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._goBack,this));
   },
     _go_back : function(){
       this._history.goBack();
@@ -70,7 +71,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       var requestValue = {
           'svcNumList' : [phoneObj]
       };
-      this._apiService.request(Tw.API_CMD.BFF_10_0020, requestValue, {},this._prodId).
+      this._apiService.request(Tw.API_CMD.BFF_10_0020, requestValue, {},[this._prodId]).
       done($.proxy(function (res) {
           if(res.code===Tw.API_CODE.CODE_00){
               this._addedList.push(phoneObj);
@@ -122,7 +123,12 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
   },
 
   _makeTemplate : function (phoneNum,idx) {
-      var templateData = { phoneData : { phoneNum : phoneNum, idx : idx } };
+      var maskedPhoneNum = {
+          serviceNumber1 : phoneNum.serviceNumber1,
+          serviceNumber2 : phoneNum.serviceNumber2.substring(0,2)+'**',
+          serviceNumber3 : phoneNum.serviceNumber3.substring(0,2)+'**'
+      };
+      var templateData = { phoneData : { phoneNum : maskedPhoneNum, idx : idx } };
       var handlebarsTemplate = Handlebars.compile(this.$alarmTemplate.html());
       this.$container.find('#alarm_list').append(handlebarsTemplate(templateData));
   },
@@ -133,7 +139,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
           'svcNumList' : this._addedList[selectedIndex]
       };
 
-      this._apiService.request(Tw.API_CMD.BFF_10_0019, requestValue, {},this._prodId).
+      this._apiService.request(Tw.API_CMD.BFF_10_0019, requestValue, {},[this._prodId]).
       done($.proxy(function (res) {
           if(res.code===Tw.API_CODE.CODE_00){
               this._addedList.splice(selectedIndex,1);

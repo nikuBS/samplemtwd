@@ -31,7 +31,7 @@ class ProductMobileplanSettingBandYT extends TwViewController {
       return this.error.render(res, data);
     }
 
-    this.apiService.request(API_CMD.BFF_10_0042, {}, {}, prodId)
+    this.apiService.request(API_CMD.BFF_10_0075, {}, {})
       .subscribe((coupleInfo) => {
         if ( coupleInfo.code === API_CODE.CODE_00 ) {
           if ( coupleInfo.result.coupleSetInfoList.length === 0 ) {

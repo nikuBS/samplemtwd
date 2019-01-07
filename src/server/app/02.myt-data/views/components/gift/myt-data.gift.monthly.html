@@ -29,7 +29,7 @@
                     <i class="icon-gift-88"><span class="blind">gift</span></i>
                 </span>
                 <div class="cont">
-                    <h2 class="tit ff-black"><%=item.dataQty%></h2>
+                    <h2 class="tit ff-black"><%=convertTDataSet(item.dataQty).data%> <%=convertTDataSet(item.dataQty).unit%></h2>
                     <span class="txt1 fs14"><%=item.svcNum%></span>
                 </div>
                 <span class="btn-r">
@@ -45,10 +45,11 @@
 <hr class="cont-sp type1" aria-hidden="true">
 <% } %>
 
+<% if ( autoList && autoList.length < 2 ) { %>
 <div class="cont-box b-line1">
     <div class="ti-caption-type01">
         <h2 class="tit">자동 선물 받는 분 번호
-            <button class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button>
+            <button class="btn-tip" id="DC_03_02_tip_01" page-id="DC_03_02"><i class="icon-badge-tip"><span class="blind">tip</span></i></button>
         </h2>
     </div>
     <div class="recently-tel-box new">
@@ -66,12 +67,12 @@
         </div>
         <span class="error-txt blind fe-error-phone01">휴대폰번호 자릿수를 확인해주세요. (10~11자리)</span>
         <span class="error-txt blind fe-error-phone02">휴대폰 번호가 올바르지 않습니다.</span>
-        <span class="error-txt blind fe-error-phone03">휴대폰 번호를 입력해 주세요.</span>
     </div>
     <p class="fs13 mt10"><a class="bt-link-tx underline fe-available_product">선물 받을 수 있는 요금제 확인</a></p>
 </div>
-
 <hr class="cont-sp type1" aria-hidden="true">
+<% } %>
+
 <% if ( autoList && autoList.length >= 2 ) { %>
 <div class="cont-box">
     <p class="fs16">결합가족 2회선을 이미 신청하셨습니다.<br>대상자를 변경하시려면 <strong>해지 후 신청</strong>해주세요.</p>
@@ -100,13 +101,13 @@
                                 <span class="radio-txt ff-tb">1<span class="light">GB</span></span>
                             </div>
                         </li>
-                        <li class="radiobox btn-type02" role="radio" aria-checked="false">
+                        <li class="radiobox btn-type02" role="radio" aria-checked="false" style="display:none">
                             <div class="form">
                                 <input type="radio" name="radio4" value="900" title="900MB">
                                 <span class="radio-txt ff-tb">900<span class="light">MB</span></span>
                             </div>
                         </li>
-                        <li class="radiobox btn-type02" role="radio" aria-checked="false">
+                        <li class="radiobox btn-type02" role="radio" aria-checked="false" style="display:none">
                             <div class="form">
                                 <input type="radio" name="radio4" value="800" title="800MB">
                                 <span class="radio-txt ff-tb">800<span class="light">MB</span></span>
@@ -124,7 +125,7 @@
                                 <span class="radio-txt ff-tb">600<span class="light">MB</span></span>
                             </div>
                         </li>
-                        <li class="radiobox btn-type02" role="radio" aria-checked="false" style="display:none">
+                        <li class="radiobox btn-type02" role="radio" aria-checked="false">
                             <div class="form">
                                 <input type="radio" name="radio4" value="500" title="500MB">
                                 <span class="radio-txt ff-tb">500<span class="light">MB</span></span>
@@ -148,7 +149,7 @@
                                 <span class="radio-txt ff-tb">200<span class="light">MB</span></span>
                             </div>
                         </li>
-                        <li class="radiobox btn-type02" role="radio" aria-checked="false"style="display:none">
+                        <li class="radiobox btn-type02" role="radio" aria-checked="false">
                             <div class="form">
                                 <input type="radio" name="radio4" value="100" title="100MB">
                                 <span class="radio-txt ff-tb">100<span class="light">MB</span></span>

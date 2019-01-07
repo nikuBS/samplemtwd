@@ -19,6 +19,8 @@ Tw.MyTJoinPhoneNumChgAlarmExt = function (rootEl, options) {
 
   this._bindEvent();
   this._onchangeUiCondition();
+
+  this._userChanged = false;
 };
 
 Tw.MyTJoinPhoneNumChgAlarmExt.prototype = {
@@ -35,14 +37,30 @@ Tw.MyTJoinPhoneNumChgAlarmExt.prototype = {
     this.$container.on('change', this.$radioSvcType, $.proxy(this._onchangeUiCondition, this));
     this.$container.on('change', this.$radioAlarmType, $.proxy(this._onchangeUiCondition, this));
     this.$container.on('click', '#btn-ok', $.proxy(this._onclickBtnOk, this));
+    this.$container.on('click', '#fe-prev-step', $.proxy(this._onclickBtnClose, this));
   },
 
+
+  _onclickBtnClose: function(){
+    if(this._userChanged) {
+
+      this._popupService.openConfirm(
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+        $.proxy(function(){
+          this._historyService.goLoad('/myt-join/submain');
+        }, this));
+    } else {
+      this._historyService.goBack();
+    }
+  },
 
   /**
    * 신청 조건 변경시(기간선택, 알람유형 선택시)
    * @private
    */
   _onchangeUiCondition: function(){
+    this._userChanged = true;
 
     if(this.$radioSvcType.checkedVal() === this._SVC_TYPE.EXT){
       $('#div-alarmtype').show();
@@ -77,10 +95,33 @@ Tw.MyTJoinPhoneNumChgAlarmExt.prototype = {
       param = {
         notiType : this.$radioAlarmType.checkedVal()  // 선택 알림유형
       };
+      this._requestServices(svcCmd, param, svcType);
 
     }else if(svcType === this._SVC_TYPE.CAN){   // 해지
       svcCmd = Tw.API_CMD.BFF_05_0183;
+
+      this._popupService.openConfirmButton(
+        Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A3.MSG,
+        Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A3.TITLE,
+        $.proxy(function(){
+          this._popupService.close();
+          this._requestServices(svcCmd, param, svcType);
+        }, this),
+        null,
+        null,
+        Tw.BUTTON_LABEL.TERMINATE
+      );
     }
+
+  },
+
+  /**
+   * service request
+   * @param svcCmd
+   * @param param
+   * @private
+   */
+  _requestServices: function(svcCmd, param, svcType){
 
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
@@ -140,6 +181,7 @@ Tw.MyTJoinPhoneNumChgAlarmExt.prototype = {
         Tw.Error(err.status, err.statusText).pop();
       });
   },
+
 
   /**
    * 완료페이지로 가기

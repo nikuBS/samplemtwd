@@ -27,6 +27,8 @@ Tw.MyTFareBillRainbow.prototype = {
     this.$fareSelector = this.$selectedTab.find('.fe-select-fare');
     this.$point = this.$selectedTab.find('.fe-point');
     this.$payBtn = this.$container.find('.fe-' + $targetId + '-pay');
+    this.$isValid = false;
+    this.$isSelectValid = true;
 
     this.$payBtn.show();
     this.$payBtn.siblings().hide();
@@ -35,11 +37,13 @@ Tw.MyTFareBillRainbow.prototype = {
     this.$container.on('click', '.fe-tab-selector > li', $.proxy(this._changeTab, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
+    this.$container.on('blur', '.fe-point', $.proxy(this._checkPoint, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-select-fare', $.proxy(this._selectFare, this));
     this.$container.on('click', '.fe-cancel', $.proxy(this._cancel, this));
     this.$container.on('click', '.fe-tab1-pay', $.proxy(this._onePay, this));
     this.$container.on('click', '.fe-tab2-pay', $.proxy(this._autoPay, this));
+    this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
   },
   _changeTab: function (event) {
     var $targetId = $(event.currentTarget).attr('id');
@@ -84,35 +88,65 @@ Tw.MyTFareBillRainbow.prototype = {
     var $target = $(event.currentTarget);
 
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
+      url: '/hbs/',
+      hbs: 'actionsheet01',
       layer: true,
-      title: Tw.POPUP_TITLE.SELECT_FARE,
-      data: Tw.POPUP_TPL.FARE_PAYMENT_RAINBOW
+      data: Tw.POPUP_TPL.FARE_PAYMENT_RAINBOW,
+      btnfloating: { 'class': 'fe-popup-close', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectPopupCallback, this, $target));
   },
   _selectPopupCallback: function ($target, $layer) {
-    $layer.on('click', '.point-type', $.proxy(this._setSelectedValue, this, $target));
+    $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
+    $layer.on('click', '.fe-popup-close', $.proxy(this._checkSelected, this));
+  },
+  _checkSelected: function () {
+    if (Tw.FormatHelper.isEmpty(this.$fareSelector.attr('id'))) {
+      this.$fareSelector.siblings('.fe-error-msg').show();
+      this.$fareSelector.focus();
+      this.$isSelectValid = false;
+    }
+    this._popupService.close();
   },
   _setSelectedValue: function ($target, event) {
-    var $selectedValue = $(event.currentTarget);
+    var $selectedValue = $(event.target);
     $target.attr('id', $selectedValue.attr('id'));
-    $target.text($.trim($selectedValue.text()));
+    $target.text($.trim($selectedValue.parents('label').text()));
+
+    this.$fareSelector.siblings('.fe-error-msg').hide();
+    this.$isSelectValid = true;
 
     this._checkIsAbled();
     this._popupService.close();
   },
-  _isValidForOne: function () {
-    return (this._validation.checkIsAvailablePoint(this.$point.val(),
-      parseInt(this.$standardPoint.attr('id'), 10),
-      Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27) &&
-      this._validation.checkIsMore(this.$point.val(), 1, Tw.ALERT_MSG_MYT_FARE.UP_TO_ONE) &&
-      this._validation.checkIsTenUnit(this.$point.val(), Tw.ALERT_MSG_MYT_FARE.TEN_POINT));
+  _checkPoint: function () {
+    var isValid = false;
+    var $message = this.$point.siblings('.fe-error-msg');
+    $message.empty();
+
+    if (!this._validation.checkEmpty(this.$point.val())) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V65);
+    } else if (!this._validation.checkIsAvailablePoint(this.$point.val(),
+        parseInt(this.$standardPoint.attr('id'), 10))) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27);
+    } else if (!this._validation.checkIsMore(this.$point.val(), 1)) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.UP_TO_ONE);
+    } else if (!this._validation.checkIsTenUnit(this.$point.val())) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.TEN_POINT);
+    } else {
+      isValid = true;
+    }
+
+    this.$isValid = this._validation.showAndHideErrorMsg(this.$point, isValid);
   },
   _isValidForAuto: function () {
-    return this._validation.checkIsMore(parseInt(this.$standardPoint.attr('id'), 10), 1000, Tw.ALERT_MSG_MYT_FARE.UP_TO_TEN);
+    var isValid = this._validation.checkIsMore(parseInt(this.$standardPoint.attr('id'), 10), 1000);
+    if (!isValid) {
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.UP_TO_TEN);
+    }
+    return isValid;
   },
   _onePay: function () {
-    if (this._isValidForOne()) {
+    if (this.$isValid && this.$isSelectValid) {
       var reqData = this._makeRequestDataForOne();
       this._apiService.request(Tw.API_CMD.BFF_07_0048, reqData)
         .done($.proxy(this._paySuccess, this, ''))
@@ -120,7 +154,7 @@ Tw.MyTFareBillRainbow.prototype = {
     }
   },
   _autoPay: function () {
-    if (this._isValidForAuto()) {
+    if (this._isValidForAuto() && this.$isSelectValid) {
       var reqData = this._makeRequestDataForAuto();
       this._apiService.request(Tw.API_CMD.BFF_07_0056, reqData)
         .done($.proxy(this._paySuccess, this, 'auto'))
@@ -158,5 +192,33 @@ Tw.MyTFareBillRainbow.prototype = {
       rbpChgRsnCd: 'A1'
     };
     return reqData;
-  }
+  },
+  _onClose: function () {
+    if (this._isChanged()) {
+      this._popupService.openConfirmButton(null, Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_CANCEL.TITLE,
+        $.proxy(this._closePop, this), $.proxy(this._afterClose, this));
+    } else {
+      this._historyService.goBack();
+    }
+  },
+  _isChanged: function () {
+    if (this.$selectedTab.attr('id') === 'tab1-tab') {
+      return !Tw.FormatHelper.isEmpty(this.$fareSelector.attr('id')) || !Tw.FormatHelper.isEmpty(this.$point.val());
+    } else {
+      if (this.$autoInfo.is(':visible')) {
+        return (this.$fareSelector.attr('id') !== this.$fareSelector.attr('data-origin-id'));
+      } else {
+        return !Tw.FormatHelper.isEmpty(this.$fareSelector.attr('id'));
+      }
+    }
+  },
+  _closePop: function () {
+    this._isClose = true;
+    this._popupService.closeAll();
+  },
+  _afterClose: function () {
+    if (this._isClose) {
+      this._popupService.close();
+    }
+  },
 };

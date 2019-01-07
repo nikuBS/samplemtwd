@@ -23,7 +23,7 @@ class BenefitSelectContract extends TwViewController {
         svcInfo: svcInfo,
         title: PRODUCT_TYPE_NM.JOIN
       };
-    this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, prodId)
+    this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, [prodId])
       .subscribe((basicInfo) => {
         if ( basicInfo.code !== API_CODE.CODE_00 ) {
           return this.error.render(res, Object.assign(renderCommonInfo, {
@@ -35,7 +35,7 @@ class BenefitSelectContract extends TwViewController {
           this.apiService.request(API_CMD.BFF_10_0062, {}, {})
             .subscribe((seldis) => {
               renderCommonInfo['isContractPlan'] = (seldis.result.isNoContractPlanYn === 'Y');
-              this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, prodId)
+              this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, [prodId])
                 .subscribe((joinTermInfo) => {
                   if ( joinTermInfo.code !== API_CODE.CODE_00 ) {
                     return this.error.render(res, Object.assign(renderCommonInfo, {
@@ -52,7 +52,7 @@ class BenefitSelectContract extends TwViewController {
                 });
             });
         } else {
-          this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, prodId)
+          this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, [prodId])
             .subscribe((joinTermInfo) => {
               if ( joinTermInfo.code !== API_CODE.CODE_00 ) {
                 return this.error.render(res, Object.assign(renderCommonInfo, {

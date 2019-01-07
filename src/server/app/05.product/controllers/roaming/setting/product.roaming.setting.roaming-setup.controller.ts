@@ -17,7 +17,7 @@ class ProductRoamingSettingRoamingSetup extends TwViewController {
     constructor() {
         super();
     }
-    render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
 
 
         const prodId = req.query.prod_id || null;
@@ -31,7 +31,7 @@ class ProductRoamingSettingRoamingSetup extends TwViewController {
 
             Observable.combineLatest(
                 this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
-                this.apiService.request(API_CMD.BFF_10_0091, {}, {}, prodId)
+                this.apiService.request(API_CMD.BFF_10_0091, {}, {}, [prodId])
             ).subscribe(([ prodRedisInfo, prodBffInfo ]) => {
 
                 if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00)) {
@@ -47,7 +47,8 @@ class ProductRoamingSettingRoamingSetup extends TwViewController {
                     svcInfo : svcInfo,
                     prodRedisInfo : prodRedisInfo.summary,
                     prodBffInfo : prodBffInfo.result,
-                    prodId : prodId
+                    prodId : prodId,
+                    pageInfo : pageInfo
                 });
         });
 

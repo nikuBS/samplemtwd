@@ -58,7 +58,7 @@ Tw.MyTFareBillSetChange.prototype = {
     this.$container.find('#fe-no-addr-area').addClass('none');
     this._addrArea.addClass('none');
 
-    if (Tw.FormatHelper.isEmpty(data.zip)) {
+    if (Tw.FormatHelper.isEmpty(data.zip) || !this._isChangeInfo) {
       this.$container.find('#fe-no-addr-area').removeClass('none');
     } else {
       this._addrArea.removeClass('none').find('input[name="zip"]').val(data.zip);
@@ -77,6 +77,18 @@ Tw.MyTFareBillSetChange.prototype = {
       this._toggleDisabledCheckbox(this._options.eq(2), true);
     } else {
       this._toggleDisabledCheckbox(this._options.eq(2), false);
+    }
+  },
+
+  _disabledOptions: function (context, disabled) {
+    if (disabled) {
+      context.find('.btn-switch')
+        .find('.switch-style').attr('aria-disabled', true)
+        .find('input').prop('disabled', true);
+    } else {
+      context.find('.btn-switch')
+        .find('.switch-style').removeAttr('aria-disabled')
+        .find('input').prop('disabled', false);
     }
   },
 
@@ -192,7 +204,7 @@ Tw.MyTFareBillSetChange.prototype = {
     }
 
     // 휴대폰 번호 전체 표시 여부
-    if ((mergeType !== 'HX' || mergeType !== 'HB')) {
+    if (!(mergeType === 'HX' || mergeType === 'HB')) {
       if (mergeType === 'BX') {
         if (lineType === 'S') {
           if (isDisplay) {
@@ -239,8 +251,13 @@ Tw.MyTFareBillSetChange.prototype = {
           if (this._data.kidsYn === 'Y') {
             if (isDisplay) {
               this._toggleElement(this._options.eq(3), true);
+              this._changeCcurNotiYn(this._options.eq(3).find('[name="ccurNotiYn"]'));
             } else {
               this._checkedSlideCheckbox('ccurNotiYn', _data.ccurNotiYn); // 법정대리인 함께 수령
+              // 법정대리인 함께 수령 Y 이면 disabled
+              if ('Y' === _data.ccurNotiYn) {
+                this._disabledOptions(this._options.eq(3),true, true);
+              }
             }
           }
         }
@@ -299,13 +316,17 @@ Tw.MyTFareBillSetChange.prototype = {
       var _inputName = $(e.currentTarget).data('el');
       $(Tw.StringHelper.stringf('input[name="{0}"]', _inputName)).val(Tw.StringHelper.phoneStringToDash(params.phoneNumber));
     }
+    this._onDisableSubmitButton();
+  },
+
+  _changeCcurNotiYn: function(context) {
+    var _isChecked = context.is(':checked');
+    this._toggleElement(context.data('toggleId'), _isChecked);
   },
 
   // 법정대리인 함께 수령 스위칭
   _onChangeCcurNotiYn: function (e) {
-    var _$this = $(e.currentTarget);
-    var _isChecked = _$this.is(':checked');
-    this._toggleElement(_$this.data('toggleId'), _isChecked);
+    this._changeCcurNotiYn($(e.currentTarget));
   },
 
   // 안내서 변경 및 정보변경 모달창
@@ -388,7 +409,8 @@ Tw.MyTFareBillSetChange.prototype = {
 
           switch (_validType) {
             case 'addr' :
-              if (!(_result = _valid.checkEmpty(_value, Tw.ALERT_MSG_MYT_FARE.V43))) {
+              if (!(_result = _valid.checkEmpty(_value))) {
+                Tw.Popup.openAlert(Tw.ALERT_MSG_MYT_FARE.V43);
                 return false;
               }
               break;
@@ -400,11 +422,19 @@ Tw.MyTFareBillSetChange.prototype = {
               break;
             case 'hp' :
               var _hpValue = _value.replace(/[^0-9]/g, '');
+              // 법정 대리인 번호 확인
               if ('ccurNotiSvcNum' === _this.attr('name')) {
-                _result = _valid.checkEmpty(_hpValue, Tw.ALERT_MSG_MYT_FARE.V41);
+                // 입력한 번호와 법정 대리인 번호가 다르면 알럿
+                if (_hpValue !== $this._data.ccurNotiSvcNum) {
+                  _result = false;
+                  Tw.Popup.openAlert(Tw.ALERT_MSG_MYT_FARE.V47);
+                  return false;
+                }
               }
               // 입력값 전체 자릿수가 10자리 미만일 경우
-              if (!(_result = _valid.checkMoreLength(_hpValue, 10, Tw.ALERT_MSG_MYT_FARE.V18))) {
+              if (_hpValue.length < 10) {
+                Tw.Popup.openAlert(Tw.ALERT_MSG_MYT_FARE.V18);
+                _result = false;
                 return false;
               }
               else if (!(_result = _valid.isCellPhone(_hpValue))) {
@@ -432,6 +462,7 @@ Tw.MyTFareBillSetChange.prototype = {
         }
       }// if end..
     });
+
 
     _reqData.toBillTypeCd = this._convertBillType();
     // 'T world 확인' 일 때
@@ -469,7 +500,7 @@ Tw.MyTFareBillSetChange.prototype = {
   _onSubmit: function () {
     var _result = this._checkValidation();
     if (_result.result) {
-      this._openModal(_result.data);
+      this._reqBFF_05_0027(_result.data);
     }
   },
 

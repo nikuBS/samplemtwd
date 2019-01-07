@@ -41,15 +41,22 @@ Tw.ProductRoamingMyUse.prototype = {
   },
   _checkLogin: function() {
     if (!this._options.isLogin) {
-      return this._popupService.openConfirm(
-        Tw.ALERT_MSG_PRODUCT.ALERT_3_A20.MSG,
-        Tw.ALERT_MSG_PRODUCT.ALERT_3_A20.TITLE,
-        $.proxy(
-          function () {
-            this._popupService.close();
-            this._tidLanding.goLogin();
-          }, this
-        ));
+      if( !Tw.Environment.init ) {
+        $(window).on(Tw.INIT_COMPLETE, $.proxy(this._openLoginConfirm, this));
+      } else {
+        this._openLoginConfirm();
+      }
     }
+  },
+  _openLoginConfirm: function() {
+    return this._popupService.openConfirm(
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A20.MSG,
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A20.TITLE,
+      $.proxy(
+        function () {
+          this._popupService.close();
+          this._tidLanding.goLogin();
+        }, this
+      ));
   }
 };

@@ -29,14 +29,15 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
   _cachedElement: function() {
     this.$inputPassword = this.$container.find('.fe-input-password');
     this.$confirmPassword = this.$container.find('.fe-confirm-password');
+    this.$inputRealPassword = this.$container.find('.fe-input-real-password');
+    this.$realConfirmPassword = this.$container.find('.fe-real-confirm-password');
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
   },
 
   _bindEvent: function() {
     this.$container.on('input', 'input', $.proxy(this._checkNumber, this));
     this.$container.on('blur', 'input', $.proxy(this._setMasking, this, 1));
-    // this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
-    this.$btnSetupOk.on('click', $.proxy(this._isValid, this));
+    this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
   },
 
   _checkNumber: function (event) {
@@ -61,7 +62,15 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
     var $value = $target.val();
     var length = $value.length;
 
-    var inputData = event.originalEvent.data;
+    var inputData = null;
+
+    if ($target.val().length > $hiddenTarget.val().length) {
+      inputData = $target.val()[$target.val().length - 1];
+    }
+
+    if ($target.val().length < $hiddenTarget.val().length) {
+      inputData = null;
+    }
 
     if (inputData !== undefined && !isNaN(inputData)) {
       if (inputData === null) {
@@ -77,8 +86,8 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
   },
 
   _isValid: function () {
-    var inputVal = this.$inputPassword.siblings().val('input');
-    var confirmVal = this.$confirmPassword.siblings().val('input');
+    var inputVal = this.$inputRealPassword.val();
+    var confirmVal = this.$realConfirmPassword.val();
 
     return (
       (this._validation.checkLength(inputVal, 4, Tw.ALERT_MSG_PASSWORD.A16)) &&
@@ -91,7 +100,7 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
 
   _convConfirmOptions: function() {
     this._confirmOptions = $.extend(this._confirmOptions, {
-      svcNumMask: this._confirmOptions.preinfo.svcNumMask,
+      svcNumMask: Tw.FormatHelper.conTelFormatWithDash(this._confirmOptions.preinfo.svcNumMask),
       toProdName: this._confirmOptions.preinfo.reqProdInfo.prodNm,
       toProdDesc: this._confirmOptions.preinfo.reqProdInfo.prodSmryDesc,
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
@@ -107,12 +116,12 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
     if (this._isValid()) {
       new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
         isMobilePlan: false,
-        noticeList: this._confirmOptions.prodNoticeList,
+        noticeList: this._confirmOptions.preinfo.joinNoticeList,
         joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
         typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
         settingSummaryTexts: [{
           spanClass: 'val',
-          text: Tw.PRODUCT_JOIN_SETTING_AREA_CASE[this._displayId] + ' ' + this._data.addList.length + Tw.PRODUCT_JOIN_SETTING_AREA_CASE.LINE
+          text: Tw.PRODUCT_JOIN_SETTING_AREA_CASE[this._displayId]
         }]
       }), $.proxy(this._prodConfirmOk, this));
     }
@@ -123,7 +132,7 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_10_0018, {
       password: $.trim(this.$inputPassword.siblings('input').val())
-    }, {}, this._prodId).done($.proxy(this._procJoinRes, this));
+    }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this));
   },
 
   _procJoinRes: function(resp) {
@@ -146,25 +155,17 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
         prodId: this._prodId,
         prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
         typeNm: Tw.PRODUCT_TYPE_NM.JOIN,
-        isBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
-        basFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo ?
-          this._confirmOptions.preinfo.reqProdInfo.basFeeInfo + Tw.CURRENCY_UNIT.WON : ''
+        isBasFeeInfo: this._confirmOptions.isNumberBasFeeInfo,
+        basFeeInfo: this._confirmOptions.isNumberBasFeeInfo ?
+          this._confirmOptions.toProdBasFeeInfo + Tw.CURRENCY_UNIT.WON : ''
       }
-    }, $.proxy(this._bindJoinResPopup, this), $.proxy(this._onClosePop, this), 'join_success');
+    }, null, $.proxy(this._onClosePop, this), 'join_success');
 
     this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
   },
 
-  _bindJoinResPopup: function($popupContainer) {
-    $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
-  },
-
-  _closePop: function() {
-    this._popupService.close();
-  },
-
   _onClosePop: function() {
-    this._historyService.go(-2);
+    this._historyService.goBack();
   }
 
 };

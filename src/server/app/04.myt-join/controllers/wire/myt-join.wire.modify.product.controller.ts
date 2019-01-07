@@ -36,12 +36,12 @@ class MyTJoinWireModifyProduct extends TwViewController {
   };
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    if ( svcInfo.svcAttrCd.indexOf('S') === -1 ) {
-      return this.error.render(res, {
-        title: MYT_JOIN_WIRE.MODIFY_PRODUCT.TITLE,
-        svcInfo: svcInfo
-      });
-    }
+    // if ( svcInfo.svcAttrCd.indexOf('S') === -1 ) {
+    //   return this.error.render(res, {
+    //     title: MYT_JOIN_WIRE.MODIFY_PRODUCT.TITLE,
+    //     svcInfo: svcInfo
+    //   });
+    // }
     this._svcInfo = svcInfo;
     const thisMain = this;
     this.reqQuery = req.query;

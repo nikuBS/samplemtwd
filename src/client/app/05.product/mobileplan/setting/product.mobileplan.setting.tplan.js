@@ -55,11 +55,15 @@ Tw.ProductMobileplanSettingTplan.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0014, {
       beforeTDiyGrCd: this._currentBenefitProdId,
       afterTDiyGrCd: $checked.val()
-    }, {}, $checked.val()).done($.proxy(this._procSetupOkRes, this));
+    }, {}, [$checked.val()]).done($.proxy(this._procSetupOkRes, this));
   },
 
   _procSetupOkRes: function(resp) {
     Tw.CommonHelper.endLoading('.container');
+
+    if (resp.code === 'ZCOLE0001') {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A46.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A46.TITLE);
+    }
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();

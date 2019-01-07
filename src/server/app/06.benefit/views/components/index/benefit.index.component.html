@@ -5,28 +5,34 @@
 -->
 <script id="productList" type="text/x-handlebars-template">
     {{#list}}
-    <li>
-        <button class="list" type="button" data-benefit-id="{{benefitId}}">
-            <em>
-                {{benefitNm}}
-                {{#ifCond useYn '===' '사용중' }}
-                    <span class="occupied">사용중</span>
-                {{/ifCond}}
-            </em>
-            <p>{{benefitDesc}}</p>
+    <li class="category-type">
+        <button type="button" class="link" data-benefit-id="{{benefitId}}">
+            <div class="text-field">
+                <h3 class="title">{{benefitNm}}</h3>
+                <p class="text">{{benefitDesc}}</p>
+            </div>
             {{#ifCond ../category '===' 'F01422'}}
                 {{#isNotEmpty benefitPrice}}
-                <span class="total">{{benefitText}} <strong>{{numComma benefitPrice}}</strong>원 </span>
+                <span class="total">{{benefitText}}
+                        {{#isNaN benefitPrice}}
+                            <strong>{{benefitPrice}}</strong>
+                        {{/isNaN}}
+                        {{^isNaN benefitPrice}}
+                            <strong>{{numComma benefitPrice}}</strong>원
+                        {{/isNaN}}
+                    </span>
                 {{/isNotEmpty}}
             {{/ifCond}}
-            <div>
+            <div class="tag-field">
                 {{#each tagList}}
-                    <span>{{tagNm}}</span>
+                    <span class="tag">#{{tagNm}}</span>
                 {{/each}}
             </div>
+            {{#ifCond useYn '===' '사용중' }}
+                <i class="state-tx"><span class="blind">사용 중</span></i>
+            {{/ifCond}}
             {{#isNotEmpty imgFullPath}}
-                hello
-                <span class="img"><img src="{{imgFullPath}}" alt="{{benefitNm}}"/></span>
+                <div class="img-field"><img src="{{cdn imgFullPath}}" alt="{{benefitNm}}"></div>
             {{/isNotEmpty}}
         </button>
     </li>

@@ -181,17 +181,16 @@
                                     <span class="input">
                                         <input data-target="input_hp" type="tel" name="" title="연락 가능한 연락처 입력" value=""
                                                placeholder="숫자만 입력" maxlength="13" />
-                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                        <button class="cancel" id="btn_hp_del"><span class="blind">삭제</span></button>
                                     </span>
                                 </span>
-                            <span class="error-txt" style="display: none;">휴대폰 번호가 올바르지 않습니다.</span>
-                            <span class="error-txt" style="display: none;">휴대폰 또는 일반전화를 등록해 주세요.</span>
+                            <span class="error-txt" id="spanHpValid"></span>
                         </div>
 
                         <div class="widget mt20">
                             <div class="widget-box check">
                                 <ul class="select-list" role="group">
-                                    <li data-target="phoneLi" class="checkbox type01" role="checkbox" aria-checked="false"/>
+                                    <li data-target="phoneLi" class="checkbox type01" role="checkbox" aria-checked="false">
                                         <input type="checkbox" name="checkbox-cust-cont" value="" title="회원정보 등록된 연락처">
                                         회원정보 등록된 연락처
                                     </li>
@@ -259,11 +258,11 @@
     </div>
     <!-- // .container-wrap -->
     <!-- .popup-closeBtn -->
-    <button class="prev-step">취소</button>
+    <button class="prev-step" id="page-prev-step">취소</button>
     <!--// .popup-closeBtn -->
 </div>
 <!-- // .popup hbs -->
-<%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+
 </div>
 
 

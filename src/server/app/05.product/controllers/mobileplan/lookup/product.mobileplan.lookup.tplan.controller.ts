@@ -51,7 +51,7 @@ class ProductMobileplanLookupTplan extends TwViewController {
             return true;
           }
 
-          const issueDtKey = DateHelper.getShortDateWithFormat(item.issueDt, 'MM.DD');
+          const issueDtKey = DateHelper.getShortDateWithFormat(item.issueDt, 'YYYY.M.DD.');
           if (FormatHelper.isEmpty(resultList[issueDtKey])) {
             resultList[issueDtKey] = {
               issueDtKey: issueDtKey,
@@ -61,10 +61,9 @@ class ProductMobileplanLookupTplan extends TwViewController {
 
           this._listTotal++;
           resultList[issueDtKey].list.push(Object.assign(item, {
-            issueDt: FormatHelper.isEmpty(item.issueDt) ? '' : DateHelper.getShortDateWithFormat(item.issueDt, 'YY.MM.DD'),
-            hpnDt: FormatHelper.isEmpty(item.hpnDt) ? '' : DateHelper.getShortDateWithFormat(item.hpnDt, 'YY.MM.DD'),
-            effDt: FormatHelper.isEmpty(item.effDt) ? '' : DateHelper.getShortDateWithFormat(item.effDt, 'YY.MM.DD'),
-            multipleClass: index > 0 ? 'multiple' : ''
+            issueDt: FormatHelper.isEmpty(item.issueDt) ? '' : DateHelper.getShortDateWithFormat(item.issueDt, 'YYYY.M.DD.'),
+            hpnDt: FormatHelper.isEmpty(item.hpnDt) ? '' : DateHelper.getShortDateWithFormat(item.hpnDt, 'YYYY.M.DD.'),
+            effDt: FormatHelper.isEmpty(item.effDt) ? '' : DateHelper.getShortDateWithFormat(item.effDt, 'YYYY.M.DD.')
           }));
         });
         break;
@@ -76,7 +75,7 @@ class ProductMobileplanLookupTplan extends TwViewController {
             return true;
           }
 
-          const benfStaDtKey = DateHelper.getShortDateWithFormat(item.benfStaDt, 'MM.DD');
+          const benfStaDtKey = DateHelper.getShortDateWithFormat(item.benfStaDt, 'YYYY.M.DD.');
           if (FormatHelper.isEmpty(resultList[benfStaDtKey])) {
             resultList[benfStaDtKey] = {
               benfStaDtKey: benfStaDtKey,
@@ -88,15 +87,14 @@ class ProductMobileplanLookupTplan extends TwViewController {
           resultList[benfStaDtKey].list.push(Object.assign(item, {
             prodNm: printProdId === 'NA00006116' ? item.watchDcNm : item.primProdNm,
             prodLabel: PRODUCT_INFINITY_BENEFIT_PROD_NM[printProdId],
-            benfStaDt: FormatHelper.isEmpty(item.benfStaDt) ? '' : DateHelper.getShortDateWithFormat(item.benfStaDt, 'YY.MM.DD'),
-            benfEndDt: FormatHelper.isEmpty(item.benfEndDt) ? '' : DateHelper.getShortDateWithFormat(item.benfEndDt, 'YY.MM.DD'),
-            multipleClass: index > 0 ? 'multiple' : ''
+            benfStaDt: FormatHelper.isEmpty(item.benfStaDt) ? '' : DateHelper.getShortDateWithFormat(item.benfStaDt, 'YYYY.M.DD.'),
+            benfEndDt: FormatHelper.isEmpty(item.benfEndDt) ? '' : DateHelper.getShortDateWithFormat(item.benfEndDt, 'YYYY.M.DD.')
           }));
         });
         break;
     }
 
-    return resultList;
+    return Object.keys(resultList).map(key => resultList[key]);
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
@@ -112,7 +110,7 @@ class ProductMobileplanLookupTplan extends TwViewController {
       reqParams.tDiyGrCd = tDiyGrCd;
     }
 
-    this.apiService.request(API_CMD.BFF_10_0015, reqParams, {}, 'NA00005959')
+    this.apiService.request(API_CMD.BFF_10_0015, reqParams, {}, ['NA00005959'])
       .subscribe((data) => {
         if (data.code !== API_CODE.CODE_00) {
           return this.error.render(res, Object.assign(renderCommonInfo, {

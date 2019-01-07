@@ -12,6 +12,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { DATA_UNIT } from '../../../../types/string.type';
 import ParamsHelper from '../../../../utils/params.helper';
+import StringHelper from '../../../../utils/string.helper';
 
 class MyTDataGift extends TwViewController {
   constructor() {
@@ -33,7 +34,8 @@ class MyTDataGift extends TwViewController {
         break;
       case 'auto-complete':
         const response = Object.assign({
-          params: ParamsHelper.getQueryParams(req.url)
+          params: ParamsHelper.getQueryParams(req.url),
+          convertMaskTelNumber: this.convertMaskTelNumber
         }, responseData);
 
         res.render('gift/myt-data.gift.auto-complete.html', response);
@@ -49,7 +51,6 @@ class MyTDataGift extends TwViewController {
             params: ParamsHelper.getQueryParams(req.url)
           }, responseData);
 
-
           res.render('gift/myt-data.gift.complete.html', response);
         });
         break;
@@ -61,6 +62,7 @@ class MyTDataGift extends TwViewController {
             { autoList: autoList },
             responseData
           );
+
           res.render('gift/myt-data.gift.html', response);
         });
     }
@@ -105,11 +107,11 @@ class MyTDataGift extends TwViewController {
       });
   }
 
-  public convertTDataSet(sQty) {
-    return FormatHelper.convDataFormat(sQty, DATA_UNIT.MB);
-  }
+  public convertTDataSet = (sQty) => FormatHelper.convDataFormat(sQty, DATA_UNIT.MB);
 
   public convertTelNumber = (sNumber) => FormatHelper.conTelFormatWithDash(sNumber.replace(/-/g, ''));
+
+  public convertMaskTelNumber = (sNumber) => StringHelper.maskPhoneNumber(sNumber);
 }
 
 export default MyTDataGift;

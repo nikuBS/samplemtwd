@@ -8,8 +8,7 @@ Tw.ProductRoamingJoinRoamingAlarm = function (rootEl,prodRedisInfo,prodBffInfo,s
 
   this.$container = rootEl;
   this._popupService = Tw.Popup;
-  this._history = new Tw.HistoryService(rootEl);
-  this._history.init('hash');
+  this._historyService = new Tw.HistoryService();
   this._bindElementEvt();
   this._nativeService = Tw.Native;
   this._addedList = [];
@@ -33,6 +32,8 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
       this.$inputElement = this.$container.find('#input_phone');
       this.$addBtn = this.$container.find('#add_list');
       this.$confirmBtn = this.$container.find('#confirm_info');
+      this.$alarmTemplate = this.$container.find('#alarm_template');
+      this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._goBack,this));
   },
   _clearInput : function(){
       this.$inputElement.val('');
@@ -108,19 +109,16 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     }
   },
 
-  _makeTemplate : function (phoneNum,idx) {
-      var template = '<li class="list-box">';
-          //template+='<div class="list-ico"><span class="ico type5">이</span></div>';
-          template+='<p class="list-text">';
-          //template+='<span class="mtext">이*름</span>';
-          template+='<span class="stext gray">'+phoneNum.serviceNumber1+'-'+phoneNum.serviceNumber2+'-'+phoneNum.serviceNumber3+'</span>';
-          template+='</p>';
-          template+='<div class="list-btn">';
-          template+='<div class="bt-alone"><button data-idx="'+idx+'" class="bt-line-gray1">삭제</button></div>';
-          template+='</div>';
-          template+='</li>';
-       this.$container.find('.comp-box').append(template);
-  },
+    _makeTemplate : function (phoneNum,idx) {
+        var maskedPhoneNum = {
+            serviceNumber1 : phoneNum.serviceNumber1,
+            serviceNumber2 : phoneNum.serviceNumber2.substring(0,2)+'**',
+            serviceNumber3 : phoneNum.serviceNumber3.substring(0,2)+'**'
+        };
+        var templateData = { phoneData : { phoneNum : maskedPhoneNum, idx : idx } };
+        var handlebarsTemplate = Handlebars.compile(this.$alarmTemplate.html());
+        this.$container.find('#alarm_list').append(handlebarsTemplate(templateData));
+    },
   _removeOnList : function ($args) {
 
       var selectedIndex = parseInt($($args).attr('data-idx'),10);
@@ -133,7 +131,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
    _doJoin : function(data,apiService,historyService,$containerData){
 
 
-        apiService.request(Tw.API_CMD.BFF_10_0018, data.userJoinInfo, {},data.prodId).
+        apiService.request(Tw.API_CMD.BFF_10_0018, data.userJoinInfo, {},[data.prodId]).
         done($.proxy(function (res) {
             if(res.code===Tw.API_CODE.CODE_00){
                 var completePopupData = {
@@ -165,7 +163,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
         this._historyService.goLoad('/product/roaming/my-use');
     },
     _goBack : function(){
-        this._historyService.goLoad('/product/callplan/'+this._prodId);
+        this._historyService.goBack();
     },
    _confirmInformationSetting : function () {
         var userJoinInfo = {
@@ -176,7 +174,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
             popupTitle : Tw.PRODUCT_TYPE_NM.JOIN,
             userJoinInfo : userJoinInfo,
             prodId : this._prodId,
-            svcNum : Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.showSvc),
+            svcNum : Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.svcNum),
             processNm : Tw.PRODUCT_TYPE_NM.JOIN,
             prodType : Tw.NOTICE.ROAMING+' '+Tw.PRODUCT_CTG_NM.PLANS,
             svcType : Tw.PRODUCT_CTG_NM.ADDITIONS,

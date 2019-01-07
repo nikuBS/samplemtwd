@@ -7,8 +7,10 @@
 Tw.MembershipBenefitMovieCulture = function ($element) {
   this.$container = $element;
   this._historyService = new Tw.HistoryService(this.$container);
+  this._apiService = Tw.Api;
+  this._nativeService = Tw.Native;
+  this._popupService = Tw.Popup;
   this._bindEvent();
-  console.log('MembershipBenefitMovieCulture created');
 };
 
 Tw.MembershipBenefitMovieCulture.prototype = {
@@ -17,25 +19,40 @@ Tw.MembershipBenefitMovieCulture.prototype = {
    * @private
    */
   _bindEvent: function () {
-    $('#btnMovTicket').click($.proxy(this._goMovieTicketing, this));
-    $('#btnFindTicket').click($.proxy(this._goFindTiketingOrCancel, this));
+    $('#btnMovTicket').click($.proxy(this._onClickFindTiketing, this, $.proxy(this._goMovieTicketing, this)));
+    $('#btnFindTicket').click($.proxy(this._onClickFindTiketing, this, $.proxy(this._goCulture, this)));
+  },
+
+  _onClickFindTiketing: function (callback) {
+    this._popupService.openConfirm(Tw.MEMBERSHIP.MOVIE_CULTURE_CINFIRM.MESSAGE,
+      Tw.MEMBERSHIP.MOVIE_CULTURE_CINFIRM.TITLE, callback);
+  },
+
+
+  /**
+   * 영화예매하기 사이트 이동
+   * @private
+   */
+  _goMovieTicketing: function () {
+    if ( Tw.BrowserHelper.isApp() ) {
+      Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.MEMBERSHIP_MOVIE_APP);
+    } else {
+      Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.MEMBERSHIP_MOVIE_WEB);
+    }
+    this._popupService.close();
   },
 
   /**
-   * 영화예매하기 버튼 클릭시
+   * 컬쳐 예매조회 사이트 이동
    * @private
    */
-  _goMovieTicketing: function(){
-    var mvUrl = 'https://tmovie.m.tmembership.tworld.co.kr:448/Movie/CurrentMovie.aspx';
-    this._historyService.goLoad(mvUrl);
-  },
 
-  /**
-   * 예매조회/취소 버튼 클릭시
-   * @private
-   */
-  _goFindTiketingOrCancel: function(){
-    var mvUrl = 'https://tmovie.m.tmembership.tworld.co.kr:448/MyMovie/MyOrder_List.aspx';
-    this._historyService.goLoad(mvUrl);
+  _goCulture: function () {
+    if ( Tw.BrowserHelper.isApp() ) {
+      Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.MEMBERSHIP_CULTURE_APP);
+    } else {
+      Tw.CommonHelper.openUrlExternal(Tw.URL_PATH.MEMBERSHIP_CULTURE_WEB);
+    }
+    this._popupService.close();
   }
 };

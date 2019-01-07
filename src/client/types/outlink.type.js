@@ -11,5 +11,10 @@ Tw.OUTLINK = {
   DIRECT_ACCESSORY: 'http://shop.tworld.co.kr/handler/AccessoryMall-MainAcc',
   DIRECT_PHONE: 'http://shop.tworld.co.kr/handler/Mobile-MobileMain?category_id=20010001',
   DIRECT_TABLET: 'http://shop.tworld.co.kr/handler/Mobile-MobileMain?category_id=20010002',
-  DIRECT_NUGU: 'http://shop.tworld.co.kr/handler/AccessoryMall-StartAcc?categoryId=10010003'
+  DIRECT_NUGU: 'http://shop.tworld.co.kr/handler/AccessoryMall-StartAcc?categoryId=10010003',
+  BROADBAND: 'http://www.skbroadband.com/Main.do',
+  MEMBERSHIP_MOVIE_APP: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/culture/movieList.do?bannerpoc=2018_168',
+  MEMBERSHIP_MOVIE_WEB: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/culture/movieList.do?bannerpoc=2018_169',
+  MEMBERSHIP_CULTURE_APP: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/culture/cultureList.do?bannerpoc=2018_166',
+  MEMBERSHIP_CULTURE_WEB: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/culture/cultureList.do?bannerpoc=2018_164'
 };

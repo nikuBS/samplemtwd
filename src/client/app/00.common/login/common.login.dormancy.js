@@ -4,21 +4,25 @@
  * Date: 2018.07.05
  */
 
-Tw.CommonLoginDormancy = function (rootEl) {
+Tw.CommonLoginDormancy = function (rootEl, target) {
   this.$container = rootEl;
+  this._historyService = new Tw.HistoryService();
+  this._apiService = Tw.Api;
+
+  this._target = target || '/main/home';
 
   this._bindEvent();
 };
 
 Tw.CommonLoginDormancy.prototype = {
   _bindEvent: function () {
-    this.$container.on('click', '#btn-activate', function() {
+    this.$container.on('click', '#btn-activate', function () {
       Tw.Api.request(Tw.NODE_CMD.LOGIN_USER_LOCK)
         .done(function (res) {
-          if (res.code === Tw.API_CODE.CODE_00) {
-            window.location = '/main/home';
-          } else if (res.code === Tw.API_LOGIN_ERROR.ICAS3228) {  // Need service password
-            window.location = '/common/member/login/cust-pwd';
+          if ( res.code === Tw.API_CODE.CODE_00 ) {
+            this._apiService.sendNativeSession(Tw.AUTH_LOGIN_TYPE.TID, $.proxy(this._successSetSession, this));
+          } else if ( res.code === Tw.API_LOGIN_ERROR.ICAS3228 ) {  // Need service password
+            this._historyService.goLoad('/common/member/login/cust-pwd');
           } else {
             Tw.Popup.openAlert(res.code + ' ' + res.msg);
           }
@@ -27,5 +31,8 @@ Tw.CommonLoginDormancy.prototype = {
           Tw.Logger.error('BFF_03_0010 Fail', err);
         });
     });
+  },
+  _successSetSession: function () {
+    this._historyService.goLoad(this._target);
   }
 };

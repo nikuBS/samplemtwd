@@ -43,7 +43,8 @@ Tw.ProductRoamingSearchResult.prototype = {
         this.$notiButton = this.$container.find('.fe-noti-btn');
         this.$userPhoneInfo = this.$container.find('#fe-search-phone');
         this._phoneInfo = {
-            eqpMdlNm : ''
+            eqpMdlNm : this._srchInfo.eqpMdlNm,
+            eqpMdlCd : this._srchInfo.eqpMdlCd
         };
         this.reqParams = {
             'countryCode': this._srchInfo.countryCd,
@@ -53,12 +54,11 @@ Tw.ProductRoamingSearchResult.prototype = {
 
         this._rmPhoneInfoTmpl = Handlebars.compile($('#fe-phone-info').html());
         this._rmPhoneSelectTmpl = Handlebars.compile($('#fe-phone-select').html());
-
         if(this._svcInfo !== null){
-            if(this._svcInfo.eqpMdlNm !== ''){
-                this.$userPhoneInfo.append(this._rmPhoneInfoTmpl({ items: this._svcInfo }));
+            if(this._phoneInfo.eqpMdlNm !== ''){
+                this.$userPhoneInfo.append(this._rmPhoneInfoTmpl({ items: this._phoneInfo }));
             }else {
-                if(this._srchInfo.eqpMdlNm !== ''){
+                if(this._phoneInfo.eqpMdlNm !== ''){
                     this.$userPhoneInfo.append(this._rmPhoneInfoTmpl({ items: this._srchInfo }));
                 }else {
                     this.$userPhoneInfo.append(this._rmPhoneSelectTmpl({ items: this._svcInfo }));
@@ -76,35 +76,46 @@ Tw.ProductRoamingSearchResult.prototype = {
         this.$container.find('.fe-search-input').val(this._srchInfo.countryNm);
         this.manageType = [];
         this.typeTxt = [];
-        if(this._rateInfo.lte > 0){
-            this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.lte].txt);
-            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.lte]);
-        }
-        if(this._rateInfo.wcdma > 0){
+
+        if (this._rateInfo.eqpMthdCd === 'W') {
             this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma].txt);
             this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma]);
-        }
-        if(this._rateInfo.cdma > 0){
-            this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma].txt);
-            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma]);
-        }
-        if(this._rateInfo.gsm > 0){
             this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm].txt);
             this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm]);
-        }
-        if(this._rateInfo.rent > 0){
-            this.reqParams.showDailyPrice = 'Y';
-            this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.R].txt);
-            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.R]);
-        }else {
-            this.reqParams.showDailyPrice = 'N';
-            if(this._svcInfo === null && this._srchInfo.eqpMdlNm === ''){
-                this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent].txt);
-                this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent]);
-            } else {
-                if(this._srchInfo.eqpMdlNm === ''){
+        } else if (this._rateInfo.eqpMthdCd === 'D') {
+            this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma].txt);
+            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma]);
+        } else {
+            if(this._rateInfo.lte > 0 && this._rateInfo.iLtePhone !== 'N'){
+                this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.lte].txt);
+                this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.lte]);
+            }
+            if(this._rateInfo.wcdma > 0){
+                this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma].txt);
+                this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma]);
+            }
+            if(this._rateInfo.cdma > 0){
+                this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma].txt);
+                this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma]);
+            }
+            if(this._rateInfo.gsm > 0){
+                this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm].txt);
+                this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm]);
+            }
+            if(this._rateInfo.rent > 0){
+                this.reqParams.showDailyPrice = 'Y';
+                this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.R].txt);
+                this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.R]);
+            }else {
+                this.reqParams.showDailyPrice = 'N';
+                if(this._svcInfo === null && this._srchInfo.eqpMdlNm === ''){
                     this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent].txt);
                     this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent]);
+                } else {
+                    if(this._srchInfo.eqpMdlNm === ''){
+                        this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent].txt);
+                        this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent]);
+                    }
                 }
             }
         }
@@ -139,6 +150,15 @@ Tw.ProductRoamingSearchResult.prototype = {
         this.$container.on('click', '#fe-phone-btn', $.proxy(this._onClickSelectBtn, this));
         this.$container.on('click', '.fe-rm-asiapass', $.proxy(this._goAsiaPassPlan, this));
         this.$container.on('click', '.fe-rm-europepass', $.proxy(this._goEuropePassPlan, this));
+        this.$container.on('click', '.fe-rm-data', $.proxy(this._goRoamingList, this, 'data'));
+        this.$container.on('click', '.fe-rm-voice', $.proxy(this._goRoamingList, this, 'voice'));
+    },
+    _goRoamingList: function (type) {
+        if(type === 'data') {
+            this._history.goLoad('/product/roaming/fee?filters=F01531');
+        } else if (type === 'voice') {
+            this._history.goLoad('/product/roaming/fee?filters=F01532');
+        }
     },
     _goAsiaPassPlan: function () {
         this._history.goLoad('/product/callplan/NA00005900');
@@ -149,6 +169,7 @@ Tw.ProductRoamingSearchResult.prototype = {
     _onClickSelectBtn: function () {
         if(this.modelValue !== '') {
             this._phoneInfo.eqpMdlNm = this.modelValue;
+            this._phoneInfo.eqpMdlCd = this.modelCode;
             this._srchInfo.eqpMdlNm = this.modelValue;
             this.$userPhoneInfo.empty();
             this.$userPhoneInfo.append(this._rmPhoneInfoTmpl({ items: this._phoneInfo }));
@@ -180,11 +201,11 @@ Tw.ProductRoamingSearchResult.prototype = {
         $layer.find('[data-model-nm="' + this.modelValue + '"]').attr('checked', 'checked');
         $layer.find('[name="r2"]').on('click', $.proxy(this._onPhoneSelect, this, $layer));
         $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
-        $layer.find('.popup-blind').on('click', $.proxy(this._popupService.close, this));
     },
     _onPhoneSelect: function ($layer, e) {
         var target = $(e.currentTarget);
         this.modelValue = target.attr('data-model-nm');
+        this.modelCode = target.attr('data-model-code');
 
         this.$container.find('.fe-roaming-model').text(this.modelValue);
         this._popupService.close();
@@ -252,6 +273,20 @@ Tw.ProductRoamingSearchResult.prototype = {
         this.$container.find('.round-dot-list li > a').attr('href', '/product/callplan/TW61000002');
         this.$container.find('.round-dot-list li > a').removeAttr('target');
 
+        if(_result.dablYn === 'Y') {
+            this._popupService.open({
+                'pop_name': 'type_tx_scroll',
+                'title': Tw.ROAMING_ERROR.TITLE,
+                'title_type': 'sub',
+                'cont_align': 'tl',
+                'contents': _result.dablCtt,
+                'bt_b': Tw.ROAMING_ERROR.BUTTON
+            }, null, $.proxy(this._onCloseRoamingNotice, this));
+        }
+
+    },
+    _onCloseRoamingNotice: function() {
+        this._popupService.close();
     },
     _closeRusNotiPopup: function ($layer) {
         $layer.on('click', '.bt-red1', $.proxy(this._selectOkBtn, this));
@@ -259,7 +294,10 @@ Tw.ProductRoamingSearchResult.prototype = {
     },
     _selectRoamingCenter: function () {
         this._popupService.close();
-        this._history.goLoad('/product/roaming/info/center');
+        setTimeout(function () {
+            window.location.href = '/product/roaming/info/center';
+        }, 300);
+
     },
     _selectOkBtn: function () {
         this._popupService.close();
@@ -281,7 +319,6 @@ Tw.ProductRoamingSearchResult.prototype = {
         $layer.find('[data-mfact-name="' + this.cdName + '"]').attr('checked', 'checked');
         $layer.find('[name="r2"]').on('click', $.proxy(this._getModelInfo, this, $layer));
         $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
-        $layer.find('.popup-blind').on('click', $.proxy(this._popupService.close, this));
     },
     _getModelInfo: function ($layer, e) {
         var target = $(e.currentTarget);
@@ -335,8 +372,11 @@ Tw.ProductRoamingSearchResult.prototype = {
     },
     _onChangeModel: function (){
         this._phoneInfo.eqpMdlNm = '';
+        this._phoneInfo.eqpMdlCd = '';
         this._srchInfo.eqpMdlNm = '';
+        this._srchInfo.eqpMdlCd = '';
         this.modelValue = '';
+        this.modelCode = '';
         this.cdName = '';
         this.$userPhoneInfo.empty();
         this.$userPhoneInfo.append(this._rmPhoneSelectTmpl({ items: null }));
@@ -370,7 +410,6 @@ Tw.ProductRoamingSearchResult.prototype = {
         $layer.find('[data-manage-type="' + this.reqParams.manageType + '"]').attr('checked', 'checked');
         $layer.find('[name="r2"]').on('click', $.proxy(this._handleSelectRoamingType, this, $layer));
         $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
-        $layer.find('.popup-blind').on('click', $.proxy(this._popupService.close, this));
     },
     _handleSelectRoamingType: function ($layer, e) {
         var $target = $(e.currentTarget);
@@ -402,11 +441,12 @@ Tw.ProductRoamingSearchResult.prototype = {
         var countryNm = encodeURIComponent(valueArr[1]);
 
         var eqpMdlNm = '';
+        var eqpMdlCd = this._phoneInfo.eqpMdlCd;
         if(this._srchInfo.eqpMdlNm !== ''){
             eqpMdlNm = encodeURIComponent(this._srchInfo.eqpMdlNm);
         }
 
-        var resultUrl = '/product/roaming/search-result?code=' + countryCode + '&nm=' + countryNm + '&eqpNm=' + eqpMdlNm;
+        var resultUrl = '/product/roaming/search-result?code=' + countryCode + '&nm=' + countryNm + '&eqpNm=' + eqpMdlNm + '&eqpCd=' + eqpMdlCd;
 
         this._history.goLoad(resultUrl);
     },
@@ -477,10 +517,11 @@ Tw.ProductRoamingSearchResult.prototype = {
             var countryNm = encodeURIComponent(_result[0].countryNm);
 
             var eqpMdlNm = '';
-            if(this._srchInfo.eqpMdlNm !== ''){
-                eqpMdlNm = encodeURIComponent(this._srchInfo.eqpMdlNm);
+            var eqpMdlCd = this._phoneInfo.eqpMdlCd;
+            if(this._phoneInfo.eqpMdlNm !== ''){
+                eqpMdlNm = encodeURIComponent(this._phoneInfo.eqpMdlNm);
             }
-            var resultUrl = '/product/roaming/search-result?code=' + countryCode + '&nm=' + countryNm + '&eqpNm=' + eqpMdlNm;
+            var resultUrl = '/product/roaming/search-result?code=' + countryCode + '&nm=' + countryNm + '&eqpNm=' + eqpMdlNm + '&eqpCd=' + eqpMdlCd;
 
             this._history.goLoad(resultUrl);
         }
@@ -488,8 +529,9 @@ Tw.ProductRoamingSearchResult.prototype = {
     _roamingDecriptonInit: function () {
         if(this._svcInfo !== null){
             this._svcInfo.totalSvcCnt = Number(this._svcInfo.totalSvcCnt);
+            this._svcAttrCd = this._svcInfo.svcAttrCd.charAt(0);
             if(this._svcInfo.totalSvcCnt > 1 ){
-                if(this._svcInfo.svcGr !== 'A'){
+                if(this._svcAttrCd !== 'M'){
                     this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_LINE_MSG);
                     this.$container.find('.fe-bottom-msg').html('');
                 } else {
@@ -503,8 +545,8 @@ Tw.ProductRoamingSearchResult.prototype = {
                     }
                 }
             }else if(this._svcInfo.totalSvcCnt === 1){
-                if(this._svcInfo.svcGr !== 'A'){
-                    this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_LINE_MSG);
+                if(this._svcAttrCd !== 'M'){
+                    this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_LOGIN_MSG);
                     this.$container.find('.fe-bottom-msg').html('');
                 } else {
                     if(this._srchInfo.eqpMdlNm !== ''){
@@ -516,6 +558,9 @@ Tw.ProductRoamingSearchResult.prototype = {
                         this.$container.find('.fe-bottom-msg').html(Tw.ROAMING_DESC.BOTTOM_NOTI_PHONE_MSG);
                     }
                 }
+            } else {
+                this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_NOTI_MSG);
+                this.$container.find('.fe-bottom-msg').html(Tw.ROAMING_DESC.BOTTOM_NOTI_PHONE_MSG);
             }
         } else {
             this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_NOTI_MSG);

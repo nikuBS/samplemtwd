@@ -12,13 +12,13 @@ import { API_CMD, API_CODE, API_T_FAMILY_ERROR } from '../../types/api-command.t
 import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
 import { CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE } from '../../types/string.type';
-import { MYT_DATA_SUBMAIN_TITLE } from '../../types/title.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { UNIT, UNIT_E } from '../../types/bff.type';
-import { BANNER_MOCK } from '../../mock/server/radis.banner.mock';
 import { REDIS_BANNER_ADMIN } from '../../types/redis.type';
 
 const skipIdList: any = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
+const tmoaBelongToProdList: any = ['NA00005959', 'NA00005958', 'NA00005957', 'NA00005956', 'NA00005955', 'NA00006157', 'NA00006156',
+  'NA00006155', 'NA00005627', 'NA00005628', 'NA00005629', 'NA00004891'];
 
 class MytDataSubmainController extends TwViewController {
   constructor() {
@@ -39,7 +39,6 @@ class MytDataSubmainController extends TwViewController {
       isApp: BrowserHelper.isApp(req)
     };
     Observable.combineLatest(
-      this._getFamilyMoaData(),
       this._getRemnantData(),
       this._getDataPresent(),
       this._getRefillCoupon(),
@@ -50,24 +49,35 @@ class MytDataSubmainController extends TwViewController {
       this._getEtcChargeBreakdown(),
       this._getRefillPresentBreakdown(),
       this._getRefillUsedBreakdown(),
-      this._getUsagePatternSevice(),
       this.redisService.getData(REDIS_BANNER_ADMIN + pageInfo.menuId),
-    ).subscribe(([family, remnant, present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern, banner]) => {
-      if ( !svcInfo.svcMgmtNum || remnant.info ) {
-        // 비정상 진입 또는 API 호출 오류
-        this.error.render(res, {
-          title: MYT_DATA_SUBMAIN_TITLE.MAIN,
-          code: remnant.info.code,
-          msg: remnant.info.msg,
-          svcInfo: svcInfo
-        });
-        return false;
-      }
-      // TODO: 실시간 잔여량 합산 API 정상 동작 후 재확인 필요
-      if ( remnant ) {
+    ).subscribe(([remnant, present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern, banner]) => {
+      if ( remnant.info ) {
+        data.remnant = remnant;
+      } else {
         data.remnantData = this.parseRemnantData(remnant);
-        if ( data.remnantData.gdata ) {
-          data.isDataInfo = true;
+        if ( data.remnantData.gdata && data.remnantData.gdata.length > 0 ) {
+          data.isDataShow = true;
+          if ( data.remnantData.tmoa && data.remnantData.tmoa.length > 0 ) {
+            // 가입
+            data.family = data.remnantData.tmoa[0];
+            data.family.remained = data.family.showRemained.data + data.family.showRemained.unit;
+            // T가족모아 가입가능한 요금제
+            data.family.isProdId = tmoaBelongToProdList.indexOf(data.svcInfo.prodId) > -1;
+          } else {
+            // 미가입
+            data.family = {
+              impossible: true
+            };
+          }
+        } else if ( data.remnantData.sdata && data.remnantData.sdata.length > 0 ) {
+          data.isSpDataShow = true;
+        } else if ( data.remnantData.voice && data.remnantData.voice.length > 0 ) {
+          data.isVoiceShow = true;
+        } else if ( data.remnantData.sms && data.remnantData.sms.length > 0 ) {
+          data.isSmsShow = true;
+        } else {
+          data.isDataShow = true;
+          data.emptyData = true;
         }
       }
 
@@ -99,23 +109,6 @@ class MytDataSubmainController extends TwViewController {
       if ( refill && refill.length > 0 ) {
         // 리필쿠폰
         data.refill = refill;
-      }
-
-      // T가족모아 데이터
-      if ( family && Object.keys(family).length > 0 ) {
-        if ( family.impossible ) {
-          // T가족모아 미가입인 경우
-          data.family = family;
-        } else {
-          data.family = this.convertFamilyData(family, svcInfo);
-          const remained = parseInt(data.family.shared, 10) - parseInt(data.family.used, 10);
-          data.family.remained = FormatHelper.convDataFormat(remained, DATA_UNIT.GB).data;
-          data.family.limitation = parseInt(data.family.limitation, 10);
-          // T가족모아 서비스는 가입되어있지만 공유 불가능하거나 미성년인 경우
-          if ( data.family.shrblYn === 'N' || data.family.adultYn === 'N' ) {
-            data.family.noshare = true;
-          }
-        }
       }
 
       // 최근 충전 및 선물 내역
@@ -199,18 +192,44 @@ class MytDataSubmainController extends TwViewController {
       if ( breakdownList.length > 0 ) {
         data.breakdownList = this.sortBreakdownItems(breakdownList);
       }
-      // 최근 데이터/음성/문자 사용량
-      if ( pattern ) {
-        data.pattern = pattern;
-      }
       // 배너 정보
-      if ( banner.code === API_CODE.REDIS_SUCCESS ) {
+      if ( banner && (banner.code === API_CODE.REDIS_SUCCESS) ) {
         if ( !FormatHelper.isEmpty(banner.result) ) {
           data.banner = this.parseBanner(banner.result);
         }
       }
 
-      res.render('myt-data.submain.html', { data });
+      if ( data.family && data.family.impossible ) {
+        res.render('myt-data.submain.html', { data });
+      } else {
+        // 가입이 가능한 경우에만
+        this.apiService.request(API_CMD.BFF_06_0044, {}).subscribe((family) => {
+          if ( family.code === API_CODE.CODE_00 ) {
+            if ( data.family ) {
+              data.family.limitation = parseInt(family.result.remained, 10);
+              // T가족모아 서비스는 가입되어있지만 공유 불가능한 요금제이면서 미성년인 경우
+              if ( !data.family.isProdId || family.result.adultYn === 'N' ) {
+                data.family.noshare = true;
+              }
+            } else {
+              data.family = family.result;
+            }
+          } else if ( family.code === API_T_FAMILY_ERROR.BLN0010 ) {
+            // T가족모아 가입 가능한 요금제이나 미가입으로 가입유도 화면 노출
+            if ( data.family ) {
+              data.family.impossible = true;
+            } else {
+              data.family = {
+                impossible: true
+              };
+            }
+          } else {
+            // 가입불가능한 요금제인 경우
+            data.family = null;
+          }
+          res.render('myt-data.submain.html', { data });
+        });
+      }
     });
   }
 
@@ -355,10 +374,24 @@ class MytDataSubmainController extends TwViewController {
     return list;
   }
 
+  compare(a, b) {
+    const codeA = a.svcAttrCd.toUpperCase();
+    const codeB = b.svcAttrCd.toUpperCase();
+
+    let comparison = 0;
+    if ( codeA > codeB ) {
+      comparison = 1;
+    } else if ( codeA < codeB ) {
+      comparison = -1;
+    }
+    return comparison;
+  }
+
   convertOtherLines(target, items): any {
     // 다른 회선은 휴대폰만 해당;
     const MOBILE = (items && items['m']) || [];
     const list: any = [];
+    MOBILE.sort(this.compare);
     if ( MOBILE.length > 0 ) {
       const nOthers: any = Object.assign([], MOBILE);
       nOthers.filter((item) => {
@@ -369,22 +402,6 @@ class MytDataSubmainController extends TwViewController {
       });
     }
     return list;
-  }
-
-  convertFamilyData(items, svcInfo): any {
-    let info: any = {
-      'total': items.total,
-      'adultYn': items.adultYn,
-    };
-    const list = items.mbrList;
-    if ( list ) {
-      list.filter((item) => {
-        if ( item.svcMgmtNum === svcInfo.svcMgmtNum ) {
-          info = Object.assign(info, item);
-        }
-      });
-    }
-    return info;
   }
 
   sortBreakdownItems(items): any {
@@ -547,31 +564,6 @@ class MytDataSubmainController extends TwViewController {
         // error
         return null;
       }
-    });
-  }
-
-  // 최근 사용패턴 사용량
-  _getUsagePatternSevice() {
-    const curDate = new Date().getDate();
-    return this.apiService.request(API_CMD.BFF_05_0091, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        // 1 ~ 4 일 (집계중으로표시하지 않음)
-        if ( curDate < 5 ) {
-          return null;
-        } else {
-          return resp.result;
-        }
-      } else {
-        // error
-        return null;
-      }
-    });
-  }
-
-  _getBannerMock(): Observable<any> {
-    return Observable.create((obs) => {
-      obs.next(BANNER_MOCK);
-      obs.complete();
     });
   }
 }

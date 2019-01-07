@@ -36,6 +36,7 @@ interface BranchDetail {
   apple: string;
   agnYn: string;
   authAgnYn: string;
+  talkMapArr?: Array<string>,
   star?: string;
 }
 
@@ -92,9 +93,11 @@ class CustomerAgentsearchDetail extends TwViewController {
       purified.custRateAvg += '.0';
     }
 
-    if (purified.agnYn === 'Y') {
+    if (purified.agnYn === 'Y' || purified.star.includes('NaN')) {
       purified.custRateCnt = '0';
     }
+
+    purified.talkMapArr = purified.talkMap.split(/<br.*?\/>/gi);
 
     return purified;
   }

@@ -8,10 +8,17 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { NextFunction, Request, Response } from 'express';
 import { Observable } from 'rxjs/Rx';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { MYT_DATA_CHARGE_TYPE_NAMES as TypeNames, UNIT, MYT_DATA_CHARGE_TYPES as ChargeTypeNames, ETC_CENTER } from '../../../../types/string.type';
+import {
+  MYT_DATA_CHARGE_TYPE_NAMES as TypeNames,
+  UNIT,
+  MYT_DATA_CHARGE_TYPES as ChargeTypeNames,
+  ETC_CENTER,
+  MYT_DATA_REFILL_TYPES
+} from '../../../../types/string.type';
 
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
+import { REFILL_USAGE_DATA_CODES } from '../../../../types/bff.type';
 
 enum RechargeTypes {
   DATA_GIFT,
@@ -86,8 +93,6 @@ export default class MyTDataHistory extends TwViewController {
 
   private getDataGifts = () => {
     return this.apiService.request(API_CMD.BFF_06_0018, { fromDt: this.fromDt, toDt: this.toDt }).map(resp => {
-      // const resp = DATA_GIFTS;
-
       if (resp.code !== API_CODE.CODE_00) {
         return resp;
       }
@@ -114,8 +119,6 @@ export default class MyTDataHistory extends TwViewController {
 
   private getLimitCharges = () => {
     return this.apiService.request(API_CMD.BFF_06_0042, { fromDt: this.fromDt, toDt: this.toDt, type: 1 }).map(resp => {
-      // const resp = LIMIT_CHARGES;
-
       if (resp.code !== API_CODE.CODE_00) {
         return resp;
       }
@@ -138,7 +141,6 @@ export default class MyTDataHistory extends TwViewController {
 
   private getTingCharges = () => {
     return this.apiService.request(API_CMD.BFF_06_0032, { fromDt: this.fromDt, toDt: this.toDt }).map(resp => {
-      // const resp = TING_CHARGES;
       if (resp.code !== API_CODE.CODE_00) {
         return resp;
       }
@@ -161,8 +163,6 @@ export default class MyTDataHistory extends TwViewController {
 
   private getTingGifts = () => {
     return this.apiService.request(API_CMD.BFF_06_0026, { fromDt: this.fromDt, toDt: this.toDt }).map(resp => {
-      // const resp = TING_GIFTS;
-
       if (resp.code !== API_CODE.CODE_00) {
         return resp;
       }
@@ -187,8 +187,6 @@ export default class MyTDataHistory extends TwViewController {
 
   private getRefillUsages = () => {
     return this.apiService.request(API_CMD.BFF_06_0002, {}).map(resp => {
-      // const resp = REFILL_USAGES;
-
       if (resp.code !== API_CODE.CODE_00) {
         return resp;
       }
@@ -205,7 +203,7 @@ export default class MyTDataHistory extends TwViewController {
             typeName: TypeNames.REFILL_USAGE,
             date: DateHelper.getShortDate(key),
             badge: 'recharge',
-            right: item.copnDtlClNm,
+            right: REFILL_USAGE_DATA_CODES.indexOf(item.copnDtlClCd) >= 0 ? MYT_DATA_REFILL_TYPES.DATA : MYT_DATA_REFILL_TYPES.VOICE,
             bottom: [item.opOrgNm || ETC_CENTER]
           };
         });
@@ -214,7 +212,6 @@ export default class MyTDataHistory extends TwViewController {
 
   private getRefillGifts = () => {
     return this.apiService.request(API_CMD.BFF_06_0003, { type: 0 }).map(resp => {
-      // const resp = REFILL_GIFTS;
       if (resp.code !== API_CODE.CODE_00) {
         return resp;
       }

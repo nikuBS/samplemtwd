@@ -36,10 +36,46 @@
             <% if (usageData && usageData.data && usageData.data.length > 0) { %>
             <%- include('../../components/usage/myt-data.usage.circle-graphbox.html', { type: 'data', color: 'red', typeStr: '데이터', items: usageData.data, usageData: usageData }); %>
             <% } %>
-
-
             <!--// .cont-box -->
             <hr class="cont-sp type1" aria-hidden="true" />
+
+            <% if (usageData && !usageData.hasDefaultData && balanceAddOns && balanceAddOns.dataSharing === 'Y') { %>
+            <div id="fe-data-share" class="cont-box pb0">
+                <div class="ti-caption-type01 fe-data-share-header">
+                    <h2 class="tit">데이터 함께쓰기
+                        <button class="btn-tip" id="TC000003"><i
+                            class="icon-badge-tip"><span class="blind">tip</span></i></button>
+                    </h2>
+                    <p class="num">총 사용
+                        <em></em>
+                        <span></span>
+                    </p>
+                </div>
+                <div class="data-list-type1">
+                    <script id="fe-child-tmpl" type="text/x-handlebars-template">
+                        <li>
+                            <span class="stit">{{ feeProdNm }}</span>
+                            <div class="sta">
+                                <span>설정일: {{ auditDtm }}</span>
+                                <span class="txt-type1">{{ svcNum }}</span>
+                            </div>
+                            <span class="use btn">
+                                <button type="button" class="btn-round2 btn-style3 fe-btn-used-data" data-svcmgmtnum="{{ svcMgmtNum }}">조회</button>
+                                <span class="fe-used-data-result" style="display: none;">
+                                    <strong>
+                                        <span class="str fe-data"></span>
+                                        <span class="fe-unit"></span>
+                                    </strong>사용
+                                </span>
+                            </span>
+                        </li>
+                    </script>
+                    <ul class="type1 fe-children"></ul>
+                </div>
+
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <% } %>
 
             <% if (balanceAddOns && balanceAddOns.tdataSharing === 'Y') { %>
             <div id="fe-tdata-share" class="cont-box pb0">
@@ -316,6 +352,7 @@
   $(document).ready(function () {
     new Tw.MyTDataUsage($('#myt-data-hotdata'), {
       svcAttrCd : '<%= svcInfo && svcInfo.svcAttrCd %>',
+      hasDefaultData: '<%= usageData && usageData.hasDefaultData %>',
       dataSharing : '<%= balanceAddOns && balanceAddOns.dataSharing %>',
       tdataSharing : '<%= balanceAddOns && balanceAddOns.tdataSharing %>',
       troamingSharing : '<%= balanceAddOns && balanceAddOns.troamingSharing %>',

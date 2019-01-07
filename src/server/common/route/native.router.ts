@@ -9,7 +9,6 @@ import LoginService from '../../services/login.service';
 class NativeRouter {
   public router: Router;
   private apiService: ApiService = new ApiService();
-  private loginService: LoginService = new LoginService();
 
   constructor() {
     this.router = express.Router();
@@ -53,12 +52,13 @@ class NativeRouter {
 
   private sendRequest(cmd: any, req: Request, res: Response, next: NextFunction) {
     this.apiService.setCurrentReq(req, res);
-    this.loginService.setCurrentReq(req, res);
 
     const params = cmd.method === API_METHOD.GET ? req.query : req.body;
     const pathVar = this.getPathVariable(req.params);
     const headers = req.headers;
-    this.apiService.request(cmd, params, headers, ...pathVar)
+    const version = req.params['version'];
+
+    this.apiService.request(cmd, params, headers, pathVar, version)
       .subscribe((data) => {
         return res.json(data);
       });
@@ -66,9 +66,9 @@ class NativeRouter {
 
   private getPathVariable(params) {
     if ( !FormatHelper.isEmpty(params) ) {
-      return Object.keys(params).map((key) => {
-        return params[key];
-      });
+      return Object.keys(params)
+        .filter((key) => key !== 'version')
+        .map((key) => params[key]);
     }
     return [];
   }

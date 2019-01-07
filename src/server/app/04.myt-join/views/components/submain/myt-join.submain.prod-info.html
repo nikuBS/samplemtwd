@@ -26,11 +26,7 @@
                 <button data-id="add-prod">
                     <span class="inner">
                         <span class="tit">
-                            <% if (data.type === 2 || data.type === 3) { %>
                             나의 부가서비스
-                            <% } else { %>
-                            나의 부가 상품
-                            <% } %>
                         </span>
                         <span class="text">
                             <% if (data.type === 2 || data.type === 3) { %>
@@ -56,39 +52,39 @@
                 <% } %>
             <% } %>
         <% } %>
-        <% if (data.type === 0) { %>
-            <% if (data.isInstallement) { %>
-            <li>
-                <button data-id="installement">
-                    <span class="inner">
-                        <span class="tit">약정할인 &middot; 기기상환 정보</span>
-                        <span class="text"><%= data.myInstallement.disProdNm %> <br/> <%= data.myInstallement.disMthCnt %>개월</span>
-                    </span>
-                </button>
-            </li>
-            <% } %>
-            <% if (data.isContractPlan) { %>
-            <li>
-                <button data-id="contract-plan">
-                    <span class="inner">
-                        <span class="tit">무약정 플랜 포인트</span>
-                        <span class="text"><%= data.myContractPlan.point %>P / <%= data.myContractPlan.count %>건</span>
-                    </span>
-                </button>
-            </li>
-            <% } %>
-        <% } else if (data.type === 2) { %>
+        <% if (data.type === 2) { %>
             <li>
                 <button data-id="wire-inq">
-                    <span class="inner">
-                        <span class="tit">인터넷 &middot; 집전화 &middot; IPTV 신청내역 및 조회</span>
-                    </span>
+                        <span class="inner">
+                            <span class="tit">인터넷 &middot; 집전화 &middot; IPTV 신청내역 및 조회</span>
+                        </span>
                 </button>
             </li>
             <% if (data.isWireFree) { %>
             <li>
                 <button data-id="B-target-inq">
                     <span class="tit">B끼리 무료통화 대상자 조회</span>
+                </button>
+            </li>
+            <% } %>
+        <% } else { %>
+            <% if (data.isInstallement) { %>
+            <li>
+                <button data-id="installement">
+                        <span class="inner">
+                            <span class="tit">약정할인 &middot; 기기상환 정보</span>
+                            <span class="text"><%= data.myInstallement.disProdNm %> <br/> <%= data.myInstallement.disMthCnt %>개월</span>
+                        </span>
+                </button>
+            </li>
+            <% } %>
+            <% if (data.isContractPlan) { %>
+            <li>
+                <button data-id="contract-plan">
+                        <span class="inner">
+                            <span class="tit">무약정 플랜 포인트</span>
+                            <span class="text"><%= data.myContractPlan.point %>P / <%= data.myContractPlan.count %>건</span>
+                        </span>
                 </button>
             </li>
             <% } %>

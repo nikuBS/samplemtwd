@@ -89,19 +89,18 @@ Tw.ValidationHelper = (function () {
     return findNumber.length >= length;
   }
 
-  /** 아래 check 및 alert 띄우는 validation은 client 한정이므로 따로 .ts에 구현하지 않겠습니다.
-   *  by Jayoon KONG (jayoon.kong@sk.com)
+  /** 아래 validation check function은 client 한정이므로 따로 .ts에 구현하지 않겠습니다.
+   *  by Jayoon Kong (jayoon.kong@sk.com)
    */
-  /* input 값을 입력하지 않았을 경우 alert 띄우는 function */
-  function checkEmpty(value, message) {
+  /* input 값을 입력하지 않았을 경우 */
+  function checkEmpty(value) {
     if (Tw.FormatHelper.isEmpty(value)) {
-      Tw.Popup.openAlert(message);
       return false;
     }
     return true;
   }
 
-  /* input 값의 길이가 맞지 않는 경우 alert 띄우는 function */
+  /* input 값의 길이가 맞지 않는 경우 */
   function checkLength(value, length, message) {
     if ($.trim(value).length !== length) {
       Tw.Popup.openAlert(message);
@@ -110,28 +109,25 @@ Tw.ValidationHelper = (function () {
     return true;
   }
 
-  /* input 값의 길이가 기준값보다 적은 경우 alert 띄우는 function */
-  function checkMoreLength(value, length, message) {
-    if ($.trim(value).length < length) {
-      Tw.Popup.openAlert(message);
+  /* input 값의 길이가 기준값보다 적은 경우 */
+  function checkMoreLength($target, length) {
+    if ($.trim($target.val()).length < length) {
       return false;
     }
     return true;
   }
 
-  /* input 값이 param보다 적은 경우 alert 띄우는 function */
-  function checkIsMore(value, minVal, message) {
+  /* input 값이 param보다 적은 경우 */
+  function checkIsMore(value, minVal) {
     if (parseInt($.trim(value), 10) < minVal) {
-      Tw.Popup.openAlert(message);
       return false;
     }
     return true;
   }
 
   /* input 값이 param보다 적은 경우 alert 띄우고 값 변경해주는 function */
-  function checkIsMoreAndSet($standardSelector, $selector, message) {
+  function checkIsMoreAndSet($standardSelector, $selector) {
     if (parseInt($.trim($standardSelector.attr('id')), 10) < $selector.attr('id')) {
-      Tw.Popup.openAlert(message);
       $selector.attr('id', $standardSelector.attr('id'));
       $selector.text($standardSelector.text());
       return false;
@@ -149,58 +145,78 @@ Tw.ValidationHelper = (function () {
   }
 
   /* 포인트 정합성 체크 funtion */
-  function checkIsAvailablePoint(value, point, message) {
+  function checkIsAvailablePoint(value, point) {
     if (parseInt($.trim(value), 10) > parseInt(point, 10)) {
-      Tw.Popup.openAlert(message);
       return false;
     }
     return true;
   }
 
   /* 포인트 10점 단위 체크 function */
-  function checkIsTenUnit(value, message) {
+  function checkIsTenUnit(value) {
     value = $.trim(value);
     if (value[value.length - 1] !== '0') {
-      Tw.Popup.openAlert(message);
       return false;
     }
     return true;
   }
 
-  /* 은행명 선택하지 않았을 때 alert 띄우는 function */
-  function checkIsSelected($target, message, type) {
-    if (type === undefined || type === null) {
-      if ($target.attr('id') === undefined) {
-        Tw.Popup.openAlert(message);
-        return false;
-      }
+  /* 필수값 선택 여부 체크하는 function */
+  function checkIsSelected($target) {
+    if ($target.attr('id') === undefined) {
+      return false;
     }
     return true;
   }
 
   /* 카드 유효기간 체크하는 function */
-  function checkYear(year, month, message) {
-    if (parseInt($.trim(year), 10) < new Date().getFullYear() ||
-      (parseInt($.trim(year), 10) === new Date().getFullYear() && parseInt($.trim(month), 10) < new Date().getMonth() + 1)) {
-      Tw.Popup.openAlert(message);
+  function checkYear($targetY) {
+    var value = $targetY.val();
+    if (value.length < 4 || value < new Date().getFullYear()) {
       return false;
     }
     return true;
   }
 
-  function checkMonth(value, message) {
+  function checkMonth($targetM, $targetY) {
+    var value = $targetM.val();
     var months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
-    if (!months.includes($.trim(value))) {
-      Tw.Popup.openAlert(message);
+
+    if (months.indexOf(value) === -1 || value.length < 2 ||
+      (parseInt($targetY.val(), 10) === new Date().getFullYear() && value < new Date().getMonth() + 1)) {
       return false;
     }
     return true;
+  }
+
+  function checkExpiration($targetY, $targetM) {
+    var $focusTarget = null;
+    var isValid = false;
+    var message = Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6;
+
+    if (parseInt($.trim($targetY.val()), 10) < new Date().getFullYear()) {
+      $focusTarget = $targetY;
+    } else if ((parseInt($.trim($targetY.val()), 10) === new Date().getFullYear() &&
+      parseInt($.trim($targetM.val()), 10) < new Date().getMonth() + 1)) {
+      $focusTarget = $targetM;
+    } else if (!this.checkMonth($targetM)) {
+      $focusTarget = $targetM;
+    } else {
+      isValid = true;
+    }
+
+    if (isValid) {
+      $targetY.parents('.fe-exp-wrap').siblings('.fe-error-msg').hide();
+    } else {
+      $targetY.parents('.fe-exp-wrap').siblings('.fe-error-msg').text(message).show();
+      $focusTarget.focus();
+    }
+    return isValid;
   }
 
   /* 배수 체크하는 function */
-  function checkMultiple(value, standard, message) {
+  function checkMultiple(value, standard) {
     if (parseInt($.trim(value), 10) % standard !== 0) {
-      Tw.Popup.openAlert(message);
       return false;
     }
     return true;
@@ -249,6 +265,21 @@ Tw.ValidationHelper = (function () {
     return true;
   }
 
+  function showAndHideErrorMsg($target, isValid, message) {
+    var $message = $target.siblings('.fe-error-msg');
+    if (isValid) {
+      $message.hide();
+      return true;
+    } else {
+      $message.show();
+      if (message) {
+        $message.text(message);
+      }
+      $target.focus();
+    }
+    return false;
+  }
+
   return {
     regExpTest: regExpTest,
     isCellPhone: isCellPhone,
@@ -274,6 +305,8 @@ Tw.ValidationHelper = (function () {
     checkIsStraight: checkIsStraight,
     checkIsSameLetters: checkIsSameLetters,
     checkIsSame: checkIsSame,
-    checkIsDifferent: checkIsDifferent
+    checkIsDifferent: checkIsDifferent,
+    checkExpiration: checkExpiration,
+    showAndHideErrorMsg: showAndHideErrorMsg
   };
 })();

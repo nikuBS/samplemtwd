@@ -15,16 +15,16 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap step">
-    <!-- #header -->
+<div class="wrap" data-menuId="M000203">
     <div class="popup-page tw-popup nobg fixed-bottom h60">
-        <div class="header-wrap noborder">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>T끼리 데이터 선물</h1>
-                </div>
+    <!-- #header -->
+    <div class="header-wrap noborder">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>T끼리 데이터 선물</h1>
             </div>
         </div>
+    </div>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -38,12 +38,12 @@
                             <div class="tab-linker">
                                 <ul role="tablist" style="width: 100%;">
                                     <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1">
-                                        <a class="fe-replace-history" href="">바로 선물</a>
+                                        <a class="fe-replace-history" href="/myt-data/giftdata">바로 선물</a>
                                     </li>
                                     <!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
                                     <% if ( autoList ) { %>
                                     <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2">
-                                        <a class="fe-replace-history" href="#auto">자동 선물 (<span><%-autoList.length%></span>)</a>
+                                        <a class="fe-replace-history" href="/myt-data/giftdata?auto=true#auto">자동 선물 (<span><%-autoList.length%></span>)</a>
                                     </li>
                                     <% } %>
                                 </ul>
@@ -66,10 +66,8 @@
         </div>
     </div>
     <!--// #contents -->
-    <div class="popup-page tw-popup fe-layer_available_product" style="display:none">
-
-    </div>
-    <button class="prev-step fe-common-back">취소</button>
+    <div class="popup-page tw-popup fe-layer_available_product" style="display:none"></div>
+    <button class="prev-step">취소</button>
     </div>
 </div>
 </body>

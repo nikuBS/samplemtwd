@@ -8,11 +8,15 @@
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
-import { PRODUCT_REQUIRE_DOCUMENT_TYPE_NM } from '../../../../../types/string.type';
-import { PRODUCT_RESERVATION_REJECT } from '../../../../../types/bff.type';
+import {
+  PRODUCT_REQUIRE_DOCUMENT,
+  PRODUCT_REQUIRE_DOCUMENT_APPLY_RESULT, PRODUCT_REQUIRE_DOCUMENT_RS,
+  PRODUCT_REQUIRE_DOCUMENT_TYPE_NM
+} from '../../../../../types/string.type';
 import DateHelper from '../../../../../utils/date.helper';
 import FormatHelper from '../../../../../utils/format.helper';
 import {REDIS_PRODUCT_INFO} from '../../../../../types/redis.type';
+import {Observable} from 'rxjs/Observable';
 
 class ProductWireplanJoinRequireDocumentHistory extends TwViewController {
   constructor() {
@@ -20,48 +24,96 @@ class ProductWireplanJoinRequireDocumentHistory extends TwViewController {
   }
 
   /**
+   * @param reqDocInfo
+   * @param isJoined
    * @private
    */
-  private _convertReqDocInfo(reqDocInfo): any {
-    const nextDistbDt = FormatHelper.isEmpty(reqDocInfo.nextDistbDt) ? null :
-      DateHelper.getShortDateWithFormat(reqDocInfo.nextDistbDt, 'YYYY.MM.DD');
-
+  private _convertReqDocInfo(reqDocInfo: any, isJoined: boolean): any {
     return Object.assign(reqDocInfo, {
       opDtm: FormatHelper.isEmpty(reqDocInfo.opDtm) ? null :
-        DateHelper.getShortDateWithFormat(reqDocInfo.opDtm, 'YYYY.MM.DD'),
-      nextDistbDt: nextDistbDt,
-      resultText: FormatHelper.isEmpty(reqDocInfo.ciaInsptRsnCd) ? reqDocInfo.insptStNm :
-        this._getResultText(reqDocInfo.ciaInsptRsnCd, reqDocInfo.ciaInsptRsnNm, nextDistbDt),
-      isRetryReservation: !FormatHelper.isEmpty(reqDocInfo.ciaInsptRsnCd)
+        DateHelper.getShortDateWithFormat(reqDocInfo.opDtm, 'YYYY.M.DD.'),
+      resultText: this._getResultText(reqDocInfo, isJoined)
     });
   }
 
   /**
-   * @param ciaInsptRsnCd
-   * @param ciaInsptRsnNm
+   * @param reqDocInfo
+   * @param isJoined
+   * @private
+   */
+  private _getResultText(reqDocInfo: any, isJoined: boolean): any {
+    if (FormatHelper.isEmpty(reqDocInfo.ciaInsptRslt) ||
+      reqDocInfo.ciaInsptRslt !== PRODUCT_REQUIRE_DOCUMENT.NORMAL &&
+      reqDocInfo.ciaInsptRslt !== PRODUCT_REQUIRE_DOCUMENT.ABNORMAL) {
+      return {
+        list: [],
+        text: PRODUCT_REQUIRE_DOCUMENT_APPLY_RESULT.WORKING
+      };
+    }
+
+    if (reqDocInfo.ciaInsptRslt === PRODUCT_REQUIRE_DOCUMENT.ABNORMAL) {
+      const ciaInsptRsnCd: any = reqDocInfo.ciaInsptRsnCd.split(','),
+        nextDistbDt = FormatHelper.isEmpty(reqDocInfo.nextDistbDt) ? null :
+          DateHelper.getShortDateWithFormat(reqDocInfo.nextDistbDt, 'YYYY.M.DD.'),
+        rsnCdList = this._getRsnCdList(ciaInsptRsnCd, nextDistbDt);
+
+      if (rsnCdList.indexOf('000') !== -1 || rsnCdList.indexOf('174') !== -1) {
+        return {
+          list: rsnCdList,
+          text: PRODUCT_REQUIRE_DOCUMENT_APPLY_RESULT.NEED_DOCUMENT
+        };
+      }
+
+      if (FormatHelper.isEmpty(rsnCdList)) {
+        return {
+          list: [],
+          isRetry: true,
+          text: PRODUCT_REQUIRE_DOCUMENT_APPLY_RESULT.EXPIRE_DOCUMENT
+        };
+      }
+
+      return {
+        list: rsnCdList,
+        text: PRODUCT_REQUIRE_DOCUMENT_APPLY_RESULT.NEED_DOCUMENT_RETRY
+      };
+    }
+
+    if ((reqDocInfo.ciaInsptRslt === PRODUCT_REQUIRE_DOCUMENT.NORMAL) && isJoined) {
+      return {
+        list: [],
+        isCompleteAdditional: true,
+        text: PRODUCT_REQUIRE_DOCUMENT_APPLY_RESULT.COMPLETE_ADDITIONAL
+      };
+    }
+
+    return {
+      list: [],
+      isComlete: true,
+      text: PRODUCT_REQUIRE_DOCUMENT_APPLY_RESULT.COMPLETE
+    };
+  }
+
+  /**
+   * @param rsnCdList
    * @param nextDistbDt
    * @private
    */
-  private _getResultText(ciaInsptRsnCd: any, ciaInsptRsnNm: any, nextDistbDt: any): any {
+  private _getRsnCdList(rsnCdList: any, nextDistbDt: any): any {
     const resultText: any = [];
 
-    ciaInsptRsnCd.split(',').forEach((code) => {
+    rsnCdList.forEach((code) => {
       const insptCode = code.trim();
-      if (FormatHelper.isEmpty(PRODUCT_RESERVATION_REJECT['R' + insptCode])) {
+      if (FormatHelper.isEmpty(PRODUCT_REQUIRE_DOCUMENT_RS['R' + insptCode])) {
         return true;
       }
 
-      if (code === '000') {
-        resultText.push(PRODUCT_RESERVATION_REJECT['R' + insptCode]).replace('nextDistbDt', nextDistbDt);
+      if (insptCode === '000') {
+        resultText.push(PRODUCT_REQUIRE_DOCUMENT_RS['R' + insptCode].replace('YYYYMDD', nextDistbDt));
         return true;
       }
 
-      resultText.push(PRODUCT_RESERVATION_REJECT['R' + insptCode]);
+      resultText.push(PRODUCT_REQUIRE_DOCUMENT_RS['R' + insptCode]);
     });
-
-    if (FormatHelper.isEmpty(resultText)) {
-      return ciaInsptRsnNm;
-    }
 
     return resultText;
   }
@@ -92,20 +144,24 @@ class ProductWireplanJoinRequireDocumentHistory extends TwViewController {
         return this.error.render(res, renderCommonInfo);
       }
 
-      this.redisService.getData(REDIS_PRODUCT_INFO + reqDocInfo.result.necessaryDocumentInspectInfoList[0].svcProdCd)
-        .subscribe((prodRedisInfo) => {
-          if (prodRedisInfo.code !== API_CODE.CODE_00) {
-            return this.error.render(res, Object.assign(renderCommonInfo, {
-              code: prodRedisInfo.code,
-              msg: prodRedisInfo.msg
-            }));
-          }
-
-          res.render('wireplan/join/product.wireplan.join.require-document.history.html', Object.assign(renderCommonInfo, {
-            reqDocInfo: this._convertReqDocInfo(reqDocInfo.result.necessaryDocumentInspectInfoList[0]),
-            prodRedisInfo: prodRedisInfo.result
+      Observable.combineLatest(
+        this.apiService.request(API_CMD.BFF_05_0134, { prodId: reqDocInfo.result.necessaryDocumentInspectInfoList[0].svcProdCd }),
+        this.redisService.getData(REDIS_PRODUCT_INFO + reqDocInfo.result.necessaryDocumentInspectInfoList[0].svcProdCd)
+      ).subscribe(([ combineInfo, prodRedisInfo ]) => {
+        if (prodRedisInfo.code !== API_CODE.CODE_00) {
+          return this.error.render(res, Object.assign(renderCommonInfo, {
+            code: prodRedisInfo.code,
+            msg: prodRedisInfo.msg
           }));
-        });
+        }
+
+        const isJoined = combineInfo.code === API_CODE.CODE_00;
+
+        res.render('wireplan/join/product.wireplan.join.require-document.history.html', Object.assign(renderCommonInfo, {
+          reqDocInfo: this._convertReqDocInfo(reqDocInfo.result.necessaryDocumentInspectInfoList[0], isJoined),
+          prodRedisInfo: prodRedisInfo.result
+        }));
+      });
     });
   }
 }

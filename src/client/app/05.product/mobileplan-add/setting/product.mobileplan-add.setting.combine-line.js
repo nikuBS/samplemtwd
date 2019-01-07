@@ -52,6 +52,8 @@ Tw.ProductMobileplanAddSettingCombineLine.prototype = {
     }
 
     this.$inputNumber.val(res.params.phoneNumber);
+    this._toggleClearBtn();
+    this._toggleNumAddBtn();
   },
 
   _addNum: function() {
@@ -66,7 +68,7 @@ Tw.ProductMobileplanAddSettingCombineLine.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0020, {
       svcProdGrpId: this._svcProdGrpId,
       svcNumList: [this._getServiceNumberFormat(number)]
-    }, {}, this._prodId)
+    }, {}, [this._prodId])
       .done($.proxy(this._addDelNumRes, this));
   },
 
@@ -85,8 +87,8 @@ Tw.ProductMobileplanAddSettingCombineLine.prototype = {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A10.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A10.TITLE);
     }
 
-    this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON, null, $.proxy(this._delNumReq, this, $(e.currentTarget).parents('li').data('grp_id')));
+    this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON, Tw.BUTTON_LABEL.CLOSE, null, $.proxy(this._delNumReq, this, $(e.currentTarget).parents('li').data('grp_id')));
   },
 
   _delNumReq: function(grpId) {
@@ -95,11 +97,11 @@ Tw.ProductMobileplanAddSettingCombineLine.prototype = {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_10_0019, {
       chldSvcMgmtNum: grpId
-    }, {}, this._prodId).done($.proxy(this._addDelNumRes, this));
+    }, {}, [this._prodId]).done($.proxy(this._addDelNumRes, this));
   },
 
   _detectInputNumber: function() {
-    this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9.]/g, ''));
+    this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9]/g, ''));
     if (this.$inputNumber.val().length > 11) {
       this.$inputNumber.val(this.$inputNumber.val().substr(0, 11));
     }
@@ -113,7 +115,7 @@ Tw.ProductMobileplanAddSettingCombineLine.prototype = {
   },
 
   _toggleNumAddBtn: function() {
-    if (this.$inputNumber.val().length > 0) {
+    if (this.$inputNumber.val().length > 9) {
       this.$btnAddNum.removeAttr('disabled').prop('disabled', false);
     } else {
       this.$btnAddNum.attr('disabled', 'disabled').prop('disabled', true);

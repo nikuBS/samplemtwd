@@ -16,7 +16,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- #header -->
     <%- include('../../../../common/views/components/header.component.html', { title: 'T파이 임대', svcInfo: svcInfo }) %>
     <!--// #header -->
@@ -24,15 +24,16 @@
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
+                <hr class="cont-sp type4" aria-hidden="true"/>
             <!-- .cont-box -->
             <div class="cont-box">
                 <h3 class="tx-bold">T파이란?</h3>
                 <div class="cont-noti pt20">
-                    <span class="type3">전 세계 70여개국에서 무선인터넷을 이용 할 수 있도록 T로밍 전용 Wi-Fi 기기를 임대해드리는 서비스입니다.</span>
+                        <span class="type3">전세계 70여 개국에서 무선인터넷을 이용하실 수 있도록 T로밍 전용 와이파이 기기를 임대해드리는 서비스입니다.</span>
                 </div>
                 <ul class="bt-slice item-two mt30">
                     <li class="bt-white2" id="inquire-btn">
-                        <button>T파이 조회/취소</button>
+                        <button>T파이 조회&middot;취소</button>
                     </li>
                     <li class="bt-white2" id="reservation-btn">
                         <button>T파이 예약하기</button>
@@ -47,7 +48,7 @@
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">T파이 임대 방법</h3>
                 <div class="cont-noti pt20">
-                    <span class="type3">온라인 또는 고객센터를 통한 사전예약 후 임대가 가능합니다.(출국 2일 전 예약 가능)</span>
+                        <span class="type3">온라인 또는 고객센터를 통한 사전예약 후 임대하실 수 있습니다.(출국 2일 전 예약 가능)</span>
                 </div>
                 <div class="confirm-noti">
                     <!-- .widget -->
@@ -59,24 +60,20 @@
                                         <li class="acco-box">
                                             <div class="acco-tit">온라인 사전 예약 <button role="button" aria-pressed="false"></button></div>
                                             <div class="acco-cont type1">
-                                                <div class="basic-text">
-                                                    <div class="cont-noti">
-                                                        <ul class="bullet-type type6">
-                                                            <li><span class="tx-bold">T파이 임대 > T파이 예약</span> 메뉴를 통해 사전 예약이 가능합니다.</li>
-                                                        </ul>
-                                                    </div>
+                                                <div class="cont-noti">
+                                                    <ul class="bullet-type type6">
+                                                        <li><span class="tx-bold">T파이 임대 > T파이 예약</span> 메뉴를 통해 사전 예약하실 수 있습니다.</li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </li>
                                         <li class="acco-box">
                                             <div class="acco-tit">고객센터 사전 예약 <button role="button" aria-pressed="false"></button></div>
                                             <div class="acco-cont type1">
-                                                <div class="basic-text">
-                                                    <div class="cont-noti">
-                                                        <ul class="bullet-type type6">
-                                                            <li><span class="tx-bold">T로밍 고객센터 02-6343-9000</span>를 통해서도 사전 예약이 가능합니다.(SKT휴대폰에서 통화료 무료)</li>
-                                                        </ul>
-                                                    </div>
+                                                <div class="cont-noti">
+                                                    <ul class="bullet-type type6">
+                                                        <li><span class="tx-bold">T로밍 고객센터(02-6343-9000)</span>를 통해서도 사전 예약하실 수 있습니다. (SK텔레콤 휴대폰에서 통화료 무료)</li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </li>
@@ -224,10 +221,10 @@
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">꼭 확인해 주세요</h3>
                 <ul class="noti-list">
-                    <li>T파이 임대 이용 안내 <button id="RM_14_01_tip_01" page-id="M000499" type="button" class="tip-view" title="T파이 임대 이용 안내 정보보기" aria-haspopup="true">TIP</button></li>
-                    <li>유의 사항 <button id="RM_14_01_tip_02" page-id="M000499" type="button" class="tip-view" title="유의 사항 정보보기" aria-haspopup="true">TIP</button></li>
-                    <li>문의 사항 <button id="RM_14_01_tip_03" page-id="M000499" type="button" class="tip-view" title="문의 사항 정보보기" aria-haspopup="true">TIP</button></li>
-                    <li>서비스 제공 대상 <button id="RM_14_01_tip_04" page-id="M000499" type="button" class="tip-view" title="서비스 제공 대상 정보보기" aria-haspopup="true">TIP</button></li>
+                    <li>T파이 임대 이용 안내 <button id="RM_14_01_tip_01" type="button" class="tip-view" title="T파이 임대 이용 안내 정보보기" aria-haspopup="true">TIP</button></li>
+                    <li>유의 사항 <button id="RM_14_01_tip_02" type="button" class="tip-view" title="유의 사항 정보보기" aria-haspopup="true">TIP</button></li>
+                    <li>문의 사항 <button id="RM_14_01_tip_03" type="button" class="tip-view" title="문의 사항 정보보기" aria-haspopup="true">TIP</button></li>
+                    <li>서비스 제공 대상 <button id="RM_14_01_tip_04" type="button" class="tip-view" title="서비스 제공 대상 정보보기" aria-haspopup="true">TIP</button></li>
                 </ul>
             </div>
             <!--// .cont-box -->

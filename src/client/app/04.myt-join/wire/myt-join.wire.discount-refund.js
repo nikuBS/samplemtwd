@@ -25,7 +25,7 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
    * @private
    */
   _bindEvent: function () {
-    $('button').click($.proxy(this._requestData, this));
+    $('#btn-search').click($.proxy(this._requestData, this));
   },
 
   /**
@@ -43,14 +43,20 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
    */
   _requestData: function() {
     // Tw.CommonHelper.startLoading('.container', 'grey', true);
+    $('#btn-search').attr('disabled', true);
+    $('#divEmpty').hide();
+    $('.info-list-type1').hide();
     $('#divLoading').show();
 
     this._apiService.request(Tw.API_CMD.BFF_05_0158, {})
       .done($.proxy(function (resp) {
         // Tw.CommonHelper.endLoading('.container');
+        $('#btn-search').attr('disabled', false);
         $('#divLoading').hide();
 
         if( !resp || (resp.code !== Tw.API_CODE.CODE_00 && resp.code !== 'ZINVE8888')){
+          // $('.info-list-type1').hide();
+          // $('#divEmpty').show();
           Tw.Error(resp.code, resp.msg).pop();
           return;
         }
@@ -69,9 +75,9 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
           for ( var i = 0; i < list.length ; i++ ) {
             html += this._listTmpl( list[i] );
           }
-          $('.info-list-type1').show();
           $('#divEmpty').hide();
           $('#refund-list').html(html);
+          $('.info-list-type1').show();
         }else{
           $('.info-list-type1').hide();
           $('#divEmpty').show();
@@ -83,6 +89,7 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
       }, this))
       .fail(function (err) {
         // Tw.CommonHelper.endLoading('.container');
+        $('#btn-search').attr('disabled', false);
         $('#divLoading').hide();
         Tw.Error(err.status, err.statusText);
       });

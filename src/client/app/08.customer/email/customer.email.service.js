@@ -35,15 +35,39 @@ Tw.CustomerEmailService.prototype = {
   _request: function () {
     var serviceCategory = this.$service_depth1.data('service-depth1');
 
-    if ( !this._isValidServiceEmail() ) {
+    if ( !this._isValidServicePhone() ) {
       this._popupService.openAlert(
-        Tw.CUSTOMER_EMAIL.INVALID_EMAIL,
+        Tw.CUSTOMER_EMAIL.INVALID_PHONE,
         Tw.POPUP_TITLE.NOTIFY,
-        Tw.BUTTON_LABEL.CONFIRM
+        Tw.BUTTON_LABEL.CONFIRM,
+        $.proxy(function () {
+          setTimeout(function () {
+            $('.fe-service_phone').click();
+            $('.fe-service_phone').focus();
+          }, 500);
+        }, this)
       );
 
       return false;
     }
+
+    if ( !this._isValidServiceEmail() ) {
+      this._popupService.openAlert(
+        Tw.CUSTOMER_EMAIL.INVALID_EMAIL,
+        Tw.POPUP_TITLE.NOTIFY,
+        Tw.BUTTON_LABEL.CONFIRM,
+        $.proxy(function () {
+          setTimeout(function () {
+            $('.fe-service_email').click();
+            $('.fe-service_email').focus();
+          }, 500);
+        }, this)
+      );
+
+      return false;
+    }
+
+    //연락처 번호를 다시 확인해 주세요.
 
     switch ( serviceCategory ) {
       case 'CELL':
@@ -171,8 +195,12 @@ Tw.CustomerEmailService.prototype = {
     } else {
       $('.fe-service_register').prop('disabled', true);
     }
+  },
 
-    //  Tw.CUSTOMER_EMAIL
+  _isValidServicePhone: function () {
+    var sPhone = $('.fe-service_phone').val();
+
+    return Tw.ValidationHelper.isCellPhone(sPhone) || Tw.ValidationHelper.isTelephone(sPhone);
   },
 
   _isValidServiceEmail: function () {

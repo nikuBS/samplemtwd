@@ -18,7 +18,7 @@ class ProductRoamingSettingRoamingAlarm extends TwViewController {
     constructor() {
         super();
     }
-    render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+    render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
 
 
 
@@ -34,7 +34,7 @@ class ProductRoamingSettingRoamingAlarm extends TwViewController {
 
         Observable.combineLatest(
             this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
-            this.apiService.request(API_CMD.BFF_10_0021, {}, {}, prodId),
+            this.apiService.request(API_CMD.BFF_10_0021, {}, {}, [prodId]),
         ).subscribe(([ prodRedisInfo, prodBffInfo ]) => {
 
             if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00) ) {
@@ -51,7 +51,8 @@ class ProductRoamingSettingRoamingAlarm extends TwViewController {
                 prodRedisInfo : prodRedisInfo.summary,
                 prodBffInfo : prodBffInfo.result,
                 prodId : prodId,
-                phoneNum : StringHelper.phoneStringToDash(svcInfo.showSvc)
+                phoneNum : StringHelper.phoneStringToDash(svcInfo.svcNum),
+                pageInfo : pageInfo
             });
         });
 

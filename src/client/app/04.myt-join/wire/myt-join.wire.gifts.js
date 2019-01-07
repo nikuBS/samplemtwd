@@ -46,7 +46,7 @@ Tw.MyTJoinWireGifts.prototype = {
     // hasSKTWire:SK브로드밴드 가입여부(Y/N), resultValue:사은품 여부(Y/N)
     if('Y' === initData.hasSKTWire ){
       if( !Tw.Environment.cdn ) {
-        $(window).on('env', $.proxy(this._openSkbdPopup, this));
+        $(window).on(Tw.INIT_COMPLETE, $.proxy(this._openSkbdPopup, this));
       } else {
         this._openSkbdPopup();
       }

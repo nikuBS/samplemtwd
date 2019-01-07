@@ -48,6 +48,11 @@ class BenefitMyBenefit extends TwViewController {
         }
 
         const options = { svcInfo, pageInfo };
+        if ( membership.code === API_CODE.CODE_00 ) {
+          options['membership'] = membership.result.mbrGrCd;
+        } else {
+          options['membership'] = null;
+        }
         if ( ocb.result.svcYN === 'Y' ) {
           options['okCashback'] = this._dataPreprocess(ocb.result.availPt);
           options['t'] = this._dataPreprocess(ocb.result.availTPt);
@@ -88,10 +93,10 @@ class BenefitMyBenefit extends TwViewController {
         }
 
         // 결합할인
-        if ( parseInt(combination.result.etcCnt, 10) > 0 ) {
+      if ( combination.result.prodNm.trim() !== '' ) {
           options['bond'] = {
             name: combination.result.prodNm,
-            total: parseInt(combination.result.etcCnt, 10) + (combination.result.prodNm.trim() !== '' ? 1 : 0)
+            total: parseInt(combination.result.etcCnt, 10) + 1
           };
           options['count'] += options['bond'].total;
         }
@@ -103,9 +108,9 @@ class BenefitMyBenefit extends TwViewController {
         }
 
         // 장기가입 요금
-        if ( loyalty.result.dcList && loyalty.result.dcList.length > 0) {
+        if ( loyalty.result.dcList && loyalty.result.dcList.length > 0 ) {
           // 장기요금할인 복수개 가능여부 확인 필요
-          const dc =  loyalty.result.dcList[0];
+          const dc = loyalty.result.dcList[0];
           options['loyalty'] = `${dc.dcItmTypNm} ${dc.dcAmt}${dc.dcUnit}`;
           options['count'] += 1;
         }

@@ -27,7 +27,7 @@
                 <div class="cont-box">
                     <div class="evt-desc">
                         <div class="evt-tit"><%= result.prNm %></div>
-                        <div class="evt-cont"><%= result.startDate %> ~ <%= result.endDate %></div>
+                        <div class="evt-cont">기간 <%= result.startDate %> ~ <%= result.endDate %></div>
                     </div>
                 </div>
                 <!--// .cont-box -->
@@ -44,4 +44,9 @@
     </div>
 </body>
 <% include ../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    // new Tw.TeventDetail($('.wrap'));
+  });
+</script>
 <% include ../components/end.component.html %>

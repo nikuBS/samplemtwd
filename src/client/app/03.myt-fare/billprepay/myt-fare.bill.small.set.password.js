@@ -6,22 +6,24 @@
 
 Tw.MyTFareBillSmallSetPassword = function (rootEl, $target) {
   this.$container = rootEl;
+  this.$target = $target;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._commonHelper = Tw.CommonHelper;
   this._validation = Tw.ValidationHelper;
+  this._historyService = new Tw.HistoryService(rootEl);
 
-  this._init($target);
+  this._init();
 };
 
 Tw.MyTFareBillSmallSetPassword.prototype = {
-  _init: function ($target) {
-    var code = $target.attr('data-code');
+  _init: function () {
+    var code = this.$target.attr('data-code');
 
     if (code === Tw.API_CODE.CODE_00) {
-      var cpinCode = $target.attr('data-cpin');
-      var birth = $target.attr('data-birth');
+      var cpinCode = this.$target.attr('data-cpin');
+      var birth = this.$target.attr('data-birth');
 
       switch (cpinCode) {
         case 'NC': {
@@ -40,15 +42,21 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
         }
         case 'LC': {
           this._popupService.openConfirm(Tw.ALERT_MSG_MYT_FARE.PASSWORD_ADDITIONAL_INFO,
-            Tw.POPUP_TITLE.NOTIFY, $.proxy(this._goAdditionalService, this));
+            Tw.POPUP_TITLE.NOTIFY, $.proxy(this._confirmCallback, this), $.proxy(this._goAdditionalService, this));
           break;
         }
         case 'IC': {
+          this.$type = 'change';
+          this._popupService.open({
+            'hbs': 'MF_06_06'
+          }, $.proxy(this._openPassword, this, birth), null, 'set-pwd');
           break;
         }
         default:
           break;
       }
+    } else if (code === 'BIL0054') {
+      this._goProductService();
     }
   },
   _openPassword: function (birth, $layer) {
@@ -90,7 +98,7 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
   },
   _bindEvent: function () {
     this.$layer.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
-    this.$layer.on('keypress', '.required-input-field', $.proxy(this._setMaxValue, this));
+    this.$layer.on('input', '.required-input-field', $.proxy(this._setMaxValue, this));
     this.$layer.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$layer.on('click', '.fe-set', $.proxy(this._setPassword, this));
   },
@@ -110,7 +118,12 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
   },
   _setMaxValue: function (event) {
     var $target = $(event.currentTarget);
-    return $target.val().length < $target.attr('maxLength');
+    var maxLength = $target.attr('maxLength');
+    if ($target.attr('maxLength')) {
+      if ($target.val().length >= maxLength) {
+        $target.val($target.val().slice(0, maxLength));
+      }
+    }
   },
   _setPassword: function () {
     if (this._isValid()) {
@@ -168,7 +181,16 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
   _fail: function (err) {
     Tw.Error(err.code, err.msg).pop();
   },
+  _confirmCallback: function () {
+    this._close = true;
+    this._popupService.close();
+  },
   _goAdditionalService: function () {
-    this._commonHelper.openUrlExternal(Tw.URL_PATH.SET_PASSWORD);
+    if (this._isClose) {
+      this._historyService.goLoad('/myt-join/additions');
+    }
+  },
+  _goProductService: function () {
+    this._historyService.goLoad('/product/callplan/' + this.$target.attr('data-cpin'));
   }
 };

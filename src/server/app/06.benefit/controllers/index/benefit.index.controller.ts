@@ -1,6 +1,5 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {NextFunction, Request, Response} from 'express';
-import FormatHelper from '../../../../utils/format.helper';
 
 /**
  * FileName: benefit.index.controller.ts

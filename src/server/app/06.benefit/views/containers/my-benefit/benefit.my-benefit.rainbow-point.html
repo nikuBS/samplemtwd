@@ -35,7 +35,6 @@
                     <div class="charge-cont">
                         <span class="sub-disc05">
                             레인보우 포인트
-                            <button class="tip-view" id="BS_01_01_tip_01">정보보기</button>
                         </span>
                         <span class="tit tx-blue"><span class="charge-txt"><%= rainbowPointsInfo.usblPoint %></span>점</span>
                     </div>
@@ -77,7 +76,7 @@
                 <ul class="link-list type2">
                     <li>
                         <dl>
-                            <dt>포인트 합산<button class="tip-view" id="BS_01_01_tip_02">정보보기</button><!--레이어팝업으로 띄울경우 aria-haspopup="true" 속성 추가--></dt>
+                            <dt>포인트 합산<button class="tip-view" id="BS_01_01_tip_01">정보보기</button><!--레이어팝업으로 띄울경우 aria-haspopup="true" 속성 추가--></dt>
                             <dd>
                                 <a class="fe-anchor-go-adjustment" href="/benefit/my/rainbowpoint/adjustment">포인트 합산 화면 이동</a>
                             </dd>
@@ -85,7 +84,7 @@
                     </li>
                     <li>
                         <dl>
-                            <dt>청소년 - 법정대리인 간 양도<button class="tip-view" id="BS_01_01_tip_03">정보보기</button><!--레이어팝업으로 띄울경우 aria-haspopup="true" 속성 추가--></dt>
+                            <dt>청소년 - 법정대리인 간 양도<button class="tip-view" id="BS_01_01_tip_02">정보보기</button><!--레이어팝업으로 띄울경우 aria-haspopup="true" 속성 추가--></dt>
                             <dd>
                                 <a class="fe-anchor-go-transfer" href="/benefit/my/rainbowpoint/transfer">청소년 - 법정대리인 간 양도 화면 이동</a>
                             </dd>
@@ -100,38 +99,45 @@
             </div>
             <!-- .cont-box -->
             <div class="cont-box nogaps">
-                <ul class="list-comp-lineinfo type5 no-bt">
-                    <% for (var i = 0; i < rainbowPointHistories.length; i++) { %>
-                    <li>
-                        <div class="lineinfo-user">
-                            <span class="info-title"><%= rainbowPointHistories[i].opClNm %></span>
-                            <span class="info-sub">
-                                <span class="elem"><%= rainbowPointHistories[i].opDtl %></span>
-                                <span class="elem"><%= rainbowPointHistories[i].opDt %></span>
-                            </span>
+                <% if (rainbowPointHistories.length > 0) { %>
+                    <ul class="list-comp-lineinfo type5 no-bt">
+                        <% for (var i = 0; i < rainbowPointHistories.length; i++) { %>
+                        <li>
+                            <div class="lineinfo-user">
+                                <span class="info-title"><%= rainbowPointHistories[i].opClNm %></span>
+                                <span class="info-sub">
+                                    <span class="elem"><%= rainbowPointHistories[i].opDtl %></span>
+                                    <span class="elem"><%= rainbowPointHistories[i].opDt %></span>
+                                </span>
+                            </div>
+                            <div class="lineinfo-data">
+                                <span class="info-title">
+                                    <span class="num ff-tg-black"><%= rainbowPointHistories[i].point %></span><span class="unit ff-tg-medium">점</span>
+                                </span>
+                            </div>
+                        </li>
+                        <% } %>
+                    </ul>
+                    <% if (paging.needPaging) { %>
+                    <div class="paging-wrap top-line">
+                        <div class="paging">
+                            <% if (paging.prevPageIdx) { %>
+                            <a href="<%= paging.uri%>?curPage=<%= paging.prevPageIdx %>" role="button" class="prev"><span class="pg-blind">이전 페이지로 이동</span></a>
+                            <% } %>
+                            <% for ( var i = paging.startNum; i <= paging.endNum; i++) { %>
+                            <a href="<%= paging.uri%>?curPage=<%= i %>" role="button" class="<%= (paging.curPage == i) ? 'active' : '' %>" ><%= i %></a>
+                            <% } %>
+                            <% if (paging.nextPageIdx) { %>
+                            <a href="<%= paging.uri%>?curPage=<%= paging.nextPageIdx %>" role="button" class="next"><span class="pg-blind">다음 페이지로 이동</span></a>
+                            <% } %>
                         </div>
-                        <div class="lineinfo-data">
-                            <span class="info-title">
-                                <span class="num ff-tg-black"><%= rainbowPointHistories[i].point %></span><span class="unit ff-tg-medium">점</span>
-                            </span>
-                        </div>
-                    </li>
-                    <% } %>
-                </ul>
-                <% if (paging.needPaging) { %>
-                <div class="paging-wrap top-line">
-                    <div class="paging">
-                        <% if (paging.prevPageIdx) { %>
-                        <a href="<%= paging.uri%>?curPage=<%= paging.prevPageIdx %>" role="button" class="prev"><span class="pg-blind">이전 페이지로 이동</span></a>
-                        <% } %>
-                        <% for ( var i = paging.startNum; i <= paging.endNum; i++) { %>
-                        <a href="<%= paging.uri%>?curPage=<%= i %>" role="button" class="<%= (paging.curPage == i) ? 'active' : '' %>" ><%= i %></a>
-                        <% } %>
-                        <% if (paging.nextPageIdx) { %>
-                        <a href="<%= paging.uri%>?curPage=<%= paging.nextPageIdx %>" role="button" class="next"><span class="pg-blind">다음 페이지로 이동</span></a>
-                        <% } %>
                     </div>
-                </div>
+                    <% } %>
+                <% } else { %>
+                    <div class="contents-empty">
+                        <span class="ico type1"></span>
+                        <p class="desc">내역이 없습니다.</p>
+                    </div>
                 <% } %>
             </div>
             <!--// .cont-box -->
@@ -142,8 +148,8 @@
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">꼭 확인해 주세요</h3>
                 <ul class="noti-list">
-                    <li>적립 안내 <button type="button" class="tip-view" id="BS_01_01_tip_04">TIP</button></li>
-                    <li>사용 안내 <button type="button" class="tip-view" id="BS_01_01_tip_05">TIP</button></li>
+                    <li>적립 안내 <button type="button" class="tip-view" id="BS_01_01_tip_03">TIP</button></li>
+                    <li>사용 안내 <button type="button" class="tip-view" id="BS_01_01_tip_04">TIP</button></li>
                     <li>소멸예정포인트 안내 <button type="button" class="tip-view" id="BS_01_01_tip_06">TIP</button></li>
                 </ul>
             </div>

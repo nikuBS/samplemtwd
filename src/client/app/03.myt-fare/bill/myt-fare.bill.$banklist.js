@@ -8,7 +8,6 @@ Tw.MyTFareBillBankList = function (rootEl) {
   this.$bankList = [];
   this.$currentTarget = null;
   this.$container = rootEl;
-  this.$document = $(document);
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -29,20 +28,33 @@ Tw.MyTFareBillBankList.prototype = {
     }
   },
   _onOpenList: function ($layer) {
-    $layer.on('click', '.hbs-bank-name', $.proxy(this._getSelectedBank, this));
+    var $id = this.$currentTarget.attr('id');
+    if (!Tw.FormatHelper.isEmpty($id)) {
+      $layer.find('input#' + $id).attr('checked', 'checked');
+    }
+    $layer.on('change', '.ac-list', $.proxy(this._getSelectedBank, this));
+    $layer.on('click', '.fe-popup-close', $.proxy(this._checkSelected, this));
   },
   _getSelectedBank: function (event) {
     var $selectedBank = this.$currentTarget;
-    var $target = $(event.currentTarget);
+    var $target = $(event.target);
     $selectedBank.attr('id', $target.attr('id'));
-    $selectedBank.text($target.text());
+    $selectedBank.text($target.parents('label').text());
 
+    this.$currentTarget.parents('.fe-bank-wrap').find('.fe-bank-error-msg').hide();
     this._popupService.close();
 
     if (this._callbackFunction !== undefined) {
       var callbackFunction = this._callbackFunction;
       callbackFunction();
     }
+  },
+  _checkSelected: function () {
+    if (Tw.FormatHelper.isEmpty(this.$currentTarget.attr('id'))) {
+      this.$currentTarget.parents('.fe-bank-wrap').find('.fe-bank-error-msg').show();
+      this.$currentTarget.focus();
+    }
+    this._popupService.close();
   },
   _isNotExistBankList: function () {
     return Tw.FormatHelper.isEmpty(this.$bankList);
@@ -67,9 +79,9 @@ Tw.MyTFareBillBankList.prototype = {
     var formatList = [];
     for (var i = 0; i < bankList.length; i++) {
       var bankObj = {
-        option: 'hbs-bank-name',
-        attr: 'id=' + bankList[i].bankCardCoCd,
-        value: bankList[i].bankCardCoNm
+        'label-attr': 'id=' + bankList[i].bankCardCoCd,
+        'radio-attr': 'id=' + bankList[i].bankCardCoCd + ' name="r2"',
+        'txt': bankList[i].bankCardCoNm
       };
       formatList.push(bankObj);
     }
@@ -80,10 +92,11 @@ Tw.MyTFareBillBankList.prototype = {
   },
   _openBank: function () {
     this._popupService.open({
-      hbs:'actionsheet_select_a_type',
-      layer:true,
-      title:Tw.POPUP_TITLE.SELECT_BANK,
-      data:this.$bankList
+      url: '/hbs/',
+      hbs: 'actionsheet01',
+      layer: true,
+      data: this.$bankList,
+      btnfloating: { 'class': 'fe-popup-close', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._onOpenList, this));
   }
 };

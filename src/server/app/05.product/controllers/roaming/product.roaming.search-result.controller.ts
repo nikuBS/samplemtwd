@@ -18,18 +18,19 @@ class ProductRoamingSearchResult extends TwViewController {
 
     private COUNTRY_CDDE = '';
 
-    render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+    render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
 
       this.COUNTRY_CDDE = req.query.code;
       const searchInfo = {
           countryCd: this.COUNTRY_CDDE,
           countryNm: decodeURIComponent(req.query.nm),
-          eqpMdlNm: decodeURIComponent(req.query.eqpNm)
+          eqpMdlNm: decodeURIComponent(req.query.eqpNm),
+          eqpMdlCd: decodeURIComponent(req.query.eqpCd)
       };
       const params = {
           countryCode: searchInfo.countryCd,
           command: '',
-          eqpMdlCd: ''
+          eqpMdlCd: searchInfo.eqpMdlCd
       };
       if ( svcInfo ) {
           if ( !svcInfo.eqpMdlNm ) {
@@ -43,7 +44,6 @@ class ProductRoamingSearchResult extends TwViewController {
           } else {
               params.command = 'withCountry';
           }
-
       }
 
       Observable.combineLatest(
@@ -52,7 +52,6 @@ class ProductRoamingSearchResult extends TwViewController {
       ).subscribe(([roamingTypeData]) => {
           res.render('roaming/product.roaming.search-result.html',
               {svcInfo, pageInfo, searchInfo, roamingTypeData, isLogin: this.isLogin(svcInfo)});
-          this.logger.info(this, 'roamingTypeData : ', roamingTypeData);
       });
     }
     private isLogin(svcInfo: any): boolean {

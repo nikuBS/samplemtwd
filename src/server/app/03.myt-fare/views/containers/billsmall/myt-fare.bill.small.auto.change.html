@@ -75,20 +75,25 @@
                         <div class="fe-change-money-info">
                             <div class="form-data-tit-wrap">
                                 <strong class="tit">금액정보</strong>
-                                <button id="MF_06_04_tip_01" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button>
+                                <button id="MF_06_04_tip_01" class="tip-view">금액정보 정보보기</button>
                             </div>
                             <ul class="form-data-list">
                                 <li class="type2">
                                     <label class="tit">기준 금액</label>
-                                    <button id="<%= autoPrepayInfo.autoChrgStrdAmt %>" class="bt-dropdown big fe-standard-amount" title="기준 금액" aria-haspopup="true">
+                                    <button id="<%= autoPrepayInfo.autoChrgStrdAmt %>" data-origin-id="<%= autoPrepayInfo.autoChrgStrdAmt %>"
+                                            class="bt-dropdown big fe-standard-amount" title="기준 금액" aria-haspopup="true">
                                         <%= autoPrepayInfo.comboStandardAmount %>만원<span class="ico"></span>
                                     </button>
                                 </li>
                                 <li class="type2">
                                     <label class="tit">선결제 금액</label>
-                                    <button id="<%= autoPrepayInfo.autoChrgAmt %>" class="bt-dropdown big fe-prepay-amount" title="선결제 금액" aria-haspopup="true">
+                                    <button id="<%= autoPrepayInfo.autoChrgAmt %>" data-origin-id="<%= autoPrepayInfo.autoChrgAmt %>"
+                                            class="bt-dropdown big fe-prepay-amount" title="선결제 금액" aria-haspopup="true">
                                         <%= autoPrepayInfo.comboChargeAmount %>만원<span class="ico"></span>
                                     </button>
+                                    <span class="error-txt fe-error-msg" style="display:none;">
+                                        선결제 가능 최대금액을 초과하였습니다.
+                                    </span>
                                 </li>
                             </ul>
                         </div>
@@ -116,12 +121,15 @@
                                             <input id="flab07" class="fe-card-number required-input-field" maxlength="16"
                                                    type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" />
                                             <button class="cancel"><span class="blind">삭제</span></button>
+                                            <span class="error-txt fe-error-msg" style="display:none;">
+                                                카드번호를 입력해 주세요.
+                                            </span>
                                         </span>
                                     </span>
                                 </li>
                                 <li>
                                     <label class="tit" for="flab05">유효기간</label>
-                                    <div class="input-wrap-half">
+                                    <div class="input-wrap-half fe-exp-wrap">
                                         <span class="inputbox">
                                             <span class="input">
                                                 <input id="flab05" class="fe-card-y required-input-field" type="number" inputmode="numeric" min="0" pattern="[0-9]*"
@@ -137,6 +145,9 @@
                                             </span>
                                         </span>
                                     </div>
+                                    <span class="error-txt fe-error-msg" style="display:none;">
+                                        유효기간이 올바르지 않습니다.
+                                    </span>
                                 </li>
                                 <li>
                                     <label class="tit" for="flab06">비밀번호</label>
@@ -145,6 +156,9 @@
                                             <input id="flab06" class="fe-card-pw required-input-field" type="password" style="-webkit-text-security: disc;"
                                                    inputmode="numeric" min="0" pattern="[0-9]*" placeholder="앞 2자리" maxlength="2" />
                                             <button class="cancel"><span class="blind">삭제</span></button>
+                                            <span class="error-txt fe-error-msg" style="display:none;">
+                                                비밀번호가 올바르지 않습니다.
+                                            </span>
                                         </span>
                                     </span>
                                 </li>
@@ -158,7 +172,7 @@
                     <div class="cont-box nogaps-btm">
                         <h3 class="tx-bold">꼭 확인해 주세요</h3>
                         <ul class="noti-list">
-                            <li>이용 안내 <button id="MF_06_04_tip_02" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                            <li>이용 안내 <button id="MF_06_04_tip_02" class="tip-view">TIP</button></li>
                         </ul>
                     </div>
                     <!--// .cont-box -->
@@ -173,7 +187,7 @@
             </div>
             <!--// #contents -->
             <!-- .popup-closeBtn -->
-            <button class="prev-step fe-common-back">취소</button>
+            <button class="prev-step fe-close">취소</button>
             <!--// .popup-closeBtn -->
         </div>
         <footer id="fe-all-menu">

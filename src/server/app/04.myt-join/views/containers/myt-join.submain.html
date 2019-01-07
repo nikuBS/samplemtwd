@@ -15,7 +15,7 @@
 <!--// #skip_navigation -->
 <div class="wrap" data-menuId="<%= data.pageInfo.menuId %>">
     <!-- #header -->
-    <%- include('../../../common/views/components/header.component.html', { title: '나의 가입정보' }); %>
+    <%- include('../../../common/views/components/header.component.html', { title: '나의 가입정보', svcInfo: data.svcInfo }); %>
     <!--// #header -->
 
     <!-- #contents -->
@@ -100,7 +100,7 @@
                 <div class="cont-box nogaps-btm" data-id="other-lines">
                     <div class="tit-wrap">
                         <h3 class="tit-type6 iblock">다른 회선 정보</h3>
-                        <button class="btn-tip" id="MS_tip_01" page-id="MS"><i class="icon-badge-tip"><span class="blind">MS_tip_01</span></i></button>
+                        <button class="btn-tip" id="TC000004" page-id="<%= data.pageInfo.menuId %>"><i class="icon-badge-tip"><span class="blind">MS_tip_01</span></i></button>
                     </div>
                     <ul class="my-line-info">
                         <% var length = (data.otherLines.length > 20 ? 20 : data.otherLines.length); %>
@@ -135,7 +135,7 @@
                     </li>
                     <% if (data.type === 2) { %>
                     <li>
-                        <a href="/myt-join/myplancombine">
+                        <a href="/benefit/submain?filters=F01422">
                             <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 &middot; 할인 &gt; 결합할인
                         </a>
                     </li>
@@ -146,7 +146,7 @@
                     </li>
                     <li>
                         <a href="/product/wireplan/service-area">
-                            <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 &middot; 할인 &gt; 서비스 가능지역 조회
+                            <i class="icon-discount-40"><span class="blind">discount</span></i>인터넷/전화/IPTV 상품 &gt; 서비스 가능지역 조회
                         </a>
                     </li>
                     <li>
@@ -155,8 +155,20 @@
                         </a>
                     </li>
                     <li>
-                        <a data-href="/myt-join/submain/wire/gifts">
+                        <a href="/myt-join/submain/wire/gifts">
                             <i class="icon-my-40"><span class="blind">discount</span></i>나의 가입 정보 &gt; 사은품 조회
+                        </a>
+                    </li>
+                    <% } else if (data.type === 1) { %>
+                    <!-- DV001-10531 -->
+                    <li>
+                        <a href="/common/member/line">
+                            <i class="icon-member-40"><span class="blind">member</span></i>회원정보관리 &gt; 회선관리
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/benefit/my">
+                            <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 &middot; 할인 &gt; 나의 할인 혜택
                         </a>
                     </li>
                     <% } else { %>

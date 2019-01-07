@@ -16,7 +16,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- #header -->
     <%- include('../../../common/views/components/header.component.html', { title: '국가별 로밍 요금 조회', svcInfo: svcInfo }); %>
     <!--// #header -->
@@ -31,7 +31,7 @@
                     <div class="comp-box country-roaming">
                         <div class="list-box cont-noti">
                             <h3 class="tit">출국 국가 검색<button class="tip-view" page-id="M000458" id="RM_03_01_01_01_tip_01">TIP</button></h3>
-                            <span class="type1">아래에서 국가명을 입력하신 후 검색 버튼을 <br/>클릭해주세요.</span>
+                            <span class="type1">아래에서 국가명을 입력하신 후 검색 버튼을 클릭해 주세요.</span>
                         </div>
                         <div class="inputbox bt-add">
 								<span class="input">
@@ -58,18 +58,18 @@
             <!-- .cont-box -->
             <div class="cont-box">
                 <div class="roaming-info-wrap">
-                    <p class="info-txt" data-search-conuntry="<%= searchInfo.countryCd %>"><strong><%= searchInfo.countryNm %></strong>의<br/>로딩 맞춤 정보를 안내해 드립니다.</p>
+                    <p class="info-txt" data-search-conuntry="<%= searchInfo.countryCd %>"><strong><%= searchInfo.countryNm %></strong>의<br/>로밍 맞춤 정보를 안내해 드립니다.</p>
                     <h4 class="txt">이용 가능 로밍 서비스</h4>
                     <ul class="link-long-list">
                         <% if (roamingTypeData.dataRoamingYn  === 'Y') {%>
-                        <li>
+                        <li class="fe-rm-data">
                             <div class="link-long">
                                 <button><span class="icon type1"></span>데이터 로밍<span class="ico"></span></button>
                             </div>
                         </li>
                         <% } %>
                         <% if (roamingTypeData.voiceRoamingYn  === 'Y') {%>
-                        <li>
+                        <li class="fe-rm-voice">
                             <div class="link-long">
                                 <button><span class="icon type2"></span>음성 로밍<span class="ico"></span></button>
                             </div>
@@ -79,7 +79,7 @@
 
                     <h4 class="txt pt40">로밍 서비스 방식별 종량 요금 안내</h4>
                     <div class="cont-noti">
-                        <span class="type3">이용 가능한 로밍 서비스 방식은 <br/>
+                        <span class="type3">이용할 수 있는 로밍 서비스 방식은 <br/>
                             <strong class="fe-rm-type"></strong>입니다.</span>
                     </div>
                     <p class="mt20"><button class="bt-dropdown big fe-manage-type" title="사용 가능 서비스" aria-haspopup="true">
@@ -172,9 +172,9 @@
 														<span class="txt-tit">로밍 요금제</span>
 													</span>
                                                 <span class="located bottom">
-														<span class="txt-detail">사용 패턴별/국가별로 <br/>설계된 다양한 로밍 요금제</span>
+														<span class="txt-detail">사용 패턴별&middot;국가별로<br/>설계된 다양한 로밍 요금제</span>
 													</span>
-                                                <span class="ico"><img src="<%= CDN %>/img/product/ico-roaming-service01.png" alt="T로밍 아시아패스" /></span>
+                                                <!--<span class="ico"><img src="<%= CDN %>/img/product/ico-roaming-service01.png" alt="T로밍 아시아패스" /></span>-->
                                             </button>
                                         </div>
                                     </li>
@@ -187,7 +187,7 @@
                                                 <span class="located bottom">
 														<span class="txt-detail">로밍 이용 시 함께하면 좋은 <br/>무료 부가 서비스를 추천해 드립니다.</span>
 													</span>
-                                                <span class="ico"><img src="<%= CDN %>/img/product/ico-roaming-service02.png" alt="T로밍 아시아패스" /></span>
+                                                <!--<span class="ico"><img src="<%= CDN %>/img/product/ico-roaming-service02.png" alt="T로밍 아시아패스" /></span>-->
                                             </button>
                                         </div>
                                     </li>
@@ -200,7 +200,7 @@
                                                 <span class="located bottom">
 														<span class="txt-detail">T 로밍 데이터 무제한 OnePass 요금제를 <br/>보다 편리하게 이용해 보세요.</span>
 													</span>
-                                                <span class="ico"><img src="<%= CDN %>/img/product/ico-roaming-service03.png" alt="T로밍 아시아패스" /></span>
+                                                <!--<span class="ico"><img src="<%= CDN %>/img/product/ico-roaming-service03.png" alt="T로밍 아시아패스" /></span>-->
                                             </button>
                                         </div>
                                     </li>

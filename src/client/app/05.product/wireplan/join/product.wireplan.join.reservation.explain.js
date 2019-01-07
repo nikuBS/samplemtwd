@@ -78,6 +78,7 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
       title: Tw.POPUP_TITLE.SELECT_FAMILY_TYPE,
       data: [{
         'list': [
+          { value: Tw.FAMILY_TYPE.ME, option: (this._familyType === 'me') ? 'checked' : '', attr: 'data-family_type="me"' },
           { value: Tw.FAMILY_TYPE.SPOUSE, option: (this._familyType === 'spouse') ? 'checked' : '', attr: 'data-family_type="spouse"' },
           { value: Tw.FAMILY_TYPE.CHILDREN, option: (this._familyType === 'children') ? 'checked' : '', attr: 'data-family_type="children"' },
           { value: Tw.FAMILY_TYPE.PARENTS, option: (this._familyType === 'parents') ? 'checked' : '', attr: 'data-family_type="parents"' },
@@ -85,8 +86,7 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
           { value: Tw.FAMILY_TYPE.GRANDPARENTS, option: (this._familyType === 'grandparents') ? 'checked' : '',
             attr: 'data-family_type="grandparents"' },
           { value: Tw.FAMILY_TYPE.GRANDCHILDREN, option: (this._familyType === 'grandchildren') ? 'checked' : '',
-            attr: 'data-family_type="grandchildren"' },
-          { value: Tw.FAMILY_TYPE.ME, option: (this._familyType === 'me') ? 'checked' : '', attr: 'data-family_type="me"' }
+            attr: 'data-family_type="grandchildren"' }
         ]
       }]
     }, $.proxy(this._bindFamilyTypePop, this), null, 'select_family_type');
@@ -230,7 +230,7 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE);
     }
 
-    if (this._acceptExt.indexOf(fileInfo.name.split('.').pop()) === -1) {
+    if (this._acceptExt.indexOf(fileInfo.name.split('.').pop().toLowerCase()) === -1) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A33.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A33.TITLE);
     }
 
@@ -244,7 +244,8 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
 
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     Tw.CommonHelper.fileUpload(Tw.UPLOAD_TYPE.RESERVATION, dFiles)
-      .done($.proxy(this._successUploadFile, this));
+      .done($.proxy(this._successUploadFile, this))
+      .fail($.proxy(this._failUploadFile, this));
   },
 
   _successUploadFile: function(resp) {
@@ -259,6 +260,11 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
 
     this._clearExplainFile();
     this._procEnableApplyBtn();
+  },
+
+  _failUploadFile: function() {
+    Tw.CommonHelper.endLoading('.container');
+    this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A00);
   },
 
   _clearExplainFile: function() {

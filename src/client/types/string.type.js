@@ -2,7 +2,8 @@ Tw.COMMON_STRING = {
   ALL: '전체',
   AGREE: '동의',
   DISAGREE: '비동의',
-  UNLIMIT: '무제한'
+  UNLIMIT: '무제한',
+  TERM: '이용약관'
 };
 
 Tw.DATA_UNIT = {
@@ -48,7 +49,6 @@ Tw.BUTTON_LABEL = {
   JOIN: '가입하기',
   TERMINATE: '해지하기',
   NEXT: '다음',
-  RETRY: '다시 받기',
   HOME: '홈으로',
   YES: '예',
   NO: '아니오'
@@ -61,7 +61,8 @@ Tw.SMS_VALIDATION = {
   NOT_MATCH_CODE: '인증번호가 일치하지 않습니다',
   EXPIRE_AUTH_TIME: '인증번호 입력 시간이 초과했습니다.',
   ALREADY_AUTH: '이미 인증을 받은 번호입니다.',
-  SUCCESS: '인증이 완료 되었습니다.'
+  SUCCESS: '인증이 완료 되었습니다.',
+  EMPTY_CERT: '인증번호를 입력해 주세요.'
 };
 
 Tw.POPUP_TITLE = {
@@ -86,11 +87,7 @@ Tw.POPUP_TITLE = {
   SELECT_ORDER: '정렬 기준을 선택해주세요',
   CONFIRM_SHARE: '데이터를 공유 하시겠습니까?',
   CANCEL_HELPLINE: '예약을 취소하시겠습니까?',
-  SET_TIME: '시간설정',
-  SET_HELPLINE_TYPE: '상담유형 설정',
-  SET_AREA: '지역설정',
   ALREADY_EXIST_RESERVATION: '이미 예약하신 정보가 있습니다.',
-  SELECT_SUBJECT_TYPE: '대상 설정',
   AGREED_PERIOD: '약정기간',
   SELECT_RESERVATION_COMBINE_PRODUCT: '결합 상품 선택',
   EXTERNAL_LINK: '외부 사이트로 연결됩니다.',
@@ -106,6 +103,7 @@ Tw.POPUP_TITLE = {
 Tw.POPUP_CONTENTS = {
   MORE_DETAIL: '더 알아보기',
   REFILL_COUPON_FAMILY: 'SK텔레콤 결합상품으로 묶으시면 리필쿠폰을 선물하실 수 있습니다.',
+  REFILL_COUPON_FAMILY_INFO: 'T끼리 온가족할인 / T가족결합(착한고객) / TB끼리 온가족무료 / TB끼리 온가족 프리 / 온가족 행복플랜 가입고객만 이용 가능. ※ 단, T가족결합(착한가족)은 기존 고객만 가능',
   CERTIFICATE_SUCCESS: '스마트폰 인증서 내보내기: 성공',
   REFUND_ACCOUNT_SUCCESS: '환불신청 계좌가 등록되었습니다.',
   RESEND_CONTENTS_FAX: '등록된 팩스 번호로 재발행 되었습니다.',
@@ -113,7 +111,10 @@ Tw.POPUP_CONTENTS = {
   NO_WIFI: 'Wifi를 사용하지 않으시는 경우 데이터 요금이 발생됩니다.',
   DONATION: '미환급금을 기부하시겠습니까?',
   BIO_FINGER_DEREGISTER: '지문등록 해지 후 다시 사용하시려면 지문정보를 재등록 하셔야 합니다.<br />지문인증을 해지하시겠습니까?',
-  BIO_FACE_DEREGISTER: 'Face ID 인증 해지 후 다시 사용하시려면 Face ID를 재등록 하셔야 합니다.<br />Face ID 인증을 해지하시겠습니까?'
+  BIO_FACE_DEREGISTER: 'Face ID 인증 해지 후 다시 사용하시려면 Face ID를 재등록 하셔야 합니다.<br />Face ID 인증을 해지하시겠습니까?',
+  COUPON_RECEIVER_LIMIT:
+    ' 선물 받으시는 분께서 선물 받을 수 있는 횟수가 초과되셨습니다. <br />리필쿠폰은 가족구성원에게 연간 최대 2회까지만 선물 받으실 수 있습니다.',
+  BIO_REGISTER: '생체정보(지문,Face ID)로 본인인증을 하실 수 있습니다.<br />지금 등록하시겠습니까?'
 };
 
 Tw.CHART_TYPE = {
@@ -150,11 +151,17 @@ Tw.WEEKDAYS = ['월', '화', '수', '목', '금', '토', '일'];
 
 Tw.REFILL_COUPON_CONFIRM = {
   TITLE_REFILL: '리필 하시겠습니까?',
-  CONTENTS_REFILL: '리필 음성/데이터는 이번 달까지만 사용 가능합니다.',
+  CONTENTS_REFILL: '리필 음성/데이터는 이번 달까지만 사용할 수 있습니다.',
   CONFIRM_REFILL: '리필하기',
   TITLE_GIFT: '가족에게 선물하시겠습니까?',
   CONTENTS_GIFT: '가족에게 선물하시려면 문자 인증을 해야하며, 인증하고 나면 선물을 취소할 수 없습니다.',
   CONFIRM_GIFT: '선물하기'
+};
+
+Tw.REFILL_COUPON_ALERT = {
+  A211: '선물 가능 횟수가 초과되었습니다.<br />선물은 월 2회까지만 보낼 수 있습니다.',
+  A212: '팅요금제 이용고객은 리필쿠폰 선물하기가 불가능합니다.',
+  A213: '휴대폰 번호가 올바르지 않습니다.<br />휴대폰 번호를 확인해주세요.'
 };
 
 Tw.REFUND_ACCOUNT_INFO = {
@@ -242,14 +249,20 @@ Tw.MYT_DATA_CANCEL_TSHARE = {
 Tw.MYT_DATA_TOTAL_SHARING_DATA = {
   USED_DATA_PREFIX: '총 ',
   USED_DATA_SUFFIX: ' 사용',
-  JOIN_T_FAMILY_SHARING: 'T가족모아 가입하기'
+  JOIN_T_FAMILY_SHARING: 'T가족모아 가입하기',
+  SEARCH_KEYWORD: '함께 쓰기'
+};
+
+Tw.MYT_DATA_PATTERN_TITLE = {
+  DATA: '최근 데이터 사용량',
+  VOICE: '최근 음성 사용량'
 };
 
 Tw.MYT_FARE_BILL_GUIDE = {
   DATE_FORMAT: {
     YYYYMM_TYPE: 'YYYY년 M월'
   },
-  FIRST_SVCTYPE: '서비스 전체',
+  FIRST_SVCTYPE: '전체',
   PHONE_SVCTYPE: '휴대폰',
   PHONE_TYPE_0: '이동전화',
   PHONE_TYPE_1: '휴대폰',
@@ -343,7 +356,8 @@ Tw.MYT_FARE_PAYMENT_NAME = {
   AUTO_CANCEL: '자동납부 해지',
   GO_CHANGE_HISTORY: '변경내역 보기',
   RAINBOW_MESSAGE: '1,000점 이상 보유시 매월 자동 차감',
-  SMS_MESSAGE: '문자 알림서비스(무료) 신청하시고,' + '<br/>' + '매월 문자로 입금안내 서비스 받으세요.'
+  SMS_MESSAGE: '문자 알림서비스(무료) 신청하시고,' + '<br/>' + '매월 문자로 입금안내 서비스 받으세요.',
+  USING: '사용 중'
 };
 
 Tw.MYT_FARE_PAYMENT_TYPE = {
@@ -393,13 +407,18 @@ Tw.ALERT_MSG_HOME = {
   A61: '',
   A62: '',
   A63: '',
-  A64: ''
+  A64: '',
+  QUICK_ADD: 'MY 바로가기에 추가되었습니다.',
+  QUICK_REMOVE: 'MY 바로가기에서 제거되었습니다.'
 };
 
 Tw.ALERT_MSG_MYT_DATA = {
   GIFT_DATA_TARGET: '님에게',
   GIFT_DATA_QUESTION: '를 선물하시겠습니까?',
-  UNSUBSCRIBE_MONTHLY_GIFT: '선택하신 자동 선물 내역을 삭제하시겠습니까?',
+  UNSUBSCRIBE_MONTHLY_GIFT_TITLE: '자동 선물하기를 해지하시겠습니까?',
+  UNSUBSCRIBE_MONTHLY_GIFT: '자동선물 신청된 가족은 ',
+  UNSUBSCRIBE_MONTHLY_GIFT_END: ' 입니다.',
+  UNSUBSCRIBE_MONTHLY_GIFT_COMPLETE: '자동선물 해지 완료되었습니다.',
   RECHARGE_CANCLE: '충전 취소는 고객센터 [국번 없이 1599-0011(유료) / 휴대폰 114]를 통해 당일에 한해 가능합니다.',
   JOIN_ONLY_CUSTOMER_CENTER_T: '대리점 방문 또는 고객센터를' + '<br />' + '통해 신청 가능합니다.',
   JOIN_ONLY_CUSTOMER_CENTER_C:
@@ -412,7 +431,7 @@ Tw.ALERT_MSG_MYT_DATA = {
   ALERT_2_A17: {
     TITLE: '데이터 조르기',
     MSG: 'SKT를 이용하는 고객에게 문자와 SNS로 데이터 조르기를 하실 수 있습니다.',
-    BUTTON: '조르기'
+    BUTTON: '조르기 요청'
   },
   ALERT_2_A18: {
     TITLE: '데이터 조르기',
@@ -466,35 +485,36 @@ Tw.ALERT_MSG_MYT_FARE = {
   MICRO: '소액결제',
   CONTENTS: '콘텐츠이용료',
   USABLE: '사용',
-  MSG_ALLOWED: '가 혀용되었습니다.',
-  MSG_PROHIBITED: '가 차단되었습니다.',
+  MICRO_USE: '소액결제 사용이 ',
+  MSG_DONE: '되었습니다.',
+  ALLOW: '허용',
+  PROHIBIT: '차단',
   V18: '휴대폰번호 자릿수를 확인해주세요. (10~11자리)',
   V21: '이메일 주소가 올바르지 않습니다.',
   V41: '법정대리인 휴대폰번호를 입력해주세요.',
   V42: '이메일 주소를 입력해주세요.',
   V43: '우편 주소를 입력해주세요.',
   V44: '휴대폰 번호가 올바르지 않습니다.',
+  V47: '미성년자 서비스의 법정대리인 SKT회선만 신청 가능합니다.',
   NOT_USED: '법인 실사용자 통합 청구 고객은 T world를 통해 요금안내서를 신청/변경을 하실 수 없습니다.',
   NOT_STRAIGHT_NUMBER: '연속숫자 또는 동일숫자를 제외한 숫자를 입력해 주세요',
   NOT_SAME_BIRTH: '주민번호 앞자리와 다른 숫자를 입력해 주세요',
   CONFIRM_PASSWORD: '변경할 비밀번호와 일치하지 않습니다.',
   CHECK_PASSWORD_LENGTH: '비밀번호는 6자리로 입력해 주세요',
   PASSWORD_ADDITIONAL_INFO:
-    '부가서비스 해지 후 재가입하셔야' +
+    '잠금 상태인 경우에는 ARS(1509)를 통해 비밀번호 재설정 또는 부가서비스 해지 후 재가입하실 수 있습니다.' +
     '<br />' +
-    '휴대폰 결제 비밀번호 이용이 가능합니다.' +
-    '<br />' +
-    '휴대폰 결제 비밀번호 설정 페이지로 이동하시겠습니까?',
+    '휴대폰결제 비밀번호 부가서비스를 해지하러 가시겠습니까?',
   A59: '조회 종료일 유효한 일자가 아닙니다.',
   A60: '시작일이 종료일보다 클 수 없습니다.',
   ALERT_2_V1: '받는 분 번호가 올바르지 않습니다.',
   ALERT_2_V2: '계좌번호가 올바르지 않습니다',
   ALERT_2_V3: '은행정보가 올바르지 않습니다.',
   ALERT_2_V4: '카드번호가 올바르지 않습니다.',
-  ALERT_2_V5: '유효기간을 입력해주세요.',
+  ALERT_2_V5: '유효기간을 입력해 주세요.',
   ALERT_2_V6: '유효기간이 올바르지 않습니다.',
   ALERT_2_V7: '비밀번호가 올바르지 않습니다.',
-  ALERT_2_V8: '1,000점 이상 입력해주세요.',
+  ALERT_2_V8: '1,000점 이상 입력해 주세요.',
   ALERT_2_V9: '휴대폰 번호가 올바르지 않습니다.',
   ALERT_2_V10: '선결제 가능 최대금액을 초과하였습니다.',
   ALERT_2_V11: '생년월일이 올바르지 않습니다.',
@@ -504,34 +524,42 @@ Tw.ALERT_MSG_MYT_FARE = {
   ALERT_2_V15: '일련번호가 올바르지 않습니다.',
   ALERT_2_V16: '공유 가능 데이터를 초과했습니다.',
   ALERT_2_V17: '가족에게 공유할 데이터를 입력해주세요.',
-  ALERT_2_V18: '휴대폰번호 자릿수를 확인해주세요. (10~11자리)',
+  ALERT_2_V18: '휴대폰번호 자릿수를 확인해 주세요. (10~11자리)',
   ALERT_2_V26: '카드번호가 올바르지 않습니다',
-  ALERT_2_V27: '보유하신 포인트 보다 초과 입력 하셨습니다.',
+  ALERT_2_V27: '보유하신 포인트 보다 초과 입력하셨습니다.',
   ALERT_2_V28: '해당 카드사가 등록되어 있지 않습니다.',
-  ALERT_2_V41: '법정대리인 휴대폰번호를 입력해주세요.',
-  ALERT_2_V42: '이메일 주소를 입력해주세요.',
-  ALERT_2_V43: '우편 주소를 입력해주세요.',
+  ALERT_2_V41: '법정대리인 휴대폰번호를 입력해 주세요.',
+  ALERT_2_V42: '이메일 주소를 입력해 주세요.',
+  ALERT_2_V43: '우편 주소를 입력해 주세요.',
   ALERT_2_V44: '휴대폰 번호가 올바르지 않습니다.',
-  ALERT_2_A28: '팩스 전송이 완료 되었습니다.',
-  ALERT_2_A29: '이메일로 전송 완료 되었습니다.',
+  ALERT_2_V58: '카드 비밀번호를 입력해 주세요.',
+  ALERT_2_V60: '카드번호를 입력해 주세요.',
+  ALERT_2_V65: '납부할 포인트를 입력해 주세요.',
+  ALERT_2_V66: '납부할 포인트를 선택해 주세요.',
+  ALERT_2_V75: '은행을 선택해 주세요.',
+  ALERT_2_A28: '팩스 전송이 완료되었습니다.',
+  ALERT_2_A29: '이메일로 전송 완료되었습니다.',
   ALERT_2_A32: '계좌 정보를 확인해주세요.',
   ALERT_2_A74: 'OK캐쉬백 포인트 요금 납부는 포인트 점수가 500점 부터 가능합니다.',
   ALERT_2_A75: 'T포인트 요금 납부는 포인트 점수가 1,000점 부터 가능합니다.',
   ALERT_2_A76: '적립된 레인보우 포인트가 0점입니다.' + '<br />' + '포인트 적립 후 이용해주세요.',
-  ALERT_2_A85: { TITLE: 'T포인트 납부 예약 취소 하시겠습니까?', MSG: '' },
+  ALERT_2_A85: { TITLE: 'T포인트 납부 예약 취소하시겠습니까?', MSG: '' },
   ALERT_2_A86: { TITLE: '알림', MSG: 'T포인트 납부 예약이 취소되었습니다.' },
-  ALERT_2_A87: { TITLE: '레인보우포인트 납부 예약 취소 하시겠습니까?', MSG: '' },
+  ALERT_2_A87: { TITLE: '레인보우포인트 납부 예약 취소하시겠습니까?', MSG: '' },
   ALERT_2_A88: { TITLE: '알림', MSG: '레인보우 포인트 납부 예약이 취소되었습니다.' },
   ALERT_2_A89: { TITLE: '알림', MSG: '선결제 가능 금액이 없습니다.' },
-  ALERT_2_A92: { TITLE: 'OK캐쉬백 포인트 납부 예약 취소 하시겠습니까?', MSG: '' },
+  ALERT_2_A92: { TITLE: 'OK캐쉬백 포인트 납부 예약 취소하시겠습니까?', MSG: '' },
   ALERT_2_A93: { TITLE: '알림', MSG: 'OK캐쉬백 포인트 납부 예약이 취소되었습니다.' },
   ALERT_2_A94: { TITLE: '자동결제를 차단하시겠습니까?', MSG: '차단은 다음달에 적용 됩니다.', BUTTON: '차단하기' },
-  ALERT_2_A95: { TITLE: '자동결제를 해제하시겠습니까?', MSG: '해제은 다음달에 적용 됩니다.', BUTTON: '해제하기' },
-  ALERT_2_A100: { TITLE: '선결제를 종료하시겠습니까?', MSG: '선결제가 종료됩니다.', BUTTON: '종료하기' }
+  ALERT_2_A95: { TITLE: '자동결제를 해제하시겠습니까?', MSG: '해제는 다음달에 적용 됩니다.', BUTTON: '해제하기' },
+  ALERT_2_A96: { TITLE: '이용한도를 변경하시겠습니까?', MSG: '이용한도 변경은 월 1회만 가능합니다.', BUTTON: '변경하기' },
+  ALERT_2_A100: { TITLE: '선결제를 종료하시겠습니까?', MSG: '선결제가 종료됩니다.', BUTTON: '종료하기' },
+  ALERT_2_A101: { TITLE: '요금납부를 종료하시겠습니까?', MSG: '요금납부가 종료됩니다.', BUTTON: '종료하기' }
 };
 
 Tw.ALERT_MSG_MYT_JOIN = {
   A1: '전화번호를 정확히 입력해주십시오.',
+  ALERT_2_A3: { TITLE: '번호변경 안내 서비스를 해지하시겠습니까?', MSG: '해지 시, 재신청이 불가능합니다.', BUTTON: '종료하기' },
   ALERT_2_A11: { TITLE: '알림', MSG: '기존과 동일한 혜택입니다. 다시 선택해 주세요.' },
   ALERT_2_A12: { TITLE: '알림', MSG: '변경되었습니다.' },
   ALERT_2_A13: { TITLE: '알림', MSG: '기존과 동일한 혜택입니다. 다시 입력해 주세요.' },
@@ -543,7 +571,7 @@ Tw.ALERT_MSG_MYT_JOIN = {
     MSG: '설치장소 변경 신청이 완료되었습니다. 빠른 시일 내에 신청내역 확인을 위해 상담원이 연락 드리겠습니다. 감사합니다'
   },
   ALERT_2_A36: { TITLE: '알림', MSG: '가입 서비스 변경 신청이 완료 되었습니다 빠른 시일내에 연락 드리도록 하겠습니다' },
-  ALERT_2_A39: { TITLE: '알림', MSG: '요금제 변경 알림 서비스가 신청 되었습니다.' },
+  ALERT_2_A39: { TITLE: '알림', MSG: '요금제 변경 알림 서비스가 신청되었습니다.' },
   ALERT_2_A40: { TITLE: '알림', MSG: '요금제 변경 가능일 알림이 해지 되었습니다.' },
   ALERT_2_A61: { TITLE: '알림', MSG: '비밀번호를 확인해주세요.' },
   ALERT_2_A62: { TITLE: '알림', MSG: '고객보호 비밀번호가 변경되었습니다.' },
@@ -590,8 +618,8 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A9: { TITLE: '결합회선 4회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
   ALERT_3_A10: { TITLE: '1회선만 결합된 경우, 회선 해지가 불가합니다.', MSG: '' },
   ALERT_3_A15: { TITLE: '3G/LTE 망 사용시 데이터 요금이 발생됩니다', MSG: '' },
-  ALERT_3_A16: { TITLE: '확인을 누르시면 선택된 필터가 해제되고 선택한 태그의 결과페이지로 이동합니다', MSG: '' },
-  ALERT_3_A17: { TITLE: '알림', MSG: '확인을 누르시면 선택된 태그가 해제되고 필터가 선택됩니다.' },
+  ALERT_3_A16: { TITLE: '확인을 누르시면 선택된 필터가 해제되고 태그가 선택됩니다.', MSG: '' },
+  ALERT_3_A17: { TITLE: '확인을 누르시면 선택된 태그가 해제되고 필터가 선택됩니다.', MSG: '' },
   ALERT_3_A18: { TITLE: '검색 결과가 없습니다', MSG: '' },
   ALERT_3_A20: { TITLE: '로그인이 필요합니다.', MSG: '' },
   ALERT_3_A26: { TITLE: '선택하신 로밍 예약 건을 취소하시겠습니까?', MSG: '', BUTTON: '확인' },
@@ -606,9 +634,18 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A35: { TITLE: '지정번호 6회선 모두 등록되었습니다.\n기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
   ALERT_3_A36: { TITLE: '로그인 하시겠습니까?', MSG: '로그인 후 가족정보 입력 및 서류제출이 가능합니다. 로그인하시겠습니까?' },
   ALERT_3_A37: { TITLE: '이미 사용하고 있는 상품입니다.', MSG: '' },
+  ALERT_3_A38: { TITLE: '지정번호 4회선 모두 등록되었습니다.\n기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
   ALERT_3_A40: { TITLE: '가입상담 예약은 신규가입만 가능합니다.\n추가 가입과 관련하여 상담을 받으시겠습니까?', MSG: '' },
+  ALERT_3_A44: { TITLE: '다른 회선으로 절친 등록 시 현재 회선의 절친은 자동 해지 됩니다.' },
+  ALERT_3_A45: { TITLE: '절친으로 등록된 회선은 해지 불가합니다.', MSG: '다른 회선으로 절친 등록 후 해당 회선 해지 하실 수 있습니다.' },
   ALERT_3_A46: { TITLE: '변경일 기준 30일 이내 다른 옵션으로 변경이 불가합니다.', MSG: '' },
+  ALERT_3_A74: { TITLE: '선택하신 상품 해지를 취소 하시겠습니까?', MSG: '', BUTTON: '계속하기' },
+  ALERT_3_A77: { TITLE: '지역 추가 시, 1개 지역당 1,650원(부가세포함)씩 과금이 추가됩니다.지역을 추가하시겠습니까?', MSG: '' },
+  ALERT_3_A78: { TITLE: '할인지역은 최대 2개까지 등록가능합니다', MSG: '' },
   ALERT_ALREADY_PRODUCT: '이미 사용중인 상품입니다.',
+  ALERT_ALREADY_TERM_PRODUCT: '사용중이지 않은 상품입니다.',
+  ALERT_NUMBER_MIN: '최소 한개의 지정번호는 존재해야 합니다.',
+  ALERT_LOCATION_MIN: '최소 한개의 지역은 존재해야 합니다.',
   PREVIEW: '미리보기에서는 해당 기능이 제공되지 않습니다.'
 };
 
@@ -646,18 +683,34 @@ Tw.ALERT_MSG_MEMBERSHIP = {
     TITLE: '멤버십 가입 완료',
     CONTENT: '발급 카드 정보 : </br> T멤버십(Leaders Clubs) 모바일 카드',
     LINK_TITLE: '발급 변경 내역 보기 >'
-  }
+  },
+  ALERT_1_A50: { TITLE: '알림', MSG: '시작일이 종료일보다 늦을 수 없습니다.' },
+  ALERT_1_A51: { TITLE: 'T멤버십 카드를 재발급하시겠습니까?', MSG: '스마트폰 이용 고객님은 모바일 카드만 신청하실 수 있습니다.', BUTTON: '재발급 신청' },
+  ALERT_1_A52: { TITLE: 'T멤버십 카드 재발급 신청을 취소하시겠습니까?', MSG: '', BUTTON: '신청 취소' },
+  ALERT_1_A53: { TITLE: 'T멤버십 회원정보를 수정하시겠습니까?', MSG: '수정하신 내용은 바로 적용됩니다.', BUTTON: '수정' },
+  ALERT_1_A54: { TITLE: '알림', MSG: '주소를 입력해주세요.' },
+  ALERT_1_A55: { TITLE: '알림', MSG: '전화 번호를 입력해주세요' },
+  ALERT_1_A58: { TITLE: 'T멤버십(리더스클럽)으로 종류를 변경하시겠습니까?', MSG: '2017년 1월 1일 부터 T멤버십(리더스클럽) 카드만 제공하고 있습니다.', BUTTON: '변경' },
+  ALERT_1_A59: { TITLE: '알림', MSG: '이용정지 상태에서 정보를 수정을 하실 수 없습니다.' },
+  ALERT_1_A61: { TITLE: '알림', MSG: '카드 신청 후 2주 이내에는 카드 재발급을 신청하실 수 없습니다.' },
+  ALERT_1_A62: { TITLE: '알림', MSG: '이용정지 상태에서 정보를 수정을 하실 수 없습니다.' },
+  ALERT_1_A63: { TITLE: 'OK캐쉬백 기능 추가를 취소하시겠습니까?  ', MSG: 'OK캐쉬백 기능 추가는 나의 T멤버십 〉 정보수정에서 추가하실 수 있습니다.' },
+  ALERT_1_A66: {
+    TITLE: '재발급 신청을 취소하실 수 없습니다.',
+    MSG: '재발급을 신청한 날 24:00까지 결제기능을 추가하지 않은 모바일 카드 이용 고객님만 재발급 신청을 취소하실 수 있습니다.',
+    BUTTON: '발급 변경내역'
+  },
 };
 
 Tw.ALERT_MSG_CUSTOMER = {
   ALERT_HELPLINE_A01: '예약을 취소하시면 작성하신 모든 정보가 초기화됩니다.',
-  ALERT_HELPLINE_A02: '전화상담 예약은 지역별 1일 1회로 제한되며 중복 신청을 하실 수 없습니다. 예약현황을 확인하시겠습니까?',
+  ALERT_HELPLINE_A02: '전화상담 예약은 지역별 1일 1회로 제한되며 중복 신청을 하실 수 없습니다.',
   ALERT_PRAISE_COMPLETE: '고객님의 소중한 칭찬 글이<br /> 등록되었습니다.',
   ALERT_PRAISE_CANCEL: {
     TITLE: '입력하신 정보는 모두 취소됩니다.<br>창을 닫으시겠습니까?'
   },
   ALERT_RESEARCHES_A01: '이미 참여하신 설문입니다.',
-  ALERT_RESEARCHES_A02: '설문에 참여해주셔서 감사합니다.'
+  ALERT_RESEARCHES_A02: '설문에 참여해 주셔서 감사합니다.'
 };
 
 Tw.ALERT_MSG_TEVENT = {};
@@ -709,7 +762,16 @@ Tw.PRODUCT_JOIN_SETTING_AREA_CASE = {
   MV_02_02_01: '결합회선',
   MP_02_02_03_05: '결합회선',
   MP_02_02_03_11: '공유회선',
+  MV_02_02_03: '비밀번호 설정 완료',
   MV_02_02_04: '보호자'
+};
+
+Tw.PRODUCT_MOBILEPLAN_COMPARE_PLANS = {
+  MY_DATA_TXT: '나의 데이터',
+  USAGE_TXT: '사용량',
+  MONTH_TXT: '{0}개월',
+  RECENT_AVG_TXT: '최근 {0} 평균',
+  RECENT_MAX_TXT: '최근 {0} 최대'
 };
 
 Tw.MYT_FARE_HISTORY_PAYMENT = {
@@ -762,7 +824,7 @@ Tw.URL_PATH = {
   BILL_LETTER_DOWNLOAD_APP_STORE: 'https://itunes.apple.com/kr/app/%EC%9A%94%EA%B8%88%EC%95%88%EB%82%B4%EC%84%9C-bill-letter/id435060754?mt=8',
   BILL_LETTER_DOWNLOAD_PLAY_STORE: 'https://play.google.com/store/apps/details?id=com.skt.smartbill&hl=ko',
   CAR_LIFE_DETAIL: 'http://m.tmembership.tworld.co.kr/mobileWeb/html/coupon/CtgViewMain.jsp?BRAND_CD=2012000026&PAGE_UCD=30',
-  SMART_CHOICE: 'http://www.smartchoice.or.kr'
+  SMART_CHOICE: 'http://www.smartchoice.or.kr',
 };
 
 Tw.PRODUCT_INFINITY_CATEGORY = {
@@ -847,9 +909,11 @@ Tw.MYT_DATA_CANCEL_MONTHLY = {
 };
 
 Tw.MYT_DATA_TING = {
+  V31: '팅요금제 사용 고객이 아닙니다.',
   A81_TITLE: '팅요금 선물을 차단하시겠습니까?',
   A81_CONTENT: '차단 시에는 팅요금 선물을 할 수 없습니다.',
-  A81_BTN_CONFIRM: '차단하기'
+  A81_BTN_CONFIRM: '차단하기',
+  SUCCESS_BLOCK: '팅 요금 선물 차단 완료 되었습니다.'
 };
 
 Tw.MYT_DATA_PREPAID = {
@@ -958,6 +1022,12 @@ Tw.MYT_JOIN_WIRE_MODIFY_ADDRESS = {
   BUILDING: ['단독주택', '아파트', '공통주택', '일반건물', '지하', '사서함', '임시건물', '비건물']
 };
 
+Tw.MYT_JOIN_WIRE_CANCEL_SERVICE = {
+  NO_PHONE: '휴대폰 또는 일반전화를 등록해 주세요.',
+  INVALID_PHONE: '전화번호를 올바르게 입력해 주세요.',
+  NO_DC_REFUND: '할인반환내역이 없습니다.'
+};
+
 Tw.MYT_JOIN_SUSPEND = {
   CONFIRM: {
     TITLE: '일시정지를 신청하시겠습니까?',
@@ -980,6 +1050,7 @@ Tw.MYT_JOIN_SUSPEND = {
   SUCCESS_LONG_TERM_SUSPEND_MESSAGE_SVC: '회선번호 : {SVC_INFO}<br />일시정지 기간 : {DURATION}',
   SUCCESS_SUSPEND_MESSAGE: '일시정지 기간 : {DURATION}<br />일시정지 설정: {SUSPEND_TYPE}',
   SUCCESS_RESUSPEND_MESSAGE: '회선번호 : {SVC_NUMBER}<br />재시작 기간: {DURATION}',
+  GO_TO_STATUS: '일시정지 신청현황',
   TYPE: {
     ALL: '걸기/받기 모두 정지',
     CALL: '걸기만 정지'
@@ -988,6 +1059,7 @@ Tw.MYT_JOIN_SUSPEND = {
   NOT_VALID_PHONE_NUMBER: '휴대폰 번호가 올바르지 않습니다.',
   NOT_VALID_PERIOD: '일시정지 가능 최대기간을 초과하였습니다.',
   NOT_VALID_FROM_DATE: '시작일은 오늘 이후로 지정할 수 있습니다.',
+  NOT_VALID_FROM_DATE_01: '시작 일자는 당일로부터 30일 이내로 선택하실 수 있습니다.',
   ALERT_EXCEED: {
     TITLE: '신청불가',
     MESSAGE: '월 5회 이상 신청이 불가능합니다.'
@@ -1056,8 +1128,15 @@ Tw.CUSTOMER_EMAIL = {
   SELECT_SERVICE: '서비스 선택',
   SELECT_QUESTION: '문의사항 선택',
   SMS_ALARM: 'SMS알림 설정 시 답변이 등록되면 입력하신 휴대전화번호로 SMS가 발송됩니다.',
+  INVALID_PHONE: '연락처 번호를 다시 확인해 주세요.',
   INVALID_EMAIL: '이메일 주소를 다시 확인해주세요.',
-  INVALID_FILE: '첨부하실 수 없는 파일입니다. <br> 다시 확인해주세요.'
+  INVALID_FILE: '첨부하실 수 없는 파일입니다. <br> 다시 확인해주세요.',
+  DEFAULT_PLACEHOLDER: '내용 입력',
+  MEMBERSHIP_PLACEHOLDER: '멤버십 등급 산정 기준 등 \n' +
+    '멤버십의 상세한 내용 확인을 위해서는 \n' +
+    '‘청구서 주소 및 멤버십 카드 뒤 3자리’가 필요합니다. 해당 정보가 없을 경우 일부 상담이 제한될 수 있습니다.\n' +
+    '청구서 주소: \n' +
+    '멤버십 카드번호 뒤 3자리:'
 };
 Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT = {
   SVCCTG: {
@@ -1126,15 +1205,15 @@ Tw.BRANCH_SEARCH_OPTIONS = {
 Tw.UPLOAD_FILE = {
   UPLOAD_FILE: '파일 추가하기',
   WARNING_A00: '업로드를 실패 했습니다. 잠시 후 다시 시도해주세요.',
-  WARNING_A01: '첨부파일 용량은 30MB를 넘을 수 없습니다.',
+  WARNING_A01: '첨부파일 용량은 2MB를 넘을 수 없습니다.',
   WARNING_A02: '첨부파일은 최대 5개까지 등록할 수 있습니다.',
   WARNING_A03: 'MS워드, 한글hwp, 이미지 (jpg, bmp, gif, pdf)파일을 첨부할 수 있습니다.',
   BUTTON_ADD: '파일찾기',
-  BUTTON_DELETE: '파일삭제'
+  BUTTON_DELETE: '파일삭제',
+  CONFIRM_A01: '첨부파일의 용량이 총 2MB를 초과하여 등록할 수 없습니다. 다시 확인해주세요.',
 };
 
 Tw.PRODUCT_RESERVATION = {
-  title: '가입 상담 상품 선택',
   cellphone: '휴대폰',
   internet: '인터넷',
   phone: '전화',
@@ -1144,12 +1223,13 @@ Tw.PRODUCT_RESERVATION = {
     text: '가입상담 예약',
     subtext_product: '상담상품 : ',
     subtext_applyer: '신청자 정보 : ',
-    subtext_info: '상담예정일 : 신청일로부터 2일 이내(영업일 기준)'
+    subtext_info: '상담 예정일 : 신청일로부터 2일 이내(영업일 기준)'
   }
 };
 
 Tw.PRODUCT_REQUIRE_DOCUMENT = {
-  SUCCESS_TITLE: '구비서류 제출',
+  HISTORY_DETAIL: '심사결과 자세히 보기',
+  SUCCESS_TITLE: '필요서류 제출',
   FILE_COUNT: '제출 파일 : ',
   FILE_COUNT_UNIT: '개'
 };
@@ -1162,9 +1242,9 @@ Tw.PRODUCT_COMBINE_PRODUCT = {
       TITLE: 'TB끼리 한가족할인',
       EXPLAIN: '이동전화와 인터넷을 묶으면 인터넷 기본료 8,800원 할인혜택 제공'
     },
-    NA00002040: {
-      TITLE: '온가족할인',
-      EXPLAIN: '가족들의 이동전화 가입기간 합산기간에 따라 이동전화 월정액 최대 50% 할인혜택 제공'
+    NA00005055: {
+      TITLE: '가족나눔데이터',
+      EXPLAIN: '가족 간 이동전화(2회선~5회선)를 결합하면 데이터 최대 1,000MB 제공'
     },
     NH00000133: {
       TITLE: 'New온가족플랜',
@@ -1172,7 +1252,7 @@ Tw.PRODUCT_COMBINE_PRODUCT = {
     },
     NH00000084: {
       TITLE: 'TB끼리 온가족프리',
-      EXPLAIN: '이동전화와 인터넷을 묶으면 이동전화 및 인터넷 기본료 할인\n+ 추가혜택 제공'
+      EXPLAIN: '이동전화와 인터넷을 결합하면 이동전화·인터넷 기본료 할인에 추가 혜택 제공'
     },
     NONE: {
       TITLE: '결합상품을 선택해 주세요'
@@ -1181,6 +1261,12 @@ Tw.PRODUCT_COMBINE_PRODUCT = {
       TITLE: '그 외 결합상품'
     }
   }
+};
+
+Tw.PRODUCT_CONFIRM_GO_TO_DOCUMENT = {
+  TITLE: '기존에 신청한 가입상담예약 건이 존재합니다.\n가입서류를 제출하시겠어요?',
+  GO_DOCUMENT_BTN: '제출하기',
+  GO_RESERVATION_BTN: '신규신청'
 };
 
 Tw.MEMBERSHIP_GRADE = {
@@ -1309,15 +1395,16 @@ Tw.ROAMING_CENTER = [
 Tw.ROAMING_DESC = {
   MFACTCD_DESC: '제조사를 선택하세요.',
   MODEL_DESC: '모델명을 선택하세요.',
-  HEADER_NOTI_MSG: '출국 국가 검색 후 휴대폰 모델을 선택하시면 <br>' + '해당 국가에서 이용 가능한 로밍 서비스 방식과<br>요금을 확인하실 수 있습니다.',
-  HEADER_LOGIN_MSG:
-    '가입된 무선 회선 정보가 확인되지 않습니다. 휴대폰을 선택하신 후 상단에서 국가명으로 검색하시면 해당 국가에 따른 서비스 방식을 확인하실 수 있습니다.' +
-    ' 국가명으로만 검색하셔도 해당 국가에 따른 서비스 방식을 확인하실 수 있습니다. 찾고자 하는 휴대폰 모델이 없을 경우 고객센터로 문의 바랍니다.(고객센터 : 114 또는 02-6343-9000)',
+  HEADER_NOTI_MSG: '출국 국가 검색 후 휴대폰 모델을 선택하시면 해당 국가에서 이용할 수 있는 로밍 서비스 방식과 요금을 확인하실 수 있습니다.',
+  HEADER_LOGIN_MSG: '가입된 무선 회선 정보가 확인되지 않습니다.<br>' +
+    '휴대폰을 선택하신 후 상단에서 <strong>국가명</strong>으로 검색하시면 해당 국가에 따른 서비스 방식을 확인하실 수 있습니다.' +
+    '<strong>국가명</strong>으로만 검색하셔도 해당 국가에 따른 서비스 방식을 확인하실 수 있습니다.<br>' +
+    '찾고자 하는 휴대폰 모델이 없을 경우 고객센터로 문의 바랍니다.(고객센터 : 114 또는 02-6343-9000)',
   HEADER_LINE_MSG:
-    '기본 회선을 무선 회선으로 변경하시면 가입된 휴대폰 정보로 출국 국가별 이용 가능한 로밍 서비스 방식과 요금을 확인하실 수 있습니다.' +
-    ' 찾고자 하는 휴대폰 모델이 없을 경우 고객센터로 문의 바랍니다.(고객센터 : 114 또는 02-6343-9000)',
+    '기본 회선을 무선 회선으로 변경하시면 가입된 휴대폰 정보로 출국 국가별 이용 가능한 로밍 서비스 방식과 요금을 확인하실 수 있습니다.<br>' +
+    '찾고자 하는 휴대폰 모델이 없을 경우 고객센터로 문의 바랍니다.(고객센터 : 114 또는 02-6343-9000)',
   BOTTOM_NOTI_LOGIN_MSG: '* 로그인을 하시면 가입된 휴대폰 정보로 확인하실 수 있습니다.',
-  BOTTOM_NOTI_PHONE_MSG: '* 고객님은 회선 미인증 회원입니다. <br>' + 'T world에서 회선 인증 후 이용 가능한 서비스 방식 확인이 가능합니다.'
+  BOTTOM_NOTI_PHONE_MSG: '* 고객님은 회선 <strong>미인증 회원</strong>입니다.<br>T world에서 회선 인증 후 이용 가능한 서비스 방식 확인이 가능합니다.'
 };
 
 Tw.EVENT_TYPE = {
@@ -1350,7 +1437,7 @@ Tw.NOTI_POPUP_BTN = {
 Tw.MENU_STRING = {
   TOTAL: '총 ',
   DESC: '개의 회선',
-  SVC_COUNT: function(count) {
+  SVC_COUNT: function (count) {
     return this.TOTAL + count + this.DESC;
   }
 };
@@ -1367,8 +1454,86 @@ Tw.ROAMING_COMBINE_LINE_STRING = {
 Tw.SETTING_LOCATION = {
   AGREE: '위치정보 이용에 동의하셨습니다.',
   DISAGREE: '위치정보 이용동의를 취소하셨습니다.'
-}
+};
 
 Tw.TMAP_STRING = {
   POI_SEARCH_POSTFIX: '청'
+};
+
+Tw.ROAMING_RETURN_CODE = {
+  '1430452300': '대구 SKT 황금점 매장',
+  '1430456896': '인천공항 2터미널 1층 로밍센터',
+  A100110000: '인천공항 1터미널 1층 로밍센터',
+  A100140000: '김포공항 1층 로밍센터',
+  A900100000: '제주공항 국제선 1층 로밍센터',
+  A200130000: '김해공항 3층 로밍센터',
+  C399900000: '대구공항 2층 로밍센터'
+};
+
+Tw.ROAMING_RECEIVE_CODE = {
+  1000004045: { code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(E-F 카운터)' },
+  1000004047: { code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(G-H 카운터)' },
+  1000004055: { code: 'A100140000', name: '김포공항 1층 로밍센터' },
+  1000004057: { code: 'A900100000', name: '제주공항 국제선 1층 로밍센터' },
+  1000012532: { code: 'A200130000', name: '김해공항 3층 로밍센터' },
+  1430452300: { code: '1430452300', name: '대구 SKT 황금점 매장' },
+  1430455436: { code: 'C399900000', name: '대구공항 2층 로밍센터' },
+  1430456957: { code: '1430456896', name: '인천공항 2터미널 3층 로밍센터(D-E 카운터)' }
+};
+
+Tw.SERVICE_AREA_TYPE = {
+  기가광랜: 1,
+  인터넷: 2,
+  디지털전화: 5,
+  일반전화: 5,
+  인터넷전화: 6,
+  Btv: 7
+};
+
+Tw.MEMBERSHIP_TYPE = {
+  '0': 'Leaders Club',
+  '3': 'T`PLE',
+  '4': 'COUPLE'
+};
+
+Tw.ROAMING_ERROR = {
+  TITLE: '서비스 장애 관련 공지',
+  BUTTON: [{
+    style_class: 'tw-popup-closeBtn bt-red1 pos-right',
+    txt: '확인'
+  }]
+};
+
+Tw.ROAMING_DOWNLOAD_URL = {
+  SMART_GUIDE: 'https://cdnm.tworld.co.kr/adminupload/common/15490/93452/237955092.pdf',
+  PHONE_GUIDE: 'http://cdnm.tworld.co.kr/adminupload/common/15490/93452/365062307.pdf',
+  RENTAL_GUIDE: 'http://cdnm.tworld.co.kr/adminupload/common/15490/93452/1602002132.pdf'
+};
+
+Tw.TOOLTIP_TITLE = {
+  ROAMING_PAY_GUIDE: '로밍 이용요금 안내',
+  ROAMING_USE_GUIDE: '로밍 사용안내',
+  SERVICE_START_GUIDE: '서비스개시일/시간안내'
+};
+
+Tw.MEMBERSHIP = {
+  MOVIE_CULTURE_CINFIRM: {
+    TITLE: 'T멤버십 앱으로 이동하시겠습니까?',
+    MESSAGE: '예매·조회는 T멤버십 앱에서 가능합니다.'
+  },
+  BENEFIT : {
+    BRAND: {
+      GRADE: {
+        A: '전체 등급',
+        V: 'VIP 등급',
+        M: '내 등급'
+      }
+    },
+    DEFAULT_AREA: {
+      AREA1: '서울',
+      AREA2: '중구',
+      MAP_X: '37.5600420',
+      MAP_Y: '126.9858500'
+    }
+  }
 };

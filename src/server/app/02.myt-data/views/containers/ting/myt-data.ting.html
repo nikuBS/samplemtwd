@@ -15,11 +15,17 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap step">
-    <!-- #header -->
-    <%- include('../../../../common/views/components/header.component.html',
-    { title: '팅요금제 충전 선물', svcInfo: svcInfo, option: { back: 'step' } }); %>
-    <!--// #header -->
+<div class="wrap" data-menuId="M000213">
+    <div class="popup-page tw-popup nobg fixed-bottom h60">
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>팅요금제 충전 선물</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
@@ -46,7 +52,7 @@
                 <div class="recently-tel-box">
                     <div class="inputbox bt-add canceling mb26">
                         <span class="input">
-                            <input type="text" class="fe-input_ting_receiver" placeholder="숫자만 입력" title="input" value=""
+                            <input type="tel" class="fe-input_ting_receiver" placeholder="숫자만 입력" title="input" value=""
                                    aria-labelledby="aria-exp-label1"
                                    aria-describedby="aria-exp-desc1" maxlength="13">
                             <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
@@ -56,6 +62,8 @@
                             <button type="button" class="fe-btn_native_contact">주소록</button>
                         </span>
                         <% } %>
+                        <div class="val-txt-type01 fe-error-text blind"><span class="error-txt">휴대폰 번호 자릿수를 확인해주세요. (10~11자리)</span></div>
+                        <div class="val-txt-type01 fe-error-text blind"><span class="error-txt">휴대폰 번호가 올바르지 않습니다.</span></div>
                     </div>
                 </div>
                 <h4 class="tabcon-title0">
@@ -152,7 +160,6 @@
     <!--// #contents -->
 
     <div class="popup-page tw-popup fe-wrap-ting-block" style="display:none">
-        <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
         <!-- #header -->
         <div class="header-wrap">
             <div class="page-header">
@@ -163,7 +170,7 @@
         </div>
         <!--// #header -->
         <!-- .container-wrap -->
-        <div id="contents" class="container-wrap">
+        <div class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
 
@@ -191,16 +198,6 @@
                     <h3>상세내역</h3>
                     <div class="history-list type2">
                         <ul class="fe-wrap-block-list">
-                            <!--<li>-->
-                                <!--<div class="li-elem">-->
-                                    <!--<div class="title-box">-->
-                                        <!--<span class="tit">충전 허용 금액 변경</span>-->
-                                        <!--<span class="sub-tit">-->
-                                            <!--<span>을지로점</span><span>2018.07.12</span>-->
-                                        <!--</span>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <!--</li>-->
                         </ul>
                     </div>
                 </div>
@@ -212,6 +209,10 @@
         <!-- .popup-closeBtn -->
         <button class="popup-closeBtn fe-close-wrap-ting-block"><span class="blind">팝업 페이지 닫기</span></button>
         <!--// .popup-closeBtn -->
+    </div>
+        <!-- .popup-closeBtn -->
+    <button class="prev-step fe-common-back">취소</button>
+    <!--// .popup-closeBtn -->
     </div>
 </div>
 

@@ -16,7 +16,7 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+    <div class="wrap" data-menuId="<%= pageInfo.menuId %>" data-research-id="<%= research.info.qstnId %>">
         <!-- #header -->
         <%- include('../../../common/views/components/header.component.html', { title: '설문조사 진행', svcInfo: svcInfo }); %>
         <!--// #header -->
@@ -31,7 +31,7 @@
                         <span class="poll-question"><%= research.info.qstnTitleNm %></span>
                         <%- research.info.qstnHtmlCtt %>
                         <span class="poll-date"><%= research.info.staDtm %> <span class="blind">에서</span><span class="vt" aria-hidden="true">-</span> <%= research.info.endDtm %></span>
-                        <em class="poll-condition">진행</em>
+                        <em class="poll-condition">진행 중</em>
                     </div>
                     <!-- // .poll-title -->
                     <!-- poll-chart-box -->
@@ -39,17 +39,18 @@
                         <div class="poll-chart-sbox">
                             <dl class="poll-chart-txt">
                                 <dt>진행률</dt>
-                                <dd>80%</dd>
+                                <dd>0%</dd>
                             </dl>
                             <div class="bar-chart-hoz">
-                                <span class="data-bar blue2" style="width:80%"></span>
+                                <span class="data-bar blue2" style="width:0%"></span>
                             </div><br/>
                         </div>
                     </div>
                     <!-- // poll-chart-box -->
-                    <div class="poll-box">
-                        <% research.questions.map(question => { %>
-                            <div><%= question.inqDtlCtt %></div>
+                    <% research.questions.map((question, idx) => { 
+                        const isEssential = question.mndtAnswYn === 'Y' %>
+                        <div class="poll-box <%= idx === 0 ? '': 'none' %>" data-is-essential-="<%= isEssential %>" data-answer-type="<%= question.inqItmTypCd %>">
+                            <div class="poll-sub-tit"><%= question.inqDtlCtt %></div>
                             <% switch (question.inqItmTypCd) { 
                                 case '0': {
                                 let etcIdx = -1; %>
@@ -62,15 +63,15 @@
                                                     etcIdx = idx;
                                                 }
                                                 const content = exam.isEtc ? '기타' : exam.content %>
-                                                <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                <li class="radiobox type01" role="radio" aria-checked="false" data-next-question="<%= exam.nxtInqItmNum %>"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                                     <input type="radio" name="radio<%= research.bnnrRsrchId %>" value="" title="<%= content %>" /><!-- 체크상태일 경우 checked="checked" -->
                                                     <%= content %>
                                                 </li>
-                                            <% }; %>
+                                            <% } %>
                                         </ul>
                                     </div>
                                 </div>
-                                <% if (etcIdx > 0) { %><textarea class="poll-area mt10 mb10" data-etc-idx="<%= etcIdx %>" cols="20" rows="3" placeholder="기타항목 선택시 내용을 입력해주세요."></textarea><% } %>
+                                <% if (etcIdx > 0) { %><textarea class="poll-area mt10 mb10 fe-etc-area" data-etc-idx="<%= etcIdx %>" cols="20" rows="3" placeholder="기타항목 선택시 내용을 입력해주세요."></textarea><% } %>
                                 <% if (question.motMsgHtmlCtt) { %><div class="mb20"><%- question.motMsgHtmlCtt %></div><% } %>
                                 <% break;
                                 }
@@ -85,11 +86,11 @@
                                                     etcIdx = idx;
                                                 }
                                                 const content = exam.isEtc ? '기타' : exam.content %>
-                                                <li class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                <li class="checkbox type01" role="checkbox" aria-checked="false" data-next-question="<%= exam.nextQuestion %>"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                                     <input type="checkbox" name="checkbox" value="" title="<%= content %>" /><!-- 체크상태일 경우 checked="checked" -->
                                                     <%= content %>
                                                 </li>
-                                            <% }; %>
+                                            <% } %>
                                         </ul>
                                     </div>
                                 </div>
@@ -102,30 +103,31 @@
                                 <% break;
                                 }
                             } %>
-                        <% }); %>
+                            <% if (idx === 0) { %>
+                                <ul class="bt-slice mt30">
+                                    <li class="bt-blue1 fe-go-next">
+                                        <button>다음</button>
+                                    </li>
+                                </ul>
+                            <% } else { %>
+                                <ul class="bt-slice mt30 item-two">
+                                    <li class="bt-white2 fe-go-prev">
+                                        <button>이전으로</button>
+                                    </li>
+                                    <% if (idx === research.questions.length - 1) { %>
+                                    <li class="bt-blue1" id="fe-submit-research">
+                                        <button disabled="<%= isEssential %>">참여하기</button>
+                                    </li>
+                                    <% } else { %>
+                                    <li class="bt-blue1 fe-go-next" >
+                                        <button disabled="<%= isEssential %>">다음</button>
+                                    </li>
+                                    <% } %>
+                                </ul>
+                            <% } %>
+                        </div>
+                    <% }); %>
                     </div>
-                    <ul class="bt-slice mt30">
-                        <li class="bt-blue1">
-                            <button>다음</button>
-                        </li>
-                    </ul>
-                    <!--
-                    <ul class="bt-slice mt30">
-                        <li class="bt-blue1">
-                            <button>다음</button>
-                        </li>
-                    </ul>
-                    -->
-                    <!--
-                    <ul class="bt-slice mt30 item-two">
-                        <li class="bt-white2">
-                            <button>이전으로</button>
-                        </li>
-                        <li class="bt-blue1">
-                            <button>참여하기</button>
-                        </li>
-                    </ul>
-                    -->
                 </div>
                 <!-- // .cont-box -->
             </div>
@@ -139,7 +141,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-        new Tw.CustomerResearches($('.wrap'));
+        new Tw.CustomerResearch($('.wrap'));
     });
 </script>
 <% include ../../components/end.component.html %>

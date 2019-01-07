@@ -35,7 +35,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
     this._cachedElement();
     this._getWelcomeMsg();
     this._bindEvent();
-    // this._getQuickMenu();
+    this._getQuickMenu();
     this._initScroll();
   } else {
     setTimeout($.proxy(function () {
@@ -70,28 +70,37 @@ Tw.MainHome.prototype = {
     this._makeBarcode();
   },
   _bindEvent: function () {
-    this.$elBarcode.on('click', $.proxy(this._onClickBarcode, this));
+    this.$container.on('click', '#fe-membership-extend', $.proxy(this._onClickBarcode, this));
+    this.$container.on('click', '#fe-membership-go', $.proxy(this._onClickBarcodeGo, this));
     this.$container.on('click', '.fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
     this.$container.on('click', '.fe-bt-line', $.proxy(this._onClickLine, this));
     this.$container.on('click', '#fe-bt-data-link', $.proxy(this._openDataLink, this));
+    this.$container.on('click', '#fe-bt-link-broadband', $.proxy(this._onClickGoBroadband, this));
+    this.$container.on('click', '#fe-bt-link-billguide', $.proxy(this._onClickGoBillGuide, this));
   },
   _bindEventStore: function () {
     this.$container.on('click', '#fe-bt-direct-support', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_SUPPORT));
     this.$container.on('click', '#fe-bt-direct-home', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_HOME));
+    this.$container.on('click', '.fe-bt-direct-home', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_HOME));
     this.$container.on('click', '#fe-bt-direct-accessory', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_ACCESSORY));
     this.$container.on('click', '#fe-bt-direct-phone', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_PHONE));
     this.$container.on('click', '#fe-bt-direct-tablet', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_TABLET));
     this.$container.on('click', '#fe-bt-direct-nugu', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_NUGU));
+    this.$container.on('click', '.fe-bt-direct-nugu', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_NUGU));
   },
   _bindEventLogin: function () {
     this.$container.on('click', '.fe-bt-home-login', $.proxy(this._onClickLogin, this));
     this.$container.on('click', '.fe-bt-home-slogin', $.proxy(this._onClickSLogin, this));
+    this.$container.on('click', '.fe-bt-signup', $.proxy(this._onClickSignup, this));
   },
   _onClickLogin: function () {
     this._tidLanding.goLogin();
   },
   _onClickSLogin: function () {
     this._tidLanding.goSLogin();
+  },
+  _onClickSignup: function () {
+    this._tidLanding.goSignup();
   },
   _onClickExternalLink: function (url) {
     Tw.CommonHelper.openUrlExternal(url);
@@ -109,7 +118,27 @@ Tw.MainHome.prototype = {
   _onClickBarcode: function () {
     var cardNum = this.$elBarcode.data('cardnum');
     var mbrGr = this.$barcodeGr.data('mbrgr');
-    var usedAmount = Tw.FormatHelper.addComma(this.$elBarcode.data('usedamount'));
+    this._apiService.request(Tw.API_CMD.BFF_11_0001, {})
+      .done($.proxy(this._successMembership, this, mbrGr, cardNum));
+  },
+  _onClickBarcodeGo: function () {
+    if ( Tw.BrowserHelper.isApp() ) {
+      if ( Tw.BrowserHelper.isAndroid() ) {
+        Tw.CommonHelper.openUrlExternal('http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/recommend/recommendMain.do?bannerpoc=2018_155');
+      } else {
+        Tw.CommonHelper.openUrlExternal('http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/recommend/recommendMain.do?bannerpoc=2018_156');
+      }
+    }
+  },
+  _successMembership: function (mbrGr, cardNum, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      var usedAmt = resp.result.mbrUsedAmt;
+      this._openBarcodePopup(mbrGr, cardNum, Tw.FormatHelper.addComma((+usedAmt).toString()));
+    } else {
+      Tw.Error(resp.code, resp.msg).pop();
+    }
+  },
+  _openBarcodePopup: function (mbrGr, cardNum, usedAmount) {
     this._popupService.open({
       hbs: 'HO_01_01_02',
       layer: true,
@@ -120,12 +149,19 @@ Tw.MainHome.prototype = {
         usedAmount: usedAmount
       }
     }, $.proxy(this._onOpenBarcode, this, cardNum));
+
   },
   _onOpenBarcode: function (cardNum, $popupContainer) {
     var extendBarcode = $popupContainer.find('#fe-membership-barcode-extend');
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
       extendBarcode.JsBarcode(cardNum);
     }
+  },
+  _onClickGoBroadband: function () {
+    Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.BROADBAND);
+  },
+  _onClickGoBillGuide: function () {
+    this._historyService.goLoad('/myt-fare/billguide/guide')
   },
   _openDataLink: function () {
     this._popupService.open({
@@ -198,6 +234,8 @@ Tw.MainHome.prototype = {
         'contents': notice.ntcCtt,
         'bt_b': this._makeBtnList(notice)
       }, $.proxy(this._onOpenNotice, this), $.proxy(this._onCloseNotice, this));
+    } else {
+      this._openLineResisterPopup();
     }
   },
   _checkShowEmrNotice: function (notice, today) {
@@ -561,17 +599,34 @@ Tw.MainHome.prototype = {
   },
   _successWelcomeMsg: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._welcomeList = this._filterShowMsg(resp.result.welcomeMsgList);
-      this._drawWelcomeMsg(this._welcomeList);
+      if ( Tw.BrowserHelper.isApp() ) {
+        this._nativeSrevice.send(Tw.NTV_CMD.LOAD, {
+          key: Tw.NTV_STORAGE.HOME_WELCOME
+        }, $.proxy(this._onHomeWelcomeForDraw, this, resp.result.welcomeMsgList));
+      } else {
+        var nonShow = Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.HOME_WELCOME) || '';
+        this._handleDrawNoti(resp.result.welcomeMsgList, nonShow);
+      }
     }
   },
-  _filterShowMsg: function (list) {
-    var nonShow = Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.HOME_WELCOME) || '';
+  _onHomeWelcomeForDraw: function (list, resp) {
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      this._handleDrawNoti(list, resp.params.value);
+    } else {
+      this._handleDrawNoti(list, '');
+    }
+  },
+  _handleDrawNoti: function (list, nonShow) {
+    this._welcomeList = this._filterShowMsg(list, nonShow);
+    this._drawWelcomeMsg(this._welcomeList);
+  },
+  _filterShowMsg: function (list, nonShow) {
     return _.filter(list, $.proxy(function (msg) {
       var startTime = Tw.DateHelper.convDateFormat(msg.expsStaDtm).getTime();
       var endTime = Tw.DateHelper.convDateFormat(msg.expsEndDtm).getTime();
       var today = new Date().getTime();
       return (nonShow.indexOf(msg.wmsgId) === -1 && startTime < today && endTime > today);
+      // return nonShow.indexOf(msg.wmsgId) === -1;
     }, this));
   },
   _drawWelcomeMsg: function (list) {
@@ -589,15 +644,38 @@ Tw.MainHome.prototype = {
     }
   },
   _onClickCloseNoti: function () {
-    var nonShow = Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.HOME_WELCOME) || '';
+    if ( Tw.BrowserHelper.isApp() ) {
+      this._nativeSrevice.send(Tw.NTV_CMD.LOAD, {
+        key: Tw.NTV_STORAGE.HOME_WELCOME
+      }, $.proxy(this._onHomeWelcomeForClose, this));
+    } else {
+      var nonShow = Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.HOME_WELCOME) || '';
+      this._handleClosedNoti(nonShow);
+    }
+  },
+  _onHomeWelcomeForClose: function (resp) {
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      this._handleClosedNoti(resp.params.value);
+    } else {
+      this._handleClosedNoti('');
+    }
+  },
+  _handleClosedNoti: function (nonShow) {
     if ( nonShow === '' ) {
       nonShow = this._welcomeList[0].wmsgId;
     } else {
       nonShow = nonShow + ',' + this._welcomeList[0].wmsgId;
     }
-    Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.HOME_WELCOME, nonShow);
-    this._welcomeList = this._filterShowMsg(this._welcomeList);
-    this._drawWelcomeMsg(this._welcomeList);
+    if ( Tw.BrowserHelper.isApp() ) {
+      this._nativeSrevice.send(Tw.NTV_CMD.SAVE, {
+        key: Tw.NTV_STORAGE.HOME_WELCOME,
+        value: nonShow
+      });
+    } else {
+      Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.HOME_WELCOME, nonShow);
+    }
+
+    this._handleDrawNoti(this._welcomeList, nonShow);
   },
   _onClickGoNoti: function () {
 
@@ -638,7 +716,25 @@ Tw.MainHome.prototype = {
     $('.fe-bt-quick-edit').on('click', $.proxy(this._onClickQuickEdit, this));
   },
   _parseQuickMenu: function (quickMenu) {
-    return [];
+    var menuId = Tw.FormatHelper.isEmpty(quickMenu.menuIdStr) || quickMenu.menuIdStr === 'null' || quickMenu.menuIdStr === ' ' ? [] :
+      quickMenu.menuIdStr.indexOf('|') !== -1 ? quickMenu.menuIdStr.split('|') : [quickMenu.menuIdStr.trim()];
+    var iconPath = Tw.FormatHelper.isEmpty(quickMenu.iconPathStr) || quickMenu.iconPathStr === 'null' || quickMenu.iconPathStr === ' ' ? [] :
+      quickMenu.iconPathStr.indexOf('|') !== -1 ? quickMenu.iconPathStr.split('|') : [quickMenu.iconPathStr.trim()];
+    var menuNm = Tw.FormatHelper.isEmpty(quickMenu.menuNmStr) || quickMenu.menuNmStr === 'null' || quickMenu.menuNmStr === ' ' ? [] :
+      quickMenu.menuNmStr.indexOf('|') !== -1 ? quickMenu.menuNmStr.split('|') : [quickMenu.menuNmStr.trim()];
+    var menuUrl = Tw.FormatHelper.isEmpty(quickMenu.menuUrlStr) || quickMenu.menuUrlStr === 'null' || quickMenu.menuUrlStr === ' ' ? [] :
+      quickMenu.menuUrlStr.indexOf('|') !== -1 ? quickMenu.menuUrlStr.split('|') : [quickMenu.menuUrlStr.trim()];
+    var result = [];
+    _.map(menuId, $.proxy(function (id, index) {
+      var menu = {
+        menuId: id,
+        iconPath: iconPath[index],
+        menuNm: menuNm[index],
+        menuUrl: menuUrl[index]
+      };
+      result.push(menu);
+    }, this));
+    return result;
   },
   _onClickQuickEdit: function () {
     this._popupService.open({

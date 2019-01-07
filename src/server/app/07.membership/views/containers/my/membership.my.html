@@ -1,0 +1,194 @@
+<%#
+* FileName: membership.my.html
+* Author: Seungkyu Kim (ksk4788@pineone.com)
+* Date: 2018.12.18
+* ID: BE_02
+%>
+
+<% include ../../components/start.component.html %>
+<% include ../../components/my/membership.my.component.html %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+        <div class="h-belt">
+            <div class="h-default">
+                <div class="h-menu">
+                    <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                </div>
+                <div class="h-tit">나의 T멤버십</div>
+                <div class="h-serarch">
+                    <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+
+            <hr class="cont-sp type1" aria-hidden="true">
+
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="myinfo-wrap">
+                    <div class="user-level">
+                        <i class="ico vip"><span class="blind"><%= myInfoData.mbrGrStr %></span></i>
+                        <div class="info-inner">
+                            <span class="title-l"><%= myInfoData.custNm %> 님</span>
+                            <span class="subtx"><%= myInfoData.mbrTypStr %>
+				<% if( myInfoData.mbrTypCd === '3' || myInfoData.mbrTypCd === '4' ) { %>
+					<button id="fe-card-change" class="bt-link-tx underline ml6">카드 종류 변경</button></span>
+                            <% } %>
+                        </div>
+                    </div>
+                    <div class="info-detail">
+                        <div class="basic-list">
+                            <ul>
+                                <li>
+                                    <span class="title">등급 적용연도</span>
+                                    <span class="tx-cont"><%= myInfoData.getReqYear %></span>
+                                </li>
+                                <li>
+                                    <span class="title">등급 산정기간</span>
+                                    <span class="tx-cont"><%= myInfoData.estimateGradeStart %>~<%= myInfoData.estimateGradeEnd %></span>
+                                </li>
+                                <li>
+                                    <span class="title">지난해 납부금액</span>
+                                    <span class="tx-cont"><span class="tx-emp">총 <%= myInfoData.showPayAmtScor %>원</span></span>
+                                </li>
+                                <li>
+                                    <span class="title">T멤버십 가입기간</span>
+                                    <span class="tx-cont"><%= myInfoData.scrbPrd %>개월</span>
+                                </li>
+                                <li>
+                                    <span class="title">연체 횟수</span>
+                                    <span class="tx-cont"><span class="tx-emp"><%= myInfoData.colCnt %>건</span></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <ul class="bt-slice item-two mt20">
+                    <li><button type="button" class="btn-round1 btn-style4">정보 수정</button></li>
+                    <li>
+                        <% if(myInfoData.cardReqCd === '1'){ %>
+                        <button id="fe-reissue-cancel" type="button" class="btn-round1 btn-style4">재발급 취소</button>
+                        <% }else{ %>
+                        <button id="fe-reissue" type="button" class="btn-round1 btn-style4">재발급 신청</button>
+                        <% } %>
+                    </li>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true">
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz">
+                <ul class="review-list mt0">
+                    <li>
+                        <div class="txt">
+                            <strong class="tit">연간 누적 혜택</strong>
+                        </div>
+                        <span class="val vt">42,000원</span>
+                    </li>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true">
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-btm">
+                <div class="membership-use-particulars">
+                    <div class="widget">
+                        <div class="widget-box toggle">
+                            <div class="bt-detail type1">
+                                <span class="tx-title">이용내역<button id="BE_02_tip_01" page-id="M000571" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
+                                <button id="fe-period" class="bt-toggle date" role="button" aria-pressed="false" title="이용내역 더보기"><!-- 이용기간 날짜 --></button>
+                            </div>
+                            <div class="toggler">
+                                    <span class="form-wrap multi-type">
+                                        <span class="select">
+                                            <button id="fe-sdate" class="bt-dropdown big" title="시작날짜 선택" aria-haspopup="true">2018.1.<span class="ico"></span></button>
+                                        </span>
+                                        <span class="select">
+                                            <button id="fe-edate" class="bt-dropdown big ml8" title="마지막날짜 선택" aria-haspopup="true">2018.12.<span class="ico"></span></button>
+                                        </span>
+                                        <button id="fe-inquire" type="button" class="btn-round2 btn-style3 ml10">조회하기</button>
+                                    </span>
+                                <div class="announcement-box pt10">
+                                    <p class="announcement-txt">올해 12개월까지만 내역을 조회하실 수 있습니다.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="fe-empty" class="result-none type2" style="display:none;">
+                        이용내역이 없습니다.
+                    </div>
+
+                    <ul id="fe-list" class="review-list">
+
+                    </ul>
+                    <div class="btn-more" style="display:none;">
+                        <button>더 보기 <span id="fe-more-cnt"> </span></button>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <ul class="full-link-list">
+                    <li>
+                        <button>
+                                <span class="inner">
+                                    <span class="tit">발급 변경내역</span>
+                                </span>
+                        </button>
+                    </li>
+                    <li>
+                        <button>
+                                <span class="inner">
+                                    <span class="tit">T멤버십 카드·등급 안내</span>
+                                </span>
+                        </button>
+                    </li>
+                    <li>
+                        <button>
+                                <span class="inner">
+                                    <span class="tit">T멤버십 해지</span>
+                                </span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+        </div>
+    </div>
+    <!--// #contents -->
+</div>
+</body>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MembershipMy($('.wrap'));
+  });
+</script>
+
+<% include ../../components/end.component.html %>

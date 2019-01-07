@@ -50,10 +50,10 @@ import CommonTidCertPw from './controllers/tid/common.tid.cert-pw.controller';
 import CommonShareAppInstallInfo from './controllers/share/common.share.app-install.info.controller';
 import CommonMemberWithdrawalComplete from './controllers/member/common.member.withdrawal-complete';
 import CommonMemberLogin from './controllers/member/common.member.login.controller';
-import CommonSearchResult from './controllers/search/common.search.controller';
 import CommonSearchMore from './controllers/search/common.search.more.controller';
 import CommonSearch from './controllers/search/common.search.controller';
-import CommonSearchInResult from './controllers/search/common.search.in_result.controller';
+import CommonMemberInit from './controllers/member/common.member.init.controller';
+import CommonSearchMain from './controllers/search/common.search_main.controller';
 
 export default class CommonRouter extends TwRouter {
   constructor() {
@@ -70,6 +70,7 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push( {url: '/cert/result', controller: CommonCertResult, post: true});
 
     // member - login
+    this.controllers.push({ url: '/member/init', controller: CommonMemberInit });
     this.controllers.push({ url: '/member/login', controller: CommonMemberLogin });
     this.controllers.push({ url: '/member/login/route', controller: CommonMemberLoginRoute });
     this.controllers.push({ url: '/member/login/fail', controller: CommonMemberLoginFail});
@@ -115,9 +116,9 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push({ url: '/share/bridge', controller: CommonShareBridge });
     this.controllers.push({ url: '/share/app-install/info', controller: CommonShareAppInstallInfo });
 
-    //search
+    // search
     this.controllers.push({ url: '/search', controller: CommonSearch});
+    this.controllers.push({ url: '/search_main', controller: CommonSearchMain});
     this.controllers.push({ url: '/search/more', controller: CommonSearchMore });
-    this.controllers.push({ url: '/search/in_result', controller: CommonSearchInResult });
   }
 }

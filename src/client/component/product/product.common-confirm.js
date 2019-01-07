@@ -9,6 +9,7 @@ Tw.ProductCommonConfirm = function(isPopup, rootEl, data, applyCallback) {
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
+  this._comparePlans = new Tw.ProductMobilePlanComparePlans();
   this._data = this._convData(data);
   this._isApply = false;
   this._isPopup = isPopup;
@@ -97,9 +98,12 @@ Tw.ProductCommonConfirm.prototype = {
       'contents': $btn.parent().find('.fe-tip_view_html').html(),
       'bt_b': [{
         style_class:'pos-left fe-btn_close',
-        txt: Tw.BUTTON_LABEL.CLOSE
+        txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     }, $.proxy(this._bindTipView, this));
+
+    e.preventDefault();
+    e.stopPropagation();
   },
 
   _bindTipView: function($popupContainer) {
@@ -121,6 +125,7 @@ Tw.ProductCommonConfirm.prototype = {
 
   _setContainer: function(isPopup, $container) {
     this.$container = $container;
+
     this._cachedElement();
 
     if (this._data.isWidgetInit) {
@@ -129,9 +134,10 @@ Tw.ProductCommonConfirm.prototype = {
   },
 
   _joinCancel: function() {
-    this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.MSG,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A1.BUTTON, $.proxy(this._bindJoinCancelPopupEvent, this),
-      null, $.proxy(this._bindJoinCancelPopupCloseEvent, this));
+    var alert = this._data.isTerm ? Tw.ALERT_MSG_PRODUCT.ALERT_3_A74 : Tw.ALERT_MSG_PRODUCT.ALERT_3_A1;
+
+    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES,
+      $.proxy(this._bindJoinCancelPopupEvent, this), null, $.proxy(this._bindJoinCancelPopupCloseEvent, this));
   },
 
   _bindJoinCancelPopupEvent: function($popupContainer) {
@@ -145,6 +151,10 @@ Tw.ProductCommonConfirm.prototype = {
   _bindJoinCancelPopupCloseEvent: function() {
     if (!this._cancelFlag) {
       return;
+    }
+
+    if (!this._isPopup) {
+      return this._historyService.goBack();
     }
 
     this._historyService.go(-2);
@@ -250,8 +260,7 @@ Tw.ProductCommonConfirm.prototype = {
   },
 
   _openComparePlans: function() {
-    Tw.CommonHelper.openUrlInApp(location.origin + '/product/mobileplan/compare-plans?prodId=' +
-      this._data.preinfo.toProdInfo.prodId, 'status=1,toolbar=1');
+    this._comparePlans.openCompare(this._data.preinfo.toProdInfo.prodId);
   },
 
   _setAgreeAndclosePop: function($wrap) {
@@ -263,21 +272,22 @@ Tw.ProductCommonConfirm.prototype = {
   },
 
   _closePop: function(event) {
-    var $target = $(event.currentTarget);
+    var $target = event ? $(event.currentTarget) : null;
+
     this._popupService.close();
-    if($target.hasClass('set-info')) {
+    if($target && $target.hasClass('set-info')) {
       this._historyService.goBack();
     }
   },
 
   _openConfirmAlert: function() {
     this._popupService.openModalTypeATwoButton(this._confirmAlert.TITLE, this._confirmAlert.MSG, this._confirmAlert.BUTTON,
-      Tw.BUTTON_LABEL.CLOSE, null, $.proxy(this._setConfirmAlertApply, this), null, 'join_confirm');
+      Tw.BUTTON_LABEL.CLOSE, null, $.proxy(this._setConfirmAlertApply, this), null, 'join_confirm_alert');
   },
 
   _setConfirmAlertApply: function() {
     this._popupService.close();
-    this._doCallback();
+    setTimeout($.proxy(this._doCallback, this), 100);
   },
 
   _toggleApplyBtn: function(toggle) {

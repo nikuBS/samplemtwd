@@ -5,10 +5,11 @@
  *
  */
 
-Tw.ImmediatelyRechargeLayer = function ($element) {
+Tw.ImmediatelyRechargeLayer = function ($element, prodId) {
   this.$container = $element;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._prodId = prodId;
   this._historyService = new Tw.HistoryService(this.$container);
   this.immChargeData = {}; // 초기화
   this._initialize();
@@ -17,6 +18,22 @@ Tw.ImmediatelyRechargeLayer = function ($element) {
 Tw.ImmediatelyRechargeLayer.prototype = {
 
   _initialize: function () {
+    this._readOnlyProductIdList = ['NA00000138', 'NA00000719', 'NA00000720', 'NA00001901', 'NA00002244', 'NA00002373',
+      'NA00002494', 'NA00002549', 'NA00002572', 'NA00002573', 'NA00002597', 'NA00002604', 'NA00002605', 'NA00002606',
+      'NA00002865', 'NA00002867', 'NA00002887', 'NA00002974', 'NA00003018', 'NA00003311', 'NA00003312', 'NA00003314',
+      'NA00003315', 'NA00003316', 'NA00003317', 'NA00003318', 'NA00003320', 'NA00003321', 'NA00003322', 'NA00003323',
+      'NA00003324', 'NA00003325', 'NA00003326', 'NA00003327', 'NA00003328', 'NA00003329', 'NA00003362', 'NA00003368',
+      'NA00003369', 'NA00003370', 'NA00003371', 'NA00003420', 'NA00003427', 'NA00003458', 'NA00003696', 'NA00003856',
+      'NA00003857', 'NA00003858', 'NA00003859', 'NA00003860', 'NA00003861', 'NA00003862', 'NA00003863', 'NA00003864',
+      'NA00003865', 'NA00003866', 'NA00003867', 'NA00003868', 'NA00003869', 'NA00003870', 'NA00003871', 'NA00003872',
+      'NA00003873', 'NA00003874', 'NA00003875', 'NA00003886', 'NA00003887', 'NA00003888', 'NA00003889', 'NA00004142',
+      'NA00004143', 'NA00004185', 'NA00004283', 'NA00004284', 'NA00004324', 'NA00004325', 'NA00004341', 'NA00004342',
+      'NA00004410', 'NA00004435', 'NA00004655', 'NA00004725', 'NA00004726', 'NA00004778', 'NA00004779', 'NA00004846',
+      'NA00004951', 'NA00004968', 'NA00004969', 'NA00005000', 'NA00005032', 'NA00005033', 'NA00005037', 'NA00005061',
+      'NA00005062', 'NA00005063', 'NA00005064', 'NA00005065', 'NA00005066', 'NA00005073', 'NA00005084', 'NA00005109',
+      'NA00005173', 'NA00005205', 'NA00005246', 'NA00005306', 'NA00005307', 'NA00005326', 'NA00005330', 'NA00005381',
+      'NA00005382', 'NA00005509', 'NA00005510', 'NA00005511', 'NA00005723', 'NA00005736', 'NA00005806', 'NA00005848',
+      'NA00005849', 'NA00005876', 'NA00005880'];
     this._immediatelyChargeRequest();
   },
   // api request
@@ -25,10 +42,11 @@ Tw.ImmediatelyRechargeLayer.prototype = {
       { command: Tw.API_CMD.BFF_06_0001, params: {} },
       { command: Tw.API_CMD.BFF_06_0020, params: {} },
       { command: Tw.API_CMD.BFF_06_0028, params: {} },
-      { command: Tw.API_CMD.BFF_06_0034, params: {} }
+      { command: Tw.API_CMD.BFF_06_0034, params: {} },
+      { command: Tw.API_CMD.BFF_05_0136, params: {} }
     ];
     this._apiService.requestArray(apiList)
-      .done($.proxy(function (refill, ting, etc, limit) {
+      .done($.proxy(function (refill, ting, etc, limit, optSvc) {
         if ( refill.code === Tw.API_CODE.CODE_00 ) {
           this.immChargeData.refill = refill.result;
         }
@@ -47,12 +65,25 @@ Tw.ImmediatelyRechargeLayer.prototype = {
         else {
           this.immChargeData.etc = null;
         }
-        // API 정상 리턴시에만 충전방법에 데이터한도요금제 항목 노출 (DV001-4362)
-        if ( limit.code === Tw.API_CODE.CODE_00 ) {
-          this.immChargeData.limit = limit.result;
+        if ( optSvc.code === Tw.API_CODE.CODE_00 ) {
+          if ( optSvc.result.optProdList && optSvc.result.optProdList.length > 0 ) {
+            _.filter(optSvc.result.optProdList, $.proxy(function (item) {
+              // 부가서비스
+              if ( !this._isLimited ) {
+                this._isLimited = (this._readOnlyProductIdList.indexOf(item.prodId) > -1);
+              }
+            }, this));
+          }
         }
-        else {
-          this.immChargeData.limit = null;
+        // 해당요금제에 속해 있는 경우만 노출
+        if ( this._isLimited ) {
+          // API 정상 리턴시에만 충전방법에 데이터한도요금제 항목 노출 (DV001-4362)
+          if ( limit.code === Tw.API_CODE.CODE_00 ) {
+            this.immChargeData.limit = limit.result;
+          }
+          else {
+            this.immChargeData.limit = null;
+          }
         }
         this._openPopup();
       }, this));
@@ -156,7 +187,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
     }
     else {
       $target = this.$popupContainer.find('[data-external]');
-      if($target.length > 0) {
+      if ( $target.length > 0 ) {
         Tw.CommonHelper.openUrlExternal($target.attr('data-external'));
       }
     }

@@ -31,13 +31,13 @@
             <% include product.common.callplan.sktprodbenefit.html %>
             <%# // SKT만의 혜택 %>
 
-            <%# 상단 배너 %>
-            <% include product.common.callplan.banner.top.html %>
-            <%# // 상단 배너 %>
-
             <%# 콘텐츠 상단 넛지 %>
             <% include product.common.callplan.top-nudge.html %>
             <%# // 콘텐츠 상단 넛지 %>
+
+            <%# 상단 배너 %>
+            <% include product.common.callplan.banner.top.html %>
+            <%# // 상단 배너 %>
 
             <%# 콘텐츠 %>
             <% include product.common.callplan.contents.html %>
@@ -77,5 +77,6 @@
 </div>
 </body>
 <% include ../../../components/javascript.component.html %>
-<script>$(function () { new Tw.ProductCommonCallplan($('.wrap'), '<%= prodId %>', '<%= basicInfo.prodTypCd %>', '<%= isPreview ? "Y" : "N" %>'); });</script>
+<script>$(function () { new Tw.ProductCommonCallplan($('.wrap'), '<%= prodId %>', '<%= basicInfo.prodTypCd %>',
+  '<%- JSON.stringify(basicInfo.linkBtnList.setting) %>', '<%= isPreview ? "Y" : "N" %>'); });</script>
 <% include ../../../components/end.component.html %>

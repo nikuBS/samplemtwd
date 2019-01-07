@@ -15,8 +15,8 @@ import ProductHelper from '../../../../utils/product.helper';
 const FEE_PLAN_TIP = {
   M1: ['MS_05_tip_01'], // 휴대폰
   M2: ['MS_05_tip_02'], // 선불폰(PPS)
-  M3: ['MS_05_tip_06', 'MS_05_tip_07'], // T pocket Fi
-  M4: ['MS_05_tip_04', 'MS_05_tip_05'], // T Login
+  M3: ['MS_05_tip_04'], // T pocket Fi
+  M4: ['MS_05_tip_04'], // T Login
   M5: [], // T Wibro
   S1: ['MS_05_tip_03'], // 인터넷
   S2: ['MS_05_tip_03'], // IPTV
@@ -57,7 +57,8 @@ class MyTJoinMyplan extends TwViewController {
   private _convertOptionAndDiscountProgramList(optionAndDiscountProgramList): any {
     return optionAndDiscountProgramList.map((item) => {
       return Object.assign(item, {
-        scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.MM.DD')
+        scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.M.DD.'),
+        btnList: this._convertBtnList(item.btnList)
       });
     });
   }
@@ -79,7 +80,7 @@ class MyTJoinMyplan extends TwViewController {
     return Object.assign(wirePlan, {
       basFeeAmt: wirePlan.basFeeAmt > 0 ? FormatHelper.addComma(wirePlan.basFeeAmt.toString()) : 0,
       isDisplayFeeAmt: (wirePlan.coClCd === 'T' && wirePlan.basFeeAmt > 0),
-      svcScrbDt: DateHelper.getShortDateWithFormat(wirePlan.svcScrbDt, 'YYYY.MM.DD'),
+      svcScrbDt: DateHelper.getShortDateWithFormat(wirePlan.svcScrbDt, 'YYYY.M.DD.'),
       dcBenefits: this._convertWireDcBenefits(wirePlan.dcBenefits)
     });
   }
@@ -92,10 +93,10 @@ class MyTJoinMyplan extends TwViewController {
     return dcBenefits.map((item) => {
       return Object.assign(item, {
         penText: (item.penYn === 'Y') ? MYT_FEEPLAN_BENEFIT.PEN_Y : MYT_FEEPLAN_BENEFIT.PEN_N,
-        dcStaDt: DateHelper.getShortDateWithFormat(item.dcStaDt, 'YYYY.MM.DD'),
-        dcEndDt: (item.dcEndDt !== '99991231') ? DateHelper.getShortDateWithFormat(item.dcEndDt, 'YYYY.MM.DD')
+        dcStaDt: DateHelper.getShortDateWithFormat(item.dcStaDt, 'YYYY.M.DD.'),
+        dcEndDt: (item.dcEndDt !== '99991231') ? DateHelper.getShortDateWithFormat(item.dcEndDt, 'YYYY.M.DD.')
             : MYT_FEEPLAN_BENEFIT.ENDLESS,
-        dcVal: FormatHelper.addComma(item.dcVal.toString())
+        dcVal: item.dcCttClCd === '01' ? FormatHelper.addComma(item.dcVal.toString()) : item.dcVal
       });
     });
   }
@@ -124,11 +125,12 @@ class MyTJoinMyplan extends TwViewController {
 
     return Object.assign(wirelessPlan, {
       feePlanProd: FormatHelper.isEmpty(wirelessPlan.feePlanProd) ? null : Object.assign(wirelessPlan.feePlanProd, {
-        scrbDt: DateHelper.getShortDateWithFormat(wirelessPlan.feePlanProd.scrbDt, 'YYYY.MM.DD'),
+        scrbDt: DateHelper.getShortDateWithFormat(wirelessPlan.feePlanProd.scrbDt, 'YYYY.M.DD.'),
         basFeeInfo: spec.basFeeInfo,
         basOfrDataQtyCtt: spec.basOfrDataQtyCtt,
         basOfrVcallTmsCtt: spec.basOfrVcallTmsCtt,
-        basOfrCharCntCtt: spec.basOfrCharCntCtt
+        basOfrCharCntCtt: spec.basOfrCharCntCtt,
+        btnList: this._convertBtnList(wirelessPlan.feePlanProd.btnList)
       }),
       optionAndDiscountProgramList: this._convertOptionAndDiscountProgramList([...disProdList, ...optProdList, ...comProdList])
     });
@@ -175,6 +177,36 @@ class MyTJoinMyplan extends TwViewController {
         title: FEE_PLAN_TIP_TXT[item]
       };
     });
+  }
+
+  /**
+   * @param btnList
+   * @private
+   */
+  private _convertBtnList(btnList: any): any {
+    if (FormatHelper.isEmpty(btnList)) {
+      return [];
+    }
+
+    const settingBtnList: any = [],
+      terminateBtnList: any = [],
+      unknownBtnList: any = [];
+
+    btnList.forEach((item) => {
+      if (item.btnTypCd === 'SE') {
+        settingBtnList.push(item);
+        return true;
+      }
+
+      if (item.btnTypCd === 'TE') {
+        terminateBtnList.push(item);
+        return true;
+      }
+
+      unknownBtnList.push(item);
+    });
+
+    return [...settingBtnList, ...terminateBtnList, ...unknownBtnList];
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {

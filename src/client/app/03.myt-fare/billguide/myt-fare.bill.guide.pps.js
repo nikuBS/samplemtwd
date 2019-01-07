@@ -5,7 +5,7 @@
  */
 Tw.MyTFareBillGuidePps = function (rootEl, resData) {
   this.resData = resData;
-  Tw.Logger.info('[Server Res Data]', resData);
+  // Tw.Logger.info('[Server Res Data]', resData);
 
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -82,7 +82,7 @@ Tw.MyTFareBillGuidePps.prototype = {
 
   _proData: function () { //데이터 가공
     var thisMain = this;
-    Tw.Logger.info('[ _proData ]');
+    // Tw.Logger.info('[ _proData ]');
     this.detailListObj[0].listData = $.extend(true, [], this.bffListData); // deep copy array
     this.detailListObj[0].curLen = this.detailListObj[0].listData.length;
 
@@ -100,7 +100,7 @@ Tw.MyTFareBillGuidePps.prototype = {
       item.rate = thisMain._comComma(item.rate);
       return item;
     });
-    Tw.Logger.info('[ _proData end ]', this.detailListObj[0]);
+    // Tw.Logger.info('[ _proData end ]', this.detailListObj[0]);
   },
   _ctrlInit: function () {
     var thisMain = this;
@@ -123,7 +123,7 @@ Tw.MyTFareBillGuidePps.prototype = {
     this._dataSplice(this.detailListObj[0].listData, this.detailListObj[0].startCount);
     this._svcHbDetailList(this.detailListObj, this.$detailList, this.$entryTplList);
 
-    this.$curNum.html('( ' + this.detailListObj[0].curLen + ' )');
+    // this.$curNum.html('( ' + this.detailListObj[0].curLen + ' )');
 
     if ( this.detailListObj[0].curLen <= 0 ) {
       this.$addBtnArea.hide();
@@ -139,9 +139,9 @@ Tw.MyTFareBillGuidePps.prototype = {
     this._dataSplice(this.detailListObj[0].listData, this.detailListObj[0].addCount);
     this._svcHbDetailList(this.detailListObj, this.$detailList, this.$entryTplList);
 
-    this.$curNum.html('( ' + this.detailListObj[0].curLen + ' )');
+    // this.$curNum.html('( ' + this.detailListObj[0].curLen + ' )');
 
-    Tw.Logger.info('[ detailListObj.curLen 2 ]', this.detailListObj[0].curLen);
+    // Tw.Logger.info('[ detailListObj.curLen 2 ]', this.detailListObj[0].curLen);
     if ( this.detailListObj[0].curLen <= 0 ) {
       this.$addBtnArea.hide();
     }
@@ -166,39 +166,49 @@ Tw.MyTFareBillGuidePps.prototype = {
     var momentTemp = '';
 
     // 순차적으로 0, +1, +2 를 더한다.
-    for ( var i=0, len=2; i<=len; i++ ) {
-      momentTemp = momentStart.add(i, 'months');
+    for ( var i=1, len=2; i<=len; i++ ) {
+      momentTemp = momentStart.add(1, 'months');
       var diffNum = momentMax.diff(momentTemp, 'months');
 
       if (diffNum < 0) {break;}
 
-      Tw.Logger.info('[ momentStart]', momentStart.format('YYYYMM'));
-      Tw.Logger.info('[ momentMax]', momentMax.format('YYYYMM'));
+      // Tw.Logger.info('[ momentStart]', momentStart.format('YYYYMM'));
+      // Tw.Logger.info('[ momentMax]', momentMax.format('YYYYMM'));
 
-      Tw.Logger.info('[ diffNum]', diffNum);
+      // Tw.Logger.info('[ diffNum]', diffNum);
 
       if ( diffNum >= 0 ) {
-        Tw.Logger.info('[ start 는 max]');
+        // Tw.Logger.info('[ start 는 max]');
 
+        var radioAttr = 'id="ra'+i+'" name="r1" data-value="' + momentTemp.format('YYYYMM') + '"';
+        // if(reqDate === invDtArr[idx]){
+        //   radioAttr += ' checked';
+        // }
         pushData = {
-          value: momentTemp.format(Tw.MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE),
-          option: '',
-          attr: 'data-value="' + momentTemp.format('YYYYMM') + '", data-target="selectBtn"'
+          'label-attr': 'id="ra'+i+'"',
+          'radio-attr': radioAttr,
+          'txt': momentTemp.format(Tw.MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE)
         };
+
+        // pushData = {
+        //   value: momentTemp.format(Tw.MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE),
+        //   option: '',
+        //   attr: 'data-value="' + momentTemp.format('YYYYMM') + '", data-target="selectBtn"'
+        // };
         this.selDateObj.selectEndList.push(pushData);
       }
     }
 
     this.selDateObj.selectEndList.reverse();
 
-    Tw.Logger.info('[selDateObj] ', this.selDateObj);
+    // Tw.Logger.info('[selDateObj] ', this.selDateObj);
 
     var listData = this.selDateObj.selectEndList;
     this._selectDatePopEvt(event, 'end', listData);
   },
   _selectDatePopEvt: function (event, state, listData) {
     var $target = $(event.currentTarget);
-    var hbsName = 'actionsheet_select_a_type';
+    var hbsName = 'actionsheet01';
     var data = [{
       list: null
     }];
@@ -211,7 +221,8 @@ Tw.MyTFareBillGuidePps.prototype = {
         hbs: hbsName,
         layer: true,
         data: data,
-        title: titleStr
+        title: titleStr,
+        btnfloating : { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE }
       },
       $.proxy(this._selectDatePopEvtInit, this, $target, state),
       $.proxy(this._selectDatePopEvtClose, this, $target),
@@ -219,37 +230,27 @@ Tw.MyTFareBillGuidePps.prototype = {
 
   },
   _selectDatePopEvtInit: function ($target, state, $layer) {
-    Tw.Logger.info('[_selectDatePopEvtInit > $target]', $target);
-    var selectVal = $target.attr('data-value').slice(0, 6);
-    /*
-    * 1. 이벤트 설정
-    * 2. 현재 선택된 날짜 체크
-     */
-    $layer.on('click', '[data-target="selectBtn"]', $.proxy(this._setSelectedValue, this, $target, state));
-    var $selectBtnTg = $layer.find('[data-value="' + selectVal + '"]');
-    $selectBtnTg.addClass('checked');
+    // Tw.Logger.info('[_selectDatePopEvtInit > $layer]', $layer);
 
+    // 현재 선택된 날짜 체크
+    var selectVal = $target.attr('data-value');
+    var $selectBtnTg = $layer.find('[data-value="' + selectVal + '"]');
+
+    $selectBtnTg.prop('checked', true);
+
+    // 이벤트 설정
+    $layer.one('click', 'li.type1', $.proxy(this._setSelectedValue, this, $target, state));
   },
   _setSelectedValue: function ($target, state, event) {
 
     var $tg = $(event.currentTarget);
-    var $parentTg = $tg.closest('.chk-link-list');
-    var selectDateVal = '';
-
-    /*
-    * 1. 모든 checked 클래스 제거
-    * 2. 선택한 버튼에 checked 추가
-    * 3. 선택한 값을 input > value 에 적용
-     */
-    $parentTg.find('button').removeClass('checked');
-    $tg.addClass('checked');
-
-    selectDateVal = $tg.attr('data-value');
-    // console.info('selectDateVal', selectDateVal);
+    var selectDateVal = $tg.find('input[type=radio]').attr('data-value');
+    // Tw.Logger.info('[선택 : ]', selectDateVal);
 
     var momentObj = moment(selectDateVal, 'YYYYMM');
 
     var dataVal;
+
     if ( state === 'start' ) {
       dataVal = momentObj.startOf('month').format('YYYYMM');
       this.selDateObj.startDt = dataVal;
@@ -260,13 +261,13 @@ Tw.MyTFareBillGuidePps.prototype = {
     $target.attr('data-value', dataVal);
     $target.text(momentObj.format('YYYY.M'));
 
-    Tw.Logger.info(this.selDateObj);
+    // Tw.Logger.info(this.selDateObj);
 
-
+    this._popupService.close();
   },
   _selectDatePopEvtClose: function () {
-    Tw.Logger.info('[팝업 닫기 : actionsheet_select_a_type]');
-    this._popupService.close();
+    // Tw.Logger.info('[팝업 닫기 : actionsheet_select_a_type]');
+    //this._popupService.close();
   },
 
   _searchBtnEvt: function () {
@@ -281,13 +282,13 @@ Tw.MyTFareBillGuidePps.prototype = {
 
       if ( diffMontsVal <= this.selDateObj.endRangeNum ) {
         // 유효성 완료, 조회 진행
-        Tw.Logger.info('[유효성 완료, 조회 진행] ');
+        // Tw.Logger.info('[유효성 완료, 조회 진행] ');
         // console.info('[selDateObj] ', this.selDateObj);
         this._getHistoriesInfo();
 
       } else {
         // 검색 범위 초과
-        Tw.Logger.info('[검색 범위 초과] ');
+        // Tw.Logger.info('[검색 범위 초과] ');
         this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.A59, Tw.POPUP_TITLE.NOTIFY, null,
           $.proxy(function () {
 
@@ -296,15 +297,15 @@ Tw.MyTFareBillGuidePps.prototype = {
 
     } else {
       // end 값이 큰 경우
-      Tw.Logger.info('[시작일이 종료일보다 큰경우] ');
+      // Tw.Logger.info('[시작일이 종료일보다 큰경우] ');
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.A60, Tw.POPUP_TITLE.NOTIFY, null,
         $.proxy(function () {
 
-      }, this));
+        }, this));
 
 
     }
-    Tw.Logger.info('[end - start = 비교] ', diffMontsVal);
+    // Tw.Logger.info('[end - start = 비교] ', diffMontsVal);
 
   },
 
@@ -322,7 +323,7 @@ Tw.MyTFareBillGuidePps.prototype = {
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this.$fingerprint.hide();
-      Tw.Logger.info('[res] ', res);
+      // Tw.Logger.info('[res] ', res);
       var dataArr = res.result;
       /*
       * 상세 내역 리스트
@@ -354,7 +355,7 @@ Tw.MyTFareBillGuidePps.prototype = {
     var spliceData = tempListData.splice(0, tempCount);
     this.detailListObj[0].viewData = spliceData;
     this.detailListObj[0].curLen = this.detailListObj[0].listData.length;
-    Tw.Logger.info('[ _dataSplice end ]', this.detailListObj[0]);
+    // Tw.Logger.info('[ _dataSplice end ]', this.detailListObj[0]);
   },
 
   _dateInit: function () {
@@ -368,17 +369,16 @@ Tw.MyTFareBillGuidePps.prototype = {
     * 선택 데이터 리스트
      */
     this.selDateObj.selectList = [];
-    this.selDateObj.selectEndList = [];
+    // this.selDateObj.selectEndList = [];
+
     for ( var i = 1, len = this.selDateObj.startRangeNum; i <= len; i++ ) {
-      var val = moment().subtract(i, 'months').format(Tw.MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE);
+
       var defaultVal = moment().subtract(i, 'months').format('YYYYMM');
-
       var pushData = {
-        value: val,
-        option: '',
-        attr: 'data-value="' + defaultVal + '", data-target="selectBtn"'
+        'label-attr': 'id="ra1'+i+'"',
+        'radio-attr': 'id="ra1'+i+'" name="r1" data-value="' + defaultVal + '"',
+        'txt': moment().subtract(i, 'months').format(Tw.MYT_FARE_BILL_GUIDE.DATE_FORMAT.YYYYMM_TYPE)
       };
-
       this.selDateObj.selectList.push(pushData);
       // this.selDateObj.selectEndList.push(pushData);
     }
@@ -394,9 +394,9 @@ Tw.MyTFareBillGuidePps.prototype = {
     this.selDateObj.maxDt = maxVal;
     this.selDateObj.minDt = minVal;
 
-    Tw.Logger.info('[tempVal] ', tempVal);
-    Tw.Logger.info('[maxVal] ', maxVal);
-    Tw.Logger.info('[minVal] ', minVal);
+    // Tw.Logger.info('[tempVal] ', tempVal);
+    // Tw.Logger.info('[maxVal] ', maxVal);
+    // Tw.Logger.info('[minVal] ', minVal);
   },
 
 

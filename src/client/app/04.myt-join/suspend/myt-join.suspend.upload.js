@@ -43,7 +43,6 @@ Tw.MytJoinSuspendUpload.prototype = {
       inputfile_num: this._fileInfo,
       warning_msg: [
         { 'txt': Tw.UPLOAD_FILE.WARNING_A01, 'point': '' },
-        { 'txt': Tw.UPLOAD_FILE.WARNING_A02, 'point': '' },
         { 'txt': Tw.UPLOAD_FILE.WARNING_A03, 'point': 'bold' }
       ]
 
@@ -87,7 +86,7 @@ Tw.MytJoinSuspendUpload.prototype = {
   },
   _validateFile: function (file) {
     if ( file.size > Tw.MAX_FILE_SIZE ) {
-      this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A01);
+      this._popupService.openAlert(Tw.UPLOAD_FILE.CONFIRM_A01);
       return false;
     }
     // file suffix validation.

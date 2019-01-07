@@ -18,7 +18,7 @@ class TeventWinDetail extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any): void {
     const id = req.url.split('/')[3];
 
-    this.apiService.request(API_CMD.BFF_09_0005, {}, {}, id).subscribe((resp) => {
+    this.apiService.request(API_CMD.BFF_09_0005, {}, {}, [id]).subscribe((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         res.render('tevent.win.detail.html', {
           result: this.parseData(resp.result),
@@ -37,9 +37,9 @@ class TeventWinDetail extends TwViewController {
 
   private parseData(result: any): any {
     if (!FormatHelper.isEmpty(result)) {
-      result.startDate = DateHelper.getShortDateNoDot(result.prStaDt);
-      result.endDate = DateHelper.getShortDateNoDot(result.prEndDt);
-      result.winDate = DateHelper.getShortDateNoDot(result.winDt);
+      result.startDate = DateHelper.getShortDate(result.prStaDt);
+      result.endDate = DateHelper.getShortDate(result.prEndDt);
+      result.winDate = DateHelper.getShortDate(result.winDt);
       result.height = result.winUrlHSize + 'px';
     }
     return result;

@@ -52,17 +52,17 @@ class MyTFareBillSmallHistoryDetail extends TwViewController {
 
       // 
       const blockState = MYT_FARE_HISTORY_MICRO_BLOCK_TYPE[resultData.cpState] === undefined ? 
-                        null : MYT_FARE_HISTORY_MICRO_BLOCK_TYPE[resultData.cpState];
+                         null : MYT_FARE_HISTORY_MICRO_BLOCK_TYPE[resultData.cpState];
       const plainTime = resultData.useDt.replace(/-/gi, '').replace(/:/gi, '').replace(/ /gi, ''); // YYYY-MM-DD hh:mm--> YYYYMMDDhhmm
-      
       const data = Object.assign(resultData, {
-        FullDate: DateHelper.getShortDateAndTime(plainTime),
+        FullDate: DateHelper.getShortMonthDateAndTime(plainTime),
         useAmt: FormatHelper.addComma(resultData.sumPrice), // 이용금액
         payMethodNm: MYT_FARE_HISTORY_MICRO_TYPE[resultData.payMethod] || '', // 결제구분
         payWay: MYT_FARE_HISTORY_MICRO_PAY_TYPE[resultData.wapYn],
         isShowBlockBtn: (resultData.payMethod === '03' && blockState !== null), // 차단하기/내역 버튼 표기여부
         blockState: blockState || '', // 차단 상테
-        isBlocked: blockState ? true : false, // 차단여부
+        // isBlocked: blockState ? true : false, // 차단여부
+        isBlocked: (resultData.cpState.indexOf('A') === 0) // 정책변경 : A로 시작되지 않는 상태값은 모두 차단중이 아닌것으로 변경 19.1.3
       });
 
       res.render('billsmall/myt-fare.bill.small.history.detail.html', {

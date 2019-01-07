@@ -43,19 +43,29 @@ class MyTFareBillSmall extends TwViewController {
     return this.getRemainLimit('Request', '0')
       .switchMap((resp) => {
         if (resp.code === API_CODE.CODE_00) {
-          return this.getRemainLimit('Done', '1')
-            .switchMap((next) => {
-              if (next.code === API_CODE.CODE_00) {
-                return Observable.of(next);
-              } else {
-                return Observable.timer(3000)
-                  .switchMap(() => {
-                    return this.getRemainLimit('Retry', '2');
-                  });
-              }
-            });
+          return this.getRemainLimit('Done', '1');
         } else {
           throw resp;
+        }
+      })
+      .switchMap((next) => {
+        if (next.code === API_CODE.CODE_00) {
+          return Observable.of(next);
+        } else {
+          return Observable.timer(3000)
+            .switchMap(() => {
+              return this.getRemainLimit('Done', '2');
+            });
+        }
+      })
+      .switchMap((next) => {
+        if (next.code === API_CODE.CODE_00) {
+          return Observable.of(next);
+        } else {
+          return Observable.timer(3000)
+            .switchMap(() => {
+              return this.getRemainLimit('Done', '3');
+            });
         }
       });
   }
@@ -93,7 +103,13 @@ class MyTFareBillSmall extends TwViewController {
       const passwordResult = passwordStatus.result;
       passwordStatus.text = MYT_FARE_MICRO_NAME[passwordResult.cpinStCd];
     } else {
-      passwordStatus.text = '';
+      if (passwordStatus.code === 'BIL0054') {
+        passwordStatus.text = MYT_FARE_MICRO_NAME['NC'];
+        passwordStatus.result = {};
+        passwordStatus.result.cpinStCd = 'NA00003909';
+      } else {
+        passwordStatus.text = '';
+      }
     }
     return passwordStatus;
   }

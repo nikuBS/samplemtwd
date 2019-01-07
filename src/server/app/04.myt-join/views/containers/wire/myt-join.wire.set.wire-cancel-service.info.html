@@ -1,0 +1,112 @@
+<%#
+* FileName: myt-join.wire.set.wire-cancel-service.info.html
+* Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
+* Date: 2018.12.12
+* ViewId: MS_04_08_01
+%>
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
+
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+    <!-- .popup hbs -->
+    <div class="popup-page nobg tw-popup fixed-btn"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>서비스 해지 신청 현황</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <div class="cont-box noborder nogaps bgnone">
+                    <div class="myfare-result-wrap type2">
+                        <div class="myfare-list" data-svc-mgmt-num="">
+                            <ul>
+                                <li>
+                                    <dl class="show-data">
+                                        <dt>이름</dt>
+                                        <dd class="tx-bold"><%= svcInfo.mbrNm %></dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl class="show-data">
+                                        <dt>연락받을 전화번호</dt>
+                                        <dd class="tx-bold"><%= data.visitCntcNum %></dd>
+                                    </dl>
+                                </li>
+                                <!--<li>
+                                    <dl class="show-data">
+                                        <dt>해지 신청일</dt>
+                                        <dd class="tx-bold"><%= data.termPrefrDtmFront %></dd>
+                                    </dl>
+                                </li>-->
+                                <li>
+                                    <dl class="show-data">
+                                        <dt>해지 요청일</dt>
+                                        <dd class="tx-bold"><%= data.termPrefrDtmFront %></dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl class="show-data">
+                                        <dt>해지 서비스명</dt>
+                                        <dd class="tx-bold"><%= data.svcName %>(<%= data.svcTechMthdNm %>)</dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl class="show-data">
+                                        <dt>현재 처리 상태</dt>
+                                        <dd class="tx-bold"><%= data.rcvOperStNm %></dd>
+                                    </dl>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- .cont-box -->
+
+                <div class="cont-box noborder bgnone">
+                    <div class="announcement-box">
+                        <div class="announcement-txt">해지 신청 취소는 신청 당일에만 가능하며 고객센터(1600-2000)를 통해 취소할 수 있습니다.</div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                <!--
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1" id="btn-abort-cancel">
+                            <button>해지신청 취소</button>
+                        </li>
+                    </ul>
+                </div>
+                -->
+            </div>
+        </div>
+        <!-- // .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-common-back">취소</button>
+        <!--// .popup-closeBtn -->
+    </div>
+    <!-- // .popup hbs -->
+
+</div>
+
+<script>
+  $(document).ready(function () {
+    new Tw.MyTJoinWireSetWireCancelServiceInfo( $('#fe-wrap'), <%-JSON.stringify(data) %>);
+  });
+</script>
+<% include ../../components/end.component.html %>

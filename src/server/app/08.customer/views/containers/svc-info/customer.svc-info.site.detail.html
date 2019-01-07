@@ -1,0 +1,50 @@
+<%#
+* FileName: customer.svc-info.site.detail.html
+* Author: Lee Kirim (kirim@sk.com)
+* Date: 2018.12.17
+%>
+<% include ../../components/start-idpt.component.html %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+<div class="wrap">
+    <%- include('../../../../../common/views/components/header.component.html', { title: '온라인 T월드 이용안내'}); %>
+
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <% if(data.type==="A") { %>
+            <div class="ti-caption-gray">
+                <button class="bt-select" id="ti-select-btn" title="정렬 선택" aria-haspopup="true"><!--고객님의 정보를 가리는 이유--></button>
+            </div>
+            <% } else { %>
+            <!-- <div class="ti-caption-gray">
+            <%= data.title %>
+            </div> -->
+            <% } %>
+            <%- contentHTML %>
+
+        </div>
+    </div>
+    <!--// #contents -->
+
+    
+</div>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.CustomerSvcInfoSiteDetail($(document), '<%- (JSON.stringify(data)) %>');
+  });
+</script>
+</body>
+<% include ../../components/end.component.html %>

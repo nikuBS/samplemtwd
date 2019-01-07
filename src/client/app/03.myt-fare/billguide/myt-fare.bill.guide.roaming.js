@@ -5,7 +5,7 @@
  */
 Tw.MyTFareBillGuideRoaming = function (rootEl, resData) {
   this.resData = resData;
-  Tw.Logger.info('[Server Res Data]', resData);
+  // Tw.Logger.info('[Server Res Data]', resData);
 
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -63,7 +63,7 @@ Tw.MyTFareBillGuideRoaming.prototype = {
       });
   },
   _getRoamingInfoInit: function (param, res) {
-    // Tw.Logger.info('[결과] _getRoamingInfoInit', param, res );
+    // // Tw.Logger.info('[결과] _getRoamingInfoInit', param, res );
     Tw.CommonHelper.endLoading('.container');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var dataArr = res.result.roamingList;
@@ -73,8 +73,8 @@ Tw.MyTFareBillGuideRoaming.prototype = {
         totalNum += Number(item.amt);
       });
 
-      Tw.Logger.info('[totalNum]', totalNum);
-      Tw.Logger.info('[param]', param);
+      // Tw.Logger.info('[totalNum]', totalNum);
+      // Tw.Logger.info('[param]', param);
 
       var resData = {
         startDt: Tw.DateHelper.getShortDateNoDot(param.startDt),
@@ -104,7 +104,7 @@ Tw.MyTFareBillGuideRoaming.prototype = {
     //   this.$dateSelect.hide();
     //
     //   if ( resObj.totalSec === 0 ) {
-    //     // Tw.Logger.info('[콜기프트 > 이용내역이 없습니다. ]', resObj.totalSec);
+    //     // // Tw.Logger.info('[콜기프트 > 이용내역이 없습니다. ]', resObj.totalSec);
     //     this.$dataResult.hide();
     //     this.$noData.show();
     //   } else {
@@ -159,22 +159,22 @@ Tw.MyTFareBillGuideRoaming.prototype = {
 
     // switch( selectVal ) {
     //   case 0:
-    //     Tw.Logger.info('[전일]', 0);
+    //     // Tw.Logger.info('[전일]', 0);
     //     break;
     //   case 1:
-    //     Tw.Logger.info('[1주일]', 1);
+    //     // Tw.Logger.info('[1주일]', 1);
     //     break;
     //   case 2:
-    //     Tw.Logger.info('[3주일]', 2);
+    //     // Tw.Logger.info('[3주일]', 2);
     //     break;
     //   case 3:
-    //     Tw.Logger.info('[1개월]', 3);
+    //     // Tw.Logger.info('[1개월]', 3);
     //     break;
     //   case 4:
-    //     Tw.Logger.info('[3개월]', 4);
+    //     // Tw.Logger.info('[3개월]', 4);
     //     break;
     //   case 5:
-    //     Tw.Logger.info('[6개월]', 5);
+    //     // Tw.Logger.info('[6개월]', 5);
     //     break;
     // }
 

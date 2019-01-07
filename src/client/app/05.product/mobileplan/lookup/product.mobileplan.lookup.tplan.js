@@ -4,11 +4,12 @@
  * Date: 2018.10.01
  */
 
-Tw.ProductMobileplanLookupTplan = function(rootEl) {
+Tw.ProductMobileplanLookupTplan = function(rootEl, prodId) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
-  this._popupService = new Tw.PopupService();
+  this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
+  this._prodId = prodId;
   this._cachedElement();
   this._bindEvent();
 };
@@ -36,31 +37,46 @@ Tw.ProductMobileplanLookupTplan.prototype = {
   },
 
   _getBenefitCategory: function() {
-    return _.map(_.keys(this._prodIdList), function(prodId) {
+    var currentProdId = this._prodId;
+
+    return _.map(_.keys(this._prodIdList), function(prodId, index) {
       return {
-        value: Tw.PRODUCT_INFINITY_CATEGORY[prodId],
-        attr: 'data-prod_id="' + prodId + '"'
+        'label-attr': 'id="ra' + index + '"',
+        'txt': Tw.PRODUCT_INFINITY_CATEGORY[prodId],
+        'radio-attr':'id="ra' + index + '" data-prod_id="' + prodId + '" ' + (currentProdId === prodId ? 'checked' : '')
       };
     });
   },
 
   _openCategoryPopup: function() {
     this._popupService.open({
-      hbs: 'actionsheet_link_a_type',
-      layer: true,
-      title: Tw.POPUP_TITLE.SELECT,
-      data: [{
-        'list': this._getBenefitCategory()
-      }]
-    }, $.proxy(this._bindPopupEvent, this), null, 'inifinity_category_popup');
+      hbs:'actionsheet01',
+      layer:true,
+      data:[
+        {
+          'list': this._getBenefitCategory()
+        }
+      ],
+      btnfloating : {'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE}
+    }, $.proxy(this._bindPopupEvent, this), $.proxy(this._onClosePopup, this), 'inifinity_category_popup');
   },
 
   _bindPopupEvent: function($popupContainer) {
-    $popupContainer.on('click', '[data-prod_id]', $.proxy(this._goOtherProdIdBenefitList, this));
+    $popupContainer.on('click', '[data-prod_id]', $.proxy(this._setGoCategory, this));
   },
 
-  _goOtherProdIdBenefitList: function(e) {
-    this._historyService.goLoad('/product/lookup/tplan?s_prod_id=' + $(e.currentTarget).data('prod_id'));
+  _setGoCategory: function(e) {
+    this._isGoCategory = true;
+    this._goCategoryProdId = $(e.currentTarget).data('prod_id');
+    this._popupService.close();
+  },
+
+  _onClosePopup: function() {
+    if (!this._isGoCategory) {
+      return;
+    }
+
+    this._historyService.goLoad('/product/mobileplan/lookup/tplan?s_prod_id=' + this._goCategoryProdId);
   },
 
   _goTop: function() {

@@ -7,6 +7,8 @@
 Tw.MyTDataGift = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
 
   this._cachedElement();
   this._bindEvent();
@@ -22,11 +24,12 @@ Tw.MyTDataGift.prototype = {
   },
 
   _cachedElement: function () {
-    this.wrap_tpl_available_product = $('.fe-layer_available_product');
-    this.tpl_available_product = Handlebars.compile($('#tpl-available-product').html());
-    this.tpl_recently_gift = Handlebars.compile($('#tpl_recently_gift').html());
-    this.$inputImmediatelyGift = $('.fe-input_immediately_gift');
     this.$recent_tel = this.$container.find('.recently-tel');
+    this.$inputImmediatelyGift = this.$container.find('.fe-input_immediately_gift');
+    this.wrap_available_product = this.$container.find('.fe-layer_available_product');
+    this.tpl_recently_gift = Handlebars.compile($('#tpl_recently_gift').html());
+    this.tpl_available_product = Handlebars.compile($('#tpl-available-product').html());
+    this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
   },
 
   _bindEvent: function () {
@@ -96,7 +99,7 @@ Tw.MyTDataGift.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var sortedList = Tw.FormatHelper.purifyPlansData(res.result);
 
-      this.wrap_tpl_available_product.html(
+      this.wrap_available_product.html(
         this.tpl_available_product({ sortedList: sortedList })
       );
 
@@ -107,10 +110,34 @@ Tw.MyTDataGift.prototype = {
   },
 
   _showAvailableProduct: function () {
-    this.wrap_tpl_available_product.show();
+    this.wrap_available_product.show();
   },
 
   _hideAvailableProduct: function () {
-    this.wrap_tpl_available_product.hide();
+    this.wrap_available_product.hide();
+  },
+
+  _stepBack: function () {
+    // this._popupService.openConfirmButton(Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG, Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+    //   $.proxy(function () {
+    //     this._popupService.close();
+    //     setTimeout($.proxy(this._goBack, this), 500);
+    //   }, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+    var confirmed = false;
+    this._popupService.openConfirmButton(
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+      $.proxy(function () {
+        confirmed = true;
+        this._popupService.close();
+      }, this),
+      $.proxy(function () {
+        if (confirmed) {
+          this._historyService.goBack();
+        }
+      }, this),
+      Tw.BUTTON_LABEL.NO,
+      Tw.BUTTON_LABEL.YES
+    );
   }
 };

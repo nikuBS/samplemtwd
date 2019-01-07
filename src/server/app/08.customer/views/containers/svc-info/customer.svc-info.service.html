@@ -1,0 +1,103 @@
+<%#
+* FileName: customer.svc-info.service.html
+* Author: Lee Kirim (kirim@sk.com)
+* Date: 2018.12.18
+%>
+<% include ../../components/start.component.html %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+<div class="wrap">
+    <%- include('../../../../../common/views/components/header.component.html', { title: '서비스 이용방법'}); %>
+    
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+
+            <div class="cont-box nogaps-btm">
+                <div class="plan-history-wrap">
+                    <div class="plan-data-wrap">
+                        가입, 변경, 요금 기준 등<br><span class="tx-bold vbl">서비스 이용방법</span>을 확인하세요.
+                    </div>
+                </div>
+            </div>
+            <% data.list.forEach(function(el, selectIndex){ %>
+            <div class="ti-caption-gray bdt">
+                <span class="tit"><%=el.title %></span>
+            </div>
+            <div class="cont-box nogaps-hoz">
+                <ul class="customer-liststyle01">
+                    <% el.sub_list.forEach(function(sub, selectSubdex){ %>
+                    <li>
+                        <% if(sub.dep_list) { %>
+                            <!--하위메뉴 있는경우 (콤보박스 노출)-->
+                        <div class="servicecenter-wrap01">
+                            <dl class="textinfo-wrap">
+                                <dt><%=sub.sub_title%></dt>
+                                <dd><%=sub.sub_text%></dd>
+                            </dl>
+                            <div class="inputbox bt-add date-selcet">
+                                <span class="input date-type">
+                                    <button 
+                                        class="bt-date fe-select-box" 
+                                        title="" 
+                                        aria-haspopup="true"
+                                        data-select-index="<%=selectIndex%>"
+                                        data-select-subdex="<%=selectSubdex%>"
+                                    ><%=sub.dep_list[0].dep_title %></button>
+                                </span>
+                                <span class="bt-box">
+                                    <button 
+                                        type="button" 
+                                        class="fe-select-btn"
+                                        data-select-index="<%=selectIndex%>"
+                                        data-select-subdex="<%=selectSubdex%>"
+                                        data-list-code="<%=sub.dep_list[0].code %>"
+                                    >확인</button>
+                                </span>
+                            </div>
+                        </div>
+                        <% } else { %>
+                        <button 
+                            class="servicecenter-wrap01 link-type fe-move-btn"
+                            data-select-index="<%=selectIndex%>"
+                            data-select-subdex="<%=selectSubdex%>"
+                            data-list-code="<%=sub.code %>"
+                        >
+                            <dl class="textinfo-wrap">
+                                <dt><%=sub.sub_title%></dt>
+                                <dd><%=sub.sub_text%></dd>
+                            </dl>
+                        </button>
+                        <% } %>
+                    </li>
+                    <% }) %>
+                </ul>
+            </div>
+            <% }) %>
+
+        </div>
+
+    </div>
+
+    <!--// #contents -->
+    
+</div>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.CustomerSvcinfoService($(document), '<%- JSON.stringify(data) %>');
+  });
+</script>
+</body>
+<% include ../../components/end.component.html %>

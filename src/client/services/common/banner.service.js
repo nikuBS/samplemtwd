@@ -4,7 +4,7 @@ Tw.BannerService = function(rootEl, banners, callback) {
     return;
   }
 
-  // $(window).on('env', $.proxy(this._init, this, this._getProperBanners(banners)));
+  // $(window).on(Tw.INIT_COMPLETE, $.proxy(this._init, this, this._getProperBanners(banners)));
   this._init(banners, callback);
   this._bindEvent();
 };
@@ -57,22 +57,23 @@ Tw.BannerService.prototype = {
 
     var link = banner.imgLinkUrl;
 
-    switch (banner.imgLinkTrgtClCd) {
-      case Tw.BANNER_LINK_TYPE.CHANNEL_APP:
-      case Tw.BANNER_LINK_TYPE.CHANNEL_WEB: {
-        window.location.href = link;
-        break;
-      }
-      case Tw.BANNER_LINK_TYPE.OTHER_APP:
-      case Tw.BANNER_LINK_TYPE.OTHER_WEB: {
-        if (banner.isBill) {
-          Tw.CommonHelper.showDataCharge(function() {
-            Tw.CommonHelper.openUrlExternal(link);
-          });
-        } else {
-          Tw.CommonHelper.openUrlExternal(link);
+    if (link) {
+      switch (banner.imgLinkTrgtClCd) {
+        case Tw.BANNER_LINK_TYPE.CHANNEL_APP: {
+          window.location.href = link;
+          break;
         }
-        break;
+        case Tw.BANNER_LINK_TYPE.OTHER_WEB: 
+        default: {
+          if (banner.isBill) {
+            Tw.CommonHelper.showDataCharge(function() {
+              Tw.CommonHelper.openUrlExternal(link);
+            });
+          } else {
+            Tw.CommonHelper.openUrlExternal(link);
+          }
+          break;
+        }
       }
     }
   },
@@ -91,11 +92,9 @@ Tw.BannerService.prototype = {
     return _.chain(banners)
       .filter(function(banner) {
         return (
-          (banner.chnlClCd.includes(Tw.REDIS_DEVICE_CODE.MOBILE) || banner.chnlClCd.includes(browserCode)) &&
-          (!banner.expsStaDtm || 
-          Tw.DateHelper.getDifference(banner.expsStaDtm.substring(0, 8)) <= 0) &&
-          (!banner.expsEndDtm ||
-          Tw.DateHelper.getDifference(banner.expsEndDtm.substring(0, 8)) >= 0)
+          (banner.chnlClCd.indexOf(Tw.REDIS_DEVICE_CODE.MOBILE) >= 0 || banner.chnlClCd.indexOf(browserCode) >= 0) &&
+          (!banner.expsStaDtm || Tw.DateHelper.getDifference(banner.expsStaDtm.substring(0, 8)) <= 0) &&
+          (!banner.expsEndDtm || Tw.DateHelper.getDifference(banner.expsEndDtm.substring(0, 8)) >= 0)
         );
       })
       .sort(function(a, b) {

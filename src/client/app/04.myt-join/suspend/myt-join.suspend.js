@@ -13,6 +13,7 @@ Tw.MyTJoinSuspend = function (rootEl, params) {
   this._params = params;
   this._historyService = new Tw.HistoryService();
   this._historyService.init();
+  this._popupService = Tw.Popup;
 
   this._temp = null;
   this._long = null;
@@ -74,7 +75,17 @@ Tw.MyTJoinSuspend.prototype = {
     }
   },
 
-  _onClose: function(){
-    this._historyService.goLoad('/myt-join/submain');
+
+  _onClose: function () {
+    if ( (this._temp && this._temp.hasChanged()) || (this._long && this._long.hasChanged()) ) {
+      this._popupService.openConfirm(
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+        $.proxy(function () {
+          this._historyService.goLoad('/myt-join/submain');
+        }, this));
+    } else {
+      this._historyService.goLoad('/myt-join/submain');
+    }
   }
 };

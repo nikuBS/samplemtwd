@@ -84,6 +84,8 @@ Tw.LineRegisterComponent.prototype = {
         bt_more: this._listLength > Tw.DEFAULT_LIST_COUNT,
         data: data
       }, $.proxy(this._onOpenRegisterLine, this), $.proxy(this._onCloseRegisterLine, this), 'line-register');
+    } else {
+      Tw.Logger.info('[LineRegister] Empty');
     }
   },
   _onOpenRegisterLine: function ($layer) {
@@ -205,7 +207,7 @@ Tw.LineRegisterComponent.prototype = {
     if ( !Tw.FormatHelper.isEmpty(this._marketingSvc) && this._marketingSvc !== '0' ) {
       var $target = this.$list.filter('[data-svcmgmtnum=' + this._marketingSvc + ']');
 
-      this._apiService.request(Tw.API_CMD.BFF_03_0014, {}, {}, this._marketingSvc)
+      this._apiService.request(Tw.API_CMD.BFF_03_0014, {}, {}, [this._marketingSvc])
         .done($.proxy(this._successGetMarketingOffer, this, $target.data('showname'), $target.data('svcnum')))
         .fail($.proxy(this._failGetMargetingOffer, this));
     }

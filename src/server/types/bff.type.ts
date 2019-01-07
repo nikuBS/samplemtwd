@@ -293,7 +293,8 @@ export const MYT_FARE_HISTORY_MICRO_BLOCK_TYPE = {
   A0: '차단중',
   A1: '다음 달 차단예정',
   C0: '', // 해제상태
-  C1: '다음 달 해제예정'
+  C1: '다음 달 해제예정',
+  N: '' // 신청내역 없음
 };
 
 export const MYT_PAYMENT_HISTORY_REFUND_TYPE = {
@@ -314,9 +315,9 @@ export const MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE = {
   '11': 'T포인트',
   '40': '페이톡 계좌이체',
   '41': '계좌이체',
-  Y: '결제완료',
-  N: '결제취소',
-  A: '결제완료'
+  Y: '납부 완료',
+  N: '납부 취소',
+  A: '납부 완료'
 };
 
 export const MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE_TO_STRING = {
@@ -355,17 +356,6 @@ export const COMBINATION_PRODUCT = {
   TW20000013: 'family-plan', // 온가족플랜
   NH00000133: 'family-plan' // NEW 온가족플랜
 };
-
-export enum PRODUCT_RESERVATION_REJECT {
-  R000 = '구비서류 제출기한을 초과하였습니다.\n(제출기한 : nextDistbDt)',
-  R001 = '개명(개칭) 확인이 가능한 서류를 제출해주세요.',
-  R059 = '본인 이외 타인의 서류는 제출이 불가능합니다.\n자세한 상담은 SK텔레콤 전문 상담원(114)에게 문의해주세요.',
-  R174 = '가족관계 입증이 가능한 서류를 제출해주세요.',
-  R175 = '서류에서 신청하신 가족 정보를 식별할 수 없습니다.\n가족관계 식별이 가능한 서류를 제출해주세요.',
-  R176 = '서류에서 신청하신 가족 정보를 확인할 수 없습니다.\n가족관계 입증이 가능한 서류를 제출해주세요.',
-  R173 = '가족간 명의변경 및 주민(법인,외국인)등록번호 정정내용 \n확인이 가능한 서류(행정기관 발급용)를 제출해주세요.',
-  R999 = '상세 신청결과는 SK텔레콤 전문 상담원(114)에게 문의해주세요.'
-}
 
 export enum CUSTOMER_NOTICE_CTG_CD {
   A01 = '안내',
@@ -479,17 +469,6 @@ export const PRODUCT_CALLPLAN_BENEFIT_REDIRECT = {
   TW20000019: 'http://skt.datacoupon.co.kr'
 };
 
-export const PRODUCT_CALLPLAN_ADDITIONS_REDIRECT = {
-  NA00003557: 'NA00004197',
-  NA00003558: 'NA00004197',
-  NA00004048: 'NA00004198',
-  NA00004049: 'NA00004198',
-  NA00004046: 'NA00004188',
-  NA00003556: 'NA00004188',
-  NA00004047: 'NA00004196',
-  NA00003958: 'NA00004196'
-};
-
 export const PRODUCT_REPLACED_RULE = {
   CHAR: [{
     TARGET: ['999999999', '999,999,999', '무제한', '기본제공'],
@@ -578,9 +557,19 @@ export enum AUTH_CERTIFICATION_METHOD {
 }
 
 export const TPLAN_SHARE_LIST = ['POT10', 'POT20'];
+export const TPLAN_PROD_ID = ['NA00005959', 'NA00005958', 'NA00005957', 'NA00005956', 'NA00005955', 'NA00006157', 'NA00006156',
+  'NA00006155', 'NA00005627', 'NA00005628', 'NA00005629', 'NA00004891'];
 
 export enum LOGIN_TYPE {
   NONE = 'N',
   TID = 'T',
   EASY = 'S'
 }
+
+export const MEMBERSHIP_TYPE = {
+  '0': 'Leaders Club',
+  '3': 'T`PLE',
+  '4': 'COUPLE'
+};
+
+export const REFILL_USAGE_DATA_CODES = ['AAA10', 'AAA30'];

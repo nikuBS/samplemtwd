@@ -46,7 +46,10 @@ Tw.MainMenuSettingsLocation.prototype = {
     this.$term.attr('checked', !checked);
   },
   _onLink: function () {
-    var code = 40;
-    Tw.CommonHelper.openTermLayer(code);
+    Tw.CommonHelper.openUrlInApp(
+      'http://m2.tworld.co.kr/normal.do?serviceId=S_PUSH0011&viewId=V_MEMB2005&stplTypCd=15',
+      null,
+      Tw.COMMON_STRING.TERM
+   );
   }
 };

@@ -216,7 +216,7 @@ class MyTFareBillGuide extends TwViewController {
       thisMain._commDataInfo.joinSvcList = (!thisMain.reqQuery.line) ? thisMain.paidAmtSvcCdListFun() : null;
       thisMain._commDataInfo.useAmtTot = (thisMain._billpayInfo) ? FormatHelper.addComma(thisMain._billpayInfo.useAmtTot) : null;
 
-      thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun() : null;
+      thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun(allSvc) : null;
       thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
 
       thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo) ? thisMain._billpayInfo.autopayYn : null;
@@ -233,7 +233,7 @@ class MyTFareBillGuide extends TwViewController {
 
       thisMain.logger.info(thisMain, '[_urlTplInfo.combineRepresentPage] : ', thisMain._urlTplInfo.combineRepresentPage);
 
-      thisMain.renderView(res, thisMain._urlTplInfo.combineRepresentPage, {
+      thisMain.reqButtonView(res, thisMain._urlTplInfo.combineRepresentPage, {
         reqQuery: thisMain.reqQuery,
         svcInfo: svcInfo,
         pageInfo: thisMain.pageInfo,
@@ -247,6 +247,11 @@ class MyTFareBillGuide extends TwViewController {
       });
     }, function(err) {
       thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
+      if ( err.code === 'BIL0076' ) {
+        return res.render( 'billguide/myt-fare.bill.guide.nopay6month.html',
+          { svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
+      }
+
       return thisMain.error.render(res, {
         title: 'title',
         code: err.code,
@@ -282,11 +287,11 @@ class MyTFareBillGuide extends TwViewController {
         (thisMain._billpayInfo) ? FormatHelper.addComma(String(Math.abs(Number(thisMain._billpayInfo.deduckTotInvAmt)))) : 0;
       thisMain._commDataInfo.useAmtTot = (thisMain._billpayInfo) ? FormatHelper.addComma(thisMain._billpayInfo.useAmtTot) : null;
 
-      thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun() : null;
+      thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun(allSvc) : null;
       thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
 
       thisMain.logger.info(thisMain, '[_urlTplInfo.combineCommonPage] : ', thisMain._urlTplInfo.combineCommonPage);
-      thisMain.renderView(res, thisMain._urlTplInfo.combineCommonPage, {
+      thisMain.reqButtonView(res, thisMain._urlTplInfo.combineCommonPage, {
         reqQuery: thisMain.reqQuery,
         svcInfo: svcInfo,
         pageInfo: thisMain.pageInfo,
@@ -298,6 +303,11 @@ class MyTFareBillGuide extends TwViewController {
       });
     }, function(err) {
       thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
+      if ( err.code === 'BIL0076' ) {
+        return res.render( 'billguide/myt-fare.bill.guide.nopay6month.html',
+          { svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
+      }
+
       return thisMain.error.render(res, {
         title: 'title',
         code: err.code,
@@ -333,14 +343,15 @@ class MyTFareBillGuide extends TwViewController {
         (thisMain._billpayInfo) ? FormatHelper.addComma(String(Math.abs(Number(thisMain._billpayInfo.deduckTotInvAmt)))) : 0;
       thisMain._commDataInfo.useAmtTot = (thisMain._billpayInfo) ? FormatHelper.addComma(thisMain._billpayInfo.useAmtTot) : null;
 
-      thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun() : null;
+      thisMain._commDataInfo.intBillLineList = (thisMain._intBillLineInfo) ? thisMain.intBillLineFun(allSvc) : null;
       thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
 
       thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo) ? thisMain._billpayInfo.autopayYn : null;
       thisMain._showConditionInfo.nonPaymentYn = (thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList.length === 0) ? 'N' : 'Y';
+      thisMain._showConditionInfo.selectNonPaymentYn = thisMain.getSelectNonPayment();
 
       thisMain.logger.info(thisMain, '[_urlTplInfo.individualPage] : ', thisMain._urlTplInfo.individualPage);
-      thisMain.renderView(res, thisMain._urlTplInfo.individualPage, {
+      thisMain.reqButtonView(res, thisMain._urlTplInfo.individualPage, {
         reqQuery: thisMain.reqQuery,
         svcInfo: svcInfo,
         pageInfo: thisMain.pageInfo,
@@ -354,6 +365,11 @@ class MyTFareBillGuide extends TwViewController {
       });
     }, function(err) {
       thisMain.logger.info(thisMain, `[ Promise.all > error ] : `, err);
+      if ( err.code === 'BIL0076' ) {
+        return res.render( 'billguide/myt-fare.bill.guide.nopay6month.html',
+          { svcInfo : svcInfo, pageInfo : thisMain.pageInfo });
+      }
+
       return thisMain.error.render(res, {
         title: 'title',
         code: err.code,
@@ -438,13 +454,54 @@ class MyTFareBillGuide extends TwViewController {
     });
   }
 
+  public reqButtonView(res: Response, view: string, data: any): any {
+    const thisMain = this;
+    const params = {
+      startDt: DateHelper.getStartOfMonDate( String(this._billpayInfo.invDt), 'YYYYMMDD'),
+      endDt: DateHelper.getEndOfMonDate( String(this._billpayInfo.invDt), 'YYYYMMDD')
+    };
+    data.roamDonaCallBtnYn = {
+      roamingYn: 'N', donationYn: 'N', callgiftYn: 'N'
+    };
+
+
+    Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_05_0044, params),
+      this.apiService.request(API_CMD.BFF_05_0038, params),
+      this.apiService.request(API_CMD.BFF_05_0045, params)
+    ).subscribe((resp) => {
+      thisMain.logger.info(thisMain, resp);
+
+      if ( resp[0].code === API_CODE.CODE_00 &&
+        resp[0].result.roamingList && resp[0].result.roamingList.length > 0 ) {
+        data.roamDonaCallBtnYn.roamingYn = 'Y';
+      }
+
+      if ( resp[1].code === API_CODE.CODE_00 &&
+        resp[1].result.donationList && resp[1].result.donationList.length > 0 ) {
+        data.roamDonaCallBtnYn.donationYn = 'Y';
+      }
+
+      if ( resp[2].code === API_CODE.CODE_00 &&
+        resp[2].result.callData && Number(resp[2].result.callData) ) {
+        data.roamDonaCallBtnYn.callgiftYn = 'Y';
+      }
+      thisMain.logger.info('===================== 로밍 YN : ' + data.roamDonaCallBtnYn.roamingYn);
+      thisMain.logger.info('===================== 기부금 YN : ' + data.roamDonaCallBtnYn.donationYn);
+      thisMain.logger.info('===================== 콜기프트 YN : ' + data.roamDonaCallBtnYn.callgiftYn);
+      thisMain.logger.info(thisMain, '[ HTML ] : ', view);
+      thisMain.renderView(res, view, data);
+    });
+
+  }
+
   // -------------------------------------------------------------[SVC]
   public getSelectNonPayment(): any {
     const thisMain = this;
     const unPaidAmtMonthInfoList = thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList;
     const queryDate = thisMain.reqQuery.date;
 
-    if ( unPaidAmtMonthInfoList.length ) {
+    if ( !unPaidAmtMonthInfoList || unPaidAmtMonthInfoList.length === 0 ) {
       return 'N';
     }
 
@@ -519,26 +576,44 @@ class MyTFareBillGuide extends TwViewController {
       DateHelper.getShortDateWithFormatAddByUnit(date, 1, 'days', 'M' );
   }
 
-  public intBillLineFun() {
+  public intBillLineFun(allSvc: any) {
     const thisMain = this;
 
     const svcTotList = thisMain._intBillLineInfo || [];
 
     for ( let i = 0; i < svcTotList.length; i++ ) {
       const item = svcTotList[i];
+      const svcItem = this.getAllSvcItem(allSvc, item.svcMgmtNum);
+      item.addr = svcItem ? svcItem.addr : item.dtlAddr;
+
       if ( item.svcType === MYT_FARE_BILL_GUIDE.PHONE_SVCTYPE ) {
         item.label = thisMain.phoneStrToDash( item.svcNum );
       } else {
-        if ( item.dtlAddr && item.dtlAddr.length > 18 ) {
-          item.label = item.dtlAddr.substr(0, 18);
+        if ( item.addr && item.addr.length > 18 ) {
+          item.label = item.addr.substr(0, 18);
         } else {
-          item.label = item.dtlAddr;
+          item.label = item.addr;
         }
 
       }
     }
     svcTotList.unshift({ svcType: MYT_FARE_BILL_GUIDE.FIRST_SVCTYPE } );
     return svcTotList;
+  }
+
+  public getAllSvcItem(allSvc: any, svcMgmtNum: string) {
+    if ( !allSvc ) {
+      this.logger.error(this, 'allSvc is ' + allSvc);
+      return null;
+    }
+    const listM = allSvc.m || [];
+    const listS = allSvc.s || [];
+    const listO = allSvc.o || [];
+    const item =
+      listM.find(svc => svc.svcMgmtNum === svcMgmtNum ) ||
+      listS.find(svc => svc.svcMgmtNum === svcMgmtNum ) ||
+      listO.find(svc => svc.svcMgmtNum === svcMgmtNum );
+    return item;
   }
 
   public conditionChangeDtListFun() {

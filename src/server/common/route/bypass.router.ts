@@ -54,22 +54,23 @@ class BypassRouter {
 
   private sendRequest(cmd: any, req: Request, res: Response, next: NextFunction) {
     this.apiService.setCurrentReq(req, res);
-    this.loginService.setCurrentReq(req, res);
+    // this.loginService.setCurrentReq(req, res);
 
     const params = cmd.method === API_METHOD.GET ? req.query : req.body;
     // const parameter = FormatHelper.isEmpty(params.parameter) ? {} : params.parameter;
     // const pathVariables = FormatHelper.isEmpty(params.pathVariables) ? [] : params.pathVariables;
     const pathVar = this.getPathVariable(req.params);
     const headers = req.headers;
+    const version = req.params['version'];
 
-    this.apiService.request(cmd, params, headers, ...pathVar)
+    this.apiService.request(cmd, params, headers, pathVar, version)
       .subscribe((data) => {
         // TODO: This is unpretty. Need to revise for NON JSON Object response
         if ( data instanceof Buffer ) {
           return res.end(data);
         }
 
-        const svcInfo = this.loginService.getSvcInfo();
+        const svcInfo = this.loginService.getSvcInfo(req);
         if ( !FormatHelper.isEmpty(svcInfo) ) {
           // data.serverSession = this.loginService.getServerSession();
           data.loginType = svcInfo.loginType;
@@ -82,9 +83,9 @@ class BypassRouter {
 
   private getPathVariable(params) {
     if ( !FormatHelper.isEmpty(params) ) {
-      return Object.keys(params).map((key) => {
-        return params[key];
-      });
+      return Object.keys(params)
+        .filter((key) => key !== 'version')
+        .map((key) => params[key]);
     }
     return [];
   }

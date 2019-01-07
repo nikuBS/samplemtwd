@@ -21,9 +21,10 @@ Tw.CustomerAgentsearchNear = function (rootEl) {
   this._nearShops = undefined;
 
   this._currentBranchType = 0;
+  this._currentDo = undefined;
   this._currentGu = undefined;
 
-  $(window).on('env', $.proxy(function () {
+  $(window).on(Tw.INIT_COMPLETE, $.proxy(function () {
       this._showDataChargeIfNeeded($.proxy(function () {
       this._init();
       this._cacheElements();
@@ -106,7 +107,7 @@ Tw.CustomerAgentsearchNear.prototype = {
   _askCurrentLocation: function () {
     if (Tw.BrowserHelper.isApp()) {
       this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function (res) {
-        if (res.resultCode === 401) {
+        if (res.resultCode === 401 || res.resultCode === 400 || res.resultCode === -1) {
           this._historyService.goBack();
           return;
         } else {
@@ -126,6 +127,7 @@ Tw.CustomerAgentsearchNear.prototype = {
     }
   },
   _showPermission: function (location) {
+    var shouldGoBack = false;
     this._popupService.open({
       ico: 'type3',
       title: Tw.BRANCH.PERMISSION_TITLE,
@@ -143,11 +145,17 @@ Tw.CustomerAgentsearchNear.prototype = {
       }]
     }, $.proxy(function (root) {
       root.on('click', '.fe-link-term', $.proxy(function () {
-        this._popupService.close();
+        // this._popupService.close();
         // this._historyService.goLoad(약관 전문)
+        Tw.CommonHelper.openUrlInApp(
+          'http://m2.tworld.co.kr/normal.do?serviceId=S_PUSH0011&viewId=V_MEMB2005&stplTypCd=15',
+          null,
+          Tw.COMMON_STRING.TERM
+        );
       }, this));
 
       root.on('click', '.bt-white2', $.proxy(function () {
+        shouldGoBack = true;
         this._popupService.close();
       }, this));
 
@@ -172,7 +180,13 @@ Tw.CustomerAgentsearchNear.prototype = {
             Tw.Error(err.code, err.msg).pop();
           });
       }, this));
-    }, this));
+    }, this),
+    $.proxy(function () {
+      if (shouldGoBack) {
+        this._historyService.goBack();
+      }
+    }, this)
+    );
   },
   _onCurrentLocation: function (location) {
     var $tmapBox = this.$container.find('#fe-tmap-box');
@@ -181,7 +195,8 @@ Tw.CustomerAgentsearchNear.prototype = {
       this._map = new Tmap.Map({
         div: $tmapBox.attr('id'),
         width: '100%',
-        height: $tmapBox.width() + 'px'
+        height: $tmapBox.width() + 'px',
+        httpsMode: true
       });
     }
     this._map.setCenter(
@@ -216,6 +231,7 @@ Tw.CustomerAgentsearchNear.prototype = {
       reqLat: location.latitude,
       appKey: Tw.TMAP.APP_KEY
     }).done($.proxy(function (res) {
+      this._currentDo = res.searchRegionsInfo[0].regionInfo.properties.doName.split(' ')[0].trim();
       this._currentGu = res.searchRegionsInfo[0].regionInfo.properties.guName.split(' ')[0].trim();
 
       var regions = res.searchRegionsInfo[0].regionInfo.description.split(' ');
@@ -234,11 +250,15 @@ Tw.CustomerAgentsearchNear.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_08_0008, {
       currLocX: location.longitude, currLocY: location.latitude
     }).done($.proxy(function (res) {
-      this._nearShops = res.result.regionInfoList;
-      this._onNearShops();
+      if (res.code === Tw.API_CODE.CODE_00) {
+        this._nearShops = res.result.regionInfoList;
+        this._onNearShops();
+      } else {
+        Tw.Error(res.coee, res.msg).pop();
+      }
     }, this))
     .fail($.proxy(function (err) {
-      this._popupService.openAlert(err.code + ' ' + err.msg);
+      Tw.Error(err.code, err.msg).pop();
     }, this));
   },
   _onNearShops: function () {  // Add near shops' markers
@@ -310,7 +330,7 @@ Tw.CustomerAgentsearchNear.prototype = {
   },
   _onRegionChangeClicked: function () {
     this._popupService.open({ hbs: 'CS_02_03_L01'}, $.proxy(function (container) {
-      new Tw.CustomerAgentsearchRegion(container, this._currentGu, this._regions,
+      new Tw.CustomerAgentsearchRegion(container, this._currentDo, this._currentGu, this._regions,
         $.proxy(this._onRegionChanged, this));
     }, this));
   },

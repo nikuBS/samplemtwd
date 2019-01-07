@@ -16,7 +16,7 @@
     </div>
     <!--// #skip_navigation -->
     <div class="wrap">
-        <%- include('../../../../common/views/components/header.component.html', { title: '매장정보', svcInfo: svcIfno }); %>
+        <%- include('../../../../common/views/components/header.component.html', { title: '매장정보', svcInfo: svcInfo }); %>
         <!-- #contents -->
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
@@ -77,9 +77,9 @@
                                 <li>
                                     <dl class="type03">
                                         <dt>찾아오시는길</dt>
-                                        <dd>
-                                            <%= detail.talkMap %>
-                                        </dd>
+                                        <% for (let i = 0; i < detail.talkMapArr.length; i += 1) { %>
+                                        <dd><%= detail.talkMapArr[i] %></dd>
+                                        <% } %>
                                     </dl>
                                 </li>
                             </ul>

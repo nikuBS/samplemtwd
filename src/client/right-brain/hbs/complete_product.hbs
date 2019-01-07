@@ -1,30 +1,30 @@
-<div class="popup-page nobg tw-popup fixed-btn">
+<div class="popup-page tw-popup pt0 fixed-bottom">
     <div class="container-wrap">
-        <h2 class="blind">내용</h2>
         <div class="container">
-            <h1 class="complete-title">
-                <img src="/img/dummy/dmy-complete.jpg" alt=""/>
-                {{#if data.prodNm}}
-                    <p class="complete-tx0">{{data.prodNm}}{{#if data.isBasFeeInfo}}({{data.basFeeInfo}})로{{/if}}</p>
-                {{else}}
-                    <p class="complete-tx0">&nbsp;</p>
-                {{/if}}
-                <span><strong>{{data.prodCtgNm}} {{data.typeNm}} 완료</strong></span>
-            </h1>
-            {{#if data.mytPage}}
-                <div class="complete-btn-box pt56">
-                    <ul class="bt-slice">
-                        <li class="bt-blue1">
-                            <a href="/myt-join/{{data.mytPage}}">나의 가입정보 확인하기 &gt;</a>
-                        </li>
-                    </ul>
+            <div class="complete-wrap">
+                <div class="title-box">
+                    <i class="icon-complete-120"><span class="blind">complete</span></i>
+                    <p class="tx-tit">
+                        {{#if data.prodNm}}
+                            {{data.prodNm}}{{#if data.isBasFeeInfo}}({{data.basFeeInfo}}){{/if}}<br>
+                        {{/if}}
+                        <span class="tx-highlight pt10">{{data.prodCtgNm}} {{data.typeNm}} 완료</span>
+                    </p>
                 </div>
-            {{/if}}
-            <ul class="bt-slice full">
-                <li class="bt-red1">
-                    <button class="fe-btn_success_close">확인</button>
-                </li>
-            </ul>
+                {{#if data.mytPage}}
+                    <div class="tx-contents">
+                        <ul class="bt-slice item-one">
+                            <li><a href="/myt-join/{{data.mytPage}}" class="btn-round2 btn-style3">나의 가입정보 확인하기 &gt;</a></li>
+                        </ul>
+                    </div>
+                {{/if}}
+            </div>
         </div>
+    </div>
+
+    <div class="bt-fixed-area">
+        <ul class="bt-slice full">
+            <li><button type="button" class="btn-floating btn-style2 tw-popup-closeBtn">확인</button></li>
+        </ul>
     </div>
 </div>

@@ -45,7 +45,7 @@
                                                     <!-- .inputbox -->
                                                     <span class="inputbox">
                                                         <span class="input">
-                                                            <input id="fe-input-name" type="text" title="지점/대리점명" placeholder="지점/대리점명" value="<%= isSearch ? keyword : '' %>" aria-labelledby="aria-citation-phone" autocomplete="off" />
+                                                            <input id="fe-input-name" type="text" title="지점/대리점명" placeholder="지점/대리점명" value="<%= isSearch && type === 'name' ? keyword : '' %>" aria-labelledby="aria-citation-phone" autocomplete="off" />
                                                             <button id="fe-cancel-name" class="cancel"><span class="blind">삭제</span></button>
                                                         </span>
                                                     </span>
@@ -79,7 +79,7 @@
                                                     <!-- .inputbox -->
                                                     <span class="inputbox">
                                                         <span class="input">
-                                                            <input id="fe-input-addr" type="text" title="주소/지역명" placeholder="주소/지역명" value="<%= isSearch ? keyword : undefined %>" aria-labelledby="aria-citation-phone" autocomplete="off" />
+                                                            <input id="fe-input-addr" type="text" title="주소/지역명" placeholder="주소/지역명" value="<%= isSearch && type === 'addr' ? keyword : undefined %>" aria-labelledby="aria-citation-phone" autocomplete="off" />
                                                             <button id="fe-cancel-addr" class="cancel"><span class="blind">삭제</span></button>
                                                         </span>
                                                     </span>
@@ -113,7 +113,7 @@
                                                     <!-- .inputbox -->
                                                     <span class="inputbox">
                                                         <span class="input">
-                                                            <input id="fe-input-tube" type="text" title="지하철명" placeholder="지하철명" value="<%= isSearch ? keyword : undefined %>" aria-labelledby="aria-citation-phone" autocomplete="off" />
+                                                            <input id="fe-input-tube" type="text" title="지하철명" placeholder="정확한 역명 예) 홍대역(X), 홍대입구역(O)" value="<%= isSearch && type === 'tube' ? keyword : undefined %>" aria-labelledby="aria-citation-phone" autocomplete="off" />
                                                             <button id="fe-cancel-tube" class="cancel"><span class="blind">삭제</span></button>
                                                         </span>
                                                     </span>
@@ -151,7 +151,7 @@
                 <div class="cont-box pt0">
                     <!-- .search-point -->
                     <div class="search-point">
-                        <div class="fe-none <%= isSearch && result.totalCount === 0 ? undefined : 'none' %>">
+                        <div class="fe-none fe-result <%= isSearch && result.totalCount === 0 ? undefined : 'none' %>">
                             <!-- .ti-caption-gray -->
                             <div class="ti-caption-gray">
                                 <h3 class="tit">총 <em>0</em>개의 매장이 검색되었습니다.</h3>
@@ -225,8 +225,8 @@
                                     <dd>09:30 ~ 18:00</dd>
                                 </dl>
                             </div>
-                            <div class="dot">토, 일요일 및 공휴일 휴무</div>
                             <div class="dot">대리점 업무시간은 매장 별로 상이합니다.</div>
+                            <div class="dot">토, 일요일 및 공휴일 휴무.</div>
                         </div>
                         <!-- // .hours-of-business -->
                     </div>

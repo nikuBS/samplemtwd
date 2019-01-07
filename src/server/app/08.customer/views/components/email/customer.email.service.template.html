@@ -2,6 +2,27 @@
     <div class="cont-box">
         <div class="inquiryform-wrap">
             <p class="title">문의하실 내용을 작성해주세요.</p>
+
+            <% if ( allSvc.m && allSvc.m.length >= 2 ) { %>
+            <div class="info-form-box">
+                <button class="bt-dropdown big tx-bold fe-select-line" title="문의하실 회선정보 선택" aria-haspopup="true"
+                        data-svcMgmtNum="<%-svcInfo.svcMgmtNum%>"><%-convertTelFormat(svcInfo.svcNum)%><span class="ico"></span></button>
+            </div>
+            <% } else if( allSvc.m && allSvc.m.length === 1 ) { %>
+            <div class="inputbox">
+                <div class="input">
+                    <input type="text" placeholder="회선정보 입력" title="문의하실 회선정보 입력" data-svcMgmtNum="<%-svcInfo.svcMgmtNum%>"
+                           value="<%-convertTelFormat(svcInfo.svcNum)%>" disabled>
+                </div>
+            </div>
+            <% } else { %>
+            <div class="inputbox">
+                <div class="input">
+                    <input type="text" placeholder="회선정보 입력" title="문의하실 회선정보 입력" value="">
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </div>
+            </div>
+            <% } %>
             <div class="inputbox">
                 <div class="input">
                     <input type="text" class="fe-text_title" placeholder="제목 입력" title="input" value="" maxlength="20"
@@ -13,7 +34,8 @@
             <div class="option-box">
                 <div class="inputbox textarea-type">
                     <div class="input">
-                        <textarea class="input-focus inner-tx fe-text_content" cols="20" rows="6" placeholder="내용 입력" maxlength="12000"
+                        <textarea class="input-focus inner-tx fe-text_content" cols="20" rows="6" placeholder="{{{placeHolder}}}"
+                                  maxlength="12000"
                                   aria-labelledby="aria-email-qacont" required></textarea>
                         <button href="javascript:void(0)" class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                     </div>
@@ -22,7 +44,9 @@
             </div>
             <div class="fileplus-wrap">
                 <p class="text">최대 5개 파일을 등록할 수 있습니다.</p>
-                <div class="bt-alone"><button class="bt-bg-blue1 fe-upload-file-service">파일첨부하기</button></div>
+                <div class="bt-alone">
+                    <button class="bt-bg-blue1 fe-upload-file-service">파일첨부하기</button>
+                </div>
             </div>
             <ul class="filename-list">
             </ul>
@@ -36,6 +60,26 @@
     <div class="cont-box">
         <div class="inquiryform-wrap">
             <p class="title">문의하실 내용을 작성해주세요.</p>
+            <% if( allSvc.s && allSvc.s.length >= 2 ) { %>
+            <div class="info-form-box">
+                <button class="bt-dropdown big tx-bold fe-select-line" title="문의하실 회선정보 선택" aria-haspopup="true"
+                        data-svcMgmtNum="<%-allSvc.s[0].svcMgmtNum%>"><%-allSvc.s[0].svcNum%><span class="ico"></span></button>
+            </div>
+            <% } else if( allSvc.s && allSvc.s.length === 1 ) { %>
+            <div class="inputbox">
+                <div class="input">
+                    <input type="text" placeholder="회선정보 입력" title="문의하실 회선정보 입력" data-svcMgmtNum="<%-allSvc.s[0].svcMgmtNum%>"
+                           value="<%-allSvc.s[0].svcNum%>" disabled>
+                </div>
+            </div>
+            <% } else { %>
+            <div class="inputbox">
+                <div class="input">
+                    <input type="text" placeholder="회선정보 입력" title="문의하실 회선정보 입력" value="">
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </div>
+            </div>
+            <% } %>
             <div class="inputbox">
                 <div class="input">
                     <input type="text" class="fe-text_title" placeholder="제목 입력" title="input" value="" maxlength="20"
@@ -56,7 +100,9 @@
             </div>
             <div class="fileplus-wrap">
                 <p class="text">최대 5개 파일을 등록할 수 있습니다.</p>
-                <div class="bt-alone"><button class="bt-bg-blue1 fe-upload-file-service">파일첨부하기</button></div>
+                <div class="bt-alone">
+                    <button class="bt-bg-blue1 fe-upload-file-service">파일첨부하기</button>
+                </div>
             </div>
             <ul class="filename-list">
             </ul>
@@ -192,7 +238,7 @@
         <!-- .container-wrap -->
         <div class="container-wrap">
             <h2 class="blind">내용</h2>
-            <div class="container">
+            <div class="container" style="padding-bottom: 4.5rem">
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <div class="basic-text">
@@ -219,10 +265,11 @@
                                                     <div class="widget-box check">
                                                         <ul class="select-list" role="group">
                                                             <li class="checkbox type01" role="checkbox" aria-checked="false">
-                                                                <input type="checkbox" name="checkbox" value="" title="" aria-labelledby="aria-comp-checkbox1">
+                                                                <input type="checkbox" name="checkbox" value="" title=""
+                                                                       aria-labelledby="aria-comp-checkbox1">
                                                                 <div class="comp-list-layout gaptype01">
                                                                     <div class="shoppingbox-wrap">
-                                                                        <p class="title tx-bold">{{ordProdNm}}</p>
+                                                                        <p class="title tx-bold">{{{ordProdNm}}}</p>
                                                                         <div class="shoppinginfo-wrap">
                                                                             <div class="info">
                                                                                 <dl class="detail">
@@ -235,7 +282,7 @@
                                                                                 </dl>
                                                                             </div>
                                                                             <div class="imgbox">
-                                                                                <img src="/img/dummy/img_products.png">
+                                                                                <img src="<%= CDN %>/img/dummy/img_products.png">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -251,6 +298,11 @@
                                                 <p class="desc">주문하신 내역이 없습니다.</p>
                                             </div>
                                             {{/each}}
+                                            {{#if isMoreListShop}}
+                                            <div class="bt-more">
+                                                <button class="fe-direct-more">더 보기</button>
+                                            </div>
+                                            {{/if}}
                                         </li>
                                         <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
                                             {{#each listUsed}}
@@ -259,7 +311,9 @@
                                                     <div class="widget-box check">
                                                         <ul class="select-list" role="group">
                                                             <li class="checkbox type01" role="checkbox" aria-checked="false">
-                                                                <input type="checkbox" name="checkbox" value="" title="SM-G150NS / 블랙 / 기기변경 / band데이터 29 / T 기본약정 24개월 / 29,900원 / 미약정" aria-labelledby="aria-comp-checkbox1">
+                                                                <input type="checkbox" name="checkbox" value=""
+                                                                       title="SM-G150NS / 블랙 / 기기변경 / band데이터 29 / T 기본약정 24개월 / 29,900원 / 미약정"
+                                                                       aria-labelledby="aria-comp-checkbox1">
                                                                 <div class="comp-list-layout gaptype01">
                                                                     <div class="shoppingbox-wrap">
                                                                         <p class="title tx-bold">{{ordProdNm}}</p>
@@ -275,13 +329,16 @@
                                                                                 </dl>
                                                                             </div>
                                                                             <div class="imgbox">
-                                                                                <img src="/img/dummy/img_products.png">
+                                                                                <img src="<%= CDN %>/img/dummy/img_products.png">
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </li>
                                                         </ul>
+                                                    </div>
+                                                    <div class="bt-more blind">
+                                                        <button>더 보기</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -291,6 +348,11 @@
                                                 <p class="desc">주문하신 내역이 없습니다.</p>
                                             </div>
                                             {{/each}}
+                                            {{#if isMoreListUsed}}
+                                            <div class="bt-more">
+                                                <button class="fe-direct-more">더 보기</button>
+                                            </div>
+                                            {{/if}}
                                         </li>
                                     </ul>
                                 </div>

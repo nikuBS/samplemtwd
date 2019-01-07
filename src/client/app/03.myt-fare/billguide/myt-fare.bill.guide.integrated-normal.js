@@ -5,7 +5,7 @@
  */
 Tw.MyTFareBillGuideIntegratedNormal = function (rootEl, resData) {
   this.resData = resData;
-  Tw.Logger.info('[Server Res Data]', resData);
+  // Tw.Logger.info('[Server Res Data]', resData);
 
   this.$container = rootEl;
   this._apiService = Tw.Api;
@@ -38,13 +38,13 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
 
   },
   _onHashChange: function (hash) {
-    Tw.Logger.info('[hash]', hash);
+    // Tw.Logger.info('[hash]', hash);
 
     if ( !hash.raw ) { return; }
 
     switch ( hash.raw ) {
       case 'conditionChange_P' :
-        Tw.Logger.info('[hash > conditionChange_P]', hash);
+        // Tw.Logger.info('[hash > conditionChange_P]', hash);
         this.$conditionChangeBtn.trigger('click');
         break;
       default :
@@ -139,57 +139,51 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
   },
   _conditionChangeEvt: function (event) {
     var $target = $(event.currentTarget);
-    var hbsName = 'actionsheet_select_a_type';
-    var data = [{
-      list: null
-    }];
+    var hbsName = 'actionsheet01';
     var hashName = 'conditionChange';
-
+    var reqDate = this.resData.reqQuery.date;
     // 데이터 초기화
     var invDtArr = this.resData.billpayInfo.invDtArr; // data-value
     var conditionChangeDtList = this.resData.commDataInfo.conditionChangeDtList; // value
     var listData = _.map(invDtArr, function (item, idx) {
+      var radioAttr = 'id="ra'+idx+'" name="r1" data-value="' + invDtArr[idx] + '"';
+      if(reqDate === invDtArr[idx]){
+        radioAttr += ' checked';
+      }
       return {
-        value: conditionChangeDtList[idx],
-        option: '',
-        attr: 'data-value="' + invDtArr[idx] + '", data-target="selectBtn"'
+        'label-attr': 'id="ra'+idx+'"',
+        'radio-attr': radioAttr,
+        'txt': conditionChangeDtList[idx]
       };
     });
-    data[0].list = listData;
 
     this._popupService.open({
         hbs: hbsName,
         layer: true,
-        data: data,
-        title: Tw.MYT_FARE_BILL_GUIDE.POP_TITLE_TYPE_0
+        data: [{ list: listData }],
+        title: Tw.MYT_FARE_BILL_GUIDE.POP_TITLE_TYPE_0,
+        btnfloating : { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
       },
       $.proxy(this._conditionChangeEvtInit, this, $target),
       $.proxy(this._conditionChangeEvtClose, this, $target),
       hashName);
   },
   _conditionChangeEvtInit: function ($target, $layer) {
-    $layer.on('click', '[data-target="selectBtn"]', $.proxy(this._setSelectedValue, this, $target));
-    Tw.Logger.info('[팝업 오픈 : actionsheet_select_a_type]', $layer);
-
-    this.paramDate = this.resData.reqQuery.date || '';
-
-    if ( this.paramDate ) {
-      var $selectBtnTg = $layer.find('[data-value="' + this.paramDate + '"]');
-      $selectBtnTg.addClass('checked');
-    }
-
+    $layer.one('click', 'li.type1', $.proxy(this._setSelectedValue, this));
+    // Tw.Logger.info('[팝업 오픈 : actionsheet_select_a_type]', $layer);
   },
-  _setSelectedValue: function ($target, event) {
+  _setSelectedValue: function (event) {
     var $tg = $(event.currentTarget);
-    this.paramDate = $tg.attr('data-value');
-    Tw.Logger.info('[선택 : ]', this.paramDate);
+    this.paramDate = $tg.find('input[type=radio]').attr('data-value');
+    // Tw.Logger.info('[선택 : ]', this.paramDate);
     this._conditionChangeEvtClose();
   },
   _conditionChangeEvtClose: function () {
-    Tw.Logger.info('[팝업 닫기 : actionsheet_select_a_type]');
+    // Tw.Logger.info('[팝업 닫기 : actionsheet_select_a_type]');
     var param = {
       date: this.paramDate
     };
+
     this._history.goLoad('/myt-fare/billguide/guide?' + $.param(param));
     // this._popupService.close();
   },
@@ -197,26 +191,25 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
   _getChildBillInfo: function () {
     var thisMain = this;
     var childTotNum = this.resData.childLineInfo.length;
-    var targetApi = Tw.API_CMD.BFF_05_0036;
+    var targetApi = Tw.API_CMD.BFF_05_0047;
     var commands = [];
 
     for ( var i = 0; i < childTotNum; i++ ) {
       commands.push({
         command: targetApi,
         params: {
-          selSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum,
-          detailYn:'Y',
+          childSvcMgmtNum: this.resData.childLineInfo[i].svcMgmtNum,
           invDt: this.resData.reqQuery.date
         }});
     }
 
-    Tw.Logger.info('------- 자녀 사용량 조회 -----------------');
+    // Tw.Logger.info('------- 자녀 사용량 조회 -----------------');
     this._apiService.requestArray(commands)
       .done(function () {
         var childLineInfo = thisMain.resData.childLineInfo;
-
+        // Tw.Logger.info('------- 자녀 사용량 결과 -----------------', arguments);
         _.each(arguments, function (element, index) {
-          if ( element.result && (element.result.selSvcMgmtNum === childLineInfo[index].svcMgmtNum) ) {   //BFF_05_0036
+          if ( element.result && (element.result.svcMgmtNum === childLineInfo[index].svcMgmtNum) ) {   //BFF_05_0036
             childLineInfo[index].detailInfo = element.result;
           }
         });
@@ -237,7 +230,7 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
       }
     }
 
-    Tw.Logger.info('childListData', childListData);
+    // Tw.Logger.info('childListData', childListData);
 
     this._svcHbDetailList(childListData, this.$hbChildListArea, this.$entryTplChild);
 
@@ -260,7 +253,7 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
         item.invAmt = Tw.FormatHelper.addComma(item.invAmt);
         return item;
       });
-      Tw.Logger.info('[useAmtDetailInfo]', useAmtDetailInfo);
+      // Tw.Logger.info('[useAmtDetailInfo]', useAmtDetailInfo);
       var resData = useAmtDetailInfo;
       var groupKeyArr = ['billItmLclNm', 'billItmSclNm'];
       var priceKey = 'invAmt';
@@ -272,7 +265,7 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
         val.children = thisMain._comTraverse(val.children, groupKeyArr[1], priceKey);
       });
 
-      Tw.Logger.info('[ rootNodes ] : ', rootNodes);
+      // Tw.Logger.info('[ rootNodes ] : ', rootNodes);
       this._svcHbDetailList(rootNodes, this.$hbDetailListArea, this.$entryTplUseBill);
 
       //위젯 아코디언 초기화

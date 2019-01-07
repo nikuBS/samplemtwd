@@ -153,8 +153,10 @@ Tw.MyTFareInfoBillTax.prototype = {
   _openResendByEmailCallback: function ($container) {
     this.$emailInput = $container.find('.input input[type="text"]');
     this.$rerequestSendBtn = $container.find('.bt-slice button');
+    this.$textValidation = $container.find('.input-txt-type02');
     this.$rerequestSendBtn.on('click', $.proxy(this._sendRerequestByEmail, this));
     this.$emailInput.on('keyup', $.proxy(this._checkEmailValue, this));
+    this.$emailInput.on('focusout', $.proxy(this._checkEmailValidation, this));
     this.$emailInput.siblings('.cancel').on('click', $.proxy(function() {
       this.$rerequestSendBtn.attr('disabled', true);
     }, this));
@@ -163,6 +165,18 @@ Tw.MyTFareInfoBillTax.prototype = {
   _checkEmailValue: function (e) {
     this.$rerequestSendBtn.attr('disabled', !Tw.ValidationHelper.isEmail($(e.currentTarget).val()));
   },
+
+  // 이메일 재발송 팝업 포커스 아웃 시 밸리데이션 추가
+  _checkEmailValidation: function (e) {
+    if (Tw.ValidationHelper.isEmail($(e.currentTarget).val()) || 
+      Tw.FormatHelper.isEmpty($(e.currentTarget).val())
+    ) {
+      this.$textValidation.hide();
+    } else {
+      this.$textValidation.show();
+    }
+  },
+  
   _sendRerequestByEmail: function () {
     this._apiService.request(Tw.API_CMD.BFF_07_0018, {
         eMail:this.$emailInput.val(), 

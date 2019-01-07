@@ -83,8 +83,9 @@ Tw.ProductApps.prototype = {
   },
 
   _handleConfirmAppInstalled: function(apps, resp) {
+    var installedList = (resp.params && resp.params.list) || [];
     var list = _.reduce(
-      (resp.params && resp.params.list) || [],
+      installedList,
       function(apps, app) {
         var key = Object.keys(app)[0];
         apps[key] = app[key];
@@ -96,9 +97,14 @@ Tw.ProductApps.prototype = {
     this._apps = _.map(apps, function(app) {
       app.isNew = Tw.DateHelper.getDifference(app.newIconExpsEndDtm) > 0;
       app.isInstalled = list[app.prodNm] || false;
+      app.iconImg = Tw.Environment.cdn + app.iconImg;
 
       return app;
     });
+
+    if (installedList.length === 0) {
+      this.$container.find('div.app-list-top').addClass('none');
+    }
 
     this._appendApps(true);
   },

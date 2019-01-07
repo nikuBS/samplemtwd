@@ -59,9 +59,9 @@ class App {
     this.app.engine('html', ejs.renderFile);
     this.app.use(express.json());       // to support JSON-encoded bodies
     this.app.use(express.urlencoded({ extended: true })); // to support URL-encoded bodies
+    this.app.use(cookie());
     this.app.use(this.redisService.getMiddleWare());
     this.app.use(UA.express()); // req.useragent
-    this.app.use(cookie());
     // development env
     this.app.use(express.static(path.join(__dirname, '/public/cdn')));
     this.app.use('/mock', express.static(path.join(__dirname, '/mock/client')));
@@ -103,7 +103,7 @@ class App {
   private setClientMap() {
     const version = String(process.env.NODE_ENV) === 'local' ? 'dev' : VERSION;
 
-    this.apiService.request(API_CMD.MANIFEST, {}, {}, version).subscribe((manifest) => {
+    this.apiService.request(API_CMD.MANIFEST, {}, {}, [version]).subscribe((manifest) => {
       Object.keys(manifest).map((key) => {
         if ( key.indexOf('.') !== -1 ) {
           let appName = key.split('.')[0];

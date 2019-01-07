@@ -10,24 +10,26 @@ Tw.CustomerAgentsearchDetail = function (mapEl, coord) {
 
   this._dataChargeConfirmed = false;
 
-  this._showDataChargePopupIfNeeded(mapEl, coord);
+  $(window).on(Tw.INIT_COMPLETE, $.proxy(function() {
+    this._showDataChargePopupIfNeeded(mapEl, coord);
+  }, this))
 };
 
 Tw.CustomerAgentsearchDetail.prototype = {
   _showDataChargePopupIfNeeded: function (mapEl, coord) {
     if (Tw.BrowserHelper.isApp()) {
-      this._popupService.openConfirm(
-        Tw.POPUP_CONTENTS.NO_WIFI,
-        Tw.POPUP_TITLE.EXTERNAL_LINK,
+      var confirmed = false;
+      Tw.CommonHelper.showDataCharge(
         $.proxy(function () {
-          this._dataChargeConfirmed = true;
-          this._popupService.close();
-          this._initMap(mapEl, coord);
+          confirmed = true;
         }, this),
         $.proxy(function () {
-          if (!this._dataChargeConfirmed) {
+          if (!confirmed) {
             this._historyService.goBack();
+            return;
           }
+
+          this._initMap(mapEl, coord);
         }, this)
       );
     } else {
@@ -38,7 +40,8 @@ Tw.CustomerAgentsearchDetail.prototype = {
     var map = new Tmap.Map({
       div: mapEl[0].id,
       width: '100%',
-      height: mapEl.width() + 'px'
+      height: mapEl.width() + 'px',
+      httpsMode: true
     });
 
     var shopLon = coord.lon + '';
@@ -52,7 +55,7 @@ Tw.CustomerAgentsearchDetail.prototype = {
     var lonlat = new Tmap.LonLat(shopLon, shopLat).transform('EPSG:4326', 'EPSG:3857');
     var size = new Tmap.Size(24, 38);
     var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
-    var icon = new Tmap.Icon('/img/ico/ico-tmap-pin.png',
+    var icon = new Tmap.Icon(Tw.Environment.cdn + '/img/ico/ico-tmap-pin.png',
       size, offset);
 
     var marker = new Tmap.Marker(lonlat, icon);

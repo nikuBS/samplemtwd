@@ -13,6 +13,7 @@ Tw.CertificationPublic = function () {
   this._command = null;
   this._callback = null;
   this._authKind = null;
+  this._prodAuthKey = null;
 
   this.$termsConfirm = null;
   this._termsConfirm = false;
@@ -20,11 +21,13 @@ Tw.CertificationPublic = function () {
 
 
 Tw.CertificationPublic.prototype = {
-  open: function (authUrl, authKind, command, callback) {
+  open: function (authUrl, authKind, prodAuthKey, command, callback) {
     this._authUrl = authUrl;
+    this._authKind = authKind;
+    this._prodAuthKey = prodAuthKey;
     this._command = command;
     this._callback = callback;
-    this._authKind = authKind;
+
     this._openTerms();
   },
   _openTerms: function () {
@@ -79,7 +82,7 @@ Tw.CertificationPublic.prototype = {
     } else {
       this._callback({
         code: Tw.API_CODE.CERT_FAIL
-      }, this._deferred, this._command);
+      });
     }
   },
   _setAppMsg: function (result) {
@@ -100,11 +103,10 @@ Tw.CertificationPublic.prototype = {
     return false;
   },
   _setComplete: function () {
-    // TODO: 상품인경우 prodAuthKey 추가
     this._apiService.request(Tw.API_CMD.BFF_01_0026, {
       authUrl: this._authUrl,
       authKind: this._authKind,
-      prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? this._command.params.prodId + this._command.params.prodProctypeCd : ''
+      prodAuthKey: this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ? this._prodAuthKey : ''
     }).done($.proxy(this._successComplete, this));
   },
   _successComplete: function (resp) {

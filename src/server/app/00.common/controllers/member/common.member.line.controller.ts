@@ -37,7 +37,7 @@ class CommonMemberLine extends TwViewController {
     let totalCount = 0;
     const list: string[] = [];
     category.map((line) => {
-      const curLine = lineList[LINE_NAME[line]] || lineList[LINE_NAME[line].toUpperCase()];
+      const curLine = lineList[LINE_NAME[line]];
       if ( !FormatHelper.isEmpty(curLine) ) {
         this.convLineData(curLine);
         list.push(LINE_NAME[line]);

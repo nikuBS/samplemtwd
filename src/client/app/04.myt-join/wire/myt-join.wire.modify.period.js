@@ -12,10 +12,6 @@ Tw.MyTJoinWireModifyPeriod = function (rootEl, options) {
   this._historyService = new Tw.HistoryService(this.$container);
   this._historyService.init('hash');
 
-  if ( this._options.isBroadbandJoined === 'Y' ) {
-    this._openErrorAlert();
-    return;
-  }
   this._cachedElement();
   this._bindEvent();
   this._init();
@@ -121,6 +117,7 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
   },
 
   _bindEvent: function () {
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._checkBroadbancJoined, this));
     this._$btnSelectPeriod.on('click', $.proxy(this._onClickBtnSelectPeriod, this));
     this._$btnRequest.on('click', $.proxy(this._onClickBtnRequest, this));
     this._$btnSubmit.on('click', $.proxy(this._onClickBtnSubmit, this));
@@ -136,6 +133,12 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     this._phonePopupTplList = this._PHONE_NUMS[0].list;
 
     // this._setSelectPopup(this._periodPopupTplList, this._options.beforeTerm);
+  },
+
+  _checkBroadbancJoined: function() {
+    if ( this._options.isBroadbandJoined === 'Y' ) {
+      this._openErrorAlert();
+    }
   },
 
   _getPeriodTermCnt: function (term) {

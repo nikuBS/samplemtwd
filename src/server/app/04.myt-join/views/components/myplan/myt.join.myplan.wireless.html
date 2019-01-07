@@ -3,7 +3,7 @@
 
         <div class="plan-compact-info">
             <div class="plan">
-                <span class="tit"><%= feePlan.feePlanProd.prodNm %></span>
+                <a href="/product/callplan/<%= feePlan.feePlanProd.prodId %>" class="tit"><%= feePlan.feePlanProd.prodNm %></a>
                 <% if ( feePlan.feePlanProd.basFeeInfo && !feePlan.feePlanProd.basFeeInfo.isNaN ) { %>
                 <span class="val"><%= feePlan.feePlanProd.basFeeInfo.value %>원</span>
                 <% } %>
@@ -97,7 +97,7 @@
                             <span class="tit"><%= feePlan.optionAndDiscountProgramList[i].prodNm %></span>
                             <span class="join-date">가입일 <%= feePlan.optionAndDiscountProgramList[i].scrbDt %></span>
                             <% for (var j in feePlan.optionAndDiscountProgramList[i].btnList) { %>
-                            <a href="<%= feePlan.optionAndDiscountProgramList[i].btnList[j].btnLinkUrl %>" class="bt-link-tx underline">
+                            <a href="<%= feePlan.optionAndDiscountProgramList[i].btnList[j].btnLinkUrl %>?prod_id=<%= feePlan.optionAndDiscountProgramList[i].prodId %>" class="bt-link-tx underline">
                                 <%= feePlan.optionAndDiscountProgramList[i].btnList[j].btnNm %>
                             </a>
                             <% } %>

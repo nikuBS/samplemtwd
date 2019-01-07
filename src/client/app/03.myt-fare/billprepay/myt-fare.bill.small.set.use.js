@@ -35,12 +35,12 @@ Tw.MyTFareBillSmallSetUse.prototype = {
     Tw.Error(err.code, err.msg).pop();
   },
   _getToastMessage: function (tx) {
-    var message = Tw.ALERT_MSG_MYT_FARE.MICRO;
+    var message = Tw.ALERT_MSG_MYT_FARE.MICRO_USE;
 
     if (tx === Tw.ALERT_MSG_MYT_FARE.USABLE) {
-      message += Tw.ALERT_MSG_MYT_FARE.MSG_ALLOWED;
+      message += Tw.ALERT_MSG_MYT_FARE.ALLOW + Tw.ALERT_MSG_MYT_FARE.MSG_DONE;
     } else {
-      message += Tw.ALERT_MSG_MYT_FARE.MSG_PROHIBITED;
+      message += Tw.ALERT_MSG_MYT_FARE.PROHIBIT + Tw.ALERT_MSG_MYT_FARE.MSG_DONE;
     }
 
     return message;

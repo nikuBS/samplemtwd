@@ -31,6 +31,7 @@ Tw.MyTDataGiftMonthly.prototype = {
   },
 
   _bindEvent: function () {
+    this.$container.on('click', '.cancel', $.proxy(this._checkValidateSendingButton, this));
     this.$btn_add_contact.on('click', $.proxy(this._showAddUI, this));
     this.$btn_auto_contact.on('click', $.proxy(this._onClickBtnAddr, this));
     this.$btnRequestSendingAuto.on('click', $.proxy(this._getReceiveUserInfo, this));
@@ -69,11 +70,17 @@ Tw.MyTDataGiftMonthly.prototype = {
   _unSubscribeAutoGift: function (e) {
     var elTarget = $(e.currentTarget);
     var serNum = elTarget.data('sernum');
+    var svcNum = elTarget.closest('li').find('.txt1.fs14').text();
 
-    this._popupService.openConfirm(
-      Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT,
-      null,
-      $.proxy(this._requestUnsubscribeAutoGift, this, serNum)
+    this._popupService.openConfirmButton(
+      Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT + svcNum + Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT_END,
+      Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT_TITLE,
+      $.proxy(this._requestUnsubscribeAutoGift, this, serNum),
+      $.proxy(function () {
+        this._popupService.close();
+      }, this),
+      Tw.BUTTON_LABEL.CANCEL,
+      Tw.BUTTON_LABEL.TERMINATE
     );
   },
 
@@ -96,13 +103,15 @@ Tw.MyTDataGiftMonthly.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this.paramData = $.extend({}, this.paramData, res.result);
       this._subscribeAutoGift();
-    } else {
-      if ( res.code === 'ZNGME0008' ) {
-        Tw.Error(Tw.POPUP_TITLE.NOTIFY, Tw.MYT_DATA_CANCEL_MONTHLY.ALERT_NOT_SK).pop();
-      } else {
-        Tw.Error(res.code, res.msg).pop();
-      }
+      return false;
     }
+
+    if ( res.code === 'ZNGME0008' ) {
+      this._popupService.openAlert(Tw.MYT_DATA_CANCEL_MONTHLY.ALERT_NOT_SK);
+      return false;
+    }
+
+    Tw.Error(res.code, res.msg).pop();
   },
 
   _subscribeAutoGift: function () {
@@ -112,6 +121,7 @@ Tw.MyTDataGiftMonthly.prototype = {
     };
 
     this.paramData = $.extend({}, this.paramData, htParams);
+
     this._apiService.request(Tw.API_CMD.BFF_06_0004, htParams)
       .done($.proxy(this._onSuccessAutoGift, this));
   },
@@ -119,14 +129,24 @@ Tw.MyTDataGiftMonthly.prototype = {
   _onSuccessAutoGift: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.replaceURL('/myt-data/giftdata/auto-complete?' + $.param(this.paramData));
-    } else {
-      Tw.Error(res.code, res.msg).pop();
+      return false;
     }
+
+    Tw.Error(res.code, res.msg).pop();
   },
 
   _onSuccessUnsubscribeAutoGift: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.reload();
+      // this._popupService.openAlert(
+      //   Tw.UNSUBSCRIBE_MONTHLY_GIFT_COMPLETE,
+      //   null,
+      //   null,
+      //   $.proxy(function () {
+      //     this._popupService.close();
+      //     this._historyService.reload();
+      //   }, this));
+      this._popupService.toast(Tw.UNSUBSCRIBE_MONTHLY_GIFT_COMPLETE);
+      return true;
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -165,8 +185,10 @@ Tw.MyTDataGiftMonthly.prototype = {
     var sPhoneNumber = this.$input_auto_gift.val() ? this.$input_auto_gift.val().replace(/-/g, '') : '';
 
     if ( sPhoneNumber.length < 10 ) {
+      this._removeErrorComment();
       this.$container.find('.fe-error-phone01').removeClass('blind');
     } else if ( !Tw.FormatHelper.isCellPhone(sPhoneNumber) ) {
+      this._removeErrorComment();
       this.$container.find('.fe-error-phone02').removeClass('blind');
     }
 

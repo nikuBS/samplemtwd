@@ -47,7 +47,9 @@
                             <button class="bt-dropdown big tx-bold fe-btn-line-to-receive" title="포인트 받는 회선" aria-haspopup="true" data-svc-mgmt-num="<%= lineToReceive.svcMgmtNum %>">
                                 <span class="fe-svc-num"><%= lineToReceive.svcNum %></span>
                             </button> 으로
-                            <button class="tip-view" id="BS_01_01_03_tip_01">정보보기</button>
+                            <span>
+                                <button class="tip-view" id="BS_01_01_03_tip_01">정보보기</button>
+                            </span>
                         </div>
                         <div class="inputbox">
                                 <span class="input">
@@ -63,65 +65,65 @@
                     </ul>
                 </div>
                 <!--// .cont-box -->
-                <% if (histories.length > 0) { %>
                 <div class="ti-caption-gray">
                     <h3 class="tit">합산내역</h3>
                 </div>
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-hoz">
-                    <div class="history-list type3">
-                        <ul>
-                            <% for (var i = 0; i < histories.length; i++) { %>
-                            <li>
-                                <div class="li-elem">
-                                    <div class="title-box">
-                                            <span class="sub-tit03">
-                                                <span class="elem"><span class="blind">포인트</span><span class="tx-bold"><%= histories[i].showPoint %></span>점</span>
-                                                <span class="elem"><span class="blind">처리일시</span><%= histories[i].showOpDt %></span>
-                                            </span>
+                    <% if (histories.length > 0) { %>
+                        <div class="history-list type3">
+                            <ul>
+                                <% for (var i = 0; i < histories.length; i++) { %>
+                                <li>
+                                    <div class="li-elem">
+                                        <div class="title-box">
+                                                <span class="sub-tit03">
+                                                    <span class="elem"><span class="blind">포인트</span><span class="tx-bold"><%= histories[i].showPoint %></span>점</span>
+                                                    <span class="elem"><span class="blind">처리일시</span><%= histories[i].showOpDt %></span>
+                                                </span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="basic-list">
-                                    <ul>
-                                        <li>
-                                            <span class="title">포인트를 준 회선</span>
-                                            <span class="tx-cont"><%= histories[i].sndrSvcNum %></span>
-                                        </li>
-                                        <li>
-                                            <span class="title">포인트를 받은 회선</span>
-                                            <span class="tx-cont"><%= histories[i].befrSvcNum %></span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <% } %>
-                        </ul>
-                    </div>
-                    <% if (paging.needPaging) { %>
-                    <div class="paging-wrap top-line type1">
-                        <div class="paging">
-                            <% if (paging.prevPageIdx) { %>
-                            <a href="<%= paging.uri%>?curPage=<%= paging.prevPageIdx %>" role="button" class="prev"><span class="pg-blind">이전 페이지로 이동</span></a>
-                            <% } %>
-                            <% for ( var i = paging.startNum; i <= paging.endNum; i++) { %>
-                            <a href="<%= paging.uri%>?curPage=<%= i %>" role="button" class="<%= (paging.curPage == i) ? 'active' : '' %>" ><%= i %></a>
-                            <% } %>
-                            <% if (paging.nextPageIdx) { %>
-                            <a href="<%= paging.uri%>?curPage=<%= paging.nextPageIdx %>" role="button" class="next disabled"><span class="pg-blind">다음 페이지로 이동</span></a><!-- 비활성화시 disabled 클래스 추가 -->
-                            <% } %>
+                                    <div class="basic-list">
+                                        <ul>
+                                            <li>
+                                                <span class="title">포인트를 준 회선</span>
+                                                <span class="tx-cont"><%= histories[i].sndrSvcNum %></span>
+                                            </li>
+                                            <li>
+                                                <span class="title">포인트를 받은 회선</span>
+                                                <span class="tx-cont"><%= histories[i].befrSvcNum %></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <% } %>
+                            </ul>
                         </div>
-                    </div>
+                        <% if (paging.needPaging) { %>
+                        <div class="paging-wrap top-line type1">
+                            <div class="paging">
+                                <% if (paging.prevPageIdx) { %>
+                                <a href="<%= paging.uri%>?curPage=<%= paging.prevPageIdx %>" role="button" class="prev"><span class="pg-blind">이전 페이지로 이동</span></a>
+                                <% } %>
+                                <% for ( var i = paging.startNum; i <= paging.endNum; i++) { %>
+                                <a href="<%= paging.uri%>?curPage=<%= i %>" role="button" class="<%= (paging.curPage == i) ? 'active' : '' %>" ><%= i %></a>
+                                <% } %>
+                                <% if (paging.nextPageIdx) { %>
+                                <a href="<%= paging.uri%>?curPage=<%= paging.nextPageIdx %>" role="button" class="next disabled"><span class="pg-blind">다음 페이지로 이동</span></a><!-- 비활성화시 disabled 클래스 추가 -->
+                                <% } %>
+                            </div>
+                        </div>
+                        <% } %>
+                    <% } else { %>
+                        <div class="cont-box nogaps-hoz">
+                            <div class="contents-empty">
+                                <span class="ico type1"></span>
+                                <p class="desc">내역이 없습니다.</p>
+                            </div>
+                        </div>
                     <% } %>
                 </div>
                 <!--// .cont-box -->
-                <% } else { %>
-                <div class="cont-box nogaps-hoz">
-                    <div class="contents-empty">
-                        <span class="ico type1"></span>
-                        <p class="desc">내역이 없습니다.</p>
-                    </div>
-                </div>
-                <% } %>
 
             </div>
         </div>

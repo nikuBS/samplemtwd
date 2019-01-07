@@ -13,7 +13,8 @@ import {
   REDIS_MENU,
   REDIS_URL_META,
   REDIS_HOME_NOTICE,
-  REDIS_HOME_HELP, REDIS_TOOLTIP, REDIS_HOME_NOTI, REDIS_QUICK_MENU, REDIS_QUICK_DEFAULT
+  REDIS_HOME_HELP, REDIS_TOOLTIP, REDIS_HOME_NOTI, REDIS_QUICK_MENU, REDIS_QUICK_DEFAULT, REDIS_PRODUCT_COMPARISON,
+  REDIS_PRODUCT_INFO
 } from '../../types/redis.type';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
@@ -26,6 +27,7 @@ import dateHelper from '../../utils/date.helper';
 import environment from '../../config/environment.config';
 import BrowserHelper from '../../utils/browser.helper';
 import { NODE_API_ERROR } from '../../types/string.type';
+import { COOKIE_KEY } from '../../types/common.type';
 
 class ApiRouter {
   public router: Router;
@@ -40,7 +42,6 @@ class ApiRouter {
   }
 
   private setApi() {
-    this.router.get('/sessions', this.checkSession.bind(this));
     this.router.get('/health', this.checkHealth.bind(this));
     this.router.get('/environment', this.getEnvironment.bind(this));
     this.router.get('/domain', this.getDomain.bind(this));
@@ -52,14 +53,14 @@ class ApiRouter {
     this.router.put('/common/selected-sessions', this.changeSession.bind(this));    // BFF_01_0003
     this.router.post('/user/service-password-sessions', this.loginSvcPassword.bind(this));    // BFF_03_0009
     this.router.delete('/user/locks', this.setUserLocks.bind(this));    // BFF_03_0010
-    this.router.put('/core-auth/v1/service-passwords', this.changeSvcPassword.bind(this));    // BFF_03_0016
+    this.router.put('/core-auth/service-passwords', this.changeSvcPassword.bind(this));    // BFF_03_0016
     this.router.put('/user/services', this.changeLine.bind(this));    // BFF_03_0005
     this.router.get('/common/selected-sessions', this.updateSvcInfo.bind(this));    // BFF_01_0005
     this.router.post('/uploads', this.uploadFile.bind(this));
     this.router.get('/svcInfo', this.getSvcInfo.bind(this));
     this.router.get('/allSvcInfo', this.getAllSvcInfo.bind(this));
     this.router.get('/childInfo', this.getChildInfo.bind(this));
-    this.router.get('/serverSession', this.getServerSession.bind(this));
+    // this.router.get('/serverSession', this.getServerSession.bind(this));
     this.router.get('/app-version', this.getVersion.bind(this));
     this.router.get('/splash', this.getSplash.bind(this));
     this.router.get('/app-notice', this.getAppNotice.bind(this));
@@ -72,14 +73,10 @@ class ApiRouter {
     this.router.get('/home/help', this.getHomeHelp.bind(this));
     this.router.get('/tooltip', this.getTooltip.bind(this));
     this.router.get('/home/quick-menu', this.getQuickMenu.bind(this));
+    this.router.get('/product/comparison', this.getProductComparison.bind(this));
+    this.router.get('/product/info', this.getProductInfo.bind(this));
     this.router.get('/masking-method', this.getMaskingMethod.bind(this));
     this.router.post('/masking-complete', this.setMaskingComplete.bind(this));
-  }
-
-  private checkSession(req: Request, res: Response, next: NextFunction) {
-    res.json({
-      code: API_CODE.CODE_00
-    });
   }
 
   private checkHealth(req: Request, res: Response, next: NextFunction) {
@@ -162,10 +159,9 @@ class ApiRouter {
 
   private getMenu(req: Request, res: Response, next: NextFunction) {
     const code = BrowserHelper.isApp(req) ? MENU_CODE.MAPP : MENU_CODE.MWEB;
-    this.apiService.setCurrentReq(req, res);
-    this.loginService.setCurrentReq(req, res);
 
-    const svcInfo = this.loginService.getSvcInfo();
+    const svcInfo = this.loginService.getSvcInfo(req);
+    this.logger.info(this, '[get menu]', req.cookies[COOKIE_KEY.TWM], this.loginService.getSessionId(req), svcInfo);
     this.redisService.getData(REDIS_MENU + code)
       .subscribe((resp) => {
         if ( resp.code === API_CODE.REDIS_SUCCESS ) {
@@ -181,6 +177,7 @@ class ApiRouter {
             resp.result.userInfo.nickName = svcInfo.nickNm;
             resp.result.userInfo.loginType = svcInfo.loginType;
             resp.result.userInfo.tid = svcInfo.userId;
+            resp.result.userInfo.addr = svcInfo.addr;
           }
           res.json(resp);
         } else {
@@ -229,7 +226,7 @@ class ApiRouter {
   }
 
   private getQuickMenu(req: Request, res: Response, next: NextFunction) {
-    const svcInfo = this.loginService.getSvcInfo();
+    const svcInfo = this.loginService.getSvcInfo(req);
     if ( FormatHelper.isEmpty(svcInfo) ) {
       return res.json({
         code: API_CODE.NODE_1001,
@@ -237,8 +234,7 @@ class ApiRouter {
       });
     }
     this.apiService.setCurrentReq(req, res);
-    this.loginService.setCurrentReq(req, res);
-    const svcMgmtNum = this.loginService.getSvcInfo().svcMgmtNum;
+    const svcMgmtNum = svcInfo.svcMgmtNum;
     this.redisService.getData(REDIS_QUICK_MENU + svcMgmtNum)
       .switchMap((resp) => {
         if ( resp.code === API_CODE.REDIS_SUCCESS ) {
@@ -257,6 +253,25 @@ class ApiRouter {
       })
       .subscribe((resp) => {
         return res.json(resp);
+      }, (err) => {
+        return res.json(err);
+      });
+  }
+
+  private getProductComparison(req: Request, res: Response, next: NextFunction) {
+    const beforeId = req.query.beforeId;
+    const afterId = req.query.afterId;
+    this.redisService.getData(REDIS_PRODUCT_COMPARISON + beforeId + '/' + afterId)
+      .subscribe((resp) => {
+        res.json(resp);
+      });
+  }
+
+  private getProductInfo(req: Request, res: Response, next: NextFunction) {
+    const prodId = req.query.prodId;
+    this.redisService.getData(REDIS_PRODUCT_INFO + prodId)
+      .subscribe((resp) => {
+        res.json(resp);
       });
   }
 
@@ -268,7 +283,7 @@ class ApiRouter {
   }
 
   private setMaskingComplete(req: Request, res: Response, next: NextFunction) {
-    const svcInfo = this.loginService.getSvcInfo();
+    const svcInfo = this.loginService.getSvcInfo(req);
     if ( FormatHelper.isEmpty(svcInfo) ) {
       return res.json({
         code: API_CODE.NODE_1001,
@@ -276,9 +291,8 @@ class ApiRouter {
       });
     }
     const svcMgmtNum = req.body.svcMgmtNum;
-    this.apiService.setCurrentReq(req, res);
-    this.loginService.setCurrentReq(req, res);
 
+    this.loginService.setCurrentReq(req, res);
     this.loginService.setMaskingCert(svcMgmtNum).subscribe((resp) => {
       res.json({
         code: API_CODE.CODE_00
@@ -355,53 +369,53 @@ class ApiRouter {
     });
   }
 
-  private getServerSession(req: Request, res: Response, next: NextFunction) {
-    this.logger.info(this, '[get serverSession]');
-    this.apiService.setCurrentReq(req, res);
-    this.loginService.setCurrentReq(req, res);
-
-    const svcInfo = this.loginService.getSvcInfo();
-    let loginType = '';
-    if ( !FormatHelper.isEmpty(svcInfo) ) {
-      loginType = svcInfo.loginType;
-    }
-
-    res.json({
-      code: API_CODE.CODE_00,
-      result: {
-        serverSession: this.loginService.getServerSession(),
-        loginType: loginType
-      }
-    });
-  }
+  // private getServerSession(req: Request, res: Response, next: NextFunction) {
+  //   this.logger.info(this, '[get serverSession]');
+  //   this.apiService.setCurrentReq(req, res);
+  //   this.loginService.setCurrentReq(req, res);
+  //
+  //   const svcInfo = this.loginService.getSvcInfo();
+  //   let loginType = '';
+  //   if ( !FormatHelper.isEmpty(svcInfo) ) {
+  //     loginType = svcInfo.loginType;
+  //   }
+  //
+  //   res.json({
+  //     code: API_CODE.CODE_00,
+  //     result: {
+  //       serverSession: this.loginService.getServerSession(),
+  //       loginType: loginType
+  //     }
+  //   });
+  // }
 
   private getSvcInfo(req: Request, res: Response, next: NextFunction) {
-    this.logger.info(this, '[get svcInfo]');
-    this.apiService.setCurrentReq(req, res);
-    this.loginService.setCurrentReq(req, res);
+    this.logger.info(this, '[get svcInfo]', req.cookies[COOKIE_KEY.TWM], this.loginService.getSessionId(req));
+    // this.apiService.setCurrentReq(req, res);
+    // this.loginService.setCurrentReq(req, res);
     res.json({
       code: API_CODE.CODE_00,
-      result: this.loginService.getSvcInfo()
+      result: this.loginService.getSvcInfo(req)
     });
   }
 
   private getAllSvcInfo(req: Request, res: Response, next: NextFunction) {
     this.logger.info(this, '[get allSvcInfo]');
-    this.apiService.setCurrentReq(req, res);
-    this.loginService.setCurrentReq(req, res);
+    // this.apiService.setCurrentReq(req, res);
+    // this.loginService.setCurrentReq(req, res);
     res.json({
       code: API_CODE.CODE_00,
-      result: this.loginService.getAllSvcInfo()
+      result: this.loginService.getAllSvcInfo(req)
     });
   }
 
   private getChildInfo(req: Request, res: Response, next: NextFunction) {
     this.logger.info(this, '[get childInfo]');
-    this.apiService.setCurrentReq(req, res);
-    this.loginService.setCurrentReq(req, res);
+    // this.apiService.setCurrentReq(req, res);
+    // this.loginService.setCurrentReq(req, res);
     res.json({
       code: API_CODE.CODE_00,
-      result: this.loginService.getChildInfo()
+      result: this.loginService.getChildInfo(req)
     });
   }
 
@@ -409,7 +423,7 @@ class ApiRouter {
     const params = req.body;
     this.logger.info(this, '[chagne session]', params);
     this.apiService.setCurrentReq(req, res);
-    this.loginService.setCurrentReq(req, res);
+    // this.loginService.setCurrentReq(req, res);
     this.apiService.requestChangeSession(params).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
@@ -420,7 +434,7 @@ class ApiRouter {
   private loginSvcPassword(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
     this.apiService.setCurrentReq(req, res);
-    this.loginService.setCurrentReq(req, res);
+    // this.loginService.setCurrentReq(req, res);
     this.apiService.requestLoginSvcPassword(params).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
@@ -431,7 +445,7 @@ class ApiRouter {
   private loginTid(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
     this.apiService.setCurrentReq(req, res);
-    this.loginService.setCurrentReq(req, res);
+    // this.loginService.setCurrentReq(req, res);
     this.apiService.requestLoginTid(params.tokenId, params.state).subscribe((resp) => {
       this.logger.info('[TID login]', resp);
       res.json(resp);
@@ -454,7 +468,7 @@ class ApiRouter {
   private setUserLocks(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
     this.apiService.setCurrentReq(req, res);
-    this.loginService.setCurrentReq(req, res);
+    // this.loginService.setCurrentReq(req, res);
     this.apiService.requestUserLocks(params).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
@@ -465,7 +479,7 @@ class ApiRouter {
   private easyLoginAos(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
     this.apiService.setCurrentReq(req, res);
-    this.loginService.setCurrentReq(req, res);
+    // this.loginService.setCurrentReq(req, res);
     this.apiService.requestEasyLoginAos(params).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
@@ -476,7 +490,7 @@ class ApiRouter {
   private easyLoginIos(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
     this.apiService.setCurrentReq(req, res);
-    this.loginService.setCurrentReq(req, res);
+    // this.loginService.setCurrentReq(req, res);
     this.apiService.requestEasyLoginIos(params).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
@@ -487,7 +501,7 @@ class ApiRouter {
   private changeSvcPassword(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
     this.apiService.setCurrentReq(req, res);
-    this.loginService.setCurrentReq(req, res);
+    // this.loginService.setCurrentReq(req, res);
     this.apiService.requestChangeSvcPassword(params).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
@@ -498,7 +512,7 @@ class ApiRouter {
   public changeLine(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
     this.apiService.setCurrentReq(req, res);
-    this.loginService.setCurrentReq(req, res);
+    // this.loginService.setCurrentReq(req, res);
     this.apiService.requestChangeLine(params).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
@@ -508,7 +522,7 @@ class ApiRouter {
 
   public updateSvcInfo(req: Request, res: Response, next: NextFunction) {
     this.apiService.setCurrentReq(req, res);
-    this.loginService.setCurrentReq(req, res);
+    // this.loginService.setCurrentReq(req, res);
     this.apiService.updateSvcInfo().subscribe((resp) => {
       res.json(resp);
     }, (error) => {

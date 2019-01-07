@@ -48,7 +48,7 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
         this._changeLimit(res.result);
       }
     } else {
-      this._fail();
+      this._fail(res);
     }
   },
   _getLimitFail: function () {
@@ -111,7 +111,7 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     $layer.on('click', '.fe-month', $.proxy(this._selectAmount, this));
     $layer.on('click', '.fe-day', $.proxy(this._selectAmount, this));
     $layer.on('click', '.fe-once', $.proxy(this._selectAmount, this));
-    $layer.on('click', '.fe-change', $.proxy(this._change, this));
+    $layer.on('click', '.fe-change', $.proxy(this._openChangeConfirm, this));
   },
   _getLittleAmount: function (amount) {
     var defaultValue = 50;
@@ -125,38 +125,40 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     var $amount = $target.attr('id');
 
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
+      url: '/hbs/',
+      hbs: 'actionsheet01',
       layer: true,
-      title: Tw.POPUP_TITLE.SELECT_AMOUNT,
-      data: Tw.POPUP_TPL.FARE_PAYMENT_LIMIT
+      data: Tw.POPUP_TPL.FARE_PAYMENT_LIMIT,
+      btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectPopupCallback, this, $target, $amount));
   },
   _selectPopupCallback: function ($target, $amount, $layer) {
-    // this._setLayerData($layer, $amount); 보류
-    $layer.on('click', '.limit', $.proxy(this._setSelectedValue, this, $target));
-  },
-  _setLayerData: function ($layer, $amount) {
-    $layer.find('.limit').each(function () {
-      var $this = $(this);
-      if ($this.attr('origin-value') > $amount) {
-        $this.hide();
-      }
-    });
+    $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
   },
   _setSelectedValue: function ($target, event) {
-    var $selectedValue = $(event.currentTarget);
+    var $selectedValue = $(event.target);
     $target.attr('id', $selectedValue.attr('id'));
-    $target.text($selectedValue.text());
+    $target.text($selectedValue.parents('label').text());
 
     this._popupService.close();
   },
+  _openChangeConfirm: function () {
+    this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.TITLE,
+      $.proxy(this._onChange, this), $.proxy(this._change, this), Tw.BUTTON_LABEL.CANCEL, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.BUTTON);
+  },
+  _onChange: function () {
+    this.$isChange = true;
+    this._popupService.close();
+  },
   _change: function () {
-    var apiName = this._changeLimitApiName();
-    var reqData = this._makeRequestData();
+    if (this.$isChange) {
+      var apiName = this._changeLimitApiName();
+      var reqData = this._makeRequestData();
 
-    this._apiService.request(apiName, reqData)
-      .done($.proxy(this._changeLimitSuccess, this))
-      .fail($.proxy(this._fail, this));
+      this._apiService.request(apiName, reqData)
+        .done($.proxy(this._changeLimitSuccess, this))
+        .fail($.proxy(this._fail, this));
+    }
   },
   _changeLimitApiName: function () {
     var apiName = '';
