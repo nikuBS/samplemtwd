@@ -117,7 +117,7 @@ Tw.ProductAppsDetail.prototype = {
 
     if (this._stores) {
       if (Tw.BrowserHelper.isIos()) {
-        store = this._stores['appStore'];
+        store = this._stores['appStore'] || '';
       } else {
         store = this._stores['playStore'] || this._stores['oneStore'] || '';
       }
@@ -135,10 +135,13 @@ Tw.ProductAppsDetail.prototype = {
   },
 
   _handleOpenMarket: function(e) {
-    var url = e.currentTarget.getAttribute('data-market-url');
-    this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
-      type: Tw.NTV_BROWSER.EXTERNAL,
-      href: url
-    });
+    var market = e.currentTarget.getAttribute('data-market'),
+      url = this._stores[market];
+    if (url && url !== '') {
+      this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
+        type: Tw.NTV_BROWSER.EXTERNAL,
+        href: url
+      });
+    }
   }
 };
