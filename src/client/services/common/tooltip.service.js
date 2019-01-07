@@ -46,13 +46,18 @@ Tw.TooltipService.prototype = {
   },
   _getContents: function ($content) {
     for (var i = 0; i < $content.length; i++) {
-      this._setTitle($content[i]);
+      var $target = $('button[id="' + $content[i].mtwdTtipId + '"]');
+      if ($content[i].ttipPresTypCd !== Tw.REDIS_TOOLTIP_CODE.ICON) {
+        this._setTitle($target, $content[i]);
+      } else {
+        $target.on('click', $.proxy(this._openTip, this, $content[i]));
+      }
     }
   },
-  _setTitle: function ($result) {
-    var $target = $('button[id="' + $result.mtwdTtipId + '"]');
+  _setTitle: function ($target, $result) {
     var cloneTarget = $target.first().clone();
     var parentTarget = $target.parent();
+
     parentTarget.text($result.ttipTitNm);
     parentTarget.append(cloneTarget);
 
