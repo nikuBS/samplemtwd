@@ -90,7 +90,6 @@ Tw.CommonSearchMain.prototype = {
         }else{
             this._recentlyKeywordListData[this._nowUser].splice(removeIdx,1);
         }
-        console.log(this._recentlyKeywordListData[this._nowUser]);
         Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(this._recentlyKeywordListData));
         this._recentlyKeywordInit();
     },
@@ -110,7 +109,6 @@ Tw.CommonSearchMain.prototype = {
         this.$container.find('.remove-recently-list').on('click',$.proxy(this._removeRecentlyKeywordList,this));
     },
     _addRecentlyKeywordList : function (keyword) {
-        console.log('_addRecentlyKeywordList called keyword : '+keyword);
         this._recentlyKeywordListData[this._nowUser].push({ keyword : keyword, searchTime : moment().format('YY.M.D.')});
         while (this._recentlyKeywordListData[this._nowUser].length>10){
             this._recentlyKeywordListData[this._nowUser].shift();
@@ -131,9 +129,9 @@ Tw.CommonSearchMain.prototype = {
         return recentlyKeywordData;
     },
     _searchByInputValue : function () {
-        var searchKeyword = this.$container.find('#search_keyword').val();
+        var searchKeyword = this.$inputElement.val();
         if(Tw.FormatHelper.isEmpty(searchKeyword)||searchKeyword.length<=0){
-            searchKeyword = this.$container.find('#selected_keyword').val();
+            searchKeyword = this.$inputElement.val();
         }
         this._doSearch(searchKeyword);
     },

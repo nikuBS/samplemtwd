@@ -25,6 +25,7 @@ Tw.CommonSearchNotFound.prototype = {
         this.$container.find('.icon-gnb-search').on('click',$.proxy(this._doSearch,this));
         this.$container.find('#search_keyword').on('keyup',$.proxy(this._inputKeyupEvt,this));
         this.$container.find('.close-area').on('click',$.proxy(this._historyService.goBack,this));
+        this.$container.on('click','.search-element',$.proxy(this._searchRelatedKeyword,this));
     },
     _showClaimPopup : function(btnEvt){
         //var $selectedClaim = $(btnEvt.currentTarget);
@@ -127,6 +128,12 @@ Tw.CommonSearchNotFound.prototype = {
         }
 
         Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(recentlyKeywordData));
+    },
+    _searchRelatedKeyword : function (targetEvt) {
+        var keyword = $(targetEvt.currentTarget).data('param');
+        var goUrl = '/common/search?keyword='+keyword;
+        this._addRecentlyKeyword(keyword);
+        this._historyService.goLoad(goUrl);
     }
 
 
