@@ -1561,6 +1561,8 @@
     right: 1rem;
     top: 1.0625rem;
     color: #666; }
+    .list-comp-title .bt.font-type {
+      font-size: 0.8125rem; }
   .list-comp-title .ico {
     display: inline-block;
     position: absolute;
@@ -17083,7 +17085,8 @@ a.bt-link-tx.underline.small {
     display: block;
     margin-bottom: 0.9375rem;
     text-indent: -1.625rem;
-    padding-left: 1.625rem; }
+    padding-left: 1.625rem;
+    line-height: 1.5; }
 
 .poll-box .division-two > li, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .division-two > li {
   display: inline-block;
@@ -20841,6 +20844,10 @@ a.bt-link-tx.underline.small {
         width: 65%; }
         .status-list-box .list-comp-lineinfo li .btn-type .lineinfo-user .info-title {
           line-height: 1.375rem; }
+      .status-list-box .list-comp-lineinfo li .btn-type.not-link .lineinfo-data {
+        padding-right: 0rem; }
+        .status-list-box .list-comp-lineinfo li .btn-type.not-link .lineinfo-data:after {
+          display: none; }
       .status-list-box .list-comp-lineinfo li .btn-type .lineinfo-data {
         position: relative;
         margin-top: 0.1875rem;
@@ -25821,12 +25828,46 @@ input[type="radio"].formradio-small:checked:disabled + label {
   text-indent: 100%;
   white-space: nowrap; }
 
+.icon-gold {
+  overflow: hidden;
+  display: inline-block;
+  width: 3.25rem;
+  height: 1.125rem;
+  background: url(/img/common/badge/badge_member_02.svg) no-repeat;
+  background-size: 3.25rem;
+  text-indent: 100%;
+  white-space: nowrap; }
+
+.icon-silver {
+  overflow: hidden;
+  display: inline-block;
+  width: 3.75rem;
+  height: 1.125rem;
+  background: url(/img/common/badge/badge_member_03.svg) no-repeat;
+  background-size: 3.75rem;
+  text-indent: 100%;
+  white-space: nowrap; }
+
+.icon-o {
+  overflow: hidden;
+  display: inline-block;
+  width: 2.5rem;
+  height: 1.125rem;
+  background: url(/img/common/badge/badge_member_08.svg) no-repeat;
+  background-size: 2.5rem;
+  text-indent: 100%;
+  white-space: nowrap; }
+
 .user-barcode-info {
   position: relative;
   padding-right: 5.25rem; }
   .user-barcode-info .user-type {
     padding: 0.75rem 0 0.5625rem; }
     .user-barcode-info .user-type .icon-vip {
+      vertical-align: top; }
+    .user-barcode-info .user-type .icon-gold {
+      vertical-align: top; }
+    .user-barcode-info .user-type .icon-silver {
       vertical-align: top; }
     .user-barcode-info .user-type .txt {
       vertical-align: top;
@@ -27170,6 +27211,7 @@ input[type="radio"].formradio-small:checked:disabled + label {
         line-height: 1.5625rem; }
       .discountbenefit-list .category-type .link .text-field .text {
         margin-top: 0.5rem;
+        padding-right: 8.75rem;
         color: #ffffff;
         font-size: 0.8125rem;
         line-height: 1.125rem; }
@@ -29144,6 +29186,7 @@ body.apphome {
     text-align: right;
     font-size: 0; }
     .t-apps-box .btn-area .bt {
+      display: inline-block;
       width: 48.5%;
       height: 2.5rem;
       border: 1px solid #fff;
@@ -29200,6 +29243,7 @@ body.apphome {
   .smart-app-new .horizontal-list li:last-child {
     padding-right: 1rem; }
   .smart-app-new .horizontal-list li .bt {
+    display: inline-block;
     margin-left: 2.8125rem;
     text-align: center; }
     .smart-app-new .horizontal-list li .bt img {
@@ -29219,6 +29263,8 @@ body.apphome {
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       text-overflow: ellipsis; }
+  .smart-app-new .horizontal-list li a.bt img {
+    margin-top: 0.1875rem; }
 
 /* 권은별 */
 /* 공통(회원) */
@@ -31680,3 +31726,64 @@ body.apphome {
 .type-qa .acco-list .info-service .txt-d {
   margin-top: 0.25rem;
   line-height: 1.6; }
+
+/* 제휴브랜드 */
+.category-box-wrap .cont-layer .select-list li .ico {
+  background-position: 0 0; }
+
+.category-box-wrap .cont-layer .select-list .ico-type01 .ico {
+  background-image: url(/img/benefit/ico-category01.png); }
+
+.category-box-wrap .cont-layer .select-list .ico-type02 .ico {
+  background-image: url(/img/benefit/ico-category02.png); }
+
+.category-box-wrap .cont-layer .select-list .ico-type03 .ico {
+  background-image: url(/img/benefit/ico-category03.png); }
+
+.category-box-wrap .cont-layer .select-list .ico-type04 .ico {
+  background-image: url(/img/benefit/ico-category04.png); }
+
+.category-box-wrap .cont-layer .select-list .ico-type05 .ico {
+  background-image: url(/img/benefit/ico-category05.png); }
+
+.category-box-wrap .cont-layer .select-list .ico-type06 .ico {
+  background-image: url(/img/benefit/ico-category06.png); }
+
+.category-box-wrap .cont-layer .select-list .ico-type07 .ico {
+  background-image: url(/img/benefit/ico-category07.png); }
+
+.category-box-wrap .cont-layer .select-list .ico-type08 .ico {
+  background-image: url(/img/benefit/ico-category08.png); }
+
+.category-box-wrap .cont-layer .select-list .ico-type09 .ico {
+  background-image: url(/img/benefit/ico-category09.png); }
+
+.category-box-wrap .cont-layer .select-list .ico-type10 .ico {
+  background-image: url(/img/benefit/ico-category10.png); }
+
+.category-box-wrap .cont-layer .select-list .ico-type11 .ico {
+  background-image: url(/img/benefit/ico-category11.png); }
+
+.category-box-wrap .cont-layer .select-list .ico-type12 .ico {
+  background-image: url(/img/benefit/ico-category12.png); }
+
+.category-box-wrap .cont-layer .select-list .ico-type13 .ico {
+  background-image: url(/img/benefit/ico-category13.png); }
+
+.category-box-wrap .cont-layer .select-list .ico-type14 .ico {
+  background-image: url(/img/benefit/ico-category14.png); }
+
+.category-box-wrap .cont-layer .select-list .ico-type15 .ico {
+  background-image: url(/img/benefit/ico-category15.png); }
+
+.category-box-wrap .cont-layer .select-list .ico-type16 .ico {
+  background-image: url(/img/benefit/ico-category16.png); }
+
+.category-box-wrap .cont-layer .select-list .ico-type17 .ico {
+  background-image: url(/img/benefit/ico-category17.png); }
+
+.category-box-wrap .cont-layer .select-list .ico-type18 .ico {
+  background-image: url(/img/benefit/ico-category18.png); }
+
+.category-box-wrap .cont-layer .select-list .ico-type19 .ico {
+  background-image: url(/img/benefit/ico-category19.png); }
