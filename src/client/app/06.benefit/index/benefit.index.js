@@ -41,10 +41,10 @@ Tw.BenefitIndex.prototype = {
     this.$combinationPreview = this.$container.find('#fe-combination-preview');
   },
   _bindEvent: function () {
-    this.$container.on('click', '#fe-category input:radio', $.proxy(this._onClickCategory, this));
+    this.$categoryTab.find('button').on('click', $.proxy(this._onClickCategory, this));
     this.$container.on('click', '[data-url]', $.proxy(this._goUrl, this));
     this.$container.on('change', '[data-check-disabled]', $.proxy(this._onCheckDisabled, this));
-    this.$container.on('click', '.del, .add', $.proxy(this._onVariations, this));
+    this.$container.on('click', '.plus, .minus', $.proxy(this._onVariations, this));
     this.$internetType.on('click', $.proxy(this._checkStateLine, this));
     this.$showDiscountBtn.on('click', $.proxy(this._onViewDiscountAmt, this));
     this.$container.on('click', '[data-benefit-id]', $.proxy(this._onClickProduct, this)); // 카테고리 하위 리스트 클릭
@@ -66,14 +66,14 @@ Tw.BenefitIndex.prototype = {
     var $this = $(e.currentTarget);
     var $lineCnt = this.$mblPhonLineCnt;
     var _cnt = $lineCnt.text();
-    var $addBtn = this.$container.find('.add');
+    var $addBtn = this.$container.find('.plus');
 
     var fnAddBtnDisabled = function (bool) {
       $addBtn.prop('disabled', bool);
       if (bool) {
-        $addBtn.addClass('active');
+        $addBtn.addClass('disabled');
       } else {
-        $addBtn.removeClass('active');
+        $addBtn.removeClass('disabled');
       }
     };
 
@@ -100,14 +100,14 @@ Tw.BenefitIndex.prototype = {
     var $this = $(e.currentTarget);
     var $lineCnt = this.$mblPhonLineCnt;
     var _cnt = $lineCnt.text();
-    $this.siblings('button').prop('disabled', false).removeClass('active');
+    $this.siblings('button').prop('disabled', false).removeClass('disabled');
 
     // 감소 클릭
-    if ($this.hasClass('del')) {
+    if ($this.hasClass('minus')) {
       var _minCnt = 1;
       $lineCnt.text(_cnt-- < _minCnt ? _minCnt : _cnt);
       if (_cnt <= _minCnt) {
-        $this.prop('disabled', true).addClass('active');
+        $this.prop('disabled', true).addClass('disabled');
       }
     }
     // 증가 클릭
@@ -116,7 +116,7 @@ Tw.BenefitIndex.prototype = {
       var _maxCnt = this.$internetType.filter(':checked').val() === 'G1' ? 5 : 4;
       $lineCnt.text(_cnt++ > _maxCnt ? _maxCnt : _cnt);
       if (_cnt >= _maxCnt) {
-        $this.prop('disabled', true).addClass('active');
+        $this.prop('disabled', true).addClass('disabled');
       }
     }
   },
@@ -131,7 +131,7 @@ Tw.BenefitIndex.prototype = {
       }
     });
 
-    this.$showDiscountBtn.prop('disabled', isDisabled);
+    this.$showDiscountBtn.toggleClass('disabled',isDisabled).prop('disabled', isDisabled);
   },
 
   _goUrl: function (e) {
@@ -236,19 +236,14 @@ Tw.BenefitIndex.prototype = {
 
   // 카테고리 클릭 이벤트
   _onClickCategory: function (e) {
-    this._switchTab($(e.currentTarget).val());
+    this._switchTab($(e.currentTarget).data('category'));
   },
 
   // 카테고리 '탭' 선택
   _switchTab: function (categoryId) {
-    // 모두 체크해제
-    this.$categoryTab.find('input[name="radio1"]').prop('checked',false);
-    this.$categoryTab.find('li.radiobox').removeClass('checked').attr('aria-checked',false);
-
-    // 선택 카테고리 체크선택
-    this.$categoryTab.find('[value="{0}"]'.replace('{0}', categoryId))
-      .prop('checked',true)
-      .parent().addClass('checked').attr('aria-checked',true);
+    // 모두 체크해제 , 현재 탭 활성화
+    this.$categoryTab.find('[data-category]').removeClass('on');
+    this.$categoryTab.find('[data-category="{0}"]'.replace('{0}', categoryId)).addClass('on');
 
     this._reqProductList(categoryId);
     this.$combinationPreview.addClass('none');
@@ -326,11 +321,10 @@ Tw.BenefitIndex.prototype = {
     }
 
     this.$list.empty();
-    var cnt = category === '' ? Tw.DEFAULT_LIST_COUNT : 50;
     // 더보기 설정
     this._moreViewSvc.init({
       list: resp.result.list,
-      cnt: cnt,
+      btnMore: this.$container.find('.btn-more'),
       callBack: $.proxy(this._renderList, this, category),
       isOnMoreView: true
     });

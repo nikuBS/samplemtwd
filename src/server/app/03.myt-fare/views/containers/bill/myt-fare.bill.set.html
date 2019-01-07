@@ -125,11 +125,20 @@
                 <p class="con-tit0 pb6">다른 요금안내서로 받기</p>
                 <p class="con-txt0 pb12">T world 계정 또는 Bill Letter로 받아보시면 종이 안내서보다 <br/>빠르고 안전하게 보관하실 수 있습니다.</p>
                 <ul class="link-long-list nopd">
-                    <% data.billList.forEach( (bill) => { %>
+                    <%
+                        let icoName = {
+                            'P': 'ico-ch-tw',
+                            'H': 'ico-ch-letter',
+                            'B': 'ico-ch-msg',
+                            '2': 'ico-ch-email',
+                            '1': 'ico-ch-post'
+                        };
+                        data.billList.forEach( (bill) => {
+                    %>
                     <li>
                         <div class="link-long lower-h">
                             <a href="/myt-fare/billsetup/change?billType=<%=bill.cd%>&subBillType=<%=bill.cd !== 'P' ? 'X':'NO'%>">
-                                <span class="ico-thum2"></span><%= bill.nm %>
+                                <span class="<%=icoName[bill.cd]%>"></span><%= bill.nm %>
                                 <span class="tx-sub">
                                     <span class="ico"></span>
                                 </span>
@@ -146,17 +155,19 @@
                 <%
                     let billLetterInfo = {
                         title : '이번달 Bill Letter가 도착했습니다~',
-                        msg : '월별 청구 금액과 상세 내역 등을 언제든지 편리하게 확인하세요.'
+                        msg : '월별 청구 금액과 상세 내역 등을 언제든지 편리하게 확인하세요.',
+                        img : 'ic-img'
                     };
                     if ( 'H' !== data.billInfo[0].cd ) {
                         billLetterInfo.title = 'Bill Letter를 알고 계세요? ';
                         billLetterInfo.msg = '쌓여가는 요금안내서,<br/> Bill Letter 앱으로 한 번에 관리하세요.';
+                        billLetterInfo.img = 'ic-img2';
                     }
                 %>
                 <a id="fe-app-down">
                     <span class="tit"><%= billLetterInfo.title%></span>
                     <span class="tx0"><%- billLetterInfo.msg%></span>
-                    <span class="ic-img"></span>
+                    <span class="<%=billLetterInfo.img%>"></span>
                 </a>
             </p>
 
