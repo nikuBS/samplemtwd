@@ -18,25 +18,57 @@
 <!--// #skip_navigation -->
 <div class="wrap" data-menuId="M000215">
     <!-- #contents -->
-    <div id="contents" class="container-wrap">
-        <div class="container">
-            <h1 class="complete-title">
-                <img src="/img/dummy/dmy-complete.jpg" alt="">
-                <span><strong>선물</strong> 완료</span>
-            </h1>
-            <div class="complete-btn-box pt56">
-                <ul class="bt-slice">
-                    <li class="bt-blue1">
-                        <a href="/myt-data/history" class="fe-replace-history">선물내역 보기</a>
-                    </li>
-                </ul>
+    <!--<div id="contents" class="container-wrap">-->
+    <!--<div class="container">-->
+    <!--<h1 class="complete-title">-->
+    <!--<img src="/img/dummy/dmy-complete.jpg" alt="">-->
+    <!--<span><strong>선물</strong> 완료</span>-->
+    <!--</h1>-->
+    <!--<div class="complete-btn-box pt56">-->
+    <!--<ul class="bt-slice">-->
+    <!--<li class="bt-blue1">-->
+    <!--<a href="/myt-data/history" class="fe-replace-history">선물내역 보기</a>-->
+    <!--</li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <!--<a href="/myt-data/submain" class="complete-closeBtn fe-replace-history">-->
+    <!--<span class="blind">페이지 닫기</span>-->
+    <!--</a>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--// #contents -->
+
+    <div class="popup-page tw-popup pt0 fixed-bottom">
+        <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <div class="container">
+                <div class="complete-wrap">
+                    <div class="title-box">
+                        <i class="icon-complete-120"><span class="blind">complete</span></i>
+                        <p class="tx-tit">
+                            <span class="tx-highlight pt10">선물 완료</span>
+                        </p>
+                    </div>
+                    <div class="tx-contents">
+                        <ul class="bt-slice item-one">
+                            <li>
+                                <a href="/myt-data/history" class="btn-round2 btn-style3 fe-replace-history">선물내역 보기</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <a href="/myt-data/submain" class="complete-closeBtn fe-replace-history">
-                <span class="blind">페이지 닫기</span>
-            </a>
+        </div>
+
+        <div class="bt-fixed-area">
+            <ul class="bt-slice full">
+                <li>
+                    <a href="/myt-data/submain" class="btn-floating btn-style2 fe-replace-history">확인</a>
+                </li>
+            </ul>
         </div>
     </div>
-    <!--// #contents -->
 </div>
 
 <% include ../../components/javascript.component.html %>
