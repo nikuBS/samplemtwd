@@ -24,202 +24,163 @@
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
-            <!-- cont-box -->
-            <!--나의 혜택&middot;할인 정보-->
-            <div id="fe-my-benefit-area" class="cont-box none">
-                <div class="my-benefit-info">
-                    <button type="button" class="view" data-url="/benefit/my">나의 혜택&middot;할인 정보</button>
-                    <div class="info">
-                        <ul>
-                            <li>
-                                <em class="stit">멤버십</em>
-                                <span id="fe-membership" class="cont"></span>
-                            </li>
-                            <li>
-                                <em class="stit">보유 포인트</em>
-                                <span id="fe-point" class="cont">점</span>
-                            </li>
-                            <li>
-                                <em class="stit">할인&middot;혜택</em>
-                                <span id="fe-benefit" class="cont">건</span>
-                            </li>
-                        </ul>
+            <div id="fe-my-benefit-area" class="none">
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!-- cont-box -->
+                <!--나의 혜택&middot;할인 정보-->
+                <div class="cont-box">
+                    <div class="calling-plan">
+                        <button class="wrap-link" data-url="/benefit/my">
+                            <i class="icon-badge-plan-my mr8"><span class="blind">my</span></i>
+                            <span class="stit">포인트 <span id="fe-point">점</span></span>
+                            <span class="view-tx">혜택 &middot; 할인 <span id="fe-benefit">건</span></span>
+                        </button>
                     </div>
                 </div>
+                <!--// 나의 혜택&middot;할인 정보-->
+                <!-- //cont-box -->
             </div>
-            <!--// 나의 혜택&middot;할인 정보-->
-            <!-- //cont-box -->
+
             <hr class="cont-sp type1" aria-hidden="true"/>
 
-            <!-- .cont-box -->
-            <div class="cont-box nogaps">
-                <div class="phonefilter-wrap benefit-icon">
-                    <strong class="stit-type">SKT 혜택&middot;할인</strong>
-                    <div class="widget">
-                        <div class="widget-box radio">
-                            <div class="filtertype-wrap">
-                                <ul id="fe-category" class="select-list division-five" role="group">
-                                    <li class="radiobox checked" role="radio" aria-checked="true">
-                                        <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                        <input type="radio" name="radio1" value="" title="전체" checked/>
-                                        <!-- 체크상태일 경우 checked="checked" -->
-                                        <p class="text-wrap">
-                                            <i class="ico benefit1"></i><span class="text">전체</span>
-                                        </p>
-                                    </li>
-                                    <li class="radiobox" role="radio" aria-checked="false">
-                                        <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                        <input type="radio" name="radio1" value="F01421" title="요금할인"/>
-                                        <!-- 체크상태일 경우 checked="false" -->
-                                        <p class="text-wrap">
-                                            <i class="ico benefit2"></i><span class="text">요금할인</span>
-                                        </p>
-                                    </li>
-                                    <li class="radiobox" role="radio" aria-checked="false">
-                                        <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                        <input type="radio" name="radio1" value="F01422" title="결합할인"/>
-                                        <!-- 체크상태일 경우 checked="false" -->
-                                        <p class="text-wrap">
-                                            <i class="ico benefit3"></i><span class="text">결합할인</span>
-                                        </p>
-                                    </li>
-                                    <li class="radiobox" role="radio" aria-checked="false">
-                                        <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                        <input type="radio" name="radio1" value="F01423" title="장기가입혜택"/>
-                                        <!-- 체크상태일 경우 checked="false" -->
-                                        <p class="text-wrap">
-                                            <i class="ico benefit4"></i><span class="text">장기가입혜택</span>
-                                        </p>
-                                    </li>
-                                    <li class="radiobox" role="radio" aria-checked="false" aria-disabled="true">
-                                        <!-- 비활성화일경우 .disabled 클래스 추가 , aria-disabled="true" -->
-                                        <input type="radio" name="radio1" value="F01424" title="참여혜택"/>
-                                        <!-- 비활성화상태일 경우 disabled="disabled" -->
-                                        <p class="text-wrap">
-                                            <i class="ico benefit5"></i><span class="text">참여혜택</span>
-                                        </p>
-                                    </li>
-                                </ul>
-                            </div>
+            <!-- cont-box -->
+            <div class="cont-box nogaps-btm">
+                <h3 class="tit-type6 tx-regular pb20">SK텔레콤 혜택 &middot; 할인</h3>
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box horizontal">
+                        <div class="horizontal-slide">
+                            <ul id="fe-category" class="horizontal-list benefit-link">
+                                <li><button type="button" class="unit on" data-category="">전체</button></li>
+                                <li><button type="button" class="unit" data-category="F01421">요금할인</button></li>
+                                <li><button type="button" class="unit" data-category="F01422">결합할인</button></li>
+                                <li><button type="button" class="unit" data-category="F01423">장기가입혜택</button></li>
+                                <li><button type="button" class="unit" data-category="F01424">참여혜택</button></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <div class="benefit-productfilter-type line-none">
-                    <ul id="fe-list">
-                        <!-- 상품 리스트 area-->
-                    </ul>
-                </div>
+                <!-- .widget -->
+            </div>
+            <!--// cont-box -->
 
-                <div class="bt-more none">
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz bgnone">
+
+                <ul id="fe-list" class="discountbenefit-list">
+                    <!-- 상품 리스트 area-->
+                </ul>
+
+                <div class="btn-more no-border none">
                     <button>더보기</button>
                 </div>
             </div>
             <!--// .cont-box -->
 
-            <!--결합할인 금액 미리보기-->
+            <!--결합할인 금액 미리보기 입력부분-->
             <div id="fe-combination-preview" class="none">
-                <hr class="cont-sp type1" aria-hidden="true"/>
-                <!-- cont-box -->
-                <div class="cont-box">
-                    <div class="discount-look-ahead">
-                        <strong class="stit-type">결합할인금액 미리보기</strong>
-                        <p>내게 딱 맞는 결합할인 금액을 확인하세요</p>
-                        <div class="board-type">
-                            <p>인터넷</p>
-                            <div>
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm noborder">
+                    <h3 class="tit-type7">결합할인금액 미리보기</h3>
+                    <p class="subtit-info2 mt8">내게 딱 맞는 결합할인금액을 확인하세요</p>
+                    <div class="discount-look-ahead type01">
+                        <div class="board-type pt0">
+                            <h4 class="dis-tit pt18">인터넷</h4>
+                            <div class="inner-wrap">
                                 <div class="widget">
                                     <div class="widget-box radio">
                                         <ul class="select-list" role="radiogroup" data-check-disabled>
-                                            <li class="radiobox btn-type01" role="radio">
-                                                <input type="radio" name="inetTypCd" value="F1" title="광랜 1회선"
-                                                       data-name="inetTypCd"/><!-- 체크상태일 경우 checked="checked" -->
-                                                <span class="radio-txt">광랜 1회선</span>
+                                            <li class="radiobox btn-type02" role="radio">
+                                                <input type="radio" name="inetTypCd" value="F1" title="광랜 1회선" data-name="inetTypCd" /><!-- 체크상태일 경우 checked="checked" -->
+                                                <span class="radio-txt ff-tb">광랜 1회선</span>
                                             </li>
-                                            <li class="radiobox btn-type01" role="radio">
-                                                <input type="radio" name="inetTypCd" value="F2" title="광랜 2회선"
-                                                       data-name="inetTypCd"/><!-- 체크상태일 경우 checked="false" -->
-                                                <span class="radio-txt">광랜 2회선</span>
+                                            <li class="radiobox btn-type02" role="radio">
+                                                <input type="radio" name="inetTypCd" value="F2" title="광랜 2회선" data-name="inetTypCd"/><!-- 체크상태일 경우 checked="false" -->
+                                                <span class="radio-txt ff-tb">광랜 2회선</span>
                                             </li>
-                                            <li class="radiobox btn-type01" role="radio">
-                                                <input type="radio" name="inetTypCd" value="G1" title="Giga"
-                                                       data-name="inetTypCd"/><!-- 비활성화상태일 경우 disabled="disabled" -->
-                                                <span class="radio-txt">Giga</span>
+                                            <li class="radiobox btn-type02" role="radio">
+                                                <input type="radio" name="inetTypCd" value="G1" title="Giga" data-name="inetTypCd"/><!-- 비활성화상태일 경우 disabled="disabled" -->
+                                                <span class="radio-txt ff-tb">Giga</span>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            <p>이동전화</p>
-                            <div>
-								<span class="btn-line-add">
-									<button class="del active" type="button" disabled>회선삭제</button>
-									<span><span data-name="mblPhonLineCnt">1</span>회선</span>
-									<button class="add" type="button">회선추가</button>
-								</span>
+                            <h4 class="dis-tit">이동전화</h4>
+                            <div class="inner-wrap">
+                                <div class="line-control-wrap"><!-- 모든 버튼 비활성화의 경우 all-disabled 클래스 추가 -->
+                                    <button class="minus disabled" type="button" disabled="disabled">회선삭제</button><!-- 비활성화의 경우 disabled 속성,클래스 추가 -->
+                                    <span class="txt"><span data-name="mblPhonLineCnt">1</span>회선</span>
+                                    <button class="plus disabled" type="button" disabled="disabled">회선추가</button>
+                                </div>
                             </div>
-                            <p>TV</p>
-                            <div>
+                            <h4 class="dis-tit">TV</h4>
+                            <div class="inner-wrap">
                                 <div class="widget">
                                     <div class="widget-box radio">
                                         <ul class="select-list" role="radiogroup" data-check-disabled>
-                                            <li class="radiobox btn-type01" role="radio">
-                                                <input type="radio" name="btvUseYn" value="Y" title="값1"
-                                                       data-name="btvUseYn"/><!-- 체크상태일 경우 checked="checked" -->
-                                                <span class="radio-txt">있음</span>
+                                            <li class="radiobox btn-type02" role="radio"><!-- 비활성화일경우 .disabled 클래스 추가 , aria-disabled="true" -->
+                                                <input type="radio" name="btvUseYn" value="Y" title="값1" data-name="btvUseYn"/><!-- 체크상태일 경우 checked="checked" -->
+                                                <span class="radio-txt ff-tb">있음</span>
                                             </li>
-                                            <li class="radiobox btn-type01" role="radio">
-                                                <input type="radio" name="btvUseYn" value="N" title="값2"
-                                                       data-name="btvUseYn"/><!-- 체크상태일 경우 checked="false" -->
-                                                <span class="radio-txt">없음</span>
+                                            <li class="radiobox btn-type02" role="radio">
+                                                <input type="radio" name="btvUseYn" value="N" title="값2" data-name="btvUseYn"/><!-- 체크상태일 경우 checked="false" -->
+                                                <span class="radio-txt ff-tb">없음</span>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="board-type-btn-wrap">
+                            <button id="fe-show-discount" class="btn disabled" type="button" disabled="disabled">할인금액 보기</button><!-- 비활성화의 경우 disabled 속성,클래스 추가 -->
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
 
-                        <ul class="bt-slice">
-                            <li class="bt-red1">
-                                <button id="fe-show-discount" disabled="disabled">할인 금액 보기</button>
-                            </li>
-                        </ul>
-                        <!--할인금액 결과 보기-->
-                        <div id="fe-discount-result" class="data-result-type01 none">
-                            <div class="data-result">
-                                <p id="fe-discount-amt" class="data"><!--<em>15,000</em><span>원</span>--></p>
-                                <p id="fe-with-tax" class="tit"><!--부가세포함--></p>
-                            </div>
-                            <strong class="stit-type">이용조건</strong>
-                            <ul id="fe-use-condition" class="round-dot-list">
-                                <!--<li>최소 1회선이 이동전화 62 요금제 이상 / Band데이터 47요금제  사용</li>
-                                <li>인터넷 스마트 다이렉트 요금제 (월 2만원) 사용 </li>
-                                <li>IPTV “Btv New 스마트“ 요금제 (월 11,000원)사용</li>
-                                <li>IPTV 3년약정 </li>
-                                <li>이동전화 2천원 할인 포함 </li>-->
+                <!--할인금액 보기-->
+                <!-- .cont-box -->
+                <div id="fe-discount-result" class="cont-box nogaps bgtype1 none">
+                    <div class="total-discount-info">
+                        <div class="td-txt">
+                            <strong id="fe-with-tax" class="tit"></strong>
+                            <span id="fe-discount-amt" class="value"></span>
+                        </div>
+                        <div class="condition">
+                            <strong class="tit">이용조건</strong>
+                            <ul id="fe-use-condition" class="bul-text-list">
+                                <!--어드민 통해 가져온 이용조건 노출 영역 -->
                             </ul>
                         </div>
-                        <!--// 할인금액 결과 보기-->
                     </div>
                 </div>
-                <!-- //cont-box -->
-                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!--// .cont-box -->
+                <!--// 할인금액 보기-->
+                <hr class="cont-sp type1" aria-hidden="true">
 
-                <!-- cont-box -->
+                <!-- .cont-box -->
                 <div class="cont-box nogaps">
-                    <div class="reserve-formdown">
-                        <ul>
-                            <li>
-                                <button type="button" class="list" data-url="/product/wireplan/join/reservation?type_cd=combine">가입상담예약 신청/조회</button>
-                            </li>
-                            <li>
-                                <button type="button" class="list" data-url="/customer/document?type=etc">구비서류 안내</button>
-                            </li>
-                        </ul>
-                    </div>
+                    <ul class="full-link-list">
+                        <li>
+                            <button>
+                             <span class="inner">
+                                 <span class="tit" data-url="/product/wireplan/join/reservation?type_cd=combine">가입상담예약 신청 &middot; 조회</span>
+                             </span>
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                            <span class="inner">
+                                <span class="tit" data-url="/customer/document?type=etc">구비서류 안내 </span>
+                            </span>
+                            </button>
+                        </li>
+                    </ul>
                 </div>
-                <!-- //cont-box -->
+                <!--// .cont-box -->
             </div>
-            <!--// 결합할인 금액 미리보기-->
+            <!--// 결합할인 금액 미리보기 입력부분-->
 
 
             <!-- 다른 페이지를 찾고 계신가요? area-->
@@ -228,23 +189,23 @@
                 <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
                 <ul class="pg-link-list">
                     <li>
-                        <button class="list" type="button" data-url="/product/mobileplan">
-                            <i class="icon-my-40"><span class="blind">my</span></i>요금제
+                        <button type="button" data-url="/product/mobileplan">
+                            <i class="icon-price-plan-40"><span class="blind">price plan</span></i>요금제
                         </button>
                     </li>
                     <li>
-                        <button class="list" type="button" data-url="/product/mobileplan-add">
-                            <i class="icon-my-40"><span class="blind">my</span></i>부가서비스
+                        <button type="button" data-url="/product/mobileplan-add">
+                            <i class="icon-vas-40"><span class="blind">vas</span></i>부가서비스
                         </button>
                     </li>
                     <li>
-                        <button class="list" type="button" data-url="/product/wireplan">
-                            <i class="icon-my-40"><span class="blind">my</span></i>인터넷∙전화∙TV
+                        <button type="button" data-url="/product/wireplan">
+                            <i class="icon-internet-40"><span class="blind">discount</span></i>인터넷 · 집전화 · IPTV
                         </button>
                     </li>
                     <li>
-                        <button class="list" type="button" data-url="/product/roaming">
-                            <i class="icon-my-40"><span class="blind">my</span></i>T로밍
+                        <button type="button" data-url="/product/roaming">
+                            <i class="icon-roaming-40"><span class="blind">my</span></i>T로밍
                         </button>
                     </li>
                 </ul>

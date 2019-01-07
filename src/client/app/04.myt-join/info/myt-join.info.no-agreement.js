@@ -98,7 +98,7 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
 
   _setData : function (resp) {
     this.$usablePoint.text(resp.usablePt);
-    if (Number(resp.extnSchdPt) > 0 && resp.extnSchdDt !== '') {
+    if (Number(Tw.FormatHelper.removeComma(resp.extnSchdPt)) > 0 && resp.extnSchdDt !== '') {
       this.$removeDate.text(resp.extnSchdDt).parent().removeClass('none');
     }
     this.$removePoint.text(resp.extnSchdPt);
