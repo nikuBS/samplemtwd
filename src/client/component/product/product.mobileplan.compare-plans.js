@@ -95,8 +95,21 @@ Tw.ProductMobilePlanComparePlans.prototype = {
       joinUrl: this._getJoinUrl(basicInfo).linkUrl
     };
 
+    var openPopup = function(param){
+      this._popupService.open({
+          hbs: 'MP_02_02_01',
+          layer: true,
+          data: param
+        },
+        $.proxy(this._afterComparePop, this, param),
+        $.proxy(this._closeComparePop, this),
+        'compare'
+      );
+    };
+
     if (!recentUsage.result || !recentUsage.result.data || recentUsage.result.data.length < 1) {
-      return _data;
+      openPopup.call(this, _data);
+      return;
     }
 
     var sum = 0, max = 0;
@@ -118,15 +131,7 @@ Tw.ProductMobilePlanComparePlans.prototype = {
       max: Tw.FormatHelper.customDataFormat(max, Tw.DATA_UNIT.KB, Tw.DATA_UNIT.GB).data
     });
 
-    this._popupService.open({
-        hbs: 'MP_02_02_01',
-        layer: true,
-        data: _data
-      },
-      $.proxy(this._afterComparePop, this, _data),
-      $.proxy(this._closeComparePop, this),
-      'compare'
-    );
+    openPopup.call(this, _data);
   },
 
   _afterComparePop: function (_data, $layer) {
