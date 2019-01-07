@@ -39,7 +39,6 @@ class BenefitSelectContract extends TwViewController {
       this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0062, {}, {}, [prodId])
     ).subscribe(([joinTermInfo, seldisSets]) => {
-      console.log(joinTermInfo);
       // 무선 선택약정 할인제도 상품 설정 조회
       if ( seldisSets.code === API_CODE.CODE_00 ) {
         data.isContractPlan = (seldisSets.result.isNoContractPlanYn === 'Y');
