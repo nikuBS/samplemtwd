@@ -106,7 +106,10 @@ Tw.MyTJoinPhoneNumChgAlarmExt.prototype = {
         $.proxy(function(){
           this._popupService.close();
           this._requestServices(svcCmd, param, svcType);
-        }, this)
+        }, this),
+        null,
+        null,
+        Tw.BUTTON_LABEL.TERMINATE
       );
     }
 
