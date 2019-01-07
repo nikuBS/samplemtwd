@@ -195,19 +195,11 @@
                                     <div class="widget-box radio fe-category-list-in-layer">
                                         <ul class="select-list horizontal-list" role="radiogroup">
                                             <% for (var i = 0; i < cateList.length; i++) { %>
-                                                <% if (selectedCateCd === cateList[i].cateCd) { %>
-                                                <li class="radiobox type05 ico-type01 checked" role="radio" aria-checked="true" cate-cd="<%= cateList[i].cateCd %>">
-                                                    <img src="<%= cateList[i].onImgUrl %>" class="ico" alt="all" onSrc="<%= cateList[i].onImgUrl %>" offSrc="<%= cateList[i].imgUrl %>"/>
+                                                <li class="radiobox type05 ico-type01 <%= (selectedCateCd === cateList[i].cateCd) ? 'checked': '' %>" role="radio" aria-checked="true" cate-cd="<%= cateList[i].cateCd %>">
+                                                    <img src="<%= CDN %>/<%= cateList[i].showImgUrl %>" class="ico" alt="all" />
                                                     <input type="radio" name="radio01" value="<%= cateList[i].cateCd %>" title="<%= cateList[i].cateName %>" checked="checked">
                                                     <%= cateList[i].cateName %>
                                                 </li>
-                                                <% } else { %>
-                                                <li class="radiobox type05 ico-type01" role="radio" cate-cd="<%= cateList[i].cateCd %>">
-                                                    <img src="<%= cateList[i].imgUrl %>" class="ico" alt="all" onSrc="<%= cateList[i].onImgUrl %>" offSrc="<%= cateList[i].imgUrl %>" />
-                                                    <input type="radio" name="radio01" value="<%= cateList[i].cateCd %>" title="<%= cateList[i].cateName %>">
-                                                    <%= cateList[i].cateName %>
-                                                </li>
-                                                <% } %>
                                             <% } %>
                                         </ul>
                                     </div>
