@@ -125,6 +125,7 @@ Tw.ProductCommonConfirm.prototype = {
 
   _setContainer: function(isPopup, $container) {
     this.$container = $container;
+
     this._cachedElement();
 
     if (this._data.isWidgetInit) {
@@ -286,7 +287,7 @@ Tw.ProductCommonConfirm.prototype = {
 
   _setConfirmAlertApply: function() {
     this._popupService.close();
-    this._doCallback();
+    setTimeout($.proxy(this._doCallback, this), 100);
   },
 
   _toggleApplyBtn: function(toggle) {

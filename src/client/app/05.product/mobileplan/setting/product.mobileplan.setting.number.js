@@ -107,7 +107,7 @@ Tw.ProductMobileplanSettingNumber.prototype = {
   },
 
   _detectInputNumber: function() {
-    this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9.]/g, ''));
+    this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9]/g, ''));
     if (this.$inputNumber.val().length > 11) {
       this.$inputNumber.val(this.$inputNumber.val().substr(0, 11));
     }

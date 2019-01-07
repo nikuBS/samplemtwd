@@ -159,21 +159,13 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
         basFeeInfo: this._confirmOptions.isNumberBasFeeInfo ?
           this._confirmOptions.toProdBasFeeInfo + Tw.CURRENCY_UNIT.WON : ''
       }
-    }, $.proxy(this._bindJoinResPopup, this), $.proxy(this._onClosePop, this), 'join_success');
+    }, null, $.proxy(this._onClosePop, this), 'join_success');
 
     this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
   },
 
-  _bindJoinResPopup: function($popupContainer) {
-    $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
-  },
-
-  _closePop: function() {
-    this._popupService.close();
-  },
-
   _onClosePop: function() {
-    this._historyService.go(-2);
+    this._historyService.goBack();
   }
 
 };
