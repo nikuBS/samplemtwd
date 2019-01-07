@@ -23,6 +23,7 @@ Tw.ProductAppsDetail.prototype = {
     this.$container.on('click', '#fe-images', $.proxy(this._handleOpenImgDetail, this));
     this.$container.on('click', '#fe-exe-btn', $.proxy(this._handleCheckAndOpenApp, this));
     this.$container.on('click', '#fe-open-btn', $.proxy(this._handleOpenApp, this));
+    this.$container.on('click', '.bt.apple, .bt.google, .bt.one-store', $.proxy(this._handleOpenMarket, this));
   },
 
   _cachedElement: function() {
@@ -118,7 +119,7 @@ Tw.ProductAppsDetail.prototype = {
       if (Tw.BrowserHelper.isIos()) {
         store = this._stores['appStore'];
       } else {
-        store = this._stores['playStore'] || '';
+        store = this._stores['playStore'] || this._stores['oneStore'] || '';
       }
 
       setTimeout(function() {
@@ -131,5 +132,13 @@ Tw.ProductAppsDetail.prototype = {
   _handleOpenApp: function() {
     var app = this._app;
     this._nativeService.send(Tw.NTV_CMD.OPEN_APP, { scheme: app.lnkgAppScmCtt, package: app.lnkgAppPkgNm });
+  },
+
+  _handleOpenMarket: function(e) {
+    var url = e.currentTarget.getAttribute('data-market-url');
+    this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
+      type: Tw.NTV_BROWSER.EXTERNAL,
+      href: url
+    });
   }
 };
