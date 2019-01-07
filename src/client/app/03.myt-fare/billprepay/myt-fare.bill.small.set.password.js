@@ -42,18 +42,21 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
         }
         case 'LC': {
           this._popupService.openConfirm(Tw.ALERT_MSG_MYT_FARE.PASSWORD_ADDITIONAL_INFO,
-            Tw.POPUP_TITLE.NOTIFY, $.proxy(this._confirmCallback, this), $.proxy(this._goProductService, this));
+            Tw.POPUP_TITLE.NOTIFY, $.proxy(this._confirmCallback, this), $.proxy(this._goAdditionalService, this));
           break;
         }
         case 'IC': {
+          this.$type = 'change';
+          this._popupService.open({
+            'hbs': 'MF_06_06'
+          }, $.proxy(this._openPassword, this, birth), null, 'set-pwd');
           break;
         }
         default:
           break;
       }
     } else if (code === 'BIL0054') {
-      this._popupService.openConfirm(Tw.ALERT_MSG_MYT_FARE.PASSWORD_ADDITIONAL_INFO,
-        Tw.POPUP_TITLE.NOTIFY, $.proxy(this._confirmCallback, this), $.proxy(this._goProductService, this));
+      this._goProductService();
     }
   },
   _openPassword: function (birth, $layer) {
@@ -182,9 +185,12 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     this._close = true;
     this._popupService.close();
   },
-  _goProductService: function () {
-    if (this._close) {
-      this._historyService.goLoad('/product/callplan/' + this.$target.attr('data-cpin'));
+  _goAdditionalService: function () {
+    if (this._isClose) {
+      this._historyService.goLoad('/myt-join/additions');
     }
+  },
+  _goProductService: function () {
+    this._historyService.goLoad('/product/callplan/' + this.$target.attr('data-cpin'));
   }
 };
