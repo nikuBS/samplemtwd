@@ -60,8 +60,10 @@
               <% if ( listCase === 'A' ) { %>
               <li>
                 <p class="date"><%= benefitList[i].issueDtKey %></p>
-                <% for ( var j in benefitList[i].list ) { %>
-                <dl class="<%= benefitList[i].list[j].multipleClass %>">
+                <% for ( var j in benefitList[i].list ) {
+                multipleClass = j !== '0' ? 'multiple' : '';
+                %>
+                <dl class="<%= multipleClass %>">
                   <dt>혜택</dt>
                   <dd><%= benefitList[i].list[j].relProdNm %></dd>
                   <dt>사용여부</dt>
@@ -83,8 +85,10 @@
               <% } else { %>
               <li>
                 <p class="date"><%= benefitList[i].benfStaDtKey %></p>
-                <% for ( var j in benefitList[i].list ) { %>
-                <dl class="<%= benefitList[i].list[j].multipleClass %>">
+                <% for ( var j in benefitList[i].list ) {
+                multipleClass = j !== '0' ? 'multiple' : '';
+                %>
+                <dl class="<%= multipleClass %>">
                   <dt><%= benefitList[i].list[j].prodLabel %></dt>
                   <dd><%= benefitList[i].list[j].prodNm %></dd>
                   <dt>지원시작일</dt>

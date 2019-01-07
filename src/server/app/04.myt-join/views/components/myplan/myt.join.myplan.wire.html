@@ -43,8 +43,8 @@
                     <div class="txt">
                         <strong class="tit"><%= feePlan.dcBenefits[i].dcOferNm %></strong>
                         <div class="sub-info">
-                            <% if ( feePlan.dcBenefits[i].penText ) { %><span><%= feePlan.dcBenefits[i].penText %></span><% } %>
-                            <% if ( feePlan.dcBenefits[i].dcObjInvItmTypNm ) { %><span><%= feePlan.dcBenefits[i].dcObjInvItmTypNm %> 대상</span><% } %>
+                            <% if ( feePlan.dcBenefits[i].penText ) { %><span class="item"><%= feePlan.dcBenefits[i].penText %></span><% } %>
+                            <% if ( feePlan.dcBenefits[i].dcObjInvItmTypNm ) { %><span class="item"><%= feePlan.dcBenefits[i].dcObjInvItmTypNm %> 대상</span><% } %>
                         </div>
                     </div>
                     <% if (['01', '02'].indexOf(feePlan.dcBenefits[i].dcCttClCd) !== -1) { %>
