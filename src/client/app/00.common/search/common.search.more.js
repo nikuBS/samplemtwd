@@ -4,25 +4,27 @@
  * Date: 2018.12.11
  */
 
-Tw.CommonSearchMore = function (rootEl,searchInfo,svcInfo,category) {
+Tw.CommonSearchMore = function (rootEl,searchInfo,svcInfo,cdn,accessQuery) {
     this.$container = rootEl;
     //this._category = category;
     this._historyService = new Tw.HistoryService();
     //this._searchInfo = JSON.parse(this._decodeEscapeChar(searchInfo));
+    this._cdn = cdn;
+    this._accessQuery = accessQuery;
+    this._popupService = Tw.Popup;
     this._searchInfo = searchInfo;
     this._svcInfo = svcInfo;
-    this._init(this._searchInfo,category);
+    this._init(this._searchInfo,accessQuery.category);
     this._accessKeyword = this._searchInfo.query;
-    this._category = category;
+    this._category = accessQuery.category;
 };
 
 Tw.CommonSearchMore.prototype = {
     _init : function (searchInfo,category) {
         if(searchInfo.search.length<=0){
-
             return;
         }
-        this._listData =this._arrangeData(searchInfo.search[0][category].data);
+        this._listData =this._arrangeData(searchInfo.search[0][category].data,category);
         //this._showShortcutList(this._listData,this.$container.find('#'+category+'_template'),this.$container.find('#'+category+'_list'));
         this._showShortcutList(this._listData,$('#'+category+'_template'),this.$container.find('#'+category+'_list'));
         this.$inputElement =this.$container.find('#keyword');
@@ -33,8 +35,10 @@ Tw.CommonSearchMore.prototype = {
         this.$container.on('click','.close-area',$.proxy(this._historyService.goBack,this));
         this.$container.on('click','.icon-gnb-search',$.proxy(this._doSearch,this));
         this.$container.on('click','.search-element',$.proxy(this._searchRelatedKeyword,this));
+        this.$container.on('click','.filterselect-btn',$.proxy(this._showSelectFilter,this));
+        this.$container.on('click','.list-data',$.proxy(this._goLink,this));
     },
-    _arrangeData : function (data) {
+    _arrangeData : function (data,category) {
         if(!data){
 
             return [];
@@ -49,6 +53,16 @@ Tw.CommonSearchMore.prototype = {
                     data[i][key] = data[i][key].replace(/\|/g,'/');
                     data[i][key] = data[i][key].replace(/\ /g,' > ');
 
+                }
+                if(key==='MENU_URL'){
+                    data[i][key] = data[i][key].replace('https://app.tworld.co.kr','');
+                }
+                if(category==='prevent'&&key==='DOCID'){
+                    data[i][key] = Number(data[i][key].replace(/[A-Za-z]/g,''));
+                }
+                if(category==='direct'&&key==='ALIAS'){
+                    data[i][key] = data[i][key].replace('shopacc',Tw.OUTLINK.DIRECT_ACCESSORY);
+                    data[i][key] = data[i][key].replace('shopmobile',Tw.OUTLINK.DIRECT_PHONE);
                 }
                 if(key==='METATAG'){
                     data[i][key] = data[i][key].split('#');
@@ -71,7 +85,7 @@ Tw.CommonSearchMore.prototype = {
             parent.hide();
         }
          _.each(data,function (listData) {
-             parent.append(templateData({listData : listData}));
+             parent.append(templateData({listData : listData , CDN : this._cdn}));
          });
     },
     _decodeEscapeChar : function (targetString) {
@@ -118,5 +132,45 @@ Tw.CommonSearchMore.prototype = {
         var requestUrl = inResult?'/common/search/more?category='+this._category+'&keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
         this._addRecentlyKeyword(this.$inputElement.val());
         this._historyService.goLoad(requestUrl+this.$inputElement.val());
+    },
+    _showSelectFilter : function () {
+        var listData = [
+            {value : '추천순' , option : this._searchInfo.search[0].direct.sort==='R'?'checked':'' , attr : 'data-type="R"'},
+            {value : '인기순' , option : this._searchInfo.search[0].direct.sort==='P'?'checked':'' , attr : 'data-type="P"'},
+            {value : '최신순' , option : this._searchInfo.search[0].direct.sort==='D'?'checked':'' , attr : 'data-type="D"'},
+            {value : '낮은 가격순' , option : this._searchInfo.search[0].direct.sort==='H'?'checked':'' , attr : 'data-type="H"'},
+            {value : '높은 가격순' , option : this._searchInfo.search[0].direct.sort==='L'?'checked':'' , attr : 'data-type="L"'}
+            ];
+        this._popupService.open({
+            hbs: 'actionsheet_select_a_type',
+            layer: true,
+            data : [{list : listData}]
+        },$.proxy(this._bindPopupElementEvt,this),
+            null,
+            'select_filter');
+    },
+    _bindPopupElementEvt : function(popupElement){
+        $(popupElement).on('click','button',$.proxy(this._filterSelectEvent,this));
+    },
+    _filterSelectEvent : function (btnEvt) {
+        var changeFilterUrl = '/common/search/more?category='+this._category+'&keyword='+this._accessQuery.keyword;
+        changeFilterUrl+='&arrange='+$(btnEvt.currentTarget).data('type');
+        if(this._accessQuery.in_keyword){
+            changeFilterUrl+='&in_keyword='+this._accessQuery.in_keyword;
+        }
+        this._historyService.goLoad(changeFilterUrl);
+    },
+    _goLink : function (linkEvt) {
+        var $linkData = $(linkEvt.currentTarget);
+        var linkUrl = $linkData.data('link');
+        if(Tw.FormatHelper.isEmpty(linkUrl)){
+            return;
+        }
+        //TODO User Click Ajax event call
+        if($linkData.hasClass('direct-element')){
+            Tw.CommonHelper.openUrlExternal(linkUrl);
+        }else {
+            this._historyService.goLoad(linkUrl);
+        }
     }
 };

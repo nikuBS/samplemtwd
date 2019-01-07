@@ -47,6 +47,14 @@
     <div id="contents" class="container-wrap">
         <div class="container">
 
+            <% if(searchInfo.suggestQuery.length>0){ %>
+            <div class="cont-box noborder gaps-style03">
+                <p class="re-searchword">
+                    혹시 이것을 찾으시나요? <a data-param="<%= searchInfo.suggestQuery %>"class="re-searchword-text search-element"><%= searchInfo.suggestQuery %>로 검색하기</a>
+                </p>
+            </div>
+            <% } %>
+
             <!-- .cont-box -->
             <% if(relatedKeyword.result&&relatedKeyword.result.Word&&relatedKeyword.result.Word.length>0){ %>
             <div class="connection-searchword">
@@ -57,10 +65,12 @@
                     <% } %>
                 </dl>
             </div>
+            <% } %>
+            <% if(searchInfo.suggestQuery.length>0||(relatedKeyword.result&&relatedKeyword.result.Word&&relatedKeyword.result.Word.length>0)){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <% } %>
 
-            <% if(category=='shortcut'&&searchInfo.search[0]&&searchInfo.search[0].shortcut){ %>
+            <% if(accessQuery.category=='shortcut'&&searchInfo.search[0]&&searchInfo.search[0].shortcut){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box nogaps-btm">
                 <div class="searchnumbox-wrap">
@@ -76,7 +86,7 @@
             </div>
             <% } %>
             <!--// .cont-box -->
-            <% if(category=='rate'&&searchInfo.search[0]&&searchInfo.search[0].rate){ %>
+            <% if(accessQuery.category=='rate'&&searchInfo.search[0]&&searchInfo.search[0].rate){ %>
             <div class="cont-box bgnone noborder nogaps-btm rate">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">요금제</h2>
@@ -94,7 +104,7 @@
 
             <% } %>
 
-            <% if(category=='roaming'&&searchInfo.search[0]&&searchInfo.search[0].roaming){ %>
+            <% if(accessQuery.category=='roaming'&&searchInfo.search[0]&&searchInfo.search[0].roaming){ %>
             <!--<hr class="cont-sp type1" aria-hidden="true">-->
             <div class="cont-box bgnone noborder nogaps-btm roaming">
                 <div class="searchnumbox-wrap">
@@ -112,7 +122,7 @@
             </div>
             <% } %>
 
-            <% if(category=='service'&&searchInfo.search[0]&&searchInfo.search[0].service){ %>
+            <% if(accessQuery.category=='service'&&searchInfo.search[0]&&searchInfo.search[0].service){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box bgnone noborder nogaps-btm service">
                 <div class="searchnumbox-wrap">
@@ -131,7 +141,7 @@
             <hr class="cont-sp type1" aria-hidden="true">
             <% } %>
 
-            <% if(category=='tv'&&searchInfo.search[0]&&searchInfo.search[0].tv){ %>
+            <% if(accessQuery.category=='tv'&&searchInfo.search[0]&&searchInfo.search[0].tv){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box bgnone noborder nogaps-btm tv">
                 <div class="searchnumbox-wrap">
@@ -150,13 +160,20 @@
             <hr class="cont-sp type1" aria-hidden="true">
             <% } %>
 
-            <% if(category=='direct'&&searchInfo.search[0]&&searchInfo.search[0].direct){ %>
+            <% if(accessQuery.category=='direct'&&searchInfo.search[0]&&searchInfo.search[0].direct){ %>
 
             <div class="cont-box bgnone noborder gaps-style03">
                 <div class="contheader-box">
                     <div class="totalfilter-wrap"></div>
                     <div class="filter-select">
-                        <a type="button" class="filterselect-btn">최신순</a>
+                        <a type="button" class="filterselect-btn" data-type="<%= searchInfo.search[0].direct.sort %>">
+                            <%=
+                                searchInfo.search[0].direct.sort==='R'?'추천순':
+                                searchInfo.search[0].direct.sort==='P'?'인기순':
+                                searchInfo.search[0].direct.sort==='D'?'최신순':
+                                searchInfo.search[0].direct.sort==='H'?'낮은가격순':'높은가격순'
+                            %>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -183,10 +200,11 @@
 
                 </div>
             </div>
+            <hr class="cont-sp type1" aria-hidden="true">
             <% } %>
             <!--// .cont-box -->
 
-            <% if(category=='membership'&&searchInfo.search[0]&&searchInfo.search[0].membership){ %>
+            <% if(accessQuery.category=='membership'&&searchInfo.search[0]&&searchInfo.search[0].membership){ %>
             <hr class="cont-sp type1" aria-hidden="true">
 
             <!-- .cont-box -->
@@ -206,7 +224,7 @@
             <!--// .cont-box -->
             <% } %>
 
-            <% if(category=='event'&&searchInfo.search[0]&&searchInfo.search[0].event){ %>
+            <% if(accessQuery.category=='event'&&searchInfo.search[0]&&searchInfo.search[0].event){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box nogaps-btm bgnone noborder event">
                 <div class="searchnumbox-wrap">
@@ -223,7 +241,7 @@
             </div>
             <% } %>
 
-            <% if(category=='sale'&&searchInfo.search[0]&&searchInfo.search[0].sale){ %>
+            <% if(accessQuery.category=='sale'&&searchInfo.search[0]&&searchInfo.search[0].sale){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box nogaps-btm noborder sale">
                 <div class="searchnumbox-wrap">
@@ -240,7 +258,7 @@
             </div>
             <% } %>
 
-            <% if(category=='as'&&searchInfo.search[0]&&searchInfo.search[0].as){ %>
+            <% if(accessQuery.category=='as'&&searchInfo.search[0]&&searchInfo.search[0].as){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <!-- 지점 · 대리점, A/S센터 -->
             <div class="cont-box nogaps-btm as">
@@ -256,7 +274,7 @@
             </div>
             <!-- //지점 · 대리점, A/S센터 -->
             <% } %>
-            <% if(category=='question'&&searchInfo.search[0]&&searchInfo.search[0].question){ %>
+            <% if(accessQuery.category=='question'&&searchInfo.search[0]&&searchInfo.search[0].question){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box nogaps-btm question">
                 <div class="searchnumbox-wrap">
@@ -270,7 +288,7 @@
                 </ul>
             </div>
             <% } %>
-            <% if(category=='notice'&&searchInfo.search[0]&&searchInfo.search[0].notice){ %>
+            <% if(accessQuery.category=='notice'&&searchInfo.search[0]&&searchInfo.search[0].notice){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box nogaps-btm notice">
                 <div class="searchnumbox-wrap">
@@ -284,7 +302,7 @@
                 </ul>
             </div>
             <% } %>
-            <% if(category=='prevent'&&searchInfo.search[0]&&searchInfo.search[0].prevent){ %>
+            <% if(accessQuery.category=='prevent'&&searchInfo.search[0]&&searchInfo.search[0].prevent){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box nogaps-btm prevent">
                 <div class="searchnumbox-wrap">
@@ -298,7 +316,7 @@
                 </ul>
             </div>
             <% } %>
-            <% if(category=='manner'&&searchInfo.search[0]&&searchInfo.search[0].manner){ %>
+            <% if(accessQuery.category=='manner'&&searchInfo.search[0]&&searchInfo.search[0].manner){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box nogaps-btm manner">
                 <div class="searchnumbox-wrap">
@@ -312,7 +330,7 @@
                 </ul>
             </div>
             <% } %>
-            <% if(category=='serviceInfo'&&searchInfo.search[0]&&searchInfo.search[0].serviceInfo){ %>
+            <% if(accessQuery.category=='serviceInfo'&&searchInfo.search[0]&&searchInfo.search[0].serviceInfo){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box nogaps-btm serviceInfo">
                 <div class="searchnumbox-wrap">
@@ -326,7 +344,7 @@
                 </ul>
             </div>
             <% } %>
-            <% if(category=='siteInfo'&&searchInfo.search[0]&&searchInfo.search[0].siteInfo){ %>
+            <% if(accessQuery.category=='siteInfo'&&searchInfo.search[0]&&searchInfo.search[0].siteInfo){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box nogaps-btm siteInfo">
                 <div class="searchnumbox-wrap">
@@ -345,7 +363,11 @@
                     <% if(pageNum==1){ %>
                         <button type="button" disabled class="prev-btn" >이전</button>
                     <% }else{ %>
-                        <button type="button" class="prev-btn page-change" value="/common/search/more?keyword=<%= keyword %>&category=<%= category %>&page=<%= Number(pageNum)-1 %>">이전</button>
+                        <button type="button" class="prev-btn page-change"
+                        value="/common/search/more?keyword=<%= keyword %>&category=<%= accessQuery.category %>&page=<%= Number(pageNum)-1 %><%= accessQuery.arrange?'&arrange='+accessQuery.arrange:''%><%= accessQuery.in_keyword?'&in_keyword='+accessQuery.in_keyword:''%>">
+                            이전
+                        </button>
+                    <!-- category=direct&keyword=갤럭시&arrange=P&pageNum-->
                     <% } %>
                 </div>
                 <div  class="numberbox">
@@ -356,9 +378,15 @@
                     <select class="sispopup" style="color : transparent">
                         <% for(var i=1;i<=parseInt(searchInfo.totalcount/20)+(searchInfo.totalcount%20>0?1:0);i++){ %>
                             <% if(i==pageNum){ %>
-                                <option style="color: #3c3c3c" selected value="/common/search/more?keyword=<%= keyword %>&category=<%= category %>&page=<%= i %>"><%= i %></option>
+                                <option style="color: #3c3c3c" selected
+                                value="/common/search/more?keyword=<%= keyword %>&category=<%= accessQuery.category %>&page=<%= i %><%= accessQuery.arrange?'&arrange='+accessQuery.arrange:''%><%= accessQuery.in_keyword?'&in_keyword='+accessQuery.in_keyword:''%>">
+                                    <%= i %>
+                                </option>
                             <% }else{ %>
-                                <option style="color: #3c3c3c" value="/common/search/more?keyword=<%= keyword %>&category=<%= category %>&page=<%= i %>"><%= i %></option>
+                                <option style="color: #3c3c3c"
+                                value="/common/search/more?keyword=<%= keyword %>&category=<%= accessQuery.category %>&page=<%= i %><%= accessQuery.arrange?'&arrange='+accessQuery.arrange:''%><%= accessQuery.in_keyword?'&in_keyword='+accessQuery.in_keyword:''%>">
+                                    <%= i %>
+                                </option>
                             <% } %>
                         <% } %>
                     </select>
@@ -367,7 +395,10 @@
                     <% if(pageNum==totalPageNum){ %>
                         <button type="button" disabled class="next-btn">다음</button>
                     <% }else{ %>
-                        <button type="button" class="next-btn page-change" value="/common/search/more?keyword=<%= keyword %>&category=<%= category %>&page=<%= Number(pageNum)+1 %>">다음</button>
+                        <button type="button" class="next-btn page-change"
+                        value="/common/search/more?keyword=<%= keyword %>&category=<%= accessQuery.category %>&page=<%= Number(pageNum)+1 %><%= accessQuery.arrange?'&arrange='+accessQuery.arrange:''%><%= accessQuery.in_keyword?'&in_keyword='+accessQuery.in_keyword:''%>">
+                            다음
+                        </button>
                     <% } %>
                 </div>
             </div>
@@ -385,7 +416,7 @@
 <% include ../../components/search/search.template.component.html %>
 <script>
     $(document).ready(function () {
-        new Tw.CommonSearchMore($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>,<%- JSON.stringify(svcInfo) %>,'<%- category %>','<%- CDN %>');
+        new Tw.CommonSearchMore($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>,<%- JSON.stringify(svcInfo) %>,'<%- CDN %>',<%- JSON.stringify(accessQuery)%>);
     });
 </script>
 <% include ../../components/end.component.html %>

@@ -28,19 +28,23 @@ Tw.CommonSearch.prototype = {
                   this.$container.find('.'+keyName).hide();
               }
               if(keyName==='banner'){
-                  this._showBanner(this._arrangeData(searchInfo.search[i][keyName].data));
+                  this._showBanner(this._arrangeData(searchInfo.search[i][keyName].data,keyName));
               }
               continue;
           }
-          this._showShortcutList(this._arrangeData(searchInfo.search[i][keyName].data),keyName,this._cdn);
+          if(keyName==='direct'){
+              this.$container.find('.direct-element.home').data('link',Tw.OUTLINK.DIRECT_HOME);
+          }
+          this._showShortcutList(this._arrangeData(searchInfo.search[i][keyName].data,keyName),keyName,this._cdn);
         }
         this.$container.on('keyup','#keyword',$.proxy(this._inputChangeEvent,this));
         this.$container.on('click','.icon-historyback-40',$.proxy(this._historyService.goBack,this));
         this.$container.on('click','.close-area',$.proxy(this._historyService.goBack,this));
         this.$container.on('click','.search-element',$.proxy(this._searchRelatedKeyword,this));
+        this.$container.on('click','.list-data',$.proxy(this._goLink,this));
     },
 
-    _arrangeData : function (data) {
+    _arrangeData : function (data,category) {
         if(!data){
             return [];
         }
@@ -53,7 +57,16 @@ Tw.CommonSearch.prototype = {
                 if(key==='DEPTH_PATH'){
                     data[i][key] = data[i][key].replace(/\|/g,'/');
                     data[i][key] = data[i][key].replace(/\ /g,' > ');
-
+                }
+                if(key==='MENU_URL'){
+                    data[i][key] = data[i][key].replace('https://app.tworld.co.kr','');
+                }
+                if(category==='prevent'&&key==='DOCID'){
+                    data[i][key] = Number(data[i][key].replace(/[A-Za-z]/g,''));
+                }
+                if(category==='direct'&&key==='ALIAS'){
+                    data[i][key] = data[i][key].replace('shopacc',Tw.OUTLINK.DIRECT_ACCESSORY);
+                    data[i][key] = data[i][key].replace('shopmobile',Tw.OUTLINK.DIRECT_PHONE);
                 }
                 if(key==='METATAG'){
                     data[i][key] = data[i][key].split('#');
@@ -70,7 +83,6 @@ Tw.CommonSearch.prototype = {
         return data;
     },
     _showShortcutList : function (data,dataKey,cdn) {
-        //var $template = this.$container.find('#'+dataKey+'_template');
         var $template = $('#'+dataKey+'_template');
         var $list = this.$container.find('#'+dataKey+'_list');
         var shortcutTemplate = $template.html();
@@ -98,7 +110,29 @@ Tw.CommonSearch.prototype = {
         }
     },
     _showBanner : function (data) {
-        //TODO check banner data.
+        var bannerPositionObj = {
+            AGN	 : 'as',
+            APP	: 'app',
+            BENF : 'sale',
+            CUG	 : 'manner',
+            EVT	 : 'event',
+            FAQ	: 'question',
+            FEE	: 'rate',
+            IUG	: 'siteInfo',
+            MBR	: 'membership',
+            NOTI : 'notice',
+            ROM	: 'raoming',
+            SVC	: 'service',
+            TWD	: 'direct',
+            VUG	: 'serviceInfo',
+            WIRE : 'tv'
+        };
+        var bannerTemplate = Handlebars.compile($('#banner_template').html());
+        _.each(data,$.proxy(function (bannerData) {
+            this.$container.find('.cont-box.list.'+bannerPositionObj[bannerData.SUBM_MENU_ID1])
+                .after(bannerTemplate({listData : bannerData, CDN : this._cdn}));
+        },this));
+
     },
     _addRecentlyKeyword : function (keyword) {
         var recentlyKeywordData = JSON.parse(Tw.CommonHelper.getLocalStorage('recentlySearchKeyword'));
@@ -122,6 +156,20 @@ Tw.CommonSearch.prototype = {
         var goUrl = '/common/search?keyword='+keyword;
         this._addRecentlyKeyword(keyword);
         this._historyService.goLoad(goUrl);
+    },
+    _goLink : function (linkEvt) {
+        var $linkData = $(linkEvt.currentTarget);
+        var linkUrl = $linkData.data('link');
+        if(Tw.FormatHelper.isEmpty(linkUrl)){
+            return;
+        }
+        //TODO User Click Ajax event call
+        if($linkData.hasClass('direct-element')){
+            Tw.CommonHelper.openUrlExternal(linkUrl);
+        }else{
+            this._historyService.goLoad(linkUrl);
+        }
     }
+
 
 };

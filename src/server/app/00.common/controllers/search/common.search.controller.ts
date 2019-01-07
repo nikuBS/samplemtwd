@@ -74,7 +74,8 @@ class CommonSearch extends TwViewController {
                       keyword : searchResult.result.query,
                       relatedKeyword : relatedKeyword,
                       inKeyword : searchResult.result.researchQuery,
-                      surveyList : surveyList.result
+                      surveyList : surveyList.result,
+                      suggestQuery : searchResult.result.suggestQuery
                   });
               });
           } else if (searchResult.result.search[0].immediate.data.length <= 0 || svcInfo === null) {

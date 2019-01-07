@@ -45,8 +45,13 @@
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <div class="container">
-
-
+            <% if(searchInfo.suggestQuery.length>0){ %>
+            <div class="cont-box noborder gaps-style03">
+                <p class="re-searchword">
+                    혹시 이것을 찾으시나요? <a data-param="<%= searchInfo.suggestQuery %>"class="re-searchword-text search-element"><%= searchInfo.suggestQuery %>로 검색하기</a>
+                </p>
+            </div>
+            <% } %>
 
             <% if(relatedKeyword.result&&relatedKeyword.result.Word&&relatedKeyword.result.Word.length>0){ %>
             <div class="connection-searchword">
@@ -57,6 +62,8 @@
                     <% } %>
                 </dl>
             </div>
+            <% } %>
+            <% if(searchInfo.suggestQuery.length>0||(relatedKeyword.result&&relatedKeyword.result.Word&&relatedKeyword.result.Word.length>0)){ %>
             <hr class="cont-sp type1" aria-hidden="true">
             <% } %>
 
@@ -98,7 +105,7 @@
             <% if(searchInfo.search[1].smart.data.length>0){ %>
             <% if(searchInfo.search[1].smart.data[0].BNNR_IOS320_URL.length>0){ %>
             <div class="search-banner">
-                <a href="#"><img src="<%= CDN + searchInfo.search[1].smart.data[0].BNNR_IOS320_URL %>" alt="<%= searchInfo.search[1].smart.data[0].SMART_SRCH_NM %>"></a>
+                <a class="list-data" data-link="<%= searchInfo.search[1].smart.data[0].SMART_SRCH_URL %>"><img src="<%= CDN + searchInfo.search[1].smart.data[0].BNNR_IOS320_URL %>" alt="<%= searchInfo.search[1].smart.data[0].SMART_SRCH_NM %>"></a>
             </div>
             <% } %>
             <!-- .cont-box -->
@@ -106,13 +113,13 @@
             <div class="cont-box nogaps">
                 <ul class="btn-link-list col3">
                     <% if(searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM1.length>0){ %>
-                    <li class="last-line"><a href="<%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_URL1 %>" ><%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM1 %></a></li>
+                    <li class="last-line"><a class="list-data" data-link="<%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_URL1 %>" ><%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM1 %></a></li>
                     <% } %>
                     <% if(searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM2.length>0){ %>
-                    <li class="last-line"><a href="<%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_URL2 %>" ><%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM2 %></a></li>
+                    <li class="last-line"><a class="list-data" data-link="<%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_URL2 %>" ><%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM2 %></a></li>
                     <% } %>
                     <% if(searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM3.length>0){ %>
-                    <li class="last-line"><a href="<%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_URL3 %>" ><%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM3 %></a></li>
+                    <li class="last-line"><a class="list-data" data-link="<%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_URL3 %>" ><%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM3 %></a></li>
                     <% } %>
                 </ul>
             </div>
@@ -153,7 +160,7 @@
                 </div>
             </div>
 
-            <div class="cont-box bgnone  gaps-style05 rate">
+            <div class="cont-box list bgnone  gaps-style05 rate">
                 <ul class="extraservice-list" id="rate_list">
                     <!--<li class="category-type">
                         <button class="link">
@@ -202,7 +209,7 @@
                 </div>
             </div>
 
-            <div class="cont-box bgnone noborder gaps-style06 service">
+            <div class="cont-box list bgnone noborder gaps-style06 service">
                 <ul class="extraservice-list" id="service_list">
 
                 </ul>
@@ -220,7 +227,7 @@
                 </div>
             </div>
 
-            <div class="cont-box bgnone noborder gaps-style06 tv">
+            <div class="cont-box list bgnone noborder gaps-style06 tv">
                 <ul class="extraservice-list" id="tv_list">
 
                 </ul>
@@ -238,7 +245,7 @@
                 </div>
             </div>
 
-            <div class="cont-box bgnone noborder gaps-style07 roaming">
+            <div class="cont-box list bgnone noborder gaps-style07 roaming">
                 <ul class="extraservice-list" id="roaming_list">
 
                 </ul>
@@ -246,11 +253,11 @@
 
             <!-- .cont-box -->
             <hr class="cont-sp type1 app" aria-hidden="true">
-            <div class="cont-box nogaps-btm app">
+            <div class="cont-box list nogaps-btm app">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">T앱</h2>
                     <div class="numberbox">
-                        <span class="num">5</span>건
+                        <span class="num"><%= searchInfo.search[7].app.count %></span>건
                     </div>
                 </div>
                 <div class="tapplist-wrap">
@@ -258,7 +265,7 @@
 
                     </ul>
                     <div class="tappbtn-wrap">
-                        <button class="btn">T앱 전체보기</button>
+                        <button class="btn list-data" data-link="/product/apps">T앱 전체보기</button>
                     </div>
                 </div>
             </div>
@@ -267,7 +274,7 @@
 
             <!-- .cont-box -->
             <hr class="cont-sp type1 direct" aria-hidden="true">
-            <div class="cont-box pb0 direct">
+            <div class="cont-box list pb0 direct">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">T월드 다이렉트</h2>
                     <div class="numberbox">
@@ -290,7 +297,7 @@
                         </li> -->
                     </ul>
                     <div class="btn-more">
-                        <button>다이렉트샵 가기</button>
+                        <a class="list-data direct-element home">다이렉트샵 가기</a>
                     </div>
                 </div>
             </div>
@@ -300,7 +307,7 @@
 
             <!-- .cont-box -->
             <hr class="cont-sp type1 membership" aria-hidden="true">
-            <div class="cont-box pb0 membership">
+            <div class="cont-box list pb0 membership">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">T멤버십</h2>
                     <div class="numberbox">
@@ -327,7 +334,7 @@
             <!--// .cont-box -->
 
             <!-- .cont-box -->
-            <div class="cont-box nogaps-btm bgnone noborder event">
+            <div class="cont-box list nogaps-btm bgnone noborder event">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">진행 중인 이벤트</h2>
                     <div class="numberbox">
@@ -353,7 +360,8 @@
             <!--// .cont-box -->
 
             <!-- 혜택 · 할인 -->
-            <div class="cont-box nogaps-btm noborder sale">
+            <hr class="cont-sp type1 sale" aria-hidden="true">
+            <div class="cont-box list nogaps-btm noborder sale">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">혜택·할인</h2>
                     <div class="numberbox">
@@ -380,7 +388,7 @@
             <!--<hr class="cont-sp type1" aria-hidden="true">-->
 
             <!-- 지점 · 대리점, A/S센터 -->
-            <div class="cont-box nogaps-btm as">
+            <div class="cont-box list nogaps-btm as">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">지점 · 대리점, A/S센터</h2>
                     <div class="numberbox">
@@ -398,12 +406,12 @@
             <!-- //지점 · 대리점, A/S센터 -->
 
             <!-- 자주하는 질문 -->
-            <div class="cont-box nogaps-btm question">
+            <div class="cont-box list nogaps-btm question">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">자주 하는 질문</h2>
                     <div class="numberbox">
                         <span class="num"><%= searchInfo.search[15].question.count %></span>건
-                        <%if(searchInfo.search[15].question.count){ %>
+                        <%if(searchInfo.search[15].question.count>=10){ %>
                         <a href="/common/search/more?category=question&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>" class="morelink">더보기</a>
                         <% } %>
                     </div>
@@ -422,7 +430,7 @@
             <hr class="cont-sp type1 question" aria-hidden="true">
 
             <!-- 공지사항 -->
-            <div class="cont-box nogaps-btm notice">
+            <div class="cont-box list nogaps-btm notice">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">공지사항</h2>
                     <div class="numberbox">
@@ -441,7 +449,7 @@
             <hr class="cont-sp type1 notice" aria-hidden="true">
 
             <!-- 이용자 피해예방 주의보 -->
-            <div class="cont-box nogaps-btm prevent">
+            <div class="cont-box list nogaps-btm prevent">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">이용자 피해예방 주의보</h2>
                     <div class="numberbox">
@@ -460,7 +468,7 @@
             <hr class="cont-sp type1 prevent" aria-hidden="true">
 
             <!-- 이럴 땐 이렇게 하세요 -->
-            <div class="cont-box nogaps-btm manner">
+            <div class="cont-box list nogaps-btm manner">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">이럴 땐 이렇게 하세요</h2>
                     <div class="numberbox">
@@ -479,7 +487,7 @@
             <hr class="cont-sp type1 manner" aria-hidden="true">
 
             <!-- 서비스 이용안내 -->
-            <div class="cont-box nogaps-btm serviceInfo">
+            <div class="cont-box list nogaps-btm serviceInfo">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">서비스 이용안내</h2>
                     <div class="numberbox">
@@ -498,7 +506,7 @@
             <hr class="cont-sp type1 serviceInfo" aria-hidden="true">
 
             <!-- 사이트 이용안내 -->
-            <div class="cont-box nogaps-btm siteInfo">
+            <div class="cont-box list nogaps-btm siteInfo">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">사이트 이용방법</h2>
                     <div class="numberbox">
