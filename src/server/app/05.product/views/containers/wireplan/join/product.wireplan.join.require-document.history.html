@@ -47,19 +47,45 @@
                             <li>
                                 <span class="title">결과</span>
                                 <span class="tx-cont">
-                                    <span class="tx-bold"><%- reqDocInfo.resultText.join('<br>') %></span>
+                                    <span class="tx-bold"><%= resultText.text %></span>
                                 </span>
                             </li>
                         </ul>
                     </div>
+                    <% if ( !reqDocInfo.resultText.isCompleteAdditional ) { %>
                     <ul class="bt-slice mt30">
                         <li class="bt-blue1">
                             <a href="/myt-join/submain">나의 가입정보 보기</a>
                         </li>
                     </ul>
-                    <% if ( reqDocInfo.isRetryReservation ) { %>
+                    <% if ( reqDocInfo.resultText.isRetry ) { %>
                     <div class="bt-link-box">
                         <a href="/product/wireplan/join/reservation?type_cd=combine" class="bt-link-tx">다시 가입상담예약 하기</a>
+                    </div>
+                    <% } %>
+                    <% } else { %>
+                    <div class="cont-box noborder">
+                        <h3>나의 <strong>“<%= prodRedisInfo.summary.prodNm %>”</strong> 가입정보</h3>
+                        <ul class="liststyle-type01 mt10">
+                            <li class="category-type">
+                                <p class="title">결합가족 보기</p>
+                                <div class="infobox">
+                                    <a href="/myt-join/combinations/<%= reqDocInfo.svcProdCd %>" class="link">보기</a>
+                                </div>
+                            </li>
+                            <li class="category-type">
+                                <p class="title">상품정보 보기</p>
+                                <div class="infobox">
+                                    <a href="/product/callplan/<%= reqDocInfo.svcProdCd %>" class="link">보기</a>
+                                </div>
+                            </li>
+                            <li class="category-type">
+                                <p class="title">나의 결합상품 전체보기</p>
+                                <div class="infobox">
+                                    <a href="/myt-join/combinations" class="link">보기</a>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                     <% } %>
                 </div>

@@ -187,13 +187,47 @@ export enum PRODUCT_RESERVATION_COMBINE_NM {
   NA00002040 = '온가족할인',
   NH00000133 = 'New온가족플랜',
   NH00000084 = 'TB끼리 온가족프리',
-  NONE = '결합상품을 선택해 주세요',
+  NONE = '결합상품을 선택해 주세요.',
   ETC = '그 외 결합상품'
 }
 
 export enum PRODUCT_REQUIRE_DOCUMENT_TYPE_NM {
-  apply = '구비서류 제출/조회',
+  apply = '필요서류 제출',
   history = '가입신청 내역 조회'
+}
+
+export enum PRODUCT_REQUIRE_DOCUMENT {
+  NORMAL = '정상',
+  ABNORMAL = '비정상',
+  APPLY = '제출',
+  HISTORY = '조회'
+}
+
+export enum PRODUCT_REQUIRE_DOCUMENT_RS {
+  R000 = '필요서류 제출기한이 지났습니다.\n(제출기한 : YYYYMDD)',
+  R059 = '본인 이외 타인의 서류는 제출이 불가능합니다.',
+  R173 = '가족간 명의변경 및 주민(인,외국인)등록번호 정정내용 확인이 가능한 서류(행정기관 발급용)를 제출해주세요.',
+  R174 = '가족관계 입증이 가능한 서류를 제출해주세요.',
+  R175 = '서류에서 신청하신 가족 정보를 식별할 수 없습니다.\n가족관계 식별이 가능한 서류를 제출해주세요.',
+  R176 = '서류에서 신청하신 가족 정보를 확인할 수 없습니다.\n가족관계 입증이 가능한 서류를 제출해주세요.',
+  R177 = '개명(개칭) 확인이 가능한 서류를 제출해주세요.',
+  R999 = '상세 신청결과는 SK텔레콤 전문 상담원(114)에게 문의해주세요.'
+}
+
+export enum PRODUCT_REQUIRE_DOCUMENT_APPLY_RESULT {
+  WORKING = '신청하신 내용을 검토 중입니다.',
+  NEED_DOCUMENT = '필요서류를 첨부해주세요.',
+  NEED_DOCUMENT_RETRY = '필요서류를 다시 첨부해주세요.',
+  EXPIRE_DOCUMENT = '필요서류 제출기한이 지났습니다',
+  COMPLETE = '검토가 완료 되었습니다.\nSK텔레콤 전문상담원을 통해서 상품 가입이 가능합니다.',
+  COMPLETE_ADDITIONAL = '검토가 완료 되었습니다.'
+}
+
+export enum PRODUCT_REQUIRE_DOCUMENT_CALLPLAN_RESULT {
+  WORKING = '신청하신 내용을 검토 중입니다.',
+  NEED_DOCUMENT = '현재 서류 미비 상태입니다.',
+  EXPIRE_DOCUMENT = '필요서류 제출기한이 지났습니다',
+  COMPLETE = '검토가 완료 되었습니다.'
 }
 
 export const MYT_FARE_BILL_REISSUE = {

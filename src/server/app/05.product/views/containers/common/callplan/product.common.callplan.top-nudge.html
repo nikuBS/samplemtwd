@@ -9,35 +9,15 @@
 </div>
 <% } %>
 
-<% if (combineRequireDocumentInfo && combineRequireDocumentInfo.isNeedDocument) { %>
+<% if (combineRequireDocumentInfo) { %>
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <div class="joinconsulting-wrap">
-    <p class="text">가입서류를 제출해주세요.</p>
+    <p class="text"><%= combineRequireDocumentInfo.text %></p>
     <div class="btn">
-        <a href="/product/wireplan/join/require-document/apply" class="btn-round3 btn-style3">제출</a>
-    </div>
-</div>
-<% } %>
-
-<% if (combineRequireDocumentInfo && combineRequireDocumentInfo.isExpired) { %>
-<hr class="cont-sp type1" aria-hidden="true"/>
-
-<div class="joinconsulting-wrap">
-    <p class="text">서류제출기한이 종료되었습니다.</p>
-    <div class="btn">
-        <a href="/product/wireplan/join/require-document/apply" class="btn-round3 btn-style3">제출</a>
-    </div>
-</div>
-<% } %>
-
-<% if (combineRequireDocumentInfo && combineRequireDocumentInfo.isProcess) { %>
-<hr class="cont-sp type1" aria-hidden="true"/>
-
-<div class="joinconsulting-wrap">
-    <p class="text">제출한 서류를 검토 중입니다.</p>
-    <div class="btn">
-        <a href="/product/wireplan/join/require-document/history" class="btn-round3 btn-style3">조회</a>
+        <a href="/product/wireplan/join/require-document/<%= combineRequireDocumentInfo.page %>" class="btn-round3 btn-style3">
+            <%= combineRequireDocumentInfo.btnText %>
+        </a>
     </div>
 </div>
 <% } %>

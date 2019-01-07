@@ -4,7 +4,7 @@
  * Date: 2018.11.08
  */
 
-Tw.ProductWireplanJoinRequireDocumentApply = function(rootEl) {
+Tw.ProductWireplanJoinRequireDocumentApply = function(rootEl, historyList) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
@@ -17,6 +17,7 @@ Tw.ProductWireplanJoinRequireDocumentApply = function(rootEl) {
   this._fileList = [];
   this._limitFileByteSize = 2097152;
   this._acceptExt = ['jpg', 'jpeg', 'png', 'gif'];
+  this._historyList = JSON.parse(window.unescape(historyList));
 
   this._fileTemplate = Handlebars.compile($('#fe-templ-reserv-file').html());
 };
@@ -29,11 +30,13 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
     this.$explainFile = this.$container.find('.fe-explain_file');
     this.$explainFileView = this.$container.find('.fe-explain_file_view');
     this.$btnExplainFileAdd = this.$container.find('.fe-btn_explain_file_add');
+    this.$btnOpenHistoryDetail = this.$container.find('.fe-btn_open_detail');
     this.$btnApply = this.$container.find('.fe-btn_apply');
   },
 
   _bindEvent: function() {
     this.$btnExplainFileAdd.on('click', $.proxy(this._uploadExplainFile, this));
+    this.$btnOpenHistoryDetail.on('click', $.proxy(this._openHistoryDetailPop, this));
     this.$explainFile.on('change', $.proxy(this._onChangeExplainFile, this));
     this.$fileList.on('click', '.fe-btn_explain_file_del', $.proxy(this._delExplainFile, this));
     this.$btnApply.on('click', $.proxy(this._procApply, this));
@@ -178,6 +181,22 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
     }
 
     this._openSuccessPop();
+  },
+
+  _openHistoryDetailPop: function() {
+    this._popupService.open({
+      'pop_name': 'type_tx_scroll',
+      'title': Tw.PRODUCT_REQUIRE_DOCUMENT.HISTORY_DETAIL,
+      'title_type': 'sub',
+      'cont_align':'tl',
+      'contents': (this._historyList.map(function(item) {
+        return '- ' + item;
+      })).join('<br>'),
+      'bt_b': [{
+        style_class:'pos-left tw-popup-closeBtn',
+        txt: Tw.BUTTON_LABEL.CONFIRM
+      }]
+    }, null);
   },
 
   _openSuccessPop: function() {

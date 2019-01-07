@@ -1225,12 +1225,13 @@ Tw.PRODUCT_RESERVATION = {
     text: '가입상담 예약',
     subtext_product: '상담상품 : ',
     subtext_applyer: '신청자 정보 : ',
-    subtext_info: '상담예정일 : 신청일로부터 2일 이내(영업일 기준)'
+    subtext_info: '상담 예정일 : 신청일로부터 2일 이내(영업일 기준)'
   }
 };
 
 Tw.PRODUCT_REQUIRE_DOCUMENT = {
-  SUCCESS_TITLE: '구비서류 제출',
+  HISTORY_DETAIL: '심사결과 자세히 보기',
+  SUCCESS_TITLE: '필요서류 제출',
   FILE_COUNT: '제출 파일 : ',
   FILE_COUNT_UNIT: '개'
 };
@@ -1243,9 +1244,9 @@ Tw.PRODUCT_COMBINE_PRODUCT = {
       TITLE: 'TB끼리 한가족할인',
       EXPLAIN: '이동전화와 인터넷을 묶으면 인터넷 기본료 8,800원 할인혜택 제공'
     },
-    NA00002040: {
-      TITLE: '온가족할인',
-      EXPLAIN: '가족들의 이동전화 가입기간 합산기간에 따라 이동전화 월정액 최대 50% 할인혜택 제공'
+    NA00005055: {
+      TITLE: '가족나눔데이터',
+      EXPLAIN: '가족 간 이동전화(2회선~5회선)를 결합하면 데이터 최대 1,000MB 제공'
     },
     NH00000133: {
       TITLE: 'New온가족플랜',
@@ -1253,7 +1254,7 @@ Tw.PRODUCT_COMBINE_PRODUCT = {
     },
     NH00000084: {
       TITLE: 'TB끼리 온가족프리',
-      EXPLAIN: '이동전화와 인터넷을 묶으면 이동전화 및 인터넷 기본료 할인\n+ 추가혜택 제공'
+      EXPLAIN: '이동전화와 인터넷을 결합하면 이동전화·인터넷 기본료 할인에 추가 혜택 제공'
     },
     NONE: {
       TITLE: '결합상품을 선택해 주세요'
