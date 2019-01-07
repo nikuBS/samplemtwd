@@ -15,8 +15,8 @@ import ProductHelper from '../../../../utils/product.helper';
 const FEE_PLAN_TIP = {
   M1: ['MS_05_tip_01'], // 휴대폰
   M2: ['MS_05_tip_02'], // 선불폰(PPS)
-  M3: ['MS_05_tip_06', 'MS_05_tip_07'], // T pocket Fi
-  M4: ['MS_05_tip_04', 'MS_05_tip_05'], // T Login
+  M3: ['MS_05_tip_04'], // T pocket Fi
+  M4: ['MS_05_tip_04'], // T Login
   M5: [], // T Wibro
   S1: ['MS_05_tip_03'], // 인터넷
   S2: ['MS_05_tip_03'], // IPTV
@@ -96,7 +96,7 @@ class MyTJoinMyplan extends TwViewController {
         dcStaDt: DateHelper.getShortDateWithFormat(item.dcStaDt, 'YYYY.M.DD.'),
         dcEndDt: (item.dcEndDt !== '99991231') ? DateHelper.getShortDateWithFormat(item.dcEndDt, 'YYYY.M.DD.')
             : MYT_FEEPLAN_BENEFIT.ENDLESS,
-        dcVal: FormatHelper.addComma(item.dcVal.toString())
+        dcVal: item.dcCttClCd === '01' ? FormatHelper.addComma(item.dcVal.toString()) : item.dcVal
       });
     });
   }
