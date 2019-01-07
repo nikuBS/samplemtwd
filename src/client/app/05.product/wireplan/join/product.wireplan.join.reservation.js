@@ -377,7 +377,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
   _detectInputNumber: function(e) {
     var $input = $(e.currentTarget);
-    $input.val($input.val().replace(/[^0-9.]/g, ''));
+    $input.val($input.val().replace(/[^0-9]/g, ''));
     if ($input.val().length > 11) {
       $input.val($input.val().substr(0, 11));
     }
@@ -589,7 +589,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
       reqParams = {
         productValue: Tw.PRODUCT_RESERVATION_VALUE[this._typeCd],
         userNm: this.$reservName.val(),
-        inputSvcNum: this.$reservNumber.val().replace(/[^0-9.]/g, '')
+        inputSvcNum: this.$reservNumber.val().replace(/[^0-9]/g, '')
       };
 
     this._isCombineInfo = false;

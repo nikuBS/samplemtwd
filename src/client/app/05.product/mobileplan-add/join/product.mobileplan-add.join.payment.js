@@ -54,7 +54,7 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
   },
 
   _detectInputNumber: function(e) {
-    this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9.]/g, ''));
+    this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9]/g, ''));
     if (this.$inputNumber.val().length > 11) {
       this.$inputNumber.val(this.$inputNumber.val().substr(0, 11));
     }
@@ -115,7 +115,7 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
       return;
     }
 
-    this.$inputAuthCode.val(this.$inputAuthCode.val().replace(/[^0-9.]/g, ''));
+    this.$inputAuthCode.val(this.$inputAuthCode.val().replace(/[^0-9]/g, ''));
     if (this.$inputAuthCode.val().length > 6) {
       this.$inputAuthCode.val(this.$inputAuthCode.val().substr(0, 6));
     }
@@ -288,19 +288,11 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
         basFeeInfo: this._confirmOptions.isNumberBasFeeInfo ?
           this._confirmOptions.toProdBasFeeInfo + Tw.CURRENCY_UNIT.WON : ''
       }
-    }, $.proxy(this._bindJoinResPopup, this), $.proxy(this._onClosePop, this), 'join_success');
-  },
-
-  _bindJoinResPopup: function($popupContainer) {
-    $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
-  },
-
-  _closePop: function() {
-    this._popupService.close();
+    }, null, $.proxy(this._onClosePop, this), 'join_success');
   },
 
   _onClosePop: function() {
-    this._historyService.go(-2);
+    this._historyService.goBack();
   }
 
 };
