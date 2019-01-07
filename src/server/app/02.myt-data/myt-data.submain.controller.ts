@@ -216,7 +216,13 @@ class MytDataSubmainController extends TwViewController {
             }
           } else if ( family.code === API_T_FAMILY_ERROR.BLN0010 ) {
             // T가족모아 가입 가능한 요금제이나 미가입으로 가입유도 화면 노출
-            data.family.impossible = true;
+            if ( data.family ) {
+              data.family.impossible = true;
+            } else {
+              data.family = {
+                impossible: true
+              };
+            }
           } else {
             // 가입불가능한 요금제인 경우
             data.family = null;
