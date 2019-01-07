@@ -657,37 +657,44 @@ export const CUSTOMER_STIE_OPTION_TYPE = [
   {
     cat: '기타',
     title: '가려진 정보 확인 방법',
-    code: 'D00007'
+    code: 'D00007',
+    className: 'ico-etc'
   },
   {
     cat: 'myT',
     title: '소액결제 현명하게 관리하기',
-    code: 'D00002'
+    code: 'D00002',
+    className: 'ico-myt'
   },
   {
     cat: '회원',
     title: '개인명의 휴대폰 태블릿 다회선 등록하기',
-    code: 'D00001'
+    code: 'D00001',
+    className: 'ico-member'
   },
   {
     cat: '회원',
     title: '법인명의 휴대폰번호 삭제방법',
-    code: 'D00006'
+    code: 'D00006',
+    className: 'ico-member'
   },
   {
     cat: '회원',
     title: '법인명의 태블릿 다회선 등록하기',
-    code: 'D00005'
+    code: 'D00005',
+    className: 'ico-member'
   },
   {
     cat: '기타',
     title: '모두에게 평등한 웹 접근성 안내',
-    code: 'D00008'
+    code: 'D00008',
+    className: 'ico-etc'
   },
   {
     cat: '기타',
     title: 'T월드의 모든 메뉴 꼼꼼히 살펴보기',
-    code: 'D00009'
+    code: 'D00009',
+    className: 'ico-etc'
   }
 ];
 
