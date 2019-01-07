@@ -1,21 +1,15 @@
 <!-- .popup hbs -->
-<div class="popup-page tw-popup tw-popup fixed-btn"><!-- .no-btn 하단에 버튼이 없을 경우 -->
-    <!-- #header -->
-    <div class="header-wrap">
-        <div class="page-header">
-            <div class="header-ti">
-            </div>
-        </div>
-    </div>
-    <!--// #header -->
+<div class="popup-page tw-popup pt0 fixed-bottom"><!-- .no-btn 하단에 버튼이 없을 경우 -->
     <!-- .container-wrap -->
     <div class="container-wrap">
-        <h2 class="blind">내용</h2>
         <div class="container">
-            <h1 class="complete-title">
-                <img src="/img/dummy/dmy-complete.jpg" alt=""/>
-                <span><strong>{{{text}}}</strong> 완료</span>
-            </h1>
+            <div class="complete-wrap">
+                <div class="title-box">
+                    <i class="icon-complete-120"><span class="blind">complete</span></i>
+                    <p class="tx-tit"><span class="tx-highlight pt10"><em>{{{text}}}</em> 완료</span></p>
+                </div>
+            </div>
+
             {{#if link_text}}
                 <div class="complete-btn-box pt56">
                     <ul class="bt-slice">
