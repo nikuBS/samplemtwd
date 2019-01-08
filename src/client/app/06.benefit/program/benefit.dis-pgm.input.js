@@ -93,7 +93,7 @@ Tw.BenefitDisPgmInput.prototype = {
             spanClass: 'date',
             text: this._confirmOptions.monthDetail[this._selType]
           }]
-      }), $.proxy(this._joinCompleteConfirm, this));
+      }), $.proxy(this._prodConfirmOk, this));
     }
     else {
       new Tw.ProductCommonConfirm(false, this.$container, {
@@ -107,8 +107,8 @@ Tw.BenefitDisPgmInput.prototype = {
   _prodConfirmOk: function () {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0035, {
-      addCd: '2'
+    this._apiService.request(Tw.API_CMD.BFF_10_0063, {
+      svcAgrmtPrdCd: this._selType
     }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this));
   },
 

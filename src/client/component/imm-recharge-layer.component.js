@@ -56,14 +56,22 @@ Tw.ImmediatelyRechargeLayer.prototype = {
         if ( ting.code === Tw.API_CODE.CODE_00 ) {
           this.immChargeData.ting = ting.result;
         }
-        else {
+        else if ( ting.code === Tw.API_CODE.ZPAYE0077 ) {
+          // 팅 요금제 선물 차단 상태
           this.immChargeData.ting = null;
+        }
+        else {
+          this.immChargeData.ting = ting;
         }
         if ( etc.code === Tw.API_CODE.CODE_00 ) {
           this.immChargeData.etc = etc.result;
         }
-        else {
+        else if (etc.code === Tw.API_CODE.RCG0062) {
+          // 팅/쿠키즈/안심음성 요금제 미사용중인 경우
           this.immChargeData.etc = null;
+        }
+        else {
+          this.immChargeData.etc = etc;
         }
         if ( optSvc.code === Tw.API_CODE.CODE_00 ) {
           if ( optSvc.result.optProdList && optSvc.result.optProdList.length > 0 ) {

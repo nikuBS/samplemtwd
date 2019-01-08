@@ -585,7 +585,11 @@ Tw.API_CODE = {
   CODE_400: '400',
 
   NOT_FAMILY: 'ZORDE4011', // 쿠폰 선물 가능한 가족그룹 아님
-  RECEIVER_LIMIT: 'ZNGME0000' // 쿠폰 받는 사람 횟수 초과
+  RECEIVER_LIMIT: 'ZNGME0000', // 쿠폰 받는 사람 횟수 초과
+
+  RCG0101: 'RCG0101', // Ting 요금제 차단 상태
+  ZPAYE0077: 'ZPAYE0077', // 제공자가 성인이 아닌 경우 팅충전 선물을 할 수 없습니다.
+  RCG0062: 'RCG0062' // 팅,쿠키즈,안심 음성 미사용 상태
 };
 
 Tw.API_SVC_PWD_ERROR = {
