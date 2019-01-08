@@ -65,6 +65,8 @@ Tw.CertificationBio.prototype = {
       this._callback({
         code: Tw.API_CODE.CODE_00
       });
+    } else if (resp.resultCode === this.ERROR_CODE.CANCEL) {
+      //
     } else {
       this._callback({
         code: Tw.API_CODE.CERT_FAIL

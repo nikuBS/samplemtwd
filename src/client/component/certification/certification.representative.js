@@ -49,7 +49,7 @@ Tw.CertificationRepresentative.prototype = {
     return _.map(smsNumbers, $.proxy(function (number, index) {
       return {
         txt: number.nameMask + ' ' + number.numberMask,
-        option: index === 0 ? 'checked' : ''
+        option: ''
       };
     }, this));
   },
