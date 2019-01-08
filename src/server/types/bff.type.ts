@@ -105,6 +105,11 @@ export const VOICE_UNIT = {
   SEC: '초'
 };
 
+export enum MYT_MYPLAN_WIRELESS_BASFEEINFO {
+  SEE_CONTENTS = '상세참조',
+  FREE = '무료'
+}
+
 export enum MYT_FARE_PAYMENT_TYPE {
   BANK = '01',
   CARD = '02',

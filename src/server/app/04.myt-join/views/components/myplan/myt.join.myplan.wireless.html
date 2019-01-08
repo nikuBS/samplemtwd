@@ -12,7 +12,7 @@
                 <% } %>
             </div>
             <div class="sub">
-                <% if ( feePlan.feePlanProd.prodFltNm ) { %>
+                <% if ( feePlan.feePlanProd.prodFltNm && svcInfo.svcAttrCd === 'M1' ) { %>
                 <span class="hash">#<%= feePlan.feePlanProd.prodFltNm %></span>
                 <% } %>
                 <% if ( feePlan.feePlanProd.basFeeInfo && !feePlan.feePlanProd.basFeeInfo.isNaN ) { %>

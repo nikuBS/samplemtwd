@@ -405,6 +405,7 @@ class ProductCommonCallplanPreview extends TwViewController {
     return {
       isMobileplan: prodTypCd === 'AB',
       isMobileplanAdd: prodTypCd === 'C',
+      isInternet: prodTypCd === 'D_I',
       isWireplan: ['D_I', 'D_P', 'D_T'].indexOf(prodTypCd) !== -1,
       isWireplanAdd: ['E_I', 'E_P', 'E_T'].indexOf(prodTypCd) !== -1,
       isRoaming: ['H_P', 'H_A'].indexOf(prodTypCd) !== -1,

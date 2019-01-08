@@ -6,7 +6,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { SVC_CDNAME, SVC_CDGROUP } from '../../../../types/bff.type';
+import { SVC_CDNAME, SVC_CDGROUP, MYT_MYPLAN_WIRELESS_BASFEEINFO } from '../../../../types/bff.type';
 import { DATA_UNIT, MYT_FEEPLAN_BENEFIT, FEE_PLAN_TIP_TXT } from '../../../../types/string.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
@@ -68,8 +68,8 @@ class MyTJoinMyplan extends TwViewController {
    * @param isWire
    * @private
    */
-  private _convertFeePlan(data, isWire): any {
-    return isWire ? this._convertWirePlan(data.result) : this._convertWirelessPlan(data.result);
+  private _convertFeePlan(data, isWire, svcAttrCd): any {
+    return isWire ? this._convertWirePlan(data.result) : this._convertWirelessPlan(data.result, svcAttrCd);
   }
 
   /**
@@ -103,9 +103,10 @@ class MyTJoinMyplan extends TwViewController {
 
   /**
    * @param wirelessPlan
+   * @param svcAttrCd
    * @private
    */
-  private _convertWirelessPlan(wirelessPlan): any {
+  private _convertWirelessPlan(wirelessPlan, svcAttrCd): any {
     if (FormatHelper.isEmpty(wirelessPlan.feePlanProd)) {
       return null;
     }
@@ -126,7 +127,7 @@ class MyTJoinMyplan extends TwViewController {
     return Object.assign(wirelessPlan, {
       feePlanProd: FormatHelper.isEmpty(wirelessPlan.feePlanProd) ? null : Object.assign(wirelessPlan.feePlanProd, {
         scrbDt: DateHelper.getShortDateWithFormat(wirelessPlan.feePlanProd.scrbDt, 'YYYY.M.DD.'),
-        basFeeInfo: spec.basFeeInfo,
+        basFeeInfo: this._convertPpsBasfeeTxt(svcAttrCd, spec.basFeeInfo),
         basOfrDataQtyCtt: spec.basOfrDataQtyCtt,
         basOfrVcallTmsCtt: spec.basOfrVcallTmsCtt,
         basOfrCharCntCtt: spec.basOfrCharCntCtt,
@@ -209,6 +210,23 @@ class MyTJoinMyplan extends TwViewController {
     return [...settingBtnList, ...terminateBtnList, ...unknownBtnList];
   }
 
+  /**
+   * @param svcAttrCd
+   * @param basFeeTxt
+   * @private
+   */
+  private _convertPpsBasfeeTxt(svcAttrCd: any, basFeeTxt: any): any {
+    if (svcAttrCd !== 'M2') {
+      return basFeeTxt;
+    }
+
+    if (basFeeTxt.value !== MYT_MYPLAN_WIRELESS_BASFEEINFO.SEE_CONTENTS && basFeeTxt.value !== MYT_MYPLAN_WIRELESS_BASFEEINFO.FREE) {
+      return basFeeTxt;
+    }
+
+    return null;
+  }
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const defaultOptions = {
       title: '나의 요금제',
@@ -233,7 +251,7 @@ class MyTJoinMyplan extends TwViewController {
           }));
         }
 
-        const feePlan = this._convertFeePlan(feePlanInfo, apiInfo.isWire),
+        const feePlan = this._convertFeePlan(feePlanInfo, apiInfo.isWire, svcInfo.svcAttrCd),
           tipList = this._getTipList(svcInfo.svcAttrCd);
 
         if (FormatHelper.isEmpty(feePlan)) {
