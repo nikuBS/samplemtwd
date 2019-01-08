@@ -59,7 +59,8 @@ Tw.InputHelper = (function () {
 
   function insertDashCellPhone(input) {
     var $input = $(input);
-    $input.val(Tw.StringHelper.phoneStringToDash($input.val()));
+    var tel = $input.val().replace(/[^0-9]/g, '');
+    $input.val(Tw.StringHelper.phoneStringToDash(tel));
   }
 
   return {
