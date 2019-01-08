@@ -39,6 +39,7 @@ Tw.MyTDataPrepaidData.prototype = {
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
     this.$container.on('keyup', '.fe-card-number', $.proxy(this._resetCardInfo, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
+    this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
     this.$rechargeBtn.on('click', $.proxy(this._checkPay, this));
   },
   _openSelectPop: function (event) {
@@ -171,6 +172,17 @@ Tw.MyTDataPrepaidData.prototype = {
     this.$isValid = this._isEmpty($target, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V58) &&
       this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 2), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V7);
   },
+  _onClose: function () {
+    var isChanged = !(Tw.FormatHelper.isEmpty(this.$dataSelector.attr('id'))) || !Tw.FormatHelper.isEmpty(this.$cardNumber.val()) ||
+      !Tw.FormatHelper.isEmpty(this.$cardY.val()) || !Tw.FormatHelper.isEmpty(this.$cardM.val()) || !Tw.FormatHelper.isEmpty(this.$cardPw.val());
+
+    if (isChanged) {
+      this._popupService.openConfirmButton(null, Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_CANCEL.TITLE,
+        $.proxy(this._closePop, this), $.proxy(this._afterClose, this));
+    } else {
+      this._historyService.goBack();
+    }
+  },
   _checkPay: function () {
     if (this._isValid()) {
       this._popupService.open({
@@ -213,6 +225,7 @@ Tw.MyTDataPrepaidData.prototype = {
     $layer.find('.fe-email-address').text($.trim(this.$emailAddress.text()));
   },
   _setEvent: function ($layer) {
+    $layer.on('click', '.fe-popup-close', $.proxy(this._checkClose, this));
     $layer.on('click', '.fe-recharge', $.proxy(this._recharge, this, $layer));
   },
   _recharge: function ($layer) {
@@ -250,5 +263,18 @@ Tw.MyTDataPrepaidData.prototype = {
   },
   _rechargeFail: function (err) {
     Tw.Error(err.code, err.msg).pop();
+  },
+  _checkClose: function () {
+    this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_DATA.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_DATA.TITLE,
+      $.proxy(this._closePop, this), $.proxy(this._afterClose, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_DATA.BUTTON);
+  },
+  _closePop: function () {
+    this._isClose = true;
+    this._popupService.closeAll();
+  },
+  _afterClose: function () {
+    if (this._isClose) {
+      this._popupService.close();
+    }
   }
 };
