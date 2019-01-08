@@ -19,7 +19,7 @@ class ProductRoamingTerminate extends TwViewController {
     }
     render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
 
-        const prodId = req.query.prodId || null;
+        const prodId = req.query.prod_id || null;
 
 
         if (FormatHelper.isEmpty(prodId)) {
@@ -32,9 +32,9 @@ class ProductRoamingTerminate extends TwViewController {
         Observable.combineLatest(
             this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
             this.apiService.request(API_CMD.BFF_10_0017, {'joinTermCd' : '03'}, {}, [prodId])
-        ).subscribe(([ prodRedisInfo, prodApiInfo ]) => {
+        ).subscribe(([ prodRedisInfo, prodBffInfo ]) => {
 
-            if (FormatHelper.isEmpty(prodRedisInfo) || (prodApiInfo.code !== API_CODE.CODE_00)) {
+            if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00)) {
                 return this.error.render(res, {
                     svcInfo: svcInfo,
                     title: PRODUCT_TYPE_NM.JOIN
@@ -44,7 +44,7 @@ class ProductRoamingTerminate extends TwViewController {
             res.render('roaming/product.roaming.terminate.html', {
                 svcInfo : svcInfo,
                 prodRedisInfo : prodRedisInfo.result.summary,
-                prodApiInfo : prodApiInfo.result,
+                prodBffInfo : prodBffInfo.result,
                 prodId : prodId
             });
         });

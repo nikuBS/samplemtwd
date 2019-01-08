@@ -10,7 +10,7 @@ Tw.ProductRoamingJoinRoamingBeginSetup = function (rootEl,prodRedisInfo,prodApiI
   this._bindBtnEvents();
   this._historyService = new Tw.HistoryService(this.$container);
   this._prodRedisInfo = JSON.parse(prodRedisInfo);
-  this._prodApiInfo = prodApiInfo;
+  this._prodApiInfo = this._removeHtmlTag(prodApiInfo);
   this._svcInfo = svcInfo;
   this._prodId = prodId;
   this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
@@ -132,7 +132,7 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
             btnNmList : [Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE]
         };
 
-        apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},data.prodId).
+        apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},[data.prodId]).
         done($.proxy(function (res) {
             if(res.code===Tw.API_CODE.CODE_00){
                 this._popupService.open({
@@ -150,7 +150,7 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
     },
     _bindCompletePopupBtnEvt : function($args1,$args2){
         $($args2).on('click','.btn-round2',$.proxy($args1._goMyInfo,$args1));
-        $($args2).on('click','.btn-floating',$.proxy($args1._goBack,$args1));
+        $($args2).on('click','.btn-floating',$.proxy($args1._goPlan,$args1));
     },
     _goMyInfo : function(){
         this._historyService.goLoad('/product/roaming/my-use');
@@ -158,15 +158,18 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
     _goBack : function(){
         this._historyService.goBack();
     },
+    _goPlan : function () {
+        this._historyService.goLoad('/product/callplan/'+this._prodId);
+    },
     _confirmInformationSetting : function () {
 
 
         var userJoinInfo = {
             'svcStartDt' : this.$container.find('#start_date').attr('data-number'),
-            'svcEndDt' : {},
-            'svcStartTm' : {},
-            'svcEndTm' : {},
-            'startEndTerm' : {}
+            'svcEndDt' : '{}',
+            'svcStartTm' : '{}',
+            'svcEndTm' : '{}',
+            'startEndTerm' : '{}'
         };
 
         var data = {

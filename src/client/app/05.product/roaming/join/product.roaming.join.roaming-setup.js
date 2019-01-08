@@ -10,7 +10,7 @@ Tw.ProductRoamingJoinRoamingSetup = function (rootEl,prodRedisInfo,prodApiInfo,s
   this._bindBtnEvents();
   this._historyService = new Tw.HistoryService(this.$container);
   this._prodRedisInfo = JSON.parse(prodRedisInfo);
-  this._prodApiInfo = prodApiInfo;
+  this._prodApiInfo = this._removeHtmlTag(prodApiInfo);
   this._svcInfo = svcInfo;
   this._prodId = prodId;
   this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
@@ -187,7 +187,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
           'select_date');
     },
     _doJoin : function(data,apiService,historyService,$containerData){
-        apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},data.prodId).
+        apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},[data.prodId]).
         done($.proxy(function (res) {
             if(res.code===Tw.API_CODE.CODE_00){
                 var completePopupData = {
@@ -212,13 +212,16 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
     },
     _bindCompletePopupBtnEvt : function($args1,$args2){
          $($args2).on('click','.btn-round2',$.proxy($args1._goMyInfo,$args1));
-         $($args2).on('click','.btn-floating',$.proxy($args1._goBack,$args1));
+         $($args2).on('click','.btn-floating',$.proxy($args1._goPlan,$args1));
     },
     _goMyInfo : function(){
         this._historyService.goLoad('/product/roaming/my-use');
     },
     _goBack : function(){
         this._historyService.goBack();
+    },
+    _goPlan : function () {
+        this._historyService.goLoad('/product/callplan/'+this._prodId);
     },
     _confirmInformationSetting : function () {
         var startDtIdx = parseInt(this.$container.find('#start_date').attr('data-idx'),10);

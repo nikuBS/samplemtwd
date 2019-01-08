@@ -82,7 +82,7 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
             requestValue.childSvcNum = phoneNum;
         }
 
-        this._apiService.request(Tw.API_CMD.BFF_10_0084, requestValue, {},this._prodId).
+        this._apiService.request(Tw.API_CMD.BFF_10_0084, requestValue, {},[this._prodId]).
         done($.proxy(function (res) {
             return res.code === Tw.API_CODE.CODE_00;
         }, this)).fail($.proxy(function (err) {

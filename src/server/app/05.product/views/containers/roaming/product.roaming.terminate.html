@@ -248,7 +248,7 @@
 
                         <li>
 
-                            <button type="button" class="tip-view" title="정보보기" data-txt="<%= prodBffInfo.preinfo.joinNoticeList[i].noticeTxt %>" aria-haspopup="true">TIP</button>
+
                         </li>
                     </ul>
                 </div>
@@ -276,7 +276,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-        new Tw.ProductRoamingTerminate($('.wrap'),'<%- JSON.stringify(prodBffInfo) %>',<%- JSON.stringify(svcInfo) %>,'<%- String(prodId)%>',<%- JSON.stringify(prodRedisInfo) %>);
+        new Tw.ProductRoamingTerminate($('.wrap'),<%- JSON.stringify(prodBffInfo) %>,<%- JSON.stringify(svcInfo) %>,'<%- String(prodId) %>',<%- JSON.stringify(prodRedisInfo) %>);
 
     });
 </script>

@@ -4,23 +4,22 @@
  * Date: 2018.11.30
  */
 
-Tw.ProductRoamingJoinConfirmInfo = function (rootEl,data,doJoinCallBack,closeCallBack,hash,rootData) {
+Tw.ProductRoamingJoinConfirmInfo = function (rootEl,data,doJoinCallBack,closeCallBack,hash,rootData,pageProdId) {
   this.$rootContainer = rootEl;
-  this._popupData = data;
-  this._page = false;
+  this._page = hash === null;
+  this._popupData = this._arrangeAgree(data);
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$rootContainer);
-  if(hash===null){
+  if(this._page){
       this._$popupContainer = this.$rootContainer;
-      this._prodBffInfo = data;
       this._prodRedisInfo = rootData;
-      this._page = true;
+      this._prodId = pageProdId;
       this._bindPopupElementEvt(this.$rootContainer);
       return;
   }
   this._doJoinCallBack = doJoinCallBack;
-  this._openConfirmRoamingInfoPopup(data,closeCallBack,hash);
+  this._openConfirmRoamingInfoPopup(this._popupData,closeCallBack,hash);
   this._rootData = rootData;
 };
 
@@ -65,9 +64,9 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         var $popupLayer = $(popupObj);
         this._$allAgreeElement = this._$popupContainer.find('.all.checkbox>input');
         this._$individualAgreeElement = this._$popupContainer.find('.individual.checkbox>input');
-
         $popupLayer.on('click','#do_join',$.proxy(this._doJoin,this));
-        if(this._popupData.showStipulation===false||_.size(this._popupData.stipulationInfo)===0){
+        $popupLayer.on('click','.agree-view',$.proxy(this._showDetailContent,this));
+        if(this._popupData.agreeCnt<=0){
             this._$popupContainer.find('#do_join').removeAttr('disabled');
         }else{
             $popupLayer.on('click','.all.checkbox>input',$.proxy(this._allAgree,this));
@@ -125,16 +124,16 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     },
     _excuteJoin : function () {
         var userJoinInfo = {
-            'svcStartDt' : {},
-            'svcEndDt' : {},
-            'svcStartTm' : {},
-            'svcEndTm' : {},
-            'startEndTerm' : {}
+            'svcStartDt' : '{}',
+            'svcEndDt' : '{}',
+            'svcStartTm' : '{}',
+            'svcEndTm' : '{}',
+            'startEndTerm' : '{}'
         };
 
 
 
-        this._apiService.request(Tw.API_CMD.BFF_10_0084, userJoinInfo, {},this.prodId).
+        this._apiService.request(Tw.API_CMD.BFF_10_0084, userJoinInfo, {},[this._prodId]).
         done($.proxy(function (res) {
             if(res.code===Tw.API_CODE.CODE_00){
                 var completePopupData = {
@@ -159,6 +158,46 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
 
         }, this));
 
+    },
+    _showDetailContent : function (targetEvt) {
+        var $currentTarget = $(targetEvt.currentTarget);
+        this._nowShowAgreeType = $currentTarget.data('type');
+        this._popupService.open({
+            hbs: 'FT_01_03_L01',
+            data: {
+                title: $currentTarget.data('tit'),
+                html: $currentTarget.data('txt')
+            }
+        },$.proxy(this._bindDetailAgreePopupEvt,this), null, 'agree_pop');
+    },
+    _bindDetailAgreePopupEvt : function (popEvt){
+        $(popEvt).on('click','.fe-btn_ok',$.proxy(this._detailAgreePopupEvt,this));
+    },
+    _detailAgreePopupEvt : function (){
+        this._historyService.goBack();
+        this._$popupContainer.find('.'+this._nowShowAgreeType).trigger('click');
+    },
+    _arrangeAgree : function(data){
+        var targetObj;
+        data.agreeCnt = 0;
+        if(this._page){
+            targetObj = data.stipulationInfo;
+        }else{
+            targetObj = data.autoInfo.stipulationInfo;
+        }
+        Object.keys(targetObj).map($.proxy(function(objectKey) {
+            if(objectKey.indexOf('Ctt')>=0){
+                targetObj[objectKey+'Tit'] = targetObj[objectKey].replace(/<([^>]+)>/ig,'');
+            }else if(objectKey.indexOf('AgreeYn')>=0){
+                data.agreeCnt = targetObj[objectKey] === 'Y'?data.agreeCnt+1:data.agreeCnt;
+            }
+        },this));
+        if(this._page){
+            data.stipulationInfo = targetObj;
+        }else{
+            data.autoInfo.stipulationInfo = targetObj;
+        }
+        return data;
     },
     _bindCompletePopupEvt : function (popupObj) {
         $(popupObj).on('click','.btn-round2',this._goMyInfo);

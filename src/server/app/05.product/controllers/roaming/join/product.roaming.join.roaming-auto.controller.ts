@@ -35,8 +35,6 @@ class ProductRoamingJoinRoamingAuto extends TwViewController {
             this.apiService.request(API_CMD.BFF_10_0017, {'joinTermCd' : '01'}, {}, [prodId]),
             this.apiService.request(API_CMD.BFF_10_0091, {}, {}, [prodId])
         ).subscribe(([ prodRedisInfo, prodApiInfo, prodServiceTimeInfo ]) => {
-            console.log(JSON.stringify(pageInfo))
-
             if (FormatHelper.isEmpty(prodRedisInfo) || (prodApiInfo.code !== API_CODE.CODE_00) || (prodServiceTimeInfo.code !== API_CODE.CODE_00)) {
                 return this.error.render(res, {
                     svcInfo: svcInfo,

@@ -119,9 +119,9 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
         var handlebarsTemplate = Handlebars.compile(this.$alarmTemplate.html());
         this.$container.find('#alarm_list').append(handlebarsTemplate(templateData));
     },
-  _removeOnList : function ($args) {
+  _removeOnList : function (args) {
 
-      var selectedIndex = parseInt($($args).attr('data-idx'),10);
+      var selectedIndex = parseInt($(args).attr('data-idx'),10);
       this._addedList.splice(selectedIndex,1);
       this._changeList();
   },
@@ -155,15 +155,18 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
 
         }, this));
    },
-    _bindCompletePopupBtnEvt : function($args1,$args2){
-        $($args2).on('click','.btn-round2',$.proxy($args1._goMyInfo,$args1));
-        $($args2).on('click','.btn-floating',$.proxy($args1._goBack,$args1));
+    _bindCompletePopupBtnEvt : function(args1,args2){
+        $(args2).on('click','.btn-round2',$.proxy(args1._goMyInfo,args1));
+        $(args2).on('click','.btn-floating',$.proxy(args1._goPlan,args1));
     },
     _goMyInfo : function(){
         this._historyService.goLoad('/product/roaming/my-use');
     },
     _goBack : function(){
         this._historyService.goBack();
+    },
+    _goPlan : function () {
+        this._historyService.goLoad('/product/callplan/'+this._prodId);
     },
    _confirmInformationSetting : function () {
         var userJoinInfo = {

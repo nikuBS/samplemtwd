@@ -117,6 +117,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
             var expireDate = parseInt(this._expireDate,10) + parseInt(startDateElement.attr('data-idx'),10);
             var endDate = moment().add(expireDate, 'days').format('YYYY. MM. DD');
             endDateElement.text(endDate);
+            endDateElement.attr('data-number',moment().add(expireDate, 'days').format('YYYYMMDD'));
             endTimeElement.text(startTime);
         }else{
             this.$container.find('.bt-fixed-area button').attr('disabled','disabled');
@@ -175,7 +176,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
         if($containerData._prodId==='NA00005690'||$containerData._prodId==='NA00005693'){
             completePopupData.btnNmList.unshift(Tw.ROAMING_COMBINE_LINE_STRING.COMBINE_LINE);
         }
-        apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},data.prodId).
+        apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},[data.prodId]).
         done($.proxy(function (res) {
             if(res.code===Tw.API_CODE.CODE_00){
                 this._popupService.open({
@@ -192,7 +193,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
         }, this));
     },
     _bindCompletePopupBtnEvt : function($args1,$args2){
-        $($args2).on('click','.btn-floating',$.proxy($args1._goBack,$args1));
+        $($args2).on('click','.btn-floating',$.proxy($args1._goPlan,$args1));
 
         if($args1._prodId==='NA00005690'||$args1._prodId==='NA00005693'){
             $($args2).on('click','#btn0.btn-round2',$.proxy($args1._goSetting,$args1));
@@ -207,17 +208,20 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
     _goBack : function(){
         this._historyService.goBack();
     },
+    _goPlan : function () {
+        this._historyService.goLoad('/product/callplan/'+this._prodId);
+    },
     _goSetting : function(){
-        this._historyService.goLoad('/product/roaming/setting/roaming-combine?prodId='+this._prodId);
+        this._historyService.goLoad('/product/roaming/setting/roaming-combine?prod_id='+this._prodId);
     },
     _confirmInformationSetting : function () {
 
         var userJoinInfo = {
             'svcStartDt' : this.$container.find('#start_date').attr('data-number'),
-            'svcEndDt' : {},
+            'svcEndDt' : this.$container.find('#end_date').attr('data-number'),
             'svcStartTm' : this.$container.find('#start_time').attr('data-number'),
-            'svcEndTm' : {},
-            'startEndTerm' : {}
+            'svcEndTm' : this.$container.find('#start_time').attr('data-number'),
+            'startEndTerm' : this._expireDate
         };
 
         var data = {
@@ -232,7 +236,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
                         prodFee : this._prodRedisInfo.basFeeInfo,
                         description : this._prodRedisInfo.prodSmryDesc,
                         autoInfo : this._prodApiInfo,
-                        showStipulation : Object.keys(this._prodApiInfo.stipulationInfo).length>0,
+                        agreeCnt : this._agreeCnt,
                         joinType : 'auto'
                    };
 
