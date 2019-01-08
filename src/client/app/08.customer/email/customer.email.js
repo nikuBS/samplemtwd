@@ -37,6 +37,7 @@ Tw.CustomerEmail.prototype = {
     this.$container.on('click', '.cancel', $.proxy(this._onChangeContent, this));
     this.$container.on('keyup blur change', '.fe-text_title', $.proxy(this._onChangeTitle, this));
     this.$container.on('keyup blur change', '.fe-text_content', $.proxy(this._onChangeContent, this));
+    this.$container.on('keyup', '.fe-numeric', $.proxy(this._onKeyUpValidNumber, this));
     this.$container.on('keyup', '.fe-service_phone', $.proxy(this._onKeyUpPhoneNumber, this));
     this.$container.on('keyup', '.fe-quality_phone', $.proxy(this._onKeyUpPhoneNumber, this));
     this.$container.on('keyup', '.fe-service_email', $.proxy(this._onKeyUpEmail, this));
@@ -47,6 +48,18 @@ Tw.CustomerEmail.prototype = {
     this.$container.on('click', '.fe-quality_sms', $.proxy(this._openSMSAlert, this));
     this.$container.on('click', '.fe-term-private-collect', $.proxy(this._openTermLayer, this, '55'));
     this.$container.on('click', '.fe-term-private-agree', $.proxy(this._openTermLayer, this, '37'));
+    this.$container.on('click', '.fe-service-cntcNumClCd', $.proxy(this._onChangeReceiveContact, this));
+  },
+
+  _onChangeReceiveContact: function (e) {
+    var radioIndex = $(e.currentTarget).find('.radiobox.focus').index();
+    var $wrap_inquiry = $(e.currentTarget).closest('.inquiryform-wrap');
+    var $wrap_sms = $wrap_inquiry.find('.fe-wrap-sms');
+    if ( radioIndex === 0 ) {
+      $wrap_sms.show();
+    } else {
+      $wrap_sms.hide();
+    }
   },
 
   _onClickBtnAddr: function (e) {
@@ -73,6 +86,14 @@ Tw.CustomerEmail.prototype = {
     }
   },
 
+  _onKeyUpValidNumber: function (e) {
+    var $elNumber = $(e.currentTarget);
+    var number = !!$elNumber.val() ? $elNumber.val() : '';
+    var sNumber = number.match(/\d+/g);
+
+    $elNumber.val(sNumber);
+  },
+
   _onKeyUpEmail: function (e) {
     var $elEmail = $(e.currentTarget);
     var $elErrorEmail = $elEmail.closest('.inputbox').siblings('.fe-error-email');
@@ -86,7 +107,6 @@ Tw.CustomerEmail.prototype = {
 
   _isValidPhone: function (sPhoneNumber) {
     return Tw.ValidationHelper.isTelephone(sPhoneNumber) || Tw.ValidationHelper.isCellPhone(sPhoneNumber);
-
   },
 
   _isValidEmail: function (sEmail) {
@@ -165,7 +185,7 @@ Tw.CustomerEmail.prototype = {
         this._popupService.close();
       }, this),
       $.proxy(function () {
-        if (confirmed) {
+        if ( confirmed ) {
           this._historyService.goBack();
         }
       }, this),
