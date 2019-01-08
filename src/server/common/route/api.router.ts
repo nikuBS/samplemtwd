@@ -457,11 +457,11 @@ class ApiRouter {
   private logoutTid(req: Request, res: Response, next: NextFunction) {
     this.apiService.setCurrentReq(req, res);
     this.loginService.setCurrentReq(req, res);
-    Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_03_0001, {}),
-      this.loginService.logoutSession()
-    ).subscribe((resp) => {
-      res.json({ code: API_CODE.CODE_00 });
+    this.apiService.request(API_CMD.BFF_03_0001, {})
+      .switchMap((resp) => {
+        return this.loginService.logoutSession();
+      }).subscribe((resp) => {
+        res.json({ code: API_CODE.CODE_00 });
     });
   }
 

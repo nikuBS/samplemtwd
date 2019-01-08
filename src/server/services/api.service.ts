@@ -137,11 +137,14 @@ class ApiService {
     this.logger.info(this, '[API RESP]', !contentType.includes('json') ? 'No JSON' : respData);
 
     if ( command.server === API_SERVER.BFF ) {
-      this.setServerSession(resp.headers);
+      this.setServerSession(resp.headers).subscribe(() => {
+        observer.next(respData);
+        observer.complete();
+      });
+    } else {
+      observer.next(respData);
+      observer.complete();
     }
-
-    observer.next(respData);
-    observer.complete();
   }
 
   // private apiCallbackNative(observer, command, resp) {
@@ -167,14 +170,19 @@ class ApiService {
       this.logger.error(this, '[API ERROR]', error);
 
       if ( command.server === API_SERVER.BFF ) {
-        this.setServerSession(headers);
+        this.setServerSession(headers).subscribe((resp) => {
+          observer.next(error);
+          observer.complete();
+        });
+      } else {
+        observer.next(error);
+        observer.complete();
       }
-      observer.next(error);
     } else {
       this.logger.error(this, '[API ERROR] Exception', err);
       observer.next({ code: API_CODE.CODE_500 });
+      observer.complete();
     }
-    observer.complete();
   }
 
   // private handleErrorNative(observer, command, err) {
@@ -197,15 +205,15 @@ class ApiService {
   //   observer.complete();
   // }
 
-  private setServerSession(headers): any {
+  private setServerSession(headers): Observable<any> {
     this.logger.info(this, 'Headers: ', JSON.stringify(headers));
     if ( headers['set-cookie'] ) {
       const serverSession = this.parseSessionCookie(headers['set-cookie'][0]);
-      this.logger.info(this, 'Set Session Cookie', serverSession);
-      this.loginService.setServerSession(serverSession).subscribe();
-      return serverSession;
+      this.logger.info(this, '[Set Session Cookie]', serverSession);
+      return this.loginService.setServerSession(serverSession);
+    } else {
+      return Observable.of({});
     }
-    return null;
   }
 
   private parseSessionCookie(cookie: string): string {

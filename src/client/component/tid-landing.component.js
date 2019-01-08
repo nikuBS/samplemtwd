@@ -50,7 +50,12 @@ Tw.TidLandingComponent.prototype = {
     this._goLoad(Tw.NTV_CMD.SIGN_UP, '/common/member/signup-guide', $.proxy(this._onNativeSignup, this));
   },
   goLogout: function () {
-    this._goLoad(Tw.NTV_CMD.LOGOUT, '/common/tid/logout', $.proxy(this._onNativeLogout, this));
+    if ( Tw.BrowserHelper.isApp() ) {
+      this._apiService.request(Tw.NODE_CMD.LOGOUT_TID, {})
+        .done($.proxy(this._successLogout, this));
+    } else {
+      this._historyService.goLoad('/common/tid/logout');
+    }
   },
   _onClickBtnAuthLine: function () {
     this._historyService.goLoad('/common/member/line');
@@ -115,15 +120,17 @@ Tw.TidLandingComponent.prototype = {
       this._historyService.goLoad('/common/member/login/fail?errorCode=' + resp.code);
     }
   },
-  _onNativeLogout: function () {
-    this._apiService.request(Tw.NODE_CMD.LOGOUT_TID, {})
-      .done($.proxy(this._successLogout, this));
-  },
   _successLogout: function (resp) {
-    Tw.Logger.info('[Logout Resp]', resp, Tw.CommonHelper.getCookie('TWM'));
-    this._historyService.goLoad('/common/member/logout/complete');
+    Tw.Logger.info('[Logout Resp]', resp);
     // if ( resp.code === NTV_CODE.CODE_00 ) {
     // }
+    this._nativeService.send(Tw.NTV_CMD.LOGOUT, {}, $.proxy(this._onNativeLogout, this));
+  },
+  _onNativeLogout: function (resp) {
+    Tw.Logger.info('[Logout TID Resp]', resp, Tw.CommonHelper.getCookie('TWM'));
+    // if ( resp.code === NTV_CODE.CODE_00 ) {
+    // }
+    this._historyService.goLoad('/common/member/logout/complete');
   },
   _successSetSession: function () {
     this._historyService.reload();
