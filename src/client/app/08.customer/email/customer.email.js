@@ -186,7 +186,7 @@ Tw.CustomerEmail.prototype = {
       }, this),
       $.proxy(function () {
         if ( confirmed ) {
-          this._historyService.goBack();
+          this._history.goBack();
         }
       }, this),
       Tw.BUTTON_LABEL.NO,
