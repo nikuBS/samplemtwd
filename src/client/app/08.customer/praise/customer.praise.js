@@ -49,9 +49,9 @@ Tw.CustomerPraise.prototype = {
 
   _openSelectTypePopup: function() {
     var selectedType = this._selectedType,
-      list = this._selectedType
-        ? _.map(Tw.CUSTOMER_PRAISE_SUBJECT_TYPES, function(item, index) {
-            if (selectedType === index) {
+      list = selectedType
+        ? _.map(Tw.CUSTOMER_PRAISE_SUBJECT_TYPES, function(item) {
+            if (item['radio-attr'].indexOf(selectedType) !== -1) {
               return $.extend({}, item, { 'radio-attr': item['radio-attr'] + ' checked' });
             }
             return item;
