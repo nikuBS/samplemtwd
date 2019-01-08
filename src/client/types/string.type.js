@@ -137,7 +137,11 @@ Tw.TOAST_TEXT = {
   MYT_FARE_HISTORY_AUTOPAYMENT_BLOCK: '차단 신청이 완료되었습니다.',
   MTY_FARE_HISTORY_AUTOPAYMENT_UNBLOCK: '헤제 신청이 완료되었습니다.',
   MYT_DATA_LIMIT_BLOCK: '데이터 차단이 설정되었습니다.',
-  MYT_DATA_LIMIT_UNBLOCK: '데이터 차단해제가 설정되었습니다.'
+  MYT_DATA_LIMIT_UNBLOCK: '데이터 차단해제가 설정되었습니다.',
+  QUICK_ADD: 'MY 바로가기에 추가되었습니다.',
+  QUICK_REMOVE: 'MY 바로가기에서 제거되었습니다.',
+  FIDO_USE: '생체인증을 사용합니다.',
+  FIDO_NOT_USE: '생체인증을 사용하지 않습니다.'
 };
 
 Tw.PERIOD_UNIT = {
@@ -408,9 +412,7 @@ Tw.ALERT_MSG_HOME = {
   A61: '',
   A62: '',
   A63: '',
-  A64: '',
-  QUICK_ADD: 'MY 바로가기에 추가되었습니다.',
-  QUICK_REMOVE: 'MY 바로가기에서 제거되었습니다.'
+  A64: ''
 };
 
 Tw.ALERT_MSG_MYT_DATA = {

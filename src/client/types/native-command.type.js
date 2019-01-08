@@ -66,4 +66,5 @@ Tw.NTV_STORAGE = {
   MOST_RECENT_PUSH_SEQ: 'mostRecentPushSeq',
   LAST_READ_PUSH_SEQ: 'lastReadPushSeq',
   HOME_WELCOME: 'homeWelcome',
+  FIDO_USE: 'fidoUse'
 };
