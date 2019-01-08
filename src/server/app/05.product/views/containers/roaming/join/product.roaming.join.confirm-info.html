@@ -284,8 +284,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-        new Tw.ProductRoamingJoinConfirmInfo($('.wrap'),<%- JSON.stringify(prodBffInfo) %>,null,<%- JSON.stringify(svcInfo) %>,'<%- String(prodId)%>',<%- JSON.stringify(prodRedisInfo) %>);
-
+        new Tw.ProductRoamingJoinConfirmInfo($('.wrap'),<%- JSON.stringify(prodBffInfo) %>,null,null,null,<%- JSON.stringify(prodRedisInfo) %>);
     });
 </script>
 <% include ../../../components/end.component.html %>
