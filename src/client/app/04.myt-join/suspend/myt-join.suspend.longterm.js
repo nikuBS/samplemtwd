@@ -238,7 +238,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
         this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_PERIOD);
         return;
       } else if ( diff > 24 ) {
-        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_PERIOD);
+        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_LONG_TERM_PERIOD);
         return;
       }
       option.svcChgRsnCd = '21';

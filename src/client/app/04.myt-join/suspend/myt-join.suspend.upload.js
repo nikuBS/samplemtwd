@@ -119,6 +119,7 @@ Tw.MytJoinSuspendUpload.prototype = {
     if ( addable ) {
       $inputBox.find('input.fileview').val('');
       $inputBox.find('input.file').prop('files', null);
+      $inputBox.find('input.file').val('');
       $inputBox.find('input.file').removeAttr('disabled').css('pointer-events', 'all');
       $inputBox.find('.fe-file-button').text(Tw.UPLOAD_FILE.BUTTON_ADD);
     } else {

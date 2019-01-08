@@ -1051,7 +1051,7 @@ Tw.MYT_JOIN_SUSPEND = {
   CANCEL_RESUSPEND: '재신청 취소',
   RESET: '해제',
   APPLY: '신청',
-  SUCCESS_LONG_TERM_SUSPEND_MESSAGE_SVC: '회선번호 : {SVC_INFO}<br />일시정지 기간 : {DURATION}',
+  SUCCESS_LONG_TERM_SUSPEND_MESSAGE_SVC: '회선번호 : {SVC_INFO}<br />장기일시정지 기간 : {DURATION}',
   SUCCESS_SUSPEND_MESSAGE: '일시정지 기간 : {DURATION}<br />일시정지 설정: {SUSPEND_TYPE}',
   SUCCESS_RESUSPEND_MESSAGE: '회선번호 : {SVC_NUMBER}<br />재시작 기간: {DURATION}',
   GO_TO_STATUS: '일시정지 신청현황',
@@ -1062,6 +1062,7 @@ Tw.MYT_JOIN_SUSPEND = {
   NOT_VALID_EMAIL: '이메일 주소가 올바르지 않습니다.',
   NOT_VALID_PHONE_NUMBER: '휴대폰 번호가 올바르지 않습니다.',
   NOT_VALID_PERIOD: '일시정지 가능 최대기간을 초과하였습니다.',
+  NOT_VALID_LONG_TERM_PERIOD: '종료일은 설정한 시작일로부터 24개월을 초과하여 설정할 수 없습니다.',
   NOT_VALID_FROM_DATE: '시작일은 오늘 이후로 지정할 수 있습니다.',
   NOT_VALID_FROM_DATE_01: '시작 일자는 당일로부터 30일 이내로 선택하실 수 있습니다.',
   ALERT_EXCEED: {
