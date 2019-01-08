@@ -11,10 +11,8 @@ Tw.ProductRoamingJoinConfirmInfo = function (rootEl,data,doJoinCallBack,closeCal
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$rootContainer);
-  if(doJoinCallBack===null){
-      this._svcInfo = closeCallBack;
+  if(hash===null){
       this._$popupContainer = this.$rootContainer;
-      this._prodId = hash;
       this._prodBffInfo = data;
       this._prodRedisInfo = rootData;
       this._page = true;
