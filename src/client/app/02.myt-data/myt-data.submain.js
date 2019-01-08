@@ -255,6 +255,10 @@ Tw.MyTDataSubMain.prototype = {
         data_arry: chart_data //데이터 obj
       });
     }
+    else {
+      this.$patternChart.hide();
+      this.$container.find('[data-id=pattern_empty]').hide();
+    }
   },
 
   _initOtherLinesInfo: function () {
