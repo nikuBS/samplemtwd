@@ -20,7 +20,13 @@ Tw.CommonShareAppInstallInfo = function (rootEl, target, loginType) {
 
 Tw.CommonShareAppInstallInfo.prototype = {
   _bindEvent: function () {
+    this.$container.on('click', '.fe-link', $.proxy(this._goLoad, this));
     this.$container.on('click', '.fe-tworld', $.proxy(this._onClickTworld, this));
+  },
+  _goLoad: function (event) {
+    var $target = $(event.currentTarget);
+    console.log($target.attr('data-link'));
+    Tw.CommonHelper.openUrlExternal($target.attr('data-link'));
   },
   _onClickTworld: function () {
     var appCustomScheme = 'mtworldapp2://tworld?target=' + encodeURIComponent(this._target) + '&loginType=' + this._loginType;
@@ -67,7 +73,7 @@ Tw.CommonShareAppInstallInfo.prototype = {
   },
   _goStore: function (isLink) {
     if (isLink || this._isLink) {
-      window.location = this._href;
+      Tw.CommonHelper.openUrlExternal(this._href);
     }
   }
 };
