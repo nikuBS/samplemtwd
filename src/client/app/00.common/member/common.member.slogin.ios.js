@@ -266,13 +266,15 @@ Tw.CommonMemberSloginIos.prototype = {
     error.addClass('none');
   },
   _onRefreshCallback: function () {
-    var interval = new Date().getTime() - this._addTime;
+    if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
+      var interval = new Date().getTime() - this._addTime;
 
-    clearTimeout(this._addTimer);
-    if ( interval > 5 * 60 * 1000 ) {
-      this._expireAddTime();
-    } else {
-      this._addTimer = setTimeout($.proxy(this._expireAddTime, this), 5 * 60 * 1000 - interval);
+      clearTimeout(this._addTimer);
+      if ( interval > 5 * 60 * 1000 ) {
+        this._expireAddTime();
+      } else {
+        this._addTimer = setTimeout($.proxy(this._expireAddTime, this), 5 * 60 * 1000 - interval);
+      }
     }
   },
   _clearAllError: function () {

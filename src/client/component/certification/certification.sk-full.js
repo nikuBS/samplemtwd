@@ -132,7 +132,9 @@ Tw.CertificationSkFull.prototype = {
     this._jobCode = Tw.BrowserHelper.isApp() ? 'NFM_MTW_CMNBSNS_AUTH' : 'NFM_MWB_CMNBSNS_AUTH';
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( resp.result.auth && resp.result.auth.jobCode ) {
-        this._jobCode = Tw.BrowserHelper.isApp() ? resp.result.auth.jobCode.mobileApp : resp.result.auth.jobCode.mobileWeb;
+        if ( !Tw.FormatHelper.isEmpty(resp.result.auth.jobCode) ) {
+          this._jobCode = Tw.BrowserHelper.isApp() ? resp.result.auth.jobCode.mobileApp : resp.result.auth.jobCode.mobileWeb;
+        }
       }
     }
     this._sendCert();
@@ -267,13 +269,15 @@ Tw.CertificationSkFull.prototype = {
     error.addClass('none');
   },
   _onRefreshCallback: function () {
-    var interval = new Date().getTime() - this._addTime;
+    if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
+      var interval = new Date().getTime() - this._addTime;
 
-    clearTimeout(this._addTimer);
-    if ( interval > 5 * 60 * 1000 ) {
-      this._expireAddTime();
-    } else {
-      this._addTimer = setTimeout($.proxy(this._expireAddTime, this), 5 * 60 * 1000 - interval);
+      clearTimeout(this._addTimer);
+      if ( interval > 5 * 60 * 1000 ) {
+        this._expireAddTime();
+      } else {
+        this._addTimer = setTimeout($.proxy(this._expireAddTime, this), 5 * 60 * 1000 - interval);
+      }
     }
   },
   _clearAllError: function () {
