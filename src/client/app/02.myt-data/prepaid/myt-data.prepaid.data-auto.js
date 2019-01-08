@@ -40,6 +40,7 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
     this.$container.on('keyup', '.fe-card-number', $.proxy(this._resetCardInfo, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
+    this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
     this.$rechargeBtn.on('click', $.proxy(this._recharge, this));
   },
   _cancel: function () {
@@ -193,6 +194,28 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
       expireMM: $.trim(this.$cardM.val()),
       expireYY: $.trim(this.$cardY.val()).substr(2,2)
     };
+  },
+  _onClose: function () {
+    var isChanged = this.$dataSelector.attr('id') !== this.$dataSelector.attr('data-origin-id') ||
+      (this.$isAuto && (this.$cardNumber.val() !== this.$hiddenNumber.val()) ||
+        (!this.$isAuto && !Tw.FormatHelper.isEmpty(this.$cardNumber.val()))) ||
+      !Tw.FormatHelper.isEmpty(this.$cardY.val()) || !Tw.FormatHelper.isEmpty(this.$cardM.val());
+
+    if (isChanged) {
+      this._popupService.openConfirmButton(null, Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_CANCEL.TITLE,
+        $.proxy(this._closePop, this), $.proxy(this._afterClose, this));
+    } else {
+      this._historyService.goBack();
+    }
+  },
+  _closePop: function () {
+    this._isClose = true;
+    this._popupService.closeAll();
+  },
+  _afterClose: function () {
+    if (this._isClose) {
+      this._popupService.close();
+    }
   },
   _recharge: function () {
     if (this._isValid()) {

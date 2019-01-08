@@ -80,7 +80,9 @@
                             <li>
                                 <label class="tit" for="formInput01">충전 데이터</label>
                                 <span class="inputbox">
-                                    <button id="<%= autoInfo.id %>" class="bt-dropdown big fe-select-data" data-code="<%= ppsInfo.dataYn %>" title="충전 데이터 선택" aria-haspopup="true">
+                                    <button id="<%= autoInfo.id %>" data-origin-id="<%= autoInfo.id %>"
+                                            class="bt-dropdown big fe-select-data" data-code="<%= ppsInfo.dataYn %>"
+                                            title="충전 데이터 선택" aria-haspopup="true">
                                         <%= autoInfo.txt %><span class="ico"></span>
                                     </button>
                                     <span class="error-txt fe-error-msg" style="display:none;">
@@ -161,7 +163,7 @@
             </div>
             <!-- // .container-wrap -->
             <!-- .popup-closeBtn -->
-            <button class="prev-step fe-common-back">취소</button>
+            <button class="prev-step fe-close">취소</button>
             <!--// .popup-closeBtn -->
         </div>
         <!-- // .popup hbs -->
