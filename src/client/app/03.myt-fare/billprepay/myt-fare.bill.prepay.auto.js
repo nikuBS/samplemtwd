@@ -228,6 +228,10 @@ Tw.MyTFareBillPrepayAuto.prototype = {
   _checkBirthday: function (event) {
     var $target = $(event.currentTarget);
     this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 6));
+
+    if (this.$isValid) {
+      this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.isBirthday($target.val()));
+    }
   },
   _checkCardExpiration: function (event) {
     var $target = $(event.currentTarget);
