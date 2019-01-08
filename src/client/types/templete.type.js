@@ -274,7 +274,7 @@ Tw.POPUP_TPL = {
       }
     ]
   },
-  FARE_PAYMENT_LIMIT: [
+  FARE_PAYMENT_SMALL_LIMIT: [
     {
       'list': [
         { 'label-attr': 'id="500000"', 'radio-attr': 'name="r2" id="500000"', txt: '50만원' },
@@ -284,6 +284,22 @@ Tw.POPUP_TPL = {
         { 'label-attr': 'id="120000"', 'radio-attr': 'name="r2" id="120000"', txt: '12만원' },
         { 'label-attr': 'id="60000"', 'radio-attr': 'name="r2" id="60000"', txt: '6만원' },
         { 'label-attr': 'id="50000"', 'radio-attr': 'name="r2" id="50000"', txt: '5만원' },
+        { 'label-attr': 'id="30000"', 'radio-attr': 'name="r2" id="30000"', txt: '3만원' },
+        { 'label-attr': 'id="10000"', 'radio-attr': 'name="r2" id="10000"', txt: '1만원' }
+      ]
+    }
+  ],
+  FARE_PAYMENT_CONTENTS_LIMIT: [
+    {
+      'list': [
+        { 'label-attr': 'id="500000"', 'radio-attr': 'name="r2" id="500000"', txt: '50만원' },
+        { 'label-attr': 'id="400000"', 'radio-attr': 'name="r2" id="400000"', txt: '40만원' },
+        { 'label-attr': 'id="300000"', 'radio-attr': 'name="r2" id="300000"', txt: '30만원' },
+        { 'label-attr': 'id="200000"', 'radio-attr': 'name="r2" id="200000"', txt: '20만원' },
+        { 'label-attr': 'id="150000"', 'radio-attr': 'name="r2" id="150000"', txt: '15만원' },
+        { 'label-attr': 'id="100000"', 'radio-attr': 'name="r2" id="100000"', txt: '10만원' },
+        { 'label-attr': 'id="90000"', 'radio-attr': 'name="r2" id="90000"', txt: '9만원' },
+        { 'label-attr': 'id="60000"', 'radio-attr': 'name="r2" id="60000"', txt: '6만원' },
         { 'label-attr': 'id="30000"', 'radio-attr': 'name="r2" id="30000"', txt: '3만원' },
         { 'label-attr': 'id="10000"', 'radio-attr': 'name="r2" id="10000"', txt: '1만원' }
       ]
