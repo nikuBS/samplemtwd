@@ -50,8 +50,12 @@
             <% if(type === 'temporary' ){ %>
             <a href="/myt-join/submain/suspend#long-term">장기일시정지 신청하기</a>
             <% } else { %>
-            <button id="bt-resuspend">재신청하기</button>
+             <% if(resuspendable){ %>
+             <button data-id="bt-resuspend" >재신청하기</button>
+             <% } else { %>
+             <button data-id="bt-resuspend" disabled >재신청하기</button>
              <% } %>
+            <% } %>
         </li>
         <li class="bt-white2">
             <button data-id="bt-reset">해제하기</button>
