@@ -10,6 +10,7 @@ Tw.ProductCommonConfirm = function(isPopup, rootEl, data, applyCallback) {
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
   this._comparePlans = new Tw.ProductMobilePlanComparePlans();
+
   this._data = this._convData(data);
   this._isApply = false;
   this._isPopup = isPopup;
@@ -119,7 +120,8 @@ Tw.ProductCommonConfirm.prototype = {
       hbs: 'product_common_confirm',
       layer: true,
       title: Tw.PRODUCT_TYPE_NM.JOIN,
-      applyBtnText: Tw.BUTTON_LABEL.JOIN
+      applyBtnText: Tw.BUTTON_LABEL.JOIN,
+      isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this._data.preinfo.toProdInfo.prodId) === -1
     }), $.proxy(this._setContainer, this, true), $.proxy(this._closePop, this), 'join_confirm');
   },
 
