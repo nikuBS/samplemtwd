@@ -25,7 +25,6 @@ Tw.CommonShareAppInstallInfo.prototype = {
   },
   _goLoad: function (event) {
     var $target = $(event.currentTarget);
-    console.log($target.attr('data-link'));
     Tw.CommonHelper.openUrlExternal($target.attr('data-link'));
   },
   _onClickTworld: function () {
