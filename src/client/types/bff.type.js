@@ -19,6 +19,7 @@ Tw.PAYMENT_POINT_VALUE = {
 };
 
 Tw.LINE_NAME = {
+  ALL: 'a',
   MOBILE: 'm',
   INTERNET_PHONE_IPTV: 's',
   SECURITY: 'o'
