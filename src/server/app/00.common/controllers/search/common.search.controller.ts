@@ -24,6 +24,7 @@ class CommonSearch extends TwViewController {
 
       const query =  encodeURI(req.query.keyword) || '';
       const collection = 'all';
+      const step = req.query.step || 1;
       let requestObj, researchCd, researchQuery;
       if (FormatHelper.isEmpty(req.query.in_keyword)) {
           requestObj = { query , collection };
@@ -39,7 +40,8 @@ class CommonSearch extends TwViewController {
               searchInfo : searchResult.result,
               keyword : searchResult.result.query,
               relatedKeyword : relatedKeyword,
-              inKeyword : searchResult.result.researchQuery
+              inKeyword : searchResult.result.researchQuery,
+              step : step
           });
       }
 
@@ -65,7 +67,7 @@ class CommonSearch extends TwViewController {
                       return this.error.render(res, {
                           svcInfo: svcInfo,
                           code: surveyList.code,
-                          msg: surveyList.msg,
+                          msg: surveyList.msg
                       });
                   }
                   res.render('search/common.search.not_found.html', {
@@ -75,7 +77,8 @@ class CommonSearch extends TwViewController {
                       relatedKeyword : relatedKeyword,
                       inKeyword : searchResult.result.researchQuery,
                       surveyList : surveyList.result,
-                      suggestQuery : searchResult.result.suggestQuery
+                      suggestQuery : searchResult.result.suggestQuery,
+                      step : step
                   });
               });
           } else if (searchResult.result.search[0].immediate.data.length <= 0 || svcInfo === null) {

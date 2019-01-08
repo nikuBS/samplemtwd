@@ -20,6 +20,7 @@ class CommonSearchMore extends TwViewController {
 
         const query =  encodeURI(req.query.keyword) || '';
         const collection = req.query.category || null;
+        const step = req.query.step || 1;
         const pageNum = req.query.page || 1;
         const sort = req.query.arrange || 'R';
         let requestObj, researchCd, researchQuery;
@@ -69,7 +70,8 @@ class CommonSearchMore extends TwViewController {
                         relatedKeyword : relatedKeyword,
                         inKeyword : searchResult.result.researchQuery,
                         surveyList : surveyList.result,
-                        suggestQuery : searchResult.result.suggestQuery
+                        suggestQuery : searchResult.result.suggestQuery,
+                        step : step
                     });
                 });
             } else {
@@ -80,7 +82,8 @@ class CommonSearchMore extends TwViewController {
                     pageNum : pageNum,
                     relatedKeyword : relatedKeyword,
                     inKeyword : searchResult.result.researchQuery,
-                    accessQuery : req.query
+                    accessQuery : req.query,
+                    step : step
                 });
             }
         });

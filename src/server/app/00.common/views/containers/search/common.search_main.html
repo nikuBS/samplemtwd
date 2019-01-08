@@ -20,11 +20,9 @@
     <div class="sch-form">
             <span class="inputbox">
                 <span class="input">
-                    <!--<form action="/common/search" method="get">-->
-                    <input type="text" name="keyword" id="search_input" placeholder="<%= recommendKeyword.keywordDs %>" title="검색" value="">
                     <input type="hidden" id="selected_keyword" value="<%= recommendKeyword.keywordNm %>">
-                    <!--</form>-->
-                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                    <input type="text" name="keyword" id="search_input" placeholder="<%= recommendKeyword.keywordDs %>" title="검색" >
+                    <button class="cancel" style="display: none;" ><span class="blind">삭제</span></button>
                 </span>
             </span>
         <button class="icon-gnb-search"><span class="blind">검색</span></button>
@@ -38,7 +36,7 @@
             <ul class="popularsearchword-list search-keyword" id="auto_complete_list">
                 <script type="text/x-handlebars-template" id="auto_complete_template">
                 <li>
-                    <a href="/common/search?keyword={{listData.linkStr}}" class="category-type">
+                    <a data-param="{{listData.linkStr}}" class="category-type search-element">
                         <p class="text">{{{listData.showStr}}}</p>
                     </a>
                 </li>
@@ -127,7 +125,7 @@
 <script>
     $(document).ready(function () {
 
-        new Tw.CommonSearchMain($('.wrap'),<%- JSON.stringify(svcInfo)%>);
+        new Tw.CommonSearchMain($('.wrap'),<%- JSON.stringify(svcInfo)%>,'<%- CDN %>','<%- step %>');
 
     });
 </script>

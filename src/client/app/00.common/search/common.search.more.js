@@ -4,12 +4,13 @@
  * Date: 2018.12.11
  */
 
-Tw.CommonSearchMore = function (rootEl,searchInfo,svcInfo,cdn,accessQuery) {
+Tw.CommonSearchMore = function (rootEl,searchInfo,svcInfo,cdn,accessQuery,step) {
     this.$container = rootEl;
     //this._category = category;
     this._historyService = new Tw.HistoryService();
     //this._searchInfo = JSON.parse(this._decodeEscapeChar(searchInfo));
     this._cdn = cdn;
+    this._step = step;
     this._accessQuery = accessQuery;
     this._popupService = Tw.Popup;
     this._searchInfo = searchInfo;
@@ -32,7 +33,7 @@ Tw.CommonSearchMore.prototype = {
         this.$container.on('click','.icon-historyback-40',$.proxy(this._historyService.goBack,this));
         this.$container.on('change','.sispopup',$.proxy(this._pageChange,this));
         this.$container.on('click','.page-change',$.proxy(this._pageChange,this));
-        this.$container.on('click','.close-area',$.proxy(this._historyService.goBack,this));
+        this.$container.on('click','.close-area',$.proxy(this._closeSearch,this));
         this.$container.on('click','.icon-gnb-search',$.proxy(this._doSearch,this));
         this.$container.on('click','.search-element',$.proxy(this._searchRelatedKeyword,this));
         this.$container.on('click','.filterselect-btn',$.proxy(this._showSelectFilter,this));
@@ -123,15 +124,17 @@ Tw.CommonSearchMore.prototype = {
     },
     _searchRelatedKeyword : function (targetEvt) {
         var keyword = $(targetEvt.currentTarget).data('param');
-        var goUrl = '/common/search?keyword='+keyword;
+        var goUrl = '/common/search?keyword='+keyword+'&step='+(Number(this._step)+1);
         this._addRecentlyKeyword(keyword);
         this._historyService.goLoad(goUrl);
     },
     _doSearch : function () {
         var inResult = this.$container.find('#resultsearch').is(':checked');
         var requestUrl = inResult?'/common/search/more?category='+this._category+'&keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
+        requestUrl+=this.$inputElement.val();
+        requestUrl+='&step='+(Number(this._step)+1);
         this._addRecentlyKeyword(this.$inputElement.val());
-        this._historyService.goLoad(requestUrl+this.$inputElement.val());
+        this._historyService.goLoad(requestUrl);
     },
     _showSelectFilter : function () {
         var listData = [
@@ -158,6 +161,7 @@ Tw.CommonSearchMore.prototype = {
         if(this._accessQuery.in_keyword){
             changeFilterUrl+='&in_keyword='+this._accessQuery.in_keyword;
         }
+        changeFilterUrl+='&step='+(Number(this._step)+1);
         this._historyService.goLoad(changeFilterUrl);
     },
     _goLink : function (linkEvt) {
@@ -172,5 +176,8 @@ Tw.CommonSearchMore.prototype = {
         }else {
             this._historyService.goLoad(linkUrl);
         }
+    },
+    _closeSearch : function () {
+        this._historyService.go(Number(this._step)*-1);
     }
 };

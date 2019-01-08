@@ -4,12 +4,13 @@
  * Date: 2018.12.11
  */
 
-Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn) {
+Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step) {
     this._cdn = cdn;
     this.$container = rootEl;
     this._historyService = new Tw.HistoryService();
     this._svcInfo = svcInfo;
     this._searchInfo = searchInfo;
+    this._step = step;
     this._accessKeyword = this._searchInfo.query;
     this._init(this._searchInfo);
 };
@@ -39,7 +40,7 @@ Tw.CommonSearch.prototype = {
         }
         this.$container.on('keyup','#keyword',$.proxy(this._inputChangeEvent,this));
         this.$container.on('click','.icon-historyback-40',$.proxy(this._historyService.goBack,this));
-        this.$container.on('click','.close-area',$.proxy(this._historyService.goBack,this));
+        this.$container.on('click','.close-area',$.proxy(this._closeSearch,this));
         this.$container.on('click','.search-element',$.proxy(this._searchRelatedKeyword,this));
         this.$container.on('click','.list-data',$.proxy(this._goLink,this));
     },
@@ -105,8 +106,10 @@ Tw.CommonSearch.prototype = {
         var inResult = this.$container.find('#resultsearch').is(':checked');
         if(args.keyCode===13){
             var requestUrl = inResult?'/common/search?keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
+            requestUrl+=args.currentTarget.value;
+            requestUrl+='&step='+(Number(this._step)+1);
             this._addRecentlyKeyword(args.currentTarget.value);
-            this._historyService.goLoad(requestUrl+args.currentTarget.value);
+            this._historyService.goLoad(requestUrl);
         }
     },
     _showBanner : function (data) {
@@ -153,7 +156,7 @@ Tw.CommonSearch.prototype = {
     },
     _searchRelatedKeyword : function (targetEvt) {
         var keyword = $(targetEvt.currentTarget).data('param');
-        var goUrl = '/common/search?keyword='+keyword;
+        var goUrl = '/common/search?keyword='+keyword+'&step='+(Number(this._step)+1);
         this._addRecentlyKeyword(keyword);
         this._historyService.goLoad(goUrl);
     },
@@ -169,6 +172,9 @@ Tw.CommonSearch.prototype = {
         }else{
             this._historyService.goLoad(linkUrl);
         }
+    },
+    _closeSearch : function () {
+        this._historyService.go(Number(this._step)*-1);
     }
 
 
