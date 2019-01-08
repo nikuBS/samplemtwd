@@ -123,10 +123,15 @@ Tw.ProductAppsDetail.prototype = {
       }
 
       setTimeout(function() {
-        window.location = store;
+        window.location.replace(store);
       }, 1000);
     }
-    window.location.href = this._app.lnkgAppScmCtt;
+
+    if (this._app.lnkgAppScmCtt) {
+      window.location.replace(this._app.lnkgAppScmCtt);
+    } else if (store.length > 0) {
+      window.location.replace(store);
+    }
   },
 
   _handleOpenApp: function() {
@@ -137,7 +142,16 @@ Tw.ProductAppsDetail.prototype = {
   _handleOpenMarket: function(e) {
     var market = e.currentTarget.getAttribute('data-market'),
       url = this._stores[market];
-    if (url && url !== '') {
+
+    if (market === 'oneStore') {
+      var pid = Tw.UrlHelper.getQueryParams(url).pid;
+
+      if (pid) {
+        url = Tw.OUTLINK.ONE_STORE_PREFIX + pid;
+      }
+    }
+
+    if (url && url.length > 0) {
       this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
         type: Tw.NTV_BROWSER.EXTERNAL,
         href: url
