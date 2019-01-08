@@ -48,6 +48,18 @@ Tw.CustomerEmail.prototype = {
     this.$container.on('click', '.fe-quality_sms', $.proxy(this._openSMSAlert, this));
     this.$container.on('click', '.fe-term-private-collect', $.proxy(this._openTermLayer, this, '55'));
     this.$container.on('click', '.fe-term-private-agree', $.proxy(this._openTermLayer, this, '37'));
+    this.$container.on('click', '.fe-service-cntcNumClCd', $.proxy(this._onChangeReceiveContact, this));
+  },
+
+  _onChangeReceiveContact: function (e) {
+    var radioIndex = $(e.currentTarget).find('.radiobox.focus').index();
+    var $wrap_inquiry = $(e.currentTarget).closest('.inquiryform-wrap');
+    var $wrap_sms = $wrap_inquiry.find('.fe-wrap-sms');
+    if ( radioIndex === 0 ) {
+      $wrap_sms.show();
+    } else {
+      $wrap_sms.hide();
+    }
   },
 
   _onClickBtnAddr: function (e) {
@@ -77,7 +89,7 @@ Tw.CustomerEmail.prototype = {
   _onKeyUpValidNumber: function (e) {
     var $elNumber = $(e.currentTarget);
     var number = !!$elNumber.val() ? $elNumber.val() : '';
-    var sNumber = number.match( /\d+/g);
+    var sNumber = number.match(/\d+/g);
 
     $elNumber.val(sNumber);
   },
