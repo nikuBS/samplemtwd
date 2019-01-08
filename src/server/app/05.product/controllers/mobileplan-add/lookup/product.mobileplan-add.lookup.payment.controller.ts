@@ -25,7 +25,9 @@ class ProductMobileplanAddLookupPayment extends TwViewController {
       return null;
     }
 
-    return paymentInfo.combinationLineList[0];
+    return Object.assign(paymentInfo.combinationLineList[0], {
+      svcNumMask: FormatHelper.conTelFormatWithDash(paymentInfo.combinationLineList[0].svcNumMask)
+    });
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {

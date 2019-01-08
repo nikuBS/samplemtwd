@@ -60,7 +60,7 @@
         </div>
         <% } else { %>
         <div class="limit">
-            가입제한 상품
+            <%= (basicInfo.prodStCd === 'F1000' ? '가입제한 상품' : '가입불가 상품') %>
         </div>
         <% } %>
         <% } else { %>
@@ -86,7 +86,7 @@
             ( isMobileplanAdd || isWireplanAdd || isRoaming || isCombine || isDiscount ) && !isJoined)
         ) { %>
         <div class="limit">
-            가입제한 상품
+            <%= (basicInfo.prodStCd === 'F1000' ? '가입제한 상품' : '가입불가 상품') %>
         </div>
         <% } %>
         <% } %>

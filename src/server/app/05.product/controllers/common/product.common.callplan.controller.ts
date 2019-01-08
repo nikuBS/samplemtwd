@@ -323,12 +323,14 @@ class ProductCommonCallplan extends TwViewController {
     };
 
     contentsInfo.forEach((item) => {
+      item.ledItmDesc = item.ledItmDesc.replace(/(?:\r\n|\r|\n)/g, '<br>');
+
       if (!isOpen && (item.vslYn && item.vslYn === 'Y')) {
         return true;
       }
 
       if (item.vslLedStylCd === 'LA' || item.vslLedStylCd === 'R') {
-        contentsResult[item.vslLedStylCd] = EnvHelper.replaceCdnUrl(this._removePcImgs(item.ledItmDesc));
+        contentsResult[item.vslLedStylCd] = this._convertContentsHtml(item.ledItmDesc);
         return true;
       }
 
@@ -336,7 +338,7 @@ class ProductCommonCallplan extends TwViewController {
         contentsResult.FIRST = {
           vslClass: item.vslYn && item.vslYn === 'Y' ? 'prVisual' : 'plm',
           paddingClass: item.vslYn && item.vslYn === 'Y' ? 'nogaps noborder' : '',
-          ledItmDesc: EnvHelper.replaceCdnUrl(this._removePcImgs(item.ledItmDesc))
+          ledItmDesc: this._convertContentsHtml(item.ledItmDesc)
         };
 
         return true;
@@ -348,11 +350,33 @@ class ProductCommonCallplan extends TwViewController {
 
       contentsResult.LIST.push(Object.assign(item, {
         vslClass: FormatHelper.isEmpty(item.vslYn) ? null : (item.vslYn === 'Y' ? 'prVisual' : 'plm'),
-        ledItmDesc: EnvHelper.replaceCdnUrl(this._removePcImgs(item.ledItmDesc))
+        ledItmDesc: this._convertContentsHtml(item.ledItmDesc)
       }));
     });
 
     return contentsResult;
+  }
+
+  /**
+   * @param contents
+   * @private
+   */
+  private _convertContentsHtml(contents: any): any {
+    if (FormatHelper.isEmpty(contents)) {
+      return null;
+    }
+
+    contents = contents.replace(/(?:\r\n|\r|\n)/g, '<br>');
+    contents = this._removePcImgs(contents);
+    contents = EnvHelper.replaceCdnUrl(contents);
+
+    if (contents.indexOf('||') === -1) {
+      return contents;
+    }
+
+    // TODO
+
+    return contents;
   }
 
   /**
@@ -552,7 +576,7 @@ class ProductCommonCallplan extends TwViewController {
     return {
       isMobileplan: prodTypCd === 'AB',
       isMobileplanAdd: prodTypCd === 'C',
-      isInternet: prodTypCd === 'D_I',
+      isInternet: ['D_I', 'E_I'].indexOf(prodTypCd) !== -1,
       isWireplan: ['D_I', 'D_P', 'D_T'].indexOf(prodTypCd) !== -1,
       isWireplanAdd: ['E_I', 'E_P', 'E_T'].indexOf(prodTypCd) !== -1,
       isRoaming: ['H_P', 'H_A'].indexOf(prodTypCd) !== -1,

@@ -5,7 +5,7 @@
     .bg-productdetail .productdetails-bg { background-color: <%= basicInfo.smrySurrColor %> }
     <% } %>
     <% if ( basicInfo.bgimgUrl ) { %>
-    .bg-productdetail .productdetails-bg { background-image: url('<%= basicInfo.bgimgUrl %>'); }
+    .bg-productdetail .productdetails-bg { background-image: url('<%= CDN %><%= basicInfo.bgimgUrl %>'); }
     <% } %>
 </style>
 <% } %>
