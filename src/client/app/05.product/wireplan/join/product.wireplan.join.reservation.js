@@ -448,8 +448,6 @@ Tw.ProductWireplanJoinReservation.prototype = {
     // 가입 여부 체크
     if (this._typeCd !== 'combine' && !Tw.FormatHelper.isEmpty(this._isProduct) && this._isProduct[this._typeCd] ||
       this._typeCd === 'combine' && this._currentCombineProductList.indexOf(this._prodId) !== -1) {
-      console.log('detect!');
-      return;
       return this._procConfirmAdditional();
     }
 
