@@ -91,7 +91,7 @@ Tw.MytJoinSuspendUpload.prototype = {
     }
     // file suffix validation.
     if ( !/(.gif|.bmp|.jpg|.jpeg|.doc|.pdf|.hwp|.docx)$/ig.test(file.name) ) {
-      this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A03);
+      this._popupService.openAlert(Tw.UPLOAD_FILE.CONFIRM_A02);
       return false;
     }
     return true;

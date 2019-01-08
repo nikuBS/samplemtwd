@@ -1215,6 +1215,7 @@ Tw.UPLOAD_FILE = {
   BUTTON_ADD: '파일찾기',
   BUTTON_DELETE: '파일삭제',
   CONFIRM_A01: '첨부파일의 용량이 총 2MB를 초과하여 등록할 수 없습니다. 다시 확인해주세요.',
+  CONFIRM_A02: '첨부하실 수 없는 파일입니다. 다시 확인해주세요.',
 };
 
 Tw.PRODUCT_RESERVATION = {
