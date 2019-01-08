@@ -19,7 +19,6 @@ Tw.CommonLoginDormancy.prototype = {
     this.$container.on('click', '#btn-activate', $.proxy(function () {
       Tw.Api.request(Tw.NODE_CMD.LOGIN_USER_LOCK)
         .done($.proxy(function (res) {
-          var res = { code: '00' };
           if ( res.code === Tw.API_CODE.CODE_00 ) {
             this._apiService.sendNativeSession(Tw.AUTH_LOGIN_TYPE.TID, $.proxy(this._successSetSession, this));
           } else if ( res.code === Tw.API_LOGIN_ERROR.ICAS3228 ) {  // Need service password
