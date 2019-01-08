@@ -1,0 +1,24 @@
+<%#
+* FileName: myt-data.submain.breakdown.html
+* Author: Kim InHwan (skt.p132150@partner.sk.com)
+* Date: 2018.09.17
+%>
+
+<li class="list-box">
+    <span class="badge"><i class="icon-<%= data[0].class %>"><span class="blind"><%= data[0].class %></span></i></span>
+    <ul class="list-con">
+        <li>
+            <p class="list-text">
+                <span class="stext-b"><%= data[0].u_type === 'data'? '데이터 충전':'음성 충전'%></span>
+                <span class="stext">
+                    <span class="gray-tx"><%= data[0].u_title %></span>
+                    <span class="gray-tx"><%= data[0].u_sub %></span>
+                </span>
+            </p>
+            <div class="list-data">
+                <p class="data-tx txt1">+   <%= data[0].d_title %><%= data[0].unit %></p>
+                <span class="date"><%= data[0].d_sub %></span>
+            </div>
+        </li>
+    </ul>
+</li>

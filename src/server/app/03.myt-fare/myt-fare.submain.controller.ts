@@ -440,17 +440,8 @@ class MyTFareSubmainController extends TwViewController {
   _getMicroPrepay() {
     // 소액결제 확인
     return this.apiService.request(API_CMD.BFF_07_0072, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        resp.result.code = API_CODE.CODE_00;
-        return resp.result;
-      } else if ( resp.code === API_ADD_SVC_ERROR.BIL0030 ) {
-        return { code: API_ADD_SVC_ERROR.BIL0030 };
-      } else if ( resp.code === API_ADD_SVC_ERROR.BIL0031 ) {
-        return { code: API_ADD_SVC_ERROR.BIL0031 };
-      } else if ( resp.code === API_ADD_SVC_ERROR.BIL0033 ) {
-        return { code: API_ADD_SVC_ERROR.BIL0033 };
-      } else if ( resp.code === API_ADD_SVC_ERROR.BIL0034 ) {
-        return { code: API_ADD_SVC_ERROR.BIL0034 };
+      if ( resp.code === API_CODE.CODE_00 || resp.code.indexOf('BIL') > -1 ) {
+        return resp;
       } else {
         return null;
       }
@@ -460,17 +451,8 @@ class MyTFareSubmainController extends TwViewController {
   _getContentPrepay() {
     // 콘텐츠이용 확인
     return this.apiService.request(API_CMD.BFF_07_0080, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        resp.result.code = API_CODE.CODE_00;
-        return resp.result;
-      } else if ( resp.code === API_ADD_SVC_ERROR.BIL0030 ) {
-        return { code: API_ADD_SVC_ERROR.BIL0030 };
-      } else if ( resp.code === API_ADD_SVC_ERROR.BIL0031 ) {
-        return { code: API_ADD_SVC_ERROR.BIL0031 };
-      } else if ( resp.code === API_ADD_SVC_ERROR.BIL0033 ) {
-        return { code: API_ADD_SVC_ERROR.BIL0033 };
-      } else if ( resp.code === API_ADD_SVC_ERROR.BIL0034 ) {
-        return { code: API_ADD_SVC_ERROR.BIL0034 };
+      if ( resp.code === API_CODE.CODE_00 || resp.code.indexOf('BIL') > -1 ) {
+        return resp;
       } else {
         return null;
       }

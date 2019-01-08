@@ -123,12 +123,20 @@
                         최근 충전·선물 내역
                         <% } %>
                     </h2>
-                    <span class="r-btn"><a href="/myt-data/history" class="more">더보기</a></span>
+                    <% var bkListUrl = '/myt-data/history'; %>
+                    <% if (data.svcInfo.svcAttrCd === 'M2') { %>
+                    <% bkListUrl = '/myt-data/recharge/prepaid/history'; %>
+                    <% } %>
+                    <span class="r-btn"><a href="<%= bkListUrl %>" class="more">더보기</a></span>
                 </div>
                 <div class="list-comp-history type01">
                     <ul class="comp-box">
                         <% for (var i=0; i < data.breakdownList.length; i++) { %>
+                        <% if (data.svcInfo.svcAttrCd === 'M2') { %>
+                        <%- include('../components/submain/myt-data.submain.breakdown-pps.html', { data: data.breakdownList[i] }); %>
+                        <% } else { %>
                         <%- include('../components/submain/myt-data.submain.breakdown.html', { data: data.breakdownList[i] }); %>
+                        <% } %>
                         <% } %>
                     </ul>
                 </div>

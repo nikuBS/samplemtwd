@@ -443,6 +443,12 @@ export const PREPAID_PAYMENT_TYPE = {
   '99': '선불카드(PPS카드)'
 };
 
+export const PREPAID_PAYMENT_PAY_CD = {
+  '1': '수납',
+  '2': '당일취소',
+  '9': '당일취소'
+};
+
 export const PRODUCT_TYP_CD_LIST = {
   AB: 'product/mobileplan/list',
   C: 'product/mobileplan-add/list',

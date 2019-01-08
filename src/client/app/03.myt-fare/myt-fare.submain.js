@@ -566,6 +566,7 @@ Tw.MyTFareSubMain.prototype = {
         content = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0030_C;
         more = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.MORE;
         break;
+      case Tw.API_ADD_SVC_ERROR.BIL0035:
       case Tw.API_ADD_SVC_ERROR.BIL0033:
         title = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0033;
         content = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0033_C;
