@@ -176,10 +176,7 @@ export default class MyTDataHistory extends TwViewController {
           date: DateHelper.getShortDate(key),
           badge: item.opTypCd === '1' ? 'send' : 'recieve',
           right: FormatHelper.addComma(item.amt) + UNIT.WON,
-          bottom:
-            item.opTypCd === '2' || item.opTypCd === '4' ? 
-              [FormatHelper.conTelFormatWithDash(item.svcNum), ChargeTypeNames.CANCEL] : 
-              [FormatHelper.conTelFormatWithDash(item.svcNum)]
+          bottom: [FormatHelper.conTelFormatWithDash(item.svcNum)]
         };
       });
     });
