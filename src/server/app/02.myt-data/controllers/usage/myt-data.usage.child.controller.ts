@@ -18,6 +18,7 @@ const VIEW = {
 };
 
 class MyTDataUsageChild extends TwViewController {
+  private childSvcMgmtNum;
   private myTDataHotData = new MyTDataHotData();
 
   constructor() {
@@ -26,14 +27,15 @@ class MyTDataUsageChild extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const self = this;
-    const childSvcMgmtNum = req.query.childSvcMgmtNum;
-    if (FormatHelper.isEmpty(childSvcMgmtNum)) {
+    this.childSvcMgmtNum = req.query.childSvcMgmtNum;
+    if (FormatHelper.isEmpty(this.childSvcMgmtNum)) {
       return this.renderErr(res, svcInfo, {});
     }
     Observable.combineLatest(
-      this.reqBalances(childSvcMgmtNum),
-      this.reqBaseFeePlan(childSvcMgmtNum)
-    ).subscribe(([usageDataResp, baseFeePlanResp]) => {
+      this.reqBalances(),
+      this.reqBaseFeePlan(),
+      this.reqTingSubscriptions()
+    ).subscribe(([usageDataResp, baseFeePlanResp, tingSubscriptionsResp]) => {
       const apiError = this.error.apiError([
         usageDataResp, baseFeePlanResp
       ]);
@@ -45,8 +47,9 @@ class MyTDataUsageChild extends TwViewController {
       const usageDataResult = usageDataResp.result;
       const baseFeePlan = baseFeePlanResp.result;
       const usageData = self.myTDataHotData.parseUsageData(usageDataResult);
+      const tingSubscription = tingSubscriptionsResp.code === API_CODE.CODE_00;
       const child = childInfo.find((_child) => {
-        return _child.svcMgmtNum === childSvcMgmtNum;
+        return _child.svcMgmtNum === this.childSvcMgmtNum;
       });
       usageData['childSvcNum'] = child.svcNum;
       usageData['childSvcMgmtNum'] = child.svcMgmtNum;
@@ -54,6 +57,7 @@ class MyTDataUsageChild extends TwViewController {
       usageData['childProdNm'] = baseFeePlan.prodName;
       const option = {
         usageData,
+        tingSubscription,
         svcInfo,
         pageInfo
       };
@@ -74,9 +78,9 @@ class MyTDataUsageChild extends TwViewController {
     return this.error.render(res, option);
   }
 
-  private reqBalances(childSvcMgmtNum: string): Observable<any> {
+  private reqBalances(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0001, {
-      childSvcMgmtNum: childSvcMgmtNum
+      childSvcMgmtNum: this.childSvcMgmtNum
     });
     // return Observable.create((observer) => {
     //   setTimeout(() => {
@@ -215,9 +219,15 @@ class MyTDataUsageChild extends TwViewController {
     // });
   }
 
-  private reqBaseFeePlan(childSvcMgmtNum: string): Observable<any> {
+  private reqTingSubscriptions(): Observable<any> {
+    return this.apiService.request(API_CMD.BFF_06_0028, {
+      childSvcMgmtNum: this.childSvcMgmtNum
+    });
+  }
+
+  private reqBaseFeePlan(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0041, {
-      childSvcMgmtNum: childSvcMgmtNum
+      childSvcMgmtNum: this.childSvcMgmtNum
     });
   }
 }
