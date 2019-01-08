@@ -8,7 +8,7 @@ Tw.CommonHelper = (function () {
         type: browserType,
         href: url
       };
-      if (!Tw.FormatHelper.isEmpty(title)) {
+      if ( !Tw.FormatHelper.isEmpty(title) ) {
         param.title = title;
       }
       Tw.Native.send(Tw.NTV_CMD.OPEN_URL, param, null);
@@ -56,33 +56,32 @@ Tw.CommonHelper = (function () {
   };
 
   var getCookie = function (key) {
-    if(Tw.FormatHelper.isEmpty(document.cookie)) {
+    if ( Tw.FormatHelper.isEmpty(document.cookie) ) {
       return null;
     }
     var value = null;
-    _.each(document.cookie.split(';'), function(cookieItem) {
+    _.each(document.cookie.split(';'), function (cookieItem) {
       var cookieItemToken = cookieItem.split('=');
-      if (cookieItemToken[0].trim() === key) {
+      if ( cookieItemToken[0].trim() === key ) {
         value = cookieItemToken[1];
         return false;
       }
     });
 
     return value;
-
   };
 
-  var removeLocalStorage = function(key) {
+  var removeLocalStorage = function (key) {
     return localStorage.removeItem(key);
   };
 
   var fileUpload = function (dest, files) {
     var formData = new FormData();
-    if (!Tw.FormatHelper.isEmpty(dest)) {
+    if ( !Tw.FormatHelper.isEmpty(dest) ) {
       formData.append('dest', dest);
     }
 
-    _.each(files, function(file) {
+    _.each(files, function (file) {
       formData.append('file', file);
     });
 
@@ -92,7 +91,7 @@ Tw.CommonHelper = (function () {
   var showDataCharge = function (confirmCallback, closeCallback) {
     Tw.Native.send(Tw.NTV_CMD.GET_NETWORK, {},
       $.proxy(function (res) {
-        if (res.resultCode === Tw.NTV_CODE.CODE_00 && !res.params.isWifiConnected) {
+        if ( res.resultCode === Tw.NTV_CODE.CODE_00 && !res.params.isWifiConnected ) {
           Tw.Popup.openConfirm(
             Tw.POPUP_CONTENTS.NO_WIFI,
             Tw.POPUP_TITLE.EXTERNAL_LINK,
@@ -142,7 +141,7 @@ Tw.CommonHelper = (function () {
   };
 
   var allOffLoading = function () {
-    if($('.tw-loading').length > 0) {
+    if ( $('.tw-loading').length > 0 ) {
       skt_landing.action.loading.allOff();
     }
   };
@@ -156,7 +155,7 @@ Tw.CommonHelper = (function () {
       svcType: 'MM',
       serNum: code
     }).done(function (res) {
-      if (res.code === Tw.API_CODE.CODE_00) {
+      if ( res.code === Tw.API_CODE.CODE_00 ) {
         Tw.Popup.open({
           hbs: 'HO_04_05_01_02_01',
           title: res.result.title,
@@ -170,7 +169,7 @@ Tw.CommonHelper = (function () {
     });
   };
 
-  var replaceCdnUrl = function(context) {
+  var replaceCdnUrl = function (context) {
     return context.replace('/{{cdn}}/gi', Tw.Environment.cdn);
   };
 
