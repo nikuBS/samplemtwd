@@ -113,24 +113,40 @@ Tw.ProductAppsDetail.prototype = {
   },
 
   _handleCheckAndOpenApp: function() {
-    var store = '';
+    var store = '',
+      isIos = Tw.BrowserHelper.isIos();
 
     if (this._stores) {
-      if (Tw.BrowserHelper.isIos()) {
+      if (isIos) {
         store = this._stores['appStore'] || '';
       } else {
         store = this._stores['playStore'] || this._stores['oneStore'] || '';
       }
-
-      setTimeout(function() {
-        window.location.replace(store);
-      }, 1000);
     }
 
+    var openMarket = function() {
+        window.location.replace(store);
+      },
+      openConfirm = $.proxy(function() {
+        if (isIos) {
+          window.location.replace(store);
+        } else {
+          this._popupService.openConfirmButton(
+            this._app.prodNm + Tw.POPUP_CONTENTS.APP_NOT_INSTALLED,
+            ' ',
+            openMarket,
+            null,
+            Tw.BUTTON_LABEL.NO,
+            Tw.BUTTON_LABEL.YES
+          );
+        }
+      }, this);
+
     if (this._app.lnkgAppScmCtt) {
-      window.location.replace(this._app.lnkgAppScmCtt);
+      setTimeout(openConfirm, 1000);
+      window.location.href = this._app.lnkgAppScmCtt;
     } else if (store.length > 0) {
-      window.location.replace(store);
+      openConfirm();
     }
   },
 
