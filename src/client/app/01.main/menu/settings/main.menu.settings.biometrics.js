@@ -37,7 +37,7 @@ Tw.MainMenuSettingsBiometrics.prototype = {
   },
   _onClickCancelFido: function () {
     var content = this._target === Tw.FIDO_TYPE.FINGER ? Tw.POPUP_CONTENTS.BIO_FINGER_DEREGISTER : Tw.POPUP_CONTENTS.BIO_FACE_DEREGISTER;
-    this._popupService.openConfirm(content, null, $.proxy(this._onConfirmCancelFido, this));
+    this._popupService.openConfirmButton(content, null, $.proxy(this._onConfirmCancelFido, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
   },
   _onConfirmCancelFido: function () {
     this._popupService.close();
