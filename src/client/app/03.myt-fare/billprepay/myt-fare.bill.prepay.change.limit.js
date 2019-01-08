@@ -123,12 +123,16 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
   _selectAmount: function (event) {
     var $target = $(event.currentTarget);
     var $amount = $target.attr('id');
+    var data = Tw.POPUP_TPL.FARE_PAYMENT_SMALL_LIMIT;
+    if (this.$title === 'contents') {
+      data = Tw.POPUP_TPL.FARE_PAYMENT_CONTENTS_LIMIT;
+    }
 
     this._popupService.open({
       url: '/hbs/',
       hbs: 'actionsheet01',
       layer: true,
-      data: Tw.POPUP_TPL.FARE_PAYMENT_LIMIT,
+      data: data,
       btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectPopupCallback, this, $target, $amount));
   },
