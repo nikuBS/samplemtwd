@@ -56,9 +56,12 @@ Tw.TooltipService.prototype = {
       if (!$target.hasClass('fe-tip')) {
         $target.addClass('fe-tip');
 
-        if (this._contentList[i].ttipPresTypCd !== Tw.REDIS_TOOLTIP_CODE.ICON) {
+        if (this._contentList[i].ttipPresTypCd === Tw.REDIS_TOOLTIP_CODE.ALL) {
           this._setTitle($target, this._contentList[i]);
         } else {
+          if (this._contentList[i].ttipPresTypCd === Tw.REDIS_TOOLTIP_CODE.TEXT) {
+            $target.text(this._contentList[i].ttipTitNm);
+          }
           $target.on('click', $.proxy(this._openTip, this, this._contentList[i]));
         }
       }
