@@ -24,8 +24,12 @@ class MyTJoinWireDiscountRefund extends TwViewController {
     //   });
     // }
 
-    this.apiService.request(API_CMD.BFF_05_0158, {})
-      .subscribe((resp) => {
+    // 서버 api로 기준날짜를 받아오려고 했지만 서버 오류 등으로 기준날짜를 오늘 날짜로 고정해서 화면 출력
+    const option = { svcInfo: svcInfo, pageInfo: pageInfo, reqDate: DateHelper.getShortDate(new Date()) };
+    res.render('wire/myt-join.wire.discount-refund.html', option);
+
+    // this.apiService.request(API_CMD.BFF_05_0158, {})
+    //   .subscribe((resp) => {
 
         /*const resp = {
           'code': '00',
@@ -44,32 +48,32 @@ class MyTJoinWireDiscountRefund extends TwViewController {
               }
           }
         };*/
-
-        if ( resp.code === API_CODE.CODE_00 ) {
-
-          const option = { svcInfo: svcInfo, pageInfo: pageInfo, reqDate: DateHelper.getShortDateNoDot(resp.result.reqDate) };
-          res.render('wire/myt-join.wire.discount-refund.html', option);
-
-        } else if ( resp.code === 'ZINVE8888' ) {
-          const option = { svcInfo: svcInfo, pageInfo: pageInfo, reqDate: DateHelper.getShortDateNoDot(new Date()) };
-          res.render('wire/myt-join.wire.discount-refund.html', option);
-
-        } else {
-          return this.error.render(res, {
-            title: MYT_JOIN_WIRE.DISC_REFUND.TITLE,
-            code: resp.code,
-            msg: resp.msg,
-            svcInfo: svcInfo
-          });
-        }
-      }, (resp) => {
-        return this.error.render(res, {
-          title: MYT_JOIN_WIRE.DISC_REFUND.TITLE,
-          code: resp.code,
-          msg: resp.msg,
-          svcInfo: svcInfo
-        });
-      });
+      //
+      //   if ( resp.code === API_CODE.CODE_00 ) {
+      //
+      //     const option = { svcInfo: svcInfo, pageInfo: pageInfo, reqDate: DateHelper.getShortDateNoDot(resp.result.reqDate) };
+      //     res.render('wire/myt-join.wire.discount-refund.html', option);
+      //
+      //   } else if ( resp.code === 'ZINVE8888' ) {
+      //     const option = { svcInfo: svcInfo, pageInfo: pageInfo, reqDate: DateHelper.getShortDateNoDot(new Date()) };
+      //     res.render('wire/myt-join.wire.discount-refund.html', option);
+      //
+      //   } else {
+      //     return this.error.render(res, {
+      //       title: MYT_JOIN_WIRE.DISC_REFUND.TITLE,
+      //       code: resp.code,
+      //       msg: resp.msg,
+      //       svcInfo: svcInfo
+      //     });
+      //   }
+      // }, (resp) => {
+      //   return this.error.render(res, {
+      //     title: MYT_JOIN_WIRE.DISC_REFUND.TITLE,
+      //     code: resp.code,
+      //     msg: resp.msg,
+      //     svcInfo: svcInfo
+      //   });
+      // });
 
   }
 }
