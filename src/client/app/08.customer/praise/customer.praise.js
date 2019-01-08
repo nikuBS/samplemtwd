@@ -98,17 +98,20 @@ Tw.CustomerPraise.prototype = {
     switch (code) {
       case this.TYPES.STORE: {
         this._setInputField(selectedValue);
+        this._setInputMaxLength(10, 10);
         this.$area.removeClass('none');
         break;
       }
       case this.TYPES.OFFICE:
       case this.TYPES.CUSTOMER_CENTER:
       case this.TYPES.AS_CENTER: {
+        this._setInputMaxLength(50, 50);
         this._setInputField(Tw.CUSTOMER_PRAISE_SUBJECT_TYPE.OFFICE);
         break;
       }
       case this.TYPES.QUALITY_MANAGER:
       case this.TYPES.HAPPY_MANAGER: {
+        this._setInputMaxLength(50, 25);
         this._setInputField(Tw.CUSTOMER_PRAISE_SUBJECT_TYPE.COMPANY);
 
         var currentContents = this.$pRole.text();
@@ -137,6 +140,11 @@ Tw.CustomerPraise.prototype = {
     })[1];
     $span.nodeValue = $span.nodeValue.replace(originalContent, replace);
     this.$divRole.removeClass('none');
+  },
+
+  _setInputMaxLength: function(role, subject) {
+    this.$divRole.find('input').attr('maxLength', role);
+    this.$subject.find('input').attr('maxLength', subject);
   },
 
   _openSelectAreaPopup: function() {
