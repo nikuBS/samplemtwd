@@ -150,12 +150,9 @@ Tw.MyTDataRechargeCouponUse.prototype = {
       befrSvcNum: this.$numberInput.val().replace(/[^0-9]/gi, '').trim()
     };
 
-    this._success('gift', { code: '00'});
-    /*
     this._apiService.request(Tw.API_CMD.BFF_06_0008, reqData)
       .done($.proxy(this._success, this, 'gift'))
       .fail($.proxy(this._fail, this));
-      */
   },
   _success: function (type, res) {
     if (res.code !== Tw.API_CODE.CODE_00) {

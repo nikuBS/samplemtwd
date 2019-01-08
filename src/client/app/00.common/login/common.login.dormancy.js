@@ -16,9 +16,10 @@ Tw.CommonLoginDormancy = function (rootEl, target) {
 
 Tw.CommonLoginDormancy.prototype = {
   _bindEvent: function () {
-    this.$container.on('click', '#btn-activate', function () {
+    this.$container.on('click', '#btn-activate', $.proxy(function () {
       Tw.Api.request(Tw.NODE_CMD.LOGIN_USER_LOCK)
-        .done(function (res) {
+        .done($.proxy(function (res) {
+          var res = { code: '00' };
           if ( res.code === Tw.API_CODE.CODE_00 ) {
             this._apiService.sendNativeSession(Tw.AUTH_LOGIN_TYPE.TID, $.proxy(this._successSetSession, this));
           } else if ( res.code === Tw.API_LOGIN_ERROR.ICAS3228 ) {  // Need service password
@@ -26,11 +27,11 @@ Tw.CommonLoginDormancy.prototype = {
           } else {
             Tw.Popup.openAlert(res.code + ' ' + res.msg);
           }
-        })
+        }, this))
         .fail(function (err) {
           Tw.Logger.error('BFF_03_0010 Fail', err);
         });
-    });
+    }, this));
   },
   _successSetSession: function () {
     this._historyService.goLoad(this._target);
