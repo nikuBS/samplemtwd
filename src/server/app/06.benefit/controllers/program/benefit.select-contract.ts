@@ -28,8 +28,8 @@ class BenefitSelectContract extends TwViewController {
     };
 
     const curDate = new Date();
-    const nextDate_1 = curDate.getFullYear() + 1;
-    const nextDate_2 = curDate.getFullYear() + 2;
+    const nextDate_1 = new Date(curDate.getFullYear() + 1, curDate.getMonth(), curDate.getDate() - 1);
+    const nextDate_2 = new Date(curDate.getFullYear() + 2, curDate.getMonth(), curDate.getDate() - 1);
     data.monthDetail = {
       'M0012': DateHelper.getShortDateNoDot(curDate) + ' ~ ' + DateHelper.getShortDateNoDot(nextDate_1),
       'M0024': DateHelper.getShortDateNoDot(curDate) + ' ~ ' + DateHelper.getShortDateNoDot(nextDate_2)

@@ -24,8 +24,8 @@ Tw.BenefitDisPgmInput.prototype = {
     if ( this._selType ) {
       var data = {};
       var curDate = new Date();
-      var nextDate_1 = curDate.getFullYear() + 1;
-      var nextDate_2 = curDate.getFullYear() + 2;
+      var nextDate_1 = new Date(curDate.getFullYear() + 1, curDate.getMonth(), curDate.getDate() - 1);
+      var nextDate_2 = new Date(curDate.getFullYear() + 2, curDate.getMonth(), curDate.getDate() - 1);
       data.monthDetail = {
         'M0012': Tw.DateHelper.getShortDateNoDot(curDate) + ' ~ ' + Tw.DateHelper.getShortDateNoDot(nextDate_1),
         'M0024': Tw.DateHelper.getShortDateNoDot(curDate) + ' ~ ' + Tw.DateHelper.getShortDateNoDot(nextDate_2)
