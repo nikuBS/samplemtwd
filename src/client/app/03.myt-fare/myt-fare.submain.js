@@ -36,8 +36,14 @@ Tw.MyTFareSubMain.prototype = {
 
   _rendered: function () {
     if ( this.data.type === 'UF' ) {
-      // 사용요금자세히보기
-      this.$usedDetail = this.$container.find('button[data-id=used-detail]');
+      if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
+        // 사용내역확인버튼
+        this.$usedBrkd = this.$container.find('button[data-id=used-brkd]');
+      }
+      else {
+        // 사용요금자세히보기
+        this.$usedDetail = this.$container.find('button[data-id=used-detail]');
+      }
     }
     else {
       if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
@@ -105,8 +111,14 @@ Tw.MyTFareSubMain.prototype = {
 
   _bindEvent: function () {
     if ( this.data.type === 'UF' ) {
-      // 사용요금자세히보기
-      this.$usedDetail.on('click', $.proxy(this._onClickedSelBillGuide, this));
+      if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
+        // 사용내역확인버튼
+        this.$usedBrkd.on('click', $.proxy(this._onClickedSelBillGuide, this));
+      }
+      else {
+        // 사용요금자세히보기
+        this.$usedDetail.on('click', $.proxy(this._onClickedSelBillGuide, this));
+      }
     }
     else {
       if ( this.data.svcInfo.svcAttrCd === 'M2' ) {

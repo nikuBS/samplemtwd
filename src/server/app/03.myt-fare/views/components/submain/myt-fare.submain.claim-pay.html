@@ -10,7 +10,10 @@
     <div class="user-month-bill">
         <div class="this-month-bill">
             <% if (data.isPPS) { %>
-            <p class="price"><em class="tx-bold">선불폰을 사용중</em>이십니다.</p>
+            <div class="exception-case">
+                <span class="ico-wrap"><i class="icon-cellphone-48"><span class="blind">cellphone</span></i></span>
+                <p class="msg">선불폰을 사용 중입니다.</p>
+            </div>
             <% } else { %>
                 <p class="stit">이번 달
                     <% if (data.type === 'UF') { %>
@@ -55,7 +58,11 @@
     </div>
     <ul class="bt-slice <%= data.isNotAutoPayment? 'item-two': 'solid' %> mt20 mb4">
         <% if (data.type === 'UF') { %>
-            <li><button data-id="used-detail" type="button" class="btn-round1 btn-style4">이용요금 자세히보기</button></li>
+            <% if (data.svcInfo.svcAttrCd === 'M2') { %>
+                <li><button data-id="used-brkd" type="button" class="btn-round1 btn-style4">사용내역 확인</button></li>
+            <% } else { %>
+                <li><button data-id="used-detail" type="button" class="btn-round1 btn-style4">이용요금 자세히보기</button></li>
+            <% } %>
         <% } else { %>
             <% if (data.svcInfo.svcAttrCd === 'M2') { %>
                 <li><button data-id="used-brkd" type="button" class="btn-round1 btn-style4">사용내역 확인</button></li>
