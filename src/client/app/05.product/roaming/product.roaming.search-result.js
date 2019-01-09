@@ -85,7 +85,7 @@ Tw.ProductRoamingSearchResult.prototype = {
 
         if (this._rateInfo.eqpMthdCd === 'W') {
             this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma].txt);
-            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma]);z
+            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma]);
             this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm].txt);
             this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm]);
         } else if (this._rateInfo.eqpMthdCd === 'D') {
