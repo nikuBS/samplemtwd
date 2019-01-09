@@ -20,7 +20,7 @@ Tw.CustomerSvcinfoServiceDetail = function (rootEl, data) {
 Tw.CustomerSvcinfoServiceDetail.prototype = {
   _cachedElement: function () {
     this.$selectBtn = this.$container.find('.btn-dropdown'); // type A
-    this.$defineUSIMBtn = this.$container.find('.fe-btn-define-usim'); //용어정리 버튼(유심)
+    this.$defineUSIMBtn = this.$container.find('#fe-btn-define-usim'); //용어정리 버튼(유심)
   },
   _init: function () {
     this.rootPathName = this._historyService.pathname;
@@ -92,7 +92,6 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
   },
 
   _moveDetailPage: function (code) {
-    // TODO code 값이 url 일때를 고려
     var targetURL = this.rootPathName.slice(-1) === '/' ? this.rootPathName.split('/').slice(0, -1).join('/') : this.rootPathName;
     this._historyService.goLoad(targetURL + '?code=' + code);
   },
@@ -112,6 +111,7 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
   },
 
   _USIMActionSheetEvent: function ($container) {
+    this.$USIMContentsContainer = $container;
     this.$USIMSelectBtn = $container.find('.btn-dropdown'); // 유심정리 탭 선택
     this.$USIMSelectBtn.text(Tw.CUSTOMER_SERVICE_INFO_USIM_DEFINE.data.list[0].txt);
     this.$USIMSelectBtn.on('click', $.proxy(this._USIMSelect, this));
@@ -141,27 +141,27 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     this.$USIMSelectLists.find('input').prop('checked', false);
     $(e.currentTarget).find('input').prop('checked', true);
     this.$USIMSelectBtn.text($(e.currentTarget).find('.txt').text());
-    // TODO 해당 컨텐츠 내용을 가리고 보이기 처리
-    
+    // 해당 컨텐츠 내용을 가리고 보이기 처리
+    this.$USIMContentsContainer.find('.fe-usim-info').eq(parseFloat($(e.currentTarget).val())-1).show().siblings('.fe-usim-info').hide();
     // 팝업닫기
     this.$USIMSelectClostBtn.click();
   },
   // 유심용어 정리 바로가기 액션시트 end
 
   _bindUIEvent: function () {
-    $('.idpt-tab', this.$container).each(function(){
+    $('.idpt-tab').each(function(){
       var tabBtn = $(this).find('li');
       $(tabBtn).click(function(){
         var i = $(this).index();
-        $('.idpt-tab > li', this.$container).removeClass('on').eq(i).addClass('on');
-        $('.idpt-tab-content', this.$container).removeClass('show').eq(i).addClass('show');
+        $('.idpt-tab > li').removeClass('on').eq(i).addClass('on');
+        $('.idpt-tab-content').removeClass('show').eq(i).addClass('show');
       });
     });
   
     // popup
     $('.idpt-popup-open', this.$container).click(function(){
       var popId = $(this).attr('href');
-      $('.idpt-popup-wrap', this.$container).removeClass('show');
+      $('.idpt-popup-wrap').removeClass('show');
       $(popId).addClass('show');
       $('.idpt-popup', this.$container).show();
     });
@@ -169,18 +169,37 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
       $('.idpt-popup', this.$container).hide();
     });
   
-    // tooltip
-    $('.info-tooltip', this.$container).each(function(){
-      $('.btn-tooltip-open', this.$container).on('click', function(){
-        var remStandard = $('body').css('font-size').replace('px','');
-        var btnLeft = $(this).offset().left - 28;
-        var btnRem = btnLeft/remStandard
-        $('.idpt-tooltip-layer', this.$container).css('left', btnRem + 'rem');
-        $(this).next('div').show();
-      });
+    $('input[type=radio][name=call]', this.$container).on('click', function() {
+      var chkValue = $('input[type=radio][name=call]:checked').val();
+      if (chkValue == '1') {
+        $('.call-cont01').css('display', 'block');
+        $('.call-cont02').css('display', 'none');
+      } else if (chkValue  == '2') {
+        $('.call-cont01').css('display', 'none');
+        $('.call-cont02').css('display', 'block');
+      }
     });
-    $('.btn-tooltip-close', this.$container).on('click', function(){
-      $('.idpt-tooltip-layer', this.$container).hide();
+  
+    $('input[type=radio][name=center]', this.$container).on('click', function() {
+      var chkValue = $('input[type=radio][name=center]:checked', this.$container).val();
+      if (chkValue == '1') {
+        $('.center-cont01').css('display', 'block');
+        $('.center-cont02').css('display', 'none');
+      } else if (chkValue  == '2') {
+        $('.center-cont01').css('display', 'none');
+        $('.center-cont02').css('display', 'block');
+      }
+    });
+
+    //tooltip
+    $('.btn-tooltip-open', this.$container).click(function(){
+      var toolpopId = $(this).attr('href');
+      $('.popup-info').removeClass('show');
+      $(toolpopId).addClass('show');
+      $('.tooltip-popup', this.$container).show();
+    });
+    $('.btn_confirm').click(function(){
+      $('.tooltip-popup', this.$container).hide();
     });
   
     //accordian

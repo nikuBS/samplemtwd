@@ -986,7 +986,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           {
             dep_title: '버튼식 ARS',
             type: 'A3',
-            code: 'C00038'
+            code: 'url:/customer/helpline'
           },
           {
             dep_title: '보이는 ARS',
