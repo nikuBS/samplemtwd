@@ -86,7 +86,7 @@ Tw.MyTFareBillSms.prototype = {
   },
   _afterClose: function () {
     if (this._isClose) {
-      this._popupService.close();
+      this._historyService.goBack();
     }
   },
   _pay: function () {
