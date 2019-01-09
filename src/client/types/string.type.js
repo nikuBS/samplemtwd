@@ -473,8 +473,8 @@ Tw.ALERT_MSG_MYT_FARE = {
   COMPLETE_CHANGE_DATE: '요금납부일 변경이 완료되었습니다.',
   COMPLETE_CHANGE_LIMIT: '한도변경이 완료되었습니다.',
   COMPLETE_CHANGE_PASSWORD: '결제 비밀번호 변경이 완료되었습니다.',
-  NOT_ALLOWED_CHANGE_LIMIT: '한도 변경이 불가능합니다',
-  NOT_ALLOWED_INFO_MESSAGE: '연체/미납 중인 고객님은 납부 후' + '<br/>' + '한도변경이 가능합니다.',
+  NOT_ALLOWED_CHANGE_LIMIT: '한도를 변경할 수 없습니다',
+  NOT_ALLOWED_INFO_MESSAGE: '연체∙미납 중인 고객님은 납부 후<br/>한도를 변경하실 수 있습니다.',
   GO_PAYMENT: '납부하러 가기',
   ADD_SVC: {
     BIL0030: '휴대폰 결제 이용동의 후 사용 가능합니다.',
@@ -705,7 +705,7 @@ Tw.ALERT_MSG_MEMBERSHIP = {
     TITLE: '재발급 신청을 취소하실 수 없습니다.',
     MSG: '재발급을 신청한 날 24:00까지 결제기능을 추가하지 않은 모바일 카드 이용 고객님만 재발급 신청을 취소하실 수 있습니다.',
     BUTTON: '발급 변경내역'
-  },
+  }
 };
 
 Tw.ALERT_MSG_CUSTOMER = {
@@ -830,7 +830,7 @@ Tw.URL_PATH = {
   BILL_LETTER_DOWNLOAD_APP_STORE: 'https://itunes.apple.com/kr/app/%EC%9A%94%EA%B8%88%EC%95%88%EB%82%B4%EC%84%9C-bill-letter/id435060754?mt=8',
   BILL_LETTER_DOWNLOAD_PLAY_STORE: 'https://play.google.com/store/apps/details?id=com.skt.smartbill&hl=ko',
   CAR_LIFE_DETAIL: 'http://m.tmembership.tworld.co.kr/mobileWeb/html/coupon/CtgViewMain.jsp?BRAND_CD=2012000026&PAGE_UCD=30',
-  SMART_CHOICE: 'http://www.smartchoice.or.kr',
+  SMART_CHOICE: 'http://www.smartchoice.or.kr'
 };
 
 Tw.PRODUCT_INFINITY_CATEGORY = {
@@ -1153,7 +1153,7 @@ Tw.CUSTOMER_HELPLINE_COMPLETE = {
   TYPE: '상담유형',
   AREA: '상담지역',
   PHONE_NUMBER: '연락가능번호'
-},
+};
 
 Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT = {
   SVCCTG: {
@@ -1228,7 +1228,7 @@ Tw.UPLOAD_FILE = {
   BUTTON_ADD: '파일찾기',
   BUTTON_DELETE: '파일삭제',
   CONFIRM_A01: '첨부파일의 용량이 총 2MB를 초과하여 등록할 수 없습니다. 다시 확인해주세요.',
-  CONFIRM_A02: '첨부하실 수 없는 파일입니다. 다시 확인해주세요.',
+  CONFIRM_A02: '첨부하실 수 없는 파일입니다. 다시 확인해주세요.'
 };
 
 Tw.PRODUCT_RESERVATION = {
