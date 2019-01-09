@@ -277,6 +277,9 @@ Tw.ValidationHelper = (function () {
 
   function showAndHideErrorMsg($target, isValid, message) {
     var $message = $target.siblings('.fe-error-msg');
+    if (!$message.hasClass('fe-error-msg')) {
+      $message = $target.parent().siblings('.fe-error-msg');
+    }
     if (isValid) {
       $message.hide();
       return true;

@@ -206,7 +206,7 @@ Tw.MyTFareBillPoint.prototype = {
     }
 
     var isValid = false;
-    var $message = this.$point.siblings('.fe-error-msg');
+    var $message = this.$point.parent().siblings('.fe-error-msg');
     $message.empty();
 
     if (!this._validation.checkIsAvailablePoint(this.$point.val(),

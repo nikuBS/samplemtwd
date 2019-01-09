@@ -210,7 +210,7 @@ Tw.MyTFareBillPrepayAuto.prototype = {
       var cardName = res.result.prchsCardName;
 
       this.$cardNumber.attr({ 'data-code': cardCode, 'data-name': cardName });
-      this.$cardNumber.siblings('.fe-error-msg').hide();
+      this.$cardNumber.parent().siblings('.fe-error-msg').hide();
       this.$isCardValid = true;
 
       if (Tw.FormatHelper.isEmpty(cardCode)) {
@@ -221,7 +221,7 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     }
   },
   _getFail: function () {
-    this.$cardNumber.siblings('.fe-error-msg').empty().text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V28).show();
+    this.$cardNumber.parent().siblings('.fe-error-msg').empty().text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V28).show();
     this.$cardNumber.focus();
     this.$isCardValid = false;
   },
