@@ -45,7 +45,14 @@ Tw.CustomerHelpline.prototype = {
   },
 
   _openCancelPopup: function() {
-    this._popupService.openConfirm(Tw.ALERT_MSG_CUSTOMER.HELPLINE_A01, Tw.POPUP_TITLE.CANCEL_HELPLINE, $.proxy(this._handleCancel, this));
+    this._popupService.openConfirmButton(
+      null,
+      Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_CANCEL.TITLE,
+      $.proxy(this._handleCancel, this),
+      null,
+      Tw.BUTTON_LABEL.NO,
+      Tw.BUTTON_LABEL.YES
+    );
   },
 
   _handleCancel: function() {
@@ -242,16 +249,18 @@ Tw.CustomerHelpline.prototype = {
       if (resp.result.historiesYn === 'Y') {
         this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_HELPLINE_A02, Tw.POPUP_TITLE.ALREADY_EXIST_RESERVATION);
       } else {
+        this.$areaPhone.find('input').val('');
         this._popupService.open({
-          hbs: 'CS_14_01_complete',
-          data: {
-            date: Tw.DateHelper.getShortDateNoDot(resp.result.date),
-            weekday: resp.result.weekName,
-            time: resp.result.hour.replace('00', ':00'),
-            type: resp.result.reserveType,
-            area: resp.result.reserveArea,
-            number: Tw.FormatHelper.getDashedPhoneNumber(resp.result.reserveSvcNum)
-          }
+          hbs: 'complete_c_type',
+          layer: true,
+          title: Tw.CUSTOMER_HELPLINE_COMPLETE.TITLE,
+          items: [
+            { key: Tw.CUSTOMER_HELPLINE_COMPLETE.DATE, value: Tw.DateHelper.getShortDate(resp.result.date) + '(' + resp.result.weekName + ')' },
+            { key: Tw.CUSTOMER_HELPLINE_COMPLETE.TIME, value: resp.result.hour.replace('00', ':00') },
+            { key: Tw.CUSTOMER_HELPLINE_COMPLETE.TYPE, value: resp.result.reserveType },
+            { key: Tw.CUSTOMER_HELPLINE_COMPLETE.AREA, value: resp.result.reserveArea },
+            { key: Tw.CUSTOMER_HELPLINE_COMPLETE.PHONE_NUMBER, value: Tw.FormatHelper.getDashedPhoneNumber(resp.result.reserveSvcNum) }
+          ]
         });
       }
     } else {
