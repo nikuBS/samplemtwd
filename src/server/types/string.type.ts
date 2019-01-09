@@ -248,7 +248,12 @@ export const MYT_FARE_BILL_REISSUE_TYPE = {
   Q: 'Bill Letter+문자',
   // 유선
   J: 'Bill Letter',
-  K: 'Bill Letter+이메일'
+  K: 'Bill Letter+이메일',
+  U: '기타(우편)+문자',
+  W: '기타(우편)+Bill Letter',
+  T: '기타(우편)+문자+Bill Letter',
+  Y: '기타(우편)+이메일+Bill Letter',
+  X: '기타(우편)+이메일+문자'
 };
 
 export const MYT_INFO_DISCOUNT_MONTH = {

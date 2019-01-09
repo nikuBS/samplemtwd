@@ -11,14 +11,19 @@ import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 
 const MYT_FARE_BILL_REQ_REISSUE_MULTI_TYPE = {
-  'I': ['05', '02'], // 무선 Bill Letter+이메일
-  'A': ['03', '02'], // 무선 문자+이메일
-  'Q': ['05', '03'], // 무선 Bill Letter+문자
+  'I': ['05', '02'],      // 무선 Bill Letter+이메일
+  'A': ['03', '02'],      // 무선 문자+이메일
+  'Q': ['05', '03'],      // 무선 Bill Letter+문자
+  'U': ['1', '03'],        // 우편 요금안내서+문자 요금안내서 (전자추가발송)
+  'W': ['1', '05'],        // 우편 요금안내서+Bill Letter (전자추가발송)
+  'T': ['1', '03', '05'],  // 우편 요금안내서+문자 요금안내서+Bill Letter (전자추가발송)
+  'Y': ['1', '02', '05'],  // 우편 요금안내서+이메일 요금안내서+Bill Letter (전자추가발송)
+  'X': ['1', '02', '03'],  // 우편 요금안내서+이메일 요금안내서+문자 요금안내서 (전자추가발송)
 };
 
 const MYT_FARE_BILL_REQ_REISSUE_MULTI_LOCAL_TYPE = {
-  'A': ['10', '02'], // 유선 문자+이메일
-  'K': ['05', '02'], // 유선 Bill Letter+이메일
+  'A': ['10', '02'],      // 유선 문자+이메일
+  'K': ['05', '02'],      // 유선 Bill Letter+이메일
 };
 
 class MyTFareBillSetReissue extends TwViewController {
