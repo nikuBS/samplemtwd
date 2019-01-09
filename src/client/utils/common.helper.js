@@ -173,6 +173,21 @@ Tw.CommonHelper = (function () {
     return context.replace('/{{cdn}}/gi', Tw.Environment.cdn);
   };
 
+  var setXtvSvcInfo = function() {
+    var xtvLid = Tw.CommonHelper.getCookie('XTVLID'),
+      xtvLoginId = Tw.CommonHelper.getCookie('XTVLOGINID'),
+      xtvLoginType = Tw.CommonHelper.getCookie('XTLOGINTYPE');
+
+    if (!Tw.BrowserHelper.isApp() || xtvLoginType === 'Z') {
+      return;
+    }
+
+    Tw.Native.send(Tw.NTV_CMD.SET_XTVSVCINFO, {
+      xtvLid: xtvLid,
+      xtvLoginId: xtvLoginId
+    });
+  };
+
   return {
     openUrlExternal: openUrlExternal,
     openUrlInApp: openUrlInApp,
@@ -191,6 +206,7 @@ Tw.CommonHelper = (function () {
     resetHeight: resetHeight,
     openTermLayer: openTermLayer,
     fileUpload: fileUpload,
-    replaceCdnUrl: replaceCdnUrl
+    replaceCdnUrl: replaceCdnUrl,
+    setXtvSvcInfo: setXtvSvcInfo
   };
 })();
