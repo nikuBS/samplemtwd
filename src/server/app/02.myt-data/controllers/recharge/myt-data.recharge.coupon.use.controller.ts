@@ -61,7 +61,7 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
         if (!FormatHelper.isEmpty(couponUsage) && !FormatHelper.isEmpty(productSummary)) {
           const options = this.purifyCouponOptions(couponUsage, productSummary, svcInfo.prodId);
           res.render('recharge/myt-data.recharge.coupon-use.html', {
-            no, name, period, tab, options, isGift
+            no, name, period, tab, options, isGift, pageInfo
           });
         }
       },
