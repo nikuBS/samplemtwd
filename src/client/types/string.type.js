@@ -856,8 +856,8 @@ Tw.SETTINGS_MENU = {
 Tw.NTV_FIDO_REGISTER_TXT = {
   FINGER_ON: '등록된 지문이 있습니다.',
   FINGER_OFF: '등록된 지문이 없습니다.',
-  FACE_ON: 'Face ID가 등록되지 않았습니다.',
-  FACE_OFF: 'Face ID가 등록되었습니다.'
+  FACE_ON: 'Face ID가 등록되었습니다.',
+  FACE_OFF: 'Face ID가 등록되지 않았습니다.'
 };
 
 Tw.JOIN_INFO_NO_AGREEMENT = {

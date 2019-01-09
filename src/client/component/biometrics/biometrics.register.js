@@ -10,7 +10,6 @@ Tw.BiometricsRegister = function (target) {
 
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
-  this._biometricsComplete = new Tw.BiometricsComplete(this._target);
 
   this._complete = false;
 };
@@ -57,7 +56,8 @@ Tw.BiometricsRegister.prototype = {
   },
   _onCloseBioRegister: function () {
     if ( this._complete ) {
-      this._biometricsComplete.open(this._callback);
+      var biometricsComplete = new Tw.BiometricsComplete(this._target);
+      biometricsComplete.open(this._callback);
     }
   }
 };

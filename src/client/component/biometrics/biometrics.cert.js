@@ -11,8 +11,6 @@ Tw.BiometricsCert = function (target) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 
-  this._biometiricsRegister = new Tw.BiometricsRegister(this._target);
-
   this._svcInfo = null;
   this._authUrl = 'GET|/v1/dummy/auth';
   this._authKind = Tw.AUTH_CERTIFICATION_KIND.P;
@@ -80,7 +78,8 @@ Tw.BiometricsCert.prototype = {
   },
   _completeIdentification: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._biometiricsRegister.open(this._callback);
+      var biometricsRegister = new Tw.BiometricsRegister(this._target);
+      biometricsRegister.open(this._callback);
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
