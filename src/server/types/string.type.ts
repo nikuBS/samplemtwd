@@ -639,6 +639,7 @@ export const ROAMING_RECEIVE_CENTER = {
 
 export const NODE_API_ERROR = {
   '1001': '로그인이 필요합니다.',
+  '1002': '인증 오류 입니다.',
   '01': '해당 값이 없습니다.',
   '02': '잘못된 형식입니다.'
 };

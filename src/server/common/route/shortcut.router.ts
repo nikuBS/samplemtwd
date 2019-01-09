@@ -1,7 +1,6 @@
 import express from 'express';
 import { Router, Request, Response, NextFunction } from 'express';
 import RedisService from '../../services/redis.service';
-import { REDIS_SC_URL } from '../../types/redis.type';
 
 
 class ShortcutRouter {
