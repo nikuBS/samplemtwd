@@ -525,11 +525,11 @@ Tw.HELPLINE_TYPES = [
 ];
 
 Tw.CUSTOMER_HELPLINE_AREAS = [
-  { txt: '수도권 (서울, 경기, 인천, 강원)', 'radio-attr': 'data-area-code="1"' },
-  { txt: '중부 (충남, 충북, 대전)', 'radio-attr': 'data-area-code="5"' },
-  { txt: '서부 (전남, 전북, 광주, 제주)', 'radio-attr': 'data-area-code="4"' },
-  { txt: '대구 (경북, 대구)', 'radio-attr': 'data-area-code="3"' },
-  { txt: '부산 (경남, 울산, 부산)', 'radio-attr': 'data-area-code="2"' }
+  { txt: '수도권(서울, 경기, 인천, 강원)', 'radio-attr': 'data-area-code="1"' },
+  { txt: '중부(충남, 충북, 대전)', 'radio-attr': 'data-area-code="5"' },
+  { txt: '서부(전남, 전북, 광주, 제주)', 'radio-attr': 'data-area-code="4"' },
+  { txt: '대구(경북, 대구)', 'radio-attr': 'data-area-code="3"' },
+  { txt: '부산(경남, 울산, 부산)', 'radio-attr': 'data-area-code="2"' }
 ];
 
 Tw.CUSTOMER_PRAISE_SUBJECT_TYPES = [

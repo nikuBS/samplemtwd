@@ -254,10 +254,13 @@ Tw.CustomerPraise.prototype = {
           layer: true,
           title: Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_COMPLETE,
           btnText: Tw.BUTTON_LABEL.CONFIRM,
-          itemOne: {
-            text: Tw.BUTTON_LABEL.HOME,
-            url: '/main/home'
-          }
+          buttons: [
+            {
+              text: Tw.BUTTON_LABEL.HOME,
+              url: '/main/home'
+            }
+          ],
+          buttonClass: 'one'
         },
         $.proxy(this._openCompletePopup, this),
         this._historyService.goBack

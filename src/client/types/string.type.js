@@ -708,7 +708,7 @@ Tw.ALERT_MSG_MEMBERSHIP = {
 
 Tw.ALERT_MSG_CUSTOMER = {
   ALERT_HELPLINE_A01: '예약을 취소하시면 작성하신 모든 정보가 초기화됩니다.',
-  ALERT_HELPLINE_A02: '전화상담 예약은 지역별 1일 1회로 제한되며 중복 신청을 하실 수 없습니다.',
+  ALERT_HELPLINE_A02: '이미 예약하신 정보가 있습니다. 전화상담 예약은 지역별 1일 1회로 제한되며 중복 신청을 하실 수 없습니다.',
   ALERT_PRAISE_COMPLETE: '고객님의 소중한 칭찬글이<br /> 등록되었습니다.',
   ALERT_PRAISE_CANCEL: {
     TITLE: '입력하신 정보는 모두 취소됩니다.<br>창을 닫으시겠습니까?'
@@ -1143,6 +1143,16 @@ Tw.CUSTOMER_EMAIL = {
     '청구서 주소: \n' +
     '멤버십 카드번호 뒤 3자리:'
 };
+
+Tw.CUSTOMER_HELPLINE_COMPLETE = {
+  TITLE: '전화상담 예약 완료',
+  DATE: '예약일자',
+  TIME: '예약시간',
+  TYPE: '상담유형',
+  AREA: '상담지역',
+  PHONE_NUMBER: '연락가능번호'
+},
+
 Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT = {
   SVCCTG: {
     S1: '인터넷',
