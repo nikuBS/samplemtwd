@@ -17,25 +17,25 @@ class CommonSearchMain extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-      const nowOsType = BrowserHelper.isApp(req) ? BrowserHelper.isAndroid(req) ? 'A' : 'I' : 'X';
-      const step = req.query.step || 1;
-      Observable.combineLatest(
-          this.apiService.request(API_CMD.POPULAR_KEYWORD, { range : 'D'}, {}),
-          this.apiService.request(API_CMD.BFF_12_0010, { mblOsTypCd : nowOsType }, {})
-      ).subscribe(([ popularKeyword, recommendKeyword ]) => {
-          // if (popularKeyword.code !== API_CODE.CODE_00) {
-          //     popularKeyword.result = [];
-          // }
-          // if (recommendKeyword.code !== API_CODE.CODE_00) {
-          //     recommendKeyword.result = [];
-          // }
-          res.render('search/common.search_main.html', {
-              svcInfo : svcInfo,
-              popularKeyword : popularKeyword,
-              recommendKeyword : recommendKeyword.result,
-              step : step
-          });
+    const nowOsType = BrowserHelper.isApp(req) ? BrowserHelper.isAndroid(req) ? 'A' : 'I' : 'X';
+    const step = req.query.step || 1;
+    Observable.combineLatest(
+      this.apiService.request(API_CMD.POPULAR_KEYWORD, { range : 'D'}, {}),
+      this.apiService.request(API_CMD.BFF_12_0010, { mblOsTypCd : nowOsType }, {})
+    ).subscribe(([ popularKeyword, recommendKeyword ]) => {
+      // if (popularKeyword.code !== API_CODE.CODE_00) {
+      //     popularKeyword.result = [];
+      // }
+      // if (recommendKeyword.code !== API_CODE.CODE_00) {
+      //     recommendKeyword.result = [];
+      // }
+      res.render('search/common.search_main.html', {
+        svcInfo : svcInfo,
+        popularKeyword : popularKeyword,
+        recommendKeyword : recommendKeyword.result,
+        step : step
       });
+    });
   }
 }
 

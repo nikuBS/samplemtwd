@@ -22,126 +22,126 @@ class CommonSearch extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
 
-      const query =  encodeURI(req.query.keyword) || '';
-      const collection = 'all';
-      const step = req.query.step || 1;
-      let requestObj, researchCd, researchQuery;
-      if (FormatHelper.isEmpty(req.query.in_keyword)) {
-          requestObj = { query , collection };
-      } else {
-          researchCd = 1;
-          researchQuery = encodeURI(req.query.in_keyword) || null;
-          requestObj = { query , collection , researchQuery , researchCd};
-      }
+    const query =  encodeURI(req.query.keyword) || '';
+    const collection = 'all';
+    const step = req.query.step || 1;
+    let requestObj, researchCd, researchQuery;
+    if (FormatHelper.isEmpty(req.query.in_keyword)) {
+      requestObj = { query , collection };
+    } else {
+      researchCd = 1;
+      researchQuery = encodeURI(req.query.in_keyword) || null;
+      requestObj = { query , collection , researchQuery , researchCd};
+    }
 
-      function showResult(searchResult: any, relatedKeyword: any): void {
-          res.render('search/common.search.html', {
-              svcInfo : svcInfo,
-              searchInfo : searchResult.result,
-              keyword : searchResult.result.query,
-              relatedKeyword : relatedKeyword,
-              inKeyword : searchResult.result.researchQuery,
-              step : step
-          });
-      }
-
-
-      Observable.combineLatest(
-          this.apiService.request( BrowserHelper.isApp(req) ? API_CMD.SEARCH_APP : API_CMD.SEARCH_WEB, requestObj, {}),
-          this.apiService.request(API_CMD.RELATED_KEYWORD, requestObj, {})
-      ).subscribe(([ searchResult, relatedKeyword ]) => {
-
-          if ((searchResult.code !== 0)) {
-              return this.error.render(res, {
-                  svcInfo: svcInfo,
-                  title: PRODUCT_TYPE_NM.JOIN
-              });
-          }
-          if ( searchResult.result.totalcount === 0 ) {
-              Observable.combineLatest(
-                  this.apiService.request(API_CMD.BFF_08_0069, {srchId : '52'}, {}),
-                  this.apiService.request(API_CMD.POPULAR_KEYWORD, {range : 'D'}, {})
-              ).
-              subscribe(([surveyList, popularKeyword]) => {
-                  if (surveyList.code !== API_CODE.CODE_00) {
-                      return this.error.render(res, {
-                          svcInfo: svcInfo,
-                          code: surveyList.code,
-                          msg: surveyList.msg
-                      });
-                  }
-                  res.render('search/common.search.not_found.html', {
-                      svcInfo : svcInfo,
-                      popularKeyword : popularKeyword.result,
-                      keyword : searchResult.result.query,
-                      relatedKeyword : relatedKeyword,
-                      inKeyword : searchResult.result.researchQuery,
-                      surveyList : surveyList.result,
-                      suggestQuery : searchResult.result.suggestQuery,
-                      step : step
-                  });
-              });
-          } else if (searchResult.result.search[0].immediate.data.length <= 0 || svcInfo === null) {
-              searchResult.result.search[0].immediate.data = [];
-              showResult(searchResult, relatedKeyword);
-          } else {
-              searchResult.result.search[0].immediate.data[0].mainData = StringHelper.phoneStringToDash(svcInfo.svcNum);
-              switch (Number(searchResult.result.search[0].immediate.data[0].DOCID)) {
-                  case 2:
-                       this.apiService.request(API_CMD.BFF_05_0001, {}, {}).
-                       subscribe((resultData) => {
-                           if (resultData.code !== API_CODE.CODE_00) {
-                               searchResult.result.search[0].immediate.data = [];
-                           } else {
-                               const remainData = new MyTDataHotData().parseCellPhoneUsageData(resultData.result, svcInfo);
-                               searchResult.result.search[0].immediate.data[0].subData = remainData;
-                           }
-                           showResult(searchResult, relatedKeyword);
-                      });
-                      break;
-                   case 3:
-                       this.apiService.request(API_CMD.BFF_05_0047, {}, {}).
-                       subscribe((resultData) => {
-                           if (resultData.code !== API_CODE.CODE_00) {
-                               searchResult.result.search[0].immediate.data = [];
-                           } else {
-                               /*const nowPrice = Number(resultData.result.useAmtTot) + Number(resultData.result.deduckTotInvAmt);*/
-                               const nowPrice = Number(resultData.result.useAmtTot);
-                               searchResult.result.search[0].immediate.data[0].subData = nowPrice;
-                           }
-                           showResult(searchResult, relatedKeyword);
-                       });
-                       break;
-                  case 4:
-                      this.apiService.request(API_CMD.BFF_05_0079, { payMethod : 'ALL'}, {}).
-                      subscribe((resultData) => {
-                          if (resultData.code !== API_CODE.CODE_00) {
-                              searchResult.result.search[0].immediate.data = [];
-                          } else {
-                              searchResult.result.search[0].immediate.data[0].subData = resultData.result.totalSumPrice;
-                          }
-                          showResult(searchResult, relatedKeyword);
-                      });
-                      break;
-                   case 5:
-                       this.apiService.request(API_CMD.BFF_11_0001, {}, {}).
-                       subscribe((resultData) => {
-                           if (resultData.code !== API_CODE.CODE_00) {
-                               searchResult.result.search[0].immediate.data = [];
-                           } else {
-                               searchResult.result.search[0].immediate.data[0].mainData = resultData.result.mbrGrCd;
-                               searchResult.result.search[0].immediate.data[0].subData = resultData.result.mbrUsedAmt;
-                           }
-                           showResult(searchResult, relatedKeyword);
-                       });
-                       break;
-                  default:
-                      searchResult.result.search[0].immediate.data[0].subData = svcInfo.prodNm;
-                      showResult(searchResult, relatedKeyword);
-                      break;
-              }
-          }
+    function showResult(searchResult: any, relatedKeyword: any): void {
+      res.render('search/common.search.html', {
+        svcInfo : svcInfo,
+        searchInfo : searchResult.result,
+        keyword : searchResult.result.query,
+        relatedKeyword : relatedKeyword,
+        inKeyword : searchResult.result.researchQuery,
+        step : step
       });
+    }
+
+
+    Observable.combineLatest(
+      this.apiService.request( BrowserHelper.isApp(req) ? API_CMD.SEARCH_APP : API_CMD.SEARCH_WEB, requestObj, {}),
+      this.apiService.request(API_CMD.RELATED_KEYWORD, requestObj, {})
+    ).subscribe(([ searchResult, relatedKeyword ]) => {
+
+      if ((searchResult.code !== 0)) {
+        return this.error.render(res, {
+          svcInfo: svcInfo,
+          title: PRODUCT_TYPE_NM.JOIN
+        });
+      }
+      if ( searchResult.result.totalcount === 0 ) {
+        Observable.combineLatest(
+          this.apiService.request(API_CMD.BFF_08_0069, {srchId : '52'}, {}),
+          this.apiService.request(API_CMD.POPULAR_KEYWORD, {range : 'D'}, {})
+        ).
+        subscribe(([surveyList, popularKeyword]) => {
+          if (surveyList.code !== API_CODE.CODE_00) {
+            return this.error.render(res, {
+              svcInfo: svcInfo,
+              code: surveyList.code,
+              msg: surveyList.msg
+            });
+          }
+          res.render('search/common.search.not_found.html', {
+            svcInfo : svcInfo,
+            popularKeyword : popularKeyword.result,
+            keyword : searchResult.result.query,
+            relatedKeyword : relatedKeyword,
+            inKeyword : searchResult.result.researchQuery,
+            surveyList : surveyList.result,
+            suggestQuery : searchResult.result.suggestQuery,
+            step : step
+          });
+        });
+      } else if (searchResult.result.search[0].immediate.data.length <= 0 || svcInfo === null) {
+        searchResult.result.search[0].immediate.data = [];
+        showResult(searchResult, relatedKeyword);
+      } else {
+        searchResult.result.search[0].immediate.data[0].mainData = StringHelper.phoneStringToDash(svcInfo.svcNum);
+        switch (Number(searchResult.result.search[0].immediate.data[0].DOCID)) {
+          case 2:
+            this.apiService.request(API_CMD.BFF_05_0001, {}, {}).
+            subscribe((resultData) => {
+              if (resultData.code !== API_CODE.CODE_00) {
+                searchResult.result.search[0].immediate.data = [];
+              } else {
+                const remainData = new MyTDataHotData().parseCellPhoneUsageData(resultData.result, svcInfo);
+                searchResult.result.search[0].immediate.data[0].subData = remainData;
+              }
+              showResult(searchResult, relatedKeyword);
+            });
+            break;
+          case 3:
+            this.apiService.request(API_CMD.BFF_05_0047, {}, {}).
+            subscribe((resultData) => {
+              if (resultData.code !== API_CODE.CODE_00) {
+                searchResult.result.search[0].immediate.data = [];
+              } else {
+                /*const nowPrice = Number(resultData.result.useAmtTot) + Number(resultData.result.deduckTotInvAmt);*/
+                const nowPrice = Number(resultData.result.useAmtTot);
+                searchResult.result.search[0].immediate.data[0].subData = nowPrice;
+              }
+              showResult(searchResult, relatedKeyword);
+            });
+            break;
+          case 4:
+            this.apiService.request(API_CMD.BFF_05_0079, { payMethod : 'ALL'}, {}).
+            subscribe((resultData) => {
+              if (resultData.code !== API_CODE.CODE_00) {
+                searchResult.result.search[0].immediate.data = [];
+              } else {
+                searchResult.result.search[0].immediate.data[0].subData = resultData.result.totalSumPrice;
+              }
+              showResult(searchResult, relatedKeyword);
+            });
+            break;
+          case 5:
+            this.apiService.request(API_CMD.BFF_11_0001, {}, {}).
+            subscribe((resultData) => {
+              if (resultData.code !== API_CODE.CODE_00) {
+                searchResult.result.search[0].immediate.data = [];
+              } else {
+                searchResult.result.search[0].immediate.data[0].mainData = resultData.result.mbrGrCd;
+                searchResult.result.search[0].immediate.data[0].subData = resultData.result.mbrUsedAmt;
+              }
+              showResult(searchResult, relatedKeyword);
+            });
+            break;
+          default:
+            searchResult.result.search[0].immediate.data[0].subData = svcInfo.prodNm;
+            showResult(searchResult, relatedKeyword);
+            break;
+        }
+      }
+    });
 
   }
 }
