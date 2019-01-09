@@ -26,9 +26,9 @@ Tw.MyTDataRechargeCouponUse.prototype = {
   _cacheElements: function () {
     this.$btnUse = this.$container.find('.fe-btn-use');
     this.$numberInput = this.$container.find('input[type=tel]');
-    this.$errorSpan = this.$container.find('.error-txt');
-    this.$errorV18 = this.$container.find('#fe-2-v18');
-    this.$errorV9 = this.$container.find('#fe-2-v9');
+    // this.$errorSpan = this.$container.find('.error-txt');
+    // this.$errorV18 = this.$container.find('#fe-2-v18');
+    // this.$errorV9 = this.$container.find('#fe-2-v9');
   },
   _bindEvent: function () {
     this.$container.on('change', 'input[type=radio]', $.proxy(this._onOptionSelected, this));
@@ -71,6 +71,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
     var number = this.$numberInput.val().trim();
 
     var pureNumber = number.replace(/[^0-9]/gi, '');
+    /*
     if (pureNumber.length === 0) {
       this.$errorSpan.addClass('none');
       return;
@@ -85,12 +86,18 @@ Tw.MyTDataRechargeCouponUse.prototype = {
       this.$errorV9.removeClass('none');
       return;
     }
+    */
 
-    this.$errorSpan.addClass('none');
-    this.$btnUse.attr('disabled', false);
+    // this.$errorSpan.addClass('none');
+
+    if (pureNumber.length === 0) {
+      this.$btnUse.attr('disabled', true);
+    } else {
+      this.$btnUse.attr('disabled', false);
+    }
   },
   _onNumberCancel: function () {
-    this.$errorSpan.addClass('none');
+    // this.$errorSpan.addClass('none');
     this.$btnUse.attr('disabled', true);
   },
   _onClickContacts: function () {
