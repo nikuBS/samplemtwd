@@ -91,7 +91,7 @@ Tw.MytJoinSuspendUpload.prototype = {
     }
     // file suffix validation.
     if ( !/(.gif|.bmp|.jpg|.jpeg|.doc|.pdf|.hwp|.docx)$/ig.test(file.name) ) {
-      this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A03);
+      this._popupService.openAlert(Tw.UPLOAD_FILE.CONFIRM_A02);
       return false;
     }
     return true;
@@ -119,6 +119,7 @@ Tw.MytJoinSuspendUpload.prototype = {
     if ( addable ) {
       $inputBox.find('input.fileview').val('');
       $inputBox.find('input.file').prop('files', null);
+      $inputBox.find('input.file').val('');
       $inputBox.find('input.file').removeAttr('disabled').css('pointer-events', 'all');
       $inputBox.find('.fe-file-button').text(Tw.UPLOAD_FILE.BUTTON_ADD);
     } else {

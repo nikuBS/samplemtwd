@@ -21,7 +21,7 @@ import {
   MYT_FARE_BILL_CO_TYPE
 } from '../../../types/bff.type';
 import DateHelper from '../../../utils/date.helper';
-import { REDIS_APP_VERSION } from '../../../types/redis.type';
+import { REDIS_KEY } from '../../../types/redis.type';
 
 class TestHome extends TwViewController {
   constructor() {
@@ -154,7 +154,7 @@ class TestHome extends TwViewController {
   }
 
   private getNotice(): Observable<any> {
-    return this.redisService.getData(REDIS_APP_VERSION)
+    return this.redisService.getData(REDIS_KEY.APP_VERSION)
       .map((result) => {
         if ( !FormatHelper.isEmpty((result)) ) {
           return result.notice;

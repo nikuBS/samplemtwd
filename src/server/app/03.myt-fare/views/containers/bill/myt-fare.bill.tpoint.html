@@ -82,9 +82,9 @@
                                                                            inputmode="numeric" min="0" pattern="[0-9]*"
                                                                            type="number" maxlength="8" placeholder="최소 1,000포인트 이상" />
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
-                                                                    <span class="error-txt fe-error-msg" style="display:none;"></span>
 																</span>
-																<p class="comm-indent-txt mt20">* T포인트는 1,000점 이상 10원 단위로 납부하실 수 있습니다.</p>
+                                                                <span class="error-txt fe-error-msg" style="display:none;"></span>
+																<p class="comm-indent-txt mt20">※ T포인트는 1,000점 이상 10원 단위로 납부하실 수 있습니다.</p>
 															</span>
                                                         </li>
                                                         <li>
@@ -94,8 +94,8 @@
 																	<input id="formInput02" class="fe-point-card required-input-field fe-only-number" maxlength="16"
                                                                            inputmode="numeric" min="0" pattern="[0-9]*" type="number" placeholder="숫자만 입력" />
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
-                                                                    <span class="error-txt fe-error-msg" style="display:none;">카드번호가 올바르지 않습니다.</span>
 																</span>
+                                                                <span class="error-txt fe-error-msg" style="display:none;">카드번호가 올바르지 않습니다.</span>
 															</span>
                                                         </li>
                                                         <li>
@@ -105,9 +105,9 @@
 																	<input id="formInput03" class="fe-point-pw required-input-field"
                                                                            type="password" maxlength="16" placeholder="비밀번호 입력" />
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
-                                                                    <span class="error-txt fe-error-msg" style="display:none;">비밀번호가 올바르지 않습니다.</span>
 																</span>
-																<p class="mt10"><button class="bt-link-tx underline fs-13 fe-find-password">OK캐쉬백 비밀번호 찾기</button></p>
+                                                                <span class="error-txt fe-error-msg" style="display:none;">비밀번호가 올바르지 않습니다.</span>
+																<p class="mt10"><button class="bt-link-tx underline fs-13 fe-find-password">OK캐쉬백 비밀번호 찾기 ></button></p>
 															</span>
                                                         </li>
                                                     </ul>
@@ -123,10 +123,10 @@
 																	<button id="<%= autoInfo.amtId %>" class="bt-dropdown big fe-select-point" title="납부할 포인트" aria-haspopup="true">
                                                                         <%= autoInfo.amtText %><span class="ico"></span>
                                                                     </button>
-                                                                    <span class="error-txt fe-error-msg" style="display:none;">납부할 포인트를 선택해 주세요.</span>
 																</span>
-																<p class="comm-indent-txt mt10">자동 납부 종료예정일<span class="pl10"><%= autoInfo.endDate %></span></p>
-																<p class="comm-indent-txt mt20">* 본인 명의로 이동전화를 등록한 고객님에 한해 포인트로 이동전화요금을 납부하실 수 있습니다.</p>
+                                                                <span class="error-txt fe-error-msg" style="display:none;">납부할 포인트를 선택해 주세요.</span>
+																<p class="comm-indent-txt mt10">자동납부 종료예정일<span class="pl10"><%= autoInfo.endDate %></span></p>
+																<p class="comm-indent-txt mt20">※ 본인명의로 이동전화를 등록한 고객님에 한해 포인트로 이동전화요금을 납부하실 수 있습니다.</p>
 															</span>
                                                         </li>
                                                         <li>
@@ -142,8 +142,8 @@
                                                                             <% } %>
                                                                            maxlength="16" placeholder="숫자만 입력" />
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
-                                                                    <span class="error-txt fe-error-msg" style="display:none;">카드번호가 올바르지 않습니다.</span>
 																</span>
+                                                                <span class="error-txt fe-error-msg" style="display:none;">카드번호가 올바르지 않습니다.</span>
 															</span>
                                                         </li>
                                                     </ul>

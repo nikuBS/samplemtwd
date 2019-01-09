@@ -164,7 +164,7 @@ Tw.MytJoinWireSetPause.prototype = {
   },
 
   _onClickBtnSubmit: function () {
-    var title, contents, btName, apiCmd, params;
+    var title, contents, btName, closeBtName, apiCmd, params;
     switch ( this._options.svcStCd ) {
       case this._SVC_ST_CD.AC:
         var sDate = Tw.DateHelper.getShortDateNoDot(this._startDate);
@@ -173,7 +173,8 @@ Tw.MytJoinWireSetPause.prototype = {
         contents = Tw.MYT_JOIN_WIRE_SET_PAUSE.SET.CONTENTS;
         contents = contents.replace('[sDate]', sDate);
         contents = contents.replace('[eDate]', eDate);
-        btName = Tw.MYT_JOIN_WIRE_SET_PAUSE.SET.BTNAME;
+        btName = null;
+        closeBtName = Tw.BUTTON_LABEL.CLOSE;
         apiCmd = Tw.API_CMD.BFF_05_0170;
         params = {
           lfr: Tw.DateHelper.getCurrentShortDate(this._startDate),
@@ -183,12 +184,13 @@ Tw.MytJoinWireSetPause.prototype = {
       case this._SVC_ST_CD.SP:
         title = Tw.MYT_JOIN_WIRE_SET_PAUSE.CANCEL.TITLE;
         contents = null;
-        btName = Tw.MYT_JOIN_WIRE_SET_PAUSE.CANCEL.BTNAME;
+        btName = null;
+        closeBtName = null;
         apiCmd = Tw.API_CMD.BFF_05_0171;
         params = {};
         break;
     }
-    this._popupService.openModalTypeA(title, contents, btName, undefined, $.proxy(this._reqWireSetPause, this, apiCmd, params));
+    this._popupService.openModalTypeATwoButton(title, contents, btName, closeBtName, undefined, $.proxy(this._reqWireSetPause, this, apiCmd, params));
   },
 
   _reqWireSetPause: function (apiCmd, params) {

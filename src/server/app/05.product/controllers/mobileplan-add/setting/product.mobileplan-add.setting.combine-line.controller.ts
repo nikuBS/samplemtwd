@@ -21,23 +21,34 @@ class ProductMobileplanAddSettingCombineLine extends TwViewController {
 
   /**
    * @param combineLIneInfo
+   * @param allSvc
    * @private
    */
-  private _convCombineLineInfo(combineLIneInfo: any): any {
+  private _convCombineLineInfo(combineLIneInfo: any, allSvc: any): any {
     return Object.assign(combineLIneInfo, {
       svcProdGrpId: combineLIneInfo.combinationLineList[0].svcProdGrpId,
-      combinationLineList: this._convertSvcNumMask(combineLIneInfo.combinationLineList)
+      combinationLineList: this._convertLineList(combineLIneInfo.combinationLineList, allSvc)
     });
   }
 
   /**
    * @param combinationLineList
+   * @param allSvc
    * @private
    */
-  private _convertSvcNumMask(combinationLineList): any {
+  private _convertLineList(combinationLineList: any, allSvc: any): any {
+    const nickNameList: any = {};
+
+    if (!FormatHelper.isEmpty(allSvc.m)) {
+      allSvc.m.forEach((item) => {
+        nickNameList[item.svcMgmtNum] = FormatHelper.isEmpty(item.nickNm) ? null : item.nickNm;
+      });
+    }
+
     return combinationLineList.map((item) => {
       return Object.assign(item, {
-        svcNumMask: FormatHelper.conTelFormatWithDash(item.svcNumMask)
+        svcNumMask: FormatHelper.conTelFormatWithDash(item.svcNumMask),
+        nickNm: FormatHelper.isEmpty(nickNameList[item.svcMgmtNum]) ? null : nickNameList[item.svcMgmtNum]
       });
     });
   }
@@ -65,7 +76,7 @@ class ProductMobileplanAddSettingCombineLine extends TwViewController {
 
         res.render('mobileplan-add/setting/product.mobileplan-add.setting.combine-line.html', Object.assign(renderCommonInfo, {
           prodId: prodId,
-          combineLineInfo: this._convCombineLineInfo(combineLineInfo.result),
+          combineLineInfo: this._convCombineLineInfo(combineLineInfo.result, allSvc),
           isApp: BrowserHelper.isApp(req)
         }));
       });

@@ -173,7 +173,7 @@ Tw.API_CMD = {
   BFF_05_0139: { path: '/core-modification/:version/myinfo/wire-service-contracts', method: Tw.API_METHOD.GET },
   BFF_05_0141: { path: '/core-modification/:version/wire-agreements-penalty', method: Tw.API_METHOD.GET },
   BFF_05_0142: { path: '/core-modification/:version/wire-agreements', method: Tw.API_METHOD.PUT },
-  BFF_05_0144: { path: '/core-product/:version/services/combinations/:args0/terminations', method: Tw.API_METHOD.DELETE },
+  BFF_05_0144: { path: '/core-product/:version/services/combinations/:args0/terminations', method: Tw.API_METHOD.PUT },
   BFF_05_0147: { path: '/core-bill/:version/bill-address-change', method: Tw.API_METHOD.PUT },
   BFF_05_0149: { path: '/core-modification/:version/phone-pause-states', method: Tw.API_METHOD.GET },
   BFF_05_0150: { path: '/core-modification/:version/wire-troubles-cancel', method: Tw.API_METHOD.DELETE },
@@ -585,7 +585,11 @@ Tw.API_CODE = {
   CODE_400: '400',
 
   NOT_FAMILY: 'ZORDE4011', // 쿠폰 선물 가능한 가족그룹 아님
-  RECEIVER_LIMIT: 'ZNGME0000' // 쿠폰 받는 사람 횟수 초과
+  RECEIVER_LIMIT: 'ZNGME0000', // 쿠폰 받는 사람 횟수 초과
+
+  RCG0101: 'RCG0101', // Ting 요금제 차단 상태
+  ZPAYE0077: 'ZPAYE0077', // 제공자가 성인이 아닌 경우 팅충전 선물을 할 수 없습니다.
+  RCG0062: 'RCG0062' // 팅,쿠키즈,안심 음성 미사용 상태
 };
 
 Tw.API_SVC_PWD_ERROR = {
@@ -611,5 +615,6 @@ Tw.API_ADD_SVC_ERROR = {
   BIL0030: 'BIL0030', // 휴대폰 결제 이용동의 후 사용 가능한 메뉴입니다
   BIL0031: 'BIL0031', // 미성년자는 이용할 수 없습니다
   BIL0033: 'BIL0033', // 휴대폰 결제 차단 고객은 사용이 제한된 메뉴입니다
-  BIL0034: 'BIL0034' // 소액결제 부가서비스 미가입자는 이용할 수 없습니다
+  BIL0034: 'BIL0034', // 소액결제 부가서비스 미가입자는 이용할 수 없습니다
+  BIL0035: 'BIL0035' //휴대폰 결제 차단 고객은 사용이 제한된 메뉴입니다.
 };

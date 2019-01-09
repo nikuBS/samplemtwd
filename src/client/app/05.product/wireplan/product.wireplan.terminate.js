@@ -49,9 +49,18 @@ Tw.ProductWireplanTerminate.prototype = {
       toProdDesc: this._confirmOptions.preinfo.reqProdInfo.prodSmryDesc,
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
       isNumberBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
-      svcNumMask: Tw.FormatHelper.conTelFormatWithDash(this._confirmOptions.preinfo.svcNumMask),
-      isAgreement: this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.isTermStplAgree
+      svcNumMask: this._confirmOptions.preinfo.svcNumMask,
+      isAgreement: this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.isTermStplAgree,
+      iconClass: this._getIcon()
     });
+  },
+
+  _getIcon: function() {
+    if (this._confirmOptions.preinfo.reqProdInfo.svcCd === 'P') {
+      return 'ico-type1';
+    }
+
+    return 'ico-type1';
   },
 
   _callConfirmCommonJs: function() {

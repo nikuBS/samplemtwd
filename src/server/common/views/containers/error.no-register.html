@@ -1,68 +1,66 @@
 <%#
 * FileName: error.no-register.html
-* Author: Ara Jo (araara.jo@sk.com)
-* Date: 2018.08.08
-* CO_99_06_01_01
+* Author: Jayoon Kong (jayoon.kong@sk.com)
+* Date: 2019.01.09
 %>
 
 <% include ../components/start.component.html %>
-<body class="bg-white">
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
         <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
     </ul>
 </div>
 <!--// #skip_navigation -->
 <div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+    </div>
+    <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <div class="container">
-
         </div>
     </div>
     <!--// #contents -->
     <!-- .popup hbs -->
-    <div class="popup-page tw-popup"><!-- .no-btn 하단에 버튼이 없을 경우 -->
-        <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
+    <div class="popup-page tw-popup pt0 fixed-bottom"><!-- .no-btn 하단에 버튼이 없을 경우 -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <div class="container">
+                <div class="complete-wrap">
+                    <div class="title-box">
+                        <i class="icon-warning-120"><span class="blind">warning</span></i>
+                        <p class="tx-tit"><span class="tx-highlight">SK 텔레콤 회선이 있어야<br/>사용 가능한 서비스 입니다.</span></p>
+                    </div>
+                    <div class="tx-contents">
+                        <p class="basic-txt">SK텔레콤 가입 회선이 있으시다면<br/>아래 '회선 등록하기'에서<br/>T World 이용 회선 등록을 해주세요.</p>
+
+                        <ul class="bt-slice item-one">
+                            <li><button type="button" class="btn-round2 btn-style3 fe-line">회선 등록하기</button></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-        <!--// #header -->
-        <!-- .container-wrap -->
-        <div class="container-wrap">
-            <h2 class="blind">내용</h2>
-            <div class="container">
-                <h1 class="complete-title">
-                    <img src="<%= CDN %>/img/dummy/dmy-complete.jpg" alt=""/>
-                    <span>SK 텔레콤 회선이 있어야<br/>사용 가능한 서비스 입니다.</span>
-                </h1>
-                <p class="complete-tx1">SK텔레콤 가입 회선이 있으시다면<br/>아래 '회선 등록하기'에서<br/>T World 이용 회선 등록을 해주세요.</p>
-                <div class="complete-btn-box pt40">
-                    <ul class="bt-slice">
-                        <li class="bt-white2">
-                            <a href="/common/member/line">회선 등록하기</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+
+        <div class="bt-fixed-area">
+            <ul class="bt-slice full">
+                <li><button type="button" class="btn-floating btn-style2 fe-common-back">닫기</button></li>
+            </ul>
         </div>
         <!--// .container-wrap -->
         <!-- .popup-closeBtn -->
-        <button class="popup-closeBtn fe-common-back"><span class="blind">팝업 페이지 닫기</span></button>
         <!--// .popup-closeBtn -->
     </div>
     <!--// .popup hbs -->
 </div>
 <% include ../components/javascript.component.html %>
-</body>
 <script>
   $(document).ready(function () {
+    $('.fe-line', '.wrap').on('click', function () {
+      window.location.href = '/common/member/line';
+    });
   });
 </script>
 <% include ../components/end.component.html %>

@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <% if (['01', '02'].indexOf(feePlan.dcBenefits[i].dcCttClCd) !== -1) { %>
-                    <span class="val"><%= feePlan.dcBenefits[i].dcVal %><%= (feePlan.dcBenefits[i].dcCttClCd === '01') ? '원' : '%' %></span>
+                    <span class="val"><%= Math.ceil(feePlan.dcBenefits[i].dcVal) %><%= (feePlan.dcBenefits[i].dcCttClCd === '01') ? '원' : '%' %></span>
                     <% } %>
                 </li>
                 <% } %>

@@ -10,7 +10,6 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
-import {REDIS_PRODUCT_INFO} from '../../../../types/redis.type';
 import { MYT_DATA_RECHARGE_COUPON } from '../../../../types/string.type';
 
 interface Coupon {
@@ -96,8 +95,10 @@ export default class MyTDataRechargeCoupon extends TwViewController {
 
   private purifyCouponData(data: Array<Coupon>): Array<Coupon> {
     return data.map((item) => {
-      item.usePsblStaDt = DateHelper.getShortDateNoDot(item.usePsblStaDt);
-      item.usePsblEndDt = DateHelper.getShortDateNoDot(item.usePsblEndDt);
+      // item.usePsblStaDt = DateHelper.getShortDateNoDot(item.usePsblStaDt);
+      item.usePsblStaDt = DateHelper.getShortDate(item.usePsblStaDt);
+      // item.usePsblEndDt = DateHelper.getShortDateNoDot(item.usePsblEndDt);
+      item.usePsblEndDt = DateHelper.getShortDateNoYear(item.usePsblEndDt) + '.';
       item.isGift = item.copnOperStCd === 'A20';  // A20: 선물, A10: 장기가입, A14: 10년주기
       item.copnNm = MYT_DATA_RECHARGE_COUPON[item.copnOperStCd];
       return item;

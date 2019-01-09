@@ -168,7 +168,7 @@ Tw.CustomerEmailQuality.prototype = {
   },
 
   _isValidQualityPhone: function () {
-    var sPhone = $('.fe-service_phone').val();
+    var sPhone = $('.fe-quality_phone').val();
 
     return Tw.ValidationHelper.isCellPhone(sPhone)|| Tw.ValidationHelper.isTelephone(sPhone);
   },

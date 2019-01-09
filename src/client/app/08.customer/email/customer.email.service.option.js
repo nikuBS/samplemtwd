@@ -21,11 +21,13 @@ Tw.CustomerEmailServiceOption.prototype = {
   },
 
   _cachedElement: function () {
+    this.$wrap_tpl_service = this.$container.find('.fe-wrap_tpl_service');
     this.tpl_service_direct_order = Handlebars.compile($('#tpl_service_direct_order').html());
   },
 
   _bindEvent: function () {
-    this.$container.on('click', '.fe-select-line', $.proxy(this._selectLine, this));
+    this.$wrap_tpl_service.on('click', '.fe-select-line', $.proxy(this._selectLine, this));
+    this.$wrap_tpl_service.on('click', '[data-svcmgmtnum]', $.proxy(this._selectLineCallback, this));
     this.$container.on('click', '.fe-select-brand', $.proxy(this._getDirectBrand, this));
     this.$container.on('click', '.fe-select-device', $.proxy(this._getDirectDevice, this));
     this.$container.on('click', '.fe-search-order', $.proxy(this._getOrderInfo, this));
@@ -33,7 +35,6 @@ Tw.CustomerEmailServiceOption.prototype = {
     this.$container.on('click', '.fe-wrap_direct_order .popup-closeBtn', $.proxy(this._closeDirectOrder, this));
     this.$container.on('click', '.fe-wrap_direct_order input[type="checkbox"]', $.proxy(this._disabledCheckbox, this));
     this.$container.on('click', '.fe-direct-more', $.proxy(this._onShowMoreList, this));
-    this.$container.on('click', '[data-svcmgmtnum]', $.proxy(this._selectLineCallback, this));
   },
 
   _selectLine: function (e) {

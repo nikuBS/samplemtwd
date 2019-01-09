@@ -20,23 +20,30 @@ class CommonTidLogout extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const target = req.query.target || '/common/member/logout/complete';
+    let clientId = '';
+
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_03_0007, {}),
-      this.apiService.request(API_CMD.BFF_03_0001, {})
-    ).subscribe(([key, logout]) => {
+      this.apiService.request(API_CMD.BFF_03_0001, {}),
+    ).switchMap(([key, bff_logout]) => {
       if ( key.code === API_CODE.CODE_00 ) {
-        const params = {
-          client_id: key.result.clientId,
-          redirect_uri: 'http://' + this.loginService.getDns() +
-            '/common/member/logout/route?target=' + target,
-          client_type: TID.CLIENT_TYPE,
-        };
-        const url = this.apiService.getServerUri(API_CMD.LOGOUT) + API_CMD.LOGOUT.path + ParamsHelper.setQueryParams(params);
-        this.logger.info(this, '[redirect]', url);
-        res.redirect(url);
+        clientId = key.result.clientId;
+        return this.loginService.logoutSession();
       } else {
-        res.send('login fail');
+        throw key;
       }
+    }).subscribe((resp) => {
+      const params = {
+        client_id: clientId,
+        redirect_uri: 'http://' + this.loginService.getDns() +
+          '/common/member/logout/route?target=' + target,
+        client_type: TID.CLIENT_TYPE,
+      };
+      const url = this.apiService.getServerUri(API_CMD.LOGOUT) + API_CMD.LOGOUT.path + ParamsHelper.setQueryParams(params);
+      this.logger.info(this, '[redirect]', url);
+      res.redirect(url);
+    }, (err) => {
+      res.send('logout fail');
     });
   }
 }

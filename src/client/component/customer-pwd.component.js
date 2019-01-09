@@ -68,6 +68,14 @@ Tw.CustomerPwdComponent.prototype = {
   },
   _onInput: function (event) {
     var $target = $(event.currentTarget);
+    if (!$target.hasClass('fe-first-pwd')) {
+      var $prev = $target.parent().prev().find('input');
+      if (Tw.FormatHelper.isEmpty($prev.val())) {
+        this._removePwd();
+        this.$firstPwd.focus();
+        return;
+      }
+    }
 
     this._hideErrMsg();
     this._setAsterisk($target);
@@ -96,6 +104,7 @@ Tw.CustomerPwdComponent.prototype = {
   },
   _removePwd: function () {
     this.$pwd.val('');
+    this.$pwd.parent().addClass('active').removeClass('entered');
   },
   _requestLogin: function () {
     var api = this._isPopup ? Tw.NODE_CMD.CHANGE_SESSION : Tw.NODE_CMD.LOGIN_SVC_PASSWORD;

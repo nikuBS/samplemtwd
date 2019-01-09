@@ -85,7 +85,7 @@ Tw.MyTFareBillCard.prototype = {
       $target.siblings().removeClass('checked');
       this.$refundBank.attr('disabled', 'disabled');
       this.$refundNumber.attr('disabled', 'disabled');
-      this.$refundNumber.siblings('.fe-error-msg').hide();
+      this.$refundNumber.parents('.fe-bank-wrap').find('.fe-error-msg').hide();
       this.$refundNumber.parents('.fe-bank-wrap').find('.fe-bank-error-msg').hide();
     }
 
@@ -199,7 +199,7 @@ Tw.MyTFareBillCard.prototype = {
       var cardName = res.result.prchsCardName;
 
       this.$cardNumber.attr({ 'data-code': cardCode, 'data-name': cardName });
-      this.$cardNumber.siblings('.fe-error-msg').hide();
+      this.$cardNumber.parent().siblings('.fe-error-msg').hide();
       this.$isCardValid = true;
 
       if (Tw.FormatHelper.isEmpty(cardCode)) {
@@ -210,7 +210,7 @@ Tw.MyTFareBillCard.prototype = {
     }
   },
   _getFail: function () {
-    this.$cardNumber.siblings('.fe-error-msg').empty().text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V28).show();
+    this.$cardNumber.parent().siblings('.fe-error-msg').empty().text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V28).show();
     this.$cardNumber.focus();
     this.$isCardValid = false;
   },
@@ -243,7 +243,14 @@ Tw.MyTFareBillCard.prototype = {
   },
   _checkAccountNumber: function (event) {
     var $target = $(event.currentTarget);
-    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkEmpty($target.val()));
+    this.$isValid = this._validation.checkEmpty($target.val());
+
+    if (this.$isValid) {
+      $target.parents('.fe-bank-wrap').find('.fe-error-msg').hide();
+    } else {
+      $target.parents('.fe-bank-wrap').find('.fe-error-msg').show();
+      $target.focus();
+    }
   },
   _onClose: function () {
     if (!this.$isChanged) {
@@ -316,7 +323,7 @@ Tw.MyTFareBillCard.prototype = {
   },
   _afterClose: function () {
     if (this._isClose) {
-      this._popupService.close();
+      this._historyService.goBack();
     }
   },
   _pay: function () {

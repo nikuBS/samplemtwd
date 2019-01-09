@@ -40,8 +40,8 @@
     <div class="productdetails-ledgercase">
         <% if ( prodRedisInfo.summary.basFeeInfo ) { %>
         <p class="price-text">
-            <% if ( !isCombine ) { %>
-                월정액(<%= basFeeSubText %>)<br>
+            <% if ( !isCombine && !isDiscount ) { %>
+                <%= ( isRoaming || isWireplanAdd || isMobileplanAdd ) ? '이용요금' : '월정액' %>(<%= basFeeSubText %>)<br>
                 <strong class="price-type"><%= prodRedisInfo.summary.basFeeInfo.value %></strong>
                 <% if ( !prodRedisInfo.summary.basFeeInfo.isNaN ) { %>
                 <span class="unit">원</span>
@@ -60,7 +60,7 @@
         </div>
         <% } else { %>
         <div class="limit">
-            가입제한 상품
+            <%= (basicInfo.prodStCd === 'F1000' ? '가입제한 상품' : '가입불가 상품') %>
         </div>
         <% } %>
         <% } else { %>
@@ -86,7 +86,7 @@
             ( isMobileplanAdd || isWireplanAdd || isRoaming || isCombine || isDiscount ) && !isJoined)
         ) { %>
         <div class="limit">
-            가입제한 상품
+            <%= (basicInfo.prodStCd === 'F1000' ? '가입제한 상품' : '가입불가 상품') %>
         </div>
         <% } %>
         <% } %>

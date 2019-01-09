@@ -39,11 +39,14 @@ Tw.MyTDataTingBlock.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var blockList = res.result;
 
-      $('.fe-wrap-block-list').html(this.tpl_block_item({ block_list: blockList }))
+      $('.fe-wrap-block-list').html(this.tpl_block_item({ block_list: blockList }));
+
       if ( blockList.length !== 0 ) {
         $('.fe-wrap-block-history').show();
+        $('.fe-block-history-empty').hide();
       } else {
         $('.fe-wrap-block-history').hide();
+        $('.fe-block-history-empty').show();
       }
 
     } else {
@@ -74,7 +77,9 @@ Tw.MyTDataTingBlock.prototype = {
 
   _onSuccessTingBlock: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.openAlert(Tw.MYT_DATA_TING.SUCCESS_BLOCK, null, null, $.proxy(this._goToMytMain, this));
+      this._popupService.toast(Tw.MYT_DATA_TING.SUCCESS_BLOCK);
+      this._goToMytMain();
+      // this._popupService.openAlert(Tw.MYT_DATA_TING.SUCCESS_BLOCK, null, null, $.proxy(this._goToMytMain, this));
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

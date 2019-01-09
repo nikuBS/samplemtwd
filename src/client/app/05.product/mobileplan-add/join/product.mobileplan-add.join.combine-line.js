@@ -18,12 +18,14 @@ Tw.ProductMobileplanAddJoinCombineLine = function(rootEl, prodId, displayId, con
   this._cachedElement();
   this._bindEvent();
   this._convConfirmOptions();
+  this._getAllSvcInfo();
 };
 
 Tw.ProductMobileplanAddJoinCombineLine.prototype = {
 
   _data: {
-    addList: []
+    addList: [],
+    nickNmList: {}
   },
 
   _cachedElement: function() {
@@ -49,6 +51,21 @@ Tw.ProductMobileplanAddJoinCombineLine.prototype = {
     this.$inputNumber.on('focus', $.proxy(this._focusInputNumber, this));
 
     this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
+  },
+
+  _getAllSvcInfo: function() {
+    this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
+      .done($.proxy(this._getAllSvcInfoRes, this));
+  },
+
+  _getAllSvcInfoRes: function(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result) || Tw.FormatHelper.isEmpty(resp.result.m)) {
+      return;
+    }
+
+    $.each(resp.result.m, function(item) {
+      this._data.nickNmList[item.svcNum] = Tw.FormatHelper.isEmpty(item.nickNm) ? null : item.nickNm;
+    }.bind(this));
   },
 
   _openAppAddressBook: function() {
@@ -78,10 +95,15 @@ Tw.ProductMobileplanAddJoinCombineLine.prototype = {
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
     }
 
+    var numMask = Tw.FormatHelper.getFormattedPhoneNumber(number),
+      nickNm = Tw.FormatHelper.isEmpty(this._data.nickNmList[numMask]) ? null : this._data.nickNmList[numMask];
+
     this._data.addList.push(number);
     this.$lineList.append(this._combinationTemplate({
       number: number,
-      numMask: Tw.FormatHelper.getFormattedPhoneNumber(number)
+      nickNm: nickNm,
+      nickNmFirst: Tw.FormatHelper.isEmpty(nickNm) ? null : nickNm.substr(0, 1),
+      numMask: numMask
     }));
 
     this._clearNum();

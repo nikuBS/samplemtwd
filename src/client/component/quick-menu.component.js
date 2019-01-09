@@ -66,7 +66,7 @@ Tw.QuickMenuComponent.prototype = {
   },
   _successAddQuickMenu: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.toast(Tw.ALERT_MSG_HOME.QUICK_ADD);
+      this._popupService.toast(Tw.TOAST_TEXT.QUICK_ADD);
       this.$btQuickAdd.parent().addClass('none');
       this.$btQuickRemove.parent().removeClass('none');
     } else {
@@ -75,9 +75,9 @@ Tw.QuickMenuComponent.prototype = {
   },
   _successRemoveQuickMenu: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.toast(Tw.ALERT_MSG_HOME.QUICK_REMOVE);
-      this.$btQuickAdd.parent().addClass('none');
-      this.$btQuickRemove.parent().removeClass('none');
+      this._popupService.toast(Tw.TOAST_TEXT.QUICK_REMOVE);
+      this.$btQuickRemove.parent().addClass('none');
+      this.$btQuickAdd.parent().removeClass('none');
     } else {
       Tw.Error.pop(resp.code, resp.msg);
     }

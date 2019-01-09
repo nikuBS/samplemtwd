@@ -255,6 +255,10 @@ Tw.MyTDataSubMain.prototype = {
         data_arry: chart_data //데이터 obj
       });
     }
+    else {
+      this.$patternChart.hide();
+      this.$container.find('[data-id=pattern_empty]').hide();
+    }
   },
 
   _initOtherLinesInfo: function () {
@@ -462,11 +466,11 @@ Tw.MyTDataSubMain.prototype = {
 
   // 회선 변경 후 처리
   _onChangeSessionSuccess: function () {
+    if ( Tw.BrowserHelper.isApp() ) {
+      this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
+    }
     setTimeout($.proxy(function () {
       this._historyService.reload();
-      if ( Tw.BrowserHelper.isApp() ) {
-        this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
-      }
     }, this), 500);
   },
 

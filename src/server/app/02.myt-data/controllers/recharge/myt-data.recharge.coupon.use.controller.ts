@@ -8,9 +8,9 @@ import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { REDIS_PRODUCT_INFO } from '../../../../types/redis.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { DATA_UNIT, TIME_UNIT } from '../../../../types/string.type';
+import { REDIS_KEY } from '../../../../types/redis.type';
 
 interface Option {
   dataVoiceClCd: string;
@@ -61,7 +61,7 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
         if (!FormatHelper.isEmpty(couponUsage) && !FormatHelper.isEmpty(productSummary)) {
           const options = this.purifyCouponOptions(couponUsage, productSummary, svcInfo.prodId);
           res.render('recharge/myt-data.recharge.coupon-use.html', {
-            no, name, period, tab, options, isGift
+            no, name, period, tab, options, isGift, pageInfo
           });
         }
       },
@@ -87,7 +87,7 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
   }
 
   private getRedisProductInfo(res: Response, svcInfo: any, prodId: any): Observable<any> {
-    return this.redisService.getData(REDIS_PRODUCT_INFO + prodId).map(resp => {
+    return this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId).map(resp => {
       if (!FormatHelper.isEmpty(resp.result)) {
         return resp.result.summary;
       }

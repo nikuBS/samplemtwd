@@ -21,7 +21,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
 
   _bindEvent: function () {
     this.$container.on('click', '[data-id="bt-reset"]', $.proxy(this._onClickReset, this));
-    this.$container.on('click', '#bt-resuspend', $.proxy(this._onClickResuspend, this));
+    this.$container.on('click', '[data-id="bt-resuspend"]', $.proxy(this._onClickResuspend, this));
     this.$container.on('click', '#bt-cancel-resuspend', $.proxy(this._onClickCancelResuspend, this));
   },
 
@@ -209,10 +209,6 @@ Tw.MyTJoinSuspendStatus.prototype = {
   },
 
   _successUploadFile: function (res) {
-    // TODO uscan 정상동작시 삭제
-    // this._requestReupload();
-    // return;
-
     // USCAN upload
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var convFileList = res.result.map(function (item) {

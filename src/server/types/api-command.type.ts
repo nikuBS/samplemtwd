@@ -242,7 +242,7 @@ export const API_CMD = {
   BFF_05_0143: { path: '/core-modification/:version/wire-agreements-changes', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0144: {
     path: '/core-product/:version/services/combinations/:args0/terminations',
-    method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true
+    method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true
   },
   BFF_05_0146: { path: '/core-bill/:version/bill-address', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0147: { path: '/core-bill/:version/bill-address-change', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
@@ -624,6 +624,8 @@ export const API_CMD = {
     bypass: true
   },
   BFF_10_0084: { path: '/core-product/:version/roaming/fee-plans/:args0/joins', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0085: { path: '/core-product/:version/roaming/fee-plans/:args0/sets', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0086: { path: '/core-product/:version/roaming/fee-plans/:args0/terminations', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_10_0088: { path: '/core-product/:version/roaming/submain/promBannerList', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0089: { path: '/core-product/:version/roaming/submain/alpaList', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0090: { path: '/core-product/:version//roaming/submain/bannerList', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

@@ -274,7 +274,7 @@ Tw.POPUP_TPL = {
       }
     ]
   },
-  FARE_PAYMENT_LIMIT: [
+  FARE_PAYMENT_SMALL_LIMIT: [
     {
       'list': [
         { 'label-attr': 'id="500000"', 'radio-attr': 'name="r2" id="500000"', txt: '50만원' },
@@ -284,6 +284,22 @@ Tw.POPUP_TPL = {
         { 'label-attr': 'id="120000"', 'radio-attr': 'name="r2" id="120000"', txt: '12만원' },
         { 'label-attr': 'id="60000"', 'radio-attr': 'name="r2" id="60000"', txt: '6만원' },
         { 'label-attr': 'id="50000"', 'radio-attr': 'name="r2" id="50000"', txt: '5만원' },
+        { 'label-attr': 'id="30000"', 'radio-attr': 'name="r2" id="30000"', txt: '3만원' },
+        { 'label-attr': 'id="10000"', 'radio-attr': 'name="r2" id="10000"', txt: '1만원' }
+      ]
+    }
+  ],
+  FARE_PAYMENT_CONTENTS_LIMIT: [
+    {
+      'list': [
+        { 'label-attr': 'id="500000"', 'radio-attr': 'name="r2" id="500000"', txt: '50만원' },
+        { 'label-attr': 'id="400000"', 'radio-attr': 'name="r2" id="400000"', txt: '40만원' },
+        { 'label-attr': 'id="300000"', 'radio-attr': 'name="r2" id="300000"', txt: '30만원' },
+        { 'label-attr': 'id="200000"', 'radio-attr': 'name="r2" id="200000"', txt: '20만원' },
+        { 'label-attr': 'id="150000"', 'radio-attr': 'name="r2" id="150000"', txt: '15만원' },
+        { 'label-attr': 'id="100000"', 'radio-attr': 'name="r2" id="100000"', txt: '10만원' },
+        { 'label-attr': 'id="90000"', 'radio-attr': 'name="r2" id="90000"', txt: '9만원' },
+        { 'label-attr': 'id="60000"', 'radio-attr': 'name="r2" id="60000"', txt: '6만원' },
         { 'label-attr': 'id="30000"', 'radio-attr': 'name="r2" id="30000"', txt: '3만원' },
         { 'label-attr': 'id="10000"', 'radio-attr': 'name="r2" id="10000"', txt: '1만원' }
       ]
@@ -509,11 +525,11 @@ Tw.HELPLINE_TYPES = [
 ];
 
 Tw.CUSTOMER_HELPLINE_AREAS = [
-  { txt: '수도권 (서울, 경기, 인천, 강원)', 'radio-attr': 'data-area-code="1"' },
-  { txt: '중부 (충남, 충북, 대전)', 'radio-attr': 'data-area-code="5"' },
-  { txt: '서부 (전남, 전북, 광주, 제주)', 'radio-attr': 'data-area-code="4"' },
-  { txt: '대구 (경북, 대구)', 'radio-attr': 'data-area-code="3"' },
-  { txt: '부산 (경남, 울산, 부산)', 'radio-attr': 'data-area-code="2"' }
+  { txt: '수도권(서울, 경기, 인천, 강원)', 'radio-attr': 'data-area-code="1"' },
+  { txt: '중부(충남, 충북, 대전)', 'radio-attr': 'data-area-code="5"' },
+  { txt: '서부(전남, 전북, 광주, 제주)', 'radio-attr': 'data-area-code="4"' },
+  { txt: '대구(경북, 대구)', 'radio-attr': 'data-area-code="3"' },
+  { txt: '부산(경남, 울산, 부산)', 'radio-attr': 'data-area-code="2"' }
 ];
 
 Tw.CUSTOMER_PRAISE_SUBJECT_TYPES = [
@@ -521,16 +537,16 @@ Tw.CUSTOMER_PRAISE_SUBJECT_TYPES = [
   { txt: '대리점', 'radio-attr': 'data-index="1" data-code="T10"' },
   { txt: '고객센터', 'radio-attr': 'data-index="2" data-code="T30"' },
   { txt: '통화품질 기준 매니저', 'radio-attr': 'data-index="3" data-code="T50"' },
-  { txt: 'AS센터', 'radio-attr': 'data-index="4" data-code="T20"' },
+  { txt: 'A/S센터', 'radio-attr': 'data-index="4" data-code="T20"' },
   { txt: '행복기사(SK브로드밴드)', 'radio-attr': 'data-index="5" data-code="T60"' }
 ];
 
 Tw.CUSTOMER_PRAISE_AREAS = [
-  { txt: '서울/인천/경기', 'radio-attr': 'data-code="A10"' },
-  { txt: '강원/충청/대전', 'radio-attr': 'data-code="A20"' },
-  { txt: '전북/전남/광주/제주', 'radio-attr': 'data-code="A30"' },
-  { txt: '부산/경남', 'radio-attr': 'data-code="A40"' },
-  { txt: '대구/경북', 'radio-attr': 'data-code="A50"' }
+  { txt: '서울·인천·경기', 'radio-attr': 'data-code="A10"' },
+  { txt: '강원·충청·대전', 'radio-attr': 'data-code="A20"' },
+  { txt: '전북·전남·광주·제주', 'radio-attr': 'data-code="A30"' },
+  { txt: '부산·경남', 'radio-attr': 'data-code="A40"' },
+  { txt: '대구·경북', 'radio-attr': 'data-code="A50"' }
 ];
 
 Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
@@ -738,14 +754,6 @@ Tw.SUSPEND_RELATION = {
   ]
 };
 
-Tw.PRODUCT_JOIN_TYPE = [
-  { txt: '휴대폰', 'radio-attr': 'data-type-code="cellphone"' },
-  { txt: '인터넷', 'radio-attr': 'data-type-code="internet"' },
-  { txt: '전화', 'radio-attr': 'data-type-code="phone"' },
-  { txt: 'TV', 'radio-attr': 'data-type-code="tv"' },
-  { txt: '결합상품', 'radio-attr': 'data-type-code="combine"' }
-];
-
 Tw.SUSPEND_RELATION = {
   title: '추가연락처',
   list: [
@@ -759,7 +767,10 @@ Tw.SUSPEND_RELATION = {
   ]
 };
 
-Tw.PREPAID_HISTORIES = [{ txt: '음성 충전', 'radio-attr': 'data-type="voice"' }, { txt: '데이터 충전', 'radio-attr': 'data-type="data"' }];
+Tw.PREPAID_HISTORIES = [
+  { txt: '음성 충전', 'radio-attr': 'data-type="voice"' }, 
+  { txt: '데이터 충전', 'radio-attr': 'data-type="data"' }
+];
 
 Tw.PREPAID_BADGES = {
   1: { name: '1회', icon: 'auto' },

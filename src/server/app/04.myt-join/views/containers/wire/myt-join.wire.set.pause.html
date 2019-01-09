@@ -68,8 +68,12 @@
                     <% } else if (wirePauseInfo.svc_st_cd === 'SP') { %>
                     <div class="data-result mt30">
                         <p class="tit">이용 중단 기간</p>
-                        <p class="data"><em><%= wirePauseInfo.pause_range %></em></p>
-                        <p class="tit"></p>
+                        <p class="data"><em>
+                            <%= wirePauseInfo.showLastSuspDtFr %>
+                            ~
+                            <%= wirePauseInfo.showLastSuspDtTo %>
+                        </em></p>
+                        <p class="tit">(<%= wirePauseInfo.pause_range %>)</p>
                     </div>
                     <% } %>
                 </div>

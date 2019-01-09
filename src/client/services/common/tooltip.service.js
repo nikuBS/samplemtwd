@@ -2,6 +2,7 @@ Tw.TooltipService = function () {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 
+  this._contentList = [];
   this._link = null;
 
   this._inapp = false;
@@ -13,44 +14,56 @@ Tw.TooltipService = function () {
 
 Tw.TooltipService.prototype = {
   _init: function () {
-    var $menuId = $('.wrap').attr('data-menuId');
-    this._getTip($menuId);
+    this.$menuId = $('.wrap').attr('data-menuId');
+    this._getTip();
   },
   popInit: function ($menuId) {
     if (window.location.hash.indexOf('_P') !== -1) {
-      this._getTip($menuId);
+      if (Tw.FormatHelper.isEmpty($menuId) || this.$menuId === $menuId) {
+        this._getContents();
+      } else {
+        this.$menuId = $menuId;
+        this._getTip();
+      }
     }
   },
-  _getTip: function ($menuId) {
-    if ($menuId) {
-      this._apiService.request(Tw.NODE_CMD.GET_TOOLTIP, {menuId: $menuId})
-        .done($.proxy(this._success, this, $menuId))
-        .fail($.proxy(this._fail, this, $menuId));
+  _getTip: function () {
+    if (this.$menuId) {
+      this._apiService.request(Tw.NODE_CMD.GET_TOOLTIP, {menuId: this.$menuId})
+        .done($.proxy(this._success, this))
+        .fail($.proxy(this._fail, this));
     }
   },
-  _success: function ($menuId, res) {
+  _success: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      var $content = res.result.tooltip;
-      if (!Tw.FormatHelper.isEmpty($content)) {
-        this._getContents($content);
+      this._contentList = res.result.tooltip;
+      if (!Tw.FormatHelper.isEmpty(this._contentList)) {
+        this._getContents();
       }
     } else {
-      this._fail($menuId, res);
+      this._fail(res);
     }
   },
-  _fail: function ($menuId, err) {
-    $('button[page-id="' + $menuId + '"]').on('click', $.proxy(this._failAlert, this, err));
+  _fail: function (err) {
+    $('button[page-id="' + this.$menuId + '"]').on('click', $.proxy(this._failAlert, this, err));
   },
   _failAlert: function (err) {
     Tw.Error(err.code, err.msg).pop();
   },
-  _getContents: function ($content) {
-    for (var i = 0; i < $content.length; i++) {
-      var $target = $('button[id="' + $content[i].mtwdTtipId + '"]');
-      if ($content[i].ttipPresTypCd !== Tw.REDIS_TOOLTIP_CODE.ICON) {
-        this._setTitle($target, $content[i]);
-      } else {
-        $target.on('click', $.proxy(this._openTip, this, $content[i]));
+  _getContents: function () {
+    for (var i = 0; i < this._contentList.length; i++) {
+      var $target = $('button[id="' + this._contentList[i].mtwdTtipId + '"]');
+      if (!$target.hasClass('fe-tip')) {
+        $target.addClass('fe-tip');
+
+        if (this._contentList[i].ttipPresTypCd === Tw.REDIS_TOOLTIP_CODE.ALL) {
+          this._setTitle($target, this._contentList[i]);
+        } else {
+          if (this._contentList[i].ttipPresTypCd === Tw.REDIS_TOOLTIP_CODE.TEXT) {
+            $target.text(this._contentList[i].ttipTitNm);
+          }
+          $target.on('click', $.proxy(this._openTip, this, this._contentList[i]));
+        }
       }
     }
   },

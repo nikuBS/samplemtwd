@@ -39,20 +39,15 @@
                         <div class="widget-box radio">
                             <div class="radio-slide big">
                                 <ul class="select-list fe-bill-isue-typs" role="radiogroup">
-                                    <li class="radiobox checked" role="radio" aria-checked="true">
-                                        <input type="radio" name="radio1" value="<%= data.billIsueTyps[0] %>"
-                                               title="<%= data.billIsueTypNms[0] %>" checked/>
-                                        <span class="radio-txt">
-												<span><%= data.billIsueTypNms[0] %></span>
-											</span>
-                                    </li>
-                                    <li class="radiobox" role="radio">
-                                        <input type="radio" name="radio1" value="<%= data.billIsueTyps[1] %>"
-                                               title="<%= data.billIsueTypNms[1] %>"/>
-                                        <span class="radio-txt">
-												<span><%= data.billIsueTypNms[1] %></span>
-											</span>
-                                    </li>
+                                    <% for (var i = 0; i < data.billIsueTyps.length; i++) { %>
+                                        <li class="radiobox <%= (i === 0) ? 'checked': ''%>" role="radio" aria-checked="<%= (i === 0) ? 'checked': ''%>">
+                                            <input type="radio" name="radio1" value="<%= data.billIsueTyps[i] %>"
+                                                   title="<%= data.billIsueTypNms[i] %>" <%= (i === 0) ? 'checked': ''%>/>
+                                            <span class="radio-txt">
+                                                <span><%= data.billIsueTypNms[i] %></span>
+                                            </span>
+                                        </li>
+                                    <% } %>
                                 </ul>
                             </div>
                         </div>
@@ -60,8 +55,8 @@
                 </div>
                 <% } %>
 
-                <!-- 휴대폰인 경우 재발행 시점 표시-->
-                <% if (data.type === '01') { %>
+                <!-- 휴대폰 && T월드 타입이 아닌경우 재발행 시점 표시-->
+                <% if (data.type === '01' && data.billIsueTypCd !== 'P') { %>
                 <div class="cont-box">
                     <p class="con-tit0 pb12">재발행 시점</p>
                     <div class="widget">

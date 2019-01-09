@@ -31,9 +31,8 @@ class ProductMobileplanSettingBandYT extends TwViewController {
       return this.error.render(res, data);
     }
 
-    this.apiService.request(API_CMD.BFF_10_0042, {}, {}, prodId)
+    this.apiService.request(API_CMD.BFF_10_0042, {}, {})
       .subscribe((bandytInfo) => {
-        // TODO: bandYT 설정 조회 API 정상 기능이 아님, API 정상처리후 재작업필요
         if ( bandytInfo.code === API_CODE.CODE_00 ) {
           data.bandyt = bandytInfo.result;
           if ( prodId === 'NA00005017' ) {

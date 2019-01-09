@@ -9,9 +9,23 @@
                 <div class="tx-contents">
                     {{#if codeTxt}}<p class="code-txt">{{codeTxt}}</p>{{/if}}
                     {{#if basicTxt}}<p class="basic-txt">{{basicTxt}}</p>{{/if}}
-                    {{#if itemOne}}
-                        <ul class="bt-slice item-one">
-                            <li><a href="{{itemOne.url}}" class="btn-round2 btn-style3">{{itemOne.text}}</a></li>
+                    {{#if items}}
+                        <div class="basic-list">
+                            <ul>
+                                {{#each items}}
+                                    <li>
+                                        <span class="title">{{key}}</span>
+                                        <span class="tx-cont">{{{value}}}</span>
+                                    </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    {{/if}}
+                    {{#if buttons}}
+                        <ul class="bt-slice item-{{../buttonClass}}">
+                            {{#each buttons}}
+                                <li><a href="{{url}}" class="btn-round2 btn-style3">{{text}}</a></li>
+                            {{/each}}
                         </ul>
                     {{/if}}
                 </div>
@@ -21,7 +35,13 @@
 
     <div class="bt-fixed-area">
         <ul class="bt-slice full">
-            <li><button type="button" class="btn-floating btn-style2 fe-btn_close">{{btnText}}</button></li>
+        {{#if btnText}}
+                <li><button type="button" class="btn-floating btn-style2 fe-btn_close">{{btnText}}</button></li>
+        {{else}}
+            <li class="bt-red1">
+                <a type="button" href="/main/home" class="btn-floating btn-style2 fe-btn_close">홈으로</a>
+            </li>
+        {{/if}}
         </ul>
     </div>
 </div>

@@ -178,7 +178,7 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
     .inputbox .input input[type=number],
     .inputbox .input input[type=tel] {
       display: block;
-      padding: 0 0.625rem;
+      padding: 0 2.25rem 0 0.625rem;
       height: 2.375rem;
       border-radius: 0.25rem;
       background: #f2f2f2;
@@ -304,6 +304,50 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
       height: 1.5625rem;
       background: url(/img/ico/ico-group.png) no-repeat -1.5625rem -32.8125rem;
       background-size: 3.125rem; }
+    .inputbox .input textarea.text-auto-expand {
+      display: block;
+      overflow: hidden;
+      padding: 0.5625rem 2.25rem 0.5rem 0.625rem;
+      height: 2.375rem;
+      background: #f2f2f2;
+      font-size: 0.9375rem;
+      color: #000;
+      font-weight: 300;
+      line-height: 1.3125rem; }
+      .inputbox .input textarea.text-auto-expand::-webkit-input-placeholder {
+        font-size: 0.9375rem;
+        color: #8f8f8f; }
+      .inputbox .input textarea.text-auto-expand:-ms-input-placeholder {
+        font-weight: 300;
+        font-size: 0.9375rem;
+        color: #8f8f8f; }
+      .inputbox .input textarea.text-auto-expand::-ms-input-placeholder {
+        font-weight: 300;
+        font-size: 0.9375rem;
+        color: #8f8f8f; }
+      .inputbox .input textarea.text-auto-expand::placeholder {
+        font-weight: 300;
+        font-size: 0.9375rem;
+        color: #8f8f8f; }
+      .inputbox .input textarea.text-auto-expand.place-small::-webkit-input-placeholder {
+        font-size: 0.6875rem;
+        letter-spacing: -1px; }
+      .inputbox .input textarea.text-auto-expand:focus {
+        border-color: #7b7b7b; }
+        .inputbox .input textarea.text-auto-expand:focus::-webkit-input-placeholder {
+          color: transparent; }
+      .inputbox .input textarea.text-auto-expand:disabled {
+        background-color: #dcdcdc;
+        font-weight: 300;
+        color: #c1c1c1; }
+        .inputbox .input textarea.text-auto-expand:disabled::-webkit-input-placeholder {
+          color: #808698;
+          font-weight: 300; }
+      .inputbox .input textarea.text-auto-expand[readonly] {
+        background-color: #fff;
+        border-color: #d1d1d1; }
+        .inputbox .input textarea.text-auto-expand[readonly] .cancel {
+          display: none; }
   .inputbox .guide-txt {
     display: block;
     margin: 0.375rem 0 0;
@@ -702,7 +746,8 @@ input[type='radio'], input[type='text'], input[type='password'], input[type='num
   border: 0;
   -webkit-border: 0;
   -moz-border: 0;
-  border-radius: 0; }
+  border-radius: 0;
+  text-decoration: none; }
 
 input::-webkit-scrollbar, textarea::-webkit-scrollbar {
   width: 0;

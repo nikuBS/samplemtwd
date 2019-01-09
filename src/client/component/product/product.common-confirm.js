@@ -10,6 +10,7 @@ Tw.ProductCommonConfirm = function(isPopup, rootEl, data, applyCallback) {
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
   this._comparePlans = new Tw.ProductMobilePlanComparePlans();
+
   this._data = this._convData(data);
   this._isApply = false;
   this._isPopup = isPopup;
@@ -119,7 +120,8 @@ Tw.ProductCommonConfirm.prototype = {
       hbs: 'product_common_confirm',
       layer: true,
       title: Tw.PRODUCT_TYPE_NM.JOIN,
-      applyBtnText: Tw.BUTTON_LABEL.JOIN
+      applyBtnText: Tw.BUTTON_LABEL.JOIN,
+      isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this._data.preinfo.toProdInfo.prodId) === -1
     }), $.proxy(this._setContainer, this, true), $.proxy(this._closePop, this), 'join_confirm');
   },
 
@@ -151,6 +153,11 @@ Tw.ProductCommonConfirm.prototype = {
   _bindJoinCancelPopupCloseEvent: function() {
     if (!this._cancelFlag) {
       return;
+    }
+
+    if(this._data.setInfo) {
+      // 선택약정할인 상품인 경우 예외 처리 (Edit: KIM inHwan)
+      return this._historyService.go(-3);
     }
 
     if (!this._isPopup) {
@@ -194,17 +201,24 @@ Tw.ProductCommonConfirm.prototype = {
 
   _openSelectTerminateCause: function() {
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
-      layer: true,
-      title: Tw.POPUP_TITLE.SELECT_FAMILY_TYPE,
-      data: this._data.termRsnList.map(function(item) {
-        return {
-          value: item.ranNm,
-          option: this._termRsnCd === item.ranCd ? 'checked' : '',
-          attr: 'data-term_rsn_cd="' + item.ranCd + '"'
-        };
-      })
+      hbs:'actionsheet01',
+      layer:true,
+      data:[
+        {
+          'list': this._data.preinfo.termRsnList.map($.proxy(this._getTermRsn, this))
+        }
+      ],
+      btnfloating : {'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE}
     }, $.proxy(this._bindSelectTerminateCause, this), null, 'select_term_rsn_cd');
+  },
+
+  _getTermRsn: function(item, idx) {
+    return {
+      'label-attr': 'id="ra' + idx + '"',
+      'txt': item.rsnNm,
+      'radio-attr': 'id="ra' + idx + '" data-rsn_txt="' + item.rsnNm + '" data-term_rsn_cd="' + item.rsnCd +
+        '" ' + ($.trim(this._termRsnCd) === $.trim(item.rsnCd) ? 'checked' : '')
+    };
   },
 
   _bindSelectTerminateCause: function($popupContainer) {
@@ -212,8 +226,10 @@ Tw.ProductCommonConfirm.prototype = {
   },
 
   _setTermRsnCd: function(e) {
-    this._termRsnCd = $(e.currentTarget).data('term_rsn_cd');
-    this.$btnSelectTerminateCause.html(Tw.WIREPLAN_TERMINATE_CAUSE[this._termRsnCd] +
+    var $elem = $(e.currentTarget);
+
+    this._termRsnCd = $elem.data('term_rsn_cd');
+    this.$btnSelectTerminateCause.html($elem.data('rsn_txt') +
       $('<div\>').append(this.$btnSelectTerminateCause.find('.ico')).html());
     this._procApplyBtnActivate();
 
@@ -276,7 +292,8 @@ Tw.ProductCommonConfirm.prototype = {
 
     this._popupService.close();
     if($target && $target.hasClass('set-info')) {
-      this._historyService.goBack();
+      // 선택약정할인 상품인 경우 예외 처리 (Edit: KIM inHwan)
+      this._historyService.go(-3);
     }
   },
 

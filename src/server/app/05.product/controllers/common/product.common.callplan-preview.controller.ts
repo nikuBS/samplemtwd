@@ -14,12 +14,12 @@ import {
   PRODUCT_SIMILAR_PRODUCT,
   PRODUCT_TYPE_NM
 } from '../../../../types/string.type';
-import { PRODUCT_CALLPLAN, PRODUCT_TYP_CD_LIST } from '../../../../types/bff.type';
-import { REDIS_PRODUCT_FILTER } from '../../../../types/redis.type';
+import { BENEFIT_SUBMAIN_CATEGORY, PRODUCT_CALLPLAN, PRODUCT_TYP_CD_LIST } from '../../../../types/bff.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
 import EnvHelper from '../../../../utils/env.helper';
+import { REDIS_KEY } from '../../../../types/redis.type';
 
 class ProductCommonCallplanPreview extends TwViewController {
   constructor() {
@@ -369,7 +369,7 @@ class ProductCommonCallplanPreview extends TwViewController {
     }
 
     let prodIdsLength: any = 0;
-    if (prodTypCd === 'G' && similarProductInfo.similarsList) {
+    if (['G', 'F'].indexOf(prodTypCd) !== -1 && similarProductInfo.similarsList) {
       let prodIds: any = [];
 
       similarProductInfo.similarsList.forEach((item) => {
@@ -387,13 +387,15 @@ class ProductCommonCallplanPreview extends TwViewController {
       prodIdsLength = prodIds.length;
     }
 
-    return Object.assign(similarProductInfo, {
+    const prodFltIds: any = FormatHelper.isEmpty(similarProductInfo.result.list) ? '' : similarProductInfo.result.list.map((item) => {
+      return item.prodFltId;
+    }).join(',');
+
+    return Object.assign(similarProductInfo.result, {
       titleNm: titleNm,
-      prodFltIds: FormatHelper.isEmpty(similarProductInfo.similarsList) ? '' : similarProductInfo.similarsList.map((item) => {
-        return item.prodFltId;
-      }).join(','),
-      prodCnt: prodTypCd === 'G' ? prodIdsLength : similarProductInfo.prodCnt,
-      list: similarProductInfo.similarsList
+      benefitPath: FormatHelper.isEmpty(BENEFIT_SUBMAIN_CATEGORY[prodFltIds]) ? null : BENEFIT_SUBMAIN_CATEGORY[prodFltIds],
+      prodFltIds: prodFltIds,
+      prodCnt: ['G', 'F'].indexOf(prodTypCd) !== -1 ? prodIdsLength : similarProductInfo.result.prodCnt
     });
   }
 
@@ -405,6 +407,7 @@ class ProductCommonCallplanPreview extends TwViewController {
     return {
       isMobileplan: prodTypCd === 'AB',
       isMobileplanAdd: prodTypCd === 'C',
+      isInternet: prodTypCd === 'D_I',
       isWireplan: ['D_I', 'D_P', 'D_T'].indexOf(prodTypCd) !== -1,
       isWireplanAdd: ['E_I', 'E_P', 'E_T'].indexOf(prodTypCd) !== -1,
       isRoaming: ['H_P', 'H_A'].indexOf(prodTypCd) !== -1,
@@ -439,7 +442,7 @@ class ProductCommonCallplanPreview extends TwViewController {
 
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_10_0116, {}, {}, [prodId]),
-      this.redisService.getData(REDIS_PRODUCT_FILTER + 'F01230')
+      this.redisService.getData(REDIS_KEY.PRODUCT_FILTER + 'F01230')
     ).subscribe(([prodInfo, additionsProdFilterInfo]) => {
         if (prodInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, Object.assign(renderCommonInfo, {

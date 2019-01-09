@@ -54,7 +54,7 @@
                             </button>
                             <% } else { %>
                             <button id="fe-bt-cancel-face">
-                                Face ID 해지
+                                Face ID 인증 해지
                                 <span class="ico"></span>
                             </button>
                             <% } %>
@@ -63,13 +63,13 @@
                             생체인증 사용 설정
                             <span class="widget">
                                 <span class="widget-box switch">
-                                    <span class="btn-switch type1 on fe-switch"><!-- 비활성화 class .disabled 추가 -->
-                                        <span class="switch-style fe-checkbox" role="checkbox" aria-checked="true"><!-- 비활성화 aria-disabled="true" 추가 -->
+                                    <span class="btn-switch type1 fe-switch"><!-- 비활성화 class .disabled 추가 -->
+                                        <span class="switch-style fe-checkbox" role="checkbox" aria-checked="false"><!-- 비활성화 aria-disabled="true" 추가 -->
                                             <span class="off-tx">꺼짐</span>
                                             <% if (target === 'finger') { %>
-                                            <input id="fe-input-set-finger" type="checkbox" title="이번 달 차단" checked="checked" /><!-- 비활성화 attr disabled 추가 -->
+                                            <input id="fe-input-set-finger" type="checkbox" title="이번 달 차단" /><!-- 비활성화 attr disabled 추가 -->
                                             <% } else { %>
-                                            <input id="fe-input-set-face" type="checkbox" title="이번 달 차단" checked="checked" /><!-- 비활성화 attr disabled 추가 -->
+                                            <input id="fe-input-set-face" type="checkbox" title="이번 달 차단" /><!-- 비활성화 attr disabled 추가 -->
                                             <% } %>
                                             <span class="on-tx">켜짐</span>
                                         </span>

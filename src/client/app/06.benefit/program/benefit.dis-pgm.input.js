@@ -24,8 +24,8 @@ Tw.BenefitDisPgmInput.prototype = {
     if ( this._selType ) {
       var data = {};
       var curDate = new Date();
-      var nextDate_1 = curDate.getFullYear() + 1;
-      var nextDate_2 = curDate.getFullYear() + 2;
+      var nextDate_1 = new Date(curDate.getFullYear() + 1, curDate.getMonth(), curDate.getDate() - 1);
+      var nextDate_2 = new Date(curDate.getFullYear() + 2, curDate.getMonth(), curDate.getDate() - 1);
       data.monthDetail = {
         'M0012': Tw.DateHelper.getShortDateNoDot(curDate) + ' ~ ' + Tw.DateHelper.getShortDateNoDot(nextDate_1),
         'M0024': Tw.DateHelper.getShortDateNoDot(curDate) + ' ~ ' + Tw.DateHelper.getShortDateNoDot(nextDate_2)
@@ -68,7 +68,8 @@ Tw.BenefitDisPgmInput.prototype = {
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
       autoTermList: this._confirmOptions.preinfo.autoTermList,
       isAutoJoinTermList: (this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0),
-      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0)
+      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0),
+      isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this.prodId) === -1
     });
   },
 
@@ -92,7 +93,7 @@ Tw.BenefitDisPgmInput.prototype = {
             spanClass: 'date',
             text: this._confirmOptions.monthDetail[this._selType]
           }]
-      }), $.proxy(this._joinCompleteConfirm, this));
+      }), $.proxy(this._prodConfirmOk, this));
     }
     else {
       new Tw.ProductCommonConfirm(false, this.$container, {
@@ -106,8 +107,8 @@ Tw.BenefitDisPgmInput.prototype = {
   _prodConfirmOk: function () {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0035, {
-      addCd: '2'
+    this._apiService.request(Tw.API_CMD.BFF_10_0063, {
+      svcAgrmtPrdCd: this._selType
     }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this));
   },
 

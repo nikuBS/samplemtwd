@@ -10,7 +10,6 @@ Tw.BiometricsRegister = function (target) {
 
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
-  this._biometricsComplete = new Tw.BiometricsComplete(this._target);
 
   this._complete = false;
 };
@@ -45,6 +44,10 @@ Tw.BiometricsRegister.prototype = {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._complete = true;
       this._popupService.closeAll();
+      this._nativeService.send(Tw.NTV_CMD.SAVE, {
+        key: Tw.NTV_STORAGE.FIDO_USE,
+        value: true
+      });
     } else if ( resp.resultCode === this.ERROR_CODE.CANCEL ) {
       Tw.Logger.log('[FIDO] Cancel');
     } else {
@@ -53,7 +56,8 @@ Tw.BiometricsRegister.prototype = {
   },
   _onCloseBioRegister: function () {
     if ( this._complete ) {
-      this._biometricsComplete.open(this._callback);
+      var biometricsComplete = new Tw.BiometricsComplete(this._target);
+      biometricsComplete.open(this._callback);
     }
   }
 };

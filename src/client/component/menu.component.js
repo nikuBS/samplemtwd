@@ -162,7 +162,7 @@ Tw.MenuComponent.prototype = {
             this._modifyMenu(
               res.result.isLogin,
               res.result.userInfo,
-              this._tideUpMenuInfo(res.result.frontMenus, res.result.userInfo)
+              this.tideUpMenuInfo(res.result.frontMenus, res.result.userInfo)
             );
             this._isMenuSet = true;
           } else {
@@ -370,7 +370,7 @@ Tw.MenuComponent.prototype = {
     skt_landing.action.gnb();
   },
 
-  _tideUpMenuInfo: function (menuInfo, userInfo) {
+  tideUpMenuInfo: function (menuInfo, userInfo) {
     var sorted = _.chain(menuInfo)
       .filter(function (item) {
         if (item.menuId === 'M000344') {

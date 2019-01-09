@@ -24,6 +24,19 @@ Tw.MyTJoinInfoSms.prototype = {
   _bindEvent: function () {
     this.$container.on('keyup focus change', '[data-require]', $.proxy(this._onDisableStatus, this));
     this.$btnSubmit.on('click', $.proxy(this._reqSms, this));
+    this.$container.on('click', '#fe-back', $.proxy(this._onCloseConfirm, this));
+  },
+
+  // 닫기 버튼 클릭 시 [확인]
+  _onCloseConfirm: function() {
+    this._popupService.openConfirm(
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+      $.proxy(function () {
+        this._popupService.close();
+        this._historyService.goBack();
+      },this)
+    );
   },
 
   _onDisableStatus: function (e) {

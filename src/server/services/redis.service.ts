@@ -12,20 +12,24 @@ import LoggerService from './logger.service';
 class RedisService {
   private static instance: RedisService;
   private envRedis;
+  private envTosRedis;
   private RedisStore;
   private redisOption;
   private middleWare;
   private client;
+  private tosClient;
   private logger = new LoggerService();
 
   private constructor() {
     this.envRedis = EnvHelper.getEnvironment('REDIS');
+    this.envTosRedis = EnvHelper.getEnvironment('REDIS_TOS');
     this.RedisStore = connect(session);
     this.redisOption = Object.assign(this.envRedis, {
       prefix: 'session:'
     });
 
     this.client = redis.createClient(this.envRedis.port, this.envRedis.host);
+    this.tosClient = redis.createClient(this.envTosRedis.port, this.envTosRedis.host);
   }
 
   static getInstance() {
@@ -41,8 +45,8 @@ class RedisService {
       store: new this.RedisStore(this.redisOption),
       cookie: { maxAge: 60 * 60 * 1000, httpOnly: false }, // 1hours
       secret: 'sktechx',
-      saveUninitialized: true, // don't create session until something stored,
-      resave: false, // don't save session if unmodified
+      saveUninitialized: false, // don't create session until something stored,
+      resave: true, // don't save session if unmodified
       rolling: true,
     });
     return this.middleWare;
@@ -52,10 +56,30 @@ class RedisService {
     this.client.set(key, value);
   }
 
+  public setDataTos(key, value) {
+    this.tosClient.set(key, value);
+  }
+
   public getString(key): Observable<any> {
+    return this.getRedisString(key, this.client);
+  }
+
+  public getData(key): Observable<any> {
+    return this.getRedisData(key, this.client);
+  }
+
+  public getStringTos(key): Observable<any> {
+    return this.getRedisString(key, this.tosClient);
+  }
+
+  public getDataTos(key): Observable<any> {
+    return this.getRedisData(key, this.tosClient);
+  }
+
+  private getRedisString(key, client): Observable<any> {
     this.logger.info(this, '[Get String]', key);
     return Observable.create((observer) => {
-      this.client.get(key, (err, reply) => {
+      client.get(key, (err, reply) => {
         const resp = {
           code: API_CODE.REDIS_SUCCESS,
           msg: 'success',
@@ -75,10 +99,10 @@ class RedisService {
     });
   }
 
-  public getData(key): Observable<any> {
+  private getRedisData(key, client): Observable<any> {
     this.logger.info(this, '[Get Data]', key);
     return Observable.create((observer) => {
-      this.client.get(key, (err, reply) => {
+      client.get(key, (err, reply) => {
         const resp = {
           code: API_CODE.REDIS_SUCCESS,
           msg: 'success',
@@ -101,7 +125,6 @@ class RedisService {
       });
     });
   }
-
 }
 
 export default RedisService;

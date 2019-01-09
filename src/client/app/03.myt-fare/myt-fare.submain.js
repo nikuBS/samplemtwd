@@ -36,8 +36,14 @@ Tw.MyTFareSubMain.prototype = {
 
   _rendered: function () {
     if ( this.data.type === 'UF' ) {
-      // 사용요금자세히보기
-      this.$usedDetail = this.$container.find('button[data-id=used-detail]');
+      if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
+        // 사용내역확인버튼
+        this.$usedBrkd = this.$container.find('button[data-id=used-brkd]');
+      }
+      else {
+        // 사용요금자세히보기
+        this.$usedDetail = this.$container.find('button[data-id=used-detail]');
+      }
     }
     else {
       if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
@@ -105,8 +111,14 @@ Tw.MyTFareSubMain.prototype = {
 
   _bindEvent: function () {
     if ( this.data.type === 'UF' ) {
-      // 사용요금자세히보기
-      this.$usedDetail.on('click', $.proxy(this._onClickedSelBillGuide, this));
+      if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
+        // 사용내역확인버튼
+        this.$usedBrkd.on('click', $.proxy(this._onClickedSelBillGuide, this));
+      }
+      else {
+        // 사용요금자세히보기
+        this.$usedDetail.on('click', $.proxy(this._onClickedSelBillGuide, this));
+      }
     }
     else {
       if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
@@ -229,7 +241,7 @@ Tw.MyTFareSubMain.prototype = {
   // 사용요금내역조회-2
   _responseUsageFee: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( resp.result && resp.result.recentUsageList.length > 0 ) {
+      if ( !Tw.FormatHelper.isEmpty(resp.result) && resp.result.recentUsageList.length > 0 ) {
         var items = resp.result.recentUsageList;
         var chart_data = [];
         for ( var idx = items.length - 1; idx > -1; idx-- ) {
@@ -250,14 +262,16 @@ Tw.MyTFareSubMain.prototype = {
         this._initPatternChart(chart_data);
       }
       else {
-        this.$billChart.addClass('blind');
+        this.$billChart.hide();
+        this.$container.find('[data-id=bill-chart-empty]').hide();
       }
     }
     else {
-      this.$billChart.addClass('blind');
+      this.$billChart.hide();
+      this.$container.find('[data-id=bill-chart-empty]').hide();
     }
-    // 실시간요금
-    setTimeout($.proxy(this._otherLineBills, this), 300);
+    this._responseOtherLineBills();
+    // setTimeout($.proxy(this._otherLineBills, this), 300);
     // setTimeout($.proxy(this._realTimeBillRequest, this), 300);
   },
 
@@ -271,7 +285,7 @@ Tw.MyTFareSubMain.prototype = {
   // 최근청구요금내역조회-2
   _responseClaimPayment: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( resp.result && resp.result.recentUsageList.length > 0 ) {
+      if ( !Tw.FormatHelper.isEmpty(resp.result) && resp.result.recentUsageList.length > 0 ) {
         var items = resp.result.recentUsageList;
         var length = items.length > 6 ? 6 : items.length;
         var chart_data = [];
@@ -292,6 +306,14 @@ Tw.MyTFareSubMain.prototype = {
         }
         this._initPatternChart(chart_data);
       }
+      else {
+        this.$billChart.hide();
+        this.$container.find('[data-id=bill-chart-empty]').hide();
+      }
+    }
+    else {
+      this.$billChart.hide();
+      this.$container.find('[data-id=bill-chart-empty]').hide();
     }
     setTimeout($.proxy(this._otherLineBills, this), 300);
   },
@@ -383,7 +405,7 @@ Tw.MyTFareSubMain.prototype = {
         }
         // 당월 기준으로 실시간 요금 노출
         var realtimeBillInfo = resp.result.hotBillInfo[0];
-        this.$realTimePay.find('span.text').html(realtimeBillInfo.totOpenBal2);
+        this.$realTimePay.find('span.text').html(realtimeBillInfo.totOpenBal2 + Tw.CHART_UNIT.WON);
       }
     }
     else if ( resp.code === Tw.MYT_FARE_SUB_MAIN.NO_BILL_REQUEST_EXIST ) {
@@ -425,7 +447,9 @@ Tw.MyTFareSubMain.prototype = {
 
   // 납부방법 이동
   _onClickedPayMthd: function (/*event*/) {
-    this._historyService.goLoad('/myt-fare/bill/option');
+    if ( this.data.type !== 'UF' ) {
+      this._historyService.goLoad('/myt-fare/bill/option');
+    }
   },
 
   // 소액결제 이동
@@ -505,11 +529,11 @@ Tw.MyTFareSubMain.prototype = {
 
   // 회선 변경 후 처리
   _onChangeSessionSuccess: function () {
+    if ( Tw.BrowserHelper.isApp() ) {
+      this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
+    }
     setTimeout($.proxy(function () {
       this._historyService.reload();
-      if ( Tw.BrowserHelper.isApp() ) {
-        this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
-      }
     }, this), 500);
   },
 
@@ -566,6 +590,7 @@ Tw.MyTFareSubMain.prototype = {
         content = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0030_C;
         more = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.MORE;
         break;
+      case Tw.API_ADD_SVC_ERROR.BIL0035:
       case Tw.API_ADD_SVC_ERROR.BIL0033:
         title = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0033;
         content = Tw.ALERT_MSG_MYT_FARE.ADD_SVC.BIL0033_C;

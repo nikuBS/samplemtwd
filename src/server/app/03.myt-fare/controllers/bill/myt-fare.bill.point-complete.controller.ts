@@ -32,6 +32,7 @@ class MyTFareBillPointComplete extends TwViewController {
       subTitle: this._getSubTitle(title, type),
       description: this._getDescription(title, type, add),
       point: this._getPoint(point),
+      isRight: title === 'rainbow' && type === '',
       centerName: MYT_FARE_COMPLETE_MSG.HISTORY,
       centerUrl: '/myt-fare/info/history',
       confirmUrl: '/myt-fare/submain'
@@ -66,13 +67,11 @@ class MyTFareBillPointComplete extends TwViewController {
   private _getSubTitle(title: string, type: string): string {
     let subTitle = '';
 
-    if (title !== 'rainbow') {
-      if (FormatHelper.isEmpty(type)) {
-        subTitle = MYT_FARE_POINT_MSG.RESERVATION_POINT;
-      } else {
-        if (type !== 'cancel') {
-          subTitle = MYT_FARE_POINT_MSG.REGISTER_POINT;
-        }
+    if (FormatHelper.isEmpty(type)) {
+      subTitle = MYT_FARE_POINT_MSG.RESERVATION_POINT;
+    } else {
+      if (title !== 'rainbow' && type !== 'cancel') {
+        subTitle = MYT_FARE_POINT_MSG.REGISTER_POINT;
       }
     }
     return subTitle;

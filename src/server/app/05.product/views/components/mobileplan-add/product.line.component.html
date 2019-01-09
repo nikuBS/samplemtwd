@@ -6,13 +6,25 @@
 
 <script id="fe-templ-line_item" type="text/x-handlebars-template">
     <li class="list-box" data-num="{{number}}">
+        <div class="list-ico">
+            {{#if nickNm}}
+            {{nickNmFirst}}
+            {{else}}
+            <span class="ico type-img"></span>
+            {{/if}}
+        </div>
         <p class="list-text">
-            <span class="mtext">{{numMask}}</span>
+            <span class="mtext gray">
+                {{#if nickNm}}
+                {{nickNm}}
+                {{else}}
+                등록된 닉네임이 없습니다.
+                {{/if}}
+            </span>
+            <span class="stext gray">{{numMask}}</span>
         </p>
         <div class="list-btn">
-            <div class="bt-alone">
-                <button class="fe-btn_del_num bt-line-gray1">삭제</button>
-            </div>
+            <div class="bt-alone"><button class="bt-line-gray1">삭제</button></div>
         </div>
     </li>
 </script>

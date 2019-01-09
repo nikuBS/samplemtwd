@@ -10,9 +10,9 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
-import {REDIS_PRODUCT_COMPARISON, REDIS_PRODUCT_INFO} from '../../../../../types/redis.type';
 import ProductHelper from '../../../../../utils/product.helper';
 import FormatHelper from '../../../../../utils/format.helper';
+import { REDIS_KEY } from '../../../../../types/redis.type';
 
 class ProductMobileplanJoin extends TwViewController {
   constructor() {
@@ -30,7 +30,7 @@ class ProductMobileplanJoin extends TwViewController {
       return Observable.of({ code: null });
     }
 
-    return this.redisService.getData(REDIS_PRODUCT_COMPARISON + svcInfoProdId + '/' + prodId);
+    return this.redisService.getData(REDIS_KEY.PRODUCT_COMPARISON + svcInfoProdId + '/' + prodId);
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
@@ -45,7 +45,7 @@ class ProductMobileplanJoin extends TwViewController {
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_10_0008, {}, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0009, {}),
-      this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
+      this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId),
       this._getMobilePlanCompareInfo(svcInfoProdId, prodId)
     ).subscribe(([joinTermInfo, overPayReqInfo, prodRedisInfo, mobilePlanCompareInfo]) => {
       if (joinTermInfo.code !== API_CODE.CODE_00) {

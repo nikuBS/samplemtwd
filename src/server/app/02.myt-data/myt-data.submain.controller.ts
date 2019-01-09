@@ -14,7 +14,8 @@ import DateHelper from '../../utils/date.helper';
 import { CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE } from '../../types/string.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { UNIT, UNIT_E } from '../../types/bff.type';
-import { REDIS_BANNER_ADMIN } from '../../types/redis.type';
+import { REDIS_KEY } from '../../types/redis.type';
+import { PREPAID_PAYMENT_TYPE, PREPAID_PAYMENT_PAY_CD } from '../../types/bff.type';
 
 const skipIdList: any = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
 const tmoaBelongToProdList: any = ['NA00005959', 'NA00005958', 'NA00005957', 'NA00005956', 'NA00005955', 'NA00006157', 'NA00006156',
@@ -24,6 +25,8 @@ class MytDataSubmainController extends TwViewController {
   constructor() {
     super();
   }
+
+  private isPPS = false;
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
     const data: any = {
@@ -38,6 +41,7 @@ class MytDataSubmainController extends TwViewController {
       otherLines: this.convertOtherLines(svcInfo, allSvc),
       isApp: BrowserHelper.isApp(req)
     };
+    this.isPPS = (svcInfo.svcAttrCd === 'M2');
     Observable.combineLatest(
       this._getRemnantData(),
       this._getDataPresent(),
@@ -49,7 +53,7 @@ class MytDataSubmainController extends TwViewController {
       this._getEtcChargeBreakdown(),
       this._getRefillPresentBreakdown(),
       this._getRefillUsedBreakdown(),
-      this.redisService.getData(REDIS_BANNER_ADMIN + pageInfo.menuId),
+      this.redisService.getData(REDIS_KEY.BANNER_ADMIN + pageInfo.menuId),
     ).subscribe(([remnant, present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern, banner]) => {
       if ( remnant.info ) {
         data.remnant = remnant;
@@ -116,12 +120,22 @@ class MytDataSubmainController extends TwViewController {
       if ( dcBkd && dcBkd.length > 0 ) {
         // 데이터한도요금제 충전내역
         dcBkd.map((item) => {
-          item['class'] = (item.opTypCd === '2' || item.opTypCd === '4') ? 'send' : 'recharge';
-          item['u_title'] = item.opTypNm;
-          item['u_sub'] = item.opOrgNm;
-          item['d_title'] = item.amt;
-          item['d_sub'] = DateHelper.getShortDate(item.opDt);
-          item['unit'] = CURRENCY_UNIT.WON;
+          if ( this.isPPS ) {
+            item['class'] = (item.chargeTp === '1') ? 'once' : 'auto';
+            item['u_type'] = 'data';
+            item['u_title'] = PREPAID_PAYMENT_PAY_CD[item.payCd];
+            item['u_sub'] = item.cardNm || PREPAID_PAYMENT_TYPE[item.wayCd];
+            item['d_title'] = item.amt;
+            item['d_sub'] = item.data;
+            item['unit'] = CURRENCY_UNIT.WON;
+          } else {
+            item['class'] = (item.opTypCd === '2' || item.opTypCd === '4') ? 'send' : 'recharge';
+            item['u_title'] = item.opTypNm;
+            item['u_sub'] = item.opOrgNm;
+            item['d_title'] = item.amt;
+            item['d_sub'] = DateHelper.getShortDate(item.opDt);
+            item['unit'] = CURRENCY_UNIT.WON;
+          }
         });
         breakdownList.push(FormatHelper.groupByArray(dcBkd, 'opDt'));
       }
@@ -144,7 +158,8 @@ class MytDataSubmainController extends TwViewController {
         tpBkd.map((item) => {
           item['class'] = (item.opTypCd === '1' ? 'send' : 'recharge');
           item['u_title'] = item.opTypNm;
-          item['u_sub'] = item.custNm + ' | ' + item.svcNum;
+          // custNm 명세서에서 제외됨
+          item['u_sub'] = /*item.custNm ||  + ' | ' +*/ item.svcNum;
           item['d_title'] = item.amt;
           item['d_sub'] = DateHelper.getShortDate(item.opDt);
           item['unit'] = CURRENCY_UNIT.WON;
@@ -154,12 +169,22 @@ class MytDataSubmainController extends TwViewController {
       if ( etcBkd && etcBkd.length > 0 ) {
         // 팅/쿠키즈/안심요금 충전 내역
         etcBkd.map((item) => {
-          item['class'] = (item.opTypCd === '2' || item.opTypCd === '4') ? 'send' : 'recharge';
-          item['u_title'] = item.opTypNm;
-          item['u_sub'] = '';
-          item['d_title'] = item.amt;
-          item['d_sub'] = DateHelper.getShortDate(item.opDt);
-          item['unit'] = CURRENCY_UNIT.WON;
+          if ( this.isPPS ) {
+            item['class'] = (item.chargeTp === '1') ? 'once' : 'auto';
+            item['u_type'] = 'voice';
+            item['u_title'] = PREPAID_PAYMENT_PAY_CD[item.payCd];
+            item['u_sub'] = item.cardNm || PREPAID_PAYMENT_TYPE[item.wayCd];
+            item['d_title'] = item.amt;
+            item['d_sub'] = item.data;
+            item['unit'] = CURRENCY_UNIT.WON;
+          } else {
+            item['class'] = (item.opTypCd === '2' || item.opTypCd === '4') ? 'send' : 'recharge';
+            item['u_title'] = item.opTypNm;
+            item['u_sub'] = '';
+            item['d_title'] = item.amt;
+            item['d_sub'] = DateHelper.getShortDate(item.opDt);
+            item['unit'] = CURRENCY_UNIT.WON;
+          }
         });
         breakdownList.push(FormatHelper.groupByArray(etcBkd, 'opDt'));
       }
@@ -519,9 +544,22 @@ class MytDataSubmainController extends TwViewController {
 
   // 데이터한도요금제 충전내역
   _getDataChargeBreakdown() {
-    return this.apiService.request(API_CMD.BFF_06_0042, {}).map((resp) => {
+    let url = API_CMD.BFF_06_0042;
+    let params = {};
+    if ( this.isPPS ) {
+      url = API_CMD.BFF_06_0063;
+      params = {
+        pageNum: 1,
+        rowNum: 10
+      };
+    }
+    return this.apiService.request(url, params).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
+        if ( this.isPPS ) {
+          return resp.result.history;
+        } else {
+          return resp.result;
+        }
       } else {
         // error
         return null;
@@ -531,9 +569,22 @@ class MytDataSubmainController extends TwViewController {
 
   // 팅/쿠키즈/안심음성 충전내역
   _getEtcChargeBreakdown() {
-    return this.apiService.request(API_CMD.BFF_06_0032, {}).map((resp) => {
+    let url = API_CMD.BFF_06_0032;
+    let params = {};
+    if ( this.isPPS ) {
+      url = API_CMD.BFF_06_0062;
+      params = {
+        pageNum: 1,
+        rowNum: 10
+      };
+    }
+    return this.apiService.request(url, params).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
+        if ( this.isPPS ) {
+          return resp.result.history;
+        } else {
+          return resp.result;
+        }
       } else {
         // error
         return null;

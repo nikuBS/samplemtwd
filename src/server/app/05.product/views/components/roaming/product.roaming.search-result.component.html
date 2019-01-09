@@ -8,7 +8,7 @@
 <script id="fe-phone-info" type="text/x-handlebars-template">
     <div class="comp-box country-roaming">
         <div class="list-box cont-noti pt0">
-            <h3 class="tit">휴대폰 선택<button class="tip-view" page-id="M000458" id="RM_03_01_01_01_tip_02">TIP</button></h3>
+            <h3 class="tit">휴대폰 선택<button class="tip-view" id="RM_03_01_01_01_tip_02">TIP</button></h3>
             <span class="type1 fe-header-msg"></span>
         </div>
         <div class="phone-name" data-model-code="{{items.eqpMdlCd}}">
@@ -26,7 +26,7 @@
 <script id="fe-phone-select" type="text/x-handlebars-template">
     <div class="comp-box country-roaming">
         <div class="list-box cont-noti pt0">
-            <h3 class="tit">휴대폰 선택<button class="tip-view" page-id="M000458" id="RM_03_01_01_01_tip_02">TIP</button></h3>
+            <h3 class="tit">휴대폰 선택<button class="tip-view" id="RM_03_01_01_01_tip_02">TIP</button></h3>
             <span class="type1 fe-header-msg"></span>
         </div>
         <span class="inputbox">
@@ -49,95 +49,92 @@
 </script>
 
 <script id="fe-roaming-rate" type="text/x-handlebars-template">
-    <div class="roaming-info-wrap">
-        <h4 class="txt">데이터(정보이용료 별도)<button class="tip-view" page-id="M000460" id="RM_04_tip_01">TIP</button></h4>
-        <div class="unpaid-charges mt12">
-            <ul class="point-box mb0">
-                <li>
-                    <dl>
-                        <dt>데이터</dt>
-                        {{#if items.dMoChargeMin}}<dd>{{items.dMoChargeMin}}원/패킷</dd>
-                        {{else}}<dd>서비스 이용 불가</dd>{{/if}}
-                    </dl>
-                </li>
-            </ul>
-        </div>
-        <ul class="round-dot-list mt20 pb20">
-            {{# if items.rentShown}}
-            <li>임대로밍의 경우 일임대료는 2,200원(부가세 포함)입니다. 상기 요금은 3G∙GSM 기준이며, 대여 받으시는 임대폰의 기종에 따라 요금은 상이할 수 있습니다.</li>
-            {{/if}}
-            {{# if items.lteShown}}
-            <li><strong>LTE 자동로밍</strong>을 이용하셔도 <strong>음성 로밍은 3G/GSM망으로 연결되어 3G 자동로밍 요금</strong>이 적용됩니다.<br/>자세한 사항은 3G 자동로밍을 선택해서 확인하세요.</li>
-            {{/if}}
-            <li>선택하신 국가는 통화버튼을 누른 시점부터 로밍 요금이 발생되오니 유의하시기 바랍니다.</li>
-            <li><strong>T로밍 데이터 안심서비스!</strong><br />데이터 사용요금이 5,000원 일 상한 도달하면 원패스 제휴 사업자 접속의 경우 200kbps 속도제어, 비 제휴사업자 접속의 경우 데이터가 차단됩니다.</li>
-            <li><strong>3/23부터는 음성 통화 요금이 분당 과금에서 초당 과금으로 변경됩니다.</strong></li>
+    <div class="unpaid-charges mt12">
+        <ul class="point-box mb0">
+            <li>
+                <dl>
+                    <dt>데이터</dt>
+                    {{#if items.dMoChargeMin}}<dd>{{items.dMoChargeMin}}원/패킷</dd>
+                    {{else}}<dd>서비스 이용 불가</dd>{{/if}}
+                </dl>
+            </li>
         </ul>
-        <h4 class="txt tline">음성</h4>
-        <div class="unpaid-charges mt12 pb20">
-            <ul class="point-box mb0">
-                <li>
-                    <dl>
-                        <dt>방문국에서 방문국으로</dt>
-                        {{#if items.vMoChargeMin}}<dd>{{items.vMoChargeMin}}원/초</dd>
-                        {{else}}<dd>서비스 이용 불가</dd>{{/if}}
-                    </dl>
-                </li>
-                <li>
-                    <dl>
-                        <dt>방문국에서 한국/해외로</dt>
-                        {{#if items.vIntChargeMin}}<dd>{{items.vIntChargeMin}}원/초</dd>
-                        {{else}}<dd>서비스 이용 불가</dd>{{/if}}
-                    </dl>
-                </li>
-                <li>
-                    <dl>
-                        <dt>수신</dt>
-                        {{#if items.vMtChargeMin}}<dd>{{items.vMtChargeMin}}원/초</dd>
-                        {{else}}<dd>서비스 이용 불가</dd>{{/if}}
-                    </dl>
-                </li>
-            </ul>
-        </div>
+    </div>
+    <ul class="round-dot-list mt20 pb20">
+        {{# if items.rentShown}}
+        <li>임대로밍의 경우 일임대료는 2,200원(부가세 포함)입니다. 상기 요금은 3G∙GSM 기준이며, 대여 받으시는 임대폰의 기종에 따라 요금은 상이할 수 있습니다.</li>
+        {{/if}}
+        {{# if items.lteShown}}
+        <li><strong>LTE 자동로밍</strong>을 이용하셔도 <strong>음성 로밍은 3G/GSM망으로 연결되어 3G 자동로밍 요금</strong>이 적용됩니다.<br/>자세한 사항은 3G 자동로밍을 선택해서 확인하세요.</li>
+        {{/if}}
+        <li>선택하신 국가는 통화버튼을 누른 시점부터 로밍 요금이 발생되오니 유의하시기 바랍니다.</li>
+        <li><strong>T로밍 데이터 안심서비스!</strong><br />데이터 사용요금이 5,000원 일 상한 도달하면 원패스 제휴 사업자 접속의 경우 200kbps 속도제어, 비 제휴사업자 접속의 경우 데이터가 차단됩니다.</li>
+        <li><strong>3/23부터는 음성 통화 요금이 분당 과금에서 초당 과금으로 변경됩니다.</strong></li>
+    </ul>
+    <h4 class="txt tline">음성</h4>
+    <div class="unpaid-charges mt12 pb20">
+        <ul class="point-box mb0">
+            <li>
+                <dl>
+                    <dt>방문국에서 방문국으로</dt>
+                    {{#if items.vMoChargeMin}}<dd>{{items.vMoChargeMin}}원/초</dd>
+                    {{else}}<dd>서비스 이용 불가</dd>{{/if}}
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt>방문국에서 한국/해외로</dt>
+                    {{#if items.vIntChargeMin}}<dd>{{items.vIntChargeMin}}원/초</dd>
+                    {{else}}<dd>서비스 이용 불가</dd>{{/if}}
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt>수신</dt>
+                    {{#if items.vMtChargeMin}}<dd>{{items.vMtChargeMin}}원/초</dd>
+                    {{else}}<dd>서비스 이용 불가</dd>{{/if}}
+                </dl>
+            </li>
+        </ul>
+    </div>
 
-        <h3 class="txt tline">문자</h3>
-        <div class="unpaid-charges mt12">
-            <ul class="point-box mb0">
-                <li>
-                    <dl>
-                        <dt>SMS 발신</dt>
-                        {{#if items.sMoChargeMin}}<dd>{{items.sMoChargeMin}}원/건</dd>
-                        {{else}}<dd>서비스 이용 불가</dd>{{/if}}
-                    </dl>
-                </li>
-                <li>
-                    <dl>
-                        <dt>SMS 수신</dt>
-                        <dd>무료</dd>
-                    </dl>
-                </li>
-                <li>
-                    <dl>
-                        <dt>MMS 텍스트 발신</dt>
-                        {{#if items.mTxtCharge}}<dd>{{items.mTxtCharge}}원/건</dd>
-                        {{else}}<dd>서비스 이용 불가</dd>{{/if}}
-                    </dl>
-                </li>
-                <li>
-                    <dl>
-                        <dt>MMS 멀티미디어 발신</dt>
-                        {{#if items.mMtmCharge}}<dd>{{items.mMtmCharge}}원/건</dd>
-                        {{else}}<dd>서비스 이용 불가</dd>{{/if}}
-                    </dl>
-                </li>
-                <li>
-                    <dl>
-                        <dt>MMS 수신</dt>
-                        <dd>무료</dd>
-                    </dl>
-                </li>
-            </ul>
-        </div>
+    <h3 class="txt tline">문자</h3>
+    <div class="unpaid-charges mt12">
+        <ul class="point-box mb0">
+            <li>
+                <dl>
+                    <dt>SMS 발신</dt>
+                    {{#if items.sMoChargeMin}}<dd>{{items.sMoChargeMin}}원/건</dd>
+                    {{else}}<dd>서비스 이용 불가</dd>{{/if}}
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt>SMS 수신</dt>
+                    <dd>무료</dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt>MMS 텍스트 발신</dt>
+                    {{#if items.mTxtCharge}}<dd>{{items.mTxtCharge}}원/건</dd>
+                    {{else}}<dd>서비스 이용 불가</dd>{{/if}}
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt>MMS 멀티미디어 발신</dt>
+                    {{#if items.mMtmCharge}}<dd>{{items.mMtmCharge}}원/건</dd>
+                    {{else}}<dd>서비스 이용 불가</dd>{{/if}}
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt>MMS 수신</dt>
+                    <dd>무료</dd>
+                </dl>
+            </li>
+        </ul>
     </div>
 </script>
 

@@ -26,6 +26,9 @@ Tw.MyTDataRechargeCouponUse.prototype = {
   _cacheElements: function () {
     this.$btnUse = this.$container.find('.fe-btn-use');
     this.$numberInput = this.$container.find('input[type=tel]');
+    // this.$errorSpan = this.$container.find('.error-txt');
+    // this.$errorV18 = this.$container.find('#fe-2-v18');
+    // this.$errorV9 = this.$container.find('#fe-2-v9');
   },
   _bindEvent: function () {
     this.$container.on('change', 'input[type=radio]', $.proxy(this._onOptionSelected, this));
@@ -65,15 +68,36 @@ Tw.MyTDataRechargeCouponUse.prototype = {
   },
   _onNumberChanged: function () {
     this.$numberInput.val(Tw.StringHelper.phoneStringToDash(this.$numberInput.val()).trim());
-    var number = Tw.StringHelper.phoneStringToDash(this.$numberInput.val()).trim();
+    var number = this.$numberInput.val().trim();
 
-    if (Tw.FormatHelper.isEmpty(number)) {
+    var pureNumber = number.replace(/[^0-9]/gi, '');
+    /*
+    if (pureNumber.length === 0) {
+      this.$errorSpan.addClass('none');
+      return;
+    }
+    if (pureNumber.length < 10) {
+      this.$errorSpan.addClass('none');
+      this.$errorV18.removeClass('none');
+      return;
+    }
+    if (!Tw.FormatHelper.isCellPhone(pureNumber)) {
+      this.$errorSpan.addClass('none');
+      this.$errorV9.removeClass('none');
+      return;
+    }
+    */
+
+    // this.$errorSpan.addClass('none');
+
+    if (pureNumber.length === 0) {
       this.$btnUse.attr('disabled', true);
     } else {
       this.$btnUse.attr('disabled', false);
     }
   },
   _onNumberCancel: function () {
+    // this.$errorSpan.addClass('none');
     this.$btnUse.attr('disabled', true);
   },
   _onClickContacts: function () {
@@ -98,17 +122,6 @@ Tw.MyTDataRechargeCouponUse.prototype = {
         );
         break;
       case 'gift':
-        var $errorSpan = this.$container.find('.fe-number-error');
-        $errorSpan.addClass('none');
-
-        var number = this.$numberInput.val().trim();
-        if (number.length < 10) {
-          $errorSpan.removeClass('none');
-          // $errorSpan.children().addClass('none');
-          // $errorSpan.find('#fe-2-v18').removeClass('none');
-          return;
-        }
-
         var confirmed = false;
         this._popupService.openModalTypeA(
           Tw.REFILL_COUPON_CONFIRM.TITLE_GIFT,
@@ -150,12 +163,9 @@ Tw.MyTDataRechargeCouponUse.prototype = {
       befrSvcNum: this.$numberInput.val().replace(/[^0-9]/gi, '').trim()
     };
 
-    this._success('gift', { code: '00'});
-    /*
     this._apiService.request(Tw.API_CMD.BFF_06_0008, reqData)
       .done($.proxy(this._success, this, 'gift'))
       .fail($.proxy(this._fail, this));
-      */
   },
   _success: function (type, res) {
     if (res.code !== Tw.API_CODE.CODE_00) {

@@ -18,18 +18,16 @@ Tw.CustomerEmailTemplate = function (rootEl, allSvc) {
 
 Tw.CustomerEmailTemplate.prototype = {
   _init: function () {
-    // this.service_category = Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY;
-    // this.quality_category = Tw.CUSTOMER_EMAIL_QUALITY_CATEGORY;
   },
 
   _cachedElement: function () {
     this.$wrap_tpl_service = this.$container.find('.fe-wrap_tpl_service');
     this.$wrap_tpl_quality = this.$container.find('.fe-wrap_tpl_quality');
-    this.$wrap_tpl_faq = $('.fe-btn_faq');
 
     // service, quality template
     this.tpl_service_cell = Handlebars.compile($('#tpl_service_cell').html());
     this.tpl_quality_cell = Handlebars.compile($('#tpl_quality_cell').html());
+    this.tpl_quality_wibro = Handlebars.compile($('#tpl_quality_wibro').html());
     this.tpl_service_direct = Handlebars.compile($('#tpl_service_direct').html());
     this.tpl_service_direct_brand = Handlebars.compile($('#tpl_service_direct_brand').html());
     this.tpl_service_internet = Handlebars.compile($('#tpl_service_internet').html());
@@ -40,13 +38,17 @@ Tw.CustomerEmailTemplate.prototype = {
   _bindEvent: function () {
     this.$container.on('changeServiceTemplate', $.proxy(this._changeServiceTemplate, this));
     this.$container.on('changeQualityTemplate', $.proxy(this._changeQualityTemplate, this));
+    this.$container.on('click', '.fe-quality-inqSvcClCd', $.proxy(this._onChangeQualityType, this));
   },
 
   _changeServiceTemplate: function (e, serviceCategory) {
     switch ( serviceCategory.depth1 ) {
       case 'CELL':
         var templatePlaceholder = this._setTemplatePlaceholder(serviceCategory);
-        this.$wrap_tpl_service.html(this.tpl_service_cell({ placeHolder: templatePlaceholder }));
+        this.$wrap_tpl_service.html(this.tpl_service_cell({
+          placeHolder: templatePlaceholder,
+          isDefaultValue: templatePlaceholder === Tw.CUSTOMER_EMAIL.DEFAULT_PLACEHOLDER ? true : false
+        }));
         break;
       case 'INTERNET':
         this.$wrap_tpl_service.html(this.tpl_service_internet());
@@ -68,10 +70,14 @@ Tw.CustomerEmailTemplate.prototype = {
     skt_landing.widgets.widget_init();
   },
 
-  _changeQualityTemplate: function (e, qualityCategory) {
+  _changeQualityTemplate: function (e, qualityCategory, qualityType) {
     switch ( qualityCategory.depth1 ) {
       case 'cell':
-        this.$wrap_tpl_quality.html(this.tpl_quality_cell());
+        if ( qualityType && qualityType.isWibro ) {
+          this.$wrap_tpl_quality.html(this.tpl_quality_wibro());
+        } else {
+          this.$wrap_tpl_quality.html(this.tpl_quality_cell());
+        }
         break;
       case 'internet':
         this.$wrap_tpl_quality.html(this.tpl_quality_internet());
@@ -86,8 +92,19 @@ Tw.CustomerEmailTemplate.prototype = {
   _setTemplatePlaceholder: function (serviceCategory) {
     if ( serviceCategory.depth2 === '5000275' ) {
       return Tw.CUSTOMER_EMAIL.MEMBERSHIP_PLACEHOLDER;
-    }else{
+    } else {
       return Tw.CUSTOMER_EMAIL.DEFAULT_PLACEHOLDER;
+    }
+  },
+
+  _onChangeQualityType: function (e) {
+    var nTabIndex = $(e.currentTarget).find('.focus').index();
+    var category = this.$container.triggerHandler('getCategory');
+
+    if ( nTabIndex === 0 ) {
+      this.$container.trigger('changeQualityTemplate', [category.quality, { isWibro: false }]);
+    } else {
+      this.$container.trigger('changeQualityTemplate', [category.quality, { isWibro: true }]);
     }
   }
 };

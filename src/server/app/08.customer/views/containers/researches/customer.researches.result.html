@@ -40,11 +40,17 @@
                 <div class="cont-box">
                     <!-- poll-chart-box -->
                     <div class="poll-chart-box">
-                        <% result.examples.map(exam => { %>
+                        <% result.examples.map((exam, idx) => { 
+                            let color = '';
+                            if (result.bnnrRsrchTypCd === 'Q') {
+                                color = exam.isAnswer ? 'red' : 'gray1'
+                            } else {
+                                color = result.maxIdx === idx ? 'red' : 'blue1'
+                            } %>
                         <div class="poll-chart-sbox">
                             <dl class="poll-chart-txt <%= exam.isAnswer ? 'correct' : '' %>">
                                 <dt>
-                                    <% if (exam.isAnswer) { %>
+                                    <% if (result.bnnrRsrchTypCd === 'Q' && exam.isAnswer) { %>
                                         <span class="tx-bold">[정답]</span>
                                     <% } %>
                                     <%= exam.content === 'QSTNETC' ? '기타' : exam.content %>
@@ -52,7 +58,7 @@
                                 <dd><%= exam.count %>표(<%= exam.rate %>%)</dd>
                             </dl>
                             <div class="bar-chart-hoz">
-                                <span class="data-bar <%= exam.isAnswer ? 'red' : 'gray1' %>" style="width:<%= exam.rate %>%"></span>
+                                <span class="data-bar <%= color %>" style="width:<%= exam.rate %>%;"></span>
                             </div><br/>
                         </div>
                         <% }); %>

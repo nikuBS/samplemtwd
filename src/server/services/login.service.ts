@@ -133,7 +133,6 @@ class LoginService {
         this.request.session.serverSession = serverSession;
         this.request.session.save(() => {
           this.logger.debug(this, '[setServerSession]', this.request.session);
-          console.log(this.request.session);
           observer.next(this.request.session.serverSession);
           observer.complete();
         });

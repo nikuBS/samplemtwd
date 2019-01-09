@@ -19,6 +19,7 @@ Tw.CertificationSelect = function () {
   this._methodCnt = 1;
   this._enableFido = false;
   this._registerFido = false;
+  this._useFido = false;
   this._fidoTarget = '';
 
   this._svcInfo = null;
@@ -98,7 +99,22 @@ Tw.CertificationSelect.prototype = {
   _onCheckFido: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._registerFido = true;
-      this._openCertPopup(Tw.AUTH_CERTIFICATION_METHOD.BIO);
+      this._checkFidoUse();
+    } else {
+      this._checkSmsPri();
+    }
+  },
+  _checkFidoUse: function () {
+    this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.FIDO_USE }, $.proxy(this._onCheckFidoUse, this));
+  },
+  _onCheckFidoUse: function (resp) {
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      if ( resp.params.value === Tw.NTV_FIDO_USE.ENABLE ) {
+        this._useFido = true;
+        this._openCertPopup(Tw.AUTH_CERTIFICATION_METHOD.BIO);
+      } else {
+        this._checkSmsPri();
+      }
     } else {
       this._checkSmsPri();
     }
@@ -181,7 +197,8 @@ Tw.CertificationSelect.prototype = {
         save: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SAVE) !== -1,
         publicCert: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH) !== -1,
         ipin: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.IPIN) !== -1,
-        bio: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.BIO) !== -1 && this._enableFido
+        bio: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.BIO) !== -1 &&
+          ((this._enableFido && !this._registerFido) || (this._enableFido && this._registerFido && this._useFido))
       }
     }, $.proxy(this._onOpenSelectPopup, this), $.proxy(this._onCloseSelectPopup, this), 'certSelect');
   },

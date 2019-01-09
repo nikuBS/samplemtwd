@@ -114,7 +114,8 @@ Tw.POPUP_CONTENTS = {
   BIO_FACE_DEREGISTER: 'Face ID 인증 해지 후 다시 사용하시려면 Face ID를 재등록 하셔야 합니다.<br />Face ID 인증을 해지하시겠습니까?',
   COUPON_RECEIVER_LIMIT:
     ' 선물 받으시는 분께서 선물 받을 수 있는 횟수가 초과되셨습니다. <br />리필쿠폰은 가족구성원에게 연간 최대 2회까지만 선물 받으실 수 있습니다.',
-  BIO_REGISTER: '생체정보(지문,Face ID)로 본인인증을 하실 수 있습니다.<br />지금 등록하시겠습니까?'
+  BIO_REGISTER: '생체정보(지문,Face ID)로 본인인증을 하실 수 있습니다.<br />지금 등록하시겠습니까?',
+  APP_NOT_INSTALLED: ' 앱이 설치되어 있지 않습니다. <br />설치하시겠습니까?'
 };
 
 Tw.CHART_TYPE = {
@@ -136,7 +137,11 @@ Tw.TOAST_TEXT = {
   MYT_FARE_HISTORY_AUTOPAYMENT_BLOCK: '차단 신청이 완료되었습니다.',
   MTY_FARE_HISTORY_AUTOPAYMENT_UNBLOCK: '헤제 신청이 완료되었습니다.',
   MYT_DATA_LIMIT_BLOCK: '데이터 차단이 설정되었습니다.',
-  MYT_DATA_LIMIT_UNBLOCK: '데이터 차단해제가 설정되었습니다.'
+  MYT_DATA_LIMIT_UNBLOCK: '데이터 차단해제가 설정되었습니다.',
+  QUICK_ADD: 'MY 바로가기에 추가되었습니다.',
+  QUICK_REMOVE: 'MY 바로가기에서 제거되었습니다.',
+  FIDO_USE: '생체인증을 사용합니다.',
+  FIDO_NOT_USE: '생체인증을 사용하지 않습니다.'
 };
 
 Tw.PERIOD_UNIT = {
@@ -407,9 +412,7 @@ Tw.ALERT_MSG_HOME = {
   A61: '',
   A62: '',
   A63: '',
-  A64: '',
-  QUICK_ADD: 'MY 바로가기에 추가되었습니다.',
-  QUICK_REMOVE: 'MY 바로가기에서 제거되었습니다.'
+  A64: ''
 };
 
 Tw.ALERT_MSG_MYT_DATA = {
@@ -470,8 +473,8 @@ Tw.ALERT_MSG_MYT_FARE = {
   COMPLETE_CHANGE_DATE: '요금납부일 변경이 완료되었습니다.',
   COMPLETE_CHANGE_LIMIT: '한도변경이 완료되었습니다.',
   COMPLETE_CHANGE_PASSWORD: '결제 비밀번호 변경이 완료되었습니다.',
-  NOT_ALLOWED_CHANGE_LIMIT: '한도 변경이 불가능합니다',
-  NOT_ALLOWED_INFO_MESSAGE: '연체/미납 중인 고객님은 납부 후' + '<br/>' + '한도변경이 가능합니다.',
+  NOT_ALLOWED_CHANGE_LIMIT: '한도를 변경할 수 없습니다',
+  NOT_ALLOWED_INFO_MESSAGE: '연체∙미납 중인 고객님은 납부 후<br/>한도를 변경하실 수 있습니다.',
   GO_PAYMENT: '납부하러 가기',
   ADD_SVC: {
     BIL0030: '휴대폰 결제 이용동의 후 사용 가능합니다.',
@@ -543,6 +546,7 @@ Tw.ALERT_MSG_MYT_FARE = {
   ALERT_2_A74: 'OK캐쉬백 포인트 요금 납부는 포인트 점수가 500점 부터 가능합니다.',
   ALERT_2_A75: 'T포인트 요금 납부는 포인트 점수가 1,000점 부터 가능합니다.',
   ALERT_2_A76: '적립된 레인보우 포인트가 0점입니다.' + '<br />' + '포인트 적립 후 이용해주세요.',
+  ALERT_2_A77: { TITLE: '자동납부를 해지하시겠습니까?', BUTTON: '해지하기' },
   ALERT_2_A85: { TITLE: 'T포인트 납부 예약 취소하시겠습니까?', MSG: '' },
   ALERT_2_A86: { TITLE: '알림', MSG: 'T포인트 납부 예약이 취소되었습니다.' },
   ALERT_2_A87: { TITLE: '레인보우포인트 납부 예약 취소하시겠습니까?', MSG: '' },
@@ -554,7 +558,8 @@ Tw.ALERT_MSG_MYT_FARE = {
   ALERT_2_A95: { TITLE: '자동결제를 해제하시겠습니까?', MSG: '해제는 다음달에 적용 됩니다.', BUTTON: '해제하기' },
   ALERT_2_A96: { TITLE: '이용한도를 변경하시겠습니까?', MSG: '이용한도 변경은 월 1회만 가능합니다.', BUTTON: '변경하기' },
   ALERT_2_A100: { TITLE: '선결제를 종료하시겠습니까?', MSG: '선결제가 종료됩니다.', BUTTON: '종료하기' },
-  ALERT_2_A101: { TITLE: '요금납부를 종료하시겠습니까?', MSG: '요금납부가 종료됩니다.', BUTTON: '종료하기' }
+  ALERT_2_A101: { TITLE: '요금납부를 종료하시겠습니까?', MSG: '요금납부가 종료됩니다.', BUTTON: '종료하기' },
+  ALERT_2_DATA: { TITLE: '데이터 충전을 종료하시겠습니까?', MSG: '데이터 충전이 종료됩니다.', BUTTON: '종료하기' }
 };
 
 Tw.ALERT_MSG_MYT_JOIN = {
@@ -589,6 +594,7 @@ Tw.ALERT_MSG_MYT_JOIN = {
       '(확인 버튼 터치시 로그아웃 후 메인으로 이동됩니다.)'
   },
   ALERT_2_A201: { TITLE: '알림', MSG: 'B끼리 무료통화 대상자입니다.' },
+  ALERT_2_A202: { TITLE: '알림', MSG: '선택할 수 있는 날짜가 아닙니다.<br>다른 날짜를 선택해주세요.' },
   ALERT_2_A209: {
     TITLE: '알림',
     MSG: '고객보호 비밀번호 N회 잘못 입력하셨습니다.<br>' + '5회 이상 잘못 입력한 경우 SK텔레콤 지점에 방문하여 초기화 후 이용해 주셔야 합니다.'
@@ -639,6 +645,7 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A44: { TITLE: '다른 회선으로 절친 등록 시 현재 회선의 절친은 자동 해지 됩니다.' },
   ALERT_3_A45: { TITLE: '절친으로 등록된 회선은 해지 불가합니다.', MSG: '다른 회선으로 절친 등록 후 해당 회선 해지 하실 수 있습니다.' },
   ALERT_3_A46: { TITLE: '변경일 기준 30일 이내 다른 옵션으로 변경이 불가합니다.', MSG: '' },
+  ALERT_3_A73: { TITLE: '스마트워치 회선이 존재하지 않습니다.', MSG: '' },
   ALERT_3_A74: { TITLE: '선택하신 상품 해지를 취소 하시겠습니까?', MSG: '', BUTTON: '계속하기' },
   ALERT_3_A77: { TITLE: '지역 추가 시, 1개 지역당 1,650원(부가세포함)씩 과금이 추가됩니다.지역을 추가하시겠습니까?', MSG: '' },
   ALERT_3_A78: { TITLE: '할인지역은 최대 2개까지 등록가능합니다', MSG: '' },
@@ -699,13 +706,13 @@ Tw.ALERT_MSG_MEMBERSHIP = {
     TITLE: '재발급 신청을 취소하실 수 없습니다.',
     MSG: '재발급을 신청한 날 24:00까지 결제기능을 추가하지 않은 모바일 카드 이용 고객님만 재발급 신청을 취소하실 수 있습니다.',
     BUTTON: '발급 변경내역'
-  },
+  }
 };
 
 Tw.ALERT_MSG_CUSTOMER = {
   ALERT_HELPLINE_A01: '예약을 취소하시면 작성하신 모든 정보가 초기화됩니다.',
-  ALERT_HELPLINE_A02: '전화상담 예약은 지역별 1일 1회로 제한되며 중복 신청을 하실 수 없습니다.',
-  ALERT_PRAISE_COMPLETE: '고객님의 소중한 칭찬 글이<br /> 등록되었습니다.',
+  ALERT_HELPLINE_A02: '이미 예약하신 정보가 있습니다. 전화상담 예약은 지역별 1일 1회로 제한되며 중복 신청을 하실 수 없습니다.',
+  ALERT_PRAISE_COMPLETE: '고객님의 소중한 칭찬글이<br /> 등록되었습니다.',
   ALERT_PRAISE_CANCEL: {
     TITLE: '입력하신 정보는 모두 취소됩니다.<br>창을 닫으시겠습니까?'
   },
@@ -824,7 +831,7 @@ Tw.URL_PATH = {
   BILL_LETTER_DOWNLOAD_APP_STORE: 'https://itunes.apple.com/kr/app/%EC%9A%94%EA%B8%88%EC%95%88%EB%82%B4%EC%84%9C-bill-letter/id435060754?mt=8',
   BILL_LETTER_DOWNLOAD_PLAY_STORE: 'https://play.google.com/store/apps/details?id=com.skt.smartbill&hl=ko',
   CAR_LIFE_DETAIL: 'http://m.tmembership.tworld.co.kr/mobileWeb/html/coupon/CtgViewMain.jsp?BRAND_CD=2012000026&PAGE_UCD=30',
-  SMART_CHOICE: 'http://www.smartchoice.or.kr',
+  SMART_CHOICE: 'http://www.smartchoice.or.kr'
 };
 
 Tw.PRODUCT_INFINITY_CATEGORY = {
@@ -850,8 +857,8 @@ Tw.SETTINGS_MENU = {
 Tw.NTV_FIDO_REGISTER_TXT = {
   FINGER_ON: '등록된 지문이 있습니다.',
   FINGER_OFF: '등록된 지문이 없습니다.',
-  FACE_ON: '등록된 Face ID가 있습니다.',
-  FACE_OFF: '등록된 Face ID가 없습니다.'
+  FACE_ON: 'Face ID가 등록되었습니다.',
+  FACE_OFF: 'Face ID가 등록되지 않았습니다.'
 };
 
 Tw.JOIN_INFO_NO_AGREEMENT = {
@@ -1047,7 +1054,7 @@ Tw.MYT_JOIN_SUSPEND = {
   CANCEL_RESUSPEND: '재신청 취소',
   RESET: '해제',
   APPLY: '신청',
-  SUCCESS_LONG_TERM_SUSPEND_MESSAGE_SVC: '회선번호 : {SVC_INFO}<br />일시정지 기간 : {DURATION}',
+  SUCCESS_LONG_TERM_SUSPEND_MESSAGE_SVC: '회선번호 : {SVC_INFO}<br />장기일시정지 기간 : {DURATION}',
   SUCCESS_SUSPEND_MESSAGE: '일시정지 기간 : {DURATION}<br />일시정지 설정: {SUSPEND_TYPE}',
   SUCCESS_RESUSPEND_MESSAGE: '회선번호 : {SVC_NUMBER}<br />재시작 기간: {DURATION}',
   GO_TO_STATUS: '일시정지 신청현황',
@@ -1058,6 +1065,7 @@ Tw.MYT_JOIN_SUSPEND = {
   NOT_VALID_EMAIL: '이메일 주소가 올바르지 않습니다.',
   NOT_VALID_PHONE_NUMBER: '휴대폰 번호가 올바르지 않습니다.',
   NOT_VALID_PERIOD: '일시정지 가능 최대기간을 초과하였습니다.',
+  NOT_VALID_LONG_TERM_PERIOD: '종료일은 설정한 시작일로부터 24개월을 초과하여 설정할 수 없습니다.',
   NOT_VALID_FROM_DATE: '시작일은 오늘 이후로 지정할 수 있습니다.',
   NOT_VALID_FROM_DATE_01: '시작 일자는 당일로부터 30일 이내로 선택하실 수 있습니다.',
   ALERT_EXCEED: {
@@ -1138,6 +1146,16 @@ Tw.CUSTOMER_EMAIL = {
     '청구서 주소: \n' +
     '멤버십 카드번호 뒤 3자리:'
 };
+
+Tw.CUSTOMER_HELPLINE_COMPLETE = {
+  TITLE: '전화상담 예약 완료',
+  DATE: '예약일자',
+  TIME: '예약시간',
+  TYPE: '상담유형',
+  AREA: '상담지역',
+  PHONE_NUMBER: '연락가능번호'
+};
+
 Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT = {
   SVCCTG: {
     S1: '인터넷',
@@ -1211,6 +1229,7 @@ Tw.UPLOAD_FILE = {
   BUTTON_ADD: '파일찾기',
   BUTTON_DELETE: '파일삭제',
   CONFIRM_A01: '첨부파일의 용량이 총 2MB를 초과하여 등록할 수 없습니다. 다시 확인해주세요.',
+  CONFIRM_A02: '첨부하실 수 없는 파일입니다. 다시 확인해주세요.'
 };
 
 Tw.PRODUCT_RESERVATION = {

@@ -18,10 +18,7 @@ class CommonMemberLogoutRoute extends TwViewController {
     if ( query.target.indexOf('error') !== -1 || !FormatHelper.isEmpty(query.error) ) {
       res.send(query.error_description);
     } else {
-      this.loginService.logoutSession().subscribe((resp) => {
-        res.redirect(query.target);
-      });
-
+      res.redirect(query.target);
     }
   }
 }

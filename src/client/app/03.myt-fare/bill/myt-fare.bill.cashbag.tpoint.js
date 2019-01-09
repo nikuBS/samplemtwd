@@ -35,7 +35,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     this.$payBtn.show();
     this.$payBtn.siblings().hide();
 
-    this.$isValid = false;
+    this.$isValid = true;
     this.$isSelectValid = true;
   },
   _bindEvent: function () {
@@ -83,7 +83,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
   },
   _checkPoint: function () {
     var isValid = false;
-    var $message = this.$point.siblings('.fe-error-msg');
+    var $message = this.$point.parent().siblings('.fe-error-msg');
     $message.empty();
 
     if (!this._validation.checkEmpty(this.$point.val())) {
@@ -112,12 +112,19 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
       this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 6), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V7);
   },
   _cancel: function () {
-    this._popupService.openConfirm(null, Tw.AUTO_PAY_CANCEL.CONFIRM_MESSAGE, $.proxy(this._autoCancel, this));
+    this._popupService.openConfirmButton('', Tw.ALERT_MSG_MYT_FARE.ALERT_2_A77.TITLE,
+      $.proxy(this._onCancel, this), $.proxy(this._autoCancel, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A77.BUTTON);
+  },
+  _onCancel: function () {
+    this._isCancel = true;
+    this._popupService.close();
   },
   _autoCancel: function () {
-    this._apiService.request(Tw.API_CMD.BFF_07_0054, { reqClCd: '3', ptClCd: this.$pointType })
-      .done($.proxy(this._cancelSuccess, this))
-      .fail($.proxy(this._fail, this));
+    if (this._isCancel) {
+      this._apiService.request(Tw.API_CMD.BFF_07_0054, {reqClCd: '3', ptClCd: this.$pointType})
+        .done($.proxy(this._cancelSuccess, this))
+        .fail($.proxy(this._fail, this));
+    }
   },
   _cancelSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
@@ -152,7 +159,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     $target.attr('id', $selectedValue.attr('id'));
     $target.text($.trim($selectedValue.parents('label').text()));
 
-    this.$pointSelector.siblings('.fe-error-msg').hide();
+    this.$pointSelector.parent().siblings('.fe-error-msg').hide();
     this.$isSelectValid = true;
 
     this._checkIsAbled();
@@ -160,7 +167,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
   },
   _checkSelected: function () {
     if (Tw.FormatHelper.isEmpty(this.$pointSelector.attr('id'))) {
-      this.$pointSelector.siblings('.fe-error-msg').show();
+      this.$pointSelector.parent().siblings('.fe-error-msg').show();
       this.$pointSelector.focus();
       this.$isSelectValid = false;
     }
@@ -292,7 +299,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
   },
   _afterClose: function () {
     if (this._isClose) {
-      this._popupService.close();
+      this._historyService.goBack();
     }
   }
 };

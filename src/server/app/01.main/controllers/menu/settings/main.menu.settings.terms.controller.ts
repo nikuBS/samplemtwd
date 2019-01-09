@@ -21,7 +21,7 @@ export default class MainMenuSettingsTerms extends TwViewController {
   };
 
   private urlMap = {
-    101: 'http://www.sktmembership.co.kr:90/mobile/html/iframe/1.1_iframe1.html' // 멤버십 회원약관
+    101: 'https://www.sktmembership.co.kr/mobile/html/iframe/1.1_iframe1.html' // 멤버십 회원약관
   };
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,

@@ -49,9 +49,9 @@ Tw.CustomerPraise.prototype = {
 
   _openSelectTypePopup: function() {
     var selectedType = this._selectedType,
-      list = this._selectedType
-        ? _.map(Tw.CUSTOMER_PRAISE_SUBJECT_TYPES, function(item, index) {
-            if (selectedType === index) {
+      list = selectedType
+        ? _.map(Tw.CUSTOMER_PRAISE_SUBJECT_TYPES, function(item) {
+            if (item['radio-attr'].indexOf(selectedType) !== -1) {
               return $.extend({}, item, { 'radio-attr': item['radio-attr'] + ' checked' });
             }
             return item;
@@ -98,17 +98,20 @@ Tw.CustomerPraise.prototype = {
     switch (code) {
       case this.TYPES.STORE: {
         this._setInputField(selectedValue);
+        this._setInputMaxLength(10, 10);
         this.$area.removeClass('none');
         break;
       }
       case this.TYPES.OFFICE:
       case this.TYPES.CUSTOMER_CENTER:
       case this.TYPES.AS_CENTER: {
+        this._setInputMaxLength(50, 50);
         this._setInputField(Tw.CUSTOMER_PRAISE_SUBJECT_TYPE.OFFICE);
         break;
       }
       case this.TYPES.QUALITY_MANAGER:
       case this.TYPES.HAPPY_MANAGER: {
+        this._setInputMaxLength(50, 25);
         this._setInputField(Tw.CUSTOMER_PRAISE_SUBJECT_TYPE.COMPANY);
 
         var currentContents = this.$pRole.text();
@@ -137,6 +140,11 @@ Tw.CustomerPraise.prototype = {
     })[1];
     $span.nodeValue = $span.nodeValue.replace(originalContent, replace);
     this.$divRole.removeClass('none');
+  },
+
+  _setInputMaxLength: function(role, subject) {
+    this.$divRole.find('input').attr('maxLength', role);
+    this.$subject.find('input').attr('maxLength', subject);
   },
 
   _openSelectAreaPopup: function() {
@@ -246,10 +254,13 @@ Tw.CustomerPraise.prototype = {
           layer: true,
           title: Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_COMPLETE,
           btnText: Tw.BUTTON_LABEL.CONFIRM,
-          itemOne: {
-            text: Tw.BUTTON_LABEL.HOME,
-            url: '/main/home'
-          }
+          buttons: [
+            {
+              text: Tw.BUTTON_LABEL.HOME,
+              url: '/main/home'
+            }
+          ],
+          buttonClass: 'one'
         },
         $.proxy(this._openCompletePopup, this),
         this._historyService.goBack

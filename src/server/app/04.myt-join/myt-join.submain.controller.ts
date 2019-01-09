@@ -13,7 +13,7 @@ import DateHelper from '../../utils/date.helper';
 import FormatHelper from '../../utils/format.helper';
 import { NEW_NUMBER_MSG } from '../../types/string.type';
 import { MYT_JOIN_SUBMAIN_TITLE } from '../../types/title.type';
-import { REDIS_BANNER_ADMIN } from '../../types/redis.type';
+import { REDIS_KEY } from '../../types/redis.type';
 import { SVC_ATTR_NAME } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 
@@ -85,7 +85,7 @@ class MyTJoinSubmainController extends TwViewController {
       this._getWireFreeCall(),
       this._getOldNumberInfo(),
       this._getChangeNumInfoService(),
-      this.redisService.getData(REDIS_BANNER_ADMIN + pageInfo.menuId)
+      this.redisService.getData(REDIS_KEY.BANNER_ADMIN + pageInfo.menuId)
     ).subscribe(([myline, myif, myhs, myap, mycpp, myinsp, myps, mylps, wirefree, oldnum, numSvc, banner]) => {
       // 가입정보가 없는 경우에는 에러페이지 이동 (PPS는 가입정보 API로 조회불가하여 무선이력으로 확인)
       if ( this.type === 1 ) {

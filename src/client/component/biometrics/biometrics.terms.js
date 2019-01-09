@@ -9,8 +9,6 @@ Tw.BiometricsTerms = function (target) {
   this._callback = null;
 
   this._popupService = Tw.Popup;
-
-  this._biometiricsCert = new Tw.BiometricsCert(this._target);
 };
 
 Tw.BiometricsTerms.prototype = {
@@ -49,7 +47,8 @@ Tw.BiometricsTerms.prototype = {
     this._enableBtns();
   },
   onClickConfirm: function () {
-    this._biometiricsCert.open(this._callback);
+    var biometiricsCert = new Tw.BiometricsCert(this._target);
+    biometiricsCert.open(this._callback);
   },
   _checkElement: function ($element) {
     $element.prop('checked', true);

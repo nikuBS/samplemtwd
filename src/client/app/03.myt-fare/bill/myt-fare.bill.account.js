@@ -89,7 +89,7 @@ Tw.MyTFareBillAccount.prototype = {
       $target.siblings().removeClass('checked');
       $bankTarget.attr('disabled', 'disabled');
       $numberTarget.attr('disabled', 'disabled');
-      $numberTarget.siblings('.fe-error-msg').hide();
+      $numberTarget.parents('.fe-bank-wrap').find('.fe-error-msg').hide();
       $numberTarget.parents('.fe-bank-wrap').find('.fe-bank-error-msg').hide();
     }
     this.$isChanged = true;
@@ -150,7 +150,14 @@ Tw.MyTFareBillAccount.prototype = {
   },
   _checkAccountNumber: function (event) {
     var $target = $(event.currentTarget);
-    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkEmpty($target.val()));
+    this.$isValid = this._validation.checkEmpty($target.val());
+
+    if (this.$isValid) {
+      $target.parents('.fe-bank-wrap').find('.fe-error-msg').hide();
+    } else {
+      $target.parents('.fe-bank-wrap').find('.fe-error-msg').show();
+      $target.focus();
+    }
   },
   _onClose: function () {
     if (!this.$isChanged) {
@@ -180,7 +187,7 @@ Tw.MyTFareBillAccount.prototype = {
   },
   _afterClose: function () {
     if (this._isClose) {
-      this._popupService.close();
+      this._historyService.goBack();
     }
   },
   _checkPay: function () {

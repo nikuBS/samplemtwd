@@ -70,12 +70,19 @@ Tw.MyTFareBillRainbow.prototype = {
     Tw.InputHelper.inputNumberOnly(target);
   },
   _cancel: function () {
-    this._popupService.openConfirm(null, Tw.AUTO_PAY_CANCEL.CONFIRM_MESSAGE, $.proxy(this._autoCancel, this));
+    this._popupService.openConfirmButton('', Tw.ALERT_MSG_MYT_FARE.ALERT_2_A77.TITLE,
+      $.proxy(this._onCancel, this), $.proxy(this._autoCancel, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A77.BUTTON);
+  },
+  _onCancel: function () {
+    this._isCancel = true;
+    this._popupService.close();
   },
   _autoCancel: function () {
-    this._apiService.request(Tw.API_CMD.BFF_07_0056, { rbpChgRsnCd: 'T1' })
-      .done($.proxy(this._cancelSuccess, this))
-      .fail($.proxy(this._fail, this));
+    if (this._isCancel) {
+      this._apiService.request(Tw.API_CMD.BFF_07_0056, { rbpChgRsnCd: 'T1' })
+        .done($.proxy(this._cancelSuccess, this))
+        .fail($.proxy(this._fail, this));
+    }
   },
   _cancelSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
@@ -101,7 +108,7 @@ Tw.MyTFareBillRainbow.prototype = {
   },
   _checkSelected: function () {
     if (Tw.FormatHelper.isEmpty(this.$fareSelector.attr('id'))) {
-      this.$fareSelector.siblings('.fe-error-msg').show();
+      this.$fareSelector.parent().siblings('.fe-error-msg').show();
       this.$fareSelector.focus();
       this.$isSelectValid = false;
     }
@@ -112,7 +119,7 @@ Tw.MyTFareBillRainbow.prototype = {
     $target.attr('id', $selectedValue.attr('id'));
     $target.text($.trim($selectedValue.parents('label').text()));
 
-    this.$fareSelector.siblings('.fe-error-msg').hide();
+    this.$fareSelector.parent().siblings('.fe-error-msg').hide();
     this.$isSelectValid = true;
 
     this._checkIsAbled();
@@ -120,7 +127,7 @@ Tw.MyTFareBillRainbow.prototype = {
   },
   _checkPoint: function () {
     var isValid = false;
-    var $message = this.$point.siblings('.fe-error-msg');
+    var $message = this.$point.parent().siblings('.fe-error-msg');
     $message.empty();
 
     if (!this._validation.checkEmpty(this.$point.val())) {
@@ -218,7 +225,7 @@ Tw.MyTFareBillRainbow.prototype = {
   },
   _afterClose: function () {
     if (this._isClose) {
-      this._popupService.close();
+      this._historyService.goBack();
     }
-  },
+  }
 };

@@ -37,18 +37,22 @@
                             </p>
                         </div>
                         <div class="tx-contents">
-                            <% if (description) { %>
-                            <p class="basic-txt"><%- description %></p>
-                            <% } %>
                             <% if (subTitle !== '') { %>
                             <div class="basic-list">
                                 <ul>
                                     <li>
                                         <span class="title"><%= subTitle %></span>
-                                        <span class="tx-cont"><%= point %></span>
+                                        <span class="tx-cont"><span class="tx-red1"><%= point %></span></span>
                                     </li>
                                 </ul>
                             </div>
+                            <% } %>
+                            <% if (description) { %>
+                                <% if (isRight) { %>
+                                <p class="basic-txt" style="text-align:right"><%- description %></p>
+                                <% } else { %>
+                                <p class="basic-txt"><%- description %></p>
+                                <% } %>
                             <% } %>
                             <% if (centerName !== '') { %>
                             <ul class="bt-slice item-one">

@@ -89,6 +89,16 @@ Tw.ValidationHelper = (function () {
     return findNumber.length >= length;
   }
 
+  function isBirthday(value) {
+    var month = value.substr(2,2);
+    var day = value.substr(4,2);
+
+    var isMonth = parseInt(month, 10) > 0 && parseInt(month, 10) <= 12;
+    var isDay = parseInt(day, 10) > 0 && parseInt(day, 10) <= 31;
+
+    return isMonth && isDay;
+  }
+
   /** 아래 validation check function은 client 한정이므로 따로 .ts에 구현하지 않겠습니다.
    *  by Jayoon Kong (jayoon.kong@sk.com)
    */
@@ -267,6 +277,9 @@ Tw.ValidationHelper = (function () {
 
   function showAndHideErrorMsg($target, isValid, message) {
     var $message = $target.siblings('.fe-error-msg');
+    if (!$message.hasClass('fe-error-msg')) {
+      $message = $target.parent().siblings('.fe-error-msg');
+    }
     if (isValid) {
       $message.hide();
       return true;
@@ -290,6 +303,7 @@ Tw.ValidationHelper = (function () {
     isStraightPassword: isStraightPassword,
     containSpecial: containSpecial,
     containNumber: containNumber,
+    isBirthday: isBirthday,
     checkEmpty: checkEmpty,
     checkLength: checkLength,
     checkMoreLength: checkMoreLength,

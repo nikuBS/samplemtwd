@@ -286,15 +286,15 @@ Tw.MyTJoinSubMain.prototype = {
 
   // 회선 변경 후 처리
   _onChangeSessionSuccess: function () {
+    if ( Tw.BrowserHelper.isApp() ) {
+      this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
+    }
     setTimeout($.proxy(function () {
       if(this.changeLineType ===  'pc') {
         this._historyService.replaceURL('/myt-join/submain_w');
       }
       else {
         this._historyService.replaceURL('/myt-join/submain');
-      }
-      if ( Tw.BrowserHelper.isApp() ) {
-        this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
       }
     }, this), 500);
   },

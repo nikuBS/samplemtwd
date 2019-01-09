@@ -65,6 +65,7 @@ Tw.ProductCommonCallplan.prototype = {
     this.$contents.on('click', '[data-contents]', $.proxy(this._openContentsDetailPop, this, 'contents'));
     this.$contents.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
     this.$contents.on('click', '.fe-link-internal', $.proxy(this._openInternalUrl, this));
+    this.$contents.on('click', '.dmg-contract', $.proxy(this._openDmgPopup, this));
   },
 
   _showReadyOn: function() {
@@ -118,6 +119,13 @@ Tw.ProductCommonCallplan.prototype = {
 
     e.preventDefault();
     e.stopPropagation();
+  },
+
+  _openDmgPopup: function() {
+    this._popupService.open({
+      hbs: 'BS_02_01_02_01',
+      layer: true
+    });
   },
 
   _procSetting: function() {

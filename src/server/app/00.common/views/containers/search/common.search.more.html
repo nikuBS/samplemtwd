@@ -364,7 +364,7 @@
                         <button type="button" disabled class="prev-btn" >이전</button>
                     <% }else{ %>
                         <button type="button" class="prev-btn page-change"
-                        value="/common/search/more?keyword=<%= keyword %>&category=<%= accessQuery.category %>&page=<%= Number(pageNum)-1 %><%= accessQuery.arrange?'&arrange='+accessQuery.arrange:''%><%= accessQuery.in_keyword?'&in_keyword='+accessQuery.in_keyword:''%>">
+                        value="/common/search/more?keyword=<%= keyword %>&category=<%= accessQuery.category %>&page=<%= Number(pageNum)-1 %><%= accessQuery.arrange?'&arrange='+accessQuery.arrange:''%><%= accessQuery.in_keyword?'&in_keyword='+accessQuery.in_keyword:''%>&step=<%= Number(step)+1 %>">
                             이전
                         </button>
                     <!-- category=direct&keyword=갤럭시&arrange=P&pageNum-->
@@ -379,12 +379,12 @@
                         <% for(var i=1;i<=parseInt(searchInfo.totalcount/20)+(searchInfo.totalcount%20>0?1:0);i++){ %>
                             <% if(i==pageNum){ %>
                                 <option style="color: #3c3c3c" selected
-                                value="/common/search/more?keyword=<%= keyword %>&category=<%= accessQuery.category %>&page=<%= i %><%= accessQuery.arrange?'&arrange='+accessQuery.arrange:''%><%= accessQuery.in_keyword?'&in_keyword='+accessQuery.in_keyword:''%>">
+                                value="/common/search/more?keyword=<%= keyword %>&category=<%= accessQuery.category %>&page=<%= i %><%= accessQuery.arrange?'&arrange='+accessQuery.arrange:''%><%= accessQuery.in_keyword?'&in_keyword='+accessQuery.in_keyword:''%>&step=<%= Number(step)+1 %>">
                                     <%= i %>
                                 </option>
                             <% }else{ %>
                                 <option style="color: #3c3c3c"
-                                value="/common/search/more?keyword=<%= keyword %>&category=<%= accessQuery.category %>&page=<%= i %><%= accessQuery.arrange?'&arrange='+accessQuery.arrange:''%><%= accessQuery.in_keyword?'&in_keyword='+accessQuery.in_keyword:''%>">
+                                value="/common/search/more?keyword=<%= keyword %>&category=<%= accessQuery.category %>&page=<%= i %><%= accessQuery.arrange?'&arrange='+accessQuery.arrange:''%><%= accessQuery.in_keyword?'&in_keyword='+accessQuery.in_keyword:''%>&step=<%= Number(step)+1 %>">
                                     <%= i %>
                                 </option>
                             <% } %>
@@ -396,7 +396,7 @@
                         <button type="button" disabled class="next-btn">다음</button>
                     <% }else{ %>
                         <button type="button" class="next-btn page-change"
-                        value="/common/search/more?keyword=<%= keyword %>&category=<%= accessQuery.category %>&page=<%= Number(pageNum)+1 %><%= accessQuery.arrange?'&arrange='+accessQuery.arrange:''%><%= accessQuery.in_keyword?'&in_keyword='+accessQuery.in_keyword:''%>">
+                        value="/common/search/more?keyword=<%= keyword %>&category=<%= accessQuery.category %>&page=<%= Number(pageNum)+1 %><%= accessQuery.arrange?'&arrange='+accessQuery.arrange:''%><%= accessQuery.in_keyword?'&in_keyword='+accessQuery.in_keyword:''%>&step=<%= Number(step)+1 %>">
                             다음
                         </button>
                     <% } %>
@@ -416,7 +416,7 @@
 <% include ../../components/search/search.template.component.html %>
 <script>
     $(document).ready(function () {
-        new Tw.CommonSearchMore($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>,<%- JSON.stringify(svcInfo) %>,'<%- CDN %>',<%- JSON.stringify(accessQuery)%>);
+        new Tw.CommonSearchMore($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>,<%- JSON.stringify(svcInfo) %>,'<%- CDN %>',<%- JSON.stringify(accessQuery)%>,'<%- step %>');
     });
 </script>
 <% include ../../components/end.component.html %>

@@ -28,7 +28,9 @@ Tw.BiometricsComplete.prototype = {
     $popupContainer.on('click', '#fe-bt-complete', $.proxy(this._onClickComplete, this));
   },
   _onCloseBioCert: function () {
+    console.log('onClose');
     if ( !Tw.FormatHelper.isEmpty(this._callback) ) {
+      console.log('callback');
       this._callback({ code: Tw.API_CODE.CODE_00 });
     }
   },

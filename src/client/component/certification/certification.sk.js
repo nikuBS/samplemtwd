@@ -32,22 +32,12 @@ Tw.CertificationSk = function () {
 
 
 Tw.CertificationSk.prototype = {
-  SMS_CERT_ERROR: {
-    SMS2001: 'SMS2001',
-    SMS2002: 'SMS2002',
-    SMS2003: 'SMS2003',
-    SMS2004: 'SMS2004',
-    SMS2005: 'SMS2005',
-    SMS2006: 'SMS2006',
-    SMS2007: 'SMS2007',
-    SMS2008: 'SMS2008',
-    SMS2009: 'SMS2009',
-    SMS2010: 'SMS2010',
-    SMS2011: 'SMS2011',
-    SMS2013: 'SMS2013',
-    SMS2014: 'SMS2014',
-    SMS3001: 'SMS3001',
-    ATH1221: 'ATH1221'
+  SMS_ERROR: {
+    ATH2003: 'ATH2003',     // 재전송 제한시간이 지난 후에 이용하시기 바랍니다.
+    ATH2006: 'ATH2006',     // 제한시간 내에 보낼 수 있는 발송량이 초과하였습니다.
+    ATH2007: 'ATH2007',     // 입력하신 인증번호가 맞지 않습니다.
+    ATH2008: 'ATH2008',     // 인증번호를 입력할 수 있는 시간이 초과하였습니다.
+    ATH1221: 'ATH1221'      // 인증번호 유효시간이 경과되었습니다.
   },
   open: function (svcInfo, authUrl, authKind, prodAuthKey, callback, opMethods, optMethods, isWelcome, methodCnt) {
     this._callbackParam = null;
@@ -90,7 +80,7 @@ Tw.CertificationSk.prototype = {
           _.map(curLine, $.proxy(function (target) {
             if ( target.repSvcYn === 'Y' ) {
               this._svcInfo = target;
-              return;
+
             }
           }, this));
         }
@@ -237,9 +227,8 @@ Tw.CertificationSk.prototype = {
     this._jobCode = Tw.BrowserHelper.isApp() ? 'NFM_MTW_CMNBSNS_AUTH' : 'NFM_MWB_CMNBSNS_AUTH';
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( resp.result.auth && resp.result.auth.jobCode ) {
-        this._jobCode = Tw.BrowserHelper.isApp() ? resp.result.auth.jobCode.mobileApp : resp.result.auth.jobCode.mobileWeb;
         if ( Tw.FormatHelper.isEmpty(this._jobCode) ) {
-          this._jobCode = Tw.BrowserHelper.isApp() ? 'NFM_MTW_CMNBSNS_AUTH' : 'NFM_MWB_CMNBSNS_AUTH';
+          this._jobCode = Tw.BrowserHelper.isApp() ? resp.result.auth.jobCode.mobileApp : resp.result.auth.jobCode.mobileWeb;
         }
       }
     }
@@ -272,10 +261,10 @@ Tw.CertificationSk.prototype = {
         this._addTimer = setTimeout($.proxy(this._expireAddTime, this), 5 * 60 * 1000);
         this._addTime = new Date().getTime();
       }
-    } else if ( resp.code === this.SMS_CERT_ERROR.SMS2003 ) {
+    } else if ( resp.code === this.SMS_ERROR.ATH2003 ) {
       this._clearCertError();
       this.$errorCertTime.removeClass('none');
-    } else if ( resp.code === this.SMS_CERT_ERROR.SMS2006 ) {
+    } else if ( resp.code === this.SMS_ERROR.ATH2006 ) {
       this._clearCertError();
       this.$errorCertCnt.removeClass('none');
     } else {
@@ -303,7 +292,7 @@ Tw.CertificationSk.prototype = {
       this.$btReCert.parent().removeClass('none');
       this.$btCertAdd.parent().addClass('none');
       this.$validAddCert.removeClass('none');
-    } else if ( resp.code === this.ERROR_CODE.ATH1221 ) {
+    } else if ( resp.code === this.SMS_ERROR.ATH1221 ) {
       this._clearCertError();
       this.$btReCert.parent().removeClass('none');
       this.$btCertAdd.parent().addClass('none');
@@ -327,26 +316,27 @@ Tw.CertificationSk.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._callbackParam = resp;
       this._popupService.close();
-    } else if ( resp.code === this.SMS_CERT_ERROR.SMS2007 ) {
+    } else if ( resp.code === this.SMS_ERROR.ATH2007 ) {
       this._clearConfirmError();
       this.$errorConfirm.removeClass('none');
-    } else if ( resp.code === this.SMS_CERT_ERROR.SMS2008 ) {
+    } else if ( resp.code === this.SMS_ERROR.ATH2008 ) {
       this._clearConfirmError();
       this.$errorConfirmTime.removeClass('none');
     } else {
-      this._callbackParam = resp;
-      this._popupService.close();
+      Tw.Error(resp.code, resp.msg).pop();
     }
 
   },
   _onRefreshCallback: function () {
-    var interval = new Date().getTime() - this._addTime;
+    if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
+      var interval = new Date().getTime() - this._addTime;
 
-    clearTimeout(this._addTimer);
-    if ( interval > 5 * 60 * 1000 ) {
-      this._expireAddTime();
-    } else {
-      this._addTimer = setTimeout($.proxy(this._expireAddTime, this), 5 * 60 * 1000 - interval);
+      clearTimeout(this._addTimer);
+      if ( interval > 5 * 60 * 1000 ) {
+        this._expireAddTime();
+      } else {
+        this._addTimer = setTimeout($.proxy(this._expireAddTime, this), 5 * 60 * 1000 - interval);
+      }
     }
   },
   _clearCertError: function () {
