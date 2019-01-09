@@ -42,6 +42,8 @@ Tw.CustomerHelpline.prototype = {
     this.$btnTime = this.$container.find('#fe-time');
     this.$areaPhone = this.$container.find('.inputbox.bt-add.mt20');
     this.$btnSubmit = this.$container.find('.bt-red1 button');
+    this.$cellphone = this.$container.find('#fe-cellphone');
+    this.$telephone = this.$container.find('#fe-telephone');
   },
 
   _openCancelPopup: function() {
@@ -65,8 +67,27 @@ Tw.CustomerHelpline.prototype = {
 
   _handleGetContact: function(resp) {
     if (resp.params && resp.params.phoneNumber) {
-      this.$areaPhone.find('input').val(resp.params.phoneNumber.replace(/-/g, ''));
+      var number = resp.params.phoneNumber.replace(/-/g, '');
+      this.$areaPhone.find('input').val(number);
+      if (Tw.ValidationHelper.isCellPhone(number)) {
+        this.$cellphone.trigger('click');
+      } else {
+        this.$telephone.trigger('click');
+      }
+      this._reservationPhoneNum = number;
       this._setSubmitState();
+    }
+  },
+
+  _togglePhoneType: function($type, check) {
+    if (check) {
+      $type.addClass('checked');
+      $type.attr('aria-checked', 'true');
+      $type.find('input').attr('checked', true);
+    } else {
+      $type.removeClass('checked');
+      $type.attr('aria-checked', 'false');
+      $type.find('input').removeAttr('checked');
     }
   },
 
@@ -75,7 +96,13 @@ Tw.CustomerHelpline.prototype = {
       $input = this.$areaPhone.find('input'),
       errorState = this.$areaPhone.hasClass('error'),
       number = $input.val(),
-      isValid = Tw.ValidationHelper.isTelephone(number) || Tw.ValidationHelper.isCellPhone(number);
+      isValid = false;
+
+    if (this.$cellphone.hasClass('checked')) {
+      isValid = Tw.ValidationHelper.isCellPhone(number);
+    } else {
+      isValid = Tw.ValidationHelper.isTelephone(number);
+    }
 
     if (number && !isValid) {
       if (!errorState) {
