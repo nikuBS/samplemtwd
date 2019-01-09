@@ -120,7 +120,6 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     this.$container.find('#alarm_list').append(handlebarsTemplate(templateData));
   },
   _removeOnList : function (args) {
-
     var selectedIndex = parseInt($(args).attr('data-idx'),10);
     this._addedList.splice(selectedIndex,1);
     this._changeList();
@@ -150,14 +149,16 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
           $.proxy($containerData._bindCompletePopupBtnEvt,this,$containerData),
           null,
           'complete');
+      }else{
+        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
       }
     }, this)).fail($.proxy(function (err) {
-
+      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
     }, this));
   },
   _bindCompletePopupBtnEvt : function(args1,args2){
     $(args2).on('click','.btn-round2',$.proxy(args1._goMyInfo,args1));
-    $(args2).on('click','.btn-floating',$.proxy(args1._goPlan,args1));
+    $(args2).on('click','.btn-floating',$.proxy(args1._goPlan,args1,-3));
   },
   _goMyInfo : function(){
     this._historyService.goLoad('/product/roaming/my-use');
@@ -165,8 +166,18 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
   _goBack : function(){
     this._historyService.goBack();
   },
-  _goPlan : function () {
-    this._historyService.goLoad('/product/callplan/'+this._prodId);
+  _goPlan : function (idx) {
+    this._historyService.go(idx);
+  },
+  _showCancelAlart : function (){
+    var alert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A1;
+    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES,
+      $.proxy(this._bindCancelPopupEvent,this),
+      $.proxy(this._popupService.close,this),
+      null);
+  },
+  _bindCancelPopupEvent : function (popupLayer) {
+    $(popupLayer).on('click','.pos-left>button',$.proxy(this._goPlan,this,-1));
   },
   _confirmInformationSetting : function () {
     var userJoinInfo = {

@@ -31,7 +31,7 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
     this.$container.on('click', '#phone_book', $.proxy(this._showPhoneBook, this));
     this.$container.on('click', '#add_list', $.proxy(this._addPhoneNumOnList, this));
     this.$container.on('click','.cancel',$.proxy(this._clearInput,this));
-    this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._goBack,this));
+    this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._historyService.goBack,this));
     this.$inputElement = this.$container.find('#input_phone');
     this.$addBtn = this.$container.find('#add_list');
     this.$confirmBtn = this.$container.find('#confirm_info');
@@ -60,16 +60,16 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
     var reuqestPhoneNum = this.$inputElement.val().replace(/\-/g,'');
     if(this._requestOrder('CHK',reuqestPhoneNum)){
       if(this._requestOrder('add',reuqestPhoneNum)){
-        this._history.reload();
+        this._historyService.reload();
       }
     }
 
   },
   _requestOrder : function(requestType,phoneNum){
-
     var requestValue = {
       svcOpClCd : '',
       startDtm : this._prodBffInfo.startdtm,
+      useDays : String(moment().diff(moment(this._prodBffInfo.startdtm,'YYYYMMDDHHmm'),'days')),
       endDtm : this._prodBffInfo.enddtm,
       childSvcNum : '',
       delChildSvcMgmtNum : ''
@@ -87,15 +87,16 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
     };
 
 
-
-    this._apiService.request(Tw.API_CMD.BFF_10_0092, requestValue, headerData,[this._prodId]).
+    this._apiService.request(Tw.API_CMD.BFF_10_0092, requestValue, {},[this._prodId]).
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
         return true;
       }else{
+        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
         return false;
       }
     }, this)).fail($.proxy(function (err) {
+      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
       return false;
     }, this));
   },
@@ -138,10 +139,13 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
       this.$confirmBtn.attr('disabled','disabled');
     }
   },
+  _makePhoneNumDash : function (val) {
+    return val.replace(/(^02.{0}|^01.{1}|[0-9*]{3})([0-9*]+)([0-9*]{4})/, '$1-$2-$3');
+  },
   _makeTemplate : function (name,phoneNum,idx) {
     var listData  = {
       name : name,
-      phoneNum : phoneNum,
+      phoneNum : this._makePhoneNumDash(phoneNum),
       idx : idx
     };
     this.$container.find('.comp-box').append(this._combineListTemplate({listData : listData}));
@@ -149,13 +153,11 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
   _removeOnList : function ($args) {
     var selectedIdx = $args.currentTarget.attributes['data-idx'].nodeValue;
     selectedIdx = parseInt(selectedIdx,10);
-    var reuqestPhoneNum = this._addedList[selectedIdx].svcNum;
-
-    if(this._requestOrder('CHK',reuqestPhoneNum)){
-      if(this._requestOrder('remove',reuqestPhoneNum)){
-        this._history.reload();
-      }
+    var reuqestPhoneNum = this._addedList[selectedIdx].svcMgmtNum;
+    if(this._requestOrder('remove',reuqestPhoneNum)){
+      this._historyService.reload();
     }
+
   },
   _bindRemoveEvt : function () {
     this.$container.find('.list-btn button').on('click',$.proxy(this._removeOnList,this));
@@ -168,9 +170,6 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
       }
     }
     return tempArr;
-  },
-  _goBack : function(){
-    this._historyService.goBack();
   }
 
 

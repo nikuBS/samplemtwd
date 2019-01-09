@@ -10,7 +10,7 @@ Tw.ProductRoamingJoinRoamingBeginSetup = function (rootEl,prodRedisInfo,prodApiI
   this._bindBtnEvents();
   this._historyService = new Tw.HistoryService(this.$container);
   this._prodRedisInfo = JSON.parse(prodRedisInfo);
-  this._prodApiInfo = this._removeHtmlTag(prodApiInfo);
+  this._prodApiInfo = prodApiInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
   this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
@@ -21,7 +21,7 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
   _bindBtnEvents: function () {
     this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
     this.$container.on('click','.bt-fixed-area #do_confirm',$.proxy(this._confirmInformationSetting, this));
-    this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._goBack,this));
+    this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._showCancelAlart,this));
   },
   _getDateArrFromToDay : function(range,format){
     var dateFormat = 'YYYY-MM-DD';
@@ -143,23 +143,32 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
           $.proxy($containerData._bindCompletePopupBtnEvt,this,$containerData),
           null,
           'complete');
+      }else{
+        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
       }
     }, this)).fail($.proxy(function (err) {
-
+      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
     }, this));
   },
   _bindCompletePopupBtnEvt : function($args1,$args2){
     $($args2).on('click','.btn-round2',$.proxy($args1._goMyInfo,$args1));
-    $($args2).on('click','.btn-floating',$.proxy($args1._goPlan,$args1));
+    $($args2).on('click','.btn-floating',$.proxy($args1._goPlan,$args1,-3));
   },
   _goMyInfo : function(){
     this._historyService.goLoad('/product/roaming/my-use');
   },
-  _goBack : function(){
-    this._historyService.goBack();
+  _goPlan : function (idx) {
+    this._historyService.go(idx);
   },
-  _goPlan : function () {
-    this._historyService.goLoad('/product/callplan/'+this._prodId);
+  _showCancelAlart : function (){
+    var alert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A1;
+    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES,
+      $.proxy(this._bindCancelPopupEvent,this),
+      $.proxy(this._popupService.close,this),
+      null);
+  },
+  _bindCancelPopupEvent : function (popupLayer) {
+    $(popupLayer).on('click','.pos-left>button',$.proxy(this._goPlan,this,-1));
   },
   _confirmInformationSetting : function () {
 

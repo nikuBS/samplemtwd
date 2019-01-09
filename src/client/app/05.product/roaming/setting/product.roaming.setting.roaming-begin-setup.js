@@ -30,7 +30,7 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
     this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
     this.$container.on('click','.bt-fixed-area #do_setting',$.proxy(this._changeInformationSetting, this));
     this.$container.on('click','.bt-fixed-area #do_setting',$.proxy(this._changeInformationSetting, this));
-    this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._goBack,this));
+    this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._historyService.goBack,this));
   },
   _getDateArrFromToDay : function(range,format){
     var dateFormat = 'YYYY. MM. DD';
@@ -134,21 +134,23 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
   _changeInformationSetting : function () {
     var userSettingInfo = {
       'svcStartDt' : this.$container.find('#start_date').attr('data-number'),
-      'svcEndDt' : {},
-      'svcStartTm' : {},
-      'svcEndTm' : {},
-      'startEndTerm' : {}
+      'svcEndDt' : '{}',
+      'svcStartTm' : '{}',
+      'svcEndTm' : '{}',
+      'startEndTerm' : '{}'
     };
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0085, userSettingInfo, {},this._prodId).
+    this._apiService.request(Tw.API_CMD.BFF_10_0085, userSettingInfo, {},[this._prodId]).
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
         this._historyService.goBack();
+      }else{
+        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
       }
+    }, this)).
+    fail($.proxy(function (err) {
+      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
     }, this));
-  },
-  _goBack : function(){
-    this._historyService.goBack();
   },
   _tooltipInit : function (prodId) {
     switch (prodId) {
