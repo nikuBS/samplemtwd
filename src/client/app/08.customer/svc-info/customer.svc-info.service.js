@@ -109,8 +109,11 @@ Tw.CustomerSvcinfoService.prototype = {
   },
 
   _moveDetailPage: function (code) {
-    // TODO code 값이 url 일때를 고려
     var targetURL = this.rootPathName.slice(-1) === '/' ? this.rootPathName.split('/').slice(0, -1).join('/') : this.rootPathName;
-    this._historyService.goLoad(targetURL + '/detail?code=' + code);
+    if (code.indexOf('url:') >= 0) {
+      this._historyService.goLoad(code.replace('url:', ''));
+    } else {
+      this._historyService.goLoad(targetURL + '/detail?code=' + code);
+    }
   }
 };

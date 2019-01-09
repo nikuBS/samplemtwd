@@ -63,6 +63,12 @@
 .idpt-popup-cont.allfamily-plan { display:none; }
 .idpt-popup-cont.allfamily-plan.show { display:block; }
 
+.idpt-radio-wrap.call-cont02 { display:none; }
+.idpt-radio-wrap.center-cont02 { display:none; }
+
+.tooltip-popup, .popup-info {display:none}
+.tooltip-popup .popup-info.show {display:block}
+
 /* button style */
 .idpt-container a.idpt-link-default { display:inline-block; border:none; color:#188bce; text-decoration:underline; }
 .idpt-container a.small {font-size:0.75rem; }
@@ -386,15 +392,15 @@
 
 .idpt-container .idpt-toggle-cont { display:none; }
 .idpt-container .idpt-faq-question { position:relative; padding:1.25rem 1.25rem 1.25rem 2.2625rem; background-color:#fff; border-bottom:1px solid #e5e5e5; }
-.idpt-container .idpt-faq-answer { position:relative; padding:1.25rem 1.25rem 1.25rem 2.2625rem; background-color:#f5f5f5; border-bottom:1px solid #e5e5e5; }
+.idpt-container .idpt-faq-answer-sw { position:relative; padding:1.25rem 1.25rem 1.25rem 2.2625rem; background-color:#f5f5f5; border-bottom:1px solid #e5e5e5; }
 .idpt-container .idpt-toggle-cont .faq-icon-txt {position:absolute; left:1rem; font-weight:600; font-size:0.875rem; }
 .idpt-container .idpt-toggle-cont .idpt-faq-question .faq-icon-txt { top:1.25rem; }
-.idpt-container .idpt-toggle-cont .idpt-faq-answer .faq-icon-txt { top:1.45rem; }
+.idpt-container .idpt-toggle-cont .idpt-faq-answer-sw .faq-icon-txt { top:1.45rem; }
 .idpt-container .idpt-faq-question > p { font-size:0.875rem; color:#000}
-.idpt-container .idpt-faq-answer > p { font-size: 0.8125rem; color:#000; line-height:1.6em; }
-.idpt-container .idpt-faq-answer > ul { padding-left:0.8125rem; }
-.idpt-container .idpt-faq-answer > ul > li { list-style-type: decimal; font-size: 0.8125rem; color:#000; line-height:1.6em; }
-.idpt-container .idpt-faq-answer > ul > li + li { margin-top:0.375rem; }
+.idpt-container .idpt-faq-answer-sw > p { font-size: 0.8125rem; color:#000; line-height:1.6em; }
+.idpt-container .idpt-faq-answer-sw > ul { padding-left:0.8125rem; }
+.idpt-container .idpt-faq-answer-sw > ul > li { list-style-type: decimal; font-size: 0.8125rem; color:#000; line-height:1.6em; }
+.idpt-container .idpt-faq-answer-sw > ul > li + li { margin-top:0.375rem; }
 .idpt-container .idpt-faq-btn { padding:1.875rem 1.25rem; background-color:#fff; border-bottom:1px solid #e5e5e5; }
 
 /* 이용안내 */
