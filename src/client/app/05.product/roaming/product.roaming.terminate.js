@@ -12,7 +12,7 @@ Tw.ProductRoamingTerminate = function (rootEl,prodBffInfo,svcInfo,prodId,prodRed
     this._historyService = new Tw.HistoryService(this.$rootContainer);
     this._svcInfo = svcInfo;
     this._prodId = prodId;
-    this._prodBffInfo = JSON.parse(prodBffInfo);
+    this._prodBffInfo = prodBffInfo;
     this._prodRedisInfo = prodRedisInfo;
     this._page = true;
     this._bindPopupElementEvt();
@@ -89,13 +89,13 @@ Tw.ProductRoamingTerminate.prototype = {
             null,
             'complete');
 
-        this._apiService.request(Tw.API_CMD.BFF_10_0086, {}, {},this.prodId).
+        this._apiService.request(Tw.API_CMD.BFF_10_0086, {}, {},[this._prodId]).
         done($.proxy(function (res) {
 
-            if(res===Tw.API_CODE.CODE_00){
+            if(res.code===Tw.API_CODE.CODE_00){
                 var completePopupData = {
                     prodNm : this._prodRedisInfo.prodNm,
-                    processNm : PRODUCT_TYPE_NM.TERMINATE,
+                    processNm : Tw.PRODUCT_TYPE_NM.TERMINATE,
                     isBasFeeInfo : this._prodRedisInfo.baseFeeInfo,
                     typeNm : Tw.PRODUCT_CTG_NM.ADDITIONS,
                     settingType : Tw.PRODUCT_CTG_NM.ADDITIONS+' '+Tw.PRODUCT_TYPE_NM.JOIN,

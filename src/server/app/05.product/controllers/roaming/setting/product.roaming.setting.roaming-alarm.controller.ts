@@ -15,49 +15,49 @@ import StringHelper from '../../../../../utils/string.helper';
 
 
 class ProductRoamingSettingRoamingAlarm extends TwViewController {
-    constructor() {
-        super();
+  constructor() {
+    super();
+  }
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
+
+
+
+    const prodId = req.query.prod_id || null;
+
+
+    if (FormatHelper.isEmpty(prodId)) {
+      return this.error.render(res, {
+        svcInfo: svcInfo,
+        title: PRODUCT_TYPE_NM.JOIN
+      });
     }
-    render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
 
+    Observable.combineLatest(
+      this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
+      this.apiService.request(API_CMD.BFF_10_0021, {}, {}, [prodId]),
+    ).subscribe(([ prodRedisInfo, prodBffInfo ]) => {
 
-
-        const prodId = req.query.prod_id || null;
-
-
-        if (FormatHelper.isEmpty(prodId)) {
-            return this.error.render(res, {
-                svcInfo: svcInfo,
-                title: PRODUCT_TYPE_NM.JOIN
-            });
-        }
-
-        Observable.combineLatest(
-            this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
-            this.apiService.request(API_CMD.BFF_10_0021, {}, {}, [prodId]),
-        ).subscribe(([ prodRedisInfo, prodBffInfo ]) => {
-
-            if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00) ) {
-                return this.error.render(res, {
-                    svcInfo: svcInfo,
-                    title: PRODUCT_TYPE_NM.SETTING,
-                    code: prodBffInfo.code,
-                    msg: prodBffInfo.msg,
-                });
-            }
-
-            res.render('roaming/setting/product.roaming.setting.roaming-alarm.html', {
-                svcInfo : svcInfo,
-                prodRedisInfo : prodRedisInfo.summary,
-                prodBffInfo : prodBffInfo.result,
-                prodId : prodId,
-                phoneNum : StringHelper.phoneStringToDash(svcInfo.svcNum),
-                pageInfo : pageInfo
-            });
+      if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00) ) {
+        return this.error.render(res, {
+          svcInfo: svcInfo,
+          title: PRODUCT_TYPE_NM.SETTING,
+          code: prodBffInfo.code,
+          msg: prodBffInfo.msg,
         });
+      }
+
+      res.render('roaming/setting/product.roaming.setting.roaming-alarm.html', {
+        svcInfo : svcInfo,
+        prodRedisInfo : prodRedisInfo.summary,
+        prodBffInfo : prodBffInfo.result,
+        prodId : prodId,
+        phoneNum : StringHelper.phoneStringToDash(svcInfo.svcNum),
+        pageInfo : pageInfo
+      });
+    });
 
 
-    }
+  }
 }
 
 export default ProductRoamingSettingRoamingAlarm;

@@ -15,52 +15,52 @@ import {ROAMING_AUTO_EXPIRE_CASE} from '../../../../../types/bff.type';
 
 
 class ProductRoamingSettingRoamingAuto extends TwViewController {
-    constructor() {
-        super();
+  constructor() {
+    super();
+  }
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
+    const prodId = req.query.prod_id || null;
+    let expireDate = '';
+
+    if (FormatHelper.isEmpty(prodId)) {
+      return this.error.render(res, {
+        svcInfo: svcInfo,
+        title: PRODUCT_TYPE_NM.SETTING
+      });
     }
-    render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
-        const prodId = req.query.prod_id || null;
-        let expireDate = '';
 
-        if (FormatHelper.isEmpty(prodId)) {
-            return this.error.render(res, {
-                svcInfo: svcInfo,
-                title: PRODUCT_TYPE_NM.SETTING
-            });
-        }
+    Observable.combineLatest(
+      this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
+      this.apiService.request(API_CMD.BFF_10_0091, {}, {}, [prodId])
+    ).subscribe(([ prodRedisInfo, prodBffInfo ]) => {
 
-        Observable.combineLatest(
-            this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
-            this.apiService.request(API_CMD.BFF_10_0091, {}, {}, [prodId])
-        ).subscribe(([ prodRedisInfo, prodBffInfo ]) => {
-
-            if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00)) {
-                return this.error.render(res, {
-                    svcInfo: svcInfo,
-                    title: PRODUCT_TYPE_NM.SETTING,
-                    code: prodBffInfo.code,
-                    msg: prodBffInfo.msg,
-                });
-            }
-
-            if (prodBffInfo.romUsePrdInfo) {
-                expireDate = prodBffInfo.romUsePrdInfo;
-            } else {
-                expireDate = ROAMING_AUTO_EXPIRE_CASE[prodId];
-            }
-
-
-            res.render('roaming/setting/product.roaming.setting.roaming-auto.html', {
-                svcInfo : svcInfo,
-                prodRedisInfo : prodRedisInfo.summary,
-                prodBffInfo : prodBffInfo.result,
-                prodId : prodId,
-                expireDate : expireDate,
-                pageInfo : pageInfo
-            });
+      if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00)) {
+        return this.error.render(res, {
+          svcInfo: svcInfo,
+          title: PRODUCT_TYPE_NM.SETTING,
+          code: prodBffInfo.code,
+          msg: prodBffInfo.msg,
         });
+      }
 
-    }
+      if (prodBffInfo.romUsePrdInfo) {
+        expireDate = prodBffInfo.romUsePrdInfo;
+      } else {
+        expireDate = ROAMING_AUTO_EXPIRE_CASE[prodId];
+      }
+
+
+      res.render('roaming/setting/product.roaming.setting.roaming-auto.html', {
+        svcInfo : svcInfo,
+        prodRedisInfo : prodRedisInfo.summary,
+        prodBffInfo : prodBffInfo.result,
+        prodId : prodId,
+        expireDate : expireDate,
+        pageInfo : pageInfo
+      });
+    });
+
+  }
 }
 
 export default ProductRoamingSettingRoamingAuto;

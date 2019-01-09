@@ -624,6 +624,7 @@ export const API_CMD = {
     bypass: true
   },
   BFF_10_0084: { path: '/core-product/:version/roaming/fee-plans/:args0/joins', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0086: { path: '/core-product/:version/roaming/fee-plans/:args0/terminations', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_10_0088: { path: '/core-product/:version/roaming/submain/promBannerList', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0089: { path: '/core-product/:version/roaming/submain/alpaList', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0090: { path: '/core-product/:version//roaming/submain/bannerList', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
