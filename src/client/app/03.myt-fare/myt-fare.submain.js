@@ -270,8 +270,8 @@ Tw.MyTFareSubMain.prototype = {
       this.$billChart.hide();
       this.$container.find('[data-id=bill-chart-empty]').hide();
     }
-    // 실시간요금
-    setTimeout($.proxy(this._otherLineBills, this), 300);
+    this._responseOtherLineBills();
+    // setTimeout($.proxy(this._otherLineBills, this), 300);
     // setTimeout($.proxy(this._realTimeBillRequest, this), 300);
   },
 
@@ -405,7 +405,7 @@ Tw.MyTFareSubMain.prototype = {
         }
         // 당월 기준으로 실시간 요금 노출
         var realtimeBillInfo = resp.result.hotBillInfo[0];
-        this.$realTimePay.find('span.text').html(realtimeBillInfo.totOpenBal2);
+        this.$realTimePay.find('span.text').html(realtimeBillInfo.totOpenBal2 + Tw.CHART_UNIT.WON);
       }
     }
     else if ( resp.code === Tw.MYT_FARE_SUB_MAIN.NO_BILL_REQUEST_EXIST ) {
