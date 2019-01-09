@@ -29,8 +29,6 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
   _init: function() {
     this._typeCd = this.$container.data('type_cd');
-    this._prodId = this.$container.data('prod_id');
-    this._isEtcProd = !Tw.FormatHelper.isEmpty(this._prodId) && this._prodIdList.indexOf(this._prodId) === -1;
 
     if (this._typeCd === 'combine') {
       this._initCombineProduct();
@@ -46,23 +44,6 @@ Tw.ProductWireplanJoinReservation.prototype = {
     this.$combineWrap.show();
     this._getIsExistsCombineReservation();
     this._getCurrentCombineList();
-
-    if (Tw.FormatHelper.isEmpty(this._prodId)) {
-      return;
-    } else {
-      this.$combineExplainAllWrap.show();
-    }
-
-    if (this._prodId !== 'NH00000103') {
-      setTimeout(function() {
-        this.$combineExplain.attr('aria-disabled', false).removeClass('disabled');
-        this.$combineExplain.find('input[type=checkbox]').removeAttr('disabled').prop('disabled', false);
-
-        this._toggleCombineExplain();
-      }.bind(this));
-    }
-
-    this.$combineSelected.prop('checked', true);
   },
 
   _restoreLocalStorage: function() {

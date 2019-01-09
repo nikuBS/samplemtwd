@@ -122,7 +122,6 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _openDmgPopup: function() {
-    console.log('* open dmg popup');
     this._popupService.open({
       hbs: 'BS_02_01_02_01',
       layer: true
