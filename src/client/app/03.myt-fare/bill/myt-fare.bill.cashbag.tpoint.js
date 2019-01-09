@@ -83,7 +83,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
   },
   _checkPoint: function () {
     var isValid = false;
-    var $message = this.$point.siblings('.fe-error-msg');
+    var $message = this.$point.parent().siblings('.fe-error-msg');
     $message.empty();
 
     if (!this._validation.checkEmpty(this.$point.val())) {
@@ -159,7 +159,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     $target.attr('id', $selectedValue.attr('id'));
     $target.text($.trim($selectedValue.parents('label').text()));
 
-    this.$pointSelector.siblings('.fe-error-msg').hide();
+    this.$pointSelector.parent().siblings('.fe-error-msg').hide();
     this.$isSelectValid = true;
 
     this._checkIsAbled();
@@ -167,7 +167,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
   },
   _checkSelected: function () {
     if (Tw.FormatHelper.isEmpty(this.$pointSelector.attr('id'))) {
-      this.$pointSelector.siblings('.fe-error-msg').show();
+      this.$pointSelector.parent().siblings('.fe-error-msg').show();
       this.$pointSelector.focus();
       this.$isSelectValid = false;
     }

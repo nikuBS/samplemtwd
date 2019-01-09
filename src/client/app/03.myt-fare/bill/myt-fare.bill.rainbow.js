@@ -108,7 +108,7 @@ Tw.MyTFareBillRainbow.prototype = {
   },
   _checkSelected: function () {
     if (Tw.FormatHelper.isEmpty(this.$fareSelector.attr('id'))) {
-      this.$fareSelector.siblings('.fe-error-msg').show();
+      this.$fareSelector.parent().siblings('.fe-error-msg').show();
       this.$fareSelector.focus();
       this.$isSelectValid = false;
     }
@@ -119,7 +119,7 @@ Tw.MyTFareBillRainbow.prototype = {
     $target.attr('id', $selectedValue.attr('id'));
     $target.text($.trim($selectedValue.parents('label').text()));
 
-    this.$fareSelector.siblings('.fe-error-msg').hide();
+    this.$fareSelector.parent().siblings('.fe-error-msg').hide();
     this.$isSelectValid = true;
 
     this._checkIsAbled();
@@ -127,7 +127,7 @@ Tw.MyTFareBillRainbow.prototype = {
   },
   _checkPoint: function () {
     var isValid = false;
-    var $message = this.$point.siblings('.fe-error-msg');
+    var $message = this.$point.parent().siblings('.fe-error-msg');
     $message.empty();
 
     if (!this._validation.checkEmpty(this.$point.val())) {
