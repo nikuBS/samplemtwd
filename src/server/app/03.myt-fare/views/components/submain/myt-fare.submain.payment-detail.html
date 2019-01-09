@@ -47,12 +47,16 @@
                     </span>
                 </button>
             </li>
-        <% } %>
+            <% } %>
             <li>
                 <button data-id="pay-mthd">
                     <span class="inner">
                         <span class="tit">납부방법</span>
-                        <span class="text type2"><%= data.paymentInfo.payMthdNm %></span>
+                        <% if (data.type === 'UF') { %>
+                            <span class="text type2">통합청구 이용 중</span>
+                        <% } else { %>
+                            <span class="text type2"><%= data.paymentInfo.payMthdNm %></span>
+                        <% } %>
                     </span>
                 </button>
             </li>
