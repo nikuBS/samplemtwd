@@ -14,7 +14,7 @@ import DateHelper from '../../utils/date.helper';
 import { CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE } from '../../types/string.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { UNIT, UNIT_E } from '../../types/bff.type';
-import { REDIS_BANNER_ADMIN } from '../../types/redis.type';
+import { REDIS_KEY } from '../../types/redis.type';
 import { PREPAID_PAYMENT_TYPE, PREPAID_PAYMENT_PAY_CD } from '../../types/bff.type';
 
 const skipIdList: any = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
@@ -53,7 +53,7 @@ class MytDataSubmainController extends TwViewController {
       this._getEtcChargeBreakdown(),
       this._getRefillPresentBreakdown(),
       this._getRefillUsedBreakdown(),
-      this.redisService.getData(REDIS_BANNER_ADMIN + pageInfo.menuId),
+      this.redisService.getData(REDIS_KEY.BANNER_ADMIN + pageInfo.menuId),
     ).subscribe(([remnant, present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern, banner]) => {
       if ( remnant.info ) {
         data.remnant = remnant;

@@ -13,7 +13,7 @@ import DateHelper from '../../utils/date.helper';
 import { API_ADD_SVC_ERROR, API_CMD, API_CODE, API_MYT_ERROR, API_TAX_REPRINT_ERROR } from '../../types/api-command.type';
 import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
 import { MYT_FARE_PAYMENT_ERROR } from '../../types/string.type';
-import { REDIS_BANNER_ADMIN } from '../../types/redis.type';
+import { REDIS_KEY } from '../../types/redis.type';
 import { SVC_ATTR_NAME } from '../../types/bff.type';
 
 class MyTFareSubmainController extends TwViewController {
@@ -51,6 +51,7 @@ class MyTFareSubmainController extends TwViewController {
         data.svcCount = parseInt(req.query.count, 10);
       }
     }
+    this.bannerUrl = REDIS_KEY.BANNER_ADMIN + pageInfo.menuId;
     if ( svcInfo.svcAttrCd === 'M2' ) {
       data.type = 'UF';
       this._requestPPS(req, res, data, svcInfo);
@@ -77,17 +78,7 @@ class MyTFareSubmainController extends TwViewController {
                 svcInfo: svcInfo
               });
             }
-            if ( claim.invDt.length === 0 ) {
-              // no data
-              this.error.render(res, {
-                title: MYT_FARE_SUBMAIN_TITLE.MAIN,
-                code: '',
-                msg: MYT_FARE_PAYMENT_ERROR.DEFAULT,
-                svcInfo: svcInfo
-              });
-            }
           }
-          this.bannerUrl = REDIS_BANNER_ADMIN + pageInfo.menuId;
           // PPS, 휴대폰이 아닌 경우는 서비스명 노출
           if ( ['M1', 'M2'].indexOf(data.svcInfo.svcAttrCd) === -1 ) {
             data.svcInfo.nickNm = SVC_ATTR_NAME[data.svcInfo.svcAttrCd];
@@ -96,7 +87,7 @@ class MyTFareSubmainController extends TwViewController {
             this._requestUsageFee(req, res, data, svcInfo);
           } else {
             // 청구요금
-            if ( claim ) {
+            if ( claim && claim.invDt.length > 0 ) {
               data.claim = claim;
               data.claimFirstDay = DateHelper.getMonthFirstDay(claim.invDt);
               data.claimLastDay = DateHelper.getMonthLastDay(claim.invDt);
@@ -108,6 +99,8 @@ class MyTFareSubmainController extends TwViewController {
               data.claimDisAmt = FormatHelper.addComma(disAmt.toString());
               // Total
               data.claimPay = FormatHelper.addComma((usedAmt + disAmt).toString());
+            } else {
+              data.isRealTime = false;
             }
             this._requestClaim(req, res, data, svcInfo);
           }
@@ -270,7 +263,7 @@ class MyTFareSubmainController extends TwViewController {
   _requestPPS(req, res, data, svcInfo) {
     Observable.combineLatest(
       this.redisService.getData(this.bannerUrl),
-    ).subscribe(([paymentInfo, microPay, contentPay, banner]) => {
+    ).subscribe(([banner]) => {
       // 납부/청구 정보
       if ( banner && (banner.code === API_CODE.REDIS_SUCCESS) ) {
         if ( !FormatHelper.isEmpty(banner.result) ) {
@@ -278,6 +271,7 @@ class MyTFareSubmainController extends TwViewController {
         }
       }
       data.isNotAutoPayment = false;
+      data.isRealTime = false;
       data.isPPS = true;
       res.render('myt-fare.submain.html', { data });
 
@@ -430,7 +424,11 @@ class MyTFareSubmainController extends TwViewController {
   _getContribution() {
     return this.apiService.request(API_CMD.BFF_05_0038, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
+        if ( resp.result.donationList && resp.result.donationList.length > 0 ) {
+          return resp.result;
+        } else {
+          return null;
+        }
       } else {
         return null;
       }
