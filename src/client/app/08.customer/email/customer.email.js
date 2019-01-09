@@ -49,6 +49,7 @@ Tw.CustomerEmail.prototype = {
     this.$container.on('click', '.fe-term-private-collect', $.proxy(this._openTermLayer, this, '55'));
     this.$container.on('click', '.fe-term-private-agree', $.proxy(this._openTermLayer, this, '37'));
     this.$container.on('click', '.fe-service-cntcNumClCd', $.proxy(this._onChangeReceiveContact, this));
+    this.$container.on('click', '.fe-quality-cntcNumClCd', $.proxy(this._onChangeReceiveContact, this));
   },
 
   _onChangeReceiveContact: function (e) {

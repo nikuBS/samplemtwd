@@ -77,7 +77,8 @@ class CustomerEmail extends TwViewController {
             res.render('email/customer.email.history.detail.html',
               Object.assign({}, responseData, {
                 inquiryInfo: response.result,
-                convertDate: this.convertDate
+                convertDate: this.convertDate,
+                hideEmail: this.hideEmail
               })
             );
           });
@@ -107,6 +108,11 @@ class CustomerEmail extends TwViewController {
 
   public convertDate = (sDate) => DateHelper.getShortDate(sDate);
   public convertTelFormat = (sPhoneNumber) => FormatHelper.conTelFormatWithDash(sPhoneNumber);
+  public hideEmail = (sEmail) => {
+    const prefixEMail = sEmail.slice(0, 2);
+    const suffixEmail = sEmail.slice(2).replace(/[^@]/g, '*');
+    return prefixEMail + suffixEmail;
+  }
 }
 
 export default CustomerEmail;
