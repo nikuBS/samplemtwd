@@ -241,7 +241,7 @@ Tw.MyTFareSubMain.prototype = {
   // 사용요금내역조회-2
   _responseUsageFee: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( resp.result && resp.result.recentUsageList.length > 0 ) {
+      if ( !Tw.FormatHelper.isEmpty(resp.result) && resp.result.recentUsageList.length > 0 ) {
         var items = resp.result.recentUsageList;
         var chart_data = [];
         for ( var idx = items.length - 1; idx > -1; idx-- ) {
@@ -262,11 +262,13 @@ Tw.MyTFareSubMain.prototype = {
         this._initPatternChart(chart_data);
       }
       else {
-        this.$billChart.addClass('blind');
+        this.$billChart.hide();
+        this.$container.find('[data-id=bill-chart-empty]').hide();
       }
     }
     else {
-      this.$billChart.addClass('blind');
+      this.$billChart.hide();
+      this.$container.find('[data-id=bill-chart-empty]').hide();
     }
     // 실시간요금
     setTimeout($.proxy(this._otherLineBills, this), 300);
@@ -283,7 +285,7 @@ Tw.MyTFareSubMain.prototype = {
   // 최근청구요금내역조회-2
   _responseClaimPayment: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( resp.result && resp.result.recentUsageList.length > 0 ) {
+      if ( !Tw.FormatHelper.isEmpty(resp.result) && resp.result.recentUsageList.length > 0 ) {
         var items = resp.result.recentUsageList;
         var length = items.length > 6 ? 6 : items.length;
         var chart_data = [];
@@ -304,6 +306,14 @@ Tw.MyTFareSubMain.prototype = {
         }
         this._initPatternChart(chart_data);
       }
+      else {
+        this.$billChart.hide();
+        this.$container.find('[data-id=bill-chart-empty]').hide();
+      }
+    }
+    else {
+      this.$billChart.hide();
+      this.$container.find('[data-id=bill-chart-empty]').hide();
     }
     setTimeout($.proxy(this._otherLineBills, this), 300);
   },

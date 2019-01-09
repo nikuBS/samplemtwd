@@ -26,34 +26,41 @@
                 <i class="icon-dialog-emoji-56"><span class="blind">dialog emoji</span></i>
                 <p class="msg"><%= data.svcInfo.mbrNm %>님,<br /><span class="str">변함없이 저희와 함께해 주셔서 감사합니다.</span></p>
             </div>
+            <% if (data.isPPS) { %>
             <!-- 청구요금 -->
             <%- include('../components/submain/myt-fare.submain.claim-pay.html', data) %>
-            <% if (!data.isPPS) { %>
-            <!-- 상세항목 -->
-            <%- include('../components/submain/myt-fare.submain.payment-detail.html', data) %>
-            <!-- 소액결제 콘텐츠이용 -->
-            <%- include('../components/submain/myt-fare.submain.micro-payment.html', data) %>
+            <% } else { %>
+                <% if (!data.claim && !data.usage) { %>
+                    <%- include('../components/submain/myt-fare.submain.claim-pay-none.html') %>
+                <% } else { %>
+                <!-- 청구요금 -->
+                <%- include('../components/submain/myt-fare.submain.claim-pay.html', data) %>
+                <!-- 상세항목 -->
+                <%- include('../components/submain/myt-fare.submain.payment-detail.html', data) %>
+                <!-- 소액결제 콘텐츠이용 -->
+                <%- include('../components/submain/myt-fare.submain.micro-payment.html', data) %>
 
-            <% if (data.totalPayment && data.totalPayment.length > 0) { %>
-            <hr class="cont-sp type1" aria-hidden="true"/>
-            <!-- .cont-box -->
-            <div class="cont-box nogaps-btm">
-                <div class="tit-wrap">
-                    <h3 class="tit-type6 iblock tx-regular">최근 납부 내역</h3>
-                    <button class="btn-txt-more" data-id="payment-detail">더보기</button>
+                <% if (data.totalPayment && data.totalPayment.length > 0) { %>
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <div class="tit-wrap">
+                        <h3 class="tit-type6 iblock tx-regular">최근 납부 내역</h3>
+                        <button class="btn-txt-more" data-id="payment-detail">더보기</button>
+                    </div>
+                    <ul class="review-list">
+                        <% var totPlength = data.totalPayment.length > 3 ? 3 : data.totalPayment.length; %>
+                        <% for(var i=0; i < totPlength; i++) { %>
+                        <%- include('../components/submain/myt-fare.submain.total-payment.html', data.totalPayment[i]) %>
+                        <% } %>
+                    </ul>
                 </div>
-                <ul class="review-list">
-                    <% var totPlength = data.totalPayment.length > 3 ? 3 : data.totalPayment.length; %>
-                    <% for(var i=0; i < totPlength; i++) { %>
-                    <%- include('../components/submain/myt-fare.submain.total-payment.html', data.totalPayment[i]) %>
-                    <% } %>
-                </ul>
-            </div>
-            <!--// .cont-box -->
-            <% } %>
-            <% } %>
+                <!--// .cont-box -->
+                <% } %>
 
-            <hr class="cont-sp type1" aria-hidden="true"/>
+                <% } %>
+            <% } %>
+            <hr class="cont-sp type1" aria-hidden="true" data-id="bill-chart-empty"/>
             <!-- .cont-box -->
             <div class="cont-box nogaps-ver pb0" data-id="bill-chart">
                 <h3 class="graph-tit">
