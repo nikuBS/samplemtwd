@@ -270,8 +270,8 @@ Tw.MyTFareSubMain.prototype = {
       this.$billChart.hide();
       this.$container.find('[data-id=bill-chart-empty]').hide();
     }
-    // 실시간요금
-    setTimeout($.proxy(this._otherLineBills, this), 300);
+    this._responseOtherLineBills();
+    // setTimeout($.proxy(this._otherLineBills, this), 300);
     // setTimeout($.proxy(this._realTimeBillRequest, this), 300);
   },
 
@@ -405,7 +405,7 @@ Tw.MyTFareSubMain.prototype = {
         }
         // 당월 기준으로 실시간 요금 노출
         var realtimeBillInfo = resp.result.hotBillInfo[0];
-        this.$realTimePay.find('span.text').html(realtimeBillInfo.totOpenBal2);
+        this.$realTimePay.find('span.text').html(realtimeBillInfo.totOpenBal2 + Tw.CHART_UNIT.WON);
       }
     }
     else if ( resp.code === Tw.MYT_FARE_SUB_MAIN.NO_BILL_REQUEST_EXIST ) {
@@ -447,7 +447,9 @@ Tw.MyTFareSubMain.prototype = {
 
   // 납부방법 이동
   _onClickedPayMthd: function (/*event*/) {
-    this._historyService.goLoad('/myt-fare/bill/option');
+    if ( this.data.type !== 'UF' ) {
+      this._historyService.goLoad('/myt-fare/bill/option');
+    }
   },
 
   // 소액결제 이동
@@ -527,11 +529,11 @@ Tw.MyTFareSubMain.prototype = {
 
   // 회선 변경 후 처리
   _onChangeSessionSuccess: function () {
+    if ( Tw.BrowserHelper.isApp() ) {
+      this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
+    }
     setTimeout($.proxy(function () {
       this._historyService.reload();
-      if ( Tw.BrowserHelper.isApp() ) {
-        this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
-      }
     }, this), 500);
   },
 

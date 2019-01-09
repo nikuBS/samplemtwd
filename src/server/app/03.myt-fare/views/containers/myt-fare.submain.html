@@ -101,7 +101,7 @@
             <% delete data.banner; %>
             <% } %>
 
-            <% if ( data.otherLines.length > 0) { %>
+            <% if ( data.type !== 'UF' && data.otherLines.length > 0) { %>
             <% var length = (data.otherLines.length > 20 ? 20 : data.otherLines.length); %>
             <hr class="cont-sp type1" aria-hidden="true"/>
             <!-- .cont-box -->
