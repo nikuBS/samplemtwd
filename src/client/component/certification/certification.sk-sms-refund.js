@@ -15,10 +15,10 @@ Tw.CertificationSkSmsRefund = function () {
 
 Tw.CertificationSkSmsRefund.prototype = {
   SMS_CERT_ERROR: {
-    SMS2003: 'SMS2003', // 재전송 제한시간이 지난 후에 이용
-    SMS2006: 'SMS2006', // 제한시간 내 인증번호를 보낼 수 있는 횟수 초과
-    SMS2007: 'SMS2007', // 인증번호 불일치
-    SMS2008: 'SMS2008'  // 인증번호 입력시간 초과
+    SMS2003: 'ATH2003', // 재전송 제한시간이 지난 후에 이용
+    SMS2006: 'ATH2006', // 제한시간 내 인증번호를 보낼 수 있는 횟수 초과
+    SMS2007: 'ATH2007', // 인증번호 불일치
+    SMS2008: 'ATH2008'  // 인증번호 입력시간 초과
   },
 
   openSmsPopup: function (callback) {
