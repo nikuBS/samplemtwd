@@ -51,6 +51,7 @@ Tw.MyTFareBillOptionRegister.prototype = {
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-payment-date', $.proxy(this._changePaymentDate, this));
     this.$container.on('click', '.fe-submit', $.proxy(this._submit, this));
+    this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
   },
   _changeRadioBox: function (event) {
     var $target = $(event.target);
@@ -247,5 +248,30 @@ Tw.MyTFareBillOptionRegister.prototype = {
       apiName = Tw.API_CMD.BFF_07_0062;
     }
     return apiName;
+  },
+  _onClose: function () {
+    if (this._isChanged()) {
+      this._popupService.openConfirmButton(null, Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_CANCEL.TITLE,
+        $.proxy(this._closePop, this), $.proxy(this._afterClose, this));
+    } else {
+      this._historyService.goBack();
+    }
+  },
+  _isChanged: function () {
+    if (this.$selectedWrap.hasClass('fe-bank-wrap')) {
+      return !Tw.FormatHelper.isEmpty(this.$accountPhoneNumber.val()) || !Tw.FormatHelper.isEmpty(this.$accountNumber.val()) ||
+        !Tw.FormatHelper.isEmpty(this.$container.find('.fe-select-bank').attr('id'));
+    } else {
+      return true;
+    }
+  },
+  _closePop: function () {
+    this._isClose = true;
+    this._popupService.closeAll();
+  },
+  _afterClose: function () {
+    if (this._isClose) {
+      this._historyService.goBack();
+    }
   }
 };

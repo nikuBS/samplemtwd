@@ -180,7 +180,7 @@ Tw.MyTFareBillAccount.prototype = {
   },
   _afterClose: function () {
     if (this._isClose) {
-      this._popupService.close();
+      this._historyService.goBack();
     }
   },
   _checkPay: function () {
