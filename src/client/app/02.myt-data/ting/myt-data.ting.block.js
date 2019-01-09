@@ -77,7 +77,9 @@ Tw.MyTDataTingBlock.prototype = {
 
   _onSuccessTingBlock: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.openAlert(Tw.MYT_DATA_TING.SUCCESS_BLOCK, null, null, $.proxy(this._goToMytMain, this));
+      this._popupService.toast(Tw.MYT_DATA_TING.SUCCESS_BLOCK);
+      this._goToMytMain();
+      // this._popupService.openAlert(Tw.MYT_DATA_TING.SUCCESS_BLOCK, null, null, $.proxy(this._goToMytMain, this));
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
