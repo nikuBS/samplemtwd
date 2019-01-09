@@ -13,7 +13,7 @@ import DateHelper from '../../utils/date.helper';
 import { API_ADD_SVC_ERROR, API_CMD, API_CODE, API_MYT_ERROR, API_TAX_REPRINT_ERROR } from '../../types/api-command.type';
 import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
 import { MYT_FARE_PAYMENT_ERROR } from '../../types/string.type';
-import { REDIS_BANNER_ADMIN } from '../../types/redis.type';
+import { REDIS_KEY } from '../../types/redis.type';
 import { SVC_ATTR_NAME } from '../../types/bff.type';
 
 class MyTFareSubmainController extends TwViewController {
@@ -51,7 +51,7 @@ class MyTFareSubmainController extends TwViewController {
         data.svcCount = parseInt(req.query.count, 10);
       }
     }
-    this.bannerUrl = REDIS_BANNER_ADMIN + pageInfo.menuId;
+    this.bannerUrl = REDIS_KEY.BANNER_ADMIN + pageInfo.menuId;
     if ( svcInfo.svcAttrCd === 'M2' ) {
       data.type = 'UF';
       this._requestPPS(req, res, data, svcInfo);
