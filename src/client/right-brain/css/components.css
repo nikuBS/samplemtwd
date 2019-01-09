@@ -5463,25 +5463,32 @@
     float: left;
     width: 33.3%;
     text-align: center;
-    color: #666;
     font-size: 0.75rem;
+    color: #3b98e6;
     position: relative; }
     .process-list ul li.request {
-      font-weight: 700;
-      color: #3b98e6; }
+      font-weight: 700; }
       .process-list ul li.request:before {
         background: url(/img/ico/ico-process.png) no-repeat 0 0;
         background-size: 3rem auto; }
+      .process-list ul li.request.off:before {
+        background: url(/img/ico/ico-process-off.png) no-repeat 0 0;
+        background-size: 3rem auto; }
     .process-list ul li.ing {
-      font-weight: 700;
-      color: #3b98e6; }
+      font-weight: 700; }
       .process-list ul li.ing:before {
         background: url(/img/ico/ico-process1.png) no-repeat 0 0;
+        background-size: 3rem auto; }
+      .process-list ul li.ing.off:before {
+        background: url(/img/ico/ico-process1-off.png) no-repeat 0 0;
         background-size: 3rem auto; }
     .process-list ul li.complete {
       font-weight: 700; }
       .process-list ul li.complete:before {
         background: url(/img/ico/ico-process2.png) no-repeat 0 0;
+        background-size: 3rem auto; }
+      .process-list ul li.complete.off:before {
+        background: url(/img/ico/ico-process2-off.png) no-repeat 0 0;
         background-size: 3rem auto; }
     .process-list ul li:last-of-type:after {
       display: none; }
@@ -5502,6 +5509,8 @@
       position: absolute;
       right: -0.625rem;
       top: 1.375rem; }
+    .process-list ul li.off {
+      color: #666; }
 
 .order-state ul {
   overflow: hidden;
@@ -10327,16 +10336,6 @@ a.bt-link-tx.underline.small {
     color: #999; }
     .notice-comp-infolist dl dd:last-of-type {
       margin-bottom: 0; }
-    .notice-comp-infolist dl dd:before {
-      content: "";
-      display: inline-block;
-      position: absolute;
-      top: 0.4375rem;
-      left: 0;
-      width: 0.1875rem;
-      height: 0.1875rem;
-      border-radius: 100%;
-      background: #626262; }
 
 .box-certifipaper-sel .certifipaper-sel-list .select-list li {
   position: relative;
@@ -14001,6 +14000,8 @@ a.bt-link-tx.underline.small {
 
 .formradio-style01 {
   padding: 0.9375rem 0 1.25rem; }
+  .formradio-style01 li {
+    line-height: 1.5; }
   .formradio-style01 .type01-big {
     margin-left: 1.875rem; }
     .formradio-style01 .type01-big::before {
@@ -14729,6 +14730,13 @@ a.bt-link-tx.underline.small {
     padding-top: 1.25rem;
     border-top: 1px solid #e1e1e1; }
 
+.discount-area {
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 16.1875rem; }
+  .discount-area .select-list > li:last-child .comp-list-layout:before {
+    display: none; }
+
 .badge.badge-fam-members2 {
   background-position: 0 -13.75rem;
   background-size: 4.6875rem;
@@ -15359,8 +15367,12 @@ a.bt-link-tx.underline.small {
     .cont-actionsheet .ac-list .type1 > a, .cont-actionsheet .ac-list .type1 button {
       display: inline-block;
       width: 100%; }
+      .cont-actionsheet .ac-list .type1 > a .table-cell.cell-title, .cont-actionsheet .ac-list .type1 button .table-cell.cell-title {
+        width: 60%; }
       .cont-actionsheet .ac-list .type1 > a .table-cell > span.link, .cont-actionsheet .ac-list .type1 button .table-cell > span.link {
         display: inline-block; }
+    .cont-actionsheet .ac-list .type1 > label .table-cell.cell-title {
+      width: 60%; }
     .cont-actionsheet .ac-list .type1 > label .table-cell.right {
       width: 3.125rem; }
     .cont-actionsheet .ac-list .type1 .table {
@@ -15439,6 +15451,7 @@ a.bt-link-tx.underline.small {
           text-align: left;
           white-space: normal; }
         .cont-actionsheet .ac-list .type1 .table-cell > span.add {
+          padding-right: 4.375rem;
           color: #000;
           font-size: 0.8125rem;
           letter-spacing: -0.025em;
@@ -17271,6 +17284,11 @@ a.bt-link-tx.underline.small {
   .accordion .acco-style.poll .acco-list .acco-box .acco-cont {
     padding: 0; }
     .accordion .acco-style.poll .acco-list .acco-box .acco-cont .cont-box {
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      width: 100%;
+      display: inline-block;
       padding: 0 1rem 1rem 1rem;
       border: 0; }
   .accordion .acco-style.poll .acco-list .acco-box:after {
@@ -20554,23 +20572,27 @@ a.bt-link-tx.underline.small {
   font-size: 0.8125rem;
   font-weight: 700; }
 
-.brand-benefit-wrap .benefit-list li {
-  position: relative;
-  margin-top: 0.4375rem;
-  padding-left: 0.5rem;
+.brand-benefit-wrap .benefit-list {
+  color: #666;
   font-size: 0.8125rem;
   line-height: 1.1875rem; }
-  .brand-benefit-wrap .benefit-list li:before {
-    content: '';
-    position: absolute;
-    top: 0.625rem;
-    left: 0;
-    width: 0.1875rem;
-    height: 0.1875rem;
-    background: #666;
-    border-radius: 100%; }
-  .brand-benefit-wrap .benefit-list li p {
-    color: #666; }
+  .brand-benefit-wrap .benefit-list li {
+    position: relative;
+    margin-top: 0.4375rem;
+    padding-left: 0.5rem;
+    font-size: 0.8125rem;
+    line-height: 1.1875rem; }
+    .brand-benefit-wrap .benefit-list li:before {
+      content: '';
+      position: absolute;
+      top: 0.625rem;
+      left: 0;
+      width: 0.1875rem;
+      height: 0.1875rem;
+      background: #666;
+      border-radius: 100%; }
+    .brand-benefit-wrap .benefit-list li p {
+      color: #666; }
 
 .brand-benefit-wrap .bt-slice {
   margin-top: 1.25rem; }
@@ -23615,15 +23637,10 @@ a.bt-link-tx.underline.small {
 
 .bt-slice > li button.btn-round1,
 .btn-round1 {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: inline-block;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
   width: 100%;
   height: 2.5rem;
   border-radius: 1.875rem;
@@ -27323,6 +27340,9 @@ input[type="radio"].formradio-small:checked:disabled + label {
         width: 2.5rem;
         height: 2.5rem;
         margin: 0 auto 0.125rem; }
+      .quick-menu-list li .bt img {
+        display: block;
+        width: 100%; }
     .quick-menu-list li.add-type {
       width: 100%; }
     .quick-menu-list li .add-bt {
@@ -31787,3 +31807,78 @@ body.apphome {
 
 .category-box-wrap .cont-layer .select-list .ico-type19 .ico {
   background-image: url(/img/benefit/ico-category19.png); }
+
+/* 검색결과 : 인터넷 / 집전화 / IPTV */
+.extraservice-list > .category-type .ico-tv {
+  background: url(/img/ico/ico-chan-plan.png) no-repeat 0 0.9375rem;
+  background-size: 0.9375rem 0.9375rem;
+  padding-left: 1.3125rem; }
+
+/* BS 결합할인 */
+.discountbenefit-list .category-type .link .tag-price {
+  position: absolute;
+  bottom: 1.9375rem;
+  right: 1.25rem;
+  color: #fff;
+  font-size: 0.75rem;
+  width: 6.875rem;
+  text-align: center; }
+  .discountbenefit-list .category-type .link .tag-price .txt {
+    display: inline-block;
+    font-weight: 700;
+    letter-spacing: -0.01563rem; }
+
+/* gnb coach mark */
+.g-coach-box li {
+  position: relative; }
+  .g-coach-box li.on .coach-mark {
+    display: block; }
+  .g-coach-box li .coach-mark {
+    display: none;
+    position: absolute;
+    /*left:-24%;*/
+    top: -4rem;
+    padding: 0.5625rem 0.75rem 0.4375rem 0.75rem;
+    border: 1px solid #333;
+    background: #fff;
+    font-size: 0.8125rem;
+    border-radius: 0.3125rem;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+    -webkit-box-shadow: 0 0.625rem 0.9375rem rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0.625rem 0.9375rem rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
+    z-index: 1; }
+    .g-coach-box li .coach-mark:after {
+      content: '';
+      position: absolute;
+      /*right:16%;*/
+      bottom: -0.4375rem;
+      width: 0.75rem;
+      height: 0.4375rem;
+      background: url(/img/main/bg_coach_mark_btm.png) no-repeat;
+      background-size: 100%; }
+    .g-coach-box li .coach-mark .coach-txt {
+      text-align: left; }
+      .g-coach-box li .coach-mark .coach-txt .point {
+        color: #178bce; }
+    .g-coach-box li .coach-mark .close {
+      position: absolute;
+      right: 0;
+      top: 0.8125rem;
+      width: 1.9375rem;
+      height: 0.5625rem;
+      background: url(/img/main/btn_coach_mark.png) no-repeat center;
+      background-size: 9px 9px;
+      font-size: 0; }
+  .g-coach-box li.mark-lock .coach-mark {
+    left: -24%; }
+    .g-coach-box li.mark-lock .coach-mark:after {
+      right: 14%; }
+  .g-coach-box li.mark-pin .coach-mark {
+    left: 110%;
+    padding: 0.5625rem 2.25rem 0.4375rem 0.75rem; }
+    .g-coach-box li.mark-pin .coach-mark:after {
+      left: 22%; }
+
+/* 김효진 */
