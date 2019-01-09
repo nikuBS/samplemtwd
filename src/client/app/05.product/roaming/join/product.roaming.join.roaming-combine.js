@@ -60,7 +60,6 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
     var reuqestPhoneNum = this.$inputElement.val().replace(/\-/g,'');
     if(this._requestOrder('CHK',reuqestPhoneNum)){
       if(this._requestOrder('add',reuqestPhoneNum)){
-        console.log('go to setting/roaming-combine');
         this._historyService.goLoad('/product/roaming/setting/roaming-combine?prodId='+this._prodId);
       }
     }
@@ -84,8 +83,14 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_10_0084, requestValue, {},[this._prodId]).
     done($.proxy(function (res) {
-      return res.code === Tw.API_CODE.CODE_00;
+      if(res.code === Tw.API_CODE.CODE_00){
+        return true;
+      }else{
+        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
+        return false;
+      }
     }, this)).fail($.proxy(function (err) {
+      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
       return false;
     }, this));
   },

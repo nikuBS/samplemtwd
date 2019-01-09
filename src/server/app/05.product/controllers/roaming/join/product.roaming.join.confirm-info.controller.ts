@@ -19,7 +19,6 @@ class ProductRoamingJoinConfirmInfo extends TwViewController {
     super();
   }
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
-
     const prodId = req.query.prod_id || null;
 
 

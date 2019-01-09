@@ -47,7 +47,7 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
     this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
     this.$container.on('click', '.bt-dropdown.time', $.proxy(this._btnTimeEvent, this));
     this.$container.on('click','.bt-fixed-area #do_change',$.proxy(this._changeInformationSetting, this));
-    this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._goBack,this));
+    this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._historyService.goBack,this));
   },
   _getDateArrFromToDay : function(range,format){
     var dateFormat = 'YYYY. MM. DD';
@@ -219,15 +219,17 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
       'startEndTerm' : endDtIdx - startDtIdx
     };
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0085, userSettingInfo, {},this._prodId).
+    this._apiService.request(Tw.API_CMD.BFF_10_0085, userSettingInfo, {},[this._prodId]).
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
         this._historyService.goBack();
+      }else{
+        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
       }
+    }, this)).
+    fail($.proxy(function (err) {
+      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
     }, this));
-  },
-  _goBack : function () {
-    this._historyService.goBack();
   },
   _tooltipInit : function (prodId) {
 

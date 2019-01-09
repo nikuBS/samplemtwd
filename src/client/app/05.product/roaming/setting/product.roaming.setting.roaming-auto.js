@@ -7,7 +7,6 @@
 Tw.ProductRoamingSettingRoamingAuto = function (rootEl,prodRedisInfo,prodBffInfo,svcInfo,prodId,expireDate) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
-  this._bindBtnEvents();
   this._historyService = new Tw.HistoryService(this.$container);
   this._prodRedisInfo = prodRedisInfo;
   this._prodBffInfo = prodBffInfo;
@@ -16,6 +15,7 @@ Tw.ProductRoamingSettingRoamingAuto = function (rootEl,prodRedisInfo,prodBffInfo
   this._expireDate = expireDate;
   this._apiService = Tw.Api;
   this._init();
+  this._bindBtnEvents();
   this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
   this._tooltipInit(prodId);
 };
@@ -41,7 +41,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
     this.$container.on('click', '.bt-dropdown.time', $.proxy(this._btnTimeEvent, this));
     this.$container.on('click','.bt-fixed-area #do_setting',$.proxy(this._settingInformationSetting, this));
-    this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._goBack,this));
+    this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._historyService.goBack,this));
   },
   _getDateArrFromToDay : function(range,format){
     var dateFormat = 'YYYY. MM. DD';
@@ -135,6 +135,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
       this.$container.find('.bt-fixed-area button').removeAttr('disabled');
       var expireDate = parseInt(this._expireDate,10) + parseInt(startDateElement.attr('data-idx'),10);
       var endDate = moment().add(expireDate, 'days').format('YYYY. MM. DD');
+      endDateElement.attr('data-number',moment().add(expireDate, 'days').format('YYYYMMDD'));
       endDateElement.text(endDate);
       endTimeElement.text(startTime);
     }else{
@@ -164,7 +165,6 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     var endValue = parseInt(endDate+''+endTime,10);
     if(startValue>=endValue){
       var $errorsElement = this.$container.find('.error-txt.end');
-      $errorsElement.text('the error message in this case is not defined');
       $errorsElement.removeClass('none');
     }else{
       returnValue = true;
@@ -186,22 +186,24 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
 
     var userSettingInfo = {
       'svcStartDt' : this.$container.find('#start_date').attr('data-number'),
-      'svcEndDt' : {},
+      'svcEndDt' : this.$container.find('#end_date').attr('data-number'),
       'svcStartTm' : this.$container.find('#start_time').attr('data-number'),
-      'svcEndTm' : {},
-      'startEndTerm' : {}
+      'svcEndTm' : this.$container.find('#end_time').attr('data-number'),
+      'startEndTerm' : this._expireDate
     };
 
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0085, userSettingInfo, {},this._prodId).
+    this._apiService.request(Tw.API_CMD.BFF_10_0085, userSettingInfo, {},[this._prodId]).
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
-        this._goBack();
+        this._historyService.goBack();
+      }else{
+        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
       }
+    }, this)).
+    fail($.proxy(function (err) {
+      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
     }, this));
-  },
-  _goBack : function () {
-    this._historyService.goBack();
   },
   _tooltipInit : function (prodId) {
     switch (prodId) {

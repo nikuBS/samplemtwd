@@ -8,8 +8,7 @@
 Tw.ProductRoamingSettingRoamingAlarm = function (rootEl,prodRedisInfo,prodBffInfo,svcInfo,prodId) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
-  this._history = new Tw.HistoryService(rootEl);
-  this._history.init();
+  this._historyService = new Tw.HistoryService();
   this._bindElementEvt();
   this._nativeService = Tw.Native;
   this._addedList = this._sortingSettingData(prodBffInfo.combinationLineList);
@@ -24,21 +23,17 @@ Tw.ProductRoamingSettingRoamingAlarm = function (rootEl,prodRedisInfo,prodBffInf
 Tw.ProductRoamingSettingRoamingAlarm.prototype = {
 
   _bindElementEvt : function () {
+    this.$inputElement = this.$container.find('#input_phone');
+    this.$addBtn = this.$container.find('#add_list');
+    this.$confirmBtn = this.$container.find('#confirm_info');
+    this.$alarmTemplate = this.$container.find('#alarm_template');
     this.$container.on('keyup', '#input_phone', $.proxy(this._activateAddBtn, this));
     this.$container.on('blur', '#input_phone', $.proxy(this._inputBlurEvt, this));
     this.$container.on('focus', '#input_phone', $.proxy(this._inputFocusEvt, this));
     this.$container.on('click', '#phone_book', $.proxy(this._showPhoneBook, this));
     this.$container.on('click', '#add_list', $.proxy(this._addPhoneNumOnList, this));
     this.$container.on('click','.cancel',$.proxy(this._clearInput,this));
-    this.$container.on('click','.prev-step',$.proxy(this._go_back,this));
-    this.$inputElement = this.$container.find('#input_phone');
-    this.$addBtn = this.$container.find('#add_list');
-    this.$confirmBtn = this.$container.find('#confirm_info');
-    this.$alarmTemplate = this.$container.find('#alarm_template');
-    this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._goBack,this));
-  },
-  _go_back : function(){
-    this._history.goBack();
+    this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._historyService.goBack,this));
   },
   _clearInput : function(){
     this.$inputElement.val('');
@@ -78,9 +73,11 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
         this._activateConfirmBtn();
         this._clearInput();
         this._changeList();
+      }else{
+        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
       }
     }, this)).fail($.proxy(function (err) {
-
+      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
     }, this));
   },
   _changeList : function(){
@@ -124,9 +121,9 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
 
   _makeTemplate : function (phoneNum,idx) {
     var maskedPhoneNum = {
-      serviceNumber1 : phoneNum.serviceNumber1,
-      serviceNumber2 : phoneNum.serviceNumber2.substring(0,2)+'**',
-      serviceNumber3 : phoneNum.serviceNumber3.substring(0,2)+'**'
+      'serviceNumber1' : phoneNum.serviceNumber1,
+      'serviceNumber2' : phoneNum.serviceNumber2.substring(0,2)+'**',
+      'serviceNumber3' : phoneNum.serviceNumber3.substring(0,2)+'**'
     };
     var templateData = { phoneData : { phoneNum : maskedPhoneNum, idx : idx } };
     var handlebarsTemplate = Handlebars.compile(this.$alarmTemplate.html());
@@ -136,7 +133,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
 
     var selectedIndex = $args.currentTarget.attributes['data-idx'].nodeValue;
     var requestValue = {
-      'svcNumList' : this._addedList[selectedIndex]
+      'svcNumList' : [this._addedList[selectedIndex]]
     };
 
     this._apiService.request(Tw.API_CMD.BFF_10_0019, requestValue, {},[this._prodId]).
@@ -144,9 +141,11 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       if(res.code===Tw.API_CODE.CODE_00){
         this._addedList.splice(selectedIndex,1);
         this._changeList();
+      }else{
+        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
       }
     }, this)).fail($.proxy(function (err) {
-
+      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
     }, this));
   },
   _bindRemoveEvt : function () {

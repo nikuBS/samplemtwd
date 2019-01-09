@@ -30,7 +30,8 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       hbs: 'RM_11_01_01_02',
       layer: true,
       data : data
-    },$.proxy(this._init,this),null,hash);
+    },$.proxy(this._init,this),
+      closeCallBack,hash);
   },
   _init : function($poppContainer){
     this._$popupContainer = $poppContainer;
@@ -73,7 +74,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     if(this._page){
       $popupLayer.on('click','.prev-step',$.proxy(this._goBack,this));
     }else{
-      $popupLayer.on('click','.prev-step',$.proxy(this._doCancel,this));
+      $popupLayer.on('click','.prev-step',$.proxy(this._showCancelAlart,this));
     }
   },
   _doCancel : function(){
@@ -114,6 +115,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.BUTTON, null, $.proxy(this._confirmInfo,this));
   },
   _confirmInfo : function () {
+    this._popupService.close();
     if(this._page===true){
       this._excuteJoin();
     }else{
@@ -151,9 +153,11 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
           null,
           'complete');
 
+      } else {
+        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
       }
     }, this)).fail($.proxy(function (err) {
-
+      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
     }, this));
 
   },
@@ -207,6 +211,19 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
   },
   _goMyInfo : function () {
     this._historyService.goLoad('/product/roaming/my-use');
+  },
+  _showCancelAlart : function (){
+    var alert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A1;
+    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES,
+     $.proxy(this._bindCancelPopupEvent,this),
+     $.proxy(this._popupService.close,this),
+     null);
+  },
+  _bindCancelPopupEvent : function (popupLayer) {
+    $(popupLayer).on('click','.pos-left>button',$.proxy(this._goPlan,this));
+  },
+  _goPlan : function () {
+    this._historyService.go(-2);
   },
   _tooltipInit : function (prodId) {
     var tooltipArr = [];

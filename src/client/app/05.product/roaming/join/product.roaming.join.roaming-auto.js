@@ -23,7 +23,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
     this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
     this.$container.on('click', '.bt-dropdown.time', $.proxy(this._btnTimeEvent, this));
     this.$container.on('click','.bt-fixed-area #do_confirm',$.proxy(this._confirmInformationSetting, this));
-    this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._goBack,this));
+    this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._showCancelAlart,this));
   },
   _getDateArrFromToDay : function(range,format){
     var dateFormat = 'YYYY. MM. DD';
@@ -146,7 +146,6 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
     var endValue = parseInt(endDate+''+endTime,10);
     if(startValue>=endValue){
       var $errorsElement = this.$container.find('.error-txt.end');
-      $errorsElement.text('the error message in this case is not defined');
       $errorsElement.removeClass('none');
     }else{
       returnValue = true;
@@ -187,13 +186,15 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
           $.proxy($containerData._bindCompletePopupBtnEvt,this,$containerData),
           null,
           'complete');
+      }else{
+        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
       }
     }, this)).fail($.proxy(function (err) {
-
+      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
     }, this));
   },
   _bindCompletePopupBtnEvt : function($args1,$args2){
-    $($args2).on('click','.btn-floating',$.proxy($args1._goPlan,$args1));
+    $($args2).on('click','.btn-floating',$.proxy($args1._goPlan,$args1,-3));
 
     if($args1._prodId==='NA00005690'||$args1._prodId==='NA00005693'){
       $($args2).on('click','#btn0.btn-round2',$.proxy($args1._goSetting,$args1));
@@ -205,14 +206,21 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
   _goMyInfo : function(){
     this._historyService.goLoad('/product/roaming/my-use');
   },
-  _goBack : function(){
-    this._historyService.goBack();
-  },
-  _goPlan : function () {
-    this._historyService.goLoad('/product/callplan/'+this._prodId);
+  _goPlan : function (idx) {
+    this._historyService.go(idx);
   },
   _goSetting : function(){
     this._historyService.goLoad('/product/roaming/setting/roaming-combine?prod_id='+this._prodId);
+  },
+  _showCancelAlart : function (){
+    var alert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A1;
+    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES,
+      $.proxy(this._bindCancelPopupEvent,this),
+      $.proxy(this._popupService.close,this),
+      null);
+  },
+  _bindCancelPopupEvent : function (popupLayer) {
+    $(popupLayer).on('click','.pos-left>button',$.proxy(this._goPlan,this,-1));
   },
   _confirmInformationSetting : function () {
 
