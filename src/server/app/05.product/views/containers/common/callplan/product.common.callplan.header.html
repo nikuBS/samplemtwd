@@ -40,8 +40,8 @@
     <div class="productdetails-ledgercase">
         <% if ( prodRedisInfo.summary.basFeeInfo ) { %>
         <p class="price-text">
-            <% if ( !isCombine ) { %>
-                월정액(<%= basFeeSubText %>)<br>
+            <% if ( !isCombine && !isDiscount ) { %>
+                <%= ( isRoaming || isWireplanAdd || isMobileplanAdd ) ? '이용요금' : '월정액' %>(<%= basFeeSubText %>)<br>
                 <strong class="price-type"><%= prodRedisInfo.summary.basFeeInfo.value %></strong>
                 <% if ( !prodRedisInfo.summary.basFeeInfo.isNaN ) { %>
                 <span class="unit">원</span>
