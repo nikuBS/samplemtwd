@@ -14,7 +14,8 @@ import {
   PRODUCT_SIMILAR_PRODUCT,
   PRODUCT_TYPE_NM
 } from '../../../../types/string.type';
-import { PRODUCT_CALLPLAN, PRODUCT_CALLPLAN_BENEFIT_REDIRECT, PRODUCT_TYP_CD_LIST } from '../../../../types/bff.type';
+import { BENEFIT_SUBMAIN_CATEGORY, PRODUCT_CALLPLAN,
+  PRODUCT_CALLPLAN_BENEFIT_REDIRECT, PRODUCT_TYP_CD_LIST} from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
 import DateHelper from '../../../../utils/date.helper';
@@ -496,7 +497,7 @@ class ProductCommonCallplan extends TwViewController {
     }
 
     let prodIdsLength: any = 0;
-    if (prodTypCd === 'G' && similarProductInfo.result.list) {
+    if (['G', 'F'].indexOf(prodTypCd) !== -1 && similarProductInfo.result.list) {
       let prodIds: any = [];
 
       similarProductInfo.result.list.forEach((item) => {
@@ -514,12 +515,15 @@ class ProductCommonCallplan extends TwViewController {
       prodIdsLength = prodIds.length;
     }
 
+    const prodFltIds: any = FormatHelper.isEmpty(similarProductInfo.result.list) ? '' : similarProductInfo.result.list.map((item) => {
+      return item.prodFltId;
+    }).join(',');
+
     return Object.assign(similarProductInfo.result, {
       titleNm: titleNm,
-      prodFltIds: FormatHelper.isEmpty(similarProductInfo.result.list) ? '' : similarProductInfo.result.list.map((item) => {
-        return item.prodFltId;
-      }).join(','),
-      prodCnt: prodTypCd === 'G' ? prodIdsLength : similarProductInfo.result.prodCnt
+      benefitPath: FormatHelper.isEmpty(BENEFIT_SUBMAIN_CATEGORY[prodFltIds]) ? null : BENEFIT_SUBMAIN_CATEGORY[prodFltIds],
+      prodFltIds: prodFltIds,
+      prodCnt: ['G', 'F'].indexOf(prodTypCd) !== -1 ? prodIdsLength : similarProductInfo.result.prodCnt
     });
   }
 
