@@ -56,7 +56,6 @@ Tw.BenefitMyBenefit.prototype = {
   _bindPopupEvent: function ($layer) {
     $layer.find('[data-role="fe-link"]').on('click', $.proxy(this._onClickPayByPointLinK, this));
     $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
-    $layer.find('.popup-blind').on('click', $.proxy(this._popupService.close, this));
   },
 
   _onClickPayByPointLinK: function (e) {
