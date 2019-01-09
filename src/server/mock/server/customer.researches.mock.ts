@@ -232,3 +232,31 @@ export const StepResearch = {
     ]
   }
 };
+
+export const ResearchResult = {
+  code: '00',
+  msg: 'success',
+  result: [
+    {
+      bnnrRsrchTypCd: 'Q',
+      bnnrRsrchTitleNm: 'SKT중고 거래 앱 서비스.....',
+      custCntrSubmHtmlCtt: '<P>submain test</P>',
+      staDtm: '2018.07.19',
+      endDtm: '2018.12.31',
+      bnnrRsrchRpsTypCd: 'R',
+      bnnrRsrchSortTpyCd: 'D',
+      exCtt1: '보기1',
+      exCtt2: '보기2',
+      exCtt3: '보기3',
+      exCtt4: '보기4',
+      canswNum: '2',
+      motMsgHtmlCtt: '<P>MOT메세지<P>',
+      hintExUrl: 'url',
+      rpsCtt1Cnt: 30,
+      rpsCtt2Cnt: 40,
+      rpsCtt3Cnt: 10,
+      rpsCtt4Cnt: 10,
+      totRpsCnt: 90
+    }
+  ]
+};

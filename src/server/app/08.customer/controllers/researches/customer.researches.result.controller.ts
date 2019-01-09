@@ -8,11 +8,13 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
+// import { of } from 'rxjs/observable/of';
+// import { ResearchResult } from '../../../../mock/server/customer.researches.mock';
 
 export default class CustomerResearchesResult extends TwViewController {
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     this.getResult(req.query.id).subscribe(result => {
-      if (!result || result.code) {
+      if (result.code) {
         return this.error.render(res, {
           svcInfo,
           ...result
@@ -24,6 +26,7 @@ export default class CustomerResearchesResult extends TwViewController {
   }
 
   private getResult = id => {
+    // return of(ResearchResult).map(resp => {
     return this.apiService.request(API_CMD.BFF_08_0024, { bnnrRsrchId: id }).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return resp;
@@ -35,25 +38,29 @@ export default class CustomerResearchesResult extends TwViewController {
         const examples: any[] = [],
           totalCount = result.totRpsCnt,
           answer = Number(result.canswNum || 0);
-        let i = 1;
+        let i = 1,
+          maxIdx = 0;
 
         while (result['exCtt' + i]) {
+          const count = result['rpsCtt' + i + 'Cnt'];
           examples.push({
             content: result['exCtt' + i] || '',
-            count: result['rpsCtt' + i + 'Cnt'],
-            rate: totalCount === 0 ? 0 : Math.floor((result['rpsCtt' + i + 'Cnt'] / totalCount) * 100),
+            count,
+            rate: totalCount === 0 ? 0 : Math.floor((count / totalCount) * 100),
             isAnswer: answer === i
           });
+          maxIdx = result['rpsCtt' + (maxIdx + 1) + 'Cnt'] < count ? i - 1 : maxIdx;
           i++;
         }
 
         return {
-          ...resp.result,
+          ...result,
           staDtm: DateHelper.getShortDate(result.staDtm),
           endDtm: DateHelper.getShortDate(result.endDtm),
           isProceeding: result.endDtm && DateHelper.getDifference(result.endDtm.replace(/\./g, '')) > 0,
           examples,
-          totalCount
+          totalCount,
+          maxIdx
         };
       } else {
         return result;
