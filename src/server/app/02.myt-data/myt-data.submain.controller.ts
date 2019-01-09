@@ -158,7 +158,8 @@ class MytDataSubmainController extends TwViewController {
         tpBkd.map((item) => {
           item['class'] = (item.opTypCd === '1' ? 'send' : 'recharge');
           item['u_title'] = item.opTypNm;
-          item['u_sub'] = item.custNm + ' | ' + item.svcNum;
+          // custNm 명세서에서 제외됨
+          item['u_sub'] = /*item.custNm ||  + ' | ' +*/ item.svcNum;
           item['d_title'] = item.amt;
           item['d_sub'] = DateHelper.getShortDate(item.opDt);
           item['unit'] = CURRENCY_UNIT.WON;
