@@ -22,9 +22,11 @@ Tw.CustomerEmailQualityOption.prototype = {
   },
 
   _cachedElement: function () {
+    this.$wrap_tpl_quality = this.$container.find('.fe-wrap_tpl_quality');
   },
 
   _bindEvent: function () {
+    this.$wrap_tpl_quality.on('click', '.fe-select-line', $.proxy(this._openSelectTypePopup, this));
     this.$container.on('click', '.fe-line_internet', $.proxy(this._showLineSheet, this, 'INTERNET'));
     this.$container.on('click', '.fe-line', $.proxy(this._showLineSheet, this, 'CELL'));
     this.$container.on('click', '.fe-occurrence', $.proxy(this._showOptionSheet, this, 'Q_TYPE01'));
@@ -38,6 +40,48 @@ Tw.CustomerEmailQualityOption.prototype = {
 
   _onClickSearchPost: function (e) {
     new Tw.CommonPostcodeMain(this.$container);
+  },
+
+  _openSelectTypePopup: function (e) {
+    var $target = $(e.currentTarget);
+
+    var fnFilter = function ($target, item) {
+      var isChecked = $target.data('svcmgmtnum').toString() === item.svcMgmtNum;
+      var dashNumber = Tw.FormatHelper.conTelFormatWithDash(item.svcNum);
+
+      return $.extend({}, item, {
+        'label-attr': 'data-svcmgmtnum=' + item.svcMgmtNum + '',
+        'txt': dashNumber,
+        'radio-attr': isChecked ? 'checked' : ' '
+      });
+    }
+
+    var list = _.map(this.allSvc.m, $.proxy(fnFilter, this, $target));
+
+    this._popupService.open({
+        hbs: 'actionsheet01',
+        layer: true,
+        btnfloating: { 'attr': 'type="button"', 'class': 'fe-popup-close', 'txt': Tw.BUTTON_LABEL.CLOSE },
+        data: [{ list: list }]
+      },
+      $.proxy(this._handleOpenSelectType, this, $target));
+  },
+
+  _handleOpenSelectType: function ($target, $layer) {
+    $layer.on('click', 'li.type1', $.proxy(this._handleSelectType, this, $target));
+  },
+
+  _handleSelectType: function ($target, e) {
+    this._popupService.close();
+
+    var $currentTarget = $(e.currentTarget);
+    var svcNum = $currentTarget.text().trim();
+    var svcMgmtNum = $currentTarget.find('label').data('svcmgmtnum');
+
+    $target.text(svcNum);
+    $target.data('svcmgmtnum', svcMgmtNum);
+    e.stopPropagation();
+    e.preventDefault();
   },
 
   _showLineSheet: function (sType, e) {

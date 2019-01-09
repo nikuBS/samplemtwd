@@ -18,15 +18,33 @@
         </div>
         <div class="inquiryform-wrap">
             <p class="title">문의하실 회선과 현상, 지역정보를 선택해 주세요.</p>
+            <% if ( allSvc.m && allSvc.m.length >= 2 ) { %>
+            <div class="info-form-box">
+                <button class="bt-dropdown big tx-bold fe-select-line" title="문의하실 회선정보 선택" aria-haspopup="true"
+                        data-svcMgmtNum="<%-svcInfo.svcMgmtNum%>"><%-convertTelFormat(svcInfo.svcNum)%><span class="ico"></span>
+                </button>
+            </div>
+            <% } else if( allSvc.m && allSvc.m.length === 1 ) { %>
             <div class="inputbox">
                 <div class="input">
-                    <input type="text" placeholder="회선정보 입력" title="문의하실 회선정보 입력" value="">
+                    <input type="text" placeholder="회선정보 입력" title="문의하실 회선정보 입력" data-svcMgmtNum="<%-svcInfo.svcMgmtNum%>"
+                           value="<%-convertTelFormat(svcInfo.svcNum)%>" disabled>
+                </div>
+            </div>
+            <% } else { %>
+            <div class="inputbox">
+                <div class="input">
+                    <input type="tel" class="fe-numeric" pattern="[0-9]*" placeholder="회선정보 입력" title="문의하실 회선정보 입력" value="" maxlength="20">
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </div>
             </div>
-            <!--<div class="info-form-box">-->
-                <!--<button class="bt-dropdown big tx-bold fe-line" title="사용자번호" aria-haspopup="true" data-svcmgmtnum="<%-svcInfo.svcMgmtNum%>"><%-svcNum%><span class="ico"></span></button>-->
-            <!--</div>-->
+            <% } %>
+            <div class="inputbox fe-wrap-wibro" style="display:none">
+                <div class="input">
+                    <input type="tel" class="fe-numeric" pattern="[0-9]*" placeholder="회선정보 입력" title="문의하실 회선정보 입력" value="" maxlength="20">
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </div>
+            </div>
             <div class="info-form-box">
                 <button class="bt-dropdown big fe-occurrence" title="사용자번호" aria-haspopup="true" required>현상선택 (필수)<span class="ico"></span></button>
             </div>
@@ -66,7 +84,99 @@
                     <button class="cancel" style="display: none;"><span
                         class="blind">삭제</span></button>
                 </span>
-                <span class="bt-box">
+                <span class="bt-box type01">
+                    <button type="button" class="fe-search-post">우편번호 조회</button>
+                </span>
+            </div>
+            <div class="inputbox">
+                <div class="input">
+                    <input type="text" class="fe-main-address" value="" title="input" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1"
+                           readonly="">
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </div>
+            </div>
+            <div class="inputbox">
+                <div class="input">
+                    <input type="text" class="fe-detail-address" value="" title="input" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1"
+                           readonly="">
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </div>
+            </div>
+            <div class="info-form-box">
+                <button class="bt-dropdown big fe-occurrence_date" title="발생시기 선택 (필수)" aria-haspopup="true">발생시기 선택 (필수)<span class="ico"></span></button>
+            </div>
+        </div>
+    </div>
+    <hr class="cont-sp type1" aria-hidden="true">
+    <%- include('../../components/email/customer.email.common.template.html', { type: 'quality' }); %>
+</script>
+
+<script type="text/template" id="tpl_quality_wibro">
+    <div class="cont-box">
+        <div class="widget formradio-style01">
+            <div class="widget-box radio">
+                <ul class="select-list fe-quality-inqSvcClCd" role="radiogroup">
+                    <li class="radiobox type01-big checked" role="radio" aria-checked="false">
+                        <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                        <input type="radio" name="radio1-big1" value="C" title="값1"><!-- 체크상태일 경우 checked="checked" -->
+                        휴대폰
+                    </li>
+                    <li class="radiobox type01-big" role="radio" aria-checked="true">
+                        <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                        <input type="radio" name="radio1-big1" value="W" title="값2" checked="checked"><!-- 체크상태일 경우 checked="false" -->
+                        와이브로
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="inquiryform-wrap">
+            <p class="title">문의하실 회선과 현상, 지역정보를 선택해 주세요.</p>
+            <div class="inputbox">
+                <div class="input">
+                    <input type="tel" class="fe-numeric" pattern="[0-9]*" placeholder="회선정보 입력" title="문의하실 회선정보 입력" value="" maxlength="20">
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </div>
+            </div>
+            <div class="info-form-box">
+                <button class="bt-dropdown big fe-occurrence" title="사용자번호" aria-haspopup="true" required>현상선택 (필수)<span class="ico"></span></button>
+            </div>
+            <div class="info-form-box">
+                <button class="bt-dropdown big fe-occurrence_detail" title="사용자번호" aria-haspopup="true" required>세부현상 선택 (필수)<span class="ico"></span></button>
+            </div>
+            <div class="info-form-box">
+                <button class="bt-dropdown big fe-place" title="사용자번호" aria-haspopup="true" required>발생위치 선택 (필수)<span class="ico"></span></button>
+            </div>
+            <div class="info-form-box">
+                <button class="bt-dropdown big fe-place_detail" title="사용자번호" aria-haspopup="true" required>건물종류 선택 (필수)<span class="ico"></span></button>
+            </div>
+            <p class="title">문의하실 상세현황을 기재해 주세요.</p>
+            <div class="option-box">
+                <div class="inputbox textarea-type">
+                    <div class="input">
+                        <textarea class="input-focus inner-tx fe-text_content" cols="20" rows="6" placeholder="상세한 현상 입력 (필수)" maxlength="12000"
+                                  aria-labelledby="aria-email-qacont" required></textarea>
+                        <button href="javascript:void(0)" class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                    </div>
+                    <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자(최대)</span>
+                </div>
+            </div>
+            <div class="inputbox">
+                <div class="input">
+                    <input type="text" class="fe-text_name" placeholder="접수자 성함 입력 (필수)" title="input" value="" aria-labelledby="aria-exp-label1"
+                           aria-describedby="aria-exp-desc1" required>
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </div>
+            </div>
+            <p class="title">발생 지역 주소와 발생시기를 기재해 주세요.</p>
+            <div class="inputbox bt-add">
+                <span class="input">
+                    <input type="text" class="fe-zip" placeholder="우편번호 조회" title="input" value=""
+                           aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1"
+                           readonly="">
+                    <button class="cancel" style="display: none;"><span
+                        class="blind">삭제</span></button>
+                </span>
+                <span class="bt-box type01">
                     <button type="button" class="fe-search-post">우편번호 조회</button>
                 </span>
             </div>
@@ -130,7 +240,7 @@
                     <input type="text" class="fe-zip" placeholder="우편번호 조회" title="input" value="" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" readonly="">
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </span>
-                <span class="bt-box">
+                <span class="bt-box type01">
                     <button type="button" class="fe-search-post">우편번호 조회</button>
                 </span>
             </div>
