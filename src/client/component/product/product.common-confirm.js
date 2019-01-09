@@ -201,17 +201,24 @@ Tw.ProductCommonConfirm.prototype = {
 
   _openSelectTerminateCause: function() {
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
-      layer: true,
-      title: Tw.POPUP_TITLE.SELECT_FAMILY_TYPE,
-      data: this._data.termRsnList.map(function(item) {
-        return {
-          value: item.ranNm,
-          option: this._termRsnCd === item.ranCd ? 'checked' : '',
-          attr: 'data-term_rsn_cd="' + item.ranCd + '"'
-        };
-      })
+      hbs:'actionsheet01',
+      layer:true,
+      data:[
+        {
+          'list': this._data.preinfo.termRsnList.map($.proxy(this._getTermRsn, this))
+        }
+      ],
+      btnfloating : {'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE}
     }, $.proxy(this._bindSelectTerminateCause, this), null, 'select_term_rsn_cd');
+  },
+
+  _getTermRsn: function(item, idx) {
+    return {
+      'label-attr': 'id="ra' + idx + '"',
+      'txt': item.rsnNm,
+      'radio-attr': 'id="ra' + idx + '" data-rsn_txt="' + item.rsnNm + '" data-term_rsn_cd="' + item.rsnCd +
+        '" ' + ($.trim(this._termRsnCd) === $.trim(item.rsnCd) ? 'checked' : '')
+    };
   },
 
   _bindSelectTerminateCause: function($popupContainer) {
@@ -219,8 +226,10 @@ Tw.ProductCommonConfirm.prototype = {
   },
 
   _setTermRsnCd: function(e) {
-    this._termRsnCd = $(e.currentTarget).data('term_rsn_cd');
-    this.$btnSelectTerminateCause.html(Tw.WIREPLAN_TERMINATE_CAUSE[this._termRsnCd] +
+    var $elem = $(e.currentTarget);
+
+    this._termRsnCd = $elem.data('term_rsn_cd');
+    this.$btnSelectTerminateCause.html($elem.data('rsn_txt') +
       $('<div\>').append(this.$btnSelectTerminateCause.find('.ico')).html());
     this._procApplyBtnActivate();
 
