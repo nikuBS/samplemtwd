@@ -1,5 +1,5 @@
 <%# 모바일 요금제, 할인프로그램은 상단 영역 내에서 SKT만의 혜택 노출 %>
-<% if ((( isMobileplan || isDiscount ) && (prodRedisInfo.summaryCase !== '3' && basicInfo.prodScrbYn === 'Y') ||
+<% if ((( isMobileplan || isDiscount ) && (prodRedisInfo.summaryCase === '3' && basicInfo.prodScrbYn === 'Y') ||
     ( isMobileplanAdd || isWireplan || isWireplanAdd || isRoaming )) && prodRedisInfo.summary.sktProdBenfCtt ) { %>
 <hr class="cont-sp type1" aria-hidden="true"/>
 

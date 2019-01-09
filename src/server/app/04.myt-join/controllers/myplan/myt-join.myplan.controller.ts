@@ -113,9 +113,7 @@ class MyTJoinMyplan extends TwViewController {
     const basFeeTxt = FormatHelper.getValidVars(wirelessPlan.feePlanProd.basFeeTxt),
       basOfrVcallTmsCtt = FormatHelper.getValidVars(wirelessPlan.feePlanProd.basOfrVcallTmsTxt),
       basOfrCharCntCtt = FormatHelper.getValidVars(wirelessPlan.feePlanProd.basOfrLtrAmtTxt),
-      disProdList = FormatHelper.getValidVars(wirelessPlan.disProdList, []),
-      optProdList = FormatHelper.getValidVars(wirelessPlan.optProdList, []),
-      comProdList = FormatHelper.getValidVars(wirelessPlan.comProdList, []);
+      disProdList = FormatHelper.getValidVars(wirelessPlan.disProdList, []);
 
     const basDataGbTxt = FormatHelper.getValidVars(wirelessPlan.feePlanProd.basDataGbTxt),
       basDataMbTxt = FormatHelper.getValidVars(wirelessPlan.feePlanProd.basDataMbTxt),
@@ -132,7 +130,7 @@ class MyTJoinMyplan extends TwViewController {
         basOfrCharCntCtt: spec.basOfrCharCntCtt,
         btnList: this._convertBtnList(wirelessPlan.feePlanProd.btnList)
       }),
-      optionAndDiscountProgramList: this._convertOptionAndDiscountProgramList([...disProdList, ...optProdList, ...comProdList])
+      optionAndDiscountProgramList: this._convertOptionAndDiscountProgramList(disProdList)
     });
   }
 

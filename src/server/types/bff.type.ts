@@ -461,7 +461,8 @@ export const PRODUCT_TYP_CD_LIST = {
   H_P: 'product/roaming/fee',
   H_A: 'product/roaming/planadd',
   G: 'benefit/submain',
-  H: 'benefit/submain'
+  H: 'benefit/submain',
+  F: 'benefit/submain'
 };
 
 export const PRODUCT_CALLPLAN = {
@@ -579,3 +580,10 @@ export const MEMBERSHIP_TYPE = {
 };
 
 export const REFILL_USAGE_DATA_CODES = ['AAA10', 'AAA30'];
+
+export enum BENEFIT_SUBMAIN_CATEGORY {
+  F01421 = 'discount',
+  F01422 = 'combinations',
+  F01423 = 'long-term',
+  F01424 = 'participation'
+}

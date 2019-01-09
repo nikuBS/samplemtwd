@@ -1,14 +1,15 @@
 <% if ( relateTags && relateTags.length > 0 && (!isCombine && !isDiscount) ||
-similarProductInfo && similarProductInfo.prodCnt > 0 && similarProductInfo.list.length > 0 ) {
+similarProductInfo && (similarProductInfo.prodCnt > 0 || isCombine) && similarProductInfo.list.length > 0 ) {
 const tagsClass = relateTags && relateTags.length > 0 && (!isCombine && !isDiscount) ? 'nogaps-btm widget' : '';
+const similarPath = '/' + basicInfo.prodTypListPath + (similarProductInfo.benefitPath ? '/' + similarProductInfo.benefitPath : '?filters=' + similarProductInfo.prodFltIds);
 %>
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <div class="cont-box <%= tagsClass %>">
     <h3 class="suggest-tag-title">연관태그</h3>
-    <% if ( similarProductInfo && similarProductInfo.prodCnt > 0 && similarProductInfo.list.length > 0 ) { %>
+    <% if ( similarProductInfo && (similarProductInfo.prodCnt > 0 || isCombine) && similarProductInfo.list.length > 0 ) { %>
     <div class="suggest-tag-titlebox">
-        <a href="/<%= basicInfo.prodTypListPath %>?filters=<%= similarProductInfo.prodFltIds %>" class="suggest-tag-link">
+        <a href="<%= similarPath %>" class="suggest-tag-link">
             <p class="text">
                 유사한 <%= similarProductInfo.titleNm %> 찾아보세요!
                 <span class="textnumber">(<span class="number"><%= similarProductInfo.prodCnt %></span>개) </span>
