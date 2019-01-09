@@ -11,33 +11,33 @@ import FormatHelper from '../../../../utils/format.helper';
 import {PRODUCT_TYPE_NM} from '../../../../types/string.type';
 
 class ProductRoamingLookup extends TwViewController {
-    render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
 
-  const prodId = req.query.prod_id || null;
+    const prodId = req.query.prod_id || null;
 
-  if (FormatHelper.isEmpty(prodId)) {
+    if (FormatHelper.isEmpty(prodId)) {
       return this.error.render(res, {
-          svcInfo: svcInfo,
-          title: PRODUCT_TYPE_NM.JOIN
+        svcInfo: svcInfo,
+        title: PRODUCT_TYPE_NM.JOIN
       });
-  }
+    }
 
-  this.apiService.request(API_CMD.BFF_10_0091, {}, {}, [prodId])
-  .subscribe(( prodBffInfo ) => {
-    if (FormatHelper.isEmpty(prodBffInfo)) {
-        return this.error.render(res, {
+    this.apiService.request(API_CMD.BFF_10_0091, {}, {}, [prodId])
+      .subscribe(( prodBffInfo ) => {
+        if (FormatHelper.isEmpty(prodBffInfo)) {
+          return this.error.render(res, {
             svcInfo: svcInfo,
             title: PRODUCT_TYPE_NM.JOIN
-        });
-    }
-      res.render( 'roaming/product.roaming.lookup.html', {
-          svcInfo : svcInfo,
-          prodBffInfo : prodBffInfo.result,
-          prodId : prodId,
-          pageInfo : pageInfo
+          });
         }
-      );
-  });
+        res.render( 'roaming/product.roaming.lookup.html', {
+            svcInfo : svcInfo,
+            prodBffInfo : prodBffInfo.result,
+            prodId : prodId,
+            pageInfo : pageInfo
+          }
+        );
+      });
 
 
 
