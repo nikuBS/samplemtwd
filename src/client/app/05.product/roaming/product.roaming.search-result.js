@@ -77,9 +77,15 @@ Tw.ProductRoamingSearchResult.prototype = {
         this.manageType = [];
         this.typeTxt = [];
 
+        if(this._rateInfo.iLtePhone === undefined){
+            this._rateInfo.iLtePhone = 'Y';
+        } else if(this._rateInfo.iLtePhone === ''){
+            this._rateInfo.iLtePhone = 'N';
+        }
+
         if (this._rateInfo.eqpMthdCd === 'W') {
             this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma].txt);
-            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma]);
+            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma]);z
             this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm].txt);
             this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm]);
         } else if (this._rateInfo.eqpMthdCd === 'D') {
