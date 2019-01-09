@@ -10,10 +10,10 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import { PRODUCT_TYPE_NM } from '../../../../../types/string.type';
-import {REDIS_PRODUCT_COMPARISON, REDIS_PRODUCT_INFO} from '../../../../../types/redis.type';
 import FormatHelper from '../../../../../utils/format.helper';
 import BrowserHelper from '../../../../../utils/browser.helper';
 import ProductHelper from '../../../../../utils/product.helper';
+import { REDIS_KEY } from '../../../../../types/redis.type';
 
 class ProductMobileplanJoinShareLine extends TwViewController {
   constructor() {
@@ -34,7 +34,7 @@ class ProductMobileplanJoinShareLine extends TwViewController {
       return Observable.of({ code: null });
     }
 
-    return this.redisService.getData(REDIS_PRODUCT_COMPARISON + svcInfoProdId + '/' + prodId);
+    return this.redisService.getData(REDIS_KEY.PRODUCT_COMPARISON + svcInfoProdId + '/' + prodId);
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
@@ -54,7 +54,7 @@ class ProductMobileplanJoinShareLine extends TwViewController {
       this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0008, {}, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0009, {}),
-      this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
+      this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId),
       this._getMobilePlanCompareInfo(svcInfoProdId, prodId)
     ).subscribe(([ basicInfo, joinTermInfo, overPayReqInfo, prodRedisInfo, mobilePlanCompareInfo ]) => {
       const apiError = this.error.apiError([basicInfo, joinTermInfo]);

@@ -4,18 +4,6 @@ import { API_CMD, API_CODE } from '../../types/api-command.type';
 import LoggerService from '../../services/logger.service';
 import ApiService from '../../services/api.service';
 import LoginService from '../../services/login.service';
-import {
-  CHANNEL_CODE,
-  MENU_CODE,
-  REDIS_APP_VERSION,
-  REDIS_BANNER_ADMIN,
-  REDIS_MASKING_METHOD,
-  REDIS_MENU,
-  REDIS_URL_META,
-  REDIS_HOME_NOTICE,
-  REDIS_HOME_HELP, REDIS_TOOLTIP, REDIS_HOME_NOTI, REDIS_QUICK_MENU, REDIS_QUICK_DEFAULT, REDIS_PRODUCT_COMPARISON,
-  REDIS_PRODUCT_INFO
-} from '../../types/redis.type';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import * as path from 'path';
@@ -28,6 +16,7 @@ import environment from '../../config/environment.config';
 import BrowserHelper from '../../utils/browser.helper';
 import { NODE_API_ERROR } from '../../types/string.type';
 import { COOKIE_KEY } from '../../types/common.type';
+import { CHANNEL_CODE, MENU_CODE, REDIS_KEY } from '../../types/redis.type';
 
 class ApiRouter {
   public router: Router;
@@ -112,7 +101,7 @@ class ApiRouter {
 
   private getVersion(req: Request, res: Response, next: NextFunction) {
     const env = String(process.env.NODE_ENV);
-    this.redisService.getData(REDIS_APP_VERSION)
+    this.redisService.getData(REDIS_KEY.APP_VERSION)
       .subscribe((resp) => {
         if ( resp.code === API_CODE.REDIS_SUCCESS ) {
           resp.result = {
@@ -127,7 +116,7 @@ class ApiRouter {
   }
 
   private getSplash(req: Request, res: Response, next: NextFunction) {
-    this.redisService.getData(REDIS_APP_VERSION)
+    this.redisService.getData(REDIS_KEY.APP_VERSION)
       .subscribe((resp) => {
         if ( resp.code === API_CODE.REDIS_SUCCESS ) {
           resp.result = resp.result.splash;
@@ -138,7 +127,7 @@ class ApiRouter {
   }
 
   private getAppNotice(req: Request, res: Response, next: NextFunction) {
-    this.redisService.getData(REDIS_APP_VERSION)
+    this.redisService.getData(REDIS_KEY.APP_VERSION)
       .subscribe((resp) => {
         if ( resp.code === API_CODE.REDIS_SUCCESS ) {
           resp.result = resp.result.notice;
@@ -150,7 +139,7 @@ class ApiRouter {
 
   private getUrlMeta(req: Request, res: Response, next: NextFunction) {
     const url = this.loginService.getReferer(req);
-    this.redisService.getData(REDIS_URL_META + url)
+    this.redisService.getData(REDIS_KEY.URL_META + url)
       .subscribe((resp) => {
         res.json(resp);
       });
@@ -162,7 +151,7 @@ class ApiRouter {
 
     const svcInfo = this.loginService.getSvcInfo(req);
     this.logger.info(this, '[get menu]', req.cookies[COOKIE_KEY.TWM], this.loginService.getSessionId(req), svcInfo);
-    this.redisService.getData(REDIS_MENU + code)
+    this.redisService.getData(REDIS_KEY.MENU + code)
       .subscribe((resp) => {
         if ( resp.code === API_CODE.REDIS_SUCCESS ) {
           resp.result.isLogin = !FormatHelper.isEmpty(svcInfo);
@@ -188,14 +177,14 @@ class ApiRouter {
 
   private getBannerAdmin(req: Request, res: Response, next: NextFunction) {
     const menuId = req.query.menuId;
-    this.redisService.getData(REDIS_BANNER_ADMIN + menuId)
+    this.redisService.getData(REDIS_KEY.BANNER_ADMIN + menuId)
       .subscribe((resp) => {
         res.json(resp);
       });
   }
 
   private getHomeWelcome(req: Request, res: Response, next: NextFunction) {
-    this.redisService.getData(REDIS_HOME_NOTI)
+    this.redisService.getData(REDIS_KEY.HOME_NOTI)
       .subscribe((resp) => {
         res.json(resp);
       });
@@ -204,14 +193,14 @@ class ApiRouter {
   private getHomeNotice(req: Request, res: Response, next: NextFunction) {
     const code = !BrowserHelper.isApp(req) ? CHANNEL_CODE.MWEB :
       BrowserHelper.isIos(req) ? CHANNEL_CODE.IOS : CHANNEL_CODE.ANDROID;
-    this.redisService.getData(REDIS_HOME_NOTICE + code)
+    this.redisService.getData(REDIS_KEY.HOME_NOTICE + code)
       .subscribe((resp) => {
         res.json(resp);
       });
   }
 
   private getHomeHelp(req: Request, res: Response, next: NextFunction) {
-    this.redisService.getData(REDIS_HOME_HELP)
+    this.redisService.getData(REDIS_KEY.HOME_HELP)
       .subscribe((resp) => {
         res.json(resp);
       });
@@ -219,7 +208,7 @@ class ApiRouter {
 
   private getTooltip(req: Request, res: Response, next: NextFunction) {
     const menuId = req.query.menuId;
-    this.redisService.getData(REDIS_TOOLTIP + menuId)
+    this.redisService.getData(REDIS_KEY.TOOLTIP + menuId)
       .subscribe((resp) => {
         res.json(resp);
       });
@@ -235,7 +224,7 @@ class ApiRouter {
     }
     this.apiService.setCurrentReq(req, res);
     const svcMgmtNum = svcInfo.svcMgmtNum;
-    this.redisService.getData(REDIS_QUICK_MENU + svcMgmtNum)
+    this.redisService.getData(REDIS_KEY.QUICK_MENU + svcMgmtNum)
       .switchMap((resp) => {
         if ( resp.code === API_CODE.REDIS_SUCCESS ) {
           throw resp;
@@ -246,7 +235,7 @@ class ApiRouter {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           const defaultCode = resp.result;
-          return this.redisService.getData(REDIS_QUICK_DEFAULT + defaultCode);
+          return this.redisService.getData(REDIS_KEY.QUICK_DEFAULT + defaultCode);
         } else {
           throw resp;
         }
@@ -261,7 +250,7 @@ class ApiRouter {
   private getProductComparison(req: Request, res: Response, next: NextFunction) {
     const beforeId = req.query.beforeId;
     const afterId = req.query.afterId;
-    this.redisService.getData(REDIS_PRODUCT_COMPARISON + beforeId + '/' + afterId)
+    this.redisService.getData(REDIS_KEY.PRODUCT_COMPARISON + beforeId + '/' + afterId)
       .subscribe((resp) => {
         res.json(resp);
       });
@@ -269,14 +258,14 @@ class ApiRouter {
 
   private getProductInfo(req: Request, res: Response, next: NextFunction) {
     const prodId = req.query.prodId;
-    this.redisService.getData(REDIS_PRODUCT_INFO + prodId)
+    this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId)
       .subscribe((resp) => {
         res.json(resp);
       });
   }
 
   private getMaskingMethod(req: Request, res: Response, next: NextFunction) {
-    this.redisService.getData(REDIS_MASKING_METHOD)
+    this.redisService.getData(REDIS_KEY.MASKING_METHOD)
       .subscribe((resp) => {
         res.json(resp);
       });

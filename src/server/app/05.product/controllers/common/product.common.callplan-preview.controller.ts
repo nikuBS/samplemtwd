@@ -15,11 +15,11 @@ import {
   PRODUCT_TYPE_NM
 } from '../../../../types/string.type';
 import { PRODUCT_CALLPLAN, PRODUCT_TYP_CD_LIST } from '../../../../types/bff.type';
-import { REDIS_PRODUCT_FILTER } from '../../../../types/redis.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
 import EnvHelper from '../../../../utils/env.helper';
+import { REDIS_KEY } from '../../../../types/redis.type';
 
 class ProductCommonCallplanPreview extends TwViewController {
   constructor() {
@@ -440,7 +440,7 @@ class ProductCommonCallplanPreview extends TwViewController {
 
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_10_0116, {}, {}, [prodId]),
-      this.redisService.getData(REDIS_PRODUCT_FILTER + 'F01230')
+      this.redisService.getData(REDIS_KEY.PRODUCT_FILTER + 'F01230')
     ).subscribe(([prodInfo, additionsProdFilterInfo]) => {
         if (prodInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, Object.assign(renderCommonInfo, {

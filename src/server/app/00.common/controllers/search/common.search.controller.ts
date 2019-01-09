@@ -9,7 +9,6 @@ import { NextFunction, Request, Response } from 'express';
 import FormatHelper from '../../../../utils/format.helper';
 import {PRODUCT_TYPE_NM} from '../../../../types/string.type';
 import {Observable} from 'rxjs/Observable';
-import {REDIS_PRODUCT_INFO} from '../../../../types/redis.type';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import StringHelper from '../../../../utils/string.helper';
 import MyTDataHotData from '../../../02.myt-data/controllers/usage/myt-data.hotdata.controller';

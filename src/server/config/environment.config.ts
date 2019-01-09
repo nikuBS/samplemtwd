@@ -11,6 +11,11 @@ const environment = {
       port: 32300,
       db: 0
     },
+    REDIS_TOS: {
+      host: '61.250.19.37',
+      port: 32400,
+      db: 0
+    },
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
     SEARCH_SERVER: 'http://61.250.22.114:8080',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
@@ -30,6 +35,11 @@ const environment = {
     CDN_MANIFEST: 'http://61.250.20.69',
     REDIS: {
       host: 'dev-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-dev-nod',
+      port: 6379,
+      db: 0
+    },
+    REDIS_TOS: {
+      host: 'dev-backing-redis-tos-ibm-redis-ha-dev-master-svc.mtw-dev-tos',
       port: 6379,
       db: 0
     },
@@ -55,6 +65,11 @@ const environment = {
       port: 6379,
       db: 0
     },
+    REDIS_TOS: {
+      host: 'stg-backing-redis-tos-ibm-redis-ha-dev-master-svc.mtw-stg-tos',
+      port: 6379,
+      db: 0
+    },
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
     SEARCH_SERVER: 'http://61.250.22.114:8080',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
@@ -76,6 +91,13 @@ const environment = {
       // port: 6379,
       host: '61.250.19.37',
       port: 32300,
+      db: 0
+    },
+    REDIS_TOS: {
+      // host: 'backing-redis-tos-ibm-redis-ha-dev-master-svc.mtw-prd-tos',
+      // port: 6379,
+      host: '61.250.19.37',
+      port: 32400,
       db: 0
     },
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',

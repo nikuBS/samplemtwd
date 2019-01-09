@@ -1,28 +1,33 @@
-export const REDIS_URL_META = 'UrlMetaNode:';
-export const REDIS_MASKING_METHOD = 'MaskAuthMethods';
-export const REDIS_APP_VERSION = 'AppVersion:appLoad';
+export enum REDIS_KEY {
+  URL_META = 'UrlMetaNode:',
+  MASKING_METHOD = 'MaskAuthMethods',
+  APP_VERSION = 'AppVersion:appLoad',
 
-export const REDIS_PRODUCT_INFO = 'ProductLedger:';
-export const REDIS_PRODUCT_CONTETNS = 'ProductLedgerContents:';
-export const REDIS_PRODUCT_FILTER = 'ProductFilter:';
-export const REDIS_PRODUCT_COMPARISON = 'ProductComparison:';
+  PRODUCT_INFO = 'ProductLedger:',
+  PRODUCT_CONTETNS = 'ProductLedgerContents:',
+  PRODUCT_FILTER = 'ProductFilter:',
+  PRODUCT_COMPARISON = 'ProductComparison:',
 
-export const REDIS_SC_URL = 'Scuturl:';
-export const REDIS_QUICK_MENU = 'UserQuickMenuByUser:';
-export const REDIS_QUICK_DEFAULT = 'UserQuickMenuByMbrGr:';
-export const REDIS_TOOLTIP = 'TooltipInfo:';
-export const REDIS_MENU = 'FrontMenuList:';
-export const REDIS_SMART_CARD = 'SmartCardSorting:';
-export const REDIS_SMART_CARD_DEFAULT = 'SmartCardSorting:9999999999';
-export const REDIS_RCM_MENU = 'FrontRcmndMenu:';
-export const REDIS_BANNER_ADMIN = 'Banner:';
-export const REDIS_BANNER_TOS_LINK = 'BannerTosLnkgInfo:';
-export const REDIS_BANNER_TOS_KEY = 'BannerTosKey:';
-export const REDIS_BANNER_TOS_META = 'BannerTosInfo:';
-export const REDIS_HOME_NOTI = 'WelcomeMsg:WelcomeMsgList';
-export const REDIS_HOME_NOTICE = 'HomeNotice:';
-export const REDIS_HOME_HELP = 'HomeCicntsList';
-export const REDIS_MENU_URL = 'MenuSubUrl:';
+  SC_URL = 'Scuturl:',
+  QUICK_MENU = 'UserQuickMenuByUser:',
+  QUICK_DEFAULT = 'UserQuickMenuByMbrGr:',
+  TOOLTIP = 'TooltipInfo:',
+  MENU = 'FrontMenuList:',
+  SMART_CARD_DEFAULT = 'SmartCardSorting:9999999999',
+  RCM_MENU = 'FrontRcmndMenu:',
+  BANNER_ADMIN = 'Banner:',
+  BANNER_TOS_LINK = 'BannerTosLnkgInfo:',
+  BANNER_TOS_META = 'BannerTosInfo:',
+  HOME_NOTI = 'WelcomeMsg:WelcomeMsgList',
+  HOME_NOTICE = 'HomeNotice:',
+  HOME_HELP = 'HomeCicntsList',
+  MENU_URL = 'MenuSubUrl:'
+}
+
+export enum REDIS_TOS_KEY {
+  SMART_CARD = 'SmartCardSorting:',
+  BANNER_TOS_KEY = 'BannerTosKey:'
+}
 
 export enum CHANNEL_CODE {
   PC = 'O',
@@ -36,3 +41,4 @@ export enum MENU_CODE {
   ONWEB = '04',
   MAPP = '05'
 }
+

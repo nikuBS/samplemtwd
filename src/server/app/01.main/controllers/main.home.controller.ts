@@ -22,18 +22,7 @@ import {
 } from '../../../types/bff.type';
 import { UNIT as UNIT_STR, UNLIMIT_NAME } from '../../../types/string.type';
 import DateHelper from '../../../utils/date.helper';
-import {
-  REDIS_APP_VERSION,
-  REDIS_BANNER_ADMIN,
-  REDIS_HOME_NOTI,
-  REDIS_QUICK_DEFAULT,
-  REDIS_SMART_CARD,
-  REDIS_HOME_NOTICE,
-  REDIS_HOME_HELP,
-  CHANNEL_CODE,
-  REDIS_SMART_CARD_DEFAULT,
-  REDIS_MENU_URL
-} from '../../../types/redis.type';
+import { CHANNEL_CODE, REDIS_KEY } from '../../../types/redis.type';
 import { SKIP_NAME, TIME_UNIT } from '../../../types/string.type';
 import BrowserHelper from '../../../utils/browser.helper';
 
@@ -53,11 +42,15 @@ class MainHome extends TwViewController {
     const noticeCode = !BrowserHelper.isApp(req) ? CHANNEL_CODE.MWEB :
       BrowserHelper.isIos(req) ? CHANNEL_CODE.IOS : CHANNEL_CODE.ANDROID;
 
-    // this.redisService.getString(REDIS_SMART_CARD + svcInfo.svcMgmtNum)
+    // this.redisService.getStringTos(REDIS_TOS_KEY.SMART_CARD + '1004483007')
     //   .subscribe((resp) => {
-    //     console.log(resp);
+    //     console.log('tos', resp);
     //   });
-    // this.redisService.getString(REDIS_SMART_CARD_DEFAULT)
+    // this.redisService.getStringTos(REDIS_TOS_KEY.BANNER_TOS_KEY + '0001:lee33a:7191046505')
+    //   .subscribe((resp) => {
+    //     console.log('bnnr', resp);
+    //   });
+    // this.redisService.getString(REDIS_KEY._SMART_CARD_DEFAULT)
     //   .subscribe((resp) => {
     //     console.log('default', resp);
     //   });
@@ -153,7 +146,7 @@ class MainHome extends TwViewController {
   }
 
   private getNoti(): Observable<any> {
-    return this.redisService.getData(REDIS_HOME_NOTI)
+    return this.redisService.getData(REDIS_KEY.HOME_NOTI)
       .map((resp) => {
         // if ( resp.code === API_CODE.REDIS_SUCCESS ) {
         //
@@ -163,7 +156,7 @@ class MainHome extends TwViewController {
   }
 
   private getHomeNotice(noticeCode): Observable<any> {
-    return this.redisService.getData(REDIS_HOME_NOTICE + noticeCode)
+    return this.redisService.getData(REDIS_KEY.HOME_NOTICE + noticeCode)
       .map((resp) => {
         // if ( resp.code === API_CODE.REDIS_SUCCESS ) {
         //   return resp.result;
@@ -174,7 +167,7 @@ class MainHome extends TwViewController {
 
   private getHomeHelp(): Observable<any> {
     let result = null;
-    return this.redisService.getData(REDIS_HOME_HELP)
+    return this.redisService.getData(REDIS_KEY.HOME_HELP)
       .map((resp) => {
         if ( resp.code === API_CODE.REDIS_SUCCESS ) {
           result = this.parseHelpData(resp.result.cicntsList);

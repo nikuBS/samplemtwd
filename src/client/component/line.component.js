@@ -18,38 +18,23 @@ Tw.LineComponent = function () {
   this._goAuthLine = false;
   this._lineList = null;
   this._changeLine = false;
+  this._customerLogin = false;
+  this._openLineList = false;
   this._callback = null;
-  // this._bindEvent();
-  // Tw.Logger.info('[Line] init complete', this._urlAuth);
+
+  this._svcMgmtNum = '';
+  this._mdn = '';
 };
 
 Tw.LineComponent.prototype = {
   ERROR_CODE: {
-    RDT0006: 'RDT0006',    //	service-password required	고객비밀번호 인증필요
-    RDT0007: 'RDT0007',    //	service-password locked	고객비밀번호 인증필요
-    RDT0008: 'RDT0008'     //	service-password initialized	고객비밀번호 재설정 필요 ( 신청, 초기화 상태 )
+    BFF0012: 'BFF0012',    //	고객비밀번호 인증이 필요합니다.
+    BFF0013: 'BFF0013',    //	고객비밀번호 잠김 해제가 필요합니다.
+    ICAS3216: 'ICAS3216'   // 고객비밀번호가 잠김
   },
-  // _bindEvent: function () {
-  //   this.$btLine = this.$container.find('#fe-bt-line');
-  //   var selectedMgmt = this.$btLine.data('svcmgmtnum');
-  //   var urlAuth = this.$btLine.data('svcmgmtnum');
-  //
-  //   this.$btLine.on('click', $.proxy(this._onClickBtLine, this, selectedMgmt, urlAuth));
-  // },
-  // _onClickBtLine: function (selectedMgmt, urlAuth, $event) {
-  //   $event.stopPropagation();
-  //   var curBtn = $($event.currentTarget);
-  //   if ( !curBtn.hasClass('no-arrow') ) {
-  //     // if ( !curBtn.hasClass('disabled') ) {
-  //     //   this._getLineList();
-  //     // } else {
-  //     //   this._closePopup();
-  //     // }
-  //     this.onClickLine(selectedMgmt, urlAuth);
-  //   }
-  // },
   onClickLine: function (selectedMgmt) {
     this._init(selectedMgmt);
+    this._openLineList = true;
     this._getLineList();
   },
   _init: function (selectedMgmt) {
@@ -58,7 +43,12 @@ Tw.LineComponent.prototype = {
     this._goAuthLine = false;
     this._lineList = null;
     this._changeLine = false;
+    this._customerLogin = false;
+    this._openLineList = false;
     this._callback = null;
+
+    this._svcMgmtNum = '';
+    this._mdn = '';
   },
   _getLineList: function () {
     // if ( Tw.FormatHelper.isEmpty(this._lineList) ) {
@@ -99,10 +89,12 @@ Tw.LineComponent.prototype = {
     $popupContainer.on('click', '#fe-bt-line', $.proxy(this._onClickLineButton, this));
   },
   _onCloseListPopup: function () {
-    if ( this._goAuthLine ) {
+    if ( this._changeLine ) {
+      this._completeLogin();
+    } else if ( this._customerLogin ) {
+      this._customerPwd.openLayer(this._mdn, this._svcMgmtNum, $.proxy(this._completeCustomerLogin, this));
+    } else if ( this._goAuthLine ) {
       this._historyService.goLoad('/common/member/line');
-    } else if ( this._changeLine ) {
-      this._historyService.reload();
     }
   },
   _closePopup: function () {
@@ -149,24 +141,35 @@ Tw.LineComponent.prototype = {
   },
   changeLine: function (svcMgmtNum, mdn, callback) {
     this._callback = callback;
+    this._svcMgmtNum = svcMgmtNum;
+    this._mdn = mdn;
     this._apiService.request(Tw.NODE_CMD.CHANGE_SESSION, { svcMgmtNum: svcMgmtNum })
-      .done($.proxy(this._successChangeLine, this, svcMgmtNum, mdn));
+      .done($.proxy(this._successChangeLine, this));
   },
   _onClickLineButton: function () {
     this._closePopup();
     this._goAuthLine = true;
   },
-  _successChangeLine: function (svcMgmtNum, mdn, resp) {
+  _successChangeLine: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._completeLogin();
-    } else if ( resp.code === this.ERROR_CODE.RDT0006 || resp.code === this.ERROR_CODE.RDT0007 ) {
-      this._customerPwd.openLayer(mdn, svcMgmtNum, $.proxy(this._completeCustomerLogin, this));
-    } else if ( resp.code === this.ERROR_CODE.RDT0008 ) {
-      // 고객보호 비밀번호 설정 페이지
-      this._popupService.openAlert(resp.code + ' ' + resp.msg);
+      this._changeLine = true;
+      if ( this._openLineList ) {
+        this._popupService.close();
+      } else {
+        this._onCloseListPopup();
+      }
+    } else if ( resp.code === this.ERROR_CODE.BFF0012 ) {
+      this._customerLogin = true;
+      if ( this._openLineList ) {
+        this._popupService.close();
+      } else {
+        this._onCloseListPopup();
+      }
+    } else if ( resp.code === this.ERROR_CODE.BFF0013 || resp.code === this.ERROR_CODE.ICAS3216 ) {
+      // 고객보호 비밀번호 잠김
+      Tw.Error(resp.code, resp.msg).pop();
     } else {
-      // this._historyService.goLoad('/common/member/login/fail?errorCode=' + resp.code);
-      this._popupService.openAlert(resp.code + ' ' + resp.msg);
+      Tw.Error(resp.code, resp.msg).pop();
     }
   },
   _onClickMore: function () {
@@ -186,12 +189,12 @@ Tw.LineComponent.prototype = {
     }
   },
   _completeLogin: function () {
-    this._changeLine = true;
     Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
     if ( !Tw.FormatHelper.isEmpty(this._callback) ) {
       this._callback();
+    } else {
+      this._historyService.reload();
     }
-    this._closePopup();
   },
   _completeCustomerLogin: function () {
     this._completeLogin();

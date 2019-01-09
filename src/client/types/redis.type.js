@@ -12,16 +12,19 @@ Tw.REDIS_KEY = {
   QUICK_DEFAULT: 'UserQuickMenuByMbrGr:',
   TOOLTIP: 'ToolTip:',
   MENU: 'FrontMenuList:',
-  SMART_CARD: 'SmartCardSorting:',
   RCM_MENU: 'FrontRcmndMenu:',
   BANNER_ADMIN: 'Banner:',
   BANNER_TOS_LINK: 'BannerTosLnkgInfo:',
-  BANNER_TOS_KEY: 'BannerTosKey:',
   BANNER_TOS_META: 'BannerTosInfo:',
   HOME_NOTI: 'WelcomeMsg:WelcomeMsgList',
   HOME_NOTICE: 'HomeNotice:',
   HOME_HELP: 'HomeCicntsList',
   REDIS_MENU_URL: 'MenuSubUrl:'
+};
+
+Tw.REDIS_TOS_KEY = {
+  SMART_CARD: 'SmartCardSorting:',
+  BANNER_TOS_KEY: 'BannerTosKey:'
 };
 
 Tw.BANNER_LINK_TYPE = {

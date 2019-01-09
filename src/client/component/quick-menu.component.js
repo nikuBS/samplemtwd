@@ -76,8 +76,8 @@ Tw.QuickMenuComponent.prototype = {
   _successRemoveQuickMenu: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._popupService.toast(Tw.TOAST_TEXT.QUICK_REMOVE);
-      this.$btQuickAdd.parent().addClass('none');
-      this.$btQuickRemove.parent().removeClass('none');
+      this.$btQuickRemove.parent().addClass('none');
+      this.$btQuickAdd.parent().removeClass('none');
     } else {
       Tw.Error.pop(resp.code, resp.msg);
     }

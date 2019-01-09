@@ -50,13 +50,14 @@ Tw.CommonMemberSloginIos.prototype = {
     '1': 'MALE',
     '2': 'FEMALE'
   },
-  ERROR_CODE: {
-    SMS2003: 'SMS2003',   // 1분 안에 재발송 오류 처리
-    SMS2006: 'SMS2006',   // 5분 안에 4회 발송 오류 처리
-    SMS2008: 'SMS2008',   // 인증번호를 입력할 수 있는 시간이 초과 하였습니다.
-    SMS2007: 'SMS2007',   // 입력하신 인증번호가 맞지 않습니다. 다시 입력해 주세요.
-    ATH1004: 'ATH1004',   // 입력하신 정보가 일치하지 않습니다. 확인 후 재입력해 주세요.
-    ATH1005: 'ATH1005'    // 휴대폰번호 입력오류
+  SMS_ERROR: {
+    ATH1004: 'ATH1004',     // 입력하신 정보가 일치하지 않습니다. 확인 후 재입력해 주세요.
+    ATH1005: 'ATH1005',     // 휴대폰번호 입력오류
+    ATH2003: 'ATH2003',     // 재전송 제한시간이 지난 후에 이용하시기 바랍니다.
+    ATH2006: 'ATH2006',     // 제한시간 내에 보낼 수 있는 발송량이 초과하였습니다.
+    ATH2007: 'ATH2007',     // 입력하신 인증번호가 맞지 않습니다.
+    ATH2008: 'ATH2008',     // 인증번호를 입력할 수 있는 시간이 초과하였습니다.
+    ATH1221: 'ATH1221'      // 인증번호 유효시간이 경과되었습니다.
   },
   _bindEvent: function () {
     this.$container.on('click', '#fe-bt-cop', $.proxy(this._onClickCopBtn, this));
@@ -179,7 +180,7 @@ Tw.CommonMemberSloginIos.prototype = {
       this.$btCertAdd.addClass('none');
       this.$btReCert.removeClass('none');
       this.$validAddCert.removeClass('none');
-    } else if ( resp.code === this.ERROR_CODE.ATH1221 ) {
+    } else if ( resp.code === this.SMS_ERROR.ATH1221 ) {
       this._clearCertError();
       this.$btCertAdd.parent().addClass('none');
       this.$btReCert.parent().removeClass('none');
@@ -189,13 +190,13 @@ Tw.CommonMemberSloginIos.prototype = {
     }
   },
   _checkCertError: function (errorCode, errorMsg) {
-    if ( errorCode === this.ERROR_CODE.SMS2003 ) {
+    if ( errorCode === this.SMS_ERROR.ATH2003 ) {
       this._clearCertError();
       this.$errorCertTime.removeClass('none');
-    } else if ( errorCode === this.ERROR_CODE.SMS2006 ) {
+    } else if ( errorCode === this.SMS_ERROR.ATH2006 ) {
       this._clearCertError();
       this.$errorCertCount.removeClass('none');
-    } else if ( errorCode === this.ERROR_CODE.ATH1004 ) {
+    } else if ( errorCode === this.SMS_ERROR.ATH1004 ) {
       this._showError(this.$inputboxName, this.$inputName, this.$errorNameMismatch, 'aria-phone-tx2');
     } else {
       Tw.Error(errorCode, errorMsg).pop();
@@ -224,14 +225,13 @@ Tw.CommonMemberSloginIos.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
       this._historyService.goBack();
-    } else if ( resp.code === this.ERROR_CODE.SMS2007 ) {
+    } else if ( resp.code === this.SMS_ERROR.ATH2007 ) {
       this.$errorLoginCert.removeClass('none');
-    } else if ( resp.code === this.ERROR_CODE.SMS2008 ) {
+    } else if ( resp.code === this.SMS_ERROR.ATH2008 ) {
       this.$errorLoginTime.removeClass('none');
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
-
   },
   _checkCertValidation: function () {
     var inputName = this.$inputName.val();

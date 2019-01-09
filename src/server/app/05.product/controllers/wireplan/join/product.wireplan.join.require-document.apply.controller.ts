@@ -13,7 +13,7 @@ import {
   PRODUCT_REQUIRE_DOCUMENT_APPLY_RESULT, PRODUCT_REQUIRE_DOCUMENT_RS,
   PRODUCT_REQUIRE_DOCUMENT_TYPE_NM
 } from '../../../../../types/string.type';
-import { REDIS_PRODUCT_INFO } from '../../../../../types/redis.type';
+import { REDIS_KEY } from '../../../../../types/redis.type';
 import FormatHelper from '../../../../../utils/format.helper';
 import DateHelper from '../../../../../utils/date.helper';
 import {Observable} from 'rxjs/Observable';
@@ -143,7 +143,7 @@ class ProductWireplanJoinRequireDocumentApply extends TwViewController {
 
       Observable.combineLatest(
         this.apiService.request(API_CMD.BFF_05_0134, { prodId: reqDocInfo.result.necessaryDocumentInspectInfoList[0].svcProdCd }),
-        this.redisService.getData(REDIS_PRODUCT_INFO + reqDocInfo.result.necessaryDocumentInspectInfoList[0].svcProdCd)
+        this.redisService.getData(REDIS_KEY.PRODUCT_INFO + reqDocInfo.result.necessaryDocumentInspectInfoList[0].svcProdCd)
       ).subscribe(([ combineInfo, prodRedisInfo ]) => {
         if (prodRedisInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, Object.assign(renderCommonInfo, {
