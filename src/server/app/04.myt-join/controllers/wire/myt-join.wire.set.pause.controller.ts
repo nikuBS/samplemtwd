@@ -82,6 +82,8 @@ class MyTJoinWireSetPause extends TwViewController {
         rangeStr += diffDays + MYT_JOIN_WIRE_SET_PAUSE.DAY;
       }
       wirePauseInfo['pause_range'] = rangeStr;
+      wirePauseInfo['showLastSuspDtFr'] = DateHelper.getShortDate(wirePauseInfo['last_susp_dt_fr']);
+      wirePauseInfo['showLastSuspDtTo'] = DateHelper.getShortDate(wirePauseInfo['last_susp_dt_to']);
     }
     return wirePauseInfo;
   }
