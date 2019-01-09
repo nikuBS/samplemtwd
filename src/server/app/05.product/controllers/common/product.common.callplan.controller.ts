@@ -8,7 +8,6 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
-import { REDIS_PRODUCT_INFO, REDIS_PRODUCT_CONTETNS, REDIS_PRODUCT_COMPARISON } from '../../../../types/redis.type';
 import {
   DATA_UNIT,
   PRODUCT_CALLPLAN_FEEPLAN, PRODUCT_REQUIRE_DOCUMENT, PRODUCT_REQUIRE_DOCUMENT_APPLY_RESULT, PRODUCT_REQUIRE_DOCUMENT_CALLPLAN_RESULT,
@@ -16,11 +15,11 @@ import {
   PRODUCT_TYPE_NM
 } from '../../../../types/string.type';
 import { PRODUCT_CALLPLAN, PRODUCT_CALLPLAN_BENEFIT_REDIRECT, PRODUCT_TYP_CD_LIST } from '../../../../types/bff.type';
-import { REDIS_PRODUCT_FILTER } from '../../../../types/redis.type';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
 import DateHelper from '../../../../utils/date.helper';
 import EnvHelper from '../../../../utils/env.helper';
+import { REDIS_KEY } from '../../../../types/redis.type';
 
 class ProductCommonCallplan extends TwViewController {
   constructor() {
@@ -41,7 +40,7 @@ class ProductCommonCallplan extends TwViewController {
       return Observable.of({ code: null });
     }
 
-    return this.redisService.getData(REDIS_PRODUCT_COMPARISON + svcInfoProdId + '/' + prodId);
+    return this.redisService.getData(REDIS_KEY.PRODUCT_COMPARISON + svcInfoProdId + '/' + prodId);
   }
 
   /**
@@ -77,7 +76,7 @@ class ProductCommonCallplan extends TwViewController {
       return Observable.of({ code: null });
     }
 
-    return this.redisService.getData(REDIS_PRODUCT_FILTER + 'F01230');
+    return this.redisService.getData(REDIS_KEY.PRODUCT_FILTER + 'F01230');
   }
 
   /**
@@ -109,7 +108,7 @@ class ProductCommonCallplan extends TwViewController {
       return Observable.of({});
     }
 
-    return this.redisService.getData(REDIS_PRODUCT_CONTETNS + prodId);
+    return this.redisService.getData(REDIS_KEY.PRODUCT_CONTETNS + prodId);
   }
 
   /**
@@ -123,7 +122,7 @@ class ProductCommonCallplan extends TwViewController {
       return Observable.of({});
     }
 
-    return this.redisService.getData(REDIS_PRODUCT_CONTETNS + repProdId);
+    return this.redisService.getData(REDIS_KEY.PRODUCT_CONTETNS + repProdId);
   }
 
   /**
@@ -636,7 +635,7 @@ class ProductCommonCallplan extends TwViewController {
           this.apiService.request(API_CMD.BFF_10_0006, {}, {}, [prodId]),
           this.apiService.request(API_CMD.BFF_10_0139, {}, {}, [prodId]),
           this.apiService.request(API_CMD.BFF_10_0112, {}, {}, [prodId]),
-          this.redisService.getData(REDIS_PRODUCT_INFO + prodId),
+          this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId),
           this._getMyContentsData(basicInfo.result.grpProdScrnConsCd, prodId),
           this._getExtendContentsData(basicInfo.result.prodGrpYn, basicInfo.result.repProdId, basicInfo.result.prodGrpRepYn),
           this._getMobilePlanCompareInfo(basicInfo.result.prodTypCd, svcInfoProdId, prodId),

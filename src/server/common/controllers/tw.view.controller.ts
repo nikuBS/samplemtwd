@@ -9,9 +9,9 @@ import { CHANNEL_TYPE, COOKIE_KEY } from '../../types/common.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { Observable } from 'rxjs/Observable';
 import RedisService from '../../services/redis.service';
-import { REDIS_URL_META } from '../../types/redis.type';
 import { LOGIN_TYPE, SVC_ATTR_NAME, LINE_NAME } from '../../types/bff.type';
 import { UrlMetaModel } from '../../models/url-meta.model';
+import { REDIS_KEY } from '../../types/redis.type';
 
 
 abstract class TwViewController {
@@ -135,7 +135,7 @@ abstract class TwViewController {
 
   private getAuth(req, res, next, path, svcInfo, allSvc, childInfo) {
     const isLogin = !FormatHelper.isEmpty(svcInfo);
-    this._redisService.getData(REDIS_URL_META + path).subscribe((resp) => {
+    this._redisService.getData(REDIS_KEY.URL_META + path).subscribe((resp) => {
       this.logger.info(this, '[URL META]', path, resp);
       const urlMeta = new UrlMetaModel(resp.result || {});
       const loginType = urlMeta.auth.accessTypes;
