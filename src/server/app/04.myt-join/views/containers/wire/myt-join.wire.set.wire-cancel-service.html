@@ -67,7 +67,7 @@
 
 
 <!-- .popup hbs -->
-<div id="fe-wrap" class="wrap popup-page nobg tw-popup fixed-btn" data-menuId="<%= pageInfo.menuId %>"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+<div id="fe-wrap" class="wrap popup-page nobg tw-popup fixed-bottom" data-menuId="<%= pageInfo.menuId %>"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
 
     <!-- #header -->
     <div class="header-wrap">
@@ -107,6 +107,7 @@
                     </div>
                 </div>
                 <!--// .list-comp-input -->
+                <span class="error-txt ml60 mb20" id="span-err-guide" style="display: none;">안내사항을 확인해주세요.</span>
             </div>
             <!--// .cont-box -->
 
@@ -144,7 +145,7 @@
                             </div>
                         </div>
                     </div>
-                    <span class="error-txt" style="display: none;">해지 신청 상품을 선택해 주세요.</span>
+                    <span class="error-txt" style="display: none;" id="span-err-prod">해지 신청 상품을 선택해 주세요.</span>
                     <!--// .list-comp-input -->
                     <h3 class="form-title pt36">해지 요청일</h3>
                     <span class="inputbox">
@@ -152,7 +153,7 @@
                             <input type="date" title="해지 요청일 선택" data-target="select_Termination_input" />
                         </span>
                     </span>
-                    <span class="error-txt" style="display: none;">해지 요청일을 선택해 주세요.</span>
+                    <span class="error-txt" style="display: none;" id="span-err-date">해지 요청일을 선택해 주세요.</span>
                     <div class="cont-noti mt20">
                         <span class="type1">신청일 기준 2일 이후부터 최대 30일까지 신청 가능합니다.</span>
                     </div>
@@ -185,6 +186,7 @@
                                     </span>
                                 </span>
                             <span class="error-txt" id="spanHpValid"></span>
+                            <span class="error-txt" id="span-err-noregcontr" style="display: none;">휴대폰 또는 일반전화를 등록해 주세요.</span>
                         </div>
 
                         <div class="widget mt20">
@@ -219,7 +221,7 @@
                 </ul>
 
                 <!-- 데이터 불러올때 화면 -->
-                <span class="error-txt" style="display: none;">할인 반환금을 조회해 주세요.</span>
+                <span class="error-txt" style="display: none;" id="span-err-dcrefund">할인 반환금을 조회해 주세요.</span>
                 <div data-target="dataLoading" class="contents-empty mt10" style="display: none;">
                     <span class="ico type-loading"></span>
                     <p class="desc-s">데이터를 불러오는 중입니다.<br />잠시만 기다려 주세요</p>

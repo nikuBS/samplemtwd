@@ -133,7 +133,8 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
 
     if( !this.dataModel.dcRefdSearch ){
       // 할인 반환금을 조회해 주세요.
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_V54);
+      // this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_V54);
+      $('#span-err-dcrefund').show();
       return;
     }
 
@@ -157,6 +158,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
             this.infoLi.attr('aria-checked', true);
             this.infoLi.addClass('checked');
             this.infoLi.find('input[type=checkbox]').prop('checked', true);
+            $('#span-err-guide').hide();
             this.dataModel.infoConfirmBol = true;
             this._formValidateionChk();
           }, this));
@@ -171,10 +173,17 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
       this.infoLi.attr('aria-checked', false);
       this.infoLi.removeClass('checked');
       this.infoLi.find('input[type=checkbox]').attr('checked', false);
+      $('#span-err-guide').show();
     }
 
   },
   $productLiEvt: function(event) {
+    if(this.productLi.find('input[type=checkbox]:checked').length === 0){
+      $('#span-err-prod').show();
+    } else {
+      $('#span-err-prod').hide();
+    }
+
     this.dataModel.productList =  this._productChkConfirm(event); // 선택한 항목을 배열에 저장
 
     this._formValidateionChk();
@@ -183,6 +192,12 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
 
   // 해지 요청일
   select_Termination_inputEvt: function () {
+
+    if(this.select_Termination_input.val().length === 0){
+      $('#span-err-date').show();
+    } else {
+      $('#span-err-date').hide();
+    }
     Tw.Logger.info('[해지 요청일]');
     var curDt = Tw.DateHelper.getCurrentDateTime('YYYY-MM-DD');
     var startDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 2, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
@@ -365,6 +380,11 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
         }
       }, this));
     }
+
+    if(!this.memberPhoneObj.hp && !this.memberPhoneObj.tel){
+      $('#span-err-noregcontr').show();
+    }
+
     Tw.Logger.info('[회원정보 등록된 연락처 셋팅 완료]', this.memberPhoneObj);
   },
 
@@ -388,9 +408,15 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
    */
   _dateChkBetween: function($search, $betweenStart, $betweenEnd) {
     if(moment($search).isBefore($betweenStart)){
+      if ( Tw.BrowserHelper.isIos() ) {
+        this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A202.MSG);
+      }
       return $betweenStart;
     }
     if(moment($search).isAfter($betweenEnd)){
+      if ( Tw.BrowserHelper.isIos() ) {
+        this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A202.MSG);
+      }
       return $betweenEnd;
     }
     return $search;
@@ -434,7 +460,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
 
           if(!$('[data-target="input_hp"]').val()){
             Tw.Logger.info('[값을 입력하세요.]', key);
-            $('#spanHpValid').text(Tw.MYT_JOIN_WIRE_CANCEL_SERVICE.NO_PHONE);
+
             throw new Error('break');
           }
 
@@ -480,6 +506,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     Tw.Logger.info('[할인반환금조회]');
     // var thisMain = this;
     this.dataLoading.show();
+    $('#span-err-dcrefund').hide();
 
     // $.ajax('http://localhost:3000/mock/wire.BFF_05_0173.json')
     //   .done(function (resp) {
