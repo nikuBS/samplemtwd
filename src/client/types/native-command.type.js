@@ -68,3 +68,8 @@ Tw.NTV_STORAGE = {
   HOME_WELCOME: 'homeWelcome',
   FIDO_USE: 'fidoUse'
 };
+
+Tw.NTV_FIDO_USE = {
+  ENABLE: '0',
+  DISABLE: '1'
+};

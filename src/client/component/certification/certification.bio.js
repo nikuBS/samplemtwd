@@ -13,6 +13,7 @@ Tw.CertificationBio = function () {
   this._authKind = null;
   this._prodAuthKey = null;
   this._register = false;
+  this._target = '';
 };
 
 
@@ -27,8 +28,7 @@ Tw.CertificationBio.prototype = {
     this._authUrl = authUrl;
     this._authKind = authKind;
     this._prodAuthKey = prodAuthKey;
-
-    this._biometricsTerm = new Tw.BiometricsTerms(target);
+    this._target = target;
 
     if ( isRegister ) {
       this._fidoAuth();
@@ -51,7 +51,8 @@ Tw.CertificationBio.prototype = {
     }
   },
   _goBioRegister: function () {
-    this._biometricsTerm.open($.proxy(this._onFidoRegister, this));
+    var biometricsTerm = new Tw.BiometricsTerms(this._target);
+    biometricsTerm.open($.proxy(this._onFidoRegister, this));
   },
   _fidoAuth: function () {
     this._nativeService.send(Tw.NTV_CMD.FIDO_AUTH, {
