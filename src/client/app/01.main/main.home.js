@@ -737,15 +737,7 @@ Tw.MainHome.prototype = {
     return result;
   },
   _onClickQuickEdit: function () {
-    this._popupService.open({
-      hbs: 'HO_01_01_01',
-      layer: true
-    }, $.proxy(this._onOpenQuickEdit, this), $.proxy(this._onCloseQuickEdit, this));
-  },
-  _onOpenQuickEdit: function ($popupContainer) {
-
-  },
-  _onCloseQuickEdit: function () {
-
+    var quickEdit = new Tw.QuickMenuEditComponent();
+    quickEdit.open();
   }
 };
