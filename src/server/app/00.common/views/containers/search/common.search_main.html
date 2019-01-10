@@ -96,23 +96,27 @@
     </div>
 
     <hr class="cont-sp type1" aria-hidden="true">
-    <!--
+    <% if(smartKeyword.smartSrchUrl){ %>
     <div class="banner-area">
-        <a><img src="/img/dummy/dummy-banner02.jpg" alt="내게 맞는 요금제 찾기 내 사용패턴, 할인 정보 등에 딱 맞는 요금제를 추천해드려요!"></a>
+        <a><img src="<%= CDN %><%= smartKeyword.bnnrIos320Url %>" alt="<%= smartKeyword.smartSrchDesc%>"></a>
     </div>
-    -->
+    <% } %>
     <div class="cont-box nogaps">
         <ul class="plantype-list">
+            <%if(smartKeyword.bnnrBotBtnNm1){ %>
             <li class="category-type">
-                <a href="" class="link">
-                    모바일 요금제
-                </a>
-            </li>
-            <li class="category-type">
-                <button type="button" class="link">
-                    부가서비스 요금제
+                <button data-link="<%= smartKeyword.bnnrBotBtnUrl1 %>" type="button" class="link">
+                    <%= smartKeyword.bnnrBotBtnNm1 %>
                 </button>
             </li>
+            <% } %>
+            <% if(smartKeyword.bnnrBotBtnNm2){ %>
+            <li class="category-type">
+                <button data-link="<%= smartKeyword.bnnrBotBtnUrl2 %>" type="button" class="link">
+                    <%= smartKeyword.bnnrBotBtnNm2 %>
+                </button>
+            </li>
+            <% } %>
         </ul>
     </div>
 

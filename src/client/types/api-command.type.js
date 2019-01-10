@@ -561,6 +561,11 @@ Tw.AJAX_CMD = {
       method : Tw.API_METHOD.GET,
       url : 'http://61.250.22.114:8080',
       contentType: 'application/x-www-form-urlencoded'
+  },
+  SEARCH_STACK_USER_CLICK : {
+    path : '/search/tworld/log/save',
+    method : Tw.API_METHOD.POST,
+    url : 'http://61.250.22.114:8080'
   }
 };
 
