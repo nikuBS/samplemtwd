@@ -107,9 +107,11 @@ Tw.LineComponent.prototype = {
       var curLine = lineList[Tw.LINE_NAME[line]];
       if ( !Tw.FormatHelper.isEmpty(curLine) ) {
         var showService = this._index < Tw.DEFAULT_LIST_COUNT ? '' : 'none';
+        var list = this._convLineData(curLine, line);
         result.push({
           title: Tw.SVC_CATEGORY[Tw.LINE_NAME[line]],
-          list: this._convLineData(curLine, line),
+          cnt: list.length,
+          list: list,
           showService: showService
         });
       }
