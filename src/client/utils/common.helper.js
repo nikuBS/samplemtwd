@@ -173,18 +173,18 @@ Tw.CommonHelper = (function () {
     return context.replace('/{{cdn}}/gi', Tw.Environment.cdn);
   };
 
-  var setXtvSvcInfo = function() {
-    var xtvLid = Tw.CommonHelper.getCookie('XTVLID'),
-      xtvLoginId = Tw.CommonHelper.getCookie('XTVLOGINID'),
-      xtvLoginType = Tw.CommonHelper.getCookie('XTLOGINTYPE');
+  var setXtSvcInfo = function() {
+    var xtLid = Tw.CommonHelper.getCookie('XTLID'),
+      xtLoginId = Tw.CommonHelper.getCookie('XTLOGINID'),
+      xtLoginType = Tw.CommonHelper.getCookie('XTLOGINTYPE');
 
-    if (!Tw.BrowserHelper.isApp() || xtvLoginType === 'Z') {
+    if (!Tw.BrowserHelper.isApp() || xtLoginType === 'Z') {
       return;
     }
 
-    Tw.Native.send(Tw.NTV_CMD.SET_XTVSVCINFO, {
-      xtvLid: xtvLid,
-      xtvLoginId: xtvLoginId
+    Tw.Native.send(Tw.NTV_CMD.SET_XTSVCINFO, {
+      xtLid: xtLid,
+      xtLoginId: xtLoginId
     });
   };
 
@@ -207,6 +207,6 @@ Tw.CommonHelper = (function () {
     openTermLayer: openTermLayer,
     fileUpload: fileUpload,
     replaceCdnUrl: replaceCdnUrl,
-    setXtvSvcInfo: setXtvSvcInfo
+    setXtSvcInfo: setXtSvcInfo
   };
 })();
