@@ -127,6 +127,16 @@ skt_landing.widgets = {
           bt.show();
         }
       });
+      if(field.hasClass('text-auto-expand')) {
+        field.on('input',function(){
+          $(this).css('height', 'inherit');
+          var scroll_height = $(this).get(0).scrollHeight;
+          $(this).css('height', scroll_height + 'px');
+        });
+        bt.on('click',function(){
+          field.css('height', 'inherit');
+        });
+      }
     });
   },
   widget_step: function () {
@@ -285,6 +295,27 @@ skt_landing.widgets = {
           return $('<span />').text(i + 1);
         },
       });
+      if($(this).hasClass('slider1-auto')) {
+        _this.slick('destroy');
+        _this.slick({
+          autoplay: true,
+          autoplaySpeed: 4000,
+          dots: true,
+          arrows: true,
+          infinite: false,
+          speed : 300,
+          // useTransform : false,
+          // mobileFirst : true,
+          // useCSS : false,
+          // useTransform : false,
+          centerMode: false,
+          focusOnSelect: false,
+          touchMove : true,
+          customPaging: function(slider, i) {
+            return $('<span />').text(i + 1);
+          },
+        });
+      }
       var $slick = _this.slick('getSlick');
       var $slides = $slick.$slides;
       var slideIndex = $slick.slickCurrentSlide();
@@ -443,7 +474,7 @@ skt_landing.widgets = {
           event.stopPropagation();
         }else{
           $(this).attr('aria-pressed', 'false');
-        };
+        }
       });
     })
   },
@@ -718,29 +749,29 @@ skt_landing.widgets = {
             .data('now', 0)
             .data('unit', (max - $(this).data('percent') + loop) / (time / interval))
             .data('reverse', 0)
-      })
+      });
       var t = setInterval(function(){
         $(_this).find('.donut-chart .c100').each(function(){
             if(!$(this).data('reverse')){
                $(this).data('now', Math.ceil($(this).data('unit') * now / 10));
             }else{
-              $(this).data('reverse', $(this).data('reverse') + 1)
+              $(this).data('reverse', $(this).data('reverse') + 1);
               $(this).data('now', max - Math.floor($(this).data('unit') * $(this).data('reverse')));
             }
             $(this).attr('class','').addClass('c100').addClass('p'+$(this).data('now'));
             if($(this).data('now') >= max){ // reverse flag
-              $(this).data('now', max)
+              $(this).data('now', max);
               $(this).data('reverse', true)
             }
-        })
+        });
         now += interval;
         if(now >= time){
           $(_this).find('.donut-chart .c100').each(function(){
             $(this).attr('class','').addClass('c100').addClass('p'+$(this).data('percent'));
-          })
+          });
           clearInterval(t);
         }
       }, interval)
     });
   }
-}
+};

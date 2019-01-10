@@ -14,21 +14,21 @@
         <div class="container">
             <div class="form-info-box">
                 {{#data.banners.centerBanners}}
-                <div class="data-result _dev_header" data-key="{{@key}}">
-                    <h3 class="tit2">{{{titleNm}}}</h3>
-                    <p class="txt">{{{bnnrDesc}}}</p>
-                </div>
+                    <div class="data-result _dev_header" data-key="{{@key}}">
+                        <h3 class="tit2">{{{titleNm}}}</h3>
+                        <p class="txt">{{{bnnrDesc}}}</p>
+                    </div>
                 {{/data.banners.centerBanners}}
                 <button class="slick-prev" id="_dev_prev">이전 정보</button>
                 <button class="slick-next" id="_dev_next">다음 정보</button>
             </div>
 
             {{#data.banners.centerBanners}}
-            <div class="_dev_html" data-key="{{@key}}">
-                <!-- cont-box-->
-                {{{bnnrHtmlCtt}}}
-                <!-- //cont-box -->
-            </div>
+                <div class="_dev_html" data-key="{{@key}}">
+                    <!-- cont-box-->
+                    {{{bnnrHtmlCtt}}}
+                    <!-- //cont-box -->
+                </div>
             {{/data.banners.centerBanners}}
 
         </div>
