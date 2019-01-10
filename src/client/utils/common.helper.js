@@ -175,7 +175,9 @@ Tw.CommonHelper = (function () {
 
   var setXtSvcInfo = function() {
     var xtLid = Tw.CommonHelper.getCookie('XTLID'),
+      xtLidOrigin = Tw.CommonHelper.getCookie('XTLID_ORIGIN'),
       xtLoginId = Tw.CommonHelper.getCookie('XTLOGINID'),
+      xtLoginIdOrigin = Tw.CommonHelper.getCookie('XTLOGINID_ORIGIN'),
       xtLoginType = Tw.CommonHelper.getCookie('XTLOGINTYPE');
 
     if (!Tw.BrowserHelper.isApp() || xtLoginType === 'Z') {
@@ -184,7 +186,9 @@ Tw.CommonHelper = (function () {
 
     Tw.Native.send(Tw.NTV_CMD.SET_XTSVCINFO, {
       xtLid: xtLid,
-      xtLoginId: xtLoginId
+      xtLidOrigin: xtLidOrigin,
+      xtLoginId: xtLoginId,
+      xtLoginIdOrigin: xtLoginIdOrigin
     });
   };
 
