@@ -63,7 +63,7 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
       return (resp.result.combinationMemberList || []).map(comb => {
         return {
           ...comb,
-          scrbDt: DateHelper.getShortDateNoDot(comb.scrbDt)
+          scrbDt: DateHelper.getShortDate(comb.scrbDt)
         };
       });
     });
@@ -91,7 +91,7 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
         combinationGroup: {
           ...resp.result.combinationGroup,
           totBasFeeDcTx: FormatHelper.addComma(String(resp.result.combinationGroup.totBasFeeDcTx)),
-          combStaDt: DateHelper.getShortDateNoDot(resp.result.combinationGroup.combStaDt),
+          combStaDt: DateHelper.getShortDate(resp.result.combinationGroup.combStaDt),
           isRepresentation: resp.result.combinationGroup.svcMgmtNum === svcInfo.svcMgmtNum
         },
         combinationWirelessMemberList: (resp.result.combinationWirelessMemberList || []).map(member => {
