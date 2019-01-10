@@ -52,43 +52,43 @@
         </p>
         <% } %>
         <% if ( basicInfo.prodStCd !== 'E1000' ) { %>
-        <% if ( basicInfo.prodTermYn === 'Y' && (( isMobileplanAdd || isWireplanAdd || isCombine || isDiscount || isRoaming ) && isJoined) ) { %>
-        <div class="btn">
-            <% if ( basicInfo.linkBtnList.terminate.length > 0 ) { %>
-            <button type="button" class="bt-white1 fe-btn_terminate fe-btn_ready_on" style="display: none" data-url="<%= basicInfo.linkBtnList.terminate[0].linkUrl %>"><%= basicInfo.linkBtnList.terminate[0].linkNm %></button>
+            <% if ( basicInfo.prodTermYn === 'Y' && (( isMobileplanAdd || isWireplanAdd || isCombine || isDiscount || isRoaming ) && isJoined) ) { %>
+            <div class="btn">
+                <% if ( basicInfo.linkBtnList.terminate.length > 0 ) { %>
+                <button type="button" class="bt-white1 fe-btn_terminate fe-btn_ready_on" style="display: none" data-url="<%= basicInfo.linkBtnList.terminate[0].linkUrl %>"><%= basicInfo.linkBtnList.terminate[0].linkNm %></button>
+                <% } %>
+            </div>
+            <% } else { %>
+            <div class="limit">
+                <%= (basicInfo.prodStCd === 'F1000' ? '가입제한 상품' : '가입불가 상품') %>
+            </div>
             <% } %>
-        </div>
         <% } else { %>
-        <div class="limit">
-            <%= (basicInfo.prodStCd === 'F1000' ? '가입제한 상품' : '가입불가 상품') %>
-        </div>
-        <% } %>
-        <% } else { %>
-        <% if ( basicInfo.prodScrbYn === 'Y' && (
-            ( isMobileplan || isWireplan ) && (svcInfo && svcInfo.prodId !== prodId || isMobileplan && !svcInfo) ||
-            ( isMobileplanAdd || isWireplanAdd || isRoaming || isCombine || isDiscount ) && !isJoined)
-        ) { %>
-        <div class="btn">
-            <% if ( basicInfo.linkBtnList.join.length > 0 ) { %>
-                <button type="button" class="bt-white1 fe-btn_join fe-btn_ready_on" style="display: none" data-url="<%= basicInfo.linkBtnList.join[0].linkUrl %>"><%= basicInfo.linkBtnList.join[0].linkNm %></button>
+            <% if ( basicInfo.prodScrbYn === 'Y' && (
+                ( isMobileplan || isWireplan ) && (svcInfo && svcInfo.prodId !== prodId || isMobileplan && !svcInfo) ||
+                ( isMobileplanAdd || isWireplanAdd || isRoaming || isCombine || isDiscount ) && !isJoined)
+            ) { %>
+            <div class="btn">
+                <% if ( basicInfo.linkBtnList.join.length > 0 ) { %>
+                    <button type="button" class="bt-white1 fe-btn_join fe-btn_ready_on" style="display: none" data-url="<%= basicInfo.linkBtnList.join[0].linkUrl %>"><%= basicInfo.linkBtnList.join[0].linkNm %></button>
+                <% } %>
+            </div>
             <% } %>
-        </div>
-        <% } %>
-        <% if ( basicInfo.prodTermYn === 'Y' && (( isMobileplanAdd || isWireplanAdd || isCombine || isDiscount || isRoaming ) && isJoined) ) { %>
-        <div class="btn">
-            <% if ( basicInfo.linkBtnList.terminate.length > 0 ) { %>
-            <button type="button" class="bt-white1 fe-btn_terminate fe-btn_ready_on" style="display: none" data-url="<%= basicInfo.linkBtnList.terminate[0].linkUrl %>"><%= basicInfo.linkBtnList.terminate[0].linkNm %></button>
+            <% if ( basicInfo.prodTermYn === 'Y' && (( isMobileplanAdd || isWireplanAdd || isCombine || isDiscount || isRoaming ) && isJoined) ) { %>
+            <div class="btn">
+                <% if ( basicInfo.linkBtnList.terminate.length > 0 ) { %>
+                <button type="button" class="bt-white1 fe-btn_terminate fe-btn_ready_on" style="display: none" data-url="<%= basicInfo.linkBtnList.terminate[0].linkUrl %>"><%= basicInfo.linkBtnList.terminate[0].linkNm %></button>
+                <% } %>
+            </div>
             <% } %>
-        </div>
-        <% } %>
-        <% if ( basicInfo.prodScrbYn === 'N' && (
-            ( isMobileplan || isWireplan ) && svcInfo && svcInfo.prodId !== prodId ||
-            ( isMobileplanAdd || isWireplanAdd || isRoaming || isCombine || isDiscount ) && !isJoined)
-        ) { %>
-        <div class="limit">
-            <%= (basicInfo.prodStCd === 'F1000' ? '가입제한 상품' : '가입불가 상품') %>
-        </div>
-        <% } %>
+            <% if ( basicInfo.prodScrbYn === 'N' && (
+                ( isMobileplan || isWireplan ) && svcInfo && svcInfo.prodId !== prodId ||
+                ( isMobileplanAdd || isWireplanAdd || isRoaming || isCombine || isDiscount ) && !isJoined)
+            ) { %>
+            <div class="limit">
+                <%= (basicInfo.prodStCd === 'F1000' ? '가입제한 상품' : '가입불가 상품') %>
+            </div>
+            <% } %>
         <% } %>
     </div>
     <% if ( isMobileplan && (prodRedisInfo.summary.basOfrDataQtyCtt || prodRedisInfo.summary.basOfrVcallTmsCtt || prodRedisInfo.summary.basOfrCharCntCtt) ) { %>

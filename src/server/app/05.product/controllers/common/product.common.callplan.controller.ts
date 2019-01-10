@@ -323,8 +323,6 @@ class ProductCommonCallplan extends TwViewController {
     };
 
     contentsInfo.forEach((item) => {
-      item.ledItmDesc = item.ledItmDesc.replace(/(?:\r\n|\r|\n)/g, '<br>');
-
       if (!isOpen && (item.vslYn && item.vslYn === 'Y')) {
         return true;
       }
@@ -348,6 +346,10 @@ class ProductCommonCallplan extends TwViewController {
         return true;
       }
 
+      if (!item || item.vslYn === 'N') {
+        item.ledItmDesc = item.ledItmDesc.replace(/(?:\r\n|\r|\n)/g, '<br>');
+      }
+
       contentsResult.LIST.push(Object.assign(item, {
         vslClass: FormatHelper.isEmpty(item.vslYn) ? null : (item.vslYn === 'Y' ? 'prVisual' : 'plm'),
         ledItmDesc: this._convertContentsHtml(item.ledItmDesc)
@@ -366,15 +368,12 @@ class ProductCommonCallplan extends TwViewController {
       return null;
     }
 
-    contents = contents.replace(/(?:\r\n|\r|\n)/g, '<br>');
     contents = this._removePcImgs(contents);
     contents = EnvHelper.replaceCdnUrl(contents);
 
     if (contents.indexOf('||') === -1) {
       return contents;
     }
-
-    // TODO
 
     return contents;
   }
@@ -615,7 +614,8 @@ class ProductCommonCallplan extends TwViewController {
 
     if (this._benefitRedirectProdList.indexOf(prodId) !== -1) {
       return res.render('common/callplan/product.common.callplan.redirect.html', {
-        redirectUrl: PRODUCT_CALLPLAN_BENEFIT_REDIRECT[prodId]
+        redirectUrl: PRODUCT_CALLPLAN_BENEFIT_REDIRECT[prodId],
+        prodId: prodId
       });
     }
 
@@ -671,9 +671,9 @@ class ProductCommonCallplan extends TwViewController {
           };
 
           // 대표, 종속상품 처리
-          const convContents = FormatHelper.isEmpty(prodRedisContentsInfo) ? null :
+          const convContents = FormatHelper.isEmpty(prodRedisContentsInfo.result) ? null :
               this._convertContents(basicInfo.result.prodStCd, prodRedisContentsInfo.result.contents),
-            convRepContents = FormatHelper.isEmpty(prodRedisExtendContentsInfo) ? null :
+            convRepContents = FormatHelper.isEmpty(prodRedisExtendContentsInfo.result) ? null :
               this._convertContents(basicInfo.result.prodStCd, prodRedisExtendContentsInfo.result.contents),
             contentsResult = this._convertContentsInfo({
               convContents,
