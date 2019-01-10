@@ -92,8 +92,8 @@ Tw.MyTFareBill.prototype = {
     } else {
       $cashbagSelector.text(cashbagText + Tw.MYT_FARE_PAYMENT_NAME.POINT);
       $tpointSelector.text(tpointText);
-      $rainbowSelector.find('.spot').text(Tw.FormatHelper.addComma(this._rainbowPoint) + Tw.MYT_FARE_PAYMENT_NAME.POINT_UNIT);
     }
+    $rainbowSelector.find('.spot').text(Tw.FormatHelper.addComma(this._rainbowPoint) + Tw.MYT_FARE_PAYMENT_NAME.POINT_UNIT);
   },
   _bindEvent: function () {
     this.$layer.on('click', '.fe-account', $.proxy(this._setEvent, this, 'account'));
