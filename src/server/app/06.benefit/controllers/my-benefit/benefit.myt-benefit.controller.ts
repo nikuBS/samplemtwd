@@ -33,11 +33,14 @@ class BenefitMyBenefit extends TwViewController {
       this.apiService.request(API_CMD.BFF_05_0120, {}), // military: BIL0071
       this.apiService.request(API_CMD.BFF_05_0106, {}), // 요금할인
       this.apiService.request(API_CMD.BFF_05_0094, {}), // 결합할인
-      this.apiService.request(API_CMD.BFF_05_0196, {})
-    ).subscribe(([membership, ocb, rainbow, noContract, cookiz, military, bill, combination, loyalty]) => {
+      this.apiService.request(API_CMD.BFF_05_0196, {}),
+      this.apiService.request(API_CMD.BFF_06_0001, {}) // 리필쿠폰 내역
+
+    ).subscribe(([membership, ocb, rainbow, noContract, cookiz, military, bill, combination, loyalty, refillCoupons]) => {
 
         // checks all API errors except that the API has valid code not API_CODE.CODE_00
-        const apiError = this.error.apiError([/*membership,*/ ocb, rainbow, noContract, /* cookiz, military,*/ bill, combination, loyalty]);
+        const apiError = this.error.apiError(
+          [/*membership,*/ ocb, rainbow, noContract, /* cookiz, military,*/ bill, combination, loyalty, refillCoupons]);
         if ( !FormatHelper.isEmpty(apiError) ) {
           return this.error.render(res, {
             title: MY_BENEFIT.MAIN,
@@ -93,7 +96,7 @@ class BenefitMyBenefit extends TwViewController {
         }
 
         // 결합할인
-      if ( combination.result.prodNm.trim() !== '' ) {
+        if ( combination.result.prodNm.trim() !== '' ) {
           options['bond'] = {
             name: combination.result.prodNm,
             total: parseInt(combination.result.etcCnt, 10) + 1
@@ -102,8 +105,11 @@ class BenefitMyBenefit extends TwViewController {
         }
 
         // 장기가입 쿠폰
-        if ( loyalty.result.benfList.length > 0 ) {
-          options['coupons'] = loyalty.result.benfList.length;
+        if ( loyalty.result.benfList.length > 0 &&
+          loyalty.result.benfList.findIndex((item) => {
+          return item.benfCd === '1';
+        }) > -1 ) {
+          options['coupons'] = refillCoupons.result.length;
           options['count'] += 1;
         }
 
