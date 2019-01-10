@@ -175,10 +175,10 @@ class DateHelper {
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @returns {string} : 2018.06.01.
+   * @returns {string} : 2018.6.1.
    */
   static getShortDate(date: any): string {
-    return moment(this.convDateFormat(date)).format('YYYY.M.DD.');
+    return moment(this.convDateFormat(date)).format('YYYY.M.D.');
   }
 
    /**
@@ -191,35 +191,35 @@ class DateHelper {
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @returns {string} : 2018.06.01
+   * @returns {string} : 2018.6.1
    */
   static getShortDateNoDot(date: any): string {
-    return moment(this.convDateFormat(date)).format('YYYY.M.DD');
+    return moment(this.convDateFormat(date)).format('YYYY.M.D');
   }
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @returns {string} : 2018.06.01 (first date of this month)
+   * @returns {string} : 2018.6.1 (first date of this month)
    */
   static getShortFirstDateNoDot(date: any): string {
     const curDate = this.convDateFormat(date);
     const firstDate = new Date(curDate.setDate(1));
-    return moment(firstDate).format('YYYY.M.DD');
+    return moment(firstDate).format('YYYY.M.D');
   }
   
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @returns {string} : 2018.06.01 (first date of this month)
+   * @returns {string} : 2018.6.1 (first date of this month)
    */
   static getShortFirstDate(date: any): string {
     const curDate = this.convDateFormat(date);
     const firstDate = new Date(curDate.setDate(1));
-    return moment(firstDate).format('YYYY.M.DD.');
+    return moment(firstDate).format('YYYY.M.D.');
   }
 
     /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @returns {string} : 2018.06.01 (first date of this month)
+   * @returns {string} : 2018.6.1 (first date of this month)
    */
   static getShortFirstShortDate(date: any): string {
     const curDate = this.convDateFormat(date);

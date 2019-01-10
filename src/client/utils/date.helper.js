@@ -130,38 +130,38 @@ Tw.DateHelper = (function () {
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @returns {string} : 2018.06.01.
+   * @returns {string} : 2018.6.1.
    */
   var getShortDate = function (date) {
-    return moment(convDateFormat(date)).format('YYYY.M.DD.');
+    return moment(convDateFormat(date)).format('YYYY.M.D.');
   };
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @returns {string} : 2018.06.01
+   * @returns {string} : 2018.6.1
    */
   var getShortDateNoDot = function (date) {
-    return moment(convDateFormat(date)).format('YYYY.M.DD');
+    return moment(convDateFormat(date)).format('YYYY.M.D');
   };
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @returns {string} : 2018.06.01 (first date of this month)
+   * @returns {string} : 2018.6.1 (first date of this month)
    */
   var getShortFirstDateNoDot = function (date) {
     var curDate = this.convDateFormat(date);
     var firstDate = new Date(curDate.setDate(1));
-    return moment(firstDate).format('YYYY.M.DD');
+    return moment(firstDate).format('YYYY.M.D');
   };
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @returns {string} : 2018.6.01 (first date of this month)
+   * @returns {string} : 2018.6.1 (first date of this month)
    */
   var getShortFirstDate = function (date) {
     var curDate = this.convDateFormat(date);
     var firstDate = new Date(curDate.setDate(1));
-    return moment(firstDate).format('YYYY.M.DD.');
+    return moment(firstDate).format('YYYY.M.D.');
   };
 
 
@@ -312,7 +312,7 @@ Tw.DateHelper = (function () {
    */
   var getDifference = function (endDate, startDate) {
     return moment(endDate).diff(startDate || new Date());
-  }
+  };
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
