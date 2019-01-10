@@ -17,6 +17,8 @@ import BrowserHelper from '../../utils/browser.helper';
 import { NODE_API_ERROR } from '../../types/string.type';
 import { COOKIE_KEY } from '../../types/common.type';
 import { CHANNEL_CODE, MENU_CODE, REDIS_KEY } from '../../types/redis.type';
+import CryptoHelper from '../../utils/crypto.helper';
+import {XTRACTOR_KEY} from '../../types/config.type';
 
 class ApiRouter {
   public router: Router;
@@ -413,6 +415,12 @@ class ApiRouter {
   private changeSession(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
     this.logger.info(this, '[chagne session]', params);
+    res.clearCookie(COOKIE_KEY.XTUID);
+
+    if (!FormatHelper.isEmpty(req.cookies.XTLID)) {
+      res.cookie(COOKIE_KEY.XTUID, req.cookies.XTLID);
+    }
+
     this.apiService.setCurrentReq(req, res);
     // this.loginService.setCurrentReq(req, res);
     this.apiService.requestChangeSession(params).subscribe((resp) => {
