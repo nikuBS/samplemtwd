@@ -4,7 +4,7 @@
  * Date: 2018.11.09
  */
 
-Tw.ProductMobileplanJoinTplan = function(rootEl, prodId, displayId, confirmOptions, isOverPayReqYn, isComparePlanYn) {
+Tw.ProductMobileplanJoinTplan = function(rootEl, prodId, displayId, confirmOptions, isOverPayReqYn, isComparePlanYn, watchInfo) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
@@ -15,8 +15,10 @@ Tw.ProductMobileplanJoinTplan = function(rootEl, prodId, displayId, confirmOptio
   this._isOverPayReq = isOverPayReqYn === 'Y';
   this._isComparePlan = isComparePlanYn === 'Y';
   this._confirmOptions = JSON.parse(window.unescape(confirmOptions));
+  this._watchInfo = JSON.parse(watchInfo);
   this._isSetOverPayReq = false;
   this._overpayRetryCnt = 0;
+  this._smartWatchLine = null;
 
   this.$container = rootEl;
   this._cachedElement();
@@ -36,8 +38,86 @@ Tw.ProductMobileplanJoinTplan.prototype = {
     this.$btnSetupOk.on('click', $.proxy(this._reqOverpay, this));
   },
 
-  _enableSetupButton: function() {
+  _enableSetupButton: function(e) {
+    if ($(e.currentTarget).val() === 'NA00006116') {
+      return this._selectSmartWatchItem();
+    } else {
+      this._smartWatchLine = null;
+    }
+
     this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
+  },
+
+  _selectSmartWatchItem: function() {
+    this._isDisableSmartWatchLineInfo = false;
+    this._smartWatchLine = null;
+
+    if (this._watchInfo.watchCase === 'C' || this._watchInfo.watchSvcList.length < 1 || true) {
+      return this._popupService.openConfirmButton(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A73.TITLE,
+        $.proxy(this._enableSmartWatchLineInfo, this), $.proxy(this._procClearSmartWatchLineInfo, this), Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+    }
+
+    if (this._watchInfo.watchCase === 'B' && this._watchInfo.watchSvcList.length > 1) {
+      return this._openSmartWatchLineSelectPopup();
+    }
+
+    if (this._watchInfo.watchCase === 'A') {
+      return true;
+    }
+
+    this._smartWatchLine = this._watchInfo.watchSvcList[0].watchSvcNum;
+    return true;
+  },
+
+  _enableSmartWatchLineInfo: function() {
+    this._isDisableSmartWatchLineInfo = true;
+    this._popupService.close();
+  },
+
+  _procClearSmartWatchLineInfo: function() {
+    if (this._isDisableSmartWatchLineInfo) {
+      return;
+    }
+
+    this._clearSelectItem();
+  },
+
+  _openSmartWatchLineSelectPopup: function() {
+    this._popupService.open({
+      hbs:'actionsheet01',
+      layer:true,
+      data:[
+        {
+          'title': Tw.POPUP_TITLE.TPLAN_SMARTWATCH,
+          'list': this._watchInfo.watchSvcList.map($.proxy(this._getSmartWatchLineList, this))
+        }
+      ],
+      btnfloating : {'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE}
+    }, $.proxy(this._bindSmartWatchLineSelectPopup, this), null, 'select_smart_watch_line_pop');
+  },
+
+  _getSmartWatchLineList: function(item, idx) {
+    return {
+      'label-attr': 'id="ra' + idx + '"',
+      'txt': Tw.FormatHelper.conTelFormatWithDash(item.watchSvcNumMask),
+      'radio-attr': 'id="ra' + idx + '" data-num="' + item.watchSvcNum + '" ' + (this._smartWatchLine === item.watchSvcNum ? 'checked' : '')
+    };
+  },
+
+  _bindSmartWatchLineSelectPopup: function($popupContainer) {
+    $popupContainer.on('click', '[data-num]', $.proxy(this._setSmartWatchLine, this));
+  },
+
+  _setSmartWatchLine: function(e) {
+    this._smartWatchLine = $(e.currentTarget).data('num');
+    this._popupService.close();
+  },
+
+  _clearSelectItem: function() {
+    var $elem = this.$container.find('.widget-box.radio input[type="radio"]:checked');
+
+    $elem.prop('checked', false);
+    $elem.parents('.radiobox').removeClass('checked').attr('aria-checked', 'false');
   },
 
   _convConfirmOptions: function() {
@@ -121,11 +201,21 @@ Tw.ProductMobileplanJoinTplan.prototype = {
   _prodConfirmOk: function() {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0012, {
-      asgnNumList: [],
-      optProdId: this.$container.find('.widget-box.radio input[type="radio"]:checked').val(),
-      svcProdGrpId: ''
-    }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this));
+    var optProdId = this.$container.find('.widget-box.radio input[type="radio"]:checked').val(),
+      reqParams = {
+        asgnNumList: [],
+        optProdId: optProdId,
+        svcProdGrpId: ''
+      };
+
+    if (!Tw.FormatHelper.isEmpty(this._smartWatchLine) && optProdId === 'NA00006116') {
+      reqParams = $.extend(reqParams, {
+        optWatchNum: this._smartWatchLine
+      });
+    }
+
+    this._apiService.request(Tw.API_CMD.BFF_10_0012, reqParams,
+      {}, [this._prodId]).done($.proxy(this._procJoinRes, this));
   },
 
   _procJoinRes: function(resp) {
