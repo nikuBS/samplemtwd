@@ -41,4 +41,3 @@ export enum MENU_CODE {
   ONWEB = '04',
   MAPP = '05'
 }
-
