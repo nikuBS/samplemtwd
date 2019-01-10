@@ -140,6 +140,7 @@ Tw.ProductMobileplanJoin.prototype = {
       data: {
         prodCtgNm: Tw.PRODUCT_CTG_NM.PLANS,
         mytPage: 'myplan',
+        btClass: 'item-one',
         prodId: this._prodId,
         prodNm: this._confirmOptions.preinfo.toProdInfo.prodNm,
         typeNm: Tw.PRODUCT_TYPE_NM.JOIN,

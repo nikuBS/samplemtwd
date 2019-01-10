@@ -441,6 +441,8 @@ Tw.API_CMD = {
   BFF_10_0166: { path: '/core-product/:version/wire/additions/:args0/joins/ledger-prechecks/cancels', method: Tw.API_METHOD.GET },
   BFF_10_0167: { path: '/core-product/:version/wire/additions/:args0/joins/ledger-prechecks/adds', method: Tw.API_METHOD.GET },
   BFF_10_0168: { path: '/core-product/:version/wire/additions/:args0/joins/ledger-prechecks/terms', method: Tw.API_METHOD.GET },
+  BFF_10_0169: { path: '/core-product/v1/mobiles/fee-plans/young-plan-mid-sets', method: Tw.API_METHOD.GET },
+  BFF_10_0170: { path: '/core-product/v1/mobiles/fee-plans/young-plan-mid-sets', method: Tw.API_METHOD.PUT },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/:version/submain/products', method: Tw.API_METHOD.GET },
