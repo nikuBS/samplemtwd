@@ -105,8 +105,9 @@ Tw.CommonMemberLineEdit.prototype = {
   _onConfirmRegisterPopup: function (svcNumList) {
     this._popupService.close();
     var lineList = svcNumList.join('~');
-    this._apiService.request(Tw.NODE_CMD.CHANGE_LINE, { svcCtg: this._category, svcMgmtNumArr: lineList })
-      .done($.proxy(this._successRegisterLineList, this));
+    this._apiService.request(Tw.NODE_CMD.CHANGE_LINE, {
+      params: { svcCtg: this._category, svcMgmtNumArr: lineList }
+    }).done($.proxy(this._successRegisterLineList, this));
   },
   _successRegisterLineList: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {

@@ -32,6 +32,7 @@ class ApiService {
 
   public request(command: any, params: any, header?: any, pathParams?: any[], version?: string): Observable<any> {
     pathParams = pathParams || [];
+
     const apiUrl = this.getServerUri(command);
     const options = this.getOption(command, apiUrl, params, header, pathParams, version);
     this.logger.info(this, '[API_REQ]', options);
@@ -390,9 +391,9 @@ class ApiService {
     return this.requestUpdateSvcInfo(API_CMD.BFF_01_0003, params);
   }
 
-  public requestUpdateAllSvcInfo(command, params): Observable<any> {
+  public requestUpdateAllSvcInfo(command, params, headers, pathParams, version): Observable<any> {
     let result = null;
-    return this.request(command, params)
+    return this.request(command, params, headers, pathParams, version)
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           result = resp.result;
@@ -445,8 +446,12 @@ class ApiService {
       });
   }
 
-  public requestChangeLine(params: any): Observable<any> {
-    return this.requestUpdateAllSvcInfo(API_CMD.BFF_03_0005, params);
+  public requestChangeLine(params: any, headers?: any, pathParams?: any, version?: any): Observable<any> {
+    return this.requestUpdateAllSvcInfo(API_CMD.BFF_03_0005, params, headers, pathParams, version);
+  }
+
+  public requestChangeNickname(params: any, headers?: any, pathParams?: any, version?: any): Observable<any> {
+    return this.requestUpdateAllSvcInfo(API_CMD.BFF_03_0006, params, headers, pathParams, version);
   }
 
   public updateSvcInfo(): Observable<any> {
