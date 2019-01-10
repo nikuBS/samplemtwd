@@ -60,7 +60,6 @@ Tw.MyTDataCookizOptions.prototype = {
     Tw.CommonHelper.share(content);
   },
 
-
   _goToAuthHistory: function () {
     this._historyService.goLoad('/myt-data/recharge/cookiz/auth');
   },
