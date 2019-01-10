@@ -48,8 +48,8 @@
                         <div class="info-inner">
                             <span class="title-l"><%= myInfoData.custNm %> 님</span>
                             <span class="subtx"><%= myInfoData.mbrTypStr %>
-				<% if( myInfoData.mbrTypCd === '3' || myInfoData.mbrTypCd === '4' ) { %>
-					<button id="fe-card-change" class="bt-link-tx underline ml6">카드 종류 변경</button></span>
+                            <% if( myInfoData.mbrTypCd === '3' || myInfoData.mbrTypCd === '4' ) { %>
+                                <button id="fe-card-change" class="bt-link-tx underline ml6">카드 종류 변경</button></span>
                             <% } %>
                         </div>
                     </div>
@@ -81,14 +81,8 @@
                     </div>
                 </div>
                 <ul class="bt-slice item-two mt20">
-                    <li><button type="button" class="btn-round1 btn-style4">정보 수정</button></li>
-                    <li>
-                        <% if(myInfoData.cardReqCd === '1'){ %>
-                        <button id="fe-reissue-cancel" type="button" class="btn-round1 btn-style4">재발급 취소</button>
-                        <% }else{ %>
-                        <button id="fe-reissue" type="button" class="btn-round1 btn-style4">재발급 신청</button>
-                        <% } %>
-                    </li>
+                    <li><button id="fe-go-update" type="button" class="btn-round1 btn-style4">정보 수정</button></li>
+                    <li><button id="fe-reissue" type="button" class="btn-round1 btn-style4">재발급 신청</button></li>
                 </ul>
             </div>
             <!--// .cont-box -->
@@ -155,25 +149,25 @@
             <div class="cont-box nogaps">
                 <ul class="full-link-list">
                     <li>
-                        <button>
+                        <a href="/membership/my/history">
                                 <span class="inner">
                                     <span class="tit">발급 변경내역</span>
                                 </span>
-                        </button>
+                        </a>
                     </li>
                     <li>
-                        <button>
+                        <a href="/membership/membership_info/mbrs_0001">
                                 <span class="inner">
                                     <span class="tit">T멤버십 카드·등급 안내</span>
                                 </span>
-                        </button>
+                        </a>
                     </li>
                     <li>
-                        <button>
+                        <a href="/membership/my/cancel">
                                 <span class="inner">
                                     <span class="tit">T멤버십 해지</span>
                                 </span>
-                        </button>
+                        </a>
                     </li>
                 </ul>
             </div>

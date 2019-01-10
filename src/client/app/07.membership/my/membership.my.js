@@ -24,9 +24,7 @@ Tw.MembershipMy.prototype = {
 
   _cachedElement: function() {
     this.$btnReissue = this.$container.find('#fe-reissue');
-    this.$btnReissueCancel = this.$container.find('#fe-reissue-cancel');
     this.$btnCardChange = this.$container.find('#fe-card-change');
-    this.$btnPopupClose = this.$container.find('.popup-closeBtn');
     this.$strPeriod = this.$container.find('#fe-period');
     this.$inputSdate = this.$container.find('#fe-sdate');
     this.$inputEdate = this.$container.find('#fe-edate');
@@ -35,17 +33,18 @@ Tw.MembershipMy.prototype = {
     this.$more = this.$container.find('.btn-more');
     this.$moreCnt = this.$container.find('#fe-more-cnt');
     this.$empty = this.$container.find('#fe-empty');
+    this.$goUpdate = this.$container.find('#fe-go-update');
   },
 
   _bindEvent: function() {
-    this.$btnReissue.on('click', $.proxy(this._requestReissueInfo, this, 'reissue'));
-    this.$btnReissueCancel.on('click', $.proxy(this._requestReissueInfo, this, 'cancel'));
+    this.$btnReissue.on('click', $.proxy(this._requestReissueInfo, this));
     this.$btnCardChange.on('click', $.proxy(this._cardChangeAlert, this));
-    this.$btnPopupClose.on('click', $.proxy(this._goRoamingGuide, this));
+    this.$container.on('click', '.prev-step',$.proxy(this._popupClose, this));
     this.$inputSdate.on('click', $.proxy(this._openDateActionSheet, this));
     this.$inputEdate.on('click', $.proxy(this._openDateActionSheet, this));
     this.$inquire.on('click', $.proxy(this._getUseHistory,this));
     this.$more.on('click', $.proxy(this._onMore,this));
+    this.$goUpdate.on('click', $.proxy(this._goUpdate,this));
   },
 
   _initPeriod: function() {
@@ -191,6 +190,14 @@ Tw.MembershipMy.prototype = {
   },
 
   _requestReissueInfo: function(state) {
+    //TODO: 신청불가 알럿 모바일 카드 신청 후 2주 이내로 변경
+    /*
+    if(this._cardCd === '2'){
+      var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A61;
+      this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
+      return;
+    }*/
+
     this._apiService
       .request(Tw.API_CMD.BFF_11_0003, {})
       .done($.proxy(this._successReissueInfo, this, state))
@@ -207,14 +214,9 @@ Tw.MembershipMy.prototype = {
   _successReissueInfo: function(state, res) {
     if(res.code === Tw.API_CODE.CODE_00) {
       var data = this._parseReissueData(res.result);
-      var hbs = '';
-      if(state === 'cancel'){
-        hbs = 'BE_02_02';
-      }else{
-        hbs = 'BE_02_01';
-      }
+
       this._popupService.open({
-          hbs: hbs,
+          hbs: 'BE_02_01',
           layer: true,
           data: data
         },
@@ -225,7 +227,6 @@ Tw.MembershipMy.prototype = {
 
   _onReissueOpened: function($root) {
     $root.on('click', '#fe-reissue-req', $.proxy(this._openReissueAlert, this));
-    $root.on('click', '#fe-cancel-req', $.proxy(this._openCancelAlert, this));
   },
 
   _openReissueAlert: function() {
@@ -247,20 +248,6 @@ Tw.MembershipMy.prototype = {
       .fail($.proxy(this._onFail, this));
   },
 
-  _openCancelAlert: function() {
-    var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A52;
-    this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleCancelAlert, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A52.BUTTON);
-  },
-
-  _handleCancelAlert: function() {
-    var mbrCardNum1 = $('#fe-cancel-req').attr('data-card');
-
-    this._apiService
-      .request(Tw.API_CMD.BFF_11_0005, { mbrCardNum1 : mbrCardNum1 })
-      .done($.proxy(this._renderTemplate, this))
-      .fail($.proxy(this._onFail, this));
-  },
-
   _cardChangeAlert: function() {
     var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A58;
     this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleChangeAlert, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A58.BUTTON);
@@ -273,12 +260,25 @@ Tw.MembershipMy.prototype = {
       .fail($.proxy(this._onFail, this));
   },
 
-  _successCardChange: function() {
+  _successCardChange: function(res) {
     //카드 종류 변경 완료 페이지 이동
+    if(res.code === Tw.API_CODE.CODE_00){
+
+    }else{
+      this._onFail(res);
+    }
   },
 
-  _goRoamingGuide: function() {
-    this._historyService.replaceURL('/product/roaming/fi/guide');
+  _popupClose: function() {
+    this._popupService.close();
+  },
+
+  _goUpdate: function() {
+    this._historyService.replaceURL('/membership/my/update');
+  },
+
+  _goMyCancel: function() {
+    this._historyService.goLoad('/membership/my/cancel');
   },
 
   _onFail: function(err) {

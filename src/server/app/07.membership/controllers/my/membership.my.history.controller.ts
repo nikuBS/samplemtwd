@@ -18,15 +18,22 @@ export default class MembershipMyHistory extends TwViewController {
 
     this.apiService.request(API_CMD.BFF_11_0010, {}).subscribe((resp) => {
       let myHistoryData = {};
-      if ( resp.code === API_CODE.CODE_00 ) {
-        myHistoryData = this.parseMyHistoryData(resp.result.mHistOut);
+      let noHistoryData = false;
+      if ( resp.code === API_CODE.CODE_00) {
+        if (Object.keys(resp.result).length === 0 && JSON.stringify(resp.result) === JSON.stringify({})) {
+          noHistoryData = true;
+          myHistoryData['record2'] = [];
+        } else {
+          myHistoryData = this.parseMyHistoryData(resp.result.mHistOut);
+        }
       } else {
         myHistoryData = resp;
       }
 
       res.render('my/membership.my.history.html', {
         myHistoryData: myHistoryData,
-        svcInfo: svcInfo
+        svcInfo: svcInfo,
+        noHistoryData: noHistoryData
       });
     });
   }

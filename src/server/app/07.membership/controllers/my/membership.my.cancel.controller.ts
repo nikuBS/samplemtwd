@@ -11,34 +11,33 @@ import { API_CMD } from '../../../../types/api-command.type';
 import { API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { MEMBERSHIP_GROUP, MEMBERSHIP_TYPE } from '../../../../types/bff.type';
-import DateHelper from '../../../../utils/date.helper';
 
-export default class MembershipMy extends TwViewController {
+export default class MembershipMyCancel extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
 
-    this.apiService.request(API_CMD.BFF_11_0002, {}).subscribe((resp) => {
-      let myInfoData = {};
+    this.apiService.request(API_CMD.BFF_11_0013, {}).subscribe((resp) => {
+      let myCardData = {};
       if ( resp.code === API_CODE.CODE_00 ) {
-        myInfoData = this.parseMyInfoData(resp.result);
+        myCardData = this.parseMyCardData(resp.result);
       } else {
-        myInfoData = resp;
+        myCardData = resp;
       }
 
-      res.render('my/membership.my.html', {
-        myInfoData: myInfoData,
+      res.render('my/membership.my.cancel.html', {
+        myCardData: myCardData,
         svcInfo: svcInfo
       });
     });
   }
 
-  private parseMyInfoData(myInfoData): any {
+  private parseMyCardData(myCardData): any {
+    myCardData.showMbrCardNum = FormatHelper.addCardDash(myCardData.mbrCardNum.toString());
+    myCardData.mbrGrStr = MEMBERSHIP_GROUP[myCardData.mbrGrCd];
+    myCardData.mbrTypStr = MEMBERSHIP_TYPE[myCardData.mbrTypCd];
+    //myCardData.todayDate = DateHelper.getCurrentShortDate();
+    //myCardData.cardReqCd = '1';
 
-    myInfoData.showPayAmtScor = FormatHelper.addComma((+myInfoData.payAmtScor).toString());
-    myInfoData.mbrGrStr = MEMBERSHIP_GROUP[myInfoData.mbrGrCd].toUpperCase();
-    myInfoData.mbrTypStr = MEMBERSHIP_TYPE[myInfoData.mbrTypCd];
-    myInfoData.todayDate = DateHelper.getCurrentShortDate();
-
-    return myInfoData;
+    return myCardData;
   }
 }
