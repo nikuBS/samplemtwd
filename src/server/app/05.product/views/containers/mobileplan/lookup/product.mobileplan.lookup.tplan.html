@@ -54,6 +54,25 @@
                     <div class="announcement-box wrap-gaps-top">
                         <div class="announcement-txt">최근 50건의 이용내역만 조회 가능합니다.</div>
                     </div>
+                    <% if (beforeTDiyGrCd === 'NA00006114') { %>
+                    <div class="cont-box nogaps-ver pb0">
+                        <!-- .component -->
+                        <div class="component">
+                            <div class="component-box tabs">
+                                <div class="tab-area new"><!-- 타입별 탭형태 변환 -->
+                                    <div class="tab-linker">
+                                        <ul role="tablist">
+                                            <li role="tab" aria-selected="<%= tabId === 'onepass' ? 'true' : 'false' %>" aria-controls="tab1-tab" id="tab1"><a href="javascript:void(0)" class="fe-tab" data-key="onepass">T로밍 OnePass</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                            <li role="tab" aria-selected="<%= tabId === 'martina' ? 'true' : 'false' %>" aria-controls="tab3-tab" id="tab2"><a href="javascript:void(0)" class="fe-tab" data-key="martina">마티나 라운지</a></li>
+                                        </ul>
+                                    </div>
+                                    <!-- 탭메뉴만 넣어달라는 요청으로 .tab-contents는 넣지 않음 -->
+                                </div>
+                            </div>
+                        </div>
+                        <!--// .component -->
+                    </div>
+                    <% } %>
                     <% if ( benefitList && Object.keys(benefitList).length > 0 ) {
                         const keys = Object.keys(benefitList).reverse();
                         for (var i in keys) {

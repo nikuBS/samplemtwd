@@ -46,7 +46,8 @@
                 <% if ( !prodRedisInfo.summary.basFeeInfo.isNaN ) { %>
                 <span class="unit">원</span>
                 <% } %>
-            <% } else { %>
+            <% } %>
+            <% if ( isCombine ) { %>
             <%= prodRedisInfo.summary.prodBasBenfCtt %>
             <% } %>
         </p>

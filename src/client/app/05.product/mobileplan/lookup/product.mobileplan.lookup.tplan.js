@@ -29,11 +29,17 @@ Tw.ProductMobileplanLookupTplan.prototype = {
   _cachedElement: function() {
     this.$btnCategory = this.$container.find('.fe-btn_category');
     this.$btnGoTop = this.$container.find('.fe-btn_go_top');
+    this.$tab = this.$container.find('.fe-tab');
   },
 
   _bindEvent: function() {
     this.$btnCategory.on('click', $.proxy(this._openCategoryPopup, this));
     this.$btnGoTop.on('click', $.proxy(this._goTop, this));
+    this.$tab.on('click', $.proxy(this._goTab, this));
+  },
+
+  _goTab: function(e) {
+    this._historyService.goLoad('/product/mobileplan/lookup/tplan?s_prod_id=' + this._prodId + '&tab_id=' + $(e.currentTarget).data('key'));
   },
 
   _getBenefitCategory: function() {
