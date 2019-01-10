@@ -161,12 +161,21 @@ Tw.MyTFareBillAccount.prototype = {
   },
   _onClose: function () {
     if (!this.$isChanged) {
+      var $amount = this.$container.find('.fe-amount');
+      if (Tw.FormatHelper.addComma($amount.attr('data-value')) !== $amount.text()) {
+        this.$isChanged = true;
+      }
+    }
+
+    if (!this.$isChanged) {
       if (this.$accountNumber.attr('disabled') !== 'disabled') {
         if (this.$accountNumber.val() !== '') {
           this.$isChanged = true;
         }
       }
+    }
 
+    if (!this.$isChanged) {
       if (this.$refundNumber.attr('disabled') !== 'disabled') {
         if (this.$refundNumber.val() !== '') {
           this.$isChanged = true;

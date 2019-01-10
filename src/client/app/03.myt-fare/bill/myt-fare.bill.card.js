@@ -254,15 +254,24 @@ Tw.MyTFareBillCard.prototype = {
   },
   _onClose: function () {
     if (!this.$isChanged) {
+      var $amount = this.$container.find('.fe-amount');
+      if (Tw.FormatHelper.addComma($amount.attr('data-value')) !== $amount.text()) {
+        this.$isChanged = true;
+      }
+    }
+
+    if (!this.$isChanged) {
       if (this.$cardNumber.val() !== '' || this.$cardY.val() !== '' ||
       this.$cardM.val() !== '' || this.$cardPw.val() !== '') {
         this.$isChanged = true;
       }
     }
 
-    if (this.$refundBank.attr('disabled') !== 'disabled') {
-      if (!Tw.FormatHelper.isEmpty(this.$refundBank.attr('id')) || this.$refundNumber.val() !== '') {
-        this.$isChanged = true;
+    if (!this.$isChanged) {
+      if (this.$refundBank.attr('disabled') !== 'disabled') {
+        if (!Tw.FormatHelper.isEmpty(this.$refundBank.attr('id')) || this.$refundNumber.val() !== '') {
+          this.$isChanged = true;
+        }
       }
     }
 

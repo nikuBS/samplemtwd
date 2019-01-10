@@ -78,6 +78,10 @@ Tw.MyTFareBillSms.prototype = {
     }
   },
   _isChanged: function () {
+    var $amount = this.$container.find('.fe-amount');
+    if (Tw.FormatHelper.addComma($amount.attr('data-value')) !== $amount.text()) {
+      return true;
+    }
     return this.$accountSelector.attr('id') !== this.$accountSelector.attr('data-origin-id');
   },
   _closePop: function () {
