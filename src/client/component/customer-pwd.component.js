@@ -68,9 +68,9 @@ Tw.CustomerPwdComponent.prototype = {
   },
   _onInput: function (event) {
     var $target = $(event.currentTarget);
-    if (!$target.hasClass('fe-first-pwd')) {
+    if ( !$target.hasClass('fe-first-pwd') ) {
       var $prev = $target.parent().prev().find('input');
-      if (Tw.FormatHelper.isEmpty($prev.val())) {
+      if ( Tw.FormatHelper.isEmpty($prev.val()) ) {
         this._removePwd();
         this.$firstPwd.focus();
         return;

@@ -35,6 +35,7 @@ Tw.TidLandingComponent.prototype = {
     }
   },
   goLogin: function (target) {
+    target = target || '/main/home';
     this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login?target=' + target, $.proxy(this._onNativeLogin, this, target));
   },
   goSLogin: function () {
