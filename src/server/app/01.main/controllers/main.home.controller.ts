@@ -302,7 +302,8 @@ class MainHome extends TwViewController {
   private getUsageData(svcInfo): Observable<any> {
     let usageData = {
       code: '',
-      msg: ''
+      msg: '',
+      showSvcNum: FormatHelper.conTelFormatWithDash(svcInfo.svcNum)
     };
     return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
@@ -310,6 +311,8 @@ class MainHome extends TwViewController {
       }
       usageData.code = resp.code;
       usageData.msg = resp.msg;
+
+      console.log(usageData);
       return usageData;
     });
   }
@@ -320,8 +323,7 @@ class MainHome extends TwViewController {
     const result = {
       data: { isShow: false },
       voice: { isShow: false },
-      sms: { isShow: false },
-      showSvcNum: FormatHelper.conTelFormatWithDash(svcInfo.svcNum)
+      sms: { isShow: false }
     };
 
     if ( !FormatHelper.isEmpty(usageData.gnrlData) ) {
