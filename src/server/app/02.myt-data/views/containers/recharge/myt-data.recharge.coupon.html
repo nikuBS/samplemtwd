@@ -21,7 +21,7 @@
         <div id="contents" class="container-wrap">
             <div class="container">
                 <!-- .cont-box -->
-                <% if (available !== 'ALL') { %>
+                <% if (available !== 'ALL' && list.length !== 0) { %>
 				<hr class="cont-sp type1" aria-hidden="true"/>
                 <div class="cont-box">
                     <div class="refill-except">
@@ -39,7 +39,7 @@
                 </div>
                 <% } %>
 
-                <% if (available !== 'NONE' && list.length === 0) { %>
+                <% if (list.length === 0) { %>
                 <div class="cont-box nogaps-hoz">
                     <div class="result-none">
                         사용할 수 있는 쿠폰이 없습니다.
