@@ -35,7 +35,7 @@ Tw.MyTFareBillGuideIndividual.prototype = {
 
     this._getUseBillsInfo();
 
-    this._hashService.initHashNav($.proxy(this._onHashChange, this));
+    // this._hashService.initHashNav($.proxy(this._onHashChange, this));
 
   },
   _onHashChange: function (hash) {
