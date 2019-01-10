@@ -55,10 +55,10 @@ Tw.CertificationSkSmsRefund.prototype = {
   },
   _requestCaptchaImg: function () {
     this.$captchaImage.attr('src',
-      '/bypass' + Tw.API_CMD.BFF_01_0053.path + '?rnd=' + Math.random());
+      '/bypass' + Tw.API_CMD.BFF_01_0053.path.replace(':version', 'v1') + '?rnd=' + Math.random());
   },
   _requestCaptchaSound: function () {
-     new Audio('/bypass' + Tw.API_CMD.BFF_01_0054.path).play();
+     new Audio('/bypass' + Tw.API_CMD.BFF_01_0054.path.replace(':version', 'v1')).play();
   },
   _onGenderChanged: function (e) {
     this._gender = e.currentTarget.value;
