@@ -17,5 +17,8 @@ Tw.OUTLINK = {
   MEMBERSHIP_MOVIE_WEB: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/culture/movieList.do?bannerpoc=2018_169',
   MEMBERSHIP_CULTURE_APP: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/culture/cultureList.do?bannerpoc=2018_166',
   MEMBERSHIP_CULTURE_WEB: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/culture/cultureList.do?bannerpoc=2018_164',
+  IPHONE_XS: 'https://shop.tworld.co.kr/handler/PhoneDetail-Start?PRODUCT_GRP_ID=000000740&SUBSCRIPTION_ID=NA00005134&CATEGORY_ID=20010001&REL_CATEGORY_ID=30010024&COLOR_HEX=&callGnb=01&loc_code=&o2o_flag=L',
+  IPHONE_XR: 'https://shop.tworld.co.kr/handler/PhoneDetail-Start?PRODUCT_GRP_ID=000000742&SUBSCRIPTION_ID=NA00005134&CATEGORY_ID=20010001&REL_CATEGORY_ID=30010024&COLOR_HEX=&callGnb=01&loc_code=&o2o_flag=L',
+  GALAXY_S9: 'https://shop.tworld.co.kr/handler/PhoneDetail-Start?PRODUCT_GRP_ID=000002752&SUBSCRIPTION_ID=NA00005134&CATEGORY_ID=20010001&REL_CATEGORY_ID=30010024&COLOR_HEX=&callGnb=01&loc_code=&o2o_flag=L',
   ONE_STORE_PREFIX: 'onestore://common/product/'
 };
