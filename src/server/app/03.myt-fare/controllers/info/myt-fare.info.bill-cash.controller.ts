@@ -54,7 +54,7 @@ class MyTFareInfoBill extends TwViewController {
 
       resp.result = resp.result.reduce((prev, cur, index) => {
         cur.listId = index;
-        cur.listDt = cur.dataDt.slice(5);
+        cur.listDt = cur.dataDt; // .slice(5);
 
         if (prev.length) {
           if (prev.slice(-1)[0].sortDt.slice(0, 4) !== cur.sortDt.slice(0, 4)) {
