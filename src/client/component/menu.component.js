@@ -302,7 +302,11 @@ Tw.MenuComponent.prototype = {
         var type = elem.getAttribute('data-value');
         switch (type) {
           case 'svcCnt':
-            $(elem).text(Tw.MENU_STRING.SVC_COUNT(userInfo.totalSvcCnt));
+            if (userInfo.totalSvcCnt !== 0 && userInfo.expsSvcCnt !== 0) {
+              $(elem).text(Tw.MENU_STRING.SVC_COUNT(userInfo.totalSvcCnt));
+            } else {
+              $(elem).remove();
+            }
             break;
           case 'bill':
             this._apiService.request(Tw.API_CMD.BFF_05_0036, {})
@@ -506,6 +510,21 @@ Tw.MenuComponent.prototype = {
     } else {
       var dataObj = Tw.FormatHelper.convDataFormat(dataRemained, Tw.UNIT[Tw.UNIT_E.DATA]);
       ret = dataObj.data + dataObj.unit;
+    }
+
+    if (!Tw.FormatHelper.isEmpty(info.voice[0])) {
+      ret += '/';
+      if (Tw.UNLIMIT_CODE.indexOf(info.voice[0].unlimit) !== -1) {
+        ret += Tw.COMMON_STRING.UNLIMIT;
+      } else {
+        var voiceObj = Tw.FormatHelper.convVoiceFormat(parseInt(info.voice[0].remained, 10));
+        var min = voiceObj.hours * 60 + voiceObj.min;
+        if (min === 0 && voiceObj.sec !== 0)  {
+          ret += voiceObj.sec + Tw.VOICE_UNIT.SEC;
+        } else {
+          ret += voiceObj.hours * 60 + voiceObj.min + Tw.VOICE_UNIT.MIN;
+        }
+      }
     }
 
     return ret;
