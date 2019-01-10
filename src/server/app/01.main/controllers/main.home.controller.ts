@@ -60,7 +60,6 @@ class MainHome extends TwViewController {
           ).subscribe(([usageData, membershipData, redisData]) => {
             homeData.usageData = usageData;
             homeData.membershipData = membershipData;
-            console.log(redisData);
             res.render('main.home.html', {
               svcInfo,
               svcType,
@@ -335,7 +334,7 @@ class MainHome extends TwViewController {
     };
     return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        usageData = this.parseUsageData(resp.result, svcInfo);
+        usageData = Object.assign(usageData, this.parseUsageData(resp.result, svcInfo));
       }
       usageData.code = resp.code;
       usageData.msg = resp.msg;
