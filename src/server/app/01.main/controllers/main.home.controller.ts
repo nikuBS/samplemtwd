@@ -22,7 +22,7 @@ import {
 } from '../../../types/bff.type';
 import { UNIT as UNIT_STR, UNLIMIT_NAME } from '../../../types/string.type';
 import DateHelper from '../../../utils/date.helper';
-import { CHANNEL_CODE, REDIS_KEY } from '../../../types/redis.type';
+import { CHANNEL_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../../types/redis.type';
 import { SKIP_NAME, TIME_UNIT } from '../../../types/string.type';
 import BrowserHelper from '../../../utils/browser.helper';
 
@@ -38,74 +38,101 @@ class MainHome extends TwViewController {
       membershipData: null,
       billData: null,
     };
-    let smartCard = [];
     const noticeCode = !BrowserHelper.isApp(req) ? CHANNEL_CODE.MWEB :
       BrowserHelper.isIos(req) ? CHANNEL_CODE.IOS : CHANNEL_CODE.ANDROID;
 
-    // this.redisService.getStringTos(REDIS_TOS_KEY.SMART_CARD + '1004483007')
-    //   .subscribe((resp) => {
-    //     console.log('tos', resp);
-    //   });
     // this.redisService.getStringTos(REDIS_TOS_KEY.BANNER_TOS_KEY + '0001:lee33a:7191046505')
     //   .subscribe((resp) => {
     //     console.log('bnnr', resp);
     //   });
-    // this.redisService.getString(REDIS_KEY._SMART_CARD_DEFAULT)
-    //   .subscribe((resp) => {
-    //     console.log('default', resp);
-    //   });
+
+
     if ( svcType.login ) {
       // const showSvcInfo = this.parseSvcInfo(svcType, svcInfo);
       if ( svcType.svcCategory === LINE_NAME.MOBILE ) {
         if ( svcType.mobilePhone ) {
           // 모바일 - 휴대폰 회선
-          smartCard = this.getSmartCardOrder(svcInfo.svcMgmtNum);
+          // smartCard = this.getSmartCardOrder(svcInfo.svcMgmtNum);
           Observable.combineLatest(
             this.getUsageData(svcInfo),
             this.getMembershipData(),
-            this.getRedisData(noticeCode)
+            this.getRedisData(noticeCode, svcInfo.svcMgmtNum)
           ).subscribe(([usageData, membershipData, redisData]) => {
             homeData.usageData = usageData;
             homeData.membershipData = membershipData;
-            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, redisData, pageInfo, noticeType: svcInfo.noticeType });
+            console.log(redisData);
+            res.render('main.home.html', {
+              svcInfo,
+              svcType,
+              homeData,
+              redisData,
+              pageInfo,
+              noticeType: svcInfo.noticeType
+            });
           });
         } else {
           // 모바일 - 휴대폰 외 회선
           Observable.combineLatest(
             this.getUsageData(svcInfo),
-            this.getRedisData(noticeCode)
+            this.getRedisData(noticeCode, svcInfo.svcMgmtNum)
           ).subscribe(([usageData, redisData]) => {
             homeData.usageData = usageData;
-            res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, redisData, pageInfo, noticeType: svcInfo.noticeType });
+            res.render('main.home.html', {
+              svcInfo,
+              svcType,
+              homeData,
+              redisData,
+              pageInfo,
+              noticeType: svcInfo.noticeType
+            });
           });
         }
       } else if ( svcType.svcCategory === LINE_NAME.INTERNET_PHONE_IPTV ) {
         // 인터넷 회선
         Observable.combineLatest(
           this.getBillData(),
-          this.getRedisData(noticeCode)
+          this.getRedisData(noticeCode, svcInfo.svcMgmtNum)
         ).subscribe(([billData, redisData]) => {
           homeData.billData = billData;
-          res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, redisData, pageInfo, noticeType: svcInfo.noticeType });
+          res.render('main.home.html', {
+            svcInfo,
+            svcType,
+            homeData,
+            redisData,
+            pageInfo,
+            noticeType: svcInfo.noticeType
+          });
         });
       }
     } else {
       // 비로그인
-      this.getRedisData(noticeCode).subscribe((redisData) => {
-        res.render('main.home.html', { svcInfo, svcType, homeData, smartCard, redisData, pageInfo, noticeType: '' });
+      this.getRedisData(noticeCode, svcInfo.svcMgmtNum).subscribe((redisData) => {
+        res.render('main.home.html', { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: '' });
       });
     }
   }
 
-  private getSmartCardOrder(svcMgmtNum): any {
-    const orderNum = +svcMgmtNum % 6;
-    const order = HOME_SEGMENT_ORDER[HOME_SEGMENT[orderNum]];
-    return order.map((segment) => {
-      return {
-        no: segment,
-        title: HOME_SMART_CARD[segment]
-      };
-    });
+  private getSmartCardOrder(svcMgmtNum): Observable<any> {
+    return this.redisService.getStringTos(REDIS_TOS_KEY.SMART_CARD + svcMgmtNum)  // 1004483007
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          return Observable.of(resp);
+        } else {
+          return this.redisService.getStringTos(REDIS_TOS_KEY.SMART_CARD_DEFAULT);
+        }
+      }).map((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          const order = resp.result.split(',');
+          return order.map((segment) => {
+            return {
+              no: segment,
+              title: HOME_SMART_CARD[segment]
+            };
+          });
+        } else {
+          return [];
+        }
+      });
   }
 
   private getSvcType(svcInfo): any {
@@ -129,19 +156,20 @@ class MainHome extends TwViewController {
     return svcType;
   }
 
-  private getRedisData(noticeCode): Observable<any> {
+  private getRedisData(noticeCode, svcMgmtNum): Observable<any> {
     return Observable.combineLatest(
       this.getNoti(),
       this.getHomeNotice(noticeCode),
-      this.getHomeHelp()
-    ).map(([noti, notice, help]) => {
+      this.getHomeHelp(),
+      this.getSmartCardOrder(svcMgmtNum)
+    ).map(([noti, notice, help, smartCard]) => {
       let mainNotice = null;
       let emrNotice = null;
       if ( !FormatHelper.isEmpty(notice) ) {
         mainNotice = notice.mainNotice;
         emrNotice = notice.emrNotice;
       }
-      return { noti, mainNotice, emrNotice, help };
+      return { noti, mainNotice, emrNotice, help, smartCard };
     });
   }
 
