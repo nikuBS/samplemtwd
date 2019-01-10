@@ -17,6 +17,11 @@ Tw.MyTDataCookiz = function (rootEl) {
 
 Tw.MyTDataCookiz.prototype = {
   _init: function () {
+    // If there is hash #auto, show second tab(auto gift)
+    if ( window.location.hash === '#auto' ) {
+      this._goAutoTab();
+    }
+
     this._getReceiveUserInfo();
   },
 
@@ -29,24 +34,24 @@ Tw.MyTDataCookiz.prototype = {
   },
 
   _bindEvent: function () {
-    this.$btn_recharge_monthly.on('click', $.proxy(this._rechargeMonthly, this));
-    this.$btn_recharge_immediately.on('click', $.proxy(this._rechargeImmediately, this));
-    this.$btn_cancel_auto_recharge.on('click', $.proxy(this._cancelMonthlyRecharge, this));
-    this.$wrap_monthly_select_list.on('click', $.proxy(this._onSelectMonthlyAmount, this));
-    this.$wrap_immediately_select_list.on('click', $.proxy(this._onSelectImmediatelyAmount, this));
+    // this.$btn_recharge_monthly.on('click', $.proxy(this._rechargeMonthly, this));
+    // this.$btn_recharge_immediately.on('click', $.proxy(this._rechargeImmediately, this));
+    // this.$btn_cancel_auto_recharge.on('click', $.proxy(this._cancelMonthlyRecharge, this));
+    // this.$wrap_monthly_select_list.on('click', $.proxy(this._onSelectMonthlyAmount, this));
+    // this.$wrap_immediately_select_list.on('click', $.proxy(this._onSelectImmediatelyAmount, this));
   },
 
-  _onSelectImmediatelyAmount: function () {
-    if ( this.$wrap_immediately_select_list.find('input:checked').size() !== 0 ) {
-      this.$btn_recharge_immediately.prop('disabled', false);
-    }
-  },
-
-  _onSelectMonthlyAmount: function () {
-    if ( this.$wrap_monthly_select_list.find('input:checked').size() !== 0 ) {
-      this.$btn_recharge_monthly.prop('disabled', false);
-    }
-  },
+  // _onSelectImmediatelyAmount: function () {
+  //   if ( this.$wrap_immediately_select_list.find('input:checked').size() !== 0 ) {
+  //     this.$btn_recharge_immediately.prop('disabled', false);
+  //   }
+  // },
+  //
+  // _onSelectMonthlyAmount: function () {
+  //   if ( this.$wrap_monthly_select_list.find('input:checked').size() !== 0 ) {
+  //     this.$btn_recharge_monthly.prop('disabled', false);
+  //   }
+  // },
 
   _getReceiveUserInfo: function () {
     this._apiService.request(Tw.API_CMD.BFF_06_0028, { childSvcMgmtNum: '' }).done($.proxy(this._onSuccessReceiveUserInfo, this));
@@ -75,75 +80,82 @@ Tw.MyTDataCookiz.prototype = {
     this.$wrap_immediately_select_list.find('input').each(fnCheckedUI);
   },
 
-  _rechargeImmediately: function () {
-    var htParams = {
-      amt: this.$wrap_immediately_select_list.find('li.checked input').val()
-    };
-
-    this._apiService.request(Tw.API_CMD.BFF_06_0029, htParams)
-      .done($.proxy(this._onSuccessRechargeImmediately, this));
-  },
-
-  _onSuccessRechargeImmediately: function (res) {
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.replaceURL('/myt-data/recharge/cookiz/complete');
-    } else {
-      Tw.Error(res.code, res.msg).pop();
-    }
-  },
-
-  _rechargeMonthly: function () {
-    var htParams = {
-      amt: this.$wrap_monthly_select_list.find('li.checked input').val()
-    };
-
-    this._apiService.request(Tw.API_CMD.BFF_06_0030, htParams)
-      .done($.proxy(this._onSuccessRechargeMonthly, this));
-  },
-
-  _onSuccessRechargeMonthly: function (res) {
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.replaceURL('/myt-data/recharge/cookiz/complete');
-    } else {
-      Tw.Error(res.code, res.msg).pop();
-    }
-  },
-
-  _cancelMonthlyRecharge: function () {
-    this._popupService.openModalTypeA(
-      Tw.MYT_DATA_CANCEL_MONTHLY.TITLE,
-      Tw.MYT_DATA_CANCEL_MONTHLY.CONTENTS,
-      Tw.MYT_DATA_CANCEL_MONTHLY.BTN_NAME,
-      null,
-      $.proxy(this._cancelMonthly, this)
-    );
-  },
-
-  _cancelMonthly: function () {
-    this._popupService.close();
-    this._apiService.request(Tw.API_CMD.BFF_06_0031, {})
-      .done($.proxy(this._onSuccessCancelRechargeMonthly, this));
-  },
-
-  _onSuccessCancelRechargeMonthly: function (res) {
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.reload();
-    } else {
-      Tw.Error(res.code, res.msg).pop();
-    }
-  },
-
-  _validatePhoneNumber: function (sPhone) {
-    if ( sPhone.length < 10 ) {
-      Tw.Error(null, Tw.VALIDATE_MSG_MYT_DATA.V18).pop();
-      return false;
-    }
-
-    if ( !Tw.FormatHelper.isCellPhone(sPhone) ) {
-      Tw.Error(null, Tw.VALIDATE_MSG_MYT_DATA.V9).pop();
-      return false;
-    }
-
-    return true;
+  _goAutoTab: function () {
+    var $tab1 = this.$container.find('#tab1');
+    var $tab2 = this.$container.find('#tab2');
+    $tab1.attr('aria-selected', false);
+    $tab2.attr('aria-selected', true);
   }
+
+  // _rechargeImmediately: function () {
+  //   var htParams = {
+  //     amt: this.$wrap_immediately_select_list.find('li.checked input').val()
+  //   };
+  //
+  //   this._apiService.request(Tw.API_CMD.BFF_06_0029, htParams)
+  //     .done($.proxy(this._onSuccessRechargeImmediately, this));
+  // },
+  //
+  // _onSuccessRechargeImmediately: function (res) {
+  //   if ( res.code === Tw.API_CODE.CODE_00 ) {
+  //     this._historyService.replaceURL('/myt-data/recharge/cookiz/complete');
+  //   } else {
+  //     Tw.Error(res.code, res.msg).pop();
+  //   }
+  // },
+  //
+  // _rechargeMonthly: function () {
+  //   var htParams = {
+  //     amt: this.$wrap_monthly_select_list.find('li.checked input').val()
+  //   };
+  //
+  //   this._apiService.request(Tw.API_CMD.BFF_06_0030, htParams)
+  //     .done($.proxy(this._onSuccessRechargeMonthly, this));
+  // },
+  //
+  // _onSuccessRechargeMonthly: function (res) {
+  //   if ( res.code === Tw.API_CODE.CODE_00 ) {
+  //     this._historyService.replaceURL('/myt-data/recharge/cookiz/complete');
+  //   } else {
+  //     Tw.Error(res.code, res.msg).pop();
+  //   }
+  // },
+  //
+  // _cancelMonthlyRecharge: function () {
+  //   this._popupService.openModalTypeA(
+  //     Tw.MYT_DATA_CANCEL_MONTHLY.TITLE,
+  //     Tw.MYT_DATA_CANCEL_MONTHLY.CONTENTS,
+  //     Tw.MYT_DATA_CANCEL_MONTHLY.BTN_NAME,
+  //     null,
+  //     $.proxy(this._cancelMonthly, this)
+  //   );
+  // },
+  //
+  // _cancelMonthly: function () {
+  //   this._popupService.close();
+  //   this._apiService.request(Tw.API_CMD.BFF_06_0031, {})
+  //     .done($.proxy(this._onSuccessCancelRechargeMonthly, this));
+  // },
+  //
+  // _onSuccessCancelRechargeMonthly: function (res) {
+  //   if ( res.code === Tw.API_CODE.CODE_00 ) {
+  //     this._historyService.reload();
+  //   } else {
+  //     Tw.Error(res.code, res.msg).pop();
+  //   }
+  // },
+
+  // _validatePhoneNumber: function (sPhone) {
+  //   if ( sPhone.length < 10 ) {
+  //     Tw.Error(null, Tw.VALIDATE_MSG_MYT_DATA.V18).pop();
+  //     return false;
+  //   }
+  //
+  //   if ( !Tw.FormatHelper.isCellPhone(sPhone) ) {
+  //     Tw.Error(null, Tw.VALIDATE_MSG_MYT_DATA.V9).pop();
+  //     return false;
+  //   }
+  //
+  //   return true;
+  // }
 };
