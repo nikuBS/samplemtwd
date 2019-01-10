@@ -33,7 +33,6 @@
             <h2 class="blind">내용</h2>
             <div class="container">
                 <hr class="cont-sp type1" aria-hidden="true">
-                <% if( myInfoData.cardIsueTypCd === '1' ){ %>
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <h3 class="tit-type7">개인정보 수정</h3>
@@ -44,65 +43,7 @@
                     </div>
                 </div>
                 <!--// .cont-box -->
-                <% }else if( myInfoData.cardIsueTypCd === '0'){ %>
-                <!-- .cont-box -->
-                <div class="cont-box">
-                    <h3 class="tit-type7">개인정보 수정</h3>
-                    <p class="subtit-info mt2">카드수령 정보(필수)</p>
-                    <div class="form-wrap">
-                        <div id="fe-radio" class="radio-set mt32">
-                            <span class="custom-form"><input type="radio" id="radio1" name="r1" data-type="03" <%= myInfoData.checkHomeChecked %>><span class="r-type1"></span></span>
-                            <label for="radio1" class="lab">자택</label>
-                            <span class="custom-form"><input type="radio" id="radio2" name="r1" data-type="04" <%= myInfoData.checkOfficeChecked %>><span class="r-type1"></span></span>
-                            <label for="radio2" class="lab">직장</label>
-                        </div>
-                        <h4 class="tit-type7 mt16">주소</h4>
-                        <div class="form-address mt10">
-                            <div class="btn-area">
-                                <span class="inputbox">
-                                    <span class="input">
-                                        <input id="fe-zip" type="text" title="우편번호" value="<%= myInfoData.zip %>" readonly="readonly" />
-                                    </span>
-                                    <span class="btn-box">
-                                        <button id="fe-search-zip" type="button" class="btn-round2 btn-style3">우편번호 검색</button>
-                                    </span>
-                                </span>
-                            </div>
-                            <span class="inputbox mt8">
-                                <span class="input">
-                                    <input id="fe-basAddr" type="text" title="상세 주소" value="<%= myInfoData.basAddr %>" readonly="readonly" />
-                                </span>
-                            </span>
-                            <span class="inputbox mt8">
-                                <span class="input">
-                                    <input id="fe-detAddr" type="text" value="<%= myInfoData.dtlAddr %>" title="상세 주소" />
-                                    <button class="cancel"><span class="blind">삭제</span></button>
-                                </span>
-                            </span>
-                        </div>
-                        <h4 class="tit-type7 mt16">전화번호</h4>
-                        <div class="form-phone mt10 mb5">
-                            <span class="select">
-                                <button id="fe-ph-first" class="bt-dropdown big" title="전화번호 앞자리 선택" aria-haspopup="true"><%= myInfoData.cntcNum1 %><span class="ico"></span></button>
-                            </span>
-                            <span class="inputbox">
-                                <span class="input">
-                                    <input id="fe-ph-second" type="number" maxlength="4" title="전화번호 중간자리 입력" value="<%= myInfoData.cntcNum2 %>" onInput="return Tw.InputHelper.inputNumberOnly(this);">
-                                    <button class="cancel"><span class="blind">삭제</span></button>
-                                </span>
-                            </span>
-                            <span class="inputbox">
-                                <span class="input">
-                                    <input id="fe-ph-third" type="number" maxlength="4" title="전화번호 끝자리 입력" value="<%= myInfoData.cntcNum3 %>" onInput="return Tw.InputHelper.inputNumberOnly(this);">
-                                    <button class="cancel"><span class="blind">삭제</span></button>
-                                </span>
-                            </span>
-                        </div>
-                        <p id="fe-validation" class="error-txt" style="display:none;">휴대폰번호 자릿수를 확인해주세요. (10~11자리)</p>
-                    </div>
-                </div>
-                <!--// .cont-box -->
-                <% } %>
+
                 <hr class="cont-sp type1" aria-hidden="true">
 
                 <!-- .cont-box -->
