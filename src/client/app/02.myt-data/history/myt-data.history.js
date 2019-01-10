@@ -94,14 +94,15 @@ Tw.MyTDataHistory.prototype = {
   },
 
   _handleOpenType: function($layer) {
-    $layer.on('click', 'li.type1', $.proxy(this._handleSelectType, this));
+    $layer.on('change', 'li input', $.proxy(this._handleSelectType, this));
   },
 
   _handleSelectType: function(e) {
-    var $target = $(e.currentTarget);
-    var selectedIdx = Number($target.find('input').data('type'));
+    var $target = $(e.currentTarget),
+      $li = $target.parents('label');
+    var selectedIdx = Number($target.data('type'));
 
-    this.$container.find('.bt-select').text($target.find('span.txt').text());
+    this.$container.find('.bt-select').text($li.find('span.txt').text());
 
     this._handleLoadFilteredData(selectedIdx);
     this._popupService.close();

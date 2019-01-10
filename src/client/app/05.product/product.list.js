@@ -124,12 +124,13 @@ Tw.ProductList.prototype = {
   },
 
   _handleOpenOrderPopup: function($layer) {
-    $layer.on('click', 'li.type1', $.proxy(this._handleSelectOrder, this));
+    $layer.on('change', 'li input', $.proxy(this._handleSelectOrder, this));
   },
 
   _handleSelectOrder: function(e) {
-    var $target = $(e.currentTarget);
-    var orderType = $target.find('input').data('order');
+    var $target = $(e.currentTarget),
+      $li = $target.parents('li');
+    var orderType = $target.data('order');
 
     if (this._params.searchOrder === orderType) {
       return;
@@ -138,7 +139,7 @@ Tw.ProductList.prototype = {
     this._params.searchOrder = orderType;
     delete this._params.searchLastProdId;
     delete this._leftCount;
-    this.$orderBtn.text($target.find('.txt').text());
+    this.$orderBtn.text($li.find('.txt').text());
     this.$list.empty();
 
     this._handleLoadMore();

@@ -68,13 +68,11 @@ Tw.MyTDataPrepaidHistory.prototype = {
   },
 
   _handleOpenChangeHistories: function($layer) {
-    $layer.on('click', 'li.type1', $.proxy(this._handleSelectType, this));
+    $layer.on('change', 'li input', $.proxy(this._handleSelectType, this));
   },
 
   _handleSelectType: function(e) {
-    var type = $(e.currentTarget)
-        .find('input')
-        .data('type'),
+    var type = $(e.currentTarget).data('type'),
       count = this.$totalCount.data(type);
 
     if (type === this._currentType) {
@@ -215,7 +213,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
       date: Tw.DateHelper.getShortDate(history.chargeDt),
       payment:
         history.cardNm && history.wayCd !== '99' ? 
-          Tw.PREPAID_PAYMENT_TYPE[history.wayCd] + '(' + history.cardNm + ')' : 
+          Tw.PREPAID_PAYMENT_TYPE[history.wayCd] + '(' + history.cardNm + ')' :
           Tw.PREPAID_PAYMENT_TYPE[history.wayCd]
     });
 

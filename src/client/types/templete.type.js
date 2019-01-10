@@ -472,18 +472,18 @@ Tw.MYT_TPL = {
 };
 
 Tw.MYT_DATA_CHARGE_TYPE_LIST = [
-  { txt: '전체', 'radio-attr': 'data-type="5"' },
-  { txt: 'T끼리 데이터 선물', 'radio-attr': 'data-type="0"' },
-  { txt: '데이터 한도 충전', 'radio-attr': 'data-type="1"' },
-  { txt: '팅/쿠키즈/안심요금', 'radio-attr': 'data-type="2"' },
-  { txt: '팅 요금 선물', 'radio-attr': 'data-type="3"' },
-  { txt: '데이터 음성 리필', 'radio-attr': 'data-type="4"' }
+  { txt: '전체', 'radio-attr': 'data-type="5"', 'label-attr': ' ' },
+  { txt: 'T끼리 데이터 선물', 'radio-attr': 'data-type="0"', 'label-attr': ' ' },
+  { txt: '데이터 한도 충전', 'radio-attr': 'data-type="1"', 'label-attr': ' ' },
+  { txt: '팅/쿠키즈/안심요금', 'radio-attr': 'data-type="2"', 'label-attr': ' ' },
+  { txt: '팅 요금 선물', 'radio-attr': 'data-type="3"', 'label-attr': ' ' },
+  { txt: '데이터 음성 리필', 'radio-attr': 'data-type="4"', 'label-attr': ' ' }
 ];
 
 Tw.PRODUCT_LIST_ORDER = [
-  { txt: '추천순', 'radio-attr': 'data-order="recommand"' },
-  { txt: '높은 가격순', 'radio-attr': 'data-order="highprice"' },
-  { txt: '낮은 가격순', 'radio-attr': 'data-order="lowprice"' }
+  { txt: '추천순', 'radio-attr': 'data-order="recommand"', 'label-attr': ' ' },
+  { txt: '높은 가격순', 'radio-attr': 'data-order="highprice"', 'label-attr': ' ' },
+  { txt: '낮은 가격순', 'radio-attr': 'data-order="lowprice"', 'label-attr': ' ' }
 ];
 
 Tw.TERMS_ACTION = {
@@ -533,20 +533,20 @@ Tw.CUSTOMER_HELPLINE_AREAS = [
 ];
 
 Tw.CUSTOMER_PRAISE_SUBJECT_TYPES = [
-  { txt: '지점', 'radio-attr': 'data-index="0" data-code="T40"' },
-  { txt: '대리점', 'radio-attr': 'data-index="1" data-code="T10"' },
-  { txt: '고객센터', 'radio-attr': 'data-index="2" data-code="T30"' },
-  { txt: '통화품질 기준 매니저', 'radio-attr': 'data-index="3" data-code="T50"' },
-  { txt: 'A/S센터', 'radio-attr': 'data-index="4" data-code="T20"' },
-  { txt: '행복기사(SK브로드밴드)', 'radio-attr': 'data-index="5" data-code="T60"' }
+  { txt: '지점', 'radio-attr': 'data-index="0" data-code="T40"', 'label-attr': ' ' },
+  { txt: '대리점', 'radio-attr': 'data-index="1" data-code="T10"', 'label-attr': ' ' },
+  { txt: '고객센터', 'radio-attr': 'data-index="2" data-code="T30"', 'label-attr': ' ' },
+  { txt: '통화품질 기준 매니저', 'radio-attr': 'data-index="3" data-code="T50"', 'label-attr': ' ' },
+  { txt: 'A/S센터', 'radio-attr': 'data-index="4" data-code="T20"', 'label-attr': ' ' },
+  { txt: '행복기사(SK브로드밴드)', 'radio-attr': 'data-index="5" data-code="T60"', 'label-attr': ' ' }
 ];
 
 Tw.CUSTOMER_PRAISE_AREAS = [
-  { txt: '서울·인천·경기', 'radio-attr': 'data-code="A10"' },
-  { txt: '강원·충청·대전', 'radio-attr': 'data-code="A20"' },
-  { txt: '전북·전남·광주·제주', 'radio-attr': 'data-code="A30"' },
-  { txt: '부산·경남', 'radio-attr': 'data-code="A40"' },
-  { txt: '대구·경북', 'radio-attr': 'data-code="A50"' }
+  { txt: '서울·인천·경기', 'radio-attr': 'data-code="A10"', 'label-attr': ' ' },
+  { txt: '강원·충청·대전', 'radio-attr': 'data-code="A20"', 'label-attr': ' ' },
+  { txt: '전북·전남·광주·제주', 'radio-attr': 'data-code="A30"', 'label-attr': ' ' },
+  { txt: '부산·경남', 'radio-attr': 'data-code="A40"', 'label-attr': ' ' },
+  { txt: '대구·경북', 'radio-attr': 'data-code="A50"', 'label-attr': ' ' }
 ];
 
 Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
@@ -768,8 +768,8 @@ Tw.SUSPEND_RELATION = {
 };
 
 Tw.PREPAID_HISTORIES = [
-  { txt: '음성 충전', 'radio-attr': 'data-type="voice"' }, 
-  { txt: '데이터 충전', 'radio-attr': 'data-type="data"' }
+  { txt: '음성 충전', 'radio-attr': 'data-type="voice"', 'label-attr': ' ' }, 
+  { txt: '데이터 충전', 'radio-attr': 'data-type="data"', 'label-attr': ' ' }
 ];
 
 Tw.PREPAID_BADGES = {

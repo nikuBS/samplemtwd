@@ -70,14 +70,14 @@ Tw.CustomerPraise.prototype = {
   },
 
   _handleOpenSelectType: function($layer) {
-    $layer.on('click', 'li.type1', $.proxy(this._handleSelectType, this));
+    $layer.on('change', 'li input', $.proxy(this._handleSelectType, this));
   },
 
   _handleSelectType: function(e) {
     var $target = $(e.currentTarget),
-      $input = $target.find('input'),
-      selectedValue = $target.find('.txt').text(),
-      code = $input.data('code');
+      $li = $target.parents('li'),
+      selectedValue = $li.find('.txt').text(),
+      code = $target.data('code');
 
     if (this._selectedType === code) {
       return this._popupService.close();
@@ -171,13 +171,13 @@ Tw.CustomerPraise.prototype = {
   },
 
   _handleOpenSelectArea: function($layer) {
-    $layer.on('click', 'li.type1', $.proxy(this._handleSelectArea, this));
+    $layer.on('change', 'li input', $.proxy(this._handleSelectArea, this));
   },
 
   _handleSelectArea: function(e) {
     var $target = $(e.currentTarget),
-      $input = $target.find('input');
-    var code = $input.data('code');
+      $li = $target.parents('li');
+    var code = $target.data('code');
 
     if (this._selectedArea === code) {
       this._popupService.close();
@@ -185,7 +185,7 @@ Tw.CustomerPraise.prototype = {
     }
 
     this._selectedArea = code;
-    this.$area.find('button').text($target.find('.txt').text());
+    this.$area.find('button').text($li.find('.txt').text());
     this._setAvailableSubmit();
     this._popupService.close();
   },
