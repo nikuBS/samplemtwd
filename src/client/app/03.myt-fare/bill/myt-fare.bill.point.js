@@ -55,62 +55,7 @@ Tw.MyTFareBillPoint.prototype = {
     }
   },
   _openGetPoint: function () {
-    this._popupService.open({
-      'hbs':'MF_01_03_01'
-    }, $.proxy(this._setPoint, this), null, 'get-point');
-  },
-  _setPoint: function ($layer) {
-    $layer.on('keyup', '.fe-point-card-number', $.proxy(this._checkIsLayerAbled, this, $layer));
-    $layer.on('input', '.fe-point-card-number', $.proxy(this._setMaxValue, this));
-    $layer.on('blur', '.fe-point-card-number', $.proxy(this._checkCardNumber, this, $layer));
-    $layer.on('change', '.fe-cashbag-agree', $.proxy(this._checkIsLayerAbled, this, $layer));
-    $layer.on('click', '.cancel', $.proxy(this._checkIsLayerAbled, this, $layer));
-    $layer.on('click', '.fe-get', $.proxy(this._getPoint, this));
-  },
-  _checkIsLayerAbled: function ($layer) {
-    if ($layer.find('.fe-point-card-number').val() !== '' &&
-      $layer.find('.fe-cashbag-agree').hasClass('checked')) {
-      $layer.find('.fe-get').removeAttr('disabled');
-    } else {
-      $layer.find('.fe-get').attr('disabled', 'disabled');
-    }
-  },
-  _setMaxValue: function (event) {
-    var $target = $(event.currentTarget);
-    var maxLength = $target.attr('maxLength');
-    if ($target.attr('maxLength')) {
-      if ($target.val().length >= maxLength) {
-        $target.val($target.val().slice(0, maxLength));
-      }
-    }
-  },
-  _checkCardNumber: function ($layer) {
-    var $pointCardNumber = $layer.find('.fe-point-card-number');
-    this._pointCardNumber = $.trim($pointCardNumber.val());
-    this.$isValid = this._validation.showAndHideErrorMsg($pointCardNumber, this._validation.checkMoreLength($pointCardNumber, 16));
-  },
-  _getPoint: function () {
-    if (this.$isValid) {
-      this._apiService.request(Tw.API_CMD.BFF_07_0043, { 'ocbCcno': this._pointCardNumber })
-        .done($.proxy(this._getSuccess, this))
-        .fail($.proxy(this._getFail, this));
-    }
-  },
-  _getSuccess: function (res) {
-    if (res.code === Tw.API_CODE.CODE_00) {
-      this._popupService.close();
-      this._setPointInfo(res.result);
-
-      this.$pointBox.show();
-      this.$getPointBtn.hide();
-
-      this.$isChanged = true;
-    } else {
-      this._getFail(res);
-    }
-  },
-  _getFail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
+    new Tw.MyTFareBillGetPoint(this.$container, $.proxy(this._setPointInfo, this));
   },
   _setPointInfo: function (result) {
     this.$container.find('.fe-cashbag-point').attr('id', result.availPt).text(Tw.FormatHelper.addComma(result.availPt.toString()));
