@@ -41,12 +41,14 @@
             <% } %>
         </ul>
 
+        <% if (roamingFeePlan.roamingProdList.length !== 0 && wirelessAdd.isAdditionUse !== 'Y') { %>
         <div class="arrival-noti">
             <a href="/product/callplan/NA00003200" style="text-decoration:none; color:#000000;">
             <span class="tit">T로밍 도착알리미를 신청해 보세요.</span>
             <span class="txt">해외 도착 시 지인에게<br>도착알림 문자가 발송됩니다</span>
             </a>
         </div>
+        <% } %>
 
         <ul class="bt-slice">
             <li class="bt-blue1">

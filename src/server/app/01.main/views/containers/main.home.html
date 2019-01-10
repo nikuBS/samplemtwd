@@ -133,7 +133,7 @@
                                     <% if(homeData.usageData.data.isTplanUse) { %>
                                     <span class="category1"><span><em class="data"><%= homeData.usageData.data.showShareRemained %></em>T가족모아데이터</span></span>
                                     <% } else { %>
-                                    <span class="category1"><span>T가족모아데이터</span><button class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
+                                    <span class="category1"><span>T가족모아데이터</span><button id="HO_tip_01" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
                                     <% } %>
                                 </div>
                                 <% } %>
@@ -219,7 +219,7 @@
                             <!-- //모바일 회선_잔여 데이터 -->
                             <% } else if (homeData.usageData.code === 'BLN0001') { %>
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.svcNum %></button></em>
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.usageData.showSvcNum %></button></em>
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잠시 후 다시 이용해 주세요</strong>
@@ -229,16 +229,16 @@
                             </div>
                             <% } else if (homeData.usageData.code === 'BLN0003') { %>
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.svcNum %></button></em>
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.usageData.showSvcNum %></button></em>
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                                    <p class="tx">정지 이력이 있어 잔여량 조회 서비스를<br>이용하실 수 없습니다.<br>자세한 사항은 고객센터나 <button class="bt">이메일</button>로<br> 문의해 주시기 바랍니다</p>
+                                    <p class="tx">정지 이력이 있어 잔여량 조회 서비스를<br>이용하실 수 없습니다.<br>자세한 사항은 고객센터나 <a href="/customer/emailconsult" class="bt">이메일</a>로<br> 문의해 주시기 바랍니다</p>
                                 </div>
                             </div>
                             <% } else { %>
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.svcNum %></button></em>
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.usageData.showSvcNum %></button></em>
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
@@ -638,19 +638,19 @@
                                 <strong class="ti">할인된 가격으로<br>인기 스마트폰 구매</strong>
                                 <span class="tx">SK텔레콤 고객을 위한 공시 지원금에 추가 지원금 할인</span>
                                 <ul class="info">
-                                    <li>
+                                    <li id="fe-bt-iphone-xs">
                                         <span class="img"><img src="<%= CDN %>/img/main/img_phone01.png" alt=""></span>
                                         <strong class="ti">iPhone XS</strong>
                                         <em class="tx">56,270원~/월</em>
                                         <span class="tag"><i class="icon-new"><span class="blind">NEW</span></i></span>
                                     </li>
-                                    <li>
+                                    <li id="fe-bt-iphone-xr">
                                         <span class="img"><img src="<%= CDN %>/img/main/img_phone02.png" alt=""></span>
                                         <strong class="ti">iPhone XR</strong>
                                         <em class="tx">39,711원~/월</em>
                                         <span class="tag"><i class="icon-hot"><span class="blind">HOT</span></i></span>
                                     </li>
-                                    <li>
+                                    <li id="fe-bt-galaxy-s9">
                                         <span class="img"><img src="<%= CDN %>/img/main/img_phone03.png" alt=""></span>
                                         <strong class="ti">갤럭시 노트9갤럭시 노트9</strong>
                                         <em class="tx">40,415원~/월</em>
@@ -742,7 +742,7 @@
                                     </li>
                                     <li>
                                         <a href="/product/callplan/NA00004136" class="bt-cont-box">
-                                            <strong class="ti ti-type">분실폰찾기 분실폰찾기분실폰찾기 분실폰찾기분실폰찾기 분실폰찾기분실폰찾기 분실폰찾기</strong>
+                                            <strong class="ti">분실폰찾기 분실폰찾기분실폰찾기 분실폰찾기분실폰찾기 분실폰찾기분실폰찾기 분실폰찾기</strong>
                                             <em class="sum">무료</em>
                                             <span class="tag">혜택 · 편의</span>
                                             <span class="tx">스마트폰을 분실했을 때  관리할 수 있는 통합서비스(기기잠금, 개인정보 삭제, 위치조회서비스 등 제공)</span>

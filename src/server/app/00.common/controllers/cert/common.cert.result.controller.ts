@@ -8,6 +8,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { AUTH_CERTIFICATION_KIND, NICE_TYPE, AUTH_CERTIFICATION_METHOD } from '../../../../types/bff.type';
+import { NODE_API_ERROR } from '../../../../types/string.type';
 
 class CommonCertResult extends TwViewController {
   constructor() {
@@ -35,16 +36,28 @@ class CommonCertResult extends TwViewController {
         this.sendResult(req, res, API_CMD.BFF_01_0025, { EncodeData: req.body.EncodeData });
       }
     } else {
-      // error
+      res.render('cert/common.cert.result.html', {
+        target: AUTH_CERTIFICATION_METHOD.IPIN,
+        code: API_CODE.NODE_1002,
+        msg: NODE_API_ERROR[API_CODE.NODE_1002] + `(type: ${certType})`
+      });
     }
   }
 
   private sendResult(req, res, command, params) {
     this.apiService.request(command, params).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        res.redirect('/common/cert/complete?target=' + AUTH_CERTIFICATION_METHOD.IPIN);
+        res.render('cert/common.cert.result.html', {
+          target: AUTH_CERTIFICATION_METHOD.IPIN,
+          code: resp.code,
+          msg: resp.msg
+        });
       } else {
-        // error
+        res.render('cert/common.cert.result.html', {
+          target: AUTH_CERTIFICATION_METHOD.IPIN,
+          code: resp.code,
+          msg: resp.msg
+        });
       }
     });
   }

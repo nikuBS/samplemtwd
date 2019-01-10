@@ -3,7 +3,9 @@ import LoggerService from './logger.service';
 import { SvcInfoModel } from '../models/svc-info.model';
 import { Observable } from 'rxjs/Observable';
 import { BUILD_TYPE, COOKIE_KEY } from '../types/common.type';
+import { XTRACTOR_KEY } from '../types/config.type';
 import EnvHelper from '../utils/env.helper';
+import CryptoHelper from '../utils/crypto.helper';
 
 class LoginService {
   static instance;
@@ -66,6 +68,8 @@ class LoginService {
   public setSvcInfo(svcInfo: any): Observable<any> {
     return Observable.create((observer) => {
       this.response.cookie(COOKIE_KEY.TWM_LOGIN, 'Y');
+      this.setXtractorCookie(svcInfo);
+
       if ( FormatHelper.isEmpty(this.request.session.svcInfo) ) {
         this.request.session.svcInfo = new SvcInfoModel(svcInfo);
       } else {
@@ -77,6 +81,22 @@ class LoginService {
         observer.complete();
       });
     });
+  }
+
+  private setXtractorCookie(svcInfo: any): any {
+    this.response.clearCookie(COOKIE_KEY.XTLID);
+    this.response.clearCookie(COOKIE_KEY.XTLOGINID);
+    this.response.clearCookie(COOKIE_KEY.XTLOGINTYPE);
+
+    if (!FormatHelper.isEmpty(svcInfo.svcMgmtNum)) {
+      this.response.cookie(COOKIE_KEY.XTLID, CryptoHelper.encrypt(svcInfo.svcMgmtNum, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB));
+    }
+
+    if (!FormatHelper.isEmpty(svcInfo.userId)) {
+      this.response.cookie(COOKIE_KEY.XTLOGINID, CryptoHelper.encrypt(svcInfo.userId, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB));
+    }
+
+    this.response.cookie(COOKIE_KEY.XTLOGINTYPE, svcInfo.loginType === 'E' ? 'Z' : 'A');
   }
 
   public getAllSvcInfo(req?): any {

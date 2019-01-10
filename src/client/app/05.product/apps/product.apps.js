@@ -70,7 +70,7 @@ Tw.ProductApps.prototype = {
       );
     } else {
       this._apps = _.map(apps, function(app) {
-        app.isNew = Tw.DateHelper.getDifference(app.newIconExpsEndDtm) > 0;
+        app.isNew = Tw.DateHelper.getDifference(app.newIconExpsEndDtm.substring(0, 8)) > 0;
         if (app.iconImg && app.iconImg.indexOf('http') < 0) {
           app.iconImg = Tw.Environment.cdn + app.iconImg;
         }
@@ -95,7 +95,7 @@ Tw.ProductApps.prototype = {
     );
 
     this._apps = _.map(apps, function(app) {
-      app.isNew = Tw.DateHelper.getDifference(app.newIconExpsEndDtm) > 0;
+      app.isNew = Tw.DateHelper.getDifference(app.newIconExpsEndDtm.substring(0, 8)) > 0;
       app.isInstalled = list[app.prodNm] || false;
       app.iconImg = Tw.Environment.cdn + app.iconImg;
 

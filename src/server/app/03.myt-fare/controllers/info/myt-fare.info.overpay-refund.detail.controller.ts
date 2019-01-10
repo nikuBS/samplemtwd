@@ -43,8 +43,8 @@ class MyTFareInfoOverpayRefund extends TwViewController {
           return this._renderError(null, MYT_PAYMENT_DETAIL_ERROR.MSG, res, svcInfo);
         }
 
-        resultData.reqDt = DateHelper.getShortMonthDate(resultData.effStaDt); // 신청일자
-        resultData.dataDt = resultData.rfndReqDt ? DateHelper.getShortMonthDate(resultData.rfndReqDt) : ''; // 처리일자 
+        resultData.reqDt = DateHelper.getShortDate(resultData.effStaDt); // 신청일자
+        resultData.dataDt = resultData.rfndReqDt ? DateHelper.getShortDate(resultData.rfndReqDt) : ''; // 처리일자 
         resultData.dataAmt = FormatHelper.addComma(resultData.sumAmt); // 신청금액 / 합계 금액
         resultData.dataOverAmt = FormatHelper.addComma(resultData.ovrPay); // 과납금액
         resultData.dataBondAmt = FormatHelper.addComma(resultData.rfndObjAmt); // 채권보존료

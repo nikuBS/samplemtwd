@@ -8,7 +8,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CommonCertComplete('<%= target %>');
+    new Tw.CommonCertResult('<%= target %>', '<%= code %>', '<%= msg %>');
   });
 </script>
 <% include ../../components/end.component.html %>

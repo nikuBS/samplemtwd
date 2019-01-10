@@ -75,7 +75,7 @@ class MyTJoinMyPlanAdd extends TwViewController {
       ...addition,
       ...(addition.btnList && addition.btnList.length > 0 ? { btnList: addition.btnList.sort(this._sortButtons) } : {}),
       basFeeTxt: FormatHelper.getFeeContents(addition.basFeeTxt),
-      scrbDt: DateHelper.getShortDateNoDot(addition.scrbDt)
+      scrbDt: DateHelper.getShortDate(addition.scrbDt)
     };
   }
 

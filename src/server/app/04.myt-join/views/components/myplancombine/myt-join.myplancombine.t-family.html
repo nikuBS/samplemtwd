@@ -66,7 +66,7 @@
                                             <div class="num"><%= member.svcNum %></div>
                                         </div>
                                         <div class="list-data">
-                                            <span class="vol">-<%= member.basFeeDcTx %></span>원 할인
+                                            할인 후 <span class="vol"><%= member.basFeeDcTx %></span>원
                                         </div>
                                         <div class="list-arrow">
                                             <span class="ico-arrow"></span>
@@ -81,17 +81,17 @@
                                             <dl>
                                                 <dt>가족대표와의 관계</dt>
                                                 <dd>
-                                                    <%= member.relClNm %><%= isMine? '(내번호)': ''%><br />
+                                                    <%= member.relClNm %><%= isMine? '(내 번호)': ''%><br />
                                                     <% if (isMine && isRep || groupInfo.mblSvcCnt < 2) { %><a class="bt-link-tx underline red" href="/product/callplan/<%= prodId %>">해지</a><% } %>
                                                 </dd>
                                             </dl>
                                         </li>
-                                        <li><dl><dt>휴대폰 가입년수</dt><dd><%= member.useYySum %>년</dd></dl></li>
+                                        <li><dl><dt>휴대폰 가입 연수</dt><dd><%= member.useYySum %>년</dd></dl></li>
                                         <li><dl><dt>B가입기간</dt><dd><%= member.bIdx >= 0 ? combination.combinationWireMemberList[member.bIdx].useYySum + '년' : '-' %></dd></dl></li>
-                                        <li><dl><dt>월정액할인율</dt><dd><%= member.tcFeeBenf %></dd></dl></li>
+                                        <li><dl><dt>월정액 할인율</dt><dd><%= member.tcFeeBenf %></dd></dl></li>
                                         <li><dl><dt>사용중인 요금제</dt><dd><a class="bt-link-tx underline" href="/product/callplan/<%= member.feeProdId %>"><%= member.feeProdNm %></a></dd></dl></li>
                                         <li><dl><dt>할인 전 금액</dt><dd><%= member.basFeeAmtTx %> 원</dd></dl></li>
-                                        <li><dl><dt>할인 금액</dt><dd>- <%= member.basFeeDcTx %> 원</dd></dl></li>
+                                        <li><dl><dt>할인금액</dt><dd>- <%= member.basFeeDcTx %> 원</dd></dl></li>
                                         <li><dl><dt>할인 후 금액</dt><dd><strong><%= member.aftBasFeeAmtTx %></strong> 원</dd></dl></li>
                                     </ul>
                                 </div>
@@ -112,8 +112,8 @@
 <div class="cont-box nogaps-btm">
     <h3 class="tx-bold">꼭 확인해 주세요</h3>
     <ul class="noti-list">
-        <li>band 데이터 요금제 <button id="MS_07_01_01_tip_01" type="button" class="tip-view" title="band 데이터 요금제" aria-haspopup="true">TIP</button></li>
-        <li>실제 할인 금액 <button id="MS_07_01_01_tip_02" type="button" class="tip-view" title="실제 할인 금액" aria-haspopup="true">TIP</button></li>
+        <li>band데이터 요금제 <button id="MS_07_01_01_tip_01" type="button" class="tip-view" title="band 데이터 요금제" aria-haspopup="true">TIP</button></li>
+        <li>실제 할인금액 <button id="MS_07_01_01_tip_02" type="button" class="tip-view" title="실제 할인 금액" aria-haspopup="true">TIP</button></li>
         <li>통화료 내역 제외 <button id="MS_07_01_01_tip_03" type="button" class="tip-view" title="통화료 내역 제외" aria-haspopup="true">TIP</button></li>
         <li>더블할인 혜택 이용 고객 <button id="MS_07_01_01_tip_04" type="button" class="tip-view" title="더블할인 혜택 이용 고객" aria-haspopup="true">TIP</button></li>
         <li>가입연수 산정 <button id="MS_07_01_01_tip_05" type="button" class="tip-view" title="가입연수 산정" aria-haspopup="true">TIP</button></li>

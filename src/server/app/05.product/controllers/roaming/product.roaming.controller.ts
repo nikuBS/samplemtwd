@@ -9,7 +9,7 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
-import { REDIS_BANNER_ADMIN } from '../../../../types/redis.type';
+import { REDIS_KEY } from '../../../../types/redis.type';
 import ProductHelper from '../../../../utils/product.helper';
 
 export default class ProductRoaming extends TwViewController {
@@ -100,7 +100,7 @@ export default class ProductRoaming extends TwViewController {
   }
 
   private getBanners(pageInfo): Observable<any> {
-    return this.redisService.getData(REDIS_BANNER_ADMIN + pageInfo.menuId).map((resp) => {
+    return this.redisService.getData(REDIS_KEY.BANNER_ADMIN + pageInfo.menuId).map((resp) => {
       if ( resp.code !== API_CODE.REDIS_SUCCESS ) {
         return {
           code: resp.code,

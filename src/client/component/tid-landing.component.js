@@ -35,6 +35,7 @@ Tw.TidLandingComponent.prototype = {
     }
   },
   goLogin: function (target) {
+    target = target || '/main/home';
     this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login?target=' + target, $.proxy(this._onNativeLogin, this, target));
   },
   goSLogin: function () {
@@ -104,6 +105,7 @@ Tw.TidLandingComponent.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( Tw.BrowserHelper.isApp() ) {
         this._apiService.sendNativeSession(Tw.AUTH_LOGIN_TYPE.TID, $.proxy(this._successSetSession, this));
+        Tw.CommonHelper.setXtSvcInfo();
       } else {
         this._historyService.reload();
         // this._historyService.goLoad('/main/home');
