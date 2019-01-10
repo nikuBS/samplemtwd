@@ -48,17 +48,17 @@ Tw.MyTDataGift.prototype = {
   },
 
   _onSuccessRecently: function (res) {
-    var tempAddr = [];
+    var tempContactList = [];
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var contactList = res.result;
 
-      var list = contactList.filter(function (item) {
-        if ( tempAddr.includes(item.svcNum) ) {
-          return false;
+      var list = _.filter(contactList, function (contact) {
+        if ( tempContactList.indexOf(contact.svcNum) === -1 ) {
+          tempContactList.push(contact.svcNum);
+          return true;
         }
-        tempAddr.push(item.svcNum);
-        return true;
+        return false;
       });
 
       var filteredList = list.splice(0, 3).map(function (item) {
@@ -132,7 +132,7 @@ Tw.MyTDataGift.prototype = {
         this._popupService.close();
       }, this),
       $.proxy(function () {
-        if (confirmed) {
+        if ( confirmed ) {
           this._historyService.goBack();
         }
       }, this),
