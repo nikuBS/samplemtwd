@@ -87,6 +87,9 @@ Tw.MainHome.prototype = {
     this.$container.on('click', '#fe-bt-direct-tablet', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_TABLET));
     this.$container.on('click', '#fe-bt-direct-nugu', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_NUGU));
     this.$container.on('click', '.fe-bt-direct-nugu', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_NUGU));
+    this.$container.on('click', '#fe-bt-iphone-xs', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.IPHONE_XS));
+    this.$container.on('click', '#fe-bt-iphone-xr', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.IPHONE_XR));
+    this.$container.on('click', '#fe-bt-galaxy-s9', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.GALAXY_S9));
   },
   _bindEventLogin: function () {
     this.$container.on('click', '.fe-bt-home-login', $.proxy(this._onClickLogin, this));
