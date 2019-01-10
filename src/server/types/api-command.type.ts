@@ -754,6 +754,7 @@ export const API_CODE = {
   REDIS_ERROR: '02',
 
   NODE_1001: '1001',    // login 필요
+  NODE_1002: '1002',    // 인증 오류
 
   CODE_200: '200',
   CODE_400: '400',

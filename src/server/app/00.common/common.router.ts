@@ -11,7 +11,7 @@ import CommonCertMotpFail from './controllers/cert/common.cert.motp-fail.control
 import CommonCertPublicExport from './controllers/cert/common.cert.public-export.controller';
 import CommonCertNice from './controllers/cert/common.cert.nice.controller';
 import CommonCertIpin from './controllers/cert/common.cert.ipin.controller';
-import CommonCertComplete from './controllers/cert/common.cert.complete.controller';
+// import CommonCertComplete from './controllers/cert/common.cert.complete.controller';
 import CommonMemberLine from './controllers/member/common.member.line.controller';
 import CommonMemberLineEdit from './controllers/member/common.member.line.edit.controller';
 import CommonMemberLineBizRegister from './controllers/member/common.member.line.biz-register.controller';
@@ -66,7 +66,7 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push({ url: '/cert/nice/refund', controller: CommonCertNiceRefund });
     this.controllers.push({ url: '/cert/ipin', controller: CommonCertIpin });
     this.controllers.push({ url: '/cert/ipin/refund', controller: CommonCertIpinRefund });
-    this.controllers.push({ url: '/cert/complete', controller: CommonCertComplete });
+    // this.controllers.push({ url: '/cert/complete', controller: CommonCertComplete });
     this.controllers.push( {url: '/cert/result', controller: CommonCertResult, post: true});
 
     // member - login
