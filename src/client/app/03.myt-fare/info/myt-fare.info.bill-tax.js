@@ -121,7 +121,7 @@ Tw.MyTFareInfoBillTax.prototype = {
     );
   },
   _openResendByFaxCallback: function ($container) {
-    this.$faxNumberInput = $container.find('.input input[type="number"]');
+    this.$faxNumberInput = $container.find('.input input[type="tel"]');
     this.$rerequestSendBtn = $container.find('.bt-slice button');
     this.$rerequestSendBtn.on('click', $.proxy(this._sendRerequestByFax, this));
     this.$faxNumberInput.on('keyup', $.proxy(this._checkFaxNumber, this));
