@@ -476,7 +476,7 @@ Tw.MyTFareSubMain.prototype = {
         name    = $target.attr('data-name');
     if ( mgmtNum ) {
       // 기준회선변경
-      var defaultLineInfo = this.data.svcInfo.svcNum + ' ' + this.data.svcInfo.nickNm;
+      var defaultLineInfo = this.data.svcInfo.svcNum + ' ' + (this.data.svcInfo.nickNm || this.data.svcInfo.eqpMdlNm);
       var selectLineInfo = number + ' ' + name;
       this.changeLineMgmtNum = mgmtNum;
       this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,
