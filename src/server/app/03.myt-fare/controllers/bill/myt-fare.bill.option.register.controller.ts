@@ -10,6 +10,7 @@ import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import {MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_NAME, MYT_FARE_PAYMENT_TYPE} from '../../../../types/bff.type';
 import BrowserHelper from '../../../../utils/browser.helper';
+import FormatHelper from '../../../../utils/format.helper';
 
 class MyTFareBillOptionRegister extends TwViewController {
   constructor() {
@@ -68,7 +69,24 @@ class MyTFareBillOptionRegister extends TwViewController {
       result.type = 'new';
       result.isAuto = false;
     }
+
+    result.bankList = this.getBankList(result.lBankArray);
     return result;
+  }
+
+  private getBankList(bankArray: any[]): any {
+    const bankList: any = [];
+    if (!FormatHelper.isEmpty(bankArray)) {
+      for (let i = 0; i < bankArray.length; i++) {
+        const obj = {
+          bankCardCoCd: bankArray[i].commCdVal,
+          bankCardCoNm: bankArray[i].commCdValNm
+        };
+        bankList.push(obj);
+      }
+      return JSON.stringify(bankList);
+    }
+    return bankList;
   }
 }
 
