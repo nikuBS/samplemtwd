@@ -22,7 +22,9 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     this._bindEvent();
   },
   _initVariables: function ($targetId) {
+    this.$pointWrap = this.$container.find('.fe-point-wrap');
     this.$standardPoint = this.$container.find('.fe-standard-point');
+    this.$getPointBtn = this.$container.find('.fe-get-point');
     this.$autoInfo = this.$container.find('.fe-auto-info');
     this.$selectedTab = this.$container.find('#' + $targetId + '-tab');
     this.$pointCardNumber = this.$selectedTab.find('.fe-point-card');
@@ -39,6 +41,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     this.$isSelectValid = true;
   },
   _bindEvent: function () {
+    this.$container.on('click', '.fe-get-point', $.proxy(this._openGetPoint, this));
     this.$container.on('click', '.fe-tab-selector > li', $.proxy(this._changeTab, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.fe-only-number', $.proxy(this._checkNumber, this));
@@ -54,6 +57,24 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     this.$container.on('click', '.fe-tab1-pay', $.proxy(this._onePay, this));
     this.$container.on('click', '.fe-tab2-pay', $.proxy(this._autoPay, this));
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
+  },
+  _openGetPoint: function () {
+    new Tw.MyTFareBillGetPoint(this.$container, $.proxy(this._setPointInfo, this));
+  },
+  _setPointInfo: function (result) {
+    var $point = 0;
+    if (this.$pointType === 'CPT') {
+      $point = result.availPt;
+    } else {
+      $point = result.availTpt;
+    }
+
+    this.$standardPoint.attr('id', $point).text(Tw.FormatHelper.addComma($point));
+    this.$pointCardNumber.val(result.ocbCcno).attr('readonly', true);
+    this.$selectedTab.siblings().find('.fe-point-card').val(result.ocbCcno).attr('readonly', true);
+
+    this.$pointWrap.removeClass('none');
+    this.$getPointBtn.hide();
   },
   _changeTab: function (event) {
     var $targetId = $(event.currentTarget).attr('id');

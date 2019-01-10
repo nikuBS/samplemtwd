@@ -37,7 +37,14 @@
                                 <div class="charge-cont">
                                     <span class="sub-disc01">OK캐쉬백<button id="MF_01_05_tip_03" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
                                     <span class="tit tx-blue">
-                                        <span id="<%= cashbag.availPt %>" class="charge-txt fe-standard-point"><%= cashbag.point %></span>점
+                                        <% if (cashbag.svcYN === 'Y') { %>
+                                        <span id="<%= cashbag.availTPt %>" class="charge-txt fe-standard-point"><%= cashbag.point %></span>점
+                                        <% } else { %>
+                                        <span class="fe-point-wrap none">
+                                            <span class="charge-txt fe-standard-point"></span>점
+                                        </span>
+                                        <button class="fe-get-point">조회하기</button>
+                                        <% } %>
                                     </span>
                                 </div>
                                 <ul class="round-dot-list type01 mb20">
@@ -91,9 +98,13 @@
                                                             <label class="tit" for="formInput02">OK캐쉬백 카드번호</label>
                                                             <span class="inputbox">
 																<span class="input">
+                                                                    <% if (cashbag.svcYN === 'Y') { %>
+                                                                    <input class="fe-point-card" type="text" value="<%= cashbag.ocbCcno %>" readonly />
+                                                                    <% } else { %>
 																	<input id="formInput02" class="fe-point-card required-input-field fe-only-number" maxlength="16"
                                                                            inputmode="numeric" min="0" pattern="[0-9]*" type="number" placeholder="숫자만 입력" />
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
+                                                                    <% } %>
 																</span>
                                                                 <span class="error-txt fe-error-msg" style="display:none;">카드번호가 올바르지 않습니다.</span>
 															</span>
@@ -138,9 +149,13 @@
                                                                     <input id="<%= cashbag.ocbCcno %>" class="fe-point-card"
                                                                            value="<%= cashbag.cardNumber %>" type="text" readOnly />
                                                                     <% } else { %>
-                                                                    <input id="<%= cashbag.ocbCcno %>" class="fe-point-card required-input-field fe-only-number"
-                                                                           inputmode="numeric" min="0" pattern="[0-9]*" type="number"
-                                                                           maxlength="16" placeholder="숫자만 입력" />
+                                                                        <% if (cashbag.svcYN === 'Y') { %>
+                                                                        <input class="fe-point-card" type="text" value="<%= cashbag.ocbCcno %>" readonly />
+                                                                        <% } else { %>
+                                                                        <input class="fe-point-card required-input-field fe-only-number"
+                                                                               inputmode="numeric" min="0" pattern="[0-9]*" type="number"
+                                                                               maxlength="16" placeholder="숫자만 입력" />
+                                                                        <% } %>
                                                                     <% } %>
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
 																</span>
