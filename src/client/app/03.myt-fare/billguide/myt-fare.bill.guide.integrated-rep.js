@@ -20,7 +20,7 @@ Tw.MyTFareBillGuideIntegratedRep = function (rootEl, resData) {
   this.paramDate = '';
   this.paramLine = '';
 
-  this._hashService.initHashNav($.proxy(this._onHashChange, this));
+  // this._hashService.initHashNav($.proxy(this._onHashChange, this));
 };
 
 Tw.MyTFareBillGuideIntegratedRep.prototype = {
