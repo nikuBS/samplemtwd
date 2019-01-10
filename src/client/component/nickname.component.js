@@ -29,7 +29,6 @@ Tw.NicknameComponent.prototype = {
 
   },
   _onOpenNickname: function (nickname, $popup) {
-    console.log($popup);
     this.$nicknameInput = $popup.find('#fe-input-nickname');
     this.$nicknameConfirm = $popup.find('#fe-bt-confirm');
     this.$nicknameError = $popup.find('#aria-exp-desc1');
@@ -80,8 +79,10 @@ Tw.NicknameComponent.prototype = {
       var params = {
         nickNm: nickname
       };
-      this._apiService.request(Tw.API_CMD.BFF_03_0006, params, {}, [this._svcMgmtNum])
-        .done($.proxy(this._successChangeNickname, this, nickname));
+      this._apiService.request(Tw.NODE_CMD.CHANGE_NICKNAME, {
+        params: params,
+        pathParams: [this._svcMgmtNum]
+      }).done($.proxy(this._successChangeNickname, this, nickname));
 
     } else {
       this._isChanged = true;

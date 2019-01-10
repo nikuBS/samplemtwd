@@ -141,9 +141,9 @@ Tw.CUSTOMER_NOTICE_CTG_CD = {
 };
 
 Tw.SVC_CATEGORY = {
-  M: '모바일',
-  S: '인터넷/집전화/IPTV',
-  O: '보안솔루션'
+  m: '모바일',
+  s: '인터넷/집전화/IPTV',
+  o: '보안솔루션'
 };
 
 Tw.SVC_ATTR = {

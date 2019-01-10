@@ -505,6 +505,7 @@ Tw.NODE_CMD = {
   LOGIN_USER_LOCK: { path: '/user/locks', method: Tw.API_METHOD.DELETE },
   CHANGE_SVC_PASSWORD: { path: '/core-auth/service-passwords', method: Tw.API_METHOD.PUT },
   CHANGE_LINE: { path: '/user/services', method: Tw.API_METHOD.PUT },
+  CHANGE_NICKNAME: { path: '/user/nick-names', method: Tw.API_METHOD.PUT },
   UPDATE_SVC: { path: '/common/selected-sessions', method: Tw.API_METHOD.GET },
 
   UPLOAD_FILE: { path: '/uploads', method: Tw.API_METHOD.POST },

@@ -219,7 +219,7 @@
                             <!-- //모바일 회선_잔여 데이터 -->
                             <% } else if (homeData.usageData.code === 'BLN0001') { %>
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.svcNum %></button></em>
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.usageData.showSvcNum %></button></em>
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잠시 후 다시 이용해 주세요</strong>
@@ -229,16 +229,16 @@
                             </div>
                             <% } else if (homeData.usageData.code === 'BLN0003') { %>
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.svcNum %></button></em>
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.usageData.showSvcNum %></button></em>
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                                    <p class="tx">정지 이력이 있어 잔여량 조회 서비스를<br>이용하실 수 없습니다.<br>자세한 사항은 고객센터나 <button class="bt">이메일</button>로<br> 문의해 주시기 바랍니다</p>
+                                    <p class="tx">정지 이력이 있어 잔여량 조회 서비스를<br>이용하실 수 없습니다.<br>자세한 사항은 고객센터나 <a href="/customer/emailconsult" class="bt">이메일</a>로<br> 문의해 주시기 바랍니다</p>
                                 </div>
                             </div>
                             <% } else { %>
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.svcNum %></button></em>
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.usageData.showSvcNum %></button></em>
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>

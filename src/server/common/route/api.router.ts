@@ -44,7 +44,9 @@ class ApiRouter {
     this.router.delete('/user/locks', this.setUserLocks.bind(this));    // BFF_03_0010
     this.router.put('/core-auth/service-passwords', this.changeSvcPassword.bind(this));    // BFF_03_0016
     this.router.put('/user/services', this.changeLine.bind(this));    // BFF_03_0005
+    this.router.put('/user/nick-names', this.changeNickname.bind(this));    // BFF_03_0006
     this.router.get('/common/selected-sessions', this.updateSvcInfo.bind(this));    // BFF_01_0005
+
     this.router.post('/uploads', this.uploadFile.bind(this));
     this.router.get('/svcInfo', this.getSvcInfo.bind(this));
     this.router.get('/allSvcInfo', this.getAllSvcInfo.bind(this));
@@ -499,10 +501,29 @@ class ApiRouter {
   }
 
   public changeLine(req: Request, res: Response, next: NextFunction) {
-    const params = req.body;
+    const params = req.body.params || {};
+    const headers = req.body.headers || null;
+    const pathParams = req.body.pathParams || [];
+    const version = req.body.version || null;
+
     this.apiService.setCurrentReq(req, res);
     // this.loginService.setCurrentReq(req, res);
-    this.apiService.requestChangeLine(params).subscribe((resp) => {
+    this.apiService.requestChangeLine(params, headers, pathParams, version).subscribe((resp) => {
+      res.json(resp);
+    }, (error) => {
+      res.json(error);
+    });
+  }
+
+  public changeNickname(req: Request, res: Response, next: NextFunction) {
+    const params = req.body.params || {};
+    const headers = req.body.headers || null;
+    const pathParams = req.body.pathParams || [];
+    const version = req.body.version || null;
+
+    this.apiService.setCurrentReq(req, res);
+    // this.loginService.setCurrentReq(req, res);
+    this.apiService.requestChangeNickname(params, headers, pathParams, version).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
       res.json(error);
