@@ -200,6 +200,7 @@
     </div>
     <!--// #contents -->
 </div>
+<%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 <script>
   $(document).ready(function () {
     new Tw.BenefitMyBenefit($('#fe-benefit-my'), '<%= okCashback %>', '<%= t %>', '<%= rainbow %>');

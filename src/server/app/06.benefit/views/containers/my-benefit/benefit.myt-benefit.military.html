@@ -61,11 +61,11 @@
             <hr class="cont-sp type1" aria-hidden="true"/>
             <!-- .cont-box -->
             <div class="cont-box nogaps-btm">
-                <h3 class="tx-bold">꼭 확인해주세요</h3>
+                <h3 class="tx-bold">꼭 확인해 주세요</h3>
                 <ul class="noti-list">
                     <li>적립∙시점 안내 <button type="button" class="tip-view" id="BS_01_01_05_tip_01">TIP</button></li>
-                    <li>활용안내 <button type="button" class="tip-view" id="BS_01_01_05_tip_01">TIP</button></li>
-                    <li>해지∙소멸 안내 <button type="button" class="tip-view" id="BS_01_01_05_tip_01">TIP</button></li>
+                    <li>활용안내 <button type="button" class="tip-view" id="BS_01_01_05_tip_02">TIP</button></li>
+                    <li>해지∙소멸 안내 <button type="button" class="tip-view" id="BS_01_01_05_tip_03">TIP</button></li>
                 </ul>
             </div>
             <!--// .cont-box -->
@@ -73,6 +73,7 @@
     </div>
     <!--// #contents -->
 </div>
+<%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 <script>
   $(document).ready(function () {
     new Tw.BenefitMyBenefitMilitary($('#fe-benefit-military'));
