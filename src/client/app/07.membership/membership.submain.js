@@ -39,7 +39,6 @@ Tw.MembershipSubmain.prototype = {
 
   },
   _goChocolate: function () {
-    console.log('go chocolate ........ ');
     Tw.CommonHelper.openUrlExternal(Tw.URL_PATH.CHOCOLATE_MALL,'');
   },
   _goTmembership: function () {
