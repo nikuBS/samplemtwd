@@ -37,8 +37,8 @@ class MyTFareInfoOverpayRefund extends TwViewController {
       resp.result.refundPaymentRecord = resp.result.refundPaymentRecord.reduce((prev, cur, index) => {
         
         cur.listId = index;
-        cur.reqDt = DateHelper.getShortMonthDate(cur.effStaDt); // 신청일자
-        cur.dataDt = cur.rfndReqDt ? DateHelper.getShortMonthDate(cur.rfndReqDt) : ''; // 처리날짜
+        cur.reqDt = DateHelper.getShortDate(cur.effStaDt); // 신청일자
+        cur.dataDt = cur.rfndReqDt ? DateHelper.getShortDate(cur.rfndReqDt) : ''; // 처리날짜
         cur.listDt = cur.dataDt.slice(5);
         cur.dataAmt = FormatHelper.addComma(cur.sumAmt);
         cur.dataOverAmt = FormatHelper.addComma(cur.ovrPay);
