@@ -21,8 +21,9 @@ class CommonSearchMain extends TwViewController {
     const step = req.query.step || 1;
     Observable.combineLatest(
       this.apiService.request(API_CMD.POPULAR_KEYWORD, { range : 'D'}, {}),
-      this.apiService.request(API_CMD.BFF_12_0010, { mblOsTypCd : nowOsType }, {})
-    ).subscribe(([ popularKeyword, recommendKeyword ]) => {
+      this.apiService.request(API_CMD.BFF_12_0010, { mblOsTypCd : nowOsType }, {}),
+      this.apiService.request(API_CMD.BFF_08_0072, { mblOsTypCd : nowOsType }, {})
+    ).subscribe(([ popularKeyword, recommendKeyword , smartKeyword]) => {
       // if (popularKeyword.code !== API_CODE.CODE_00) {
       //     popularKeyword.result = [];
       // }
@@ -33,6 +34,7 @@ class CommonSearchMain extends TwViewController {
         svcInfo : svcInfo,
         popularKeyword : popularKeyword,
         recommendKeyword : recommendKeyword.result,
+        smartKeyword : smartKeyword.result,
         step : step
       });
     });

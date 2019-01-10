@@ -499,8 +499,9 @@ export const API_CMD = {
   BFF_08_0069: { path: '/core-modification/:version/search/invst-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // SEARCH SURVEY
-  BFF_08_0070: { path: '/core-modification/v1/search/invst-append', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
-  BFF_08_0071: { path: '/core-modification/v1/search/invst-insert', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0070: { path: '/core-modification/:version/search/invst-append', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0071: { path: '/core-modification/:version/search/invst-insert', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0072: { path: '/core-modification/:version/search/smart', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/:version/event/ing-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
