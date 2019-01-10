@@ -79,7 +79,7 @@ class MyTDataCookiz extends TwViewController {
     })
 
   public addComma = (sAmount) => FormatHelper.addComma(sAmount);
-  public convertDate = (sDate) => DateHelper.getShortDateNoDot(sDate);
+  public convertDate = (sDate) => DateHelper.getShortDate(sDate);
 }
 
 export default MyTDataCookiz;
