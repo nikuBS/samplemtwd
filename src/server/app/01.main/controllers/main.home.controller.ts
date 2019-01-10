@@ -312,7 +312,6 @@ class MainHome extends TwViewController {
       usageData.code = resp.code;
       usageData.msg = resp.msg;
 
-      console.log(usageData);
       return usageData;
     });
   }
