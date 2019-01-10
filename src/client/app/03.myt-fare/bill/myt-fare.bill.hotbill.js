@@ -9,10 +9,11 @@ Tw.MyTFareHotBill = function (rootEl, params) {
   this._popupService = Tw.Popup;
   this.NUM_OF_ITEMS = 20;
   this._historyService = new Tw.HistoryService();
-
+  this._commonHelper = Tw.CommonHelper;
   this.childSvcMgmtNum = Tw.UrlHelper.getQueryParams().child || null;
   this._isPrev = Tw.UrlHelper.getLastPath() === 'prev';
   this._lines = params.lines;
+  console.log(this._lines);
   this._init();
 };
 
@@ -45,7 +46,6 @@ Tw.MyTFareHotBill.prototype = {
   },
 
   _bindEvent: function () {
-    // this.$lineButton.on('click', $.proxy(this._onClickLine, this));
     this.$preBill.on('click', $.proxy(this._onClickPreBill, this));
   },
 
@@ -206,7 +206,14 @@ Tw.MyTFareHotBill.prototype = {
     var lineComponent = new Tw.LineComponent();
     this._popupService.close();
     Tw.CommonHelper.startLoading('.container');
-    lineComponent.changeLine(target.svcMgmtNum, null, $.proxy(this._historyService.reload, this));
+    lineComponent.changeLine(target.svcMgmtNum, null, $.proxy(this._onChangeSessionSuccess, this));
+  },
+
+  _onChangeSessionSuccess: function () {
+    if ( Tw.BrowserHelper.isApp() ) {
+      this._commonHelper.toast(Tw.REMNANT_OTHER_LINE.TOAST);
+    }
+    this._historyService.reload();
   }
 };
 
