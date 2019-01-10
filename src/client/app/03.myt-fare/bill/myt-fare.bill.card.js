@@ -46,7 +46,7 @@ Tw.MyTFareBillCard.prototype = {
   _bindEvent: function () {
     this.$container.on('change', '.fe-auto-info > li', $.proxy(this._onChangeOption, this));
     this.$container.on('change', '.fe-auto-info', $.proxy(this._checkIsAbled, this));
-    this.$container.on('change', '.fe-refund-check-btn input', $.proxy(this._showAndHideAccount, this));
+    this.$container.on('change', '.fe-refund-check-btn input[type="checkbox"]', $.proxy(this._showAndHideAccount, this));
     this.$container.on('blur', '.fe-card-number', $.proxy(this._checkCardNumber, this));
     this.$container.on('blur', '.fe-card-y', $.proxy(this._checkCardExpiration, this));
     this.$container.on('blur', '.fe-card-m', $.proxy(this._checkCardExpiration, this));
