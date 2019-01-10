@@ -7,11 +7,11 @@
     <!--<div class="section-box">-->
     <div class="main-breakdown-box">
         {{#if type1}}
-        <div class="stit c-point">이번 달 청구요금 <i class="icon-whole2"><span class="blind">전체</span></i></div>
+        <div class="stit c-point">{{invMonth}}월 청구요금 <i class="icon-whole2"><span class="blind">전체</span></i></div>
         {{else if type2}}
-        <div class="stit c-point">이번 달 청구요금</div>
+        <div class="stit c-point">{{invMonth}}월 청구요금</div>
         {{else if type3}}
-        <div class="stit c-point">이번 달 이용요금</div>
+        <div class="stit c-point">{{invMonth}}월 이용요금</div>
         {{/if}}
         <em class="sum">{{chargeAmtTot}}원</em>
         <span class="date">{{invStartDt}}~{{invEndDt}}</span>
