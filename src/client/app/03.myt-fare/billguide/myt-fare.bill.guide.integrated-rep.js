@@ -429,7 +429,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     } else if ( selectSvcType.svcType === Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_1 ) {
       textVal = Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_1 + '(' + selectSvcType.label + ')';
     } else {
-      textVal = selectSvcType.svcType + '(' + this._getShortStr(selectSvcType.dtlAddr) + ')';
+      textVal = selectSvcType.svcType + '(' + this._getShortStr(selectSvcType.addr) + ')';
     }
 
     this.$searchNmSvcType.html(templt({svcType: textVal}));
