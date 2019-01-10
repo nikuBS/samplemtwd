@@ -476,6 +476,7 @@ Tw.API_CMD = {
   BFF_11_0022: { path: '/core-membership/:version/tmembership/area2-list', method: Tw.API_METHOD.GET },
   BFF_11_0023: { path: '/core-membership/:version/tmembership/mrcht-list', method: Tw.API_METHOD.GET },
   BFF_11_0024: { path: '/core-membership/:version/tmembership/mrcht-info', method: Tw.API_METHOD.GET },
+  BFF_11_0025: { path: '/core-membership/:version/tmembership/near-brand', method: Tw.API_METHOD.GET },
   BFF_11_0026: { path: '/core-membership/:version/tmembership/area-by-geo', method: Tw.API_METHOD.GET },
   BFF_10_0062: { path: '/core-product/:version/mobiles/additions-sets/:args0/seldis-sets', method: Tw.API_METHOD.GET },
   BFF_10_0063: { path: '/core-product/:version/mobiles/additions-sets/:args0/seldis-sets', method: Tw.API_METHOD.POST },
