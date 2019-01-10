@@ -303,16 +303,19 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     }
   },
   _isChanged: function () {
-    if (this.$selectedTab.attr('id') === 'tab1-tab') {
-      return !Tw.FormatHelper.isEmpty(this.$point.val()) || !Tw.FormatHelper.isEmpty(this.$pointCardNumber.val()) ||
-        !Tw.FormatHelper.isEmpty(this.$pointPw.val());
-    } else {
-      if (this.$autoInfo.is(':visible')) {
-        return (this.$pointSelector.attr('id') !== this.$pointSelector.attr('data-origin-id'));
-      } else {
-        return !Tw.FormatHelper.isEmpty(this.$pointSelector.attr('id')) || !Tw.FormatHelper.isEmpty(this.$pointCardNumber.val());
+    var isChanged = false;
+    if (!this.$pointCardNumber.attr('readOnly')) {
+      if (!Tw.FormatHelper.isEmpty(this.$pointCardNumber.val())) {
+        isChanged = true;
       }
     }
+
+    if (this.$selectedTab.attr('id') === 'tab1-tab') {
+      isChanged = !Tw.FormatHelper.isEmpty(this.$point.val()) || !Tw.FormatHelper.isEmpty(this.$pointPw.val());
+    } else {
+      isChanged = true;
+    }
+    return isChanged;
   },
   _closePop: function () {
     this._isClose = true;

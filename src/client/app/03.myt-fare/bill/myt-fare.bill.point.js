@@ -103,7 +103,9 @@ Tw.MyTFareBillPoint.prototype = {
     Tw.CommonHelper.openUrlExternal(Tw.URL_PATH.OKCASHBAG);
   },
   _onClose: function () {
-    if (this.$isChanged || this.$pointPw.val() !== '') {
+    var $amount = this.$container.find('.fe-amount');
+    if (this.$isChanged || this.$pointPw.val() !== '' ||
+      Tw.FormatHelper.addComma($amount.attr('data-value')) !== $amount.text()) {
       this._popupService.openConfirmButton(null, Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_CANCEL.TITLE,
         $.proxy(this._closePop, this), $.proxy(this._afterClose, this));
     } else {
