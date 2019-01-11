@@ -39,6 +39,8 @@ class MainHome extends TwViewController {
     const noticeCode = !BrowserHelper.isApp(req) ? CHANNEL_CODE.MWEB :
       BrowserHelper.isIos(req) ? CHANNEL_CODE.IOS : CHANNEL_CODE.ANDROID;
 
+    const flag = BrowserHelper.isApp(req) ? 'app' : 'web';
+
     // this.redisService.getStringTos(REDIS_TOS_KEY.BANNER_TOS_KEY + '0001:lee33a:7191046505')
     //   .subscribe((resp) => {
     //     console.log('bnnr', resp);
@@ -58,14 +60,9 @@ class MainHome extends TwViewController {
           ).subscribe(([usageData, membershipData, redisData]) => {
             homeData.usageData = usageData;
             homeData.membershipData = membershipData;
-            res.render('main.home.html', {
-              svcInfo,
-              svcType,
-              homeData,
-              redisData,
-              pageInfo,
-              noticeType: svcInfo.noticeType
-            });
+            const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: svcInfo.noticeType };
+
+            res.render(`main.home-${flag}.html`, renderData);
           });
         } else {
           // 모바일 - 휴대폰 외 회선
@@ -74,14 +71,8 @@ class MainHome extends TwViewController {
             this.getRedisData(noticeCode, svcInfo.svcMgmtNum)
           ).subscribe(([usageData, redisData]) => {
             homeData.usageData = usageData;
-            res.render('main.home.html', {
-              svcInfo,
-              svcType,
-              homeData,
-              redisData,
-              pageInfo,
-              noticeType: svcInfo.noticeType
-            });
+            const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: svcInfo.noticeType };
+            res.render(`main.home-${flag}.html`, renderData);
           });
         }
       } else if ( svcType.svcCategory === LINE_NAME.INTERNET_PHONE_IPTV ) {
@@ -91,20 +82,15 @@ class MainHome extends TwViewController {
           this.getRedisData(noticeCode, svcInfo.svcMgmtNum)
         ).subscribe(([billData, redisData]) => {
           homeData.billData = billData;
-          res.render('main.home.html', {
-            svcInfo,
-            svcType,
-            homeData,
-            redisData,
-            pageInfo,
-            noticeType: svcInfo.noticeType
-          });
+          const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: svcInfo.noticeType };
+          res.render(`main.home-${flag}.html`, renderData);
         });
       }
     } else {
       // 비로그인
       this.getRedisData(noticeCode, '').subscribe((redisData) => {
-        res.render('main.home.html', { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: '' });
+        const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: '' };
+        res.render(`main.home-${flag}.html`, renderData);
       });
     }
   }
