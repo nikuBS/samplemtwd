@@ -62,14 +62,14 @@ Tw.MyTDataFamily.prototype = {
 
   _handleOpenChangeLimitation: function(mgmtNum, limitation, $layer) {
     $layer.on('click', '.bt-red1', $.proxy(this._handleSubmitLimitation, this, mgmtNum, limitation));
-    $layer.on('change', 'input[type="radio"]', $.proxy(this._handleChangeLimitType, this, $layer, limitation));
+    $layer.on('change', 'input[type="radio"]', $.proxy(this._handleChangeLimitType, this, $layer));
     $layer.on('keyup', 'span.input input', $.proxy(this._handleChangeLimitation, this, $layer));
   },
 
   _handleSubmitLimitation: function(mgmtNum, originLimit) {
     var limitation = this._limitation;
 
-    if (originLimit == limitation) {
+    if (originLimit === limitation) {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.A5);
     } else if (limitation === false) {
       this._popupService.close();
@@ -87,16 +87,19 @@ Tw.MyTDataFamily.prototype = {
     }
   },
 
-  _handleChangeLimitType: function($layer, limitation, e) {
+  _handleChangeLimitType: function($layer, e) {
     var inputId = e.currentTarget.id;
-    var $btn = $layer.find('.bt-red1 > button');
-    var value = $layer.find('span.input input').val();
+    var $btn = $layer.find('.bt-red1 > button'),
+      $input = $layer.find('span.input input'),
+      value = $input.val();
 
     if (inputId === 'sradio2') {
       $btn.attr('disabled', value.length === 0);
+      $input.removeAttr('disabled');
       this._limitation = value;
     } else {
       $btn.attr('disabled', false);
+      $input.attr('disabled', true);
       this._limitation = false;
     }
   },
