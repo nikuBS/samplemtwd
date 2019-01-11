@@ -19,19 +19,7 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="h-belt">
-            <div class="h-default">
-                <div class="h-menu">
-                    <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
-                </div>
-                <div class="h-tit">T멤버십</div>
-                <div class="h-serarch">
-                    <button class="icon-gnb-search"><span class="blind">검색</span></button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <%- include('../../../common/views/components/header.component.html', { title: 'T멤버십', svcInfo: svcInfo }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -73,16 +61,21 @@
             <hr class="cont-sp type1" aria-hidden="true"/>
 
             <!-- .cont-box -->
-            <% if (isLogin) { %>
+            <% const checkData = membershipCheckData; %>
+            <% if (isLogin && checkData.cardCreatableYn === 'N') { %>
             <div class="cont-box nogaps-top">
                 <div class="card-wrap">
-                    <button class="solid-link">나의 T멤버십
+                    <button class="solid-link fe-mebership-my">나의 T멤버십
                         <span class="sub-info">연간 누적 혜택 <strong><%= membershipData.showUsedAmount %>원</strong></span>
                         <i class="ico"></i>
                     </button>
                     <div class="user-barcode-info">
                         <div class="user-type">
-                            <i class="icon-vip"><%= membershipData.mbrGrStr %></i>
+                            <% if (membershipData.mbrGrade === 'default') { %>
+                            <i class="icon-o"><%= membershipData.mbrGrStr %></i>
+                            <% } else { %>
+                            <i class="icon-<%= membershipData.mbrGrade %>"><%= membershipData.mbrGrStr %></i>
+                            <% } %>
                             <span class="txt"><%= membershipData.mbrTypStr %></span>
                         </div>
                         <div class="user-number-info">
@@ -107,7 +100,7 @@
                     <button class="solid-link fe-membership-grade">T멤버십 카드&middot;등급 안내<i class="ico"></i></button>
                     <div class="box-card-apl">
                         <p class="card-txt"><span class="point">T멤버십 카드를 신청</span>하시고<br />다양한 혜택을 받으세요</p>
-                        <div class="btn-wrap"><button class="btn-round1 btn-style1">가입하기</button></div>
+                        <div class="btn-wrap"><button class="btn-round1 btn-style1" id="fe-membership-join">가입하기</button></div>
                     </div>
                 </div>
             </div>
@@ -196,7 +189,9 @@
 <script>
   $(document).ready(function () {
       var membershipData = '<%- JSON.stringify(membershipData) %>';
-      new Tw.MembershipSubmain($('.wrap'), JSON.parse(membershipData));
+      var svcInfo = '<%- JSON.stringify(svcInfo) %>';
+      var membershipCheckData = '<%- JSON.stringify(membershipCheckData) %>';
+      new Tw.MembershipSubmain($('.wrap'), JSON.parse(membershipData), JSON.parse(svcInfo), JSON.parse(membershipCheckData));
   });
 </script>
 <% include ../components/end.component.html %>
