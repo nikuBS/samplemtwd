@@ -33,7 +33,6 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
 
     this.$btnAddNum = this.$container.find('.fe-btn_add_num');
     this.$btnClearNum = this.$container.find('.fe-btn_clear_num');
-    this.$btnAddressBook = this.$container.find('.fe-btn_address_book');
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
 
     this._combinationTemplate = Handlebars.compile($('#fe-templ-line_item').html());
@@ -43,26 +42,11 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
     this.$btnAddNum.on('click', $.proxy(this._addNum, this));
     this.$lineList.on('click', '.fe-btn_del_num', $.proxy(this._delNum, this));
     this.$btnClearNum.on('click', $.proxy(this._clearNum, this));
-    this.$btnAddressBook.on('click', $.proxy(this._openAppAddressBook, this));
     this.$inputNumber.on('keyup input', $.proxy(this._detectInputNumber, this));
     this.$inputNumber.on('blur', $.proxy(this._blurInputNumber, this));
     this.$inputNumber.on('focus', $.proxy(this._focusInputNumber, this));
 
     this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
-  },
-
-  _openAppAddressBook: function() {
-    this._nativeService.send('getContact', {}, $.proxy(this._setAppAddressBook, this));
-  },
-
-  _setAppAddressBook: function(res) {
-    if (Tw.FormatHelper.isEmpty(res.params.phoneNumber)) {
-      return;
-    }
-
-    this.$inputNumber.val(res.params.phoneNumber);
-    this._toggleClearBtn();
-    this._toggleNumAddBtn();
   },
 
   _addNum: function() {
