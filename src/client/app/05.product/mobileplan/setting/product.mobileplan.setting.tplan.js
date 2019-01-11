@@ -148,6 +148,7 @@ Tw.ProductMobileplanSettingTplan.prototype = {
   },
 
   _procSetupOkRes: function(resp) {
+    var $checked = this.$container.find('.widget-box.radio input[type="radio"]:checked');
     Tw.CommonHelper.endLoading('.container');
 
     if (resp.code === 'ZCOLE0001') {
@@ -158,12 +159,23 @@ Tw.ProductMobileplanSettingTplan.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
+    var completeData = {
+      prodCtgNm: Tw.PRODUCT_TYPE_NM.SETTING,
+      typeNm: Tw.PRODUCT_TYPE_NM.CHANGE,
+      isSmartWatch: $checked.val() === 'NA00006116',
+      btClass: 'item-one'
+    };
+
+    if ($checked.val() === 'NA00006116') {
+      completeData = $.extend(completeData, {
+        basicTxt: Tw.FormatHelper.isEmpty(this._smartWatchLine) ? Tw.POPUP_CONTENTS.TPLAN_WATCH_NON_LINE :
+          Tw.POPUP_CONTENTS.TPLAN_WATCH + Tw.FormatHelper.getFormattedPhoneNumber(this._smartWatchLine)
+      });
+    }
+
     this._popupService.open({
       hbs: 'complete_product',
-      data: {
-        prodCtgNm: Tw.PRODUCT_TYPE_NM.SETTING,
-        typeNm: Tw.PRODUCT_TYPE_NM.CHANGE
-      }
+      data: completeData
     }, $.proxy(this._bindSuccessPopup, this), $.proxy(this._onClosePop, this), 'save_setting_success');
   },
 

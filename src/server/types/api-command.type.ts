@@ -675,6 +675,12 @@ export const API_CMD = {
   BFF_10_0168: {
     path: '/core-product/:version/wire/additions/:args0/joins/ledger-prechecks/terms', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },
+  BFF_10_0169: {
+    path: '/core-product/v1/mobiles/fee-plans/young-plan-mid-sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
+  BFF_10_0170: {
+    path: '/core-product/v1/mobiles/fee-plans/young-plan-mid-sets', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true
+  },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/:version/submain/products', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

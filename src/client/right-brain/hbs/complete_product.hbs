@@ -11,13 +11,19 @@
                         <span class="tx-highlight pt10">{{data.prodCtgNm}} {{data.typeNm}} 완료</span>
                     </p>
                 </div>
-                {{#if data.mytPage}}
-                    <div class="tx-contents">
-                        <ul class="bt-slice item-one">
-                            <li><a href="/myt-join/{{data.mytPage}}" class="btn-round2 btn-style3">나의 가입정보 확인하기 &gt;</a></li>
-                        </ul>
-                    </div>
-                {{/if}}
+                <div class="tx-contents">
+                    {{#if basicTxt}}
+                    <p class="basic-txt">{{breakline basicTxt}}</p>
+                    {{/if}}
+                    <ul class="bt-slice item-one">
+                        {{#if data.isSmartWatch}}
+                        <li><a href="/product/callplan/NA00005381" class="btn-round2 btn-style3">스마트워치 할인상품 보기 &gt;</a></li>
+                        {{/if}}
+                        {{#if data.mytPage}}
+                        <li><a href="/myt-join/{{data.mytPage}}" class="btn-round2 btn-style3">나의 가입정보 확인하기 &gt;</a></li>
+                        {{/if}}
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

@@ -1,7 +1,15 @@
-<% if ( relateTags && relateTags.length > 0 && (!isCombine && !isDiscount) ||
-similarProductInfo && (similarProductInfo.prodCnt > 0 || isCombine) && similarProductInfo.list && similarProductInfo.list.length > 0 ) {
-const tagsClass = relateTags && relateTags.length > 0 && (!isCombine && !isDiscount) ? 'nogaps-btm widget' : '';
-const similarPath = '/' + basicInfo.prodTypListPath + (similarProductInfo.benefitPath ? '/' + similarProductInfo.benefitPath : '?filters=' + similarProductInfo.prodFltIds);
+<%
+    if (
+        relateTags && relateTags.length > 0 && (!isCombine && !isDiscount) ||
+        similarProductInfo && (similarProductInfo.prodCnt > 0 ||
+        isCombine) && similarProductInfo.list && similarProductInfo.list.length > 0
+    ) {
+
+    const tagsClass = relateTags && relateTags.length > 0 && (!isCombine && !isDiscount) ? 'nogaps-btm widget' : '';
+    let similarPath = '/' + basicInfo.prodTypListPath + (similarProductInfo.benefitPath ? '/' + similarProductInfo.benefitPath : '');
+    if ( isMobileplan || isMobileplanAdd ) {
+        similarPath += '?filters=' + similarProductInfo.prodFltIds;
+    }
 %>
 <hr class="cont-sp type1" aria-hidden="true"/>
 

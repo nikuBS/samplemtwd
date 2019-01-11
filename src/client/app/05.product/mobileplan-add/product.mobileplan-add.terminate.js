@@ -106,6 +106,7 @@ Tw.ProductMobileplanAddTerminate.prototype = {
         hbs: 'complete_product',
         data: {
           mytPage: 'additions',
+          btClass: 'item-one',
           prodId: this._prodId,
           prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
           prodCtgNm: Tw.PRODUCT_CTG_NM.ADDITIONS,

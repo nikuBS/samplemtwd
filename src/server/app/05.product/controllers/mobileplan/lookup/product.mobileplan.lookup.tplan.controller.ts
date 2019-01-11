@@ -47,6 +47,7 @@ class ProductMobileplanLookupTplan extends TwViewController {
     switch (printProdId) {
       case 'NA00006114':
         resultList = this._convertTravelAndMovieList(result[this._prodIdList[printProdId]][tabId === 'onepass' ? 'infiRomList' : 'infiMatinaList']);
+        this._listTotal = result[this._prodIdList[printProdId]].infiRomList.length + result[this._prodIdList[printProdId]].infiMatinaList.length;
         break;
       case 'NA00006115':
         resultList = this._convertTravelAndMovieList(result[this._prodIdList[printProdId]]);

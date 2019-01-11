@@ -231,6 +231,7 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
       data: {
         prodCtgNm: Tw.PRODUCT_CTG_NM.ADDITIONS,
         mytPage: 'additions',
+        btClass: 'item-one',
         prodId: this._prodId,
         prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
         typeNm: Tw.PRODUCT_TYPE_NM.JOIN,

@@ -230,18 +230,31 @@ Tw.ProductMobileplanJoinTplan.prototype = {
   },
 
   _openSuccessPop: function() {
+    var $checked = this.$container.find('.widget-box.radio input[type="radio"]:checked');
+
+    var completeData = {
+      prodCtgNm: Tw.PRODUCT_CTG_NM.PLANS,
+      mytPage: 'myplan',
+      btClass: 'item-two',
+      prodId: this._prodId,
+      prodNm: this._confirmOptions.preinfo.toProdInfo.prodNm,
+      typeNm: Tw.PRODUCT_TYPE_NM.JOIN,
+      isBasFeeInfo: this._confirmOptions.isNumberBasFeeInfo,
+      basFeeInfo: this._confirmOptions.isNumberBasFeeInfo ?
+        this._confirmOptions.toProdBasFeeInfo + Tw.CURRENCY_UNIT.WON : '',
+      isSmartWatch: $checked.val() === 'NA00006116'
+    };
+
+    if ($checked.val() === 'NA00006116') {
+      completeData = $.extend(completeData, {
+        basicTxt: Tw.FormatHelper.isEmpty(this._smartWatchLine) ? Tw.POPUP_CONTENTS.TPLAN_WATCH_NON_LINE :
+          Tw.POPUP_CONTENTS.TPLAN_WATCH + Tw.FormatHelper.getFormattedPhoneNumber(this._smartWatchLine)
+      });
+    }
+
     this._popupService.open({
       hbs: 'complete_product',
-      data: {
-        prodCtgNm: Tw.PRODUCT_CTG_NM.PLANS,
-        mytPage: 'myplan',
-        prodId: this._prodId,
-        prodNm: this._confirmOptions.preinfo.toProdInfo.prodNm,
-        typeNm: Tw.PRODUCT_TYPE_NM.JOIN,
-        isBasFeeInfo: this._confirmOptions.isNumberBasFeeInfo,
-        basFeeInfo: this._confirmOptions.isNumberBasFeeInfo ?
-          this._confirmOptions.toProdBasFeeInfo + Tw.CURRENCY_UNIT.WON : ''
-      }
+      data: completeData
     }, null, $.proxy(this._onClosePop, this), 'join_success');
 
     this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});

@@ -576,3 +576,6 @@ export enum BENEFIT_SUBMAIN_CATEGORY {
   F01423 = 'long-term',
   F01424 = 'participation'
 }
+
+export const HOME_SEGMENT = {};
+export const HOME_SEGMENT_ORDER = {};
