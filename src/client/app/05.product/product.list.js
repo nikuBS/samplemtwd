@@ -85,7 +85,17 @@ Tw.ProductList.prototype = {
       item.isNumber = true;
     }
 
-    item.basOfrDataQtyCtt = this._isEmptyAmount(item.basOfrDataQtyCtt) ? null : Tw.FormatHelper.appendDataUnit(item.basOfrDataQtyCtt);
+    if (!this._isEmptyAmount(item.basOfrDataQtyCtt)) {
+      var data = Number(item.basOfrDataQtyCtt);
+      if (isNaN(data)) {
+        item.basOfrDataQtyCtt = item.basOfrDataQtyCtt;
+      } else {
+        item.basOfrDataQtyCtt = data + Tw.DATA_UNIT.GB;
+      }
+    } else if (!this._isEmptyAmount(item.basOfrMbDataQtyCtt)) {
+      item.basOfrDataQtyCtt = Tw.FormatHelper.appendDataUnit(item.basOfrMbDataQtyCtt);
+    }
+
     item.basOfrVcallTmsCtt = this._isEmptyAmount(item.basOfrVcallTmsCtt) ? null : Tw.FormatHelper.appendVoiceUnit(item.basOfrVcallTmsCtt);
     item.basOfrCharCntCtt = this._isEmptyAmount(item.basOfrCharCntCtt) ? null : Tw.FormatHelper.appendSMSUnit(item.basOfrCharCntCtt);
 

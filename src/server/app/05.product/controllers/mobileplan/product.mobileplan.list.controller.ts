@@ -11,6 +11,7 @@ import { API_CMD } from '../../../../types/api-command.type';
 import { API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
+import { DATA_UNIT } from '../../../../types/string.type';
 
 export default class ProductPlans extends TwViewController {
   private PLAN_CODE = 'F01100';
@@ -54,10 +55,14 @@ export default class ProductPlans extends TwViewController {
           return {
             ...plan,
             basFeeAmt: ProductHelper.convProductBasfeeInfo(plan.basFeeAmt),
-            basOfrDataQtyCtt: this.isEmptyAmount(plan.basOfrDataQtyCtt) ? null : ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrDataQtyCtt),
-            basOfrVcallTmsCtt: this.isEmptyAmount(plan.basOfrVcallTmsCtt) ? 
-              null : 
-              ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
+            basOfrDataQtyCtt: this.isEmptyAmount(plan.basOfrDataQtyCtt)
+              ? this.isEmptyAmount(plan.basOfrMbDataQtyCtt)
+                ? null
+                : ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrMbDataQtyCtt)
+              : ProductHelper.convProductBasOfrDataQtyCtt(plan.basOfrDataQtyCtt, DATA_UNIT.GB),
+            basOfrVcallTmsCtt: this.isEmptyAmount(plan.basOfrVcallTmsCtt)
+              ? null
+              : ProductHelper.convProductBasOfrVcallTmsCtt(plan.basOfrVcallTmsCtt, false),
             basOfrCharCntCtt: this.isEmptyAmount(plan.basOfrCharCntCtt) ? null : ProductHelper.convProductBasOfrCharCntCtt(plan.basOfrCharCntCtt),
             filters: plan.filters.filter(filter => {
               return /^F011[2|3|6]/.test(filter.prodFltId);
