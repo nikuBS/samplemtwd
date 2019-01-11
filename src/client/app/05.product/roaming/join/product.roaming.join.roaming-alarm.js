@@ -54,7 +54,15 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
   },
   _addPhoneNumOnList : function () {
     if(this._addedList.length>=5){
-      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.TITLE);
+      this._popupService.openAlert(
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.MSG,
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.TITLE,
+        null,
+        $.proxy(function () {
+          this.$addBtn.attr('disabled','disabled');
+          this.$addBtn.removeAttr('disabled');
+        },this)
+      );
       return;
     }
     var tempPhoneNum = this.$inputElement.val().split('-');
@@ -128,13 +136,25 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     var handlebarsTemplate = Handlebars.compile(this.$alarmTemplate.html());
     this.$container.find('#alarm_list').append(handlebarsTemplate(templateData));
   },
+  _removeEvt : function (btnEvt) {
+    this._popupService.openConfirmButton(
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE,
+      $.proxy(function () {
+        this._popupService.close();
+        this._removeOnList(btnEvt);
+      },this),
+      null,
+      Tw.BUTTON_LABEL.CLOSE,
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON);
+  },
   _removeOnList : function (args) {
     var selectedIndex = parseInt($(args).attr('data-idx'),10);
     this._addedList.splice(selectedIndex,1);
     this._changeList();
   },
   _bindRemoveEvt : function () {
-    this.$container.find('.list-btn button').on('click',$.proxy(this._removeOnList,this));
+    this.$container.find('.list-btn button').on('click',$.proxy(this._removeEvt,this));
   },
   _doJoin : function(data,apiService,historyService,$containerData){
 

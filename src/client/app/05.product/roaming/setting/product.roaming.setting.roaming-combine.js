@@ -54,7 +54,15 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
   },
   _addPhoneNumOnList : function () {
     if(this._addedList.length>=5){
-      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.TITLE);
+      this._popupService.openAlert(
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.MSG,
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.TITLE,
+        null,
+        $.proxy(function () {
+          this.$addBtn.attr('disabled','disabled');
+          this.$addBtn.removeAttr('disabled');
+        },this)
+      );
       return;
     }
     var reuqestPhoneNum = this.$inputElement.val().replace(/\-/g,'');
