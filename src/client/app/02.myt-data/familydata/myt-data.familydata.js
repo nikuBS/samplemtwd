@@ -4,17 +4,18 @@
  * Date: 2018.10.01
  */
 
-Tw.MyTDataFamily = function(rootEl, maxLimitation) {
+Tw.MyTDataFamily = function(rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
-  this._maxLimitation = maxLimitation;
 
   this._bindEvent();
 };
 
 Tw.MyTDataFamily.prototype = {
+  MAX_LIMITATION: 200,
+
   _bindEvent: function() {
     this.$container.on('click', '.fe-setting-limit', $.proxy(this._openChangeLimit, this));
   },
@@ -73,7 +74,7 @@ Tw.MyTDataFamily.prototype = {
     } else if (limitation === false) {
       this._popupService.close();
       this._apiService.request(Tw.API_CMD.BFF_06_0051, {}, {}, [mgmtNum]).done($.proxy(this._successChangeLimitation, this));
-    } else if (this._maxLimitation < Number(limitation)) {
+    } else if (this.MAX_LIMITATION < Number(limitation)) {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.A6);
     } else {
       this._popupService.close();
