@@ -90,12 +90,6 @@ Tw.CustomerEmailQualityRetry.prototype = {
   },
 
   _stepBack: function () {
-    // this._popupService.openConfirmButton(Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG, Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-    //   $.proxy($.proxy(function () {
-    //     this._popupService.close();
-    //     this._history.goBack();
-    //   }, this), this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-
     var confirmed = false;
     this._popupService.openConfirmButton(
       Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
