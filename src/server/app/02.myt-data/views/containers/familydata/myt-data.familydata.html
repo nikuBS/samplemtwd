@@ -146,7 +146,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MyTDataFamily($('.container-wrap'), <%= shareData.shrblData %>);
+    new Tw.MyTDataFamily($('.container-wrap'), 40); // TODO: 한도 설정 최대치 변경 필요
   });
 </script>
 <% include ../../components/end.component.html %>
