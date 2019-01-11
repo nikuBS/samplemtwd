@@ -16,7 +16,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div id="commonMemberSloginFail" class="wrap">
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <div class="container">
@@ -44,7 +44,7 @@
                         </li>
                     </ul>
                     <div class="bt-link-box">
-                        <a href="/common/member/signup-guide" class="bt-link-tx">회원가입 하기</a>
+                        <button class="bt-link-tx fe-bt-signup">회원가입 하기</button>
                     </div>
                 </div>
                 <ul class="bt-slice full">
@@ -62,6 +62,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
+    new Tw.TidLandingComponent($('#commonMemberSloginFail'));
   });
 </script>
 <% include ../../components/end.component.html %>
