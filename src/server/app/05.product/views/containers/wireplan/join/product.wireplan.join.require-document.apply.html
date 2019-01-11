@@ -47,10 +47,9 @@
                             <li>
                                 <div class="title">결과</div>
                                 <div class="tx-cont">
-                                    <span class="tx-bold">필요서류를 첨부해주세요</span>
+                                    <span class="tx-bold"><%= reqDocInfo.resultText.text %></span>
                                     <span class="tx-noti">
-                                        <%= resultText.text %>
-                                        <% if (resultText.list) { %>
+                                        <% if (reqDocInfo.resultText.list && reqDocInfo.resultText.list.length > 0) { %>
                                         <a class="bt-link-tx underline fe-btn_open_detail" href="javascript:void(0)">심사결과 자세히 보기</a>
                                         <% } %>
                                     </span>

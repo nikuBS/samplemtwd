@@ -15,13 +15,19 @@ import {
 } from '../../../../../types/string.type';
 import DateHelper from '../../../../../utils/date.helper';
 import FormatHelper from '../../../../../utils/format.helper';
-import {REDIS_KEY} from '../../../../../types/redis.type';
-import {Observable} from 'rxjs/Observable';
+import { REDIS_KEY } from '../../../../../types/redis.type';
+import { Observable } from 'rxjs/Observable';
 
 class ProductWireplanJoinRequireDocumentHistory extends TwViewController {
   constructor() {
     super();
   }
+
+  private _convertProdIds = {
+    NH00000103: 'TW00000009',
+    NA00005055: 'TW20000012',
+    NH00000084: 'TW20000008'
+  };
 
   /**
    * @param reqDocInfo
@@ -53,9 +59,9 @@ class ProductWireplanJoinRequireDocumentHistory extends TwViewController {
 
     if (reqDocInfo.ciaInsptRslt === PRODUCT_REQUIRE_DOCUMENT.ABNORMAL) {
       const ciaInsptRsnCd: any = reqDocInfo.ciaInsptRsnCd.split(','),
-        nextDistbDt = FormatHelper.isEmpty(reqDocInfo.nextDistbDt) ? null :
-          DateHelper.getShortDateWithFormat(reqDocInfo.nextDistbDt, 'YYYY.M.DD.'),
-        rsnCdList = this._getRsnCdList(ciaInsptRsnCd, nextDistbDt);
+        nextSchdDt = FormatHelper.isEmpty(reqDocInfo.nextSchdDt) ? null :
+          DateHelper.getShortDateWithFormat(reqDocInfo.nextSchdDt, 'YYYY.M.DD.'),
+        rsnCdList = this._getRsnCdList(ciaInsptRsnCd, nextSchdDt);
 
       if (rsnCdList.indexOf('000') !== -1 || rsnCdList.indexOf('174') !== -1) {
         return {
@@ -95,10 +101,10 @@ class ProductWireplanJoinRequireDocumentHistory extends TwViewController {
 
   /**
    * @param rsnCdList
-   * @param nextDistbDt
+   * @param nextSchdDt
    * @private
    */
-  private _getRsnCdList(rsnCdList: any, nextDistbDt: any): any {
+  private _getRsnCdList(rsnCdList: any, nextSchdDt: any): any {
     const resultText: any = [];
 
     rsnCdList.forEach((code) => {
@@ -108,7 +114,7 @@ class ProductWireplanJoinRequireDocumentHistory extends TwViewController {
       }
 
       if (insptCode === '000') {
-        resultText.push(PRODUCT_REQUIRE_DOCUMENT_RS['R' + insptCode].replace('YYYYMDD', nextDistbDt));
+        resultText.push(PRODUCT_REQUIRE_DOCUMENT_RS['R' + insptCode].replace('YYYYMDD', nextSchdDt));
         return true;
       }
 
@@ -127,7 +133,7 @@ class ProductWireplanJoinRequireDocumentHistory extends TwViewController {
         title: PRODUCT_REQUIRE_DOCUMENT_TYPE_NM.history
       };
 
-    if (FormatHelper.isEmpty(prodId)) {
+    if (!FormatHelper.isEmpty(prodId)) {
       reqParams.svcProdCd = prodId === 'NH00000083' ? 'NH00000084' : prodId;
     }
 
@@ -144,9 +150,19 @@ class ProductWireplanJoinRequireDocumentHistory extends TwViewController {
         return this.error.render(res, renderCommonInfo);
       }
 
+      let getProdId: any = reqDocInfo.result.necessaryDocumentInspectInfoList[0].svcProdCd;
+
+      if (getProdId === 'NH00000083') {
+        getProdId = 'NH00000084';
+      }
+
+      if (!FormatHelper.isEmpty(this._convertProdIds[reqDocInfo.result.necessaryDocumentInspectInfoList[0].svcProdCd])) {
+        getProdId = this._convertProdIds[reqDocInfo.result.necessaryDocumentInspectInfoList[0].svcProdCd];
+      }
+
       Observable.combineLatest(
-        this.apiService.request(API_CMD.BFF_05_0134, { prodId: reqDocInfo.result.necessaryDocumentInspectInfoList[0].svcProdCd }),
-        this.redisService.getData(REDIS_KEY.PRODUCT_INFO + reqDocInfo.result.necessaryDocumentInspectInfoList[0].svcProdCd)
+        this.apiService.request(API_CMD.BFF_10_0119, {}, null, [reqDocInfo.result.necessaryDocumentInspectInfoList[0].svcProdCd]),
+        this.redisService.getData(REDIS_KEY.PRODUCT_INFO + getProdId)
       ).subscribe(([ combineInfo, prodRedisInfo ]) => {
         if (prodRedisInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, Object.assign(renderCommonInfo, {
@@ -155,7 +171,7 @@ class ProductWireplanJoinRequireDocumentHistory extends TwViewController {
           }));
         }
 
-        const isJoined = combineInfo.code === API_CODE.CODE_00;
+        const isJoined = combineInfo.result.combiProdScrbYn === 'Y';
 
         res.render('wireplan/join/product.wireplan.join.require-document.history.html', Object.assign(renderCommonInfo, {
           reqDocInfo: this._convertReqDocInfo(reqDocInfo.result.necessaryDocumentInspectInfoList[0], isJoined),
