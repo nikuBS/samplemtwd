@@ -58,9 +58,23 @@ class MyTJoinMyplan extends TwViewController {
     return optionAndDiscountProgramList.map((item) => {
       return Object.assign(item, {
         scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.M.DD.'),
-        btnList: this._convertBtnList(item.btnList)
+        btnList: this._convertBtnList(item.btnList),
+        dcStaDt: FormatHelper.isEmpty(item.dcStaDt) ? null : DateHelper.getShortDateWithFormat(item.dcStaDt, 'YYYY.M.DD.'),
+        dcEndDt: FormatHelper.isEmpty(item.dcEndDt) ? null : this._getDcEndDt(item.dcEndDt)
       });
     });
+  }
+
+  /**
+   * @param dcEndDt
+   * @private
+   */
+  private _getDcEndDt(dcEndDt: any): any {
+    if (dcEndDt === '99991231') {
+      return MYT_FEEPLAN_BENEFIT.ENDLESS;
+    }
+
+    return DateHelper.getShortDateWithFormat(dcEndDt, 'YYYY.M.DD.')
   }
 
   /**
