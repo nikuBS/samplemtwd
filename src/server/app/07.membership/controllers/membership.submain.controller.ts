@@ -10,6 +10,7 @@ import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../utils/format.helper';
 import { MEMBERSHIP_GROUP , MEMBERSHIP_TYPE } from '../../../types/bff.type';
+import {CUSTOMER_NOTICE_CATEGORY} from '../../../types/string.type';
 
 export default class MembershipSubmain extends TwViewController {
   constructor() {
@@ -19,9 +20,10 @@ export default class MembershipSubmain extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     if (this.isLogin(svcInfo)) {
       Observable.combineLatest(
+        this.getMembershipCheck(),
         this.getMembershipData(),
         this.getPopBrandData()
-      ).subscribe(([membershipData, popBrandData]) => {
+      ).subscribe(([membershipCheckData, membershipData, popBrandData]) => {
 
         const error = {
           code: membershipData.code || popBrandData.code,
@@ -32,12 +34,16 @@ export default class MembershipSubmain extends TwViewController {
           return this.error.render(res, { ...error, svcInfo });
         }
 
-        res.render('membership.submain.html', { svcInfo, pageInfo, isLogin: this.isLogin(svcInfo), membershipData, popBrandData });
+        this.logger.info(this, 'membershipCheckData1 : ', membershipCheckData);
+
+        res.render('membership.submain.html',
+            { svcInfo, pageInfo, isLogin: this.isLogin(svcInfo), membershipCheckData, membershipData, popBrandData });
       });
     } else {
       Observable.combineLatest(
+        this.getMembershipCheck(),
         this.getPopBrandData()
-      ).subscribe(([popBrandData]) => {
+      ).subscribe(([membershipCheckData, popBrandData]) => {
 
         const error = {
           code: popBrandData.code,
@@ -50,7 +56,10 @@ export default class MembershipSubmain extends TwViewController {
 
         const membershipData = null;
 
-        res.render('membership.submain.html', { svcInfo, pageInfo, isLogin: this.isLogin(svcInfo), membershipData, popBrandData });
+        this.logger.info(this, 'membershipCheckData2 : ', membershipCheckData);
+
+        res.render('membership.submain.html',
+            { svcInfo, pageInfo, isLogin: this.isLogin(svcInfo), membershipCheckData, membershipData, popBrandData });
       });
     }
   }
@@ -60,6 +69,16 @@ export default class MembershipSubmain extends TwViewController {
       return false;
     }
     return true;
+  }
+
+  private getMembershipCheck(): Observable<any> {
+    let membershipCheckData = null;
+    return this.apiService.request(API_CMD.BFF_11_0015, {}).map((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        membershipCheckData = resp.result;
+      }
+      return membershipCheckData;
+    });
   }
 
   private getMembershipData(): Observable<any> {
@@ -82,6 +101,7 @@ export default class MembershipSubmain extends TwViewController {
     membershipData.showCardNum = FormatHelper.addCardDash(membershipData.mbrCardNum.toString());
     membershipData.showUsedAmount = FormatHelper.addComma((+membershipData.mbrUsedAmt).toString());
     membershipData.mbrGrStr = MEMBERSHIP_GROUP[membershipData.mbrGrCd].toUpperCase();
+    membershipData.mbrGrade = MEMBERSHIP_GROUP[membershipData.mbrGrCd].toLowerCase();
     membershipData.mbrTypStr = MEMBERSHIP_TYPE[membershipData.mbrTypCd];
     return membershipData;
   }

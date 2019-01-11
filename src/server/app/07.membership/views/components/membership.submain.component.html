@@ -6,7 +6,7 @@
 <script id="tmplList" type="text/x-handlebars-template">
     {{#each list}}
     <li>
-        <a class="brand-inner" href="/membership/benefit/brand-benefit?cateCd=&brandCd={{brandCd}}">
+        <a class="brand-inner" href="/membership/benefit/brand-benefit?cateCd={{coCd}}&brandCd={{brandCd}}">
             <span class="inner">
                 <span class="logo"><img src="{{appIcoImgUrl}}" alt="CU(구)훼미리마트"></span>
                 <span class="intro">
@@ -30,7 +30,10 @@
                 </span>
             </span>
         </a>
-        <div class="map-view"><button class="map">지도보기</button></div>
+        <div class="map-view"><button class="map"
+                                      data-brandcd="{{ brandCd }}"
+                                      data-cocd="{{ coCd }}"
+                                      data-joincd="{{ joinCd }}">지도보기</button></div>
     </li>
     {{/each}}
 </script>
