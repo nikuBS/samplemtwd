@@ -224,7 +224,8 @@ Tw.ProductRoamingFiInquire.prototype = {
 
   _clickCancelBtn : function(selected){
     var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A26;
-    this._popupService.openConfirm(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleConfirmAlert, this, selected));
+    this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE,
+      $.proxy(this._handleConfirmAlert, this, selected), null, Tw.BUTTON_LABEL.CLOSE, ALERT.BUTTON);
   },
 
   _handleConfirmAlert : function(selected){
