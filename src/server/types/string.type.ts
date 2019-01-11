@@ -1020,3 +1020,5 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   }
 ];
+export const MYT_JOIN_PERSONAL = '개인';
+export const MYT_JOIN_FAMILY = '패밀리';
