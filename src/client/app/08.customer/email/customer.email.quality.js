@@ -121,7 +121,7 @@ Tw.CustomerEmailQuality.prototype = {
       subject: this.$wrap_tpl_quality.find('.fe-text_title').val(),
       inptZip: $('.fe-zip').val(),
       inptBasAddr: $('.fe-main-address').val(),
-      inptDtlAddr: $('.fe-detail-address').val(),
+      inptDtlAddr: $('.fe-detail-address').val()
     });
 
     this._apiService.request(Tw.API_CMD.BFF_08_0045, htParams)
