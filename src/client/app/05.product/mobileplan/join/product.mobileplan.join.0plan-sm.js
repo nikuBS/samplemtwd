@@ -4,7 +4,7 @@
  * Date: 2019.01.10
  */
 
-Tw.ProductMobileplanJoin0planSm = function(rootEl, prodId, displayId, confirmOptions, isOverPayReqYn, isComparePlanYn) {
+Tw.ProductMobileplanJoin0planSm = function(rootEl, prodId, displayId, sktProdBenfCtt, isOverPayReqYn, isComparePlanYn) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
@@ -14,15 +14,15 @@ Tw.ProductMobileplanJoin0planSm = function(rootEl, prodId, displayId, confirmOpt
   this._displayId = displayId;
   this._isOverPayReq = isOverPayReqYn === 'Y';
   this._isComparePlan = isComparePlanYn === 'Y';
-  this._confirmOptions = JSON.parse(window.unescape(confirmOptions));
+  this._sktProdBenfCtt = window.unescape(sktProdBenfCtt);
   this._isSetOverPayReq = false;
   this._overpayRetryCnt = 0;
   this._startTime = null;
+  this._confirmOptions = {};
 
   this.$container = rootEl;
   this._cachedElement();
   this._bindEvent();
-  this._convConfirmOptions();
 };
 
 Tw.ProductMobileplanJoin0planSm.prototype = {
@@ -53,29 +53,46 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
 
     if ($(e.currentTarget).val() === 'NA00006163' && !Tw.FormatHelper.isEmpty(this._startTime)) {
       this.$msg.show();
-    } else {
+    }
+
+    if ($(e.currentTarget).val() === 'NA00006163' && Tw.FormatHelper.isEmpty(this._startTime)) {
+      this.$btnSetupOk.prop('disabled', true).attr('disabled');
       return;
     }
 
     this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
   },
 
-  _convConfirmOptions: function() {
-    this._confirmOptions = $.extend(this._confirmOptions, {
+  _convConfirmOptions: function(result) {
+    this._confirmOptions = Tw.ProductHelper.convPlansJoinTermInfo(result);
+
+    $.extend(this._confirmOptions, {
       svcNumMask: Tw.FormatHelper.conTelFormatWithDash(this._confirmOptions.preinfo.svcNumMask),
       svcProdNm: this._confirmOptions.preinfo.frProdInfo.prodNm,
       svcProdBasFeeInfo: this._confirmOptions.preinfo.frProdInfo.basFeeInfo,
       toProdName: this._confirmOptions.preinfo.toProdInfo.prodNm,
       isNumberBasFeeInfo: !this._confirmOptions.preinfo.toProdInfo.basFeeInfo.isNaN,
       toProdBasFeeInfo: this._confirmOptions.preinfo.toProdInfo.basFeeInfo.value,
-      toProdDesc: this._confirmOptions.sktProdBenfCtt,
+      toProdDesc: this.sktProdBenfCtt,
       isAutoJoinTermList: (this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0),
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
       autoTermList: this._confirmOptions.preinfo.autoTermList,
       autoJoinBenefitList: this._confirmOptions.preinfo.toProdInfo.chgSktProdBenfCtt,
       autoTermBenefitList: this._confirmOptions.preinfo.frProdInfo.chgSktProdBenfCtt,
-      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0)
+      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0),
+      isMobilePlan: true,
+      isComparePlan: this._isComparePlan,
+      noticeList: $.merge(this._confirmOptions.preinfo.termNoticeList, this._confirmOptions.preinfo.joinNoticeList),
+      joinTypeText: Tw.PRODUCT_TYPE_NM.CHANGE,
+      typeText: Tw.PRODUCT_CTG_NM.PLANS,
+      confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2,
+      settingSummaryTexts: [{
+        spanClass: 'val',
+        text: this.$container.find('.widget-box.radio input[type="radio"]:checked').attr('title')
+      }]
     });
+
+    return this._confirmOptions;
   },
 
   _openTimeSelectPop: function() {
@@ -170,18 +187,21 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
   },
 
   _procConfirm: function() {
-    new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
-      isMobilePlan: true,
-      isComparePlan: this._isComparePlan,
-      noticeList: $.merge(this._confirmOptions.preinfo.termNoticeList, this._confirmOptions.preinfo.joinNoticeList),
-      joinTypeText: Tw.PRODUCT_TYPE_NM.CHANGE,
-      typeText: Tw.PRODUCT_CTG_NM.PLANS,
-      confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2,
-      settingSummaryTexts: [{
-        spanClass: 'val',
-        text: this.$container.find('.widget-box.radio input[type="radio"]:checked').attr('title')
-      }]
-    }), $.proxy(this._prodConfirmOk, this));
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
+
+    this._apiService.request(Tw.API_CMD.BFF_10_0008, {
+      option: this.$container.find('.widget-box.radio input[type="radio"]:checked').val()
+    }, {}, [this._prodId]).done($.proxy(this._procConfirmRes, this));
+  },
+
+  _procConfirmRes: function(resp) {
+    Tw.CommonHelper.endLoading('.container');
+
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    new Tw.ProductCommonConfirm(true, null, this._convConfirmOptions(resp.result), $.proxy(this._prodConfirmOk, this));
   },
 
   _prodConfirmOk: function() {

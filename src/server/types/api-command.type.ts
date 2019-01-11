@@ -521,7 +521,7 @@ export const API_CMD = {
     path: '/core-product/:version/mobiles/fee-plans/:args0/joins/join-prechecks',
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },
-  BFF_10_0008: { path: '/:version/products/fee-plans/:args0/join-term-infos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_10_0008: { path: '/:version/products/fee-plans/:args0/join-term-infos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0009: {
     path: '/core-product/:version/mobiles/fee-plans/joins/request-over-chargings',
     method: API_METHOD.POST,

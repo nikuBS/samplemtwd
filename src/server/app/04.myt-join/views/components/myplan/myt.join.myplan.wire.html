@@ -3,7 +3,11 @@
 
         <div class="plan-compact-info">
             <div class="plan">
-                <a href="/product/callplan/<%= feePlan.prodId %>" class="tit"><%= feePlan.feeProdNm %></a>
+                <% if (feePlan.linkProdId) { %>
+                <a href="/product/callplan/<%= feePlan.linkProdId %>" class="tit"><%= feePlan.feeProdNm %></a>
+                <% } else { %>
+                <span class="tit"><%= feePlan.feeProdNm %></span>
+                <% } %>
                 <% if ( feePlan.isDisplayFeeAmt ) { %>
                 <span class="val"><%= feePlan.basFeeAmt %>원</span>
                 <% } %>

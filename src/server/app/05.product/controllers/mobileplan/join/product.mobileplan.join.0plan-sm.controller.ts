@@ -50,17 +50,14 @@ class ProductMobileplanJoin0planSm extends TwViewController {
 
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, [prodId]),
-      this.apiService.request(API_CMD.BFF_10_0008, { option: prodId + ',' + svcInfo.prodId }, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0009, {}),
       this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId),
       this._getMobilePlanCompareInfo(svcInfoProdId, prodId)
-    ).subscribe(([ basicInfo, joinTermInfo, overPayReqInfo, prodRedisInfo, mobilePlanCompareInfo ]) => {
-      const apiError = this.error.apiError([basicInfo, joinTermInfo]);
-
-      if (!FormatHelper.isEmpty(apiError)) {
+    ).subscribe(([ basicInfo, overPayReqInfo, prodRedisInfo, mobilePlanCompareInfo ]) => {
+      if (basicInfo.code !== API_CODE.CODE_00) {
         return this.error.render(res, Object.assign(renderCommonInfo, {
-          code: apiError.code,
-          msg: apiError.msg
+          code: basicInfo.code,
+          msg: basicInfo.msg
         }));
       }
 
@@ -69,9 +66,8 @@ class ProductMobileplanJoin0planSm extends TwViewController {
         basicInfo: basicInfo.result,
         isOverPayReqYn: overPayReqInfo.code === API_CODE.CODE_00 ? 'Y' : 'N',
         mobilePlanCompareInfo: mobilePlanCompareInfo.code !== API_CODE.CODE_00 ? null : mobilePlanCompareInfo.result, // 요금제 비교하기
-        joinTermInfo: Object.assign(ProductHelper.convPlansJoinTermInfo(joinTermInfo.result), {
-          sktProdBenfCtt: FormatHelper.isEmpty(prodRedisInfo.result.summary.sktProdBenfCtt) ? null : prodRedisInfo.result.summary.sktProdBenfCtt
-        })
+        sktProdBenfCtt: FormatHelper.isEmpty(prodRedisInfo.result.summary.sktProdBenfCtt) ? null :
+          prodRedisInfo.result.summary.sktProdBenfCtt // SKT만의 혜택
       }));
     });
   }

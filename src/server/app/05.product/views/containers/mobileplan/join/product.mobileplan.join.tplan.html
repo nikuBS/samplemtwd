@@ -35,7 +35,7 @@
                 <div class="cont-box">
                     <div class="product-tit-wrap">
                         <span class="tit-small">변경할 상품 옵션 설정하세요.</span>
-                        <span class="tit-big"><%= joinTermInfo.preinfo.toProdInfo.prodNm %></span>
+                        <span class="tit-big">Data 인피니티</span>
                     </div>
                 </div>
                 <!--// .cont-box -->
@@ -139,7 +139,7 @@
 </body>
 <% include ../../../components/javascript.component.html %>
 <script>$(function () {
-  new Tw.ProductMobileplanJoinTplan($('.wrap'), '<%= prodId %>', 'MP_02_02_03_01', '<%- escape(JSON.stringify(joinTermInfo)) %>',
+  new Tw.ProductMobileplanJoinTplan($('.wrap'), '<%= prodId %>', 'MP_02_02_03_01', '<%- escape(sktProdBenfCtt) %>',
     '<%= isOverPayReqYn %>', '<%= mobilePlanCompareInfo ? "Y" : "N" %>', '<%- JSON.stringify(watchInfo) %>');
 });</script>
 <% include ../../../components/end.component.html %>
