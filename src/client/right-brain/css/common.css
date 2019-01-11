@@ -1203,7 +1203,7 @@ table caption, legend, figcaption {
   height: 1px;
   *height: 0px;
   margin-top: -1px;
-  font-size: 0;
+  /*font-size:0;*/
   line-height: 0;
   text-indent: -9999px; }
 
