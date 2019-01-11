@@ -636,6 +636,7 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A16: { TITLE: '확인을 누르시면 선택된 필터가 해제되고 태그가 선택됩니다.', MSG: '' },
   ALERT_3_A17: { TITLE: '확인을 누르시면 선택된 태그가 해제되고 필터가 선택됩니다.', MSG: '' },
   ALERT_3_A18: { TITLE: '검색 결과가 없습니다', MSG: '' },
+  ALERT_3_A19: { TITLE: 'SK텔레콤 회선만 등록 가능합니다.', MSG: '' },
   ALERT_3_A20: { TITLE: '로그인이 필요합니다.', MSG: '' },
   ALERT_3_A26: { TITLE: '선택하신 로밍 예약 건을 취소하시겠습니까?', MSG: '', BUTTON: '확인' },
   ALERT_3_A27: { TITLE: '수정되었습니다.', MSG: '' },

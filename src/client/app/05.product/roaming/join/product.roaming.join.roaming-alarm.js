@@ -37,6 +37,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
   },
   _clearInput : function(){
     this.$inputElement.val('');
+    this.$inputElement.trigger('keyup');
     this._activateAddBtn();
   },
   _inputBlurEvt : function(){
@@ -56,14 +57,17 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
       this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.TITLE);
       return;
     }
-
     var tempPhoneNum = this.$inputElement.val().split('-');
+    var phonReg = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
+    if(!phonReg.test(this.$inputElement.val())){
+      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
+      return;
+    }
     var phoneObj = {
       'serviceNumber1' : tempPhoneNum[0],
       'serviceNumber2' : tempPhoneNum[1],
       'serviceNumber3' : tempPhoneNum[2]
     };
-
     this._addedList.push(phoneObj);
     this._activateConfirmBtn();
     this._clearInput();
@@ -83,13 +87,13 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     }
   },
   _showPhoneBook : function () {
-
     this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._phoneBookCallBack,this));
   },
   _phoneBookCallBack : function(res){
     if (res.resultCode === Tw.NTV_CODE.CODE_00) {
-      var number = res.params.phoneNumber;
-      this.$inputElement.val(number);
+      this.$inputElement.val(res.params.phoneNumber);
+      this.$inputElement.trigger('keyup');
+      this._inputBlurEvt();
     }
   },
   _activateAddBtn : function () {

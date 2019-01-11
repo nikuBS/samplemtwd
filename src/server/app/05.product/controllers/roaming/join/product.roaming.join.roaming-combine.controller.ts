@@ -20,10 +20,7 @@ class ProductRoamingJoinRoamingCombine extends TwViewController {
   }
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
 
-
-
     const prodId = req.query.prod_id || null;
-
 
     if (FormatHelper.isEmpty(prodId)) {
       return this.error.render(res, {
@@ -34,10 +31,8 @@ class ProductRoamingJoinRoamingCombine extends TwViewController {
 
     Observable.combineLatest(
       this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId),
-      this.apiService.request(API_CMD.BFF_10_0141, {}, {})
-    ).subscribe(([ prodRedisInfo, prodBffInfo]) => {
-
-
+      this.apiService.request(API_CMD.BFF_10_0141, {}, {}),
+    ).subscribe(([ prodRedisInfo, prodBffInfo ]) => {
       if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00)) {
         return this.error.render(res, {
           svcInfo: svcInfo,
@@ -46,7 +41,6 @@ class ProductRoamingJoinRoamingCombine extends TwViewController {
           msg: prodBffInfo.msg,
         });
       }
-
       res.render('roaming/join/product.roaming.join.roaming-combine.html', {
         svcInfo : svcInfo,
         prodRedisInfo : prodRedisInfo.result.summary,
@@ -56,7 +50,6 @@ class ProductRoamingJoinRoamingCombine extends TwViewController {
         pageInfo : pageInfo
       });
     });
-
 
 
 

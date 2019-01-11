@@ -20,8 +20,6 @@ class ProductRoamingSettingRoamingCombine extends TwViewController {
   }
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
 
-
-
     const prodId = req.query.prod_id || null;
 
     if (FormatHelper.isEmpty(prodId)) {
@@ -30,7 +28,7 @@ class ProductRoamingSettingRoamingCombine extends TwViewController {
         title: PRODUCT_TYPE_NM.JOIN
       });
     }
-
+    
     Observable.combineLatest(
       this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId),
       this.apiService.request(API_CMD.BFF_10_0141, {}, {}),
@@ -43,7 +41,6 @@ class ProductRoamingSettingRoamingCombine extends TwViewController {
           msg: prodBffInfo.msg,
         });
       }
-
       res.render('roaming/setting/product.roaming.setting.roaming-combine.html', {
         svcInfo : svcInfo,
         prodRedisInfo : prodRedisInfo.result.summary,
