@@ -281,7 +281,6 @@ Tw.MyTFareBillSetChange.prototype = {
 
   // 휴대폰 번호 입력 시 자동 하이픈 넣기
   _onFormatHpNum: function (e) {
-    console.log('@@@@@');
     var _$this = $(e.currentTarget);
     var data = _$this.val();
     data = data.replace(/[^0-9]/g, '');
@@ -302,7 +301,6 @@ Tw.MyTFareBillSetChange.prototype = {
       tmp += data.substr(3 + size);
       data = tmp;
     }
-    console.log(data);
     _$this.val(data);
   },
 
