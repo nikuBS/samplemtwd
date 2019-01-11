@@ -3,7 +3,7 @@
 
         <div class="plan-compact-info">
             <div class="plan">
-                <% if (feePlan.feePlanProd.linkProdId) { %>
+                <% if (feePlan.feePlanProd.prodLinkYn === 'Y' && feePlan.feePlanProd.linkProdId) { %>
                 <a href="/product/callplan/<%= feePlan.feePlanProd.linkProdId %>" class="tit"><%= feePlan.feePlanProd.prodNm %></a>
                 <% } else { %>
                 <span class="tit"><%= feePlan.feePlanProd.prodNm %></span>
