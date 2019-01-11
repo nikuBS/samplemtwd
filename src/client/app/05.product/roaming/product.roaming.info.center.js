@@ -16,7 +16,7 @@ Tw.ProductRoamingInfoCenter = function(rootEl) {
 Tw.ProductRoamingInfoCenter.prototype = {
   _init: function() {
 
-    for( var i=1; i<=14; i++){
+    for( var i=1; i<14; i++){
       $('#center'+i).hide();
     }
     $('#center1').show();
