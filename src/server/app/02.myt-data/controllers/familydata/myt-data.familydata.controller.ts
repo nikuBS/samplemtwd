@@ -54,13 +54,14 @@ class MyTDataFamily extends TwViewController {
         };
       }
 
-      const data =
-        mine.limitedYn === 'Y'
-          ? {
-              remained: Number(mine.limitation) * 1000 - Number(mine.used),
-              total: Number(mine.limitation)
-            }
-          : { remained: Number(resp.result.remained), total: Number(resp.result.total) };
+      const limit = Number(mine.limitation),
+        data =
+          mine.limitedYn === 'Y'
+            ? {
+                remained: limit === 0 ? 0 : Number(mine.limitation) * 1000 - Number(mine.used),
+                total: limit
+              }
+            : { remained: Number(resp.result.remained), total: Number(resp.result.total) };
 
       return {
         ...resp.result,
