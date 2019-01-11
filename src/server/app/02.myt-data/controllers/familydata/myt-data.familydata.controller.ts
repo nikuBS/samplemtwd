@@ -59,7 +59,7 @@ class MyTDataFamily extends TwViewController {
               remained: Number(mine.limitation) * 1000 - Number(mine.used),
               total: Number(mine.limitation)
             }
-          : { remained: resp.result.remained, total: Number(resp.result.total) };
+          : { remained: Number(resp.result.remained), total: Number(resp.result.total) };
 
       return {
         ...resp.result,
@@ -70,7 +70,7 @@ class MyTDataFamily extends TwViewController {
         mine: {
           ...mine,
           remained: FormatHelper.convDataFormat(data.remained, DATA_UNIT.MB),
-          ratio: data.remained / data.total / 10,
+          ratio: Math.round(data.remained / data.total / 10),
           used: FormatHelper.convDataFormat(Number(mine.used), DATA_UNIT.MB),
           shared: FormatHelper.addComma(mine.shared),
           limitation: FormatHelper.addComma(mine.limitation),
