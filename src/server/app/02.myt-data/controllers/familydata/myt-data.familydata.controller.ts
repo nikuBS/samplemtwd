@@ -17,10 +17,11 @@ class MyTDataFamily extends TwViewController {
   }
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    Observable.combineLatest(this.getFamilyData(svcInfo), this.getShareData()).subscribe(([familyInfo, shareData]) => {
+    // Observable.combineLatest(this.getFamilyData(svcInfo), this.getShareData()).subscribe(([familyInfo, shareData]) => {
+    this.getFamilyData(svcInfo).subscribe(familyInfo => {
       const error = {
-        code: familyInfo.code || shareData.code,
-        msg: familyInfo.msg || shareData.msg
+        code: familyInfo.code,
+        msg: familyInfo.msg
       };
 
       if (error.code) {
@@ -30,7 +31,7 @@ class MyTDataFamily extends TwViewController {
         });
       }
 
-      res.render('familydata/myt-data.familydata.html', { svcInfo, pageInfo, familyInfo, shareData });
+      res.render('familydata/myt-data.familydata.html', { svcInfo, pageInfo, familyInfo });
     });
   }
 
@@ -53,13 +54,14 @@ class MyTDataFamily extends TwViewController {
         };
       }
 
-      const data =
-        mine.limitedYn === 'Y'
-          ? {
-              remained: Number(mine.limitation) * 1000 - Number(mine.used),
-              total: Number(mine.limitation)
-            }
-          : { remained: Number(resp.result.remained), total: Number(resp.result.total) };
+      const limit = Number(mine.limitation),
+        data =
+          mine.limitedYn === 'Y'
+            ? {
+                remained: limit === 0 ? 0 : Number(mine.limitation) * 1000 - Number(mine.used),
+                total: limit
+              }
+            : { remained: Number(resp.result.remained), total: Number(resp.result.total) };
 
       return {
         ...resp.result,
@@ -89,14 +91,16 @@ class MyTDataFamily extends TwViewController {
     });
   }
 
-  private getShareData = () => {
-    return this.apiService.request(API_CMD.BFF_06_0047, {}).map(resp => {
-      if (resp.code !== API_CODE.CODE_00) {
-        return resp;
-      }
-      return resp.result;
-    });
-  }
+  // private getShareData = familyInfo => {
+  //   return this.apiService.request(API_CMD.BFF_06_0047, {}).map(resp => {
+  //     if (resp.code !== API_CODE.CODE_00) {
+  //       return resp;
+  //     }
+  //     return {
+  //       familyInfo: familyInfo,
+  //       shaceresp.result;
+  //   });
+  // }
 }
 
 export default MyTDataFamily;
