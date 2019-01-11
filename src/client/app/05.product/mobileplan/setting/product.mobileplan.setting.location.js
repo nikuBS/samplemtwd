@@ -38,6 +38,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     $('#btnNumAdd').click($.proxy(this._addNumber, this));
     $('.comp-box').on('click', '.bt-line-gray1', $.proxy(this._removeNumber, this));
     $('#num-input').on('input', $.proxy(this._oninputTelNumber, this));
+    $('#num-input').on('keyup', $.proxy(this._onKeyUp, this));
     $('#num-input').on('focus', $.proxy(this._onfocusNumInput, this));
     $('#num-input').on('blur', $.proxy(this._onblurNumInput, this));
     $('#num-inputbox .cancel').on('click', $.proxy(this._onclickInputDel, this));
@@ -89,8 +90,28 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     this._checkAddNumberBtn();
   },
 
+  /**
+   * input 키 입력시 - 숫자이외의 문자만 막음
+   * @param event
+   * @private
+   */
+  _onKeyUp: function (event) {
+
+    // 숫자 외 다른 문자를 입력한 경우
+    var $input = $(event.target);
+    var value = $input.val();
+    var reg = /[^0-9]/g;
+
+    if( reg.test(value) ){
+      event.stopPropagation();
+      event.preventDefault();
+      $input.val(value.replace(reg, ''));
+    }
+  },
+
+
   // /**
-  //  * input 키 입력시
+  //  * input 키 입력시 - 전화번호 형식으로 변경
   //  * @param event
   //  * @private
   //  */
@@ -124,6 +145,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     $('#btnNumAdd').prop('disabled', true);
     //$('#inputReqPhone').val('');
     $('#num-inputbox').removeClass('error');
+    $('#num-input').trigger('click');
   },
 
   /**
@@ -194,7 +216,14 @@ Tw.ProductMobileplanSettingLocation.prototype = {
   },
 
 
-  _onclickLocSchPopup: function(){
+  _onclickLocSchPopup: function(event){
+    if($(event.target).attr('id') === 'loc-search-input'){
+      if(event.preventDefault){
+        event.preventDefault();
+      }
+      event.stopPropagation();
+      $('#loc-search-input').trigger('blur');
+    }
 
     // 2개 이상인 경우
     //3_A78
