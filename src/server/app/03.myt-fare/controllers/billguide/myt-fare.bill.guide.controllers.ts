@@ -193,18 +193,18 @@ class MyTFareBillGuide extends TwViewController {
     }
 
     const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0049, {}), 'p2'); // 통합청구등록회선조회
-    const p3 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0030, {}), 'p3'); // 미납내역조회
+    // const p3 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0030, {}), 'p3'); // 미납내역조회
     /*
     p1 = this._getPromiseApiMock(bill_guide_BFF_05_0036, 'p1');
     const p2 = this._getPromiseApiMock(bill_guide_BFF_05_0049, 'p2');
     const p3 = this._getPromiseApiMock(bill_guide_BFF_05_0024, 'p3');
     */
 
-    Promise.all([p1, p2, p3]).then(function(resArr) {
+    Promise.all([p1, p2 /*, p3*/ ]).then(function(resArr) {
 
       thisMain._billpayInfo = resArr[0].result;
       thisMain._intBillLineInfo = resArr[1].result;
-      thisMain._unpaidBillsInfo = resArr[2].result;
+      // thisMain._unpaidBillsInfo = resArr[2].result;
       thisMain._childLineInfo = childInfo;
 
       thisMain._commDataInfo.selClaimDt = (thisMain._billpayInfo) ? thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt)) : null;
@@ -220,9 +220,9 @@ class MyTFareBillGuide extends TwViewController {
       thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
 
       thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo) ? thisMain._billpayInfo.autopayYn : null;
-      thisMain._showConditionInfo.nonPaymentYn = (thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList.length === 0) ? 'N' : 'Y';
+      // thisMain._showConditionInfo.nonPaymentYn = (thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList.length === 0) ? 'N' : 'Y';
 
-      thisMain._showConditionInfo.selectNonPaymentYn = thisMain.getSelectNonPayment();
+      // thisMain._showConditionInfo.selectNonPaymentYn = thisMain.getSelectNonPayment();
 
       // 사용요금/청구요금이 존재하는지
       if ( thisMain.reqQuery.line ) {
@@ -242,7 +242,7 @@ class MyTFareBillGuide extends TwViewController {
         intBillLineInfo: thisMain._intBillLineInfo,
         childLineInfo: thisMain._childLineInfo,
         showConditionInfo: thisMain._showConditionInfo,
-        unpaidBillsInfo: thisMain._unpaidBillsInfo,
+        // unpaidBillsInfo: thisMain._unpaidBillsInfo,
         allSvc: allSvc
       });
     }, function(err) {
@@ -326,13 +326,13 @@ class MyTFareBillGuide extends TwViewController {
       invDt: this.reqQuery.date
     }), 'p1');
     const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0049, {}), 'p2'); // 통합청구등록회선조회
-    const p3 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0030, {}), 'p3'); // 미납내역조회
+    // const p3 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0030, {}), 'p3'); // 미납내역조회
 
-    Promise.all([p1, p2, p3]).then(function(resArr) {
+    Promise.all([p1, p2/*, p3*/]).then(function(resArr) {
 
       thisMain._billpayInfo = resArr[0].result;
       thisMain._intBillLineInfo = resArr[1].result;
-      thisMain._unpaidBillsInfo = resArr[2].result;
+      // thisMain._unpaidBillsInfo = resArr[2].result;
       thisMain._childLineInfo = childInfo;
 
       thisMain._commDataInfo.selClaimDt = (thisMain._billpayInfo) ? thisMain.getSelClaimDt(String(thisMain._billpayInfo.invDt)) : null;
@@ -347,8 +347,8 @@ class MyTFareBillGuide extends TwViewController {
       thisMain._commDataInfo.conditionChangeDtList = (thisMain._billpayInfo.invDtArr ) ? thisMain.conditionChangeDtListFun() : null;
 
       thisMain._showConditionInfo.autopayYn = (thisMain._billpayInfo) ? thisMain._billpayInfo.autopayYn : null;
-      thisMain._showConditionInfo.nonPaymentYn = (thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList.length === 0) ? 'N' : 'Y';
-      thisMain._showConditionInfo.selectNonPaymentYn = thisMain.getSelectNonPayment();
+      // thisMain._showConditionInfo.nonPaymentYn = (thisMain._unpaidBillsInfo.unPaidAmtMonthInfoList.length === 0) ? 'N' : 'Y';
+      // thisMain._showConditionInfo.selectNonPaymentYn = thisMain.getSelectNonPayment();
 
       thisMain.logger.info(thisMain, '[_urlTplInfo.individualPage] : ', thisMain._urlTplInfo.individualPage);
       thisMain.reqButtonView(res, thisMain._urlTplInfo.individualPage, {
@@ -360,7 +360,7 @@ class MyTFareBillGuide extends TwViewController {
         intBillLineInfo: thisMain._intBillLineInfo,
         childLineInfo: thisMain._childLineInfo,
         showConditionInfo: thisMain._showConditionInfo,
-        unpaidBillsInfo: thisMain._unpaidBillsInfo,
+        // unpaidBillsInfo: thisMain._unpaidBillsInfo,
         allSvc: allSvc
       });
     }, function(err) {
