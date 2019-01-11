@@ -105,13 +105,16 @@ class MainHome extends TwViewController {
       }
     } else {
       // 비로그인
-      this.getRedisData(noticeCode, svcInfo.svcMgmtNum).subscribe((redisData) => {
+      this.getRedisData(noticeCode, '').subscribe((redisData) => {
         res.render('main.home.html', { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: '' });
       });
     }
   }
 
   private getSmartCardOrder(svcMgmtNum): Observable<any> {
+    if ( FormatHelper.isEmpty(svcMgmtNum) ) {
+      return Observable.of([]);
+    }
     return this.redisService.getStringTos(REDIS_TOS_KEY.SMART_CARD + svcMgmtNum)  // 1004483007
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
