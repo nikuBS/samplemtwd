@@ -30,12 +30,15 @@
 <script id="fe-templ-filters" type="text/x-handlebars-template">
     {{#if filters}}
         {{#each filters}}
+            {{#unless @first}}
+            ,
+            {{/unless}}
             #<span class="datebox">{{this}}</span>
         {{/each}}
         {{#if leftCount}}
             <span class="text">외</span>
             <span class="number">{{leftCount}}</span>
-            <span class="text">건</span>
+            <span class="text">개</span>
         {{/if}}
     {{else}}
         <span class="datebox">전체 부가서비스</span>
