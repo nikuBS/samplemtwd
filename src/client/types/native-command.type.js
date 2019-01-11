@@ -51,6 +51,10 @@ Tw.NTV_CODE = {
   CODE_A80: 'A80'
 };
 
+Tw.NTV_ERROR_MSG = {
+  A80: '무료문자 서비스는 SK텔레콤 휴대폰 번호를 등록하셔야 사용하실 수 있습니다. 지금 \'회선등록\' 버튼을 클릭하여 T world에서 이용하실 회선을 등록해 주세요.'
+};
+
 Tw.IOS_URL = 'tworld://';
 
 Tw.NTV_BROWSER = {

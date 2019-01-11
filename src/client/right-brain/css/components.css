@@ -13019,6 +13019,8 @@ a.bt-link-tx.underline.small {
       -webkit-box-sizing: border-box;
               box-sizing: border-box;
       text-align: left; }
+      .recommendedrate-list > li .product-infolink.not-imgstyle {
+        padding: 1.25rem 0 1.25rem 0 !important; }
       .recommendedrate-list > li .product-infolink .products-detailinfo {
         margin-top: 0.3125rem;
         color: #959595;

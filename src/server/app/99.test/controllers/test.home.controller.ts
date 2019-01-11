@@ -10,8 +10,6 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import {
-  HOME_SEGMENT,
-  HOME_SEGMENT_ORDER,
   HOME_SMART_CARD,
   LINE_NAME,
   SVC_ATTR_E,
@@ -122,14 +120,7 @@ class TestHome extends TwViewController {
   }
 
   private getSmartCardOrder(svcMgmtNum): any {
-    const orderNum = +svcMgmtNum % 6;
-    const order = HOME_SEGMENT_ORDER[HOME_SEGMENT[orderNum]];
-    return order.map((segment) => {
-      return {
-        no: segment,
-        title: HOME_SMART_CARD[segment]
-      };
-    });
+    return ['00001', '00002', '00003', '00004', '00005'];
   }
 
   private getSvcType(svcInfo): any {
