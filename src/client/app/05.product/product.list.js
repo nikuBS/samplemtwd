@@ -306,10 +306,7 @@ Tw.ProductList.prototype = {
             data = {},
             DEFAILT_COUNT = 2;
           data.filters = _.map(filters.slice(0, DEFAILT_COUNT), function(filter, index) {
-            if (index === 0) {
-              return filter.prodFltNm;
-            }
-            return ',' + filter.prodFltNm;
+            return filter.prodFltNm;
           });
 
           if (filters.length > DEFAILT_COUNT) {
