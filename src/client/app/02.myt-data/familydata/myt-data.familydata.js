@@ -75,7 +75,7 @@ Tw.MyTDataFamily.prototype = {
       this._popupService.close();
       this._apiService.request(Tw.API_CMD.BFF_06_0051, {}, {}, [mgmtNum]).done($.proxy(this._successChangeLimitation, this));
     } else if (this.MAX_LIMITATION < Number(limitation)) {
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.A6);
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.A6.MSG, Tw.ALERT_MSG_MYT_DATA.A6.TITLE);
     } else {
       this._popupService.close();
       this._apiService
