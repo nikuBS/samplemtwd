@@ -204,7 +204,7 @@ Tw.ProductList.prototype = {
         layer: true
       },
       $.proxy(this._handleOpenSelectFilterPopup, this),
-      undefined,
+      $.proxy(this._handleCloseSelectFilterPopup, this),
       'search'
     );
   },
@@ -214,6 +214,18 @@ Tw.ProductList.prototype = {
     $layer.on('click', '.bt-red1', $.proxy(this._handleSelectFilters, this, $layer));
     $layer.on('click', '.resetbtn', $.proxy(this._handleResetFilters, this, $layer));
     $layer.on('click', '.link', $.proxy(this._openSelectTagPopup, this, $layer));
+  },
+
+  _handleCloseSelectFilterPopup: function() {
+    if (this._loadedNewSearch) {
+      if (this._params.searchFltIds) {
+        location.href = location.pathname + '?filters=' + this._params.searchFltIds;
+      } else if (this._params.searchTagId) {
+        location.href = location.pathname + '?tag=' + this._params.searchTagId;
+      } else {
+        location.href = location.pathname;
+      }
+    }
   },
 
   _handleClickFilter: function($layer, e) {
@@ -290,41 +302,8 @@ Tw.ProductList.prototype = {
       this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
       this._params = originParams;
     } else {
-      delete this._params.searchLastProdId;
-      delete this._leftCount;
-      this.$list.empty();
-
-      if (this.$total.length > 0) {
-        this.$total.text(resp.result.productCount);
-      }
-
-      this.$orderBtn.text(Tw.PRODUCT_LIST_ORDER[this.ORDER['recommand']].txt);
-
-      if (resp.result.searchOption) {
-        if (resp.result.searchOption.searchFltIds) {
-          var filters = resp.result.searchOption.searchFltIds,
-            data = {},
-            DEFAILT_COUNT = 2;
-          data.filters = _.map(filters.slice(0, DEFAILT_COUNT), function(filter, index) {
-            return filter.prodFltNm;
-          });
-
-          if (filters.length > DEFAILT_COUNT) {
-            data.leftCount = filters.length - DEFAILT_COUNT;
-          }
-          this.$filters.html(this._filterTmpl(data));
-        } else if (resp.result.searchOption.searchProdTagNm) {
-          this.$filters.html(
-            this._filterTmpl({
-              leftCount: 0,
-              filters: [resp.result.searchOption.searchProdTagNm]
-            })
-          );
-        }
-      }
-
       this._popupService.close();
-      this._handleSuccessLoadingData(resp);
+      this._loadedNewSearch = true;
     }
   },
 
