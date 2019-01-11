@@ -15,6 +15,7 @@ import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
 import { MYT_FARE_PAYMENT_ERROR } from '../../types/string.type';
 import { REDIS_KEY } from '../../types/redis.type';
 import { SVC_ATTR_NAME } from '../../types/bff.type';
+import StringHelper from '../../utils/string.helper';
 
 class MyTFareSubmainController extends TwViewController {
   private _bannerUrl: string = '';
@@ -342,6 +343,7 @@ class MyTFareSubmainController extends TwViewController {
           if ( ['M1', 'M2'].indexOf(item.svcAttrCd) === -1 ) {
             item.nickNm = SVC_ATTR_NAME[item.svcAttrCd];
           }
+          item.svcNum = StringHelper.phoneStringToDash(item.svcNum);
           list.push(item);
         }
       });
