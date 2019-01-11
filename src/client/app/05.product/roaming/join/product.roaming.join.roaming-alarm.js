@@ -96,8 +96,13 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
       this._inputBlurEvt();
     }
   },
-  _activateAddBtn : function () {
-
+  _activateAddBtn : function (inputEvt) {
+    var inputVal = this.$inputElement.val();
+    if(inputVal.length>0&&isNaN(inputEvt.key)){
+      this.$inputElement.val(inputVal.replace(/[^0-9]/g,''));
+      this.$inputElement.blur();
+      this.$inputElement.focus();
+    }
     if(this.$inputElement.val().length>=10){
       this.$addBtn.removeAttr('disabled');
     }else{
