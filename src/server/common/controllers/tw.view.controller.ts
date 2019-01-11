@@ -171,6 +171,8 @@ abstract class TwViewController {
               this.errorAuth(req, res, next);
               // this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
             }
+          } else if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
+            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
           } else {
             // 현재 로그인 방법으론 이용할 수 없음
             if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
