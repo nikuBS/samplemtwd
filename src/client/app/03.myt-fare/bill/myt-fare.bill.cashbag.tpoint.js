@@ -24,7 +24,8 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
   _initVariables: function ($targetId) {
     this.$pointWrap = this.$container.find('.fe-point-wrap');
     this.$standardPoint = this.$container.find('.fe-standard-point');
-    this.$getPointBtn = this.$container.find('.fe-get-point');
+    this.$getPointBtn = this.$container.find('.fe-get-point-wrapper');
+    this.$pointInfo = this.$container.find('.fe-point-info');
     this.$autoInfo = this.$container.find('.fe-auto-info');
     this.$selectedTab = this.$container.find('#' + $targetId + '-tab');
     this.$pointCardNumber = this.$selectedTab.find('.fe-point-card');
@@ -75,6 +76,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
 
     this.$pointWrap.removeClass('none');
     this.$getPointBtn.hide();
+    this.$pointInfo.show();
   },
   _changeTab: function (event) {
     var $targetId = $(event.currentTarget).attr('id');
