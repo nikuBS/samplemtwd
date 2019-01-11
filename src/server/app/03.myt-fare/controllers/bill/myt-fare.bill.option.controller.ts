@@ -60,11 +60,11 @@ class MyTFareBillOption extends TwViewController {
 
   private parseData(data: any): any {
     if (data.payMthdCd === MYT_FARE_PAYMENT_TYPE.BANK) {
-      data.fstDrwSchdDate = DateHelper.getShortDateNoDot(data.fstDrwSchdDt);
+      data.fstDrwSchdDate = DateHelper.getShortDate(data.fstDrwSchdDt);
       data.isAuto = true;
     } else if (data.payMthdCd === MYT_FARE_PAYMENT_TYPE.CARD) {
       data.cardYm = FormatHelper.makeCardYymm('20' + data.cardEffYm);
-      data.fstDrwSchdDate = DateHelper.getShortDateNoDot(data.fstDrwSchdDt);
+      data.fstDrwSchdDate = DateHelper.getShortDate(data.fstDrwSchdDt);
       data.isAuto = true;
     } else {
       data.isAuto = false;

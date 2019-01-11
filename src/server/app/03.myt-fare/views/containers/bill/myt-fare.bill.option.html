@@ -76,7 +76,7 @@
                             <dl>
                                 <dt>요금납부일</dt>
                                 <dd>
-                                    <p class="value">매월 <span class="fe-pay-date"><%= paymentOption.payCyclNm %></span>일</p>
+                                    <p class="value">매달 <span class="fe-pay-date"><%= paymentOption.payCyclNm %></span>일</p>
                                     <% if (paymentOption.chgYn === 'Y') { %>
                                     <button class="bt-link-tx underline fe-change-date" id="<%= paymentOption.payCyclNm %>" title="요금 납부일 변경">변경</button>
                                     <% } %>
@@ -114,7 +114,7 @@
                             <dl>
                                 <dt>인출(승인)일</dt>
                                 <dd>
-                                    <p class="value">영업일/<br />카드사에 따라 다름</p>
+                                    <p class="value">영업일 / 카드사에 따라 다름</p>
                                 </dd>
                             </dl>
                         </li>
