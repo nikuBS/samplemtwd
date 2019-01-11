@@ -10,8 +10,6 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import {
-  HOME_SEGMENT,
-  HOME_SEGMENT_ORDER,
   HOME_SMART_CARD,
   LINE_NAME, MEMBERSHIP_GROUP,
   MYT_FARE_BILL_CO_TYPE,
