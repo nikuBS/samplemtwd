@@ -389,12 +389,12 @@ export const MYT_FARE_COMPLETE_MSG = {
   HISTORY: '납부내역 보기',
   PREPAY: '선결제 완료',
   PREPAY_HISTORY: '선결제내역 보기',
-  REGISTER: '신청완료',
-  CHANGE: '변경완료',
+  REGISTER: '신청 완료',
+  CHANGE: '변경 완료',
   CHANGE_HISTORY: '변경내역 보기',
   NUMBER: '번호로',
-  SMS: 'SMS 전송 완료',
-  SMS_DESCRIPTION: '전송된 입금전용계좌로 입금하시면\n즉시 수납이 반영됩니다.'
+  SMS: '문자 전송 완료',
+  SMS_DESCRIPTION: '전송된 입금전용계좌로 입금하시면<br />즉시 입금이 확인됩니다.'
 };
 
 export const MYT_DATA_COMPLETE_MSG = {

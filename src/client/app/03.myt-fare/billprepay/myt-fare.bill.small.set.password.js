@@ -7,6 +7,7 @@
 Tw.MyTFareBillSmallSetPassword = function (rootEl, $target) {
   this.$container = rootEl;
   this.$target = $target;
+  this.$isValid = false;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -99,6 +100,9 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
   _bindEvent: function () {
     this.$layer.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$layer.on('input', '.required-input-field', $.proxy(this._setMaxValue, this));
+    this.$layer.on('blur', '.fe-current-password', $.proxy(this._checkCurrentPassword, this));
+    this.$layer.on('blur', '.fe-new-password', $.proxy(this._checkPassword, this));
+    this.$layer.on('blur', '.fe-confirm-password', $.proxy(this._checkConfirmPassword, this));
     this.$layer.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$layer.on('click', '.fe-set', $.proxy(this._setPassword, this));
   },
@@ -125,8 +129,34 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
       }
     }
   },
+  _checkCurrentPassword: function (event) {
+    this.$isValid = this._checkPasswordLength(event);
+  },
+  _checkPassword: function (event) {
+    this.$isValid = this._checkPasswordLength(event);
+
+    if (this.$isValid) {
+      var isValid = (this._validation.checkIsStraight(this.$newPassword.val(), 6) &&
+        this._validation.checkIsDifferent(this.$newPassword.val(), this.$birth));
+
+      this.$isValid = this._validation.showAndHideErrorMsg(this.$newPassword, isValid, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V30);
+    }
+  },
+  _checkConfirmPassword: function (event) {
+    this.$isValid = this._checkPasswordLength(event);
+
+    if (this.$isValid) {
+      this.$isValid = this._validation.showAndHideErrorMsg(this.$confirmPassword,
+        this._validation.checkIsSame(this.$newPassword.val(), this.$confirmPassword.val()),
+        Tw.ALERT_MSG_MYT_FARE.ALERT_2_V12);
+    }
+  },
+  _checkPasswordLength: function (event) {
+    var $target = $(event.currentTarget);
+    return this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 6), Tw.ALERT_MSG_MYT_FARE.CHECK_PASSWORD_LENGTH);
+  },
   _setPassword: function () {
-    if (this._isValid()) {
+    if (this.$isValid) {
       var apiName = this._getApiName();
       var reqData = this._makeRequestData();
 
@@ -143,20 +173,6 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
       apiName = Tw.API_CMD.BFF_05_0087;
     }
     return apiName;
-  },
-  _isValid: function () {
-    var isValid = (this._validation.checkLength(this.$newPassword.val(), 6, Tw.ALERT_MSG_MYT_FARE.CHECK_PASSWORD_LENGTH) &&
-      this._validation.checkLength(this.$confirmPassword.val(), 6, Tw.ALERT_MSG_MYT_FARE.CHECK_PASSWORD_LENGTH) &&
-      this._validation.checkIsStraight(this.$newPassword.val(), 6, Tw.ALERT_MSG_MYT_FARE.NOT_STRAIGHT_NUMBER) &&
-      this._validation.checkIsSame(this.$newPassword.val(), this.$birth, Tw.ALERT_MSG_MYT_FARE.NOT_SAME_BIRTH));
-
-    if (isValid) {
-      if (this.$type === 'change') {
-        isValid = (this._validation.checkLength(this.$currentPassword.val(), 6, Tw.ALERT_MSG_MYT_FARE.CHECK_PASSWORD_LENGTH) &&
-          this._validation.checkIsDifferent(this.$newPassword.val(), this.$confirmPassword.val(), Tw.ALERT_MSG_MYT_FARE.CONFIRM_PASSWORD));
-      }
-    }
-    return isValid;
   },
   _makeRequestData: function () {
     var reqData = {};

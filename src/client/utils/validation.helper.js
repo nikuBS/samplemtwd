@@ -233,9 +233,8 @@ Tw.ValidationHelper = (function () {
   }
 
   /* 연속숫자 체크하는 function */
-  function checkIsStraight(value, max, message) {
+  function checkIsStraight(value, max) {
     if (isStraightPassword($.trim(value.toString()), max)) {
-      Tw.Popup.openAlert(message);
       return false;
     }
     return true;
@@ -258,18 +257,16 @@ Tw.ValidationHelper = (function () {
   }
 
   /* 동일 값 체크하는 function */
-  function checkIsSame(value, standard, message) {
-    if ($.trim(value.toString()) === standard) {
-      Tw.Popup.openAlert(message);
+  function checkIsSame(value, standard) {
+    if ($.trim(value.toString()) !== standard) {
       return false;
     }
     return true;
   }
 
   /* 다른 값 체크하는 function */
-  function checkIsDifferent(value, standard, message) {
-    if ($.trim(value.toString()) !== standard) {
-      Tw.Popup.openAlert(message);
+  function checkIsDifferent(value, standard) {
+    if ($.trim(value.toString()) === standard) {
       return false;
     }
     return true;

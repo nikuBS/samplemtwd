@@ -50,7 +50,7 @@
                                             <input type="radio" name="radio" class="fe-card" value="" title="체크/신용카드" aria-labelledby="aria-comp-radio2" /><!-- 체크상태일 경우 checked="checked" -->
                                             <div class="comp-list-layout" id="aria-comp-radio2" aria-hidden="true">
                                                 <p class="layout-text">
-                                                    <span class="mtext ellipsis">체크/신용카드</span>
+                                                    <span class="mtext ellipsis">체크∙신용카드</span>
                                                 </p>
                                             </div>
                                         </li>
@@ -85,7 +85,7 @@
                             </li>
                             <li class="fe-bank-wrap">
                                 <label class="tit" for="flab07">계좌정보 <button id="MF_05_01_01_tip_02" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></label>
-                                <button class="bt-dropdown big fe-select-bank" title="은행선택" aria-haspopup="true">은행선택<span class="ico"></span></button>
+                                <button class="bt-dropdown big fe-select-bank" title="은행선택" aria-haspopup="true">은행 선택<span class="ico"></span></button>
                                 <span class="fe-bank-list none"><%= paymentOption.bankList %></span>
                                 <span class="error-txt fe-bank-error-msg" style="display:none;">은행을 선택해 주세요.</span>
                                 <span class="inputbox mt6">
@@ -166,7 +166,7 @@
                         <h3 class="tx-bold">꼭 확인해 주세요</h3>
                         <ul class="noti-list">
                             <% if (paymentOption.type === 'change') { %>
-                            <li>자동납부 신청/변경/해지 시 <button id="MF_05_01_01_tip_01" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                            <li>자동납부 신청∙변경∙해지 시 <button id="MF_05_01_01_tip_01" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                             <li>은행 자동납부 신청 안내 <button id="MF_05_01_01_tip_03" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                             <% } %>
                             <li>이용시간 안내 <button id="MF_05_01_tip_03" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>

@@ -27,7 +27,7 @@
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <div class="monthly-billing">
-                        <div class="detail"><button title="<%= currentMonth %>월 사용금액 자세히보기"><%= currentMonth %>월 사용금액</button></div>
+                        <div class="detail"><button title="<%= currentMonth %>월 사용금액 자세히보기"><%= currentMonth %>월 이용금액</button></div>
                         <div class="price"><span id="<%= result.tmthUseAmt %>" class="str fe-max-amount"><%= result.tmthUseAmount %></span>원</div>
                         <div class="limit">잔여한도<span class="str"><%= result.remainLimit %></span>원</div>
                     </div>
@@ -50,7 +50,7 @@
                     <ul class="link-list">
                         <li>
                             <dl>
-                                <dt>선결제 가능 금액<button id="MF_06_tip_01" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></dt>
+                                <dt>선결제 가능금액<button id="MF_06_tip_01" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></dt>
                                 <dd>
                                     <span class="val"><span class="str fe-prepay-amount"><%= result.tmthChrgPsblAmount %></span>원</span>
                                     <button class="fe-prepay">선결제 화면 이동</button>
@@ -84,7 +84,7 @@
                     <ul class="link-list">
                         <li>
                             <dl>
-                                <dt>소액결제 사용설정</dt>
+                                <dt>소액결제 이용설정</dt>
                                 <dd>
                                     <div class="switch-wrap">
 										<span class="widget">
