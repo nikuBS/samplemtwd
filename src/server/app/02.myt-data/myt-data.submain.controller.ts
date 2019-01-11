@@ -54,7 +54,7 @@ class MytDataSubmainController extends TwViewController {
       this._getRefillPresentBreakdown(),
       this._getRefillUsedBreakdown(),
       this.redisService.getData(REDIS_KEY.BANNER_ADMIN + pageInfo.menuId),
-    ).subscribe(([remnant, present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern, banner]) => {
+    ).subscribe(([remnant, present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, banner]) => {
       if ( remnant.info ) {
         data.remnant = remnant;
       } else {
