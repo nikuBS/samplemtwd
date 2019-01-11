@@ -145,7 +145,6 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     $('#btnNumAdd').prop('disabled', true);
     //$('#inputReqPhone').val('');
     $('#num-inputbox').removeClass('error');
-    $('#num-input').trigger('click');
   },
 
   /**
