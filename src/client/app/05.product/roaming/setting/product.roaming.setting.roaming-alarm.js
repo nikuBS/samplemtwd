@@ -54,7 +54,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
 
   _addPhoneNumOnList : function () {
     if(this._addedList.length>=5){
-      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.TITLE);
+      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.TITLE);
       return;
     }
     var tempPhoneNum = this.$inputElement.val().split('-');
