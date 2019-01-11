@@ -64,7 +64,7 @@ class MyTJoinMyPlanAdd extends TwViewController {
 
       return {
         joined: (resp.result.pays || []).concat(resp.result.frees || []).map(this.convertAdditions),
-        joinable: resp.result.joinables.map(this.convertAdditions),
+        joinable: resp.result.joinables.map(this.convertAdditions).sort(this._sortAdditions),
         reserved: resp.result.reserveds.map(this.convertAdditions)
       };
     });
@@ -89,6 +89,17 @@ class MyTJoinMyPlanAdd extends TwViewController {
     } else {
       return 0;
     }
+  }
+
+  private _sortAdditions = (a, b) => {
+    const diff = DateHelper.getDifference(a.scrbDt, b.scrbDt);
+    if (diff > 0) {
+      return 1;
+    } else if (diff < 0) {
+      return -1;
+    }
+
+    return 0;
   }
 }
 
