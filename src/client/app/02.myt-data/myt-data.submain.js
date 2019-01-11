@@ -374,10 +374,10 @@ Tw.MyTDataSubMain.prototype = {
 
   // 데이터 혜텍
   _onDataBenefitDetail: function () {
-    // 혜택 할인 페이지 BPCP 페이지
-    //Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_FACTORY);
-    // TODO: BP 페이지 미개발 상태로 개발 완료 후 처리
-    this._popupService.openAlert('TBD');
+    // TODO: 상용 BPCP 페이지 개발 완료 후 상용 URL로 적용
+    var browser = Tw.BrowserHelper.isApp()? 'APP' : 'WEB';
+    // Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.DATA_FACTORY[browser]);
+    Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.DATA_FACTORY_DEV[browser]);
   },
 
   // 데이터 조르기
@@ -482,8 +482,31 @@ Tw.MyTDataSubMain.prototype = {
 
   _onPrepayCoupon: function (event) {
     var $target = $(event.currentTarget);
-    var href = $target.attr('data-href');
-    Tw.CommonHelper.openUrlExternal(href);
+    var type = $target.attr('data-type');
+    var browser = Tw.BrowserHelper.isApp()? 'APP' : 'WEB';
+    // TODO: 상용 BPCP 페이지 개발 완료 후 상용 URL로 적용
+    switch ( type ) {
+      case 'data':
+        // Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.T_DATA[browser]);
+        Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.T_DATA_DEV[browser]);
+        break;
+      case 'coupon':
+        // Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.T_COUPON[browser]);
+        Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.T_COUPON_DEV[browser]);
+        break;
+      case 'oksusu':
+        // Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.OKSUSU[browser]);
+        Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.OKSUSU_DEV[browser]);
+        break;
+      case 'jeju':
+        // Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.JEJU[browser]);
+        Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.JEJU_DEV[browser]);
+        break;
+      case 'sdata':
+        // Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.T_SHORT_DATA[browser]);
+        Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.T_SHORT_DATA_DEV[browser]);
+        break;
+    }
   },
 
   _successPattern: function (resp) {
@@ -504,7 +527,7 @@ Tw.MyTDataSubMain.prototype = {
     }
   },
 
-  _errorRequestPattern: function(resp) {
+  _errorRequestPattern: function (resp) {
     this.$patternChart.hide();
     this.$container.find('[data-id=pattern_empty]').hide();
     this._errorRequest(resp);
