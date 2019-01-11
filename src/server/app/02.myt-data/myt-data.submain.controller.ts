@@ -13,9 +13,8 @@ import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
 import { CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE } from '../../types/string.type';
 import BrowserHelper from '../../utils/browser.helper';
-import { UNIT, UNIT_E } from '../../types/bff.type';
+import { PREPAID_PAYMENT_PAY_CD, PREPAID_PAYMENT_TYPE, UNIT, UNIT_E } from '../../types/bff.type';
 import { REDIS_KEY } from '../../types/redis.type';
-import { PREPAID_PAYMENT_TYPE, PREPAID_PAYMENT_PAY_CD } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 
 const skipIdList: any = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
@@ -74,13 +73,18 @@ class MytDataSubmainController extends TwViewController {
               impossible: true
             };
           }
-        } else if ( data.remnantData.sdata && data.remnantData.sdata.length > 0 ) {
+        }
+        if ( data.remnantData.sdata && data.remnantData.sdata.length > 0 ) {
           data.isSpDataShow = true;
-        } else if ( data.remnantData.voice && data.remnantData.voice.length > 0 ) {
+        }
+        if ( data.remnantData.voice && data.remnantData.voice.length > 0 ) {
           data.isVoiceShow = true;
-        } else if ( data.remnantData.sms && data.remnantData.sms.length > 0 ) {
+        }
+        if ( data.remnantData.sms && data.remnantData.sms.length > 0 ) {
           data.isSmsShow = true;
-        } else {
+        }
+        if ( data.remnantData.gdata.length === 0 && data.remnantData.sdata.length === 0 &&
+          data.remnantData.voice.length === 0 && data.remnantData.sms.length === 0 ) {
           data.isDataShow = true;
           data.emptyData = true;
         }
