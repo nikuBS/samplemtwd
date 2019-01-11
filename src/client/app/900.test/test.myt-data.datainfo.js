@@ -202,6 +202,6 @@ Tw.TestMyTDataInfo.prototype = {
   },
 
   _openCanclableChargeAlert: function() {
-    this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.RECHARGE_CANCLE);
+    this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.RECHARGE_CANCEL);
   }
 };
