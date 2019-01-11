@@ -48,7 +48,7 @@ Tw.MyTDataHistory.prototype = {
   _bindEvent: function() {
     this.$moreBtn.on('click', $.proxy(this._handleLoadMore, this));
     this.$container.on('click', '.bt-select', $.proxy(this._handleChangeType, this));
-    this.$container.on('click', 'button.bt-link-tx', $.proxy(this._openCanclableChargeAlert, this));
+    this.$container.on('click', 'button.bt-link-tx', $.proxy(this._openCancelableChargeAlert, this));
   },
 
   _handleLoadMore: function() {
@@ -141,7 +141,7 @@ Tw.MyTDataHistory.prototype = {
     }
   },
 
-  _openCanclableChargeAlert: function() {
-    this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.RECHARGE_CANCLE);
+  _openCancelableChargeAlert: function() {
+    this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.RECHARGE_CANCEL);
   }
 };

@@ -426,7 +426,7 @@ Tw.ALERT_MSG_MYT_DATA = {
   UNSUBSCRIBE_MONTHLY_GIFT: '자동선물 신청된 가족은 ',
   UNSUBSCRIBE_MONTHLY_GIFT_END: ' 입니다.',
   UNSUBSCRIBE_MONTHLY_GIFT_COMPLETE: '자동선물 해지 완료되었습니다.',
-  RECHARGE_CANCLE: '충전 취소는 고객센터 [국번 없이 1599-0011(유료) / 휴대폰 114]를 통해 당일에 한해 가능합니다.',
+  RECHARGE_CANCEL: '충전 취소는 고객센터 [국번 없이 1599-0011(유료) / 휴대폰 114]를 통해 당일 충전한 데이터를 하나도 사용하지 않았을 때, 취소 가능합니다.',
   JOIN_ONLY_CUSTOMER_CENTER_T: '대리점 방문 또는 고객센터를' + '<br />' + '통해 신청 가능합니다.',
   JOIN_ONLY_CUSTOMER_CENTER_C:
     '고객센터를 통하여 신청하시면' + '<br />' + '그룹 구성을 동의 할 수 있는 SMS를 ' + '<br />' + '가족 구성원에게 보내드립니다.',

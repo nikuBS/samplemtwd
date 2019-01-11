@@ -125,15 +125,16 @@ export default class MyTDataHistory extends TwViewController {
 
       return resp.result.map(item => {
         const key = item.opDt;
+        const rechargeDate = DateHelper.getShortDate(key);
         return {
           key,
           type: RechargeTypes.LIMIT_CHARGE,
           typeName: TypeNames.LIMIT_CHARGE,
           date: DateHelper.getShortDate(key),
           badge: 'recharge',
-          refundable: item.opTypCd === '1' && this.toDt === key,
+          refundable: item.opTypCd === '1' && this.toDt === rechargeDate,
           right: FormatHelper.addComma(item.amt) + UNIT.WON,
-          bottom: [item.opOrgNm || ETC_CENTER]
+          bottom: [item.OpOrgNm || ETC_CENTER]
         };
       });
     });
