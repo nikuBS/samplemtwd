@@ -175,6 +175,7 @@
 .idpt-benefit .benefit-button .button-round { display:inline-block; height:2.25rem; line-height:2.25rem; padding:0 1.4375rem; text-align: center; border-radius:1.125rem; font-size: 0.875rem; color:#000; font-weight: 500; margin:0 auto; border:1px solid #e5e5e5; }
 .idpt-benefit .benefit-button .button-red-round { display:block; width:13.75rem; height:2.5rem; line-height:2.5rem; text-align: center; border:1px solid #f76252; border-radius:1.25rem; background-color:#fff; font-size: 1rem; color:#f76252; font-weight: 500; margin:0 auto; }
 .idpt-benefit .benefit-button .button-red-round.w-full { width:100%; }
+.idpt-benefit .benefit-button .button-red-round.inline-button { display:inline-block; width:auto; min-width:13.75rem; padding:0 1.375rem; }
 .idpt-benefit.another-benefit .benefit-button { text-align:left; }
 .idpt-inside-button-wrap { margin-top:0.625rem; }
 .idpt-inside-button-wrap .inside-button { display:inline-block; font-size:0.8125rem; color:#000; font-weight: 400; height:1.75rem; line-height:1.75rem; border-radius:0.875rem; border:1px solid #e5e5e5; padding:0 0.8125rem; }
@@ -218,7 +219,7 @@
 .idpt-benefit .infinity-list > li:first-child { padding-top:0; }
 .idpt-benefit .infinity-list > li.no-padding-bottom { padding-bottom:0; }
 .idpt-benefit .infinity-list > li img { width:4rem; height:4rem; margin-right:1rem; float:left; }
-.idpt-benefit .infinity-list > li div.link-type { position:relative; width:100%; background:url('/img/product/button-right-arrow_m.png') right center no-repeat; background-size:0.4375rem 0.6875rem; }
+.idpt-benefit .infinity-list > li div.link-type { position:relative; width:100%; background:url('/img/product/button-right-arrow_m.png') right center no-repeat; background-size:0.4375rem 0.6875rem; padding-right:0.8125rem; -webkit-box-sizing: border-box; box-sizing: border-box; }
 .idpt-benefit .infinity-list > li div.link-type > a { position:absolute; top:0; bottom:0; left:0; right:0; text-indent:-9999px; }
 .idpt-benefit .infinity-list > li div > p.infinity-title { font-size:1rem; color:#000; font-weight: 600; margin-bottom:0.5rem; }
 .idpt-benefit .infinity-list > li div > p { font-size:0.8125rem; color:#666; }
@@ -288,7 +289,7 @@
 .idpt-bg-list > li dl > dt + dd { margin-top:0.5rem; }
 .idpt-bg-list > li dl > dd + dd { margin-top:1rem; }
 .idpt-bg-list > li div { padding-left:5rem; -webkit-box-sizing:border-box; box-sizing:border-box; }
-.idpt-bg-list > li div.link-type { position:relative; width:100%; background:url('/img/product/button-right-arrow_m.png') right center no-repeat; background-size:0.4375rem 0.6875rem; }
+.idpt-bg-list > li div.link-type { position:relative; width:100%; background:url('/img/product/button-right-arrow_m.png') right center no-repeat; background-size:0.4375rem 0.6875rem; padding-right:0.8125rem; -webkit-box-sizing: border-box; box-sizing: border-box; }
 .idpt-bg-list > li div.link-type > a { position:absolute; top:0; bottom:0; left:0; right:0; text-indent:-9999px; }
 .idpt-bg-list > li div > p.idpt-bg-list-title { font-size: 1rem; color:#000; font-weight: 600; }
 .idpt-bg-list > li div > p.idpt-bg-list-txt { font-size: 0.8125rem; color:#666; }
@@ -311,6 +312,7 @@
 .idpt-country-list > li:first-child { padding-top:0; }
 .idpt-country-list > li img { width:2.5rem; height:2.5rem; float:left; margin-right:1rem; }
 .idpt-country-list > li > a { display:block; line-height:2.5rem; font-size: 1rem; color:#000; font-weight: 600; background:url('/img/product/button-right-arrow_m.png') right center no-repeat; background-size:0.4375rem 0.6875rem; }
+.idpt-country-list > li > p { line-height:2.5rem; font-size: 1rem; color:#000; font-weight: 600; }
 
 .idpt-circle-list { margin-top:3rem; }
 .idpt-circle-list.with-title { margin-top:1rem; }
@@ -371,6 +373,7 @@
 .idpt-benefit.another-benefit > dl.NA00005292 > dd.dd-sub { font-size: 0.75rem; color:#999; margin-top:0.3125rem; margin-bottom:1rem; }
 
 /* 시리즈 그래프 */
+.idpt-series-wrap { width:100%; overflow-x: scroll; }
 .idpt-benefit .series-graph { position: relative; max-width:20rem; height:8.875rem; margin:3rem auto 0; }
 .idpt-benefit .series-graph > li { position:absolute; bottom:0; width:auto; height:100%; }
 .idpt-benefit .series-graph > li > div { position:absolute; display:block; width:auto; height:auto; bottom:0; left:0; }
@@ -524,15 +527,15 @@
 .idpt-benefit .tbl-wrap { margin-top:3rem; }
 .idpt-benefit .tbl-wrap .tbl-caption { font-size: 0.75rem; color:#959595; margin-bottom:1rem; }
 .idpt-benefit .tbl-wrap .tbl-caption.big { font-size: 0.8125rem; color:#666; }
-.idpt-tbl-discount { border:1px solid #cfcfcf; }
+.idpt-tbl-discount { border:1px solid #cfcfcf; word-break: break-word; }
 .idpt-tbl-discount thead { background-color:#f5f5f5; }
-.idpt-tbl-discount thead th { text-align:left; padding:0.75rem 0.5rem 0.75rem 0.5rem; font-size: 0.75rem; color:#959595; border-left:1px solid #cfcfcf; }
+.idpt-tbl-discount thead th { padding:0.75rem 0.5rem 0.75rem 0.5rem; font-size: 0.75rem; color:#959595; border-left:1px solid #cfcfcf; }
 .idpt-tbl-discount thead th:first-child { border-left:0; }
 .idpt-tbl-discount tbody tr { border-top:1px solid #cfcfcf; }
 .idpt-tbl-discount tbody th,
-.idpt-tbl-discount tbody td { padding:0.8125rem 0.5rem 0.8125rem 0.5rem; text-align: left; font-size: 0.75rem; color:#000; }
+.idpt-tbl-discount tbody td { padding:0.8125rem 0.5rem 0.8125rem 0.5rem; text-align: center; font-size: 0.75rem; color:#000; }
 .idpt-tbl-discount tbody td { border-left:1px solid #cfcfcf; }
-.idpt-tbl-discount tbody td.center { text-align:center; }
+.idpt-tbl-discount tbody td.left { text-align:left; }
 .idpt-tbl-discount tbody tr.apply { background-color:#bd5dbe; }
 .idpt-tbl-discount tbody tr.apply th,
 .idpt-tbl-discount tbody tr.apply td { color:#fff; }
@@ -544,12 +547,16 @@
 .idpt-tbl-discount tbody tr td.apply { font-weight: 600; color:#4e67b5; }
 .idpt-tbl-discount.darknavy thead tr th.apply,
 .idpt-tbl-discount.darknavy tbody tr td.apply { font-weight: 600; color:#57637f; }
+.idpt-tbl-discount.guam-saipan tbody td { vertical-align: top; }
+.idpt-tbl-discount.guam-saipan p.guam-tbl-title { font-size: 0.625rem; color:#000; font-weight: 700; margin-top:0.5rem; }
+.idpt-tbl-discount.guam-saipan p.guam-tbl-txt { font-size: 0.625rem; color:#666; font-weight: 300; margin-top:0.125rem; }
+.idpt-tbl-discount.guam-saipan p.guam-tbl-etc { font-size: 0.625rem; color:#959595; font-weight: 300; margin-top:0.5rem; }
 
 .idpt-tbl-basic { border:1px solid #cfcfcf; }
 .idpt-tbl-basic tbody tr { border-top:1px solid #cfcfcf; }
 .idpt-tbl-basic tbody tr:first-child { border-top:0; }
-.idpt-tbl-basic tbody th { padding:0.75rem 0 0.75rem 0.75rem; background-color:#f5f5f5; text-align:left; font-size: 0.75rem; color:#959595; }
-.idpt-tbl-basic tbody td { padding:0 0.75rem; border-left:1px solid #cfcfcf; font-size: 0.75rem; color:#000; }
+.idpt-tbl-basic tbody th { padding:0.75rem 0 0.75rem 0.75rem; background-color:#f5f5f5; font-size: 0.75rem; color:#959595; }
+.idpt-tbl-basic tbody td { padding:0 0.75rem; border-left:1px solid #cfcfcf; font-size: 0.75rem; color:#000; text-align:center; }
 
 .idpt-tbl-series tbody tr { border-top:1px solid #e5e5e5; }
 .idpt-tbl-series tbody tr:first-child { border-top:0; }
@@ -806,7 +813,7 @@
 .idpt-benefit .white-box.welfare { background-color:#f5f7fa; margin-top:1.25rem; padding:1.25rem; }
 .idpt-benefit .white-box.welfare .welfare-dis { position:relative; }
 .idpt-benefit .white-box.welfare .welfare-dis p { font-size: 0.75rem; color:#666; font-weight: 300; }
-.idpt-benefit .white-box.welfare .welfare-dis p.dis-perc { position:absolute; top:50%; right:0; font-size: 0.8125rem; color:#57637f; font-weight: 500; transform:translateY(-50%); }
+.idpt-benefit .white-box.welfare .welfare-dis p.dis-perc { position:absolute; top:50%; right:0; font-size: 0.8125rem; color:#57637f; font-weight: 500; -webkit-transform:translateY(-50%); transform:translateY(-50%); }
 .idpt-benefit .white-box.welfare.first-welfare .welfare-dis { width:10.9375rem; margin:0 auto; }
 .idpt-benefit .white-box.welfare .welfare-dis + .welfare-dis { margin-top:0.625rem; }
 .idpt-benefit .white-box.welfare > p.welfare-etc { float:none; position:relative; font-size: 0.625rem; color:#959595; font-weight: 300; margin-top:0.625rem; padding-left:0.625rem; }
