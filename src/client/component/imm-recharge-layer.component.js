@@ -178,7 +178,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
         case 'data_coupon':
         case 't_coupon':
         case 'jeju_coupon':
-          item.on('click', $.proxy(this._onPrepayCoupon, this));
+          item.on('click', $.proxy(this._onPrepayCoupon, this, classNm));
           break;
       }
     }
@@ -226,9 +226,23 @@ Tw.ImmediatelyRechargeLayer.prototype = {
     this._popupService.close();
   },
 
-  _onPrepayCoupon: function (event) {
-    var $target = $(event.target);
-    $target.attr('data-external', 'http://skt.datacoupon.co.kr');
+  _onPrepayCoupon: function (classNm, event) {
+    var $target = $(event.currentTarget);
+    var browser = Tw.BrowserHelper.isApp()? 'APP' : 'WEB';
+    switch ( classNm ) {
+      case 'data_coupon':
+        // $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.T_DATA[browser]);
+        $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.T_DATA_DEV[browser]);
+        break;
+      case 't_coupon':
+        // $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.T_COUPON[browser]);
+        $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.T_COUPON_DEV[browser]);
+        break;
+      case 'jeju_coupon':
+        // $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.JEJU[browser]);
+        $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.JEJU_DEV[browser]);
+        break;
+    }
     this._popupService.close();
   }
 };
