@@ -63,7 +63,7 @@ Tw.ProductMobileplanAddJoinCombineLine.prototype = {
       return;
     }
 
-    $.each(resp.result.m, function(item) {
+    $.each(resp.result.m, function(idx, item) {
       this._data.nickNmList[item.svcNum] = Tw.FormatHelper.isEmpty(item.nickNm) ? null : item.nickNm;
     }.bind(this));
   },

@@ -77,8 +77,9 @@ class MyTJoinMyplan extends TwViewController {
    * @private
    */
   private _convertWirePlan(wirePlan): any {
+    const isNumberBasFeeAmt = !isNaN(Number(wirePlan.basFeeAmt));
     return Object.assign(wirePlan, {
-      basFeeAmt: wirePlan.basFeeAmt > 0 ? FormatHelper.addComma(wirePlan.basFeeAmt.toString()) : 0,
+      basFeeAmt: isNumberBasFeeAmt && parseInt(wirePlan.basFeeAmt, 10) > 0 ? FormatHelper.addComma(wirePlan.basFeeAmt.toString()) : 0,
       isDisplayFeeAmt: (wirePlan.coClCd === 'T' && wirePlan.basFeeAmt > 0),
       svcScrbDt: DateHelper.getShortDateWithFormat(wirePlan.svcScrbDt, 'YYYY.M.DD.'),
       dcBenefits: this._convertWireDcBenefits(wirePlan.dcBenefits)

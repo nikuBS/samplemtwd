@@ -31,6 +31,15 @@
         <div class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="product-tit-wrap">
+                        <span class="tit-small">변경할 상품 옵션 설정하세요.</span>
+                        <span class="tit-big">0플랜 <%= prodId === 'NA00006155' ? '스몰' : '미디엄' %></span>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
                 <div class="product-select-wrap">
                     <span class="data-tit">0플랜 옵션 선택 <button class="tip-view" id="MP_02_02_03_15_tip_01">TIP</button></span>
                 </div>
@@ -120,7 +129,7 @@
 </body>
 <% include ../../../components/javascript.component.html %>
 <script>$(function () {
-  new Tw.ProductMobileplanJoin0planSm($('.wrap'), '<%= prodId %>', 'MP_02_02_03_15', '<%- escape(JSON.stringify(joinTermInfo)) %>',
+  new Tw.ProductMobileplanJoin0planSm($('.wrap'), '<%= prodId %>', 'MP_02_02_03_15', '<%- escape(sktProdBenfCtt) %>',
     '<%= isOverPayReqYn %>', '<%= mobilePlanCompareInfo ? "Y" : "N" %>');
 });</script>
 <% include ../../../components/end.component.html %>

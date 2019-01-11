@@ -100,56 +100,6 @@ Tw.FormatHelper = (function () {
     };
   };
 
-  var convProductSpecifications = function (basFeeInfo, basOfrDataQtyCtt, basOfrVcallTmsCtt, basOfrCharCntCtt) {
-    var isValid = function (value) {
-      return !(Tw.FormatHelper.isEmpty(value) || ['0', '-'].indexOf(value) !== -1);
-    };
-
-    return {
-      basFeeInfo: isValid(basFeeInfo) ? Tw.FormatHelper.convProductBasfeeInfo(basFeeInfo) : null,
-      basOfrDataQtyCtt: isValid(basOfrDataQtyCtt) ? Tw.FormatHelper.convProductBasOfrDataQtyCtt(basOfrDataQtyCtt) : null,
-      basOfrVcallTmsCtt: isValid(basOfrVcallTmsCtt) ? Tw.FormatHelper.convProductBasOfrVcallTmsCtt(basOfrVcallTmsCtt) : null,
-      basOfrCharCntCtt: isValid(basOfrCharCntCtt) ? Tw.FormatHelper.convProductBasOfrCharCntCtt(basOfrCharCntCtt) : null
-    };
-  };
-
-  var convProductBasfeeInfo = function (basFeeInfo) {
-    var isNaNbasFeeInfo = isNaN(parseInt(basFeeInfo, 10));
-
-    return {
-      isNaN: isNaNbasFeeInfo,
-      value: isNaNbasFeeInfo ? basFeeInfo : Tw.FormatHelper.addComma(basFeeInfo)
-    };
-  };
-
-  var convProductBasOfrDataQtyCtt = function (basOfrDataQtyCtt) {
-    var isNaNbasOfrDataQtyCtt = isNaN(parseInt(basOfrDataQtyCtt, 10));
-
-    return {
-      isNaN: isNaNbasOfrDataQtyCtt,
-      value: isNaNbasOfrDataQtyCtt ? basOfrDataQtyCtt : Tw.FormatHelper.convDataFormat(basOfrDataQtyCtt, Tw.DATA_UNIT.MB)
-    };
-  };
-
-  var convProductBasOfrVcallTmsCtt = function (basOfrVcallTmsCtt) {
-    var isNaNbasOfrVcallTmsCtt = isNaN(parseInt(basOfrVcallTmsCtt, 10));
-
-    return {
-      isNaN: isNaNbasOfrVcallTmsCtt,
-      value: isNaNbasOfrVcallTmsCtt ? basOfrVcallTmsCtt : Tw.FormatHelper.convVoiceMinFormatWithUnit(basOfrVcallTmsCtt)
-    };
-  };
-
-  var convProductBasOfrCharCntCtt = function (basOfrCharCntCtt) {
-    var isNaNbasOfrCharCntCtt = isNaN(parseInt(basOfrCharCntCtt, 10));
-
-    return {
-      isNaN: isNaNbasOfrCharCntCtt,
-      value: basOfrCharCntCtt,
-      unit: Tw.SMS_UNIT
-    };
-  };
-
   var convSpDataFormat = function (fee, curUnit) {
     // 데이터 단위가 '원' 인 경우가 있음
     fee = +fee;
@@ -443,7 +393,11 @@ Tw.FormatHelper = (function () {
     });
 
     return data;
-  }
+  };
+
+  var stripTags = function(context) {
+    return context.replace(/(<([^>]+)>)|&nbsp;/ig, '');
+  };
 
   return {
     leadingZeros: leadingZeros,
@@ -452,11 +406,6 @@ Tw.FormatHelper = (function () {
     isArray: isArray,
     isString: isString,
     customDataFormat: customDataFormat,
-    convProductSpecifications: convProductSpecifications,
-    convProductBasfeeInfo: convProductBasfeeInfo,
-    convProductBasOfrDataQtyCtt: convProductBasOfrDataQtyCtt,
-    convProductBasOfrVcallTmsCtt: convProductBasOfrVcallTmsCtt,
-    convProductBasOfrCharCntCtt: convProductBasOfrCharCntCtt,
     convDataFormat: convDataFormat,
     convSpDataFormat: convSpDataFormat,
     addComma: addComma,
@@ -484,6 +433,7 @@ Tw.FormatHelper = (function () {
     appendSMSUnit: appendSMSUnit,
     getTemplateString: getTemplateString,
     isCellPhone: isCellPhone,
-    purifyPlansData: purifyPlansData
+    purifyPlansData: purifyPlansData,
+    stripTags: stripTags
   };
 })();

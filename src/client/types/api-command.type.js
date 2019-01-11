@@ -393,6 +393,7 @@ Tw.API_CMD = {
   // PRODUCT
   BFF_10_0001: { path: '/core-product/:version/ledger/:args0', method: Tw.API_METHOD.GET },
   BFF_10_0007: { path: '/core-product/:version/mobiles/fee-plans/:args0/joins/join-prechecks', method: Tw.API_METHOD.GET },
+  BFF_10_0008: { path: '/v1/products/fee-plans/:args0/join-term-infos', method: Tw.API_METHOD.GET },
   BFF_10_0010: { path: '/core-product/:version/mobiles/fee-plans/joins/over-chargings', method: Tw.API_METHOD.GET },
   BFF_10_0012: { path: '/:version/products/fee-plans/:args0/joins', method: Tw.API_METHOD.PUT },
   BFF_10_0013: { path: '/core-product/:version/mobiles/fee-plans/:args0/tplan-sets', method: Tw.API_METHOD.GET },
