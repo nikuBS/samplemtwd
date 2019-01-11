@@ -59,15 +59,15 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
     }
     var tempPhoneNum = this.$inputElement.val().split('-');
     var phonReg = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
-    if(!phonReg.test(this.$inputElement.val())){
-      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
-      return;
-    }
     var phoneObj = {
       'serviceNumber1' : tempPhoneNum[0],
       'serviceNumber2' : tempPhoneNum[1],
       'serviceNumber3' : tempPhoneNum[2]
     };
+    if(!phonReg.test(phoneObj.serviceNumber1+phoneObj.serviceNumber2+phoneObj.serviceNumber3)){
+      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
+      return;
+    }
     var requestValue = {
       'svcNumList' : [phoneObj]
     };
