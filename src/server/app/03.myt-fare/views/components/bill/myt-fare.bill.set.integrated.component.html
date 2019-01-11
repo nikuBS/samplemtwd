@@ -1,0 +1,21 @@
+<!--
+* FileName: myt-fare.bill.set.integrated.component.html
+* Author: 양정규 (skt.P130715@partner.sk.com)
+* Date: 2019.01.09
+-->
+<script id="integrateList" type="text/x-handlebars-template">
+    {{#list}}
+    <li class="radiobox" role="radio" aria-checked="false">
+        <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
+            <p class="layout-text">
+                <span class="mtext"><strong>{{svcType}}</strong>
+                    {{#ifCond acntRepYN '===' 'Y'}}
+                        <span class="badge badge-merge ml6"><span class="blind">통합</span></span>
+                    {{/ifCond}}
+                </span>
+                <span class="stext">{{value}}</span>
+            </p>
+        </div>
+    </li>
+    {{/list}}
+</script>

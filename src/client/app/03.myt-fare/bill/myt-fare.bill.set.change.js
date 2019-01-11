@@ -73,11 +73,7 @@ Tw.MyTFareBillSetChange.prototype = {
     var _$target = $(e.currentTarget);
     // "infoInvDtlDispChkYn": 콘텐츠이용료 청구 사용가능 여부 확인 이 N 이면 disable
     // scurMailYn : 이메일 요금안내서 보안여부 N 이면 disable
-    if (this._data.infoInvDtlDispChkYn === 'N' || !_$target.is(':checked')) {
-      this._toggleDisabledCheckbox(this._options.eq(2), true);
-    } else {
-      this._toggleDisabledCheckbox(this._options.eq(2), false);
-    }
+    this._toggleDisabledCheckbox(this._options.siblings('.fe-infoInvDtlDispYn'), this._data.infoInvDtlDispChkYn === 'N' || !_$target.is(':checked'));
   },
 
   _disabledOptions: function (context, disabled) {
@@ -107,7 +103,7 @@ Tw.MyTFareBillSetChange.prototype = {
 
   // 함께 받을 요금 안내서 값
   _getTogetherVal: function () {
-    return this.$container.find('input[name="together"]:checked').val();
+    return this.$container.find('input[name="together"]:checked').val() || '';
   },
 
   _prop: function (_$el, checked) {
@@ -160,6 +156,7 @@ Tw.MyTFareBillSetChange.prototype = {
         this._checkedElement('scurMailYn', _data.scurMailYn);
         this._checkedElement('emailRcvAgreeYn', _data.emailRcvAgreeYn);
       }
+      // 우편문 발송주기
       this._checkedElement('billSndCyclCd', this._data.billSndCyclCd);
       // 옵션 설정
       this._setOptions(2);
@@ -194,70 +191,57 @@ Tw.MyTFareBillSetChange.prototype = {
     this._options.addClass('none').find('input').data('state', false);
     var _data = this._data;
 
+    var _selectOptions = function (name, isShow) {
+      if (isShow) {
+        this._toggleElement(this._options.siblings('.fe-'+name), true);
+      } else {
+        this._checkedSlideCheckbox(name, _data[name]); // Bell Letter 보안강화
+      }
+    };
+
+    // T월드 확인
+    if('P' === billType) {
+      // 무선이면서 SMS수신가능 단말기일때 보임
+      _selectOptions.call(this, 'nreqGuidSmsSndYn', isDisplay && 'M' === lineType && 'Y' === this._data.isusimchk);
+    }
+
     // 안내서 유형이 Bill Letter 포함일때 : Bill Letter  보안강화
     if ('H' === billType) {
-      if (isDisplay) {
-        this._toggleElement(this._options.eq(0), true);
-      } else {
-        this._checkedSlideCheckbox('scurBillYn', _data.scurBillYn); // Bell Letter 보안강화
-      }
+      _selectOptions.call(this, 'scurBillYn', isDisplay);
     }
 
     // 휴대폰 번호 전체 표시 여부
-    if (!(mergeType === 'HX' || mergeType === 'HB')) {
-      if (mergeType === 'BX') {
-        if (lineType === 'S') {
-          if (isDisplay) {
-            this._toggleElement(this._options.eq(1), true);
-          } else {
-            this._checkedSlideCheckbox('phonNumPrtClCd', _data.phonNumPrtClCd); // 휴대폰번호 전체 표시
-          }
-        }
+    if (['P', 'HX', 'HB'].indexOf(mergeType) === -1) {
+      if (mergeType === 'BX' && lineType === 'S') {
+        _selectOptions.call(this, 'phonNumPrtClCd', isDisplay);
       } else {
-        if (isDisplay) {
-          this._toggleElement(this._options.eq(1), true);
-        } else {
-          this._checkedSlideCheckbox('phonNumPrtClCd', _data.phonNumPrtClCd); // 휴대폰번호 전체 표시
-        }
+        _selectOptions.call(this, 'phonNumPrtClCd', isDisplay);
       }
     }
 
     if (lineType === 'M' || lineType === 'W') {
       // 콘텐츠 이용 상세내역 표시
       if (billType === '2') {
-        if (isDisplay) {
-          this._toggleElement(this._options.eq(2), true);
-        } else {
-          this._checkedSlideCheckbox('infoInvDtlDispYn', _data.infoInvDtlDispYn); // 콘텐츠 이용 상세내역 표시
-        }
+        _selectOptions.call(this, 'infoInvDtlDispYn', isDisplay);
       }
 
       if (lineType === 'M') {
         // 콘텐츠 이용 상세내역 표시
-        if (this._options.eq(2).hasClass('none') && _.some('H2,B2'.split(','), function (e) {
-          return e === mergeType;
-        })) {
-          if (isDisplay) {
-            this._toggleElement(this._options.eq(2), true);
-          } else {
-            this._checkedSlideCheckbox('infoInvDtlDispYn', _data.infoInvDtlDispYn); // 콘텐츠 이용 상세내역 표시
-          }
+        if (this._options.eq(3).hasClass('none') && ['H2', 'B2'].indexOf(mergeType) !== -1) {
+          _selectOptions.call(this, 'infoInvDtlDispYn', isDisplay);
         }
 
         // 법정 대리인 함께 수령
-        if (_.some('HX,H2,BX,B2'.split(','), function (e) {
-          return e === mergeType;
-        })) {
-          if (this._data.kidsYn === 'Y') {
-            if (isDisplay) {
-              this._toggleElement(this._options.eq(3), true);
-              this._changeCcurNotiYn(this._options.eq(3).find('[name="ccurNotiYn"]'));
-            } else {
-              this._checkedSlideCheckbox('ccurNotiYn', _data.ccurNotiYn); // 법정대리인 함께 수령
-              // 법정대리인 함께 수령 Y 이면 disabled
-              if ('Y' === _data.ccurNotiYn) {
-                this._disabledOptions(this._options.eq(3),true, true);
-              }
+        if (['HX', 'H2', 'BX', 'B2'].indexOf(mergeType) !== -1 && this._data.kidsYn === 'Y') {
+          var name = 'ccurNotiYn';
+          if (isDisplay) {
+            this._toggleElement(this._options.siblings('.fe-'+name), true);
+            this._changeCcurNotiYn(this._options.eq(4).find('[name="{0}"]'.replace('{0}', name)));
+          } else {
+            this._checkedSlideCheckbox(name, _data.ccurNotiYn); // 법정대리인 함께 수령
+            // 법정대리인 함께 수령 Y 이면 disabled
+            if ('Y' === _data.ccurNotiYn) {
+              this._disabledOptions(this._options.eq(4),true, true);
             }
           }
         }
@@ -465,10 +449,6 @@ Tw.MyTFareBillSetChange.prototype = {
 
 
     _reqData.toBillTypeCd = this._convertBillType();
-    // 'T world 확인' 일 때
-    if (this._billType === 'P' && this._data.isusimchk === 'Y') {
-      _reqData.nreqGuidSmsSndYn = this._getTogetherVal() === 'YES' ? 'Y' : 'N';
-    }
 
     return {data: _reqData, result: _result};
   },

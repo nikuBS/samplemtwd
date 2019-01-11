@@ -8,29 +8,36 @@ import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import {MyTBillSetData} from '../../../../mock/server/myt.fare.bill.set.mock';
 import MyTFareBillSetCommon from './myt-fare.bill.set.common.controller';
+import FormatHelper from '../../../../utils/format.helper';
+import {MYT_JOIN_WIRE_SVCATTRCD} from '../../../../types/string.type';
 
 class MyTFareBillSet extends MyTFareBillSetCommon {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this.svcInfo = svcInfo;
     Observable.combineLatest(
-      // this.mockReqBillType()
       this.reqBillType()
+      // this.apiService.request(API_CMD.BFF_05_0049, {})  // 통합청구등록회선 리스트 조회 , 13차수는 보류
     ).subscribe(([resBillType]) => {
-      if (resBillType.code === API_CODE.CODE_00) {
-        const data = this.getData(resBillType.result, svcInfo, pageInfo);
-        res.render('bill/myt-fare.bill.set.html', data);
-      } else {
-        this.fail(res, resBillType, svcInfo);
+      const apiError = this.error.apiError([resBillType]);
+      if ( !FormatHelper.isEmpty(apiError) ) {
+        this.fail(res, apiError, svcInfo);
+        return;
       }
+
+      const data = this.getData(resBillType.result, {}, svcInfo, pageInfo);
+      res.render('bill/myt-fare.bill.set.html', data);
+
     });
   }
 
-  private getData(data: any, svcInfo: any, pageInfo: any): any {
+  private getData(data: any, integrate: any, svcInfo: any, pageInfo: any): any {
     this.makeBillInfo(data);
     this.makeAnotherBillList(data);
     this.parseTel(data);
     this.makeOptions(data);
+    this.makeHpNum(data);
+    this.parseIntegration(data, integrate);
 
     return {
       svcInfo,
@@ -39,10 +46,48 @@ class MyTFareBillSet extends MyTFareBillSetCommon {
     };
   }
 
-  // 설정한 옵션 생성
+  // 통합청구 회선
+  private parseIntegration(data: any, integrate: any): void {
+    if (FormatHelper.isEmpty(integrate.result)) {
+      data.integrateList = [];
+      return;
+    }
+    // 정렬
+    const sort = {};
+    sort[MYT_JOIN_WIRE_SVCATTRCD.M1] = 1; // 휴대폰
+    sort[MYT_JOIN_WIRE_SVCATTRCD.M3] = 2; // T pocket Fi
+    sort[MYT_JOIN_WIRE_SVCATTRCD.M4] = 3; // T Login
+    sort[MYT_JOIN_WIRE_SVCATTRCD.S1] = 4; // 인터넷
+    sort[MYT_JOIN_WIRE_SVCATTRCD.S3] = 5; // 집전화
+    sort[MYT_JOIN_WIRE_SVCATTRCD.S2] = 6; // IPTV
+
+    const list = integrate.result.map(o => {
+      o.idx = sort[o.svcType];
+      // 전화번호 포맷팅
+      o.svcNum = FormatHelper.conTelFormatWithDash(o.svcNum);
+      // 유형이 "인터넷" 인 경우만 주소 정보를 보여준다.(나머지는 전화번호 노출)
+      o.value = MYT_JOIN_WIRE_SVCATTRCD.S1 === o.svcType ? o.dtlAddr : o.svcNum;
+      return o;
+    });
+
+    data.integrateList = FormatHelper.sortObjArrAsc(list, 'idx');
+  }
+
+  // 우편, 전자추가발송, 유선 (문자)일 때, 핸드폰 번호 보임
+  private makeHpNum(data: any): void {
+    const lineType = this.getLinetype();
+    // 우편, 전자추가발송 일때
+    if (['1', 'ADD'].indexOf(data.billInfo[0].cd) !== -1) {
+      data.hpNum = data.cntcNum1 || ' ';
+    } else if ('S' === lineType && 'B' === data.billInfo[0].cd) {
+      data.hpNum = data.wsmsBillSndNum || ' ';
+    }
+  }
+
+  // "설정한 옵션" 생성
   private makeOptions(data: any): void {
     const billType = data.billInfo[0].cd;
-    const mergeType = billType + data.billInfo[1].cd;
+    const mergeType = billType + (data.billInfo.length > 1 ? data.billInfo[1].cd : '');
     const lineType = this.getLinetype();
 
     const options = new Array();
@@ -70,6 +115,10 @@ class MyTFareBillSet extends MyTFareBillSetCommon {
       }
       // 회선이 무선 일때
       if (lineType === 'M') {
+        // "문자 수신" 여부
+        if (billType === 'P' && data.isusimchk === 'Y' && data.nreqGuidSmsSndYn === 'Y') {
+          options.push('5');
+        }
         // 콘텐츠 이용 상세내역 표시
         if (['H2', 'B2'].indexOf(mergeType) > -1 && data.infoInvDtlDispYn === 'Y') {
           options.push('3');
