@@ -5,6 +5,7 @@
 %>
 
 <% include ../../components/start.component.html %>
+<% include ../../components/bill/myt-fare.bill.set.integrated.component.html %>
 <body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -33,48 +34,74 @@
                     현재 요금안내서<br/>
                     <strong><%= data.billInfo[0].nm %></strong>
                 </p>
-                <!--우편인 경우만 안보임-->
-                <% if( '1' !== data.curBillType ) {%>
+
+                <% if(data.billInfo.length > 1) {%>
                 <dl class="info-tx0">
-                    <dt><%='P' !== data.billInfo[0].cd ? '함께 받는 요금안내서':'SMS 수신여부'%></dt>
-                    <dd><strong><%= data.billInfo[1].nm  %></strong></dd>
+                    <dt>함께 받는 요금안내서</dt>
+                    <% for (let i=1; i < data.billInfo.length; i++) { %>
+                        <dd>
+                            <strong>
+                                <%= i > 1 ? ',':'';%>
+                                <%= data.billInfo[i].nm  %>
+                            </strong>
+                        </dd>
+                    <%}%>
                 </dl>
                 <%}%>
 
                 <div class="cont-box nogaps pt22">
-                    <%if ( '1' === data.billInfo[0].cd ) {%>
-                    <dl class="info-tx1">
-                        <dt>우편 주소</dt>
-                        <dd>[<%= data.zip%>] <%= data.basAddr + ' '+ data.dtlAddr%></dd>
-                    </dl>
-                    <div class="info-line">
+                    <%if (['1', 'ADD'].indexOf(data.billInfo[0].cd) !== -1) {%>
                         <dl class="info-tx1">
-                            <dt>우편물 발송주기</dt>
-                            <dd>
-                                <%
-                                    let jugi = {
-                                        '1' : '매월',
-                                        '2' : '격월',
-                                        '3' : '분기',
-                                        '4' : '반기'
-                                    };
-                                %>
-                                <%=jugi[data.billSndCyclCd]%>
-                            </dd>
+                            <dt>우편 주소</dt>
+                            <dd>[<%= data.zip%>] <%= data.basAddr + ' '+ data.dtlAddr%></dd>
                         </dl>
-                        <dl class="info-tx1">
-                            <dt>휴대폰번호</dt>
-                            <dd><%=data.cntcNum1%></dd>
-                        </dl>
-                    </div>
+                        <div class="info-line">
+                            <dl class="info-tx1">
+                                <dt>우편물 발송주기</dt>
+                                <dd>
+                                    <%
+                                        let jugi = {
+                                            '1' : '매월',
+                                            '2' : '격월',
+                                            '3' : '분기',
+                                            '4' : '반기'
+                                        };
+                                    %>
+                                    <%=jugi[data.billSndCyclCd]%>
+                                </dd>
+                            </dl>
+                            <!--<dl class="info-tx1">
+                                <dt>휴대폰번호</dt>
+                                <dd><%=data.cntcNum1%></dd>
+                            </dl>-->
+                        </div>
                     <%}%>
 
                     <!--안내서가 "이메일"을 포함하는 경우만 보임-->
-                    <%if(data.billInfo[0].cd === '2' || '2' === data.billInfo[1].cd){%>
-                    <dl class="info-tx1">
-                        <dt>이메일 주소</dt>
-                        <dd><%=data.invEmailAddr%></dd>
-                    </dl>
+                    <%if(data.billInfo.some( (o) => o.cd === '2')){%>
+                        <dl class="info-tx1">
+                            <dt>이메일 주소</dt>
+                            <dd><%=data.invEmailAddr%></dd>
+                        </dl>
+                        <!--"전자추가발송" 이 아닌 경우만 보임-->
+                        <%if('ADD' !== data.billInfo[0].cd){%>
+                        <dl class="info-tx1">
+                            <dt>이메일 보안설정</dt>
+                            <dd><%=data.scurMailYn === 'Y' ? '예':'아니오'%></dd>
+                        </dl>
+                        <dl class="info-tx1">
+                            <dt>혜택 정보 받기</dt>
+                            <dd><%=data.emailRcvAgreeYn === 'Y' ? '예':'아니오'%></dd>
+                        </dl>
+                        <%}%>
+                    <%}%>
+
+                    <!--우편, 유선 ( 문자 )일 때, 핸드폰 번호 보임 -->
+                    <%if(data.hpNum) {%>
+                        <dl class="info-tx1">
+                            <dt>휴대폰번호</dt>
+                            <dd><%=data.hpNum%></dd>
+                        </dl>
                     <%}%>
 
                     <!--T world 확인은 [설정한 옵션] 없음-->
@@ -84,7 +111,8 @@
                             '1':'Bill Letter 보안강화',
                             '2':'휴대폰번호 전체 표시',
                             '3':'콘텐츠 이용 상세내역 표시',
-                            '4':'법정대리인 함께 수령'
+                            '4':'법정대리인 함께 수령',
+                            '5':'문자 수신'
                         };
                     %>
                     <dl class="info-tx1">
@@ -99,10 +127,13 @@
                     <%}%>
                 </div>
 
-                <%if( !('P' === data.curBillType && 'N' === data.isusimchk ) || 'B' !== data.curBillType ) {%>
-                <!--"정보변경" 없는 유형 : T world 확인(SMS 수신불가 단말), 문자-->
+                <!--"정보변경" 없는 유형 : T world 확인(SMS 수신불가 단말), 전자추가발송-->
+                <%
+                    if( (!('P' === data.curBillType && 'N' === data.isusimchk ) && 'ADD' !== data.billInfo[0].cd) ) {
+                    let params = 'isChangeInfo=Y&billType='+ data.billInfo[0].cd + (data.billInfo.length > 1 ? '&subBillType=' + data.billInfo[1].cd : '');
+                %>
                 <div class="bt-alone">
-                    <a class="bt-bg-blue1" href="/myt-fare/billsetup/change?billType=<%=data.billInfo[0].cd%>&subBillType=<%=data.billInfo[1].cd%>&isChangeInfo=Y">정보변경</a>
+                    <a class="bt-bg-blue1" href="/myt-fare/billsetup/change?<%=params%>">정보변경</a>
                 </div>
                 <%}%>
                 <ul class="bt-slice item-two pt40">
@@ -119,7 +150,29 @@
                 </ul>
             </div>
             <!--// .cont-box -->
-            <hr class="cont-sp type1" />
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
+            <%if(data.integrateList && data.integrateList.length > 0){%>
+            <div class="cont-box nogaps-hoz">
+                <div class="list-comp-input type01">
+                    <h3 class="tit">통합청구 등록회선</h3>
+                    <div class="widget">
+                        <div class="widget-box radio">
+                            <ul id="fe-integrate-list" class="select-list" role="group">
+                                <!--통합청구 등록회선 리스트 영역-->
+                            </ul>
+                            <div class="btn-more none">
+                                <button>더 보기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <%}%>
+            <!--// .cont-box -->
+
             <!-- .cont-box -->
             <div class="cont-box pb0">
                 <p class="con-tit0 pb6">다른 요금안내서로 받기</p>
@@ -180,9 +233,10 @@
 </body>
 
 <% include ../../components/javascript.component.html %>
+
 <script>
   $(document).ready(function () {
-    new Tw.MyTFareBillSet($('.wrap'));
+    new Tw.MyTFareBillSet($('.wrap'), JSON.parse('<%-JSON.stringify(data.integrateList)%>'));
   });
 </script>
 <% include ../../components/end.component.html %>

@@ -27,9 +27,8 @@ export const MYT_FARE_BILL_TYPE = {
   B: '문자',
   '2': '이메일',
   '1': '기타(우편)',
-  X: '선택 안 함',
-  NO: '받지 않음',
-  YES: '받음'
+  ADD: '기타(우편) (전자추가발송)',
+  X: '선택 안 함'
 };
 
 export enum UNIT {

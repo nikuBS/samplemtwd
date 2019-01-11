@@ -127,7 +127,6 @@ abstract class MyTFareBillSetCommon extends TwViewController {
     this.convertCd(data);
     const curBillType = data.curBillType;
     let convertBillType = curBillType;
-    const lineType = this.getLinetype();
     const billArr = new Array();
 
     // Bell Letter 포함 안내서 는 'H' 로 통합
@@ -136,29 +135,37 @@ abstract class MyTFareBillSetCommon extends TwViewController {
     // 문자 포함 안내서는 문자(B) 로 통합
     convertBillType = convertBillType === 'A' ? 'B' : convertBillType;
 
-    this.pushBillInfo(billArr, convertBillType);
-    switch (curBillType) {
-      // 'T world 확인' 은 함께받는 요금안내서가 없고 "문자" 수신여부인데.. SB가 이렇게 나와서 일단 여기다 작업한다. 나중에 바뀔듯..
-      case 'P' :
-        if ('M' === lineType && data.isusimchk === 'Y' && data.nreqGuidSmsSndYn === 'Y') {
-          this.pushBillInfo(billArr, 'YES');
-        } else {
-          this.pushBillInfo(billArr, 'NO');
-        }
-        break;
-      // Bill Letter + 문자
-      case 'Q' :
-        this.pushBillInfo(billArr, 'B');
-        break;
-      // Bill Letter + 이메일 or 문자 + 이메일
-      case 'I' :
-      // 문자 + 이메일
-      case 'A' :
-        this.pushBillInfo(billArr, '2');
-        break;
-      default :
-        this.pushBillInfo(billArr, 'X');
-        break;
+    // 현재 요금안내서 설정하기
+    // 우편 + 전자추가발송 유형 추가
+    /*
+        U:우편+문자
+        W:우편+Bill Letter
+        T:우편+문자+Bill Letter
+        Y:우편+이메일+Bill Letter
+        X:우편+이메일+문자
+     */
+    if (['U', 'W', 'T', 'Y', 'X'].indexOf(convertBillType) !== -1) {
+      this.pushBillInfo(billArr, 'ADD');
+    } else {
+      this.pushBillInfo(billArr, convertBillType);
+    }
+
+    // 함께 받는 요금안내서 설정
+    // A:문자 + 이메일
+    if (['A', 'I', 'K', 'Y', 'X'].indexOf(curBillType) !== -1) {
+      this.pushBillInfo(billArr, '2');  // 이메일 추가
+    }
+    // Q:Bill Letter + 문자
+    if (['Q', 'U', 'T', 'X'].indexOf(curBillType) !== -1) {
+      this.pushBillInfo(billArr, 'B');  // "문자" 추가
+    }
+    if (['W', 'T', 'Y'].indexOf(curBillType) !== -1) {
+      this.pushBillInfo(billArr, 'H');
+    }
+
+    // T월드 확인, 이메일, 우편은 함께 받는 안내서가 없다.
+    if (billArr.length === 1 && ['P', '2', '1'].indexOf(curBillType) === -1) {
+      this.pushBillInfo(billArr, 'X');
     }
 
     data.billInfo = billArr;

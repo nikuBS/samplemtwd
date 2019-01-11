@@ -76,17 +76,9 @@ class MyTFareBillSetChange extends MyTFareBillSetCommon {
     const billArr = new Array();
     const lineType = this.getLinetype();
 
-    this.pushBillInfo(billArr, 'P' === billType ? 'NO' : 'X');
+    this.pushBillInfo(billArr, 'X');
 
-    // 'T world 확인'
-    if ('P' === billType) {
-      // 무선 이면서 SMS 수신 가능
-      if ('M' === lineType && 'Y' === data.isusimchk) {
-        this.pushBillInfo(billArr, 'YES');
-      } else { // 유선 이거나 SMS 수신불가일때
-        data.isNotTogether = true;  // 유선 일때는 '입력하실 정보가 없습니다.'
-      }
-    } else if ('H' === billType) { // Bill Letter
+    if ('H' === billType) { // Bill Letter
       // 무선 일 때만
       if ('M' === lineType) {
         this.pushBillInfo(billArr, 'B');
