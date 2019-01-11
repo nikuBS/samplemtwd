@@ -89,20 +89,23 @@ Tw.MytJoinCustpasswordCheck.prototype = {
   },
 
   _defaultErrorHandler : function(res, unexpectedError){
-    var errorMsg = unexpectedError ? res.msg : Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A61.MSG;
+    // this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A61.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A61.TITLE);
+
+    // var errorMsg = unexpectedError ? res.msg : Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A61.MSG;
 
     // blocked
     if(this.errCount >= 5){
-      Tw.Error(res.code, Tw.MYT_JOIN_CUSTPASS.BLOCKED_PWD).pop();
+      this._popupService.openAlert(Tw.MYT_JOIN_CUSTPASS.BLOCKED_PWD);
       return;
     }
 
     if(this.errCount > 0){
-      errorMsg = Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A209.MSG;
+      var errorMsg = Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A209.MSG;
       errorMsg = errorMsg.replace('N', this.errCount);
-      Tw.Error(res.code, errorMsg).pop();
+      this._popupService.openAlert(errorMsg);
+
     } else {
-      Tw.Error(res.code, errorMsg).pop();
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A61.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A61.TITLE);
     }
   }
 
