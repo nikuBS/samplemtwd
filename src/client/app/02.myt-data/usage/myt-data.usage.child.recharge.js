@@ -10,6 +10,8 @@ Tw.MyTDataUsageChildRecharge = function (rootEl, options) {
   this._options = options;
   this._historyService = new Tw.HistoryService();
 
+  this._topUpLimit = parseInt(this._options.topUpLimit, 10);
+
   this._cachedElement();
   this._bindEvent();
   this._init();
@@ -23,10 +25,13 @@ Tw.MyTDataUsageChildRecharge.prototype = {
   _AMT_MINIMUM: 1000,
   _AMT_GAP: 1000,
   _AMT_BOTTOM_MARGIN: 12,
+  _AMT_CNT_EACH_LINE: 4,
 
   _cachedElement: function () {
     this._$amtItemTmpl = this.$container.find('#fe-amt-item');
     this._$amtsContainer = this.$container.find('.fe-amts-container');
+    this._$summaryAmts = this.$container.find('.summary-amts');
+    this._$allAmts = this.$container.find('.all-amts');
     this._$btnMore = this.$container.find('.fe-btn-more');
     this._$btnSubmit = this.$container.find('.fe-btn-submit');
   },
@@ -36,34 +41,43 @@ Tw.MyTDataUsageChildRecharge.prototype = {
   },
 
   _init: function () {
-    this._drawAmtSelectors();
-    this._setAmtsContainer();
+    this._drawSummaryAmt();
+    this._drawAllAmt();
   },
 
-  _setAmtsContainer: function () {
-    var height = this._$amtsContainer.find('li:eq(0)').height();
-    this._$amtsContainer.css({
-      height: height + this._AMT_BOTTOM_MARGIN
-    }).show();
+  _drawSummaryAmt: function() {
+    var $ul = $('<ul style="display: flex;margin-bottom: 0;" />');
+    $ul.appendTo(this._$summaryAmts);
+    this._drawEachLine(this._topUpLimit, $ul);
   },
 
-  _drawAmtSelectors: function () {
+  _drawAllAmt: function () {
+    for (var i = 5; i >= 1; i--) {
+      var max = i * this._AMT_CNT_EACH_LINE * this._AMT_GAP;
+      var $ul = $('<ul style="display: flex;margin-bottom: 0;" />');
+      $ul.appendTo(this._$allAmts);
+      this._drawEachLine(max, $ul);
+    }
+  },
+
+  _drawEachLine: function(max, $elem) {
     var source = this._$amtItemTmpl.html();
-    for ( var i = this._AMT_MAXIMUM; i >= this._AMT_MINIMUM; i -= this._AMT_GAP ) {
+    var min = max - (this._AMT_GAP * (this._AMT_CNT_EACH_LINE - 1));
+    for ( var i = max; i >= min; i -= this._AMT_GAP ) {
       var template = Handlebars.compile(source);
       var html = template({
         amt: i.toString(),
         amtWithComma: Tw.FormatHelper.addComma(i.toString())
+        // disabled: i > this._topUpLimit ? 'disabled' : ''
       });
-      this._$amtsContainer.find('ul').append(html);
+      $elem.append(html);
     }
   },
 
   _onClickBtnMore: function () {
-    this._$amtsContainer.css({
-      height: 'auto'
-    });
+    this._$summaryAmts.hide();
     this._$btnMore.hide();
+    this._$allAmts.show();
   },
 
   _onClickBtnSubmit: function () {
