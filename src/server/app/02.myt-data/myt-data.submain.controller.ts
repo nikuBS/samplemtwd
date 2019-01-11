@@ -16,6 +16,7 @@ import BrowserHelper from '../../utils/browser.helper';
 import { UNIT, UNIT_E } from '../../types/bff.type';
 import { REDIS_KEY } from '../../types/redis.type';
 import { PREPAID_PAYMENT_TYPE, PREPAID_PAYMENT_PAY_CD } from '../../types/bff.type';
+import StringHelper from '../../utils/string.helper';
 
 const skipIdList: any = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
 const tmoaBelongToProdList: any = ['NA00005959', 'NA00005958', 'NA00005957', 'NA00005956', 'NA00005955', 'NA00006157', 'NA00006156',
@@ -389,11 +390,9 @@ class MytDataSubmainController extends TwViewController {
     items.filter((item) => {
       list.push({
         child: true,
-        nickNm: item.childEqpMdNm, // item.mdlName 서버데이터 확인후 변경
-        svcNum: item.svcNum,
-        svcMgmtNum: item.svcMgmtNum,
-        data: '', // TODO: 개발이 되지 않은 항목 추후 작업 필요
-        unit: '' // TODO: 개발이 되지 않은 항목 추후 작업 필요
+        nickNm: item.childEqpMdNm || item.eqpMdlNm, // item.mdlName 서버데이터 확인후 변경
+        svcNum: StringHelper.phoneStringToDash(item.svcNum),
+        svcMgmtNum: item.svcMgmtNum
       });
     });
     return list;
@@ -422,6 +421,7 @@ class MytDataSubmainController extends TwViewController {
       nOthers.filter((item) => {
         if ( target.svcMgmtNum !== item.svcMgmtNum ) {
           item.nickNm = item.eqpMdlNm || item.nickNm;
+          item.svcNum = StringHelper.phoneStringToDash(item.svcNum);
           list.push(item);
         }
       });
@@ -448,23 +448,6 @@ class MytDataSubmainController extends TwViewController {
       }
     });
     return returnVal.reverse();
-  }
-
-  // T가족모아데이터 정보
-  _getFamilyMoaData(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_06_0044, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
-      } else if ( resp.code === API_T_FAMILY_ERROR.BLN0010 ) {
-        // T가족모아 가입 가능한 요금제이나 미가입으로 가입유도 화면 노출
-        return {
-          impossible: true
-        };
-      } else {
-        // error
-        return null;
-      }
-    });
   }
 
   _getRemnantData(): Observable<any> {

@@ -4,7 +4,7 @@
  * Date: 2018.09.17
  *
  */
-var skipIdList = ['POT10', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
+var skipIdList = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
 
 Tw.MyTDataSubMain = function (params) {
   this.$container = params.$element;
@@ -124,6 +124,20 @@ Tw.MyTDataSubMain.prototype = {
     return parseFloat((value / 1024 / 1024).toFixed(2));
   },
 
+  __calculationData: function (tmoaremained, tmoatotal, etcremained, etctotal){
+    var result = {};
+    var total = tmoatotal + etctotal;
+    var totalRemained = tmoaremained + etcremained;
+    result.showTotal = this.__convFormat(total.toString(), Tw.UNIT_E.DATA);
+    result.showRemained = this.__convFormat(totalRemained.toString(), Tw.UNIT_E.DATA);
+    result.showTmoaRemained = this.__convFormat(tmoaremained.toString(), Tw.UNIT_E.DATA);
+    result.showEtcmoaRemained = this.__convFormat(etcremained.toString(), Tw.UNIT_E.DATA);
+    result.tmoaRemainedRatio = Math.round(tmoaremained / total * 100);
+    result.etcRemainedRatio = Math.round(etcremained / total * 100);
+    result.totalRemainedRatio = Math.round(totalRemained / total * 100);
+    return result;
+  },
+
   __convShowData: function (data) {
     data.isUnlimit = !_.isFinite(data.total);
     data.remainedRatio = 100;
@@ -152,28 +166,52 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   __parseRemnantData: function (remnant) {
-    var DATA = remnant.data || [];
+    var GDATA = remnant.gnrlData || [];
+    var SDATA = remnant.spclData || [];
     var VOICE = remnant.voice || [];
     var SMS = remnant.sms || [];
+    var tmoaRemained = 0;
+    var tmoaTotal = 0;
+    var etcRemained = 0;
+    var etcTotal = 0;
     var result = {
-      data: [],
+      gdata: [],
+      sdata: [],
       voice: [],
       sms: [],
       tmoa: []
     };
-    if ( DATA.length > 0 ) {
+    if ( GDATA.length > 0 ) {
       _.filter(
-        DATA,
+        GDATA,
         $.proxy(function (item) {
           this.__convShowData(item);
-          if ( skipIdList.indexOf(item.skipId) === -1 ) {
-            result.data.push(item);
+          if ( item.skipId === skipIdList[0] || item.skipId === skipIdList[1] ) {
+            result.tmoa.push(item);
+            tmoaRemained += parseInt(item.remained, 10);
+            tmoaTotal += parseInt(item.total, 10);
+          } else {
+            result.gdata.push(item);
+            etcRemained += result.totalLimit ? 100 : parseInt(item.remained, 10);
+            etcTotal += result.totalLimit ? 100 : parseInt(item.total, 10);
           }
-          else {
-            if ( item.skipId === 'POT10' ) {
-              result.tmoa.push(item);
-            }
-          }
+        }, this)
+      );
+      if ( !result.totalLimit ) {
+        result.total = this.__calculationData(tmoaRemained, tmoaTotal, etcRemained, etcTotal);
+      } else {
+        result.total = {
+          etcRemainedRatio: 100,
+          totalRemainedRatio: 0
+        };
+      }
+    }
+    if ( SDATA.length > 0 ) {
+      _.filter(
+        SDATA,
+        $.proxy(function (item) {
+          this.__convShowData(item);
+          result.sdata.push(item);
         }, this)
       );
     }
@@ -292,10 +330,16 @@ Tw.MyTDataSubMain.prototype = {
         var data = {};
         if ( arguments[idx].code === Tw.API_CODE.CODE_00 ) {
           var item = this.__parseRemnantData(arguments[idx].result);
-          if ( item.data.length > 0 ) {
+          if ( item.total ) {
             data = {
-              data: item.data[0].showRemained.data,
-              unit: item.data[0].showRemained.unit
+              data: item.total.showRemained.data,
+              unit: item.total.showRemained.unit
+            };
+          }
+          else if ( item.sdata.length > 0 ) {
+            data = {
+              data: item.sdata[0].showRemained.data,
+              unit: item.sdata[0].showRemained.unit
             };
           }
           else if ( item.voice.length > 0 ) {
