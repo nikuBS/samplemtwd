@@ -106,7 +106,9 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
             badge: BADGE[member.relClCd],
             bIdx: resp.result.combinationWireMemberList.findIndex(wire => {
               return wire.mblSvcMgmtNum === member.svcMgmtNum;
-            })
+            }),
+            svcNum: FormatHelper.conTelFormatWithDash(member.svcNum),
+            asgnNum: FormatHelper.conTelFormatWithDash(member.asgnNum)
           };
         })
       };

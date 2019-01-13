@@ -38,7 +38,6 @@
                             <% joined.map(addition => { %>
                                 <li class="<%= addition.btnList && addition.btnList.length > 0 && 'add-con' %>" data-isFree ="<%= !addition.basFeeTxt || addition.basFeeTxt === '무료' %>">
                                     <!-- 리스트 하단에 추가 컨텐츠 있을 경우 li에 class="add-con" 추가 -->
-                                    <button>
                                         <div class="lineinfo-user">
                                             <span class="info-title"><%= addition.prodNm %></span>
                                             <span class="info-sub2">가입일 <%= addition.scrbDt %></span>
@@ -61,7 +60,6 @@
                                                 <% } %>
                                             <% } %>
                                         </div>
-                                    </button>
                                     <% if (addition.btnList && addition.btnList.length > 0) { %>
                                         <span class="bt-wrap">
                                             <% addition.btnList.map(btn => { %>
@@ -92,7 +90,6 @@
                                 <% reserved.map(addition => { %>
                                 <li class="<%= addition.btnList && addition.btnList.length > 0 && 'add-con' %>" data-isFree ="<%= !addition.basFeeTxt || addition.basFeeTxt === '무료' %>">
                                     <!-- 리스트 하단에 추가 컨텐츠 있을 경우 li에 class="add-con" 추가 -->
-                                    <button>
                                         <div class="lineinfo-user">
                                             <span class="info-title"><%= addition.prodNm %></span>
                                             <span class="info-sub2">가입일 <%= addition.scrbDt %></span>
@@ -115,7 +112,6 @@
                                                 <% } %>
                                             <% } %>
                                         </div>
-                                    </button>
                                     <% if (addition.btnList && addition.btnList.length > 0) { %>
                                         <span class="bt-wrap">
                                             <% addition.btnList.map(btn => { %>

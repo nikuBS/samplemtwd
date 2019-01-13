@@ -45,7 +45,6 @@
                             <% additions.map(addition => { %>
                             <li class="<%= addition.btnList.length > 0 ? 'add-con' : '' %>" data-isFree ="<%= !addition.basFeeTxt || addition.basFeeTxt === "무료" %>">
                                 <!-- 리스트 하단에 추가 컨텐츠 있을 경우 li에 class="add-con" 추가 -->
-                                <button>
                                     <div class="lineinfo-user">
                                         <span class="info-title"><%= addition.prodNm %></span>
                                         <span class="info-sub"><span>가입</span><span><%= addition.scrbDt %></span></span>    
@@ -68,7 +67,6 @@
                                         <% } %>
                                         <% } %>
                                     </div>
-                                </button>
                                 <% if (addition.btnList.length > 0) { %>
                                     <span class="bt-wrap">
                                         <% addition.btnList.map(btn => { %>
@@ -91,7 +89,6 @@
                     <div class="add-prd-wrap">
                         <ul class="list-comp-lineinfo">
                             <li>
-                                <button>
                                     <a href="/product/roaming/my-use">
                                         <div class="lineinfo-user">
                                             <span class="info-title">나의 로밍 요금제 및<br>부가서비스</span>
@@ -101,7 +98,6 @@
                                             <span class="ico"></span>
                                         </div>
                                     </a>
-                                </button>
                             </li>
                         </ul>
                     </div>

@@ -23,18 +23,20 @@ export default class ProductAdditions extends TwViewController {
       ...(req.query.tag ? { searchTagId: req.query.tag } : {})
     };
 
-    Observable.combineLatest(this.getMyAdditions(!!svcInfo), this.getAdditions(params)).subscribe(([myAdditions, additions]) => {
-      const error = {
-        code: (myAdditions && myAdditions.code) || additions.code,
-        msg: (myAdditions && myAdditions.msg) || additions.msg
-      };
+    Observable.combineLatest(this.getMyAdditions(svcInfo && svcInfo.svcAttrCd.startsWith('M')), this.getAdditions(params)).subscribe(
+      ([myAdditions, additions]) => {
+        const error = {
+          code: (myAdditions && myAdditions.code) || additions.code,
+          msg: (myAdditions && myAdditions.msg) || additions.msg
+        };
 
-      if (error.code) {
-        return this.error.render(res, { ...error, svcInfo });
+        if (error.code) {
+          return this.error.render(res, { ...error, svcInfo });
+        }
+
+        res.render('mobileplan-add/product.mobileplan-add.list.html', { svcInfo, additionData: { myAdditions, additions }, params, pageInfo });
       }
-
-      res.render('mobileplan-add/product.mobileplan-add.list.html', { svcInfo, additionData: { myAdditions, additions }, params, pageInfo });
-    });
+    );
   }
 
   private getMyAdditions = isLogin => {

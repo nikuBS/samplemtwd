@@ -18,7 +18,7 @@ export default class ProductAddition extends TwViewController {
 
   render(_req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     Observable.combineLatest(
-      this.getMyAdditions(!!svcInfo),
+      this.getMyAdditions(svcInfo && svcInfo.svcAttrCd.startsWith('M')),
       this.getBestAdditions(),
       this.getRecommendedAdditions(),
       this.getRecommendedTags()

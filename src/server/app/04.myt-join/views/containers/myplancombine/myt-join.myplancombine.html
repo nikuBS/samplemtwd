@@ -68,7 +68,7 @@
                                     <div class="inner">
                                         <% const tip = TIPS[comb.prodId] %>
                                         <strong class="tit"><%= comb.prodNm %><% if (tip) { %><button id="MS_07_tip_<%= tip %>" type="button" class="tip-view" title="<%= comb.prodNm %> 정보보기" aria-haspopup="true">TIP</button><% } %></strong>
-                                        <p class="txt"><%= comb.prodBasBenfCtt %></p>
+                                        <p class="txt"><%= comb.prodSmryDesc %></p>
                                         <p class="date">신청일  <%= comb.scrbDt %></p>
                                         <% if (COMBINATION_PRODUCTS.includes(comb.prodId)) { %>
                                         <a class="bt-link-tx underline" href="combinations/<%= comb.prodId %>">결합가족 보기</a>
