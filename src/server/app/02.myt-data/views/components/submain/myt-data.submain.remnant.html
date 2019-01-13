@@ -201,15 +201,7 @@
                                 <% } %>
                             </span>
                             <% if (!data.family.impossible) { %>
-                            <% if (data.family.remained === 0) { %>
-                            <% if (data.family.limitedYn === 'Y' && data.family.limitation === 0 ) { %>
-                            <span class="value type2"><strong>0GB</strong> 남음</span>
-                            <% } else { %>
-                            <span class="value type3">한도 소진</span>
-                            <% } %>
-                            <% } else { %>
-                            <span class="value type2"><strong><%= data.family.remained %><%= data.family.remained === '0'? 'KB' : '' %></strong> 남음</span>
-                            <% } %>
+                                <span class="value type2"><strong><%= data.family.remained %><%= data.family.remained === '0'? 'KB' : '' %></strong> 남음</span>
                             <% } %>
                         </li>
                         <% } %>
