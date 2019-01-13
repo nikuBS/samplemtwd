@@ -33,12 +33,13 @@ Tw.CustomerEmailTemplate.prototype = {
     this.tpl_service_internet = Handlebars.compile($('#tpl_service_internet').html());
     this.tpl_service_chocolate = Handlebars.compile($('#tpl_service_chocolate').html());
     this.tpl_quality_internet = Handlebars.compile($('#tpl_quality_internet').html());
+    this.tpl_quality_phone = Handlebars.compile($('#tpl_quality_phone').html());
   },
 
   _bindEvent: function () {
     this.$container.on('changeServiceTemplate', $.proxy(this._changeServiceTemplate, this));
     this.$container.on('changeQualityTemplate', $.proxy(this._changeQualityTemplate, this));
-    this.$container.on('click', '.fe-quality-inqSvcClCd', $.proxy(this._onChangeQualityType, this));
+    this.$container.on('click', '.fe-quality-inqSvcClCd', $.proxy(this._onChangeQualityLineType, this));
   },
 
   _changeServiceTemplate: function (e, serviceCategory) {
@@ -80,7 +81,11 @@ Tw.CustomerEmailTemplate.prototype = {
         }
         break;
       case 'internet':
-        this.$wrap_tpl_quality.html(this.tpl_quality_internet());
+        if ( qualityType && qualityType.isPhone ) {
+          this.$wrap_tpl_quality.html(this.tpl_quality_phone());
+        } else {
+          this.$wrap_tpl_quality.html(this.tpl_quality_internet());
+        }
         break;
       default:
         this.$wrap_tpl_quality.html(this.tpl_quality_cell());
@@ -97,14 +102,24 @@ Tw.CustomerEmailTemplate.prototype = {
     }
   },
 
-  _onChangeQualityType: function (e) {
+  _onChangeQualityLineType: function (e) {
     var nTabIndex = $(e.currentTarget).find('.focus').index();
     var category = this.$container.triggerHandler('getCategory');
 
-    if ( nTabIndex === 0 ) {
-      this.$container.trigger('changeQualityTemplate', [category.quality, { isWibro: false }]);
-    } else {
-      this.$container.trigger('changeQualityTemplate', [category.quality, { isWibro: true }]);
+    if ( category.quality.depth1 === 'cell' ) {
+      if ( nTabIndex === 0 ) {
+        this.$container.trigger('changeQualityTemplate', [category.quality, { isWibro: false }]);
+      } else {
+        this.$container.trigger('changeQualityTemplate', [category.quality, { isWibro: true }]);
+      }
+    }
+
+    if ( category.quality.depth1 === 'internet' ) {
+      if ( nTabIndex === 0 ) {
+        this.$container.trigger('changeQualityTemplate', [category.quality, { isPhone: false }]);
+      } else {
+        this.$container.trigger('changeQualityTemplate', [category.quality, { isPhone: true }]);
+      }
     }
   }
 };
