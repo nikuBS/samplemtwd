@@ -323,6 +323,12 @@ Tw.MyTFareBillGuidePps.prototype = {
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this.$fingerprint.hide();
+      if(!res.result || res.result.length === 0){
+        $('#div-usage-empty').show();
+      }else {
+        $('#div-usage-empty').hide();
+      }
+
       // Tw.Logger.info('[res] ', res);
       var dataArr = res.result;
       /*

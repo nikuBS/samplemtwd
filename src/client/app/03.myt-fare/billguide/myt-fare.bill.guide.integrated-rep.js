@@ -355,6 +355,17 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
 
       rootNodes = thisMain._comTraverse(resData, groupKeyArr[0], priceKey);
 
+      if(rootNodes && this.resData && this.resData.commDataInfo && this.resData.commDataInfo.intBillLineList){
+        for(var i = 0; i < rootNodes.length; i++){
+          for(var j = 0; j < this.resData.commDataInfo.intBillLineList.length; j++){
+            if(rootNodes[i].id === this.resData.commDataInfo.intBillLineList[j].svcMgmtNum){
+              rootNodes[i].label = this.resData.commDataInfo.intBillLineList[j].svcType;
+              rootNodes[i].svcInfoNm = this.resData.commDataInfo.intBillLineList[j].label;
+            }
+          }
+        }
+      }
+
       _.map(rootNodes, function (val) {
         val.children = thisMain._comTraverse(val.children, groupKeyArr[1], priceKey);
       });
