@@ -186,6 +186,11 @@ Tw.CertificationSk.prototype = {
   },
   _onChangeKeyin: function (event) {
     var $target = $(event.target);
+
+    clearTimeout(this._addTimer);
+    this._addTimer = null;
+    this._addTime = null;
+
     if ( $target.is(':checked') ) {
       this._onKeyin = true;
       this.$inputMdn.prop('readonly', false);
