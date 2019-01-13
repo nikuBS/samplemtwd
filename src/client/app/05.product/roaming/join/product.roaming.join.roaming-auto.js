@@ -210,7 +210,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
     this._historyService.go(idx);
   },
   _goSetting : function(){
-    this._historyService.goLoad('/product/roaming/setting/roaming-combine?prod_id='+this._prodId);
+    this._historyService.goLoad('/product/roaming/join/roaming-combine?prod_id='+this._prodId);
   },
   _showCancelAlart : function (){
     var alert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A1;

@@ -7,7 +7,7 @@
 Tw.ProductRoamingSettingRoamingAuto = function (rootEl,prodRedisInfo,prodBffInfo,svcInfo,prodId,expireDate) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
-  this._historyService = new Tw.HistoryService(this.$container);
+  this._historyService = new Tw.HistoryService();
   this._prodRedisInfo = prodRedisInfo;
   this._prodBffInfo = prodBffInfo;
   this._svcInfo = svcInfo;
@@ -196,7 +196,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0085, userSettingInfo, {},[this._prodId]).
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
-        this._historyService.goBack();
+        this._showCompletePopup(this._prodBffInfo);
       }else{
         this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
       }
@@ -204,6 +204,26 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     fail($.proxy(function (err) {
       this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
     }, this));
+  },
+  _showCompletePopup : function(data){
+    var completePopupData = {
+      prodNm : data.prodNm,
+      processNm : Tw.PRODUCT_TYPE_NM.SETTING,
+      isBasFeeInfo : data.prodFee,
+      typeNm : Tw.PRODUCT_CTG_NM.ADDITIONS,
+      btnNmList : []
+    };
+    this._popupService.open({
+        hbs: 'complete_product_roaming',
+        layer: true,
+        data : completePopupData
+      },
+      $.proxy(this._bindCompletePopupBtnEvt,this),
+      null,
+      'complete');
+  },
+  _bindCompletePopupBtnEvt : function (popupEvt) {
+    $(popupEvt).on('click','.btn-floating.btn-style2',$.proxy(this._historyService.go,this._historyService,-2));
   },
   _tooltipInit : function (prodId) {
     switch (prodId) {
