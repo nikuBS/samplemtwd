@@ -307,7 +307,8 @@ Tw.ProductRoamingFiInquire.prototype = {
   _onEditPopOpened : function($root){
     $root.on('blur', '#flab01', $.proxy(this._insertDashPhone, this));
     $root.on('click', '#flab01', $.proxy(this._removeDashPhone, this));
-    $root.on('change keyup paste', '#flab01', $.proxy(this._changeCheck, this));
+    $root.on('keyup paste', '#flab01', $.proxy(this._changeCheck, this, 'keyup'));
+    $root.on('change', '#flab01', $.proxy(this._changeCheck, this));
     $root.on('click', 'button[id=flab04],button[id=flab05]', $.proxy(this._openLocationPop, this));
     $root.on('click', '.cancel', $.proxy(this._changeCheck, this));
     $root.on('click', '#fe-register', $.proxy(this._handleEditReservation, this));
@@ -360,15 +361,33 @@ Tw.ProductRoamingFiInquire.prototype = {
       $(selected).attr('data-center',$(e.target).parents('label').attr('data-center')); //부스코드를 data-code값에 넣기
       $(selected).attr('data-booth',$(e.target).parents('label').attr('data-booth'));
       this.selectIdx = Number($(e.target).parents('label').attr('id')) - 6; //예약 완료 페이지에 넘기는 값
+
+      //약도 이미지 변경
+      var imgUrl = $('#fe-receive-img').attr('src');
+      var startLen = imgUrl.lastIndexOf('/');
+      var cdnUrl = imgUrl.substring(0,startLen+1);
+      $('#fe-receive-img').attr('src', cdnUrl + $(e.target).parents('label').attr('data-img') + '.png');
     }else{
       $(selected).text($(e.target).parents('label').attr('value')); //센터명 출력
       $(selected).attr('data-center',$(e.target).parents('label').attr('data-center'));
+
+      //약도 이미지 변경
+      var imgUrl = $('#fe-return-img').attr('src');
+      var startLen = imgUrl.lastIndexOf('/');
+      var cdnUrl = imgUrl.substring(0,startLen+1);
+      $('#fe-return-img').attr('src', cdnUrl + $(e.target).parents('label').attr('data-img') + '.png');
     }
 
     this._popupService.close();
   },
 
-  _changeCheck : function(){
+  _changeCheck : function(state){
+    if(state === 'keyup'){
+      if($('#flab01').val().length > 11){
+        $('#flab01').val($('#flab01').val().substring(0,11));
+      }
+    }
+
     var dateCheck = true;
 
     if($('#flab02').val() === '' || $('#flab03').val() === ''){
