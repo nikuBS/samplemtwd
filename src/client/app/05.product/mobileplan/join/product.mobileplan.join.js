@@ -106,8 +106,20 @@ Tw.ProductMobileplanJoin.prototype = {
       noticeList: $.merge(this._confirmOptions.preinfo.termNoticeList, this._confirmOptions.preinfo.joinNoticeList),
       isAutoJoinTermList: (this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0),
       isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0),
-      isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this.prodId) === -1
+      isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this.prodId) === -1,
+      downgrade: this._getDowngrade()
     });
+  },
+
+  _getDowngrade: function() {
+    if (Tw.FormatHelper.isEmpty(this._confirmOptions.downgrade) || Tw.FormatHelper.isEmpty(this._confirmOptions.downgrade.guidMsgCtt)) {
+      return null;
+    }
+
+    return {
+      isHtml: this._confirmOptions.downgrade.htmlMsgYn === 'Y',
+      guidMsgCtt: this._confirmOptions.downgrade.guidMsgCtt
+    };
   },
 
   _callConfirmCommonJs: function() {

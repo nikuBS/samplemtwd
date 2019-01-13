@@ -142,6 +142,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
       joinTypeText: Tw.PRODUCT_TYPE_NM.CHANGE,
       typeText: Tw.PRODUCT_CTG_NM.PLANS,
       confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2,
+      downgrade: this._getDowngrade(),
       settingSummaryTexts: [{
         spanClass: 'val',
         text: this.$container.find('.widget-box.radio input[type="radio"]:checked').attr('title')
@@ -149,6 +150,17 @@ Tw.ProductMobileplanJoinTplan.prototype = {
     });
 
     return this._confirmOptions;
+  },
+
+  _getDowngrade: function() {
+    if (Tw.FormatHelper.isEmpty(this._confirmOptions.downgrade) || Tw.FormatHelper.isEmpty(this._confirmOptions.downgrade.guidMsgCtt)) {
+      return null;
+    }
+
+    return {
+      isHtml: this._confirmOptions.downgrade.htmlMsgYn === 'Y',
+      guidMsgCtt: this._confirmOptions.downgrade.guidMsgCtt
+    };
   },
 
   _reqOverpay: function() {

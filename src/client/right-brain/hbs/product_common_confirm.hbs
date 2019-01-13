@@ -204,12 +204,12 @@
                             </li>
                         </ul>
                     </div>
-                    {{#if downgrade.guidMsgCtt}}
+                    {{#if downgrade}}
                         <div class="cont-noti pt20">
                             {{#if downgrade.isHtml}}
-                                <span class="type2">{{downgrade.guidMsgCtt}}</span>
-                            {{else}}
                                 {{{downgrade.guidMsgCtt}}}
+                            {{else}}
+                                <span class="type2">{{downgrade.guidMsgCtt}}</span>
                             {{/if}}
                         </div>
                     {{/if}}

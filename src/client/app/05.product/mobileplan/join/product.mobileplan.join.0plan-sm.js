@@ -89,10 +89,22 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
       settingSummaryTexts: [{
         spanClass: 'val',
         text: this.$container.find('.widget-box.radio input[type="radio"]:checked').attr('title')
-      }]
+      }],
+      downgrade: this._getDowngrade()
     });
 
     return this._confirmOptions;
+  },
+
+  _getDowngrade: function() {
+    if (Tw.FormatHelper.isEmpty(this._confirmOptions.downgrade) || Tw.FormatHelper.isEmpty(this._confirmOptions.downgrade.guidMsgCtt)) {
+      return null;
+    }
+
+    return {
+      isHtml: this._confirmOptions.downgrade.htmlMsgYn === 'Y',
+      guidMsgCtt: this._confirmOptions.downgrade.guidMsgCtt
+    };
   },
 
   _openTimeSelectPop: function() {
