@@ -51,6 +51,10 @@ Tw.MyTFareBillSetChange.prototype = {
       basAddr: resp.main,
       dtlAddr: resp.detail
     });
+
+    this._addrArea.find('input[name="zip"]').data('state', true);
+    this._addrArea.find('input[name="basAddr"]').data('state', true);
+    this._addrArea.find('input[name="dtlAddr"]').data('state', true);
   },
 
   // 기타(우편) 데이터 설정
@@ -58,7 +62,7 @@ Tw.MyTFareBillSetChange.prototype = {
     this.$container.find('#fe-no-addr-area').addClass('none');
     this._addrArea.addClass('none');
 
-    if (Tw.FormatHelper.isEmpty(data.zip) || !this._isChangeInfo) {
+    if (Tw.FormatHelper.isEmpty(data.zip)) {
       this.$container.find('#fe-no-addr-area').removeClass('none');
     } else {
       this._addrArea.removeClass('none').find('input[name="zip"]').val(data.zip);
@@ -176,7 +180,7 @@ Tw.MyTFareBillSetChange.prototype = {
       this._toggleElement('fe-email-area', this._billType === '2');
     }
 
-    this._setAddrData(this._data);
+    this._setAddrData(this._isChangeInfo ? this._data:'');
     this._setOptions(1);
   },
 
@@ -195,8 +199,20 @@ Tw.MyTFareBillSetChange.prototype = {
       if (isShow) {
         this._toggleElement(this._options.siblings('.fe-'+name), true);
       } else {
-        this._checkedSlideCheckbox(name, _data[name]); // Bell Letter 보안강화
+        this._checkedSlideCheckbox(name, _data[name]);
       }
+    };
+
+    // 콘텐츠 이용 상세내역 표시
+    var _setContents = function () {
+      var _infoInvDtlDispYnName = 'infoInvDtlDispYn';
+      var _infoInvDtlDispYn = _data.infoInvDtlDispYn+_data.infoInvDtlDispChkYn === 'YY' ? 'Y':'N';
+      if (_infoInvDtlDispYn === 'N') {
+        this._toggleDisabledCheckbox(this._options.siblings('.fe-'+_infoInvDtlDispYnName), true);
+      } else {
+        this._checkedSlideCheckbox(_infoInvDtlDispYnName, _infoInvDtlDispYn);
+      }
+      this._toggleElement(this._options.siblings('.fe-'+_infoInvDtlDispYnName), isDisplay);
     };
 
     // T월드 확인
@@ -222,13 +238,13 @@ Tw.MyTFareBillSetChange.prototype = {
     if (lineType === 'M' || lineType === 'W') {
       // 콘텐츠 이용 상세내역 표시
       if (billType === '2') {
-        _selectOptions.call(this, 'infoInvDtlDispYn', isDisplay);
+        _setContents.call(this);
       }
 
       if (lineType === 'M') {
         // 콘텐츠 이용 상세내역 표시
-        if (this._options.eq(3).hasClass('none') && ['H2', 'B2'].indexOf(mergeType) !== -1) {
-          _selectOptions.call(this, 'infoInvDtlDispYn', isDisplay);
+        if (this._options.siblings('.fe-infoInvDtlDispYn').hasClass('none') && ['H2', 'B2'].indexOf(mergeType) !== -1) {
+          _setContents.call(this);
         }
 
         // 법정 대리인 함께 수령
@@ -241,7 +257,7 @@ Tw.MyTFareBillSetChange.prototype = {
             this._checkedSlideCheckbox(name, _data.ccurNotiYn); // 법정대리인 함께 수령
             // 법정대리인 함께 수령 Y 이면 disabled
             if ('Y' === _data.ccurNotiYn) {
-              this._disabledOptions(this._options.eq(4),true, true);
+              this._disabledOptions(this._options.siblings('.fe-'+name),true);
             }
           }
         }
