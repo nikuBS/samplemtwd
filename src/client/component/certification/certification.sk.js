@@ -57,15 +57,19 @@ Tw.CertificationSk.prototype = {
     }
   },
   _checkOption: function (optMethods) {
+    if ( this._svcInfo.smsUsableYn === 'N' || this._svcInfo.svcStCd === Tw.SVC_STATE.SP ) {
+      return false;
+    }
+
     if ( optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN) !== -1 ) {
       this._enableKeyin = true;
-      this._defaultKeyin = this._svcInfo.smsUsableYn === 'N' || this._svcInfo.svcStCd === Tw.SVC_STATE.SP;
+      // this._defaultKeyin = this._svcInfo.smsUsableYn === 'N' || this._svcInfo.svcStCd === Tw.SVC_STATE.SP;
 
     }
     if ( optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_SECURITY) !== -1 && Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
       this._securityAuth = true;
-
     }
+    return true;
   },
   _getAllSvcInfo: function (opMethods, optMethods, isWelcome, methodCnt) {
     this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
@@ -73,6 +77,10 @@ Tw.CertificationSk.prototype = {
   },
   _onSuccessAllSvcInfo: function (opMethods, optMethods, isWelcome, methodCnt, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      if ( Tw.FormatHelper.isEmpty(resp.result.m) ) {
+        this._callback({ code: Tw.API_CODE.CERT_SELECT });
+        return;
+      }
       var category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
       _.map(category, $.proxy(function (line) {
         var curLine = resp.result[Tw.LINE_NAME[line]];
@@ -88,12 +96,15 @@ Tw.CertificationSk.prototype = {
 
       this._openSmsOnly(opMethods, optMethods, isWelcome, methodCnt);
     } else {
-      // error
+      Tw.Error.pop(resp.code, resp.msg);
     }
   },
   _openSmsOnly: function (opMethods, optMethods, isWelcome, methodCnt) {
     this._checkSmsType(opMethods);
-    this._checkOption(optMethods);
+    if ( !this._checkOption(optMethods) ) {
+      this._callback({ code: Tw.API_CODE.CERT_SELECT });
+      return;
+    }
 
     this._popupService.open({
       hbs: 'CO_CE_02_02_01_02',
@@ -170,7 +181,7 @@ Tw.CertificationSk.prototype = {
   },
 
   _onClickOtherCert: function () {
-    this._callbackParam = { code: 'CERT0001' };
+    this._callbackParam = { code: Tw.API_CODE.CERT_SELECT };
     this._popupService.close();
   },
   _onChangeKeyin: function (event) {

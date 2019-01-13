@@ -589,6 +589,7 @@ Tw.API_CODE = {
   BFF_0020: 'BFF0020', // 법정대리인 인증필요
 
   CERT_FAIL: 'TWM0001',
+  CERT_SELECT: 'CERT0001',   // 인증수단 선택화면으로 이동
 
   CODE_99: 'RDT0099', // Circuit Open
   CODE_200: '200',

@@ -329,7 +329,7 @@ Tw.CertificationSelect.prototype = {
         }
         this._callback(resp, this._deferred, this._command);
       }
-    } else if ( resp.code === 'CERT0001' ) {
+    } else if ( resp.code === Tw.API_CODE.CERT_SELECT ) {
       // 인증 선택
       this._openSelectPopup(false);
     } else {
