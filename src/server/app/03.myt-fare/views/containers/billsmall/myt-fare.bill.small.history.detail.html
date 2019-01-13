@@ -87,13 +87,14 @@
                             {{/if}}
                             </span>
                             <span class="tx-cont">{{payMethodNm}}
+                            {{#if isShowBlockBtn}}
                             <br />
                                 {{#if isBlocked}}
                                 <button class="red-btn" id="fe-btn-view-block">차단내역</button>
                                 {{else}}
                                 <button class="red-btn" id="fe-btn-set-block" data-list-id="{{listId}}">차단하기</button>
                                 {{/if}}
-                            
+                            {{/if}}
                             </span>
                         </li>
                         <!--// CASE: 일반결제 -->
