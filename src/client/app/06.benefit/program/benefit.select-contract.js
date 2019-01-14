@@ -8,6 +8,7 @@
 Tw.BenefitSelectContract = function (params) {
   this.$container = params.$element;
   this.data = params.data;
+  this.data.joinInfoTerm = params.joinInfoTerm;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
   this._render();
@@ -20,14 +21,11 @@ Tw.BenefitSelectContract.prototype = {
   _render: function () {
     this.$radioGroup = this.$container.find('[data-id=radio-group]');
     this.$okBtn = this.$container.find('[data-id=btn-ok]');
-    this.$refundBtn = this.$container.find('[data-id=refund-info]');
   },
 
   _bindEvent: function () {
     this.$radioGroup.on('click', 'li', $.proxy(this._onRadioGroupClicked, this));
     this.$okBtn.on('click', $.proxy(this._onOkBtnClicked, this));
-    // TODO: 할인반환금조회(#refund_info) 및 단말 위약금 조회(#cancel_fee) admin 작업처리
-    this.$refundBtn.on('click', $.proxy(this._onRefundBtnClicked, this));
   },
 
   _initialize: function () {
@@ -38,14 +36,14 @@ Tw.BenefitSelectContract.prototype = {
       toProdBasFeeInfo: this.data.joinInfoTerm.preinfo.reqProdInfo.basFeeInfo,
       isNumberBasFeeInfo: this.data.joinInfoTerm.preinfo.reqProdInfo.isNumberBasFeeInfo,
       isAutoJoinTermList: (this.data.joinInfoTerm.preinfo.autoJoinList.length > 0 || this.data.joinInfoTerm.preinfo.autoTermList.length > 0),
-      isAgreement: (this.data.joinInfoTerm.stipulationInfo && this.data.joinInfoTerm.stipulationInfo.stipulation.existsCount > 0)
+      isAgreement: (this.data.joinInfoTerm.stipulationInfo && this.data.joinInfoTerm.stipulationInfo.existsCount > 0)
     });
   },
 
   _onRadioGroupClicked: function (evt) {
     // 아이템 선택 시 버튼 enable 처리
     if ( !this._isEnable ) {
-      var $target = $(evt.target).parents('li');
+      var $target = $(evt.currentTarget);
       var checked = $target.attr('aria-checked');
       if ( checked === 'true' ) {
         this._isEnable = true;
@@ -53,10 +51,6 @@ Tw.BenefitSelectContract.prototype = {
         this.$okBtn.removeAttr('disabled');
       }
     }
-  },
-
-  _onRefundBtnClicked: function () {
-    this._popupService.openAlert('TBD_Tip');
   },
 
   _onOkBtnClicked: function () {

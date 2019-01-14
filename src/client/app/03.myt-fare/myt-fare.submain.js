@@ -358,7 +358,8 @@ Tw.MyTFareSubMain.prototype = {
             combine: isCombine,
             repSvc: repSvc,
             amt: Tw.FormatHelper.addComma(amt.toString()),
-            svcType: this.__selectSvcType(selectLine.svcAttrCd)
+            svcType: this.__selectSvcType(selectLine.svcAttrCd),
+            isAddr: (['S1', 'S2'].indexOf(selectLine.svcAttrCd) > -1)
           }, selectLine);
           if ( isCombine ) {
             combinList.push(data);
