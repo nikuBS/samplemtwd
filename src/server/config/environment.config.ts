@@ -2,7 +2,7 @@ const environment = {
   local: {
     BFF_SERVER: 'http://61.250.19.37:31020',  // 개발 61.250.19.37:31010
     BFF_SERVER_G: 'http://211.188.180.73:31010',
-    CDN: 'http://localhost:3001',
+    CDN: 'http://150.28.66.186:3001',
     CDN_MANIFEST: 'http://localhost:3001',
     REDIS: {
       host: '61.250.19.37',

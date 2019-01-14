@@ -74,8 +74,9 @@ Tw.ImmediatelyRechargeLayer.prototype = {
           this.immChargeData.etc = etc;
         }
         if ( optSvc.code === Tw.API_CODE.CODE_00 ) {
-          if ( optSvc.result.optProdList && optSvc.result.optProdList.length > 0 ) {
-            _.filter(optSvc.result.optProdList, $.proxy(function (item) {
+          // optProdList -> disProdList 합쳐짐 (BE 1/14 기준)
+          if ( optSvc.result.disProdList && optSvc.result.disProdList.length > 0 ) {
+            _.filter(optSvc.result.disProdList, $.proxy(function (item) {
               // 부가서비스
               if ( !this._isLimited ) {
                 this._isLimited = (this._readOnlyProductIdList.indexOf(item.prodId) > -1);
