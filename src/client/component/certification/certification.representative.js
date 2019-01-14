@@ -50,7 +50,7 @@ Tw.CertificationRepresentative.prototype = {
     return _.map(smsNumbers, $.proxy(function (number, index) {
       return {
         txt: number.nameMask + ' ' + number.numberMask,
-        option: ''
+        option: smsNumbers.length === 1 && index === 0 ? 'checked' : ''
       };
     }, this));
   },
@@ -76,7 +76,7 @@ Tw.CertificationRepresentative.prototype = {
   },
   _onCloseCert: function () {
     if ( !Tw.FormatHelper.isEmpty(this._callbackParam) ) {
-      this._callback(this._callbackParam, this._deferred, this._command);
+      this._callback(this._callbackParam, this.deferred, this._command);
     }
   },
   _onClickList: function () {
