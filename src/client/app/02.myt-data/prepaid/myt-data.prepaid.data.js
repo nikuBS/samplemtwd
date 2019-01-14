@@ -90,7 +90,8 @@ Tw.MyTDataPrepaidData.prototype = {
     this._popupService.close();
   },
   _checkIsAbled: function () {
-    if (this.$cardNumber.val() !== '' && this.$cardY.val() !== '' &&
+    if (!Tw.FormatHelper.isEmpty(this.$dataSelector.attr('id')) &&
+      this.$cardNumber.val() !== '' && this.$cardY.val() !== '' &&
       this.$cardM.val() !== '' && this.$cardPw.val() !== '') {
       this.$rechargeBtn.removeAttr('disabled');
     } else {
