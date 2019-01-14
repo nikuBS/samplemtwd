@@ -8,6 +8,7 @@ Tw.CustomerEmailUpload = function (rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._nativeService = Tw.Native;
   this._history = new Tw.HistoryService();
   this._limitFileByteSize = 2097152;
   this._acceptExt = ['jpg', 'jpeg', 'png', 'gif'];
@@ -33,12 +34,56 @@ Tw.CustomerEmailUpload.prototype = {
   },
 
   _bindEvent: function () {
+    this.$container.on('click', 'input[type=file]', $.proxy(this._openCustomFileChooser, this));
     this.$container.on('click', '.fe-file-delete', $.proxy(this._removeFile, this));
     this.$container.on('click', '.fe-close-upload', $.proxy(this._hideUploadPopup, this));
     this.$container.on('click', '.fe-upload_email_files', $.proxy(this._uploadFile, this));
     this.$container.on('click', '.fe-upload-file-service', $.proxy(this._onClickServiceUpload, this));
     this.$container.on('click', '.fe-upload-file-quality', $.proxy(this._onClickQualityUpload, this));
     this.$container.on('change', '.fe-wrap-file-upload input.file', $.proxy(this._selectFile, this));
+  },
+
+  _openCustomFileChooser: function (e) {
+    var $target = $(e.currentTarget);
+    var androidVersion = Tw.BrowserHelper.getAndroidVersion();
+
+    if ( androidVersion && androidVersion.indexOf('4.4') !== -1 ) {
+      this._nativeService.send(Tw.NTV_CMD.OPEN_FILE_CHOOSER, {}, $.proxy(this._onFileChooser, this, $target));
+    }
+  },
+
+  _onFileChooser: function ($target, response) {
+    if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      var params = response.params;
+
+      console.log(params);
+
+      var $elFileName = $target.parent().parent().find('.fileview');
+      // $elFileName.val(fileInfo.name);
+
+      // this.uploadFiles = this.uploadFiles.concat(fileInfo);
+
+      this._showUploadPopup();
+      this._checkUploadButton();
+
+      // if ( this._acceptExt.indexOf(fileInfo.name.split('.').pop()) === -1 ) {
+      //   return this._popupService.openAlert(Tw.CUSTOMER_EMAIL.INVALID_FILE, Tw.POPUP_TITLE.NOTIFY);
+      // }
+      //
+      // if ( fileInfo.size > this._limitFileByteSize ) {
+      //   return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE);
+      // }
+      //
+      // if ( fileInfo ) {
+      //   var $elFileName = $(e.currentTarget).parent().parent().find('.fileview');
+      //   $elFileName.val(fileInfo.name);
+      // }
+      //
+      // this.uploadFiles = this.uploadFiles.concat(fileInfo);
+      //
+      // this._showUploadPopup();
+      // this._checkUploadButton();
+    }
   },
 
   _selectFile: function (e) {
@@ -54,7 +99,7 @@ Tw.CustomerEmailUpload.prototype = {
     }
 
     if ( fileInfo ) {
-      var $elFileName = $(e.currentTarget).parent().parent().find('.fileview');
+      var $elFileName = $target.parent().parent().find('.fileview');
       $elFileName.val(fileInfo.name);
     }
 

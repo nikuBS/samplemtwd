@@ -40,7 +40,8 @@ Tw.NTV_CMD = {
   SAVE: 'save',
   LOAD: 'load',
   IS_APP_CREATED: 'isAppCreated',
-  OPEN_NETWORK_ERROR_POP: 'openNetworkErrorPop'
+  OPEN_NETWORK_ERROR_POP: 'openNetworkErrorPop',
+  OPEN_FILE_CHOOSER: 'openFileChooser'
 };
 
 Tw.NTV_CODE = {
