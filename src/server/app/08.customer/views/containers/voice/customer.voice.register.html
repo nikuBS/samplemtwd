@@ -60,9 +60,20 @@
                 <div class="voicebox-style">
                     <div class="info-form-box">
                         <p class="form-label" id="aria-exp-label2">안내 받으실 휴대폰 번호</p>
+
+                        <% if ( allSvc.m && allSvc.m.length >= 2 ) { %>
                         <button class="bt-dropdown big mt14 fe-select_phone" title="사용자번호" aria-haspopup="true"
                                 data-svcMgmtNum="<%=svcInfo.svcMgmtNum%>"><%-convertTelFormat(svcInfo.svcNum)%><span class="ico"></span>
                         </button>
+                        <% } else { %>
+                        <div class="inputbox">
+                            <div class="input">
+                                <input type="text" class="fe-select_phone" placeholder="회선정보 입력" title="문의하실 회선정보 입력" data-svcMgmtNum="<%-svcInfo.svcMgmtNum%>"
+                                       value="<%-convertTelFormat(svcInfo.svcNum)%>" disabled>
+                            </div>
+                        </div>
+                        <% } %>
+
                     </div>
                     <p class="information-use-text04">* 목소리 등록 문자는 114번호로 발송되며, 등록 신청은 1일 1회만 가능합니다.</p>
                 </div>
