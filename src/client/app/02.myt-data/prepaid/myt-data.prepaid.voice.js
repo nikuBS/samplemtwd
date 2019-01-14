@@ -27,6 +27,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$cardNumber = this.$container.find('.fe-card-number');
     this.$cardY = this.$container.find('.fe-card-y');
     this.$cardM = this.$container.find('.fe-card-m');
+    this.$prepaid_card = this.$container.find('.fe-prepaid-card');
   },
 
   _bindEvent: function () {
@@ -40,6 +41,11 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$container.on('click', '.fe-prepaid-complete', $.proxy(this._requestCompleteCreditCard, this));
     this.$container.on('change input blur click', '#tab1-tab [required]', $.proxy(this._validatePrepaidCard, this));
     this.$container.on('change input blur click', '#tab2-tab [required]', $.proxy(this._checkIsAbled, this));
+    this.$container.on('keyup', 'input[type=tel]', $.proxy(this._checkMaxLength, this));
+ },
+
+  _checkMaxLength: function (e) {
+    Tw.InputHelper.inputNumberMaxLength(e.currentTarget);
   },
 
   _checkIsAbled: function () {
