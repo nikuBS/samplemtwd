@@ -21,6 +21,7 @@ Tw.MyTFareInfoHistory.prototype = {
   _init: function () {
 
     this.rootPathName = this._historyService.pathname;
+    this.queryParams = Tw.UrlHelper.getQueryParams();
 
     if(this.data){
       this.currentActionsheetIndex = Tw.MYT_PAYMENT_HISTORY_TYPE.reduce($.proxy(function (prev, cur, index) {
@@ -302,15 +303,14 @@ Tw.MyTFareInfoHistory.prototype = {
     this.$typeSelectActionsheetButtons.on('click', $.proxy(this._moveByPaymentType, this));
   },
   _moveByPaymentType: function (e) {
-    var target    = $(e.currentTarget),
+    var target    = $(e.currentTarget).find('input'),
         targetURL = this.rootPathName.slice(-1) === '/' ? this.rootPathName.split('/').slice(0, -1).join('/') : this.rootPathName;
-
     
-    if (!target.find('input').prop('checked')) {
+    if (Tw.MYT_PAYMENT_HISTORY_TYPE[target.val()] !== this.queryParams.sortType) {
       this.$typeSelectActionsheetButtons.find('input').prop('checked', false);
-      target.find('input').prop('checked', true);
-      targetURL = !Tw.MYT_PAYMENT_HISTORY_TYPE[this.$typeSelectActionsheetButtons.index(target)] ?
-          targetURL : targetURL + '?sortType=' + Tw.MYT_PAYMENT_HISTORY_TYPE[this.$typeSelectActionsheetButtons.index(target)];
+      target.prop('checked', true);
+      targetURL = !Tw.MYT_PAYMENT_HISTORY_TYPE[target.val()] ?
+          targetURL : targetURL + '?sortType=' + Tw.MYT_PAYMENT_HISTORY_TYPE[target.val()];
 
       this._popupService.close();
       
