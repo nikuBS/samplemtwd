@@ -67,8 +67,6 @@ Tw.CustomerEmailService.prototype = {
       return false;
     }
 
-    //연락처 번호를 다시 확인해 주세요.
-
     switch ( serviceCategory ) {
       case 'CELL':
         this._requestCell();
@@ -133,15 +131,16 @@ Tw.CustomerEmailService.prototype = {
   _requestDirect: function () {
     var depth2Category = this.$service_depth2.data('serviceDepth2');
     var htParams;
-    if ( depth2Category === '08' || depth2Category === '09' || depth2Category === '12' ) {
+
+    if ( depth2Category === '07' || depth2Category === '10' ) {
       htParams = $.extend(this._makeParams(), {
         category: this.$service_depth2.data('serviceDepth2'),
-        orderNo: ''
+        phoneId: $('.fe-select-device').data('phoneid')
       });
     } else {
       htParams = $.extend(this._makeParams(), {
         category: this.$service_depth2.data('serviceDepth2'),
-        phoneId: $('.fe-select-device').data().phoneid
+        orderNo: $('.fe-text_order').val()
       });
     }
 
