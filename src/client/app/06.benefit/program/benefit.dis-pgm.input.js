@@ -67,9 +67,9 @@ Tw.BenefitDisPgmInput.prototype = {
       svcNumMask: Tw.FormatHelper.conTelFormatWithDash(this._confirmOptions.preinfo.svcNumMask),
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
       autoTermList: this._confirmOptions.preinfo.autoTermList,
-      isAutoJoinTermList: (this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0),
       isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0),
-      isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this.prodId) === -1
+      isJoinTermProducts: (!Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoJoinList) ||
+        !Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoTermList))
     });
   },
 
@@ -80,7 +80,7 @@ Tw.BenefitDisPgmInput.prototype = {
         typeText: Tw.PRODUCT_CTG_NM.DISCOUNT_PROGRAM,
         isSelectedProgram: true,
         isContractPlan: this._confirmOptions.isContractPlan,
-        isAutoJoinTermList: true,
+        isJoinTermProducts: true,
         setInfo: 'set-info',
         isTerm: true,
         confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2,

@@ -81,7 +81,8 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     }
 
     this.$sendMsgResult.hide();
-    this._apiService.request(Tw.API_CMD.BFF_01_0058, {
+    this._apiService.request(Tw.API_CMD.BFF_01_0059, {
+      jobCode: Tw.BrowserHelper.isApp() ? 'NFM_MTW_SFNTPRT_AUTH' : 'NFM_MWB_SFNTPRT_AUTH',
       receiverNum: number
     }).done($.proxy(this._resAuthCode, this));
   },
@@ -126,6 +127,8 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
 
   _reqValidateAuthCode: function() {
     this._apiService.request(Tw.API_CMD.BFF_01_0063, {
+      jobCode: Tw.BrowserHelper.isApp() ? 'NFM_MTW_SFNTPRT_AUTH' : 'NFM_MWB_SFNTPRT_AUTH',
+      receiverNum: this.$inputNumber.val().replace(/-/gi, ''),
       authNum: this.$inputAuthCode.val()
     }).done($.proxy(this._resValidateAuthCode, this));
   },
@@ -221,7 +224,8 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
       svcNumMask: Tw.FormatHelper.conTelFormatWithDash(this._confirmOptions.preinfo.svcNumMask),
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
       autoTermList: this._confirmOptions.preinfo.autoTermList,
-      isAutoJoinTermList: (this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0),
+      isJoinTermProducts: (!Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoJoinList) ||
+        !Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoTermList)),
       isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0)
     });
   },

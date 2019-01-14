@@ -10,6 +10,7 @@ Tw.Init = function () {
   this._initComponent();
   this._getEnvironment();
   this._setXtvid();
+  this._sendXtractorLoginDummy();
   // this._setNodeCookie();
 };
 
@@ -64,6 +65,7 @@ Tw.Init.prototype = {
       this._nativeService.send(Tw.NTV_CMD.SET_XTVID, { xtvId: cookie });
     }
   },
+
   _setNodeCookie: function () {
     var cookie = Tw.CommonHelper.getCookie('TWM');
     if ( Tw.BrowserHelper.isApp() && !Tw.FormatHelper.isEmpty(cookie) ) {
@@ -72,6 +74,20 @@ Tw.Init.prototype = {
         expired: 60 * 60 * 1000
       });
     }
+  },
+
+  _sendXtractorLoginDummy: function() {
+    var cookie = Tw.CommonHelper.getCookie('XTSVCGR');
+    if (Tw.FormatHelper.isEmpty(cookie) || Tw.FormatHelper.isEmpty(window.XtractorScript)) {
+      return;
+    }
+
+    window.XtractorScript.xtrLoginDummy($.param({
+      V_ID: Tw.CommonHelper.getCookie('XTVID'),
+      L_ID: Tw.CommonHelper.getCookie('XTLID'),
+      T_ID: Tw.CommonHelper.getCookie('XTLOGINID'),
+      GRADE: Tw.CommonHelper.getCookie('XTSVCGR')
+    }));
   }
 
 };

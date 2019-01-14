@@ -186,10 +186,10 @@ Tw.CommonHelper = (function () {
     }
 
     Tw.Native.send(Tw.NTV_CMD.SET_XTSVCINFO, {
-      xtLid: xtLid,
-      xtLidOrigin: xtLidOrigin,
-      xtLoginId: xtLoginId,
-      xtLoginIdOrigin: xtLoginIdOrigin
+      xtLid: Tw.FormatHelper.isEmpty(xtLid) ? '' : xtLid,
+      xtLidOrigin: Tw.FormatHelper.isEmpty(xtLidOrigin) ? '' : xtLidOrigin,
+      xtLoginId: Tw.FormatHelper.isEmpty(xtLoginId) ? '' : xtLoginId,
+      xtLoginIdOrigin: Tw.FormatHelper.isEmpty(xtLoginIdOrigin) ? '' : xtLoginIdOrigin
     });
   };
 

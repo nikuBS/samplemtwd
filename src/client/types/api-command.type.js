@@ -59,6 +59,7 @@ Tw.API_CMD = {
   BFF_01_0055: { path: '/:version/captcha/answer/:args0', method: Tw.API_METHOD.PUT },
   BFF_01_0057: { path: '/:version/auth/skt-sms/representative', method: Tw.API_METHOD.POST },
   BFF_01_0058: { path: '/:version/auth/skt-sms/legal-agent', method: Tw.API_METHOD.POST },
+  BFF_01_0059: { path: '/v1/auth/skt-sms/key-in', method: Tw.API_METHOD.POST },
   BFF_01_0061: { path: '/core-auth/:version/user-email', method: Tw.API_METHOD.GET },
   BFF_01_0063: { path: '/:version/auth/skt-sms/common', method: Tw.API_METHOD.PUT },
 
