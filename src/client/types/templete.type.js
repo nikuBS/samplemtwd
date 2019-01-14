@@ -451,16 +451,20 @@ Tw.MYT_TPL = {
   },
   FARE_SUBMAIN: {
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}" data-rep-svc="{{repSvc}}"' +
-    'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
-    '<span class="ico-wrap">' +
-    '<i class="icon-{{svcType}}-80"><span class="blind">{{svcType}}</span></i>' +
-    '</span>' +
-    '<span class="cont">' +
-    '<span class="info-title">{{nickNm}}' +
-    '{{#if combine}}' +
-    '<span class="badge badge-allpay ml6"><span class="blind">통합대표</span></span>' +
-    '{{/if}}' +
-    '</span><span class="info-sub">{{svcNum}}</span>' +
+      'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
+      '<span class="ico-wrap">' +
+      '<i class="icon-{{svcType}}-80"><span class="blind">{{svcType}}</span></i>' +
+      '</span>' +
+      '<span class="cont">' +
+      '<span class="info-title">{{nickNm}}' +
+      '{{#if combine}}' +
+      '<span class="badge badge-allpay ml6"><span class="blind">통합대표</span></span>' +
+      '{{/if}}' +
+      '</span>' + '{{#if isAddr }}' +
+      '<span class="info-sub">{{addr}}</span>' +
+      '{{else}}'+
+      '<span class="info-sub">{{svcNum}}</span>' +
+      '{{/if}}' +
     '<span class="price">{{amt}} 원</span>' +
     '</span></button></li>'
   },
