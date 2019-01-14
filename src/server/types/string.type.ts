@@ -183,7 +183,7 @@ export enum PRODUCT_RESERVATION_TYPE_NM {
 
 export enum PRODUCT_RESERVATION_COMBINE_NM {
   NH00000103 = 'TB끼리 한가족할인',
-  NA00002040 = '온가족할인',
+  NA00005055 = '가족나눔데이터',
   NH00000133 = 'New온가족플랜',
   NH00000084 = 'TB끼리 온가족프리',
   NONE = '결합상품을 선택해 주세요.',
