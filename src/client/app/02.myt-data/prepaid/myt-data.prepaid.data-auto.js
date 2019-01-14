@@ -70,7 +70,8 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
         data: popupName,
         btnfloating: { 'class': 'fe-popup-close', 'txt': Tw.BUTTON_LABEL.CLOSE }
       },
-      $.proxy(this._selectPopupCallback, this, $target));
+      $.proxy(this._selectPopupCallback, this, $target),
+      $.proxy(this._checkIsAbled, this));
   },
   _selectPopupCallback: function ($target, $layer) {
     var $id = $target.attr('id');
