@@ -161,7 +161,7 @@ class MytJoinInfoDiscount extends TwViewController {
         switch ( priceList[i].prodId ) {
 
           case 'NA00003677': // 요금약정할인24 (730)
-            const month = DateHelper.getDiffByUnit(priceList[i].agrmtDcEndDt, priceList[i].agrmtDcStaDt, 'month') + 1;
+            const month = DateHelper.getDiffByUnit(priceList[i].agrmtDcEndDt, priceList[i].agrmtDcStaDt, 'month'); // + 1;
             priceList[i].typeStr = 'fee_type_A';
             priceList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_A.TIT_NM + '(' + month + TIME_UNIT.MONTH + ')';
             priceList[i].svcAgrmtDcObj = {
@@ -401,7 +401,7 @@ class MytJoinInfoDiscount extends TwViewController {
     dataObj.curDt = moment(useDt, 'YYYYMMDD').diff(startDt, 'day'); // 진행 일수
     dataObj.remDt = dataObj.totDt - dataObj.curDt; // 잔여 일수
     dataObj.perDt = Math.floor((dataObj.curDt / dataObj.totDt) * 100); // 퍼센트
-    dataObj.totMt = moment(endDt, 'YYYYMMDD').diff(startDt, 'month') + 1;
+    dataObj.totMt = moment(endDt, 'YYYYMMDD').diff(startDt, 'month'); // + 1;
 
   }
 
@@ -422,7 +422,7 @@ class MytJoinInfoDiscount extends TwViewController {
     dataObj.remDt = dataObj.totDt - dataObj.curDt; // 잔여일수
 
     dataObj.perDt = Math.floor((dataObj.curDt / dataObj.totDt) * 100); // 퍼센트
-    dataObj.totMt = moment(endDt, 'YYYYMMDD').diff(startDt, 'month') + 1;
+    dataObj.totMt = moment(endDt, 'YYYYMMDD').diff(startDt, 'month'); // + 1;
 
   }
 
