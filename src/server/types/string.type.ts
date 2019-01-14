@@ -27,9 +27,8 @@ export const MYT_FARE_BILL_TYPE = {
   B: '문자',
   '2': '이메일',
   '1': '기타(우편)',
-  X: '선택 안 함',
-  NO: '받지 않음',
-  YES: '받음'
+  ADD: '기타(우편) (전자추가발송)',
+  X: '선택 안 함'
 };
 
 export enum UNIT {
@@ -184,7 +183,7 @@ export enum PRODUCT_RESERVATION_TYPE_NM {
 
 export enum PRODUCT_RESERVATION_COMBINE_NM {
   NH00000103 = 'TB끼리 한가족할인',
-  NA00002040 = '온가족할인',
+  NA00005055 = '가족나눔데이터',
   NH00000133 = 'New온가족플랜',
   NH00000084 = 'TB끼리 온가족프리',
   NONE = '결합상품을 선택해 주세요.',
@@ -389,12 +388,12 @@ export const MYT_FARE_COMPLETE_MSG = {
   HISTORY: '납부내역 보기',
   PREPAY: '선결제 완료',
   PREPAY_HISTORY: '선결제내역 보기',
-  REGISTER: '신청완료',
-  CHANGE: '변경완료',
+  REGISTER: '신청 완료',
+  CHANGE: '변경 완료',
   CHANGE_HISTORY: '변경내역 보기',
   NUMBER: '번호로',
-  SMS: 'SMS 전송 완료',
-  SMS_DESCRIPTION: '전송된 입금전용계좌로 입금하시면\n즉시 수납이 반영됩니다.'
+  SMS: '문자 전송 완료',
+  SMS_DESCRIPTION: '전송된 입금전용계좌로 입금하시면<br />즉시 입금이 확인됩니다.'
 };
 
 export const MYT_DATA_COMPLETE_MSG = {
@@ -1020,3 +1019,5 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   }
 ];
+export const MYT_JOIN_PERSONAL = '개인';
+export const MYT_JOIN_FAMILY = '패밀리';

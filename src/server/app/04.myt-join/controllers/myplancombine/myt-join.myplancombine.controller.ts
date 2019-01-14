@@ -10,6 +10,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { COMBINATION_PRODUCT } from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
+import { MYT_JOIN_PERSONAL, MYT_JOIN_FAMILY } from '../../../../types/string.type';
 
 export default class MyTJoinMyPlanCombine extends TwViewController {
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
@@ -23,7 +24,7 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
         });
       }
 
-      this.getCombination(prodId, svcInfo).subscribe(combination => {
+      this.getCombination(prodId, svcInfo, req.query.type).subscribe(combination => {
         if (combination.code) {
           return this.error.render(res, {
             ...combination,
@@ -69,7 +70,7 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
     });
   }
 
-  private getCombination = (id, svcInfo) => {
+  private getCombination = (id, svcInfo, type) => {
     return this.apiService.request(API_CMD.BFF_05_0134, {}, {}, [id]).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
@@ -86,13 +87,15 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
         '04': 'brother'
       };
 
+      const group = resp.result.combinationGroup;
       return {
         ...resp.result,
         combinationGroup: {
-          ...resp.result.combinationGroup,
-          totBasFeeDcTx: FormatHelper.addComma(String(resp.result.combinationGroup.totBasFeeDcTx)),
-          combStaDt: DateHelper.getShortDate(resp.result.combinationGroup.combStaDt),
-          isRepresentation: resp.result.combinationGroup.svcMgmtNum === svcInfo.svcMgmtNum
+          ...group,
+          svcProdGrpNm: type && type === '1' ? group.svcProdGrpNm.replace(MYT_JOIN_FAMILY, MYT_JOIN_PERSONAL) : group.svcProdGrpNm,
+          totBasFeeDcTx: FormatHelper.addComma(String(group.totBasFeeDcTx)),
+          combStaDt: DateHelper.getShortDate(group.combStaDt),
+          isRepresentation: group.svcMgmtNum === svcInfo.svcMgmtNum
         },
         combinationWirelessMemberList: (resp.result.combinationWirelessMemberList || []).map(member => {
           return {
@@ -103,7 +106,9 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
             badge: BADGE[member.relClCd],
             bIdx: resp.result.combinationWireMemberList.findIndex(wire => {
               return wire.mblSvcMgmtNum === member.svcMgmtNum;
-            })
+            }),
+            svcNum: FormatHelper.conTelFormatWithDash(member.svcNum),
+            asgnNum: FormatHelper.conTelFormatWithDash(member.asgnNum)
           };
         })
       };

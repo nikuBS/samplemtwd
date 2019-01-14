@@ -4,10 +4,14 @@
  * Date: 2018.09.19
  */
 
-Tw.MyTFareBillBankList = function (rootEl) {
+Tw.MyTFareBillBankList = function (rootEl, bankList) {
   this.$bankList = [];
   this.$currentTarget = null;
   this.$container = rootEl;
+
+  if (!Tw.FormatHelper.isEmpty(bankList)) {
+    this._setBankList(bankList);
+  }
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -20,7 +24,7 @@ Tw.MyTFareBillBankList.prototype = {
       this._callbackFunction = callback;
     }
 
-    if (this._isNotExistBankList()) {
+    if (Tw.FormatHelper.isEmpty(this.$bankList)) {
       this._getBankList();
     }
     else {
@@ -56,17 +60,14 @@ Tw.MyTFareBillBankList.prototype = {
     }
     this._popupService.close();
   },
-  _isNotExistBankList: function () {
-    return Tw.FormatHelper.isEmpty(this.$bankList);
-  },
   _getBankList: function () {
     this._apiService.request(Tw.API_CMD.BFF_07_0022, {})
       .done($.proxy(this._getBankListSuccess, this))
       .fail($.proxy(this._getBankListFail, this));
   },
   _getBankListSuccess: function (res) {
-    if (res.code === '00') {
-      this._setBankList(res);
+    if (res.code === Tw.API_CODE.CODE_00) {
+      this._setBankList(res.result.payovrBankList, true);
     } else {
       this._getBankListFail(res);
     }
@@ -74,8 +75,7 @@ Tw.MyTFareBillBankList.prototype = {
   _getBankListFail: function (err) {
     Tw.Error(err.code, err.msg).pop();
   },
-  _setBankList: function (res) {
-    var bankList = res.result.payovrBankList;
+  _setBankList: function (bankList, isData) {
     var formatList = [];
     for (var i = 0; i < bankList.length; i++) {
       var bankObj = {
@@ -88,7 +88,10 @@ Tw.MyTFareBillBankList.prototype = {
     this.$bankList.push({
       'list': formatList
     });
-    this._openBank();
+
+    if (isData) {
+      this._openBank();
+    }
   },
   _openBank: function () {
     this._popupService.open({

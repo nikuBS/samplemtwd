@@ -2014,6 +2014,10 @@
       display: block;
       width: 100%;
       padding: 1.375rem 0; }
+    .list-comp-lineinfo li > a {
+      display: block;
+      width: 100%;
+      padding: 1.375rem 0; }
     .list-comp-lineinfo li .lineinfo-user {
       float: left;
       width: 50%;
@@ -4616,7 +4620,8 @@
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
-    position: relative; }
+    position: relative;
+    /* 취소버튼 */ }
     .history-list ul li .li-elem .title-box {
       display: table-cell;
       vertical-align: top;
@@ -4741,6 +4746,14 @@
       position: absolute;
       right: 0;
       top: 1.25rem; }
+    .history-list ul li .li-elem .tx-cont {
+      font-size: 0.8125rem; }
+      .history-list ul li .li-elem .tx-cont button.bt-link-tx, .history-list ul li .li-elem .tx-cont a.bt-link-tx {
+        width: auto;
+        padding: 0;
+        float: right; }
+      .history-list ul li .li-elem .tx-cont button:after, .history-list ul li .li-elem .tx-cont a:after {
+        display: none; }
     .history-list ul li .li-elem .bk {
       color: #000; }
   .history-list ul li .basic-list {
@@ -4760,6 +4773,10 @@
           padding: 0; }
         .history-list ul li .basic-list ul li .tx-cont button:after, .history-list ul li .basic-list ul li .tx-cont a:after {
           display: none; }
+      .history-list ul li .basic-list ul li .tx-number {
+        font-size: 0.875rem;
+        color: #212121;
+        float: right; }
       .history-list ul li .basic-list ul li:first-of-type {
         padding-top: 0; }
   .history-list ul li button, .history-list ul li a {
@@ -7887,18 +7904,23 @@ a.bt-link-tx.underline.small {
   width: 100%;
   padding: 1.0625rem 0;
   font-size: 0.875rem;
-  text-align: left;
-  border-top: 1px solid #e1e1e1; }
-  .expect-discount-wrap .bt-toggle:after {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    margin-top: -0.375rem;
-    width: 0.5rem;
-    height: 0.75rem;
-    content: '';
-    background: url(/img/ico/ico-group2.png) no-repeat -0.5625rem -3.5625rem;
-    background-size: 3.125rem auto; }
+  border-top: 1px solid #e1e1e1;
+  text-align: center; }
+  .expect-discount-wrap .bt-toggle .more {
+    display: inline-block;
+    padding-right: 1.25rem; }
+    .expect-discount-wrap .bt-toggle .more:after {
+      content: "상세보기";
+      position: absolute;
+      top: 50%;
+      right: 0;
+      margin: -0.125rem 0 0 0;
+      width: 0.8125rem;
+      height: 0.375rem;
+      background: url(/img/ico/ico-group.png) no-repeat -1.9375rem -22.5rem;
+      background-size: 3.125rem;
+      overflow: hidden;
+      color: transparent; }
 
 .expect-discount-wrap .inner-box {
   padding: 0.9375rem 1rem 3.125rem;
@@ -13019,6 +13041,8 @@ a.bt-link-tx.underline.small {
       -webkit-box-sizing: border-box;
               box-sizing: border-box;
       text-align: left; }
+      .recommendedrate-list > li .product-infolink.not-imgstyle {
+        padding: 1.25rem 0 1.25rem 0 !important; }
       .recommendedrate-list > li .product-infolink .products-detailinfo {
         margin-top: 0.3125rem;
         color: #959595;
@@ -15341,6 +15365,13 @@ a.bt-link-tx.underline.small {
 
 .cont-actionsheet hr {
   border-top: 1px solid #f2f2f2; }
+  .cont-actionsheet hr.hr-block-line {
+    display: block;
+    width: 100%;
+    height: 0.9375rem;
+    font-size: 0;
+    border: 0 none;
+    border-bottom: 1px solid #f2f2f2; }
 
 .cont-actionsheet .ac-tit {
   font-size: 0.75rem;
@@ -15602,8 +15633,249 @@ a.bt-link-tx.underline.small {
           font-size: 1rem;
           letter-spacing: -0.025em;
           text-align: right; }
+  .cont-actionsheet .ac-list .type4 {
+    display: block;
+    width: auto;
+    padding: 0.75rem 0.75rem 0.75rem 1rem;
+    line-height: 0; }
+    .cont-actionsheet .ac-list .type4 > a, .cont-actionsheet .ac-list .type4 button {
+      display: inline-block;
+      width: 100%; }
+      .cont-actionsheet .ac-list .type4 > a .table-cell.cell-title, .cont-actionsheet .ac-list .type4 button .table-cell.cell-title {
+        width: 60%; }
+      .cont-actionsheet .ac-list .type4 > a .table-cell > span.link, .cont-actionsheet .ac-list .type4 button .table-cell > span.link {
+        display: inline-block; }
+    .cont-actionsheet .ac-list .type4 > button {
+      margin-top: 0.0625rem; }
+    .cont-actionsheet .ac-list .type4 > label .table-cell.cell-title {
+      width: 60%; }
+    .cont-actionsheet .ac-list .type4 > label .table-cell.right {
+      width: 3.125rem; }
+    .cont-actionsheet .ac-list .type4 .table {
+      width: 100%;
+      display: table;
+      table-layout: fixed; }
+    .cont-actionsheet .ac-list .type4 .table-row {
+      display: table-row; }
+    .cont-actionsheet .ac-list .type4 .table-cell {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: left;
+      white-space: nowrap; }
+      .cont-actionsheet .ac-list .type4 .table-cell.right {
+        text-align: right; }
+      .cont-actionsheet .ac-list .type4 .table-cell > span {
+        display: inline-block;
+        vertical-align: middle;
+        white-space: normal;
+        word-break: break-all; }
+        .cont-actionsheet .ac-list .type4 .table-cell > span.simbol {
+          display: inline-block;
+          width: 1.25rem;
+          height: 1.25rem;
+          vertical-align: middle;
+          margin-right: 0.4375rem; }
+          .cont-actionsheet .ac-list .type4 .table-cell > span.simbol.ico1 {
+            background: url(/img/svg/icon_48px_coupon_refill.svg) no-repeat 0 0;
+            background-size: 100% 100%; }
+          .cont-actionsheet .ac-list .type4 .table-cell > span.simbol.ico2 {
+            background: url(/img/svg/icon_48px_dcoupon.svg) no-repeat 0 0;
+            background-size: 100% 100%; }
+          .cont-actionsheet .ac-list .type4 .table-cell > span.simbol.ico3 {
+            background: url(/img/svg/icon_48px_tcoupon.svg) no-repeat 0 0;
+            background-size: 100% 100%; }
+          .cont-actionsheet .ac-list .type4 .table-cell > span.simbol.ico4 {
+            background: url(/img/svg/icon_48px_price_plan_data.svg) no-repeat 0 0;
+            background-size: 100% 100%; }
+          .cont-actionsheet .ac-list .type4 .table-cell > span.simbol.ico5 {
+            background: url(/img/svg/icon_48px_coupon_ting.svg) no-repeat 0 0;
+            background-size: 100% 100%; }
+          .cont-actionsheet .ac-list .type4 .table-cell > span.simbol.ico6 {
+            background: url(/img/svg/icon_48px_gift.svg) no-repeat 0 0;
+            background-size: 100% 100%; }
+          .cont-actionsheet .ac-list .type4 .table-cell > span.simbol.ico7 {
+            background: url(/img/svg/icon_48px_cellphone.svg) no-repeat 0 0;
+            background-size: 100% 100%; }
+          .cont-actionsheet .ac-list .type4 .table-cell > span.simbol.ico8 {
+            background: url(/img/ico/icon_48px_wifi.png) no-repeat 0 0;
+            background-size: 100% 100%; }
+          .cont-actionsheet .ac-list .type4 .table-cell > span.simbol.ico9 {
+            background: url(/img/svg/icon_48px_tablet.svg) no-repeat 0 0;
+            background-size: 100% 100%; }
+          .cont-actionsheet .ac-list .type4 .table-cell > span.simbol.ico10 {
+            background: url(/img/svg/icon_48px_internet.svg) no-repeat 0 0;
+            background-size: 100% 100%; }
+          .cont-actionsheet .ac-list .type4 .table-cell > span.simbol.ico11 {
+            background: url(/img/ico/icon_40px_tv.png) no-repeat 0 0;
+            background-size: 100% 100%; }
+          .cont-actionsheet .ac-list .type4 .table-cell > span.simbol.ico12 {
+            background: url(/img/svg/icon_48px_call.svg) no-repeat 0 0;
+            background-size: 100% 100%; }
+          .cont-actionsheet .ac-list .type4 .table-cell > span.simbol.ico13 {
+            background: url(/img/svg/icon_48px_coupon_jeju.svg) no-repeat 0 0;
+            background-size: 100% 100%; }
+        .cont-actionsheet .ac-list .type4 .table-cell > span.pin {
+          margin-left: 0.3125rem;
+          width: 1.125rem;
+          height: 1.125rem;
+          background: url(/img/ico/icon_36px_pin.png) no-repeat 0 0;
+          background-size: 100% 100%; }
+        .cont-actionsheet .ac-list .type4 .table-cell > span.txt {
+          color: #000;
+          font-size: 1rem;
+          letter-spacing: -0.025em;
+          text-align: left;
+          white-space: normal; }
+        .cont-actionsheet .ac-list .type4 .table-cell > span.cont-txt {
+          display: block;
+          color: #959595;
+          font-size: 0.75rem;
+          letter-spacing: -0.025em;
+          text-align: left;
+          line-height: 1.5; }
+        .cont-actionsheet .ac-list .type4 .table-cell > span.add {
+          padding-right: 4.375rem;
+          color: #000;
+          font-size: 0.8125rem;
+          letter-spacing: -0.025em;
+          padding-left: 0.5rem;
+          white-space: normal; }
+        .cont-actionsheet .ac-list .type4 .table-cell > span.link {
+          width: 1rem;
+          height: 1rem;
+          background: url(/img/ico/ico_actionsheet_link.png) no-repeat 0 0;
+          background-size: 100% 100%;
+          display: none; }
+        .cont-actionsheet .ac-list .type4 .table-cell > span.spot {
+          color: #f76252;
+          font-size: 1rem;
+          letter-spacing: -0.025em;
+          text-align: right; }
   .cont-actionsheet .ac-list:last-of-type {
-    padding-bottom: 0; }
+    padding-bottom: 0;
+    border-bottom: 2px solid #f2f2f2; }
+  .cont-actionsheet .ac-list.ly-table {
+    display: table; }
+    .cont-actionsheet .ac-list.ly-table:last-of-type {
+      border-bottom: none; }
+  .cont-actionsheet .ac-list .type5 {
+    display: block;
+    width: auto;
+    padding: 1rem 0.75rem 1rem 1rem; }
+    .cont-actionsheet .ac-list .type5 > a, .cont-actionsheet .ac-list .type5 button {
+      display: inline-block;
+      width: 100%; }
+      .cont-actionsheet .ac-list .type5 > a .table-cell.cell-title, .cont-actionsheet .ac-list .type5 button .table-cell.cell-title {
+        width: 60%; }
+      .cont-actionsheet .ac-list .type5 > a .table-cell > span.link, .cont-actionsheet .ac-list .type5 button .table-cell > span.link {
+        display: inline-block; }
+    .cont-actionsheet .ac-list .type5 > label .table-cell.cell-title {
+      width: 60%; }
+    .cont-actionsheet .ac-list .type5 > label .table-cell.right {
+      width: 3.125rem; }
+    .cont-actionsheet .ac-list .type5 .table {
+      width: 100%;
+      display: table;
+      table-layout: fixed; }
+    .cont-actionsheet .ac-list .type5 .table-row {
+      display: table-row; }
+    .cont-actionsheet .ac-list .type5 .table-cell {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: left;
+      white-space: nowrap; }
+      .cont-actionsheet .ac-list .type5 .table-cell.right {
+        text-align: right; }
+      .cont-actionsheet .ac-list .type5 .table-cell > span {
+        display: inline-block;
+        vertical-align: middle;
+        white-space: normal;
+        word-break: break-all; }
+        .cont-actionsheet .ac-list .type5 .table-cell > span.simbol {
+          display: inline-block;
+          width: 1.25rem;
+          height: 1.25rem;
+          vertical-align: middle;
+          margin-right: 0.4375rem; }
+          .cont-actionsheet .ac-list .type5 .table-cell > span.simbol.ico1 {
+            background: url(/img/svg/icon_48px_coupon_refill.svg) no-repeat 0 0;
+            background-size: 100% 100%; }
+          .cont-actionsheet .ac-list .type5 .table-cell > span.simbol.ico2 {
+            background: url(/img/svg/icon_48px_dcoupon.svg) no-repeat 0 0;
+            background-size: 100% 100%; }
+          .cont-actionsheet .ac-list .type5 .table-cell > span.simbol.ico3 {
+            background: url(/img/svg/icon_48px_tcoupon.svg) no-repeat 0 0;
+            background-size: 100% 100%; }
+          .cont-actionsheet .ac-list .type5 .table-cell > span.simbol.ico4 {
+            background: url(/img/svg/icon_48px_price_plan_data.svg) no-repeat 0 0;
+            background-size: 100% 100%; }
+          .cont-actionsheet .ac-list .type5 .table-cell > span.simbol.ico5 {
+            background: url(/img/svg/icon_48px_coupon_ting.svg) no-repeat 0 0;
+            background-size: 100% 100%; }
+          .cont-actionsheet .ac-list .type5 .table-cell > span.simbol.ico6 {
+            background: url(/img/svg/icon_48px_gift.svg) no-repeat 0 0;
+            background-size: 100% 100%; }
+          .cont-actionsheet .ac-list .type5 .table-cell > span.simbol.ico7 {
+            background: url(/img/svg/icon_48px_cellphone.svg) no-repeat 0 0;
+            background-size: 100% 100%; }
+          .cont-actionsheet .ac-list .type5 .table-cell > span.simbol.ico8 {
+            background: url(/img/ico/icon_48px_wifi.png) no-repeat 0 0;
+            background-size: 100% 100%; }
+          .cont-actionsheet .ac-list .type5 .table-cell > span.simbol.ico9 {
+            background: url(/img/svg/icon_48px_tablet.svg) no-repeat 0 0;
+            background-size: 100% 100%; }
+          .cont-actionsheet .ac-list .type5 .table-cell > span.simbol.ico10 {
+            background: url(/img/svg/icon_48px_internet.svg) no-repeat 0 0;
+            background-size: 100% 100%; }
+          .cont-actionsheet .ac-list .type5 .table-cell > span.simbol.ico11 {
+            background: url(/img/ico/icon_40px_tv.png) no-repeat 0 0;
+            background-size: 100% 100%; }
+          .cont-actionsheet .ac-list .type5 .table-cell > span.simbol.ico12 {
+            background: url(/img/svg/icon_48px_call.svg) no-repeat 0 0;
+            background-size: 100% 100%; }
+          .cont-actionsheet .ac-list .type5 .table-cell > span.simbol.ico13 {
+            background: url(/img/svg/icon_48px_coupon_jeju.svg) no-repeat 0 0;
+            background-size: 100% 100%; }
+        .cont-actionsheet .ac-list .type5 .table-cell > span.pin {
+          margin-left: 0.3125rem;
+          width: 1.125rem;
+          height: 1.125rem;
+          background: url(/img/ico/icon_36px_pin.png) no-repeat 0 0;
+          background-size: 100% 100%; }
+        .cont-actionsheet .ac-list .type5 .table-cell > span.txt {
+          color: #000;
+          font-size: 1rem;
+          letter-spacing: -0.025em;
+          text-align: left;
+          white-space: normal; }
+        .cont-actionsheet .ac-list .type5 .table-cell > span.cont-txt {
+          display: block;
+          color: #959595;
+          font-size: 0.75rem;
+          letter-spacing: -0.025em;
+          text-align: left;
+          line-height: 1.5; }
+        .cont-actionsheet .ac-list .type5 .table-cell > span.add {
+          padding-right: 4.375rem;
+          color: #000;
+          font-size: 0.8125rem;
+          letter-spacing: -0.025em;
+          padding-left: 0.5rem;
+          white-space: normal; }
+        .cont-actionsheet .ac-list .type5 .table-cell > span.link {
+          width: 1rem;
+          height: 1rem;
+          background: url(/img/ico/ico_actionsheet_link.png) no-repeat 0 0;
+          background-size: 100% 100%;
+          display: none; }
+        .cont-actionsheet .ac-list .type5 .table-cell > span.spot {
+          color: #f76252;
+          font-size: 1rem;
+          letter-spacing: -0.025em;
+          text-align: right; }
+  .cont-actionsheet .ac-list:last-of-type {
+    padding-bottom: 0;
+    border-bottom: 2px solid #f2f2f2; }
 
 .cont-actionsheet .btn-more {
   margin-top: 1.0625rem; }
@@ -19248,7 +19520,10 @@ a.bt-link-tx.underline.small {
     border-top: none; }
 
 .details-top .tit {
-  display: block;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   font-size: 0.9375rem;
   font-weight: 400;
   line-height: 1.3125rem; }
@@ -25207,6 +25482,21 @@ input[type="radio"].formradio-small:checked:disabled + label {
               content: ''; }
           .review-list li .txt .sub-info .item.date {
             /*font-weight:$fw-normal;*/ }
+      .review-list li .txt .sale-period {
+        display: block;
+        font-size: 0.75rem;
+        color: #959595;
+        margin-top: 0.1875rem; }
+        .review-list li .txt .sale-period .sale-tit {
+          display: inline-block;
+          float: left;
+          font-size: 0.75rem;
+          margin-right: 0.375rem;
+          vertical-align: middle; }
+        .review-list li .txt .sale-period .period {
+          display: inline-block;
+          float: left;
+          vertical-align: middle; }
     .review-list li .val {
       display: table-cell;
       width: 35%;
@@ -25216,6 +25506,11 @@ input[type="radio"].formradio-small:checked:disabled + label {
       font-weight: 700;
       line-height: 1;
       /*newfont*/ }
+      .review-list li .val .val-txt {
+        display: block;
+        font-size: 1rem;
+        font-weight: 300;
+        margin-top: 0.25rem; }
 
 .user-greeting {
   position: relative;
@@ -26812,6 +27107,14 @@ input[type="radio"].formradio-small:checked:disabled + label {
       color: #000000;
       font-size: 0.875rem;
       vertical-align: middle; }
+  .plantype-list.cell1 .category-type {
+    width: 100%; }
+  .plantype-list.cell3 .category-type {
+    width: 33.333%;
+    border-left: 1px solid #f2f2f2; }
+    .plantype-list.cell3 .category-type:first-child {
+      border-right: none;
+      border-left: none; }
 
 .paymentcharge-box {
   padding: 6.4375rem 0 1.875rem;

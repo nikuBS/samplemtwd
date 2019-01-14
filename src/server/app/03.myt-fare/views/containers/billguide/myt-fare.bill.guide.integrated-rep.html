@@ -326,11 +326,11 @@ Kim Myoung-Hwan (skt.P130714@partner.sk.com)
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <ul class="btn-link-list">
-                    <% if(showConditionInfo.autopayYn == 'N' && showConditionInfo.selectNonPaymentYn == 'Y' ){ %>
+                    <%# if(showConditionInfo.autopayYn == 'N' && showConditionInfo.selectNonPaymentYn == 'Y' ){ %>
                     <li class="last-line">
                         <button data-target="feePayBtn">요금 납부</button>
                     </li>
-                    <% } %>
+                    <%# } %>
                     <li class="last-line">
                         <button data-target="payListBtn">납부 내역 조회</button>
                     </li>
@@ -420,8 +420,7 @@ Kim Myoung-Hwan (skt.P130714@partner.sk.com)
       commDataInfo : <%-JSON.stringify(commDataInfo) %>,
       intBillLineInfo : <%-JSON.stringify(intBillLineInfo) %>,
       childLineInfo : <%-JSON.stringify(childLineInfo) %>,
-      showConditionInfo : <%-JSON.stringify(showConditionInfo) %>,
-      unpaidBillsInfo : <%-JSON.stringify(unpaidBillsInfo) %>
+      showConditionInfo : <%-JSON.stringify(showConditionInfo) %>
   } );
   });
 </script>

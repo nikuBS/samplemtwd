@@ -1,7 +1,6 @@
 const environment = {
   local: {
-    BFF_SERVER: 'http://61.250.19.37:31020',  // 개발 31010
-    // BFF_SERVER: 'http://211.188.180.73:31020',
+    BFF_SERVER: 'http://61.250.19.37:31020',  // 개발 61.250.19.37:31010
     BFF_SERVER_G: 'http://211.188.180.73:31010',
     CDN: 'http://localhost:3001',
     CDN_MANIFEST: 'http://localhost:3001',
@@ -104,7 +103,7 @@ const environment = {
     SEARCH_SERVER: 'http://61.250.22.114:8080',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     // DOMAIN: 'https://beta.m.tworld.co.kr',
-    DOMAIN_G: 'beta.g.m.tworld.co.kr',
+    DOMAIN_G: 'appg.m.tworld.co.kr',
     TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441',
     SIGNGATE: {
       host: 'relay.signgate.com',

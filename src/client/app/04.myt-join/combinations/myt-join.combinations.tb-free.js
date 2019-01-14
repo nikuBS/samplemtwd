@@ -102,6 +102,8 @@ Tw.MyTJoinCombinationsTBFree.prototype = {
       }
 
       this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, $.proxy(this._closePopup, this));
+    } else if (resp.code === 'PRD0024') {
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A14.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A14.TITLE);
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }

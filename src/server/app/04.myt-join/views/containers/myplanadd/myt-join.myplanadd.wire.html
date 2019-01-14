@@ -38,14 +38,13 @@
                             <% joined.map(addition => { %>
                                 <li class="<%= addition.btnList && addition.btnList.length > 0 && 'add-con' %>" data-isFree ="<%= !addition.basFeeTxt || addition.basFeeTxt === '무료' %>">
                                     <!-- 리스트 하단에 추가 컨텐츠 있을 경우 li에 class="add-con" 추가 -->
-                                    <button>
                                         <div class="lineinfo-user">
                                             <span class="info-title"><%= addition.prodNm %></span>
                                             <span class="info-sub2">가입일 <%= addition.scrbDt %></span>
                                         </div>
                                         <div class="lineinfo-data">
                                             <% if (addition.prodLinkYn === "Y") { %>
-                                                <a href="/product/callplan/<%= addition.prodId %>">
+                                                <a href="/product/callplan/<%= addition.linkProdId || addition.prodId %>">
                                                     <% if (/^[0-9,]+$/.test(addition.basFeeTxt)) { %>
                                                     <span class="info-title num"><%= addition.basFeeTxt %><span class="unit ml4">원</span></span>
                                                     <% } else { %>
@@ -61,7 +60,6 @@
                                                 <% } %>
                                             <% } %>
                                         </div>
-                                    </button>
                                     <% if (addition.btnList && addition.btnList.length > 0) { %>
                                         <span class="bt-wrap">
                                             <% addition.btnList.map(btn => { %>
@@ -92,14 +90,13 @@
                                 <% reserved.map(addition => { %>
                                 <li class="<%= addition.btnList && addition.btnList.length > 0 && 'add-con' %>" data-isFree ="<%= !addition.basFeeTxt || addition.basFeeTxt === '무료' %>">
                                     <!-- 리스트 하단에 추가 컨텐츠 있을 경우 li에 class="add-con" 추가 -->
-                                    <button>
                                         <div class="lineinfo-user">
                                             <span class="info-title"><%= addition.prodNm %></span>
                                             <span class="info-sub2">가입일 <%= addition.scrbDt %></span>
                                         </div>
                                         <div class="lineinfo-data">
                                             <% if (addition.prodLinkYn === "Y") { %>
-                                                <a href="/product/callplan/<%= addition.prodId %>">
+                                                <a href="/product/callplan/<%= addition.linkProdId || addition.prodId %>">
                                                     <% if (/^[0-9,]+$/.test(addition.basFeeTxt)) { %>
                                                     <span class="info-title num"><%= addition.basFeeTxt %><span class="unit ml4">원</span></span>
                                                     <% } else { %>
@@ -115,7 +112,6 @@
                                                 <% } %>
                                             <% } %>
                                         </div>
-                                    </button>
                                     <% if (addition.btnList && addition.btnList.length > 0) { %>
                                         <span class="bt-wrap">
                                             <% addition.btnList.map(btn => { %>
@@ -147,7 +143,7 @@
                             <% joinable.map(addition => { %>
                             <li>
                                 <% if (addition.prodLinkYn === "Y") { %>
-                                <a href="/product/callplan/<%= addition.prodId %>">
+                                <a href="/product/callplan/<%= addition.linkProdId || addition.prodId %>">
                                     <span class="tit"><%= addition.prodNm %></span>
                                     <span class="txt">자세히 보기</span>
                                 </a>

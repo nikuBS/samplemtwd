@@ -46,7 +46,7 @@ Tw.MyTFareBillCard.prototype = {
   _bindEvent: function () {
     this.$container.on('change', '.fe-auto-info > li', $.proxy(this._onChangeOption, this));
     this.$container.on('change', '.fe-auto-info', $.proxy(this._checkIsAbled, this));
-    this.$container.on('change', '.fe-refund-check-btn input', $.proxy(this._showAndHideAccount, this));
+    this.$container.on('change', '.fe-refund-check-btn input[type="checkbox"]', $.proxy(this._showAndHideAccount, this));
     this.$container.on('blur', '.fe-card-number', $.proxy(this._checkCardNumber, this));
     this.$container.on('blur', '.fe-card-y', $.proxy(this._checkCardExpiration, this));
     this.$container.on('blur', '.fe-card-m', $.proxy(this._checkCardExpiration, this));
@@ -254,15 +254,24 @@ Tw.MyTFareBillCard.prototype = {
   },
   _onClose: function () {
     if (!this.$isChanged) {
+      var $amount = this.$container.find('.fe-amount');
+      if (Tw.FormatHelper.addComma($amount.attr('data-value')) !== $amount.text()) {
+        this.$isChanged = true;
+      }
+    }
+
+    if (!this.$isChanged) {
       if (this.$cardNumber.val() !== '' || this.$cardY.val() !== '' ||
       this.$cardM.val() !== '' || this.$cardPw.val() !== '') {
         this.$isChanged = true;
       }
     }
 
-    if (this.$refundBank.attr('disabled') !== 'disabled') {
-      if (!Tw.FormatHelper.isEmpty(this.$refundBank.attr('id')) || this.$refundNumber.val() !== '') {
-        this.$isChanged = true;
+    if (!this.$isChanged) {
+      if (this.$refundBank.attr('disabled') !== 'disabled') {
+        if (!Tw.FormatHelper.isEmpty(this.$refundBank.attr('id')) || this.$refundNumber.val() !== '') {
+          this.$isChanged = true;
+        }
       }
     }
 

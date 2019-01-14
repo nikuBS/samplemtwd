@@ -11,6 +11,7 @@ import { API_CMD } from '../../../../types/api-command.type';
 import { API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { MEMBERSHIP_GROUP, MEMBERSHIP_TYPE } from '../../../../types/bff.type';
+import DateHelper from '../../../../utils/date.helper';
 
 export default class MembershipMy extends TwViewController {
 
@@ -32,9 +33,12 @@ export default class MembershipMy extends TwViewController {
   }
 
   private parseMyInfoData(myInfoData): any {
+
     myInfoData.showPayAmtScor = FormatHelper.addComma((+myInfoData.payAmtScor).toString());
     myInfoData.mbrGrStr = MEMBERSHIP_GROUP[myInfoData.mbrGrCd].toUpperCase();
     myInfoData.mbrTypStr = MEMBERSHIP_TYPE[myInfoData.mbrTypCd];
+    myInfoData.todayDate = DateHelper.getCurrentShortDate();
+
     return myInfoData;
   }
 }

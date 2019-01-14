@@ -96,7 +96,8 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
   _requestData: function() {
 
     $('.process-list').hide();
-    $('.process-list li').removeClass('complete');
+    //$('.process-list li').removeClass('complete');
+    $('.process-list li').removeClass('off').addClass('off');
 
     var phNum = $('input').val();
 
@@ -147,7 +148,8 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
           $('.process-list').show();
           $('.process-list li').each(function(idx){
             if( idx <= compIdx ){
-              $(this).addClass('complete');
+              // $(this).addClass('complete');
+              $(this).removeClass('off');
             }
           });
         }

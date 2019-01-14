@@ -13,7 +13,6 @@ export enum REDIS_KEY {
   QUICK_DEFAULT = 'UserQuickMenuByMbrGr:',
   TOOLTIP = 'TooltipInfo:',
   MENU = 'FrontMenuList:',
-  SMART_CARD_DEFAULT = 'SmartCardSorting:9999999999',
   RCM_MENU = 'FrontRcmndMenu:',
   BANNER_ADMIN = 'Banner:',
   BANNER_TOS_LINK = 'BannerTosLnkgInfo:',
@@ -26,6 +25,7 @@ export enum REDIS_KEY {
 
 export enum REDIS_TOS_KEY {
   SMART_CARD = 'SmartCardSorting:',
+  SMART_CARD_DEFAULT = 'SmartCardSorting:9999999999',
   BANNER_TOS_KEY = 'BannerTosKey:'
 }
 
@@ -41,4 +41,3 @@ export enum MENU_CODE {
   ONWEB = '04',
   MAPP = '05'
 }
-

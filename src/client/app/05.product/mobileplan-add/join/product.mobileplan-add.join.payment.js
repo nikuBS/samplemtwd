@@ -87,9 +87,9 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
   },
 
   _setSendResultText: function(isError, text) {
+    this.$container.find('.fe-send_result_msg').remove();
     this.$sendMsgResult.html($('<span\>').addClass('fe-send_result_msg')
       .addClass(isError ? 'error-txt' : 'validation-txt').text(text));
-    this.$container.find('.fe-send_result_msg').remove();
     this.$sendMsgResult.show();
   },
 
@@ -160,9 +160,9 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
   },
 
   _setValidateResultText: function(isError, text) {
+    this.$container.find('.fe-send_result_msg').remove();
     this.$validateResult.html($('<span\>').addClass('fe-send_result_msg')
       .addClass(isError ? 'error-txt' : 'validation-txt').text(text));
-    this.$container.find('.fe-send_result_msg').remove();
     this.$validateResult.show();
   },
 
@@ -281,6 +281,7 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
       data: {
         prodCtgNm: Tw.PRODUCT_CTG_NM.ADDITIONS,
         mytPage: 'additions',
+        btClass: 'item-one',
         prodId: this._prodId,
         prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
         typeNm: Tw.PRODUCT_TYPE_NM.JOIN,

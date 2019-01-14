@@ -1,4 +1,6 @@
 // for APM
+const os = require('os');
+process.env.WHATAP_NAME = os.hostname();
 const WhatapAgent = require('whatap').NodeAgent;
 
 // Node Modules
@@ -9,7 +11,7 @@ import express, { Application } from 'express';
 import UA from 'express-useragent';
 import ejs from 'ejs';
 import cookie from 'cookie-parser';
-
+import morgan from 'morgan';
 import environment from './config/environment.config';
 
 // Route Modules
@@ -62,6 +64,7 @@ class App {
     this.app.use(cookie());
     this.app.use(this.redisService.getMiddleWare());
     this.app.use(UA.express()); // req.useragent
+    // this.app.use(morgan(this.accessLogFormat.bind(this)));
     // development env
     this.app.use(express.static(path.join(__dirname, '/public/cdn')));
     this.app.use('/mock', express.static(path.join(__dirname, '/mock/client')));
@@ -186,6 +189,23 @@ class App {
       // return res.status(500).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
     }
     next();
+  }
+
+  private accessLogFormat(tokens, req, res) {
+    return [
+      'ACC|' + tokens['remote-addr'](req),
+      '-',
+      '-', // tokens['remote-user'](req, res),
+      '[' + tokens['date'](req, res, 'iso') + ']',
+      tokens.status(req, res) + '_code',
+      tokens['res'](req, res, 'content-length') + '_bytes',
+      (tokens['response-time'](req, res, 3) * 1000) + '_usecs',
+      '"' + tokens.method(req, res),
+      tokens.url(req, res),
+      'HTTP/' + tokens['http-version'](req) + '"',
+      '"' + tokens['referrer'](req) + '"',
+      '"' + tokens['user-agent'](req) + '"'
+    ].join(' ');
   }
 }
 

@@ -3,12 +3,12 @@
         <div class="widget formradio-style01">
             <div class="widget-box radio">
                 <ul class="select-list fe-quality-inqSvcClCd" role="radiogroup">
-                    <li class="radiobox type01-big checked" role="radio" aria-checked="true">
+                    <li class="radiobox type01 checked" role="radio" aria-checked="true">
                         <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                         <input type="radio" name="radio1-big1" value="C" title="값1" checked="checked"><!-- 체크상태일 경우 checked="checked" -->
                         휴대폰
                     </li>
-                    <li class="radiobox type01-big" role="radio" aria-checked="false">
+                    <li class="radiobox type01 ml30" role="radio" aria-checked="false">
                         <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                         <input type="radio" name="radio1-big1" value="W" title="값2"><!-- 체크상태일 경우 checked="false" -->
                         와이브로
@@ -116,12 +116,12 @@
         <div class="widget formradio-style01">
             <div class="widget-box radio">
                 <ul class="select-list fe-quality-inqSvcClCd" role="radiogroup">
-                    <li class="radiobox type01-big checked" role="radio" aria-checked="false">
+                    <li class="radiobox type01 checked" role="radio" aria-checked="false">
                         <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                         <input type="radio" name="radio1-big1" value="C" title="값1"><!-- 체크상태일 경우 checked="checked" -->
                         휴대폰
                     </li>
-                    <li class="radiobox type01-big" role="radio" aria-checked="true">
+                    <li class="radiobox type01 ml30" role="radio" aria-checked="true">
                         <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                         <input type="radio" name="radio1-big1" value="W" title="값2" checked="checked"><!-- 체크상태일 경우 checked="false" -->
                         와이브로
@@ -208,14 +208,105 @@
         <div class="widget formradio-style01">
             <div class="widget-box radio">
                 <ul class="select-list fe-quality-inqSvcClCd" role="radiogroup">
-                    <li class="radiobox type01-big checked" role="radio" aria-checked="false">
+                    <li class="radiobox type01 checked" role="radio" aria-checked="true">
                         <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                         <input type="radio" name="radio1-big1" value="I" title="값2" checked=""><!-- 체크상태일 경우 checked="false" -->
                         인터넷/TV
                     </li>
-                    <li class="radiobox type01-big" role="radio" aria-checked="true">
+                    <li class="radiobox type01 ml30" role="radio" aria-checked="false">
                         <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                         <input type="radio" name="radio1-big1" value="P" title="값1"><!-- 체크상태일 경우 checked="checked" -->
+                        집전화
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="inquiryform-wrap">
+            <p class="title">문의하실 회선과 현상을 선택 후 내용을 기재해 주세요</p>
+            <% if ( allSvc.s && allSvc.s.length >= 1 ) { %>
+            <div class="inputbox">
+                <div class="input">
+                    <input type="text" placeholder="회선정보 입력" title="문의하실 회선정보 입력" data-svcMgmtNum="<%-allSvc.s[0].svcMgmtNum%>"
+                           value="<%-allSvc.s[0].addr%>" disabled>
+                </div>
+            </div>
+            <% } else { %>
+            <div class="inputbox">
+                <div class="input">
+                    <input type="tel" class="fe-numeric" pattern="[0-9]*" placeholder="회선정보 입력" title="문의하실 회선정보 입력" value="" maxlength="20">
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </div>
+            </div>
+            <% } %>
+
+            <p class="title">문의하실 설치 주소와 현상을 선택 후<br>내용을 기재해 주세요.</p>
+            <div class="inputbox bt-add">
+                <span class="input">
+                    <input type="text" class="fe-zip" placeholder="우편번호 조회" title="input" value="" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" readonly="">
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </span>
+                <span class="bt-box type01">
+                    <button type="button" class="fe-search-post">우편번호 조회</button>
+                </span>
+            </div>
+            <div class="inputbox">
+                <div class="input">
+                    <input type="text" value="" class="fe-main-address"  title="input" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" readonly="">
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </div>
+            </div>
+            <div class="inputbox">
+                <div class="input">
+                    <input type="text" class="fe-detail-address" value="" title="input" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1"
+                           readonly="">
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </div>
+            </div>
+            <div class="inputbox">
+                <div class="input">
+                    <input type="text" class="fe-text_title" placeholder="제목 입력" title="input" value="" aria-labelledby="aria-exp-label1"
+                           aria-describedby="aria-exp-desc1" required>
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </div>
+                <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자(최대)</span>
+            </div>
+            <div class="option-box">
+                <div class="inputbox textarea-type">
+                    <div class="input">
+                        <textarea class="input-focus inner-tx fe-text_content" cols="20" rows="6" placeholder="내용 입력" maxlength="12000"
+                                  aria-labelledby="aria-email-qacont" required></textarea>
+                        <button href="javascript:void(0)" class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                    </div>
+                    <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">12,000</span>자(최대)</span>
+                </div>
+            </div>
+            <div class="fileplus-wrap">
+                <p class="text">최대 5개 파일을 등록할 수 있습니다.</p>
+                <div class="bt-alone">
+                    <button class="bt-bg-blue1 fe-upload-file-quality">파일첨부하기</button>
+                </div>
+            </div>
+            <ul class="filename-list">
+            </ul>
+        </div>
+    </div>
+    <hr class="cont-sp type1" aria-hidden="true">
+    <%- include('../../components/email/customer.email.common.template.html', { type: 'quality' }); %>
+</script>
+
+<script type="text/template" id="tpl_quality_phone">
+    <div class="cont-box">
+        <div class="widget formradio-style01">
+            <div class="widget-box radio">
+                <ul class="select-list fe-quality-inqSvcClCd" role="radiogroup">
+                    <li class="radiobox type01 checked" role="radio" aria-checked="false">
+                        <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                        <input type="radio" name="radio1-big1" value="I" title="값2"><!-- 체크상태일 경우 checked="false" -->
+                        인터넷/TV
+                    </li>
+                    <li class="radiobox type01 ml30" role="radio" aria-checked="true">
+                        <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                        <input type="radio" name="radio1-big1" value="P" title="값1" checked=""><!-- 체크상태일 경우 checked="checked" -->
                         집전화
                     </li>
                 </ul>

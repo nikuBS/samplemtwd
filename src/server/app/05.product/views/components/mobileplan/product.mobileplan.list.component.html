@@ -49,6 +49,9 @@
 <script id="fe-templ-filters" type="text/x-handlebars-template">
     {{#if filters}}
         {{#each filters}}
+            {{#unless @first}}
+            ,
+            {{/unless}}
             #<span class="datebox">{{this}}</span>
         {{/each}}
         {{#if leftCount}}

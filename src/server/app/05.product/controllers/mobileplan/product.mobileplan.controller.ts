@@ -21,21 +21,24 @@ export default class Product extends TwViewController {
   }
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    Observable.combineLatest(this.getProductGroups(), this.getRecommendedPlans(), this.getMyFilters(!!svcInfo), this.getRecommendedTags()).subscribe(
-      ([groups, recommendedPlans, myFilters, recommendedTags]) => {
-        const error = {
-          code: groups.code || recommendedPlans.code || (myFilters && myFilters.code) || recommendedTags.code,
-          msg: groups.msg || recommendedPlans.msg || (myFilters && myFilters.msg) || recommendedTags.msg
-        };
+    Observable.combineLatest(
+      this.getProductGroups(),
+      this.getRecommendedPlans(),
+      this.getMyFilters(svcInfo && svcInfo.svcAttrCd.startsWith('M')),
+      this.getRecommendedTags()
+    ).subscribe(([groups, recommendedPlans, myFilters, recommendedTags]) => {
+      const error = {
+        code: groups.code || recommendedPlans.code || (myFilters && myFilters.code) || recommendedTags.code,
+        msg: groups.msg || recommendedPlans.msg || (myFilters && myFilters.msg) || recommendedTags.msg
+      };
 
-        if (error.code) {
-          return this.error.render(res, { ...error, svcInfo });
-        }
-
-        const productData = { groups, myFilters, recommendedPlans, recommendedTags };
-        res.render('mobileplan/product.mobileplan.html', { svcInfo, pageInfo, productData });
+      if (error.code) {
+        return this.error.render(res, { ...error, svcInfo });
       }
-    );
+
+      const productData = { groups, myFilters, recommendedPlans, recommendedTags };
+      res.render('mobileplan/product.mobileplan.html', { svcInfo, pageInfo, productData });
+    });
   }
 
   private getProductGroups = () => {

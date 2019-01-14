@@ -15,36 +15,42 @@ export default class ProductRoamingReservationComplete extends TwViewController 
     const centerName = ROAMING_RECEIVE_CENTER[selectIdx];
 
     let centerImg = '';
-    // 이미지 추후 적용
-    /*
+
     switch (selectIdx) {
       case '0':
-        centerImg = 'place-img-01-1.jpg';
+        //인천공항 1터미널 3층 로밍센터(E-F 카운터)
+        centerImg = 'place-img-01';
         break;
       case '1' :
-        centerImg = '';
+        //인천공항 1터미널 3층 로밍센터(G-H 카운터)
+        centerImg = 'place-img-01';
         break;
       case '2' :
-        centerImg = '';
+        //인천공항 2터미널 3층 로밍센터(D-E 카운터)
+        centerImg = 'place-img-02';
         break;
       case '3' :
-        centerImg = 'place-img-03.jpg';
+        //김포공항 1층 로밍센터
+        centerImg = 'place-img-03';
         break;
       case '4' :
-        centerImg = '';
+        //제주공항 국제선 1층 로밍센터
+        centerImg = 'place-img-04';
         break;
       case '5' :
-        centerImg = 'place-img-05.jpg';
+        //김해공항 3층 로밍센터
+        centerImg = 'place-img-05';
         break;
       case '6' :
-        centerImg = '';
+        //대구공항 2층 로밍센터
+        centerImg = 'place-img-06';
         break;
       case '7' :
+        //대구 SKT 황금점 매장
         centerImg = '';
         break;
       default : break;
     }
-    */
 
     const data = {
       centerName,

@@ -63,7 +63,7 @@ Tw.ProductMobileplanAddJoinCombineLine.prototype = {
       return;
     }
 
-    $.each(resp.result.m, function(item) {
+    $.each(resp.result.m, function(idx, item) {
       this._data.nickNmList[item.svcNum] = Tw.FormatHelper.isEmpty(item.nickNm) ? null : item.nickNm;
     }.bind(this));
   },
@@ -253,6 +253,7 @@ Tw.ProductMobileplanAddJoinCombineLine.prototype = {
       data: {
         prodCtgNm: Tw.PRODUCT_CTG_NM.ADDITIONS,
         mytPage: 'additions',
+        btClass: 'item-one',
         prodId: this._prodId,
         prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
         typeNm: Tw.PRODUCT_TYPE_NM.JOIN,

@@ -45,7 +45,7 @@ Tw.MyTFareBillAccount.prototype = {
   _bindEvent: function () {
     this.$container.on('change', '.fe-auto-info > li', $.proxy(this._onChangeOption, this));
     this.$container.on('change', '.fe-auto-info', $.proxy(this._checkIsAbled, this));
-    this.$container.on('change', '.fe-refund-check-btn input', $.proxy(this._showAndHideAccount, this));
+    this.$container.on('change', '.fe-refund-check-btn input[type="checkbox"]', $.proxy(this._showAndHideAccount, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
     this.$container.on('blur', '.required-input-field', $.proxy(this._checkAccountNumber, this));
@@ -161,12 +161,21 @@ Tw.MyTFareBillAccount.prototype = {
   },
   _onClose: function () {
     if (!this.$isChanged) {
+      var $amount = this.$container.find('.fe-amount');
+      if (Tw.FormatHelper.addComma($amount.attr('data-value')) !== $amount.text()) {
+        this.$isChanged = true;
+      }
+    }
+
+    if (!this.$isChanged) {
       if (this.$accountNumber.attr('disabled') !== 'disabled') {
         if (this.$accountNumber.val() !== '') {
           this.$isChanged = true;
         }
       }
+    }
 
+    if (!this.$isChanged) {
       if (this.$refundNumber.attr('disabled') !== 'disabled') {
         if (this.$refundNumber.val() !== '') {
           this.$isChanged = true;

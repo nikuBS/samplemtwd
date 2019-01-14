@@ -13,6 +13,7 @@ import ProductMobileplanJoin from './controllers/mobileplan/join/product.mobilep
 import ProductMobileplanJoinTplan from './controllers/mobileplan/join/product.mobileplan.join.tplan.controller';
 import ProductMobileplanJoinShareLine from './controllers/mobileplan/join/product.mobileplan.join.share-line.controller';
 import ProductMobileplanJoinDataTogether from './controllers/mobileplan/join/product.mobileplan.join.data-together.controller';
+import ProductMobileplanJoin0planSm from './controllers/mobileplan/join/product.mobileplan.join.0plan-sm.controller';
 import ProductMobileplanSettingOption from './controllers/mobileplan/setting/product.mobileplan.setting.option.controller';
 import ProductMobileplanSettingTplan from './controllers/mobileplan/setting/product.mobileplan.setting.tplan.controller';
 import ProductMobileplanSetting0plan from './controllers/mobileplan/setting/product.mobileplan.setting.0plan.controller';
@@ -22,8 +23,10 @@ import ProductMobileplanSettingNumberFriend from './controllers/mobileplan/setti
 import ProductMobileplanSettingBandYT from './controllers/mobileplan/setting/product.mobileplan.setting.bandYT.controller';
 import ProductMobileplanSettingCouple from './controllers/mobileplan/lookup/product.mobileplan.lookup.couple.controller';
 import ProductMobileplanSettingLocation from './controllers/mobileplan/setting/product.mobileplan.setting.location.controller';
+import ProductMobileplanSetting0planSm from './controllers/mobileplan/setting/product.mobileplan.setting.0plan-sm.controller';
 import ProductMobileplanLookupTplan from './controllers/mobileplan/lookup/product.mobileplan.lookup.tplan.controller';
 import ProductMobileplanLookupTing from './controllers/mobileplan/lookup/product.mobileplan.lookup.ting.controller';
+import ProductMobilePlanIndividuals from './controllers/mobileplan/product.mobileplan.individuals.controller';
 
 import ProductAddition from './controllers/mobileplan-add/product.mobileplan-add.controller';
 import ProductAdditions from './controllers/mobileplan-add/product.mobileplan-add.list.controller';
@@ -75,7 +78,7 @@ import ProductRoamingSettingRoamingAlarm from './controllers/roaming/setting/pro
 import ProductRoamingSettingRoamingCombine from './controllers/roaming/setting/product.roaming.setting.roaming-combine.controller';
 import ProductRoamingJoinRoamingCombine from './controllers/roaming/join/product.roaming.join.roaming-combine.controller';
 import ProductRoamingTerminate from './controllers/roaming/product.roaming.terminate.controller';
-import ProductMobilePlanIndividuals from './controllers/mobileplan/product.mobileplan.individuals.controller';
+import ProductRoamingInfoPhBook from './controllers/roaming/product.roaming.info.ph-book.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -85,11 +88,13 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/mobileplan/club-t|campuszone|concierge', controller: ProductMobilePlanIndividuals });
     this.controllers.push({ url: '/mobileplan/list', controller: ProductPlans });
     this.controllers.push({ url: '/mobileplan/join/tplan', controller: ProductMobileplanJoinTplan });
+    this.controllers.push({ url: '/mobileplan/join/0plan-sm', controller: ProductMobileplanJoin0planSm });
     this.controllers.push({ url: '/mobileplan/join/share-line', controller: ProductMobileplanJoinShareLine });
     this.controllers.push({ url: '/mobileplan/join/data-together', controller: ProductMobileplanJoinDataTogether });
     this.controllers.push({ url: '/mobileplan/join', controller: ProductMobileplanJoin });
     this.controllers.push({ url: '/mobileplan/setting/tplan', controller: ProductMobileplanSettingTplan });
     this.controllers.push({ url: '/mobileplan/setting/0plan', controller: ProductMobileplanSetting0plan });
+    this.controllers.push({ url: '/mobileplan/setting/0plan-sm', controller: ProductMobileplanSetting0planSm });
     this.controllers.push({ url: '/mobileplan/setting/option', controller: ProductMobileplanSettingOption });
     this.controllers.push({ url: '/mobileplan/setting/ting', controller: ProductMobileplanSettingTing });
     this.controllers.push({ url: '/mobileplan/setting/number', controller: ProductMobileplanSettingNumber });
@@ -159,6 +164,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/callplan-preview', controller: ProductCommonCallplanPreview });
 
     this.controllers.push({ url: '/roaming/terminate', controller: ProductRoamingTerminate });
+    this.controllers.push({ url: '/roaming/info/ph-book', controller: ProductRoamingInfoPhBook });
   }
 }
 

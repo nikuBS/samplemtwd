@@ -1,0 +1,39 @@
+<%#
+* FileName: membership.submain.component.html
+* Author: EUNJUNG JUNG
+* Date: 2018.12.19
+%>
+<script id="tmplList" type="text/x-handlebars-template">
+    {{#each list}}
+    <li>
+        <a class="brand-inner" href="/membership/benefit/brand-benefit?cateCd={{coCd}}&brandCd={{brandCd}}">
+            <span class="inner">
+                <span class="logo"><img src="{{appIcoImgUrl}}" alt="CU(구)훼미리마트"></span>
+                <span class="intro">
+                    <strong class="brand-name">{{coPtnrNm}}</strong>
+                    {{#if showIcoGrd1}}
+                    <span class="section">
+                        {{#each showIcoGrd1}}
+                        <em class="ico-s {{this}}-tag">{{this}}</em>
+                        {{/each}}
+                        {{icoCont1}}
+                    </span>
+                    {{/if}}
+                    {{#if showIcoGrd2}}
+                    <span class="section">
+                        {{#each showIcoGrd2}}
+                        <em class="ico-s {{this}}-tag">{{this}}</em>
+                        {{/each}}
+                        {{icoCont2}}
+                    </span>
+                    {{/if}}
+                </span>
+            </span>
+        </a>
+        <div class="map-view"><button class="map"
+                                      data-brandcd="{{ brandCd }}"
+                                      data-cocd="{{ coCd }}"
+                                      data-joincd="{{ joinCd }}">지도보기</button></div>
+    </li>
+    {{/each}}
+</script>

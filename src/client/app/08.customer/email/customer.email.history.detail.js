@@ -28,7 +28,7 @@ Tw.CustomerEmailHistoryDetail.prototype = {
   },
 
   _retryInquiry: function (e) {
-    var inqclcd = $(e.currentTarget).data().inqclcd;
+    var inqclcd = $(e.currentTarget).data('inqclcd');
 
     // service inquiry
     if ( inqclcd === 'B' ) {

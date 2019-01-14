@@ -22,7 +22,7 @@
             <div class="header-wrap">
                 <div class="page-header">
                     <div class="header-ti">
-                        <h1>데이터 자동 충전</h1>
+                        <h1>데이터 자동충전</h1>
                     </div>
                 </div>
             </div>
@@ -35,12 +35,11 @@
                     <div class="cont-box">
                         <div class="unpaid-charges">
                             <dl class="total-box">
-                                <dt>남은 데이터 량 <button id="DC_09_04_tip_03" class="tip-view">TIP</button></dt>
+                                <dt>남은 데이터양 <button id="DC_09_04_tip_03" class="tip-view">TIP</button></dt>
                                 <dd class="t-point"><span class="num ff-tg-black fe-data" data-value="<%= ppsInfo.dataObj.dataValue %>">
                                     <%= ppsInfo.dataObj.data %></span><span class="ff-tg-medium">MB</span>
                                 </dd>
                             </dl>
-                            <p class="ctext3 mb20"><strong>데이터 1MB</strong> 이하 또는 <strong>사용기간 만료 1일 전</strong>일 때 자동 충전</p>
                             <ul class="point-box mb20">
                                 <li>
                                     <dl>
@@ -61,10 +60,11 @@
                                     </dl>
                                 </li>
                             </ul>
+                            <p class="ctext3 mb20"><strong>데이터 1MB</strong> 이하 또는 <strong>사용기간 만료 1일 전</strong>일 때 자동충전</p>
                             <% if (autoInfo.isAuto) { %>
                             <ul class="bt-slice fe-cancel">
                                 <li class="bt-blue1">
-                                    <button>자동 충전 해지</button>
+                                    <button>자동충전 해지</button>
                                 </li>
                             </ul>
                             <% } %>
@@ -138,7 +138,7 @@
 
                     <!-- .cont-box -->
                     <div class="cont-box nogaps-btm">
-                        <h3 class="tx-bold">꼭 확인해주세요</h3>
+                        <h3 class="tx-bold">꼭 확인해 주세요</h3>
                         <ul class="noti-list">
                             <li>공인인증서 인증 안내 <button type="button" id="DC_09_02_tip_01" class="tip-view" aria-haspopup="true">TIP</button></li>
                             <li>자동충전 안내 <button type="button" id="DC_09_04_tip_02" class="tip-view" aria-haspopup="true">TIP</button></li>

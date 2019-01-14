@@ -66,7 +66,7 @@ class MyTFareBillCard extends TwViewController {
       list.defaultIndex = 0;
 
       list.map((data, index) => {
-        data.invYearMonth = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY.M');
+        data.invYearMonth = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY.M.');
         data.intMoney = this.removeZero(data.invAmt);
         data.invMoney = FormatHelper.addComma(data.intMoney);
         data.svcName = SVC_CD[data.svcCd];

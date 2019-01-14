@@ -121,7 +121,8 @@ Tw.CommonHelper = (function () {
         if ( resp.code === Tw.API_CODE.CODE_00 ) {
           if ( resp.result.totalSvcCnt > 0 && resp.result.expsSvcCnt < 1 ) {
             Tw.Native.send(Tw.NTV_CMD.FREE_SMS, {
-              error: Tw.NTV_CODE.CODE_A80
+              error: Tw.NTV_CODE.CODE_A80,
+              msg: Tw.NTV_ERROR_MSG[Tw.NTV_CODE.CODE_A80]
             });
           } else {
             Tw.Native.send(Tw.NTV_CMD.FREE_SMS, {});
@@ -175,7 +176,9 @@ Tw.CommonHelper = (function () {
 
   var setXtSvcInfo = function() {
     var xtLid = Tw.CommonHelper.getCookie('XTLID'),
+      xtLidOrigin = Tw.CommonHelper.getCookie('XTLID_ORIGIN'),
       xtLoginId = Tw.CommonHelper.getCookie('XTLOGINID'),
+      xtLoginIdOrigin = Tw.CommonHelper.getCookie('XTLOGINID_ORIGIN'),
       xtLoginType = Tw.CommonHelper.getCookie('XTLOGINTYPE');
 
     if (!Tw.BrowserHelper.isApp() || xtLoginType === 'Z') {
@@ -184,7 +187,9 @@ Tw.CommonHelper = (function () {
 
     Tw.Native.send(Tw.NTV_CMD.SET_XTSVCINFO, {
       xtLid: xtLid,
-      xtLoginId: xtLoginId
+      xtLidOrigin: xtLidOrigin,
+      xtLoginId: xtLoginId,
+      xtLoginIdOrigin: xtLoginIdOrigin
     });
   };
 

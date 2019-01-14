@@ -16,7 +16,7 @@
 <!--// #skip_navigation -->
 <div id="mainHome" class="wrap" data-menuid="<%= pageInfo.menuId %>" data-layertype="<%= noticeType %>">
     <!-- #header -->
-    <%- include('../../../../common/views/components/header.component.html', { title: '<div class="h-logo"><a href="/main/home" class="icon-gnb-home"><span class="blind">홈으로</span></a></div>', svcInfo: svcInfo }) %>
+    <%- include('../../../../common/views/components/header.component.html', { title: '<div class="h-logo"><a href="/main/home" class="icon-gnb-home"><span class="blind">홈으로</span></a></div>', svcInfo: svcInfo, home: 'app' }) %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -206,9 +206,9 @@
                                                 <!-- // loop -->
                                             </div>
                                             <span class="ti-data">
-                                                    <strong class="ti">남은 문자</strong>
-                                                    <em class="data"><%= homeData.usageData.sms.showRemained %></em>
-                                                </span>
+                                                <strong class="ti">남은 문자</strong>
+                                                <em class="data"><%= homeData.usageData.sms.showRemained %></em>
+                                            </span>
                                         </button>
                                         <!-- // .donut-chart -->
                                     </div>
@@ -361,11 +361,13 @@
                         <% } %>
 
                         <% if (svcType.login && svcType.mobilePhone) { %>
-                        <div class="section-box empty fe-smart-0 fe-smart-<%= smartCard[0].no %>" data-smartCard="<%= smartCard[0].no %>">
+                        <% if (redisData.smartCard.length > 0 && redisData.smartCard[0]) { %>
+                        <div class="section-box empty fe-smart-0 fe-smart-<%= redisData.smartCard[0].no %>" data-smartCard="<%= redisData.smartCard[0].no %>">
                             <div class="main-breakdown-box">
-                                <div class="stit c-point"><%= smartCard[0].title %></div>
+                                <div class="stit c-point"><%= redisData.smartCard[0].title %></div>
                             </div>
                         </div>
+                        <% } %>
                         <% } %>
 
                         <!-- 프로모션 배너 1 -->
@@ -373,7 +375,7 @@
                             <div class="main-charge-box benefit section-swiper-box main-banner-img">
                                 <!-- .widget -->
                                 <div class="widget">
-                                    <div class="widget-box slider1">
+                                    <div class="widget-box slider1 slider1-auto">
                                         <div class="slider-box">
                                             <ul class="slider" data-location="1">
                                             </ul>
@@ -414,18 +416,22 @@
                         <!-- // 프로모션 배너 2 -->
 
                         <% if (svcType.login && svcType.mobilePhone) { %>
-                        <div class="section-box empty fe-smart-1 fe-smart-<%= smartCard[1].no %>" data-smartCard="<%= smartCard[1].no %>">
+                        <% if (redisData.smartCard.length > 0 && redisData.smartCard[1]) { %>
+                        <div class="section-box empty fe-smart-1 fe-smart-<%= redisData.smartCard[1].no %>" data-smartCard="<%= redisData.smartCard[1].no %>">
                             <div class="main-breakdown-box">
-                                <div class="stit c-point"><%= smartCard[1].title %></div>
+                                <div class="stit c-point"><%= redisData.smartCard[1].title %></div>
                             </div>
                         </div>
                         <% } %>
+                        <% } %>
                         <% if (svcType.login && svcType.mobilePhone) { %>
-                        <div class="section-box empty fe-smart-2 fe-smart-<%= smartCard[2].no %>" data-smartCard="<%= smartCard[2].no %>">
+                        <% if (redisData.smartCard.length > 0 && redisData.smartCard[2]) { %>
+                        <div class="section-box empty fe-smart-2 fe-smart-<%= redisData.smartCard[2].no %>" data-smartCard="<%= redisData.smartCard[2].no %>">
                             <div class="main-breakdown-box">
-                                <div class="stit c-point"><%= smartCard[2].title %></div>
+                                <div class="stit c-point"><%= redisData.smartCard[2].title %></div>
                             </div>
                         </div>
+                        <% } %>
                         <% } %>
 
                         <!-- 프로모션 배너 2 -->
@@ -433,9 +439,9 @@
                             <div class="main-charge-box advice section-swiper-box main-banner-img">
                                 <!-- .widget -->
                                 <div class="widget">
-                                    <div class="widget-box slider1">
+                                    <div class="widget-box slider1 slider1-auto">
                                         <div class="slider-box">
-                                            <ul class="slider"  data-location="2">
+                                            <ul class="slider" data-location="2">
                                             </ul>
                                         </div>
                                         <!-- <div class="slider-box">
@@ -473,18 +479,22 @@
                         </div>
                         <!-- // 프로모션 배너 2 -->
                         <% if (svcType.login && svcType.mobilePhone) { %>
-                        <div class="section-box empty fe-smart-3 fe-smart-<%= smartCard[3].no %>" data-smartCard="<%= smartCard[3].no %>">
+                        <% if (redisData.smartCard.length > 0 && redisData.smartCard[3]) { %>
+                        <div class="section-box empty fe-smart-3 fe-smart-<%= redisData.smartCard[3].no %>" data-smartCard="<%= redisData.smartCard[3].no %>">
                             <div class="main-breakdown-box">
-                                <div class="stit c-point"><%= smartCard[3].title %></div>
+                                <div class="stit c-point"><%= redisData.smartCard[3].title %></div>
+                            </div>
+                        </div>
+                        <% }%>
+                        <% } %>
+                        <% if (svcType.login && svcType.mobilePhone) { %>
+                        <% if (redisData.smartCard.length > 0 && redisData.smartCard[4]) { %>
+                        <div class="section-box empty fe-smart-4 fe-smart-<%= redisData.smartCard[4].no %>" data-smartCard="<%= redisData.smartCard[4].no %>">
+                            <div class="main-breakdown-box">
+                                <div class="stit c-point"><%= redisData.smartCard[4].title %></div>
                             </div>
                         </div>
                         <% } %>
-                        <% if (svcType.login && svcType.mobilePhone) { %>
-                        <div class="section-box empty fe-smart-4 fe-smart-<%= smartCard[4].no %>" data-smartCard="<%= smartCard[4].no %>">
-                            <div class="main-breakdown-box">
-                                <div class="stit c-point"><%= smartCard[4].title %></div>
-                            </div>
-                        </div>
                         <% } %>
 
                         <!-- 프로모션 배너 3 -->
@@ -492,7 +502,7 @@
                             <div class="main-charge-box advice section-swiper-box main-banner-img">
                                 <!-- .widget -->
                                 <div class="widget">
-                                    <div class="widget-box slider1">
+                                    <div class="widget-box slider1 slider1-auto">
                                         <div class="slider-box">
                                             <ul class="slider" data-location="3">
                                             </ul>
@@ -606,7 +616,7 @@
                             <div class="main-banner-box section-swiper-box">
                                 <!-- .widget -->
                                 <div class="widget">
-                                    <div class="widget-box slider1">
+                                    <div class="widget-box slider1 slider1-auto">
                                         <div class="slider-box">
                                             <ul class="slider"  data-location="4">
                                             </ul>
@@ -673,7 +683,7 @@
                         <!-- 모바일 요금제 -->
                         <div class="section-box nogaps-btm">
                             <div class="main-direct-box">
-                                <div class="stit c-point"><a href="/product/mobileplan/list" class="bt">모바일 요금제 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
+                                <div class="stit c-point"><a href="/product/mobileplan" class="bt">모바일 요금제 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
                                 <strong class="ti">인기 있는 SK텔레콤의 대표요금제</strong>
                                 <ul class="charge-product">
                                     <li>
@@ -775,7 +785,7 @@
                                 <div class="stit c-point"><a href="/product/roaming" class="bt">T로밍 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
                                 <!-- .widget -->
                                 <div class="widget">
-                                    <div class="widget-box slider1">
+                                    <div class="widget-box slider1 slider1-auto">
                                         <div class="slider-box">
                                             <!-- <ul class="slider">
                                                 <li>
@@ -941,7 +951,6 @@
     </div>
     <!--// #contents -->
 </div>
-</body>
 <% include ../components/javascript.component.html %>
 <% if (svcType.login && svcType.mobilePhone) { %>
 <% include ../components/smart-card/bill.component.html %>
@@ -950,11 +959,14 @@
 <% include ../components/smart-card/micro-pay.component.html %>
 <%- include('../components/smart-card/recharge.component.html', { usageData: homeData.usageData }); %>
 <%- include('../components/home/home.welcome.component.html', { svcInfo: svcInfo }); %>
+<% } %>
+<% if (svcType.login) { %>
 <%- include('../components/home/home.quick-menu.component.html', { cdn: CDN }); %>
 <% } %>
 <script>
   $(document).ready(function () {
-    new Tw.MainHome($('#mainHome'), '<%-JSON.stringify(smartCard) %>', '<%= redisData.embNotice !== null %>', '<%= pageInfo.menuId %>', '<%= svcInfo !== null %>');
+    new Tw.MainHome($('#mainHome'), '<%-JSON.stringify(redisData.smartCard) %>', '<%= redisData.embNotice !== null %>', '<%= pageInfo.menuId %>', '<%= svcInfo !== null %>');
   });
 </script>
+</body>
 <% include ../components/end.component.html %>

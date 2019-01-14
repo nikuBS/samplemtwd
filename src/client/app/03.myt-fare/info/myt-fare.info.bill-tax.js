@@ -115,13 +115,23 @@ Tw.MyTFareInfoBillTax.prototype = {
   _openResendByFax: function (data) {
     data.hbs = 'MF_08_01_01_01';
     this._popupService.open(data,
-        $.proxy(this._openResendByFaxCallback, this), null,
+        $.proxy(this._openResendByFaxCallback, this), 
+        $.proxy(this._closeResendByFax, this),
         Tw.MYT_PAYMENT_HISTORY_HASH.BILL_RESEND_BY_FAX,
         'byFax'
     );
   },
+  _closeResendByFax: function () {
+    if(!Tw.FormatHelper.isEmpty(this.$faxNumberInput.val())) {
+      this._popupService.openConfirm(
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE
+      );
+    }
+  },
+
   _openResendByFaxCallback: function ($container) {
-    this.$faxNumberInput = $container.find('.input input[type="number"]');
+    this.$faxNumberInput = $container.find('.input input[type="tel"]');
     this.$rerequestSendBtn = $container.find('.bt-slice button');
     this.$rerequestSendBtn.on('click', $.proxy(this._sendRerequestByFax, this));
     this.$faxNumberInput.on('keyup', $.proxy(this._checkFaxNumber, this));
@@ -145,11 +155,22 @@ Tw.MyTFareInfoBillTax.prototype = {
   _openResendByEmail: function (data) {
     data.hbs = 'MF_08_01_01_02';
     this._popupService.open(data,
-        $.proxy(this._openResendByEmailCallback, this), null,
+        $.proxy(this._openResendByEmailCallback, this), 
+        $.proxy(this._closeResendByEmail, this),
         Tw.MYT_PAYMENT_HISTORY_HASH.BILL_RESEND_BY_EMAIL,
         'byEmail'
     );
   },
+
+  _closeResendByEmail: function () {
+    if(!Tw.FormatHelper.isEmpty(this.$emailInput.val())) {
+      this._popupService.openConfirm(
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE
+      );
+    }
+  },
+
   _openResendByEmailCallback: function ($container) {
     this.$emailInput = $container.find('.input input[type="text"]');
     this.$rerequestSendBtn = $container.find('.bt-slice button');

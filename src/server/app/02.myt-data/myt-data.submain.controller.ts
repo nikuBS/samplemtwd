@@ -13,9 +13,9 @@ import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
 import { CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE } from '../../types/string.type';
 import BrowserHelper from '../../utils/browser.helper';
-import { UNIT, UNIT_E } from '../../types/bff.type';
+import { PREPAID_PAYMENT_PAY_CD, PREPAID_PAYMENT_TYPE, UNIT, UNIT_E } from '../../types/bff.type';
 import { REDIS_KEY } from '../../types/redis.type';
-import { PREPAID_PAYMENT_TYPE, PREPAID_PAYMENT_PAY_CD } from '../../types/bff.type';
+import StringHelper from '../../utils/string.helper';
 
 const skipIdList: any = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
 const tmoaBelongToProdList: any = ['NA00005959', 'NA00005958', 'NA00005957', 'NA00005956', 'NA00005955', 'NA00006157', 'NA00006156',
@@ -54,34 +54,39 @@ class MytDataSubmainController extends TwViewController {
       this._getRefillPresentBreakdown(),
       this._getRefillUsedBreakdown(),
       this.redisService.getData(REDIS_KEY.BANNER_ADMIN + pageInfo.menuId),
-    ).subscribe(([remnant, present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, pattern, banner]) => {
+    ).subscribe(([remnant, present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, banner]) => {
       if ( remnant.info ) {
         data.remnant = remnant;
       } else {
         data.remnantData = this.parseRemnantData(remnant);
         if ( data.remnantData.gdata && data.remnantData.gdata.length > 0 ) {
           data.isDataShow = true;
-          if ( data.remnantData.tmoa && data.remnantData.tmoa.length > 0 ) {
-            // 가입
-            data.family = data.remnantData.tmoa[0];
-            data.family.remained = data.family.showRemained.data + data.family.showRemained.unit;
-            // T가족모아 가입가능한 요금제
-            data.family.isProdId = tmoaBelongToProdList.indexOf(data.svcInfo.prodId) > -1;
-          } else {
-            // 미가입
-            data.family = {
-              impossible: true
-            };
-          }
-        } else if ( data.remnantData.sdata && data.remnantData.sdata.length > 0 ) {
+        }
+        if ( data.remnantData.sdata && data.remnantData.sdata.length > 0 ) {
           data.isSpDataShow = true;
-        } else if ( data.remnantData.voice && data.remnantData.voice.length > 0 ) {
+        }
+        if ( data.remnantData.voice && data.remnantData.voice.length > 0 ) {
           data.isVoiceShow = true;
-        } else if ( data.remnantData.sms && data.remnantData.sms.length > 0 ) {
+        }
+        if ( data.remnantData.sms && data.remnantData.sms.length > 0 ) {
           data.isSmsShow = true;
-        } else {
+        }
+        if ( data.remnantData.gdata.length === 0 && data.remnantData.sdata.length === 0 &&
+          data.remnantData.voice.length === 0 && data.remnantData.sms.length === 0 ) {
           data.isDataShow = true;
           data.emptyData = true;
+        }
+        if ( data.remnantData.tmoa && data.remnantData.tmoa.length > 0 ) {
+          // 가입
+          data.family = data.remnantData.tmoa[0];
+          data.family.remained = data.family.showRemained.data + data.family.showRemained.unit;
+          // T가족모아 가입가능한 요금제
+          data.family.isProdId = tmoaBelongToProdList.indexOf(data.svcInfo.prodId) > -1;
+        } else {
+          // 미가입
+          data.family = {
+            impossible: true
+          };
         }
       }
 
@@ -228,32 +233,25 @@ class MytDataSubmainController extends TwViewController {
         res.render('myt-data.submain.html', { data });
       } else {
         // 가입이 가능한 경우에만
-        this.apiService.request(API_CMD.BFF_06_0044, {}).subscribe((family) => {
-          if ( family.code === API_CODE.CODE_00 ) {
-            if ( data.family ) {
-              data.family.limitation = parseInt(family.result.remained, 10);
+        if ( data.family ) {
+          this.apiService.request(API_CMD.BFF_06_0044, {}).subscribe((family) => {
+            if ( family.code === API_CODE.CODE_00 ) {
               // T가족모아 서비스는 가입되어있지만 공유 불가능한 요금제이면서 미성년인 경우
-              if ( !data.family.isProdId || family.result.adultYn === 'N' ) {
+              if ( data.family.isProdId || family.result.adultYn === 'N' ) {
                 data.family.noshare = true;
               }
-            } else {
-              data.family = family.result;
-            }
-          } else if ( family.code === API_T_FAMILY_ERROR.BLN0010 ) {
-            // T가족모아 가입 가능한 요금제이나 미가입으로 가입유도 화면 노출
-            if ( data.family ) {
+            } else if ( family.code === API_T_FAMILY_ERROR.BLN0010 ) {
+              // T가족모아 가입 가능한 요금제이나 미가입으로 가입유도 화면 노출
               data.family.impossible = true;
             } else {
-              data.family = {
-                impossible: true
-              };
+              // 가입불가능한 요금제인 경우
+              data.family = null;
             }
-          } else {
-            // 가입불가능한 요금제인 경우
-            data.family = null;
-          }
+            res.render('myt-data.submain.html', { data });
+          });
+        } else {
           res.render('myt-data.submain.html', { data });
-        });
+        }
       }
     });
   }
@@ -389,11 +387,9 @@ class MytDataSubmainController extends TwViewController {
     items.filter((item) => {
       list.push({
         child: true,
-        nickNm: item.childEqpMdNm, // item.mdlName 서버데이터 확인후 변경
-        svcNum: item.svcNum,
-        svcMgmtNum: item.svcMgmtNum,
-        data: '', // TODO: 개발이 되지 않은 항목 추후 작업 필요
-        unit: '' // TODO: 개발이 되지 않은 항목 추후 작업 필요
+        nickNm: item.childEqpMdNm || item.eqpMdlNm, // item.mdlName 서버데이터 확인후 변경
+        svcNum: StringHelper.phoneStringToDash(item.svcNum),
+        svcMgmtNum: item.svcMgmtNum
       });
     });
     return list;
@@ -422,6 +418,7 @@ class MytDataSubmainController extends TwViewController {
       nOthers.filter((item) => {
         if ( target.svcMgmtNum !== item.svcMgmtNum ) {
           item.nickNm = item.eqpMdlNm || item.nickNm;
+          item.svcNum = StringHelper.phoneStringToDash(item.svcNum);
           list.push(item);
         }
       });
@@ -448,23 +445,6 @@ class MytDataSubmainController extends TwViewController {
       }
     });
     return returnVal.reverse();
-  }
-
-  // T가족모아데이터 정보
-  _getFamilyMoaData(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_06_0044, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
-      } else if ( resp.code === API_T_FAMILY_ERROR.BLN0010 ) {
-        // T가족모아 가입 가능한 요금제이나 미가입으로 가입유도 화면 노출
-        return {
-          impossible: true
-        };
-      } else {
-        // error
-        return null;
-      }
-    });
   }
 
   _getRemnantData(): Observable<any> {

@@ -393,6 +393,7 @@ Tw.API_CMD = {
   // PRODUCT
   BFF_10_0001: { path: '/core-product/:version/ledger/:args0', method: Tw.API_METHOD.GET },
   BFF_10_0007: { path: '/core-product/:version/mobiles/fee-plans/:args0/joins/join-prechecks', method: Tw.API_METHOD.GET },
+  BFF_10_0008: { path: '/v1/products/fee-plans/:args0/join-term-infos', method: Tw.API_METHOD.GET },
   BFF_10_0010: { path: '/core-product/:version/mobiles/fee-plans/joins/over-chargings', method: Tw.API_METHOD.GET },
   BFF_10_0012: { path: '/:version/products/fee-plans/:args0/joins', method: Tw.API_METHOD.PUT },
   BFF_10_0013: { path: '/core-product/:version/mobiles/fee-plans/:args0/tplan-sets', method: Tw.API_METHOD.GET },
@@ -441,6 +442,8 @@ Tw.API_CMD = {
   BFF_10_0166: { path: '/core-product/:version/wire/additions/:args0/joins/ledger-prechecks/cancels', method: Tw.API_METHOD.GET },
   BFF_10_0167: { path: '/core-product/:version/wire/additions/:args0/joins/ledger-prechecks/adds', method: Tw.API_METHOD.GET },
   BFF_10_0168: { path: '/core-product/:version/wire/additions/:args0/joins/ledger-prechecks/terms', method: Tw.API_METHOD.GET },
+  BFF_10_0169: { path: '/core-product/v1/mobiles/fee-plans/young-plan-mid-sets', method: Tw.API_METHOD.GET },
+  BFF_10_0170: { path: '/core-product/v1/mobiles/fee-plans/young-plan-mid-sets', method: Tw.API_METHOD.PUT },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/:version/submain/products', method: Tw.API_METHOD.GET },
@@ -476,6 +479,7 @@ Tw.API_CMD = {
   BFF_11_0022: { path: '/core-membership/:version/tmembership/area2-list', method: Tw.API_METHOD.GET },
   BFF_11_0023: { path: '/core-membership/:version/tmembership/mrcht-list', method: Tw.API_METHOD.GET },
   BFF_11_0024: { path: '/core-membership/:version/tmembership/mrcht-info', method: Tw.API_METHOD.GET },
+  BFF_11_0025: { path: '/core-membership/:version/tmembership/near-brand', method: Tw.API_METHOD.GET },
   BFF_11_0026: { path: '/core-membership/:version/tmembership/area-by-geo', method: Tw.API_METHOD.GET },
   BFF_10_0062: { path: '/core-product/:version/mobiles/additions-sets/:args0/seldis-sets', method: Tw.API_METHOD.GET },
   BFF_10_0063: { path: '/core-product/:version/mobiles/additions-sets/:args0/seldis-sets', method: Tw.API_METHOD.POST },
@@ -560,6 +564,11 @@ Tw.AJAX_CMD = {
       method : Tw.API_METHOD.GET,
       url : 'http://61.250.22.114:8080',
       contentType: 'application/x-www-form-urlencoded'
+  },
+  SEARCH_STACK_USER_CLICK : {
+    path : '/search/tworld/log/save',
+    method : Tw.API_METHOD.POST,
+    url : 'http://61.250.22.114:8080'
   }
 };
 
@@ -580,6 +589,8 @@ Tw.API_CODE = {
   BFF_0020: 'BFF0020', // 법정대리인 인증필요
 
   CERT_FAIL: 'TWM0001',
+  CERT_SELECT: 'CERT0001',   // 인증수단 선택화면으로 이동
+  CERT_SMS_BLOCK: 'CERT0002',   // SMS 인증 불가
 
   CODE_99: 'RDT0099', // Circuit Open
   CODE_200: '200',

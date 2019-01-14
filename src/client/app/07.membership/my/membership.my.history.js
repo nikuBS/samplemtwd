@@ -18,7 +18,7 @@ Tw.MembershipMyHistory = function(rootEl, myHistoryData) {
 Tw.MembershipMyHistory.prototype = {
   _init: function() {
     this._cachedElement();
-    this._bindEvent();;
+    this._bindEvent();
     this._renderTemplate();
   },
 
@@ -28,11 +28,13 @@ Tw.MembershipMyHistory.prototype = {
     this.$more = this.$container.find('.btn-more');
     this.$moreCnt = this.$container.find('#fe-more-cnt');
     this.$empty = this.$container.find('#fe-empty');
+    this.$btnPrevStep = this.$container.find('.prev-step');
   },
 
   _bindEvent: function() {
     this.$btnPopupClose.on('click', $.proxy(this._goRoamingGuide, this));
     this.$more.on('click', $.proxy(this._onMore,this));
+    this.$btnPrevStep.on('click', $.proxy(this._goPrevStep, this));
   },
 
   _renderTemplate: function() {
@@ -95,6 +97,10 @@ Tw.MembershipMyHistory.prototype = {
 
   _goRoamingGuide: function() {
     this._historyService.replaceURL('/product/roaming/fi/guide');
+  },
+
+  _goPrevStep: function() {
+    this._historyService.goBack();
   },
 
   _onFail: function(err) {

@@ -508,28 +508,34 @@ li.checkbox.type01 {
   .checkbox.type01:before {
     content: "";
     display: inline-block;
-    margin-top: -0.1875rem;
     width: 1.5rem;
     height: 1.5rem;
     vertical-align: middle;
-    background: url(/img/form/ico-checkbox-style01.png) no-repeat 0 0;
-    background-size: 1.5rem; }
+    background: url(/img/form/ico-checkbox-style01-default.png) no-repeat 0 0;
+    background-size: 1.5rem auto; }
   .checkbox.type01.checked:before {
-    background-position: 0 -1.5rem; }
+    background: url(/img/form/ico-checkbox-style01-checked.png) no-repeat 0 0;
+    background-size: 1.5rem auto; }
   .checkbox.type01.disabled:before {
-    background-position: 0 -3rem; }
+    background: url(/img/form/ico-checkbox-style01-disabled.png) no-repeat 0 0;
+    background-size: 1.5rem auto; }
   .checkbox.type01.checked.disabled:before {
-    background-position: 0 -4.5rem; }
+    background: url(/img/form/ico-checkbox-style01-checked-disabled.png) no-repeat 0 0;
+    background-size: 1.5rem auto; }
   .checkbox.type01.focus {
     outline: -webkit-focus-ring-color auto 5px; }
   .checkbox.type01.focus:before {
-    background-position: 0 0; }
+    background: url(/img/form/ico-checkbox-style01-default.png) no-repeat 0 0;
+    background-size: 1.5rem auto; }
   .checkbox.type01.focus.checked:before {
-    background-position: 0 -1.5rem; }
+    background: url(/img/form/ico-checkbox-style01-checked.png) no-repeat 0 0;
+    background-size: 1.5rem auto; }
   .checkbox.type01.focus.disabled:before {
-    background-position: 0 -3rem; }
+    background: url(/img/form/ico-checkbox-style01-disabled.png) no-repeat 0 0;
+    background-size: 1.5rem auto; }
   .checkbox.type01.focus.checked.disabled:before {
-    background-position: 0 -4.5rem; }
+    background: url(/img/form/ico-checkbox-style01-checked-disabled.png) no-repeat 0 0;
+    background-size: 1.5rem auto; }
   .checkbox.type01 > span {
     display: inline-block;
     font-size: 0.8125rem;
@@ -614,28 +620,34 @@ li.checkbox.type01 {
   .radiobox.type01:before {
     content: "";
     display: inline-block;
-    margin-top: -0.125rem;
     width: 1.5rem;
     height: 1.5rem;
-    background: url(/img/form/ico-radio-style01.png) no-repeat 0 0;
+    background: url(/img/form/ico-radio-style01-default.png) no-repeat 0 0;
     background-size: 1.5rem auto;
     vertical-align: middle; }
   .radiobox.type01.checked:before {
-    background-position: 0 -1.5rem; }
+    background: url(/img/form/ico-radio-style01-checked.png) no-repeat 0 0;
+    background-size: 1.5rem auto; }
   .radiobox.type01.disabled:before {
-    background-position: 0 -3rem; }
+    background: url(/img/form/ico-radio-style01-disabled.png) no-repeat 0 0;
+    background-size: 1.5rem auto; }
   .radiobox.type01.checked.disabled:before {
-    background-position: 0 -4.5rem; }
+    background: url(/img/form/ico-radio-style01-checked-disabled.png) no-repeat 0 0;
+    background-size: 1.5rem auto; }
   .radiobox.type01.focus {
     outline: -webkit-focus-ring-color auto 5px; }
   .radiobox.type01.focus:before {
-    background-position: 0 0; }
+    background: url(/img/form/ico-radio-style01-default.png) no-repeat 0 0;
+    background-size: 1.5rem auto; }
   .radiobox.type01.focus.checked:before {
-    background-position: 0 -1.5rem; }
+    background: url(/img/form/ico-radio-style01-checked.png) no-repeat 0 0;
+    background-size: 1.5rem auto; }
   .radiobox.type01.focus.disabled:before {
-    background-position: 0 -3rem; }
+    background: url(/img/form/ico-radio-style01-disabled.png) no-repeat 0 0;
+    background-size: 1.5rem auto; }
   .radiobox.type01.focus.checked.disabled:before {
-    background-position: 0 -4.5rem; }
+    background: url(/img/form/ico-radio-style01-checked-disabled.png) no-repeat 0 0;
+    background-size: 1.5rem auto; }
   .radiobox.type01 > span {
     display: inline-block;
     font-size: 0.8125rem;
@@ -653,25 +665,32 @@ li.checkbox.type01 {
     margin-top: -0.125rem;
     width: 2rem;
     height: 2rem;
-    background: url(/img/form/ico-radio-style01-big.png) no-repeat 0 0;
+    background: url(/img/form/ico-radio-style01-big-default.png) no-repeat 0 0;
     background-size: 2rem;
     vertical-align: middle; }
   .radiobox.type01-big.checked:before {
-    background-position: 0 -2rem; }
+    background: url(/img/form/ico-radio-style01-big-checked.png) no-repeat 0 0;
+    background-size: 2rem; }
   .radiobox.type01-big.disabled:before {
-    background-position: 0 -4rem; }
+    background: url(/img/form/ico-radio-style01-big-disabled.png) no-repeat 0 0;
+    background-size: 2rem; }
   .radiobox.type01-big.checked.disabled:before {
-    background-position: 0 -6rem; }
+    background: url(/img/form/ico-radio-style01-big-checked-disabled.png) no-repeat 0 0;
+    background-size: 2rem; }
   .radiobox.type01-big.focus {
     outline: -webkit-focus-ring-color auto 5px; }
   .radiobox.type01-big.focus:before {
-    background-position: 0 0; }
+    background: url(/img/form/ico-radio-style01-big-default.png) no-repeat 0 0;
+    background-size: 2rem; }
   .radiobox.type01-big.focus.checked:before {
-    background-position: 0 -2rem; }
+    background: url(/img/form/ico-radio-style01-big-checked.png) no-repeat 0 0;
+    background-size: 2rem; }
   .radiobox.type01-big.focus.disabled:before {
-    background-position: 0 -4rem; }
+    background: url(/img/form/ico-radio-style01-big-disabled.png) no-repeat 0 0;
+    background-size: 2rem; }
   .radiobox.type01-big.focus.checked.disabled:before {
-    background-position: 0 -6rem; }
+    background: url(/img/form/ico-radio-style01-big-checked-disabled.png) no-repeat 0 0;
+    background-size: 2rem; }
   .radiobox.type01-big > span {
     display: inline-block;
     font-size: 0.8125rem;
@@ -881,7 +900,7 @@ li.checkbox.type01 {
         right: 0.4375rem;
         width: 1.25rem;
         height: 1.25rem;
-        background: url(/img/form/ico-radio-style03.png) no-repeat 0 0;
+        background: url(/img/form/ico-radio-style03-default.png) no-repeat 0 0;
         background-size: 1.25rem; }
       .radio-slide .select-list .radiobox:nth-child(n+2) {
         margin-left: 0.125rem; }
@@ -906,7 +925,8 @@ li.checkbox.type01 {
           font-family: "TgothicBlack", Roboto, sans-serif;
           color: #fff; }
         .radio-slide .select-list .radiobox.checked:before {
-          background-position: 0 -1.25rem; }
+          background: url(/img/form/ico-radio-style03-checked.png) no-repeat 0 0;
+          background-size: 1.25rem; }
       .radio-slide .select-list .radiobox.disabled {
         background-color: #d1d1d1; }
         .radio-slide .select-list .radiobox.disabled .radio-txt {

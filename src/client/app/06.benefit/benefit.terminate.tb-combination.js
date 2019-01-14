@@ -81,6 +81,7 @@ Tw.BenefitTerminateTbCombination.prototype = {
       hbs: 'complete_product',
       data: {
         mytPage: 'myplancombine',
+        btClass: 'item-one',
         prodId: this._prodId,
         prodNm: this._prodNm,
         typeNm: Tw.PRODUCT_TYPE_NM.TERMINATE,

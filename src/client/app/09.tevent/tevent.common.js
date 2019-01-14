@@ -173,9 +173,9 @@ Tw.TeventCommon.prototype = {
 
     var url = '/tevent';
     if (this._uri === 'win') {
-      url = url + '/win/detail/';
+      url = url + '/win/detail?id=';
     } else {
-      url = url + '/detail/';
+      url = url + '/detail?id=';
     }
     this._historyService.goLoad(url + id);
   }

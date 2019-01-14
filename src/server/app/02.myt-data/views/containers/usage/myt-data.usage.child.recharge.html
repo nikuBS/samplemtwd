@@ -47,15 +47,17 @@
                         <div class="discount-look-ahead type01">
                             <div class="widget">
                                 <div class="widget-box radio">
-                                    <div class="fe-amts-container" style="display: none;overflow: hidden;margin-bottom: 1.25em;">
-                                        <ul class="select-list pb20" role="radiogroup" style="margin-bottom: 0;">
-                                            <script id="fe-amt-item" type="text/x-handlebars-template">
-                                                <li class="radiobox btn-type02" role="radio"><!-- 비활성화일경우 .disabled 클래스 추가 , aria-disabled="true" -->
-                                                    <input type="radio" name="radio4" value="{{ amt }}" title="{{ amtWithComma }}원" />
-                                                    <span class="radio-txt ff-tb">{{ amtWithComma }}원</span>
-                                                </li>
-                                            </script>
-                                        </ul>
+                                    <div class="fe-amts-container">
+                                        <script id="fe-amt-item" type="text/x-handlebars-template">
+                                            <li class="radiobox btn-type02 {{ disabled }}" role="radio" aria-disabled="true" style="flex: auto;"><!-- 비활성화일경우 .disabled 클래스 추가 , aria-disabled="true" -->
+                                                <input type="radio" name="radio4" value="{{ amt }}" title="{{ amtWithComma }}원" {{ disabled }} />
+                                                <span class="radio-txt ff-tb">{{ amtWithComma }}원</span>
+                                            </li>
+                                        </script>
+                                        <div class="select-list pb20 summary-amts" role="radiogroup">
+                                        </div>
+                                        <div class="select-list pb20 all-amts" role="radiogroup" style="display: none;">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -91,7 +93,8 @@
 <script>
   $(document).ready(function () {
     new Tw.MyTDataUsageChildRecharge($('#myt-data-usage-child-recharge'), {
-      childSvcMgmtNum: '<%= childSvcMgmtNum %>'
+      childSvcMgmtNum: '<%= childSvcMgmtNum %>',
+      topUpLimit: '<%= tingSubscriptions.topUpLimit %>'
     });
   });
 </script>

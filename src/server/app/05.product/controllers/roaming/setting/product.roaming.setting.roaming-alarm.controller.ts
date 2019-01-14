@@ -48,7 +48,7 @@ class ProductRoamingSettingRoamingAlarm extends TwViewController {
 
       res.render('roaming/setting/product.roaming.setting.roaming-alarm.html', {
         svcInfo : svcInfo,
-        prodRedisInfo : prodRedisInfo.summary,
+        prodRedisInfo : prodRedisInfo.result.summary,
         prodBffInfo : prodBffInfo.result,
         prodId : prodId,
         phoneNum : StringHelper.phoneStringToDash(svcInfo.svcNum),

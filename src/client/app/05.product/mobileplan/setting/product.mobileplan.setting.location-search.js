@@ -40,7 +40,7 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
     this.$container.on('click', 'button.search', $.proxy(this._listFilter, this));
     this.$container.on('click', '.bt-red1 button', $.proxy(this._addLocation, this));
     this.$container.on('click', '.select-list .radiobox', $.proxy(this._onchangeUiCondition, this));
-    this.$container.on('click', '.inputbox .cancel', $.proxy(this._listFilter, this));
+    // this.$container.on('click', '.inputbox .cancel', $.proxy(this._listFilter, this));
   },
 
   _listFilter: function(){

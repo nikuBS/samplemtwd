@@ -26,22 +26,22 @@ Tw.LINE_NAME = {
 };
 
 Tw.HOME_SMART_CARD_E = {
-  CHILD: 'H01',
-  BILL: 'H02',
-  NON_PAYMENT: 'H03',
-  SUSPENSION: 'H04',
-  MEMBERSHIP: 'H05',
-  CONTENT: 'H06',
-  MICRO_PAY: 'H07',
-  COLORING: 'H08',
-  DEVICE: 'H09',
-  GIFT: 'H10',
-  RECHARGE: 'H11',
-  AUTO: 'H12',
-  DIRECT: 'H13',
-  ROAMING: 'H14',
-  PRODUCT: 'H15',
-  ADDITIONAL: 'H16'
+  // CHILD: 'H01',
+  BILL: '00001',
+  // NON_PAYMENT: 'H03',
+  // SUSPENSION: 'H04',
+  // MEMBERSHIP: 'H05',
+  CONTENT: '00005',
+  MICRO_PAY: '00004',
+  // COLORING: 'H08',
+  // DEVICE: 'H09',
+  GIFT: '00002',
+  RECHARGE: '00003'
+  // AUTO: 'H12',
+  // DIRECT: 'H13',
+  // ROAMING: 'H14',
+  // PRODUCT: 'H15',
+  // ADDITIONAL: 'H16'
 };
 
 Tw.SVC_STATE = {
@@ -236,3 +236,26 @@ Tw.UNLIMIT_CODE = [
 ];
 
 Tw.IGNORE_JOINTERM = ['NA00004430', 'NA00004778', 'NA00005381', 'NA00002246', 'NA00002079', 'NA00002080', 'NA00002081', 'NA00002082'];
+
+Tw.PRODUCT_REPLACED_RULE = {
+  CHAR: [{
+    TARGET: ['999999999', '999,999,999', '무제한', '기본제공'],
+    RESULT: '기본제공'
+  }],
+  VCALL: [{
+    TARGET: ['999999999', '999,999,999', '무제한'],
+    RESULT: '무제한'
+  }, {
+    TARGET: ['999999995', '999,999,995'],
+    RESULT: 'SKT 지정회선 무제한'
+  }, {
+    TARGET: ['999999996', '999,999,996'],
+    RESULT: 'SKT 고객간 무제한'
+  }, {
+    TARGET: ['999999997', '999,999,997'],
+    RESULT: '이동전화 무제한'
+  }, {
+    TARGET: ['999999998', '999,999,998'],
+    RESULT: '집·이동전화 무제한'
+  }]
+};

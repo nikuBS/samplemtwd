@@ -27,7 +27,7 @@ Tw.CustomerEmailServiceOption.prototype = {
 
   _bindEvent: function () {
     this.$wrap_tpl_service.on('click', '.fe-select-line', $.proxy(this._selectLine, this));
-    this.$wrap_tpl_service.on('click', '[data-svcmgmtnum]', $.proxy(this._selectLineCallback, this));
+    this.$container.on('click', '[data-svcmgmtnum]', $.proxy(this._selectLineCallback, this));
     this.$container.on('click', '.fe-select-brand', $.proxy(this._getDirectBrand, this));
     this.$container.on('click', '.fe-select-device', $.proxy(this._getDirectDevice, this));
     this.$container.on('click', '.fe-search-order', $.proxy(this._getOrderInfo, this));

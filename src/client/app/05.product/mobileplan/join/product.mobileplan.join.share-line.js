@@ -109,8 +109,20 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
       autoTermList: this._confirmOptions.preinfo.autoTermList,
       autoJoinBenefitList: this._confirmOptions.preinfo.toProdInfo.chgSktProdBenfCtt,
       autoTermBenefitList: this._confirmOptions.preinfo.frProdInfo.chgSktProdBenfCtt,
-      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0)
+      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0),
+      downgrade: this._getDowngrade()
     });
+  },
+
+  _getDowngrade: function() {
+    if (Tw.FormatHelper.isEmpty(this._confirmOptions.downgrade) || Tw.FormatHelper.isEmpty(this._confirmOptions.downgrade.guidMsgCtt)) {
+      return null;
+    }
+
+    return {
+      isHtml: this._confirmOptions.downgrade.htmlMsgYn === 'Y',
+      guidMsgCtt: this._confirmOptions.downgrade.guidMsgCtt
+    };
   },
 
   _reqOverpay: function() {
@@ -204,6 +216,7 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
       data: {
         prodCtgNm: Tw.PRODUCT_CTG_NM.PLANS,
         mytPage: 'myplan',
+        btClass: 'item-one',
         prodId: this._prodId,
         prodNm: this._confirmOptions.preinfo.toProdInfo.prodNm,
         typeNm: Tw.PRODUCT_TYPE_NM.JOIN,

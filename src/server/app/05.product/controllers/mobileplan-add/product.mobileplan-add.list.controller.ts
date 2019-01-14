@@ -11,6 +11,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import ProductHelper from '../../../../utils/product.helper';
+import { DATA_UNIT } from '../../../../types/string.type';
 
 export default class ProductAdditions extends TwViewController {
   private ADDITION_CODE = 'F01200';
@@ -22,18 +23,20 @@ export default class ProductAdditions extends TwViewController {
       ...(req.query.tag ? { searchTagId: req.query.tag } : {})
     };
 
-    Observable.combineLatest(this.getMyAdditions(!!svcInfo), this.getAdditions(params)).subscribe(([myAdditions, additions]) => {
-      const error = {
-        code: (myAdditions && myAdditions.code) || additions.code,
-        msg: (myAdditions && myAdditions.msg) || additions.msg
-      };
+    Observable.combineLatest(this.getMyAdditions(svcInfo && svcInfo.svcAttrCd.startsWith('M')), this.getAdditions(params)).subscribe(
+      ([myAdditions, additions]) => {
+        const error = {
+          code: (myAdditions && myAdditions.code) || additions.code,
+          msg: (myAdditions && myAdditions.msg) || additions.msg
+        };
 
-      if (error.code) {
-        return this.error.render(res, { ...error, svcInfo });
+        if (error.code) {
+          return this.error.render(res, { ...error, svcInfo });
+        }
+
+        res.render('mobileplan-add/product.mobileplan-add.list.html', { svcInfo, additionData: { myAdditions, additions }, params, pageInfo });
       }
-
-      res.render('mobileplan-add/product.mobileplan-add.list.html', { svcInfo, additionData: { myAdditions, additions }, params, pageInfo });
-    });
+    );
   }
 
   private getMyAdditions = isLogin => {
@@ -72,15 +75,17 @@ export default class ProductAdditions extends TwViewController {
           return {
             ...addition,
             basFeeAmt: ProductHelper.convProductBasfeeInfo(addition.basFeeAmt),
-            basOfrDataQtyCtt: this.isEmptyAmount(addition.basOfrDataQtyCtt) ? 
-              null : 
-              ProductHelper.convProductBasOfrDataQtyCtt(addition.basOfrDataQtyCtt),
-            basOfrVcallTmsCtt: this.isEmptyAmount(addition.basOfrVcallTmsCtt) ? 
-              null : 
-              ProductHelper.convProductBasOfrVcallTmsCtt(addition.basOfrVcallTmsCtt, false),
-            basOfrCharCntCtt: this.isEmptyAmount(addition.basOfrCharCntCtt) ? 
-              null : 
-              ProductHelper.convProductBasOfrCharCntCtt(addition.basOfrCharCntCtt)
+            basOfrDataQtyCtt: this.isEmptyAmount(addition.basOfrDataQtyCtt)
+              ? this.isEmptyAmount(addition.basOfrMbDataQtyCtt)
+                ? null
+                : ProductHelper.convProductBasOfrDataQtyCtt(addition.basOfrMbDataQtyCtt)
+              : ProductHelper.convProductBasOfrDataQtyCtt(addition.basOfrDataQtyCtt, DATA_UNIT.GB),
+            basOfrVcallTmsCtt: this.isEmptyAmount(addition.basOfrVcallTmsCtt)
+              ? null
+              : ProductHelper.convProductBasOfrVcallTmsCtt(addition.basOfrVcallTmsCtt, false),
+            basOfrCharCntCtt: this.isEmptyAmount(addition.basOfrCharCntCtt)
+              ? null
+              : ProductHelper.convProductBasOfrCharCntCtt(addition.basOfrCharCntCtt)
           };
         })
       };

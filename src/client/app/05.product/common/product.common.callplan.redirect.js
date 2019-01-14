@@ -4,10 +4,11 @@
  * Date: 2018.12.04
  */
 
-Tw.ProductCommonCallplanRedirect = function(redirectUrl) {
+Tw.ProductCommonCallplanRedirect = function(prodId, redirectUrl) {
   this._redirectUrl = redirectUrl;
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
+  this._prodId = prodId;
 
   $(window).on(Tw.INIT_COMPLETE, $.proxy(this._openConfirm, this));
 };
@@ -15,6 +16,15 @@ Tw.ProductCommonCallplanRedirect = function(redirectUrl) {
 Tw.ProductCommonCallplanRedirect.prototype = {
 
   _openConfirm: function() {
+    if (this._prodId === 'TW20000019') {
+      return Tw.CommonHelper.openUrlInApp(this._redirectUrl);
+    }
+
+    if (!Tw.BrowserHelper.isApp()) {
+      this._isConfirm = true;
+      return this._procRedirect();
+    }
+
     this._popupService.openConfirm(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A15.TITLE, $.proxy(this._setConfirm, this), $.proxy(this._procRedirect, this));
   },
 

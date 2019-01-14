@@ -6,6 +6,16 @@
 
 Tw.MembershipBenefitBrandBenefit = function (rootEl, options) {
 
+  // 데이터 내에 태그를 escape한 것이 있다면 컨텐츠를 다시 뿌림
+  var tmp = options.coBenefitDtl.replace(/ /g, '').toLowerCase();
+  if(tmp.indexOf('&lt;br/&gt;') !== -1 ||
+    tmp.indexOf('&lt;b&gt;') !== -1 ||
+    tmp.indexOf('&lt;strong&gt;') !== -1) {
+    $('.benefit-list').eq(0).html($('.benefit-list').eq(0).text()).show();
+  }else{
+    $('.benefit-list').eq(0).show();
+  }
+
   this.$container = rootEl;
   this._options = options;
   this._historyService = new Tw.HistoryService();

@@ -37,6 +37,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
   },
   _clearInput : function(){
     this.$inputElement.val('');
+    this.$inputElement.trigger('keyup');
     this._activateAddBtn();
   },
   _inputBlurEvt : function(){
@@ -53,17 +54,28 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
   },
   _addPhoneNumOnList : function () {
     if(this._addedList.length>=5){
-      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.TITLE);
+      this._popupService.openAlert(
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.MSG,
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.TITLE,
+        null,
+        $.proxy(function () {
+          this.$addBtn.attr('disabled','disabled');
+          this.$addBtn.removeAttr('disabled');
+        },this)
+      );
       return;
     }
-
     var tempPhoneNum = this.$inputElement.val().split('-');
+    var phonReg = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
     var phoneObj = {
       'serviceNumber1' : tempPhoneNum[0],
       'serviceNumber2' : tempPhoneNum[1],
       'serviceNumber3' : tempPhoneNum[2]
     };
-
+    if(!phonReg.test(phoneObj.serviceNumber1+phoneObj.serviceNumber2+phoneObj.serviceNumber3)){
+      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
+      return;
+    }
     this._addedList.push(phoneObj);
     this._activateConfirmBtn();
     this._clearInput();
@@ -83,17 +95,22 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     }
   },
   _showPhoneBook : function () {
-
     this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._phoneBookCallBack,this));
   },
   _phoneBookCallBack : function(res){
     if (res.resultCode === Tw.NTV_CODE.CODE_00) {
-      var number = res.params.phoneNumber;
-      this.$inputElement.val(number);
+      this.$inputElement.val(res.params.phoneNumber);
+      this.$inputElement.trigger('keyup');
+      this._inputBlurEvt();
     }
   },
-  _activateAddBtn : function () {
-
+  _activateAddBtn : function (inputEvt) {
+    var inputVal = this.$inputElement.val();
+    if(inputVal.length>0&&isNaN(inputEvt.key)){
+      this.$inputElement.val(inputVal.replace(/[^0-9]/g,''));
+      this.$inputElement.blur();
+      this.$inputElement.focus();
+    }
     if(this.$inputElement.val().length>=10){
       this.$addBtn.removeAttr('disabled');
     }else{
@@ -119,13 +136,25 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     var handlebarsTemplate = Handlebars.compile(this.$alarmTemplate.html());
     this.$container.find('#alarm_list').append(handlebarsTemplate(templateData));
   },
+  _removeEvt : function (btnEvt) {
+    this._popupService.openConfirmButton(
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE,
+      $.proxy(function () {
+        this._popupService.close();
+        this._removeOnList(btnEvt);
+      },this),
+      null,
+      Tw.BUTTON_LABEL.CLOSE,
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON);
+  },
   _removeOnList : function (args) {
     var selectedIndex = parseInt($(args).attr('data-idx'),10);
     this._addedList.splice(selectedIndex,1);
     this._changeList();
   },
   _bindRemoveEvt : function () {
-    this.$container.find('.list-btn button').on('click',$.proxy(this._removeOnList,this));
+    this.$container.find('.list-btn button').on('click',$.proxy(this._removeEvt,this));
   },
   _doJoin : function(data,apiService,historyService,$containerData){
 

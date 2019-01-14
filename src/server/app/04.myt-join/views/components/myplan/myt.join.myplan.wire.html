@@ -3,7 +3,11 @@
 
         <div class="plan-compact-info">
             <div class="plan">
-                <a href="/product/callplan/<%= feePlan.prodId %>" class="tit"><%= feePlan.feeProdNm %></a>
+                <% if (feePlan.prodDetailLinkYn === 'Y' && feePlan.linkProdId) { %>
+                <a href="/product/callplan/<%= feePlan.linkProdId %>" class="tit"><%= feePlan.feeProdNm %></a>
+                <% } else { %>
+                <span class="tit"><%= feePlan.feeProdNm %></span>
+                <% } %>
                 <% if ( feePlan.isDisplayFeeAmt ) { %>
                 <span class="val"><%= feePlan.basFeeAmt %>원</span>
                 <% } %>
@@ -46,9 +50,15 @@
                             <% if ( feePlan.dcBenefits[i].penText ) { %><span class="item"><%= feePlan.dcBenefits[i].penText %></span><% } %>
                             <% if ( feePlan.dcBenefits[i].dcObjInvItmTypNm ) { %><span class="item"><%= feePlan.dcBenefits[i].dcObjInvItmTypNm %> 대상</span><% } %>
                         </div>
+                        <% if ( feePlan.dcBenefits[i].dcStaDt && feePlan.dcBenefits[i].dcEndDt ) { %>
+                        <div class="sale-period">
+                            <span class="sale-tit">할인기간</span>
+                            <span class="period"><%= feePlan.dcBenefits[i].dcStaDt %> ~ <%= feePlan.dcBenefits[i].dcEndDt %></span>
+                        </div>
+                        <% } %>
                     </div>
                     <% if (['01', '02'].indexOf(feePlan.dcBenefits[i].dcCttClCd) !== -1) { %>
-                    <span class="val"><%= Math.ceil(feePlan.dcBenefits[i].dcVal) %><%= (feePlan.dcBenefits[i].dcCttClCd === '01') ? '원' : '%' %></span>
+                    <span class="val"><%= feePlan.dcBenefits[i].dcCttClCd !== '01' ? Math.ceil(feePlan.dcBenefits[i].dcVal) : feePlan.dcBenefits[i].dcVal %><%= (feePlan.dcBenefits[i].dcCttClCd === '01') ? '원' : '%' %> <span class="val-txt">할인</span></span>
                     <% } %>
                 </li>
                 <% } %>

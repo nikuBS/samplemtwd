@@ -1105,7 +1105,6 @@ body.bg-gray {
       padding-top: 0;
       background: #fff; }
   .popup-page .container-wrap {
-    height: 100%;
     -webkit-box-sizing: border-box;
             box-sizing: border-box; }
     .popup-page .container-wrap.bg-type1 {

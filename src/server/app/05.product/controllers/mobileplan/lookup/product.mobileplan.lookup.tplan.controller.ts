@@ -23,7 +23,7 @@ class ProductMobileplanLookupTplan extends TwViewController {
   }
 
   private readonly _prodIdList = {
-    NA00006114: 'infiTravelList',
+    NA00006114: 'infiTravel',
     NA00006115: 'infiMovieList',
     NA00006116: 'infiWatchList',
     NA00006117: 'infiClubList'
@@ -35,37 +35,22 @@ class ProductMobileplanLookupTplan extends TwViewController {
   /**
    * @param result
    * @param printProdId
+   * @param tabId
    * @private
    */
-  private _parseBenefitList(result, printProdId): any {
-    const resultList: any = {};
+  private _parseBenefitList(result: any, printProdId: any, tabId?: any): any {
+    let resultList: any = {};
 
     this._listCase = 'A';
     this._listTotal = 0;
 
     switch (printProdId) {
       case 'NA00006114':
+        resultList = this._convertTravelAndMovieList(result[this._prodIdList[printProdId]][tabId === 'onepass' ? 'infiRomList' : 'infiMatinaList']);
+        this._listTotal = result[this._prodIdList[printProdId]].infiRomList.length + result[this._prodIdList[printProdId]].infiMatinaList.length;
+        break;
       case 'NA00006115':
-        result[this._prodIdList[printProdId]].forEach((item, index) => {
-          if (FormatHelper.isEmpty(item.issueDt)) {
-            return true;
-          }
-
-          const issueDtKey = DateHelper.getShortDateWithFormat(item.issueDt, 'YYYY.M.DD.');
-          if (FormatHelper.isEmpty(resultList[issueDtKey])) {
-            resultList[issueDtKey] = {
-              issueDtKey: issueDtKey,
-              list: []
-            };
-          }
-
-          this._listTotal++;
-          resultList[issueDtKey].list.push(Object.assign(item, {
-            issueDt: FormatHelper.isEmpty(item.issueDt) ? '' : DateHelper.getShortDateWithFormat(item.issueDt, 'YYYY.M.DD.'),
-            hpnDt: FormatHelper.isEmpty(item.hpnDt) ? '' : DateHelper.getShortDateWithFormat(item.hpnDt, 'YYYY.M.DD.'),
-            effDt: FormatHelper.isEmpty(item.effDt) ? '' : DateHelper.getShortDateWithFormat(item.effDt, 'YYYY.M.DD.')
-          }));
-        });
+        resultList = this._convertTravelAndMovieList(result[this._prodIdList[printProdId]]);
         break;
       case 'NA00006116':
       case 'NA00006117':
@@ -75,16 +60,22 @@ class ProductMobileplanLookupTplan extends TwViewController {
             return true;
           }
 
-          const benfStaDtKey = DateHelper.getShortDateWithFormat(item.benfStaDt, 'YYYY.M.DD.');
-          if (FormatHelper.isEmpty(resultList[benfStaDtKey])) {
-            resultList[benfStaDtKey] = {
+          const benfStaDtKey = DateHelper.getShortDateWithFormat(item.benfStaDt, 'YYYY.M.DD.'),
+            yearKey = DateHelper.getShortDateWithFormat(item.benfStaDt, 'YYYY');
+
+          if (FormatHelper.isEmpty(resultList[yearKey])) {
+            resultList[yearKey] = {};
+          }
+
+          if (FormatHelper.isEmpty(resultList[yearKey][benfStaDtKey])) {
+            resultList[yearKey][benfStaDtKey] = {
               benfStaDtKey: benfStaDtKey,
               list: []
             };
           }
 
           this._listTotal++;
-          resultList[benfStaDtKey].list.push(Object.assign(item, {
+          resultList[yearKey][benfStaDtKey].list.push(Object.assign(item, {
             prodNm: printProdId === 'NA00006116' ? item.watchDcNm : item.primProdNm,
             prodLabel: PRODUCT_INFINITY_BENEFIT_PROD_NM[printProdId],
             benfStaDt: FormatHelper.isEmpty(item.benfStaDt) ? '' : DateHelper.getShortDateWithFormat(item.benfStaDt, 'YYYY.M.DD.'),
@@ -94,7 +85,44 @@ class ProductMobileplanLookupTplan extends TwViewController {
         break;
     }
 
-    return Object.keys(resultList).map(key => resultList[key]);
+    return resultList;
+  }
+
+  /**
+   * @param list
+   * @private
+   */
+  private _convertTravelAndMovieList(list: any): any {
+    const resultList: any = {};
+
+    list.forEach((item, index) => {
+      if (FormatHelper.isEmpty(item.issueDt)) {
+        return true;
+      }
+
+      const issueDtKey = DateHelper.getShortDateWithFormat(item.issueDt, 'YYYY.M.DD.'),
+        yearKey = DateHelper.getShortDateWithFormat(item.issueDt, 'YYYY');
+
+      if (FormatHelper.isEmpty(resultList[yearKey])) {
+        resultList[yearKey] = {};
+      }
+
+      if (FormatHelper.isEmpty(resultList[yearKey][issueDtKey])) {
+        resultList[yearKey][issueDtKey] = {
+          issueDtKey: issueDtKey,
+          list: []
+        };
+      }
+
+      this._listTotal++;
+      resultList[yearKey][issueDtKey].list.push(Object.assign(item, {
+        issueDt: FormatHelper.isEmpty(item.issueDt) ? '' : DateHelper.getShortDateWithFormat(item.issueDt, 'YYYY.M.DD.'),
+        hpnDt: FormatHelper.isEmpty(item.hpnDt) ? '' : DateHelper.getShortDateWithFormat(item.hpnDt, 'YYYY.M.DD.'),
+        effDt: FormatHelper.isEmpty(item.effDt) ? '' : DateHelper.getShortDateWithFormat(item.effDt, 'YYYY.M.DD.')
+      }));
+    });
+
+    return resultList;
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
@@ -106,6 +134,7 @@ class ProductMobileplanLookupTplan extends TwViewController {
       };
 
     const reqParams: any = {};
+
     if (!FormatHelper.isEmpty(tDiyGrCd)) {
       reqParams.tDiyGrCd = tDiyGrCd;
     }
@@ -123,18 +152,24 @@ class ProductMobileplanLookupTplan extends TwViewController {
           return this.error.render(res, renderCommonInfo);
         }
 
-        const printProdId = FormatHelper.isEmpty(tDiyGrCd) ? data.result.beforeTDiyGrCd : tDiyGrCd;
-        const currentGrToken = PRODUCT_INFINITY_BENEFIT_NM[data.result.beforeTDiyGrCd].split('_');
-        const grToken = PRODUCT_INFINITY_BENEFIT_NM[printProdId].split('_');
+        const printProdId = FormatHelper.isEmpty(tDiyGrCd) ? data.result.beforeTDiyGrCd : tDiyGrCd,
+          currentGrToken = PRODUCT_INFINITY_BENEFIT_NM[data.result.beforeTDiyGrCd].split('_'),
+          grToken = PRODUCT_INFINITY_BENEFIT_NM[printProdId].split('_');
+
+        let tabId: any = req.query.tab_id || null;
+        if (printProdId === 'NA00006114' && FormatHelper.isEmpty(tabId)) {
+          tabId = 'onepass';
+        }
 
         res.render('mobileplan/lookup/product.mobileplan.lookup.tplan.html', Object.assign(renderCommonInfo, {
           beforeTDiyGrNm: currentGrToken.join(' '),
           beforeTDiyGrNmCategory: grToken[1],
           beforeTDiyGrDesc: PRODUCT_INFINITY_BENEFIT[data.result.beforeTDiyGrCd],
           beforeTDiyGrCd: printProdId,
-          benefitList: this._parseBenefitList(data.result, printProdId),
+          benefitList: this._parseBenefitList(data.result, printProdId, tabId),
           listCase: this._listCase,
-          listTotal: this._listTotal
+          listTotal: this._listTotal,
+          tabId: tabId
         }));
       });
   }

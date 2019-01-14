@@ -125,9 +125,10 @@ Tw.MembershipBenefitBrandList.prototype = {
         this._selectedArea1 = rbt.val();
         $target.text(this._selectedArea1);
         this._requestArea2();
+        this._selectedArea2 = '';
         $('#fe-btn-gu').text(this.DEFAULT_SIGUNGU_TXT);
         $('#fe-btn-gu').attr('disabled', false);
-        this.$btnSearch.attr('disabled', true);
+        this.$btnSearch.attr('disabled', false);
       }
       this._popupService.close();
     }, this, $target));

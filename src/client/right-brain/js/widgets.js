@@ -127,6 +127,16 @@ skt_landing.widgets = {
           bt.show();
         }
       });
+      if(field.hasClass('text-auto-expand')) {
+        field.on('input',function(){
+          $(this).css('height', 'inherit');
+          var scroll_height = $(this).get(0).scrollHeight;
+          $(this).css('height', scroll_height + 'px');
+        });
+        bt.on('click',function(){
+          field.css('height', 'inherit');
+        });
+      }
     });
   },
   widget_step: function () {
@@ -285,6 +295,27 @@ skt_landing.widgets = {
           return $('<span />').text(i + 1);
         },
       });
+      if($(this).hasClass('slider1-auto')) {
+        _this.slick('destroy');
+        _this.slick({
+          autoplay: true,
+          autoplaySpeed: 4000,
+          dots: true,
+          arrows: true,
+          infinite: false,
+          speed : 300,
+          // useTransform : false,
+          // mobileFirst : true,
+          // useCSS : false,
+          // useTransform : false,
+          centerMode: false,
+          focusOnSelect: false,
+          touchMove : true,
+          customPaging: function(slider, i) {
+            return $('<span />').text(i + 1);
+          },
+        });
+      }
       var $slick = _this.slick('getSlick');
       var $slides = $slick.$slides;
       var slideIndex = $slick.slickCurrentSlide();

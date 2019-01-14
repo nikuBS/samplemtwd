@@ -61,7 +61,7 @@ Tw.PPSRechargeLayer.prototype = {
       }]
     });
     data.push({
-      title: Tw.POPUP_TPL.PPS_CHARGE_DATA.VOICE,
+      title: Tw.POPUP_TPL.PPS_CHARGE_DATA.DATA,
       list: [{
         option: 'once-data',
         txt: Tw.POPUP_TPL.PPS_CHARGE_DATA.ONCE

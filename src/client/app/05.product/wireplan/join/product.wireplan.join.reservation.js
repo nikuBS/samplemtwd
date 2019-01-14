@@ -13,7 +13,7 @@ Tw.ProductWireplanJoinReservation = function(rootEl, isProduct) {
   this._historyService = new Tw.HistoryService();
   this._tidLanding = new Tw.TidLandingComponent();
 
-  this._prodIdFamilyList = ['NA00002040', 'NH00000133', 'NH00000084'];
+  this._prodIdFamilyList = ['NA00005055', 'NH00000133', 'NH00000084'];
   this._prodIdList = $.merge(this._prodIdFamilyList, ['NH00000103']);
   this._isProduct = Tw.FormatHelper.isEmpty(isProduct) ? null : JSON.parse(isProduct);
   this._logged = false;
@@ -237,16 +237,16 @@ Tw.ProductWireplanJoinReservation.prototype = {
           'title': Tw.PRODUCT_COMBINE_PRODUCT.GROUP_PERSONAL,
           'list':[
             { 'label-attr': 'id="ra1"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000103.TITLE,
-              'explain': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00002040.EXPLAIN,
+              'explain': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000103.EXPLAIN,
               'radio-attr':'id="ra1" data-prod_id="NH00000103" ' + (this._prodId === 'NH00000103' ? 'checked' : '') }
           ]
         },
         {
           'title': Tw.PRODUCT_COMBINE_PRODUCT.GROUP_FAMILY,
           'list': [
-            { 'label-attr': 'id="ra2_0"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00002040.TITLE,
-              'explain': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00002040.EXPLAIN,
-              'radio-attr':'id="ra2_0" data-prod_id="NA00002040" ' + (this._prodId === 'NA00002040' ? 'checked' : '') },
+            { 'label-attr': 'id="ra2_0"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00005055.TITLE,
+              'explain': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00005055.EXPLAIN,
+              'radio-attr':'id="ra2_0" data-prod_id="NA00005055" ' + (this._prodId === 'NA00005055' ? 'checked' : '') },
             { 'label-attr': 'id="ra2_1"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.TITLE,
               'explain': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.EXPLAIN,
               'radio-attr':'id="ra2_1" data-prod_id="NH00000133" ' + (this._prodId === 'NH00000133' ? 'checked' : '') },

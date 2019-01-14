@@ -22,7 +22,10 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     this._bindEvent();
   },
   _initVariables: function ($targetId) {
+    this.$pointWrap = this.$container.find('.fe-point-wrap');
     this.$standardPoint = this.$container.find('.fe-standard-point');
+    this.$getPointBtn = this.$container.find('.fe-get-point-wrapper');
+    this.$pointInfo = this.$container.find('.fe-point-info');
     this.$autoInfo = this.$container.find('.fe-auto-info');
     this.$selectedTab = this.$container.find('#' + $targetId + '-tab');
     this.$pointCardNumber = this.$selectedTab.find('.fe-point-card');
@@ -39,6 +42,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     this.$isSelectValid = true;
   },
   _bindEvent: function () {
+    this.$container.on('click', '.fe-get-point', $.proxy(this._openGetPoint, this));
     this.$container.on('click', '.fe-tab-selector > li', $.proxy(this._changeTab, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.fe-only-number', $.proxy(this._checkNumber, this));
@@ -54,6 +58,25 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     this.$container.on('click', '.fe-tab1-pay', $.proxy(this._onePay, this));
     this.$container.on('click', '.fe-tab2-pay', $.proxy(this._autoPay, this));
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
+  },
+  _openGetPoint: function () {
+    new Tw.MyTFareBillGetPoint(this.$container, $.proxy(this._setPointInfo, this));
+  },
+  _setPointInfo: function (result) {
+    var $point = 0;
+    if (this.$pointType === 'CPT') {
+      $point = result.availPt;
+    } else {
+      $point = result.availTpt;
+    }
+
+    this.$standardPoint.attr('id', $point).text(Tw.FormatHelper.addComma($point));
+    this.$pointCardNumber.val(result.ocbCcno).attr('readonly', true);
+    this.$selectedTab.siblings().find('.fe-point-card').val(result.ocbCcno).attr('readonly', true);
+
+    this.$pointWrap.removeClass('none');
+    this.$getPointBtn.hide();
+    this.$pointInfo.show();
   },
   _changeTab: function (event) {
     var $targetId = $(event.currentTarget).attr('id');
@@ -151,6 +174,10 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     return Tw.POPUP_TPL.FARE_PAYMENT_TPOINT;
   },
   _selectPopupCallback: function ($target, $layer) {
+    var $id = $target.attr('id');
+    if (!Tw.FormatHelper.isEmpty($id)) {
+      $layer.find('input#' + $id).attr('checked', 'checked');
+    }
     $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
     $layer.on('click', '.fe-popup-close', $.proxy(this._checkSelected, this));
   },
@@ -282,16 +309,19 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     }
   },
   _isChanged: function () {
-    if (this.$selectedTab.attr('id') === 'tab1-tab') {
-      return !Tw.FormatHelper.isEmpty(this.$point.val()) || !Tw.FormatHelper.isEmpty(this.$pointCardNumber.val()) ||
-        !Tw.FormatHelper.isEmpty(this.$pointPw.val());
-    } else {
-      if (this.$autoInfo.is(':visible')) {
-        return (this.$pointSelector.attr('id') !== this.$pointSelector.attr('data-origin-id'));
-      } else {
-        return !Tw.FormatHelper.isEmpty(this.$pointSelector.attr('id')) || !Tw.FormatHelper.isEmpty(this.$pointCardNumber.val());
+    var isChanged = false;
+    if (!this.$pointCardNumber.attr('readOnly')) {
+      if (!Tw.FormatHelper.isEmpty(this.$pointCardNumber.val())) {
+        isChanged = true;
       }
     }
+
+    if (this.$selectedTab.attr('id') === 'tab1-tab') {
+      isChanged = !Tw.FormatHelper.isEmpty(this.$point.val()) || !Tw.FormatHelper.isEmpty(this.$pointPw.val());
+    } else {
+      isChanged = true;
+    }
+    return isChanged;
   },
   _closePop: function () {
     this._isClose = true;

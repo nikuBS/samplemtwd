@@ -98,8 +98,7 @@ Tw.MyTFareBillSetReIssue.prototype = {
       this._popupService.openAlert(Tw.MYT_FARE_BILL_SET.A44.CONTENTS, ' ');
     } else if ( params.code && params.code === Tw.API_CODE.CODE_00 ) {
       // 성공 - 발행 된 건이 없는 경우
-      this._popupService.openAlert(Tw.MYT_FARE_BILL_SET.BILL_GUIDECHANGE_A14, Tw.POPUP_TITLE.NOTIFY,
-        null, $.proxy(this._goToComplete, this));
+      this._goToComplete();
     } else {
       this._popupService.openAlert(params.msg, params.code);
     }

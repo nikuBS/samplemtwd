@@ -4,13 +4,17 @@
  * Date: 2018.10.02
  */
 
-Tw.MyTFareBillOptionRegister = function (rootEl) {
+Tw.MyTFareBillOptionRegister = function (rootEl, bankList) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService(rootEl);
-  this._bankList = new Tw.MyTFareBillBankList(this.$container);
+
+  if (!(Tw.FormatHelper.isEmpty(bankList) || bankList === '[]')) {
+    bankList = JSON.parse(bankList);
+  }
+  this._bankList = new Tw.MyTFareBillBankList(rootEl, bankList);
 
   this._init();
 };

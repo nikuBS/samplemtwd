@@ -1,0 +1,135 @@
+<%#
+* FileName: product.mobileplan.join.0plan-sm.html
+* Author: Ji Hun Yang (jihun202@sk.com)
+* Date: 2019.01.10
+%>
+<% include ../../../components/start.component.html %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap step" data-menuId="<%= pageInfo.menuId %>">
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup nobg fixed-bottom h60">
+        <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>가입</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="product-tit-wrap">
+                        <span class="tit-small">변경할 상품 옵션 설정하세요.</span>
+                        <span class="tit-big">0플랜 <%= prodId === 'NA00006155' ? '스몰' : '미디엄' %></span>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <div class="product-select-wrap">
+                    <span class="data-tit">0플랜 옵션 선택 <button class="tip-view" id="MP_02_02_03_15_tip_01">TIP</button></span>
+                </div>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps noborder">
+                    <div class="list-comp-input">
+                        <div class="widget">
+                            <div class="widget-box radio">
+                                <ul class="select-list" role="group">
+                                    <li class="radiobox type01" role="radio" aria-checked="false">
+                                        <input type="radio" name="radio" value="NA00006161" title="0플랜_주말" data-desc="주말(토요일,일요일) 각2GB+3Mbps이용" aria-labelledby="aria-comp-radio1">
+                                        <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
+                                            <p class="layout-text">
+                                                <span class="mtext">0플랜_주말</span>
+                                                <span class="stext">주말(토요일,일요일) 각2GB+3Mbps이용</span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li class="radiobox type01" role="radio" aria-checked="false">
+                                        <input type="radio" name="radio" value="NA00006162" title="0플랜_심야" data-desc="심야(0~7am) 완전무제한 이용" aria-labelledby="aria-comp-radio2">
+                                        <div class="comp-list-layout" id="aria-comp-radio2" aria-hidden="true">
+                                            <span class="ico ico-movie"></span>
+                                            <p class="layout-text">
+                                                <span class="mtext">0플랜_심야</span>
+                                                <span class="stext">심야(0~7am) 완전무제한 이용</span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <li class="radiobox type01" role="radio" aria-checked="false">
+                                        <input type="radio" name="radio" value="NA00006163" title="0플랜_매일3시간" aria-labelledby="aria-comp-radio3">
+                                        <div class="comp-list-layout" id="aria-comp-radio3" aria-hidden="true">
+                                            <span class="ico ico-watch"></span>
+                                            <p class="layout-text">
+                                                <span class="mtext">0플랜_매일3시간</span>
+                                                <span class="stext">선택한 시간부터+3시간<br>무제한 이용(2GB+3Mbps)</span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-top">
+                    <div class="plan-cont">
+                            <span class="form-wrap">
+                                <span class="inputbox">
+                                    <span class="select">
+                                        <button class="bt-dropdown big fe-btn_time_select" disabled title="0플랜 시작시간 선택" aria-haspopup="true">시작시간 선택<span class="ico"></span></button>
+                                    </span>
+                                </span>
+                            </span>
+                        <p class="tx-msg fe-msg" style="display: none"><span class="fe-start_time"></span>시 ~ <span class="fe-end_time"></span>시까지 무제한 이용</p>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <!-- .cont-box -->
+                <div class="cont-box noborder bgnone">
+                    <div class="announcement-box">
+                        <div class="announcement-bullet type02">3개의 옵션 중 1가지를 선택할 수 있으며, 변경일을 기준으로 30일 이내에는 다른 옵션으로 변경하실 수 없습니다.</div>
+                        <div class="announcement-bullet type02 mt10">단, 요금제 가입일 기준 당일에 한해 2회까지 옵션 변경이 가능하며, 이후 부터는 주 1회에 변경 가능합니다.</div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button class="fe-btn_setup_ok" disabled="disabled">설정 완료</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- // .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-common-back">취소</button>
+        <!--// .popup-closeBtn -->
+    </div>
+    <!-- // .popup hbs -->
+</div>
+</body>
+<% include ../../../components/javascript.component.html %>
+<script>$(function () {
+  new Tw.ProductMobileplanJoin0planSm($('.wrap'), '<%= prodId %>', 'MP_02_02_03_15', '<%- escape(sktProdBenfCtt) %>',
+    '<%= isOverPayReqYn %>', '<%= mobilePlanCompareInfo ? "Y" : "N" %>');
+});</script>
+<% include ../../../components/end.component.html %>

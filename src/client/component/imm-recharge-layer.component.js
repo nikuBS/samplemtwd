@@ -74,8 +74,9 @@ Tw.ImmediatelyRechargeLayer.prototype = {
           this.immChargeData.etc = etc;
         }
         if ( optSvc.code === Tw.API_CODE.CODE_00 ) {
-          if ( optSvc.result.optProdList && optSvc.result.optProdList.length > 0 ) {
-            _.filter(optSvc.result.optProdList, $.proxy(function (item) {
+          // optProdList -> disProdList 합쳐짐 (BE 1/14 기준)
+          if ( optSvc.result.disProdList && optSvc.result.disProdList.length > 0 ) {
+            _.filter(optSvc.result.disProdList, $.proxy(function (item) {
               // 부가서비스
               if ( !this._isLimited ) {
                 this._isLimited = (this._readOnlyProductIdList.indexOf(item.prodId) > -1);
@@ -178,7 +179,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
         case 'data_coupon':
         case 't_coupon':
         case 'jeju_coupon':
-          item.on('click', $.proxy(this._onPrepayCoupon, this));
+          item.on('click', $.proxy(this._onPrepayCoupon, this, classNm));
           break;
       }
     }
@@ -226,9 +227,23 @@ Tw.ImmediatelyRechargeLayer.prototype = {
     this._popupService.close();
   },
 
-  _onPrepayCoupon: function (event) {
-    var $target = $(event.target);
-    $target.attr('data-external', 'http://skt.datacoupon.co.kr');
+  _onPrepayCoupon: function (classNm, event) {
+    var $target = $(event.currentTarget);
+    var browser = Tw.BrowserHelper.isApp()? 'APP' : 'WEB';
+    switch ( classNm ) {
+      case 'data_coupon':
+        // $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.T_DATA[browser]);
+        $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.T_DATA_DEV[browser]);
+        break;
+      case 't_coupon':
+        // $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.T_COUPON[browser]);
+        $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.T_COUPON_DEV[browser]);
+        break;
+      case 'jeju_coupon':
+        // $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.JEJU[browser]);
+        $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.JEJU_DEV[browser]);
+        break;
+    }
     this._popupService.close();
   }
 };

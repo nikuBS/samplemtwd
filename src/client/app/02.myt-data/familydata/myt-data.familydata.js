@@ -4,17 +4,18 @@
  * Date: 2018.10.01
  */
 
-Tw.MyTDataFamily = function(rootEl, maxLimitation) {
+Tw.MyTDataFamily = function(rootEl) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
-  this._maxLimitation = maxLimitation;
 
   this._bindEvent();
 };
 
 Tw.MyTDataFamily.prototype = {
+  MAX_LIMITATION: 200,
+
   _bindEvent: function() {
     this.$container.on('click', '.fe-setting-limit', $.proxy(this._openChangeLimit, this));
   },
@@ -61,20 +62,20 @@ Tw.MyTDataFamily.prototype = {
 
   _handleOpenChangeLimitation: function(mgmtNum, limitation, $layer) {
     $layer.on('click', '.bt-red1', $.proxy(this._handleSubmitLimitation, this, mgmtNum, limitation));
-    $layer.on('change', 'input[type="radio"]', $.proxy(this._handleChangeLimitType, this, $layer, limitation));
+    $layer.on('change', 'input[type="radio"]', $.proxy(this._handleChangeLimitType, this, $layer));
     $layer.on('keyup', 'span.input input', $.proxy(this._handleChangeLimitation, this, $layer));
   },
 
   _handleSubmitLimitation: function(mgmtNum, originLimit) {
     var limitation = this._limitation;
 
-    if (originLimit == limitation) {
+    if (originLimit === limitation) {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.A5);
     } else if (limitation === false) {
       this._popupService.close();
       this._apiService.request(Tw.API_CMD.BFF_06_0051, {}, {}, [mgmtNum]).done($.proxy(this._successChangeLimitation, this));
-    } else if (this._maxLimitation < Number(limitation)) {
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.A6);
+    } else if (this.MAX_LIMITATION < Number(limitation)) {
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.A6.MSG, Tw.ALERT_MSG_MYT_DATA.A6.TITLE);
     } else {
       this._popupService.close();
       this._apiService
@@ -86,16 +87,19 @@ Tw.MyTDataFamily.prototype = {
     }
   },
 
-  _handleChangeLimitType: function($layer, limitation, e) {
+  _handleChangeLimitType: function($layer, e) {
     var inputId = e.currentTarget.id;
-    var $btn = $layer.find('.bt-red1 > button');
-    var value = $layer.find('span.input input').val();
+    var $btn = $layer.find('.bt-red1 > button'),
+      $input = $layer.find('span.input input'),
+      value = $input.val();
 
     if (inputId === 'sradio2') {
       $btn.attr('disabled', value.length === 0);
+      $input.removeAttr('disabled');
       this._limitation = value;
     } else {
       $btn.attr('disabled', false);
+      $input.attr('disabled', true);
       this._limitation = false;
     }
   },

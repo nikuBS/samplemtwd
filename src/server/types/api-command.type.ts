@@ -499,8 +499,9 @@ export const API_CMD = {
   BFF_08_0069: { path: '/core-modification/:version/search/invst-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // SEARCH SURVEY
-  BFF_08_0070: { path: '/core-modification/v1/search/invst-append', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
-  BFF_08_0071: { path: '/core-modification/v1/search/invst-insert', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0070: { path: '/core-modification/:version/search/invst-append', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0071: { path: '/core-modification/:version/search/invst-insert', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0072: { path: '/core-modification/:version/search/smart', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/:version/event/ing-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -520,7 +521,7 @@ export const API_CMD = {
     path: '/core-product/:version/mobiles/fee-plans/:args0/joins/join-prechecks',
     method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },
-  BFF_10_0008: { path: '/:version/products/fee-plans/:args0/join-term-infos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_10_0008: { path: '/:version/products/fee-plans/:args0/join-term-infos', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0009: {
     path: '/core-product/:version/mobiles/fee-plans/joins/request-over-chargings',
     method: API_METHOD.POST,
@@ -630,7 +631,7 @@ export const API_CMD = {
   BFF_10_0089: { path: '/core-product/:version/roaming/submain/alpaList', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0090: { path: '/core-product/:version//roaming/submain/bannerList', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0091: { path: '/core-product/:version/roaming/fee-plans/:args0/rom-use-periods', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_10_0092: { path: '/core-product/:version/roaming/services/t-roam-tog/:args0/members', method: API_METHOD.POST , bypass: true },
+  BFF_10_0092: { path: '/core-product/:version/roaming/services/t-roam-tog/:args0/members', method: API_METHOD.POST , server: API_SERVER.BFF, bypass: true },
   BFF_10_0093: { path: '/core-product/:version/submain/tapps', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0098: { path: '/core-product/:version/wire/additions/:args0/joins/prechecks', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0099: { path: '/core-product/:version/wire/additions/:args0/joins', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
@@ -674,6 +675,12 @@ export const API_CMD = {
   BFF_10_0168: {
     path: '/core-product/:version/wire/additions/:args0/joins/ledger-prechecks/terms', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },
+  BFF_10_0169: {
+    path: '/core-product/v1/mobiles/fee-plans/young-plan-mid-sets', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
+  BFF_10_0170: {
+    path: '/core-product/v1/mobiles/fee-plans/young-plan-mid-sets', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true
+  },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/:version/submain/products', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -697,7 +704,7 @@ export const API_CMD = {
   BFF_11_0006: { path: '/core-membership/:version/card/change', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_11_0007: { path: '/core-membership/:version/card/check', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_11_0009: { path: '/core-membership/:version/card/used-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_11_0010: { path: '/core-membership/:version/card/used-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_11_0010: { path: '/core-membership/:version/card/hist', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_11_0011: { path: '/core-membership/:version/card/create', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_11_0012: { path: '/core-membership/:version/card/modify', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_11_0013: { path: '/core-membership/:version/card/cancel-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

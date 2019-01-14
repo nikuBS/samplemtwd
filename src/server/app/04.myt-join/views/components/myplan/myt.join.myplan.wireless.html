@@ -3,7 +3,11 @@
 
         <div class="plan-compact-info">
             <div class="plan">
-                <a href="/product/callplan/<%= feePlan.feePlanProd.prodId %>" class="tit"><%= feePlan.feePlanProd.prodNm %></a>
+                <% if (feePlan.feePlanProd.prodLinkYn === 'Y' && feePlan.feePlanProd.linkProdId) { %>
+                <a href="/product/callplan/<%= feePlan.feePlanProd.linkProdId %>" class="tit"><%= feePlan.feePlanProd.prodNm %></a>
+                <% } else { %>
+                <span class="tit"><%= feePlan.feePlanProd.prodNm %></span>
+                <% } %>
                 <% if ( feePlan.feePlanProd.basFeeInfo && !feePlan.feePlanProd.basFeeInfo.isNaN ) { %>
                 <span class="val"><%= feePlan.feePlanProd.basFeeInfo.value %>원</span>
                 <% } %>
@@ -57,7 +61,7 @@
                 <li class="last-line"><a href="/benefit/my">나의 혜택 보기</a></li>
                 <% if ( feePlan.feePlanProd.btnList && feePlan.feePlanProd.btnList.length > 0 ) { %>
                 <% for (var i in feePlan.feePlanProd.btnList) { %>
-                <li class="last-line"><a href="<%= feePlan.feePlanProd.btnList[i].btnLinkUrl %>?prod_id=<%= feePlan.feePlanProd.prodId %>"><%= feePlan.feePlanProd.btnList[i].btnNm %></a></li>
+                <li class="last-line"><a href="<%= feePlan.feePlanProd.btnList[i].btnLinkUrl %>?prod_id=<%= feePlan.feePlanProd.linkProdId %>"><%= feePlan.feePlanProd.btnList[i].btnNm %></a></li>
                 <% } %>
                 <% } %>
             </ul>
@@ -97,13 +101,13 @@
                             <span class="tit"><%= feePlan.optionAndDiscountProgramList[i].prodNm %></span>
                             <span class="join-date">가입일 <%= feePlan.optionAndDiscountProgramList[i].scrbDt %></span>
                             <% for (var j in feePlan.optionAndDiscountProgramList[i].btnList) { %>
-                            <a href="<%= feePlan.optionAndDiscountProgramList[i].btnList[j].btnLinkUrl %>?prod_id=<%= feePlan.optionAndDiscountProgramList[i].prodId %>" class="bt-link-tx underline">
+                            <a href="<%= feePlan.optionAndDiscountProgramList[i].btnList[j].btnLinkUrl %>?prod_id=<%= feePlan.optionAndDiscountProgramList[i].linkProdId %>" class="bt-link-tx underline">
                                 <%= feePlan.optionAndDiscountProgramList[i].btnList[j].btnNm %>
                             </a>
                             <% } %>
                         </div>
                         <% if ( feePlan.optionAndDiscountProgramList[i].prodLinkYn === 'Y' ) { %>
-                        <a href="/product/callplan/<%= feePlan.optionAndDiscountProgramList[i].prodId %>" class="btn">상세보기</a>
+                        <a href="/product/callplan/<%= feePlan.optionAndDiscountProgramList[i].linkProdId %>" class="btn">상세보기</a>
                         <% } %>
                     </li>
                     <% } %>

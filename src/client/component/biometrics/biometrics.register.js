@@ -56,8 +56,10 @@ Tw.BiometricsRegister.prototype = {
   },
   _onCloseBioRegister: function () {
     if ( this._complete ) {
-      var biometricsComplete = new Tw.BiometricsComplete(this._target);
-      biometricsComplete.open(this._callback);
+      setTimeout($.proxy(function () {
+        var biometricsComplete = new Tw.BiometricsComplete(this._target);
+        biometricsComplete.open(this._callback);
+      }, this), 100);
     }
   }
 };

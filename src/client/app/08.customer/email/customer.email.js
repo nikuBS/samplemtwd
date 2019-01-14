@@ -43,7 +43,7 @@ Tw.CustomerEmail.prototype = {
     this.$container.on('keyup', '.fe-service_email', $.proxy(this._onKeyUpEmail, this));
     this.$container.on('keyup', '.fe-quality_email', $.proxy(this._onKeyUpEmail, this));
     this.$container.on('click', '.fe-btn_addr', $.proxy(this._onClickBtnAddr, this));
-    this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
+    this.$container.on('click', '.fe-email-close', $.proxy(this._stepBack, this));
     this.$container.on('click', '.fe-service_sms', $.proxy(this._openSMSAlert, this));
     this.$container.on('click', '.fe-quality_sms', $.proxy(this._openSMSAlert, this));
     this.$container.on('click', '.fe-term-private-collect', $.proxy(this._openTermLayer, this, '55'));
