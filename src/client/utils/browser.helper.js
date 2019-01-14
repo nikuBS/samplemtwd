@@ -24,12 +24,19 @@ Tw.BrowserHelper = (function () {
     return userAgent;
   };
 
+  var getAndroidVersion = function (ua) {
+    ua = (ua || navigator.userAgent).toLowerCase();
+    var match = ua.match(/android\s([0-9\.]*)/);
+    return match ? match[1] : undefined;
+  };
+
   return {
     isAndroid: isAndroid,
     isIos: isIos,
     isMobile: isMobile,
     isApp: isApp,
     isOnline: isOnline,
-    getUserAgent: getUserAgent
+    getUserAgent: getUserAgent,
+    getAndroidVersion: getAndroidVersion
   };
 })();
