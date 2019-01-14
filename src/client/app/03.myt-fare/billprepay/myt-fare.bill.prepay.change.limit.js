@@ -137,6 +137,10 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     }, $.proxy(this._selectPopupCallback, this, $target, $amount));
   },
   _selectPopupCallback: function ($target, $amount, $layer) {
+    var $id = $target.attr('id');
+    if (!Tw.FormatHelper.isEmpty($id)) {
+      $layer.find('input#' + $id).attr('checked', 'checked');
+    }
     $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
   },
   _setSelectedValue: function ($target, event) {
