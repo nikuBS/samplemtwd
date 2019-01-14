@@ -1,4 +1,6 @@
 // for APM
+const os = require('os');
+process.env.WHATAP_NAME = os.hostname();
 const WhatapAgent = require('whatap').NodeAgent;
 
 // Node Modules
