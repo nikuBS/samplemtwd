@@ -6,9 +6,9 @@
                 <div class="header-ti align-l">
                     <h1>법정대리인 동의하기</h1>
                 </div>
-        <!-- .popup-closeBtn -->
-        <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
-        <!--// .popup-closeBtn -->
+                <!-- .popup-closeBtn -->
+                <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+                <!--// .popup-closeBtn -->
             </div>
         </div>
         <!--// #header -->
@@ -30,10 +30,10 @@
                                             <div class="widget-box radio">
                                                 <ul class="select-list" role="radiogroup">
                                                     {{#each list}}
-                                                    <li class="radiobox type01 {{option}} fe-radio-list" role="radio" aria-checked="false" data-index="{{@index}}">
-                                                        <input type="radio" name="radio1" value="" title="{{txt}}" {{option}} aria-describedby="aria-phone-tx1" data-index="{{@index}}"/>
-                                                        {{txt}}
-                                                    </li>
+                                                        <li class="radiobox type01 {{option}} fe-radio-list" role="radio" aria-checked="false" data-index="{{@index}}">
+                                                            <input type="radio" name="radio1" value="" title="{{txt}}" {{option}} aria-describedby="aria-phone-tx1" data-index="{{@index}}"/>
+                                                            {{txt}}
+                                                        </li>
                                                     {{/each}}
                                                 </ul>
                                             </div>
@@ -44,7 +44,8 @@
                                         <span id="fe-txt-cert" class="tx-box none">
                                             <span id="aria-phone-tx1" class="validation-txt">정상적으로 발송되었습니다.</span><!-- 정상 작동되지 않을때는 .none 추가 -->
                                         </span>
-                                        <span id="fe-error-cert" class="error-txt none">재전송 제한시간(1분)이 지난 후에 이용해 주세요.</span>
+                                        <span id="fe-error-cert-time" class="error-txt none">재전송 제한시간(1분)이 지난 후에 이용해 주세요.</span>
+                                        <span id="fe-error-cert-cnt" class="error-txt none">제한시간 내 인증번호를 보낼 수 있는 횟수가 넘었습니다.</span>
                                     </div>
                                 </div>
                                 <span class="inputbox pt20">
@@ -55,6 +56,9 @@
                                     <span id="fe-error-confirm" class="tx-box none">
                                         <span id="aria-phone-tx2" class="error-txt">인증번호가 일치하지 않습니다.</span><!-- 정상 작동되지 않을때는 .none 추가 -->
                                     </span>
+                                    <span id="fe-error-confirm-time" class="tx-box none">
+                                        <span id="aria-phone-tx2" class="error-txt">인증번호가 입력시간이 초과했습니다.</span><!-- 정상 작동되지 않을때는 .none 추가 -->
+                                    </span>
                                 </span>
                             </li>
                         </ul>
@@ -62,7 +66,7 @@
                             <p class="announcement-bullet type02">미리 등록하신 법정대리인 명의의 이동전화번호(SK텔레콤 회선만 가능)로만 인증번호를 선택하실 수 있습니다.</p>
                         </div>
                     </div>
-                    
+
                 </div>
                 <!--// .cont-box -->
                 <ul class="bt-slice full">

@@ -19,18 +19,19 @@ Tw.CertificationRepresentative = function () {
   this.$btCert = null;
   this.$btConfirm = null;
   this._receiverNum = '';
+  this._callbackParam = null;
 
   this._jobCode = Tw.BrowserHelper.isApp() ? 'NFM_MTW_MINORPR_AUTH' : 'NFM_MWB_MINORPR_AUTH';
 };
 
 Tw.CertificationRepresentative.prototype = {
-  SMS_CERT_ERROR: {
-    SMS2003: 'SMS2003'
+  SMS_ERROR: {
+    ATH2003: 'ATH2003',     // 재전송 제한시간이 지난 후에 이용하시기 바랍니다.
+    ATH2006: 'ATH2006',     // 제한시간 내에 보낼 수 있는 발송량이 초과하였습니다.
+    ATH2007: 'ATH2007',     // 입력하신 인증번호가 맞지 않습니다.
+    ATH2008: 'ATH2008',     // 인증번호를 입력할 수 있는 시간이 초과하였습니다.
+    ATH1221: 'ATH1221'      // 인증번호 유효시간이 경과되었습니다.
   },
-  SMS_CONFIRM_ERROR: {
-    SMS2007: 'SMS2007'
-  },
-
   open: function (certInfo, authUrl, command, deferred, callback) {
     this._certInfo = certInfo;
     this._authUrl = authUrl;
@@ -42,7 +43,7 @@ Tw.CertificationRepresentative.prototype = {
       hbs: 'MV_01_02_01_01',
       layer: true,
       list: this._makeShowData(certInfo.smsNumbers)
-    }, $.proxy(this._onOpenCert, this));
+    }, $.proxy(this._onOpenCert, this), $.proxy(this._onCloseCert, this));
   },
   _makeShowData: function (smsNumbers) {
     this._smsNumbers = smsNumbers;
@@ -59,8 +60,10 @@ Tw.CertificationRepresentative.prototype = {
     this.$btConfirm = $popupContainer.find('#fe-bt-confirm');
     this.$inputCert = $popupContainer.find('#fe-input-cert');
     this.$validCert = $popupContainer.find('#fe-txt-cert');
-    this.$errorCert = $popupContainer.find('#fe-error-cert');
+    this.$errorCertTime = $popupContainer.find('#fe-error-cert-time');
+    this.$errorCertCnt = $popupContainer.find('#fe-error-cert-cnt');
     this.$errorConfirm = $popupContainer.find('#fe-error-confirm');
+    this.$errorConfirmTime = $popupContainer.find('#fe-error-confirm-time');
 
     this.$btCert.on('click', $.proxy(this._onClickCert, this));
     this.$btConfirm.on('click', $.proxy(this._onClickConfirm, this));
@@ -69,6 +72,11 @@ Tw.CertificationRepresentative.prototype = {
 
     if ( this.$list.find(':checked').length > 0 ) {
       this.$btCert.attr('disabled', false);
+    }
+  },
+  _onCloseCert: function () {
+    if ( !Tw.FormatHelper.isEmpty(this._callbackParam) ) {
+      this._callback(this._callbackParam, this._deferred, this._command);
     }
   },
   _onClickList: function () {
@@ -96,9 +104,12 @@ Tw.CertificationRepresentative.prototype = {
   _successCert: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this.$validCert.removeClass('none');
-    } else if ( resp.code === this.ERROR_CODE.SMS2003 ) {
-      this.$validCert.addClass('none');
-      this.$errorCert.removeClass('none');
+    } else if ( resp.code === this.SMS_ERROR.ATH2003 ) {
+      this._clearCertError();
+      this.$errorCertTime.removeClass('none');
+    } else if ( resp.code === this.SMS_ERROR.ATH2006 ) {
+      this._clearCertError();
+      this.$errorCertCnt.removeClass('none');
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
@@ -113,10 +124,26 @@ Tw.CertificationRepresentative.prototype = {
     }
   },
   _completeCert: function (resp) {
-    if ( resp.code === this.SMS_CONFIRM_ERROR.SMS2007 ) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._callbackParam = resp;
+      this._popupService.close();
+    } else if ( resp.code === this.SMS_ERROR.ATH2007 ) {
+      this._clearConfirmError();
       this.$errorConfirm.removeClass('none');
+    } else if ( resp.code === this.SMS_ERROR.ATH2008 ) {
+      this._clearConfirmError();
+      this.$errorConfirmTime.removeClass('none');
     } else {
-      this._callback(resp, this._deferred, this._command);
+      Tw.Error(resp.code, resp.msg).pop();
     }
+  },
+  _clearCertError: function () {
+    this.$validCert.addClass('none');
+    this.$errorCertTime.addClass('none');
+    this.$errorCertCnt.addClass('none');
+  },
+  _clearConfirmError: function () {
+    this.$errorConfirm.addClass('none');
+    this.$errorConfirmTime.addClass('none');
   }
 };
