@@ -466,7 +466,8 @@ Tw.ALERT_MSG_MYT_DATA = {
   },
   V56: '충전 금액을 선택해 주세요.',
   ALERT_2_A74: '충전을 취소하시겠습니까?',
-  DAILY_USED_USAGE_ERROR: '데이터가 존재하지 않습니다.'
+  DAILY_USED_USAGE_ERROR: '데이터가 존재하지 않습니다.',
+  INVALID_CARD: '카드 정보가 올바르지 않습니다.\n 카드 정보 확인 후 다시 입력해주세요.'
 };
 
 Tw.VALIDATE_MSG_MYT_DATA = {

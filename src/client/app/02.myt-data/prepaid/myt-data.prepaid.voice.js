@@ -42,7 +42,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$container.on('change input blur click', '#tab1-tab [required]', $.proxy(this._validatePrepaidCard, this));
     this.$container.on('change input blur click', '#tab2-tab [required]', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', 'input[type=tel]', $.proxy(this._checkMaxLength, this));
- },
+  },
 
   _checkMaxLength: function (e) {
     Tw.InputHelper.inputNumberMaxLength(e.currentTarget);
@@ -152,6 +152,8 @@ Tw.MyTDataPrepaidVoice.prototype = {
           rechargeAmount: Tw.FormatHelper.addComma(rechargeAmount.toString())
         }
       });
+    } else if ( resp.code === 'BIL0102' ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.INVALID_CARD);
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
