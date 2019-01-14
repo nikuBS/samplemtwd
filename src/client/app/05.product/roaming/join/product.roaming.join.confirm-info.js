@@ -184,22 +184,23 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     data.agreeCnt = 0;
     if(this._page){
       targetObj = data.stipulationInfo;
-    }else{
-      targetObj = data.autoInfo.stipulationInfo;
-    }
-    Object.keys(targetObj).map($.proxy(function(objectKey) {
-      if(objectKey.indexOf('Ctt')>=0){
-        targetObj[objectKey+'Tit'] = targetObj[objectKey].replace(/<([^>]+)>/ig,'');
-      }else if(objectKey.indexOf('AgreeYn')>=0){
-        data.agreeCnt = targetObj[objectKey] === 'Y'?data.agreeCnt+1:data.agreeCnt;
-      }
-    },this));
-    if(this._page){
+      data.agreeCnt = this._countAgree(targetObj);
       data.stipulationInfo = targetObj;
     }else{
+      targetObj = data.autoInfo.stipulationInfo;
+      data.agreeCnt = this._countAgree(targetObj);
       data.autoInfo.stipulationInfo = targetObj;
     }
     return data;
+  },
+  _countAgree : function (dataObj) {
+    var agreeCnt = 0;
+    Object.keys(dataObj).map(function(objectKey) {
+      if(objectKey.indexOf('AgreeYn')>=0){
+        agreeCnt = dataObj[objectKey] === 'Y'?agreeCnt+1:agreeCnt;
+      }
+    });
+    return agreeCnt;
   },
   _bindCompletePopupEvt : function (popupObj) {
     $(popupObj).on('click','.btn-round2',this._goMyInfo);

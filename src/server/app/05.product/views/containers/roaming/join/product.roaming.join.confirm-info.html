@@ -166,73 +166,91 @@
                                         <% if(prodBffInfo.stipulationInfo.scrbStplAgreeYn=='Y'){ %>
                                         <li>
                                             <div class="checkbox type01 individual" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="checkbox" name="checkbox" value="" title="<%= prodBffInfo.stipulationInfo.scrbStplAgreeTitNm %>" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
+                                                <input class="scrbStpl" type="checkbox" name="checkbox" value="" title="<%= prodBffInfo.stipulationInfo.scrbStplAgreeTitNm %>" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
                                                 <div class="comp-list-layout" id="aria-comp-checkbox2">
                                                     <p class="layout-text">
                                                         <span class="mtext"><%= prodBffInfo.stipulationInfo.scrbStplAgreeTitNm %></span>
                                                         <span class="stext-bg mt20">
                                                                 <span class="stext-c">
-                                                                     <%- prodBffInfo.stipulationInfo.scrbStplAgreeHtmlCtt %>
+                                                                     <%= prodBffInfo.stipulationInfo.scrbStplAgreeHtmlCtt.replace(/<([^>]+)>/ig,'') %>
                                                                 </span>
                                                             </span>
                                                     </p>
                                                 </div>
                                             </div>
-                                            <button class="agree-view"><span class="blind">자세히 보기</span></button>
+                                            <button class="agree-view" data-type="scrbStpl" data-txt="<%= prodBffInfo.stipulationInfo.scrbStplAgreeHtmlCtt %>" data-tit="<%= prodBffInfo.stipulationInfo.scrbStplAgreeTitNm %>"><span class="blind">자세히 보기</span></button>
+                                        </li>
+                                        <% } %>
+                                        <% if(prodBffInfo.stipulationInfo.termStplAgreeYn=='Y'){ %>
+                                        <li>
+                                            <div class="checkbox type01 individual" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                <input class="termStpl" type="checkbox" name="checkbox" value="" title="<%= prodBffInfo.stipulationInfo.termStplAgreeTitNm %>" aria-labelledby="aria-comp-checkbox3"><!-- 체크상태일 경우 checked="false" -->
+                                                <div class="comp-list-layout" id="aria-comp-checkbox3">
+                                                    <p class="layout-text">
+                                                        <span class="mtext"><%= prodBffInfo.stipulationInfo.termStplAgreeTitNm %></span>
+                                                        <span class="stext-bg mt20">
+                                                                <span class="stext-c">
+                                                                     <%= prodBffInfo.stipulationInfo.termStplAgreeHtmlCtt.replace(/<([^>]+)>/ig,'') %>
+                                                                </span>
+                                                            </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <button class="agree-view" data-type="termStpl" data-txt="<%= prodBffInfo.stipulationInfo.termStplAgreeHtmlCtt %>" data-tit="<%= prodBffInfo.stipulationInfo.termStplAgreeTitNm %>"><span class="blind">자세히 보기</span></button>
                                         </li>
                                         <% } %>
                                         <% if(prodBffInfo.stipulationInfo.psnlInfoCnsgAgreeYn=='Y'){ %>
                                         <li>
                                             <div class="checkbox type01 individual" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="checkbox" name="checkbox" value="" title="<%= prodBffInfo.stipulationInfo.psnlInfoCnsgAgreeTitNm %>" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
-                                                <div class="comp-list-layout" id="aria-comp-checkbox2">
+                                                <input type="checkbox" class="psnlInfoCnsg" name="checkbox" value="" title="<%= prodBffInfo.stipulationInfo.psnlInfoCnsgAgreeTitNm %>" aria-labelledby="aria-comp-checkbox4"><!-- 체크상태일 경우 checked="false" -->
+                                                <div class="comp-list-layout" id="aria-comp-checkbox4">
                                                     <p class="layout-text">
                                                         <span class="mtext"><%= prodBffInfo.stipulationInfo.psnlInfoCnsgAgreeTitNm %></span>
                                                         <span class="stext-bg mt20">
                                                                 <span class="stext-c">
-                                                                     <%- prodBffInfo.stipulationInfo.psnlInfoCnsgHtmlCtt %>
+                                                                     <%= prodBffInfo.stipulationInfo.psnlInfoCnsgHtmlCtt.replace(/<([^>]+)>/ig,'') %>
                                                                 </span>
                                                             </span>
                                                     </p>
                                                 </div>
                                             </div>
-                                            <button class="agree-view"><span class="blind">자세히 보기</span></button>
+                                            <button class="agree-view" data-type="psnlInfoCnsg" data-txt="<%= prodBffInfo.stipulationInfo.psnlInfoCnsgHtmlCtt %>" data-tit="<%= prodBffInfo.stipulationInfo.psnlInfoCnsgAgreeTitNm %>"><span class="blind">자세히 보기</span></button>
                                         </li>
                                         <% } %>
                                         <% if(prodBffInfo.stipulationInfo.psnlInfoOfrAgreeYn=='Y'){ %>
                                         <li>
                                             <div class="checkbox type01 individual" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="checkbox" name="checkbox" value="" title="<%= prodBffInfo.stipulationInfo.psnlInfoOfrAgreeTitNm %>" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
-                                                <div class="comp-list-layout" id="aria-comp-checkbox2">
+                                                <input class="psnlInfoOfr" type="checkbox" name="checkbox" value="" title="<%= prodBffInfo.stipulationInfo.psnlInfoOfrAgreeTitNm %>" aria-labelledby="aria-comp-checkbox5"><!-- 체크상태일 경우 checked="false" -->
+                                                <div class="comp-list-layout" id="aria-comp-checkbox5">
                                                     <p class="layout-text">
                                                         <span class="mtext"><%= prodBffInfo.stipulationInfo.psnlInfoOfrAgreeTitNm %></span>
                                                         <span class="stext-bg mt20">
                                                             <span class="stext-c">
-                                                                 <%- prodBffInfo.stipulationInfo.psnlInfoOfrHtmlCtt %>
+                                                                 <%= prodBffInfo.stipulationInfo.psnlInfoOfrHtmlCtt.replace(/<([^>]+)>/ig,'') %>
                                                             </span>
                                                         </span>
                                                     </p>
                                                 </div>
                                             </div>
-                                            <button class="agree-view"><span class="blind">자세히 보기</span></button>
+                                            <button class="agree-view" data-type="psnlInfoOfr" data-txt="<%= prodBffInfo.stipulationInfo.psnlInfoOfrHtmlCtt %>" data-tit="<%= prodBffInfo.stipulationInfo.psnlInfoOfrAgreeTitNm %>"><span class="blind">자세히 보기</span></button>
                                         </li>
                                         <% } %>
                                         <% if(prodBffInfo.stipulationInfo.adInfoOfrAgreeYn=='Y'){ %>
                                         <li>
                                             <div class="checkbox type01 individual" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="checkbox" name="checkbox" value="" title="<%= prodBffInfo.stipulationInfo.adInfoOfrAgreeTitNm %>" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
-                                                <div class="comp-list-layout" id="aria-comp-checkbox2">
+                                                <input class="adInfoOfr" type="checkbox" name="checkbox" value="" title="<%= prodBffInfo.stipulationInfo.adInfoOfrAgreeTitNm %>" aria-labelledby="aria-comp-checkbox6"><!-- 체크상태일 경우 checked="false" -->
+                                                <div class="comp-list-layout" id="aria-comp-checkbox6">
                                                     <p class="layout-text">
                                                         <span class="mtext"><%= prodBffInfo.stipulationInfo.adInfoOfrAgreeTitNm %></span>
                                                         <span class="stext-bg mt20">
                                                             <span class="stext-c">
-                                                                <%- prodBffInfo.stipulationInfo.adInfoOfrHtmlCtt %>
+                                                                <%= prodBffInfo.stipulationInfo.adInfoOfrHtmlCtt.replace(/<([^>]+)>/ig,'') %>
                                                             </span>
                                                         </span>
                                                     </p>
                                                 </div>
                                             </div>
-                                            <button class="agree-view"><span class="blind">자세히 보기</span></button>
+                                            <button class="agree-view" data-type="adInfoOfr" data-txt="<%= prodBffInfo.stipulationInfo.adInfoOfrHtmlCtt %>" data-tit="<%= prodBffInfo.stipulationInfo.adInfoOfrAgreeTitNm %>" ><span class="blind">자세히 보기</span></button>
                                         </li>
                                         <% } %>
                                     </ul>
