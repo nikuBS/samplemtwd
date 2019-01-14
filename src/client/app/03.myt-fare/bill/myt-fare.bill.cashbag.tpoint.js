@@ -174,6 +174,10 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     return Tw.POPUP_TPL.FARE_PAYMENT_TPOINT;
   },
   _selectPopupCallback: function ($target, $layer) {
+    var $id = $target.attr('id');
+    if (!Tw.FormatHelper.isEmpty($id)) {
+      $layer.find('input#' + $id).attr('checked', 'checked');
+    }
     $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
     $layer.on('click', '.fe-popup-close', $.proxy(this._checkSelected, this));
   },
