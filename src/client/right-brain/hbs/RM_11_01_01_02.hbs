@@ -129,16 +129,16 @@
                                 <div class="widget-box check">
                                     <ul class="select-list" role="group">
                                         {{#ifCond data.agreeCnt '>' '1'}}
-                                        <li>
-                                            <div class="checkbox type01 all" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="checkbox" name="checkbox" value="" title="모두동의" aria-labelledby="aria-comp-checkbox1"><!-- 체크상태일 경우 checked="checked" -->
-                                                <div class="comp-list-layout" id="aria-comp-checkbox1">
-                                                    <p class="layout-text all-chk">
-                                                        <span class="mtext">모두동의</span>
-                                                    </p>
+                                            <li>
+                                                <div class="checkbox type01 all" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                    <input type="checkbox" name="checkbox" value="" title="모두동의" aria-labelledby="aria-comp-checkbox1"><!-- 체크상태일 경우 checked="checked" -->
+                                                    <div class="comp-list-layout" id="aria-comp-checkbox1">
+                                                        <p class="layout-text all-chk">
+                                                            <span class="mtext">모두동의</span>
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </li>
+                                            </li>
                                         {{/ifCond}}
                                         {{#ifCond data.autoInfo.stipulationInfo.scrbStplAgreeYn '===' 'Y'}}
                                             <li>
@@ -149,7 +149,7 @@
                                                             <span class="mtext">{{data.autoInfo.stipulationInfo.scrbStplAgreeTitNm}}</span>
                                                             <span class="stext-bg mt20">
                                                                 <span class="stext-c">
-                                                                    {{data.autoInfo.stipulationInfo.scrbStplAgreeHtmlCttTit}}
+                                                                    {{removeTag data.autoInfo.stipulationInfo.scrbStplAgreeHtmlCtt}}
                                                                 </span>
                                                             </span>
                                                         </p>
@@ -161,19 +161,19 @@
                                         {{#ifCond data.autoInfo.stipulationInfo.termStplAgreeYn '===' 'Y'}}
                                             <li>
                                                 <div class="checkbox type01 individual" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="checkbox" class="scrbStpl" name="checkbox" value="" title="{{data.autoInfo.stipulationInfo.termStplAgreeTitNm}}" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
+                                                    <input type="checkbox" class="termStpl" name="checkbox" value="" title="{{data.autoInfo.stipulationInfo.termStplAgreeTitNm}}" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
                                                     <div class="comp-list-layout" id="aria-comp-checkbox2">
                                                         <p class="layout-text">
                                                             <span class="mtext">{{data.autoInfo.stipulationInfo.termStplAgreeTitNm}}</span>
                                                             <span class="stext-bg mt20">
                                                                 <span class="stext-c">
-                                                                    {{data.autoInfo.stipulationInfo.termStplAgreeHtmlCttTit}}
+                                                                    {{removeTag data.autoInfo.stipulationInfo.termStplAgreeHtmlCtt}}
                                                                 </span>
                                                             </span>
                                                         </p>
                                                     </div>
                                                 </div>
-                                                <button class="agree-view" data-type="scrbStpl" data-tit="{{data.autoInfo.stipulationInfo.termStplAgreeTitNm}}" data-txt="{{data.autoInfo.stipulationInfo.termStplAgreeHtmlCtt}}"><span class="blind">자세히 보기</span></button>
+                                                <button class="agree-view" data-type="termStpl" data-tit="{{data.autoInfo.stipulationInfo.termStplAgreeTitNm}}" data-txt="{{data.autoInfo.stipulationInfo.termStplAgreeHtmlCtt}}"><span class="blind">자세히 보기</span></button>
                                             </li>
                                         {{/ifCond}}
                                         {{#ifCond data.autoInfo.stipulationInfo.psnlInfoCnsgAgreeYn '===' 'Y'}}
@@ -185,7 +185,7 @@
                                                             <span class="mtext">{{data.autoInfo.stipulationInfo.psnlInfoCnsgAgreeTitNm}}</span>
                                                             <span class="stext-bg mt20">
                                                                 <span class="stext-c">
-                                                                    {{data.autoInfo.stipulationInfo.psnlInfoCnsgHtmlCttTit}}
+                                                                    {{removeTag data.autoInfo.stipulationInfo.psnlInfoCnsgHtmlCtt}}
                                                                 </span>
                                                             </span>
                                                         </p>
@@ -203,7 +203,7 @@
                                                             <span class="mtext">{{data.autoInfo.stipulationInfo.psnlInfoOfrAgreeTitNm}}</span>
                                                             <span class="stext-bg mt20">
                                                             <span class="stext-c">
-                                                                {{data.autoInfo.stipulationInfo.psnlInfoOfrHtmlCttTit}}
+                                                                {{removeTag data.autoInfo.stipulationInfo.psnlInfoOfrHtmlCtt}}
                                                             </span>
                                                         </span>
                                                         </p>
@@ -221,7 +221,7 @@
                                                             <span class="mtext">{{data.autoInfo.stipulationInfo.adInfoOfrAgreeTitNm}}</span>
                                                             <span class="stext-bg mt20">
                                                             <span class="stext-c">
-                                                                {{data.autoInfo.stipulationInfo.adInfoOfrHtmlCttTit}}
+                                                                {{removeTag data.autoInfo.stipulationInfo.adInfoOfrHtmlCtt}}
                                                             </span>
                                                         </span>
                                                         </p>
