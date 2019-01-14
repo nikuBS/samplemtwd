@@ -248,11 +248,12 @@ class LoginService {
 
   public getPath(): string {
     if ( !FormatHelper.isEmpty(this.request) ) {
-      const url = this.request.baseUrl + this.request.path;
-      if ( url.indexOf('bypass') !== -1 ) {
+      console.log('get path', this.request.baseUrl);
+      const baseUrl = this.request.baseUrl;
+      if ( baseUrl.indexOf('bypass') !== -1 || baseUrl.indexOf('api') !== -1 ||  baseUrl.indexOf('native') !== -1) {
         this.getReferer();
       } else {
-        return this.request.baseUrl + this.request.path;
+        return baseUrl + this.request.path;
       }
     }
     return '';
