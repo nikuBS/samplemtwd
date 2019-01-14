@@ -36,6 +36,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
     this.$container.on('click', '.fe-alarm-date', $.proxy(this._onChangeStatus, this, 'date_list'));
     this.$container.on('click', '.fe-alarm-amount', $.proxy(this._onChangeStatus, this, 'price_list'));
     this.$container.on('click', '.fe-setting-alarm', $.proxy(this._requestAlarmSetting, this));
+    this.$container.on('click', '.fe-popup-close', $.proxy(this._stepBack, this));
   },
 
   _onChangeStatus: function (sListName, e) {
@@ -125,5 +126,24 @@ Tw.MyTDataPrepaidAlarm.prototype = {
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
+  },
+
+  _stepBack: function () {
+    var confirmed = false;
+    this._popupService.openConfirmButton(
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+      $.proxy(function () {
+        confirmed = true;
+        this._popupService.close();
+      }, this),
+      $.proxy(function () {
+        if ( confirmed ) {
+          this._historyService.replaceURL('/myt-data');
+        }
+      }, this),
+      Tw.BUTTON_LABEL.NO,
+      Tw.BUTTON_LABEL.YES
+    );
   }
 };
