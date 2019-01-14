@@ -64,7 +64,6 @@ Tw.ProductWireplanJoinReservation.prototype = {
     this.$reservName.val(data.name);
     this.$reservNumber.val(data.number).trigger('change');
     this._typeCd = data.typeCd;
-    this._prodId = Tw.FormatHelper.isEmpty(data.prodId) ? null : data.prodId;
 
     this._typeCdPopupClose();
     this._setCombineResult();
@@ -269,10 +268,9 @@ Tw.ProductWireplanJoinReservation.prototype = {
     $popupContainer.on('click', '[data-prod_id]', $.proxy(this._setCombine, this));
   },
 
-  _setCombine: function(e) {
+  _setCombine: function() {
     this.$combineSelected.prop('checked', true);
     this.$combineSelected.parent().addClass('checked').attr('aria-checked', true);
-    this._prodId = $(e.currentTarget).data('prod_id');
     this._popupService.close();
   },
 

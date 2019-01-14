@@ -84,18 +84,21 @@ class LoginService {
     });
   }
 
-  private setXtractorCookie(svcInfo: any, isApp: boolean): any {
+  public clearXtCookie(): any {
     this.response.clearCookie(COOKIE_KEY.XTLID);
     this.response.clearCookie(COOKIE_KEY.XTLID_ORIGIN);
     this.response.clearCookie(COOKIE_KEY.XTLOGINID);
     this.response.clearCookie(COOKIE_KEY.XTLOGINID_ORIGIN);
     this.response.clearCookie(COOKIE_KEY.XTLOGINTYPE);
+    this.response.clearCookie(COOKIE_KEY.XTSVCGR);
+  }
 
+  private setXtractorCookie(svcInfo: any, isApp: boolean): any {
     if (!FormatHelper.isEmpty(svcInfo.svcMgmtNum)) {
       this.response.cookie(COOKIE_KEY.XTLID, CryptoHelper.encrypt(svcInfo.svcMgmtNum, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB));
     }
 
-    if (FormatHelper.isEmpty(svcInfo.svcMgmtNum) && isApp) {
+    if (!FormatHelper.isEmpty(svcInfo.svcMgmtNum) && isApp) {
       this.response.cookie(COOKIE_KEY.XTLID_ORIGIN, svcInfo.svcMgmtNum);
     }
 
@@ -103,11 +106,15 @@ class LoginService {
       this.response.cookie(COOKIE_KEY.XTLOGINID, CryptoHelper.encrypt(svcInfo.userId, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB));
     }
 
-    if (FormatHelper.isEmpty(svcInfo.userId) && isApp) {
+    if (!FormatHelper.isEmpty(svcInfo.userId) && isApp) {
       this.response.cookie(COOKIE_KEY.XTLOGINID_ORIGIN, svcInfo.userId);
     }
 
     this.response.cookie(COOKIE_KEY.XTLOGINTYPE, svcInfo.loginType === 'E' ? 'Z' : 'A');
+
+    if (FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTSVCGR])) {
+      this.response.cookie(COOKIE_KEY.XTSVCGR, svcInfo.svcGr);
+    }
   }
 
   public getAllSvcInfo(req?): any {
@@ -248,7 +255,6 @@ class LoginService {
 
   public getPath(): string {
     if ( !FormatHelper.isEmpty(this.request) ) {
-      console.log('get path', this.request.baseUrl);
       const baseUrl = this.request.baseUrl;
       if ( baseUrl.indexOf('bypass') !== -1 || baseUrl.indexOf('api') !== -1 ||  baseUrl.indexOf('native') !== -1) {
         this.getReferer();
