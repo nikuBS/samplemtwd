@@ -36,9 +36,9 @@
                 <div class="unpaid-charges">
                     <dl class="total-box">
                         <dt>현재 카드 잔액</dt>
-                        <dd class="t-point"><span class="num ff-tg-black"><%-convertAmount(PPSInfo.prodAmt)%></span><span
-                            class="ff-tg-medium">원</span>
-                            <button type="button" class="tip-view" title="현재 카드 잔액" aria-haspopup="true" id="DC_09_02_tip_02" page-id="DC_09_02">TIP</button>
+                        <dd class="t-point"><span class="num ff-tg-black"><%-convertAmount(PPSInfo.prodAmt)%></span>
+                            <span class="ff-tg-medium">원</span>
+                            <!--<button type="button" class="tip-view" title="현재 카드 잔액" aria-haspopup="true" id="DC_09_02_tip_02" page-id="DC_09_02">TIP</button>-->
                         </dd>
                     </dl>
                     <% if ( AutoInfo ) { %>
@@ -64,7 +64,9 @@
                     <ul class="point-box mb20">
                         <li>
                             <dl>
-                                <dt>발신 기간</dt>
+                                <dt>발신 기간
+                                    <button class="tip-view" id="DC_09_01_tip_02" page-id="DC_09_01">TIP</button>
+                                </dt>
                                 <dd><%-convertDate(PPSInfo.obEndDt)%></dd>
                             </dl>
                         </li>
@@ -211,7 +213,7 @@
     </div>
     <!--// #contents -->
     <!-- .popup-closeBtn -->
-    <button class="prev-step fe-common-back">취소</button>
+    <button class="prev-step fe-popup-close">취소</button>
     <!--// .popup-closeBtn -->
     </div>
 </div>

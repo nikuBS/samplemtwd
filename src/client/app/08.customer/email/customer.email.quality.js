@@ -107,7 +107,8 @@ Tw.CustomerEmailQuality.prototype = {
         text_content: $('.fe-text_content').val(),
         occurrence_date: $('.fe-occurrence_date').val(),
         occurrence_detail: $('.fe-occurrence_detail').val(),
-        inqSvcClCd: $('.fe-quality-inqSvcClCd').find(':checked').val()
+        inqSvcClCd: $('.fe-quality-inqSvcClCd').find(':checked').val(),
+        svcNum: $('.fe-quality-line').is('input') ? $('.fe-quality-line').val() : $('.fe-quality-line').text().trim()
       })
     });
 
@@ -170,7 +171,7 @@ Tw.CustomerEmailQuality.prototype = {
   _isValidQualityPhone: function () {
     var sPhone = $('.fe-quality_phone').val();
 
-    return Tw.ValidationHelper.isCellPhone(sPhone)|| Tw.ValidationHelper.isTelephone(sPhone);
+    return Tw.ValidationHelper.isCellPhone(sPhone) || Tw.ValidationHelper.isTelephone(sPhone);
   },
 
   _isValidQualityEmail: function () {

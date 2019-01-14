@@ -30,6 +30,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
   },
 
   _bindEvent: function () {
+    this.$container.on('click', '.fe-popup-close', $.proxy(this._stepBack, this));
     this.$container.on('click', '.fe-close-example-card', $.proxy(this._onCloseExampleCard, this));
     this.$container.on('click', '.fe-btn-show-example', $.proxy(this._onShowExampleCard, this));
     this.$container.on('click', '.fe-select-amount', $.proxy(this._onShowSelectAmount, this));
@@ -212,5 +213,24 @@ Tw.MyTDataPrepaidVoice.prototype = {
     // } else {
     //   Tw.Error(res.code, res.msg).pop();
     // }
+  },
+
+  _stepBack: function () {
+    var confirmed = false;
+    this._popupService.openConfirmButton(
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+      $.proxy(function () {
+        confirmed = true;
+        this._popupService.close();
+      }, this),
+      $.proxy(function () {
+        if ( confirmed ) {
+          this._historyService.replaceURL('/myt-data');
+        }
+      }, this),
+      Tw.BUTTON_LABEL.NO,
+      Tw.BUTTON_LABEL.YES
+    );
   }
 };
