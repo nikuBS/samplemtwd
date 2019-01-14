@@ -390,6 +390,10 @@ Tw.ALERT_MSG_COMMON = {
     MSG: '선택하신 서비스는<br/>모바일 T world app에서만<br/>이용하실 수 있습니다.',
     BUTTON: '이동'
   },
+  CERT_SMS_BLOCK: {
+    TITLE: 'SMS인증을 사용할 수 없습니다.',
+    MSG: '인증할 수 있는 회선번호가 없습니다.<br />다른 인증수단을 선택해주세요.'
+  },
   STEP_CANCEL: { TITLE: '안내', MSG: '입력하신 정보는 모두 취소됩니다. 창을 닫으시겠습니까?' },
   CHANGE: '변경하시겠습니까?'
 };
