@@ -195,7 +195,7 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
   },
   _success: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      if (res.result.customerInfo.resultCd === 'VC000') {
+      if (res.result.customerInfo.resultCd === 'VS000') {
         this._popupService.close();
 
         var message = '';
