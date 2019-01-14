@@ -173,7 +173,7 @@ Tw.CustomerDocument.prototype = {
         'title': list[i].ncssDocGuidClNm,
         'name': 'radio' + $target.data('index')
       });
-      $liNode.find('span').text(list[i].ncssDocGuidClNm);
+      $liNode.find('input').after(list[i].ncssDocGuidClNm);
       $liNode.removeClass('fe-standard-node none');
       $target.find('.select-list').append($liNode);
     }
@@ -193,10 +193,14 @@ Tw.CustomerDocument.prototype = {
     $target.on('click', 'li', $.proxy(this._onRadioButtonClick, this));
   },
   _onRadioButtonClick: function (event) {
-    var $target = $(event.currentTarget).find('input');
+    var $currentTarget = $(event.currentTarget);
+    var $target = $currentTarget.find('input');
     var $parentTarget = $target.parents('.acco-list');
     var idx = $parentTarget.data('index');
     var $nextTarget = $parentTarget.next();
+
+    $currentTarget.addClass('checked').attr('aria-checked', 'true');
+    $currentTarget.siblings().removeClass('checked').attr('aria-checked', 'false');
 
     this._setTitle($parentTarget, $target);
     this._resetChildren($parentTarget, idx);

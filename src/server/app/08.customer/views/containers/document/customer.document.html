@@ -67,9 +67,9 @@
                                                                                            id="<%= mobileCategoryList[i].ncssDocGuidClId %>"
                                                                                            title="<%= mobileCategoryList[i].ncssDocGuidClNm %>" />
                                                                                     <% if (mobileCategoryList[i].isLong) { %>
-                                                                                        <span class="txt"><%= mobileCategoryList[i].name1 %><br /><%= mobileCategoryList[i].name2 %></span>
+                                                                                        <%= mobileCategoryList[i].name1 %><br /><%= mobileCategoryList[i].name2 %>
                                                                                     <% } else { %>
-                                                                                        <span class="txt"><%= mobileCategoryList[i].ncssDocGuidClNm %></span>
+                                                                                        <%= mobileCategoryList[i].ncssDocGuidClNm %>
                                                                                     <% } %>
                                                                                 </li>
                                                                                 <% } %>
