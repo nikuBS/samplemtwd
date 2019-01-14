@@ -99,7 +99,9 @@ Tw.CustomerPwdComponent.prototype = {
     } else {
       var $nextTarget = $target.parent().next();
       $nextTarget.addClass('active');
-      $nextTarget.find('input').focus();
+      setTimeout(function () {
+        $nextTarget.find('input').focus();
+      }, 0);
     }
   },
   _removePwd: function () {
