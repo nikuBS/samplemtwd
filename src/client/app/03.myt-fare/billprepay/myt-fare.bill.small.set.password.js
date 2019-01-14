@@ -130,10 +130,12 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     }
   },
   _checkCurrentPassword: function (event) {
-    this.$isValid = this._checkPasswordLength(event);
+    var $target = $(event.currentTarget);
+    this.$isValid = this._checkPasswordLength($target);
   },
   _checkPassword: function (event) {
-    this.$isValid = this._checkPasswordLength(event);
+    var $target = $(event.currentTarget);
+    this.$isValid = this._checkPasswordLength($target);
 
     if (this.$isValid) {
       var isValid = (this._validation.checkIsStraight(this.$newPassword.val(), 6) &&
@@ -143,16 +145,21 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     }
   },
   _checkConfirmPassword: function (event) {
-    this.$isValid = this._checkPasswordLength(event);
+    var $target = $(event.currentTarget);
+    this.$isValid = this._checkPasswordLength($target);
 
     if (this.$isValid) {
-      this.$isValid = this._validation.showAndHideErrorMsg(this.$confirmPassword,
-        this._validation.checkIsSame(this.$newPassword.val(), this.$confirmPassword.val()),
-        Tw.ALERT_MSG_MYT_FARE.ALERT_2_V12);
+      if (Tw.FormatHelper.isEmpty(this.$newPassword.val())) {
+        this.$isValid = this._checkPasswordLength(this.$newPassword);
+        this.$newPassword.focus();
+      } else {
+        this.$isValid = this._validation.showAndHideErrorMsg(this.$confirmPassword,
+          this._validation.checkIsSame(this.$newPassword.val(), this.$confirmPassword.val()),
+          Tw.ALERT_MSG_MYT_FARE.ALERT_2_V12);
+      }
     }
   },
-  _checkPasswordLength: function (event) {
-    var $target = $(event.currentTarget);
+  _checkPasswordLength: function ($target) {
     return this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 6), Tw.ALERT_MSG_MYT_FARE.CHECK_PASSWORD_LENGTH);
   },
   _setPassword: function () {
@@ -188,8 +195,19 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
   },
   _success: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._popupService.close();
-      this._commonHelper.toast(Tw.ALERT_MSG_MYT_FARE.COMPLETE_CHANGE_PASSWORD);
+      if (res.result.customerInfo.resultCd === 'VS000') {
+        this._popupService.close();
+
+        var message = '';
+        if (this.$type === 'change') {
+          message = Tw.ALERT_MSG_MYT_FARE.COMPLETE_CHANGE_PASSWORD;
+        } else {
+          message = Tw.ALERT_MSG_MYT_FARE.COMPLETE_REGISTER_PASSWORD;
+        }
+        this._commonHelper.toast(message);
+      } else {
+        this._popupService.openAlert(res.result.returnMessage);
+      }
     } else {
       this._fail(res);
     }
@@ -202,7 +220,7 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     this._popupService.close();
   },
   _goAdditionalService: function () {
-    if (this._isClose) {
+    if (this._close) {
       this._historyService.goLoad('/myt-join/additions');
     }
   },

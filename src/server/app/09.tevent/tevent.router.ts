@@ -12,8 +12,8 @@ class TeventRouter extends TwRouter {
     this.controllers.push({ url: '/ing', controller: TeventIngList });
     this.controllers.push({ url: '/last', controller: TeventLastList });
     this.controllers.push({ url: '/win', controller: TeventWinList });
-    this.controllers.push({ url: '/detail/:id', controller: TeventDetail });
-    this.controllers.push({ url: '/win/detail/:id', controller: TeventWinDetail });
+    this.controllers.push({ url: '/detail', controller: TeventDetail });
+    this.controllers.push({ url: '/win/detail', controller: TeventWinDetail });
   }
 }
 
