@@ -12,7 +12,7 @@ Tw.MyTFareBillOptionRegister = function (rootEl, bankList) {
   this._historyService = new Tw.HistoryService(rootEl);
 
   if (!(Tw.FormatHelper.isEmpty(bankList) || bankList === '[]')) {
-    bankList = JSON.parse(bankList);
+    bankList = JSON.parse(window.unescape(bankList));
   }
   this._bankList = new Tw.MyTFareBillBankList(rootEl, bankList);
 

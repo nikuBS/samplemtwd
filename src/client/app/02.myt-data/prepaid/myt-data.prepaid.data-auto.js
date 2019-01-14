@@ -70,7 +70,8 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
         data: popupName,
         btnfloating: { 'class': 'fe-popup-close', 'txt': Tw.BUTTON_LABEL.CLOSE }
       },
-      $.proxy(this._selectPopupCallback, this, $target));
+      $.proxy(this._selectPopupCallback, this, $target),
+      $.proxy(this._checkIsAbled, this));
   },
   _selectPopupCallback: function ($target, $layer) {
     var $id = $target.attr('id');
@@ -103,7 +104,8 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
     this._popupService.close();
   },
   _checkIsAbled: function () {
-    if (this.$cardNumber.val() !== '' && this.$cardY.val() !== '' &&
+    if (!Tw.FormatHelper.isEmpty(this.$dataSelector.attr('id')) &&
+      this.$cardNumber.val() !== '' && this.$cardY.val() !== '' &&
       this.$cardM.val() !== '') {
       this.$rechargeBtn.removeAttr('disabled');
     } else {
