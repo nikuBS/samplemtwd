@@ -26,8 +26,6 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
       var cpinCode = this.$target.attr('data-cpin');
       var birth = this.$target.attr('data-birth');
 
-      console.log(cpinCode);
-
       switch (cpinCode) {
         case 'NC': {
           this.$type = 'new';
