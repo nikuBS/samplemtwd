@@ -28,6 +28,7 @@ Tw.MyTFareBillSetChange.prototype = {
     this._submit = this.$container.find('#fe-submit'); // 변경하기 버튼
     this._btnAddr = this.$container.find('.fe-btn-addr'); // 주소록 버튼
     this._addrArea = this.$container.find('#fe-addr-area'); // 우편 주소 area
+    this._scurMailYn = this.$container.find('#fe-scurMailYn'); // 이메일 보안 설정
   },
 
   _bindEvent: function () {
@@ -37,7 +38,7 @@ Tw.MyTFareBillSetChange.prototype = {
     this._submit.on('click', $.proxy(this._onSubmit, this));
     this.$container.on('change', 'input[name="ccurNotiYn"]', $.proxy(this._onChangeCcurNotiYn, this)); // 옵션 설정 > 법정대리인
     this.$container.on('keyup focus change', '[data-inactive-target]', $.proxy(this._onDisableSubmitButton, this));
-    this.$container.on('change', '[name="scurMailYn"]', $.proxy(this._onChangeScurMailYn, this)); // 이메일 보안 설정
+    this._scurMailYn.on('change', $.proxy(this._onChangeScurMailYn, this)); // 이메일 보안 설정
     this.$container.on('click', '.fe-search-zip', $.proxy(this._searchZip, this)); // 우편번호 검색
   },
 
@@ -73,11 +74,8 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   // 이메일 보안설정 이벤트
-  _onChangeScurMailYn: function (e) {
-    var _$target = $(e.currentTarget);
-    // "infoInvDtlDispChkYn": 콘텐츠이용료 청구 사용가능 여부 확인 이 N 이면 disable
-    // scurMailYn : 이메일 요금안내서 보안여부 N 이면 disable
-    this._toggleDisabledCheckbox(this._options.siblings('.fe-infoInvDtlDispYn'), this._data.infoInvDtlDispChkYn === 'N' || !_$target.is(':checked'));
+  _onChangeScurMailYn: function () {
+    this._setOptionsContents(true);
   },
 
   _disabledOptions: function (context, disabled) {
@@ -151,21 +149,15 @@ Tw.MyTFareBillSetChange.prototype = {
 
   // 옵션 설정 Default 설정
   _initDefaultOptions: function () {
-    // 정보변경 일때
-    if (this._isChangeInfo) {
-      var _data = this._data;
+    var _data = this._data;
 
-      // 안내서가 "이메일" 을 포함한 경우
-      if (this._billType === '2' || '2' === this._subBillType) {
-        this._checkedElement('scurMailYn', _data.scurMailYn);
-        this._checkedElement('emailRcvAgreeYn', _data.emailRcvAgreeYn);
-      }
-      // 우편문 발송주기
-      this._checkedElement('billSndCyclCd', this._data.billSndCyclCd);
-      // 옵션 설정
-      this._setOptions(2);
+    // 안내서가 "이메일" 을 포함한 경우
+    if (this._billType === '2' || '2' === this._subBillType) {
+      this._checkedElement('scurMailYn', _data.scurMailYn);
+      this._checkedElement('emailRcvAgreeYn', _data.emailRcvAgreeYn);
     }
-
+    // 우편문 발송주기
+    this._checkedElement('billSndCyclCd', this._data.billSndCyclCd);
     // App 이 아니면 주소록 버튼 숨김
     if (!Tw.BrowserHelper.isApp()) {
       this._btnAddr.parent().hide();
@@ -181,7 +173,24 @@ Tw.MyTFareBillSetChange.prototype = {
     }
 
     this._setAddrData(this._isChangeInfo ? this._data:'');
-    this._setOptions(1);
+    this._setOptions(2); // 옵션 설정
+    this._setOptions(1); // 옵션 보이기
+  },
+
+  // 콘텐츠 이용 상세내역 표시
+  // "infoInvDtlDispChkYn": 콘텐츠이용료 청구 사용가능 여부 확인 이 N 이면 disable
+  // scurMailYn : 이메일 요금안내서 보안여부 N 이면 disable
+  _setOptionsContents: function(isShow) {
+    var _data = this._data;
+    var _infoInvDtlDispYnName = 'infoInvDtlDispYn';
+    var isDisabled = _data.infoInvDtlDispChkYn !== 'Y';
+    if (isShow) {
+      this._toggleDisabledCheckbox(this._options.siblings('.fe-'+_infoInvDtlDispYnName), isDisabled || !this._scurMailYn.is(':checked'));
+      this._toggleElement(this._options.siblings('.fe-'+_infoInvDtlDispYnName), isShow);
+    } else {
+      this._checkedSlideCheckbox(_infoInvDtlDispYnName, _data.infoInvDtlDispYn);
+      this._toggleDisabledCheckbox(this._options.siblings('.fe-'+_infoInvDtlDispYnName), isDisabled || _data.scurMailYn !== 'Y');
+    }
   },
 
   // gubun 1: 노출여부 , 2: 옵션 체크
@@ -203,18 +212,6 @@ Tw.MyTFareBillSetChange.prototype = {
       }
     };
 
-    // 콘텐츠 이용 상세내역 표시
-    var _setContents = function () {
-      var _infoInvDtlDispYnName = 'infoInvDtlDispYn';
-      var _infoInvDtlDispYn = _data.infoInvDtlDispYn+_data.infoInvDtlDispChkYn === 'YY' ? 'Y':'N';
-      if (_infoInvDtlDispYn === 'N') {
-        this._toggleDisabledCheckbox(this._options.siblings('.fe-'+_infoInvDtlDispYnName), true);
-      } else {
-        this._checkedSlideCheckbox(_infoInvDtlDispYnName, _infoInvDtlDispYn);
-      }
-      this._toggleElement(this._options.siblings('.fe-'+_infoInvDtlDispYnName), isDisplay);
-    };
-
     // T월드 확인
     if('P' === billType) {
       // 무선이면서 SMS수신가능 단말기일때 보임
@@ -228,37 +225,34 @@ Tw.MyTFareBillSetChange.prototype = {
 
     // 휴대폰 번호 전체 표시 여부
     if (['P', 'HX', 'HB'].indexOf(mergeType) === -1) {
-      if (mergeType === 'BX' && lineType === 'S') {
-        _selectOptions.call(this, 'phonNumPrtClCd', isDisplay);
+      if (mergeType === 'BX') {
+        if(lineType === 'S'){
+          _selectOptions.call(this, 'phonNumPrtClCd', isDisplay);
+        }
       } else {
         _selectOptions.call(this, 'phonNumPrtClCd', isDisplay);
       }
     }
 
-    if (lineType === 'M' || lineType === 'W') {
-      // 콘텐츠 이용 상세내역 표시
-      if (billType === '2') {
-        _setContents.call(this);
+    // 무선 회선일때
+    if (lineType === 'M') {
+      // 이메일 안내서 표함인경우, 콘텐츠 이용 상세내역 표시
+      if (mergeType.indexOf('2') !== -1) {
+        this._setOptionsContents.call(this, isDisplay);
       }
 
-      if (lineType === 'M') {
-        // 콘텐츠 이용 상세내역 표시
-        if (this._options.siblings('.fe-infoInvDtlDispYn').hasClass('none') && ['H2', 'B2'].indexOf(mergeType) !== -1) {
-          _setContents.call(this);
-        }
-
-        // 법정 대리인 함께 수령
-        if (['HX', 'H2', 'BX', 'B2'].indexOf(mergeType) !== -1 && this._data.kidsYn === 'Y') {
-          var name = 'ccurNotiYn';
-          if (isDisplay) {
-            this._toggleElement(this._options.siblings('.fe-'+name), true);
-            this._changeCcurNotiYn(this._options.eq(4).find('[name="{0}"]'.replace('{0}', name)));
-          } else {
-            this._checkedSlideCheckbox(name, _data.ccurNotiYn); // 법정대리인 함께 수령
-            // 법정대리인 함께 수령 Y 이면 disabled
-            if ('Y' === _data.ccurNotiYn) {
-              this._disabledOptions(this._options.siblings('.fe-'+name),true);
-            }
+      // 법정 대리인 함께 수령
+      if (['HX', 'H2', 'BX', 'B2'].indexOf(mergeType) !== -1 && this._data.kidsYn === 'Y') {
+        var name = 'ccurNotiYn';
+        var _$currContext = this._options.siblings('.fe-'+name);
+        if (isDisplay) {
+          this._toggleElement(_$currContext, true);
+          this._changeCcurNotiYn(_$currContext.find('[name="{0}"]'.replace('{0}', name)));
+        } else {
+          this._checkedSlideCheckbox(name, _data.ccurNotiYn); // 법정대리인 함께 수령
+          // 법정대리인 함께 수령 Y 이면 disabled
+          if ('Y' === _data.ccurNotiYn) {
+            this._disabledOptions(_$currContext,true);
           }
         }
       }
@@ -284,6 +278,9 @@ Tw.MyTFareBillSetChange.prototype = {
     var _$this = $(e.currentTarget);
     var data = _$this.val();
     data = data.replace(/[^0-9]/g, '');
+
+    // 길이가 11자 이상이면 앞에 11자리만 가져옴
+    data = data.length > 11 ? data.substr(0, 11) : data;
 
     var tmp = '';
 
@@ -475,7 +472,13 @@ Tw.MyTFareBillSetChange.prototype = {
     _$target.each(function () {
       var _$this = $(this);
       if (_$this.data('state')) {
-        _isDisable = _$this.val() === '';
+        // input type이 체크박스 인 경우
+        if(_$this.is(':checkbox')){
+          _isDisable = !_$this.is(':checked');
+        }else {
+          _isDisable = _$this.val() === '';
+        }
+
         if (_isDisable) return false;
       }
     });

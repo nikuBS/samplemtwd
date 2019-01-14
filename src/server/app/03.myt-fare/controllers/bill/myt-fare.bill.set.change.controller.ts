@@ -114,10 +114,6 @@ class MyTFareBillSetChange extends MyTFareBillSetCommon {
         param.value = data.wsmsBillSndNum;
       }
     }
-    // "다른 요금안내서로 받기" 인 경우는 핸드폰 번호 공백으로 한다.
-    if (data.query.isChangeInfo !== 'Y') {
-      param.value = '';
-    }
 
     data.hpParam = param;
     // 법정 대리인 휴대폰 번호
