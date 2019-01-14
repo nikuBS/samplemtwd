@@ -191,10 +191,12 @@
                         </div>
                         <div class="basic-list">
                             <ul>
+                                <% if (item.donaReqYn === 'Y' || item.effStaDt !== '') { %>
                                 <li>
                                     <span class="title">신청일</span>
                                     <span class="tx-cont"><%= item.donaReqYn === 'Y' ? item.donaReqDt : item.effStaDt %></span>
                                 </li>
+                                <% } %>
                                 <li>
                                     <span class="title">계좌번호</span>
                                     <% if (item.donaReqYn !== 'Y') { %>
