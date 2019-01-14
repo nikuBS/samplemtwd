@@ -114,7 +114,7 @@ Tw.ProductMobilePlanComparePlans.prototype = {
 
     var sum = 0, max = 0;
     recentUsage.result.data.forEach(function(o) {
-      var totalUsage = o.totalUsage;
+      var totalUsage = parseFloat(o.totalUsage);
       sum += parseFloat(totalUsage);
       if (totalUsage > max) {
         max = totalUsage;
