@@ -72,20 +72,20 @@
                     <div id="fe-email-area" class="cont-box pb0 none">
                         <p class="con-tit0 pb12">이메일 주소</p>
                         <span class="inputbox">
-                        <span class="input">
-                            <input type="text" placeholder="이메일 입력" title="input" name="invEmailAddr"
-                                   value="<%= data.invEmailAddr%>"
-                                   aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1"
-                                   data-inactive-target data-valid-type="email"/>
-                            <button class="cancel"><span class="blind">삭제</span></button>
+                            <span class="input">
+                                <input type="text" placeholder="이메일 입력" title="input" name="invEmailAddr"
+                                       value="<%= data.invEmailAddr%>"
+                                       aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1"
+                                       data-inactive-target data-valid-type="email"/>
+                                <button class="cancel"><span class="blind">삭제</span></button>
+                            </span>
                         </span>
-                    </span>
                         <div class="widget pt20">
                             <div class="widget-box check">
                                 <ul class="select-list" role="group">
                                     <li class="checkbox type01 mb16 checked" role="checkbox" aria-checked="true">
                                         <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                        <input type="checkbox" name="scurMailYn" value="Y" title="값1" checked/>
+                                        <input id="fe-scurMailYn" type="checkbox" name="scurMailYn" value="Y" title="값1" checked/>
                                         <!-- 체크상태일 경우 checked="checked" -->
                                         이메일 보안 설정
                                     </li>
@@ -102,107 +102,107 @@
                     <!--// 이메일 area -->
 
                     <% if( '1' === data.changeBillInfo.cd ) { %>
-                    <!--기타(우편) area-->
-                    <div class="cont-box pb0">
-                        <p class="con-tit0 pb12">우편 주소</p>
+                        <!--기타(우편) area-->
+                        <div class="cont-box pb0">
+                            <p class="con-tit0 pb12">우편 주소</p>
 
-                        <!--주소가 있을 때-->
-                        <div id="fe-addr-area" class="none">
-                        <span class="inputbox bt-add">
-                            <span class="input">
-                                <input type="text" class="fe-zip" name="zip" title="우편번호" data-valid-type="addr"
-                                       data-inactive-target disabled/>
+                            <!--주소가 있을 때-->
+                            <div id="fe-addr-area" class="none">
+                            <span class="inputbox bt-add">
+                                <span class="input">
+                                    <input type="text" class="fe-zip" name="zip" title="우편번호" data-valid-type="addr"
+                                           data-inactive-target disabled/>
+                                </span>
+                                <span class="bt-box">
+                                    <button type="button" class="fe-search-zip">우편번호 검색</button>
+                                </span>
                             </span>
-                            <span class="bt-box">
-                                <button type="button" class="fe-search-zip">우편번호 검색</button>
+                                <span class="inputbox mt6">
+                                <span class="input">
+                                    <input type="text" class="fe-main-address" name="basAddr" title="메인 주소"
+                                           aria-labelledby="aria-citation-phone" data-valid-type="addr" disabled/>
+                                </span>
                             </span>
-                        </span>
-                            <span class="inputbox mt6">
-                            <span class="input">
-                                <input type="text" class="fe-main-address" name="basAddr" title="메인 주소"
-                                       aria-labelledby="aria-citation-phone" data-valid-type="addr" disabled/>
+                                <span class="inputbox mt6">
+                                <span class="input">
+                                    <input type="text" class="fe-detail-address" name="dtlAddr" placeholder="상세주소 입력"
+                                           title="상세 주소" aria-labelledby="aria-citation-phone"/>
+                                    <button class="cancel"><span class="blind">삭제</span></button>
+                                </span>
                             </span>
-                        </span>
-                            <span class="inputbox mt6">
-                            <span class="input">
-                                <input type="text" class="fe-detail-address" name="dtlAddr" placeholder="상세주소 입력"
-                                       title="상세 주소" aria-labelledby="aria-citation-phone"/>
-                                <button class="cancel"><span class="blind">삭제</span></button>
-                            </span>
-                        </span>
+                            </div>
+                            <!--// 주소가 있을 때-->
+
+                            <!--주소 없을 때는 우편번호 검색 만 보임-->
+                            <ul id="fe-no-addr-area" class="bt-slice none">
+                                <li class="bt-blue1">
+                                    <button class="fe-search-zip">우편번호 검색</button>
+                                </li>
+                            </ul>
+                            <!--// 주소 없을 때는 우편번호 검색 만 보임-->
+
                         </div>
-                        <!--// 주소가 있을 때-->
 
-                        <!--주소 없을 때는 우편번호 검색 만 보임-->
-                        <ul id="fe-no-addr-area" class="bt-slice none">
-                            <li class="bt-blue1">
-                                <button class="fe-search-zip">우편번호 검색</button>
-                            </li>
-                        </ul>
-                        <!--// 주소 없을 때는 우편번호 검색 만 보임-->
-
-                    </div>
-
-                    <!--우편물 발송주기 area-->
-                    <% if(data.billSndCyclYn === 'Y') { %>
-                    <div class="cont-box nogaps pt36">
-                        <p class="con-tit0 pb14 pl16">우편물 발송주기</p>
-                        <div class="list-comp-input">
-                            <div class="widget">
-                                <div class="widget-box radio">
-                                    <ul class="select-list" role="group">
-                                        <li class="radiobox type01-big mid-top checked" role="radio"
-                                            aria-checked="true">
-                                            <input type="radio" name="billSndCyclCd" value="1" title="매월"
-                                                   aria-labelledby="aria-comp-radio1" checked=""/>
-                                            <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
-                                                <p class="layout-text">
-                                                    <span class="mtext">매월</span>
-                                                </p>
-                                            </div>
-                                        </li>
-                                        <li class="radiobox type01-big mid-top" role="radio" aria-checked="false">
-                                            <input type="radio" name="billSndCyclCd" value="2" title="격월"
-                                                   aria-labelledby="aria-comp-radio2"/>
-                                            <div class="comp-list-layout" id="aria-comp-radio2" aria-hidden="true">
-                                                <p class="layout-text">
-                                                    <span class="mtext">격월</span>
-                                                </p>
-                                            </div>
-                                        </li>
-                                        <li class="radiobox type01-big mid-top" role="radio" aria-checked="false">
-                                            <input type="radio" name="billSndCyclCd" value="3" title="분기"
-                                                   aria-labelledby="aria-comp-radio3"/>
-                                            <div class="comp-list-layout" id="aria-comp-radio3" aria-hidden="true">
-                                                <p class="layout-text">
-                                                    <span class="mtext">분기</span>
-                                                </p>
-                                            </div>
-                                        </li>
-                                        <li class="radiobox type01-big mid-top" role="radio" aria-checked="false">
-                                            <input type="radio" name="billSndCyclCd" value="4" title="반기"
-                                                   aria-labelledby="aria-comp-radio4"/>
-                                            <div class="comp-list-layout" id="aria-comp-radio4" aria-hidden="true">
-                                                <p class="layout-text">
-                                                    <span class="mtext">반기</span>
-                                                </p>
-                                            </div>
-                                        </li>
-                                    </ul>
+                        <!--우편물 발송주기 area-->
+                        <% if(data.billSndCyclYn === 'Y') { %>
+                        <div class="cont-box nogaps pt36">
+                            <p class="con-tit0 pb14 pl16">우편물 발송주기</p>
+                            <div class="list-comp-input">
+                                <div class="widget">
+                                    <div class="widget-box radio">
+                                        <ul class="select-list" role="group">
+                                            <li class="radiobox type01-big mid-top checked" role="radio"
+                                                aria-checked="true">
+                                                <input type="radio" name="billSndCyclCd" value="1" title="매월"
+                                                       aria-labelledby="aria-comp-radio1" checked=""/>
+                                                <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
+                                                    <p class="layout-text">
+                                                        <span class="mtext">매월</span>
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li class="radiobox type01-big mid-top" role="radio" aria-checked="false">
+                                                <input type="radio" name="billSndCyclCd" value="2" title="격월"
+                                                       aria-labelledby="aria-comp-radio2"/>
+                                                <div class="comp-list-layout" id="aria-comp-radio2" aria-hidden="true">
+                                                    <p class="layout-text">
+                                                        <span class="mtext">격월</span>
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li class="radiobox type01-big mid-top" role="radio" aria-checked="false">
+                                                <input type="radio" name="billSndCyclCd" value="3" title="분기"
+                                                       aria-labelledby="aria-comp-radio3"/>
+                                                <div class="comp-list-layout" id="aria-comp-radio3" aria-hidden="true">
+                                                    <p class="layout-text">
+                                                        <span class="mtext">분기</span>
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li class="radiobox type01-big mid-top" role="radio" aria-checked="false">
+                                                <input type="radio" name="billSndCyclCd" value="4" title="반기"
+                                                       aria-labelledby="aria-comp-radio4"/>
+                                                <div class="comp-list-layout" id="aria-comp-radio4" aria-hidden="true">
+                                                    <p class="layout-text">
+                                                        <span class="mtext">반기</span>
+                                                    </p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
+                            <ul class="con-dot-txt0 pl16 pt20">
+                                <li>월 요금안내서와 미발송 청구내역이 함께 발송됩니다.</li>
+                                <li>격월 : 2 / 4 / 6 / 8 / 10 / 12월</li>
+                                <li>분기 : 3 / 6 / 9 / 12월</li>
+                                <li>반기 : 6 / 12월</li>
+                            </ul>
                         </div>
-                        <ul class="con-dot-txt0 pl16 pt20">
-                            <li>월 요금안내서와 미발송 청구내역이 함께 발송됩니다.</li>
-                            <li>격월 : 2 / 4 / 6 / 8 / 10 / 12월</li>
-                            <li>분기 : 3 / 6 / 9 / 12월</li>
-                            <li>반기 : 6 / 12월</li>
-                        </ul>
-                    </div>
+                        <%}%>
+                        <!--// 우편물 발송주기 area-->
                     <%}%>
-                    <!--// 우편물 발송주기 area-->
                     <!--//기타(우편) area-->
-                    <%}%>
 
                     <%if( data.hpParam.name !== ''){%>
                     <!--노출 CASE : 우편, 유선 ( Bill Letter, 문자 )-->
@@ -285,6 +285,7 @@
                                     </span>
                                 </span>
                             </li>
+                            <!--법정대리인 함께 수령 > 핸드폰 번호 area-->
                             <li class="fe-ccurNotiYn none">
                                 법정대리인 함께 수령
                                 <span class="widget">
@@ -292,7 +293,7 @@
                                         <span class="btn-switch type1">
                                             <span class="switch-style" role="checkbox" aria-checked="false">
                                                 <span class="off-tx">꺼짐</span>
-                                                <input type="checkbox" name="ccurNotiYn" value="Y" title="법정대리인 함께 수령" data-toggle-id="fe-ccurNotiSvcNum"/>
+                                                <input type="checkbox" name="ccurNotiYn" value="Y" title="법정대리인 함께 수령" data-toggle-id="fe-ccurNotiSvcNum" data-inactive-target/>
                                                 <span class="on-tx">켜짐</span>
                                             </span>
                                         </span>
@@ -305,9 +306,8 @@
                                     </ul>
                                 </div>
                             </li>
+                            <!--// 법정대리인 함께 수령 > 핸드폰 번호 area-->
                         </ul>
-                        <!--법정대리인 함께 수령 > 핸드폰 번호 area-->
-                        <!--// 법정대리인 함께 수령 > 핸드폰 번호 area-->
                     </div>
                     <%}%>
                     <!--// 옵션설정 끝-->
