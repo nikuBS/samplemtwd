@@ -39,13 +39,14 @@ Tw.CertificationSk.prototype = {
     ATH2008: 'ATH2008',     // 인증번호를 입력할 수 있는 시간이 초과하였습니다.
     ATH1221: 'ATH1221'      // 인증번호 유효시간이 경과되었습니다.
   },
-  open: function (svcInfo, authUrl, authKind, prodAuthKey, callback, opMethods, optMethods, isWelcome, methodCnt) {
+  open: function (svcInfo, authUrl, authKind, prodAuthKey, callback, opMethods, optMethods, isWelcome, methodCnt, userSmsOpen) {
     this._callbackParam = null;
     this._svcInfo = svcInfo;
     this._authUrl = authUrl;
     this._authKind = authKind;
     this._callback = callback;
     this._prodAuthKey = prodAuthKey;
+    this._usesSmsOpen = userSmsOpen;
 
     this._getAllSvcInfo(opMethods, optMethods, isWelcome, methodCnt);
   },
@@ -57,15 +58,19 @@ Tw.CertificationSk.prototype = {
     }
   },
   _checkOption: function (optMethods) {
+    if ( !this._usesSmsOpen && (this._svcInfo.smsUsableYn === 'N' || this._svcInfo.svcStCd === Tw.SVC_STATE.SP) ) {
+      return false;
+    }
+
     if ( optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN) !== -1 ) {
       this._enableKeyin = true;
-      this._defaultKeyin = this._svcInfo.smsUsableYn === 'N' || this._svcInfo.svcStCd === Tw.SVC_STATE.SP;
+      // this._defaultKeyin = this._svcInfo.smsUsableYn === 'N' || this._svcInfo.svcStCd === Tw.SVC_STATE.SP;
 
     }
     if ( optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_SECURITY) !== -1 && Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
       this._securityAuth = true;
-
     }
+    return true;
   },
   _getAllSvcInfo: function (opMethods, optMethods, isWelcome, methodCnt) {
     this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
@@ -73,6 +78,10 @@ Tw.CertificationSk.prototype = {
   },
   _onSuccessAllSvcInfo: function (opMethods, optMethods, isWelcome, methodCnt, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      if ( !this._usesSmsOpen && Tw.FormatHelper.isEmpty(resp.result.m) ) {
+        this._callback({ code: Tw.API_CODE.CERT_SELECT });
+        return;
+      }
       var category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
       _.map(category, $.proxy(function (line) {
         var curLine = resp.result[Tw.LINE_NAME[line]];
@@ -88,12 +97,15 @@ Tw.CertificationSk.prototype = {
 
       this._openSmsOnly(opMethods, optMethods, isWelcome, methodCnt);
     } else {
-      // error
+      Tw.Error.pop(resp.code, resp.msg);
     }
   },
   _openSmsOnly: function (opMethods, optMethods, isWelcome, methodCnt) {
     this._checkSmsType(opMethods);
-    this._checkOption(optMethods);
+    if ( !this._checkOption(optMethods) ) {
+      this._callback({ code: Tw.API_CODE.CERT_SELECT });
+      return;
+    }
 
     this._popupService.open({
       hbs: 'CO_CE_02_02_01_02',
@@ -170,11 +182,16 @@ Tw.CertificationSk.prototype = {
   },
 
   _onClickOtherCert: function () {
-    this._callbackParam = { code: 'CERT0001' };
+    this._callbackParam = { code: Tw.API_CODE.CERT_SELECT };
     this._popupService.close();
   },
   _onChangeKeyin: function (event) {
     var $target = $(event.target);
+
+    clearTimeout(this._addTimer);
+    this._addTimer = null;
+    this._addTime = null;
+
     if ( $target.is(':checked') ) {
       this._onKeyin = true;
       this.$inputMdn.prop('readonly', false);

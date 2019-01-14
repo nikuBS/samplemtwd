@@ -107,17 +107,18 @@ class MainHome extends TwViewController {
           return this.redisService.getStringTos(REDIS_TOS_KEY.SMART_CARD_DEFAULT);
         }
       }).map((resp) => {
+        this.logger.info(this, '[Smart Card]', resp);
+        // let order = ['00001', '00002', '00003', '00004', '00005'];
+        let order = [];
         if ( resp.code === API_CODE.CODE_00 ) {
-          const order = resp.result.split(',');
-          return order.map((segment) => {
-            return {
-              no: segment,
-              title: HOME_SMART_CARD[segment]
-            };
-          });
-        } else {
-          return [];
+          order = resp.result.split(',');
         }
+        return order.map((segment) => {
+          return {
+            no: segment,
+            title: HOME_SMART_CARD[segment]
+          };
+        });
       });
   }
 

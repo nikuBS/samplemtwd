@@ -3,6 +3,7 @@ Tw.NativeService = function () {
   this._callbackList = [];
   this._randomCode = 0;
   this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
   this._gnb = null;
 
   this._init();
@@ -72,7 +73,7 @@ Tw.NativeService.prototype = {
     if ( /\/main\/home/.test(location.href) ) {
       if ( this._popupService.isPopup() ) {
         this._popupService.close();
-      } else if (!!this._gnb && this._gnb.isOpened()) {
+      } else if ( !!this._gnb && this._gnb.isOpened() ) {
         this._gnb.close();
       } else {
         this._popupService.openConfirm(Tw.ALERT_MSG_COMMON.EXIT_APP, null, $.proxy(this._exitApp, this));
@@ -105,14 +106,23 @@ Tw.NativeService.prototype = {
         window.location.href = '/common/member/slogin/ios';
       }
     } else {
-      this._popupService.openAlert(Tw.MSG_AUTH.EASY_LOGIN_FAIL);
+      // error
     }
   },
 
   _onSessionExpired: function (resp) {
     Tw.Logger.info('[onSessionExpired]', resp);
+    this._tidLanding = new Tw.TidLandingComponent();
+    this._tidLanding.logout($.proxy(this._completeLogout, this, resp));
   },
-
+  _completeLogout: function (isAutoLogin, resp) {
+    Tw.Logger.info('[completeLogout]', isAutoLogin, resp);
+    if ( isAutoLogin === 'Y' ) {
+      this._tidLanding.goActionSheetLogin();
+    } else {
+      this._historyService.goLoad('/common/member/logout/expire');
+    }
+  },
   _exitApp: function () {
     this.send(Tw.NTV_CMD.EXIT, {});
   }
