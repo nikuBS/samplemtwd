@@ -28,10 +28,10 @@
                     <span class="logo"><img src="<%= data.appLogoImgUrl %>" alt="<%= data.appLogoImgAlt %>"></span>
                     <strong class="brand-tit"><%= data.coPtnrNm %></strong>
                     <p class="bramd-txt"><%= data.brandSubtitleMob %></p>
-                    <button class="bt-like on" data-mylikecount="<%= data.myLikeCount %>"><%= data.totLikeCount %></button>
+                    <!--<button class="bt-like on" data-mylikecount="<%= data.aaaa %>"><%= data.totLikeCount %></button>-->
                     <h3 class="stit">혜택 정보</h3>
                     <h4 class="sstit">혜택</h4>
-                    <div><%- data.coBenefitDtl %></div>
+                    <div class="benefit-list" style="display: none;"><%- data.coBenefitDtl %></div>
                     <!--<ul class="benefit-list">-->
                     <!--<li>-->
                     <!--VIP고객-->
@@ -43,7 +43,7 @@
                     <!--</li>-->
                     <!--</ul>-->
                     <h4 class="sstit">유의사항</h4>
-                    <div><%- data.appCoUseInfo %></div>
+                    <div class="benefit-list"><%- data.appCoUseInfo %></div>
                     <!--<ul class="benefit-list">-->
                     <!--<li>1일 1회 사용가능</li>-->
                     <!--<li>최소 구매금액 1천원 이상 시 할인 가능</li>-->

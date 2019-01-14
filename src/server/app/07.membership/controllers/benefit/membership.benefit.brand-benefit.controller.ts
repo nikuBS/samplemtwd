@@ -33,16 +33,16 @@ class MembershipBenefitBrandBenefit extends TwViewController {
     this.apiService.request(API_CMD.BFF_11_0018, param).subscribe(
       (resp) => {
 
-
         if ( resp.code === API_CODE.CODE_00 ) {
 
           const data = resp.result;
-          data.totLikeCount = FormatHelper.addComma(data.totLikeCount);
-          data.myLike = ( data.myLikeCount !== '0' );
-          // data.coBenefitDtl = unescape(data.coBenefitDtl);
+          if ( data.totLikeCount ) {
+            data['totLikeCount'] = FormatHelper.addComma(data.totLikeCount);
+            data['myLike'] = ( data.myLikeCount && data.myLikeCount !== '0' );
+          }
 
-          data.cateCd = cateCd;
-          data.brandCd = brandCd;
+          data['cateCd'] = cateCd;
+          data['brandCd'] = brandCd;
 
           res.render('benefit/membership.benefit.brand-benefit.html', {
             svcInfo: svcInfo,
@@ -54,7 +54,7 @@ class MembershipBenefitBrandBenefit extends TwViewController {
 
           this.error.render(res, {
             code: resp.code,
-            msg: resp.smg,
+            msg: resp.msg,
             svcInfo
           });
         }
@@ -62,7 +62,7 @@ class MembershipBenefitBrandBenefit extends TwViewController {
     (err) => {
       this.error.render(res, {
         code: err.code,
-        msg: err.smg,
+        msg: err.msg,
         svcInfo
       });
     });
