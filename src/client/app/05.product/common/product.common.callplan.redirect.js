@@ -20,6 +20,11 @@ Tw.ProductCommonCallplanRedirect.prototype = {
       return Tw.CommonHelper.openUrlInApp(this._redirectUrl);
     }
 
+    if (!Tw.BrowserHelper.isApp()) {
+      this._isConfirm = true;
+      return this._procRedirect();
+    }
+
     this._popupService.openConfirm(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A15.TITLE, $.proxy(this._setConfirm, this), $.proxy(this._procRedirect, this));
   },
 

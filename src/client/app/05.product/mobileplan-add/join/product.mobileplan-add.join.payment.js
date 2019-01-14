@@ -87,9 +87,9 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
   },
 
   _setSendResultText: function(isError, text) {
+    this.$container.find('.fe-send_result_msg').remove();
     this.$sendMsgResult.html($('<span\>').addClass('fe-send_result_msg')
       .addClass(isError ? 'error-txt' : 'validation-txt').text(text));
-    this.$container.find('.fe-send_result_msg').remove();
     this.$sendMsgResult.show();
   },
 
@@ -160,9 +160,9 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
   },
 
   _setValidateResultText: function(isError, text) {
+    this.$container.find('.fe-send_result_msg').remove();
     this.$validateResult.html($('<span\>').addClass('fe-send_result_msg')
       .addClass(isError ? 'error-txt' : 'validation-txt').text(text));
-    this.$container.find('.fe-send_result_msg').remove();
     this.$validateResult.show();
   },
 
