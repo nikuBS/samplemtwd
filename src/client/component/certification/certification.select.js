@@ -30,6 +30,7 @@ Tw.CertificationSelect = function () {
   this._callback = null;
   this._prodAuthKey = '';
 
+  this._userSmsOpen = false;
   this._optionCert = false;
 };
 
@@ -214,7 +215,8 @@ Tw.CertificationSelect.prototype = {
         this._certSk = new Tw.CertificationSk();
         this._certSk.open(
           this._svcInfo, this._authUrl, this._authKind, this._prodAuthKey, $.proxy(this._completeCert, this),
-          this._opMethods, this._optMethods, isWelcome, this._methodCnt);
+          this._opMethods, this._optMethods, isWelcome, this._methodCnt, this._userSmsOpen);
+        this._userSmsOpen = false;
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS:
         this._certNice = new Tw.CertificationNice();
@@ -275,6 +277,7 @@ Tw.CertificationSelect.prototype = {
   _onClickSkSms: function () {
     this._certMethod = Tw.AUTH_CERTIFICATION_METHOD.SK_SMS;
     this._openCert = true;
+    this._userSmsOpen = true;
     this._popupService.close();
   },
   _onClickKtSms: function () {

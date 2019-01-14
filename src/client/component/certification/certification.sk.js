@@ -39,13 +39,14 @@ Tw.CertificationSk.prototype = {
     ATH2008: 'ATH2008',     // 인증번호를 입력할 수 있는 시간이 초과하였습니다.
     ATH1221: 'ATH1221'      // 인증번호 유효시간이 경과되었습니다.
   },
-  open: function (svcInfo, authUrl, authKind, prodAuthKey, callback, opMethods, optMethods, isWelcome, methodCnt) {
+  open: function (svcInfo, authUrl, authKind, prodAuthKey, callback, opMethods, optMethods, isWelcome, methodCnt, userSmsOpen) {
     this._callbackParam = null;
     this._svcInfo = svcInfo;
     this._authUrl = authUrl;
     this._authKind = authKind;
     this._callback = callback;
     this._prodAuthKey = prodAuthKey;
+    this._usesSmsOpen = userSmsOpen;
 
     this._getAllSvcInfo(opMethods, optMethods, isWelcome, methodCnt);
   },
@@ -57,7 +58,7 @@ Tw.CertificationSk.prototype = {
     }
   },
   _checkOption: function (optMethods) {
-    if ( this._svcInfo.smsUsableYn === 'N' || this._svcInfo.svcStCd === Tw.SVC_STATE.SP ) {
+    if ( !this._usesSmsOpen && (this._svcInfo.smsUsableYn === 'N' || this._svcInfo.svcStCd === Tw.SVC_STATE.SP) ) {
       return false;
     }
 
@@ -77,7 +78,7 @@ Tw.CertificationSk.prototype = {
   },
   _onSuccessAllSvcInfo: function (opMethods, optMethods, isWelcome, methodCnt, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( Tw.FormatHelper.isEmpty(resp.result.m) ) {
+      if ( !this._usesSmsOpen && Tw.FormatHelper.isEmpty(resp.result.m) ) {
         this._callback({ code: Tw.API_CODE.CERT_SELECT });
         return;
       }
