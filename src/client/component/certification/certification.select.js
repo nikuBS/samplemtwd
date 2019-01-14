@@ -30,7 +30,7 @@ Tw.CertificationSelect = function () {
   this._callback = null;
   this._prodAuthKey = '';
 
-  this._userSmsOpen = false;
+  this._smsBlock = false;
   this._optionCert = false;
 };
 
@@ -192,8 +192,8 @@ Tw.CertificationSelect.prototype = {
         sLogin: this._svcInfo.loginType === Tw.AUTH_LOGIN_TYPE.EASY,
         masking: this._authKind === Tw.AUTH_CERTIFICATION_KIND.A,
         cntClass: this._methodCnt === 1 ? 'one' : this._methodCnt === 2 ? 'two' : 'three',
-        skSms: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS) !== -1 ||
-          this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE) !== -1,
+        skSms: !this._smsBlock && (this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS) !== -1 ||
+          this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE) !== -1),
         otherSms: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS) !== -1,
         save: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SAVE) !== -1,
         publicCert: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH) !== -1,
@@ -215,8 +215,7 @@ Tw.CertificationSelect.prototype = {
         this._certSk = new Tw.CertificationSk();
         this._certSk.open(
           this._svcInfo, this._authUrl, this._authKind, this._prodAuthKey, $.proxy(this._completeCert, this),
-          this._opMethods, this._optMethods, isWelcome, this._methodCnt, this._userSmsOpen);
-        this._userSmsOpen = false;
+          this._opMethods, this._optMethods, isWelcome, this._methodCnt);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS:
         this._certNice = new Tw.CertificationNice();
@@ -334,6 +333,9 @@ Tw.CertificationSelect.prototype = {
       }
     } else if ( resp.code === Tw.API_CODE.CERT_SELECT ) {
       // 인증 선택
+      this._openSelectPopup(false);
+    } else if ( resp.code === Tw.API_CODE.CERT_SMS_BLOCK ) {
+      this._smsBlock = true;
       this._openSelectPopup(false);
     } else {
       // TODO: 인증 실패

@@ -80,6 +80,8 @@ Tw.BiometricsCert.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var biometricsRegister = new Tw.BiometricsRegister(this._target);
       biometricsRegister.open(this._callback);
+    } else if ( resp.code === Tw.API_CODE.CERT_SMS_BLOCK ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_SMS_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_SMS_BLOCK.TITLE, Tw.BUTTON_LABEL.CLOSE);
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
