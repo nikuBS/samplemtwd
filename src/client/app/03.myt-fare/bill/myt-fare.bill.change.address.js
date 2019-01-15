@@ -69,7 +69,11 @@ Tw.MyTFareBillChangeAddress.prototype = {
   },
   _checkPhoneNumber: function (event) {
     var $target = $(event.currentTarget);
-    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 12));
+    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 12), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V18);
+
+    if (this.$isValid) {
+      this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.isCellPhone($target.val()), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V9);
+    }
   },
   _addHipen: function (target) {
     var target_val = target.value.replace(/\D[^\.]/g, '');
