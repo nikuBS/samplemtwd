@@ -370,13 +370,17 @@ class MyTJoinSubmainController extends TwViewController {
     // 가입자명
     result.custNm = data.wireReqrNm;
     // 서비스 약정
-    result.svcPrdStaDt = this.isMasking(data.svcPrdStaDt) ? data.svcPrdStaDt : DateHelper.getShortDateNoDot(data.svcPrdStaDt);
-    result.svcPrdEndDt = this.isMasking(data.svcPrdEndDt) ? data.svcPrdEndDt : DateHelper.getShortDateNoDot(data.svcPrdEndDt);
+    result.svcPrdStaDt = this.isMasking(data.svcPrdStaDt) ? data.svcPrdStaDt :
+      (data.svcPrdStaDt ? DateHelper.getShortDateNoDot(data.svcPrdStaDt) : data.svcPrdStaDt);
+    result.svcPrdEndDt = this.isMasking(data.setPrdStaDt) ? data.svcPrdEndDt :
+      (data.setPrdStaDt ? DateHelper.getShortDateNoDot(data.svcPrdEndDt) : data.svcPrdEndDt);
     result.svcAgrmtMth = data.svcAgrmtMth;
     // 세트 약정
     result.setNm = data.setNm;
-    result.setPrdStaDt = this.isMasking(data.setPrdStaDt) ? data.setPrdStaDt : DateHelper.getShortDateNoDot(data.setPrdStaDt);
-    result.setPrdEndDt = this.isMasking(data.setPrdEndDt) ? data.setPrdEndDt : DateHelper.getShortDateNoDot(data.setPrdEndDt);
+    result.setPrdStaDt = this.isMasking(data.setPrdStaDt) ? data.setPrdStaDt :
+      (data.setPrdStaDt ? DateHelper.getShortDateNoDot(data.setPrdStaDt) : data.setPrdStaDt);
+    result.setPrdEndDt = this.isMasking(data.setPrdEndDt) ? data.setPrdEndDt :
+      (data.setPrdEndDt ? DateHelper.getShortDateNoDot(data.setPrdEndDt) : data.setPrdEndDt);
     // 유선상품 수
     result.wireProdCnt = data.wireProdCnt;
     // 설치 주소
