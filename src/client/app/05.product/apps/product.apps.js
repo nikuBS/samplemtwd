@@ -19,6 +19,7 @@ Tw.ProductApps = function(rootEl, menuId) {
 
 Tw.ProductApps.prototype = {
   _init: function() {
+    this._today = new Date();
     this._appsTmpl = Handlebars.compile($('#fe-tmpl-apps').html());
     this._getApps();
   },
@@ -70,7 +71,7 @@ Tw.ProductApps.prototype = {
       );
     } else {
       this._apps = _.map(apps, function(app) {
-        app.isNew = Tw.DateHelper.getDifference(app.newIconExpsEndDtm.substring(0, 8)) > 0;
+        app.isNew = Tw.DateHelper.getDiffByUnit(app.newIconExpsEndDtm.substring(0, 8), this._today, 'days') >= 0;
         if (app.iconImg && app.iconImg.indexOf('http') < 0) {
           app.iconImg = Tw.Environment.cdn + app.iconImg;
         }
@@ -95,7 +96,7 @@ Tw.ProductApps.prototype = {
     );
 
     this._apps = _.map(apps, function(app) {
-      app.isNew = Tw.DateHelper.getDifference(app.newIconExpsEndDtm.substring(0, 8)) > 0;
+      app.isNew = Tw.DateHelper.getDiffByUnit(app.newIconExpsEndDtm.substring(0, 8), this._today, 'days') >= 0;
       app.isInstalled = list[app.prodNm] || false;
       app.iconImg = Tw.Environment.cdn + app.iconImg;
 
