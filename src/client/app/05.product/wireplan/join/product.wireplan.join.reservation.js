@@ -42,7 +42,6 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
   _initCombineProduct: function() {
     this.$combineWrap.show();
-    this._getIsExistsCombineReservation();
     this._getCurrentCombineList();
   },
 
@@ -136,22 +135,6 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
     if (isApply) {
       this._procApplyCheck();
-    }
-  },
-
-  _getIsExistsCombineReservation: function() {
-    this._apiService.request(Tw.API_CMD.BFF_10_0078, {})
-      .done($.proxy(this._resCombineReservation, this));
-  },
-
-  _resCombineReservation: function(resp) {
-    if (resp.code !== Tw.API_CODE.CODE_00) {
-      this.$combineIsExists.hide();
-      return;
-    }
-
-    if (!Tw.FormatHelper.isEmpty(resp.result.necessaryDocumentInspectInfoList)) {
-      this.$combineIsExists.show();
     }
   },
 

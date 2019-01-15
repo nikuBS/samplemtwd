@@ -229,6 +229,11 @@ export enum PRODUCT_REQUIRE_DOCUMENT_CALLPLAN_RESULT {
   COMPLETE = '검토가 완료 되었습니다.'
 }
 
+export enum PRODUCT_REQUIRE_DOCUMENT_RESERVATION_RESULT {
+  APPLY = '가입서류를 제출',
+  HISTORY = '진행결과를 조회'
+}
+
 export const MYT_FARE_BILL_REISSUE = {
   TITLE: '요금안내서 재발행',
   REASON: {
