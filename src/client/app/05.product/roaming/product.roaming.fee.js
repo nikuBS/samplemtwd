@@ -246,6 +246,7 @@ Tw.ProductRoamingFee.prototype = {
       }
 
       var items = _.map(resp.result.products, function(item) {
+          item.isNumber = $.isNumeric(Number(item.basFeeAmt));
           item.basFeeAmt = Tw.FormatHelper.addComma(item.basFeeAmt);
           return item;
       });
