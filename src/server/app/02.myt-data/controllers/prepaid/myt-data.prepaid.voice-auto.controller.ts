@@ -30,7 +30,7 @@ class MyTDataPrepaidVoiceAuto extends TwViewController {
     this.renderPrepaidVoiceAuto(req, res, next, svcInfo, pageInfo);
   }
 
-  public renderPrepaidVoiceAuto = (req: Request, res: Response, next: NextFunction, svcInfo, pageInfo) =>     Observable.combineLatest(
+  public renderPrepaidVoiceAuto = (req: Request, res: Response, next: NextFunction, svcInfo, pageInfo) => Observable.combineLatest(
     this.getPPSInfo(),
     this.getAutoPPSInfo()
   ).subscribe(([PPSInfo, AutoInfo]) => {

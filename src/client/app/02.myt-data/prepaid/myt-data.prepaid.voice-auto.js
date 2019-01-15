@@ -34,9 +34,18 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     this.$container.on('click', '.fe-select-amount', $.proxy(this._onShowAmount, this));
     this.$container.on('click', '.fe-select-date', $.proxy(this._onShowDate, this));
     this.$container.on('click', '.fe-select-remain-amount', $.proxy(this._onShowRemainAmount, this));
+    this.$container.on('change', '.fe-select-expire', $.proxy(this._validateExpireDate, this));
     this.$container.on('change input blur click', '.fe-wrap-template [required]', $.proxy(this._validateForm, this));
     this.$container.on('click', '.fe-request-recharge', $.proxy(this._requestRechargeAuto, this));
     this.$container.on('keyup', 'input[type=tel]', $.proxy(this._checkMaxLength, this));
+  },
+
+  _validateExpireDate: function (e) {
+    var $target = $(e.currentTarget);
+
+    if ( Tw.DateHelper.isBefore($target.val()) ) {
+      $target.val(Tw.DateHelper.getTomorrowDate());
+    }
   },
 
   _checkMaxLength: function (e) {
@@ -60,10 +69,10 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
 
   _onShowDate: function (e) {
     var $elButton = $(e.currentTarget);
-    var fnSelectDate = function (item) {
+    var fnSelectDate = function ($elButton, item) {
       return {
         value: item.text,
-        option: false,
+        option: $elButton.text().trim() === item.text ? 'checked' : '',
         attr: 'data-value=' + item.chargeCd
       };
     };
@@ -72,7 +81,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
         hbs: 'actionsheet_select_a_type',
         layer: true,
         title: Tw.MYT_PREPAID_AMOUNT.title,
-        data: [{ list: Tw.MYT_PREPAID_DATE.list.map($.proxy(fnSelectDate, this)) }]
+        data: [{ list: Tw.MYT_PREPAID_DATE.list.map($.proxy(fnSelectDate, this, $elButton)) }]
       },
       $.proxy(this._selectPopupCallback, this, [$elButton, true]),
       null
@@ -102,10 +111,10 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
 
   _onShowAmount: function (e) {
     var $elButton = $(e.currentTarget);
-    var fnSelectAmount = function (item) {
+    var fnSelectAmount = function ($elButton, item) {
       return {
         value: item.text,
-        option: false,
+        option: $elButton.text().trim() === item.text ? 'checked' : '',
         attr: 'data-value=' + item.value
       };
     };
@@ -114,7 +123,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
         hbs: 'actionsheet_select_a_type',
         layer: true,
         title: Tw.MYT_PREPAID_AMOUNT.title,
-        data: [{ list: Tw.MYT_PREPAID_AMOUNT.list.map($.proxy(fnSelectAmount, this)) }]
+        data: [{ list: Tw.MYT_PREPAID_AMOUNT.list.map($.proxy(fnSelectAmount, this, $elButton)) }]
       },
       $.proxy(this._selectPopupCallback, this, [$elButton, false]),
       null
