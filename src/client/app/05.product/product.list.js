@@ -295,6 +295,10 @@ Tw.ProductList.prototype = {
       }).join(','),
       originParams = this._params;
 
+    if (searchFltIds.length === 0 && $layer.find('button.active').length > 0) {
+      this._popupService.close();
+    }
+
     this._params = { idxCtgCd: this.CODE };
     this._params.searchFltIds = searchFltIds;
 
