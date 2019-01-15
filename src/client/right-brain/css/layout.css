@@ -2763,6 +2763,8 @@ body.bg-gray {
       background-image: url(/img/svg/icon_48px_titlebar_menu_white.svg); }
     .bg-productdetail .header-wrap .h-belt .icon-gnb-search {
       background-image: url(/img/svg/icon_48px_titlebar_search_white.svg); }
+  .bg-productdetail .header-wrap .h-tit {
+    color: #fff; }
 
 .bg-productdetail.scroll .h-belt {
   border-color: #e5e5e5;
@@ -2771,6 +2773,9 @@ body.bg-gray {
     background-image: url(/img/svg/icon_48px_titlebar_menu.svg); }
   .bg-productdetail.scroll .h-belt .icon-gnb-search {
     background-image: url(/img/svg/icon_48px_titlebar_search.svg); }
+
+.bg-productdetail.scroll .h-tit {
+  color: #000; }
 
 .bg-tapp #contents .container {
   padding-top: 0 !important; }
