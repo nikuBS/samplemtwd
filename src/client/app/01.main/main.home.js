@@ -297,15 +297,19 @@ Tw.MainHome.prototype = {
   },
   _openLineResisterPopup: function () {
     var layerType = this.$container.data('layertype');
-    // layerType = Tw.LOGIN_NOTICE_TYPE.NEW_LINE;
+    // var layerType = Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER;
     Tw.Logger.info('[Home] layerType', layerType);
     if ( !Tw.FormatHelper.isEmpty(layerType) ) {
       if ( layerType === Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER || layerType === Tw.LOGIN_NOTICE_TYPE.EXIST_CUSTOMER ) {
-        this._lineRegisterLayer.openRegisterLinePopup(layerType);
+        setTimeout($.proxy(function () {
+          this._lineRegisterLayer.openRegisterLinePopup(layerType);
+        }, this), 100);
       } else if ( layerType === Tw.LOGIN_NOTICE_TYPE.CUSTOMER_PASSWORD ) {
         this._openCustomerPasswordGuide();
       } else if ( layerType === Tw.LOGIN_NOTICE_TYPE.NEW_LINE ) {
-        this._popupService.openAlert(Tw.ALERT_MSG_HOME.NEW_LINE, null, null, $.proxy(this._closeNewLine, this));
+        setTimeout($.proxy(function () {
+          this._popupService.openAlert(Tw.ALERT_MSG_HOME.NEW_LINE, null, null, $.proxy(this._closeNewLine, this));
+        }, this), 100);
       }
     }
   },
