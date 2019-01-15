@@ -67,7 +67,9 @@ Tw.ProductCommonCallplan.prototype = {
     this.$contents.on('click', '[data-contents]', $.proxy(this._openContentsDetailPop, this, 'contents'));
     this.$contents.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
     this.$contents.on('click', '.fe-link-internal', $.proxy(this._openInternalUrl, this));
-    this.$contents.on('click', '.dmg-contract', $.proxy(this._openDmgPopup, this));
+
+    this.$contents.on('click', '.dmg-contract', $.proxy(this._openCustomPopup, this, 'BS_02_01_02_01'));
+    this.$contents.on('click', '.possible-product', $.proxy(this._openCustomPopup, this, 'BS_03_01_01_02'));
   },
 
   _showReadyOn: function() {
@@ -127,9 +129,9 @@ Tw.ProductCommonCallplan.prototype = {
     e.stopPropagation();
   },
 
-  _openDmgPopup: function() {
+  _openCustomPopup: function(hbsCode) {
     this._popupService.open({
-      hbs: 'BS_02_01_02_01',
+      hbs: hbsCode,
       layer: true
     });
   },
