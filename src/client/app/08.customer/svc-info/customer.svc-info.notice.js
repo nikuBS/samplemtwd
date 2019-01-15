@@ -4,7 +4,7 @@
  * Date: 2018.10.23
  */
 
-Tw.CustomerSvcInfoNotice = function(rootEl, category, ntcId) {
+Tw.CustomerSvcInfoNotice = function(rootEl, category, ntcId, tworldChannel) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -13,6 +13,7 @@ Tw.CustomerSvcInfoNotice = function(rootEl, category, ntcId) {
   this._template = Handlebars.compile($('#tpl_notice_list_item').html());
   this._category = category;
   this._ntcId = ntcId;
+  this._tworldChannel = tworldChannel;
   this._setContentsList = [];
   this._page = 1;
 
@@ -75,7 +76,7 @@ Tw.CustomerSvcInfoNotice.prototype = {
     }
 
     Tw.CommonHelper.startLoading('.container', 'grey', true);
-    this._apiService.request(Tw.API_CMD.BFF_08_0029, { expsChnlCd: 'M', ntcId: ntcId })
+    this._apiService.request(Tw.API_CMD.BFF_08_0029, { expsChnlCd: this._tworldChannel, ntcId: ntcId })
       .done($.proxy(this._setContentsRes, this));
   },
 
