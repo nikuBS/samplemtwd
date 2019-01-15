@@ -1,9 +1,12 @@
-Tw.MenuComponent = function () {
+Tw.MenuComponent = function (notAboutMenu) {
+  if ( notAboutMenu ) {
+    return;
+  }
   $(document).ready($.proxy(function () {
     this.$container = $('#common-menu');
     this.$gnbBtn = $('#fe-bt-gnb');
 
-    if (!this.$container.length || !this.$gnbBtn.length) {
+    if ( !this.$container.length || !this.$gnbBtn.length ) {
       return;
     }
 
@@ -78,29 +81,29 @@ Tw.MenuComponent.prototype = {
     this.$container.on('click', '.fe-bt-logout', $.proxy(this._onClickLogout, this));
   },
   _componentReady: function () {
-    if (location.hash === '#menu') {
+    if ( location.hash === '#menu' ) {
       setTimeout($.proxy(function () {
         this.$gnbBtn.click();
       }, this), 100);
     }
 
     this._tid = this.$container.find('.fe-t-noti').data('tid').trim();
-    if (!Tw.BrowserHelper.isApp() || Tw.FormatHelper.isEmpty(this._tid)) {
+    if ( !Tw.BrowserHelper.isApp() || Tw.FormatHelper.isEmpty(this._tid) ) {
       return;
     }
 
     // Check if there is unread T-Notifications
     this._nativeService.send(Tw.NTV_CMD.IS_APP_CREATED, {}, $.proxy(function (res) {
       // Only if an App is fresh executed
-      if (res.resultCode === Tw.NTV_CODE.CODE_00 && res.params.value) {
+      if ( res.resultCode === Tw.NTV_CODE.CODE_00 && res.params.value ) {
         this._apiService.request(Tw.API_CMD.BFF_04_0004, { tid: this._tid })
           .then($.proxy(function (res) {
-            if (res.code === Tw.API_CODE.CODE_00 && res.result.length) {
+            if ( res.code === Tw.API_CODE.CODE_00 && res.result.length ) {
               this._nativeService.send(Tw.NTV_CMD.SAVE, {
                 key: Tw.NTV_STORAGE.MOST_RECENT_PUSH_SEQ,
                 value: res.result[0].seq
               }, $.proxy(function (res) {
-                if (res.resultCode === Tw.NTV_CODE.CODE_00) {
+                if ( res.resultCode === Tw.NTV_CODE.CODE_00 ) {
                   this._checkNewTNoti();
                 }
               }));
@@ -115,15 +118,15 @@ Tw.MenuComponent.prototype = {
     var showNotiIfNeeded = function (latestSeq, self) {
       self._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.LAST_READ_PUSH_SEQ },
         $.proxy(function (res) {
-          if (res.resultCode === Tw.NTV_CODE.CODE_00) {
-            if (res.params.value !== latestSeq) {
+          if ( res.resultCode === Tw.NTV_CODE.CODE_00 ) {
+            if ( res.params.value !== latestSeq ) {
               // Show red dot!
               self.$container.find('.fe-t-noti').addClass('on');
               $('.fe-bt-menu').addClass('on');
             }
-          } else if (res.resultCode === Tw.NTV_CODE.CODE_ERROR) {
-              self.$container.find('.fe-t-noti').addClass('on');
-              $('.fe-bt-menu').addClass('on');
+          } else if ( res.resultCode === Tw.NTV_CODE.CODE_ERROR ) {
+            self.$container.find('.fe-t-noti').addClass('on');
+            $('.fe-bt-menu').addClass('on');
           }
         }, self)
       );
@@ -131,7 +134,7 @@ Tw.MenuComponent.prototype = {
 
     this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.MOST_RECENT_PUSH_SEQ },
       $.proxy(function (res) {
-        if (res.resultCode === Tw.NTV_CMD.CODE_00) {
+        if ( res.resultCode === Tw.NTV_CMD.CODE_00 ) {
           showNotiIfNeeded(res.params.value, this);
         }
       }, this)
@@ -146,13 +149,13 @@ Tw.MenuComponent.prototype = {
   },
   _onGnbBtnClicked: function () {
     this._isOpened = true;
-    if (!this._isMenuSet) {
+    if ( !this._isMenuSet ) {
       // retrieve redis
       this._apiService.request(Tw.NODE_CMD.GET_MENU, {})
         .then($.proxy(function (res) {
-          if (res.code === Tw.API_CODE.CODE_00) {
+          if ( res.code === Tw.API_CODE.CODE_00 ) {
             this._isLogin = res.result.isLogin;
-            if (this._isLogin) {
+            if ( this._isLogin ) {
               this._isMultiLine = res.result.userInfo.totalSvcCnt > 1;
               this._svcMgmtNum = res.result.userInfo.svcMgmtNum;
               this._svcAttr = res.result.userInfo.svcAttr;
@@ -175,14 +178,14 @@ Tw.MenuComponent.prototype = {
     }
   },
   _onTNoti: function () {
-    if (!this._tNotifyComp) {
+    if ( !this._tNotifyComp ) {
       this._tNotifyComp = new Tw.TNotifyComponent();
     }
     this._tNotifyComp.open(this._tid);
   },
   _onUserInfo: function () {
-    if (this._isMultiLine) {
-      if (!this._lineComponent) {
+    if ( this._isMultiLine ) {
+      if ( !this._lineComponent ) {
         this._lineComponent = new Tw.LineComponent();
       }
       this._lineComponent.onClickLine(this._svcMgmtNum);
@@ -194,19 +197,19 @@ Tw.MenuComponent.prototype = {
   },
   _onClose: function () {
     this._isOpened = false;
-    if (window.location.hash.indexOf('menu') !== -1) {
+    if ( window.location.hash.indexOf('menu') !== -1 ) {
       this._historyService.goBack();
     }
   },
   _checkAndClose: function () {
-    if (window.location.hash.indexOf('menu') === -1 && this._isOpened) {
+    if ( window.location.hash.indexOf('menu') === -1 && this._isOpened ) {
       this.$closeBtn.click();
     }
   },
   _onSimpleLogin: function () {
-    if (Tw.BrowserHelper.isAndroid) {
+    if ( Tw.BrowserHelper.isAndroid ) {
       this._historyService.goLoad('/common/member/slogin/aos');
-    } else if (Tw.BrowserHelper.isIos) {
+    } else if ( Tw.BrowserHelper.isIos ) {
       this._historyService.goLoad('/common/member/slogin/ios');
     }
   },
@@ -216,7 +219,7 @@ Tw.MenuComponent.prototype = {
   },
   _onMenuLink: function (e) {
     var url = e.currentTarget.value;
-    if (url.indexOf('http') !== -1) {
+    if ( url.indexOf('http') !== -1 ) {
       Tw.CommonHelper.openUrlExternal(url);
     } else {
       this._historyService.goLoad(url);
@@ -227,7 +230,7 @@ Tw.MenuComponent.prototype = {
     return false;
   },
   _onRefund: function (e) {
-    if (!this._isLogin) { // If it's not logged in
+    if ( !this._isLogin ) { // If it's not logged in
       (new Tw.CertificationSelect()).open({
         authClCd: Tw.AUTH_CERTIFICATION_KIND.F
       }, '', null, null, $.proxy(function () {
@@ -245,21 +248,21 @@ Tw.MenuComponent.prototype = {
     var isLoginSelector = isLogin ? '.fe-when-login' : '.fe-when-logout';
     this.$container.find(isLoginSelector).removeClass('none');
 
-    if (isLogin) {
+    if ( isLogin ) {
       userInfo.totalSvcCnt = parseInt(userInfo.totalSvcCnt, 10);
       userInfo.expsSvcCnt = parseInt(userInfo.expsSvcCnt, 10);
 
       // 0: normal, 1: number unregistered, 2: no svc
       var memberType = userInfo.totalSvcCnt > 0 ? (userInfo.expsSvcCnt > 0 ? 0 : 1) : 2;
-      switch (memberType) {
+      switch ( memberType ) {
         case 0:
           this.$container.find('.fe-when-login-type0').removeClass('none');
           var nick = userInfo.nickName;
-          if (Tw.FormatHelper.isEmpty(nick)) {
+          if ( Tw.FormatHelper.isEmpty(nick) ) {
             nick = Tw.SVC_ATTR[userInfo.svcAttr];
           }
           this.$nickName.text(nick);
-          if (userInfo.svcAttr.indexOf('M') === -1) {
+          if ( userInfo.svcAttr.indexOf('M') === -1 ) {
             this.$svcNumber.text(userInfo.addr);
           } else {
             this.$svcNumber.text(Tw.FormatHelper.getDashedCellPhoneNumber(userInfo.svcNum));
@@ -280,29 +283,29 @@ Tw.MenuComponent.prototype = {
     }
 
     // When web
-    if (!Tw.BrowserHelper.isApp()) {
+    if ( !Tw.BrowserHelper.isApp() ) {
       this.$container.find('.fe-when-web').removeClass('none');
       this.$container.find('.fe-bt-free-sms').addClass('none');
     }
 
     // When logout and app
-    if (isApp && !isLogin) {
+    if ( isApp && !isLogin ) {
       this.$container.find('.fe-when-logout-and-app').removeClass('none');
     }
 
     // When app or login
-    if (isApp || isLogin) {
+    if ( isApp || isLogin ) {
       this.$container.find('.fe-when-app-or-login').removeClass('none');
     }
 
     this.$menuArea.prepend(this._menuTpl({ list: menu }));
 
-    if (isLogin) {
+    if ( isLogin ) {
       $('.fe-menu-realtime').each($.proxy(function (i, elem) {
         var type = elem.getAttribute('data-value');
-        switch (type) {
+        switch ( type ) {
           case 'svcCnt':
-            if (userInfo.totalSvcCnt !== 0 && userInfo.expsSvcCnt !== 0) {
+            if ( userInfo.totalSvcCnt !== 0 && userInfo.expsSvcCnt !== 0 ) {
               $(elem).text(Tw.MENU_STRING.SVC_COUNT(userInfo.totalSvcCnt));
             } else {
               $(elem).remove();
@@ -311,9 +314,9 @@ Tw.MenuComponent.prototype = {
           case 'bill':
             this._apiService.request(Tw.API_CMD.BFF_05_0036, {})
               .then($.proxy(function (res) {
-                if (res.code === Tw.API_CODE.CODE_00) {
+                if ( res.code === Tw.API_CODE.CODE_00 ) {
                   var info = res.result;
-                  if (info.coClCd === Tw.MYT_FARE_BILL_CO_TYPE.BROADBAND) {
+                  if ( info.coClCd === Tw.MYT_FARE_BILL_CO_TYPE.BROADBAND ) {
                     $(elem).remove();
                     return;
                   }
@@ -331,9 +334,9 @@ Tw.MenuComponent.prototype = {
           case 'data':
             this._apiService.request(Tw.API_CMD.BFF_05_0001, {})
               .then($.proxy(function (res) {
-                if (res.code === Tw.API_CODE.CODE_00) {
+                if ( res.code === Tw.API_CODE.CODE_00 ) {
                   var text = this._parseUsage(res.result);
-                  if (!text) {
+                  if ( !text ) {
                     $(elem).remove();
                     return;
                   }
@@ -344,12 +347,12 @@ Tw.MenuComponent.prototype = {
               }, this))
               .fail(function () {
                 $(elem).remove();
-              })
+              });
             break;
           case 'membership':
             this._apiService.request(Tw.API_CMD.BFF_04_0001, {})
               .then(function (res) {
-                if (res.code === Tw.API_CODE.CODE_00) {
+                if ( res.code === Tw.API_CODE.CODE_00 ) {
                   var group = {
                     V: 'vip',
                     G: 'gold',
@@ -375,12 +378,13 @@ Tw.MenuComponent.prototype = {
   },
 
   tideUpMenuInfo: function (menuInfo, userInfo) {
-    var sorted = _.chain(menuInfo)
+    var sorted = [];
+    sorted = _.chain(menuInfo)
       .filter(function (item) {
-        if (item.menuId === 'M000344') {
+        if ( item.menuId === 'M000344' ) {
           item.expsSeq = '100';
         }
-        if (item.menuId === 'M000353') {
+        if ( item.menuId === 'M000353' ) {
           item.expsSeq = '101';
         }
         return item.menuId !== 'M000343'; // Remove 인터넷/집전화/IPTV menu by hard coded
@@ -389,30 +393,31 @@ Tw.MenuComponent.prototype = {
         return parseInt(item.expsSeq, 10);
       }).value();
 
-    var category = _.reduce(sorted, function (memo, item) {
+    var category = [];
+    category = _.reduce(sorted, function (memo, item) {
       item.children = [];
       memo[item.menuId] = item;
       return memo;
     }, {});
 
     var len = sorted.length;
-    for (var i = 0; i < len; i += 1) {
-      if (sorted[i].frontMenuDpth !== '1') {
-        if (!!category[sorted[i].supMenuId]) {
+    for ( var i = 0; i < len; i += 1 ) {
+      if ( sorted[i].frontMenuDpth !== '1' ) {
+        if ( !!category[sorted[i].supMenuId] ) {
           category[sorted[i].supMenuId].children.push(sorted[i]);
         } else {
           // Modify some menu category by hard coded
-          if (sorted[i].menuId === 'M000344' || sorted[i].menuId === 'M000353') {
+          if ( sorted[i].menuId === 'M000344' || sorted[i].menuId === 'M000353' ) {
             category['M000301'].children.push(sorted[i]);
           }
         }
       }
     }
 
-    var loginType = Tw.FormatHelper.isEmpty(userInfo) ? 'N': userInfo.loginType;
+    var loginType = Tw.FormatHelper.isEmpty(userInfo) ? 'N' : userInfo.loginType;
     category = _.chain(category)
       .filter($.proxy(function (item) {
-        if (item.supMenuNmExpsYn === 'Y') {
+        if ( item.supMenuNmExpsYn === 'Y' ) {
           item.showThis = true;
         }
 
@@ -425,29 +430,29 @@ Tw.MenuComponent.prototype = {
         // Edit: Kim inhwan
         var menu_url = item.menuUrl;
         var checkUrl = '/myt-join/submain';
-        if (menu_url) {
-          if (menu_url.indexOf(checkUrl) > -1 && menu_url.replace(checkUrl, '').length === 0) {
+        if ( menu_url ) {
+          if ( menu_url.indexOf(checkUrl) > -1 && menu_url.replace(checkUrl, '').length === 0 ) {
             if ( !!userInfo && userInfo.svcAttr.indexOf('S') > -1 ) {
               item.menuUrl = item.menuUrl.replace('submain', 'submain_w');
             }
           }
         }
 
-        if (!!item.urlAuthClCd) {
-          if (loginType === 'N' && item.urlAuthClCd.indexOf(loginType) === -1) {
+        if ( !!item.urlAuthClCd ) {
+          if ( loginType === 'N' && item.urlAuthClCd.indexOf(loginType) === -1 ) {
             // item.menuUrl = item.isLink ? '/common/member/login' : item.menuUrl;
             item.loginNeed = true;
             // item.children = [];
             // item.hasChildren = false;
-          } else if (loginType === 'S' && item.urlAuthClCd.indexOf(loginType) === -1) {
+          } else if ( loginType === 'S' && item.urlAuthClCd.indexOf(loginType) === -1 ) {
             item.menuUrl = item.isLink ? 'common/member/slogin/fail' : item.menuUrl;
             // item.children = [];
             // item.hasChildren = false;
           }
         }
 
-        if (loginType !== 'N') {
-          if (!!this.REAL_TIME_ITEM[item.menuId]) {
+        if ( loginType !== 'N' ) {
+          if ( !!this.REAL_TIME_ITEM[item.menuId] ) {
             item.isRealtime = true;
             item.realtimeBFF = this.REAL_TIME_ITEM[item.menuId];
           }
@@ -456,12 +461,12 @@ Tw.MenuComponent.prototype = {
         return item.frontMenuDpth === '1';
       }, this))
       .reduce($.proxy(function (memo, item) {
-        if (memo.length === 0) {
+        if ( memo.length === 0 ) {
           memo.push([]);
         }
-        if (!!this.TOP_PADDING_MENU[item.menuId]) {
+        if ( !!this.TOP_PADDING_MENU[item.menuId] ) {
           memo.push([]);
-          if (item.menuId === this.TOP_PADDING_MENU.M001778) {
+          if ( item.menuId === this.TOP_PADDING_MENU.M001778 ) {
             item.isLine = true;
           }
         }
@@ -475,7 +480,7 @@ Tw.MenuComponent.prototype = {
     var subCategory = category[0];
     // subCategory[1].children.push(subCategory[2].children[0]);
     // subCategory[1].children.push(subCategory[3].children[0]);
-    for (var i = 2; i < subCategory.length - 1; i += 1) {
+    for ( var i = 2; i < subCategory.length - 1; i += 1 ) {
       subCategory[1].children.push(subCategory[i].children[0]);
     }
     subCategory = subCategory.slice(0, 2).concat(subCategory.slice(subCategory.length - 1));
@@ -485,18 +490,18 @@ Tw.MenuComponent.prototype = {
   },
 
   _parseUsage: function (info) {
-    if (info.gnrlData.length === 0) {
+    if ( info.gnrlData.length === 0 ) {
       return undefined;
     }
 
     var ret = '';
 
     var dataRemained = _.reduce(info.gnrlData, function (memo, item) {
-      if (memo < 0) { // Unlimit
+      if ( memo < 0 ) { // Unlimit
         return memo;
       }
 
-      if (Tw.UNLIMIT_CODE.indexOf(item.unlimit) !== -1) {
+      if ( Tw.UNLIMIT_CODE.indexOf(item.unlimit) !== -1 ) {
         memo = -1;
         return memo;
       }
@@ -505,21 +510,21 @@ Tw.MenuComponent.prototype = {
       return memo;
     }, 0);
 
-    if (dataRemained < 0) {
+    if ( dataRemained < 0 ) {
       ret = Tw.COMMON_STRING.UNLIMIT;
     } else {
       var dataObj = Tw.FormatHelper.convDataFormat(dataRemained, Tw.UNIT[Tw.UNIT_E.DATA]);
       ret = dataObj.data + dataObj.unit;
     }
 
-    if (!Tw.FormatHelper.isEmpty(info.voice[0])) {
+    if ( !Tw.FormatHelper.isEmpty(info.voice[0]) ) {
       ret += '/';
-      if (Tw.UNLIMIT_CODE.indexOf(info.voice[0].unlimit) !== -1) {
+      if ( Tw.UNLIMIT_CODE.indexOf(info.voice[0].unlimit) !== -1 ) {
         ret += Tw.COMMON_STRING.UNLIMIT;
       } else {
         var voiceObj = Tw.FormatHelper.convVoiceFormat(parseInt(info.voice[0].remained, 10));
         var min = voiceObj.hours * 60 + voiceObj.min;
-        if (min === 0 && voiceObj.sec !== 0)  {
+        if ( min === 0 && voiceObj.sec !== 0 ) {
           ret += voiceObj.sec + Tw.VOICE_UNIT.SEC;
         } else {
           ret += voiceObj.hours * 60 + voiceObj.min + Tw.VOICE_UNIT.MIN;
