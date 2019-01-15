@@ -62,14 +62,9 @@ class BenefitTerminateTbCombination extends TwViewController {
           }));
         }
 
-        const convTermInfo: any = this._convertTermInfo(termInfo.result);
-        if (FormatHelper.isEmpty(convTermInfo.combinationWireMember)) {
-          return this.error.render(res, renderCommonInfo);
-        }
-
         res.render('terminate/benefit.terminate.tb-combination.html', Object.assign(renderCommonInfo, {
           prodId: prodId,
-          termInfo: convTermInfo
+          termInfo: this._convertTermInfo(termInfo.result)
         }));
       });
   }

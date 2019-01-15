@@ -30,8 +30,8 @@
                                             <div class="horizontal-slide">
                                                 <ul class="horizontal-list" style="width: 641px;">
                                                     <% for (var i in series.list) { %>
-                                                    <li>
-                                                        <a href="/product/callplan/<%= series.list[i].prodId %>" class="product-info">
+                                                    <li data-prod_id="<%= series.list[i].prodId %>" class="fe-go_prod">
+                                                        <div class="product-info">
                                                             <h5 class="title"><%= series.list[i].prodNm %></h5>
                                                             <% if (!series.list[i].isDiscount && !series.list[i].isCombine) { %>
                                                             <p class="info">
@@ -79,7 +79,7 @@
                                                                 <%= series.list[i].prodSmryDesc %>
                                                             </div>
                                                             <% } %>
-                                                        </a>
+                                                        </div>
                                                     </li>
                                                     <% } %>
                                                 </ul>
@@ -101,8 +101,8 @@
                                             <div class="horizontal-slide">
                                                 <ul class="horizontal-list" style="width: 641px;">
                                                     <% for ( var i in recommends ) { %>
-                                                    <li>
-                                                        <a href="/product/callplan/<%= recommends[i].prodId %>" class="product-info">
+                                                    <li data-prod_id="<%= recommends[i].prodId %>" class="fe-go_prod">
+                                                        <div class="product-info">
                                                             <h5 class="title"><%= recommends[i].prodNm %></h5>
                                                             <% if (!recommends[i].isDiscount && !recommends[i].isCombine) { %>
                                                             <p class="info">
@@ -150,7 +150,7 @@
                                                                 <%= recommends[i].prodSmryDesc %>
                                                             </div>
                                                             <% } %>
-                                                        </a>
+                                                        </div>
                                                     </li>
                                                     <% } %>
                                                 </ul>
