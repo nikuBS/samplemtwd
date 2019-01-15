@@ -88,8 +88,8 @@
                                             <div class="horizontal-slide">
                                                 <ul class="horizontal-list">
                                                     <% group.prodList.map(product => { %>
-                                                    <li>
-                                                        <a href="/product/callplan/<%= product.prodId %>" class="product-info">
+                                                    <li data-url="/product/callplan/<%= product.prodId %>" class="fe-go-plan">
+                                                        <div class="product-info">
                                                             <h5 class="title"><%= product.prodNm %></h5>
                                                             <% if (product.basFeeInfo.isNaN) { %>
                                                                 <p class="info"><span class="money"><%= product.basFeeInfo.value %></span></p>
@@ -101,7 +101,7 @@
                                                                 <span class="str"><%= product.displayInfo.value %></span><%= product.displayInfo.unit %>
                                                             </div>
                                                             <% } %>
-                                                        </a>
+                                                        </div>
                                                     </li>
                                                     <% }); %>
                                                 </ul>
