@@ -537,7 +537,7 @@
 .idpt-container .bt-fixed-area .bt-slice > li.bt-red1 button {color:#fff; background:#e22f26}
 
 /* accordian */
-.idpt-container .idpt-accordian > li { position:relative; background-color:#fff; }
+.idpt-container .idpt-accordian > li { position:relative; background:#fff; }
 .idpt-container .idpt-accordian > li > a { position:relative; display:block; width:calc(100% - 2rem); height:3.5rem; line-height:3.5rem; font-size: 0.875rem; color:#000; font-weight: 600; -webkit-box-sizing:border-box; box-sizing:border-box; border-bottom:1px solid #e1e1e1; margin:0 auto;}
 .idpt-container .idpt-accordian > li.two-line {padding-top:0.9rem}
 .idpt-container .idpt-accordian > li.two-line > a { position:relative; display:block; width:calc(100% - 2rem); height:3.5rem; line-height:1.4rem; font-size: 0.875rem; color:#000; font-weight: 600; -webkit-box-sizing:border-box; box-sizing:border-box; border-bottom:1px solid #e1e1e1; margin:0 auto;}
@@ -548,6 +548,10 @@
 .idpt-container .idpt-accordian > li > a.open::after { -webkit-transform:rotate(180deg); transform:rotate(180deg); }
 
 .idpt-container .idpt-accordian-cont { display:none; padding:1.625rem 1rem; background-color:#fff; border-top:1px solid #e1e1e1;}
+
+.idpt-container .idpt-accordian.no-padding li { position:relative}
+.idpt-container .idpt-accordian.no-padding > li > a {width:100% !important}
+.idpt-container .idpt-accordian-cont.no-padding {padding:1.625rem 0 !important}
 
 .idpt-container .card-list { margin-top:0.9375rem; }
 .idpt-container .card-list > li { border:1px solid #e1e1e1; border-radius:0.25rem; background-color:#fff; }
@@ -580,6 +584,7 @@
 .idpt-container .idpt-oneline-list li.top-border {border-top:1px solid #e1e1e1}
 .idpt-container .idpt-oneline-list li.no-border { border-bottom:0 !important; }
 .idpt-container .idpt-oneline-list li .one-title {color:#000; font-size:0.875rem; }
+.idpt-container .idpt-oneline-list li .idpt-link-tel {display:inline-block; text-align:right; float:right}
 
 .idpt-container .idpt-imgline-list {height:auto; box-sizing:border-box; }
 .idpt-container .idpt-imgline-list li {font-size:0.875rem; width:100%; min-height:3.5rem; padding:1rem 0; border-bottom:1px solid #e1e1e1; box-sizing:border-box}
