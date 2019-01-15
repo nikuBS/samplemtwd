@@ -18,10 +18,10 @@ Tw.MyTDataPrepaidAlarm = function (rootEl) {
 
 Tw.MyTDataPrepaidAlarm.prototype = {
   _init: function () {
-    this.typeCd = 1; // 알람 기준(1 : 시간, 2 : 잔액)
-    this.term = 1; // 시간: 기준항목(1:발신기간, 2:수신기간, 3:번호유지기간)
-    this.day = 1; // 시간: 기준일(1:1일전, 2:2일전, 3:3일전)
-    this.amt = 1; // 금액(1:1000원, 2:2000원, 3:3000원, 5:5000원)
+    this.typeCd = false; // 알람 기준(1 : 시간, 2 : 잔액)
+    this.term = false; // 시간: 기준항목(1:발신기간, 2:수신기간, 3:번호유지기간)
+    this.day = false; // 시간: 기준일(1:1일전, 2:2일전, 3:3일전)
+    this.amt = false; // 금액(1:1000원, 2:2000원, 3:3000원, 5:5000원)
   },
 
   _cachedElement: function () {
@@ -37,6 +37,33 @@ Tw.MyTDataPrepaidAlarm.prototype = {
     this.$container.on('click', '.fe-alarm-amount', $.proxy(this._onChangeStatus, this, 'price_list'));
     this.$container.on('click', '.fe-setting-alarm', $.proxy(this._requestAlarmSetting, this));
     this.$container.on('click', '.fe-popup-close', $.proxy(this._stepBack, this));
+    this.$container.on('click', '.tw-popup-closeBtn', $.proxy(this._validateForm, this));
+  },
+
+  _validateForm: function () {
+    if ( !this.typeCd ) {
+      $('.fe-alarm-status').closest('li').find('.error-txt').removeClass('blind');
+    } else {
+      $('.fe-alarm-status').closest('li').find('.error-txt').addClass('blind');
+    }
+
+    if ( !this.term ) {
+      $('.fe-alarm-category').closest('div').find('.error-txt').removeClass('blind');
+    } else {
+      $('.fe-alarm-category').closest('div').find('.error-txt').addClass('blind');
+    }
+
+    if ( !this.day ) {
+      $('.fe-alarm-date').closest('div').find('.error-txt').removeClass('blind');
+    } else {
+      $('.fe-alarm-date').closest('div').find('.error-txt').addClass('blind');
+    }
+
+    if ( !this.amt ) {
+      $('.fe-alarm-amount').closest('div').find('.error-txt').removeClass('blind');
+    } else {
+      $('.fe-alarm-amount').closest('div').find('.error-txt').addClass('blind');
+    }
   },
 
   _onChangeStatus: function (sListName, e) {
@@ -62,6 +89,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
   },
 
   _selectPopupCallback: function (sListName, $target, $layer) {
+    this._validateForm();
     $layer.on('click', '[data-value]', $.proxy(this._setSelectedValue, this, sListName, $target));
   },
 
@@ -138,7 +166,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
   },
 
   _requestAlarm: function (htParams) {
-    if (this._isCancel) {
+    if ( this._isCancel ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0064, htParams)
         .done($.proxy(this._onCompleteAlarm, this));
     }

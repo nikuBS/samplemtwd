@@ -37,13 +37,56 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$container.on('click', '.fe-close-example-card', $.proxy(this._onCloseExampleCard, this));
     this.$container.on('click', '.fe-btn-show-example', $.proxy(this._onShowExampleCard, this));
     this.$container.on('click', '.fe-select-amount', $.proxy(this._onShowSelectAmount, this));
-    this.$container.on('click', '.fe-request-prepaid-card', $.proxy(this._onRequestPrepaidCard, this));
+    this.$container.on('click', '.fe-request-prepaid-card', $.proxy(this._requestPrepaidCard, this));
     this.$container.on('click', '.fe-request-credit-card', $.proxy(this._validateCreditCard, this));
     this.$container.on('click', '.fe-prepaid-voice-cancel', $.proxy(this._closePrepaidPopup, this));
-    this.$container.on('click', '.fe-prepaid-complete', $.proxy(this._requestCompleteCreditCard, this));
+    this.$container.on('click', '.fe-prepaid-complete', $.proxy(this._requestCreditCard, this));
     this.$container.on('change input blur click', '#tab1-tab [required]', $.proxy(this._validatePrepaidCard, this));
     this.$container.on('change input blur click', '#tab2-tab [required]', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', 'input[type=tel]', $.proxy(this._checkMaxLength, this));
+    this.$cardNumber.on('keyup', $.proxy(this._validateCard, this));
+    this.$cardY.on('keyup', $.proxy(this._validateExpired, this));
+    this.$cardM.on('keyup', $.proxy(this._validateExpired, this));
+    this.$cardPwd.on('keyup', $.proxy(this._validatePwd, this));
+  },
+
+  _validateCard: function (e) {
+    var $error = $(e.currentTarget).closest('li').find('.error-txt');
+    $error.addClass('blind');
+
+    if ( !this._validation.checkMoreLength(this.$cardNumber, 15) ) {
+      $($error.get(0)).removeClass('blind');
+      $($error.get(1)).addClass('blind');
+    }
+
+    if ( this.$cardNumber.val() === '' ) {
+      $($error.get(0)).addClass('blind');
+      $($error.get(1)).removeClass('blind');
+    }
+  },
+
+  _validateExpired: function (e) {
+    var $error = $(e.currentTarget).closest('li').find('.error-txt');
+    $error.addClass('blind');
+
+    if ( this.$cardY.val() === '' || this.$cardM.val() === '' ) {
+      $($error.get(0)).addClass('blind');
+      $($error.get(1)).removeClass('blind');
+    }
+
+    if ( !(this._validation.checkMoreLength(this.$cardY, 4) && this._validation.checkMoreLength(this.$cardM, 2) && this._validation.checkYear(this.$cardY) && this._validation.checkMonth(this.$cardM, this.$cardY)) ) {
+      $($error.get(0)).removeClass('blind');
+      $($error.get(1)).addClass('blind');
+    }
+  },
+
+  _validatePwd: function (e) {
+    var $error = $(e.currentTarget).closest('li').find('.error-txt');
+    $error.addClass('blind');
+
+    if ( this.$cardPwd.val() === '') {
+      $error.removeClass('blind');
+    }
   },
 
   _checkMaxLength: function (e) {
@@ -94,7 +137,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
     return isValid;
   },
 
-  _onRequestPrepaidCard: function () {
+  _requestPrepaidCard: function () {
     var htParams = {
       cardNum: $('.fe-prepaid-card').val(),
       serialNum: $('.fe-prepaid-serial').val()
@@ -163,10 +206,10 @@ Tw.MyTDataPrepaidVoice.prototype = {
 
   _onShowSelectAmount: function (e) {
     var $elButton = $(e.currentTarget);
-    var fnSelectAmount = function (item) {
+    var fnSelectAmount = function ($elButton, item) {
       return {
         value: item.text,
-        option: false,
+        option: $elButton.text().trim() === item.text ? 'checked' : '',
         attr: 'data-value=' + item.value
       };
     };
@@ -175,7 +218,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
         hbs: 'actionsheet_select_a_type',
         layer: true,
         title: Tw.MYT_PREPAID_AMOUNT.title,
-        data: [{ list: Tw.MYT_PREPAID_AMOUNT.list.map($.proxy(fnSelectAmount, this)) }]
+        data: [{ list: Tw.MYT_PREPAID_AMOUNT.list.map($.proxy(fnSelectAmount, this, $elButton)) }]
       },
       $.proxy(this._selectPopupCallback, this, $elButton),
       null
@@ -204,7 +247,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this._popupService.close();
   },
 
-  _requestCompleteCreditCard: function () {
+  _requestCreditCard: function () {
     var htParams = {
       amt: Number($('.fe-select-amount').data('amount')).toString(),
       cardNum: this.$cardNumber.val(),

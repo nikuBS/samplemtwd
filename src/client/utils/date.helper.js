@@ -1,4 +1,3 @@
-
 Tw.DateHelper = (function () {
   moment.locale('ko', {
     weekdaysMin: Tw.WEEKDAYS
@@ -324,6 +323,14 @@ Tw.DateHelper = (function () {
       .format('YYYYMMDD');
   };
 
+  var isBefore = function (date) {
+    return moment(date).isBefore(new Date());
+  };
+
+  var getTomorrowDate = function (){
+    return moment(new Date()).add(1,'days').format('YYYY-MM-DD');
+  };
+
   return {
     getRemainDate: getRemainDate,
     getNewRemainDate: getNewRemainDate,
@@ -362,6 +369,8 @@ Tw.DateHelper = (function () {
     getStartOfMonDate: getStartOfMonDate,
     getEndOfMonDate: getEndOfMonDate,
     getDifference: getDifference,
-    AddMonth: AddMonth
+    getTomorrowDate: getTomorrowDate,
+    AddMonth: AddMonth,
+    isBefore: isBefore
   };
 })();

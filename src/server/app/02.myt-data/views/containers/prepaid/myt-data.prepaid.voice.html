@@ -97,8 +97,7 @@
                                                             </button>
                                                         </span>
                                                         <span class="validation-txt">
-                                                            <button
-                                                                class="bt-link-tx underline fe-btn-show-example">카드번호 예시 보기</button>
+                                                            <button class="bt-link-tx underline fe-btn-show-example">카드번호 예시 보기</button>
                                                         </span>
                                                     </span>
                                                     </li>
@@ -106,7 +105,7 @@
                                                         <label class="tit" for="formInput02">일련번호</label>
                                                         <span class="inputbox">
                                                         <span class="input">
-                                                            <input class="fe-prepaid-serial" id="formInput02" type="text"
+                                                            <input class="fe-prepaid-serial" type="text"
                                                                    placeholder="일련번호 입력"
                                                                    title="선불 이동전화 카드 일련번호 번호 입력" aria-labelledby="aria-exp-label1"
                                                                    aria-describedby="aria-exp-desc1" required>
@@ -135,46 +134,49 @@
                                                     <li>
                                                         <label class="tit" for="formInput01">충전금액</label>
                                                         <span class="inputbox">
-                                                        <button class="bt-dropdown big fe-select-amount" title="충전금액 선택"
-                                                                aria-haspopup="true">
-                                                            금액 선택
-                                                            <span class="ico"></span>
-                                                        </button>
-                                                    </span>
+                                                            <button class="bt-dropdown big fe-select-amount" title="충전금액 선택"
+                                                                    aria-haspopup="true">
+                                                                금액 선택
+                                                                <span class="ico"></span>
+                                                            </button>
+                                                        </span>
+                                                        <span class="error-txt blind">충전 금액을 선택해 주세요.</span>
                                                     </li>
                                                     <li>
                                                         <label class="tit" for="formInput02">카드번호</label>
                                                         <span class="inputbox">
-                                                        <span class="input">
-                                                            <input class="fe-card-number" id="formInput02" type="tel"
-                                                                   placeholder="숫자만 입력" title="신용카드번호 입력" maxlength="16"
-                                                                   value="" required>
-                                                            <button class="cancel" style="display: none;">
-                                                                <span class="blind">삭제</span>
-                                                            </button>
+                                                            <span class="input">
+                                                                <input class="fe-card-number" id="formInput02" type="tel"
+                                                                       placeholder="숫자만 입력" title="신용카드번호 입력" maxlength="16"
+                                                                       value="" required/>
+                                                                <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                                                            </span>
                                                         </span>
-                                                    </span>
+                                                        <span class="error-txt blind">카드번호가 올바르지 않습니다.</span>
+                                                        <span class="error-txt blind">카드 번호를 입력해주세요.</span>
                                                     </li>
                                                     <li>
                                                         <label class="tit" for="formInput03">유효기간</label>
                                                         <div class="input-wrap-half">
-                                                    <span class="inputbox">
-                                                        <span class="input">
-                                                            <input class="fe-card-y" id="formInput03" type="tel" placeholder="YYYY"
-                                                                   title="유효 년" maxlength="4" value="" required>
-                                                            <button class="cancel" style="display: none;"><span
-                                                                class="blind">삭제</span></button>
-                                                        </span>
-                                                    </span>
                                                             <span class="inputbox">
-                                                        <span class="input">
-                                                            <input class="fe-card-m" type="tel" placeholder="MM" title="유효 월"
-                                                                   maxlength="2" value="" required>
-                                                            <button class="cancel" style="display: none;"><span
-                                                                class="blind">삭제</span></button>
-                                                        </span>
-                                                    </span>
+                                                                <span class="input">
+                                                                    <input class="fe-card-y" id="formInput03" type="tel" placeholder="YYYY"
+                                                                           title="유효 년" maxlength="4" value="" required>
+                                                                    <button class="cancel" style="display: none;"><span
+                                                                        class="blind">삭제</span></button>
+                                                                </span>
+                                                            </span>
+                                                            <span class="inputbox">
+                                                                <span class="input">
+                                                                    <input class="fe-card-m" type="tel" placeholder="MM" title="유효 월"
+                                                                           maxlength="2" value="" required>
+                                                                    <button class="cancel" style="display: none;"><span
+                                                                        class="blind">삭제</span></button>
+                                                                </span>
+                                                            </span>
                                                         </div>
+                                                        <span class="error-txt blind">유효기간이 올바르지 않습니다.</span>
+                                                        <span class="error-txt blind">카드 유효기간을 입력해 주세요.</span>
                                                     </li>
                                                     <li>
                                                         <label class="tit" for="formInput04">카드 비밀번호</label>
@@ -185,6 +187,7 @@
                                                                 <button class="cancel"><span class="blind">삭제</span></button>
                                                             </span>
                                                         </span>
+                                                        <span class="error-txt blind">카드 비밀번호를 입력해주세요.</span>
                                                     </li>
                                                 </ul>
                                             </div>
