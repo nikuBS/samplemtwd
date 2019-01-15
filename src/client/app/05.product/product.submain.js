@@ -9,9 +9,14 @@ Tw.ProductSubmain = function(rootEl, menuId) {
   this._apiService = Tw.Api;
 
   this._getBanners(menuId);
+  this._bindEvent();
 };
 
 Tw.ProductSubmain.prototype = {
+  _bindEvent: function() {
+    this.$container.on('click', '.fe-go-plan', this._goPlan);
+  },
+
   _getBanners: function(menuId) {
     this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: menuId }).done($.proxy(this._handleLoadBanners, this));
     // $.ajax('http://localhost:3000/mock/product.banners.json').done($.proxy(this._handleLoadBanners, this));
@@ -19,5 +24,12 @@ Tw.ProductSubmain.prototype = {
 
   _handleLoadBanners: function(resp) {
     new Tw.BannerService(this.$container, resp.result && resp.result.banners);
+  },
+
+  _goPlan: function(e) {
+    var url = e.currentTarget.getAttribute('data-url');
+    if (url) {
+      window.location.href = url;
+    }
   }
 };

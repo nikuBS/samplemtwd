@@ -22,7 +22,7 @@ class MyTJoinMyPlanAdd extends TwViewController {
           return this.error.render(res, {
             ...mobile,
             svcInfo: svcInfo,
-            title: '나의 부가상품'
+            title: '나의 부가서비스'
           });
         }
 
@@ -34,7 +34,7 @@ class MyTJoinMyPlanAdd extends TwViewController {
           return this.error.render(res, {
             ...wire,
             svcInfo: svcInfo,
-            title: '나의 부가상품'
+            title: '나의 부가서비스'
           });
         }
 
@@ -73,7 +73,19 @@ class MyTJoinMyPlanAdd extends TwViewController {
   private convertAdditions = (addition: any) => {
     return {
       ...addition,
-      ...(addition.btnList && addition.btnList.length > 0 ? { btnList: addition.btnList.sort(this._sortButtons) } : {}),
+      ...(addition.btnList && addition.btnList.length > 0
+        ? {
+            btnList: addition.btnList
+              .filter(btn => {
+                if (btn.btnTypCd === 'TE') {
+                  return addition.prodTermYn === 'Y';
+                }
+
+                return btn.btnTypCd === 'SC' && addition.prodSetYn === 'Y';
+              })
+              .sort(this._sortButtons)
+          }
+        : {}),
       basFeeTxt: FormatHelper.getFeeContents(addition.basFeeTxt),
       scrbDt: DateHelper.getShortDate(addition.scrbDt)
     };
