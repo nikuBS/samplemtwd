@@ -30,16 +30,20 @@
         <!-- .container-wrap -->
         <div class="container-wrap">
             <h2 class="blind">내용</h2>
-            <div class="fe-combine_is_exists" style="display: none">
+            <% if ( combineRequireDocumentInfo ) { %>
+            <div class="fe-combine_is_exists">
                 <div class="cont-box rt-bt-type">
                     <div class="announcement-box">
-                        <div class="announcement-tit">기존에 신청하신 가입상담 예약이 있습니다.<br /><strong class="tx-bold">가입서류를 제출</strong>하시겠습니까?</div>
+                        <div class="announcement-tit">기존에 신청하신 가입상담 예약이 있습니다.<br /><strong class="tx-bold fe-reserv_status"><%= combineRequireDocumentInfo.text %></strong>하시겠습니까?</div>
                     </div>
-                    <div class="bt-alone"><a href="/product/wireplan/join/require-document/apply" class="bt-bg-blue1">제출</a></div>
+                    <div class="bt-alone"><a href="/product/wireplan/join/require-document/<%= combineRequireDocumentInfo.page %>" class="bt-bg-blue1">
+                        <%= combineRequireDocumentInfo.btnText %>
+                    </a></div>
                 </div>
 
                 <hr class="cont-sp type1" aria-hidden="true"/>
             </div>
+            <% } %>
 
             <div class="container">
 

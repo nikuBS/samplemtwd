@@ -74,7 +74,7 @@ class MyTJoinMyplan extends TwViewController {
       return MYT_FEEPLAN_BENEFIT.ENDLESS;
     }
 
-    return DateHelper.getShortDateWithFormat(dcEndDt, 'YYYY.M.DD.')
+    return DateHelper.getShortDateWithFormat(dcEndDt, 'YYYY.M.DD.');
   }
 
   /**
