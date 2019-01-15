@@ -83,6 +83,8 @@ Tw.CustomerPraise.prototype = {
       return this._popupService.close();
     }
 
+    this._clearForm();
+
     this._selectedType = code;
 
     this.$container.find('.fe-subject').removeClass('none');
