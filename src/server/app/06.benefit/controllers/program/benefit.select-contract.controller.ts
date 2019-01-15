@@ -14,7 +14,7 @@ import ProductHelper from '../../../../utils/product.helper';
 import DateHelper from '../../../../utils/date.helper';
 import { PRODUCT_TYPE_NM } from '../../../../types/string.type';
 
-class BenefitSelectContract extends TwViewController {
+class BenefitSelectContractController extends TwViewController {
   constructor() {
     super();
   }
@@ -74,5 +74,5 @@ class BenefitSelectContract extends TwViewController {
   }
 }
 
-export default BenefitSelectContract;
+export default BenefitSelectContractController;
 
