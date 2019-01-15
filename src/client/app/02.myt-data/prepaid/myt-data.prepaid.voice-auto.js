@@ -36,6 +36,11 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     this.$container.on('click', '.fe-select-remain-amount', $.proxy(this._onShowRemainAmount, this));
     this.$container.on('change input blur click', '.fe-wrap-template [required]', $.proxy(this._validateForm, this));
     this.$container.on('click', '.fe-request-recharge', $.proxy(this._requestRechargeAuto, this));
+    this.$container.on('keyup', 'input[type=tel]', $.proxy(this._checkMaxLength, this));
+  },
+
+  _checkMaxLength: function (e) {
+    Tw.InputHelper.inputNumberMaxLength(e.currentTarget);
   },
 
   _changeRechargeType: function (e) {
@@ -124,7 +129,6 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     var $target = arrParams[0];
     var isChargeCd = arrParams[1];
     if ( isChargeCd ) {
-      debugger;
       this.chargeCd = $(e.currentTarget).data('value');
     }
 

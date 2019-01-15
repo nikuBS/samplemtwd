@@ -121,6 +121,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
   _onCompleteAlarm: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
+      // 알람 설정 하시겠습니까?
       // TODO after Self Authentication, go to submain
       this._historyService.replaceURL('/myt-data');
     } else {

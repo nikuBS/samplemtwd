@@ -27,6 +27,9 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$cardNumber = this.$container.find('.fe-card-number');
     this.$cardY = this.$container.find('.fe-card-y');
     this.$cardM = this.$container.find('.fe-card-m');
+    this.$cardPwd = this.$container.find('.fe-card-pw');
+    this.$prepaid_card = this.$container.find('.fe-prepaid-card');
+    this.$creditAmount = this.$container.find('.fe-select-amount');
   },
 
   _bindEvent: function () {
@@ -40,10 +43,15 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$container.on('click', '.fe-prepaid-complete', $.proxy(this._requestCompleteCreditCard, this));
     this.$container.on('change input blur click', '#tab1-tab [required]', $.proxy(this._validatePrepaidCard, this));
     this.$container.on('change input blur click', '#tab2-tab [required]', $.proxy(this._checkIsAbled, this));
+    this.$container.on('keyup', 'input[type=tel]', $.proxy(this._checkMaxLength, this));
+  },
+
+  _checkMaxLength: function (e) {
+    Tw.InputHelper.inputNumberMaxLength(e.currentTarget);
   },
 
   _checkIsAbled: function () {
-    if ( this.$cardNumber.val() !== '' && this.$cardY.val() !== '' && this.$cardM.val() !== '' ) {
+    if ( this.$creditAmount.data('amount') && this.$cardNumber.val() !== '' && this.$cardY.val() !== '' && this.$cardM.val() !== '' && this.$cardPwd.val() !== '' ) {
       this.$btnRequestCreditCard.prop('disabled', false);
     } else {
       this.$btnRequestCreditCard.prop('disabled', true);
@@ -51,11 +59,11 @@ Tw.MyTDataPrepaidVoice.prototype = {
   },
 
   _validateCreditCard: function () {
-    var isValid = this._validation.checkMoreLength(this.$cardNumber.val(), 15, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4) &&
-      this._validation.checkLength(this.$cardY.val(), 4, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
-      this._validation.checkLength(this.$cardM.val(), 2, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5) &&
-      this._validation.checkYear(this.$cardY.val(), this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6) &&
-      this._validation.checkMonth(this.$cardM.val(), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6)
+    var isValid = this._validation.checkMoreLength(this.$cardNumber, 15) &&
+      this._validation.checkLength(this.$cardY.val(), 4) &&
+      this._validation.checkLength(this.$cardM.val(), 2) &&
+      this._validation.checkYear(this.$cardY) &&
+      this._validation.checkMonth(this.$cardM, this.$cardY)
 
     if ( isValid ) {
       var htParams = {
@@ -146,6 +154,8 @@ Tw.MyTDataPrepaidVoice.prototype = {
           rechargeAmount: Tw.FormatHelper.addComma(rechargeAmount.toString())
         }
       });
+    } else if ( resp.code === 'BIL0102' ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.INVALID_CARD);
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
