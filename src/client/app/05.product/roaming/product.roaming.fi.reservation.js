@@ -43,6 +43,12 @@ Tw.ProductRoamingFiReservation.prototype = {
   },
 
   _searchCountryCode: function(){
+    var inputNumber = $('#flab01').val();
+    if (!Tw.ValidationHelper.isCellPhone(inputNumber)) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
+    }
+
     this._apiService.request(Tw.API_CMD.BFF_10_0060, {keyword : ''}).done($.proxy(this._handleSuccessSearchCountry, this));
   },
 
