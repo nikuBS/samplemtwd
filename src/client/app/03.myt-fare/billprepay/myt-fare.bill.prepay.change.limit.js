@@ -77,8 +77,12 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     }
   },
   _changeLimit: function (result) {
+    var hbsName = 'MF_06_02';
+    if (this.$title === 'contents') {
+      hbsName = 'MF_07_02';
+    }
     this._popupService.open({
-      'hbs': 'MF_06_02'
+      'hbs': hbsName
     }, $.proxy(this._openChangeLimit, this, result), null, 'change-limit');
   },
   _openChangeLimit: function (result, $layer) {
