@@ -1,0 +1,65 @@
+<%#
+* FileName: myt-join.info.discount.device.buy.html
+* Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
+* Date: 2019.01.15
+* info : 단말기 구매정보
+%>
+<div class="cont-box">
+
+    <div class="contract-dc-wrap">
+        <div class="dc-tit-wrap">
+            <h4 class="dc-tit">T렌탈</h4>
+            <!-- 2018-10-31 tip type 변경 -->
+            <button id="MS_09_tip_09" aria-haspopup="true" class="tip-view" title="T지원금 약정 정보보기">TIP</button>
+            <!--<div class="bt-alone"><button class="bt-bg-blue1" title="T지원금 약정 혜택 보기">혜택 보기</button></div>-->
+        </div>
+
+        <div class="contract-dc-list type4">
+            <ul>
+                <li>
+                    <dl>
+                        <dt>
+                            <strong class="tit">월 이용금액</strong>
+                        </dt>
+                        <dd>
+                            <span class="val-type3"><span class="str"><%= commDataInfo.tRental.mthRentAmt %></span>원</span>
+                        </dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>
+                            <strong class="tit">모델명</strong>
+                        </dt>
+                        <dd>
+                            <span class="val-type2"><%= commDataInfo.tRental.rentEqpMdlCd %></span>
+                        </dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>
+                            <strong class="tit">T렌탈 시작일</strong>
+                        </dt>
+                        <dd>
+                            <span class="val-type2"><%= commDataInfo.tRental.rentalStaDt %></span>
+                        </dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>
+                            <strong class="tit">T렌탈 기기변경 가능일</strong>
+                        </dt>
+                        <dd>
+                            <span class="val-type2"><%= commDataInfo.tRental.allotEndSchdDt %></span>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+<!--// T렌탈 -->
+

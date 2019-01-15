@@ -130,6 +130,7 @@ class MytJoinInfoDiscount extends TwViewController {
     this._commDataInfo.feeInfo = [];
     this._commDataInfo.terminalInfo = [];
     this._commDataInfo.repaymentInfo = [];
+    this._commDataInfo.tRental = null;
 
     const priceList = thisMain._resDataInfo.priceList;
     this.logger.info(this, '[ (priceList) ]', this.getSizeObjOrArr(priceList));
@@ -142,6 +143,7 @@ class MytJoinInfoDiscount extends TwViewController {
     this.logger.info(this, '[ (tInstallment) ]', this.getSizeObjOrArr(tInstallment));
     this.logger.info(this, '[ (rsvPenTAgree) ]', this.getSizeObjOrArr(rsvPenTAgree));
     this.logger.info(this, '[ (sucesAgreeList) ]', this.getSizeObjOrArr(sucesAgreeList));
+    this.logger.info(this, '[ (tRental) ]', this.getSizeObjOrArr(thisMain._resDataInfo.tRental));
 
     const installmentList = thisMain._resDataInfo.installmentList;
     this.logger.info(this, '[ (installmentList) ]', this.getSizeObjOrArr(installmentList));
@@ -362,6 +364,16 @@ class MytJoinInfoDiscount extends TwViewController {
     this.logger.info(this, '[ 3. this._commDataInfo.repaymentInfo ]');
     // console.dir(this._commDataInfo.repaymentInfo);
 
+
+    // 단말기 구매정보(T렌탈)
+    if ( this.getSizeObjOrArr(thisMain._resDataInfo.tRental) > 0 ) {
+      this._commDataInfo.tRental = thisMain._resDataInfo.tRental;
+      this._commDataInfo.tRental.rentalStaDt = DateHelper.getShortDate(this._commDataInfo.tRental.rentalStaDt);
+      this._commDataInfo.tRental.allotEndSchdDt = DateHelper.getShortDate(this._commDataInfo.tRental.allotEndSchdDt);
+      this._commDataInfo.tRental.mthRentAmt = FormatHelper.addComma(this._commDataInfo.tRental.mthRentAmt);
+    }
+
+
     this.logger.info(this, '[ _dataInit() end ]');
 
   }
@@ -491,6 +503,10 @@ class MytJoinInfoDiscount extends TwViewController {
 
   // -------------------------------------------------------------[COM]
   public getSizeObjOrArr(obj): any {
+
+    if ( !obj ) {
+      return -1;
+    }
 
     let tempLen;
 
