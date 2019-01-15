@@ -12,6 +12,7 @@ import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import sanitizeHtml from 'sanitize-html';
+import BrowserHelper from '../../../../utils/browser.helper';
 
 class CustomerSvcInfoNoticeTworld extends TwViewController {
   constructor() {
@@ -66,17 +67,36 @@ class CustomerSvcInfoNoticeTworld extends TwViewController {
   /**
    * @private
    */
-  private _getReqParams(page: any): any {
+  private _getReqParams(page: any, tworldChannel: any): any {
     let params = {
       page: (page - 1) < 0 ? 0 : page - 1,
       size: 20
     };
 
     if (this._category === 'tworld') {
-      params = Object.assign({ expsChnlCd: 'M' }, params);
+      params = Object.assign({
+        expsChnlCd: tworldChannel
+      }, params);
     }
 
     return params;
+  }
+
+  /**
+   * @param isAndroid
+   * @param isIos
+   * @private
+   */
+  private _getTworldChannel(isAndroid, isIos): any {
+    if (isAndroid) {
+      return 'A';
+    }
+
+    if (isIos) {
+      return 'I';
+    }
+
+    return 'M';
   }
 
   /**
@@ -129,11 +149,14 @@ class CustomerSvcInfoNoticeTworld extends TwViewController {
     };
 
     this._category = req.query.category || 'tworld';
+
     if (FormatHelper.isEmpty(this._category) || this._allowedCategoryList.indexOf(this._category) === -1) {
       return this.error.render(res, renderCommonInfo);
     }
 
-    this.apiService.request(this._categoryApis[this._category], this._getReqParams(page))
+    const tworldChannel: any = this._category === 'tworld' ? this._getTworldChannel(BrowserHelper.isAndroid(req), BrowserHelper.isIos(req)) : null;
+
+    this.apiService.request(this._categoryApis[this._category], this._getReqParams(page, tworldChannel))
       .subscribe((data) => {
         if (data.code !== API_CODE.CODE_00) {
           return this.error.render(res, renderCommonInfo);
@@ -144,7 +167,8 @@ class CustomerSvcInfoNoticeTworld extends TwViewController {
           category: this._category,
           categoryLabel: CUSTOMER_NOTICE_CATEGORY[this._category.toUpperCase()],
           data: this._convertData(data.result),
-          paging: this._getPaging(this._baseUrl, 20, 5, page, data.result.totalElements)
+          paging: this._getPaging(this._baseUrl, 20, 5, page, data.result.totalElements),
+          tworldChannel: tworldChannel
         }));
       });
   }
