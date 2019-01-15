@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import StringHelper from '../../../../utils/string.helper';
 import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
-import { MYT_FARE_BILL_GUIDE } from '../../../../types/string.type';
+import { MYT_FARE_BILL_GUIDE, MYT_JOIN_WIRE_SVCATTRCD } from '../../../../types/string.type';
 
 class MyTFareBillGuide extends TwViewController {
   constructor() {
@@ -587,10 +587,16 @@ class MyTFareBillGuide extends TwViewController {
       item.addr = svcItem ? svcItem.addr : item.dtlAddr;
 
       if ( item.svcType === MYT_FARE_BILL_GUIDE.PHONE_SVCTYPE ) {
-        item.label = thisMain.phoneStrToDash( item.svcNum );
+        item.label = thisMain.phoneStrToDash(item.svcNum);
+      } else if (
+        item.svcType.toLowerCase() === MYT_JOIN_WIRE_SVCATTRCD.M3.toLowerCase() ||
+        item.svcType.toLowerCase() === MYT_JOIN_WIRE_SVCATTRCD.M4.toLowerCase() ||
+        item.svcType === MYT_JOIN_WIRE_SVCATTRCD.S3 ) {
+
+        item.label = thisMain.phoneStrToDash(svcItem ? svcItem.svcNum : item.svcNum);
       } else {
-        if ( item.addr && item.addr.length > 18 ) {
-          item.label = item.addr.substr(0, 18);
+        if ( item.addr && item.addr.length > 22 ) {
+          item.label = item.addr.substr(0, 22);
         } else {
           item.label = item.addr;
         }
