@@ -95,10 +95,8 @@ export default class MyTDataRechargeCoupon extends TwViewController {
 
   private purifyCouponData(data: Array<Coupon>): Array<Coupon> {
     return data.map((item) => {
-      // item.usePsblStaDt = DateHelper.getShortDateNoDot(item.usePsblStaDt);
       item.usePsblStaDt = DateHelper.getShortDate(item.usePsblStaDt);
-      // item.usePsblEndDt = DateHelper.getShortDateNoDot(item.usePsblEndDt);
-      item.usePsblEndDt = DateHelper.getShortDateNoYear(item.usePsblEndDt) + '.';
+      item.usePsblEndDt = DateHelper.getShortDate(item.usePsblEndDt);
       item.isGift = item.copnOperStCd === 'A20';  // A20: 선물, A10: 장기가입, A14: 10년주기
       item.copnNm = MYT_DATA_RECHARGE_COUPON[item.copnOperStCd];
       return item;

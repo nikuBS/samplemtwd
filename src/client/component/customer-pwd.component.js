@@ -156,7 +156,7 @@ Tw.CustomerPwdComponent.prototype = {
       }
 
       if ( errCount >= 1 ) {
-        this.$errMsg.find('span').text(this._changeCount(this.$errMsg.text(), errCount));
+        this.$errMsg.find('span').text(errCount);
         this.$errMsg.show();
       }
 
