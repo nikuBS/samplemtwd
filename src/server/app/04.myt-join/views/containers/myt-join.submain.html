@@ -49,7 +49,13 @@
                             </button>
                             <% } %>
                         </div>
-                        <div class="p-num"><span class="blind">회선정보</span><%= data.svcInfo.svcNum %></div>
+                        <div class="p-num"><span class="blind">회선정보</span>
+                            <%  if ( ['S1', 'S2'].indexOf(data.svcInfo.svcAttrCd) > -1 ) { %>
+                            <%= data.svcInfo.addr %>
+                            <% } else { %>
+                            <%= data.svcInfo.svcNum %>
+                            <% } %>
+                        </div>
                     </div>
 
                     <div class="basic-list mt20">

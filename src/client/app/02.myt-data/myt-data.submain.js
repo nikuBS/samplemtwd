@@ -124,7 +124,7 @@ Tw.MyTDataSubMain.prototype = {
     return parseFloat((value / 1024 / 1024).toFixed(2));
   },
 
-  __calculationData: function (tmoaremained, tmoatotal, etcremained, etctotal){
+  __calculationData: function (tmoaremained, tmoatotal, etcremained, etctotal) {
     var result = {};
     var total = tmoatotal + etctotal;
     var totalRemained = tmoaremained + etcremained;
@@ -190,7 +190,8 @@ Tw.MyTDataSubMain.prototype = {
             result.tmoa.push(item);
             tmoaRemained += parseInt(item.remained, 10);
             tmoaTotal += parseInt(item.total, 10);
-          } else {
+          }
+          else {
             result.gdata.push(item);
             etcRemained += result.totalLimit ? 100 : parseInt(item.remained, 10);
             etcTotal += result.totalLimit ? 100 : parseInt(item.total, 10);
@@ -199,7 +200,8 @@ Tw.MyTDataSubMain.prototype = {
       );
       if ( !result.totalLimit ) {
         result.total = this.__calculationData(tmoaRemained, tmoaTotal, etcRemained, etcTotal);
-      } else {
+      }
+      else {
         result.total = {
           etcRemainedRatio: 100,
           totalRemainedRatio: 0
@@ -310,15 +312,25 @@ Tw.MyTDataSubMain.prototype = {
           param.params = { childSvcMgmtNum: this.data.otherLines[idx].svcMgmtNum };
         }
         else {
-          // 서버 명세가 변경됨 svcMgmtNum -> T-svcMgmtNum
-          param.headers = { 'T-svcMgmtNum': this.data.otherLines[idx].svcMgmtNum };
+          // 간편로그인이 아닌 경우에만 다른회선잔여량도 포함시킨다.
+          if ( this.data.svcInfo.loginType !== Tw.AUTH_LOGIN_TYPE.EASY ) {
+            // 서버 명세가 변경됨 svcMgmtNum -> T-svcMgmtNum
+            param.headers = { 'T-svcMgmtNum': this.data.otherLines[idx].svcMgmtNum };
+          }
         }
         requestCommand.push(param);
       }
-      this._apiService
-        .requestArray(requestCommand)
-        .done($.proxy(this._responseOtherLine, this))
-        .fail($.proxy(this._errorRequest, this));
+      if ( requestCommand.length > 0 ) {
+        this._apiService
+          .requestArray(requestCommand)
+          .done($.proxy(this._responseOtherLine, this))
+          .fail($.proxy(this._errorRequest, this));
+      }
+      else {
+        // 다른 회선 정보는 있지만 조회할 수 없는 경우 숨김
+        this.$container.find('[data-id=empty-other-lines]').hide();
+        this.$otherLines.hide();
+      }
     }
   },
 
@@ -419,7 +431,7 @@ Tw.MyTDataSubMain.prototype = {
   // 데이터 혜텍
   _onDataBenefitDetail: function () {
     // TODO: 상용 BPCP 페이지 개발 완료 후 상용 URL로 적용
-    var browser = Tw.BrowserHelper.isApp()? 'APP' : 'WEB';
+    var browser = Tw.BrowserHelper.isApp() ? 'APP' : 'WEB';
     // Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.DATA_FACTORY[browser]);
     Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.DATA_FACTORY_DEV[browser]);
   },
@@ -527,7 +539,7 @@ Tw.MyTDataSubMain.prototype = {
   _onPrepayCoupon: function (event) {
     var $target = $(event.currentTarget);
     var type = $target.attr('data-type');
-    var browser = Tw.BrowserHelper.isApp()? 'APP' : 'WEB';
+    var browser = Tw.BrowserHelper.isApp() ? 'APP' : 'WEB';
     // TODO: 상용 BPCP 페이지 개발 완료 후 상용 URL로 적용
     switch ( type ) {
       case 'data':

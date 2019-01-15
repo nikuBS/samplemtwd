@@ -37,7 +37,7 @@ Tw.BenefitSelectContract.prototype = {
       isNumberBasFeeInfo: this.data.joinInfoTerm.preinfo.reqProdInfo.isNumberBasFeeInfo,
       isJoinTermProducts: (!Tw.FormatHelper.isEmpty(this.data.joinInfoTerm.preinfo.autoJoinList) ||
         !Tw.FormatHelper.isEmpty(this.data.joinInfoTerm.preinfo.autoTermList)),
-      isAgreement: (this.data.joinInfoTerm.stipulationInfo && this.data.joinInfoTerm.stipulationInfo.stipulation.existsCount > 0)
+      isAgreement: (this.data.joinInfoTerm.stipulationInfo && this.data.joinInfoTerm.stipulationInfo.existsCount > 0)
     });
   },
 
