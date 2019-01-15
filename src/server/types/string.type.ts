@@ -724,7 +724,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
             code: 'C00023'
           },
           {
-            dep_title: '번호 이동',
+            dep_title: '번호이동',
             type: 'A1',
             code: 'C00013'
           },

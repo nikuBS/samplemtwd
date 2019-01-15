@@ -55,7 +55,7 @@ class CustomerSvcInfoSite extends TwViewController {
         pageInfo: pageInfo, 
         contentHTML: this.modifyHTML(resp.result.icntsCtt),
         data: {
-          type: code === 'D00007' ? 'A' : 'B',  // 가려진 타입 예외 하나만 적용
+          // type: code === 'D00007' ? 'A' : 'B',  // 가려진 타입 예외 하나만 적용
           title: curContent.title
         }
       });
