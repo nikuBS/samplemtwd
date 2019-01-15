@@ -108,15 +108,40 @@ Tw.MyTDataPrepaidAlarm.prototype = {
         term: this.term.toString(),
         day: this.day.toString()
       });
+
+      this._popupService.openConfirmButton(
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.MSG_1 + this.day.toString() + Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.MSG_2,
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.TITLE,
+        $.proxy(this._onCancel, this),
+        $.proxy(this._requestAlarm, this),
+        null,
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.BUTTON);
     } else {
       htParams = $.extend(htParams, {
         typeCd: '2',
         amt: this.amt.toString()
       });
-    }
 
-    this._apiService.request(Tw.API_CMD.BFF_06_0064, htParams)
-      .done($.proxy(this._onCompleteAlarm, this));
+      this._popupService.openConfirmButton(
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.MSG_1 + this.amt.toString() + Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.MSG_2,
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.TITLE,
+        $.proxy(this._onCancel, this),
+        $.proxy(this._requestAlarm, this),
+        null,
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.BUTTON);
+    }
+  },
+
+  _onCancel: function () {
+    this._isCancel = true;
+    this._popupService.close();
+  },
+
+  _requestAlarm: function (htParams) {
+    if (this._isCancel) {
+      this._apiService.request(Tw.API_CMD.BFF_06_0064, htParams)
+        .done($.proxy(this._onCompleteAlarm, this));
+    }
   },
 
   _onCompleteAlarm: function (res) {
