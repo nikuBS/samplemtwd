@@ -4,7 +4,7 @@
  * Date: 2018.10.30
  */
 
-Tw.MyTJoinCombinationsDataShare = function(rootEl, combination, pageId) {
+Tw.MyTJoinCombinationsDataShare = function(rootEl, combination) {
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
@@ -12,7 +12,6 @@ Tw.MyTJoinCombinationsDataShare = function(rootEl, combination, pageId) {
 
   this._members = combination.combinationWirelessMemberList;
   this._groupInfo = combination.combinationGroup;
-  this._pageId = pageId;
 
   this.bindEvent();
   this.init();
@@ -42,8 +41,7 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
         remainAmount: this._remainAmount,
         members: this._members,
         amounts: amounts,
-        layer: true,
-        pageId: this._pageId
+        layer: true
       },
       $.proxy(this._handleOpenSharePopup, this),
       null,

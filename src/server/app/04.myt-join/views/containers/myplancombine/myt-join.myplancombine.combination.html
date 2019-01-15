@@ -36,7 +36,7 @@
 <% if (pageId === 'data-share') { %>
 <script>
     $(document).ready(function() {
-        new Tw.MyTJoinCombinationsDataShare($('.wrap'), <%- JSON.stringify(combination) %>, '<%= pageInfo.menuId %>');
+        new Tw.MyTJoinCombinationsDataShare($('.wrap'), <%- JSON.stringify(combination) %>);
     });
 </script>
 <% } else if (pageId === 'tb-free') { %>
