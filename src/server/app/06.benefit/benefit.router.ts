@@ -8,10 +8,10 @@ import BenefitMyBenefitRainbowPointTransferComplete from './controllers/my-benef
 import BenefitMyBenefit from './controllers/my-benefit/benefit.myt-benefit.controller';
 import BenefitMilitary from './controllers/my-benefit/benefit.myt-benefit.military';
 import BenefitCookiz from './controllers/my-benefit/benefit.myt-benefit.cookiz';
-import BenefitSelectContract from './controllers/program/benefit.select-contract';
-import BenefitTPlusSales from './controllers/program/benefit.t-plus-sales';
-import BenefitDisPgmInput from './controllers/program/benefit.dis-pgm.input';
-import BenefitDisPgmCancel from './controllers/program/benefit.dis-pgm.cancel';
+import BenefitSelectContractController from './controllers/program/benefit.select-contract.controller';
+import BenefitTPlusSalesController from './controllers/program/benefit.t-plus-sales.controller';
+import BenefitDisPgmInput from './controllers/program/benefit.dis-pgm.input.controller';
+import BenefitDisPgmCancel from './controllers/program/benefit.dis-pgm.cancel.controller';
 import BenefitTerminateTbCombination from './controllers/benefit.terminate.tb-combination.controller';
 import BenefitSubmainCombinationPreview from './controllers/submain/benefit.submain.combination-preview.info.controller';
 import BenefitSubmainFareInfo from './controllers/submain/benefit.submain.fare.info.controller';
@@ -22,10 +22,10 @@ class BenefitRouter extends TwRouter {
     // new IA
     this.controllers.push({ url: '/submain', controller: BenefitIndex });
     this.controllers.push({ url: '/submain(/discount|/combinations|/long-term|/participation)?', controller: BenefitIndex });
-    this.controllers.push({ url: '/submain/detail/select-contract', controller: BenefitSelectContract });
+    this.controllers.push({ url: '/submain/detail/select-contract', controller: BenefitSelectContractController });
     this.controllers.push({ url: '/submain/detail/dis-pgm/input', controller: BenefitDisPgmInput });
     this.controllers.push({ url: '/submain/detail/dis-pgm/cancel', controller: BenefitDisPgmCancel });
-    this.controllers.push({ url: '/submain/detail/t-plus-sales', controller: BenefitTPlusSales });
+    this.controllers.push({ url: '/submain/detail/t-plus-sales', controller: BenefitTPlusSalesController });
     this.controllers.push({ url: '/submain/combination-preview/info', controller: BenefitSubmainCombinationPreview });
     this.controllers.push({ url: '/submain/fare/info(/restrict-law|/joinable-product)?', controller: BenefitSubmainFareInfo });
     this.controllers.push({ url: '/my', controller: BenefitMyBenefit });
