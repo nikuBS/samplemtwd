@@ -30,9 +30,35 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     this.$selectBtn.on('click', $.proxy(this._typeActionSheetOpen, this));
     // from html DOM 주요용어 바로가기
     this.$defineUSIMBtn.on('click', $.proxy(this._USIMInfoCall, this));
+    // 링크이동
+    this.$container.on('click', '.fe-link-external', $.proxy(this._openExternalUrl, this));
+    this.$container.on('click', '.ffe-link-internal', $.proxy(this._openInternalUrl, this));
+    this.$container.on('click', '.fe-link-inapp', $.proxy(this._openInApp, this));
 
     // from idpt
-    this._bindUIEvent();
+    this._bindUIEvent(this.$container);
+  },
+
+  _openExternalUrl: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this._popupService.close();
+    Tw.CommonHelper.openUrlExternal($(e.currentTarget).attr('href'));
+  },
+
+  _openInternalUrl: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this._historyService.goLoad(location.origin + $(e.currentTarget).attr('href'));
+  },
+
+  _openInApp: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    Tw.CommonHelper.openUrlInApp(location.origin + $(e.currentTarget).attr('href'));
   },
 
   _typeActionSheetOpen: function (e) {
@@ -98,7 +124,7 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
 
   // 유심용어 정리 바로가기 액션시트 start
   _USIMInfoCall: function () {
-    this._apiService.request(Tw.API_CMD.BFF_08_0064, {}, {}, ['C00014']) // TODO 유심 컨텐츠 ID 전달 되면 바꾸어주기
+    this._apiService.request(Tw.API_CMD.BFF_08_0064, {}, {}, ['C00046'])
     .done($.proxy(this._USIMActionSheetOpen, this)).fail($.proxy(this._apiError, this));
   },
 
@@ -135,20 +161,23 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     this.$USIMSelectLists = $selectContainer.find('.ac-list>li');
     this.$USIMSelectClostBtn = $selectContainer.find('.tw-popup-closeBtn');
     this.$USIMSelectLists.on('click', $.proxy(this._selectUSIMmenu, this));
+
+    this.$USIMSelectLists.eq(this.usimContentIndex || 0).find('input').prop('checked', true);
   },
 
   _selectUSIMmenu: function (e) {
+    this.usimContentIndex = parseFloat($(e.currentTarget).find('input').val()) -1;
     this.$USIMSelectLists.find('input').prop('checked', false);
     $(e.currentTarget).find('input').prop('checked', true);
     this.$USIMSelectBtn.text($(e.currentTarget).find('.txt').text());
     // 해당 컨텐츠 내용을 가리고 보이기 처리
-    this.$USIMContentsContainer.find('.fe-usim-info').eq(parseFloat($(e.currentTarget).val())-1).show().siblings('.fe-usim-info').hide();
+    this.$USIMContentsContainer.find('.fe-usim-info').eq(this.usimContentIndex).show().siblings('.fe-usim-info').hide();
     // 팝업닫기
     this.$USIMSelectClostBtn.click();
   },
   // 유심용어 정리 바로가기 액션시트 end
 
-  _bindUIEvent: function () {
+  _bindUIEvent: function ($container) {
     $('.idpt-tab').each(function(){
       var tabBtn = $(this).find('li');
       $(tabBtn).click(function(){
@@ -159,18 +188,18 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     });
   
     // popup
-    $('.idpt-popup-open', this.$container).click(function(){
+    $('.idpt-popup-open', $container).click(function(){
       var popId = $(this).attr('href');
       $('.idpt-popup-wrap').removeClass('show');
       $(popId).addClass('show');
-      $('.idpt-popup', this.$container).show();
+      $('.idpt-popup', $container).show();
     });
-    $('.idpt-popup-close', this.$container).click(function(){
-      $('.idpt-popup', this.$container).hide();
+    $('.idpt-popup-close', $container).click(function(){
+      $('.idpt-popup', $container).hide();
     });
   
-    $('input[type=radio][name=call]', this.$container).on('click', function() {
-      var chkValue = $('input[type=radio][name=call]:checked').val();
+    $('input[type=radio][name=call]', $container).on('click', function() {
+      var chkValue = $('input[type=radio][name=call]:checked', $container).val();
       if (chkValue == '1') {
         $('.call-cont01').css('display', 'block');
         $('.call-cont02').css('display', 'none');
@@ -180,32 +209,32 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
       }
     });
   
-    $('input[type=radio][name=center]', this.$container).on('click', function() {
-      var chkValue = $('input[type=radio][name=center]:checked', this.$container).val();
+    $('input[type=radio][name=center]', $container).on('click', function() {
+      var chkValue = $('input[type=radio][name=center]:checked', $container).val();
       if (chkValue == '1') {
-        $('.center-cont01').css('display', 'block');
-        $('.center-cont02').css('display', 'none');
+        $('.center-cont01', $container).css('display', 'block');
+        $('.center-cont02', $container).css('display', 'none');
       } else if (chkValue  == '2') {
-        $('.center-cont01').css('display', 'none');
-        $('.center-cont02').css('display', 'block');
+        $('.center-cont01', $container).css('display', 'none');
+        $('.center-cont02', $container).css('display', 'block');
       }
     });
 
     //tooltip
-    $('.btn-tooltip-open', this.$container).click(function(){
+    $('.btn-tooltip-open', $container).click(function(){
       var toolpopId = $(this).attr('href');
-      $('.popup-info').removeClass('show');
+      $('.popup-info', $container).removeClass('show');
       $(toolpopId).addClass('show');
-      $('.tooltip-popup', this.$container).show();
+      $('.tooltip-popup', $container).show();
     });
-    $('.btn_confirm').click(function(){
-      $('.tooltip-popup', this.$container).hide();
+    $('.btn_confirm', $container).click(function(){
+      $('.tooltip-popup', $container).hide();
     });
   
     //accordian
-    $('.idpt-accordian > li > a', this.$container).on('click', function(){
-      $('.idpt-accordian > li > a', this.$container).removeClass('open');
-      $('.idpt-accordian-cont', this.$container).slideUp();
+    $('.idpt-accordian > li > a', $container).on('click', function(){
+      $('.idpt-accordian > li > a', $container).removeClass('open');
+      $('.idpt-accordian-cont', $container).slideUp();
       if ($(this).parent().find('.idpt-accordian-cont').is(':hidden')){
         $(this).addClass('open');
         $(this).parent().find('.idpt-accordian-cont').slideDown();
@@ -213,7 +242,7 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     });
   
     //toggle (FAQ)
-    $('.idpt-toggle-btn', this.$container).each(function(){
+    $('.idpt-toggle-btn', $container).each(function(){
       $(this).click(function(){
         $(this).toggleClass('open').next('.idpt-toggle-cont').slideToggle();
       })
