@@ -59,7 +59,6 @@ Tw.MyTDataPrepaidVoice.prototype = {
   },
 
   _validateCreditCard: function () {
-    debugger;
     var isValid = this._validation.checkMoreLength(this.$cardNumber, 15) &&
       this._validation.checkLength(this.$cardY.val(), 4) &&
       this._validation.checkLength(this.$cardM.val(), 2) &&
