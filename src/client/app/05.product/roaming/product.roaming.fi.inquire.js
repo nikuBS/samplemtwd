@@ -416,6 +416,12 @@ Tw.ProductRoamingFiInquire.prototype = {
   },
 
   _handleEditReservation: function() {
+    var inputNumber = $('#flab01').val();
+    if (!Tw.ValidationHelper.isCellPhone(inputNumber)) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
+    }
+
     var expbranchnm = $('#flab05').text();
     var boothcode = $('#flab04').attr('data-booth');
     var boothnm = $('#flab04').text();
