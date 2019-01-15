@@ -4,34 +4,48 @@
  * Date: 2018.09.17
  */
 
-Tw.MyTFareBill = function (rootEl) {
+Tw.MyTFareBill = function (rootEl, svcAttrCd) {
   this.$container = rootEl;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(rootEl);
 
-  this._init();
+  this._init(svcAttrCd);
 };
 
 Tw.MyTFareBill.prototype = {
-  _init: function () {
-    this._initVariables();
-
+  _init: function (svcAttrCd) {
+    this._initVariables(svcAttrCd);
     this._getAutoPayment();
-    this._getPoint();
-    this._getRainbowPoint();
+
+    if (this.$isMobile) {
+      this._getPoint();
+      this._getRainbowPoint();
+    }
   },
-  _initVariables: function () {
+  _initVariables: function (svcAttrCd) {
     this.$uri = null;
     this._autoComplete = false;
-    this._pointComplete = false;
-    this._rainbowComplete = false;
     this._isAutoTarget = false;
     this._isPointTarget = true;
     this._okCashbag = 0;
     this._tPoint = 0;
     this._rainbowPoint = 0;
+
+    if (Tw.FormatHelper.isEmpty(svcAttrCd)) {
+      this.$isMobile = false;
+    } else {
+      this.$isMobile = svcAttrCd.indexOf('M') !== -1;
+    }
+
+    if (this.$isMobile) {
+      this._pointComplete = false;
+      this._rainbowComplete = false;
+    } else {
+      this._pointComplete = true;
+      this._rainbowComplete = true;
+    }
   },
   _getAutoPayment: function () {
     this._apiService.request(Tw.API_CMD.BFF_05_0058, {})
@@ -54,10 +68,15 @@ Tw.MyTFareBill.prototype = {
     }
   },
   _openPaymentOption: function () {
+    var data = Tw.POPUP_TPL.FARE_PAYMENT_LAYER_DATA;
+    if (!this.$isMobile) {
+      data = Tw.POPUP_TPL.FARE_PAYMENT_LAYER_DATA_EXCEPT_POINT;
+    }
+
     this._popupService.open({
       hbs: 'MF_01',// hbs의 파일명
       layer: true,
-      data: Tw.POPUP_TPL.FARE_PAYMENT_LAYER_DATA,
+      data: data,
       btnfloating: { 'txt': Tw.BUTTON_LABEL.CLOSE }
     },
       $.proxy(this._onOpenPopup, this),
@@ -67,8 +86,10 @@ Tw.MyTFareBill.prototype = {
   _onOpenPopup: function ($layer) {
     this.$layer = $layer;
 
+    if (this.$isMobile) {
+      this._setPointInfo();
+    }
     this._setAutoField();
-    this._setPointInfo();
     this._bindEvent();
   },
   _setAutoField: function () {
