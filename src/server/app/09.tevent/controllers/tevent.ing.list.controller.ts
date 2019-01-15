@@ -49,7 +49,7 @@ class TeventIngList extends TwViewController {
       content.map((data) => {
         data.startDate = DateHelper.getShortDate(data.prStaDt);
         data.endDate = DateHelper.getShortDate(data.prEndDt);
-        data.dday = DateHelper.getNewRemainDate(data.prEndDt) - 1;
+        data.dday = DateHelper.getDday(data.prEndDt);
         data.promotionType = data.prTypCd === 'E' ? PROMOTION_TYPE[data.prTypCd] : null;
       });
     }
