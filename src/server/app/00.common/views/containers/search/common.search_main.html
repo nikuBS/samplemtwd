@@ -98,22 +98,29 @@
     <hr class="cont-sp type1" aria-hidden="true">
     <% if(smartKeyword.smartSrchUrl){ %>
     <div class="banner-area">
-        <a><img src="<%= CDN %><%= smartKeyword.bnnrIos320Url %>" alt="<%= smartKeyword.smartSrchDesc%>"></a>
+        <a data-param="<%= smartKeyword.smartSrchUrl %>" class="link search-element"><img src="<%= CDN %><%= smartKeyword.bnnrIos320Url %>" alt="<%= smartKeyword.smartSrchDesc%>"></a>
     </div>
     <% } %>
     <div class="cont-box nogaps">
-        <ul class="plantype-list">
+        <ul class="plantype-list <%= smartKeyword.bnnrBotBtnNm3?'cell3': smartKeyword.bnnrBotBtnNm2?'':'cell1'%>">
             <%if(smartKeyword.bnnrBotBtnNm1){ %>
             <li class="category-type">
-                <button data-link="<%= smartKeyword.bnnrBotBtnUrl1 %>" type="button" class="link">
+                <button data-param="<%= smartKeyword.bnnrBotBtnUrl1 %>" type="button" class="link search-element">
                     <%= smartKeyword.bnnrBotBtnNm1 %>
                 </button>
             </li>
             <% } %>
             <% if(smartKeyword.bnnrBotBtnNm2){ %>
             <li class="category-type">
-                <button data-link="<%= smartKeyword.bnnrBotBtnUrl2 %>" type="button" class="link">
+                <button data-param="<%= smartKeyword.bnnrBotBtnUrl2 %>" type="button" class="link search-element">
                     <%= smartKeyword.bnnrBotBtnNm2 %>
+                </button>
+            </li>
+            <% } %>
+            <% if(smartKeyword.bnnrBotBtnNm3){ %>
+            <li class="category-type">
+                <button data-param="<%= smartKeyword.bnnrBotBtnUrl3 %>" type="button" class="link search-element">
+                    <%= smartKeyword.bnnrBotBtnNm3 %>
                 </button>
             </li>
             <% } %>

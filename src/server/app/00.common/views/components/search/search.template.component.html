@@ -6,7 +6,7 @@
 
 <script type="text/x-handlebars-template" id="shortcut_template">
     <li>
-        <a data-link="{{listData.MENU_URL}}" class="shortcut-element list-data" data-category="shortcut" data-id="{{listData.DOCID}}" data-tit="{{listData.MENU_NM}}">
+        <a data-link="{{listData.MENU_URL}}" class="shortcut-element list-data" data-category="shortcut" data-id="{{listData.DOCID}}" data-tit="{{removeTag listData.MENU_NM}}">
             <span class="main-category">{{{listData.MENU_NM}}}</span>
             <span class="sub-category">my T &gt; {{{listData.DEPTH_PATH}}}</span>
         </a>
@@ -15,7 +15,7 @@
 
 <script type="text/x-handlebars-template" id="rate_template">
     <li class="category-type">
-        <a class="link rate-element list-data" data-link="/product/callplan/{{listData.PRID}}" data-category="rate" data-id="{{listData.DOCID}}"  data-tit="{{listData.PROD_NM}}">
+        <a class="link rate-element list-data" data-link="/product/callplan/{{listData.PRID}}" data-category="rate" data-id="{{listData.DOCID}}"  data-tit="{{removeTag listData.PROD_NM}}">
             <div class="products-titleinfo">
                 <p class="title">{{{listData.PROD_NM}}}</p>
                 <p class="info">
@@ -41,7 +41,7 @@
 
 <script type="text/x-handlebars-template" id="banner_template">
     <div class="search-banner">
-        <a data-link="{{listData.IMG_LINK_URL}}" class="banner-element list-data" data-id="{{listData.DOCID}}" data-category="banner" data-tit="{{listData.TITLE_NM}}">
+        <a data-link="{{listData.IMG_LINK_URL}}" class="banner-element list-data" data-id="{{listData.DOCID}}" data-category="banner" data-tit="{{removeTag listData.TITLE_NM}}">
             <img src="{{CDN}}{{listData.BNNR_FILE_PATH_NM}}" alt="{{listData.TITLE_NM}}">
         </a>
     </div>
@@ -50,7 +50,7 @@
 
 <script type="text/x-handlebars-template" id="service_template">
     <li class="category-type">
-        <a class="link service-element list-data" data-link="/product/callplan/{{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="service" data-tit="{{listData.PROD_NM}}">
+        <a class="link service-element list-data" data-link="/product/callplan/{{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="service" data-tit="{{removeTag listData.PROD_NM}}">
             <div class="products-titleinfo">
                 <p class="title">{{{listData.PROD_NM}}}</p>
                 <p class="info">
@@ -77,7 +77,7 @@
 
 <script type="text/x-handlebars-template" id="tv_template">
     <li class="category-type">
-        <a data-link="/product/callplan/{{listData.PRID}}" class="link tv-element list-data" data-id="{{listData.DOCID}}" data-category="tv" data-tit="{{listData.PROD_NM}}">
+        <a data-link="/product/callplan/{{listData.PRID}}" class="link tv-element list-data" data-id="{{listData.DOCID}}" data-category="tv" data-tit="{{removeTag listData.PROD_NM}}">
             <div class="products-titleinfo">
                 <p class="title">{{{listData.PROD_NM}}}</p>
                 <p class="info">
@@ -98,7 +98,7 @@
 
 <script type="text/x-handlebars-template" id="roaming_template">
     <li class="category-type">
-        <a class="link roaming-element list-data" data-link="/product/callplan/{{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="roaming" data-tit="{{listData.PROD_NM}}">
+        <a class="link roaming-element list-data" data-link="/product/callplan/{{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="roaming" data-tit="{{removeTag listData.PROD_NM}}">
             <div class="products-titleinfo">
                 <p class="title">{{{listData.PROD_NM}}}</p>
                 <p class="info">
@@ -123,7 +123,7 @@
 
 <script type="text/x-handlebars-template" id="app_template">
     <li>
-        <a class="app-element list-data" data-link="/product/apps/app?appId={{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="app" data-tit="{{listData.PROD_NM}}">
+        <a class="app-element list-data" data-link="/product/apps/app?appId={{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="app" data-tit="{{removeTag listData.PROD_NM}}">
             <span class="app-img"><img src="{{listData.IMG}}" alt=""></span>
             <span class="txt">{{{listData.PROD_NM}}}</span>
         </a>
@@ -131,7 +131,7 @@
 </script>
 
 <script id="direct_template" type="text/x-handlebars-template">
-    <li class="direct-element list-data" data-link="{{listData.ALIAS}}?CATEGORY_ID={{listData.CATEGORY_ID}}&ACCESSORY_ID={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="direct" data-tit="{{listData.PRODUCT_NM}}">
+    <li class="direct-element list-data" data-link="{{listData.ALIAS}}?CATEGORY_ID={{listData.CATEGORY_ID}}&ACCESSORY_ID={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="direct" data-tit="{{removeTag listData.PRODUCT_NM}}">
         <div class="img"><img src="{{CDN}}{{listData.IMG}}" alt="{{listData.IMG_ALT}}"></div>
         <div class="cont">
             <div class="tit">{{{listData.PRODUCT_NM}}}</div>
@@ -145,7 +145,7 @@
 
 <script type="text/x-handlebars-template" id="membership_template">
     <li>
-        <a class="link membership-element list-data" title="T멤버십 상세보기" data-id="{{listData.DOCID}}" data-category="membership" data-tit="{{listData.BRAND_NM}}">
+        <a class="link membership-element list-data" title="T멤버십 상세보기" data-id="{{listData.DOCID}}" data-category="membership" data-tit="{{removeTag listData.BRAND_NM}}">
             <div class="img"><img src="{{{listData.TITLE_IMG_URL}}}" alt="{{listData.CATE_NAME}}"></div>
             <div class="cont">
                 <div class="tit">{{{listData.BRAND_NM}}}</div>
@@ -157,7 +157,7 @@
 
 <script id="event_template" type="text/x-handlebars-template">
     <li>
-        <button class="event-datail event-element list-data" title="이벤트 상세페이지 보기" data-id="{{listData.DOCID}}" data-category="event" data-tit="{{listData.PR_NM}}">
+        <button class="event-datail event-element list-data" title="이벤트 상세페이지 보기" data-id="{{listData.DOCID}}" data-category="event" data-tit="{{removeTag listData.PR_NM}}">
             <img src="/img/dummy/img-event02.jpg" alt="{{{listData.PR_NM}}}">
         </button>
         <div class="event-info">
@@ -172,7 +172,7 @@
 
 <script type="text/x-handlebars-template" id="sale_template">
     <li>
-        <button class="list in-img sale-element list-data" type="button" data-link="/product/callplan/{{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="sale" data-tit="{{listData.PROD_NM}}">
+        <button class="list in-img sale-element list-data" type="button" data-link="/product/callplan/{{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="sale" data-tit="{{removeTag listData.PROD_NM}}">
             <em>{{{listData.PROD_NM}}}</em>
             <p>{{{listData.PROD_SMRY_DESC}}}</p>
             <div>
@@ -191,9 +191,9 @@
     <li>
         <div class="b-cont">
             {{#ifCond listData.ALIAS '===' 'as'}}
-                <a class="bt-t as-element list-data" data-link="/customer/agentsearch/repair-detail?code={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="as" data-tit="{{listData.STORE_NAME}}">
+                <a class="bt-t as-element list-data" data-link="/customer/agentsearch/repair-detail?code={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="as" data-tit="{{removeTag listData.STORE_NAME}}">
             {{else}}
-                <a class="bt-t as-element list-data" data-link="/customer/agentsearch/detail?code={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="as" data-tit="{{listData.STORE_NAME}}">
+                <a class="bt-t as-element list-data" data-link="/customer/agentsearch/detail?code={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="as" data-tit="{{removeTag listData.STORE_NAME}}">
             {{/ifCond}}
                 <strong class="ti">{{{listData.STORE_NAME}}}</strong>
                 <span class="tx">{{{listData.SEARCH_ADDR}}}<br>({{{listData.JIBUN_ADDR}}})</span>
@@ -205,7 +205,7 @@
 
 <script type="text/x-handlebars-template" id="question_template">
     <li>
-        <a class="b-cont question-element list-data" data-id="{{listData.DOCID}}" data-category="question" data-tit="{{listData.INQ_CTT}}">
+        <a class="b-cont question-element list-data" data-id="{{listData.DOCID}}" data-category="question" data-tit="{{removeTag listData.INQ_CTT}}">
             <strong class="ti">{{{listData.INQ_CTT}}}</strong>
             <span class="tx">{{{listData.CATEGORY}}}</span>
         </a>
@@ -214,7 +214,7 @@
 
 <script id="notice_template" type="text/x-handlebars-template">
     <li>
-        <a class="b-cont notice-element list-data" data-id="{{listData.DOCID}}" data-category="notice" data-tit="{{listData.NTC_TIT_NM}}">
+        <a class="b-cont notice-element list-data" data-id="{{listData.DOCID}}" data-category="notice" data-tit="{{removeTag listData.NTC_TIT_NM}}">
             {{{listData.NTC_TIT_NM}}}
         </a>
     </li>
@@ -222,7 +222,7 @@
 
 <script type="text/x-handlebars-template" id="prevent_template">
     <li>
-        <a class="b-cont prevent-element list-data" data-link="/customer/damage-info/warning/view?idx={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="prevent" data-tit="{{listData.ICNTS_TIT_NM}}">
+        <a class="b-cont prevent-element list-data" data-link="/customer/damage-info/warning/view?idx={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="prevent" data-tit="{{removeTag listData.ICNTS_TIT_NM}}">
             {{{listData.ICNTS_TIT_NM}}}
         </a>
     </li>
@@ -230,7 +230,7 @@
 
 <script type="text/x-handlebars-template" id="manner_template">
     <li>
-        <a class="b-cont manner-element list-data" data-link="/customer/faq/do-like-this?id={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="manner" data-tit="{{listData.ICNTS_TIT_NM}}">
+        <a class="b-cont manner-element list-data" data-link="/customer/faq/do-like-this?id={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="manner" data-tit="{{removeTag listData.ICNTS_TIT_NM}}">
             {{{listData.ICNTS_TIT_NM}}}
         </a>
     </li>
@@ -238,7 +238,7 @@
 
 <script type="text/x-handlebars-template" id="serviceInfo_template">
     <li>
-        <a class="b-cont serviceInfo-element list-data" data-link="/customer/svc-info/service/detail?code={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="serviceInfo" data-tit="{{listData.ICNTS_TIT_NM}}">
+        <a class="b-cont serviceInfo-element list-data" data-link="/customer/svc-info/service/detail?code={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="serviceInfo" data-tit="{{removeTag listData.ICNTS_TIT_NM}}">
             <strong class="ti">{{{listData.ICNTS_TIT_NM}}}</strong>
             <span class="tx">{{{listData.ICNTS_TIT_NM}}}</span>
         </a>
@@ -247,7 +247,7 @@
 
 <script id="siteInfo_template" type="text/x-handlebars-template">
     <li>
-        <a class="b-cont siteInfo-element list-data" data-link="/customer/svc-info/site/detail?code={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="siteInfo" data-tit="{{listData.ICNTS_TIT_NM}}">
+        <a class="b-cont siteInfo-element list-data" data-link="/customer/svc-info/site/detail?code={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="siteInfo" data-tit="{{removeTag listData.ICNTS_TIT_NM}}">
             <span class="img-box"><img class="lte" src="/img/dummy/dmy_product.png" alt="샘플이미지"></span>
             <strong class="ti">{{{listData.ICNTS_TIT_NM}}}</strong>
             <span class="tx">{{{listData.ICTG_PATH}}}</span>

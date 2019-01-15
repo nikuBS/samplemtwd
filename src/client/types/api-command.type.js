@@ -533,7 +533,9 @@ Tw.NODE_CMD = {
   GET_TOOLTIP: { path: '/tooltip', method: Tw.API_METHOD.GET },
   GET_QUICK_MENU: { path: '/home/quick-menu', method: Tw.API_METHOD.GET },
   GET_PRODUCT_COMPARISON: { path: '/product/comparison', method: Tw.API_METHOD.GET },
-  GET_PRODUCT_INFO: { path: '/product/info', method: Tw.API_METHOD.GET }
+  GET_PRODUCT_INFO: { path: '/product/info', method: Tw.API_METHOD.GET },
+  GET_SEARCH_AUTO_COMPLETE : { path : '/search/get/autocomplete', method : Tw.API_METHOD.GET },
+  STACK_SEARCH_USER_CLICK : { path : '/search/stack/userclick', method : Tw.API_METHOD.POST }
 };
 
 Tw.TMAP = {
@@ -559,17 +561,6 @@ Tw.AJAX_CMD = {
     method: Tw.API_METHOD.POST,
     url: Tw.IPIN_URL,
     contentType: 'application/x-www-form-urlencoded'
-  },
-  SEARCH_AUTO_COMPLETE : {
-      path : '/search/tworld/autocomplete',
-      method : Tw.API_METHOD.GET,
-      url : 'http://61.250.22.114:8080',
-      contentType: 'application/x-www-form-urlencoded'
-  },
-  SEARCH_STACK_USER_CLICK : {
-    path : '/search/tworld/log/save',
-    method : Tw.API_METHOD.POST,
-    url : 'http://61.250.22.114:8080'
   }
 };
 

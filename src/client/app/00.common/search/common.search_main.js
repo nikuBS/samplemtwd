@@ -40,7 +40,7 @@ Tw.CommonSearchMain.prototype = {
       return;
     }
     var requestParam = { query : this.$inputElement.val() };
-    this._apiService.requestAjax(Tw.AJAX_CMD.SEARCH_AUTO_COMPLETE,requestParam)
+    this._apiService.request(Tw.NODE_CMD.GET_SEARCH_AUTO_COMPLETE,requestParam)
       .done($.proxy(function (res) {
         this.$autoCompleteList.empty();
         if(res.code===0&&res.result.length>0){
@@ -147,8 +147,13 @@ Tw.CommonSearchMain.prototype = {
     this._doSearch(searchKeyword);
   },
   _searchByElement : function(linkEvt){
-    var param = $(linkEvt.currentTarget).data('param');
-    this._doSearch(param);
+    var $target = $(linkEvt.currentTarget);
+    var param = $target.data('param');
+    if($target.hasClass('link')){
+      Tw.CommonHelper.openUrlExternal(param);
+    }else{
+      this._doSearch(param);
+    }
   },
   _doSearch : function (searchKeyword) {
     if(this._historyService.getHash()){

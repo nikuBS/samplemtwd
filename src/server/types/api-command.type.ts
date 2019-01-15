@@ -25,6 +25,8 @@ export const API_CMD = {
   SEARCH_WEB : { path: '/search/tworld/mobile-web', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
   RELATED_KEYWORD : { path: '/search/tworld/recommend', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
   POPULAR_KEYWORD : { path : '/search/tworld/popword', method : API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
+  SEARCH_AUTO_COMPLETE : { path : '/search/tworld/autocomplete', method : API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
+  SEARCH_STACK_USER_CLICK : { path : '/search/tworld/log/save', method : API_METHOD.POST, server: API_SERVER.SEARCH, bypass: true },
   BFF_12_0010: { path: '/core-modification/:version/search/keyword', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // SPRINT #3
