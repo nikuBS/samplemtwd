@@ -764,12 +764,12 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
             dep_title: '내 유심으로 타사 기기 사용',
             type: 'A1',
             code: 'C00012'
-          },
-          {
+          } // ,
+          /* {
             dep_title: '타사 유심으로 SK텔레콤 기기 사용',
             type: 'A2',
             code: 'C00025'
-          }
+          } */
         ]
       }
     ]
@@ -986,7 +986,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           {
             dep_title: '버튼식 ARS',
             type: 'A3',
-            code: 'url:/customer/helpline'
+            code: 'C00038'
           },
           {
             dep_title: '보이는 ARS',
