@@ -105,7 +105,7 @@ Tw.CustomerPraise.prototype = {
       case this.TYPES.OFFICE:
       case this.TYPES.CUSTOMER_CENTER:
       case this.TYPES.AS_CENTER: {
-        this._setInputMaxLength(50, 50);
+        this._setInputMaxLength(50, 25);
         this._setInputField(Tw.CUSTOMER_PRAISE_SUBJECT_TYPE.OFFICE);
         break;
       }
