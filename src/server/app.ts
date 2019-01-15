@@ -66,7 +66,7 @@ class App {
     this.app.use(UA.express()); // req.useragent
     // this.app.use(morgan(this.accessLogFormat.bind(this)));
     // development env
-    this.app.use(express.static(path.join(__dirname, '/public/cdn')));
+    // this.app.use(express.static(path.join(__dirname, '/public/cdn')));
     this.app.use('/mock', express.static(path.join(__dirname, '/mock/client')));
 
     this.exceptionHandler();
@@ -196,7 +196,7 @@ class App {
       'ACC|' + tokens['remote-addr'](req),
       '-',
       '-', // tokens['remote-user'](req, res),
-      '[' + tokens['date'](req, res, 'iso') + ']',
+      '[' + tokens['date'](req, res, 'clf') + ']',
       tokens.status(req, res) + '_code',
       tokens['res'](req, res, 'content-length') + '_bytes',
       (tokens['response-time'](req, res, 3) * 1000) + '_usecs',

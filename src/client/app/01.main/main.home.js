@@ -716,7 +716,7 @@ Tw.MainHome.prototype = {
       var tplQuickEmpty = Handlebars.compile($quickEmptyTemp.html());
       $quickMenuEl.html(tplQuickEmpty());
     }
-    $('.fe-bt-quick-edit').on('click', $.proxy(this._onClickQuickEdit, this));
+    $('.fe-bt-quick-edit').on('click', $.proxy(this._onClickQuickEdit, this, list));
   },
   _parseQuickMenu: function (quickMenu) {
     var menuId = Tw.FormatHelper.isEmpty(quickMenu.menuIdStr) || quickMenu.menuIdStr === 'null' || quickMenu.menuIdStr === ' ' ? [] :
@@ -731,7 +731,7 @@ Tw.MainHome.prototype = {
     _.map(menuId, $.proxy(function (id, index) {
       var menu = {
         menuId: id,
-        iconPath: iconPath[index],
+        iconImgFilePathNm: iconPath[index] || '/dummy/icon_80px_default_shortcut@2x.png',    // iconImgFilePathNm
         menuNm: menuNm[index],
         menuUrl: menuUrl[index]
       };
@@ -739,8 +739,11 @@ Tw.MainHome.prototype = {
     }, this));
     return result;
   },
-  _onClickQuickEdit: function () {
+  _onClickQuickEdit: function (list) {
     var quickEdit = new Tw.QuickMenuEditComponent();
-    quickEdit.open();
+    quickEdit.open(list, $.proxy(this._onChangeQuickMenu, this));
+  },
+  _onChangeQuickMenu: function () {
+    this._getQuickMenu();
   }
 };

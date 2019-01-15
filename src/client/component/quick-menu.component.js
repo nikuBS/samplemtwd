@@ -48,7 +48,6 @@ Tw.QuickMenuComponent.prototype = {
       this._apiService.request(Tw.API_CMD.BFF_04_0003, { menuIdStr: menuId })
         .done($.proxy(this._successAddQuickMenu, this));
     }
-
   },
   _removeQuickMenu: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
