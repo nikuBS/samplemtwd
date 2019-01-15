@@ -71,6 +71,17 @@ Tw.CommonHelper = (function () {
     return value;
   };
 
+  var setCookie = function(name, value, days) {
+    var expires = '';
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + (days*24*60*60*1000));
+      expires = '; expires=' + date.toUTCString();
+    }
+
+    document.cookie = name + '=' + (value || '')  + expires + '; path=/';
+  };
+
   var removeLocalStorage = function (key) {
     return localStorage.removeItem(key);
   };
@@ -201,6 +212,7 @@ Tw.CommonHelper = (function () {
     setLocalStorage: setLocalStorage,
     getLocalStorage: getLocalStorage,
     getCookie: getCookie,
+    setCookie: setCookie,
     removeLocalStorage: removeLocalStorage,
     showDataCharge: showDataCharge,
     share: share,

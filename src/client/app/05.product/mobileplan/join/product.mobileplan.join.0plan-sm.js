@@ -73,7 +73,7 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
       toProdName: this._confirmOptions.preinfo.toProdInfo.prodNm,
       isNumberBasFeeInfo: !this._confirmOptions.preinfo.toProdInfo.basFeeInfo.isNaN,
       toProdBasFeeInfo: this._confirmOptions.preinfo.toProdInfo.basFeeInfo.value,
-      toProdDesc: this.sktProdBenfCtt,
+      toProdDesc: this._sktProdBenfCtt,
       isJoinTermProducts: (!Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoJoinList) ||
         !Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoTermList)),
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
