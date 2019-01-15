@@ -166,8 +166,9 @@ Tw.LineRegisterComponent.prototype = {
     }
   },
   _registerLineList: function (lineList, length) {
-    this._apiService.request(Tw.NODE_CMD.CHANGE_LINE, { svcCtg: Tw.LINE_NAME.ALL, svcMgmtNumArr: lineList })
-      .done($.proxy(this._successRegisterLineList, this, length))
+    this._apiService.request(Tw.NODE_CMD.CHANGE_LINE, {
+      params: { svcCtg: Tw.LINE_NAME.ALL, svcMgmtNumArr: lineList }
+    }).done($.proxy(this._successRegisterLineList, this, length))
       .fail($.proxy(this._failRegisterLineList, this));
   },
   _successRegisterLineList: function (registerLength, resp) {
@@ -209,7 +210,7 @@ Tw.LineRegisterComponent.prototype = {
 
       this._apiService.request(Tw.API_CMD.BFF_03_0014, {}, {}, [this._marketingSvc])
         .done($.proxy(this._successGetMarketingOffer, this, $target.data('showname'), $target.data('svcnum')))
-        .fail($.proxy(this._failGetMargetingOffer, this));
+        .fail($.proxy(this._failGetMarketingOffer, this));
     }
   },
   _successGetMarketingOffer: function (showName, svcNum, resp) {
@@ -217,29 +218,32 @@ Tw.LineRegisterComponent.prototype = {
       if ( resp.result.agr201Yn !== 'Y' && resp.result.agr203Yn !== 'Y' ) {
         setTimeout($.proxy(function () {
           this.lineMarketingLayer.openMarketingOffer(this._marketingSvc,
-            showName, svcNum, resp.result.agr201Yn, resp.result.agr203Yn);
+            showName, svcNum, resp.result.agr201Yn, resp.result.agr203Yn, $.proxy(this._onCloseMarketingOfferPopup, this));
         }, this), 0);
-      } else {
-        this._historyService.goBack();
       }
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
-  _failGetMargetingOffer: function () {
+  _failGetMarketingOffer: function () {
 
   },
   _closeCompletePopup: function () {
     this._popupService.close();
-
   },
   _goAuthLine: function () {
     this._goAuth = true;
     this._popupService.close();
   },
+  _onCloseMarketingOfferPopup: function () {
+    this._closeCompletePopup();
+  },
   _onCloseCompletePopup: function () {
     if ( this._goAuth ) {
+      Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
       this._historyService.goLoad('/common/member/line');
+    } else if ( this._registerLength > 0 ) {
+      this._historyService.reload();
     }
   }
 };
