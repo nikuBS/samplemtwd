@@ -15,6 +15,7 @@ Tw.ProductRoamingSettingRoamingBeginSetup = function (rootEl,prodRedisInfo,prodB
   this._prodId = prodId;
   this._apiService = Tw.Api;
   this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
+  this._showDateFormat = 'YYYY. MM. DD.';
   this._bindBtnEvents();
   this._init();
   this._tooltipInit(prodId);
@@ -22,7 +23,7 @@ Tw.ProductRoamingSettingRoamingBeginSetup = function (rootEl,prodRedisInfo,prodB
 
 Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
   _init : function(){
-    var startDate = moment(this._prodBffInfo.svcStartDt,'YYYYMMDD').format('YYYY. MM. DD');
+    var startDate = moment(this._prodBffInfo.svcStartDt,'YYYYMMDD').format(this._showDateFormat);
     this.$container.find('#start_date').text(startDate);
     this.$container.find('#start_date').attr('data-number',this._prodBffInfo.svcStartDt);
   },
@@ -33,7 +34,7 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
     this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._historyService.goBack,this));
   },
   _getDateArrFromToDay : function(range,format){
-    var dateFormat = 'YYYY. MM. DD';
+    var dateFormat = this._showDateFormat;
     var resultArr = [];
     if(format){
       dateFormat = format;
@@ -83,7 +84,7 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
   },
   _actionSheetCloseEvt : function(eventObj){
     var $selectedTarget = $(eventObj.delegateTarget).find('.chk-link-list button.checked');
-    var dateValue = $selectedTarget.text().trim().substr(0,12);
+    var dateValue = $selectedTarget.text().trim().substr(0,13);
     var dateAttr = $selectedTarget.attr('data-name');
     var changeTarget = this.$container.find('#'+dateAttr);
     changeTarget.text(dateValue);

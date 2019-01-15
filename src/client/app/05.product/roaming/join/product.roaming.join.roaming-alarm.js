@@ -54,13 +54,13 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
   },
   _addPhoneNumOnList : function () {
     if(this._addedList.length>=5){
+      this.$addBtn.css('pointer-events','none');
       this._popupService.openAlert(
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.MSG,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.TITLE,
         null,
         $.proxy(function () {
-          this.$addBtn.attr('disabled','disabled');
-          this.$addBtn.removeAttr('disabled');
+          this.$addBtn.css('pointer-events','all');
         },this)
       );
       return;
@@ -107,9 +107,8 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
   _activateAddBtn : function (inputEvt) {
     var inputVal = this.$inputElement.val();
     if(inputVal.length>0&&isNaN(inputEvt.key)){
+      this.$inputElement.val('');
       this.$inputElement.val(inputVal.replace(/[^0-9]/g,''));
-      this.$inputElement.blur();
-      this.$inputElement.focus();
     }
     if(this.$inputElement.val().length>=10){
       this.$addBtn.removeAttr('disabled');

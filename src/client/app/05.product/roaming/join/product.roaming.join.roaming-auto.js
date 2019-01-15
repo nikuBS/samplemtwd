@@ -7,7 +7,6 @@
 Tw.ProductRoamingJoinRoamingAuto = function (rootEl,prodRedisInfo,prodApiInfo,svcInfo,prodId,expireDate) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
-  this._bindBtnEvents();
   this._historyService = new Tw.HistoryService(this.$container);
   this._prodRedisInfo = JSON.parse(prodRedisInfo);
   this._prodApiInfo = prodApiInfo;
@@ -15,7 +14,9 @@ Tw.ProductRoamingJoinRoamingAuto = function (rootEl,prodRedisInfo,prodApiInfo,sv
   this._prodId = prodId;
   this._expireDate = expireDate;
   this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
+  this._showDateFormat = 'YYYY. MM. DD.';
   this._tooltipInit(prodId);
+  this._bindBtnEvents();
 };
 
 Tw.ProductRoamingJoinRoamingAuto.prototype = {
@@ -26,7 +27,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
     this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._showCancelAlart,this));
   },
   _getDateArrFromToDay : function(range,format){
-    var dateFormat = 'YYYY. MM. DD';
+    var dateFormat = this._showDateFormat;
     var resultArr = [];
     if(format){
       dateFormat = format;
@@ -88,7 +89,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
   },
   _actionSheetCloseEvt : function(eventObj){
     var $selectedTarget = $(eventObj.delegateTarget).find('.chk-link-list button.checked');
-    var dateValue = $selectedTarget.text().trim().substr(0,12);
+    var dateValue = $selectedTarget.text().trim().substr(0,13);
     var dateAttr = $selectedTarget.attr('data-name');
     var changeTarget = this.$container.find('#'+dateAttr);
     changeTarget.text(dateValue);
@@ -115,7 +116,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
     if(startDateValidationResult){
       this.$container.find('.bt-fixed-area button').removeAttr('disabled');
       var expireDate = parseInt(this._expireDate,10) + parseInt(startDateElement.attr('data-idx'),10);
-      var endDate = moment().add(expireDate, 'days').format('YYYY. MM. DD');
+      var endDate = moment().add(expireDate, 'days').format(this._showDateFormat);
       endDateElement.text(endDate);
       endDateElement.attr('data-number',moment().add(expireDate, 'days').format('YYYYMMDD'));
       endTimeElement.text(startTime);
