@@ -111,6 +111,29 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
+  FARE_PAYMENT_LAYER_DATA_EXCEPT_POINT: [
+    {
+      'list': [
+        { 'button-attr': 'type="button"', 'txt': '자동납부', 'option': 'fe-auto', 'spot': '신청' }
+      ]
+    },
+    {
+      'title': '요금 즉시 납부',
+      'list': [
+        { 'button-attr': 'type="button"', 'txt': '계좌이체 납부', 'option': 'fe-account' },
+        { 'button-attr': 'type="button"', 'txt': '체크 ∙ 신용카드 납부', 'option': 'fe-card' },
+        { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백 ∙ T포인트 납부', 'option': 'fe-point' },
+      ]
+    },
+    {
+      'list': [
+        {
+          'button-attr': 'type="button"', 'txt': '입금전용계좌 문자 신청', 'option': 'fe-sms',
+          'add': '입금전용계좌 정보를 문자로 전송합니다.\n자동납부 인출 중이 아닌 경우에만 이용 가능합니다.', 'spot': '신청'
+        }
+      ]
+    }
+  ],
   IMMEDIATELY_CHARGE_DATA: {
     TITLE: '충전방법 선택',
     REFILL: {
