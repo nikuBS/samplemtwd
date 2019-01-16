@@ -55,7 +55,7 @@ class MyTJoinSuspendStatus extends TwViewController {
             status['resuspend'] = DateHelper.getShortDateWithFormat(suspendStatus.result.reFormDt, 'YYYY.MM.DD.');
           } else if ( suspendStatus.result.svcChgRsnCd === '21' ) {
             const months = DateHelper.getDiffByUnit(DateHelper.getCurrentDate(), suspendStatus.result.fromDt, 'months');
-            if ( months >= 24 ) {
+            if ( months >= 23 ) {
               status['resuspendable'] = false;
             }
           }
