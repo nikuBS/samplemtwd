@@ -36,7 +36,6 @@ class ProductRoamingSettingRoamingAlarm extends TwViewController {
       this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId),
       this.apiService.request(API_CMD.BFF_10_0021, {}, {}, [prodId]),
     ).subscribe(([ prodRedisInfo, prodBffInfo ]) => {
-
       if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00) ) {
         return this.error.render(res, {
           svcInfo: svcInfo,

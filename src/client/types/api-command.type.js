@@ -485,6 +485,10 @@ Tw.API_CMD = {
   BFF_10_0062: { path: '/core-product/:version/mobiles/additions-sets/:args0/seldis-sets', method: Tw.API_METHOD.GET },
   BFF_10_0063: { path: '/core-product/:version/mobiles/additions-sets/:args0/seldis-sets', method: Tw.API_METHOD.POST },
 
+  //SEARCH
+  GET_SEARCH_AUTO_COMPLETE : { path : '/search/tworld/autocomplete', method : Tw.API_METHOD.GET },
+  STACK_SEARCH_USER_CLICK : { path : '/search/tworld/log/save', method : Tw.API_METHOD.POST },
+
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },
   GET_PARAM: { path: '/comments', method: Tw.API_METHOD.GET },
@@ -559,17 +563,6 @@ Tw.AJAX_CMD = {
     method: Tw.API_METHOD.POST,
     url: Tw.IPIN_URL,
     contentType: 'application/x-www-form-urlencoded'
-  },
-  SEARCH_AUTO_COMPLETE : {
-      path : '/search/tworld/autocomplete',
-      method : Tw.API_METHOD.GET,
-      url : 'http://61.250.22.114:8080',
-      contentType: 'application/x-www-form-urlencoded'
-  },
-  SEARCH_STACK_USER_CLICK : {
-    path : '/search/tworld/log/save',
-    method : Tw.API_METHOD.POST,
-    url : 'http://61.250.22.114:8080'
   }
 };
 
