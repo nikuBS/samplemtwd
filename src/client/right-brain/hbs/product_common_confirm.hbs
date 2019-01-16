@@ -218,10 +218,10 @@
             {{/if}}
 
             {{#if isMobilePlan}}
-                <div class="ti-caption-gray">
-                    <h3 class="tit">초과 사용량 정산 안내</h3>
-                </div>
                 {{#if isOverpayResult}}
+                    <div class="ti-caption-gray">
+                        <h3 class="tit">초과 사용량 정산 안내</h3>
+                    </div>
                     <!-- .cont-box -->
                     <div class="cont-box">
                         <div class="charge-guide-wrap">
@@ -272,6 +272,9 @@
                     <!--// .cont-box -->
                 {{/if}}
                 {{#if isOverPayError}}
+                    <div class="ti-caption-gray">
+                        <h3 class="tit">초과 사용량 정산 안내</h3>
+                    </div>
                     <!-- .cont-box -->
                     <div class="cont-box">
                         <div class="cont-txt-type01">
