@@ -57,10 +57,10 @@ Tw.CertificationSk.prototype = {
     }
   },
   _checkOption: function (optMethods, methodCnt) {
-    if ( optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN) !== -1 ) {
+    if ( !Tw.FormatHelper.isEmpty(optMethods) && optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN) !== -1 ) {
       this._enableKeyin = true;
     }
-    if ( optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_SECURITY) !== -1 && Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
+    if ( !Tw.FormatHelper.isEmpty(optMethods) && optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_SECURITY) !== -1 && Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
       this._securityAuth = true;
     }
 
@@ -364,7 +364,7 @@ Tw.CertificationSk.prototype = {
   },
   _checkEnableCase: function (optMethods, methodCnt) {
     if ( methodCnt === 1 ) {
-      if ( optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN) !== -1 ) {
+      if ( !Tw.FormatHelper.isEmpty(optMethods) && optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN) !== -1 ) {
         this._defaultKeyin = true;
         return true;
       } else {
