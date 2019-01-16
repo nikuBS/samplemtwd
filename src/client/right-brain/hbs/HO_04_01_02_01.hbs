@@ -3,8 +3,11 @@
         <!-- #header -->
         <div class="header-wrap">
             <div class="page-header">
-                <div class="header-ti align">
+                <div class="header-ti">
                     <h1>수신동의 설정</h1>
+                </div>
+                <div class="header-mask">
+                    <button type="button" class="btn-mask"><span class="blind">마스킹 해제</span></button><!-- 선택됨 : .seleted,  선택불가 : .disabled // -->
                 </div>
             </div>
         </div>
@@ -19,21 +22,21 @@
                         <ul class="list-style type1">
                             <li>
                                 <span class="wrap-label"><label for="oka1">T월드 광고성 정보 수신동의(선택)</label></span>
-                                <span class="wrap-btn"><button type="button" class="btn-detail fe-view" value="http://m2.tworld.co.kr/normal.do?serviceId=S_PUSH0011&viewId=V_MEMB2005&stplTypCd=03">상세보기</button></span>
-                                <span class="wrap-form"><span class="custom-form"><input type="checkbox" id="oka1" name="r1" value="twdAdRcvAgreeYn"><span class="c-type1"></span></span></span>
+                                <span class="wrap-btn"><button type="button" class="btn-detail">상세보기</button></span>
+                                <span class="wrap-form"><span class="custom-form"><input type="checkbox" id="oka1" name="r1" checked="checked"><span class="c-type1"></span></span></span>
                             </li>
                             <li>
                                 <span class="wrap-label"><label for="oka2">T월드 개인정보 수집 · 이용동의(선택)</label></span>
-                                <span class="wrap-btn"><button type="button" class="btn-detail fe-view" value="http://m2.tworld.co.kr/normal.do?serviceId=S_PUSH0011&viewId=V_MEMB2005&stplTypCd=06">상세보기</button></span>
-                                <span class="wrap-form"><span class="custom-form"><input type="checkbox" id="oka2" name="r1" value="twdInfoRcvAgreeYn"><span class="c-type1"></span></span></span>
+                                <span class="wrap-btn"><button type="button" class="btn-detail">상세보기</button></span>
+                                <span class="wrap-form"><span class="custom-form"><input type="checkbox" id="oka2" name="r1"><span class="c-type1"></span></span></span>
                             </li>
-                            <li class="fe-location">
+                            <li>
                                 <span class="wrap-label"><label for="oka3">위치정보 이용동의(선택)</label></span>
-                                <span class="wrap-btn"><button type="button" class="btn-detail fe-view" value="http://m2.tworld.co.kr/normal.do?serviceId=S_PUSH0011&viewId=V_MEMB2005&stplTypCd=15">상세보기</button></span>
-                                <span class="wrap-form"><span class="custom-form"><input type="checkbox" id="oka3" name="r1" value="twdLocUseAgreeYn"><span class="c-type1"></span></span></span>
+                                <span class="wrap-btn"><button type="button" class="btn-detail">상세보기</button></span>
+                                <span class="wrap-form"><span class="custom-form"><input type="checkbox" id="oka3" name="r1"><span class="c-type1"></span></span></span>
                             </li>
                         </ul>
-                        <button type="button" class="btn-floating btn-style1" id="fe-confirm">저장</button>
+                        <button type="button" class="btn-floating btn-style1">저장</button>
                     </div>
                     <!-- // .cont-actionsheet -->
                 </div>
