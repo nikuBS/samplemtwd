@@ -53,7 +53,7 @@
                     <%if (['1', 'ADD'].indexOf(data.billInfo[0].cd) !== -1) {%>
                         <dl class="info-tx1">
                             <dt>우편 주소</dt>
-                            <dd>[<%= data.zip%>] <%= data.basAddr + ' '+ data.dtlAddr%></dd>
+                            <dd><%= data.fullAddr%></dd>
                         </dl>
                         <div class="info-line">
                             <dl class="info-tx1">
