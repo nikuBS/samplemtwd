@@ -9,7 +9,6 @@ Tw.MainMenuSettingsBiometrics = function (rootEl, target) {
   this._target = target;
 
   this._nativeService = Tw.Native;
-  this._popupService = Tw.Popup;
 
   this.$inputFido = null;
   this.$txtFido = null;
@@ -81,14 +80,14 @@ Tw.MainMenuSettingsBiometrics.prototype = {
         key: Tw.NTV_STORAGE.FIDO_USE,
         value: Tw.NTV_FIDO_USE.DISABLE
       });
-      this._popupService.toast(Tw.TOAST_TEXT.FIDO_NOT_USE);
+      Tw.CommonHelper.toast(Tw.TOAST_TEXT.FIDO_NOT_USE);
     } else {
       // on
       this._nativeService.send(Tw.NTV_CMD.SAVE, {
         key: Tw.NTV_STORAGE.FIDO_USE,
         value: Tw.NTV_FIDO_USE.ENABLE
       });
-      this._popupService.toast(Tw.TOAST_TEXT.FIDO_USE);
+      Tw.CommonHelper.toast(Tw.TOAST_TEXT.FIDO_USE);
     }
   },
   _setEnableStatus: function (str) {
