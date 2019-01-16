@@ -362,6 +362,9 @@ skt_landing.action = {
             'bottom':0
           });
         }
+        //wai-aria
+        popups.attr('role','dialog')
+              .attr('aria-hidden','false');
       }).fail(function() {
         if(callback_fail){
           callback_fail();
@@ -463,20 +466,28 @@ skt_landing.action = {
       }
     })
   },
-  home_slider : function(){ // home 전체 슬라이더
-    var homeIndex = 0;
+  home_slider : function(opts){ // home 전체 슬라이더
+    if(opts){
+        $('.home-slider .home-slider-belt').slick('destroy');
+    }
+	var defaults = {
+        dots: false,
+        infinite: false,
+        speed: 300,
+        slidesToShow: 1,
+        adaptiveHeight: true,
+        nextArrow:'.ico-home-tab-store',
+        prevArrow:'.ico-home-tab-my',
+        touchMove : true,
+        touchThreshold : 4 /* 50% 이동해야지 넘어감 (1/touchThreshold) * the width */
+	};
+	var options = $.extend({}, defaults, opts);
+    var homeIndex = options.initialSlide ? options.initialSlide : 0;
+    if(options.initialSlide){
+        $('.home-tab-belt .tab').eq(options.initialSlide).find('button, a').addClass('on').closest('.tab').siblings().find('button, a').removeClass('on');
+    }
     $('.home-slider .home-slider-belt').each(function(){
-      t = $(this).slick({
-          dots: false,
-          infinite: false,
-          speed: 300,
-          slidesToShow: 1,
-          adaptiveHeight: true,
-          nextArrow:'.ico-home-tab-store',
-          prevArrow:'.ico-home-tab-my',
-          touchMove : true,
-          touchThreshold : 4 /* 50% 이동해야지 넘어감 (1/touchThreshold) * the width */
-      })
+      t = $(this).slick(options)
       .on('beforeChange', function(slick, currentSlide){
       })
       .on('afterChange', function(slick, currentSlide){
@@ -486,7 +497,8 @@ skt_landing.action = {
             $('.home-tab-belt .tab').eq(homeIndex).find('button, a').addClass('on').closest('.tab').siblings().find('button, a').removeClass('on');
           }
       })
-    })
+    });
+
     $(window).bind('scroll', function(){
       if(skt_landing.util.win_info.get_scrollT() == 0){
           $('body').removeClass('fly');
@@ -498,13 +510,13 @@ skt_landing.action = {
       }else{
           $('.home-tab-belt').removeClass('fixed');
       }
-    })
-    $('.home-tab-belt button, a').on('click', function(){
+    });
+    $('.home-tab-belt button, .home-tab-belt a').on('click', function(){
         if(!$(this).hasClass('on')){
           $('.home-slider .home-slider-belt').slick('slickGoTo', $(this).closest('.tab').index());
           $(this).addClass('on').closest('.tab').siblings().find('button').removeClass('on');
         }
-    })
+    });
   },
   header_shadow : function(){
     $(window).bind('scroll', function(){
