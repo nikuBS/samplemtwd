@@ -13,9 +13,9 @@ Tw.MyTFareInfoBillCash = function (rootEl, data) {
   this.data = JSON.parse(data);
 
   this._cachedElement();
-  this._bindEvent();
-
   this._init();
+  this._bindEvent();
+  
 
 };
 
@@ -36,9 +36,10 @@ Tw.MyTFareInfoBillCash.prototype = {
 
       this.renderableListData = this.data.list.slice(0, this.listRenderPerPage);
 
+      // this.renderListData = this.data.noticeInfo;
       this.renderListData.initialMoreData = this.listViewMoreHide;
       this.renderListData.restCount = totalDataCounter - this.listRenderPerPage;
-      this.renderListData = this.data.noticeInfo;
+      
       this.renderListData.records = this.renderableListData.reduce($.proxy(function (prev, cur) {
         if (prev.length) {
           if (prev.slice(-1)[0].date === cur.listDt) {
@@ -52,7 +53,7 @@ Tw.MyTFareInfoBillCash.prototype = {
 
         return prev;
       }, this), []);
-
+      
       initedListTemplate = this.$template.$listCashWrapper(this.renderListData);
     }
 
