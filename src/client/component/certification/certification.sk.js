@@ -56,18 +56,16 @@ Tw.CertificationSk.prototype = {
       this._smsType = Tw.AUTH_CERTIFICATION_METHOD.SK_SMS;
     }
   },
-  _checkOption: function (optMethods) {
-    if ( this._svcInfo.smsUsableYn === 'N' || this._svcInfo.svcStCd === Tw.SVC_STATE.SP ) {
-      return false;
-    }
-
+  _checkOption: function (optMethods, methodCnt) {
     if ( optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN) !== -1 ) {
       this._enableKeyin = true;
-      // this._defaultKeyin = this._svcInfo.smsUsableYn === 'N' || this._svcInfo.svcStCd === Tw.SVC_STATE.SP;
-
     }
     if ( optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_SECURITY) !== -1 && Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
       this._securityAuth = true;
+    }
+
+    if ( this._svcInfo.smsUsableYn === 'N' || this._svcInfo.svcStCd === Tw.SVC_STATE.SP ) {
+      return this._checkEnableCase(optMethods, methodCnt);
     }
     return true;
   },
@@ -77,8 +75,7 @@ Tw.CertificationSk.prototype = {
   },
   _onSuccessAllSvcInfo: function (opMethods, optMethods, isWelcome, methodCnt, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( Tw.FormatHelper.isEmpty(resp.result.m) ) {
-        this._callback({ code: Tw.API_CODE.CERT_SMS_BLOCK });
+      if ( Tw.FormatHelper.isEmpty(resp.result.m) && !this._checkEnableCase(optMethods, methodCnt) ) {
         return;
       }
       var category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
@@ -101,8 +98,7 @@ Tw.CertificationSk.prototype = {
   },
   _openSmsOnly: function (opMethods, optMethods, isWelcome, methodCnt) {
     this._checkSmsType(opMethods);
-    if ( !this._checkOption(optMethods) ) {
-      this._callback({ code: Tw.API_CODE.CERT_SMS_BLOCK });
+    if ( !this._checkOption(optMethods, methodCnt) ) {
       return;
     }
 
@@ -115,7 +111,7 @@ Tw.CertificationSk.prototype = {
         sLogin: this._svcInfo.loginType === Tw.AUTH_LOGIN_TYPE.EASY,
         masking: this._authKind === Tw.AUTH_CERTIFICATION_KIND.A,
         svcNum: this._svcInfo.svcNum,
-        enableKeyin: this._enableKeyin
+        enableKeyin: this._enableKeyin,
       }
     }, $.proxy(this._onOpenSmsOnly, this), $.proxy(this._onCloseSmsOnly, this), 'cert-sms');
   },
@@ -365,5 +361,19 @@ Tw.CertificationSk.prototype = {
   _clearConfirmError: function () {
     this.$errorConfirm.addClass('none');
     this.$errorConfirmTime.addClass('none');
+  },
+  _checkEnableCase: function (optMethods, methodCnt) {
+    if ( methodCnt === 1 ) {
+      if ( optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN) !== -1 ) {
+        this._defaultKeyin = true;
+        return true;
+      } else {
+        this._callback({ code: Tw.API_CODE.CERT_SMS_BLOCK });
+        return false;
+      }
+    } else {
+      this._callback({ code: Tw.API_CODE.CERT_SMS_BLOCK });
+      return false;
+    }
   }
 };

@@ -32,7 +32,7 @@
                             <p class="certifi-ti-big pt8">아래 인증방식 중 한가지를 선택해 주세요.</p>
                         {{/if}}
                         <ul class="certifi-card-list mt28 {{data.cntClass}}"><!-- li 행별 최대 갯수 : 1개 .one, 2개 .two, 3개 .three -->
-                            {{#if data.skSms}}
+                            {{#if data.methods.skSms}}
                             <li>
                                 <button id="fe-bt-sk">
                                     <span class="ico-certifi-card type1" aria-hidden="true"></span>
@@ -40,7 +40,7 @@
                                 </button>
                             </li>
                             {{/if}}
-                            {{#if data.otherSms}}
+                            {{#if data.methods.otherSms}}
                             <li>
                                 <button id="fe-bt-kt">
                                     <span class="ico-certifi-card type2" aria-hidden="true"></span>
@@ -54,7 +54,7 @@
                                 </button>
                             </li>
                             {{/if}}
-                            {{#if data.save}}
+                            {{#if data.methods.save}}
                             <li>
                                 <button id="fe-bt-save">
                                     <span class="ico-certifi-card type4" aria-hidden="true"></span>
@@ -62,7 +62,7 @@
                                 </button>
                             </li>
                             {{/if}}
-                            {{#if data.publicCert}}
+                            {{#if data.methods.publicCert}}
                             <li>
                                 <button id="fe-bt-public">
                                     <span class="ico-certifi-card type5" aria-hidden="true"></span>
@@ -70,7 +70,7 @@
                                 </button>
                             </li>
                             {{/if}}
-                            {{#if data.ipin}}
+                            {{#if data.methods.ipin}}
                             <li>
                                 <button id="fe-bt-ipin">
                                     <span class="ico-certifi-card type6" aria-hidden="true"></span>
@@ -78,22 +78,13 @@
                                 </button>
                             </li>
                             {{/if}}
-                            {{#if data.bio}}
+                            {{#if data.methods.bio}}
                             <li>
                                 <button id="fe-bt-bio">
                                     <span class="ico-certifi-card type7" aria-hidden="true"></span>
                                     <span class="certifi-card-tx"><span class="tx">생체인증</span></span>
                                 </button>
                             </li>
-                            {{/if}}
-                            {{#if data.skSmsRefund}}
-
-                            {{/if}}
-                            {{#if data.otherSmsRefund}}
-
-                            {{/if}}
-                            {{#if data.ipinRefund}}
-
                             {{/if}}
                         </ul>
                     </div>
