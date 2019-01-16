@@ -75,20 +75,20 @@
                                 <li>
                                     <div class="li-elem">
                                         <div class="title-box">
-                                                <span class="sub-tit03">
-                                                    <span class="elem"><span class="tx-bold"><%= histories[i].showPoint %></span>점</span>
-                                                    <span class="elem"><%= histories[i].showOpDt %></span>
-                                                </span>
+                                            <span class="sub-tit03">
+                                                <span class="elem"><span class="blind">양도포인트</span><span class="tx-bold"><%= histories[i].showPoint %></span>점</span>
+                                                <span class="elem"><span class="blind">처리일시</span><%= histories[i].showOpDt %></span>
+                                            </span>
                                         </div>
-                                        <span class="tx-number" aria-labelledby="numlabel01"><%= histories[i].befrSvcNum %></span>
+                                        <% if (histories[i].cancelYn === 'Y') { %>
+                                        <span class="tx-cont"><button class="bt-link-tx underline bt-cancel" data-ser-num="<%= histories[i].serNum %>">취소</button></span>
+                                        <% } %>
                                     </div>
                                     <div class="basic-list">
                                         <ul>
                                             <li>
                                                 <span class="title" id="numlabel01">포인트를 받은 회선</span>
-                                                <% if (histories[i].cancelYn === 'Y') { %>
-                                                <span class="tx-cont"><button class="bt-link-tx underline bt-cancel" data-ser-num="<%= histories[i].serNum %>">취소</button></span>
-                                                <% } %>
+                                                <span class="tx-number" aria-labelledby="numlabel01"><%= histories[i].befrSvcNum %></span>
                                             </li>
                                         </ul>
                                     </div>
