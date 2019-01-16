@@ -453,7 +453,6 @@ Tw.MainHome.prototype = {
     }
   },
   _getGiftData: function (element, index) {
-    // skt_landing.action.loading.on({ ta: '.fe-smart-' + index, co: 'grey', size: true });
     if ( new Date().getDate() === Tw.GIFT_BLOCK_USAGE ) {
       this._drawGiftData(element, {
         blockUsage: true
@@ -565,12 +564,13 @@ Tw.MainHome.prototype = {
     }, this));
   },
   _initSmartCard: function (index) {
+
+    this._getSmartCard(index - 1);
     this._getSmartCard(index);
     this._getSmartCard(index + 1);
-    this._getSmartCard(index + 2);
   },
   _getSmartCard: function (index) {
-    if ( index < this.loadingStaus.length && !this.loadingStaus[index] ) {
+    if ( index >= 0 && index < this.loadingStaus.length && !this.loadingStaus[index] ) {
       var cardNo = this.$elArrSmartCard[index].data('smartcard');
       this._drawSmartCard(cardNo, index);
       this.loadingStaus[index] = true;
