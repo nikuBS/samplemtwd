@@ -333,6 +333,7 @@ Tw.CertificationSelect.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( this._optionCert ) {
         this._optionCert = false;
+        this._certPassword = new Tw.CertificationPassword();
         this._certPassword.open(this._authUrl, this._authKind, this._command, $.proxy(this._completeCert, this));
       } else {
         resp.authKind = this._authKind;
