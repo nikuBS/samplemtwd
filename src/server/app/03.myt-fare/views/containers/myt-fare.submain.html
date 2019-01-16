@@ -140,11 +140,13 @@
                             <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 &middot; 할인 &gt; 나의 할인 혜택
                         </button>
                     </li>
+                    <% if( ['P', 'S'].indexOf(data.svcInfo.svcGr) === -1) {%>
                     <li>
                         <button data-href="/benefit/my">
                             <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 &middot; 할인 &gt; 나의 포인트 혜택
                         </button>
                     </li>
+                    <% } %>
                     <li>
                         <button data-href="/myt-join/myplan">
                             <i class="icon-my-40"><span class="blind">my</span></i>나의 가입정보 &gt; 나의 요금제
