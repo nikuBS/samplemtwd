@@ -331,7 +331,6 @@ Tw.DateHelper = (function () {
     return moment(new Date()).add(1,'days').format('YYYY-MM-DD');
   };
 
-
   return {
     getRemainDate: getRemainDate,
     getNewRemainDate: getNewRemainDate,
