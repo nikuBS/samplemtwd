@@ -625,7 +625,7 @@ Tw.MainHome.prototype = {
   },
   _handleDrawNoti: function (list, nonShow) {
     this._welcomeList = this._filterShowMsg(list, nonShow);
-    this._drawWelcomeMsg(this._welcomeList);
+    this._drawWelcomeMsg(this._welcomeList, nonShow);
   },
   _filterShowMsg: function (list, nonShow) {
     return _.filter(list, $.proxy(function (msg) {
@@ -636,38 +636,21 @@ Tw.MainHome.prototype = {
       // return nonShow.indexOf(msg.wmsgId) === -1;
     }, this));
   },
-  _drawWelcomeMsg: function (list) {
+  _drawWelcomeMsg: function (list, nonShow) {
     var $welcomeEl = this.$container.find('#fe-tmpl-noti');
     if ( $welcomeEl.length > 0 && list.length > 0 ) {
       var $welcomeTemp = $('#fe-home-welcome');
       var tplWelcome = Handlebars.compile($welcomeTemp.html());
       $welcomeEl.html(tplWelcome({ msg: list[0] }));
-      $('#fe-bt-noti-close').on('click', $.proxy(this._onClickCloseNoti, this));
-      $('#fe-bt-noti-go').on('click', $.proxy(this._onClickGoNoti, this));
+      $('#fe-bt-noti-close').on('click', $.proxy(this._onClickCloseNoti, this, nonShow));
+      $('#fe-bt-noti-go').on('click', $.proxy(this._onClickGoNoti, this, list[0]));
       // $('#fe-bt-go-recharge').on('click', $.proxy(this._onClickBtRecharge, this));
       this._resetHeight();
     } else {
       $welcomeEl.hide();
     }
   },
-  _onClickCloseNoti: function () {
-    if ( Tw.BrowserHelper.isApp() ) {
-      this._nativeSrevice.send(Tw.NTV_CMD.LOAD, {
-        key: Tw.NTV_STORAGE.HOME_WELCOME
-      }, $.proxy(this._onHomeWelcomeForClose, this));
-    } else {
-      var nonShow = Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.HOME_WELCOME) || '';
-      this._handleClosedNoti(nonShow);
-    }
-  },
-  _onHomeWelcomeForClose: function (resp) {
-    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
-      this._handleClosedNoti(resp.params.value);
-    } else {
-      this._handleClosedNoti('');
-    }
-  },
-  _handleClosedNoti: function (nonShow) {
+  _onClickCloseNoti: function (nonShow) {
     if ( nonShow === '' ) {
       nonShow = this._welcomeList[0].wmsgId;
     } else {
@@ -681,10 +664,14 @@ Tw.MainHome.prototype = {
     } else {
       Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.HOME_WELCOME, nonShow);
     }
-
     this._handleDrawNoti(this._welcomeList, nonShow);
   },
-  _onClickGoNoti: function () {
+  _onClickGoNoti: function (noti) {
+    if ( noti.linkTrgtClCd === '1' ) {
+      this._historyService.goLoad(noti.linkUrl);
+    } else if ( noti.linkTrgtClCd === '2' ) {
+      Tw.CommonHelper.openUrlExternal(noti.linkUrl);
+    }
 
   },
   _setBanner: function (menuId) {
