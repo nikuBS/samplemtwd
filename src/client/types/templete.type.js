@@ -384,7 +384,7 @@ Tw.POPUP_TPL = {
         { 'radio-attr': 'id="03" name="r2"', 'label-attr':'id="03" data-center="A900100000" data-img="place-img-04" value="제주공항 국제선 1층 로밍센터"', txt: '제주공항 국제선 1층 로밍센터' },
         { 'radio-attr': 'id="04" name="r2"', 'label-attr':'id="04" data-center="A200130000" data-img="place-img-05-1" value="김해공항 3층 로밍센터"', txt: '김해공항 3층 로밍센터' },
         { 'radio-attr': 'id="05" name="r2"', 'label-attr':'id="05" data-center="C399900000" data-img="place-img-06" value="대구공항 2층 로밍센터"', txt: '대구공항 2층 로밍센터' },
-        { 'radio-attr': 'id="14" name="r2"', 'label-attr':'id="14" data-center="1430452300" data-img="" value="대구 SKT 황금점 매장"', txt: '대구 SKT 황금점 매장' }
+        { 'radio-attr': 'id="14" name="r2"', 'label-attr':'id="14" data-center="1430452300" data-img="place-img-10" value="대구 SKT 황금점 매장"', txt: '대구 SKT 황금점 매장' }
       ]
     }
   ],
@@ -407,7 +407,7 @@ Tw.POPUP_TPL = {
         { 'radio-attr': 'name="r2"', 'label-attr':'id="10" data-center="A900100000" data-booth="1000004057" data-img="place-img-04" value="제주공항 국제선 1층 로밍센터"', txt: '제주공항 국제선 1층 로밍센터' },
         { 'radio-attr': 'name="r2"', 'label-attr':'id="11" data-center="A200130000" data-booth="1000012532" data-img="place-img-05" value="김해공항 3층 로밍센터"', txt: '김해공항 3층 로밍센터' },
         { 'radio-attr': 'name="r2"', 'label-attr':'id="12" data-center="C399900000" data-booth="1430455436" data-img="place-img-06" value="대구공항 2층 로밍센터"', txt: '대구공항 2층 로밍센터' },
-        { 'radio-attr': 'name="r2"', 'label-attr':'id="13" data-center="1430452300" data-booth="1430452300" data-img="" value="대구 SKT 황금점 매장"', txt: '대구 SKT 황금점 매장' }
+        { 'radio-attr': 'name="r2"', 'label-attr':'id="13" data-center="1430452300" data-booth="1430452300" data-img="place-img-10" value="대구 SKT 황금점 매장"', txt: '대구 SKT 황금점 매장' }
       ]
     }
   ],
