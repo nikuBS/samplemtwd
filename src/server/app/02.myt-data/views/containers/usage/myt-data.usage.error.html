@@ -38,7 +38,7 @@
                     </p>
                 </div>
             </div>
-            <% } else if (usageData.code === 'BLN0003') { %>
+            <% } else if (usageData.code === 'BLN0003' || svcInfo.svcStCd === 'SP') { %>
             <div class="popup-header">
                 <span class="ico type1"></span>
                 <h5 class="popup-title ">
@@ -49,7 +49,7 @@
             <div class="popup-contents ">
                 <div class="inner-contents">
                     <p class="">
-                        정지 이력이 있어 잔여량 조회 서비스를
+                        회선정지 상태이거나 정지 이력이 있어 잔여량 조회 서비스를
                         이용할 수 없습니다. 자세한 사항은
                         고객센터로 문의해 주시기 바랍니다.
                     </p>
