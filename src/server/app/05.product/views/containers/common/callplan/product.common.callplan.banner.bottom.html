@@ -1,10 +1,14 @@
 <% if ( prodRedisInfo.banner.B && prodRedisInfo.banner.B.bnnrImgUrl ) { %>
+<hr class="cont-sp type1" aria-hidden="true"/>
+
 <div class="cont-box nogaps noborder">
     <div class="bannerbox-wrap">
         <a href="<%= prodRedisInfo.banner.B.bnnrLinkUrl %>" class="fe-banner_link"><img src="<%= CDN %><%= prodRedisInfo.banner.B.bnnrImgUrl %>"></a>
     </div>
 </div>
 <% } else if ( prodRedisInfo.banner.B && prodRedisInfo.banner.B.bnnrDtlHtmlCtt ) { %>
+<hr class="cont-sp type1" aria-hidden="true"/>
+
 <div class="cont-box nogaps noborder">
     <div class="bannerbox-wrap">
         <%- prodRedisInfo.banner.B.bnnrDtlHtmlCtt %>
