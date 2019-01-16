@@ -90,10 +90,16 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
     var $selectedTarget = $(eventObj.delegateTarget).find('.chk-link-list button.checked');
     var dateValue = $selectedTarget.text().trim().substr(0,13);
     var dateAttr = $selectedTarget.attr('data-name');
-    var changeTarget = this.$container.find('#'+dateAttr);
+    var changeTarget;
+    //changeTarget = this.$container.find('#'+dateAttr);
+    if(dateAttr.indexOf('time')>=0){
+      changeTarget = this.$container.find('.time');
+    }else{
+      changeTarget = this.$container.find('#'+dateAttr);
+    }
     changeTarget.text(dateValue);
     changeTarget.removeClass('placeholder');
-    changeTarget.attr('data-number',dateValue.replace(/\.\ /g, ''));
+    changeTarget.attr('data-number',dateValue.replace(/\.|\ /g, ''));
     changeTarget.attr('data-idx',$selectedTarget.parent().index());
     this._validateDateValue(changeTarget.attr('id'));
     this._popupService.close();

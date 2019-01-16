@@ -38,9 +38,9 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
     this.$container.find('#end_date').text(endDate);
     this.$container.find('#end_date').attr('data-number',this._prodBffInfo.svcEndDt);
     this.$container.find('#end_date').attr('data-idx',endDateIdx);
-    this.$container.find('#start_time').text(parseInt(startTime,10));
+    this.$container.find('#start_time').text(startTime);
     this.$container.find('#start_time').attr('data-number',this._prodBffInfo.svcStartTm);
-    this.$container.find('#end_time').text(parseInt(endTime,10));
+    this.$container.find('#end_time').text(endTime);
     this.$container.find('#end_time').attr('data-number',this._prodBffInfo.svcEndTm);
 
   },
@@ -115,10 +115,16 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
     var $selectedTarget = $(eventObj.delegateTarget).find('.chk-link-list button.checked');
     var dateValue = $selectedTarget.text().trim().substr(0,13);
     var dateAttr = $selectedTarget.attr('data-name');
-    var changeTarget = this.$container.find('#'+dateAttr);
+    var changeTarget;
+    //changeTarget = this.$container.find('#'+dateAttr);
+    if(dateAttr.indexOf('time')>=0){
+      changeTarget = this.$container.find('.time');
+    }else{
+      changeTarget = this.$container.find('#'+dateAttr);
+    }
     changeTarget.text(dateValue);
     changeTarget.removeClass('placeholder');
-    changeTarget.attr('data-number',dateValue.replace(/\.\ /g, ''));
+    changeTarget.attr('data-number',dateValue.replace(/\.|\ /g, ''));
     changeTarget.attr('data-idx',$selectedTarget.parent().index());
     this._validateDateValue(changeTarget.attr('id'));
     this._popupService.close();
@@ -217,7 +223,7 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
       'svcEndDt' : this.$container.find('#end_date').attr('data-number'),
       'svcStartTm' : this.$container.find('#start_time').attr('data-number'),
       'svcEndTm' : this.$container.find('#end_time').attr('data-number'),
-      'startEndTerm' : endDtIdx - startDtIdx
+      'startEndTerm' : String(endDtIdx - startDtIdx)
     };
 
     this._apiService.request(Tw.API_CMD.BFF_10_0085, userSettingInfo, {},[this._prodId]).
