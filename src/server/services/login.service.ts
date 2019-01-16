@@ -110,7 +110,7 @@ class LoginService {
       this.response.cookie(COOKIE_KEY.XTLOGINID_ORIGIN, svcInfo.userId);
     }
 
-    this.response.cookie(COOKIE_KEY.XTLOGINTYPE, svcInfo.loginType === 'E' ? 'Z' : 'A');
+    this.response.cookie(COOKIE_KEY.XTLOGINTYPE, svcInfo.loginType === 'S' ? 'Z' : 'A');
 
     if (FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTSVCGR])) {
       this.response.cookie(COOKIE_KEY.XTSVCGR, svcInfo.svcGr);

@@ -26,22 +26,23 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <ul class="prevention-list fe-list">
-                    <% for (var i in data.list) {
-                    const emcyClass = data.list[i].emcyYn == 'Y' ? 'important' : '';
-                    %>
-                    <li class="<%= emcyClass %>">
-                        <a href="/customer/damage-info/warning/view?idx=<%= data.list[i].bltn2BltnId %>" class="list-inner">
-                            <strong class="list-tit"><%= data.list[i].bltnTitleNm %></strong>
-                            <em class="list-date"><%= data.list[i].date %></em>
+                    <% for (var i in importList) { %>
+                    <li class="important">
+                        <a href="/customer/damage-info/warning/view?icntsId=<%= importList[i].icntsId %>" class="list-inner">
+                            <strong class="list-tit tx-bold"><%= importList[i].icntsTitNm %></strong>
+                            <em class="list-date"><%= importList[i].date %></em>
+                        </a>
+                    </li>
+                    <% } %>
+                    <% for (var i in normalList) { %>
+                    <li>
+                        <a href="/customer/damage-info/warning/view?icntsId=<%= normalList[i].icntsId %>" class="list-inner">
+                            <strong class="list-tit"><%= normalList[i].icntsTitNm %></strong>
+                            <em class="list-date"><%= normalList[i].date %></em>
                         </a>
                     </li>
                     <% } %>
                 </ul>
-                <% if (data.remain > 0) { %>
-                <div class="bt-more">
-                    <button class="fe-btn_more_list">더보기<span>(<%= data.remain %>)</span></button>
-                </div>
-                <% } %>
             </div>
             <!--// .cont-box -->
         </div>

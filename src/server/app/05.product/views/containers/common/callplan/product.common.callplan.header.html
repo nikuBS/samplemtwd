@@ -90,7 +90,7 @@
             </div>
             <% } %>
             <% if ( basicInfo.prodScrbYn === 'N' && (
-                ( isMobileplan || isWireplan ) && svcInfo && svcInfo.prodId !== prodId ||
+                ( isMobileplan || isWireplan ) && (svcInfo && svcInfo.prodId !== prodId || !svcInfo) ||
                 ( isMobileplanAdd || isWireplanAdd || isRoaming || isCombine || isDiscount ) && !isJoined)
             ) { %>
             <div class="limit">

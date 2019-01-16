@@ -621,6 +621,7 @@ class ProductCommonCallplan extends TwViewController {
 
     this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, [prodId])
       .subscribe((basicInfo) => {
+        console.log(basicInfo.result);
         if (basicInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, Object.assign(renderCommonInfo, {
             code: basicInfo.code,
