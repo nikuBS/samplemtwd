@@ -80,7 +80,7 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
     var changeTarget = this.$container.find('#'+dateAttr);
     changeTarget.text(dateValue);
     changeTarget.removeClass('placeholder');
-    changeTarget.attr('data-number',dateValue.replace(/\.\ /g, ''));
+    changeTarget.attr('data-number',dateValue.replace(/\.|\ /g, ''));
     changeTarget.attr('data-idx',$selectedTarget.parent().index());
     this._validateDateValue();
     this._popupService.close();
