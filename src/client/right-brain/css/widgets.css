@@ -511,30 +511,30 @@ li.checkbox.type01 {
     width: 1.5rem;
     height: 1.5rem;
     vertical-align: middle;
-    background: url(/img/form/ico-checkbox-style01-default.png) no-repeat 0 0;
+    background: url(/img/svg/component_check_small_off.svg) no-repeat 0 0;
     background-size: 1.5rem auto; }
   .checkbox.type01.checked:before {
-    background: url(/img/form/ico-checkbox-style01-checked.png) no-repeat 0 0;
+    background-image: url(/img/svg/component_check_small_on.svg);
     background-size: 1.5rem auto; }
   .checkbox.type01.disabled:before {
-    background: url(/img/form/ico-checkbox-style01-disabled.png) no-repeat 0 0;
+    background-image: url(/img/svg/component_check_small_off_disabled.svg);
     background-size: 1.5rem auto; }
   .checkbox.type01.checked.disabled:before {
-    background: url(/img/form/ico-checkbox-style01-checked-disabled.png) no-repeat 0 0;
+    background-image: url(/img/svg/component_check_small_on_disabled.svg);
     background-size: 1.5rem auto; }
   .checkbox.type01.focus {
     outline: -webkit-focus-ring-color auto 5px; }
   .checkbox.type01.focus:before {
-    background: url(/img/form/ico-checkbox-style01-default.png) no-repeat 0 0;
+    background: url(/img/svg/component_check_small_off.svg) no-repeat 0 0;
     background-size: 1.5rem auto; }
   .checkbox.type01.focus.checked:before {
-    background: url(/img/form/ico-checkbox-style01-checked.png) no-repeat 0 0;
+    background-image: url(/img/svg/component_check_small_on.svg);
     background-size: 1.5rem auto; }
   .checkbox.type01.focus.disabled:before {
-    background: url(/img/form/ico-checkbox-style01-disabled.png) no-repeat 0 0;
+    background-image: url(/img/svg/component_check_small_off_disabled.svg);
     background-size: 1.5rem auto; }
   .checkbox.type01.focus.checked.disabled:before {
-    background: url(/img/form/ico-checkbox-style01-checked-disabled.png) no-repeat 0 0;
+    background-image: url(/img/svg/component_check_small_on_disabled.svg);
     background-size: 1.5rem auto; }
   .checkbox.type01 > span {
     display: inline-block;
@@ -555,24 +555,31 @@ li.checkbox.type01 {
     width: 2rem;
     height: 2rem;
     vertical-align: middle;
-    background: url(/img/form/ico-checkbox-style01.png) no-repeat 0 0;
+    background: url(/img/svg/component_check_small_off.svg) no-repeat 0 0;
     background-size: 2rem; }
   .checkbox.type01-big.checked:before {
-    background-position: 0 -2rem; }
+    background-image: url(/img/svg/component_check_small_on.svg);
+    background-size: 2rem; }
   .checkbox.type01-big.disabled:before {
-    background-position: 0 -4rem; }
+    background-image: url(/img/svg/component_check_small_off_disabled.svg);
+    background-size: 2rem; }
   .checkbox.type01-big.checked.disabled:before {
-    background-position: 0 -6rem; }
+    background-image: url(/img/svg/component_check_small_on_disabled.svg);
+    background-size: 2rem; }
   .checkbox.type01-big.focus {
     outline: -webkit-focus-ring-color auto 5px; }
   .checkbox.type01-big.focus:before {
-    background-position: 0 0; }
+    background: url(/img/svg/component_check_small_off.svg) no-repeat 0 0;
+    background-size: 2rem; }
   .checkbox.type01-big.focus.checked:before {
-    background-position: 0 -2rem; }
+    background-image: url(/img/svg/component_check_small_on.svg);
+    background-size: 2rem; }
   .checkbox.type01-big.focus.disabled:before {
-    background-position: 0 -4rem; }
+    background-image: url(/img/svg/component_check_small_off_disabled.svg);
+    background-size: 2rem; }
   .checkbox.type01-big.focus.checked.disabled:before {
-    background-position: 0 -6rem; }
+    background-image: url(/img/svg/component_check_small_on_disabled.svg);
+    background-size: 2rem; }
   .checkbox.type01-big > span {
     display: inline-block;
     font-size: 0.8125rem;

@@ -12,23 +12,16 @@
                             {{#each list}}
                                 <li class="type2">
                                     <button {{{attr}}}>
-                                        {{#if simbol}}
                                         <span class="circle">
                                             <span class="simbol {{{simbol}}}"></span>
                                         </span>
-                                        {{/if}}
-                                        {{#if img}}
-                                        <span class="circle">
-                                            <img src="{{img.src}}" alt="{{img.alt}}" width="100%" height="100%" />
-                                        </span>
-                                        {{/if}}
                                         <span class="txt">{{{value}}}</span>
                                     </button>
                                 </li>
                             {{/each}}
                         </ul>
                         {{#btn-floating}}
-                        <button {{{attr}}} class="btn-floating btn-style3 fe-close tw-popup-closeBtn">{{txt}}</button>
+                        <button {{{attr}}} class="btn-floating btn-style3">{{txt}}</button>
                         {{/btn-floating}}
                     </div>
                     <!-- // .cont-actionsheet -->
