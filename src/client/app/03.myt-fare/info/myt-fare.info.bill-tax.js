@@ -8,7 +8,7 @@ Tw.MyTFareInfoBillTax = function (rootEl, data) {
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._historyService = new Tw.HistoryService(rootEl);
+  this._historyService = new Tw.HistoryService(rootEl);  
 
   this.data = JSON.parse(data);
 
@@ -116,19 +116,23 @@ Tw.MyTFareInfoBillTax.prototype = {
     data.hbs = 'MF_08_01_01_01';
     this._popupService.open(data,
         $.proxy(this._openResendByFaxCallback, this), 
-        $.proxy(this._closeResendByFax, this),
+        null,
         Tw.MYT_PAYMENT_HISTORY_HASH.BILL_RESEND_BY_FAX,
         'byFax'
     );
   },
-  _closeResendByFax: function () {
-    if(!Tw.FormatHelper.isEmpty(this.$faxNumberInput.val())) {
-      this._popupService.openConfirm(
-        Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
-        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE
-      );
-    }
+  _closeResendByFax: function (e) {
+      if(!Tw.FormatHelper.isEmpty(this.$faxNumberInput.val())) { 
+        this._popupService.openConfirmButton(
+          Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+          Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+          $.proxy(this._closePop, this)
+        );
+      } else {
+        this._historyService.goBack();
+      }
   },
+
 
   _openResendByFaxCallback: function ($container) {
     this.$faxNumberInput = $container.find('.input input[type="tel"]');
@@ -139,6 +143,7 @@ Tw.MyTFareInfoBillTax.prototype = {
       this.$rerequestSendBtn.attr('disabled', true);
     }, this));
     this.$faxNumberInput.trigger('keyup');
+    $container.find('.fe-common-back').on('click', $.proxy(this._closeResendByFax, this));
   },
   _checkFaxNumber: function (e) {
     Tw.InputHelper.inputNumberOnly(e.currentTarget);
@@ -156,7 +161,7 @@ Tw.MyTFareInfoBillTax.prototype = {
     data.hbs = 'MF_08_01_01_02';
     this._popupService.open(data,
         $.proxy(this._openResendByEmailCallback, this), 
-        $.proxy(this._closeResendByEmail, this),
+        null,
         Tw.MYT_PAYMENT_HISTORY_HASH.BILL_RESEND_BY_EMAIL,
         'byEmail'
     );
@@ -164,10 +169,13 @@ Tw.MyTFareInfoBillTax.prototype = {
 
   _closeResendByEmail: function () {
     if(!Tw.FormatHelper.isEmpty(this.$emailInput.val())) {
-      this._popupService.openConfirm(
+      this._popupService.openConfirmButton(
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
-        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+        $.proxy(this._closePop, this)
       );
+    } else {
+      this._historyService.goBack();
     }
   },
 
@@ -182,6 +190,7 @@ Tw.MyTFareInfoBillTax.prototype = {
       this.$rerequestSendBtn.attr('disabled', true);
     }, this));
     this.$emailInput.trigger('keyup');
+    $container.find('.fe-common-back').on('click', $.proxy(this._closeResendByEmail, this));
   },
   _checkEmailValue: function (e) {
     this.$rerequestSendBtn.attr('disabled', !Tw.ValidationHelper.isEmail($(e.currentTarget).val()));
@@ -209,13 +218,17 @@ Tw.MyTFareInfoBillTax.prototype = {
     if (res.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(res.code, res.msg).pop();
     }
+    
     this._popupService.openAlert(this.isFax ? 
       // is Fax
       Tw.FormatHelper.getDashedPhoneNumber(this.$faxNumberInput.val())+ " "+ Tw.ALERT_MSG_MYT_FARE.ALERT_2_A28 : 
       // is Email
       this.$emailInput.val()+ " "+ Tw.ALERT_MSG_MYT_FARE.ALERT_2_A29,
-        Tw.POPUP_TITLE.NOTIFY, Tw.BUTTON_LABEL.CONFIRM, $.proxy(function() {
-          this._popupService.close();
-        }, this));
-  }
+      Tw.POPUP_TITLE.NOTIFY, Tw.BUTTON_LABEL.CONFIRM, $.proxy(this._closePop, this)
+      );
+  },
+
+  _closePop: function () {
+    this._popupService.closeAll();
+  },
 };
