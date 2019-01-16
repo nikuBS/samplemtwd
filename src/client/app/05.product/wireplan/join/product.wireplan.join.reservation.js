@@ -353,12 +353,12 @@ Tw.ProductWireplanJoinReservation.prototype = {
       return;
     }
 
-    $input.val(Tw.FormatHelper.getDashedCellPhoneNumber($input.val()));
+    $input.attr('type', 'text').val(Tw.FormatHelper.getDashedCellPhoneNumber($input.val()));
   },
 
   _focusInputNumber: function(e) {
     var $input = $(e.currentTarget);
-    $input.val($input.val().replace(/-/gi, ''));
+    $input.val($input.val().replace(/-/gi, '')).attr('type', 'number');
   },
 
   _toggleInputCancelBtn: function(e) {
