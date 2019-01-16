@@ -10,6 +10,12 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 
+const PLAN_BUTTON_TYPE = {
+  SET: 'SE',
+  TERMINATE: 'TE',
+  SUBSCRIBE: 'SC'
+};
+
 class MyTJoinMyPlanAdd extends TwViewController {
   constructor() {
     super();
@@ -77,11 +83,19 @@ class MyTJoinMyPlanAdd extends TwViewController {
         ? {
             btnList: addition.btnList
               .filter(btn => {
-                if (btn.btnTypCd === 'TE') {
-                  return addition.prodTermYn === 'Y';
+                switch (btn.btnTypCd) {
+                  case PLAN_BUTTON_TYPE.TERMINATE: {
+                    return addition.prodTermYn === 'Y';
+                  }
+                  case PLAN_BUTTON_TYPE.SET: {
+                    return addition.prodSetYn === 'Y';
+                  }
+                  case PLAN_BUTTON_TYPE.SUBSCRIBE: {
+                    return addition.prodScrbYn === 'Y';
+                  }
                 }
 
-                return btn.btnTypCd === 'SC' && addition.prodSetYn === 'Y';
+                return true;
               })
               .sort(this._sortButtons)
           }
@@ -93,7 +107,7 @@ class MyTJoinMyPlanAdd extends TwViewController {
 
   private _sortButtons = (a, b) => {
     if (a.btnTypCd) {
-      if (a.btnTypCd === 'TE') {
+      if (a.btnTypCd === PLAN_BUTTON_TYPE.TERMINATE) {
         return 1;
       } else {
         return -1;
