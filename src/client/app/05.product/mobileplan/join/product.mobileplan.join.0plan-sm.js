@@ -190,12 +190,26 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
         overpayResults = $.extend(overpayResults, {
           isDataOvrAmt: isDataOvrAmt,
           isVoiceOvrAmt: isVoiceOvrAmt,
-          isSmsOvrAmt: isSmsOvrAmt
+          isSmsOvrAmt: isSmsOvrAmt,
+          dataIfAmt: parseInt(resp.result.dataIfAmt, 10),
+          dataBasAmt: parseInt(resp.result.dataBasAmt, 10),
+          dataOvrAmt: parseInt(resp.result.dataOvrAmt, 10),
+          voiceIfAmt: parseInt(resp.result.voiceIfAmt, 10),
+          voiceBasAmt: parseInt(resp.result.voiceBasAmt, 10),
+          voiceOvrAmt: parseInt(resp.result.voiceOvrAmt, 10),
+          smsIfAmt: parseInt(resp.result.smsIfAmt, 10),
+          smsBasAmt: parseInt(resp.result.smsBasAmt, 10),
+          smsOvrAmt: parseInt(resp.result.smsOvrAmt, 10),
+          ovrTotAmt: parseInt(resp.result.ovrTotAmt, 10)
         });
       }
     }
 
-    this._confirmOptions = $.extend(this._confirmOptions, overpayResults);
+    this._confirmOptions = $.extend(this._confirmOptions, {
+      isOverpayResult: overpayResults.isOverpayResult,
+      overpay: overpayResults
+    });
+
     this._procConfirm();
   },
 
