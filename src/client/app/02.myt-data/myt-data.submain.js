@@ -55,6 +55,9 @@ Tw.MyTDataSubMain.prototype = {
       }
     }
     this.$otherPages = this.$container.find('[data-id=other-pages]');
+    if ( this.data.banner.length > 0 ) {
+      this.$bannerList = this.$container.find('[data-id=banner-list]');
+    }
   },
 
   _bindEvent: function () {
@@ -88,6 +91,9 @@ Tw.MyTDataSubMain.prototype = {
     }
     this.$otherPages.find('li').on('click', $.proxy(this._onOtherPages, this));
     this.$prepayContainer.on('click', 'button', $.proxy(this._onPrepayCoupon, this));
+    if ( this.data.banner.length > 0 ) {
+      this.$bannerList.on('click', 'li', $.proxy(this._onClickBannerItem, this));
+    }
   },
 
   _initialize: function () {
@@ -570,6 +576,12 @@ Tw.MyTDataSubMain.prototype = {
         Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.T_SHORT_DATA_DEV[browser]);
         break;
     }
+  },
+
+  _onClickBannerItem: function (event) {
+    var $target = $(event.currentTarget);
+    var url = $target.find('a').attr('data-href');
+    Tw.CommonHelper.openUrlExternal(url);
   },
 
   _successPattern: function (resp) {
