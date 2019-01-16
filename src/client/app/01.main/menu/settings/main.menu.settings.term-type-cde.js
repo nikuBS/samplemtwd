@@ -52,21 +52,21 @@ Tw.MainMenuSettingsTermTypeCDE.prototype = {
     var searchId = this._termGroup[id];
     var data  = Tw.TERMS_ACTION[searchId].data;
     data[0].list = _.map(data[0].list, function (item) {
-      if (item.attr.indexOf(id) !== -1) {
-        item.option += ' checked';
+      if (item['radio-attr'].indexOf(id) !== -1) {
+        item['radio-attr'] += ' checked';
       }
       return item;
     });
 
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
-        layer: true,
-        title: Tw.TERMS_ACTION[searchId].title,
-        data: data
+      hbs: 'actionsheet01',
+      layer: true,
+      data: data,
+      btnfloating: { attr: 'type="button"', txt: Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._onActionSheetOpened, this));
   },
   _onActionSheetOpened: function (root) {
-    root.on('click', '.fe-action', $.proxy(function (e) {
+    root.on('click', 'input[type=radio]', $.proxy(function (e) {
       this._popupService.close();
       if ($(e.currentTarget).hasClass('checked')) {
         return;
@@ -81,5 +81,8 @@ Tw.MainMenuSettingsTermTypeCDE.prototype = {
       }
       this._historyService.goLoad(url);
     }, this));
+    root.on('click', '.btn-floating', $.proxy(function () {
+      this._popupService.close();
+    }, this))
   }
 };
