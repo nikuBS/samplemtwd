@@ -156,6 +156,7 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
 
   _reqOverpay: function() {
     if (!this._isOverPayReq || this._isSetOverPayReq) {
+      this._confirmOptions = $.extend(this._confirmOptions, { isOverPayError: true });
       return this._procConfirm();
     }
 
@@ -191,16 +192,16 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
           isDataOvrAmt: isDataOvrAmt,
           isVoiceOvrAmt: isVoiceOvrAmt,
           isSmsOvrAmt: isSmsOvrAmt,
-          dataIfAmt: parseInt(resp.result.dataIfAmt, 10),
-          dataBasAmt: parseInt(resp.result.dataBasAmt, 10),
-          dataOvrAmt: parseInt(resp.result.dataOvrAmt, 10),
-          voiceIfAmt: parseInt(resp.result.voiceIfAmt, 10),
-          voiceBasAmt: parseInt(resp.result.voiceBasAmt, 10),
-          voiceOvrAmt: parseInt(resp.result.voiceOvrAmt, 10),
-          smsIfAmt: parseInt(resp.result.smsIfAmt, 10),
-          smsBasAmt: parseInt(resp.result.smsBasAmt, 10),
-          smsOvrAmt: parseInt(resp.result.smsOvrAmt, 10),
-          ovrTotAmt: parseInt(resp.result.ovrTotAmt, 10)
+          dataIfAmt: resp.result.dataIfAmt,
+          dataBasAmt: resp.result.dataBasAmt,
+          dataOvrAmt: Math.ceil(resp.result.dataOvrAmt),
+          voiceIfAmt: Math.ceil(resp.result.voiceIfAmt),
+          voiceBasAmt: Math.ceil(resp.result.voiceBasAmt),
+          voiceOvrAmt: Math.ceil(resp.result.voiceOvrAmt),
+          smsIfAmt: Math.ceil(resp.result.smsIfAmt),
+          smsBasAmt: Math.ceil(resp.result.smsBasAmt),
+          smsOvrAmt: Math.ceil(resp.result.smsOvrAmt),
+          ovrTotAmt: Math.ceil(resp.result.ovrTotAmt)
         });
       }
     }
