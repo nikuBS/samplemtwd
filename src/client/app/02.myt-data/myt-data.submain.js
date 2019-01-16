@@ -116,12 +116,14 @@ Tw.MyTDataSubMain.prototype = {
     return ((elemTop <= docViewBottom) && (elemTop >= docViewTop));
   },
 
-  __getPatternMonth: function (value) {
-    return value.slice(value.length - 2, value.length) + Tw.PERIOD_UNIT.MONTH;
-  },
-
   __convertData: function (value) {
     return parseFloat((value / 1024 / 1024).toFixed(2));
+  },
+
+  __convertVoice: function (value) {
+    var min = parseInt((value % 3600) / 60, 10);
+    var sec = value % 60;
+    return min + ':' + sec;
   },
 
   __calculationData: function (tmoaremained, tmoatotal, etcremained, etctotal) {
@@ -258,46 +260,51 @@ Tw.MyTDataSubMain.prototype = {
   _initPatternChart: function () {
     if ( (this.data.pattern.data && this.data.pattern.data.length > 0) ||
       (this.data.pattern.voice && this.data.pattern.voice.length > 0) ) {
-      var unit       = '',
+      var unit,
           data,
           chart_data = [],
           idx;
-      if ( this.data.pattern.data.length > 0 ) {
-        this.$patternChart.find('.tit').text(Tw.MYT_DATA_PATTERN_TITLE.DATA);
-        unit = Tw.CHART_UNIT.GB;
-        data = this.data.pattern.data;
-        if ( data.length > 0 ) {
+      this.$patternChart.find('.tit').text(Tw.MYT_DATA_PATTERN_TITLE.DATA);
+      unit = Tw.CHART_UNIT.GB;
+      data = this.data.pattern.data;
+      var baseTotalData = 0;
+      for ( idx = 0; idx < data.length; idx++ ) {
+        var usageData = parseInt(data[idx].totalUsage, 10);
+        baseTotalData += usageData;
+        if ( usageData > 0 ) {
+          chart_data.push({
+            t: Tw.DateHelper.getShortKoreanAfterMonth(data[idx].invMth), // 각 항목 타이틀
+            v: this.__convertData(usageData) // 배열 평균값으로 전달
+          });
+        }
+      }
+      if ( baseTotalData === 0 ) {
+        chart_data = [];
+        if ( this.data.pattern.voice.length > 0 ) {
+          this.$patternChart.find('.tit').text(Tw.MYT_DATA_PATTERN_TITLE.VOICE);
+          unit = Tw.CHART_UNIT.TIME;
+          data = this.data.pattern.voice;
           for ( idx = 0; idx < data.length; idx++ ) {
             chart_data.push({
-              t: this.__getPatternMonth(data[idx].invMth), // 각 항목 타이틀
-              v: this.__convertData(parseInt(data[idx].totalUsage, 10)) // 배열 평균값으로 전달
+              t: Tw.DateHelper.getShortKoreanAfterMonth(data[idx].invMth), // 각 항목 타이틀
+              v: this.__convertVoice(parseInt(data[idx].totalUsage, 10)) // 배열 평균값으로 전달
             });
           }
         }
       }
-      else if ( this.data.pattern.voice.length > 0 ) {
-        this.$patternChart.find('.tit').text(Tw.MYT_DATA_PATTERN_TITLE.VOICE);
-        unit = Tw.CHART_UNIT.TIME;
-        data = this.data.pattern.voice;
-        for ( idx = 0; idx < data.length; idx++ ) {
-          chart_data.push({
-            t: this.__getPatternMonth(data[idx].invMth), // 각 항목 타이틀
-            v: this.__convertData(parseInt(data[idx].totalUsage, 10)) // 배열 평균값으로 전달
-          });
-        }
+      if ( chart_data.length > 0 ) {
+        this.$patternChart.chart2({
+          type: Tw.CHART_TYPE.BAR_2, //bar
+          target: '.pattern', //클래스명 String
+          average: true,
+          unit: unit, //x축 이름
+          data_arry: chart_data //데이터 obj
+        });
       }
-
-      this.$patternChart.chart2({
-        type: Tw.CHART_TYPE.BAR_2, //bar
-        target: '.pattern', //클래스명 String
-        average: true,
-        unit: unit, //x축 이름
-        data_arry: chart_data //데이터 obj
-      });
-    }
-    else {
-      this.$patternChart.hide();
-      this.$container.find('[data-id=pattern_empty]').hide();
+      else {
+        this.$patternChart.hide();
+        this.$container.find('[data-id=pattern_empty]').hide();
+      }
     }
   },
 
