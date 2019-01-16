@@ -44,7 +44,7 @@
             <div class="cont-box">
                 <div class="myinfo-wrap">
                     <div class="user-level">
-                        <i class="ico vip"><span class="blind"><%= myInfoData.mbrGrStr %></span></i>
+                        <i class="ico <%= myInfoData.mbrGrStr %>"><span class="blind"><%= myInfoData.mbrGrStr %></span></i>
                         <div class="info-inner">
                             <span class="title-l"><%= myInfoData.custNm %> 님</span>
                             <span class="subtx"><%= myInfoData.mbrTypStr %>
@@ -81,8 +81,10 @@
                     </div>
                 </div>
                 <ul class="bt-slice item-two mt20">
-                    <li><button id="fe-go-update" type="button" class="btn-round1 btn-style4">정보 수정</button></li>
+                    <li><button id="fe-go-update" data-type="<%= myInfoData.mbrStCd %>" type="button" class="btn-round1 btn-style4">정보 수정</button></li>
+                    <% if( myInfoData.mbrTypCd === '0' || myInfoData.mbrTypCd === '3' || myInfoData.mbrTypCd === '4' ) { %>
                     <li><button id="fe-reissue" type="button" class="btn-round1 btn-style4">재발급 신청</button></li>
+                    <% } %>
                 </ul>
             </div>
             <!--// .cont-box -->
@@ -96,7 +98,7 @@
                         <div class="txt">
                             <strong class="tit">연간 누적 혜택</strong>
                         </div>
-                        <span class="val vt">42,000원</span>
+                        <span class="val vt"><%= membershipData.showUsedAmount %>원</span>
                     </li>
                 </ul>
             </div>

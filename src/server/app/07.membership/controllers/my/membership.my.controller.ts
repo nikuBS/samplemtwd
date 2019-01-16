@@ -12,33 +12,55 @@ import { API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import { MEMBERSHIP_GROUP, MEMBERSHIP_TYPE } from '../../../../types/bff.type';
 import DateHelper from '../../../../utils/date.helper';
+import { Observable } from 'rxjs/Observable';
 
 export default class MembershipMy extends TwViewController {
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
-
-    this.apiService.request(API_CMD.BFF_11_0002, {}).subscribe((resp) => {
-      let myInfoData = {};
-      if ( resp.code === API_CODE.CODE_00 ) {
-        myInfoData = this.parseMyInfoData(resp.result);
-      } else {
-        myInfoData = resp;
-      }
-
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
+    Observable.combineLatest(
+      this.getMyInfoData(),
+      this.getMembershipData()
+    ).subscribe(([myInfoData, membershipData]) => {
       res.render('my/membership.my.html', {
         myInfoData: myInfoData,
+        membershipData: membershipData,
         svcInfo: svcInfo
       });
     });
   }
 
-  private parseMyInfoData(myInfoData): any {
+  private getMyInfoData(): Observable<any> {
+    let myInfoData = null;
+    return this.apiService.request(API_CMD.BFF_11_0002, {}).map((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        myInfoData = this.parseMyInfoData(resp.result);
+      }
+      return myInfoData;
+    });
+  }
 
+  private getMembershipData(): Observable<any> {
+    let membershipData = null;
+    return this.apiService.request(API_CMD.BFF_11_0001, {}).map((resp) => {
+      if ( resp.code === API_CODE.CODE_00 ) {
+        membershipData = this.parseMembershipData(resp.result);
+      }
+      return membershipData;
+    });
+  }
+
+  private parseMembershipData(membershipData): any {
+    membershipData.showUsedAmount = FormatHelper.addComma((+membershipData.mbrUsedAmt).toString());
+    return membershipData;
+  }
+
+  private parseMyInfoData(myInfoData): any {
     myInfoData.showPayAmtScor = FormatHelper.addComma((+myInfoData.payAmtScor).toString());
-    myInfoData.mbrGrStr = MEMBERSHIP_GROUP[myInfoData.mbrGrCd].toUpperCase();
+    myInfoData.mbrGrStr = MEMBERSHIP_GROUP[myInfoData.mbrGrCd];
     myInfoData.mbrTypStr = MEMBERSHIP_TYPE[myInfoData.mbrTypCd];
     myInfoData.todayDate = DateHelper.getCurrentShortDate();
 
     return myInfoData;
   }
+
 }
