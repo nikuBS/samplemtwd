@@ -47,9 +47,9 @@ Tw.MyTDataLimitImmediately.prototype = {
   _onSuccessBlockImmediately: function (sCheckType, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       if ( sCheckType === 'block' ) {
-        this._popupService.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_BLOCK);
+        Tw.CommonHelper.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_BLOCK);
       } else {
-        this._popupService.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_UNBLOCK);
+        Tw.CommonHelper.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_UNBLOCK);
       }
     } else {
       Tw.Error(res.code, res.msg).pop();

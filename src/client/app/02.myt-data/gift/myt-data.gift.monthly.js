@@ -145,7 +145,7 @@ Tw.MyTDataGiftMonthly.prototype = {
       //     this._popupService.close();
       //     this._historyService.reload();
       //   }, this));
-      this._popupService.toast(Tw.UNSUBSCRIBE_MONTHLY_GIFT_COMPLETE);
+      Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT_COMPLETE);
       return true;
     } else {
       Tw.Error(res.code, res.msg).pop();
