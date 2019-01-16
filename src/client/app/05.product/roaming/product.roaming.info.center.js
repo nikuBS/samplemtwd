@@ -25,21 +25,21 @@ Tw.ProductRoamingInfoCenter.prototype = {
   },
 
   _cachedElement: function() {
-    this.$btnPopupClose = this.$container.find('.widget');
+    this.$btnWidget = this.$container.find('.widget input');
     this.$btnDropdown = this.$container.find('.cont-box > #flab04');
   },
 
   _bindEvent: function() {
-    this.$btnPopupClose.on('click', $.proxy(this._goRoamingGuide, this));
+    this.$btnWidget.on('click', $.proxy(this._widgetSelect, this));
     this.$btnDropdown.on('click', $.proxy(this._openActionsheet, this));
   },
 
-  _goRoamingGuide: function(e) {
+  _widgetSelect: function(e) {
     var centerArr = Tw.ROAMING_CENTER;
     var selectCenter;
 
     for(var i=0; i<centerArr.length; i++){
-      if( e.target.title === centerArr[i]){
+      if( e.currentTarget.title === centerArr[i]){
         selectCenter = i+1;
       }
     }
