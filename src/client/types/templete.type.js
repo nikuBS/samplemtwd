@@ -518,12 +518,11 @@ Tw.PRODUCT_LIST_ORDER = [
 
 Tw.TERMS_ACTION = {
   46: {
-    title: '재판매 이용약관',
     data: [{
       list: [
-        { value: '초고속인터넷 이용약관', option: 'fe-action', attr: 'value="46:c:43"' },
-        { value: '인터넷전화 이용약관', option: 'fe-action', attr: 'value="49:d"' },
-        { value: '시내전화 이용약관', option: 'fe-action', attr: 'value="50:d"' }
+        { txt: '초고속인터넷 이용약관', 'label-attr': 'id="46"', 'radio-attr': 'id="46" value="46:c:43"' },
+        { txt: '인터넷전화 이용약관', 'label-attr': 'id="49"', 'radio-attr': 'id="49" value="49:d"' },
+        { txt: '시내전화 이용약관', 'label-attr': 'id="50"', 'radio-attr': 'id="50" value="50:d"' }
       ]
     }]
   }
@@ -797,7 +796,7 @@ Tw.SUSPEND_RELATION = {
 };
 
 Tw.PREPAID_HISTORIES = [
-  { txt: '음성 충전', 'radio-attr': 'data-type="voice"', 'label-attr': ' ' }, 
+  { txt: '음성 충전', 'radio-attr': 'data-type="voice"', 'label-attr': ' ' },
   { txt: '데이터 충전', 'radio-attr': 'data-type="data"', 'label-attr': ' ' }
 ];
 
