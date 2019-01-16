@@ -213,7 +213,7 @@ Tw.CustomerPraise.prototype = {
     });
 
     if (emptyInputs || this.$reasons.val().length === 0 || (this._selectedType === this.TYPES.STORE && this._selectedArea === undefined)) {
-      return this.$submitBtn.attr('disabled');
+      this.$submitBtn.attr('disabled', true);
     } else {
       this.$submitBtn.removeAttr('disabled');
     }
