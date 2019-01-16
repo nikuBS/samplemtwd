@@ -81,16 +81,19 @@
             </div>
             <!--// .cont-box -->
 
+            <% if ( warningList ) { %>
             <hr class="cont-sp type1" aria-hidden="true">
 
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <p class="list-comp-title">최신 이용자 피해예방 주의보 <a href="/customer/damage-info/warning" class="bt">더보기</a></p>
                 <ul class="link-long-list">
-                    <% for (var i in warningList) { %>
+                    <% for (var i in warningList) {
+                    if (i > 1) { break; }
+                    %>
                     <li>
                         <div class="link-long">
-                            <a href="/customer/damage-info/warning/view?idx=<%= warningList[i].bltn2BltnId %>"><%= warningList[i].bltnTitleNm %>
+                            <a href="/customer/damage-info/warning/view?icntsId=<%= warningList[i].icntsId %>"><%= warningList[i].icntsTitNm %>
                                 <span class="tx-sub">
                                     <span class="ico"></span>
                                 </span>
@@ -101,6 +104,7 @@
                 </ul>
             </div>
             <!--// .cont-box -->
+            <% } %>
 
             <hr class="cont-sp type1" aria-hidden="true">
 

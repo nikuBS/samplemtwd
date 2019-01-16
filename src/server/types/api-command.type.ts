@@ -496,6 +496,7 @@ export const API_CMD = {
   BFF_08_0060: { path: '/core-modification/:version/email-inquiry-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0061: { path: '/core-modification/:version/email-inquiry-detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0062: { path: '/core-modification/:version/email-inquiry', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0063: { path: '/core-modification/v1/guide/contents-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0064: { path: '/core-modification/:version/guide/contents-detail/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0065: { path: '/core-modification/:version/guide/contents-view-count-up/:args0', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_08_0066: { path: '/core-modification/:version/center/banner', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
