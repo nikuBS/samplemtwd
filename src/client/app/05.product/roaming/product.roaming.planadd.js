@@ -43,6 +43,7 @@ Tw.ProductRoamingPlanAdd.prototype = {
       }else {
           this.selectTag = false;
       }
+      this._reset = false;
       this._params.searchLastProdId = this.$rmAddBtn.data('last-product');
       this._leftCount = this.$rmAddBtn.data('left-count');
 
@@ -154,6 +155,11 @@ Tw.ProductRoamingPlanAdd.prototype = {
           return input.getAttribute('data-addfilter-id');
       }).join(',');
 
+      if(searchRmFltIds === '' && !this._reset){
+          this._popupService.close();
+          return;
+      }
+
       this._params = { idxCtgCd: this.RMADD_CODE };
       this._params.searchFltIds = searchRmFltIds;
       this._apiService.request(Tw.API_CMD.BFF_10_0000, this._params)
@@ -204,6 +210,8 @@ Tw.ProductRoamingPlanAdd.prototype = {
   _handleAddResetBtn: function ($layer) {
       $layer.find('.btn-type01').removeClass('checked');
       $layer.find('input').removeAttr('checked');
+      this._reset = true;
+      this.selectTag = false;
   },
   _handleGetRmAddFilters: function(resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
@@ -230,7 +238,7 @@ Tw.ProductRoamingPlanAdd.prototype = {
               this.$selectBtn.attr('checked','checked');
           }
       }
-
+      this._reset = false;
   },
   _handleResetTag: function ($layer, $target) {
     this._popupService.close();

@@ -48,6 +48,7 @@ Tw.ProductRoamingFee.prototype = {
       }else {
           this.selectPlanTag = false;
       }
+      this._reset = false;
       this._params.searchLastProdId = this.$addBtn.data('last-product');
       this._leftCount = this.$addBtn.data('left-count');
 
@@ -148,8 +149,10 @@ Tw.ProductRoamingFee.prototype = {
     this._history.goLoad('/product/roaming/fee?tag=' + selectedTag);
   },
   _handleResetBtn: function ($layer) {
-        $layer.find('.btn-type01').removeClass('checked');
-        $layer.find('input').removeAttr('checked');
+      $layer.find('.btn-type01').removeClass('checked');
+      $layer.find('input').removeAttr('checked');
+      this._reset = true;
+      this.selectPlanTag = false;
     },
   _bindFilterBtnEvent: function ($layer, e) {
     this.$filterBtn = $(e.currentTarget);
@@ -185,12 +188,18 @@ Tw.ProductRoamingFee.prototype = {
                   this.$selectBtn.attr('checked', 'checked');
               }
           }
+          this._reset = false;
       }
   },
   _handleRoamingSelectFilters: function ($layer){
       var searchRmFltIds = _.map($layer.find('input[checked="checked"]'), function(input) {
           return input.getAttribute('data-rmfilter-id');
       }).join(',');
+
+      if(searchRmFltIds === '' && !this._reset){
+          this._popupService.close();
+          return;
+      }
 
       this._params = { idxCtgCd: this.RM_CODE };
       this._params.searchFltIds = searchRmFltIds;
