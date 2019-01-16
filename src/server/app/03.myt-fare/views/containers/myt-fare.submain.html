@@ -83,10 +83,10 @@
                     <div class="widget">
                         <div class="widget-box slider1">
                             <div class="slider-box">
-                                <ul class="slider">
+                                <ul class="slider" data-id="banner-list">
                                     <% for (var i=0; i < data.banner.length; i++) { %>
                                     <li>
-                                        <a href="<%= data.banner[i].imgLinkUrl %>">
+                                        <a href="javascript:void(0)" data-href="<%= data.banner[i].imgLinkUrl %>">
                                             <img src="<%= CDN %><%= data.banner[i].bnnrFilePathNm %>" alt="<%= data.banner[i].bnnrImgAltCtt %>">
                                         </a>
                                     </li>
@@ -98,7 +98,6 @@
                     <!--// .widget -->
                 </div>
             </div>
-            <% delete data.banner; %>
             <% } %>
 
             <% if ( data.type !== 'UF' && data.otherLines.length > 0) { %>

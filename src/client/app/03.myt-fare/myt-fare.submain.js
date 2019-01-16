@@ -107,6 +107,10 @@ Tw.MyTFareSubMain.prototype = {
       this.$contribution = this.$container.find('[data-id=contbt]');
     }
     this.$otherPages = this.$container.find('[data-id=other-pages]');
+
+    if ( this.data.banner.length > 0 ) {
+      this.$bannerList = this.$container.find('[data-id=banner-list]');
+    }
   },
 
   _bindEvent: function () {
@@ -179,6 +183,9 @@ Tw.MyTFareSubMain.prototype = {
       this.$contribution.on('click', $.proxy(this._onClickedContribution, this));
     }
     this.$otherPages.find('li').on('click', $.proxy(this._onOtherPages, this));
+    if ( this.data.banner.length > 0 ) {
+      this.$bannerList.on('click', 'li', $.proxy(this._onClickBannerItem, this));
+    }
   },
 
   // chart create
@@ -642,9 +649,14 @@ Tw.MyTFareSubMain.prototype = {
   },
 
   _onOtherPages: function (event) {
-    // TODO: 페이지 관련 URL 미비된 부분이 있어 확정후 완료 처리 필요!
     var $target = $(event.target);
     var href = $target.attr('data-href');
     this._historyService.goLoad(href);
+  },
+
+  _onClickBannerItem: function (event) {
+    var $target = $(event.currentTarget);
+    var url = $target.find('a').attr('data-href');
+    Tw.CommonHelper.openUrlExternal(url);
   }
 };
