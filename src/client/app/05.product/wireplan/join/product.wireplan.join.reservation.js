@@ -212,14 +212,14 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
   _openCombinePop: function() {
     this._popupService.open({
-      hbs:'actionsheet01',
+      hbs:'actionsheet05',
       layer:true,
       data:[
         {
           'title': Tw.PRODUCT_COMBINE_PRODUCT.GROUP_PERSONAL,
           'list':[
             { 'label-attr': 'id="ra1"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000103.TITLE,
-              'explain': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000103.EXPLAIN,
+              'cont-txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000103.EXPLAIN,
               'radio-attr':'id="ra1" data-prod_id="NH00000103" ' + (this._prodId === 'NH00000103' ? 'checked' : '') }
           ]
         },
@@ -227,13 +227,13 @@ Tw.ProductWireplanJoinReservation.prototype = {
           'title': Tw.PRODUCT_COMBINE_PRODUCT.GROUP_FAMILY,
           'list': [
             { 'label-attr': 'id="ra2_0"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00005055.TITLE,
-              'explain': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00005055.EXPLAIN,
+              'cont-txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00005055.EXPLAIN,
               'radio-attr':'id="ra2_0" data-prod_id="NA00005055" ' + (this._prodId === 'NA00005055' ? 'checked' : '') },
             { 'label-attr': 'id="ra2_1"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.TITLE,
-              'explain': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.EXPLAIN,
+              'cont-txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.EXPLAIN,
               'radio-attr':'id="ra2_1" data-prod_id="NH00000133" ' + (this._prodId === 'NH00000133' ? 'checked' : '') },
             { 'label-attr': 'id="ra2_2"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000084.TITLE,
-              'explain': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000084.EXPLAIN,
+              'cont-txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000084.EXPLAIN,
               'radio-attr':'id="ra2_2" data-prod_id="NH00000084" ' + (this._prodId === 'NH00000084' ? 'checked' : '') },
             { 'label-attr': 'id="ra2_3"',
               'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.ETC.TITLE,
@@ -251,9 +251,10 @@ Tw.ProductWireplanJoinReservation.prototype = {
     $popupContainer.on('click', '[data-prod_id]', $.proxy(this._setCombine, this));
   },
 
-  _setCombine: function() {
+  _setCombine: function(e) {
     this.$combineSelected.prop('checked', true);
     this.$combineSelected.parent().addClass('checked').attr('aria-checked', true);
+    this._prodId = $(e.currentTarget).data('prod_id');
     this._popupService.close();
   },
 

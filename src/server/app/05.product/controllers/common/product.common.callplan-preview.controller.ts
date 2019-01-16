@@ -61,12 +61,16 @@ class ProductCommonCallplanPreview extends TwViewController {
     let isJoinReservation: any = false;
 
     basicInfo.linkBtnList.forEach((item) => {
+      if (item.linkTypCd === 'SE' && basicInfo.prodSetYn !== 'Y') {
+        return true;
+      }
+
       if (item.linkTypCd === 'SC') {
         joinBtnList.push(item);
         return true;
       }
 
-      if (item.linkTypCd === 'SE') {
+      if (item.linkTypCd === 'SE' && basicInfo.prodSetYn === 'Y') {
         settingBtnList.push(item);
         return true;
       }

@@ -58,7 +58,7 @@ class MyTJoinMyplan extends TwViewController {
     return optionAndDiscountProgramList.map((item) => {
       return Object.assign(item, {
         scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.M.DD.'),
-        btnList: this._convertBtnList(item.btnList),
+        btnList: this._convertBtnList(item.btnList, item.prodSetYn),
         dcStaDt: FormatHelper.isEmpty(item.dcStaDt) ? null : DateHelper.getShortDateWithFormat(item.dcStaDt, 'YYYY.M.DD.'),
         dcEndDt: FormatHelper.isEmpty(item.dcEndDt) ? null : this._getDcEndDt(item.dcEndDt)
       });
@@ -143,7 +143,7 @@ class MyTJoinMyplan extends TwViewController {
         basOfrDataQtyCtt: spec.basOfrDataQtyCtt,
         basOfrVcallTmsCtt: spec.basOfrVcallTmsCtt,
         basOfrCharCntCtt: spec.basOfrCharCntCtt,
-        btnList: this._convertBtnList(wirelessPlan.feePlanProd.btnList)
+        btnList: this._convertBtnList(wirelessPlan.feePlanProd.btnList, wirelessPlan.feePlanProd.prodSetYn)
       }),
       optionAndDiscountProgramList: this._convertOptionAndDiscountProgramList(disProdList)
     });
@@ -194,9 +194,10 @@ class MyTJoinMyplan extends TwViewController {
 
   /**
    * @param btnList
+   * @param prodSetYn
    * @private
    */
-  private _convertBtnList(btnList: any): any {
+  private _convertBtnList(btnList: any, prodSetYn: any): any {
     if (FormatHelper.isEmpty(btnList)) {
       return [];
     }
@@ -206,13 +207,16 @@ class MyTJoinMyplan extends TwViewController {
       unknownBtnList: any = [];
 
     btnList.forEach((item) => {
-      if (item.btnTypCd === 'SE') {
+      if (item.btnTypCd === 'SE' && prodSetYn !== 'Y') {
+        return true;
+      }
+
+      if (item.btnTypCd === 'SE' && prodSetYn === 'Y') {
         settingBtnList.push(item);
         return true;
       }
 
       if (item.btnTypCd === 'TE') {
-        terminateBtnList.push(item);
         return true;
       }
 
