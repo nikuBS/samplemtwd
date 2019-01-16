@@ -34,7 +34,7 @@ class MyTFareBillCard extends TwViewController {
         if (unpaidList.code === API_CODE.CODE_00) {
           res.render('bill/myt-fare.bill.card.html', {
             ...data,
-            unpaidList: this.parseData(unpaidList.result, svcInfo),
+            unpaidList: this.parseData(unpaidList.result, svcInfo, allSvc),
             autoInfo: this.parseInfo(autoInfo)
           });
         } else {
@@ -58,7 +58,7 @@ class MyTFareBillCard extends TwViewController {
     return this.apiService.request(API_CMD.BFF_07_0022, {});
   }
 
-  private parseData(result: any, svcInfo: any): any {
+  private parseData(result: any, svcInfo: any, allSvc: any): any {
     const list = result.settleUnPaidList;
     if (!FormatHelper.isEmpty(list)) {
       list.cnt = result.recCnt;
@@ -70,7 +70,8 @@ class MyTFareBillCard extends TwViewController {
         data.intMoney = this.removeZero(data.invAmt);
         data.invMoney = FormatHelper.addComma(data.intMoney);
         data.svcName = SVC_CD[data.svcCd];
-        data.svcNumber = data.svcCd === 'C' ? FormatHelper.conTelFormatWithDash(data.svcNum) : data.svcNum;
+        data.svcNumber = data.svcCd === 'I' || data.svcCd === 'T' ? this.getAddr(data.svcMgmtNum, allSvc) :
+          FormatHelper.conTelFormatWithDash(data.svcNum);
 
         if (svcInfo.svcMgmtNum === data.svcMgmtNum && data.invDt > list.invDt) {
           list.invDt = data.invDt;
@@ -107,6 +108,19 @@ class MyTFareBillCard extends TwViewController {
       return result;
     }
     return null;
+  }
+
+  private getAddr(svcMgmtNum: any, allSvc: any): any {
+    const serviceArray = allSvc.s;
+    let addr = '';
+
+    serviceArray.map((data) => {
+      if (data.svcMgmtNum === svcMgmtNum) {
+        addr = data.addr;
+      }
+    });
+
+    return addr;
   }
 
 }
