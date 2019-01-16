@@ -42,10 +42,10 @@ Tw.ProductRoamingFiInquire.prototype = {
   },
 
   _bindEvent: function() {
-    this.$inquire.on('click', $.proxy(this._getTfiResponse,this));
+    this.$inquire.on('click', $.proxy(this._getTfiResponse, this));
     this.$container.on('click', '#fe-edit', $.proxy(this._clickEditBtn, this));
     this.$container.on('click', '#fe-cancel', $.proxy(this._clickCancelBtn, this));
-    this.$container.on('click', '.bt-more', $.proxy(this._onMore,this));
+    this.$container.on('click', '.bt-more', $.proxy(this._onMore, this));
     this.$btnPopupClose.on('click', $.proxy(this._goRoamingGuide, this));
     this.$container.on('change', '#flab02', $.proxy(this._changeCheck, this));
     this.$container.on('change', '#flab03', $.proxy(this._changeCheck, this));
@@ -71,8 +71,8 @@ Tw.ProductRoamingFiInquire.prototype = {
   },
 
   _getTfiResponse: function(state) {
-    if(state === 'edit' || state === 'cancel'){
-      //예약 수정, 취소시 스크롤 상단 위치
+    if(state === 'cancel'){
+      //예약 취소시 스크롤 상단 위치
       $('.container-wrap').scrollTop(0);
     };
 
@@ -457,7 +457,7 @@ Tw.ProductRoamingFiInquire.prototype = {
   _handleSuccessEditReservation: function(res) {
     if(res.code === Tw.API_CODE.CODE_00) {
       var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A27;
-        this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, $.proxy(this._getTfiResponse, this, 'edit'));
+        this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, $.proxy(this._reload, this));
     }else{
       this._onFail(res);
     }
@@ -469,6 +469,14 @@ Tw.ProductRoamingFiInquire.prototype = {
 
   _goRoamingCenter: function() {
     this._historyService.goLoad('/product/roaming/info/center');
+  },
+
+  _reload: function() {
+    this._popupService.close();
+    var self = this;
+    setTimeout(function(){
+      self._historyService.reload();
+    },100);
   },
 
   _onFail: function (err) {
