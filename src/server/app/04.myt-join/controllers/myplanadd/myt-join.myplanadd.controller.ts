@@ -85,7 +85,7 @@ class MyTJoinMyPlanAdd extends TwViewController {
               .filter(btn => {
                 switch (btn.btnTypCd) {
                   case PLAN_BUTTON_TYPE.TERMINATE: {
-                    return addition.prodTermYn === 'Y';
+                    return false;
                   }
                   case PLAN_BUTTON_TYPE.SET: {
                     return addition.prodSetYn === 'Y';
