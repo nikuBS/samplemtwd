@@ -721,6 +721,11 @@ Tw.ALERT_MSG_MEMBERSHIP = {
     CONTENT: '발급 카드 정보 : </br> T멤버십(Leaders Clubs) 모바일 카드',
     LINK_TITLE: '발급 변경 내역 보기 >'
   },
+  COMPLETE_TITLE: {
+    REISSUE: '멤버십 재발급',
+    CHANGE: '멤버십 종류 변경',
+    UPDATE: '멤버십 정보 수정'
+  },
   ALERT_1_A50: { TITLE: '알림', MSG: '시작일이 종료일보다 늦을 수 없습니다.' },
   ALERT_1_A51: { TITLE: 'T멤버십 카드를 재발급하시겠습니까?', MSG: '스마트폰 이용 고객님은 모바일 카드만 신청하실 수 있습니다.', BUTTON: '재발급 신청' },
   ALERT_1_A52: { TITLE: 'T멤버십 카드 재발급 신청을 취소하시겠습니까?', MSG: '', BUTTON: '신청 취소' },

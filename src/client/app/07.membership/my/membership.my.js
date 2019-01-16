@@ -74,7 +74,6 @@ Tw.MembershipMy.prototype = {
       .request(Tw.API_CMD.BFF_11_0009, params)
       .done($.proxy(this._renderTemplate, this, params))
       .fail($.proxy(this._onFail, this));
-
   },
 
   _renderTemplate: function(params, res) {
@@ -86,6 +85,8 @@ Tw.MembershipMy.prototype = {
       }else{
         this._renderListOne(params,res);
       }
+    }else{
+      this._onFail(res);
     }
   },
 
@@ -190,14 +191,6 @@ Tw.MembershipMy.prototype = {
   },
 
   _requestReissueInfo: function(state) {
-    //TODO: 신청불가 알럿 모바일 카드 신청 후 2주 이내로 변경
-    /*
-    if(this._cardCd === '2'){
-      var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A61;
-      this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
-      return;
-    }*/
-
     this._apiService
       .request(Tw.API_CMD.BFF_11_0003, {})
       .done($.proxy(this._successReissueInfo, this, state))
@@ -207,6 +200,8 @@ Tw.MembershipMy.prototype = {
   _parseReissueData: function(res) {
     res.showGrade = Tw.MEMBERSHIP_GRADE[res.mbrGrCd];
     res.showType = Tw.MEMBERSHIP_TYPE[res.mbrTypCd];
+    res.showSvcNum = Tw.FormatHelper.conTelFormatWithDash(res.svcNum);
+    res.showMbrCardNum = Tw.FormatHelper.addCardDash(res.mbrCardNum);
 
     return res;
   },
@@ -222,6 +217,8 @@ Tw.MembershipMy.prototype = {
         },
         $.proxy(this._onReissueOpened, this)
       );
+    }else{
+      this._onFail(res);
     }
   },
 
@@ -244,8 +241,18 @@ Tw.MembershipMy.prototype = {
 
     this._apiService
       .request(Tw.API_CMD.BFF_11_0004, { mbrChgRsnCd : mbrChgRsnCd })
-      .done($.proxy(this._renderTemplate, this))
+      .done($.proxy(this._successReissueRequest, this))
       .fail($.proxy(this._onFail, this));
+  },
+
+  _successReissueRequest: function(res) {
+    if(res.code === Tw.API_CODE.CODE_00){
+      this._popupService.afterRequestSuccess('/membership/my/history', '/membership/my',
+        Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.LINK_TITLE, Tw.ALERT_MSG_MEMBERSHIP.COMPLETE_TITLE.REISSUE,
+        Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.CONTENT);
+    }else{
+      this._onFail(res);
+    }
   },
 
   _cardChangeAlert: function() {
@@ -263,7 +270,9 @@ Tw.MembershipMy.prototype = {
   _successCardChange: function(res) {
     //카드 종류 변경 완료 페이지 이동
     if(res.code === Tw.API_CODE.CODE_00){
-
+      this._popupService.afterRequestSuccess('/membership/my/history', '/membership/my',
+        Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.LINK_TITLE, Tw.ALERT_MSG_MEMBERSHIP.COMPLETE_TITLE.CHANGE,
+        Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.CONTENT);
     }else{
       this._onFail(res);
     }
@@ -273,7 +282,12 @@ Tw.MembershipMy.prototype = {
     this._popupService.close();
   },
 
-  _goUpdate: function() {
+  _goUpdate: function(e) {
+    if($(e.currentTarget).attr('data-type') === 'SP'){
+      var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A59;
+      this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
+      return;
+    }
     this._historyService.replaceURL('/membership/my/update');
   },
 
