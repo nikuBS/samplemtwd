@@ -55,10 +55,13 @@
                     </li>
                 <% }) %>
                 </ul>
-                <% } %>
+                <% if ( inquiryList.length >= 20 ) { %>
                 <div class="bt-more fe-history-more">
                     <button>더보기</button>
                 </div>
+                <% } %>
+
+                <% } %>
             </div>
             <!--// .cont-box -->
             <!-- .cont-box -->

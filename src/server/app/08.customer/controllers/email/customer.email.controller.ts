@@ -17,8 +17,9 @@ class CustomerEmail extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, pageInfo?: any): void {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any): void {
     const page = req.params.page;
+
     const responseData = {
       svcInfo: svcInfo,
       pageInfo: pageInfo,
