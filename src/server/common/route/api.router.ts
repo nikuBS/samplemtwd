@@ -70,8 +70,6 @@ class ApiRouter {
     this.router.get('/product/info', this.getProductInfo.bind(this));
     this.router.get('/masking-method', this.getMaskingMethod.bind(this));
     this.router.post('/masking-complete', this.setMaskingComplete.bind(this));
-    this.router.get('/search/get/autocomplete', this.getAutoCompleteKeyword.bind(this));
-    this.router.post('/search/stack/userclick', this.stackSearchUserClick.bind(this));
   }
 
   private checkHealth(req: Request, res: Response, next: NextFunction) {
@@ -550,25 +548,6 @@ class ApiRouter {
     });
   }
 
-  public getAutoCompleteKeyword(req: Request, res: Response, next: NextFunction) {
-    const query =  encodeURI(req.query.query);
-    this.apiService.request(API_CMD.SEARCH_AUTO_COMPLETE, { query })
-    .subscribe((resp) => {
-      res.json(resp);
-    }, (error) => {
-      res.json(error);
-    });
-  }
-
-  public stackSearchUserClick(req: Request, res: Response, next: NextFunction) {
-    const requestParam = encodeURI(req.body.param);
-    this.apiService.request(API_CMD.SEARCH_STACK_USER_CLICK, requestParam)
-      .subscribe((resp) => {
-        res.json(resp);
-      }, (error) => {
-        res.json(error);
-      });
-  }
 }
 
 export default ApiRouter;

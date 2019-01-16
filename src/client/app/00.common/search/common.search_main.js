@@ -40,7 +40,7 @@ Tw.CommonSearchMain.prototype = {
       return;
     }
     var requestParam = { query : this.$inputElement.val() };
-    this._apiService.request(Tw.NODE_CMD.GET_SEARCH_AUTO_COMPLETE,requestParam)
+    this._apiService.request(Tw.API_CMD.GET_SEARCH_AUTO_COMPLETE,requestParam)
       .done($.proxy(function (res) {
         this.$autoCompleteList.empty();
         if(res.code===0&&res.result.length>0){

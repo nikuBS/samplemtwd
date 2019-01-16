@@ -485,6 +485,10 @@ Tw.API_CMD = {
   BFF_10_0062: { path: '/core-product/:version/mobiles/additions-sets/:args0/seldis-sets', method: Tw.API_METHOD.GET },
   BFF_10_0063: { path: '/core-product/:version/mobiles/additions-sets/:args0/seldis-sets', method: Tw.API_METHOD.POST },
 
+  //SEARCH
+  GET_SEARCH_AUTO_COMPLETE : { path : '/search/tworld/autocomplete', method : Tw.API_METHOD.GET },
+  STACK_SEARCH_USER_CLICK : { path : '/search/tworld/log/save', method : Tw.API_METHOD.POST },
+
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },
   GET_PARAM: { path: '/comments', method: Tw.API_METHOD.GET },
@@ -533,9 +537,7 @@ Tw.NODE_CMD = {
   GET_TOOLTIP: { path: '/tooltip', method: Tw.API_METHOD.GET },
   GET_QUICK_MENU: { path: '/home/quick-menu', method: Tw.API_METHOD.GET },
   GET_PRODUCT_COMPARISON: { path: '/product/comparison', method: Tw.API_METHOD.GET },
-  GET_PRODUCT_INFO: { path: '/product/info', method: Tw.API_METHOD.GET },
-  GET_SEARCH_AUTO_COMPLETE : { path : '/search/get/autocomplete', method : Tw.API_METHOD.GET },
-  STACK_SEARCH_USER_CLICK : { path : '/search/stack/userclick', method : Tw.API_METHOD.POST }
+  GET_PRODUCT_INFO: { path: '/product/info', method: Tw.API_METHOD.GET }
 };
 
 Tw.TMAP = {
