@@ -73,22 +73,29 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
 
   _openFamilyTypePop: function() {
     this._popupService.open({
-      hbs: 'actionsheet_select_a_type',
-      layer: true,
-      title: Tw.POPUP_TITLE.SELECT_FAMILY_TYPE,
-      data: [{
-        'list': [
-          { value: Tw.FAMILY_TYPE.ME, option: (this._familyType === 'me') ? 'checked' : '', attr: 'data-family_type="me"' },
-          { value: Tw.FAMILY_TYPE.SPOUSE, option: (this._familyType === 'spouse') ? 'checked' : '', attr: 'data-family_type="spouse"' },
-          { value: Tw.FAMILY_TYPE.CHILDREN, option: (this._familyType === 'children') ? 'checked' : '', attr: 'data-family_type="children"' },
-          { value: Tw.FAMILY_TYPE.PARENTS, option: (this._familyType === 'parents') ? 'checked' : '', attr: 'data-family_type="parents"' },
-          { value: Tw.FAMILY_TYPE.BROTHER, option: (this._familyType === 'brother') ? 'checked' : '', attr: 'data-family_type="brother"' },
-          { value: Tw.FAMILY_TYPE.GRANDPARENTS, option: (this._familyType === 'grandparents') ? 'checked' : '',
-            attr: 'data-family_type="grandparents"' },
-          { value: Tw.FAMILY_TYPE.GRANDCHILDREN, option: (this._familyType === 'grandchildren') ? 'checked' : '',
-            attr: 'data-family_type="grandchildren"' }
-        ]
-      }]
+      hbs:'actionsheet01',
+      layer:true,
+      data:[
+        {
+          'list':[
+            { 'label-attr': 'id="ra1"', 'txt': Tw.FAMILY_TYPE.ME,
+              'radio-attr':'id="ra1" data-family_type="me" ' + (this._familyType === 'me' ? 'checked' : '') },
+            { 'label-attr': 'id="ra2"', 'txt': Tw.FAMILY_TYPE.SPOUSE,
+              'radio-attr':'id="ra2" data-family_type="spouse" ' + (this._familyType === 'spouse' ? 'checked' : '') },
+            { 'label-attr': 'id="ra3"', 'txt': Tw.FAMILY_TYPE.CHILDREN,
+              'radio-attr':'id="ra3" data-family_type="children" ' + (this._familyType === 'children' ? 'checked' : '') },
+            { 'label-attr': 'id="ra4"', 'txt': Tw.FAMILY_TYPE.PARENTS,
+              'radio-attr':'id="ra4" data-family_type="parents" ' + (this._familyType === 'parents' ? 'checked' : '') },
+            { 'label-attr': 'id="ra5"', 'txt': Tw.FAMILY_TYPE.BROTHER,
+              'radio-attr':'id="ra5" data-family_type="brother" ' + (this._familyType === 'brother' ? 'checked' : '') },
+            { 'label-attr': 'id="ra6"', 'txt': Tw.FAMILY_TYPE.GRANDPARENTS,
+              'radio-attr':'id="ra6" data-family_type="grandparents" ' + (this._familyType === 'grandparents' ? 'checked' : '') },
+            { 'label-attr': 'id="ra7"', 'txt': Tw.FAMILY_TYPE.GRANDCHILDREN,
+              'radio-attr':'id="ra7" data-family_type="grandchildren" ' + (this._familyType === 'grandchildren' ? 'checked' : '') }
+          ]
+        }
+      ],
+      btnfloating : {'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE}
     }, $.proxy(this._bindFamilyTypePop, this), null, 'select_family_type');
   },
 
