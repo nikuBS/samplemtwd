@@ -10,6 +10,7 @@ Tw.ProductRoamingLookup = function (rootEl,prodBffInfo,prodId) {
   this._history = new Tw.HistoryService(rootEl);
   this._prodBffInfo = prodBffInfo;
   this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
+  this._dateHelper = Tw.DateHelper;
   this._showDateFormat = 'YYYY. MM. DD.';
   this._init();
   this._bindBtnEvents();
@@ -18,8 +19,8 @@ Tw.ProductRoamingLookup = function (rootEl,prodBffInfo,prodId) {
 
 Tw.ProductRoamingLookup.prototype = {
   _init : function(){
-    var startDate = moment(this._prodBffInfo.svcStartDt,'YYYYMMDD').format(this._showDateFormat);
-    var endDate = moment(this._prodBffInfo.svcEndDt,'YYYYMMDD').format(this._showDateFormat);
+    var startDate = this._dateHelper.getDateCustomFormat(this._showDateFormat,this._prodBffInfo.svcStartDt);
+    var endDate = this._dateHelper.getDateCustomFormat(this._showDateFormat,this._prodBffInfo.svcEndDt);
     this.$container.find('#start_date').text(startDate+' '+this._prodBffInfo.svcStartTm+':00');
     this.$container.find('#end_date').text(endDate+' '+this._prodBffInfo.svcEndTm+':00');
   },
