@@ -38,9 +38,9 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
     this.$container.find('#end_date').text(endDate);
     this.$container.find('#end_date').attr('data-number',this._prodBffInfo.svcEndDt);
     this.$container.find('#end_date').attr('data-idx',endDateIdx);
-    this.$container.find('#start_time').text(startTime,10);
+    this.$container.find('#start_time').text(startTime);
     this.$container.find('#start_time').attr('data-number',this._prodBffInfo.svcStartTm);
-    this.$container.find('#end_time').text(endTime,10);
+    this.$container.find('#end_time').text(endTime);
     this.$container.find('#end_time').attr('data-number',this._prodBffInfo.svcEndTm);
 
   },
