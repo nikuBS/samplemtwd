@@ -121,8 +121,7 @@ Tw.POPUP_TPL = {
       'title': '요금 즉시 납부',
       'list': [
         { 'button-attr': 'type="button"', 'txt': '계좌이체 납부', 'option': 'fe-account' },
-        { 'button-attr': 'type="button"', 'txt': '체크 ∙ 신용카드 납부', 'option': 'fe-card' },
-        { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백 ∙ T포인트 납부', 'option': 'fe-point' },
+        { 'button-attr': 'type="button"', 'txt': '체크 ∙ 신용카드 납부', 'option': 'fe-card' }
       ]
     },
     {
