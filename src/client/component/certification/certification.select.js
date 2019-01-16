@@ -151,7 +151,8 @@ Tw.CertificationSelect.prototype = {
   },
   _openMaskingCert: function () {
     var methods = Tw.BrowserHelper.isApp() ? this._certInfo.mobileApp : this._certInfo.mobileWeb;
-    this._opMethods = methods;
+    this._opMethods = methods.opAuthMethods;
+    this._optMethods = methods.optAuthMethods || '';
     this._openOpCert();
   },
   _openBusinessCert: function () {
