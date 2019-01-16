@@ -15,7 +15,7 @@ Tw.ProductMobileplanJoinTplan = function(rootEl, prodId, displayId, sktProdBenfC
   this._isOverPayReq = isOverPayReqYn === 'Y';
   this._isComparePlan = isComparePlanYn === 'Y';
   this._sktProdBenfCtt = window.unescape(sktProdBenfCtt);
-  this._watchInfo = JSON.parse(watchInfo);
+  this._watchInfo = Tw.FormatHelper.isEmpty(watchInfo) ? null : JSON.parse(watchInfo);
   this._isSetOverPayReq = false;
   this._overpayRetryCnt = 0;
   this._smartWatchLine = null;
@@ -166,6 +166,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
 
   _reqOverpay: function() {
     if (!this._isOverPayReq || this._isSetOverPayReq) {
+      this._confirmOptions = $.extend(this._confirmOptions, { isOverPayError: true });
       return this._procConfirm();
     }
 

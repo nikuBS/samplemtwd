@@ -132,6 +132,7 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
 
   _reqOverpay: function() {
     if (!this._isOverPayReq || this._isSetOverPayReq) {
+      this._confirmOptions = $.extend(this._confirmOptions, { isOverPayError: true });
       return this._procConfirm();
     }
 
