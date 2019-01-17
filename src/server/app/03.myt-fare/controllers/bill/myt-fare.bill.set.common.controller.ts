@@ -10,6 +10,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import {Observable} from 'rxjs/Observable';
 import {API_CMD} from '../../../../types/api-command.type';
 import {MyTBillSetData} from '../../../../mock/server/myt.fare.bill.set.mock';
+import StringHelper from '../../../../utils/string.helper';
 
 abstract class MyTFareBillSetCommon extends TwViewController {
 
@@ -192,15 +193,11 @@ abstract class MyTFareBillSetCommon extends TwViewController {
 
   // 기타(우편) 일 때 연락처 포맷팅
   protected parseTel(data: any): void {
-    if ( FormatHelper.isEmpty(data.cntcNum1) || data.cntcNum1.length !== 12 ) {
+    if ( FormatHelper.isEmpty(data.cntcNum1) || data.cntcNum1.length < 9 || data.cntcNum1.length > 12 ) {
       return;
     }
 
-    const tel = data.cntcNum1;
-    let tel1 = tel.substring(0, 4);
-    tel1 = this._tel1[tel1] || tel1;
-    const tel2 = FormatHelper.normalizeNumber(tel.substr(4, 4));
-    data.cntcNum1 = `${tel1}-${tel2}-${tel.substring(8)}`;
+    data.cntcNum1 = StringHelper.phoneStringToDash(data.cntcNum1);
   }
 
   // 안내서 유형 조회
