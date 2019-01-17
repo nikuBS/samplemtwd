@@ -192,6 +192,8 @@ Tw.MyTDataPrepaidVoice.prototype = {
           rechargeAmount: Tw.FormatHelper.addComma(rechargeAmount.toString())
         }
       });
+    } else if ( res.code === 'BIL0080' ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
