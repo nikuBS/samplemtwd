@@ -312,6 +312,10 @@ Tw.MyTDataSubMain.prototype = {
         this.$container.find('[data-id=pattern_empty]').hide();
       }
     }
+    else {
+      this.$patternChart.hide();
+      this.$container.find('[data-id=pattern_empty]').hide();
+    }
   },
 
   _initOtherLinesInfo: function () {
