@@ -23,6 +23,11 @@ Tw.ProductRoamingLookup.prototype = {
     var endDate = this._dateHelper.getShortDateWithFormat(this._prodBffInfo.svcEndDt,this._showDateFormat,'YYYYMMDD');
     this.$container.find('#start_date').text(startDate+' '+this._prodBffInfo.svcStartTm+':00');
     this.$container.find('#end_date').text(endDate+' '+this._prodBffInfo.svcEndTm+':00');
+    if(isNaN(this._prodBffInfo.prodFee)){
+      this.$container.find('.point').text(this._prodBffInfo.prodFee);
+    }else{
+      this.$container.find('.point').text(Tw.FormatHelper.addComma(this._prodBffInfo.prodFee+Tw.CURRENCY_UNIT.WON));
+    }
   },
   _bindBtnEvents: function () {
     this.$container.on('click','.popup-closeBtn',$.proxy(this._goBack,this));
