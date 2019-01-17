@@ -593,7 +593,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
 
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.TITLE, null,
         $.proxy(function(){
-          this._goLoad('/myt-join/submain/wire/history');
+          this._goLoad('/myt-join/submain_w');
         }, this));
     } else {
       Tw.Error(res.code, res.msg).pop();
