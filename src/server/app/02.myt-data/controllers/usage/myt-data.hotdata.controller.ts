@@ -26,10 +26,6 @@ class MyTDataHotdata extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    if (svcInfo.svcStCd === 'SP') {
-      return res.render(VIEW.ERROR, { usageData: {}, svcInfo: svcInfo });
-    }
-
     const reqArr = new Array();
     reqArr.push(this.reqBalances());
     switch ( svcInfo.svcAttrCd ) {
