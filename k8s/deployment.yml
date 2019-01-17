@@ -14,6 +14,18 @@ spec:
       labels:
         app: bff-nodejs-service
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - bff-nodejs-service
+              topologyKey: kubernetes.io/hostname
       containers:
       - name: bff-nodejs
         image: mtwd.icp.skt.com:8500/mtw-dev/bff-nodejs-mobile:1.0
