@@ -41,9 +41,9 @@ class ProductCommonLineChange extends TwViewController {
         svcNum: lineInfo.svcNum,
         svcAttrCd: lineInfo.svcAttrCd,
         fullNm: lineInfo.svcAttrCd === 'M1' || lineInfo.svcAttrCd === 'M2' ?
-          MYT_JOIN_WIRE_SVCATTRCD[lineInfo.svcAttrCd] + ' ' + lineInfo.nickNm : MYT_JOIN_WIRE_SVCATTRCD[lineInfo.svcAttrCd],
+          MYT_JOIN_WIRE_SVCATTRCD[lineInfo.svcAttrCd] + ' ' + lineInfo.eqpMdlNm : MYT_JOIN_WIRE_SVCATTRCD[lineInfo.svcAttrCd],
         ctgNm: MYT_JOIN_WIRE_SVCATTRCD[lineInfo.svcAttrCd],
-        nickNm: lineInfo.nickNm
+        eqpMdlNm: lineInfo.eqpMdlNm
       });
     });
 
