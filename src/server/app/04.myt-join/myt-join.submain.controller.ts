@@ -201,6 +201,9 @@ class MyTJoinSubmainController extends TwViewController {
       }
 
       if ( data.myLongPausedState ) {
+        const fromDt = data.myLongPausedState.fromDt, toDt = data.myLongPausedState.toDt;
+        data.myLongPausedState.sDate = this.isMasking(fromDt) ? fromDt : DateHelper.getShortDateNoDot(fromDt);
+        data.myLongPausedState.eDate = this.isMasking(toDt) ? toDt : DateHelper.getShortDateNoDot(toDt);
         data.myLongPausedState.state = true;
       }
 

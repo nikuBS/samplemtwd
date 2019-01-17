@@ -13,7 +13,7 @@ import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
 import { CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE } from '../../types/string.type';
 import BrowserHelper from '../../utils/browser.helper';
-import { PREPAID_PAYMENT_PAY_CD, PREPAID_PAYMENT_TYPE, UNIT, UNIT_E } from '../../types/bff.type';
+import { LOGIN_TYPE, PREPAID_PAYMENT_PAY_CD, PREPAID_PAYMENT_TYPE, UNIT, UNIT_E } from '../../types/bff.type';
 import { REDIS_KEY } from '../../types/redis.type';
 import StringHelper from '../../utils/string.helper';
 
@@ -412,6 +412,10 @@ class MytDataSubmainController extends TwViewController {
     // 다른 회선은 휴대폰만 해당;
     const MOBILE = (items && items['m']) || [];
     const list: any = [];
+    // 간편로그인인 경우는 다른 회선 정보 노출 하지않도록 처리
+    if(target.loginType === LOGIN_TYPE.EASY) {
+      return list;
+    }
     MOBILE.sort(this.compare);
     if ( MOBILE.length > 0 ) {
       const nOthers: any = Object.assign([], MOBILE);

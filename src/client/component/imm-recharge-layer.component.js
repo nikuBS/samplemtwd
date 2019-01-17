@@ -66,12 +66,9 @@ Tw.ImmediatelyRechargeLayer.prototype = {
         if ( etc.code === Tw.API_CODE.CODE_00 ) {
           this.immChargeData.etc = etc.result;
         }
-        else if (etc.code === Tw.API_CODE.RCG0062) {
-          // 팅/쿠키즈/안심음성 요금제 미사용중인 경우
-          this.immChargeData.etc = null;
-        }
         else {
-          this.immChargeData.etc = etc;
+          //  RCG0062: 팅/쿠키즈/안심음성 요금제 미사용중인 경우
+          this.immChargeData.etc = null;
         }
         if ( optSvc.code === Tw.API_CODE.CODE_00 ) {
           // optProdList -> disProdList 합쳐짐 (BE 1/14 기준)
@@ -113,7 +110,6 @@ Tw.ImmediatelyRechargeLayer.prototype = {
           }]
         });
       }
-      // 선불 쿠폰 TODO: API 완료 후 적용 필요함(TBD)
       data.push(Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.PREPAY);
       var subList = [];
       if ( !_.isEmpty(this.immChargeData.limit) ) {
