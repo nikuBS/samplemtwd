@@ -151,7 +151,12 @@ Tw.BenefitDisPgmInput.prototype = {
   },
 
   _onClosePop: function () {
-    this._historyService.goBack();
+    if ( this._selType ) {
+      this._historyService.go(-2);
+    }
+    else {
+      this._historyService.goBack();
+    }
   }
 
 };
