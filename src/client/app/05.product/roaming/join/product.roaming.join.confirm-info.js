@@ -11,39 +11,61 @@ Tw.ProductRoamingJoinConfirmInfo = function (rootEl,data,doJoinCallBack,closeCal
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$rootContainer);
+  this._dateHelper = Tw.DateHelper;
+  this._showDateFormat = 'YYYY. MM. DD.';
+  this._dateFormat = 'YYYYMMDD';
   if(this._page){
     this._$popupContainer = this.$rootContainer;
     this._prodRedisInfo = rootData;
     this._prodId = pageProdId;
-    this._bindPopupElementEvt(this.$rootContainer);
-    return;
+     this._pageInit();
+  }else{
+    this._doJoinCallBack = doJoinCallBack;
+    this._popupInit(closeCallBack,hash);
+    this._rootData = rootData;
   }
-  this._doJoinCallBack = doJoinCallBack;
-  this._openConfirmRoamingInfoPopup(this._popupData,closeCallBack,hash);
-  this._rootData = rootData;
 };
 
 Tw.ProductRoamingJoinConfirmInfo.prototype = {
+  _pageInit : function () {
+    if(isNaN(this._popupData.preinfo.reqProdInfo.basFeeInfo)){
+      this.$rootContainer.find('.tx-bold.vbl').text(this._popupData.preinfo.reqProdInfo.basFeeInfo);
+      this.$rootContainer.find('#tex').hide();
+    }else{
+      this.$rootContainer.find('.tx-bold.vbl').text(Tw.FormatHelper.addComma(this._popupData.preinfo.reqProdInfo.basFeeInfo)+Tw.CURRENCY_UNIT.WON);
+    }
+    this._bindPopupElementEvt(this.$rootContainer);
+  },
+  _popupInit : function (closeCallBack,hash) {
+    if(isNaN(this._popupData.prodFee)){
+      this._popupData.showTex = false;
+    }else{
+      this._popupData.prodFee = Tw.FormatHelper.addComma(this._popupData.prodFee)+Tw.CURRENCY_UNIT.WON;
+      this._popupData.showTex = true;
+    }
+    this._openConfirmRoamingInfoPopup(this._popupData,closeCallBack,hash);
+  },
   _openConfirmRoamingInfoPopup : function (data,closeCallBack,hash) {
     data.toolTipData = this._tooltipInit(data.prodId);
     this._popupService.open({
       hbs: 'RM_11_01_01_02',
       layer: true,
       data : data
-    },$.proxy(this._init,this),
+    },$.proxy(this._popupOpenCallback,this),
       closeCallBack,hash);
   },
-  _init : function($poppContainer){
+  _popupOpenCallback : function($poppContainer){
     this._$popupContainer = $poppContainer;
     this._bindPopupElementEvt($poppContainer);
+    this._currentDate = this._dateHelper.getCurrentShortDate();
     var setingInfo;
     if(this._popupData.joinType==='setup'){
-      setingInfo = moment(this._popupData.userJoinInfo.svcStartDt,'YYYYMMDD').format('YYYY. MM. DD')+' '+this._popupData.userJoinInfo.svcStartTm+':00';
-      setingInfo+= ' ~ '+moment(this._popupData.userJoinInfo.svcEndDt,'YYYYMMDD').format('YYYY. MM. DD')+' '+this._popupData.userJoinInfo.svcEndTm+':00';
+      setingInfo = this._dateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcStartDt,this._showDateFormat,this._dateFormat)+' '+this._popupData.userJoinInfo.svcStartTm+':00';
+      setingInfo+= ' ~ '+this._dateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcEndDt,this._showDateFormat,this._dateFormat)+' '+this._popupData.userJoinInfo.svcEndTm+':00';
     }else if(this._popupData.joinType==='auto'){
-      setingInfo = moment(this._popupData.userJoinInfo.svcStartDt,'YYYYMMDD').format('YYYY. MM. DD')+' '+this._popupData.userJoinInfo.svcStartTm+':00';
+      setingInfo = this._dateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcStartDt,this._showDateFormat,this._dateFormat)+' '+this._popupData.userJoinInfo.svcStartTm+':00';
     }else if(this._popupData.joinType==='begin'){
-      setingInfo = moment(this._popupData.userJoinInfo.svcStartDt,'YYYYMMDD').format('YYYY. MM. DD');
+      setingInfo = this._dateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcStartDt,this._showDateFormat,this._dateFormat);
     }else if(this._popupData.joinType==='alarm'){
       for(var i=0;i<this._popupData.userJoinInfo.svcNumList.length;i++){
         if(i>=2){
@@ -55,9 +77,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         }
       }
     }
-
     this._$popupContainer.find('.term').text(setingInfo);
-
   },
   _bindPopupElementEvt : function (popupObj) {
     var $popupLayer = $(popupObj);
@@ -72,6 +92,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       $popupLayer.on('click','.individual.checkbox>input',$.proxy(this._agreeCheck,this));
     }
     if(this._page){
+      $popupLayer.on('click','.tip-view',$.proxy(this._showBffToolTip,this));
       $popupLayer.on('click','.prev-step',$.proxy(this._goBack,this));
     }else{
       $popupLayer.on('click','.prev-step',$.proxy(this._showCancelAlart,this));
@@ -327,5 +348,20 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         break;
     }
     return tooltipArr;
+  },
+  _showBffToolTip : function (evt) {
+    var tooltipData = $(evt.currentTarget).data();
+    this._popupService.open({
+      url: Tw.Environment.cdn + '/hbs/',
+      'pop_name': 'type_tx_scroll',
+      'title': tooltipData.tit,
+      'title_type': 'sub',
+      'cont_align': 'tl',
+      'contents': tooltipData.txt,
+      'bt_b': [{
+        style_class: 'tw-popup-closeBtn bt-red1 pos-right',
+        txt: Tw.BUTTON_LABEL.CONFIRM
+      }]
+    },null,null);
   }
 };

@@ -54,13 +54,7 @@
 									<span class="elem">가입할 요금제 (부가서비스)</span>
 								</span>
                             <span class="tit-tx"><%= prodRedisInfo.prodNm %></span>
-                            <span class="sub-disc03">
-                                <% if(prodRedisInfo.basFeeInfo!=='무료'){ %>
-                                    <span class="tx-bold vbl">월 <%= prodRedisInfo.basFeeInfo%>원</span> 부가세포함
-                                <% }else{ %>
-                                    <span class="tx-bold vbl"><%= prodRedisInfo.basFeeInfo%></span>
-                                <% } %>
-                            </span>
+                            <span class="sub-disc03"><span class="tx-bold vbl">무료</span><span id="tex"> 부가세포함</span></span>
                             <div class="cont-noti pt36">
                                 <span class="type3"><%= prodRedisInfo.prodSmryDesc %></span>
                             </div>
@@ -273,7 +267,7 @@
                         <% for(var i=0;i<prodBffInfo.preinfo.joinNoticeList.length;i++){ %>
                         <li>
                             <%= prodBffInfo.preinfo.joinNoticeList[i].noticeTit %>
-                            <button type="button" class="tip-view fe-btn_tip_view" title="정보보기" page-id="M000478" id="<%= prodId=='NA00000294'?'MV_01_02_01_tip_02':'MV_01_02_01_tip_06'%>" data-txt="<%= prodBffInfo.preinfo.joinNoticeList[i].noticeTxt %>" aria-haspopup="true">TIP</button>
+                            <button type="button" class="tip-view fe-btn_tip_view" title="정보보기" id="<%= prodId=='NA00000294'?'MV_01_02_01_tip_02':'MV_01_02_01_tip_06'%>" data-tit="<%= prodBffInfo.preinfo.joinNoticeList[i].noticeTit %>" data-txt="<%= prodBffInfo.preinfo.joinNoticeList[i].noticeTxt %>" aria-haspopup="true">TIP</button>
                         </li>
                         <% } %>
                     </ul>

@@ -15,6 +15,8 @@ Tw.ProductRoamingSettingRoamingAuto = function (rootEl,prodRedisInfo,prodBffInfo
   this._expireDate = expireDate;
   this._apiService = Tw.Api;
   this._showDateFormat = 'YYYY. MM. DD.';
+  this._dateFormat = 'YYYYMMDD';
+  this._dateHelper = Tw.DateHelper;
   this._init();
   this._bindBtnEvents();
   this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
@@ -23,12 +25,12 @@ Tw.ProductRoamingSettingRoamingAuto = function (rootEl,prodRedisInfo,prodBffInfo
 
 Tw.ProductRoamingSettingRoamingAuto.prototype = {
   _init : function(){
-
-    var startDate = moment(this._prodBffInfo.svcStartDt,'YYYYMMDD').format(this._showDateFormat);
-    var endDate = moment(this._prodBffInfo.svcEndDt,'YYYYMMDD').format(this._showDateFormat);
+    var startDate = this._dateHelper.getShortDateWithFormat(this._prodBffInfo.svcStartDt,this._showDateFormat,this._dateFormat);
+    var endDate = this._dateHelper.getShortDateWithFormat(this._prodBffInfo.svcEndDt,this._showDateFormat,this._dateFormat);
     var startTime = this._prodBffInfo.svcStartTm;
     var endTime = this._prodBffInfo.svcEndTm;
 
+    this._currentDate = this._dateHelper.getCurrentShortDate();
     this.$container.find('#start_date').text(startDate);
     this.$container.find('#start_date').attr('data-number',this._prodBffInfo.svcStartDt);
     this.$container.find('#end_date').text(endDate);
@@ -51,7 +53,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
       dateFormat = format;
     }
     for(var i=0;i<range;i++){
-      resultArr.push(moment().add(i, 'days').format(dateFormat));
+      resultArr.push(this._dateHelper.getShortDateWithFormatAddByUnit(this._currentDate,i,'days',dateFormat,this._dateFormat));
     }
     return resultArr;
   },
@@ -135,8 +137,8 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     if(startDateValidationResult){
       this.$container.find('.bt-fixed-area button').removeAttr('disabled');
       var expireDate = parseInt(this._expireDate,10) + parseInt(startDateElement.attr('data-idx'),10);
-      var endDate = moment().add(expireDate, 'days').format(this._showDateFormat);
-      endDateElement.attr('data-number',moment().add(expireDate, 'days').format('YYYYMMDD'));
+      var endDate = this._dateHelper.getShortDateWithFormatAddByUnit(this._currentDate,expireDate,'days',this._showDateFormat,this._dateFormat);
+      endDateElement.attr('data-number',this._dateHelper.getShortDateWithFormatAddByUnit(this._currentDate,expireDate,'days',this._dateFormat,this._dateFormat));
       endDateElement.text(endDate);
       endTimeElement.text(startTime);
     }else{
@@ -149,7 +151,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
   _validateTimeValueAgainstNow : function(paramDate,paramTime,className){
     var returnValue = false;
     var $errorsElement = this.$container.find('.error-txt.'+className);
-    if((paramDate===moment().format('YYYYMMDD'))&&(parseInt(paramTime,10)<=parseInt(moment().format('HH'),10))){
+    if((paramDate===this._currentDate)&&(parseInt(paramTime,10)<=parseInt(this._dateHelper.getCurrentDateTime('HH'),10))){
       $errorsElement.text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_START_TIME);
       $errorsElement.removeClass('none');
     }else{
