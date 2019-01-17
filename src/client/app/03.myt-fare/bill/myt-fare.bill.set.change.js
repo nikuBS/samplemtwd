@@ -249,11 +249,10 @@ Tw.MyTFareBillSetChange.prototype = {
           this._toggleElement(_$currContext, true);
           this._changeCcurNotiYn(_$currContext.find('[name="{0}"]'.replace('{0}', name)));
         } else {
-          this._checkedSlideCheckbox(name, _data.ccurNotiYn); // 법정대리인 함께 수령
-          // 법정대리인 함께 수령 Y 이면 disabled
-          if ('Y' === _data.ccurNotiYn) {
-            this._disabledOptions(_$currContext,true);
-          }
+          // Y,N 여부와 상관없이 무조건 Y 로 세팅한다.
+          this._checkedSlideCheckbox(name, 'Y'); // 법정대리인 함께 수령
+          // 법정대리인 함께 수령 켜짐 으로 무조건 disabled
+          this._disabledOptions(_$currContext,true);
         }
       }
     }
