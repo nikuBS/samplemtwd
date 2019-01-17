@@ -71,9 +71,7 @@ Tw.CertificationBio.prototype = {
         code: Tw.API_CODE.CERT_SELECT
       });
     } else {
-      this._callback({
-        code: Tw.API_CODE.CERT_FAIL
-      });
+      Tw.Error(resp.resultCode, '');
     }
   },
   _onFidoRegister: function (resp) {
