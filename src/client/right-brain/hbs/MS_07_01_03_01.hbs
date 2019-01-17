@@ -27,7 +27,7 @@
                                     <input type="radio" name="radio" value="" title="{{custNm}}" aria-labelledby="aria-comp-radio1" {{#if @first}}checked{{/if}}><!-- 체크상태일 경우 checked="checked" -->
                                     <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
                                         <p class="layout-text">
-                                            <span class="mtext">{{custNm}}<i class="badge badge-{{badge}}"><span class="blind">{{relClNm}}</span></i>
+                                            <span class="mtext">{{custNm}}<i class="icon-{{badge}} ml9"><span class="blind">{{relClNm}}</span></i>
                                             <span class="stext">{{#if membOfrPt}}{{membOfrPt}}MB 받음{{else}}받은 적 없음{{/if}}</span>
                                         </p>
                                     </div>
@@ -75,8 +75,8 @@
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">꼭 확인해 주세요</h3>
                 <ul class="noti-list">
-                    <li>나눠쓰기 할 데이터양<button id="MS_07_01_03_01_tip_02" page-id="{{pageId}}" type="button" class="tip-view" title="나눠쓰기 할 데이터 량" aria-haspopup="true">TIP</button></li>
-                    <li>나눠쓰기 데이터 사용<button id="MS_07_01_03_01_tip_03" page-id="{{pageId}}" type="button" class="tip-view" title="나눠쓰기 데이터 사용" aria-haspopup="true">TIP</button></li>
+                    <li>나눠쓰기 할 데이터양<button id="MS_07_01_03_01_tip_02" type="button" class="tip-view" title="나눠쓰기 할 데이터 량" aria-haspopup="true">TIP</button></li>
+                    <li>나눠쓰기 데이터 사용<button id="MS_07_01_03_01_tip_03" type="button" class="tip-view" title="나눠쓰기 데이터 사용" aria-haspopup="true">TIP</button></li>
                 </ul>
             </div>
             <!--// .cont-box -->

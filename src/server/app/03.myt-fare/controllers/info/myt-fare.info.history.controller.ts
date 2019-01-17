@@ -270,7 +270,7 @@ class MyTFareInfoHistory extends TwViewController {
         o.dataPayMethodCode = MYT_FARE_PAYMENT_TYPE.DIRECT;
         o.dataIsBankOrCard = this.isBankOrCard(o.cardCdNm) || this.isBankOrCard(o.settleWayCd) ;
         o.listTitle = o.dataIsBankOrCard ? o.cardCdNm + ' ' + MYT_FARE_PAYMENT_HISTORY_TYPE.PAY_KOR_TITLE : o.cardCdNm;
-        o.isPoint = (o.settlWayNm === MYT_FARE_PAYMENT_CODE.POINT);
+        o.isPoint = (o.settleWayCd === MYT_FARE_PAYMENT_CODE.POINT);
         o.dataDt = DateHelper.getShortDate(o.opDt);
         o.dataFullDt = DateHelper.getShortDateAndTimeWithDot(o.opDt + o.payOpTm);
         o.dataAmt = FormatHelper.addComma(o.cardAmt);

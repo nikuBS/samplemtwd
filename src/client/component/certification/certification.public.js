@@ -110,6 +110,10 @@ Tw.CertificationPublic.prototype = {
     }).done($.proxy(this._successComplete, this));
   },
   _successComplete: function (resp) {
-    this._callback(resp);
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._callback(resp);
+    } else {
+      Tw.Error(resp.code, resp.msg);
+    }
   }
 };

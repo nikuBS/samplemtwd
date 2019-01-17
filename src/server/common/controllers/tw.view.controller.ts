@@ -12,6 +12,7 @@ import RedisService from '../../services/redis.service';
 import { LOGIN_TYPE, SVC_ATTR_NAME, LINE_NAME } from '../../types/bff.type';
 import { UrlMetaModel } from '../../models/url-meta.model';
 import { REDIS_KEY } from '../../types/redis.type';
+import DateHelper from '../../utils/date.helper';
 
 
 abstract class TwViewController {
@@ -141,6 +142,13 @@ abstract class TwViewController {
       const loginType = urlMeta.auth.accessTypes;
 
       if ( resp.code === API_CODE.REDIS_SUCCESS ) {
+        // TODO: 화면차단
+        // if ( this.checkServiceBlock(urlMeta) ) {
+        //   const blockUrl = urlMeta.block.url || '/common/util/service-block';
+        //   res.redirect(blockUrl);
+        //   return;
+        // }
+
         if ( loginType === '' ) {
           // TODO: 삭제예정 admin 정보 입력 오류 (accessType이 비어있음)
           this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
@@ -232,6 +240,17 @@ abstract class TwViewController {
 
   private renderError(req: Request, res: Response, next: NextFunction, message: any) {
     res.send(message);
+  }
+
+  private checkServiceBlock(urlMeta: any) {
+    if ( !FormatHelper.isEmpty(urlMeta.block) &&
+      !FormatHelper.isEmpty(urlMeta.block.fromDtm) && !FormatHelper.isEmpty(urlMeta.block.fromDtm) ) {
+      const startTime = DateHelper.convDateFormat(urlMeta.block.fromDtm).getTime();
+      const endTime = DateHelper.convDateFormat(urlMeta.block.toDtm).getTime();
+      const today = new Date().getTime();
+      return today > startTime && today < endTime;
+    }
+    return false;
   }
 }
 

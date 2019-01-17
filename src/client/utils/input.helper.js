@@ -9,6 +9,18 @@ Tw.InputHelper = (function () {
     $input.val($input.val().replace(/[^0-9*]/g, ''));
   }
 
+  function inputNumberMaxLength(input) {
+    var $input = $(input);
+    var nLength = Number($input.attr('maxlength'));
+    var sValue = $input.val().replace(/[^0-9]/g, '');
+
+    if ( nLength ) {
+      sValue = sValue.slice(0, nLength);
+    }
+
+    $input.val(sValue);
+  }
+
   function inputNumKeyDown(event) {
     // input keydown event (only input number)
     var key = event.which;
@@ -71,6 +83,7 @@ Tw.InputHelper = (function () {
     inputNumKeyUp: inputNumKeyUp,
     inputNumKeyDown: inputNumKeyDown,
     getByteCount: getByteCount,
-    insertDashCellPhone: insertDashCellPhone
+    insertDashCellPhone: insertDashCellPhone,
+    inputNumberMaxLength: inputNumberMaxLength
   };
 })();

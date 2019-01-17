@@ -28,6 +28,7 @@ Tw.ProductMobileplanJoin.prototype = {
 
   _reqOverpay: function() {
     if (!this._isOverPayReq || this._isSetOverPayReq) {
+      this._confirmOptions = $.extend(this._confirmOptions, { isOverPayError: true });
       return this._getJoinConfirmContext();
     }
 
@@ -58,12 +59,26 @@ Tw.ProductMobileplanJoin.prototype = {
         overpayResults = $.extend(overpayResults, {
           isDataOvrAmt: isDataOvrAmt,
           isVoiceOvrAmt: isVoiceOvrAmt,
-          isSmsOvrAmt: isSmsOvrAmt
+          isSmsOvrAmt: isSmsOvrAmt,
+          dataIfAmt: resp.result.dataIfAmt,
+          dataBasAmt: resp.result.dataBasAmt,
+          dataOvrAmt: Math.ceil(resp.result.dataOvrAmt),
+          voiceIfAmt: Math.ceil(resp.result.voiceIfAmt),
+          voiceBasAmt: Math.ceil(resp.result.voiceBasAmt),
+          voiceOvrAmt: Math.ceil(resp.result.voiceOvrAmt),
+          smsIfAmt: Math.ceil(resp.result.smsIfAmt),
+          smsBasAmt: Math.ceil(resp.result.smsBasAmt),
+          smsOvrAmt: Math.ceil(resp.result.smsOvrAmt),
+          ovrTotAmt: Math.ceil(resp.result.ovrTotAmt)
         });
       }
     }
 
-    this._confirmOptions = $.extend(this._confirmOptions, overpayResults);
+    this._confirmOptions = $.extend(this._confirmOptions, {
+      isOverpayResult: overpayResults.isOverpayResult,
+      overpay: overpayResults
+    });
+
     this._getJoinConfirmContext();
   },
 
@@ -76,6 +91,7 @@ Tw.ProductMobileplanJoin.prototype = {
   },
 
   _setConfirmBodyIntoContainer: function(context) {
+    console.log(this._confirmOptions);
     var tmpl = Handlebars.compile(context),
       html = tmpl(this._confirmOptions);
 
@@ -104,9 +120,9 @@ Tw.ProductMobileplanJoin.prototype = {
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
       autoTermList: this._confirmOptions.preinfo.autoTermList,
       noticeList: $.merge(this._confirmOptions.preinfo.termNoticeList, this._confirmOptions.preinfo.joinNoticeList),
-      isAutoJoinTermList: (this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0),
       isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0),
-      isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this.prodId) === -1,
+      isJoinTermProducts: (!Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoJoinList) ||
+        !Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoTermList)),
       downgrade: this._getDowngrade()
     });
   },
@@ -123,9 +139,9 @@ Tw.ProductMobileplanJoin.prototype = {
   },
 
   _callConfirmCommonJs: function() {
-    new Tw.ProductCommonConfirm(false, this.$container, {
+    new Tw.ProductCommonConfirm(false, this.$container, $.extend(this._confirmOptions, {
       isWidgetInit: true
-    }, $.proxy(this._prodConfirmOk, this));
+    }), $.proxy(this._prodConfirmOk, this));
   },
 
   _prodConfirmOk: function() {

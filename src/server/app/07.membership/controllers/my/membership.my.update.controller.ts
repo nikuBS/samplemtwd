@@ -14,7 +14,7 @@ import { MEMBERSHIP_GROUP, MEMBERSHIP_TYPE } from '../../../../types/bff.type';
 
 export default class MembershipMy extends TwViewController {
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
 
     this.apiService.request(API_CMD.BFF_11_0007, {}).subscribe((resp) => {
       let myInfoData = {};

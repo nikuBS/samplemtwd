@@ -36,9 +36,9 @@
                 <div class="unpaid-charges">
                     <dl class="total-box">
                         <dt>현재 카드 잔액</dt>
-                        <dd class="t-point"><span class="num ff-tg-black"><%-convertAmount(PPSInfo.prodAmt)%></span><span
-                            class="ff-tg-medium">원</span>
-                            <button type="button" class="tip-view" title="현재 카드 잔액" aria-haspopup="true" id="DC_09_02_tip_02" page-id="DC_09_02">TIP</button>
+                        <dd class="t-point"><span class="num ff-tg-black"><%-convertAmount(PPSInfo.prodAmt)%></span>
+                            <span class="ff-tg-medium">원</span>
+                            <!--<button type="button" class="tip-view" title="현재 카드 잔액" aria-haspopup="true" id="DC_09_02_tip_02" page-id="DC_09_02">TIP</button>-->
                         </dd>
                     </dl>
                     <% if ( AutoInfo ) { %>
@@ -64,7 +64,9 @@
                     <ul class="point-box mb20">
                         <li>
                             <dl>
-                                <dt>발신 기간</dt>
+                                <dt>발신 기간
+                                    <button class="tip-view" id="DC_09_01_tip_02" page-id="DC_09_01">TIP</button>
+                                </dt>
                                 <dd><%-convertDate(PPSInfo.obEndDt)%></dd>
                             </dl>
                         </li>
@@ -164,27 +166,27 @@
                         <li>
                             <label class="tit" for="formInput04">카드번호</label>
                             <span class="inputbox">
-                    <span class="input">
-                        <input class="fe-card-number" id="formInput04" type="number" placeholder="숫자만 입력" title="카드번호 입력" requried>
-                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
-                    </span>
-                </span>
+                                <span class="input">
+                                    <input class="fe-card-number" id="formInput04" type="tel" placeholder="숫자만 입력" title="카드번호 입력" maxlength="16" required>
+                                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                                </span>
+                            </span>
                         </li>
                         <li>
                             <label class="tit" for="formInput05">유효기간</label>
                             <div class="input-wrap-half">
-                    <span class="inputbox">
-                        <span class="input">
-                            <input class="fe-card-y" id="formInput05" type="number" placeholder="YYYY" title="유효 년" maxlength="4">
-                            <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
-                        </span>
-                    </span>
                                 <span class="inputbox">
-                        <span class="input">
-                            <input class="fe-card-m" type="number" placeholder="MM" title="유효 월" maxlength="2">
-                            <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
-                        </span>
-                    </span>
+                                    <span class="input">
+                                        <input class="fe-card-y" id="formInput05" type="tel" placeholder="YYYY" title="유효 년" maxlength="4" required>
+                                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                                    </span>
+                                </span>
+                                <span class="inputbox">
+                                    <span class="input">
+                                        <input class="fe-card-m" type="tel" placeholder="MM" title="유효 월" maxlength="2" required>
+                                        <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                                    </span>
+                                </span>
                             </div>
                         </li>
                     </ul>
@@ -211,7 +213,7 @@
     </div>
     <!--// #contents -->
     <!-- .popup-closeBtn -->
-    <button class="prev-step fe-common-back">취소</button>
+    <button class="prev-step fe-popup-close">취소</button>
     <!--// .popup-closeBtn -->
     </div>
 </div>
@@ -252,9 +254,8 @@
                 <label class="tit" for="formInput02">카드번호</label>
                 <span class="inputbox">
                     <span class="input">
-                        <input class="fe-card-number" id="formInput02" type="number"
-                               placeholder="숫자만 입력" title="신용카드번호 입력" maxlength="16"
-                               value="" required>
+                        <input class="fe-card-number" id="formInput02" type="tel"
+                               placeholder="숫자만 입력" title="신용카드번호 입력" maxlength="16" required>
                         <button class="cancel" style="display: none;">
                             <span class="blind">삭제</span>
                         </button>
@@ -266,16 +267,16 @@
                 <div class="input-wrap-half">
                     <span class="inputbox">
                         <span class="input">
-                            <input class="fe-card-y" id="formInput03" type="number" placeholder="YYYY"
-                                   title="유효 년" maxlength="4" value="" required>
+                            <input class="fe-card-y" id="formInput03" type="tel" placeholder="YYYY"
+                                   title="유효 년" maxlength="4" required>
                             <button class="cancel" style="display: none;"><span
                                 class="blind">삭제</span></button>
                         </span>
                     </span>
                     <span class="inputbox">
                         <span class="input">
-                            <input class="fe-card-m" type="number" placeholder="MM" title="유효 월"
-                                   maxlength="2" value="" required>
+                            <input class="fe-card-m" type="tel" placeholder="MM" title="유효 월"
+                                   maxlength="2" required>
                             <button class="cancel" style="display: none;"><span
                                 class="blind">삭제</span></button>
                         </span>
@@ -320,7 +321,7 @@
                 <label class="tit" for="formInput02">카드번호</label>
                 <span class="inputbox">
                     <span class="input">
-                        <input class="fe-card-number" id="formInput02" type="number"
+                        <input class="fe-card-number" id="formInput02" type="tel"
                                placeholder="숫자만 입력" title="신용카드번호 입력" maxlength="16"
                                value="" required>
                         <button class="cancel" style="display: none;">
@@ -334,7 +335,7 @@
                 <div class="input-wrap-half">
                     <span class="inputbox">
                         <span class="input">
-                            <input class="fe-card-y" id="formInput03" type="number" placeholder="YYYY"
+                            <input class="fe-card-y" id="formInput03" type="tel" placeholder="YYYY"
                                    title="유효 년" maxlength="4" value="" required>
                             <button class="cancel" style="display: none;"><span
                                 class="blind">삭제</span></button>
@@ -342,7 +343,7 @@
                     </span>
                     <span class="inputbox">
                         <span class="input">
-                            <input class="fe-card-m" type="number" placeholder="MM" title="유효 월"
+                            <input class="fe-card-m" type="tel" placeholder="MM" title="유효 월"
                                    maxlength="2" value="" required>
                             <button class="cancel" style="display: none;"><span
                                 class="blind">삭제</span></button>

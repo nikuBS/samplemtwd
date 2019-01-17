@@ -55,6 +55,9 @@ Tw.MyTDataSubMain.prototype = {
       }
     }
     this.$otherPages = this.$container.find('[data-id=other-pages]');
+    if ( this.data.banner.length > 0 ) {
+      this.$bannerList = this.$container.find('[data-id=banner-list]');
+    }
   },
 
   _bindEvent: function () {
@@ -88,6 +91,9 @@ Tw.MyTDataSubMain.prototype = {
     }
     this.$otherPages.find('li').on('click', $.proxy(this._onOtherPages, this));
     this.$prepayContainer.on('click', 'button', $.proxy(this._onPrepayCoupon, this));
+    if ( this.data.banner.length > 0 ) {
+      this.$bannerList.on('click', 'li', $.proxy(this._onClickBannerItem, this));
+    }
   },
 
   _initialize: function () {
@@ -116,15 +122,17 @@ Tw.MyTDataSubMain.prototype = {
     return ((elemTop <= docViewBottom) && (elemTop >= docViewTop));
   },
 
-  __getPatternMonth: function (value) {
-    return value.slice(value.length - 2, value.length) + Tw.PERIOD_UNIT.MONTH;
-  },
-
   __convertData: function (value) {
     return parseFloat((value / 1024 / 1024).toFixed(2));
   },
 
-  __calculationData: function (tmoaremained, tmoatotal, etcremained, etctotal){
+  __convertVoice: function (value) {
+    var min = parseInt((value % 3600) / 60, 10);
+    var sec = value % 60;
+    return min + ':' + sec;
+  },
+
+  __calculationData: function (tmoaremained, tmoatotal, etcremained, etctotal) {
     var result = {};
     var total = tmoatotal + etctotal;
     var totalRemained = tmoaremained + etcremained;
@@ -190,7 +198,8 @@ Tw.MyTDataSubMain.prototype = {
             result.tmoa.push(item);
             tmoaRemained += parseInt(item.remained, 10);
             tmoaTotal += parseInt(item.total, 10);
-          } else {
+          }
+          else {
             result.gdata.push(item);
             etcRemained += result.totalLimit ? 100 : parseInt(item.remained, 10);
             etcTotal += result.totalLimit ? 100 : parseInt(item.total, 10);
@@ -199,7 +208,8 @@ Tw.MyTDataSubMain.prototype = {
       );
       if ( !result.totalLimit ) {
         result.total = this.__calculationData(tmoaRemained, tmoaTotal, etcRemained, etcTotal);
-      } else {
+      }
+      else {
         result.total = {
           etcRemainedRatio: 100,
           totalRemainedRatio: 0
@@ -256,46 +266,51 @@ Tw.MyTDataSubMain.prototype = {
   _initPatternChart: function () {
     if ( (this.data.pattern.data && this.data.pattern.data.length > 0) ||
       (this.data.pattern.voice && this.data.pattern.voice.length > 0) ) {
-      var unit       = '',
+      var unit,
           data,
           chart_data = [],
           idx;
-      if ( this.data.pattern.data.length > 0 ) {
-        this.$patternChart.find('.tit').text(Tw.MYT_DATA_PATTERN_TITLE.DATA);
-        unit = Tw.CHART_UNIT.GB;
-        data = this.data.pattern.data;
-        if ( data.length > 0 ) {
+      this.$patternChart.find('.tit').text(Tw.MYT_DATA_PATTERN_TITLE.DATA);
+      unit = Tw.CHART_UNIT.GB;
+      data = this.data.pattern.data;
+      var baseTotalData = 0;
+      for ( idx = 0; idx < data.length; idx++ ) {
+        var usageData = parseInt(data[idx].totalUsage, 10);
+        baseTotalData += usageData;
+        if ( usageData > 0 ) {
+          chart_data.push({
+            t: Tw.DateHelper.getShortKoreanAfterMonth(data[idx].invMth), // 각 항목 타이틀
+            v: this.__convertData(usageData) // 배열 평균값으로 전달
+          });
+        }
+      }
+      if ( baseTotalData === 0 ) {
+        chart_data = [];
+        if ( this.data.pattern.voice.length > 0 ) {
+          this.$patternChart.find('.tit').text(Tw.MYT_DATA_PATTERN_TITLE.VOICE);
+          unit = Tw.CHART_UNIT.TIME;
+          data = this.data.pattern.voice;
           for ( idx = 0; idx < data.length; idx++ ) {
             chart_data.push({
-              t: this.__getPatternMonth(data[idx].invMth), // 각 항목 타이틀
-              v: this.__convertData(parseInt(data[idx].totalUsage, 10)) // 배열 평균값으로 전달
+              t: Tw.DateHelper.getShortKoreanAfterMonth(data[idx].invMth), // 각 항목 타이틀
+              v: this.__convertVoice(parseInt(data[idx].totalUsage, 10)) // 배열 평균값으로 전달
             });
           }
         }
       }
-      else if ( this.data.pattern.voice.length > 0 ) {
-        this.$patternChart.find('.tit').text(Tw.MYT_DATA_PATTERN_TITLE.VOICE);
-        unit = Tw.CHART_UNIT.TIME;
-        data = this.data.pattern.voice;
-        for ( idx = 0; idx < data.length; idx++ ) {
-          chart_data.push({
-            t: this.__getPatternMonth(data[idx].invMth), // 각 항목 타이틀
-            v: this.__convertData(parseInt(data[idx].totalUsage, 10)) // 배열 평균값으로 전달
-          });
-        }
+      if ( chart_data.length > 0 ) {
+        this.$patternChart.chart2({
+          type: Tw.CHART_TYPE.BAR_2, //bar
+          target: '.pattern', //클래스명 String
+          average: true,
+          unit: unit, //x축 이름
+          data_arry: chart_data //데이터 obj
+        });
       }
-
-      this.$patternChart.chart2({
-        type: Tw.CHART_TYPE.BAR_2, //bar
-        target: '.pattern', //클래스명 String
-        average: true,
-        unit: unit, //x축 이름
-        data_arry: chart_data //데이터 obj
-      });
-    }
-    else {
-      this.$patternChart.hide();
-      this.$container.find('[data-id=pattern_empty]').hide();
+      else {
+        this.$patternChart.hide();
+        this.$container.find('[data-id=pattern_empty]').hide();
+      }
     }
   },
 
@@ -310,15 +325,25 @@ Tw.MyTDataSubMain.prototype = {
           param.params = { childSvcMgmtNum: this.data.otherLines[idx].svcMgmtNum };
         }
         else {
-          // 서버 명세가 변경됨 svcMgmtNum -> T-svcMgmtNum
-          param.headers = { 'T-svcMgmtNum': this.data.otherLines[idx].svcMgmtNum };
+          // 간편로그인이 아닌 경우에만 다른회선잔여량도 포함시킨다.
+          if ( this.data.svcInfo.loginType !== Tw.AUTH_LOGIN_TYPE.EASY ) {
+            // 서버 명세가 변경됨 svcMgmtNum -> T-svcMgmtNum
+            param.headers = { 'T-svcMgmtNum': this.data.otherLines[idx].svcMgmtNum };
+          }
         }
         requestCommand.push(param);
       }
-      this._apiService
-        .requestArray(requestCommand)
-        .done($.proxy(this._responseOtherLine, this))
-        .fail($.proxy(this._errorRequest, this));
+      if ( requestCommand.length > 0 ) {
+        this._apiService
+          .requestArray(requestCommand)
+          .done($.proxy(this._responseOtherLine, this))
+          .fail($.proxy(this._errorRequest, this));
+      }
+      else {
+        // 다른 회선 정보는 있지만 조회할 수 없는 경우 숨김
+        this.$container.find('[data-id=empty-other-lines]').hide();
+        this.$otherLines.hide();
+      }
     }
   },
 
@@ -419,7 +444,7 @@ Tw.MyTDataSubMain.prototype = {
   // 데이터 혜텍
   _onDataBenefitDetail: function () {
     // TODO: 상용 BPCP 페이지 개발 완료 후 상용 URL로 적용
-    var browser = Tw.BrowserHelper.isApp()? 'APP' : 'WEB';
+    var browser = Tw.BrowserHelper.isApp() ? 'APP' : 'WEB';
     // Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.DATA_FACTORY[browser]);
     Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.DATA_FACTORY_DEV[browser]);
   },
@@ -527,7 +552,7 @@ Tw.MyTDataSubMain.prototype = {
   _onPrepayCoupon: function (event) {
     var $target = $(event.currentTarget);
     var type = $target.attr('data-type');
-    var browser = Tw.BrowserHelper.isApp()? 'APP' : 'WEB';
+    var browser = Tw.BrowserHelper.isApp() ? 'APP' : 'WEB';
     // TODO: 상용 BPCP 페이지 개발 완료 후 상용 URL로 적용
     switch ( type ) {
       case 'data':
@@ -551,6 +576,12 @@ Tw.MyTDataSubMain.prototype = {
         Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.T_SHORT_DATA_DEV[browser]);
         break;
     }
+  },
+
+  _onClickBannerItem: function (event) {
+    var $target = $(event.currentTarget);
+    var url = $target.find('a').attr('data-href');
+    Tw.CommonHelper.openUrlExternal(url);
   },
 
   _successPattern: function (resp) {

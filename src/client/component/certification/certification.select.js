@@ -47,7 +47,6 @@ Tw.CertificationSelect.prototype = {
     this._deferred = deferred;
     this._callback = callback;
 
-
     this._getSvcInfo();
   },
   _getSvcInfo: function () {
@@ -152,7 +151,8 @@ Tw.CertificationSelect.prototype = {
   },
   _openMaskingCert: function () {
     var methods = Tw.BrowserHelper.isApp() ? this._certInfo.mobileApp : this._certInfo.mobileWeb;
-    this._opMethods = methods;
+    this._opMethods = methods.opAuthMethods;
+    this._optMethods = methods.optAuthMethods || '';
     this._openOpCert();
   },
   _openBusinessCert: function () {
@@ -184,6 +184,26 @@ Tw.CertificationSelect.prototype = {
   },
 
   _openSelectPopup: function (isWelcome) {
+    var methods = {
+      skSms: !this._smsBlock && (this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS) !== -1 ||
+        this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE) !== -1),
+      otherSms: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS) !== -1,
+      save: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SAVE) !== -1,
+      publicCert: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH) !== -1,
+      ipin: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.IPIN) !== -1,
+      bio: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.BIO) !== -1 &&
+        ((this._enableFido && !this._registerFido) || (this._enableFido && this._registerFido && this._useFido))
+    };
+
+    var enableMethod = _.find(methods, $.proxy(function (method) {
+      return method === true;
+    }, this));
+
+    if ( Tw.FormatHelper.isEmpty(enableMethod) ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_SMS_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_SMS_BLOCK.TITLE, Tw.BUTTON_LABEL.CLOSE);
+      return;
+    }
+
     this._popupService.open({
       hbs: 'CO_CE_02_01',
       layer: true,
@@ -192,14 +212,7 @@ Tw.CertificationSelect.prototype = {
         sLogin: this._svcInfo.loginType === Tw.AUTH_LOGIN_TYPE.EASY,
         masking: this._authKind === Tw.AUTH_CERTIFICATION_KIND.A,
         cntClass: this._methodCnt === 1 ? 'one' : this._methodCnt === 2 ? 'two' : 'three',
-        skSms: !this._smsBlock && (this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS) !== -1 ||
-          this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE) !== -1),
-        otherSms: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.OTHER_SMS) !== -1,
-        save: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SAVE) !== -1,
-        publicCert: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.PUBLIC_AUTH) !== -1,
-        ipin: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.IPIN) !== -1,
-        bio: this._opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.BIO) !== -1 &&
-          ((this._enableFido && !this._registerFido) || (this._enableFido && this._registerFido && this._useFido))
+        methods: methods
       }
     }, $.proxy(this._onOpenSelectPopup, this), $.proxy(this._onCloseSelectPopup, this), 'certSelect');
   },
@@ -321,6 +334,7 @@ Tw.CertificationSelect.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( this._optionCert ) {
         this._optionCert = false;
+        this._certPassword = new Tw.CertificationPassword();
         this._certPassword.open(this._authUrl, this._authKind, this._command, $.proxy(this._completeCert, this));
       } else {
         resp.authKind = this._authKind;

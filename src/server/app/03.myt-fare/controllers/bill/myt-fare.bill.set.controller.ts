@@ -87,17 +87,29 @@ class MyTFareBillSet extends MyTFareBillSetCommon {
   // "설정한 옵션" 생성
   private makeOptions(data: any): void {
     const billType = data.billInfo[0].cd;
-    const mergeType = billType + (data.billInfo.length > 1 ? data.billInfo[1].cd : '');
+    const mergeType = billType + (data.billInfo.length > 1 ? data.billInfo[1].cd : 'X');
     const lineType = this.getLinetype();
 
     const options = new Array();
+    data.options = options;
+    // 전자추가발송 은 옵션 비노출
+    if (billType === 'ADD') {
+      return;
+    }
 
+    /**
+       '1':'Bill Letter 보안강화',
+       '2':'휴대폰번호 전체 표시',
+       '3':'콘텐츠 이용 상세내역 표시',
+       '4':'법정대리인 함께 수령',
+       '5':'문자 수신'
+     */
     // Bill Letter  보안강화 (안내서 유형이 Bill Letter 포함일때)
     if ('H' === billType && data.scurBillYn === 'Y') {
       options.push('1');
     }
     // 휴대폰 번호 전체 표시 여부
-    if ((mergeType !== 'HX' && mergeType !== 'HB') && data.phonNumPrtClCd === 'Y') {
+    if (['H2', 'BX', 'B2', '2X', '1X'].indexOf(mergeType) !== -1 && data.phonNumPrtClCd === 'Y') {
       if (mergeType === 'BX') {
         if (lineType === 'S') {
           options.push('2');
@@ -107,33 +119,22 @@ class MyTFareBillSet extends MyTFareBillSetCommon {
       }
     }
 
-    // 회선이 무선,와이브로 일때
-    if (lineType === 'M' || lineType === 'W') {
+    // 회선이 무선 일때
+    if (lineType === 'M') {
+      // "문자 수신" 여부
+      if (billType === 'P' && data.isusimchk === 'Y' && data.nreqGuidSmsSndYn === 'Y') {
+        options.push('5');
+      }
       // 콘텐츠 이용 상세내역 표시
-      if (billType === '2' && data.infoInvDtlDispYn === 'Y') {
+      if (mergeType.indexOf('2') !== -1 && (data.scurMailYn + data.infoInvDtlDispChkYn + data.infoInvDtlDispYn) === 'YYY') {
         options.push('3');
       }
-      // 회선이 무선 일때
-      if (lineType === 'M') {
-        // "문자 수신" 여부
-        if (billType === 'P' && data.isusimchk === 'Y' && data.nreqGuidSmsSndYn === 'Y') {
-          options.push('5');
-        }
-        // 콘텐츠 이용 상세내역 표시
-        if (['H2', 'B2'].indexOf(mergeType) > -1 && data.infoInvDtlDispYn === 'Y') {
-          options.push('3');
-        }
 
-        // 법정 대리인 함께 수령
-        if (['HX', 'H2', 'BX', 'B2'].indexOf(mergeType) > -1 && data.ccurNotiYn === 'Y') {
-          if (data.kidsYn === 'Y') {
-            options.push('4');
-          }
-        }
+      // 법정 대리인 함께 수령
+      if (['HX', 'H2', 'BX', 'B2'].indexOf(mergeType) > -1 && (data.kidsYn + data.ccurNotiYn) === 'YY') {
+        options.push('4');
       }
     }
-
-    data.options = options;
   }
 
   // 하단 > "다른 요금안내서로 받기" 리스트

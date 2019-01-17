@@ -100,17 +100,6 @@ Tw.CertificationFinance.prototype = {
       this._certBio.open(this._authUrl, this._authKind, this._prodAuthKey, $.proxy(this._completeCert, this), false, this._fidoTarget);
     }
   },
-
-  _openCertBrowser: function (path) {
-    this._apiService.request(Tw.NODE_CMD.GET_DOMAIN, {})
-      .done($.proxy(this._successGetDomain, this, path));
-  },
-  _successGetDomain: function (path, resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      Tw.CommonHelper.openUrlInApp('http://' + resp.result.domain + path, 'status=1,toolbar=1');
-      // Tw.CommonHelper.openUrlInApp('http://150.28.69.23:3000' + path, 'status=1,toolbar=1');
-    }
-  },
   _completeIdentification: function (result) {
     if ( result.code === Tw.API_CODE.CODE_00 ) {
       // this._isCompleteIden = true;

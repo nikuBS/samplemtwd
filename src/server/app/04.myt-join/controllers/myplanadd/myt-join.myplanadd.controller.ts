@@ -10,6 +10,12 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 
+const PLAN_BUTTON_TYPE = {
+  SET: 'SE',
+  TERMINATE: 'TE',
+  SUBSCRIBE: 'SC'
+};
+
 class MyTJoinMyPlanAdd extends TwViewController {
   constructor() {
     super();
@@ -22,7 +28,7 @@ class MyTJoinMyPlanAdd extends TwViewController {
           return this.error.render(res, {
             ...mobile,
             svcInfo: svcInfo,
-            title: '나의 부가상품'
+            title: '나의 부가서비스'
           });
         }
 
@@ -34,7 +40,7 @@ class MyTJoinMyPlanAdd extends TwViewController {
           return this.error.render(res, {
             ...wire,
             svcInfo: svcInfo,
-            title: '나의 부가상품'
+            title: '나의 부가서비스'
           });
         }
 
@@ -73,7 +79,27 @@ class MyTJoinMyPlanAdd extends TwViewController {
   private convertAdditions = (addition: any) => {
     return {
       ...addition,
-      ...(addition.btnList && addition.btnList.length > 0 ? { btnList: addition.btnList.sort(this._sortButtons) } : {}),
+      ...(addition.btnList && addition.btnList.length > 0
+        ? {
+            btnList: addition.btnList
+              .filter(btn => {
+                switch (btn.btnTypCd) {
+                  case PLAN_BUTTON_TYPE.TERMINATE: {
+                    return false;
+                  }
+                  case PLAN_BUTTON_TYPE.SET: {
+                    return addition.prodSetYn === 'Y';
+                  }
+                  case PLAN_BUTTON_TYPE.SUBSCRIBE: {
+                    return addition.prodScrbYn === 'Y';
+                  }
+                }
+
+                return true;
+              })
+              .sort(this._sortButtons)
+          }
+        : {}),
       basFeeTxt: FormatHelper.getFeeContents(addition.basFeeTxt),
       scrbDt: DateHelper.getShortDate(addition.scrbDt)
     };
@@ -81,7 +107,7 @@ class MyTJoinMyPlanAdd extends TwViewController {
 
   private _sortButtons = (a, b) => {
     if (a.btnTypCd) {
-      if (a.btnTypCd === 'TE') {
+      if (a.btnTypCd === PLAN_BUTTON_TYPE.TERMINATE) {
         return 1;
       } else {
         return -1;

@@ -66,12 +66,12 @@ Tw.CertificationBio.prototype = {
       this._callback({
         code: Tw.API_CODE.CODE_00
       });
-    } else if (resp.resultCode === this.ERROR_CODE.CANCEL) {
-      //
-    } else {
+    } else if ( resp.resultCode === this.ERROR_CODE.CANCEL ) {
       this._callback({
-        code: Tw.API_CODE.CERT_FAIL
+        code: Tw.API_CODE.CERT_SELECT
       });
+    } else {
+      Tw.Error(resp.resultCode, '');
     }
   },
   _onFidoRegister: function (resp) {

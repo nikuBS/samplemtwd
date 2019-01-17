@@ -385,6 +385,14 @@ class DateHelper {
   static getMonthLastDay( date: any): any {
     return moment(this.convDateFormat(date)).add(1, 'months').date(0).format('YYYY.M.DD.');
   }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {number} : 30
+   */
+  static getDday(date: any): number {
+    return moment(this.convDateFormat(date)).diff(new Date(), 'day');
+  }
 }
 
 export default DateHelper;

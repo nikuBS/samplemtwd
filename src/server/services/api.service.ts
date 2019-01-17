@@ -263,6 +263,8 @@ class ApiService {
               // delete resp.result.expsSvcCnt;
             }
           });
+
+          this.loginService.clearXtCookie();
           return Observable.combineLatest(
             this.loginService.setSvcInfo(currentSvcInfo),
             this.loginService.setAllSvcInfo(resp.result));

@@ -10,6 +10,7 @@ Tw.Init = function () {
   this._initComponent();
   this._getEnvironment();
   this._setXtvid();
+  this._sendXtractorLoginDummy();
   // this._setNodeCookie();
 };
 
@@ -64,14 +65,36 @@ Tw.Init.prototype = {
       this._nativeService.send(Tw.NTV_CMD.SET_XTVID, { xtvId: cookie });
     }
   },
+
   _setNodeCookie: function () {
     var cookie = Tw.CommonHelper.getCookie('TWM');
     if ( Tw.BrowserHelper.isApp() && !Tw.FormatHelper.isEmpty(cookie) ) {
       this._nativeService.send(Tw.NTV_CMD.SESSION, {
         serverSession: cookie,
-        expired: 60 * 60 * 1000
+        expired: Tw.SESSION_EXPIRE_TIME
       });
     }
+  },
+
+  _sendXtractorLoginDummy: function() {
+    var cookie = Tw.CommonHelper.getCookie('XTSVCGR');
+    if (!Tw.BrowserHelper.isApp() || Tw.FormatHelper.isEmpty(cookie) ||
+      cookie === 'LOGGED' || Tw.FormatHelper.isEmpty(window.XtractorScript)) {
+      return;
+    }
+
+    try {
+      window.XtractorScript.xtrLoginDummy($.param({
+        V_ID: Tw.CommonHelper.getCookie('XTVID'),
+        L_ID: Tw.CommonHelper.getCookie('XTLID'),
+        T_ID: Tw.CommonHelper.getCookie('XTLOGINID'),
+        GRADE: Tw.CommonHelper.getCookie('XTSVCGR')
+      }));
+    } catch (e) {
+      console.log(e.message);
+    }
+
+    Tw.CommonHelper.setCookie('XTSVCGR', 'LOGGED');
   }
 
 };

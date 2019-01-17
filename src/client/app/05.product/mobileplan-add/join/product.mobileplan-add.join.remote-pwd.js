@@ -105,7 +105,8 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
       toProdDesc: this._confirmOptions.preinfo.reqProdInfo.prodSmryDesc,
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
       isNumberBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
-      isAutoJoinTermList: (this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0),
+      isJoinTermProducts: (!Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoJoinList) ||
+        !Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoTermList)),
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
       autoTermList: this._confirmOptions.preinfo.autoTermList,
       isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0)

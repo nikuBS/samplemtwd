@@ -297,15 +297,19 @@ Tw.MainHome.prototype = {
   },
   _openLineResisterPopup: function () {
     var layerType = this.$container.data('layertype');
-    // layerType = Tw.LOGIN_NOTICE_TYPE.NEW_LINE;
+    // var layerType = Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER;
     Tw.Logger.info('[Home] layerType', layerType);
     if ( !Tw.FormatHelper.isEmpty(layerType) ) {
       if ( layerType === Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER || layerType === Tw.LOGIN_NOTICE_TYPE.EXIST_CUSTOMER ) {
-        this._lineRegisterLayer.openRegisterLinePopup(layerType);
+        setTimeout($.proxy(function () {
+          this._lineRegisterLayer.openRegisterLinePopup(layerType);
+        }, this), 100);
       } else if ( layerType === Tw.LOGIN_NOTICE_TYPE.CUSTOMER_PASSWORD ) {
         this._openCustomerPasswordGuide();
       } else if ( layerType === Tw.LOGIN_NOTICE_TYPE.NEW_LINE ) {
-        this._popupService.openAlert(Tw.ALERT_MSG_HOME.NEW_LINE, null, null, $.proxy(this._closeNewLine, this));
+        setTimeout($.proxy(function () {
+          this._popupService.openAlert(Tw.ALERT_MSG_HOME.NEW_LINE, null, null, $.proxy(this._closeNewLine, this));
+        }, this), 100);
       }
     }
   },
@@ -449,7 +453,6 @@ Tw.MainHome.prototype = {
     }
   },
   _getGiftData: function (element, index) {
-    // skt_landing.action.loading.on({ ta: '.fe-smart-' + index, co: 'grey', size: true });
     if ( new Date().getDate() === Tw.GIFT_BLOCK_USAGE ) {
       this._drawGiftData(element, {
         blockUsage: true
@@ -561,12 +564,13 @@ Tw.MainHome.prototype = {
     }, this));
   },
   _initSmartCard: function (index) {
+
+    this._getSmartCard(index - 1);
     this._getSmartCard(index);
     this._getSmartCard(index + 1);
-    this._getSmartCard(index + 2);
   },
   _getSmartCard: function (index) {
-    if ( index < this.loadingStaus.length && !this.loadingStaus[index] ) {
+    if ( index >= 0 && index < this.loadingStaus.length && !this.loadingStaus[index] ) {
       var cardNo = this.$elArrSmartCard[index].data('smartcard');
       this._drawSmartCard(cardNo, index);
       this.loadingStaus[index] = true;
@@ -621,7 +625,7 @@ Tw.MainHome.prototype = {
   },
   _handleDrawNoti: function (list, nonShow) {
     this._welcomeList = this._filterShowMsg(list, nonShow);
-    this._drawWelcomeMsg(this._welcomeList);
+    this._drawWelcomeMsg(this._welcomeList, nonShow);
   },
   _filterShowMsg: function (list, nonShow) {
     return _.filter(list, $.proxy(function (msg) {
@@ -632,38 +636,24 @@ Tw.MainHome.prototype = {
       // return nonShow.indexOf(msg.wmsgId) === -1;
     }, this));
   },
-  _drawWelcomeMsg: function (list) {
-    var $welcomeEl = this.$container.find('#fe-tmpl-noti');
-    if ( $welcomeEl.length > 0 && list.length > 0 ) {
+  _drawWelcomeMsg: function (list, nonShow) {
+    this.$welcomeEl = this.$container.find('#fe-tmpl-noti');
+    if ( this.$welcomeEl.length > 0 && list.length > 0 ) {
       var $welcomeTemp = $('#fe-home-welcome');
       var tplWelcome = Handlebars.compile($welcomeTemp.html());
-      $welcomeEl.html(tplWelcome({ msg: list[0] }));
-      $('#fe-bt-noti-close').on('click', $.proxy(this._onClickCloseNoti, this));
-      $('#fe-bt-noti-go').on('click', $.proxy(this._onClickGoNoti, this));
+      this.$welcomeEl.html(tplWelcome({ msg: list[0] }));
+      $('#fe-bt-noti-close').on('click', $.proxy(this._onClickCloseNoti, this, nonShow));
+      $('#fe-bt-noti-go').on('click', $.proxy(this._onClickGoNoti, this, list[0]));
       // $('#fe-bt-go-recharge').on('click', $.proxy(this._onClickBtRecharge, this));
       this._resetHeight();
     } else {
-      $welcomeEl.hide();
+      this.$welcomeEl.hide();
     }
   },
-  _onClickCloseNoti: function () {
-    if ( Tw.BrowserHelper.isApp() ) {
-      this._nativeSrevice.send(Tw.NTV_CMD.LOAD, {
-        key: Tw.NTV_STORAGE.HOME_WELCOME
-      }, $.proxy(this._onHomeWelcomeForClose, this));
-    } else {
-      var nonShow = Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.HOME_WELCOME) || '';
-      this._handleClosedNoti(nonShow);
-    }
+  _closeNoti: function () {
+    this.$welcomeEl.hide();
   },
-  _onHomeWelcomeForClose: function (resp) {
-    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
-      this._handleClosedNoti(resp.params.value);
-    } else {
-      this._handleClosedNoti('');
-    }
-  },
-  _handleClosedNoti: function (nonShow) {
+  _onClickCloseNoti: function (nonShow) {
     if ( nonShow === '' ) {
       nonShow = this._welcomeList[0].wmsgId;
     } else {
@@ -677,11 +667,14 @@ Tw.MainHome.prototype = {
     } else {
       Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.HOME_WELCOME, nonShow);
     }
-
-    this._handleDrawNoti(this._welcomeList, nonShow);
+    this._closeNoti();
   },
-  _onClickGoNoti: function () {
-
+  _onClickGoNoti: function (noti) {
+    if ( noti.linkTrgtClCd === '1' ) {
+      this._historyService.goLoad(noti.linkUrl);
+    } else if ( noti.linkTrgtClCd === '2' ) {
+      Tw.CommonHelper.openUrlExternal(noti.linkUrl);
+    }
   },
   _setBanner: function (menuId) {
     this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: menuId })
@@ -716,7 +709,7 @@ Tw.MainHome.prototype = {
       var tplQuickEmpty = Handlebars.compile($quickEmptyTemp.html());
       $quickMenuEl.html(tplQuickEmpty());
     }
-    $('.fe-bt-quick-edit').on('click', $.proxy(this._onClickQuickEdit, this));
+    $('.fe-bt-quick-edit').on('click', $.proxy(this._onClickQuickEdit, this, list));
   },
   _parseQuickMenu: function (quickMenu) {
     var menuId = Tw.FormatHelper.isEmpty(quickMenu.menuIdStr) || quickMenu.menuIdStr === 'null' || quickMenu.menuIdStr === ' ' ? [] :
@@ -731,7 +724,7 @@ Tw.MainHome.prototype = {
     _.map(menuId, $.proxy(function (id, index) {
       var menu = {
         menuId: id,
-        iconPath: iconPath[index],
+        iconImgFilePathNm: iconPath[index] || '/dummy/icon_80px_default_shortcut@2x.png',    // iconImgFilePathNm
         menuNm: menuNm[index],
         menuUrl: menuUrl[index]
       };
@@ -739,8 +732,11 @@ Tw.MainHome.prototype = {
     }, this));
     return result;
   },
-  _onClickQuickEdit: function () {
+  _onClickQuickEdit: function (list) {
     var quickEdit = new Tw.QuickMenuEditComponent();
-    quickEdit.open();
+    quickEdit.open(list, $.proxy(this._onChangeQuickMenu, this));
+  },
+  _onChangeQuickMenu: function () {
+    this._getQuickMenu();
   }
 };

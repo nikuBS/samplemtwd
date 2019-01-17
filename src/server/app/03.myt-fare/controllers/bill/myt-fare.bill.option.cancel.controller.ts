@@ -16,7 +16,9 @@ class MyTFareBillOptionCancel extends TwViewController {
     this.apiService.request(API_CMD.BFF_07_0060, {}).subscribe((paymentOption) => {
       if (paymentOption.code === API_CODE.CODE_00) {
         res.render('bill/myt-fare.bill.option.cancel.html', {
-          paymentOption: paymentOption.result
+          paymentOption: paymentOption.result,
+          svcInfo: svcInfo,
+          pageInfo: pageInfo
         });
       } else {
         this.error.render(res, {

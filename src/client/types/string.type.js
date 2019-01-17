@@ -394,6 +394,10 @@ Tw.ALERT_MSG_COMMON = {
     TITLE: 'SMS인증을 사용할 수 없습니다.',
     MSG: '인증할 수 있는 회선번호가 없습니다.<br />다른 인증수단을 선택해주세요.'
   },
+  CERT_BLOCK: {
+    TITLE: 'SMS인증을 사용할 수 없습니다.',
+    MSG: '인증할 수 있는 회선번호가 없습니다.<br />고객센터(114)로 문의주세요.'
+  },
   STEP_CANCEL: { TITLE: '안내', MSG: '입력하신 정보는 모두 취소됩니다. 창을 닫으시겠습니까?' },
   CHANGE: '변경하시겠습니까?'
 };
@@ -452,6 +456,20 @@ Tw.ALERT_MSG_MYT_DATA = {
     MSG: '부모님께 문자와 SNS로 팅 선물 조르기를 하실 수 있습니다.',
     BUTTON: '조르기'
   },
+  ALERT_2_A70: {
+    TITLE: '자동 충전을 해지하시겠습니까?',
+    MSG: '해지 요청일 이후부터 자동 충전되지 않으며 해지 전에 충전된 충전분은 취소되지 않습니다.',
+    BUTTON: '해지하기' },
+  ALERT_2_A71: {
+    TITLE: '알람 설정 하시겠습니까?',
+    MSG_1: '사용중인 선불폰 이동전화의 발신기간이[',
+    MSG_2: '일]전이면 SMS로 알림 메시지가 전송됩니다.',
+    BUTTON: '설정하기' },
+  ALERT_2_A72: {
+    TITLE: '알람 설정 하시겠습니까?',
+    MSG_1: '사용중인 선불폰 이동전화의 잔액이[',
+    MSG_2: '원]이면 SMS로 알림 메시지가 전송됩니다.',
+    BUTTON: '설정하기' },
   DATA_PESTER: {
     TITLE: '[SKT] ',
     CONTENT: '님이\n"T끼리 데이터 선물 조르기"를 요청하셨습니다.\n데이터 선물 하러가기\n'
@@ -462,7 +480,8 @@ Tw.ALERT_MSG_MYT_DATA = {
   },
   V56: '충전 금액을 선택해 주세요.',
   ALERT_2_A74: '충전을 취소하시겠습니까?',
-  DAILY_USED_USAGE_ERROR: '데이터가 존재하지 않습니다.'
+  DAILY_USED_USAGE_ERROR: '데이터가 존재하지 않습니다.',
+  INVALID_CARD: '카드 정보가 올바르지 않습니다.\n 카드 정보 확인 후 다시 입력해주세요.'
 };
 
 Tw.VALIDATE_MSG_MYT_DATA = {
@@ -706,6 +725,11 @@ Tw.ALERT_MSG_MEMBERSHIP = {
     CONTENT: '발급 카드 정보 : </br> T멤버십(Leaders Clubs) 모바일 카드',
     LINK_TITLE: '발급 변경 내역 보기 >'
   },
+  COMPLETE_TITLE: {
+    REISSUE: '멤버십 재발급',
+    CHANGE: '멤버십 종류 변경',
+    UPDATE: '멤버십 정보 수정'
+  },
   ALERT_1_A50: { TITLE: '알림', MSG: '시작일이 종료일보다 늦을 수 없습니다.' },
   ALERT_1_A51: { TITLE: 'T멤버십 카드를 재발급하시겠습니까?', MSG: '스마트폰 이용 고객님은 모바일 카드만 신청하실 수 있습니다.', BUTTON: '재발급 신청' },
   ALERT_1_A52: { TITLE: 'T멤버십 카드 재발급 신청을 취소하시겠습니까?', MSG: '', BUTTON: '신청 취소' },
@@ -739,7 +763,8 @@ Tw.ALERT_MSG_CUSTOMER = {
 Tw.ALERT_MSG_TEVENT = {};
 
 Tw.ALERT_MSG_AUTH = {
-  L01: '선택하신 회선을 첫 번째 순서로 지정하시겠습니까?',
+  ALERT_4_A5: '선택하신 회선을 기준회선으로 변경하시겠습니까?',
+  ALERT_4_A6: '기준회선으로 변경 되었습니다.',
   L02: '첫 번째 순서가 변경 되었습니다.',
   L03: '선택하신 회선을 사용 가능 회선 목록으로 이동 시 회선관리 목록에서 삭제됩니다.<br/>삭제 후 다시 사용하시려면 직접 등록하셔야 가능합니다.',
   L04: '변경 내용을 저장하시겠습니까?',
@@ -1554,7 +1579,7 @@ Tw.TOOLTIP_TITLE = {
 Tw.MEMBERSHIP = {
   MOVIE_CULTURE_CINFIRM: {
     TITLE: 'T멤버십 앱으로 이동하시겠습니까?',
-    MESSAGE: '예매·조회는 T멤버십 앱에서 가능합니다.'
+    MESSAGE: '컬처 예매는 T멤버십 앱을 통해서만 가능합니다.'
   },
   BENEFIT : {
     BRAND: {

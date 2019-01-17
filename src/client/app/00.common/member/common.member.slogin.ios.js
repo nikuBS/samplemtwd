@@ -163,7 +163,7 @@ Tw.CommonMemberSloginIos.prototype = {
         this.$btReCert.addClass('none');
         this.$btCert.addClass('none');
         this.$btCertAdd.removeClass('none');
-        this._addTimer = setTimeout($.proxy(this._expireAddTime, this), 5 * 60 * 1000);
+        this._addTimer = setTimeout($.proxy(this._expireAddTime, this), Tw.SMS_CERT_TIME);
         this._addTime = new Date().getTime();
       }
     } else {
@@ -270,10 +270,10 @@ Tw.CommonMemberSloginIos.prototype = {
       var interval = new Date().getTime() - this._addTime;
 
       clearTimeout(this._addTimer);
-      if ( interval > 5 * 60 * 1000 ) {
+      if ( interval > Tw.SMS_CERT_TIME ) {
         this._expireAddTime();
       } else {
-        this._addTimer = setTimeout($.proxy(this._expireAddTime, this), 5 * 60 * 1000 - interval);
+        this._addTimer = setTimeout($.proxy(this._expireAddTime, this), Tw.SMS_CERT_TIME - interval);
       }
     }
   },

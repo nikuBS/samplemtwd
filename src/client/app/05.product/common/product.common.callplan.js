@@ -47,6 +47,7 @@ Tw.ProductCommonCallplan.prototype = {
     this.$btnContentsDetail = this.$container.find('.fe-btn_contents_detail');
     this.$btnReadyOn = this.$container.find('.fe-btn_ready_on');
     this.$comparePlans = this.$container.find('.fe-compare_plans');
+    this.$goProd = this.$container.find('.fe-go_prod');
 
     this.$contentsDetailItem = this.$container.find('.fe-contents_detail_item');
     this.$contents = this.$container.find('.fe-contents');
@@ -58,6 +59,7 @@ Tw.ProductCommonCallplan.prototype = {
     this.$btnSetting.on('click', $.proxy(this._procSetting, this));
     this.$btnContentsDetail.on('click', $.proxy(this._openContentsDetailPop, this, 'contents_idx'));
     this.$comparePlans.on('click', $.proxy(this._openComparePlans, this));
+    this.$goProd.on('click', $.proxy(this._goProd, this));
 
     this.$container.on('click', '.fe-bpcp', $.proxy(this._detectBpcp, this));
     this.$container.on('click', '.fe-banner_link', $.proxy(this._onBannerLink, this));
@@ -65,11 +67,17 @@ Tw.ProductCommonCallplan.prototype = {
     this.$contents.on('click', '[data-contents]', $.proxy(this._openContentsDetailPop, this, 'contents'));
     this.$contents.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
     this.$contents.on('click', '.fe-link-internal', $.proxy(this._openInternalUrl, this));
-    this.$contents.on('click', '.dmg-contract', $.proxy(this._openDmgPopup, this));
+
+    this.$contents.on('click', '.dmg-contract', $.proxy(this._openCustomPopup, this, 'BS_02_01_02_01'));
+    this.$contents.on('click', '.possible-product', $.proxy(this._openCustomPopup, this, 'BS_03_01_01_02'));
   },
 
   _showReadyOn: function() {
     this.$btnReadyOn.show();
+  },
+
+  _goProd: function(e) {
+    this._historyService.goLoad($(e.currentTarget).data('prod_id'));
   },
 
   _convertSettingBtnList: function() {
@@ -121,9 +129,9 @@ Tw.ProductCommonCallplan.prototype = {
     e.stopPropagation();
   },
 
-  _openDmgPopup: function() {
+  _openCustomPopup: function(hbsCode) {
     this._popupService.open({
-      hbs: 'BS_02_01_02_01',
+      hbs: hbsCode,
       layer: true
     });
   },

@@ -9,7 +9,10 @@
     <li>
         <span class="title">서비스 약정</span>
         <span class="tx-cont">
-            <%= data.myInfo.svcAgrmtMth %>(<%= data.myInfo.svcPrdStaDt %> ~ <%= data.myInfo.svcPrdEndDt %>)
+            <%= data.myInfo.svcAgrmtMth %>
+            <% if(data.myInfo.svcPrdStaDt && data.myInfo.svcPrdEndDt) { %>
+            (<%= data.myInfo.svcPrdStaDt %> ~ <%= data.myInfo.svcPrdEndDt %>)
+            <% } %>
         </span>
     </li>
     <li class="pt10">
@@ -19,7 +22,10 @@
     <li class="pt10">
         <span class="title">세트 약정</span>
         <span class="tx-cont">
-            약정만료(<%= data.myInfo.setPrdStaDt %> ~ <%= data.myInfo.setPrdEndDt %>)
+            약정만료
+            <% if(data.myInfo.setPrdStaDt && data.myInfo.setPrdEndDt) { %>
+            (<%= data.myInfo.setPrdStaDt %> ~ <%= data.myInfo.setPrdEndDt %>)
+            <% } %>
         </span>
     </li>
     <li class="pt10">

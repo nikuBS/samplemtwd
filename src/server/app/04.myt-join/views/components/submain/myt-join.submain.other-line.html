@@ -3,8 +3,9 @@
 * Author: Kim InHwan (skt.P132150@partner.sk.com)
 * Date: 2018.10.10
 %>
+<% var number = (['S1', 'S2'].indexOf(data.svcAttrCd) > -1) ? data.addr : data.svcNum; %>
 
-<li data-svc-mgmt-num="<%= data.svcMgmtNum %>"  data-name="<%= data.nickNm %>"  data-num="<%= data.svcNum %>">
+<li data-svc-mgmt-num="<%= data.svcMgmtNum %>"  data-name="<%= data.nickNm %>"  data-num="<%= number %>">
     <button>
         <span class="ico-wrap">
             <i class="icon-<%= data.className %>-80">
@@ -13,11 +14,7 @@
         </span>
         <span class="cont">
             <span class="info-title"><%= data.nickNm %></span>
-            <%  if ( ['S1', 'S2'].indexOf(data.svcAttrCd) > -1 ) { %>
-            <span class="info-sub"><%= data.addr %></span>
-            <% } else { %>
-            <span class="info-sub"><%= data.svcNum %></span>
-            <% } %>
+            <span class="info-sub"><%= number %></span>
         </span>
     </button>
 </li>

@@ -399,6 +399,12 @@ Tw.FormatHelper = (function () {
     return context.replace(/(<([^>]+)>)|&nbsp;/ig, '');
   };
 
+  var addCardDash = function (value) {
+    var regexp = /\B(?=([\d|\*]{4})+(?![\d|\*]))/g;
+
+    return value.replace(regexp, '-');
+  };
+
   return {
     leadingZeros: leadingZeros,
     isEmpty: isEmpty,
@@ -434,6 +440,7 @@ Tw.FormatHelper = (function () {
     getTemplateString: getTemplateString,
     isCellPhone: isCellPhone,
     purifyPlansData: purifyPlansData,
-    stripTags: stripTags
+    stripTags: stripTags,
+    addCardDash: addCardDash
   };
 })();

@@ -51,8 +51,17 @@ Tw.CustomerEmailServiceOption.prototype = {
     }
 
     var fnSelectLine = function (item) {
+      var sItem;
+
+      if ( item.svcGr === 'I' || item.svcGr === 'T' ) {
+        sItem = item.addr;
+      } else {
+        sItem = item.svcNum;
+      }
+
+
       return {
-        value: item.svcNum,
+        value: sItem,
         option: $('.fe-select-line').data('svcmgmtnum').toString() === item.svcMgmtNum ? 'checked' : '',
         attr: 'data-svcmgmtnum=' + item.svcMgmtNum
       };

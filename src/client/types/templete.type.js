@@ -83,21 +83,21 @@ Tw.POPUP_TPL = {
   FARE_PAYMENT_LAYER_DATA: [
     {
       'list': [
-        { 'button-attr': 'type="button"', 'txt': '자동납부', 'option': 'fe-auto', 'spot': '신청' }
+        { 'txt': '자동납부', 'option': 'fe-auto', 'spot': '신청' }
       ]
     },
     {
       'title': '요금 즉시 납부',
       'list': [
-        { 'button-attr': 'type="button"', 'txt': '계좌이체 납부', 'option': 'fe-account' },
-        { 'button-attr': 'type="button"', 'txt': '체크 ∙ 신용카드 납부', 'option': 'fe-card' },
-        { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백 ∙ T포인트 납부', 'option': 'fe-point' },
+        { 'txt': '계좌이체 납부', 'option': 'fe-account' },
+        { 'txt': '체크 ∙ 신용카드 납부', 'option': 'fe-card' },
+        { 'txt': 'OK캐쉬백 ∙ T포인트 납부', 'option': 'fe-point' }
       ]
     },
     {
       'list': [
         {
-          'button-attr': 'type="button"', 'txt': '입금전용계좌 문자 신청', 'option': 'fe-sms',
+          'txt': '입금전용계좌 문자 신청', 'option': 'fe-sms',
           'add': '입금전용계좌 정보를 문자로 전송합니다.\n자동납부 인출 중이 아닌 경우에만 이용 가능합니다.', 'spot': '신청'
         }
       ]
@@ -105,9 +105,31 @@ Tw.POPUP_TPL = {
     {
       'title': '포인트 요금 납부 예약',
       'list': [
-        { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백', 'option': 'fe-ok-cashbag' },
-        { 'button-attr': 'type="button"', 'txt': 'T포인트', 'option': 'fe-t-point' },
-        { 'button-attr': 'type="button"', 'txt': '레인보우포인트', 'option': 'fe-rainbow-point' }
+        { 'txt': 'OK캐쉬백', 'option': 'fe-ok-cashbag' },
+        { 'txt': 'T포인트', 'option': 'fe-t-point' },
+        { 'txt': '레인보우포인트', 'option': 'fe-rainbow-point' }
+      ]
+    }
+  ],
+  FARE_PAYMENT_LAYER_DATA_EXCEPT_POINT: [
+    {
+      'list': [
+        { 'txt': '자동납부', 'option': 'fe-auto', 'spot': '신청' }
+      ]
+    },
+    {
+      'title': '요금 즉시 납부',
+      'list': [
+        { 'txt': '계좌이체 납부', 'option': 'fe-account' },
+        { 'txt': '체크 ∙ 신용카드 납부', 'option': 'fe-card' }
+      ]
+    },
+    {
+      'list': [
+        {
+          'txt': '입금전용계좌 문자 신청', 'option': 'fe-sms',
+          'add': '입금전용계좌 정보를 문자로 전송합니다.\n자동납부 인출 중이 아닌 경우에만 이용 가능합니다.', 'spot': '신청'
+        }
       ]
     }
   ],
@@ -361,7 +383,7 @@ Tw.POPUP_TPL = {
         { 'radio-attr': 'id="03" name="r2"', 'label-attr':'id="03" data-center="A900100000" data-img="place-img-04" value="제주공항 국제선 1층 로밍센터"', txt: '제주공항 국제선 1층 로밍센터' },
         { 'radio-attr': 'id="04" name="r2"', 'label-attr':'id="04" data-center="A200130000" data-img="place-img-05-1" value="김해공항 3층 로밍센터"', txt: '김해공항 3층 로밍센터' },
         { 'radio-attr': 'id="05" name="r2"', 'label-attr':'id="05" data-center="C399900000" data-img="place-img-06" value="대구공항 2층 로밍센터"', txt: '대구공항 2층 로밍센터' },
-        { 'radio-attr': 'id="14" name="r2"', 'label-attr':'id="14" data-center="1430452300" data-img="" value="대구 SKT 황금점 매장"', txt: '대구 SKT 황금점 매장' }
+        { 'radio-attr': 'id="14" name="r2"', 'label-attr':'id="14" data-center="1430452300" data-img="place-img-10" value="대구 SKT 황금점 매장"', txt: '대구 SKT 황금점 매장' }
       ]
     }
   ],
@@ -384,7 +406,7 @@ Tw.POPUP_TPL = {
         { 'radio-attr': 'name="r2"', 'label-attr':'id="10" data-center="A900100000" data-booth="1000004057" data-img="place-img-04" value="제주공항 국제선 1층 로밍센터"', txt: '제주공항 국제선 1층 로밍센터' },
         { 'radio-attr': 'name="r2"', 'label-attr':'id="11" data-center="A200130000" data-booth="1000012532" data-img="place-img-05" value="김해공항 3층 로밍센터"', txt: '김해공항 3층 로밍센터' },
         { 'radio-attr': 'name="r2"', 'label-attr':'id="12" data-center="C399900000" data-booth="1430455436" data-img="place-img-06" value="대구공항 2층 로밍센터"', txt: '대구공항 2층 로밍센터' },
-        { 'radio-attr': 'name="r2"', 'label-attr':'id="13" data-center="1430452300" data-booth="1430452300" data-img="" value="대구 SKT 황금점 매장"', txt: '대구 SKT 황금점 매장' }
+        { 'radio-attr': 'name="r2"', 'label-attr':'id="13" data-center="1430452300" data-booth="1430452300" data-img="place-img-10" value="대구 SKT 황금점 매장"', txt: '대구 SKT 황금점 매장' }
       ]
     }
   ],
@@ -451,16 +473,20 @@ Tw.MYT_TPL = {
   },
   FARE_SUBMAIN: {
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}" data-rep-svc="{{repSvc}}"' +
-    'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
-    '<span class="ico-wrap">' +
-    '<i class="icon-{{svcType}}-80"><span class="blind">{{svcType}}</span></i>' +
-    '</span>' +
-    '<span class="cont">' +
-    '<span class="info-title">{{nickNm}}' +
-    '{{#if combine}}' +
-    '<span class="badge badge-allpay ml6"><span class="blind">통합대표</span></span>' +
-    '{{/if}}' +
-    '</span><span class="info-sub">{{svcNum}}</span>' +
+      'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
+      '<span class="ico-wrap">' +
+      '<i class="icon-{{svcType}}-80"><span class="blind">{{svcType}}</span></i>' +
+      '</span>' +
+      '<span class="cont">' +
+      '<span class="info-title">{{nickNm}}' +
+      '{{#if combine}}' +
+      '<span class="badge badge-allpay ml6"><span class="blind">통합대표</span></span>' +
+      '{{/if}}' +
+      '</span>' + '{{#if isAddr }}' +
+      '<span class="info-sub">{{addr}}</span>' +
+      '{{else}}'+
+      '<span class="info-sub">{{svcNum}}</span>' +
+      '{{/if}}' +
     '<span class="price">{{amt}} 원</span>' +
     '</span></button></li>'
   },
@@ -492,12 +518,11 @@ Tw.PRODUCT_LIST_ORDER = [
 
 Tw.TERMS_ACTION = {
   46: {
-    title: '재판매 이용약관',
     data: [{
       list: [
-        { value: '초고속인터넷 이용약관', option: 'fe-action', attr: 'value="46:c:43"' },
-        { value: '인터넷전화 이용약관', option: 'fe-action', attr: 'value="49:d"' },
-        { value: '시내전화 이용약관', option: 'fe-action', attr: 'value="50:d"' }
+        { txt: '초고속인터넷 이용약관', 'label-attr': 'id="46"', 'radio-attr': 'id="46" value="46:c:43"' },
+        { txt: '인터넷전화 이용약관', 'label-attr': 'id="49"', 'radio-attr': 'id="49" value="49:d"' },
+        { txt: '시내전화 이용약관', 'label-attr': 'id="50"', 'radio-attr': 'id="50" value="50:d"' }
       ]
     }]
   }
@@ -771,7 +796,7 @@ Tw.SUSPEND_RELATION = {
 };
 
 Tw.PREPAID_HISTORIES = [
-  { txt: '음성 충전', 'radio-attr': 'data-type="voice"', 'label-attr': ' ' }, 
+  { txt: '음성 충전', 'radio-attr': 'data-type="voice"', 'label-attr': ' ' },
   { txt: '데이터 충전', 'radio-attr': 'data-type="data"', 'label-attr': ' ' }
 ];
 

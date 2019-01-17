@@ -63,21 +63,14 @@ export default class ProductRoamingMyUse extends TwViewController {
         return resp.result;
       }
 
-      resp.result.roamingProdList.forEach(prod => {
-        const sc = prod.btnList.filter(btn => btn.btnTypCd === "SC" );
-        const se = prod.btnList.filter(btn => btn.btnTypCd === "SE" );
-        const te = prod.btnList.filter(btn => btn.btnTypCd === "TE" );
-
-        prod.btnList = sc.concat(se, te);
-      });
-
       return {
         ...resp.result,
         roamingProdList: resp.result.roamingProdList.map(prod => {
           return {
             ...prod,
             basFeeTxt: (prod.basFeeTxt === "" || prod.basFeeTxt === "무료") ? "0" : prod.basFeeTxt,
-            scrbDt: DateHelper.getShortDate(prod.scrbDt)
+            scrbDt: DateHelper.getShortDateNoDot(prod.scrbDt),
+            btnList: prod.btnList.filter(btn => btn.btnTypCd === "SE")
           };
         })
       };
@@ -103,7 +96,8 @@ export default class ProductRoamingMyUse extends TwViewController {
           return {
             ...prod,
             basFeeTxt: (prod.basFeeTxt === "" || prod.basFeeTxt === "무료") ? "0" : prod.basFeeTxt,
-            scrbDt: DateHelper.getShortDate(prod.scrbDt)
+            scrbDt: DateHelper.getShortDateNoDot(prod.scrbDt),
+            btnList: prod.btnList.filter(btn => btn.btnTypCd === "SE")
           };
         })
       };

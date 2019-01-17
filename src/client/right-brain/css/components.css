@@ -2006,8 +2006,8 @@
 .list-comp-lineinfo {
   padding: 0 1rem; }
   .list-comp-lineinfo li {
-    border-bottom: 1px solid #e1e1e1;
-    overflow: hidden; }
+    overflow: hidden;
+    border-bottom: 1px solid #e1e1e1; }
     .list-comp-lineinfo li:last-of-type {
       border-bottom: 0; }
     .list-comp-lineinfo li button {
@@ -2015,6 +2015,18 @@
       width: 100%;
       padding: 1.375rem 0; }
     .list-comp-lineinfo li > a {
+      overflow: hidden;
+      display: block;
+      width: 100%;
+      padding: 1.375rem 0 0;
+      color: #000; }
+    .list-comp-lineinfo li .not-link {
+      overflow: hidden;
+      display: block;
+      width: 100%;
+      padding: 1.375rem 0 0; }
+    .list-comp-lineinfo li .not-con-link {
+      overflow: hidden;
       display: block;
       width: 100%;
       padding: 1.375rem 0; }
@@ -5196,7 +5208,8 @@
     .agree-chk-wrap .list-comp-input-agree .select-list > li > div .comp-list-layout .layout-text .stext {
       font-size: 0.75rem;
       color: #666;
-      line-height: 1.0625rem; }
+      line-height: 1.0625rem;
+      display: -webkit-box; }
     .agree-chk-wrap .list-comp-input-agree .select-list > li > div .comp-list-layout .layout-text .stext-ellipsis {
       padding: 0.3125rem 2.125rem 0 0;
       font-size: 0.75rem;
@@ -7921,6 +7934,36 @@ a.bt-link-tx.underline.small {
       background-size: 3.125rem;
       overflow: hidden;
       color: transparent; }
+  .expect-discount-wrap .bt-toggle.txt-detail .more {
+    font-size: 0; }
+    .expect-discount-wrap .bt-toggle.txt-detail .more:before {
+      content: "자세히 보기";
+      display: block;
+      width: auto;
+      font-size: 0.875rem; }
+    .expect-discount-wrap .bt-toggle.txt-detail .more:after {
+      content: "자세히 보기";
+      top: 40%; }
+  .expect-discount-wrap .bt-toggle.txt-detail.open .more {
+    display: inline-block;
+    padding-right: 1.25rem; }
+    .expect-discount-wrap .bt-toggle.txt-detail.open .more:before {
+      content: "닫기";
+      display: block;
+      width: auto;
+      font-size: 0.875rem; }
+    .expect-discount-wrap .bt-toggle.txt-detail.open .more:after {
+      content: "닫기";
+      position: absolute;
+      top: 40%;
+      right: 0;
+      margin: -0.125rem 0 0 0;
+      width: 0.8125rem;
+      height: 0.375rem;
+      background: url(/img/ico/ico-group.png) no-repeat -0.4375rem -22.4375rem;
+      background-size: 3.125rem;
+      overflow: hidden;
+      color: transparent; }
 
 .expect-discount-wrap .inner-box {
   padding: 0.9375rem 1rem 3.125rem;
@@ -9283,16 +9326,20 @@ a.bt-link-tx.underline.small {
         height: 1.875rem; }
       .sortlist .ui-state-default .state-bt .bt-sort.up {
         top: 1.125rem;
-        background-position: -0.125rem -37.6875rem; }
+        background-position: -1.6875rem -14.1875rem; }
         .sortlist .ui-state-default .state-bt .bt-sort.up:before {
           top: -0.625rem;
           left: -0.625rem; }
       .sortlist .ui-state-default .state-bt .bt-sort.down {
         bottom: 1.125rem;
-        background-position: -1.6875rem -37.6875rem; }
+        background-position: -0.125rem -14.1875rem; }
         .sortlist .ui-state-default .state-bt .bt-sort.down:before {
           top: 0;
           left: -0.625rem; }
+  .sortlist .ui-state-default:first-child .state-bt .bt-sort.up {
+    background-position: -0.125rem -37.6875rem; }
+  .sortlist .ui-state-default:last-child .state-bt .bt-sort.down {
+    background-position: -1.6875rem -37.6875rem; }
 
 .sortlist #sortable-enabled {
   position: relative; }
@@ -15419,6 +15466,10 @@ a.bt-link-tx.underline.small {
       white-space: nowrap; }
       .cont-actionsheet .ac-list .type1 .table-cell.right {
         text-align: right; }
+      .cont-actionsheet .ac-list .type1 .table-cell.disabled > span.txt {
+        color: #dcdcdc; }
+      .cont-actionsheet .ac-list .type1 .table-cell.disabled > span.add {
+        color: #dcdcdc; }
       .cont-actionsheet .ac-list .type1 .table-cell > span {
         display: inline-block;
         vertical-align: middle;
@@ -15488,6 +15539,14 @@ a.bt-link-tx.underline.small {
           letter-spacing: -0.025em;
           padding-left: 0.5rem;
           white-space: normal; }
+          .cont-actionsheet .ac-list .type1 .table-cell > span.add .badge {
+            margin-left: 0.3125rem;
+            width: 1.5rem;
+            height: 1rem;
+            background: url(/img/svg/badge_status_00.svg) no-repeat 0 0;
+            background-size: 100% 100%;
+            font-size: 0;
+            vertical-align: middle; }
         .cont-actionsheet .ac-list .type1 .table-cell > span.link {
           width: 1rem;
           height: 1rem;
@@ -17436,33 +17495,40 @@ a.bt-link-tx.underline.small {
   margin-top: -0.125rem;
   width: 1.375rem;
   height: 1.375rem;
-  background: url(/img/form/ico-checkbox-style01.png) no-repeat 0 0;
+  background: url(/img/svg/component_check_small_off.svg) no-repeat 0 0;
   background-size: 1.375rem;
   vertical-align: middle; }
 
 .poll-box .has-image .checkbox.checked .poll-text:before, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .has-image .checkbox.checked .poll-text:before {
-  background-position: 0 -1.375rem; }
+  background-image: url(/img/svg/component_check_small_on.svg);
+  background-size: 1.375rem; }
 
 .poll-box .has-image .checkbox.disabled .poll-text:before, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .has-image .checkbox.disabled .poll-text:before {
-  background-position: 0 -2.75rem; }
+  background-image: url(/img/svg/component_check_small_off_disabled.svg);
+  background-size: 1.375rem; }
 
 .poll-box .has-image .checkbox.checked.disabled .poll-text:before, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .has-image .checkbox.checked.disabled .poll-text:before {
-  background-position: 0 -4.125rem; }
+  background-image: url(/img/svg/component_check_small_on_disabled.svg);
+  background-size: 1.375rem; }
 
 .poll-box .has-image .checkbox.focus, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .has-image .checkbox.focus {
   outline: -webkit-focus-ring-color auto 5px; }
 
 .poll-box .has-image .checkbox.focus .poll-text:before, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .has-image .checkbox.focus .poll-text:before {
-  background-position: 0 0; }
+  background: url(/img/svg/component_check_small_off.svg) no-repeat 0 0;
+  background-size: 1.375rem; }
 
 .poll-box .has-image .checkbox.focus.checked .poll-text:before, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .has-image .checkbox.focus.checked .poll-text:before {
-  background-position: 0 -1.375rem; }
+  background-image: url(/img/svg/component_check_small_on.svg);
+  background-size: 1.375rem; }
 
 .poll-box .has-image .checkbox.focus.disabled .poll-text:before, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .has-image .checkbox.focus.disabled .poll-text:before {
-  background-position: 0 -2.75rem; }
+  background-image: url(/img/svg/component_check_small_off_disabled.svg);
+  background-size: 1.375rem; }
 
 .poll-box .has-image .checkbox.focus.checked.disabled .poll-text:before, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .has-image .checkbox.focus.checked.disabled .poll-text:before {
-  background-position: 0 -4.125rem; }
+  background-image: url(/img/svg/component_check_small_on_disabled.svg);
+  background-size: 1.375rem; }
 
 .poll-box .versus > li, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .versus > li {
   padding-bottom: 1.25rem; }
@@ -19521,12 +19587,13 @@ a.bt-link-tx.underline.small {
 
 .details-top .tit {
   overflow: hidden;
-  display: -webkit-box;
+  display: inline-block;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   font-size: 0.9375rem;
   font-weight: 400;
-  line-height: 1.3125rem; }
+  line-height: 1.3125rem;
+  word-break: break-all; }
 
 .details-top .date {
   display: inline-block;
@@ -19584,7 +19651,8 @@ a.bt-link-tx.underline.small {
   margin: 1rem 0;
   color: #666;
   font-size: 0.875rem;
-  line-height: 1.3125rem; }
+  line-height: 1.3125rem;
+  word-break: break-all; }
 
 .card-box {
   position: relative;
@@ -24009,6 +24077,8 @@ a.bt-link-tx.underline.small {
       top: 1rem;
       font-size: 1.0625rem;
       line-height: 1.2; }
+    .calling-plan .wrap-link .right {
+      top: 1.5rem; }
 
 .device_ios .calling-plan .wrap-link:after {
   top: 50%;
@@ -26812,6 +26882,14 @@ input[type="radio"].formradio-small:checked:disabled + label {
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     text-align: left; }
+  .extraservice-list > .category-type.no-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 1.1875rem 1rem 0 1rem;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    text-align: left; }
   .extraservice-list > .category-type:first-child {
     margin-top: 0; }
   .extraservice-list > .category-type .products-titleinfo {
@@ -27209,7 +27287,6 @@ input[type="radio"].formradio-small:checked:disabled + label {
   .connection-searchword .searchword-list {
     overflow: hidden;
     width: 100%;
-    height: 4.375rem;
     padding: 0.3125rem 0;
     -webkit-box-sizing: border-box;
             box-sizing: border-box; }
@@ -27846,7 +27923,7 @@ input[type="radio"].formradio-small:checked:disabled + label {
     .main-charge-box .main-box-cont .bt {
       position: absolute;
       left: 1.5rem;
-      bottom: 1.25rem;
+      bottom: 1.5rem;
       height: 2.25rem;
       padding: 0 0.9375rem;
       border: 1px solid #fff;
@@ -28614,12 +28691,14 @@ body.apphome {
       background: #f76252; }
     .main-chart-box .legend .category0 .data {
       color: #f76252;
-      font-weight: 500; }
+      font-weight: 500;
+      margin-right: 0.1875rem; }
     .main-chart-box .legend .category1::before {
       background: #59bcf5; }
     .main-chart-box .legend .category1 .data {
       color: #178bce;
-      font-weight: 500; }
+      font-weight: 500;
+      margin-right: 0.1875rem; }
   .main-chart-box .call-message {
     margin-top: 1.5625rem; }
     .main-chart-box .call-message [class^="bt-"] {
@@ -32111,12 +32190,6 @@ body.apphome {
 .category-box-wrap .cont-layer .select-list .ico-type19 .ico {
   background-image: url(/img/benefit/ico-category19.png); }
 
-/* 검색결과 : 인터넷 / 집전화 / IPTV */
-.extraservice-list > .category-type .ico-tv {
-  background: url(/img/ico/ico-chan-plan.png) no-repeat 0 0.9375rem;
-  background-size: 0.9375rem 0.9375rem;
-  padding-left: 1.3125rem; }
-
 /* BS 결합할인 */
 .discountbenefit-list .category-type .link .tag-price {
   position: absolute;
@@ -32183,5 +32256,52 @@ body.apphome {
     padding: 0.5625rem 2.25rem 0.4375rem 0.75rem; }
     .g-coach-box li.mark-pin .coach-mark:after {
       left: 22%; }
+
+.view-tit-wrap {
+  padding-bottom: 0.375rem; }
+  .view-tit-wrap .tit {
+    display: block;
+    font-size: 0.875rem;
+    color: #000;
+    letter-spacing: -0.05rem;
+    line-height: 1.5;
+    margin-top: 0.25rem; }
+  .view-tit-wrap .sub-txt {
+    display: block;
+    font-size: 0.8125rem;
+    color: #666;
+    margin-top: 0.25rem;
+    letter-spacing: -0.0125rem; }
+    .view-tit-wrap .sub-txt:after {
+      content: "";
+      display: block;
+      clear: both; }
+    .view-tit-wrap .sub-txt .item {
+      position: relative;
+      display: inline-block;
+      float: left;
+      padding-right: 0.625rem;
+      margin-right: 0.625rem; }
+      .view-tit-wrap .sub-txt .item:after {
+        position: absolute;
+        right: 0;
+        top: 0.25rem;
+        display: block;
+        content: "";
+        width: 0.0625rem;
+        height: 0.5625rem;
+        background: #e1e1e1;
+        margin-left: 0.625rem; }
+    .view-tit-wrap .sub-txt .date {
+      display: inline-block;
+      float: left; }
+
+.box-btm-txt {
+  padding-top: 0.9375rem; }
+  .box-btm-txt .tx.type1 {
+    font-size: 0.875rem;
+    line-height: 1.125rem;
+    color: #666;
+    text-align: center; }
 
 /* 김효진 */

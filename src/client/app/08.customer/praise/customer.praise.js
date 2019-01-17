@@ -83,6 +83,8 @@ Tw.CustomerPraise.prototype = {
       return this._popupService.close();
     }
 
+    this._clearForm();
+
     this._selectedType = code;
 
     this.$container.find('.fe-subject').removeClass('none');
@@ -105,7 +107,7 @@ Tw.CustomerPraise.prototype = {
       case this.TYPES.OFFICE:
       case this.TYPES.CUSTOMER_CENTER:
       case this.TYPES.AS_CENTER: {
-        this._setInputMaxLength(50, 50);
+        this._setInputMaxLength(50, 25);
         this._setInputField(Tw.CUSTOMER_PRAISE_SUBJECT_TYPE.OFFICE);
         break;
       }
@@ -211,7 +213,7 @@ Tw.CustomerPraise.prototype = {
     });
 
     if (emptyInputs || this.$reasons.val().length === 0 || (this._selectedType === this.TYPES.STORE && this._selectedArea === undefined)) {
-      return this.$submitBtn.attr('disabled');
+      this.$submitBtn.attr('disabled', true);
     } else {
       this.$submitBtn.removeAttr('disabled');
     }

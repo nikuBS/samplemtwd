@@ -21,6 +21,8 @@ Tw.MyTDataFamilyShare.prototype = {
     this.$amountInput = this.$container.find('span.input input');
     this.$submitBtn = this.$container.find('.bt-red1 button');
     this.$error = this.$container.find('.pb10');
+    this.$pRemained = this.$container.find('p.pt4');
+    this.$sRemained = this.$pRemained.find('.txt-c2');
   },
 
   _bindEvent: function() {
@@ -47,15 +49,20 @@ Tw.MyTDataFamilyShare.prototype = {
     if (!value) {
       this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.V17);
       this.$error.removeClass('none');
+      this.$sRemained.text(Number(this._shareAmount) + Tw.DATA_UNIT.GB);
+      this.$pRemained.removeClass('none');
       this._setDisableSubmit(true);
     } else if (value > this._shareAmount) {
       this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.V16);
       this.$error.removeClass('none');
+      this.$pRemained.addClass('none');
       this._setDisableSubmit(true);
     } else {
       if (!this.$error.hasClass('none')) {
         this.$error.addClass('none');
       }
+      this.$sRemained.text(Number(this._shareAmount - value) + Tw.DATA_UNIT.GB);
+      this.$pRemained.removeClass('none');
       this._setDisableSubmit(false);
     }
   },

@@ -20,31 +20,25 @@
             <p class="title">문의하실 회선과 현상, 지역정보를 선택해 주세요.</p>
             <% if ( allSvc.m && allSvc.m.length >= 2 ) { %>
             <div class="info-form-box">
-                <button class="bt-dropdown big tx-bold fe-select-line" title="문의하실 회선정보 선택" aria-haspopup="true"
+                <button class="bt-dropdown big tx-bold fe-select-line fe-quality-line" title="문의하실 회선정보 선택" aria-haspopup="true"
                         data-svcMgmtNum="<%-svcInfo.svcMgmtNum%>"><%-convertTelFormat(svcInfo.svcNum)%><span class="ico"></span>
                 </button>
             </div>
             <% } else if( allSvc.m && allSvc.m.length === 1 ) { %>
             <div class="inputbox">
                 <div class="input">
-                    <input type="text" placeholder="회선정보 입력" title="문의하실 회선정보 입력" data-svcMgmtNum="<%-svcInfo.svcMgmtNum%>"
+                    <input type="text" class="fe-quality-line" placeholder="회선정보 입력" title="문의하실 회선정보 입력" data-svcMgmtNum="<%-svcInfo.svcMgmtNum%>"
                            value="<%-convertTelFormat(svcInfo.svcNum)%>" disabled>
                 </div>
             </div>
             <% } else { %>
             <div class="inputbox">
                 <div class="input">
-                    <input type="tel" class="fe-numeric" pattern="[0-9]*" placeholder="회선정보 입력" title="문의하실 회선정보 입력" value="" maxlength="20">
+                    <input type="text" class="fe-quality-line" pattern="[0-9]*" placeholder="회선정보 입력" title="문의하실 회선정보 입력" value="" maxlength="20">
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </div>
             </div>
             <% } %>
-            <div class="inputbox fe-wrap-wibro" style="display:none">
-                <div class="input">
-                    <input type="tel" class="fe-numeric" pattern="[0-9]*" placeholder="회선정보 입력" title="문의하실 회선정보 입력" value="" maxlength="20">
-                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
-                </div>
-            </div>
             <div class="info-form-box">
                 <button class="bt-dropdown big fe-occurrence" title="사용자번호" aria-haspopup="true" required>현상선택 (필수)<span class="ico"></span></button>
             </div>
@@ -133,7 +127,7 @@
             <p class="title">문의하실 회선과 현상, 지역정보를 선택해 주세요.</p>
             <div class="inputbox">
                 <div class="input">
-                    <input type="tel" class="fe-numeric" pattern="[0-9]*" placeholder="회선정보 입력" title="문의하실 회선정보 입력" value="" maxlength="20">
+                    <input type="tel" class="fe-numeric fe-quality-line" pattern="[0-9]*" placeholder="회선정보 입력" title="문의하실 회선정보 입력" value="" maxlength="20">
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </div>
             </div>
@@ -226,14 +220,14 @@
             <% if ( allSvc.s && allSvc.s.length >= 1 ) { %>
             <div class="inputbox">
                 <div class="input">
-                    <input type="text" placeholder="회선정보 입력" title="문의하실 회선정보 입력" data-svcMgmtNum="<%-allSvc.s[0].svcMgmtNum%>"
+                    <input type="text" class="fe-quality-line" placeholder="회선정보 입력" title="문의하실 회선정보 입력" data-svcMgmtNum="<%-allSvc.s[0].svcMgmtNum%>"
                            value="<%-allSvc.s[0].addr%>" disabled>
                 </div>
             </div>
             <% } else { %>
             <div class="inputbox">
                 <div class="input">
-                    <input type="tel" class="fe-numeric" pattern="[0-9]*" placeholder="회선정보 입력" title="문의하실 회선정보 입력" value="" maxlength="20">
+                    <input type="text" class="fe-quality-line" pattern="[0-9]*" placeholder="회선정보 입력" title="문의하실 회선정보 입력" value="" maxlength="20">
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </div>
             </div>
@@ -317,19 +311,18 @@
             <% if ( allSvc.s && allSvc.s.length >= 1 ) { %>
             <div class="inputbox">
                 <div class="input">
-                    <input type="text" placeholder="회선정보 입력" title="문의하실 회선정보 입력" data-svcMgmtNum="<%-allSvc.s[0].svcMgmtNum%>"
-                           value="<%-allSvc.s[0].addr%>" disabled>
+                    <input type="text" class="fe-quality-line" placeholder="회선정보 입력" title="문의하실 회선정보 입력" data-svcMgmtNum="<%-allSvc.s[0].svcMgmtNum%>"
+                           value="<%-allSvc.s[0].svcNum%>" disabled>
                 </div>
             </div>
             <% } else { %>
             <div class="inputbox">
                 <div class="input">
-                    <input type="tel" class="fe-numeric" pattern="[0-9]*" placeholder="회선정보 입력" title="문의하실 회선정보 입력" value="" maxlength="20">
+                    <input type="text" class="fe-quality-line" pattern="[0-9]*" placeholder="회선정보 입력" title="문의하실 회선정보 입력" value="" maxlength="20">
                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                 </div>
             </div>
             <% } %>
-
             <p class="title">문의하실 설치 주소와 현상을 선택 후<br>내용을 기재해 주세요.</p>
             <div class="inputbox bt-add">
                 <span class="input">
@@ -388,7 +381,7 @@
 <script type="text/template" id="tpl_quality_cell_content">
   1. 접수자 : {{text_name}}
   2. 문의서비스 : {{inqSvcClCd}}
-  3. 문의번호 : {{selSvcMgmtNum}}
+  3. 문의번호 : {{svcNum}}
   4. 현상 : {{occurrence}} / {{occurrence_detail}}
   5. 발생지역 : 발생지역 ( {{inptZip}} / {{inptBasAddr}} {{inptDtlAddr}} )
   6. 발생장소 : {{place}} / {{place_detail}}

@@ -15,7 +15,7 @@ Tw.ProductMobileplanJoinTplan = function(rootEl, prodId, displayId, sktProdBenfC
   this._isOverPayReq = isOverPayReqYn === 'Y';
   this._isComparePlan = isComparePlanYn === 'Y';
   this._sktProdBenfCtt = window.unescape(sktProdBenfCtt);
-  this._watchInfo = JSON.parse(watchInfo);
+  this._watchInfo = Tw.FormatHelper.isEmpty(watchInfo) ? null : JSON.parse(watchInfo);
   this._isSetOverPayReq = false;
   this._overpayRetryCnt = 0;
   this._smartWatchLine = null;
@@ -129,8 +129,9 @@ Tw.ProductMobileplanJoinTplan.prototype = {
       toProdName: this._confirmOptions.preinfo.toProdInfo.prodNm,
       isNumberBasFeeInfo: !this._confirmOptions.preinfo.toProdInfo.basFeeInfo.isNaN,
       toProdBasFeeInfo: this._confirmOptions.preinfo.toProdInfo.basFeeInfo.value,
-      toProdDesc: this.sktProdBenfCtt,
-      isAutoJoinTermList: (this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0),
+      toProdDesc: this._sktProdBenfCtt,
+      isJoinTermProducts: (!Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoJoinList) ||
+        !Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoTermList)),
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
       autoTermList: this._confirmOptions.preinfo.autoTermList,
       autoJoinBenefitList: this._confirmOptions.preinfo.toProdInfo.chgSktProdBenfCtt,
@@ -165,6 +166,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
 
   _reqOverpay: function() {
     if (!this._isOverPayReq || this._isSetOverPayReq) {
+      this._confirmOptions = $.extend(this._confirmOptions, { isOverPayError: true });
       return this._procConfirm();
     }
 
@@ -199,12 +201,26 @@ Tw.ProductMobileplanJoinTplan.prototype = {
         overpayResults = $.extend(overpayResults, {
           isDataOvrAmt: isDataOvrAmt,
           isVoiceOvrAmt: isVoiceOvrAmt,
-          isSmsOvrAmt: isSmsOvrAmt
+          isSmsOvrAmt: isSmsOvrAmt,
+          dataIfAmt: resp.result.dataIfAmt,
+          dataBasAmt: resp.result.dataBasAmt,
+          dataOvrAmt: Math.ceil(resp.result.dataOvrAmt),
+          voiceIfAmt: Math.ceil(resp.result.voiceIfAmt),
+          voiceBasAmt: Math.ceil(resp.result.voiceBasAmt),
+          voiceOvrAmt: Math.ceil(resp.result.voiceOvrAmt),
+          smsIfAmt: Math.ceil(resp.result.smsIfAmt),
+          smsBasAmt: Math.ceil(resp.result.smsBasAmt),
+          smsOvrAmt: Math.ceil(resp.result.smsOvrAmt),
+          ovrTotAmt: Math.ceil(resp.result.ovrTotAmt)
         });
       }
     }
 
-    this._confirmOptions = $.extend(this._confirmOptions, overpayResults);
+    this._confirmOptions = $.extend(this._confirmOptions, {
+      isOverpayResult: overpayResults.isOverpayResult,
+      overpay: overpayResults
+    });
+
     this._procConfirm();
   },
 

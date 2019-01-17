@@ -162,5 +162,5 @@
 </div>
 </body>
 <% include ../../components/javascript.component.html %>
-<script>$(function () {new Tw.BenefitTerminateTbCombination($('.wrap'), '<%= prodId %>', '<%= termInfo.combinationGroup.svcProdGrpNm %>', '<%= termInfo.combinationWireMember.svcCd %>');});</script>
+<script>$(function () {new Tw.BenefitTerminateTbCombination($('.wrap'), '<%= prodId %>', '<%= termInfo.combinationGroup.svcProdGrpNm %>', '<%= termInfo.combinationWireMember ? termInfo.combinationWireMember.svcCd : "" %>');});</script>
 <% include ../../components/end.component.html %>

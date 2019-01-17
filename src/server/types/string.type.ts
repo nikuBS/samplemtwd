@@ -229,6 +229,11 @@ export enum PRODUCT_REQUIRE_DOCUMENT_CALLPLAN_RESULT {
   COMPLETE = '검토가 완료 되었습니다.'
 }
 
+export enum PRODUCT_REQUIRE_DOCUMENT_RESERVATION_RESULT {
+  APPLY = '가입서류를 제출',
+  HISTORY = '진행결과를 조회'
+}
+
 export const MYT_FARE_BILL_REISSUE = {
   TITLE: '요금안내서 재발행',
   REASON: {
@@ -719,7 +724,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
             code: 'C00023'
           },
           {
-            dep_title: '번호 이동',
+            dep_title: '번호이동',
             type: 'A1',
             code: 'C00013'
           },
@@ -764,12 +769,12 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
             dep_title: '내 유심으로 타사 기기 사용',
             type: 'A1',
             code: 'C00012'
-          },
-          {
+          } // ,
+          /* {
             dep_title: '타사 유심으로 SK텔레콤 기기 사용',
             type: 'A2',
             code: 'C00025'
-          }
+          } */
         ]
       }
     ]
@@ -986,7 +991,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           {
             dep_title: '버튼식 ARS',
             type: 'A3',
-            code: 'url:/customer/helpline'
+            code: 'C00038'
           },
           {
             dep_title: '보이는 ARS',

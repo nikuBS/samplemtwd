@@ -77,20 +77,26 @@ Tw.CommonWithdrawalSurvey.prototype = {
   _showWithdrawConfirm: function () {
     if (this._isValid()) {
       this._popupService.openConfirm(Tw.ALERT_MSG_COMMON.ALERT_4_A3, Tw.POPUP_TITLE.NOTIFY,
-        null, $.proxy(this._sendWithdrawRequest, this));
+        $.proxy(this._onConfirm, this), $.proxy(this._sendWithdrawRequest, this));
     }
   },
+  _onConfirm: function () {
+    this._confirm = true;
+    this._popupService.close();
+  },
   _sendWithdrawRequest: function () {
-    var data = {
-      qstnCd: this.selected
-    };
-    if (data.qstnCd === '6') {
-      data.qstnCtt = this.$textArea.val();
-    }
+    if (this._confirm) {
+      var data = {
+        qstnCd: this.selected
+      };
+      if (data.qstnCd === '6') {
+        data.qstnCtt = this.$textArea.val();
+      }
 
-    this._apiService.request(Tw.API_CMD.BFF_03_0003, data)
-      .done($.proxy(this._onRequestDone, this))
-      .fail($.proxy(this._error, this));
+      this._apiService.request(Tw.API_CMD.BFF_03_0003, data)
+        .done($.proxy(this._onRequestDone, this))
+        .fail($.proxy(this._error, this));
+    }
   },
   _onRequestDone: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {

@@ -5,7 +5,6 @@
  */
 Tw.QuickMenuComponent = function () {
   this._apiService = Tw.Api;
-  this._popupService = Tw.Popup;
 
   this._menuId = '';
   this._bindEvent();
@@ -48,7 +47,6 @@ Tw.QuickMenuComponent.prototype = {
       this._apiService.request(Tw.API_CMD.BFF_04_0003, { menuIdStr: menuId })
         .done($.proxy(this._successAddQuickMenu, this));
     }
-
   },
   _removeQuickMenu: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -66,7 +64,7 @@ Tw.QuickMenuComponent.prototype = {
   },
   _successAddQuickMenu: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.toast(Tw.TOAST_TEXT.QUICK_ADD);
+      Tw.CommonHelper.toast(Tw.TOAST_TEXT.QUICK_ADD);
       this.$btQuickAdd.parent().addClass('none');
       this.$btQuickRemove.parent().removeClass('none');
     } else {
@@ -75,7 +73,7 @@ Tw.QuickMenuComponent.prototype = {
   },
   _successRemoveQuickMenu: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.toast(Tw.TOAST_TEXT.QUICK_REMOVE);
+      Tw.CommonHelper.toast(Tw.TOAST_TEXT.QUICK_REMOVE);
       this.$btQuickRemove.parent().addClass('none');
       this.$btQuickAdd.parent().removeClass('none');
     } else {

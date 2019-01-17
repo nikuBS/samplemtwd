@@ -44,9 +44,19 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
     this.$rechargeBtn.on('click', $.proxy(this._recharge, this));
   },
   _cancel: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0061, {})
-      .done($.proxy(this._cancelSuccess, this))
-      .fail($.proxy(this._fail, this));
+    this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A70.MSG, Tw.ALERT_MSG_MYT_DATA.ALERT_2_A70.TITLE,
+      $.proxy(this._onCancel, this), $.proxy(this._autoCancel, this), null, Tw.ALERT_MSG_MYT_DATA.ALERT_2_A70.BUTTON);
+  },
+  _onCancel: function () {
+    this._isCancel = true;
+    this._popupService.close();
+  },
+  _autoCancel: function () {
+    if (this._isCancel) {
+      this._apiService.request(Tw.API_CMD.BFF_06_0061, {})
+        .done($.proxy(this._cancelSuccess, this))
+        .fail($.proxy(this._fail, this));
+    }
   },
   _cancelSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
@@ -70,7 +80,8 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
         data: popupName,
         btnfloating: { 'class': 'fe-popup-close', 'txt': Tw.BUTTON_LABEL.CLOSE }
       },
-      $.proxy(this._selectPopupCallback, this, $target));
+      $.proxy(this._selectPopupCallback, this, $target),
+      $.proxy(this._checkIsAbled, this));
   },
   _selectPopupCallback: function ($target, $layer) {
     var $id = $target.attr('id');
@@ -103,7 +114,8 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
     this._popupService.close();
   },
   _checkIsAbled: function () {
-    if (this.$cardNumber.val() !== '' && this.$cardY.val() !== '' &&
+    if (!Tw.FormatHelper.isEmpty(this.$dataSelector.attr('id')) &&
+      this.$cardNumber.val() !== '' && this.$cardY.val() !== '' &&
       this.$cardM.val() !== '') {
       this.$rechargeBtn.removeAttr('disabled');
     } else {

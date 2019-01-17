@@ -59,6 +59,7 @@ Tw.API_CMD = {
   BFF_01_0055: { path: '/:version/captcha/answer/:args0', method: Tw.API_METHOD.PUT },
   BFF_01_0057: { path: '/:version/auth/skt-sms/representative', method: Tw.API_METHOD.POST },
   BFF_01_0058: { path: '/:version/auth/skt-sms/legal-agent', method: Tw.API_METHOD.POST },
+  BFF_01_0059: { path: '/v1/auth/skt-sms/key-in', method: Tw.API_METHOD.POST },
   BFF_01_0061: { path: '/core-auth/:version/user-email', method: Tw.API_METHOD.GET },
   BFF_01_0063: { path: '/:version/auth/skt-sms/common', method: Tw.API_METHOD.PUT },
 
@@ -375,6 +376,7 @@ Tw.API_CMD = {
   BFF_08_0060: { path: '/core-modification/:version/email-inquiry-list', method: Tw.API_METHOD.GET },
   BFF_08_0061: { path: '/core-modification/:version/email-inquiry-detail', method: Tw.API_METHOD.GET },
   BFF_08_0062: { path: '/core-modification/:version/email-inquiry', method: Tw.API_METHOD.DELETE },
+  BFF_08_0063: { path: '/core-modification/v1/guide/contents-list', method: Tw.API_METHOD.GET },
 
   BFF_08_0064: { path: '/core-modification/:version/guide/contents-detail/:args0', method: Tw.API_METHOD.GET },
 
@@ -484,6 +486,10 @@ Tw.API_CMD = {
   BFF_10_0062: { path: '/core-product/:version/mobiles/additions-sets/:args0/seldis-sets', method: Tw.API_METHOD.GET },
   BFF_10_0063: { path: '/core-product/:version/mobiles/additions-sets/:args0/seldis-sets', method: Tw.API_METHOD.POST },
 
+  //SEARCH
+  GET_SEARCH_AUTO_COMPLETE : { path : '/search/tworld/autocomplete', method : Tw.API_METHOD.GET },
+  STACK_SEARCH_USER_CLICK : { path : '/search/tworld/log/save', method : Tw.API_METHOD.POST },
+
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },
   GET_PARAM: { path: '/comments', method: Tw.API_METHOD.GET },
@@ -502,6 +508,7 @@ Tw.NODE_CMD = {
   SET_DEVICE: { path: '/device', method: Tw.API_METHOD.POST },
   LOGIN_TID: { path: '/user/sessions', method: Tw.API_METHOD.POST },
   LOGOUT_TID: { path: '/logout-tid', method: Tw.API_METHOD.POST },
+  SESSION: { path: '/session', method: Tw.API_METHOD.POST },
   EASY_LOGIN_AOS: { path: '/user/login/android', method: Tw.API_METHOD.POST },
   EASY_LOGIN_IOS: { path: '/user/login/ios', method: Tw.API_METHOD.POST },
   CHANGE_SESSION: { path: '/common/selected-sessions', method: Tw.API_METHOD.PUT },
@@ -558,17 +565,6 @@ Tw.AJAX_CMD = {
     method: Tw.API_METHOD.POST,
     url: Tw.IPIN_URL,
     contentType: 'application/x-www-form-urlencoded'
-  },
-  SEARCH_AUTO_COMPLETE : {
-      path : '/search/tworld/autocomplete',
-      method : Tw.API_METHOD.GET,
-      url : 'http://61.250.22.114:8080',
-      contentType: 'application/x-www-form-urlencoded'
-  },
-  SEARCH_STACK_USER_CLICK : {
-    path : '/search/tworld/log/save',
-    method : Tw.API_METHOD.POST,
-    url : 'http://61.250.22.114:8080'
   }
 };
 

@@ -47,7 +47,7 @@ export default class ProductRoamingReservationComplete extends TwViewController 
         break;
       case '7' :
         //대구 SKT 황금점 매장
-        centerImg = '';
+        centerImg = 'place-img-10';
         break;
       default : break;
     }

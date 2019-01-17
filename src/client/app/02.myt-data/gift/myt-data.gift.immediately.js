@@ -18,7 +18,7 @@ Tw.MyTDataGiftImmediately = function (rootEl) {
 
 Tw.MyTDataGiftImmediately.prototype = {
   _init: function () {
-    this._getRemainDataInfo();
+    // this._getRemainDataInfo();
   },
 
   _cachedElement: function () {

@@ -48,12 +48,14 @@
 
 <script id="fe-templ-filters" type="text/x-handlebars-template">
     {{#if filters}}
+        <span class="datebox">
         {{#each filters}}
             {{#unless @first}}
             ,
             {{/unless}}
-            #<span class="datebox">{{this}}</span>
+            #{{this}}
         {{/each}}
+        </span>
         {{#if leftCount}}
             <span class="text">외</span>
             <span class="number">{{leftCount}}</span>

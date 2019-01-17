@@ -7,8 +7,14 @@
 
 import TwViewController from '../../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import { PRODUCT_RESERVATION_TYPE_NM, PRODUCT_RESERVATION_COMBINE_NM } from '../../../../../types/string.type';
+import {
+  PRODUCT_RESERVATION_TYPE_NM,
+  PRODUCT_RESERVATION_COMBINE_NM,
+  PRODUCT_REQUIRE_DOCUMENT,
+  PRODUCT_REQUIRE_DOCUMENT_RESERVATION_RESULT
+} from '../../../../../types/string.type';
 import FormatHelper from '../../../../../utils/format.helper';
+import {API_CMD, API_CODE} from '../../../../../types/api-command.type';
 
 class ProductWireplanJoinReservation extends TwViewController {
   constructor() {
@@ -42,6 +48,50 @@ class ProductWireplanJoinReservation extends TwViewController {
     });
   }
 
+  /**
+   * @param requireDocumentInfo
+   * @private
+   */
+  private _convertRequireDocument (requireDocumentInfo: any) {
+    if (requireDocumentInfo.code !== API_CODE.CODE_00 || FormatHelper.isEmpty(requireDocumentInfo.result.necessaryDocumentInspectInfoList)) {
+      return null;
+    }
+
+    const latestItem = requireDocumentInfo.result.necessaryDocumentInspectInfoList[0];
+
+    if (FormatHelper.isEmpty(latestItem.ciaInsptRslt) ||
+      latestItem.ciaInsptRslt !== PRODUCT_REQUIRE_DOCUMENT.NORMAL &&
+      latestItem.ciaInsptRslt !== PRODUCT_REQUIRE_DOCUMENT.ABNORMAL) {
+      return {
+        text: PRODUCT_REQUIRE_DOCUMENT_RESERVATION_RESULT.HISTORY,
+        btnText: PRODUCT_REQUIRE_DOCUMENT.HISTORY,
+        page: 'history'
+      };
+    }
+
+    if (latestItem.ciaInsptRslt === PRODUCT_REQUIRE_DOCUMENT.ABNORMAL && !FormatHelper.isEmpty(latestItem.ciaInsptRsnCd)) {
+      return {
+        text: PRODUCT_REQUIRE_DOCUMENT_RESERVATION_RESULT.APPLY,
+        btnText: PRODUCT_REQUIRE_DOCUMENT.APPLY,
+        page: 'apply'
+      };
+    }
+
+    if (latestItem.ciaInsptRslt === PRODUCT_REQUIRE_DOCUMENT.ABNORMAL && FormatHelper.isEmpty(latestItem.ciaInsptRsnCd)) {
+      return {
+        text: PRODUCT_REQUIRE_DOCUMENT_RESERVATION_RESULT.HISTORY,
+        btnText: PRODUCT_REQUIRE_DOCUMENT.HISTORY,
+        page: 'history'
+      };
+    }
+
+    return {
+      text: PRODUCT_REQUIRE_DOCUMENT_RESERVATION_RESULT.HISTORY,
+      btnText: PRODUCT_REQUIRE_DOCUMENT.HISTORY,
+      page: 'history'
+    };
+  }
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const typeCd = req.query.type_cd || 'internet',
       prodId = req.query.prod_id || null;
@@ -62,15 +112,19 @@ class ProductWireplanJoinReservation extends TwViewController {
 
     const isProductInfo: any = FormatHelper.isEmpty(allSvc) ? {} : this._convertIsProductInfo(allSvc);
 
-    res.render('wireplan/join/product.wireplan.join.reservation.html', {
-      isProduct: isProductInfo,
-      typeCd: typeCd,
-      typeName: PRODUCT_RESERVATION_TYPE_NM[typeCd],
-      svcInfo: svcInfo,
-      pageInfo: pageInfo,
-      prodId: prodId,
-      prodNm: prodNm
-    });
+    this.apiService.request(API_CMD.BFF_10_0078, {})
+      .subscribe((combineRequireDocumentInfo) => {
+        res.render('wireplan/join/product.wireplan.join.reservation.html', {
+          combineRequireDocumentInfo: this._convertRequireDocument(combineRequireDocumentInfo),
+          isProduct: isProductInfo,
+          typeCd: typeCd,
+          typeName: PRODUCT_RESERVATION_TYPE_NM[typeCd],
+          svcInfo: svcInfo,
+          pageInfo: pageInfo,
+          prodId: prodId,
+          prodNm: prodNm
+        });
+      });
   }
 }
 

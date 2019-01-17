@@ -71,6 +71,17 @@ Tw.CommonHelper = (function () {
     return value;
   };
 
+  var setCookie = function(name, value, days) {
+    var expires = '';
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + (days*24*60*60*1000));
+      expires = '; expires=' + date.toUTCString();
+    }
+
+    document.cookie = name + '=' + (value || '')  + expires + '; path=/';
+  };
+
   var removeLocalStorage = function (key) {
     return localStorage.removeItem(key);
   };
@@ -176,9 +187,7 @@ Tw.CommonHelper = (function () {
 
   var setXtSvcInfo = function() {
     var xtLid = Tw.CommonHelper.getCookie('XTLID'),
-      xtLidOrigin = Tw.CommonHelper.getCookie('XTLID_ORIGIN'),
       xtLoginId = Tw.CommonHelper.getCookie('XTLOGINID'),
-      xtLoginIdOrigin = Tw.CommonHelper.getCookie('XTLOGINID_ORIGIN'),
       xtLoginType = Tw.CommonHelper.getCookie('XTLOGINTYPE');
 
     if (!Tw.BrowserHelper.isApp() || xtLoginType === 'Z') {
@@ -186,10 +195,8 @@ Tw.CommonHelper = (function () {
     }
 
     Tw.Native.send(Tw.NTV_CMD.SET_XTSVCINFO, {
-      xtLid: xtLid,
-      xtLidOrigin: xtLidOrigin,
-      xtLoginId: xtLoginId,
-      xtLoginIdOrigin: xtLoginIdOrigin
+      xtLid: Tw.FormatHelper.isEmpty(xtLid) ? '' : xtLid,
+      xtLoginId: Tw.FormatHelper.isEmpty(xtLoginId) ? '' : xtLoginId
     });
   };
 
@@ -201,6 +208,7 @@ Tw.CommonHelper = (function () {
     setLocalStorage: setLocalStorage,
     getLocalStorage: getLocalStorage,
     getCookie: getCookie,
+    setCookie: setCookie,
     removeLocalStorage: removeLocalStorage,
     showDataCharge: showDataCharge,
     share: share,

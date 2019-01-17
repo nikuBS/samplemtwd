@@ -9,6 +9,7 @@ Tw.CommonSearchMore = function (rootEl,searchInfo,svcInfo,cdn,accessQuery,step) 
   //this._category = category;
   this._historyService = new Tw.HistoryService();
   //this._searchInfo = JSON.parse(this._decodeEscapeChar(searchInfo));
+  this._apiService = Tw.Api;
   this._cdn = cdn;
   this._step = step;
   this._accessQuery = accessQuery;
@@ -170,7 +171,9 @@ Tw.CommonSearchMore.prototype = {
     if(Tw.FormatHelper.isEmpty(linkUrl)){
       return;
     }
-    //TODO User Click Ajax event call
+    this._apiService.request(Tw.API_CMD.STACK_SEARCH_USER_CLICK,
+      { param : 'docId='+$linkData.data('id')+'&section='+$linkData.data('category')+'&title='+$linkData.data('tit')+'&keyword='+this._searchInfo.researchQuery }
+    );
     if($linkData.hasClass('direct-element')){
       Tw.CommonHelper.openUrlExternal(linkUrl);
     }else {

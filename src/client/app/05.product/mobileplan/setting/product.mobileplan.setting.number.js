@@ -58,7 +58,7 @@ Tw.ProductMobileplanSettingNumber.prototype = {
   _addNum: function() {
     var number = this.$inputNumber.val().replace(/-/gi, '');
 
-    if (!Tw.ValidationHelper.isCellPhone(number)) {
+    if (!Tw.ValidationHelper.isCellPhone(number) && !Tw.ValidationHelper.isTelephone(number)) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
     }
@@ -137,11 +137,11 @@ Tw.ProductMobileplanSettingNumber.prototype = {
   },
 
   _blurInputNumber: function() {
-    this.$inputNumber.val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$inputNumber.val()));
+    this.$inputNumber.attr('type', 'text').val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$inputNumber.val()));
   },
 
   _focusInputNumber: function() {
-    this.$inputNumber.val(this.$inputNumber.val().replace(/-/gi, ''));
+    this.$inputNumber.val(this.$inputNumber.val().replace(/-/gi, '')).attr('type', 'number');
   },
 
   _clearNum: function() {

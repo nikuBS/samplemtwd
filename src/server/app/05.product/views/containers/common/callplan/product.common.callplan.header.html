@@ -2,7 +2,7 @@
 <div class="cont-box nogaps-hoz productdetails-bg">
     <div class="productdetails-wrap">
         <h3 class="productdetails-title">
-            <% if (( isMobileplan || isDiscount ) && prodRedisInfo.summary.prodSmryDesc ) { %>
+            <% if (( isMobileplan ) && prodRedisInfo.summary.prodSmryDesc ) { %>
             <div class="sub">
                 <p class="pro-sub-area">
                     <span class="pro-sub-text"><%= prodRedisInfo.summary.prodSmryDesc %></span>
@@ -14,23 +14,29 @@
             <% } %>
         </h3>
         <% if ( basicInfo.prodStCd === 'E1000' ) { %>
-            <% if (( isMobileplan || isDiscount ) && (prodRedisInfo.summaryCase === '2' || basicInfo.prodScrbYn === 'N') ) { %>
-            <p class="productdetails-text02"><%= prodRedisInfo.summary.sktProdBenfCtt %></p>
-            <% } %>
             <% if ( prodRedisInfo.summary.smryHtmlCtt && prodRedisInfo.summaryCase === '3' && basicInfo.prodScrbYn === 'Y' ) { %>
             <%- prodRedisInfo.summary.smryHtmlCtt %>
             <% } %>
-            <% if (( isMobileplanAdd || isWireplan || isWireplanAdd || isRoaming ) &&
-            ( prodRedisInfo.summary.prodSmryDesc || prodRedisInfo.summary.prodBasBenfCtt )) { %>
+
+            <% if (( isMobileplanAdd || isWireplan || isWireplanAdd || isRoaming || isCombine ) &&
+            ( prodRedisInfo.summary.prodSmryDesc || prodRedisInfo.summary.prodBasBenfCtt ) && prodRedisInfo.summaryCase !== '3') { %>
             <p class="productdetails-text02">
                 <% if ( prodRedisInfo.summary.prodSmryDesc ) { %>
                 <%= prodRedisInfo.summary.prodSmryDesc %>
                 <% } %>
-                <% if (( isWireplan || isRoaming ) && prodRedisInfo.summary.prodBasBenfCtt) { %>
+                <% if (( isWireplan || isRoaming ) && prodRedisInfo.summary.prodBasBenfCtt && !isCombine) { %>
                     <% if ( prodRedisInfo.summary.prodSmryDesc ) { %><br><% } %>
                     <%= prodRedisInfo.summary.prodBasBenfCtt %>
                 <% } %>
             </p>
+            <% } %>
+
+            <% if (isDiscount && prodRedisInfo.summary.prodSmryDesc && prodRedisInfo.summaryCase !== '3') { %>
+            <p class="productdetails-text02"><%= prodRedisInfo.summary.prodSmryDesc %></p>
+            <% } %>
+
+            <% if (( isMobileplan || isDiscount ) && (prodRedisInfo.summaryCase === '2' || basicInfo.prodScrbYn === 'N') ) { %>
+            <p class="productdetails-text02"><%= prodRedisInfo.summary.sktProdBenfCtt %></p>
             <% } %>
         <% } %>
         <% if ( basicInfo.svcOfrCoNm ) { %>
@@ -83,7 +89,7 @@
             </div>
             <% } %>
             <% if ( basicInfo.prodScrbYn === 'N' && (
-                ( isMobileplan || isWireplan ) && svcInfo && svcInfo.prodId !== prodId ||
+                ( isMobileplan || isWireplan ) && (svcInfo && svcInfo.prodId !== prodId || !svcInfo) ||
                 ( isMobileplanAdd || isWireplanAdd || isRoaming || isCombine || isDiscount ) && !isJoined)
             ) { %>
             <div class="limit">

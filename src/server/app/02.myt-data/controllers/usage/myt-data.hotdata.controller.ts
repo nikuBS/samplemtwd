@@ -26,9 +26,6 @@ class MyTDataHotdata extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    // console.log('~~~~~~~~~~`svcInfo', svcInfo);
-    // svcInfo.svcAttrCd = 'M2';
-
     const reqArr = new Array();
     reqArr.push(this.reqBalances());
     switch ( svcInfo.svcAttrCd ) {
@@ -105,7 +102,6 @@ class MyTDataHotdata extends TwViewController {
         });
       }
     });
-    // console.log('~~~~~~~~~~~~~~~~~~~~~~~~usageData', usageData);
     return usageData;
   }
 
@@ -185,7 +181,6 @@ class MyTDataHotdata extends TwViewController {
 
 
     usageData.data = dataArr;
-    // console.log('~~~~~~~~~~~~~usageData.data', usageData.data);
 
     kinds.map((kind) => {
       if ( !FormatHelper.isEmpty(usageData[kind]) ) {
@@ -194,7 +189,6 @@ class MyTDataHotdata extends TwViewController {
         });
       }
     });
-    // console.log('~~~~~~~~~~~~~~~~~~~~~~~~usageData', usageData);
     return usageData;
   }
 

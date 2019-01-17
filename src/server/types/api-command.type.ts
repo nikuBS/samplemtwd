@@ -25,6 +25,8 @@ export const API_CMD = {
   SEARCH_WEB : { path: '/search/tworld/mobile-web', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
   RELATED_KEYWORD : { path: '/search/tworld/recommend', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
   POPULAR_KEYWORD : { path : '/search/tworld/popword', method : API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
+  SEARCH_AUTO_COMPLETE : { path : '/search/tworld/autocomplete', method : API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
+  SEARCH_STACK_USER_CLICK : { path : '/search/tworld/log/save', method : API_METHOD.POST, server: API_SERVER.SEARCH, bypass: true },
   BFF_12_0010: { path: '/core-modification/:version/search/keyword', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // SPRINT #3
@@ -87,6 +89,7 @@ export const API_CMD = {
   BFF_01_0055: { path: '/:version/captcha/answer/:args0', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_01_0057: { path: '/:version/auth/skt-sms/representative', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_01_0058: { path: '/:version/auth/skt-sms/legal-agent', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_01_0059: { path: '/v1/auth/skt-sms/key-in', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_01_0061: { path: '/core-auth/:version/user-email', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_01_0063: { path: '/:version/auth/skt-sms/common', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   // AUTH
@@ -493,6 +496,7 @@ export const API_CMD = {
   BFF_08_0060: { path: '/core-modification/:version/email-inquiry-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0061: { path: '/core-modification/:version/email-inquiry-detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0062: { path: '/core-modification/:version/email-inquiry', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0063: { path: '/core-modification/v1/guide/contents-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0064: { path: '/core-modification/:version/guide/contents-detail/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0065: { path: '/core-modification/:version/guide/contents-view-count-up/:args0', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_08_0066: { path: '/core-modification/:version/center/banner', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

@@ -14,6 +14,7 @@ Tw.ProductRoamingSettingRoamingSetup = function (rootEl,prodRedisInfo,prodBffInf
   this._prodId = prodId;
   this._apiService = Tw.Api;
   this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
+  this._showDateFormat = 'YYYY. MM. DD.';
   this._init();
   this._bindBtnEvents();
   this._tooltipInit(prodId);
@@ -23,8 +24,8 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
   _init : function(){
     var startMoment = moment(this._prodBffInfo.svcStartDt,'YYYYMMDD');
     var endMoment = moment(this._prodBffInfo.svcEndDt,'YYYYMMDD');
-    var startDate = startMoment.format('YYYY. MM. DD');
-    var endDate = endMoment.format('YYYY. MM. DD');
+    var startDate = startMoment.format(this._showDateFormat);
+    var endDate = endMoment.format(this._showDateFormat);
     var startTime = this._prodBffInfo.svcStartTm;
     var endTime = this._prodBffInfo.svcEndTm;
     var startDateIdx = moment(Tw.DateHelper.getCurrentShortDate(),'YYYYMMDD').diff(startMoment,'day');
@@ -37,9 +38,9 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
     this.$container.find('#end_date').text(endDate);
     this.$container.find('#end_date').attr('data-number',this._prodBffInfo.svcEndDt);
     this.$container.find('#end_date').attr('data-idx',endDateIdx);
-    this.$container.find('#start_time').text(parseInt(startTime,10));
+    this.$container.find('#start_time').text(startTime);
     this.$container.find('#start_time').attr('data-number',this._prodBffInfo.svcStartTm);
-    this.$container.find('#end_time').text(parseInt(endTime,10));
+    this.$container.find('#end_time').text(endTime);
     this.$container.find('#end_time').attr('data-number',this._prodBffInfo.svcEndTm);
 
   },
@@ -50,7 +51,7 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
     this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._historyService.goBack,this));
   },
   _getDateArrFromToDay : function(range,format){
-    var dateFormat = 'YYYY. MM. DD';
+    var dateFormat = this._showDateFormat;
     var resultArr = [];
     if(format){
       dateFormat = format;
@@ -112,12 +113,18 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
   },
   _actionSheetCloseEvt : function(eventObj){
     var $selectedTarget = $(eventObj.delegateTarget).find('.chk-link-list button.checked');
-    var dateValue = $selectedTarget.text().trim().substr(0,12);
+    var dateValue = $selectedTarget.text().trim().substr(0,13);
     var dateAttr = $selectedTarget.attr('data-name');
-    var changeTarget = this.$container.find('#'+dateAttr);
+    var changeTarget;
+    //changeTarget = this.$container.find('#'+dateAttr);
+    if(dateAttr.indexOf('time')>=0){
+      changeTarget = this.$container.find('.time');
+    }else{
+      changeTarget = this.$container.find('#'+dateAttr);
+    }
     changeTarget.text(dateValue);
     changeTarget.removeClass('placeholder');
-    changeTarget.attr('data-number',dateValue.replace(/\.\ /g, ''));
+    changeTarget.attr('data-number',dateValue.replace(/\.|\ /g, ''));
     changeTarget.attr('data-idx',$selectedTarget.parent().index());
     this._validateDateValue(changeTarget.attr('id'));
     this._popupService.close();
@@ -216,7 +223,7 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
       'svcEndDt' : this.$container.find('#end_date').attr('data-number'),
       'svcStartTm' : this.$container.find('#start_time').attr('data-number'),
       'svcEndTm' : this.$container.find('#end_time').attr('data-number'),
-      'startEndTerm' : endDtIdx - startDtIdx
+      'startEndTerm' : String(endDtIdx - startDtIdx)
     };
 
     this._apiService.request(Tw.API_CMD.BFF_10_0085, userSettingInfo, {},[this._prodId]).

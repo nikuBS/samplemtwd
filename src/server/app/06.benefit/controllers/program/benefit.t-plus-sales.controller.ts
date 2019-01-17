@@ -11,7 +11,7 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import { PRODUCT_TYPE_NM } from '../../../../types/string.type';
 
-class BenefitTPlusSales extends TwViewController {
+class BenefitTPlusSalesController extends TwViewController {
   constructor() {
     super();
   }
@@ -43,5 +43,5 @@ class BenefitTPlusSales extends TwViewController {
   }
 }
 
-export default BenefitTPlusSales;
+export default BenefitTPlusSalesController;
 

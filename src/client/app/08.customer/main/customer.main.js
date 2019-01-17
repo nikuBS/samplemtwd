@@ -38,6 +38,8 @@ Tw.CustomerMain.prototype = {
     }
   },
   _goToFaq: function () {
-    this._history.goLoad('/customer/faq/search?' + $.param({ keyword: this.$fe_faq_search_text.val() }));
+    if ( this.$fe_faq_search_text.val() !== '' ) {
+      this._history.goLoad('/customer/faq/search?' + $.param({ keyword: this.$fe_faq_search_text.val() }));
+    }
   }
 };

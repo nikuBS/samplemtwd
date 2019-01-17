@@ -164,10 +164,10 @@
                     <div class="widget">
                         <div class="widget-box slider1">
                             <div class="slider-box">
-                                <ul class="slider">
+                                <ul class="slider" data-id="banner-list">
                                     <% for (var i=0; i < data.banner.length; i++) { %>
                                     <li>
-                                        <a href="<%= data.banner[i].imgLinkUrl %>">
+                                        <a href="javascript:void(0)" data-href="<%= data.banner[i].imgLinkUrl %>">
                                             <img src="<%= CDN %><%= data.banner[i].bnnrFilePathNm %>" alt="<%= data.banner[i].bnnrImgAltCtt %>">
                                         </a>
                                     </li>
@@ -180,13 +180,12 @@
                 </div>
             </div>
             <!-- //.cont-box -->
-            <% delete data.banner; %>
             <% } %>
             <% } %>
 
             <% if (data.otherLines.length > 0) { %>
             <% var length = (data.otherLines.length > 20 ? 20 : data.otherLines.length); %>
-                <hr class="cont-sp type1" aria-hidden="true"/>
+                <hr class="cont-sp type1" aria-hidden="true" data-id="empty-other-lines"/>
                 <!-- .cont-box -->
                 <div class="cont-box noborder nogaps-btm b-line1" data-id="other-lines">
                     <div class="ti-caption-type01 pb0">

@@ -137,16 +137,19 @@
         <button class="prev-step fe-common-back">취소</button>
         <!--// .popup-closeBtn -->
     </div>
+    <% var joinInfoTerm = data.joinInfoTerm; delete data.joinInfoTerm; %>
 </div>
 <% include ../../components/javascript.component.html %>
 </body>
 <script>
   // client 작업 중
+  var joinInfoTerm = '<%- escape(JSON.stringify(joinInfoTerm)) %>';
   var data = '<%- JSON.stringify(data) %>';
   $(document).ready(function () {
     new Tw.BenefitSelectContract({
       $element: $('[data-id=sel-ct-container]'),
-      data: JSON.parse(data)
+      data: JSON.parse(data),
+      joinInfoTerm: JSON.parse(unescape(joinInfoTerm))
     });
   });
 </script>

@@ -49,7 +49,13 @@
                             </button>
                             <% } %>
                         </div>
-                        <div class="p-num"><span class="blind">회선정보</span><%= data.svcInfo.svcNum %></div>
+                        <div class="p-num"><span class="blind">회선정보</span>
+                            <%  if ( ['S1', 'S2'].indexOf(data.svcInfo.svcAttrCd) > -1 ) { %>
+                            <%= data.svcInfo.addr %>
+                            <% } else { %>
+                            <%= data.svcInfo.svcNum %>
+                            <% } %>
+                        </div>
                     </div>
 
                     <div class="basic-list mt20">
@@ -75,10 +81,10 @@
                     <div class="widget">
                         <div class="widget-box slider1">
                             <div class="slider-box">
-                                <ul class="slider">
+                                <ul class="slider" data-id="banner-list">
                                     <% for (var i=0; i < data.banner.length; i++) { %>
                                     <li>
-                                        <a href="<%= data.banner[i].imgLinkUrl %>">
+                                        <a href="javascript:void(0)" data-href="<%= data.banner[i].imgLinkUrl %>">
                                             <img src="<%= CDN %><%= data.banner[i].bnnrFilePathNm %>" alt="<%= data.banner[i].bnnrImgAltCtt %>">
                                         </a>
                                     </li>
@@ -90,7 +96,6 @@
                     <!--// .widget -->
                 </div>
             </div>
-            <% delete data.banner; %>
             <% } %>
 
             <% if (data.type !== 1) { %>
@@ -166,11 +171,6 @@
                             <i class="icon-member-40"><span class="blind">member</span></i>회원정보관리 &gt; 회선관리
                         </a>
                     </li>
-                    <li>
-                        <a href="/benefit/my">
-                            <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 &middot; 할인 &gt; 나의 할인 혜택
-                        </a>
-                    </li>
                     <% } else { %>
                     <li>
                         <a href="/common/member/line">
@@ -184,7 +184,7 @@
                     </li>
                     <li>
                         <a href="/benefit/my">
-                            <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 &middot; 할인 &gt; 나의 혜택
+                            <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 &middot; 할인 &gt; 나의 할인 혜택
                         </a>
                     </li>
                     <% } %>

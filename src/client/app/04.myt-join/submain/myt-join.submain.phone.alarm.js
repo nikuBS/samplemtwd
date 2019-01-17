@@ -64,8 +64,9 @@ Tw.MyTJoinPhoneNumChgAlarm.prototype = {
   },
 
   _selectPopupCallback: function ($target, $layer) {
-    $layer.one('click', '.condition', $.proxy(this._setSelectedValue, this, $target));
-    $layer.find('['+this._ATTR_DATA_PRD+'=' + $target.attr(this._ATTR_DATA_PRD) + ']').addClass('checked');
+    $layer.one('click', 'li button', $.proxy(this._setSelectedValue, this, $target));
+    $layer.find('['+this._ATTR_DATA_PRD+'=' + $target.attr(this._ATTR_DATA_PRD) + ']').addClass('checked')
+      .find(' input[type=radio]').prop('checked', true);
   },
 
   /**

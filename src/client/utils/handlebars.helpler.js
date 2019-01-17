@@ -42,4 +42,8 @@ Tw.HandlebarHelper = (function () {
   Handlebars.registerHelper('currencyComma', function(str) {
       return str.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   });
+
+  Handlebars.registerHelper('removeTag', function(str) {
+    return str.replace(/<([^>]+)>/ig,'');
+  });
 })();

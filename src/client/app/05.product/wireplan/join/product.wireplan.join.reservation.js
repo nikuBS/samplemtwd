@@ -42,7 +42,6 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
   _initCombineProduct: function() {
     this.$combineWrap.show();
-    this._getIsExistsCombineReservation();
     this._getCurrentCombineList();
   },
 
@@ -64,7 +63,6 @@ Tw.ProductWireplanJoinReservation.prototype = {
     this.$reservName.val(data.name);
     this.$reservNumber.val(data.number).trigger('change');
     this._typeCd = data.typeCd;
-    this._prodId = Tw.FormatHelper.isEmpty(data.prodId) ? null : data.prodId;
 
     this._typeCdPopupClose();
     this._setCombineResult();
@@ -140,22 +138,6 @@ Tw.ProductWireplanJoinReservation.prototype = {
     }
   },
 
-  _getIsExistsCombineReservation: function() {
-    this._apiService.request(Tw.API_CMD.BFF_10_0078, {})
-      .done($.proxy(this._resCombineReservation, this));
-  },
-
-  _resCombineReservation: function(resp) {
-    if (resp.code !== Tw.API_CODE.CODE_00) {
-      this.$combineIsExists.hide();
-      return;
-    }
-
-    if (!Tw.FormatHelper.isEmpty(resp.result.necessaryDocumentInspectInfoList)) {
-      this.$combineIsExists.show();
-    }
-  },
-
   _openTypeCdPop: function() {
     this._popupService.open({
       hbs:'actionsheet01',
@@ -198,7 +180,6 @@ Tw.ProductWireplanJoinReservation.prototype = {
     } else {
       this.$combineWrap.show();
       this.$nonCombineTip.hide();
-      this._getIsExistsCombineReservation();
       this._getCurrentCombineList();
     }
 
@@ -230,14 +211,14 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
   _openCombinePop: function() {
     this._popupService.open({
-      hbs:'actionsheet01',
+      hbs:'actionsheet05',
       layer:true,
       data:[
         {
           'title': Tw.PRODUCT_COMBINE_PRODUCT.GROUP_PERSONAL,
           'list':[
             { 'label-attr': 'id="ra1"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000103.TITLE,
-              'explain': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000103.EXPLAIN,
+              'cont-txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000103.EXPLAIN,
               'radio-attr':'id="ra1" data-prod_id="NH00000103" ' + (this._prodId === 'NH00000103' ? 'checked' : '') }
           ]
         },
@@ -245,13 +226,13 @@ Tw.ProductWireplanJoinReservation.prototype = {
           'title': Tw.PRODUCT_COMBINE_PRODUCT.GROUP_FAMILY,
           'list': [
             { 'label-attr': 'id="ra2_0"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00005055.TITLE,
-              'explain': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00005055.EXPLAIN,
+              'cont-txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00005055.EXPLAIN,
               'radio-attr':'id="ra2_0" data-prod_id="NA00005055" ' + (this._prodId === 'NA00005055' ? 'checked' : '') },
             { 'label-attr': 'id="ra2_1"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.TITLE,
-              'explain': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.EXPLAIN,
+              'cont-txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.EXPLAIN,
               'radio-attr':'id="ra2_1" data-prod_id="NH00000133" ' + (this._prodId === 'NH00000133' ? 'checked' : '') },
             { 'label-attr': 'id="ra2_2"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000084.TITLE,
-              'explain': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000084.EXPLAIN,
+              'cont-txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000084.EXPLAIN,
               'radio-attr':'id="ra2_2" data-prod_id="NH00000084" ' + (this._prodId === 'NH00000084' ? 'checked' : '') },
             { 'label-attr': 'id="ra2_3"',
               'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.ETC.TITLE,
@@ -372,12 +353,12 @@ Tw.ProductWireplanJoinReservation.prototype = {
       return;
     }
 
-    $input.val(Tw.FormatHelper.getDashedCellPhoneNumber($input.val()));
+    $input.attr('type', 'text').val(Tw.FormatHelper.getDashedCellPhoneNumber($input.val()));
   },
 
   _focusInputNumber: function(e) {
     var $input = $(e.currentTarget);
-    $input.val($input.val().replace(/-/gi, ''));
+    $input.val($input.val().replace(/-/gi, '')).attr('type', 'number');
   },
 
   _toggleInputCancelBtn: function(e) {

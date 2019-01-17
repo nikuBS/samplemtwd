@@ -14,6 +14,7 @@ Tw.ProductRoamingSettingRoamingAuto = function (rootEl,prodRedisInfo,prodBffInfo
   this._prodId = prodId;
   this._expireDate = expireDate;
   this._apiService = Tw.Api;
+  this._showDateFormat = 'YYYY. MM. DD.';
   this._init();
   this._bindBtnEvents();
   this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
@@ -23,8 +24,8 @@ Tw.ProductRoamingSettingRoamingAuto = function (rootEl,prodRedisInfo,prodBffInfo
 Tw.ProductRoamingSettingRoamingAuto.prototype = {
   _init : function(){
 
-    var startDate = moment(this._prodBffInfo.svcStartDt,'YYYYMMDD').format('YYYY. MM. DD');
-    var endDate = moment(this._prodBffInfo.svcEndDt,'YYYYMMDD').format('YYYY. MM. DD');
+    var startDate = moment(this._prodBffInfo.svcStartDt,'YYYYMMDD').format(this._showDateFormat);
+    var endDate = moment(this._prodBffInfo.svcEndDt,'YYYYMMDD').format(this._showDateFormat);
     var startTime = this._prodBffInfo.svcStartTm;
     var endTime = this._prodBffInfo.svcEndTm;
 
@@ -44,7 +45,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._historyService.goBack,this));
   },
   _getDateArrFromToDay : function(range,format){
-    var dateFormat = 'YYYY. MM. DD';
+    var dateFormat = this._showDateFormat;
     var resultArr = [];
     if(format){
       dateFormat = format;
@@ -107,12 +108,12 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
   },
   _actionSheetCloseEvt : function(eventObj){
     var $selectedTarget = $(eventObj.delegateTarget).find('.chk-link-list button.checked');
-    var dateValue = $selectedTarget.text().trim().substr(0,12);
+    var dateValue = $selectedTarget.text().trim().substr(0,13);
     var dateAttr = $selectedTarget.attr('data-name');
     var changeTarget = this.$container.find('#'+dateAttr);
     changeTarget.text(dateValue);
     changeTarget.removeClass('placeholder');
-    changeTarget.attr('data-number',dateValue.replace(/\.\ /g, ''));
+    changeTarget.attr('data-number',dateValue.replace(/\.|\ /g, ''));
     changeTarget.attr('data-idx',$selectedTarget.parent().index());
     this._validateDateValue();
     this._popupService.close();
@@ -134,7 +135,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     if(startDateValidationResult){
       this.$container.find('.bt-fixed-area button').removeAttr('disabled');
       var expireDate = parseInt(this._expireDate,10) + parseInt(startDateElement.attr('data-idx'),10);
-      var endDate = moment().add(expireDate, 'days').format('YYYY. MM. DD');
+      var endDate = moment().add(expireDate, 'days').format(this._showDateFormat);
       endDateElement.attr('data-number',moment().add(expireDate, 'days').format('YYYYMMDD'));
       endDateElement.text(endDate);
       endTimeElement.text(startTime);

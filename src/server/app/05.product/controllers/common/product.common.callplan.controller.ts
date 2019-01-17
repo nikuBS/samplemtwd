@@ -55,7 +55,7 @@ class ProductCommonCallplan extends TwViewController {
       return Observable.of({});
     }
 
-    if (['C', 'G', 'H_P', 'H_A'].indexOf(prodTypCd) !== -1) {
+    if (['C', 'H_P', 'H_A'].indexOf(prodTypCd) !== -1) {
       return this.apiService.request(API_CMD.BFF_05_0040, {}, {}, [prodId]);
     }
 
@@ -138,12 +138,16 @@ class ProductCommonCallplan extends TwViewController {
     let isJoinReservation: any = false;
 
     basicInfo.linkBtnList.forEach((item) => {
+      if (item.linkTypCd === 'SE' && basicInfo.prodSetYn !== 'Y') {
+        return true;
+      }
+
       if (item.linkTypCd === 'SC') {
         joinBtnList.push(item);
         return true;
       }
 
-      if (item.linkTypCd === 'SE') {
+      if (item.linkTypCd === 'SE' && basicInfo.prodSetYn === 'Y') {
         settingBtnList.push(item);
         return true;
       }
@@ -419,7 +423,7 @@ class ProductCommonCallplan extends TwViewController {
       return false;
     }
 
-    if (['C', 'G', 'H_P', 'H_A'].indexOf(prodTypCd) !== -1) {
+    if (['C', 'H_P', 'H_A'].indexOf(prodTypCd) !== -1) {
       return isJoinedInfo.result.isAdditionUse === 'Y';
     }
 

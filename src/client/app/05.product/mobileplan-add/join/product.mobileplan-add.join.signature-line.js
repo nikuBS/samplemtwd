@@ -116,11 +116,11 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
   },
 
   _blurInputNumber: function() {
-    this.$inputNumber.val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$inputNumber.val()));
+    this.$inputNumber.attr('type', 'text').val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$inputNumber.val()));
   },
 
   _focusInputNumber: function() {
-    this.$inputNumber.val(this.$inputNumber.val().replace(/-/gi, ''));
+    this.$inputNumber.val(this.$inputNumber.val().replace(/-/gi, '')).attr('type', 'number');
   },
 
   _clearNum: function() {
@@ -170,7 +170,8 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
       toProdDesc: this._confirmOptions.preinfo.reqProdInfo.prodSmryDesc,
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
       isNumberBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
-      isAutoJoinTermList: (this._confirmOptions.preinfo.autoJoinList.length > 0 || this._confirmOptions.preinfo.autoTermList.length > 0),
+      isJoinTermProducts: (!Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoJoinList) ||
+        !Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoTermList)),
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
       autoTermList: this._confirmOptions.preinfo.autoTermList,
       isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0)

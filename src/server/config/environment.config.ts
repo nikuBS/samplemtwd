@@ -16,7 +16,7 @@ const environment = {
       db: 0
     },
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
-    SEARCH_SERVER: 'http://61.250.22.114:8080',
+    SEARCH_SERVER: 'http://61.250.22.114:8180',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     // DOMAIN: 'http://m.tworld.co.kr:3000',
     DOMAIN_G: 'm-dev.tworld.co.kr:3000',

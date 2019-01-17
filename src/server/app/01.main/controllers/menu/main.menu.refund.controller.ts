@@ -108,17 +108,20 @@ class MainMenuRefund extends TwViewController {
       socialId: data.ctzCorpNum,
       canSubmit: !!data.cancelRefund[0].custNum,
       refundArr: data.cancelRefund.filter((item: RefundItem) => {
-        return item.donaReqYn !== 'Y' && FormatHelper.isEmpty(item.effStaDt);
+        return item.donaReqYn !== 'Y' && FormatHelper.isEmpty(item.effStaDt) &&
+          FormatHelper.isEmpty(item.rfndReqDt);
       }).map((item: RefundItem) => {
         item.svcBamt = FormatHelper.convNumFormat(parseInt(item.svcBamt, 10));
         item.svcCdNm = item.svcCdNm.includes('이동전화') ? '휴대폰' : item.svcCdNm;
         return item;
       }),
       submittedArr: data.cancelRefund.filter((item: RefundItem) => {
-        return item.donaReqYn === 'Y' || !FormatHelper.isEmpty(item.effStaDt);
+        return item.donaReqYn === 'Y' || !FormatHelper.isEmpty(item.effStaDt) ||
+          !FormatHelper.isEmpty(item.rfndReqDt);
       }).map((item: RefundItemSubmitted) => {
         item.donaReqDt = DateHelper.getShortDateNoDot(item.donaReqDt);
-        item.effStaDt = DateHelper.getShortDateNoDot(item.effStaDt);
+        item.effStaDt = FormatHelper.isEmpty(item.effStaDt) ?
+          '' : DateHelper.getShortDateNoDot(item.effStaDt);
         item.svcCdNm = item.svcCdNm.includes(MAIN_MENU_REFUND_SVC_TYPE.PHONE_TYPE_0) ?
           MAIN_MENU_REFUND_SVC_TYPE.PHONE_TYPE_1 : item.svcCdNm;
         item.svcNum = FormatHelper.conTelFormatWithDash(item.svcNum);

@@ -11,18 +11,6 @@
                 <h3 class="title">{{benefitNm}}</h3>
                 <p class="text">{{benefitDesc}}</p>
             </div>
-            {{#ifCond ../category '===' 'F01422'}}
-                {{#isNotEmpty benefitPrice}}
-                <span class="total">{{benefitText}}
-                        {{#isNaN benefitPrice}}
-                            <strong>{{benefitPrice}}</strong>
-                        {{/isNaN}}
-                        {{^isNaN benefitPrice}}
-                            <strong>{{numComma benefitPrice}}</strong>원
-                        {{/isNaN}}
-                    </span>
-                {{/isNotEmpty}}
-            {{/ifCond}}
             <div class="tag-field">
                 {{#each tagList}}
                     <span class="tag">#{{tagNm}}</span>

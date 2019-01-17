@@ -76,6 +76,9 @@ Tw.MyTJoinSubMain.prototype = {
     this.$joinService = this.$container.find('[data-id=join-svc]');
     this.$nickNmBtn = this.$container.find('[data-id=change-nick]');
     this.$certifyBtn = this.$container.find('[data-id=certify-popup]');
+    if ( this.data.banner.length > 0 ) {
+      this.$bannerList = this.$container.find('[data-id=banner-list]');
+    }
   },
 
   _bindEvent: function () {
@@ -135,6 +138,9 @@ Tw.MyTJoinSubMain.prototype = {
     this.$joinService.on('click', $.proxy(this._onMovedJoinService, this));
     this.$nickNmBtn.on('click', $.proxy(this._onChangeNickName, this));
     this.$certifyBtn.on('click', $.proxy(this._onOpenCertifyPopup, this));
+    if ( this.data.banner.length > 0 ) {
+      this.$bannerList.on('click', 'li', $.proxy(this._onClickBannerItem, this));
+    }
   },
 
   _initialize: function () {
@@ -315,5 +321,11 @@ Tw.MyTJoinSubMain.prototype = {
   // 공인인증센터
   _onOpenCertifyPopup: function () {
     Tw.Native.send(Tw.NTV_CMD.GO_CERT, {});
+  },
+
+  _onClickBannerItem: function (event) {
+    var $target = $(event.currentTarget);
+    var url = $target.find('a').attr('data-href');
+    Tw.CommonHelper.openUrlExternal(url);
   }
 };

@@ -92,10 +92,15 @@ Tw.MyTFareBillPrepayMain.prototype = {
     return true;
   },
   _prepay: function () {
+    var hbsName = 'MF_06_03';
+    if (this.$title === 'contents') {
+      hbsName = 'MF_07_03';
+    }
+
     if (this._isPrepayAble()) {
       if (Tw.BrowserHelper.isApp()) {
         this._popupService.open({
-          'hbs': 'MF_06_03'
+          'hbs': hbsName
         }, $.proxy(this._goPrepay, this), null, 'pay');
       } else {
         this._goAppInfo();

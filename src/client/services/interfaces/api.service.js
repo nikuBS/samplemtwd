@@ -11,7 +11,14 @@ Tw.ApiService.prototype = {
     Tw.Logger.info('[API REQ]', htOptions);
 
     return $.ajax(htOptions)
-      .then($.proxy(this._checkAuth, this, command, params, headers, pathParams, version));
+      .then($.proxy(this._checkAuth, this, command, params, headers, pathParams, version))
+      .fail(function (err) {
+        if (err.statusText === 'timeout') {
+          err.code = 'timeout';
+          err.msg = 'Timeout from ' + command.path;
+        }
+        return err;
+      });
   },
 
   requestArray: function (requests) {
@@ -157,7 +164,7 @@ Tw.ApiService.prototype = {
   sendNativeSession: function (loginType, callback) {
     this._nativeService.send(Tw.NTV_CMD.SESSION, {
       serverSession: Tw.CommonHelper.getCookie('TWM'),
-      expired: 60 * 60 * 1000,
+      expired: Tw.SESSION_EXPIRE_TIME,
       loginType: loginType
     });
     if ( !Tw.FormatHelper.isEmpty(callback) ) {
