@@ -503,7 +503,7 @@ Tw.MYT_TPL = {
 
 Tw.MYT_DATA_CHARGE_TYPE_LIST = [
   { txt: '전체', 'radio-attr': 'data-type="5"', 'label-attr': ' ' },
-  { txt: 'T끼리 데이터 선물', 'radio-attr': 'data-type="0"', 'label-attr': ' ' },
+  { txt: 'T끼리 데이터 선물', 'radio-attr': 'data-type="0"', 'label-attr': ' ', 'check-attr': 'cell-title' },
   { txt: '데이터 한도 충전', 'radio-attr': 'data-type="1"', 'label-attr': ' ' },
   { txt: '팅/쿠키즈/안심요금', 'radio-attr': 'data-type="2"', 'label-attr': ' ' },
   { txt: '팅 요금 선물', 'radio-attr': 'data-type="3"', 'label-attr': ' ' },
