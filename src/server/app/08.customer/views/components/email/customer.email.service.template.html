@@ -64,14 +64,24 @@
             <p class="title">문의하실 내용을 작성해주세요.</p>
             <% if( allSvc.s && allSvc.s.length >= 2 ) { %>
             <div class="info-form-box">
+                <% if ( allSvc.s[0].svcGr === 'U' ) { %>
                 <button class="bt-dropdown big tx-bold fe-select-line" title="문의하실 회선정보 선택" aria-haspopup="true"
                         data-svcMgmtNum="<%-allSvc.s[0].svcMgmtNum%>"><%-allSvc.s[0].svcNum%><span class="ico"></span></button>
+                <% } else { %>
+                <button class="bt-dropdown big tx-bold fe-select-line" title="문의하실 회선정보 선택" aria-haspopup="true"
+                        data-svcMgmtNum="<%-allSvc.s[0].svcMgmtNum%>"><%-allSvc.s[0].addr%><span class="ico"></span></button>
+                <% } %>
             </div>
-            <% } else if( allSvc.s && allSvc.s.length === 1 ) { %>
+            <% } else if( allSvc.s && allSvc.s.length === 1 ) { %>all
             <div class="inputbox">
                 <div class="input">
+                    <% if ( allSvc.s[0].svcGr === 'U' ) { %>
                     <input type="text" placeholder="회선정보 입력" title="문의하실 회선정보 입력" data-svcMgmtNum="<%-allSvc.s[0].svcMgmtNum%>"
                            value="<%-allSvc.s[0].svcNum%>" disabled>
+                    <% } else { %>
+                    <input type="text" placeholder="회선정보 입력" title="문의하실 회선정보 입력" data-svcMgmtNum="<%-allSvc.s[0].svcMgmtNum%>"
+                           value="<%-allSvc.s[0].addr%>" disabled>
+                    <% } %>
                 </div>
             </div>
             <% } else { %>
