@@ -39,7 +39,11 @@
                                     <span class="info-date">기간 <span class="fe-event-day"><%= content[i].startDate %> ~ <%= content[i].endDate %></span></span>
                                     <% if (content[i].dday <= 7) { %>
                                     <span class="info-day fe-dday-wrap">
-                                        D-<span class="fe-dday"><%= content[i].dday %></span>
+                                        <% if (content[i].dday === 0) { %>
+                                            D-day
+                                        <% } else { %>
+                                            D-<span class="fe-dday"><%= content[i].dday %></span>
+                                        <% } %>
                                     </span>
                                     <% } %>
                                     <% if (content[i].promotionType !== null) { %>
