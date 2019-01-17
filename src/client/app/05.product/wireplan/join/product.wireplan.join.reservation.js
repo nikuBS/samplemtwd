@@ -180,7 +180,6 @@ Tw.ProductWireplanJoinReservation.prototype = {
     } else {
       this.$combineWrap.show();
       this.$nonCombineTip.hide();
-      this._getIsExistsCombineReservation();
       this._getCurrentCombineList();
     }
 
