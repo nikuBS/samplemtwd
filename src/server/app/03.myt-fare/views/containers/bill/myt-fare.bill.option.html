@@ -15,7 +15,7 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div id="myt-fare-bill-option" class="wrap" data-menuId="M000261">
+    <div id="myt-fare-bill-option" class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <!-- #header -->
         <%- include('../../../../../common/views/components/header.component.html', { title: '납부방법', svcInfo: svcInfo }); %>
         <!--// #header -->
@@ -87,7 +87,7 @@
                             <dl>
                                 <dt>연락처</dt>
                                 <dd>
-                                    <p class="value"><%= svcInfo.phoneNum %></p>
+                                    <p class="value"><%= paymentOption.phoneNum %></p>
                                 </dd>
                             </dl>
                         </li>
@@ -130,7 +130,7 @@
                             <dl>
                                 <dt>연락처</dt>
                                 <dd>
-                                    <p class="value"><%= svcInfo.phoneNum %></p>
+                                    <p class="value"><%= paymentOption.phoneNum %></p>
                                 </dd>
                             </dl>
                         </li>
