@@ -44,7 +44,7 @@ class ProductWireplanTerminate extends TwViewController {
 
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_10_0111, { joinTermCd: '03' }, {}, [prodId]),
-      this.apiService.request(API_CMD.BFF_10_0101, { joinTermCd: '03' }, {}, [prodId])
+      this.apiService.request(API_CMD.BFF_10_0168, { joinTermCd: '03' }, {}, [prodId])
     ).subscribe(([joinTermInfo, currentAdditionsInfo]) => {
       const apiError = this.error.apiError([joinTermInfo, currentAdditionsInfo]);
 

@@ -13,7 +13,7 @@ Tw.ProductWireplanJoinReservation = function(rootEl, isProduct) {
   this._historyService = new Tw.HistoryService();
   this._tidLanding = new Tw.TidLandingComponent();
 
-  this._prodIdFamilyList = ['NA00005055', 'NH00000133', 'NH00000084'];
+  this._prodIdFamilyList = ['NA00005055', 'NH00000133', 'NH00000083'];
   this._prodIdList = $.merge(this._prodIdFamilyList, ['NH00000103']);
   this._isProduct = Tw.FormatHelper.isEmpty(isProduct) ? null : JSON.parse(isProduct);
   this._logged = false;
@@ -92,7 +92,6 @@ Tw.ProductWireplanJoinReservation.prototype = {
     this.$combineWrap = this.$container.find('.fe-combine_wrap');
     this.$formData = this.$container.find('.fe-form_data');
     this.$nonCombineTip = this.$container.find('.fe-non_combine_tip');
-    this.$combineIsExists = this.$container.find('.fe-combine_is_exists');
     this.$combineExplainCheckboxWrap = this.$container.find('.fe-combine_explan_checkbox_wrap');
     this.$combineExplainAllWrap = this.$container.find('.fe-combine_explain_all_wrap');
 
@@ -176,7 +175,6 @@ Tw.ProductWireplanJoinReservation.prototype = {
       this._resetCombineWrap();
       this.$combineWrap.hide();
       this.$nonCombineTip.show();
-      this.$combineIsExists.hide();
     } else {
       this.$combineWrap.show();
       this.$nonCombineTip.hide();
@@ -231,9 +229,9 @@ Tw.ProductWireplanJoinReservation.prototype = {
             { 'label-attr': 'id="ra2_1"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.TITLE,
               'cont-txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.EXPLAIN,
               'radio-attr':'id="ra2_1" data-prod_id="NH00000133" ' + (this._prodId === 'NH00000133' ? 'checked' : '') },
-            { 'label-attr': 'id="ra2_2"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000084.TITLE,
-              'cont-txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000084.EXPLAIN,
-              'radio-attr':'id="ra2_2" data-prod_id="NH00000084" ' + (this._prodId === 'NH00000084' ? 'checked' : '') },
+            { 'label-attr': 'id="ra2_2"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000083.TITLE,
+              'cont-txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000083.EXPLAIN,
+              'radio-attr':'id="ra2_2" data-prod_id="NH00000083" ' + (this._prodId === 'NH00000083' ? 'checked' : '') },
             { 'label-attr': 'id="ra2_3"',
               'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.ETC.TITLE,
               'radio-attr':'id="ra2_3" data-prod_id="' + (!Tw.FormatHelper.isEmpty(this._prodId) &&
@@ -339,7 +337,9 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
   _detectInputNumber: function(e) {
     var $input = $(e.currentTarget);
+
     $input.val($input.val().replace(/[^0-9]/g, ''));
+
     if ($input.val().length > 11) {
       $input.val($input.val().substr(0, 11));
     }
@@ -353,12 +353,12 @@ Tw.ProductWireplanJoinReservation.prototype = {
       return;
     }
 
-    $input.attr('type', 'text').val(Tw.FormatHelper.getDashedCellPhoneNumber($input.val()));
+    $input.val(Tw.FormatHelper.getDashedCellPhoneNumber($input.val()));
   },
 
   _focusInputNumber: function(e) {
     var $input = $(e.currentTarget);
-    $input.val($input.val().replace(/-/gi, '')).attr('type', 'number');
+    $input.val($input.val().replace(/-/gi, ''));
   },
 
   _toggleInputCancelBtn: function(e) {
