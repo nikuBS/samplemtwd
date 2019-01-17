@@ -4,7 +4,7 @@
  * Date: 2018.09.11
  */
 
-Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, isPreview) {
+Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, lineProcessCase, isPreview) {
   this.$container = rootEl;
 
   this._historyService = new Tw.HistoryService();
@@ -18,6 +18,7 @@ Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, i
   this._prodId = prodId;
   this._prodTypCd = prodTypCd;
   this._settingBtnList = settingBtnList;
+  this._lineProcessCase = lineProcessCase;
   this._isPreview = isPreview === 'Y';
 
   this._convertSettingBtnList();
@@ -249,9 +250,18 @@ Tw.ProductCommonCallplan.prototype = {
 
   _getSvcInfoRes: function(joinTermCd, url, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
-      return this._tidLanding.goLogin(location.href + (Tw.FormatHelper.isEmpty(location.search) ? '' : location.search));
+      return this._tidLanding.goLogin(location.origin + url + '?prod_id=' + this._prodId);
     }
 
+    if (this._lineProcessCase === 'B' || this._lineProcessCase === 'D') {
+      return this._procPreCheck(joinTermCd, url);
+    }
+
+    this._historyService.goLoad('/product/line-change?p_mod=' + (this._lineProcessCase === 'A' ? 'select' : 'change') +
+      '&t_prod_id=' + this._prodId + '&t_url=' + encodeURIComponent(url + '?prod_id=' + this._prodId));
+  },
+
+  _procPreCheck: function(joinTermCd, url) {
     var preCheckApi = this._getPreCheckApiReqInfo(joinTermCd);
 
     if (Tw.FormatHelper.isEmpty(preCheckApi)) {
