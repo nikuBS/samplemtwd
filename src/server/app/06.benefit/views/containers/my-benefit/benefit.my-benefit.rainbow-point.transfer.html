@@ -40,12 +40,12 @@
                     <div class="option-box point-type">
                         <div class="dropdown-wrap">
                             <button class="bt-dropdown big tx-bold fe-btn-line-to-give" title="양도하는 회선" aria-haspopup="true" data-svc-mgmt-num="<%= lineToGive.svcMgmtNum %>" style="cursor: default;">
-                                <span class="fe-svc-num"><%= lineToGive.svcNum %></span>
+                                <span class="fe-svc-num"><%= lineToGive.showSvcNum %></span>
                             </button> 에서
                         </div>
                         <div class="dropdown-wrap">
                             <button class="bt-dropdown big tx-bold fe-btn-line-to-receive" title="양수하는 회선" aria-haspopup="true"data-svc-mgmt-num="<%= lineToReceive.svcMgmtNum %>">
-                                <span class="fe-svc-num"><%= lineToReceive.svcNum %></span>
+                                <span class="fe-svc-num"><%= lineToReceive.showSvcNum %></span>
                             </button> 으로
                         </div>
                         <div class="inputbox">
@@ -88,7 +88,7 @@
                                         <ul>
                                             <li>
                                                 <span class="title" id="numlabel01">포인트를 받은 회선</span>
-                                                <span class="tx-number" aria-labelledby="numlabel01"><%= histories[i].befrSvcNum %></span>
+                                                <span class="tx-number" aria-labelledby="numlabel01"><%= histories[i].showBefrSvcNum %></span>
                                             </li>
                                         </ul>
                                     </div>
