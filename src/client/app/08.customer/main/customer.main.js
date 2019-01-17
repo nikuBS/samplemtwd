@@ -28,6 +28,7 @@ Tw.CustomerMain.prototype = {
   _bindEvent: function () {
     this.$fe_faq_search.on('click', $.proxy(this._goToFaq, this));
     this.$fe_faq_search_text.on('keyup', $.proxy(this._activateFaqSearch, this));
+    this.$container.on('click', '.cancel', $.proxy(this._activateFaqSearch, this));
   },
 
   _activateFaqSearch: function () {
@@ -37,6 +38,7 @@ Tw.CustomerMain.prototype = {
       this.$fe_faq_search.prop('disabled', true);
     }
   },
+
   _goToFaq: function () {
     if ( this.$fe_faq_search_text.val() !== '' ) {
       this._history.goLoad('/customer/faq/search?' + $.param({ keyword: this.$fe_faq_search_text.val() }));
