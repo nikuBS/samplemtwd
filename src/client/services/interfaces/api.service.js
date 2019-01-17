@@ -11,7 +11,14 @@ Tw.ApiService.prototype = {
     Tw.Logger.info('[API REQ]', htOptions);
 
     return $.ajax(htOptions)
-      .then($.proxy(this._checkAuth, this, command, params, headers, pathParams, version));
+      .then($.proxy(this._checkAuth, this, command, params, headers, pathParams, version))
+      .fail(function (err) {
+        if (err.statusText === 'timeout') {
+          err.code = 'timeout';
+          err.msg = 'Timeout from ' + command.path;
+        }
+        return err;
+      });
   },
 
   requestArray: function (requests) {
