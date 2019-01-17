@@ -157,7 +157,7 @@ Tw.ApiService.prototype = {
   sendNativeSession: function (loginType, callback) {
     this._nativeService.send(Tw.NTV_CMD.SESSION, {
       serverSession: Tw.CommonHelper.getCookie('TWM'),
-      expired: 60 * 60 * 1000,
+      expired: Tw.SESSION_EXPIRE_TIME,
       loginType: loginType
     });
     if ( !Tw.FormatHelper.isEmpty(callback) ) {

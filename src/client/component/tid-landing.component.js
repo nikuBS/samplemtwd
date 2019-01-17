@@ -35,9 +35,16 @@ Tw.TidLandingComponent.prototype = {
     }
   },
   goActionSheetLogin: function () {
-    this._nativeService.send(Tw.NTV_CMD.LOGIN, {
-      type: '1'
-    }, $.proxy(this._onNativeLogin, this));
+    this._apiService.request(Tw.NODE_CMD.SESSION, {})
+      .done($.proxy(this._onSuccessSession, this));
+  },
+  _onSuccessSession: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._apiService.sendNativeSession('');
+      this._nativeService.send(Tw.NTV_CMD.LOGIN, {
+        type: '1'
+      }, $.proxy(this._onNativeLogin, this, '/main/home'));
+    }
   },
   goLogin: function (target) {
     target = target || '/main/home';

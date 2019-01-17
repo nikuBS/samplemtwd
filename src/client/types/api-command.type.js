@@ -508,6 +508,7 @@ Tw.NODE_CMD = {
   SET_DEVICE: { path: '/device', method: Tw.API_METHOD.POST },
   LOGIN_TID: { path: '/user/sessions', method: Tw.API_METHOD.POST },
   LOGOUT_TID: { path: '/logout-tid', method: Tw.API_METHOD.POST },
+  SESSION: { path: '/session', method: Tw.API_METHOD.POST },
   EASY_LOGIN_AOS: { path: '/user/login/android', method: Tw.API_METHOD.POST },
   EASY_LOGIN_IOS: { path: '/user/login/ios', method: Tw.API_METHOD.POST },
   CHANGE_SESSION: { path: '/common/selected-sessions', method: Tw.API_METHOD.PUT },

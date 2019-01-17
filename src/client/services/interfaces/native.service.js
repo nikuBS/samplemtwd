@@ -109,7 +109,6 @@ Tw.NativeService.prototype = {
       // error
     }
   },
-
   _onSessionExpired: function (resp) {
     Tw.Logger.info('[onSessionExpired]', resp);
     this._tidLanding = new Tw.TidLandingComponent();
