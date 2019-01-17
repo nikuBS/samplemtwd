@@ -11,8 +11,15 @@ import { Observable } from 'rxjs/Observable';
 import MyTUsageGraphbox from './myt-data.usage.graphbox.controller';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
-import { SKIP_NAME } from '../../../../types/string.type';
-import { DAY_BTN_STANDARD_SKIP_ID, T0_PLAN_SKIP_ID, UNIT, UNLIMIT_CODE } from '../../../../types/bff.type';
+import { MYT_DATA_USAGE, SKIP_NAME } from '../../../../types/string.type';
+import {
+  DAY_BTN_STANDARD_SKIP_ID,
+  SVC_ATTR_E,
+  T0_PLAN_SKIP_ID,
+  UNIT,
+  UNIT_E,
+  UNLIMIT_CODE
+} from '../../../../types/bff.type';
 
 const VIEW = {
   CIRCLE: 'usage/myt-data.hotdata.html',
@@ -29,10 +36,10 @@ class MyTDataHotdata extends TwViewController {
     const reqArr = new Array();
     reqArr.push(this.reqBalances());
     switch ( svcInfo.svcAttrCd ) {
-      case 'M1' :
+      case SVC_ATTR_E.MOBILE_PHONE :
         reqArr.push(this.reqBalanceAddOns()); // 부가 서비스
         break;
-      case 'M2' :
+      case SVC_ATTR_E.PPS :
         reqArr.push(this.reqPpsCard()); // PPS 정보
         break;
     }
@@ -49,14 +56,14 @@ class MyTDataHotdata extends TwViewController {
         };
 
         switch ( svcInfo.svcAttrCd ) {
-          case 'M1' :
+          case SVC_ATTR_E.MOBILE_PHONE :
               option['usageData'] = this.parseCellPhoneUsageData(usageDataResp.result, svcInfo);
               if ( extraDataResp && extraDataResp.code === API_CODE.CODE_00 ) {
                 option['balanceAddOns'] = extraDataResp.result;
               }
               view = VIEW.CIRCLE;
             break;
-          case 'M2' :
+          case SVC_ATTR_E.PPS :
             // extraDataResp = {
             //   'code': '00',
             //   'msg': 'success',
@@ -91,7 +98,12 @@ class MyTDataHotdata extends TwViewController {
   }
 
   public parseUsageData(usageData: any): any {
-    const kinds = ['data', 'voice', 'sms', 'etc'];
+    const kinds = [
+      MYT_DATA_USAGE.DATA_TYPE.DATA,
+      MYT_DATA_USAGE.DATA_TYPE.VOICE,
+      MYT_DATA_USAGE.DATA_TYPE.SMS,
+      MYT_DATA_USAGE.DATA_TYPE.ETC
+    ];
     this.setTotalRemained(usageData);
     usageData.data = usageData.gnrlData || [];
 
@@ -106,7 +118,12 @@ class MyTDataHotdata extends TwViewController {
   }
 
   public parseCellPhoneUsageData(usageData: any, svcInfo: any): any {
-    const kinds = ['data', 'voice', 'sms', 'etc'];
+    const kinds = [
+      MYT_DATA_USAGE.DATA_TYPE.DATA,
+      MYT_DATA_USAGE.DATA_TYPE.VOICE,
+      MYT_DATA_USAGE.DATA_TYPE.SMS,
+      MYT_DATA_USAGE.DATA_TYPE.ETC
+    ];
     const gnrlData = usageData.gnrlData || [];  // 범용 데이터 공제항목
     const spclData = usageData.spclData || [];  // 특수 데이터 공제항목
     let dataArr = new Array();
@@ -169,14 +186,14 @@ class MyTDataHotdata extends TwViewController {
     if (pas.length > 0) {
       pas.map((pa) => {
         dataArr = dataArr.filter((_data) => {
-          return !(_data.skipId === 'PA' && _data.prodId === pa.prodId);
+          return !(_data.skipId === SKIP_NAME.DAILY && _data.prodId === pa.prodId);
         });
       });
     }
 
     // skipId가 'PA' && 무제한이 아닌 경우 노출 제외
     dataArr = dataArr.filter((_data) => {
-      return !(_data.skipId === 'PA' && (UNLIMIT_CODE.indexOf(_data.unlimit) === -1));
+      return !(_data.skipId === SKIP_NAME.DAILY && (UNLIMIT_CODE.indexOf(_data.unlimit) === -1));
     });
 
 
@@ -207,7 +224,7 @@ class MyTDataHotdata extends TwViewController {
       const totalRemained = gnrlData.reduce((_memo, _data) => {
         return _memo + parseInt(_data.remained, 10);
       }, 0);
-      usageData.totalRemained = FormatHelper.convDataFormat(totalRemained, UNIT['140']);
+      usageData.totalRemained = FormatHelper.convDataFormat(totalRemained, UNIT[UNIT_E.DATA]);
     }
   }
 

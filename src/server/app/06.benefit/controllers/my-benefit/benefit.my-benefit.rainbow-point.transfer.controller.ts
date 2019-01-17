@@ -84,6 +84,7 @@ class BenefitMyBenefitRainbowPointTransfer extends TwViewController {
     lines.map((line) => {
       line.showPoint = FormatHelper.addComma(line.point);
       line.showRelNm = line.relCd === RAINBOW_POINT_REL_CD.P ? MY_BENEFIT_RAINBOW_POINT_TRANSFER.REL_NM.P : '';
+      line.showSvcNum = FormatHelper.conTelFormatWithDash(line.svcNum);
     });
     return lines;
   }
@@ -94,6 +95,7 @@ class BenefitMyBenefitRainbowPointTransfer extends TwViewController {
     histories.map((history) => {
       history.showPoint = FormatHelper.addComma(history.point);
       history.showOpDt = DateHelper.getShortDate(history.opDt);
+      history.showBefrSvcNum = FormatHelper.conTelFormatWithDash(history.befrSvcNum);
     });
     return result;
   }

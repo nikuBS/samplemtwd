@@ -29,7 +29,7 @@ Tw.BenefitMyBenefitRainbowPointCommon.prototype = {
     return [{
       list: _.map(lines, function (line) {
         return {
-          value: line.svcNum,
+          value: line.showSvcNum,
           attr: 'id="' + line.svcMgmtNum + '"',
           option: line.svcMgmtNum === svcMgmtNum ? 'checked' : ''
         };
@@ -208,13 +208,13 @@ Tw.BenefitMyBenefitRainbowPointAdjustment.prototype = $.extend({}, Tw.BenefitMyB
     var pointToReceive = parseInt(selectedLineToReceive.point, 10);
     return {
       giver: {
-        svcNum: selectedLineToGive.svcNum,
+        svcNum: selectedLineToGive.showSvcNum,
         point: Tw.FormatHelper.addComma(pointToGive.toString()),
         remain: Tw.FormatHelper.addComma((pointToGive - inputPoint).toString()),
         inputPoint: Tw.FormatHelper.addComma(inputPoint.toString())
       },
       receiver: {
-        svcNum: selectedLineToReceive.svcNum,
+        svcNum: selectedLineToReceive.showSvcNum,
         point: Tw.FormatHelper.addComma(pointToReceive.toString()),
         remain: Tw.FormatHelper.addComma((pointToReceive + inputPoint).toString())
       }
