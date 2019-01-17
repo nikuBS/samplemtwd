@@ -87,6 +87,7 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
 
   _detectInputNumber: function() {
     this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9]/g, ''));
+
     if (this.$inputNumber.val().length > 11) {
       this.$inputNumber.val(this.$inputNumber.val().substr(0, 11));
     }
@@ -116,11 +117,11 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
   },
 
   _blurInputNumber: function() {
-    this.$inputNumber.attr('type', 'text').val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$inputNumber.val()));
+    this.$inputNumber.val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$inputNumber.val()));
   },
 
   _focusInputNumber: function() {
-    this.$inputNumber.val(this.$inputNumber.val().replace(/-/gi, '')).attr('type', 'number');
+    this.$inputNumber.val(this.$inputNumber.val().replace(/-/gi, ''));
   },
 
   _clearNum: function() {

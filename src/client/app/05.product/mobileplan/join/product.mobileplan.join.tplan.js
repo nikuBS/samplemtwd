@@ -75,6 +75,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
 
   _procClearSmartWatchLineInfo: function() {
     if (this._isDisableSmartWatchLineInfo) {
+      this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
       return;
     }
 
@@ -109,6 +110,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
 
   _setSmartWatchLine: function(e) {
     this._smartWatchLine = $(e.currentTarget).data('num');
+    this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
     this._popupService.close();
   },
 
@@ -117,6 +119,9 @@ Tw.ProductMobileplanJoinTplan.prototype = {
 
     $elem.prop('checked', false);
     $elem.parents('.radiobox').removeClass('checked').attr('aria-checked', 'false');
+
+    this.$btnSetupOk.attr('disabled');
+    this.$btnSetupOk.prop('disabled', true);
   },
 
   _convConfirmOptions: function(result) {

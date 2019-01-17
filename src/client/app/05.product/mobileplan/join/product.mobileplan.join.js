@@ -91,7 +91,6 @@ Tw.ProductMobileplanJoin.prototype = {
   },
 
   _setConfirmBodyIntoContainer: function(context) {
-    console.log(this._confirmOptions);
     var tmpl = Handlebars.compile(context),
       html = tmpl(this._confirmOptions);
 
