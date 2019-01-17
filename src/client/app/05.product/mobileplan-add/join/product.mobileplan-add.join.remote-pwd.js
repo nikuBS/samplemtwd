@@ -85,19 +85,6 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
     }
   },
 
-  _isValid: function () {
-    var inputVal = this.$inputRealPassword.val();
-    var confirmVal = this.$realConfirmPassword.val();
-
-    return (
-      (this._validation.checkLength(inputVal, 4, Tw.ALERT_MSG_PASSWORD.A16)) &&
-      (this._validation.checkLength(confirmVal, 4, Tw.ALERT_MSG_PASSWORD.A16)) &&
-      (this._validation.checkIsDifferent(inputVal, confirmVal, Tw.ALERT_MSG_PASSWORD.A17)) &&
-      (this._validation.checkIsSameLetters(inputVal, Tw.ALERT_MSG_PASSWORD.A19)) &&
-      (this._validation.checkIsStraight(inputVal, 4, Tw.ALERT_MSG_PASSWORD.A18))
-    );
-  },
-
   _convConfirmOptions: function() {
     this._confirmOptions = $.extend(this._confirmOptions, {
       svcNumMask: Tw.FormatHelper.conTelFormatWithDash(this._confirmOptions.preinfo.svcNumMask),
@@ -114,18 +101,39 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
   },
 
   _procConfirm: function() {
-    if (this._isValid()) {
-      new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
-        isMobilePlan: false,
-        noticeList: this._confirmOptions.preinfo.joinNoticeList,
-        joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
-        typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
-        settingSummaryTexts: [{
-          spanClass: 'val',
-          text: Tw.PRODUCT_JOIN_SETTING_AREA_CASE[this._displayId]
-        }]
-      }), $.proxy(this._prodConfirmOk, this));
+    var inputVal = this.$inputRealPassword.val();
+    var confirmVal = this.$realConfirmPassword.val();
+
+    if (!this._validation.checkIsLength(inputVal, 4) || !this._validation.checkIsLength(confirmVal, 4)) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PASSWORD.A16);
     }
+
+    if (this._validation.checkIsDifferent(inputVal, confirmVal)) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PASSWORD.A17);
+    }
+
+    if (!this._validation.checkIsSameLetters(inputVal)) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PASSWORD.A19);
+    }
+
+    if (!this._validation.checkIsStraight(inputVal, 4)) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PASSWORD.A18);
+    }
+
+    this._procConfirmOk();
+  },
+
+  _procConfirmOk: function() {
+    new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
+      isMobilePlan: false,
+      noticeList: this._confirmOptions.preinfo.joinNoticeList,
+      joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
+      typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
+      settingSummaryTexts: [{
+        spanClass: 'val',
+        text: Tw.PRODUCT_JOIN_SETTING_AREA_CASE[this._displayId]
+      }]
+    }), $.proxy(this._prodConfirmOk, this));
   },
 
   _prodConfirmOk: function() {
