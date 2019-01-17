@@ -57,10 +57,10 @@ Tw.CertificationSk.prototype = {
     }
   },
   _checkOption: function (optMethods, methodCnt) {
-    if ( optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN) !== -1 ) {
+    if ( !Tw.FormatHelper.isEmpty(optMethods) && optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN) !== -1 ) {
       this._enableKeyin = true;
     }
-    if ( optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_SECURITY) !== -1 && Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
+    if ( !Tw.FormatHelper.isEmpty(optMethods) && optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_SECURITY) !== -1 && Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
       this._securityAuth = true;
     }
 
@@ -270,7 +270,7 @@ Tw.CertificationSk.prototype = {
         this.$btReCert.parent().addClass('none');
         this.$btCert.parent().addClass('none');
         this.$btCertAdd.parent().removeClass('none');
-        this._addTimer = setTimeout($.proxy(this._expireAddTime, this), 5 * 60 * 1000);
+        this._addTimer = setTimeout($.proxy(this._expireAddTime, this), Tw.SMS_CERT_TIME);
         this._addTime = new Date().getTime();
       }
     } else if ( resp.code === this.SMS_ERROR.ATH2003 ) {
@@ -344,10 +344,10 @@ Tw.CertificationSk.prototype = {
       var interval = new Date().getTime() - this._addTime;
 
       clearTimeout(this._addTimer);
-      if ( interval > 5 * 60 * 1000 ) {
+      if ( interval > Tw.SMS_CERT_TIME ) {
         this._expireAddTime();
       } else {
-        this._addTimer = setTimeout($.proxy(this._expireAddTime, this), 5 * 60 * 1000 - interval);
+        this._addTimer = setTimeout($.proxy(this._expireAddTime, this), Tw.SMS_CERT_TIME - interval);
       }
     }
   },
@@ -364,7 +364,7 @@ Tw.CertificationSk.prototype = {
   },
   _checkEnableCase: function (optMethods, methodCnt) {
     if ( methodCnt === 1 ) {
-      if ( optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN) !== -1 ) {
+      if ( !Tw.FormatHelper.isEmpty(optMethods) && optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN) !== -1 ) {
         this._defaultKeyin = true;
         return true;
       } else {
