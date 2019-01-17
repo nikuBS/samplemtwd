@@ -42,16 +42,18 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
    * @private
    */
   _requestData: function() {
-    // Tw.CommonHelper.startLoading('.container', 'grey', true);
+
     $('#btn-search').attr('disabled', true);
     $('#divEmpty').hide();
     $('.info-list-type1').hide();
     $('#divLoading').show();
+    Tw.CommonHelper.startLoading('#divLoading', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_05_0158, {})
       .done($.proxy(function (resp) {
-        // Tw.CommonHelper.endLoading('.container');
+
         $('#btn-search').attr('disabled', false);
+        Tw.CommonHelper.endLoading('#divLoading');
         $('#divLoading').hide();
 
         if( !resp || (resp.code !== Tw.API_CODE.CODE_00 && resp.code !== 'ZINVE8888')){
@@ -88,8 +90,9 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
         }
       }, this))
       .fail(function (err) {
-        // Tw.CommonHelper.endLoading('.container');
+
         $('#btn-search').attr('disabled', false);
+        Tw.CommonHelper.endLoading('#divLoading');
         $('#divLoading').hide();
         Tw.Error(err.status, err.statusText);
       });
