@@ -301,7 +301,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
       }, this),
       $.proxy(function () {
         if ( confirmed ) {
-          this._historyService.replaceURL('/myt-data');
+          this._historyService.replaceURL('/myt-data/submain');
         }
       }, this),
       Tw.BUTTON_LABEL.NO,
