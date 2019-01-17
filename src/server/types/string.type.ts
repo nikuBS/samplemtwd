@@ -540,6 +540,18 @@ export const PRODUCT_TYPE_NM = {
   SETTING: '설정',
   LOOKUP: {
     TPLAN: '혜택이용내역'
+  },
+  LINE_PROCESS: {
+    SELECT: {
+      TITLE: '회선 선택',
+      BUTTON: '진행하기',
+      DESCRIPTION: '요금제를 변경할 회선을 선택해 주세요.'
+    },
+    CHANGE: {
+      TITLE: '회선 변경',
+      BUTTON: '변경하기',
+      DESCRIPTION: '현재 회선으로는 이용이 불가능 합니다.<br>다른 회선으로 변경해 주세요.'
+    }
   }
 };
 

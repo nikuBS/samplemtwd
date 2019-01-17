@@ -1323,6 +1323,11 @@ Tw.PRODUCT_COMBINE_PRODUCT = {
   }
 };
 
+Tw.PRODUCT_JOIN_LINE_CHANGE = {
+  DEFAULT: '다른 회선으로 변경 하시겠습니까?',
+  NEED_CHANGE: '현재 회선으로는 이용이 불가능 합니다.\n다른 회선으로 변경해 주세요.'
+};
+
 Tw.PRODUCT_CONFIRM_GO_TO_DOCUMENT = {
   TITLE: '기존에 신청한 가입상담예약 건이 존재합니다.\n가입서류를 제출하시겠어요?',
   GO_DOCUMENT_BTN: '제출하기',

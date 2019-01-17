@@ -1,0 +1,134 @@
+<%#
+* FileName: product.common.line-change.html
+* Author: Ji Hun Yang (jihun202@sk.com)
+* Date: 2019.01.17
+%>
+
+<% include ../../components/start.component.html %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<!-- #contents -->
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1><%= title %></h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <hr class="cont-sp type1" aria-hidden="true" />
+
+                <div class="cont-box pb24">
+                    <%= description %>
+                </div>
+
+                <hr class="cont-sp type1" aria-hidden="true" />
+
+                <% if (pageMode === 'change') { %>
+                <div class="cont-box nogaps-hoz">
+                    <div class="list-comp-input type01">
+                        <h3 class="tit">현재 회선</h3>
+                        <div class="widget">
+                            <div class="widget-box radio">
+                                <ul class="select-list fe-line_list" role="group">
+                                    <li class="type01-big">
+                                        <div class="comp-list-layout">
+                                            <p class="layout-text">
+                                                <span class="mtext">
+                                                    <strong><%= currentLine.ctgNm %></strong>
+                                                    <% if ((currentLine.svcAttrCd === 'M1' || currentLine.svcAttrCd === 'M2') && currentLine.eqpMdlNm) { %>
+                                                     <%= currentLine.eqpMdlNm %>
+                                                    <% } %>
+                                                </span>
+                                                <span class="stext"><%= currentLine.svcNum %></span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="cont-sp type1" aria-hidden="true" />
+                <% } %>
+
+                <!-- .cont-box -->
+                <!-- 2019.01.07  aria-hidden="true" 삭제 sblee -->
+                <div class="cont-box nogaps-hoz">
+                    <div class="list-comp-input type01">
+                        <h3 class="tit">가능 회선</h3>
+                        <div class="widget">
+                            <div class="widget-box radio">
+                                <ul class="select-list fe-line_list" role="group">
+                                    <% for (var i in allowedLineList) { %>
+                                    <% if ( i < 20 ) { %>
+                                    <li class="radiobox type01-big" role="radio" aria-checked="false">
+                                    <% } else { %>
+                                    <li class="radiobox type01-big" role="radio" aria-checked="false" style="display: none">
+                                    <% } %>
+                                        <input type="radio" name="radio" value="<%= allowedLineList[i].svcMgmtNum %>" title="<%= allowedLineList[i].fullNm %>"
+                                               aria-labelledby="aria-comp-radio<%= i %>">
+                                        <div class="comp-list-layout" id="aria-comp-radio<%= i %>">
+                                            <p class="layout-text">
+                                                <span class="mtext">
+                                                    <strong><%= allowedLineList[i].ctgNm %></strong>
+                                                    <% if ((allowedLineList[i].svcAttrCd === 'M1' || allowedLineList[i].svcAttrCd === 'M2') && allowedLineList[i].eqpMdlNm) { %>
+                                                     <%= allowedLineList[i].eqpMdlNm %>
+                                                    <% } %>
+                                                </span>
+                                                <span class="stext"><%= allowedLineList[i].svcNum %></span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                    <% } %>
+                                </ul>
+                                <% if (allowedLineList && allowedLineList.length > 20) { %>
+                                <div class="bt-more">
+                                    <button class="fe-btn_more">더보기</button>
+                                </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// 2019.01.07  aria-hidden="true" 삭제 sblee -->
+                <!--// .cont-box -->
+
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button class="fe-btn_ok" disabled="disabled"><%= button %></button> <!-- 버튼 활성화시 disabled="disabled" 삭제  -->
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- // .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-common-back">취소</button>
+        <!--// .popup-closeBtn -->
+    </div>
+    <!-- // .popup hbs -->
+</div>
+</body>
+<% include ../../components/javascript.component.html %>
+<script>$(function () { new Tw.ProductCommonLineChange($('.wrap'), '<%= prodTypCd %>', '<%= pageMode %>',
+  '<%= targetProdId %>', '<%= targetUrl %>', '<%= svcInfo.svcMgmtNum %>'); });</script>
+<% include ../../components/end.component.html %>

@@ -79,6 +79,7 @@ import ProductRoamingSettingRoamingCombine from './controllers/roaming/setting/p
 import ProductRoamingJoinRoamingCombine from './controllers/roaming/join/product.roaming.join.roaming-combine.controller';
 import ProductRoamingTerminate from './controllers/roaming/product.roaming.terminate.controller';
 import ProductRoamingInfoPhBook from './controllers/roaming/product.roaming.info.ph-book.controller';
+import ProductCommonLineChange from './controllers/common/product.common.line-change.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -162,6 +163,7 @@ class ProductRouter extends TwRouter {
 
     this.controllers.push({ url: '/callplan/:prodId', controller: ProductCommonCallplan });
     this.controllers.push({ url: '/callplan-preview', controller: ProductCommonCallplanPreview });
+    this.controllers.push({ url: '/line-change', controller: ProductCommonLineChange });
 
     this.controllers.push({ url: '/roaming/terminate', controller: ProductRoamingTerminate });
     this.controllers.push({ url: '/roaming/info/ph-book', controller: ProductRoamingInfoPhBook });
