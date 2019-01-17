@@ -135,7 +135,8 @@ Tw.MyTFareBillPrepayMain.prototype = {
     var isAndroid = Tw.BrowserHelper.isAndroid();
     this._popupService.open({
       'hbs': 'open_app_info',
-      'isAndroid': isAndroid
+      'isAndroid': isAndroid,
+      'cdn': Tw.Environment.cdn
     }, $.proxy(this._onOpenTworld, this));
   },
   _onOpenTworld: function ($layer) {

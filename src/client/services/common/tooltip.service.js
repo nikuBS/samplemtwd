@@ -14,11 +14,15 @@ Tw.TooltipService = function () {
 
 Tw.TooltipService.prototype = {
   _init: function () {
-    this.$menuId = $('.wrap').attr('data-menuId');
+    this.$container = $('.wrap');
+    this.$menuId = this.$container.attr('data-menuId');
     this._getTip();
   },
-  popInit: function ($menuId) {
+  popInit: function ($layer) {
     if (window.location.hash.indexOf('_P') !== -1) {
+      this.$container = $layer;
+      var $menuId = this.$container.attr('data-menuId');
+
       if (Tw.FormatHelper.isEmpty($menuId) || this.$menuId === $menuId) {
         this._getContents();
       } else {
@@ -45,14 +49,14 @@ Tw.TooltipService.prototype = {
     }
   },
   _fail: function (err) {
-    $('button[page-id="' + this.$menuId + '"]').on('click', $.proxy(this._failAlert, this, err));
+    this.$container.find('button[page-id="' + this.$menuId + '"]').on('click', $.proxy(this._failAlert, this, err));
   },
   _failAlert: function (err) {
     Tw.Error(err.code, err.msg).pop();
   },
   _getContents: function () {
     for (var i = 0; i < this._contentList.length; i++) {
-      var $target = $('button[id="' + this._contentList[i].mtwdTtipId + '"]');
+      var $target = this.$container.find('button[id="' + this._contentList[i].mtwdTtipId + '"]');
       if (!$target.hasClass('fe-tip')) {
         $target.addClass('fe-tip');
 
