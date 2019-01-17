@@ -40,6 +40,35 @@
 
                 <hr class="cont-sp type1" aria-hidden="true" />
 
+                <% if (pageMode === 'change') { %>
+                <div class="cont-box nogaps-hoz">
+                    <div class="list-comp-input type01">
+                        <h3 class="tit">현재 회선</h3>
+                        <div class="widget">
+                            <div class="widget-box radio">
+                                <ul class="select-list fe-line_list" role="group">
+                                    <li class="type01-big">
+                                        <div class="comp-list-layout">
+                                            <p class="layout-text">
+                                                <span class="mtext">
+                                                    <strong><%= currentLine.ctgNm %></strong>
+                                                    <% if ((currentLine.svcAttrCd === 'M1' || currentLine.svcAttrCd === 'M2') && currentLine.eqpMdlNm) { %>
+                                                     <%= currentLine.eqpMdlNm %>
+                                                    <% } %>
+                                                </span>
+                                                <span class="stext"><%= currentLine.svcNum %></span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="cont-sp type1" aria-hidden="true" />
+                <% } %>
+
                 <!-- .cont-box -->
                 <!-- 2019.01.07  aria-hidden="true" 삭제 sblee -->
                 <div class="cont-box nogaps-hoz">
@@ -49,14 +78,18 @@
                             <div class="widget-box radio">
                                 <ul class="select-list fe-line_list" role="group">
                                     <% for (var i in allowedLineList) { %>
+                                    <% if ( i < 20 ) { %>
                                     <li class="radiobox type01-big" role="radio" aria-checked="false">
+                                    <% } else { %>
+                                    <li class="radiobox type01-big" role="radio" aria-checked="false" style="display: none">
+                                    <% } %>
                                         <input type="radio" name="radio" value="<%= allowedLineList[i].svcMgmtNum %>" title="<%= allowedLineList[i].fullNm %>"
                                                aria-labelledby="aria-comp-radio<%= i %>">
                                         <div class="comp-list-layout" id="aria-comp-radio<%= i %>">
                                             <p class="layout-text">
                                                 <span class="mtext">
                                                     <strong><%= allowedLineList[i].ctgNm %></strong>
-                                                    <% if (allowedLineList[i].svcAttrCd === 'M1' || allowedLineList[i].svcAttrCd === 'M2') { %>
+                                                    <% if ((allowedLineList[i].svcAttrCd === 'M1' || allowedLineList[i].svcAttrCd === 'M2') && allowedLineList[i].eqpMdlNm) { %>
                                                      <%= allowedLineList[i].eqpMdlNm %>
                                                     <% } %>
                                                 </span>

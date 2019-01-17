@@ -18,6 +18,7 @@ Tw.ProductCommonLineChange = function(rootEl, prodTypCd, pageMode, targetProdId,
   this._targetUrl = targetUrl;
   this._currentSvcMgmtNum = currentSvcMgmtNum;
   this._svcMgmtNum = currentSvcMgmtNum;
+  this._page = 1;
 
   this._cachedElement();
   this._bindEvent();
@@ -31,22 +32,42 @@ Tw.ProductCommonLineChange.prototype = {
       this._historyService.goBack();
     }
 
-    this.$lineList.find('input[type=radio][value="' + this._svcMgmtNum + '"]').trigger('click');
+    if (this._pageMode === 'select' && this.$lineList.find('input[type=radio][value="' + this._svcMgmtNum + '"]').length > 0) {
+      this.$lineList.find('input[type=radio][value="' + this._svcMgmtNum + '"]').trigger('click');
+    }
   },
 
   _cachedElement: function() {
     this.$lineList = this.$container.find('.fe-line_list');
     this.$lineRadio = this.$lineList.find('input[type=radio]');
+    this.$btnMore = this.$container.find('.fe-btn_more');
     this.$btnOk = this.$container.find('.fe-btn_ok');
   },
 
   _bindEvent: function() {
     this.$lineRadio.on('change', $.proxy(this._enableSetupButton, this));
+    this.$btnMore.on('click', $.proxy(this._showMoreList, this));
     this.$btnOk.on('click', $.proxy(this._procApply, this));
   },
 
   _enableSetupButton: function() {
     this.$btnOk.removeAttr('disabled').prop('disabled', false);
+  },
+
+  _showMoreList: function() {
+    var idxLimit = this._page * 20;
+    $.each(this.$lineList, function(elem, idx) {
+      if (idx > idxLimit) {
+        return false;
+      }
+
+      $(elem).show();
+    });
+
+    this._page++;
+    if (this.$lineList.find('li:not(:visible)').length < 1) {
+      this.$btnMore.remove();
+    }
   },
 
   _goBack: function() {

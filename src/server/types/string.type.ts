@@ -549,7 +549,7 @@ export const PRODUCT_TYPE_NM = {
     CHANGE: {
       TITLE: '회선 변경',
       BUTTON: '변경하기',
-      DESCRIPTION: '다른 회선으로 변경 하시겠습니까?'
+      DESCRIPTION: '현재 회선으로는 이용이 불가능 합니다.<br>다른 회선으로 변경해 주세요.'
     }
   }
 };

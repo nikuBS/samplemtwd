@@ -18,21 +18,20 @@ class ProductCommonLineChange extends TwViewController {
 
   /**
    * @param prodTypCd
+   * @param pageMode
    * @param targetProdId
    * @param allSvc
+   * @param currentSvcMgmtNum
    * @param svcAttrCd
    * @private
    */
-  private _getAllowedLineList(prodTypCd: any, targetProdId: any, allSvc?: any, svcAttrCd?: any): any {
-    if (FormatHelper.isEmpty(allSvc) || FormatHelper.isEmpty(svcAttrCd)) {
-      return null;
-    }
-
+  private _getAllowedLineList(prodTypCd: any, pageMode: any, targetProdId: any, allSvc: any, currentSvcMgmtNum: any, svcAttrCd: any): any {
     const allowedSvcAttrInfo: any = this._getAllowedSvcAttrCd(prodTypCd),
       allowedLineList: any = [];
 
     allSvc[allowedSvcAttrInfo.group].forEach((lineInfo) => {
-      if (allowedSvcAttrInfo.svcAttrCds.indexOf(lineInfo.svcAttrCd) === -1 || lineInfo.prodId === targetProdId) {
+      if (allowedSvcAttrInfo.svcAttrCds.indexOf(lineInfo.svcAttrCd) === -1 || lineInfo.prodId === targetProdId ||
+        pageMode === 'change' && currentSvcMgmtNum === lineInfo.svcMgmtNum) {
         return true;
       }
 
@@ -89,6 +88,22 @@ class ProductCommonLineChange extends TwViewController {
     };
   }
 
+  /**
+   * @param svcInfo
+   * @private
+   */
+  private _convertCurrentLine(svcInfo: any): any {
+    return {
+      svcMgmtNum: svcInfo.svcMgmtNum,
+      svcNum: svcInfo.svcNum,
+      svcAttrCd: svcInfo.svcAttrCd,
+      fullNm: svcInfo.svcAttrCd === 'M1' || svcInfo.svcAttrCd === 'M2' ?
+        MYT_JOIN_WIRE_SVCATTRCD[svcInfo.svcAttrCd] + ' ' + svcInfo.eqpMdlNm : MYT_JOIN_WIRE_SVCATTRCD[svcInfo.svcAttrCd],
+      ctgNm: MYT_JOIN_WIRE_SVCATTRCD[svcInfo.svcAttrCd],
+      eqpMdlNm: svcInfo.eqpMdlNm
+    };
+  }
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const targetProdId = req.query.t_prod_id || null,
       targetUrl = req.query.t_url || null,
@@ -115,8 +130,8 @@ class ProductCommonLineChange extends TwViewController {
           }));
         }
 
-        const svcAttrCd = !FormatHelper.isEmpty(svcInfo) && !FormatHelper.isEmpty(svcInfo.svcAttrCd) ? svcInfo.svcAttrCd : null,
-          allowedLineList: any = this._getAllowedLineList(basicInfo.result.prodTypCd, targetProdId, allSvc, svcAttrCd);
+        const allowedLineList: any = this._getAllowedLineList(basicInfo.result.prodTypCd, pageMode,
+          targetProdId, allSvc, svcInfo.svcMgmtNum, svcInfo.svcAttrCd);
 
         if (FormatHelper.isEmpty(allowedLineList)) {
           return this.error.render(res, renderCommonInfo);
@@ -127,6 +142,7 @@ class ProductCommonLineChange extends TwViewController {
           targetProdId: targetProdId,
           targetUrl: targetUrl,
           prodTypCd: basicInfo.result.prodTypCd,
+          currentLine: this._convertCurrentLine(svcInfo),
           pageMode: pageMode
         }));
       });
