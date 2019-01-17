@@ -25,7 +25,7 @@ class MyTDataTing extends TwViewController {
 
     switch ( page ) {
       case 'complete':
-        res.render('ting/myt-data.ting.complete.html');
+        res.render('ting/myt-data.ting.complete.html', responseData);
         break;
       default:
         this.getTingInfo()
