@@ -60,20 +60,23 @@ Tw.CustomerSvcInfoNotice.prototype = {
       setTimeout(function() {
         $.when(item.find('button').trigger('click'))
           .then(function() {
-            console.log(item.offset().top - $("#header").height());
-            $(window).scrollTop(item.offset().top - $("#header").height());
+            $(window).scrollTop(item.offset().top - $('#header').height());
           });
       }, 100);
     }
   },
 
   _setContentsReq: function(e) {
-    var ntcId = parseInt($(e.currentTarget).data('ntc_id'), 10);
-    this._historyService.replacePathName(window.location.pathname + '?ntcId=' + ntcId);
-
-    if (this._category !== 'tworld' || this._setContentsList.indexOf(ntcId) !== -1) {
+    if (this._category !== 'tworld') {
       return;
     }
+
+    var ntcId = parseInt($(e.currentTarget).data('ntc_id'), 10);
+    if (this._setContentsList.indexOf(ntcId) !== -1) {
+      return;
+    }
+
+    this._historyService.replacePathName(window.location.pathname + '?ntcId=' + ntcId);
 
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_08_0029, { expsChnlCd: this._tworldChannel, ntcId: ntcId })
@@ -200,7 +203,7 @@ Tw.CustomerSvcInfoNotice.prototype = {
 
   _setItemClass: function(item) {
     if (this._category === 'tworld') {
-      return (item.ntcTypCd === 'Y' ? 'impo ' : '') + (item.new ? 'new' : '');
+      return (item.ntcTypCd === 'Y' ? 'impo ' : '') + (item['new'] ? 'new' : '');
     }
 
     return (item.isTop ? 'impo ' : '') + (item.isNew ? 'new' : '');

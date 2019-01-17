@@ -467,7 +467,8 @@ export enum CUSTOMER_NOTICE_CATEGORY {
   TWORLD = 'T world',
   DIRECTSHOP = '다이렉트샵',
   MEMBERSHIP = '멤버십',
-  ROAMING = '로밍'
+  ROAMING = '로밍',
+  VIEW = '공지사항'
 }
 
 export enum CUSTOMER_PROTECT_GUIDE {

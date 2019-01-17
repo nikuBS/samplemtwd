@@ -1,0 +1,51 @@
+<%#
+* FileName: customer.svc-info.notice.view.html
+* Author: Ji Hun Yang (jihun202@sk.com)
+* Date: 2019.01.17
+%>
+<% include ../../components/start.component.html %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+    <%- include('../../../../common/views/components/header.component.html', { title: title, svcInfo: svcInfo }); %>
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+
+            <hr class="cont-sp type1" aria-hidden="true">
+
+            <div class="cont-box nogaps-btm noborder">
+                <div class="view-tit-wrap">
+                    <span class="tit"><%= data.ntcTitNm %></span>
+                    <p class="sub-txt">
+                        <% if (data.type) { %><span class="item"><%= data.type %></span><% } %>
+                        <span class="date"><%= data.date %></span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="cont-box gaps-style01 noborder">
+                <%- data.content %>
+            </div>
+
+        </div>
+    </div>
+    <!--// #contents -->
+    <!-- #footer -->
+    <footer id="fe-all-menu">
+        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+    </footer>
+    <!--// #footer -->
+</div>
+</body>
+<% include ../../components/javascript.component.html %>
+<% include ../../components/end.component.html %>
