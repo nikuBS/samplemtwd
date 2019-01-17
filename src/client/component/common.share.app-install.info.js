@@ -55,8 +55,14 @@ Tw.CommonShareAppInstallInfo.prototype = {
     );
   },
   _onSelectStore: function ($layer) {
+    $layer.find('img').each($.proxy(this._setCdn, this));
     $layer.on('click', 'li', $.proxy(this._setStoreUrl, this));
     $layer.on('click', '.fe-close', $.proxy(this._onlyClose, this));
+  },
+  _setCdn: function (idx, target) {
+    var $img = $(target);
+    var src = Tw.Environment.cdn + $img.attr('src');
+    $img.attr('src', src);
   },
   _setStoreUrl: function (event) {
     var $target = $(event.currentTarget);
