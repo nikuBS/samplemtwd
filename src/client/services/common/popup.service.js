@@ -5,7 +5,9 @@ Tw.PopupService = function () {
   this._confirmCallback = null;
   this._openCallback = null;
   this._closeCallback = null;
+  this._popupBackup = null;
   this._hashService = Tw.Hash;
+  this._historyService = new Tw.HistoryService();
 
   this._popupObj = {};
 
@@ -36,13 +38,16 @@ Tw.PopupService.prototype = {
     }
     Tw.Tooltip.popInit($popups.last());
   },
-  _onFailPopup: function(option) {
+  _onFailPopup: function() {
     if (Tw.BrowserHelper.isApp()) {
-      Tw.Native.send(Tw.NTV_CMD.OPEN_NETWORK_ERROR_POP, {}, $.proxy(this._onRetry, this, option));
+      Tw.Native.send(Tw.NTV_CMD.OPEN_NETWORK_ERROR_POP, {}, $.proxy(this._onRetry, this));
     }
   },
-  _onRetry: function(option) {
-    this._open(option);
+  _onRetry: function() {
+    this._prevHashList = [];
+    this.close();
+
+    setTimeout($.proxy(this._popupBackup, this), 100);
   },
   _popupClose: function (closeCallback) {
     this._confirmCallback = null;
@@ -105,12 +110,18 @@ Tw.PopupService.prototype = {
       url: Tw.Environment.cdn + '/hbs/',
       cdn: Tw.Environment.cdn
     });
-    skt_landing.action.popup.open(option, $.proxy(this._onOpenPopup, this), $.proxy(this._onFailPopup, this, option));
+    skt_landing.action.popup.open(option, $.proxy(this._onOpenPopup, this), $.proxy(this._onFailPopup, this));
   },
   open: function (option, openCallback, closeCallback, hashName) {
     this._setOpenCallback(openCallback);
     this._addHash(closeCallback, hashName);
     this._open(option);
+
+    this._popupBackup = $.proxy(function() {
+      this._setOpenCallback(openCallback);
+      this._addHash(closeCallback, hashName);
+      this._open(option);
+    }, this);
   },
   openAlert: function (contents, title, btName, closeCallback) {
     var option = {

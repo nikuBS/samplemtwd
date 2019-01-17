@@ -122,7 +122,7 @@ Tw.ProductMobileplanSettingNumber.prototype = {
   },
 
   _toggleNumAddBtn: function() {
-    if (this.$inputNumber.val().length > 9) {
+    if (this.$inputNumber.val().length > 8) {
       this.$btnAddNum.removeAttr('disabled').prop('disabled', false);
     } else {
       this.$btnAddNum.attr('disabled', 'disabled').prop('disabled', true);

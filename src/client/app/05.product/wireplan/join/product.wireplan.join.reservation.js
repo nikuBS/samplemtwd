@@ -30,24 +30,28 @@ Tw.ProductWireplanJoinReservation.prototype = {
   _init: function() {
     this._typeCd = this.$container.data('type_cd');
 
-    if (this._typeCd === 'combine') {
-      this._initCombineProduct();
-    } else {
+    if (this._typeCd !== 'combine') {
       this.$nonCombineTip.show();
     }
 
     this._reqSvcMgmtNum();
-    this._restoreLocalStorage();
   },
 
   _initCombineProduct: function() {
     this.$combineWrap.show();
-    this._getCurrentCombineList();
+
+    if (this._logged) {
+      this._getCurrentCombineList();
+    }
   },
 
   _restoreLocalStorage: function() {
     if (!Tw.CommonHelper.getLocalStorage('productJoinReservation')) {
       return;
+    }
+
+    if (!this._logged) {
+      return Tw.CommonHelper.removeLocalStorage('productJoinReservation');
     }
 
     var data = Tw.CommonHelper.getLocalStorage('productJoinReservation');
@@ -63,6 +67,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
     this.$reservName.val(data.name);
     this.$reservNumber.val(data.number).trigger('change');
     this._typeCd = data.typeCd;
+    this._prodId = data.prodId;
 
     this._typeCdPopupClose();
     this._setCombineResult();
@@ -79,7 +84,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
       this.$combineExplain.find('input[type=checkbox]').trigger('click');
     }
 
-    this._reqSvcMgmtNum(true);
+    this._procApplyCheck();
     Tw.CommonHelper.removeLocalStorage('productJoinReservation');
   },
 
@@ -119,21 +124,26 @@ Tw.ProductWireplanJoinReservation.prototype = {
     this.$combineExplain.on('change', 'input[type=checkbox]', $.proxy(this._onChangeCombineExplain, this));
   },
 
-  _reqSvcMgmtNum: function(isApply) {
+  _reqSvcMgmtNum: function() {
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
-      .done($.proxy(this._setSvcMgmtNum, this, isApply));
+      .done($.proxy(this._setSvcMgmtNum, this));
   },
 
-  _setSvcMgmtNum: function(isApply, resp) {
+  _setSvcMgmtNum: function(resp) {
     if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
+      if (this._typeCd === 'combine') {
+        this._initCombineProduct();
+      }
+
       return;
     }
 
     this._logged = true;
     this._svcMgmtNum = resp.result.svcMgmtNum;
+    this._restoreLocalStorage();
 
-    if (isApply) {
-      this._procApplyCheck();
+    if (this._typeCd === 'combine') {
+      this._initCombineProduct();
     }
   },
 
@@ -223,9 +233,6 @@ Tw.ProductWireplanJoinReservation.prototype = {
         {
           'title': Tw.PRODUCT_COMBINE_PRODUCT.GROUP_FAMILY,
           'list': [
-            { 'label-attr': 'id="ra2_0"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00005055.TITLE,
-              'cont-txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00005055.EXPLAIN,
-              'radio-attr':'id="ra2_0" data-prod_id="NA00005055" ' + (this._prodId === 'NA00005055' ? 'checked' : '') },
             { 'label-attr': 'id="ra2_1"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.TITLE,
               'cont-txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.EXPLAIN,
               'radio-attr':'id="ra2_1" data-prod_id="NH00000133" ' + (this._prodId === 'NH00000133' ? 'checked' : '') },

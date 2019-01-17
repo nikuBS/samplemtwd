@@ -432,6 +432,30 @@ class ProductCommonCallplanPreview extends TwViewController {
     return context.replace(/\/poc\/img\/product\/(.*)(jpg|png|jpeg)/gi, '');
   }
 
+  /**
+   * @param typeCd
+   * @private
+   */
+  private _getReservationTypeCd(typeCd: any): any {
+    if (['D_I', 'E_I'].indexOf(typeCd) !== -1) {
+      return 'internet';
+    }
+
+    if (['D_P', 'E_P'].indexOf(typeCd) !== -1) {
+      return 'phone';
+    }
+
+    if (['D_T', 'E_T'].indexOf(typeCd) !== -1) {
+      return 'tv';
+    }
+
+    if (typeCd === 'F') {
+      return 'combine';
+    }
+
+    return null;
+  }
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {
@@ -498,7 +522,8 @@ class ProductCommonCallplanPreview extends TwViewController {
           similarProductInfo: convertedProdInfo.similar,  // 모바일 요금제 유사한 상품
           isJoined: true,  // 가입 여부
           additionsProdFilterInfo: additionsProdFilterInfo.code !== API_CODE.CODE_00 ? null : additionsProdFilterInfo.result,  // 부가서비스 카테고리 필터 리스트
-          combineRequireDocumentInfo: null  // 구비서류 제출 심사내역
+          combineRequireDocumentInfo: null,  // 구비서류 제출 심사내역
+          reservationTypeCd: this._getReservationTypeCd(prodInfo.result.baseInfo.prodTypCd)
         }].reduce((a, b) => {
           return Object.assign(a, b);
         }));
