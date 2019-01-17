@@ -29,6 +29,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$cardM = this.$container.find('.fe-card-m');
     this.$cardPwd = this.$container.find('.fe-card-pw');
     this.$prepaid_card = this.$container.find('.fe-prepaid-card');
+    this.$prepaid_serial = this.$container.find('.fe-prepaid-serial');
     this.$creditAmount = this.$container.find('.fe-select-amount');
   },
 
@@ -48,6 +49,27 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$cardY.on('keyup', $.proxy(this._validateExpired, this));
     this.$cardM.on('keyup', $.proxy(this._validateExpired, this));
     this.$cardPwd.on('keyup', $.proxy(this._validatePwd, this));
+    this.$prepaid_card.on('keyup', $.proxy(this._validatePrepaidNumber, this));
+    this.$prepaid_serial.on('keyup', $.proxy(this._validatePrepaidSerial, this));
+
+  },
+
+  _validatePrepaidNumber: function (e) {
+    var $error = $(e.currentTarget).closest('li').find('.error-txt');
+    $error.addClass('blind');
+
+    if ( !this._validation.checkMoreLength(this.$prepaid_card, 10) ) {
+      $error.removeClass('blind');
+    }
+  },
+
+  _validatePrepaidSerial: function (e) {
+    var $error = $(e.currentTarget).closest('li').find('.error-txt');
+    $error.addClass('blind');
+
+    if ( !this._validation.checkMoreLength(this.$prepaid_serial, 10) ) {
+      $error.removeClass('blind');
+    }
   },
 
   _validateCard: function (e) {
@@ -84,7 +106,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
     $error.addClass('blind');
 
-    if ( this.$cardPwd.val() === '') {
+    if ( this.$cardPwd.val() === '' ) {
       $error.removeClass('blind');
     }
   },

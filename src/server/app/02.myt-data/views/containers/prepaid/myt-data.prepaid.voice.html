@@ -91,7 +91,7 @@
                                                         <span class="input">
                                                             <input class="fe-prepaid-card" id="formInput01" type="tel"
                                                                    placeholder="숫자만 입력"
-                                                                   title="선불 이동전화 카드번호 입력" maxlength="16" required>
+                                                                   title="선불 이동전화 카드번호 입력" maxlength="10" required>
                                                             <button class="cancel" style="display: inline-block;">
                                                                 <span class="blind">삭제</span>
                                                             </button>
@@ -100,6 +100,7 @@
                                                             <button class="bt-link-tx underline fe-btn-show-example">카드번호 예시 보기</button>
                                                         </span>
                                                     </span>
+                                                        <span class="error-txt blind">카드번호가 올바르지 않습니다.</span>
                                                     </li>
                                                     <li>
                                                         <label class="tit" for="formInput02">일련번호</label>
@@ -107,7 +108,7 @@
                                                         <span class="input">
                                                             <input class="fe-prepaid-serial" type="text"
                                                                    placeholder="일련번호 입력"
-                                                                   title="선불 이동전화 카드 일련번호 번호 입력" aria-labelledby="aria-exp-label1"
+                                                                   title="선불 이동전화 카드 일련번호 번호 입력" maxlength="10" aria-labelledby="aria-exp-label1"
                                                                    aria-describedby="aria-exp-desc1" required>
                                                             <button class="cancel" style="display: none;">
                                                                 <span class="blind">삭제</span>
@@ -115,6 +116,7 @@
                                                         </span>
                                                         <span id="aria-exp-desc1" class="guide-txt">유통기한 우측에 표기된 숫자</span>
                                                     </span>
+                                                        <span class="error-txt blind">카드의 일련번호가 올바르지 않습니다.</span>
                                                     </li>
                                                 </ul>
                                             </div>
