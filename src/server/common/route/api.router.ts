@@ -288,12 +288,14 @@ class ApiRouter {
     const svcMgmtNum = req.body.svcMgmtNum;
 
     this.loginService.setCurrentReq(req, res);
-    this.loginService.setMaskingCert(svcMgmtNum).subscribe((resp) => {
-      res.json({
-        code: API_CODE.CODE_00
+    this.apiService.setCurrentReq(req, res);
+    this.apiService.updateAllSvcInfo({})
+      .switchMap((resp) => this.loginService.setMaskingCert(svcMgmtNum))
+      .subscribe((resp) => {
+        res.json({
+          code: API_CODE.CODE_00
+        });
       });
-    });
-
   }
 
   // private setDeviceInfo(req: Request, res: Response, next: NextFunction) {

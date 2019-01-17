@@ -411,7 +411,11 @@ class ApiService {
           throw resp;
         }
       })
-      .switchMap((resp) => this.request(API_CMD.BFF_01_0002, {}))
+      .switchMap((resp) => this.updateAllSvcInfo(result));
+  }
+
+  public updateAllSvcInfo(result): Observable<any> {
+    return this.request(API_CMD.BFF_01_0002, {})
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           const category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
