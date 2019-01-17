@@ -26,7 +26,7 @@ class MyTFareBillOption extends TwViewController {
         res.render('bill/myt-fare.bill.option.html', {
           svcInfo: this.getSvcInfo(svcInfo),
           pageInfo: pageInfo,
-          paymentOption: this.parseData(paymentOption.result),
+          paymentOption: this.parseData(paymentOption.result, svcInfo),
           addrInfo: this.parseInfo(addrInfo.result)
         });
       } else {
@@ -58,13 +58,17 @@ class MyTFareBillOption extends TwViewController {
     return svcInfo;
   }
 
-  private parseData(data: any): any {
+  private parseData(data: any, svcInfo: any): any {
     if (data.payMthdCd === MYT_FARE_PAYMENT_TYPE.BANK) {
       data.fstDrwSchdDate = DateHelper.getShortDate(data.fstDrwSchdDt);
+      data.phoneNum = svcInfo.svcAttrCd.indexOf('M') === -1 ? StringHelper.phoneStringToDash(data.cntcNum)
+        : svcInfo.phoneNum;
       data.isAuto = true;
     } else if (data.payMthdCd === MYT_FARE_PAYMENT_TYPE.CARD) {
       data.cardYm = FormatHelper.makeCardYymm('20' + data.cardEffYm);
       data.fstDrwSchdDate = DateHelper.getShortDate(data.fstDrwSchdDt);
+      data.phoneNum = svcInfo.svcAttrCd.indexOf('M') === -1 ? StringHelper.phoneStringToDash(data.cntcNum)
+        : svcInfo.phoneNum;
       data.isAuto = true;
     } else {
       data.isAuto = false;
