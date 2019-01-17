@@ -7,6 +7,8 @@ import CustomerSvcInfoMcenter from './controllers/svc-info/customer.svc-info.sit
 import CustomerSvcInfoSiteDetail from './controllers/svc-info/customer.svc-info.site.detail.controller';
 import CustomerSvcInfoService from './controllers/svc-info/customer.svc-info.service.controller';
 import CustomerSvcInfoServiceDetail from './controllers/svc-info/customer.svc-info.service.detail.controller';
+import CustomerSvcInfoNotice from './controllers/svc-info/customer.svc-info.notice.controller';
+import CustomerSvcInfoNoticeView from './controllers/svc-info/customer.svc-info.notice.view.controller';
 import CustomerGuideServiceUse from './controllers/useguide/customer.useguide.service.controller';
 import CustomerPraise from './controllers/praise/customer.praise.controller';
 import CustomerDamageInfo from './controllers/damage-info/customer.damage-info.controller';
@@ -30,7 +32,6 @@ import CustomerAgentsearchNear from './controllers/agentsearch/customer.agentsea
 import CustomerAgentsearchRepair from './controllers/agentsearch/customer.agentsearch.repair.controller';
 import CustomerAgentsearchRepairDetail from './controllers/agentsearch/customer.agentsearch.repair-detail.controller';
 import CustomerAgentsearchRepairManufacturer from './controllers/agentsearch/customer.agentsearch.repair-manufacturer.controllter';
-import CustomerSvcInfoNotice from './controllers/svc-info/customer.svc-info.notice.controller';
 import CustomerFaqDoLikeThis from './controllers/faq/customer.faq.do-like-this.controller';
 import CustomerDocument from './controllers/document/customer.document.controller';
 import CustomerResearchesResult from './controllers/researches/customer.researches.result.controller';
@@ -54,6 +55,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/svc-info/site/detail', controller: CustomerSvcInfoSiteDetail });
     this.controllers.push({ url: '/svc-info/voice(/:page)?', controller: CustomerVoice });
     this.controllers.push({ url: '/svc-info/notice', controller: CustomerSvcInfoNotice });
+    this.controllers.push({ url: '/svc-info/notice/view', controller: CustomerSvcInfoNoticeView });
     this.controllers.push({ url: '/damage-info', controller: CustomerDamageInfo });
     this.controllers.push({ url: '/damage-info/guide', controller: CustomerDamageInfoGuide });
     this.controllers.push({ url: '/damage-info/guide/webtoon-view', controller: CustomerDamageInfoGuideWebtoonView });
