@@ -55,11 +55,10 @@ Tw.CommonMemberLine.prototype = {
       $btMore.hide();
     }
   },
-
   _onChangeFirst: function ($event) {
     var $currentTarget = $($event.currentTarget);
-    this._popupService.openConfirm(Tw.ALERT_MSG_AUTH.L01, Tw.POPUP_TITLE.NOTIFY,
-      $.proxy(this._confirmNotifyPopup, this), $.proxy(this._closeNotifyPopup, this, $currentTarget));
+    this._popupService.openConfirmButton(Tw.ALERT_MSG_AUTH.ALERT_4_A5, null, $.proxy(this._confirmNotifyPopup, this),
+      $.proxy(this._closeNotifyPopup, this, $currentTarget), Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
   },
   _confirmNotifyPopup: function () {
     this._popupService.close();
@@ -79,14 +78,18 @@ Tw.CommonMemberLine.prototype = {
   },
   _requestChangeList: function (svcNumList) {
     var lineList = svcNumList.join('~');
-    this._apiService.request(Tw.NODE_CMD.CHANGE_LINE, { svcCtg: Tw.LINE_NAME.MOBILE, svcMgmtNumArr: lineList })
-      .done($.proxy(this._successRegisterLineList, this))
+    this._apiService.request(Tw.NODE_CMD.CHANGE_LINE, {
+      params: { svcCtg: Tw.LINE_NAME.MOBILE, svcMgmtNumArr: lineList }
+    }).done($.proxy(this._successRegisterLineList, this))
       .fail($.proxy(this._failRegisterLineList, this));
   },
   _successRegisterLineList: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.reload();
+      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.ALERT_4_A6, null, null, $.proxy(this._closeRegisterLine, this));
     }
+  },
+  _closeRegisterLine: function () {
+    this._historyService.reload();
   },
   _failRegisterLineList: function (error) {
     Tw.Logger.error(error);
