@@ -54,11 +54,7 @@
                                 <dt>이용요금</dt>
                                 <dd>
                                     <p class="value">
-                                        <%if(isNaN(prodBffInfo.prodFee)){ %>
-                                        <span class="point"><%= prodBffInfo.prodFee %></span> / 일
-                                        <%}else{%>
-                                        <span class="point"><%= prodBffInfo.prodFee.replace(/\B(?=(\d{3})+(?!\d))/g, ',') %></span>원 / 일
-                                        <%}%>
+                                        <span class="point"></span> / 일
                                     </p>
                                 </dd>
                             </dl>
