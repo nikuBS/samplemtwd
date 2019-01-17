@@ -18,7 +18,7 @@ import { NODE_API_ERROR } from '../../types/string.type';
 import { COOKIE_KEY } from '../../types/common.type';
 import { CHANNEL_CODE, MENU_CODE, REDIS_KEY } from '../../types/redis.type';
 import CryptoHelper from '../../utils/crypto.helper';
-import {XTRACTOR_KEY} from '../../types/config.type';
+import { XTRACTOR_KEY } from '../../types/config.type';
 
 class ApiRouter {
   public router: Router;
@@ -38,7 +38,6 @@ class ApiRouter {
     this.router.get('/domain', this.getDomain.bind(this));
     // this.router.post('/device', this.setDeviceInfo.bind(this));
     this.router.post('/user/sessions', this.loginTid.bind(this));   // BFF_03_0008
-    this.router.post('/logout-tid', this.logoutTid.bind(this));
     this.router.post('/user/login/android', this.easyLoginAos.bind(this));    // BFF_03_0017
     this.router.post('/user/login/ios', this.easyLoginIos.bind(this));        // BFF_03_0018
     this.router.put('/common/selected-sessions', this.changeSession.bind(this));    // BFF_01_0003
@@ -48,6 +47,9 @@ class ApiRouter {
     this.router.put('/user/services', this.changeLine.bind(this));    // BFF_03_0005
     this.router.put('/user/nick-names', this.changeNickname.bind(this));    // BFF_03_0006
     this.router.get('/common/selected-sessions', this.updateSvcInfo.bind(this));    // BFF_01_0005
+
+    this.router.post('/logout-tid', this.logoutTid.bind(this));
+    this.router.post('/session', this.generateSession.bind(this));
 
     this.router.post('/uploads', this.uploadFile.bind(this));
     this.router.get('/svcInfo', this.getSvcInfo.bind(this));
@@ -417,7 +419,7 @@ class ApiRouter {
     this.logger.info(this, '[chagne session]', params);
     res.clearCookie(COOKIE_KEY.XTUID);
 
-    if (!FormatHelper.isEmpty(req.cookies.XTLID)) {
+    if ( !FormatHelper.isEmpty(req.cookies.XTLID) ) {
       res.cookie(COOKIE_KEY.XTUID, req.cookies.XTLID);
     }
 
@@ -446,7 +448,7 @@ class ApiRouter {
     this.apiService.setCurrentReq(req, res);
     // this.loginService.setCurrentReq(req, res);
     this.apiService.requestLoginTid(params.tokenId, params.state).subscribe((resp) => {
-      this.logger.info('[TID login]', resp);
+      this.logger.info(this, '[TID login]', resp);
       res.json(resp);
     }, (error) => {
       res.json(error);
@@ -459,9 +461,19 @@ class ApiRouter {
     this.apiService.request(API_CMD.BFF_03_0001, {})
       .switchMap((resp) => {
         return this.loginService.logoutSession();
-      }).subscribe((resp) => {
+      })
+      .subscribe((resp) => {
+        this.logger.info(this, '[TID logout]', this.loginService.getSvcInfo(req));
         res.json({ code: API_CODE.CODE_00 });
-    });
+      });
+  }
+
+  private generateSession(req: Request, res: Response, next: NextFunction) {
+    this.loginService.setCurrentReq(req, res);
+    this.loginService.sessionGenerate(req).subscribe(() => {
+      this.logger.info(this, '[Session ID]', this.loginService.getSessionId(req));
+      res.json({ code: API_CODE.CODE_00 });
+    })
   }
 
   private setUserLocks(req: Request, res: Response, next: NextFunction) {

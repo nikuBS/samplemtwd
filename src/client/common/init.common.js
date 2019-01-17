@@ -71,7 +71,7 @@ Tw.Init.prototype = {
     if ( Tw.BrowserHelper.isApp() && !Tw.FormatHelper.isEmpty(cookie) ) {
       this._nativeService.send(Tw.NTV_CMD.SESSION, {
         serverSession: cookie,
-        expired: 60 * 60 * 1000
+        expired: Tw.SESSION_EXPIRE_TIME
       });
     }
   },
