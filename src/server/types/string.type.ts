@@ -37,7 +37,6 @@ export enum UNIT {
   MB = 'MB',
   SMS = '건'
 }
-
 export const MYT_DATA_USAGE = {
   T_O_PLAN_BASE_DATA: {
     DD3EA: '인피니티',
@@ -52,6 +51,12 @@ export const MYT_DATA_USAGE = {
     DD3CV: '패밀리',
     DD3CU: '라지',
     DD4D5: '라지'
+  },
+  DATA_TYPE: {
+    DATA: 'data',
+    VOICE: 'voice',
+    SMS: 'sms',
+    ETC: 'etc'
   }
 };
 
