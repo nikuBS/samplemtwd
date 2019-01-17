@@ -17,11 +17,11 @@ class MyTDataFamily extends TwViewController {
   }
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
-    // Observable.combineLatest(this.getFamilyData(svcInfo), this.getShareData()).subscribe(([familyInfo, shareData]) => {
-    this.getFamilyData(svcInfo).subscribe(familyInfo => {
+    Observable.combineLatest(this.getFamilyData(svcInfo), this.getHistory()).subscribe(([familyInfo, histories]) => {
+      // this.getFamilyData(svcInfo).subscribe(familyInfo => {
       const error = {
-        code: familyInfo.code,
-        msg: familyInfo.msg
+        code: familyInfo.code || histories.code,
+        msg: familyInfo.msg || histories.msg
       };
 
       if (error.code) {
@@ -31,11 +31,11 @@ class MyTDataFamily extends TwViewController {
         });
       }
 
-      res.render('familydata/myt-data.familydata.html', { svcInfo, pageInfo, familyInfo });
+      res.render('familydata/myt-data.familydata.html', { svcInfo, pageInfo, familyInfo, histories });
     });
   }
 
-  private getFamilyData(svcInfo) {
+  private getFamilyData = svcInfo => {
     return this.apiService.request(API_CMD.BFF_06_0044, {}).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
@@ -91,16 +91,16 @@ class MyTDataFamily extends TwViewController {
     });
   }
 
-  // private getShareData = familyInfo => {
-  //   return this.apiService.request(API_CMD.BFF_06_0047, {}).map(resp => {
-  //     if (resp.code !== API_CODE.CODE_00) {
-  //       return resp;
-  //     }
-  //     return {
-  //       familyInfo: familyInfo,
-  //       shaceresp.result;
-  //   });
-  // }
+  private getHistory = () => {
+    return this.apiService.request(API_CMD.BFF_06_0071, {}).map(resp => {
+      if (resp.code !== API_CODE.CODE_00) {
+        return resp;
+      }
+
+      const histories = resp.result.mySharePot;
+      return histories ? histories.length : 0;
+    });
+  }
 }
 
 export default MyTDataFamily;

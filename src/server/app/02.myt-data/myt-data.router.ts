@@ -24,6 +24,7 @@ import MyTDataPrepaidDataAuto from './controllers/prepaid/myt-data.prepaid.data-
 import MyTDataPrepaidDataComplete from './controllers/prepaid/myt-data.prepaid.data-complete.controller';
 import MyTDataPrepaidVoiceAuto from './controllers/prepaid/myt-data.prepaid.voice-auto.controller';
 import MyTDataPrepaidVoiceComplete from './controllers/prepaid/myt-data.prepaid.voice-complete.controller';
+import MyTDataFamilyHistory from './controllers/familydata/myt-data.familydata.history.controller';
 
 class MytDataRouter extends TwRouter {
   constructor() {
@@ -39,6 +40,7 @@ class MytDataRouter extends TwRouter {
     this.controllers.push({ url: '/recharge/coupon/complete', controller: MyTDataRechargeCouponComplete });
     this.controllers.push({ url: '/familydata', controller: MyTDataFamily });
     this.controllers.push({ url: '/familydata/share', controller: MyTDataFamilyShare });
+    this.controllers.push({ url: '/familydata/history', controller: MyTDataFamilyHistory });
     this.controllers.push({ url: '/history', controller: MyTDataHistory });
     this.controllers.push({ url: '/submain', controller: MyTDataSubMain });
     this.controllers.push({ url: '/submain/child-hotdata', controller: MyTDataUsageChild });
