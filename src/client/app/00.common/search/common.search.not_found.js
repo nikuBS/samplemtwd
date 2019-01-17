@@ -4,7 +4,7 @@
  * Date: 2018.12.31
  */
 
-Tw.CommonSearchNotFound = function (rootEl,svcInfo,surveyList) {
+Tw.CommonSearchNotFound = function (rootEl,svcInfo,surveyList,step) {
   //this._cdn = cdn;
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
@@ -12,6 +12,7 @@ Tw.CommonSearchNotFound = function (rootEl,svcInfo,surveyList) {
   this._svcInfo = svcInfo;
   this._surveyList = surveyList;
   this._popupService = Tw.Popup;
+  this._step = step;
   this._init();
   /*
   HO_05_02_02_01_01.hbs : 검색 의견 신청 텍스트
@@ -24,7 +25,7 @@ Tw.CommonSearchNotFound.prototype = {
     this.$container.find('.request_keyword').on('click',$.proxy(this._showClaimPopup,this));
     this.$container.find('.icon-gnb-search').on('click',$.proxy(this._doSearch,this));
     this.$container.find('#search_keyword').on('keyup',$.proxy(this._inputKeyupEvt,this));
-    this.$container.find('.close-area').on('click',$.proxy(this._historyService.goBack,this));
+    this.$container.find('.close-area').on('click',$.proxy(this._closeSearch,this));
     this.$container.on('click','.search-element',$.proxy(this._searchRelatedKeyword,this));
   },
   _showClaimPopup : function(btnEvt){
@@ -107,7 +108,7 @@ Tw.CommonSearchNotFound.prototype = {
       return;
     }
     this._addRecentlyKeyword(searchKeyword);
-    this._historyService.goLoad('/common/search?keyword='+searchKeyword);
+    this._historyService.goLoad('/common/search?keyword='+searchKeyword+'&step='+(Number(this._step)+1));
   },
   _addRecentlyKeyword : function (keyword) {
     var recentlyKeywordData = JSON.parse(Tw.CommonHelper.getLocalStorage('recentlySearchKeyword'));
@@ -134,6 +135,9 @@ Tw.CommonSearchNotFound.prototype = {
     var goUrl = '/common/search?keyword='+keyword;
     this._addRecentlyKeyword(keyword);
     this._historyService.goLoad(goUrl);
+  },
+  _closeSearch : function () {
+    this._historyService.go(Number(this._step)*-1);
   }
 
 

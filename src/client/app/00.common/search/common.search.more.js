@@ -174,11 +174,9 @@ Tw.CommonSearchMore.prototype = {
     this._apiService.request(Tw.API_CMD.STACK_SEARCH_USER_CLICK,
       { param : 'docId='+$linkData.data('id')+'&section='+$linkData.data('category')+'&title='+$linkData.data('tit')+'&keyword='+this._searchInfo.researchQuery }
     );
-    if($linkData.hasClass('direct-element')){
-      Tw.CommonHelper.openUrlExternal(linkUrl);
-    }else {
-      this._historyService.goLoad(linkUrl);
-    }
+
+    //Tw.CommonHelper.openUrlExternal(linkUrl);
+    this._historyService.goLoad(linkUrl);
   },
   _closeSearch : function () {
     this._historyService.go(Number(this._step)*-1);
