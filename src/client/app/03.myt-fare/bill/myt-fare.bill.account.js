@@ -224,10 +224,10 @@ Tw.MyTFareBillAccount.prototype = {
 
     $layer.find('.fe-payment-option-name').attr('id', data.bankCd).text(data.bankNm);
     $layer.find('.fe-payment-option-number').attr('id', data.accountNum)
-      .text(Tw.StringHelper.masking(data.accountNum, '*', 8));
+      .text(data.accountNum);
     $layer.find('.fe-payment-amount').text(Tw.FormatHelper.addComma(this._paymentCommon.getAmount().toString()));
     $layer.find('.fe-payment-refund').attr('id', data.refundCd).attr('data-num', data.refundNum)
-      .text(data.refundNm + ' ' + Tw.StringHelper.masking(data.refundNum, '*', 8));
+      .text(data.refundNm + ' ' + data.refundNum);
   },
   _getData: function () {
     var isAccountInput = this.$accountInputBox.hasClass('checked');
