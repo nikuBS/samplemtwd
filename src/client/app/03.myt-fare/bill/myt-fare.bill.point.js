@@ -20,7 +20,6 @@ Tw.MyTFareBillPoint.prototype = {
   _init: function () {
     this._initVariables();
     this._bindEvent();
-    this._checkIsPopup();
   },
   _initVariables: function () {
     this.$pointSelector = this.$container.find('.fe-select-point');
@@ -45,14 +44,6 @@ Tw.MyTFareBillPoint.prototype = {
     this.$container.on('click', '.fe-find-password', $.proxy(this._goCashbagSite, this));
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
-  },
-  _checkIsPopup: function () {
-    var isCheck = this._historyService.getHash().match('check');
-
-    if (isCheck && this._historyService.isReload()) {
-      this._historyService.replace();
-      this._checkPay();
-    }
   },
   _openGetPoint: function () {
     new Tw.MyTFareBillGetPoint(this.$container, $.proxy(this._setPointInfo, this));
