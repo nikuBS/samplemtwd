@@ -141,7 +141,10 @@ Tw.MyTDataPrepaidAlarm.prototype = {
       });
 
       this._popupService.openConfirmButton(
-        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.MSG_1 + this.day.toString() + Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.MSG_2,
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.MSG_1 +
+        $('.fe-alarm-category').text().trim() +
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.MSG_2 +
+        this.day.toString() + Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.MSG_3,
         Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.TITLE,
         $.proxy(this._onCancel, this),
         $.proxy(this._requestAlarm, this),

@@ -421,6 +421,17 @@ Tw.FormatHelper = (function () {
     return value.replace(regexp, '-');
   };
 
+  function dataURLtoFile(dataurl, filename) {
+    var arr = dataurl.split(',')
+    var mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    console.log(mime);
+    while(n--){
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, {type:mime});
+  }
+
   return {
     leadingZeros: leadingZeros,
     isEmpty: isEmpty,
@@ -457,6 +468,7 @@ Tw.FormatHelper = (function () {
     isCellPhone: isCellPhone,
     purifyPlansData: purifyPlansData,
     stripTags: stripTags,
-    addCardDash: addCardDash
+    addCardDash: addCardDash,
+    dataURLtoFile: dataURLtoFile
   };
 })();
