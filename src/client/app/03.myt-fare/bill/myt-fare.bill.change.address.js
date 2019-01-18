@@ -30,17 +30,17 @@ Tw.MyTFareBillChangeAddress.prototype = {
     this.$container.on('click', '.fe-change', $.proxy(this._changeAddress, this));
   },
   _checkNumber: function (event) {
-    var target = event.target;
-    Tw.InputHelper.inputNumberOnly(target);
+    Tw.InputHelper.inputNumberOnly(event.target);
+    var $target = $(event.target);
 
     if (this._phoneModifyYn === 'N') {
       if (Tw.InputHelper.isDeleteKey(event)) {
         this._phoneModifyYn = 'Y';
-        $(target).val('');
+        $target.val('');
       }
     }
 
-    this._addHipen(target);
+    $target.val(Tw.FormatHelper.conTelFormatWithDash($target.val()));
     this._setChangeBtnAble();
   },
   _checkPhoneNumber: function (event) {
