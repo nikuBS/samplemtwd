@@ -290,7 +290,7 @@ class ApiRouter {
 
     this.loginService.setCurrentReq(req, res);
     this.apiService.setCurrentReq(req, res);
-    this.apiService.updateAllSvcInfo({})
+    this.apiService.updateSvcInfo({})
       .switchMap((resp) => this.loginService.setMaskingCert(svcMgmtNum))
       .subscribe((resp) => {
         res.json({
@@ -556,7 +556,7 @@ class ApiRouter {
   public updateSvcInfo(req: Request, res: Response, next: NextFunction) {
     this.apiService.setCurrentReq(req, res);
     // this.loginService.setCurrentReq(req, res);
-    this.apiService.updateAllSvcInfo({}).subscribe((resp) => {
+    this.apiService.updateSvcInfo({}).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
       res.json(error);
