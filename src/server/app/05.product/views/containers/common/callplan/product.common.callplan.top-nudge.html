@@ -1,4 +1,4 @@
-<% if (( isWireplan && (!svcInfo || svcInfo && svcInfo.prodId !== prodId) || isCombine && !isJoined ) && basicInfo.isJoinReservation && !combineRequireDocumentInfo) { %>
+<% if (( isWireplan && (!svcInfo || svcInfo && svcInfo.prodId !== prodId) || isCombine && !isJoined ) && basicInfo.isJoinReservation && (!combineRequireDocumentInfo || combineRequireDocumentInfo && combineRequireDocumentInfo.page === 'history')) { %>
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <div class="joinconsulting-wrap">

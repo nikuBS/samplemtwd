@@ -203,12 +203,14 @@ Tw.ProductMobileplanJoinTplan.prototype = {
       if (!isDataOvrAmt && !isVoiceOvrAmt && !isSmsOvrAmt) {
         overpayResults.isOverpayResult = false;
       } else {
+        var convDataAmt = Tw.ProductHelper.convDataAmtIfAndBas(resp.result.dataIfAmt, resp.result.dataBasAmt);
+
         overpayResults = $.extend(overpayResults, {
           isDataOvrAmt: isDataOvrAmt,
           isVoiceOvrAmt: isVoiceOvrAmt,
           isSmsOvrAmt: isSmsOvrAmt,
-          dataIfAmt: Tw.FormatHelper.addComma(resp.result.dataIfAmt),
-          dataBasAmt: Tw.FormatHelper.addComma(resp.result.dataBasAmt),
+          dataIfAmt: Tw.FormatHelper.addComma(convDataAmt.dataIfAmt) + convDataAmt.unit,
+          dataBasAmt: Tw.FormatHelper.addComma(convDataAmt.dataBasAmt) + convDataAmt.unit,
           dataOvrAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.dataOvrAmt)),
           voiceIfAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.voiceIfAmt)),
           voiceBasAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.voiceBasAmt)),

@@ -26,7 +26,7 @@ Tw.FormatHelper = (function () {
 
   var addComma = function (value) {
     var regexp = /\B(?=(\d{3})+(?!\d))/g;
-    return value.replace(regexp, ',');
+    return value.toString().replace(regexp, ',');
   };
 
   var removeZero = function (value) {
