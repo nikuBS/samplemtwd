@@ -595,11 +595,8 @@ class MyTFareBillGuide extends TwViewController {
 
         item.label = thisMain.phoneStrToDash(svcItem ? svcItem.svcNum : item.svcNum);
       } else {
-        if ( item.addr && item.addr.length > 22 ) {
-          item.label = item.addr.substr(0, 22);
-        } else {
-          item.label = item.addr;
-        }
+
+        item.label = item.addr;
 
       }
     }
