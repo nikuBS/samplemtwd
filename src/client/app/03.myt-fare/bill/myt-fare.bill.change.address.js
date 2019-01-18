@@ -7,65 +7,41 @@
 Tw.MyTFareBillChangeAddress = function (rootEl) {
   this.$container = rootEl;
   this.$isValid = true;
+  this._phoneModifyYn = 'N';
+  this._addrModifyYn = 'N';
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._commonHelper = Tw.CommonHelper;
   this._validation = Tw.ValidationHelper;
 
-  this._init();
+  this._historyService = new Tw.HistoryService(rootEl);
+
+  this._bindEvent();
 };
 
 Tw.MyTFareBillChangeAddress.prototype = {
-  _init: function () {
-    this._popupService.open({
-      'hbs':'MF_05_02_02'
-    },
-      $.proxy(this._openChangeAddress, this),
-      $.proxy(this._setToast, this),
-      'address');
-  },
-  _openChangeAddress: function ($layer) {
-    this.$layer = $layer;
-
-    this._setInitData();
-    this._bindEvent();
-  },
-  _setToast: function () {
-    if (this.$isChanged) {
-      this._commonHelper.toast(Tw.ALERT_MSG_MYT_FARE.COMPLETE_CHANGE);
-    }
-  },
-  _setInitData: function () {
-    this.$layer.find('.fe-phone').val(this.$container.find('.fe-phone').text());
-    this.$layer.find('.fe-zip').val(this.$container.find('.fe-zip-code').attr('id'));
-    this.$layer.find('.fe-main-address').val(this.$container.find('.fe-addr1').text());
-    this.$layer.find('.fe-detail-address').val(this.$container.find('.fe-addr2').text());
-  },
   _bindEvent: function () {
-    this.$layer.on('keyup', '.required-input-field', $.proxy(this._setChangeBtnAble, this));
-    this.$layer.on('keyup', '.fe-phone', $.proxy(this._checkNumber, this));
-    this.$layer.on('input', '.fe-phone', $.proxy(this._setMaxValue, this));
-    this.$layer.on('blur', '.fe-phone', $.proxy(this._checkPhoneNumber, this));
-    this.$layer.on('click', '.cancel', $.proxy(this._setChangeBtnAble, this));
-    this.$layer.on('click', '.fe-post', $.proxy(this._getPostcode, this));
-    this.$layer.on('click', '.fe-change', $.proxy(this._changeAddress, this));
+    this.$container.on('keyup', '.required-input-field', $.proxy(this._setChangeBtnAble, this));
+    this.$container.on('keyup', '.fe-phone', $.proxy(this._checkNumber, this));
+    this.$container.on('blur', '.fe-phone', $.proxy(this._checkPhoneNumber, this));
+    this.$container.on('click', '.cancel', $.proxy(this._setChangeBtnAble, this));
+    this.$container.on('click', '.fe-post', $.proxy(this._getPostcode, this));
+    this.$container.on('click', '.fe-change', $.proxy(this._changeAddress, this));
   },
   _checkNumber: function (event) {
     var target = event.target;
     Tw.InputHelper.inputNumberOnly(target);
 
-    this._addHipen(target);
-    this._setChangeBtnAble();
-  },
-  _setMaxValue: function (event) {
-    var $target = $(event.currentTarget);
-    var maxLength = $target.attr('maxLength');
-    if ($target.attr('maxLength')) {
-      if ($target.val().length >= maxLength) {
-        $target.val($target.val().slice(0, maxLength));
+    if (this._phoneModifyYn === 'N') {
+      if (Tw.InputHelper.isDeleteKey(event)) {
+        this._phoneModifyYn = 'Y';
+        $(target).val('');
       }
     }
+
+    this._addHipen(target);
+    this._setChangeBtnAble();
   },
   _checkPhoneNumber: function (event) {
     var $target = $(event.currentTarget);
@@ -85,15 +61,21 @@ Tw.MyTFareBillChangeAddress.prototype = {
     }
   },
   _getPostcode: function () {
+    new Tw.CommonPostcodeMain(this.$container, $.proxy(this._setAddress, this));
+  },
+  _setAddress: function (address) {
+    this.$container.find('.fe-zip').val(address.zip);
+    this.$container.find('.fe-main-address').val(address.main);
+    this.$container.find('.fe-detail-address').val(address.detail);
+
+    this._addrModifyYn = 'Y';
     this._setChangeBtnAble();
-    new Tw.CommonPostcodeMain(this.$layer);
   },
   _setChangeBtnAble: function () {
-    if (!Tw.FormatHelper.isEmpty($.trim(this.$layer.find('.fe-phone').val())) &&
-      !Tw.FormatHelper.isEmpty($.trim(this.$layer.find('.fe-detail-address').val()))) {
-      this.$layer.find('.fe-change').removeAttr('disabled');
+    if (!Tw.FormatHelper.isEmpty($.trim(this.$container.find('.fe-phone').val()))) {
+      this.$container.find('.fe-change').removeAttr('disabled');
     } else {
-      this.$layer.find('.fe-change').attr('disabled', 'disabled');
+      this.$container.find('.fe-change').attr('disabled', 'disabled');
     }
   },
   _changeAddress: function () {
@@ -104,31 +86,33 @@ Tw.MyTFareBillChangeAddress.prototype = {
     }
   },
   _makeRequestData: function () {
+    if (this._addrModifyYn === 'N') {
+      this._checkIsChangedDetailAddress();
+    }
     this._changeData = {
-      billSvcNum: $.trim(this.$layer.find('.fe-phone').val()),
-      zip: $.trim(this.$layer.find('.fe-zip').val()),
-      basAddr: $.trim(this.$layer.find('.fe-main-address').val()),
-      dtlAddr: $.trim(this.$layer.find('.fe-detail-address').val())
+      billSvcNum: $.trim(this.$container.find('.fe-phone').val()),
+      zip: $.trim(this.$container.find('.fe-zip').val()),
+      basAddr: $.trim(this.$container.find('.fe-main-address').val()),
+      dtlAddr: $.trim(this.$container.find('.fe-detail-address').val()),
+      svcNumChgYn: this._phoneModifyYn,
+      addrChgYn: this._addrModifyYn
     };
     return this._changeData;
   },
+  _checkIsChangedDetailAddress: function () {
+    var $detailAddress = this.$container.find('.fe-detail-address');
+    if ($detailAddress.attr('data-origin-value') !== $.trim($detailAddress.val())) {
+      this._addrModifyYn = 'Y';
+    }
+  },
   _changeSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._setChangedData();
-
-      this.$isChanged = true;
-      this._popupService.close();
+      this._historyService.goLoad('/myt-fare/bill/option?type=change');
     } else {
       this._changeFail(res);
     }
   },
   _changeFail: function (err) {
     Tw.Error(err.code, err.msg).pop();
-  },
-  _setChangedData: function () {
-    this.$container.find('.fe-phone').text(this._changeData.billSvcNum);
-    this.$container.find('.fe-zip').text(this._changeData.zip);
-    this.$container.find('.fe-addr1').text(this._changeData.basAddr);
-    this.$container.find('.fe-addr2').text(this._changeData.dtlAddr);
   }
 };
