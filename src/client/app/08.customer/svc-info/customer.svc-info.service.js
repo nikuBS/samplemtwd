@@ -65,7 +65,8 @@ Tw.CustomerSvcinfoService.prototype = {
           return {
             txt: el.dep_title,
             // option: 'checked', 
-            'radio-attr': 'name="selectType" value="'+ el.code +'"'
+            'radio-attr': 'name="selectType" value="'+ el.code +'" id="radio'+el.code+'"',
+            'label-attr': 'for="radio'+el.code+'"'
           }
         })
       }
@@ -83,6 +84,11 @@ Tw.CustomerSvcinfoService.prototype = {
 
     // event
     this.$selectButtons.on('click', $.proxy(this._setActionSheetValue, this));
+    $container.find('.ac-list>li label').on('click', $.proxy(this._noDefaultEvent, this));
+  },
+  
+  _noDefaultEvent: function(e) {
+    e.preventDefault();
   },
 
   _closeSelect: function () {
