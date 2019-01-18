@@ -537,7 +537,7 @@ Tw.MyTDataUsage.prototype = {
       return Tw.FormatHelper.convDataFormat(amt, Tw.DATA_UNIT.KB).unit;
     });
     Handlebars.registerHelper('dateFormat', Tw.DateHelper.getShortDate);
-    Handlebars.registerHelper('dashPhoneNum', Tw.FormatHelper.getFormattedPhoneNumber);
+    Handlebars.registerHelper('dashPhoneNum', Tw.FormatHelper.getDashedCellPhoneNumber);
     Handlebars.registerHelper('numComma', Tw.FormatHelper.addComma);
     Handlebars.registerHelper('usimFormat', this.convUsimFormat);
   },
