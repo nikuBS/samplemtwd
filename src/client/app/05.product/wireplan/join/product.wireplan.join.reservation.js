@@ -360,7 +360,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
       return;
     }
 
-    $input.val(Tw.FormatHelper.getDashedCellPhoneNumber($input.val()));
+    $input.val(Tw.FormatHelper.conTelFormatWithDash($input.val()));
   },
 
   _focusInputNumber: function(e) {
