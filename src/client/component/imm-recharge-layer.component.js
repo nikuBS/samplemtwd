@@ -193,7 +193,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
     else {
       $target = this.$popupContainer.find('[data-external]');
       if ( $target.length > 0 ) {
-        Tw.CommonHelper.openUrlExternal($target.attr('data-external'));
+       this._getBPCP($target.attr('data-external'));
       }
     }
   },
@@ -225,21 +225,35 @@ Tw.ImmediatelyRechargeLayer.prototype = {
 
   _onPrepayCoupon: function (classNm, event) {
     var $target = $(event.currentTarget);
-    var browser = Tw.BrowserHelper.isApp()? 'APP' : 'WEB';
     switch ( classNm ) {
       case 'data_coupon':
-        // $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.T_DATA[browser]);
-        $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.T_DATA_DEV[browser]);
+        $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.T_DATA);
         break;
       case 't_coupon':
-        // $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.T_COUPON[browser]);
-        $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.T_COUPON_DEV[browser]);
-        break;
+        $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.T_COUPON);
       case 'jeju_coupon':
-        // $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.JEJU[browser]);
-        $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.JEJU_DEV[browser]);
+        $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.JEJU);
         break;
     }
     this._popupService.close();
+  },
+
+  _getBPCP: function(url) {
+    var replaceUrl = url.replace('BPCP:', '');
+    this._apiService.request(Tw.API_CMD.BFF_01_0039, { bpcpServiceId: replaceUrl })
+      .done($.proxy(this._responseBPCP, this));
+  },
+
+  _responseBPCP: function(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    var url = resp.result.svcUrl;
+    if (!Tw.FormatHelper.isEmpty(resp.result.tParam)) {
+      url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
+    }
+
+    Tw.CommonHelper.openUrlInApp(url);
   }
 };

@@ -447,10 +447,7 @@ Tw.MyTDataSubMain.prototype = {
 
   // 데이터 혜텍
   _onDataBenefitDetail: function () {
-    // TODO: 상용 BPCP 페이지 개발 완료 후 상용 URL로 적용
-    var browser = Tw.BrowserHelper.isApp() ? 'APP' : 'WEB';
-    // Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.DATA_FACTORY[browser]);
-    Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.DATA_FACTORY_DEV[browser]);
+    this._getBPCP(Tw.OUTLINK.DATA_COUPON.DATA_FACTORY);
   },
 
   // 데이터 조르기
@@ -556,30 +553,44 @@ Tw.MyTDataSubMain.prototype = {
   _onPrepayCoupon: function (event) {
     var $target = $(event.currentTarget);
     var type = $target.attr('data-type');
-    var browser = Tw.BrowserHelper.isApp() ? 'APP' : 'WEB';
-    // TODO: 상용 BPCP 페이지 개발 완료 후 상용 URL로 적용
+    var url = '';
     switch ( type ) {
       case 'data':
-        // Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.T_DATA[browser]);
-        Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.T_DATA_DEV[browser]);
+        url = Tw.OUTLINK.DATA_COUPON.T_DATA;
         break;
       case 'coupon':
-        // Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.T_COUPON[browser]);
-        Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.T_COUPON_DEV[browser]);
+        url = Tw.OUTLINK.DATA_COUPON.T_COUPON;
         break;
       case 'oksusu':
-        // Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.OKSUSU[browser]);
-        Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.OKSUSU_DEV[browser]);
+        url = Tw.OUTLINK.DATA_COUPON.OKSUSU;
         break;
       case 'jeju':
-        // Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.JEJU[browser]);
-        Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.JEJU_DEV[browser]);
+        url = Tw.OUTLINK.DATA_COUPON.JEJU;
         break;
       case 'sdata':
-        // Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.T_SHORT_DATA[browser]);
-        Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.DATA_COUPON.T_SHORT_DATA_DEV[browser]);
+        url = Tw.OUTLINK.DATA_COUPON.T_SHORT_DATA;
         break;
     }
+    this._getBPCP(url);
+  },
+
+  _getBPCP: function(url) {
+    var replaceUrl = url.replace('BPCP:', '');
+    this._apiService.request(Tw.API_CMD.BFF_01_0039, { bpcpServiceId: replaceUrl })
+      .done($.proxy(this._responseBPCP, this));
+  },
+
+  _responseBPCP: function(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    var url = resp.result.svcUrl;
+    if (!Tw.FormatHelper.isEmpty(resp.result.tParam)) {
+      url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
+    }
+
+    Tw.CommonHelper.openUrlInApp(url);
   },
 
   _onClickBannerItem: function (event) {

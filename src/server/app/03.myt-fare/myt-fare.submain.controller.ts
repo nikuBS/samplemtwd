@@ -94,10 +94,10 @@ class MyTFareSubmainController extends TwViewController {
               data.claimLastDay = DateHelper.getMonthLastDay(claim.invDt);
               // 사용요금
               const usedAmt = parseInt(claim.useAmtTot, 10);
-              data.claimUseAmt = FormatHelper.addComma(usedAmt.toString());
+              data.claimUseAmt = FormatHelper.addComma(usedAmt.toString() || '0');
               // 할인요금
               const disAmt = Math.abs(claim.deduckTotInvAmt);
-              data.claimDisAmt = FormatHelper.addComma(disAmt.toString());
+              data.claimDisAmt = FormatHelper.addComma((disAmt.toString() || '0'));
               // Total
               data.claimPay = FormatHelper.addComma((usedAmt + disAmt).toString());
             } else {
@@ -222,7 +222,7 @@ class MyTFareSubmainController extends TwViewController {
           data.usageLastDay = DateHelper.getMonthLastDay(usage.invDt);
           // 사용요금
           const usedAmt = parseInt(usage.useAmtTot, 10);
-          data.useAmtTot = FormatHelper.addComma(usedAmt.toString());
+          data.useAmtTot = FormatHelper.addComma(usedAmt.toString() || '0');
         }
         // 납부/청구 정보
         if ( paymentInfo ) {
