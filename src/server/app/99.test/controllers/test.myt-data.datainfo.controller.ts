@@ -6,13 +6,18 @@
 
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import { Observable } from 'rxjs/Rx';
-import { API_CMD, API_CODE } from '../../../types/api-command.type';
-import { MYT_DATA_CHARGE_TYPE_NAMES as TypeNames, UNIT, MYT_DATA_CHARGE_TYPES as ChargeTypeNames } from '../../../types/string.type';
+import {
+  MYT_DATA_CHARGE_TYPE_NAMES as TypeNames,
+  UNIT,
+  MYT_DATA_CHARGE_TYPES as ChargeTypeNames,
+  DATA_UNIT,
+  CURRENCY_UNIT
+} from '../../../types/string.type';
 
 import DateHelper from '../../../utils/date.helper';
 import FormatHelper from '../../../utils/format.helper';
 import { DATA_GIFTS, LIMIT_CHARGES, TING_CHARGES, REFILL_USAGES, TING_GIFTS, REFILL_GIFTS } from '../../../mock/server/myt-data.datainfo.mock';
+import { API_CODE } from '../../../types/api-command.type';
 
 enum RechargeTypes {
   DATA_GIFT = 1,
@@ -128,12 +133,12 @@ export default class TestMyTDataInfo extends TwViewController {
           amount > 1000
             ? {
                 amount: (amount / 1000).toFixed(1),
-                unit: UNIT.GB,
+                unit: DATA_UNIT.GB,
                 color: item.type === '1' ? 'red' : 'blue'
               }
             : {
                 amount: amount,
-                unit: UNIT.MB,
+                unit: DATA_UNIT.MB,
                 color: item.type === '1' ? 'red' : 'blue'
               },
         bottom: item.giftType === 'GC' ? [item.svcNum, ChargeTypeNames.FIXED] : [item.svcNum]
@@ -174,7 +179,7 @@ export default class TestMyTDataInfo extends TwViewController {
         },
         right: {
           amount: FormatHelper.addComma(item.amt),
-          unit: UNIT.WON,
+          unit: CURRENCY_UNIT.WON,
           color: 'blue'
         },
         bottom: [item.opTypNm]
@@ -209,7 +214,7 @@ export default class TestMyTDataInfo extends TwViewController {
         date: DateHelper.getShortDateNoYear(key),
         right: {
           amount: FormatHelper.addComma(item.amt),
-          unit: UNIT.WON,
+          unit: CURRENCY_UNIT.WON,
           color: item.opTypCd === '2' || item.opTypCd === '4' ? 'gray' : 'blue'
         },
         badge: {
@@ -250,7 +255,7 @@ export default class TestMyTDataInfo extends TwViewController {
         date: DateHelper.getShortDateNoYear(key),
         right: {
           amount: FormatHelper.addComma(item.amt),
-          unit: UNIT.WON,
+          unit: CURRENCY_UNIT.WON,
           color: item.opTypCd === '1' ? 'red' : 'blue'
         },
         badge: {

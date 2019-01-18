@@ -10,10 +10,10 @@ import { Observable } from 'rxjs/Rx';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import {
   MYT_DATA_CHARGE_TYPE_NAMES as TypeNames,
-  UNIT,
   MYT_DATA_CHARGE_TYPES as ChargeTypeNames,
   ETC_CENTER,
-  MYT_DATA_REFILL_TYPES
+  MYT_DATA_REFILL_TYPES,
+  CURRENCY_UNIT
 } from '../../../../types/string.type';
 
 import DateHelper from '../../../../utils/date.helper';
@@ -133,7 +133,7 @@ export default class MyTDataHistory extends TwViewController {
           date: DateHelper.getShortDate(key),
           badge: 'recharge',
           refundable: item.opTypCd === '1' && this.toDt === rechargeDate,
-          right: FormatHelper.addComma(item.amt) + UNIT.WON,
+          right: FormatHelper.addComma(item.amt) + CURRENCY_UNIT.WON,
           bottom: [item.OpOrgNm || ETC_CENTER]
         };
       });
@@ -155,7 +155,7 @@ export default class MyTDataHistory extends TwViewController {
           date: DateHelper.getShortDate(item.opDt),
           badge: 'recharge',
           refundable: item.refundableYn === 'Y',
-          right: FormatHelper.addComma(item.amt) + UNIT.WON,
+          right: FormatHelper.addComma(item.amt) + CURRENCY_UNIT.WON,
           bottom: item.opTypCd === '2' || item.opTypCd === '4' ? [item.opOrgNm || ETC_CENTER, ChargeTypeNames.CANCEL] : [item.opOrgNm || ETC_CENTER]
         };
       });
@@ -176,7 +176,7 @@ export default class MyTDataHistory extends TwViewController {
           typeName: TypeNames.TING_GIFT,
           date: DateHelper.getShortDate(key),
           badge: item.opTypCd === '1' ? 'send' : 'recieve',
-          right: FormatHelper.addComma(item.amt) + UNIT.WON,
+          right: FormatHelper.addComma(item.amt) + CURRENCY_UNIT.WON,
           bottom: [FormatHelper.conTelFormatWithDash(item.svcNum)]
         };
       });

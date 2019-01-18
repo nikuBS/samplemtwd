@@ -32,11 +32,9 @@ export const MYT_FARE_BILL_TYPE = {
 };
 
 export enum UNIT {
-  WON = '원',
-  GB = 'GB',
-  MB = 'MB',
   SMS = '건'
 }
+
 export const MYT_DATA_USAGE = {
   T_O_PLAN_BASE_DATA: {
     DD3EA: '인피니티',
