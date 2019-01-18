@@ -194,11 +194,11 @@ Tw.MainMenuRefund.prototype = {
       if (res.code === Tw.API_CODE.CODE_00) {
         this._historyService.reload();
       } else {
-        Tw.Error(res.code, res.msg).poop();
+        Tw.Error(res.code, res.msg).pop();
       }
     }, this))
     .fail(function (err) {
-      Tw.Error(err.code, err.msg).poop();
+      Tw.Error(err.code, err.msg).pop();
     });
   },
   _onChangeAccount: function (e) {

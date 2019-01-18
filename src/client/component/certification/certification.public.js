@@ -67,7 +67,7 @@ Tw.CertificationPublic.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._openPublicCert(this._setAppMsg(resp.result));
     } else {
-      this._openPublicCert('');
+      Tw.Error(resp.code, resp.msg).pop();
     }
   },
   _openPublicCert: function (message) {
@@ -91,7 +91,8 @@ Tw.CertificationPublic.prototype = {
       return '';
     }
     if ( this._needAccountInfo(this._command.command.path) ) {
-      return Tw.PUBLIC_AUTH_COP + ',' + this._command.params.bankOrCardName + ',' + this._command.params.bankOrCardAccn + ',' + result.custName + ',' + result.birthDate;
+      return Tw.PUBLIC_AUTH_COP + ',' + this._command.params.bankOrCardName + ',' +
+        this._command.params.bankOrCardAccn + ',' + result.custName + ',' + result.birthDate;
     }
     return result.custName + ',' + result.birthDate;
   },
@@ -113,7 +114,7 @@ Tw.CertificationPublic.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._callback(resp);
     } else {
-      Tw.Error(resp.code, resp.msg);
+      Tw.Error(resp.code, resp.msg).pop();
     }
   }
 };

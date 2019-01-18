@@ -64,7 +64,7 @@ Tw.CertificationSk.prototype = {
         callback({ code: Tw.API_CODE.CERT_SMS_ENABLE });
       }
     } else {
-      Tw.Error.pop(resp.code, resp.msg);
+      Tw.Error(resp.code, resp.msg).pop();
     }
   },
   _checkEnableCase: function (allSvc, svcInfo, opMethods, optMethods, methodCnt) {
@@ -105,7 +105,7 @@ Tw.CertificationSk.prototype = {
       this._allSvcInfo = resp.result;
       this._parseAllSvcInfo(resp.result, opMethods, optMethods, isWelcome, methodCnt);
     } else {
-      Tw.Error.pop(resp.code, resp.msg);
+      Tw.Error(resp.code, resp.msg).pop();
     }
   },
   _checkSmsType: function (opMethods) {
