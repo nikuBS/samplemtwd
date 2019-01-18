@@ -254,8 +254,11 @@ Tw.ValidationHelper = (function () {
       }
     }
 
-    if (isSame) {
+    if (!Tw.FormatHelper.isEmpty(message)) {
       Tw.Popup.openAlert(message);
+    }
+
+    if (isSame) {
       return false;
     }
     return true;
