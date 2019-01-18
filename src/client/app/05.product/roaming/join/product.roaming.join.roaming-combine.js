@@ -122,9 +122,10 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
   },
   _activateAddBtn : function (inputEvt) {
     var inputVal = this.$inputElement.val();
-    if(inputVal.length>0&&isNaN(inputEvt.key)){
+    var numReg = /[^0-9]/;
+    if(inputVal.length>0&&isNaN(inputEvt.key)&&numReg.test(inputVal.charAt(inputVal.length-1))){
       this.$inputElement.val('');
-      this.$inputElement.val(inputVal.replace(/[^0-9]/g,''));
+      this.$inputElement.val(inputVal.substring(0,inputVal.length-1));
     }
     if(this.$inputElement.val().length>=10){
       this.$addBtn.removeAttr('disabled');

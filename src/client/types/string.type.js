@@ -1578,7 +1578,9 @@ Tw.ROAMING_DOWNLOAD_URL = {
 Tw.TOOLTIP_TITLE = {
   ROAMING_PAY_GUIDE: '로밍 이용요금 안내',
   ROAMING_USE_GUIDE: '로밍 사용안내',
-  SERVICE_START_GUIDE: '서비스개시일/시간안내'
+  SERVICE_START_GUIDE: '서비스개시일/시간안내',
+  ROAMING_SERVICE_CAUTION: '서비스 유의사항',
+  ROAMING_SERVICE_TERM: '로밍 서비스 기간 설정'
 };
 
 Tw.MEMBERSHIP = {

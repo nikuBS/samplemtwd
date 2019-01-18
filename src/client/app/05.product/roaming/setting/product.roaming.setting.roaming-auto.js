@@ -38,6 +38,13 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     this.$container.find('#start_time').attr('data-number',this._prodBffInfo.svcStartTm);
     this.$container.find('#end_time').text(endTime);
     this.$container.find('#end_time').attr('data-number',this._prodBffInfo.svcEndTm);
+    this._checkSelectedEndDate(this._prodBffInfo.svcEndDt);
+  },
+  _checkSelectedEndDate : function (endDate) {
+    if(this._currentDate>=endDate){
+      this.$container.find('.bt-dropdown').attr('disabled','disabled');
+      this.$container.find('#do_setting').attr('disabled','disabled');
+    }
   },
   _bindBtnEvents: function () {
     this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
