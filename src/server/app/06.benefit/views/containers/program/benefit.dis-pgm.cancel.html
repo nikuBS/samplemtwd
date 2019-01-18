@@ -17,7 +17,7 @@
   <!--// #skip_navigation -->
   <div class="wrap" data-menuId="<%= pageInfo.menuId %>"></div>
 </body>
-<% include ../../../../components/javascript.component.html %>
+<% include ../../components/javascript.component.html %>
 <script>
   $(function () {
     new Tw.BenefitDisPgmCancel($('.wrap'), '<%= prodId %>', '<%- escape(JSON.stringify(joinTermInfo)) %>');
