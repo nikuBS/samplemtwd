@@ -16,7 +16,6 @@ Tw.ProductRoamingJoinRoamingCombine = function (rootEl,prodRedisInfo,prodBffInfo
   this._svcInfo = svcInfo;
   this._prodId = prodId;
   this._apiService = Tw.Api;
-  this._dateHelper = Tw.DateHelper;
   this._bindElementEvt();
   this._addedList = this._sortingSettingData(this._prodBffInfo.togetherMemList);
   this._changeList();
@@ -76,9 +75,9 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
       requestValue.childSvcNum = phoneNum;
       requestValue.startDtm = this._prodBffInfo.startdtm;
       requestValue.endDtm = this._prodBffInfo.enddtm;
-      requestValue.useDays = this._dateHelper.getDiffByUnit(
-        this._dateHelper.convDateFormat(),
-        this._dateHelper.convDateFormat(this._prodBffInfo.startdtm),
+      requestValue.useDays = Tw.DateHelper.getDiffByUnit(
+        Tw.DateHelper.convDateFormat(),
+        Tw.DateHelper.convDateFormat(this._prodBffInfo.startdtm),
         'days');
     }
 

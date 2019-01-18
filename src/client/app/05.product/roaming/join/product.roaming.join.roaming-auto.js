@@ -16,8 +16,7 @@ Tw.ProductRoamingJoinRoamingAuto = function (rootEl,prodRedisInfo,prodApiInfo,sv
   this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
   this._showDateFormat = 'YYYY. MM. DD.';
   this._dateFormat = 'YYYYMMDD';
-  this._dateHelper = Tw.DateHelper;
-  this._currentDate = this._dateHelper.getCurrentShortDate();
+  this._currentDate = Tw.DateHelper.getCurrentShortDate();
   this._tooltipInit(prodId);
   this._bindBtnEvents();
 };
@@ -36,7 +35,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
       dateFormat = format;
     }
     for(var i=0;i<range;i++){
-      resultArr.push(this._dateHelper.getShortDateWithFormatAddByUnit(this._currentDate,i,'days',dateFormat,this._dateFormat));
+      resultArr.push(Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,i,'days',dateFormat,this._dateFormat));
     }
     return resultArr;
   },
@@ -119,9 +118,9 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
     if(startDateValidationResult){
       this.$container.find('.bt-fixed-area button').removeAttr('disabled');
       var expireDate = parseInt(this._expireDate,10) + parseInt(startDateElement.attr('data-idx'),10);
-      var endDate = this._dateHelper.getShortDateWithFormatAddByUnit(this._currentDate,expireDate,'days',this._showDateFormat,this._dateFormat);
+      var endDate = Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,expireDate,'days',this._showDateFormat,this._dateFormat);
       endDateElement.text(endDate);
-      endDateElement.attr('data-number',this._dateHelper.getShortDateWithFormatAddByUnit(this._currentDate,expireDate,'days',this._dateFormat,this._dateFormat));
+      endDateElement.attr('data-number',Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,expireDate,'days',this._dateFormat,this._dateFormat));
       endTimeElement.text(startTime);
     }else{
       this.$container.find('.bt-fixed-area button').attr('disabled','disabled');
@@ -133,7 +132,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
   _validateTimeValueAgainstNow : function(paramDate,paramTime,className){
     var returnValue = false;
     var $errorsElement = this.$container.find('.error-txt.'+className);
-    if((paramDate===this._currentDate)&&(parseInt(paramTime,10)<=parseInt(this._dateHelper.getCurrentDateTime('HH'),10))){
+    if((paramDate===this._currentDate)&&(parseInt(paramTime,10)<=parseInt(Tw.DateHelper.getCurrentDateTime('HH'),10))){
       $errorsElement.text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_START_TIME);
       $errorsElement.removeClass('none');
     }else{

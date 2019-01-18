@@ -13,10 +13,9 @@ Tw.ProductRoamingJoinRoamingSetup = function (rootEl,prodRedisInfo,prodApiInfo,s
   this._svcInfo = svcInfo;
   this._prodId = prodId;
   this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
-  this._dateHelper = Tw.DateHelper;
   this._showDateFormat = 'YYYY. MM. DD.';
   this._dateFormat = 'YYYYMMDD';
-  this._currentDate = this._dateHelper.getCurrentShortDate();
+  this._currentDate = Tw.DateHelper.getCurrentShortDate();
   this._bindBtnEvents();
   this._tooltipInit(prodId);
 };
@@ -35,7 +34,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
       dateFormat = format;
     }
     for(var i=0;i<range;i++){
-      resultArr.push(this._dateHelper.getShortDateWithFormatAddByUnit(this._currentDate,i,'days',dateFormat,this._dateFormat));
+      resultArr.push(Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,i,'days',dateFormat,this._dateFormat));
     }
     return resultArr;
   },
@@ -150,7 +149,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
   _validateTimeValueAgainstNow : function(paramDate,paramTime,className){
     var returnValue = false;
     var $errorsElement = this.$container.find('.error-txt.'+className);
-    if((paramDate===this._currentDate)&&(parseInt(paramTime,10)<=parseInt(this._dateHelper.getCurrentDateTime('HH'),10))){
+    if((paramDate===this._currentDate)&&(parseInt(paramTime,10)<=parseInt(Tw.DateHelper.getCurrentDateTime('HH'),10))){
       if(className==='start'){
         $errorsElement.text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_START_TIME);
       }else{
