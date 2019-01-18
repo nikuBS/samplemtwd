@@ -1024,7 +1024,8 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
       {
         sub_title: '목소리 인증 이용안내',
         sub_text: '더 안전한 ARS이용을 원하신다면',
-        code: 'C00024'
+        code: 'C00024',
+        type: 'B1'
         /*dep_list: [
           {
             dep_title: '목소리 인증',
