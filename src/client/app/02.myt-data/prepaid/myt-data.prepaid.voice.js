@@ -193,7 +193,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
         }
       });
     } else if ( res.code === 'BIL0080' ) {
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4);
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.INVALID_CARD);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
