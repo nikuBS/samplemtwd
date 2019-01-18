@@ -45,19 +45,11 @@ Tw.MyTFareBillChangeAddress.prototype = {
   },
   _checkPhoneNumber: function (event) {
     var $target = $(event.currentTarget);
-    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 12), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V18);
+    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 11), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V18);
 
     if (this.$isValid) {
-      this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.isCellPhone($target.val()), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V9);
-    }
-  },
-  _addHipen: function (target) {
-    var target_val = target.value.replace(/\D[^\.]/g, '');
-
-    if (target_val.length <= 10) {
-      target.value = target_val.slice(0, 3) + '-' + target_val.slice(3, 6) + '-' + target_val.slice(6);
-    } else {
-      target.value = target_val.slice(0, 3) + '-' + target_val.slice(3, 7) + '-' + target_val.slice(7);
+      var isPhone = this._validation.isCellPhone($target.val()) || this._validation.isTelephone($target.val());
+      this.$isValid = this._validation.showAndHideErrorMsg($target, isPhone, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V9);
     }
   },
   _getPostcode: function () {
