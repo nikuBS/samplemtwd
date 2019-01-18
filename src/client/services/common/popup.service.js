@@ -44,8 +44,13 @@ Tw.PopupService.prototype = {
       this._prevHashList = [];
       this.close();
 
-      var NativeService = new Tw.NativeService();
-      NativeService.send(Tw.NTV_CMD.OPEN_NETWORK_ERROR_POP, {}, $.proxy(this._onRetry, this, $.extend(retryParams, lastHash)));
+      setTimeout($.proxy(function() {
+        Tw.Native.send(Tw.NTV_CMD.OPEN_NETWORK_ERROR_POP, {}, $.proxy(this._onRetry, this, $.extend(retryParams, lastHash)));
+
+        if (Tw.BrowserHelper.isIos()) {
+          window.onNativeCallback = $.proxy(this._onRetry, this, $.extend(retryParams, lastHash));
+        }
+      }, this), 100);
     }
   },
   _onRetry: function(retryParams) {
@@ -54,7 +59,7 @@ Tw.PopupService.prototype = {
       this._setConfirmCallback(retryParams.confirmCallback);
       this._addHash(retryParams.closeCallback, retryParams.curHash);
       this._open(retryParams.option);
-    }, this), 100);
+    }, this), 200);
   },
   _popupClose: function (closeCallback) {
     this._confirmCallback = null;
