@@ -293,10 +293,10 @@ Tw.MyTFareBillCard.prototype = {
     var data = this._getData();
 
     $layer.find('.fe-payment-option-name').attr('id', this.$cardNumber.attr('data-code')).text(this.$cardNumber.attr('data-name'));
-    $layer.find('.fe-payment-option-number').attr('id', data.cardNum).text(Tw.StringHelper.masking(data.cardNum, '*', 8));
+    $layer.find('.fe-payment-option-number').attr('id', data.cardNum).text(data.cardNum);
     $layer.find('.fe-payment-amount').text(Tw.FormatHelper.addComma(this._paymentCommon.getAmount().toString()));
     $layer.find('.fe-payment-refund').attr('id', data.refundCd).attr('data-num', data.refundNum)
-      .text(data.refundNm + ' ' + Tw.StringHelper.masking(data.refundNum, '*', 8));
+      .text(data.refundNm + ' ' + data.refundNum);
   },
   _getData: function () {
     var isRefundInput = this.$refundInputBox.hasClass('checked');
