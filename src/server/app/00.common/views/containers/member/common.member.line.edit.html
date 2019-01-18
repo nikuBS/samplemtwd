@@ -47,7 +47,11 @@
                                             <% if(category !== 's') { %>
                                             <span class="ph"><%= line.svcNum %></span>
                                             <% } else { %>
+                                            <% if(line.svcAttrCd === 'S3') { %>
+                                            <span class="ph"><%= line.svcNum %></span>
+                                            <% } else { %>
                                             <span class="ph"><%= line.addr %></span>
+                                            <% } %>
                                             <% } %>
                                         </div>
                                         <div class="bt-active">
@@ -72,7 +76,11 @@
                                             <% if(category !== 's') { %>
                                             <span class="ph"><%= line.svcNum %></span>
                                             <% } else { %>
+                                            <% if(line.svcAttrCd === 'S3') { %>
+                                            <span class="ph"><%= line.svcNum %></span>
+                                            <% } else { %>
                                             <span class="ph"><%= line.addr %></span>
+                                            <% } %>
                                             <% } %>
                                         </div>
                                         <div class="bt-active">
