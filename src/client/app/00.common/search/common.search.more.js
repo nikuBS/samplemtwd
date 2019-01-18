@@ -172,7 +172,12 @@ Tw.CommonSearchMore.prototype = {
       return;
     }
     this._apiService.request(Tw.API_CMD.STACK_SEARCH_USER_CLICK,
-      { param : 'docId='+$linkData.data('id')+'&section='+$linkData.data('category')+'&title='+$linkData.data('tit')+'&keyword='+this._searchInfo.researchQuery }
+      {
+        'docId' : $linkData.data('id'),
+        'section' : $linkData.data('category'),
+        'title' : encodeURI($linkData.data('tit')),
+        'keyword' : encodeURI(this._searchInfo.researchQuery)
+      }
     );
 
     //Tw.CommonHelper.openUrlExternal(linkUrl);

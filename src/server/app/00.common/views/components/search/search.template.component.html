@@ -158,7 +158,7 @@
 <script id="event_template" type="text/x-handlebars-template">
     <li>
         <button class="event-datail event-element list-data" title="이벤트 상세페이지 보기" data-id="{{listData.DOCID}}" data-category="event" data-tit="{{removeTag listData.PR_NM}}">
-            <img src="/img/dummy/img-event02.jpg" alt="{{{listData.PR_NM}}}">
+            <img src="{{CDN}}{{listData.FILE_PATH}}" alt="{{{removeTag listData.PR_NM}}}">
         </button>
         <div class="event-info">
             <span class="info-date">{{{listData.PR_STA_DT}}}~{{{listData.PR_END_DT}}}</span>
