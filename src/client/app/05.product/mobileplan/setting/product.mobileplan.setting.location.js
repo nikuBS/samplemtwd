@@ -78,7 +78,12 @@ Tw.ProductMobileplanSettingLocation.prototype = {
   },
 
   _onblurNumInput: function(event){
-    $(event.target).val(Tw.FormatHelper.getDashedCellPhoneNumber($(event.target).val()));
+    //$(event.target).val(Tw.FormatHelper.getDashedCellPhoneNumber($(event.target).val()));
+    var num = Tw.FormatHelper.getDashedPhoneNumber($(event.target).val());
+    if ( this._isCellPhone2(num) ) {    // 013번호
+      num = Tw.FormatHelper.getDashedCellPhoneNumber(num.replace(/-/g,''));
+    }
+    $(event.target).val(num);
   },
 
   /**
@@ -152,7 +157,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    * @private
    */
   _checkAddNumberBtn: function(){
-    var disabled = !($('#num-input').val().replace(/-/g,'').length >= 10);
+    var disabled = !($('#num-input').val().replace(/-/g,'').length >= 8);
     $('#btnNumAdd').prop('disabled', disabled);
   },
 
@@ -434,13 +439,19 @@ Tw.ProductMobileplanSettingLocation.prototype = {
       return;
     }
     var num = $('#num-input').val();
-    //if (!Tw.ValidationHelper.isCellPhone(num) && !Tw.ValidationHelper.isTelephone(num)) {
-    if (!Tw.ValidationHelper.isCellPhone(num) ) {
+    if (!this._isCellPhone2(num) && !Tw.ValidationHelper.isTelephone(num)) {
+    //if (!Tw.ValidationHelper.isCellPhone(num) ) {
       this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
       return;
     }
 
     this._settingTargetNumber('1', {svcnum:num}, $.proxy(this._reloadNumList, this));
+  },
+
+  _isCellPhone2: function(str) {
+    // return Tw.ValidationHelper.isCellPhone(str);
+    var phone = str.split('-').join('');
+    return Tw.ValidationHelper.regExpTest(/(^01[1|3|6|7|8|9]-?[0-9]{3,4}|^010-?[0-9]{4})-?([0-9]{4})$/, phone);
   },
 
   /**
