@@ -157,7 +157,7 @@ Tw.MainHome.prototype = {
   _onOpenBarcode: function (cardNum, $popupContainer) {
     var extendBarcode = $popupContainer.find('#fe-membership-barcode-extend');
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
-      extendBarcode.JsBarcode(cardNum);
+      extendBarcode.JsBarcode(cardNum, {height:75, margin:0});
     }
   },
   _onClickGoBroadband: function () {
