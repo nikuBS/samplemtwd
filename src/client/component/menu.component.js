@@ -262,7 +262,9 @@ Tw.MenuComponent.prototype = {
             nick = Tw.SVC_ATTR[userInfo.svcAttr];
           }
           this.$nickName.text(nick);
-          if ( userInfo.svcAttr.indexOf('M') === -1 ) {
+          if (userInfo.svcAttr.indexOf('S3') !== -1) {
+            this.$svcNumber.text(Tw.FormatHelper.conTelFormatWithDash(userInfo.svcNum));
+          } else if ( userInfo.svcAttr.indexOf('M') === -1 ) {
             this.$svcNumber.text(userInfo.addr);
           } else {
             this.$svcNumber.text(Tw.FormatHelper.getDashedCellPhoneNumber(userInfo.svcNum));
