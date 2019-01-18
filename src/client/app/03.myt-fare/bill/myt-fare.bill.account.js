@@ -23,7 +23,6 @@ Tw.MyTFareBillAccount.prototype = {
     this._initVariables();
     this._bindEvent();
     this._checkIsAuto();
-    this._checkIsPopup();
   },
   _initVariables: function () {
     this.$selectBank = this.$container.find('.fe-select-bank');
@@ -57,14 +56,6 @@ Tw.MyTFareBillAccount.prototype = {
   _checkIsAuto: function () {
     if (this.$container.find('.fe-auto-info').is(':visible')) {
       this.$payBtn.removeAttr('disabled');
-    }
-  },
-  _checkIsPopup: function () {
-    var isCheck = this._historyService.getHash().match('check');
-
-    if (isCheck && this._historyService.isReload()) {
-      this._historyService.replace();
-      this._checkPay();
     }
   },
   _onChangeOption: function (event) {
