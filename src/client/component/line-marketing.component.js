@@ -70,7 +70,6 @@ Tw.LineMarketingComponent.prototype = {
     this._popupService.close();
   },
   _onClickTerms: function(serNum) {
-    console.log('onClickTerms', serNum);
     Tw.CommonHelper.openTermLayer(serNum);
   },
   _closeOpenMarketingOfferPopup: function () {
