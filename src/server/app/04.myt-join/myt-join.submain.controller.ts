@@ -387,7 +387,7 @@ class MyTJoinSubmainController extends TwViewController {
     // 유선상품 수
     result.wireProdCnt = data.wireProdCnt;
     // 설치 주소
-    result.address = data.basAddr + data.dtlAddr;
+    result.address = data.fullAddr; /*data.basAddr + data.dtlAddr;*/
     return result;
   }
 
