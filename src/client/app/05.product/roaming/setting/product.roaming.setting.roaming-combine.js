@@ -10,16 +10,16 @@ Tw.ProductRoamingSettingRoamingCombine = function (rootEl,prodRedisInfo,prodBffI
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(rootEl);
-  this._bindElementEvt();
   this._nativeService = Tw.Native;
   this._prodRedisInfo = JSON.parse(prodRedisInfo);
   this._prodBffInfo = prodBffInfo;
   this._combineListTemplate = Handlebars.compile(this.$container.find('#combine_list_template').html());
-  this._addedList = this._sortingSettingData(this._prodBffInfo.togetherMemList);
-  this._changeList();
   this._svcInfo = svcInfo;
   this._prodId = prodId;
   this._apiService = Tw.Api;
+  this._bindElementEvt();
+  this._addedList = this._sortingSettingData(this._prodBffInfo.togetherMemList);
+  this._changeList();
 };
 
 Tw.ProductRoamingSettingRoamingCombine.prototype = {
@@ -75,7 +75,10 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
       requestValue.childSvcNum = phoneNum;
       requestValue.startDtm = this._prodBffInfo.startdtm;
       requestValue.endDtm = this._prodBffInfo.enddtm;
-      requestValue.useDays = String(moment().diff(moment(this._prodBffInfo.startdtm,'YYYYMMDDHHmm'),'days'));
+      requestValue.useDays = Tw.DateHelper.getDiffByUnit(
+        Tw.DateHelper.convDateFormat(),
+        Tw.DateHelper.convDateFormat(this._prodBffInfo.startdtm),
+        'days');
     }
 
     this._apiService.request(Tw.API_CMD.BFF_10_0092, requestValue, {},[this._prodId]).

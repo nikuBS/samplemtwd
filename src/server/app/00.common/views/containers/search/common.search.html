@@ -77,7 +77,7 @@
             <% } else if(searchInfo.search[0].immediate.data[0].DOCID==2){ %>
             <p class="paymentcharge-box type02">
                 이용하고 계신 <span class="phonnumber"><%= searchInfo.search[0].immediate.data[0].mainData %></span>회선의<br>총 데이터 잔여량은
-                <span class="str"><strong class="money"><%= searchInfo.search[0].immediate.data[0].subData %>MB</strong>입니다.</span>
+                <span class="str"><strong class="money"><%= searchInfo.search[0].immediate.data[0].subData.data+searchInfo.search[0].immediate.data[0].subData.unit %></strong>입니다.</span>
             </p>
             <% } else if(searchInfo.search[0].immediate.data[0].DOCID==3){ %>
             <p class="paymentcharge-box type03">
@@ -162,38 +162,7 @@
 
             <div class="cont-box list bgnone  gaps-style05 rate">
                 <ul class="extraservice-list" id="rate_list">
-                    <!--<li class="category-type">
-                        <button class="link">
-                            <div class="products-titleinfo">
-                                <p class="title">뉴 T끼리 <span class="highlight-text">맞춤형</span>(100분+6GB)</p>
-                                <p class="info">월<span class="money">43,175</span>원</p>
-                            </div>
-                            <div class="taglist-wrap">
-                                <p class="tag-text">#LTE</p>
-                                <p class="tag-text">#<span class="highlight-text">5~8G</span>B</p>
-                                <p class="tag-text">#실버</p>
-                                <!--
-                                #데이터 한줄 유형입니다. 말줄임 (..) <span class="highlight-text">처리일때난</span> span태그로 감싸지 않고 텍스트만 뿌려주시면 됩니다.
-                                --><!--
-                            </div>
 
-                            <ul class="products-detailinfo02">
-                                <li class="category-type type01">
-                                    <p class="gb"><span>20</span>GB</p>
-                                </li>
-                                <li class="category-type type02">
-                                    <p class="type">
-                                        집,이동전화 무제한
-                                    </p>
-                                </li>
-                                <li class="category-type type03">
-                                    <p class="basic">
-                                        기본제공
-                                    </p>
-                                </li>
-                            </ul>
-                        </button>
-                    </li>-->
                 </ul>
             </div>
 
@@ -286,15 +255,7 @@
                 </div>
                 <div class="direct-shop-wrap">
                     <ul id="direct_list">
-                        <!--<li>
-                            <a href="" class="link">
-                                <div class="img"><img src="/img/etc/img-phone03.png" alt="샤오미 포코폰"></div>
-                                <div class="cont">
-                                    <div class="tit">[타거스]<span class="highlight-text">링버클</span> 충전/싱크 라이트닝 USB 8핀 케이블 9cm</div>
-                                    <div class="price">17,900원~/월<span class="price2">18,900원</span></div>
-                                </div>
-                            </a>
-                        </li> -->
+
                     </ul>
                     <div class="btn-more">
                         <a class="list-data direct-element home">다이렉트샵 가기</a>
@@ -319,15 +280,7 @@
                 </div>
                 <div class="t-membership-wrap">
                     <ul id="membership_list">
-                        <!--<li>
-                            <button class="link" title="T멤버십 상세보기">
-                                <div class="img"><img src="/img/search/img_t01.png" alt="CGV"></div>
-                                <div class="cont">
-                                    <div class="tit"><span class="highlight-text">CU(구)훼미리마트</span></div>
-                                    <div class="txt1">영화관</div>
-                                </div>
-                            </button>
-                        </li>-->
+
                     </ul>
                 </div>
             </div>
@@ -346,14 +299,7 @@
                 </div>
                 <div class="event-list">
                     <ul id="event_list">
-                        <!--<li>
-                            <button class="event-datail" title="이벤트 상세페이지 보기"><img src="/img/dummy/img-event02.jpg" alt="SK텔레콤 중고생이라면? O틴 위크에서 데이터&amp;인싸템 받자!"></button>
-                            <div class="event-info">
-                                <span class="info-date">2018.10.15.~2018.11.30.</span>
-                                <span class="info-type">응모형</span>
-                                <span class="info-day"></span>
-                            </div>
-                        </li>-->
+
                     </ul>
                 </div>
             </div>
@@ -417,12 +363,7 @@
                     </div>
                 </div>
                 <ul class="service-guide-s" id="question_list">
-                    <!--<li>
-                        <button class="b-cont">
-                            <strong class="ti">[임대폰] 임대한 <em class="highlight-text">휴대폰</em>을 <em class="highlight-text">분실</em>하면 어떻게 변상해야 하나요?</strong>
-                            <span class="tx"><strong>휴대폰 분실</strong>/습득</span>
-                        </button>
-                    </li>-->
+
                 </ul>
             </div>
             <!-- //자주하는 질문 -->
@@ -517,20 +458,7 @@
                     </div>
                 </div>
                 <ul class="site-guide-s" id="siteInfo_list">
-                    <!--<li>
-                        <button class="b-cont">
-                            <span class="img-box"><img class="type01" src="http://localhost:3001/img/search/img_site01.png" alt=""></span>
-                            <strong class="ti">[회원] T world에 등록된 법인명의 <em class="highlight-text">휴대폰</em>번호 삭제방법</strong>
-                            <span class="tx">온라인 T world</span>
-                        </button>
-                    </li>
-                    <li>
-                        <button class="b-cont">
-                            <span class="img-box"><img class="type02" src="http://localhost:3001/img/search/img_site02.png" alt=""></span>
-                            <strong class="ti">내 손안에 <em class="highlight-text">모바일</em> T world 고객센터 활용하기</strong>
-                            <span class="tx">모바일 T world</span>
-                        </button>
-                    </li>-->
+
                 </ul>
             </div>
             <!-- //사이트 이용안내 -->

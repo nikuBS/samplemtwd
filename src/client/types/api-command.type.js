@@ -487,7 +487,7 @@ Tw.API_CMD = {
   BFF_10_0063: { path: '/core-product/:version/mobiles/additions-sets/:args0/seldis-sets', method: Tw.API_METHOD.POST },
 
   //SEARCH
-  GET_SEARCH_AUTO_COMPLETE : { path : '/search/tworld/autocomplete', method : Tw.API_METHOD.GET },
+  SEARCH_AUTO_COMPLETE : { path : '/search/tworld/autocomplete', method : Tw.API_METHOD.GET },
   STACK_SEARCH_USER_CLICK : { path : '/search/tworld/log/save', method : Tw.API_METHOD.POST },
 
   // TEST

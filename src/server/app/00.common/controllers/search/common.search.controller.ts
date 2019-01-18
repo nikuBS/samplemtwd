@@ -93,7 +93,7 @@ class CommonSearch extends TwViewController {
                 searchResult.result.search[0].immediate.data = [];
               } else {
                 const remainData = new MyTDataHotData().parseCellPhoneUsageData(resultData.result, svcInfo);
-                searchResult.result.search[0].immediate.data[0].subData = remainData;
+                searchResult.result.search[0].immediate.data[0].subData = remainData.gnrlData[0].showRemained;
               }
               showResult(searchResult, relatedKeyword);
             });

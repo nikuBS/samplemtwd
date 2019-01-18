@@ -39,14 +39,13 @@ Tw.CommonSearchMain.prototype = {
     if(this.$inputElement.val().trim().length<=0){
       return;
     }
-    var requestParam = { query : this.$inputElement.val() };
-    this._apiService.request(Tw.API_CMD.GET_SEARCH_AUTO_COMPLETE,requestParam)
+    var requestParam = { query : encodeURI(this.$inputElement.val()) };
+    this._apiService.request(Tw.API_CMD.SEARCH_AUTO_COMPLETE,requestParam)
       .done($.proxy(function (res) {
         this.$autoCompleteList.empty();
         if(res.code===0&&res.result.length>0){
           _.each(res.result[0].items,$.proxy(this._showAutoCompleteKeyword,this));
         }
-        this.$container.find('.search-element').on('click',$.proxy(this._searchByElement,this));
       },this));
   },
   _showAutoCompleteKeyword : function(data){
@@ -57,8 +56,9 @@ Tw.CommonSearchMain.prototype = {
     this.$inputElement.on('keyup',$.proxy(this._keyInputEvt,this));
     this.$inputElement.on('focus',$.proxy(this._inputFocusEvt,this));
     this.$container.on('click','.close',$.proxy(this._inputBlurEvt,this));
-    this.$container.find('.icon-gnb-search').on('click',$.proxy(this._searchByInputValue,this));
-    this.$container.find('.search-element').on('click',$.proxy(this._searchByElement,this));
+    this.$container.on('click','.icon-gnb-search',$.proxy(this._searchByInputValue,this));
+    this.$container.on('click','.search-element',$.proxy(this._searchByElement,this));
+    this.$container.on('click','.remove-recently-list',$.proxy(this._removeRecentlyKeywordList,this));
   },
   _convertAutoKeywordData : function (listStr) {
     var returnObj = {};
@@ -117,7 +117,6 @@ Tw.CommonSearchMain.prototype = {
       $recentlyKeywordList.append($recentlyKeywordTemplate({data : data, index : index}));
     });
     Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(this._recentlyKeywordListData));
-    this.$container.find('.remove-recently-list').on('click',$.proxy(this._removeRecentlyKeywordList,this));
   },
   _addRecentlyKeywordList : function (keyword) {
     this._recentlyKeywordListData[this._nowUser].push({ keyword : keyword, searchTime : moment().format('YY.M.D.')});
@@ -150,7 +149,8 @@ Tw.CommonSearchMain.prototype = {
     var $target = $(linkEvt.currentTarget);
     var param = $target.data('param');
     if($target.hasClass('link')){
-      Tw.CommonHelper.openUrlExternal(param);
+      //Tw.CommonHelper.openUrlExternal(param);
+      this._historyService.goLoad(param);
     }else{
       this._doSearch(param);
     }

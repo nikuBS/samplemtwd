@@ -98,7 +98,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-        new Tw.CommonSearchNotFound($('.wrap'),<%- JSON.stringify(svcInfo) %>,<%- JSON.stringify(surveyList) %>);
+        new Tw.CommonSearchNotFound($('.wrap'),<%- JSON.stringify(svcInfo) %>,<%- JSON.stringify(surveyList) %>,<%- step %>);
     });
 </script>
 <% include ../../components/end.component.html %>

@@ -16,6 +16,7 @@ Tw.ProductRoamingSettingRoamingBeginSetup = function (rootEl,prodRedisInfo,prodB
   this._apiService = Tw.Api;
   this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
   this._showDateFormat = 'YYYY. MM. DD.';
+  this._dateFormat = 'YYYYMMDD';
   this._bindBtnEvents();
   this._init();
   this._tooltipInit(prodId);
@@ -23,13 +24,13 @@ Tw.ProductRoamingSettingRoamingBeginSetup = function (rootEl,prodRedisInfo,prodB
 
 Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
   _init : function(){
-    var startDate = moment(this._prodBffInfo.svcStartDt,'YYYYMMDD').format(this._showDateFormat);
+    var startDate = Tw.DateHelper.getShortDateWithFormat(this._prodBffInfo.svcStartDt,this._showDateFormat,this._dateFormat);
+    this._currentDate = Tw.DateHelper.getCurrentShortDate();
     this.$container.find('#start_date').text(startDate);
     this.$container.find('#start_date').attr('data-number',this._prodBffInfo.svcStartDt);
   },
   _bindBtnEvents: function () {
     this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
-    this.$container.on('click','.bt-fixed-area #do_setting',$.proxy(this._changeInformationSetting, this));
     this.$container.on('click','.bt-fixed-area #do_setting',$.proxy(this._changeInformationSetting, this));
     this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._historyService.goBack,this));
   },
@@ -40,7 +41,7 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
       dateFormat = format;
     }
     for(var i=0;i<range;i++){
-      resultArr.push(moment().add(i, 'days').format(dateFormat));
+      resultArr.push(Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,i,'days',dateFormat,this._dateFormat));
     }
     return resultArr;
   },
@@ -109,7 +110,7 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
   _validateTimeValueAgainstNow : function(paramDate,paramTime,className){
     var returnValue = false;
     var $errorsElement = this.$container.find('.error-txt.'+className);
-    if((paramDate===moment().format('YYYYMMDD'))&&(parseInt(paramTime,10)<=parseInt(moment().format('HH'),10))){
+    if((paramDate===this._currentDate)&&(parseInt(paramTime,10)<=parseInt(Tw.DateHelper.getCurrentDateTime('HH'),10))){
       $errorsElement.removeClass('none');
     }else{
       returnValue = true;

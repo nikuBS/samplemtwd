@@ -1602,3 +1602,11 @@ Tw.MEMBERSHIP = {
     }
   }
 };
+
+Tw.ROAMING_SVCTIME_SETTING_ERR_CASE = {
+  ERR_START_TIME : '서비스 개시일 시간 설정은 당일 현재시간 이후만 가능합니다.',
+  ERR_START_DATE : '서비스 개시일 설정은 당일 이후만 가능합니다.',
+  ERR_END_DATE : '서비스 종료일 설정은 당일 이후만 가능합니다.',
+  ERR_END_EVT_START : '서비스 개시일 설정은 종료일 이전만 설정 가능합니다.',
+  ERR_END_EVT_END : '서비스 종료일 설정은 개시일 이후만 가능합니다.'
+};
