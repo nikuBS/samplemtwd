@@ -26,7 +26,8 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
     this.$inputElement = this.$container.find('#input_phone');
     this.$addBtn = this.$container.find('#add_list');
     this.$confirmBtn = this.$container.find('#confirm_info');
-    this.$alarmTemplate = this.$container.find('#alarm_template');
+    this.$alarmTemplateOthers = this.$container.find('#alarm_template_others');
+    this.$alarmTemplateUsers = this.$container.find('#alarm_template_users');
     this.$container.on('keyup', '#input_phone', $.proxy(this._activateAddBtn, this));
     this.$container.on('blur', '#input_phone', $.proxy(this._inputBlurEvt, this));
     this.$container.on('focus', '#input_phone', $.proxy(this._inputFocusEvt, this));
@@ -41,7 +42,11 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
   },
   _inputBlurEvt : function(){
     var tempVal = this.$inputElement.val();
-    tempVal = Tw.StringHelper.phoneStringToDash(tempVal);
+    if(tempVal.length===7){
+      tempVal = this._phoneForceChange(tempVal);
+    }else{
+      tempVal = Tw.StringHelper.phoneStringToDash(tempVal);
+    }
     this.$inputElement.attr('maxlength','13');
     this.$inputElement.val(tempVal);
     //this._activateAddBtn();
@@ -82,11 +87,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0020, requestValue, {},[this._prodId]).
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
-        this._addedList.push(phoneObj);
-        this.$container.find('.cancel').trigger('click');
-        this.$inputElement.blur();
-        this._activateConfirmBtn();
-        this._changeList();
+        this._historyService.reload();
       }else{
         this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
       }
@@ -119,10 +120,12 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
   },
   _activateAddBtn : function (inputEvt) {
     var inputVal = this.$inputElement.val();
-    var numReg = /[^0-9]/;
-    if(inputVal.length>0&&isNaN(inputEvt.key)&&numReg.test(inputVal.charAt(inputVal.length-1))){
+    var numReg = /[^0-9]/g;
+    if(inputVal.length>0&&numReg.test(inputVal)){
+      this.$inputElement.blur();
       this.$inputElement.val('');
-      this.$inputElement.val(inputVal.substring(0,inputVal.length-1));
+      this.$inputElement.val(inputVal.replace(numReg,''));
+      this.$inputElement.focus();
     }
     if(this.$inputElement.val().length>=10){
       this.$addBtn.removeAttr('disabled');
@@ -140,13 +143,20 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
   },
 
   _makeTemplate : function (phoneNum,idx) {
+    var templateData;
+    var handlebarsTemplate;
     var maskedPhoneNum = {
       'serviceNumber1' : phoneNum.serviceNumber1,
       'serviceNumber2' : phoneNum.serviceNumber2.substring(0,2)+'**',
       'serviceNumber3' : phoneNum.serviceNumber3.substring(0,2)+'**'
     };
-    var templateData = { phoneData : { phoneNum : maskedPhoneNum, idx : idx } };
-    var handlebarsTemplate = Handlebars.compile(this.$alarmTemplate.html());
+    if(this._svcInfo.svcMgmtNum===phoneNum.svcMgmtNum){
+      templateData = { phoneData : { phoneNum : maskedPhoneNum, idx : idx , mbrNm : this._svcInfo.mbrNm , firstNm : this._svcInfo.mbrNm.charAt(0) } };
+      handlebarsTemplate = Handlebars.compile(this.$alarmTemplateUsers.html());
+    }else{
+      templateData = { phoneData : { phoneNum : maskedPhoneNum, idx : idx } };
+      handlebarsTemplate = Handlebars.compile(this.$alarmTemplateOthers.html());
+    }
     this.$container.find('#alarm_list').append(handlebarsTemplate(templateData));
   },
   _removeEvt : function (btnEvt) {
@@ -171,8 +181,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0019, requestValue, {},[this._prodId]).
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
-        this._addedList.splice(selectedIndex,1);
-        this._changeList();
+        this._historyService.reload();
       }else{
         this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
       }
@@ -189,7 +198,8 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       inputData[i] = {
         'serviceNumber1' : tempArr[0],
         'serviceNumber2' : tempArr[1],
-        'serviceNumber3' : tempArr[2]
+        'serviceNumber3' : tempArr[2],
+        'svcMgmtNum' : inputData[i].svcMgmtNum
       };
     }
     return inputData;
@@ -207,6 +217,9 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       returnVal+=phoneString.charAt(i);
     }
     return returnVal;
+  },
+  _phoneForceChange : function (str) {
+    return str.substring(0,3)+'-'+str.substring(3,str.length);
   }
 
 };

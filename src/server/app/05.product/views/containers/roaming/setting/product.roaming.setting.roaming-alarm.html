@@ -57,7 +57,7 @@
                     </div>
                     <ul class="bt-slice pt26">
                         <li class="bt-blue1">
-                            <button disabled="disabled" id="add_list">추가하기</button>
+                            <button disabled="disabled" id="add_list" class="btn_active">추가하기</button>
                         </li>
                     </ul>
                 </div>
@@ -71,7 +71,7 @@
                         <h3 class="tit type1">지정번호 신청된 회선</h3>
                         <div class="list-comp-thumnail">
                             <ul class="comp-box" id="alarm_list">
-                                <script id="alarm_template" type="text/x-handlebars-template">
+                                <script id="alarm_template_others" type="text/x-handlebars-template">
                                     <li class="list-box">
                                     <div class="list-ico"><span class="ico type-img"></span></div>
                                     <p class="list-text">
@@ -81,6 +81,18 @@
                                     <div class="list-btn">
                                         <div class="bt-alone"><button data-idx="{{phoneData.idx}}" class="bt-line-gray1">해지</button></div>
                                         </div>
+                                    </li>
+                                </script>
+                                <script id="alarm_template_users" type="text/x-handlebars-template">
+                                    <li class="list-box">
+                                    <div class="list-ico"><span class="ico type5">{{phoneData.firstNm}}</span></div>
+                                    <p class="list-text">
+                                        <span class="mtext">{{phoneData.mbrNm}}</span>
+                                        <span class="stext gray">{{phoneData.phoneNum.serviceNumber1}}-{{phoneData.phoneNum.serviceNumber2}}-{{phoneData.phoneNum.serviceNumber3}}</span>
+                                    </p>
+                                        <div class="list-btn">
+                                        <div class="bt-alone"><button data-idx="{{phoneData.idx}}" class="bt-line-gray1">해지</button></div>
+                                    </div>
                                     </li>
                                 </script>
                             </ul>
