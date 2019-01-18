@@ -46,6 +46,7 @@ class ApiRouter {
     this.router.put('/core-auth/service-passwords', this.changeSvcPassword.bind(this));    // BFF_03_0016
     this.router.put('/user/services', this.changeLine.bind(this));    // BFF_03_0005
     this.router.put('/user/nick-names', this.changeNickname.bind(this));    // BFF_03_0006
+
     this.router.get('/common/selected-sessions', this.updateSvcInfo.bind(this));    // BFF_01_0005
 
     this.router.post('/logout-tid', this.logoutTid.bind(this));
@@ -475,7 +476,7 @@ class ApiRouter {
     this.loginService.sessionGenerate(req).subscribe(() => {
       this.logger.info(this, '[Session ID]', this.loginService.getSessionId(req));
       res.json({ code: API_CODE.CODE_00 });
-    })
+    });
   }
 
   private setUserLocks(req: Request, res: Response, next: NextFunction) {
@@ -555,7 +556,7 @@ class ApiRouter {
   public updateSvcInfo(req: Request, res: Response, next: NextFunction) {
     this.apiService.setCurrentReq(req, res);
     // this.loginService.setCurrentReq(req, res);
-    this.apiService.updateSvcInfo().subscribe((resp) => {
+    this.apiService.updateAllSvcInfo({}).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
       res.json(error);
