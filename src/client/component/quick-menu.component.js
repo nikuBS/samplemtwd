@@ -68,7 +68,7 @@ Tw.QuickMenuComponent.prototype = {
       this.$btQuickAdd.parent().addClass('none');
       this.$btQuickRemove.parent().removeClass('none');
     } else {
-      Tw.Error.pop(resp.code, resp.msg);
+      Tw.Error(resp.code, resp.msg).pop();
     }
   },
   _successRemoveQuickMenu: function (resp) {
@@ -77,7 +77,7 @@ Tw.QuickMenuComponent.prototype = {
       this.$btQuickRemove.parent().addClass('none');
       this.$btQuickAdd.parent().removeClass('none');
     } else {
-      Tw.Error.pop(resp.code, resp.msg);
+      Tw.Error(resp.code, resp.msg).pop();
     }
   }
 };

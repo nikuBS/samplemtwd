@@ -47,6 +47,9 @@ Tw.LineMarketingComponent.prototype = {
     this.$childChecks.on('change', $.proxy(this._onClickChildCheck, this));
     this.$btnAgree.on('click', $.proxy(this._onClickAgree, this));
 
+    $layer.on('click', '#fe-term-personal', $.proxy(this._onClickTerms, this, '55'));
+    $layer.on('click', '#fe-term-marketing', $.proxy(this._onClickTerms, this, '67'));
+
     this._enableBtns();
   },
   _onClickChildCheck: function () {
@@ -65,6 +68,10 @@ Tw.LineMarketingComponent.prototype = {
   },
   _onClickDisagree: function () {
     this._popupService.close();
+  },
+  _onClickTerms: function(serNum) {
+    console.log('onClickTerms', serNum);
+    Tw.CommonHelper.openTermLayer(serNum);
   },
   _closeOpenMarketingOfferPopup: function () {
     if ( this._complete ) {
