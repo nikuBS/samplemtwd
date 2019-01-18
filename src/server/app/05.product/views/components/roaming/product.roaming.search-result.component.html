@@ -111,27 +111,30 @@
             <li>
                 <dl>
                     <dt>SMS 수신</dt>
-                    <dd>무료</dd>
+                    {{#if items.sMoChargeMin}}<dd>무료</dd>
+                    {{else}}<dd>서비스 이용 불가</dd>{{/if}}
                 </dl>
             </li>
             <li>
                 <dl>
                     <dt>MMS 텍스트 발신</dt>
-                    {{#if items.mTxtCharge}}<dd>{{items.mTxtCharge}}원/건</dd>
+                    {{#if items.dMoChargeMin}}<dd>{{items.mTxtCharge}}{{#if items.cdmaUnit}}원/패킷{{else}}원/건{{/if}}</dd>
                     {{else}}<dd>서비스 이용 불가</dd>{{/if}}
                 </dl>
             </li>
             <li>
                 <dl>
                     <dt>MMS 멀티미디어 발신</dt>
-                    {{#if items.mMtmCharge}}<dd>{{items.mMtmCharge}}원/건</dd>
+                    {{#if items.dMoChargeMin}}<dd>{{items.mMtmCharge}}{{#if items.cdmaUnit}}원/패킷{{else}}원/건{{/if}}</dd>
                     {{else}}<dd>서비스 이용 불가</dd>{{/if}}
                 </dl>
             </li>
             <li>
                 <dl>
                     <dt>MMS 수신</dt>
-                    <dd>무료</dd>
+                    {{#if items.cdmaUnit}}<dd>{{items.dMoChargeMin}}원/패킷</dd>
+                    {{else if items.dMoChargeMin}}<dd>무료</dd>
+                    {{else}}<dd>서비스 이용 불가</dd>{{/if}}
                 </dl>
             </li>
         </ul>
