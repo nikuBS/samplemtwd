@@ -1,0 +1,77 @@
+<%#
+* FileName: myt-data.familydata.history.html
+* Author: Jiyoung Jo (jiyoungjo@sk.com)
+* Date: 2019.01.16
+* id: 
+%>
+
+<% include ../../components/start.component.html %>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+        <!-- #header -->
+		<%- include('../../../common/views/components/header.component.html', { title: '이번 달 공유내역', svcInfo: svcInfo }); %>
+        <!--// #header --> 
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<!-- .cont-box -->
+				<div class="cont-box pb0">
+					<div class="ti-caption-type01">
+						<h2 class="tit">나의 총 공유 데이터 <button class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></h2>
+						<p class="num"><em>16</em>GB</p>
+					</div>
+					<div class="data-list-type1">
+						<ul class="type1">
+                            <% histories.map(history => { %>
+                                <li>
+                                    <span class="stit"><strong><%= history.shrPotGbQty %>GB</strong> 공유</span>
+                                    <div class="sta">
+                                        <span><%= history.shrPotDonaAplyDt %></span>
+                                    </div>
+                                    <div class="use">
+                                        <button type="button" class="btn-round2 btn-style3">조회</button>
+                                        <span class="modify none"><strong>2.68GB</strong>변경가능</span>
+                                        <a class="bt-link-tx underline none" href="">변경하기</a>
+                                    </div>
+                                </li>
+                            <% }); %>
+						</ul>
+                    </div>
+                    
+                    <!-- .btn-more -->
+                    <!-- <div class="btn-more">
+                        <button>더 보기</button>
+                    </div> -->
+                    <!-- // .btn-more -->
+
+				</div>
+                <!--// .cont-box -->
+                
+				<div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                    <ul class="pg-chk-list">
+                        <li>이번 달 공유내역 유의사항<button class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    </ul>
+                </div>
+
+			</div>
+        </div>
+        <!--// #contents -->
+        <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+    </div>
+</body>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {});
+</script>
+<% include ../../components/end.component.html %>

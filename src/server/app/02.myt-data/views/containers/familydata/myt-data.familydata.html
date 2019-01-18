@@ -118,17 +118,18 @@
 
             <hr class="cont-sp type1" aria-hidden="true">
 
+            <% if (familyInfo.isRepresentation && histories > 0) { %>
             <!-- .cont-box -->
-            <!-- 범위 제외 -->
-            <!-- <div class="cont-box nogaps">
+            <div class="cont-box nogaps">
                 <div class="calling-plan type3">
-                    <button class="wrap-link fs-type01">
-                        <span class="left">이번달 공유내역 / 회수하기</span>
-                        <span class="right fc-type01"><strong class="fs-type03">28건</strong></span>
-                    </button>
+                    <a class="wrap-link fs-type01" href="/myt-data/familydata/history">
+                        <span class="left">이번 달 공유한 데이터 변경하기</span>
+                        <span class="right fc-type01"><strong class="fs-type03"><%= histories %>건</strong></span>
+                    </a>
                 </div>
-            </div> -->
+            </div>
             <!--// .cont-box -->
+            <% } %>
 
             <div class="cont-box noborder bgnone">
                 <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
