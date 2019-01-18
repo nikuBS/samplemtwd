@@ -165,6 +165,8 @@
 .idpt-benefit span.txt-color-brown { color:#cd684d; }
 .idpt-benefit span.txt-color-mud { color:#b16d1c; }
 .idpt-benefit span.txt-color-violet { color:#b84cb9; }
+.idpt-benefit .benefit-sub-common-title { font-size: 0.8125rem; color:#666; font-weight: 500; margin-top:1.5rem; }
+.idpt-benefit .benefit-sub-common-txt { font-size: 0.75rem; color:#666; font-weight: 300; margin-top: 0.3125rem; }
 
 /* button */
 .idpt-benefit .benefit-button { text-align:right; margin-top:2.5rem; }
@@ -173,7 +175,7 @@
 .idpt-benefit .benefit-button .button-more { text-decoration: underline; }
 .idpt-benefit .benefit-button .button-gray { color:#666; }
 .idpt-benefit .benefit-button .button-round { display:inline-block; height:2.25rem; line-height:2.25rem; padding:0 1.4375rem; text-align: center; border-radius:1.125rem; font-size: 0.875rem; color:#000; font-weight: 500; margin:0 auto; border:1px solid #e5e5e5; }
-.idpt-benefit .benefit-button .button-red-round { display:block; width:13.75rem; height:2.5rem; line-height:2.5rem; text-align: center; border:1px solid #f76252; border-radius:1.25rem; background-color:#fff; font-size: 1rem; color:#f76252; font-weight: 500; margin:0 auto; }
+.idpt-benefit .benefit-button .button-red-round { display:block; width:13.75rem; height:2.5rem; line-height:2.5rem; text-align: center; border:1px solid #e5e5e5; border-radius:1.25rem; background-color:#fff; font-size: 1rem; color:#000; font-weight: 500; margin:0 auto; }
 .idpt-benefit .benefit-button .button-red-round.w-full { width:100%; }
 .idpt-benefit .benefit-button .button-red-round.inline-button { display:inline-block; width:auto; min-width:13.75rem; padding:0 1.375rem; }
 .idpt-benefit.another-benefit .benefit-button { text-align:left; }
@@ -202,10 +204,10 @@
 .idpt-benefit .benefit-data > li > p { font-size: 0.625rem; color:#666; }
 .idpt-benefit .benefit-data > li > p.title { font-size: 0.75rem; margin-top:0.4rem; }
 .idpt-benefit .benefit-data > li > p.sub { color:#959595; margin-top:0.4rem; }
-.idpt-benefit .benefit-data > li.plus::after { position:absolute; content:''; display:block; width:1.25rem; height:1.25rem; top:1rem; right:-0.75rem; background:url('/img/product/bg-plus_m.png') no-repeat; background-size:100%; }
+.idpt-benefit .benefit-data > li.plus::after { position:absolute; content:''; display:block; width:0.75rem; height:0.75rem; top:1.25rem; right:-0.75rem; background:url('/img/product/bg-plus_m.png') no-repeat; background-size:100%; }
 .idpt-benefit .benefit-data.list02 > li.plus::after { right:-1.325rem; }
 .idpt-benefit .benefit-data.list02 > li.plus-new::after { position:absolute; content:''; display:block; width:0.75rem; height:0.75rem; top:1.215rem; right:-1.215rem; background:url('/img/product/plus-gray_m.png') no-repeat; background-size:100%;}
-.idpt-benefit .benefit-data > li.or::after { position:absolute; content:''; display:block; width:1rem; height:0.625rem; top:1.35rem; right:-0.75rem; background:url('/img/product/bg-or_m.png') no-repeat; background-size:100%; }
+.idpt-benefit .benefit-data > li.or::after { position:absolute; content:''; display:block; width:0.84375rem; height:0.5625rem; top:1.35rem; right:-0.6125rem; background:url('/img/product/bg-or_m.png') no-repeat; background-size:100%; }
 .idpt-benefit .benefit-data.allfamily > li { width:50%; }
 .idpt-benefit .benefit-data.allfamily > li > img { width:6.375rem; }
 .idpt-benefit .benefit-data.list02.plus > li { color:#57637f; }
@@ -227,7 +229,7 @@
 .idpt-benefit .infinity-list.NA00006156 > li:last-child { border-bottom:0; }
 .idpt-benefit .infinity-list > li.no-border-bottom { border-bottom:0; }
 
-.idpt-dot-list { margin-top:1.5rem; }
+.idpt-dot-list { margin-top:1.875rem; }
 .idpt-dot-list > li { position:relative; font-size: 0.75rem; color:#959595; padding-left:0.625rem; }
 .idpt-dot-list > li + li { margin-top:0.75rem; }
 .idpt-dot-list > li::before { position: absolute; content:''; display:block; top:0.3125rem; left:0; width:0.1875rem; height:0.1875rem; border-radius:50%; background-color:#959595; }
@@ -304,6 +306,7 @@
 .idpt-bg-list.no-bg > li div p.idpt-bg-list-title { font-size: 0.8125rem; }
 .idpt-bg-list > li.no-bg { min-height:auto; }
 .idpt-bg-list > li.no-bg div { padding-left:0; }
+.idpt-bg-list.tw61000002 > li > div > p.idpt-bg-list-title { font-size: 1.25rem; }
 
 .idpt-country-list { margin-top:3rem; }
 .idpt-country-list > li { padding:1rem 0; border-bottom:1px solid #f2f2f2; }
@@ -358,6 +361,10 @@
 .idpt-oksusu-voucher > li .voucher-price { position:absolute; bottom:1.125rem; right:1.4375rem; font-size: 0.75rem; color:#000; font-weight: 500; text-align: right; }
 .idpt-oksusu-voucher > li .voucher-price > span { font-size: 0.9375rem; }
 
+.idpt-arrow-list { margin-top:0.3125rem; }
+.idpt-arrow-list > li { position:relative; font-size: 0.6875rem; color:#959595; padding-left:0.8125rem; background:url('/img/product/icon-arrow-list_m.png') left 0.0325rem no-repeat; background-size:0.625rem; }
+.idpt-arrow-list > li + li { margin-top:0.3125rem; }
+
 
 /* 또 다른 혜택, 부가혜택 */
 .idpt-benefit.another-benefit { padding:1.875rem 1.25rem; position:relative; }
@@ -373,7 +380,7 @@
 .idpt-benefit.another-benefit > dl.NA00005292 > dd.dd-sub { font-size: 0.75rem; color:#999; margin-top:0.3125rem; margin-bottom:1rem; }
 
 /* 시리즈 그래프 */
-.idpt-series-wrap { width:100%; overflow-x: scroll; }
+.idpt-series-wrap { width:100%; max-width:20.5rem; margin:0 auto; }
 .idpt-benefit .series-graph { position: relative; max-width:20rem; height:8.875rem; margin:3rem auto 0; }
 .idpt-benefit .series-graph > li { position:absolute; bottom:0; width:auto; height:100%; }
 .idpt-benefit .series-graph > li > div { position:absolute; display:block; width:auto; height:auto; bottom:0; left:0; }
@@ -555,7 +562,7 @@
 .idpt-tbl-basic { border:1px solid #cfcfcf; }
 .idpt-tbl-basic tbody tr { border-top:1px solid #cfcfcf; }
 .idpt-tbl-basic tbody tr:first-child { border-top:0; }
-.idpt-tbl-basic tbody th { padding:0.75rem 0 0.75rem 0.75rem; background-color:#f5f5f5; font-size: 0.75rem; color:#959595; }
+.idpt-tbl-basic tbody th { padding:0.75rem 0; background-color:#f5f5f5; font-size: 0.75rem; color:#959595; }
 .idpt-tbl-basic tbody td { padding:0 0.75rem; border-left:1px solid #cfcfcf; font-size: 0.75rem; color:#000; text-align:center; }
 
 .idpt-tbl-series tbody tr { border-top:1px solid #e5e5e5; }
@@ -574,8 +581,11 @@
 .idpt-benefit .white-box .idpt-tbl-chuck thead tr th:nth-child(2) { text-align: right; }
 .idpt-benefit .white-box .idpt-tbl-chuck tbody tr th,
 .idpt-benefit .white-box .idpt-tbl-chuck tbody tr td { padding:0; padding-top:0.75rem; font-weight: 500; }
-.idpt-benefit .white-box .idpt-tbl-chuck tbody tr th { font-size: 0.75rem; text-align: left; vertical-align: top; color:#666; }
+.idpt-benefit .white-box .idpt-tbl-chuck tbody tr th { position: relative; font-size: 0.75rem; text-align: left; vertical-align: top; color:#666; }
 .idpt-benefit .white-box .idpt-tbl-chuck tbody tr td { font-size: 0.8125rem; text-align: right; vertical-align: top; color:#6d7583; }
+.idpt-benefit .white-box .idpt-tbl-chuck tbody tr th::after { position:absolute; display:block; content:''; width:2.5rem; height:1.8125rem; top:0.8125rem; right:0; background:url('/img/product/chuck-arrow_m.png') no-repeat; background-size:100%; }
+.idpt-benefit .white-box .idpt-tbl-chuck tbody tr.db-direct td { padding-top:1.5125rem; }
+.idpt-benefit .white-box .idpt-tbl-chuck tbody tr.db-direct th::after { top:1.6125rem; right:-1.3125rem; }
 
 /* contract box */
 .idpt-benefit .contract-box { padding:1.5625rem 0; border-top:1px solid #f2f2f2; text-align:center; margin-top:1.25rem; }
@@ -585,9 +595,9 @@
 .idpt-benefit .contract-box.no-border { border-top:0; }
 .idpt-benefit.benefit-gray .contract-box.no-border { border-top:0; }
 .idpt-benefit .contract-box .contract-title { font-size: 1rem; color:#3583e3; font-weight: 600; margin-bottom:1rem; }
-.idpt-benefit .contract-box .contract-txt { font-size: 0.8125rem; color:#666; margin-bottom:0.5rem; }
-.idpt-benefit .contract-box .contract-detail { font-size: 1rem; color:#000; }
-.idpt-benefit .contract-box .contract-sub { font-size: 0.625rem; color:#959595; margin-top:0.3125rem; }
+.idpt-benefit .contract-box .contract-txt { font-size: 0.8125rem; color:#666; margin-bottom:0.375rem; }
+.idpt-benefit .contract-box .contract-detail { font-size: 1.125rem; color:#000; font-weight: 500; }
+.idpt-benefit .contract-box .contract-sub { font-size: 0.625rem; color:#959595; margin-top:1rem; }
 
 /* bg-box */
 .idpt-bg-box { position:relative; }
@@ -638,15 +648,17 @@
 .idpt-charge-info .charge p.mud { color:#b16d1c; }
 .idpt-charge-info .charge p.navy { color:#4e68b5; }
 .idpt-charge-info .charge p.darknavy { color:#57637f; }
+.idpt-charge-info .charge p.gray { color:#6d7583; }
 .idpt-charge-info .charge p.brown.with-icon { display:inline-block; height:1.75rem; line-height:1.75rem; padding-left:2.375rem; background:url('/img/product/icon-currency-brown_m.png') left center no-repeat; background-size:1.75rem; }
 .idpt-charge-info .charge p.violet.with-icon { display:inline-block; height:1.75rem; line-height:1.75rem; padding-left:2.375rem; background:url('/img/product/icon-currency-violet_m.png') left center no-repeat; background-size:1.75rem; }
 .idpt-charge-info .charge p.blue.with-icon { display:inline-block; height:1.75rem; line-height:1.75rem; padding-left:2.375rem; background:url('/img/product/icon-currency-blue_m.png') left center no-repeat; background-size:1.75rem; }
 .idpt-charge-info .charge p.mud.with-icon { display:inline-block; height:1.75rem; line-height:1.75rem; padding-left:2.375rem; background:url('/img/product/icon-currency-mud_m.png') left center no-repeat; background-size:1.75rem; }
 .idpt-charge-info .charge p.navy.with-icon { display:inline-block; height:1.75rem; line-height:1.75rem; padding-left:2.375rem; background:url('/img/product/icon-currency-navy_m.png') left center no-repeat; background-size:1.75rem; }
 .idpt-charge-info .charge p.darknavy.with-icon { display:inline-block; height:1.75rem; line-height:1.75rem; padding-left:2.375rem; background:url('/img/product/icon-currency-darknavy_m.png') left center no-repeat; background-size:1.75rem; }
+.idpt-charge-info .charge p.gray.with-icon { display:inline-block; height:1.75rem; line-height:1.75rem; padding-left:2.375rem; background:url('/img/product/icon-currency-gray_m.png') left center no-repeat; background-size:1.75rem; }
 .idpt-charge-info .charge + .charge-txt { margin-top: 1rem; }
 .idpt-charge-info .float-style > div:nth-child(2) { margin-top:1rem; }
-.idpt-charge-info img.multiply { width:1rem; height:1rem; margin-top:0.5rem; }
+.idpt-charge-info img.multiply { width:0.75rem; height:1rem; margin-top:0.5rem; }
 .idpt-charge-info .benefit-button { margin-top:0.625rem; text-align: center; }
 .idpt-charge-info .benefit-button + .charge-txt.black { margin-top:1rem; }
 
@@ -691,7 +703,7 @@
 .idpt-benefit .white-box table tbody tr th img { float:left; width:1rem; height:1rem; margin-right:0.3125rem; }
 .idpt-benefit .white-box table tbody tr td { font-size: 0.8125rem; color:#000; padding-bottom:1rem; font-weight: 500; }
 .idpt-benefit .white-box table tbody tr:last-child td { padding-bottom:0; }
-.idpt-benefit .white-box table tbody tr td.darknavy { color:#57637f;}
+.idpt-benefit .white-box table tbody tr td.darknavy { color:#57637f; font-weight: 600; }
 .idpt-benefit .white-box table.long-term tbody th { font-size: 0.75rem; }
 .idpt-benefit .white-box table.long-term tbody td { color:#57637f; text-align:right; }
 
@@ -720,7 +732,7 @@
 .idpt-benefit.no-padding .benefit-title { padding-left:1rem; padding-right:1rem; }
 .idpt-benefit.no-padding .idpt-dot-list { padding-left:1rem; padding-right:1rem; }
 .idpt-tab-wrap { margin-top:2.1875rem; }
-.idpt-tab-wrap .tab-menu { width:100%; border-bottom:1px solid #f2f2f2; padding-left:0.6125rem; }
+.idpt-tab-wrap .tab-menu { width:100%; border-bottom:1px solid #f2f2f2; padding-left:0.6125rem; box-sizing: border-box; }
 .idpt-benefit.benefit-gray .idpt-tab-wrap .tab-menu { border-color:#e5e5e5; }
 .idpt-benefit.benefit-sky .idpt-tab-wrap .tab-menu { border-color:#dbe3ee; }
 .idpt-tab-wrap .tab-menu > li { position:relative; float:left; font-size: 0.8125rem; color:#959595; font-weight: 600; padding:0.5rem 0; cursor: pointer;}
@@ -747,6 +759,7 @@
 .idpt-popup-cont.roaming { display:none; padding:1.6875rem 0 1rem; }
 .idpt-popup-cont.roaming.show { display:block; }
 .idpt-popup-cont.roaming p.popup-cont-title { font-size: 0.875rem; color:#000; font-weight: 700; padding:0 1rem; }
+.idpt-popup-cont.roaming p.popup-cont-title.roaming { margin-top:0.625rem; }
 .idpt-popup-cont.roaming .benefit-img { margin-top:0.625rem; }
 .idpt-popup-cont.roaming .tbl-wrap { margin-top:1.875rem; padding:0 1rem 0.5rem 1rem; overflow-x: auto; white-space: nowrap; }
 .idpt-popup-cont.roaming .idpt-tbl-discount { width:56.0625rem; border-top:0; white-space: normal; }
@@ -842,3 +855,11 @@
 .idpt-faq-answer .answer-txt.with-title { margin-top:0.625rem; }
 .idpt-faq-answer .answer-img { max-width:18.125rem; margin-top:0.5rem; }
 .idpt-faq-answer .answer-img > img { width:100%; }
+
+@media screen and (max-width:359px) {
+    .idpt-benefit,
+    .idpt-benefit .inside-box { overflow-x: hidden; }
+    .idpt-benefit .benefit-data > li { width:auto; }
+    .idpt-benefit .benefit-data.list03 > li + li { margin-left:1rem; }
+    .idpt-series-wrap { width:100%; overflow-x: auto; max-width:20.5rem; margin:0 auto; }
+}
