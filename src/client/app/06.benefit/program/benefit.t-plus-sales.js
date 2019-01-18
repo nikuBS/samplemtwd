@@ -34,15 +34,15 @@ Tw.BenefitTPlusSales.prototype = {
   _onLongDiscountClicked: function () {
     this._popupService.open({
       hbs: 'BS_03_02_01_03',
-      layer: true
+      layer: true,
+      info: this.data.svcInfo
     }, null, null, 'long_discount');
   },
 
   _onPlusExampleClicked: function () {
     this._popupService.open({
       hbs: 'BS_03_02_01_02',
-      layer: true,
-      info: this.data.svcInfo
+      layer: true
     }, null, null, 'tplus-example');
   },
 
