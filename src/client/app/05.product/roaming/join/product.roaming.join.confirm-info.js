@@ -11,7 +11,6 @@ Tw.ProductRoamingJoinConfirmInfo = function (rootEl,data,doJoinCallBack,closeCal
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$rootContainer);
-  this._dateHelper = Tw.DateHelper;
   this._showDateFormat = 'YYYY. MM. DD.';
   this._dateFormat = 'YYYYMMDD';
   if(this._page){
@@ -57,15 +56,15 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
   _popupOpenCallback : function($poppContainer){
     this._$popupContainer = $poppContainer;
     this._bindPopupElementEvt($poppContainer);
-    this._currentDate = this._dateHelper.getCurrentShortDate();
+    this._currentDate = Tw.DateHelper.getCurrentShortDate();
     var setingInfo;
     if(this._popupData.joinType==='setup'){
-      setingInfo = this._dateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcStartDt,this._showDateFormat,this._dateFormat)+' '+this._popupData.userJoinInfo.svcStartTm+':00';
-      setingInfo+= ' ~ '+this._dateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcEndDt,this._showDateFormat,this._dateFormat)+' '+this._popupData.userJoinInfo.svcEndTm+':00';
+      setingInfo = Tw.DateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcStartDt,this._showDateFormat,this._dateFormat)+' '+this._popupData.userJoinInfo.svcStartTm+':00';
+      setingInfo+= ' ~ '+Tw.DateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcEndDt,this._showDateFormat,this._dateFormat)+' '+this._popupData.userJoinInfo.svcEndTm+':00';
     }else if(this._popupData.joinType==='auto'){
-      setingInfo = this._dateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcStartDt,this._showDateFormat,this._dateFormat)+' '+this._popupData.userJoinInfo.svcStartTm+':00';
+      setingInfo = Tw.DateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcStartDt,this._showDateFormat,this._dateFormat)+' '+this._popupData.userJoinInfo.svcStartTm+':00';
     }else if(this._popupData.joinType==='begin'){
-      setingInfo = this._dateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcStartDt,this._showDateFormat,this._dateFormat);
+      setingInfo = Tw.DateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcStartDt,this._showDateFormat,this._dateFormat);
     }else if(this._popupData.joinType==='alarm'){
       for(var i=0;i<this._popupData.userJoinInfo.svcNumList.length;i++){
         if(i>=2){
