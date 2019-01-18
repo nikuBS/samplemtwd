@@ -1610,3 +1610,8 @@ Tw.ROAMING_SVCTIME_SETTING_ERR_CASE = {
   ERR_END_EVT_START : '서비스 개시일 설정은 종료일 이전만 설정 가능합니다.',
   ERR_END_EVT_END : '서비스 종료일 설정은 개시일 이후만 가능합니다.'
 };
+
+Tw.ROAMING_BPCP = {
+  BUY : '쿠폰 구매·선물',
+  REGISTER : 'T로밍쿠폰 상세'
+};
