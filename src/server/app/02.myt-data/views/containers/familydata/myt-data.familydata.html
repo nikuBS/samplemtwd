@@ -61,7 +61,7 @@
                 <% } %>
                 <div class="total-data">
                     <span class="stit">총 가족 공유 데이터</span>
-                    <span class="r-txt"><span class="ff-type1"><%= familyInfo.total + 'GB' %></span></span>
+                    <span class="r-txt"><span class="ff-type1"><%= familyInfo.total > 0 ? familyInfo.total + 'GB' : '0KB' %></span></span>
                 </div>
             </div>
             <!--// .cont-box -->
@@ -87,7 +87,7 @@
                                         <% if (isInfinity) { %>
                                             <span class="ff-type1">무제한</span>
                                         <% } else { %>
-                                            <span class="ff-type1"><%= member.used.data + member.used.unit %></span>이용
+                                            <span class="ff-type1"><%= member.used.data > 0 ? member.used.data + member.used.unit : '0KB' %></span>이용
                                         <% } %>
                                     </span>
                                     <p><%= member.svcNum %></p>
@@ -97,7 +97,7 @@
                                         <dt>이용요금제</dt>
                                         <dd><%= member.prodNm %></dd>
                                         <dt>공유한 데이터</dt>
-                                        <dd><%= member.shared %>GB</dd>
+                                        <dd><%= member.shared > 0 ? member.shared + 'GB' : '0KB' %></dd>
                                         <% if (!isInfinity) { %>
                                             <dt>이용한도</dt>
                                             <dd>
