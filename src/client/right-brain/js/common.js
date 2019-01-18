@@ -483,7 +483,7 @@ skt_landing.action = {
 	};
 	var options = $.extend({}, defaults, opts);
     var homeIndex = options.initialSlide ? options.initialSlide : 0;
-    if(options.initialSlide){
+    if(options.initialSlide >= 0){
         $('.home-tab-belt .tab').eq(options.initialSlide).find('button, a').addClass('on').closest('.tab').siblings().find('button, a').removeClass('on');
     }
     $('.home-slider .home-slider-belt').each(function(){
