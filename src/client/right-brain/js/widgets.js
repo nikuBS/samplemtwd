@@ -302,7 +302,7 @@ skt_landing.widgets = {
           autoplaySpeed: 4000,
           dots: true,
           arrows: true,
-          infinite: false,
+          infinite: true,
           speed : 300,
           // useTransform : false,
           // mobileFirst : true,

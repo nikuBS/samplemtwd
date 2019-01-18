@@ -288,8 +288,8 @@ body.bg-gray {
         position: relative;
         min-height: 3.25rem;
         background-repeat: no-repeat;
-        background-size: 100% 100%;
-        background-position: left top; }
+        background-size: contain;
+        background-position: right top; }
         #common-menu .section-cont .section-gnb .bt-depth1 > .bt {
           position: relative;
           display: table;
@@ -430,7 +430,7 @@ body.bg-gray {
     #common-menu .section-cont .open .depth2 {
       display: block !important; }
   #common-menu .footer {
-    padding: 1.875rem 1rem; }
+    padding: 1.5625rem 1rem 1.875rem; }
     #common-menu .footer .f-menu li {
       display: inline-block;
       margin-right: 0.4375rem; }
