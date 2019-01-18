@@ -44,7 +44,7 @@ class CustomerUseguideService extends TwViewController {
       
       // 제목 구하기
       const result = Object.assign(resp.result, {
-        title: CUSTOMER_SERVICE_OPTION_TYPE[listIndex as any].title,
+        title: CUSTOMER_SERVICE_OPTION_TYPE[listIndex as any].unitedTitle || CUSTOMER_SERVICE_OPTION_TYPE[listIndex as any].title,
         sub_title: CUSTOMER_SERVICE_OPTION_TYPE[listIndex as any].sub_list[subIndex as any].sub_title,
         dep_title: this.getCurTitleFromDeps(list, code)
       });

@@ -814,7 +814,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
         sub_title: 'band LTE',
         sub_text: 'band LTE 요금 기준이 궁금하다면',
         type: 'B2',
-        code: 'C00029'
+        code: 'C00027'
       },
       {
         sub_title: '데이터 사용요금',
@@ -998,7 +998,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    title: '목소리 인증∙ARS상담에 대한 안내',
+    title: '목소리 인증∙전화상담에 대한 안내',
     sub_list: [
       {
         sub_title: 'ARS상담 이용안내',
@@ -1014,17 +1014,18 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
             type: 'A2',
             code: 'C00021'
           },
-          {
+          /* {
             dep_title: '음성인식 ARS',
             type: 'A2',
             code: 'C00022'
-          }
+          }*/
         ]
       },
       {
         sub_title: '목소리 인증 이용안내',
         sub_text: '더 안전한 ARS이용을 원하신다면',
-        dep_list: [
+        code: 'C00024'
+        /*dep_list: [
           {
             dep_title: '목소리 인증',
             type: 'A2',
@@ -1035,7 +1036,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
             type: 'A2',
             code: 'C00026'
           }
-        ]
+        ]*/
       }
     ]
   }
