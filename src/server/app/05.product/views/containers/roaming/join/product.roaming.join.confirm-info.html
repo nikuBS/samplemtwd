@@ -273,6 +273,18 @@
                     </ul>
                 </div>
                 <!--// .cont-box -->
+                <% } else { %>
+                <div class="cont-box nogaps-btm tip_container">
+                    <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                    <ul class="noti-list" id="tooltip_list">
+                        <script type="text/x-handlebars-template" id="tooltip_template">
+                        <li>
+                            <span>{{tipData.tipTitle}}</span>
+                            <button type="button" id="{{tipData.tipId}}" class="tip-view fe-btn_tip_view" title="정보보기"  aria-haspopup="true">TIP</button>
+                        </li>
+                        </script>
+                    </ul>
+                </div>
                 <% } %>
                 <div class="bt-fixed-area">
                     <ul class="bt-slice full">
