@@ -339,8 +339,8 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
 
       paidAmtDetailInfo = $.extend(true, {}, paidAmtDetailInfo);
       paidAmtDetailInfo = _.map(paidAmtDetailInfo, function (item) {
-        item.svcInfoNm = thisMain._phoneStrToDash(item.svcInfoNm);
-        item.svcInfoNm = thisMain._getShortStr(item.svcInfoNm);
+        // item.svcInfoNm = thisMain._phoneStrToDash(item.svcInfoNm);
+        // item.svcInfoNm = thisMain._getShortStr(item.svcInfoNm);
         item.invAmt = Tw.FormatHelper.addComma(item.invAmt);
         if ( item.svcNm === Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_0 ) {
           item.svcNm = Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_1;
@@ -355,12 +355,18 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
 
       rootNodes = thisMain._comTraverse(resData, groupKeyArr[0], priceKey);
 
+      // rootNode는 무조건 회선정보로 한다.(세션에 있는 경우 세션정보를, 없는경우 통합청구등록회선 조회에서 가져온 값
       if(rootNodes && this.resData && this.resData.commDataInfo && this.resData.commDataInfo.intBillLineList){
         for(var i = 0; i < rootNodes.length; i++){
           for(var j = 0; j < this.resData.commDataInfo.intBillLineList.length; j++){
             if(rootNodes[i].id === this.resData.commDataInfo.intBillLineList[j].svcMgmtNum){
               rootNodes[i].label = this.resData.commDataInfo.intBillLineList[j].svcType;
               rootNodes[i].svcInfoNm = this.resData.commDataInfo.intBillLineList[j].label;
+
+              // 상품이름이 없는 경우 통합청구등록회선조회 값 세팅
+              if(!rootNodes[i].prodNm){
+                rootNodes[i].prodNm = this.resData.commDataInfo.intBillLineList[j].assistAddr;
+              }
             }
           }
         }
@@ -425,6 +431,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
   },
 
   //--------------------------------------------------------------------------[SVC]
+  // 개별회선 선택시 타이틀에 회선 정보 출력
   _searchNmSvcTypeFun: function () {
     var svcTypeList = this.resData.commDataInfo.intBillLineList;
     var svcMgmtNum = this.resData.reqQuery.line;
@@ -538,8 +545,8 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     // window.location.hash = hash;
   },
   _getShortStr: function(str){
-    if( str && str.length > 18 ){
-      return str.substr(0, 18);
+    if( str && unescape(encodeURIComponent(str)).length > 18 ){
+      return str.substr(0, 18) + '...';
     }
     return str;
   }

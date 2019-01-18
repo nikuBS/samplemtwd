@@ -141,7 +141,12 @@ Kim Myoung-Hwan (skt.P130714@partner.sk.com)
                     {{#if_icon rootItem.label }}
                     {{/if_icon}}
                     <span class="in-tx">{{rootItem.label}}<span class="val">{{rootItem.svcInfoNm}}</span></span>
+                    {{#if rootItem.prodId }}
                     <button class="bt-link-tx underline"><a href="/product/callplan/{{rootItem.prodId}}">{{rootItem.prodNm}}</a></button>
+                    {{else}}
+                    <button>{{rootItem.prodNm}}</button>
+                    {{/if}}
+
                 </span>
                 <span class="price">{{rootItem.totPrice}}원</span>
             </div>
