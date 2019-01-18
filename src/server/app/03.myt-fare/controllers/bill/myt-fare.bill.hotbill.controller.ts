@@ -87,6 +87,7 @@ class MyTFareBillHotbill extends TwViewController {
           const child = childInfo.find(svc => svc.svcMgmtNum === req.query.child);
           options['title'] = MYT_FARE_HOTBILL_TITLE.CHILD;
           options['child'] = StringHelper.phoneStringToDash(child.svcNum);
+          options['childProdNm'] = StringHelper.phoneStringToDash(child.prodNm);
           options['preBill'] =  false;
         } else {
           options['title'] = MYT_FARE_HOTBILL_TITLE.MAIN;
