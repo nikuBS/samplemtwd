@@ -83,8 +83,9 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
         this._addedList.push(phoneObj);
+        this.$container.find('.cancel').trigger('click');
+        this.$inputElement.blur();
         this._activateConfirmBtn();
-        this._clearInput();
         this._changeList();
       }else{
         this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
@@ -118,9 +119,10 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
   },
   _activateAddBtn : function (inputEvt) {
     var inputVal = this.$inputElement.val();
-    if(inputVal.length>0&&isNaN(inputEvt.key)){
+    var numReg = /[^0-9]/;
+    if(inputVal.length>0&&isNaN(inputEvt.key)&&numReg.test(inputVal.charAt(inputVal.length-1))){
       this.$inputElement.val('');
-      this.$inputElement.val(inputVal.replace(/[^0-9]/g,''));
+      this.$inputElement.val(inputVal.substring(0,inputVal.length-1));
     }
     if(this.$inputElement.val().length>=10){
       this.$addBtn.removeAttr('disabled');
