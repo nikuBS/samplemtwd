@@ -306,7 +306,7 @@ Tw.MenuComponent.prototype = {
         switch ( type ) {
           case 'svcCnt':
             if ( userInfo.totalSvcCnt !== 0 && userInfo.expsSvcCnt !== 0 ) {
-              $(elem).text(Tw.MENU_STRING.SVC_COUNT(userInfo.totalSvcCnt));
+              $(elem).text(Tw.MENU_STRING.SVC_COUNT(userInfo.expsSvcCnt));
             } else {
               $(elem).remove();
             }
