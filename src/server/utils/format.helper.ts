@@ -165,7 +165,7 @@ class FormatHelper {
   }
 
   static conTelFormatWithDash(tel: any): any {
-    if (this.isEmpty(tel) || tel.length < 9 || tel.length > 11) {
+    if (this.isEmpty(tel)) {
       return tel;
     }
 

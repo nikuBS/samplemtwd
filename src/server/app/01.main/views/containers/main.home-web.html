@@ -191,7 +191,11 @@
                     <% if(homeData.billData) { %>
                     <% if(homeData.billData.isBroadband) { %>
                     <!-- 브로드밴드 가입회선 -->
+                    <% if(svcInfo.svcAttrCd === 'S3') { %>
+                    <button class="num fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.billData.showSvcNum %>/button>
+                    <% } else { %>
                     <button class="num fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.addr %></button>
+                    <% } %>
                     <strong class="user">반갑습니다, <%= svcInfo.mbrNm %> 고객님.</strong>
                     <div class="t-none">SK브로드밴드에서 가입한<br>회선입니다.</div>
                     <p class="desc">전화 106 또는 <button id="fe-bt-link-broadband" class="bt">SK브로드밴드 웹사이트</button>를 이용해 주시기 바랍니다.</p>
@@ -218,7 +222,11 @@
                     <% } %>
                     <% } else { %>
                     <!-- 요금안내서가 없는경우 -->
+                    <% if(svcInfo.svcAttrCd === 'S3') { %>
+                    <button class="num fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.billData.showSvcNum %>/button>
+                    <% } else { %>
                     <button class="num fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.addr %></button>
+                    <% } %>
                     <strong class="user">반갑습니다, <%= svcInfo.mbrNm %> 고객님.</strong>
                     <div class="t-none">발행된 요금안내서가 없습니다.</div>
                     <% } %>
