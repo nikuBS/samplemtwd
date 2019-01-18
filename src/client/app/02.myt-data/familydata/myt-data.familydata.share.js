@@ -27,6 +27,7 @@ Tw.MyTDataFamilyShare.prototype = {
 
   _bindEvent: function() {
     this.$container.on('click', '.btn-type01', $.proxy(this._addShareData, this));
+    this.$container.on('click', '.cancel', $.proxy(this._validateShareAmount, this));
     this.$amountInput.on('focusout', $.proxy(this._validateShareAmount, this));
     this.$amountInput.on('keyup', $.proxy(this._validateShareAmount, this));
   },
