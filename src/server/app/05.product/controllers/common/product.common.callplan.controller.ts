@@ -603,6 +603,30 @@ class ProductCommonCallplan extends TwViewController {
   }
 
   /**
+   * @param typeCd
+   * @private
+   */
+  private _getReservationTypeCd(typeCd: any): any {
+    if (['D_I', 'E_I'].indexOf(typeCd) !== -1) {
+      return 'internet';
+    }
+
+    if (['D_P', 'E_P'].indexOf(typeCd) !== -1) {
+      return 'phone';
+    }
+
+    if (['D_T', 'E_T'].indexOf(typeCd) !== -1) {
+      return 'tv';
+    }
+
+    if (typeCd === 'F') {
+      return 'combine';
+    }
+
+    return null;
+  }
+
+  /**
    * @param prodTypCd
    * @param allSvc
    * @param svcAttrCd
@@ -778,6 +802,7 @@ class ProductCommonCallplan extends TwViewController {
             similarProductInfo: this._convertSimilarProduct(basicInfo.result.prodTypCd, similarProductInfo),  // 모바일 요금제 유사한 상품
             isJoined: this._isJoined(basicInfo.result.prodTypCd, isJoinedInfo),  // 가입 여부
             combineRequireDocumentInfo: this._convertRequireDocument(combineRequireDocumentInfo),  // 구비서류 제출 심사내역
+            reservationTypeCd: this._getReservationTypeCd(basicInfo.result.prodTypCd),
             lineProcessCase: this._getLineProcessCase(basicInfo.result.prodTypCd, allSvc, svcAttrCd) // 가입 가능 회선 타입
           }].reduce((a, b) => {
             return Object.assign(a, b);

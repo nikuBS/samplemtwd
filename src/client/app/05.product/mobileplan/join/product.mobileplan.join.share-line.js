@@ -165,16 +165,16 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
           isDataOvrAmt: isDataOvrAmt,
           isVoiceOvrAmt: isVoiceOvrAmt,
           isSmsOvrAmt: isSmsOvrAmt,
-          dataIfAmt: resp.result.dataIfAmt,
-          dataBasAmt: resp.result.dataBasAmt,
-          dataOvrAmt: Math.ceil(resp.result.dataOvrAmt),
-          voiceIfAmt: Math.ceil(resp.result.voiceIfAmt),
-          voiceBasAmt: Math.ceil(resp.result.voiceBasAmt),
-          voiceOvrAmt: Math.ceil(resp.result.voiceOvrAmt),
-          smsIfAmt: Math.ceil(resp.result.smsIfAmt),
-          smsBasAmt: Math.ceil(resp.result.smsBasAmt),
-          smsOvrAmt: Math.ceil(resp.result.smsOvrAmt),
-          ovrTotAmt: Math.ceil(resp.result.ovrTotAmt)
+          dataIfAmt: Tw.FormatHelper.addComma(resp.result.dataIfAmt),
+          dataBasAmt: Tw.FormatHelper.addComma(resp.result.dataBasAmt),
+          dataOvrAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.dataOvrAmt)),
+          voiceIfAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.voiceIfAmt)),
+          voiceBasAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.voiceBasAmt)),
+          voiceOvrAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.voiceOvrAmt)),
+          smsIfAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.smsIfAmt)),
+          smsBasAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.smsBasAmt)),
+          smsOvrAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.smsOvrAmt)),
+          ovrTotAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.ovrTotAmt))
         });
       }
     }
