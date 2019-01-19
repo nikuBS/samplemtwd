@@ -50,13 +50,21 @@ Tw.ProductList.prototype = {
   },
 
   _handleLoadMore: function() {
-    this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params).done($.proxy(this._handleSuccessLoadingData, this));
+    this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params).done($.proxy(this._handleSuccessLoadingData, this, undefined));
   },
 
-  _handleSuccessLoadingData: function(resp) {
+  _handleLoadWithNewOrder: function(order) {
+    this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params).done($.proxy(this._handleSuccessLoadingData, this, order));
+  },
+
+  _handleSuccessLoadingData: function(order, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       Tw.Error(resp.code, resp.msg).pop();
       return;
+    }
+
+    if (order) {
+      location.href = Tw.UrlHelper.replaceQueryParam('order', order);
     }
 
     var items = _.map(resp.result.products, $.proxy(this._mapProperData, this));
@@ -152,7 +160,7 @@ Tw.ProductList.prototype = {
     this.$orderBtn.text($li.find('.txt').text());
     this.$list.empty();
 
-    this._handleLoadMore();
+    this._handleLoadWithNewOrder(orderType);
     this._popupService.close();
   },
 
