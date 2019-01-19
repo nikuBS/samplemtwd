@@ -48,6 +48,10 @@ Tw.BenefitIndex.prototype = {
     this.$internetType.on('click', $.proxy(this._checkStateLine, this));
     this.$showDiscountBtn.on('click', $.proxy(this._onViewDiscountAmt, this));
     this.$container.on('click', '[data-benefit-id]', $.proxy(this._onClickProduct, this)); // 카테고리 하위 리스트 클릭
+
+    window.onpopstate = $.proxy(function() {
+      this._loadTab();
+    },this);
   },
 
   // 카테고리 하위 리스트 클릭
@@ -158,8 +162,8 @@ Tw.BenefitIndex.prototype = {
 
   // 상단 > 나의 혜택.할인 정보 API들 호출 (9개 호출해서 계산)
   _reqMyBenefitDiscountInfo: function () {
-    // 미 로그인 또는 유선인 경우 건너뜀
-    if (!this._isLogin || ['S1','S2','S3'].indexOf(this._svcInfo.svcAttrCd) > -1) {
+    // 미 로그인, 준회원, 유선인 경우 건너뜀
+    if (!this._isLogin || this._svcInfo.svcAttrCd === '' || ['S1','S2','S3'].indexOf(this._svcInfo.svcAttrCd) > -1) {
       return;
     }
     this._apiService.requestArray([
@@ -236,7 +240,19 @@ Tw.BenefitIndex.prototype = {
 
   // 카테고리 클릭 이벤트
   _onClickCategory: function (e) {
-    this._switchTab($(e.currentTarget).data('category'));
+    var lastPath = {
+      'F01421': 'discount'      ,
+      'F01422': 'combinations'  ,
+      'F01423': 'long-term'     ,
+      'F01424': 'participation' ,
+      'X'     : 'submain'
+    };
+    var category = $(e.currentTarget).data('category');
+    var last = lastPath[category || 'X'];
+    if (Tw.UrlHelper.getLastPath() !== last ) {
+      this._history.pushUrl('/benefit/submain' + (last === 'submain' ? '':'/'+last));
+    }
+    this._switchTab(category);
   },
 
   // 카테고리 '탭' 선택
