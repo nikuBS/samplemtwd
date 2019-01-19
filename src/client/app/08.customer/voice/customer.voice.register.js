@@ -86,7 +86,8 @@ Tw.CustomerVoiceRegister.prototype = {
 
   _onSuccessRegister: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._history.replaceURL('/customer/svc-info/voice/complete?targetNum=' + this.$btn_select_phone.text().trim());
+      var sPhone = !!this.$btn_select_phone.val() ? this.$btn_select_phone.val() : this.$btn_select_phone.text();
+      this._history.replaceURL('/customer/svc-info/voice/complete?targetNum=' + sPhone);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
