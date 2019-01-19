@@ -2,6 +2,7 @@ Tw.MenuComponent = function (notAboutMenu) {
   if ( notAboutMenu ) {
     return;
   }
+
   $(document).ready($.proxy(function () {
     this.$container = $('#common-menu');
     this.$gnbBtn = $('#fe-bt-gnb');
@@ -31,6 +32,8 @@ Tw.MenuComponent = function (notAboutMenu) {
 
     this._isOpened = false;
     this._isMenuSet = false;
+
+    this._menuRedisErrorCount = 0;
 
     this._init();
     this._bindEvents();
@@ -153,6 +156,7 @@ Tw.MenuComponent.prototype = {
       // retrieve redis
       this._apiService.request(Tw.NODE_CMD.GET_MENU, {})
         .then($.proxy(function (res) {
+          this._menuRedisErrorCount = 0;
           if ( res.code === Tw.API_CODE.CODE_00 ) {
             this._isLogin = res.result.isLogin;
             if ( this._isLogin ) {
@@ -172,9 +176,16 @@ Tw.MenuComponent.prototype = {
             Tw.Error(res.code, res.msg).pop();
           }
         }, this))
-        .fail(function (err) {
+        .fail($.proxy(function (err) {
+          if (this._menuRedisErrorCount === 0) {  // Try one time more
+            this._menuRedisErrorCount += 1;
+            this._onGnbBtnClicked();
+            return;
+          } else {
+            this._menuRedisErrorCount = 0;
+          }
           Tw.Error(err.code, err.msg).pop();
-        });
+        }, this));
     }
   },
   _onTNoti: function () {
