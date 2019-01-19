@@ -20,6 +20,12 @@ Tw.ProductWireplanJoinReservation = function(rootEl, isProduct) {
   this._isLoadCombineList = false;
   this._currentCombineProductList = [];
 
+  this._convertProdIds = {
+    NH00000103: 'TW00000009',
+    NA00005055: 'TW20000012',
+    NH00000083: 'TW20000008'
+  };
+
   this._cachedElement();
   this._bindEvent();
   this._init();
@@ -508,8 +514,13 @@ Tw.ProductWireplanJoinReservation.prototype = {
       return this._openExplainFilePop([]);
     }
 
+    var reqProdId = this._prodId;
+    if (!Tw.FormatHelper.isEmpty(this._convertProdIds[this._prodId])) {
+      reqProdId = this._convertProdIds[this._prodId];
+    }
+
     Tw.CommonHelper.startLoading('.container', 'grey', true);
-    this._apiService.request(Tw.API_CMD.BFF_05_0134, {}, {}, [this._prodId])
+    this._apiService.request(Tw.API_CMD.BFF_05_0134, {}, {}, [reqProdId])
       .done($.proxy(this._procExpalinFilePopRes, this));
   },
 
