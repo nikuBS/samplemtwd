@@ -12817,7 +12817,7 @@ a.bt-link-tx.underline.small {
         color: #000;
         font-size: 1rem; }
         .representcharge-list > li .representcharge-info .title .lte {
-          width: 1.9375rem;
+          width: auto;
           height: 1rem;
           margin-left: 0.3125rem;
           vertical-align: -0.1875rem; }
@@ -13668,6 +13668,30 @@ a.bt-link-tx.underline.small {
     font-size: 1.125rem;
     font-weight: 700;
     letter-spacing: -1px; }
+
+.productdetails-ledgercase02 {
+  display: table;
+  width: 100%;
+  padding-bottom: 1rem; }
+  .productdetails-ledgercase02 .price-text {
+    display: table-cell;
+    color: #fff;
+    font-size: 0.8125rem; }
+  .productdetails-ledgercase02 .limit {
+    display: table-cell;
+    width: 8.125rem;
+    color: #fff;
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+    text-align: right;
+    vertical-align: top; }
+  .productdetails-ledgercase02:after {
+    content: " ";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden; }
 
 .productdetails-utill {
   position: relative;
@@ -26851,8 +26875,7 @@ input[type="radio"].formradio-small:checked:disabled + label {
           text-overflow: ellipsis;
           max-width: 6.25rem;
           font-size: 0.8125rem;
-          line-height: 1;
-          vertical-align: middle; }
+          line-height: 1; }
         .contheader-box .totalfilter-wrap .filter-btn.date-in .text {
           display: inline-block;
           font-size: 0.8125rem;
@@ -32393,3 +32416,56 @@ body.apphome {
     text-align: center; }
 
 /* 김효진 */
+/* 나은별 */
+/* 인풋 옆에 버튼이 붙는 경우 (주소록, 우편번호 검색 등...) */
+.inputbox.inp-btn {
+  display: table;
+  table-layout: inherit; }
+  .inputbox.inp-btn .input {
+    display: table-cell;
+    width: 100% !important; }
+  .inputbox.inp-btn .bt-box {
+    display: table-cell !important;
+    padding-left: 0.625rem;
+    vertical-align: middle;
+    text-indent: 0; }
+  .inputbox.inp-btn .bt-box2 {
+    display: table-cell !important;
+    padding-left: 0.625rem;
+    vertical-align: middle;
+    text-indent: 0; }
+    .inputbox.inp-btn .bt-box2 button {
+      min-height: 2.375rem; }
+  .inputbox.inp-btn .r-btn {
+    display: table-cell !important;
+    padding-left: 0.625rem;
+    vertical-align: middle;
+    text-indent: 0;
+    margin: 0; }
+  .inputbox.inp-btn .txt-area {
+    display: table-cell !important;
+    padding-left: 0.625rem;
+    vertical-align: middle;
+    text-indent: 0; }
+
+.inputbox + .tx-box {
+  display: block; }
+
+.inputbox + .guide-txt {
+  position: relative;
+  display: block;
+  margin: 1rem 0 0 0;
+  padding: 0 0 0 0.5rem;
+  font-size: 0.75rem;
+  color: #666666; }
+  .inputbox + .guide-txt:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: "*"; }
+
+.inputbox input[placeholder] {
+  line-height: 0 !important; }
+
+.file .inp-btn .input, .file-wrap .inp-btn .input {
+  padding-right: 0.625rem; }

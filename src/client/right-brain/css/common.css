@@ -3963,6 +3963,10 @@ a.ui-button:active,
       .bt-slice > li.bt-blue1 button:disabled {
         color: #808698;
         background: #e5e8ee; }
+      .bt-slice > li.bt-blue1 button.btn_active:hover {
+        background: #3b98e6; }
+      .bt-slice > li.bt-blue1 button.btn_active:active {
+        background: #90caf9; }
     .bt-slice > li.bt-blue1 a {
       color: #fff;
       background: #3b98e6; }
