@@ -59,7 +59,7 @@
                     </div>
                     <ul class="bt-slice pt26">
                         <li class="bt-blue1">
-                            <button disabled="disabled" id="add_list">추가하기</button>
+                            <button disabled="disabled" id="add_list" class="btn_active">추가하기</button>
                         </li>
                     </ul>
                 </div>
@@ -75,9 +75,9 @@
                             <ul class="comp-box" id="combine_list">
                                 <script type="text/x-handlebars-template" id="combine_list_template">
                                     <li class="list-box">
-                                    <div class="list-ico"><span class="ico type5">이</span></div>
+                                    <div class="list-ico"><span class="ico type5">{{listData.name.firstNm}}</span></div>
                                     <p class="list-text">
-                                    <span class="mtext">{{listData.name}}</span>
+                                    <span class="mtext">{{listData.name.fullNm}}</span>
                                     <span class="stext gray">{{listData.phoneNum}}</span>
                                     </p>
                                     <div class="list-btn">

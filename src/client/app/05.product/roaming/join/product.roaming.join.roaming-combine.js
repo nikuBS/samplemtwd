@@ -44,7 +44,11 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
   },
   _inputBlurEvt : function(){
     var tempVal = this.$inputElement.val();
-    tempVal = Tw.StringHelper.phoneStringToDash(tempVal);
+    if(tempVal.length===7){
+      tempVal = this._phoneForceChange(tempVal);
+    }else{
+      tempVal = Tw.StringHelper.phoneStringToDash(tempVal);
+    }
     this.$inputElement.attr('maxlength','13');
     this.$inputElement.val(tempVal);
   },
@@ -122,10 +126,12 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
   },
   _activateAddBtn : function (inputEvt) {
     var inputVal = this.$inputElement.val();
-    var numReg = /[^0-9]/;
-    if(inputVal.length>0&&isNaN(inputEvt.key)&&numReg.test(inputVal.charAt(inputVal.length-1))){
+    var numReg = /[^0-9]/g;
+    if(inputVal.length>0&&numReg.test(inputVal)){
+      this.$inputElement.blur();
       this.$inputElement.val('');
-      this.$inputElement.val(inputVal.substring(0,inputVal.length-1));
+      this.$inputElement.val(inputVal.replace(numReg,''));
+      this.$inputElement.focus();
     }
     if(this.$inputElement.val().length>=10){
       this.$addBtn.removeAttr('disabled');
@@ -194,6 +200,9 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
         this.$addBtn.css('pointer-events', 'all');
       }, this)
     );
+  },
+  _phoneForceChange : function (str) {
+    return str.substring(0,3)+'-'+str.substring(3,str.length);
   }
 
 };

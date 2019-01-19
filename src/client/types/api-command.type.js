@@ -488,7 +488,7 @@ Tw.API_CMD = {
 
   //SEARCH
   SEARCH_AUTO_COMPLETE : { path : '/search/tworld/autocomplete', method : Tw.API_METHOD.GET },
-  STACK_SEARCH_USER_CLICK : { path : '/search/tworld/log/save', method : Tw.API_METHOD.POST },
+  STACK_SEARCH_USER_CLICK : { path : '/search/tworld/log/save', method : Tw.API_METHOD.GET },
 
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },

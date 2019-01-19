@@ -13,11 +13,12 @@ Tw.ProductRoamingJoinRoamingAuto = function (rootEl,prodRedisInfo,prodApiInfo,sv
   this._svcInfo = svcInfo;
   this._prodId = prodId;
   this._expireDate = expireDate;
-  this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
+  this.$tooltipHead = this.$container.find('#tip_head');
+  this.$tooltipBody = this.$container.find('#tip_body');
   this._showDateFormat = 'YYYY. MM. DD.';
   this._dateFormat = 'YYYYMMDD';
   this._currentDate = Tw.DateHelper.getCurrentShortDate();
-  this._tooltipInit(prodId);
+  this._tooltipInit(prodId,this.$tooltipHead,this.$tooltipBody);
   this._bindBtnEvents();
 };
 
@@ -253,17 +254,20 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
 
     new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,null,'confirm_data',this);
   },
-  _tooltipInit : function (prodId) {
+  _tooltipInit : function (prodId,$tooltipHead,$tooltipBody) {
     switch (prodId) {
       case 'NA00005252':
       case 'NA00005300':
       case 'NA00005505':
-        this.$serviceTipElement.attr('id','RM_11_01_02_05_tip_01_02');
+      case 'NA00005337':
+        $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_02');
+        this.$container.find('.tip_body_container').hide();
         break;
       case 'NA00003178':
       case 'NA00003177':
       case 'NA00004226':
-        this.$serviceTipElement.attr('id','RM_11_01_02_05_tip_01_03');
+        $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_03');
+        this.$container.find('.tip_body_container').hide();
         break;
       case 'NA00006046':
       case 'NA00006048':
@@ -279,7 +283,10 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
       case 'NA00005898':
       case 'NA00006226':
       case 'NA00006229':
-        this.$serviceTipElement.attr('id','RM_11_01_02_05_tip_01_04');
+      case 'NA00006045':
+      case 'NA00006053':
+        $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_04');
+        this.$container.find('.tip_body_container').hide();
         break;
       case 'NA00005691':
       case 'NA00005694':
@@ -287,7 +294,37 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
       case 'NA00005693':
       case 'NA00005692':
       case 'NA00005695':
-        this.$serviceTipElement.attr('id','RM_11_01_02_05_tip_01_01');
+        $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_01');
+        this.$container.find('.tip_body_container').hide();
+        break;
+      case 'NA00006039':
+        $tooltipHead.find('button').attr('id','TC000007');
+        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        $tooltipBody.find('button').attr('id','TC000008');
+        break;
+      case 'NA00005901':
+        $tooltipHead.find('button').attr('id','TC000009');
+        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        $tooltipBody.find('button').attr('id','TC000008');
+        break;
+      case 'NA00006041':
+      case 'NA00006047':
+        $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_04');
+        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        $tooltipBody.find('button').attr('id','TC000008');
+        break;
+      case 'NA00005903':
+        $tooltipHead.find('button').attr('id','TC000009');
+        this.$container.find('.tip_body_container').hide();
+        break;
+      case 'NA00005747':
+        $tooltipHead.find('button').attr('id','TC000009');
+        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        $tooltipBody.find('button').attr('id','TC000010');
+        break;
+      case 'NA00005301':
+        $tooltipHead.find('button').attr('id','TC000011');
+        this.$container.find('.tip_body_container').hide();
         break;
     }
   }
