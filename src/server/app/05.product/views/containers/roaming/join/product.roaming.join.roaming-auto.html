@@ -37,7 +37,7 @@
                 <div class="cont-box">
                     <div class="product-tit-wrap">
                         <span class="tit-small">가입할 상품 옵션을 설정하세요.</span>
-                        <h3 class="tit-big"><%= prodRedisInfo.prodNm %></h3>
+                        <h3 class="tit-big"><%= prodApiInfo.preinfo.reqProdInfo.prodNm %></h3>
                     </div>
                 </div>
                 <!--// .cont-box -->
@@ -124,7 +124,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-        new Tw.ProductRoamingJoinRoamingAuto($('.wrap'),'<%- JSON.stringify(prodRedisInfo) %>',<%- JSON.stringify(prodApiInfo) %>,<%- JSON.stringify(svcInfo) %>,'<%- prodId %>','<%- expireDate -%>');
+        new Tw.ProductRoamingJoinRoamingAuto($('.wrap'),'<%- JSON.stringify(prodTypeInfo) %>',<%- JSON.stringify(prodApiInfo) %>,<%- JSON.stringify(svcInfo) %>,'<%- prodId %>','<%- expireDate -%>');
     });
 </script>
 <% include ../../../components/end.component.html %>

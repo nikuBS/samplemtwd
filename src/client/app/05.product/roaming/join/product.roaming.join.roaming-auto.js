@@ -4,11 +4,11 @@
  * Date: 2018.12.03
  */
 
-Tw.ProductRoamingJoinRoamingAuto = function (rootEl,prodRedisInfo,prodApiInfo,svcInfo,prodId,expireDate) {
+Tw.ProductRoamingJoinRoamingAuto = function (rootEl,prodTypeInfo,prodApiInfo,svcInfo,prodId,expireDate) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
-  this._prodRedisInfo = JSON.parse(prodRedisInfo);
+  this._prodTypeInfo = JSON.parse(prodTypeInfo);
   this._prodApiInfo = prodApiInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
@@ -242,11 +242,10 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
       prodId : this._prodId,
       svcNum : Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.svcNum),
       processNm : Tw.PRODUCT_TYPE_NM.JOIN,
-      prodType : Tw.NOTICE.ROAMING+' '+Tw.PRODUCT_CTG_NM.PLANS,
-      svcType : Tw.PRODUCT_CTG_NM.ADDITIONS,
-      prodNm : this._prodRedisInfo.prodNm,
-      prodFee : this._prodRedisInfo.basFeeInfo,
-      description : this._prodRedisInfo.prodSmryDesc,
+      prodType : Tw.NOTICE.ROAMING+' '+(this._prodTypeInfo.prodTypCd==='H_P'?Tw.PRODUCT_CTG_NM.PLANS:Tw.PRODUCT_CTG_NM.ADDITIONS),
+      prodNm : this._prodApiInfo.preinfo.reqProdInfo.prodNm,
+      prodFee : this._prodApiInfo.preinfo.reqProdInfo.basFeeInfo,
+      description : this._prodApiInfo.preinfo.reqProdInfo.prodSmryDesc,
       autoInfo : this._prodApiInfo,
       agreeCnt : this._agreeCnt,
       joinType : 'auto'

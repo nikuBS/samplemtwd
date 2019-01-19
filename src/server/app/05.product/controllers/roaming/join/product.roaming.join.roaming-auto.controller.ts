@@ -31,16 +31,16 @@ class ProductRoamingJoinRoamingAuto extends TwViewController {
     }
 
     Observable.combineLatest(
-      this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId),
+      this.apiService.request(API_CMD.BFF_10_0001, {}, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0017, {'joinTermCd' : '01'}, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0091, {}, {}, [prodId])
-    ).subscribe(([ prodRedisInfo, prodApiInfo, prodServiceTimeInfo ]) => {
-      if (FormatHelper.isEmpty(prodRedisInfo) || (prodApiInfo.code !== API_CODE.CODE_00) || (prodServiceTimeInfo.code !== API_CODE.CODE_00)) {
+    ).subscribe(([ prodTypeInfo, prodApiInfo, prodServiceTimeInfo ]) => {
+      if ((prodTypeInfo.code !== API_CODE.CODE_00) || (prodApiInfo.code !== API_CODE.CODE_00) || (prodServiceTimeInfo.code !== API_CODE.CODE_00)) {
         return this.error.render(res, {
           svcInfo: svcInfo,
           title: PRODUCT_TYPE_NM.JOIN,
-          code: prodApiInfo.code,
-          msg: prodApiInfo.msg,
+          code: prodTypeInfo.code !== API_CODE.CODE_00 ? prodTypeInfo.code : prodApiInfo.code,
+          msg: prodTypeInfo.code !== API_CODE.CODE_00 ? prodTypeInfo.msg : prodApiInfo.msg
         });
       }
 
@@ -53,7 +53,7 @@ class ProductRoamingJoinRoamingAuto extends TwViewController {
 
       res.render('roaming/join/product.roaming.join.roaming-auto.html', {
         svcInfo : this.loginService.getSvcInfo(),
-        prodRedisInfo : prodRedisInfo.result.summary,
+        prodTypeInfo : prodTypeInfo.result,
         prodApiInfo : prodApiInfo.result,
         prodId : prodId,
         expireDate : expireDate,

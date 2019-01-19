@@ -4,7 +4,7 @@
  * Date: 2018.12.05
  */
 
-Tw.ProductRoamingJoinRoamingAlarm = function (rootEl,prodRedisInfo,prodBffInfo,svcInfo,prodId) {
+Tw.ProductRoamingJoinRoamingAlarm = function (rootEl,prodTypeInfo,prodBffInfo,svcInfo,prodId) {
 
   this.$container = rootEl;
   this._popupService = Tw.Popup;
@@ -13,7 +13,7 @@ Tw.ProductRoamingJoinRoamingAlarm = function (rootEl,prodRedisInfo,prodBffInfo,s
   this._nativeService = Tw.Native;
   this._addedList = [];
   this._changeList();
-  this._prodRedisInfo = JSON.parse(prodRedisInfo);
+  this._prodTypeInfo = JSON.parse(prodTypeInfo);
   this._prodBffInfo = prodBffInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
@@ -225,11 +225,10 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
       prodId : this._prodId,
       svcNum : Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.svcNum),
       processNm : Tw.PRODUCT_TYPE_NM.JOIN,
-      prodType : Tw.NOTICE.ROAMING+' '+Tw.PRODUCT_CTG_NM.PLANS,
-      svcType : Tw.PRODUCT_CTG_NM.ADDITIONS,
-      prodNm : this._prodRedisInfo.prodNm,
-      prodFee : this._prodRedisInfo.basFeeInfo,
-      description : this._prodRedisInfo.prodSmryDesc,
+      prodType : Tw.NOTICE.ROAMING+' '+(this._prodTypeInfo.prodTypCd==='H_P'?Tw.PRODUCT_CTG_NM.PLANS:Tw.PRODUCT_CTG_NM.ADDITIONS),
+      prodNm : this._prodBffInfo.preinfo.reqProdInfo.prodNm,
+      prodFee : this._prodBffInfo.preinfo.reqProdInfo.basFeeInfo,
+      description : this._prodBffInfo.preinfo.reqProdInfo.prodSmryDesc,
       autoInfo : this._prodBffInfo,
       showStipulation : Object.keys(this._prodBffInfo.stipulationInfo).length>0,
       joinType : 'alarm'
