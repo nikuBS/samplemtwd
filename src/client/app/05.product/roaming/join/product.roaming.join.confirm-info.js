@@ -15,7 +15,7 @@ Tw.ProductRoamingJoinConfirmInfo = function (rootEl,data,doJoinCallBack,closeCal
   this._dateFormat = 'YYYYMMDD';
   if(this._page){
     this._$popupContainer = this.$rootContainer;
-    this._prodRedisInfo = rootData;
+    this._prodTypeInfo = rootData;
     this._prodId = pageProdId;
     this._pageInit();
   }else{
@@ -31,7 +31,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       this.$rootContainer.find('.tx-bold.vbl').text(this._popupData.preinfo.reqProdInfo.basFeeInfo);
       this.$rootContainer.find('#tex').hide();
     }else{
-      this.$rootContainer.find('.tx-bold.vbl').text(Tw.FormatHelper.addComma(this._popupData.preinfo.reqProdInfo.basFeeInfo)+Tw.CURRENCY_UNIT.WON);
+      this.$rootContainer.find('.tx-bold.vbl').text(this._convertPrice(this._popupData.preinfo.reqProdInfo.basFeeInfo));
     }
     this._bindPopupElementEvt(this.$rootContainer);
     if(this._popupData.preinfo.joinNoticeList.length<=0){
@@ -44,7 +44,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     if(isNaN(this._popupData.prodFee)){
       this._popupData.showTex = false;
     }else{
-      this._popupData.prodFee = Tw.FormatHelper.addComma(this._popupData.prodFee)+Tw.CURRENCY_UNIT.WON;
+      this._popupData.prodFee = this._convertPrice(this._popupData.prodFee);
       this._popupData.showTex = true;
     }
     this._openConfirmRoamingInfoPopup(this._popupData,closeCallBack,hash);
@@ -164,9 +164,9 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
         var completePopupData = {
-          prodNm : this._prodRedisInfo.prodNm,
+          prodNm : this._popupData.preinfo.reqProdInfo.prodNm,
           processNm : Tw.PRODUCT_TYPE_NM.JOIN,
-          isBasFeeInfo : this._prodRedisInfo.baseFeeInfo,
+          isBasFeeInfo : this._convertPrice(this._popupData.preinfo.reqProdInfo.basFeeInfo),
           typeNm : Tw.PRODUCT_CTG_NM.ADDITIONS,
           settingType : Tw.PRODUCT_CTG_NM.ADDITIONS+' '+Tw.PRODUCT_TYPE_NM.JOIN,
           btnNmList : [Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE]
@@ -230,8 +230,8 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     return agreeCnt;
   },
   _bindCompletePopupEvt : function (popupObj) {
-    $(popupObj).on('click','.btn-round2',this._goMyInfo);
-    $(popupObj).on('click','.btn-floating',this._goBack);
+    $(popupObj).on('click','.btn-round2',$.proxy(this._goMyInfo,this));
+    $(popupObj).on('click','.btn-floating',$.proxy(this._goBack,this));
   },
   _goBack : function(){
     this._popupService.close();
@@ -376,6 +376,10 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         break;
     }
     if(this._page){
+      if(tooltipArr.length<=0){
+        this.$rootContainer.find('.tip_container').hide();
+        return;
+      }
       _.each(tooltipArr,$.proxy(function (data) {
         this.$tooltipList.append(this._tooltipTemplate({tipData : data}));
       },this));
@@ -397,5 +401,11 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
     },null,null);
+  },
+  _convertPrice : function (priceVal) {
+    if(!isNaN(priceVal)){
+      priceVal = Tw.FormatHelper.addComma(priceVal)+Tw.CURRENCY_UNIT.WON;
+    }
+    return priceVal;
   }
 };

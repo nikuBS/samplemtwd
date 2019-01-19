@@ -4,7 +4,7 @@
  * Date: 2018.12.06
  */
 
-Tw.ProductRoamingTerminate = function (rootEl,prodBffInfo,svcInfo,prodId,prodRedisInfo) {
+Tw.ProductRoamingTerminate = function (rootEl,prodBffInfo,svcInfo,prodId,prodTypeInfo) {
   this.$rootContainer = rootEl;
   this._page = false;
   this._apiService = Tw.Api;
@@ -13,13 +13,20 @@ Tw.ProductRoamingTerminate = function (rootEl,prodBffInfo,svcInfo,prodId,prodRed
   this._svcInfo = svcInfo;
   this._prodId = prodId;
   this._prodBffInfo = this._arrangeAgree(prodBffInfo);
-  this._prodRedisInfo = prodRedisInfo;
+  this._prodTypeInfo= prodTypeInfo;
   this._page = true;
+  this._init();
   this._bindPopupElementEvt();
 };
 
 Tw.ProductRoamingTerminate.prototype = {
-
+  _init : function (){
+    if(isNaN(this._prodBffInfo.preinfo.reqProdInfo.basFeeInfo)){
+      this.$rootContainer.find('#showTex').hide();
+    }else{
+      this.$rootContainer.find('.tx-bold.vbl').text(this._convertPrice(this._prodBffInfo.preinfo.reqProdInfo.basFeeInfo));
+    }
+  },
   _bindPopupElementEvt : function () {
     this._$allAgreeElement = this.$rootContainer.find('.all.checkbox>input');
     this._$individualAgreeElement = this.$rootContainer.find('.individual.checkbox>input');
@@ -79,9 +86,9 @@ Tw.ProductRoamingTerminate.prototype = {
   _confirmInfo : function () {
     this._popupService.close();
     var completePopupData = {
-      prodNm : this._prodRedisInfo.prodNm,
+      prodNm : this._prodBffInfo.preinfo.reqProdInfo.prodNm,
       processNm : Tw.PRODUCT_TYPE_NM.TERMINATE,
-      isBasFeeInfo : this._prodRedisInfo.baseFeeInfo,
+      isBasFeeInfo : this._convertPrice(this._prodBffInfo.preinfo.reqProdInfo.basFeeInfo),
       typeNm : Tw.PRODUCT_CTG_NM.ADDITIONS,
       settingType : Tw.PRODUCT_CTG_NM.ADDITIONS+' '+Tw.PRODUCT_TYPE_NM.JOIN,
       btnNmList : ['나의 가입정보 확인']
@@ -100,9 +107,9 @@ Tw.ProductRoamingTerminate.prototype = {
 
       if(res.code===Tw.API_CODE.CODE_00){
         var completePopupData = {
-          prodNm : this._prodRedisInfo.prodNm,
+          prodNm : this._prodBffInfo.preinfo.reqProdInfo.prodNm,
           processNm : Tw.PRODUCT_TYPE_NM.TERMINATE,
-          isBasFeeInfo : this._prodRedisInfo.baseFeeInfo,
+          isBasFeeInfo : this._convertPrice(this._prodBffInfo.preinfo.reqProdInfo.basFeeInfo),
           typeNm : Tw.PRODUCT_CTG_NM.ADDITIONS,
           settingType : Tw.PRODUCT_CTG_NM.ADDITIONS+' '+Tw.PRODUCT_TYPE_NM.JOIN,
           btnNmList : ['나의 가입정보 확인']
@@ -166,4 +173,10 @@ Tw.ProductRoamingTerminate.prototype = {
     this._historyService.goBack();
     this.$rootContainer.find('input.'+this._nowShowAgreeType).trigger('click');
   },
+  _convertPrice : function (priceVal) {
+    if(!isNaN(priceVal)){
+      priceVal = Tw.FormatHelper.addComma(priceVal)+Tw.CURRENCY_UNIT.WON;
+    }
+    return priceVal;
+  }
 };
