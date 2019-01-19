@@ -68,7 +68,7 @@ Tw.CertificationSk.prototype = {
     }
   },
   _checkEnableCase: function (allSvc, svcInfo, opMethods, optMethods, methodCnt) {
-    if ( Tw.FormatHelper.isEmpty(allSvc.m) && !this._checkEnableCase(optMethods, methodCnt) ) {
+    if ( Tw.FormatHelper.isEmpty(allSvc.m) ) {
       return false;
     }
 
@@ -222,7 +222,10 @@ Tw.CertificationSk.prototype = {
   },
 
   _onClickOtherCert: function () {
-    this._callbackParam = { code: Tw.API_CODE.CERT_SELECT, target: Tw.AUTH_CERTIFICATION_KIND.AUTH_CERTIFICATION_METHOD };
+    this._callbackParam = {
+      code: Tw.API_CODE.CERT_SELECT,
+      target: Tw.AUTH_CERTIFICATION_KIND.AUTH_CERTIFICATION_METHOD
+    };
     this._popupService.close();
   },
   _onChangeKeyin: function (event) {
