@@ -68,7 +68,15 @@
                             </button>
                         </div>
                         <div class="filter-select">
-                            <button type="button" class="filterselect-btn fe-select-order">추천순</button>
+                            <button type="button" class="filterselect-btn fe-select-order">
+                                <% if (params.searchOrder === 'highprice') { %>
+                                    높은 가격순
+                                <% } else if (params.searchOrder === 'lowprice') { %>
+                                    낮은 가격순
+                                <% } else { %>
+                                    추천순
+                                <% } %>
+                            </button>
                         </div>
                     </div>
                 </div>
