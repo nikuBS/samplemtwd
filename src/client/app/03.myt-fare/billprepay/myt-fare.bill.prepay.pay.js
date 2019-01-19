@@ -264,7 +264,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
       cardCorp: $layer.find('.fe-payment-option-name').attr('id'),
       cardNm: $layer.find('.fe-payment-option-name').text(),
       cardExpyyVal: $.trim(this.$cardY.val())+ $.trim(this.$cardM.val()),
-      instmm: this.$cardTypeSelector.attr('id').toString(),
+      instMm: this.$cardTypeSelector.attr('id').toString(),
       cardPwdVal: $.trim(this.$cardPw.val().toString())
     };
     return reqData;
