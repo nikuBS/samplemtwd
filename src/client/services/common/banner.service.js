@@ -65,7 +65,7 @@ Tw.BannerService.prototype = {
         }
         case Tw.BANNER_LINK_TYPE.OTHER_WEB: 
         default: {
-          if (banner.isBill) {
+          if (Tw.BrowserHelper.isApp() && banner.isBill) {
             Tw.CommonHelper.showDataCharge(function() {
               Tw.CommonHelper.openUrlExternal(link);
             });
