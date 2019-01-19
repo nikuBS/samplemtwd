@@ -60,7 +60,7 @@
             <div class="connection-searchword">
                 <dl class="searchword-list">
                     <dt class="tit">연관</dt>
-                    <% for(var i=0;i<relatedKeyword.result.Word.length;i++){ %>
+                    <% for(var i=0;i<relatedKeyword.result.Word.length||i<=5;i++){ %>
                     <dd><a data-param="<%= relatedKeyword.result.Word[i] %>" class="link search-element"><%= relatedKeyword.result.Word[i] %></a></dd>
                     <% } %>
                 </dl>
@@ -71,7 +71,6 @@
             <% } %>
 
             <% if(accessQuery.category=='shortcut'&&searchInfo.search[0]&&searchInfo.search[0].shortcut){ %>
-            <hr class="cont-sp type1" aria-hidden="true">
             <div class="cont-box nogaps-btm">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">바로가기</h2>

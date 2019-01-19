@@ -104,9 +104,7 @@ class CommonSearch extends TwViewController {
               if (resultData.code !== API_CODE.CODE_00) {
                 searchResult.result.search[0].immediate.data = [];
               } else {
-                /*const nowPrice = Number(resultData.result.useAmtTot) + Number(resultData.result.deduckTotInvAmt);*/
-                const nowPrice = Number(resultData.result.useAmtTot);
-                searchResult.result.search[0].immediate.data[0].subData = nowPrice;
+                searchResult.result.search[0].immediate.data[0].subData = FormatHelper.addComma(resultData.result.useAmtTot);
               }
               showResult(searchResult, relatedKeyword);
             });
@@ -117,7 +115,7 @@ class CommonSearch extends TwViewController {
               if (resultData.code !== API_CODE.CODE_00) {
                 searchResult.result.search[0].immediate.data = [];
               } else {
-                searchResult.result.search[0].immediate.data[0].subData = resultData.result.totalSumPrice;
+                searchResult.result.search[0].immediate.data[0].subData = FormatHelper.addComma(resultData.result.totalSumPrice);
               }
               showResult(searchResult, relatedKeyword);
             });

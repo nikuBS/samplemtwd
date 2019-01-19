@@ -57,7 +57,7 @@
             <div class="connection-searchword">
                 <dl class="searchword-list">
                     <dt class="tit">연관</dt>
-                    <% for(var i=0;i<relatedKeyword.result.Word.length;i++){ %>
+                    <% for(var i=0;i<relatedKeyword.result.Word.length||i<=5;i++){ %>
                     <dd><a data-param="<%= relatedKeyword.result.Word[i] %>" class="link search-element"><%= relatedKeyword.result.Word[i] %></a></dd>
                     <% } %>
                 </dl>
@@ -71,23 +71,23 @@
             <!--<hr class="cont-sp type1" aria-hidden="true">-->
             <% if(searchInfo.search[0].immediate.data[0].DOCID==1){  %>
             <p class="paymentcharge-box type01">
-                이용하고 계신 <span class="phonnumber"><%= searchInfo.search[0].immediate.data[0].mainData %></span>회선의<br>요금제는
-                <span class="str"><strong class="money"><%= searchInfo.search[0].immediate.data[0].subData %></strong>입니다.</span>
+                이용하고 계신 <a href="/myt-join/submain" class="phonnumber search-element"><%= searchInfo.search[0].immediate.data[0].mainData %></a>회선의<br>요금제는
+                <span class="str"><a href="/myt-join/myplan"><strong class="money"><%= searchInfo.search[0].immediate.data[0].subData %></strong></a>입니다.</span>
             </p>
             <% } else if(searchInfo.search[0].immediate.data[0].DOCID==2){ %>
             <p class="paymentcharge-box type02">
-                이용하고 계신 <span class="phonnumber"><%= searchInfo.search[0].immediate.data[0].mainData %></span>회선의<br>총 데이터 잔여량은
-                <span class="str"><strong class="money"><%= searchInfo.search[0].immediate.data[0].subData.data+searchInfo.search[0].immediate.data[0].subData.unit %></strong>입니다.</span>
+                이용하고 계신 <a href="/myt-join/submain" class="phonnumber"><%= searchInfo.search[0].immediate.data[0].mainData %></a>회선의<br>총 데이터 잔여량은
+                <span class="str"><a href="/myt-data/hotdata"><strong class="money"><%= searchInfo.search[0].immediate.data[0].subData.data+searchInfo.search[0].immediate.data[0].subData.unit %></strong></a>입니다.</span>
             </p>
             <% } else if(searchInfo.search[0].immediate.data[0].DOCID==3){ %>
             <p class="paymentcharge-box type03">
-                이용하고 계신 <span class="phonnumber"><%= searchInfo.search[0].immediate.data[0].mainData %></span>회선의<br>실시간 이용요금은
-                <span class="str"><strong class="money"><%= searchInfo.search[0].immediate.data[0].subData %>원</strong>입니다.</span>
+                이용하고 계신 <a href="/myt-join/submain" class="phonnumber"><%= searchInfo.search[0].immediate.data[0].mainData %></a>회선의<br>실시간 이용요금은
+                <span class="str"><a href="/myt-fare/submain"><strong class="money"><%= searchInfo.search[0].immediate.data[0].subData %>원</strong></a>입니다.</span>
             </p>
             <% } else if(searchInfo.search[0].immediate.data[0].DOCID==4){ %>
             <p class="paymentcharge-box type04">
-                이용하고 계신 <a href="" class="phonnumber"><%= searchInfo.search[0].immediate.data[0].mainData %></a>회선의<br>소액결제 이용요금은
-                <span class="str"><a class="money" href=""><%= searchInfo.search[0].immediate.data[0].subData %>원</a>입니다.</span>
+                이용하고 계신 <a href="/myt-join/submain" class="phonnumber"><%= searchInfo.search[0].immediate.data[0].mainData %></a>회선의<br>소액결제 이용요금은
+                <span class="str"><a href="/myt-fare/bill/small"><strong class="money"><%= searchInfo.search[0].immediate.data[0].subData %>원</strong></a>입니다.</span>
             </p>
             <% } else if(searchInfo.search[0].immediate.data[0].DOCID==5){ %>
             <p class="paymentcharge-box type05">
