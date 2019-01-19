@@ -18,8 +18,6 @@ Tw.CustomerVoiceRegister = function (rootEl, allSvc) {
 
 Tw.CustomerVoiceRegister.prototype = {
   _init: function () {
-    // this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
-    //   .done($.proxy(this._onSuccessLineInfo, this));
   },
 
   _cachedElement: function () {
@@ -35,14 +33,6 @@ Tw.CustomerVoiceRegister.prototype = {
     this.$container.on('click', '[data-service-number]', $.proxy(this._onChoiceNumber, this));
     this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
   },
-
-  // _onSuccessLineInfo: function (res) {
-  //   if ( res.code === Tw.API_CODE.CODE_00 ) {
-  //     this.userLineList = res.result.M;
-  //   } else {
-  //     Tw.Error(res.code, res.msg).pop();
-  //   }
-  // },
 
   _onClickAgreeTerm: function () {
     if ( this.$check_voice_term.prop('checked') ) {
