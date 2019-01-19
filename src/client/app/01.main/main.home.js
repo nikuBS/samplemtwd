@@ -42,6 +42,9 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
       this.$tabStore.trigger('click');
     }, this), 0);
   }
+
+  // Remove border bottom for only main home
+  $('.header-wrap').addClass('home');
 };
 
 Tw.MainHome.prototype = {
