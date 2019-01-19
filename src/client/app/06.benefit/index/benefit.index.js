@@ -162,8 +162,8 @@ Tw.BenefitIndex.prototype = {
 
   // 상단 > 나의 혜택.할인 정보 API들 호출 (9개 호출해서 계산)
   _reqMyBenefitDiscountInfo: function () {
-    // 미 로그인 또는 유선인 경우 건너뜀
-    if (!this._isLogin || ['S1','S2','S3'].indexOf(this._svcInfo.svcAttrCd) > -1) {
+    // 미 로그인, 준회원, 유선인 경우 건너뜀
+    if (!this._isLogin || this._svcInfo.svcAttrCd === '' || ['S1','S2','S3'].indexOf(this._svcInfo.svcAttrCd) > -1) {
       return;
     }
     this._apiService.requestArray([

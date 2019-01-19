@@ -98,21 +98,22 @@ abstract class MyTFareBillSetCommon extends TwViewController {
     안내서 유형 설정
     무선회선을 기본으로 하여, 유선일 경우 무선 유형으로 변경해준다.
     최종적으로 안내서 변경 요청시 다시 유선 코드로 변경해서 보낸다.
+    2019.01.19 구 코드(기타우편) 현 코드로 변경 추가
   */
   protected convertCd(data: any): void {
-    /*if ( 'M' === this.getLinetype() ) {
-      return;
-    }*/
-
     let curBillType = data.curBillType;
 
     // Bill Letter
     switch (curBillType) {
       case 'J' : curBillType = 'H'; break;  // Bill Letter
       case 'K' : curBillType = 'I'; break;  // Bill Letter + 이메일
-
-      default : break;
+      default :
+        if (['4', '5', '8', 'C'].indexOf(curBillType) > -1) {
+          curBillType = '1';
+        }
+        break;
     }
+
     data.curBillType = curBillType;
   }
 
