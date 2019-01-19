@@ -224,34 +224,35 @@ class ApiRouter {
   private getQuickMenu(req: Request, res: Response, next: NextFunction) {
     const svcInfo = this.loginService.getSvcInfo(req);
     if ( FormatHelper.isEmpty(svcInfo) ) {
-      return res.json({
-        code: API_CODE.NODE_1001,
-        msg: NODE_API_ERROR[API_CODE.NODE_1001]
-      });
+      this.redisService.getData(REDIS_KEY.QUICK_DEFAULT + 'N')
+        .subscribe((resp) => {
+          return res.json(resp);
+        });
+    } else {
+      this.apiService.setCurrentReq(req, res);
+      const svcMgmtNum = svcInfo.svcMgmtNum;
+      this.redisService.getData(REDIS_KEY.QUICK_MENU + svcMgmtNum)
+        .switchMap((resp) => {
+          if ( resp.code === API_CODE.REDIS_SUCCESS ) {
+            throw resp;
+          } else {
+            return this.apiService.request(API_CMD.BFF_04_0005, {});
+          }
+        })
+        .switchMap((resp) => {
+          if ( resp.code === API_CODE.CODE_00 ) {
+            const defaultCode = resp.result;
+            return this.redisService.getData(REDIS_KEY.QUICK_DEFAULT + defaultCode);
+          } else {
+            throw resp;
+          }
+        })
+        .subscribe((resp) => {
+          return res.json(resp);
+        }, (err) => {
+          return res.json(err);
+        });
     }
-    this.apiService.setCurrentReq(req, res);
-    const svcMgmtNum = svcInfo.svcMgmtNum;
-    this.redisService.getData(REDIS_KEY.QUICK_MENU + svcMgmtNum)
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.REDIS_SUCCESS ) {
-          throw resp;
-        } else {
-          return this.apiService.request(API_CMD.BFF_04_0005, {});
-        }
-      })
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          const defaultCode = resp.result;
-          return this.redisService.getData(REDIS_KEY.QUICK_DEFAULT + defaultCode);
-        } else {
-          throw resp;
-        }
-      })
-      .subscribe((resp) => {
-        return res.json(resp);
-      }, (err) => {
-        return res.json(err);
-      });
   }
 
   private getProductComparison(req: Request, res: Response, next: NextFunction) {
