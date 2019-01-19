@@ -204,11 +204,14 @@
                     <%}%>
                     <!--//기타(우편) area-->
 
-                    <%if( data.hpParam.name !== ''){%>
+                    <%if
+                        (data.hpParam.name !== ''){
+                        let teltitleName = data.hpParam.name === 'cntcNum1' ? '연락처':'휴대폰 번호';
+                    %>
                     <!--노출 CASE : 우편, 유선 ( Bill Letter, 문자 )-->
                     <!--휴대폰번호 area-->
                     <div class="cont-box pb0">
-                        <p class="con-txt0 pt6">휴대폰 번호</p>
+                        <p class="con-txt0 pt6"><%=teltitleName%></p>
                         <%- include( '../../components/bill/myt-fare.bill.set.change.cell-phone.html', data.hpParam) %>
                     </div>
                     <!--// 휴대폰번호 area-->

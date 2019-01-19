@@ -48,6 +48,10 @@ Tw.BenefitIndex.prototype = {
     this.$internetType.on('click', $.proxy(this._checkStateLine, this));
     this.$showDiscountBtn.on('click', $.proxy(this._onViewDiscountAmt, this));
     this.$container.on('click', '[data-benefit-id]', $.proxy(this._onClickProduct, this)); // 카테고리 하위 리스트 클릭
+
+    window.onpopstate = $.proxy(function() {
+      this._loadTab();
+    },this);
   },
 
   // 카테고리 하위 리스트 클릭
@@ -236,7 +240,19 @@ Tw.BenefitIndex.prototype = {
 
   // 카테고리 클릭 이벤트
   _onClickCategory: function (e) {
-    this._switchTab($(e.currentTarget).data('category'));
+    var lastPath = {
+      'F01421': 'discount'      ,
+      'F01422': 'combinations'  ,
+      'F01423': 'long-term'     ,
+      'F01424': 'participation' ,
+      'X'     : 'submain'
+    };
+    var category = $(e.currentTarget).data('category');
+    var last = lastPath[category || 'X'];
+    if (Tw.UrlHelper.getLastPath() !== last ) {
+      this._history.pushUrl('/benefit/submain' + (last === 'submain' ? '':'/'+last));
+    }
+    this._switchTab(category);
   },
 
   // 카테고리 '탭' 선택

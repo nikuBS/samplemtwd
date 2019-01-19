@@ -92,8 +92,8 @@ class MyTFareBillSet extends MyTFareBillSetCommon {
 
     const options = new Array();
     data.options = options;
-    // 전자추가발송 은 옵션 비노출
-    if (billType === 'ADD') {
+    // 전자추가발송, 모바일 퀵 은 옵션 비노출
+    if (['D', 'E', 'ADD'].indexOf(billType) > -1) {
       return;
     }
 
