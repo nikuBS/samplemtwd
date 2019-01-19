@@ -108,6 +108,7 @@ Tw.CertificationRepresentative.prototype = {
   },
   _successCert: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._clearCertError();
       this.$validCert.removeClass('none');
     } else if ( resp.code === this.SMS_ERROR.ATH2003 ) {
       this._clearCertError();
