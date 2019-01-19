@@ -208,6 +208,9 @@ body.bg-gray {
       display: block;
       height: 100%; }
       #common-menu .section-userinfo .userinfo .ti-tx {
+        -webkit-transform: none;
+                transform: none;
+        overflow: hidden;
         display: inline-block;
         color: inherit;
         text-align: left; }
@@ -1021,7 +1024,7 @@ body.bg-gray {
     top: auto;
     bottom: -100%;
     min-height: 0;
-    max-height: 80%;
+    max-height: 90%;
     -webkit-transition: all 1s;
     transition: all 1s; }
     .popup-page.layer .header-wrap {
@@ -1265,8 +1268,6 @@ body.bg-gray {
     padding-bottom: 0 !important; }
     .popup-page.focusin .container > .bt-slice {
       /* 코드가 이원화되어있어서 정리 필요함 */
-      margin-top: 0.625rem;
-      /* 아래 컨텐츠 간격이 없을 경우를 대비하여 최하 여백 확보 */
       position: relative !important; }
     .popup-page.focusin .bt-fixed-area {
       /* 코드가 이원화되어있어서 정리 필요함 */

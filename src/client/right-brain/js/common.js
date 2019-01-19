@@ -356,7 +356,7 @@ skt_landing.action = {
         if(popup_info.layer){
           var win_h = skt_landing.util.win_info.get_winH(),
               layer = $('.popup .popup-page.layer'),
-              layer_h = layer.height();
+              layer_h = layer.outerHeight();
           layer.css({
             'height':layer_h,
             'bottom':0
