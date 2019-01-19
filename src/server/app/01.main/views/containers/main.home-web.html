@@ -192,7 +192,7 @@
                     <% if(homeData.billData.isBroadband) { %>
                     <!-- 브로드밴드 가입회선 -->
                     <% if(svcInfo.svcAttrCd === 'S3') { %>
-                    <button class="num fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.billData.showSvcNum %>/button>
+                    <button class="num fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.billData.showSvcNum %></button>
                     <% } else { %>
                     <button class="num fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.addr %></button>
                     <% } %>
@@ -278,17 +278,8 @@
 
             <!-- MY 바로가기 -->
             <div class="section-box nogaps-ver">
-                <% if(svcType.login) { %>
                 <div id="fe-tmpl-quick">
                 </div>
-                <% } else { %>
-                <ul class="quick-menu-list">
-                    <li><button class="bt"><i class="icon-charge-80"></i>나의 요금</button></li>
-                    <li><button class="bt"><i class="icon-discount2-80"></i>혜택 · 할인</button></li>
-                    <li><button class="bt"><i class="icon-my-80"></i>나의 가입 정보</button></li>
-                    <li><button class="bt"><i class="icon-tmembership-80"></i>T멤버십</button></li>
-                </ul>
-                <% } %>
             </div>
             <!-- //MY 바로가기 -->
 
@@ -499,9 +490,7 @@
     <!--// #contents -->
 </div>
 <% include ../components/javascript.component.html %>
-<% if (svcType.login) { %>
 <%- include('../components/home/home.quick-menu.component.html', { cdn: CDN }); %>
-<% } %>
 <script>
   $(document).ready(function () {
     new Tw.MainHome($('#mainHome'), '<%-JSON.stringify(redisData.smartCard) %>', '<%= redisData.embNotice !== null %>', '<%= pageInfo.menuId %>', '<%= svcInfo !== null %>');

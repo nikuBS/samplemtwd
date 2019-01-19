@@ -8,7 +8,6 @@ Tw.QuickMenuComponent = function () {
 
   this._menuId = '';
   this._bindEvent();
-  this._init();
 };
 Tw.QuickMenuComponent.prototype = {
   _init: function () {
@@ -27,9 +26,12 @@ Tw.QuickMenuComponent.prototype = {
   _bindEvent: function () {
     this.$btQuickAdd = $('#fe-bt-quick-add');
     this.$btQuickRemove = $('#fe-bt-quick-remove');
-    this._menuId = this.$btQuickAdd.data('menuid');
-    this.$btQuickAdd.on('click', $.proxy(this._onClickAddQuickMenu, this));
-    this.$btQuickRemove.on('click', $.proxy(this._onClickRemoveQuickMenu, this));
+    if ( this.$btQuickAdd.length > 0 ) {
+      this._menuId = this.$btQuickAdd.data('menuid');
+      this.$btQuickAdd.on('click', $.proxy(this._onClickAddQuickMenu, this));
+      this.$btQuickRemove.on('click', $.proxy(this._onClickRemoveQuickMenu, this));
+      this._init();
+    }
   },
   _onClickAddQuickMenu: function () {
     this._apiService.request(Tw.NODE_CMD.GET_QUICK_MENU, {})
