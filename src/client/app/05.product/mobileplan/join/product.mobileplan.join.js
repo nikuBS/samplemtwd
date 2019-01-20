@@ -122,8 +122,7 @@ Tw.ProductMobileplanJoin.prototype = {
       autoTermList: this._confirmOptions.preinfo.autoTermList,
       noticeList: $.merge(this._confirmOptions.preinfo.termNoticeList, this._confirmOptions.preinfo.joinNoticeList),
       isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0),
-      isJoinTermProducts: (!Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoJoinList) ||
-        !Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoTermList)),
+      isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this._prodId) === -1,
       downgrade: this._getDowngrade()
     });
   },
