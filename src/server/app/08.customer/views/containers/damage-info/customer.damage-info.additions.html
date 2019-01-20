@@ -98,12 +98,14 @@
                             <em class="list-date">고객 단말기를 타인이 사용하지 못하도록 보호해 주는 서비스</em>
                         </a>
                     </li>
+                    <% if ( isAndroid ) { %>
                     <li>
                         <a href="/product/callplan/NA00004136" class="list-inner ico-t17">
                             <strong class="list-tit">분실폰 찾기</strong>
                             <em class="list-date">스마트폰 분실 시 단말 잠금, 데이터삭제 등 단말원격 관리 서비스</em>
                         </a>
                     </li>
+                    <% } %>
                 </ul>
             </div>
             <!--// .cont-box -->
@@ -135,15 +137,18 @@
                 <h4 class="tit">T apps</h4>
             </div>
 
+            <% if ( isApp ) { %>
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <ul class="service-list">
+                    <% if ( isAndroid ) { %>
                     <li>
                         <a href="/product/callplan/TW50000033" class="list-inner ico-t20">
                             <strong class="list-tit">T가드(T백신)</strong>
                             <em class="list-date">최신 백신 엔진과 기술을 결합한 SK텔레콤 고객 전용 보안 서비스</em>
                         </a>
                     </li>
+                    <% } %>
                     <li>
                         <a href="/product/callplan/TW50000002" class="list-inner ico-t21">
                             <strong class="list-tit">T전화</strong>
@@ -153,6 +158,7 @@
                 </ul>
             </div>
             <!--// .cont-box -->
+            <% } %>
         </div>
     </div>
     <!--// #contents -->
