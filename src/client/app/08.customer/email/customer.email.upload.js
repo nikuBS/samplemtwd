@@ -45,9 +45,8 @@ Tw.CustomerEmailUpload.prototype = {
 
   _openCustomFileChooser: function (e) {
     var $target = $(e.currentTarget);
-    var androidVersion = Tw.BrowserHelper.getAndroidVersion();
 
-    if ( androidVersion && androidVersion.indexOf('4.4') !== -1 ) {
+    if ( this._isLowerVersionAndroid() ) {
       this._nativeService.send(Tw.NTV_CMD.OPEN_FILE_CHOOSER, {}, $.proxy(this._onFileChooser, this, $target));
     }
   },
@@ -55,34 +54,36 @@ Tw.CustomerEmailUpload.prototype = {
   _onFileChooser: function ($target, response) {
     if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
       var params = response.params;
+      // var result = {
+      //   'code': '00',
+      //   'result': [
+      //     {
+      //       'name': '1547883889329_8224.png',
+      //       'size': 93749,
+      //       'path': 'uploads/email/190119/',
+      //       'originalName': '스크린샷 2018-12-04 오후 10.43.14.png'
+      //     }
+      //   ]
+      // }
+      var fileInfo = response.params.result[0];
 
-      console.log(params);
+      if ( this._acceptExt.indexOf(fileInfo.name.split('.').pop()) === -1 ) {
+        return this._popupService.openAlert(Tw.CUSTOMER_EMAIL.INVALID_FILE, Tw.POPUP_TITLE.NOTIFY);
+      }
 
-      var $elFileName = $target.parent().parent().find('.fileview');
-      // $elFileName.val(fileInfo.name);
+      if ( fileInfo.size > this._limitFileByteSize ) {
+        return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE);
+      }
 
-      // this.uploadFiles = this.uploadFiles.concat(fileInfo);
+      if ( fileInfo ) {
+        var $elFileName = $target.parent().parent().find('.fileview');
+        $elFileName.val(fileInfo.originalName);
+      }
+
+      this.uploadFiles = this.uploadFiles.concat(fileInfo);
 
       this._showUploadPopup();
       this._checkUploadButton();
-
-      // if ( this._acceptExt.indexOf(fileInfo.name.split('.').pop()) === -1 ) {
-      //   return this._popupService.openAlert(Tw.CUSTOMER_EMAIL.INVALID_FILE, Tw.POPUP_TITLE.NOTIFY);
-      // }
-      //
-      // if ( fileInfo.size > this._limitFileByteSize ) {
-      //   return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE);
-      // }
-      //
-      // if ( fileInfo ) {
-      //   var $elFileName = $(e.currentTarget).parent().parent().find('.fileview');
-      //   $elFileName.val(fileInfo.name);
-      // }
-      //
-      // this.uploadFiles = this.uploadFiles.concat(fileInfo);
-      //
-      // this._showUploadPopup();
-      // this._checkUploadButton();
     }
   },
 
@@ -110,15 +111,19 @@ Tw.CustomerEmailUpload.prototype = {
   },
 
   _uploadFile: function () {
-    var formData = new FormData();
-    formData.append('dest', Tw.UPLOAD_TYPE.EMAIL);
+    if ( this._isLowerVersionAndroid() ) {
+      this._successUploadFile();
+    } else {
+      var formData = new FormData();
+      formData.append('dest', Tw.UPLOAD_TYPE.EMAIL);
 
-    this.uploadFiles.map(function (file) {
-      formData.append('file', file);
-    });
+      this.uploadFiles.map(function (file) {
+        formData.append('file', file);
+      });
 
-    this._apiService.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData)
-      .done($.proxy(this._successUploadFile, this));
+      this._apiService.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData)
+        .done($.proxy(this._successUploadFile, this));
+    }
   },
 
   _showUploadPopup: function () {
@@ -147,7 +152,11 @@ Tw.CustomerEmailUpload.prototype = {
 
     if ( this._getCurrentType() === 'service' ) {
       this.serviceUploadFiles = this.uploadFiles.slice(0);
-      this.wrap_service.find('.filename-list').html(this.tpl_upload_list({ files: res.result }));
+      if ( this._isLowerVersionAndroid() ) {
+        this.wrap_service.find('.filename-list').html(this.tpl_upload_list({ files: this.serviceUploadFiles }));
+      } else {
+        this.wrap_service.find('.filename-list').html(this.tpl_upload_list({ files: res.result }));
+      }
 
       if ( this.uploadFiles.length >= 5 ) {
         $('.fe-upload-file-service').prop('disabled', true);
@@ -156,7 +165,12 @@ Tw.CustomerEmailUpload.prototype = {
       }
     } else {
       this.qualityUploadFiles = this.uploadFiles.slice(0);
-      this.wrap_quality.find('.filename-list').html(this.tpl_upload_list({ files: res.result }));
+
+      if ( this._isLowerVersionAndroid() ) {
+        this.wrap_quality.find('.filename-list').html(this.tpl_upload_list({ files: this.qualityUploadFiles }));
+      } else {
+        this.wrap_quality.find('.filename-list').html(this.tpl_upload_list({ files: res.result }));
+      }
 
       if ( this.uploadFiles.length >= 5 ) {
         $('.fe-upload-file-quality').prop('disabled', true);
@@ -196,6 +210,12 @@ Tw.CustomerEmailUpload.prototype = {
 
   _disableUploadButton: function () {
     $('.fe-upload_email_files').prop('disabled', true);
+  },
+
+  _isLowerVersionAndroid: function () {
+    var androidVersion = Tw.BrowserHelper.getAndroidVersion();
+
+    return androidVersion && androidVersion.indexOf('4') !== -1;
   }
 };
 
