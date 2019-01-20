@@ -24,17 +24,18 @@
                         <ul class="form-data-list pt26">
                             <li>
                                 <label class="tit">휴대폰번호</label>
-                                <div class="inputbox bt-add pt6">
+                                <!-- 2019-01-17 inp-btn 추가 -->
+                                <div class="inputbox bt-add inp-btn pt6">
                                     <span class="input">
                                         <input type="text" value="010-12**-56**" title="휴대폰번호" aria-describedby="aria-phone-tx1" readonly="readonly">
                                     </span>
                                     <span class="bt-box">
                                         <button type="button">인증번호 받기</button>
                                     </span>
-                                    <span class="tx-box">
-                                        <span id="aria-phone-tx1" class="validation-txt">정상적으로 발송되었습니다.</span><!-- 정상 작동되지 않을때는 .none 추가 -->
-                                    </span>
                                 </div>
+                                <span class="tx-box">
+                                    <span id="aria-phone-tx1" class="validation-txt">정상적으로 발송되었습니다.</span><!-- 정상 작동되지 않을때는 .none 추가 -->
+                                </span>
                                 <span class="inputbox pt20">
                                     <span class="input">
                                         <input type="number" value="123456" title="인증번호 숫자 6자리 입력하세요" aria-describedby="aria-phone-tx2">
