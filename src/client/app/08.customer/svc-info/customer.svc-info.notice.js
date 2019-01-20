@@ -104,7 +104,7 @@ Tw.CustomerSvcInfoNotice.prototype = {
       data:[
         {
           'list':[
-            { 'label-attr': 'id="ra1"', 'txt': 'T world',
+            { 'label-attr': 'id="ra1"', 'txt': Tw.NOTICE.TWORLD,
               'radio-attr':'id="ra1" data-category="tworld" ' + (this._category === 'tworld' ? 'checked' : '') },
             { 'label-attr': 'id="ra2"', 'txt': Tw.NOTICE.DIRECTSHOP,
               'radio-attr':'id="ra2" data-category="directshop" ' + (this._category === 'directshop' ? 'checked' : '') },

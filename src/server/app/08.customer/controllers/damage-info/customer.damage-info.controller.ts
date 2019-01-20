@@ -42,7 +42,8 @@ class CustomerDamageInfo extends TwViewController {
         warningList: [...warningTopInfoList, ...warningNormalInfoList],
         svcInfo: svcInfo,
         pageInfo: pageInfo,
-        isApp: BrowserHelper.isApp(req)
+        isApp: BrowserHelper.isApp(req),
+        isAndroid: BrowserHelper.isAndroid(req)
       });
     });
   }

@@ -163,10 +163,10 @@ export enum MYT_DATA_RECHARGE_COUPON {
 }
 
 export enum PRODUCT_INFINITY_BENEFIT {
-  NA00006114 = 'T 로밍 Onepass 월 1회/ 1개월 + 마티나 라운지 이용권 1회/ 3개월',
-  NA00006115 = '무료영화예매 2회 / 1개월',
-  NA00006116 = '스마트 워치 월정액 100% 할인',
-  NA00006117 = '인피니티 클럽 이용료 100%할인'
+  NA00006114 = 'T로밍 OnePass 1개월에 1개,<br>마티나 라운지 이용권 3개월에 1회 제공',
+  NA00006115 = '영화예매권 월 2장 무료',
+  NA00006116 = '스마트워치 요금지원',
+  NA00006117 = '\'인피니티 클럽\'가입 및 만6개월 사용 후 휴대폰 교체 시 남은 할부금(출고가의 최대 70%까지)을 면제'
 }
 
 export enum PRODUCT_INFINITY_BENEFIT_NM {
@@ -468,10 +468,10 @@ export const MYT_JOIN_WIRE_SET_PAUSE = {
 };
 
 export enum CUSTOMER_NOTICE_CATEGORY {
-  TWORLD = 'T world',
-  DIRECTSHOP = '다이렉트샵',
-  MEMBERSHIP = '멤버십',
-  ROAMING = '로밍',
+  TWORLD = 'T월드',
+  DIRECTSHOP = 'T월드 다이렉트',
+  MEMBERSHIP = 'T멤버십',
+  ROAMING = 'T로밍',
   VIEW = '공지사항'
 }
 
