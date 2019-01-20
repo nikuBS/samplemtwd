@@ -53,8 +53,7 @@ Tw.ProductMobileplanAddTerminate.prototype = {
       noticeList: this._confirmOptions.preinfo.termNoticeList,
       isNoticeList: this._confirmOptions.preinfo.termNoticeList && this._confirmOptions.preinfo.termNoticeList.length > 0,
       isAgreement: this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.isTermStplAgree,
-      isJoinTermProducts: (!Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoJoinList) ||
-        !Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoTermList))
+      isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this._prodId) === -1
     });
   },
 
