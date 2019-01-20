@@ -35,7 +35,7 @@ class CustomerVoice extends TwViewController {
         res.render('voice/customer.voice.complete.html',
           Object.assign(
             responseData,
-            { targetNum: FormatHelper.conTelFormatWithDash(req.query.targetNum) }
+            { targetNum: req.query.targetNum }
           ));
         break;
       default:
