@@ -1157,9 +1157,10 @@ Tw.CUSTOMER_PRAISE_DEFAULT = {
 
 Tw.NOTICE = {
   TITLE: '카테고리 설정',
-  DIRECTSHOP: '다이렉트샵',
-  MEMBERSHIP: '멤버십',
-  ROAMING: '로밍'
+  TWORLD: 'T월드',
+  DIRECTSHOP: 'T월드 다이렉트',
+  MEMBERSHIP: 'T멤버십',
+  ROAMING: 'T로밍'
 };
 
 Tw.PROTECT_GUIDE = {

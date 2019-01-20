@@ -24,7 +24,7 @@ export const CUSTOMER_PROTECT_GUIDE_VIDEO = [
     LINK: 'http://tv.naver.com/v/564907'
   },
   {
-    TEXT: '공용 컴퓨터 사용시 주의사항',
+    TEXT: '공용 컴퓨터 사용 시 주의사항',
     LINK: 'http://tv.naver.com/v/564894'
   },
   {
@@ -36,7 +36,7 @@ export const CUSTOMER_PROTECT_GUIDE_VIDEO = [
     LINK: 'http://tv.naver.com/v/564846'
   },
   {
-    TEXT: '안전한 PC 사용을 위한 SW 업데이트의 중요성',
+    TEXT: '안전한 PC 사용을 위한 소프트웨어 업데이트의 중요성',
     LINK: 'http://tv.naver.com/v/564858'
   },
   {
@@ -87,12 +87,12 @@ export const CUSTOMER_PROTECT_GUIDE_LATEST = [
     IS_EXTERNAL: true
   },
   {
-    TEXT: '맞춤형 개인정보 통합 클린서비스',
+    TEXT: '맞춤형 개인정보 통합 클린 서비스',
     LINK: 'https://m.post.naver.com/viewer/postView.nhn?volumeNo=5188513&memberNo=3326308&navigationType=push',
     IS_EXTERNAL: true
   },
   {
-    TEXT: '내 스마트폰을 지키는 악성앱 치료서비스',
+    TEXT: '내 스마트폰을 지키는 악성 앱 치료 서비스',
     LINK: 'https://m.post.naver.com/viewer/postView.nhn?volumeNo=5073390&memberNo=3326308&navigationType=push',
     IS_EXTERNAL: true
   },
@@ -102,7 +102,7 @@ export const CUSTOMER_PROTECT_GUIDE_LATEST = [
     IS_EXTERNAL: true
   },
   {
-    TEXT: '해외여행 체크리스트, 요금 폭탄 피하는 법과 로밍 TIP',
+    TEXT: '해외여행 체크리스트, 요금 폭탄 피하는 방법과 로밍 팁',
     LINK: 'http://blog.skbroadband.com/1944',
     IS_EXTERNAL: true
   },
@@ -132,12 +132,12 @@ export const CUSTOMER_PROTECT_GUIDE_LATEST = [
     IS_EXTERNAL: true
   },
   {
-    TEXT: '사이버 응급실 \'모바일 응급 사이버 치료체계\'를 아시나요?',
+    TEXT: '사이버 응급실 \'모바일 응급 사이버 치료 체계\'를 아시나요?',
     LINK: 'http://blog.skbroadband.com/1848',
     IS_EXTERNAL: true
   },
   {
-    TEXT: '이것만은 꼭 알아두고 가세요! 최신 파싱 및 파밍 유형들',
+    TEXT: '이것만은 꼭 알아 두세요. 최신 파싱 및 파밍 유형',
     LINK: 'http://blog.skbroadband.com/1841',
     IS_EXTERNAL: true
   },
@@ -147,7 +147,7 @@ export const CUSTOMER_PROTECT_GUIDE_LATEST = [
     IS_EXTERNAL: true
   },
   {
-    TEXT: '추석연휴, 스미싱·보이스피싱·승차권사기 보안수칙!',
+    TEXT: '추석연휴, 스미싱·보이스피싱·승차권 사기 보안수칙!',
     LINK: 'http://blog.skbroadband.com/1833',
     IS_EXTERNAL: true
   },
@@ -157,7 +157,7 @@ export const CUSTOMER_PROTECT_GUIDE_LATEST = [
     IS_EXTERNAL: true
   },
   {
-    TEXT: '스미싱도 진짜 가짜가 있다? 가짜 메시지 \'혹스(Hoax)\'',
+    TEXT: '스미싱도 진짜 가짜가 있다? 가짜 문자 \'혹스(Hoax)\'',
     LINK: 'http://blog.skbroadband.com/1827',
     IS_EXTERNAL: true
   },
@@ -187,22 +187,22 @@ export const CUSTOMER_PROTECT_GUIDE_LATEST = [
     IS_EXTERNAL: true
   },
   {
-    TEXT: '명의도용 피해예방법',
+    TEXT: '명의도용 피해 예방법',
     LINK: '/customer/damage-info/contents/page013',
     IS_EXTERNAL: false
   },
   {
-    TEXT: '소액결제 피해예방법',
+    TEXT: '소액결제 피해 예방법',
     LINK: '/customer/damage-info/contents/page014',
     IS_EXTERNAL: false
   },
   {
-    TEXT: '결합상품 피해예방법',
+    TEXT: '결합상품 피해 예방법',
     LINK: '/customer/damage-info/contents/page015',
     IS_EXTERNAL: false
   },
   {
-    TEXT: '해외 로밍 피해예방법',
+    TEXT: '해외 로밍 피해 예방법',
     LINK: '/customer/damage-info/contents/page016',
     IS_EXTERNAL: false
   },
@@ -212,12 +212,12 @@ export const CUSTOMER_PROTECT_GUIDE_LATEST = [
     IS_EXTERNAL: true
   },
   {
-    TEXT: 'PC타고 스마트폰까지 침투하는 악성코드 주의보',
+    TEXT: 'PC 타고 스마트폰까지 침투하는 악성코드 주의보',
     LINK: 'http://blog.skbroadband.com/1612',
     IS_EXTERNAL: true
   },
   {
-    TEXT: '스미싱 피해예방 안내',
+    TEXT: '스미싱 피해 예방 안내',
     LINK: '/customer/damage-info/contents/page001',
     IS_EXTERNAL: false
   },
@@ -227,7 +227,7 @@ export const CUSTOMER_PROTECT_GUIDE_LATEST = [
     IS_EXTERNAL: true
   },
   {
-    TEXT: '파밍 피해예방 방법',
+    TEXT: '파밍 피해 예방 방법',
     LINK: 'http://blog.skbroadband.com/1215',
     IS_EXTERNAL: true
   },
@@ -242,7 +242,7 @@ export const CUSTOMER_PROTECT_GUIDE_LATEST = [
     IS_EXTERNAL: true
   },
   {
-    TEXT: '스팸 메시지 대응방법',
+    TEXT: '스팸 문자 대응방법',
     LINK: 'http://blog.skbroadband.com/950',
     IS_EXTERNAL: true
   },
@@ -283,7 +283,7 @@ export const CUSTOMER_PROTECT_REPORT_ORG = [
     LINK: 'https://spam.kisa.or.kr/integration/main.do'
   },
   {
-    TEXT: 'KISA 보호나라&KrCERT',
+    TEXT: 'KISA 보호나라, KrCERT',
     LINK: 'https://www.krcert.or.kr/main.do'
   },
   {
@@ -291,7 +291,7 @@ export const CUSTOMER_PROTECT_REPORT_ORG = [
     LINK: 'http://m.msafer.or.kr/'
   },
   {
-    TEXT: '휴대폰/ARS결제 중재센터',
+    TEXT: '휴대폰∙ARS 결제 중재센터',
     LINK: 'http://m.spayment.org/svc/'
   },
   {
@@ -310,19 +310,19 @@ export const CUSTOMER_PROTECT_RELATE_ORG = [
     LINK: 'http://www.law.go.kr/lsSc.do?menuId=0&p1=&subMenu=1&nwYn=1&query=%EC%A0%95%EB%B3%B4%ED%86%B5%EC%8B%A0%EB%A7%9D%EB%B2%95&x=0&y=0'
   },
   {
-    TEXT: '방송통신 위원회',
+    TEXT: '방송통신위원회',
     LINK: 'http://www.kcc.go.kr'
   },
   {
-    TEXT: '방송통신 심의 위원회',
+    TEXT: '방송통신심의위원회',
     LINK: 'http://www.kocsc.or.kr'
   },
   {
-    TEXT: '방송통신 이용자 정보 포털',
+    TEXT: '방송통신이용자보호센터',
     LINK: 'http://www.wiseuser.go.kr'
   },
   {
-    TEXT: '그린 i-Net',
+    TEXT: '그린아이넷',
     LINK: 'http://www.greeninet.or.kr'
   },
   {
@@ -334,11 +334,11 @@ export const CUSTOMER_PROTECT_RELATE_ORG = [
     LINK: 'http://cyberbureau.police.go.kr'
   },
   {
-    TEXT: '국가 사이버 안전센터',
+    TEXT: '국가사이버안전센터',
     LINK: 'http://www.nis.go.kr'
   },
   {
-    TEXT: '국가 인터넷 진흥원(Kisa)',
+    TEXT: '한국인터넷진흥원(Kisa)',
     LINK: 'http://www.kisa.or.kr'
   }
 ];
