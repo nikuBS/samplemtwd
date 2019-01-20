@@ -46,9 +46,6 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
   if ( window.location.hash === '#store' ) {
     this._resetSlider('2');
   }
-
-  // Remove border bottom for only main home
-  $('.header-wrap').addClass('home');
 };
 
 Tw.MainHome.prototype = {
