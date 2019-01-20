@@ -46,13 +46,13 @@
 
                 <div class="ti-caption-gray">
                     <button class="bt-select fe-btn_category" title="혜택이용 카테고리 선택" aria-haspopup="true"><%= beforeTDiyGrNmCategory %></button>
-                    <p class="num">혜택이용 내역 총 <em><%= listTotal %></em>건</p>
+                    <p class="num">혜택 이용내역 총 <em><%= listTotal %></em>건</p>
                 </div>
 
                 <!-- .cont-box -->
                 <div class="cont-box nogaps">
                     <div class="announcement-box wrap-gaps-top">
-                        <div class="announcement-txt">최근 50건의 이용내역만 조회 가능합니다.</div>
+                        <div class="announcement-txt">최근 50건의 이용내역만 조회하실 수 있습니다.</div>
                     </div>
                     <% if (beforeTDiyGrCd === 'NA00006114') { %>
                     <div class="cont-box nogaps-ver pb0">
@@ -123,10 +123,10 @@
                                                 <dl class="<%= multipleClass %>">
                                                     <dt><%= item.list[k].prodLabel %></dt>
                                                     <dd><%= item.list[k].prodNm %></dd>
-                                                    <dt>지원시작일</dt>
+                                                    <dt>지원 시작일</dt>
                                                     <dd><%= item.list[k].benfStaDt %></dd>
                                                     <% if ( item.list[k].benfEndDt ) { %>
-                                                    <dt>지원종료일</dt>
+                                                    <dt>지원 종료일</dt>
                                                     <dd><%= item.list[k].benfEndDt %></dd>
                                                     <% } %>
                                                 </dl>
