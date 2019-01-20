@@ -121,13 +121,8 @@ export const API_CMD = {
   BFF_03_0025: { path: '/core-auth/:version/add-fcm-user-info', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
   BFF_03_0026: { path: '/core-auth/:version/requestRegistFcmClickInfo', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
   BFF_03_0027: { path: '/core-auth/:version/users/otp', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
-  BFF_03_0028: {
-    path: '/core-auth/:version/free-sms-availability/:args0',
-    method: API_METHOD.GET,
-    server: API_SERVER.BFF,
-    bypass: true,
-    native: true
-  },
+  BFF_03_0028: { path: '/core-auth/:version/free-sms-availability/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, native: true },
+  BFF_03_0029: { path: '/core-auth/:version/exposable-services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   // MainHome T-Notify
   BFF_04_0001: { path: '/core-membership/:version/card/homeinfo', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_04_0002: { path: '/core-product/:version/t-notice/prod-chg-hst', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
