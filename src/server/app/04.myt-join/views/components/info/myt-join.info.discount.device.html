@@ -37,6 +37,26 @@
                 <li>
                     <dl>
                         <dt>
+                            <strong class="tit">분할상환금</strong>
+                        </dt>
+                        <dd>
+                            <span class="val-type4"><span class="str"><%=commDataInfo.repaymentInfo[i].mthPrnAmt %></span>원</span>
+                        </dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>
+                            <strong class="tit">분할상환 수수료</strong>
+                        </dt>
+                        <dd>
+                            <span class="val-type4"><span class="str"><%=commDataInfo.repaymentInfo[i].mthIntAmt %></span>원</span>
+                        </dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>
                             <strong class="tit">분할상환 시작일</strong>
                         </dt>
                         <dd>
@@ -44,6 +64,28 @@
                         </dd>
                     </dl>
                 </li>
+
+                <li>
+                    <dl>
+                        <dt>
+                            <strong class="tit">중도 부분납일</strong>
+                        </dt>
+                        <dd>
+                            <span class="val-type2"><%=commDataInfo.repaymentInfo[i].lastAllotPayOpTm %></span>
+                        </dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>
+                            <strong class="tit">중도 부분납금</strong>
+                        </dt>
+                        <dd>
+                            <span class="val-type2"><%=commDataInfo.repaymentInfo[i].allotPayAmt %> 원</span>
+                        </dd>
+                    </dl>
+                </li>
+
             </ul>
             <div class="amountdata-num">
                 <div class="date-info">
