@@ -23,7 +23,13 @@ Tw.NativeService.prototype = {
   setGNB: function (gnb) {
     this._gnb = gnb;
   },
-
+  // only using common.member.init
+  sendInitSession: function (command, params, callback) {
+    if ( this._bridge ) {
+      var parameter = this._setParameter(command, params, callback);
+      this._bridge.postMessage(parameter);
+    }
+  },
   _init: function () {
     this._bridge = null;
     if ( Tw.BrowserHelper.isApp() ) {
