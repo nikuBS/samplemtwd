@@ -40,32 +40,23 @@ Tw.CustomerEmailUpload.prototype = {
     this.$container.on('click', '.fe-upload_email_files', $.proxy(this._uploadFile, this));
     this.$container.on('click', '.fe-upload-file-service', $.proxy(this._onClickServiceUpload, this));
     this.$container.on('click', '.fe-upload-file-quality', $.proxy(this._onClickQualityUpload, this));
-    this.$container.on('change', '.fe-wrap-file-upload input.file', $.proxy(this._selectFile, this));
+    this.$container.on('change', '.fe-wrap-file-upload input.file', $.proxy(this._inputFileChooser, this));
   },
 
   _openCustomFileChooser: function (e) {
     var $target = $(e.currentTarget);
 
     if ( this._isLowerVersionAndroid() ) {
-      this._nativeService.send(Tw.NTV_CMD.OPEN_FILE_CHOOSER, {}, $.proxy(this._onFileChooser, this, $target));
+      this._nativeService.send(Tw.NTV_CMD.OPEN_FILE_CHOOSER, { dest: 'email' }, $.proxy(this._nativeFileChooser, this, $target));
     }
+
+
   },
 
-  _onFileChooser: function ($target, response) {
+  _nativeFileChooser: function ($target, response) {
     if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
       var params = response.params;
-      // var result = {
-      //   'code': '00',
-      //   'result': [
-      //     {
-      //       'name': '1547883889329_8224.png',
-      //       'size': 93749,
-      //       'path': 'uploads/email/190119/',
-      //       'originalName': '스크린샷 2018-12-04 오후 10.43.14.png'
-      //     }
-      //   ]
-      // }
-      var fileInfo = response.params.result[0];
+      var fileInfo = params.fileData.result[0];
 
       if ( this._acceptExt.indexOf(fileInfo.name.split('.').pop()) === -1 ) {
         return this._popupService.openAlert(Tw.CUSTOMER_EMAIL.INVALID_FILE, Tw.POPUP_TITLE.NOTIFY);
@@ -87,7 +78,7 @@ Tw.CustomerEmailUpload.prototype = {
     }
   },
 
-  _selectFile: function (e) {
+  _inputFileChooser: function (e) {
     var $target = $(e.currentTarget);
     var fileInfo = $target.prop('files').item(0);
 
@@ -134,11 +125,23 @@ Tw.CustomerEmailUpload.prototype = {
   },
 
   _onClickServiceUpload: function () {
+    if ( !Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
+      // Not Supported File Upload
+      this._popupService.openAlert(Tw.CUSTOMER_EMAIL.NOT_SUPPORT_FILE_UPLOAD);
+      return false;
+    }
+
     this.uploadFiles = this.serviceUploadFiles.slice(0);
     this._showUploadPopup();
   },
 
   _onClickQualityUpload: function () {
+    if ( !Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
+      // Not Supported File Upload
+      this._popupService.openAlert(Tw.CUSTOMER_EMAIL.NOT_SUPPORT_FILE_UPLOAD);
+      return false;
+    }
+
     this.uploadFiles = this.qualityUploadFiles.slice(0);
     this._showUploadPopup();
   },
