@@ -126,7 +126,9 @@ Tw.MainHome.prototype = {
   _makeBarcode: function () {
     var cardNum = this.$elBarcode.data('cardnum');
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
-      this.$elBarcode.JsBarcode(cardNum);
+      this.$elBarcode.JsBarcode(cardNum, {
+        background: 'rgba(255, 255, 255, 0)'
+      });
     }
   },
   _onClickBarcode: function () {
@@ -166,9 +168,9 @@ Tw.MainHome.prototype = {
 
   },
   _onOpenBarcode: function (cardNum, $popupContainer) {
-    var extendBarcode = $popupContainer.find('#fe-membership-barcode-extend');
+    var $extendBarcode = $popupContainer.find('#fe-membership-barcode-extend');
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
-      extendBarcode.JsBarcode(cardNum, { height: 75, margin: 0 });
+      $extendBarcode.JsBarcode(cardNum, { height: 75, margin: 0 });
     }
   },
   _onClickGoBroadband: function () {
