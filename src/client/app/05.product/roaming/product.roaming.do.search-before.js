@@ -117,15 +117,15 @@ Tw.ProductRoamingSearchBefore.prototype = {
       }
   },
   _onClickSelectBtn: function () {
-    if(this.modelValue !== '') {
-        this._phoneInfo.eqpMdlNm = this.modelValue;
-        this._phoneInfo.eqpMdlCd = this.modelCode;
-        this.$userPhoneInfo.empty();
-        this.$userPhoneInfo.append(this._rmPhoneInfoTmpl({ items: this._phoneInfo }));
-        this._desciptionInit();
-    }else {
-        this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.MSG, Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.TITLE);
-    }
+      if(this.modelValue === undefined || this.modelValue === ''){
+          this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.MSG, Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.TITLE);
+      } else {
+          this._phoneInfo.eqpMdlNm = this.modelValue;
+          this._phoneInfo.eqpMdlCd = this.modelCode;
+          this.$userPhoneInfo.empty();
+          this.$userPhoneInfo.append(this._rmPhoneInfoTmpl({ items: this._phoneInfo }));
+          this._desciptionInit();
+      }
   },
   _onBtnClicked : function () {
     this.keyword = this.$inputContrySearch.val().trim();
