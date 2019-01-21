@@ -391,7 +391,7 @@ class DateHelper {
    * @returns {number} : 30
    */
   static getDday(date: any): number {
-    return moment(this.convDateFormat(date)).diff(new Date(), 'day');
+    return moment(date).diff(this.getCurrentShortDate(new Date()), 'day');
   }
 }
 
