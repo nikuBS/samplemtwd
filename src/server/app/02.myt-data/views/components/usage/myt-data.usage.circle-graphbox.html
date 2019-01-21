@@ -28,7 +28,7 @@
                         <div class="donut-chart-area">
                             <!-- loop -->
                             <div class="c100 p<%= (items[i].isRunout) ? '0' : (items[i].isRemainUnlimited) ? '100' : items[i].remainedRatio %>"><!-- .p+(0~100) // -->
-                                <div class="<%= color %>"><!-- red, yellow, green, blue // -->
+                                <div class="<%= items[i].isTFamilyData ? 'blue' : color %>"><!-- red, yellow, green, blue // -->
                                     <div class="slice">
                                         <div class="bar"></div>
                                         <div class="fill"></div>
