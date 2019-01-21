@@ -13,6 +13,6 @@ export default class MainMenuSettingsBiometrics extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const target = req.query.target;
 
-    res.render('menu/settings/main.menu.settings.biometrics.html', { svcInfo, target });
+    res.render('menu/settings/main.menu.settings.biometrics.html', { svcInfo, target, pageInfo });
   }
 }

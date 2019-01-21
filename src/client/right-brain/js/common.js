@@ -246,8 +246,8 @@ skt_landing.action = {
           'z-index' : 1000
         })
         .attr('id', 'loading' + Math.floor(Math.random()*1000))
-        .appendTo($('body').find('.wrap:eq(0)'))
-      $(ta).data('mate', loading_box.attr('id'))
+        .appendTo($('body').find('.wrap:eq(0)'));
+      $(ta).data('mate', loading_box.attr('id'));
       loading_ico.appendTo(loading_box);
       loading_ico.append(svg);
       if(!ta || ta == '.wrap'){
@@ -436,7 +436,7 @@ skt_landing.action = {
             layer = wrap.find('.toast-layer').last(),
             layerH = layer.outerHeight(),
             transitionTime = parseFloat(layer.css('transition').split(' ')[1])*1500;
-        layer.addClass('on')
+        layer.addClass('on');
         setTimeout(function(){
           layer.removeClass('on');
           setTimeout(function(){
@@ -450,7 +450,7 @@ skt_landing.action = {
     var selector = '.popup-page textarea, .popup-page input[type=text], .popup-page input[type=date], .popup-page input[type=datetime-local], .popup-page input[type=email], .popup-page input[type=month], .popup-page input[type=number], .popup-page input[type=password], .popup-page input[type=search], .popup-page input[type=tel], .popup-page input[type=time], .popup-page input[type=url], .popup-page input[type=week]';
     $(document).on('focus',selector, function(){
       $(this).closest('.popup-page').addClass('focusin')
-    })
+    });
     $(document).on('focusout',selector, function(){
       $(this).closest('.popup-page').removeClass('focusin')
     })
@@ -468,9 +468,12 @@ skt_landing.action = {
   },
   home_slider : function(opts){ // home 전체 슬라이더
     if(opts){
-        $('.home-slider .home-slider-belt').slick('destroy');
+      $('.home-slider > .home-slider-belt').addClass('home-slider-belt-active');
     }
-	var defaults = {
+    if($('.home-slider > .slick-initialized').length > 0){
+      $('.home-slider > .home-slider-belt').slick('destroy');
+    }
+	  var defaults = {
         dots: false,
         infinite: false,
         speed: 300,
@@ -496,7 +499,7 @@ skt_landing.action = {
             $("html, body").stop().animate({scrollTop:0}, 1, function(){});
             $('.home-tab-belt .tab').eq(homeIndex).find('button, a').addClass('on').closest('.tab').siblings().find('button, a').removeClass('on');
           }
-      })
+      });
     });
 
     $(window).bind('scroll', function(){
@@ -545,13 +548,13 @@ skt_landing.action = {
     $('.icon-gnb-menu').bind('click', function(){
       skt_landing.action.fix_scroll();
       $('#common-menu').addClass('on');
-    })
+    });
     $('#common-menu .c-close').bind('click', function(){
       $('#common-menu').removeClass('on');
       if($('.wrap > .popup,.wrap > .popup-page').length == 0 && !$('#common-menu').hasClass('on')){
         skt_landing.action.auto_scroll();
       }
-    })
+    });
     $('.section-cont').scroll(function(){
       if ($(this).scrollTop() > 0) {
         $('#common-menu').addClass('scroll');
@@ -604,4 +607,4 @@ skt_landing.dev = {
      }
    });
   }
-} 
+};
