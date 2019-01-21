@@ -218,11 +218,7 @@ Tw.MenuComponent.prototype = {
     }
   },
   _onSimpleLogin: function () {
-    if ( Tw.BrowserHelper.isAndroid ) {
-      this._historyService.goLoad('/common/member/slogin/aos');
-    } else if ( Tw.BrowserHelper.isIos ) {
-      this._historyService.goLoad('/common/member/slogin/ios');
-    }
+    this._tidLanding.goSLogin();
   },
   _onOutLink: function (e) {
     var url = e.currentTarget.value;
