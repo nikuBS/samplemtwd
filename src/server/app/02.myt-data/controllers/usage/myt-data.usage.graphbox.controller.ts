@@ -6,7 +6,7 @@
 
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
-import { DAY_BTN_STANDARD_SKIP_ID, UNIT, UNIT_E } from '../../../../types/bff.type';
+import { DAY_BTN_STANDARD_SKIP_ID, TPLAN_SHARE_LIST, UNIT, UNIT_E } from '../../../../types/bff.type';
 import { SKIP_NAME } from '../../../../types/string.type';
 
 class MyTUsageGraphbox {
@@ -41,6 +41,7 @@ class MyTUsageGraphbox {
     data.isExceed = data.skipId === SKIP_NAME.EXCEED;
     data.isDailyUsed = data.skipId === SKIP_NAME.DAILY;
     data.isRunout = data.remained === '0' || data.isExceed;
+    data.isTFamilyData = TPLAN_SHARE_LIST.indexOf(data.skipId) !== -1;
     data.rgstDtm = data.rgstDtm ? DateHelper.getShortDate(data.rgstDtm) : '';
     data.barClassName = this.getBarStayle(data.isUnlimited); // TODO 삭제예정
     data.barClass = this.getBarStyle(data.isUnlimited, data.unit);
