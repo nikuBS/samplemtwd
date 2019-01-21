@@ -28,7 +28,11 @@
                 <div class="cont-box">
                     <div class="cont-tit-wrap">
                         <span class="tit-small"><%= addrInfo.payNm %></span>
+                        <% if (paymentOption.payMthdCd === '01') { %>
+                        <span class="tit-big"><%= paymentOption.bankNm %> <em><%= paymentOption.bankNum %></em></span>
+                        <% } else { %>
                         <span class="tit-big"><%= paymentOption.bankCardName %> <em><%= paymentOption.bankCardNum %></em></span>
+                        <% } %>
                     </div>
                     <ul class="bt-slice item-two mt30">
                         <li class="bt-blue1">
