@@ -30,21 +30,21 @@ class ProductRoamingJoinConfirmInfo extends TwViewController {
     }
 
     Observable.combineLatest(
-      this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId),
+      this.apiService.request(API_CMD.BFF_10_0001, {}, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0017, {'joinTermCd' : '01'}, {}, [prodId])
-    ).subscribe(([ prodRedisInfo, prodBffInfo ]) => {
-      if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00)) {
+    ).subscribe(([ prodTypeInfo, prodBffInfo ]) => {
+      if ((prodTypeInfo.code !== API_CODE.CODE_00) || (prodBffInfo.code !== API_CODE.CODE_00)) {
         return this.error.render(res, {
           svcInfo: svcInfo,
           title: PRODUCT_TYPE_NM.JOIN,
-          code: prodBffInfo.code,
-          msg: prodBffInfo.msg,
+          code: prodTypeInfo.code !== API_CODE.CODE_00 ? prodTypeInfo.code : prodBffInfo.code,
+          msg: prodTypeInfo.code !== API_CODE.CODE_00 ? prodTypeInfo.msg : prodBffInfo.msg,
         });
       }
 
       res.render('roaming/join/product.roaming.join.confirm-info.html', {
         svcInfo : svcInfo,
-        prodRedisInfo : prodRedisInfo.result.summary,
+        prodTypeInfo : prodTypeInfo.result,
         prodBffInfo : prodBffInfo.result,
         prodId : prodId,
         maskingNum : StringHelper.phoneStringToDash(svcInfo.svcNum),

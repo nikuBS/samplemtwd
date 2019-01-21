@@ -221,7 +221,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
   },
   _setData: function ($layer) {
     $layer.find('.fe-payment-option-name').attr('id', this.$cardNumber.attr('data-code')).text(this.$cardNumber.attr('data-name'));
-    $layer.find('.fe-payment-option-number').text(Tw.StringHelper.masking(this.$cardNumber.val(), '*', 8));
+    $layer.find('.fe-payment-option-number').text(this.$cardNumber.val());
     $layer.find('.fe-payment-amount').text(Tw.FormatHelper.addComma($.trim(this.$prepayAmount.val().toString())));
     $layer.find('.fe-mbr-name').text(this._name);
     $layer.find('.fe-payment-type').text(this.$cardTypeSelector.text());
@@ -264,7 +264,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
       cardCorp: $layer.find('.fe-payment-option-name').attr('id'),
       cardNm: $layer.find('.fe-payment-option-name').text(),
       cardExpyyVal: $.trim(this.$cardY.val())+ $.trim(this.$cardM.val()),
-      instmm: this.$cardTypeSelector.attr('id').toString(),
+      instMm: this.$cardTypeSelector.attr('id').toString(),
       cardPwdVal: $.trim(this.$cardPw.val().toString())
     };
     return reqData;
@@ -272,7 +272,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
   _paySuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._isPaySuccess = true;
-      this._popupService.close();
+      this._popupService.closeAll();
     } else {
       this._payFail(res);
     }

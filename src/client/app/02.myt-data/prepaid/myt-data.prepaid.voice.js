@@ -29,6 +29,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$cardM = this.$container.find('.fe-card-m');
     this.$cardPwd = this.$container.find('.fe-card-pw');
     this.$prepaid_card = this.$container.find('.fe-prepaid-card');
+    this.$prepaid_serial = this.$container.find('.fe-prepaid-serial');
     this.$creditAmount = this.$container.find('.fe-select-amount');
   },
 
@@ -48,6 +49,27 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$cardY.on('keyup', $.proxy(this._validateExpired, this));
     this.$cardM.on('keyup', $.proxy(this._validateExpired, this));
     this.$cardPwd.on('keyup', $.proxy(this._validatePwd, this));
+    this.$prepaid_card.on('keyup', $.proxy(this._validatePrepaidNumber, this));
+    this.$prepaid_serial.on('keyup', $.proxy(this._validatePrepaidSerial, this));
+
+  },
+
+  _validatePrepaidNumber: function (e) {
+    var $error = $(e.currentTarget).closest('li').find('.error-txt');
+    $error.addClass('blind');
+
+    if ( !this._validation.checkMoreLength(this.$prepaid_card, 10) ) {
+      $error.removeClass('blind');
+    }
+  },
+
+  _validatePrepaidSerial: function (e) {
+    var $error = $(e.currentTarget).closest('li').find('.error-txt');
+    $error.addClass('blind');
+
+    if ( !this._validation.checkMoreLength(this.$prepaid_serial, 10) ) {
+      $error.removeClass('blind');
+    }
   },
 
   _validateCard: function (e) {
@@ -84,7 +106,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
     $error.addClass('blind');
 
-    if ( this.$cardPwd.val() === '') {
+    if ( this.$cardPwd.val() === '' ) {
       $error.removeClass('blind');
     }
   },
@@ -170,6 +192,8 @@ Tw.MyTDataPrepaidVoice.prototype = {
           rechargeAmount: Tw.FormatHelper.addComma(rechargeAmount.toString())
         }
       });
+    } else if ( res.code === 'BIL0080' ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.INVALID_CARD);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -260,12 +284,13 @@ Tw.MyTDataPrepaidVoice.prototype = {
   },
 
   _onCompleteRechargeByCreditCard: function (res) {
-    this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=voice&' + $.param(this.amountInfo));
-    // if ( res.code === Tw.API_CODE.CODE_00 ) {
-    //   this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete');
-    // } else {
-    //   Tw.Error(res.code, res.msg).pop();
-    // }
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_DATA.COMPLETE_RECHARGE);
+      this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=voice&' + $.param(this.amountInfo));
+      // this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete');
+    } else {
+      Tw.Error(res.code, res.msg).pop();
+    }
   },
 
   _stepBack: function () {
@@ -279,7 +304,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
       }, this),
       $.proxy(function () {
         if ( confirmed ) {
-          this._historyService.replaceURL('/myt-data');
+          this._historyService.replaceURL('/myt-data/submain');
         }
       }, this),
       Tw.BUTTON_LABEL.NO,

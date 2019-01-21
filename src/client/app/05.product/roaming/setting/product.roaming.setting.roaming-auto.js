@@ -4,31 +4,34 @@
  * Date: 2018.12.03
  */
 
-Tw.ProductRoamingSettingRoamingAuto = function (rootEl,prodRedisInfo,prodBffInfo,svcInfo,prodId,expireDate) {
+Tw.ProductRoamingSettingRoamingAuto = function (rootEl,protTypeInfo,prodBffInfo,svcInfo,prodId,expireDate) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
-  this._prodRedisInfo = prodRedisInfo;
+  this._protTypeInfo = JSON.parse(protTypeInfo);
   this._prodBffInfo = prodBffInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
   this._expireDate = expireDate;
   this._apiService = Tw.Api;
   this._showDateFormat = 'YYYY. MM. DD.';
+  this._dateFormat = 'YYYYMMDD';
+  this.$tooltipHead = this.$container.find('#tip_head');
+  this.$tooltipBody = this.$container.find('#tip_body');
   this._init();
   this._bindBtnEvents();
   this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
-  this._tooltipInit(prodId);
+  this._tooltipInit(prodId,this.$tooltipHead,this.$tooltipBody);
 };
 
 Tw.ProductRoamingSettingRoamingAuto.prototype = {
   _init : function(){
-
-    var startDate = moment(this._prodBffInfo.svcStartDt,'YYYYMMDD').format(this._showDateFormat);
-    var endDate = moment(this._prodBffInfo.svcEndDt,'YYYYMMDD').format(this._showDateFormat);
+    var startDate = Tw.DateHelper.getShortDateWithFormat(this._prodBffInfo.svcStartDt,this._showDateFormat,this._dateFormat);
+    var endDate = Tw.DateHelper.getShortDateWithFormat(this._prodBffInfo.svcEndDt,this._showDateFormat,this._dateFormat);
     var startTime = this._prodBffInfo.svcStartTm;
     var endTime = this._prodBffInfo.svcEndTm;
 
+    this._currentDate = Tw.DateHelper.getCurrentShortDate();
     this.$container.find('#start_date').text(startDate);
     this.$container.find('#start_date').attr('data-number',this._prodBffInfo.svcStartDt);
     this.$container.find('#end_date').text(endDate);
@@ -37,6 +40,13 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     this.$container.find('#start_time').attr('data-number',this._prodBffInfo.svcStartTm);
     this.$container.find('#end_time').text(endTime);
     this.$container.find('#end_time').attr('data-number',this._prodBffInfo.svcEndTm);
+    this._checkSelectedEndDate(this._prodBffInfo.svcEndDt);
+  },
+  _checkSelectedEndDate : function (endDate) {
+    if(this._currentDate>=endDate){
+      this.$container.find('.bt-dropdown').attr('disabled','disabled');
+      this.$container.find('#do_setting').attr('disabled','disabled');
+    }
   },
   _bindBtnEvents: function () {
     this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
@@ -51,7 +61,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
       dateFormat = format;
     }
     for(var i=0;i<range;i++){
-      resultArr.push(moment().add(i, 'days').format(dateFormat));
+      resultArr.push(Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,i,'days',dateFormat,this._dateFormat));
     }
     return resultArr;
   },
@@ -135,8 +145,8 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     if(startDateValidationResult){
       this.$container.find('.bt-fixed-area button').removeAttr('disabled');
       var expireDate = parseInt(this._expireDate,10) + parseInt(startDateElement.attr('data-idx'),10);
-      var endDate = moment().add(expireDate, 'days').format(this._showDateFormat);
-      endDateElement.attr('data-number',moment().add(expireDate, 'days').format('YYYYMMDD'));
+      var endDate = Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,expireDate,'days',this._showDateFormat,this._dateFormat);
+      endDateElement.attr('data-number',Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,expireDate,'days',this._dateFormat,this._dateFormat));
       endDateElement.text(endDate);
       endTimeElement.text(startTime);
     }else{
@@ -149,7 +159,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
   _validateTimeValueAgainstNow : function(paramDate,paramTime,className){
     var returnValue = false;
     var $errorsElement = this.$container.find('.error-txt.'+className);
-    if((paramDate===moment().format('YYYYMMDD'))&&(parseInt(paramTime,10)<=parseInt(moment().format('HH'),10))){
+    if((paramDate===this._currentDate)&&(parseInt(paramTime,10)<=parseInt(Tw.DateHelper.getCurrentDateTime('HH'),10))){
       $errorsElement.text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_START_TIME);
       $errorsElement.removeClass('none');
     }else{
@@ -210,8 +220,8 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     var completePopupData = {
       prodNm : data.prodNm,
       processNm : Tw.PRODUCT_TYPE_NM.SETTING,
-      isBasFeeInfo : data.prodFee,
-      typeNm : Tw.PRODUCT_CTG_NM.ADDITIONS,
+      isBasFeeInfo : this._convertPrice(data.prodFee),
+      typeNm : Tw.NOTICE.ROAMING+' '+(this._prodTypeInfo.prodTypCd==='H_P'?Tw.PRODUCT_CTG_NM.PLANS:Tw.PRODUCT_CTG_NM.ADDITIONS),
       btnNmList : []
     };
     this._popupService.open({
@@ -226,17 +236,20 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
   _bindCompletePopupBtnEvt : function (popupEvt) {
     $(popupEvt).on('click','.btn-floating.btn-style2',$.proxy(this._historyService.go,this._historyService,-2));
   },
-  _tooltipInit : function (prodId) {
+  _tooltipInit : function (prodId,$tooltipHead,$tooltipBody) {
     switch (prodId) {
       case 'NA00005252':
       case 'NA00005300':
       case 'NA00005505':
-        this.$serviceTipElement.attr('id','RM_11_01_02_05_tip_01_02');
+      case 'NA00005337':
+        $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_02');
+        this.$container.find('.tip_body_container').hide();
         break;
       case 'NA00003178':
       case 'NA00003177':
       case 'NA00004226':
-        this.$serviceTipElement.attr('id','RM_11_01_02_05_tip_01_03');
+        $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_03');
+        this.$container.find('.tip_body_container').hide();
         break;
       case 'NA00006046':
       case 'NA00006048':
@@ -252,7 +265,10 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
       case 'NA00005898':
       case 'NA00006226':
       case 'NA00006229':
-        this.$serviceTipElement.attr('id','RM_11_01_02_05_tip_01_04');
+      case 'NA00006041':
+      case 'NA00006047':
+        $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_04');
+        this.$container.find('.tip_body_container').hide();
         break;
       case 'NA00005691':
       case 'NA00005694':
@@ -260,9 +276,57 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
       case 'NA00005693':
       case 'NA00005692':
       case 'NA00005695':
-        this.$serviceTipElement.attr('id','RM_11_01_02_05_tip_01_01');
+        $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_01');
+        this.$container.find('.tip_body_container').hide();
+        break;
+      case 'NA00006039':
+      case 'NA00006049':
+        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        $tooltipBody.find('button').attr('id','TC000008');
+        $tooltipHead.find('button').attr('id','TC000007');
+        break;
+      case 'NA00005901':
+        $tooltipHead.find('button').attr('id','TC000009');
+        this.$container.find('.tip_body_container').hide();
+        break;
+      case 'NA00005747':
+        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        $tooltipBody.find('button').attr('id','TC000010');
+        $tooltipHead.find('button').attr('id','TC000009');
+        break;
+      case 'NA00005301':
+        $tooltipHead.find('button').attr('id','TC000011');
+        this.$container.find('.tip_body_container').hide();
+        break;
+      case 'NA00005903':
+        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        $tooltipBody.find('button').attr('id','TC000012');
+        $tooltipHead.find('button').attr('id','TC000009');
+        break;
+      case 'NA00006043':
+      case 'NA00006051':
+        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        $tooltipBody.find('button').attr('id','TC000012');
+        $tooltipHead.find('button').attr('id','TC000007');
+        break;
+      case 'NA00006045':
+      case 'NA00006053':
+        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        $tooltipBody.find('button').attr('id','TC000012');
+        $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_04');
+        break;
+      case 'NA00005899':
+        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        $tooltipBody.find('button').attr('id','TC000013');
+        $tooltipHead.find('button').attr('id','TC000009');
         break;
     }
+  },
+  _convertPrice : function (priceVal) {
+    if(!isNaN(priceVal)){
+      priceVal = Tw.FormatHelper.addComma(priceVal)+Tw.CURRENCY_UNIT.WON;
+    }
+    return priceVal;
   }
 
 

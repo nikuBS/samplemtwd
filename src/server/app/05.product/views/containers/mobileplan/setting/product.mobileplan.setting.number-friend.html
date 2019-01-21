@@ -44,7 +44,7 @@
                         <div class="form-box">
                                 <span class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
                                     <span class="input">
-                                        <input type="text" class="fe-num_input" placeholder="숫자만 입력" title="지정번호 설정할 회선번호" aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx1" maxlength="11">
+                                        <input type="tel" class="fe-num_input" placeholder="숫자만 입력" title="지정번호 설정할 회선번호" aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx1" maxlength="11">
                                         <button class="cancel fe-btn_clear_num"><span class="blind">삭제</span></button>
                                     </span>
                                     <% if (isApp) { %>
@@ -54,8 +54,8 @@
                                     <% } %>
                                 </span>
                             <ul class="announcement-box mt16" id="aria-phone-tx1">
-                                <li class="announcement-bullet type01">절친번호는 SK텔레콤 고객번호만 가능합니다.</li>
-                                <li class="announcement-bullet type01">지정번호 별 절친여부를 선택해주세요.</li>
+                                <li class="announcement-bullet type01">절친번호는 SK텔레콤 고객의 번호만 설정할 수 있습니다.</li>
+                                <li class="announcement-bullet type01">지정번호별 절친 여부를 선택해 주세요.</li>
                             </ul>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                     <!-- .cont-box -->
                     <div class="cont-box nogaps">
                         <div class="input-number-wrap">
-                            <h3 class="tit type1">지정번호 신청된 회선</h3>
+                            <h3 class="tit type1">지정번호 신청하신 회선</h3>
                             <div class="list-comp-thumnail">
                                 <ul class="comp-box fe-line_list">
                                     <% for ( var i in numberInfo.numCoupleList ) { %>

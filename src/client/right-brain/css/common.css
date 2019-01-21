@@ -3907,7 +3907,8 @@ a.ui-button:active,
       width: 100%;
       height: 100%;
       font-size: 0.8125rem;
-      border-radius: 1.25rem; }
+      border-radius: 1.25rem;
+      vertical-align: top; }
       .bt-slice > li button .num {
         display: inline-block;
         margin: 0 0 0 0.3125rem;
@@ -3920,9 +3921,7 @@ a.ui-button:active,
       height: 100%;
       font-size: 0.8125rem;
       text-align: center;
-      line-height: 2.5rem;
       border-radius: 1.25rem;
-      letter-spacing: 0;
       -webkit-box-sizing: border-box;
               box-sizing: border-box; }
       .bt-slice > li a .num {
@@ -3963,6 +3962,10 @@ a.ui-button:active,
       .bt-slice > li.bt-blue1 button:disabled {
         color: #808698;
         background: #e5e8ee; }
+      .bt-slice > li.bt-blue1 button.btn_active:hover {
+        background: #3b98e6; }
+      .bt-slice > li.bt-blue1 button.btn_active:active {
+        background: #90caf9; }
     .bt-slice > li.bt-blue1 a {
       color: #fff;
       background: #3b98e6; }
@@ -4012,7 +4015,8 @@ a.ui-button:active,
     .bt-slice > li.bt-white2 a {
       border: 1px solid #9cc9f5;
       color: #3b98e6;
-      background: #fff; }
+      background: #fff;
+      line-height: 2.25rem; }
       .bt-slice > li.bt-white2 a.selected {
         background: #f5f5f5; }
       .bt-slice > li.bt-white2 a:hover {

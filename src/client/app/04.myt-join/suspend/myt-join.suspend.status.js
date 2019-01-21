@@ -154,7 +154,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
   _successSvcInfo: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._svcInfo = _.clone(resp.result);
-      this._svcInfo.svcNum = Tw.FormatHelper.getFormattedPhoneNumber(this._svcInfo.svcNum);
+      this._svcInfo.svcNum = Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.svcNum.replace(/-/g,''));
       this._bindEvent();
     }
   },

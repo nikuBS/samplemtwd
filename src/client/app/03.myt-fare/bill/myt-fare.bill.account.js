@@ -23,7 +23,6 @@ Tw.MyTFareBillAccount.prototype = {
     this._initVariables();
     this._bindEvent();
     this._checkIsAuto();
-    this._checkIsPopup();
   },
   _initVariables: function () {
     this.$selectBank = this.$container.find('.fe-select-bank');
@@ -57,14 +56,6 @@ Tw.MyTFareBillAccount.prototype = {
   _checkIsAuto: function () {
     if (this.$container.find('.fe-auto-info').is(':visible')) {
       this.$payBtn.removeAttr('disabled');
-    }
-  },
-  _checkIsPopup: function () {
-    var isCheck = this._historyService.getHash().match('check');
-
-    if (isCheck && this._historyService.isReload()) {
-      this._historyService.replace();
-      this._checkPay();
     }
   },
   _onChangeOption: function (event) {
@@ -224,10 +215,10 @@ Tw.MyTFareBillAccount.prototype = {
 
     $layer.find('.fe-payment-option-name').attr('id', data.bankCd).text(data.bankNm);
     $layer.find('.fe-payment-option-number').attr('id', data.accountNum)
-      .text(Tw.StringHelper.masking(data.accountNum, '*', 8));
+      .text(data.accountNum);
     $layer.find('.fe-payment-amount').text(Tw.FormatHelper.addComma(this._paymentCommon.getAmount().toString()));
     $layer.find('.fe-payment-refund').attr('id', data.refundCd).attr('data-num', data.refundNum)
-      .text(data.refundNm + ' ' + Tw.StringHelper.masking(data.refundNum, '*', 8));
+      .text(data.refundNm + ' ' + data.refundNum);
   },
   _getData: function () {
     var isAccountInput = this.$accountInputBox.hasClass('checked');

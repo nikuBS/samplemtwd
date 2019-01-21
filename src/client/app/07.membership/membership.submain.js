@@ -4,18 +4,20 @@
  * Date: 2018.12.26
  */
 
-Tw.MembershipSubmain = function(rootEl, membershipData, svcInfo, membershipCheckData) {
+Tw.MembershipSubmain = function(rootEl, membershipData, svcInfo, membershipCheckData, menuId) {
   this.$container = rootEl;
   this._membershipData = membershipData;
   this._svcInfo = svcInfo;
-  this._membershipCheckData = membershipCheckData;
+  this._membershipLayerPopup = new Tw.MembershipInfoLayerPopup(this.$container);
   this._nativeService = Tw.Native;
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._map = undefined;
+  this._membershipInit();
   this._cachedElement();
   this._bindEvent();
+  this._getMembershipBanner(menuId);
   this._checkCurrentLocation();
 };
 
@@ -25,6 +27,9 @@ Tw.MembershipSubmain.prototype = {
     G: 'gold',
     S: 'silver',
     A: 'all'
+  },
+  _membershipInit: function () {
+    this._membershipLayerPopup.reqPossibleJoin();
   },
   _cachedElement: function() {
     this.$barCode = this.$container.find('#fe-barcode-img');
@@ -39,14 +44,78 @@ Tw.MembershipSubmain.prototype = {
     this.$container.on('click', '.box-app-down', $.proxy(this._goTmembership, this));
     this.$container.on('click', '.data-plus', $.proxy(this._goChocolate, this));
     this.$container.on('click', '.coalition-brand-list .map', $.proxy(this._getBrandDetailInfo, this));
-    this.$container.on('click', '#fe-membership-join', $.proxy(this._goMembershipJoin, this));
+    this.$container.on('click', '#fe-membership-join', $.proxy( this._membershipLayerPopup.onClickJoinBtn, this._membershipLayerPopup));
     this.$container.on('click', '.fe-mebership-my', $.proxy(this._goMyMembership, this));
+    this.$container.on('click', '.fe-membership-location', $.proxy(this._showAgreementPopup, this));
+  },
+  _checkLocationAgreement:function () {
+    this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
+      .done($.proxy(function (res) {
+        if (res.code === Tw.API_CODE.CODE_00) {
+          Tw.Logger.info('check loc agreement : ', res);
+          if (res.result.twdLocUseAgreeYn === 'Y') {
+            this._checkCurrentLocation();
+          } else {
+            this._showAgreementPopup();
+          }
+        } else {
+          Tw.Error(res.code, res.msg).pop();
+        }
+      }, this))
+      .fail(function (err) {
+        Tw.Error(err.code, err.msg).pop();
+      });
+  },
+  _showAgreementPopup: function () {
+    this._popupService.open({
+          ico: 'type3', title: Tw.BRANCH.PERMISSION_TITLE, contents: Tw.BRANCH.PERMISSION_DETAIL,
+          link_list: [{style_class: 'fe-link-term', txt: Tw.BRANCH.VIEW_LOCATION_TERM}],
+          bt: [{style_class: 'bt-blue1', txt: Tw.BRANCH.AGREE},
+              {style_class: 'bt-white2', txt: Tw.BRANCH.CLOSE}]
+        }, $.proxy(function (root) {
+          root.on('click', '.fe-link-term', $.proxy(function () {
+            Tw.CommonHelper.openUrlInApp(
+                'http://m2.tworld.co.kr/normal.do?serviceId=S_PUSH0011&viewId=V_MEMB2005&stplTypCd=15',
+                null,
+                Tw.COMMON_STRING.TERM
+            );
+          }, this));
+          root.on('click', '.bt-white2', $.proxy(function () {
+            this._popupService.close();
+          }, this));
+          root.on('click', '.bt-blue1', $.proxy(function () {
+            this._popupService.close();
+            var data = { twdLocUseAgreeYn: 'Y' };
+            this._apiService.request(Tw.API_CMD.BFF_03_0022, data)
+                .done($.proxy(function (res) {
+                  if (res.code === Tw.API_CODE.CODE_00) {
+                    this._checkCurrentLocation();
+                  } else {
+                    Tw.Error(res.code, res.msg).pop();
+                  }
+                }, this))
+                .fail(function (err) {
+                  Tw.Error(err.code, err.msg).pop();
+                });
+          }, this));
+        }, this),
+        $.proxy(function () {
+          this._popupService.close();
+        }, this)
+    );
+  },
+  _getMembershipBanner: function (menuId){
+    this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: menuId })
+        .done($.proxy(this._successMemnbershipBanner, this));
+  },
+  _successMemnbershipBanner: function (resp){
+    Tw.Logger.info('membership resp : ', resp);
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      new Tw.BannerService(this.$container, resp.result && resp.result.banners);
+    }
   },
   _goMyMembership: function() {
     this._historyService.goLoad('/membership/my');
-  },
-  _goMembershipJoin: function () {
-    this._historyService.goLoad('/membership/join');
   },
   _getBrandDetailInfo: function (event) {
     this.currentTarget = $(event.currentTarget);
@@ -178,9 +247,9 @@ Tw.MembershipSubmain.prototype = {
   },
 
   _onOpenBarcode: function (cardNum, $popupContainer) {
-    var extendBarcode = $popupContainer.find('#fe-membership-barcode-extend');
+    var membershipBarcode = $popupContainer.find('#fe-membership-barcode-extend');
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
-      extendBarcode.JsBarcode(cardNum);
+      membershipBarcode.JsBarcode(cardNum, {height:75, margin:0});
     }
   },
 

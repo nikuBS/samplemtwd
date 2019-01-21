@@ -87,6 +87,7 @@ Tw.API_CMD = {
   BFF_03_0026: { path: '/core-auth/:version/requestRegistFcmClickInfo', method: Tw.API_METHOD.POST },
   BFF_03_0027: { path: '/core-auth/:version/users/otp', method: Tw.API_METHOD.PUT },
   BFF_03_0028: { path: '/core-auth/:version/free-sms-availability/::args0', method: Tw.API_METHOD.GET },
+  BFF_03_0029: { path: '/core-auth/:version/exposable-services', method: Tw.API_METHOD.GET },
 
   // HOME
   BFF_04_0001: { path: '/core-membership/:version/card/home', method: Tw.API_METHOD.GET },
@@ -274,6 +275,7 @@ Tw.API_CMD = {
   BFF_06_0068: { path: '/core-recharge/:version/ting-permissions', method: Tw.API_METHOD.POST },
   BFF_06_0069: { path: '/core-bill/:version/pps-recharges', method: Tw.API_METHOD.DELETE },
   BFF_06_0070: { path: '/core-bill/:version/pps-data-recharges', method: Tw.API_METHOD.DELETE },
+  BFF_06_0075: { path: '/core-bill/v1/pps-alram', method: Tw.API_METHOD.GET },
 
   // PAYMENT
   BFF_07_0004: { path: '/core-bill/:version/cash-receipts-issue-history', method: Tw.API_METHOD.GET },
@@ -320,7 +322,7 @@ Tw.API_CMD = {
   BFF_07_0069: { path: '/core-bill/:version/payment/auto-integrated-payment/cancel', method: Tw.API_METHOD.GET },
   BFF_07_0071: { path: '/core-bill/:version/micro-prepay/hist-requests', method: Tw.API_METHOD.GET },
   BFF_07_0073: { path: '/core-bill/:version/micro-prepay/requests', method: Tw.API_METHOD.GET },
-  BFF_07_0074: { path: '/core-bill/:version/micro-Prepay/process', method: Tw.API_METHOD.POST },
+  BFF_07_0074: { path: '/core-bill/:version/micro-prepay/process', method: Tw.API_METHOD.POST },
   BFF_07_0076: { path: '/core-bill/:version/micro-prepay/auto-process', method: Tw.API_METHOD.POST },
   BFF_07_0077: { path: '/core-bill/:version/micro-prepay/auto-delete', method: Tw.API_METHOD.POST },
   BFF_07_0078: { path: '/core-bill/:version/use-contents-prepay/hist-requests', method: Tw.API_METHOD.GET },
@@ -487,8 +489,8 @@ Tw.API_CMD = {
   BFF_10_0063: { path: '/core-product/:version/mobiles/additions-sets/:args0/seldis-sets', method: Tw.API_METHOD.POST },
 
   //SEARCH
-  GET_SEARCH_AUTO_COMPLETE : { path : '/search/tworld/autocomplete', method : Tw.API_METHOD.GET },
-  STACK_SEARCH_USER_CLICK : { path : '/search/tworld/log/save', method : Tw.API_METHOD.POST },
+  SEARCH_AUTO_COMPLETE : { path : '/search/tworld/autocomplete', method : Tw.API_METHOD.GET },
+  STACK_SEARCH_USER_CLICK : { path : '/search/tworld/log/save', method : Tw.API_METHOD.GET },
 
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },
@@ -524,6 +526,8 @@ Tw.NODE_CMD = {
   GET_SVC_INFO: { path: '/svcInfo', method: Tw.API_METHOD.GET },
   GET_ALL_SVC: { path: '/allSvcInfo', method: Tw.API_METHOD.GET },
   GET_CHILD_INFO: { path: '/childInfo', method: Tw.API_METHOD.GET },
+  UPDATE_NOTICE_TYPE: { path: '/update/notice-type', method: Tw.API_METHOD.PUT },
+
   GET_VERSION: { path: '/app-version', method: Tw.API_METHOD.GET },
   GET_SPLASH: { path: '/splash', method: Tw.API_METHOD.GET },
   GET_APP_NOTICE: { path: '/app-notice', method: Tw.API_METHOD.GET },
@@ -587,6 +591,7 @@ Tw.API_CODE = {
   CERT_FAIL: 'TWM0001',
   CERT_SELECT: 'CERT0001',   // 인증수단 선택화면으로 이동
   CERT_SMS_BLOCK: 'CERT0002',   // SMS 인증 불가
+  CERT_SMS_ENABLE: 'CERT0003',
 
   CODE_99: 'RDT0099', // Circuit Open
   CODE_200: '200',

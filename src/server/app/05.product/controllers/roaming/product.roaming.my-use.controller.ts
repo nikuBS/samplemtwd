@@ -60,6 +60,7 @@ export default class ProductRoamingMyUse extends TwViewController {
       }
 
       if (FormatHelper.isEmpty(resp.result)) {
+        resp.result.roamingProdList = [];
         return resp.result;
       }
 
@@ -87,6 +88,7 @@ export default class ProductRoamingMyUse extends TwViewController {
       }
 
       if (FormatHelper.isEmpty(resp.result)) {
+        resp.result.roamingProdList = [];
         return resp.result;
       }
 

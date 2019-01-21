@@ -162,6 +162,11 @@ class MainMenuRefund extends TwViewController {
       purified.canDonate = true;
     }
 
+    // If social id has length 13, then insert '-'
+    if (purified.socialId.length === 13) {
+      purified.socialId = purified.socialId.slice(0, 6) + '-' + purified.socialId.slice(6);
+    }
+
     return purified;
   }
 }

@@ -53,7 +53,7 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
 
     this.apiService.request(API_CMD.BFF_05_0198, {})
       .subscribe(function(resp) {
-        if ( resp.code === API_CODE.CODE_00 && resp.result ) {
+        if ( resp.code === API_CODE.CODE_00 && !FormatHelper.isEmpty(resp.result) ) {
 
           const data = resp.result;
           // const data = {

@@ -42,15 +42,16 @@ Tw.CertificationRepresentative.prototype = {
     this._popupService.open({
       hbs: 'MV_01_02_01_01',
       layer: true,
-      list: this._makeShowData(certInfo.smsNumbers)
+      list: this._makeShowData(certInfo.smsNumbers),
+      one: certInfo.smsNumbers.length === 1
     }, $.proxy(this._onOpenCert, this), $.proxy(this._onCloseCert, this));
   },
   _makeShowData: function (smsNumbers) {
     this._smsNumbers = smsNumbers;
-    return _.map(smsNumbers, $.proxy(function (number, index) {
+    return _.map(smsNumbers, $.proxy(function (number) {
       return {
-        txt: number.nameMask + ' ' + number.numberMask,
-        option: smsNumbers.length === 1 && index === 0 ? 'checked' : ''
+        txt: number.nameMask + ' ' + number.numberMask
+        // option: smsNumbers.length === 1 && index === 0 ? 'checked' : ''
       };
     }, this));
   },
@@ -70,9 +71,9 @@ Tw.CertificationRepresentative.prototype = {
     this.$list.on('click', $.proxy(this._onClickList, this));
     this.$inputCert.on('input', $.proxy(this._onInputCert, this));
 
-    if ( this.$list.find(':checked').length > 0 ) {
-      this.$btCert.attr('disabled', false);
-    }
+    // if ( this.$list.find(':checked').length > 0 ) {
+    //   this.$btCert.attr('disabled', false);
+    // }
   },
   _onCloseCert: function () {
     if ( !Tw.FormatHelper.isEmpty(this._callbackParam) ) {
@@ -83,8 +84,12 @@ Tw.CertificationRepresentative.prototype = {
     this.$btCert.attr('disabled', false);
   },
   _onClickCert: function () {
-    var $selected = this.$list.find(':checked');
-    this._receiverNum = this._smsNumbers[$selected.data('index')].number;
+    if ( this._smsNumbers.length > 1 ) {
+      var $selected = this.$list.find(':checked');
+      this._receiverNum = this._smsNumbers[$selected.data('index')].number;
+    } else {
+      this._receiverNum = this._smsNumbers[0].number;
+    }
 
     this._apiService.request(Tw.API_CMD.BFF_01_0058, {
       receiverNum: this._receiverNum,
@@ -103,6 +108,7 @@ Tw.CertificationRepresentative.prototype = {
   },
   _successCert: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._clearCertError();
       this.$validCert.removeClass('none');
     } else if ( resp.code === this.SMS_ERROR.ATH2003 ) {
       this._clearCertError();

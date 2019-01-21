@@ -62,7 +62,7 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
   _addNum: function() {
     var number = this.$inputNumber.val().replace(/-/gi, '');
 
-    if (!Tw.ValidationHelper.isCellPhone(number)) {
+    if (!Tw.ValidationHelper.isCellPhone(number) && !Tw.ValidationHelper.isTelephone(number)) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
     }
@@ -117,6 +117,7 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
 
   _detectInputNumber: function() {
     this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9]/g, ''));
+
     if (this.$inputNumber.val().length > 11) {
       this.$inputNumber.val(this.$inputNumber.val().substr(0, 11));
     }
@@ -159,7 +160,7 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
   },
 
   _toggleNumAddBtn: function() {
-    if (this.$inputNumber.val().length > 9) {
+    if (this.$inputNumber.val().length > 8) {
       this.$btnAddNum.removeAttr('disabled').prop('disabled', false);
     } else {
       this.$btnAddNum.attr('disabled', 'disabled').prop('disabled', true);
@@ -175,11 +176,11 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
   },
 
   _blurInputNumber: function() {
-    this.$inputNumber.attr('type', 'text').val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$inputNumber.val()));
+    this.$inputNumber.val(Tw.FormatHelper.conTelFormatWithDash(this.$inputNumber.val()));
   },
 
   _focusInputNumber: function() {
-    this.$inputNumber.val(this.$inputNumber.val().replace(/-/gi, '')).attr('type', 'number');
+    this.$inputNumber.val(this.$inputNumber.val().replace(/-/gi, ''));
   },
 
   _clearNum: function() {

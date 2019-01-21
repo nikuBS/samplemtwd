@@ -21,53 +21,23 @@ Tw.OUTLINK = {
   GALAXY_S9: 'https://shop.tworld.co.kr/handler/PhoneDetail-Start?PRODUCT_GRP_ID=000002752&SUBSCRIPTION_ID=NA00005134&CATEGORY_ID=20010001&REL_CATEGORY_ID=30010024&COLOR_HEX=&callGnb=01&loc_code=&o2o_flag=L',
   ONE_STORE_PREFIX: 'onestore://common/product/',
   DATA_COUPON: {
-    T_DATA_DEV: {
-      APP: 'https://devskt.datacoupon.co.kr/order/datacouponCharge1.view?catId=42&poc=APP',
-      WEB: 'https://devskt.datacoupon.co.kr/order/datacouponCharge1.view?catId=42&poc=MWEB'
-    },
-    T_DATA: {
-      APP: 'https://skt.datacoupon.co.kr/order/datacouponCharge1.view?catId=64&poc=APP',
-      WEB: 'https://skt.datacoupon.co.kr/order/datacouponCharge1.view?catId=64&poc=MWEB'
-    },
-    T_COUPON_DEV: {
-      APP: 'https://devskt.datacoupon.co.kr/order/tcouponCharge1.view?catId=46&poc=APP',
-      WEB: 'https://devskt.datacoupon.co.kr/order/tcouponCharge1.view?catId=46&poc=MWEB'
-    },
-    T_COUPON: {
-      APP: 'https://skt.datacoupon.co.kr/order/tcouponCharge1.view?catId=66&poc=APP',
-      WEB: 'https://skt.datacoupon.co.kr/order/tcouponCharge1.view?catId=66&poc=MWEB'
-    },
-    OKSUSU_DEV: {
-      APP: 'https://devskt.datacoupon.co.kr/order/tcouponCharge1.view?catId=47&poc=APP',
-      WEB: 'https://devskt.datacoupon.co.kr/order/tcouponCharge1.view?catId=47&poc=MWEB'
-    },
-    OKSUSU: {
-      APP: 'https://skt.datacoupon.co.kr/order/tcouponCharge1.view?catId=67&poc=APP',
-      WEB: 'https://skt.datacoupon.co.kr/order/tcouponCharge1.view?catId=67&poc=MWEB'
-    },
-    JEJU_DEV: {
-      APP: 'https://devskt.datacoupon.co.kr/order/datacouponCharge1.view?catId=44&poc=APP',
-      WEB: 'https://devskt.datacoupon.co.kr/order/datacouponCharge1.view?catId=44&poc=MWEB'
-    },
-    JEJU: {
-      APP: 'https://skt.datacoupon.co.kr/order/datacouponCharge1.view?catId=65&poc=APP',
-      WEB: 'https://skt.datacoupon.co.kr/order/datacouponCharge1.view?catId=65&poc=MWEB'
-    },
-    DATA_FACTORY_DEV: {
-      APP: 'https://devskt.datacoupon.co.kr/dataCharge/dataChargeList.view?poc=APP',
-      WEB: 'https://devskt.datacoupon.co.kr/dataCharge/dataChargeList.view?poc=MWEB'
-    },
-    DATA_FACTORY: {
-      APP: 'https://skt.datacoupon.co.kr/dataCharge/dataChargeList.view?poc=APP',
-      WEB: 'https://skt.datacoupon.co.kr/dataCharge/dataChargeList.view?poc=MWEB'
-    },
-    T_SHORT_DATA_DEV: {
-      APP: 'https://devskt.datacoupon.co.kr/tShortTermCoupon/info.view?poc=APP',
-      WEB: 'https://devskt.datacoupon.co.kr/tShortTermCoupon/info.view?poc=MWEB'
-    },
-    T_SHORT_DATA: {
-      APP: 'https://skt.datacoupon.co.kr/tShortTermCoupon/info.view?poc=APP',
-      WEB: 'https://skt.datacoupon.co.kr/tShortTermCoupon/info.view?poc=MWEB'
-    }
+    T_DATA: 'BPCP:0000105171',
+    T_COUPON: 'BPCP:0000105151',
+    JEJU: 'BPCP:0000105148',
+    OKSUSU: 'BPCP:0000105173',
+    DATA_FACTORY: 'BPCP:0000105150',
+    T_SHORT_DATA: 'BPCP:0000105175'
+  },
+  ROAMING_COUPON: {
+    BUY: 'BPCP:0000105155',
+    REGISTER: 'BPCP:0000105159',
+    INQUIRE: 'BPCP:0000105157',
+    ONE_PASS: 'BPCP:0000105169',
+    KCJ_PASS: 'BPCP:0000105161',
+    ASIA_PASS: 'BPCP:0000105165',
+    AMERICA_PASS: 'BPCP:0000105167',
+    EU_PASS: 'BPCP:0000105163',
+    GIFT_CARD: 'BPCP:0000105153',
+    TING_SILVER: 'BPCP:0000105145'
   }
 };

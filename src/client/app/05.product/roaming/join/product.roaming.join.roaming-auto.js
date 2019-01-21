@@ -4,18 +4,21 @@
  * Date: 2018.12.03
  */
 
-Tw.ProductRoamingJoinRoamingAuto = function (rootEl,prodRedisInfo,prodApiInfo,svcInfo,prodId,expireDate) {
+Tw.ProductRoamingJoinRoamingAuto = function (rootEl,prodTypeInfo,prodApiInfo,svcInfo,prodId,expireDate) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
-  this._prodRedisInfo = JSON.parse(prodRedisInfo);
+  this._prodTypeInfo = JSON.parse(prodTypeInfo);
   this._prodApiInfo = prodApiInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
   this._expireDate = expireDate;
-  this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
+  this.$tooltipHead = this.$container.find('#tip_head');
+  this.$tooltipBody = this.$container.find('#tip_body');
   this._showDateFormat = 'YYYY. MM. DD.';
-  this._tooltipInit(prodId);
+  this._dateFormat = 'YYYYMMDD';
+  this._currentDate = Tw.DateHelper.getCurrentShortDate();
+  this._tooltipInit(prodId,this.$tooltipHead,this.$tooltipBody);
   this._bindBtnEvents();
 };
 
@@ -33,7 +36,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
       dateFormat = format;
     }
     for(var i=0;i<range;i++){
-      resultArr.push(moment().add(i, 'days').format(dateFormat));
+      resultArr.push(Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,i,'days',dateFormat,this._dateFormat));
     }
     return resultArr;
   },
@@ -116,9 +119,9 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
     if(startDateValidationResult){
       this.$container.find('.bt-fixed-area button').removeAttr('disabled');
       var expireDate = parseInt(this._expireDate,10) + parseInt(startDateElement.attr('data-idx'),10);
-      var endDate = moment().add(expireDate, 'days').format(this._showDateFormat);
+      var endDate = Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,expireDate,'days',this._showDateFormat,this._dateFormat);
       endDateElement.text(endDate);
-      endDateElement.attr('data-number',moment().add(expireDate, 'days').format('YYYYMMDD'));
+      endDateElement.attr('data-number',Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,expireDate,'days',this._dateFormat,this._dateFormat));
       endTimeElement.text(startTime);
     }else{
       this.$container.find('.bt-fixed-area button').attr('disabled','disabled');
@@ -130,7 +133,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
   _validateTimeValueAgainstNow : function(paramDate,paramTime,className){
     var returnValue = false;
     var $errorsElement = this.$container.find('.error-txt.'+className);
-    if((paramDate===moment().format('YYYYMMDD'))&&(parseInt(paramTime,10)<=parseInt(moment().format('HH'),10))){
+    if((paramDate===this._currentDate)&&(parseInt(paramTime,10)<=parseInt(Tw.DateHelper.getCurrentDateTime('HH'),10))){
       $errorsElement.text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_START_TIME);
       $errorsElement.removeClass('none');
     }else{
@@ -169,8 +172,8 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
       prodNm : data.prodNm,
       processNm : Tw.PRODUCT_TYPE_NM.JOIN,
       isBasFeeInfo : data.prodFee,
-      typeNm : data.svcType,
-      settingType : (data.svcType+' '+data.processNm),
+      typeNm : data.prodType,
+      settingType : data.processNm,
       btnNmList : [Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE]
     };
     if($containerData._prodId==='NA00005690'||$containerData._prodId==='NA00005693'){
@@ -239,11 +242,10 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
       prodId : this._prodId,
       svcNum : Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.svcNum),
       processNm : Tw.PRODUCT_TYPE_NM.JOIN,
-      prodType : Tw.NOTICE.ROAMING+' '+Tw.PRODUCT_CTG_NM.PLANS,
-      svcType : Tw.PRODUCT_CTG_NM.ADDITIONS,
-      prodNm : this._prodRedisInfo.prodNm,
-      prodFee : this._prodRedisInfo.basFeeInfo,
-      description : this._prodRedisInfo.prodSmryDesc,
+      prodType : Tw.NOTICE.ROAMING+' '+(this._prodTypeInfo.prodTypCd==='H_P'?Tw.PRODUCT_CTG_NM.PLANS:Tw.PRODUCT_CTG_NM.ADDITIONS),
+      prodNm : this._prodApiInfo.preinfo.reqProdInfo.prodNm,
+      prodFee : this._prodApiInfo.preinfo.reqProdInfo.basFeeInfo,
+      description : this._prodApiInfo.preinfo.reqProdInfo.prodSmryDesc,
       autoInfo : this._prodApiInfo,
       agreeCnt : this._agreeCnt,
       joinType : 'auto'
@@ -251,17 +253,20 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
 
     new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,null,'confirm_data',this);
   },
-  _tooltipInit : function (prodId) {
+  _tooltipInit : function (prodId,$tooltipHead,$tooltipBody) {
     switch (prodId) {
       case 'NA00005252':
       case 'NA00005300':
       case 'NA00005505':
-        this.$serviceTipElement.attr('id','RM_11_01_02_05_tip_01_02');
+      case 'NA00005337':
+        $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_02');
+        this.$container.find('.tip_body_container').hide();
         break;
       case 'NA00003178':
       case 'NA00003177':
       case 'NA00004226':
-        this.$serviceTipElement.attr('id','RM_11_01_02_05_tip_01_03');
+        $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_03');
+        this.$container.find('.tip_body_container').hide();
         break;
       case 'NA00006046':
       case 'NA00006048':
@@ -277,7 +282,10 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
       case 'NA00005898':
       case 'NA00006226':
       case 'NA00006229':
-        this.$serviceTipElement.attr('id','RM_11_01_02_05_tip_01_04');
+      case 'NA00006045':
+      case 'NA00006053':
+        $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_04');
+        this.$container.find('.tip_body_container').hide();
         break;
       case 'NA00005691':
       case 'NA00005694':
@@ -285,7 +293,37 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
       case 'NA00005693':
       case 'NA00005692':
       case 'NA00005695':
-        this.$serviceTipElement.attr('id','RM_11_01_02_05_tip_01_01');
+        $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_01');
+        this.$container.find('.tip_body_container').hide();
+        break;
+      case 'NA00006039':
+        $tooltipHead.find('button').attr('id','TC000007');
+        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        $tooltipBody.find('button').attr('id','TC000008');
+        break;
+      case 'NA00005901':
+        $tooltipHead.find('button').attr('id','TC000009');
+        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        $tooltipBody.find('button').attr('id','TC000008');
+        break;
+      case 'NA00006041':
+      case 'NA00006047':
+        $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_04');
+        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        $tooltipBody.find('button').attr('id','TC000008');
+        break;
+      case 'NA00005903':
+        $tooltipHead.find('button').attr('id','TC000009');
+        this.$container.find('.tip_body_container').hide();
+        break;
+      case 'NA00005747':
+        $tooltipHead.find('button').attr('id','TC000009');
+        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        $tooltipBody.find('button').attr('id','TC000010');
+        break;
+      case 'NA00005301':
+        $tooltipHead.find('button').attr('id','TC000011');
+        this.$container.find('.tip_body_container').hide();
         break;
     }
   }

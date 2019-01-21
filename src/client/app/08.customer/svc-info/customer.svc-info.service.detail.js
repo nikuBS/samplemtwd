@@ -81,7 +81,8 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
           return {
             txt: el.dep_title,
             // option: 'checked', 
-            'radio-attr': 'name="selectType" value="'+ el.code +'"'
+            'radio-attr': 'name="selectType" value="'+ el.code +'" id="radio'+el.code+'"',
+            'label-attr': 'for="radio'+el.code+'"'
           }
         })
       }
@@ -99,7 +100,14 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     
     // 이벤트 바인드
     this.$selectButtons.on('click', $.proxy(this._setActionSheetValue, this));
+
+    $container.find('.ac-list>li label').on('click', $.proxy(this._noDefaultEvent, this));
   },
+
+  _noDefaultEvent: function(e) {
+    e.preventDefault();
+  },
+
 
   _closeSelect: function () {
     this._popupService.close();
@@ -137,6 +145,7 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
   },
 
   _USIMActionSheetEvent: function ($container) {
+    this.usimContentIndex = 0; // 초기화 
     this.$USIMContentsContainer = $container;
     this.$USIMSelectBtn = $container.find('.btn-dropdown'); // 유심정리 탭 선택
     this.$USIMSelectBtn.text(Tw.CUSTOMER_SERVICE_INFO_USIM_DEFINE.data.list[0].txt);
@@ -232,7 +241,8 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     });
   
     //accordian
-    $('.idpt-accordian > li > a', $container).on('click', function(){
+    $('.idpt-accordian > li > a', $container).on('click', function(e){
+      e.preventDefault();
       $('.idpt-accordian > li > a', $container).removeClass('open');
       $('.idpt-accordian-cont', $container).slideUp();
       if ($(this).parent().find('.idpt-accordian-cont').is(':hidden')){

@@ -10,7 +10,6 @@ import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../utils/format.helper';
 import { MEMBERSHIP_GROUP , MEMBERSHIP_TYPE } from '../../../types/bff.type';
-import {CUSTOMER_NOTICE_CATEGORY} from '../../../types/string.type';
 
 export default class MembershipSubmain extends TwViewController {
   constructor() {

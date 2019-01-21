@@ -148,7 +148,8 @@ class MyTJoinSubmainController extends TwViewController {
       // 개통일자
       if ( data.myHistory ) {
         if ( data.myHistory.length > 0 ) {
-          data.hsDate = DateHelper.getShortDateNoDot(data.myHistory[0].chgDt);
+          const h_chgDt = data.myHistory[0].chgDt;
+          data.hsDate = this.isMasking(h_chgDt) ? h_chgDt : DateHelper.getShortDateNoDot(h_chgDt);
         } else {
           data.hsDate = null;
         }
@@ -201,6 +202,9 @@ class MyTJoinSubmainController extends TwViewController {
       }
 
       if ( data.myLongPausedState ) {
+        const fromDt = data.myLongPausedState.fromDt, toDt = data.myLongPausedState.toDt;
+        data.myLongPausedState.sDate = this.isMasking(fromDt) ? fromDt : DateHelper.getShortDateNoDot(fromDt);
+        data.myLongPausedState.eDate = this.isMasking(toDt) ? toDt : DateHelper.getShortDateNoDot(toDt);
         data.myLongPausedState.state = true;
       }
 
@@ -384,7 +388,7 @@ class MyTJoinSubmainController extends TwViewController {
     // 유선상품 수
     result.wireProdCnt = data.wireProdCnt;
     // 설치 주소
-    result.address = data.basAddr + data.dtlAddr;
+    result.address = data.fullAddr; /*data.basAddr + data.dtlAddr;*/
     return result;
   }
 

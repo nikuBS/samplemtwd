@@ -127,9 +127,9 @@ Tw.ProductRoamingFiInquire.prototype = {
 
     for( var x in res){
       res[x].visit_nat_lst = this._changeCountryCode(res[x].visit_nat_lst);
-      res[x].rental_sale_org_id = this._returnObj[res[x].rental_sale_org_id];
+      res[x].show_rental_sale_org_id = this._returnObj[res[x].rental_sale_org_id].name;
       res[x].impbranch = this._receiveObj[res[x].rental_booth_org_id].code;
-      res[x].rental_booth_org_id = this._receiveObj[res[x].rental_booth_org_id].name;
+      res[x].show_rental_booth_org_id = this._receiveObj[res[x].rental_booth_org_id].name;
       res[x].rsv_rcv_dtm = this._dateHelper.getShortDateNoDot(res[x].rsv_rcv_dtm);
       if(this._dateHelper.getDifference(res[x].rental_schd_sta_dtm.substr(0,8)) > 0){
         res[x].dateDifference = this._dateHelper.getDifference(res[x].rental_schd_sta_dtm.substr(0,8));
@@ -256,7 +256,7 @@ Tw.ProductRoamingFiInquire.prototype = {
       'romingTypCd': '28',
       'type': 'D'
     };
-
+    
     this._apiService
       .request(Tw.API_CMD.BFF_10_0066, params )
       .done($.proxy(this._openCancelAlert, this));
@@ -284,8 +284,10 @@ Tw.ProductRoamingFiInquire.prototype = {
     if(res.code === Tw.API_CODE.CODE_00){
       res.result.rominfo.rental_schd_sta_dtm = this._dateHelper.getShortDateWithFormat(res.result.rominfo.rental_schd_sta_dtm.substr(0,8), 'YYYY-MM-DD');
       res.result.rominfo.rental_schd_end_dtm = this._dateHelper.getShortDateWithFormat(res.result.rominfo.rental_schd_end_dtm, 'YYYY-MM-DD');
-      res.result.rominfo.rtn_sale_org_nm = this._returnObj[res.result.rominfo.rtn_sale_org_id];
-      res.result.rominfo.rental_sale_org_nm = this._receiveObj[res.result.rominfo.rental_booth_org_id].name;
+      res.result.rominfo.receive_center_img =  this._receiveObj[res.result.rominfo.rental_booth_org_id].img;
+      res.result.rominfo.return_center_img = this._returnObj[res.result.rominfo.rental_sale_org_id].img;
+      res.result.rominfo.show_rtn_sale_org_nm = this._returnObj[res.result.rominfo.rental_sale_org_id].name;
+      res.result.rominfo.show_rental_sale_org_nm = this._receiveObj[res.result.rominfo.rental_booth_org_id].name;
       res.result.rominfo.changeCountry = changeCountry;
       res.result.minDate = moment().add(2, 'days').format('YYYY-MM-DD');
       res.result.maxDate = this._dateHelper.getEndOfMonSubtractDate(undefined,-6,'YYYY-MM-DD');

@@ -4,17 +4,18 @@
  * Date: 2018.12.03
  */
 
-Tw.ProductRoamingSettingRoamingSetup = function (rootEl,prodRedisInfo,prodBffInfo,svcInfo,prodId) {
+Tw.ProductRoamingSettingRoamingSetup = function (rootEl,prodTypeInfo,prodBffInfo,svcInfo,prodId) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
-  this._prodRedisInfo = prodRedisInfo;
+  this._prodTypeInfo = JSON.parse(prodTypeInfo);
   this._prodBffInfo = prodBffInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
   this._apiService = Tw.Api;
   this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
   this._showDateFormat = 'YYYY. MM. DD.';
+  this._dateFormat = 'YYYYMMDD';
   this._init();
   this._bindBtnEvents();
   this._tooltipInit(prodId);
@@ -22,14 +23,15 @@ Tw.ProductRoamingSettingRoamingSetup = function (rootEl,prodRedisInfo,prodBffInf
 
 Tw.ProductRoamingSettingRoamingSetup.prototype = {
   _init : function(){
-    var startMoment = moment(this._prodBffInfo.svcStartDt,'YYYYMMDD');
-    var endMoment = moment(this._prodBffInfo.svcEndDt,'YYYYMMDD');
-    var startDate = startMoment.format(this._showDateFormat);
-    var endDate = endMoment.format(this._showDateFormat);
+    this._currentDate = Tw.DateHelper.getCurrentShortDate();
+    var startDateObj = Tw.DateHelper.convDateFormat(this._prodBffInfo.svcStartDt);
+    var endDateObj = Tw.DateHelper.convDateFormat(this._prodBffInfo.svcEndDt);
+    var startDate = Tw.DateHelper.getShortDateWithFormat(this._prodBffInfo.svcStartDt,this._showDateFormat,this._dateFormat);
+    var endDate = Tw.DateHelper.getShortDateWithFormat(this._prodBffInfo.svcEndDt,this._showDateFormat,this._dateFormat);
     var startTime = this._prodBffInfo.svcStartTm;
     var endTime = this._prodBffInfo.svcEndTm;
-    var startDateIdx = moment(Tw.DateHelper.getCurrentShortDate(),'YYYYMMDD').diff(startMoment,'day');
-    var endDateIdx = moment(Tw.DateHelper.getCurrentShortDate(),'YYYYMMDD').diff(endMoment,'day');
+    var startDateIdx = Tw.DateHelper.getDiffByUnit(this._currentDate,startDateObj,'day');
+    var endDateIdx = Tw.DateHelper.getDiffByUnit(this._currentDate,endDateObj,'day');
     startDateIdx = parseInt(startDateIdx,10) * -1;
     endDateIdx = parseInt(endDateIdx,10) * -1;
     this.$container.find('#start_date').text(startDate);
@@ -42,7 +44,13 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
     this.$container.find('#start_time').attr('data-number',this._prodBffInfo.svcStartTm);
     this.$container.find('#end_time').text(endTime);
     this.$container.find('#end_time').attr('data-number',this._prodBffInfo.svcEndTm);
-
+    this._checkSelectedEndDate(this._prodBffInfo.svcEndDt);
+  },
+  _checkSelectedEndDate : function (endDate) {
+    if(this._currentDate>=endDate){
+      this.$container.find('.bt-dropdown').attr('disabled','disabled');
+      this.$container.find('#do_change').attr('disabled','disabled');
+    }
   },
   _bindBtnEvents: function () {
     this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
@@ -57,7 +65,7 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
       dateFormat = format;
     }
     for(var i=0;i<range;i++){
-      resultArr.push(moment().add(i, 'days').format(dateFormat));
+      resultArr.push(Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,i,'days',dateFormat,this._dateFormat));
     }
     return resultArr;
   },
@@ -130,7 +138,6 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
     this._popupService.close();
   },
   _validateDateValue : function(selectedDateTypeId){
-
     var startDate = this.$container.find('#start_date').attr('data-number');
     var startTime = this.$container.find('#start_time').attr('data-number');
     var endDate = this.$container.find('#end_date').attr('data-number');
@@ -149,7 +156,7 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
     }
     if(!isNaN(endDate)){
       var $endErrElement = this.$container.find('.error-txt.end');
-      if(endDate===moment().format('YYYYMMDD')){
+      if(endDate<=this._currentDate){
         endDateValidationResult = false;
         $endErrElement.text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_END_DATE);
         if($endErrElement.hasClass('none')){
@@ -172,8 +179,9 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
   _validateTimeValueAgainstNow : function(paramDate,paramTime,className){
     var returnValue = false;
     var $errorsElement = this.$container.find('.error-txt.'+className);
-    if((paramDate===moment().format('YYYYMMDD'))&&(parseInt(paramTime,10)<=parseInt(moment().format('HH'),10))){
+    if((paramDate<=this._currentDate)&&(parseInt(paramTime,10)<=parseInt(Tw.DateHelper.getCurrentDateTime('HH'),10))){
       $errorsElement.removeClass('none');
+      $errorsElement.text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_START_TIME);
     }else{
       returnValue = true;
       if(!$errorsElement.hasClass('none')){
@@ -242,8 +250,8 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
     var completePopupData = {
       prodNm : data.prodNm,
       processNm : Tw.PRODUCT_TYPE_NM.SETTING,
-      isBasFeeInfo : data.prodFee,
-      typeNm : Tw.PRODUCT_CTG_NM.ADDITIONS,
+      isBasFeeInfo : this._convertPrice(data.prodFee),
+      typeNm : Tw.NOTICE.ROAMING+' '+(this._prodTypeInfo.prodTypCd==='H_P'?Tw.PRODUCT_CTG_NM.PLANS:Tw.PRODUCT_CTG_NM.ADDITIONS),
       btnNmList : []
     };
     this._popupService.open({
@@ -286,7 +294,11 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
         this.$serviceTipElement.attr('id','RM_11_01_02_02_tip_01_05');
         break;
     }
+  },
+  _convertPrice : function (priceVal) {
+    if(!isNaN(priceVal)){
+      priceVal = Tw.FormatHelper.addComma(priceVal)+Tw.CURRENCY_UNIT.WON;
+    }
+    return priceVal;
   }
-
-
 };

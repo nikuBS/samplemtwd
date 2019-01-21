@@ -75,6 +75,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
 
   _procClearSmartWatchLineInfo: function() {
     if (this._isDisableSmartWatchLineInfo) {
+      this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
       return;
     }
 
@@ -109,6 +110,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
 
   _setSmartWatchLine: function(e) {
     this._smartWatchLine = $(e.currentTarget).data('num');
+    this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
     this._popupService.close();
   },
 
@@ -117,6 +119,9 @@ Tw.ProductMobileplanJoinTplan.prototype = {
 
     $elem.prop('checked', false);
     $elem.parents('.radiobox').removeClass('checked').attr('aria-checked', 'false');
+
+    this.$btnSetupOk.attr('disabled');
+    this.$btnSetupOk.prop('disabled', true);
   },
 
   _convConfirmOptions: function(result) {
@@ -130,8 +135,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
       isNumberBasFeeInfo: !this._confirmOptions.preinfo.toProdInfo.basFeeInfo.isNaN,
       toProdBasFeeInfo: this._confirmOptions.preinfo.toProdInfo.basFeeInfo.value,
       toProdDesc: this._sktProdBenfCtt,
-      isJoinTermProducts: (!Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoJoinList) ||
-        !Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoTermList)),
+      isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this._prodId) === -1,
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
       autoTermList: this._confirmOptions.preinfo.autoTermList,
       autoJoinBenefitList: this._confirmOptions.preinfo.toProdInfo.chgSktProdBenfCtt,
@@ -198,20 +202,22 @@ Tw.ProductMobileplanJoinTplan.prototype = {
       if (!isDataOvrAmt && !isVoiceOvrAmt && !isSmsOvrAmt) {
         overpayResults.isOverpayResult = false;
       } else {
+        var convDataAmt = Tw.ProductHelper.convDataAmtIfAndBas(resp.result.dataIfAmt, resp.result.dataBasAmt);
+
         overpayResults = $.extend(overpayResults, {
           isDataOvrAmt: isDataOvrAmt,
           isVoiceOvrAmt: isVoiceOvrAmt,
           isSmsOvrAmt: isSmsOvrAmt,
-          dataIfAmt: resp.result.dataIfAmt,
-          dataBasAmt: resp.result.dataBasAmt,
-          dataOvrAmt: Math.ceil(resp.result.dataOvrAmt),
-          voiceIfAmt: Math.ceil(resp.result.voiceIfAmt),
-          voiceBasAmt: Math.ceil(resp.result.voiceBasAmt),
-          voiceOvrAmt: Math.ceil(resp.result.voiceOvrAmt),
-          smsIfAmt: Math.ceil(resp.result.smsIfAmt),
-          smsBasAmt: Math.ceil(resp.result.smsBasAmt),
-          smsOvrAmt: Math.ceil(resp.result.smsOvrAmt),
-          ovrTotAmt: Math.ceil(resp.result.ovrTotAmt)
+          dataIfAmt: Tw.FormatHelper.addComma(convDataAmt.dataIfAmt) + convDataAmt.unit,
+          dataBasAmt: Tw.FormatHelper.addComma(convDataAmt.dataBasAmt) + convDataAmt.unit,
+          dataOvrAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.dataOvrAmt)),
+          voiceIfAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.voiceIfAmt)),
+          voiceBasAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.voiceBasAmt)),
+          voiceOvrAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.voiceOvrAmt)),
+          smsIfAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.smsIfAmt)),
+          smsBasAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.smsBasAmt)),
+          smsOvrAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.smsOvrAmt)),
+          ovrTotAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.ovrTotAmt))
         });
       }
     }
@@ -279,7 +285,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
     var completeData = {
       prodCtgNm: Tw.PRODUCT_CTG_NM.PLANS,
       mytPage: 'myplan',
-      btClass: 'item-two',
+      btClass: '',
       prodId: this._prodId,
       prodNm: this._confirmOptions.preinfo.toProdInfo.prodNm,
       typeNm: Tw.PRODUCT_TYPE_NM.JOIN,

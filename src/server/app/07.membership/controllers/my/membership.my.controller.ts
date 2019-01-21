@@ -32,20 +32,28 @@ export default class MembershipMy extends TwViewController {
   private getMyInfoData(): Observable<any> {
     let myInfoData = null;
     return this.apiService.request(API_CMD.BFF_11_0002, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
+      if ( resp.code !== API_CODE.CODE_00 ) {
+        return {
+          code: resp.code,
+          msg: resp.msg
+        };
+      } else {
         myInfoData = this.parseMyInfoData(resp.result);
       }
-      return myInfoData;
     });
   }
 
   private getMembershipData(): Observable<any> {
     let membershipData = null;
     return this.apiService.request(API_CMD.BFF_11_0001, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
+      if ( resp.code !== API_CODE.CODE_00 ) {
+        return {
+          code: resp.code,
+          msg: resp.msg
+        };
+      } else {
         membershipData = this.parseMembershipData(resp.result);
       }
-      return membershipData;
     });
   }
 

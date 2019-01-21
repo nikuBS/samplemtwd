@@ -22,8 +22,6 @@ Tw.MyTFareBillCard.prototype = {
   _init: function () {
     this._initVariables();
     this._bindEvent();
-    // this._checkIsAuto();
-    this._checkIsPopup();
   },
   _initVariables: function () {
     this.$cardNumber = this.$container.find('.fe-card-number');
@@ -60,19 +58,6 @@ Tw.MyTFareBillCard.prototype = {
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this));
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
     this.$container.on('click', '.fe-check-pay', $.proxy(this._checkPay, this));
-  },
-  _checkIsAuto: function () {
-    if (this.$container.find('.fe-auto-info').is(':visible')) {
-      this.$payBtn.removeAttr('disabled');
-    }
-  },
-  _checkIsPopup: function () {
-    var isCheck = this._historyService.getHash().match('check');
-
-    if (isCheck && this._historyService.isReload()) {
-      this._historyService.replace();
-      this._checkPay();
-    }
   },
   _onChangeOption: function (event) {
     var $target = $(event.currentTarget);
@@ -293,10 +278,10 @@ Tw.MyTFareBillCard.prototype = {
     var data = this._getData();
 
     $layer.find('.fe-payment-option-name').attr('id', this.$cardNumber.attr('data-code')).text(this.$cardNumber.attr('data-name'));
-    $layer.find('.fe-payment-option-number').attr('id', data.cardNum).text(Tw.StringHelper.masking(data.cardNum, '*', 8));
+    $layer.find('.fe-payment-option-number').attr('id', data.cardNum).text(data.cardNum);
     $layer.find('.fe-payment-amount').text(Tw.FormatHelper.addComma(this._paymentCommon.getAmount().toString()));
     $layer.find('.fe-payment-refund').attr('id', data.refundCd).attr('data-num', data.refundNum)
-      .text(data.refundNm + ' ' + Tw.StringHelper.masking(data.refundNum, '*', 8));
+      .text(data.refundNm + ' ' + data.refundNum);
   },
   _getData: function () {
     var isRefundInput = this.$refundInputBox.hasClass('checked');

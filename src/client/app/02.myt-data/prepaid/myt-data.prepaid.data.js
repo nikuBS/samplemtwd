@@ -220,7 +220,7 @@ Tw.MyTDataPrepaidData.prototype = {
 
     $layer.find('.fe-remain-data').text(Tw.FormatHelper.addComma(remainData.toString()));
     $layer.find('.fe-after-data').text(Tw.FormatHelper.addComma(this._afterData.toString()));
-    $layer.find('.fe-layer-card-number').text(Tw.StringHelper.masking($.trim(this.$cardNumber.val()), '*', 8));
+    $layer.find('.fe-layer-card-number').text($.trim(this.$cardNumber.val()));
     $layer.find('.fe-layer-card-info').attr('data-code', this.$cardNumber.attr('data-code'))
       .text(this.$cardNumber.attr('data-name'));
     $layer.find('.fe-recharge-amount').text($.trim(this.$dataSelector.text()));

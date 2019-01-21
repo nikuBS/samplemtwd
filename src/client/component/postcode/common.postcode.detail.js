@@ -69,7 +69,7 @@ Tw.CommonPostcodeDetail.prototype = {
     this.$layer.on('click', '.fe-more-btn', $.proxy(this._getMoreList, this));
   },
   _checkNumber: function (event) {
-    this._inputHelper.inputNumberOnly(event.currentTarget);
+    this._inputHelper.inputNumberAndDashOnly(event.currentTarget);
   },
   _search: function(event) {
     this.$resultBox.find('.fe-clone').remove();

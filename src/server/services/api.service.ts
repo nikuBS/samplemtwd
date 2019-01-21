@@ -287,6 +287,57 @@ class ApiService {
       });
   }
 
+  private requestSLogin(command, params, type): Observable<any> {
+    let result = null;
+    return this.request(command, params)
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          result = resp.result;
+          return this.loginService.setSvcInfo({
+            mbrNm: resp.result.mbrNm,
+            noticeType: resp.result.noticeTypCd,
+            loginType: type
+          });
+        } else {
+          throw resp;
+        }
+      })
+      .switchMap((resp) => this.request(API_CMD.BFF_01_0005, {}))
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          const category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
+          const currentSvcInfo = {
+            totalSvcCnt: 1,
+            expsSvcCnt: 1
+          };
+          Object.assign(currentSvcInfo, resp.result);
+
+          this.loginService.clearXtCookie();
+          return this.loginService.setSvcInfo(currentSvcInfo);
+        } else {
+          return this.loginService.setSvcInfo(null);
+        }
+      })
+      .switchMap((resp) => this.request(API_CMD.BFF_01_0002, {}))
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          return this.loginService.setAllSvcInfo(resp.result);
+        } else {
+          return this.loginService.setAllSvcInfo(null);
+        }
+      })
+      .switchMap((resp) => this.request(API_CMD.BFF_01_0040, {}))
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          return this.loginService.setChildInfo(resp.result);
+        } else {
+          return this.loginService.setChildInfo(null);
+        }
+      }).map((resp) => {
+        return { code: API_CODE.CODE_00, result: result };
+      });
+  }
+
   public requestLoginLoadTest(userId: string): Observable<any> {
     let result = null;
     return this.request(API_CMD.BFF_03_0000_TEST, { mbrChlId: userId })
@@ -357,11 +408,11 @@ class ApiService {
   }
 
   public requestEasyLoginAos(params): Observable<any> {
-    return this.requestLogin(API_CMD.BFF_03_0017, params, LOGIN_TYPE.EASY);
+    return this.requestSLogin(API_CMD.BFF_03_0017, params, LOGIN_TYPE.EASY);
   }
 
   public requestEasyLoginIos(params): Observable<any> {
-    return this.requestLogin(API_CMD.BFF_03_0018, params, LOGIN_TYPE.EASY);
+    return this.requestSLogin(API_CMD.BFF_03_0018, params, LOGIN_TYPE.EASY);
   }
 
   public requestUpdateSvcInfo(command, params): Observable<any> {
@@ -393,7 +444,7 @@ class ApiService {
     return this.requestUpdateSvcInfo(API_CMD.BFF_01_0003, params);
   }
 
-  public requestUpdateAllSvcInfo(command, params, headers, pathParams, version): Observable<any> {
+  public requestUpdateAllSvcInfo(command, params, headers?, pathParams?, version?): Observable<any> {
     let result = null;
     return this.request(command, params, headers, pathParams, version)
       .switchMap((resp) => {
@@ -406,46 +457,11 @@ class ApiService {
             loginType: svcInfo.loginType
           });
           return this.loginService.setSvcInfo(newSvc);
-          // return this.request(API_CMD.BFF_01_0005, {});
         } else {
           throw resp;
         }
       })
-      .switchMap((resp) => this.request(API_CMD.BFF_01_0002, {}))
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          const category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
-          const currentSvcInfo = {
-            userId: resp.result.userId,
-            xtUserId: resp.result.xtUserId,
-            totalSvcCnt: resp.result.totalSvcCnt,
-            expsSvcCnt: resp.result.expsSvcCnt
-          };
-          category.map((line) => {
-            const curLine = resp.result[LINE_NAME[line]];
-            if ( !FormatHelper.isEmpty(curLine) ) {
-              curLine.map((target) => {
-                if ( target.expsSeq === '1' ) {
-                  Object.assign(currentSvcInfo, target);
-                }
-              });
-              // delete resp.result.userId;
-              // delete resp.result.xtUserId;
-              // delete resp.result.totalSvcCnt;
-              // delete resp.result.expsSvcCnt;
-            }
-          });
-          return Observable.combineLatest(
-            this.loginService.setSvcInfo(currentSvcInfo),
-            this.loginService.setAllSvcInfo(resp.result));
-        } else {
-          return Observable.combineLatest(
-            this.loginService.setSvcInfo(null),
-            this.loginService.setAllSvcInfo(null));
-        }
-      }).map(() => {
-        return { code: API_CODE.CODE_00, result: result };
-      });
+      .switchMap((resp) => this.updateSvcInfo(result));
   }
 
   public requestChangeLine(params: any, headers?: any, pathParams?: any, version?: any): Observable<any> {
@@ -456,7 +472,7 @@ class ApiService {
     return this.requestUpdateAllSvcInfo(API_CMD.BFF_03_0006, params, headers, pathParams, version);
   }
 
-  public updateSvcInfo(): Observable<any> {
+  public updateSvcInfo(result): Observable<any> {
     return this.request(API_CMD.BFF_01_0005, {})
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
@@ -464,8 +480,35 @@ class ApiService {
         } else {
           throw resp;
         }
+      })
+      .switchMap((resp) => this.request(API_CMD.BFF_01_0002, {}))
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          // const category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
+          const currentSvcInfo = {
+            userId: resp.result.userId,
+            xtUserId: resp.result.xtUserId,
+            totalSvcCnt: resp.result.totalSvcCnt,
+            expsSvcCnt: resp.result.expsSvcCnt
+          };
+          return Observable.combineLatest(
+            this.loginService.setSvcInfo(currentSvcInfo),
+            this.loginService.setAllSvcInfo(resp.result));
+        } else {
+          return Observable.combineLatest(
+            this.loginService.setSvcInfo(null),
+            this.loginService.setAllSvcInfo(null));
+        }
+      })
+      .switchMap((resp) => this.request(API_CMD.BFF_01_0040, {}))
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          return this.loginService.setChildInfo(resp.result);
+        } else {
+          return this.loginService.setChildInfo(null);
+        }
       }).map(() => {
-        return { code: API_CODE.CODE_00 };
+        return { code: API_CODE.CODE_00, result: result };
       });
   }
 }

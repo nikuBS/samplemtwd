@@ -96,34 +96,57 @@ Tw.CustomerEmailQuality.prototype = {
   },
 
   _requestCell: function () {
+    var elSelectedLine = this.$wrap_tpl_quality.find('[data-svcmgmtnum]').data('svcmgmtnum');
+    var elInputline = this.$wrap_tpl_quality.find('.fe-quality-line').val();
+    var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine : '0';
+    var selSvcNum = !!elInputline ? elInputline : '';
+
     var htParams = $.extend(this._makeParams(), {
       inptZip: $('.fe-zip').val(),
       inptBasAddr: $('.fe-main-address').val(),
       inptDtlAddr: $('.fe-detail-address').val(),
+      selSvcMgmtNum: selSvcMgmtNum,
       content: this.tpl_quality_cell_content({
-        place: $('.fe-place').val(),
-        occurrence: $('.fe-occurrence').val(),
-        place_detail: $('.fe-place_detail').val(),
-        text_content: $('.fe-text_content').val(),
-        occurrence_date: $('.fe-occurrence_date').val(),
-        occurrence_detail: $('.fe-occurrence_detail').val(),
-        inqSvcClCd: $('.fe-quality-inqSvcClCd').find(':checked').val(),
-        svcNum: $('.fe-quality-line').is('input') ? $('.fe-quality-line').val() : $('.fe-quality-line').text().trim()
+        place: $('.fe-place').text(),
+        place_detail: $('.fe-place_detail').text(),
+        occurrence: $('.fe-occurrence').text(),
+        text_name: $('.fe-text_name').val(),
+        text_content: this.$wrap_tpl_quality.find('.fe-text_content').val(),
+        occurrence_date: $('.fe-occurrence_date').text(),
+        occurrence_detail: $('.fe-occurrence_detail').text(),
+        inqSvcClCd: $('.fe-quality-inqSvcClCd').find(':checked').parent().text().trim(),
+        svcNum: $('.fe-quality-line').is('input') ? $('.fe-quality-line').val() : $('.fe-quality-line').text().trim(),
+        inptZip: $('.fe-zip').val(),
+        inptBasAddr: $('.fe-main-address').val(),
+        inptDtlAddr: $('.fe-detail-address').val()
       })
     });
+
+    if ( selSvcMgmtNum === '0' ) {
+      htParams = $.extend(htParams, { selSvcNum: selSvcNum });
+    }
 
     this._apiService.request(Tw.API_CMD.BFF_08_0044, htParams)
       .done($.proxy(this._onSuccessRequest, this));
   },
 
   _requestInternet: function () {
+    var elSelectedLine = this.$wrap_tpl_quality.find('[data-svcmgmtnum]').data('svcmgmtnum');
+    var elInputline = this.$wrap_tpl_quality.find('.fe-quality-line').val();
+    var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine : '0';
+    var selSvcNum = !!elInputline ? elInputline : '';
+
     var htParams = $.extend(this._makeParams(), {
-      connSite: Tw.BrowserHelper.isApp() ? '19' : '15',
       subject: this.$wrap_tpl_quality.find('.fe-text_title').val(),
       inptZip: $('.fe-zip').val(),
       inptBasAddr: $('.fe-main-address').val(),
-      inptDtlAddr: $('.fe-detail-address').val()
+      inptDtlAddr: $('.fe-detail-address').val(),
+      selSvcMgmtNum: selSvcMgmtNum
     });
+
+    if ( selSvcMgmtNum === '0' ) {
+      htParams = $.extend(htParams, { selSvcNum: selSvcNum });
+    }
 
     this._apiService.request(Tw.API_CMD.BFF_08_0045, htParams)
       .done($.proxy(this._onSuccessRequest, this));

@@ -57,7 +57,6 @@ Tw.BenefitDisPgmInput.prototype = {
     this._confirmOptions = $.extend(this._confirmOptions, {
       title: Tw.PRODUCT_TYPE_NM.JOIN,
       applyBtnText: Tw.BUTTON_LABEL.JOIN,
-      isMobilePlan: !this._selType,
       joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
       typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
       toProdName: this._confirmOptions.preinfo.reqProdInfo.prodNm,
@@ -68,40 +67,37 @@ Tw.BenefitDisPgmInput.prototype = {
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
       autoTermList: this._confirmOptions.preinfo.autoTermList,
       isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0),
-      isJoinTermProducts: (!Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoJoinList) ||
-        !Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoTermList))
+      isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this._prodId) === -1
     });
   },
 
   _callConfirmCommonJs: function () {
-    if ( this._selType ) {
-      new Tw.ProductCommonConfirm(true, this.$container, $.extend(this._confirmOptions, {
-        joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
-        typeText: Tw.PRODUCT_CTG_NM.DISCOUNT_PROGRAM,
-        isSelectedProgram: true,
-        isContractPlan: this._confirmOptions.isContractPlan,
-        isJoinTermProducts: true,
-        setInfo: 'set-info',
-        isTerm: true,
-        confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2,
-        settingSummaryTexts: [
-          {
-            spanClass: 'term',
-            text: this._confirmOptions.monthCode[this._selType] + Tw.DATE_UNIT.MONTH
-          },
-          {
-            spanClass: 'date',
-            text: this._confirmOptions.monthDetail[this._selType]
-          }]
-      }), $.proxy(this._prodConfirmOk, this));
-    }
-    else {
-      new Tw.ProductCommonConfirm(false, this.$container, {
-        isWidgetInit: true,
-        noticeList: this._confirmOptions.prodNoticeList
-      }, $.proxy(this._prodConfirmOk, this));
+    var options = $.extend(this._confirmOptions, {
+      joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
+      typeText: Tw.PRODUCT_CTG_NM.DISCOUNT_PROGRAM,
+      isSelectedProgram: true,
+      isContractPlan: this._confirmOptions.isContractPlan,
+      isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this._prodId) === -1,
+      setInfo: 'set-info',
+      isTerm: true,
+      confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2,
+      isNoticeList: true,
+      isMobilePlan: false,
+      isDiscountPgm: true
+    });
 
+    if ( this._selType ) {
+      options.settingSummaryTexts = [
+        {
+          spanClass: 'term',
+          text: this._confirmOptions.monthCode[this._selType] + Tw.DATE_UNIT.MONTH
+        },
+        {
+          spanClass: 'date',
+          text: this._confirmOptions.monthDetail[this._selType]
+        }];
     }
+    new Tw.ProductCommonConfirm(true, this.$container, options, $.proxy(this._prodConfirmOk, this));
   },
 
   _prodConfirmOk: function () {
@@ -151,7 +147,12 @@ Tw.BenefitDisPgmInput.prototype = {
   },
 
   _onClosePop: function () {
-    this._historyService.goBack();
+    if ( this._selType ) {
+      this._historyService.go(-2);
+    }
+    else {
+      this._historyService.goBack();
+    }
   }
 
 };

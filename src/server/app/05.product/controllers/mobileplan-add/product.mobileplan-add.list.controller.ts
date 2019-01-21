@@ -13,13 +13,13 @@ import { of } from 'rxjs/observable/of';
 import ProductHelper from '../../../../utils/product.helper';
 import { DATA_UNIT } from '../../../../types/string.type';
 
+const ADDITION_CODE = 'F01200';
 export default class ProductAdditions extends TwViewController {
-  private ADDITION_CODE = 'F01200';
-
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     const params = {
-      idxCtgCd: this.ADDITION_CODE,
+      idxCtgCd: ADDITION_CODE,
       ...(req.query.filters ? { searchFltIds: req.query.filters } : {}),
+      ...(req.query.order ? { searchOrder: req.query.order } : {}),
       ...(req.query.tag ? { searchTagId: req.query.tag } : {})
     };
 

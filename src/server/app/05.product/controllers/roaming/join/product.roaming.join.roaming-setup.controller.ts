@@ -30,22 +30,21 @@ class ProductRoamingJoinRoamingSetup extends TwViewController {
     }
 
     Observable.combineLatest(
-      this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId),
+      this.apiService.request(API_CMD.BFF_10_0001, {}, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0017, {'joinTermCd' : '01'}, {}, [prodId])
-    ).subscribe(([ prodRedisInfo, prodApiInfo ]) => {
-
-      if (FormatHelper.isEmpty(prodRedisInfo) || (prodApiInfo.code !== API_CODE.CODE_00)) {
+    ).subscribe(([ prodTypeInfo, prodApiInfo ]) => {
+      if ((prodTypeInfo.code !== API_CODE.CODE_00) || (prodApiInfo.code !== API_CODE.CODE_00)) {
         return this.error.render(res, {
           svcInfo: svcInfo,
           title: PRODUCT_TYPE_NM.JOIN,
-          code: prodApiInfo.code,
-          msg: prodApiInfo.msg,
+          code: (prodTypeInfo.code !== API_CODE.CODE_00) ? prodTypeInfo.code : prodApiInfo.code,
+          msg: (prodTypeInfo.code !== API_CODE.CODE_00) ? prodTypeInfo.msg : prodApiInfo.msg,
         });
       }
 
       res.render('roaming/join/product.roaming.join.roaming-setup.html', {
         svcInfo : svcInfo,
-        prodRedisInfo : prodRedisInfo.result.summary,
+        prodTypeInfo : prodTypeInfo.result,
         prodApiInfo : prodApiInfo.result,
         prodId : prodId,
         pageInfo : pageInfo

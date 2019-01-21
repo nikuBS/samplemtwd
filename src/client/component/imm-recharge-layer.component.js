@@ -66,12 +66,9 @@ Tw.ImmediatelyRechargeLayer.prototype = {
         if ( etc.code === Tw.API_CODE.CODE_00 ) {
           this.immChargeData.etc = etc.result;
         }
-        else if (etc.code === Tw.API_CODE.RCG0062) {
-          // 팅/쿠키즈/안심음성 요금제 미사용중인 경우
-          this.immChargeData.etc = null;
-        }
         else {
-          this.immChargeData.etc = etc;
+          //  RCG0062: 팅/쿠키즈/안심음성 요금제 미사용중인 경우
+          this.immChargeData.etc = null;
         }
         if ( optSvc.code === Tw.API_CODE.CODE_00 ) {
           // optProdList -> disProdList 합쳐짐 (BE 1/14 기준)
@@ -113,8 +110,8 @@ Tw.ImmediatelyRechargeLayer.prototype = {
           }]
         });
       }
-      // 선불 쿠폰 TODO: API 완료 후 적용 필요함(TBD)
-      data.push(Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.PREPAY);
+      // TODO: 11차수에서 hidden 처리, 환경설정 및 개발 완료 후 enable 처리
+      // data.push(Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.PREPAY);
       var subList = [];
       if ( !_.isEmpty(this.immChargeData.limit) ) {
         var curLimit = parseInt(this.immChargeData.limit.currentTopUpLimit, 10);
@@ -197,7 +194,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
     else {
       $target = this.$popupContainer.find('[data-external]');
       if ( $target.length > 0 ) {
-        Tw.CommonHelper.openUrlExternal($target.attr('data-external'));
+        this._getBPCP($target.attr('data-external'));
       }
     }
   },
@@ -229,21 +226,36 @@ Tw.ImmediatelyRechargeLayer.prototype = {
 
   _onPrepayCoupon: function (classNm, event) {
     var $target = $(event.currentTarget);
-    var browser = Tw.BrowserHelper.isApp()? 'APP' : 'WEB';
     switch ( classNm ) {
       case 'data_coupon':
-        // $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.T_DATA[browser]);
-        $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.T_DATA_DEV[browser]);
+        $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.T_DATA);
         break;
       case 't_coupon':
-        // $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.T_COUPON[browser]);
-        $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.T_COUPON_DEV[browser]);
+        $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.T_COUPON);
         break;
       case 'jeju_coupon':
-        // $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.JEJU[browser]);
-        $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.JEJU_DEV[browser]);
+        $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.JEJU);
         break;
     }
     this._popupService.close();
+  },
+
+  _getBPCP: function (url) {
+    var replaceUrl = url.replace('BPCP:', '');
+    this._apiService.request(Tw.API_CMD.BFF_01_0039, { bpcpServiceId: replaceUrl })
+      .done($.proxy(this._responseBPCP, this));
+  },
+
+  _responseBPCP: function (resp) {
+    if ( resp.code !== Tw.API_CODE.CODE_00 ) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    var url = resp.result.svcUrl;
+    if ( !Tw.FormatHelper.isEmpty(resp.result.tParam) ) {
+      url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
+    }
+
+    Tw.CommonHelper.openUrlInApp(url);
   }
 };

@@ -11,39 +11,65 @@ Tw.ProductRoamingJoinConfirmInfo = function (rootEl,data,doJoinCallBack,closeCal
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$rootContainer);
+  this._showDateFormat = 'YYYY. MM. DD.';
+  this._dateFormat = 'YYYYMMDD';
   if(this._page){
     this._$popupContainer = this.$rootContainer;
-    this._prodRedisInfo = rootData;
+    this._prodTypeInfo = rootData;
     this._prodId = pageProdId;
-    this._bindPopupElementEvt(this.$rootContainer);
-    return;
+    this._pageInit();
+  }else{
+    this._doJoinCallBack = doJoinCallBack;
+    this._popupInit(closeCallBack,hash);
+    this._rootData = rootData;
   }
-  this._doJoinCallBack = doJoinCallBack;
-  this._openConfirmRoamingInfoPopup(this._popupData,closeCallBack,hash);
-  this._rootData = rootData;
 };
 
 Tw.ProductRoamingJoinConfirmInfo.prototype = {
+  _pageInit : function () {
+    if(isNaN(this._popupData.preinfo.reqProdInfo.basFeeInfo)){
+      this.$rootContainer.find('.tx-bold.vbl').text(this._popupData.preinfo.reqProdInfo.basFeeInfo);
+      this.$rootContainer.find('#tex').hide();
+    }else{
+      this.$rootContainer.find('.tx-bold.vbl').text(this._convertPrice(this._popupData.preinfo.reqProdInfo.basFeeInfo));
+    }
+    this._bindPopupElementEvt(this.$rootContainer);
+    if(this._popupData.preinfo.joinNoticeList.length<=0){
+      this.$tooltipList = this.$rootContainer.find('#tooltip_list');
+      this._tooltipTemplate = Handlebars.compile(this.$rootContainer.find('#tooltip_template').html());
+      this._tooltipInit(this._prodId);
+    }
+  },
+  _popupInit : function (closeCallBack,hash) {
+    if(isNaN(this._popupData.prodFee)){
+      this._popupData.showTex = false;
+    }else{
+      this._popupData.prodFee = this._convertPrice(this._popupData.prodFee);
+      this._popupData.showTex = true;
+    }
+    this._openConfirmRoamingInfoPopup(this._popupData,closeCallBack,hash);
+  },
   _openConfirmRoamingInfoPopup : function (data,closeCallBack,hash) {
     data.toolTipData = this._tooltipInit(data.prodId);
     this._popupService.open({
       hbs: 'RM_11_01_01_02',
       layer: true,
       data : data
-    },$.proxy(this._init,this),
+    },$.proxy(this._popupOpenCallback,this),
       closeCallBack,hash);
   },
-  _init : function($poppContainer){
+  _popupOpenCallback : function($poppContainer){
     this._$popupContainer = $poppContainer;
     this._bindPopupElementEvt($poppContainer);
+    this._currentDate = Tw.DateHelper.getCurrentShortDate();
     var setingInfo;
     if(this._popupData.joinType==='setup'){
-      setingInfo = moment(this._popupData.userJoinInfo.svcStartDt,'YYYYMMDD').format('YYYY. MM. DD')+' '+this._popupData.userJoinInfo.svcStartTm+':00';
-      setingInfo+= ' ~ '+moment(this._popupData.userJoinInfo.svcEndDt,'YYYYMMDD').format('YYYY. MM. DD')+' '+this._popupData.userJoinInfo.svcEndTm+':00';
+      setingInfo = Tw.DateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcStartDt,this._showDateFormat,this._dateFormat)+' '+this._popupData.userJoinInfo.svcStartTm+':00';
+      setingInfo+= ' ~ '+Tw.DateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcEndDt,this._showDateFormat,this._dateFormat)+' '+this._popupData.userJoinInfo.svcEndTm+':00';
     }else if(this._popupData.joinType==='auto'){
-      setingInfo = moment(this._popupData.userJoinInfo.svcStartDt,'YYYYMMDD').format('YYYY. MM. DD')+' '+this._popupData.userJoinInfo.svcStartTm+':00';
+      setingInfo = Tw.DateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcStartDt,this._showDateFormat,this._dateFormat)+' '+this._popupData.userJoinInfo.svcStartTm+':00';
     }else if(this._popupData.joinType==='begin'){
-      setingInfo = moment(this._popupData.userJoinInfo.svcStartDt,'YYYYMMDD').format('YYYY. MM. DD');
+      setingInfo = Tw.DateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcStartDt,this._showDateFormat,this._dateFormat);
     }else if(this._popupData.joinType==='alarm'){
       for(var i=0;i<this._popupData.userJoinInfo.svcNumList.length;i++){
         if(i>=2){
@@ -55,9 +81,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         }
       }
     }
-
     this._$popupContainer.find('.term').text(setingInfo);
-
   },
   _bindPopupElementEvt : function (popupObj) {
     var $popupLayer = $(popupObj);
@@ -72,6 +96,9 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       $popupLayer.on('click','.individual.checkbox>input',$.proxy(this._agreeCheck,this));
     }
     if(this._page){
+      if(this._popupData.preinfo.joinNoticeList.length>0){
+        $popupLayer.on('click','.tip-view',$.proxy(this._showBffToolTip,this));
+      }
       $popupLayer.on('click','.prev-step',$.proxy(this._goBack,this));
     }else{
       $popupLayer.on('click','.prev-step',$.proxy(this._showCancelAlart,this));
@@ -137,11 +164,11 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
         var completePopupData = {
-          prodNm : this._prodRedisInfo.prodNm,
+          prodNm : this._popupData.preinfo.reqProdInfo.prodNm,
           processNm : Tw.PRODUCT_TYPE_NM.JOIN,
-          isBasFeeInfo : this._prodRedisInfo.baseFeeInfo,
-          typeNm : Tw.PRODUCT_CTG_NM.ADDITIONS,
-          settingType : Tw.PRODUCT_CTG_NM.ADDITIONS+' '+Tw.PRODUCT_TYPE_NM.JOIN,
+          isBasFeeInfo : this._convertPrice(this._popupData.preinfo.reqProdInfo.basFeeInfo),
+          typeNm : Tw.NOTICE.ROAMING+' '+(this._prodTypeInfo.prodTypCd==='H_P'?Tw.PRODUCT_CTG_NM.PLANS:Tw.PRODUCT_CTG_NM.ADDITIONS),
+          settingType : Tw.PRODUCT_TYPE_NM.JOIN,
           btnNmList : [Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE]
         };
         this._popupService.open({
@@ -203,8 +230,8 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     return agreeCnt;
   },
   _bindCompletePopupEvt : function (popupObj) {
-    $(popupObj).on('click','.btn-round2',this._goMyInfo);
-    $(popupObj).on('click','.btn-floating',this._goBack);
+    $(popupObj).on('click','.btn-round2',$.proxy(this._goMyInfo,this));
+    $(popupObj).on('click','.btn-floating',$.proxy(this._goBack,this));
   },
   _goBack : function(){
     this._popupService.close();
@@ -264,6 +291,8 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       case 'NA00004230':
       case 'NA00004231':
       case 'NA00005167':
+      case 'NA00005301':
+      case 'NA00005337':
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_09', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
         break;
       case 'NA00005252':
@@ -282,6 +311,13 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       case 'NA00006038':
       case 'NA00006040':
       case 'NA00005900':
+      case 'NA00005901':
+      case 'NA00006039':
+      case 'NA00006041':
+      case 'NA00006045':
+      case 'NA00006047':
+      case 'NA00006049':
+      case 'NA00006053':
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_13', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_14', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
         break;
@@ -290,6 +326,12 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       case 'NA00006042':
       case 'NA00006044':
       case 'NA00005902':
+        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_14', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
+        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_15', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
+        break;
+      case 'NA00005903':
+      case 'NA00006043':
+      case 'NA00006051':
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_15', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_16', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
         break;
@@ -300,6 +342,10 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       case 'NA00005898':
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_19', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_20', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
+        break;
+      case 'NA00005899':
+        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_20', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
+        tooltipArr.push({ tipId : ' TC000013', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
         break;
       case 'NA00005691':
       case 'NA00005694':
@@ -325,7 +371,41 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_33', tipTitle : Tw.TOOLTIP_TITLE.SERVICE_START_GUIDE });
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_34', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
         break;
+      case 'NA00005747':
+        tooltipArr.push({ tipId : 'TC000006', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
+        break;
     }
-    return tooltipArr;
+    if(this._page){
+      if(tooltipArr.length<=0){
+        this.$rootContainer.find('.tip_container').hide();
+        return;
+      }
+      _.each(tooltipArr,$.proxy(function (data) {
+        this.$tooltipList.append(this._tooltipTemplate({tipData : data}));
+      },this));
+    }else{
+      return tooltipArr;
+    }
+  },
+  _showBffToolTip : function (evt) {
+    var tooltipData = $(evt.currentTarget).data();
+    this._popupService.open({
+      url: Tw.Environment.cdn + '/hbs/',
+      'pop_name': 'type_tx_scroll',
+      'title': tooltipData.tit,
+      'title_type': 'sub',
+      'cont_align': 'tl',
+      'contents': tooltipData.txt,
+      'bt_b': [{
+        style_class: 'tw-popup-closeBtn bt-red1 pos-right',
+        txt: Tw.BUTTON_LABEL.CONFIRM
+      }]
+    },null,null);
+  },
+  _convertPrice : function (priceVal) {
+    if(!isNaN(priceVal)){
+      priceVal = Tw.FormatHelper.addComma(priceVal)+Tw.CURRENCY_UNIT.WON;
+    }
+    return priceVal;
   }
 };

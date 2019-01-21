@@ -113,7 +113,14 @@
                                 <ul class="acco-list">
                                     <% lineList.s.map((line, index) => { %>
                                     <li class="acco-box fe-line <%if(line.expsYn === 'N') { %> none-event <% } %> <% if(index >= showParam.defaultCnt) { %> none <% } %>"  data-svcMgmtNum="<%= line.svcMgmtNum%>">
-                                        <div class="acco-tit"><button role="button" aria-pressed="false"><span class="ico"></span><span class="txt fe-show-name"><%= line.showName %></span><span class="line"><%= line.addr %></span></button></div>
+                                        <div class="acco-tit"><button role="button" aria-pressed="false">
+                                            <span class="ico"></span><span class="txt fe-show-name"><%= line.showName %></span>
+                                            <% if(line.svcAttrCd === 'S3') { %>
+                                            <span class="line"><%= line.svcNum %></span>
+                                            <% } else { %>
+                                            <span class="line"><%= line.addr %></span>
+                                            <% } %>
+                                        </button></div>
                                         <div class="acco-cont">
                                             <div class="line-change-cont">
                                                 <ul>

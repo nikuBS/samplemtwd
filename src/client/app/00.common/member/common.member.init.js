@@ -7,12 +7,16 @@
 Tw.CommonMemberInit = function (rootEl) {
   this.$container = rootEl;
 
-  this._apiService = Tw.Api;
+  this._nativeService = new Tw.NativeService();
   this._init();
 };
 
 Tw.CommonMemberInit.prototype = {
   _init: function () {
-    this._apiService.sendNativeSession('N');
+    this._nativeService.sendInitSession(Tw.NTV_CMD.SESSION, {
+      serverSession: Tw.CommonHelper.getCookie('TWM'),
+      expired: Tw.SESSION_EXPIRE_TIME,
+      loginType: 'N'
+    });
   }
 };

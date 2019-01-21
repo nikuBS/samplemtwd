@@ -30,12 +30,14 @@
             <div id="contents" class="container-wrap">
                 <h2 class="blind">내용</h2>
                 <div class="container">
+                    <% if (!isAllPaid) { %>
                     <!-- .cont-box -->
                     <div class="cont-box">
                         <% include ../../components/bill/myt-fare.bill.common.component.html %>
                     </div>
                     <!--// .cont-box -->
                     <hr class="cont-sp type1" aria-hidden="true"/>
+                    <% } %>
                     <!-- .cont-box -->
                     <% if (virtualBankList.length > 0) { %>
                     <div class="cont-box noborder">

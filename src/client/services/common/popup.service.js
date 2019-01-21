@@ -6,6 +6,7 @@ Tw.PopupService = function () {
   this._openCallback = null;
   this._closeCallback = null;
   this._hashService = Tw.Hash;
+  this._historyService = new Tw.HistoryService();
 
   this._popupObj = {};
 
@@ -34,15 +35,31 @@ Tw.PopupService.prototype = {
     if ( !Tw.FormatHelper.isEmpty(this._openCallback) ) {
       this._sendOpenCallback($currentPopup);
     }
-    Tw.Tooltip.popInit($popups.last().attr('data-menuId'));
+    Tw.Tooltip.popInit($popups.last());
   },
-  _onFailPopup: function(option) {
+  _onFailPopup: function(retryParams) {
     if (Tw.BrowserHelper.isApp()) {
-      Tw.Native.send(Tw.NTV_CMD.OPEN_NETWORK_ERROR_POP, {}, $.proxy(this._onRetry, this, option));
+      var lastHash = this._prevHashList[this._prevHashList.length - 1];
+
+      this._prevHashList = [];
+      this.close();
+
+      setTimeout($.proxy(function() {
+        Tw.Native.send(Tw.NTV_CMD.OPEN_NETWORK_ERROR_POP, {}, $.proxy(this._onRetry, this, $.extend(retryParams, lastHash)));
+
+        if (Tw.BrowserHelper.isIos()) {
+          window.onNativeCallback = $.proxy(this._onRetry, this, $.extend(retryParams, lastHash));
+        }
+      }, this), 100);
     }
   },
-  _onRetry: function(option) {
-    this._open(option);
+  _onRetry: function(retryParams) {
+    setTimeout($.proxy(function() {
+      this._setOpenCallback(retryParams.openCallback);
+      this._setConfirmCallback(retryParams.confirmCallback);
+      this._addHash(retryParams.closeCallback, retryParams.curHash);
+      this._open(retryParams.option);
+    }, this), 200);
   },
   _popupClose: function (closeCallback) {
     this._confirmCallback = null;
@@ -105,7 +122,11 @@ Tw.PopupService.prototype = {
       url: Tw.Environment.cdn + '/hbs/',
       cdn: Tw.Environment.cdn
     });
-    skt_landing.action.popup.open(option, $.proxy(this._onOpenPopup, this), $.proxy(this._onFailPopup, this, option));
+    skt_landing.action.popup.open(option, $.proxy(this._onOpenPopup, this), $.proxy(this._onFailPopup, this, {
+      option: option,
+      openCallback: this._openCallback,
+      confirmCallback: this._confirmCallback
+    }));
   },
   open: function (option, openCallback, closeCallback, hashName) {
     this._setOpenCallback(openCallback);

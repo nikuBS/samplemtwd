@@ -77,16 +77,56 @@ Tw.ProductRoamingSearchResult.prototype = {
         this.manageType = [];
         this.typeTxt = [];
 
-        if (this._rateInfo.eqpMthdCd === 'W') {
-            this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma].txt);
-            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma]);
-            this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm].txt);
-            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm]);
-        } else if (this._rateInfo.eqpMthdCd === 'D') {
-            this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma].txt);
-            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma]);
+        Tw.Logger.info('roaming service info : ', JSON.stringify(this._rateInfo));
+
+        if(this._rateInfo.iPoPhone){
+            if(this._rateInfo.iPoPhone === '0') {
+                if(this._rateInfo.eqpMthdCd === 'W'){   // wcdma+gsm
+                    this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma].txt);
+                    this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma]);
+                    this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm].txt);
+                    this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm]);
+                }else if(this._rateInfo.eqpMthdCd === 'D'){ // cdma
+                    this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma].txt);
+                    this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma]);
+                }else {
+                    this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.lte].txt);
+                    this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.lte]);
+                    this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma].txt);
+                    this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma]);
+                    this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma].txt);
+                    this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma]);
+                    this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm].txt);
+                    this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm]);
+                }
+            } else {
+                if(this._rateInfo.lte > 0 && this._rateInfo.iLtePhone !== '' && this._rateInfo.iLtePhone !== 'N'){
+                    this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.lte].txt);
+                    this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.lte]);
+                }
+
+                if(this._rateInfo.iPoPhone === '1') {    // WCDMA Only
+                    this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma].txt);
+                    this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma]);
+                } else if(this._rateInfo.iPoPhone === '2'){ // WCDMA+GSM
+                    this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma].txt);
+                    this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma]);
+                    this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm].txt);
+                    this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm]);
+                } else if(this._rateInfo.iPoPhone === '4'){ // WCDMA+CDMA
+                    this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma].txt);
+                    this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma]);
+                    this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma].txt);
+                    this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma]);
+                } else {
+                    this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma].txt);
+                    this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma]);
+                    this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm].txt);
+                    this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm]);
+                }
+            }
         } else {
-            if(this._rateInfo.lte > 0 && this._rateInfo.iLtePhone !== 'N'){
+            if(this._rateInfo.lte > 0 && this._rateInfo.iLtePhone !== '' && this._rateInfo.iLtePhone !== 'N'){
                 this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.lte].txt);
                 this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.lte]);
             }
@@ -102,26 +142,26 @@ Tw.ProductRoamingSearchResult.prototype = {
                 this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm].txt);
                 this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm]);
             }
-            if(this._rateInfo.rent > 0){
-                this.reqParams.showDailyPrice = 'Y';
-                this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.R].txt);
-                this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.R]);
-            }else {
-                this.reqParams.showDailyPrice = 'N';
-                if(this._svcInfo === null && this._srchInfo.eqpMdlNm === ''){
+        }
+
+        if(this._rateInfo.rent > 0){
+            this.reqParams.showDailyPrice = 'Y';
+            this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.R].txt);
+            this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.R]);
+        }else {
+            this.reqParams.showDailyPrice = 'N';
+            if(this._svcInfo === null && this._srchInfo.eqpMdlNm === ''){
+                this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent].txt);
+                this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent]);
+            } else {
+                if(this._srchInfo.eqpMdlNm === ''){
                     this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent].txt);
                     this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent]);
-                } else {
-                    if(this._srchInfo.eqpMdlNm === ''){
-                        this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent].txt);
-                        this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.rent]);
-                    }
                 }
             }
         }
 
         this.reqParams.manageType = this.manageType[0].type;
-        // this.manageType[0]= 'checked';
         this.$container.find('.fe-rm-type').text(this.typeTxt.join(', '));
 
         Tw.Logger.info('this.reqParams : ', this.reqParams);
@@ -167,15 +207,15 @@ Tw.ProductRoamingSearchResult.prototype = {
         this._history.goLoad('/product/callplan/NA00006046');
     },
     _onClickSelectBtn: function () {
-        if(this.modelValue !== '') {
+        if(this.modelValue === undefined || this.modelValue === ''){
+            this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.MSG, Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.TITLE);
+        } else {
             this._phoneInfo.eqpMdlNm = this.modelValue;
             this._phoneInfo.eqpMdlCd = this.modelCode;
             this._srchInfo.eqpMdlNm = this.modelValue;
             this.$userPhoneInfo.empty();
             this.$userPhoneInfo.append(this._rmPhoneInfoTmpl({ items: this._phoneInfo }));
             this._roamingDecriptonInit();
-        }else {
-            this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.MSG, Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.TITLE);
         }
     },
     _onSelectModel: function () {
@@ -243,6 +283,10 @@ Tw.ProductRoamingSearchResult.prototype = {
             noticeParam.voiceShown = false;
         }else if(this.reqParams.manageType === ''){
             _result.rentShown = true;
+        } else if(this.reqParams.manageType === 'C' && _result.dMoChargeMin){
+            _result.cdmaUnit = true;
+            _result.mTxtCharge = _result.dMoChargeMin;
+            _result.mMtmCharge = _result.dMoChargeMin;
         }
 
         if(_result.ableAreaType === 'A'){

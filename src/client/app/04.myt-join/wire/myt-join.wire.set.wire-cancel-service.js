@@ -506,6 +506,15 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     Tw.Logger.info('[할인반환금조회]');
     // var thisMain = this;
     this.dataLoading.show();
+    $('#divEmpty').hide();
+    Tw.CommonHelper.startLoading('[data-target="dataLoading"]', 'grey', true);
+    // 스크롤시에 로딩바의 위치가 바뀌므로 조정한다.
+    var loadingBarY = parseInt($('.tw-loading').css('top'),0);
+    var containerY = $('.container').offset().top;
+    var headerH = $('.header-wrap').height();
+    loadingBarY = loadingBarY - containerY + headerH;
+    $('.tw-loading').css('top',  loadingBarY);
+
     $('#span-err-dcrefund').hide();
 
     // $.ajax('http://localhost:3000/mock/wire.BFF_05_0173.json')
@@ -518,16 +527,24 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     //     Tw.Logger.info(err);
     //   });
 
-    return this._apiService.request(Tw.API_CMD.BFF_05_0173).done($.proxy(this._getWireCancelFeeInit, this));
+    return this._apiService.request(Tw.API_CMD.BFF_05_0173).done($.proxy(this._getWireCancelFeeInit, this))
+      .fail(function(){
+        Tw.CommonHelper.endLoading('[data-target="dataLoading"]');
+      });
 
   },
   _getWireCancelFeeInit: function(res) {
+    Tw.CommonHelper.endLoading(this.dataLoading);
     this.dataLoading.hide();
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       Tw.Logger.info('[결과1] _getWireCancelFeeInit', res);
       this.dataModel.dcRefdSearch = true;
       this.cancelFeeInfo = res.result;
+
+      if(res.result.penaltyInfo && res.result.paenaltyInfo.length <= 0){
+        $('#divEmpty').show();
+      }
 
       _.map( this.cancelFeeInfo.penaltyInfo, $.proxy( function( item ){
         item.brchAmt = this._comComma( item.brchAmt );
@@ -547,6 +564,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
       this._svcHbDetailList(textDtObj, this.outputDtArea, this.$entryTplDate);
 
     } else if ( res.code === 'ZINVE8888' ) {
+      $('#divEmpty').show();
       this._popupService.openAlert(Tw.MYT_JOIN_WIRE_CANCEL_SERVICE.NO_DC_REFUND);
       this.dataModel.dcRefdSearch = true;
     }
@@ -575,7 +593,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
 
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.TITLE, null,
         $.proxy(function(){
-          this._goLoad('/myt-join/submain/wire/history');
+          this._goLoad('/myt-join/submain_w');
         }, this));
     } else {
       Tw.Error(res.code, res.msg).pop();

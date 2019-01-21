@@ -33,7 +33,7 @@
                     <div class="calling-plan">
                         <a class="wrap-link" href="/myt-join/additions">
                             <i class="badge icon-badge-plan-my"><span class="blind">my</span></i>
-                            <span class="stit"><%= additionData.myAdditions.recentlyJoinsProdNm %> 외 <%= additionData.myAdditions.addProdCnt %>건</span>
+                            <span class="stit"><%= additionData.myAdditions.recentlyJoinsProdNm %><% if (additionData.myAdditions.addProdCnt > 1) { %> 외 <%= additionData.myAdditions.addProdCnt - 1 %>건<% } %></span>
                         </a>
                     </div>
                 </div>
@@ -68,7 +68,15 @@
                             </button>
                         </div>
                         <div class="filter-select">
-                            <button type="button" class="filterselect-btn fe-select-order">추천순</button>
+                            <button type="button" class="filterselect-btn fe-select-order">
+                                <% if (params.searchOrder === 'highprice') { %>
+                                    높은 가격순
+                                <% } else if (params.searchOrder === 'lowprice') { %>
+                                    낮은 가격순
+                                <% } else { %>
+                                    추천순
+                                <% } %>
+                            </button>
                         </div>
                     </div>
                 </div>

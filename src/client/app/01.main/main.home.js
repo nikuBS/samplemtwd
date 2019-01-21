@@ -17,7 +17,6 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
   this._smartCardOrder = JSON.parse(smartCard);
 
   this.$elBarcode = null;
-  this.$tabStore = null;
   this.$elArrSmartCard = [];
   this.loadingStaus = [];
   this._emrNotice = null;
@@ -30,17 +29,13 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
   this._cachedDefaultElement();
   this._bindEventStore();
   this._bindEventLogin();
+  this._getQuickMenu(isLogin === 'true');
 
   if ( isLogin === 'true' ) {
     this._cachedElement();
     this._getWelcomeMsg();
     this._bindEvent();
-    this._getQuickMenu();
     this._initScroll();
-  } else {
-    setTimeout($.proxy(function () {
-      this.$tabStore.trigger('click');
-    }, this), 0);
   }
 };
 
@@ -59,7 +54,7 @@ Tw.MainHome.prototype = {
     FAMILY: 'family'
   },
   _cachedDefaultElement: function () {
-    this.$tabStore = this.$container.find('.icon-home-tab-store');
+    // this.$tabStore = this.$container.find('.icon-home-tab-store');
   },
   _cachedElement: function () {
     this.$elBarcode = this.$container.find('#fe-membership-barcode');
@@ -115,7 +110,9 @@ Tw.MainHome.prototype = {
   _makeBarcode: function () {
     var cardNum = this.$elBarcode.data('cardnum');
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
-      this.$elBarcode.JsBarcode(cardNum);
+      this.$elBarcode.JsBarcode(cardNum, {
+        background: 'rgba(255, 255, 255, 0)'
+      });
     }
   },
   _onClickBarcode: function () {
@@ -155,9 +152,9 @@ Tw.MainHome.prototype = {
 
   },
   _onOpenBarcode: function (cardNum, $popupContainer) {
-    var extendBarcode = $popupContainer.find('#fe-membership-barcode-extend');
+    var $extendBarcode = $popupContainer.find('#fe-membership-barcode-extend');
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
-      extendBarcode.JsBarcode(cardNum);
+      $extendBarcode.JsBarcode(cardNum, { height: 75, margin: 0 });
     }
   },
   _onClickGoBroadband: function () {
@@ -688,26 +685,28 @@ Tw.MainHome.prototype = {
   _successDrawBanner: function () {
     this._resetHeight();
   },
-  _getQuickMenu: function () {
+  _getQuickMenu: function (isLogin) {
     this._apiService.request(Tw.NODE_CMD.GET_QUICK_MENU, {})
-      .done($.proxy(this._successQuickMenu, this));
+      .done($.proxy(this._successQuickMenu, this, isLogin));
   },
-  _successQuickMenu: function (resp) {
+  _successQuickMenu: function (isLogin, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._drawQuickMenu(resp.result);
+      this._drawQuickMenu(resp.result, isLogin);
     }
   },
-  _drawQuickMenu: function (quickMenu) {
+  _drawQuickMenu: function (quickMenu, isLogin) {
     var list = this._parseQuickMenu(quickMenu);
     var $quickMenuEl = this.$container.find('#fe-tmpl-quick');
     if ( $quickMenuEl.length > 0 && list.length > 0 ) {
       var $quickTemp = $('#fe-home-quick');
       var tplQuick = Handlebars.compile($quickTemp.html());
-      $quickMenuEl.html(tplQuick({ list: list }));
+      $quickMenuEl.html(tplQuick({ list: list, isLogin: isLogin }));
     } else {
-      var $quickEmptyTemp = $('#fe-home-quick-empty');
-      var tplQuickEmpty = Handlebars.compile($quickEmptyTemp.html());
-      $quickMenuEl.html(tplQuickEmpty());
+      if ( isLogin ) {
+        var $quickEmptyTemp = $('#fe-home-quick-empty');
+        var tplQuickEmpty = Handlebars.compile($quickEmptyTemp.html());
+        $quickMenuEl.html(tplQuickEmpty());
+      }
     }
     $('.fe-bt-quick-edit').on('click', $.proxy(this._onClickQuickEdit, this, list));
   },
@@ -737,6 +736,6 @@ Tw.MainHome.prototype = {
     quickEdit.open(list, $.proxy(this._onChangeQuickMenu, this));
   },
   _onChangeQuickMenu: function () {
-    this._getQuickMenu();
+    this._getQuickMenu(true);
   }
 };

@@ -33,22 +33,7 @@
                     <div class="widget">
                         <div class="widget-box slider1">
                             <div class="slider-box">
-                                <ul class="slider">
-                                    <li>
-                                        <button>
-                                            <img src="/img/dummy/dummy-banner01.jpg" alt="">
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button>
-                                            <img src="/img/dummy/dummy-banner01.jpg" alt="">
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button>
-                                            <img src="/img/dummy/dummy-banner01.jpg" alt="">
-                                        </button>
-                                    </li>
+                                <ul class="slider" data-location="6">
                                 </ul>
                             </div>
                         </div>
@@ -136,6 +121,7 @@
                         <div class="widget-box horizontal">
                             <div class="horizontal-slide">
                                 <ul class="horizontal-list coalition-brand-box type2">
+                                    <% if(popBrandData) { %>
                                     <% for(var i = 0; i < popBrandData.list.length; i++){ %>
                                     <li>
                                         <a class="brand-inner" href="/membership/benefit/brand-benefit?cateCd=<%= popBrandData.list[i].cateCd %>&brandCd=<%= popBrandData.list[i].brandCd %>">
@@ -145,6 +131,7 @@
                                             <em><%= popBrandData.list[i].icoCont1 %></em>
                                         </a>
                                     </li>
+                                    <% } %>
                                     <% } %>
                                 </ul>
                             </div>
@@ -191,7 +178,7 @@
       var membershipData = '<%- JSON.stringify(membershipData) %>';
       var svcInfo = '<%- JSON.stringify(svcInfo) %>';
       var membershipCheckData = '<%- JSON.stringify(membershipCheckData) %>';
-      new Tw.MembershipSubmain($('.wrap'), JSON.parse(membershipData), JSON.parse(svcInfo), JSON.parse(membershipCheckData));
+      new Tw.MembershipSubmain($('.wrap'), JSON.parse(membershipData), JSON.parse(svcInfo), JSON.parse(membershipCheckData), '<%= pageInfo.menuId %>');
   });
 </script>
 <% include ../components/end.component.html %>

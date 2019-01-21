@@ -10,17 +10,16 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import {
   DATA_UNIT,
-  PRODUCT_CALLPLAN_FEEPLAN, PRODUCT_REQUIRE_DOCUMENT, PRODUCT_REQUIRE_DOCUMENT_APPLY_RESULT, PRODUCT_REQUIRE_DOCUMENT_CALLPLAN_RESULT,
+  PRODUCT_CALLPLAN_FEEPLAN, PRODUCT_REQUIRE_DOCUMENT, PRODUCT_REQUIRE_DOCUMENT_CALLPLAN_RESULT,
   PRODUCT_SIMILAR_PRODUCT,
   PRODUCT_TYPE_NM
 } from '../../../../types/string.type';
 import { BENEFIT_SUBMAIN_CATEGORY, PRODUCT_CALLPLAN,
   PRODUCT_CALLPLAN_BENEFIT_REDIRECT, PRODUCT_TYP_CD_LIST} from '../../../../types/bff.type';
+import { REDIS_KEY } from '../../../../types/redis.type';
 import FormatHelper from '../../../../utils/format.helper';
 import ProductHelper from '../../../../utils/product.helper';
-import DateHelper from '../../../../utils/date.helper';
 import EnvHelper from '../../../../utils/env.helper';
-import { REDIS_KEY } from '../../../../types/redis.type';
 
 class ProductCommonCallplan extends TwViewController {
   constructor() {
@@ -603,6 +602,102 @@ class ProductCommonCallplan extends TwViewController {
     return context.replace(/\/poc\/img\/product\/(.*)(jpg|png|jpeg)/gi, 'data:,');
   }
 
+  /**
+   * @param typeCd
+   * @private
+   */
+  private _getReservationTypeCd(typeCd: any): any {
+    if (['D_I', 'E_I'].indexOf(typeCd) !== -1) {
+      return 'internet';
+    }
+
+    if (['D_P', 'E_P'].indexOf(typeCd) !== -1) {
+      return 'phone';
+    }
+
+    if (['D_T', 'E_T'].indexOf(typeCd) !== -1) {
+      return 'tv';
+    }
+
+    if (typeCd === 'F') {
+      return 'combine';
+    }
+
+    return null;
+  }
+
+  /**
+   * @param prodTypCd
+   * @param allSvc
+   * @param svcAttrCd
+   * @private
+   * A: 현재회선으로 가입 가능 && 기준회선 외 다른회선 선택 가능
+   * B: 현재회선으로 가입 가능 && 가입가능 회선이 1개
+   * C: 현재회선으로 가입 불가능 && 가입가능한 다른 회선 선택 가능
+   * D: 현재회선으로 가입 불가능 && 가입불가
+   */
+  private _getLineProcessCase(prodTypCd: any, allSvc?: any, svcAttrCd?: any): any {
+    if (FormatHelper.isEmpty(allSvc) || FormatHelper.isEmpty(svcAttrCd)) {
+      return null;
+    }
+
+    const allowedSvcAttrInfo: any = this._getAllowedSvcAttrCd(prodTypCd),
+      isAllowedCurrentSvcAttrCd: boolean = allowedSvcAttrInfo.svcAttrCds.indexOf(svcAttrCd) !== -1;
+
+    if (isAllowedCurrentSvcAttrCd && allSvc[allowedSvcAttrInfo.group].length > 1) {
+      return 'A';
+    }
+
+    if (isAllowedCurrentSvcAttrCd && allSvc[allowedSvcAttrInfo.group].length === 1) {
+      return 'B';
+    }
+
+    if (!isAllowedCurrentSvcAttrCd && allSvc[allowedSvcAttrInfo.group].length > 0) {
+      return 'C';
+    }
+
+    return 'D';
+  }
+
+  /**
+   * @param prodTypCd
+   * @private
+   */
+  private _getAllowedSvcAttrCd(prodTypCd: any): any {
+    if (['AB', 'C', 'H_P', 'H_A', 'F', 'G'].indexOf(prodTypCd) !== -1) {
+      return {
+        group: 'm',
+        svcAttrCds: ['M1', 'M2', 'M3', 'M4']
+      };
+    }
+
+    if (['D_I', 'E_I'].indexOf(prodTypCd) !== -1) {
+      return {
+        group: 's',
+        svcAttrCds: ['S1']
+      };
+    }
+
+    if (['D_P', 'E_P'].indexOf(prodTypCd) !== -1) {
+      return {
+        group: 's',
+        svcAttrCds: ['S3']
+      };
+    }
+
+    if (['D_T', 'E_T'].indexOf(prodTypCd) !== -1) {
+      return {
+        group: 's',
+        svcAttrCds: ['S2']
+      };
+    }
+
+    return {
+      group: null,
+      svcAttrCds: []
+    };
+  }
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.params.prodId || null,
       svcInfoProdId = svcInfo ? svcInfo.prodId : null,
@@ -688,6 +783,9 @@ class ProductCommonCallplan extends TwViewController {
               grpProdScrnConsCd: basicInfo.result.grpProdScrnConsCd
             });
 
+          // 사용자 svcAttrCd
+          const svcAttrCd = !FormatHelper.isEmpty(svcInfo) && !FormatHelper.isEmpty(svcInfo.svcAttrCd) ? svcInfo.svcAttrCd : null;
+
           res.render('common/callplan/product.common.callplan.html', [renderCommonInfo, isCategory, {
             isPreview: false,
             prodId: prodId,
@@ -703,7 +801,9 @@ class ProductCommonCallplan extends TwViewController {
             recommends: this._convertSeriesAndRecommendInfo(recommendsInfo.result, false),  // 함께하면 유용한 상품
             similarProductInfo: this._convertSimilarProduct(basicInfo.result.prodTypCd, similarProductInfo),  // 모바일 요금제 유사한 상품
             isJoined: this._isJoined(basicInfo.result.prodTypCd, isJoinedInfo),  // 가입 여부
-            combineRequireDocumentInfo: this._convertRequireDocument(combineRequireDocumentInfo)  // 구비서류 제출 심사내역
+            combineRequireDocumentInfo: this._convertRequireDocument(combineRequireDocumentInfo),  // 구비서류 제출 심사내역
+            reservationTypeCd: this._getReservationTypeCd(basicInfo.result.prodTypCd),
+            lineProcessCase: this._getLineProcessCase(basicInfo.result.prodTypCd, allSvc, svcAttrCd) // 가입 가능 회선 타입
           }].reduce((a, b) => {
             return Object.assign(a, b);
           }));

@@ -39,11 +39,13 @@ Tw.CommonSearch.prototype = {
       }
       this._showShortcutList(this._arrangeData(searchInfo.search[i][keyName].data,keyName),keyName,this._cdn);
     }
+    this.$inputElement =this.$container.find('#keyword');
     this.$container.on('keyup','#keyword',$.proxy(this._inputChangeEvent,this));
     this.$container.on('click','.icon-historyback-40',$.proxy(this._historyService.goBack,this));
     this.$container.on('click','.close-area',$.proxy(this._closeSearch,this));
     this.$container.on('click','.search-element',$.proxy(this._searchRelatedKeyword,this));
     this.$container.on('click','.list-data',$.proxy(this._goLink,this));
+    this.$container.on('click','.icon-gnb-search',$.proxy(this._doSearch,this));
   },
 
   _arrangeData : function (data,category) {
@@ -57,8 +59,10 @@ Tw.CommonSearch.prototype = {
           data[i][key] = data[i][key].replace(/<!HS>/g, '<span class="highlight-text">');
         }
         if(key==='DEPTH_PATH'){
-          data[i][key] = data[i][key].replace(/\|/g,'/');
-          data[i][key] = data[i][key].replace(/\ /g,' > ');
+          if(data[i][key].charAt(0)==='|'){
+            data[i][key] = data[i][key].replace('|','');
+          }
+          data[i][key] = data[i][key].replace(/\ /g,' > ').replace(/\|/g,' / ').replace(/MyT/g,' my T ');
         }
         if(key==='MENU_URL'){
           data[i][key] = data[i][key].replace('https://app.tworld.co.kr','');
@@ -104,14 +108,17 @@ Tw.CommonSearch.prototype = {
     return returnStr;
   },
   _inputChangeEvent : function (args) {
-    var inResult = this.$container.find('#resultsearch').is(':checked');
     if(args.keyCode===13){
-      var requestUrl = inResult?'/common/search?keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
-      requestUrl+=args.currentTarget.value;
-      requestUrl+='&step='+(Number(this._step)+1);
-      this._addRecentlyKeyword(args.currentTarget.value);
-      this._historyService.goLoad(requestUrl);
+      this._doSearch();
     }
+  },
+  _doSearch : function () {
+    var inResult = this.$container.find('#resultsearch').is(':checked');
+    var requestUrl = inResult?'/common/search?keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
+    requestUrl+=this.$inputElement.val();
+    requestUrl+='&step='+(Number(this._step)+1);
+    this._addRecentlyKeyword(this.$inputElement.val());
+    this._historyService.goLoad(requestUrl);
   },
   _showBanner : function (data) {
     var bannerPositionObj = {
@@ -168,13 +175,16 @@ Tw.CommonSearch.prototype = {
       return;
     }
     this._apiService.request(Tw.API_CMD.STACK_SEARCH_USER_CLICK,
-      { param : 'docId='+$linkData.data('id')+'&section='+$linkData.data('category')+'&title='+$linkData.data('tit')+'&keyword='+this._searchInfo.researchQuery }
+      {
+        'docId' : $linkData.data('id'),
+        'section' : $linkData.data('category'),
+        'title' : encodeURI($linkData.data('tit')),
+        'keyword' : encodeURI(this._searchInfo.researchQuery)
+      }
     );
-    if($linkData.hasClass('direct-element')){
-      Tw.CommonHelper.openUrlExternal(linkUrl);
-    }else{
-      //this._historyService.goLoad(linkUrl);
-    }
+    //Tw.CommonHelper.openUrlExternal(linkUrl);
+    this._historyService.goLoad(linkUrl);
+
   },
   _closeSearch : function () {
     this._historyService.go(Number(this._step)*-1);

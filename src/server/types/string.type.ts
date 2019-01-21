@@ -27,14 +27,17 @@ export const MYT_FARE_BILL_TYPE = {
   B: '문자',
   '2': '이메일',
   '1': '기타(우편)',
+  '4': '기타(우편)',
+  '5': '기타(우편)',
+  '8': '기타(우편)',
+  'C': '기타(우편)',
+  D: '모바일퀵',
+  E: '모바일퀵+이메일',
   ADD: '기타(우편) (전자추가발송)',
   X: '선택 안 함'
 };
 
 export enum UNIT {
-  WON = '원',
-  GB = 'GB',
-  MB = 'MB',
   SMS = '건'
 }
 
@@ -52,6 +55,12 @@ export const MYT_DATA_USAGE = {
     DD3CV: '패밀리',
     DD3CU: '라지',
     DD4D5: '라지'
+  },
+  DATA_TYPE: {
+    DATA: 'data',
+    VOICE: 'voice',
+    SMS: 'sms',
+    ETC: 'etc'
   }
 };
 
@@ -154,10 +163,10 @@ export enum MYT_DATA_RECHARGE_COUPON {
 }
 
 export enum PRODUCT_INFINITY_BENEFIT {
-  NA00006114 = 'T 로밍 Onepass 월 1회/ 1개월 + 마티나 라운지 이용권 1회/ 3개월',
-  NA00006115 = '무료영화예매 2회 / 1개월',
-  NA00006116 = '스마트 워치 월정액 100% 할인',
-  NA00006117 = '인피니티 클럽 이용료 100%할인'
+  NA00006114 = 'T로밍 OnePass 1개월에 1개,<br>마티나 라운지 이용권 3개월에 1회 제공',
+  NA00006115 = '영화예매권 월 2장 무료',
+  NA00006116 = '스마트워치 요금지원',
+  NA00006117 = '\'인피니티 클럽\'가입 및 만6개월 사용 후 휴대폰 교체 시 남은 할부금(출고가의 최대 70%까지)을 면제'
 }
 
 export enum PRODUCT_INFINITY_BENEFIT_NM {
@@ -185,7 +194,7 @@ export enum PRODUCT_RESERVATION_COMBINE_NM {
   NH00000103 = 'TB끼리 한가족할인',
   NA00005055 = '가족나눔데이터',
   NH00000133 = 'New온가족플랜',
-  NH00000084 = 'TB끼리 온가족프리',
+  NH00000083 = 'TB끼리 온가족프리',
   NONE = '결합상품을 선택해 주세요.',
   ETC = '그 외 결합상품'
 }
@@ -459,10 +468,11 @@ export const MYT_JOIN_WIRE_SET_PAUSE = {
 };
 
 export enum CUSTOMER_NOTICE_CATEGORY {
-  TWORLD = 'T world',
-  DIRECTSHOP = '다이렉트샵',
-  MEMBERSHIP = '멤버십',
-  ROAMING = '로밍'
+  TWORLD = 'T월드',
+  DIRECTSHOP = 'T월드 다이렉트',
+  MEMBERSHIP = 'T멤버십',
+  ROAMING = 'T로밍',
+  VIEW = '공지사항'
 }
 
 export enum CUSTOMER_PROTECT_GUIDE {
@@ -534,6 +544,18 @@ export const PRODUCT_TYPE_NM = {
   SETTING: '설정',
   LOOKUP: {
     TPLAN: '혜택이용내역'
+  },
+  LINE_PROCESS: {
+    SELECT: {
+      TITLE: '회선 선택',
+      BUTTON: '진행하기',
+      DESCRIPTION: '요금제를 변경할 회선을 선택해 주세요.'
+    },
+    CHANGE: {
+      TITLE: '회선 변경',
+      BUTTON: '변경하기',
+      DESCRIPTION: '현재 회선으로는 이용이 불가능 합니다.<br>다른 회선으로 변경해 주세요.'
+    }
   }
 };
 
@@ -632,8 +654,8 @@ export const CUSTOMER_DAMAGEINFO_CONTENTS_TITLE = {
 
 export const ROAMING_RECEIVE_CENTER = {
   '0': '인천공항 1터미널 3층 로밍 센터(E-F 카운터)',
-  '1': '인천공항 2터미널 3층 로밍 센터(D-E 카운터)',
-  '2': '인천공항 1터미널 3층 로밍 센터(G-H 카운터)',
+  '1': '인천공항 1터미널 3층 로밍 센터(G-H 카운터)',
+  '2': '인천공항 2터미널 3층 로밍 센터(D-E 카운터)',
   '3': '김포공항 1층 로밍 센터',
   '4': '제주공항 국제선 1층 로밍 센터',
   '5': '김해공항 3층 로밍 센터',
@@ -798,7 +820,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
         sub_title: 'band LTE',
         sub_text: 'band LTE 요금 기준이 궁금하다면',
         type: 'B2',
-        code: 'C00029'
+        code: 'C00027'
       },
       {
         sub_title: '데이터 사용요금',
@@ -982,7 +1004,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    title: '목소리 인증∙ARS상담에 대한 안내',
+    title: '목소리 인증∙전화상담에 대한 안내',
     sub_list: [
       {
         sub_title: 'ARS상담 이용안내',
@@ -998,17 +1020,19 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
             type: 'A2',
             code: 'C00021'
           },
-          {
+          /* {
             dep_title: '음성인식 ARS',
             type: 'A2',
             code: 'C00022'
-          }
+          }*/
         ]
       },
       {
         sub_title: '목소리 인증 이용안내',
         sub_text: '더 안전한 ARS이용을 원하신다면',
-        dep_list: [
+        code: 'C00024',
+        type: 'B1'
+        /*dep_list: [
           {
             dep_title: '목소리 인증',
             type: 'A2',
@@ -1019,7 +1043,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
             type: 'A2',
             code: 'C00026'
           }
-        ]
+        ]*/
       }
     ]
   }

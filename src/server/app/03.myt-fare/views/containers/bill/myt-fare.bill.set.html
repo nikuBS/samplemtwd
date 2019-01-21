@@ -53,7 +53,7 @@
                     <%if (['1', 'ADD'].indexOf(data.billInfo[0].cd) !== -1) {%>
                         <dl class="info-tx1">
                             <dt>우편 주소</dt>
-                            <dd><%= data.fullAddr%></dd>
+                            <dd><%= '[' + data.zip +'] ' + data.basAddr + data.dtlAddr%></dd>
                         </dl>
                         <div class="info-line">
                             <dl class="info-tx1">
@@ -70,10 +70,6 @@
                                     <%=jugi[data.billSndCyclCd]%>
                                 </dd>
                             </dl>
-                            <!--<dl class="info-tx1">
-                                <dt>휴대폰번호</dt>
-                                <dd><%=data.cntcNum1%></dd>
-                            </dl>-->
                         </div>
                     <%}%>
 
@@ -99,7 +95,7 @@
                     <!--우편, 유선 ( 문자 )일 때, 핸드폰 번호 보임 -->
                     <%if(data.hpNum) {%>
                         <dl class="info-tx1">
-                            <dt>휴대폰번호</dt>
+                            <dt>연락처</dt>
                             <dd><%=data.hpNum%></dd>
                         </dl>
                     <%}%>
@@ -124,17 +120,29 @@
                         </dd>
                     </dl>
                     <%}%>
+
+                    <!--모바일 퀵 만 노출-->
+                    <%if(['D', 'E'].indexOf(data.curBillType) !== -1){%>
+                    <dl class="info-tx1">
+                        <dt>모바일퀵(모바일M) 서비스는 2011년 5월 31일자로 종료되었습니다. <br/>
+                            기존 이용 고객님께서는 하단의 [다른 요금안내서로 받기]로 변경하시거나 SKT 고객센터를 통해 요금안내서 유형을 변경하시기 바랍니다.</dt>
+                    </dl>
+                    <%}%>
+                    <!--// 모바일 퀵 만 노출-->
                 </div>
 
-                <!--"정보변경" 없는 유형 : T world 확인(SMS 수신불가 단말), 전자추가발송-->
+                <!--"정보변경" 없는 유형 : T world 확인(SMS 수신불가 단말), 전자추가발송, 모바일 퀵-->
                 <%
-                    if( (!('P' === data.curBillType && 'N' === data.isusimchk ) && 'ADD' !== data.billInfo[0].cd) ) {
+                    if( (!('P' === data.curBillType && 'N' === data.isusimchk ) && ['D', 'E', 'ADD'].indexOf(data.billInfo[0].cd) === -1) ) {
                     let params = 'isChangeInfo=Y&billType='+ data.billInfo[0].cd + (data.billInfo.length > 1 ? '&subBillType=' + data.billInfo[1].cd : '');
                 %>
                 <div class="bt-alone">
                     <a class="bt-bg-blue1" href="/myt-fare/billsetup/change?<%=params%>">정보변경</a>
                 </div>
                 <%}%>
+
+                <!--모바일 퀵 은 "반송내역", "재발행" 비노출-->
+                <%if(['D', 'E'].indexOf(data.curBillType) === -1){%>
                 <ul class="bt-slice item-two pt40">
                     <li class="bt-blue1">
                         <a href="/myt-fare/billsetup/historyreturn">반송내역</a>
@@ -147,6 +155,8 @@
                     </li>
                     <%}%>
                 </ul>
+                <%}%>
+                <!--// 모바일 퀵 은 "반송내역", "재발행" 비노출-->
             </div>
             <!--// .cont-box -->
             <hr class="cont-sp type1" aria-hidden="true"/>
@@ -202,6 +212,7 @@
             </div>
             <!--// .cont-box -->
             <hr class="cont-sp type1" />
+
             <!-- .cont-box -->
             <p class="fee-banner0">
                 <%

@@ -46,7 +46,6 @@ class MainHome extends TwViewController {
     //     console.log('bnnr', resp);
     //   });
 
-
     if ( svcType.login ) {
       // const showSvcInfo = this.parseSvcInfo(svcType, svcInfo);
       if ( svcType.svcCategory === LINE_NAME.MOBILE ) {
@@ -78,7 +77,7 @@ class MainHome extends TwViewController {
       } else if ( svcType.svcCategory === LINE_NAME.INTERNET_PHONE_IPTV ) {
         // 인터넷 회선
         Observable.combineLatest(
-          this.getBillData(),
+          this.getBillData(svcInfo),
           this.getRedisData(noticeCode, svcInfo.svcMgmtNum)
         ).subscribe(([billData, redisData]) => {
           homeData.billData = billData;
@@ -215,15 +214,20 @@ class MainHome extends TwViewController {
     return membershipData;
   }
 
-  private getBillData(): Observable<any> {
-    let billData = null;
+  private getBillData(svcInfo): Observable<any> {
+    let billData = {
+      code: '',
+      msg: '',
+      showSvcNum: FormatHelper.conTelFormatWithDash(svcInfo.svcNum)
+    };
+
     return Observable.combineLatest(
       this.getCharge(),
       this.getUsed(),
       (charge, used) => {
         return { charge, used };
       }).map((resp) => {
-      billData = this.parseBillData(resp);
+      billData = Object.assign(billData, this.parseBillData(resp));
       return billData;
     });
   }

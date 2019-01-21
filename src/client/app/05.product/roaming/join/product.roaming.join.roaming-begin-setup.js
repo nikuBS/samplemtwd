@@ -4,15 +4,17 @@
  * Date: 2018.12.03
  */
 
-Tw.ProductRoamingJoinRoamingBeginSetup = function (rootEl,prodRedisInfo,prodApiInfo,svcInfo,prodId) {
+Tw.ProductRoamingJoinRoamingBeginSetup = function (rootEl,prodTypeInfo,prodApiInfo,svcInfo,prodId) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
-  this._prodRedisInfo = JSON.parse(prodRedisInfo);
+  this._prodTypeInfo = JSON.parse(prodTypeInfo);
   this._prodApiInfo = prodApiInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
   this._showDateFormat = 'YYYY. MM. DD.';
+  this._dateFormat = 'YYYYMMDD';
+  this._currentDate = Tw.DateHelper.getCurrentShortDate();
   this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
   this._tooltipInit(prodId);
   this._bindBtnEvents();
@@ -31,7 +33,7 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
       dateFormat = format;
     }
     for(var i=0;i<range;i++){
-      resultArr.push(moment().add(i, 'days').format(dateFormat));
+      resultArr.push(Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,i,'days',dateFormat,this._dateFormat));
     }
     return resultArr;
   },
@@ -100,7 +102,7 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
   _validateTimeValueAgainstNow : function(paramDate,paramTime,className){
     var returnValue = false;
     var $errorsElement = this.$container.find('.error-txt.'+className);
-    if((paramDate===moment().format('YYYYMMDD'))&&(parseInt(paramTime,10)<=parseInt(moment().format('HH'),10))){
+    if((paramDate===this._currentDate)&&(parseInt(paramTime,10)<=parseInt(Tw.DateHelper.getCurrentDateTime('HH'),10))){
       $errorsElement.removeClass('none');
     }else{
       returnValue = true;
@@ -128,8 +130,8 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
       prodNm : data.prodNm,
       processNm : Tw.PRODUCT_TYPE_NM.JOIN,
       isBasFeeInfo : data.prodFee,
-      typeNm : data.svcType,
-      settingType : (data.svcType+' '+data.processNm),
+      typeNm : data.prodType,
+      settingType : data.processNm,
       btnNmList : [Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE]
     };
 
@@ -188,11 +190,10 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
       prodId : this._prodId,
       svcNum : Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.svcNum),
       processNm : Tw.PRODUCT_TYPE_NM.JOIN,
-      prodType : Tw.NOTICE.ROAMING+' '+Tw.PRODUCT_CTG_NM.PLANS,
-      svcType : Tw.PRODUCT_CTG_NM.ADDITIONS,
-      prodNm : this._prodRedisInfo.prodNm,
-      prodFee : this._prodRedisInfo.basFeeInfo,
-      description : this._prodRedisInfo.prodSmryDesc,
+      prodType : Tw.NOTICE.ROAMING+' '+(this._prodTypeInfo.prodTypCd==='H_P'?Tw.PRODUCT_CTG_NM.PLANS:Tw.PRODUCT_CTG_NM.ADDITIONS),
+      prodNm : this._prodApiInfo.preinfo.reqProdInfo.prodNm,
+      prodFee : this._prodApiInfo.preinfo.reqProdInfo.basFeeInfo,
+      description : this._prodApiInfo.preinfo.reqProdInfo.prodSmryDesc,
       autoInfo : this._prodApiInfo,
       showStipulation : Object.keys(this._prodApiInfo.stipulationInfo).length>0,
       joinType : 'begin'

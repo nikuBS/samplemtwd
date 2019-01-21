@@ -119,6 +119,11 @@ Tw.ValidationHelper = (function () {
     return true;
   }
 
+  /* input 값의 길이가 맞지 않는 경우 */
+  function checkIsLength(value, length) {
+    return !($.trim(value).length !== length);
+  }
+
   /* input 값의 길이가 기준값보다 적은 경우 */
   function checkMoreLength($target, length) {
     if ($.trim($target.val()).length < length) {
@@ -249,8 +254,11 @@ Tw.ValidationHelper = (function () {
       }
     }
 
-    if (isSame) {
+    if (!Tw.FormatHelper.isEmpty(message)) {
       Tw.Popup.openAlert(message);
+    }
+
+    if (isSame) {
       return false;
     }
     return true;
@@ -303,6 +311,7 @@ Tw.ValidationHelper = (function () {
     isBirthday: isBirthday,
     checkEmpty: checkEmpty,
     checkLength: checkLength,
+    checkIsLength: checkIsLength,
     checkMoreLength: checkMoreLength,
     checkIsMore: checkIsMore,
     checkIsMoreAndSet: checkIsMoreAndSet,

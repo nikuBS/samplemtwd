@@ -9,7 +9,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import DateHelper from '../../../../utils/date.helper';
 import {MYT_FARE_PAYMENT_TITLE, SVC_CD} from '../../../../types/bff.type';
 import FormatHelper from '../../../../utils/format.helper';
-import {API_CMD, API_CODE} from '../../../../types/api-command.type';
+import {API_CMD, API_CODE, API_UNPAID_ERROR} from '../../../../types/api-command.type';
 import {Observable} from 'rxjs/Observable';
 
 class MyTFareBillSms extends TwViewController {
@@ -19,9 +19,12 @@ class MyTFareBillSms extends TwViewController {
       this.getUnpaidList(),
       this.getAccountList()
     ).subscribe(([unpaidList, accountList]) => {
-      if (unpaidList.code === API_CODE.CODE_00) {
+      if (unpaidList.code === API_CODE.CODE_00 || unpaidList.code === API_UNPAID_ERROR.BIL0016) {
+        const isAllPaid = unpaidList.code === API_UNPAID_ERROR.BIL0016;
+
         res.render('bill/myt-fare.bill.sms.html', {
-          unpaidList: this.parseData(unpaidList.result, svcInfo, allSvc),
+          isAllPaid: isAllPaid,
+          unpaidList: isAllPaid ? [] : this.parseData(unpaidList.result, svcInfo, allSvc),
           virtualBankList: accountList,
           title: MYT_FARE_PAYMENT_TITLE.SMS,
           svcInfo: this.getSvcInfo(svcInfo),

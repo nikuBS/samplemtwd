@@ -87,6 +87,7 @@ class MyTFareBillHotbill extends TwViewController {
           const child = childInfo.find(svc => svc.svcMgmtNum === req.query.child);
           options['title'] = MYT_FARE_HOTBILL_TITLE.CHILD;
           options['child'] = StringHelper.phoneStringToDash(child.svcNum);
+          options['childProdNm'] = StringHelper.phoneStringToDash(child.prodNm);
           options['preBill'] =  false;
         } else {
           options['title'] = MYT_FARE_HOTBILL_TITLE.MAIN;
@@ -126,9 +127,7 @@ class MyTFareBillHotbill extends TwViewController {
     const self = this;
     const params = { count: 0 };
     const headers: {} = {};
-    if ( svc['child'] ) {
-      params['childSvcMgmtNum'] = svc['svcMgmtNum'];
-    }
+    params['childSvcMgmtNum'] = svc['svcMgmtNum'];
 
     return self.apiService.request(API_CMD.BFF_05_0022, params, headers)
       .pipe(
@@ -151,14 +150,10 @@ class MyTFareBillHotbill extends TwViewController {
     const self = this;
     const params = { count: !isRetry ? 1 : 2 };
     const headers: {} = {};
-    if ( svc['child'] ) {
-      params['childSvcMgmtNum'] = svc['svcMgmtNum'];
-    }
+    params['childSvcMgmtNum'] = svc['svcMgmtNum'];
     return self.apiService.request(API_CMD.BFF_05_0022, params, headers)
       .map(resp => {
         if ( resp.code !== '00' ) {
-          // TODO  여러 회선 중 하나만 애러 발생시 대처방안 확인
-          // throw Error(`CODE ${resp.code} : ${resp.msg}`);
           return null;
         } else if ( !resp.result.hotBillInfo[0] || !resp.result.hotBillInfo[0].record1 ) {
           // 2번째 시도에도 fail이면 error 처리

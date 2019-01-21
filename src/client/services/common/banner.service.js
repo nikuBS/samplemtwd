@@ -5,6 +5,7 @@ Tw.BannerService = function(rootEl, banners, callback) {
   }
 
   // $(window).on(Tw.INIT_COMPLETE, $.proxy(this._init, this, this._getProperBanners(banners)));
+  this._cachedElement();
   this._init(banners, callback);
   this._bindEvent();
 };
@@ -12,29 +13,37 @@ Tw.BannerService = function(rootEl, banners, callback) {
 Tw.BannerService.prototype = {
   _init: function(banners, callback) {
     this._banners = this._getProperBanners(banners);
-    this._renderBanners(this._banners, callback);
+    this._renderBanners(callback);
   },
 
-  _renderBanners: function(banners, callback) {
+  _cachedElement: function() {
+    this.$banners = this.$container.find('ul.slider');
+  },
+
+  _renderBanners: function(callback) {
     var locations = Object.keys(this._banners),
       i = 0,
       CDN = Tw.Environment.cdn;
 
     this.locations = locations;
-    this.$banners = {};
 
     $.get(
       CDN + '/hbs/banner.hbs',
       $.proxy(function(hbs) {
         this._bannerTmpl = Handlebars.compile(hbs);
 
-        for (; i < locations.length; i++) {
-          var location = locations[i],
-            $banners = this.$container.find('ul.slider[data-location="' + location + '"]');
+        for (; i < this.$banners.length; i++) {
+          var $item = $(this.$banners[i]),
+            location = $item.data('location'),
+            list = this._banners[location];
 
-          $banners.slick('slickAdd', this._bannerTmpl({ banners: banners[location], location: location }));
-          if (callback) {
-            $banners.find('img').on('load', callback);
+          if (!list || list.length === 0) {
+            $item.parents('div.nogaps').addClass('none');
+          } else {
+            $item.slick('slickAdd', this._bannerTmpl({ banners: list, location: location }));
+            if (callback) {
+              $item.find('img').on('load', callback);
+            }
           }
         }
       }, this)
@@ -63,9 +72,9 @@ Tw.BannerService.prototype = {
           window.location.href = link;
           break;
         }
-        case Tw.BANNER_LINK_TYPE.OTHER_WEB: 
+        case Tw.BANNER_LINK_TYPE.OTHER_WEB:
         default: {
-          if (banner.isBill) {
+          if (Tw.BrowserHelper.isApp() && banner.isBill) {
             Tw.CommonHelper.showDataCharge(function() {
               Tw.CommonHelper.openUrlExternal(link);
             });
@@ -88,13 +97,14 @@ Tw.BannerService.prototype = {
 
   _getProperBanners: function(banners) {
     var browserCode = this._getBrowserCode(),
-      CDN = Tw.Environment.cdn;
+      CDN = Tw.Environment.cdn,
+      today = new Date();
     return _.chain(banners)
       .filter(function(banner) {
         return (
           (banner.chnlClCd.indexOf(Tw.REDIS_DEVICE_CODE.MOBILE) >= 0 || banner.chnlClCd.indexOf(browserCode) >= 0) &&
-          (!banner.expsStaDtm || Tw.DateHelper.getDifference(banner.expsStaDtm.substring(0, 8)) <= 0) &&
-          (!banner.expsEndDtm || Tw.DateHelper.getDifference(banner.expsEndDtm.substring(0, 8)) >= 0)
+          (!banner.expsStaDtm || Tw.DateHelper.getDiffByUnit(banner.expsStaDtm.substring(0, 8), today, 'days') <= 0) &&
+          (!banner.expsEndDtm || Tw.DateHelper.getDiffByUnit(banner.expsEndDtm.substring(0, 8), today, 'days') >= 0)
         );
       })
       .sort(function(a, b) {

@@ -26,7 +26,7 @@ Tw.FormatHelper = (function () {
 
   var addComma = function (value) {
     var regexp = /\B(?=(\d{3})+(?!\d))/g;
-    return value.replace(regexp, ',');
+    return value.toString().replace(regexp, ',');
   };
 
   var removeZero = function (value) {
@@ -170,16 +170,36 @@ Tw.FormatHelper = (function () {
       return v;
     }
 
-    var ret = v.trim(),
-      pattern = {
-        9: [2, 3, 4],
-        10: [3, 3, 4],
-        11: [3, 4, 4]
-      };
+    var str = $.trim(v),
+      maskCharIndexs = [],
+      j = 0;
 
-    return ret.substring(0, pattern[ret.length][0]) + '-' +
-      ret.substring(pattern[ret.length][0], pattern[ret.length][0] + pattern[ret.length][1]) + '-' +
-      ret.substring(pattern[ret.length][0] + pattern[ret.length][1], ret.length);
+    for (var a = 0; a < str.length; a++) {
+      if (str[a] === '*') {
+        maskCharIndexs.push(a);
+      }
+    }
+
+    str = str.replace(/\*/gi, '0');
+    str = str.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, '$1-$2-$3');
+
+    for (var b = 0; b < str.length; b++) {
+      if (str[b] === '-') {
+        continue;
+      }
+
+      if (maskCharIndexs.indexOf(j) !== -1) {
+        str = Tw.StringHelper.replaceAt(str, b, '*');
+      }
+
+      j++;
+    }
+
+    return str;
+  };
+
+  var conDateFormatWIthDash = function (date) {
+    return date.slice(0, 4) + '.' + date.slice(4, 6) + '.' + date.slice(6, 8);
   };
 
   var sortObjArrDesc = function (array, key) {
@@ -325,21 +345,21 @@ Tw.FormatHelper = (function () {
       return data + Tw.DATA_UNIT.GB;
     }
     return data;
-  }
+  };
 
   var appendVoiceUnit = function (amount) {
     if ( /^[0-9\.]+$/.test(amount) ) {
       return amount + Tw.PERIOD_UNIT.MINUTES;
     }
     return amount;
-  }
+  };
 
   var appendSMSUnit = function (amount) {
     if ( /^[0-9\.]+$/.test(amount) ) {
       return amount + Tw.SMS_UNIT;
     }
     return amount;
-  }
+  };
 
   var getTemplateString = function (template, values) {
     return template.replace(/{\w+}/g, function (x) {
@@ -405,6 +425,17 @@ Tw.FormatHelper = (function () {
     return value.replace(regexp, '-');
   };
 
+  function dataURLtoFile(dataurl, filename) {
+    var arr = dataurl.split(',');
+    var mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    console.log(mime);
+    while(n--){
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, {type:mime});
+  }
+
   return {
     leadingZeros: leadingZeros,
     isEmpty: isEmpty,
@@ -420,6 +451,7 @@ Tw.FormatHelper = (function () {
     convVoiceFormat: convVoiceFormat,
     convSmsPrice: convSmsPrice,
     conTelFormatWithDash: conTelFormatWithDash,
+    conDateFormatWIthDash: conDateFormatWIthDash,
     sortObjArrDesc: sortObjArrDesc,
     sortObjArrAsc: sortObjArrAsc,
     makeCardYymm: makeCardYymm,
@@ -441,6 +473,7 @@ Tw.FormatHelper = (function () {
     isCellPhone: isCellPhone,
     purifyPlansData: purifyPlansData,
     stripTags: stripTags,
-    addCardDash: addCardDash
+    addCardDash: addCardDash,
+    dataURLtoFile: dataURLtoFile
   };
 })();

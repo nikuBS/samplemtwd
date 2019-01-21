@@ -73,7 +73,7 @@ Tw.BenefitMyBenefitRainbowPointTransfer.prototype = $.extend({}, Tw.BenefitMyBen
       giver: {
         relNm: this._lineToGive.showRelNm,
         custNm: this._lineToGive.custNm,
-        svcNum: this._lineToGive.svcNum,
+        svcNum: this._lineToGive.showSvcNum,
         point: Tw.FormatHelper.addComma(pointToGive.toString()),
         remain: Tw.FormatHelper.addComma((pointToGive - inputPoint).toString()),
         inputPoint: Tw.FormatHelper.addComma(inputPoint.toString())
@@ -81,7 +81,7 @@ Tw.BenefitMyBenefitRainbowPointTransfer.prototype = $.extend({}, Tw.BenefitMyBen
       receiver: {
         relNm: selectedLineToReceive.showRelNm,
         custNm: selectedLineToReceive.custNm,
-        svcNum: selectedLineToReceive.svcNum,
+        svcNum: selectedLineToReceive.showSvcNum,
         point: Tw.FormatHelper.addComma(pointToReceive.toString()),
         remain: Tw.FormatHelper.addComma((pointToReceive + inputPoint).toString()),
         relCd: selectedLineToReceive.relCd

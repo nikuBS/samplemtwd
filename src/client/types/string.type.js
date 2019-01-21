@@ -462,8 +462,9 @@ Tw.ALERT_MSG_MYT_DATA = {
     BUTTON: '해지하기' },
   ALERT_2_A71: {
     TITLE: '알람 설정 하시겠습니까?',
-    MSG_1: '사용중인 선불폰 이동전화의 발신기간이[',
-    MSG_2: '일]전이면 SMS로 알림 메시지가 전송됩니다.',
+    MSG_1: '사용중인 선불폰 이동전화의 ',
+    MSG_2: '이[',
+    MSG_3: '일]전이면 SMS로 알림 메시지가 전송됩니다.',
     BUTTON: '설정하기' },
   ALERT_2_A72: {
     TITLE: '알람 설정 하시겠습니까?',
@@ -481,7 +482,8 @@ Tw.ALERT_MSG_MYT_DATA = {
   V56: '충전 금액을 선택해 주세요.',
   ALERT_2_A74: '충전을 취소하시겠습니까?',
   DAILY_USED_USAGE_ERROR: '데이터가 존재하지 않습니다.',
-  INVALID_CARD: '카드 정보가 올바르지 않습니다.\n 카드 정보 확인 후 다시 입력해주세요.'
+  INVALID_CARD: '카드 정보가 올바르지 않습니다.\n 카드 정보 확인 후 다시 입력해주세요.',
+  COMPLETE_RECHARGE: '충전이 완료 되었습니다.'
 };
 
 Tw.VALIDATE_MSG_MYT_DATA = {
@@ -644,12 +646,12 @@ Tw.ALERT_MSG_MYT_JOIN = {
 Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A1: { TITLE: '선택하신 상품 가입을 취소하시겠습니까?', MSG: '', BUTTON: '계속하기' },
   ALERT_3_A2: {
-    TITLE: '가입 시 유의사항을 모두 확인 하였으며,\n선택하신 상품으로 가입하시겠습니까?',
-    MSG: '사용중인 요금제는 자동 해지되며, 1개월동안 다른 상품으로 가입하실 수 없습니다.',
+    TITLE: '가입 시 유의사항을 모두 확인하였으며,\n선택하신 상품으로\n가입하시겠습니까?',
+    MSG: '사용 중인 요금제는 자동 해지되며,\n1개월동안 다른 상품으로 가입하실 수 없습니다.',
     BUTTON: '가입하기'
   },
-  ALERT_3_A3: { TITLE: '가입 시 유의사항을 모두 확인 하였으며,\n선택하신 상품으로 가입하시겠습니까?', MSG: '', BUTTON: '가입하기' },
-  ALERT_3_A4: { TITLE: '해지 시 유의사항을 모두 확인 하였으며,\n선택하신 상품을 해지하시겠습니까?', MSG: '', BUTTON: '해지하기' },
+  ALERT_3_A3: { TITLE: '가입 시 유의사항을 모두 확인하였으며,\n선택하신 상품에 가입하시겠습니까?', MSG: '', BUTTON: '가입하기' },
+  ALERT_3_A4: { TITLE: '해지 시 유의사항을 모두 확인하였으며,\n선택하신 상품을 해지하시겠습니까?', MSG: '', BUTTON: '해지하기' },
   ALERT_3_A5: { TITLE: '선택한 회선을 해지하시겠습니까?', MSG: '해지하시면, 해당 회선은 서비스 이용이 불가합니다.', BUTTON: '해지하기' },
   ALERT_3_A6: { TITLE: '선택한 지역을 해지하시겠습니까?', MSG: '해지하시면, 해당 지역은 서비스 이용이 불가합니다.', BUTTON: '해지하기' },
   ALERT_3_A7: { TITLE: '지정번호 5회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
@@ -699,9 +701,9 @@ Tw.ALERT_MSG_PRODUCT_ROAMING = {
 
 Tw.ALERT_MSG_PASSWORD = {
   A16: '비밀번호는 4자리입니다.',
-  A17: '입력하신 비밀번호가 일치하지 않습니다.\n입력하신 비밀번호를 다시 확인해 주세요.',
-  A18: '연속된 숫자는 설정 불가합니다',
-  A19: '동일한 번호가 반복되는 숫자는 사용 불가합니다'
+  A17: '입력하신 비밀번호가 일치하지 않습니다.',
+  A18: '연속된 숫자는 설정하실 수 없습니다.',
+  A19: '동일한 숫자는 설정하실 수 업습니다.'
 };
 
 Tw.ALERT_MSG_BENEFIT = {
@@ -770,7 +772,9 @@ Tw.ALERT_MSG_AUTH = {
   L04: '변경 내용을 저장하시겠습니까?',
   ALERT_4_A7: 'SK텔레콤 이동전화번호가 아니거나 입력하신 정보가 일치하지 않습니다. 다시 입력해 주세요.',
   ALERT_4_A8: '이미 다른 계정에 등록된 회선 입니다.',
-  ALERT_4_A9: '이미 등록된 회선 입니다.'
+  ALERT_4_A9: '이미 등록된 회선 입니다.',
+  NICKNAME_VALID: '사용하실 수 없는 닉네임 입니다.',
+  NICKNAME_ERROR: '닉네임 수정중 에러가 발생하였습니다.'
 };
 
 Tw.MYT_DATA_CANCLABLE_CHARGE_ALERT = '충전 취소는 고객센터 [국번 없이 1599-0011(유료) / 휴대폰 114]를 통해 당일에 한해 가능합니다.';
@@ -1154,9 +1158,10 @@ Tw.CUSTOMER_PRAISE_DEFAULT = {
 
 Tw.NOTICE = {
   TITLE: '카테고리 설정',
-  DIRECTSHOP: '다이렉트샵',
-  MEMBERSHIP: '멤버십',
-  ROAMING: '로밍'
+  TWORLD: 'T월드',
+  DIRECTSHOP: 'T월드 다이렉트',
+  MEMBERSHIP: 'T멤버십',
+  ROAMING: 'T로밍'
 };
 
 Tw.PROTECT_GUIDE = {
@@ -1185,7 +1190,8 @@ Tw.CUSTOMER_EMAIL = {
     '멤버십의 상세한 내용 확인을 위해서는 \n' +
     '‘청구서 주소 및 멤버십 카드 뒤 3자리’가 필요합니다. 해당 정보가 없을 경우 일부 상담이 제한될 수 있습니다.\n' +
     '청구서 주소: \n' +
-    '멤버십 카드번호 뒤 3자리:'
+    '멤버십 카드번호 뒤 3자리:',
+  NOT_SUPPORT_FILE_UPLOAD: '사용하고 계신 안드로이드 버전에서는 <br> 지원하지 않는 기능입니다.'
 };
 
 Tw.CUSTOMER_HELPLINE_COMPLETE = {
@@ -1310,7 +1316,7 @@ Tw.PRODUCT_COMBINE_PRODUCT = {
       TITLE: 'New온가족플랜',
       EXPLAIN: '이동전화와 인터넷 결합회선수에 따라 할인혜택 제공'
     },
-    NH00000084: {
+    NH00000083: {
       TITLE: 'TB끼리 온가족프리',
       EXPLAIN: '이동전화와 인터넷을 결합하면 이동전화·인터넷 기본료 할인에 추가 혜택 제공'
     },
@@ -1321,6 +1327,11 @@ Tw.PRODUCT_COMBINE_PRODUCT = {
       TITLE: '그 외 결합상품'
     }
   }
+};
+
+Tw.PRODUCT_JOIN_LINE_CHANGE = {
+  DEFAULT: '다른 회선으로 변경 하시겠습니까?',
+  NEED_CHANGE: '현재 회선으로는 이용이 불가능 합니다.\n다른 회선으로 변경해 주세요.'
 };
 
 Tw.PRODUCT_CONFIRM_GO_TO_DOCUMENT = {
@@ -1521,24 +1532,24 @@ Tw.TMAP_STRING = {
 };
 
 Tw.ROAMING_RETURN_CODE = {
-  '1430452300': '대구 SKT 황금점 매장',
-  '1430456896': '인천공항 2터미널 1층 로밍센터',
-  A100110000: '인천공항 1터미널 1층 로밍센터',
-  A100140000: '김포공항 1층 로밍센터',
-  A900100000: '제주공항 국제선 1층 로밍센터',
-  A200130000: '김해공항 3층 로밍센터',
-  C399900000: '대구공항 2층 로밍센터'
+  '1430452300': { name: '대구 SKT 황금점 매장', img: 'place-img-10' },
+  '1430456896': { name: '인천공항 2터미널 1층 로밍센터', img: 'place-img-01-01' },
+  'A100110000': { name: '인천공항 1터미널 1층 로밍센터', img: 'place-img-02-1' },
+  'A100140000': { name: '김포공항 1층 로밍센터', img: 'place-img-03' },
+  'A900100000': { name: '제주공항 국제선 1층 로밍센터', img: 'place-img-04' },
+  'A200130000': { name: '김해공항 3층 로밍센터', img: 'place-img-05-1' },
+  'C399900000': { name: '대구공항 2층 로밍센터', img: 'place-img-06' }
 };
 
 Tw.ROAMING_RECEIVE_CODE = {
-  1000004045: { code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(E-F 카운터)' },
-  1000004047: { code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(G-H 카운터)' },
-  1000004055: { code: 'A100140000', name: '김포공항 1층 로밍센터' },
-  1000004057: { code: 'A900100000', name: '제주공항 국제선 1층 로밍센터' },
-  1000012532: { code: 'A200130000', name: '김해공항 3층 로밍센터' },
-  1430452300: { code: '1430452300', name: '대구 SKT 황금점 매장' },
-  1430455436: { code: 'C399900000', name: '대구공항 2층 로밍센터' },
-  1430456957: { code: '1430456896', name: '인천공항 2터미널 3층 로밍센터(D-E 카운터)' }
+  1000004045: { code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(E-F 카운터)', img: 'place-img-01' },
+  1000004047: { code: 'A100110000', name: '인천공항 1터미널 3층 로밍센터(G-H 카운터)', img: 'place-img-01' },
+  1000004055: { code: 'A100140000', name: '김포공항 1층 로밍센터', img: 'place-img-03' },
+  1000004057: { code: 'A900100000', name: '제주공항 국제선 1층 로밍센터', img: 'place-img-04' },
+  1000012532: { code: 'A200130000', name: '김해공항 3층 로밍센터', img: 'place-img-05' },
+  1430452300: { code: '1430452300', name: '대구 SKT 황금점 매장', img: 'place-img-10' },
+  1430455436: { code: 'C399900000', name: '대구공항 2층 로밍센터', img: 'place-img-06' },
+  1430456957: { code: '1430456896', name: '인천공항 2터미널 3층 로밍센터(D-E 카운터)', img: 'place-img-02' }
 };
 
 Tw.SERVICE_AREA_TYPE = {
@@ -1573,7 +1584,9 @@ Tw.ROAMING_DOWNLOAD_URL = {
 Tw.TOOLTIP_TITLE = {
   ROAMING_PAY_GUIDE: '로밍 이용요금 안내',
   ROAMING_USE_GUIDE: '로밍 사용안내',
-  SERVICE_START_GUIDE: '서비스개시일/시간안내'
+  SERVICE_START_GUIDE: '서비스개시일/시간안내',
+  ROAMING_SERVICE_CAUTION: '서비스 유의사항',
+  ROAMING_SERVICE_TERM: '로밍 서비스 기간 설정'
 };
 
 Tw.MEMBERSHIP = {
@@ -1596,4 +1609,17 @@ Tw.MEMBERSHIP = {
       MAP_Y: '126.9858500'
     }
   }
+};
+
+Tw.ROAMING_SVCTIME_SETTING_ERR_CASE = {
+  ERR_START_TIME : '서비스 개시일 시간 설정은 당일 현재시간 이후만 가능합니다.',
+  ERR_START_DATE : '서비스 개시일 설정은 당일 이후만 가능합니다.',
+  ERR_END_DATE : '서비스 종료일 설정은 당일 이후만 가능합니다.',
+  ERR_END_EVT_START : '서비스 개시일 설정은 종료일 이전만 설정 가능합니다.',
+  ERR_END_EVT_END : '서비스 종료일 설정은 개시일 이후만 가능합니다.'
+};
+
+Tw.ROAMING_BPCP = {
+  BUY : '쿠폰 구매·선물',
+  REGISTER : 'T로밍쿠폰 상세'
 };

@@ -77,8 +77,8 @@ class MyTFareBillOption extends TwViewController {
   }
 
   private parseInfo(info: any): any {
-    if (info.svcNum) {
-      info.phoneNum = StringHelper.phoneStringToDash(info.svcNum);
+    if (info.dispSvcNum) {
+      info.phoneNum = StringHelper.phoneStringToDash(info.dispSvcNum);
     }
 
     if (info.address) {

@@ -28,7 +28,8 @@ Tw.CustomerPraise.prototype = {
   },
 
   _bindEvent: function() {
-    this.$container.on('keyup', 'input', $.proxy(this._setAvailableSubmit, this));
+    this.$container.on('keyup', '.input > input', $.proxy(this._setAvailableSubmit, this));
+    this.$container.on('click', '.cancel', $.proxy(this._setAvailableSubmit, this, true));
     this.$container.on('click', '.prev-step', $.proxy(this._handleClickCancel, this));
     this.$typeBtn.on('click', $.proxy(this._openSelectTypePopup, this));
     this.$reasons.on('keyup', $.proxy(this._handleTypeReasons, this));
@@ -125,7 +126,6 @@ Tw.CustomerPraise.prototype = {
     }
 
     this.$typeBtn.text(selectedValue);
-    this._setAvailableSubmit();
     this._popupService.close();
   },
 
@@ -205,7 +205,12 @@ Tw.CustomerPraise.prototype = {
     this._setAvailableSubmit();
   },
 
-  _setAvailableSubmit: function() {
+  _setAvailableSubmit: function(disabled) {
+    if (disabled) {
+      this.$submitBtn.attr('disabled', true);
+      return;
+    }
+
     var $inputs = this.$container.find('div:not(.none) input');
 
     var emptyInputs = _.find($inputs, function(eInput) {
@@ -286,6 +291,7 @@ Tw.CustomerPraise.prototype = {
     delete this._selectedArea;
     this.$typeBtn.text(Tw.CUSTOMER_PRAISE_DEFAULT.TYPE);
     this.$area.find('button').text(Tw.CUSTOMER_PRAISE_DEFAULT.AREA);
+    this._setAvailableSubmit(true);
   },
 
   _handleClickCancel: function() {

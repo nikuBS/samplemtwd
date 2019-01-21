@@ -46,6 +46,7 @@ class ApiRouter {
     this.router.put('/core-auth/service-passwords', this.changeSvcPassword.bind(this));    // BFF_03_0016
     this.router.put('/user/services', this.changeLine.bind(this));    // BFF_03_0005
     this.router.put('/user/nick-names', this.changeNickname.bind(this));    // BFF_03_0006
+
     this.router.get('/common/selected-sessions', this.updateSvcInfo.bind(this));    // BFF_01_0005
 
     this.router.post('/logout-tid', this.logoutTid.bind(this));
@@ -56,10 +57,11 @@ class ApiRouter {
     this.router.get('/allSvcInfo', this.getAllSvcInfo.bind(this));
     this.router.get('/childInfo', this.getChildInfo.bind(this));
     // this.router.get('/serverSession', this.getServerSession.bind(this));
+    this.router.put('/update/notice-type', this.updateNoticeType.bind(this));
+
     this.router.get('/app-version', this.getVersion.bind(this));
     this.router.get('/splash', this.getSplash.bind(this));
     this.router.get('/app-notice', this.getAppNotice.bind(this));
-
     this.router.get('/urlMeta', this.getUrlMeta.bind(this));
     this.router.get('/menu', this.getMenu.bind(this));
     this.router.get('/banner/admin', this.getBannerAdmin.bind(this));
@@ -71,6 +73,7 @@ class ApiRouter {
     this.router.get('/product/comparison', this.getProductComparison.bind(this));
     this.router.get('/product/info', this.getProductInfo.bind(this));
     this.router.get('/masking-method', this.getMaskingMethod.bind(this));
+
     this.router.post('/masking-complete', this.setMaskingComplete.bind(this));
   }
 
@@ -223,34 +226,35 @@ class ApiRouter {
   private getQuickMenu(req: Request, res: Response, next: NextFunction) {
     const svcInfo = this.loginService.getSvcInfo(req);
     if ( FormatHelper.isEmpty(svcInfo) ) {
-      return res.json({
-        code: API_CODE.NODE_1001,
-        msg: NODE_API_ERROR[API_CODE.NODE_1001]
-      });
+      this.redisService.getData(REDIS_KEY.QUICK_DEFAULT + 'N')
+        .subscribe((resp) => {
+          return res.json(resp);
+        });
+    } else {
+      this.apiService.setCurrentReq(req, res);
+      const svcMgmtNum = svcInfo.svcMgmtNum;
+      this.redisService.getData(REDIS_KEY.QUICK_MENU + svcMgmtNum)
+        .switchMap((resp) => {
+          if ( resp.code === API_CODE.REDIS_SUCCESS ) {
+            throw resp;
+          } else {
+            return this.apiService.request(API_CMD.BFF_04_0005, {});
+          }
+        })
+        .switchMap((resp) => {
+          if ( resp.code === API_CODE.CODE_00 ) {
+            const defaultCode = resp.result;
+            return this.redisService.getData(REDIS_KEY.QUICK_DEFAULT + defaultCode);
+          } else {
+            throw resp;
+          }
+        })
+        .subscribe((resp) => {
+          return res.json(resp);
+        }, (err) => {
+          return res.json(err);
+        });
     }
-    this.apiService.setCurrentReq(req, res);
-    const svcMgmtNum = svcInfo.svcMgmtNum;
-    this.redisService.getData(REDIS_KEY.QUICK_MENU + svcMgmtNum)
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.REDIS_SUCCESS ) {
-          throw resp;
-        } else {
-          return this.apiService.request(API_CMD.BFF_04_0005, {});
-        }
-      })
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          const defaultCode = resp.result;
-          return this.redisService.getData(REDIS_KEY.QUICK_DEFAULT + defaultCode);
-        } else {
-          throw resp;
-        }
-      })
-      .subscribe((resp) => {
-        return res.json(resp);
-      }, (err) => {
-        return res.json(err);
-      });
   }
 
   private getProductComparison(req: Request, res: Response, next: NextFunction) {
@@ -288,12 +292,14 @@ class ApiRouter {
     const svcMgmtNum = req.body.svcMgmtNum;
 
     this.loginService.setCurrentReq(req, res);
-    this.loginService.setMaskingCert(svcMgmtNum).subscribe((resp) => {
-      res.json({
-        code: API_CODE.CODE_00
+    this.apiService.setCurrentReq(req, res);
+    this.apiService.updateSvcInfo({})
+      .switchMap((resp) => this.loginService.setMaskingCert(svcMgmtNum))
+      .subscribe((resp) => {
+        res.json({
+          code: API_CODE.CODE_00
+        });
       });
-    });
-
   }
 
   // private setDeviceInfo(req: Request, res: Response, next: NextFunction) {
@@ -414,6 +420,16 @@ class ApiRouter {
     });
   }
 
+  private updateNoticeType(req: Request, res: Response, next: NextFunction) {
+    this.logger.info(this, '[update noticeType]');
+    this.loginService.setCurrentReq(req, res);
+    this.loginService.setSvcInfo({
+      noticeType: ''
+    }).subscribe((resp) => {
+      res.json(resp);
+    });
+  }
+
   private changeSession(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
     this.logger.info(this, '[chagne session]', params);
@@ -473,7 +489,7 @@ class ApiRouter {
     this.loginService.sessionGenerate(req).subscribe(() => {
       this.logger.info(this, '[Session ID]', this.loginService.getSessionId(req));
       res.json({ code: API_CODE.CODE_00 });
-    })
+    });
   }
 
   private setUserLocks(req: Request, res: Response, next: NextFunction) {
@@ -553,7 +569,7 @@ class ApiRouter {
   public updateSvcInfo(req: Request, res: Response, next: NextFunction) {
     this.apiService.setCurrentReq(req, res);
     // this.loginService.setCurrentReq(req, res);
-    this.apiService.updateSvcInfo().subscribe((resp) => {
+    this.apiService.updateSvcInfo({}).subscribe((resp) => {
       res.json(resp);
     }, (error) => {
       res.json(error);

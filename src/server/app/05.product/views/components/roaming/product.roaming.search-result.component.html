@@ -6,11 +6,6 @@
 %>
 
 <script id="fe-phone-info" type="text/x-handlebars-template">
-    <div class="comp-box country-roaming">
-        <div class="list-box cont-noti pt0">
-            <h3 class="tit">휴대폰 선택<button class="tip-view" id="RM_03_01_01_01_tip_02">TIP</button></h3>
-            <span class="type1 fe-header-msg"></span>
-        </div>
         <div class="phone-name" data-model-code="{{items.eqpMdlCd}}">
             <strong>{{items.eqpMdlNm}}</strong>
         </div>
@@ -20,15 +15,10 @@
             </li>
         </ul>
         <p class="comm-indent-txt pt20 fe-bottom-msg"></p>
-    </div>
+    <!--</div>-->
 </script>
 
 <script id="fe-phone-select" type="text/x-handlebars-template">
-    <div class="comp-box country-roaming">
-        <div class="list-box cont-noti pt0">
-            <h3 class="tit">휴대폰 선택<button class="tip-view" id="RM_03_01_01_01_tip_02">TIP</button></h3>
-            <span class="type1 fe-header-msg"></span>
-        </div>
         <span class="inputbox">
             <span class="input">
                 <button class="bt-dropdown big placeholder fe-roaming-mfactCd" title="데이터 용량" aria-haspopup="true">제조사를 선택하세요<span class="ico"></span></button>
@@ -45,7 +35,7 @@
             </li>
         </ul>
         <p class="comm-indent-txt pt20 fe-bottom-msg"></p>
-    </div>
+    <!--</div>-->
 </script>
 
 <script id="fe-roaming-rate" type="text/x-handlebars-template">
@@ -111,27 +101,30 @@
             <li>
                 <dl>
                     <dt>SMS 수신</dt>
-                    <dd>무료</dd>
+                    {{#if items.sMoChargeMin}}<dd>무료</dd>
+                    {{else}}<dd>서비스 이용 불가</dd>{{/if}}
                 </dl>
             </li>
             <li>
                 <dl>
                     <dt>MMS 텍스트 발신</dt>
-                    {{#if items.mTxtCharge}}<dd>{{items.mTxtCharge}}원/건</dd>
+                    {{#if items.dMoChargeMin}}<dd>{{items.mTxtCharge}}{{#if items.cdmaUnit}}원/패킷{{else}}원/건{{/if}}</dd>
                     {{else}}<dd>서비스 이용 불가</dd>{{/if}}
                 </dl>
             </li>
             <li>
                 <dl>
                     <dt>MMS 멀티미디어 발신</dt>
-                    {{#if items.mMtmCharge}}<dd>{{items.mMtmCharge}}원/건</dd>
+                    {{#if items.dMoChargeMin}}<dd>{{items.mMtmCharge}}{{#if items.cdmaUnit}}원/패킷{{else}}원/건{{/if}}</dd>
                     {{else}}<dd>서비스 이용 불가</dd>{{/if}}
                 </dl>
             </li>
             <li>
                 <dl>
                     <dt>MMS 수신</dt>
-                    <dd>무료</dd>
+                    {{#if items.cdmaUnit}}<dd>{{items.dMoChargeMin}}원/패킷</dd>
+                    {{else if items.dMoChargeMin}}<dd>무료</dd>
+                    {{else}}<dd>서비스 이용 불가</dd>{{/if}}
                 </dl>
             </li>
         </ul>

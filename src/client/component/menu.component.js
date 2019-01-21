@@ -2,6 +2,7 @@ Tw.MenuComponent = function (notAboutMenu) {
   if ( notAboutMenu ) {
     return;
   }
+
   $(document).ready($.proxy(function () {
     this.$container = $('#common-menu');
     this.$gnbBtn = $('#fe-bt-gnb');
@@ -31,6 +32,8 @@ Tw.MenuComponent = function (notAboutMenu) {
 
     this._isOpened = false;
     this._isMenuSet = false;
+
+    this._menuRedisErrorCount = 0;
 
     this._init();
     this._bindEvents();
@@ -153,6 +156,7 @@ Tw.MenuComponent.prototype = {
       // retrieve redis
       this._apiService.request(Tw.NODE_CMD.GET_MENU, {})
         .then($.proxy(function (res) {
+          this._menuRedisErrorCount = 0;
           if ( res.code === Tw.API_CODE.CODE_00 ) {
             this._isLogin = res.result.isLogin;
             if ( this._isLogin ) {
@@ -172,9 +176,16 @@ Tw.MenuComponent.prototype = {
             Tw.Error(res.code, res.msg).pop();
           }
         }, this))
-        .fail(function (err) {
+        .fail($.proxy(function (err) {
+          if (this._menuRedisErrorCount === 0) {  // Try one time more
+            this._menuRedisErrorCount += 1;
+            this._onGnbBtnClicked();
+            return;
+          } else {
+            this._menuRedisErrorCount = 0;
+          }
           Tw.Error(err.code, err.msg).pop();
-        });
+        }, this));
     }
   },
   _onTNoti: function () {
@@ -207,11 +218,7 @@ Tw.MenuComponent.prototype = {
     }
   },
   _onSimpleLogin: function () {
-    if ( Tw.BrowserHelper.isAndroid ) {
-      this._historyService.goLoad('/common/member/slogin/aos');
-    } else if ( Tw.BrowserHelper.isIos ) {
-      this._historyService.goLoad('/common/member/slogin/ios');
-    }
+    this._tidLanding.goSLogin();
   },
   _onOutLink: function (e) {
     var url = e.currentTarget.value;
@@ -262,7 +269,9 @@ Tw.MenuComponent.prototype = {
             nick = Tw.SVC_ATTR[userInfo.svcAttr];
           }
           this.$nickName.text(nick);
-          if ( userInfo.svcAttr.indexOf('M') === -1 ) {
+          if (userInfo.svcAttr.indexOf('S3') !== -1) {
+            this.$svcNumber.text(Tw.FormatHelper.conTelFormatWithDash(userInfo.svcNum));
+          } else if ( userInfo.svcAttr.indexOf('M') === -1 ) {
             this.$svcNumber.text(userInfo.addr);
           } else {
             this.$svcNumber.text(Tw.FormatHelper.getDashedCellPhoneNumber(userInfo.svcNum));
@@ -306,7 +315,7 @@ Tw.MenuComponent.prototype = {
         switch ( type ) {
           case 'svcCnt':
             if ( userInfo.totalSvcCnt !== 0 && userInfo.expsSvcCnt !== 0 ) {
-              $(elem).text(Tw.MENU_STRING.SVC_COUNT(userInfo.totalSvcCnt));
+              $(elem).text(Tw.MENU_STRING.SVC_COUNT(userInfo.expsSvcCnt));
             } else {
               $(elem).remove();
             }

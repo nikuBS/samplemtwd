@@ -40,53 +40,43 @@ Tw.CustomerEmailUpload.prototype = {
     this.$container.on('click', '.fe-upload_email_files', $.proxy(this._uploadFile, this));
     this.$container.on('click', '.fe-upload-file-service', $.proxy(this._onClickServiceUpload, this));
     this.$container.on('click', '.fe-upload-file-quality', $.proxy(this._onClickQualityUpload, this));
-    this.$container.on('change', '.fe-wrap-file-upload input.file', $.proxy(this._selectFile, this));
+    this.$container.on('change', '.fe-wrap-file-upload input.file', $.proxy(this._inputFileChooser, this));
   },
 
   _openCustomFileChooser: function (e) {
     var $target = $(e.currentTarget);
-    var androidVersion = Tw.BrowserHelper.getAndroidVersion();
 
-    if ( androidVersion && androidVersion.indexOf('4.4') !== -1 ) {
-      this._nativeService.send(Tw.NTV_CMD.OPEN_FILE_CHOOSER, {}, $.proxy(this._onFileChooser, this, $target));
+    if ( this._isLowerVersionAndroid() ) {
+      this._nativeService.send(Tw.NTV_CMD.OPEN_FILE_CHOOSER, { dest: 'email' }, $.proxy(this._nativeFileChooser, this, $target));
     }
   },
 
-  _onFileChooser: function ($target, response) {
+  _nativeFileChooser: function ($target, response) {
     if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
       var params = response.params;
+      var fileInfo = params.fileData.result[0];
 
-      console.log(params);
+      if ( this._acceptExt.indexOf(fileInfo.name.split('.').pop()) === -1 ) {
+        return this._popupService.openAlert(Tw.CUSTOMER_EMAIL.INVALID_FILE, Tw.POPUP_TITLE.NOTIFY);
+      }
 
-      var $elFileName = $target.parent().parent().find('.fileview');
-      // $elFileName.val(fileInfo.name);
+      if ( fileInfo.size > this._limitFileByteSize ) {
+        return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE);
+      }
 
-      // this.uploadFiles = this.uploadFiles.concat(fileInfo);
+      if ( fileInfo ) {
+        var $elFileName = $target.parent().parent().find('.fileview');
+        $elFileName.val(fileInfo.originalName);
+      }
+
+      this.uploadFiles = this.uploadFiles.concat(fileInfo);
 
       this._showUploadPopup();
       this._checkUploadButton();
-
-      // if ( this._acceptExt.indexOf(fileInfo.name.split('.').pop()) === -1 ) {
-      //   return this._popupService.openAlert(Tw.CUSTOMER_EMAIL.INVALID_FILE, Tw.POPUP_TITLE.NOTIFY);
-      // }
-      //
-      // if ( fileInfo.size > this._limitFileByteSize ) {
-      //   return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE);
-      // }
-      //
-      // if ( fileInfo ) {
-      //   var $elFileName = $(e.currentTarget).parent().parent().find('.fileview');
-      //   $elFileName.val(fileInfo.name);
-      // }
-      //
-      // this.uploadFiles = this.uploadFiles.concat(fileInfo);
-      //
-      // this._showUploadPopup();
-      // this._checkUploadButton();
     }
   },
 
-  _selectFile: function (e) {
+  _inputFileChooser: function (e) {
     var $target = $(e.currentTarget);
     var fileInfo = $target.prop('files').item(0);
 
@@ -110,15 +100,19 @@ Tw.CustomerEmailUpload.prototype = {
   },
 
   _uploadFile: function () {
-    var formData = new FormData();
-    formData.append('dest', Tw.UPLOAD_TYPE.EMAIL);
+    if ( this._isLowerVersionAndroid() ) {
+      this._successUploadFile();
+    } else {
+      var formData = new FormData();
+      formData.append('dest', Tw.UPLOAD_TYPE.EMAIL);
 
-    this.uploadFiles.map(function (file) {
-      formData.append('file', file);
-    });
+      this.uploadFiles.map(function (file) {
+        formData.append('file', file);
+      });
 
-    this._apiService.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData)
-      .done($.proxy(this._successUploadFile, this));
+      this._apiService.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData)
+        .done($.proxy(this._successUploadFile, this));
+    }
   },
 
   _showUploadPopup: function () {
@@ -129,11 +123,23 @@ Tw.CustomerEmailUpload.prototype = {
   },
 
   _onClickServiceUpload: function () {
+    if ( !Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
+      // Not Supported File Upload
+      this._popupService.openAlert(Tw.CUSTOMER_EMAIL.NOT_SUPPORT_FILE_UPLOAD);
+      return false;
+    }
+
     this.uploadFiles = this.serviceUploadFiles.slice(0);
     this._showUploadPopup();
   },
 
   _onClickQualityUpload: function () {
+    if ( !Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
+      // Not Supported File Upload
+      this._popupService.openAlert(Tw.CUSTOMER_EMAIL.NOT_SUPPORT_FILE_UPLOAD);
+      return false;
+    }
+
     this.uploadFiles = this.qualityUploadFiles.slice(0);
     this._showUploadPopup();
   },
@@ -147,7 +153,11 @@ Tw.CustomerEmailUpload.prototype = {
 
     if ( this._getCurrentType() === 'service' ) {
       this.serviceUploadFiles = this.uploadFiles.slice(0);
-      this.wrap_service.find('.filename-list').html(this.tpl_upload_list({ files: res.result }));
+      if ( this._isLowerVersionAndroid() ) {
+        this.wrap_service.find('.filename-list').html(this.tpl_upload_list({ files: this.serviceUploadFiles }));
+      } else {
+        this.wrap_service.find('.filename-list').html(this.tpl_upload_list({ files: res.result }));
+      }
 
       if ( this.uploadFiles.length >= 5 ) {
         $('.fe-upload-file-service').prop('disabled', true);
@@ -156,7 +166,12 @@ Tw.CustomerEmailUpload.prototype = {
       }
     } else {
       this.qualityUploadFiles = this.uploadFiles.slice(0);
-      this.wrap_quality.find('.filename-list').html(this.tpl_upload_list({ files: res.result }));
+
+      if ( this._isLowerVersionAndroid() ) {
+        this.wrap_quality.find('.filename-list').html(this.tpl_upload_list({ files: this.qualityUploadFiles }));
+      } else {
+        this.wrap_quality.find('.filename-list').html(this.tpl_upload_list({ files: res.result }));
+      }
 
       if ( this.uploadFiles.length >= 5 ) {
         $('.fe-upload-file-quality').prop('disabled', true);
@@ -196,6 +211,12 @@ Tw.CustomerEmailUpload.prototype = {
 
   _disableUploadButton: function () {
     $('.fe-upload_email_files').prop('disabled', true);
+  },
+
+  _isLowerVersionAndroid: function () {
+    var androidVersion = Tw.BrowserHelper.getAndroidVersion();
+
+    return androidVersion && androidVersion.indexOf('4') !== -1;
   }
 };
 

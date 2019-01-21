@@ -32,6 +32,8 @@ Tw.CertificationSelect = function () {
 
   this._smsBlock = false;
   this._optionCert = false;
+
+  this._certSk = new Tw.CertificationSk();
 };
 
 
@@ -200,7 +202,7 @@ Tw.CertificationSelect.prototype = {
     }, this));
 
     if ( Tw.FormatHelper.isEmpty(enableMethod) ) {
-      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_SMS_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_SMS_BLOCK.TITLE, Tw.BUTTON_LABEL.CLOSE);
+      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_BLOCK.TITLE, Tw.BUTTON_LABEL.CLOSE);
       return;
     }
 
@@ -225,7 +227,6 @@ Tw.CertificationSelect.prototype = {
 
     switch ( this._certMethod ) {
       case Tw.AUTH_CERTIFICATION_METHOD.SK_SMS:
-        this._certSk = new Tw.CertificationSk();
         this._certSk.open(
           this._svcInfo, this._authUrl, this._authKind, this._prodAuthKey, $.proxy(this._completeCert, this),
           this._opMethods, this._optMethods, isWelcome, this._methodCnt);
@@ -346,8 +347,11 @@ Tw.CertificationSelect.prototype = {
         this._callback(resp, this._deferred, this._command);
       }
     } else if ( resp.code === Tw.API_CODE.CERT_SELECT ) {
-      // 인증 선택
-      this._openSelectPopup(false);
+      if ( !Tw.FormatHelper.isEmpty(resp.target) && resp.target === Tw.AUTH_CERTIFICATION_METHOD.SK_SMS ) {
+        this._openSelectPopup(false);
+      } else {
+        this._checkSmsEnable();
+      }
     } else if ( resp.code === Tw.API_CODE.CERT_SMS_BLOCK ) {
       this._smsBlock = true;
       this._openSelectPopup(false);
@@ -355,5 +359,14 @@ Tw.CertificationSelect.prototype = {
       // TODO: 인증 실패
       this._callback(resp, this._deferred, this._command);
     }
+  },
+  _checkSmsEnable: function () {
+    this._certSk.checkSmsEnable(this._svcInfo, this._opMethods, this._optMethods, this._methodCnt, $.proxy(this._completeCheckSmsEnable, this));
+  },
+  _completeCheckSmsEnable: function (resp) {
+    if ( resp.code === Tw.API_CODE.CERT_SMS_BLOCK ) {
+      this._smsBlock = true;
+    }
+    this._openSelectPopup(false);
   }
 };

@@ -1,6 +1,7 @@
 var gulp       = require('gulp'),
     gutil      = require('gulp-util'),
     uglify     = require('gulp-uglify'),
+    cleanCSS   = require('gulp-clean-css'),
     concat     = require('gulp-concat'),
     webserver  = require('gulp-webserver'),
     livereload = require('gulp-livereload'),
@@ -53,6 +54,17 @@ gulp.task('server', function () {
     }));
 });
 
+gulp.task('js-jquery-vendor', function () {
+  return gulp.src([
+    'node_modules/jquery/dist/jquery.min.js' ])
+    .on('error', function (err) {
+      gutil.log(gutil.colors.red('[Error]'), err.toString());
+    })
+    .pipe(concat('jquery-vendor.js'))
+    // .pipe(gulp.dest(dist_tmp + 'js'))
+    .pipe(gulp.dest(dist + 'js'));
+});
+
 gulp.task('js-vendor', function () {
   return gulp.src([
     'node_modules/jquery/dist/jquery.min.js',
@@ -70,20 +82,33 @@ gulp.task('js-vendor', function () {
     .pipe(concat('vendor.js'))
     // .pipe(gulp.dest(dist_tmp + 'js'))
     .pipe(gulp.dest(dist + 'js'));
+});
 
-
+gulp.task('js-component', function () {
+  return gulp.src([
+    'src/client/component/**/*.js',
+    'src/client/common/**/*.js'])
+    .pipe(concat('component.js'))
+    // .pipe(gulp.dest(dist_tmp + 'js'))
+    .pipe(gulp.dest(dist + 'js'))
+    .pipe(uglify())
+    .on('error', function (err) {
+      gutil.log(gutil.colors.red('[Error]'), err.toString());
+    })
+    .pipe(rename('component.min.js'))
+    .pipe(rev())
+    // .pipe(gulp.dest(dist_tmp + 'js'))
+    .pipe(gulp.dest(dist + 'js'))
+    .pipe(rev.manifest(dist + 'tmp/component-manifest.json'))
+    .pipe(gulp.dest('.'));
 });
 
 gulp.task('js-util', function () {
   return gulp.src([
     'src/client/configs/**/*.js',
     'src/client/types/**/*.js',
-    'src/client/polyfill/**/*.js',
-    'src/client/plugins/**/*.js',
     'src/client/utils/**/*.js',
-    'src/client/services/**/*.js',
-    'src/client/component/**/*.js',
-    'src/client/common/**/*.js'])
+    'src/client/services/**/*.js' ])
     .pipe(concat('util.js'))
     // .pipe(gulp.dest(dist_tmp + 'js'))
     .pipe(gulp.dest(dist + 'js'))
@@ -99,16 +124,33 @@ gulp.task('js-util', function () {
     .pipe(gulp.dest('.'));
 });
 
+gulp.task('js-component-client', function () {
+  return gulp.src([
+    'src/client/component/**/*.js',
+    'src/client/common/**/*.js'])
+    .pipe(concat('component.js'))
+    // .pipe(gulp.dest(dist_tmp + 'js'))
+    .pipe(gulp.dest(dist + 'js'))
+    .pipe(uglify())
+    .on('error', function (err) {
+      gutil.log(gutil.colors.red('[Error]'), err.toString());
+    })
+    .pipe(rename(manifest['component.min.js']))
+    .on('error', function (err) {
+      gutil.log(gutil.colors.red('[Error]'), err.toString());
+      console.log(manifest);
+    })
+    // .pipe(gulp.dest(dist_tmp + 'js'))
+    .pipe(gulp.dest(dist + 'js'));
+});
+
+
 gulp.task('js-util-client', function () {
   return gulp.src([
     'src/client/configs/**/*.js',
     'src/client/types/**/*.js',
-    'src/client/polyfill/**/*.js',
-    'src/client/plugins/**/*.js',
     'src/client/utils/**/*.js',
-    'src/client/services/**/*.js',
-    'src/client/component/**/*.js',
-    'src/client/common/**/*.js'])
+    'src/client/services/**/*.js' ])
     .pipe(concat('util.js'))
     // .pipe(gulp.dest(dist_tmp + 'js'))
     .pipe(gulp.dest(dist + 'js'))
@@ -239,7 +281,7 @@ gulp.task('css-rb', function () {
   // }))
     .pipe(concat('style.css'))
     // .pipe(imagehash())
-    // .pipe(uglify())
+    .pipe(cleanCSS())
     // .pipe(gulp.dest(dist_tmp + 'css'))
     .pipe(gulp.dest(dist + 'css'))
     .on('error', function (err) {
@@ -340,9 +382,9 @@ gulp.task('js-app', appNames.map(function (app) {
 gulp.task('js-app-client', appNames.map(function (app) {
   return 'js-' + app + '-client';
 }));
-gulp.task('js', ['js-util', 'js-old-app', 'js-app']);
-gulp.task('js-client', ['js-util-client', 'js-app-client']);
-gulp.task('vendor', ['js-vendor', 'css-vendor']);
+gulp.task('js', ['js-util', 'js-component', 'js-old-app', 'js-app']);
+gulp.task('js-client', ['js-util-client', 'js-component-client', 'js-app-client']);
+gulp.task('vendor', ['js-jquery-vendor', 'js-vendor', 'css-vendor']);
 gulp.task('rb', ['js-rb', 'css-rb', 'css-copy', 'img', 'hbs', 'font']);
 
 gulp.task('task', ['vendor', 'js', 'rb', 'resource', 'cab']);

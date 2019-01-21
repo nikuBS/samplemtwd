@@ -49,7 +49,7 @@
                         </div>
                         <div class="cont">
                             <span class="stit">나의 T가족모아데이터<button id="DC_02_tip_01" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
-                            <span class="txt1"><span class="ff-type1"><%= familyInfo.mine.remained.data > 0 ? familyInfo.mine.remained.data + familyInfo.mine.remained.unit : '0GB' %> </span>남음</span>
+                            <span class="txt1"><span class="ff-type1"><%= familyInfo.mine.remained.data > 0 ? familyInfo.mine.remained.data + familyInfo.mine.remained.unit : '0KB' %> </span>남음</span>
                         </div>
                         <% if (familyInfo.mine.shrblYn === "Y") { %>
                         <span class="btn-r">
@@ -61,7 +61,7 @@
                 <% } %>
                 <div class="total-data">
                     <span class="stit">총 가족 공유 데이터</span>
-                    <span class="r-txt"><span class="ff-type1"><%= familyInfo.total + 'GB' %></span></span>
+                    <span class="r-txt"><span class="ff-type1"><%= familyInfo.total > 0 ? familyInfo.total + 'GB' : '0KB' %></span></span>
                 </div>
             </div>
             <!--// .cont-box -->
@@ -87,7 +87,7 @@
                                         <% if (isInfinity) { %>
                                             <span class="ff-type1">무제한</span>
                                         <% } else { %>
-                                            <span class="ff-type1"><%= member.used.data + member.used.unit %></span>이용
+                                            <span class="ff-type1"><%= member.used.data > 0 ? member.used.data + member.used.unit : '0KB' %></span>이용
                                         <% } %>
                                     </span>
                                     <p><%= member.svcNum %></p>
@@ -97,7 +97,7 @@
                                         <dt>이용요금제</dt>
                                         <dd><%= member.prodNm %></dd>
                                         <dt>공유한 데이터</dt>
-                                        <dd><%= member.shared %>GB</dd>
+                                        <dd><%= member.shared > 0 ? member.shared + 'GB' : '0KB' %></dd>
                                         <% if (!isInfinity) { %>
                                             <dt>이용한도</dt>
                                             <dd>
@@ -118,17 +118,18 @@
 
             <hr class="cont-sp type1" aria-hidden="true">
 
+            <% if (familyInfo.isRepresentation && histories > 0) { %>
             <!-- .cont-box -->
-            <!-- 범위 제외 -->
-            <!-- <div class="cont-box nogaps">
+            <div class="cont-box nogaps">
                 <div class="calling-plan type3">
-                    <button class="wrap-link fs-type01">
-                        <span class="left">이번달 공유내역 / 회수하기</span>
-                        <span class="right fc-type01"><strong class="fs-type03">28건</strong></span>
-                    </button>
+                    <a class="wrap-link fs-type01" href="/myt-data/familydata/history">
+                        <span class="left">이번 달 공유한 데이터 변경하기</span>
+                        <span class="right fc-type01"><strong class="fs-type03"><%= histories %>건</strong></span>
+                    </a>
                 </div>
-            </div> -->
+            </div>
             <!--// .cont-box -->
+            <% } %>
 
             <div class="cont-box noborder bgnone">
                 <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>

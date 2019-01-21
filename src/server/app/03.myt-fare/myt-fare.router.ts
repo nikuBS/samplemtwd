@@ -47,6 +47,7 @@ import MyTFareBillOptionCancel from './controllers/bill/myt-fare.bill.option.can
 import MyTFareBillOptionCancelComplete from './controllers/bill/myt-fare.bill.option.cancel-complete.controller';
 import MyTFareBillOptionSms from './controllers/bill/myt-fare.bill.option.sms.controller';
 import MyTFareBillOptionRegister from './controllers/bill/myt-fare.bill.option.register.controller';
+import MyTFareBillOptionChangeAddress from './controllers/bill/myt-fare.bill.option.change-address.controller';
 
 class MytFareRouter extends TwRouter {
   constructor() {
@@ -63,6 +64,7 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/bill/tpoint', controller: MyTFareBillTPoint });
     this.controllers.push({ url: '/bill/rainbow', controller: MyTFareBillRainbow });
     this.controllers.push({ url: '/bill/option', controller: MyTFareBillOption });
+    this.controllers.push({ url: '/bill/option/change-address', controller: MyTFareBillOptionChangeAddress });
     this.controllers.push({ url: '/bill/option/register', controller: MyTFareBillOptionRegister });
     this.controllers.push({ url: '/bill/option/cancel', controller: MyTFareBillOptionCancel });
     this.controllers.push({ url: '/bill/option/sms', controller: MyTFareBillOptionSms });

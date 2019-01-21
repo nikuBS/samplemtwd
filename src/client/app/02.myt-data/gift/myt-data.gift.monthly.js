@@ -146,6 +146,7 @@ Tw.MyTDataGiftMonthly.prototype = {
       //     this._historyService.reload();
       //   }, this));
       Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT_COMPLETE);
+      this._historyService.reload();
       return true;
     } else {
       Tw.Error(res.code, res.msg).pop();

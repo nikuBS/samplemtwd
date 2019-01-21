@@ -62,6 +62,7 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
 
   _detectInputNumber: function() {
     this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9]/g, ''));
+
     if (this.$inputNumber.val().length > 11) {
       this.$inputNumber.val(this.$inputNumber.val().substr(0, 11));
     }
@@ -79,11 +80,11 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
   },
 
   _blurInputNumber: function() {
-    this.$inputNumber.attr('type', 'text').val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$inputNumber.val()));
+    this.$inputNumber.val(Tw.FormatHelper.conTelFormatWithDash(this.$inputNumber.val()));
   },
 
   _focusInputNumber: function() {
-    this.$inputNumber.val(this.$inputNumber.val().replace(/-/gi, '')).attr('type', 'number');
+    this.$inputNumber.val(this.$inputNumber.val().replace(/-/gi, ''));
   },
 
   _clearNum: function() {
@@ -108,8 +109,7 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
       isNumberBasFeeInfo: !this._confirmOptions.preinfo.toProdInfo.basFeeInfo.isNaN,
       toProdBasFeeInfo: this._confirmOptions.preinfo.toProdInfo.basFeeInfo.value,
       toProdDesc: this._confirmOptions.sktProdBenfCtt,
-      isJoinTermProducts: (!Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoJoinList) ||
-        !Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoTermList)),
+      isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this._prodId) === -1,
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
       autoTermList: this._confirmOptions.preinfo.autoTermList,
       autoJoinBenefitList: this._confirmOptions.preinfo.toProdInfo.chgSktProdBenfCtt,
@@ -164,20 +164,22 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
       if (!isDataOvrAmt && !isVoiceOvrAmt && !isSmsOvrAmt) {
         overpayResults.isOverpayResult = false;
       } else {
+        var convDataAmt = Tw.ProductHelper.convDataAmtIfAndBas(resp.result.dataIfAmt, resp.result.dataBasAmt);
+
         overpayResults = $.extend(overpayResults, {
           isDataOvrAmt: isDataOvrAmt,
           isVoiceOvrAmt: isVoiceOvrAmt,
           isSmsOvrAmt: isSmsOvrAmt,
-          dataIfAmt: resp.result.dataIfAmt,
-          dataBasAmt: resp.result.dataBasAmt,
-          dataOvrAmt: Math.ceil(resp.result.dataOvrAmt),
-          voiceIfAmt: Math.ceil(resp.result.voiceIfAmt),
-          voiceBasAmt: Math.ceil(resp.result.voiceBasAmt),
-          voiceOvrAmt: Math.ceil(resp.result.voiceOvrAmt),
-          smsIfAmt: Math.ceil(resp.result.smsIfAmt),
-          smsBasAmt: Math.ceil(resp.result.smsBasAmt),
-          smsOvrAmt: Math.ceil(resp.result.smsOvrAmt),
-          ovrTotAmt: Math.ceil(resp.result.ovrTotAmt)
+          dataIfAmt: Tw.FormatHelper.addComma(convDataAmt.dataIfAmt) + convDataAmt.unit,
+          dataBasAmt: Tw.FormatHelper.addComma(convDataAmt.dataBasAmt) + convDataAmt.unit,
+          dataOvrAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.dataOvrAmt)),
+          voiceIfAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.voiceIfAmt)),
+          voiceBasAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.voiceBasAmt)),
+          voiceOvrAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.voiceOvrAmt)),
+          smsIfAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.smsIfAmt)),
+          smsBasAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.smsBasAmt)),
+          smsOvrAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.smsOvrAmt)),
+          ovrTotAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.ovrTotAmt))
         });
       }
     }

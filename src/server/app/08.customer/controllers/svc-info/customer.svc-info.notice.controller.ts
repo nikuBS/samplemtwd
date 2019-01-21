@@ -1,5 +1,5 @@
 /**
- * FileName: customer.svc-info.notice.tworld.controller.ts
+ * FileName: customer.svc-info.notice.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.10.19
  */
@@ -14,7 +14,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import sanitizeHtml from 'sanitize-html';
 import BrowserHelper from '../../../../utils/browser.helper';
 
-class CustomerSvcInfoNoticeTworld extends TwViewController {
+class CustomerSvcInfoNotice extends TwViewController {
   constructor() {
     super();
   }
@@ -174,4 +174,4 @@ class CustomerSvcInfoNoticeTworld extends TwViewController {
   }
 }
 
-export default CustomerSvcInfoNoticeTworld;
+export default CustomerSvcInfoNotice;

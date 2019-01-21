@@ -1,7 +1,7 @@
 export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_1_thumb.gif',
-    TITLE: '스팸 관련 정보통신망 법',
+    TITLE: '스팸 관련 정보통신망법',
     DATE: '2014.12.31',
     IMG_LIST: [
       {
@@ -199,7 +199,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   },
   {
     THUMB: 'webtoon_2_thumb.gif',
-    TITLE: '스미싱 피해예방',
+    TITLE: '스미싱 피해 예방',
     DATE: '2015.05.06',
     IMG_LIST: [
       {
@@ -230,7 +230,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   },
   {
     THUMB: 'webtoon_3_thumb.gif',
-    TITLE: '파밍 피해예방',
+    TITLE: '파밍 피해 예방',
     DATE: '2015.06.17',
     IMG_LIST: [
       {
@@ -517,7 +517,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   },
   {
     THUMB: 'webtoon_14_thumb.gif',
-    TITLE: '스마트폰 중독 피해·예방법',
+    TITLE: '스마트폰 중독 피해 예방법',
     DATE: '2016.02.24',
     IMG_LIST: [
       {
@@ -639,7 +639,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   },
   {
     THUMB: 'webtoon_18_thumb.gif',
-    TITLE: '휴대폰 페이백 주의보',
+    TITLE: '휴대폰 페이 백 주의보',
     DATE: '2016.04.27',
     IMG_LIST: [
       {
@@ -764,7 +764,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   },
   {
     THUMB: 'webtoon_22_thumb.png',
-    TITLE: '큐싱예방',
+    TITLE: '큐싱 예방',
     DATE: '2017.04.02',
     IMG_LIST: [
       {
@@ -818,7 +818,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   },
   {
     THUMB: 'webtoon_24_thumb.png',
-    TITLE: '결합상품 이용자를 위한 제도개선',
+    TITLE: '결합상품 이용자를 위한 제도 개선',
     DATE: '2017.04.02',
     IMG_LIST: [
       {
@@ -902,7 +902,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   },
   {
     THUMB: 'webtoon_27_thumb.jpg',
-    TITLE: 'USIM 비밀번호 설정',
+    TITLE: '유심 비밀번호 설정',
     DATE: '2017.12.20',
     IMG_LIST: [
       {

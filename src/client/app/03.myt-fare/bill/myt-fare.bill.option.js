@@ -17,7 +17,11 @@ Tw.MyTFareBillOption = function (rootEl) {
 
 Tw.MyTFareBillOption.prototype = {
   _init: function () {
-    this._checkIsAfterChange();
+    if( !Tw.Environment.init ) {
+      $(window).on(Tw.INIT_COMPLETE, $.proxy(this._checkIsAfterChange, this));
+    } else {
+      this._checkIsAfterChange();
+    }
     this._bindEvent();
   },
   _checkIsAfterChange: function () {
@@ -91,7 +95,7 @@ Tw.MyTFareBillOption.prototype = {
     Tw.Error(err.code, err.msg).pop();
   },
   _changeAddress: function () {
-    new Tw.MyTFareBillChangeAddress(this.$container);
+    this._historyService.goLoad('/myt-fare/bill/option/change-address');
   },
   _isBackOrReload: function () {
     if (window.performance) {

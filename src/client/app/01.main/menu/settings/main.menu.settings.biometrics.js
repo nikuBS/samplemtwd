@@ -30,10 +30,6 @@ Tw.MainMenuSettingsBiometrics.prototype = {
   },
   _checkFido: function () {
     this._nativeService.send(Tw.NTV_CMD.FIDO_CHECK, {}, $.proxy(this._onFidoCheck, this));
-    this._nativeService.send(Tw.NTV_CMD.SAVE, {
-      key: Tw.NTV_STORAGE.FIDO_USE,
-      value: Tw.NTV_FIDO_USE.ENABLE
-    });
   },
   _onClickRegisterFido: function () {
     var biometricsTerm = new Tw.BiometricsTerms(this._target);
@@ -60,11 +56,14 @@ Tw.MainMenuSettingsBiometrics.prototype = {
     }
   },
   _onFidoUse: function (resp) {
+    console.log('fido use', resp);
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       if ( resp.params.value === Tw.NTV_FIDO_USE.ENABLE ) {
+        console.log('enable');
         this.$inputFido.attr('checked', true);
         this.$inputFido.parents('.fe-switch').addClass('on');
       } else {
+        console.log('disable');
         this.$inputFido.attr('checked', false);
         this.$inputFido.parents('.fe-switch').removeClass('on');
       }

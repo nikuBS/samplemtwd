@@ -35,8 +35,7 @@ Tw.BenefitSelectContract.prototype = {
       toProdDesc: this.data.joinInfoTerm.preinfo.reqProdInfo.prodSmryDesc,
       toProdBasFeeInfo: this.data.joinInfoTerm.preinfo.reqProdInfo.basFeeInfo,
       isNumberBasFeeInfo: this.data.joinInfoTerm.preinfo.reqProdInfo.isNumberBasFeeInfo,
-      isJoinTermProducts: (!Tw.FormatHelper.isEmpty(this.data.joinInfoTerm.preinfo.autoJoinList) ||
-        !Tw.FormatHelper.isEmpty(this.data.joinInfoTerm.preinfo.autoTermList)),
+      isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this.data.prodId) === -1,
       isAgreement: (this.data.joinInfoTerm.stipulationInfo && this.data.joinInfoTerm.stipulationInfo.existsCount > 0)
     });
   },

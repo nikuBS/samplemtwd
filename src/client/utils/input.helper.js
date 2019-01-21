@@ -9,6 +9,11 @@ Tw.InputHelper = (function () {
     $input.val($input.val().replace(/[^0-9*]/g, ''));
   }
 
+  function inputNumberAndDashOnly(input) {
+    var $input = $(input);
+    $input.val($input.val().replace(/[^0-9-]/g, ''));
+  }
+
   function inputNumberMaxLength(input) {
     var $input = $(input);
     var nLength = Number($input.attr('maxlength'));
@@ -54,6 +59,15 @@ Tw.InputHelper = (function () {
     }
   }
 
+  function isDeleteKey(event) {
+    // input keyup event (only input number)
+    var key = event.which;
+    if ( key === 8 || key === 46 ) {
+      return true;
+    }
+    return false;
+  }
+
   function validateNumber(number) {
     var reg = /[^0-9]/g;
     return reg.test(number);
@@ -78,10 +92,12 @@ Tw.InputHelper = (function () {
   return {
     inputNumberOnly: inputNumberOnly,
     inputNumberAndAsteriskOnly: inputNumberAndAsteriskOnly,
+    inputNumberAndDashOnly: inputNumberAndDashOnly,
     validateEmail: validateEmail,
     validateNumber: validateNumber,
     inputNumKeyUp: inputNumKeyUp,
     inputNumKeyDown: inputNumKeyDown,
+    isDeleteKey: isDeleteKey,
     getByteCount: getByteCount,
     insertDashCellPhone: insertDashCellPhone,
     inputNumberMaxLength: inputNumberMaxLength

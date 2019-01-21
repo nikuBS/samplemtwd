@@ -24,6 +24,7 @@ Tw.CertificationSk = function () {
   this._seqNo = '';
   this._onKeyin = false;
   this._jobCode = null;
+  this._allSvcInfo = null;
 
   this._addTimer = null;
   this._addTime = null;
@@ -39,6 +40,52 @@ Tw.CertificationSk.prototype = {
     ATH2008: 'ATH2008',     // 인증번호를 입력할 수 있는 시간이 초과하였습니다.
     ATH1221: 'ATH1221'      // 인증번호 유효시간이 경과되었습니다.
   },
+  checkSmsEnable: function (svcInfo, opMethods, optMethods, methodCnt, callback) {
+    if ( Tw.FormatHelper.isEmpty(this._allSvcInfo) ) {
+      this._getAllSvcInfo($.proxy(this._onSuccessAllSvcInfoCheck, this, svcInfo, opMethods, optMethods, methodCnt, callback));
+    } else {
+      if ( !this._checkEnableCase(this._allSvcInfo, svcInfo, opMethods, optMethods, methodCnt) ) {
+        callback({ code: Tw.API_CODE.CERT_SMS_BLOCK });
+      } else {
+        callback({ code: Tw.API_CODE.CERT_SMS_ENABLE });
+      }
+    }
+  },
+  _getAllSvcInfo: function (callback) {
+    this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
+      .done(callback);
+  },
+  _onSuccessAllSvcInfoCheck: function (svcInfo, opMethods, optMethods, methodCnt, callback, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._allSvcInfo = resp.result;
+      if ( !this._checkEnableCase(resp.result, svcInfo, opMethods, optMethods, methodCnt) ) {
+        callback({ code: Tw.API_CODE.CERT_SMS_BLOCK });
+      } else {
+        callback({ code: Tw.API_CODE.CERT_SMS_ENABLE });
+      }
+    } else {
+      Tw.Error(resp.code, resp.msg).pop();
+    }
+  },
+  _checkEnableCase: function (allSvc, svcInfo, opMethods, optMethods, methodCnt) {
+    if ( Tw.FormatHelper.isEmpty(allSvc.m) ) {
+      return false;
+    }
+
+    if ( svcInfo.smsUsableYn === 'N' || svcInfo.svcStCd === Tw.SVC_STATE.SP ) {
+      if ( methodCnt === 1 ) {
+        if ( !Tw.FormatHelper.isEmpty(optMethods) && optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN) !== -1 ) {
+          this._defaultKeyin = true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
+    return true;
+  },
+
   open: function (svcInfo, authUrl, authKind, prodAuthKey, callback, opMethods, optMethods, isWelcome, methodCnt) {
     this._callbackParam = null;
     this._svcInfo = svcInfo;
@@ -47,7 +94,19 @@ Tw.CertificationSk.prototype = {
     this._callback = callback;
     this._prodAuthKey = prodAuthKey;
 
-    this._getAllSvcInfo(opMethods, optMethods, isWelcome, methodCnt);
+    if ( Tw.FormatHelper.isEmpty(this._allSvcInfo) ) {
+      this._getAllSvcInfo($.proxy(this._onSuccessAllSvcInfo, this, opMethods, optMethods, isWelcome, methodCnt));
+    } else {
+      this._parseAllSvcInfo(this._allSvcInfo, opMethods, optMethods, isWelcome, methodCnt);
+    }
+  },
+  _onSuccessAllSvcInfo: function (opMethods, optMethods, isWelcome, methodCnt, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._allSvcInfo = resp.result;
+      this._parseAllSvcInfo(resp.result, opMethods, optMethods, isWelcome, methodCnt);
+    } else {
+      Tw.Error(resp.code, resp.msg).pop();
+    }
   },
   _checkSmsType: function (opMethods) {
     if ( opMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE) !== -1 ) {
@@ -56,49 +115,35 @@ Tw.CertificationSk.prototype = {
       this._smsType = Tw.AUTH_CERTIFICATION_METHOD.SK_SMS;
     }
   },
-  _checkOption: function (optMethods, methodCnt) {
+  _checkOption: function (optMethods) {
     if ( !Tw.FormatHelper.isEmpty(optMethods) && optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN) !== -1 ) {
       this._enableKeyin = true;
     }
     if ( !Tw.FormatHelper.isEmpty(optMethods) && optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_SECURITY) !== -1 && Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
       this._securityAuth = true;
     }
+  },
+  _parseAllSvcInfo: function (allSvc, opMethods, optMethods, isWelcome, methodCnt) {
+    var category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
+    _.map(category, $.proxy(function (line) {
+      var curLine = allSvc[Tw.LINE_NAME[line]];
+      if ( !Tw.FormatHelper.isEmpty(curLine) ) {
+        _.map(curLine, $.proxy(function (target) {
+          if ( target.repSvcYn === 'Y' ) {
+            this._svcInfo = target;
 
-    if ( this._svcInfo.smsUsableYn === 'N' || this._svcInfo.svcStCd === Tw.SVC_STATE.SP ) {
-      return this._checkEnableCase(optMethods, methodCnt);
-    }
-    return true;
-  },
-  _getAllSvcInfo: function (opMethods, optMethods, isWelcome, methodCnt) {
-    this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
-      .done($.proxy(this._onSuccessAllSvcInfo, this, opMethods, optMethods, isWelcome, methodCnt));
-  },
-  _onSuccessAllSvcInfo: function (opMethods, optMethods, isWelcome, methodCnt, resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( Tw.FormatHelper.isEmpty(resp.result.m) && !this._checkEnableCase(optMethods, methodCnt) ) {
-        return;
+          }
+        }, this));
       }
-      var category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
-      _.map(category, $.proxy(function (line) {
-        var curLine = resp.result[Tw.LINE_NAME[line]];
-        if ( !Tw.FormatHelper.isEmpty(curLine) ) {
-          _.map(curLine, $.proxy(function (target) {
-            if ( target.repSvcYn === 'Y' ) {
-              this._svcInfo = target;
+    }, this));
 
-            }
-          }, this));
-        }
-      }, this));
-
-      this._openSmsOnly(opMethods, optMethods, isWelcome, methodCnt);
-    } else {
-      Tw.Error.pop(resp.code, resp.msg);
-    }
+    this._openSmsOnly(opMethods, optMethods, isWelcome, methodCnt);
   },
   _openSmsOnly: function (opMethods, optMethods, isWelcome, methodCnt) {
     this._checkSmsType(opMethods);
-    if ( !this._checkOption(optMethods, methodCnt) ) {
+    this._checkOption(optMethods);
+    if ( !this._checkEnableCase(this._allSvcInfo, this._svcInfo, opMethods, optMethods, methodCnt) ) {
+      this._callback({ code: Tw.API_CODE.CERT_SMS_BLOCK });
       return;
     }
 
@@ -111,7 +156,7 @@ Tw.CertificationSk.prototype = {
         sLogin: this._svcInfo.loginType === Tw.AUTH_LOGIN_TYPE.EASY,
         masking: this._authKind === Tw.AUTH_CERTIFICATION_KIND.A,
         svcNum: this._svcInfo.svcNum,
-        enableKeyin: this._enableKeyin,
+        enableKeyin: this._enableKeyin
       }
     }, $.proxy(this._onOpenSmsOnly, this), $.proxy(this._onCloseSmsOnly, this), 'cert-sms');
   },
@@ -177,7 +222,10 @@ Tw.CertificationSk.prototype = {
   },
 
   _onClickOtherCert: function () {
-    this._callbackParam = { code: Tw.API_CODE.CERT_SELECT };
+    this._callbackParam = {
+      code: Tw.API_CODE.CERT_SELECT,
+      target: Tw.AUTH_CERTIFICATION_KIND.AUTH_CERTIFICATION_METHOD
+    };
     this._popupService.close();
   },
   _onChangeKeyin: function (event) {
@@ -361,19 +409,5 @@ Tw.CertificationSk.prototype = {
   _clearConfirmError: function () {
     this.$errorConfirm.addClass('none');
     this.$errorConfirmTime.addClass('none');
-  },
-  _checkEnableCase: function (optMethods, methodCnt) {
-    if ( methodCnt === 1 ) {
-      if ( !Tw.FormatHelper.isEmpty(optMethods) && optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN) !== -1 ) {
-        this._defaultKeyin = true;
-        return true;
-      } else {
-        this._callback({ code: Tw.API_CODE.CERT_SMS_BLOCK });
-        return false;
-      }
-    } else {
-      this._callback({ code: Tw.API_CODE.CERT_SMS_BLOCK });
-      return false;
-    }
   }
 };

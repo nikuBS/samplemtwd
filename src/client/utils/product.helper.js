@@ -215,6 +215,33 @@ Tw.ProductHelper = (function () {
     return _.values(autoListConvertResult);
   };
 
+  /**
+   * MB/MB to GB/GB or MB/MB
+   * @param _dataIfAmt
+   * @param _dataBasAmt
+   */
+  var convDataAmtIfAndBas = function(_dataIfAmt, _dataBasAmt) {
+    var dataIfAmt = parseFloat(_dataIfAmt),
+      dataBasAmt = parseFloat(_dataBasAmt);
+
+    if (dataIfAmt >= 1024 && dataBasAmt >= 1024) {
+      var ifAmt = Tw.FormatHelper.convDataFormat(dataIfAmt, 'MB'),
+        basAmt = Tw.FormatHelper.convDataFormat(dataIfAmt, 'MB');
+
+      return {
+        dataIfAmt: ifAmt.toFixed(2),
+        dataBasAmt: basAmt.toFixed(2),
+        unit: ifAmt.unit
+      };
+    }
+
+    return {
+      dataIfAmt: Math.floor(dataIfAmt),
+      dataBasAmt: Math.floor(dataBasAmt),
+      unit: Tw.DATA_UNIT.MB
+    };
+  };
+
   return {
     convProductSpecifications: convProductSpecifications,
     convProductBasfeeInfo: convProductBasfeeInfo,
@@ -225,6 +252,7 @@ Tw.ProductHelper = (function () {
     convPlanPreInfo: convPlanPreInfo,
     convInstallmentAgreement: convInstallmentAgreement,
     convStipulation: convStipulation,
-    convAutoJoinTermList: convAutoJoinTermList
+    convAutoJoinTermList: convAutoJoinTermList,
+    convDataAmtIfAndBas: convDataAmtIfAndBas
   };
 })();

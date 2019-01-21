@@ -56,20 +56,22 @@ Tw.ProductMobileplanJoin.prototype = {
       if (!isDataOvrAmt && !isVoiceOvrAmt && !isSmsOvrAmt) {
         overpayResults.isOverpayResult = false;
       } else {
+        var convDataAmt = Tw.ProductHelper.convDataAmtIfAndBas(resp.result.dataIfAmt, resp.result.dataBasAmt);
+
         overpayResults = $.extend(overpayResults, {
           isDataOvrAmt: isDataOvrAmt,
           isVoiceOvrAmt: isVoiceOvrAmt,
           isSmsOvrAmt: isSmsOvrAmt,
-          dataIfAmt: resp.result.dataIfAmt,
-          dataBasAmt: resp.result.dataBasAmt,
-          dataOvrAmt: Math.ceil(resp.result.dataOvrAmt),
-          voiceIfAmt: Math.ceil(resp.result.voiceIfAmt),
-          voiceBasAmt: Math.ceil(resp.result.voiceBasAmt),
-          voiceOvrAmt: Math.ceil(resp.result.voiceOvrAmt),
-          smsIfAmt: Math.ceil(resp.result.smsIfAmt),
-          smsBasAmt: Math.ceil(resp.result.smsBasAmt),
-          smsOvrAmt: Math.ceil(resp.result.smsOvrAmt),
-          ovrTotAmt: Math.ceil(resp.result.ovrTotAmt)
+          dataIfAmt: Tw.FormatHelper.addComma(convDataAmt.dataIfAmt) + convDataAmt.unit,
+          dataBasAmt: Tw.FormatHelper.addComma(convDataAmt.dataBasAmt) + convDataAmt.unit,
+          dataOvrAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.dataOvrAmt)),
+          voiceIfAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.voiceIfAmt)),
+          voiceBasAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.voiceBasAmt)),
+          voiceOvrAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.voiceOvrAmt)),
+          smsIfAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.smsIfAmt)),
+          smsBasAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.smsBasAmt)),
+          smsOvrAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.smsOvrAmt)),
+          ovrTotAmt: Tw.FormatHelper.addComma(Math.ceil(resp.result.ovrTotAmt))
         });
       }
     }
@@ -91,7 +93,6 @@ Tw.ProductMobileplanJoin.prototype = {
   },
 
   _setConfirmBodyIntoContainer: function(context) {
-    console.log(this._confirmOptions);
     var tmpl = Handlebars.compile(context),
       html = tmpl(this._confirmOptions);
 
@@ -121,8 +122,7 @@ Tw.ProductMobileplanJoin.prototype = {
       autoTermList: this._confirmOptions.preinfo.autoTermList,
       noticeList: $.merge(this._confirmOptions.preinfo.termNoticeList, this._confirmOptions.preinfo.joinNoticeList),
       isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0),
-      isJoinTermProducts: (!Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoJoinList) ||
-        !Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.autoTermList)),
+      isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this._prodId) === -1,
       downgrade: this._getDowngrade()
     });
   },

@@ -10,7 +10,7 @@ Tw.NicknameComponent = function () {
   this.$nicknameInput = null;
   this.$nicknameConfirm = null;
   this.$nicknameError = null;
-  this.$nicknameGuide = null;
+  // this.$nicknameGuide = null;
   this.$nicknameLength = null;
 
   this._closeCallback = null;
@@ -32,7 +32,7 @@ Tw.NicknameComponent.prototype = {
     this.$nicknameInput = $popup.find('#fe-input-nickname');
     this.$nicknameConfirm = $popup.find('#fe-bt-confirm');
     this.$nicknameError = $popup.find('#aria-exp-desc1');
-    this.$nicknameGuide = $popup.find('#aria-from-label1');
+    // this.$nicknameGuide = $popup.find('#aria-from-label1');
     this.$nicknameLength = $popup.find('#fe-span-length');
 
     this.$nicknameInput.val(nickname);
@@ -54,6 +54,7 @@ Tw.NicknameComponent.prototype = {
     }
     if ( Tw.ValidationHelper.containSpecial(inputValue, 1) || Tw.ValidationHelper.containNumber(inputValue, 2) ) {
       this.$nicknameError.parents('.inputbox').addClass('error');
+      this.$nicknameError.text(Tw.ALERT_MSG_AUTH.NICKNAME_VALID);
     } else {
       this._changeNickname(inputValue);
     }
@@ -94,7 +95,8 @@ Tw.NicknameComponent.prototype = {
       this._isChanged = true;
       this._popupService.close();
     } else {
-      this._popupService.openAlert(resp.code + ' ' + resp.msg);
+      this.$nicknameError.parents('.inputbox').addClass('error');
+      this.$nicknameError.text(Tw.ALERT_MSG_AUTH.NICKNAME_ERROR);
     }
   }
 };

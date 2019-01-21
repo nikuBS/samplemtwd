@@ -86,6 +86,7 @@ class BenefitMyBenefitRainbowPointAdjustment extends TwViewController {
     const lines = BenefitMyBenefitRainbowPointCommon.getResult(resp);
     lines.map((line) => {
       line.showPoint = FormatHelper.addComma(line.point);
+      line.showSvcNum = FormatHelper.conTelFormatWithDash(line.svcNum);
     });
     return lines;
   }
@@ -96,6 +97,8 @@ class BenefitMyBenefitRainbowPointAdjustment extends TwViewController {
     histories.map((history) => {
       history.showPoint = FormatHelper.addComma(history.point);
       history.showOpDt = DateHelper.getShortDate(history.opDt);
+      history.showSndrSvcNum = FormatHelper.conTelFormatWithDash(history.sndrSvcNum);
+      history.showBefrSvcNum = FormatHelper.conTelFormatWithDash(history.befrSvcNum);
     });
     return result;
   }

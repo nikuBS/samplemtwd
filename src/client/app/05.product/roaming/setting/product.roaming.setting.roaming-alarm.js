@@ -5,14 +5,14 @@
  * ID : RM_11_01_02_01
  */
 
-Tw.ProductRoamingSettingRoamingAlarm = function (rootEl,prodRedisInfo,prodBffInfo,svcInfo,prodId) {
+Tw.ProductRoamingSettingRoamingAlarm = function (rootEl,prodTypeInfo,prodBffInfo,svcInfo,prodId) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
   this._bindElementEvt();
   this._nativeService = Tw.Native;
   this._addedList = this._sortingSettingData(prodBffInfo.combinationLineList);
-  this._prodRedisInfo = prodRedisInfo;
+  this._prodTypeInfo = prodTypeInfo;
   this._prodBffInfo = prodBffInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
@@ -41,7 +41,11 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
   },
   _inputBlurEvt : function(){
     var tempVal = this.$inputElement.val();
-    tempVal = Tw.StringHelper.phoneStringToDash(tempVal);
+    if(tempVal.length===7){
+      tempVal = this._phoneForceChange(tempVal);
+    }else{
+      tempVal = Tw.StringHelper.phoneStringToDash(tempVal);
+    }
     this.$inputElement.attr('maxlength','13');
     this.$inputElement.val(tempVal);
     //this._activateAddBtn();
@@ -54,15 +58,10 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
 
   _addPhoneNumOnList : function () {
     if(this._addedList.length>=5){
-      this.$addBtn.css('pointer-events','none');
-      this._popupService.openAlert(
+
+      this._openAlert(
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.MSG,
-        Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.TITLE,
-        null,
-        $.proxy(function () {
-          this.$addBtn.css('pointer-events','all');
-        },this)
-      );
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.TITLE);
       return;
     }
     var tempPhoneNum = this.$inputElement.val().split('-');
@@ -73,7 +72,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       'serviceNumber3' : tempPhoneNum[2]
     };
     if(!phonReg.test(phoneObj.serviceNumber1+phoneObj.serviceNumber2+phoneObj.serviceNumber3)){
-      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
+      this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
       return;
     }
     var requestValue = {
@@ -82,15 +81,12 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0020, requestValue, {},[this._prodId]).
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
-        this._addedList.push(phoneObj);
-        this._activateConfirmBtn();
-        this._clearInput();
-        this._changeList();
+        this._historyService.reload();
       }else{
-        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
+        this._openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
       }
     }, this)).fail($.proxy(function (err) {
-      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
+      this._openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
     }, this));
   },
   _changeList : function(){
@@ -118,9 +114,12 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
   },
   _activateAddBtn : function (inputEvt) {
     var inputVal = this.$inputElement.val();
-    if(inputVal.length>0&&isNaN(inputEvt.key)){
+    var numReg = /[^0-9]/g;
+    if(inputVal.length>0&&numReg.test(inputVal)){
+      this.$inputElement.blur();
       this.$inputElement.val('');
-      this.$inputElement.val(inputVal.replace(/[^0-9]/g,''));
+      this.$inputElement.val(inputVal.replace(numReg,''));
+      this.$inputElement.focus();
     }
     if(this.$inputElement.val().length>=10){
       this.$addBtn.removeAttr('disabled');
@@ -136,7 +135,17 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       this.$confirmBtn.attr('disabled','disabled');
     }
   },
-
+  _openAlert : function (msg,title) {
+    this._popupService.openAlert(
+      msg,
+      title,
+      null,
+      $.proxy(function () {
+        this.$addBtn.removeAttr('style');
+      }, this)
+    );
+    this.$addBtn.css({'pointer-events':'none','background':'#3b98e6'});
+  },
   _makeTemplate : function (phoneNum,idx) {
     var maskedPhoneNum = {
       'serviceNumber1' : phoneNum.serviceNumber1,
@@ -169,13 +178,12 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0019, requestValue, {},[this._prodId]).
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
-        this._addedList.splice(selectedIndex,1);
-        this._changeList();
+        this._historyService.reload();
       }else{
-        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
+        this._openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
       }
     }, this)).fail($.proxy(function (err) {
-      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
+      this._openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
     }, this));
   },
   _bindRemoveEvt : function () {
@@ -205,6 +213,9 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       returnVal+=phoneString.charAt(i);
     }
     return returnVal;
+  },
+  _phoneForceChange : function (str) {
+    return str.substring(0,3)+'-'+str.substring(3,str.length);
   }
 
 };

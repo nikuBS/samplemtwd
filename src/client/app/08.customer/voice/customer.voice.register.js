@@ -18,8 +18,6 @@ Tw.CustomerVoiceRegister = function (rootEl, allSvc) {
 
 Tw.CustomerVoiceRegister.prototype = {
   _init: function () {
-    // this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
-    //   .done($.proxy(this._onSuccessLineInfo, this));
   },
 
   _cachedElement: function () {
@@ -33,16 +31,8 @@ Tw.CustomerVoiceRegister.prototype = {
     this.$check_voice_term.on('click', $.proxy(this._onClickAgreeTerm, this));
     this.$btn_select_phone.on('click', $.proxy(this._onShowSelectPhoneNumber, this));
     this.$container.on('click', '[data-service-number]', $.proxy(this._onChoiceNumber, this));
-    this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
+    // this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
   },
-
-  // _onSuccessLineInfo: function (res) {
-  //   if ( res.code === Tw.API_CODE.CODE_00 ) {
-  //     this.userLineList = res.result.M;
-  //   } else {
-  //     Tw.Error(res.code, res.msg).pop();
-  //   }
-  // },
 
   _onClickAgreeTerm: function () {
     if ( this.$check_voice_term.prop('checked') ) {
@@ -86,19 +76,20 @@ Tw.CustomerVoiceRegister.prototype = {
 
   _onSuccessRegister: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._history.replaceURL('/customer/svc-info/voice/complete?targetNum=' + this.$btn_select_phone.text().trim());
+      var sPhone = !!this.$btn_select_phone.val() ? this.$btn_select_phone.val() : this.$btn_select_phone.text();
+      this._history.replaceURL('/customer/svc-info/voice/complete?targetNum=' + sPhone);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
   },
 
-  _stepBack: function () {
-    this._popupService.openConfirmButton(Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG, Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-      $.proxy(function () {
-        this._popupService.close();
-        setTimeout($.proxy(this._goBack, this), 500);
-      }, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-  },
+  // _stepBack: function () {
+  //   this._popupService.openConfirmButton(Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG, Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+  //     $.proxy(function () {
+  //       this._popupService.close();
+  //       setTimeout($.proxy(this._goBack, this), 500);
+  //     }, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+  // },
 
   _goBack: function () {
     this._history.goBack();

@@ -13,12 +13,18 @@ Tw.ProductWireplanJoinReservation = function(rootEl, isProduct) {
   this._historyService = new Tw.HistoryService();
   this._tidLanding = new Tw.TidLandingComponent();
 
-  this._prodIdFamilyList = ['NA00005055', 'NH00000133', 'NH00000084'];
+  this._prodIdFamilyList = ['NA00005055', 'NH00000133', 'NH00000083'];
   this._prodIdList = $.merge(this._prodIdFamilyList, ['NH00000103']);
   this._isProduct = Tw.FormatHelper.isEmpty(isProduct) ? null : JSON.parse(isProduct);
   this._logged = false;
   this._isLoadCombineList = false;
   this._currentCombineProductList = [];
+
+  this._convertProdIds = {
+    NH00000103: 'TW00000009',
+    NA00005055: 'TW20000012',
+    NH00000083: 'TW20000008'
+  };
 
   this._cachedElement();
   this._bindEvent();
@@ -30,24 +36,28 @@ Tw.ProductWireplanJoinReservation.prototype = {
   _init: function() {
     this._typeCd = this.$container.data('type_cd');
 
-    if (this._typeCd === 'combine') {
-      this._initCombineProduct();
-    } else {
+    if (this._typeCd !== 'combine') {
       this.$nonCombineTip.show();
     }
 
     this._reqSvcMgmtNum();
-    this._restoreLocalStorage();
   },
 
   _initCombineProduct: function() {
     this.$combineWrap.show();
-    this._getCurrentCombineList();
+
+    if (this._logged) {
+      this._getCurrentCombineList();
+    }
   },
 
   _restoreLocalStorage: function() {
     if (!Tw.CommonHelper.getLocalStorage('productJoinReservation')) {
       return;
+    }
+
+    if (!this._logged) {
+      return Tw.CommonHelper.removeLocalStorage('productJoinReservation');
     }
 
     var data = Tw.CommonHelper.getLocalStorage('productJoinReservation');
@@ -63,6 +73,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
     this.$reservName.val(data.name);
     this.$reservNumber.val(data.number).trigger('change');
     this._typeCd = data.typeCd;
+    this._prodId = data.prodId;
 
     this._typeCdPopupClose();
     this._setCombineResult();
@@ -79,7 +90,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
       this.$combineExplain.find('input[type=checkbox]').trigger('click');
     }
 
-    this._reqSvcMgmtNum(true);
+    this._procApplyCheck();
     Tw.CommonHelper.removeLocalStorage('productJoinReservation');
   },
 
@@ -92,7 +103,6 @@ Tw.ProductWireplanJoinReservation.prototype = {
     this.$combineWrap = this.$container.find('.fe-combine_wrap');
     this.$formData = this.$container.find('.fe-form_data');
     this.$nonCombineTip = this.$container.find('.fe-non_combine_tip');
-    this.$combineIsExists = this.$container.find('.fe-combine_is_exists');
     this.$combineExplainCheckboxWrap = this.$container.find('.fe-combine_explan_checkbox_wrap');
     this.$combineExplainAllWrap = this.$container.find('.fe-combine_explain_all_wrap');
 
@@ -120,21 +130,26 @@ Tw.ProductWireplanJoinReservation.prototype = {
     this.$combineExplain.on('change', 'input[type=checkbox]', $.proxy(this._onChangeCombineExplain, this));
   },
 
-  _reqSvcMgmtNum: function(isApply) {
+  _reqSvcMgmtNum: function() {
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
-      .done($.proxy(this._setSvcMgmtNum, this, isApply));
+      .done($.proxy(this._setSvcMgmtNum, this));
   },
 
-  _setSvcMgmtNum: function(isApply, resp) {
+  _setSvcMgmtNum: function(resp) {
     if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
+      if (this._typeCd === 'combine') {
+        this._initCombineProduct();
+      }
+
       return;
     }
 
     this._logged = true;
     this._svcMgmtNum = resp.result.svcMgmtNum;
+    this._restoreLocalStorage();
 
-    if (isApply) {
-      this._procApplyCheck();
+    if (this._typeCd === 'combine') {
+      this._initCombineProduct();
     }
   },
 
@@ -176,7 +191,6 @@ Tw.ProductWireplanJoinReservation.prototype = {
       this._resetCombineWrap();
       this.$combineWrap.hide();
       this.$nonCombineTip.show();
-      this.$combineIsExists.hide();
     } else {
       this.$combineWrap.show();
       this.$nonCombineTip.hide();
@@ -225,15 +239,12 @@ Tw.ProductWireplanJoinReservation.prototype = {
         {
           'title': Tw.PRODUCT_COMBINE_PRODUCT.GROUP_FAMILY,
           'list': [
-            { 'label-attr': 'id="ra2_0"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00005055.TITLE,
-              'cont-txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00005055.EXPLAIN,
-              'radio-attr':'id="ra2_0" data-prod_id="NA00005055" ' + (this._prodId === 'NA00005055' ? 'checked' : '') },
             { 'label-attr': 'id="ra2_1"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.TITLE,
               'cont-txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.EXPLAIN,
               'radio-attr':'id="ra2_1" data-prod_id="NH00000133" ' + (this._prodId === 'NH00000133' ? 'checked' : '') },
-            { 'label-attr': 'id="ra2_2"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000084.TITLE,
-              'cont-txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000084.EXPLAIN,
-              'radio-attr':'id="ra2_2" data-prod_id="NH00000084" ' + (this._prodId === 'NH00000084' ? 'checked' : '') },
+            { 'label-attr': 'id="ra2_2"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000083.TITLE,
+              'cont-txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000083.EXPLAIN,
+              'radio-attr':'id="ra2_2" data-prod_id="NH00000083" ' + (this._prodId === 'NH00000083' ? 'checked' : '') },
             { 'label-attr': 'id="ra2_3"',
               'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.ETC.TITLE,
               'radio-attr':'id="ra2_3" data-prod_id="' + (!Tw.FormatHelper.isEmpty(this._prodId) &&
@@ -339,7 +350,9 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
   _detectInputNumber: function(e) {
     var $input = $(e.currentTarget);
+
     $input.val($input.val().replace(/[^0-9]/g, ''));
+
     if ($input.val().length > 11) {
       $input.val($input.val().substr(0, 11));
     }
@@ -353,12 +366,12 @@ Tw.ProductWireplanJoinReservation.prototype = {
       return;
     }
 
-    $input.attr('type', 'text').val(Tw.FormatHelper.getDashedCellPhoneNumber($input.val()));
+    $input.val(Tw.FormatHelper.conTelFormatWithDash($input.val()));
   },
 
   _focusInputNumber: function(e) {
     var $input = $(e.currentTarget);
-    $input.val($input.val().replace(/-/gi, '')).attr('type', 'number');
+    $input.val($input.val().replace(/-/gi, ''));
   },
 
   _toggleInputCancelBtn: function(e) {
@@ -501,8 +514,13 @@ Tw.ProductWireplanJoinReservation.prototype = {
       return this._openExplainFilePop([]);
     }
 
+    var reqProdId = this._prodId;
+    if (!Tw.FormatHelper.isEmpty(this._convertProdIds[this._prodId])) {
+      reqProdId = this._convertProdIds[this._prodId];
+    }
+
     Tw.CommonHelper.startLoading('.container', 'grey', true);
-    this._apiService.request(Tw.API_CMD.BFF_05_0134, {}, {}, [this._prodId])
+    this._apiService.request(Tw.API_CMD.BFF_05_0134, {}, {}, [reqProdId])
       .done($.proxy(this._procExpalinFilePopRes, this));
   },
 

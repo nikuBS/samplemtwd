@@ -89,7 +89,6 @@ Tw.MyTDataPrepaidAlarm.prototype = {
   },
 
   _selectPopupCallback: function (sListName, $target, $layer) {
-    this._validateForm();
     $layer.on('click', '[data-value]', $.proxy(this._setSelectedValue, this, sListName, $target));
   },
 
@@ -109,20 +108,24 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
     if ( sListName === 'category_list' ) {
       this.term = $(e.currentTarget).data('value');
+      this._validateForm();
     }
 
     if ( sListName === 'date_list' ) {
       this.day = $(e.currentTarget).data('value');
       $('.fe-setting-alarm').prop('disabled', false);
+      this._validateForm();
     }
 
     if ( sListName === 'price_list' ) {
       this.amt = $(e.currentTarget).data('value');
       $('.fe-setting-alarm').prop('disabled', false);
+      this._validateForm();
     }
 
     $target.data($(e.currentTarget).data());
     $target.text($.trim($(e.currentTarget).text()));
+
 
     this._popupService.close();
   },
@@ -138,7 +141,10 @@ Tw.MyTDataPrepaidAlarm.prototype = {
       });
 
       this._popupService.openConfirmButton(
-        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.MSG_1 + this.day.toString() + Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.MSG_2,
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.MSG_1 +
+        $('.fe-alarm-category').text().trim() +
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.MSG_2 +
+        this.day.toString() + Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.MSG_3,
         Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.TITLE,
         $.proxy(this._onCancel, this),
         $.proxy(this._requestAlarm, this),
@@ -176,7 +182,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       // 알람 설정 하시겠습니까?
       // TODO after Self Authentication, go to submain
-      this._historyService.replaceURL('/myt-data');
+      this._historyService.replaceURL('/myt-data/submain');
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -193,7 +199,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
       }, this),
       $.proxy(function () {
         if ( confirmed ) {
-          this._historyService.replaceURL('/myt-data');
+          this._historyService.replaceURL('/myt-data/submain');
         }
       }, this),
       Tw.BUTTON_LABEL.NO,

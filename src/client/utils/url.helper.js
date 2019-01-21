@@ -21,8 +21,20 @@ Tw.UrlHelper = (function() {
     return seg;
   };
 
+  var replaceQueryParam = function(key, value, url) {
+    var current = url || location.href;
+
+    if (current.indexOf(key) !== -1) {
+      return current.replace(new RegExp('(' + key + '=)[^&]+', 'g'), '$1' + value);
+    } else {
+      var separator = location.href.indexOf('?') === -1 ? '?' : '&';
+      return current + separator + key + '=' + value;
+    }
+  };
+
   return {
     getQueryParams: getQueryParams,
-    getLastPath: getLastPath
+    getLastPath: getLastPath,
+    replaceQueryParam: replaceQueryParam
   };
 })();

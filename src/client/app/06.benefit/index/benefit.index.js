@@ -48,6 +48,10 @@ Tw.BenefitIndex.prototype = {
     this.$internetType.on('click', $.proxy(this._checkStateLine, this));
     this.$showDiscountBtn.on('click', $.proxy(this._onViewDiscountAmt, this));
     this.$container.on('click', '[data-benefit-id]', $.proxy(this._onClickProduct, this)); // 카테고리 하위 리스트 클릭
+
+    window.onpopstate = $.proxy(function() {
+      this._loadTab();
+    },this);
   },
 
   // 카테고리 하위 리스트 클릭
@@ -158,8 +162,8 @@ Tw.BenefitIndex.prototype = {
 
   // 상단 > 나의 혜택.할인 정보 API들 호출 (9개 호출해서 계산)
   _reqMyBenefitDiscountInfo: function () {
-    // 미 로그인 또는 유선인 경우 건너뜀
-    if (!this._isLogin || ['S1','S2','S3'].indexOf(this._svcInfo.svcAttrCd) > -1) {
+    // 미 로그인, 준회원, 유선인 경우 건너뜀
+    if (!this._isLogin || this._svcInfo.svcAttrCd === '' || ['S1','S2','S3'].indexOf(this._svcInfo.svcAttrCd) > -1) {
       return;
     }
     this._apiService.requestArray([
@@ -236,7 +240,19 @@ Tw.BenefitIndex.prototype = {
 
   // 카테고리 클릭 이벤트
   _onClickCategory: function (e) {
-    this._switchTab($(e.currentTarget).data('category'));
+    var lastPath = {
+      'F01421': 'discount'      ,
+      'F01422': 'combinations'  ,
+      'F01423': 'long-term'     ,
+      'F01424': 'participation' ,
+      'X'     : 'submain'
+    };
+    var category = $(e.currentTarget).data('category');
+    var last = lastPath[category || 'X'];
+    if (Tw.UrlHelper.getLastPath() !== last ) {
+      this._history.pushUrl('/benefit/submain' + (last === 'submain' ? '':'/'+last));
+    }
+    this._switchTab(category);
   },
 
   // 카테고리 '탭' 선택
@@ -252,10 +268,6 @@ Tw.BenefitIndex.prototype = {
     // 결합할인 클릭 이라면 '결합할인금액 미리보기' 노출
     if (categoryId === 'F01422') {
       this.$combinationPreview.removeClass('none');
-      // 로그인 했다면 "가입상담예약" 신청여부 API 조회 요청
-      if (this._isLogin) {
-        this._reqDocumentsInspects();
-      }
     }
   },
 
@@ -268,28 +280,6 @@ Tw.BenefitIndex.prototype = {
       'submain'       : ''
     };
     this._switchTab(categoryId[Tw.UrlHelper.getLastPath()]);
-  },
-
-  // "가입상담예약" 신청여부 API 조회
-  _reqDocumentsInspects: function () {
-    this._apiService
-      .request(Tw.API_CMD.BFF_10_0078)
-      .done($.proxy(this._successDocumentsInspects, this))
-      .fail($.proxy(this._onFail, this));
-  },
-
-  _successDocumentsInspects: function (resp) {
-    if (resp.code !== Tw.API_CODE.CODE_00) {
-      this._onFail(resp);
-      return;
-    }
-    var resData = resp.result.necessaryDocumentInspectInfoList;
-    this._isSendDocument = resData !== undefined && resData.length > 0;
-    if (this._isSendDocument) {
-      this._isSendDocument = _.some(resData[0].ciaInsptRsnCd.split(','), function (o) {
-        return '173,174,175,176,177'.split(',').indexOf(o.trim().toString()) !== -1;
-      });
-    }
   },
 
   // 상품 리스트 조회요청
