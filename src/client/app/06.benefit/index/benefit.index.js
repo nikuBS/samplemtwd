@@ -268,10 +268,6 @@ Tw.BenefitIndex.prototype = {
     // 결합할인 클릭 이라면 '결합할인금액 미리보기' 노출
     if (categoryId === 'F01422') {
       this.$combinationPreview.removeClass('none');
-      // 로그인 했다면 "가입상담예약" 신청여부 API 조회 요청
-      if (this._isLogin) {
-        this._reqDocumentsInspects();
-      }
     }
   },
 
@@ -284,28 +280,6 @@ Tw.BenefitIndex.prototype = {
       'submain'       : ''
     };
     this._switchTab(categoryId[Tw.UrlHelper.getLastPath()]);
-  },
-
-  // "가입상담예약" 신청여부 API 조회
-  _reqDocumentsInspects: function () {
-    this._apiService
-      .request(Tw.API_CMD.BFF_10_0078)
-      .done($.proxy(this._successDocumentsInspects, this))
-      .fail($.proxy(this._onFail, this));
-  },
-
-  _successDocumentsInspects: function (resp) {
-    if (resp.code !== Tw.API_CODE.CODE_00) {
-      this._onFail(resp);
-      return;
-    }
-    var resData = resp.result.necessaryDocumentInspectInfoList;
-    this._isSendDocument = resData !== undefined && resData.length > 0;
-    if (this._isSendDocument) {
-      this._isSendDocument = _.some(resData[0].ciaInsptRsnCd.split(','), function (o) {
-        return '173,174,175,176,177'.split(',').indexOf(o.trim().toString()) !== -1;
-      });
-    }
   },
 
   // 상품 리스트 조회요청
