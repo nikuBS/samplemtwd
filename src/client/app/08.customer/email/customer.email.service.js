@@ -101,7 +101,14 @@ Tw.CustomerEmailService.prototype = {
   },
 
   _requestCell: function () {
+    var elSelectedLine = this.$wrap_tpl_service.find('[data-svcmgmtnum]').data('svcmgmtnum');
+    var elInputline = this.$wrap_tpl_service.find('.fe-service-line').val();
+    var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine : '';
+    var selSvcNum = !!elInputline ? elInputline : '';
+
     var htParams = $.extend(this._makeParams(), {
+      selSvcNum: selSvcNum,
+      selSvcMgmtNum: selSvcMgmtNum,
       connSite: Tw.BrowserHelper.isApp() ? '19' : '15',
       ofrCtgSeq: this.$service_depth2.data('serviceDepth2'),
       cntcNumClCd: $('.fe-service-cntcNumClCd').find(':checked').val(),
@@ -115,7 +122,14 @@ Tw.CustomerEmailService.prototype = {
   },
 
   _requestInternet: function () {
+    var elSelectedLine = this.$wrap_tpl_service.find('[data-svcmgmtnum]').data('svcmgmtnum');
+    var elInputline = this.$wrap_tpl_service.find('.fe-service-line').val();
+    var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine : '';
+    var selSvcNum = !!elInputline ? elInputline : '';
+
     var htParams = $.extend(this._makeParams(), {
+      selSvcNum: selSvcNum,
+      selSvcMgmtNum: selSvcMgmtNum,
       connSite: Tw.BrowserHelper.isApp() ? '19' : '15',
       ofrCtgSeq: this.$service_depth2.data('serviceDepth2'),
       cntcNumClCd: $('.fe-service-cntcNumClCd').find(':checked').val(),
