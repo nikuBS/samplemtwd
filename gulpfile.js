@@ -1,6 +1,7 @@
 var gulp       = require('gulp'),
     gutil      = require('gulp-util'),
     uglify     = require('gulp-uglify'),
+    cleanCSS   = require('gulp-clean-css'),
     concat     = require('gulp-concat'),
     webserver  = require('gulp-webserver'),
     livereload = require('gulp-livereload'),
@@ -280,7 +281,7 @@ gulp.task('css-rb', function () {
   // }))
     .pipe(concat('style.css'))
     // .pipe(imagehash())
-    // .pipe(uglify())
+    .pipe(cleanCSS())
     // .pipe(gulp.dest(dist_tmp + 'css'))
     .pipe(gulp.dest(dist + 'css'))
     .on('error', function (err) {
