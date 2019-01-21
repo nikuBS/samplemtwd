@@ -2384,6 +2384,13 @@
   background: url(/img/svg/icon_80px_watch.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
+.icon-tablet-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_tablet.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
 .icon-accessory-80 {
   display: inline-block;
   width: 2.5rem;
@@ -13671,7 +13678,6 @@ a.bt-link-tx.underline.small {
 
 .productdetails-ledgercase02 {
   display: table;
-  width: 100%;
   padding-bottom: 1rem; }
   .productdetails-ledgercase02 .price-text {
     display: table-cell;
@@ -27725,6 +27731,8 @@ input[type="radio"].formradio-small:checked:disabled + label {
     margin-bottom: 0.3125rem;
     font-size: 0.875rem;
     font-weight: 500; }
+    .section-box .stit.no-mt {
+      margin-bottom: 0; }
     .section-box .stit .bt {
       display: inline-block;
       color: inherit;
@@ -27739,6 +27747,10 @@ input[type="radio"].formradio-small:checked:disabled + label {
       .section-box .stit i.icon-arrowmore-32, .section-box .stit i.icon-arrowmore-blue-32 {
         margin-left: -0.1875rem;
         vertical-align: -0.1875rem; }
+  .section-box .type02 {
+    position: absolute;
+    top: -2.8125rem;
+    color: #178bce; }
 
 .quick-menu-list {
   display: -webkit-box;
@@ -27829,6 +27841,8 @@ input[type="radio"].formradio-small:checked:disabled + label {
           width: 0.5rem;
           height: 0.5rem;
           background: #000000; }
+  .section-swiper-box .slider-box .slick-list {
+    overflow: initial; }
   .section-swiper-box .quick-menu-list {
     margin-top: 1.25rem; }
 
@@ -28929,7 +28943,8 @@ body.apphome {
   .main-tapp-box .app-list li {
     display: -webkit-box;
     display: -ms-flexbox;
-    display: flex; }
+    display: flex;
+    width: 25%; }
     .main-tapp-box .app-list li .bt {
       display: block;
       width: 100%;
@@ -28952,21 +28967,58 @@ body.apphome {
       background-image: url(/img/main/app_tcall.png); }
     .main-tapp-box .app-list li.t-pay .bt:before {
       background-image: url(/img/main/app_tpay.png); }
+    .main-tapp-box .app-list li.t-cloudberry .bt:before {
+      background-image: url(/img/main/app_cloudberry.png); }
 
 .accessories-box {
   position: relative;
-  overflow: hidden;
-  margin: 1.5625rem 1rem 0 1rem;
-  background: #fff;
   border-radius: 0.9375rem;
   -webkit-box-shadow: 0 0.625rem 0.9375rem #eaeaea;
           box-shadow: 0 0.625rem 0.9375rem #eaeaea;
   z-index: 1; }
-  .accessories-box .bt {
-    display: block; }
-    .accessories-box .bt img {
-      width: 100%;
-      vertical-align: top; }
+  .accessories-box .slider-box .slick-prev, .accessories-box .slider-box .slick-next {
+    display: none !important; }
+  .accessories-box .slider-box .slick-slide button, .accessories-box .slider-box .slick-slide a {
+    display: block;
+    width: 100%;
+    border: 0; }
+    .accessories-box .slider-box .slick-slide button img, .accessories-box .slider-box .slick-slide a img {
+      display: block;
+      width: 100%; }
+  .accessories-box .slider-box .slick-dots {
+    position: absolute;
+    top: 1.375rem;
+    left: auto;
+    right: 1.25rem;
+    bottom: auto;
+    width: auto;
+    text-align: left;
+    overflow: hidden; }
+    .accessories-box .slider-box .slick-dots li {
+      display: block;
+      float: left;
+      margin: 0;
+      width: 0.5625rem;
+      height: 0.5625rem;
+      border-radius: 100%; }
+      .accessories-box .slider-box .slick-dots li + li {
+        margin: 0 0 0 0.5625rem; }
+      .accessories-box .slider-box .slick-dots li span {
+        display: block;
+        margin: 0.0625rem auto;
+        width: 0.4375rem;
+        height: 0.4375rem;
+        border-radius: 50%;
+        overflow: hidden;
+        text-indent: -625rem;
+        background: none;
+        border-color: #000; }
+      .accessories-box .slider-box .slick-dots li.slick-active {
+        background: #000;
+        margin-top: 0.05rem; }
+        .accessories-box .slider-box .slick-dots li.slick-active span {
+          border: none;
+          background-color: transparent; }
 
 .main-alarm-box {
   display: block;
