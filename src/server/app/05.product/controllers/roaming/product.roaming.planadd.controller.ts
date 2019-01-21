@@ -23,6 +23,7 @@ class ProductRoamingPlanAdd extends TwViewController {
         const params = {
             idxCtgCd: this.CAT_CODE,
             ...(req.query.filters ? { searchFltIds: req.query.filters } : {}),
+            ...(req.query.order ? { searchOrder: req.query.order } : {}),
             ...(req.query.tag ? { searchTagId: req.query.tag } : {})
         };
 
@@ -55,7 +56,7 @@ class ProductRoamingPlanAdd extends TwViewController {
   }
   private getRoamingPlanAddData(params) {
       // let roamingPlanData = null;
-      return this.apiService.request(API_CMD.BFF_10_0000, params).map((resp) => {
+      return this.apiService.request(API_CMD.BFF_10_0031, params).map((resp) => {
           this.logger.info(this, 'result ', resp.result);
           if ( resp.code === API_CODE.CODE_00 ) {
               return {

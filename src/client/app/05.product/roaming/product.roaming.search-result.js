@@ -207,15 +207,15 @@ Tw.ProductRoamingSearchResult.prototype = {
         this._history.goLoad('/product/callplan/NA00006046');
     },
     _onClickSelectBtn: function () {
-        if(this.modelValue !== '') {
+        if(this.modelValue === undefined || this.modelValue === ''){
+            this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.MSG, Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.TITLE);
+        } else {
             this._phoneInfo.eqpMdlNm = this.modelValue;
             this._phoneInfo.eqpMdlCd = this.modelCode;
             this._srchInfo.eqpMdlNm = this.modelValue;
             this.$userPhoneInfo.empty();
             this.$userPhoneInfo.append(this._rmPhoneInfoTmpl({ items: this._phoneInfo }));
             this._roamingDecriptonInit();
-        }else {
-            this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.MSG, Tw.ALERT_MSG_PRODUCT_ROAMING.ALERT_3_A24.TITLE);
         }
     },
     _onSelectModel: function () {
