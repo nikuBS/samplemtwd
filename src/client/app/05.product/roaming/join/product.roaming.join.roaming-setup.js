@@ -202,8 +202,8 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
         var completePopupData = {
           prodNm : data.prodNm,
           isBasFeeInfo : data.prodFee,
-          typeNm : data.svcType,
-          settingType : (data.svcType+' '+data.processNm),
+          typeNm : data.prodType,
+          settingType : data.processNm,
           btnNmList : [Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE]
         };
         this._popupService.open({
