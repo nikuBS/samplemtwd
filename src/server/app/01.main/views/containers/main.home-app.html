@@ -953,6 +953,13 @@
 <%- include('../components/home/home.welcome.component.html', { svcInfo: svcInfo }); %>
 <% } %>
 <%- include('../components/home/home.quick-menu.component.html', { cdn: CDN }); %>
+<% if (svcInfo === null) { %>
+<script>
+  setTimeout(function () {
+    skt_landing.action.home_slider({ initialSlide: 1 });
+  }, 40);
+</script>
+<% } %>
 <script>
   $(document).ready(function () {
     new Tw.MainHome($('#mainHome'), '<%-JSON.stringify(redisData.smartCard) %>', '<%= redisData.embNotice !== null %>', '<%= pageInfo.menuId %>', '<%= svcInfo !== null %>');
