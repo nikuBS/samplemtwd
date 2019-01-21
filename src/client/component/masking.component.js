@@ -21,7 +21,7 @@ Tw.MaskingComponent.prototype = {
     this.$btMasking.on('click', $.proxy(this._onClickMasking, this));
   },
   _onClickMasking: function () {
-    this._apiService.request(Tw.NODE_CMD.GET_MASKING_METHOD, {})
+    this._apiService.request(Tw.API_CMD.BFF_01_0064, {})
       .done($.proxy(this._successGetData, this));
   },
   _successGetData: function (resp) {
