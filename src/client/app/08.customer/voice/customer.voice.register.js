@@ -31,7 +31,7 @@ Tw.CustomerVoiceRegister.prototype = {
     this.$check_voice_term.on('click', $.proxy(this._onClickAgreeTerm, this));
     this.$btn_select_phone.on('click', $.proxy(this._onShowSelectPhoneNumber, this));
     this.$container.on('click', '[data-service-number]', $.proxy(this._onChoiceNumber, this));
-    this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
+    // this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
   },
 
   _onClickAgreeTerm: function () {
@@ -83,13 +83,13 @@ Tw.CustomerVoiceRegister.prototype = {
     }
   },
 
-  _stepBack: function () {
-    this._popupService.openConfirmButton(Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG, Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-      $.proxy(function () {
-        this._popupService.close();
-        setTimeout($.proxy(this._goBack, this), 500);
-      }, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-  },
+  // _stepBack: function () {
+  //   this._popupService.openConfirmButton(Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG, Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+  //     $.proxy(function () {
+  //       this._popupService.close();
+  //       setTimeout($.proxy(this._goBack, this), 500);
+  //     }, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+  // },
 
   _goBack: function () {
     this._history.goBack();
