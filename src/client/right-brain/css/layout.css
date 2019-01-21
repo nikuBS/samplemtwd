@@ -178,7 +178,8 @@ body.bg-gray {
           top: -2.5rem;
           color: transparent; }
         #common-menu.user-type.scroll .section-userinfo .userinfo .tx {
-          top: -1.6875rem; }
+          -webkit-transform: translateY(-27px);
+          transform: translateY(-27px); }
         #common-menu.user-type.scroll .section-userinfo .userinfo .bt {
           top: -1.6875rem;
           color: transparent; }
@@ -232,10 +233,11 @@ body.bg-gray {
         display: inline-block;
         font-size: 0.8125rem;
         font-weight: 300;
-        -webkit-transition-property: top;
-        transition-property: top;
-        -webkit-transition-duration: 0.7s;
-                transition-duration: 0.7s; }
+        -webkit-transition: transform 0.7s;
+        -webkit-transition: -webkit-transform 0.7s;
+        transition: -webkit-transform 0.7s;
+        transition: transform 0.7s;
+        transition: transform 0.7s, -webkit-transform 0.7s; }
         #common-menu .section-userinfo .userinfo .tx.underline {
           text-decoration: underline; }
       #common-menu .section-userinfo .userinfo .bt {
