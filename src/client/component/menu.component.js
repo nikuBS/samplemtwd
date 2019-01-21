@@ -287,6 +287,11 @@ Tw.MenuComponent.prototype = {
         default:
           break;
       }
+
+      // If a user does not have mobile line, do not show free sms button
+      if (!userInfo.canSendFreeSMS) {
+        this.$container.find('.fe-bt-free-sms').addClass('none');
+      }
     } else {
       this.$container.removeClass('user-type');
     }
