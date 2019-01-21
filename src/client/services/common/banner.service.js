@@ -97,13 +97,14 @@ Tw.BannerService.prototype = {
 
   _getProperBanners: function(banners) {
     var browserCode = this._getBrowserCode(),
-      CDN = Tw.Environment.cdn;
+      CDN = Tw.Environment.cdn,
+      today = new Date();
     return _.chain(banners)
       .filter(function(banner) {
         return (
           (banner.chnlClCd.indexOf(Tw.REDIS_DEVICE_CODE.MOBILE) >= 0 || banner.chnlClCd.indexOf(browserCode) >= 0) &&
-          (!banner.expsStaDtm || Tw.DateHelper.getDifference(banner.expsStaDtm.substring(0, 8)) <= 0) &&
-          (!banner.expsEndDtm || Tw.DateHelper.getDifference(banner.expsEndDtm.substring(0, 8)) >= 0)
+          (!banner.expsStaDtm || Tw.DateHelper.getDiffByUnit(banner.expsStaDtm.substring(0, 8), today, 'days') <= 0) &&
+          (!banner.expsEndDtm || Tw.DateHelper.getDiffByUnit(banner.expsEndDtm.substring(0, 8), today, 'days') >= 0)
         );
       })
       .sort(function(a, b) {
