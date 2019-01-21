@@ -110,7 +110,8 @@ Tw.ImmediatelyRechargeLayer.prototype = {
           }]
         });
       }
-      data.push(Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.PREPAY);
+      // TODO: 11차수에서 hidden 처리, 환경설정 및 개발 완료 후 enable 처리
+      // data.push(Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.PREPAY);
       var subList = [];
       if ( !_.isEmpty(this.immChargeData.limit) ) {
         var curLimit = parseInt(this.immChargeData.limit.currentTopUpLimit, 10);
@@ -193,7 +194,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
     else {
       $target = this.$popupContainer.find('[data-external]');
       if ( $target.length > 0 ) {
-       this._getBPCP($target.attr('data-external'));
+        this._getBPCP($target.attr('data-external'));
       }
     }
   },
@@ -231,6 +232,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
         break;
       case 't_coupon':
         $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.T_COUPON);
+        break;
       case 'jeju_coupon':
         $target.attr('data-external', Tw.OUTLINK.DATA_COUPON.JEJU);
         break;
@@ -238,19 +240,19 @@ Tw.ImmediatelyRechargeLayer.prototype = {
     this._popupService.close();
   },
 
-  _getBPCP: function(url) {
+  _getBPCP: function (url) {
     var replaceUrl = url.replace('BPCP:', '');
     this._apiService.request(Tw.API_CMD.BFF_01_0039, { bpcpServiceId: replaceUrl })
       .done($.proxy(this._responseBPCP, this));
   },
 
-  _responseBPCP: function(resp) {
-    if (resp.code !== Tw.API_CODE.CODE_00) {
+  _responseBPCP: function (resp) {
+    if ( resp.code !== Tw.API_CODE.CODE_00 ) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
     var url = resp.result.svcUrl;
-    if (!Tw.FormatHelper.isEmpty(resp.result.tParam)) {
+    if ( !Tw.FormatHelper.isEmpty(resp.result.tParam) ) {
       url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
     }
 
