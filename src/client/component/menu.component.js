@@ -172,8 +172,6 @@ Tw.MenuComponent.prototype = {
               this.tideUpMenuInfo(res.result.frontMenus, res.result.userInfo)
             );
             this._isMenuSet = true;
-          } else {
-            Tw.Error(res.code, res.msg).pop();
           }
         }, this))
         .fail($.proxy(function (err) {
@@ -184,7 +182,6 @@ Tw.MenuComponent.prototype = {
           } else {
             this._menuRedisErrorCount = 0;
           }
-          Tw.Error(err.code, err.msg).pop();
         }, this));
     }
   },
