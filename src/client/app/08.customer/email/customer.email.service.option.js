@@ -59,7 +59,6 @@ Tw.CustomerEmailServiceOption.prototype = {
         sItem = item.svcNum;
       }
 
-
       return {
         value: sItem,
         option: $('.fe-select-line').data('svcmgmtnum').toString() === item.svcMgmtNum ? 'checked' : '',
@@ -82,8 +81,14 @@ Tw.CustomerEmailServiceOption.prototype = {
     this._popupService.close();
     var $el = $(e.currentTarget);
 
-    $('#tab1-tab .fe-select-line').data('svcmgmtnum', $el.data('svcmgmtnum').toString());
-    $('#tab1-tab .fe-select-line').text($el.text().trim());
+    var nTabIndex = this.$container.triggerHandler('getTabIndex');
+    if ( nTabIndex === 0 ) {
+      $('#tab1-tab .fe-select-line').data('svcmgmtnum', $el.data('svcmgmtnum').toString());
+      $('#tab1-tab .fe-select-line').text($el.text().trim());
+    } else {
+      $('#tab2-tab .fe-quality-line').data('svcmgmtnum', $el.data('svcmgmtnum').toString());
+      $('#tab2-tab .fe-quality-line').text($el.text().trim());
+    }
   },
 
   _disabledCheckbox: function (e) {

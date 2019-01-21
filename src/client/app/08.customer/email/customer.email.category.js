@@ -23,8 +23,8 @@ Tw.CustomerEmailCategory.prototype = {
     this.service_category = Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY;
     this.quality_category = Tw.CUSTOMER_EMAIL_QUALITY_CATEGORY;
 
-    this._apiService.request(Tw.API_CMD.BFF_08_0010, {})
-      .done($.proxy(this._onLoadQuestionList, this));
+    // this._apiService.request(Tw.API_CMD.BFF_08_0010, {})
+    //   .done($.proxy(this._onLoadQuestionList, this));
   },
 
   _cachedElement: function () {
@@ -42,6 +42,7 @@ Tw.CustomerEmailCategory.prototype = {
     this.$container.on('click', '[data-service-depth2]', $.proxy(this._onSelectService2Depth, this));
     this.$container.on('click', '[data-quality-depth1]', $.proxy(this._onSelectQuality1Depth, this));
     this.$container.on('getCategory', $.proxy(this._getCurrentCategory, this));
+    this.$container.on('getTabIndex', $.proxy(this._getCurrentTab, this));
   },
 
   _onLoadQuestionList: function (res) {
@@ -180,5 +181,9 @@ Tw.CustomerEmailCategory.prototype = {
     };
 
     return htCategory;
+  },
+
+  _getCurrentTab: function () {
+    return $('[role=tablist]').find('[aria-selected=true]').index();
   }
 };

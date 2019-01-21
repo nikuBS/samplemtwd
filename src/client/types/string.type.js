@@ -973,7 +973,8 @@ Tw.MYT_DATA_PREPAID = {
   A70_TITLE: '자동 충전 해지하시겠습니까?',
   A70_CONTENT: '해지 요청일 이후 부터 자동중전 되지 않으며 해지 전에 충전된 충전분은 취소 되지 않습니다.',
   A70_BTN_CONFIRM: '해지하기',
-  DATA_TITLE: '데이터 1회 충전 내역 확인'
+  DATA_TITLE: '데이터 1회 충전 내역 확인',
+  INVALID_DATE: '익일부터 선택가능합니다.'
 };
 
 Tw.MYT_PAYMENT_HISTORY_HASH = {
