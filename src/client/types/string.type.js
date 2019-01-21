@@ -730,7 +730,8 @@ Tw.ALERT_MSG_MEMBERSHIP = {
   COMPLETE_TITLE: {
     REISSUE: '멤버십 재발급',
     CHANGE: '멤버십 종류 변경',
-    UPDATE: '멤버십 정보 수정'
+    UPDATE: '멤버십 정보 수정',
+    CANCEL: '멤버십 카드 해지'
   },
   ALERT_1_A50: { TITLE: '알림', MSG: '시작일이 종료일보다 늦을 수 없습니다.' },
   ALERT_1_A51: { TITLE: 'T멤버십 카드를 재발급하시겠습니까?', MSG: '스마트폰 이용 고객님은 모바일 카드만 신청하실 수 있습니다.', BUTTON: '재발급 신청' },
