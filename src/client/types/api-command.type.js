@@ -87,6 +87,7 @@ Tw.API_CMD = {
   BFF_03_0026: { path: '/core-auth/:version/requestRegistFcmClickInfo', method: Tw.API_METHOD.POST },
   BFF_03_0027: { path: '/core-auth/:version/users/otp', method: Tw.API_METHOD.PUT },
   BFF_03_0028: { path: '/core-auth/:version/free-sms-availability/::args0', method: Tw.API_METHOD.GET },
+  BFF_03_0029: { path: '/core-auth/:version/exposable-services', method: Tw.API_METHOD.GET },
 
   // HOME
   BFF_04_0001: { path: '/core-membership/:version/card/home', method: Tw.API_METHOD.GET },

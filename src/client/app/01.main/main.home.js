@@ -10,6 +10,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._nativeSrevice = Tw.Native;
+  this._hashService = Tw.Hash;
   this._historyService = new Tw.HistoryService();
   this._lineRegisterLayer = new Tw.LineRegisterComponent();
   this._tidLanding = new Tw.TidLandingComponent();
@@ -17,13 +18,14 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
   this._smartCardOrder = JSON.parse(smartCard);
 
   this.$elBarcode = null;
-  this.$tabStore = null;
+  // this.$tabStore = null;
   this.$elArrSmartCard = [];
   this.loadingStaus = [];
   this._emrNotice = null;
   this._targetDataLink = '';
 
   this._lineComponent = new Tw.LineComponent();
+  this._hashService.initHashNav($.proxy(this._onHashChange, this));
 
   this._openEmrNotice(emrNotice);
   this._setBanner(menuId);
@@ -38,13 +40,12 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
     this._bindEvent();
     this._initScroll();
   } else {
-    setTimeout($.proxy(function () {
-      this.$tabStore.trigger('click');
-    }, this), 0);
+    location.hash = 'store';
   }
 
-  // Remove border bottom for only main home
-  $('.header-wrap').addClass('home');
+  if ( window.location.hash === '#store' ) {
+    this._resetSlider('2');
+  }
 };
 
 Tw.MainHome.prototype = {
@@ -61,8 +62,15 @@ Tw.MainHome.prototype = {
     GIFT: 'gift',
     FAMILY: 'family'
   },
+  _onHashChange: function (hash) {
+    if ( hash.base === 'store' ) {
+      this._resetSlider('2');
+    } else {
+      this._resetSlider('1');
+    }
+  },
   _cachedDefaultElement: function () {
-    this.$tabStore = this.$container.find('.icon-home-tab-store');
+    // this.$tabStore = this.$container.find('.icon-home-tab-store');
   },
   _cachedElement: function () {
     this.$elBarcode = this.$container.find('#fe-membership-barcode');
@@ -602,6 +610,14 @@ Tw.MainHome.prototype = {
   },
   _resetHeight: function () {
     Tw.CommonHelper.resetHeight($('.home-slider .home-slider-belt')[0]);
+  },
+  _resetSlider: function (state) {
+    // TODO: reset slider
+    // skt_landing.action.home_slider({
+    //   initialSlide: state
+    // });
+    // $('.slider1').find('.slider').slick('destroy');
+    // skt_landing.widgets.widget_slider1();
   },
   _getWelcomeMsg: function () {
     this._apiService.request(Tw.NODE_CMD.GET_HOME_WELCOME, {})
