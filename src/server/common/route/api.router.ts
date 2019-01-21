@@ -157,6 +157,7 @@ class ApiRouter {
     const code = BrowserHelper.isApp(req) ? MENU_CODE.MAPP : MENU_CODE.MWEB;
 
     const svcInfo = this.loginService.getSvcInfo(req);
+    const allSvcInfo = this.loginService.getAllSvcInfo(req);
     this.logger.info(this, '[get menu]', req.cookies[COOKIE_KEY.TWM], this.loginService.getSessionId(req), svcInfo);
     this.redisService.getData(REDIS_KEY.MENU + code)
       .subscribe((resp) => {
@@ -174,6 +175,12 @@ class ApiRouter {
             resp.result.userInfo.loginType = svcInfo.loginType;
             resp.result.userInfo.tid = svcInfo.userId;
             resp.result.userInfo.addr = svcInfo.addr;
+            resp.result.userInfo.canSendFreeSMS = allSvcInfo.m.reduce((memo, elem) => {
+              if (elem.svcAttrCd.includes('M1')) {
+                return true;
+              }
+              return memo;
+            }, false);
           }
           res.json(resp);
         } else {
