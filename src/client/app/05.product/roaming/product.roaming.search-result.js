@@ -212,9 +212,10 @@ Tw.ProductRoamingSearchResult.prototype = {
         } else {
             this._phoneInfo.eqpMdlNm = this.modelValue;
             this._phoneInfo.eqpMdlCd = this.modelCode;
+            this._srchInfo.eqpMdlNm = this.modelValue;
             this.$userPhoneInfo.empty();
             this.$userPhoneInfo.append(this._rmPhoneInfoTmpl({ items: this._phoneInfo }));
-            this._desciptionInit();
+            this._roamingDecriptonInit();
         }
     },
     _onSelectModel: function () {
