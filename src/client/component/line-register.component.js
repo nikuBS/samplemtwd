@@ -175,7 +175,7 @@ Tw.LineRegisterComponent.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._registerLength = registerLength;
       this._marketingSvc = resp.result.offerSvcMgmtNum;
-      this._popupService.close();
+      this._updateNoticeType();
     } else {
       // this._popupService.close();
       Tw.Error(resp.code, resp.msg).pop();
@@ -183,6 +183,13 @@ Tw.LineRegisterComponent.prototype = {
   },
   _failRegisterLineList: function (error) {
     Tw.Error(error.code, error.msg).pop();
+  },
+  _updateNoticeType: function () {
+    this._apiService.request(Tw.NODE_CMD.UPDATE_NOTICE_TYPE, {})
+      .done($.proxy(this._successUpdateNoticeType, this));
+  },
+  _successUpdateNoticeType: function (resp) {
+    this._popupService.close();
   },
   _onCloseRegisterLine: function () {
     if ( this._registerLength > 0 ) {
