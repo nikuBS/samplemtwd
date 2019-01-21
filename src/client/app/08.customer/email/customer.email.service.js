@@ -103,11 +103,10 @@ Tw.CustomerEmailService.prototype = {
   _requestCell: function () {
     var elSelectedLine = this.$wrap_tpl_service.find('[data-svcmgmtnum]').data('svcmgmtnum');
     var elInputline = this.$wrap_tpl_service.find('.fe-service-line').val();
-    var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine : '';
+    var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine : '0';
     var selSvcNum = !!elInputline ? elInputline : '';
 
     var htParams = $.extend(this._makeParams(), {
-      selSvcNum: selSvcNum,
       selSvcMgmtNum: selSvcMgmtNum,
       connSite: Tw.BrowserHelper.isApp() ? '19' : '15',
       ofrCtgSeq: this.$service_depth2.data('serviceDepth2'),
@@ -116,6 +115,10 @@ Tw.CustomerEmailService.prototype = {
         return $.trim($(item).find('.text').text() + ':' + $(item).data('hashfile'));
       })
     });
+
+    if ( selSvcMgmtNum === '0' ) {
+      htParams = $.extend(htParams, { selSvcNum: selSvcNum });
+    }
 
     this._apiService.request(Tw.API_CMD.BFF_08_0042, htParams)
       .done($.proxy(this._onSuccessRequest, this));
@@ -124,11 +127,10 @@ Tw.CustomerEmailService.prototype = {
   _requestInternet: function () {
     var elSelectedLine = this.$wrap_tpl_service.find('[data-svcmgmtnum]').data('svcmgmtnum');
     var elInputline = this.$wrap_tpl_service.find('.fe-service-line').val();
-    var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine : '';
+    var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine : '0';
     var selSvcNum = !!elInputline ? elInputline : '';
 
     var htParams = $.extend(this._makeParams(), {
-      selSvcNum: selSvcNum,
       selSvcMgmtNum: selSvcMgmtNum,
       connSite: Tw.BrowserHelper.isApp() ? '19' : '15',
       ofrCtgSeq: this.$service_depth2.data('serviceDepth2'),
@@ -137,6 +139,10 @@ Tw.CustomerEmailService.prototype = {
         return $.trim($(item).find('.text').text() + ':' + $(item).data('hashfile'));
       })
     });
+
+    if ( selSvcMgmtNum === '0' ) {
+      htParams = $.extend(htParams, { selSvcNum: selSvcNum });
+    }
 
     this._apiService.request(Tw.API_CMD.BFF_08_0043, htParams)
       .done($.proxy(this._onSuccessRequest, this));

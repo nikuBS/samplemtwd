@@ -98,14 +98,13 @@ Tw.CustomerEmailQuality.prototype = {
   _requestCell: function () {
     var elSelectedLine = this.$wrap_tpl_quality.find('[data-svcmgmtnum]').data('svcmgmtnum');
     var elInputline = this.$wrap_tpl_quality.find('.fe-quality-line').val();
-    var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine : '';
+    var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine : '0';
     var selSvcNum = !!elInputline ? elInputline : '';
 
     var htParams = $.extend(this._makeParams(), {
       inptZip: $('.fe-zip').val(),
       inptBasAddr: $('.fe-main-address').val(),
       inptDtlAddr: $('.fe-detail-address').val(),
-      selSvcNum: selSvcNum,
       selSvcMgmtNum: selSvcMgmtNum,
       content: this.tpl_quality_cell_content({
         place: $('.fe-place').text(),
@@ -123,6 +122,10 @@ Tw.CustomerEmailQuality.prototype = {
       })
     });
 
+    if ( selSvcMgmtNum === '0' ) {
+      htParams = $.extend(htParams, { selSvcNum: selSvcNum });
+    }
+
     this._apiService.request(Tw.API_CMD.BFF_08_0044, htParams)
       .done($.proxy(this._onSuccessRequest, this));
   },
@@ -130,7 +133,7 @@ Tw.CustomerEmailQuality.prototype = {
   _requestInternet: function () {
     var elSelectedLine = this.$wrap_tpl_quality.find('[data-svcmgmtnum]').data('svcmgmtnum');
     var elInputline = this.$wrap_tpl_quality.find('.fe-quality-line').val();
-    var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine : '';
+    var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine : '0';
     var selSvcNum = !!elInputline ? elInputline : '';
 
     var htParams = $.extend(this._makeParams(), {
@@ -138,9 +141,12 @@ Tw.CustomerEmailQuality.prototype = {
       inptZip: $('.fe-zip').val(),
       inptBasAddr: $('.fe-main-address').val(),
       inptDtlAddr: $('.fe-detail-address').val(),
-      selSvcNum: selSvcNum,
       selSvcMgmtNum: selSvcMgmtNum
     });
+
+    if ( selSvcMgmtNum === '0' ) {
+      htParams = $.extend(htParams, { selSvcNum: selSvcNum });
+    }
 
     this._apiService.request(Tw.API_CMD.BFF_08_0045, htParams)
       .done($.proxy(this._onSuccessRequest, this));
