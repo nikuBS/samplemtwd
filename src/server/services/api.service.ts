@@ -326,7 +326,14 @@ class ApiService {
           return this.loginService.setAllSvcInfo(null);
         }
       })
-      .map((resp) => {
+      .switchMap((resp) => this.request(API_CMD.BFF_01_0040, {}))
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          return this.loginService.setChildInfo(resp.result);
+        } else {
+          return this.loginService.setChildInfo(null);
+        }
+      }).map((resp) => {
         return { code: API_CODE.CODE_00, result: result };
       });
   }
@@ -491,6 +498,14 @@ class ApiService {
           return Observable.combineLatest(
             this.loginService.setSvcInfo(null),
             this.loginService.setAllSvcInfo(null));
+        }
+      })
+      .switchMap((resp) => this.request(API_CMD.BFF_01_0040, {}))
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          return this.loginService.setChildInfo(resp.result);
+        } else {
+          return this.loginService.setChildInfo(null);
         }
       }).map(() => {
         return { code: API_CODE.CODE_00, result: result };
