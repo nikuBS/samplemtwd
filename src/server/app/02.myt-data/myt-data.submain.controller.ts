@@ -107,8 +107,9 @@ class MytDataSubmainController extends TwViewController {
         // 데이터혜택/활용하기 영역
         // 휴대폰, T-pocketFi, T-Login  경우 노출 - 9차에서 휴대폰인 경우에만 노출
         data.isBenefit = true;
-        // 선불쿠폰영역 휴대폰 인 경우에만 노출 (9차)
-        data.isPrepayment = true;
+        // 선불쿠폰영역 휴대폰 인 경우에만 노출 (9차) - 11차에서 hidden 처리(190121)
+        // TODO: BPCP 완료 후 enable 처리
+        // data.isPrepayment = true;
       }
 
       if ( present /*&& (present.familyMemberYn === 'Y' || present.goodFamilyMemberYn === 'Y')*/ ) {
@@ -413,7 +414,7 @@ class MytDataSubmainController extends TwViewController {
     const MOBILE = (items && items['m']) || [];
     const list: any = [];
     // 간편로그인인 경우는 다른 회선 정보 노출 하지않도록 처리
-    if(target.loginType === LOGIN_TYPE.EASY) {
+    if ( target.loginType === LOGIN_TYPE.EASY ) {
       return list;
     }
     MOBILE.sort(this.compare);
