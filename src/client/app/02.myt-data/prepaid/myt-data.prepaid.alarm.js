@@ -22,6 +22,8 @@ Tw.MyTDataPrepaidAlarm.prototype = {
     this.term = false; // 시간: 기준항목(1:발신기간, 2:수신기간, 3:번호유지기간)
     this.day = false; // 시간: 기준일(1:1일전, 2:2일전, 3:3일전)
     this.amt = false; // 금액(1:1000원, 2:2000원, 3:3000원, 5:5000원)
+
+    this._getPrepaidAlarmInfo();
   },
 
   _cachedElement: function () {
@@ -38,6 +40,36 @@ Tw.MyTDataPrepaidAlarm.prototype = {
     this.$container.on('click', '.fe-setting-alarm', $.proxy(this._requestAlarmSetting, this));
     this.$container.on('click', '.fe-popup-close', $.proxy(this._stepBack, this));
     this.$container.on('click', '.tw-popup-closeBtn', $.proxy(this._validateForm, this));
+  },
+
+  _getPrepaidAlarmInfo: function () {
+    this._apiService.request(Tw.API_CMD.BFF_06_0075, {})
+      .done($.proxy(this._onSuccessAlarmInfo, this));
+  },
+
+  _onSuccessAlarmInfo: function (res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      var result = res.result;
+
+      if ( !!result.typeCd ) {
+        this.typeCd = result.typeCd;
+      }
+
+      if ( !!result.term ) {
+        this.term = result.term;
+      }
+
+      if ( !!result.day ) {
+        this.day = result.day;
+      }
+
+      if ( !!result.amt ) {
+        this.amt = result.amt;
+      }
+
+    } else {
+      Tw.Error(res.code, res.msg).pop();
+    }
   },
 
   _validateForm: function () {
@@ -93,13 +125,20 @@ Tw.MyTDataPrepaidAlarm.prototype = {
   },
 
   _setSelectedValue: function (sListName, $target, e) {
+    var htParams = {
+      typeCd: this.typeCd,
+      term: this.term,
+      day: this.day,
+      amt: this.amt
+    }
+
     if ( sListName === 'status_list' ) {
       this.typeCd = $(e.currentTarget).data('value');
 
       if ( this.typeCd === 1 ) {
-        this.wrap_alarm.html(this.tpl_alarm_amount());
+        this.wrap_alarm.html(this.tpl_alarm_amount({ params: htParams }));
       } else {
-        this.wrap_alarm.html(this.tpl_alarm_date());
+        this.wrap_alarm.html(this.tpl_alarm_date({ params: htParams }));
       }
 
       $('.fe-setting-alarm').prop('disabled', true);
@@ -125,7 +164,6 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
     $target.data($(e.currentTarget).data());
     $target.text($.trim($(e.currentTarget).text()));
-
 
     this._popupService.close();
   },
