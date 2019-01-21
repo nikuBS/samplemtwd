@@ -198,6 +198,10 @@ Tw.FormatHelper = (function () {
     return str;
   };
 
+  var conDateFormatWIthDash = function (date) {
+    return date.slice(0, 4) + '.' + date.slice(4, 6) + '.' + date.slice(6, 8);
+  };
+
   var sortObjArrDesc = function (array, key) {
     return array.sort(function (a, b) {
       return (parseInt(b[key], 10) - parseInt(a[key], 10));
@@ -341,21 +345,21 @@ Tw.FormatHelper = (function () {
       return data + Tw.DATA_UNIT.GB;
     }
     return data;
-  }
+  };
 
   var appendVoiceUnit = function (amount) {
     if ( /^[0-9\.]+$/.test(amount) ) {
       return amount + Tw.PERIOD_UNIT.MINUTES;
     }
     return amount;
-  }
+  };
 
   var appendSMSUnit = function (amount) {
     if ( /^[0-9\.]+$/.test(amount) ) {
       return amount + Tw.SMS_UNIT;
     }
     return amount;
-  }
+  };
 
   var getTemplateString = function (template, values) {
     return template.replace(/{\w+}/g, function (x) {
@@ -422,7 +426,7 @@ Tw.FormatHelper = (function () {
   };
 
   function dataURLtoFile(dataurl, filename) {
-    var arr = dataurl.split(',')
+    var arr = dataurl.split(',');
     var mime = arr[0].match(/:(.*?);/)[1],
         bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
     console.log(mime);
@@ -447,6 +451,7 @@ Tw.FormatHelper = (function () {
     convVoiceFormat: convVoiceFormat,
     convSmsPrice: convSmsPrice,
     conTelFormatWithDash: conTelFormatWithDash,
+    conDateFormatWIthDash: conDateFormatWIthDash,
     sortObjArrDesc: sortObjArrDesc,
     sortObjArrAsc: sortObjArrAsc,
     makeCardYymm: makeCardYymm,
