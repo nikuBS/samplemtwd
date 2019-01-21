@@ -36,7 +36,6 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
     this._getWelcomeMsg();
     this._bindEvent();
     this._initScroll();
-  } else {
   }
 };
 

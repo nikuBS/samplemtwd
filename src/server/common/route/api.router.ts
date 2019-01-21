@@ -57,10 +57,11 @@ class ApiRouter {
     this.router.get('/allSvcInfo', this.getAllSvcInfo.bind(this));
     this.router.get('/childInfo', this.getChildInfo.bind(this));
     // this.router.get('/serverSession', this.getServerSession.bind(this));
+    this.router.put('/update/notice-type', this.updateNoticeType.bind(this));
+
     this.router.get('/app-version', this.getVersion.bind(this));
     this.router.get('/splash', this.getSplash.bind(this));
     this.router.get('/app-notice', this.getAppNotice.bind(this));
-
     this.router.get('/urlMeta', this.getUrlMeta.bind(this));
     this.router.get('/menu', this.getMenu.bind(this));
     this.router.get('/banner/admin', this.getBannerAdmin.bind(this));
@@ -72,6 +73,7 @@ class ApiRouter {
     this.router.get('/product/comparison', this.getProductComparison.bind(this));
     this.router.get('/product/info', this.getProductInfo.bind(this));
     this.router.get('/masking-method', this.getMaskingMethod.bind(this));
+
     this.router.post('/masking-complete', this.setMaskingComplete.bind(this));
   }
 
@@ -415,6 +417,16 @@ class ApiRouter {
     res.json({
       code: API_CODE.CODE_00,
       result: this.loginService.getChildInfo(req)
+    });
+  }
+
+  private updateNoticeType(req: Request, res: Response, next: NextFunction) {
+    this.logger.info(this, '[update noticeType]');
+    this.loginService.setCurrentReq(req, res);
+    this.loginService.setSvcInfo({
+      noticeType: ''
+    }).subscribe((resp) => {
+      res.json(resp);
     });
   }
 
