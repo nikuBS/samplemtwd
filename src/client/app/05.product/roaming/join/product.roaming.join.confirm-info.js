@@ -167,8 +167,8 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
           prodNm : this._popupData.preinfo.reqProdInfo.prodNm,
           processNm : Tw.PRODUCT_TYPE_NM.JOIN,
           isBasFeeInfo : this._convertPrice(this._popupData.preinfo.reqProdInfo.basFeeInfo),
-          typeNm : Tw.PRODUCT_CTG_NM.ADDITIONS,
-          settingType : Tw.PRODUCT_CTG_NM.ADDITIONS+' '+Tw.PRODUCT_TYPE_NM.JOIN,
+          typeNm : Tw.NOTICE.ROAMING+' '+(this._prodTypeInfo.prodTypCd==='H_P'?Tw.PRODUCT_CTG_NM.PLANS:Tw.PRODUCT_CTG_NM.ADDITIONS),
+          settingType : Tw.PRODUCT_TYPE_NM.JOIN,
           btnNmList : [Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE]
         };
         this._popupService.open({

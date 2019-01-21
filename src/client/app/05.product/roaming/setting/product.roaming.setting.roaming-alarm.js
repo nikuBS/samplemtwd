@@ -58,15 +58,10 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
 
   _addPhoneNumOnList : function () {
     if(this._addedList.length>=5){
-      this.$addBtn.css('pointer-events','none');
-      this._popupService.openAlert(
+
+      this._openAlert(
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.MSG,
-        Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.TITLE,
-        null,
-        $.proxy(function () {
-          this.$addBtn.css('pointer-events','all');
-        },this)
-      );
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.TITLE);
       return;
     }
     var tempPhoneNum = this.$inputElement.val().split('-');
@@ -77,7 +72,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       'serviceNumber3' : tempPhoneNum[2]
     };
     if(!phonReg.test(phoneObj.serviceNumber1+phoneObj.serviceNumber2+phoneObj.serviceNumber3)){
-      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
+      this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
       return;
     }
     var requestValue = {
@@ -88,10 +83,10 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       if(res.code===Tw.API_CODE.CODE_00){
         this._historyService.reload();
       }else{
-        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
+        this._openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
       }
     }, this)).fail($.proxy(function (err) {
-      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
+      this._openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
     }, this));
   },
   _changeList : function(){
@@ -140,7 +135,17 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       this.$confirmBtn.attr('disabled','disabled');
     }
   },
-
+  _openAlert : function (msg,title) {
+    this._popupService.openAlert(
+      msg,
+      title,
+      null,
+      $.proxy(function () {
+        this.$addBtn.removeAttr('style');
+      }, this)
+    );
+    this.$addBtn.css({'pointer-events':'none','background':'#3b98e6'});
+  },
   _makeTemplate : function (phoneNum,idx) {
     var maskedPhoneNum = {
       'serviceNumber1' : phoneNum.serviceNumber1,
@@ -175,10 +180,10 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       if(res.code===Tw.API_CODE.CODE_00){
         this._historyService.reload();
       }else{
-        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
+        this._openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
       }
     }, this)).fail($.proxy(function (err) {
-      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
+      this._openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
     }, this));
   },
   _bindRemoveEvt : function () {

@@ -130,8 +130,8 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
       prodNm : data.prodNm,
       processNm : Tw.PRODUCT_TYPE_NM.JOIN,
       isBasFeeInfo : data.prodFee,
-      typeNm : data.svcType,
-      settingType : (data.svcType+' '+data.processNm),
+      typeNm : data.prodType,
+      settingType : data.processNm,
       btnNmList : [Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE]
     };
 

@@ -4,11 +4,11 @@
  * Date: 2018.12.03
  */
 
-Tw.ProductRoamingSettingRoamingAuto = function (rootEl,prodRedisInfo,prodBffInfo,svcInfo,prodId,expireDate) {
+Tw.ProductRoamingSettingRoamingAuto = function (rootEl,protTypeInfo,prodBffInfo,svcInfo,prodId,expireDate) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
-  this._prodRedisInfo = prodRedisInfo;
+  this._protTypeInfo = JSON.parse(protTypeInfo);
   this._prodBffInfo = prodBffInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
@@ -220,8 +220,8 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     var completePopupData = {
       prodNm : data.prodNm,
       processNm : Tw.PRODUCT_TYPE_NM.SETTING,
-      isBasFeeInfo : data.prodFee,
-      typeNm : Tw.PRODUCT_CTG_NM.ADDITIONS,
+      isBasFeeInfo : this._convertPrice(data.prodFee),
+      typeNm : Tw.NOTICE.ROAMING+' '+(this._prodTypeInfo.prodTypCd==='H_P'?Tw.PRODUCT_CTG_NM.PLANS:Tw.PRODUCT_CTG_NM.ADDITIONS),
       btnNmList : []
     };
     this._popupService.open({
@@ -321,6 +321,12 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
         $tooltipHead.find('button').attr('id','TC000009');
         break;
     }
+  },
+  _convertPrice : function (priceVal) {
+    if(!isNaN(priceVal)){
+      priceVal = Tw.FormatHelper.addComma(priceVal)+Tw.CURRENCY_UNIT.WON;
+    }
+    return priceVal;
   }
 
 

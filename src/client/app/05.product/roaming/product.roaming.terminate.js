@@ -85,22 +85,6 @@ Tw.ProductRoamingTerminate.prototype = {
   },
   _confirmInfo : function () {
     this._popupService.close();
-    var completePopupData = {
-      prodNm : this._prodBffInfo.preinfo.reqProdInfo.prodNm,
-      processNm : Tw.PRODUCT_TYPE_NM.TERMINATE,
-      isBasFeeInfo : this._convertPrice(this._prodBffInfo.preinfo.reqProdInfo.basFeeInfo),
-      typeNm : Tw.PRODUCT_CTG_NM.ADDITIONS,
-      settingType : Tw.PRODUCT_CTG_NM.ADDITIONS+' '+Tw.PRODUCT_TYPE_NM.JOIN,
-      btnNmList : ['나의 가입정보 확인']
-    };
-    this._popupService.open({
-        hbs: 'complete_product_roaming',
-        layer: true,
-        data : completePopupData
-      },
-      $.proxy(this._bindCompletePopupEvt,this),
-      null,
-      'complete');
 
     this._apiService.request(Tw.API_CMD.BFF_10_0086, {}, {},[this._prodId]).
     done($.proxy(function (res) {
@@ -110,9 +94,9 @@ Tw.ProductRoamingTerminate.prototype = {
           prodNm : this._prodBffInfo.preinfo.reqProdInfo.prodNm,
           processNm : Tw.PRODUCT_TYPE_NM.TERMINATE,
           isBasFeeInfo : this._convertPrice(this._prodBffInfo.preinfo.reqProdInfo.basFeeInfo),
-          typeNm : Tw.PRODUCT_CTG_NM.ADDITIONS,
-          settingType : Tw.PRODUCT_CTG_NM.ADDITIONS+' '+Tw.PRODUCT_TYPE_NM.JOIN,
-          btnNmList : ['나의 가입정보 확인']
+          typeNm : Tw.NOTICE.ROAMING+' '+(this._prodTypeInfo.prodTypCd==='H_P'?Tw.PRODUCT_CTG_NM.PLANS:Tw.PRODUCT_CTG_NM.ADDITIONS),
+          settingType : Tw.PRODUCT_TYPE_NM.TERMINATE,
+          btnNmList : [Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE]
         };
         this._popupService.open({
             hbs: 'complete_product_roaming',
@@ -173,6 +157,7 @@ Tw.ProductRoamingTerminate.prototype = {
     this._historyService.goBack();
     this.$rootContainer.find('input.'+this._nowShowAgreeType).trigger('click');
   },
+
   _convertPrice : function (priceVal) {
     if(!isNaN(priceVal)){
       priceVal = Tw.FormatHelper.addComma(priceVal)+Tw.CURRENCY_UNIT.WON;

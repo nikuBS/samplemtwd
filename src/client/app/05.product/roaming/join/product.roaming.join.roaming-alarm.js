@@ -58,15 +58,9 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
   },
   _addPhoneNumOnList : function () {
     if(this._addedList.length>=5){
-      this.$addBtn.css('pointer-events','none');
-      this._popupService.openAlert(
+      this._openAlert(
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.MSG,
-        Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.TITLE,
-        null,
-        $.proxy(function () {
-          this.$addBtn.css('pointer-events','all');
-        },this)
-      );
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.TITLE);
       return;
     }
     var tempPhoneNum = this.$inputElement.val().split('-');
@@ -77,7 +71,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
       'serviceNumber3' : tempPhoneNum[2]
     };
     if(!phonReg.test(phoneObj.serviceNumber1+phoneObj.serviceNumber2+phoneObj.serviceNumber3)){
-      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
+      this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
       return;
     }
     this._addedList.push(phoneObj);
@@ -172,8 +166,8 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
           prodNm : data.prodNm,
           processNm : Tw.PRODUCT_TYPE_NM.JOIN,
           isBasFeeInfo : data.prodFee,
-          typeNm : data.svcType,
-          settingType : (data.svcType+' '+data.processNm),
+          typeNm : data.prodType,
+          settingType : data.processNm,
           btnNmList : [Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE]
         };
         this._popupService.open({
@@ -185,10 +179,10 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
           null,
           'complete');
       }else{
-        this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
+        this._openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
       }
     }, this)).fail($.proxy(function (err) {
-      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
+      this._openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
     }, this));
   },
   _bindCompletePopupBtnEvt : function(args1,args2){
@@ -210,6 +204,17 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
       $.proxy(this._bindCancelPopupEvent,this),
       $.proxy(this._popupService.close,this),
       null);
+  },
+  _openAlert : function (msg,title) {
+    this._popupService.openAlert(
+      msg,
+      title,
+      null,
+      $.proxy(function () {
+        this.$addBtn.removeAttr('style');
+      }, this)
+    );
+    this.$addBtn.css({'pointer-events':'none','background':'#3b98e6'});
   },
   _bindCancelPopupEvent : function (popupLayer) {
     $(popupLayer).on('click','.pos-left>button',$.proxy(this._goPlan,this,-1));
