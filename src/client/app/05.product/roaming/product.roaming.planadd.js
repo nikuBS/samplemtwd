@@ -36,6 +36,14 @@ Tw.ProductRoamingPlanAdd.prototype = {
           'ignoreProdId':''
       };
 
+      if(this._param.searchFltIds){
+          this._params.searchFltIds = this._param.searchFltIds;
+      }
+
+      if(this._param.searchOrder){
+          this._params.searchOrder = this._param.searchOrder;
+      }
+
       this._params.idxCtgCd = this.RMADD_CODE;
       if(this._param.searchTagId){
           this._params.searchTagId = this._param.searchTagId;
@@ -112,7 +120,7 @@ Tw.ProductRoamingPlanAdd.prototype = {
               }
           },
           $.proxy(this._handleOpenAddFilterPopup, this),
-          undefined,
+          $.proxy(this._handleCloseAddFilterPopup, this),
           'search'
       );
   },
@@ -121,6 +129,17 @@ Tw.ProductRoamingPlanAdd.prototype = {
       $layer.on('click', '.resetbtn', $.proxy(this._handleAddResetBtn, this, $layer));
       $layer.on('click', '.bt-red1', $.proxy(this._handleRmAddSelectFilters, this, $layer));
       $layer.on('click', '.link', $.proxy(this._openRoamingAddTagPopup, this, $layer));
+  },
+  _handleCloseAddFilterPopup: function () {
+      if (this._loadedNewSearch) {
+          if (this._params.searchFltIds) {
+              location.href = location.pathname + '?filters=' + this._params.searchFltIds;
+          } else if (this._params.searchTagId) {
+              location.href = location.pathname + '?tag=' + this._params.searchTagId;
+          } else {
+              location.href = location.pathname;
+          }
+      }
   },
   _openRoamingAddTagPopup: function($layer, e) {
       if ($layer.find('input[checked="checked"]').length > 0) {
@@ -142,18 +161,13 @@ Tw.ProductRoamingPlanAdd.prototype = {
             return;
         }
 
-        this._params.searchTagId = selectedTag;
-        this._params.searchLastProdId = '';
-        this._params.searchFltIds = '';
-
-        this._apiService.request(Tw.API_CMD.BFF_10_0000, this._params)
-            .done($.proxy(this._handleLoadNewAddFilters, this));
-        //this._history.goLoad('/product/roaming/planadd?tag=' + selectedTag);
+        this._history.goLoad('/product/roaming/planadd?tag=' + selectedTag);
     },
   _handleRmAddSelectFilters: function ($layer){
       var searchRmFltIds = _.map($layer.find('input[checked="checked"]'), function(input) {
           return input.getAttribute('data-addfilter-id');
-      }).join(',');
+      }).join(','),
+      originParams = this._params;
 
       if(searchRmFltIds === '' && !this._reset){
           this._popupService.close();
@@ -162,10 +176,10 @@ Tw.ProductRoamingPlanAdd.prototype = {
 
       this._params = { idxCtgCd: this.RMADD_CODE };
       this._params.searchFltIds = searchRmFltIds;
-      this._apiService.request(Tw.API_CMD.BFF_10_0000, this._params)
-          .done($.proxy(this._handleLoadNewAddFilters, this));
+      this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params)
+          .done($.proxy(this._handleLoadNewAddFilters, this, originParams));
   },
-  _handleLoadNewAddFilters: function(resp) {
+  _handleLoadNewAddFilters: function(originParams, resp) {
       if (resp.code !== Tw.API_CODE.CODE_00) {
           Tw.Error(resp.code, resp.msg).pop();
           return;
@@ -174,37 +188,8 @@ Tw.ProductRoamingPlanAdd.prototype = {
       if (resp.result.products.length === 0) {
           this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A18.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A18.TITLE);
       } else {
-          delete this._params.searchLastProdId;
-          delete this._leftCount;
-          this.$rmPlanAddlist.empty();
-
-          if (resp.result.searchOption && resp.result.searchOption.searchFltIds.length > 0) {
-              var filters = resp.result.searchOption.searchFltIds;
-              var $filters = this.$container.find('.fe-rmadd-filter');
-              var data = {};
-              data.filters = _.map(filters.slice(0, 2), function(filter, index, arr) {
-                  if (index === 0 && arr.length === 2) {
-                      return filter.prodFltNm + ',';
-                  }
-                  return filter.prodFltNm;
-              });
-
-              if (filters.length > 2) {
-                  data.leftCount = filters.length - 2;
-              }
-              $filters.html(this._rmFilterTmpl(data));
-          } else if(resp.result.searchOption && resp.result.searchOption.searchTagId){
-              var tagNm = resp.result.searchOption.searchProdTagNm;
-              var $tags = this.$container.find('.fe-rmadd-filter');
-              var tagData = {'filters':[tagNm]};
-              $tags.html(this._rmFilterTmpl(tagData));
-          } else {
-              var allData = {'filters':[]};
-              this.$container.find('.fe-rmadd-filter').html(this._rmFilterTmpl(allData));
-          }
-
           this._popupService.close();
-          this._handleSuccessMoreAddData(resp);
+          this._loadedNewSearch = true;
         }
     },
   _handleAddResetBtn: function ($layer) {
@@ -256,12 +241,21 @@ Tw.ProductRoamingPlanAdd.prototype = {
       this.selectTag = false;
   },
   _openRmAddOrderPopup: function () {
-      this.orderList = Tw.PRODUCT_ROAMING_ORDER;
+      var searchType = this._params.searchOrder || this.DEFAULT_ORDER;
+      this.orderList = _.map(Tw.PRODUCT_ROAMING_ORDER, function(item) {
+          if (item['radio-attr'].indexOf(searchType) >= 0) {
+              return $.extend({}, item, {
+                  'radio-attr': item['radio-attr'] + ' checked'
+              });
+          }
+          return item;
+      });
+
       this._popupService.open(
           {
               hbs: 'actionsheet01', // hbs의 파일명
+              btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
               layer: true,
-              btnfloating: { 'attr': 'type="button" data-role="fe-bt-close"', 'txt': '닫기' },
               data: [{ list: this.orderList }]
           },
           $.proxy(this._handleOpenAddOrderPopup, this),
@@ -271,44 +265,55 @@ Tw.ProductRoamingPlanAdd.prototype = {
   },
     _handleOpenAddOrderPopup: function ($layer) {
       // $layer.on('click', 'ul.chk-link-list > li', $.proxy(this._handleSelectRmAddOrder, this));
-      var searchType = this.ORDER[this._params.searchOrder || this.DEFAULT_ORDER];
-      $layer.find('[id="ra' + searchType + '"]').attr('checked', 'checked');
+      // var searchType = this.ORDER[this._params.searchOrder || this.DEFAULT_ORDER];
+      // $layer.find('[id="ra' + searchType + '"]').attr('checked', 'checked');
       $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
       $layer.on('click', 'ul.ac-list > li', $.proxy(this._handleSelectRmAddOrder, this));
   },
-    _handleSelectRmAddOrder: function (e) {
-      var $target = $(e.currentTarget);
-      var $list = $target.parent();
-      this.orderTypeIdx = $list.find('li').index($target);
-      var orderType = this._getRmAddOrderType($list.find('li').index($target));
+  _handleSelectRmAddOrder: function (e) {
+    var $target = $(e.currentTarget);
+    var $list = $target.parent();
+    this.orderTypeIdx = $list.find('li').index($target);
+    var orderType = this._getRmAddOrderType($list.find('li').index($target));
 
-      if (this._params.searchOrder === orderType) {
-          return;
-      }
+    if (this._params.searchOrder === orderType) {
+        return;
+    }
 
-      this._params.searchOrder = orderType;
-      delete this._params.searchLastProdId;
-      delete this._leftCount;
-      this.$container.find('.fe-rmadd-order').text(this.orderList[this.orderTypeIdx].txt);
-      this.$rmPlanAddlist.empty();
+    this._params.searchOrder = orderType;
+    delete this._params.searchLastProdId;
+    delete this._leftCount;
+    this.$container.find('.fe-rmadd-order').text(this.orderList[this.orderTypeIdx].txt);
+    this.$rmPlanAddlist.empty();
 
-      this._handleMoreRoamingAdd();
-      this._popupService.close();
-    },
-  _handleMoreRoamingAdd: function () {
-      this._apiService.request(Tw.API_CMD.BFF_10_0000, this._params)
-          .done($.proxy(this._handleSuccessMoreAddData, this));
+    this._handleLoadNewOrder(orderType);
+    this._popupService.close();
   },
-  _handleSuccessMoreAddData: function (resp) {
+  _handleLoadNewOrder:function (orderType) {
+      this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params).done($.proxy(this._handleSuccessMoreAddData, this, orderType));
+  },
+  _handleMoreRoamingAdd: function () {
+      this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params)
+          .done($.proxy(this._handleSuccessMoreAddData, this, undefined));
+  },
+  _handleSuccessMoreAddData: function (orderType, resp) {
       if (resp.code !== Tw.API_CODE.CODE_00) {
           Tw.Error(resp.code, resp.msg).pop();
           return;
+      }
+
+      if (orderType) {
+          location.href = Tw.UrlHelper.replaceQueryParam('order', orderType);
       }
 
       var items = _.map(resp.result.products, function(item) {
           item.basFeeAmt = Tw.FormatHelper.addComma(item.basFeeAmt);
           return item;
       });
+
+      var srchOrder = resp.result.searchOption.searchOrder;
+
+      this.CURRENT_ORDER = srchOrder;
 
       this._params.searchLastProdId = items[items.length - 1].prodId;
       this._leftCount = (this._leftCount || resp.result.productCount) - items.length;

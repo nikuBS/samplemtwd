@@ -23,6 +23,7 @@ export default class ProductRoaming extends TwViewController {
         const params = {
             idxCtgCd: this.PLAN_CODE,
             ...(req.query.filters ? { searchFltIds: req.query.filters } : {}),
+            ...(req.query.order ? { searchOrder: req.query.order } : {}),
             ...(req.query.tag ? { searchTagId: req.query.tag } : {})
         };
 
@@ -31,7 +32,8 @@ export default class ProductRoaming extends TwViewController {
             this.getRoamingPlanData(params)
         ).subscribe(([roamingData, roamingPlanData]) => {
 
-            res.render('roaming/product.roaming.fee.html', { svcInfo, roamingData, roamingPlanData, params, isLogin: this.isLogin(svcInfo), pageInfo });
+            res.render('roaming/product.roaming.fee.html',
+                { svcInfo, roamingData, roamingPlanData, params, isLogin: this.isLogin(svcInfo), pageInfo });
 
         });
     }
@@ -60,7 +62,7 @@ export default class ProductRoaming extends TwViewController {
 
     private getRoamingPlanData(params) {
         // let roamingPlanData = null;
-        return this.apiService.request(API_CMD.BFF_10_0000, params).map((resp) => {
+        return this.apiService.request(API_CMD.BFF_10_0031, params).map((resp) => {
             this.logger.info(this, 'result ', resp.result);
             if ( resp.code === API_CODE.CODE_00 ) {
                 return {

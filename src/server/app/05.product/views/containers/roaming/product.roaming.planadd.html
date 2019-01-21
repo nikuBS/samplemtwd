@@ -59,7 +59,15 @@
                     <span class="counting pl12">총 <span class="tx-bold fe-planadd-cnt"><%= roamingAddData.productCount %></span>건</span>
                 </div>
                 <div class="right-item">
-                    <button class="bt-select fe-rmadd-order" title="정렬 선택" aria-haspopup="true">추천순</button>
+                    <button class="bt-select fe-rmadd-order" title="정렬 선택" aria-haspopup="true">
+                        <% if (params.searchOrder === 'highprice') { %>
+                        높은 가격순
+                        <% } else if (params.searchOrder === 'lowprice') { %>
+                        낮은 가격순
+                        <% } else { %>
+                        추천순
+                        <% } %>
+                    </button>
                 </div>
             </div>
             <!--//정렬 및 필터 -->

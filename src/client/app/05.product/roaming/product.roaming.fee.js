@@ -41,6 +41,10 @@ Tw.ProductRoamingFee.prototype = {
           this._params.searchFltIds = this._param.searchFltIds;
       }
 
+      if(this._param.searchOrder){
+          this._params.searchOrder = this._param.searchOrder;
+      }
+
       this._params.idxCtgCd = this.RM_CODE;
       if(this._param.searchTagId){
           this._params.searchTagId = this._param.searchTagId;
@@ -117,7 +121,7 @@ Tw.ProductRoamingFee.prototype = {
             }
         },
         $.proxy(this._handleOpenFilterPopup, this),
-        undefined,
+        $.proxy(this._handleCloseFilterPopup, this),
         'search'
     );
   },
@@ -126,6 +130,17 @@ Tw.ProductRoamingFee.prototype = {
       $layer.on('click', '.resetbtn', $.proxy(this._handleResetBtn, this, $layer));
       $layer.on('click', '.bt-red1', $.proxy(this._handleRoamingSelectFilters, this, $layer));
       $layer.on('click', '.link', $.proxy(this._openRoamingTagPopup, this, $layer));
+  },
+  _handleCloseFilterPopup: function () {
+      if (this._loadedNewSearch) {
+          if (this._params.searchFltIds) {
+              location.href = location.pathname + '?filters=' + this._params.searchFltIds;
+          } else if (this._params.searchTagId) {
+              location.href = location.pathname + '?tag=' + this._params.searchTagId;
+          } else {
+              location.href = location.pathname;
+          }
+      }
   },
   _openRoamingTagPopup: function($layer, e) {
       if ($layer.find('input[checked="checked"]').length > 0) {
@@ -194,7 +209,8 @@ Tw.ProductRoamingFee.prototype = {
   _handleRoamingSelectFilters: function ($layer){
       var searchRmFltIds = _.map($layer.find('input[checked="checked"]'), function(input) {
           return input.getAttribute('data-rmfilter-id');
-      }).join(',');
+      }).join(','),
+      originParams = this._params;
 
       if(searchRmFltIds === '' && !this._reset){
           this._popupService.close();
@@ -207,10 +223,10 @@ Tw.ProductRoamingFee.prototype = {
 
       Tw.Logger.info('[this._params]', this._params);
 
-      this._apiService.request(Tw.API_CMD.BFF_10_0000, this._params)
-          .done($.proxy(this._handleLoadNewFilters, this));
+      this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params)
+          .done($.proxy(this._handleLoadNewFilters, this, originParams));
   },
-    _handleLoadNewFilters: function(resp) {
+    _handleLoadNewFilters: function(originParams, resp) {
       if (resp.code !== Tw.API_CODE.CODE_00) {
           Tw.Error(resp.code, resp.msg).pop();
           return;
@@ -218,40 +234,28 @@ Tw.ProductRoamingFee.prototype = {
 
       if (resp.result.products.length === 0) {
           this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A18.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A18.TITLE);
+          this._params = originParams;
       } else {
-          delete this._params.searchLastProdId;
-          delete this._leftCount;
-          this.$roamingPlanlist.empty();
-
-          if (resp.result.searchOption && resp.result.searchOption.searchFltIds) {
-              var filters = resp.result.searchOption.searchFltIds;
-              var $filters = this.$container.find('.fe-roaming-filter');
-              var data = {};
-              data.filters = _.map(filters.slice(0, 2), function(filter, index, arr) {
-                  if (index === 0 && arr.length === 2) {
-                      return filter.prodFltNm + ',';
-                  }
-                  return filter.prodFltNm;
-              });
-
-              if (filters.length > 2) {
-                  data.leftCount = filters.length - 2;
-              }
-              $filters.html(this._rmFilterTmpl(data));
-          }
-
           this._popupService.close();
-          this._handleSuccessMoreData(resp);
+          this._loadedNewSearch = true;
       }
   },
   _handleMoreRoamingPlan: function () {
-      this._apiService.request(Tw.API_CMD.BFF_10_0000, this._params)
-          .done($.proxy(this._handleSuccessMoreData, this));
+      this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params)
+          .done($.proxy(this._handleSuccessMoreData, this, undefined));
   },
-  _handleSuccessMoreData: function (resp) {
+  _handleSuccessMoreData: function (orderType, resp) {
+
+      Tw.Logger.info('success more data orderType : ', orderType);
+      Tw.Logger.info('success more data resp : ', resp);
+
       if (resp.code !== Tw.API_CODE.CODE_00) {
           Tw.Error(resp.code, resp.msg).pop();
           return;
+      }
+
+      if (orderType) {
+          location.href = Tw.UrlHelper.replaceQueryParam('order', orderType);
       }
 
       var items = _.map(resp.result.products, function(item) {
@@ -280,12 +284,21 @@ Tw.ProductRoamingFee.prototype = {
       this.$roamingPlanItemCnt.text(resp.result.productCount);
   },
   _openRoamingOrderPopup: function () {
-      this.orderList = Tw.PRODUCT_ROAMING_ORDER;
+      var searchType = this._params.searchOrder || this.DEFAULT_ORDER;
+      this.orderList = _.map(Tw.PRODUCT_ROAMING_ORDER, function(item) {
+          if (item['radio-attr'].indexOf(searchType) >= 0) {
+              return $.extend({}, item, {
+                  'radio-attr': item['radio-attr'] + ' checked'
+              });
+          }
+          return item;
+      });
+
       this._popupService.open(
           {
               hbs: 'actionsheet01', // hbs의 파일명
+              btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
               layer: true,
-              btnfloating: { 'attr': 'type="button" data-role="fe-bt-close"', 'txt': '닫기' },
               data: [{ list: this.orderList }]
           },
           $.proxy(this._handleOpenOrderPopup, this),
@@ -294,9 +307,9 @@ Tw.ProductRoamingFee.prototype = {
       );
   },
   _handleOpenOrderPopup: function ($layer) {
-    var searchType = this.ORDER[this._params.searchOrder || this.DEFAULT_ORDER];
-
-    $layer.find('[id="ra' + searchType + '"]').attr('checked', 'checked');
+    // var searchType = this.ORDER[this._params.searchOrder || this.DEFAULT_ORDER];
+    //
+    // $layer.find('[id="ra' + searchType + '"]').attr('checked', 'checked');
     $layer.find('[data-role="fe-bt-close"]').on('click', $.proxy(this._popupService.close, this));
     $layer.on('click', 'ul.ac-list > li', $.proxy(this._handleSelectRoamingOrder, this));
   },
@@ -348,8 +361,12 @@ Tw.ProductRoamingFee.prototype = {
       this.$container.find('.fe-roaming-order').text(this.orderList[this.orderTypeIdx].txt);
       this.$roamingPlanlist.empty();
 
-      this._handleMoreRoamingPlan();
+      this._handleLoadNewOrder(orderType);
       this._popupService.close();
+  },
+
+  _handleLoadNewOrder:function (orderType) {
+      this._apiService.request(Tw.API_CMD.BFF_10_0031, this._params).done($.proxy(this._handleSuccessMoreData, this, orderType));
   },
   _getRoamingOrderType: function(idx) {
       var keys = Object.keys(this.ORDER),
