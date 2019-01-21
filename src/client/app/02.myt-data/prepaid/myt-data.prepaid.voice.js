@@ -284,12 +284,13 @@ Tw.MyTDataPrepaidVoice.prototype = {
   },
 
   _onCompleteRechargeByCreditCard: function (res) {
-    this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=voice&' + $.param(this.amountInfo));
-    // if ( res.code === Tw.API_CODE.CODE_00 ) {
-    //   this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete');
-    // } else {
-    //   Tw.Error(res.code, res.msg).pop();
-    // }
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_DATA.COMPLETE_RECHARGE);
+      this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=voice&' + $.param(this.amountInfo));
+      // this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete');
+    } else {
+      Tw.Error(res.code, res.msg).pop();
+    }
   },
 
   _stepBack: function () {
