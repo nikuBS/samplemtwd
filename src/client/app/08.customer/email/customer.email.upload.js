@@ -49,8 +49,6 @@ Tw.CustomerEmailUpload.prototype = {
     if ( this._isLowerVersionAndroid() ) {
       this._nativeService.send(Tw.NTV_CMD.OPEN_FILE_CHOOSER, { dest: 'email' }, $.proxy(this._nativeFileChooser, this, $target));
     }
-
-
   },
 
   _nativeFileChooser: function ($target, response) {

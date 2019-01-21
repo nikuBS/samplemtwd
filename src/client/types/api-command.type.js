@@ -275,6 +275,7 @@ Tw.API_CMD = {
   BFF_06_0068: { path: '/core-recharge/:version/ting-permissions', method: Tw.API_METHOD.POST },
   BFF_06_0069: { path: '/core-bill/:version/pps-recharges', method: Tw.API_METHOD.DELETE },
   BFF_06_0070: { path: '/core-bill/:version/pps-data-recharges', method: Tw.API_METHOD.DELETE },
+  BFF_06_0075: { path: '/core-bill/v1/pps-alram', method: Tw.API_METHOD.GET },
 
   // PAYMENT
   BFF_07_0004: { path: '/core-bill/:version/cash-receipts-issue-history', method: Tw.API_METHOD.GET },

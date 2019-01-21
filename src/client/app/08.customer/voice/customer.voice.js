@@ -26,7 +26,7 @@ Tw.CustomerVoice.prototype = {
 
   _bindEvent: function () {
     this.$btn_register.on('click', $.proxy(this._checkHistories, this));
-    this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
+    // this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
   },
 
   _checkHistories: function () {
@@ -61,24 +61,24 @@ Tw.CustomerVoice.prototype = {
     }
   },
 
-  _stepBack: function () {
-    var confirmed = false;
-    this._popupService.openConfirmButton(
-      Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
-      Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-      $.proxy(function () {
-        confirmed = true;
-        this._popupService.close();
-      }, this),
-      $.proxy(function () {
-        if (confirmed) {
-          this._history.goBack();
-        }
-      }, this),
-      Tw.BUTTON_LABEL.NO,
-      Tw.BUTTON_LABEL.YES
-    );
-  },
+  // _stepBack: function () {
+  //   var confirmed = false;
+  //   this._popupService.openConfirmButton(
+  //     Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+  //     Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+  //     $.proxy(function () {
+  //       confirmed = true;
+  //       this._popupService.close();
+  //     }, this),
+  //     $.proxy(function () {
+  //       if (confirmed) {
+  //         this._history.goBack();
+  //       }
+  //     }, this),
+  //     Tw.BUTTON_LABEL.NO,
+  //     Tw.BUTTON_LABEL.YES
+  //   );
+  // },
 
   _goBack: function () {
     this._history.goBack();
