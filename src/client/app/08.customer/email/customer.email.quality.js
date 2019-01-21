@@ -107,16 +107,19 @@ Tw.CustomerEmailQuality.prototype = {
       inptDtlAddr: $('.fe-detail-address').val(),
       selSvcNum: selSvcNum,
       selSvcMgmtNum: selSvcMgmtNum,
-
       content: this.tpl_quality_cell_content({
         place: $('.fe-place').text(),
         place_detail: $('.fe-place_detail').text(),
         occurrence: $('.fe-occurrence').text(),
         text_name: $('.fe-text_name').val(),
+        text_content: this.$wrap_tpl_quality.find('.fe-text_content').val(),
         occurrence_date: $('.fe-occurrence_date').text(),
         occurrence_detail: $('.fe-occurrence_detail').text(),
         inqSvcClCd: $('.fe-quality-inqSvcClCd').find(':checked').parent().text().trim(),
-        svcNum: $('.fe-quality-line').is('input') ? $('.fe-quality-line').val() : $('.fe-quality-line').text().trim()
+        svcNum: $('.fe-quality-line').is('input') ? $('.fe-quality-line').val() : $('.fe-quality-line').text().trim(),
+        inptZip: $('.fe-zip').val(),
+        inptBasAddr: $('.fe-main-address').val(),
+        inptDtlAddr: $('.fe-detail-address').val()
       })
     });
 
