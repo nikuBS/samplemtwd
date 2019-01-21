@@ -305,7 +305,6 @@ Tw.ProductRoamingPlanAdd.prototype = {
       if (orderType) {
           location.href = Tw.UrlHelper.replaceQueryParam('order', orderType);
       }
-
       var items = _.map(resp.result.products, function(item) {
           item.basFeeAmt = Tw.FormatHelper.addComma(item.basFeeAmt);
           return item;
