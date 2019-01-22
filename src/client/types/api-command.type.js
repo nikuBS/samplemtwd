@@ -535,6 +535,7 @@ Tw.NODE_CMD = {
   GET_URL_META: { path: '/urlMeta', method: Tw.API_METHOD.GET },
   GET_MENU: { path: '/menu', method: Tw.API_METHOD.GET },
   GET_BANNER_ADMIN: { path: '/banner/admin', method: Tw.API_METHOD.GET },
+  GET_BANNER_TOS: { path: '/banner/tos', method: Tw.API_METHOD.GET },
   GET_MASKING_METHOD: { path: '/masking-method', method: Tw.API_METHOD.GET },
   SET_MASKING_COMPLETE: { path: '/masking-complete', method: Tw.API_METHOD.POST },
   GET_HOME_WELCOME: { path: '/home/welcome', method: Tw.API_METHOD.GET },

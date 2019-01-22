@@ -16,6 +16,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
 
   this._smartCardOrder = JSON.parse(smartCard);
 
+  this._menuId = menuId;
   this.$elBarcode = null;
   this.$elArrSmartCard = [];
   this.loadingStaus = [];
@@ -25,7 +26,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
   this._lineComponent = new Tw.LineComponent();
 
   this._openEmrNotice(emrNotice);
-  this._setBanner(menuId);
+  this._setBanner();
   this._cachedDefaultElement();
   this._bindEventStore();
   this._bindEventLogin();
@@ -673,13 +674,66 @@ Tw.MainHome.prototype = {
       Tw.CommonHelper.openUrlExternal(noti.linkUrl);
     }
   },
-  _setBanner: function (menuId) {
-    this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: menuId })
-      .done($.proxy(this._successBanner, this));
+  _setBanner: function () {
+    this._getTosBanner();
   },
-  _successBanner: function (resp) {
+  _getTosBanner: function () {
+    this._apiService.requestArray([
+      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0001' } },
+      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0002' } },
+      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0003' } },
+      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0004' } },
+      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0007' } }
+    ]).done($.proxy(this._successTosBanner, this));
+  },
+  _successTosBanner: function (banner1, banner2, banner3, banner4, banner7) {
+    var result = [{ target: '1', banner: banner1 },
+      { target: '2', banner: banner2 },
+      { target: '3', banner: banner3 },
+      { target: '4', banner: banner4 },
+      { target: '7', banner: banner7 }];
+    var adminList = [];
+    // console.log(result);
+    _.map(result, $.proxy(function (bnr) {
+      if ( this._checkTosBanner(bnr.banner, bnr.target) ) {
+        if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) ) {
+          // TODO: draw tos banner
+          // new Tw.BannerService(this.$container, 'tos or admin', 'imgList', 'target', $.proxy(this._successDrawBanner, this));
+          // console.log('target', bnr.target);
+          // console.log('imgList', bnr.banner.result.imgList);
+        }
+      } else {
+        adminList.push(bnr);
+      }
+    }, this));
+
+    if ( adminList.length > 0 ) {
+      this._getAdminBanner(adminList);
+    }
+  },
+  _checkTosBanner: function (tosBanner, target) {
+    if ( tosBanner.code === Tw.API_CODE.CODE_00 ) {
+      if ( tosBanner.result.bltnYn === 'N' ) {
+        // TODO: banner none 처리
+        return true;
+      } else {
+        if ( tosBanner.result.tosLnkgYn === 'Y' ) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+    return false;
+  },
+  _getAdminBanner: function (adminList) {
+    this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: this._menuId })
+      .done($.proxy(this._successBanner, this, adminList));
+  },
+  _successBanner: function (adminList, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      new Tw.BannerService(this.$container, resp.result.banners, $.proxy(this._successDrawBanner, this));
+      // TODO: draw admin banner
+      // new Tw.BannerService(this.$container, resp.result.banners, $.proxy(this._successDrawBanner, this));
     }
   },
   _successDrawBanner: function () {

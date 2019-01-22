@@ -22,6 +22,10 @@ class DateHelper {
     return new Date();
   }
 
+  static convDateCustomFormat(date: any, format: string): Date {
+    return moment(date, format).toDate();
+  }
+
   static getNextMonth(): any {
     const next = new Date();
     next.setDate(1);
