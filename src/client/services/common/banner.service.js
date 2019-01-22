@@ -97,11 +97,11 @@ Tw.BannerService.prototype = {
           return {
             isHTML: banner.bnnrTypCd === 'H',
             isBill: banner.billYn === 'Y',
-            bnnrFilePathNm: banner.bnnrFileNm && CDN + banner.bnnrFilePathNm,
+            bnnrFilePathNm: banner.bnnrFileNm && CDN + banner.bnnrFileNm,
             idx: idx,
             imgLinkTrgtClCd: banner.tosImgLinkTrgtClCd,
             bnnrImgAltCtt: banner.imgAltCtt,
-            imgLinkUrl: imgLinkUrl
+            imgLinkUrl: banner.imgLinkUrl
           };
         })
         .value();
