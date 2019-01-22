@@ -82,6 +82,12 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     this.$container.on('click', '#btn_hp_del', $.proxy(this._formValidateionChk, this));
 
     this.$container.on('click', '#page-prev-step', $.proxy(this._closeCheck, this));
+
+    // 동적으로 화면 추가되는 경우 tip 팝업 띄우기
+    this.$container.on('click', 'button[id=MS_04_08_tip_05]', function(){
+      var item = _.find(Tw.Tooltip._contentList, function(obj){ return obj.mtwdTtipId === 'MS_04_08_tip_05' });
+      $.proxy(Tw.Tooltip._openTip, Tw.Tooltip, item)();
+    });
   },
   //--------------------------------------------------------------------------[EVENT]
   _closeCheck: function(){
