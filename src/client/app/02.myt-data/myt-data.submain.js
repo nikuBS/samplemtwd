@@ -55,9 +55,6 @@ Tw.MyTDataSubMain.prototype = {
       }
     }
     this.$otherPages = this.$container.find('[data-id=other-pages]');
-    if ( this.data.banner.length > 0 ) {
-      this.$bannerList = this.$container.find('[data-id=banner-list]');
-    }
   },
 
   _bindEvent: function () {
@@ -91,15 +88,47 @@ Tw.MyTDataSubMain.prototype = {
     }
     this.$otherPages.find('li').on('click', $.proxy(this._onOtherPages, this));
     this.$prepayContainer.on('click', 'button', $.proxy(this._onPrepayCoupon, this));
-    if ( this.data.banner.length > 0 ) {
-      this.$bannerList.on('click', 'li', $.proxy(this._onClickBannerItem, this));
-    }
   },
 
   _initialize: function () {
     this._svcMgmtNumList = [];
     this._initScroll();
+    this._initBanners();
+  },
+
+  _initBanners: function () {
+    this._apiService.request(Tw.NODE_CMD.GET_BANNER_TOS, { code: '0008' })
+      .done($.proxy(this._successBanner, this, Tw.REDIS_BANNER_TYPE.TOS))
+      .fail($.proxy(this._errorRequest, this));
+  },
+
+  _successBanner: function (type, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      var result = resp.result;
+      var isCheckBanner = type === Tw.REDIS_BANNER_TYPE.ADMIN || this._checkBanner(result);
+      if ( isCheckBanner ) {
+        new Tw.BannerService(this.$container, type, result.imgList, 'M', $.proxy(this._successDrawBanner, this));
+      }
+      else {
+        this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, {menuId: this.data.pageInfo.menuId})
+          .done($.proxy(this._successBanner, this, Tw.REDIS_BANNER_TYPE.ADMIN))
+          .fail($.proxy(this._errorRequest, this));
+      }
+    }
+    else {
+      this.$container.find('[data-id=banners-empty]').hide();
+      this.$container.find('[data-id=banners]').hide();
+    }
     setTimeout($.proxy(this._initOtherLinesInfo, this), 200);
+  },
+
+  _checkBanner: function(result) {
+    return (result.bltnYn === 'Y' && result.tosLnkgYn === 'Y');
+  },
+
+  _successDrawBanner: function() {
+    this.$bannerList = this.$container.find('[data-id=banner-list]');
+    Tw.CommonHelper.resetHeight(this.$bannerList);
   },
 
   _initScroll: function () {
@@ -574,29 +603,23 @@ Tw.MyTDataSubMain.prototype = {
     this._getBPCP(url);
   },
 
-  _getBPCP: function(url) {
+  _getBPCP: function (url) {
     var replaceUrl = url.replace('BPCP:', '');
     this._apiService.request(Tw.API_CMD.BFF_01_0039, { bpcpServiceId: replaceUrl })
       .done($.proxy(this._responseBPCP, this));
   },
 
-  _responseBPCP: function(resp) {
-    if (resp.code !== Tw.API_CODE.CODE_00) {
+  _responseBPCP: function (resp) {
+    if ( resp.code !== Tw.API_CODE.CODE_00 ) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
     var url = resp.result.svcUrl;
-    if (!Tw.FormatHelper.isEmpty(resp.result.tParam)) {
+    if ( !Tw.FormatHelper.isEmpty(resp.result.tParam) ) {
       url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
     }
 
     Tw.CommonHelper.openUrlInApp(url);
-  },
-
-  _onClickBannerItem: function (event) {
-    var $target = $(event.currentTarget);
-    var url = $target.find('a').attr('data-href');
-    Tw.CommonHelper.openUrlExternal(url);
   },
 
   _successPattern: function (resp) {

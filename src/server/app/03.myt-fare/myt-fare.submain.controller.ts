@@ -18,16 +18,6 @@ import { SVC_ATTR_NAME } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 
 class MyTFareSubmainController extends TwViewController {
-  private _bannerUrl: string = '';
-
-  set bannerUrl(value) {
-    this._bannerUrl = value;
-  }
-
-  get bannerUrl() {
-    return this._bannerUrl;
-  }
-
   constructor() {
     super();
   }
@@ -52,7 +42,7 @@ class MyTFareSubmainController extends TwViewController {
         data.svcCount = parseInt(req.query.count, 10);
       }
     }
-    this.bannerUrl = REDIS_KEY.BANNER_ADMIN + pageInfo.menuId;
+    // this.bannerUrl = REDIS_KEY.BANNER_ADMIN + pageInfo.menuId;
     if ( svcInfo.svcAttrCd === 'M2' ) {
       data.type = 'UF';
       this._requestPPS(req, res, data, svcInfo);
@@ -134,10 +124,10 @@ class MyTFareSubmainController extends TwViewController {
       this._getTaxInvoice(),
       this._getContribution(),
       this._getMicroPrepay(),
-      this._getContentPrepay(),
-      this.redisService.getData(this.bannerUrl)
+      this._getContentPrepay()
+      // this.redisService.getData(this.bannerUrl)
     ).subscribe(([nonpayment, paymentInfo, totalPayment,
-                   taxInvoice, contribution, microPay, contentPay, banner]) => {
+                   taxInvoice, contribution, microPay, contentPay/*, banner*/]) => {
       // 소액결제
       if ( microPay ) {
         data.microPay = microPay;
@@ -180,12 +170,12 @@ class MyTFareSubmainController extends TwViewController {
       if ( contribution ) {
         data.contribution = contribution;
       }
-      // 배너
-      if ( banner.code === API_CODE.REDIS_SUCCESS ) {
-        if ( !FormatHelper.isEmpty(banner.result) ) {
-          data.banner = this.parseBanner(banner.result);
-        }
-      }
+      // 배너 정보 - client에서 호출하는 방식으로 변경 (19/01/22)
+      // if ( banner.code === API_CODE.REDIS_SUCCESS ) {
+      //   if ( !FormatHelper.isEmpty(banner.result) ) {
+      //     data.banner = this.parseBanner(banner.result);
+      //   }
+      // }
 
       res.render('myt-fare.submain.html', { data });
     });
@@ -204,9 +194,9 @@ class MyTFareSubmainController extends TwViewController {
       this._getUsageFee(),
       this._getPaymentInfo(),
       this._getMicroPrepay(),
-      this._getContentPrepay(),
-      this.redisService.getData(this.bannerUrl),
-    ).subscribe(([usage, paymentInfo, microPay, contentPay, banner]) => {
+      this._getContentPrepay()
+      // this.redisService.getData(this.bannerUrl),
+    ).subscribe(([usage, paymentInfo, microPay, contentPay/*, banner*/]) => {
       if ( usage.info ) {
         this.error.render(res, {
           title: MYT_FARE_SUBMAIN_TITLE.MAIN,
@@ -249,12 +239,12 @@ class MyTFareSubmainController extends TwViewController {
             data.isContentPrepay = true;
           }
         }
-
-        if ( banner.code === API_CODE.REDIS_SUCCESS ) {
-          if ( !FormatHelper.isEmpty(banner.result) ) {
-            data.banner = this.parseBanner(banner.result);
-          }
-        }
+        // 배너 정보 - client에서 호출하는 방식으로 변경 (19/01/22)
+        // if ( banner.code === API_CODE.REDIS_SUCCESS ) {
+        //   if ( !FormatHelper.isEmpty(banner.result) ) {
+        //     data.banner = this.parseBanner(banner.result);
+        //   }
+        // }
 
         res.render('myt-fare.submain.html', { data });
       }
@@ -262,41 +252,21 @@ class MyTFareSubmainController extends TwViewController {
   }
 
   _requestPPS(req, res, data, svcInfo) {
-    Observable.combineLatest(
-      this.redisService.getData(this.bannerUrl),
-    ).subscribe(([banner]) => {
+    // Observable.combineLatest(
+    //   this.redisService.getData(this.bannerUrl),
+    // ).subscribe(([banner]) => {
       // 납부/청구 정보
-      if ( banner && (banner.code === API_CODE.REDIS_SUCCESS) ) {
-        if ( !FormatHelper.isEmpty(banner.result) ) {
-          data.banner = this.parseBanner(banner.result);
-        }
-      }
-      data.isNotAutoPayment = false;
-      data.isRealTime = false;
-      data.isPPS = true;
-      res.render('myt-fare.submain.html', { data });
-
-    });
-  }
-
-  parseBanner(data: any) {
-    const banners = data.banners;
-    const sort = {};
-    const result: any = [];
-    banners.forEach((item) => {
-      // 배너노출순번의 정보가 있는 경우
-      if ( item.bnnrExpsSeq ) {
-        sort[item.bnnrExpsSeq] = item;
-      } else {
-        sort[item.bnnrSeq] = item;
-      }
-    });
-    const keys = Object.keys(sort).sort();
-    keys.forEach((key) => {
-      result.push(sort[key]);
-    });
-
-    return result;
+      // 배너 정보 - client에서 호출하는 방식으로 변경 (19/01/22)
+      // if ( banner && (banner.code === API_CODE.REDIS_SUCCESS) ) {
+      //   if ( !FormatHelper.isEmpty(banner.result) ) {
+      //     data.banner = this.parseBanner(banner.result);
+      //   }
+      // }
+    // });
+    data.isNotAutoPayment = false;
+    data.isRealTime = false;
+    data.isPPS = true;
+    res.render('myt-fare.submain.html', { data });
   }
 
   recompare(a, b) {
