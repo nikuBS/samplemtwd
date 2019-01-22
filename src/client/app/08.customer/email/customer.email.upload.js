@@ -47,7 +47,11 @@ Tw.CustomerEmailUpload.prototype = {
     var $target = $(e.currentTarget);
 
     if ( this._isLowerVersionAndroid() ) {
-      this._nativeService.send(Tw.NTV_CMD.OPEN_FILE_CHOOSER, { dest: 'email' }, $.proxy(this._nativeFileChooser, this, $target));
+      this._nativeService.send(Tw.NTV_CMD.OPEN_FILE_CHOOSER, {
+        dest: 'email',
+        acceptExt: this.acceptExt,
+        limitSize: this._limitFileByteSize.toString()
+      }, $.proxy(this._nativeFileChooser, this, $target));
     }
   },
 
@@ -56,13 +60,13 @@ Tw.CustomerEmailUpload.prototype = {
       var params = response.params;
       var fileInfo = params.fileData.result[0];
 
-      if ( this._acceptExt.indexOf(fileInfo.name.split('.').pop()) === -1 ) {
-        return this._popupService.openAlert(Tw.CUSTOMER_EMAIL.INVALID_FILE, Tw.POPUP_TITLE.NOTIFY);
-      }
-
-      if ( fileInfo.size > this._limitFileByteSize ) {
-        return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE);
-      }
+      // if ( this._acceptExt.indexOf(fileInfo.name.split('.').pop()) === -1 ) {
+      //   return this._popupService.openAlert(Tw.CUSTOMER_EMAIL.INVALID_FILE, Tw.POPUP_TITLE.NOTIFY);
+      // }
+      //
+      // if ( fileInfo.size > this._limitFileByteSize ) {
+      //   return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE);
+      // }
 
       if ( fileInfo ) {
         var $elFileName = $target.parent().parent().find('.fileview');
@@ -73,6 +77,13 @@ Tw.CustomerEmailUpload.prototype = {
 
       this._showUploadPopup();
       this._checkUploadButton();
+
+    } else if ( response.resultCode === Tw.NTV_CODE.CODE_01 ) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE);
+    } else if ( response.resultCode === Tw.NTV_CODE.CODE_02 ) {
+      return this._popupService.openAlert(Tw.CUSTOMER_EMAIL.INVALID_FILE, Tw.POPUP_TITLE.NOTIFY);
+    } else {
+      return this._popupService.openAlert(Tw.CUSTOMER_EMAIL.INVALID_FILE, Tw.POPUP_TITLE.NOTIFY);
     }
   },
 
@@ -216,7 +227,7 @@ Tw.CustomerEmailUpload.prototype = {
   _isLowerVersionAndroid: function () {
     var androidVersion = Tw.BrowserHelper.getAndroidVersion();
 
-    return androidVersion && androidVersion.indexOf('4') !== -1;
+    return androidVersion && androidVersion.indexOf('4.4') !== -1;
   }
 };
 
