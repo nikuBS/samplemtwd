@@ -119,18 +119,26 @@ Tw.QuickMenuEditComponent.prototype = {
     }, initial, this);
   },
   _mergeList: function (menuList, quickList) {
-    _.map(quickList, $.proxy(function (quick) {
-      var findMenu = _.find(menuList, $.proxy(function (menu) {
+    this._findAddedMenu(menuList, quickList);
+    menuList.concat(_.filter(quickList, function (quick) {
+      return !quick.notUsed;
+    }));
+    return menuList;
+  },
+  _findAddedMenu: function (menuList, quickList) {
+    _.map(menuList, $.proxy(function (menu) {
+      var findQuickMenu = _.find(quickList, $.proxy(function (quick) {
         return quick.menuId === menu.menuId;
       }, this));
-      if ( !Tw.FormatHelper.isEmpty(findMenu) ) {
-        findMenu.quickAdded = true;
-      } else {
-        quick.quickAdded = true;
-        menuList.push(quick);
+
+      if ( !Tw.FormatHelper.isEmpty(findQuickMenu) ) {
+        menu.quickAdded = true;
+        findQuickMenu.notUsed = true;
+      }
+      if ( !Tw.FormatHelper.isEmpty(menu.children) ) {
+        this._findAddedMenu(menu.children, quickList);
       }
     }, this));
-    return menuList;
   },
   _checkNotShow: function (menuId) {
     return !(menuId === 'M001778' || menuId === 'M000812' || menuId === 'M000537' || menuId === 'M000118' || menuId === 'M000119');
