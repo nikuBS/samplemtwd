@@ -22,6 +22,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
   this.loadingStaus = [];
   this._emrNotice = null;
   this._targetDataLink = '';
+  this._membershipBanner = null;
 
   this._lineComponent = new Tw.LineComponent();
 
@@ -156,6 +157,11 @@ Tw.MainHome.prototype = {
   },
   _onOpenBarcode: function (cardNum, $popupContainer) {
     var $extendBarcode = $popupContainer.find('#fe-membership-barcode-extend');
+
+    if ( !Tw.FormatHelper.isEmpty(this._membershipBanner) ) {
+      new Tw.BannerService($popupContainer, this._membershipBanner.kind, this._membershipBanner.list, '7', $.proxy(this._successDrawBanner, this));
+    }
+
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
       $extendBarcode.JsBarcode(cardNum, { height: 75, margin: 0 });
     }
@@ -164,7 +170,7 @@ Tw.MainHome.prototype = {
     Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.BROADBAND);
   },
   _onClickGoBillGuide: function () {
-    this._historyService.goLoad('/myt-fare/billguide/guide')
+    this._historyService.goLoad('/myt-fare/billguide/guide');
   },
   _openDataLink: function () {
     this._popupService.open({
@@ -695,14 +701,17 @@ Tw.MainHome.prototype = {
       { target: '4', banner: banner4 },
       { target: '7', banner: banner7 }];
     var adminList = [];
-    // console.log(result);
     _.map(result, $.proxy(function (bnr) {
       if ( this._checkTosBanner(bnr.banner, bnr.target) ) {
         if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) ) {
-          // TODO: draw tos banner
-          // new Tw.BannerService(this.$container, 'tos or admin', 'imgList', 'target', $.proxy(this._successDrawBanner, this));
-          // console.log('target', bnr.target);
-          // console.log('imgList', bnr.banner.result.imgList);
+          if ( bnr.target === '7' ) {
+            this._membershipBanner = {
+              kind: Tw.REDIS_BANNER_TYPE.TOS,
+              list: bnr.banner.result.imgList
+            };
+          } else {
+            new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS, bnr.banner.result.imgList, bnr.target, $.proxy(this._successDrawBanner, this));
+          }
         }
       } else {
         adminList.push(bnr);
@@ -716,7 +725,7 @@ Tw.MainHome.prototype = {
   _checkTosBanner: function (tosBanner, target) {
     if ( tosBanner.code === Tw.API_CODE.CODE_00 ) {
       if ( tosBanner.result.bltnYn === 'N' ) {
-        // TODO: banner none 처리
+        this.$container.find('ul.slider[data-location=' + target + ']').parents('div.nogaps').addClass('none');
         return true;
       } else {
         if ( tosBanner.result.tosLnkgYn === 'Y' ) {
@@ -734,8 +743,23 @@ Tw.MainHome.prototype = {
   },
   _successBanner: function (adminList, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      // TODO: draw admin banner
-      // new Tw.BannerService(this.$container, resp.result.banners, $.proxy(this._successDrawBanner, this));
+      _.map(adminList, $.proxy(function (target) {
+        var banner = _.filter(resp.result.banners, function (banner) {
+          return banner.bnnrLocCd === target.target;
+        });
+        if ( banner.length > 0 ) {
+          if ( target.target === '7' ) {
+            this._membershipBanner = {
+              kind: Tw.REDIS_BANNER_TYPE.ADMIN,
+              list: banner
+            };
+          } else {
+            new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.ADMIN, banner, target.target, $.proxy(this._successDrawBanner, this));
+          }
+        } else {
+          this.$container.find('ul.slider[data-location=' + target.target + ']').parents('div.nogaps').addClass('none');
+        }
+      }, this));
     }
   },
   _successDrawBanner: function () {
