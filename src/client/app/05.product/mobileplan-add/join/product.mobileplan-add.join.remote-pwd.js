@@ -150,8 +150,8 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    $.when(this._popupService.close())
-      .then($.proxy(this._openSuccessPop, this));
+    this._popupService.close();
+    setTimeout($.proxy(this._openSuccessPop, this), 100);
   },
 
   _openSuccessPop: function() {
