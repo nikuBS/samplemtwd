@@ -11,7 +11,6 @@ import FormatHelper from '../../../../../utils/format.helper';
 import {API_CMD, API_CODE} from '../../../../../types/api-command.type';
 import {Observable} from 'rxjs/Observable';
 import {ROAMING_AUTO_EXPIRE_CASE} from '../../../../../types/bff.type';
-import { REDIS_KEY } from '../../../../../types/redis.type';
 
 
 class ProductRoamingSettingRoamingAuto extends TwViewController {
@@ -42,8 +41,8 @@ class ProductRoamingSettingRoamingAuto extends TwViewController {
         });
       }
 
-      if (prodBffInfo.romUsePrdInfo) {
-        expireDate = prodBffInfo.romUsePrdInfo;
+      if (prodBffInfo.result.startEndTerm) {
+        expireDate = prodBffInfo.result.startEndTerm;
       } else {
         expireDate = ROAMING_AUTO_EXPIRE_CASE[prodId];
       }
