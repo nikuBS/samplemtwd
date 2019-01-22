@@ -22,7 +22,7 @@ RUN pm2 install typescript
 
 COPY . .
 
-ARG NODE=development
+ARG NODE=dev
 ENV NODE_ENV ${NODE}
 ENV WHATAP_CONF whatap-${NODE}
 
