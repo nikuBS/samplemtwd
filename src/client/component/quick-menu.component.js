@@ -18,8 +18,8 @@ Tw.QuickMenuComponent.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var menuIdStr = resp.result.menuIdStr.trim();
       if ( menuIdStr.indexOf(this._menuId) !== -1 ) {
-        this.$btQuickAdd.parent().addClass('none');
-        this.$btQuickRemove.parent().removeClass('none');
+        this.$btQuickAdd.parent().removeClass('none');
+        this.$btQuickRemove.parent().addClass('none');
       }
     }
   },
@@ -28,8 +28,8 @@ Tw.QuickMenuComponent.prototype = {
     this.$btQuickRemove = $('#fe-bt-quick-remove');
     if ( this.$btQuickAdd.length > 0 ) {
       this._menuId = this.$btQuickAdd.data('menuid');
-      this.$btQuickAdd.on('click', $.proxy(this._onClickAddQuickMenu, this));
-      this.$btQuickRemove.on('click', $.proxy(this._onClickRemoveQuickMenu, this));
+      this.$btQuickAdd.on('click', $.proxy(this._onClickRemoveQuickMenu, this));
+      this.$btQuickRemove.on('click', $.proxy(this._onClickAddQuickMenu, this));
       this._init();
     }
   },
@@ -67,8 +67,8 @@ Tw.QuickMenuComponent.prototype = {
   _successAddQuickMenu: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       Tw.CommonHelper.toast(Tw.TOAST_TEXT.QUICK_ADD);
-      this.$btQuickAdd.parent().addClass('none');
-      this.$btQuickRemove.parent().removeClass('none');
+      this.$btQuickAdd.parent().removeClass('none');
+      this.$btQuickRemove.parent().addClass('none');
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
@@ -76,8 +76,8 @@ Tw.QuickMenuComponent.prototype = {
   _successRemoveQuickMenu: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       Tw.CommonHelper.toast(Tw.TOAST_TEXT.QUICK_REMOVE);
-      this.$btQuickRemove.parent().addClass('none');
-      this.$btQuickAdd.parent().removeClass('none');
+      this.$btQuickRemove.parent().removeClass('none');
+      this.$btQuickAdd.parent().addClass('none');
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
