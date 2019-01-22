@@ -32,6 +32,9 @@ Tw.CommonSearch.prototype = {
         if(keyName==='banner'){
           this._showBanner(this._arrangeData(searchInfo.search[i][keyName].data,keyName));
         }
+        if(keyName==='immediate'&&searchInfo.search[i][keyName].data[0]&&searchInfo.search[i][keyName].data[0].DOCID==5){
+          this._showBarcode(searchInfo.search[i][keyName].data[0].barcode,this.$container.find('#membership-barcode'));
+        }
         continue;
       }
       if(keyName==='direct'){
@@ -87,6 +90,9 @@ Tw.CommonSearch.prototype = {
       }
     }
     return data;
+  },
+  _showBarcode : function (barcodNum,$barcodElement) {
+    $barcodElement.JsBarcode(Tw.FormatHelper.addCardDash(barcodNum),{background : '#edeef0',height : $barcodElement.parent().height()});
   },
   _showShortcutList : function (data,dataKey,cdn) {
     var $template = $('#'+dataKey+'_template');

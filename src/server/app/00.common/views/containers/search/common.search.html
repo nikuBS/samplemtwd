@@ -91,11 +91,18 @@
             </p>
             <% } else if(searchInfo.search[0].immediate.data[0].DOCID==5){ %>
             <p class="paymentcharge-box type05">
-                고객님의 T멤버십 등급은 <span class="phonnumber"><%= searchInfo.search[0].immediate.data[0].mainData %></span>이며<br>올해 받으신 총 혜택은
-                <span class="str"><strong class="money"><%= searchInfo.search[0].immediate.data[0].subData %>원</strong>입니다.</span>
+                고객님의 T멤버십 등급은
+                <a href="/membership/my"><span class="phonnumber"><%=
+                searchInfo.search[0].immediate.data[0].mainData === 'V'?'VIP':
+                searchInfo.search[0].immediate.data[0].mainData === 'S'?'Silver':'일반'
+                %></span></a>
+                이며<br>올해 받으신 총 혜택은
+                <span class="str">
+                    <a href="/membership/my"><strong class="money"><%= searchInfo.search[0].immediate.data[0].subData %>원</strong></a>입니다.
+                </span>
             </p>
             <div class="search-barcode">
-                <img src="/img/search/img_bac.png" alt="">
+                <img id="membership-barcode" data-cardNum="<%= searchInfo.search[0].immediate.data[0].barcode %>" alt="barcode"/>
             </div>
             <% } %>
             <% } %>
