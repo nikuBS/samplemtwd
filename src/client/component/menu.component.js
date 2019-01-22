@@ -173,7 +173,8 @@ Tw.MenuComponent.prototype = {
             );
             this._isMenuSet = true;
           }
-        }, this))
+        }, this));
+        /*
         .fail($.proxy(function (err) {
           if (this._menuRedisErrorCount === 0) {  // Try one time more
             this._menuRedisErrorCount += 1;
@@ -183,6 +184,7 @@ Tw.MenuComponent.prototype = {
             this._menuRedisErrorCount = 0;
           }
         }, this));
+        */
     }
   },
   _onTNoti: function () {
