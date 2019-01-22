@@ -79,11 +79,18 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
   _onblurNumInput: function(event){
     //$(event.target).val(Tw.FormatHelper.getDashedCellPhoneNumber($(event.target).val()));
-    var num = Tw.FormatHelper.getDashedPhoneNumber($(event.target).val());
-    if ( this._isCellPhone2(num) ) {    // 013번호
-      num = Tw.FormatHelper.getDashedCellPhoneNumber(num.replace(/-/g,''));
+    // var num = Tw.FormatHelper.getDashedPhoneNumber($(event.target).val());
+    // if ( this._isCellPhone2(num) ) {    // 013번호
+    //   num = Tw.FormatHelper.getDashedCellPhoneNumber(num.replace(/-/g,''));
+    // }
+    // $(event.target).val(num);
+    var $inputNumber = $(event.target);
+
+    if ($inputNumber.length > 8) {
+      $inputNumber.val(Tw.FormatHelper.conTelFormatWithDash($inputNumber.val()));
+    } else {
+      $inputNumber.val(Tw.FormatHelper.getDashedCellPhoneNumber($inputNumber.val()));
     }
-    $(event.target).val(num);
   },
 
   /**
@@ -537,6 +544,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
         if(opClCd === '1'){
           $('#num-input').val('');
+          $('#num-inputbox .cancel').hide();
           $('#btnNumAdd').prop('disabled', true);
         }
 
