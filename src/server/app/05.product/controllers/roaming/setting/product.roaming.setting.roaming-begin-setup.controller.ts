@@ -10,7 +10,6 @@ import {PRODUCT_TYPE_NM} from '../../../../../types/string.type';
 import FormatHelper from '../../../../../utils/format.helper';
 import {API_CMD, API_CODE} from '../../../../../types/api-command.type';
 import {Observable} from 'rxjs/Observable';
-import { REDIS_KEY } from '../../../../../types/redis.type';
 
 
 class ProductRoamingSettingRoamingBeginSetup extends TwViewController {

@@ -4,11 +4,11 @@
  * Date: 2018.12.03
  */
 
-Tw.ProductRoamingSettingRoamingAuto = function (rootEl,protTypeInfo,prodBffInfo,svcInfo,prodId,expireDate) {
+Tw.ProductRoamingSettingRoamingAuto = function (rootEl,prodTypeInfo,prodBffInfo,svcInfo,prodId,expireDate) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
-  this._protTypeInfo = JSON.parse(protTypeInfo);
+  this._prodTypeInfo = JSON.parse(prodTypeInfo);
   this._prodBffInfo = prodBffInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
