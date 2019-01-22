@@ -138,10 +138,9 @@
                         <li>
                             <label class="tit" for="formInput01">충전금액</label>
                             <span class="inputbox">
-                                    <button id="formInput01" class="bt-dropdown big fe-select-amount" title="충전금액 선택" aria-haspopup="true"
-                                            required>금액 선택<span
-                                        class="ico"></span></button>
-                                </span>
+                                <button id="formInput01" class="bt-dropdown big fe-select-amount" title="충전금액 선택" aria-haspopup="true" required>금액 선택<span class="ico"></span></button>
+                            </span>
+                            <span class="error-txt blind">충전 금액을 선택해 주세요.</span>
                         </li>
                         <li>
                             <label class="tit" for="formInput02">충전 방식</label>
@@ -154,14 +153,16 @@
                                     마다 충전
                                 </div>
                             </div>
+                            <span class="error-txt blind">날짜를 선택해주세요.</span>
                         </li>
                         <li>
-                            <label class="tit" for="formInput03">자동 충전 유효기간(익일부터 선택가능)</label>
+                            <label class="tit" for="formInput03">자동 충전 유효기간 (익일부터 선택가능)</label>
                             <span class="inputbox">
-                    <span class="input">
-                        <input class="fe-select-expire" type="date" title="자동 충전 유효기간 날짜 선택" id="formInput03" required>
-                    </span>
-                </span>
+                                <span class="input">
+                                    <input class="fe-select-expire" type="date" title="자동 충전 유효기간 날짜 선택" id="formInput03" required>
+                                </span>
+                            </span>
+                            <span class="error-txt blind">날짜를 선택해 주세요.</span>
                         </li>
                         <li>
                             <label class="tit" for="formInput04">카드번호</label>
@@ -171,6 +172,8 @@
                                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                 </span>
                             </span>
+                            <span class="error-txt blind">카드번호가 올바르지 않습니다.</span>
+                            <span class="error-txt blind">카드 번호를 입력해주세요.</span>
                         </li>
                         <li>
                             <label class="tit" for="formInput05">유효기간</label>
@@ -188,6 +191,8 @@
                                     </span>
                                 </span>
                             </div>
+                            <span class="error-txt blind">유효기간이 올바르지 않습니다.</span>
+                            <span class="error-txt blind">카드 유효기간을 입력해 주세요.</span>
                         </li>
                     </ul>
                 </div>
@@ -225,10 +230,9 @@
             <li>
                 <label class="tit" for="formInput01">충전금액</label>
                 <span class="inputbox">
-                    <button id="formInput01" class="bt-dropdown big fe-select-amount" title="충전금액 선택" aria-haspopup="true"
-                            required>금액 선택<span
-                        class="ico"></span></button>
+                    <button id="formInput01" class="bt-dropdown big fe-select-amount" title="충전금액 선택" aria-haspopup="true" required>금액 선택<span class="ico"></span></button>
                 </span>
+                <span class="error-txt blind">충전 금액을 선택해 주세요.</span>
             </li>
             <li>
                 <label class="tit" for="formInput02">충전 방식</label>
@@ -241,6 +245,7 @@
                         마다 충전
                     </div>
                 </div>
+                <span class="error-txt blind">날짜를 선택해주세요.</span>
             </li>
             <li>
                 <label class="tit" for="formInput03">자동 충전 유효기간</label>
@@ -249,6 +254,7 @@
                         <input class="fe-select-expire" type="date" title="자동 충전 유효기간 날짜 선택" id="formInput03" required>
                     </span>
                 </span>
+                <span class="error-txt blind">날짜를 선택해 주세요.</span>
             </li>
             <li>
                 <label class="tit" for="formInput02">카드번호</label>
@@ -261,6 +267,8 @@
                         </button>
                     </span>
                 </span>
+                <span class="error-txt blind">카드번호가 올바르지 않습니다.</span>
+                <span class="error-txt blind">카드 번호를 입력해주세요.</span>
             </li>
             <li>
                 <label class="tit" for="formInput03">유효기간</label>
@@ -282,6 +290,8 @@
                         </span>
                     </span>
                 </div>
+                <span class="error-txt blind">유효기간이 올바르지 않습니다.</span>
+                <span class="error-txt blind">카드 유효기간을 입력해 주세요.</span>
             </li>
         </ul>
     </div>
@@ -296,6 +306,7 @@
                     <button id="formInput01" class="bt-dropdown big fe-select-amount" title="충전금액 선택" aria-haspopup="true">금액 선택<span
                         class="ico"></span></button>
                 </span>
+                <span class="error-txt blind">충전 금액을 선택해 주세요.</span>
             </li>
             <li>
                 <label class="tit" for="formInput02">충전 방식</label>
@@ -308,6 +319,7 @@
                         이하 시 충전
                     </div>
                 </div>
+                <span class="error-txt blind">충전 금액을 선택해 주세요.</span>
             </li>
             <li>
                 <label class="tit" for="formInput03">자동 충전 유효기간</label>
@@ -316,6 +328,7 @@
                         <input class="fe-select-expire" type="date" title="자동 충전 유효기간 날짜 선택" id="formInput03">
                     </span>
                 </span>
+                <span class="error-txt blind">날짜를 선택해 주세요.</span>
             </li>
             <li>
                 <label class="tit" for="formInput02">카드번호</label>
@@ -329,6 +342,8 @@
                         </button>
                     </span>
                 </span>
+                <span class="error-txt blind">카드번호가 올바르지 않습니다.</span>
+                <span class="error-txt blind">카드 번호를 입력해주세요.</span>
             </li>
             <li>
                 <label class="tit" for="formInput03">유효기간</label>
@@ -350,6 +365,8 @@
                         </span>
                     </span>
                 </div>
+                <span class="error-txt blind">유효기간이 올바르지 않습니다.</span>
+                <span class="error-txt blind">카드 유효기간을 입력해 주세요.</span>
             </li>
         </ul>
     </div>

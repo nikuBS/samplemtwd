@@ -23,8 +23,8 @@ Tw.CustomerEmailCategory.prototype = {
     this.service_category = Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY;
     this.quality_category = Tw.CUSTOMER_EMAIL_QUALITY_CATEGORY;
 
-    // this._apiService.request(Tw.API_CMD.BFF_08_0010, {})
-    //   .done($.proxy(this._onLoadQuestionList, this));
+    this._apiService.request(Tw.API_CMD.BFF_08_0010, {})
+      .done($.proxy(this._onLoadQuestionList, this));
   },
 
   _cachedElement: function () {
