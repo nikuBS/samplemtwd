@@ -66,7 +66,6 @@ Tw.MyTDataPrepaidAlarm.prototype = {
       if ( !!result.amt ) {
         this.amt = result.amt;
       }
-
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
