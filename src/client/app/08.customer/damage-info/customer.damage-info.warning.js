@@ -25,7 +25,8 @@ Tw.CustomerDamageInfoWarning.prototype = {
   },
 
   _loadMoreList: function() {
-    this._apiService.request(Tw.API_CMD.BFF_08_0033, {
+    this._apiService.request(Tw.API_CMD.BFF_08_0063, {
+      repCtgCd: 'A00002',
       page: this._page, size: 20
     }).done($.proxy(this._appendMoreList, this));
   },
