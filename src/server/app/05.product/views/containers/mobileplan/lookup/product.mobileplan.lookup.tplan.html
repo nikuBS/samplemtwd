@@ -100,16 +100,18 @@
                                                     <dd><%= item.list[k].relProdNm %></dd>
                                                     <dt>사용여부</dt>
                                                     <dd><%= item.list[k].issueGb %></dd>
-                                                    <% if ( item.effDt ) { %>
+                                                    <% if ( item.list[k].effDt ) { %>
                                                     <dt>발급일/만료일</dt>
-                                                    <dd><%= item.list[k].issueDt %>~<%= item.effDt %></dd>
+                                                    <dd><%= item.list[k].issueDt %>~<%= item.list[k].effDt %></dd>
                                                     <% } else { %>
                                                     <dt>발급일</dt>
                                                     <dd><%= item.list[k].issueDt %></dd>
                                                     <% } %>
-                                                    <% if ( item.list[k].hpnDt ) { %>
                                                     <dt>사용일</dt>
+                                                    <% if ( item.list[k].hpnDt ) { %>
                                                     <dd><%= item.list[k].hpnDt %></dd>
+                                                    <% } else { %>
+                                                    <dd>-</dd>
                                                     <% } %>
                                                 </dl>
                                                 <% } %>

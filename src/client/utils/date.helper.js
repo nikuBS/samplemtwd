@@ -18,6 +18,10 @@ Tw.DateHelper = (function () {
     return date;
   };
 
+  var convDateCustomFormat = function (date, format) {
+    return moment(date, format).toDate();
+  };
+
   var getDate = function () {
     var date = new Date();
     return date;
@@ -327,8 +331,8 @@ Tw.DateHelper = (function () {
     return moment(date).isBefore(new Date());
   };
 
-  var getTomorrowDate = function (){
-    return moment(new Date()).add(1,'days').format('YYYY-MM-DD');
+  var getTomorrowDate = function () {
+    return moment(new Date()).add(1, 'days').format('YYYY-MM-DD');
   };
 
   return {
@@ -344,6 +348,7 @@ Tw.DateHelper = (function () {
     getFullDateAndTime: getFullDateAndTime,
     getAddDay: getAddDay,
     convDateFormat: convDateFormat,
+    convDateCustomFormat: convDateCustomFormat,
     getCurrentShortDate: getCurrentShortDate,
     getYearMonth: getYearMonth,
     getCurrentDateTime: getCurrentDateTime,

@@ -43,6 +43,11 @@ Tw.ProductMobileplanSettingTplan.prototype = {
   },
 
   _enableSetupButton: function(e) {
+    if ($(e.currentTarget).val() === 'NA00006117') {  // 2019.1.18 클럽 옵션 가입 종료
+      this._clearSelectItem();
+      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A82);
+    }
+
     if ($(e.currentTarget).val() === 'NA00006116') {
       return this._selectSmartWatchItem();
     } else {

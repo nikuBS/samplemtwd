@@ -685,6 +685,7 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A74: { TITLE: '선택하신 상품 해지를 취소 하시겠습니까?', MSG: '', BUTTON: '계속하기' },
   ALERT_3_A77: { TITLE: '지역 추가 시, 1개 지역당 1,650원(부가세포함)씩 과금이 추가됩니다.지역을 추가하시겠습니까?', MSG: '' },
   ALERT_3_A78: { TITLE: '할인지역은 최대 2개까지 등록가능합니다', MSG: '' },
+  ALERT_3_A82: { TITLE: '해당 옵션은 2019년 1월 18일자로 가입 종료되었습니다.', MSG: '' },
   ALERT_ALREADY_PRODUCT: '이미 사용중인 상품입니다.',
   ALERT_ALREADY_TERM_PRODUCT: '사용중이지 않은 상품입니다.',
   ALERT_NUMBER_MIN: '최소 한개의 지정번호는 존재해야 합니다.',
@@ -703,7 +704,7 @@ Tw.ALERT_MSG_PASSWORD = {
   A16: '비밀번호는 4자리입니다.',
   A17: '입력하신 비밀번호가 일치하지 않습니다.',
   A18: '연속된 숫자는 설정하실 수 없습니다.',
-  A19: '동일한 숫자는 설정하실 수 업습니다.'
+  A19: '동일한 숫자는 설정하실 수 없습니다.'
 };
 
 Tw.ALERT_MSG_BENEFIT = {
@@ -730,7 +731,8 @@ Tw.ALERT_MSG_MEMBERSHIP = {
   COMPLETE_TITLE: {
     REISSUE: '멤버십 재발급',
     CHANGE: '멤버십 종류 변경',
-    UPDATE: '멤버십 정보 수정'
+    UPDATE: '멤버십 정보 수정',
+    CANCEL: '멤버십 카드 해지'
   },
   ALERT_1_A50: { TITLE: '알림', MSG: '시작일이 종료일보다 늦을 수 없습니다.' },
   ALERT_1_A51: { TITLE: 'T멤버십 카드를 재발급하시겠습니까?', MSG: '스마트폰 이용 고객님은 모바일 카드만 신청하실 수 있습니다.', BUTTON: '재발급 신청' },
@@ -972,7 +974,8 @@ Tw.MYT_DATA_PREPAID = {
   A70_TITLE: '자동 충전 해지하시겠습니까?',
   A70_CONTENT: '해지 요청일 이후 부터 자동중전 되지 않으며 해지 전에 충전된 충전분은 취소 되지 않습니다.',
   A70_BTN_CONFIRM: '해지하기',
-  DATA_TITLE: '데이터 1회 충전 내역 확인'
+  DATA_TITLE: '데이터 1회 충전 내역 확인',
+  INVALID_DATE: '익일부터 선택가능합니다.'
 };
 
 Tw.MYT_PAYMENT_HISTORY_HASH = {

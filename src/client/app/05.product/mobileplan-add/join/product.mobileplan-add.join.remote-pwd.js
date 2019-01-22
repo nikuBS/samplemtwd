@@ -31,6 +31,8 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
     this.$confirmPassword = this.$container.find('.fe-confirm-password');
     this.$inputRealPassword = this.$container.find('.fe-input-real-password');
     this.$realConfirmPassword = this.$container.find('.fe-real-confirm-password');
+    this.$error0 = this.$container.find('.fe-error0');
+    this.$error1 = this.$container.find('.fe-error1');
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
   },
 
@@ -49,11 +51,47 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
   },
 
   _checkIsAbled: function () {
-    if ($.trim(this.$inputPassword.val()) !== '' && $.trim(this.$confirmPassword.val()) !== '') {
-      this.$btnSetupOk.removeAttr('disabled');
-    } else {
-      this.$btnSetupOk.attr('disabled', 'disabled');
+    var $inputPasswordVal = $.trim(this.$inputPassword.val()),
+      $confirmPasswordVal = $.trim(this.$confirmPassword.val());
+
+    this.$btnSetupOk.attr('disabled', 'disabled');
+
+    if (!this._validation.checkIsLength($inputPasswordVal, 4)) {
+      return this._setErrorText(this.$error0, Tw.ALERT_MSG_PASSWORD.A16);
     }
+
+    if (!this._validation.checkIsSameLetters($inputPasswordVal)) {
+      return this._setErrorText(this.$error0, Tw.ALERT_MSG_PASSWORD.A19);
+    }
+
+    if (!this._validation.checkIsStraight($inputPasswordVal, 4)) {
+      return this._setErrorText(this.$error0, Tw.ALERT_MSG_PASSWORD.A18);
+    }
+
+    this.$error0.hide();
+
+    if (!this._validation.checkIsLength($confirmPasswordVal, 4)) {
+      return this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A16);
+    }
+
+    if (!this._validation.checkIsSameLetters($confirmPasswordVal)) {
+      return this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A19);
+    }
+
+    if (!this._validation.checkIsStraight($confirmPasswordVal, 4)) {
+      return this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A18);
+    }
+
+    if (this._validation.checkIsDifferent($inputPasswordVal, $confirmPasswordVal)) {
+      return this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A17);
+    }
+
+    this.$error1.hide();
+    this.$btnSetupOk.removeAttr('disabled');
+  },
+
+  _setErrorText: function ($elem, text) {
+    $elem.text(text).show();
   },
 
   _setMasking: function (standardLength, event) {
@@ -100,29 +138,6 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
   },
 
   _procConfirm: function() {
-    var inputVal = this.$inputRealPassword.val();
-    var confirmVal = this.$realConfirmPassword.val();
-
-    if (!this._validation.checkIsLength(inputVal, 4) || !this._validation.checkIsLength(confirmVal, 4)) {
-      return this._popupService.openAlert(Tw.ALERT_MSG_PASSWORD.A16);
-    }
-
-    if (this._validation.checkIsDifferent(inputVal, confirmVal)) {
-      return this._popupService.openAlert(Tw.ALERT_MSG_PASSWORD.A17);
-    }
-
-    if (!this._validation.checkIsSameLetters(inputVal)) {
-      return this._popupService.openAlert(Tw.ALERT_MSG_PASSWORD.A19);
-    }
-
-    if (!this._validation.checkIsStraight(inputVal, 4)) {
-      return this._popupService.openAlert(Tw.ALERT_MSG_PASSWORD.A18);
-    }
-
-    this._procConfirmOk();
-  },
-
-  _procConfirmOk: function() {
     new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
       isMobilePlan: false,
       noticeList: this._confirmOptions.preinfo.joinNoticeList,
@@ -150,8 +165,8 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    $.when(this._popupService.close())
-      .then($.proxy(this._openSuccessPop, this));
+    this._popupService.close();
+    setTimeout($.proxy(this._openSuccessPop, this), 100);
   },
 
   _openSuccessPop: function() {

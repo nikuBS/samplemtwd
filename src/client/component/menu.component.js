@@ -172,8 +172,6 @@ Tw.MenuComponent.prototype = {
               this.tideUpMenuInfo(res.result.frontMenus, res.result.userInfo)
             );
             this._isMenuSet = true;
-          } else {
-            Tw.Error(res.code, res.msg).pop();
           }
         }, this))
         .fail($.proxy(function (err) {
@@ -184,7 +182,6 @@ Tw.MenuComponent.prototype = {
           } else {
             this._menuRedisErrorCount = 0;
           }
-          Tw.Error(err.code, err.msg).pop();
         }, this));
     }
   },
@@ -286,6 +283,11 @@ Tw.MenuComponent.prototype = {
           break;
         default:
           break;
+      }
+
+      // If a user does not have mobile line, do not show free sms button
+      if (!userInfo.canSendFreeSMS) {
+        this.$container.find('.fe-bt-free-sms').addClass('none');
       }
     } else {
       this.$container.removeClass('user-type');

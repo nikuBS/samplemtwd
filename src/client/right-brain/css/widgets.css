@@ -1,4 +1,4 @@
-@charset "UTF-8";
+f@charset "UTF-8";
 /* widget */
 /* slider */
 .slider .swiper-slide, .slider2 .swiper-slide, .slider3 .swiper-slide, .slider4 .swiper-slide, .slider5 .swiper-slide {
@@ -817,10 +817,10 @@ li.checkbox.type01 {
     border-radius: 50%; }
   .radiobox.type05.checked {
     font-weight: 700;
-    color: #3b98e6; }
+    color: #178BCE; }
   .radiobox.type05.checked:before {
     background-color: #fff;
-    border-color: #3b98e6; }
+    border-color: #178BCE; }
 
 .device_android .radiobox {
   position: relative;
@@ -937,7 +937,7 @@ li.checkbox.type01 {
       .radio-slide .select-list .radiobox.disabled {
         background-color: #d1d1d1; }
         .radio-slide .select-list .radiobox.disabled .radio-txt {
-          color: #999; }
+          color: #858585; }
         .radio-slide .select-list .radiobox.disabled:before {
           display: none; }
   .radio-slide.small .select-list .radiobox {
@@ -1096,7 +1096,7 @@ li.checkbox.type01 {
       text-align: center; }
       .widget-box.step .step-list li.on {
         color: #fff;
-        background: #3b98e6;
+        background: #178BCE;
         z-index: 10; }
         .widget-box.step .step-list li.on + li {
           z-index: 6; }
@@ -1205,7 +1205,7 @@ li.checkbox.type01 {
       border-radius: 0.3125rem;
       text-align: left;
       font-size: 0.875rem;
-      color: #3b98e6; }
+      color: #178BCE; }
       .widget-box.tube .tube-list.refil-tube li .ico {
         display: inline-block;
         margin-right: 0.625rem;
@@ -1234,19 +1234,19 @@ li.checkbox.type01 {
     .widget-box.tube .tube-list.refil-tube:first-of-type {
       padding-top: 0; }
     .widget-box.tube .tube-list.refil-tube.type1 li {
-      border-color: #3b98e6; }
+      border-color: #178BCE; }
       .widget-box.tube .tube-list.refil-tube.type1 li.checked {
         border-color: #e22f26;
         -webkit-box-shadow: 0.25rem 0.4375rem 0.875rem 0.125rem #ffdfe5;
                 box-shadow: 0.25rem 0.4375rem 0.875rem 0.125rem #ffdfe5;
         background: #e22f26; }
     .widget-box.tube .tube-list.refil-tube.type2 li {
-      border-color: #3b98e6; }
+      border-color: #178BCE; }
       .widget-box.tube .tube-list.refil-tube.type2 li.checked {
-        border-color: #3b98e6;
+        border-color: #178BCE;
         -webkit-box-shadow: 0.25rem 0.4375rem 0.875rem 0.125rem #dbe8ff;
                 box-shadow: 0.25rem 0.4375rem 0.875rem 0.125rem #dbe8ff;
-        background: #3b98e6; }
+        background: #178BCE; }
 
 .device_ios .widget-box.tube .tube-list li input {
   display: inline;

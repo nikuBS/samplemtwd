@@ -1,48 +1,37 @@
-Tw.BannerService = function(rootEl, banners, callback) {
+Tw.BannerService = function(rootEl, type, banners, target, callback) {
   this.$container = rootEl;
   if (!banners || banners.length <= 0) {
     return;
   }
 
-  // $(window).on(Tw.INIT_COMPLETE, $.proxy(this._init, this, this._getProperBanners(banners)));
-  this._cachedElement();
-  this._init(banners, callback);
+  this._init(type, banners, target, callback);
   this._bindEvent();
 };
 
 Tw.BannerService.prototype = {
-  _init: function(banners, callback) {
-    this._banners = this._getProperBanners(banners);
-    this._renderBanners(callback);
+  _init: function(type, banners, target, callback) {
+    this._type = type;
+    this._banners = this._getProperBanners(type, banners);
+    this.$banners = this.$container.find('ul.slider[data-location=' + target + ']');
+
+    this._renderBanners(target, callback);
   },
 
-  _cachedElement: function() {
-    this.$banners = this.$container.find('ul.slider');
-  },
-
-  _renderBanners: function(callback) {
-    var locations = Object.keys(this._banners),
-      i = 0,
-      CDN = Tw.Environment.cdn;
-
-    this.locations = locations;
+  _renderBanners: function(target, callback) {
+    var CDN = Tw.Environment.cdn;
 
     $.get(
       CDN + '/hbs/banner.hbs',
       $.proxy(function(hbs) {
         this._bannerTmpl = Handlebars.compile(hbs);
 
-        for (; i < this.$banners.length; i++) {
-          var $item = $(this.$banners[i]),
-            location = $item.data('location'),
-            list = this._banners[location];
-
-          if (!list || list.length === 0) {
-            $item.parents('div.nogaps').addClass('none');
+        if (this.$banners) {
+          if (!this._banners || this._banners.length === 0) {
+            this.$banners.parents('div.nogaps').addClass('none');
           } else {
-            $item.slick('slickAdd', this._bannerTmpl({ banners: list, location: location }));
+            this.$banners.slick('slickAdd', this._bannerTmpl({ banners: this._banners, location: target }));
             if (callback) {
-              $item.find('img').on('load', callback);
+              this.$banners.find('img').on('load', callback);
             }
           }
         }
@@ -56,9 +45,8 @@ Tw.BannerService.prototype = {
 
   _openBannerLink: function(e) {
     var target = e.currentTarget,
-      location = target.getAttribute('data-location'),
       idx = target.getAttribute('data-idx'),
-      banner = this._banners[location][idx];
+      banner = this._banners[idx];
 
     if (!banner) {
       return;
@@ -88,47 +76,63 @@ Tw.BannerService.prototype = {
   },
 
   _getBrowserCode: function() {
-    return Tw.BrowserHelper.isApp() ?
-      Tw.BrowserHelper.isAndroid() ?
-        Tw.REDIS_DEVICE_CODE.ANDROID :
-        Tw.REDIS_DEVICE_CODE.IOS :
+    return Tw.BrowserHelper.isApp() ? 
+      Tw.BrowserHelper.isAndroid() ? 
+        Tw.REDIS_DEVICE_CODE.ANDROID : 
+        Tw.REDIS_DEVICE_CODE.IOS : 
       Tw.REDIS_DEVICE_CODE.MWEB;
   },
 
-  _getProperBanners: function(banners) {
+  _getProperBanners: function(type, banners) {
     var browserCode = this._getBrowserCode(),
       CDN = Tw.Environment.cdn,
       today = new Date();
-    return _.chain(banners)
-      .filter(function(banner) {
-        return (
-          (banner.chnlClCd.indexOf(Tw.REDIS_DEVICE_CODE.MOBILE) >= 0 || banner.chnlClCd.indexOf(browserCode) >= 0) &&
-          (!banner.expsStaDtm || Tw.DateHelper.getDiffByUnit(banner.expsStaDtm.substring(0, 8), today, 'days') <= 0) &&
-          (!banner.expsEndDtm || Tw.DateHelper.getDiffByUnit(banner.expsEndDtm.substring(0, 8), today, 'days') >= 0)
-        );
-      })
-      .sort(function(a, b) {
-        return Number(a.bnnrExpsSeq) - Number(b.bnnrExpsSeq);
-      })
-      .reduce(function(nBanners, banner) {
-        if (!nBanners[banner.bnnrLocCd || '0']) {
-          nBanners[banner.bnnrLocCd] = [];
-        }
 
-        var temp = {
-          isHTML: banner.bnnrTypCd === 'H',
-          isBill: banner.billYn === 'Y',
-          idx: nBanners[banner.bnnrLocCd].length
-        };
+    if (type === Tw.REDIS_BANNER_TYPE.TOS) {
+      return _.chain(banners)
+        .sort(function(a, b) {
+          return Number(a.bnnrExpsSeq) - Number(b.bnnrExpsSeq);
+        })
+        .map(function(banner, idx) {
+          return {
+            isHTML: banner.bnnrTypCd === 'H',
+            isBill: banner.billYn === 'Y',
+            bnnrFilePathNm: banner.bnnrFileNm && CDN + banner.bnnrFileNm,
+            idx: idx,
+            imgLinkTrgtClCd: banner.tosImgLinkTrgtClCd,
+            bnnrImgAltCtt: banner.imgAltCtt,
+            imgLinkUrl: banner.imgLinkUrl
+          };
+        })
+        .value();
+    } else {
+      return _.chain(banners)
+        .filter(function(banner) {
+          return (
+            (banner.chnlClCd.indexOf(Tw.REDIS_DEVICE_CODE.MOBILE) >= 0 || banner.chnlClCd.indexOf(browserCode) >= 0) &&
+            (!banner.expsStaDtm || Tw.DateHelper.getDiffByUnit(banner.expsStaDtm.substring(0, 8), today, 'days') <= 0) &&
+            (!banner.expsEndDtm || Tw.DateHelper.getDiffByUnit(banner.expsEndDtm.substring(0, 8), today, 'days') >= 0)
+          );
+        })
+        .sort(function(a, b) {
+          return Number(a.bnnrExpsSeq) - Number(b.bnnrExpsSeq);
+        })
+        .reduce(function(nBanners, banner) {
+          var temp = {
+            isHTML: banner.bnnrTypCd === 'H',
+            isBill: banner.billYn === 'Y',
+            idx: nBanners.length
+          };
 
-        if (banner.bnnrFilePathNm) {
-          temp.bnnrFilePathNm = CDN + banner.bnnrFilePathNm;
-        }
+          if (banner.bnnrFilePathNm) {
+            temp.bnnrFilePathNm = CDN + banner.bnnrFilePathNm;
+          }
 
-        nBanners[banner.bnnrLocCd].push($.extend(banner, temp));
+          nBanners.push($.extend(banner, temp));
 
-        return nBanners;
-      }, {})
-      .value();
+          return nBanners;
+        }, [])
+        .value();
+    }
   }
 };

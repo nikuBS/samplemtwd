@@ -44,6 +44,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     var $target = $(e.currentTarget);
 
     if ( Tw.DateHelper.isBefore($target.val()) ) {
+      this._popupService.openAlert(Tw.MYT_DATA_PREPAID.INVALID_DATE);
       $target.val(Tw.DateHelper.getTomorrowDate());
     }
   },

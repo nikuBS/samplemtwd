@@ -22,6 +22,10 @@ class DateHelper {
     return new Date();
   }
 
+  static convDateCustomFormat(date: any, format: string): Date {
+    return moment(date, format).toDate();
+  }
+
   static getNextMonth(): any {
     const next = new Date();
     next.setDate(1);
@@ -391,7 +395,7 @@ class DateHelper {
    * @returns {number} : 30
    */
   static getDday(date: any): number {
-    return moment(this.convDateFormat(date)).diff(new Date(), 'day');
+    return moment(date).diff(this.getCurrentShortDate(new Date()), 'day');
   }
 }
 

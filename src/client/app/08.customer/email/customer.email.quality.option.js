@@ -27,6 +27,7 @@ Tw.CustomerEmailQualityOption.prototype = {
 
   _bindEvent: function () {
     this.$wrap_tpl_quality.on('click', '.fe-select-line', $.proxy(this._onSelectLine, this));
+    this.$wrap_tpl_quality.on('click', 'button.fe-select-phone-line', $.proxy(this._onSelectQualityPhoneLine, this));
     // this.$container.on('click', '.fe-line_internet', $.proxy(this._showLineSheet, this, 'INTERNET'));
     // this.$container.on('click', '.fe-line', $.proxy(this._showLineSheet, this, 'CELL'));
     this.$container.on('click', '.fe-occurrence', $.proxy(this._showOptionSheet, this, 'Q_TYPE01'));
@@ -40,6 +41,28 @@ Tw.CustomerEmailQualityOption.prototype = {
 
   _onClickSearchPost: function () {
     new Tw.CommonPostcodeMain(this.$container);
+  },
+
+  _onSelectQualityPhoneLine: function () {
+    var filteredLine = this.allSvc.s.filter(function(item){return item.svcGr === 'U'});
+
+    var fnSelectLine = function (item) {
+      return {
+        value: Tw.FormatHelper.conTelFormatWithDash(item.svcNum),
+        option: $('.fe-select-phone-line').data('svcmgmtnum').toString() === item.svcMgmtNum ? 'checked' : '',
+        attr: 'data-svcmgmtnum=' + item.svcMgmtNum
+      };
+    };
+
+    this._popupService.open({
+        hbs: 'actionsheet_select_a_type',
+        layer: true,
+        title: Tw.CUSTOMER_VOICE.LINE_CHOICE,
+        data: [{ list: filteredLine.map($.proxy(fnSelectLine, this)) }]
+      },
+      null,
+      null
+    );
   },
 
   _onSelectLine: function (e) {
@@ -140,7 +163,7 @@ Tw.CustomerEmailQualityOption.prototype = {
   _setSelectedValue: function ($target, el) {
     this._popupService.close();
     $target.text($(el.currentTarget).text().trim());
-  },
+  }
 
   // _setSelectedLineValue: function ($target, el) {
   //   this._popupService.close();

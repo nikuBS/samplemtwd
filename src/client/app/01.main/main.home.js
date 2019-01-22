@@ -16,16 +16,18 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
 
   this._smartCardOrder = JSON.parse(smartCard);
 
+  this._menuId = menuId;
   this.$elBarcode = null;
   this.$elArrSmartCard = [];
   this.loadingStaus = [];
   this._emrNotice = null;
   this._targetDataLink = '';
+  this._membershipBanner = null;
 
   this._lineComponent = new Tw.LineComponent();
 
   this._openEmrNotice(emrNotice);
-  this._setBanner(menuId);
+  this._setBanner();
   this._cachedDefaultElement();
   this._bindEventStore();
   this._bindEventLogin();
@@ -37,6 +39,8 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
     this._bindEvent();
     this._initScroll();
   }
+
+  this._nativeSrevice.send(Tw.NTV_CMD.CLEAR_HISTORY, {});
 };
 
 Tw.MainHome.prototype = {
@@ -153,6 +157,11 @@ Tw.MainHome.prototype = {
   },
   _onOpenBarcode: function (cardNum, $popupContainer) {
     var $extendBarcode = $popupContainer.find('#fe-membership-barcode-extend');
+
+    if ( !Tw.FormatHelper.isEmpty(this._membershipBanner) ) {
+      new Tw.BannerService($popupContainer, this._membershipBanner.kind, this._membershipBanner.list, '7', $.proxy(this._successDrawBanner, this));
+    }
+
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
       $extendBarcode.JsBarcode(cardNum, { height: 75, margin: 0 });
     }
@@ -161,7 +170,7 @@ Tw.MainHome.prototype = {
     Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.BROADBAND);
   },
   _onClickGoBillGuide: function () {
-    this._historyService.goLoad('/myt-fare/billguide/guide')
+    this._historyService.goLoad('/myt-fare/billguide/guide');
   },
   _openDataLink: function () {
     this._popupService.open({
@@ -673,13 +682,84 @@ Tw.MainHome.prototype = {
       Tw.CommonHelper.openUrlExternal(noti.linkUrl);
     }
   },
-  _setBanner: function (menuId) {
-    this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: menuId })
-      .done($.proxy(this._successBanner, this));
+  _setBanner: function () {
+    this._getTosBanner();
   },
-  _successBanner: function (resp) {
+  _getTosBanner: function () {
+    this._apiService.requestArray([
+      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0001' } },
+      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0002' } },
+      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0003' } },
+      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0004' } },
+      { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0007' } }
+    ]).done($.proxy(this._successTosBanner, this));
+  },
+  _successTosBanner: function (banner1, banner2, banner3, banner4, banner7) {
+    var result = [{ target: '1', banner: banner1 },
+      { target: '2', banner: banner2 },
+      { target: '3', banner: banner3 },
+      { target: '4', banner: banner4 },
+      { target: '7', banner: banner7 }];
+    var adminList = [];
+    _.map(result, $.proxy(function (bnr) {
+      if ( this._checkTosBanner(bnr.banner, bnr.target) ) {
+        if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) ) {
+          if ( bnr.target === '7' ) {
+            this._membershipBanner = {
+              kind: Tw.REDIS_BANNER_TYPE.TOS,
+              list: bnr.banner.result.imgList
+            };
+          } else {
+            new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS, bnr.banner.result.imgList, bnr.target, $.proxy(this._successDrawBanner, this));
+          }
+        }
+      } else {
+        adminList.push(bnr);
+      }
+    }, this));
+
+    if ( adminList.length > 0 ) {
+      this._getAdminBanner(adminList);
+    }
+  },
+  _checkTosBanner: function (tosBanner, target) {
+    if ( tosBanner.code === Tw.API_CODE.CODE_00 ) {
+      if ( tosBanner.result.bltnYn === 'N' ) {
+        this.$container.find('ul.slider[data-location=' + target + ']').parents('div.nogaps').addClass('none');
+        return true;
+      } else {
+        if ( tosBanner.result.tosLnkgYn === 'Y' ) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+    return false;
+  },
+  _getAdminBanner: function (adminList) {
+    this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: this._menuId })
+      .done($.proxy(this._successBanner, this, adminList));
+  },
+  _successBanner: function (adminList, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      new Tw.BannerService(this.$container, resp.result.banners, $.proxy(this._successDrawBanner, this));
+      _.map(adminList, $.proxy(function (target) {
+        var banner = _.filter(resp.result.banners, function (banner) {
+          return banner.bnnrLocCd === target.target;
+        });
+        if ( banner.length > 0 ) {
+          if ( target.target === '7' ) {
+            this._membershipBanner = {
+              kind: Tw.REDIS_BANNER_TYPE.ADMIN,
+              list: banner
+            };
+          } else {
+            new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.ADMIN, banner, target.target, $.proxy(this._successDrawBanner, this));
+          }
+        } else {
+          this.$container.find('ul.slider[data-location=' + target.target + ']').parents('div.nogaps').addClass('none');
+        }
+      }, this));
     }
   },
   _successDrawBanner: function () {

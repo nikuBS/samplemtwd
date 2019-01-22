@@ -15,7 +15,7 @@ Tw.REDIS_KEY = {
   RCM_MENU: 'FrontRcmndMenu:',
   BANNER_ADMIN: 'Banner:',
   BANNER_TOS_LINK: 'BannerTosLnkgInfo:',
-  BANNER_TOS_META: 'BannerTosInfo:',
+  BANNER_TOS_INFO: 'BannerTosInfo:',
   HOME_NOTI: 'WelcomeMsg:WelcomeMsgList',
   HOME_NOTICE: 'HomeNotice:',
   HOME_HELP: 'HomeCicntsList',
@@ -50,4 +50,9 @@ Tw.REDIS_TOOLTIP_CODE = {
   TEXT: '1',
   ICON: '2',
   ALL: '3'
+};
+
+Tw.REDIS_BANNER_TYPE = {
+  TOS: 'tos',
+  ADMIN: 'admin'
 };

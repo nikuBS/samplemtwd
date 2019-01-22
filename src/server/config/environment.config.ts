@@ -26,7 +26,7 @@ const environment = {
       port: 9014
     }
   },
-  development: {
+  dev: {
     BFF_SERVER: 'http://bff-spring',
     // BFF_SERVER: 'http://211.188.180.73:31309',
     BFF_SERVER_G: 'http://bff-spring-g',
@@ -53,7 +53,7 @@ const environment = {
       port: 9014
     }
   },
-  staging: {
+  stg: {
     BFF_SERVER: 'http://bff-spring',
     // BFF_SERVER: 'http://211.188.180.73:31309',
     BFF_SERVER_G: 'http://bff-spring-g',
@@ -80,7 +80,7 @@ const environment = {
       port: 9014
     }
   },
-  production: {
+  prd: {
     BFF_SERVER: 'http://bff-spring',
     BFF_SERVER_G: 'http://bff-spring-g',
     CDN: 'https://cdnm.tworld.co.kr',

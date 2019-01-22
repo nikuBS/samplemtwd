@@ -76,17 +76,23 @@ Tw.CommonSearchNotFound.prototype = {
   _requestKeyword : function () {
     this._apiService.request(Tw.API_CMD.BFF_08_0070, { ctt : this.$requestKeywordPopup.find('.input-focus').val() }, {}).
     done($.proxy(function (res) {
-      this._claimCallback(res.code,52);
-    }, this));
+      this._claimCallback(res,52);
+    }, this))
+      .fail($.proxy(function (err) {
+        this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
+      }, this));
   },
   _selectClaim : function () {
     this._apiService.request(Tw.API_CMD.BFF_08_0071, { inqNum : this.$selectClaimPopup.find('input[name=r1]:checked', '#claim_list').val() }, {}).
     done($.proxy(function (res) {
-      this._claimCallback(res.code,51);
+      this._claimCallback(res,51);
+    }, this))
+    .fail($.proxy(function (err) {
+      this._popupService.openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
     }, this));
   },
-  _claimCallback : function (code,srchId) {
-    if(code===Tw.API_CODE.CODE_00){
+  _claimCallback : function (res,srchId) {
+    if(res.code===Tw.API_CODE.CODE_00){
       var $selectedEl = this.$container.find('.opinion-selectbox');
       $selectedEl.each(function (idx) {
         if($selectedEl.eq(idx).data('type')===srchId){
@@ -95,6 +101,8 @@ Tw.CommonSearchNotFound.prototype = {
         }
       });
       this._popupService.close();
+    }else{
+      this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
     }
   },
   _inputKeyupEvt : function (evt) {

@@ -178,7 +178,8 @@ body.bg-gray {
           top: -2.5rem;
           color: transparent; }
         #common-menu.user-type.scroll .section-userinfo .userinfo .tx {
-          top: -1.6875rem; }
+          -webkit-transform: translateY(-27px);
+          transform: translateY(-27px); }
         #common-menu.user-type.scroll .section-userinfo .userinfo .bt {
           top: -1.6875rem;
           color: transparent; }
@@ -232,10 +233,11 @@ body.bg-gray {
         display: inline-block;
         font-size: 0.8125rem;
         font-weight: 300;
-        -webkit-transition-property: top;
-        transition-property: top;
-        -webkit-transition-duration: 0.7s;
-                transition-duration: 0.7s; }
+        -webkit-transition: transform 0.7s;
+        -webkit-transition: -webkit-transform 0.7s;
+        transition: -webkit-transform 0.7s;
+        transition: transform 0.7s;
+        transition: transform 0.7s, -webkit-transform 0.7s; }
         #common-menu .section-userinfo .userinfo .tx.underline {
           text-decoration: underline; }
       #common-menu .section-userinfo .userinfo .bt {
@@ -438,7 +440,7 @@ body.bg-gray {
       display: inline-block;
       margin-right: 0.4375rem; }
       #common-menu .footer .f-menu li .bt {
-        color: #959595;
+        color: #858585;
         font-size: 0.875rem;
         font-weight: 500; }
     #common-menu .footer .f-info {
@@ -1697,7 +1699,7 @@ body.bg-gray {
   margin-top: 0.375rem;
   font-size: 0.75rem;
   font-weight: 700;
-  color: #3b98e6; }
+  color: #178BCE; }
   .certify-wrap .left-time span {
     vertical-align: baseline;
     font-family: "Helvetica Neue", Roboto, sans-serif; }

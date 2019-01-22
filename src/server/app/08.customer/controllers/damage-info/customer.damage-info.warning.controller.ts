@@ -49,7 +49,8 @@ class CustomerDamageInfoWarning extends TwViewController {
 
       res.render('damage-info/customer.damage-info.warning.html', Object.assign(renderCommonInfo, {
         importList: this._convertList(warningTopInfo.result.content),
-        normalList: this._convertList(warningNormalInfo.result.content)
+        normalList: this._convertList(warningNormalInfo.result.content),
+        totalPages: warningNormalInfo.result.pageable.totalPages
       }));
     });
   }

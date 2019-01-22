@@ -756,10 +756,10 @@ Tw.MYT_PREPAID_ALARM = {
     { text: '3일', value: '3' }
   ],
   price_list: [
-    { text: '5,000원', value: 5000 },
-    { text: '3,000원', value: 3000 },
-    { text: '2,000원', value: 2000 },
-    { text: '1,000원', value: 1000 }
+    { text: '1,000원', value: '1' },
+    { text: '2,000원', value: '2' },
+    { text: '3,000원', value: '3' },
+    { text: '5,000원', value: '5' }
   ]
 };
 

@@ -82,6 +82,12 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     this.$container.on('click', '#btn_hp_del', $.proxy(this._formValidateionChk, this));
 
     this.$container.on('click', '#page-prev-step', $.proxy(this._closeCheck, this));
+
+    // 동적으로 화면 추가되는 경우 tip 팝업 띄우기
+    this.$container.on('click', 'button[id=MS_04_08_tip_05]', function(){
+      var item = _.find(Tw.Tooltip._contentList, function(obj){ return obj.mtwdTtipId === 'MS_04_08_tip_05' });
+      $.proxy(Tw.Tooltip._openTip, Tw.Tooltip, item)();
+    });
   },
   //--------------------------------------------------------------------------[EVENT]
   _closeCheck: function(){
@@ -514,6 +520,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     var headerH = $('.header-wrap').height();
     loadingBarY = loadingBarY - containerY + headerH;
     $('.tw-loading').css('top',  loadingBarY);
+    $('.tw-loading').css('z-index',  10);
 
     $('#span-err-dcrefund').hide();
 
@@ -528,22 +535,30 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     //   });
 
     return this._apiService.request(Tw.API_CMD.BFF_05_0173).done($.proxy(this._getWireCancelFeeInit, this))
-      .fail(function(){
+      .fail($.proxy(function(err){
         Tw.CommonHelper.endLoading('[data-target="dataLoading"]');
-      });
+        this.dataLoading.hide();
+        Tw.Error(err.status, err.statusText).pop();
+      }, this));
 
   },
   _getWireCancelFeeInit: function(res) {
     Tw.CommonHelper.endLoading(this.dataLoading);
     this.dataLoading.hide();
 
+    if( !res || (res.code !== Tw.API_CODE.CODE_00 && res.code !== 'ZINVE8888')){
+      Tw.Error(res.code, res.msg).pop();
+      return;
+    }
+
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       Tw.Logger.info('[결과1] _getWireCancelFeeInit', res);
       this.dataModel.dcRefdSearch = true;
       this.cancelFeeInfo = res.result;
 
-      if(res.result.penaltyInfo && res.result.paenaltyInfo.length <= 0){
+      if(res.result.penaltyInfo && res.result.penaltyInfo.length <= 0){
         $('#divEmpty').show();
+        this._popupService.openAlert(Tw.MYT_JOIN_WIRE_CANCEL_SERVICE.NO_DC_REFUND);
       }
 
       _.map( this.cancelFeeInfo.penaltyInfo, $.proxy( function( item ){

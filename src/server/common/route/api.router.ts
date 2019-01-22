@@ -16,9 +16,10 @@ import environment from '../../config/environment.config';
 import BrowserHelper from '../../utils/browser.helper';
 import { NODE_API_ERROR } from '../../types/string.type';
 import { COOKIE_KEY } from '../../types/common.type';
-import { CHANNEL_CODE, MENU_CODE, REDIS_KEY } from '../../types/redis.type';
+import { CHANNEL_CODE, MENU_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../types/redis.type';
 import CryptoHelper from '../../utils/crypto.helper';
 import { XTRACTOR_KEY } from '../../types/config.type';
+import DateHelper from '../../utils/date.helper';
 
 class ApiRouter {
   public router: Router;
@@ -65,6 +66,7 @@ class ApiRouter {
     this.router.get('/urlMeta', this.getUrlMeta.bind(this));
     this.router.get('/menu', this.getMenu.bind(this));
     this.router.get('/banner/admin', this.getBannerAdmin.bind(this));
+    this.router.get('/banner/tos', this.getBannerTos.bind(this));
     this.router.get('/home/welcome', this.getHomeWelcome.bind(this));
     this.router.get('/home/notice', this.getHomeNotice.bind(this));
     this.router.get('/home/help', this.getHomeHelp.bind(this));
@@ -159,6 +161,7 @@ class ApiRouter {
     const code = BrowserHelper.isApp(req) ? MENU_CODE.MAPP : MENU_CODE.MWEB;
 
     const svcInfo = this.loginService.getSvcInfo(req);
+    const allSvcInfo = this.loginService.getAllSvcInfo(req);
     this.logger.info(this, '[get menu]', req.cookies[COOKIE_KEY.TWM], this.loginService.getSessionId(req), svcInfo);
     this.redisService.getData(REDIS_KEY.MENU + code)
       .subscribe((resp) => {
@@ -176,6 +179,12 @@ class ApiRouter {
             resp.result.userInfo.loginType = svcInfo.loginType;
             resp.result.userInfo.tid = svcInfo.userId;
             resp.result.userInfo.addr = svcInfo.addr;
+            resp.result.userInfo.canSendFreeSMS = allSvcInfo.m.reduce((memo, elem) => {
+              if ( elem.svcAttrCd.includes('M1') ) {
+                return true;
+              }
+              return memo;
+            }, false);
           }
           res.json(resp);
         } else {
@@ -189,6 +198,113 @@ class ApiRouter {
     this.redisService.getData(REDIS_KEY.BANNER_ADMIN + menuId)
       .subscribe((resp) => {
         res.json(resp);
+      });
+  }
+
+  private getBannerTos(req: Request, res: Response, next: NextFunction) {
+    const code = req.query.code;
+    const svcInfo = this.loginService.getSvcInfo(req);
+    if ( FormatHelper.isEmpty(svcInfo) ) {
+      return res.json({
+        code: API_CODE.NODE_1001,
+        msg: NODE_API_ERROR[API_CODE.NODE_1001]
+      });
+    }
+
+    const svcMgmtNum = svcInfo.svcMgmtNum || 'null';
+    const userId = svcInfo.userId;
+
+    let bannerLink = null;
+    let serialNums = '';
+    let targetSerial = '';
+
+    this.redisService.getData(REDIS_KEY.BANNER_TOS_LINK + code)
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          if ( resp.result.bltnYn === 'N' ) {
+            throw resp;
+          } else {
+            resp.result.bltnYn = 'Y';
+            if ( resp.result.tosLnkgYn === 'Y' ) {
+              bannerLink = resp.result;
+              return this.redisService.getStringTos(REDIS_TOS_KEY.BANNER_TOS_KEY + code + ':' + userId + ':' + svcMgmtNum);
+            } else {
+              throw resp;
+            }
+          }
+        } else {
+          throw resp;
+        }
+      })
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          serialNums = resp.result;
+          targetSerial = serialNums;
+          if ( serialNums.indexOf('R') !== -1 ) {
+            targetSerial = serialNums.indexOf('|') !== -1 ? serialNums.split('|')[0] : serialNums;
+          }
+          return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + targetSerial);
+        } else {
+          return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + 'D' + code);
+        }
+      })
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          if ( targetSerial === '' ) {
+            return Observable.of(resp);
+          } else {
+            const start = DateHelper.convDateCustomFormat(resp.result.cmpgnStaDt + resp.result.cmpgnStaHm, 'YYYYMMDDhhmm').getTime();
+            const end = DateHelper.convDateCustomFormat(resp.result.cmpgnEndDt + resp.result.cmpgnEndHm, 'YYYYMMDDhhmm').getTime();
+            const today = new Date().getTime();
+            if ( start < today && end > today ) {
+              targetSerial = '';
+              return Observable.of(resp);
+            } else {
+              if ( targetSerial.indexOf('R') !== -1 && serialNums.indexOf('C') !== -1 ) {
+                targetSerial = serialNums.indexOf('|') !== -1 ? serialNums.split('|')[1] : '';
+                return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + targetSerial);
+              } else {
+                targetSerial = '';
+                return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + 'D' + code);
+              }
+            }
+          }
+        } else {
+          if ( targetSerial === '' ) {
+            throw resp;
+          } else if ( targetSerial.indexOf('R') !== -1 && serialNums.indexOf('C') !== -1 ) {
+            targetSerial = serialNums.indexOf('|') !== -1 ? serialNums.split('|')[1] : '';
+            return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + targetSerial);
+          } else {
+            return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + 'D' + code);
+          }
+        }
+      })
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          if ( targetSerial === '' ) {
+            return Observable.of(resp);
+          } else {
+            const start = DateHelper.convDateCustomFormat(resp.result.cmpgnStaDt + resp.result.cmpgnStaHm, 'YYYYMMDDhhmm').getTime();
+            const end = DateHelper.convDateCustomFormat(resp.result.cmpgnEndDt + resp.result.cmpgnEndHm, 'YYYYMMDDhhmm').getTime();
+            const today = new Date().getTime();
+            if ( start < today && end > today ) {
+              return Observable.of(resp);
+            } else {
+              targetSerial = '';
+              return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + 'D' + code);
+            }
+          }
+          return Observable.of(resp);
+        } else {
+          return this.redisService.getData(REDIS_KEY.BANNER_TOS_INFO + 'D' + code);
+        }
+      })
+      .subscribe((resp) => {
+        Object.assign(resp.result, bannerLink);
+        return res.json(resp);
+      }, (err) => {
+        return res.json(err);
       });
   }
 

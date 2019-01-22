@@ -77,7 +77,7 @@ class RedisService {
   }
 
   private getRedisString(key, client): Observable<any> {
-    this.logger.info(this, '[Get String]', key);
+    // this.logger.info(this, '[Get String]', key);
     return Observable.create((observer) => {
       client.get(key, (err, reply) => {
         const resp = {
@@ -93,6 +93,7 @@ class RedisService {
           resp.result = reply;
         }
 
+        this.logger.info(this, '[Get String]', key, resp);
         observer.next(resp);
         observer.complete();
       });
@@ -100,7 +101,7 @@ class RedisService {
   }
 
   private getRedisData(key, client): Observable<any> {
-    this.logger.info(this, '[Get Data]', key);
+    // this.logger.info(this, '[Get Data]', key);
     return Observable.create((observer) => {
       client.get(key, (err, reply) => {
         const resp = {
@@ -120,6 +121,7 @@ class RedisService {
             resp.msg = NODE_API_ERROR[API_CODE.REDIS_ERROR];
           }
         }
+        this.logger.info(this, '[Get Data]', key, resp);
         observer.next(resp);
         observer.complete();
       });

@@ -11,7 +11,6 @@ import FormatHelper from '../../../../../utils/format.helper';
 import {API_CMD, API_CODE} from '../../../../../types/api-command.type';
 import {Observable} from 'rxjs/Observable';
 import StringHelper from '../../../../../utils/string.helper';
-import { REDIS_KEY } from '../../../../../types/redis.type';
 
 
 class ProductRoamingSettingRoamingAlarm extends TwViewController {

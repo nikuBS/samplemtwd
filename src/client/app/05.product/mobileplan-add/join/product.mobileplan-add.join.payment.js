@@ -179,7 +179,11 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
   },
 
   _blurInputNumber: function() {
-    this.$inputNumber.val(Tw.FormatHelper.conTelFormatWithDash(this.$inputNumber.val()));
+    if (this.$inputNumber.length > 8) {
+      this.$inputNumber.val(Tw.FormatHelper.conTelFormatWithDash(this.$inputNumber.val()));
+    } else {
+      this.$inputNumber.val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$inputNumber.val()));
+    }
   },
 
   _focusInputNumber: function() {
@@ -275,8 +279,8 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    $.when(this._popupService.close())
-      .then($.proxy(this._openSuccessPop, this));
+    this._popupService.close();
+    setTimeout($.proxy(this._openSuccessPop, this), 100);
   },
 
   _openSuccessPop: function() {
