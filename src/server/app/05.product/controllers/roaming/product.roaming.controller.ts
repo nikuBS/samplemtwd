@@ -147,6 +147,8 @@ export default class ProductRoaming extends TwViewController {
         prod.basFeeInfo = FormatHelper.numberWithCommas(Number(prod.basFeeInfo));
       });
 
+      resp.result.prodList = resp.result.prodList.slice(0, 3);
+
       return resp.result;
     });
   }
