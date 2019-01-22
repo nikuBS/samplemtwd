@@ -1050,3 +1050,9 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
 ];
 export const MYT_JOIN_PERSONAL = '개인';
 export const MYT_JOIN_FAMILY = '패밀리';
+export const MYT_SUSPEND_REASON = {
+  5000341: '군입대',
+  5000342: '군입대',
+  5000343: '해외체류',
+  5000344: '해외체류'
+};
