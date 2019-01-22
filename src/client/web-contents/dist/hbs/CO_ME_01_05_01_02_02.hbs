@@ -1,0 +1,72 @@
+<!-- .popup hbs -->
+<div class="popup-page nobg tw-popup fixed-btn fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>Foreigner(외국인) 인증</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <ul class="form-data-list">
+                    <li>
+                        <label class="tit" for="flab01">Name</label>
+                        <span class="inputbox">
+                            <span class="input">
+                                <input id="flab01" class="fe-name required-input-field" type="text" placeholder="회원가입 시 이름">
+                                <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                            </span>
+                        </span>
+                        <div class="cont-noti pt16">
+                            <ul class="bullet-type">
+                                <li>Please enter your first and last name (case-sensitive)</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <label class="tit" for="flab02">법정 생년월일</label>
+                        <span class="inputbox fe-input-box">
+                            <span class="input">
+                                <input id="flab02" class="fe-birth required-input-field" type="number" inputmode="numeric" min="0" pattern="[0-9]*"
+                                       placeholder="생년월일 8자리(YYYYMMDD)" aria-describedby="aria-birth-num1">
+                                <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                            </span>
+                            <span id="aria-exp-desc1" class="error-txt" style="display:none;">The information entered is not verified. Please re-enter</span>
+                        </span>
+                        <div class="cont-noti pt16">
+                            <ul class="bullet-type">
+                                <li>Please enter your Alien Registration Number</li>
+                                <li>Registration Number : Date of Birth / Social security / License number</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--// .cont-box -->
+            <div class="notice-comp-infolist type1">
+                <dl>
+                    <dt>Alien Registration Number</dt>
+                    <dd>If you registered alien registration number please enter your date of birth. If you registered social security number or driver’s license number, please enter your social security number or driver’s license number.</dd>
+                </dl>
+            </div>
+
+            <ul class="bt-slice full">
+                <li class="bt-red1">
+                    <button class="btn-certify" disabled>Check</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>
+<!--// .popup hbs -->

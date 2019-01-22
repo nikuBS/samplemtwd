@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>mdpi/Artboard Copy 10</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Artboard-Copy-10" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-13" transform="translate(10.000000, 9.000000)" stroke="#333333" stroke-width="3">
+            <path d="M58.5,60.5 L38.5,60.5 C37.4,60.5 36.5,59.6 36.5,58.5 L36.5,42.5 C36.5,41.4 37.4,40.5 38.5,40.5 L58.5,40.5 C59.6,40.5 60.5,41.4 60.5,42.5 L60.5,58.5 C60.5,59.6 59.6,60.5 58.5,60.5 Z" id="Stroke-1"></path>
+            <path d="M42,40.5 L42,35.212 C42,31.505 44.91,28.5 48.5,28.5 C52.09,28.5 55,31.505 55,35.212 L55,40.5" id="Stroke-3"></path>
+            <path d="M48.5,49 L48.5,52" id="Stroke-5" stroke-linecap="round"></path>
+            <polyline id="Stroke-7" stroke-linecap="round" stroke-linejoin="round" points="13.5 20.1665 19 34.8335 24.5 20.1665 30 34.8335 35.5 20.1665"></polyline>
+            <path d="M13.5,27.5 L35.5,27.5" id="Stroke-9" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M35.999,57.833 L30.304,52.5 L24.609,57.833 L18.917,52.5 L13.223,57.833 L7.527,52.5 L0.5,57.833 L0.504,52.5 L0.5,50.833 L0.5,3.166 C0.5,1.7 1.7,0.5 3.167,0.5 L45.833,0.5 C47.3,0.5 48.5,1.7 48.5,3.166 L48.5,27.833" id="Stroke-11" stroke-linecap="round" stroke-linejoin="round"></path>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="120px" height="120px" viewBox="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>graphic_120px_smile</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Icon_Badge_Graphic" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="##Element/Graphic/Smile">
+            <rect id="Icon_Area" fill-opacity="0" fill="#FFFFFF" x="0" y="0" width="120" height="120"></rect>
+            <g id="graphic_120px_smile">
+                <path d="M60,0 C93.137,0 120,26.863 120,60 C120,93.137 93.137,120 60,120 C26.863,120 0,93.137 0,60 C0,26.863 26.863,0 60,0" id="Fill-3" fill="#59BCF5" fill-rule="nonzero"></path>
+                <path d="M82.0996,45.3999 L82.0996,52.3999" id="Stroke-5" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"></path>
+                <path d="M37.8999,45.3999 L37.8999,52.3999" id="Stroke-7" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"></path>
+                <path d="M37.8999,72.2998 C40.4999,81.6998 49.3999,88.5998 59.9999,88.5998 C70.5999,88.5998 79.4999,81.6998 82.0999,72.4008" id="Stroke-9" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"></path>
+                <polyline id="Stroke-11" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" points="62.7998 51.6001 55.2998 59.3001 61.9008 67.8001"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>

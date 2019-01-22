@@ -1,0 +1,36 @@
+<div class="popup tw-popup">
+    <div class="popup-page nobg layer actionsheet has-floating"><!-- actionsheet, has-floating, has-header // -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <div class="container">
+                {{#each data}}
+                <!-- .cont-box -->
+                <div class="cont-box nogaps noborder">
+                    <!-- .cont-actionsheet -->
+                    <div class="cont-actionsheet">
+                        <ul class="ac-list ac3">
+                            {{#each list}}
+                                <li class="type2">
+                                    <button {{{attr}}}>
+                                        <span class="circle">
+                                            <span class="simbol {{{simbol}}}"></span>
+                                        </span>
+                                        <span class="txt">{{{value}}}</span>
+                                    </button>
+                                </li>
+                            {{/each}}
+                        </ul>
+                        {{#btn-floating}}
+                        <button {{{attr}}} class="btn-floating btn-style3">{{txt}}</button>
+                        {{/btn-floating}}
+                    </div>
+                    <!-- // .cont-actionsheet -->
+                </div>
+                <!--// .cont-box -->
+                {{/each}}
+            </div>
+        </div>
+        <!--// .container-wrap -->
+    </div>
+    <div class="popup-blind"></div>
+</div>

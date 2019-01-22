@@ -1,0 +1,27 @@
+<div class="popup-page tw-popup">
+    <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>{{title}}</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <div class="container">
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <div class="cont-box noborder">
+                {{!-- <img src="/img/dummy/dmy-asis.png" alt="현행정보 유지(AS-IS 정보 그대로 불러와 노출)" style="display:block;width:100%;"> --}}
+                {{{content}}}
+            </div>
+        </div>
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn fe-common-back"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>

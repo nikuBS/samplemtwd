@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>icon_48px_titlebar_menu</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="New-GUI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="##Icon/Titlebar/Menu">
+            <rect id="Icon_Area" fill-opacity="0" fill="#FFFFFF" x="0" y="0" width="48" height="48"></rect>
+            <path d="M5,10.5 L43,10.5" id="Line" stroke="#333333" stroke-width="3" stroke-linecap="round"></path>
+            <path d="M5,23.5 L43,23.5" id="Line-Copy" stroke="#333333" stroke-width="3" stroke-linecap="round"></path>
+            <path d="M5,36.5 L43,36.5" id="Line-Copy-2" stroke="#333333" stroke-width="3" stroke-linecap="round"></path>
+        </g>
+    </g>
+</svg>

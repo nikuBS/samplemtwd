@@ -1,0 +1,103 @@
+<!-- .popup hbs -->
+<div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                {{#if data.isFinger}}
+                <h1>지문 등록/재등록</h1>
+                {{else}}
+                <h1>Face ID 등록/재등록</h1>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box step">
+                        <h3 class="step-ti"><em>STEP 01</em>약관동의</h3>
+                        <ul class="step-list">
+                            <li class="on">1<span class="blind">약관동의</span></li>
+                            <li>2<span class="blind">본인확인</span></li>
+                            {{#if data.isFinger}}
+                            <li>3<span class="blind">지문등록</span></li>
+                            {{else}}
+                            <li>3<span class="blind">Face ID 등록</span></li>
+                            {{/if}}
+
+                        </ul>
+                    </div>
+                </div>
+                <!-- //.widget -->
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="agree-chk-wrap agree-chk-type">
+                    <!-- .list-comp-input -->
+                    <div class="list-comp-input-agree">
+                        <div class="widget">
+                            <div class="widget-box check">
+                                <ul class="select-list" role="group">
+                                    <li>
+                                        <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                            <input class="fe-check-child" type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="checked" -->
+                                            <div class="comp-list-layout" id="aria-comp-checkbox1" aria-hidden="true">
+                                                <div class="layout-text">
+                                                    <span class="ntext">개인정보 수집 및 이용동의</span>
+                                                    <table class="data-a mt16">
+                                                        <caption>개인정보 수집 및 이용동의</caption>
+                                                        <colgroup>
+                                                            <col style="width:75px;">
+                                                            <col>
+                                                        </colgroup>
+                                                        <tbody>
+                                                        <tr>
+                                                            <th scope="row">목적</th>
+                                                            <td>생체정보를 통한 본인식별/인증</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">항목</th>
+                                                            <td>단말기 정보(모델명,OS,Device ID 등),앱 버전</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">보유기간</th>
+                                                            <td>서비스 이용(제공) 기간(단,법령에 특별한 규정이 있을 경우 관련 법령 준수)</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <p class="stext mt16">회원님은 개인정보 수집 및 이용에 대한 동의를 거부할 권리가 있으며, 거부하시더라도 T world 회원 서비스의 이용에 제한되지 않습니다.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .list-comp-input -->
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button id="fe-bt-confirm" disabled>다음</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- // .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="prev-step tw-popup-closeBtn">취소</button>
+    <!--// .popup-closeBtn -->
+</div>
+<!-- // .popup hbs -->

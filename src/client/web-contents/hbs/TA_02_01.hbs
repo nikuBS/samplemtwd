@@ -1,0 +1,31 @@
+ <!-- .popup hbs -->
+<div class="popup-page tw-popup"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <div class="cont-box noborder nogaps x-hidden">
+                <div class="main-slide-banner ta-02">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box slider1">
+                            <div class="slider-box">
+                                <ul class="slider">
+                                    {{#each images}}
+                                    <li><img src="{{this}}" class="w100" alt="" /></li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>
+<!--// .popup hbs -->
