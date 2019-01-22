@@ -107,10 +107,6 @@ Tw.MyTFareSubMain.prototype = {
       this.$contribution = this.$container.find('[data-id=contbt]');
     }
     this.$otherPages = this.$container.find('[data-id=other-pages]');
-
-    if ( this.data.banner.length > 0 ) {
-      this.$bannerList = this.$container.find('[data-id=banner-list]');
-    }
   },
 
   _bindEvent: function () {
@@ -183,9 +179,6 @@ Tw.MyTFareSubMain.prototype = {
       this.$contribution.on('click', $.proxy(this._onClickedContribution, this));
     }
     this.$otherPages.find('li').on('click', $.proxy(this._onOtherPages, this));
-    if ( this.data.banner.length > 0 ) {
-      this.$bannerList.on('click', 'li', $.proxy(this._onClickBannerItem, this));
-    }
   },
 
   // chart create
@@ -218,9 +211,34 @@ Tw.MyTFareSubMain.prototype = {
   _initialize: function () {
     this._requestCount = -1;
     this._resTimerID = null;
-    this._chartDefaultClass = 'chart_link item';
     this._svcMgmtNumList = [];
     this._feeChartInfo = [];
+    this._initBanners();
+  },
+
+  _initBanners: function () {
+    this._apiService.request(Tw.NODE_CMD.GET_BANNER_TOS, { code: '0008' })
+      .done($.proxy(this._successBanner, this, Tw.REDIS_BANNER_TYPE.TOS))
+      .fail($.proxy(this._errorRequest, this));
+  },
+
+  _successBanner: function (type, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      var result = resp.result;
+      var isCheckBanner = type === Tw.REDIS_BANNER_TYPE.ADMIN || this._checkBanner(result);
+      if ( isCheckBanner ) {
+        new Tw.BannerService(this.$container, type, result.imgList, 'M', $.proxy(this._successDrawBanner, this));
+      }
+      else {
+        this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, {menuId: this.data.pageInfo.menuId})
+          .done($.proxy(this._successBanner, this, Tw.REDIS_BANNER_TYPE.ADMIN))
+          .fail($.proxy(this._errorRequest, this));
+      }
+    }
+    else {
+      this.$container.find('[data-id=banners-empty]').hide();
+      this.$container.find('[data-id=banners]').hide();
+    }
     /**
      * /청구요금인 경우
      * 1. 최근요금내역
@@ -236,6 +254,15 @@ Tw.MyTFareSubMain.prototype = {
     else {
       this._claimPaymentRequest();
     }
+  },
+
+  _checkBanner: function(result) {
+    return (result.bltnYn === 'Y' && result.tosLnkgYn === 'Y');
+  },
+
+  _successDrawBanner: function() {
+    this.$bannerList = this.$container.find('[data-id=banner-list]');
+    Tw.CommonHelper.resetHeight(this.$bannerList);
   },
 
   // 사용요금내역조회-1
@@ -652,11 +679,5 @@ Tw.MyTFareSubMain.prototype = {
     var $target = $(event.target);
     var href = $target.attr('data-href');
     this._historyService.goLoad(href);
-  },
-
-  _onClickBannerItem: function (event) {
-    var $target = $(event.currentTarget);
-    var url = $target.find('a').attr('data-href');
-    Tw.CommonHelper.openUrlExternal(url);
   }
 };

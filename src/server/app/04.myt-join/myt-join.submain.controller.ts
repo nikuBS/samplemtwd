@@ -84,9 +84,9 @@ class MyTJoinSubmainController extends TwViewController {
       this._getLongPausedState(),
       this._getWireFreeCall(),
       this._getOldNumberInfo(),
-      this._getChangeNumInfoService(),
-      this.redisService.getData(REDIS_KEY.BANNER_ADMIN + pageInfo.menuId)
-    ).subscribe(([myline, myif, myhs, myap, mycpp, myinsp, myps, mylps, wirefree, oldnum, numSvc, banner]) => {
+      this._getChangeNumInfoService()
+      // this.redisService.getData(REDIS_KEY.BANNER_ADMIN + pageInfo.menuId)
+    ).subscribe(([myline, myif, myhs, myap, mycpp, myinsp, myps, mylps, wirefree, oldnum, numSvc/*, banner*/]) => {
       // 가입정보가 없는 경우에는 에러페이지 이동 (PPS는 가입정보 API로 조회불가하여 무선이력으로 확인)
       if ( this.type === 1 ) {
         if ( myhs.info ) {
@@ -228,12 +228,12 @@ class MyTJoinSubmainController extends TwViewController {
           }
         }
       }
-      // 배너 정보
-      if ( banner.code === API_CODE.REDIS_SUCCESS ) {
-        if ( !FormatHelper.isEmpty(banner.result) ) {
-          data.banner = this.parseBanner(banner.result);
-        }
-      }
+      // 배너 정보 - client에서 호출하는 방식으로 변경 (19/01/22)
+      // if ( banner.code === API_CODE.REDIS_SUCCESS ) {
+      //   if ( !FormatHelper.isEmpty(banner.result) ) {
+      //     data.banner = this.parseBanner(banner.result);
+      //   }
+      // }
 
       res.render('myt-join.submain.html', { data });
     });
@@ -261,26 +261,6 @@ class MyTJoinSubmainController extends TwViewController {
         this.type = 3;
         break;
     }
-  }
-
-  parseBanner(data: any) {
-    const banners = data.banners;
-    const sort = {};
-    const result: any = [];
-    banners.forEach((item) => {
-      // 배너노출순번의 정보가 있는 경우
-      if ( item.bnnrExpsSeq ) {
-        sort[item.bnnrExpsSeq] = item;
-      } else {
-        sort[item.bnnrSeq] = item;
-      }
-    });
-    const keys = Object.keys(sort).sort();
-    keys.forEach((key) => {
-      result.push(sort[key]);
-    });
-
-    return result;
   }
 
   daysBetween(date1, date2) {
