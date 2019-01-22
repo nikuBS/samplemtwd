@@ -34,7 +34,43 @@
                 {{/each}}
             </div>
 
-            <p class="products-detailinfo">{{{listData.PROD_SMRY_DESC}}}</p>
+            <ul class="products-detailinfo02">
+                {{#ifCond listData.BAS_OFR_DATA_QTY_CTT '!==' ''}}
+                <li class="category-type type01">
+                    <p class="gb">
+                        <span>{{listData.BAS_OFR_DATA_QTY_CTT}}</span>GB
+                    </p>
+                </li>
+                {{else ifCond listData.BAS_OFR_MB_DATA_QTY_CTT '!==' ''}}
+                <li class="category-type type01">
+                    <p class="gb">
+                        <span>{{listData.BAS_OFR_MB_DATA_QTY_CTT}}</span>MB
+                    </p>
+                </li>
+                {{/ifCond}}
+                {{#ifCond listData.BAS_OFR_VCALL_TMS_CTT '!==' ''}}
+                <li class="category-type type02">
+                    <p class="type">
+                        {{#isNaN listData.BAS_OFR_VCALL_TMS_CTT}}
+                            {{listData.BAS_OFR_VCALL_TMS_CTT}}
+                        {{else}}
+                            {{listData.BAS_OFR_VCALL_TMS_CTT}}분
+                        {{/isNaN}}
+                    </p>
+                </li>
+                {{/ifCond}}
+                {{#ifCond listData.BAS_OFR_CHAR_CNT_CTT '!==' ''}}
+                <li class="category-type type03">
+                    <p class="basic">
+                        {{#isNaN listData.BAS_OFR_CHAR_CNT_CTT}}
+                            {{listData.BAS_OFR_CHAR_CNT_CTT}}
+                        {{else}}
+                            {{listData.BAS_OFR_CHAR_CNT_CTT}}건
+                        {{/isNaN}}
+                    </p>
+                </li>
+                {{/ifCond}}
+            </ul>
         </a>
     </li>
 </script>
@@ -145,7 +181,7 @@
 
 <script type="text/x-handlebars-template" id="membership_template">
     <li>
-        <a class="link membership-element list-data" data-link="/membership/benefit/brand-benefit?brandCd={{listData.DOCID}}&cateCd=3" title="T멤버십 상세보기" data-id="{{listData.DOCID}}" data-category="membership" data-tit="{{removeTag listData.BRAND_NM}}">
+        <a class="link membership-element list-data" data-link="/membership/benefit/brand-benefit?brandCd={{listData.DOCID}}&cateCd={{listData.CATE_CD}}" title="T멤버십 상세보기" data-id="{{listData.DOCID}}" data-category="membership" data-tit="{{removeTag listData.BRAND_NM}}">
             <div class="img"><img src="{{{listData.TITLE_IMG_URL}}}" alt="{{listData.CATE_NAME}}"></div>
             <div class="cont">
                 <div class="tit">{{{listData.BRAND_NM}}}</div>
@@ -178,7 +214,7 @@
             <div>
                 {{#each listData.METATAG}}
                 {{#ifCond this '!==' ''}}
-                <span>#{{{this}}}</span>
+                <span>#{{removeTag this}}</span>
                 {{/ifCond}}
                 {{/each}}
             </div>
