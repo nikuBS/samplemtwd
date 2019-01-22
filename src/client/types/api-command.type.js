@@ -62,7 +62,7 @@ Tw.API_CMD = {
   BFF_01_0059: { path: '/v1/auth/skt-sms/key-in', method: Tw.API_METHOD.POST },
   BFF_01_0061: { path: '/core-auth/:version/user-email', method: Tw.API_METHOD.GET },
   BFF_01_0063: { path: '/:version/auth/skt-sms/common', method: Tw.API_METHOD.PUT },
-
+  BFF_01_0064: { path: '/:version/mask-methods', method: Tw.API_METHOD.GET },
   // AUTH
   BFF_03_0002: { path: '/:version/user/account-auth-sessions', method: Tw.API_METHOD.POST },
   BFF_03_0003: { path: '/:version/user/accounts', method: Tw.API_METHOD.DELETE },
@@ -535,6 +535,7 @@ Tw.NODE_CMD = {
   GET_URL_META: { path: '/urlMeta', method: Tw.API_METHOD.GET },
   GET_MENU: { path: '/menu', method: Tw.API_METHOD.GET },
   GET_BANNER_ADMIN: { path: '/banner/admin', method: Tw.API_METHOD.GET },
+  GET_BANNER_TOS: { path: '/banner/tos', method: Tw.API_METHOD.GET },
   GET_MASKING_METHOD: { path: '/masking-method', method: Tw.API_METHOD.GET },
   SET_MASKING_COMPLETE: { path: '/masking-complete', method: Tw.API_METHOD.POST },
   GET_HOME_WELCOME: { path: '/home/welcome', method: Tw.API_METHOD.GET },

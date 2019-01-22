@@ -32499,6 +32499,7 @@ body.apphome {
 /* 인풋 옆에 버튼이 붙는 경우 (주소록, 우편번호 검색 등...) */
 .inputbox.inp-btn {
   display: table;
+  width: 100% !important;
   table-layout: inherit; }
   .inputbox.inp-btn .input {
     display: table-cell;
@@ -32508,6 +32509,8 @@ body.apphome {
     padding-left: 0.625rem;
     vertical-align: middle;
     text-indent: 0; }
+    .inputbox.inp-btn .bt-box.none {
+      display: none !important; }
   .inputbox.inp-btn .bt-box2 {
     display: table-cell !important;
     padding-left: 0.625rem;

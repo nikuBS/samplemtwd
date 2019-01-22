@@ -15,7 +15,7 @@ Tw.REDIS_KEY = {
   RCM_MENU: 'FrontRcmndMenu:',
   BANNER_ADMIN: 'Banner:',
   BANNER_TOS_LINK: 'BannerTosLnkgInfo:',
-  BANNER_TOS_META: 'BannerTosInfo:',
+  BANNER_TOS_INFO: 'BannerTosInfo:',
   HOME_NOTI: 'WelcomeMsg:WelcomeMsgList',
   HOME_NOTICE: 'HomeNotice:',
   HOME_HELP: 'HomeCicntsList',
