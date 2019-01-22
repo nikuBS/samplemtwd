@@ -64,7 +64,7 @@ class App {
     this.app.use(cookie());
     this.app.use(this.redisService.getMiddleWare());
     this.app.use(UA.express()); // req.useragent
-    // this.app.use(morgan(this.accessLogFormat.bind(this)));
+    this.app.use(morgan(this.accessLogFormat.bind(this)));
     // development env
     // this.app.use(express.static(path.join(__dirname, '/public/cdn')));
     this.app.use('/mock', express.static(path.join(__dirname, '/mock/client')));
@@ -194,9 +194,10 @@ class App {
   private accessLogFormat(tokens, req, res) {
     return [
       'ACC|' + tokens['remote-addr'](req),
-      '-',
+      '"' + req.headers['x-forwarded-for'] + '"',
       '-', // tokens['remote-user'](req, res),
-      '[' + tokens['date'](req, res, 'clf') + ']',
+      '-',
+      tokens['date'](req, res, 'clf'),
       tokens.status(req, res) + '_code',
       tokens['res'](req, res, 'content-length') + '_bytes',
       (tokens['response-time'](req, res, 3) * 1000) + '_usecs',

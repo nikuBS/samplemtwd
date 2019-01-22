@@ -142,12 +142,11 @@ abstract class TwViewController {
       const loginType = urlMeta.auth.accessTypes;
 
       if ( resp.code === API_CODE.REDIS_SUCCESS ) {
-        // TODO: 화면차단
-        // if ( this.checkServiceBlock(urlMeta) ) {
-        //   const blockUrl = urlMeta.block.url || '/common/util/service-block';
-        //   res.redirect(blockUrl);
-        //   return;
-        // }
+        if ( this.checkServiceBlock(urlMeta) ) {
+          const blockUrl = urlMeta.block.url || '/common/util/service-block';
+          res.redirect(blockUrl);
+          return;
+        }
 
         if ( loginType === '' ) {
           // TODO: 삭제예정 admin 정보 입력 오류 (accessType이 비어있음)
