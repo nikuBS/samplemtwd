@@ -23,7 +23,16 @@ Tw.ProductSubmain.prototype = {
   },
 
   _handleLoadBanners: function(resp) {
-    new Tw.BannerService(this.$container, resp.result && resp.result.banners);
+    if (resp.result && resp.result.banners) {
+      new Tw.BannerService(
+        this.$container,
+        Tw.REDIS_BANNER_TYPE.ADMIN,
+        _.filter(resp.result.banners, function(banner) {
+          return banner.bnnrLocCd === 'T';
+        }),
+        'T'
+      );
+    }
   },
 
   _goPlan: function(e) {
