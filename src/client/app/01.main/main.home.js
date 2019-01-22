@@ -38,6 +38,8 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
     this._bindEvent();
     this._initScroll();
   }
+
+  this._nativeSrevice.send(Tw.NTV_CMD.CLEAR_HISTORY, {});
 };
 
 Tw.MainHome.prototype = {
