@@ -9,7 +9,7 @@ import DateHelper from '../../../../utils/date.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import StringHelper from '../../../../utils/string.helper';
-import { MYT_SUSPEND_STATE, MYT_SUSPEND_ERROR_MSG } from '../../../../types/string.type';
+import { MYT_SUSPEND_STATE, MYT_SUSPEND_ERROR_MSG, MYT_SUSPEND_REASON } from '../../../../types/string.type';
 import { MYT_JOIN_SUSPEND } from '../../../../types/title.type';
 import FormatHelper from '../../../../utils/format.helper';
 
@@ -69,10 +69,11 @@ class MyTJoinSuspendStatus extends TwViewController {
       if ( progress.code === API_CODE.CODE_00 ) { //  현재 장기일시 정지 미신청 상태에 대한 코드가 없음
         const _progress = progress.result;
         _progress.rgstDt = DateHelper.getShortDateWithFormat(_progress.rgstDt, 'YYYY.MM.DD.');
-        _progress.opDtm = DateHelper.getShortDateWithFormat(_progress.opDtm, 'YYYY.MM.DD.');
+        _progress.opDtm = _progress.opDtm ? DateHelper.getShortDateWithFormat(_progress.opDtm, 'YYYY.MM.DD.') : '';
         _progress.state = MYT_SUSPEND_STATE[_progress.opStateCd];
         _progress.fromDt = DateHelper.getShortDateWithFormat(_progress.fromDt, 'YYYY.MM.DD.');
 
+        _progress.progressReason = MYT_SUSPEND_REASON[_progress.receiveCd];
         if ( _progress.toDt ) {
           _progress.toDt = DateHelper.getShortDateWithFormat(_progress.toDt, 'YYYY.MM.DD.');
         }
