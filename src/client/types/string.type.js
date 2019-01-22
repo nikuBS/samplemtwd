@@ -921,8 +921,8 @@ Tw.MYT_DATA_FAMILY_TOAST = {
 };
 
 Tw.MYT_DATA_FAMILY_CONFIRM_SHARE = {
-  TITLE: '데이터를 공유 하시겠습니까?',
-  CONTENTS: '데이터를 공유하고 나면 취소하실 수 없습니다.',
+  TITLE: ' ',
+  CONTENTS: '공유하시려는 {data}GB 데이터는 가족에게 즉시 공유됩니다. 데이터를 공유하시겠습니까?',
   BTN_NAME: '공유하기'
 };
 
