@@ -180,7 +180,8 @@ class ApiRouter {
             resp.result.userInfo.tid = svcInfo.userId;
             resp.result.userInfo.addr = svcInfo.addr;
             resp.result.userInfo.canSendFreeSMS = allSvcInfo.m.reduce((memo, elem) => {
-              if ( elem.svcAttrCd.includes('M1') ) {
+              if ( elem.svcAttrCd.includes('M1') || elem.svcAttrCd.includes('M3') ||
+                   elem.svcAttrCd.includes('M4')) {
                 return true;
               }
               return memo;

@@ -76,7 +76,7 @@ Tw.MainMenuSettings.prototype = {
   _onUpdate: function () {
     var url = '';
     if (Tw.BrowserHelper.isAndroid()) {
-      url = 'intent://scan/#intent;package=com.sktelecom.minit;end';
+      url = 'intent://scan/#Intent;package=com.sktelecom.minit;end';
     } else if (Tw.BrowserHelper.isIos()) {
       url = 'https://itunes.apple.com/kr/app/%EB%AA%A8%EB%B0%94%EC%9D%BCtworld/id428872117?mt=8';
     }
