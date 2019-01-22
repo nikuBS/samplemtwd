@@ -40,6 +40,7 @@ export default class MembershipMy extends TwViewController {
       } else {
         myInfoData = this.parseMyInfoData(resp.result);
       }
+      return resp.result;
     });
   }
 
@@ -54,6 +55,7 @@ export default class MembershipMy extends TwViewController {
       } else {
         membershipData = this.parseMembershipData(resp.result);
       }
+      return resp.result;
     });
   }
 

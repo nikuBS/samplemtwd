@@ -4,7 +4,7 @@
  * Date: 2018.12.17
  */
 
-Tw.MembershipMy = function(rootEl) {
+Tw.MembershipMy = function(rootEl, cardReqDt) {
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._dateHelper = Tw.DateHelper;
@@ -12,6 +12,7 @@ Tw.MembershipMy = function(rootEl) {
   this._apiService = Tw.Api;
   this._init();
   this._totoalList = [];
+  this._cardReqDt = cardReqDt;
 };
 
 Tw.MembershipMy.prototype = {
@@ -191,6 +192,18 @@ Tw.MembershipMy.prototype = {
   },
 
   _requestReissueInfo: function(state) {
+    //카드 발급 후 2주이내 알럿
+    if(this._cardReqDt !== ''){
+      var reissueLimitDate = Tw.DateHelper.getShortDateWithFormatAddByUnit(this._cardReqDt, 15, 'day', 'YYYYMMDD', 'YYYYMMDD');
+      var getDiffDate = Tw.DateHelper.getDifference(reissueLimitDate);
+      
+      if(getDiffDate > 0 ){
+        var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A61;
+        this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
+        return;
+      }
+    }
+
     this._apiService
       .request(Tw.API_CMD.BFF_11_0003, {})
       .done($.proxy(this._successReissueInfo, this, state))
