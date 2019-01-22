@@ -29,9 +29,6 @@ class ProductMobileplanLookupTplan extends TwViewController {
     NA00006117: 'infiClubList'
   };
 
-  private _listCase = 'A';
-  private _listTotal = 0;
-
   /**
    * @param result
    * @param printProdId
@@ -41,20 +38,24 @@ class ProductMobileplanLookupTplan extends TwViewController {
   private _parseBenefitList(result: any, printProdId: any, tabId?: any): any {
     let resultList: any = {};
 
-    this._listCase = 'A';
-    this._listTotal = 0;
+    let listCase: any = 'A';
+    let listTotal: any = 0;
 
     switch (printProdId) {
       case 'NA00006114':
-        resultList = this._convertTravelAndMovieList(result[this._prodIdList[printProdId]][tabId === 'onepass' ? 'infiRomList' : 'infiMatinaList']);
-        this._listTotal = result[this._prodIdList[printProdId]].infiRomList.length + result[this._prodIdList[printProdId]].infiMatinaList.length;
+        const convTravelInfo: any = this._convertTravelAndMovieList(result[this._prodIdList[printProdId]][tabId === 'onepass' ?
+          'infiRomList' : 'infiMatinaList']);
+        resultList = convTravelInfo.list;
+        listTotal = result[this._prodIdList[printProdId]].infiRomList.length + result[this._prodIdList[printProdId]].infiMatinaList.length;
         break;
       case 'NA00006115':
-        resultList = this._convertTravelAndMovieList(result[this._prodIdList[printProdId]]);
+        const convMovieInfo: any = this._convertTravelAndMovieList(result[this._prodIdList[printProdId]]);
+        resultList = convMovieInfo.list;
+        listTotal = convMovieInfo.listTotal;
         break;
       case 'NA00006116':
       case 'NA00006117':
-        this._listCase = 'B';
+        listCase = 'B';
         result[this._prodIdList[printProdId]].forEach((item, index) => {
           if (FormatHelper.isEmpty(item.benfStaDt)) {
             return true;
@@ -74,7 +75,7 @@ class ProductMobileplanLookupTplan extends TwViewController {
             };
           }
 
-          this._listTotal++;
+          listTotal++;
           resultList[yearKey][benfStaDtKey].list.push(Object.assign(item, {
             prodNm: printProdId === 'NA00006116' ? item.watchDcNm : item.primProdNm,
             prodLabel: PRODUCT_INFINITY_BENEFIT_PROD_NM[printProdId],
@@ -85,7 +86,11 @@ class ProductMobileplanLookupTplan extends TwViewController {
         break;
     }
 
-    return resultList;
+    return {
+      listCase: listCase,
+      listTotal: listTotal,
+      list: resultList,
+    };
   }
 
   /**
@@ -94,6 +99,7 @@ class ProductMobileplanLookupTplan extends TwViewController {
    */
   private _convertTravelAndMovieList(list: any): any {
     const resultList: any = {};
+    let listTotal: any = 0;
 
     list.forEach((item, index) => {
       if (FormatHelper.isEmpty(item.issueDt)) {
@@ -114,7 +120,7 @@ class ProductMobileplanLookupTplan extends TwViewController {
         };
       }
 
-      this._listTotal++;
+      listTotal++;
       resultList[yearKey][issueDtKey].list.push(Object.assign(item, {
         issueDt: FormatHelper.isEmpty(item.issueDt) ? '' : DateHelper.getShortDateWithFormat(item.issueDt, 'YYYY.M.DD.'),
         hpnDt: FormatHelper.isEmpty(item.hpnDt) ? '' : DateHelper.getShortDateWithFormat(item.hpnDt, 'YYYY.M.DD.'),
@@ -122,7 +128,10 @@ class ProductMobileplanLookupTplan extends TwViewController {
       }));
     });
 
-    return resultList;
+    return {
+      list: resultList,
+      listTotal: listTotal
+    };
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
@@ -161,14 +170,16 @@ class ProductMobileplanLookupTplan extends TwViewController {
           tabId = 'onepass';
         }
 
+        const convertBenefitInfo: any = this._parseBenefitList(data.result, printProdId, tabId);
+
         res.render('mobileplan/lookup/product.mobileplan.lookup.tplan.html', Object.assign(renderCommonInfo, {
           beforeTDiyGrNm: currentGrToken.join(' '),
           beforeTDiyGrNmCategory: grToken[1],
           beforeTDiyGrDesc: PRODUCT_INFINITY_BENEFIT[data.result.beforeTDiyGrCd],
           beforeTDiyGrCd: printProdId,
-          benefitList: this._parseBenefitList(data.result, printProdId, tabId),
-          listCase: this._listCase,
-          listTotal: this._listTotal,
+          benefitList: convertBenefitInfo.list,
+          listCase: convertBenefitInfo.listCase,
+          listTotal: convertBenefitInfo.listTotal,
           tabId: tabId
         }));
       });

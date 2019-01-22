@@ -179,7 +179,11 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
   },
 
   _blurInputNumber: function() {
-    this.$inputNumber.val(Tw.FormatHelper.conTelFormatWithDash(this.$inputNumber.val()));
+    if (this.$inputNumber.length > 8) {
+      this.$inputNumber.val(Tw.FormatHelper.conTelFormatWithDash(this.$inputNumber.val()));
+    } else {
+      this.$inputNumber.val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$inputNumber.val()));
+    }
   },
 
   _focusInputNumber: function() {

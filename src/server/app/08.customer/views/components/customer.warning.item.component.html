@@ -1,13 +1,8 @@
 <script type="text/template" id="tpl_warning_list_item">
   {{#list}}
-  {{#ifCond emcyYn '===' 'Y'}}
-  <li class="important">
-  {{/ifCond}}
-  {{#ifCond emcyYn '===' 'N'}}
   <li>
-  {{/ifCond}}
-    <a href="/customer/damage-info/warning/view?idx={{bltn2BltnId}}" class="list-inner">
-      <strong class="list-tit">{{bltnTitleNm}}</strong>
+    <a href="/customer/damage-info/warning/view?icntsId={{icntsId}}" class="list-inner">
+      <strong class="list-tit">{{icntsTitNm}}</strong>
       <em class="list-date">{{date}}</em>
     </a>
   </li>

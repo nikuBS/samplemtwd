@@ -26,7 +26,11 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <ul class="prevention-list fe-list">
-                    <% for (var i in importList) { %>
+                    <% for (var i in importList) {
+                        if (i > 4) {
+                            break;
+                        }
+                    %>
                     <li class="important">
                         <a href="/customer/damage-info/warning/view?icntsId=<%= importList[i].icntsId %>" class="list-inner">
                             <strong class="list-tit tx-bold"><%= importList[i].icntsTitNm %></strong>
@@ -43,6 +47,11 @@
                     </li>
                     <% } %>
                 </ul>
+                <% if ( totalPages > 1 ) { %>
+                <div class="bt-more fe-btn_more_list">
+                    <button>더 보기</button>
+                </div>
+                <% } %>
             </div>
             <!--// .cont-box -->
         </div>

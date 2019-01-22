@@ -685,6 +685,7 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A74: { TITLE: '선택하신 상품 해지를 취소 하시겠습니까?', MSG: '', BUTTON: '계속하기' },
   ALERT_3_A77: { TITLE: '지역 추가 시, 1개 지역당 1,650원(부가세포함)씩 과금이 추가됩니다.지역을 추가하시겠습니까?', MSG: '' },
   ALERT_3_A78: { TITLE: '할인지역은 최대 2개까지 등록가능합니다', MSG: '' },
+  ALERT_3_A82: { TITLE: '해당 옵션은 2019년 1월 18일자로 가입 종료되었습니다.', MSG: '' },
   ALERT_ALREADY_PRODUCT: '이미 사용중인 상품입니다.',
   ALERT_ALREADY_TERM_PRODUCT: '사용중이지 않은 상품입니다.',
   ALERT_NUMBER_MIN: '최소 한개의 지정번호는 존재해야 합니다.',
@@ -703,7 +704,7 @@ Tw.ALERT_MSG_PASSWORD = {
   A16: '비밀번호는 4자리입니다.',
   A17: '입력하신 비밀번호가 일치하지 않습니다.',
   A18: '연속된 숫자는 설정하실 수 없습니다.',
-  A19: '동일한 숫자는 설정하실 수 업습니다.'
+  A19: '동일한 숫자는 설정하실 수 없습니다.'
 };
 
 Tw.ALERT_MSG_BENEFIT = {
