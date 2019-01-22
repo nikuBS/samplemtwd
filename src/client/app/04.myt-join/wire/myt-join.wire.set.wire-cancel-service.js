@@ -69,6 +69,11 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     this.$entryTpl = $('#fe-entryTpl');
     this.$entryTplDate = $('#fe-entryTplDate');
 
+    // 날짜정보 넣기
+    var textDtObj = {
+      dtInfo : Tw.DateHelper.getShortDateNoDot(new Date())
+    };
+    this._svcHbDetailList(textDtObj, this.outputDtArea, this.$entryTplDate);
   },
   _bindEvent: function () {
     this.infoLi.on('click', $.proxy(this.$infoLiEvt, this));
@@ -572,11 +577,11 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
       // Tw.Logger.info('[cancelFeeInfo]', this.cancelFeeInfo);
       this._svcHbDetailList(this.cancelFeeInfo, this.outputArea, this.$entryTpl);
 
-      // 날짜정보 넣기
-      var textDtObj = {
-        dtInfo : Tw.DateHelper.getShortDateNoDot(this.cancelFeeInfo.reqDate)
-      };
-      this._svcHbDetailList(textDtObj, this.outputDtArea, this.$entryTplDate);
+      // // 날짜정보 넣기
+      // var textDtObj = {
+      //   dtInfo : Tw.DateHelper.getShortDateNoDot(this.cancelFeeInfo.reqDate)
+      // };
+      // this._svcHbDetailList(textDtObj, this.outputDtArea, this.$entryTplDate);
 
     } else if ( res.code === 'ZINVE8888' ) {
       $('#divEmpty').show();
