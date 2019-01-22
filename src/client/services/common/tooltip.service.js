@@ -31,6 +31,9 @@ Tw.TooltipService.prototype = {
       }
     }
   },
+  separateInit: function ($target) {
+    this._getContents($target);
+  },
   _getTip: function () {
     if (this.$menuId) {
       this._apiService.request(Tw.NODE_CMD.GET_TOOLTIP, {menuId: this.$menuId})
@@ -54,9 +57,9 @@ Tw.TooltipService.prototype = {
   _failAlert: function (err) {
     Tw.Error(err.code, err.msg).pop();
   },
-  _getContents: function () {
+  _getContents: function (target) {
     for (var i = 0; i < this._contentList.length; i++) {
-      var $target = this.$container.find('button[id="' + this._contentList[i].mtwdTtipId + '"]');
+      var $target = target || this.$container.find('button[id="' + this._contentList[i].mtwdTtipId + '"]');
       if (!$target.hasClass('fe-tip')) {
         $target.addClass('fe-tip');
 
