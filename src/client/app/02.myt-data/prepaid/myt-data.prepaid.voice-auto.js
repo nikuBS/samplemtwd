@@ -181,13 +181,13 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
       chargeCd: this.chargeCd,
       endDt: $('.fe-select-expire').val().replace(/-/g, '')
     }
-    this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=auto&' + $.param(htParams));
+    // this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=auto&' + $.param(htParams));
 
-    // if ( res.code === Tw.API_CODE.CODE_00 ) {
-    //   this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=auto&' + $.param(htParams));
-    // } else {
-    //   Tw.Error(res.code, res.msg).pop();
-    // }
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=auto&' + $.param(htParams));
+    } else {
+      Tw.Error(res.code, res.msg).pop();
+    }
   },
 
   _onCompleteRechargeAutoChange: function (res) {
