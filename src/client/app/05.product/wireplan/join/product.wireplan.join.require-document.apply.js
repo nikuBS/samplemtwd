@@ -35,6 +35,7 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
   },
 
   _bindEvent: function() {
+    this.$container.on('click', 'input[type=file]', $.proxy(this._openCustomFileChooser, this));
     this.$btnExplainFileAdd.on('click', $.proxy(this._uploadExplainFile, this));
     this.$btnOpenHistoryDetail.on('click', $.proxy(this._openHistoryDetailPop, this));
     this.$explainFile.on('change', $.proxy(this._onChangeExplainFile, this));
@@ -48,6 +49,44 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
     }
 
     this._toggleBtn(this.$btnExplainFileAdd, !Tw.FormatHelper.isEmpty(e.currentTarget.files));
+  },
+
+  _openCustomFileChooser: function (e) {
+    var $target = $(e.currentTarget);
+
+    if ( Tw.CommonHelper.isLowerVersionAndroid() ) {
+      this._nativeService.send(Tw.NTV_CMD.OPEN_FILE_CHOOSER, {
+        dest: Tw.UPLOAD_TYPE.RESERVATION
+      }, $.proxy(this._nativeFileChooser, this, $target));
+    }
+  },
+
+  _nativeFileChooser: function ($target, response) {
+    if (response.resultCode === Tw.NTV_CODE.CODE_F03) {
+      return this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A00);
+    }
+
+    if (response.resultCode === Tw.NTV_CODE.CODE_F02) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A33.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A33.TITLE);
+    }
+
+    if (response.resultCode === Tw.NTV_CODE.CODE_F01) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE);
+    }
+
+    if (this._fileList.length > 4) {
+      return this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A02);
+    }
+
+    var params = response.params;
+    var fileInfo = params.fileData.result[0];
+
+    this._fileList.push(fileInfo);
+    this.$fileList.append(this._fileTemplate(fileInfo));
+    this.$fileWrap.show();
+
+    this._clearExplainFile();
+    this._procEnableApplyBtn();
   },
 
   _uploadExplainFile: function() {
