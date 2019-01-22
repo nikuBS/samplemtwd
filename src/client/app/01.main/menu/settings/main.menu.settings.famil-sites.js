@@ -8,6 +8,7 @@ Tw.MainMenuSettingsFamilySites = function (rootEl) {
   this.$container = rootEl;
 
   this._nativeService = Tw.Native;
+  this._popupService = Tw.Popup;
 
   this._bindEvents();
 };
@@ -25,24 +26,64 @@ Tw.MainMenuSettingsFamilySites.prototype = {
     })
   },
   _onAppLink: function (e) {
-    /*
     var appKey = 'gtwd';
+    var scheme = 'gtwdschem://';
+    var schemeAndroid = scheme + 'wake';
     var package = 'com.sktelecom.gtwd';
-    this._nativeService.send(
-      Tw.NTV_CMD.IS_INSTALLED,
-      {
-        list: [{
-          appKey: appKey,
-          scheme: '',
-          package: 'com.sktelecom.gtwd'
-        }]
-      },
-      $.proxy(function (res) {
-        if (res.params.list.length !== 0 && res.params.list[0][appKey]) {
-          this._nativeService.send(Tw.NTV_CMD.OPEN_APP, { scheme: '', package: package });
+    var iOSStore = 'https://itunes.apple.com/kr/app/t-world-global/id1281412537?l=en&mt=8';
+
+    if (Tw.BrowserHelper.isApp()) {
+      this._nativeService.send(
+        Tw.NTV_CMD.IS_INSTALLED,
+        {
+          list: [{
+            appKey: appKey,
+            scheme: scheme,
+            package: package
+          }]
+        },
+        $.proxy(function (res) {
+          if (res.params.list.length !== 0 && res.params.list[0][appKey]) {
+            this._nativeService.send(Tw.NTV_CMD.OPEN_APP, { scheme: scheme, package: package });
+          } else {
+            if (Tw.BrowserHelper.isAndroid()) {
+              url = 'intent://scan/#Intent;package=com.sktelecom.gtwd;end';
+              this._nativeService.send(Tw.NTV_CMD.OPEN_URL, {
+                type: Tw.NTV_BROWSER.EXTERNAL,
+                href: url
+              });
+            } else if (Tw.BrowserHelper.isIos()) {
+              url= iOSStore;
+              Tw.CommonHelper.openUrlExternal(url);
+            }
+          }
+        }, this)
+      );
+    } else {
+      var openMarket = function () {
+        window.location.replace('intent://scan/#Intent;package=com.sktelecom.gtwd;end');
+      }
+      var openConfirm = $.proxy(function() {
+        if (Tw.BrowserHelper.isIos()) {
+          window.location.replace(iOSStore);
+        } else {
+          this._popupService.openConfirmButton(
+            'T World Global' + Tw.POPUP_CONTENTS.APP_NOT_INSTALLED,
+            ' ',
+            openMarket,
+            null,
+            Tw.BUTTON_LABEL.NO,
+            Tw.BUTTON_LABEL.YES
+          );
         }
-      }, this)
-    );
-    */
+      }, this);
+
+      setTimeout(openConfirm, 1000);
+      if (Tw.BrowserHelper.isAndroid()) {
+        window.location.href = schemeAndroid;
+      } else {
+        window.location.href = scheme;
+      }
+    }
   }
 };
