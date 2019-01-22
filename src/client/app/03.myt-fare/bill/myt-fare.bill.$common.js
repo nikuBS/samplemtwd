@@ -27,7 +27,7 @@ Tw.MyTFareBillCommon.prototype = {
     this._selectedLine = [];
     this._billList = [];
     this._moreCnt = 0;
-    this._standardCnt = 3;
+    this._standardCnt = 5;
     this._amount = this.$container.find('.fe-amount').data('value');
     this._isClicked = false;
   },
