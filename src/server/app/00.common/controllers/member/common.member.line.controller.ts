@@ -11,6 +11,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import { LINE_NAME, SVC_ATTR_NAME } from '../../../../types/bff.type';
 import DateHelper from '../../../../utils/date.helper';
 import { DEFAULT_LIST_COUNT } from '../../../../types/config.type';
+import { Observable } from '../../../../../../node_modules/rxjs/Observable';
 
 class CommonMemberLine extends TwViewController {
   constructor() {
@@ -18,6 +19,11 @@ class CommonMemberLine extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    // Observable.combineLatest([
+    //   this.apiService.request(API_CMD.BFF_03_0004, { svcCtg: LINE_NAME.MOBILE, pageSize: DEFAULT_LIST_COUNT })
+    // ]).subscribe(([mobile]) => {
+    //   console.log(mobile);
+    // });
     this.apiService.request(API_CMD.BFF_03_0004, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         const list = resp.result;
@@ -54,7 +60,8 @@ class CommonMemberLine extends TwViewController {
 
     lineData.map((line) => {
       line.showSvcAttrCd = SVC_ATTR_NAME[line.svcAttrCd];
-      line.showSvcScrbDtm = FormatHelper.isNumber(line.svcScrbDt) ? DateHelper.getShortDateNoDot(line.svcScrbDt) : FormatHelper.conDateFormatWIthDash(line.svcScrbDt);
+      line.showSvcScrbDtm = FormatHelper.isNumber(line.svcScrbDt) ?
+        DateHelper.getShortDateNoDot(line.svcScrbDt) : FormatHelper.conDateFormatWIthDash(line.svcScrbDt);
       line.showName = FormatHelper.isEmpty(line.nickNm) ? SVC_ATTR_NAME[line.svcAttrCd] : line.nickNm;
     });
   }
