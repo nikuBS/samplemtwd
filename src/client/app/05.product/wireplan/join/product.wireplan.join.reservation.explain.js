@@ -63,6 +63,7 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     this.$btnFamilyAdd.on('click', $.proxy(this._addFamily, this));
     this.$btnExplainFileAdd.on('click', $.proxy(this._uploadExplainFile, this));
 
+    this.$container.on('click', 'input[type=file]', $.proxy(this._openCustomFileChooser, this));
     this.$familyAddWrap.on('keyup input', 'input[type=text]', $.proxy(this._procEnableAddFamilyBtn, this));
     this.$familyList.on('change', 'input[type=checkbox]', $.proxy(this._procEnableApplyBtn, this));
     this.$familyList.on('click', '.fe-btn_family_del', $.proxy(this._delFamily, this));
@@ -168,6 +169,8 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
 
   _setFamilyType: function(e) {
     this._familyType = $(e.currentTarget).data('family_type');
+    this._procEnableAddFamilyBtn();
+
     this.$btnFamilyType.html(Tw.FAMILY_TYPE[this._familyType.toUpperCase()] + $('<div\>').append(this.$btnFamilyType.find('.ico')).html());
     this._popupService.close();
   },
@@ -228,6 +231,44 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     }
 
     this._toggleBtn(this.$btnExplainApply, true);
+  },
+
+  _openCustomFileChooser: function (e) {
+    var $target = $(e.currentTarget);
+
+    if ( Tw.CommonHelper.isLowerVersionAndroid() ) {
+      this._nativeService.send(Tw.NTV_CMD.OPEN_FILE_CHOOSER, {
+        dest: Tw.UPLOAD_TYPE.RESERVATION
+      }, $.proxy(this._nativeFileChooser, this, $target));
+    }
+  },
+
+  _nativeFileChooser: function ($target, response) {
+    if (response.resultCode === Tw.NTV_CODE.CODE_F03) {
+      return this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A00);
+    }
+
+    if (response.resultCode === Tw.NTV_CODE.CODE_F02) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A33.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A33.TITLE);
+    }
+
+    if (response.resultCode === Tw.NTV_CODE.CODE_F01) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE);
+    }
+
+    if (this._fileList.length > 4) {
+      return this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A02);
+    }
+
+    var params = response.params;
+    var fileInfo = params.fileData.result[0];
+
+    this._fileList.push(fileInfo);
+    this.$fileList.append(this._fileTemplate(fileInfo));
+    this.$fileWrap.show();
+
+    this._clearExplainFile();
+    this._procEnableApplyBtn();
   },
 
   _uploadExplainFile: function() {
@@ -294,5 +335,6 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
       fileList: this._fileList
     });
   }
+
 };
 

@@ -188,7 +188,8 @@ Tw.CommonHelper = (function () {
   var setXtSvcInfo = function() {
     var xtLid = Tw.CommonHelper.getCookie('XTLID'),
       xtLoginId = Tw.CommonHelper.getCookie('XTLOGINID'),
-      xtLoginType = Tw.CommonHelper.getCookie('XTLOGINTYPE');
+      xtLoginType = Tw.CommonHelper.getCookie('XTLOGINTYPE'),
+      xtSvcGr = Tw.CommonHelper.getCookie('XTSVCGR');
 
     if (!Tw.BrowserHelper.isApp() || xtLoginType === 'Z') {
       return;
@@ -196,8 +197,14 @@ Tw.CommonHelper = (function () {
 
     Tw.Native.send(Tw.NTV_CMD.SET_XTSVCINFO, {
       xtLid: Tw.FormatHelper.isEmpty(xtLid) ? '' : xtLid,
-      xtLoginId: Tw.FormatHelper.isEmpty(xtLoginId) ? '' : xtLoginId
+      xtLoginId: Tw.FormatHelper.isEmpty(xtLoginId) ? '' : xtLoginId,
+      xtSvcGr: Tw.FormatHelper.isEmpty(xtSvcGr) ? '' : xtSvcGr
     });
+  };
+
+  var isLowerVersionAndroid = function() {
+    var androidVersion = Tw.BrowserHelper.getAndroidVersion();
+    return androidVersion && androidVersion.indexOf('4') !== -1;
   };
 
   return {
@@ -220,6 +227,7 @@ Tw.CommonHelper = (function () {
     openTermLayer: openTermLayer,
     fileUpload: fileUpload,
     replaceCdnUrl: replaceCdnUrl,
-    setXtSvcInfo: setXtSvcInfo
+    setXtSvcInfo: setXtSvcInfo,
+    isLowerVersionAndroid: isLowerVersionAndroid
   };
 })();

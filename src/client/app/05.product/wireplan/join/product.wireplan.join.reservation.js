@@ -539,7 +539,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
       wirelessMemberList = resp.result.combinationWirelessMemberList.map(function(item) {
       return {
         name: item.custNm,
-        number: item.svcNum,
+        number: Tw.FormatHelper.conTelFormatWithDash(item.svcNum),
         fam: {
           leader: item.relClCd === '00',
           parents: item.relClNm === Tw.PRODUCT_COMBINE_FAMILY_TYPE.parents,
