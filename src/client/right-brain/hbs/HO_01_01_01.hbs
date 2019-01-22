@@ -21,7 +21,7 @@
                     {{#each data}}
                     <li class="depth1-type1">
                         <label for="{{menuId}}" class="bt fe-label-menu" aria-checked="{{#if quickAdded}}true{{else}}false{{/if}}"><!-- 체크 상태일 경우 aria-checked="true" -->
-                            <span class="ico"><img src="{{cdn}}{{iconImgFilePathNm}}" alt="샘플아이콘"></span> {{menuNm}}
+                            <span class="ico"><img src="{{../cdn}}{{iconImgFilePathNm}}" alt="샘플아이콘"></span> {{menuNm}}
                             <span class="custom-form"><input class="fe-input-menu" type="checkbox" id="{{menuId}}" {{#if quickAdded}}checked="checked"{{/if}} data-menuid="{{menuId}}"><span class="c-type1"></span></span><!-- 체크상태일 경우 checked="checked" -->
                         </label>
                         {{#if hasChildren}}
