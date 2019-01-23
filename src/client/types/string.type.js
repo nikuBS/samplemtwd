@@ -398,7 +398,7 @@ Tw.ALERT_MSG_COMMON = {
     TITLE: 'SMS인증을 사용할 수 없습니다.',
     MSG: '인증할 수 있는 회선번호가 없습니다.<br />고객센터(114)로 문의주세요.'
   },
-  STEP_CANCEL: { TITLE: '안내', MSG: '입력하신 정보는 모두 취소됩니다. 창을 닫으시겠습니까?' },
+  STEP_CANCEL: { TITLE: '', MSG: '입력하신 정보는 모두 취소됩니다. 창을 닫으시겠습니까?' },
   CHANGE: '변경하시겠습니까?'
 };
 
@@ -469,7 +469,7 @@ Tw.ALERT_MSG_MYT_DATA = {
   ALERT_2_A72: {
     TITLE: '알람 설정 하시겠습니까?',
     MSG_1: '사용중인 선불폰 이동전화의 잔액이[',
-    MSG_2: '원]이면 SMS로 알림 메시지가 전송됩니다.',
+    MSG_2: ']이면 SMS로 알림 메시지가 전송됩니다.',
     BUTTON: '설정하기' },
   DATA_PESTER: {
     TITLE: '[SKT] ',
