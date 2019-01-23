@@ -127,6 +127,7 @@ class MytDataSubmainController extends TwViewController {
         // 데이터한도요금제 충전내역
         dcBkd.map((item) => {
           if ( this.isPPS ) {
+            item['opDt'] = item.chargeDt;
             item['class'] = (item.chargeTp === '1') ? 'once' : 'auto';
             item['u_type'] = 'data';
             item['u_title'] = PREPAID_PAYMENT_PAY_CD[item.payCd];
@@ -176,6 +177,7 @@ class MytDataSubmainController extends TwViewController {
         // 팅/쿠키즈/안심요금 충전 내역
         etcBkd.map((item) => {
           if ( this.isPPS ) {
+            item['opDt'] = item.chargeDt;
             item['class'] = (item.chargeTp === '1') ? 'once' : 'auto';
             item['u_type'] = 'voice';
             item['u_title'] = PREPAID_PAYMENT_PAY_CD[item.payCd];
@@ -469,9 +471,7 @@ class MytDataSubmainController extends TwViewController {
         return resp.result;
       } else {
         // error
-        return {
-          info: resp
-        };
+        return null;
       }
     });
   }

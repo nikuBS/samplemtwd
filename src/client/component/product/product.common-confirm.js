@@ -291,8 +291,7 @@ Tw.ProductCommonConfirm.prototype = {
 
     this._popupService.close();
     if($target && $target.hasClass('set-info')) {
-      // 선택약정할인 상품인 경우 예외 처리 (Edit: KIM inHwan)
-      this._historyService.go(-3);
+      this._historyService.goBack();
     }
   },
 

@@ -214,31 +214,6 @@ Tw.MyTFareSubMain.prototype = {
     this._svcMgmtNumList = [];
     this._feeChartInfo = [];
     this._initBanners();
-  },
-
-  _initBanners: function () {
-    this._apiService.request(Tw.NODE_CMD.GET_BANNER_TOS, { code: '0008' })
-      .done($.proxy(this._successBanner, this, Tw.REDIS_BANNER_TYPE.TOS))
-      .fail($.proxy(this._errorRequest, this));
-  },
-
-  _successBanner: function (type, resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      var result = resp.result;
-      var isCheckBanner = type === Tw.REDIS_BANNER_TYPE.ADMIN || this._checkBanner(result);
-      if ( isCheckBanner ) {
-        new Tw.BannerService(this.$container, type, result.imgList, 'M', $.proxy(this._successDrawBanner, this));
-      }
-      else {
-        this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, {menuId: this.data.pageInfo.menuId})
-          .done($.proxy(this._successBanner, this, Tw.REDIS_BANNER_TYPE.ADMIN))
-          .fail($.proxy(this._errorRequest, this));
-      }
-    }
-    else {
-      this.$container.find('[data-id=banners-empty]').hide();
-      this.$container.find('[data-id=banners]').hide();
-    }
     /**
      * /청구요금인 경우
      * 1. 최근요금내역
@@ -253,6 +228,32 @@ Tw.MyTFareSubMain.prototype = {
     }
     else {
       this._claimPaymentRequest();
+    }
+  },
+
+  _initBanners: function () {
+    this._apiService.request(Tw.NODE_CMD.GET_BANNER_TOS, { code: '0008' })
+      .done($.proxy(this._successBanner, this, Tw.REDIS_BANNER_TYPE.TOS))
+      .fail($.proxy(this._errorRequest, this));
+  },
+
+  _successBanner: function (type, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      var result = resp.result;
+      var isCheckBanner = type === Tw.REDIS_BANNER_TYPE.ADMIN || this._checkBanner(result);
+      if ( isCheckBanner ) {
+        var list = (type === Tw.REDIS_BANNER_TYPE.ADMIN) ? result.banners : result.imgList;
+        new Tw.BannerService(this.$container, type, list, 'M', $.proxy(this._successDrawBanner, this));
+      }
+      else {
+        this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, {menuId: this.data.pageInfo.menuId})
+          .done($.proxy(this._successBanner, this, Tw.REDIS_BANNER_TYPE.ADMIN))
+          .fail($.proxy(this._errorRequest, this));
+      }
+    }
+    else {
+      this.$container.find('[data-id=banners-empty]').hide();
+      this.$container.find('[data-id=banners]').hide();
     }
   },
 
