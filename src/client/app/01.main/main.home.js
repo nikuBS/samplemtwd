@@ -306,6 +306,7 @@ Tw.MainHome.prototype = {
     // var layerType = Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER;
     Tw.Logger.info('[Home] layerType', layerType);
     if ( !Tw.FormatHelper.isEmpty(layerType) ) {
+      this._updateNoticeType();
       if ( layerType === Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER || layerType === Tw.LOGIN_NOTICE_TYPE.EXIST_CUSTOMER ) {
         setTimeout($.proxy(function () {
           this._lineRegisterLayer.openRegisterLinePopup(layerType);
@@ -318,6 +319,10 @@ Tw.MainHome.prototype = {
         }, this), 100);
       }
     }
+  },
+  _updateNoticeType: function () {
+    this._apiService.request(Tw.NODE_CMD.UPDATE_NOTICE_TYPE, {})
+      .done($.proxy(this._successUpdateNoticeType, this));
   },
   _closeNewLine: function () {
     this._historyService.goLoad('/common/member/line');
@@ -649,7 +654,7 @@ Tw.MainHome.prototype = {
       var tplWelcome = Handlebars.compile($welcomeTemp.html());
       this.$welcomeEl.html(tplWelcome({ msg: list[0] }));
       $('#fe-bt-noti-close').on('click', $.proxy(this._onClickCloseNoti, this, nonShow));
-      $('#fe-bt-noti-go').on('click', $.proxy(this._onClickGoNoti, this, list[0]));
+      $('#fe-bt-noti-go').on('click', $.proxy(this._onClickGoNoti, this, list[0], nonShow));
       // $('#fe-bt-go-recharge').on('click', $.proxy(this._onClickBtRecharge, this));
       this._resetHeight();
     } else {
@@ -675,7 +680,8 @@ Tw.MainHome.prototype = {
     }
     this._closeNoti();
   },
-  _onClickGoNoti: function (noti) {
+  _onClickGoNoti: function (noti, nonShow) {
+    this._onClickCloseNoti(nonShow);
     if ( noti.linkTrgtClCd === '1' ) {
       this._historyService.goLoad(noti.linkUrl);
     } else if ( noti.linkTrgtClCd === '2' ) {
@@ -803,7 +809,8 @@ Tw.MainHome.prototype = {
     _.map(menuId, $.proxy(function (id, index) {
       var menu = {
         menuId: id,
-        iconImgFilePathNm: iconPath[index] || '/dummy/icon_80px_default_shortcut@2x.png',    // iconImgFilePathNm
+        iconImgFilePathNm: Tw.FormatHelper.isEmpty(iconPath[index]) || iconPath[index] === 'null' ?
+          '/img/dummy/icon_80px_default_shortcut@2x.png' : iconPath[index],    // iconImgFilePathNm
         menuNm: menuNm[index],
         menuUrl: menuUrl[index]
       };

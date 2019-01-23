@@ -19,6 +19,7 @@ Tw.LineComponent = function () {
   this._lineList = null;
   this._changeLine = false;
   this._customerLogin = false;
+  this._customerSetting = false;
   this._openLineList = false;
   this._callback = null;
 
@@ -30,6 +31,7 @@ Tw.LineComponent.prototype = {
   ERROR_CODE: {
     BFF0012: 'BFF0012',    //	고객비밀번호 인증이 필요합니다.
     BFF0013: 'BFF0013',    //	고객비밀번호 잠김 해제가 필요합니다.
+    BFF0014: 'BFF0014',
     ICAS3216: 'ICAS3216'   // 고객비밀번호가 잠김
   },
   onClickLine: function (selectedMgmt) {
@@ -93,6 +95,8 @@ Tw.LineComponent.prototype = {
       this._completeLogin();
     } else if ( this._customerLogin ) {
       this._customerPwd.openLayer(this._mdn, this._svcMgmtNum, $.proxy(this._completeCustomerLogin, this));
+    } else if ( this._customerSetting ) {
+      this._historyService.goLoad('/myt-join/custpassword');
     } else if ( this._goAuthLine ) {
       this._historyService.goLoad('/common/member/line');
     }
@@ -171,9 +175,17 @@ Tw.LineComponent.prototype = {
       } else {
         this._onCloseListPopup();
       }
-    } else if ( resp.code === this.ERROR_CODE.BFF0013 || resp.code === this.ERROR_CODE.ICAS3216 ) {
+    } else if ( resp.code === this.ERROR_CODE.BFF0013 ) {
       // 고객보호 비밀번호 잠김
       Tw.Error(resp.code, resp.msg).pop();
+    } else if ( resp.code === this.ERROR_CODE.BFF0014 ) {
+      this._customerSetting = true;
+      if ( this._openLineList ) {
+        this._popupService.close();
+      } else {
+        this._onCloseListPopup();
+      }
+      // 고객보호 비밀번호 설정페이지
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }

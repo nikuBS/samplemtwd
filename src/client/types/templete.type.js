@@ -897,7 +897,7 @@ Tw.CUSTOMER_SITE_INFO_TYPEA_CHOICE = {
       { value: '가려진 정보를 보는 방법', attr: 'value="B"', option:'B'}
     ]
   }]
-}
+};
 
 
 Tw.CUSTOMER_SERVICE_INFO_USIM_DEFINE = {
@@ -909,4 +909,17 @@ Tw.CUSTOMER_SERVICE_INFO_USIM_DEFINE = {
       {txt: '서비스 관련 기타 용어', 'radio-attr': 'name="usimDefineTab" value="4"'}
     ]
   }
-}
+};
+
+Tw.LINE_RESITTER_TMPL =
+  '{{#each list}}' +
+  '<li class="checkbox type01-big fe-item" role="checkbox" aria-checked="false" data-svcMgmtNum="{{svcMgmtNum}}" data-showName="{{showName}}" data-svcNum="{{svcNum}}">' +
+  '<input type="checkbox" class="fe-check-child" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox3"/>' +
+  '<div class="comp-list-layout" id="aria-comp-checkbox3" aria-hidden="true">' +
+  '<p class="layout-text">' +
+  '<span class="mtext">{{showName}}</span>' +
+  '<span class="stext"><span class="info">{{showDetail}}</span>{{#if showPet}}<span class="info">{{eqpMdlNm}}</span>{{/if}}</span>' +
+  '</p>' +
+  '</div>' +
+  '</li>' +
+  '{{/each}}';

@@ -34,16 +34,21 @@
                     <!-- .widget -->
                     <div class="widget-box accordion">
                         <h3 class="tit-a">
-                            <button role="button" aria-pressed="">모바일<span class="num ff-tg-bolder"><%= lineList.m.length %></span></button>
+                            <button role="button" aria-pressed="">모바일<span class="num ff-tg-bolder"><%= lineList.mCnt %></span></button>
                         </h3>
                         <div class="acco-cover toggle fe-line-cover <%= showParam.m %>"><!-- toggle : 한개만 열기 -->
                             <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
                             <div class="list-edit-bt"><a a href="/common/member/line/edit?category=m" class="edit">편집</a></div>
                             <div class="acco-style">
-                                <ul class="acco-list fe-line-list">
+                                <ul id="fe-list-m" class="acco-list fe-line-list">
                                     <% lineList.m.map((line, index) => { %>
-                                    <li class="acco-box fe-line <% if(line.repSvcYn === 'Y') { %> pin <% } %> <%if(line.expsYn === 'N') { %> none-event <% } %> <% if(index >= showParam.defaultCnt) { %> none <% } %>"  data-svcMgmtNum="<%= line.svcMgmtNum%>">
-                                        <div class="acco-tit"><button role="button" aria-pressed="false"><span class="ico"></span><span class="txt fe-show-name"><%= line.showName %></span><span class="line"><%= line.svcNum %></span></button></div>
+                                    <% if(index < showParam.defaultCnt) { %>
+                                    <li class="acco-box fe-line <% if(line.repSvcYn === 'Y') { %> pin <% } %> <%if(line.expsYn === 'N') { %> none-event <% } %>"  data-svcMgmtNum="<%= line.svcMgmtNum%>">
+                                        <div class="acco-tit"><button role="button" aria-pressed="false">
+                                            <span class="ico"></span>
+                                            <span class="txt fe-show-name"><%= line.showName %></span>
+                                            <span class="line"><%= line.showDetail %></span>
+                                        </button></div>
                                         <div class="acco-cont">
                                             <div class="line-change-cont">
                                                 <ul>
@@ -77,12 +82,13 @@
                                             </div>
                                         </div>
                                     </li>
+                                    <% } %>
                                     <% }) %>
                                 </ul>
                             </div>
-                            <% if (lineList.m.length > showParam.defaultCnt) { %>
+                            <% if (lineList.mCnt > showParam.defaultCnt) { %>
                             <div class="bt-more">
-                                <button class="fe-bt-more" role="button" title="">더보기</button>
+                                <button class="fe-bt-more" role="button" title="" data-category="m">더보기</button>
                             </div>
                             <% } %>
                         </div>
@@ -104,22 +110,20 @@
                     <!-- .widget -->
                     <div class="widget-box accordion">
                         <h3 class="tit-a">
-                            <button role="button" aria-pressed="">인터넷/IPTV/집전화<span class="num ff-tg-bolder"><%= lineList.s.length %></span></button>
+                            <button role="button" aria-pressed="">인터넷/IPTV/집전화<span class="num ff-tg-bolder"><%= lineList.sCnt %></span></button>
                         </h3>
                         <div class="acco-cover toggle fe-line-cover <%= showParam.s %>"><!-- toggle : 한개만 열기 -->
                             <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
                             <div class="list-edit-bt"><a a href="/common/member/line/edit?category=s" class="edit">편집</a></div>
                             <div class="acco-style">
-                                <ul class="acco-list">
+                                <ul id="fe-list-s" class="acco-list">
                                     <% lineList.s.map((line, index) => { %>
-                                    <li class="acco-box fe-line <%if(line.expsYn === 'N') { %> none-event <% } %> <% if(index >= showParam.defaultCnt) { %> none <% } %>"  data-svcMgmtNum="<%= line.svcMgmtNum%>">
+                                    <% if(index < showParam.defaultCnt) { %>
+                                    <li class="acco-box fe-line <%if(line.expsYn === 'N') { %> none-event <% } %>"  data-svcMgmtNum="<%= line.svcMgmtNum%>">
                                         <div class="acco-tit"><button role="button" aria-pressed="false">
-                                            <span class="ico"></span><span class="txt fe-show-name"><%= line.showName %></span>
-                                            <% if(line.svcAttrCd === 'S3') { %>
-                                            <span class="line"><%= line.svcNum %></span>
-                                            <% } else { %>
-                                            <span class="line"><%= line.addr %></span>
-                                            <% } %>
+                                            <span class="ico"></span>
+                                            <span class="txt fe-show-name"><%= line.showName %></span>
+                                            <span class="line"><%= line.showDetail %></span>
                                         </button></div>
                                         <div class="acco-cont">
                                             <div class="line-change-cont">
@@ -151,12 +155,13 @@
                                             </div>
                                         </div>
                                     </li>
+                                    <% } %>
                                     <% }) %>
                                 </ul>
                             </div>
-                            <% if (lineList.s.length > showParam.defaultCnt) { %>
+                            <% if (lineList.sCnt > showParam.defaultCnt) { %>
                             <div class="bt-more">
-                                <button class="fe-bt-more" role="button" title="">더보기</button>
+                                <button class="fe-bt-more" role="button" title="" data-category="s">더보기</button>
                             </div>
                             <% } %>
                         </div>
@@ -169,7 +174,7 @@
             <% } %>
             <% } %>
             <% if (lineList.o) { %>
-            <% if (lineList.o.length > 0) { %>
+            <% if (lineList.oCnt > 0) { %>
             <hr class="cont-sp type1" aria-hidden="true"/>
             <!-- .cont-box -->
             <div class="cont-box nogaps">
@@ -178,16 +183,21 @@
                     <!-- .widget -->
                     <div class="widget-box accordion">
                         <h3 class="tit-a">
-                            <button role="button" aria-pressed="">보안솔루션<span class="num ff-tg-bolder"><%= lineList.o.length %></span></button>
+                            <button role="button" aria-pressed="">보안솔루션<span class="num ff-tg-bolder"><%= lineList.oCnt %></span></button>
                         </h3>
                         <div class="acco-cover toggle fe-line-cover <%= showParam.o %>"><!-- toggle : 한개만 열기 -->
                             <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
                             <div class="list-edit-bt"><a a href="/common/member/line/edit?category=o" class="edit">편집</a></div>
                             <div class="acco-style">
-                                <ul class="acco-list">
+                                <ul id="fe-list-o" class="acco-list">
                                     <% lineList.o.map((line, index) => { %>
-                                    <li class="acco-box fe-line <%if(line.expsYn === 'N') { %> none-event <% } %> <% if(index >= showParam.defaultCnt) { %> none <% } %>"  data-svcMgmtNum="<%= line.svcMgmtNum%>">
-                                        <div class="acco-tit"><button role="button" aria-pressed="false"><span class="ico"></span><span class="txt fe-show-name"><%= line.showName %></span><span class="line"><%= line.svcNum %></span></button></div>
+                                    <% if(index < showParam.defaultCnt) { %>
+                                    <li class="acco-box fe-line <%if(line.expsYn === 'N') { %> none-event <% } %>"  data-svcMgmtNum="<%= line.svcMgmtNum%>">
+                                        <div class="acco-tit"><button role="button" aria-pressed="false">
+                                            <span class="ico"></span>
+                                            <span class="txt fe-show-name"><%= line.showName %></span>
+                                            <span class="line"><%= line.showDetail %></span>
+                                        </button></div>
                                         <div class="acco-cont">
                                             <div class="line-change-cont">
                                                 <ul>
@@ -218,12 +228,13 @@
                                             </div>
                                         </div>
                                     </li>
+                                    <% } %>
                                     <% }) %>
                                 </ul>
                             </div>
-                            <% if (lineList.o.length > showParam.defaultCnt) { %>
+                            <% if (lineList.oCnt > showParam.defaultCnt) { %>
                             <div class="bt-more">
-                                <button class="fe-bt-more" role="button" title="">더보기</button>
+                                <button class="fe-bt-more" role="button" title="" data-category="o">더보기</button>
                             </div>
                             <% } %>
                         </div>
@@ -242,9 +253,50 @@
 </div>
 </body>
 <% include ../../components/javascript.component.html %>
+<script id="fe-line-tmpl" type="text/x-handlebars-template">
+    {{#each list}}
+    <li class="acco-box fe-line {{#if isRepSvcYn}} pin {{/if}} {{#unless isExpsYn}} none-event {{/unless}}"  data-svcMgmtNum="{{ svcMgmtNum }}">
+        <div class="acco-tit"><button class="fe-bt-detail" role="button" aria-pressed="false">
+            <span class="ico"></span>
+            <span class="txt fe-show-name">{{ showName }}</span>
+            <span class="line">{{ showDetail }}</span>
+        </button></div>
+        <div class="acco-cont">
+            <div class="line-change-cont">
+                <ul>
+                    <li>
+                        <dl>
+                            <dt>{{ showSvcAttrCd }}</dt>
+                            <dd>{{ eqpMdlNm }}</dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <dl>
+                            <dt>가입일자</dt>
+                            <dd>{{ showSvcScrbDtm }}</dd>
+                        </dl>
+                    </li>
+                </ul>
+                <div class="inputbox nickname-wrap readonly placeholder" style="width:100%">
+                    <span class="input">
+                        {{#if useNickName}}
+                        <input class="fe-input-nickname" type="text" value="{{ nickNm }}" maxlength="" title="닉네임" readonly>
+                        {{else}}
+                        <input class="fe-input-nickname" type="text" value="닉네임 입력" maxlength="" title="닉네임" readonly>
+                        {{/if}}
+                    </span>
+                    <span class="space"></span>
+                    <span class="bt-box"><button class="fe-bt-nickname">닉네임 설정</button></span>
+                </div>
+                <button class="change-first-bt mt30 fe-change-first">기준회선으로 등록하기</button>
+            </div>
+        </div>
+    </li>
+    {{/each}}
+</script>
 <script>
   $(document).ready(function () {
-    new Tw.CommonMemberLine($('#commonLine'));
+    new Tw.CommonMemberLine($('#commonLine'), '<%= showParam.defaultCnt %>');
   });
 </script>
 <% include ../../components/end.component.html %>

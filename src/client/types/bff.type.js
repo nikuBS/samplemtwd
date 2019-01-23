@@ -158,6 +158,18 @@ Tw.SVC_ATTR = {
   O1: '포인트캠'
 };
 
+Tw.SVC_ATTR_E = {
+  MOBILE_PHONE: 'M1',
+  PPS: 'M2',
+  T_POCKET_FI: 'M3',
+  T_LOGIN: 'M4',
+  T_WIBRO: 'M5',
+  INTERNET: 'S1',
+  IPTV: 'S2',
+  TELEPHONE: 'S3',
+  POINT_CAM: 'O1'
+};
+
 Tw.POINT_NM = {
   OK: 'OK캐쉬백',
   T: 'T포인트',
