@@ -250,6 +250,7 @@ Tw.CertificationSk.prototype = {
       this.$btCertAdd.parent().addClass('none');
       this.$btCert.parent().removeClass('none');
     } else {
+      this._onKeyin = false;
       this.$inputMdn.prop('readonly', true);
       this.$inputMdn.val(this._svcInfo.svcNum);
       this.$inputMdn.parents('#fe-inputbox-mdn').addClass('readonly');
