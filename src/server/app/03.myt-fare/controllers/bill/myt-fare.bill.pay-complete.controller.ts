@@ -6,13 +6,8 @@
 
 import {NextFunction, Request, Response} from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import {Observable} from 'rxjs/Observable';
-import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
-import DateHelper from '../../../../utils/date.helper';
-import {MYT_FARE_COMPLETE_MSG, MYT_FARE_PAYMENT_NAME} from '../../../../types/string.type';
-import {MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_TYPE, SVC_ATTR_NAME, SVC_CD} from '../../../../types/bff.type';
-import UnpaidList from '../../../../mock/server/payment/payment.realtime.unpaid.list.mock';
+import {MYT_FARE_COMPLETE_MSG} from '../../../../types/string.type';
 import ParamsHelper from '../../../../utils/params.helper';
 
 class MyTFareBillPayComplete extends TwViewController {
@@ -64,7 +59,11 @@ class MyTFareBillPayComplete extends TwViewController {
   private _getPrepayData(data: any, type: any): any {
     data.mainTitle = MYT_FARE_COMPLETE_MSG.PREPAY;
     data.centerName = MYT_FARE_COMPLETE_MSG.PREPAY_HISTORY;
-    data.centerUrl = '/myt-fare/bill/' + type + '/history';
+    if (type === 'small') {
+      data.centerUrl += '?sortType=micro-prepay';
+    } else {
+      data.centerUrl += '?sortType=content-prepay';
+    }
     data.confirmUrl = '/myt-fare/bill/' + type;
 
     return data;
