@@ -33,7 +33,10 @@
             <div class="container">
 
                 <div class="ti-caption-gray">
-                    <h4 class="tit">데이터 옵션 선택 <button type="button" class="tip-view" title="데이터 옵션 선택 정보보기" aria-haspopup="true">TIP</button></h4>
+                    <h4 class="tit">데이터 옵션 선택
+                        <% var tipId = data.nonOption ? 'MP_02_02_03_12_tip_02' : 'MP_02_02_03_12_tip_01' %>
+                        <button type="button" class="tip-view" id="<%= tipId %>" aria-haspopup="true">TIP</button>
+                    </h4>
                     <p class="num"><%= data.svcInfo.svcNum %></p>
                 </div>
 
@@ -62,7 +65,7 @@
                                             </p>
                                         </div>
                                     </li>
-                                    <% if (data.nonOption) { %>
+                                    <% if (!data.nonOption) { %>
                                     <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                         <input type="radio" data-info="NA00005420" name="radio" value="" title="매일 6시간 데이터 무제한" aria-labelledby="aria-comp-radio3" /><!-- 체크상태일 경우 checked="checked" -->
                                         <div class="comp-list-layout" id="aria-comp-radio3">

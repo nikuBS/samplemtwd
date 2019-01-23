@@ -38,8 +38,7 @@ Tw.ProductMobileplanSettingBandYT.prototype = {
   },
 
   _onClickOkBtn: function () {
-    this._popupService.openModalTypeA(this.data.title, Tw.ALERT_MSG_COMMON.CHANGE, Tw.PRODUCT_TYPE_NM.CHANGE,
-      null, $.proxy(this._onSetBandYT, this), null);
+    this._onSetBandYT();
   },
 
   _onChangeRadioBox: function (event) {
@@ -48,17 +47,45 @@ Tw.ProductMobileplanSettingBandYT.prototype = {
   },
 
   _onSetBandYT: function () {
-    // TODO: 서버 오류로 추후 기능 테스트 필요!
-    this._apiService.request(Tw.API_CMD.BFF_10_0035, { addCd: this.info }, {}, [this.data.prodId])
+    if ( this.info === this.data.bandyt.useOptionProdId ) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.TITLE);
+    }
+
+    Tw.CommonHelper.startLoading('.wrap', 'grey', true);
+    this._apiService.request(Tw.API_CMD.BFF_10_0035, { addCd: '3' }, {}, [this.info])
       .done($.proxy(this._onSuccessJoinAddition, this))
       .fail($.proxy(this._onFailJoinAddtion, this));
   },
 
-  _onSuccessJoinAddition: function () {
-    this._historyService.go(-2);
+  _onSuccessJoinAddition: function (resp) {
+    Tw.CommonHelper.endLoading('.wrap');
+
+    if ( resp.code !== Tw.API_CODE.CODE_00 ) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    this._popupService.open({
+      hbs: 'complete_product',
+      data: {
+        prodCtgNm: Tw.PRODUCT_TYPE_NM.SETTING,
+        typeNm: Tw.PRODUCT_TYPE_NM.CHANGE
+      }
+    }, $.proxy(this._bindSuccessPopup, this), $.proxy(this._onClosePop, this), 'save_setting_success');
   },
 
   _onFailJoinAddtion: function (resp) {
     Tw.Error(resp.code, resp.msg).pop();
+  },
+
+  _bindSuccessPopup: function ($popupContainer) {
+    $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
+  },
+
+  _closePop: function () {
+    this._popupService.close();
+  },
+
+  _onClosePop: function () {
+    this._historyService.goBack();
   }
 };
