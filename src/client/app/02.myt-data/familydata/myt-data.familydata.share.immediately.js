@@ -31,7 +31,13 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
 
   _confirmSubmit: function() {
     var POPUP = Tw.MYT_DATA_FAMILY_CONFIRM_SHARE;
-    this._popupService.openModalTypeA(POPUP.TITLE, POPUP.CONTENTS, POPUP.BTN_NAME, null, $.proxy(this._handleSubmit, this));
+    this._popupService.openModalTypeA(
+      POPUP.TITLE,
+      POPUP.CONTENTS.replace('{data}', this.$amountInput.val()),
+      POPUP.BTN_NAME,
+      null,
+      $.proxy(this._handleSubmit, this)
+    );
   },
 
   _handleSubmit: function() {
