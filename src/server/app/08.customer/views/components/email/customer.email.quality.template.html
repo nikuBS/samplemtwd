@@ -217,13 +217,24 @@
         </div>
         <div class="inquiryform-wrap">
             <p class="title">문의하실 회선과 현상을 선택 후 내용을 기재해 주세요</p>
-            <% if ( allSvc.s && allSvc.s.length >= 1 ) { %>
+            <% if ( allSvc.s && allSvc.s.filter(function(item){return item.svcGr === 'I' || item.svcGr === 'T'}).length >= 2 ) {
+                var filteredLine = allSvc.s.filter(function(item){return item.svcGr === 'I' || item.svcGr === 'T'});
+            %>
+            <div class="info-form-box">
+                <button class="bt-dropdown big tx-bold fe-quality-line fe-select-phone-line" title="문의하실 회선정보 선택" aria-haspopup="true"
+                        data-svcMgmtNum="<%-filteredLine[0].svcMgmtNum%>"><%-filteredLine[0].addr%><span class="ico"></span>
+                </button>
+            </div>
+            <% } else if ( allSvc.s && allSvc.s.filter(function(item){return item.svcGr === 'I' || item.svcGr === 'T'}).length >= 1 ) {
+                var filteredLine = allSvc.s.filter(function(item){return item.svcGr === 'I' || item.svcGr === 'T'});
+            %>
             <div class="inputbox">
                 <div class="input">
-                    <input type="text" class="fe-quality-line" placeholder="회선정보 입력" title="문의하실 회선정보 입력" data-svcMgmtNum="<%-allSvc.s[0].svcMgmtNum%>"
-                           value="<%-allSvc.s[0].addr%>" disabled>
+                    <input type="text" class="fe-quality-line" placeholder="회선정보 입력" title="문의하실 회선정보 입력" data-svcMgmtNum="<%-filteredLine[0].svcMgmtNum%>"
+                           value="<%-filteredLine[0].addr%>" disabled>
                 </div>
             </div>
+
             <% } else { %>
             <div class="inputbox">
                 <div class="input">

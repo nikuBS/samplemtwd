@@ -6,7 +6,7 @@
 
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import { API_CMD } from '../../../../types/api-command.type';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 import BrowserHelper from '../../../../utils/browser.helper';
 
@@ -21,6 +21,7 @@ class CustomerMain extends TwViewController {
       this.getNotice()
     ).subscribe(([banners, notice]) => {
       const noticeList = this.parseNoticeList(BrowserHelper.isApp(req), notice);
+
       res.render('main/customer.main.html', {
         isApp: BrowserHelper.isApp(req),
         svcInfo: svcInfo,
@@ -34,22 +35,37 @@ class CustomerMain extends TwViewController {
 
   private parseNoticeList(isApp, notice) {
     if ( isApp ) {
-      return notice.result.content.splice(0, 3);
+      return notice.content.splice(0, 3);
     }
-    return notice.result.content.splice(0, 6);
+    return notice.content.splice(0, 6);
   }
 
-  private getBanners() {
-    return this.apiService.request(API_CMD.BFF_08_0026, {});
-  }
+  private getBanners = () => this.apiService.request(API_CMD.BFF_08_0066, {})
+    .map((res) => {
+      if ( res.code === API_CODE.CODE_00 ) {
+        return res.result;
+      } else {
+        return null;
+      }
+    })
 
-  private getResearch() {
-    return this.apiService.request(API_CMD.BFF_08_0025, {});
-  }
+  private getResearch = () => this.apiService.request(API_CMD.BFF_08_0025, {})
+    .map((res) => {
+      if ( res.code === API_CODE.CODE_00 ) {
+        return res.result;
+      } else {
+        return null;
+      }
+    })
 
-  private getNotice() {
-    return this.apiService.request(API_CMD.BFF_08_0029, { expsChnlCd: 'M' });
-  }
+  private getNotice = () => this.apiService.request(API_CMD.BFF_08_0029, { expsChnlCd: 'M' })
+    .map((res) => {
+      if ( res.code === API_CODE.CODE_00 ) {
+        return res.result;
+      } else {
+        return null;
+      }
+    })
 }
 
 export default CustomerMain;
