@@ -8074,8 +8074,8 @@ a.bt-link-tx.underline.small {
 .btn-infovw {
   overflow: hidden;
   display: inline-block;
-  width: 0.875rem;
-  height: 0.875rem;
+  width: 1.25rem;
+  height: 1.25rem;
   margin: 0 0 0 0.3125rem;
   vertical-align: -0.1875rem;
   background: url(/img/ico/ico-group.png) no-repeat -1.9375rem -39.4375rem;
@@ -9332,6 +9332,7 @@ a.bt-link-tx.underline.small {
   .sortlist .ui-state-default .ico-move {
     float: right;
     width: 2.5rem;
+    height: 100%;
     margin-top: 2.125rem;
     text-align: right;
     overflow: hidden;
@@ -9859,16 +9860,16 @@ a.bt-link-tx.underline.small {
     display: block;
     float: left;
     margin: 0;
-    width: 0.5rem;
-    height: 0.5rem;
+    width: 1.4375rem;
+    height: 1.4375rem;
     border-radius: 100%; }
     .main-slide-banner .slider-box .slick-dots li + li {
       margin: 0 0 0 0.5rem; }
     .main-slide-banner .slider-box .slick-dots li span {
       display: block;
       margin: 0.0625rem auto;
-      width: 0.375rem;
-      height: 0.375rem;
+      width: 1.25rem;
+      height: 1.25rem;
       border-radius: 50%;
       overflow: hidden;
       text-indent: -625rem;
@@ -9905,8 +9906,8 @@ a.bt-link-tx.underline.small {
     .main-slide-banner.ta-02 .slick-dots li {
       border: 1px solid transparent; }
       .main-slide-banner.ta-02 .slick-dots li span {
-        width: 0.375rem;
-        height: 0.375rem;
+        width: 1.25rem;
+        height: 1.25rem;
         margin: 0;
         opacity: 1;
         border: 1px solid #000;
@@ -13715,6 +13716,8 @@ a.bt-link-tx.underline.small {
     letter-spacing: -1px;
     text-align: right;
     vertical-align: top; }
+  .productdetails-ledgercase02 .limit.ty01 {
+    width: 100%; }
   .productdetails-ledgercase02:after {
     content: " ";
     display: block;
@@ -18833,18 +18836,6 @@ a.bt-link-tx.underline.small {
     padding: 0 0.6875rem 0 0;
     color: #fff;
     font-size: 0.875rem; }
-    .operation-guide-banner .banner-more:after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      right: 0;
-      width: 0.375rem;
-      height: 0.625rem;
-      margin-top: -0.0625rem;
-      -webkit-transform: translateY(-50%);
-              transform: translateY(-50%);
-      background: url(/img/customer/bg_cs_01_01_04_01.png) no-repeat;
-      background-size: 100%; }
   .operation-guide-banner .banner-tit {
     position: relative;
     display: block;
@@ -18893,25 +18884,24 @@ a.bt-link-tx.underline.small {
       background-image: url(/img/customer/bg_operation02.png); }
     .operation-guide-banner .ico.type03 {
       background-image: url(/img/customer/bg_operation03.png); }
+  .operation-guide-banner img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; }
 
 .main-faq-menu ul {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
   margin-top: -1.875rem; }
+  .main-faq-menu ul:after {
+    display: block;
+    clear: both;
+    content: ""; }
   .main-faq-menu ul li {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-preferred-size: 33.33%;
-    flex-basis: 33.33%;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    margin-top: 1.875rem; }
+    float: left;
+    width: 33.33%;
+    margin-top: 1.875rem;
+    text-align: center; }
     .main-faq-menu ul li .menu-bt {
       color: #000;
       font-size: 0.875rem;
@@ -18982,6 +18972,8 @@ a.bt-link-tx.underline.small {
         width: 0.5rem;
         height: 0.5rem;
         background: #000; }
+  .survey-box .widget {
+    overflow: hidden; }
 
 .survey-banner {
   position: relative;
@@ -20236,7 +20228,7 @@ a.bt-link-tx.underline.small {
       color: #b2b2b2 !important; }
 
 .member-slide-banner.member-slide-banner .slider-box .slick-dots {
-  top: 2.1875rem;
+  top: 0.625rem;
   left: 1.875rem; }
 
 .member-quick-menu ul li {
@@ -20615,20 +20607,20 @@ a.bt-link-tx.underline.small {
   z-index: 1; }
   .membership-event-box .slider-box .slick-dots {
     overflow: initial;
-    top: 1.5625rem;
+    top: 0.3125rem;
     left: auto;
     right: 1.5625rem; }
     .membership-event-box .slider-box .slick-dots li {
-      width: 0.3125rem;
-      height: 0.3125rem;
+      width: 1.25rem;
+      height: 1.25rem;
       border: 1px solid #fff; }
       .membership-event-box .slider-box .slick-dots li span {
-        width: 0.25rem;
-        height: 0.25rem;
+        width: 1.25rem;
+        height: 1.25rem;
         background: none; }
       .membership-event-box .slider-box .slick-dots li.slick-active {
-        width: 0.375rem;
-        height: 0.375rem;
+        width: 1.375rem;
+        height: 1.375rem;
         margin-top: -0.0625rem;
         background: #fff; }
 
@@ -20893,8 +20885,8 @@ a.bt-link-tx.underline.small {
       vertical-align: middle; }
       .popularity-brand .slick-dots li span {
         display: block;
-        width: 0.3125rem;
-        height: 0.3125rem;
+        width: 1.25rem;
+        height: 1.25rem;
         border-radius: 100%;
         background: #959595;
         font-size: 0;
@@ -20902,8 +20894,8 @@ a.bt-link-tx.underline.small {
         cursor: pointer; }
       .popularity-brand .slick-dots li.slick-active span {
         margin: -0.0625rem 0 0 0;
-        width: 0.5rem;
-        height: 0.5rem;
+        width: 1.25rem;
+        height: 1.25rem;
         background: #178BCE; }
 
 .brand-logo-list {
@@ -21033,8 +21025,8 @@ a.bt-link-tx.underline.small {
       vertical-align: middle; }
       .national-brand .slick-dots li span {
         display: block;
-        width: 0.3125rem;
-        height: 0.3125rem;
+        width: 1.25rem;
+        height: 1.25rem;
         border-radius: 100%;
         background: #b2b2b2;
         font-size: 0;
@@ -21042,8 +21034,8 @@ a.bt-link-tx.underline.small {
         cursor: pointer; }
       .national-brand .slick-dots li.slick-active span {
         margin: -0.0625rem 0 0 0;
-        width: 0.5rem;
-        height: 0.5rem;
+        width: 1.375rem;
+        height: 1.375rem;
         background: #178BCE; }
 
 .national-brand-list li {
@@ -24098,6 +24090,7 @@ a.bt-link-tx.underline.small {
   line-height: 2.375rem; }
 
 .device_android .btn-round2 {
+  white-space: nowrap;
   line-height: 1.875rem; }
   .device_android .btn-round2.btn-style2:disabled, .device_android .btn-round2.btn-style2.disabled, .device_android .btn-round2.btn-style3:disabled, .device_android .btn-round2.btn-style3.disabled {
     line-height: 1.75rem; }
@@ -29915,8 +29908,10 @@ body.apphome {
       background-size: 1.5rem;
       vertical-align: middle; }
     .pg-member .radiobox.type01.checked:before, .pg-member .shop-info .shop-txt .radiobox.checked.type02:before, .shop-info .shop-txt .pg-member .radiobox.checked.type02:before, .pg-member .shop-info .shop-txt .radiobox.checked.type03:before, .shop-info .shop-txt .pg-member .radiobox.checked.type03:before {
+      background-image: url(/img/form/ico-radio-style05.png);
       background-position: 0 -1.5rem; }
     .pg-member .radiobox.type01.disabled:before, .pg-member .shop-info .shop-txt .radiobox.disabled.type02:before, .shop-info .shop-txt .pg-member .radiobox.disabled.type02:before, .pg-member .shop-info .shop-txt .radiobox.disabled.type03:before, .shop-info .shop-txt .pg-member .radiobox.disabled.type03:before {
+      background-image: url(/img/form/ico-radio-style05.png);
       background-position: 0 -3rem; }
     .pg-member .radiobox.type01.checked.disabled:before, .pg-member .shop-info .shop-txt .radiobox.checked.disabled.type02:before, .shop-info .shop-txt .pg-member .radiobox.checked.disabled.type02:before, .pg-member .shop-info .shop-txt .radiobox.checked.disabled.type03:before, .shop-info .shop-txt .pg-member .radiobox.checked.disabled.type03:before {
       background-image: url(/img/form/ico-radio-style05.png);
@@ -29924,14 +29919,17 @@ body.apphome {
     .pg-member .radiobox.type01.focus, .pg-member .shop-info .shop-txt .radiobox.focus.type02, .shop-info .shop-txt .pg-member .radiobox.focus.type02, .pg-member .shop-info .shop-txt .radiobox.focus.type03, .shop-info .shop-txt .pg-member .radiobox.focus.type03 {
       outline: -webkit-focus-ring-color auto 5px; }
     .pg-member .radiobox.type01.focus:before, .pg-member .shop-info .shop-txt .radiobox.focus.type02:before, .shop-info .shop-txt .pg-member .radiobox.focus.type02:before, .pg-member .shop-info .shop-txt .radiobox.focus.type03:before, .shop-info .shop-txt .pg-member .radiobox.focus.type03:before {
+      background-image: url(/img/form/ico-radio-style05.png);
       background-position: -1.5rem 0; }
     .pg-member .radiobox.type01.focus.checked:before, .pg-member .shop-info .shop-txt .radiobox.focus.checked.type02:before, .shop-info .shop-txt .pg-member .radiobox.focus.checked.type02:before, .pg-member .shop-info .shop-txt .radiobox.focus.checked.type03:before, .shop-info .shop-txt .pg-member .radiobox.focus.checked.type03:before {
-      background-position: -1.5rem -1.5rem; }
+      background-image: url(/img/form/ico-radio-style05.png);
+      background-position: 0 -1.5rem; }
     .pg-member .radiobox.type01.focus.disabled:before, .pg-member .shop-info .shop-txt .radiobox.focus.disabled.type02:before, .shop-info .shop-txt .pg-member .radiobox.focus.disabled.type02:before, .pg-member .shop-info .shop-txt .radiobox.focus.disabled.type03:before, .shop-info .shop-txt .pg-member .radiobox.focus.disabled.type03:before {
-      background-position: -1.5rem -3rem; }
+      background-image: url(/img/form/ico-radio-style05.png);
+      background-position: 0 -3rem; }
     .pg-member .radiobox.type01.focus.checked.disabled:before, .pg-member .shop-info .shop-txt .radiobox.focus.checked.disabled.type02:before, .shop-info .shop-txt .pg-member .radiobox.focus.checked.disabled.type02:before, .pg-member .shop-info .shop-txt .radiobox.focus.checked.disabled.type03:before, .shop-info .shop-txt .pg-member .radiobox.focus.checked.disabled.type03:before {
       background-image: url(/img/form/ico-radio-style05.png);
-      background-position: -1.5rem -4.5rem; }
+      background-position: 0 -4.5rem; }
     .pg-member .radiobox.type01 > span, .pg-member .shop-info .shop-txt .radiobox.type02 > span, .shop-info .shop-txt .pg-member .radiobox.type02 > span, .pg-member .shop-info .shop-txt .radiobox.type03 > span, .shop-info .shop-txt .pg-member .radiobox.type03 > span {
       display: inline-block;
       font-size: 0.8125rem;
@@ -31214,7 +31212,6 @@ body.apphome {
 .inputbox.bt-add .input.new input {
   background: #f2f2f2 !important;
   height: 2.625rem !important;
-  line-height: 2.625rem !important;
   font-weight: 400; }
 
 .inputbox.bt-add .input.new + .r-btn {
@@ -32509,14 +32506,16 @@ body.apphome {
     display: table-cell !important;
     padding-left: 0.625rem;
     vertical-align: middle;
-    text-indent: 0; }
+    text-indent: 0;
+    white-space: nowrap; }
     .inputbox.inp-btn .bt-box.none {
       display: none !important; }
   .inputbox.inp-btn .bt-box2 {
     display: table-cell !important;
     padding-left: 0.625rem;
     vertical-align: middle;
-    text-indent: 0; }
+    text-indent: 0;
+    white-space: nowrap; }
     .inputbox.inp-btn .bt-box2 button {
       min-height: 2.375rem; }
   .inputbox.inp-btn .r-btn {
@@ -32524,12 +32523,14 @@ body.apphome {
     padding-left: 0.625rem;
     vertical-align: middle;
     text-indent: 0;
+    white-space: nowrap;
     margin: 0; }
   .inputbox.inp-btn .txt-area {
     display: table-cell !important;
     padding-left: 0.625rem;
     vertical-align: middle;
-    text-indent: 0; }
+    text-indent: 0;
+    white-space: nowrap; }
 
 .inputbox + .tx-box {
   display: block; }
@@ -32552,5 +32553,9 @@ body.apphome {
 
 .file .inp-btn .input, .file-wrap .inp-btn .input {
   padding-right: 0.625rem; }
+
+.file .inputbox.inp-btn .bt-box, .file-wrap .inputbox.inp-btn .bt-box {
+  padding: 0 0.5rem;
+  height: 2.5rem; }
 
 /* 정민수 */

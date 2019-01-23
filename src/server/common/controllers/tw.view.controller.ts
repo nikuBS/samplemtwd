@@ -242,8 +242,10 @@ abstract class TwViewController {
   }
 
   private checkServiceBlock(urlMeta: any) {
+    // urlMeta.block array 변경
+
     if ( !FormatHelper.isEmpty(urlMeta.block) &&
-      !FormatHelper.isEmpty(urlMeta.block.fromDtm) && !FormatHelper.isEmpty(urlMeta.block.fromDtm) ) {
+      !FormatHelper.isEmpty(urlMeta.block.fromDtm) && !FormatHelper.isEmpty(urlMeta.block.toDtm) ) {
       const startTime = DateHelper.convDateFormat(urlMeta.block.fromDtm).getTime();
       const endTime = DateHelper.convDateFormat(urlMeta.block.toDtm).getTime();
       const today = new Date().getTime();

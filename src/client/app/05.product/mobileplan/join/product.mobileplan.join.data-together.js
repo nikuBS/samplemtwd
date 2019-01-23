@@ -204,6 +204,7 @@ Tw.ProductMobileplanJoinDataTogether.prototype = {
 
     new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
       isMobilePlan: true,
+      isNoticeList: true,
       isComparePlan: this._isComparePlan,
       noticeList: $.merge(this._confirmOptions.preinfo.termNoticeList, this._confirmOptions.preinfo.joinNoticeList),
       joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,

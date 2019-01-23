@@ -23,6 +23,13 @@ class ProductMobileplanJoinShareLine extends TwViewController {
   private readonly _allowedProdIdList = ['NA00005057', 'NA00005058', 'NA00005059', 'NA00005060',
     'NA00003958', 'NA00003557', 'NA00003558', 'NA00003556', 'NA00005057'];
 
+  private readonly _toolTip = {
+    NA00005057: 'MP_02_02_03_11_tip_02',
+    NA00005058: 'MP_02_02_03_11_tip_03',
+    NA00005059: 'MP_02_02_03_11_tip_04',
+    NA00005060: 'MP_02_02_03_11_tip_05'
+  };
+
   /**
    * 요금제 비교하기 Redis 정보 호출
    * @param svcInfoProdId
@@ -71,6 +78,7 @@ class ProductMobileplanJoinShareLine extends TwViewController {
         basicInfo: basicInfo.result,
         isOverPayReqYn: overPayReqInfo.code === API_CODE.CODE_00 ? 'Y' : 'N',
         isApp: BrowserHelper.isApp(req),
+        toolTip: FormatHelper.isEmpty(this._toolTip[prodId]) ? null : this._toolTip[prodId],
         mobilePlanCompareInfo: mobilePlanCompareInfo.code !== API_CODE.CODE_00 ? null : mobilePlanCompareInfo.result, // 요금제 비교하기
         joinTermInfo: Object.assign(ProductHelper.convPlansJoinTermInfo(joinTermInfo.result), {
           sktProdBenfCtt: FormatHelper.isEmpty(prodRedisInfo.result.summary.sktProdBenfCtt) ? null : prodRedisInfo.result.summary.sktProdBenfCtt

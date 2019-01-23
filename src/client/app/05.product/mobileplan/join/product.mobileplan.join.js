@@ -106,6 +106,7 @@ Tw.ProductMobileplanJoin.prototype = {
       title: Tw.PRODUCT_TYPE_NM.JOIN,
       applyBtnText: Tw.BUTTON_LABEL.JOIN,
       isMobilePlan: true,
+      isNoticeList: true,
       joinTypeText: Tw.PRODUCT_TYPE_NM.CHANGE,
       typeText: Tw.PRODUCT_CTG_NM.PLANS,
       confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2,

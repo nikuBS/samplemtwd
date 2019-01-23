@@ -58,8 +58,8 @@
                         </span>
                         <button class="bt-link-tx underline ml6 fe-btn-daily-used" data-prodid="<%= items[i].prodId %>">당일 사용량 조회</button>
                         <% } else { %>
-                        <span class="use">
                             <% if (!items[i].isUsedUnlimited) { %>
+                            <span class="use">
                                 <% for (var j = 0; j < items[i].showUseds.length; j++) { %>
                                 <strong><%= items[i].showUseds[j].data %><%= items[i].showUseds[j].unit %></strong>
                                 <% } %>
@@ -67,8 +67,8 @@
                                     오늘
                                 <% } %>
                                 사용
+                            </span>
                             <% } %>
-                        </span>
                         <% } %>
                     </div>
                     <% if (items[i].rgstDtm !== '') { %>

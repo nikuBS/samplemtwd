@@ -10,6 +10,7 @@ import BrowserHelper from '../../../../utils/browser.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import { delay, tap, map, retryWhen } from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
 
 export default class MyTDataFamilyShare extends TwViewController {
   constructor() {
@@ -33,7 +34,7 @@ export default class MyTDataFamilyShare extends TwViewController {
       res.render('familydata/myt-data.familydata.share.html', {
         svcInfo,
         pageInfo,
-        immediately,
+        immediately: immediately,
         monthly,
         isApp: BrowserHelper.isApp(req)
       });
@@ -41,43 +42,31 @@ export default class MyTDataFamilyShare extends TwViewController {
   }
 
   private getShareData = (): Observable<any> => {
-    return this.getShareDataInner('0').switchMap(resp => {
-      if (resp.code !== API_CODE.CODE_00) {
-        return resp;
-      }
-
-      if (resp.result.nextReqYn === 'N') {
-        return resp.result;
-      }
-
-      return Observable.timer(3000).switchMap(() =>
-        this.getShareDataInner(resp.result.reqCnt).pipe(
-          map(next => {
-            if (next.code !== API_CODE.CODE_00) {
-              return next;
+    let requestCount = 0;
+    return Observable.timer(0)
+      .mergeMap(x => {
+        return this.getShareDataInner(requestCount)
+          .map(resp => {
+            if (resp.code !== API_CODE.CODE_00) {
+              return resp;
             }
 
-            if (next.result.nextReqYn === 'Y') {
-              throw next;
-            } else {
-              return next.result;
+            if (resp.result && resp.result.nextReqYn !== 'Y') {
+              return resp.result;
             }
-          }),
-          retryWhen(errors => {
-            return errors.pipe(
-              delay(3000),
-              tap(val => {
-                return this.getShareDataInner(val.result.reqCnt);
-              })
-            );
+
+            throw resp;
           })
-        )
-      );
-    });
+          .catch(e => {
+            requestCount++;
+            return e;
+          });
+      })
+      .retryWhen(e => e.delay(3000));
   }
 
-  private getShareDataInner = (requestCount: string) => {
-    return this.apiService.request(API_CMD.BFF_06_0045, { reqCnt: requestCount });
+  private getShareDataInner = requestCount => {
+    return this.apiService.request(API_CMD.BFF_06_0045, { reqCnt: String(requestCount) });
   }
 
   private getMonthlyInfo() {

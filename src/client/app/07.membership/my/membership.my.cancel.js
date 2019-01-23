@@ -17,10 +17,12 @@ Tw.MembershipMyCancel.prototype = {
 
   _cachedElement: function() {
     this.$btnInquire = this.$container.find('#fe-cancel');
+    this.$btnPrevStep = this.$container.find('.prev-step');
   },
 
   _bindEvent: function() {
     this.$btnInquire.on('click', $.proxy(this._cancelAlert, this));
+    this.$btnPrevStep.on('click', $.proxy(this._goPrevStep, this));
   },
 
   _cancelAlert: function() {
@@ -43,6 +45,10 @@ Tw.MembershipMyCancel.prototype = {
     }else{
       this._onFail(res);
     }
+  },
+
+  _goPrevStep: function(){
+    this._historyService.goLoad('/membership/my');
   },
 
   _onFail: function(err) {

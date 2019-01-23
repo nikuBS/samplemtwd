@@ -46,8 +46,7 @@
                                                             {{#if fam.brother}}<i class="badge-siblings"><span class="blind">형제자매</span></i>{{/if}}
                                                             {{#if fam.me}}<i class="badge badge-me2"><span class="blind">본인</span></i>{{/if}}
                                                         </span>
-                                                        <span class="ntext">{{number}}</span>
-                                                        <!-- dummy button -->
+                                                        {{#if number}}<span class="ntext">{{number}}</span>{{/if}}
                                                     </div>
                                                 </div>
                                                 <div class="bt-alone"><button class="bt-line-gray1 fe-btn_family_del">삭제</button></div>
@@ -129,7 +128,7 @@
                 <div class="cont-noti pt20">
                     <ul class="bullet-type">
                         <li>첨부파일은 최대 5개까지 등록하실 수 있으며, 한 파일당 최대 용량은 2MB입니다.</li>
-                        <li>이미지 파일(확장자 jpg, jpeg, png)을 첨부할 수 있습니다.</li>
+                        <li>이미지 파일(확장자 jpg, jpeg, png, gif)을 첨부할 수 있습니다.</li>
                     </ul>
                 </div>
                 <ul class="bt-slice pt30">

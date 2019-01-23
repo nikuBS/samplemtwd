@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>icon_48px_favorite</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="New-GUI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="##Icon/48/Favorite">
+            <rect id="Icon_Area" fill-opacity="0" fill="#FFFFFF" x="0" y="0" width="48" height="48"></rect>
+            <polygon id="Star" stroke="#333333" stroke-width="2" stroke-linejoin="round" points="24 33.2166012 12.2573542 42 17.0147059 28.1611687 5 19.7507764 19.6828508 19.9813071 24 6 28.3171492 19.9813071 43 19.7507764 30.9852941 28.1611687 35.7426458 42"></polygon>
+        </g>
+    </g>
+</svg>

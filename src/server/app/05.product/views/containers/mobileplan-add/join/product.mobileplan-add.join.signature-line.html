@@ -100,11 +100,11 @@
     <!-- // .popup hbs -->
 </div>
 </body>
-<% include ../../../components/mobileplan-add/product.line.component.html %>
+<% include ../../../components/mobileplan-add/product.line.onlynumber.component.html %>
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductMobileplanAddJoinSignatureLine($('.wrap'), '<%= prodId %>', 'MV_02_02_02', '<%- escape(JSON.stringify(joinTermInfo)) %>');
+    new Tw.ProductMobileplanAddJoinSignatureLine($('.wrap'), '<%= prodId %>', 'MP_02_02_03_05', '<%- escape(JSON.stringify(joinTermInfo)) %>');
   });
 </script>
 <% include ../../../components/end.component.html %>

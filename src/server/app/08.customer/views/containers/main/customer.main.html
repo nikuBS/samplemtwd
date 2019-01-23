@@ -31,31 +31,24 @@
                 <div class="widget">
                     <div class="widget-box slider1">
                         <ul class="slider">
-                            <% banners.result.map( banner => { %>
+                            <% banners.map( banner => { %>
                             <li>
                                 <div class="operation-guide-banner">
+                                    <% if ( banner.dtlBtnUseYn === 'Y' ) { %>
                                     <a href="/customer/faq#how" class="more-view">더보기</a>
+                                    <% } %>
                                     <strong class="banner-tit">
-                                        <%-banner.menuImgDesc%>
+                                        <%-banner.titleNm%>
                                     </strong>
                                     <ul>
-                                        <% banner.contents.splice(0, 3).map( item => { %>
-                                        <% if ( item.mtwdBltn1CtgId === 'TIP001' ) { %>
-                                        <li><a
-                                            href="http://m2.tworld.co.kr/normal.do?serviceId=S_CMIS0122&viewId=V_CMIS1091&cntsId=<%-item.mtwdBltn1CntsId%>"
-                                            class="banner-bt ico-type01"><%-item.cntsNm%></a></li>
-                                        <% } else if (item.mtwdBltn1CtgId === 'TIP002') {%>
-                                        <li><a
-                                            href="http://m2.tworld.co.kr/normal.do?serviceId=S_CMIS0122&viewId=V_CMIS1091&cntsId=<%-item.mtwdBltn1CntsId%>"
-                                            class="banner-bt ico-type02"><%-item.cntsNm%></a></li>
-                                        <% } else {%>
-                                        <li><a
-                                            href="http://m2.tworld.co.kr/normal.do?serviceId=S_CMIS0122&viewId=V_CMIS1091&cntsId=<%-item.mtwdBltn1CntsId%>"
-                                            class="banner-bt ico-type03"><%-item.cntsNm%></a></li>
-                                        <% } %>
+                                        <% banner.submMenuList.splice(0, 3).map( item => { %>
+                                        <li><a href="<%-item.submMenuUrl%>"
+                                            class="banner-bt ico-type01"><%-item.submMenuNm%></a></li>
                                         <% }) %>
                                     </ul>
-                                    <span class="ico"></span>
+                                    <% if ( !!banner.imgUrl ) { %>
+                                    <img src="<%=CDN%><%-banner.imgUrl%>" alt="<%-banner.imgAltCtt%>">
+                                    <% } %>
                                 </div>
                             </li>
                             <% }) %>
@@ -202,22 +195,25 @@
 
             <hr class="cont-sp type1" aria-hidden="true">
             <!-- .cont-box -->
-            <div class="cont-box nogaps">
-                <div class="box-main-type">
-                    <p class="list-comp-title">그 외 이용하실 수 있는 서비스!</p>
-                    <ul class="service-bt-list">
-                        <li><a href="/customer/document" class="btn-round2 btn-style3">가입 · 변경 · 해지 필요서류 안내</a></li>
-                        <li><a href="/customer/emailconsult" class="btn-round2 btn-style3">이메일 상담하기</a></li>
-                        <li><a href="/customer/helpline" class="btn-round2 btn-style3">전화상담 예약하기</a></li>
-                        <li><a href="/svc-info/praise" class="btn-round2 btn-style3">칭찬합니다</a></li>
-                        <li><a href="/customer/damage-info" class="btn-round2 btn-style3">이용자 피해예방센터</a></li>
-                        <li><a href="/customer/svc-info/voice" class="btn-round2 btn-style3">목소리 인증서비스</a></li>
-                    </ul>
-                </div>
-            </div>
+            <!--<div class="cont-box nogaps">-->
+                <!--<div class="box-main-type">-->
+                    <!--<p class="list-comp-title">그 외 이용하실 수 있는 서비스!</p>-->
+                    <!--<ul class="service-bt-list">-->
+                        <!--<li><a href="/customer/document" class="btn-round2 btn-style3">가입 · 변경 · 해지 필요서류 안내</a></li>-->
+                        <!--<li><a href="/customer/emailconsult" class="btn-round2 btn-style3">이메일 상담하기</a></li>-->
+                        <!--<li><a href="/customer/helpline" class="btn-round2 btn-style3">전화상담 예약하기</a></li>-->
+                        <!--<li><a href="/svc-info/praise" class="btn-round2 btn-style3">칭찬합니다</a></li>-->
+                        <!--<li><a href="/customer/damage-info" class="btn-round2 btn-style3">이용자 피해예방센터</a></li>-->
+                        <!--<li><a href="/customer/svc-info/voice" class="btn-round2 btn-style3">목소리 인증서비스</a></li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
             <!--// .cont-box -->
-            <hr class="cont-sp type1" aria-hidden="true">
+            <!--<hr class="cont-sp type1" aria-hidden="true">-->
             <!-- .cont-box -->
+            <div class="cont-box nogaps noborder">
+                <p class="list-comp-title">그 외 이용하실 수 있는 서비스!</p>
+            </div>
             <div class="cont-box nogaps-top noborder">
                 <ul>
                     <!--<li>-->
@@ -238,15 +234,15 @@
                             </a>
                         </div>
                     </li>
-                    <li>
-                        <div class="link-long">
-                            <a href="/customer/helpline">전화상담 예약하기
-                                <span class="tx-sub">
-                                    <span class="ico"></span>
-                                </span>
-                            </a>
-                        </div>
-                    </li>
+                    <!--<li>-->
+                    <!--<div class="link-long">-->
+                    <!--<a href="/customer/helpline">전화상담 예약하기-->
+                    <!--<span class="tx-sub">-->
+                    <!--<span class="ico"></span>-->
+                    <!--</span>-->
+                    <!--</a>-->
+                    <!--</div>-->
+                    <!--</li>-->
                     <li>
                         <div class="link-long">
                             <a href="/customer/svc-info/praise">칭찬합니다

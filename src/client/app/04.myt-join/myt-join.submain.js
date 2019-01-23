@@ -76,9 +76,6 @@ Tw.MyTJoinSubMain.prototype = {
     this.$joinService = this.$container.find('[data-id=join-svc]');
     this.$nickNmBtn = this.$container.find('[data-id=change-nick]');
     this.$certifyBtn = this.$container.find('[data-id=certify-popup]');
-    if ( this.data.banner.length > 0 ) {
-      this.$bannerList = this.$container.find('[data-id=banner-list]');
-    }
   },
 
   _bindEvent: function () {
@@ -138,12 +135,45 @@ Tw.MyTJoinSubMain.prototype = {
     this.$joinService.on('click', $.proxy(this._onMovedJoinService, this));
     this.$nickNmBtn.on('click', $.proxy(this._onChangeNickName, this));
     this.$certifyBtn.on('click', $.proxy(this._onOpenCertifyPopup, this));
-    if ( this.data.banner.length > 0 ) {
-      this.$bannerList.on('click', 'li', $.proxy(this._onClickBannerItem, this));
-    }
   },
 
   _initialize: function () {
+    this._initBanners();
+  },
+
+  _initBanners: function () {
+    this._apiService.request(Tw.NODE_CMD.GET_BANNER_TOS, { code: '0008' })
+      .done($.proxy(this._successBanner, this, Tw.REDIS_BANNER_TYPE.TOS))
+      .fail($.proxy(this._errorRequest, this));
+  },
+
+  _successBanner: function (type, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      var result = resp.result;
+      var isCheckBanner = type === Tw.REDIS_BANNER_TYPE.ADMIN || this._checkBanner(result);
+      if ( isCheckBanner ) {
+        var list = (type === Tw.REDIS_BANNER_TYPE.ADMIN) ? result.banners : result.imgList;
+        new Tw.BannerService(this.$container, type, list, 'M', $.proxy(this._successDrawBanner, this));
+      }
+      else {
+        this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: this.data.pageInfo.menuId })
+          .done($.proxy(this._successBanner, this, Tw.REDIS_BANNER_TYPE.ADMIN))
+          .fail($.proxy(this._errorRequest, this));
+      }
+    }
+    else {
+      this.$container.find('[data-id=banners-empty]').hide();
+      this.$container.find('[data-id=banners]').hide();
+    }
+  },
+
+  _checkBanner: function (result) {
+    return (result.bltnYn === 'Y' && result.tosLnkgYn === 'Y');
+  },
+
+  _successDrawBanner: function () {
+    this.$bannerList = this.$container.find('[data-id=banner-list]');
+    Tw.CommonHelper.resetHeight(this.$bannerList);
   },
 
   _onChangeNickName: function () {
@@ -211,7 +241,11 @@ Tw.MyTJoinSubMain.prototype = {
   },
   // 무약정플랜
   _onMovedContractPlan: function () {
-    this._historyService.goLoad('/myt-join/myplancombine/noagreement');
+    var url = '/myt-join/myplancombine/noagreement';
+    if ( this.data.myContractPlan.muPointYn === 'N' ) {
+      url = '/product/callplan/NA00005923';
+    }
+    this._historyService.goLoad(url);
   },
   // 모바일 일시정지/해제
   _onMovedMobilePause: function () {
@@ -268,7 +302,7 @@ Tw.MyTJoinSubMain.prototype = {
   _onClickedOtherLine: function (event) {
     // 통합, 개별이면서 대표인 경우만 동작
     var $target = $(event.target).parents('[data-svc-mgmt-num]'),
-        type = $target.find('span.blind').text(),
+        type    = $target.find('span.blind').text(),
         mgmtNum = $target.attr('data-svc-mgmt-num'),
         number  = $target.attr('data-num'),
         name    = $target.attr('data-name');
@@ -296,7 +330,7 @@ Tw.MyTJoinSubMain.prototype = {
       this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
     }
     setTimeout($.proxy(function () {
-      if(this.changeLineType ===  'pc') {
+      if ( this.changeLineType === 'pc' ) {
         this._historyService.replaceURL('/myt-join/submain_w');
       }
       else {
@@ -321,11 +355,5 @@ Tw.MyTJoinSubMain.prototype = {
   // 공인인증센터
   _onOpenCertifyPopup: function () {
     Tw.Native.send(Tw.NTV_CMD.GO_CERT, {});
-  },
-
-  _onClickBannerItem: function (event) {
-    var $target = $(event.currentTarget);
-    var url = $target.find('a').attr('data-href');
-    Tw.CommonHelper.openUrlExternal(url);
   }
 };

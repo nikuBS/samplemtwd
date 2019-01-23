@@ -195,7 +195,7 @@ Tw.MyTJoinPhoneNumChgAlarmExt.prototype = {
       'subTxt=' + (options.subTxt||'') + '&' +
       'linkTxt=' + (options.linkTxt||'') + '&' +
       'linkPage=' + (options.linkPage||'');
-    this._historyService.goLoad(options.compPage + param);
+    this._historyService.replaceURL(options.compPage + param);
   }
 
 

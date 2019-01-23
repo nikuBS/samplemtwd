@@ -47,17 +47,6 @@ body {
   width: 100%;
   /*overflow-x:hidden;*/ }
 
-/*버튼 테두리 없애기*/
-button:focus {
-  border-color: #fff;
-  -wibkit-box-shadow: none;
-  -webkit-box-shadow: none;
-          box-shadow: none;
-  outline: none; }
-
-* {
-  -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important; }
-
 /*display*/
 .none {
   display: none !important; }
@@ -884,9 +873,9 @@ a + button {
   *margin-left: 4px; }
 
 a, input, label, button {
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.15);
-  -tap-highlight-color: rgba(0, 0, 0, 0.15);
-  -moz-tap-highlight-color: rgba(0, 0, 0, 0.15);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.15) !important;
+  -tap-highlight-color: rgba(0, 0, 0, 0.15) !important;
+  -moz-tap-highlight-color: rgba(0, 0, 0, 0.15) !important;
   -webkit-appearance: none; }
 
 a, a:link, a:visited, a:active, a:hover {
@@ -3936,7 +3925,8 @@ a.ui-button:active,
       text-align: center;
       border-radius: 1.25rem;
       -webkit-box-sizing: border-box;
-              box-sizing: border-box; }
+              box-sizing: border-box;
+      line-height: 2.5rem; }
       .bt-slice > li a .num {
         display: inline-block;
         margin: 0 0 0 0.3125rem;
@@ -3972,6 +3962,8 @@ a.ui-button:active,
         background: #90caf9; }
       .bt-slice > li.bt-blue1 button:hover {
         background: #90caf9; }
+      .bt-slice > li.bt-blue1 button:focus {
+        background-color: #178BCE; }
       .bt-slice > li.bt-blue1 button:disabled {
         color: #808698;
         background: #e5e8ee; }
@@ -4824,31 +4816,18 @@ a.ui-button:active,
       background: #000; }
   .address-wrap.inputbox .input {
     display: table-cell;
-    height: 0.625rem; }
+    width: 100%; }
     .address-wrap.inputbox .input input {
       -webkit-box-sizing: border-box;
               box-sizing: border-box;
       height: 2.5rem; }
   .address-wrap.inputbox .space {
-    display: table-cell;
-    width: 2%; }
+    display: none; }
   .address-wrap.inputbox .bt-box {
-    display: table-cell;
-    width: 16%;
-    height: 100%;
-    padding: 0 0.5rem;
-    border-radius: 0.3125rem;
-    text-align: center;
-    font-size: 0.875rem;
-    font-weight: 400;
-    color: #178BCE;
-    white-space: nowrap;
-    background: #ebf5fe; }
-    .address-wrap.inputbox .bt-box button {
-      font-size: 0.875rem;
-      font-weight: 400;
-      color: #178BCE;
-      white-space: nowrap; }
+    display: table-cell !important;
+    padding-left: 0.625rem;
+    vertical-align: middle;
+    text-indent: 0; }
 
 .nickname-wrap {
   display: table;
@@ -4856,7 +4835,7 @@ a.ui-button:active,
   margin-top: 0.5rem; }
   .nickname-wrap.inputbox .input {
     display: table-cell;
-    height: 0.625rem; }
+    width: 100%; }
     .nickname-wrap.inputbox .input input {
       -webkit-box-sizing: border-box;
               box-sizing: border-box;
@@ -4864,25 +4843,19 @@ a.ui-button:active,
       background: transparent;
       border-color: #c5c3c1; }
   .nickname-wrap.inputbox .space {
-    display: table-cell;
-    width: 2%; }
+    display: none; }
   .nickname-wrap.inputbox .bt-box {
-    display: table-cell;
-    width: 16%;
-    height: 100%;
-    padding: 0 0.5rem;
-    border-radius: 0.3125rem;
-    text-align: center;
-    font-size: 0.875rem;
-    font-weight: 400;
-    white-space: nowrap;
-    background: #fff;
-    border: 1px solid #dfdfdf; }
+    display: table-cell !important;
+    padding-left: 0.625rem;
+    vertical-align: middle;
+    text-indent: 0; }
     .nickname-wrap.inputbox .bt-box button {
+      padding: 0 0.5rem;
       font-size: 0.875rem;
       font-weight: 400;
       color: #666;
       white-space: nowrap;
+      border: 1px solid #dfdfdf;
       background: #fff; }
 
 /* ico 공통 */

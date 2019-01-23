@@ -52,9 +52,9 @@ class MytDataSubmainController extends TwViewController {
       this._getTingPresentBreakdown(),
       this._getEtcChargeBreakdown(),
       this._getRefillPresentBreakdown(),
-      this._getRefillUsedBreakdown(),
-      this.redisService.getData(REDIS_KEY.BANNER_ADMIN + pageInfo.menuId),
-    ).subscribe(([remnant, present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd, banner]) => {
+      this._getRefillUsedBreakdown()
+      // this.redisService.getData(REDIS_KEY.BANNER_ADMIN + pageInfo.menuId),
+    ).subscribe(([remnant, present, refill, dcBkd, dpBkd, tpBkd, etcBkd, refpBkd, refuBkd /*,banner*/]) => {
       if ( remnant.info ) {
         data.remnant = remnant;
       } else {
@@ -127,6 +127,7 @@ class MytDataSubmainController extends TwViewController {
         // 데이터한도요금제 충전내역
         dcBkd.map((item) => {
           if ( this.isPPS ) {
+            item['opDt'] = item.chargeDt;
             item['class'] = (item.chargeTp === '1') ? 'once' : 'auto';
             item['u_type'] = 'data';
             item['u_title'] = PREPAID_PAYMENT_PAY_CD[item.payCd];
@@ -176,6 +177,7 @@ class MytDataSubmainController extends TwViewController {
         // 팅/쿠키즈/안심요금 충전 내역
         etcBkd.map((item) => {
           if ( this.isPPS ) {
+            item['opDt'] = item.chargeDt;
             item['class'] = (item.chargeTp === '1') ? 'once' : 'auto';
             item['u_type'] = 'voice';
             item['u_title'] = PREPAID_PAYMENT_PAY_CD[item.payCd];
@@ -223,12 +225,12 @@ class MytDataSubmainController extends TwViewController {
       if ( breakdownList.length > 0 ) {
         data.breakdownList = this.sortBreakdownItems(breakdownList);
       }
-      // 배너 정보
-      if ( banner && (banner.code === API_CODE.REDIS_SUCCESS) ) {
-        if ( !FormatHelper.isEmpty(banner.result) ) {
-          data.banner = this.parseBanner(banner.result);
-        }
-      }
+      // 배너 정보 - client에서 호출하는 방식으로 변경 (19/01/22)
+      // if ( banner && (banner.code === API_CODE.REDIS_SUCCESS) ) {
+      //   if ( !FormatHelper.isEmpty(banner.result) ) {
+      //     data.banner = this.parseBanner(banner.result);
+      //   }
+      // }
 
       if ( data.family && data.family.impossible ) {
         res.render('myt-data.submain.html', { data });
@@ -255,26 +257,6 @@ class MytDataSubmainController extends TwViewController {
         }
       }
     });
-  }
-
-  parseBanner(data: any) {
-    const banners = data.banners;
-    const sort = {};
-    const result: any = [];
-    banners.forEach((item) => {
-      // 배너노출순번의 정보가 있는 경우
-      if ( item.bnnrExpsSeq ) {
-        sort[item.bnnrExpsSeq] = item;
-      } else {
-        sort[item.bnnrSeq] = item;
-      }
-    });
-    const keys = Object.keys(sort).sort();
-    keys.forEach((key) => {
-      result.push(sort[key]);
-    });
-
-    return result;
   }
 
   convShowData(data: any) {
@@ -489,9 +471,7 @@ class MytDataSubmainController extends TwViewController {
         return resp.result;
       } else {
         // error
-        return {
-          info: resp
-        };
+        return null;
       }
     });
   }

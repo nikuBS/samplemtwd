@@ -14,7 +14,10 @@
                     {{/if}}
                     {{../typeName}} 충전 <span class="data">{{data}}</span>
                 </span>
-                <span class="stext"><span class="gray-tx">{{cardNm}}</span><span class="black-tx">{{payNm}}</span></span>
+                <span class="stext">
+                    <span class="black-tx">{{payNm}}</span>
+                    <span class="gray-tx">{{cardNm}}</span>
+                </span>
             </p>
             <div class="list-data">
                 <button class="bt-link data-tx {{#if isCanceled}}gray-tx{{else}}blue-tx{{/if}}" data-origin-idx={{idx}}>{{amt}}원</button>

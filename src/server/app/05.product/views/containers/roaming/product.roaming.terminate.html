@@ -260,12 +260,16 @@
                 <hr class="cont-sp type1" aria-hidden="true">
 
                 <!-- .cont-box -->
+                <% if(prodBffInfo.preinfo.termNoticeList.length>0){ %>
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해주세요!</h3>
+                    <%for(var i=0;i<prodBffInfo.preinfo.termNoticeList.length;i++){ %>
                     <ul class="noti-list">
-                        <li>상품 해지 시 유의사항<button type="button" class="tip-view" id="MV_01_02_03_tip_01">TIP</button></li>
+                        <li><%= prodBffInfo.preinfo.termNoticeList[i].noticeTit %><button type="button" class="tip-view" data-tit="<%= prodBffInfo.preinfo.termNoticeList[i].noticeTit %>" data-txt="<%= prodBffInfo.preinfo.termNoticeList[i].noticeTxt %>">TIP</button></li>
                     </ul>
+                    <% } %>
                 </div>
+                <% } %>
                 <!--// .cont-box -->
 
                 <div class="bt-fixed-area">

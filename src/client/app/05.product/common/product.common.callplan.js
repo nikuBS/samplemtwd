@@ -254,6 +254,12 @@ Tw.ProductCommonCallplan.prototype = {
       return this._tidLanding.goLogin(location.origin + url + '?prod_id=' + this._prodId);
     }
 
+    if (Tw.FormatHelper.isEmpty(resp.result.svcMgmtNum)) {
+      this._isGoMemberLine = false;
+      return this._popupService.openConfirm(null, Tw.ALERT_MSG_PRODUCT.NEED_LINE,
+        $.proxy(this._setGoMemberLine, this), $.proxy(this._onCloseMemberLine, this));
+    }
+
     if (this._lineProcessCase === 'B' || this._lineProcessCase === 'D') {
       return this._procPreCheck(joinTermCd, url);
     }
@@ -272,6 +278,17 @@ Tw.ProductCommonCallplan.prototype = {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(preCheckApi.API_CMD, preCheckApi.PARAMS, null, [this._prodId])
       .done($.proxy(this._procAdvanceCheck, this, url, joinTermCd));
+  },
+
+  _setGoMemberLine: function() {
+    this._isGoMemberLine = true;
+    this._popupService.close();
+  },
+
+  _onCloseMemberLine: function() {
+    if (this._isGoMemberLine) {
+      this._historyService.goLoad('/common/member/line');
+    }
   },
 
   _openContentsDetailPop: function(key, e) {

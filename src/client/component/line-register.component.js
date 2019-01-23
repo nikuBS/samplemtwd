@@ -10,9 +10,8 @@ Tw.LineRegisterComponent = function () {
   this.lineMarketingLayer = new Tw.LineMarketingComponent();
   this._historyService = new Tw.HistoryService();
 
-  this._alreayRegisterList = [];
   this._registerLength = 0;
-  this._listLength = 0;
+  this._pageNo = 1;
   this._marketingSvc = '';
   this._goAuth = false;
 
@@ -28,15 +27,18 @@ Tw.LineRegisterComponent.prototype = {
     this._getLineInfo(type);
   },
   _getLineInfo: function (type) {
-    this._apiService.request(Tw.API_CMD.BFF_03_0004, {})
-      .done($.proxy(this._successGetLineInfo, this, type))
-      .fail($.proxy(this._failGetLineInfo, this));
+    this._apiService.request(Tw.API_CMD.BFF_03_0029, {
+      svcCtg: Tw.LINE_NAME.All,
+      pageSize: Tw.DEFAULT_LIST_COUNT,
+      pageNo: this._pageNo
+    }).done($.proxy(this._successGetLineInfo, this, type));
   },
-  _successGetLineInfo: function (type, resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._openRegisterLine(this._parseLineInfo(resp.result), type);
+  _successGetLineInfo: function (type, exposable) {
+    if ( exposable.code === Tw.API_CODE.CODE_00 ) {
+      this._pageNo = this._pageNo + 1;
+      this._openRegisterLine(this._parseLineInfo(exposable.result), type, exposable.result.totalCnt);
     } else {
-      Tw.Error(resp.code, resp.msg).pop();
+      Tw.Error(exposable.code, exposable.msg).pop();
     }
   },
   _failGetLineInfo: function (error) {
@@ -61,27 +63,22 @@ Tw.LineRegisterComponent.prototype = {
       line.showSvcAttrCd = Tw.SVC_ATTR[line.svcAttrCd];
       line.showSvcScrbDtm = Tw.DateHelper.getShortDateNoDot(line.svcScrbDt);
       line.showName = Tw.FormatHelper.isEmpty(line.nickNm) ? Tw.SVC_ATTR[line.svcAttrCd] : line.nickNm;
-      line.showAddr = type === Tw.LINE_NAME.INTERNET_PHONE_IPTV;
       line.showPet = type === Tw.LINE_NAME.MOBILE;
-      if ( line.expsYn === 'N' ) {
-        this._listLength++;
-        result.push(line);
-      } else {
-        this._alreayRegisterList.push(line.svcMgmtNum);
-      }
-      line.isShow = this._listLength <= Tw.DEFAULT_LIST_COUNT;
+      line.showDetail = type === Tw.LINE_NAME.MOBILE ? Tw.FormatHelper.conTelFormatWithDash(line.svcNum) :
+        line.svcAttrCd === Tw.SVC_ATTR_E.TELEPHONE ? Tw.FormatHelper.conTelFormatWithDash(line.svcNum) : line.addr;
+      result.push(line);
     }, this));
 
     return result;
   },
-  _openRegisterLine: function (data, type) {
-    if ( this._listLength > 0 ) {
+  _openRegisterLine: function (data, type, totalCnt) {
+    if ( totalCnt > 0 ) {
       this._popupService.open({
         hbs: 'CO_01_02_04_01',
         layer: true,
         new_customer: type === Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER,
-        list_length: this._listLength,
-        bt_more: this._listLength > Tw.DEFAULT_LIST_COUNT,
+        list_length: totalCnt,
+        bt_more: totalCnt > Tw.DEFAULT_LIST_COUNT,
         data: data
       }, $.proxy(this._onOpenRegisterLine, this), $.proxy(this._onCloseRegisterLine, this), 'line-register');
     } else {
@@ -97,6 +94,7 @@ Tw.LineRegisterComponent.prototype = {
     this.$allCheck = $layer.find('#fe-check-all');
     this.$list = $layer.find('.fe-item');
     this.$btMore = $layer.find('#fe-bt-more');
+    this.$lineList = $layer.find('#fe-list-line');
 
     this.$btnRegister.on('click', $.proxy(this._onClickRegister, this));
     this.$childChecks.on('change', $.proxy(this._onClickChildCheck, this));
@@ -120,23 +118,55 @@ Tw.LineRegisterComponent.prototype = {
   _onClickRegister: function ($event) {
     $event.stopPropagation();
 
-    var $selected = this.$childChecks.filter(':checked').parent();
-    var svcNumList = this._alreayRegisterList;
-    _.map($selected, $.proxy(function (checkbox) {
-      svcNumList.push($(checkbox).data('svcmgmtnum'));
+    this._apiService.request(Tw.NODE_CMD.GET_ALL_SVC, {})
+      .done($.proxy(this._successAllSvc, this));
+  },
+  _successAllSvc: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      var $selected = this.$childChecks.filter(':checked').parent();
+      var svcNumList = this._getExposedSvcNumList(resp.result);
+      _.map($selected, $.proxy(function (checkbox) {
+        svcNumList.push($(checkbox).data('svcmgmtnum'));
+      }, this));
+      this._registerLineList(svcNumList.join('~'), svcNumList.length);
+    } else {
+      Tw.Error(resp.code, resp.msg);
+    }
+  },
+  _getExposedSvcNumList: function(lineList) {
+    var category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
+    var list = [];
+    _.map(category, $.proxy(function (line) {
+      var curLine = lineList[Tw.LINE_NAME[line]];
+      if ( !Tw.FormatHelper.isEmpty(curLine) ) {
+        _.map(curLine, $.proxy(function(target) {
+          list.push(target.svcMgmtNum);
+        }, this));
+      }
     }, this));
-    this._registerLineList(svcNumList.join('~'), svcNumList.length);
+    return list;
   },
   _onClickMore: function () {
-    var $hideList = this.$list.filter('.none');
-    var $showList = $hideList.filter(function (index) {
-      return index < Tw.DEFAULT_LIST_COUNT;
-    });
-    var remainCnt = $hideList.length - $showList.length;
-    $showList.removeClass('none');
-    if ( remainCnt === 0 ) {
-      this.$btMore.hide();
+    this._apiService.request(Tw.API_CMD.BFF_03_0029, {
+      svcCtg: Tw.LINE_NAME.All,
+      pageSize: Tw.DEFAULT_LIST_COUNT,
+      pageNo: this._pageNo
+    }).done($.proxy(this._successMoreExposable, this));
+  },
+  _successMoreExposable: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      if ( this._pageNo * Tw.DEFAULT_LIST_COUNT >= resp.result.totalCnt ) {
+        this.$btMore.hide();
+      }
+      this._pageNo = this._pageNo + 1;
+      this._addList(resp.result);
+    } else {
+      Tw.Error(resp.code, resp.msg).pop();
     }
+  },
+  _addList: function (list) {
+    var tplLine = Handlebars.compile(Tw.LINE_RESITTER_TMPL);
+    this.$lineList.append(tplLine({ list: this._parseLineInfo(list) }));
   },
   _checkElement: function ($element) {
     $element.prop('checked', true);
@@ -175,21 +205,13 @@ Tw.LineRegisterComponent.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._registerLength = registerLength;
       this._marketingSvc = resp.result.offerSvcMgmtNum;
-      this._updateNoticeType();
+      this._popupService.close();
     } else {
-      // this._popupService.close();
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
   _failRegisterLineList: function (error) {
     Tw.Error(error.code, error.msg).pop();
-  },
-  _updateNoticeType: function () {
-    this._apiService.request(Tw.NODE_CMD.UPDATE_NOTICE_TYPE, {})
-      .done($.proxy(this._successUpdateNoticeType, this));
-  },
-  _successUpdateNoticeType: function (resp) {
-    this._popupService.close();
   },
   _onCloseRegisterLine: function () {
     if ( this._registerLength > 0 ) {

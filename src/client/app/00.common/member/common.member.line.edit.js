@@ -14,6 +14,8 @@ Tw.CommonMemberLineEdit = function (rootEl, category) {
 
   this._marketingSvc = '';
   this._goBizRegister = false;
+  this._pageNoExposable = 2;
+  this._pageNoExposed = 2;
 
   this._init();
   this._bindEvent();
@@ -29,11 +31,17 @@ Tw.CommonMemberLineEdit.prototype = {
   _bindEvent: function () {
     this.$usedTxt = this.$container.find('#fe-txt-used');
     this.$unusedTxt = this.$container.find('#fe-txt-unused');
+    this.$btMoreExposable = this.$container.find('#fe-bt-more-exposable');
+    this.$btMoreExposed = this.$container.find('#fe-bt-more-exposed');
+    this.$exposedList = this.$container.find('.fe-item-active');
 
     this.$container.on('click', '#fe-bt-guide', $.proxy(this._openGuidePopup, this));
     this.$container.on('click', '#fe-bt-complete', $.proxy(this._completeEdit, this));
     this.$container.on('click', '.fe-bt-remove', $.proxy(this._onClickRemove, this));
     this.$container.on('click', '.fe-bt-add', $.proxy(this._onClickAdd, this));
+
+    this.$btMoreExposable.on('click', $.proxy(this._onClickMoreExposable, this));
+    this.$btMoreExposed.on('click', $.proxy(this._onClickMoreExposed, this));
   },
   _openGuidePopup: function () {
     this._popupService.open({
@@ -164,6 +172,49 @@ Tw.CommonMemberLineEdit.prototype = {
   },
   _onCloseMarketingOfferPopup: function () {
     this._closeMarketingOfferPopup();
-  }
+  },
+  _onClickMoreExposable: function () {
+    this._apiService.request(Tw.API_CMD.BFF_03_0029, {
+      pageNo: this._pageNoExposable,
+      pageSize: Tw.DEFAULT_LIST_COUNT,
+      svcCtg: this._category
+    }).done($.proxy(this._successMoreExposable, this));
+  },
+  _onClickMoreExposed: function () {
+    var $hideList = this.$exposedList.filter('.none');
+    var $showList = $hideList.filter(function (index) {
+      return index < Tw.DEFAULT_LIST_COUNT;
+    });
+    var remainCnt = $hideList.length - $showList.length;
+    $showList.removeClass('none');
+    if ( remainCnt === 0 ) {
+      this.$btMoreExposed.hide();
+    }
+  },
+  _successMoreExposable: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      if ( this._pageNoExposed * Tw.DEFAULT_LIST_COUNT >= resp.result[this._category + 'Cnt'] ) {
+        this.$btMoreExposable.hide();
+      }
+      this._pageNoExposable = this._pageNoExposable + 1;
+      this._addExposableList(resp.result[this._category]);
+    } else {
+      Tw.Error(resp.code, resp.msg).pop();
+    }
+  },
+  _addExposableList: function (list) {
+    var $list = this.$container.find('.fe-list-exposable');
+    var $lineTemp = $('#fe-line-exposable-tmpl');
+    var tplLine = Handlebars.compile($lineTemp.html());
+    $list.append(tplLine({ list: this._parseLineData(list) }));
+  },
+  _parseLineData: function (list) {
+    _.map(list, $.proxy(function (line) {
+      line.showName = Tw.FormatHelper.isEmpty(line.nickNm) ? Tw.SVC_ATTR[line.svcAttrCd] : line.nickNm;
+      line.showDetail = this._category === Tw.LINE_NAME.MOBILE ? Tw.FormatHelper.conTelFormatWithDash(line.svcNum) :
+        line.svcAttrCd === Tw.SVC_ATTR_E.TELEPHONE ? Tw.FormatHelper.conTelFormatWithDash(line.svcNum) : line.addr;
+    }, this));
 
+    return list;
+  }
 };

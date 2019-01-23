@@ -24,7 +24,8 @@ export default class MembershipMy extends TwViewController {
       res.render('my/membership.my.html', {
         myInfoData: myInfoData,
         membershipData: membershipData,
-        svcInfo: svcInfo
+        svcInfo: svcInfo,
+        pageInfo: pageInfo
       });
     });
   }
@@ -40,6 +41,7 @@ export default class MembershipMy extends TwViewController {
       } else {
         myInfoData = this.parseMyInfoData(resp.result);
       }
+      return resp.result;
     });
   }
 
@@ -54,6 +56,7 @@ export default class MembershipMy extends TwViewController {
       } else {
         membershipData = this.parseMembershipData(resp.result);
       }
+      return resp.result;
     });
   }
 

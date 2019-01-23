@@ -1,0 +1,37 @@
+<div class="popup tw-popup">
+    <div class="popup-page nobg layer"><!-- .no-btn 하단에 버튼이 없을 경우 -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div>
+                {{#each data}}
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <div class="box-chk-link">
+                        {{#if type}}<p class="link-long-ti">{{type}}</p>{{/if}}
+                        <ul class="chk-link-list">
+                           {{#each list}}
+                            <li>
+                                <button class="{{option}}" {{{attr}}}>
+                                    <div class="link-info">
+                                        <span class="info-value">{{value}}</span>
+                                        {{#if explain}}
+                                        <p class="tx-explain">{{explain}}</p>
+                                        {{/if}}
+                                        <span class="ico"></span>
+                                    </div>
+                                </button>
+                            </li>
+                            {{/each}}
+                        </ul>
+                        <button type="button" class="btn-floating btn-style3 tw-popup-closeBtn">닫기</button>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                {{/each}}
+            </div>
+        </div>
+        <!--// .container-wrap -->
+    </div>
+    <div class="popup-blind"></div>
+</div>

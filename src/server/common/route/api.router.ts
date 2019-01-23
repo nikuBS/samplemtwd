@@ -72,6 +72,7 @@ class ApiRouter {
     this.router.get('/home/help', this.getHomeHelp.bind(this));
     this.router.get('/tooltip', this.getTooltip.bind(this));
     this.router.get('/home/quick-menu', this.getQuickMenu.bind(this));
+    this.router.get('/home/quick-menu/default', this.getDefaultQuickMenu.bind(this));
     this.router.get('/product/comparison', this.getProductComparison.bind(this));
     this.router.get('/product/info', this.getProductInfo.bind(this));
     this.router.get('/masking-method', this.getMaskingMethod.bind(this));
@@ -180,7 +181,8 @@ class ApiRouter {
             resp.result.userInfo.tid = svcInfo.userId;
             resp.result.userInfo.addr = svcInfo.addr;
             resp.result.userInfo.canSendFreeSMS = allSvcInfo.m.reduce((memo, elem) => {
-              if ( elem.svcAttrCd.includes('M1') ) {
+              if ( elem.svcAttrCd.includes('M1') || elem.svcAttrCd.includes('M3') ||
+                elem.svcAttrCd.includes('M4') ) {
                 return true;
               }
               return memo;
@@ -371,6 +373,31 @@ class ApiRouter {
           return res.json(err);
         });
     }
+  }
+
+  private getDefaultQuickMenu(req: Request, res: Response, next: NextFunction) {
+    const svcInfo = this.loginService.getSvcInfo(req);
+    if ( FormatHelper.isEmpty(svcInfo) ) {
+      return res.json({
+        code: API_CODE.NODE_1001,
+        msg: NODE_API_ERROR[API_CODE.NODE_1001]
+      });
+    }
+
+    this.apiService.request(API_CMD.BFF_04_0005, {})
+      .switchMap((resp) => {
+        if ( resp.code === API_CODE.CODE_00 ) {
+          const defaultCode = resp.result;
+          return this.redisService.getData(REDIS_KEY.QUICK_DEFAULT + defaultCode);
+        } else {
+          throw resp;
+        }
+      })
+      .subscribe((resp) => {
+        return res.json(resp);
+      }, (err) => {
+        return res.json(err);
+      });
   }
 
   private getProductComparison(req: Request, res: Response, next: NextFunction) {

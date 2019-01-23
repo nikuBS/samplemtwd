@@ -8,9 +8,10 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
-import { LINE_NAME, SVC_ATTR_NAME } from '../../../../types/bff.type';
+import { LINE_NAME, SVC_ATTR_E, SVC_ATTR_NAME } from '../../../../types/bff.type';
 import DateHelper from '../../../../utils/date.helper';
 import { DEFAULT_LIST_COUNT } from '../../../../types/config.type';
+import { Observable } from '../../../../../../node_modules/rxjs/Observable';
 
 class CommonMemberLine extends TwViewController {
   constructor() {
@@ -18,44 +19,70 @@ class CommonMemberLine extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    this.apiService.request(API_CMD.BFF_03_0004, {}).subscribe((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        const list = resp.result;
-        const lineInfo = this.parseLineList(list);
-        res.render('member/common.member.line.html', Object.assign(lineInfo, {
-          svcInfo, pageInfo
-        }));
+    Observable.combineLatest([
+      this.apiService.request(API_CMD.BFF_03_0004, { svcCtg: LINE_NAME.MOBILE, pageSize: DEFAULT_LIST_COUNT }),
+      this.apiService.request(API_CMD.BFF_03_0004, {
+        svcCtg: LINE_NAME.INTERNET_PHONE_IPTV,
+        pageSize: DEFAULT_LIST_COUNT
+      })
+    ]).subscribe(([mobile, internet]) => {
+      if ( mobile.code === API_CODE.CODE_00 ) {
+        if ( mobile.result.totalCnt === 0 ) {
+          res.render('member/common.member.line.empty.html', { svcInfo, pageInfo });
+        } else {
+          const lineInfo = this.parseLineList({
+            totalCnt: mobile.result.totalCnt,
+            mCnt: mobile.result.mCnt,
+            sCnt: mobile.result.sCnt,
+            m: mobile.result.m,
+            s: internet.result.s
+          });
+          res.render('member/common.member.line.html', Object.assign(lineInfo, {
+            svcInfo, pageInfo
+          }));
+        }
+
       } else {
-        // ICAS3101
-        res.render('member/common.member.line.empty.html', { svcInfo, pageInfo });
+        return this.error.render(res, {
+          svcInfo: svcInfo,
+          code: mobile.code,
+          msg: mobile.msg
+        });
       }
+
     });
   }
 
   private parseLineList(lineList): any {
     const category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
-    let totalCount = 0;
     const list: string[] = [];
+
     category.map((line) => {
       const curLine = lineList[LINE_NAME[line]];
       if ( !FormatHelper.isEmpty(curLine) ) {
-        this.convLineData(curLine);
+        this.convLineData(LINE_NAME[line], curLine);
         list.push(LINE_NAME[line]);
-        totalCount += curLine.length;
       }
     });
-    const showParam = this.setShowList(list, totalCount);
 
-    return { lineList, showParam };
+    return { lineList, showParam: this.setShowList(list, lineList.totalCnt) };
   }
 
-  private convLineData(lineData) {
-    FormatHelper.sortObjArrAsc(lineData, 'expsSeq');
+  private convLineData(category, lineData) {
+    const seqData = lineData.filter((line) => !FormatHelper.isEmpty(line.expsSeq));
+    const nonSeqData = lineData.filter((line) => FormatHelper.isEmpty(line.expsSeq));
+    if ( seqData.length > 0 ) {
+      FormatHelper.sortObjArrAsc(seqData, 'expsSeq');
+    }
+    lineData = seqData.concat(nonSeqData);
 
     lineData.map((line) => {
       line.showSvcAttrCd = SVC_ATTR_NAME[line.svcAttrCd];
-      line.showSvcScrbDtm = FormatHelper.isNumber(line.svcScrbDt) ? DateHelper.getShortDateNoDot(line.svcScrbDt) : FormatHelper.conDateFormatWIthDash(line.svcScrbDt);
+      line.showSvcScrbDtm = FormatHelper.isNumber(line.svcScrbDt) ?
+        DateHelper.getShortDateNoDot(line.svcScrbDt) : FormatHelper.conDateFormatWithDash(line.svcScrbDt);
       line.showName = FormatHelper.isEmpty(line.nickNm) ? SVC_ATTR_NAME[line.svcAttrCd] : line.nickNm;
+      line.showDetail = category === LINE_NAME.MOBILE ? FormatHelper.conTelFormatWithDash(line.svcNum) :
+        line.svcAttrCd === SVC_ATTR_E.TELEPHONE ? FormatHelper.conTelFormatWithDash(line.svcNum) : line.addr;
     });
   }
 

@@ -42,6 +42,10 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
     //   });
     // }
 
+    if ( this._ifCompletePageMove(req, res, 'submain/myt-join.submain.complete.html') ) {
+      return ;
+    }
+
     this._svcInfo = svcInfo;
     const thisMain = this;
     this.reqQuery = req.query;
@@ -266,6 +270,29 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
     res.render(view, data);
   }
 
+  /**
+   * 완료 화면 이동 (url의 끝이 /complete인 경우)
+   * @param req
+   * @param res
+   * @param compView - 완료html
+   * @private
+   */
+  private _ifCompletePageMove(req: Request, res: Response, compView: string) {
+    const compUrl = '/complete';
+    const url = req.url.substr(0, req.url.indexOf('?'));
+    const q = req.query || {};
+    if ( url.lastIndexOf(compUrl) === url.length - compUrl.length) {
+      res.render(compView, {
+        confirmMovPage : q.confirmMovPage || '',
+        mainTxt : q.mainTxt || '',
+        subTxt : q.subTxt || '',
+        linkTxt : q.linkTxt || '',
+        linkPage : q.linkPage || ''
+      });
+      return true;
+    }
+    return false;
+  }
 }
 
 export default MyTJoinWireSetWireCancelService;

@@ -166,16 +166,16 @@ Tw.FormatHelper = (function () {
   };
 
   var conTelFormatWithDash = function (v) {
-    if (Tw.FormatHelper.isEmpty(v)) {
+    if ( Tw.FormatHelper.isEmpty(v) ) {
       return v;
     }
 
-    var str = $.trim(v),
-      maskCharIndexs = [],
-      j = 0;
+    var str            = $.trim(v),
+        maskCharIndexs = [],
+        j              = 0;
 
-    for (var a = 0; a < str.length; a++) {
-      if (str[a] === '*') {
+    for ( var a = 0; a < str.length; a++ ) {
+      if ( str[a] === '*' ) {
         maskCharIndexs.push(a);
       }
     }
@@ -183,12 +183,12 @@ Tw.FormatHelper = (function () {
     str = str.replace(/\*/gi, '0');
     str = str.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, '$1-$2-$3');
 
-    for (var b = 0; b < str.length; b++) {
-      if (str[b] === '-') {
+    for ( var b = 0; b < str.length; b++ ) {
+      if ( str[b] === '-' ) {
         continue;
       }
 
-      if (maskCharIndexs.indexOf(j) !== -1) {
+      if ( maskCharIndexs.indexOf(j) !== -1 ) {
         str = Tw.StringHelper.replaceAt(str, b, '*');
       }
 
@@ -198,7 +198,7 @@ Tw.FormatHelper = (function () {
     return str;
   };
 
-  var conDateFormatWIthDash = function (date) {
+  var conDateFormatWithDash = function (date) {
     return date.slice(0, 4) + '.' + date.slice(4, 6) + '.' + date.slice(6, 8);
   };
 
@@ -221,27 +221,27 @@ Tw.FormatHelper = (function () {
   var getDashedCellPhoneNumber = function (phoneNumber) {
     var str = '';
 
-    if( phoneNumber.length < 4){
+    if ( phoneNumber.length < 4 ) {
       return phoneNumber;
-    }else if(phoneNumber.length < 7){
+    } else if ( phoneNumber.length < 7 ) {
       str += phoneNumber.substr(0, 3);
       str += '-';
       str += phoneNumber.substr(3);
       return str;
-    }else if(phoneNumber.length < 11){
+    } else if ( phoneNumber.length < 11 ) {
       str += phoneNumber.substr(0, 3);
       str += '-';
       str += phoneNumber.substr(3, 3);
       str += '-';
       str += phoneNumber.substr(6);
       return str;
-    }else{
+    } else {
       str += phoneNumber.substr(0, 3);
       str += '-';
       str += phoneNumber.substr(3, 4);
       str += '-';
       str += phoneNumber.substr(7);
-      return str.substr(0,13);
+      return str.substr(0, 13);
     }
     return phoneNumber;
   };
@@ -415,7 +415,7 @@ Tw.FormatHelper = (function () {
     return data;
   };
 
-  var stripTags = function(context) {
+  var stripTags = function (context) {
     return context.replace(/(<([^>]+)>)|&nbsp;/ig, '');
   };
 
@@ -427,13 +427,17 @@ Tw.FormatHelper = (function () {
 
   function dataURLtoFile(dataurl, filename) {
     var arr = dataurl.split(',');
-    var mime = arr[0].match(/:(.*?);/)[1],
+    var mime                                        = arr[0].match(/:(.*?);/)[1],
         bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-    console.log(mime);
-    while(n--){
+    while ( n-- ) {
       u8arr[n] = bstr.charCodeAt(n);
     }
-    return new File([u8arr], filename, {type:mime});
+    return new File([u8arr], filename, { type: mime });
+  }
+
+  function isNumber(number) {
+    var regNumber = /^[0-9]*$/;
+    return regNumber.test(number);
   }
 
   return {
@@ -451,7 +455,7 @@ Tw.FormatHelper = (function () {
     convVoiceFormat: convVoiceFormat,
     convSmsPrice: convSmsPrice,
     conTelFormatWithDash: conTelFormatWithDash,
-    conDateFormatWIthDash: conDateFormatWIthDash,
+    conDateFormatWithDash: conDateFormatWithDash,
     sortObjArrDesc: sortObjArrDesc,
     sortObjArrAsc: sortObjArrAsc,
     makeCardYymm: makeCardYymm,
@@ -474,6 +478,7 @@ Tw.FormatHelper = (function () {
     purifyPlansData: purifyPlansData,
     stripTags: stripTags,
     addCardDash: addCardDash,
-    dataURLtoFile: dataURLtoFile
+    dataURLtoFile: dataURLtoFile,
+    isNumber: isNumber
   };
 })();

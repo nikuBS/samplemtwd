@@ -76,7 +76,7 @@ Tw.API_CMD = {
   BFF_03_0013: { path: '/:version/user/biz-services', method: Tw.API_METHOD.POST },
   BFF_03_0014: { path: '/core-auth/:version/marketing-offer-subscriptions/:args0', method: Tw.API_METHOD.GET },
   BFF_03_0015: { path: '/core-auth/:version/marketing-offer-subscriptions/:args0', method: Tw.API_METHOD.PUT },
-  BFF_03_0016: { path: '/core-auth/:version/service-passwords', method: Tw.API_METHOD.PUT },
+  BFF_03_0016: { path: '/:version/my-t/service-passwords', method: Tw.API_METHOD.PUT },
   BFF_03_0019: { path: '/core-auth/:version/users/:args0/otp', method: Tw.API_METHOD.POST },
   BFF_03_0020: { path: '/core-auth/:version/passwords-check', method: Tw.API_METHOD.GET },
   BFF_03_0021: { path: '/core-auth/:version/tworld-term-agreements', method: Tw.API_METHOD.GET },
@@ -88,6 +88,7 @@ Tw.API_CMD = {
   BFF_03_0027: { path: '/core-auth/:version/users/otp', method: Tw.API_METHOD.PUT },
   BFF_03_0028: { path: '/core-auth/:version/free-sms-availability/::args0', method: Tw.API_METHOD.GET },
   BFF_03_0029: { path: '/core-auth/:version/exposable-services', method: Tw.API_METHOD.GET },
+  BFF_03_0030: { path: '/core-auth/:version/exposed-services', method: Tw.API_METHOD.GET },
 
   // HOME
   BFF_04_0001: { path: '/core-membership/:version/card/home', method: Tw.API_METHOD.GET },
@@ -134,9 +135,6 @@ Tw.API_CMD = {
   BFF_05_0064: { path: '/core-bill/:version/use-contents/hist-requests', method: Tw.API_METHOD.GET },
   BFF_05_0066: { path: '/core-bill/:version/use-contents/limit-requests', method: Tw.API_METHOD.GET },
   BFF_05_0067: { path: '/core-bill/:version/use-contents/limit-up', method: Tw.API_METHOD.POST },
-  BFF_05_0069: { path: '/core-auth/:version/service-passwords', method: Tw.API_METHOD.PUT },
-  BFF_05_0070: { path: '/core-auth/:version/service-passwords-change', method: Tw.API_METHOD.PUT },
-  BFF_05_0071: { path: '/core-auth/:version/service-passwords', method: Tw.API_METHOD.DELETE },
   BFF_05_0076: { path: '/core-modification/:version/myinfo/discount-infos-month', method: Tw.API_METHOD.GET },
   BFF_05_0078: { path: '/core-balance/:version/band-data-sharings', method: Tw.API_METHOD.GET },
   BFF_05_0079: { path: '/core-bill/:version/micro-pay/hist-requests', method: Tw.API_METHOD.POST },
@@ -516,7 +514,7 @@ Tw.NODE_CMD = {
   CHANGE_SESSION: { path: '/common/selected-sessions', method: Tw.API_METHOD.PUT },
   LOGIN_SVC_PASSWORD: { path: '/user/service-password-sessions', method: Tw.API_METHOD.POST },
   LOGIN_USER_LOCK: { path: '/user/locks', method: Tw.API_METHOD.DELETE },
-  CHANGE_SVC_PASSWORD: { path: '/core-auth/service-passwords', method: Tw.API_METHOD.PUT },
+  CHANGE_SVC_PASSWORD: { path: '/:version/my-t/service-passwords', method: Tw.API_METHOD.PUT },
   CHANGE_LINE: { path: '/user/services', method: Tw.API_METHOD.PUT },
   CHANGE_NICKNAME: { path: '/user/nick-names', method: Tw.API_METHOD.PUT },
   UPDATE_SVC: { path: '/common/selected-sessions', method: Tw.API_METHOD.GET },
@@ -543,6 +541,7 @@ Tw.NODE_CMD = {
   GET_HOME_HELP: { path: '/home/help', method: Tw.API_METHOD.GET },
   GET_TOOLTIP: { path: '/tooltip', method: Tw.API_METHOD.GET },
   GET_QUICK_MENU: { path: '/home/quick-menu', method: Tw.API_METHOD.GET },
+  GET_QUICK_MENU_DEFAULT: { path: '/home/quick-menu/default', method: Tw.API_METHOD.GET },
   GET_PRODUCT_COMPARISON: { path: '/product/comparison', method: Tw.API_METHOD.GET },
   GET_PRODUCT_INFO: { path: '/product/info', method: Tw.API_METHOD.GET }
 };

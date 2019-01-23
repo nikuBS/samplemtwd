@@ -27,8 +27,8 @@ Tw.BenefitDisPgmInput.prototype = {
       var nextDate_1 = new Date(curDate.getFullYear() + 1, curDate.getMonth(), curDate.getDate() - 1);
       var nextDate_2 = new Date(curDate.getFullYear() + 2, curDate.getMonth(), curDate.getDate() - 1);
       data.monthDetail = {
-        'M0012': Tw.DateHelper.getShortDateNoDot(curDate) + ' ~ ' + Tw.DateHelper.getShortDateNoDot(nextDate_1),
-        'M0024': Tw.DateHelper.getShortDateNoDot(curDate) + ' ~ ' + Tw.DateHelper.getShortDateNoDot(nextDate_2)
+        'M0012': Tw.DateHelper.getShortDate(curDate) + ' ~ ' + Tw.DateHelper.getShortDate(nextDate_1),
+        'M0024': Tw.DateHelper.getShortDate(curDate) + ' ~ ' + Tw.DateHelper.getShortDate(nextDate_2)
       };
       data.monthCode = { 'M0012': '12', 'M0024': '24' };
       $.extend(this._confirmOptions, data);

@@ -37,7 +37,7 @@ class ProductMobileplanAddSettingSignatureLine extends TwViewController {
   private _convertSvcNumMask(combinationLineList): any {
     return combinationLineList.map((item) => {
       return Object.assign(item, {
-        svcNumMask: FormatHelper.conTelFormatWithDash(item.asgnNumMask)
+        svcNum: FormatHelper.conTelFormatWithDash(item.svcNum)
       });
     });
   }
@@ -56,6 +56,7 @@ class ProductMobileplanAddSettingSignatureLine extends TwViewController {
 
     this.apiService.request(API_CMD.BFF_10_0021, {}, {}, [prodId])
       .subscribe((combineLineInfo) => {
+        console.log(combineLineInfo);
         if (combineLineInfo.code !== API_CODE.CODE_00 || combineLineInfo.result.combinationLineList.length < 1) {
           return this.error.render(res, Object.assign(renderCommonInfo, {
             code: combineLineInfo.code,

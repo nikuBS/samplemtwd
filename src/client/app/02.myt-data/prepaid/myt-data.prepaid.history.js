@@ -196,7 +196,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
     history.isCanceled = history.payCd === '5' || history.payCd === '9';
     history.isRefundable = history.rfndPsblYn === 'Y';
     history.amt = Tw.FormatHelper.addComma(history.amt);
-    history.cardNm = history.cardNm || Tw.PREPAID_PAYMENT_TYPE[history.wayCd];
+    history.cardNm = history.wayCd === '02' ? history.cardNm : Tw.PREPAID_PAYMENT_TYPE[history.wayCd];
 
     histories[key].push(history);
 
@@ -211,8 +211,9 @@ Tw.MyTDataPrepaidHistory.prototype = {
       typeName: Tw.PREPAID_TYPES[this._currentType.toUpperCase()],
       chargeType: Tw.PREPAID_RECHARGE_TYPE[history.chargeTp],
       date: Tw.DateHelper.getShortDate(history.chargeDt),
+      amt: Tw.FormatHelper.addComma(history.amt),
       payment:
-        history.cardNm && history.wayCd !== '99' ? 
+        history.cardNm && history.wayCd === '02' ? 
           Tw.PREPAID_PAYMENT_TYPE[history.wayCd] + '(' + history.cardNm + ')' :
           Tw.PREPAID_PAYMENT_TYPE[history.wayCd]
     });

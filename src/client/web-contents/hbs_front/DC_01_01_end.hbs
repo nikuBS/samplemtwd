@@ -1,0 +1,51 @@
+<!-- .popup hbs -->
+<div class="popup-page tw-popup">
+    <!-- .no-btn 하단에 버튼이 없을 경우 -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <h1 class="complete-title">
+                <img src="/img/dummy/dmy-complete.jpg" alt="" />
+                <span>
+                    T데이터 셰어링 USIM <br>
+                    <strong>해지 완료</strong>
+                </span>
+            </h1>
+            <div class="complete-info">
+                <dl>
+                    <dt>해지일</dt>
+                    <dd>
+                        <strong>{{ data.date }}</strong>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>해지 유심 번호</dt>
+                    <dd>
+                        <strong>{{ data.usimNum }}</strong>
+                    </dd>
+                </dl>
+            </div>
+            <div class="complete-btn-box pt40">
+                <ul class="bt-slice">
+                    <li class="bt-blue1">
+                        <a href="/myt-data/hotdata">확인</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <!--<button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>-->
+    <!--// .popup-closeBtn -->
+</div>
+<!--// .popup hbs -->

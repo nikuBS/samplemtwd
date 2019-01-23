@@ -1,0 +1,78 @@
+<div class="popup-page nobg tw-popup fixed-btn">
+    <!-- .fixed-btn 하단에 고정된 버튼이 있는 경우 -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>조건선택</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+
+            <div class="ti-caption-gray bdt titlebox-bgtype01">
+                <h3 class="tit">필터를 선택해주세요</h3>
+                <div class="num">
+                    <button class="resetbtn">초기화</button>
+                </div>
+            </div>
+
+            <!-- .cont-box -->
+            <div class="cont-box">
+                {{#each filters}}
+                <h3 class="filterlist-title">{{prodFltNm}}</h3>
+                <div class="productfilter-type">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box check">
+                            <div class="productfilter">
+                                <ul class="select-list" role="group">
+                                    {{#each subFilters}}
+                                    <li class="checkbox" role="checkbox">
+                                        <input type="checkbox" name="checkbox" title="{{prodFltNm}}" {{#if checked}}checked="checked"{{/if}} data-filter-id="{{prodFltId}}"/><!-- 체크상태일 경우 checked="checked" -->
+                                        <span class="text">
+                                            {{prodFltNm}}
+                                        </span>
+                                    </li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+                {{/each}}
+            </div>
+            <!--// .cont-box -->
+
+            {{#if tags}}
+            <hr class="cont-sp type1" aria-hidden="true" />
+            <!-- 추천태그 -->
+            <div class="cont-box gaps-style02">
+                <h3 class="suggest-tag-title">추천태그</h3>
+                <ul class="suggest-tag-list openlist-wrap">
+                    {{#each tags}}
+                    <li><button type="button" class="link {{#if checked}}active{{/if}}" data-tag-id={{tagId}}>#{{prodTagNm}}</button></li>
+                    {{/each}}
+                </ul>
+            </div>
+            <!--//추천태그 -->
+            {{/if}}
+
+            <ul class="bt-slice full">
+                <li class="bt-red1">
+                    <button>적용하기</button>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>

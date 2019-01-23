@@ -57,20 +57,22 @@
     <p class="price-text">
     <% if ( prodRedisInfo.summary.sktProdBenfCtt ) { %>
         <%= prodRedisInfo.summary.sktProdBenfCtt %>
+    <% } else { %>
+        &nbsp;
     <% } %>
     </p>
     <% if ( basicInfo.prodScrbYn === 'Y' && !isJoined && basicInfo.linkBtnList.join.length > 0 ) { %>
-    <div class="btn">
+    <div class="limit">
         <button type="button" class="bt-white1 fe-btn_join fe-btn_ready_on" style="display: none" data-url="<%= basicInfo.linkBtnList.join[0].linkUrl %>"><%= basicInfo.linkBtnList.join[0].linkNm %></button>
     </div>
     <% } %>
     <% if ( basicInfo.prodTermYn === 'Y' && isJoined && basicInfo.linkBtnList.terminate.length > 0 ) { %>
-    <div class="btn">
+    <div class="limit">
         <button type="button" class="bt-white1 fe-btn_terminate fe-btn_ready_on" style="display: none" data-url="<%= basicInfo.linkBtnList.terminate[0].linkUrl %>"><%= basicInfo.linkBtnList.terminate[0].linkNm %></button>
     </div>
     <% } %>
     <% if ( basicInfo.prodScrbYn === 'N' && !isJoined ) { %>
-    <div class="limit">
+    <div class="limit ty01">
         <%= (basicInfo.prodStCd === 'F1000' ? '가입제한 상품' : '가입불가 상품') %>
     </div>
     <% } %>

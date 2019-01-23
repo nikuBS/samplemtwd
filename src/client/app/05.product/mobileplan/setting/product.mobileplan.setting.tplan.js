@@ -43,11 +43,6 @@ Tw.ProductMobileplanSettingTplan.prototype = {
   },
 
   _enableSetupButton: function(e) {
-    if ($(e.currentTarget).val() === 'NA00006117') {  // 2019.1.18 클럽 옵션 가입 종료
-      this._clearSelectItem();
-      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A82);
-    }
-
     if ($(e.currentTarget).val() === 'NA00006116') {
       return this._selectSmartWatchItem();
     } else {
@@ -132,6 +127,10 @@ Tw.ProductMobileplanSettingTplan.prototype = {
   _procSetupOk: function() {
     var $checked = this.$container.find('.widget-box.radio input[type="radio"]:checked');
 
+    if ($checked.val() === 'NA00006117') {  // 2019.1.18 클럽 옵션 가입 종료
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A82.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A82.TITLE);
+    }
+
     if (this._currentBenefitProdId === $checked.val()) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.TITLE);
     }
@@ -155,10 +154,6 @@ Tw.ProductMobileplanSettingTplan.prototype = {
   _procSetupOkRes: function(resp) {
     var $checked = this.$container.find('.widget-box.radio input[type="radio"]:checked');
     Tw.CommonHelper.endLoading('.container');
-
-    if (resp.code === 'ZCOLE0001') {
-      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A46.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A46.TITLE);
-    }
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();

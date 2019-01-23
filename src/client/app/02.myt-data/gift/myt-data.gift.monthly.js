@@ -137,14 +137,6 @@ Tw.MyTDataGiftMonthly.prototype = {
 
   _onSuccessUnsubscribeAutoGift: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      // this._popupService.openAlert(
-      //   Tw.UNSUBSCRIBE_MONTHLY_GIFT_COMPLETE,
-      //   null,
-      //   null,
-      //   $.proxy(function () {
-      //     this._popupService.close();
-      //     this._historyService.reload();
-      //   }, this));
       Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT_COMPLETE);
       this._historyService.reload();
       return true;

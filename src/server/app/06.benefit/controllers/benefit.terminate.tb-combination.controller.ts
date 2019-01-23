@@ -25,9 +25,19 @@ class BenefitTerminateTbCombination extends TwViewController {
     return Object.assign(termInfo, {
       combinationGroup: this._convCombinationGroup(termInfo.combinationGroup),
       combinationWirelessMember: FormatHelper.isEmpty(termInfo.combinationWirelessMemberList) ? null :
-        termInfo.combinationWirelessMemberList[0],
+        this._convertWirelessInfo(termInfo.combinationWirelessMemberList[0]),
       combinationWireMember: FormatHelper.isEmpty(termInfo.combinationWireMemberList) ? null :
         termInfo.combinationWireMemberList[0]
+    });
+  }
+
+  /**
+   * @param wireLessInfo
+   * @private
+   */
+  private _convertWirelessInfo(wireLessInfo: any): any {
+    return Object.assign(wireLessInfo, {
+      svcNum: FormatHelper.conTelFormatWithDash(wireLessInfo.svcNum)
     });
   }
 

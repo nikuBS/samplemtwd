@@ -62,7 +62,9 @@ Tw.SMS_VALIDATION = {
   EXPIRE_AUTH_TIME: '인증번호 입력 시간이 초과했습니다.',
   ALREADY_AUTH: '이미 인증을 받은 번호입니다.',
   SUCCESS: '인증이 완료 되었습니다.',
-  EMPTY_CERT: '인증번호를 입력해 주세요.'
+  EMPTY_CERT: '인증번호를 입력해 주세요.',
+  ATH2007: '인증번호가 일치하지 않습니다.',
+  ATH2008: '인증번호 입력 시간이 초과했습니다.'
 };
 
 Tw.POPUP_TITLE = {
@@ -168,7 +170,7 @@ Tw.REFILL_COUPON_CONFIRM = {
 };
 
 Tw.REFILL_COUPON_ALERT = {
-  A211: '선물 가능 횟수가 초과되었습니다.<br />선물은 월 2회까지만 보낼 수 있습니다.',
+  A211: '선물 가능 횟수가 초과되었습니다.<br />선물하기는 월 1회 가능합니다.',
   A212: '팅요금제 이용고객은 리필쿠폰 선물하기가 불가능합니다.',
   A213: '휴대폰 번호가 올바르지 않습니다.<br />휴대폰 번호를 확인해주세요.'
 };
@@ -398,7 +400,7 @@ Tw.ALERT_MSG_COMMON = {
     TITLE: 'SMS인증을 사용할 수 없습니다.',
     MSG: '인증할 수 있는 회선번호가 없습니다.<br />고객센터(114)로 문의주세요.'
   },
-  STEP_CANCEL: { TITLE: '안내', MSG: '입력하신 정보는 모두 취소됩니다. 창을 닫으시겠습니까?' },
+  STEP_CANCEL: { TITLE: ' ', MSG: '입력하신 정보는 모두 취소됩니다. <br> 창을 닫으시겠습니까?' },
   CHANGE: '변경하시겠습니까?'
 };
 
@@ -469,7 +471,7 @@ Tw.ALERT_MSG_MYT_DATA = {
   ALERT_2_A72: {
     TITLE: '알람 설정 하시겠습니까?',
     MSG_1: '사용중인 선불폰 이동전화의 잔액이[',
-    MSG_2: '원]이면 SMS로 알림 메시지가 전송됩니다.',
+    MSG_2: ']이면 SMS로 알림 메시지가 전송됩니다.',
     BUTTON: '설정하기' },
   DATA_PESTER: {
     TITLE: '[SKT] ',
@@ -680,7 +682,6 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A40: { TITLE: '가입상담 예약은 신규가입만 가능합니다.\n추가 가입과 관련하여 상담을 받으시겠습니까?', MSG: '' },
   ALERT_3_A44: { TITLE: '다른 회선으로 절친 등록 시 현재 회선의 절친은 자동 해지 됩니다.' },
   ALERT_3_A45: { TITLE: '절친으로 등록된 회선은 해지 불가합니다.', MSG: '다른 회선으로 절친 등록 후 해당 회선 해지 하실 수 있습니다.' },
-  ALERT_3_A46: { TITLE: '변경일 기준 30일 이내 다른 옵션으로 변경이 불가합니다.', MSG: '' },
   ALERT_3_A73: { TITLE: '스마트워치 회선이 존재하지 않습니다.\n회선 없이 \'인피니티_스마트워치\' 옵션을 선택하시겠습니까?', MSG: '' },
   ALERT_3_A74: { TITLE: '선택하신 상품 해지를 취소 하시겠습니까?', MSG: '', BUTTON: '계속하기' },
   ALERT_3_A77: { TITLE: '지역 추가 시, 1개 지역당 1,650원(부가세포함)씩 과금이 추가됩니다.지역을 추가하시겠습니까?', MSG: '' },
@@ -690,7 +691,8 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_ALREADY_TERM_PRODUCT: '사용중이지 않은 상품입니다.',
   ALERT_NUMBER_MIN: '최소 한개의 지정번호는 존재해야 합니다.',
   ALERT_LOCATION_MIN: '최소 한개의 지역은 존재해야 합니다.',
-  PREVIEW: '미리보기에서는 해당 기능이 제공되지 않습니다.'
+  PREVIEW: '미리보기에서는 해당 기능이 제공되지 않습니다.',
+  NEED_LINE: '등록된 회선이 있어야 이용 가능합니다.\n회선 등록 후 계속하시겠습니까?'
 };
 
 Tw.ALERT_MSG_PRODUCT_ROAMING = {
@@ -921,8 +923,8 @@ Tw.MYT_DATA_FAMILY_TOAST = {
 };
 
 Tw.MYT_DATA_FAMILY_CONFIRM_SHARE = {
-  TITLE: '데이터를 공유 하시겠습니까?',
-  CONTENTS: '데이터를 공유하고 나면 취소하실 수 없습니다.',
+  TITLE: ' ',
+  CONTENTS: '공유하시려는 {data}GB 데이터는 가족에게 즉시 공유됩니다. 데이터를 공유하시겠습니까?',
   BTN_NAME: '공유하기'
 };
 
@@ -1623,6 +1625,10 @@ Tw.ROAMING_SVCTIME_SETTING_ERR_CASE = {
 };
 
 Tw.ROAMING_BPCP = {
-  BUY : '쿠폰 구매·선물',
-  REGISTER : 'T로밍쿠폰 상세'
+  BUY: '쿠폰 구매·선물',
+  REGISTER: 'T로밍쿠폰 상세'
+};
+
+Tw.POSTCODE_MESSAGE = {
+  NONE: '건물명 없음'
 };

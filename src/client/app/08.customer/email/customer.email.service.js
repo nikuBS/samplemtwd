@@ -103,7 +103,7 @@ Tw.CustomerEmailService.prototype = {
   _requestCell: function () {
     var elSelectedLine = this.$wrap_tpl_service.find('[data-svcmgmtnum]').data('svcmgmtnum');
     var elInputline = this.$wrap_tpl_service.find('.fe-service-line').val();
-    var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine : '0';
+    var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine.toString() : '0';
     var selSvcNum = !!elInputline ? elInputline : '';
 
     var htParams = $.extend(this._makeParams(), {
@@ -127,7 +127,7 @@ Tw.CustomerEmailService.prototype = {
   _requestInternet: function () {
     var elSelectedLine = this.$wrap_tpl_service.find('[data-svcmgmtnum]').data('svcmgmtnum');
     var elInputline = this.$wrap_tpl_service.find('.fe-service-line').val();
-    var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine : '0';
+    var selSvcMgmtNum = !!elSelectedLine ? elSelectedLine.toString() : '0';
     var selSvcNum = !!elInputline ? elInputline : '';
 
     var htParams = $.extend(this._makeParams(), {

@@ -1,0 +1,11 @@
+{{#each banners}}
+    <li>
+        {{#if isHTML}}
+            <button style="width:100%">
+                {{{bnnrHtmlCtt}}}
+            </button>
+        {{else}}
+            <img class="fe-banner" style="width:100%" data-idx="{{idx}}" data-location="{{../location}}" src="{{bnnrFilePathNm}}" alt="{{bnnrImgAltCtt}}">
+        {{/if}}
+    </li>
+{{/each}}

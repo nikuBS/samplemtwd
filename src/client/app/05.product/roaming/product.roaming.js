@@ -40,7 +40,7 @@ Tw.ProductRoaming.prototype = {
     this._updateFormInfo();
   },
   _onClickFormInfo: function(e) {
-    this.idxSelect = $(e.target).data('index');
+    this.idxSelect = $(e.currentTarget).data('index');
     if (this.idxSelect < 0 || this.idxSelect > this.nMax) {
       return;
     }

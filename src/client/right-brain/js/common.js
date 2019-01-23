@@ -13,6 +13,7 @@ $(document).on('ready', function () {
   }
   skt_landing.action.header_shadow(); // header shadow effect (page)
   skt_landing.action.header_shadow_popup(); // header shadow effect (popup)
+  skt_landing.action.focus_mousedown_style(document); 
 });
 $(window).on('resize', function () {
 
@@ -184,6 +185,33 @@ skt_landing.action = {
         idx = idx ? idx : 0;
     target.eq(idx).attr('tabindex',0).focus(); // focus
   },
+  focus_mousedown_style: function(d){
+      var style_element = d.createElement('STYLE'),
+          dom_events = 'addEventListener' in d,
+          add_event_listener = function(type, callback){
+          // Basic cross-browser event handling
+          if(dom_events){
+            d.addEventListener(type, callback);
+          }else{
+            d.attachEvent('on' + type, callback);
+          }
+        },
+          set_css = function(css_text){
+          // Handle setting of <style> element contents in IE8
+          !!style_element.styleSheet ? style_element.styleSheet.cssText = css_text : style_element.innerHTML = css_text;
+        };
+
+      d.getElementsByTagName('HEAD')[0].appendChild(style_element);
+
+      // Using mousedown instead of mouseover, so that previously focused elements don't lose focus ring on mouse move
+      add_event_listener('mousedown', function(){
+        set_css(':focus{outline:0}::-moz-focus-inner{border:0;}button:focus{outline:0}');
+      });
+
+      add_event_listener('keydown', function(){
+        set_css('');
+      });
+  },
   top_btn: function () {
     $('.bt-top button').on('touchstart click', function () {
       if ($(this).parents().hasClass('popup-page')) {
@@ -246,8 +274,8 @@ skt_landing.action = {
           'z-index' : 1000
         })
         .attr('id', 'loading' + Math.floor(Math.random()*1000))
-        .appendTo($('body').find('.wrap:eq(0)'));
-      $(ta).data('mate', loading_box.attr('id'));
+        .appendTo($('body').find('.wrap:eq(0)'))
+      $(ta).data('mate', loading_box.attr('id'))
       loading_ico.appendTo(loading_box);
       loading_ico.append(svg);
       if(!ta || ta == '.wrap'){
@@ -356,15 +384,25 @@ skt_landing.action = {
         if(popup_info.layer){
           var win_h = skt_landing.util.win_info.get_winH(),
               layer = $('.popup .popup-page.layer'),
+              layerContainerWrap = $('.popup .popup-page.layer > .container-wrap'),
               layer_h = layer.outerHeight();
           layer.css({
             'height':layer_h,
             'bottom':0
           });
+          layerContainerWrap.css({
+            'height':layer_h
+          });
         }
         //wai-aria
         popups.attr('role','dialog')
               .attr('aria-hidden','false');
+        if(popup_info.layer || popup_info.hbs == 'dropdown'){
+          popups.attr('role','')
+                .attr('aria-hidden','true');
+          createdTarget.attr('role','dialog')
+                       .attr('aria-hidden','false');
+        }
       }).fail(function() {
         if(callback_fail){
           callback_fail();
@@ -436,7 +474,7 @@ skt_landing.action = {
             layer = wrap.find('.toast-layer').last(),
             layerH = layer.outerHeight(),
             transitionTime = parseFloat(layer.css('transition').split(' ')[1])*1500;
-        layer.addClass('on');
+        layer.addClass('on')
         setTimeout(function(){
           layer.removeClass('on');
           setTimeout(function(){
@@ -451,9 +489,17 @@ skt_landing.action = {
     $(document).on('focus',selector, function(){
       $(this).closest('.popup-page').addClass('focusin')
     });
+    // $(document).on('focusout',selector, function(){
+    //   $(this).closest('.popup-page').removeClass('focusin')
+    // })
     $(document).on('focusout',selector, function(){
-      $(this).closest('.popup-page').removeClass('focusin')
-    })
+      var el = $(this);
+      $(document).click(function(e){
+        if(!$(e.target).is(selector)) {
+          el.closest('.popup-page').removeClass('focusin')
+        }
+      });
+    });
   },
   prd_header : function(){ // 상품상세 원장 헤더 색상 제어
     $('#header').removeClass('bg-type');
@@ -548,13 +594,13 @@ skt_landing.action = {
     $('.icon-gnb-menu').bind('click', function(){
       skt_landing.action.fix_scroll();
       $('#common-menu').addClass('on');
-    });
+    })
     $('#common-menu .c-close').bind('click', function(){
       $('#common-menu').removeClass('on');
       if($('.wrap > .popup,.wrap > .popup-page').length == 0 && !$('#common-menu').hasClass('on')){
         skt_landing.action.auto_scroll();
       }
-    });
+    })
     $('.section-cont').scroll(function(){
       if ($(this).scrollTop() > 0) {
         $('#common-menu').addClass('scroll');
@@ -579,7 +625,8 @@ skt_landing.dev = {
     }
     var $target = $(selector)[0] == $( "#sortable-enabled" )[0] ? $(selector) : $( "#sortable-enabled" );
     var defaults = {
-      axis: 'y'
+      axis: 'y',
+      handle: '.ico-move'
     };
     options = $.extend(defaults, options);
     $target.sortable(options).disableSelection();
@@ -607,4 +654,4 @@ skt_landing.dev = {
      }
    });
   }
-};
+} 

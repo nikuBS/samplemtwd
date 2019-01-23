@@ -162,7 +162,11 @@ Tw.CommonPostcodeDetail.prototype = {
 
       $cloneNode.attr('data-bld-cd', $content[i].bldCd);
 
-      $cloneNode.find('.fe-building').text($content[i].bldNm);
+      var bldNm = $content[i].bldNm;
+      if ($content[i].bldNm.indexOf('N/A') !== -1) {
+        bldNm = '(' + Tw.POSTCODE_MESSAGE.NONE + ')';
+      }
+      $cloneNode.find('.fe-building').text(bldNm);
       $cloneNode.find('.fe-number').text($content[i].totHouse_numCtt);
       $cloneNode.find('.fe-zip').text($content[i].zip);
 

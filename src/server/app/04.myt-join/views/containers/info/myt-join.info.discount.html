@@ -55,10 +55,13 @@
 
             <% } %> <%# for End %>
 
+            <% if ( commDataInfo.feeInfo.length === 0 ) { %>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+            <% } %>
 
 
 
-
+            <% if ( commDataInfo.terminalInfo.length > 0 ) { %>
 
             <div class="ti-caption-gray">
                 <h4 class="tit">단말기 약정할인</h4>
@@ -111,6 +114,10 @@
 
             <hr class="cont-sp type1" aria-hidden="true"/>
 
+            <% } %>
+
+
+            <% if ( commDataInfo.repaymentInfo.length > 0 ) { %>
 
             <div class="ti-caption-gray">
                 <h4 class="tit">단말기 분할상환 정보</h4>
@@ -123,6 +130,10 @@
             <% } %> <%# for End %>
 
             <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <% } %>
+
+
 
             <% if ( commDataInfo.tRental ) { %>
 
