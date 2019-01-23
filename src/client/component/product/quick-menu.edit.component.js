@@ -11,6 +11,8 @@ Tw.QuickMenuEditComponent = function () {
   this._quickList = [];
   this._callback = null;
   this._changeQuickMenu = false;
+  this._changedList = false;
+  this._popupClose = false;
 };
 
 Tw.QuickMenuEditComponent.prototype = {
@@ -30,6 +32,9 @@ Tw.QuickMenuEditComponent.prototype = {
     this.$list = $popupContainer.find('.fe-input-menu');
     $popupContainer.on('click', '#fe-bt-reset', $.proxy(this._onClickReset, this));
     $popupContainer.on('click', '#fe-bt-complete', $.proxy(this._onClickComplete, this));
+    $popupContainer.on('click', '#fe-bt-close', $.proxy(this._onClickClose, this));
+
+    this.$list.on('click', $.proxy(this._onClickList, this));
   },
   _onCloseQuickEdit: function () {
     if ( this._changeQuickMenu && !Tw.FormatHelper.isEmpty(this._callback) ) {
@@ -37,6 +42,10 @@ Tw.QuickMenuEditComponent.prototype = {
     }
   },
   _onClickReset: function () {
+    this._popupService.openConfirm(Tw.ALERT_MSG_HOME.A02, null, $.proxy(this._resetQuickMenu, this));
+  },
+  _resetQuickMenu: function () {
+    this._popupService.close();
     _.map(this.$list, $.proxy(function (checkbox) {
       var $checkbox = $(checkbox);
       var menuId = $checkbox.data('menuid');
@@ -59,6 +68,36 @@ Tw.QuickMenuEditComponent.prototype = {
       menuIdList.push($(checkbox).data('menuid'));
     }, this));
     this._requestSaveQuickMenu(menuIdList.join(','));
+  },
+  _onClickClose: function () {
+    if ( this._changedList ) {
+      this._popupService.openConfirm(Tw.ALERT_MSG_HOME.A01, null, $.proxy(this._confirmClose, this), $.proxy(this._onCloseConfirm, this));
+    } else {
+      this._closeQuickEdit();
+    }
+  },
+  _confirmClose: function () {
+    this._popupClose = true;
+    this._popupService.close();
+  },
+  _onCloseConfirm: function () {
+    if ( this._popupClose ) {
+      this._closeQuickEdit();
+    }
+  },
+  _closeQuickEdit: function () {
+    this._popupService.close();
+  },
+  _onClickList: function ($event) {
+    this._changedList = true;
+    var selectedLength = this.$list.filter(':checked').length;
+    if ( selectedLength > 20 ) {
+      var $currentTarget = $($event.currentTarget);
+      $currentTarget.prop('checked', false);
+      this._popupService.openAlert(Tw.ALERT_MSG_HOME.A03);
+    } else if ( selectedLength === 0 ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_HOME.A04);
+    }
   },
   _requestSaveQuickMenu: function (menuId) {
     this._apiService.request(Tw.API_CMD.BFF_04_0003, { menuIdStr: menuId })

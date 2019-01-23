@@ -5,6 +5,7 @@
  */
 Tw.QuickMenuComponent = function () {
   this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
 
   this._menuId = '';
   this._bindEvent();
@@ -47,7 +48,7 @@ Tw.QuickMenuComponent.prototype = {
       var menuId = menuIdStr.indexOf('|') !== -1 ? menuIdStr.replace(/\|/g, ',') + ',' + this._menuId :
         Tw.FormatHelper.isEmpty(menuIdStr) ? this._menuId : menuIdStr + ',' + this._menuId;
       this._apiService.request(Tw.API_CMD.BFF_04_0003, { menuIdStr: menuId })
-        .done($.proxy(this._successAddQuickMenu, this));
+        .done($.proxy(this._successAddQuickMenu, this, menuId));
     }
   },
   _removeQuickMenu: function (resp) {
@@ -60,22 +61,30 @@ Tw.QuickMenuComponent.prototype = {
         }, this)).join(',');
       }
       this._apiService.request(Tw.API_CMD.BFF_04_0003, { menuIdStr: menuId })
-        .done($.proxy(this._successRemoveQuickMenu, this));
+        .done($.proxy(this._successRemoveQuickMenu, this, menuId));
     }
 
   },
-  _successAddQuickMenu: function (resp) {
+  _successAddQuickMenu: function (menuId, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      Tw.CommonHelper.toast(Tw.TOAST_TEXT.QUICK_ADD);
+      if ( menuId.indexOf(',') !== -1 && menuId.split(',').length === 20 ) {
+        this._popupService.openAlert(Tw.ALERT_MSG_HOME.A03);
+      } else {
+        Tw.CommonHelper.toast(Tw.TOAST_TEXT.QUICK_ADD);
+      }
       this.$btQuickAdd.parent().removeClass('none');
       this.$btQuickRemove.parent().addClass('none');
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
-  _successRemoveQuickMenu: function (resp) {
+  _successRemoveQuickMenu: function (menuId, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      Tw.CommonHelper.toast(Tw.TOAST_TEXT.QUICK_REMOVE);
+      if ( Tw.FormatHelper.isEmpty(menuId) ) {
+        this._popupService.openAlert(Tw.ALERT_MSG_HOME.A04);
+      } else {
+        Tw.CommonHelper.toast(Tw.TOAST_TEXT.QUICK_REMOVE);
+      }
       this.$btQuickRemove.parent().removeClass('none');
       this.$btQuickAdd.parent().addClass('none');
     } else {
