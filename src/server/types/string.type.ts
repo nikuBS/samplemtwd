@@ -157,7 +157,7 @@ export enum MYT_DATA_RECHARGE_MSG {
 }
 
 export enum MYT_DATA_RECHARGE_COUPON {
-  A10 = '장기가입 리필쿠폰',
+  A10 = '장기가입 쿠폰',
   A14 = '10년주기 리필쿠폰',
   A20 = '선물받은 리필쿠폰'
 }
