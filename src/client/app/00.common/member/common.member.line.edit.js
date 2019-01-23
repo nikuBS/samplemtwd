@@ -193,7 +193,7 @@ Tw.CommonMemberLineEdit.prototype = {
   },
   _successMoreExposable: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( (this._pageNoExposed - 1) * Tw.DEFAULT_LIST_COUNT + resp.result[this._category].length >= resp.result[this._category + 'Cnt'] ) {
+      if ( this._pageNoExposed * Tw.DEFAULT_LIST_COUNT >= resp.result[this._category + 'Cnt'] ) {
         this.$btMoreExposable.hide();
       }
       this._pageNoExposable = this._pageNoExposable + 1;

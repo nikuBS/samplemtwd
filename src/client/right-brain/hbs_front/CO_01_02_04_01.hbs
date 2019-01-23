@@ -43,7 +43,7 @@
                 <div class="list-comp-input">
                     <div class="widget">
                         <div class="widget-box check">
-                            <ul class="select-list" role="group">
+                            <ul id="fe-list-line" class="select-list" role="group">
                                 <li class="checkbox all type01-big" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" --> <!-- .all : 전체선택용 스타일 -->
                                     <input id="fe-check-all" type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="checked" -->
                                     <div class="comp-list-layout" id="aria-comp-checkbox1" aria-hidden="true">
@@ -53,12 +53,12 @@
                                     </div>
                                 </li>
                                 {{#each data}}
-                                <li class="checkbox type01-big fe-item {{#unless isShow}}none{{/unless}}" role="checkbox" aria-checked="false" data-svcMgmtNum="{{svcMgmtNum}}" data-showName="{{showName}}" data-svcNum="{{svcNum}}"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                <li class="checkbox type01-big fe-item" role="checkbox" aria-checked="false" data-svcMgmtNum="{{svcMgmtNum}}" data-showName="{{showName}}" data-svcNum="{{svcNum}}"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                     <input type="checkbox" class="fe-check-child" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox3"/><!-- 체크상태일 경우 checked="checked" -->
                                     <div class="comp-list-layout" id="aria-comp-checkbox3" aria-hidden="true">
                                         <p class="layout-text">
                                             <span class="mtext">{{showName}}</span>
-                                            <span class="stext"><span class="info">{{#if showAddr}}{{addr}}{{else}}{{svcNum}}{{/if}}</span>{{#if showPet}}<span class="info">{{eqpMdlNm}}</span>{{/if}}</span>
+                                            <span class="stext"><span class="info">{{showDetail}}</span>{{#if showPet}}<span class="info">{{eqpMdlNm}}</span>{{/if}}</span>
                                         </p>
                                     </div>
                                 </li>

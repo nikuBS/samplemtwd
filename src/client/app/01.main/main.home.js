@@ -306,6 +306,7 @@ Tw.MainHome.prototype = {
     // var layerType = Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER;
     Tw.Logger.info('[Home] layerType', layerType);
     if ( !Tw.FormatHelper.isEmpty(layerType) ) {
+      this._updateNoticeType();
       if ( layerType === Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER || layerType === Tw.LOGIN_NOTICE_TYPE.EXIST_CUSTOMER ) {
         setTimeout($.proxy(function () {
           this._lineRegisterLayer.openRegisterLinePopup(layerType);
@@ -318,6 +319,10 @@ Tw.MainHome.prototype = {
         }, this), 100);
       }
     }
+  },
+  _updateNoticeType: function () {
+    this._apiService.request(Tw.NODE_CMD.UPDATE_NOTICE_TYPE, {})
+      .done($.proxy(this._successUpdateNoticeType, this));
   },
   _closeNewLine: function () {
     this._historyService.goLoad('/common/member/line');

@@ -63,7 +63,7 @@ Tw.CommonMemberLine.prototype = {
   },
   _successMoreData: function (category, $btMore, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( (this._pageNo - 1) * this._defaultCnt + resp.result[category].length >= resp.result.totalCnt ) {
+      if ( this._pageNo * this._defaultCnt >= resp.result.totalCnt ) {
         $btMore.hide();
       }
       this._pageNo = this._pageNo + 1;
