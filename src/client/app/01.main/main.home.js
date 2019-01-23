@@ -120,10 +120,13 @@ Tw.MainHome.prototype = {
     }
   },
   _onClickBarcode: function () {
-    var cardNum = this.$elBarcode.data('cardnum');
-    var mbrGr = this.$barcodeGr.data('mbrgr');
-    this._apiService.request(Tw.API_CMD.BFF_11_0001, {})
-      .done($.proxy(this._successMembership, this, mbrGr, cardNum));
+    if ( this.$elBarcode.length > 0 ) {
+      var cardNum = this.$elBarcode.data('cardnum');
+      var mbrGr = this.$barcodeGr.data('mbrgr');
+      this._apiService.request(Tw.API_CMD.BFF_11_0001, {})
+        .done($.proxy(this._successMembership, this, mbrGr, cardNum));
+    }
+
   },
   _onClickBarcodeGo: function () {
     if ( Tw.BrowserHelper.isApp() ) {
