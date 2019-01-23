@@ -401,6 +401,7 @@ class MytJoinInfoDiscount extends TwViewController {
     dataObj.remDt = dataObj.totDt - dataObj.curDt; // 잔여일수
 
     dataObj.perDt = Math.floor((dataObj.curDt / dataObj.totDt) * 100); // 퍼센트
+    dataObj.perDt = dataObj.perDt < 0 ? 0 : dataObj.perDt;
     dataObj.totMt = moment(endDt, 'YYYYMMDD').diff(startDt, 'month');
 
   }
@@ -442,6 +443,7 @@ class MytJoinInfoDiscount extends TwViewController {
     dataObj.remDt = dataObj.totDt - dataObj.curDt; // 잔여일수
 
     dataObj.perDt = Math.floor((dataObj.curDt / dataObj.totDt) * 100); // 퍼센트
+    dataObj.perDt = dataObj.perDt < 0 ? 0 : dataObj.perDt;
     dataObj.totMt = moment(endDt, 'YYYYMMDD').diff(startDt, 'month') + 1;
 
   }
@@ -462,7 +464,7 @@ class MytJoinInfoDiscount extends TwViewController {
     dataObj.remMt = dataObj.invRmn; // 잔여 개월
 
     dataObj.perMt = Math.floor((dataObj.curMt / dataObj.totMt) * 100); // 퍼센트
-
+    dataObj.perMt = dataObj.perMt < 0 ? 0 : dataObj.perMt;
   }
 
   // -------------------------------------------------------------[프로미스 생성]
