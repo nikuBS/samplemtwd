@@ -50,10 +50,7 @@ Tw.NTV_CODE = {
   CODE_02: 2,
   CODE_ERROR: -1,
 
-  CODE_A80: 'A80',
-  CODE_F01: 'F01',  // size limit
-  CODE_F02: 'F02',  // wrong ext
-  CODE_F03: 'F03'   // upload fail
+  CODE_A80: 'A80'
 };
 
 Tw.NTV_ERROR_MSG = {

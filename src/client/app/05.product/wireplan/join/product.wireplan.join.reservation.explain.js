@@ -244,15 +244,15 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
   },
 
   _nativeFileChooser: function ($target, response) {
-    if (response.resultCode === Tw.NTV_CODE.CODE_F03) {
+    if (response.resultCode === -1) {
       return this._popupService.openAlert(Tw.UPLOAD_FILE.WARNING_A00);
     }
 
-    if (response.resultCode === Tw.NTV_CODE.CODE_F02) {
+    if (response.resultCode === Tw.NTV_CODE.CODE_02) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A33.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A33.TITLE);
     }
 
-    if (response.resultCode === Tw.NTV_CODE.CODE_F01) {
+    if (response.resultCode === Tw.NTV_CODE.CODE_01) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE);
     }
 

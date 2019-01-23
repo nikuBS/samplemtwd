@@ -37,7 +37,13 @@ Tw.ProductCommonCallplan.prototype = {
     this._showReadyOn();
 
     if (this._historyService.isBack()) {
-      this._historyService.reload();
+      // ICAS, Swing 간 Sync time delay
+      Tw.CommonHelper.startLoading('.container', 'grey', true);
+
+      setTimeout($.proxy(function() {
+        Tw.CommonHelper.endLoading('.container');
+        this._historyService.reload();
+      }, this), 2000);
     }
   },
 
