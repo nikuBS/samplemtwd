@@ -27,7 +27,7 @@ Tw.ProductSubmain.prototype = {
       if (!Tw.FormatHelper.isEmpty(resp.result.summary)) {
         new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS, resp.result.imgList, 'T');
       } else {
-        this.$container.find('div.fe-banners').remove();
+        this.$container.find('ul.slider').remove();
       }
     } else {
       this._getAdminBanners(this._menuId);
