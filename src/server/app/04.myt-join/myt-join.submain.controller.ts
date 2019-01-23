@@ -182,7 +182,7 @@ class MyTJoinSubmainController extends TwViewController {
         data.isInstallement = true;
       }
       // 무약정플랜 노출여부
-      if ( data.myContractPlan && data.myContractPlan.muPointYn === 'Y' ) {
+      if ( data.myContractPlan ) {
         data.myContractPlan.point = FormatHelper.addComma(data.myContractPlan.muPoint);
         data.myContractPlan.count = data.myContractPlan.muPointCnt;
         data.isContractPlan = true;

@@ -156,7 +156,7 @@ Tw.MyTJoinSubMain.prototype = {
         new Tw.BannerService(this.$container, type, list, 'M', $.proxy(this._successDrawBanner, this));
       }
       else {
-        this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, {menuId: this.data.pageInfo.menuId})
+        this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: this.data.pageInfo.menuId })
           .done($.proxy(this._successBanner, this, Tw.REDIS_BANNER_TYPE.ADMIN))
           .fail($.proxy(this._errorRequest, this));
       }
@@ -167,11 +167,11 @@ Tw.MyTJoinSubMain.prototype = {
     }
   },
 
-  _checkBanner: function(result) {
+  _checkBanner: function (result) {
     return (result.bltnYn === 'Y' && result.tosLnkgYn === 'Y');
   },
 
-  _successDrawBanner: function() {
+  _successDrawBanner: function () {
     this.$bannerList = this.$container.find('[data-id=banner-list]');
     Tw.CommonHelper.resetHeight(this.$bannerList);
   },
@@ -241,7 +241,11 @@ Tw.MyTJoinSubMain.prototype = {
   },
   // 무약정플랜
   _onMovedContractPlan: function () {
-    this._historyService.goLoad('/myt-join/myplancombine/noagreement');
+    var url = '/myt-join/myplancombine/noagreement';
+    if ( this.data.myContractPlan.muPointYn === 'N' ) {
+      url = '/product/callplan/NA00005923';
+    }
+    this._historyService.goLoad(url);
   },
   // 모바일 일시정지/해제
   _onMovedMobilePause: function () {
@@ -298,7 +302,7 @@ Tw.MyTJoinSubMain.prototype = {
   _onClickedOtherLine: function (event) {
     // 통합, 개별이면서 대표인 경우만 동작
     var $target = $(event.target).parents('[data-svc-mgmt-num]'),
-        type = $target.find('span.blind').text(),
+        type    = $target.find('span.blind').text(),
         mgmtNum = $target.attr('data-svc-mgmt-num'),
         number  = $target.attr('data-num'),
         name    = $target.attr('data-name');
@@ -326,7 +330,7 @@ Tw.MyTJoinSubMain.prototype = {
       this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
     }
     setTimeout($.proxy(function () {
-      if(this.changeLineType ===  'pc') {
+      if ( this.changeLineType === 'pc' ) {
         this._historyService.replaceURL('/myt-join/submain_w');
       }
       else {
