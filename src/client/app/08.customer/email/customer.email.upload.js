@@ -46,7 +46,7 @@ Tw.CustomerEmailUpload.prototype = {
   _openCustomFileChooser: function (e) {
     var $target = $(e.currentTarget);
 
-    if ( this._isLowerVersionAndroid() ) {
+    if ( Tw.BrowserHelper.isAndroid() ) {
       this._nativeService.send(Tw.NTV_CMD.OPEN_FILE_CHOOSER, {
         dest: 'email',
         acceptExt: this.acceptExt,
