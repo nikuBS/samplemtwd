@@ -9332,6 +9332,7 @@ a.bt-link-tx.underline.small {
   .sortlist .ui-state-default .ico-move {
     float: right;
     width: 2.5rem;
+    height: 100%;
     margin-top: 2.125rem;
     text-align: right;
     overflow: hidden;
@@ -13715,6 +13716,8 @@ a.bt-link-tx.underline.small {
     letter-spacing: -1px;
     text-align: right;
     vertical-align: top; }
+  .productdetails-ledgercase02 .limit.ty01 {
+    width: 100%; }
   .productdetails-ledgercase02:after {
     content: " ";
     display: block;
@@ -24098,6 +24101,7 @@ a.bt-link-tx.underline.small {
   line-height: 2.375rem; }
 
 .device_android .btn-round2 {
+  white-space: nowrap;
   line-height: 1.875rem; }
   .device_android .btn-round2.btn-style2:disabled, .device_android .btn-round2.btn-style2.disabled, .device_android .btn-round2.btn-style3:disabled, .device_android .btn-round2.btn-style3.disabled {
     line-height: 1.75rem; }
@@ -29915,8 +29919,10 @@ body.apphome {
       background-size: 1.5rem;
       vertical-align: middle; }
     .pg-member .radiobox.type01.checked:before, .pg-member .shop-info .shop-txt .radiobox.checked.type02:before, .shop-info .shop-txt .pg-member .radiobox.checked.type02:before, .pg-member .shop-info .shop-txt .radiobox.checked.type03:before, .shop-info .shop-txt .pg-member .radiobox.checked.type03:before {
+      background-image: url(/img/form/ico-radio-style05.png);
       background-position: 0 -1.5rem; }
     .pg-member .radiobox.type01.disabled:before, .pg-member .shop-info .shop-txt .radiobox.disabled.type02:before, .shop-info .shop-txt .pg-member .radiobox.disabled.type02:before, .pg-member .shop-info .shop-txt .radiobox.disabled.type03:before, .shop-info .shop-txt .pg-member .radiobox.disabled.type03:before {
+      background-image: url(/img/form/ico-radio-style05.png);
       background-position: 0 -3rem; }
     .pg-member .radiobox.type01.checked.disabled:before, .pg-member .shop-info .shop-txt .radiobox.checked.disabled.type02:before, .shop-info .shop-txt .pg-member .radiobox.checked.disabled.type02:before, .pg-member .shop-info .shop-txt .radiobox.checked.disabled.type03:before, .shop-info .shop-txt .pg-member .radiobox.checked.disabled.type03:before {
       background-image: url(/img/form/ico-radio-style05.png);
@@ -29924,14 +29930,17 @@ body.apphome {
     .pg-member .radiobox.type01.focus, .pg-member .shop-info .shop-txt .radiobox.focus.type02, .shop-info .shop-txt .pg-member .radiobox.focus.type02, .pg-member .shop-info .shop-txt .radiobox.focus.type03, .shop-info .shop-txt .pg-member .radiobox.focus.type03 {
       outline: -webkit-focus-ring-color auto 5px; }
     .pg-member .radiobox.type01.focus:before, .pg-member .shop-info .shop-txt .radiobox.focus.type02:before, .shop-info .shop-txt .pg-member .radiobox.focus.type02:before, .pg-member .shop-info .shop-txt .radiobox.focus.type03:before, .shop-info .shop-txt .pg-member .radiobox.focus.type03:before {
+      background-image: url(/img/form/ico-radio-style05.png);
       background-position: -1.5rem 0; }
     .pg-member .radiobox.type01.focus.checked:before, .pg-member .shop-info .shop-txt .radiobox.focus.checked.type02:before, .shop-info .shop-txt .pg-member .radiobox.focus.checked.type02:before, .pg-member .shop-info .shop-txt .radiobox.focus.checked.type03:before, .shop-info .shop-txt .pg-member .radiobox.focus.checked.type03:before {
-      background-position: -1.5rem -1.5rem; }
+      background-image: url(/img/form/ico-radio-style05.png);
+      background-position: 0 -1.5rem; }
     .pg-member .radiobox.type01.focus.disabled:before, .pg-member .shop-info .shop-txt .radiobox.focus.disabled.type02:before, .shop-info .shop-txt .pg-member .radiobox.focus.disabled.type02:before, .pg-member .shop-info .shop-txt .radiobox.focus.disabled.type03:before, .shop-info .shop-txt .pg-member .radiobox.focus.disabled.type03:before {
-      background-position: -1.5rem -3rem; }
+      background-image: url(/img/form/ico-radio-style05.png);
+      background-position: 0 -3rem; }
     .pg-member .radiobox.type01.focus.checked.disabled:before, .pg-member .shop-info .shop-txt .radiobox.focus.checked.disabled.type02:before, .shop-info .shop-txt .pg-member .radiobox.focus.checked.disabled.type02:before, .pg-member .shop-info .shop-txt .radiobox.focus.checked.disabled.type03:before, .shop-info .shop-txt .pg-member .radiobox.focus.checked.disabled.type03:before {
       background-image: url(/img/form/ico-radio-style05.png);
-      background-position: -1.5rem -4.5rem; }
+      background-position: 0 -4.5rem; }
     .pg-member .radiobox.type01 > span, .pg-member .shop-info .shop-txt .radiobox.type02 > span, .shop-info .shop-txt .pg-member .radiobox.type02 > span, .pg-member .shop-info .shop-txt .radiobox.type03 > span, .shop-info .shop-txt .pg-member .radiobox.type03 > span {
       display: inline-block;
       font-size: 0.8125rem;
@@ -31214,7 +31223,6 @@ body.apphome {
 .inputbox.bt-add .input.new input {
   background: #f2f2f2 !important;
   height: 2.625rem !important;
-  line-height: 2.625rem !important;
   font-weight: 400; }
 
 .inputbox.bt-add .input.new + .r-btn {

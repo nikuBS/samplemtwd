@@ -47,17 +47,6 @@ body {
   width: 100%;
   /*overflow-x:hidden;*/ }
 
-/*버튼 테두리 없애기*/
-button:focus {
-  border-color: #fff;
-  -wibkit-box-shadow: none;
-  -webkit-box-shadow: none;
-          box-shadow: none;
-  outline: none; }
-
-* {
-  -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important; }
-
 /*display*/
 .none {
   display: none !important; }
@@ -146,7 +135,7 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
       padding: 0 0.5rem;
       font-size: 0.875rem;
       font-weight: 400;
-      color: #178BCE;
+      color: #3b98e6;
       white-space: nowrap;
       background: #ebf5fe; }
     .inputbox .bt-box.disabled button:disabled {
@@ -199,7 +188,8 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
       font-size: 0.9375rem;
       color: #000;
       font-weight: 300;
-      width: 100%; }
+      width: 100%;
+      line-height: 2.375rem; }
       .inputbox .input input[type=text]::-webkit-input-placeholder,
       .inputbox .input input[type=file]::-webkit-input-placeholder,
       .inputbox .input input[type=password]::-webkit-input-placeholder,
@@ -385,7 +375,7 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
   .inputbox.validation .validation-txt {
     display: block;
     margin: 0.375rem 0 0;
-    color: #178BCE;
+    color: #3b98e6;
     font-size: 0.75rem; }
   .inputbox.error .input {
     /*input[type=text],
@@ -536,7 +526,7 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
   .inputbox .validation-txt {
     display: block;
     margin: 0.375rem 0 0;
-    color: #178BCE;
+    color: #3b98e6;
     font-size: 0.75rem; }
   .inputbox .error-txt {
     display: block;
@@ -559,7 +549,7 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
 .validation-txt {
   display: block;
   margin: 0.375rem 0 0;
-  color: #178BCE;
+  color: #3b98e6;
   font-size: 0.75rem; }
 
 .error-txt {
@@ -884,10 +874,7 @@ a + button {
   *margin-left: 4px; }
 
 a, input, label, button {
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.15);
-  -tap-highlight-color: rgba(0, 0, 0, 0.15);
-  -moz-tap-highlight-color: rgba(0, 0, 0, 0.15);
-  -webkit-appearance: none; }
+  -webkit-tap-highlight-color: transparent; }
 
 a, a:link, a:visited, a:active, a:hover {
   text-decoration: none; }
@@ -921,7 +908,7 @@ button.bt-link-tx, a.bt-link-tx {
     display: inline-block;
     position: relative;
     font-size: inherit;
-    color: #178BCE;
+    color: #3b98e6;
     text-decoration: underline; }
   button.bt-link-tx.disabled, a.bt-link-tx.disabled {
     border-color: #d1d1d1;
@@ -1055,7 +1042,7 @@ button.bt-link-tx, a.bt-link-tx {
         display: inline-block;
         vertical-align: baseline; }
       .link-long a .tx-sub .point1, .link-long button .tx-sub .point1 {
-        color: #178BCE;
+        color: #3b98e6;
         font-weight: 400;
         display: inline-block;
         vertical-align: baseline; }
@@ -1159,15 +1146,15 @@ button.bt-link-tx, a.bt-link-tx {
         line-height: 1rem;
         color: #666; }
     .box-chk-link .chk-link-list li button.checked .link-info .info-value, .box-chk-link .chk-link-list li a.checked .link-info .info-value {
-      color: #178BCE;
+      color: #3b98e6;
       font-weight: 700; }
     .box-chk-link .chk-link-list li button.checked .link-info .ico, .box-chk-link .chk-link-list li a.checked .link-info .ico {
       background-position: 0 -70.3125rem; }
   .box-chk-link .chk-link-list li button:disabled {
-    color: #858585;
+    color: #999;
     background: #d1d1d1; }
   .box-chk-link .chk-link-list li a.disabled {
-    color: #858585;
+    color: #999;
     background: #d1d1d1; }
 
 .inline {
@@ -3936,8 +3923,7 @@ a.ui-button:active,
       text-align: center;
       border-radius: 1.25rem;
       -webkit-box-sizing: border-box;
-              box-sizing: border-box;
-      line-height: 2.5rem; }
+              box-sizing: border-box; }
       .bt-slice > li a .num {
         display: inline-block;
         margin: 0 0 0 0.3125rem;
@@ -3968,7 +3954,7 @@ a.ui-button:active,
         cursor: default; }
     .bt-slice > li.bt-blue1 button {
       color: #fff;
-      background: #178BCE; }
+      background: #3b98e6; }
       .bt-slice > li.bt-blue1 button.selected {
         background: #90caf9; }
       .bt-slice > li.bt-blue1 button:hover {
@@ -3977,12 +3963,12 @@ a.ui-button:active,
         color: #808698;
         background: #e5e8ee; }
       .bt-slice > li.bt-blue1 button.btn_active:hover {
-        background: #178BCE; }
+        background: #3b98e6; }
       .bt-slice > li.bt-blue1 button.btn_active:active {
         background: #90caf9; }
     .bt-slice > li.bt-blue1 a {
       color: #fff;
-      background: #178BCE; }
+      background: #3b98e6; }
       .bt-slice > li.bt-blue1 a.selected {
         background: #90caf9; }
       .bt-slice > li.bt-blue1 a:hover {
@@ -3993,7 +3979,7 @@ a.ui-button:active,
         pointer-events: none;
         cursor: default; }
     .bt-slice > li.bt-white1 button {
-      color: #178BCE;
+      color: #3b98e6;
       background: #edf5fd; }
       .bt-slice > li.bt-white1 button.selected {
         background: #9cc9f5; }
@@ -4003,7 +3989,7 @@ a.ui-button:active,
         color: #808698;
         background: #b2b2b2; }
     .bt-slice > li.bt-white1 a {
-      color: #178BCE;
+      color: #3b98e6;
       background: #edf5fd; }
       .bt-slice > li.bt-white1 a.selected {
         background: #9cc9f5; }
@@ -4016,7 +4002,7 @@ a.ui-button:active,
         cursor: default; }
     .bt-slice > li.bt-white2 button {
       border: 1px solid #9cc9f5;
-      color: #178BCE;
+      color: #3b98e6;
       background: #fff; }
       .bt-slice > li.bt-white2 button.selected {
         background: #f5f5f5; }
@@ -4028,7 +4014,7 @@ a.ui-button:active,
         background: #fff; }
     .bt-slice > li.bt-white2 a {
       border: 1px solid #9cc9f5;
-      color: #178BCE;
+      color: #3b98e6;
       background: #fff;
       line-height: 2.25rem; }
       .bt-slice > li.bt-white2 a.selected {
@@ -4090,17 +4076,17 @@ a.ui-button:active,
         pointer-events: none;
         cursor: default; }
     .bt-slice > li.bt-ghost button {
-      color: #178BCE; }
+      color: #3b98e6; }
       .bt-slice > li.bt-ghost button.selected {
-        color: #178BCE; }
+        color: #3b98e6; }
       .bt-slice > li.bt-ghost button:hover {
-        color: #178BCE; }
+        color: #3b98e6; }
     .bt-slice > li.bt-ghost a {
-      color: #178BCE; }
+      color: #3b98e6; }
       .bt-slice > li.bt-ghost a.selected {
-        color: #178BCE; }
+        color: #3b98e6; }
       .bt-slice > li.bt-ghost a:hover {
-        color: #178BCE; }
+        color: #3b98e6; }
       .bt-slice > li.bt-ghost a.disabled {
         cursor: default; }
   .bt-slice.last {
@@ -4320,13 +4306,13 @@ a.ui-button:active,
     color: #000;
     background: #fff; }
   .bt-alone .bt-line-blue1 {
-    border: 1px solid #178BCE;
-    color: #178BCE; }
+    border: 1px solid #3b98e6;
+    color: #3b98e6; }
   .bt-alone .bt-bg-blue1 {
     padding: 0.375rem 0.9375rem 0.4375rem 0.9375rem;
     border: 1px solid #ebf5fe;
     background-color: #ebf5fe;
-    color: #178BCE; }
+    color: #3b98e6; }
 
 .bt-close {
   position: relative;
@@ -4842,13 +4828,13 @@ a.ui-button:active,
     text-align: center;
     font-size: 0.875rem;
     font-weight: 400;
-    color: #178BCE;
+    color: #3b98e6;
     white-space: nowrap;
     background: #ebf5fe; }
     .address-wrap.inputbox .bt-box button {
       font-size: 0.875rem;
       font-weight: 400;
-      color: #178BCE;
+      color: #3b98e6;
       white-space: nowrap; }
 
 .nickname-wrap {
