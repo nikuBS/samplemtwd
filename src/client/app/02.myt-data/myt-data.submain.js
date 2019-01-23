@@ -444,11 +444,19 @@ Tw.MyTDataSubMain.prototype = {
   // },
 
   _onImmChargeDetail: function () {
-    if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
-      new Tw.PPSRechargeLayer(this.$container);
-    }
-    else {
-      new Tw.ImmediatelyRechargeLayer(this.$container, this.data.svcInfo.prodId);
+    switch (  this.data.svcInfo.svcAttrCd ) {
+      case 'M2':
+        // PPS
+        new Tw.PPSRechargeLayer(this.$container);
+        break;
+      case 'M3':
+      case 'M4':
+        // PocketFi, Tlogin
+        this._historyService.goLoad('/myt-data/hotdata');
+        break;
+      default:
+        new Tw.ImmediatelyRechargeLayer(this.$container, this.data.svcInfo.prodId);
+        break;
     }
   },
 
