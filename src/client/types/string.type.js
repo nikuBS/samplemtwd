@@ -1118,6 +1118,7 @@ Tw.MYT_JOIN_SUSPEND = {
   NOT_VALID_LONG_TERM_PERIOD: '종료일은 설정한 시작일로부터 24개월을 초과하여 설정할 수 없습니다.',
   NOT_VALID_FROM_DATE: '시작일은 오늘 이후로 지정할 수 있습니다.',
   NOT_VALID_FROM_DATE_01: '시작 일자는 당일로부터 30일 이내로 선택하실 수 있습니다.',
+  NOT_SUPPORT_FILE_UPLOAD: '사용하고 계신 안드로이드 버전에서는 지원하지 않는 기능입니다.',
   ALERT_EXCEED: {
     TITLE: '신청불가',
     MESSAGE: '월 5회 이상 신청이 불가능합니다.'
