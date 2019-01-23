@@ -24,7 +24,8 @@ export default class MembershipMy extends TwViewController {
       res.render('my/membership.my.html', {
         myInfoData: myInfoData,
         membershipData: membershipData,
-        svcInfo: svcInfo
+        svcInfo: svcInfo,
+        pageInfo: pageInfo
       });
     });
   }
