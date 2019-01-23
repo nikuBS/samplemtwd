@@ -26,11 +26,7 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <ul class="prevention-list fe-list">
-                    <% for (var i in importList) {
-                        if (i > 4) {
-                            break;
-                        }
-                    %>
+                    <% for (var i in importList) { %>
                     <li class="important">
                         <a href="/customer/damage-info/warning/view?icntsId=<%= importList[i].icntsId %>" class="list-inner">
                             <strong class="list-tit tx-bold"><%= importList[i].icntsTitNm %></strong>
