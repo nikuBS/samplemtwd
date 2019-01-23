@@ -4,59 +4,29 @@ const BFF_10_0056_mock = {
   "result": {
     "roamingProdList": [
       {
-        "prodId": "NA00004088",
-        "prodNm": "T로밍 OnePass300기간형",
-        "scrbDt": "20180826",
-        "basFeeTxt": "9900",
-        "prodLinkYn": "N",
+        "prodId": "NA00005690",
+        "prodNm": "T로밍 함께쓰기 3GB",
+        "scrbDt": "20180822",
+        "basFeeTxt": "55000",
+        "prodLinkYn": "Y",
+        "prodSetYn": "Y",
+        "prodTermYn": "Y",
+        "linkProdId": "NA00005690",
         "btnList": [
           {
             "btnTypCd": "SE",
             "btnNm": "기간 확인",
-            "btnLinkUrl": "/product/roaming/lookup/"
-          }
-        ]
-      },
-      {
-        "prodId": "NA00005900",
-        "prodNm": "T로밍 아시아패스",
-        "scrbDt": "20180826",
-        "basFeeTxt": "25000",
-        "prodLinkYn": "Y",
-        "btnList": [
-          {
-            "btnTypCd": "SC",
-            "btnNm": "가입",
-            "btnLinkUrl": "/product/roaming/join/confirm-info/"
+            "btnLinkUrl": "/product/roaming/setting/roaming-auto"
           },
           {
             "btnTypCd": "SE",
-            "btnNm": "가입 내역 조회",
-            "btnLinkUrl": "/product/roaming/setting/roaming-auto/"
+            "btnNm": "자회선 설정",
+            "btnLinkUrl": "/product/roaming/setting/roaming-combine"
           },
           {
             "btnTypCd": "TE",
             "btnNm": "해지",
             "btnLinkUrl": "/product/roaming/terminate"
-          },
-          {
-            "btnTypCd": "SE",
-            "btnNm": "설정 변경",
-            "btnLinkUrl": "/product/roaming/setting/roaming-auto/"
-          }
-        ]
-      },
-      {
-        "prodId": "NA00004684",
-        "prodNm": "00700 프리 10",
-        "scrbDt": "20150915",
-        "basFeeTxt": "11000",
-        "prodLinkYn": "Y",
-        "btnList": [
-          {
-            "btnTypCd": "TE",
-            "btnNm": "해지",
-            "btnLinkUrl": "/product/mobileplan-add/terminate"
           }
         ]
       }
