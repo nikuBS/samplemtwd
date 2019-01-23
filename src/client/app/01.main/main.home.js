@@ -654,7 +654,7 @@ Tw.MainHome.prototype = {
       var tplWelcome = Handlebars.compile($welcomeTemp.html());
       this.$welcomeEl.html(tplWelcome({ msg: list[0] }));
       $('#fe-bt-noti-close').on('click', $.proxy(this._onClickCloseNoti, this, nonShow));
-      $('#fe-bt-noti-go').on('click', $.proxy(this._onClickGoNoti, this, list[0]));
+      $('#fe-bt-noti-go').on('click', $.proxy(this._onClickGoNoti, this, list[0], nonShow));
       // $('#fe-bt-go-recharge').on('click', $.proxy(this._onClickBtRecharge, this));
       this._resetHeight();
     } else {
@@ -680,7 +680,8 @@ Tw.MainHome.prototype = {
     }
     this._closeNoti();
   },
-  _onClickGoNoti: function (noti) {
+  _onClickGoNoti: function (noti, nonShow) {
+    this._onClickCloseNoti(nonShow);
     if ( noti.linkTrgtClCd === '1' ) {
       this._historyService.goLoad(noti.linkUrl);
     } else if ( noti.linkTrgtClCd === '2' ) {
