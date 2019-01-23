@@ -81,6 +81,7 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
       autoTermBenefitList: this._confirmOptions.preinfo.frProdInfo.chgSktProdBenfCtt,
       isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0),
       isMobilePlan: true,
+      isNoticeList: true,
       isComparePlan: this._isComparePlan,
       noticeList: $.merge(this._confirmOptions.preinfo.termNoticeList, this._confirmOptions.preinfo.joinNoticeList),
       joinTypeText: Tw.PRODUCT_TYPE_NM.CHANGE,
