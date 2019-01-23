@@ -1625,6 +1625,10 @@ Tw.ROAMING_SVCTIME_SETTING_ERR_CASE = {
 };
 
 Tw.ROAMING_BPCP = {
-  BUY : '쿠폰 구매·선물',
-  REGISTER : 'T로밍쿠폰 상세'
+  BUY: '쿠폰 구매·선물',
+  REGISTER: 'T로밍쿠폰 상세'
+};
+
+Tw.POSTCODE_MESSAGE = {
+  NONE: '건물명 없음'
 };
