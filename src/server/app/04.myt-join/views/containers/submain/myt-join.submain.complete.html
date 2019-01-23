@@ -16,6 +16,12 @@
 </div>
 <!--// #skip_navigation -->
 <div class="wrap">
+
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+    </div>
+    <!--// #header -->
+
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <div class="container">
@@ -23,51 +29,55 @@
         </div>
     </div>
     <!--// #contents -->
+
+    <!--// #contents -->
     <!-- .popup hbs -->
-    <div class="popup-page tw-popup"><!-- .no-btn 하단에 버튼이 없을 경우 -->
-        <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                </div>
-            </div>
-        </div>
-        <!--// #header -->
+    <div class="popup-page tw-popup pt0 fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
         <!-- .container-wrap -->
         <div class="container-wrap">
-            <h2 class="blind">내용</h2>
             <div class="container">
-                <h1 class="complete-title">
-                    <img src="/img/dummy/dmy-complete.jpg" alt=""/>
-                    <span><strong><%- mainTxt %></strong> 완료</span>
-                </h1>
-
-                <% if(subTxt){ %>
-                <p class="complete-tx0"><%- subTxt %></p>
-                <% } %>
-
-                <div class="complete-btn-box pt40">
-                    <% if(linkTxt){ %>
-                    <ul class="bt-slice">
-                        <li class="bt-white2">
-                            <a href="<%- linkPage %>"><%- linkTxt %></a>
-                        </li>
-                    </ul>
-                    <% } %>
-                    <% if(confirmMovPage){ %>
-                    <div class="bt-link-box">
-                        <button class="bt-link-tx"><a href="<%- confirmMovPage %>">확인</a></button>
+                <div class="complete-wrap">
+                    <div class="title-box">
+                        <i class="icon-information-120"><span class="blind">information</span></i>
+                        <p class="tx-tit">
+                            <span class="tx-highlight"><%- mainTxt %> 완료</span><br />
+                            <!--<span class="pt10"></span>-->
+                        </p>
                     </div>
-                    <% } %>
+                    <div class="tx-contents">
+                        <% if(subTxt){ %>
+                        <p class="basic-txt">
+                            <%- subTxt %>
+                        </p>
+                        <% } %>
+                        <% if(linkTxt){ %>
+                        <ul class="bt-slice item-one">
+                            <li><button type="button" class="btn-round2 btn-style3">
+                                <a href="<%- linkPage %>"><%- linkTxt %></a>
+                            </button></li>
+                        </ul>
+                        <% } %>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <% if(confirmMovPage){ %>
+        <div class="bt-fixed-area">
+            <ul class="bt-slice full item-one">
+                <a href="<%- confirmMovPage %>">
+                <li><button type="button" class="btn-floating btn-style1">확인</button></li>
+                </a>
+            </ul>
+        </div>
+        <% } %>
         <!--// .container-wrap -->
         <!-- .popup-closeBtn -->
-        <button class="popup-closeBtn fe-common-back"><span class="blind">팝업 페이지 닫기</span></button>
+        <!-- <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button> -->
         <!--// .popup-closeBtn -->
     </div>
     <!--// .popup hbs -->
+
 </div>
 
 <% include ../../components/end.component.html %>

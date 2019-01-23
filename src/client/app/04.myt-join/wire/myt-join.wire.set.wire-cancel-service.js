@@ -71,7 +71,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
 
     // 날짜정보 넣기
     var textDtObj = {
-      dtInfo : Tw.DateHelper.getShortDateNoDot(new Date())
+      dtInfo : Tw.DateHelper.getShortDate(new Date())
     };
     this._svcHbDetailList(textDtObj, this.outputDtArea, this.$entryTplDate);
   },
@@ -611,15 +611,37 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
       // this._popupService.afterRequestSuccess('/myt-join/submain_w', '/myt-join/submain_w', null,
       //   Tw.MYT_JOIN_WIRE_SET_WIRE_CANCEL_SEVICE.TERMINATION_COMPLETE, null);
 
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.TITLE, null,
-        $.proxy(function(){
-          this._goLoad('/myt-join/submain_w');
-        }, this));
+      // this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A35.TITLE, null,
+      //   $.proxy(function(){
+      //     this._goLoad('/myt-join/submain_w');
+      //   }, this));
+
+
+      this._goCompletePage({
+        compPage: '/myt-join/submain/wire/cancelsvc/complete',
+        mainTxt: Tw.MYT_JOIN_WIRE_SET_WIRE_CANCEL_SEVICE.TERMINATION_COMPLETE,
+        confirmMovPage: '/myt-join/submain_w'
+      });
+
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
   },
 
+  /**
+   * 완료페이지로 가기
+   * @param options
+   * @private
+   */
+  _goCompletePage: function(options){
+    var param = '?' +
+      'confirmMovPage=' + (options.confirmMovPage||'') + '&' +
+      'mainTxt=' + (options.mainTxt||'') + '&' +
+      'subTxt=' + (options.subTxt||'') + '&' +
+      'linkTxt=' + (options.linkTxt||'') + '&' +
+      'linkPage=' + (options.linkPage||'');
+    this._history.replaceURL(options.compPage + param);
+  },
 
   //--------------------------------------------------------------------------[COM]
   _noDash: function(str) {

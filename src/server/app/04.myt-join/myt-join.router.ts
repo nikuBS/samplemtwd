@@ -62,6 +62,7 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/submain/wire/modifyperiod', controller: MyTJoinWireModifyPeriod });
     this.controllers.push({ url: '/submain/wire/modifyperiod/complete', controller: MyTJoinWireModifyPeriodComplete });
     this.controllers.push({ url: '/submain/wire/cancelsvc', controller: MyTJoinWireSetWireCancelService });
+    this.controllers.push({ url: '/submain/wire/cancelsvc/complete', controller: MyTJoinWireSetWireCancelService });
     this.controllers.push({ url: '/submain/wire/wirestopgo', controller: MyTJoinWireSetPause });
     this.controllers.push({ url: '/submain/wire/wirestopgo/complete', controller: MyTJoinWireSetPauseComplete });
     this.controllers.push({ url: '/submain/wire/changeowner', controller: MyTJoinWireGuideChangeOwnership });
