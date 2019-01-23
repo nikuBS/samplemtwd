@@ -14,10 +14,11 @@ Tw.MembershipSubmain = function(rootEl, membershipData, svcInfo, membershipCheck
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._map = undefined;
+  this._menuId = menuId;
   this._membershipInit();
   this._cachedElement();
   this._bindEvent();
-  this._getMembershipBanner(menuId);
+  this._getMembershipBanner();
   this._checkCurrentLocation();
 };
 
@@ -29,7 +30,9 @@ Tw.MembershipSubmain.prototype = {
     A: 'all'
   },
   _membershipInit: function () {
-    this._membershipLayerPopup.reqPossibleJoin();
+    if(this._svcInfo){
+      this._membershipLayerPopup.reqPossibleJoin();
+    }
   },
   _cachedElement: function() {
     this.$barCode = this.$container.find('#fe-barcode-img');
@@ -74,11 +77,7 @@ Tw.MembershipSubmain.prototype = {
               {style_class: 'bt-white2', txt: Tw.BRANCH.CLOSE}]
         }, $.proxy(function (root) {
           root.on('click', '.fe-link-term', $.proxy(function () {
-            Tw.CommonHelper.openUrlInApp(
-                'http://m2.tworld.co.kr/normal.do?serviceId=S_PUSH0011&viewId=V_MEMB2005&stplTypCd=15',
-                null,
-                Tw.COMMON_STRING.TERM
-            );
+            this._historyService.goLoad('/main/menu/settings/terms?id=33&type=a');
           }, this));
           root.on('click', '.bt-white2', $.proxy(function () {
             this._popupService.close();
@@ -104,15 +103,75 @@ Tw.MembershipSubmain.prototype = {
         }, this)
     );
   },
-  _getMembershipBanner: function (menuId){
-    this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: menuId })
-        .done($.proxy(this._successMemnbershipBanner, this));
+  _getMembershipBanner: function (){
+    this._apiService.requestArray([
+        { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0006' } },
+        { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0007' } }
+     ]).done($.proxy(this._successTosBanner, this));
   },
-  _successMemnbershipBanner: function (resp){
-    Tw.Logger.info('membership resp : ', resp);
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      new Tw.BannerService(this.$container, resp.result && resp.result.banners);
+  _successTosBanner: function (banner1, banner2) {
+      var result = [{ target: '6', banner: banner1 },
+                    { target: '7', banner: banner2 }];
+    var adminList = [];
+    _.map(result, $.proxy(function (bnr) {
+      if ( this._checkTosBanner(bnr.banner) ) {
+        if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) ) {
+          if ( bnr.target === '7' ) {
+            this._membershipPopupBanner = {
+              type: Tw.REDIS_BANNER_TYPE.TOS,
+              list: bnr.banner.result.imgList
+            };
+          } else {
+            new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS, bnr.banner.result.imgList, '6');
+          }
+        }
+      } else {
+        adminList.push(bnr);
+      }
+    }, this));
+
+    if ( adminList.length > 0 ) {
+      this._getAdminBanner(adminList);
     }
+  },
+  _successAdminBanner: function (adminList, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      _.map(adminList, $.proxy(function (target) {
+        var banner = _.filter(resp.result.banners, function (banner) {
+          return banner.bnnrLocCd === target.target;
+        });
+        if ( banner.length > 0 ) {
+          if ( target.target === '7' ) {
+            this._membershipPopupBanner = {
+              type: Tw.REDIS_BANNER_TYPE.ADMIN,
+              list: banner
+            };
+          } else {
+            new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.ADMIN, banner, target.target);
+          }
+        } else {
+          this.$container.find('.fe-membership-banner').remove();
+        }
+      }, this));
+    }
+  },
+  _getAdminBanner: function (adminList) {
+    this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: this._menuId })
+        .done($.proxy(this._successAdminBanner, this, adminList));
+  },
+  _checkTosBanner: function (tosBanner) {
+    if ( tosBanner.code === Tw.API_CODE.CODE_00 ) {
+      if ( tosBanner.result.bltnYn === 'N' ) {
+        return true;
+      } else {
+        if ( tosBanner.result.tosLnkgYn === 'Y' ) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+    return false;
   },
   _goMyMembership: function() {
     this._historyService.goLoad('/membership/my');
@@ -198,7 +257,6 @@ Tw.MembershipSubmain.prototype = {
       this.currentLocation.area2 = encodeURIComponent(_result.area2);
       Tw.Logger.info('this.currentLocation : ', this.currentLocation);
       this._apiService.request(Tw.API_CMD.BFF_11_0025, this.currentLocation)
-      // $.ajax('http://localhost:3000/mock/product.roaming.BFF_10_0059.json')
           .done($.proxy(this._handleSuccessNeaBrand, this))
           .fail($.proxy(this._handleFailCallBack, this));
     } else {
@@ -250,6 +308,9 @@ Tw.MembershipSubmain.prototype = {
     var membershipBarcode = $popupContainer.find('#fe-membership-barcode-extend');
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
       membershipBarcode.JsBarcode(cardNum, {height:75, margin:0});
+    }
+    if ( !Tw.FormatHelper.isEmpty(this._membershipPopupBanner) ) {
+      new Tw.BannerService($popupContainer, this._membershipPopupBanner.type, this._membershipPopupBanner.list, '7');
     }
   },
 

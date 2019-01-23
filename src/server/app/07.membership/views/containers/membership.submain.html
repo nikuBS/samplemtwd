@@ -27,18 +27,20 @@
         <div class="container">
 
             <!-- .cont-box -->
-            <div class="cont-box nogaps noborder">
-                <div class="main-slide-banner slide-pagingtype pg-rtop">
-                    <!-- .widget -->
-                    <div class="widget">
-                        <div class="widget-box slider1">
-                            <div class="slider-box">
-                                <ul class="slider" data-location="6">
-                                </ul>
+            <div class="fe-membership-banner">
+                <div class="cont-box nogaps noborder">
+                    <div class="main-slide-banner slide-pagingtype pg-rtop">
+                        <!-- .widget -->
+                        <div class="widget">
+                            <div class="widget-box slider1">
+                                <div class="slider-box">
+                                    <ul class="slider" data-location="6">
+                                    </ul>
+                                </div>
                             </div>
                         </div>
+                        <!--// .widget -->
                     </div>
-                    <!--// .widget -->
                 </div>
             </div>
             <!--// .cont-box -->
@@ -69,7 +71,7 @@
                         </div>
                         <% if (membershipData.mbrStCd === 'AC') { %>
                         <button type="button" class="barcode-area">
-                            <img id="fe-barcode-img" data-cardNum="<%= membershipData.mbrCardNum %>" src="/img/benefit/bar-code.png" alt="Bar Code">
+                            <img id="fe-barcode-img" data-cardNum="<%= membershipData.mbrCardNum %>" src="<%= CDN %>/img/benefit/bar-code.png" alt="Bar Code">
                         </button>
                         <% } else if (membershipData.mbrStCd === 'SP') { %>
                         <div class="barcode-area nolink">
