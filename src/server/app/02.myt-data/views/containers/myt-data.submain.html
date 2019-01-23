@@ -215,11 +215,13 @@
                             <i class="icon-charge-40"><span class="blind">charge</span></i>나의 요금 &gt; 요금안내서
                         </button>
                     </li>
+                    <% if (data.svcInfo.svcAttrCd !== 'M2') { %>
                     <li>
                         <button data-href="/myt-fare/bill/hotbill">
                             <i class="icon-charge-40"><span class="blind">charge</span></i>나의 요금 &gt; 실시간 이용요금
                         </button>
                     </li>
+                    <% } %>
                     <li>
                         <button data-href="/product/roaming/my-use">
                             <i class="icon-roaming-40"><span class="blind">my</span></i>T로밍 &gt; 나의 로밍
