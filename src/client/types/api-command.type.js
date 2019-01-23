@@ -76,7 +76,7 @@ Tw.API_CMD = {
   BFF_03_0013: { path: '/:version/user/biz-services', method: Tw.API_METHOD.POST },
   BFF_03_0014: { path: '/core-auth/:version/marketing-offer-subscriptions/:args0', method: Tw.API_METHOD.GET },
   BFF_03_0015: { path: '/core-auth/:version/marketing-offer-subscriptions/:args0', method: Tw.API_METHOD.PUT },
-  BFF_03_0016: { path: '/core-auth/:version/service-passwords', method: Tw.API_METHOD.PUT },
+  BFF_03_0016: { path: '/:version/my-t/service-passwords', method: Tw.API_METHOD.PUT },
   BFF_03_0019: { path: '/core-auth/:version/users/:args0/otp', method: Tw.API_METHOD.POST },
   BFF_03_0020: { path: '/core-auth/:version/passwords-check', method: Tw.API_METHOD.GET },
   BFF_03_0021: { path: '/core-auth/:version/tworld-term-agreements', method: Tw.API_METHOD.GET },
