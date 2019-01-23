@@ -156,18 +156,20 @@ Tw.CommonPostcodeDetail.prototype = {
     this._setMoreBtn($result);
 
     for (var i = 0; i < $resultLength; i++) {
-      var $cloneNode = this.$originalNode.clone();
-      $cloneNode.addClass('fe-clone');
-      $cloneNode.removeClass('none');
+      if ($content[i].bldNm.indexOf('N/A') === -1) {
+        var $cloneNode = this.$originalNode.clone();
+        $cloneNode.addClass('fe-clone');
+        $cloneNode.removeClass('none');
 
-      $cloneNode.attr('data-bld-cd', $content[i].bldCd);
+        $cloneNode.attr('data-bld-cd', $content[i].bldCd);
 
-      $cloneNode.find('.fe-building').text($content[i].bldNm);
-      $cloneNode.find('.fe-number').text($content[i].totHouse_numCtt);
-      $cloneNode.find('.fe-zip').text($content[i].zip);
+        $cloneNode.find('.fe-building').text($content[i].bldNm);
+        $cloneNode.find('.fe-number').text($content[i].totHouse_numCtt);
+        $cloneNode.find('.fe-zip').text($content[i].zip);
 
-      $cloneNode.on('click', $.proxy(this._goNextPage, this));
-      this.$resultBox.find('ul').append($cloneNode);
+        $cloneNode.on('click', $.proxy(this._goNextPage, this));
+        this.$resultBox.find('ul').append($cloneNode);
+      }
     }
   },
   _setMoreBtn: function ($result) {
