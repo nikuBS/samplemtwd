@@ -1098,7 +1098,7 @@ Tw.MYT_JOIN_SUSPEND = {
   },
   CONFIRM_RESET_FILE: {
     MESSAGE: '첨부된 파일이 있습니다. 일시정지사유를 변경하시면 구비서류를 재첨부해야합니다. 일시정지 사유를 변경하시겠습니까?',
-    BTNAME: '변경하기'
+    BTNAME: '확인'
   },
   RESUSPEND: '재신청',
   CANCEL_RESUSPEND: '재신청 취소',
