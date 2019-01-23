@@ -90,6 +90,7 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
   _clearNum: function() {
     this.$inputNumber.val('');
     this.$btnClearNum.hide();
+    this._toggleSetupButton(false);
   },
 
   _toggleClearBtn: function() {

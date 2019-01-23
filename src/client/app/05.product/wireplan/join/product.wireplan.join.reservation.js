@@ -271,6 +271,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
   _setCombineResult: function() {
     this._toggleCombineExplain();
     this._setBtnCombineTxt(this._getCombineProdNm());
+    this._onChangeCombineExplain();
   },
 
   _setBtnCombineTxt: function(txt) {
