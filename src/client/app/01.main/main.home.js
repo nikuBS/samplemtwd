@@ -808,7 +808,8 @@ Tw.MainHome.prototype = {
     _.map(menuId, $.proxy(function (id, index) {
       var menu = {
         menuId: id,
-        iconImgFilePathNm: iconPath[index] || '/dummy/icon_80px_default_shortcut@2x.png',    // iconImgFilePathNm
+        iconImgFilePathNm: Tw.FormatHelper.isEmpty(iconPath[index]) || iconPath[index] === 'null' ?
+          '/img/dummy/icon_80px_default_shortcut@2x.png' : iconPath[index],    // iconImgFilePathNm
         menuNm: menuNm[index],
         menuUrl: menuUrl[index]
       };
