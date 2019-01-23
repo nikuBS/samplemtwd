@@ -57,9 +57,9 @@ Tw.MyTDataTing.prototype = {
         $input.parent().addClass('disabled');
       }
 
-      if ( Number($input.val()) === nLimitMount ) {
-        $input.click();
-      }
+      // if ( Number($input.val()) === nLimitMount ) {
+      //   $input.click();
+      // }
     };
 
     var elAmount = this.$wrap_amount_select_list.find('input').each(fnCheckedUI);
