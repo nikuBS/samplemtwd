@@ -83,7 +83,11 @@
                 <button data-id="contract-plan">
                         <span class="inner">
                             <span class="tit">무약정 플랜 포인트</span>
+                            <% if ( data.myContractPlan.muPointYn === 'Y' ) { %>
                             <span class="text"><%= data.myContractPlan.point %>P / <%= data.myContractPlan.count %>건</span>
+                            <% } else { %>
+                            <span class="text">신청하기</span>
+                            <% } %>
                         </span>
                 </button>
             </li>
