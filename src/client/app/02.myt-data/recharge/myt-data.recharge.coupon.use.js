@@ -111,6 +111,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
     }, this));
   },
   _onSubmitClicked: function () {
+    var confirmed = false;
     switch (this._currentTab) {
       case 'refill':
         this._popupService.openModalTypeA(
@@ -118,11 +119,18 @@ Tw.MyTDataRechargeCouponUse.prototype = {
           Tw.REFILL_COUPON_CONFIRM.CONTENTS_REFILL,
           Tw.REFILL_COUPON_CONFIRM.CONFIRM_REFILL,
           null,
-          $.proxy(this._refill, this)
+          $.proxy(function () {
+            confirmed = true;
+            this._popupService.close();
+          }, this),
+          $.proxy(function () {
+            if (confirmed) {
+              this._refill();
+            }
+          }, this)
         );
         break;
       case 'gift':
-        var confirmed = false;
         this._popupService.openModalTypeA(
           Tw.REFILL_COUPON_CONFIRM.TITLE_GIFT,
           Tw.REFILL_COUPON_CONFIRM.CONTENTS_GIFT,
@@ -144,7 +152,6 @@ Tw.MyTDataRechargeCouponUse.prototype = {
     }
   },
   _refill: function () {
-    this._popupService.close();
     var desc = this.$container.find('input[type=radio]:checked')[0].value;
     var reqData = {
       copnIsueNum: this._couponNo,
@@ -152,6 +159,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
       copnDtlClCd: desc.split('::')[1]
     };
     var type = desc.split('::')[2] === 'D' ? 'data' : 'voice';
+
     this._apiService.request(Tw.API_CMD.BFF_06_0007, reqData)
       .done($.proxy(this._success, this, type))
       .fail($.proxy(this._fail, this));

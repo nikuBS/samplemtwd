@@ -113,10 +113,6 @@
   {{/list}}
 </script>
 <script>
-  if (window.location.search.indexOf('submain') !== -1) {
-    (new Tw.HistoryService()).init(null, 1);
-  }
-
   $(document).ready(function () {
     new Tw.MyTDataRechargeCoupon($('.wrap'), '<%- JSON.stringify(list) %>');
   });

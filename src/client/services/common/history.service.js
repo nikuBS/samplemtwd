@@ -122,7 +122,7 @@ Tw.HistoryService.prototype = {
   },
   resetHistory: function (historyLength) {
     history.go(historyLength);
-    this.reload();
+    // this.reload();
   },
   getHistoryLength: function () {
     var historyLength = this._hashList.length;
