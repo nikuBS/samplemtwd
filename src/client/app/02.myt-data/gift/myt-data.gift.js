@@ -118,11 +118,6 @@ Tw.MyTDataGift.prototype = {
   },
 
   _stepBack: function () {
-    // this._popupService.openConfirmButton(Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG, Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-    //   $.proxy(function () {
-    //     this._popupService.close();
-    //     setTimeout($.proxy(this._goBack, this), 500);
-    //   }, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
     var confirmed = false;
     this._popupService.openConfirmButton(
       Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
