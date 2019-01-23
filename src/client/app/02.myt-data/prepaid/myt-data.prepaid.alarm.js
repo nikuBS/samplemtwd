@@ -184,7 +184,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
         this.day.toString() + Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.MSG_3,
         Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.TITLE,
         $.proxy(this._onCancel, this),
-        $.proxy(this._requestAlarm, this),
+        $.proxy(this._requestAlarm, this, htParams),
         null,
         Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.BUTTON);
     } else {
@@ -194,10 +194,10 @@ Tw.MyTDataPrepaidAlarm.prototype = {
       });
 
       this._popupService.openConfirmButton(
-        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.MSG_1 + this.amt.toString() + Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.MSG_2,
+        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.MSG_1 + $('.fe-alarm-amount').text() + Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.MSG_2,
         Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.TITLE,
         $.proxy(this._onCancel, this),
-        $.proxy(this._requestAlarm, this),
+        $.proxy(this._requestAlarm, this, htParams),
         null,
         Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.BUTTON);
     }
@@ -210,6 +210,8 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
   _requestAlarm: function (htParams) {
     if ( this._isCancel ) {
+      debugger;
+
       this._apiService.request(Tw.API_CMD.BFF_06_0064, htParams)
         .done($.proxy(this._onCompleteAlarm, this));
     }
@@ -217,6 +219,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
   _onCompleteAlarm: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
+      debugger;
       // 알람 설정 하시겠습니까?
       // TODO after Self Authentication, go to submain
       this._historyService.replaceURL('/myt-data/submain');
