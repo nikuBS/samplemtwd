@@ -264,6 +264,10 @@ Tw.MytJoinCustpassword.prototype = {
     Tw.CommonHelper.endLoading('.container');
     Tw.Logger.info(params);
     if ( params.code === Tw.API_CODE.CODE_00 ) {
+
+      // update svcInfo
+      this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
+
       var msgObj = this._new ? Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A64 : Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A62;
       this._popupService.openAlert(msgObj.MSG, msgObj.TITLE, null, $.proxy(function(){
         // 완료 후 MS페이지로 이동
@@ -274,7 +278,7 @@ Tw.MytJoinCustpassword.prototype = {
       // ICAS3215	고객보호비밀번호 오입력 5회(잠김 예정)
       // ICAS3216	고객보호비밀번호 기 잠김 (지점 내점 안내 노출)
       if ( params.code === 'ICAS3216' ) {
-        Tw.Error(params.code, Tw.MYT_JOIN_CUSTPASS.BLOCKED_PWD).pop();
+        this._popupService.openAlert(params.code, Tw.MYT_JOIN_CUSTPASS.BLOCKED_PWD);
       } else {
         Tw.Error(params.code, params.msg).pop();
       }

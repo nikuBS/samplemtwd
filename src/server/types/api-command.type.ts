@@ -110,7 +110,7 @@ export const API_CMD = {
   BFF_03_0013: { path: '/:version/user/biz-services', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_03_0014: { path: '/core-auth/:version/marketing-offer-subscriptions/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0015: { path: '/core-auth/:version/marketing-offer-subscriptions/:args0', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
-  BFF_03_0016: { path: '/core-auth/:version/service-passwords', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
+  BFF_03_0016: { path: '/:version/my-t/service-passwords', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_03_0017: { path: '/:version/user/login/android', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_03_0018: { path: '/:version/user/login/ios', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false },
   BFF_03_0019: { path: '/core-auth/:version/users/:args0/otp', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
