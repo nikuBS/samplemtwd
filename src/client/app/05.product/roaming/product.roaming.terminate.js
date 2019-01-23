@@ -33,6 +33,7 @@ Tw.ProductRoamingTerminate.prototype = {
     this.$rootContainer.on('click','.agree-view',$.proxy(this._showDetailContent,this));
     this.$rootContainer.on('click','#do_confirm',$.proxy(this._doJoin,this));
     this.$rootContainer.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._goPlan,this,-1));
+    this.$rootContainer.on('click','.tip-view',$.proxy(this._showBffToolTip,this));
     if(this._prodBffInfo.agreeCnt<=0){
       this.$rootContainer.find('#do_confirm').removeAttr('disabled');
       this.$rootContainer.find('.agree-element').hide();
@@ -163,5 +164,20 @@ Tw.ProductRoamingTerminate.prototype = {
       priceVal = Tw.FormatHelper.addComma(priceVal)+Tw.CURRENCY_UNIT.WON;
     }
     return priceVal;
-  }
+  },
+  _showBffToolTip : function (evt) {
+    var tooltipData = $(evt.currentTarget).data();
+    this._popupService.open({
+      url: Tw.Environment.cdn + '/hbs/',
+      'pop_name': 'type_tx_scroll',
+      'title': tooltipData.tit,
+      'title_type': 'sub',
+      'cont_align': 'tl',
+      'contents': tooltipData.txt,
+      'bt_b': [{
+        style_class: 'tw-popup-closeBtn bt-red1 pos-right',
+        txt: Tw.BUTTON_LABEL.CONFIRM
+      }]
+    },null,null);
+  },
 };
