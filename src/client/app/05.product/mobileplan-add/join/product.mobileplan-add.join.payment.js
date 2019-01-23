@@ -61,8 +61,8 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
     }
 
     this._toggleClearBtn($(e.currentTarget));
-    this._toggleButton(this.$btnGetAuthCode, this.$inputNumber.val() > 9);
-    this.$btnGetAuthCode.parent().toggleClass('disabled', this.$inputNumber.val() < 10);
+    this._toggleButton(this.$btnGetAuthCode, this.$inputNumber.val().length > 9);
+    this.$btnGetAuthCode.parent().toggleClass('disabled', this.$inputNumber.val().length < 10);
   },
 
   _getAuthCode: function() {
@@ -148,15 +148,15 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
   },
 
   _replaceErrMsg: function(code, msg) {
-    if (code === 'SMS2007') {
+    if (code === 'ATH2007') {
       return Tw.SMS_VALIDATION.NOT_MATCH_CODE;
     }
 
-    if (code === 'SMS2008') {
+    if (code === 'ATH2008') {
       return Tw.SMS_VALIDATION.EXPIRE_AUTH_TIME;
     }
 
-    if (code === 'SMS2013') {
+    if (code === 'ATH2013') {
       return Tw.SMS_VALIDATION.ALREADY_AUTH;
     }
 

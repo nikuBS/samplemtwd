@@ -43,7 +43,7 @@ Tw.ProductCommonCallplan.prototype = {
       setTimeout($.proxy(function() {
         Tw.CommonHelper.endLoading('.container');
         this._historyService.reload();
-      }, this), 2000);
+      }, this), 1000);
     }
   },
 

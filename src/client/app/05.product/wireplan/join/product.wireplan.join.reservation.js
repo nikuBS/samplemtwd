@@ -271,6 +271,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
   _setCombineResult: function() {
     this._toggleCombineExplain();
     this._setBtnCombineTxt(this._getCombineProdNm());
+    this._onChangeCombineExplain();
   },
 
   _setBtnCombineTxt: function(txt) {
@@ -400,11 +401,6 @@ Tw.ProductWireplanJoinReservation.prototype = {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
     }
 
-    if (this._typeCd === 'combine' && this._prodId !== 'NH00000103' && !this._logged) {
-      return this._popupService.openConfirmButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A36.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A36.TITLE,
-        $.proxy(this._setGoLoginFlag, this), $.proxy(this._goLogin, this), Tw.BUTTON_LABEL.CLOSE);
-    }
-
     // 결합상품(개인형) 기 가입 상품 유무 체크
     if (this._typeCd === 'combine' && this._prodId === 'NH00000103') {
       return this._procExistsCheckPersonalCombine();
@@ -416,6 +412,11 @@ Tw.ProductWireplanJoinReservation.prototype = {
       return this._popupService.openConfirmButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A31.MSG,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A31.TITLE,
         $.proxy(this._setNotSelectCombine, this), $.proxy(this._procNotSelectCombine, this), Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+    }
+
+    if (this._typeCd === 'combine' && this._prodId !== 'NH00000103' && !this._logged) {
+      return this._popupService.openConfirmButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A36.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A36.TITLE,
+        $.proxy(this._setGoLoginFlag, this), $.proxy(this._goLogin, this), Tw.BUTTON_LABEL.CLOSE);
     }
 
     // 결합상품, 상품 선택 및 추가정보 체크하여 입력 팝업 호출
