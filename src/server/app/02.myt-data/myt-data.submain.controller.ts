@@ -469,9 +469,7 @@ class MytDataSubmainController extends TwViewController {
         return resp.result;
       } else {
         // error
-        return {
-          info: resp
-        };
+        return null;
       }
     });
   }
