@@ -235,7 +235,6 @@ Tw.MytJoinCustpassword.prototype = {
     }
 
     // Call API
-    // var api = /*this._new ? Tw.API_CMD.BFF_05_0069 :*/ Tw.API_CMD.BFF_05_0070;
     var pwd = orgPwd;
     var api = Tw.NODE_CMD.CHANGE_SVC_PASSWORD;
     var data = {
