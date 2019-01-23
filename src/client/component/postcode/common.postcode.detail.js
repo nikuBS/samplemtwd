@@ -165,6 +165,7 @@ Tw.CommonPostcodeDetail.prototype = {
       var bldNm = $content[i].bldNm;
       if ($content[i].bldNm.indexOf('N/A') !== -1) {
         bldNm = '';
+        $cloneNode.find('.fe-building').css('height', '25px');
       }
       $cloneNode.find('.fe-building').text(bldNm);
       $cloneNode.find('.fe-number').text($content[i].totHouse_numCtt);
