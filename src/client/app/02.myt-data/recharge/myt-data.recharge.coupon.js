@@ -10,6 +10,9 @@ Tw.MyTDataRechargeCoupon = function (rootEl, coupons) {
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
+  if (window.location.search.indexOf('submain') !== -1) {
+    this._historyService.init(null, 1);
+  }
 
   this._couponList = JSON.parse(coupons);
   this._couponShowed = 20;  // default showing list count is 20
