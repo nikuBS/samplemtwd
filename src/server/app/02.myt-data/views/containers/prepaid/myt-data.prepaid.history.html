@@ -56,7 +56,10 @@
                                                         <i class="badge badge-<%= badge.icon %>"><span class="blind"><%= badge.name %></span></i>
                                                     <% } %>
                                                 음성 충전</span>
-                                                <span class="stext"><span class="gray-tx"><%= history.cardNm %></span><span class="gray-tx"><%= history.payNm %></span></span>
+                                                <span class="stext">
+                                                    <span class="gray-tx"><%= history.payNm %></span>
+                                                    <span class="gray-tx"><%= history.cardNm %></span>
+                                                </span>
                                             </p>
                                             <div class="list-data">
                                                 <button class="bt-link data-tx <%= history.isCanceled ? 'gray-tx' : 'blue-tx'%>" data-origin-idx="<%= history.idx %>"><%= history.amt %>원</button>
@@ -85,7 +88,10 @@
                                                     <% } %>
                                                     데이터 충전<span class="data"> <%= history.data %></span>
                                                 </span>
-                                                <span class="stext"><span class="gray-tx"><%= history.cardNm %></span><span class="black-tx"><%= history.payNm %></span></span>
+                                                <span class="stext">
+                                                    <span class="black-tx"><%= history.payNm %></span>
+                                                    <span class="gray-tx"><%= history.cardNm %></span>
+                                                </span>
                                             </p>
                                             <div class="list-data">
                                                 <button class="bt-link data-tx <%= history.isCanceled ? 'gray-tx' : 'blue-tx'%>" data-origin-idx="<%= history.idx %>"><%= history.amt %>원</button>
