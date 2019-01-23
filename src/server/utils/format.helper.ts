@@ -198,7 +198,7 @@ class FormatHelper {
     return str;
   }
 
-  static conDateFormatWIthDash(date: any): any {
+  static conDateFormatWithDash(date: any): any {
     return date.slice(0, 4) + '.' + date.slice(4, 6) + '.' + date.slice(6, 8);
   }
 
