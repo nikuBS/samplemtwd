@@ -397,6 +397,12 @@ skt_landing.action = {
         //wai-aria
         popups.attr('role','dialog')
               .attr('aria-hidden','false');
+        if(popup_info.layer || popup_info.hbs == 'dropdown'){
+          popups.attr('role','')
+                .attr('aria-hidden','true');
+          createdTarget.attr('role','dialog')
+                       .attr('aria-hidden','false');
+        }
       }).fail(function() {
         if(callback_fail){
           callback_fail();
@@ -482,10 +488,18 @@ skt_landing.action = {
     var selector = '.popup-page textarea, .popup-page input[type=text], .popup-page input[type=date], .popup-page input[type=datetime-local], .popup-page input[type=email], .popup-page input[type=month], .popup-page input[type=number], .popup-page input[type=password], .popup-page input[type=search], .popup-page input[type=tel], .popup-page input[type=time], .popup-page input[type=url], .popup-page input[type=week]';
     $(document).on('focus',selector, function(){
       $(this).closest('.popup-page').addClass('focusin')
-    })
+    });
+    // $(document).on('focusout',selector, function(){
+    //   $(this).closest('.popup-page').removeClass('focusin')
+    // })
     $(document).on('focusout',selector, function(){
-      $(this).closest('.popup-page').removeClass('focusin')
-    })
+      var el = $(this);
+      $(document).click(function(e){
+        if(!$(e.target).is(selector)) {
+          el.closest('.popup-page').removeClass('focusin')
+        }
+      });
+    });
   },
   prd_header : function(){ // 상품상세 원장 헤더 색상 제어
     $('#header').removeClass('bg-type');
@@ -611,7 +625,8 @@ skt_landing.dev = {
     }
     var $target = $(selector)[0] == $( "#sortable-enabled" )[0] ? $(selector) : $( "#sortable-enabled" );
     var defaults = {
-      axis: 'y'
+      axis: 'y',
+      handle: '.ico-move'
     };
     options = $.extend(defaults, options);
     $target.sortable(options).disableSelection();
