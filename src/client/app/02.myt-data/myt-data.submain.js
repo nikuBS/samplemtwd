@@ -94,6 +94,7 @@ Tw.MyTDataSubMain.prototype = {
     this._svcMgmtNumList = [];
     this._initScroll();
     this._initBanners();
+    setTimeout($.proxy(this._initOtherLinesInfo, this), 200);
   },
 
   _initBanners: function () {
@@ -107,7 +108,8 @@ Tw.MyTDataSubMain.prototype = {
       var result = resp.result;
       var isCheckBanner = type === Tw.REDIS_BANNER_TYPE.ADMIN || this._checkBanner(result);
       if ( isCheckBanner ) {
-        new Tw.BannerService(this.$container, type, result.imgList, 'M', $.proxy(this._successDrawBanner, this));
+        var list = (type === Tw.REDIS_BANNER_TYPE.ADMIN) ? result.banners : result.imgList;
+        new Tw.BannerService(this.$container, type, list, 'M', $.proxy(this._successDrawBanner, this));
       }
       else {
         this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, {menuId: this.data.pageInfo.menuId})
@@ -119,7 +121,6 @@ Tw.MyTDataSubMain.prototype = {
       this.$container.find('[data-id=banners-empty]').hide();
       this.$container.find('[data-id=banners]').hide();
     }
-    setTimeout($.proxy(this._initOtherLinesInfo, this), 200);
   },
 
   _checkBanner: function(result) {
