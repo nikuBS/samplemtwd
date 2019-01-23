@@ -90,14 +90,22 @@ Tw.ProductRoamingSearchResult.prototype = {
                     this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma].txt);
                     this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma]);
                 }else {
-                    this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.lte].txt);
-                    this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.lte]);
-                    this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma].txt);
-                    this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma]);
-                    this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma].txt);
-                    this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma]);
-                    this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm].txt);
-                    this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm]);
+                    if(this._rateInfo.lte > 0 && this._rateInfo.iLtePhone !== '' && this._rateInfo.iLtePhone !== 'N'){
+                        this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.lte].txt);
+                        this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.lte]);
+                    }
+                    if(this._rateInfo.wcdma > 0){
+                        this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma].txt);
+                        this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.wcdma]);
+                    }
+                    if(this._rateInfo.cdma > 0){
+                        this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma].txt);
+                        this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.cdma]);
+                    }
+                    if(this._rateInfo.gsm > 0){
+                        this.typeTxt.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm].txt);
+                        this.manageType.push(Tw.ROAMING_MANAGE_TYPE.list[this.type.gsm]);
+                    }
                 }
             } else {
                 if(this._rateInfo.lte > 0 && this._rateInfo.iLtePhone !== '' && this._rateInfo.iLtePhone !== 'N'){
