@@ -90,7 +90,7 @@ export default class MyTDataPrepaidHistory extends TwViewController {
       date: DateHelper.getShortFirstDate(key),
       amt: FormatHelper.addComma(history.amt),
       isCanceled: history.payCd === '5' || history.payCd === '9',
-      cardNm: history.cardNm || PREPAID_PAYMENT_TYPE[history.wayCd]
+      cardNm: history.wayCd === '02' ? history.cardNm : PREPAID_PAYMENT_TYPE[history.wayCd]
     });
     return histories;
   }
