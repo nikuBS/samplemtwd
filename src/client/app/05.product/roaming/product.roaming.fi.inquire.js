@@ -70,12 +70,7 @@ Tw.ProductRoamingFiInquire.prototype = {
     this.$inquirePeriod.text(getPeriod);
   },
 
-  _getTfiResponse: function(state) {
-    if(state === 'cancel'){
-      //예약 취소시 스크롤 상단 위치
-      $('.container-wrap').scrollTop(0);
-    };
-
+  _getTfiResponse: function() {
     var sdate = this.$inputSdate.val() === undefined ? moment().format('YYYY[-]MM[-]DD') : this.$inputSdate.val();
     var edate = this.$inputEdate.val() === undefined ? moment().add(+6, 'month').format('YYYY[-]MM[-]DD') : this.$inputEdate.val();
 
@@ -136,6 +131,10 @@ Tw.ProductRoamingFiInquire.prototype = {
       }
       res[x].rental_schd_sta_dtm = this._dateHelper.getShortDateWithFormat(res[x].rental_schd_sta_dtm.substr(0,8), 'YYYY.M.DD');
       res[x].rental_schd_end_dtm = this._dateHelper.getShortDateWithFormat(res[x].rental_schd_end_dtm, 'YYYY.M.DD');
+
+      if(res[x].rental_st_cd === '17') { //예약취소 상태에서 버튼 비활성화
+        res[x].dateDifference = '';
+      }
     }
 
     return res;
@@ -277,7 +276,7 @@ Tw.ProductRoamingFiInquire.prototype = {
 
   _cancleCompletePop: function (){
     var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A28;
-    this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, $.proxy(this._getTfiResponse, this, 'cancel'));
+    this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, null, $.proxy(this._reload, this));
   },
 
   _openEditPop : function(changeCountry ,res){
