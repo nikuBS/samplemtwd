@@ -44,15 +44,43 @@ Tw.CustomerEmailQualityOption.prototype = {
   },
 
   _onSelectQualityPhoneLine: function () {
-    var filteredLine = this.allSvc.s.filter(function(item){return item.svcGr === 'U'});
+    var isInternetLine = $('.fe-quality-inqSvcClCd li.checked').index() === 0;
+    var filteredLine = [];
+    var fnSelectLine;
 
-    var fnSelectLine = function (item) {
-      return {
-        value: Tw.FormatHelper.conTelFormatWithDash(item.svcNum),
-        option: $('.fe-select-phone-line').data('svcmgmtnum').toString() === item.svcMgmtNum ? 'checked' : '',
-        attr: 'data-svcmgmtnum=' + item.svcMgmtNum
+    if ( isInternetLine ) {
+      filteredLine = this.allSvc.s.filter(function (item) {
+        return item.svcGr === 'I' || item.svcGr === 'T';
+      });
+
+      fnSelectLine = function (item) {
+        return {
+          value: item.addr,
+          option: $('.fe-select-phone-line').data('svcmgmtnum').toString() === item.svcMgmtNum ? 'checked' : '',
+          attr: 'data-svcmgmtnum=' + item.svcMgmtNum
+        };
       };
-    };
+    } else {
+      filteredLine = this.allSvc.s.filter(function (item) {
+        return item.svcGr === 'U';
+      });
+
+      fnSelectLine = function (item) {
+        return {
+          value: Tw.FormatHelper.conTelFormatWithDash(item.svcNum),
+          option: $('.fe-select-phone-line').data('svcmgmtnum').toString() === item.svcMgmtNum ? 'checked' : '',
+          attr: 'data-svcmgmtnum=' + item.svcMgmtNum
+        };
+      };
+    }
+
+    // fnSelectLine = function (item) {
+    //   return {
+    //     value: Tw.FormatHelper.conTelFormatWithDash(item.svcNum),
+    //     option: $('.fe-select-phone-line').data('svcmgmtnum').toString() === item.svcMgmtNum ? 'checked' : '',
+    //     attr: 'data-svcmgmtnum=' + item.svcMgmtNum
+    //   };
+    // };
 
     this._popupService.open({
         hbs: 'actionsheet_select_a_type',
