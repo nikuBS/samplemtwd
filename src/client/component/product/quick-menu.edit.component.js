@@ -46,20 +46,27 @@ Tw.QuickMenuEditComponent.prototype = {
   },
   _resetQuickMenu: function () {
     this._popupService.close();
-    _.map(this.$list, $.proxy(function (checkbox) {
-      var $checkbox = $(checkbox);
-      var menuId = $checkbox.data('menuid');
-      var quickMenu = _.find(this._quickList, $.proxy(function (quick) {
-        return quick.menuId === menuId;
+    this._apiService.request(Tw.NODE_CMD.GET_QUICK_MENU_DEFAULT, {})
+      .done($.proxy(this._successQuickMenuDefault, this));
+  },
+  _successQuickMenuDefault: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      var menuIdStr = resp.result.menuIdStr;
+      var defaultList = Tw.FormatHelper.isEmpty(menuIdStr) || menuIdStr === 'null' || menuIdStr === ' ' ? [] :
+        menuIdStr.indexOf('|') !== -1 ? menuIdStr.split('|') : [menuIdStr.trim()];
+      this.$list.prop('checked', false);
+      this.$list.parents('.fe-label-menu').attr('aria-checked', false);
+      _.map(this.$list, $.proxy(function (checkbox) {
+        var $checkbox = $(checkbox);
+        var menuId = $checkbox.data('menuid');
+        if ( defaultList.indexOf(menuId) !== -1 ) {
+          $checkbox.prop('checked', true);
+          $checkbox.parents('.fe-label-menu').attr('aria-checked', true);
+        }
       }, this));
-      if ( !Tw.FormatHelper.isEmpty(quickMenu) ) {
-        $checkbox.prop('checked', true);
-        $checkbox.parents('.fe-label-menu').attr('aria-checked', true);
-      } else {
-        $checkbox.prop('checked', false);
-        $checkbox.parents('.fe-label-menu').attr('aria-checked', false);
-      }
-    }, this));
+    } else {
+      Tw.Error(resp.code, resp.msg).pop();
+    }
   },
   _onClickComplete: function () {
     var $selected = this.$list.filter(':checked');
@@ -94,6 +101,7 @@ Tw.QuickMenuEditComponent.prototype = {
     if ( selectedLength > 20 ) {
       var $currentTarget = $($event.currentTarget);
       $currentTarget.prop('checked', false);
+      $currentTarget.parents('.fe-label-menu').attr('aria-checked', false);
       this._popupService.openAlert(Tw.ALERT_MSG_HOME.A03);
     } else if ( selectedLength === 0 ) {
       this._popupService.openAlert(Tw.ALERT_MSG_HOME.A04);
