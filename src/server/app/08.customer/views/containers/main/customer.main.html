@@ -46,7 +46,9 @@
                                             class="banner-bt ico-type01"><%-item.submMenuNm%></a></li>
                                         <% }) %>
                                     </ul>
-                                    <span class="ico"></span>
+                                    <% if ( !!banner.imgUrl ) { %>
+                                    <img src="<%-banner.imgUrl%>" alt="<%-banner.imgAltCtt%>">
+                                    <% } %>
                                 </div>
                             </li>
                             <% }) %>
