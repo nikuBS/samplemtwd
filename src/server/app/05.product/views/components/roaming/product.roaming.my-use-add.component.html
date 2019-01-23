@@ -12,8 +12,8 @@
             <% var prodList = roamingAdd.roamingProdList %>
             <% for (var keyProd in prodList) { %>
             <li>
-                <% if (prodList[keyProd].prodLinkYn === 'Y') { %>
-                <a class="btn-type" href="/product/callplan/<%= prodList[keyProd].prodId %>">
+                <% if (prodList[keyProd].prodLinkYn === 'Y' && prodList[keyProd].linkProdId) { %>
+                <a class="btn-type" href="/product/callplan/<%= prodList[keyProd].linkProdId %>">
                 <% } else { %>
                 <a class="btn-type not-link" href="#" onclick="return false;">
                 <% } %>
