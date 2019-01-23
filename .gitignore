@@ -10,6 +10,8 @@ ee http://help.github.com/ignore-files/ for more about ignoring files.
 /logs
 /uploads/*.*
 /uploads/**/*.*
+/src/client/web-contents
+/src/client/right-brain
 
 # dependencies
 /node_modules
