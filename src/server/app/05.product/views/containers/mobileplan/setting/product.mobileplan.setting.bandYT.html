@@ -33,7 +33,10 @@
             <div class="container">
 
                 <div class="ti-caption-gray">
-                    <h4 class="tit">데이터 옵션 선택 <button type="button" class="tip-view" title="데이터 옵션 선택 정보보기" aria-haspopup="true">TIP</button></h4>
+                    <h4 class="tit">데이터 옵션 선택
+                        <% var tipId = data.nonOption ? 'MP_02_02_03_12_tip_02' : 'MP_02_02_03_12_tip_01' %>
+                        <button type="button" class="tip-view" id="<%= tipId %>" aria-haspopup="true">TIP</button>
+                    </h4>
                     <p class="num"><%= data.svcInfo.svcNum %></p>
                 </div>
 
