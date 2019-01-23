@@ -277,7 +277,7 @@ Tw.MytJoinCustpassword.prototype = {
       // ICAS3215	고객보호비밀번호 오입력 5회(잠김 예정)
       // ICAS3216	고객보호비밀번호 기 잠김 (지점 내점 안내 노출)
       if ( params.code === 'ICAS3216' ) {
-        this._popupService.openAlert(params.code, Tw.MYT_JOIN_CUSTPASS.BLOCKED_PWD);
+        this._popupService.openAlert(Tw.MYT_JOIN_CUSTPASS.BLOCKED_PWD);
       } else {
         Tw.Error(params.code, params.msg).pop();
       }
