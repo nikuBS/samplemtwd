@@ -40,9 +40,8 @@ export default class MembershipSubmain extends TwViewController {
       });
     } else {
       Observable.combineLatest(
-        this.getMembershipCheck(),
         this.getPopBrandData()
-      ).subscribe(([membershipCheckData, popBrandData]) => {
+      ).subscribe(([popBrandData]) => {
 
         const error = {
           code: popBrandData.code,
@@ -54,6 +53,7 @@ export default class MembershipSubmain extends TwViewController {
         }
 
         const membershipData = null;
+        const membershipCheckData = null;
 
         this.logger.info(this, 'membershipCheckData2 : ', membershipCheckData);
 
