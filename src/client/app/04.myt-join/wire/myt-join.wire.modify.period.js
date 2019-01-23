@@ -190,7 +190,7 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
   _loadingPopupCloseCallback: function () {
     if ( this._agreementsPenaltyError ) {
       this._popupService.openAlert(Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.ERROR_ALERT.CONTENTS,
-        Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.ERROR_ALERT.TITLE, Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.ERROR_ALERT.BT_NAME); //에러
+        Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.ERROR_ALERT.TITLE); //에러
       this._agreementsPenaltyError = false;
     } else {
       if ( this._periodSelectPopupOpened ) {
@@ -248,7 +248,7 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_05_0141, {
       'requestCnt': this._intervalCnt
     }).done($.proxy(this._reqAgreementsPenaltyDone, this))
-      .fail($.proxy(this._reqFail, this));
+      .fail($.proxy(this._reqAgreementsPenaltyError, this));
   },
 
   _reqAgreementsPenaltyDone: function (resp) {
@@ -404,6 +404,10 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     } else {
       this._popupService.openAlert(resp.msg, resp.code);
     }
+  },
+
+  _reqFail: function (err) {
+    this._popupService.openAlert(err.msg, err.code);
   },
 
   _go: function (hash) {
