@@ -434,6 +434,19 @@ Tw.ProductRoamingFiInquire.prototype = {
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
     }
 
+    //시작일을 종료일 이후로 설정
+    if (Tw.DateHelper.getDifference(this.$inputEdate.val(), this.$inputSdate.val()) < 0) {
+      return this._popupService.openConfirm(Tw.ALERT_MSG_PRODUCT.ALERT_3_A84.MSG,
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A84.TITLE);
+    }
+
+    //시작일이 minDate(이틀 뒤)보다 작게 설정
+    var getMinDate = this.$inputSdate.attr('min');
+    if (Tw.DateHelper.getDifference(getMinDate, this.$inputSdate.val()) > 0) {
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A85.MSG,
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A85.TITLE);
+    }
+
     var expbranchnm = this.$inputReturn.text();
     var boothcode = this.$inputReceive.attr('data-booth');
     var boothnm = this.$inputReceive.text();
