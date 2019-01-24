@@ -4,7 +4,7 @@ ee http://help.github.com/ignore-files/ for more about ignoring files.
 # compiled output
 /dist
 /src/server/public
-/src/server/*.json
+/src/server/manifest.json
 /tmp
 /out-tsc
 /logs
