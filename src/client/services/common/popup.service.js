@@ -135,7 +135,7 @@ Tw.PopupService.prototype = {
   },
   openAlert: function (contents, title, btName, closeCallback) {
     var option = {
-      title: title || Tw.POPUP_TITLE.NOTIFY,
+      title: title,
       title_type: 'sub',
       cont_align: 'tl',
       contents: contents,
@@ -149,7 +149,7 @@ Tw.PopupService.prototype = {
   },
   openConfirm: function (contents, title, confirmCallback, closeCallback) {
     var option = {
-      title: title || Tw.POPUP_TITLE.NOTIFY,
+      title: title,
       title_type: 'sub',
       cont_align: 'tl',
       contents: contents,
@@ -167,7 +167,7 @@ Tw.PopupService.prototype = {
   },
   openConfirmButton: function (contents, title, confirmCallback, closeCallback, cancelButton, confirmButton) {
     var option = {
-      title: title || Tw.POPUP_TITLE.NOTIFY,
+      title: title,
       title_type: 'sub',
       cont_align: 'tl',
       contents: contents,
@@ -201,7 +201,7 @@ Tw.PopupService.prototype = {
   openTypeA: function (title, contents, icoType, openCallback, closeCallback) {
     var option = {
       ico: icoType || 'type2',
-      title: title || Tw.POPUP_TITLE.NOTIFY,
+      title: title,
       contents: contents,
       bt: [{
         style_class: 'bt-blue1 tw-popup-closeBtn',
@@ -215,7 +215,7 @@ Tw.PopupService.prototype = {
   openOneBtTypeB: function (title, contents, linkList, icoType, openCallback, closeCallback) {
     var option = {
       ico: icoType || 'type3',
-      title: title || Tw.POPUP_TITLE.NOTIFY,
+      title: title,
       contents: contents,
       link_list: linkList,
       bt: [{
@@ -230,7 +230,7 @@ Tw.PopupService.prototype = {
   openTwoBtTypeB: function (title, contents, linkList, btName, icoType, openCallback, confirmCallback, closeCallback) {
     var option = {
       ico: icoType || 'type3',
-      title: title || Tw.POPUP_TITLE.NOTIFY,
+      title: title,
       contents: contents,
       link_list: linkList,
       bt: [{
@@ -249,7 +249,7 @@ Tw.PopupService.prototype = {
   openTypeC: function (title, noticeList, icoType, openCallback, closeCallback) {
     var option = {
       ico: icoType || 'type4',
-      title: title || Tw.POPUP_TITLE.NOTIFY,
+      title: title,
       title_type: 'sub-c',
       notice_has: 'notice_has',
       notice_list: noticeList,
@@ -266,7 +266,7 @@ Tw.PopupService.prototype = {
     var option = {
       url: Tw.Environment.cdn + '/hbs/',
       ico: icoType || 'type2',
-      title: title || Tw.POPUP_TITLE.NOTIFY,
+      title: title,
       contents: contents,
       bt: [{
         style_class: 'bt-red1 tw-popup-confirm',
@@ -280,7 +280,7 @@ Tw.PopupService.prototype = {
   },
   openModalTypeA: function (title, contents, btName, openCallback, confirmCallback, closeCallback, hashName) {
     var option = {
-      title: title || Tw.POPUP_TITLE.NOTIFY,
+      title: title,
       title_type: 'sub-c',
       cont_align: 'tc',
       contents: contents,
@@ -299,7 +299,7 @@ Tw.PopupService.prototype = {
   },
   openModalTypeATwoButton: function (title, contents, btName, closeBtName, openCallback, confirmCallback, closeCallback, hashName) {
     var option = {
-      title: title || Tw.POPUP_TITLE.NOTIFY,
+      title: title,
       title_type: 'sub-c',
       cont_align: 'tc',
       contents: contents,
@@ -318,7 +318,7 @@ Tw.PopupService.prototype = {
   },
   openModalTypeALeftAlign: function (title, contents, btName, openCallback, confirmCallback, closeCallback) {
     var option = {
-      title: title || Tw.POPUP_TITLE.NOTIFY,
+      title: title,
       title_type: 'sub',
       cont_align: 'tl',
       contents: contents,

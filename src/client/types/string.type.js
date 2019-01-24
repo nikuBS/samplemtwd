@@ -755,13 +755,12 @@ Tw.ALERT_MSG_MEMBERSHIP = {
   }
 };
 
+Tw.ALERT_CANCEL = '입력하신 정보는 모두 취소됩니다.<br>창을 닫으시겠습니까?';
+
 Tw.ALERT_MSG_CUSTOMER = {
   ALERT_HELPLINE_A01: '예약을 취소하시면 작성하신 모든 정보가 초기화됩니다.',
   ALERT_HELPLINE_A02: '이미 예약하신 정보가 있습니다. 전화상담 예약은 지역별 1일 1회로 제한되며 중복 신청을 하실 수 없습니다.',
   ALERT_PRAISE_COMPLETE: '고객님의 소중한 칭찬글이<br /> 등록되었습니다.',
-  ALERT_PRAISE_CANCEL: {
-    TITLE: '입력하신 정보는 모두 취소됩니다.<br>창을 닫으시겠습니까?'
-  },
   ALERT_RESEARCHES_A01: '이미 참여하신 설문입니다.',
   ALERT_RESEARCHES_A02: '설문에 참여해 주셔서 감사합니다.'
 };

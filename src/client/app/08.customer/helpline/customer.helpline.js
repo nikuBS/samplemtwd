@@ -47,14 +47,7 @@ Tw.CustomerHelpline.prototype = {
   },
 
   _openCancelPopup: function() {
-    this._popupService.openConfirmButton(
-      null,
-      Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_CANCEL.TITLE,
-      $.proxy(this._handleCancel, this),
-      null,
-      Tw.BUTTON_LABEL.NO,
-      Tw.BUTTON_LABEL.YES
-    );
+    this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null, $.proxy(this._handleCancel, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
   },
 
   _handleCancel: function() {

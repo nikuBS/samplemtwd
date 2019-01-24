@@ -295,8 +295,7 @@ Tw.CustomerPraise.prototype = {
   },
 
   _handleClickCancel: function() {
-    var ALERT = Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_CANCEL;
-    this._popupService.openConfirmButton(null, ALERT.TITLE, $.proxy(this._handleConfirmCancel, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+    this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null, $.proxy(this._handleConfirmCancel, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
   },
 
   _handleConfirmCancel: function() {
