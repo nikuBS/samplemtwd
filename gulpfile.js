@@ -258,19 +258,16 @@ gulp.task('css-rb', function () {
 
 gulp.task('css-idpt', function() {
   return gulp.src([
-    'src/client/web-contents/css/**/idpt-reset-mobile.css',
-    'src/client/web-contents/css/**/idpt-service-mobile.css'])
+    'src/client/web-contents/css_idpt/**/*.css'])
     .pipe(concat('style-idpt.css'))
     // .pipe(imagehash())
     .pipe(cleanCSS())
-    // .pipe(gulp.dest(dist_tmp + 'css'))
     .pipe(gulp.dest(dist + 'css'))
     .on('error', function (err) {
       gutil.log(gutil.colors.red('[Error]'), err.toString());
     })
     .pipe(rename('style-idpt.min.css'))
     .pipe(rev())
-    // .pipe(gulp.dest(dist_tmp + 'css'))
     .pipe(gulp.dest(dist + 'css'))
     .pipe(rev.manifest(dist + 'tmp/css-idpt-manifest.json', {
       merge: true
