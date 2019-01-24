@@ -34,13 +34,15 @@ class BenefitMyBenefit extends TwViewController {
       this.apiService.request(API_CMD.BFF_05_0106, {}), // 요금할인
       this.apiService.request(API_CMD.BFF_05_0094, {}), // 결합할인
       this.apiService.request(API_CMD.BFF_05_0196, {}),
-      this.apiService.request(API_CMD.BFF_06_0001, {}) // 리필쿠폰 내역
+      this.apiService.request(API_CMD.BFF_06_0001, {}), // 리필쿠폰 내역
+      this.apiService.request(API_CMD.BFF_05_0068, {}) // 가입정보 조회
 
-    ).subscribe(([membership, ocb, rainbow, noContract, cookiz, military, bill, combination, loyalty, refillCoupons]) => {
+
+    ).subscribe(([membership, ocb, rainbow, noContract, cookiz, military, bill, combination, loyalty, refillCoupons, joininfo]) => {
 
         // checks all API errors except that the API has valid code not API_CODE.CODE_00
         const apiError = this.error.apiError(
-          [/*membership,*/ ocb, rainbow, noContract, /* cookiz, military,*/ bill, combination, loyalty, refillCoupons]);
+          [/*membership,*/ ocb, rainbow, noContract, /* cookiz, military,*/ bill, combination, loyalty, refillCoupons, joininfo]);
         if ( !FormatHelper.isEmpty(apiError) ) {
           return this.error.render(res, {
             title: MY_BENEFIT.MAIN,
@@ -120,8 +122,10 @@ class BenefitMyBenefit extends TwViewController {
           options['loyalty'] = `${dc.dcItmTypNm} ${dc.dcAmt}${dc.dcUnit}`;
           options['count'] += 1;
         }
-        options['days'] = DateHelper.getDiffByUnit(DateHelper.getCurrentDate(), svcInfo.svcScrbDt, 'days');
-        options['days'] = FormatHelper.addComma(options['days'].toString());
+        // options['days'] = DateHelper.getDiffByUnit(DateHelper.getCurrentDate(), svcInfo.svcScrbDt, 'days');
+        // options['days'] = FormatHelper.addComma(options['days'].toString());
+
+        options['days'] = joininfo.result.scrbYrMthCnt;
 
         res.render('my-benefit/benefit.my-benefit.html', options);
       }
