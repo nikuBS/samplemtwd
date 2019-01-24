@@ -182,13 +182,13 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
     apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},[data.prodId]).
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
-        this._popupService.open({
+        $containerData._popupService.open({
             hbs: 'complete_product_roaming',
             layer: true,
             data : completePopupData
           },
           $.proxy($containerData._bindCompletePopupBtnEvt,this,$containerData),
-          null,
+          $.proxy($containerData._goPlan,$containerData),
           'complete');
       }else{
         this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
@@ -198,7 +198,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
     }, this));
   },
   _bindCompletePopupBtnEvt : function($args1,$args2){
-    $($args2).on('click','.btn-floating',$.proxy($args1._goPlan,$args1,-3));
+    $($args2).on('click','.btn-floating',$.proxy($args1._goPlan,$args1));
 
     if($args1._prodId==='NA00005690'||$args1._prodId==='NA00005693'){
       $($args2).on('click','#btn0.btn-round2',$.proxy($args1._goSetting,$args1));
@@ -210,21 +210,22 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
   _goMyInfo : function(){
     this._historyService.goLoad('/product/roaming/my-use');
   },
-  _goPlan : function (idx) {
-    this._historyService.go(idx);
+  _goPlan : function () {
+    this._popupService.closeAll();
+    this._historyService.goBack();
   },
   _goSetting : function(){
     this._historyService.goLoad('/product/roaming/join/roaming-combine?prod_id='+this._prodId);
   },
   _showCancelAlart : function (){
     var alert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A1;
-    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES,
-      $.proxy(this._bindCancelPopupEvent,this),
-      $.proxy(this._popupService.close,this),
+    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, alert.BUTTON, Tw.BUTTON_LABEL.CLOSE,
+      null,
+      $.proxy(this._goPlan,this),
       null);
   },
   _bindCancelPopupEvent : function (popupLayer) {
-    $(popupLayer).on('click','.pos-left>button',$.proxy(this._goPlan,this,-1));
+    $(popupLayer).on('click','.pos-left>button',$.proxy(this._goPlan,this));
   },
   _confirmInformationSetting : function () {
 
@@ -251,7 +252,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
       joinType : 'auto'
     };
 
-    new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,null,'confirm_data',this);
+    new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,this._showCancelAlart,'confirm_data',this);
   },
   _tooltipInit : function (prodId,$tooltipHead,$tooltipBody) {
     switch (prodId) {

@@ -20,8 +20,9 @@ Tw.ProductRoamingJoinConfirmInfo = function (rootEl,data,doJoinCallBack,closeCal
     this._pageInit();
   }else{
     this._doJoinCallBack = doJoinCallBack;
-    this._popupInit(closeCallBack,hash);
+    this._popupInit(hash);
     this._rootData = rootData;
+    this._closeCallback = closeCallBack;
   }
 };
 
@@ -40,23 +41,23 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       this._tooltipInit(this._prodId);
     }
   },
-  _popupInit : function (closeCallBack,hash) {
+  _popupInit : function (hash) {
     if(isNaN(this._popupData.prodFee)){
       this._popupData.showTex = false;
     }else{
       this._popupData.prodFee = this._convertPrice(this._popupData.prodFee);
       this._popupData.showTex = true;
     }
-    this._openConfirmRoamingInfoPopup(this._popupData,closeCallBack,hash);
+    this._openConfirmRoamingInfoPopup(this._popupData,hash);
   },
-  _openConfirmRoamingInfoPopup : function (data,closeCallBack,hash) {
+  _openConfirmRoamingInfoPopup : function (data,hash) {
     data.toolTipData = this._tooltipInit(data.prodId);
     this._popupService.open({
       hbs: 'RM_11_01_01_02',
       layer: true,
       data : data
     },$.proxy(this._popupOpenCallback,this),
-      closeCallBack,hash);
+      null,hash);
   },
   _popupOpenCallback : function($poppContainer){
     this._$popupContainer = $poppContainer;
@@ -99,9 +100,13 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       if(this._popupData.preinfo.joinNoticeList.length>0){
         $popupLayer.on('click','.tip-view',$.proxy(this._showBffToolTip,this));
       }
-      $popupLayer.on('click','.prev-step',$.proxy(this._goBack,this));
-    }else{
       $popupLayer.on('click','.prev-step',$.proxy(this._showCancelAlart,this));
+    }else{
+      if(this._closeCallback){
+        $popupLayer.on('click','.prev-step',$.proxy(this._closeCallback,this._rootData));
+      }else{
+        $popupLayer.on('click','.prev-step',$.proxy(this._showCancelAlart,this));
+      }
     }
   },
   _doCancel : function(){
@@ -139,11 +144,14 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     $element.parent().attr('aria-checked',value==='checked'?true:false);
   },
   _doJoin : function () {
-    this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.BUTTON, null, $.proxy(this._confirmInfo,this));
+    this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.BUTTON, Tw.BUTTON_LABEL.CLOSE,
+      null,
+      $.proxy(this._confirmInfo,this),
+      null);
   },
   _confirmInfo : function () {
-    this._popupService.close();
     if(this._page===true){
+      this._popupService.close();
       this._excuteJoin();
     }else{
       this._doJoinCallBack(this._popupData,this._apiService,this._historyService,this._rootData);
@@ -177,7 +185,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
             data : completePopupData
           },
           $.proxy(this._bindCompletePopupEvt,this),
-          null,
+          $.proxy(this._goPlan,this),
           'complete');
 
       } else {
@@ -213,6 +221,9 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       targetObj = data.stipulationInfo;
       data.agreeCnt = this._countAgree(targetObj);
       data.stipulationInfo = targetObj;
+      if(data.agreeCnt<=1){
+        this.$rootContainer.find('#all_agree').hide();
+      }
     }else{
       targetObj = data.autoInfo.stipulationInfo;
       data.agreeCnt = this._countAgree(targetObj);
@@ -231,7 +242,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
   },
   _bindCompletePopupEvt : function (popupObj) {
     $(popupObj).on('click','.btn-round2',$.proxy(this._goMyInfo,this));
-    $(popupObj).on('click','.btn-floating',$.proxy(this._goBack,this));
+    $(popupObj).on('click','.btn-floating',$.proxy(this._goPlan,this));
   },
   _goBack : function(){
     this._popupService.close();
@@ -242,16 +253,17 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
   },
   _showCancelAlart : function (){
     var alert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A1;
-    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES,
-     $.proxy(this._bindCancelPopupEvent,this),
-     $.proxy(this._popupService.close,this),
-     null);
+    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, alert.BUTTON, Tw.BUTTON_LABEL.CLOSE,
+      null,
+      $.proxy(this._goPlan,this),
+      null);
   },
   _bindCancelPopupEvent : function (popupLayer) {
     $(popupLayer).on('click','.pos-left>button',$.proxy(this._goPlan,this));
   },
   _goPlan : function () {
-    this._historyService.go(-2);
+    this._popupService.closeAll();
+    this._historyService.goBack();
   },
   _tooltipInit : function (prodId) {
     var tooltipArr = [];
