@@ -39,7 +39,7 @@ import ApiService from './services/api.service';
 import { API_CMD } from './types/api-command.type';
 import VERSION from './config/version.config';
 import ShortcutRouter from './common/route/shortcut.router';
-const manifest = require('./config/manifest.json');
+const manifest = require('./manifest.json');
 
 class App {
   public app: Application = express();
