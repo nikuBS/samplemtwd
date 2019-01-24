@@ -31,7 +31,7 @@ enum RechargeTypes {
 
 export default class MyTDataHistory extends TwViewController {
   private fromDt: string = DateHelper.getPastYearShortDate();
-  private toDt: string = DateHelper.getShortDate(new Date());
+  private toDt: string = DateHelper.getCurrentShortDate();
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     Observable.combineLatest(
