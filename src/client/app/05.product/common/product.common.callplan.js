@@ -271,13 +271,18 @@ Tw.ProductCommonCallplan.prototype = {
   _procPreCheck: function(joinTermCd, url) {
     var preCheckApi = this._getPreCheckApiReqInfo(joinTermCd);
 
+
+    this._url = url;
+    this._joinTermCd = joinTermCd;
+
     if (Tw.FormatHelper.isEmpty(preCheckApi)) {
-      return this._procAdvanceCheck(url, null, { code: '00' });
+      this._joinTermCd = null;
+      return this._procAdvanceCheck({ code: '00' });
     }
 
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(preCheckApi.API_CMD, preCheckApi.PARAMS, null, [this._prodId])
-      .done($.proxy(this._procAdvanceCheck, this, url, joinTermCd));
+      .done($.proxy(this._procAdvanceCheck, this));
   },
 
   _setGoMemberLine: function() {
@@ -338,22 +343,22 @@ Tw.ProductCommonCallplan.prototype = {
     this._historyService.goLoad(this._settingGoUrl + '?prod_id=' + this._prodId);
   },
 
-  _procAdvanceCheck: function(url, joinTermCd, resp) {
+  _procAdvanceCheck: function(resp) {
     Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(null, resp.msg).pop();
     }
 
-    if (this._prodTypCd === 'F' && resp.result.combiProdScrbYn !== 'N' && joinTermCd === '01') {
+    if (this._prodTypCd === 'F' && resp.result.combiProdScrbYn !== 'N' && this._joinTermCd === '01') {
       return Tw.Error(null, Tw.ALERT_MSG_PRODUCT.ALERT_ALREADY_PRODUCT).pop();
     }
 
-    if (this._prodTypCd === 'F' && resp.result.combiProdScrbYn !== 'Y' && joinTermCd === '03') {
+    if (this._prodTypCd === 'F' && resp.result.combiProdScrbYn !== 'Y' && this._joinTermCd === '03') {
       return Tw.Error(null, Tw.ALERT_MSG_PRODUCT.ALERT_ALREADY_TERM_PRODUCT).pop();
     }
 
-    this._historyService.goLoad(url + '?prod_id=' + this._prodId);
+    this._historyService.goLoad(this._url + '?prod_id=' + this._prodId);
   }
 
 };
