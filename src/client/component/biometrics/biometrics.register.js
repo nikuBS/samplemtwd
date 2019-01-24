@@ -16,7 +16,7 @@ Tw.BiometricsRegister = function (target) {
 
 Tw.BiometricsRegister.prototype = {
   ERROR_CODE: {
-    CANCEL: 258
+    CANCEL: 9
   },
   open: function (callback) {
     this._callback = callback;
