@@ -208,6 +208,8 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
         this._showCompletePopup(this._prodBffInfo);
+      }else if(res.code==='ZNGME0005'){
+        this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.TITLE);
       }else{
         this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
       }

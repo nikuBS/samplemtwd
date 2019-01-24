@@ -24,10 +24,16 @@ Tw.ProductRoamingSettingRoamingBeginSetup = function (rootEl,prodTypeInfo,prodBf
 
 Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
   _init : function(){
+    this._currentDate = Tw.DateHelper.getCurrentShortDate();
     var startDate = Tw.DateHelper.getShortDateWithFormat(this._prodBffInfo.svcStartDt,this._showDateFormat,this._dateFormat);
+    var endDate = Tw.DateHelper.getShortDateWithFormatAddByUnit(startDate,this._prodBffInfo.startEndTerm,'days',this._dateFormat,this._dateFormat);
     this._currentDate = Tw.DateHelper.getCurrentShortDate();
     this.$container.find('#start_date').text(startDate);
     this.$container.find('#start_date').attr('data-number',this._prodBffInfo.svcStartDt);
+    if(this._currentDate>endDate){
+      this.$container.find('.bt-fixed-area button').attr('disabled','disabled');
+      this.$container.find('#start_date').attr('disabled','disabled');
+    }
   },
   _bindBtnEvents: function () {
     this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
@@ -146,6 +152,8 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
         this._showCompletePopup(this._prodBffInfo);
+      }else if(res.code==='ZNGME0005'){
+        this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.TITLE);
       }else{
         this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
       }
