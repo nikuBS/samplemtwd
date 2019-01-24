@@ -131,6 +131,7 @@ Tw.ProductRoamingFiInquire.prototype = {
       }
       res[x].rental_schd_sta_dtm = this._dateHelper.getShortDateWithFormat(res[x].rental_schd_sta_dtm.substr(0,8), 'YYYY.M.DD');
       res[x].rental_schd_end_dtm = this._dateHelper.getShortDateWithFormat(res[x].rental_schd_end_dtm, 'YYYY.M.DD');
+      res[x].show_rental_st_nm = Tw.ROAMING_RESERVATION_STATE[res[x].rental_st_cd];
 
       if(res[x].rental_st_cd === '17') { //예약취소 상태에서 버튼 비활성화
         res[x].dateDifference = '';
@@ -305,15 +306,24 @@ Tw.ProductRoamingFiInquire.prototype = {
     }
   },
 
-  _onEditPopOpened : function($root){
-    $root.on('blur', '#flab01', $.proxy(this._insertDashPhone, this));
-    $root.on('click', '#flab01', $.proxy(this._removeDashPhone, this));
-    $root.on('keyup paste', '#flab01', $.proxy(this._changeCheck, this, 'keyup'));
-    $root.on('change', '#flab01', $.proxy(this._changeCheck, this));
-    $root.on('click', 'button[id=flab04],button[id=flab05]', $.proxy(this._openLocationPop, this));
-    $root.on('click', '.cancel', $.proxy(this._changeCheck, this));
-    $root.on('click', '#fe-register', $.proxy(this._handleEditReservation, this));
-    $root.on('click', '#fe-link', $.proxy(this._goRoamingCenter, this));
+  _onEditPopOpened : function($popupLayer){
+    this.$btnRegister = $popupLayer.find('#fe-register');
+    this.$inputPhone = $popupLayer.find('#flab01');
+    this.$inputSdate = $popupLayer.find('#flab02');
+    this.$inputEdate = $popupLayer.find('#flab03');
+    this.$inputReceive = $popupLayer.find('#flab04');
+    this.$inputReturn = $popupLayer.find('#flab05');
+    this.$returnImg = $popupLayer.find('#fe-return-img');
+    this.$receiveImg = $popupLayer.find('#fe-receive-img');
+
+    $popupLayer.on('blur', '#flab01', $.proxy(this._insertDashPhone, this));
+    $popupLayer.on('click', '#flab01', $.proxy(this._removeDashPhone, this));
+    $popupLayer.on('keyup paste', '#flab01', $.proxy(this._changeCheck, this, 'keyup'));
+    $popupLayer.on('change', '#flab01', $.proxy(this._changeCheck, this));
+    $popupLayer.on('click', 'button[id=flab04],button[id=flab05]', $.proxy(this._openLocationPop, this));
+    $popupLayer.on('click', '.cancel', $.proxy(this._changeCheck, this));
+    $popupLayer.on('click', '#fe-register', $.proxy(this._handleEditReservation, this));
+    $popupLayer.on('click', '#fe-link', $.proxy(this._goRoamingCenter, this));
     this._insertDashPhone();
     this._changeCheck();
   },
@@ -364,19 +374,19 @@ Tw.ProductRoamingFiInquire.prototype = {
       this.selectIdx = Number($(e.target).parents('label').attr('id')) - 6; //예약 완료 페이지에 넘기는 값
 
       //약도 이미지 변경
-      var imgUrl = $('#fe-receive-img').attr('src');
+      var imgUrl = this.$receiveImg.attr('src');
       var startLen = imgUrl.lastIndexOf('/');
       var cdnUrl = imgUrl.substring(0,startLen+1);
-      $('#fe-receive-img').attr('src', cdnUrl + $(e.target).parents('label').attr('data-img') + '.png');
+      this.$receiveImg.attr('src', cdnUrl + $(e.target).parents('label').attr('data-img') + '.png');
     }else{
       $(selected).text($(e.target).parents('label').attr('value')); //센터명 출력
       $(selected).attr('data-center',$(e.target).parents('label').attr('data-center'));
 
       //약도 이미지 변경
-      var imgUrl = $('#fe-return-img').attr('src');
+      var imgUrl = this.$returnImg.attr('src');
       var startLen = imgUrl.lastIndexOf('/');
       var cdnUrl = imgUrl.substring(0,startLen+1);
-      $('#fe-return-img').attr('src', cdnUrl + $(e.target).parents('label').attr('data-img') + '.png');
+      this.$returnImg.attr('src', cdnUrl + $(e.target).parents('label').attr('data-img') + '.png');
     }
 
     this._popupService.close();
@@ -384,56 +394,57 @@ Tw.ProductRoamingFiInquire.prototype = {
 
   _changeCheck : function(state){
     if(state === 'keyup'){
-      if($('#flab01').val().length > 11){
-        $('#flab01').val($('#flab01').val().substring(0,11));
+      if(this.$inputPhone.val().length > 11){
+        this.$inputPhone.val(this.$inputPhone.val().substring(0,11));
       }
     }
 
     var dateCheck = true;
 
-    if($('#flab02').val() === '' || $('#flab03').val() === ''){
+    if(this.$inputSdate.val() === '' || this.$inputEdate.val() === ''){
       dateCheck = false;
     }
 
+    var self = this;
     setTimeout(function(){
-      if($('#flab01').val().length > 0 && dateCheck){
-        $('.bt-red1 button').removeAttr('disabled');
+      if(self.$inputPhone.val().length > 0 && dateCheck){
+        self.$btnRegister.removeAttr('disabled');
       }else{
-        $('.bt-red1 button').attr('disabled','disabled');
+        self.$btnRegister.attr('disabled','disabled');
       }
     },0);
   },
 
   _insertDashPhone : function() {
     //9자리 이하 : 010-000-000, 10자리 이하 : 010-000-0000, 11자리 이하 010-0000-0000
-    var phoneNum = $('#flab01').val().replace(/\-/gi, '');
+    var phoneNum = this.$inputPhone.val().replace(/\-/gi, '');
     var hypenPhoneNum = Tw.FormatHelper.getDashedCellPhoneNumber(phoneNum);
-    $('#flab01').val(hypenPhoneNum);
+    this.$inputPhone.val(hypenPhoneNum);
   },
 
   _removeDashPhone : function() {
-    var phoneNum = $('#flab01').val().replace(/\-/gi, '');
-    $('#flab01').val(phoneNum);
+    var phoneNum = this.$inputPhone.val().replace(/\-/gi, '');
+    this.$inputPhone.val(phoneNum);
   },
 
   _handleEditReservation: function() {
-    var inputNumber = $('#flab01').val();
+    var inputNumber = this.$inputPhone.val();
     if (!Tw.ValidationHelper.isCellPhone(inputNumber)) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
     }
 
-    var expbranchnm = $('#flab05').text();
-    var boothcode = $('#flab04').attr('data-booth');
-    var boothnm = $('#flab04').text();
-    var impbranch = $('#flab04').attr('data-center');
-    var expbranch = $('#flab05').attr('data-center');
-    var rentFrom = $('#flab02').val().replace(/\-/gi, '');
-    var rentTo = $('#flab03').val().replace(/\-/gi, '');
-    var contphonenum = $('#flab01').val().replace(/\-/gi, '');
+    var expbranchnm = this.$inputReturn.text();
+    var boothcode = this.$inputReceive.attr('data-booth');
+    var boothnm = this.$inputReceive.text();
+    var impbranch = this.$inputReceive.attr('data-center');
+    var expbranch = this.$inputReturn.attr('data-center');
+    var rentFrom = this.$inputSdate.val().replace(/\-/gi, '');
+    var rentTo = this.$inputEdate.val().replace(/\-/gi, '');
+    var contphonenum = this.$inputPhone.val().replace(/\-/gi, '');
     var hsrsvrcvdtm = this._dateHelper.getCurrentDateTime('YYYYMMDD');
-    var rentalmgmtnum = $('#fe-register').attr('data-mgmt');
-    var opClCd = $('#fe-register').attr('data-opclcd');
+    var rentalmgmtnum = this.$btnRegister.attr('data-mgmt');
+    var opClCd = this.$btnRegister.attr('data-opclcd');
 
     var params = {
       'rentalmgmtnum' : rentalmgmtnum,

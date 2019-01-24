@@ -22,6 +22,13 @@ Tw.ProductRoamingFiReservation.prototype = {
     this.$btnTermsAgree = this.$container.find('.comp-list-layout');
     this.$openAgreeView = this.$container.find('.agree-view');
     this.$btnPopupClose = this.$container.find('.popup-closeBtn');
+    this.$agreeCheckOne = this.$container.find('#fe-check1');
+    this.$agreeCheckTwo = this.$container.find('#fe-check2');
+    this.$inputPhone = this.$container.find('#flab01');
+    this.$inputSdate = this.$container.find('#flab02');
+    this.$inputEdate = this.$container.find('#flab03');
+    this.$inputReceive = this.$container.find('#flab04');
+    this.$inputReturn = this.$container.find('#flab05');
   },
 
   _bindEvent: function() {
@@ -43,7 +50,7 @@ Tw.ProductRoamingFiReservation.prototype = {
   },
 
   _searchCountryCode: function(){
-    var inputNumber = $('#flab01').val();
+    var inputNumber = this.$inputPhone.val();
     if (!Tw.ValidationHelper.isCellPhone(inputNumber)) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
@@ -71,15 +78,15 @@ Tw.ProductRoamingFiReservation.prototype = {
   },
 
   _handleFiReservation: function(countryArr) {
-    var expbranchnm = $('#flab05').text();
-    var boothcode = $('#flab04').attr('data-booth');
-    var boothnm = $('#flab04').text();
-    var impbranch = $('#flab04').attr('data-center');
-    var expbranch = $('#flab05').attr('data-center');
+    var expbranchnm = this.$inputReturn.text();
+    var boothcode = this.$inputReceive.attr('data-booth');
+    var boothnm = this.$inputReceive.text();
+    var impbranch = this.$inputReceive.attr('data-center');
+    var expbranch = this.$inputReturn.attr('data-center');
     var nationCode = countryArr;
-    var rentFrom = $('#flab02').val().replace(/\-/gi, '');
-    var rentTo = $('#flab03').val().replace(/\-/gi, '');
-    var contphonenum = $('#flab01').val().replace(/\-/gi, '');
+    var rentFrom = this.$inputSdate.val().replace(/\-/gi, '');
+    var rentTo = this.$inputEdate.val().replace(/\-/gi, '');
+    var contphonenum = this.$inputPhone.val().replace(/\-/gi, '');
     var date = new Date();
     var hsrsvrcvdtm = date.toISOString().substring(0,10).replace(/\-/gi, '');
 
@@ -229,14 +236,14 @@ Tw.ProductRoamingFiReservation.prototype = {
 
   _changeCheck: function(state) {
     if(state === 'keyup'){
-      if($('#flab01').val().length > 11){
-        $('#flab01').val($('#flab01').val().substring(0,11));
+      if(this.$inputPhone.val().length > 11){
+        this.$inputPhone.val(this.$inputPhone.val().substring(0,11));
       }
     }
 
     var dateCheck = true;
 
-    if($('#flab02').val() === '' || $('#flab03').val() === ''){
+    if(this.$inputSdate.val() === '' || this.$inputEdate.val() === ''){
       dateCheck = false;
     }
 
@@ -244,20 +251,21 @@ Tw.ProductRoamingFiReservation.prototype = {
       var countryCheck = true;
     }
 
+    var self = this;
     setTimeout(function(){
 
       var inputPhoneCheck = '';
 
-      if($('#flab01').val().length > 0){
+      if(self.$inputPhone.val().length > 0){
         inputPhoneCheck = true;
       }else{
         inputPhoneCheck = false;
       }
 
-      if($('#check1').hasClass('checked') && $('#check2').hasClass('checked') && countryCheck && inputPhoneCheck && dateCheck){
-        $('.bt-red1 button').removeAttr('disabled');
+      if(self.$agreeCheckOne.hasClass('checked') && self.$agreeCheckTwo.hasClass('checked') && countryCheck && inputPhoneCheck && dateCheck){
+        self.$btnRegister.removeAttr('disabled');
       }else{
-        $('.bt-red1 button').attr('disabled','disabled');
+        self.$btnRegister.attr('disabled','disabled');
       }
     },0);
   },
@@ -268,20 +276,20 @@ Tw.ProductRoamingFiReservation.prototype = {
 
   _insertDashPhone: function() {
     //9자리 이하 : 010-000-000, 10자리 이하 : 010-000-0000, 11자리 이하 010-0000-0000
-    var phoneNum = $('#flab01').val().replace(/\-/gi, '');
+    var phoneNum = this.$inputPhone.val().replace(/\-/gi, '');
     var hypenPhoneNum = Tw.FormatHelper.getDashedCellPhoneNumber(phoneNum);
-    $('#flab01').val(hypenPhoneNum);
+    this.$inputPhone.val(hypenPhoneNum);
   },
 
   _removeDashPhone: function() {
-    var phoneNum = $('#flab01').val().replace(/\-/gi, '');
-    $('#flab01').val(phoneNum);
+    var phoneNum = this.$inputPhone.val().replace(/\-/gi, '');
+    this.$inputPhone.val(phoneNum);
   },
 
   _clickConfirmBtn: function() {
-    $('#check1').addClass('checked');
-    $('#check1').attr('aria-checked', 'true');
-    $('#check1').find('input').attr('checked','checked');
+    this.$agreeCheckOne.addClass('checked');
+    this.$agreeCheckOne.attr('aria-checked', 'true');
+    this.$agreeCheckOne.find('input').attr('checked','checked');
 
     this._changeCheck();
     this._popupService.close();
