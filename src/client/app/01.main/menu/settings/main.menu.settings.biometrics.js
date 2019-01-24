@@ -56,14 +56,11 @@ Tw.MainMenuSettingsBiometrics.prototype = {
     }
   },
   _onFidoUse: function (resp) {
-    console.log('fido use', resp);
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       if ( resp.params.value === Tw.NTV_FIDO_USE.ENABLE ) {
-        console.log('enable');
         this.$inputFido.attr('checked', true);
         this.$inputFido.parents('.fe-switch').addClass('on');
       } else {
-        console.log('disable');
         this.$inputFido.attr('checked', false);
         this.$inputFido.parents('.fe-switch').removeClass('on');
       }

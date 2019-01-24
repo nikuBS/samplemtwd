@@ -46,7 +46,7 @@ Tw.BiometricsRegister.prototype = {
       this._popupService.closeAll();
       this._nativeService.send(Tw.NTV_CMD.SAVE, {
         key: Tw.NTV_STORAGE.FIDO_USE,
-        value: true
+        value: Tw.NTV_FIDO_USE.ENABLE
       });
     } else if ( resp.resultCode === this.ERROR_CODE.CANCEL ) {
       Tw.Logger.log('[FIDO] Cancel');

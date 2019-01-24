@@ -119,29 +119,32 @@ Tw.CertificationSk.prototype = {
     if ( !Tw.FormatHelper.isEmpty(optMethods) && optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_KEYIN) !== -1 ) {
       this._enableKeyin = true;
     }
-    if ( !Tw.FormatHelper.isEmpty(optMethods) && optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_SECURITY) !== -1 && Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
+    if ( !Tw.FormatHelper.isEmpty(optMethods) && optMethods.indexOf(Tw.AUTH_CERTIFICATION_METHOD.SMS_SECURITY) !== -1 &&
+      Tw.BrowserHelper.isApp() && Tw.BrowserHelper.isAndroid() ) {
       this._securityAuth = true;
     }
   },
   _parseAllSvcInfo: function (allSvc, opMethods, optMethods, isWelcome, methodCnt) {
-    var category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
-    _.map(category, $.proxy(function (line) {
-      var curLine = allSvc[Tw.LINE_NAME[line]];
-      if ( !Tw.FormatHelper.isEmpty(curLine) ) {
-        _.map(curLine, $.proxy(function (target) {
-          if ( target.repSvcYn === 'Y' ) {
-            this._svcInfo = target;
+    this._checkSmsType(opMethods);
+    this._checkOption(optMethods);
 
-          }
-        }, this));
-      }
-    }, this));
+    if ( this._smsType === Tw.AUTH_CERTIFICATION_METHOD.SK_SMS_RE ) {
+      var category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
+      _.map(category, $.proxy(function (line) {
+        var curLine = allSvc[Tw.LINE_NAME[line]];
+        if ( !Tw.FormatHelper.isEmpty(curLine) ) {
+          _.map(curLine, $.proxy(function (target) {
+            if ( target.repSvcYn === 'Y' ) {
+              this._svcInfo = target;
+            }
+          }, this));
+        }
+      }, this));
+    }
 
     this._openSmsOnly(opMethods, optMethods, isWelcome, methodCnt);
   },
   _openSmsOnly: function (opMethods, optMethods, isWelcome, methodCnt) {
-    this._checkSmsType(opMethods);
-    this._checkOption(optMethods);
     if ( !this._checkEnableCase(this._allSvcInfo, this._svcInfo, opMethods, optMethods, methodCnt) ) {
       this._callback({ code: Tw.API_CODE.CERT_SMS_BLOCK });
       return;
@@ -221,7 +224,10 @@ Tw.CertificationSk.prototype = {
     }
   },
 
-  _onClickOtherCert: function () {
+  _onClickOtherCert: function ($event) {
+    $event.stopPropagation();
+    $event.preventDefault();
+
     this._callbackParam = {
       code: Tw.API_CODE.CERT_SELECT,
       target: Tw.AUTH_CERTIFICATION_KIND.AUTH_CERTIFICATION_METHOD
@@ -244,6 +250,7 @@ Tw.CertificationSk.prototype = {
       this.$btCertAdd.parent().addClass('none');
       this.$btCert.parent().removeClass('none');
     } else {
+      this._onKeyin = false;
       this.$inputMdn.prop('readonly', true);
       this.$inputMdn.val(this._svcInfo.svcNum);
       this.$inputMdn.parents('#fe-inputbox-mdn').addClass('readonly');
