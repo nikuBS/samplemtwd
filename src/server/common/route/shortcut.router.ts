@@ -1,42 +1,56 @@
 import express from 'express';
 import { Router, Request, Response, NextFunction } from 'express';
 import RedisService from '../../services/redis.service';
+import EnvHelper from '../../utils/env.helper';
+import { REDIS_KEY } from '../../types/redis.type';
+import { API_CODE } from '../../types/api-command.type';
+import DateHelper from '../../utils/date.helper';
+import { SHORTCUT_LOGIN_TYPE } from '../../types/bff.type';
 
 
 class ShortcutRouter {
   public router: Router;
   private redisService: RedisService = RedisService.getInstance();
-  private shortcutUrl = 'skt.sh';
+  private shortcutUrl = EnvHelper.getEnvironment('SHORTCUT');
 
   constructor() {
     this.router = express.Router();
 
-    this.router.get('/', (req, res, next) => {
+    this.router.get('*', (req, res, next) => {
       const dns = req.headers.host;
+      const path = req.path;
+
       if ( dns === this.shortcutUrl ) {
-        // TODO: redis 단축 도메인 경로로 redirect
-        // this.redisService.getData(REDIS_SC_URL + dns).subscribe((resp) => {
-        //     console.log(resp);
-        // });
-        res.send('short cut');
-      } else {
+        this.redisService.getData(REDIS_KEY.SC_URL + path).subscribe((resp) => {
+          if ( resp.code === API_CODE.CODE_00 ) {
+            this.redirectTarget(req, res, next, resp.result);
+          } else {
+            next();
+          }
+        });
+
+      } else if ( req.path === '/' ) {
         res.redirect('/main/home');
-      }
-
-    });
-    this.router.get('/:args', (req, res, next) => {
-      const dns = req.headers.host;
-      if ( dns === this.shortcutUrl ) {
-        // TODO: redis 단축 도메인 경로로 redirect
-        res.send('short cut');
       } else {
-        res.status(404).render('error.page-not-found.html', { svcInfo: null, code: res.statusCode });
+        next();
       }
-
     });
-    // this.router.get('/:args/:args', (req, res, next) => {
-    //   res.json('2depth');
-    // });
+  }
+
+  private redirectTarget(req, res, next, target) {
+    // TODO: redis 단축 도메인 경로로 redirect
+    const endDate = new Date(DateHelper.convDateCustomFormat(target.effEndDtm, 'YYYYMMDD')).getTime();
+    const curDate = new Date().getTime();
+    const menuId = target.menuId;
+    const loginType = SHORTCUT_LOGIN_TYPE[target.scutUrlAuthClCd];
+
+    // menuId to path (redis)
+
+    if ( endDate > curDate ) {
+      res.send('short cut');
+    } else {
+      next();
+    }
   }
 }
 
