@@ -48,15 +48,16 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
   },
 
   _validateCard: function (e) {
+    var $cardNumber = $(e.currentTarget).val();
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
     $error.addClass('blind');
 
-    if ( !this._validation.checkMoreLength(this.$cardNumber, 15) ) {
+    if ( !this._validation.checkMoreLength($cardNumber, 15) ) {
       $($error.get(0)).removeClass('blind');
       $($error.get(1)).addClass('blind');
     }
 
-    if ( this.$cardNumber.val() === '' ) {
+    if ( $cardNumber.val() === '' ) {
       $($error.get(0)).addClass('blind');
       $($error.get(1)).removeClass('blind');
     }
@@ -228,7 +229,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     // this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=auto&' + $.param(htParams));
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_DATA.COMPLETE_RECHARGE);
+      // Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_DATA.COMPLETE_RECHARGE);
       this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=auto&' + $.param(htParams));
     } else {
       Tw.Error(res.code, res.msg).pop();

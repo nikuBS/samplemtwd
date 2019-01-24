@@ -210,8 +210,6 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
   _requestAlarm: function (htParams) {
     if ( this._isCancel ) {
-      debugger;
-
       this._apiService.request(Tw.API_CMD.BFF_06_0064, htParams)
         .done($.proxy(this._onCompleteAlarm, this));
     }
@@ -219,7 +217,6 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
   _onCompleteAlarm: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      debugger;
       // 알람 설정 하시겠습니까?
       // TODO after Self Authentication, go to submain
       this._historyService.replaceURL('/myt-data/submain');
