@@ -96,9 +96,9 @@ Tw.MenuComponent.prototype = {
     }
 
     // Check if there is unread T-Notifications
-    this._nativeService.send(Tw.NTV_CMD.IS_APP_CREATED, {}, $.proxy(function (res) {
+    this._nativeService.send(Tw.NTV_CMD.IS_APP_CREATED, { key: Tw.NTV_PAGE_KEY.T_NOTI }, $.proxy(function (res) {
       // Only if an App is fresh executed
-      if ( res.resultCode === Tw.NTV_CODE.CODE_00 && res.params.value ) {
+      if ( res.resultCode === Tw.NTV_CODE.CODE_00 && res.params.value === 'Y' ) {
         this._apiService.request(Tw.API_CMD.BFF_04_0004, { tid: this._tid })
           .then($.proxy(function (res) {
             if ( res.code === Tw.API_CODE.CODE_00 && res.result.length ) {
