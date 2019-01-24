@@ -112,7 +112,8 @@ class MytDataSubmainController extends TwViewController {
         // data.isPrepayment = true;
       }
 
-      if ( present /*&& (present.familyMemberYn === 'Y' || present.goodFamilyMemberYn === 'Y')*/ ) {
+      if ( data.svcInfo.svcAttrCd === 'M2' || present ) {
+        // PPS 인 경우에 자동알람서비스 우
         // T끼리 데이터선물버튼 영역
         data.present = true;
       }
@@ -417,9 +418,9 @@ class MytDataSubmainController extends TwViewController {
     const returnVal: any = [];
     let group: any = [];
     items.forEach((val) => {
-      group = Object.assign(group, Object.keys(val));
+      const keys = Object.keys(val).reverse(); // 최근으로 정렬하기 위함
+      group = Object.assign(group, keys);
     });
-    group.reverse(); // 최근으로 정렬하기 위함
     group = group.slice(0, 3); // 최근 기준 3개
     items.filter((item) => {
       const keys = Object.keys(item);
