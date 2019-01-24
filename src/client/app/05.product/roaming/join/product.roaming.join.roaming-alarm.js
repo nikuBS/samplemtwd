@@ -42,11 +42,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
   },
   _inputBlurEvt : function(){
     var tempVal = this.$inputElement.val();
-    if(tempVal.length===7){
-      tempVal = this._phoneForceChange(tempVal);
-    }else{
-      tempVal = Tw.StringHelper.phoneStringToDash(tempVal);
-    }
+    tempVal = Tw.FormatHelper.addLineCommonPhoneNumberFormat(tempVal);
     this.$inputElement.attr('maxlength','13');
     this.$inputElement.val(tempVal);
     //this._activateAddBtn();
@@ -106,10 +102,14 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     var inputVal = this.$inputElement.val();
     var numReg = /[^0-9]/g;
     if(inputVal.length>0&&numReg.test(inputVal)){
+      var changedValue = inputVal.replace(numReg,'');
       this.$inputElement.blur();
       this.$inputElement.val('');
-      this.$inputElement.val(inputVal.replace(numReg,''));
+      this.$inputElement.val(changedValue);
       this.$inputElement.focus();
+      if(changedValue.length<=0){
+        this.$container.find('.cancel').trigger('click');
+      }
     }
     if(this.$inputElement.val().length>=10){
       this.$addBtn.removeAttr('disabled');
@@ -241,9 +241,6 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
 
     new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,null,'confirm_data',this);
 
-  },
-  _phoneForceChange : function (str) {
-    return str.substring(0,3)+'-'+str.substring(3,str.length);
   }
 
 

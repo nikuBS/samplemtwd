@@ -425,6 +425,22 @@ Tw.FormatHelper = (function () {
     return value.replace(regexp, '-');
   };
 
+  var addLineCommonPhoneNumberFormat = function (str) {
+    var returnStr;
+    if(str.length===3){
+      returnStr = str+'-';
+    }else if(str.length>=11){
+      returnStr = str.substring(0,3)+'-'+str.substring(3,7)+'-'+str.substring(7,str.length);
+    }else if(str.length>=7){
+      returnStr = str.substring(0,3)+'-'+str.substring(3,6)+'-'+str.substring(6,str.length);
+    }else if(str.length>=4){
+      returnStr = str.substring(0,3)+'-'+str.substring(3,str.length);
+    }else{
+      returnStr = str;
+    }
+    return returnStr;
+  };
+
   function dataURLtoFile(dataurl, filename) {
     var arr = dataurl.split(',');
     var mime                                        = arr[0].match(/:(.*?);/)[1],
@@ -479,6 +495,7 @@ Tw.FormatHelper = (function () {
     stripTags: stripTags,
     addCardDash: addCardDash,
     dataURLtoFile: dataURLtoFile,
-    isNumber: isNumber
+    isNumber: isNumber,
+    addLineCommonPhoneNumberFormat : addLineCommonPhoneNumberFormat
   };
 })();
