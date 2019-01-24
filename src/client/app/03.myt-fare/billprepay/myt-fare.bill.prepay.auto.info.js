@@ -151,8 +151,6 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
   _setHiddenMoreBtn: function () {
     if (this._page === this._totalPage) {
       this.$moreBtn.hide();
-    } else {
-      this.$moreBtn.find('.fe-more-length').text('(' + (this._totalCnt - (this._page * this._defaultCnt)) + ')');
     }
   }
 };
