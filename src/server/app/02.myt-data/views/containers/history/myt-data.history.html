@@ -29,7 +29,7 @@
                 <div class="cont-box nogaps">
                     <div class="ti-caption-blue">
                         <div class="num">총 <em><%= list.length %></em>건</div>
-                        <button class="bt-select" title="충전/선물 유형 선택" aria-haspopup="true" <%= list.length === 0 ? 'disabled' : '' %>><%= TYPE_NAMES[filterIdx] %></button>
+                        <button class="bt-select" id="fe-type" title="충전/선물 유형 선택" aria-haspopup="true" <%= list.length === 0 ? 'disabled' : '' %>><%= TYPE_NAMES[filterIdx] %></button>
                     </div>
 
                     <div class="cont-box pt0 pb0">
@@ -46,7 +46,7 @@
                                                     <span class="stext-b"><%= item.typeName %></span>
                                                     <span class="stext">
                                                         <% item.bottom.map(data => { %><span class="gray-tx"><%= data%></span><% }); %>
-                                                        <% if (item.refundable) { %><button class="bt-link-tx underline">취소</button><% } %>
+                                                        <% if (item.refundable) { %><button class="bt-link-tx underline fe-cancel">취소</button><% } %>
                                                     </span>
                                                 </p>
                                                 <div class="list-data">

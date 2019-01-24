@@ -33,7 +33,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
     this.$selectBtn.on('click', $.proxy(this._openChangeHistories, this));
     this.$moreBtn.on('click', $.proxy(this._handleLoadMore, this));
     this.$container.on('click', '.data-tx', $.proxy(this._handleShowDetail, this));
-    this.$container.on('click', '.bt-link-tx.red', $.proxy(this._openCancel, this));
+    this.$container.on('click', '.fe-cancel', $.proxy(this._openCancel, this));
   },
 
   _cachedElement: function() {
