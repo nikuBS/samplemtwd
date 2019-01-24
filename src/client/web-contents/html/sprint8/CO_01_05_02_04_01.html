@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+     <div class="wrap">
+         <!-- .popup hbs -->
+         <div class="popup-page nobg">
+    <!-- .no-btn 하단에 버튼이 없을 경우 -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>회선 편집 방법</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz noborder">
+                <div class="order-list-sub-box">
+                    <ol>
+                        <li>
+                            <dt class="order-list-param3">
+                                <span class="num">01</span>
+                                사용 회선 추가하기
+                            </dt>
+                            <dd class="order-list-data1">
+                                <ul class="data-txt">
+                                    <li>이용 가능한 회선은 SK텔레콤에 가입된 회선이지만, T world 이용 회선에 등록되지 않은 회선입니다.</li>
+                                    <li>T world에서 제공하는 다양한 혜택과 각종 서비스를 이용하시려면 추가 가능한 회선의 <em>추가 버튼</em>을 눌러 주세요. </li>
+                                </ul>
+                                <div class="data-img">
+                                    <img src="/img/etc/edit-circuit01.png" alt="T world 사용 회선 추가하기 설명"/>
+                                </div>
+                            </dd>
+                        </li>
+                        <li>
+                            <dt class="order-list-param3">
+                                <span class="num">02</span>
+                                회선 그만보기
+                            </dt>
+                            <dd class="order-list-data1">
+                                <ul class="data-txt">
+                                    <li>T world에서 관리하고 싶지 않은 회선이 이용중인 회선으로 있다면, <em>삭제 버튼</em>을 눌러 주세요. <br/>다시 추가 할 때까지 조회와 서비스 이용을 그만 합니다.</li>
+                                </ul>
+                                <div class="data-img">
+                                    <img src="/img/etc/edit-circuit02.png" alt="회선 그만보기 설명"/>
+                                </div>
+                            </dd>
+                        </li>
+                        <li>
+                            <dt class="order-list-param3">
+                                <span class="num">03</span>
+                                순서 변경하기
+                            </dt>
+                            <dd class="order-list-data1">
+                                <ul class="data-txt">
+                                    <li>T world에서 조회할 회선의 노출순서를 간편하게 변경할 수 있습니다.</li>
+                                    <li>이용중인 회선명 오른쪽에 있는 <em>이동 버튼을 드래그</em>하거나, 왼쪽에 있는 <em>화살표 버튼</em>을 눌러 한칸씩 위, 아래로 이동 시킬 수 있습니다. </li>
+                                </ul>
+                                <div class="data-img">
+                                    <img src="/img/etc/edit-circuit03.png" alt="순서 변경하기 설명"/>
+                                </div>
+                            </dd>
+                        </li>
+                        <!-- 2018-10-17 추가 -->
+                        <li>
+                            <dt class="order-list-param3">
+                                <span class="num">04</span>
+                                법인명의 회선 추가하기
+                            </dt>
+                            <dd class="order-list-data1">
+                                <ul class="data-txt">
+                                    <li>현재 &#39;회선 관리&#39; 목록에서 바로 확인하실 수 없는 법인명의 회선이 있다면, 직접 회선 정보를 등록하셔야 합니다.</li>
+                                    <li>아래 <em>&#39;법인명의 회선 등록하기&#39;</em> 버튼을 눌러 추가해 주세요.</li>
+                                </ul>
+                                <ul class="bt-slice mt18">
+                                    <li class="bt-blue1">
+                                        <button>법인명의 회선 등록하기</button>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </li>
+                        <li class="mt40">
+                            <dt class="order-list-param3">
+                                <span class="num">05</span>
+                                법인명의 휴대폰에서<br />T world 사용하기
+                            </dt>
+                            <dd class="order-list-data1">
+                                <ul class="data-txt">
+                                    <li><em>&#39;법인 본인확인 비밀번호 서비스&#39;</em>에 가입하시면 법인명의 휴대폰에서도 개인명의 휴대폰과 동일한 수준으로 T world 서비스를 이용하실 수 있습니다.</li>
+                                    <li>아래 <em>&#39;가입방법 자세히 보기&#39;</em> 버튼을 눌러 가입방법을 확인해 보세요.</li>
+                                </ul>
+                                <ul class="bt-slice mt18">
+                                    <li class="bt-white2">
+                                        <button>가입방법 자세히 보기</button>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </li>
+                        <!--// 2018-10-17 추가 -->
+                    </ol>
+                </div>
+            </div>
+            <!--// .cont-box -->
+        </div>
+        <!--// .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+        <!--// .popup-closeBtn -->
+    </div>
+</div>
+
+        <!--// .popup hbs -->
+    </div>
+</body>
+
+</html>

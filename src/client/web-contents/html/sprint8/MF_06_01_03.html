@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="h-belt">
+                <div class="h-default">
+                    <div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <div class="h-tit">9월 소액결제 상세</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+               
+				<!-- payment-detail-wrap -->
+				<div class="payment-detail-wrap">
+					<div class="payment-detail-box mb0">
+						<div class="detail-inner">
+							<div class="detail-list">
+								<ul>
+									<li>
+									   <div>
+											<span class="title">이용금액</span>
+											<span class="tx-cont">27,000 <span class="tx-regular">원</span></span>
+									   </div>
+									   <div>
+											<ul class="inner-list">
+												<li>
+													<span class="title">이용한도<button aria-haspopup="true" class="tip-view" title="이용한도">TIP</button> <!-- 2018-10-29 tip 추가 --></span>
+													<span class="tx-cont">500,000 원</span>
+												</li>
+												<li>
+													<span class="title">잔여한도</span>
+													<span class="tx-cont">17,040 원</span>
+												</li>
+												<li>
+													<span class="title">선결제 하신 금액</span>
+													<span class="tx-cont">10,000 원</span>
+												</li>
+												<li>
+													<span class="title">선결제 가능 금액</span>
+													<span class="tx-cont">40,000 원</span>
+												</li>
+											</ul>
+									   </div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--// payment-detail-wrap -->
+
+                <!-- 2018-10-29 수정 -->
+                <div class="notice-comp-infolist">
+                    <dl class="star-bullet type1">
+                        <dd>잔여한도 = 이용한도 – 이용금액 + 선결제 하신 금액
+                            <span class="block pt6">- 이용금액: 이번 달 소액결제 이용금액</span>
+                            <span class="block">- 선결제 하신 금액 : 이번 달 선결제 하신 소액결제 금액</span>
+                        </dd>
+                    </dl>
+                </div>
+                <!--// 2018-10-29 수정 -->
+				
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

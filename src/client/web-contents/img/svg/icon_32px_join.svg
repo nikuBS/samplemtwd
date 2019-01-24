@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>mdpi/##Icon/32/Timer Copy 2</title>
+    <desc>Created with Sketch.</desc>
+    <g id="##Icon/32/Timer-Copy-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Icon_Area" fill-opacity="0" fill="#FFFFFF" x="0" y="0" width="32" height="32"></rect>
+        <g id="Group-13" transform="translate(2.000000, 2.000000)">
+            <path d="M28,14 C28,21.7 21.7,28 14,28 C6.3,28 0,21.7 0,14 C0,6.3 6.3,0 14,0" id="Stroke-3" stroke="#666666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M14,6.7002 C15.823,6.7002 17.3,8.1772 17.3,10.0002 C17.3,11.8232 15.823,13.3002 14,13.3002 C12.177,13.3002 10.7,11.8232 10.7,10.0002 C10.7,8.1772 12.177,6.7002 14,6.7002" id="Fill-5" fill="#666666"></path>
+            <path d="M20,19.2998 C20,16.6998 18.1,14.5998 13.7,14.5998 C9.3,14.5998 7.4,16.6998 7.4,19.2998 L20,19.2998 Z" id="Fill-7" fill="#666666"></path>
+            <path d="M20,4 L28,4" id="Stroke-9" stroke="#666666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M24,8 L24,0" id="Stroke-11" stroke="#666666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        </g>
+    </g>
+</svg>

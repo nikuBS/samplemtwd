@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="120px" height="120px" viewBox="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>graphic_120px_information</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Icon_Badge_Graphic" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="##Element/Graphic/Information">
+            <rect id="Icon_Area" fill-opacity="0" fill="#FFFFFF" x="0" y="0" width="120" height="120"></rect>
+            <circle id="Oval-5" fill="#59BCF5" cx="60" cy="60" r="60"></circle>
+            <path d="M64.1171875,51.484375 L64.1171875,89.53125 L55.328125,89.53125 L55.328125,51.484375 L64.1171875,51.484375 Z M54,35.6640625 C54,34.1275965 54.5598902,32.7994848 55.6796875,31.6796875 C56.7994848,30.5598902 58.1406172,30 59.703125,30 C61.2916746,30 62.6458277,30.5598902 63.765625,31.6796875 C64.8854223,32.773443 65.4453125,34.1145754 65.4453125,35.703125 C65.4453125,37.2916746 64.8854223,38.6458277 63.765625,39.765625 C62.6718695,40.8854223 61.3307371,41.4453125 59.7421875,41.4453125 C58.1536379,41.4453125 56.7994848,40.8854223 55.6796875,39.765625 C54.5598902,38.6458277 54,37.2786539 54,35.6640625 Z" id="i" fill="#FFFFFF"></path>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+</head>
+
+
+<body style="overflow-x:hidden;">
+    <div style="padding:10px 0 0;">
+        <div>tube base</div>
+        <!-- .widget -->
+        <div class="widget">
+            <div class="widget-box tube">
+                <ul class="tube-list" role="radiogroup">
+                    <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="100 MB">100 MB</li>
+                    <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="200 MB">200 MB</li>
+                    <li class="checked" role="radio" aria-checked="true"><input type="radio" name="senddata" checked title="300 MB">300 MB</li>
+                    <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="400 MB">400 MB</li>
+                    <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="500 MB">500 MB</li>
+                    <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="600 MB">600 MB</li>
+                    <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="700 MB">700 MB</li>
+                    <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="800 MB">800 MB</li>
+                    <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="900 MB">900 MB</li>
+                    <li class="disabled" role="radio" aria-checked="false"><input type="radio" name="senddata" disabled title="1GB">1GB</li>
+                </ul>
+            </div>
+        </div>
+        <!-- //.widget -->
+    </div>
+    <div style="padding:10px 0 0;">
+        <div>tube 직접입력(미완성)</div>
+        <!-- .widget -->
+        <div class="widget">
+            <div class="widget-box tube">
+                <ul class="tube-list three" role="radiogroup">
+                    <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="100 MB">100 MB</li>
+                    <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="200 MB">200 MB</li>
+                    <li class="checked" role="radio" aria-checked="true"><input type="radio" name="senddata" checked title="300 MB">300 MB</li>
+                    <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="400 MB">400 MB</li>
+                    <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="500 MB">500 MB</li>
+                    <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="600 MB">600 MB</li>
+                    <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="700 MB">700 MB</li>
+                    <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="800 MB">800 MB</li>
+                    <li role="radio" aria-checked="false"><input type="radio" name="senddata" title="900 MB">900 MB</li>
+                    <li aria-checked="false" class="tube-select">
+                       직접 선택 <span class="ico-select-arrow"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- //.widget -->
+    </div>
+    <div style="padding:10px 0 0;">
+        <div>tube refil-tube</div>
+        <!-- .widget -->
+        <div class="widget">
+            <div class="widget-box tube">
+                <ul class="tube-list refil-tube type1" role="radiogroup">
+                    <li class="checked" role="radio" aria-checked="true"><input type="radio" name="senddata1" checked title="데이터 100%"><span class="ico ico-data"></span>데이터 <em>100%</em></li>
+                    <li role="radio" aria-checked="false"><input type="radio" name="senddata1" title="망외 음성 20%"><span class="ico ico-ngt"></span>망외 음성 <em>20%</em></li>
+                </ul>
+                <ul class="tube-list refil-tube type2">
+                    <li role="radio" aria-checked="true"><input type="radio" name="senddata1" checked title="망내 음성 20%"><span class="ico ico-ngt"></span>망내 음성 <em>20%</em></li>
+                    <li role="radio" aria-checked="false"><input type="radio" name="senddata1" title="망외 음성 20%"><span class="ico ico-ngt"></span>망외 음성 <em>20%</em></li>
+                </ul>
+            </div>
+        </div>
+        <!--// .widget -->
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+<div class="popup">
+    <div class="popup-page nobg layer">
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti align-l">
+                    <h1>이메일 인증</h1>
+                </div>
+        <!-- .popup-closeBtn -->
+        <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+        <!--// .popup-closeBtn -->
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-top">
+                    <div class="sms-confirm-box">
+                        <div class="sms-confirm-des"><strong>입력하신 이메일로 전송 받으신 인증번호</strong>를 입력해 주세요.</div>
+                        <div class="box-citation pb18">
+                            <div class="citation-form">
+                                <div class="form-cell">
+                                    <span id="aria-citation-email" class="form-ti">이메일 주소</span>
+                                    <!-- 2019-01-17 inp-btn 추가 -->
+                                    <span class="inputbox bt-add inp-btn full error"><!-- 정상 발송일 경우 class validation 추가, 오류일 경우 class error 추가 -->
+                                        <span class="input">
+                                            <input type="text" placeholder="회원정보에 등록한 이메일" value="tworld@rightbrain.co.kr" title="회원정보에 등록한 이메일 주소" aria-labelledby="aria-citation-email" aria-describedby="" /><!-- 정상 발송일 경우 aria-sms-exp-desc1, 오류일 경우 aria-sms-exp-desc2로 변경 --><!--웹접근성 수정 -->
+                                            <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
+                                        </span>
+                                        <span class="bt-box"><!-- 인증번호를 받기 비활성화 class disabled 추가 -->
+                                            <button type="button">인증번호 받기</button><!-- 인증번호를 받기 비활성화 attr disabled 추가 -->
+                                        </span>
+                                    </span>
+                                    <span class="tx-box">
+                                        <span id="aria-sms-exp-desc1" class="error-txt">회원정보에 등록된 이메일이 아닙니다.</span><!-- 오류일 경우 class none 삭제 -->
+                                        <span id="aria-sms-exp-desc2" class="validation-txt none">정상적으로 발송되었습니다.</span><!-- 통과일 경우 class none 삭제 -->
+                                    </span>
+                                </div>
+                                <div class="form-cell">
+                                    <span class="inputbox"><!-- 오류일 경우 class error 추가 -->
+                                        <span class="input">
+                                            <input type="text" placeholder="인증번호 숫자 6자리" title="이메일 인증번호 숫자 6자리" value="" aria-labelledby="aria-citation-email" aria-describedby="aria-sms-exp-desc4" /><!-- 오류일 경우 aria-describedby에 aria-sms-exp-desc3 추가 --><!-- 웹접근성 수정 -->
+                                            <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
+                                        </span>
+                                        <span id="aria-sms-exp-desc3" class="error-txt none" aria-hidden="true">인증번호가 일치하지 않습니다.</span><!-- 오류일 경우 class none 삭제 -->
+                                        <span class="email-confirm-out none"><!-- 인증번호 발송 시 class none 삭제 -->
+                                            <button>
+                                                이메일 확인하기
+                                                <em class="ti">발급시간 : <span class="out-time">2018.07.13 16:59</span><span class="ico"></span></em>
+                                            </button>
+                                        </span>
+                                        <span id="aria-sms-exp-desc4" class="guide-txt">* 인증번호는 발송 이후 10분간 유효합니다.</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button disabled>인증하기</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--// .container-wrap -->
+    </div>
+    <div class="popup-blind"></div>
+</div>

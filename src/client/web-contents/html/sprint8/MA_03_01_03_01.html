@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+</head>
+<style type="text/css">
+    /*Default set*/
+    html, body, form, div, p, h1, h2, h3, h4, h5, h6, dl, dt, dd, ul, ol, li, fieldset, a, button, input, textarea, table, th, td, figure, hr, i, b { margin: 0; padding: 0; font-weight: 400; -webkit-text-size-adjust: none; font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Noto Sans", "Noto Sans CJK", 'Droid Sans', Roboto, sans-serif; font-style: normal; }
+
+    body { overflow-x: hidden; color: #000; line-height: 1.4; letter-spacing: -0.0625rem; word-break: keep-all; background: #f5f5f5; }
+
+    html, body { width: 100%; }
+
+    html { height: 100%; }
+
+    body { min-height: 100%; }
+
+    .wrap { width: 100%;}
+
+    /*display*/
+    .none { display: none !important; }
+
+    .block { display: block !important; }
+
+    /*font basic*/
+    .ff-hn { font-family: "Helvetica Neue", Roboto, sans-serif; letter-spacing: 0; }
+
+    .tx-normal { font-weight: 300; }
+
+    .tx-regular { font-weight: 400; }
+
+    .tx-medium { font-weight: 500; }
+
+    .tx-bold { font-weight: 700; }
+
+    .tx-bolder { font-weight: 900; }
+
+    /*font tgothic*/
+    .ff-tg-light { font-family: "TgothicLight", Roboto, sans-serif; letter-spacing: 0; }
+
+    .ff-tg-medium { font-family: "TgothicMedium", Roboto, sans-serif; letter-spacing: 0; }
+
+    .ff-tg-black { font-family: "TgothicBlack", Roboto, sans-serif; letter-spacing: 0; }
+
+    /*input*/
+    input, select { padding: 0; color: #3c3c3c; vertical-align: baseline; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; }
+
+    input.textarea, select, button { line-height: 1.4; letter-spacing: -0.0625rem; }
+
+    input[type=text], input[type=file], input[type=password], input[type=number] { border: 1px solid #d4d4d4; outline: none; }
+
+    .inputbox { position: relative; display: block; }
+
+    .inputbox .bt-box { display: flex; flex: 1; margin: 0 0 0 0.625rem; text-align: center; font-size: 0.875rem; font-weight: 400; white-space: nowrap; justify-content: center; }
+
+    .inputbox .bt-box button { border-radius: 0.3125rem; padding: 0 0.5rem; font-size: 0.875rem; font-weight: 400; color: #3b98e6; white-space: nowrap; background: #ebf5fe; }
+
+    .inputbox .bt-box.disabled button:disabled { color: #fff; background: #d1d1d1; }
+
+    .inputbox .bt-box.disabled a.disabled { color: #646464; background: #d1d1d1; }
+
+    .inputbox .bt-box.selected button { background: #9cc9f5; }
+
+    .inputbox .bt-box.selected a { background: #9cc9f5; }
+
+    .inputbox .bt-box input[type=file] { position: absolute; left: 0; right: 0; bottom: 0; top: 0; width: 100%; height: 100%; opacity: 0; }
+
+    .inputbox .tx-box { display: flex; width: 100%; }
+
+    .inputbox .input { display: block; position: relative; }
+
+    .inputbox .input input[type=text], .inputbox .input input[type=file], .inputbox .input input[type=password], .inputbox .input input[type=number], .inputbox .input input[type=tel] { padding: 0 0.625rem; height: 2.375rem; border: 1px solid #f5f5f5; border-radius: 0.25rem; background: #f5f5f5; font-size: 0.9375rem; color: #000; font-weight: 700; width: 100%; }
+
+    .inputbox .input input[type=text]::-webkit-input-placeholder, .inputbox .input input[type=file]::-webkit-input-placeholder, .inputbox .input input[type=password]::-webkit-input-placeholder, .inputbox .input input[type=number]::-webkit-input-placeholder, .inputbox .input input[type=tel]::-webkit-input-placeholder { font-size: 0.9375rem; color: #8f8f8f; }
+
+    .inputbox .input input[type=text].place-small::-webkit-input-placeholder, .inputbox .input input[type=file].place-small::-webkit-input-placeholder, .inputbox .input input[type=password].place-small::-webkit-input-placeholder, .inputbox .input input[type=number].place-small::-webkit-input-placeholder, .inputbox .input input[type=tel].place-small::-webkit-input-placeholder { font-size: 0.6875rem; letter-spacing: -1px; }
+
+    .inputbox .input input[type=text]:focus, .inputbox .input input[type=file]:focus, .inputbox .input input[type=password]:focus, .inputbox .input input[type=number]:focus, .inputbox .input input[type=tel]:focus { border-color: #7b7b7b; background: none; }
+
+    .inputbox .input input[type=text]:focus::-webkit-input-placeholder, .inputbox .input input[type=file]:focus::-webkit-input-placeholder, .inputbox .input input[type=password]:focus::-webkit-input-placeholder, .inputbox .input input[type=number]:focus::-webkit-input-placeholder, .inputbox .input input[type=tel]:focus::-webkit-input-placeholder { color: transparent; }
+
+    .inputbox .input input[type=text]:disabled, .inputbox .input input[type=file]:disabled, .inputbox .input input[type=password]:disabled, .inputbox .input input[type=number]:disabled, .inputbox .input input[type=tel]:disabled { background-color: #e5e8ee; border-color: #e5e8ee; font-weight: 300; }
+
+    .inputbox .input input[type=text]:disabled::-webkit-input-placeholder, .inputbox .input input[type=file]:disabled::-webkit-input-placeholder, .inputbox .input input[type=password]:disabled::-webkit-input-placeholder, .inputbox .input input[type=number]:disabled::-webkit-input-placeholder, .inputbox .input input[type=tel]:disabled::-webkit-input-placeholder { color: #808698; font-weight: 300; }
+
+    .inputbox .input input[type=text][readonly], .inputbox .input input[type=password][readonly], .inputbox .input input[type=number][readonly], .inputbox .input input[type=file][readonly] { background-color: #fff; border-color: #d1d1d1; }
+
+    .inputbox .input input[type=text][readonly] .cancel, .inputbox .input input[type=password][readonly] .cancel, .inputbox .input input[type=number][readonly] .cancel, .inputbox .input input[type=file][readonly] .cancel { display: none; }
+
+    input[type=text]::-ms-clear { display: none; }
+
+    input[type=password]::-ms-clear { display: none; }
+
+    input[type=number]::-ms-clear { display: none; }
+
+    input[type=button] { border: 0; background: none; }
+
+    input.radio, input.check, fieldset { border: 0; background: none; }
+
+    input, button, select, a + button, .selectBox, .calendar { *margin-right: 4px; }
+
+    input[type='radio'], input[type='text'], input[type='password'], input[type='number'], input[type='checkbox'], textarea, button, select { -webkit-appearance: none; -moz-appearance: none; appearance: none; background-color: transparent; -webkit-background-color: transparent; -moz-background-color: transparent; border: 0; -webkit-border: 0; -moz-border: 0; -webkit-border-radius: 0; -moz-border-radius: 0; -o-border-radius: 0; border-radius: 0; }
+
+    input::-webkit-scrollbar, textarea::-webkit-scrollbar { width: 0; height: 0; }
+
+    input::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb { background: none; }
+
+    textarea::-webkit-input-placeholder { color: #8f8f8f; }
+
+    input + .hyphen { *margin-left: -4px; }
+
+    input[type=text] + .btnS, input[type=password] + .btnS, input[type=number] + .btnS, input[type=text] + input[type=text], input[type=password] + input[type=text], input[type=number] + input[type=text], input[type=text] + input[type=password], input[type=text] + input[type=number] { margin-left: 10px; }
+
+    label { position: relative; }
+
+    label + .typeRadio { margin-left: 30px; }
+
+    input[type=text] + .checkbox { margin-left: 16px; }
+
+    input[type=password] + .checkbox { margin-left: 16px; }
+
+    input[type=number] + .checkbox { margin-left: 16px; }
+
+    input[type=file] { width: 200px; height: 20px; height: 30px; height: 30px; }
+
+    input[type=file]::-ms-value { border: 0 none; }
+
+    input[type=file]::-ms-browse { border: 0 none; border-left: 1px solid #ccc; }
+
+    select { height: 38px; padding: 2px 4px 3px 7px; border: 1px solid #ccc; font-size: 13px; color: #3c3c3c; }
+
+    input[type=number][readonly], input[type=text][readonly] { background: #fff; }
+
+    /*textarea*/
+    textarea { overflow-y: scroll; width: 100%; padding: 0.875rem; border: none; box-sizing: border-box; -webkit-box-sizing: border-box; border-radius: 0.25rem; resize: none; font-size: 0.9375rem; color: #8f8f8f; outline: 0; background-color: #f5f5f5; }
+
+    textarea.type-msg { padding: 0; background: transparent; letter-spacing: -0.0625rem; }
+
+    .box-txarea { position: relative; font-size: 0; }
+
+    .byte { display: block; padding: 6px 0 0; font-size: 0.75rem; font-weight: 400; text-align: right; color: #757575; vertical-align: middle; }
+
+    .byte span { display: inline-block; vertical-align: top; }
+
+    /*link*/
+    button { overflow: visible; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; }
+
+    a + button { *margin-left: 4px; }
+
+    a, input, label, button { -webkit-tap-highlight-color: transparent; }
+
+    a, a:link, a:visited, a:active, a:hover { text-decoration: none; }
+
+    /* PC 인증서 복사하기 */
+    html, body{background:#fff;}
+    .cont-pc-certifi-step .box-pc-certifi-ti{position:relative;padding:57px 36px;border-bottom:1px solid #e1e1e1;}
+    .cont-pc-certifi-step .box-pc-certifi-ti .ti{font-size:48px;line-height:50px;letter-spacing:-2px;color:#000;}
+    .cont-pc-certifi-step .box-pc-certifi-ti .tx{display:block;margin-top:20px;font-size:18px;line-height:20px;letter-spacing:-2px;color:#000;}
+    .cont-pc-certifi-step .box-pc-certifi-ti .bt-pc-certifi-copy{position:absolute;top:57px;right:36px;display:inline-block;height:87px;padding:0 37px;border-radius:5px;font-size:24px;color:#fff;background:#3b98e6;}
+    .cont-pc-certifi-step .box-pc-certifi-tx{margin-top:23px;}
+    .cont-pc-certifi-step .box-pc-certifi-tx .list-pc-certifi-copy li{position:relative;padding:46px 36px;border-bottom:1px solid #e1e1e1;}
+    .cont-pc-certifi-step .box-pc-certifi-tx .list-pc-certifi-copy li .step-number{display:inline-block;position:absolute;top:46px;left:36px;}
+    .cont-pc-certifi-step .box-pc-certifi-tx .list-pc-certifi-copy li .step-info{display:block;position:relative;padding-left:130px;}
+    .cont-pc-certifi-step .box-pc-certifi-tx .list-pc-certifi-copy li .step-info .tx{font-size:24px;line-height:28px;color:#000;}
+    .cont-pc-certifi-step .box-pc-certifi-tx .list-pc-certifi-copy li .step-info .img{display:block;margin-top:54px;}
+    .cont-pc-certifi-step .box-pc-certifi-tx .list-pc-certifi-copy li .step-info .img img{width:100%;}
+    .cont-pc-certifi-step .box-pc-certifi-notice{padding:58px 36px 80px;font-size:24px;line-height:28px;color:#666;}
+</style>
+
+<body>
+    <div class="wrap">
+        <div class="cont-pc-certifi-step">
+            <div class="box-pc-certifi-ti">
+                <h1 class="ti"><strong>인증서</strong> 내보내기</h1>
+                <span class="tx">고객님의 <strong>PC에서 휴대폰으로</strong> 인증서를 복사합니다.</span>
+                <button class="bt-pc-certifi-copy">인증서 복사하기</button>
+            </div>
+            <div class="box-pc-certifi-tx">
+                <ul class="list-pc-certifi-copy">
+                    <li>
+                        <span class="step-number"><img src="/img/pc/img-pc-certifi-step01.png" alt="Step 01" /></span>
+                        <span class="step-info">
+                            <span class="tx">지금 보고 계신 화면 상단의 ‘인증서 복사하기’ 버튼을 클릭 해 주세요.</span>
+                            <span class="img"><img src="/img/pc/img-pc-thum-step01.jpg" alt="Step 01 설명" style="width:757px" /></span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="step-number"><img src="/img/pc/img-pc-certifi-step02.png" alt="Step 02" /></span>
+                        <span class="step-info">
+                            <span class="tx">지금 보고 계신 화면 상단의 ‘인증서 복사하기’ 버튼을 클릭 해 주세요.</span>
+                            <span class="img"><img src="/img/pc/img-pc-thum-step02.jpg" alt="Step 02 설명"  style="width:757px" /></span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="step-number"><img src="/img/pc/img-pc-certifi-step03.png" alt="Step 03" /></span>
+                        <span class="step-info">
+                            <span class="tx">지금 보고 계신 화면 상단의 ‘인증서 복사하기’ 버튼을 클릭 해 주세요.</span>
+                            <span class="img"><img src="/img/pc/img-pc-thum-step03.jpg" alt="Step 03 설명" style="width:757px" /></span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="step-number"><img src="/img/pc/img-pc-certifi-step04.png" alt="Step 04" /></span>
+                        <span class="step-info">
+                            <span class="tx">지금 보고 계신 화면 상단의 ‘인증서 복사하기’ 버튼을 클릭 해 주세요.</span>
+                            <span class="img"><img src="/img/pc/img-pc-thum-step04.jpg" alt="Step 04 설명" style="width:757px" /></span>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="step-number"><img src="/img/pc/img-pc-certifi-step05.png" alt="Step 05" /></span>
+                        <span class="step-info">
+                            <span class="tx">지금 보고 계신 화면 상단의 ‘인증서 복사하기’ 버튼을 클릭 해 주세요.</span>
+                            <span class="img"><img src="/img/pc/img-pc-thum-step05.jpg" alt="Step 05 설명" style="width:757px" /></span>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div class="box-pc-certifi-notice">
+                <p class="tx">* 자세한 사항은 고객센터 <strong>국번없이 1599-0011(유료)/휴대폰 114</strong>로 문의하시기 바랍니다.</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body class="bg-tapp">
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+					</div>
+
+                    <div class="h-tit"></div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+				</div>
+			</div>
+		</div>
+        <!--// #header --> 
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+
+                <div class="t-apps-box">
+                    <div class="t-apps-ico">
+                        <img src="/img/product/t-app01.png" alt="T전화" class="ico">
+                        <span class="name">T전화</span>
+                    </div>
+                    <div class="tx">스마트폰을 스마트폰답게 만드는 전화! 모르는 번호 검색부터 스팸차단, 요금제 잔여량 조회까지 편리한 전화! 산뜻하고 심플하게 바뀐 T전화를 만나 보세요.</div>
+                    <div class="tx-desc">3G 또는 LTE망 사용 시 데이터 요금이 발생됩니다</div>
+                    <div class="btn-area">
+                        <button class="bt google">구글 Play 스토어</button>
+                        <button class="bt one-store">원스토어</button>
+                    </div>
+                </div>
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <div class="cont-box nogaps">
+                    <div class="main-banner-img">
+                        <button><img src="/img/product/banner-ta-01.png" alt=""></button>
+                    </div>
+                </div>
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <div class="cont-box nogaps">
+                    <!-- .widget -->
+                    <div class="widget"> 
+                        <div class="widget-box horizontal">
+                            <div class="horizontal-slide">
+                                <ul class="horizontal-list screen-img-box">
+                                    <li><button class="bt"><img src="/img/product/img-app01.png" alt=""></button></li>
+                                    <li><button class="bt"><img src="/img/product/img-app02.png" alt=""></button></li>
+                                    <li><button class="bt"><img src="/img/product/img-app01.png" alt=""></button></li>
+                                    <li><button class="bt"><img src="/img/product/img-app01.png" alt=""></button></li>
+                                    <li><button class="bt"><img src="/img/product/img-app01.png" alt=""></button></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- .widget -->
+                </div>
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <div class="cont-box nogaps">
+                    <div class="main-banner-img">
+                        <button><img src="/img/product/banner-ta-02.png" alt=""></button>
+                    </div>
+                </div>
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <div class="cont-box nogaps">
+                    <div class="main-banner-img">
+                        <button><img src="/img/product/banner-ta-03.png" alt=""></button>
+                    </div>
+                </div>
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <div class="smart-app-new">
+                        <h3>함께하면 더욱 좋은 앱</h3>
+                        <!-- .widget -->
+                        <div class="widget"> 
+                            <div class="widget-box horizontal">
+                                <div class="horizontal-slide">
+                                    <ul class="horizontal-list">
+                                        <li>
+                                            <div>
+                                                <button class="bt">
+                                                    <img src="/img/product/t-app01.png" alt="T전화" />
+                                                    <span>T전화</span>
+                                                </button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div>
+                                                <button class="bt">
+                                                    <img src="/img/product/t-app02.png" alt="T연락처" />
+                                                    <span>T연락처</span>
+                                                </button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div>
+                                                <button class="bt">
+                                                    <img src="/img/product/t-app03.png" alt="T맵" />
+                                                    <span>T맵</span>
+                                                </button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div>
+                                                <button class="bt">
+                                                    <img src="/img/product/t-app07.png" alt="클라우드 베리" />
+                                                    <span>클라우드<br>베리</span>
+                                                </button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div>
+                                                <button class="bt">
+                                                    <img src="/img/product/t-app01.png" alt="T전화" />
+                                                    <span>T전화</span>
+                                                </button>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div>
+                                                <button class="bt">
+                                                    <img src="/img/product/t-app02.png" alt="T연락처" />
+                                                    <span>T연락처</span>
+                                                </button>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- .widget -->
+                    </div>
+                </div>
+                <!-- // .cont-box -->
+
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

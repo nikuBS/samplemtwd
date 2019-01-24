@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+</head>
+
+
+<body>
+    <!-- .cont-box -->
+    <div class="cont-box nogaps-hoz">
+        <div class="box-confirm">
+            <!-- .widget -->
+            <div class="widget">
+                <div class="widget-box accordion">
+                    <h3 class="tit-a">전체 열기가 있는 아코디언</h3>
+                    <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+                        <div class="bt-whole"><button role="button" aria-pressed="false"><span class="blind">내용 열기</span></button></div>
+                        <div class="acco-style">
+                            <ul class="acco-list">
+                                <li class="acco-box">
+                                    <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">1.</span> 서비스 이용안내</button></div>
+                                    <div class="acco-cont">
+                                        <ul class="list-dot">
+                                            <li class="list">리필쿠폰을 보유 했더라도 데이터/음성 기본 제공량 소진 시 자동으로 사용되지 않으며, 반드시 직접 ‘리필하기’ 를 신청한 경우에만 사용이 가능합니다.</li>
+                                            <li class="list">리필한 데이터/음성은 당월에 한해 사용 가능합니다.</li>
+                                            <li class="list">일시정지 기간은 가입 기간 산정 시 제외되나, 리필쿠폰 유효기간에는 포함됩니다.</li>
+                                            <li class="list">리필하기 신청 이전에 발생한 데이터/음성 초과 사용량에 대해서는 정상 과금 됩니다.</li>
+                                            <li class="list">기본제공 데이터 또는 음성이 남은 상태에서도 리필하기 사용이 가능합니다.</li>
+                                            <li class="list">리필쿠폰은 SK텔레콤 2년 이상 이용시, 가입일 기준으로 익월 1일에 발급됩니다. (단, 1년 내 정지기 제외/갱신일자 확인필요)</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="acco-box">
+                                    <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">2.</span> 대상 요금상품 조건</button></div>
+                                    <div class="acco-cont">
+                                        <ul class="list-dot">
+                                            <li class="list">팅 계열 요금상품 이용 고객이 음성 리필하기 선택 시, 고객이 설정한 데이터 상한금액을 제외한 <em>기본 제공량의 20%를 추가 제공</em>합니다.
+                                                <ul class="ex-txt">
+                                                    <li class="list">예) LTE팅34 요금상품 이용 시, 데이터 상한금액(5/10/15천원 중 택 1)을 제외한 기본 혜택 금액의 0% 추가 제공</li>
+                                                </ul>
+                                            </li>
+                                            <li class="list">음성 기본 제공량의 유형이 2가지 이상인 요금상품은, 발신 대상이 제한된 음성 제공량(예: 망내, 커플, 수 그룹) 외의 <em>음성 기본 제공량을 추가 제공</em>합니다.
+                                                <ul class="ex-txt">
+                                                    <li class="list">예) T끼리 35 요금상품은 망외 음성 제공량 / LTE 커플 52 요금상품은 기본제공 음성통화량 기준 리필 추가 제공</li>
+                                                </ul>
+                                            </li>
+                                            <li class="list">전국민 무한75, 온가족행복플랜78 이용 시, 유선+영상+부가통화 300분 무료제공량의 음성 리필 20% 추가 제공 전국민 무한 85/100, 온가족행복플랜85/100 이용 시, 영상+부가통화 300분 무료제공량의 음성 리필 20% 추가 제공 </li>
+                                            <li class="list">데이터 무제한형 요금상품의 경우, 음성 리필만 가능합니다. (예 : 올인원 54/64/79/94 등)</li>
+                                            <li class="list">온가족행복플랜의 경우, 음성/데이터 추가 혜택 제공량은 리필하기 대상에서 제외됩니다.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="acco-box">
+                                    <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">3.</span> 쿠폰 사용</button></div>
+                                    <div class="acco-cont">
+                                        <ul class="list-dot">
+                                            <li class="list">유효기간이 가장 <em>짧은 쿠폰</em>을 먼저 사용해주시기 바랍니다.</li>
+                                            <li class="list">쿠폰은 반드시 <em>유효기간 내에 모두 사용</em>하셔야 합니다.
+                                                <ul class="ex-txt">
+                                                    <li class="list">※ 유효기간 내에 사용하지 않은 쿠폰은 자동 소멸됩니다. (단, 리필쿠폰의 유효기간이 남아 있는 경우라도 다음 가입년수 갱신시점에 자동 소멸됩니다.)</li>
+                                                    <li class="list">예) 리필하기 최초 출시시점(2013년 4~5월)에 발급된 리필쿠폰 또는 가족간 명의변경이나 번호이동 철회 후 재가입 등으로 장기가입기준일자 변경된 경우 자동소멸</li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="acco-box">
+                                    <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">4.</span> 데이터 100%</button></div>
+                                    <div class="acco-cont">
+                                        <ul class="list-dot">
+                                            <li class="list">리필하기 이용 시, 사용중인 요금제의 월 <em>기본 제공 데이터의 100%만큼</em> 추가 사용 가능합니다.
+                                                <ul class="ex-txt">
+                                                    <li class="list">예) LTE62 요금제 이용 고객이 리필하기 시, LTE 62 요금제의 기본 제공 데이터인 5GB 추가 제공</li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="acco-box">
+                                    <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">5.</span> 음성 20%</button></div>
+                                    <div class="acco-cont">
+                                        <ul class="list-dot">
+                                            <li class="list">음성 기본 제공량이 있는 경우, 데이터 리필하기 대신 음성 리필하기로 선택하여 사용 가능합니다. 단, 음성 리필하기 선택 시 기본 제공 음성 통화량의 20%만 리필 가능
+                                                <ul class="ex-txt">
+                                                    <li class="list">예) LTE62 요금제 이용 고객이 리필하기 시, LTE 62 요금제의 기본 제공 음성 350분의 20%인 70분 추가 제공</li>
+                                                </ul>
+                                            </li>
+                                            <li class="list">팅 계열 요금제 이용 고객이 음성 리필하기 선택 시, 고객이 설정한 데이터 사용가능 금액을 제외한 혜택 금액의 20%를 추가 제공합니다.
+                                                <ul class="ex-txt">
+                                                    <li class="list">예) LTE팅34 요금제 이용 시, 데이터 상한금액 (5/10/15천원 중 택 1)을 제외한 기본 혜택 금액의 20% 추가 제공</li>
+                                                </ul>
+                                            </li>
+                                            <li class="list">음성 기본 제공량의 유형이 2가지 이상인 요금제는, 발신 대상이 제한된 음성 제공량(예: 망내, 커플, 특수 그룹) 외의 음성 기본 제공량을 추가 제공합니다.
+                                                <ul class="ex-txt">
+                                                    <li class="list">예) T끼리 35 요금제는 망외 음성 제공량 / LTE 커플 52 요금제는 기본제공 음성통화량 기준 리필 추가 제공</li>
+                                                </ul>
+                                            </li>
+                                            <li class="list">전국민 무한75, 온가족행복플랜78 이용 시, 유선+영상+부가통화 300분 무료제공량의 음성 리필 20% 추가 제공 전국민 무한 85/100, 온가족행복플랜85/100 이용 시, 영상+부가통화 300분 무료제공량의 음성 리필 20% 추가 제공</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="acco-box">
+                                    <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">6.</span> 기본제공량 소진순서</button></div>
+                                    <div class="acco-cont">
+                                        <ul class="list-dot">
+                                            <li class="list">기본 제공량 소진순서는 다음과 같습니다.
+                                                <ul class="ex-txt">
+                                                    <li class="list">* 데이터 리필 : <em>리필한 데이터</em> > 프로모션 데이터 > 선물 받은 데이터 > 기본 제공량</li>
+                                                    <li class="list">* 음성 리필 : <em>리필한 음성</em> > 기본 제공량</li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="acco-box">
+                                    <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">7.</span> 가족에게 리필쿠폰 선물</button></div>
+                                    <div class="acco-cont">
+                                        <ul class="list-dot">
+                                            <li class="list">리필 쿠폰선물 후 <em>취소가 불가</em>하며, 선물 <em>이전의 유효기간과 동일</em>하게 적용됩니다.</li>
+                                            <li class="list"><em>월 1회, 연간 최대 2회</em>까지 선물하기가 가능합니다.</li>
+                                            <li class="list">가족간 리필쿠폰 선물하기는 대상 결합상품 가입고객만 이용 가능합니다.
+                                                <ul class="ex-txt">
+                                                    <li class="list">※ 대상 결합상품 : 온가족할인/T가족결합(착한가족)/온가족무료/온가족프리/온가족행복플랜</li>
+                                                    <li class="list">※ 온가족행복플랜 : 음성/데이터 추가 혜택 제공량 리필하기 대상 제외</li>
+                                                </ul>
+                                            </li>
+                                            <li class="list">팅 계열 요금상품을 이용중인 고객은 가족간 리필쿠폰 선물 받기만 가능하며, 선물하기는 불가합니다.</li>
+                                            <li class="list">선물 받는 고객이 가입기간 2년 이상인 경우, 선물 받는 고객의 장기가입일자를 기준으로 <em>연 2회 선물 받기</em>가 가능합니다.
+                                                <ul class="ex-txt">
+                                                    <li class="list">※ 단, 가입기간 2년 미만 고객은 서비스 개통시점부터 2년차 쿠폰 발급 전까지 총 2회 선물 받기가 가능합니다.</li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="acco-box">
+                                    <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">8.</span> 이용 불가 안내</button></div>
+                                    <div class="acco-cont">
+                                        <ul class="list-dot">
+                                            <li class="list">리필하기로 데이터 또는 음성이 제공된 이후에는 추가 제공량의 이용 <em>여부와 무관하게 이용취소가 불가</em>합니다.
+                                            </li>
+                                            <li class="list">리필하기 신청 후 요금제를 변경하면 리필한 데이터/음성통화량은 이용할 수 없으나, 리필하기 신청한 시점의 요금제로 당월 원상 복귀하면 잔여 리필 데이터/음성통화량을 사용하실 수 있습니다. </li>
+                                            <li class="list">리필한 데이터는 ‘T끼리 데이터 선물하기’ 서비스 이용이 불가합니다.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="acco-box">
+                                    <div class="acco-tit"><button role="button" aria-pressed="false"><span class="bullet">8.</span> 이용 불가 안내</button></div>
+                                    <div class="acco-cont">
+                                        <ul class="list-dot">
+                                            <li class="list">리필하기로 데이터 또는 음성이 제공된 이후에는 추가 제공량의 이용 <em>여부와 무관하게 이용취소가 불가</em>합니다.
+                                            </li>
+                                            <li class="list">리필하기 신청 후 요금제를 변경하면 리필한 데이터/음성통화량은 이용할 수 없으나, 리필하기 신청한 시점의 요금제로 당월 원상 복귀하면 잔여 리필 데이터/음성통화량을 사용하실 수 있습니다. </li>
+                                            <li class="list">리필한 데이터는 ‘T끼리 데이터 선물하기’ 서비스 이용이 불가합니다.</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .widget -->
+        </div>
+    </div>
+    <!--// .cont-box -->
+
+    <hr class="cont-sp type1" aria-hidden="true"/>
+    <!-- .cont-box -->
+    <div class="cont-box">
+        <!-- .widget -->
+        <div class="widget">
+            <div class="widget-box accordion">
+                <h5 class="tit-a">열려있는 일반형태</h5>
+                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                    <div class="acco-style btn-hold">
+                        <ul class="acco-list">
+                                <!-- .on: 열기 -->
+                            <li class="acco-box">
+                                <div class="acco-tit"><span class="bullet">1.</span> 하위내용 예제 <button role="button" aria-pressed="false"></button></div>
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">팅 계열 요금상품 이용 고객이 음성 리필하기 선택 시, 고객이 설정한 데이터 상한금액을 제외한 <em>기본 제공량의 20%를 추가 제공</em>합니다.
+                                            <ul class="inner-group type1"><!-- 예) 일 경우 -->
+                                                <li class="inner-list"><span class="bullet">예)</span>선물하기 전 잔여 데이터가 700MB인 경우 200 MB 선물하기 → 가능 (선물 후 잔여 데이터 500 MB) 300 MB 선물하기 → 불가 (선물 후 잔여 데이터 400 MB) LTE 안심옵션의 무료 데이터는 선물하기 불가</li>
+                                                <li class="inner-list"><span class="bullet">예)</span> 예의 내용</li>
+                                            </ul>
+                                        </li>
+                                        <li class="list">음성 기본 제공량의 유형이 2가지 이상인 요금상품은, 발신 대상이 제한된 음성 제공량(예: 망내, 커플, 수 그룹) 외의 <em>음성 기본 제공량을 추가 제공</em>합니다.
+                                            <ul class="inner-group type2"><!-- ※ 일 경우 -->
+                                                <li class="inner-list"><span class="bullet">※</span>대상 결합상품 : 온가족할인/T가족결합(착한가족)/온가족무료/온가족프리/온가족행복플랜</li>
+                                                <li class="inner-list"><span class="bullet">※</span> 22대상 결합상품 : 온가족할인/T가족결합(착한가족)/온가족무료/온가족프리/온가족행복플랜</li>
+                                            </ul>
+                                        </li>
+                                        <li class="list">전국민 무한75, 온가족행복플랜78 이용 시, 유선+영상+부가통화 300분 무료제공량의 음성 리필 20% 추가 제공 전국민 무한 85/100, 온가족행복플랜85/100 이용 시, 영상+부가통화 300분 무료제공량의 음성 리필 20% 추가 제공
+                                            <ul class="inner-group type3"><!-- * 일 경우 -->
+                                                <li class="inner-list"><span class="bullet">*</span>선물하기 전 잔여 데이터가 700MB인 경우 200 MB 선물하기 → 가능 (선물 후 잔여 데이터 500 MB) 300 MB 선물하기 → 불가 (선물 후 잔여 데이터 400 MB) LTE 안심옵션의 무료 데이터는 선물하기 불가</li>
+                                                <li class="inner-list"><span class="bullet">*</span> 예의 내용</li>
+                                            </ul>
+                                         </li>
+                                        <li class="list">데이터 무제한형 요금상품의 경우, 음성 리필만 가능합니다. (예 : 올인원 54/64/79/94 등)
+                                            <ul class="inner-group type4"><!-- - 일 경우 -->
+                                                <li class="inner-list"><span class="bullet">-</span>선물하기 전 잔여 데이터가 700MB인 경우 200 MB 선물하기 → 가능 (선물 후 잔여 데이터 500 MB) 300 MB 선물하기 → 불가 (선물 후 잔여 데이터 400 MB) LTE 안심옵션의 무료 데이터는 선물하기 불가</li>
+                                                <li class="inner-list"><span class="bullet">-</span> 예의 내용</li>
+                                            </ul>
+                                        </li>
+                                        <li class="list">온가족행복플랜의 경우, 음성/데이터 추가 혜택 제공량은 리필하기 대상에서 제외됩니다.
+                                           <div class="acco-link"><a class="bt-link-tx" href="">어떤 요금제가 가능한가요?<span class="ico"></span></a></div>
+                                        </li>
+                                        <li class="list">온가족행복플랜의 경우, 음성/데이터 추가 혜택 제공량은 리필하기 대상에서 제외됩니다.
+                                        </li>
+                                    </ul>
+                                    <div class="acco-bt-slice">
+                                       <ul class="bt-slice">
+                                            <li class="bt-white2">
+                                                <button>기존 계정으로 바로 로그인 하기</button>
+                                            </li>
+                                            <li class="bt-white2">
+                                                <a href="">아이디 찾기/비밀번호 재설정하기</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="acco-box">
+                                <div class="acco-tit"><span class="bullet">2.</span> 하위내용 예제2
+                                    <button role="button" aria-pressed="false">상세보기</button>
+                                </div>
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">온가족행복플랜의 경우, 음성/데이터 추가 혜택 제공량은 리필하기 대상에서 제외됩니다.
+                                        </li>
+                                    </ul>
+                                    <div class="acco-bt-slice">
+                                        <ul class="bt-slice">
+                                            <li class="bt-white2">
+                                                <button>기존 계정으로 바로 로그인 하기</button>
+                                            </li>
+                                            <li class="bt-white2">
+                                                <button>아이디 찾기/비밀번호 재설정하기</button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <ul class="list-dot">
+                                        <li class="list">온가족행복플랜의 경우, 음성/데이터 추가 혜택 제공량은 리필하기 대상에서 제외됩니다.
+                                            <ul class="inner-group type5">
+                                                <li class="inner-list">
+                                                    <dl>
+                                                        <dt class="inner-tit">기준금액</dt>
+                                                        <dd class="inner-cont">자동 선결제가 되는 시점의 금액을 말하며, 고객님 콘텐츠 이용한도의 최대 90%까지 설정 가능합니다. <br>예시) 자동선결제가 기준금액 ; 5만원으로 설정 시, 이번 달 소액결제를 5만원 이상 결제 시점에 자동으로 선결제됩니다.</dd>
+                                                    </dl>
+                                                </li>
+                                                <li class="inner-list">
+                                                    <dl>
+                                                        <dt class="inner-tit">선결제 금액</dt>
+                                                        <dd class="inner-cont">자동 선결제 기준금액을 도달했을 경우, 설정한 금액만큼 자동으로 선결되는 것을 말하며, 자동 선결제 금액은 기준금액 보다 적거나 같아야 합니다. <br>예시) 자동선결제 기준금액 : 5만원, 자동선결제 금액 : 5만원으로 설정 시, 이번달 콘텐츠이용료를 5만원 이상 결제된 시점에 5만원이 자동 선결제 됩니다.</dd>
+                                                    </dl>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="list"><span class="list-dot-tit">유상서비스</span> 서비스 제목</li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="acco-box">
+                                <div class="acco-tit"><span class="bullet">3.</span> 제목만 있는경우(html 확인)</div>
+                            </li>
+                            <li class="acco-box">
+                                <div class="acco-tit"><span class="bullet">4.</span> bullet '예)' 만 있는 경우 <button role="button" aria-pressed="false">상세보기</button></div>
+                                <div class="acco-cont">
+                                    <ul class="inner-group type1"><!-- 예) 일 경우 -->
+                                        <li class="inner-list"><span class="bullet">예)</span>선물하기 전 잔여 데이터가 700MB인 경우 200 MB 선물하기 → 가능 (선물 후 잔여 데이터 500 MB) 300 MB 선물하기 → 불가 (선물 후 잔여 데이터 400 MB) LTE 안심옵션의 무료 데이터는 선물하기 불가</li>
+                                        <li class="inner-list"><span class="bullet">예)</span> 예의 내용</li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// .widget -->
+    </div>
+    <!--// .cont-box -->
+
+    <hr class="cont-sp type1" aria-hidden="true"/>
+    <!-- .cont-box -->
+    <div class="cont-box">
+        <!-- .widget -->
+        <div class="widget">
+            <div class="widget-box accordion">
+                <h5 class="tit-a">열려있는 토글형태<br/>(예외없이 닫음 2018-07-17)</h5>
+                <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+                    <div class="acco-style btn-hold">
+                        <ul class="acco-list">
+                            <li class="acco-box">
+                                <!-- .on: 열기 -->
+                                <div class="acco-tit"><span class="bullet">1.</span> 서비스 이용안내 <button role="button" aria-pressed="false">상세보기</button></div>
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">리필쿠폰을 보유 했더라도 데이터/음성 기본 제공량 소진 시 자동으로 사용되지 않으며, 반드시 직접 ‘리필하기’ 를 신청한 경우에만 사용이 가능합니다.</li>
+                                        <li class="list">리필한 데이터/음성은 당월에 한해 사용 가능합니다.</li>
+                                        <li class="list">일시정지 기간은 가입 기간 산정 시 제외되나, 리필쿠폰 유효기간에는 포함됩니다.</li>
+                                        <li class="list">리필하기 신청 이전에 발생한 데이터/음성 초과 사용량에 대해서는 정상 과금 됩니다.</li>
+                                        <li class="list">기본제공 데이터 또는 음성이 남은 상태에서도 리필하기 사용이 가능합니다.</li>
+                                        <li class="list">리필쿠폰은 SK텔레콤 2년 이상 이용시, 가입일 기준으로 익월 1일에 발급됩니다. (단, 1년 내 정지기 제외/갱신일자 확인필요)</li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="acco-box">
+                                <div class="acco-tit"><span class="bullet">2.</span> 대상 요금상품 조건 <button role="button" aria-pressed="false"></button></div>
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">팅 계열 요금상품 이용 고객이 음성 리필하기 선택 시, 고객이 설정한 데이터 상한금액을 제외한 <em>기본 제공량의 20%를 추가 제공</em>합니다.
+                                            <ul class="ex-txt">
+                                                <li class="list">예) LTE팅34 요금상품 이용 시, 데이터 상한금액(5/10/15천원 중 택 1)을 제외한 기본 혜택 금액의 0% 추가 제공</li>
+                                            </ul>
+                                        </li>
+                                        <li class="list">음성 기본 제공량의 유형이 2가지 이상인 요금상품은, 발신 대상이 제한된 음성 제공량(예: 망내, 커플, 수 그룹) 외의 <em>음성 기본 제공량을 추가 제공</em>합니다.
+                                            <ul class="ex-txt">
+                                                <li class="list">예) T끼리 35 요금상품은 망외 음성 제공량 / LTE 커플 52 요금상품은 기본제공 음성통화량 기준 리필 추가 제공</li>
+                                            </ul>
+                                        </li>
+                                        <li class="list">전국민 무한75, 온가족행복플랜78 이용 시, 유선+영상+부가통화 300분 무료제공량의 음성 리필 20% 추가 제공 전국민 무한 85/100, 온가족행복플랜85/100 이용 시, 영상+부가통화 300분 무료제공량의 음성 리필 20% 추가 제공 </li>
+                                        <li class="list">데이터 무제한형 요금상품의 경우, 음성 리필만 가능합니다. (예 : 올인원 54/64/79/94 등)</li>
+                                        <li class="list">온가족행복플랜의 경우, 음성/데이터 추가 혜택 제공량은 리필하기 대상에서 제외됩니다.</li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// .widget -->
+    </div>
+    <!--// .cont-box -->
+    <!--<hr class="cont-sp type1" aria-hidden="true"/>
+    <div class="cont-box">
+        <div class="widget">
+            <div class="widget-box accordion">
+                <h5 class="tit-a">열려있는 토글형태 (중간에 토글 기능이 빠진 경우)</h5>
+                <div class="acco-cover toggle">
+                    <div class="acco-style btn-hold">
+                        <ul class="acco-list">
+                            <li class="acco-box">
+                                 .on: 열기
+                                <div class="acco-tit"><span class="bullet">1.</span> 서비스 이용안내 <button role="button" aria-pressed="false">상세보기</button></div>
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">리필쿠폰을 보유 했더라도 데이터/음성 기본 제공량 소진 시 자동으로 사용되지 않으며, 반드시 직접 ‘리필하기’ 를 신청한 경우에만 사용이 가능합니다.</li>
+                                        <li class="list">리필한 데이터/음성은 당월에 한해 사용 가능합니다.</li>
+                                        <li class="list">일시정지 기간은 가입 기간 산정 시 제외되나, 리필쿠폰 유효기간에는 포함됩니다.</li>
+                                        <li class="list">리필하기 신청 이전에 발생한 데이터/음성 초과 사용량에 대해서는 정상 과금 됩니다.</li>
+                                        <li class="list">기본제공 데이터 또는 음성이 남은 상태에서도 리필하기 사용이 가능합니다.</li>
+                                        <li class="list">리필쿠폰은 SK텔레콤 2년 이상 이용시, 가입일 기준으로 익월 1일에 발급됩니다. (단, 1년 내 정지기 제외/갱신일자 확인필요)</li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="acco-box">
+                                <div class="acco-tit"><span class="bullet">2.</span> 대상 요금상품 조건</div>
+                            </li>
+                            <li class="acco-box">
+                                <div class="acco-tit"><span class="bullet">2.</span> 대상 요금상품 조건 <button role="button" aria-pressed="false"></button></div>
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">팅 계열 요금상품 이용 고객이 음성 리필하기 선택 시, 고객이 설정한 데이터 상한금액을 제외한 <em>기본 제공량의 20%를 추가 제공</em>합니다.
+                                            <ul class="ex-txt">
+                                                <li class="list">예) LTE팅34 요금상품 이용 시, 데이터 상한금액(5/10/15천원 중 택 1)을 제외한 기본 혜택 금액의 0% 추가 제공</li>
+                                            </ul>
+                                        </li>
+                                        <li class="list">음성 기본 제공량의 유형이 2가지 이상인 요금상품은, 발신 대상이 제한된 음성 제공량(예: 망내, 커플, 수 그룹) 외의 <em>음성 기본 제공량을 추가 제공</em>합니다.
+                                            <ul class="ex-txt">
+                                                <li class="list">예) T끼리 35 요금상품은 망외 음성 제공량 / LTE 커플 52 요금상품은 기본제공 음성통화량 기준 리필 추가 제공</li>
+                                            </ul>
+                                        </li>
+                                        <li class="list">전국민 무한75, 온가족행복플랜78 이용 시, 유선+영상+부가통화 300분 무료제공량의 음성 리필 20% 추가 제공 전국민 무한 85/100, 온가족행복플랜85/100 이용 시, 영상+부가통화 300분 무료제공량의 음성 리필 20% 추가 제공 </li>
+                                        <li class="list">데이터 무제한형 요금상품의 경우, 음성 리필만 가능합니다. (예 : 올인원 54/64/79/94 등)</li>
+                                        <li class="list">온가족행복플랜의 경우, 음성/데이터 추가 혜택 제공량은 리필하기 대상에서 제외됩니다.</li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+    <!--// .cont-box -->
+    <hr class="cont-sp type1" aria-hidden="true"/>
+    <!-- .cont-box -->
+    <div class="cont-box">
+    <!-- .widget -->
+        <div class="widget">
+            <div class="widget-box accordion">
+                <h5 class="tit-a">토글이 아닌 형태</h5>
+                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                    <div class="acco-style btn-hold">
+                        <ul class="acco-list">
+                            <li class="acco-box">
+                                <div class="acco-tit"><span class="bullet">1.</span> 서비스 이용안내 <button role="button" aria-pressed="false">상세보기</button></div>
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">리필쿠폰을 보유 했더라도 데이터/음성 기본 제공량 소진 시 자동으로 사용되지 않으며, 반드시 직접 ‘리필하기’ 를 신청한 경우에만 사용이 가능합니다.</li>
+                                        <li class="list">리필한 데이터/음성은 당월에 한해 사용 가능합니다.</li>
+                                        <li class="list">일시정지 기간은 가입 기간 산정 시 제외되나, 리필쿠폰 유효기간에는 포함됩니다.</li>
+                                        <li class="list">리필하기 신청 이전에 발생한 데이터/음성 초과 사용량에 대해서는 정상 과금 됩니다.</li>
+                                        <li class="list">기본제공 데이터 또는 음성이 남은 상태에서도 리필하기 사용이 가능합니다.</li>
+                                        <li class="list">리필쿠폰은 SK텔레콤 2년 이상 이용시, 가입일 기준으로 익월 1일에 발급됩니다. (단, 1년 내 정지기 제외/갱신일자 확인필요)</li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="acco-box">
+                                <div class="acco-tit"><span class="bullet">2.</span> 대상 요금상품 조건 <button role="button" aria-pressed="false"></button></div>
+                                <div class="acco-cont">
+                                    <ul class="list-dot">
+                                        <li class="list">팅 계열 요금상품 이용 고객이 음성 리필하기 선택 시, 고객이 설정한 데이터 상한금액을 제외한 <em>기본 제공량의 20%를 추가 제공</em>합니다.
+                                            <ul class="ex-txt">
+                                                <li class="list">예) LTE팅34 요금상품 이용 시, 데이터 상한금액(5/10/15천원 중 택 1)을 제외한 기본 혜택 금액의 0% 추가 제공</li>
+                                            </ul>
+                                        </li>
+                                        <li class="list">음성 기본 제공량의 유형이 2가지 이상인 요금상품은, 발신 대상이 제한된 음성 제공량(예: 망내, 커플, 수 그룹) 외의 <em>음성 기본 제공량을 추가 제공</em>합니다.
+                                            <ul class="ex-txt">
+                                                <li class="list">예) T끼리 35 요금상품은 망외 음성 제공량 / LTE 커플 52 요금상품은 기본제공 음성통화량 기준 리필 추가 제공</li>
+                                            </ul>
+                                        </li>
+                                        <li class="list">전국민 무한75, 온가족행복플랜78 이용 시, 유선+영상+부가통화 300분 무료제공량의 음성 리필 20% 추가 제공 전국민 무한 85/100, 온가족행복플랜85/100 이용 시, 영상+부가통화 300분 무료제공량의 음성 리필 20% 추가 제공 </li>
+                                        <li class="list">데이터 무제한형 요금상품의 경우, 음성 리필만 가능합니다. (예 : 올인원 54/64/79/94 등)</li>
+                                        <li class="list">온가족행복플랜의 경우, 음성/데이터 추가 혜택 제공량은 리필하기 대상에서 제외됩니다.</li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// .widget -->
+    </div>
+    <!--// .cont-box -->
+    <hr class="cont-sp type1" aria-hidden="true"/>
+    <!-- .cont-box -->
+    <div class="cont-box">
+        <!-- .widget -->
+            <div class="widget">
+                <div class="widget-box accordion">
+                    <h5 class="tit-a">제목이 없는 경우</h5>
+                    <div class="acco-cover">
+                        <div class="acco-style btn-hold">
+                            <ul class="acco-list">
+                                <li class="acco-box">
+                                    <div class="acco-cont">
+                                        <ul class="list-dot">
+                                            <li class="list">리필쿠폰을 보유 했더라도 데이터/음성 기본 제공량 소진 시 자동으로 사용되지 않으며, 반드시 직접 ‘리필하기’ 를 신청한 경우에만 사용이 가능합니다.</li>
+                                            <li class="list">리필한 데이터/음성은 당월에 한해 사용 가능합니다.</li>
+                                            <li class="list">일시정지 기간은 가입 기간 산정 시 제외되나, 리필쿠폰 유효기간에는 포함됩니다.</li>
+                                            <li class="list">리필하기 신청 이전에 발생한 데이터/음성 초과 사용량에 대해서는 정상 과금 됩니다.</li>
+                                            <li class="list">기본제공 데이터 또는 음성이 남은 상태에서도 리필하기 사용이 가능합니다.</li>
+                                            <li class="list">리필쿠폰은 SK텔레콤 2년 이상 이용시, 가입일 기준으로 익월 1일에 발급됩니다. (단, 1년 내 정지기 제외/갱신일자 확인필요)</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--// .widget -->
+    </div>
+    <!--// .cont-box -->
+
+</body>
+
+</html>

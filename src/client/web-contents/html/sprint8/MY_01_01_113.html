@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+					<div class="h-tit">결합가족 보기</div>
+					<div class="h-serarch">
+						<button class="icon-gnb-search"><span class="blind">검색</span></button>
+					</div>
+				</div>
+			</div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+
+                <!-- .cont-box -->
+                <div class="cont-box">
+
+                    <!-- 1회선일 경우 -->
+                    <div class="expect-benefit-slide">
+                        <div class="widget"> 
+                            <div class="widget-box horizontal">
+                                <div class="horizontal-slide">
+                                    <ul class="horizontal-list" style="width: 471px;">
+                                        <li>
+                                            <button class="bg1"> <!-- 파란색 -->
+                                                <div class="inner">
+                                                    <span class="stit">휴대폰 월정액</span>
+                                                    <span class="stxt"><span class="str">3,300원</span> 할인</span>
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="bg2"> <!-- 녹색 -->
+                                                <div class="inner">
+                                                    <span class="stit">둘중 무료 제공</span>
+                                                    <span class="stxt"><span class="str">LTE안심옵션</span> 또는 데이터<span class="str">500MB</span></span>
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="bg3"> <!-- 분홍 -->
+                                                <div class="inner">
+                                                    <span class="stit">초고속 인터넷 요금</span>
+                                                    <span class="stxt"><span class="str">3천원</span> 할인</span>
+                                                </div>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// 1회선일 경우 -->
+
+                    <!-- 2회선일 경우 -->
+                    <div class="expect-benefit-slide">
+                        <div class="widget"> 
+                            <div class="widget-box horizontal">
+                                <div class="horizontal-slide">
+                                    <ul class="horizontal-list" style="width: 471px;">
+                                        <li>
+                                            <button class="bg1"> <!-- 파란색 -->
+                                                <div class="inner">
+                                                    <span class="stit">휴대폰 월정액</span>
+                                                    <span class="stxt"><span class="str">3,300원</span> 할인</span>
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="bg2"> <!-- 녹색 -->
+                                                <div class="inner">
+                                                    <span class="stit">둘중 무료 제공</span>
+                                                    <span class="stxt"><span class="str">LTE안심옵션</span> 또는 데이터<span class="str">500MB</span></span>
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="bg3"> <!-- 분홍 -->
+                                                <div class="inner">
+                                                    <span class="stit">초고속 인터넷 요금</span>
+                                                    <span class="stxt"><span class="str">4천원</span> 할인</span>
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="bg4"> <!-- 보라 -->
+                                                <div class="inner">
+                                                    <span class="stit">가족간</span>
+                                                    <span class="stxt"><span class="str">음성/문자 무료</span></span>
+                                                </div>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// 2회선일 경우 -->
+
+                    <!-- 3회선일 경우 -->
+                    <div class="expect-benefit-slide">
+                        <div class="widget"> 
+                            <div class="widget-box horizontal">
+                                <div class="horizontal-slide">
+                                    <ul class="horizontal-list" style="width: 471px;">
+                                        <li>
+                                            <button class="bg1"> <!-- 파란색 -->
+                                                <div class="inner">
+                                                    <span class="stit">휴대폰 월정액</span>
+                                                    <span class="stxt"><span class="str">3,300원</span> 할인</span>
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="bg2"> <!-- 녹색 -->
+                                                <div class="inner">
+                                                    <span class="stit">둘중 무료 제공</span>
+                                                    <span class="stxt"><span class="str">LTE안심옵션</span> 또는 데이터<span class="str">500MB</span></span>
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="bg3"> <!-- 분홍 -->
+                                                <div class="inner">
+                                                    <span class="stit">초고속 인터넷 요금</span>
+                                                    <span class="stxt"><span class="str">5천원</span> 할인</span>
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="bg4"> <!-- 보라 -->
+                                                <div class="inner">
+                                                    <span class="stit">가족간</span>
+                                                    <span class="stxt"><span class="str">음성/문자 무료</span></span>
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="bg5"> <!-- 빨강 -->
+                                                <div class="inner">
+                                                    <span class="stit">친구랑 (망내 지정 1회선)</span>
+                                                    <span class="stxt"><span class="str">음성/문자 무료</span></span>
+                                                </div>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// 3회선일 경우 -->
+
+                    <!-- 4회선일 경우 -->
+                    <div class="expect-benefit-slide">
+                        <div class="widget"> 
+                            <div class="widget-box horizontal">
+                                <div class="horizontal-slide">
+                                    <ul class="horizontal-list" style="width: 471px;">
+                                        <li>
+                                            <button class="bg1"> <!-- 파란색 -->
+                                                <div class="inner">
+                                                    <span class="stit">휴대폰 월정액</span>
+                                                    <span class="stxt"><span class="str">3,300원</span> 할인</span>
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="bg2"> <!-- 녹색 -->
+                                                <div class="inner">
+                                                    <span class="stit">둘중 무료 제공</span>
+                                                    <span class="stxt"><span class="str">LTE안심옵션</span> 또는 데이터<span class="str">500MB</span> 할인</span>
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="bg3"> <!-- 분홍 -->
+                                                <div class="inner">
+                                                    <span class="stit">초고속 인터넷 요금</span>
+                                                    <span class="stxt"><span class="str">6천원</span> 할인</span>
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="bg4"> <!-- 보라 -->
+                                                <div class="inner">
+                                                    <span class="stit">가족간</span>
+                                                    <span class="stxt"><span class="str">음성/문자 무료</span></span>
+                                                </div>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button class="bg5"> <!-- 빨강 -->
+                                                <div class="inner">
+                                                    <span class="stit">친구랑 (망내 지정 1회선)</span>
+                                                    <span class="stxt"><span class="str">음성/문자 무료</span></span>
+                                                </div>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// 4회선일 경우 -->
+
+                </div>
+                <!--// .cont-box -->
+				
+               
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>
