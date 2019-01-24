@@ -43,7 +43,7 @@ Tw.BiometricsDeregister.prototype = {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 || resp.resultCode === this.ERROR_CODE.COMPLETE ) {
       this._nativeService.send(Tw.NTV_CMD.SAVE, {
         key: Tw.NTV_STORAGE.FIDO_USE,
-        value: false
+        value: 'N'
       });
       this._openComplete();
     } else {

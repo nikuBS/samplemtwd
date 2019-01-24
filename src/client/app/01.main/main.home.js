@@ -35,7 +35,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
 
   if ( isLogin === 'true' ) {
     this._cachedElement();
-    this._getWelcomeMsg();
+    this._initWelcomsMsg();
     this._bindEvent();
     this._initScroll();
   }
@@ -614,6 +614,18 @@ Tw.MainHome.prototype = {
   _resetHeight: function () {
     Tw.CommonHelper.resetHeight($('.home-slider .home-slider-belt')[0]);
   },
+  _initWelcomsMsg: function () {
+    if ( Tw.BrowserHelper.isApp() ) {
+      this._nativeSrevice.send(Tw.NTV_CMD.IS_APP_CREATED, { key: Tw.NTV_PAGE_KEY.HOME_WELCOME }, $.proxy(this._onAppCreated, this));
+    } else {
+      this._getWelcomeMsg();
+    }
+  },
+  _onAppCreated: function (resp) {
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 && resp.params.value === 'Y' ) {
+      this._getWelcomeMsg();
+    }
+  },
   _getWelcomeMsg: function () {
     this._nativeSrevice.send(Tw.NTV_CMD.IS_APP_CREATED, { key: Tw.NTV_PAGE_KEY.HOME_WELCOME }, $.proxy(this._onAppCreated, this));
 
@@ -690,10 +702,11 @@ Tw.MainHome.prototype = {
     this._closeNoti();
   },
   _onClickGoNoti: function (noti, nonShow) {
-    this._onClickCloseNoti(nonShow);
     if ( noti.linkTrgtClCd === '1' ) {
+      this._onClickCloseNoti(nonShow);
       this._historyService.goLoad(noti.linkUrl);
     } else if ( noti.linkTrgtClCd === '2' ) {
+      this._onClickCloseNoti(nonShow);
       Tw.CommonHelper.openUrlExternal(noti.linkUrl);
     }
   },
