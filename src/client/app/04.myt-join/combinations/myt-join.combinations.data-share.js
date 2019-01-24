@@ -23,7 +23,7 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
   },
 
   bindEvent: function() {
-    this.$container.on('click', '.bt-blue1', $.proxy(this._openSharePopup, this));
+    this.$container.on('click', '.fe-share-data', $.proxy(this._openSharePopup, this));
   },
 
   _openSharePopup: function() {
