@@ -28,8 +28,16 @@ class RedisService {
       prefix: 'session:'
     });
 
-    this.client = redis.createClient(this.envRedis.port, this.envRedis.host);
-    this.tosClient = redis.createClient(this.envTosRedis.port, this.envTosRedis.host);
+    this.client = redis.createClient(
+      this.envRedis.port,
+      this.envRedis.host,
+      { password: this.envRedis.password }
+    );
+    this.tosClient = redis.createClient(
+      this.envTosRedis.port,
+      this.envTosRedis.host,
+      { password: this.envRedis.password }
+    );
   }
 
   static getInstance() {
