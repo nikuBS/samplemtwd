@@ -8,7 +8,7 @@ const environment = {
     REDIS: {
       host: '61.250.19.37',
       // port: 31300,
-      port: 32300,
+      port: 31300,
       db: 0
     },
     REDIS_TOS: {
