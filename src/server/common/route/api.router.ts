@@ -357,6 +357,9 @@ class ApiRouter {
       this.redisService.getData(REDIS_KEY.QUICK_MENU + svcMgmtNum)
         .switchMap((resp) => {
           if ( resp.code === API_CODE.REDIS_SUCCESS ) {
+            if ( resp.code === API_CODE.CODE_00 ) {
+              resp.result.enableEdit = 'Y';
+            }
             throw resp;
           } else {
             return this.apiService.request(API_CMD.BFF_04_0005, {});
@@ -371,9 +374,6 @@ class ApiRouter {
           }
         })
         .subscribe((resp) => {
-          if ( resp.code === API_CODE.CODE_00 ) {
-            resp.result.enableEdit = 'Y';
-          }
           return res.json(resp);
         }, (err) => {
           return res.json(err);
