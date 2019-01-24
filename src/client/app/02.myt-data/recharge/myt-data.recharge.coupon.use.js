@@ -35,6 +35,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
     this.$numberInput.on('keyup', $.proxy(this._onNumberChanged, this));
     this.$container.on('click', '.cancel', $.proxy(this._onNumberCancel, this));
     this.$container.on('click', '#fe-btn-contacts', $.proxy(this._onClickContacts, this));
+    this.$container.on('click', '.prev-step', $.proxy(this._onCancel, this));
     this.$btnUse.on('click', $.proxy(this._onSubmitClicked, this));
   },
   _init: function () {
@@ -239,5 +240,39 @@ Tw.MyTDataRechargeCouponUse.prototype = {
   },
   _fail: function (err) {
     Tw.Error(err.code, err.msg).pop();
+  },
+  _onCancel: function () {
+    var needToPop = false;
+    if (this._currentTab === 'refill') {
+      var checked = this.$container.find('input[type=radio]:checked');
+      if (checked.length !== 0) {
+        needToPop = true;
+      }
+    } else {
+      if (this.$numberInput.val().trim() !== '') {
+        needToPop = true;
+      }
+    }
+
+    if (needToPop) {
+      var confirmed = false;
+      this._popupService.openConfirmButton(
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+        $.proxy(function () {
+          confirmed = true;
+          this._popupService.close();
+        }, this),
+        $.proxy(function () {
+          if (confirmed) {
+            this._historyService.goBack();
+          }
+        }, this),
+        Tw.BUTTON_LABEL.NO,
+        Tw.BUTTON_LABEL.YES
+      );
+    } else {
+      this._historyService.goBack();
+    }
   }
 };
