@@ -90,12 +90,10 @@ class MyTJoinMyPlanAdd extends TwViewController {
                   case PLAN_BUTTON_TYPE.SET: {
                     return addition.prodSetYn === 'Y';
                   }
-                  case PLAN_BUTTON_TYPE.SUBSCRIBE: {
-                    return addition.prodScrbYn === 'Y';
+                  default: {
+                    return false;
                   }
                 }
-
-                return true;
               })
               .sort(this._sortButtons)
           }
