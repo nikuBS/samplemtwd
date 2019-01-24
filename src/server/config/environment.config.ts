@@ -8,7 +8,8 @@ const environment = {
     REDIS: {
       host: '61.250.19.37',
       // port: 31300,
-      port: 31300,
+      port: 32300,
+      password: 'stgmtwd1@',
       db: 0
     },
     REDIS_TOS: {
@@ -37,6 +38,7 @@ const environment = {
     REDIS: {
       host: 'dev-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-dev-nod',
       port: 6379,
+      password: 'devmtwd1@',
       db: 0
     },
     REDIS_TOS: {
@@ -65,6 +67,7 @@ const environment = {
     REDIS: {
       host: 'stg-backing-redis-node-ibm-redis-ha-dev-master-svc.mt-stg-nod',
       port: 6379,
+      password: 'stgmtwd1@',
       db: 0
     },
     REDIS_TOS: {
@@ -94,6 +97,8 @@ const environment = {
       // port: 6379,
       host: '61.250.19.37',
       port: 32300,
+      // password: 'mtwdmtwd1@',
+      password: 'stgmtwd1@',
       db: 0
     },
     REDIS_TOS: {
