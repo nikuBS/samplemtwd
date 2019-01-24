@@ -50,6 +50,7 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
   },
 
   _handleOpenSharePopup: function($layer) {
+    $layer.on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
     $layer.on('click', '.radio-slide li', $.proxy(this._handleSelectAmount, this, $layer));
     $layer.on('click', '.bt-red1', $.proxy(this._handleSubmitShare, this, $layer));
   },
@@ -115,5 +116,13 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
 
   _closePopup: function() {
     this._popupService.close();
+  },
+
+  _openCancelPopup: function() {
+    this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null, this._goBack, null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+  },
+
+  _goBack: function() {
+    history.back();
   }
 };
