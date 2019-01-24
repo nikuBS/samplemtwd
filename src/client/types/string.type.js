@@ -1633,3 +1633,10 @@ Tw.ROAMING_BPCP = {
 Tw.POSTCODE_MESSAGE = {
   NONE: '건물명 없음'
 };
+
+Tw.ROAMING_RESERVATION_STATE ={
+  11 : '예약 대기 중',
+  12 : '예약 완료',
+  16 : '미수령',
+  17 : '예약 취소'
+}
