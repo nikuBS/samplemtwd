@@ -1,0 +1,18 @@
+{
+  "benefit.min.js": "benefit.js",
+  "common.min.js": "common.js",
+  "component.min.js": "component.js",
+  "style-idpt.min.css": "style-idpt.css",
+  "style.min.css": "style.css",
+  "customer.min.js": "customer.js",
+  "script.min.js": "script.js",
+  "main.min.js": "main.js",
+  "membership.min.js": "membership.js",
+  "myt-data.min.js": "myt-data.js",
+  "myt-fare.min.js": "myt-fare.js",
+  "myt-join.min.js": "myt-join.js",
+  "product.min.js": "product.js",
+  "testold.min.js": "testold.js",
+  "tevent.min.js": "tevent.js",
+  "util.min.js": "util.js"
+}
