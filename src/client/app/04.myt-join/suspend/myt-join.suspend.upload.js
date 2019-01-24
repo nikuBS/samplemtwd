@@ -5,6 +5,7 @@
  */
 Tw.MytJoinSuspendUpload = function () {
   this._popupService = Tw.Popup;
+  this._nativeService = Tw.Native;
 };
 Tw.MytJoinSuspendUpload.DEFAULT_FILE = { 'attr': 'name="file" accept="image/gif, image/jpeg, image/png, .doc, .docx, .pdf, .hwp"' };
 Tw.MytJoinSuspendUpload.prototype = {
@@ -38,6 +39,13 @@ Tw.MytJoinSuspendUpload.prototype = {
   },
 
   _showUploadPopup: function () {
+    // 모바일웹 4.4 버젼은 파일 업로드 미지원
+    if ( !Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
+      // Not Supported File Upload
+      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_SUPPORT_FILE_UPLOAD);
+      return;
+    }
+
     this._popupService.open({
       hbs: 'CS_04_01_L02',
       inputfile_num: this._fileInfo,
@@ -47,6 +55,7 @@ Tw.MytJoinSuspendUpload.prototype = {
       ]
 
     }, $.proxy(this._openUploadFile, this), $.proxy(this._reset, this), 'upload');
+
   },
 
   _openUploadFile: function ($popupContainer) {
@@ -56,7 +65,43 @@ Tw.MytJoinSuspendUpload.prototype = {
     this.$inputFile.on('change', $.proxy(this._onChangeFile, this));
     this.$btUpload.on('click', $.proxy(this._onClickOk, this));
     this.$btFile.on('click', $.proxy(this._onClickFileButton, this));
+
     this.$btUpload.attr('disabled', true);
+
+    if ( Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
+      this.$inputFile.css('display', 'none');
+      this._nativeUploaded = [this._fileCount];
+    }
+  },
+
+  _openCustomFileChooser: function ($target) {
+    // var $target = $(e.currentTarget);
+
+    if ( this._isLowerVersionAndroid() ) {
+      this._nativeService.send(Tw.NTV_CMD.OPEN_FILE_CHOOSER, {
+        dest: 'suspend',
+        acceptExt: Tw.MytJoinSuspendUpload.DEFAULT_FILE,
+        limitSize: Tw.MAX_FILE_SIZE.toString()
+      }, $.proxy(this._nativeFileChooser, this, $target));
+    }
+  },
+
+  _nativeFileChooser: function ($target, response) {
+    if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
+      var params = response.params;
+      var fileInfo = params.fileData.result[0];
+
+      if(!this._validateFile(fileInfo)){
+        return;
+      }
+
+      if ( fileInfo ) {
+        var $elFileName = $target.find('input.fileview');
+        $elFileName.val(fileInfo.originalName);
+      }
+      this._nativeUploaded[$target.data('index')] = fileInfo;
+      this._setFileButton($target, false);
+    }
   },
 
   _reset: function () {
@@ -98,13 +143,18 @@ Tw.MytJoinSuspendUpload.prototype = {
   },
   _onClickOk: function () {
     if ( this._callback ) {
-      var uploadFile = [];
-      this.$inputFile.each(function () {
-        if ( this.files.length !== 0 ) {
-          uploadFile.push(this.files[0]);
-        }
-      });
-      this._callback(uploadFile);
+
+      if ( Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
+        this._callback(this._nativeUploaded, true);
+      }else{
+        var uploadFile = [];
+        this.$inputFile.each(function () {
+          if ( this.files.length !== 0 ) {
+            uploadFile.push(this.files[0], false);
+          }
+        });
+        this._callback(uploadFile);
+      }
     }
     this._popupService.close();
   },
@@ -112,7 +162,21 @@ Tw.MytJoinSuspendUpload.prototype = {
   _onClickFileButton: function (e) {
     var $btFile = $(e.target);
     var $inputBox = $btFile.parents('.inputbox');
-    this._setFileButton($inputBox, true);
+    if($inputBox.find('input.file').attr('disabled')){// 파일삭제
+      // 파일삭제시 input 처리
+      //TOOD 파일 삭제
+      this._setFileButton($inputBox, true);
+
+    }else{
+      if( Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ){
+        this._openCustomFileChooser($inputBox);
+      }
+    }
+  },
+
+  _isLowerVersionAndroid: function () {
+    var androidVersion = Tw.BrowserHelper.getAndroidVersion();
+    return androidVersion && androidVersion.indexOf('4.4') !== -1;
   },
 
   _setFileButton: function ($inputBox, addable) {
