@@ -41,6 +41,7 @@ Tw.ProductWireplanJoin.prototype = {
   _convConfirmOptions: function() {
     this._confirmOptions = $.extend(this._confirmOptions, {
       isTerm: false,
+      isNoticeList: true,
       title: Tw.PRODUCT_TYPE_NM.JOIN,
       applyBtnText: Tw.BUTTON_LABEL.JOIN,
       joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,

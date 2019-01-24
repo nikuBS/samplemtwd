@@ -41,6 +41,7 @@ Tw.ProductWireplanTerminate.prototype = {
     this._confirmOptions = $.extend(this._confirmOptions, {
       isTerm: true,
       isWireplan: true,
+      isNoticeList: true,
       title: Tw.PRODUCT_TYPE_NM.TERMINATE,
       applyBtnText: Tw.BUTTON_LABEL.TERMINATE,
       joinTypeText: Tw.PRODUCT_TYPE_NM.TERMINATE,
