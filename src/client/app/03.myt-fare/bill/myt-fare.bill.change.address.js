@@ -117,6 +117,7 @@ Tw.MyTFareBillChangeAddress.prototype = {
     }
   },
   _isChanged: function () {
+    this._checkIsChangedDetailAddress();
     return Tw.FormatHelper.isEmpty(this.$container.find('.fe-phone').val()) || this._phoneModifyYn === 'Y' || this._addrModifyYn === 'Y';
   },
   _closePop: function () {
