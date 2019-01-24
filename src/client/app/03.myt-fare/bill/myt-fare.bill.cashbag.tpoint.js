@@ -316,10 +316,12 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
       }
     }
 
-    if (this.$selectedTab.attr('id') === 'tab1-tab') {
-      isChanged = !Tw.FormatHelper.isEmpty(this.$point.val()) || !Tw.FormatHelper.isEmpty(this.$pointPw.val());
-    } else {
-      isChanged = true;
+    if (!isChanged) {
+      if (this.$selectedTab.attr('id') === 'tab1-tab') {
+        isChanged = !Tw.FormatHelper.isEmpty(this.$point.val()) || !Tw.FormatHelper.isEmpty(this.$pointPw.val());
+      } else {
+        isChanged = true;
+      }
     }
     return isChanged;
   },
