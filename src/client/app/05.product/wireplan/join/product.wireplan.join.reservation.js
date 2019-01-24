@@ -557,7 +557,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
     var wireMemberList = resp.result.combinationWireMemberList.map(function(item) {
       return {
         name: item.custNm,
-        number: null,
+        number: Tw.SVC_CD[item.svcCd],
         fam: {}
       };
     });
