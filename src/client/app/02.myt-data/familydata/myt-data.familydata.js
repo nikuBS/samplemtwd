@@ -62,6 +62,7 @@ Tw.MyTDataFamily.prototype = {
 
   _handleOpenChangeLimitation: function(mgmtNum, limitation, $layer) {
     $layer.on('click', '.bt-red1', $.proxy(this._handleSubmitLimitation, this, mgmtNum, limitation));
+    $layer.on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
     $layer.on('change', 'input[type="radio"]', $.proxy(this._handleChangeLimitType, this, $layer));
     $layer.on('keyup', 'span.input input', $.proxy(this._handleChangeLimitation, this, $layer));
   },
@@ -108,5 +109,13 @@ Tw.MyTDataFamily.prototype = {
     var value = e.currentTarget.value;
     $layer.find('.bt-red1 > button').attr('disabled', value.length === 0);
     this._limitation = value;
+  },
+
+  _openCancelPopup: function() {
+    this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null, this._goBack, null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+  },
+
+  _goBack: function() {
+    history.back();
   }
 };

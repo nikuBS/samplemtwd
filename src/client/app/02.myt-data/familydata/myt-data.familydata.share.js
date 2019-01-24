@@ -28,6 +28,7 @@ Tw.MyTDataFamilyShare.prototype = {
   _bindEvent: function() {
     this.$container.on('click', '.btn-type01', $.proxy(this._addShareData, this));
     this.$container.on('click', '.cancel', $.proxy(this._validateShareAmount, this));
+    this.$container.on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
     this.$amountInput.on('focusout', $.proxy(this._validateShareAmount, this));
     this.$amountInput.on('keyup', $.proxy(this._validateShareAmount, this));
   },
@@ -70,5 +71,13 @@ Tw.MyTDataFamilyShare.prototype = {
 
   _setDisableSubmit: function(disable) {
     disable !== !!this.$submitBtn.attr('disabled') && this.$submitBtn.attr('disabled', disable);
+  },
+
+  _openCancelPopup: function() {
+    this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null, this._goBack, null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+  },
+
+  _goBack: function() {
+    history.back();
   }
 };
