@@ -60,8 +60,8 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
       return;
     }
     var reuqestPhoneNum = this.$inputElement.val().replace(/\-/g,'');
-    var phonReg = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
-    if(phonReg.test(reuqestPhoneNum)){
+    //var phonReg = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
+    if(Tw.FormatHelper.isPhoneNum(reuqestPhoneNum)){
       this._requestOrder('add',reuqestPhoneNum);
     }else{
       this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);

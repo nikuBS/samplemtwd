@@ -24,7 +24,7 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
   _bindBtnEvents: function () {
     this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
     this.$container.on('click','.bt-fixed-area #do_confirm',$.proxy(this._confirmInformationSetting, this));
-    this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._historyService.go,this));
+    this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._historyService.goBack,this._historyService));
   },
   _getDateArrFromToDay : function(range,format){
     var dateFormat = this._showDateFormat;
