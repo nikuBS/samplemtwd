@@ -139,7 +139,7 @@ Tw.CHART_UNIT = {
 Tw.SVC_CD = {
   I: '인터넷',
   P: '집전화',
-  T: 'TV'
+  T: 'IPTV'
 };
 
 Tw.FARE_CHART_LEGEND = ['청구', '할인'];
