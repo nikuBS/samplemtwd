@@ -59,7 +59,7 @@ Tw.MytJoinCustpassword.prototype = {
     this._chkedpwd = this._validatePwdInput('#pwd-input1');
     if(!this._chkedpwd) return;
 
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading(this._currentHash, 'grey', true);
 
     this._pwdCheckService.check(
       this._chkedpwd,
@@ -82,12 +82,12 @@ Tw.MytJoinCustpassword.prototype = {
     this._currentHash = this._HASH_STEP_CHANGE;
 
     this._resetPwdInput('input:password');
-    Tw.CommonHelper.endLoading('.container');
+    Tw.CommonHelper.endLoading(this._currentHash);
   },
 
   _onCheckPwdFail : function(/*res, errCnt, unexpectedError*/){
     $('#pwd-input1').parents('.inputbox').addClass('error');
-    Tw.CommonHelper.endLoading('.container');
+    Tw.CommonHelper.endLoading(this._currentHash);
   },
 
   /**
@@ -247,7 +247,7 @@ Tw.MytJoinCustpassword.prototype = {
       data.svcPwd = this._chkedpwd; // 변경
     }
 
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading(this._currentHash, 'grey', true);
     this._apiService
       .request(api, data)
       .done($.proxy(this._onApiSuccess, this))
@@ -260,7 +260,7 @@ Tw.MytJoinCustpassword.prototype = {
    * @private
    */
   _onApiSuccess: function (params) {
-    Tw.CommonHelper.endLoading('.container');
+    Tw.CommonHelper.endLoading(this._currentHash);
     Tw.Logger.info(params);
     if ( params.code === Tw.API_CODE.CODE_00 ) {
 
@@ -277,7 +277,7 @@ Tw.MytJoinCustpassword.prototype = {
       // ICAS3215	고객보호비밀번호 오입력 5회(잠김 예정)
       // ICAS3216	고객보호비밀번호 기 잠김 (지점 내점 안내 노출)
       if ( params.code === 'ICAS3216' ) {
-        this._popupService.openAlert(params.code, Tw.MYT_JOIN_CUSTPASS.BLOCKED_PWD);
+        this._popupService.openAlert(Tw.MYT_JOIN_CUSTPASS.BLOCKED_PWD);
       } else {
         Tw.Error(params.code, params.msg).pop();
       }
@@ -285,7 +285,7 @@ Tw.MytJoinCustpassword.prototype = {
   },
 
   _onApiError: function (params) {
-    Tw.CommonHelper.endLoading('.container');
+    Tw.CommonHelper.endLoading(this._currentHash);
     Tw.Error(params.code, params.msg).pop();
   },
 
