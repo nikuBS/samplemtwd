@@ -795,7 +795,7 @@ Tw.MainHome.prototype = {
     if ( $quickMenuEl.length > 0 && list.length > 0 ) {
       var $quickTemp = $('#fe-home-quick');
       var tplQuick = Handlebars.compile($quickTemp.html());
-      $quickMenuEl.html(tplQuick({ list: list, isLogin: isLogin }));
+      $quickMenuEl.html(tplQuick({ list: list, enableEdit: quickMenu.enableEdit === 'Y' }));
     } else {
       if ( isLogin ) {
         var $quickEmptyTemp = $('#fe-home-quick-empty');

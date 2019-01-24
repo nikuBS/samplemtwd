@@ -122,7 +122,6 @@ gulp.task('js-component-client', function () {
     .pipe(rename(manifest['component.min.js']))
     .on('error', function (err) {
       gutil.log(gutil.colors.red('[Error]'), err.toString());
-      console.log(manifest);
     })
     .pipe(gulp.dest(dist + 'js'));
 });
@@ -143,7 +142,6 @@ gulp.task('js-util-client', function () {
     .pipe(rename(manifest['util.min.js']))
     .on('error', function (err) {
       gutil.log(gutil.colors.red('[Error]'), err.toString());
-      console.log(manifest);
     })
     .pipe(gulp.dest(dist + 'js'));
 });
@@ -234,8 +232,8 @@ gulp.task('js-rb', function () {
 
 gulp.task('css-rb', function () {
   return gulp.src([
-    'src/client/right-brain/css/**/*.css',
-    '!src/client/right-brain/css/**/*.min.css'])
+    'src/client/web-contents/css/**/*.css',
+    '!src/client/web-contents/css/**/*.min.css'])
   // .pipe(base64({
   //   baseDir: 'src/client/web-contents/',
   //   extensions: ['svg', 'png', /\.jpg#datauri$/i],
@@ -260,8 +258,8 @@ gulp.task('css-rb', function () {
 
 gulp.task('css-idpt', function() {
   return gulp.src([
-    'src/client/right-brain/css/**/idpt-reset-mobile.css',
-    'src/client/right-brain/css/**/idpt-service-mobile.css'])
+    'src/client/web-contents/css/**/idpt-reset-mobile.css',
+    'src/client/web-contents/css/**/idpt-service-mobile.css'])
     .pipe(concat('style-idpt.css'))
     // .pipe(imagehash())
     .pipe(cleanCSS())
