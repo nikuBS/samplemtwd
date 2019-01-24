@@ -65,7 +65,7 @@ const environment = {
     CDN_MANIFEST: 'http://203.236.19.151',
     SHORTCUT: 'skt.sh',
     REDIS: {
-      host: 'stg-backing-redis-node-ibm-redis-ha-dev-master-svc.mt-stg-nod',
+      host: 'stg-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-stg-nod',
       port: 6379,
       password: 'stgmtwd1@',
       db: 0
