@@ -343,9 +343,12 @@ class ApiRouter {
 
   private getQuickMenu(req: Request, res: Response, next: NextFunction) {
     const svcInfo = this.loginService.getSvcInfo(req);
-    if ( FormatHelper.isEmpty(svcInfo) ) {
+    if ( FormatHelper.isEmpty(svcInfo) || FormatHelper.isEmpty(svcInfo.svcMgmtNum) ) {
       this.redisService.getData(REDIS_KEY.QUICK_DEFAULT + 'N')
         .subscribe((resp) => {
+          if ( resp.code === API_CODE.CODE_00 ) {
+            resp.result.enableEdit = 'N';
+          }
           return res.json(resp);
         });
     } else {
@@ -368,6 +371,9 @@ class ApiRouter {
           }
         })
         .subscribe((resp) => {
+          if ( resp.code === API_CODE.CODE_00 ) {
+            resp.result.enableEdit = 'Y';
+          }
           return res.json(resp);
         }, (err) => {
           return res.json(err);
