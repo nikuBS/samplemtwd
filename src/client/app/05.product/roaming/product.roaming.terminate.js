@@ -32,7 +32,7 @@ Tw.ProductRoamingTerminate.prototype = {
     this._$individualAgreeElement = this.$rootContainer.find('.individual.checkbox>input');
     this.$rootContainer.on('click','.agree-view',$.proxy(this._showDetailContent,this));
     this.$rootContainer.on('click','#do_confirm',$.proxy(this._doJoin,this));
-    this.$rootContainer.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._goPlan,this,-1));
+    this.$rootContainer.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._goPlan,this));
     this.$rootContainer.on('click','.tip-view',$.proxy(this._showBffToolTip,this));
     if(this._prodBffInfo.agreeCnt<=0){
       this.$rootContainer.find('#do_confirm').removeAttr('disabled');
@@ -82,7 +82,11 @@ Tw.ProductRoamingTerminate.prototype = {
     $element.parent().attr('aria-checked',value==='checked'?true:false);
   },
   _doJoin : function () {
-    this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.BUTTON, null, $.proxy(this._confirmInfo,this));
+    //this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.BUTTON, null, $.proxy(this._confirmInfo,this));
+    this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.BUTTON, Tw.BUTTON_LABEL.CLOSE,
+      null,
+      $.proxy(this._confirmInfo,this),
+      null);
   },
   _confirmInfo : function () {
     this._popupService.close();
@@ -105,7 +109,7 @@ Tw.ProductRoamingTerminate.prototype = {
             data : completePopupData
           },
           $.proxy(this._bindCompletePopupEvt,this),
-          null,
+          $.proxy(this._goPlan,this),
           'complete');
       }else{
         this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
@@ -117,13 +121,14 @@ Tw.ProductRoamingTerminate.prototype = {
   },
   _bindCompletePopupEvt : function(popuEvt){
     $(popuEvt).on('click','.btn-round2',$.proxy(this._goMyInfo,this));
-    $(popuEvt).on('click','.btn-floating',$.proxy(this._goPlan,this,-2));
+    $(popuEvt).on('click','.btn-floating',$.proxy(this._goPlan,this));
   },
   _goMyInfo : function(){
     this._historyService.goLoad('/product/roaming/my-use');
   },
-  _goPlan : function(idx){
-    this._historyService.go(idx);
+  _goPlan : function(){
+    this._popupService.closeAll();
+    this._historyService.goBack();
   },
   _arrangeAgree : function(data){
     var targetObj;

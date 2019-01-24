@@ -25,7 +25,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
     this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
     this.$container.on('click', '.bt-dropdown.time', $.proxy(this._btnTimeEvent, this));
     this.$container.on('click','.bt-fixed-area #do_confirm',$.proxy(this._confirmInformationSetting, this));
-    this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._historyService.go,this));
+    this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._historyService.goBack,this._historyService));
   },
   _getDateArrFromToDay : function(range,format){
     var dateFormat = this._showDateFormat;
@@ -206,13 +206,13 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
           settingType : data.processNm,
           btnNmList : [Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE]
         };
-        this._popupService.open({
+        $containerData._popupService.open({
             hbs: 'complete_product_roaming',
             layer: true,
             data : completePopupData
           },
           $.proxy($containerData._bindCompletePopupBtnEvt,this,$containerData),
-          null,
+          $.proxy($containerData._goPlan,$containerData),
           'complete');
       }else{
         this._popupService.openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
@@ -223,23 +223,24 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
   },
   _bindCompletePopupBtnEvt : function($args1,$args2){
     $($args2).on('click','.btn-round2',$.proxy($args1._goMyInfo,$args1));
-    $($args2).on('click','.btn-floating',$.proxy($args1._goPlan,$args1,-3));
+    $($args2).on('click','.btn-floating',$.proxy($args1._goPlan,$args1));
   },
   _goMyInfo : function(){
     this._historyService.goLoad('/product/roaming/my-use');
   },
-  _goPlan : function (idx) {
-    this._historyService.go(idx);
+  _goPlan : function () {
+    this._popupService.closeAll();
+    this._historyService.goBack();
   },
   _showCancelAlart : function (){
     var alert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A1;
-    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES,
-      $.proxy(this._bindCancelPopupEvent,this),
-      $.proxy(this._popupService.close,this),
+    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, alert.BUTTON, Tw.BUTTON_LABEL.CLOSE,
+      null,
+      $.proxy(this._goPlan,this),
       null);
   },
   _bindCancelPopupEvent : function (popupLayer) {
-    $(popupLayer).on('click','.pos-left>button',$.proxy(this._goPlan,this,-1));
+    $(popupLayer).on('click','.pos-left>button',$.proxy(this._goPlan,this));
   },
   _confirmInformationSetting : function () {
     var startDtIdx = parseInt(this.$container.find('#start_date').attr('data-idx'),10);
@@ -268,7 +269,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
       joinType : 'setup'
 
     };
-    new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,null,'confirm_data',this);
+    new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,this._showCancelAlart,'confirm_data',this);
 
   },
   _tooltipInit : function (prodId) {

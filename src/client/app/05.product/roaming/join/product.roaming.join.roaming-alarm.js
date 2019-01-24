@@ -60,13 +60,13 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
       return;
     }
     var tempPhoneNum = this.$inputElement.val().split('-');
-    var phonReg = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
+    //var phonReg = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
     var phoneObj = {
       'serviceNumber1' : tempPhoneNum[0],
       'serviceNumber2' : tempPhoneNum[1],
       'serviceNumber3' : tempPhoneNum[2]
     };
-    if(!phonReg.test(phoneObj.serviceNumber1+phoneObj.serviceNumber2+phoneObj.serviceNumber3)){
+    if(!Tw.FormatHelper.isPhoneNum(phoneObj.serviceNumber1+phoneObj.serviceNumber2+phoneObj.serviceNumber3)){
       this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
       return;
     }
@@ -170,13 +170,13 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
           settingType : data.processNm,
           btnNmList : [Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE]
         };
-        this._popupService.open({
+        $containerData._popupService.open({
             hbs: 'complete_product_roaming',
             layer: true,
             data : completePopupData
           },
           $.proxy($containerData._bindCompletePopupBtnEvt,this,$containerData),
-          null,
+          $.proxy($containerData._goPlan,$containerData),
           'complete');
       }else{
         this._openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
@@ -187,7 +187,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
   },
   _bindCompletePopupBtnEvt : function(args1,args2){
     $(args2).on('click','.btn-round2',$.proxy(args1._goMyInfo,args1));
-    $(args2).on('click','.btn-floating',$.proxy(args1._goPlan,args1,-3));
+    $(args2).on('click','.btn-floating',$.proxy(args1._goPlan,args1));
   },
   _goMyInfo : function(){
     this._historyService.goLoad('/product/roaming/my-use');
@@ -195,14 +195,15 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
   _goBack : function(){
     this._historyService.goBack();
   },
-  _goPlan : function (idx) {
-    this._historyService.go(idx);
+  _goPlan : function () {
+    this._popupService.closeAll();
+    this._historyService.goBack();
   },
   _showCancelAlart : function (){
     var alert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A1;
-    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES,
-      $.proxy(this._bindCancelPopupEvent,this),
-      $.proxy(this._popupService.close,this),
+    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, alert.BUTTON, Tw.BUTTON_LABEL.CLOSE,
+      null,
+      $.proxy(this._goPlan,this),
       null);
   },
   _openAlert : function (msg,title) {
@@ -217,7 +218,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     this.$addBtn.css({'pointer-events':'none','background':'#3b98e6'});
   },
   _bindCancelPopupEvent : function (popupLayer) {
-    $(popupLayer).on('click','.pos-left>button',$.proxy(this._goPlan,this,-1));
+    $(popupLayer).on('click','.pos-left>button',$.proxy(this._goPlan,this));
   },
   _confirmInformationSetting : function () {
     var userJoinInfo = {
@@ -239,7 +240,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
       joinType : 'alarm'
     };
 
-    new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,null,'confirm_data',this);
+    new Tw.ProductRoamingJoinConfirmInfo(this.$container,data,this._doJoin,this._showCancelAlart,'confirm_data',this);
 
   }
 

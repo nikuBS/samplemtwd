@@ -441,6 +441,11 @@ Tw.FormatHelper = (function () {
     return returnStr;
   };
 
+  var isPhoneNum = function (str) {
+    var phoneRegExp = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
+    return phoneRegExp.test(str);
+  }
+
   function dataURLtoFile(dataurl, filename) {
     var arr = dataurl.split(',');
     var mime                                        = arr[0].match(/:(.*?);/)[1],
@@ -496,6 +501,7 @@ Tw.FormatHelper = (function () {
     addCardDash: addCardDash,
     dataURLtoFile: dataURLtoFile,
     isNumber: isNumber,
-    addLineCommonPhoneNumberFormat : addLineCommonPhoneNumberFormat
+    addLineCommonPhoneNumberFormat : addLineCommonPhoneNumberFormat,
+    isPhoneNum : isPhoneNum
   };
 })();
