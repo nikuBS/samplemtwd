@@ -11,7 +11,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import { DATA_UNIT } from '../../../../types/string.type';
 import { Observable } from 'rxjs/Observable';
 
-class MyTDataFamily extends TwViewController {
+export default class MyTDataFamily extends TwViewController {
   constructor() {
     super();
   }
@@ -102,5 +102,3 @@ class MyTDataFamily extends TwViewController {
     });
   }
 }
-
-export default MyTDataFamily;

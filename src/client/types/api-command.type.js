@@ -146,7 +146,7 @@ Tw.API_CMD = {
   BFF_05_0086: { path: '/core-bill/:version/micro-pay/password-create', method: Tw.API_METHOD.POST },
   BFF_05_0087: { path: '/core-bill/:version/micro-pay/password-changes', method: Tw.API_METHOD.PUT },
   BFF_05_0089: { path: '/core-bill/:version/prepayInfo', method: Tw.API_METHOD.GET },
-  BFF_05_0091: {path: '/core-bill/:version/recent-usage-pattern', method: Tw.API_METHOD.GET },
+  BFF_05_0091: { path: '/core-bill/:version/recent-usage-pattern', method: Tw.API_METHOD.GET },
   BFF_05_0093: { path: '/core-bill/:version/micro-pay/cphist-requests', method: Tw.API_METHOD.GET },
   BFF_05_0094: { path: '/core-modification/:version/combination-discounts', method: Tw.API_METHOD.GET },
   BFF_05_0096: { path: '/core-product/:version/benefit-suggestions', method: Tw.API_METHOD.GET },
@@ -273,6 +273,7 @@ Tw.API_CMD = {
   BFF_06_0068: { path: '/core-recharge/:version/ting-permissions', method: Tw.API_METHOD.POST },
   BFF_06_0069: { path: '/core-bill/:version/pps-recharges', method: Tw.API_METHOD.DELETE },
   BFF_06_0070: { path: '/core-bill/:version/pps-data-recharges', method: Tw.API_METHOD.DELETE },
+  BFF_06_0072: { path: '/core-recharge/:version/tfamily-cancelable-data', method: Tw.API_METHOD.GET },
   BFF_06_0075: { path: '/core-bill/v1/pps-alram', method: Tw.API_METHOD.GET },
 
   // PAYMENT
@@ -380,7 +381,6 @@ Tw.API_CMD = {
 
   BFF_08_0064: { path: '/core-modification/:version/guide/contents-detail/:args0', method: Tw.API_METHOD.GET },
 
-
   //SEARCH SURVEY
   BFF_08_0070: { path: '/core-modification/v1/search/invst-append', method: Tw.API_METHOD.POST },
   BFF_08_0071: { path: '/core-modification/v1/search/invst-insert', method: Tw.API_METHOD.POST },
@@ -487,8 +487,8 @@ Tw.API_CMD = {
   BFF_10_0063: { path: '/core-product/:version/mobiles/additions-sets/:args0/seldis-sets', method: Tw.API_METHOD.POST },
 
   //SEARCH
-  SEARCH_AUTO_COMPLETE : { path : '/search/tworld/autocomplete', method : Tw.API_METHOD.GET },
-  STACK_SEARCH_USER_CLICK : { path : '/search/tworld/log/save', method : Tw.API_METHOD.GET },
+  SEARCH_AUTO_COMPLETE: { path: '/search/tworld/autocomplete', method: Tw.API_METHOD.GET },
+  STACK_SEARCH_USER_CLICK: { path: '/search/tworld/log/save', method: Tw.API_METHOD.GET },
 
   // TEST
   GET: { path: '/posts', method: Tw.API_METHOD.GET },
@@ -589,8 +589,8 @@ Tw.API_CODE = {
   BFF_0020: 'BFF0020', // 법정대리인 인증필요
 
   CERT_FAIL: 'TWM0001',
-  CERT_SELECT: 'CERT0001',   // 인증수단 선택화면으로 이동
-  CERT_SMS_BLOCK: 'CERT0002',   // SMS 인증 불가
+  CERT_SELECT: 'CERT0001', // 인증수단 선택화면으로 이동
+  CERT_SMS_BLOCK: 'CERT0002', // SMS 인증 불가
   CERT_SMS_ENABLE: 'CERT0003',
 
   CODE_99: 'RDT0099', // Circuit Open

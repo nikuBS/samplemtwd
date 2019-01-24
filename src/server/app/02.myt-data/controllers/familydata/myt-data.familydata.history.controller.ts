@@ -7,6 +7,7 @@
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import DateHelper from '../../../../utils/date.helper';
 
 export default class MyTDataFamilyHistory extends TwViewController {
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
@@ -21,7 +22,18 @@ export default class MyTDataFamilyHistory extends TwViewController {
         return resp;
       }
 
-      return resp.result.mySharePot;
+      const list = resp.result.mySharePot || [];
+      return {
+        total: list.reduce((total, history) => {
+          return total + Number(history.shrPotGbQty);
+        }, 0),
+        list: list.map(history => {
+          return {
+            ...history,
+            shrPotDonaAplyDt: DateHelper.getShortDate(history.shrPotDonaAplyDt)
+          };
+        })
+      };
     });
   }
 }
