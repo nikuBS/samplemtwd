@@ -34,6 +34,7 @@ Tw.MyTDataTing.prototype = {
     this.$btn_native_contact_list.on('click', $.proxy(this._onClickBtnAddr, this));
     this.$input_ting_receiver.on('keyup', $.proxy(this._onKeyUpTingGiftNumber, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkValidateSendingButton, this));
+    this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
   },
 
   _getRemainDataInfo: function () {
@@ -153,5 +154,24 @@ Tw.MyTDataTing.prototype = {
     }
 
     return true;
+  },
+
+  _stepBack: function () {
+    var confirmed = false;
+    this._popupService.openConfirmButton(
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+      $.proxy(function () {
+        confirmed = true;
+        this._popupService.close();
+      }, this),
+      $.proxy(function () {
+        if ( confirmed ) {
+          this._historyService.goBack();
+        }
+      }, this),
+      Tw.BUTTON_LABEL.NO,
+      Tw.BUTTON_LABEL.YES
+    );
   }
 };
