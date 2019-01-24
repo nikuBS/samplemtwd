@@ -19,7 +19,6 @@ Tw.ProductMobileplanSettingTplan = function(rootEl, prodId, displayId, currentBe
   this.$container = rootEl;
   this._cachedElement();
   this._bindEvent();
-  this._init();
 };
 
 Tw.ProductMobileplanSettingTplan.prototype = {
@@ -40,10 +39,12 @@ Tw.ProductMobileplanSettingTplan.prototype = {
   _bindEvent: function() {
     this.$inputRadioInWidgetbox.on('change', $.proxy(this._enableSetupButton, this));
     this.$btnSetupOk.on('click', $.proxy(this._procSetupOk, this));
+
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._init, this));
   },
 
   _enableSetupButton: function(e) {
-    if ($(e.currentTarget).val() === 'NA00006116') {
+    if ($(e.currentTarget).val() === 'NA00006116' && this._currentBenefitProdId !== 'NA00006116') {
       return this._selectSmartWatchItem();
     } else {
       this._smartWatchLine = null;
