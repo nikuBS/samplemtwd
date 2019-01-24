@@ -228,20 +228,21 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     // this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=auto&' + $.param(htParams));
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
+      Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_DATA.COMPLETE_RECHARGE);
       this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=auto&' + $.param(htParams));
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
   },
 
-  _onCompleteRechargeAutoChange: function (res) {
-    this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=auto&' + $.param(this.amountInfo));
-    // if ( res.code === Tw.API_CODE.CODE_00 ) {
-    //   this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete');
-    // } else {
-    //   Tw.Error(res.code, res.msg).pop();
-    // }
-  },
+  // _onCompleteRechargeAutoChange: function (res) {
+  //   this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=auto&' + $.param(this.amountInfo));
+  //   // if ( res.code === Tw.API_CODE.CODE_00 ) {
+  //   //   this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete');
+  //   // } else {
+  //   //   Tw.Error(res.code, res.msg).pop();
+  //   // }
+  // },
 
   _stepBack: function () {
     var confirmed = false;
