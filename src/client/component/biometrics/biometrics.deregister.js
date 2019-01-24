@@ -31,7 +31,7 @@ Tw.BiometricsDeregister.prototype = {
     if ( this._cancelFido ) {
       this._nativeService.send(Tw.NTV_CMD.SAVE, {
         key: Tw.NTV_STORAGE.FIDO_USE,
-        value: Tw.NTV_FIDO_USE.DISABLE
+        value: 'N'
       });
       this._nativeService.send(Tw.NTV_CMD.FIDO_DEREGISTER, {}, $.proxy(this._onFidoDeRegister, this));
     }

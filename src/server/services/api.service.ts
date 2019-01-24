@@ -477,6 +477,8 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           return this.loginService.setSvcInfo(resp.result);
+        } else if ( resp.code === 'BFF0030' ) {
+          return this.loginService.setSvcInfo(new SvcInfoModel({}));
         } else {
           throw resp;
         }

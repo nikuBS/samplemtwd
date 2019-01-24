@@ -615,8 +615,14 @@ Tw.MainHome.prototype = {
     Tw.CommonHelper.resetHeight($('.home-slider .home-slider-belt')[0]);
   },
   _getWelcomeMsg: function () {
-    this._apiService.request(Tw.NODE_CMD.GET_HOME_WELCOME, {})
-      .done($.proxy(this._successWelcomeMsg, this));
+    this._nativeSrevice.send(Tw.NTV_CMD.IS_APP_CREATED, { key: Tw.NTV_PAGE_KEY.HOME_WELCOME }, $.proxy(this._onAppCreated, this));
+
+  },
+  _onAppCreated: function (resp) {
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 && resp.params.value === 'Y' ) {
+      this._apiService.request(Tw.NODE_CMD.GET_HOME_WELCOME, {})
+        .done($.proxy(this._successWelcomeMsg, this));
+    }
   },
   _successWelcomeMsg: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {

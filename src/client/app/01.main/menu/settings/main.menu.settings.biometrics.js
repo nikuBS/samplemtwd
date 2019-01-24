@@ -57,7 +57,7 @@ Tw.MainMenuSettingsBiometrics.prototype = {
   },
   _onFidoUse: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
-      if ( resp.params.value === Tw.NTV_FIDO_USE.ENABLE ) {
+      if ( resp.params.value === 'Y' ) {
         this.$inputFido.attr('checked', true);
         this.$inputFido.parents('.fe-switch').addClass('on');
       } else {
@@ -74,14 +74,14 @@ Tw.MainMenuSettingsBiometrics.prototype = {
       // off
       this._nativeService.send(Tw.NTV_CMD.SAVE, {
         key: Tw.NTV_STORAGE.FIDO_USE,
-        value: Tw.NTV_FIDO_USE.DISABLE
+        value: 'N'
       });
       Tw.CommonHelper.toast(Tw.TOAST_TEXT.FIDO_NOT_USE);
     } else {
       // on
       this._nativeService.send(Tw.NTV_CMD.SAVE, {
         key: Tw.NTV_STORAGE.FIDO_USE,
-        value: Tw.NTV_FIDO_USE.ENABLE
+        value: 'Y'
       });
       Tw.CommonHelper.toast(Tw.TOAST_TEXT.FIDO_USE);
     }
