@@ -213,7 +213,6 @@ abstract class TwViewController {
   }
 
   private renderPage(req, res, next, path) {
-    // TODO noticeTpyCd
     const svcInfo = this._loginService.getSvcInfo();
     const allSvc = this._loginService.getAllSvcInfo();
     const childInfo = this._loginService.getChildInfo();

@@ -563,6 +563,12 @@ export enum LOGIN_TYPE {
   EASY = 'S'
 }
 
+export enum SHORTCUT_LOGIN_TYPE {
+  M = 'T',
+  S = 'S',
+  U = 'N'
+}
+
 export const MEMBERSHIP_TYPE = {
   '0': 'Leaders Club',
   '3': 'T`PLE',
