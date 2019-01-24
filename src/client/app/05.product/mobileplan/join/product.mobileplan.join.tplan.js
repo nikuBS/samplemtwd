@@ -51,7 +51,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
     this._isDisableSmartWatchLineInfo = false;
     this._smartWatchLine = null;
 
-    if (this._watchInfo.watchCase === 'C' || this._watchInfo.watchSvcList.length < 1 || true) {
+    if (this._watchInfo.watchCase === 'C' || this._watchInfo.watchSvcList.length < 1) {
       return this._popupService.openConfirmButton(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A73.TITLE,
         $.proxy(this._enableSmartWatchLineInfo, this), $.proxy(this._procClearSmartWatchLineInfo, this), Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
     }

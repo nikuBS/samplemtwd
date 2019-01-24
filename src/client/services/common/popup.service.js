@@ -122,6 +122,7 @@ Tw.PopupService.prototype = {
       url: Tw.Environment.cdn + '/hbs/',
       cdn: Tw.Environment.cdn
     });
+    skt_landing.action.checkScroll.lockScroll();
     skt_landing.action.popup.open(option, $.proxy(this._onOpenPopup, this), $.proxy(this._onFailPopup, this, {
       option: option,
       openCallback: this._openCallback,
@@ -356,6 +357,7 @@ Tw.PopupService.prototype = {
         if ( !Tw.FormatHelper.isEmpty(prevHash.closeCallback) ) {
           setTimeout(function () {
             prevHash.closeCallback();
+            skt_landing.action.checkScroll.unLockScroll();
           }, 0);
         }
       }, this));
