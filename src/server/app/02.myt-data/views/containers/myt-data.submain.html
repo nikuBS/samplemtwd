@@ -131,12 +131,10 @@
                 </div>
                 <div class="list-comp-history type01">
                     <ul class="comp-box">
-                        <% for (var i=0; i < data.breakdownList.length; i++) { %>
                         <% if (data.svcInfo.svcAttrCd === 'M2') { %>
-                        <%- include('../components/submain/myt-data.submain.breakdown-pps.html', { data: data.breakdownList[i] }); %>
+                        <%- include('../components/submain/myt-data.submain.breakdown-pps.html', { data: data.breakdownList }); %>
                         <% } else { %>
-                        <%- include('../components/submain/myt-data.submain.breakdown.html', { data: data.breakdownList[i] }); %>
-                        <% } %>
+                        <%- include('../components/submain/myt-data.submain.breakdown.html', { data: data.breakdownList }); %>
                         <% } %>
                     </ul>
                 </div>

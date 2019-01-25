@@ -38,10 +38,10 @@ Tw.BenefitSelectContract.prototype = {
       isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this.data.prodId) === -1,
       isAgreement: (this.data.joinInfoTerm.stipulationInfo && this.data.joinInfoTerm.stipulationInfo.existsCount > 0)
     });
-    var box = $(this).closest('.radiobox');
-    this.$radioGroup.is(':checked') ?
-      box.addClass('checked').attr('aria-checked', 'true')
-      : box.removeClass('checked').attr('aria-checked', 'false');
+    setTimeout($.proxy(function() {
+      var box = this.$radioGroup.find('li').closest('.radiobox');
+      box.removeClass('checked').attr('aria-checked', 'false');
+    }, this), 100);
   },
 
   _onRadioGroupClicked: function (evt) {
