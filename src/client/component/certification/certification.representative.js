@@ -77,7 +77,7 @@ Tw.CertificationRepresentative.prototype = {
   },
   _onCloseCert: function () {
     if ( !Tw.FormatHelper.isEmpty(this._callbackParam) ) {
-      this._callback(this._callbackParam, this.deferred, this._command);
+      this._callback(this._callbackParam, this._deferred, this._command);
     }
   },
   _onClickList: function () {
