@@ -25,7 +25,7 @@
                             <li>
                                 {{#if one}}
                                 <label class="tit">휴대폰번호</label>
-                                <div class="inputbox bt-add pt6">
+                                <div class="inputbox bt-add inp-btn pt6">
                                 <span class="input">
                                     <input id="fe-input-mdn" type="text" value="{{ list.0.txt }}" title="휴대폰번호" aria-describedby="aria-phone-tx1" readonly="readonly">
                                 </span>
@@ -35,11 +35,11 @@
                                 <span id="fe-txt-cert" class="tx-box none">
                                     <span id="aria-phone-tx1" class="validation-txt">정상적으로 발송되었습니다.</span><!-- 정상 작동되지 않을때는 .none 추가 -->
                                 </span>
+                                </div>
                                 <span class="tx-box">
                                     <span id="fe-error-cert-time" class="error-txt none">재전송 제한시간(1분)이 지난 후에 이용해 주세요.</span>
                                     <span id="fe-error-cert-cnt" class="error-txt none">제한시간 내 인증번호를 보낼 수 있는 횟수가 넘었습니다.</span>
                                 </span>
-                                </div>
                                 {{else}}
                                 <label class="tit">휴대폰번호 선택</label>
                                 <div class="rdo-list-type pt6">
