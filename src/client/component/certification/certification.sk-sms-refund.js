@@ -12,6 +12,8 @@ Tw.CertificationSkSmsRefund = function () {
   this._isCertRequestSuccess = false;
   this._certBtnStatus = 0; // 0: 받기, 1: 시간연장하기, 2: 다시받기
 
+  this._timer = undefined;
+
   this._seqNo = undefined;
 };
 
@@ -82,6 +84,8 @@ Tw.CertificationSkSmsRefund.prototype = {
       this._apiService.request(Tw.API_CMD.BFF_01_0051, data)
         .done($.proxy(function (res) {
           if (res.code === Tw.API_CODE.CODE_00) {
+            clearTimeout(this._timer);
+            this._timer = setTimeout($.proxy(this._timeExpired, this), Tw.SMS_CERT_TIME);
             this._isCertRequestSuccess = true;
             this._seqNo = res.result.seqNo;
             this._showCertSuccess();
@@ -137,9 +141,11 @@ Tw.CertificationSkSmsRefund.prototype = {
     }
 
     // Birth
-    if (this.$inputBirth.val().trim().length !== 6) {
+    if (this.$inputBirth.val().trim().length === 0) {
       this.$container.find('#fe-birth-error').removeClass('none');
       ret = false;
+    } else if (this.$inputBirth.val().trim().length !== 6) {
+      this.$container.find('#fe-birth-wrong').removeClass('none');
     }
 
     // Gender
@@ -241,6 +247,8 @@ Tw.CertificationSkSmsRefund.prototype = {
   },
   _showTimeExpandSuccess: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      clearTimeout(this._timer);
+      this._timer = setTimeout($.proxy(this._timeExpired, this), Tw.SMS_CERT_TIME);
       this.$container.find('.fe-cert-txt').addClass('none');
       this.$container.find('#fe-time-expanded').removeClass('none');
       this._setCertBtnText();
@@ -256,4 +264,8 @@ Tw.CertificationSkSmsRefund.prototype = {
     this.$container.find('.fe-cert-number-txt').addClass('none');
     this.$container.find('.fe-cert-number-txt.' + code).removeClass('none');
   },
+  _timeExpired: function () {
+    this._showCertNumberError('ATH2008');
+    this.$btConfirm.attr('disabled', 'disabled');
+  }
 };

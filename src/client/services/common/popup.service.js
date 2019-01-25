@@ -142,7 +142,7 @@ Tw.PopupService.prototype = {
     this._addHash(closeCallback, hashName);
     this._open(option);
   },
-  openAlert: function (contents, title, btName, closeCallback) {
+  openAlert: function (contents, title, btName, closeCallback, hash) {
     var option = {
       title: title,
       title_type: 'sub',
@@ -153,7 +153,7 @@ Tw.PopupService.prototype = {
         txt: btName || Tw.BUTTON_LABEL.CONFIRM
       }]
     };
-    this._addHash(closeCallback);
+    this._addHash(closeCallback, hash);
     this._open(option);
   },
   openConfirm: function (contents, title, confirmCallback, closeCallback) {
