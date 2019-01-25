@@ -30,10 +30,11 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     this.$selectBtn.on('click', $.proxy(this._typeActionSheetOpen, this));
     // from html DOM 주요용어 바로가기
     this.$defineUSIMBtn.on('click', $.proxy(this._USIMInfoCall, this));
+
     // 링크이동
-    this.$container.on('click', '.fe-link-external', $.proxy(this._openExternalUrl, this));
-    this.$container.on('click', '.ffe-link-internal', $.proxy(this._openInternalUrl, this));
-    this.$container.on('click', '.fe-link-inapp', $.proxy(this._openInApp, this));
+    this.$container.on('click', '.fe-link-external:not([href^="#"])', $.proxy(this._openExternalUrl, this));
+    this.$container.on('click', '.fe-link-internal:not([href^="#"])', $.proxy(this._openInternalUrl, this));
+    this.$container.on('click', '.fe-link-inapp:not([href^="#"])', $.proxy(this._openInApp, this));
 
     // from idpt
     this._bindUIEvent(this.$container);
@@ -187,7 +188,7 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
   // 유심용어 정리 바로가기 액션시트 end
 
   _bindUIEvent: function ($container) {
-    $('.idpt-tab').each(function(){
+    $('.idpt-tab', $container).each(function(){
       var tabBtn = $(this).find('li');
       $(tabBtn).click(function(){
         var i = $(this).index();

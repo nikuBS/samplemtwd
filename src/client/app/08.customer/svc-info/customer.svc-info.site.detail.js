@@ -30,7 +30,35 @@ Tw.CustomerSvcInfoSiteDetail.prototype = {
     this.$InfoBtn.on('click', $.proxy(this._typeActionSheetOpen, this));
     this.$InfoBtn.text(Tw.CUSTOMER_SITE_INFO_TYPEA_CHOICE.options[0].list[0].value).attr('value', 'A'); 
 
+    // 링크이동
+    this.$container.on('click', '.fe-link-external:not([href^="#"])', $.proxy(this._openExternalUrl, this));
+    this.$container.on('click', '.fe-link-internal:not([href^="#"])', $.proxy(this._openInternalUrl, this));
+    this.$container.on('click', '.fe-link-inapp:not([href^="#"])', $.proxy(this._openInApp, this));
+
+    // from idpt
     this._bindUIEvent(this.$container);
+  },
+
+  _openExternalUrl: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this._popupService.close();
+    Tw.CommonHelper.openUrlExternal($(e.currentTarget).attr('href'));
+  },
+
+  _openInternalUrl: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this._historyService.goLoad(location.origin + $(e.currentTarget).attr('href'));
+  },
+
+  _openInApp: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    Tw.CommonHelper.openUrlInApp(location.origin + $(e.currentTarget).attr('href'));
   },
 
   // 타입 A 일 경우에만 실행되게 됨 : 셀렉트박스 실행 start
