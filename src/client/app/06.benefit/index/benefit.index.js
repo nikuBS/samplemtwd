@@ -41,7 +41,7 @@ Tw.BenefitIndex.prototype = {
     this.$combinationPreview = this.$container.find('#fe-combination-preview');
   },
   _bindEvent: function () {
-    this.$categoryTab.find('button').on('click', $.proxy(this._onClickCategory, this));
+    // this.$categoryTab.find('button').on('click', $.proxy(this._onClickCategory, this));
     this.$container.on('click', '[data-url]', $.proxy(this._goUrl, this));
     this.$container.on('change', '[data-check-disabled]', $.proxy(this._onCheckDisabled, this));
     this.$container.on('click', '.plus, .minus', $.proxy(this._onVariations, this));
@@ -49,9 +49,9 @@ Tw.BenefitIndex.prototype = {
     this.$showDiscountBtn.on('click', $.proxy(this._onViewDiscountAmt, this));
     this.$container.on('click', '[data-benefit-id]', $.proxy(this._onClickProduct, this)); // 카테고리 하위 리스트 클릭
 
-    window.onpopstate = $.proxy(function() {
+    /*window.onpopstate = $.proxy(function() {
       this._loadTab();
-    },this);
+    },this);*/
   },
 
   // 카테고리 하위 리스트 클릭
