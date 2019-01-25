@@ -109,7 +109,7 @@ Tw.MenuComponent.prototype = {
                 if ( res.resultCode === Tw.NTV_CODE.CODE_00 ) {
                   this._checkNewTNoti();
                 }
-              }));
+              }, this));
             }
           }, this));
       } else {
