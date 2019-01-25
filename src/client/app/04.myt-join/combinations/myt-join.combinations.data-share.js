@@ -119,7 +119,7 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
   },
 
   _openCancelPopup: function() {
-    this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null, this._goBack, null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+    this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null, this._goBack, this._popupService.close, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
   },
 
   _goBack: function() {
