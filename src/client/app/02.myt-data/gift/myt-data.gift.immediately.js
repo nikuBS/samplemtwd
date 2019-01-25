@@ -18,17 +18,18 @@ Tw.MyTDataGiftImmediately = function (rootEl) {
 
 Tw.MyTDataGiftImmediately.prototype = {
   _init: function () {
-    this.reqCnt = 0;
-    this._getRemainDataInfo();
+    // this.reqCnt = 0;
+    // this._getRemainDataInfo();
   },
 
   _cachedElement: function () {
-    this.$remainQty = $('.fe-remain_data');
-    this.$wrap_auto_select_list = $('.fe-auto_select_list');
+    // this.$remainQty = $('.fe-remain_data');
+    // this.$wrap_auto_select_list = $('.fe-auto_select_list');
     this.$btnNativeContactList = $('.fe-btn_native_contact');
     this.$btnRequestSendingData = $('.fe-request_sending_data');
     this.$inputImmediatelyGift = $('.fe-input_immediately_gift');
     this.$wrap_data_select_list = $('.fe-immediately_data_select_list');
+    this.$wrap = $('.wrap');
   },
 
   _bindEvent: function () {
@@ -40,59 +41,62 @@ Tw.MyTDataGiftImmediately.prototype = {
     this.$inputImmediatelyGift.on('keyup', $.proxy(this._onKeyUpImmediatelyGiftNumber, this));
   },
 
-  _getRemainDataInfo: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: this.reqCnt }).done($.proxy(this._onSuccessRemainDataInfo, this));
-  },
+  // _getRemainDataInfo: function () {
+  //   this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: this.reqCnt }).done($.proxy(this._onSuccessRemainDataInfo, this));
+  // },
 
   _onClickDataQty: function () {
     this._checkValidateSendingButton();
   },
 
-  _onSuccessRemainDataInfo: function (res) {
-    if ( this.reqCnt > 3 ) {
-      // TODO: Alert get Info error
-      // then, go back to submain
-    }
+  // _onSuccessRemainDataInfo: function (res) {
+  //   if ( this.reqCnt > 3 ) {
+  //     // TODO: Alert get Info error
+  //     // then, go back to submain
+  //   }
+  //
+  //   if ( res.code === Tw.API_CODE.CODE_00 ) {
+  //     var result = res.result;
+  //
+  //     // MOCK DATA
+  //     // var mockDataQty = '900';
+  //     // var mockData = Tw.FormatHelper.convDataFormat(mockDataQty, 'MB');
+  //     // this.beforeDataQty = mockDataQty;
+  //     // this.$remainQty.text(mockData.data + mockData.unit);
+  //     // this._setAmountUI(Number(mockDataQty));
+  //
+  //     if ( result.giftRequestAgainYn === 'N' ) {
+  //       // API DATA
+  //       var apiDataQty = res.result.dataRemQty;
+  //       var dataQty = Tw.FormatHelper.convDataFormat(apiDataQty, 'MB');
+  //       this.beforeDataQty = apiDataQty;
+  //       this.$remainQty.text(dataQty.data + dataQty.unit);
+  //       this._setAmountUI(Number(apiDataQty));
+  //     } else {
+  //       this.reqCnt = this.reqCnt + 1;
+  //
+  //       setTimeout(function () {
+  //         this._getReceiveUserInfo();
+  //       }.bind(this), 3000);
+  //     }
+  //   } else {
+  //     this._setAmountUI(Number(0));
+  //     Tw.Error(res.code, res.msg).pop();
+  //   }
+  // },
 
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var result = res.result;
-
-      // MOCK DATA
-      // var mockDataQty = '900';
-      // var mockData = Tw.FormatHelper.convDataFormat(mockDataQty, 'MB');
-      // this.beforeDataQty = mockDataQty;
-      // this.$remainQty.text(mockData.data + mockData.unit);
-      // this._setAmountUI(Number(mockDataQty));
-
-      if ( result.giftRequestAgainYn === 'N' ) {
-        // API DATA
-        var apiDataQty = res.result.dataRemQty;
-        var dataQty = Tw.FormatHelper.convDataFormat(apiDataQty, 'MB');
-        this.beforeDataQty = apiDataQty;
-        this.$remainQty.text(dataQty.data + dataQty.unit);
-        this._setAmountUI(Number(apiDataQty));
-      } else {
-        this.reqCnt = this.reqCnt + 1;
-        this._getReceiveUserInfo();
-      }
-    } else {
-      this._setAmountUI(Number(0));
-      Tw.Error(res.code, res.msg).pop();
-    }
-  },
-
-  _setAmountUI: function (nLimitMount) {
-    var fnCheckedUI = function (nIndex, elInput) {
-      var $input = $(elInput);
-      if ( Number($input.val()) > nLimitMount ) {
-        $input.prop('disabled', true);
-        $input.parent().parent().addClass('disabled');
-      }
-    };
-
-    this.$wrap_data_select_list.find('input').each(fnCheckedUI);
-    this.$wrap_auto_select_list.find('input').each(fnCheckedUI);
-  },
+  // _setAmountUI: function (nLimitMount) {
+  //   var fnCheckedUI = function (nIndex, elInput) {
+  //     var $input = $(elInput);
+  //     if ( Number($input.val()) > nLimitMount ) {
+  //       $input.prop('disabled', true);
+  //       $input.parent().parent().addClass('disabled');
+  //     }
+  //   };
+  //
+  //   this.$wrap_data_select_list.find('input').each(fnCheckedUI);
+  //   this.$wrap_auto_select_list.find('input').each(fnCheckedUI);
+  // },
 
   _onClickBtnAddr: function () {
     this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this));
@@ -125,7 +129,7 @@ Tw.MyTDataGiftImmediately.prototype = {
   _getReceiveUserInfo: function () {
     this.befrSvcNum = this.$inputImmediatelyGift.val();
     this.opDtm = this.$inputImmediatelyGift.data('opdtm');
-
+debugger;
     var svcNum = this.$inputImmediatelyGift.val().match(/\d+/g).join('');
     var isCellPhone = Tw.FormatHelper.isCellPhone(svcNum);
 
@@ -151,7 +155,7 @@ Tw.MyTDataGiftImmediately.prototype = {
     var htParams = {
       befrSvcNum: this.$inputImmediatelyGift.val(),
       dataQty: this.$wrap_data_select_list.find('li.checked input').val(),
-      beforeDataQty: this.beforeDataQty
+      beforeDataQty: this.$wrap.triggerHandler('currentRemainDataInfo')
     };
 
     this.paramData = $.extend({}, this.paramData, htParams);
