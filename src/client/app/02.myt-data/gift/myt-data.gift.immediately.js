@@ -18,7 +18,8 @@ Tw.MyTDataGiftImmediately = function (rootEl) {
 
 Tw.MyTDataGiftImmediately.prototype = {
   _init: function () {
-    // this._getRemainDataInfo();
+    this.reqCnt = 0;
+    this._getRemainDataInfo();
   },
 
   _cachedElement: function () {
@@ -40,7 +41,7 @@ Tw.MyTDataGiftImmediately.prototype = {
   },
 
   _getRemainDataInfo: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0014, {}).done($.proxy(this._onSuccessRemainDataInfo, this));
+    this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: this.reqCnt }).done($.proxy(this._onSuccessRemainDataInfo, this));
   },
 
   _onClickDataQty: function () {
@@ -48,7 +49,14 @@ Tw.MyTDataGiftImmediately.prototype = {
   },
 
   _onSuccessRemainDataInfo: function (res) {
+    if ( this.reqCnt > 3 ) {
+      // TODO: Alert get Info error
+      // then, go back to submain
+    }
+
     if ( res.code === Tw.API_CODE.CODE_00 ) {
+      var result = res.result;
+
       // MOCK DATA
       // var mockDataQty = '900';
       // var mockData = Tw.FormatHelper.convDataFormat(mockDataQty, 'MB');
@@ -56,12 +64,17 @@ Tw.MyTDataGiftImmediately.prototype = {
       // this.$remainQty.text(mockData.data + mockData.unit);
       // this._setAmountUI(Number(mockDataQty));
 
-      // API DATA
-      var apiDataQty = res.result.dataRemQty;
-      var dataQty = Tw.FormatHelper.convDataFormat(apiDataQty, 'MB');
-      this.beforeDataQty = apiDataQty;
-      this.$remainQty.text(dataQty.data + dataQty.unit);
-      this._setAmountUI(Number(apiDataQty));
+      if ( result.giftRequestAgainYn === 'N' ) {
+        // API DATA
+        var apiDataQty = res.result.dataRemQty;
+        var dataQty = Tw.FormatHelper.convDataFormat(apiDataQty, 'MB');
+        this.beforeDataQty = apiDataQty;
+        this.$remainQty.text(dataQty.data + dataQty.unit);
+        this._setAmountUI(Number(apiDataQty));
+      } else {
+        this.reqCnt = this.reqCnt + 1;
+        this._getReceiveUserInfo();
+      }
     } else {
       this._setAmountUI(Number(0));
       Tw.Error(res.code, res.msg).pop();
