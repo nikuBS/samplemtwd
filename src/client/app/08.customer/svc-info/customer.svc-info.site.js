@@ -25,9 +25,37 @@ Tw.CustomerSvcInfoSite.prototype = {
 
   },
   _bindEvent: function () {
+    // 링크이동
+    this.$container.on('click', '.fe-link-external:not([href^="#"])', $.proxy(this._openExternalUrl, this));
+    this.$container.on('click', '.fe-link-internal:not([href^="#"])', $.proxy(this._openInternalUrl, this));
+    this.$container.on('click', '.fe-link-inapp:not([href^="#"])', $.proxy(this._openInApp, this));
+
     // from idpt
     this._bindUIEvent(this.$container);
   },
+
+  _openExternalUrl: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this._popupService.close();
+    Tw.CommonHelper.openUrlExternal($(e.currentTarget).attr('href'));
+  },
+
+  _openInternalUrl: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this._historyService.goLoad(location.origin + $(e.currentTarget).attr('href'));
+  },
+
+  _openInApp: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    Tw.CommonHelper.openUrlInApp(location.origin + $(e.currentTarget).attr('href'));
+  },
+
   _hasTab: function() {
     this.$tabWrapper = this.$container.find('.tab-linker');
     this._hasTab = this.$tabWrapper.length > 0;
