@@ -11,10 +11,9 @@
         <strong class="ti">데이터가 부족하시다면 즉시 충전해 보세요</strong>
         <ul class="list">
             <% if(usageData.data && usageData.data.isShow) { %>
-            <li><strong class="ti">잔여 데이터</strong> <em class="tx f-type c-point"><%= usageData.data.showMyRemained %></em></li>
+            <li><strong class="ti">잔여 데이터</strong> <em class="tx f-type c-point"><span class="ff-tg-medium"><%= usageData.data.showMyRemained %></span></em></li>
             <% } %>
-            <li><strong class="ti">리필쿠폰 남은 개수</strong> <em class="tx c-point"><span
-                class="f-type">{{ refillCoupons }}</span>장</em></li>
+            <li><strong class="ti">리필쿠폰 남은 개수</strong> <em class="tx c-point"><span class="f-type ff-tg-medium">{{ refillCoupons }}</span>장</em></li>
         </ul>
         <div class="btn-area">
             <button id="fe-bt-go-recharge" class="bt">충전하기</button>
