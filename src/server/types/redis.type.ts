@@ -8,7 +8,7 @@ export enum REDIS_KEY {
   PRODUCT_FILTER = 'ProductFilter:',
   PRODUCT_COMPARISON = 'ProductComparison:',
 
-  SC_URL = 'Scuturl:',
+  SC_URL = 'ScuturlApi:',
   QUICK_MENU = 'UserQuickMenuByUser:',
   QUICK_DEFAULT = 'UserQuickMenuByMbrGr:',
   TOOLTIP = 'TooltipInfo:',

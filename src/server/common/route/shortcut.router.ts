@@ -38,16 +38,13 @@ class ShortcutRouter {
   }
 
   private redirectTarget(req, res, next, target) {
-    // TODO: redis 단축 도메인 경로로 redirect
     const endDate = new Date(DateHelper.convDateCustomFormat(target.effEndDtm, 'YYYYMMDD')).getTime();
     const curDate = new Date().getTime();
-    const menuId = target.menuId;
+    const menuUrl = target.trgtUrl;
     const loginType = SHORTCUT_LOGIN_TYPE[target.scutUrlAuthClCd];
 
-    // menuId to path (redis)
-
     if ( endDate > curDate ) {
-      res.send('short cut');
+      res.redirect('/common/share/bridge?target=' + menuUrl + '&loginType=' + loginType);
     } else {
       next();
     }
