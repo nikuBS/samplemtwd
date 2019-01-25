@@ -245,12 +245,22 @@ Tw.MyTDataPrepaidVoice.prototype = {
         data: [{ list: Tw.MYT_PREPAID_AMOUNT.list.map($.proxy(fnSelectAmount, this, $elButton)) }]
       },
       $.proxy(this._selectPopupCallback, this, $elButton),
-      null
+      $.proxy(this._validSelectedValue, this, $elButton)
     );
   },
 
   _selectPopupCallback: function ($target, $layer) {
     $layer.on('click', '[data-value]', $.proxy(this._setSelectedValue, this, $target));
+    // $layer.on('click', '.tw-popup-closeBtn', $.proxy(this._validSelectedValue, this, $target));
+  },
+
+  _validSelectedValue: function ($elButton) {
+    var $error = $($elButton).closest('li').find('.error-txt');
+    $error.addClass('blind');
+
+    if ( !!$($elButton).data('amount') === false ) {
+      $($error.get(0)).removeClass('blind');
+    }
   },
 
   _setSelectedValue: function ($target, e) {
