@@ -426,17 +426,18 @@ Tw.FormatHelper = (function () {
   };
 
   var addLineCommonPhoneNumberFormat = function (str) {
+    var targetStr = str.replace(/\-/g,'');
     var returnStr;
-    if(str.length===3){
-      returnStr = str+'-';
-    }else if(str.length>=11){
-      returnStr = str.substring(0,3)+'-'+str.substring(3,7)+'-'+str.substring(7,str.length);
-    }else if(str.length>=7){
-      returnStr = str.substring(0,3)+'-'+str.substring(3,6)+'-'+str.substring(6,str.length);
-    }else if(str.length>=4){
-      returnStr = str.substring(0,3)+'-'+str.substring(3,str.length);
+    if(targetStr.length===3){
+      returnStr = targetStr+'-';
+    }else if(targetStr.length>=11){
+      returnStr = targetStr.substring(0,3)+'-'+targetStr.substring(3,7)+'-'+targetStr.substring(7,str.length);
+    }else if(targetStr.length>=7){
+      returnStr = targetStr.substring(0,3)+'-'+targetStr.substring(3,6)+'-'+targetStr.substring(6,targetStr.length);
+    }else if(targetStr.length>=4){
+      returnStr = targetStr.substring(0,3)+'-'+targetStr.substring(3,targetStr.length);
     }else{
-      returnStr = str;
+      returnStr = targetStr;
     }
     return returnStr;
   };
