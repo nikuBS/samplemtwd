@@ -93,9 +93,12 @@
                     <%}%>
 
                     <!--우편, 유선 ( 문자 )일 때, 핸드폰 번호 보임 -->
-                    <%if(data.hpNum) {%>
+                    <%
+                        if(data.hpNum) {
+                        let _hpTitle = ['1', 'ADD'].indexOf(data.billInfo[0].cd) !== -1 ? '연락처':'휴대폰번호';
+                    %>
                         <dl class="info-tx1">
-                            <dt>연락처</dt>
+                            <dt><%=_hpTitle%></dt>
                             <dd><%=data.hpNum%></dd>
                         </dl>
                     <%}%>
