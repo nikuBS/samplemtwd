@@ -211,6 +211,7 @@ class MainHome extends TwViewController {
   private parseMembershipData(membershipData): any {
     // membershipData.showUsedAmount = FormatHelper.addComma((+membershipData.mbrUsedAmt).toString());
     membershipData.mbrGrStr = MEMBERSHIP_GROUP[membershipData.mbrGrCd];
+    membershipData.showCardNum = FormatHelper.addCardSpace(membershipData.mbrCardNum);
     return membershipData;
   }
 

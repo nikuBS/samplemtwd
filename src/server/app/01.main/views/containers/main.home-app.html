@@ -338,8 +338,8 @@
                             <span class="tx">고객님의 멤버십 카드가<br><strong class="t-point">이용정지</strong> 상태입니다.</span>
                             <% } else { %>
                             <span class="bar-code">
-                                <img id="fe-membership-barcode" data-cardNum="<%= homeData.membershipData.mbrCardNum %>" alt="bar code"/>
-                                <!--<img src="<%= CDN %>/img/main/bar_code.png" alt="bar code">-->
+                                <img id="fe-membership-barcode" data-cardnum="<%= homeData.membershipData.mbrCardNum %>" data-showcard="<%= homeData.membershipData.showCardNum %>" alt="bar code"/>
+                                <p class="bar-code-num"><%= homeData.membershipData.showCardNum %></p> <!-- 2019-01-25 추가 -->
                             </span>
                             <% } %>
                         </div>

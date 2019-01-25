@@ -13,15 +13,15 @@
         {{else if type3}}
         <div class="stit c-point">{{invMonth}}월 이용요금</div>
         {{/if}}
-        <em class="sum">{{chargeAmtTot}}원</em>
-        <span class="date">{{invStartDt}}~{{invEndDt}}</span>
+        <em class="sum"><span class="ff-tg-medium">{{chargeAmtTot}}</span>원</em>
+        <span class="date"><span class="ff-tg-light">{{invStartDt}}</span>~<span class="ff-tg-light">{{invEndDt}}</span></span>
         <ul class="list">
             {{#if type1}}
-            <li><strong class="ti">이용요금</strong> <em class="tx f-type">{{usedAmtTot}}원</em></li>
-            <li><strong class="ti">할인요금</strong> <em class="tx f-type c-point">{{deduckTot}}원</em></li>
+            <li><strong class="ti">이용요금</strong> <em class="tx f-type"><span class="ff-tg-medium">{{usedAmtTot}}</span>원</em></li>
+            <li><strong class="ti">할인요금</strong> <em class="tx f-type c-point"><span class="ff-tg-medium">{{deduckTot}}</span>원</em></li>
             {{else if type2}}
-            <li><strong class="ti">이용요금</strong> <em class="tx f-type">{{usedAmtTot}}원</em></li>
-            <li><strong class="ti">할인요금</strong> <em class="tx f-type c-point">{{deduckTot}}원</em></li>
+            <li><strong class="ti">이용요금</strong> <em class="tx f-type"><span class="ff-tg-medium">{{usedAmtTot}}</span>원</em></li>
+            <li><strong class="ti">할인요금</strong> <em class="tx f-type c-point"><span class="ff-tg-medium">{{deduckTot}}</span>원</em></li>
             {{else if type3}}
             <p class="tx">고객님은 현재 통합청구 이용 중이며 할인요금을 제외한 이용요금으로 조회됩니다.</p>
             {{/if}}

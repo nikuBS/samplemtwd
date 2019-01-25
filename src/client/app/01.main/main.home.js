@@ -115,7 +115,8 @@ Tw.MainHome.prototype = {
     var cardNum = this.$elBarcode.data('cardnum');
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
       this.$elBarcode.JsBarcode(cardNum, {
-        background: 'rgba(255, 255, 255, 0)'
+        background: 'rgba(255, 255, 255, 0)',
+        displayValue: false
       });
     }
   },
@@ -123,8 +124,9 @@ Tw.MainHome.prototype = {
     if ( this.$elBarcode.length > 0 ) {
       var cardNum = this.$elBarcode.data('cardnum');
       var mbrGr = this.$barcodeGr.data('mbrgr');
+      var showCardNum = this.$elBarcode.data('showcard');
       this._apiService.request(Tw.API_CMD.BFF_11_0001, {})
-        .done($.proxy(this._successMembership, this, mbrGr, cardNum));
+        .done($.proxy(this._successMembership, this, mbrGr, cardNum, showCardNum));
     }
 
   },
@@ -137,15 +139,15 @@ Tw.MainHome.prototype = {
       }
     }
   },
-  _successMembership: function (mbrGr, cardNum, resp) {
+  _successMembership: function (mbrGr, cardNum, showCardNum, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var usedAmt = resp.result.mbrUsedAmt;
-      this._openBarcodePopup(mbrGr, cardNum, Tw.FormatHelper.addComma((+usedAmt).toString()));
+      this._openBarcodePopup(mbrGr, cardNum, showCardNum, Tw.FormatHelper.addComma((+usedAmt).toString()));
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
-  _openBarcodePopup: function (mbrGr, cardNum, usedAmount) {
+  _openBarcodePopup: function (mbrGr, cardNum, showCardNum, usedAmount) {
     this._popupService.open({
       hbs: 'HO_01_01_02',
       layer: true,
@@ -153,6 +155,7 @@ Tw.MainHome.prototype = {
         mbrGr: mbrGr,
         mbrGrStr: mbrGr.toUpperCase(),
         cardNum: cardNum,
+        showCardNum: showCardNum,
         usedAmount: usedAmount
       }
     }, $.proxy(this._onOpenBarcode, this, cardNum));
@@ -166,7 +169,11 @@ Tw.MainHome.prototype = {
     }
 
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
-      $extendBarcode.JsBarcode(cardNum, { height: 75, margin: 0 });
+      $extendBarcode.JsBarcode(cardNum, {
+        height: 75,
+        margin: 0,
+        displayValue: false
+      });
     }
   },
   _onClickGoBroadband: function () {

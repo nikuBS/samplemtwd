@@ -330,6 +330,14 @@ class FormatHelper {
     const regexp = /\B(?=([\d|\*]{4})+(?![\d|\*]))/g;
     return value.replace(regexp, '-');
   }
+
+  static addCardSpace(value: string): string {
+    if ( FormatHelper.isEmpty(value) ) {
+      return '';
+    }
+    const regexp = /\B(?=([\d|\*]{4})+(?![\d|\*]))/g;
+    return value.replace(regexp, ' ');
+  }
 }
 
 export default FormatHelper;
