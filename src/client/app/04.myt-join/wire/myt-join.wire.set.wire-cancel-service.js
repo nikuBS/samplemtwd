@@ -129,7 +129,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
       this.dataModel.TerminationDtStr ||
       $('[data-target="input_hp"]').val()) {
 
-      this._popupService.openConfirm(
+      this._popupService.openConfirmButton(
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
         $.proxy(function(){
