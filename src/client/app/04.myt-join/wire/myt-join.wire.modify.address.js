@@ -116,12 +116,15 @@ Tw.MyTJoinWireModifyAddress.prototype = {
       $('[data-target="input_hp"]').val() ||
       $('[data-target="input_phone"]').val()) {
 
-      this._popupService.openConfirm(
+      this._popupService.openConfirmButton(
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
         $.proxy(function(){
           this._history.goLoad('/myt-join/submain_w');
-        }, this));
+        }, this),
+        null,
+        Tw.BUTTON_LABEL.NO,
+        Tw.BUTTON_LABEL.YES);
     } else {
       this._history.goBack();
     }

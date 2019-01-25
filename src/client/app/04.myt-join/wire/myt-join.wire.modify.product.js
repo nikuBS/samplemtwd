@@ -62,7 +62,7 @@ Tw.MyTJoinWireModifyProduct.prototype = {
     this.$container.on('click', '[data-target="submitApply"]', $.proxy(this.$submitApplyEvt, this));
     this.$container.on('click', '#btn_hp_del', $.proxy(this._formValidateionChk, this));
 
-    this.$container.on('click', '.prev-step', $.proxy(this._closeCheck, this));
+    this.$container.on('click', '#page-prev-step', $.proxy(this._closeCheck, this));
   },
 
   _openSkbdErrorAlert: function () {
@@ -89,12 +89,15 @@ Tw.MyTJoinWireModifyProduct.prototype = {
       $('[data-target="input_hp"]').val() ||
       $('[data-target="input_phone"]').val()) {
 
-      this._popupService.openConfirm(
+      this._popupService.openConfirmButton(
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
         $.proxy(function(){
           this._history.goLoad('/myt-join/submain_w');
-        }, this));
+        }, this),
+        null,
+        Tw.BUTTON_LABEL.NO,
+        Tw.BUTTON_LABEL.YES);
     } else {
       this._history.goBack();
     }
