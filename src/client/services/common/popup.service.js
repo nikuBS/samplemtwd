@@ -89,7 +89,7 @@ Tw.PopupService.prototype = {
 
       location.hash = hashName;
       // history.pushState(this._popupObj, 'popup', hashName);
-    }, this), 0);
+    }, this), 100);
   },
   _bindEvent: function ($container) {
     $('.popup-blind').on('click', $.proxy(this.close, this));
