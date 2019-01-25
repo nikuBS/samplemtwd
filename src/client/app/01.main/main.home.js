@@ -308,7 +308,7 @@ Tw.MainHome.prototype = {
   },
   _openLineResisterPopup: function () {
     var layerType = this.$container.data('layertype');
-    // var layerType = Tw.LOGIN_NOTICE_TYPE.CUSTOMER_PASSWORD;
+    // var layerType = Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER;
     Tw.Logger.info('[Home] layerType', layerType);
     if ( !Tw.FormatHelper.isEmpty(layerType) ) {
       this._updateNoticeType();
