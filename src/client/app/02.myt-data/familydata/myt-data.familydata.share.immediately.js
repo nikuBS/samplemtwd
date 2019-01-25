@@ -26,6 +26,7 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
   },
 
   _bindEvent: function() {
+    $('.wrap').on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
     this.$container.on('click', '.fe-submit', $.proxy(this._confirmSubmit, this));
   },
 
@@ -52,5 +53,13 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
       var ALERT = Tw.MYT_DATA_FAMILY_SUCCESS_SHARE;
       this._popupService.afterRequestSuccess(this.MAIN_URL, this.MAIN_URL, undefined, ALERT.TITLE, undefined);
     }
+  },
+
+  _openCancelPopup: function() {
+    this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null, this._goBack, null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+  },
+
+  _goBack: function() {
+    history.go(-2);
   }
 };
