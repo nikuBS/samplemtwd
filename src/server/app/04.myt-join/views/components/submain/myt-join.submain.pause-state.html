@@ -18,8 +18,13 @@
                     <span class="tit">일시정지 현황</span>
                     <span class="text">장기일시정지 중 / <%= data.myLongPausedState.sDate %> ~ <%= data.myLongPausedState.eDate %></span>
                     <% } else { %>
-                    <span class="tit">일시정지</span>
-                    <span class="text">신청하기</span>
+                        <% if ( data.myPausedState.armyDt ) { %>
+                        <span class="tit">일시정지 현황</span>
+                        <span class="text">장기일정지 해제 중</span>
+                        <% } else { %>
+                        <span class="tit">일시정지</span>
+                        <span class="text">신청하기</span>
+                        <% } %>
                     <% } %>
                 <% } else { %>
                     <span class="tit">일시정지 현황
