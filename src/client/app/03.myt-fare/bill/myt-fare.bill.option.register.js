@@ -38,6 +38,7 @@ Tw.MyTFareBillOptionRegister.prototype = {
     this.$cardY = this.$cardWrap.find('.fe-card-y');
     this.$cardM = this.$cardWrap.find('.fe-card-m');
     this.$paymentDate = this.$cardWrap.find('.fe-payment-date');
+    this.$isRadioChanged = false;
     this.$isValid = false;
     this.$isCardValid = true;
     this.$isSelectValid = true;
@@ -58,6 +59,8 @@ Tw.MyTFareBillOptionRegister.prototype = {
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
   },
   _changeRadioBox: function (event) {
+    this.$isRadioChanged = true;
+
     var $target = $(event.target);
     var className = $target.attr('class');
 
@@ -193,6 +196,7 @@ Tw.MyTFareBillOptionRegister.prototype = {
     $target.attr('id', $selectedValue.attr('id'));
     $target.text($selectedValue.parents('label').text());
 
+    this._isSelectChanged = true;
     this._popupService.close();
   },
   _submit: function () {
@@ -262,12 +266,18 @@ Tw.MyTFareBillOptionRegister.prototype = {
     }
   },
   _isChanged: function () {
-    if (this.$selectedWrap.hasClass('fe-bank-wrap')) {
-      return !Tw.FormatHelper.isEmpty(this.$accountPhoneNumber.val()) || !Tw.FormatHelper.isEmpty(this.$accountNumber.val()) ||
-        !Tw.FormatHelper.isEmpty(this.$container.find('.fe-select-bank').attr('id'));
-    } else {
-      return true;
+    var isValid = this.$isRadioChanged;
+
+    if (!isValid) {
+      if (this.$selectedWrap.hasClass('fe-bank-wrap')) {
+        isValid = !Tw.FormatHelper.isEmpty(this.$accountPhoneNumber.val()) || !Tw.FormatHelper.isEmpty(this.$accountNumber.val()) ||
+          !Tw.FormatHelper.isEmpty(this.$container.find('.fe-select-bank').attr('id'));
+      } else {
+        isValid = !Tw.FormatHelper.isEmpty(this.$cardPhoneNumber.val()) || !Tw.FormatHelper.isEmpty(this.$cardNumber.val()) ||
+          !Tw.FormatHelper.isEmpty(this.$cardY.val()) || !Tw.FormatHelper.isEmpty(this.$cardM.val()) || this._isSelectChanged;
+      }
     }
+    return isValid;
   },
   _closePop: function () {
     this._isClose = true;
