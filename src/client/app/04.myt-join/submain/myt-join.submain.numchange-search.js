@@ -184,8 +184,8 @@ Tw.MyTJoinPhoneNumChangeSearch.prototype = {
           this._popupService.closeAll();
         }, this),
         null,
-        Tw.BUTTON_LABEL.NO,
-        Tw.BUTTON_LABEL.YES);
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.BT_NO,
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.BT_YES);
     } else {
       this._popupService.close();
     }
