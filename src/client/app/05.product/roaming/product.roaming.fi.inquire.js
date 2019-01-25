@@ -436,7 +436,7 @@ Tw.ProductRoamingFiInquire.prototype = {
 
     //시작일을 종료일 이후로 설정
     if (Tw.DateHelper.getDifference(this.$inputEdate.val(), this.$inputSdate.val()) < 0) {
-      return this._popupService.openConfirm(Tw.ALERT_MSG_PRODUCT.ALERT_3_A84.MSG,
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A84.MSG,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A84.TITLE);
     }
 
