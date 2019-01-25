@@ -102,8 +102,8 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
   },
 
   _procEnableAddFamilyBtn: function() {
-    if (Tw.FormatHelper.isEmpty(this._familyType) || this.$familyAddWrap.find('.fe-input_name').val().length < 1 ||
-      this.$familyAddWrap.find('.fe-input_phone_number').val().length < 1 || this._familyList.length > 4) {
+    if (Tw.FormatHelper.isEmpty(this._familyType) || $.trim(this.$familyAddWrap.find('.fe-input_name').val()).length < 1 ||
+      $.trim(this.$familyAddWrap.find('.fe-input_phone_number').val()).length < 1 || this._familyList.length > 4) {
       return this._toggleBtn(this.$btnFamilyAdd, false);
     }
 

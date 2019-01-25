@@ -21,7 +21,10 @@ Tw.PopupService.prototype = {
     var lastHash = this._prevHashList[this._prevHashList.length - 1];
     Tw.Logger.log('[Popup] Hash Change', '#' + hash.base, lastHash);
     if ( !Tw.FormatHelper.isEmpty(lastHash) && ('#' + hash.base) === lastHash.curHash ) {
-      skt_landing.action.checkScroll.unLockScroll();
+      if (skt_landing.action.checkScroll && skt_landing.action.checkScroll.unLockScroll) {
+        skt_landing.action.checkScroll.unLockScroll();
+      }
+
       var closeCallback = lastHash.closeCallback;
       this._prevHashList.pop();
       Tw.Logger.info('[Popup Close]');
@@ -123,7 +126,11 @@ Tw.PopupService.prototype = {
       url: Tw.Environment.cdn + '/hbs/',
       cdn: Tw.Environment.cdn
     });
-    skt_landing.action.checkScroll.lockScroll();
+
+    if (skt_landing.action.checkScroll && skt_landing.action.checkScroll.lockScroll) {
+      skt_landing.action.checkScroll.lockScroll();
+    }
+
     skt_landing.action.popup.open(option, $.proxy(this._onOpenPopup, this), $.proxy(this._onFailPopup, this, {
       option: option,
       openCallback: this._openCallback,

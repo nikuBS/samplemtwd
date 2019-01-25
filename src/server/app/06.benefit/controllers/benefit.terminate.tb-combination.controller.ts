@@ -17,6 +17,8 @@ class BenefitTerminateTbCombination extends TwViewController {
     super();
   }
 
+  private _allowedProdIds = ['NH00000037', 'NH00000039', 'NH00000040', 'NH00000041'];
+
   /**
    * @param termInfo
    * @private
@@ -59,7 +61,7 @@ class BenefitTerminateTbCombination extends TwViewController {
         title: PRODUCT_TYPE_NM.TERMINATE
       };
 
-    if (FormatHelper.isEmpty(prodId)) {
+    if (FormatHelper.isEmpty(prodId) || this._allowedProdIds.indexOf(prodId) === -1) {
       return this.error.render(res, renderCommonInfo);
     }
 
