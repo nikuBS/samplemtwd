@@ -29,14 +29,11 @@ Tw.MyTJoinInfoSms.prototype = {
 
   // 닫기 버튼 클릭 시 [확인]
   _onCloseConfirm: function() {
-    this._popupService.openConfirm(
-      Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
-      Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-      $.proxy(function () {
+    this._popupService.openConfirmButton(Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG, Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+      $.proxy($.proxy(function () {
         this._popupService.close();
         this._historyService.goBack();
-      },this)
-    );
+      }, this), this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
   },
 
   _onDisableStatus: function (e) {
