@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE, API_T_FAMILY_ERROR } from '../../types/api-command.type';
 import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
-import { CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE, MYT_DATA_CHARGE_TYPE_NAMES } from '../../types/string.type';
+import { CURRENCY_UNIT, DATA_UNIT, MYT_DATA_CHARGE_TYPE_NAMES, MYT_T_DATA_GIFT_TYPE } from '../../types/string.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { LOGIN_TYPE, PREPAID_PAYMENT_PAY_CD, PREPAID_PAYMENT_TYPE, UNIT, UNIT_E } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
@@ -131,7 +131,7 @@ class MytDataSubmainController extends TwViewController {
             item['class'] = (item.chargeTp === '1') ? 'once' : 'auto';
             item['u_type'] = 'data';
             item['u_title'] = PREPAID_PAYMENT_PAY_CD[item.payCd];
-            item['u_sub'] = item.cardNm || PREPAID_PAYMENT_TYPE[item.wayCd];
+            item['u_sub'] = item.wayCd === '02' ? item.cardNm : PREPAID_PAYMENT_TYPE[item.wayCd];
             item['d_title'] = item.amt;
             item['d_sub'] = item.data;
             item['unit'] = CURRENCY_UNIT.WON;
@@ -182,7 +182,7 @@ class MytDataSubmainController extends TwViewController {
             item['class'] = (item.chargeTp === '1') ? 'once' : 'auto';
             item['u_type'] = 'voice';
             item['u_title'] = PREPAID_PAYMENT_PAY_CD[item.payCd];
-            item['u_sub'] = item.cardNm || PREPAID_PAYMENT_TYPE[item.wayCd];
+            item['u_sub'] = item.wayCd === '02' ? item.cardNm : PREPAID_PAYMENT_TYPE[item.wayCd];
             item['d_title'] = item.amt;
             item['d_sub'] = item.data;
             item['unit'] = CURRENCY_UNIT.WON;
@@ -433,9 +433,9 @@ class MytDataSubmainController extends TwViewController {
       }
     });
     returnVal = returnVal.sort((a, b) => {
-      if (a[0].opDt > b[0].opDt) {
+      if ( a[0].opDt > b[0].opDt ) {
         return -1;
-      } else if (a[0].opDt < b[0].opDt) {
+      } else if ( a[0].opDt < b[0].opDt ) {
         return 1;
       }
       return 0;
