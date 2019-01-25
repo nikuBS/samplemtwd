@@ -23,22 +23,22 @@
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
-                <div class="ti-caption-gray">
-                    <button class="bt-select fe-select-event" title="이벤트 메뉴 선택" aria-haspopup="true">진행중 이벤트</button>
+                <div class="sort-area">
+                    <button class="btn-select fe-select-event" title="이벤트 메뉴 선택" aria-haspopup="true">진행중 이벤트</button>
                 </div>
-                <div class="cont-box noborder">
-                    <div class="card-visual-list">
+                <div class="cont-box bgnone nogaps-hoz noborder">
+                    <div class="event-list">
                         <% if (content) { %>
                         <ul class="fe-content-list" data-page="<%= totalPages %>" data-cnt="<%= totalElements %>">
                             <% for (var i = 0; i < content.length; i++) { %>
                             <li id="<%= content[i].prNum %>" class="fe-first fe-done">
-                                <button class="btn-cvl event-detail fe-event-img" title="이벤트 상세페이지 보기">
+                                <button class="event-detail fe-event-img" title="이벤트 상세페이지 보기">
                                     <img src="<%= CDN %><%= content[i].filePath %>" alt="<%= content[i].prCtt %>">
                                 </button>
-                                <div class="extra-info">
-                                    <span class="date">기간 <span class="fe-event-day"><%= content[i].startDate %> ~ <%= content[i].endDate %></span></span>
+                                <div class="event-info">
+                                    <span class="info-date">기간 <span class="fe-event-day"><%= content[i].startDate %> ~ <%= content[i].endDate %></span></span>
                                     <% if (content[i].dday <= 7) { %>
-                                    <span class="dday fe-dday-wrap">
+                                    <span class="info-day fe-dday-wrap">
                                         <% if (content[i].dday === 0) { %>
                                             D-day
                                         <% } else { %>
@@ -47,7 +47,7 @@
                                     </span>
                                     <% } %>
                                     <% if (content[i].promotionType !== null) { %>
-                                    <span class="entry fe-event-type"><%= content[i].promotionType %></span>
+                                    <span class="info-type fe-event-type"><%= content[i].promotionType %></span>
                                     <% } %>
                                 </div>
                             </li>
@@ -55,12 +55,12 @@
                         </ul>
                         <% } %>
                     </div>
+                    <% if (totalElements > 20) { %>
+                    <div class="btn-more btm-line no-border fe-more-btn">
+                        <button>더 보기</button>
+                    </div>
+                    <% } %>
                 </div>
-                <% if (totalElements > 20) { %>
-                <div class="bt-more bottomborder fe-more-btn">
-                    <button>더 보기</button>
-                </div>
-                <% } %>
             </div>
         </div>
         <!--// #contents -->
