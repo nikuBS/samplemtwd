@@ -4,18 +4,26 @@
 * Date: 2018.09.17
 %>
 
-<li class="list-box">
-    <span class="badge"><i class="icon-<%= data[0].class %>-88"><span class="blind"><%= data[0].class %></span></i></span>
-    <ul class="list-con">
-        <li>
-            <p class="list-text">
-                <span class="stext-b"><%= data[0].u_title %></span>
-                <span class="stext"><span class="gray-tx"><%= data[0].u_sub %></span></span>
-            </p>
-            <div class="list-data">
-                <p class="data-tx txt1"><%= data[0].d_title %><%= data[0].unit %></p>
-                <span class="date"><%= data[0].d_sub %></span>
-            </div>
-        </li>
-    </ul>
-</li>
+<%var idx = 0; %>
+<% for (var i = 0; i < data.length; i++) { %>
+    <% var item = data[i];%>
+    <% for (var j = 0; j < item.length; j++) { %>
+    <% idx++; %>
+    <% if (idx < 4) { %>
+    <li class="list-box">
+        <span class="badge"><i class="icon-<%= item[j].class %>-88"><span class="blind"><%= item[j].class %></span></i></span>
+        <ul class="list-con">
+            <li>
+                <p class="list-text">
+                    <span class="stext-b"><%= item[j].u_title %></span>
+                    <span class="stext"><span class="gray-tx"><%= item[j].u_sub %></span></span>
+                </p>
+                <div class="list-data">
+                    <p class="data-tx txt1"><%= item[j].d_title %><%= item[j].unit %></p>
+                    <span class="date"><%= item[j].d_sub %></span>
+                </div>
+            </li>
+        </ul>
+    </li>
+    <% }} %>
+<% } %>
