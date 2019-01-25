@@ -123,6 +123,9 @@ Tw.ProductMobileplanSettingTplan.prototype = {
 
     $elem.prop('checked', false);
     $elem.parents('.radiobox').removeClass('checked').attr('aria-checked', 'false');
+
+    this.$btnSetupOk.attr('disabled');
+    this.$btnSetupOk.prop('disabled', true);
   },
 
   _procSetupOk: function() {
