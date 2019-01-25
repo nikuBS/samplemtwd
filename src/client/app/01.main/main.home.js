@@ -230,6 +230,8 @@ Tw.MainHome.prototype = {
   _successHomeNotice: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._openNoticePopup(resp.result.emrNotice);
+    } else {
+      this._openLineResisterPopup();
     }
   },
   _openNoticePopup: function (notice) {
