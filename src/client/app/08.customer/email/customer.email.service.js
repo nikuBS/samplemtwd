@@ -132,6 +132,7 @@ Tw.CustomerEmailService.prototype = {
 
     var htParams = $.extend(this._makeParams(), {
       selSvcMgmtNum: selSvcMgmtNum,
+      inqSvcClCd: 'I',
       connSite: Tw.BrowserHelper.isApp() ? '19' : '15',
       ofrCtgSeq: this.$service_depth2.data('serviceDepth2'),
       cntcNumClCd: $('.fe-service-cntcNumClCd').find(':checked').val(),
