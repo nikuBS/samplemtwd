@@ -26,7 +26,7 @@ Tw.CustomerSvcInfoSite.prototype = {
   },
   _bindEvent: function () {
     // from idpt
-    this._bindUIEvent();
+    this._bindUIEvent(this.$container);
   },
   _hasTab: function() {
     this.$tabWrapper = this.$container.find('.tab-linker');
@@ -62,46 +62,65 @@ Tw.CustomerSvcInfoSite.prototype = {
     return Tw.UrlHelper.getQueryParams();
   },
 
-  _bindUIEvent: function () {
-    $('.idpt-tab', this.$container).each(function(){
+  _bindUIEvent: function ($container) {
+    $('.idpt-tab', $container).each(function(){
       var tabBtn = $(this).find('li');
       $(tabBtn).click(function(){
         var i = $(this).index();
-        $('.idpt-tab > li', this.$container).removeClass('on').eq(i).addClass('on');
-        $('.idpt-tab-content', this.$container).removeClass('show').eq(i).addClass('show');
+        $('.idpt-tab > li').removeClass('on').eq(i).addClass('on');
+        $('.idpt-tab-content').removeClass('show').eq(i).addClass('show');
       });
     });
   
     // popup
-    $('.idpt-popup-open', this.$container).click(function(){
+    $('.idpt-popup-open', $container).click(function(){
       var popId = $(this).attr('href');
-      $('.idpt-popup-wrap', this.$container).removeClass('show');
+      $('.idpt-popup-wrap').removeClass('show');
       $(popId).addClass('show');
-      $('.idpt-popup', this.$container).show();
+      $('.idpt-popup', $container).show();
     });
-    $('.idpt-popup-close', this.$container).click(function(){
-      $('.idpt-popup', this.$container).hide();
+    $('.idpt-popup-close', $container).click(function(){
+      $('.idpt-popup', $container).hide();
     });
   
-    // tooltip
-    $('.info-tooltip', this.$container).each(function(){
-      $('.btn-tooltip-open', this.$container).on('click', function(){
-        var remStandard = $('body').css('font-size').replace('px','');
-        var btnLeft = $(this).offset().left - 28;
-        var btnRem = btnLeft/remStandard
-        $('.idpt-tooltip-layer', this.$container).css('left', btnRem + 'rem');
-        $(this).next('div').show();
-      });
+    $('input[type=radio][name=call]', $container).on('click', function() {
+      var chkValue = $('input[type=radio][name=call]:checked', $container).val();
+      if (chkValue == '1') {
+        $('.call-cont01').css('display', 'block');
+        $('.call-cont02').css('display', 'none');
+      } else if (chkValue  == '2') {
+        $('.call-cont01').css('display', 'none');
+        $('.call-cont02').css('display', 'block');
+      }
     });
-    $('.btn-tooltip-close', this.$container).on('click', function(){
-      $('.idpt-tooltip-layer', this.$container).hide();
+  
+    $('input[type=radio][name=center]', $container).on('click', function() {
+      var chkValue = $('input[type=radio][name=center]:checked', $container).val();
+      if (chkValue == '1') {
+        $('.center-cont01', $container).css('display', 'block');
+        $('.center-cont02', $container).css('display', 'none');
+      } else if (chkValue  == '2') {
+        $('.center-cont01', $container).css('display', 'none');
+        $('.center-cont02', $container).css('display', 'block');
+      }
+    });
+
+    //tooltip
+    $('.btn-tooltip-open', $container).click(function(){
+      var toolpopId = $(this).attr('href');
+      $('.popup-info', $container).removeClass('show');
+      $(toolpopId).addClass('show');
+      $('.tooltip-popup', $container).show();
+    });
+    $('.btn_confirm', $container).click(function(){
+      $('.tooltip-popup', $container).hide();
     });
   
     //accordian
-    $('.idpt-accordian > li > a', this.$container).on('click', function(e){
+    $('.idpt-accordian > li > a', $container).on('click', function(e){
       e.preventDefault();
-      $('.idpt-accordian > li > a', this.$container).removeClass('open');
-      $('.idpt-accordian-cont', this.$container).slideUp();
+      $('.idpt-accordian > li > a', $container).removeClass('open');
+      $('.idpt-accordian-cont', $container).slideUp();
       if ($(this).parent().find('.idpt-accordian-cont').is(':hidden')){
         $(this).addClass('open');
         $(this).parent().find('.idpt-accordian-cont').slideDown();
@@ -109,7 +128,7 @@ Tw.CustomerSvcInfoSite.prototype = {
     });
   
     //toggle (FAQ)
-    $('.idpt-toggle-btn', this.$container).each(function(){
+    $('.idpt-toggle-btn', $container).each(function(){
       $(this).click(function(){
         $(this).toggleClass('open').next('.idpt-toggle-cont').slideToggle();
       })
