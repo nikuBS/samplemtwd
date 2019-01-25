@@ -421,7 +421,6 @@ class MytDataSubmainController extends TwViewController {
       group = FormatHelper.mergeArray(group, Object.keys(val));
     });
     group.sort().reverse();
-    group = group.slice(0, 3);
     items.filter((item) => {
       const keys = Object.keys(item);
       for ( const key of keys ) {
@@ -440,7 +439,7 @@ class MytDataSubmainController extends TwViewController {
       }
       return 0;
     });
-    return returnVal.slice(0, 3); // 최근 기준 3개
+    return returnVal;
   }
 
   _getRemnantData(): Observable<any> {
