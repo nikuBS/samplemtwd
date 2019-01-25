@@ -15,6 +15,7 @@ Tw.MenuComponent = function (notAboutMenu) {
     this._tidLanding = new Tw.TidLandingComponent();
     this._nativeService = Tw.Native;
     this._apiService = Tw.Api;
+    this._popupService = Tw.Popup;
 
     this._menuTpl = undefined;
 
@@ -29,6 +30,7 @@ Tw.MenuComponent = function (notAboutMenu) {
     this._isMultiLine = false;
     this._svcAttr = undefined;
     this._tid = undefined;
+    this._memberType = undefined; // 0: normal, 1: number unregistered, 2: no svc
 
     this._isOpened = false;
     this._isMenuSet = false;
@@ -231,7 +233,17 @@ Tw.MenuComponent.prototype = {
       this._historyService.goLoad(url);
     }
   },
-  _onFreeSMS: function () {
+  _onFreeSMS: function (e) {
+    if (this._memberType === 1) {
+      this._popupService.openAlert(
+        Tw.MENU_STRING.FREE_SMS,
+        '',
+        Tw.BUTTON_LABEL.CONFIRM,
+        null,
+        'menu_free_sms'
+      );
+      return ;
+    }
     Tw.CommonHelper.openFreeSms();
     return false;
   },
@@ -259,8 +271,8 @@ Tw.MenuComponent.prototype = {
       userInfo.expsSvcCnt = parseInt(userInfo.expsSvcCnt, 10);
 
       // 0: normal, 1: number unregistered, 2: no svc
-      var memberType = userInfo.totalSvcCnt > 0 ? (userInfo.expsSvcCnt > 0 ? 0 : 1) : 2;
-      switch ( memberType ) {
+      this._memberType = userInfo.totalSvcCnt > 0 ? (userInfo.expsSvcCnt > 0 ? 0 : 1) : 2;
+      switch ( this._memberType ) {
         case 0:
           this.$container.find('.fe-when-login-type0').removeClass('none');
           var nick = userInfo.nickNm;
@@ -502,8 +514,6 @@ Tw.MenuComponent.prototype = {
     subCategory = subCategory.slice(0, 2).concat(subCategory.slice(subCategory.length - 1));
     category[0] = subCategory;
 
-    console.log(menuInfo);
-    console.log(category);
     return category;
   },
 
