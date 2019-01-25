@@ -103,9 +103,9 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
   },
   _phoneBookCallBack : function(res){
     if (res.resultCode === Tw.NTV_CODE.CODE_00) {
-      this.$inputElement.val(res.params.phoneNumber);
+      this.$inputElement.val(res.params.phoneNumber.replace(/\-/g,''));
       this.$inputElement.trigger('keyup');
-      this._inputBlurEvt();
+      this.$inputElement.blur();
     }
   },
   _activateAddBtn : function (inputEvt) {
