@@ -308,20 +308,20 @@ Tw.MainHome.prototype = {
   },
   _openLineResisterPopup: function () {
     var layerType = this.$container.data('layertype');
-    // var layerType = Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER;
+    // var layerType = Tw.LOGIN_NOTICE_TYPE.CUSTOMER_PASSWORD;
     Tw.Logger.info('[Home] layerType', layerType);
     if ( !Tw.FormatHelper.isEmpty(layerType) ) {
       this._updateNoticeType();
       if ( layerType === Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER || layerType === Tw.LOGIN_NOTICE_TYPE.EXIST_CUSTOMER ) {
         setTimeout($.proxy(function () {
           this._lineRegisterLayer.openRegisterLinePopup(layerType);
-        }, this), 100);
+        }, this), 300);
       } else if ( layerType === Tw.LOGIN_NOTICE_TYPE.CUSTOMER_PASSWORD ) {
         this._openCustomerPasswordGuide();
       } else if ( layerType === Tw.LOGIN_NOTICE_TYPE.NEW_LINE ) {
         setTimeout($.proxy(function () {
           this._popupService.openAlert(Tw.ALERT_MSG_HOME.NEW_LINE, null, null, $.proxy(this._closeNewLine, this));
-        }, this), 100);
+        }, this), 300);
       }
     }
   },
@@ -329,18 +329,26 @@ Tw.MainHome.prototype = {
     this._apiService.request(Tw.NODE_CMD.UPDATE_NOTICE_TYPE, {})
       .done($.proxy(this._successUpdateNoticeType, this));
   },
+  _successUpdateNoticeType: function (resp) {
+
+  },
   _closeNewLine: function () {
     this._historyService.goLoad('/common/member/line');
   },
   _openCustomerPasswordGuide: function () {
-    this._popupService.openTypeD(Tw.LOGIN_CUS_PW_GUIDE.TITLE, Tw.LOGIN_CUS_PW_GUIDE.CONTENTS, Tw.LOGIN_CUS_PW_GUIDE.BUTTON, '',
-      null, $.proxy(this._confirmCustPwGuide, this), $.proxy(this._closeCustPwGuide, this));
+    setTimeout($.proxy(function () {
+      this._popupService.openTypeD(Tw.LOGIN_CUS_PW_GUIDE.TITLE, Tw.LOGIN_CUS_PW_GUIDE.CONTENTS, Tw.LOGIN_CUS_PW_GUIDE.BUTTON, '',
+        null, $.proxy(this._confirmCustPwGuide, this), $.proxy(this._closeCustPwGuide, this));
+    }, this), 300);
   },
   _confirmCustPwGuide: function () {
+    this._goCustPwd = true;
     this._popupService.close();
   },
   _closeCustPwGuide: function () {
-    this._historyService.goLoad('/myt-join/custpassword');
+    if ( this._goCustPwd ) {
+      this._historyService.goLoad('/myt-join/custpassword');
+    }
   },
   _cachedSmartCard: function () {
     for ( var i = 0; i < 16; i++ ) {
