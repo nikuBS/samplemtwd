@@ -48,7 +48,10 @@ Tw.CommonSearchMain.prototype = {
         }
       },this));
   },
-  _showAutoCompleteKeyword : function(data){
+  _showAutoCompleteKeyword : function(data,idx){
+    if(idx>=10){
+      return;
+    }
     this.$autoCompleteList.append(this.$autoCompletetTemplate({listData : this._convertAutoKeywordData(data.hkeyword)}));
   },
   _bindPopupElementEvt : function () {

@@ -38,13 +38,21 @@
                 {{#ifCond listData.BAS_OFR_DATA_QTY_CTT '!==' ''}}
                 <li class="category-type type01">
                     <p class="gb">
-                        <span>{{listData.BAS_OFR_DATA_QTY_CTT}}</span>GB
+                        {{#isNaN listData.BAS_OFR_DATA_QTY_CTT}}
+                            <span>{{listData.BAS_OFR_DATA_QTY_CTT}}</span>
+                        {{else}}
+                            <span>{{listData.BAS_OFR_DATA_QTY_CTT}}</span>GB
+                        {{/isNaN}}
                     </p>
                 </li>
                 {{else ifCond listData.BAS_OFR_MB_DATA_QTY_CTT '!==' ''}}
                 <li class="category-type type01">
                     <p class="gb">
-                        <span>{{listData.BAS_OFR_MB_DATA_QTY_CTT}}</span>MB
+                        {{#isNaN listData.BAS_OFR_MB_DATA_QTY_CTT}}
+                            <span>{{listData.BAS_OFR_MB_DATA_QTY_CTT}}</span>
+                        {{else}}
+                            <span>{{listData.BAS_OFR_MB_DATA_QTY_CTT}}</span>MB
+                        {{/isNaN}}
                     </p>
                 </li>
                 {{/ifCond}}
@@ -276,7 +284,7 @@
     <li>
         <a class="b-cont serviceInfo-element list-data" data-link="/customer/svc-info/service/detail?code={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="serviceInfo" data-tit="{{removeTag listData.ICNTS_TIT_NM}}">
             <strong class="ti">{{{listData.ICNTS_TIT_NM}}}</strong>
-            <span class="tx">{{{listData.ICNTS_TIT_NM}}}</span>
+            <span class="tx">{{{listData.ICTG_PATH}}}</span>
         </a>
     </li>
 </script>
@@ -284,7 +292,7 @@
 <script id="siteInfo_template" type="text/x-handlebars-template">
     <li>
         <a class="b-cont siteInfo-element list-data" data-link="/customer/svc-info/site/detail?code={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="siteInfo" data-tit="{{removeTag listData.ICNTS_TIT_NM}}">
-            <span class="img-box"><img class="lte" src="/img/dummy/dmy_product.png" alt="샘플이미지"></span>
+            <span class="img-box"><img class="lte" src="{{CDN}}{{listData.THMB_IMG_PATH_NM}}" alt="{{listData.THMB_IMG_ALT_CTT}}"></span>
             <strong class="ti">{{{listData.ICNTS_TIT_NM}}}</strong>
             <span class="tx">{{{listData.ICTG_PATH}}}</span>
         </a>
