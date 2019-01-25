@@ -22,9 +22,11 @@ spec:
         imagePullPolicy: Always
         resources:
           requests:
-            memory: "2048Mi"
+            cpu: "2000m"
+            memory: "3072Mi"
           limits:
-            memory: "2048Mi"
+            cpu: "4000m"
+            memory: "3072Mi"
         volumeMounts:
         - mountPath: /tworld/uploads                  # (root)/uploads 에 volume mount
           name: upload-volume                            # volumes 의 name과 동일하게 설정
