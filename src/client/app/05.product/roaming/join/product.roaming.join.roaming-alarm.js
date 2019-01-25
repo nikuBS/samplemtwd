@@ -137,6 +137,10 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     this.$container.find('#alarm_list').append(handlebarsTemplate(templateData));
   },
   _removeEvt : function (btnEvt) {
+    if(this._addedList.length<=1){
+      this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_NUMBER_MIN);
+      return;
+    }
     this._popupService.openConfirmButton(
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE,
