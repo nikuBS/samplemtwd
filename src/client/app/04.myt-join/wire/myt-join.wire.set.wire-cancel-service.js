@@ -124,7 +124,8 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
   //--------------------------------------------------------------------------[EVENT]
   _closeCheck: function(){
 
-    if(this.dataModel.productList > 0 ||
+    if($('input[name=checkbox-conf-info]:checked').length > 0 ||
+      this.productLi.find('input[type=checkbox]:checked').length > 0 ||
       this.dataModel.TerminationDtStr ||
       $('[data-target="input_hp"]').val()) {
 
