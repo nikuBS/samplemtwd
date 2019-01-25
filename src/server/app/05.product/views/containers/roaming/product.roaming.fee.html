@@ -105,7 +105,7 @@
                 <% const moreCount = roamingPlanData.productCount - products.length; %>
                 <div class="bt-more gap-style">
                     <button class="<%= moreCount ? '' : 'none' %>" data-last-product="<%= products[products.length - 1].prodId %>" data-left-count="<%= moreCount %>">
-                        더보기
+                        더 보기
                     </button>
                 </div>
                 <% } %>
@@ -119,13 +119,13 @@
                 <div class="submain-findyourplan-wrap type1">
                     <a class="submain-findyourplan" href="/product/roaming/info/guide">
                         <h3 class="title">로밍 안내</h3>
-                        <p class="text">출국 전 알아두면 유용한 로밍 정보</p>
+                        <p class="text">출국 전 알아두면 유용한 로밍정보</p>
                     </a>
                 </div>
                 <div class="submain-findyourplan-wrap type1">
                     <a class="submain-findyourplan" href="/product/roaming/do/search-before">
                         <h3 class="title">국가별 로밍 요금 조회</h3>
-                        <p class="text">사용 중인 휴대폰 정보와 출국 국가명을<br>입력하시고, 로밍 요금 관련 각종 정보를<br>한 번에 확인하세요.</p>
+                        <p class="text">사용 중인 휴대폰 정보와 출국 국가명을<br>입력하시고, 로밍 요금 관련 각종 정보를<br>한번에 확인하세요.</p>
                     </a>
                 </div>
                 <div class="submain-findyourplan-wrap type1">
@@ -143,7 +143,7 @@
                     <a class="link" href="/product/roaming/info/center">로밍센터 안내</a>
                 </li>
                 <li class="category-type">
-                    <a class="link" href="/customer/faq/category?id=1400000&title=%EB%A1%9C%EB%B0%8D">자주찾는 질문</a>
+                    <a class="link" href="/customer/faq/category?id=1400000&title=%EB%A1%9C%EB%B0%8D">자주하는 질문</a>
                 </li>
             </ul>
             <% include ../../components/roaming/product.roaming.bottom-link.component.html %>
