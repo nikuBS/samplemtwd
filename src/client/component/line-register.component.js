@@ -261,7 +261,7 @@ Tw.LineRegisterComponent.prototype = {
     this._popupService.close();
   },
   _goAuthLine: function () {
-    this._goAuth = true;
+    this._goAuth = true;git
     this._popupService.close();
   },
   _onCloseMarketingOfferPopup: function () {

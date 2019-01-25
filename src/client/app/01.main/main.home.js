@@ -78,17 +78,7 @@ Tw.MainHome.prototype = {
     this.$container.on('click', '#fe-bt-link-billguide', $.proxy(this._onClickGoBillGuide, this));
   },
   _bindEventStore: function () {
-    this.$container.on('click', '#fe-bt-direct-support', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_SUPPORT));
-    this.$container.on('click', '#fe-bt-direct-home', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_HOME));
-    this.$container.on('click', '.fe-bt-direct-home', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_HOME));
-    this.$container.on('click', '#fe-bt-direct-accessory', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_ACCESSORY));
-    this.$container.on('click', '#fe-bt-direct-phone', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_PHONE));
-    this.$container.on('click', '#fe-bt-direct-tablet', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_TABLET));
-    this.$container.on('click', '#fe-bt-direct-nugu', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_NUGU));
-    this.$container.on('click', '.fe-bt-direct-nugu', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_NUGU));
-    this.$container.on('click', '#fe-bt-iphone-xs', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.IPHONE_XS));
-    this.$container.on('click', '#fe-bt-iphone-xr', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.IPHONE_XR));
-    this.$container.on('click', '#fe-bt-galaxy-s9', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.GALAXY_S9));
+    this.$container.on('click', '.fe-home-external', $.proxy(this._onClickExternal, this));
   },
   _bindEventLogin: function () {
     this.$container.on('click', '.fe-bt-home-login', $.proxy(this._onClickLogin, this));
@@ -104,7 +94,8 @@ Tw.MainHome.prototype = {
   _onClickSignup: function () {
     this._tidLanding.goSignup();
   },
-  _onClickExternalLink: function (url) {
+  _onClickExternal: function ($event) {
+    var url = $($event.currentTarget).data('url');
     Tw.CommonHelper.openUrlExternal(url);
   },
   _onClickLine: function ($event) {
@@ -170,7 +161,7 @@ Tw.MainHome.prototype = {
 
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
       $extendBarcode.JsBarcode(cardNum, {
-        height: 75,
+        height: 60,
         margin: 0,
         displayValue: false
       });
