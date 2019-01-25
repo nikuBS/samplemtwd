@@ -162,9 +162,9 @@ Tw.MenuComponent.prototype = {
             if ( this._isLogin ) {
               this._isMultiLine = res.result.userInfo.totalSvcCnt > 1;
               this._svcMgmtNum = res.result.userInfo.svcMgmtNum;
-              this._svcAttr = res.result.userInfo.svcAttr;
+              this._svcAttr = res.result.userInfo.svcAttrCd;
               this._isLogin = res.result.isLogin;
-              this._tid = res.result.userInfo.tid;
+              this._tid = res.result.userInfo.userId;
             }
             this._modifyMenu(
               res.result.isLogin,
@@ -263,14 +263,14 @@ Tw.MenuComponent.prototype = {
       switch ( memberType ) {
         case 0:
           this.$container.find('.fe-when-login-type0').removeClass('none');
-          var nick = userInfo.nickName;
+          var nick = userInfo.nickNm;
           if ( Tw.FormatHelper.isEmpty(nick) ) {
-            nick = Tw.SVC_ATTR[userInfo.svcAttr];
+            nick = Tw.SVC_ATTR[userInfo.svcAttrCd];
           }
           this.$nickName.text(nick);
-          if (userInfo.svcAttr.indexOf('S3') !== -1) {
+          if (userInfo.svcAttrCd.indexOf('S3') !== -1) {
             this.$svcNumber.text(Tw.FormatHelper.conTelFormatWithDash(userInfo.svcNum));
-          } else if ( userInfo.svcAttr.indexOf('M') === -1 ) {
+          } else if ( userInfo.svcAttrCd.indexOf('M') === -1 ) {
             this.$svcNumber.text(userInfo.addr);
           } else {
             this.$svcNumber.text(Tw.FormatHelper.getDashedCellPhoneNumber(userInfo.svcNum));
@@ -281,7 +281,7 @@ Tw.MenuComponent.prototype = {
           break;
         case 2:
           this.$container.find('.fe-when-login-type2').removeClass('none');
-          this.$userName.text(userInfo.name);
+          this.$userName.text(userInfo.mbrNm);
           break;
         default:
           break;
@@ -400,6 +400,9 @@ Tw.MenuComponent.prototype = {
         if ( item.menuId === 'M000353' ) {
           item.expsSeq = '101';
         }
+        if (item.menuNm === '이벤트') {
+          return false;
+        }
         return item.menuId !== 'M000343'; // Remove 인터넷/집전화/IPTV menu by hard coded
       })
       .sortBy(function (item) {
@@ -445,7 +448,7 @@ Tw.MenuComponent.prototype = {
         var checkUrl = '/myt-join/submain';
         if ( menu_url ) {
           if ( menu_url.indexOf(checkUrl) > -1 && menu_url.replace(checkUrl, '').length === 0 ) {
-            if ( !!userInfo && userInfo.svcAttr.indexOf('S') > -1 ) {
+            if ( !!userInfo && userInfo.svcAttrCd.indexOf('S') > -1 ) {
               item.menuUrl = item.menuUrl.replace('submain', 'submain_w');
             }
           }
@@ -499,6 +502,8 @@ Tw.MenuComponent.prototype = {
     subCategory = subCategory.slice(0, 2).concat(subCategory.slice(subCategory.length - 1));
     category[0] = subCategory;
 
+    console.log(menuInfo);
+    console.log(category);
     return category;
   },
 

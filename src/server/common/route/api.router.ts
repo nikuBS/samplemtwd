@@ -169,17 +169,7 @@ class ApiRouter {
         if ( resp.code === API_CODE.REDIS_SUCCESS ) {
           resp.result.isLogin = !FormatHelper.isEmpty(svcInfo);
           if ( resp.result.isLogin ) {
-            resp.result.userInfo = {};
-            resp.result.userInfo.svcMgmtNum = svcInfo.svcMgmtNum;
-            resp.result.userInfo.svcNum = svcInfo.svcNum;
-            resp.result.userInfo.svcAttr = svcInfo.svcAttrCd;
-            resp.result.userInfo.name = svcInfo.mbrNm;
-            resp.result.userInfo.totalSvcCnt = svcInfo.totalSvcCnt;
-            resp.result.userInfo.expsSvcCnt = svcInfo.expsSvcCnt;
-            resp.result.userInfo.nickName = svcInfo.nickNm;
-            resp.result.userInfo.loginType = svcInfo.loginType;
-            resp.result.userInfo.tid = svcInfo.userId;
-            resp.result.userInfo.addr = svcInfo.addr;
+            resp.result.userInfo = svcInfo;
             resp.result.userInfo.canSendFreeSMS = allSvcInfo.m.reduce((memo, elem) => {
               if ( elem.svcAttrCd.includes('M1') || elem.svcAttrCd.includes('M3') ||
                 elem.svcAttrCd.includes('M4') ) {
@@ -187,6 +177,9 @@ class ApiRouter {
               }
               return memo;
             }, false);
+            if (svcInfo.totalSvcCnt !== '0' && svcInfo.expsSvcCnt === '0') {
+              resp.result.userInfo.canSendFreeSMS = true;
+            }
           }
           res.json(resp);
         } else {
