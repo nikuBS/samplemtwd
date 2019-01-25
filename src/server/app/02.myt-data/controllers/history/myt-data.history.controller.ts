@@ -123,7 +123,7 @@ export default class MyTDataHistory extends TwViewController {
         return resp;
       }
 
-      return resp.result.map(item => {
+      return resp.result.map((item, idx) => {
         const key = item.opDt;
         const rechargeDate = DateHelper.getShortDate(key);
         return {
@@ -132,7 +132,7 @@ export default class MyTDataHistory extends TwViewController {
           typeName: TypeNames.LIMIT_CHARGE,
           date: DateHelper.getShortDate(key),
           badge: 'recharge',
-          refundable: item.opTypCd === '1' && this.toDt === rechargeDate,
+          refundable: item.opTypCd === '1' && item.opTypCd === '1' && DateHelper.getDiffByUnit(this.toDt, rechargeDate, 'days') === 0,
           right: FormatHelper.addComma(item.amt) + CURRENCY_UNIT.WON,
           bottom: [item.OpOrgNm || ETC_CENTER]
         };
