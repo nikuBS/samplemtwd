@@ -132,14 +132,14 @@ class MytDataSubmainController extends TwViewController {
             item['u_type'] = 'data';
             item['u_title'] = PREPAID_PAYMENT_PAY_CD[item.payCd];
             item['u_sub'] = item.wayCd === '02' ? item.cardNm : PREPAID_PAYMENT_TYPE[item.wayCd];
-            item['d_title'] = item.amt;
+            item['d_title'] = FormatHelper.addComma(item.amt);
             item['d_sub'] = item.data;
             item['unit'] = CURRENCY_UNIT.WON;
           } else {
             item['class'] = (item.opTypCd === '2' || item.opTypCd === '4') ? 'send' : 'recharge';
             item['u_title'] = item.opTypNm;
             item['u_sub'] = item.opOrgNm;
-            item['d_title'] = item.amt;
+            item['d_title'] = FormatHelper.addComma(item.amt);
             item['d_sub'] = DateHelper.getShortDate(item.opDt);
             item['unit'] = CURRENCY_UNIT.WON;
           }
@@ -168,7 +168,7 @@ class MytDataSubmainController extends TwViewController {
           item['u_title'] = item.opTypNm;
           // custNm 명세서에서 제외됨
           item['u_sub'] = /*item.custNm ||  + ' | ' +*/ FormatHelper.conTelFormatWithDash(item.svcNum);
-          item['d_title'] = item.amt;
+          item['d_title'] = FormatHelper.addComma(item.amt);
           item['d_sub'] = DateHelper.getShortDate(item.opDt);
           item['unit'] = CURRENCY_UNIT.WON;
         });
@@ -183,14 +183,14 @@ class MytDataSubmainController extends TwViewController {
             item['u_type'] = 'voice';
             item['u_title'] = PREPAID_PAYMENT_PAY_CD[item.payCd];
             item['u_sub'] = item.wayCd === '02' ? item.cardNm : PREPAID_PAYMENT_TYPE[item.wayCd];
-            item['d_title'] = item.amt;
+            item['d_title'] = FormatHelper.addComma(item.amt);
             item['d_sub'] = item.data;
             item['unit'] = CURRENCY_UNIT.WON;
           } else {
             item['class'] = (item.opTypCd === '2' || item.opTypCd === '4') ? 'send' : 'recharge';
             item['u_title'] = item.opTypNm;
             item['u_sub'] = '';
-            item['d_title'] = item.amt;
+            item['d_title'] = FormatHelper.addComma(item.amt);
             item['d_sub'] = DateHelper.getShortDate(item.opDt);
             item['unit'] = CURRENCY_UNIT.WON;
           }
