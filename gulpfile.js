@@ -232,8 +232,11 @@ gulp.task('js-rb', function () {
 
 gulp.task('css-rb', function () {
   return gulp.src([
-    'src/client/web-contents/css/**/*.css',
-    '!src/client/web-contents/css/**/*.min.css'])
+    'src/client/web-contents/css/common.css',
+    'src/client/web-contents/css/layout.css',
+    'src/client/web-contents/css/widgets.css',
+    'src/client/web-contents/css/components.css',
+    'src/client/web-contents/css/m_product.css'])
   // .pipe(base64({
   //   baseDir: 'src/client/web-contents/',
   //   extensions: ['svg', 'png', /\.jpg#datauri$/i],
