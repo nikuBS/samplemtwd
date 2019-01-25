@@ -48,7 +48,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
   },
 
   _validateCard: function (e) {
-    var $cardNumber = $(e.currentTarget).val();
+    var $cardNumber = $(e.currentTarget);
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
     $error.addClass('blind');
 
@@ -178,6 +178,16 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
 
   _selectPopupCallback: function (arrParams, $layer) {
     $layer.on('click', '[data-value]', $.proxy(this._setSelectedValue, this, arrParams));
+    $layer.on('click', '.tw-popup-closeBtn', $.proxy(this._validSelectedValue, this, arrParams));
+  },
+
+  _validSelectedValue: function ($elButton) {
+    var $error = $($elButton[0]).closest('li').find('.error-txt');
+    $error.addClass('blind');
+
+    if ( !!$($elButton[0]).data('amount') === false ) {
+      $($error.get(0)).removeClass('blind');
+    }
   },
 
   _setSelectedValue: function (arrParams, e) {
@@ -190,6 +200,8 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     this._popupService.close();
     $target.text($(e.currentTarget).text());
     $target.data('amount', $(e.currentTarget).data('value'));
+
+    this._validSelectedValue($target);
   },
 
   _validateForm: function (e) {
