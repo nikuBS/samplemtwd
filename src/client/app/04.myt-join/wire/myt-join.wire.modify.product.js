@@ -96,8 +96,8 @@ Tw.MyTJoinWireModifyProduct.prototype = {
           this._history.goLoad('/myt-join/submain_w');
         }, this),
         null,
-        Tw.ALERT_MSG_COMMON.STEP_CANCEL.BT_NO,
-        Tw.ALERT_MSG_COMMON.STEP_CANCEL.BT_YES);
+        Tw.BUTTON_LABEL.NO,
+        Tw.BUTTON_LABEL.YES);
     } else {
       this._history.goBack();
     }

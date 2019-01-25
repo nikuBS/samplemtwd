@@ -406,7 +406,7 @@ Tw.ALERT_MSG_COMMON = {
     TITLE: 'SMS인증을 사용할 수 없습니다.',
     MSG: '인증할 수 있는 회선번호가 없습니다.<br />고객센터(114)로 문의주세요.'
   },
-  STEP_CANCEL: { TITLE: ' ', MSG: '입력하신 정보는 모두 취소됩니다. <br> 창을 닫으시겠습니까?', BT_YES:'예', BT_NO:'아니요'  },
+  STEP_CANCEL: { TITLE: ' ', MSG: '입력하신 정보는 모두 취소됩니다. <br> 창을 닫으시겠습니까?' },
   CHANGE: '변경하시겠습니까?'
 };
 
