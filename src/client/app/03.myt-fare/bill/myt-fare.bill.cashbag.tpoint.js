@@ -303,7 +303,8 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
   _onClose: function () {
     if (this._isChanged()) {
       this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-        $.proxy(this._closePop, this), $.proxy(this._afterClose, this));
+        $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
+        Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
     } else {
       this._historyService.goBack();
     }
