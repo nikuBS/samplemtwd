@@ -31,9 +31,7 @@ Tw.Init.prototype = {
 
   _initComponent: function () {
     new Tw.MenuComponent();
-    new Tw.MaskingComponent();
-    new Tw.ShareComponent();
-    new Tw.QuickMenuComponent();
+    new Tw.FooterComponent();
   },
 
   _getEnvironment: function () {
