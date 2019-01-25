@@ -51,7 +51,7 @@ Tw.BUTTON_LABEL = {
   NEXT: '다음',
   HOME: '홈으로',
   YES: '예',
-  NO: '아니오'
+  NO: '아니요'
 };
 
 Tw.SMS_VALIDATION = {
