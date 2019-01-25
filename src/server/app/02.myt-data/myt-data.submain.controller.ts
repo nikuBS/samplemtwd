@@ -25,6 +25,8 @@ class MytDataSubmainController extends TwViewController {
     super();
   }
 
+  private fromDt = DateHelper.getPastYearShortDate();
+  private toDt = DateHelper.getCurrentShortDate();
   private isPPS = false;
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
@@ -486,11 +488,9 @@ class MytDataSubmainController extends TwViewController {
 
   // T 끼리 선물하기 선물내역 (1년기준)
   _getDataPresentBreakdown() {
-    const fromDt = DateHelper.getPastYearShortDate();
-    const toDt = DateHelper.getCurrentShortDate();
     return this.apiService.request(API_CMD.BFF_06_0018, {
-      fromDt: fromDt,
-      toDt: toDt,
+      fromDt: this.fromDt,
+      toDt: this.toDt,
       type: '0' // 0: all, 1: send, 2: recharge
     }).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
@@ -504,7 +504,10 @@ class MytDataSubmainController extends TwViewController {
 
   // 팅요금 선물내역
   _getTingPresentBreakdown() {
-    return this.apiService.request(API_CMD.BFF_06_0026, {}).map((resp) => {
+    return this.apiService.request(API_CMD.BFF_06_0026, {
+      fromDt: this.fromDt,
+      toDt: this.toDt
+    }).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       } else {
@@ -523,6 +526,12 @@ class MytDataSubmainController extends TwViewController {
       params = {
         pageNum: 1,
         rowNum: 10
+      };
+    } else {
+      params = {
+        fromDt: this.fromDt,
+        toDt: this.toDt,
+        type: 1
       };
     }
     return this.apiService.request(url, params).map((resp) => {
@@ -549,6 +558,11 @@ class MytDataSubmainController extends TwViewController {
         pageNum: 1,
         rowNum: 10
       };
+    } else {
+      params = {
+        fromDt: this.fromDt,
+        toDt: this.toDt
+      };
     }
     return this.apiService.request(url, params).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
@@ -568,7 +582,10 @@ class MytDataSubmainController extends TwViewController {
   _getRefillUsedBreakdown() {
     return this.apiService.request(API_CMD.BFF_06_0002, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
+        return resp.result
+          .filter(item => {
+            return DateHelper.getDifference(item.copnUseDt, this.fromDt) >= 0;
+          });
       } else {
         // error
         return null;
@@ -582,7 +599,10 @@ class MytDataSubmainController extends TwViewController {
       type: '0' // 받은내역, 보낸내역 동시 조회
     }).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
+        return resp.result
+          .filter(item => {
+            return DateHelper.getDifference(item.copnOpDt, this.fromDt) >= 0;
+          });
       } else {
         // error
         return null;

@@ -87,6 +87,7 @@ Tw.BenefitDisPgmInput.prototype = {
     });
 
     if ( this._selType ) {
+      options.selType = this._selType;
       options.settingSummaryTexts = [
         {
           spanClass: 'term',

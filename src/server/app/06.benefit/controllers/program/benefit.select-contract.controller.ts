@@ -20,11 +20,12 @@ class BenefitSelectContractController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
-    const prodId = req.query.prod_id || '';
+    const prodId = req.query.prod_id || '', selType = req.query.type || null;
     const data: any = {
       svcInfo: svcInfo,
       pageInfo: pageInfo,
-      prodId: prodId
+      prodId: prodId,
+      selType: selType
     };
 
     const curDate = new Date();
