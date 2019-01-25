@@ -71,22 +71,22 @@
                 <!--// .cont-box -->
 
                 <hr class="cont-sp type1 list_contents" aria-hidden="true">
-
+                <script type="text/x-handlebars-template" id="alarm_template">
+                    <li class="list-box type-main"><!-- 190117 타이틀이 전화번호인 경우 -->
+                        <p class="list-text">
+                            <span class="mtext">{{phoneData.phoneNum.serviceNumber1}}-{{phoneData.phoneNum.serviceNumber2}}-{{phoneData.phoneNum.serviceNumber3}}</span>
+                        </p>
+                        <div class="list-btn">
+                            <div class="bt-alone"><button data-idx="{{phoneData.idx}}" class="bt-line-gray1">해지</button></div>
+                        </div>
+                    </li>
+                </script>
                 <div class="cont-box nogaps list_contents">
                     <div class="input-number-wrap">
                         <h3 class="tit type1">지정번호 신청된 회선</h3>
                         <div class="list-comp-thumnail">
                             <ul class="comp-box" id="alarm_list">
-                                <script id="alarm_template" type="text/x-handlebars-template">
-                                    <li class="list-box type-main"><!-- 190117 타이틀이 전화번호인 경우 -->
-                                        <p class="list-text">
-                                            <span class="mtext">{{phoneData.phoneNum.serviceNumber1}}-{{phoneData.phoneNum.serviceNumber2}}-{{phoneData.phoneNum.serviceNumber3}}</span>
-                                        </p>
-                                        <div class="list-btn">
-                                            <div class="bt-alone"><button data-idx="{{phoneData.idx}}" class="bt-line-gray1">해지</button></div>
-                                        </div>
-                                    </li>
-                                </script>
+
                             </ul>
                         </div>
                     </div>

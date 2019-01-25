@@ -54,7 +54,7 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
     this.$inputElement.val(tempVal);
   },
   _addPhoneNumOnList : function () {
-    if(this._addedList.length>=5){
+    if(this._addedList.length>=4){
       this.$addBtn.css('pointer-events','none');
       this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.TITLE);
       return;
