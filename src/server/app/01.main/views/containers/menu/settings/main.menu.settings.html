@@ -66,6 +66,15 @@
                             </a>
                         </li>
                         <% } %>
+                        <% if (isApp || isLogin) { %>
+                        <li id="fe-oss">
+                            <a id="fe-oss-link" href="/main/menu/settings/oss">
+                                <span class="inner">
+                                    <span class="tit tx-medium">오픈소스 라이선스</span>
+                                </span>
+                            </a>
+                        </li>
+                        <% } %>
                         <% if (isApp) { %>
                         <li>
                             <div class="link-version">
