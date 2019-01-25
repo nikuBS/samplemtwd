@@ -16,6 +16,7 @@ Tw.CustomerEmailHistory = function (rootEl) {
 
 Tw.CustomerEmailHistory.prototype = {
   _init: function () {
+    this.nMaxListSize = 20;
     this._hideListItem();
   },
 
@@ -25,15 +26,16 @@ Tw.CustomerEmailHistory.prototype = {
   },
 
   _goToHistoryDetail: function (e) {
-    this._history.goLoad('/customer/emailconsult/history-detail?' + $.param($(e.currentTarget).data()));
+    var $target = $(e.currentTarget);
+    this._history.goLoad('/customer/emailconsult/history-detail?' + $.param($target.data()));
   },
 
   _onShowMoreList: function (e) {
-    var elTarget = e.currentTarget;
+    var elTarget = $(e.currentTarget);
     var $hideListItem = $('.email-consult-list li').not(':visible');
 
     if ( $hideListItem.size() !== 0 ) {
-      $hideListItem.slice(0, 20).show();
+      $hideListItem.slice(0, this.nMaxListSize).show();
     }
 
     if ( $hideListItem.size() === 0 ) {
@@ -42,6 +44,6 @@ Tw.CustomerEmailHistory.prototype = {
   },
 
   _hideListItem: function () {
-    $('.email-consult-list li').slice(20).hide();
+    $('.email-consult-list li').slice(this.nMaxListSize).hide();
   }
 };

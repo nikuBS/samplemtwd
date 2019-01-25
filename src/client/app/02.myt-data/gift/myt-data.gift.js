@@ -21,6 +21,10 @@ Tw.MyTDataGift.prototype = {
     if ( window.location.hash === '#auto' ) {
       this._goAutoGiftTab();
     }
+
+    this.reqCnt = 0;
+    this.currentRemainDataInfo = null;
+    this._getRemainDataInfo();
   },
 
   _cachedElement: function () {
@@ -29,7 +33,9 @@ Tw.MyTDataGift.prototype = {
     this.wrap_available_product = this.$container.find('.fe-layer_available_product');
     this.tpl_recently_gift = Handlebars.compile($('#tpl_recently_gift').html());
     this.tpl_available_product = Handlebars.compile($('#tpl-available-product').html());
-    this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
+    this.$wrap_auto_select_list = $('.fe-auto_select_list');
+    this.$wrap_data_select_list = $('.fe-immediately_data_select_list');
+    this.$remainQty = $('.fe-remain_data');
   },
 
   _bindEvent: function () {
@@ -37,6 +43,67 @@ Tw.MyTDataGift.prototype = {
     this.$container.on('click', '.fe-close-available_product', $.proxy(this._hideAvailableProduct, this));
     this.$container.on('click', '.fe-show-more-amount', $.proxy(this._onShowMoreData, this));
     this.$inputImmediatelyGift.on('focus', $.proxy(this._onLoadRecently, this));
+    this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
+    this.$container.on('currentRemainDataInfo', $.proxy(this._currentRemainDataInfo, this));
+  },
+
+  _getRemainDataInfo: function () {
+    this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: this.reqCnt }).done($.proxy(this._onSuccessRemainDataInfo, this));
+  },
+
+  _currentRemainDataInfo: function () {
+    return this.currentRemainDataInfo ? this.currentRemainDataInfo : null;
+  },
+
+  _onSuccessRemainDataInfo: function (res) {
+    // MOCK DATA
+    var mockDataQty = '900';
+    var mockData = Tw.FormatHelper.convDataFormat(mockDataQty, 'MB');
+    this.currentRemainDataInfo = mockDataQty;
+    this.$remainQty.text(mockData.data + mockData.unit);
+    this._setAmountUI(Number(mockDataQty));
+
+
+    if ( this.reqCnt > 3 ) {
+      // TODO: Alert get Info error
+      // then, go back to submain
+    }
+
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      var result = res.result;
+      // if ( result.giftRequestAgainYn === 'N' ) {
+      //   // API DATA
+      //   var apiDataQty = res.result.dataRemQty;
+      //   var dataQty = Tw.FormatHelper.convDataFormat(apiDataQty, 'MB');
+      //   this.currentRemainDataInfo = apiDataQty;
+      //   this.$remainQty.text(dataQty.data + dataQty.unit);
+      //   this._setAmountUI(Number(apiDataQty));
+      // } else {
+      //   this.reqCnt = this.reqCnt + 1;
+      //
+      //   setTimeout(function () {
+      //     this._getReceiveUserInfo();
+      //   }.bind(this), 3000);
+      // }
+    } else {
+      Tw.Error(res.code, res.msg).pop();
+    }
+  },
+
+  _setAmountUI: function (nLimitMount) {
+    var fnCheckedUI = function (nIndex, elInput) {
+      var $input = $(elInput);
+      if ( Number($input.val()) > nLimitMount ) {
+        $input.prop('disabled', true);
+        $input.parent().parent().addClass('disabled');
+      } else {
+        $input.prop('disabled', false);
+        $input.parent().parent().removeClass('disabled');
+      }
+    };
+
+    this.$wrap_data_select_list.find('input').each(fnCheckedUI);
+    this.$wrap_auto_select_list.find('input').each(fnCheckedUI);
   },
 
   _onLoadRecently: function () {

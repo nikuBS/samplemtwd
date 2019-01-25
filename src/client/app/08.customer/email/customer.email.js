@@ -196,7 +196,6 @@ Tw.CustomerEmail.prototype = {
   },
 
   _openTermLayer: function (sCode) {
-    // this._popupService.close();
     Tw.CommonHelper.openTermLayer(sCode);
   }
 };
