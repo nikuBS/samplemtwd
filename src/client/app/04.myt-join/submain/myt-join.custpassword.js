@@ -303,10 +303,13 @@ Tw.MytJoinCustpassword.prototype = {
 
     // 입력값이 있는 경우 입력값 버릴건지 확인
     if(hasInput){
-      this._popupService.openConfirm(
+      this._popupService.openConfirmButton(
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-        $.proxy(this._confirmBack, this));
+        $.proxy(this._confirmBack, this),
+        null,
+        Tw.BUTTON_LABEL.NO,
+        Tw.BUTTON_LABEL.YES);
     } else {
       this._confirmBack();
     }

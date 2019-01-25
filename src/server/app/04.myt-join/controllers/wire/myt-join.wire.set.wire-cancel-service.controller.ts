@@ -200,6 +200,17 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
 
       // thisMain._dataInit();
 
+      let skbdYn = 'N';
+      for ( let i = 0; i < thisMain._resDataInfo.wireList.length ; i++ ){
+        if ( thisMain._resDataInfo.wireList[i].SVC_MGMT_NUM === svcInfo.svcMgmtNum ) {
+          if ( thisMain._resDataInfo.wireList[i].CO_CL_CD === 'B' ){
+            skbdYn = 'Y';
+            break;
+          }
+        }
+      }
+      thisMain._resDataInfo.skbdYn = skbdYn;
+
       thisMain.logger.info(thisMain, '[_urlTplInfo.pageRenderView] : ', thisMain._urlTplInfo.pageRenderView);
 
       thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {

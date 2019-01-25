@@ -40,6 +40,15 @@ Tw.MyTJoinWireSetWireCancelService = function (rootEl, resData) {
 
   this.cancelFeeInfo = null;
 
+  if(resData.resDataInfo.skbdYn === 'Y' ){
+    if( !Tw.Environment.init ) {
+      $(window).on(Tw.INIT_COMPLETE, $.proxy(this._openSkbdErrorAlert, this));
+    } else {
+      this._openSkbdErrorAlert();
+    }
+    return;
+  }
+
   this._init();
 
 };
@@ -51,6 +60,24 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     this._memberPhoneSet();
     Tw.Logger.info('[dataModel]', this.dataModel);
   },
+
+  _openSkbdErrorAlert: function () {
+    Tw.Popup.openOneBtTypeB(
+      Tw.MYT_JOIN.BROADBAND_ERROR.TITLE,
+      Tw.MYT_JOIN.BROADBAND_ERROR.CONTENTS,
+      [{
+        style_class: 'link',
+        txt: Tw.MYT_JOIN.BROADBAND_ERROR.LINK_TXT
+      }],
+      'type1',
+      $.proxy(function ($layer) {
+        $layer.on('click', '.link', $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.MYT_JOIN.BROADBAND_ERROR.LINK));
+      }, this), $.proxy(function () {
+        this._history.goBack();
+      }, this)
+    );
+  },
+
   _cachedElement: function () {
 
     this.infoLi= $('[data-target="infoLi"]'); // 안내사항 확인
@@ -97,7 +124,8 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
   //--------------------------------------------------------------------------[EVENT]
   _closeCheck: function(){
 
-    if(this.dataModel.productList > 0 ||
+    if($('input[name=checkbox-conf-info]:checked').length > 0 ||
+      this.productLi.find('input[type=checkbox]:checked').length > 0 ||
       this.dataModel.TerminationDtStr ||
       $('[data-target="input_hp"]').val()) {
 
@@ -106,7 +134,10 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
         $.proxy(function(){
           this._history.goLoad('/myt-join/submain_w');
-        }, this));
+        }, this),
+        null,
+        Tw.BUTTON_LABEL.NO,
+        Tw.BUTTON_LABEL.YES);
     } else {
       this._history.goBack();
     }
