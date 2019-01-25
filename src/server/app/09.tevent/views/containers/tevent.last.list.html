@@ -23,10 +23,10 @@
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
-                <div class="ti-caption-gray">
-                    <button class="bt-select fe-select-event" title="이벤트 메뉴 선택" aria-haspopup="true">지난 이벤트</button>
+                <div class="sort-area">
+                    <button class="btn-select fe-select-event" title="이벤트 메뉴 선택" aria-haspopup="true">지난 이벤트</button>
                 </div>
-                <div class="cont-box nogaps">
+                <div class="cont-box nogaps-hoz">
                     <div class="event-article-list">
                         <% if (content) { %>
                         <ul class="fe-content-list" data-page="<%= totalPages %>" data-cnt="<%= totalElements %>">
@@ -46,12 +46,12 @@
                         </ul>
                         <% } %>
                     </div>
+                    <% if (totalElements > 20) { %>
+                    <div class="btn-more fe-more-btn">
+                        <button>더 보기</button>
+                    </div>
+                    <% } %>
                 </div>
-                <% if (totalElements > 20) { %>
-                <div class="bt-more fe-more-btn">
-                    <button>더 보기</button>
-                </div>
-                <% } %>
             </div>
         </div>
         <!--// #contents -->
