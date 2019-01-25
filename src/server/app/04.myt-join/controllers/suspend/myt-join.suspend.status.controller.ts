@@ -39,18 +39,20 @@ class MyTJoinSuspendStatus extends TwViewController {
         phoneNum: svcInfo ? StringHelper.phoneStringToDash(svcInfo.svcNum) : ''
       };
 
+      const status = {};
       if ( suspendStatus.result.svcStCd === 'SP' ) {
-        const status = {};
         const from = DateHelper.getShortDateWithFormat(suspendStatus.result.fromDt, 'YYYY.MM.DD.');
         const to = DateHelper.getShortDateWithFormat(suspendStatus.result.toDt, 'YYYY.MM.DD.');
         status['period'] = { from, to };
         status['reason'] = suspendStatus.result.svcChgRsnNm;
         status['resuspend'] = null;
-
+        status['resetable'] = true;
+        status['resuspendable'] = false;
+        status['militaryAC'] = false;
         if ( suspendStatus.result.svcChgRsnCd === '21'
           || suspendStatus.result.svcChgRsnCd === '22' ) { // 장기일시정지(case 6)
           status['type'] = 'long-term';
-          status['resuspendable'] = true;
+          // status['resuspendable'] = true;
           if ( suspendStatus.result.reFormDt ) { // 장기일시정지(case 7)
             status['resuspend'] = DateHelper.getShortDateWithFormat(suspendStatus.result.reFormDt, 'YYYY.MM.DD.');
           } else if ( suspendStatus.result.svcChgRsnCd === '21' ) {
@@ -63,9 +65,22 @@ class MyTJoinSuspendStatus extends TwViewController {
           status['type'] = 'temporary';
         }
         options['status'] = status;
+      } else if ( this._militaryAC(suspendStatus.result) ) { // 군입대 장기일시정지자의 중도 해제 중
+        const from = DateHelper.getShortDateWithFormat(suspendStatus.result.fromDt, 'YYYY.MM.DD.');
+        const to = DateHelper.getShortDateWithFormat(suspendStatus.result.toDt, 'YYYY.MM.DD.');
+        status['period'] = { from, to };
+        status['reason'] = MYT_SUSPEND_REASON['5000341'] ;
+        status['type'] = 'long-term';
+        status['resetable'] = false;
+        status['resuspendable'] = true;
+        status['militaryAC'] = true;
+
+        options['status'] = status;
       } else {
         options['status'] = null;
       }
+
+      // 진행사항에 대항 표시
       if ( progress.code === API_CODE.CODE_00 ) { //  현재 장기일시 정지 미신청 상태에 대한 코드가 없음
         const _progress = progress.result;
         _progress.rgstDt = DateHelper.getShortDateWithFormat(_progress.rgstDt, 'YYYY.MM.DD.');
@@ -105,6 +120,16 @@ class MyTJoinSuspendStatus extends TwViewController {
       res.render('suspend/myt-join.suspend.status.html', options);
 
     });
+  }
+
+  _militaryAC(suspendStatus: any): boolean {
+    if ( suspendStatus.svcStCd === 'AC' && suspendStatus.armyDt && suspendStatus.armyDt !== '' ) {
+      const days = DateHelper.getDiffByUnit(suspendStatus.toDt, DateHelper.getCurrentDate(), 'days');
+      if ( days > 0) {
+       return true;
+      }
+    }
+    return false;
   }
 }
 
