@@ -13,7 +13,11 @@
             <ul>
                 <li>
                     <span class="title">상태</span>
+                    <%if(locals.militaryAC){ %>
+                    <span class="tx-cont tx-bold">장기일시정지의 일시해제</span>
+                    <% } else { %>
                     <span class="tx-cont tx-bold"><% if(type === 'long-term'){ %>장기<% } %>일시정지 중</span>
+                    <% } %>
                 </li>
                 <li>
                     <span class="title"><% if(type === 'long-term'){ %>장기<% } %>일시정지 기간</span>
@@ -45,21 +49,25 @@
         </li>
     </ul>
     <% } else { %>
+    <% if(!resetable || (type !== 'temporary' && !resuspendable)){ %>
+    <ul class="bt-slice mt20 mb20 item-one">
+    <% } else { %>
     <ul class="bt-slice mt20 mb20 item-two">
+    <% } %>
         <li class="bt-white2">
             <% if(type === 'temporary' ){ %>
             <a href="/myt-join/submain/suspend#long-term">장기일시정지 신청하기</a>
             <% } else { %>
-             <% if(resuspendable){ %>
-             <button data-id="bt-resuspend" >재신청하기</button>
-             <% } else { %>
-             <button data-id="bt-resuspend" disabled >재신청하기</button>
-             <% } %>
+                 <% if(resuspendable){ %>
+                 <button data-id="bt-resuspend" >재신청하기</button>
+                 <% } %>
             <% } %>
         </li>
+        <% if(resetable){ %>
         <li class="bt-white2">
             <button data-id="bt-reset">해제하기</button>
         </li>
+        <% } %>
     </ul>
     <% } %>
 </div>
