@@ -142,6 +142,10 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
       $('.fe-setting-alarm').prop('disabled', true);
       $('.fe-alarm-status').data($(e.currentTarget).data('value'));
+
+      this.term = false; // 시간: 기준항목(1:발신기간, 2:수신기간, 3:번호유지기간)
+      this.day = false; // 시간: 기준일(1:1일전, 2:2일전, 3:3일전)
+      this.amt = false; // 금액(1:1000원, 2:2000원, 3:3000원, 5:5000원)
     }
 
     if ( sListName === 'category_list' ) {
