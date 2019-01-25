@@ -56,10 +56,25 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
   },
 
   _openCancelPopup: function() {
-    this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null, this._goBack, null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+    this._popupService.openConfirmButton(
+      Tw.ALERT_CANCEL,
+      null,
+      $.proxy(this._goBack, this),
+      $.proxy(this._handleAfterClose, this),
+      Tw.BUTTON_LABEL.NO,
+      Tw.BUTTON_LABEL.YES
+    );
   },
 
   _goBack: function() {
-    history.go(-2);
+    this._popupService.close();
+    this._isClose = true;
+  },
+
+  _handleAfterClose: function() {
+    if (this._isClose) {
+      history.back();
+      this._isClose = false;
+    }
   }
 };
