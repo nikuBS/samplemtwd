@@ -41,11 +41,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
   },
   _inputBlurEvt : function(){
     var tempVal = this.$inputElement.val();
-    if(tempVal.length===7){
-      tempVal = this._phoneForceChange(tempVal);
-    }else{
-      tempVal = Tw.StringHelper.phoneStringToDash(tempVal);
-    }
+    tempVal = Tw.FormatHelper.addLineCommonPhoneNumberFormat(tempVal);
     this.$inputElement.attr('maxlength','13');
     this.$inputElement.val(tempVal);
     //this._activateAddBtn();
@@ -65,13 +61,13 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       return;
     }
     var tempPhoneNum = this.$inputElement.val().split('-');
-    var phonReg = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
+    //var phonReg = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
     var phoneObj = {
       'serviceNumber1' : tempPhoneNum[0],
       'serviceNumber2' : tempPhoneNum[1],
       'serviceNumber3' : tempPhoneNum[2]
     };
-    if(!phonReg.test(phoneObj.serviceNumber1+phoneObj.serviceNumber2+phoneObj.serviceNumber3)){
+    if(!Tw.FormatHelper.isPhoneNum(phoneObj.serviceNumber1+phoneObj.serviceNumber2+phoneObj.serviceNumber3)){
       this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
       return;
     }
@@ -116,10 +112,14 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
     var inputVal = this.$inputElement.val();
     var numReg = /[^0-9]/g;
     if(inputVal.length>0&&numReg.test(inputVal)){
+      var changedValue = inputVal.replace(numReg,'');
       this.$inputElement.blur();
       this.$inputElement.val('');
-      this.$inputElement.val(inputVal.replace(numReg,''));
+      this.$inputElement.val(changedValue);
       this.$inputElement.focus();
+      if(changedValue.length<=0){
+        this.$container.find('.cancel').trigger('click');
+      }
     }
     if(this.$inputElement.val().length>=10){
       this.$addBtn.removeAttr('disabled');
@@ -213,9 +213,6 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       returnVal+=phoneString.charAt(i);
     }
     return returnVal;
-  },
-  _phoneForceChange : function (str) {
-    return str.substring(0,3)+'-'+str.substring(3,str.length);
   }
 
 };

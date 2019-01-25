@@ -136,6 +136,12 @@ Tw.CHART_UNIT = {
   TIME: 'time'
 };
 
+Tw.SVC_CD = {
+  I: '인터넷',
+  P: '집전화',
+  T: 'IPTV'
+};
+
 Tw.FARE_CHART_LEGEND = ['청구', '할인'];
 
 Tw.TOAST_TEXT = {
@@ -658,7 +664,7 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A6: { TITLE: '선택한 지역을 해지하시겠습니까?', MSG: '해지하시면, 해당 지역은 서비스 이용이 불가합니다.', BUTTON: '해지하기' },
   ALERT_3_A7: { TITLE: '지정번호 5회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
   ALERT_3_A8: { TITLE: '지정번호 3회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
-  ALERT_3_A9: { TITLE: '결합회선 4회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
+  ALERT_3_A9: { TITLE: '결합회선 5회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
   ALERT_3_A10: { TITLE: '1회선만 결합된 경우, 회선 해지가 불가합니다.', MSG: '' },
   ALERT_3_A15: { TITLE: '3G/LTE 망 사용시 데이터 요금이 발생됩니다', MSG: '' },
   ALERT_3_A16: { TITLE: '확인을 누르시면 선택된 필터가 해제되고 태그가 선택됩니다.', MSG: '' },
@@ -687,6 +693,8 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A77: { TITLE: '지역 추가 시, 1개 지역당 1,650원(부가세포함)씩 과금이 추가됩니다.지역을 추가하시겠습니까?', MSG: '' },
   ALERT_3_A78: { TITLE: '할인지역은 최대 2개까지 등록가능합니다', MSG: '' },
   ALERT_3_A82: { TITLE: '해당 옵션은 2019년 1월 18일자로 가입 종료되었습니다.', MSG: '' },
+  ALERT_3_A84: { TITLE: '이용 시작일이 이용 종료일 이후로 설정되었습니다.\n이용 시작일을 다시 선택해주세요.', MSG: '' },
+  ALERT_3_A85: { TITLE: '예약은 2일 후 부터 가능합니다.', MSG: '' },
   ALERT_ALREADY_PRODUCT: '이미 사용중인 상품입니다.',
   ALERT_ALREADY_TERM_PRODUCT: '사용중이지 않은 상품입니다.',
   ALERT_NUMBER_MIN: '최소 한개의 지정번호는 존재해야 합니다.',
@@ -755,13 +763,12 @@ Tw.ALERT_MSG_MEMBERSHIP = {
   }
 };
 
+Tw.ALERT_CANCEL = '입력하신 정보는 모두 취소됩니다.<br>창을 닫으시겠습니까?';
+
 Tw.ALERT_MSG_CUSTOMER = {
   ALERT_HELPLINE_A01: '예약을 취소하시면 작성하신 모든 정보가 초기화됩니다.',
   ALERT_HELPLINE_A02: '이미 예약하신 정보가 있습니다. 전화상담 예약은 지역별 1일 1회로 제한되며 중복 신청을 하실 수 없습니다.',
   ALERT_PRAISE_COMPLETE: '고객님의 소중한 칭찬글이<br /> 등록되었습니다.',
-  ALERT_PRAISE_CANCEL: {
-    TITLE: '입력하신 정보는 모두 취소됩니다.<br>창을 닫으시겠습니까?'
-  },
   ALERT_RESEARCHES_A01: '이미 참여하신 설문입니다.',
   ALERT_RESEARCHES_A02: '설문에 참여해 주셔서 감사합니다.'
 };
@@ -1098,7 +1105,7 @@ Tw.MYT_JOIN_SUSPEND = {
   },
   CONFIRM_RESET_FILE: {
     MESSAGE: '첨부된 파일이 있습니다. 일시정지사유를 변경하시면 구비서류를 재첨부해야합니다. 일시정지 사유를 변경하시겠습니까?',
-    BTNAME: '변경하기'
+    BTNAME: '확인'
   },
   RESUSPEND: '재신청',
   CANCEL_RESUSPEND: '재신청 취소',
@@ -1118,6 +1125,7 @@ Tw.MYT_JOIN_SUSPEND = {
   NOT_VALID_LONG_TERM_PERIOD: '종료일은 설정한 시작일로부터 24개월을 초과하여 설정할 수 없습니다.',
   NOT_VALID_FROM_DATE: '시작일은 오늘 이후로 지정할 수 있습니다.',
   NOT_VALID_FROM_DATE_01: '시작 일자는 당일로부터 30일 이내로 선택하실 수 있습니다.',
+  NOT_SUPPORT_FILE_UPLOAD: '사용하고 계신 안드로이드 버전에서는 지원하지 않는 기능입니다.',
   ALERT_EXCEED: {
     TITLE: '신청불가',
     MESSAGE: '월 5회 이상 신청이 불가능합니다.'
@@ -1632,3 +1640,10 @@ Tw.ROAMING_BPCP = {
 Tw.POSTCODE_MESSAGE = {
   NONE: '건물명 없음'
 };
+
+Tw.ROAMING_RESERVATION_STATE ={
+  11 : '예약 대기 중',
+  12 : '예약 완료',
+  16 : '미수령',
+  17 : '예약 취소'
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+<style>
+body{background:#fff;padding:10px;box-sizing:border-box;}
+xmp{box-sizing:border-box;max-width:100%;padding:10px;border-radius:5px;background:#000;color:#fff;}
+.guide-sample{box-sizing:border-box;padding:10px;}
+.guide-desc{padding:10px;}
+</style>
+<h1>STEP</h1>
+<pre class="guide-desc">
+- .widget 다음에는 .widget-box 만 올수있음
+- .widget-box 에는 정해진 class명 외에 사용금지 widgets.js 참조
+- 특정 style이 필요할시 .widget .widget-box 두 태그의 구조만 바꾸지 않고 자유롭게 수정가능
+ex) .widget 상위에 class지정
+ex) .widget-box 내부에 태그추가 & class 추가
+</pre>
+
+
+<div class="guide-sample">
+<div class="cont-box">
+    <!-- .widget -->
+    <div class="widget">
+        <div class="widget-box step">
+            <h3 class="step-ti"><em>STEP 01</em>연락처 입력</h3>
+            <ul class="step-list">
+                <li>1<span class="blind">step 01</span></li>
+                <li>2<span class="blind">step 02</span></li>
+                <li class="on">3<span class="blind">step 03</span></li>
+                <li>4<span class="blind">step 04</span></li>
+                <li>5<span class="blind">step 05</span></li>
+                <li>6<span class="blind">step 06</span></li>
+            </ul>
+        </div>
+    </div>
+    <!-- //.widget -->
+</div>
+<hr class="cont-sp type1" aria-hidden="true"/>
+</div>
+
+<xmp class="guide-desc">
+<div class="cont-box">
+    <!-- .widget -->
+    <div class="widget">
+        <div class="widget-box step">
+            <h3 class="step-ti"><em>STEP 01</em>연락처 입력</h3>
+            <ul class="step-list">
+                <li>1<span class="blind">step 01</span></li>
+                <li>2<span class="blind">step 02</span></li>
+                <li class="on">3<span class="blind">step 03</span></li>
+                <li>4<span class="blind">step 04</span></li>
+                <li>5<span class="blind">step 05</span></li>
+                <li>6<span class="blind">step 06</span></li>
+            </ul>
+        </div>
+    </div>
+    <!-- //.widget -->
+</div>
+<hr class="cont-sp type1" aria-hidden="true"/>
+</xmp>
+
+
+</body>
+</html>

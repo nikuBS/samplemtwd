@@ -23,7 +23,7 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
   },
 
   bindEvent: function() {
-    this.$container.on('click', '.bt-blue1', $.proxy(this._openSharePopup, this));
+    this.$container.on('click', '.fe-share-data', $.proxy(this._openSharePopup, this));
   },
 
   _openSharePopup: function() {
@@ -50,6 +50,7 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
   },
 
   _handleOpenSharePopup: function($layer) {
+    $layer.on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
     $layer.on('click', '.radio-slide li', $.proxy(this._handleSelectAmount, this, $layer));
     $layer.on('click', '.bt-red1', $.proxy(this._handleSubmitShare, this, $layer));
   },
@@ -115,5 +116,28 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
 
   _closePopup: function() {
     this._popupService.close();
+  },
+
+  _openCancelPopup: function() {
+    this._popupService.openConfirmButton(
+      Tw.ALERT_CANCEL,
+      null,
+      $.proxy(this._goBack, this),
+      $.proxy(this._handleAfterClose, this),
+      Tw.BUTTON_LABEL.NO,
+      Tw.BUTTON_LABEL.YES
+    );
+  },
+
+  _goBack: function() {
+    this._popupService.close();
+    this._isClose = true;
+  },
+
+  _handleAfterClose: function() {
+    if (this._isClose) {
+      history.back();
+      this._isClose = false;
+    }
   }
 };

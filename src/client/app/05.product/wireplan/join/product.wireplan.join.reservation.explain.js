@@ -65,6 +65,7 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
 
     this.$container.on('click', 'input[type=file]', $.proxy(this._openCustomFileChooser, this));
     this.$familyAddWrap.on('keyup input', 'input[type=text]', $.proxy(this._procEnableAddFamilyBtn, this));
+    this.$familyAddWrap.on('click', '.fe-btn_cancel', $.proxy(this._procEnableAddFamilyBtn, this));
     this.$familyList.on('change', 'input[type=checkbox]', $.proxy(this._procEnableApplyBtn, this));
     this.$familyList.on('click', '.fe-btn_family_del', $.proxy(this._delFamily, this));
 
@@ -238,7 +239,9 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
 
     if ( Tw.CommonHelper.isLowerVersionAndroid() ) {
       this._nativeService.send(Tw.NTV_CMD.OPEN_FILE_CHOOSER, {
-        dest: Tw.UPLOAD_TYPE.RESERVATION
+        dest: Tw.UPLOAD_TYPE.RESERVATION,
+        acceptExt: this.acceptExt,
+        limitSize: this._limitFileByteSize
       }, $.proxy(this._nativeFileChooser, this, $target));
     }
   },

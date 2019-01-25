@@ -43,11 +43,7 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
   },
   _inputBlurEvt : function(){
     var tempVal = this.$inputElement.val();
-    if(tempVal.length===7){
-      tempVal = this._phoneForceChange(tempVal);
-    }else{
-      tempVal = Tw.StringHelper.phoneStringToDash(tempVal);
-    }
+    tempVal = Tw.FormatHelper.addLineCommonPhoneNumberFormat(tempVal);
     this.$inputElement.attr('maxlength','13');
     this.$inputElement.val(tempVal);
   },
@@ -62,16 +58,15 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
       return;
     }
     var reuqestPhoneNum = this.$inputElement.val().replace(/\-/g,'');
-    var phonReg = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
-    if(phonReg.test(reuqestPhoneNum)){
-      if(this._requestOrder('add',reuqestPhoneNum)){
-        this._historyService.reload();
-      }
+    //var phonReg = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
+    if(Tw.FormatHelper.isPhoneNum(reuqestPhoneNum)){
+      this._requestOrder('add',reuqestPhoneNum);
     }else{
       this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
     }
   },
   _requestOrder : function(requestType,phoneNum){
+    this._popupService.close();
     var requestValue = {};
     if(requestType === 'remove'){
       requestValue.delChildSvcMgmtNum = phoneNum;
@@ -79,7 +74,7 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
       requestValue.childSvcNum = phoneNum;
       requestValue.startDtm = this._prodBffInfo.startdtm;
       requestValue.endDtm = this._prodBffInfo.enddtm;
-      requestValue.useDays = Tw.DateHelper.getDiffByUnit(
+      requestValue.useDays = -1*Tw.DateHelper.getDiffByUnit(
         Tw.DateHelper.convDateFormat(),
         Tw.DateHelper.convDateFormat(this._prodBffInfo.startdtm),
         'days');
@@ -88,7 +83,7 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0092, requestValue, {},[this._prodId]).
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
-        return true;
+        this._historyService.reload();
       }else{
         if(res.code==='PRD0027'){
           this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A19.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A19.TITLE);
@@ -130,10 +125,14 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
     var inputVal = this.$inputElement.val();
     var numReg = /[^0-9]/g;
     if(inputVal.length>0&&numReg.test(inputVal)){
+      var changedValue = inputVal.replace(numReg,'');
       this.$inputElement.blur();
       this.$inputElement.val('');
-      this.$inputElement.val(inputVal.replace(numReg,''));
+      this.$inputElement.val(changedValue);
       this.$inputElement.focus();
+      if(changedValue.length<=0){
+        this.$container.find('.cancel').trigger('click');
+      }
     }
     if(this.$inputElement.val().length>=10){
       this.$addBtn.removeAttr('disabled');
@@ -170,11 +169,7 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
       this._popupService.openConfirmButton(
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE,
-        $.proxy(function () {
-          if(this._requestOrder('remove',reuqestPhoneNum)){
-            this._historyService.reload();
-          }
-        },this),
+        $.proxy(this._requestOrder,this,'remove',reuqestPhoneNum),
         null,
         Tw.BUTTON_LABEL.CLOSE,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON);

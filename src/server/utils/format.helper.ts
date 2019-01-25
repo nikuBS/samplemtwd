@@ -1,5 +1,5 @@
 import { DATA_UNIT } from '../types/string.type';
-import { VOICE_UNIT, UNIT } from '../types/bff.type';
+import { VOICE_UNIT } from '../types/bff.type';
 import StringHelper from './string.helper';
 
 class FormatHelper {
@@ -25,7 +25,7 @@ class FormatHelper {
   }
 
   static isString(value: any): boolean {
-    return typeof(value) === 'string';
+    return typeof (value) === 'string';
   }
 
   static getValidVars(value: any, emptyValue: any = null): any {
@@ -267,6 +267,20 @@ class FormatHelper {
       mapped[actualKey].push(item);
     });
     return mapped;
+  }
+
+  static mergeArray(arr1, arr2): any {
+    const array = arr1.concat(arr2);
+    const items = array.concat();
+    for ( let i = 0; i < items.length; ++i ) {
+      for ( let j = i + 1; j < items.length; ++j ) {
+        if ( items[i] === items[j] ) {
+          items.splice(j--, 1);
+        }
+      }
+    }
+
+    return items;
   }
 
   /**

@@ -161,7 +161,6 @@ Tw.TeventCommon.prototype = {
     if (this._page === this._totalPage) {
       this.$moreBtn.hide();
     } else {
-      this.$moreBtn.find('.fe-more-length').text('(' + (this._totalCnt - ((this._page + 1) * Tw.DEFAULT_LIST_COUNT)) + ')');
       this.$moreBtn.show();
     }
   },

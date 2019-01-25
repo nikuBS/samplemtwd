@@ -48,7 +48,7 @@ Tw.MyTFareInfoBillTax.prototype = {
     this.$btnListViewMorewrapper = this.$listWrapper.find('.bt-more');
     this.$btnListViewMorewrapper.on('click', 'button', $.proxy(this._updateTaxList, this)); // 더보기버튼
     this.$appendListTarget = this.$listWrapper.find('.fe-list-inner');
-    this.$listWrapper.on('click', '.myfare-result-wrap .bt-slice button', $.proxy(this._reRequestHandler, this));
+    this.$listWrapper.on('click', '.fe-btn-reprint button', $.proxy(this._reRequestHandler, this));
   },
   _updateTaxList: function (e) {
     this._updateTaxListData();
@@ -136,7 +136,7 @@ Tw.MyTFareInfoBillTax.prototype = {
 
   _openResendByFaxCallback: function ($container) {
     this.$faxNumberInput = $container.find('.input input[type="tel"]');
-    this.$rerequestSendBtn = $container.find('.bt-slice button');
+    this.$rerequestSendBtn = $container.find('.fe-submit button');
     this.$rerequestSendBtn.on('click', $.proxy(this._sendRerequestByFax, this));
     this.$faxNumberInput.on('keyup', $.proxy(this._checkFaxNumber, this));
     this.$faxNumberInput.siblings('.cancel').on('click', $.proxy(function() {
@@ -181,7 +181,7 @@ Tw.MyTFareInfoBillTax.prototype = {
 
   _openResendByEmailCallback: function ($container) {
     this.$emailInput = $container.find('.input input[type="text"]');
-    this.$rerequestSendBtn = $container.find('.bt-slice button');
+    this.$rerequestSendBtn = $container.find('.fe-submit button');
     this.$textValidation = $container.find('.input-txt-type02');
     this.$rerequestSendBtn.on('click', $.proxy(this._sendRerequestByEmail, this));
     this.$emailInput.on('keyup', $.proxy(this._checkEmailValue, this));

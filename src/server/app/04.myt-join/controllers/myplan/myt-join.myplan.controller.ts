@@ -202,28 +202,17 @@ class MyTJoinMyplan extends TwViewController {
       return [];
     }
 
-    const settingBtnList: any = [],
-      terminateBtnList: any = [],
-      unknownBtnList: any = [];
+    const settingBtnList: any = [];
 
     btnList.forEach((item) => {
-      if (item.btnTypCd === 'SE' && prodSetYn !== 'Y') {
+      if (item.btnTypCd !== 'SE') {
         return true;
       }
 
-      if (item.btnTypCd === 'SE' && prodSetYn === 'Y') {
-        settingBtnList.push(item);
-        return true;
-      }
-
-      if (item.btnTypCd === 'TE') {
-        return true;
-      }
-
-      unknownBtnList.push(item);
+      settingBtnList.push(item);
     });
 
-    return [...settingBtnList, ...terminateBtnList, ...unknownBtnList];
+    return settingBtnList;
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- .popup hbs -->
+        <div class="popup-page nobg tw-popup"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>티플 카드, 커플 카드 안내</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+
+                    <!-- .cont-box -->
+                    <div class="cont-box">
+                        <div class="card-box type-skyblue">
+                            <div class="card-inner">
+                                <strong class="card-tit">티플 카드</strong>
+                                <span class="card-name2">모바일 콘텐츠 반값</span>
+                                <p class="card-discount">다양한 유료 콘텐츠를<br><strong>최대 50% 할인된 가격으로 제공</strong></p>
+                            </div>
+                        </div>
+                        <div class="card-intro">
+                            <strong class="intro-tit">주요 혜택</strong>
+                            <button class="intro-bt">영화·TV 반값</button>
+                            <p class="intro-txt2">원스토어, oksusu 영화·IPTV·VOD 50% 할인</p>
+                            <button class="intro-bt">음악·게임 반값</button>
+                            <p class="intro-txt2">원스토어, 멜론 음악·게임 최대 50% 할인</p>
+                            <button class="intro-bt">그 외 콘텐츠 할인</button>
+                            <p class="intro-txt2">원스토어에서 VOD, 게임을 제외한 콘텐츠 20% 할인</p>
+                            <button class="intro-bt">외식 할인</button>
+                            <strong class="intro-tit">안내</strong>
+                            <p class="intro-txt">2017년 1월 1일부터 가입이 중단되었습니다.</p>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+
+                    <!-- .cont-box -->
+                    <div class="cont-box">
+                        <div class="card-box type-yellow">
+                            <div class="card-inner">
+                                <strong class="card-tit">커플 카드</strong>
+                                <span class="card-name2">1+1 혜택</span>
+                                <p class="card-discount">영화·커피·공연 티켓을 구매하시면<br><strong>1+1으로 제공해 드리는 혜택</strong></p>
+                            </div>
+                        </div>
+                        <div class="card-intro">
+                            <strong class="intro-tit">주요 혜택</strong>
+                            <button class="intro-bt">영화 1+1</button>
+                            <ul class="intro-list">
+                                <li>티켓 1장을 사면 1장 무료(연 2회)</li>
+                                <li>매일 2,000원 할인</li>
+                            </ul>
+                            <button class="intro-bt">커피 1+1</button>
+                            <ul class="intro-list">
+                                <li>할리스 커피 1잔을 사면 1잔 무료(연 2회)</li>
+                                <li>아메리카노 또는 라떼 레귤러 사이즈</li>
+                            </ul>
+                            <button class="intro-bt">공연 1+1</button>
+                            <ul class="intro-list">
+                                <li>뮤지컬·연극·콘서트 티켓 최대 50% 할인</li>
+                            </ul>
+                            <button class="intro-bt">외식 할인</button>
+                            <strong class="intro-tit">안내</strong>
+                            <p class="intro-txt">2017년 1월 1일부터 가입이 중단되었습니다.</p>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+
+                </div>
+            </div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!--// .popup hbs -->
+    </div>
+</body>
+</html>

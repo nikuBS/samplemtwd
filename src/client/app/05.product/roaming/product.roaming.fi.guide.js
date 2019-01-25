@@ -28,11 +28,11 @@ Tw.ProductRoamingFiGuide.prototype = {
   },
 
   _goReservation: function() {
-    this._historyService.replaceURL('/product/roaming/fi/reservation');
+    this._historyService.goLoad('/product/roaming/fi/reservation');
   },
 
   _goInquire: function() {
-    this._historyService.replaceURL('/product/roaming/fi/inquire');
+    this._historyService.goLoad('/product/roaming/fi/inquire');
   },
 
   _goProductPage: function(e) {

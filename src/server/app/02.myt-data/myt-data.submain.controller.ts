@@ -11,10 +11,9 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE, API_T_FAMILY_ERROR } from '../../types/api-command.type';
 import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
-import { CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE } from '../../types/string.type';
+import { CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE, MYT_DATA_CHARGE_TYPE_NAMES } from '../../types/string.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { LOGIN_TYPE, PREPAID_PAYMENT_PAY_CD, PREPAID_PAYMENT_TYPE, UNIT, UNIT_E } from '../../types/bff.type';
-import { REDIS_KEY } from '../../types/redis.type';
 import StringHelper from '../../utils/string.helper';
 
 const skipIdList: any = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
@@ -112,7 +111,8 @@ class MytDataSubmainController extends TwViewController {
         // data.isPrepayment = true;
       }
 
-      if ( present /*&& (present.familyMemberYn === 'Y' || present.goodFamilyMemberYn === 'Y')*/ ) {
+      if ( data.svcInfo.svcAttrCd === 'M2' || present ) {
+        // PPS 인 경우에 자동알람서비스 우
         // T끼리 데이터선물버튼 영역
         data.present = true;
       }
@@ -150,9 +150,10 @@ class MytDataSubmainController extends TwViewController {
         // T끼리 선물하기 내역
         // type: 1 send, 2 recharge
         dpBkd.map((item) => {
+          item['opDt'] = item.opDtm.slice(0, 8);
           item['class'] = (item.type === '1' ? 'send' : 'recharge');
-          item['u_title'] = item.custNm;
-          item['u_sub'] = MYT_T_DATA_GIFT_TYPE[item.giftType] + ' | ' + item.svcNum;
+          item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.DATA_GIFT;
+          item['u_sub'] = MYT_T_DATA_GIFT_TYPE[item.giftType] + ' | ' + FormatHelper.conTelFormatWithDash(item.svcNum);
           item['d_title'] = item.dataQty;
           item['d_sub'] = DateHelper.getShortDate(item.opDt);
           item['unit'] = DATA_UNIT.MB;
@@ -166,7 +167,7 @@ class MytDataSubmainController extends TwViewController {
           item['class'] = (item.opTypCd === '1' ? 'send' : 'recharge');
           item['u_title'] = item.opTypNm;
           // custNm 명세서에서 제외됨
-          item['u_sub'] = /*item.custNm ||  + ' | ' +*/ item.svcNum;
+          item['u_sub'] = /*item.custNm ||  + ' | ' +*/ FormatHelper.conTelFormatWithDash(item.svcNum);
           item['d_title'] = item.amt;
           item['d_sub'] = DateHelper.getShortDate(item.opDt);
           item['unit'] = CURRENCY_UNIT.WON;
@@ -202,7 +203,7 @@ class MytDataSubmainController extends TwViewController {
           item['opDt'] = item.copnOpDt;
           item['class'] = (item.type === '1' ? 'send' : 'recharge');
           item['u_title'] = item.opTypNm;
-          item['u_sub'] = item.copnNm + ' | ' + item.svcNum;
+          item['u_sub'] = item.copnNm + ' | ' + FormatHelper.conTelFormatWithDash(item.svcNum);
           item['d_title'] = ''; // API response 값에 정의되어있지 않음
           item['d_sub'] = DateHelper.getShortDate(item.copnOpDt);
           item['unit'] = '';
@@ -414,24 +415,32 @@ class MytDataSubmainController extends TwViewController {
   }
 
   sortBreakdownItems(items): any {
-    const returnVal: any = [];
+    let returnVal: any = [];
     let group: any = [];
     items.forEach((val) => {
-      group = Object.assign(group, Object.keys(val));
+      group = FormatHelper.mergeArray(group, Object.keys(val));
     });
-    group.reverse(); // 최근으로 정렬하기 위함
-    group = group.slice(0, 3); // 최근 기준 3개
+    group.sort().reverse();
+    group = group.slice(0, 3);
     items.filter((item) => {
       const keys = Object.keys(item);
       for ( const key of keys ) {
         group.map((gp) => {
           if ( gp === key ) {
-            returnVal.push(item[key]);
+            returnVal.push(item[gp]);
           }
         });
       }
     });
-    return returnVal.reverse();
+    returnVal = returnVal.sort((a, b) => {
+      if (a[0].opDt > b[0].opDt) {
+        return -1;
+      } else if (a[0].opDt < b[0].opDt) {
+        return 1;
+      }
+      return 0;
+    });
+    return returnVal.slice(0, 3); // 최근 기준 3개
   }
 
   _getRemnantData(): Observable<any> {
@@ -478,12 +487,11 @@ class MytDataSubmainController extends TwViewController {
 
   // T 끼리 선물하기 선물내역 (1년기준)
   _getDataPresentBreakdown() {
-    const curDate = new Date();
-    const beforeDate = new Date();
-    beforeDate.setTime(curDate.getTime() - (365 * 24 * 60 * 60 * 1000));
+    const fromDt = DateHelper.getPastYearShortDate();
+    const toDt = DateHelper.getCurrentShortDate();
     return this.apiService.request(API_CMD.BFF_06_0018, {
-      fromDt: DateHelper.getCurrentShortDate(curDate),
-      toDt: DateHelper.getCurrentShortDate(beforeDate),
+      fromDt: fromDt,
+      toDt: toDt,
       type: '0' // 0: all, 1: send, 2: recharge
     }).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {

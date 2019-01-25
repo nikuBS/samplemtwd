@@ -58,7 +58,7 @@ class CustomerMain extends TwViewController {
       }
     })
 
-  private getNotice = () => this.apiService.request(API_CMD.BFF_08_0029, { expsChnlCd: 'M' })
+  private getNotice = () => this.apiService.request(API_CMD.BFF_08_0029, { expsChnlCd: 'M', ntcAreaClCd: 'M' })
     .map((res) => {
       if ( res.code === API_CODE.CODE_00 ) {
         return res.result;

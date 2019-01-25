@@ -47,8 +47,13 @@ Tw.QuickMenuComponent.prototype = {
       var menuIdStr = resp.result.menuIdStr.trim();
       var menuId = menuIdStr.indexOf('|') !== -1 ? menuIdStr.replace(/\|/g, ',') + ',' + this._menuId :
         Tw.FormatHelper.isEmpty(menuIdStr) ? this._menuId : menuIdStr + ',' + this._menuId;
-      this._apiService.request(Tw.API_CMD.BFF_04_0003, { menuIdStr: menuId })
-        .done($.proxy(this._successAddQuickMenu, this, menuId));
+
+      if ( menuId.indexOf(',') !== -1 && menuId.split(',').length >= 20 ) {
+        this._popupService.openAlert(Tw.ALERT_MSG_HOME.A03);
+      } else {
+        this._apiService.request(Tw.API_CMD.BFF_04_0003, { menuIdStr: menuId })
+          .done($.proxy(this._successAddQuickMenu, this));
+      }
     }
   },
   _removeQuickMenu: function (resp) {
@@ -65,13 +70,9 @@ Tw.QuickMenuComponent.prototype = {
     }
 
   },
-  _successAddQuickMenu: function (menuId, resp) {
+  _successAddQuickMenu: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( menuId.indexOf(',') !== -1 && menuId.split(',').length === 20 ) {
-        this._popupService.openAlert(Tw.ALERT_MSG_HOME.A03);
-      } else {
-        Tw.CommonHelper.toast(Tw.TOAST_TEXT.QUICK_ADD);
-      }
+      Tw.CommonHelper.toast(Tw.TOAST_TEXT.QUICK_ADD);
       this.$btQuickAdd.parent().removeClass('none');
       this.$btQuickRemove.parent().addClass('none');
     } else {

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+<style>
+body{background:#fff;padding:10px;box-sizing:border-box;}
+xmp{box-sizing:border-box;max-width:100%;padding:10px;border-radius:5px;background:#000;color:#fff;}
+.guide-sample{box-sizing:border-box;padding:10px;}
+.guide-desc{padding:10px;}
+</style>
+<h1>tab</h1>
+<pre class="guide-desc">
+- .component 다음에는 .component-box 만 올수있음
+- .component-box 에는 정해진 class명 외에 사용금지 widgets.js 참조
+- 특정 style이 필요할시 .component .component-box 두 태그의 구조만 바꾸지 않고 자유롭게 수정가능
+- a태그에 .dislabed 추가하면 기능 동작 안함
+ex) .component 상위에 class지정
+ex) .component-box 내부에 태그추가 & class 추가
+기본적으로 button태그 사용되기로 프론트엔드와 협의되어있음
+</pre>
+<div class="guide-sample">
+<!-- .cont-box -->
+<div class="cont-box nogaps">
+    <!-- .component -->
+    <div class="component">
+        <div class="component-box tabs">
+            <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                <div class="tab-linker">
+                    <ul role="tablist">
+                        <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="">나에게 리필</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                        <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="">선물 보낸</a></li>
+                        <li role="tab" aria-selected="false" aria-controls="tab3-tab" id="tab3"><a href="">선물 받은</a><button type="button" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
+                    </ul>
+                </div>
+                <div class="tab-contents">
+                    <ul>
+                        <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                            <div class="cont-box">
+                                나에게 리필 내용입니다.
+                            </div>
+                        </li>
+                        <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+                            <div class="cont-box">
+                                선물 보낸 내용입니다.
+                            </div>
+                        </li>
+                        <li role="tabpanel" id="tab3-tab" aria-labelledby="tab3">
+                            <div class="cont-box">
+                                선물 받은 내용입니다.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// .component -->
+</div>
+<!--// .cont-box -->
+</div>
+
+<xmp class="guide-desc">
+<!-- .cont-box -->
+<div class="cont-box nogaps">
+    <!-- .component -->
+    <div class="component">
+        <div class="component-box tabs">
+            <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                <div class="tab-linker">
+                    <ul role="tablist">
+                        <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="">나에게 리필</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                        <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="">선물 보낸</a></li>
+                        <li role="tab" aria-selected="false" aria-controls="tab3-tab" id="tab3"><a href="">선물 받은</a><button type="button" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
+                    </ul>
+                </div>
+                <div class="tab-contents">
+                    <ul>
+                        <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                            <div class="cont-box">
+                                나에게 리필 내용입니다.
+                            </div>
+                        </li>
+                        <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+                            <div class="cont-box">
+                                선물 보낸 내용입니다.
+                            </div>
+                        </li>
+                        <li role="tabpanel" id="tab3-tab" aria-labelledby="tab3">
+                            <div class="cont-box">
+                                선물 받은 내용입니다.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// .component -->
+</div>
+<!--// .cont-box -->
+</xmp>
+
+<div class="guide-sample">
+<!-- .cont-box -->
+<div class="cont-box nogaps">
+    <!-- .component -->
+    <div class="component">
+        <div class="component-box tabs">
+            <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                <div class="tab-linker">
+                    <ul role="tablist">
+                        <li role="tab" aria-selected="true" aria-controls="tab1-tab2" id="tab12"><button>나에게 리필</button></li>
+                        <li role="tab" aria-selected="false" aria-controls="tab2-tab2" id="tab22"><button>선물 보낸</button></li>
+                        <li role="tab" aria-selected="false" aria-controls="tab3-tab2" id="tab32"><button>선물 받은<span class="count">12</span></button></li>
+                    </ul>
+                </div>
+                <div class="tab-contents">
+                    <ul>
+                        <li role="tabpanel" id="tab1-tab2" aria-labelledby="tab12">
+                            <div class="cont-box">
+                                나에게 리필 내용입니다.
+                            </div>
+                        </li>
+                        <li role="tabpanel" id="tab2-tab2" aria-labelledby="tab22">
+                            <div class="cont-box">
+                                선물 보낸 내용입니다.
+                            </div>
+                        </li>
+                        <li role="tabpanel" id="tab3-tab2" aria-labelledby="tab32">
+                            <div class="cont-box">
+                                선물 받은 내용입니다.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// .component -->
+</div>
+<!--// .cont-box -->
+</div>
+
+<xmp class="guide-desc">
+<!-- .cont-box -->
+<div class="cont-box nogaps">
+    <!-- .component -->
+    <div class="component">
+        <div class="component-box tabs">
+            <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                <div class="tab-linker">
+                    <ul role="tablist">
+                        <li role="tab" aria-selected="true" aria-controls="tab1-tab2" id="tab12"><button>나에게 리필</button></li>
+                        <li role="tab" aria-selected="false" aria-controls="tab2-tab2" id="tab22"><button>선물 보낸</button></li>
+                        <li role="tab" aria-selected="false" aria-controls="tab3-tab2" id="tab32"><button>선물 받은<span class="count">12</span></button></li>
+                    </ul>
+                </div>
+                <div class="tab-contents">
+                    <ul>
+                        <li role="tabpanel" id="tab1-tab2" aria-labelledby="tab12">
+                            <div class="cont-box">
+                                나에게 리필 내용입니다.
+                            </div>
+                        </li>
+                        <li role="tabpanel" id="tab2-tab2" aria-labelledby="tab22">
+                            <div class="cont-box">
+                                선물 보낸 내용입니다.
+                            </div>
+                        </li>
+                        <li role="tabpanel" id="tab3-tab2" aria-labelledby="tab32">
+                            <div class="cont-box">
+                                선물 받은 내용입니다.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--// .component -->
+</div>
+<!--// .cont-box -->
+</xmp>
+</body>
+</html>

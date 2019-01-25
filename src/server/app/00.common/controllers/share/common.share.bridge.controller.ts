@@ -17,7 +17,6 @@ class CommonShareBridge extends TwViewController {
     const target = req.query.target;
     const loginType = req.query.loginType;
 
-    console.log('common', target, loginType);
     res.render('share/common.share.bridge.html', { isAndroid: BrowserHelper.isAndroid(req), target, loginType });
   }
 }

@@ -1,15 +1,16 @@
 ee http://help.github.com/ignore-files/ for more about ignoring files.
-/.git
+.git
 
 # compiled output
 /dist
 /src/server/public
-/src/server/config/manifest.json
+/src/server/manifest.json
 /tmp
 /out-tsc
 /logs
 /uploads/*.*
 /uploads/**/*.*
+/src/client/right-brain
 
 # dependencies
 /node_modules

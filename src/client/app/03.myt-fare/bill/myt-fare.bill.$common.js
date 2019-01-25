@@ -127,7 +127,6 @@ Tw.MyTFareBillCommon.prototype = {
     this._moreCnt = selectedCnt - this._standardCnt;
 
     $moreBtn.removeClass('none');
-    $moreBtn.find('.fe-more-cnt').text(' (' + (this._moreCnt) + ')');
     $moreBtn.on('click', $.proxy(this._onClickMore, this, $layer, selectedCnt));
   },
   _onClickMore: function ($layer, selectedCnt, event) {
@@ -141,7 +140,6 @@ Tw.MyTFareBillCommon.prototype = {
       $target.addClass('none');
     } else {
       this._moreCnt = this._moreCnt - this._standardCnt;
-      $target.find('.fe-more-cnt').text(' (' + (this._moreCnt) + ')');
     }
   },
   _setList: function ($target, $layer, index) {

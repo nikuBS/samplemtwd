@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+            </div>
+        </div>
+        <!--// #contents -->
+		<!-- .popup hbs -->
+		<div class="popup-page tw-popup"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+			<!-- #header -->
+			<div class="header-wrap">
+				<div class="page-header">
+					<div class="header-ti">
+                        <h1>선불 이동전화 카드금액 안내</h1>
+					</div>
+				</div>
+			</div>
+			<!--// #header -->
+			<!-- .container-wrap -->
+			<div class="container-wrap">
+				<div class="container">
+                    <!-- .cont-box -->
+                    <div class="cont-box">
+						<div class="prepaid-card-info">
+							<p class="stit">선불 이동전화 카드금액에 따른 <strong>사용기간, 수신가능기간, 번호유지기간</strong> 을 확인하세요.</p>
+							<table class="data-a">
+								<caption>선불 이동전화 카드금액 안내</caption>
+								<colgroup>
+									<col style="width:33.3%;">
+									<col>
+									<col>
+								</colgroup>
+								<thead>
+									<tr>
+										<th scope="col">선불카드금액<br/>(부가세포함)</th>
+										<th scope="col">사용기간<br/>(충전당일 포함)</th>
+										<th scope="col">수신가능기간<br/>(사용기간+10일)</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td class="t-r">5,000원</td>
+										<td>30일</td>
+										<td>40일</td>
+									</tr>
+									<tr>
+										<td class="t-r">10,000원</td>
+										<td>60일</td>
+										<td>70일</td>
+									</tr>
+									<tr>
+										<td class="t-r">20,000원</td>
+										<td>120일</td>
+										<td>130일</td>
+									</tr>
+									<tr>
+										<td class="t-r">30,000원</td>
+										<td>180일</td>
+										<td>190일</td>
+									</tr>
+									<tr>
+										<td class="t-r">50,000원</td>
+										<td>365일</td>
+										<td>375일</td>
+									</tr>
+								</tbody>
+							</table>
+							<p class="stxt">사용기간 종료 후 90일간 유지</p>
+							<ul class="round-dot-list">
+								<li>수신가능기간 예시 : 사용기간이 5/4일인 경우 → 5/14일까지 수신가능, 5/15일부터 수신불가</li>
+								<li>수신가능기간 종료 후 발신불가 기간이라 할지라도 <strong>긴급전화(112,113,119 등) 및 당사 고객센터(휴대폰 114), PPS ARS번호(011/010-200-4949)</strong>는 발신이 가능합니다.</li>
+								<li>선불 이동전화 5,000원권은 2009년 10월 이후 신규발행을 중단합니다.</li>
+							</ul>
+						</div>
+					</div>
+                    <!--// .cont-box -->
+
+				</div>
+			</div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+            <!--// .popup-closeBtn -->
+		</div>
+		<!--// .popup hbs -->
+    </div>
+</body>
+</html>

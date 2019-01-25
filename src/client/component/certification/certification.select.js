@@ -111,7 +111,7 @@ Tw.CertificationSelect.prototype = {
   },
   _onCheckFidoUse: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
-      if ( resp.params.value === Tw.NTV_FIDO_USE.ENABLE ) {
+      if ( resp.params.value === 'Y' ) {
         this._useFido = true;
         this._openCertPopup(Tw.AUTH_CERTIFICATION_METHOD.BIO);
       } else {

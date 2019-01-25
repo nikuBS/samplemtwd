@@ -16,7 +16,7 @@ Tw.BiometricsRegister = function (target) {
 
 Tw.BiometricsRegister.prototype = {
   ERROR_CODE: {
-    CANCEL: 258
+    CANCEL: 9
   },
   open: function (callback) {
     this._callback = callback;
@@ -46,7 +46,7 @@ Tw.BiometricsRegister.prototype = {
       this._popupService.closeAll();
       this._nativeService.send(Tw.NTV_CMD.SAVE, {
         key: Tw.NTV_STORAGE.FIDO_USE,
-        value: true
+        value: 'Y'
       });
     } else if ( resp.resultCode === this.ERROR_CODE.CANCEL ) {
       Tw.Logger.log('[FIDO] Cancel');

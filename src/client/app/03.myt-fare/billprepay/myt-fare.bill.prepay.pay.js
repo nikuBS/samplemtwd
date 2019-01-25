@@ -111,7 +111,7 @@ Tw.MyTFareBillPrepayPay.prototype = {
   },
   _onClose: function () {
     if (this._isChanged()) {
-      this._popupService.openConfirmButton(null, Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_CANCEL.TITLE,
+      this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
         $.proxy(this._closePop, this));
     } else {
       this._historyService.goBack();

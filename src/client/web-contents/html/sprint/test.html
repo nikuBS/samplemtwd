@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+
+    
+    
+
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+					</div>
+
+                    <div class="h-tit">타이틀명 34 타이틀명 34 타이틀명 34 타이틀명 34 타이틀명 34 타이틀명 34 타이틀명 34 타이틀명 34 타이틀명 34</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+				</div>
+			</div>
+		</div>
+        <!--// #header --> 
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+
+                <br />커스텀 라디오버튼 - label 프리 (작은거)<br />
+                
+                <span class="custom-form"><input type="radio" id="ok1" name="r1"><span class="r-type1"></span></span>
+                <label for="ok1">가나다라</label>
+                <span class="custom-form"><input type="radio" id="ok2" name="r1"><span class="r-type1"></span></span>
+                <label for="ok2">가나다라</label>
+                <span class="custom-form"><input type="radio" id="ok3" name="r1" checked="checked" disabled="disabled"><span class="r-type1"></span></span>
+                <label for="ok3">가나다라</label>
+                <span class="custom-form"><input type="radio" id="ok4" name="r1" disabled><span class="r-type1"></span></span>
+                <label for="ok4">가나다라</label>
+
+                <br />커스텀 라디오버튼 - label 프리 (큰거)<br />
+
+                <span class="custom-form"><input type="radio" id="ok5" name="r2"><span class="r-type2"></span></span>
+                <label for="ok5">가나다라</label>
+                <span class="custom-form"><input type="radio" id="ok6" name="r2"><span class="r-type2"></span></span>
+                <label for="ok6">가나다라</label>
+                <span class="custom-form"><input type="radio" id="ok7" name="r2" checked="checked" disabled="disabled"><span class="r-type2"></span></span>
+                <label for="ok7">가나다라</label>
+                <span class="custom-form"><input type="radio" id="ok8" name="r2" disabled><span class="r-type2"></span></span>
+                <label for="ok8">가나다라</label>
+                
+                <br />
+
+                <br />커스텀 체크박스 - label 프리 (작은거)<br />
+                
+                <span class="custom-form"><input type="checkbox" id="oka1" name="r1"><span class="c-type1"></span></span>
+                <label for="oka1">가나다라</label>
+                <span class="custom-form"><input type="checkbox" id="oka2" name="r1"><span class="c-type1"></span></span>
+                <label for="oka2">가나다라</label>
+                <span class="custom-form"><input type="checkbox" id="oka3" name="r1" checked="checked" disabled="disabled"><span class="c-type1"></span></span>
+                <label for="oka3">가나다라</label>
+                <span class="custom-form"><input type="checkbox" id="oka4" name="r1" disabled><span class="c-type1"></span></span>
+                <label for="oka4">가나다라</label>
+
+                <br />커스텀 체크박스 - label 프리 (큰거)<br />
+
+                <span class="custom-form"><input type="checkbox" id="oka5" name="r2"><span class="c-type2"></span></span>
+                <label for="oka5">가나다라</label>
+                <span class="custom-form"><input type="checkbox" id="oka6" name="r2"><span class="c-type2"></span></span>
+                <label for="oka6">가나다라</label>
+                <span class="custom-form"><input type="checkbox" id="oka7" name="r2" checked="checked" disabled="disabled"><span class="c-type2"></span></span>
+                <label for="oka7">가나다라</label>
+                <span class="custom-form"><input type="checkbox" id="oka8" name="r2" disabled><span class="c-type2"></span></span>
+                <label for="oka8">가나다라</label>
+                
+                <br />
+
+
+
+                12133스타일11<br>
+                <button type="button" class="btn-floating btn-style1">주소록</button>
+                <a href="#" class="btn-floating btn-style1">주소록</a>
+
+                <button type="button" class="btn-floating btn-style1" disabled="disabled">주소록</button>
+                <a href="#" class="btn-floating btn-style1 disabled">주소록</a>
+
+                스타일2<br>
+                <button type="button" class="btn-floating btn-style2">주소록</button>
+                <a href="#" class="btn-floating btn-style2">주소록</a>
+
+                <button type="button" class="btn-floating btn-style2" disabled="disabled">주소록</button>
+                <a href="#" class="btn-floating btn-style2 disabled">주소록</a>
+
+                스타일3<br>
+                <button type="button" class="btn-floating btn-style3">주소록</button>
+                <a href="#" class="btn-floating btn-style3">주소록</a>
+
+                <button type="button" class="btn-floating btn-style3" disabled="disabled">주소록</button>
+                <a href="#" class="btn-floating btn-style3 disabled">주소록</a>
+
+
+
+
+
+
+
+
+
+                    12133스타일11<br>
+                    <button type="button" class="btn-round1 btn-style1">주소록</button>
+                    <a href="#" class="btn-round1 btn-style1">주소록</a>
+
+                    <button type="button" class="btn-round1 btn-style1" disabled="disabled">주소록</button>
+                    <a href="#" class="btn-round1 btn-style1 disabled">주소록</a>
+
+                    스타일2<br>
+                    <button type="button" class="btn-round1 btn-style2">주소록</button>
+                    <a href="#" class="btn-round1 btn-style2">주소록</a>
+
+                    <button type="button" class="btn-round1 btn-style2" disabled="disabled">주소록</button>
+                    <a href="#" class="btn-round1 btn-style2 disabled">주소록</a>
+
+                    스타일3<br>
+                    <button type="button" class="btn-round1 btn-style3">주소록</button>
+                    <a href="#" class="btn-round1 btn-style3">주소록</a>
+
+                    <button type="button" class="btn-round1 btn-style3" disabled="disabled">주소록</button>
+                    <a href="#" class="btn-round1 btn-style3 disabled">주소록</a>
+                    
+                    스타일4<br>
+                    <button type="button" class="btn-round1 btn-style4">주소록</button>
+                    <a href="#" class="btn-round1 btn-style4">주소록</a>
+
+
+
+                    스타일1<br>
+                    <button type="button" class="btn-round2 btn-style1">주소록</button>
+                    <a href="#" class="btn-round2 btn-style1">주소록</a>
+
+                    <button type="button" class="btn-round2 btn-style1" disabled="disabled">주소록</button>
+                    <a href="#" class="btn-round2 btn-style1 disabled">주소록</a>
+
+                    스타일2<br>
+                    <button type="button" class="btn-round2 btn-style2">주소록</button>
+                    <a href="#" class="btn-round2 btn-style2">주소록</a>
+
+                    <button type="button" class="btn-round2 btn-style2" disabled="disabled">주소록</button>
+                    <a href="#" class="btn-round2 btn-style2 disabled">주소록</a>
+
+                    스타일3<br>
+                    <button type="button" class="btn-round2 btn-style3">주소록</button>
+                    <a href="#" class="btn-round2 btn-style3">주소록</a>
+
+                    <button type="button" class="btn-round2 btn-style3" disabled="disabled">주소록</button>
+                    <a href="#" class="btn-round2 btn-style3 disabled">주소록</a>
+
+
+
+                    스타일1<br>
+                    <button type="button" class="btn-round3 btn-style1">주소록</button>
+                    <a href="#" class="btn-round3 btn-style1">주소록</a>
+
+                    <button type="button" class="btn-round3 btn-style1" disabled="disabled">주소록</button>
+                    <a href="#" class="btn-round3 btn-style1 disabled">주소록</a>
+
+                    스타일2<br>
+                    <button type="button" class="btn-round3 btn-style2">주소록</button>
+                    <a href="#" class="btn-round3 btn-style2">주소록</a>
+
+                    <button type="button" class="btn-round3 btn-style2" disabled="disabled">주소록</button>
+                    <a href="#" class="btn-round3 btn-style2 disabled">주소록</a>
+
+                    스타일3<br>
+                    <button type="button" class="btn-round3 btn-style3">주소록</button>
+                    <a href="#" class="btn-round3 btn-style3">주소록</a>
+
+                    <button type="button" class="btn-round3 btn-style3" disabled="disabled">주소록</button>
+                    <a href="#" class="btn-round3 btn-style3 disabled">주소록</a>
+
+                    Big 사이즈<br>
+
+                    <input type="checkbox" name="checks" id="checks" class="formcheck-big"><label for="checks">체크박스</label>
+                    <input type="checkbox" name="checks1" id="checks1" class="formcheck-big" disabled="disabled"><label for="checks1">체크박스</label>
+                    <input type="checkbox" name="checks2" id="checks2" class="formcheck-big" checked="checked" disabled="disabled"><label for="checks2">체크박스</label>
+
+                    스몰 사이즈<br>
+
+                    <input type="checkbox" name="schecks" id="schecks" class="formcheck-small"><label for="schecks">체크박스</label>
+                    <input type="checkbox" name="schecks1" id="schecks1" class="formcheck-small" disabled="disabled"><label for="schecks1">체크박스</label>
+                    <input type="checkbox" name="schecks2" id="schecks2" class="formcheck-small" checked="checked" disabled="disabled"><label for="schecks2">체크박스</label>
+
+                    Big 사이즈<br>
+
+                    <input type="radio" name="radio1" id="radio1" class="formradio-big"><label for="radio1">라디오박스</label>
+                    <input type="radio" name="radio3" id="radio3" class="formradio-big" disabled="disabled"><label for="radio3">라디오박스</label>
+                    <input type="radio" name="radio2" id="radio2" class="formradio-big" checked="checked" disabled="disabled"><label for="radio2">라디오박스</label>
+
+                    스몰 사이즈<br>
+
+                    <input type="radio" name="sradio1" id="sradio1" class="formradio-small"><label for="sradio1">라디오박스</label>
+                    <input type="radio" name="sradio3" id="sradio3" class="formradio-small" disabled="disabled"><label for="sradio3">라디오박스</label>
+                    <input type="radio" name="sradio2" id="sradio2" class="formradio-small" checked="checked" disabled="disabled"><label for="sradio2">라디오박스</label>
+
+               
+
+                   
+
+
+
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

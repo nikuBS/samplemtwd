@@ -1,55 +1,56 @@
 <div class="popup tw-popup">
-    <div class="popup-page nobg layer actionsheet has-floating"><!-- .no-btn 하단에 버튼이 없을 경우 -->
+    <div class="popup-page nobg layer"><!-- .no-btn 하단에 버튼이 없을 경우 -->
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti align-l">
+                    <h1>{{title}}</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
         <!-- .container-wrap -->
         <div class="container-wrap">
+            <h2 class="blind">내용</h2>
             <div class="container">
+                {{#each data}}
+                {{#if @index}}
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                {{/if}}
                 <!-- .cont-box -->
                 <div class="cont-box nogaps noborder">
-                    <!-- .cont-actionsheet -->
-                    <div class="cont-actionsheet">
-                        {{#each data}}
-                            {{#if @index}}
-                                <hr aria-hidden="true"/>
-                            {{/if}}
-                            {{#if title}}<div class="ac-tit">{{title}}</div>{{/if}}
-                            <ul class="ac-list">
-                                {{#each list}}
-                                    <li class="type1 {{option}}">
-                                        {{#if button-attr}}<button {{{button-attr}}}>{{/if}}
-                                        {{#if a-attr}}<a {{{a-attr}}}>{{/if}}
-                                        {{#if label-attr}}<label {{{label-attr}}}>{{/if}}
-                                        <span class="table">
-                                                <span class="table-row">
-                                                    <span class="table-cell">
-                                                        {{#if icon}}<span class="simbol {{icon}}"></span>{{/if}}
-                                                        {{#if txt}}<span class="txt">{{txt}}</span>{{/if}}
-                                                        {{#if add}}<span class="add">{{add}}</span>{{/if}}
-                                                    </span>
-                                                    <span class="table-cell right">
-                                                        {{#if spot}}<span class="spot">{{spot}}</span>{{/if}}
-                                                        {{#if radio-attr}}<span class="custom-form"><input type="radio" {{{radio-attr}}}><span class="r-type1"></span></span>{{/if}}
-                                                        {{#if checkbox-attr}}<span class="custom-form"><input type="checkbox" {{{checkbox-attr}}}><span class="c-type1"></span></span>{{/if}}
-                                                        <span class="link"></span>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                        {{#if label-attr}}</label>{{/if}}
-                                        {{#if a-attr}}</a>{{/if}}
-                                        {{#if button-attr}}</button>{{/if}}
-                                    </li>
-                                {{/each}}
-                            </ul>
+                    {{#if type}}<p class="link-long-ti">{{type}}</p>{{/if}}
+                    <ul class="link-long-list">
+                        {{#each list}}
+                        <li class="{{option}}">
+                            <div class="link-long">
+                                <button>{{value}}
+                                    {{#if explain}}
+                                    <p class="tx-explain">{{explain}}</p>
+                                    {{/if}}
+                                    <span class="tx-sub">
+                                        {{#if text1}}<span class="normal">{{text1}}</span>{{/if}}
+                                        {{#if text2}}
+                                            {{text2}}
+                                            <span class="bar">{{bar}}</span>
+                                            <span class="point">{{point}}</span>
+                                        {{/if}}
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
                         {{/each}}
-                        <button type="button" class="btn-floating btn-style3 fe-common-back">
-                            닫기
-                        </button>
-                    </div>
-                    <!-- // .cont-actionsheet -->
+                    </ul>
                 </div>
                 <!--// .cont-box -->
+                {{/each}}
             </div>
         </div>
         <!--// .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+        <!--// .popup-closeBtn -->
     </div>
     <div class="popup-blind"></div>
 </div>

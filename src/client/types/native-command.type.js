@@ -76,7 +76,8 @@ Tw.NTV_STORAGE = {
   FIDO_USE: 'fidoUse'
 };
 
-Tw.NTV_FIDO_USE = {
-  ENABLE: '0',
-  DISABLE: '1'
+Tw.NTV_PAGE_KEY = {
+  T_NOTI: 'tNotify',
+  HOME_WELCOME: 'homeWelcome'
 };
+

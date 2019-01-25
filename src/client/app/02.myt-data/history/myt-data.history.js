@@ -47,8 +47,8 @@ Tw.MyTDataHistory.prototype = {
 
   _bindEvent: function() {
     this.$moreBtn.on('click', $.proxy(this._handleLoadMore, this));
-    this.$container.on('click', '.bt-select', $.proxy(this._handleChangeType, this));
-    this.$container.on('click', 'button.bt-link-tx', $.proxy(this._openCancelableChargeAlert, this));
+    this.$container.on('click', '#fe-type', $.proxy(this._handleChangeType, this));
+    this.$container.on('click', '.fe-cancel', $.proxy(this._openCancelableChargeAlert, this));
   },
 
   _handleLoadMore: function() {

@@ -1,0 +1,434 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" />
+    <!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" />
+    <!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" />
+    <!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" />
+    <!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script>
+    <!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script>
+    <!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script>
+    <!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script>
+    <!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script>
+    <!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script>
+    <!--[C] 기능별 위젯 -->
+    <!-- 가이드 style -->
+    <style type="text/css">
+        .form-box{margin:30px 0 20px;border-top:2px solid #000;}
+        .form-summary{margin:0 0 10px;font-size:18px;font-weight:900;}
+        .form-caption{margin-top:20px;font-size:14px;font-weight:600;text-align:center;background:#d8d8d8;}
+        .form-sub-tx{display:inline-block;font-size:12px;font-weight:400;}
+    </style>
+</head>
+<body style="background:#fff;">
+    <div id="wrap">
+        <div id="container">
+            <div id="content" style="padding:0 10px;">
+                
+
+                
+
+                <div class="form-box">
+                    <h1 class="form-summary">Input 입력창</h1>
+
+                    <h2 class="form-caption">입력 전 기본 상태</h2>
+                    <span id="aria-exp-label1">default</span>
+                    <span class="inputbox">
+                        <span class="input">
+                          <input type="text" placeholder="placeholder" title="input" value="" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" />
+                          <button class="cancel"><span class="blind">삭제</span></button>
+                        </span>
+                        <span id="aria-exp-desc1" class="guide-txt">주민등록번호 상의 법정 생년월일을 입력해 주세요.</span>
+                    </span>
+                    
+                    <h2 class="form-caption">readonly 형태</h2>
+                    <span id="aria-exp-label1">placeholder 타입</span>
+                    <span class="inputbox readonly placeholder"> <!-- readonly이며 placeholder 상태일 경우 클래스 추가 -->
+                        <span class="input">
+                          <input type="text" value="placeholder도 value값으로 넣습니다." title="input" value="" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" readonly/><!-- readonly 속성 추가 -->
+                          <button class="cancel"><span class="blind">삭제</span></button>
+                        </span>
+                        <span id="aria-exp-desc1" class="guide-txt">주민등록번호 상의 법정 생년월일을 입력해 주세요.</span>
+                    </span>
+                    <span id="aria-exp-label1">value 타입</span>
+                    <span class="inputbox readonly"><!-- readonly상태일 경우 클래스 추가 -->
+                        <span class="input">
+                          <input type="text" value="placeholder도 value값으로 넣습니다." title="input" value="" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" readonly/><!-- readonly 속성 추가 -->
+                          <button class="cancel"><span class="blind">삭제</span></button>
+                        </span>
+                        <span id="aria-exp-desc1" class="guide-txt">주민등록번호 상의 법정 생년월일을 입력해 주세요.</span>
+                    </span>
+
+                    <h2 class="form-caption">삭제 버튼</h2>
+                    <span class="inputbox">
+                        <span class="input">
+                            <input type="text" placeholder="placeholder" title="input" value="" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" />
+                            <button class="cancel"><span class="blind">삭제</span></button>
+                        </span>
+                        <span id="aria-exp-desc1" class="guide-txt">주민등록번호 상의 법정 생년월일을 입력해 주세요.</span>
+                    </span>
+
+                    <h2 class="form-caption">값 체크 통과시</h2>
+                    <span class="exp-label2">validation</span>
+                    <span class="inputbox validation">
+                        <span class="input">
+                            <input type="text" placeholder="placeholder" title="validation" value="" aria-labelledby="aria-exp-label2" aria-describedby="aria-exp-desc2" />
+                            <button class="cancel"><span class="blind">삭제</span></button>
+                        </span>
+                        <span id="aria-exp-desc2" class="validation-txt">사용할 수 있는 아이디입니다.</span>
+                    </span>
+
+                    <h2 class="form-caption">값 체크 오류시</h2>
+                    <span class="exp-label2">error</span>
+                    <span class="inputbox error">
+                        <span class="input">
+                          <input type="text" placeholder="placeholder" title="error" value="" aria-labelledby="aria-exp-label3" aria-describedby="aria-exp-desc3" />
+                          <button class="cancel"><span class="blind">삭제</span></button>
+                        </span>
+                        <span id="aria-exp-desc3" class="error-txt">잘못된 입력입니다.</span>
+                    </span>
+
+                    <h2 class="form-caption">default 경우</h2>
+                    <span class="inputbox">
+                        <span class="input">
+                          <input type="text" placeholder="입력이 불가능합니다." title="입력방지" disabled />
+                          <button class="cancel"><span class="blind">삭제</span></button>
+                        </span>
+                    </span>
+
+                    <h2 class="form-caption">입력창에 button이 있는 경우</h2>
+                    <span class="inputbox bt-add">
+                        <span class="input">
+                            <input type="text" title="우편번호" value="" />
+                            <button class="cancel"><span class="blind">삭제</span></button>
+                        </span>
+                        <span class="bt-box">
+                            <button type="button">우편번호</button>
+                        </span>
+                    </span>
+                    <span class="inputbox mt10">
+                        <span class="input">
+                            <input type="text" title="상세 주소" value="" aria-labelledby="aria-citation-phone" />
+                            <button class="cancel"><span class="blind">삭제</span></button>
+                        </span>
+                    </span>
+                    <span class="inputbox mt10">
+                        <span class="input">
+                            <input type="text" placeholder="상세주소를 입력해주세요." title="상세 주소" aria-labelledby="aria-citation-phone" />
+                            <button class="cancel"><span class="blind">삭제</span></button>
+                        </span>
+                    </span>
+
+                    <h2 class="form-caption">오류 알림이 있을 시</h2>
+                    <span id="aria-citation-phone" class="form-ti">휴대폰 번호</span>
+                    <span class="inputbox bt-add">
+                        <span class="input">
+                            <input type="number" placeholder="‘-’ 없이 숫자만 입력" title="인증번호 받기" aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx1" />
+                            <button class="cancel"><span class="blind">삭제</span></button>
+                        </span>
+                        <span class="bt-box">
+                            <button type="button">인증번호 받기</button>
+                        </span>
+                        <span class="tx-box">
+                            <span id="aria-phone-tx1" class="error-txt">입력하신 정보가 일치하지 않습니다.</span><!-- 입력 필드 오류 나타내지 않을때는 .none 추가 -->
+                        </span>
+                    </span>
+
+                    <h2 class="form-caption">정상 작동 시</h2>
+                    <span id="aria-citation-phone" class="form-ti">휴대폰 번호</span>
+                    <span class="inputbox bt-add">
+                        <span class="input">
+                            <input type="number" placeholder="‘-’ 없이 숫자만 입력" title="인증번호 받기" aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx2" />
+                            <button class="cancel"><span class="blind">삭제</span></button>
+                        </span>
+                        <span class="bt-box">
+                            <button type="button">인증번호 받기</button>
+                        </span>
+                        <span class="tx-box">
+                            <span id="aria-phone-tx2" class="validation-txt">정상적으로 발송되었습니다.</span><!-- 정상 작동되지 않을때는 .none 추가 -->
+                        </span>
+                    </span>
+
+                    <h2 class="form-caption">.bt-add full 스타일</h2>
+                    <span id="aria-citation-email" class="form-ti">이메일 주소</span>
+                    <span class="inputbox bt-add full"><!-- 정상 발송일 경우 class validation 추가, 오류일 경우 class error 추가 -->
+                        <span class="input">
+                            <input type="text" placeholder="회원정보에 등록한 이메일" value="" title="휴대폰 이메일 주소" aria-labelledby="aria-citation-email" aria-describedby="" /><!-- 정상 발송일 경우 aria-sms-exp-desc1, 오류일 경우 aria-sms-exp-desc2로 변경 -->
+                            <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
+                        </span>
+                        <span class="bt-box"><!-- 인증번호를 받기 비활성화 class disabled 추가 -->
+                            <button type="button">인증번호 받기</button><!-- 인증번호를 받기 비활성화 attr disabled 추가 -->
+                        </span>
+                        <span class="tx-box">
+                            <span id="aria-sms-exp-desc1" class="error-txt none">회원정보에 등록된 이메일이 아닙니다.</span><!-- 오류일 경우 class none 삭제 -->
+                            <span id="aria-sms-exp-desc2" class="validation-txt none">정상적으로 발송되었습니다.</span><!-- 통과일 경우 class none 삭제 -->
+                        </span>
+                    </span>
+
+                    <h2 class="form-caption">유효기간</h2>
+                    <div class="input-wrap-half">
+                        <span class="inputbox">
+                            <span class="input">
+                                <input type="number" placeholder="YYYY" title="유효 년" maxlength="4">
+                                <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                            </span>
+                        </span>
+                        <span class="inputbox">
+                            <span class="input">
+                                <input type="number" placeholder="MM" title="유효 월" maxlength="2">
+                                <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                            </span>
+                        </span>
+                    </div>
+
+                    <h2 class="form-caption">포인트</h2>
+                    <div class="select-point-box">
+                        <div class="select-point-dropdown">
+                            <button class="bt-dropdown big" title="납부 포인트 종류" aria-haspopup="true">OK캐쉬백<span class="ico"></span></button>
+                        </div>
+                        <div class="select-point-input">
+                            <div class="inputbox">
+                                <span class="input">
+                                    <input type="text" placeholder="1,000점 이상" title="input" value="" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1">
+                                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                                </span>
+                            </div>
+                        </div>
+                        <span id="aria-exp-desc1" class="select-point-info">OK캐쉬백 <span>4,600</span>점 / 포인트 <span>1,200</span>점</span>
+                    </div>
+
+                    <h2 class="form-caption">휴대폰 번호 입력</h2>
+                    <div class="inputbox phone-wrap" style="width:100%"><!-- 영역 크기에 따라 width 조절 -->
+                        <span class="select" style="width:28%">
+                            <button class="bt-dropdown big" title="휴대폰 앞자리 선택" aria-haspopup="true">010<span class="ico"></span></button>
+                        </span>
+                        <span class="hyp"></span>
+                        <span class="input">
+                            <input type="number" maxlength="4" title="휴대폰 중간자리 입력">
+                            <button class="cancel"><span class="blind">삭제</span></button>
+                        </span>
+                        <span class="hyp"></span>
+                        <span class="input">
+                            <input type="number" maxlength="4" title="휴대폰 끝자리 입력">
+                            <button class="cancel"><span class="blind">삭제</span></button>
+                        </span>
+                    </div>
+
+                    <h2 class="form-caption">동호수 입력</h2>
+                    <div class="inputbox address-wrap" style="width:100%"><!-- 영역 크기에 따라 width 조절 -->
+                        <span class="input">
+                            <input type="number" placeholder="동 입력" maxlength="" title="동">
+                            <button class="cancel"><span class="blind">삭제</span></button>
+                        </span>
+                        <span class="dongho first">동</span>
+                        <span class="input">
+                            <input type="number" placeholder="호 입력" maxlength="" title="호">
+                            <button class="cancel"><span class="blind">삭제</span></button>
+                        </span>
+                        <span class="dongho">호</span>
+                    </div>
+
+                    <h2 class="form-caption">우편번호 입력</h2>
+                    <div class="inputbox address-wrap" style="width:100%"><!-- 영역 크기에 따라 width 조절 -->
+                        <span class="input">
+                            <input type="number" placeholder="앞자리" maxlength="" title="우편번호 앞자리">
+                            <button class="cancel"><span class="blind">삭제</span></button>
+                        </span>
+                        <span class="hyp"></span>
+                        <span class="input">
+                            <input type="number" placeholder="뒷자리" maxlength="" title="우편번호 뒷자리">
+                            <button class="cancel"><span class="blind">삭제</span></button>
+                        </span>
+                        <span class="space"></span>
+                        <span class="bt-box">
+                            <button type="button">조회</button>
+                        </span>
+                    </div>
+
+                    <h2 class="form-caption">파일추가 input</h2>
+                    <div class="file-wrap">
+                        <div class="inputbox bt-add">
+                            <span class="input">
+                                <input type="text" value="IMG1.jpg" title="IMG1.jpg"/>
+                            </span>
+                            <span class="space"></span>
+                            <span class="bt-box">
+                                <button type="button">삭제</button>
+                            </span>
+                        </div>
+                        <div class="widget mt10">
+                            <div class="widget-box file">
+                                <span class="inputbox bt-add">
+                                    <span class="input">
+                                        <input class="fileview" type="text" placeholder="" title="파일명" />
+                                    </span>
+                                    <span class="space"></span>
+                                    <span class="bt-box">
+                                        파일찾기
+                                        <input class="file" type="file" value="파일찾기" />
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 class="form-caption">검색 input</h2>
+
+                    <span class="inputbox search">
+                        <span class="input">
+                            <input type="text" placeholder="지역을 검색해보세요." title="타이틀값 입력" value="" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1">
+                            <button class="cancel"><span class="blind">삭제</span></button>
+                            <button class="search">검색</button>
+                        </span>
+                    </span>
+
+                    <h2 class="form-caption">파일추가 button</h2>
+                    <div style="width:30%;">
+                        <div class="widget">
+                            <div class="widget-box file">
+                                <span class="inputbox bt-add">
+                                    <span class="bt-box">
+                                        파일찾기
+                                        <input class="file" type="file" value="파일찾기" />
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 class="form-caption">제목과 내용이 같이 있는 경우</h2>
+                    <div class="widget">
+                        <div class="widget-box tfCombined">
+                            <div class="txfield-combined">
+                                <div class="txfield-combined-ti">
+                                    <input class="input-focus" type="text" placeholder="제목을 입력해주세요." title="이메일 문의 제목" value="" maxlength="20" aria-labelledby="aria-email-qacont" />
+                                    <span class="byte"><span class="byte-current">0</span>/<span class="byte-total">20</span>자</span>
+                                </div>
+                                <div class="txfield-combined-tx">
+                                    <textarea class="input-focus inner-tx" cols="20" rows="6" placeholder="내용을 입력해주세요." maxlength="12000" aria-labelledby="aria-email-qacont">원활한 상담을 위해 아래 정보를 입력해주세요.&#10;- 성함:&#10;- 구매 휴대폰번호:&#10;- 구매한 상품명:&#10;- 문의내용:</textarea>
+                                    <span class="byte"><span class="byte-current">58</span>/<span class="byte-total">12,000</span>자</span><!-- .byte-current에 입력되어 있는 글자 수를 포함하여 나타냅니다. -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 class="form-caption">datepicker</h2>
+                    <div class="inputbox date-selcet">
+                        <span class="date-type"><input type="month" value="2018-04" min="2000-01" max="2018-12" title="시작날짜 선택"/></span>
+                        <span class="bar">~</span>
+                        <span class="date-type"><input type="month" value="2018-05" min="2000-01" max="2018-12" title="마지막날짜 선택"/></span>
+                    </div>
+
+                    <h2 class="form-caption">datepicker</h2>
+                    <div class="inputbox date-selcet">
+                        <span class="date-type full"><input type="month" value="2018-05" min="2000-01" max="2018-12" title="마지막날짜 선택"/></span>
+                    </div>
+                </div>
+                <!--// .form-box -->
+
+
+
+
+
+                <div class="form-box">
+                    <h1 class="form-summary">Dropdown</h1>
+                    <h2 class="form-caption">드롭다운박스</h2>
+                    <!--<div>인풋과 함께 나오는 경우</div>-->
+                    <!-- .widget -->
+                    <button class="bt-dropdown big" title="데이터 용량" aria-haspopup="true">셀렉트 버튼<span class="ico"></span></button>
+                    <!--// .widget -->
+                    <hr style="margin:10px 0;">
+                    <!-- .widget -->
+                    <button class="bt-dropdown big" disabled title="데이터 용량" aria-haspopup="true">셀렉트 disabled<span class="ico"></span></button>
+                    <!--// .widget -->
+                    <hr style="margin:10px 0;">
+                    <!-- .widget -->
+                    <button class="bt-dropdown big placeholder" title="데이터 용량" aria-haspopup="true">안내 문구 노출<span class="ico"></span></button>
+                    <!-- 선택값이 아닌 안내문구가 노출되는 경우에는 .placeholder 클래스 추가 -->
+                    <!--// .widget -->
+
+                    <h2 class="form-caption">a태그 드롭다운박스 스타일</h2>
+                    <!-- .widget -->
+                    <a href="" class="bt-dropdown big" title="데이터 용량">셀렉트 버튼<span class="ico"></span></a>
+                    <!--// .widget -->
+
+                    <h2 class="form-caption">arrow 없는 드롭다운박스 스타일</h2>
+                    <!-- .widget -->
+                    <button class="bt-dropdown big no-arrow" title="데이터 용량">셀렉트 버튼<span class="ico"></span></button>
+                    <!--// .widget -->
+
+                    <h2 class="form-caption">버튼이 있는 드롭다운박스 스타일</h2>
+                    <span class="inputbox bt-add">
+                        <span class="input">
+                            <button class="bt-dropdown big" title="서비스 이용안내 선택" aria-haspopup="true">휴대폰 가입<span class="ico"></span></button>
+                        </span>
+                        <span class="bt-box"><!-- 기본은 .bt-box만 있는 것 이고 style에 따라 .white1, .red1, .blue1 을 넣을 수 있다. -->
+                            <button type="button">확인</button>
+                        </span>
+                    </span>
+
+                    <h2 class="form-caption">버튼 높이의 드롭다운</h2>
+                    <!-- .widget -->
+                    <div class="inline">
+                        <button class="bt-dropdown big" title="데이터 용량" aria-haspopup="true">셀렉트 버튼<span class="ico"></span></button>
+                    </div>
+                    <!--// .widget -->
+                    <!-- .widget -->
+                    <div class="inline">
+                        <button class="bt-dropdown big" disabled title="데이터 용량" aria-haspopup="true">셀렉트 disabled<span class="ico"></span></button>
+                    </div>
+                    <!--// .widget -->
+
+                     <h2 class="form-caption">좁은 영역에서 쓰일 때</h2>
+                    <!-- .widget -->
+                    <div class="inline">
+                        <button class="bt-dropdown small" title="전화번호 선택" aria-haspopup="true">010-46**-10**</button>
+                    </div>
+                    <!--// .widget -->
+
+                    <!-- .widget -->
+                    <div class="inline">
+                        <!--<button class="bt-sel" data-select="100MB,500MB,2TB" data-title="" data-txt="" title="데이터 용량">셀렉트<span class="ico"></span></button>-->
+                        <button class="bt-dropdown small" disabled title="전화번호 선택" aria-haspopup="true">010-46**-10**</button>
+                    </div>
+                    <!--// .widget -->
+
+
+                    <h2 class="form-caption">배경없는 텍스트 스타일</h2>
+
+                    <div class="inline">
+                        <button class="bt-dropdown text-type01" title="전화번호 선택" aria-haspopup="true">010-46**-10**</button>
+                    </div>
+                </div>
+                <!--// .form-box -->
+            </div>
+            <!--// #content -->
+        </div>
+    </div>
+</body>
+</html>

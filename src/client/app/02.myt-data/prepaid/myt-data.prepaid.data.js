@@ -179,7 +179,7 @@ Tw.MyTDataPrepaidData.prototype = {
       !Tw.FormatHelper.isEmpty(this.$cardY.val()) || !Tw.FormatHelper.isEmpty(this.$cardM.val()) || !Tw.FormatHelper.isEmpty(this.$cardPw.val());
 
     if (isChanged) {
-      this._popupService.openConfirmButton(null, Tw.ALERT_MSG_CUSTOMER.ALERT_PRAISE_CANCEL.TITLE,
+      this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
         $.proxy(this._closePop, this), $.proxy(this._afterClose, this));
     } else {
       this._historyService.goBack();

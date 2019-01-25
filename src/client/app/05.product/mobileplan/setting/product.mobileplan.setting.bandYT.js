@@ -52,7 +52,7 @@ Tw.ProductMobileplanSettingBandYT.prototype = {
     }
 
     Tw.CommonHelper.startLoading('.wrap', 'grey', true);
-    this._apiService.request(Tw.API_CMD.BFF_10_0035, { addCd: '3' }, {}, [this.info])
+    this._apiService.request(Tw.API_CMD.BFF_10_0035, { addCd: '2' }, {}, [this.info])
       .done($.proxy(this._onSuccessJoinAddition, this))
       .fail($.proxy(this._onFailJoinAddtion, this));
   },

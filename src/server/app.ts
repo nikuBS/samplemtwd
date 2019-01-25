@@ -39,6 +39,7 @@ import ApiService from './services/api.service';
 import { API_CMD } from './types/api-command.type';
 import VERSION from './config/version.config';
 import ShortcutRouter from './common/route/shortcut.router';
+const manifest = require('./manifest.json');
 
 class App {
   public app: Application = express();
@@ -106,17 +107,15 @@ class App {
   private setClientMap() {
     const version = String(process.env.NODE_ENV) === 'local' ? 'dev' : VERSION;
 
-    this.apiService.request(API_CMD.MANIFEST, {}, {}, [version]).subscribe((manifest) => {
-      Object.keys(manifest).map((key) => {
-        if ( key.indexOf('.') !== -1 ) {
-          let appName = key.split('.')[0];
-          if ( appName.indexOf('-') !== -1 ) {
-            appName = appName.replace('-', '');
-          }
-          this.app.locals[appName] = manifest[key];
-          this.logger.error(this, appName, manifest[key]);
+    Object.keys(manifest).map((key) => {
+      if ( key.indexOf('.') !== -1 ) {
+        let appName = key.split('.')[0];
+        if ( appName.indexOf('-') !== -1 ) {
+          appName = appName.replace('-', '');
         }
-      });
+        this.app.locals[appName] = manifest[key];
+        this.logger.error(this, appName, manifest[key]);
+      }
     });
   }
 

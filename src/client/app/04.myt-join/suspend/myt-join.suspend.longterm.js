@@ -161,17 +161,20 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
           filePath: item.path
         };
       });
-
-      this._apiService.request(Tw.API_CMD.BFF_01_0046, {
-        recvFaxNum: 'skt257@sk.com',
-        proMemo: '', // TBD 필수값임 확인필요
-        scanFiles: convFileList
-      })
-        .done($.proxy(this._onSuccessUscanUpload, this))
-        .fail($.proxy(this._onError, this));
+      this._requestUscan(convFileList);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
+  },
+
+  _requestUscan: function(convFileList){
+    this._apiService.request(Tw.API_CMD.BFF_01_0046, {
+      recvFaxNum: 'skt257@sk.com',
+      proMemo: '', // TBD 필수값임 확인필요
+      scanFiles: convFileList
+    })
+      .done($.proxy(this._onSuccessUscanUpload, this))
+      .fail($.proxy(this._onError, this));
   },
 
   _onSuccessUscanUpload: function (res) {
@@ -269,7 +272,19 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       option.email = this.$inputEmail.val();
     }
     this._suspendOptions = option;
-    this._requestUpload(this._files);
+
+    if ( Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
+      var convFileList =  _.compact(this._files).map(function (item) {
+        return {
+          fileSize: item.size,
+          fileName: item.name,
+          filePath: item.path
+        };
+      });
+      this._requestUscan(convFileList);
+    }else{
+      this._requestUpload(this._files);
+    }
   },
 
   _requestSuspend: function () {
@@ -315,6 +330,10 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       this._defaultMilitaryToDate !== this.$container.find('.fe-military [data-role="fe-to-dt"]').val() ||
       this._defaulAbroadFromeDate !== this.$container.find('.fe-abroad [data-role="fe-from-dt"]').val();
     return changed;
+  },
 
+  _isLowerVersionAndroid: function () {
+    var androidVersion = Tw.BrowserHelper.getAndroidVersion();
+    return androidVersion && androidVersion.indexOf('4.4') !== -1;
   }
 };

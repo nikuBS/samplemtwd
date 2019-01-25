@@ -167,9 +167,13 @@ Tw.QuickMenuEditComponent.prototype = {
   },
   _mergeList: function (menuList, quickList) {
     this._findAddedMenu(menuList, quickList);
-    menuList.concat(_.filter(quickList, function (quick) {
+    var notMenu = _.filter(quickList, function (quick) {
       return !quick.notUsed;
-    }));
+    });
+    _.map(notMenu, $.proxy(function (menu) {
+      menu.quickAdded = true;
+    }, this));
+    menuList = menuList.concat(notMenu);
     return menuList;
   },
   _findAddedMenu: function (menuList, quickList) {

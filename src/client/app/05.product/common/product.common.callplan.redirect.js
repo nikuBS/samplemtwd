@@ -17,7 +17,9 @@ Tw.ProductCommonCallplanRedirect.prototype = {
 
   _openConfirm: function() {
     if (this._prodId === 'TW20000019') {
-      return Tw.CommonHelper.openUrlInApp(this._redirectUrl);
+      Tw.CommonHelper.openUrlInApp(this._redirectUrl);
+      this._back();
+      return;
     }
 
     if (!Tw.BrowserHelper.isApp()) {
@@ -39,6 +41,10 @@ Tw.ProductCommonCallplanRedirect.prototype = {
     }
 
     Tw.CommonHelper.openUrlExternal(this._redirectUrl);
+    this._back();
+  },
+
+  _back: function() {
     setTimeout(function() {
       this._historyService.goBack();
     }.bind(this), 100);

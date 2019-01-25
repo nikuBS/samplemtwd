@@ -28,6 +28,7 @@ Tw.MyTFareBillChangeAddress.prototype = {
     this.$container.on('click', '.cancel', $.proxy(this._setChangeBtnAble, this));
     this.$container.on('click', '.fe-post', $.proxy(this._getPostcode, this));
     this.$container.on('click', '.fe-change', $.proxy(this._changeAddress, this));
+    this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
   },
   _checkNumber: function (event) {
     Tw.InputHelper.inputNumberOnly(event.target);
@@ -106,5 +107,26 @@ Tw.MyTFareBillChangeAddress.prototype = {
   },
   _changeFail: function (err) {
     Tw.Error(err.code, err.msg).pop();
+  },
+  _onClose: function () {
+    if (this._isChanged()) {
+      this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
+        $.proxy(this._closePop, this), $.proxy(this._afterClose, this));
+    } else {
+      this._historyService.goBack();
+    }
+  },
+  _isChanged: function () {
+    this._checkIsChangedDetailAddress();
+    return Tw.FormatHelper.isEmpty(this.$container.find('.fe-phone').val()) || this._phoneModifyYn === 'Y' || this._addrModifyYn === 'Y';
+  },
+  _closePop: function () {
+    this._isClose = true;
+    this._popupService.closeAll();
+  },
+  _afterClose: function () {
+    if (this._isClose) {
+      this._historyService.goBack();
+    }
   }
 };
