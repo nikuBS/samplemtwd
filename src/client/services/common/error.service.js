@@ -11,10 +11,14 @@ Tw.ErrorService.prototype = {
   _init: function(code, msg) {
     this._data = {
       code: code || '',
-      msg: msg || ''
+      msg: this._replaceBreakLines(msg) || ''
     };
 
     return this;
+  },
+
+  _replaceBreakLines: function(msg) {
+    return msg.replace(/\\n/g, '<br>');
   },
 
   pop: function() {
