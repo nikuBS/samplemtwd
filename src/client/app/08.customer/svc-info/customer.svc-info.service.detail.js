@@ -36,6 +36,9 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     this.$container.on('click', '.fe-link-internal:not([href^="#"])', $.proxy(this._openInternalUrl, this));
     this.$container.on('click', '.fe-link-inapp:not([href^="#"])', $.proxy(this._openInApp, this));
 
+    // admin 제공된 tooltip 정보
+    this.$container.on('click', '.btn-tooltip-open', $.proxy(this._openTooltipPop, this))
+
     // from idpt
     this._bindUIEvent(this.$container);
   },
@@ -231,7 +234,7 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     });
 
     //tooltip
-    $('.btn-tooltip-open', $container).click(function(){
+    /*$('.btn-tooltip-open', $container).click(function(){
       var toolpopId = $(this).attr('href');
       $('.popup-info', $container).removeClass('show');
       $(toolpopId).addClass('show');
@@ -239,7 +242,7 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     });
     $('.btn_confirm', $container).click(function(){
       $('.tooltip-popup', $container).hide();
-    });
+    });*/
   
     //accordian
     $('.idpt-accordian > li > a', $container).on('click', function(e){
@@ -264,5 +267,26 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     Tw.Logger.error(err.code, err.msg);
     this._popupService.openAlert(Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.code + ' : ' + err.msg);
     return false;
+  },
+
+  _openTooltipPop: function (e) {
+    var popId = $(e.currentTarget).attr('href');
+    e.preventDefault();
+    console.log(popId);
+    this._popupService.open({
+      url: Tw.Environment.cdn + '/hbs/',
+      'pop_name': 'type_tx_scroll',
+      'title': null,
+      'title_type': 'sub',
+      'cont_align': 'tl',
+      'contents': $(popId).find('.popup-title').html().replace(/<br ?\/?>/gi, '\n'),
+      'bt_b': [{
+        style_class: 'tw-popup-closeBtn bt-red1 pos-right',
+        txt: Tw.BUTTON_LABEL.CONFIRM
+      }]
+    }, null, null);
+    /*this._popupService.openConfirm(
+      $(popId).find('.popup-title').text()
+    )*/
   }
 };
