@@ -29,8 +29,12 @@ class RedisService {
       prefix: 'session:'
     });
 
+    let redisKey = EnvHelper.getEnvironment('REDIS_PWD_KEY');
+    if (FormatHelper.isEmpty(redisKey)) {
+      redisKey = String(process.env.REDIS_PWD_KEY);
+    }
     const password = CryptoHelper.decryptRedisPwd(this.envRedis.password,
-      EnvHelper.getEnvironment('REDIS_PWD_KEY'), CryptoHelper.ALGORITHM.AES256CBCHMACSHA256);
+        redisKey, CryptoHelper.ALGORITHM.AES256CBCHMACSHA256);
     this.client = redis.createClient(
       this.envRedis.port,
       this.envRedis.host,
