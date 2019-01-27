@@ -105,6 +105,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
     this.$nonCombineTip = this.$container.find('.fe-non_combine_tip');
     this.$combineExplainCheckboxWrap = this.$container.find('.fe-combine_explan_checkbox_wrap');
     this.$combineExplainAllWrap = this.$container.find('.fe-combine_explain_all_wrap');
+    this.$inputName = this.$container.find('.fe-input_name');
 
     this.$btnAgreeView = this.$container.find('.fe-btn_agree_view');
     this.$btnApply = this.$container.find('.fe-btn_apply');
@@ -386,6 +387,10 @@ Tw.ProductWireplanJoinReservation.prototype = {
     } else {
       $input.parent().find('.fe-btn_cancel').removeClass('block');
     }
+
+    if ($input.val().length > 20) {
+      $input.val($input.val().substr(0, 20));
+    }
   },
 
   _toggleApplyBtn: function(toggle) {
@@ -414,7 +419,8 @@ Tw.ProductWireplanJoinReservation.prototype = {
         $.proxy(this._setNotSelectCombine, this), $.proxy(this._procNotSelectCombine, this), Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
     }
 
-    if (this._typeCd === 'combine' && this._prodId !== 'NH00000103' && !this._logged) {
+    if (this._typeCd === 'combine' && this._prodId !== 'NH00000103' && this.$combineExplain.find('input[type=checkbox]').is(':checked')
+      && !this._logged) {
       return this._popupService.openConfirmButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A36.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A36.TITLE,
         $.proxy(this._setGoLoginFlag, this), $.proxy(this._goLogin, this), Tw.BUTTON_LABEL.CLOSE);
     }

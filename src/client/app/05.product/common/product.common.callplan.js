@@ -347,7 +347,7 @@ Tw.ProductCommonCallplan.prototype = {
     Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(null, resp.msg).pop();
+      return Tw.Error(resp.code, resp.msg).pop();
     }
 
     if (this._prodTypCd === 'F' && resp.result.combiProdScrbYn !== 'N' && this._joinTermCd === '01') {
