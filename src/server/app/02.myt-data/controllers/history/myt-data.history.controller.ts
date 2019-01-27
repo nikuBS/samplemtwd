@@ -136,7 +136,7 @@ export default class MyTDataHistory extends TwViewController {
           typeName: TypeNames.LIMIT_CHARGE,
           date: DateHelper.getShortDate(key),
           badge: 'recharge',
-          refundable: item.opTypCd === '1' && item.opTypCd === '1' && DateHelper.getDiffByUnit(this.toDt, rechargeDate, 'days') === 0,
+          refundable: (item.opTypCd === '1' || item.opTypCd === '3') && DateHelper.getDiffByUnit(this.toDt, rechargeDate, 'days') === 0,
           right: FormatHelper.addComma(item.amt) + CURRENCY_UNIT.WON,
           bottom
         };
@@ -152,7 +152,9 @@ export default class MyTDataHistory extends TwViewController {
 
       return resp.result.map(item => {
         const key = item.opDt,
+          rechargeDate = DateHelper.getShortDate(key),
           bottom: string[] = [];
+
         if (item.opTypCd === '2' || item.opTypCd === '4') {
           bottom.push(ChargeTypeNames.CANCEL);
         } else if (item.opTypCd === '3') {
@@ -166,7 +168,7 @@ export default class MyTDataHistory extends TwViewController {
           typeName: TypeNames.TING_CHARGE,
           date: DateHelper.getShortDate(item.opDt),
           badge: 'recharge',
-          refundable: item.refundableYn === 'Y',
+          refundable: (item.opTypCd === '1' || item.opTypCd === '3') && DateHelper.getDiffByUnit(this.toDt, rechargeDate, 'days') === 0,
           right: FormatHelper.addComma(item.amt) + CURRENCY_UNIT.WON,
           bottom
         };
