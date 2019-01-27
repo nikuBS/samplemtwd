@@ -29,6 +29,12 @@ spec:
       containers:
       - name: bff-nodejs
         image: mtwd.icp.skt.com:8500/mtw-dev/bff-nodejs-mobile:1.0
+        env:
+        - name: REDIS_PWD_KEY
+          valueFrom:
+            secretKeyRef:
+              name: encsecret
+              key: jasyptEnc
         ports:
         - containerPort: 3000
         imagePullPolicy: Always
@@ -58,9 +64,3 @@ spec:
       - name: upload-volume
         persistentVolumeClaim:
           claimName: upload-pvc
-env:
-  - name: REDIS_PWD_KEY
-    valueFrom:
-      secretKeyRef:
-        name: encsecret
-        key: jasyptEnc
