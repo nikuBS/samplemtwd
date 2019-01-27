@@ -3,7 +3,8 @@ import crypto from 'crypto';
 class CryptoHelper {
 
   public static ALGORITHM = {
-    AES128ECB: 'AES-128-ECB'
+    AES128ECB: 'AES-128-ECB',
+    AES256CBCHMACSHA256: 'aes-256-cbc-hmac-sha256'
   };
 
   /**
@@ -36,6 +37,11 @@ class CryptoHelper {
       decipher.update( context, 'hex', 'utf8' ) +
       decipher.final( 'utf8' )
     );
+  }
+
+  static decryptRedisPwd(context: string, key: string, algorithm: string): string {
+    const decipher = crypto.createDecipher(algorithm, key);
+    return decipher.update(context, 'hex', 'utf8') + decipher.final('utf8');
   }
 
 }

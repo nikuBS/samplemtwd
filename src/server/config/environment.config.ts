@@ -9,7 +9,7 @@ const environment = {
       host: '61.250.19.37',
       // port: 31300,
       port: 32300,
-      password: 'stgmtwd1@',
+      password: '993d2ac0c060da72f0f8298aa4c11ece',
       db: 0
     },
     REDIS_TOS: {
@@ -17,6 +17,7 @@ const environment = {
       port: 32400,
       db: 0
     },
+    REDIS_PWD_KEY: 'cbbfc0a5-099e-4d03-8028-a18263f2b2d6',
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
     SEARCH_SERVER: 'http://61.250.22.114:8180',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
@@ -38,7 +39,7 @@ const environment = {
     REDIS: {
       host: 'dev-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-dev-nod',
       port: 6379,
-      password: 'devmtwd1@',
+      password: 'a935fdca4ac876095bea69cda9ba08c2',
       db: 0
     },
     REDIS_TOS: {

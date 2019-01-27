@@ -8,6 +8,7 @@ import FormatHelper from '../utils/format.helper';
 import { NODE_API_ERROR } from '../types/string.type';
 import { API_CODE } from '../types/api-command.type';
 import LoggerService from './logger.service';
+import CryptoHelper from '../utils/crypto.helper';
 
 class RedisService {
   private static instance: RedisService;
@@ -28,15 +29,17 @@ class RedisService {
       prefix: 'session:'
     });
 
+    const password = CryptoHelper.decryptRedisPwd(this.envRedis.password,
+      EnvHelper.getEnvironment('REDIS_PWD_KEY'), CryptoHelper.ALGORITHM.AES256CBCHMACSHA256);
     this.client = redis.createClient(
       this.envRedis.port,
       this.envRedis.host,
-      { password: this.envRedis.password }
+      { password }
     );
     this.tosClient = redis.createClient(
       this.envTosRedis.port,
       this.envTosRedis.host,
-      { password: this.envRedis.password }
+      { password }
     );
   }
 

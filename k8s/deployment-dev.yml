@@ -58,3 +58,9 @@ spec:
       - name: upload-volume
         persistentVolumeClaim:
           claimName: upload-pvc
+env:
+  - name: REDIS_PWD_KEY
+    valueFrom:
+      secretKeyRef:
+        name: encsecret
+        key: jasyptEnc
