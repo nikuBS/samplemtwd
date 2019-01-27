@@ -126,7 +126,10 @@ Tw.MyTFareInfoBillTax.prototype = {
         this._popupService.openConfirmButton(
           Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
           Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-          $.proxy(this._closePop, this)
+          $.proxy(this._closePop, this),
+          null,
+          Tw.BUTTON_LABEL.NO,
+          Tw.BUTTON_LABEL.YES
         );
       } else {
         this._historyService.goBack();
@@ -172,7 +175,10 @@ Tw.MyTFareInfoBillTax.prototype = {
       this._popupService.openConfirmButton(
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-        $.proxy(this._closePop, this)
+        $.proxy(this._closePop, this),
+        null,
+        Tw.BUTTON_LABEL.NO,
+        Tw.BUTTON_LABEL.YES
       );
     } else {
       this._historyService.goBack();
