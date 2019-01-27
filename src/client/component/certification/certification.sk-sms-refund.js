@@ -146,6 +146,7 @@ Tw.CertificationSkSmsRefund.prototype = {
       ret = false;
     } else if (this.$inputBirth.val().trim().length !== 6) {
       this.$container.find('#fe-birth-wrong').removeClass('none');
+      ret = false;
     }
 
     // Gender
