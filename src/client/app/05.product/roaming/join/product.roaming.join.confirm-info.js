@@ -35,11 +35,9 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       this.$rootContainer.find('.tx-bold.vbl').text(this._convertPrice(this._popupData.preinfo.reqProdInfo.basFeeInfo));
     }
     this._bindPopupElementEvt(this.$rootContainer);
-    if(this._popupData.preinfo.joinNoticeList.length<=0){
-      this.$tooltipList = this.$rootContainer.find('#tooltip_list');
-      this._tooltipTemplate = Handlebars.compile(this.$rootContainer.find('#tooltip_template').html());
-      this._tooltipInit(this._prodId);
-    }
+    this.$tooltipList = this.$rootContainer.find('#tooltip_list');
+    this._tooltipTemplate = Handlebars.compile(this.$rootContainer.find('#tooltip_template').html());
+    this._tooltipInit(this._prodId);
   },
   _popupInit : function (hash) {
     if(isNaN(this._popupData.prodFee)){
@@ -90,6 +88,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     this._$individualAgreeElement = this._$popupContainer.find('.individual.checkbox>input');
     $popupLayer.on('click','#do_join',$.proxy(this._doJoin,this));
     $popupLayer.on('click','.agree-view',$.proxy(this._showDetailContent,this));
+    $popupLayer.on('click','.tip-view.bff',$.proxy(this._showBffToolTip,this));
     if(this._popupData.agreeCnt<=0){
       this._$popupContainer.find('#do_join').removeAttr('disabled');
     }else{
@@ -97,9 +96,6 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       $popupLayer.on('click','.individual.checkbox>input',$.proxy(this._agreeCheck,this));
     }
     if(this._page){
-      if(this._popupData.preinfo.joinNoticeList.length>0){
-        $popupLayer.on('click','.tip-view',$.proxy(this._showBffToolTip,this));
-      }
       $popupLayer.on('click','.prev-step',$.proxy(this._showCancelAlart,this));
     }else{
       if(this._closeCallback){
@@ -253,7 +249,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
   },
   _showCancelAlart : function (){
     var alert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A1;
-    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, alert.BUTTON, Tw.BUTTON_LABEL.CLOSE,
+    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, Tw.BUTTON_LABEL.YES, Tw.BUTTON_LABEL.NO,
       null,
       $.proxy(this._goPlan,this),
       null);
@@ -388,7 +384,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         break;
     }
     if(this._page){
-      if(tooltipArr.length<=0){
+      if(tooltipArr.length<=0&&this._popupData.preinfo.joinNoticeList.length<=0){
         this.$rootContainer.find('.tip_container').hide();
         return;
       }
