@@ -31,8 +31,8 @@
 					</div>
 					<div class="data-list-type1">
 						<ul class="type1">
-                            <% histories.list.map(history => { %>
-                                <li>
+                            <% histories.list.map((history, idx) => { %>
+                                <li data-idx="<%= idx %>">
                                     <span class="stit"><strong><%= history.shrPotGbQty %>GB</strong> 공유</span>
                                     <div class="sta">
                                         <span><%= history.shrPotDonaAplyDt %></span>
@@ -71,7 +71,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-      new Tw.MyTDataFamilyHistory($('.wrap'));
+      new Tw.MyTDataFamilyHistory($('.wrap'), <%- JSON.stringify(histories.list) %>);
   });
 </script>
 <% include ../../components/end.component.html %>

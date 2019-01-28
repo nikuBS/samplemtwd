@@ -4,10 +4,11 @@
  * Date: 2019.01.21
  */
 
-Tw.MyTDataFamilyHistory = function(rootEl) {
+Tw.MyTDataFamilyHistory = function(rootEl, histories) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._histories = histories;
 
   this._bindEvent();
   this._init();
@@ -32,7 +33,7 @@ Tw.MyTDataFamilyHistory.prototype = {
 
     $target.addClass('none');
     $parent.append(this._ingTmpl());
-    this._requestRetrieve(serialNumber, 0, $target, $parent);
+    this._requestRetrieve(serialNumber, '0', $target, $parent);
   },
 
   _requestRetrieve: function(serialNumber, requestCount, $before, $parent) {
@@ -61,7 +62,7 @@ Tw.MyTDataFamilyHistory.prototype = {
   },
 
   _handleSuccessRetrieve: function(share, $before, $parent) {
-    if (!share.remGbGty || share.remGbGty.length === 0) {
+    if (!share.remGbGty && !share.remMbGty) {
       this._setRetrieveStatus($before);
       return;
     }
@@ -69,15 +70,57 @@ Tw.MyTDataFamilyHistory.prototype = {
     var serial = $before.data('serial-number');
     $before.siblings('.fe-ing').remove();
 
-    var nData = Number(share.remGbGty) || 1;
+    var nData = Number(share.remGbGty) + Number(share.remMbGty) / 1000 || 0;
     if (nData > 0) {
-      $parent.append(this._afterTmpl({ data: nData, serial: serial }));
+      $parent.append(this._afterTmpl({ data: nData, serial: serial, gb: share.remGbGty, mb: share.remMbGty }));
     } else {
       $parent.append(this._noneTmpl({}));
     }
   },
 
   _handleClickEditData: function(e) {
-    // e.currentTarget.getAttribute('data-serial-number');
+    var $target = $(e.currentTarget),
+      $parent = $target.closest('li'),
+      idx = $parent.data('idx') || 0,
+      serial = $target.data('serial-number'),
+      changable = {
+        gb: $target.data('gb'),
+        mb: $target.data('mb')
+      };
+
+    changable.data = changable.gb + changable.mb / 1000 || 0;
+
+    if (serial) {
+      this._apiService
+        .request(Tw.API_CMD.BFF_06_0073, { shrpotSerNo: serial })
+        .done($.proxy(this._handleDoneGetHistories, this, $parent, serial, idx, changable));
+    }
+  },
+
+  _handleDoneGetHistories: function($parent, serial, idx, changable, resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    var detail = this._histories[idx];
+    var histories = _.map(resp.result.cancelSharePot || [], function(history) {
+      history.cancelAplyDt = Tw.DateHelper.getShortDate(history.cancelAplyDt);
+      return history;
+    });
+
+    this._popupService.open(
+      {
+        hbs: 'DC_02_04_01',
+        layer: true,
+        detail: detail,
+        data: changable.data,
+        histories: histories
+      },
+      $.proxy(this._handleOpenChangePopup, this, $parent, serial, changable)
+    );
+  },
+
+  _handleOpenChangePopup: function($parent, serial, changable, $layer) {
+    new Tw.MyTDataFamilyHistoryChange($layer, $parent, serial, changable);
   }
 };

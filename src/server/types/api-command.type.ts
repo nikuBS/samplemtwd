@@ -393,6 +393,8 @@ export const API_CMD = {
   BFF_06_0070: { path: '/core-bill/:version/pps-data-recharges', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_06_0071: { path: '/core-recharge/:version/tfamily-my-sharings', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_06_0072: { path: '/core-recharge/:version/tfamily-cancelable-data', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_06_0073: { path: '/core-recharge/:version/tfamily-canceling-data', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_06_0074: { path: '/core-recharge/:version/tfamily-canceling', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_06_0075: { path: '/core-bill/v1/pps-alram', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // PAYMENT
