@@ -125,7 +125,13 @@ const isGoodFamily = prodId === 'TW20000009' || prodId === 'NA00004211' %>
                                         <li>
                                             <dl>
                                                 <dt>가족대표와의 관계</dt>
-                                                <dd><%= member.relClNm %><%= isMine? '(내 번호)': ''%><br /></dd>
+                                                <dd>
+                                                    <% if (isRep && isMine) { %>
+                                                        본인(내번호)<br />
+                                                    <% } else { %>
+                                                        <%= member.relClNm %><%= isMine? '(내번호)': ''%><br />
+                                                    <% } %>
+                                                </dd>
                                             </dl>
                                         </li>
                                         <li>

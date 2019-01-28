@@ -139,7 +139,11 @@
                                             <dl>
                                                 <dt>관계</dt>
                                                 <dd>
-                                                    <%= member.relClNm %><%= isMine? '(내 번호)': ''%><br />
+                                                    <% if (isRep && isMine) { %>
+                                                        본인(내번호)
+                                                    <% } else { %>
+                                                        <%= member.relClNm %><%= isMine? '(내번호)': ''%><br />
+                                                    <% } %>
                                                     <% if (combination.grpRelYn === 'Y' || groupInfo.mblSvcCnt < 2) { %><a class="bt-link-tx underline red" href="/product/callplan/<%= prodId %>">해지</a><% } %>
                                                 </dd>
                                             </dl>
