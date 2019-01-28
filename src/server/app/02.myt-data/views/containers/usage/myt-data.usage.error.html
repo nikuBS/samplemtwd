@@ -20,67 +20,73 @@
     <%- include('../../../../../common/views/components/header.component.html', { title: '실시간 사용량', svcInfo: svcInfo }); %>
     <!--// #header -->
     <!-- #contents -->
-
-    <div class="popup">
+    <div class="popup tw-popup" role="dialog" aria-hidden="false">
         <div class="popup-info" role="alertdialog" aria-labelledby="alertHeading" aria-describedby="alertText">
             <% if (usageData.code === 'BLN0001') { %>
             <div class="popup-header">
-                <span class="ico type2"></span>
-                <h5 class="popup-title ">
-                    잠시 후 다시 이용해 주세요
-                </h5>
+                <h5 class="popup-title sub">잠시 후 다시 이용해 주세요</h5>
             </div>
             <div class="popup-contents ">
                 <div class="inner-contents">
-                    <p class="">
+                    <p class="tl">
                         안정적으로 실시간 조회하실 수 있도록 조회 횟수를 제한합니다. <br />
                         (2시간 동안 최대 12번 조회 가능)
                     </p>
                 </div>
             </div>
+            <ul class="bt-bottom">
+                <li class="bt-red1 pos-right tw-popup-closeBtn">
+                    <button class="fe-common-back">확인</button>
+                </li>
+            </ul>
             <% } else if (usageData.code === 'BLN0003') { %>
             <div class="popup-header">
-                <span class="ico type1"></span>
-                <h5 class="popup-title ">
+                <h5 class="popup-title sub">
                     잔여량 조회 서비스를 <br />
                     이용할 수 없습니다.
                 </h5>
             </div>
             <div class="popup-contents ">
                 <div class="inner-contents">
-                    <p class="">
+                    <p class="tl">
                         회선정지 상태이거나 정지 이력이 있어 잔여량 조회 서비스를
                         이용할 수 없습니다. 자세한 사항은
                         고객센터로 문의해 주시기 바랍니다.
                     </p>
                 </div>
-                <ul class="link-list">
-                    <li><a href="/customer/emailconsult">이메일로 문의하기</a></li>
-                </ul>
             </div>
+            <ul class="bt-bottom">
+                <li class="pos-left">
+                    <button class="fe-common-back">닫기</button>
+                </li>
+                <li class="bt-red1 pos-right">
+                    <a href="/customer/emailconsult">이메일로 문의하기</a>
+                </li>
+            </ul>
             <% } else if (usageData.code === 'BLN0002' || usageData.code === 'BLN0004') { %>
             <div class="popup-header">
-                <span class="ico type1"></span>
-                <h5 class="popup-title ">
+                <h5 class="popup-title sub">
                     해당 서비스는<br />
                     실시간 사용량 조회 대상이 아닙니다.
                 </h5>
             </div>
+            <ul class="bt-bottom">
+                <li class="bt-red1 pos-right tw-popup-closeBtn">
+                    <button class="fe-common-back">확인</button>
+                </li>
+            </ul>
             <% } else { %>
             <div class="popup-header">
-                <span class="ico type1"></span>
-                <h5 class="popup-title ">
+                <h5 class="popup-title sub">
                     <%= usageData.msg %>
                 </h5>
             </div>
+            <ul class="bt-bottom">
+                <li class="bt-red1 pos-right tw-popup-closeBtn">
+                    <button class="fe-common-back">확인</button>
+                </li>
+            </ul>
             <% } %>
-            <div class="btn-box">
-                <ul class="bt-slice">
-                    <li class="bt-blue1">
-                        <button class="fe-common-back">닫기</button>
-                    </li>
-                </ul>
-            </div>
         </div>
         <div class="popup-blind"></div>
     </div>
