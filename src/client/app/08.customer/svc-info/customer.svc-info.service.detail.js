@@ -36,6 +36,12 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     this.$container.on('click', '.fe-link-internal:not([href^="#"])', $.proxy(this._openInternalUrl, this));
     this.$container.on('click', '.fe-link-inapp:not([href^="#"])', $.proxy(this._openInApp, this));
 
+    // admin 제공된 tooltip 정보
+    this.$container.on('click', '.btn-tooltip-open', $.proxy(this._openTooltipPop, this));
+
+    // admin 제공 팝업
+    this.$container.on('click', '.idpt-popup-open', $.proxy(this._openPagePop, this));
+    
     // from idpt
     this._bindUIEvent(this.$container);
   },
@@ -132,7 +138,8 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
   },
 
   // 유심용어 정리 바로가기 액션시트 start
-  _USIMInfoCall: function () {
+  _USIMInfoCall: function (e) {
+    e.preventDefault();
     this._apiService.request(Tw.API_CMD.BFF_08_0064, {}, {}, ['C00046'])
     .done($.proxy(this._USIMActionSheetOpen, this)).fail($.proxy(this._apiError, this));
   },
@@ -198,7 +205,7 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     });
   
     // popup
-    $('.idpt-popup-open', $container).click(function(){
+    /*$('.idpt-popup-open', $container).click(function(){
       var popId = $(this).attr('href');
       $('.idpt-popup-wrap').removeClass('show');
       $(popId).addClass('show');
@@ -206,7 +213,7 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     });
     $('.idpt-popup-close', $container).click(function(){
       $('.idpt-popup', $container).hide();
-    });
+    });*/
   
     $('input[type=radio][name=call]', $container).on('click', function() {
       var chkValue = $('input[type=radio][name=call]:checked', $container).val();
@@ -231,7 +238,7 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     });
 
     //tooltip
-    $('.btn-tooltip-open', $container).click(function(){
+    /*$('.btn-tooltip-open', $container).click(function(){
       var toolpopId = $(this).attr('href');
       $('.popup-info', $container).removeClass('show');
       $(toolpopId).addClass('show');
@@ -239,7 +246,7 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     });
     $('.btn_confirm', $container).click(function(){
       $('.tooltip-popup', $container).hide();
-    });
+    });*/
   
     //accordian
     $('.idpt-accordian > li > a', $container).on('click', function(e){
@@ -264,5 +271,37 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     Tw.Logger.error(err.code, err.msg);
     this._popupService.openAlert(Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.code + ' : ' + err.msg);
     return false;
+  },
+
+  _openTooltipPop: function (e) {
+    var popId = $(e.currentTarget).attr('href');
+    e.preventDefault();
+
+    this._popupService.open({
+      url: Tw.Environment.cdn + '/hbs/',
+      'pop_name': 'type_tx_scroll',
+      'title': null,
+      'title_type': 'sub',
+      'cont_align': 'tl',
+      'contents': $(popId).find('.popup-title').html().replace(/<br ?\/?>/gi, '\n'),
+      'bt_b': [{
+        style_class: 'tw-popup-closeBtn bt-red1 pos-right',
+        txt: Tw.BUTTON_LABEL.CONFIRM
+      }]
+    }, null, null);
+  },
+
+  _openPagePop: function (e) {
+    var popId = $(e.currentTarget).attr('href');
+    e.preventDefault();
+    this._popupService.open({
+        hbs: 'svc-info.service.popup',
+        'title': $(popId).find('.popup-title').text(),
+        'contents': $(popId).find('.idpt-popup-cont').html()
+      },
+      $.proxy(function($container) {
+        this._bindUIEvent($container);
+      },this)
+    );
   }
 };
