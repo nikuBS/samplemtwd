@@ -11,8 +11,6 @@
         similarPath += '?filters=' + similarProductInfo.prodFltIds;
     }
 %>
-<hr class="cont-sp type1" aria-hidden="true"/>
-
 <div class="cont-box <%= tagsClass %>">
     <h3 class="suggest-tag-title">연관태그</h3>
     <% if ( similarProductInfo && (similarProductInfo.prodCnt > 0 || isCombine) && similarProductInfo.list.length > 0 ) { %>

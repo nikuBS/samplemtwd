@@ -388,8 +388,8 @@ Tw.ProductWireplanJoinReservation.prototype = {
       $input.parent().find('.fe-btn_cancel').removeClass('block');
     }
 
-    if ($input.val().length > 20) {
-      $input.val($input.val().substr(0, 20));
+    if ($input.val().length > 30) {
+      $input.val($input.val().substr(0, 30));
     }
   },
 
