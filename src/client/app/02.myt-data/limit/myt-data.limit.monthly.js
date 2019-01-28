@@ -53,6 +53,8 @@ Tw.MyTDataLimitMonthly.prototype = {
       } else {
         Tw.CommonHelper.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_UNBLOCK);
       }
+    } else if ( res.code === 'ZNGME0000' ) {
+      this._popupService.openAlert(res.msg, null, null, $.proxy(this._goSubmain, this));
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -77,6 +79,8 @@ Tw.MyTDataLimitMonthly.prototype = {
   _onSuccessLimitRechargeMonthly: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.replaceURL('/myt-data/recharge/limit/complete');
+    } else if ( res.code === 'ZNGME0000' ) {
+      this._popupService.openAlert(res.msg, null, null, $.proxy(this._goSubmain, this));
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -100,8 +104,14 @@ Tw.MyTDataLimitMonthly.prototype = {
   _onSuccessCancelMonthlyRecharge: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.reload();
+    } else if ( res.code === 'ZNGME0000' ) {
+      this._popupService.openAlert(res.msg, null, null, $.proxy(this._goSubmain, this));
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
+  },
+
+  _goSubmain: function () {
+    this._historyService.replaceURL('/myt-data/submain');
   }
 };
