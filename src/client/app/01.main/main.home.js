@@ -89,6 +89,7 @@ Tw.MainHome.prototype = {
   },
   _bindEventStore: function () {
     this.$container.on('click', '.fe-home-external', $.proxy(this._onClickExternal, this));
+    this.$container.on('click', '.fe-home-internal', $.proxy(this._onClickInternal, this));
   },
   _bindEventLogin: function () {
     this.$container.on('click', '.fe-bt-home-login', $.proxy(this._onClickLogin, this));
@@ -107,6 +108,14 @@ Tw.MainHome.prototype = {
   _onClickExternal: function ($event) {
     var url = $($event.currentTarget).data('url');
     Tw.CommonHelper.openUrlExternal(url);
+  },
+  _onClickInternal: function($event) {
+    var url = $($event.currentTarget).data('url');
+    this._historyService.goLoad(url);
+    // Tw.CommonHelper.openUrlInApp(url);
+
+    $event.preventDefault();
+    $event.stopPropagation();
   },
   _onClickLine: function ($event) {
     var svcMgmtNum = $($event.currentTarget).data('svcmgmtnum');
