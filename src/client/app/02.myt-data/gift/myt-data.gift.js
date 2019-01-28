@@ -36,6 +36,11 @@ Tw.MyTDataGift.prototype = {
     this.$wrap_auto_select_list = $('.fe-auto_select_list');
     this.$wrap_data_select_list = $('.fe-immediately_data_select_list');
     this.$remainQty = $('.fe-remain_data');
+    this.$remainTxt = $('.fe-txt-remain');
+    this.$remainBtn = $('.fe-btn-remain');
+    this.$wrapSuccessRemainApi= $('.fe-remain-api');
+    this.$wrapErrorRemainApi= $('.fe-error-api');
+
   },
 
   _bindEvent: function () {
@@ -45,10 +50,18 @@ Tw.MyTDataGift.prototype = {
     this.$inputImmediatelyGift.on('focus', $.proxy(this._onLoadRecently, this));
     this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
     this.$container.on('currentRemainDataInfo', $.proxy(this._currentRemainDataInfo, this));
+    this.$remainBtn.on('click', $.proxy(this._getRemainDataInfo, this));
   },
 
   _getRemainDataInfo: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: this.reqCnt }).done($.proxy(this._onSuccessRemainDataInfo, this));
+    this.$remainBtn.hide();
+    this.$remainTxt.show();
+
+    setTimeout(function () {
+      this._apiService
+        .request(Tw.API_CMD.BFF_06_0014, { reqCnt: this.reqCnt })
+        .done($.proxy(this._onSuccessRemainDataInfo, this));
+    }.bind(this), 3000);
   },
 
   _currentRemainDataInfo: function () {
@@ -57,37 +70,49 @@ Tw.MyTDataGift.prototype = {
 
   _onSuccessRemainDataInfo: function (res) {
     // MOCK DATA
-    var mockDataQty = '900';
-    var mockData = Tw.FormatHelper.convDataFormat(mockDataQty, 'MB');
-    this.currentRemainDataInfo = mockDataQty;
-    this.$remainQty.text(mockData.data + mockData.unit);
-    this._setAmountUI(Number(mockDataQty));
-
+    // var mockDataQty = '900';
+    // var mockData = Tw.FormatHelper.convDataFormat(mockDataQty, 'MB');
+    // this.currentRemainDataInfo = mockDataQty;
+    // this.$remainQty.text(mockData.data + mockData.unit);
+    // this._setAmountUI(Number(mockDataQty));
 
     if ( this.reqCnt > 3 ) {
-      // TODO: Alert get Info error
-      // then, go back to submain
+      this._remainApiError();
+      return;
     }
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var result = res.result;
-      // if ( result.giftRequestAgainYn === 'N' ) {
-      //   // API DATA
-      //   var apiDataQty = res.result.dataRemQty;
-      //   var dataQty = Tw.FormatHelper.convDataFormat(apiDataQty, 'MB');
-      //   this.currentRemainDataInfo = apiDataQty;
-      //   this.$remainQty.text(dataQty.data + dataQty.unit);
-      //   this._setAmountUI(Number(apiDataQty));
-      // } else {
-      //   this.reqCnt = this.reqCnt + 1;
-      //
-      //   setTimeout(function () {
-      //     this._getReceiveUserInfo();
-      //   }.bind(this), 3000);
-      // }
+      if ( result.giftRequestAgainYn === 'N' ) {
+        // API DATA
+        this._remainApiSuccess();
+        var apiDataQty = res.result.dataRemQty;
+        var dataQty = Tw.FormatHelper.convDataFormat(apiDataQty, 'MB');
+        this.currentRemainDataInfo = apiDataQty;
+        this.$remainQty.text(dataQty.data + dataQty.unit);
+        this._setAmountUI(Number(apiDataQty));
+      } else {
+        this.reqCnt = this.reqCnt + 1;
+        this._getRemainDataInfo();
+      }
     } else {
-      Tw.Error(res.code, res.msg).pop();
+      this._remainApiError();
+      // Tw.Error(res.code, res.msg).pop();
     }
+  },
+
+  _remainApiError: function () {
+    this.$wrapSuccessRemainApi.hide();
+    this.$wrapErrorRemainApi.show();
+    this.$remainBtn.show();
+    this.$remainTxt.hide();
+  },
+
+  _remainApiSuccess: function (){
+    this.$wrapSuccessRemainApi.show();
+    this.$wrapErrorRemainApi.hide();
+    this.$remainBtn.hide();
+    this.$remainTxt.show();
   },
 
   _setAmountUI: function (nLimitMount) {
