@@ -46,6 +46,8 @@ class ProductRoamingSettingRoamingAlarm extends TwViewController {
       for (let i = 0; i < prodBffInfo.result.combinationLineList.length; i++) {
         if (prodBffInfo.result.combinationLineList[i].svcNumMask) {
           prodBffInfo.result.combinationLineList[i].svcNum = prodBffInfo.result.combinationLineList[i].svcNumMask;
+        } else {
+          prodBffInfo.result.combinationLineList[i].svcNum = '';
         }
       }
 
