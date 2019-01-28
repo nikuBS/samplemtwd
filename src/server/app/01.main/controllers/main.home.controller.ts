@@ -258,18 +258,19 @@ class MainHome extends TwViewController {
           isBroadband: true
         };
       }
+
       const repSvc = billData.charge.repSvcYn === 'Y';
       const totSvc = billData.charge.paidAmtMonthSvcCnt > 1;
       return {
         isBroadband: false,
-        chargeAmtTot: FormatHelper.addComma(billData.charge.useAmtTot),
-        usedAmtTot: FormatHelper.addComma(billData.used.useAmtTot),
-        deduckTot: FormatHelper.addComma(billData.charge.deduckTotInvAmt),
+        chargeAmtTot: FormatHelper.addComma(billData.charge.useAmtTot || '0'),
+        usedAmtTot: FormatHelper.addComma(billData.used.useAmtTot || '0'),
+        deduckTot: FormatHelper.addComma(billData.charge.deduckTotInvAmt || '0'),
         repSvc: billData.charge.repSvcYn === 'Y',
         totSvc: billData.charge.paidAmtMonthSvcCnt > 1,
-        invEndDt: DateHelper.getShortDate(billData.charge.invDt),
-        invStartDt: DateHelper.getShortFirstDate(billData.charge.invDt),
-        invMonth: DateHelper.getCurrentMonth(billData.charge.invDt),
+        invEndDt: DateHelper.getShortDate(billData.used.invDt),
+        invStartDt: DateHelper.getShortFirstDate(billData.used.invDt),
+        invMonth: DateHelper.getCurrentMonth(billData.used.invDt),
         type1: totSvc && repSvc,
         type2: !totSvc,
         type3: totSvc && !repSvc
