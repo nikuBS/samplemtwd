@@ -66,6 +66,13 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
       'serviceNumber2' : tempPhoneNum[1],
       'serviceNumber3' : tempPhoneNum[2]
     };
+    for(var i=0;i<this._addedList.length;i++){
+      if((this._addedList[i].serviceNumber1+this._addedList[i].serviceNumber2+this._addedList[i].serviceNumber3) ===
+        (phoneObj.serviceNumber1+phoneObj.serviceNumber2+phoneObj.serviceNumber3)){
+        this._openAlert(Tw.ROAMING_COMBINE_LINE_STRING.DUPLICATE_LINE,Tw.POPUP_TITLE.ERROR);
+        return;
+      }
+    }
     if(!Tw.FormatHelper.isPhoneNum(phoneObj.serviceNumber1+phoneObj.serviceNumber2+phoneObj.serviceNumber3)){
       this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
       return;
