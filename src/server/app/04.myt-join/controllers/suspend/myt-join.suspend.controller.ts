@@ -30,6 +30,12 @@ class MyTJoinSuspend extends TwViewController {
       };
 
       if ( suspendState.code === API_CODE.CODE_00 ) {
+
+        // 메인메뉴에서 진입 시 redirect 처리 필요
+        if ( this._checkRedirect(suspendState.result) ) {
+          res.redirect('/myt-join/submain/suspend/status');
+        }
+
         const today = DateHelper.getCurrentDateTime('YYYY-MM-DD');
         const after3Months = DateHelper.getShortDateWithFormatAddByUnit(today, 3, 'months', 'YYYY-MM-DD');
         const after24Months = DateHelper.getShortDateWithFormatAddByUnit(today, 24, 'months', 'YYYY-MM-DD');
@@ -61,6 +67,20 @@ class MyTJoinSuspend extends TwViewController {
     });
   }
 
-}
+  private _checkRedirect(suspendState: any) {
+    if ( suspendState['svcStCd'] === 'SP' ) { // 장기일시정지 경우 redirect
+      if ( ['21', '22'].indexOf(suspendState.svcChgRsnCd) > -1 ) {
+        return true;
+      }
+    } else {
+      if ( suspendState.armyDt !== ''
+        && DateHelper.getCurrentShortDate() < suspendState.toDt
+        && suspendState.armyDt < suspendState.toDt ) { // 장기일시정지 일시해제 redirect
+        return true;
+      }
+    }
+    return false;
+  }
 
+}
 export default MyTJoinSuspend;
