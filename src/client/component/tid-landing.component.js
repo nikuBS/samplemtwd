@@ -119,13 +119,8 @@ Tw.TidLandingComponent.prototype = {
   _successLogin: function (target, resp) {
     Tw.Logger.info('[Login Resp]', resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( Tw.BrowserHelper.isApp() ) {
-        this._apiService.sendNativeSession(Tw.AUTH_LOGIN_TYPE.TID, $.proxy(this._successSetSession, this));
-        Tw.CommonHelper.setXtSvcInfo();
-      } else {
-        this._historyService.reload();
-        // this._historyService.goLoad('/main/home');
-      }
+      this._apiService.sendNativeSession(Tw.AUTH_LOGIN_TYPE.TID, $.proxy(this._successSetSession, this));
+      Tw.CommonHelper.setXtSvcInfo();
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3228 ) {
       // 고객보호비밀번호
       this._historyService.goLoad('/common/member/login/cust-pwd?target=' + target);

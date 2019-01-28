@@ -466,18 +466,18 @@ Tw.MenuComponent.prototype = {
           }
         }
 
-        if ( !!item.urlAuthClCd ) {
-          if ( loginType === 'N' && item.urlAuthClCd.indexOf(loginType) === -1 ) {
-            // item.menuUrl = item.isLink ? '/common/member/login' : item.menuUrl;
-            item.loginNeed = true;
-            // item.children = [];
-            // item.hasChildren = false;
-          } else if ( loginType === 'S' && item.urlAuthClCd.indexOf(loginType) === -1 ) {
-            item.menuUrl = item.isLink ? 'common/member/slogin/fail' : item.menuUrl;
-            // item.children = [];
-            // item.hasChildren = false;
-          }
-        }
+        // if ( !!item.urlAuthClCd ) {
+        //   if ( loginType === 'N' && item.urlAuthClCd.indexOf(loginType) === -1 ) {
+        //     // item.menuUrl = item.isLink ? '/common/member/login' : item.menuUrl;
+        //     item.loginNeed = true;
+        //     // item.children = [];
+        //     // item.hasChildren = false;
+        //   } else if ( loginType === 'S' && item.urlAuthClCd.indexOf(loginType) === -1 ) {
+        //     item.menuUrl = item.isLink ? 'common/member/slogin/fail' : item.menuUrl;
+        //     // item.children = [];
+        //     // item.hasChildren = false;
+        //   }
+        // }
 
         if ( loginType !== 'N' ) {
           if ( !!this.REAL_TIME_ITEM[item.menuId] ) {

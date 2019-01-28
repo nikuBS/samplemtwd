@@ -21,7 +21,7 @@ Tw.PopupService.prototype = {
     var lastHash = this._prevHashList[this._prevHashList.length - 1];
     Tw.Logger.log('[Popup] Hash Change', '#' + hash.base, lastHash);
     if ( !Tw.FormatHelper.isEmpty(lastHash) && ('#' + hash.base) === lastHash.curHash ) {
-      if (skt_landing.action.checkScroll && skt_landing.action.checkScroll.unLockScroll) {
+      if ( skt_landing.action.checkScroll && skt_landing.action.checkScroll.unLockScroll ) {
         skt_landing.action.checkScroll.unLockScroll();
       }
 
@@ -39,28 +39,28 @@ Tw.PopupService.prototype = {
     if ( !Tw.FormatHelper.isEmpty(this._openCallback) ) {
       this._sendOpenCallback($currentPopup);
     }
-    setTimeout($.proxy(function() {
+    setTimeout($.proxy(function () {
       Tw.Tooltip.popInit($popups.last());
     }, this), 150);
   },
-  _onFailPopup: function(retryParams) {
-    if (Tw.BrowserHelper.isApp()) {
+  _onFailPopup: function (retryParams) {
+    if ( Tw.BrowserHelper.isApp() ) {
       var lastHash = this._prevHashList[this._prevHashList.length - 1];
 
       this._prevHashList = [];
       this.close();
 
-      setTimeout($.proxy(function() {
+      setTimeout($.proxy(function () {
         Tw.Native.send(Tw.NTV_CMD.OPEN_NETWORK_ERROR_POP, {}, $.proxy(this._onRetry, this, $.extend(retryParams, lastHash)));
 
-        if (Tw.BrowserHelper.isIos()) {
+        if ( Tw.BrowserHelper.isIos() ) {
           window.onNativeCallback = $.proxy(this._onRetry, this, $.extend(retryParams, lastHash));
         }
       }, this), 100);
     }
   },
-  _onRetry: function(retryParams) {
-    setTimeout($.proxy(function() {
+  _onRetry: function (retryParams) {
+    setTimeout($.proxy(function () {
       this._setOpenCallback(retryParams.openCallback);
       this._setConfirmCallback(retryParams.confirmCallback);
       this._addHash(retryParams.closeCallback, retryParams.curHash);
@@ -75,23 +75,21 @@ Tw.PopupService.prototype = {
     skt_landing.action.popup.close();
   },
   _addHash: function (closeCallback, hashName) {
-    setTimeout($.proxy(function () {
-      var curHash = location.hash || '#';
-      // Tw.Logger.log('[Popup] Add Hash', curHash);
-      this._prevHashList.push({
-        curHash: curHash,
-        closeCallback: closeCallback
-      });
+    var curHash = location.hash || '#';
+    // Tw.Logger.log('[Popup] Add Hash', curHash);
+    this._prevHashList.push({
+      curHash: curHash,
+      closeCallback: closeCallback
+    });
 
-      if ( Tw.FormatHelper.isEmpty(hashName) ) {
-        hashName = '#popup' + this._prevHashList.length;
-      } else {
-        hashName = '#' + hashName + '_P';
-      }
+    if ( Tw.FormatHelper.isEmpty(hashName) ) {
+      hashName = '#popup' + this._prevHashList.length;
+    } else {
+      hashName = '#' + hashName + '_P';
+    }
 
-      location.hash = hashName;
-      // history.pushState(this._popupObj, 'popup', hashName);
-    }, this), 100);
+    location.hash = hashName;
+    // history.pushState(this._popupObj, 'popup', hashName);
   },
   _bindEvent: function ($container) {
     $('.popup-blind').on('click', $.proxy(this.close, this));
@@ -129,7 +127,7 @@ Tw.PopupService.prototype = {
       cdn: Tw.Environment.cdn
     });
 
-    if (skt_landing.action.checkScroll && skt_landing.action.checkScroll.lockScroll) {
+    if ( skt_landing.action.checkScroll && skt_landing.action.checkScroll.lockScroll ) {
       skt_landing.action.checkScroll.lockScroll();
     }
 
