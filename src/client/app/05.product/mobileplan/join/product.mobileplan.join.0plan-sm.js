@@ -79,7 +79,9 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
       autoTermList: this._confirmOptions.preinfo.autoTermList,
       autoJoinBenefitList: this._confirmOptions.preinfo.toProdInfo.chgSktProdBenfCtt,
       autoTermBenefitList: this._confirmOptions.preinfo.frProdInfo.chgSktProdBenfCtt,
-      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0),
+      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0 ||
+        this._confirmOptions.installmentAgreement.gapDcAmt !== '0'),
+      isInstallmentAgreement: this._confirmOptions.installmentAgreement.gapDcAmt !== '0',
       isMobilePlan: true,
       isNoticeList: true,
       isComparePlan: this._isComparePlan,
