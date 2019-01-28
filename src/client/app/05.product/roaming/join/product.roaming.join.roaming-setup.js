@@ -226,7 +226,8 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
     $($args2).on('click','.btn-floating',$.proxy($args1._goPlan,$args1));
   },
   _goMyInfo : function(){
-    this._historyService.goLoad('/product/roaming/my-use');
+    var targetUrl = this._prodTypeInfo.prodTypCd==='H_P'?'/product/roaming/my-use':'/product/roaming/my-use#add';
+    this._historyService.goLoad(targetUrl);
   },
   _goPlan : function () {
     this._popupService.closeAll();

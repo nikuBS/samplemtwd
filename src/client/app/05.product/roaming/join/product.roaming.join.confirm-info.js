@@ -88,7 +88,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     this._$individualAgreeElement = this._$popupContainer.find('.individual.checkbox>input');
     $popupLayer.on('click','#do_join',$.proxy(this._doJoin,this));
     $popupLayer.on('click','.agree-view',$.proxy(this._showDetailContent,this));
-    $popupLayer.on('click','.tip-view.bff',$.proxy(this._showBffToolTip,this));
+    $popupLayer.on('click','.tip-view-btn.bff',$.proxy(this._showBffToolTip,this));
     if(this._popupData.agreeCnt<=0){
       this._$popupContainer.find('#do_join').removeAttr('disabled');
     }else{
@@ -244,8 +244,9 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     this._popupService.close();
     this._historyService.goBack();
   },
-  _goMyInfo : function () {
-    this._historyService.goLoad('/product/roaming/my-use');
+  _goMyInfo : function(){
+    var targetUrl = this._prodTypeInfo.prodTypCd==='H_P'?'/product/roaming/my-use':'/product/roaming/my-use#add';
+    this._historyService.goLoad(targetUrl);
   },
   _showCancelAlart : function (){
     var alert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A1;

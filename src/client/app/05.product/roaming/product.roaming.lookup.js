@@ -9,7 +9,7 @@ Tw.ProductRoamingLookup = function (rootEl,prodBffInfo,prodId) {
   this.$container = rootEl;
   this._history = new Tw.HistoryService(rootEl);
   this._prodBffInfo = prodBffInfo;
-  this.$serviceTipElement = this.$container.find('.tip-view.set-service-range');
+  this.$serviceTipElement = this.$container.find('.tip-view-btn');
   this._showDateFormat = 'YYYY. MM. DD.';
   this._init();
   this._bindBtnEvents();
