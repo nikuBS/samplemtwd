@@ -201,15 +201,24 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
       // thisMain._dataInit();
 
       let skbdYn = 'N';
-      for ( let i = 0; i < thisMain._resDataInfo.wireList.length ; i++ ){
+      for ( let i = 0; i < thisMain._resDataInfo.wireList.length ; i++ ) {
         if ( thisMain._resDataInfo.wireList[i].SVC_MGMT_NUM === svcInfo.svcMgmtNum ) {
-          if ( thisMain._resDataInfo.wireList[i].CO_CL_CD === 'B' ){
+          if ( thisMain._resDataInfo.wireList[i].CO_CL_CD === 'B' ) {
             skbdYn = 'Y';
             break;
           }
         }
       }
       thisMain._resDataInfo.skbdYn = skbdYn;
+
+
+      for ( let i = thisMain._resDataInfo.wireList.length - 1; i >= 0; i-- ) {
+        // skb 상품 제외
+        if ( thisMain._resDataInfo.wireList[i].CO_CL_CD === 'B' ) {
+          thisMain._resDataInfo.wireList.splice(i, 1);
+        }
+      }
+
 
       thisMain.logger.info(thisMain, '[_urlTplInfo.pageRenderView] : ', thisMain._urlTplInfo.pageRenderView);
 
