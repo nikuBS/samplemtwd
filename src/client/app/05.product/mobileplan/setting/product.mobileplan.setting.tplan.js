@@ -70,7 +70,7 @@ Tw.ProductMobileplanSettingTplan.prototype = {
       return true;
     }
 
-    this._smartWatchLine = this._watchInfo.watchSvcList[0].watchSvcNum;
+    this._smartWatchLine = this._watchInfo.watchSvcList[0].watchSvcMgmtNum;
     return true;
   },
 
@@ -105,7 +105,7 @@ Tw.ProductMobileplanSettingTplan.prototype = {
     return {
       'label-attr': 'id="ra' + idx + '"',
       'txt': Tw.FormatHelper.conTelFormatWithDash(item.watchSvcNumMask),
-      'radio-attr': 'id="ra' + idx + '" data-num="' + item.watchSvcNum + '" ' + (this._smartWatchLine === item.watchSvcNum ? 'checked' : '')
+      'radio-attr': 'id="ra' + idx + '" data-num="' + item.watchSvcMgmtNum + '" ' + (this._smartWatchLine === item.watchSvcMgmtNum ? 'checked' : '')
     };
   },
 
@@ -146,7 +146,7 @@ Tw.ProductMobileplanSettingTplan.prototype = {
 
     if (!Tw.FormatHelper.isEmpty(this._smartWatchLine) && $checked.val() === 'NA00006116') {
       reqParams = $.extend(reqParams, {
-        watchSvcNum: this._smartWatchLine
+        watchSvcMgmtNum: this._smartWatchLine
       });
     }
 
