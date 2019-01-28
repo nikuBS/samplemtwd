@@ -1533,7 +1533,8 @@ Tw.SELECTED_DATE_STRING = {
 };
 
 Tw.ROAMING_COMBINE_LINE_STRING = {
-  COMBINE_LINE: '자회선 설정하기 >'
+  COMBINE_LINE: '자회선 설정하기 >',
+  DUPLICATE_LINE : '모서비스번호와 멤버서비스번호가 동일하여 가입 처리 불가능합니다.'
 };
 
 Tw.SETTING_LOCATION = {
