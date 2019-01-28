@@ -10,6 +10,10 @@ body.bg-gray {
   padding-bottom: 1.875rem; }
   .wrap > .container-wrap {
     margin-bottom: 1.25rem; }
+    .wrap > .container-wrap.more-wrap {
+      margin-bottom: 0.625rem; }
+      .wrap > .container-wrap.more-wrap .nogaps .event-article-list li {
+        padding: 0 1rem; }
   .wrap.step {
     min-height: 100%;
     -webkit-box-sizing: border-box;
@@ -199,7 +203,7 @@ body.bg-gray {
     #common-menu .section-userinfo .login {
       display: inline-block;
       padding-right: 0.9375rem;
-      background: url(/img/common/ico-login.png) no-repeat right 0.25rem;
+      background: url(/img/common/ico-login.png) no-repeat right 55%;
       background-size: 0.4375rem 0.6875rem;
       color: inherit;
       font-size: 1.0625rem;
@@ -328,7 +332,8 @@ body.bg-gray {
             #common-menu .section-cont .section-gnb .bt-depth1 > .bt .ti-info .info {
               margin-left: 0.4375rem;
               color: #f76252;
-              font-size: 0.9375rem; }
+              font-size: 0.9375rem;
+              font-family: "TgothicLight", Roboto, sans-serif; }
             #common-menu .section-cont .section-gnb .bt-depth1 > .bt .ti-info .tx {
               display: block;
               margin-top: 0.4375rem;
@@ -378,7 +383,7 @@ body.bg-gray {
           #common-menu .section-cont .section-gnb .gnb-depth1 > li .depth2 .ti {
             display: block;
             padding: 0.75rem 1rem 0.4375rem 3.25rem;
-            color: #666;
+            color: #8d8d8d;
             font-size: 0.75rem;
             font-weight: 300; }
             #common-menu .section-cont .section-gnb .gnb-depth1 > li .depth2 .ti + ul .bt {

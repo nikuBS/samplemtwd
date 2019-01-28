@@ -62,7 +62,7 @@
                                 <!-- 2019-01-17 inp-btn 추가 -->
                                 <span class="inputbox bt-add inp-btn">
                                     <span class="input">
-                                        <input type="number" value="7850" title="조회시작 뒷번호 4자리 숫자만 입력" aria-describedby="aria-exp-desc1"/>
+                                        <input type="number" value="7850" title="변경할 010번호 조회 시작할 뒷번호 4자리 숫자만 입력" aria-describedby="aria-exp-desc1"/>
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                     <span class="tx-box type1">에서</span>
@@ -70,7 +70,7 @@
                                 <!-- 2019-01-17 inp-btn 추가 -->
                                 <span class="inputbox bt-add inp-btn mt6">
                                     <span class="input">
-                                        <input type="number" value="8850" title="조회마지막 뒷번호 4자리 숫자만 입력" aria-describedby="aria-exp-desc1"/>
+                                        <input type="number" value="8850" title="변경할 010번호 조회 끝낼 뒷번호 4자리 숫자만 입력" aria-describedby="aria-exp-desc1"/>
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                     <span class="tx-box type1">사이</span>
@@ -104,7 +104,7 @@
                                 <div class="widget-box radio">
                                     <ul class="select-list" role="group">
                                         <li class="radiobox type01 checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                            <input type="radio" name="radio" value="" title="010-2014-7850" aria-labelledby="aria-comp-radio1" checked /><!-- 체크상태일 경우 checked="checked" -->
+                                            <input type="radio" name="radio" value="" title="변경 가능한 번호" aria-labelledby="aria-comp-radio1" checked /><!-- 체크상태일 경우 checked="checked" -->
                                             <div class="comp-list-layout" id="aria-comp-radio1">
                                                 <p class="layout-text">
                                                     <span class="mtext">010-2014-7850</span>
@@ -112,7 +112,7 @@
                                             </div>
                                         </li>
                                         <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                            <input type="radio" name="radio" value="" title="010-2016-7850" aria-labelledby="aria-comp-radio2" /><!-- 체크상태일 경우 checked="checked" -->
+                                            <input type="radio" name="radio" value="" title="변경 가능한 번호" aria-labelledby="aria-comp-radio2" /><!-- 체크상태일 경우 checked="checked" -->
                                             <div class="comp-list-layout" id="aria-comp-radio2">
                                                 <p class="layout-text">
                                                     <span class="mtext">010-2016-7850</span>
@@ -120,7 +120,7 @@
                                             </div>
                                         </li>
                                         <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                            <input type="radio" name="radio" value="" title="010-4736-4856" aria-labelledby="aria-comp-radio3" /><!-- 체크상태일 경우 checked="checked" -->
+                                            <input type="radio" name="radio" value="" title="변경 가능한 번호" aria-labelledby="aria-comp-radio3" /><!-- 체크상태일 경우 checked="checked" -->
                                             <div class="comp-list-layout" id="aria-comp-radio3">
                                                 <p class="layout-text">
                                                     <span class="mtext">010-4736-4856</span>
@@ -128,7 +128,7 @@
                                             </div>
                                         </li>
                                         <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                            <input type="radio" name="radio" value="" title="010-2016-7850" aria-labelledby="aria-comp-radio4" /><!-- 체크상태일 경우 checked="checked" -->
+                                            <input type="radio" name="radio" value="" title="변경 가능한 번호" aria-labelledby="aria-comp-radio4" /><!-- 체크상태일 경우 checked="checked" -->
                                             <div class="comp-list-layout" id="aria-comp-radio4">
                                                 <p class="layout-text">
                                                     <span class="mtext">010-2016-7850</span>
@@ -151,13 +151,13 @@
 					<div class="cont-box nogaps-btm">
 						<h3 class="tx-bold">꼭 확인해 주세요</h3>
 						<ul class="noti-list">
-                            <li>이용시간 안내 <button type="button" class="tip-view">TIP</button></li>
-                            <li>변경 안내 <button type="button" class="tip-view">TIP</button></li>
-                            <li>번호변경 시 확인사항 <button type="button" class="tip-view">TIP</button></li>
-                            <li>번호변경 시 서비스 안내 <button type="button" class="tip-view">TIP</button></li>
-                            <li>번호변경 제한사항 안내 <button type="button" class="tip-view">TIP</button></li>
-                            <li>유심 제한사항 안내 <button type="button" class="tip-view">TIP</button></li>
-						</ul>
+                            <li><button type="button" class="tip-view-btn" title="이용시간 안내 TIP보기" aria-haspopup="true">이용시간 안내 <span class="tip-view">TIP</span></button></li>
+                            <li><button type="button" class="tip-view-btn" title="변경 안내 TIP보기" aria-haspopup="true">변경 안내 <span class="tip-view">TIP</span></button></li>
+                            <li><button type="button" class="tip-view-btn" title="번호변경 시 확인사항 TIP보기" aria-haspopup="true">번호변경 시 확인사항 <span class="tip-view">TIP</span></button></li>
+                            <li><button type="button" class="tip-view-btn" title="번호변경 시 서비스 안내 TIP보기" aria-haspopup="true">번호변경 시 서비스 안내 <span class="tip-view">TIP</span></button></li>
+                            <li><button type="button" class="tip-view-btn" title="번호변경 제한사항 안내 TIP보기" aria-haspopup="true">번호변경 제한사항 안내 <span class="tip-view">TIP</span></button></li>
+                            <li><button type="button" class="tip-view-btn" title="유심 제한사항 안내 TIP보기" aria-haspopup="true">유심 제한사항 안내 <span class="tip-view">TIP</span></button></li>
+                        </ul>
 					</div>
 					<!--// .cont-box -->
                     <div class="bt-fixed-area">

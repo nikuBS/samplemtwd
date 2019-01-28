@@ -100,22 +100,22 @@
 					<!-- .cont-box -->
 					<div class="cont-box nogaps">
 						<div class="cont-box pb0">
-							<p class="con-tit0 pb12" id="aria-exp-label1">이메일 주소</p>
+							<p class="con-tit0 pb12">이메일 주소</p>
 							<span class="inputbox">
 								<span class="input">
-									<input type="text" placeholder="이메일 입력" title="이메일 주소 입력" value="" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" />
+									<input type="text" placeholder="이메일 입력" title="이메일 주소를 입력해 주세요" value="" aria-describedby="aria-exp-desc1" />
 									<button class="cancel"><span class="blind">삭제</span></button>
 								</span>
 							</span>
 							<div class="widget pt20">
 								<div class="widget-box check">
 									<ul class="select-list" role="group">
-										<li class="checkbox type01 mb16 checked" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-											<input type="checkbox" name="checkbox" title="이메일 보안 설정" checked/><!-- 체크상태일 경우 checked="checked" -->
+										<li class="checkbox type01 mb16 checked" id="aria-comp-checkbox1" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+											<input type="checkbox" name="checkbox" aria-labelledby="aria-comp-checkbox1" checked/><!-- 체크상태일 경우 checked="checked" -->
 											이메일 보안 설정
 										</li>
-										<li class="checkbox type01 mb16" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-											<input type="checkbox" name="checkbox" title="입력한 이메일로 다양한 혜택 정보 받기" /><!-- 체크상태일 경우 checked="false" -->
+										<li class="checkbox type01 mb16" id="aria-comp-checkbox2" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+											<input type="checkbox" name="checkbox" aria-labelledby="aria-comp-checkbox2" /><!-- 체크상태일 경우 checked="false" -->
 											입력한 이메일로 다양한 혜택 정보 받기
 										</li>
 									</ul>
@@ -191,9 +191,9 @@
 					<!-- .cont-box --><!-- 2018-11-02 수정 -->
                     <div class="cont-box nogaps-btm">
                         <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                        <ul class="noti-list">
-                            <li>요금안내서 이용안내 <button type="button" class="tip-view" title="요금안내서 이용안내" aria-haspopup="true">TIP</button></li>
-                        </ul>
+                        <ul class="noti-list02">
+							<li><button type="button" class="tip-view-btn" title="요금안내서 재발행 이용안내" aria-haspopup="true">요금안내서 재발행 이용안내<span class="tip-view">TIP</span></button></li>
+						</ul>
                     </div>
 					<!--// .cont-box -->
 					<!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->

@@ -75,8 +75,8 @@
                                 <!-- 2019-01-17 inp-btn 추가 -->
                                 <span class="inputbox bt-add inp-btn error"><!-- 입력 필드 오류 시 .error 추가 -->
                                     <span class="input">
-                                        <input type="text" placeholder="숫자만 입력" value="010-12**-24**" title="공유회선번호 숫자만 입력" aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx1" maxlength="11">
-                                        <!-- 2019.01.14 title값 수정 sblee -->
+                                        <input type="text" placeholder="숫자만 입력" value="010-12**-24**" title="공유회선번호 숫자만 입력" aria-describedby="aria-phone-tx1" maxlength="11">
+                                        <!-- 2019.01.22 title값 수정, aria-labelledby값 삭제  sblee -->
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                     <span class="bt-box">
@@ -94,8 +94,9 @@
                     <!-- .cont-box -->
                     <div class="cont-box nogaps-btm">
                         <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                        <ul class="noti-list">
-                            <li>공유회선 설정 유의사항 <button type="button" class="tip-view" title="정보보기" aria-haspopup="true">TIP</button></li>
+                        <ul class="noti-list02">
+                            <li><button aria-haspopup="true" class="tip-view-btn" title="공유회선 설정 유의사항 정보보기">공유회선 설정 유의사항<span class="tip-view">TIP</span></button></li>
+                            <!-- 2019.01.24 title값 수정 -->
                         </ul>
                     </div>
                     <!--// .cont-box -->

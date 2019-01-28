@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no, address=no, email=no" />
+		<link rel="shortcut icon" href="/img/common/favicon.ico" />
+		<link rel="shortcut icon" href="/img/common/favicon.png" />
+		<link rel="apple-touch-icon" href="/img/common/favicon.png" />
+		<meta name="description" content="페이지설명" />
+		<meta name="keywords" content="서비스키워드" />
+		<meta property="og:title" content="SKT 홈페이지" />
+		<meta property="og:site_name" content="SKT" />
+		<meta property="og:image" content="/image/common/skt_facebook.jpg" />
+		<meta property="og:description" content="SKT framework" />
+		<title>SKT</title>
+		<link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+		<link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+		<link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+		<link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+		<script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+		<script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+		<script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+		<script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+		<script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+		<script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+		
+	</head>
+
+
+	<body class="bg-gray">
+		<!-- #skip_navigation -->
+		<div id="skipNav" class="skip_navi">
+			<ul>
+				<li><a href="#gnb">메뉴 바로가기</a></li>
+				<li><a href="#contents">본문 바로가기</a></li>
+				<li><a href="#footer">푸터 바로가기</a></li>
+			</ul>
+		</div>
+		<!--// #skip_navigation -->
+		<div class="wrap">
+			<!-- #header -->
+	        <div id="header" class="header-wrap">
+	            <div class="h-belt">
+	                <div class="h-default">
+	                    <div class="h-menu">
+	                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+	                    </div>
+	                    <div class="h-tit">요금안내서</div>
+	                    <div class="h-serarch">
+	                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	        <!--// #header -->
+			<!-- #contents -->
+			<div id="contents" class="container-wrap">
+				<h2 class="blind">내용</h2>
+				<div class="container">
+					<div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
+		                <h3 class="tit" id="aria-comp-bt1">뉴 T끼리 맞춤형 (100분+6GB)</h3>
+		                <button class="detail-view" aria-labelledby="aria-comp-bt1"><span class="blind">자세히보기</span></button>
+		            </div>
+					<!-- .cont-box -->
+					<div class="cont-box">
+						<div class="charge-guide-wrap">
+							<div class="charge-cont">
+								<span class="tit02 pt0">데이터양<br /><span class="tx-bold vbl">1,234 MB</span> 남았습니다.</span>
+							</div>
+							<span class="sub-disc01">2018.5.1. 15:05</span>
+
+							<div class="charge-cont">
+								<div class="basic-list bg-type mt26">
+									<ul>
+										<li>
+											<span class="title">발신/사용기간</span>
+											<span class="tx-cont">2018.7.12. 까지<br />발신가능</span>
+										</li>
+										<li>
+											<span class="title">수신/데이터유지기간</span>
+											<span class="tx-cont">2018.7.12. 까지<br />수신가능</span>
+										</li>
+										<li>
+											<span class="title">번호유지기간</span>
+											<span class="tx-cont">2018.7.12. 까지<br />번호유지</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--// .cont-box -->
+
+					<div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
+                        <h4 class="tit">이용내역 확인</h4>
+                    </div>
+                    <!-- .cont-box -->
+                    <div class="cont-box">
+                    	<div class="check-style">
+                    		<div class="widget">
+		                        <div class="widget-box radio">
+		                            <ul class="select-list" role="radiogroup">
+		                                <li class="radiobox type01 checked" id="aria-comp-radio1" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+		                                    <input type="radio" name="radio1" value="" aria-labelledby="aria-comp-radio1" checked /><!-- 체크상태일 경우 checked="checked" -->
+		                                    음성
+		                                </li>
+		                                <li class="radiobox type01" id="aria-comp-radio2" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+		                                    <input type="radio" name="radio1" value="" aria-labelledby="aria-comp-radio2" /><!-- 체크상태일 경우 checked="false" -->
+		                                    데이터
+		                                </li>
+		                            </ul>
+		                        </div>
+		                    </div>
+                    	</div>
+	                    <div class="inputbox date-selcet">
+                            <span class="date-type">
+                            	<button class="bt-date" title="이용내역 조회 시작일 선택" aria-haspopup="true">2018.4.</button>
+                            </span>
+                            <span class="bar">~</span>
+                            <span class="date-type">
+                            	<button class="bt-date" title="이용내역 조회 종료일 선택" aria-haspopup="true">2018.5.</button>
+                            </span>
+                        </div>
+                        <ul class="bt-slice mt30">
+	                        <li class="bt-blue1">
+	                            <button>조회하기</button>
+	                        </li>
+	                    </ul>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+
+                    <!-- .cont-box -->
+                	<div class="cont-box nogaps">
+                		<ul class="list-comp-lineinfo type3 no-bt">
+	                        <li>
+                                <div class="lineinfo-user">
+                                    <span class="info-title">국내음성통화</span>
+                                    <span class="info-sub">2018.6.28.</span>
+                                </div>
+                                <div class="lineinfo-data">
+                                    <span class="info-title"><span class="num ff-tg-black">148</span><span class="ff-tg-medium">원</span></span>
+                                </div>
+	                        </li>
+	                        <li>
+                                <div class="lineinfo-user">
+                                    <span class="info-title">국내음성통화</span>
+                                    <span class="info-sub">2018.6.28.</span>
+                                </div>
+                                <div class="lineinfo-data">
+                                    <span class="info-title"><span class="num ff-tg-black">12,148</span><span class="ff-tg-medium">원</span></span>
+                                </div>
+	                        </li>
+	                        <li>
+                                <div class="lineinfo-user">
+                                    <span class="info-title">국내음성통화</span>
+                                    <span class="info-sub">2018.6.28.</span>
+                                </div>
+                                <div class="lineinfo-data">
+                                    <span class="info-title"><span class="num ff-tg-black">4,148</span><span class="ff-tg-medium">원</span></span>
+                                </div>
+	                        </li>
+	                    </ul>
+	                    <div class="bt-more">
+	                        <button>더 보기</button>
+	                    </div>
+	                </div>
+                    <!--// .cont-box -->
+
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps-btm">
+                        <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                        <ul class="noti-list">
+                            <li>이용금액 안내 <button title="이용금액 안내" type="button" class="tip-view" aria-haspopup="true">TIP</button></li>
+                            <li>로밍 이용요금 안내 <button title="로밍 이용요금 안내" type="button" class="tip-view" aria-haspopup="true">TIP</button></li>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <!-- <div class="bt-top">
+                    	<button><span class="blind">최상단으로 가기</span></button>
+                    </div> -->
+					
+				</div>
+			</div>
+			<!--// #contents -->
+		</div>
+	</body>
+
+</html>

@@ -396,6 +396,9 @@ skt_landing.widgets = {
       }else{
         return;
       }
+      if($(this).find('.slick-initialized').length > 0){
+        $(this).find('.slider').slick('destroy');
+      }
       var _this = $(this).find('.slider');
       _this.slick({
         dots: false,

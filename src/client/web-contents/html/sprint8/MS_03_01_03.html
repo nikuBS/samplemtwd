@@ -68,8 +68,8 @@
                     
                         <ul class="form-data-list">
                             <li>
-                                <label class="tit">알림기간<button class="tip-view">TIP</button></label>
-                                <button class="bt-dropdown big" title="알림기간 선택" aria-haspopup="true">기간 선택<span class="ico"></span></button>
+                                <label class="tit">알림기간<button class="tip-view" title="알림기간 TIP보기" aria-haspopup="true">TIP</button></label>
+                                <button class="bt-dropdown big" aria-haspopup="true">기간 선택<span class="ico"><span class="blind">알림기간 선택</span></span></button>
                             </li>
                             <li>
                                 <label class="tit pt40" for="flab01">알림방법</label>
@@ -78,7 +78,7 @@
                                         <div class="widget-box radio">
                                             <ul class="select-list" role="group">
                                                 <li class="radiobox type01 checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                    <input type="radio" name="radio" value="" title="알림만" aria-labelledby="aria-comp-radio1" checked=""><!-- 체크상태일 경우 checked="checked" -->
+                                                    <input type="radio" name="radio" value="" title="알림방법" aria-labelledby="aria-comp-radio1" checked=""><!-- 체크상태일 경우 checked="checked" -->
                                                     <div class="comp-list-layout" id="aria-comp-radio1">
                                                         <p class="layout-text">
                                                             <span class="mtext">알림만</span>
@@ -87,7 +87,7 @@
                                                     </div>
                                                 </li>
                                                 <li class="radiobox type01" role="radio" aria-checked="false">
-                                                    <input type="radio" name="radio" value="" title="알림 후 자동연결" aria-labelledby="aria-comp-radio2">
+                                                    <input type="radio" name="radio" value="" title="알림방법" aria-labelledby="aria-comp-radio2">
                                                     <div class="comp-list-layout" id="aria-comp-radio2">
                                                         <p class="layout-text">
                                                             <span class="mtext">알림 후 자동연결</span>
@@ -96,7 +96,7 @@
                                                     </div>
                                                 </li>
                                                 <li class="radiobox type01" role="radio" aria-checked="false">
-                                                    <input type="radio" name="radio" value="" title="알림없는 자동연결" aria-labelledby="aria-comp-radio3">
+                                                    <input type="radio" name="radio" value="" title="알림방법" aria-labelledby="aria-comp-radio3">
                                                     <div class="comp-list-layout" id="aria-comp-radio3">
                                                         <p class="layout-text">
                                                             <span class="mtext">알림 없는 자동연결</span>
@@ -120,9 +120,9 @@
 					<div class="cont-box nogaps-btm">
 						<h3 class="tx-bold">꼭 확인해 주세요</h3>
 						<ul class="noti-list">
-							<li>금융기관 알림안내 <button type="button" class="tip-view">TIP</button></li>
-							<li>신청안내 <button type="button" class="tip-view">TIP</button></li>
-							<li>서비스 이용 중 번호변경 <button type="button" class="tip-view">TIP</button></li>
+							<li><button type="button" class="tip-view-btn" title="금융기관 알림안내 TIP보기" aria-haspopup="true">금융기관 알림안내<span class="tip-view">TIP</span></button></li>
+							<li><button type="button" class="tip-view-btn" title="신청안내 TIP보기" aria-haspopup="true">신청안내<span class="tip-view">TIP</span></button></li>
+							<li><button type="button" class="tip-view-btn" title="서비스 이용 중 번호변경 TIP보기" aria-haspopup="true">서비스 이용 중 번호변경<span class="tip-view">TIP</span></button></li>
 						</ul>
 					</div>
 					<!--// .cont-box -->
