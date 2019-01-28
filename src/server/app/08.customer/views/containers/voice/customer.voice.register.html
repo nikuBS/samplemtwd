@@ -93,10 +93,12 @@
     </div>
     <!--// #contents -->
     <!-- .popup-closeBtn -->
-    <button class="prev-step">취소</button>
+    <button class="prev-step fe-common-back">취소</button>
     <!--// .popup-closeBtn -->
 </div>
-<% include ../../components/javascript.component.html %>
+    <% include ../../components/javascript.component.html %>
+</div>
+
 <script>
   $(document).ready(function () {
     new Tw.CustomerVoiceRegister($('.wrap'), JSON.parse('<%-JSON.stringify(allSvc)%>'));

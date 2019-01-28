@@ -26,7 +26,7 @@ Tw.CustomerVoice.prototype = {
 
   _bindEvent: function () {
     this.$btn_register.on('click', $.proxy(this._checkHistories, this));
-    this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
+    // this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
   },
 
   _checkHistories: function () {
