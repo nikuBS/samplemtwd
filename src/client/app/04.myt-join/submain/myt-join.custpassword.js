@@ -296,9 +296,9 @@ Tw.MytJoinCustpassword.prototype = {
   _onclickBtnCancel: function(){
     // 입력한 값이 있는지
     var hasInput = (
-      $('#pwd-input1').val().length > 0 ||
-      $('#pwd-input2').val().length > 0 ||
-      $('#pwd-input3').val().length > 0
+      ($('#pwd-input1').val() && $('#pwd-input1').val().length > 0) ||
+      ($('#pwd-input2').val() && $('#pwd-input2').val().length > 0) ||
+        ($('#pwd-input3').val() && $('#pwd-input3').val().length > 0)
     );
 
     // 입력값이 있는 경우 입력값 버릴건지 확인
@@ -339,7 +339,11 @@ Tw.MytJoinCustpassword.prototype = {
           } else {
             this._historyService.goLoad(url);
           }*/
-        }, this));
+        }, this),
+        function(){
+          Tw.Popup.close();
+        }
+        );
     } else {
 
       // main(MS)으로 이동
