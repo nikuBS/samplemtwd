@@ -9,14 +9,9 @@ Tw.MyTDataFamilyShare = function(rootEl) {
 
   this._cachedElement();
   this._bindEvent();
-  this._init();
 };
 
 Tw.MyTDataFamilyShare.prototype = {
-  _init: function() {
-    this._shareAmount = this.$amountInput.data('share-amount');
-  },
-
   _cachedElement: function() {
     this.$amountInput = this.$container.find('.fe-amount');
     this.$submitBtn = this.$container.find('.fe-submit');
@@ -36,7 +31,7 @@ Tw.MyTDataFamilyShare.prototype = {
     var value = e.currentTarget.getAttribute('data-value');
 
     if (value === 'all') {
-      this.$amountInput.val(this._shareAmount);
+      this.$amountInput.val(this.$amountInput.data('share-amount'));
     } else {
       this.$amountInput.val(Number(this.$amountInput.val()) + Number(value));
     }
@@ -45,15 +40,16 @@ Tw.MyTDataFamilyShare.prototype = {
   },
 
   _validateShareAmount: function() {
-    var value = Number(this.$amountInput.val());
+    var value = Number(this.$amountInput.val()),
+      limit = Number(this.$amountInput.data('share-amount'));
 
     if (!value) {
       this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.V17);
       this.$error.removeClass('none');
-      this.$sRemained.text(Number(this._shareAmount) + Tw.DATA_UNIT.GB);
+      this.$sRemained.text(limit + Tw.DATA_UNIT.GB);
       this.$pRemained.removeClass('none');
       this._setDisableSubmit(true);
-    } else if (value > this._shareAmount) {
+    } else if (value > limit) {
       this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.V16);
       this.$error.removeClass('none');
       this.$pRemained.addClass('none');
@@ -62,7 +58,7 @@ Tw.MyTDataFamilyShare.prototype = {
       if (!this.$error.hasClass('none')) {
         this.$error.addClass('none');
       }
-      this.$sRemained.text(Number(this._shareAmount - value) + Tw.DATA_UNIT.GB);
+      this.$sRemained.text(Number(limit - value) + Tw.DATA_UNIT.GB);
       this.$pRemained.removeClass('none');
       this._setDisableSubmit(false);
     }
