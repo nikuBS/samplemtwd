@@ -39,9 +39,7 @@ Tw.PopupService.prototype = {
     if ( !Tw.FormatHelper.isEmpty(this._openCallback) ) {
       this._sendOpenCallback($currentPopup);
     }
-    setTimeout($.proxy(function () {
-      Tw.Tooltip.popInit($popups.last());
-    }, this), 150);
+    Tw.Tooltip.popInit($popups.last());
   },
   _onFailPopup: function (retryParams) {
     if ( Tw.BrowserHelper.isApp() ) {
