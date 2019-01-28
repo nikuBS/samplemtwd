@@ -101,6 +101,7 @@ Tw.ProductMobileplanJoin.prototype = {
   },
 
   _convConfirmOptions: function() {
+    console.log(this._confirmOptions);
     this._confirmOptions = $.extend(this._confirmOptions, {
       isComparePlan: this._isComparePlan,
       title: Tw.PRODUCT_TYPE_NM.JOIN,
@@ -122,7 +123,9 @@ Tw.ProductMobileplanJoin.prototype = {
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
       autoTermList: this._confirmOptions.preinfo.autoTermList,
       noticeList: $.merge(this._confirmOptions.preinfo.termNoticeList, this._confirmOptions.preinfo.joinNoticeList),
-      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0),
+      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0 ||
+        this._confirmOptions.installmentAgreement.gapDcAmt !== '0'),
+      isInstallmentAgreement: this._confirmOptions.installmentAgreement.gapDcAmt !== '0',
       isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this._prodId) === -1,
       downgrade: this._getDowngrade()
     });
