@@ -38,6 +38,7 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
 
     // admin 제공된 tooltip 정보
     this.$container.on('click', '.btn-tooltip-open', $.proxy(this._openTooltipPop, this));
+    this.$container.on('click', '.info-tooltip>p', $.proxy(this._openTooltipPop, this));
 
     // admin 제공 팝업
     this.$container.on('click', '.idpt-popup-open', $.proxy(this._openPagePop, this));
@@ -274,13 +275,17 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
   },
 
   _openTooltipPop: function (e) {
-    var popId = $(e.currentTarget).attr('href');
+    var isTargetTitle = !!($(e.currentTarget).siblings('.btn-tooltip-open').length);
+    var popId = isTargetTitle ? $(e.currentTarget).siblings('.btn-tooltip-open').attr('href'): $(e.currentTarget).attr('href');
+    var titleText = isTargetTitle ? $(e.currentTarget).text() : $(e.currentTarget).prev('p').text();
+    // 앞 번호 매겨져 있다면 변경
+    titleText = titleText.replace(/^\d\d?\./gi,'');
     e.preventDefault();
 
     this._popupService.open({
       url: Tw.Environment.cdn + '/hbs/',
       'pop_name': 'type_tx_scroll',
-      'title': null,
+      'title': titleText || '',
       'title_type': 'sub',
       'cont_align': 'tl',
       'contents': $(popId).find('.popup-title').html().replace(/<br ?\/?>/gi, '\n'),
@@ -288,7 +293,9 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
         style_class: 'tw-popup-closeBtn bt-red1 pos-right',
         txt: Tw.BUTTON_LABEL.CONFIRM
       }]
-    }, null, null);
+    }, $.proxy(function($container){
+      $container.find('.popup-info').show();
+    }, this), null);
   },
 
   _openPagePop: function (e) {

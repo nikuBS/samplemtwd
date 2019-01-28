@@ -8,7 +8,7 @@ Tw.CustomerSvcInfoSite = function (rootEl, data) {
   //this.data = data? JSON.parse(data) : '';
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._history = new Tw.HistoryService(rootEl);
+  this._historyService = new Tw.HistoryService(rootEl);
   this._hash = Tw.Hash;
   this._cachedElement();
   this._bindEvent();

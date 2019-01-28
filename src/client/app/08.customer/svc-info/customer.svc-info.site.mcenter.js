@@ -8,7 +8,7 @@ Tw.CustomerSvcInfoMcenter = function (rootEl) {
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._history = new Tw.HistoryService(rootEl);
+  this._historyService = new Tw.HistoryService(rootEl);
   this._hash = Tw.Hash;
 
   this._cachedElement();
@@ -29,6 +29,10 @@ Tw.CustomerSvcInfoMcenter.prototype = {
     this.$container.on('click', '.fe-link-external:not([href^="#"])', $.proxy(this._openExternalUrl, this));
     this.$container.on('click', '.fe-link-internal:not([href^="#"])', $.proxy(this._openInternalUrl, this));
     this.$container.on('click', '.fe-link-inapp:not([href^="#"])', $.proxy(this._openInApp, this));
+
+    // admin 제공된 tooltip 정보
+    this.$container.on('click', '.btn-tooltip-open', $.proxy(this._openTooltipPop, this));
+    this.$container.on('click', '.info-tooltip>p', $.proxy(this._openTooltipPop, this));
 
     // from idpt
     this._bindUIEvent(this.$container);
@@ -98,17 +102,6 @@ Tw.CustomerSvcInfoMcenter.prototype = {
         $('.center-cont02', $container).css('display', 'block');
       }
     });
-
-    //tooltip
-    $('.btn-tooltip-open', $container).click(function(){
-      var toolpopId = $(this).attr('href');
-      $('.popup-info', $container).removeClass('show');
-      $(toolpopId).addClass('show');
-      $('.tooltip-popup', $container).show();
-    });
-    $('.btn_confirm', $container).click(function(){
-      $('.tooltip-popup', $container).hide();
-    });
   
     //accordian
     $('.idpt-accordian > li > a', $container).on('click', function(e){
@@ -127,5 +120,29 @@ Tw.CustomerSvcInfoMcenter.prototype = {
         $(this).toggleClass('open').next('.idpt-toggle-cont').slideToggle();
       })
     });
+  },
+
+  _openTooltipPop: function (e) {
+    var isTargetTitle = !!($(e.currentTarget).siblings('.btn-tooltip-open').length);
+    var popId = isTargetTitle ? $(e.currentTarget).siblings('.btn-tooltip-open').attr('href'): $(e.currentTarget).attr('href');
+    var titleText = isTargetTitle ? $(e.currentTarget).text() : $(e.currentTarget).prev('p').text();
+    // 앞 숫자 변경
+    titleText = titleText.replace(/^\d\d?\./gi,'');
+    e.preventDefault();
+
+    this._popupService.open({
+      url: Tw.Environment.cdn + '/hbs/',
+      'pop_name': 'type_tx_scroll',
+      'title': titleText || '',
+      'title_type': 'sub',
+      'cont_align': 'tl',
+      'contents': $(popId).find('.popup-title').html().replace(/<br ?\/?>/gi, '\n'),
+      'bt_b': [{
+        style_class: 'tw-popup-closeBtn bt-red1 pos-right',
+        txt: Tw.BUTTON_LABEL.CONFIRM
+      }]
+    }, $.proxy(function($container){
+      $container.find('.popup-info').show();
+    }, this), null);
   },
 };
