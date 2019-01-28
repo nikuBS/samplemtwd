@@ -68,7 +68,8 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
     var amount = Number(share.tFmlyShrblQty) || 0;
     if (share.tFmlyShrblQty) {
       if (amount >= 1) {
-        this.$amountInput.data('share-amount', amount);
+        this.$container.find('#fe-ing').addClass('none');
+        this.$amountInput.attr('data-share-amount', amount);
         this.$amount.text(amount + Tw.DATA_UNIT.GB);
         this.$container.find('.txt-c2').text(amount + Tw.DATA_UNIT.GB);
         this.$amount.removeClass('none');
