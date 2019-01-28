@@ -75,7 +75,7 @@ Tw.TooltipService.prototype = {
     }
   },
   _setTitle: function ($target, $result) {
-    var $children = $target.children().clone();
+    var $children = $target.children().first().clone();
     $target.text($result.ttipTitNm);
     $target.append($children);
 
