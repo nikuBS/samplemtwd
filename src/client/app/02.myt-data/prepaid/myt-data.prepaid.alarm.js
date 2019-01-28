@@ -225,7 +225,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
   _onCompleteAlarm: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._historyService.replaceURL('/myt-data/submain');
+      this._historyService.replaceURL('/myt-data/recharge/prepaid/alarm-complete');
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -242,7 +242,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
       }, this),
       $.proxy(function () {
         if ( confirmed ) {
-          this._historyService.replaceURL('/myt-data/submain');
+          this._historyService.replaceURL('/myt-data/recharge/prepaid/alarm-complete');
         }
       }, this),
       Tw.BUTTON_LABEL.NO,
