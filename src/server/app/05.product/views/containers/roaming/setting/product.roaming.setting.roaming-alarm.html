@@ -66,22 +66,28 @@
                 <!--// .cont-box -->
 
                 <hr class="cont-sp type1 list_contents" aria-hidden="true">
-                <script type="text/x-handlebars-template" id="alarm_template">
-                    <li class="list-box type-main"><!-- 190117 타이틀이 전화번호인 경우 -->
-                        <p class="list-text">
-                            <span class="mtext">{{phoneData.phoneNum.serviceNumber1}}-{{phoneData.phoneNum.serviceNumber2}}-{{phoneData.phoneNum.serviceNumber3}}</span>
-                        </p>
-                        <div class="list-btn">
-                            <div class="bt-alone"><button data-idx="{{phoneData.idx}}" class="bt-line-gray1">해지</button></div>
-                        </div>
-                    </li>
-                </script>
                 <div class="cont-box nogaps list_contents">
                     <div class="input-number-wrap">
                         <h3 class="tit type1">지정번호 신청된 회선</h3>
                         <div class="list-comp-thumnail">
                             <ul class="comp-box" id="alarm_list">
-
+                                <% for(var i=0;i<prodBffInfo.combinationLineList.length;i++){ %>
+                                <li class="list-box type-main"><!-- 190117 타이틀이 전화번호인 경우 -->
+                                    <p class="list-text">
+                                        <span class="mtext">
+                                            <%= prodBffInfo.combinationLineList[i].svcNumMask %></span>
+                                    </p>
+                                    <div class="list-btn">
+                                        <div class="bt-alone">
+                                            <% if (svcInfo && locals.pageInfo && pageInfo.auth && pageInfo.auth.cert && pageInfo.auth.cert.maskAuthYn === 'Y' && !pageInfo.masking) { %>
+                                            <button class="bt-line-gray1 fe-bt-masking" type="button" data-menuid="<%= pageInfo.menuId %>" data-menuurl="<%= pageInfo.menuUrl %>">해지</button>
+                                            <% } else { %>
+                                            <button class="bt-line-gray1 fe-btn_del_num" data-idx="<%= i %>" >해지</button>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </li>
+                                <% } %>
                             </ul>
                         </div>
                     </div>

@@ -17,7 +17,8 @@ Tw.ProductRoamingSettingRoamingAlarm = function (rootEl,prodTypeInfo,prodBffInfo
   this._svcInfo = svcInfo;
   this._prodId = prodId;
   this._apiService = Tw.Api;
-  this._changeList();
+  this.$container.on('click','.fe-btn_del_num',$.proxy(this._removeEvt,this));
+  //this._changeList();
 };
 
 Tw.ProductRoamingSettingRoamingAlarm.prototype = {
@@ -180,7 +181,6 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
     var requestValue = {
       'svcNumList' : [this._addedList[selectedIndex]]
     };
-
     this._apiService.request(Tw.API_CMD.BFF_10_0019, requestValue, {},[this._prodId]).
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
@@ -193,10 +193,13 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
     }, this));
   },
   _bindRemoveEvt : function () {
-    this.$container.find('.list-btn button').on('click',$.proxy(this._removeEvt,this));
+    //this.$container.find('.fe-btn_del_num').on('click',$.proxy(this._removeEvt,this));
   },
   _sortingSettingData : function (inputData) {
     for(var i=0;i<inputData.length;i++){
+      if(!inputData[i].svcNum){
+        return;
+      }
       var tempArr = this._convertPhoneNumFormat(inputData[i].svcNum).split('-');
       inputData[i] = {
         'serviceNumber1' : tempArr[0],
