@@ -64,7 +64,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
       return true;
     }
 
-    this._smartWatchLine = this._watchInfo.watchSvcList[0].watchSvcNum;
+    this._smartWatchLine = this._watchInfo.watchSvcList[0].watchSvcMgmtNum;
     return true;
   },
 
@@ -100,7 +100,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
     return {
       'label-attr': 'id="ra' + idx + '"',
       'txt': Tw.FormatHelper.conTelFormatWithDash(item.watchSvcNumMask),
-      'radio-attr': 'id="ra' + idx + '" data-num="' + item.watchSvcNum + '" ' + (this._smartWatchLine === item.watchSvcNum ? 'checked' : '')
+      'radio-attr': 'id="ra' + idx + '" data-num="' + item.watchSvcMgmtNum + '" ' + (this._smartWatchLine === item.watchSvcMgmtNum ? 'checked' : '')
     };
   },
 
@@ -125,6 +125,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
   },
 
   _convConfirmOptions: function(result) {
+    console.log(result);
     this._confirmOptions = Tw.ProductHelper.convPlansJoinTermInfo(result);
 
     $.extend(this._confirmOptions, {
@@ -261,7 +262,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
 
     if (!Tw.FormatHelper.isEmpty(this._smartWatchLine) && optProdId === 'NA00006116') {
       reqParams = $.extend(reqParams, {
-        optWatchNum: this._smartWatchLine
+        optWatchMgmtNum: this._smartWatchLine
       });
     }
 
