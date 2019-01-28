@@ -261,7 +261,8 @@ gulp.task('css-rb', function () {
 
 gulp.task('css-idpt', function() {
   return gulp.src([
-    'src/client/web-contents/css_idpt/**/*.css'])
+    'src/client/web-contents/css/idpt-reset-mobile.css',
+    'src/client/web-contents/css/idpt-service-mobile.css'])
     .pipe(concat('style-idpt.css'))
     // .pipe(imagehash())
     .pipe(cleanCSS())

@@ -28,6 +28,9 @@ export const API_CMD = {
   SEARCH_STACK_USER_CLICK: { path: '/search/tworld/log/save', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
   BFF_12_0010: { path: '/core-modification/:version/search/keyword', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
+  BFF_INFO: { path: '/actuator/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_VERSION: { path: '/actuator/:args0/:args1', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+
   // SPRINT #3
   BFF_03_0003_C: { path: '/svc-catalog/detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0004_C: { path: '/change-svc', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
