@@ -112,12 +112,22 @@ Tw.ProductRoamingFee.prototype = {
           )
         .value();
 
+    var currentTag = this._params.searchTagId;
+      var tags = currentTag
+          ? _.map(this._roamingFilters.tags, function(tag) {
+              if (currentTag === tag.tagId) {
+                  return $.extend({ checked: true }, tag);
+              }
+              return tag;
+          })
+          : this._roamingFilters.tags;
+
     this._popupService.open(
         {
             hbs: 'RM_11_01',
             data: {
                 filters: rmFilters,
-                tags: this._roamingFilters.tags
+                tags: tags
             }
         },
         $.proxy(this._handleOpenFilterPopup, this),
@@ -166,6 +176,12 @@ Tw.ProductRoamingFee.prototype = {
   _handleResetBtn: function ($layer) {
       $layer.find('.btn-type01').removeClass('checked');
       $layer.find('input').removeAttr('checked');
+
+      var selectedTag = $layer.find('.suggest-tag-list .link.active');
+      if (selectedTag.length > 0) {
+          selectedTag.removeClass('active');
+      }
+
       this._reset = true;
       this.selectPlanTag = false;
     },
@@ -320,6 +336,11 @@ Tw.ProductRoamingFee.prototype = {
       this.$filterBtn = $target;
       this.$selectBtn =  $target.find('input');
       this.selectFilter = this.$selectBtn.attr('data-rmfilter-id');
+
+      var selectedTag = $layer.find('.suggest-tag-list .link.active');
+      if (selectedTag.length > 0) {
+          selectedTag.removeClass('active');
+      }
 
       if(this.selectFilter!=='F01526'){
           if(this.$filterBtn.hasClass('checked')){

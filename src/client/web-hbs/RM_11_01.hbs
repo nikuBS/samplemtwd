@@ -53,7 +53,7 @@
                 <div class="suggest-tag-list openlist-wrap">
                     <ul>
                         {{#each data.tags}}
-                            <li><button type="button" class="link" data-rmtag-id={{tagId}}>#{{prodTagNm}}</button></li>
+                            <li><button type="button" class="link {{#if checked}}active{{/if}}" data-rmtag-id={{tagId}}>#{{prodTagNm}}</button></li>
                         {{/each}}
                     </ul>
                 </div>

@@ -111,12 +111,22 @@ Tw.ProductRoamingPlanAdd.prototype = {
           )
           .value();
 
+      var currentTag = this._params.searchTagId;
+      var tags = currentTag
+          ? _.map(this._rmAddFilters.tags, function(tag) {
+              if (currentTag === tag.tagId) {
+                  return $.extend({ checked: true }, tag);
+              }
+              return tag;
+          })
+          : this._rmAddFilters.tags;
+
       this._popupService.open(
           {
               hbs: 'RM_12_01',
               data: {
                   filters: rmAddFilters,
-                  tags: this._rmAddFilters.tags
+                  tags: tags
               }
           },
           $.proxy(this._handleOpenAddFilterPopup, this),
@@ -195,6 +205,12 @@ Tw.ProductRoamingPlanAdd.prototype = {
   _handleAddResetBtn: function ($layer) {
       $layer.find('.btn-type01').removeClass('checked');
       $layer.find('input').removeAttr('checked');
+
+      var selectedTag = $layer.find('.suggest-tag-list .link.active');
+      if (selectedTag.length > 0) {
+          selectedTag.removeClass('active');
+      }
+
       this._reset = true;
       this.selectTag = false;
   },
@@ -229,6 +245,11 @@ Tw.ProductRoamingPlanAdd.prototype = {
     this._popupService.close();
       this._params.searchTagId = '';
       this.$selectBtn =  $target.find('input');
+
+      var selectedTag = $layer.find('.suggest-tag-list .link.active');
+      if (selectedTag.length > 0) {
+          selectedTag.removeClass('active');
+      }
 
       if($target.hasClass('checked')){
           $target.removeClass('checked');
