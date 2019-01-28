@@ -136,7 +136,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
   _makeTemplate : function (phoneNum,idx) {
     var maskedPhoneNum = {
       serviceNumber1 : phoneNum.serviceNumber1,
-      serviceNumber2 : phoneNum.serviceNumber2.substring(0,2)+'**',
+      serviceNumber2 : phoneNum.serviceNumber2.substring(0,(phoneNum.serviceNumber2.length-2))+'**',
       serviceNumber3 : phoneNum.serviceNumber3.substring(0,2)+'**'
     };
     var templateData = { phoneData : { phoneNum : maskedPhoneNum, idx : idx } };
@@ -160,7 +160,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON);
   },
   _removeOnList : function (args) {
-    var selectedIndex = parseInt($(args).attr('data-idx'),10);
+    var selectedIndex = parseInt($(args.currentTarget).attr('data-idx'),10);
     this._addedList.splice(selectedIndex,1);
     this._changeList();
   },
@@ -201,7 +201,8 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     $(args2).on('click','.btn-floating',$.proxy(args1._goPlan,args1));
   },
   _goMyInfo : function(){
-    this._historyService.goLoad('/product/roaming/my-use');
+    var targetUrl = this._prodTypeInfo.prodTypCd==='H_P'?'/product/roaming/my-use':'/product/roaming/my-use#add';
+    this._historyService.goLoad(targetUrl);
   },
   _goBack : function(){
     this._historyService.goBack();

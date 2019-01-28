@@ -283,7 +283,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
         break;
       case 'NA00006039':
       case 'NA00006049':
-        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        //$tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
         $tooltipBody.find('button').attr('id','TC000008');
         $tooltipHead.find('button').attr('id','TC000007');
         break;
@@ -292,7 +292,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
         this.$container.find('.tip_body_container').hide();
         break;
       case 'NA00005747':
-        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        //$tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
         $tooltipBody.find('button').attr('id','TC000010');
         $tooltipHead.find('button').attr('id','TC000009');
         break;
@@ -301,24 +301,24 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
         this.$container.find('.tip_body_container').hide();
         break;
       case 'NA00005903':
-        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        //$tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
         $tooltipBody.find('button').attr('id','TC000012');
         $tooltipHead.find('button').attr('id','TC000009');
         break;
       case 'NA00006043':
       case 'NA00006051':
-        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        //$tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
         $tooltipBody.find('button').attr('id','TC000012');
         $tooltipHead.find('button').attr('id','TC000007');
         break;
       case 'NA00006045':
       case 'NA00006053':
-        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        //$tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
         $tooltipBody.find('button').attr('id','TC000012');
         $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_04');
         break;
       case 'NA00005899':
-        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        //$tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
         $tooltipBody.find('button').attr('id','TC000013');
         $tooltipHead.find('button').attr('id','TC000009');
         break;

@@ -261,8 +261,9 @@
                 <hr class="cont-sp type1" aria-hidden="true">
                 <script type="text/x-handlebars-template" id="tooltip_template">
                     <li>
-                        <span>{{tipData.tipTitle}}</span>
-                        <button type="button" id="{{tipData.tipId}}" class="tip-view fe-btn_tip_view" title="정보보기"  aria-haspopup="true">TIP</button>
+                        <button type="button" class="tip-view-btn"  id="{{tipData.tipId}}" aria-haspopup="true">
+                            {{tipData.tipTitle}}<span class="tip-view">TIP</span>
+                        </button>
                     </li>
                 </script>
 
@@ -273,8 +274,9 @@
                         <% if(prodBffInfo.preinfo.joinNoticeList.length>0){ %>
                         <% for(var i=0;i<prodBffInfo.preinfo.joinNoticeList.length;i++){ %>
                         <li>
-                            <%= prodBffInfo.preinfo.joinNoticeList[i].noticeTit %>
-                            <button type="button" class="tip-view fe-btn_tip_view bff" title="정보보기" id="<%= prodId=='NA00000294'?'MV_01_02_01_tip_02':'MV_01_02_01_tip_06'%>" data-tit="<%= prodBffInfo.preinfo.joinNoticeList[i].noticeTit %>" data-txt="<%= prodBffInfo.preinfo.joinNoticeList[i].noticeTxt %>" aria-haspopup="true">TIP</button>
+                            <button type="button" class="tip-view-btn bff"   aria-haspopup="true" data-tit="<%= prodBffInfo.preinfo.joinNoticeList[i].noticeTit %>" data-txt="<%= prodBffInfo.preinfo.joinNoticeList[i].noticeTxt %>">
+                                <%= prodBffInfo.preinfo.joinNoticeList[i].noticeTit %><span class="tip-view">TIP</span>
+                            </button>
                         </li>
                         <% } %>
                         <% } %>

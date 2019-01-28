@@ -43,6 +43,11 @@ class ProductRoamingSettingRoamingAlarm extends TwViewController {
           msg: prodTypeInfo.code !== API_CODE.CODE_00 ? prodTypeInfo.msg : prodBffInfo.msg,
         });
       }
+      for (let i = 0; i < prodBffInfo.result.combinationLineList.length; i++) {
+        if (prodBffInfo.result.combinationLineList[i].svcNumMask) {
+          prodBffInfo.result.combinationLineList[i].svcNum = prodBffInfo.result.combinationLineList[i].svcNumMask;
+        }
+      }
 
       res.render('roaming/setting/product.roaming.setting.roaming-alarm.html', {
         svcInfo : svcInfo,

@@ -208,7 +208,8 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
     }
   },
   _goMyInfo : function(){
-    this._historyService.goLoad('/product/roaming/my-use');
+    var targetUrl = this._prodTypeInfo.prodTypCd==='H_P'?'/product/roaming/my-use':'/product/roaming/my-use#add';
+    this._historyService.goLoad(targetUrl);
   },
   _goPlan : function () {
     this._popupService.closeAll();
@@ -299,18 +300,18 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
         break;
       case 'NA00006039':
         $tooltipHead.find('button').attr('id','TC000007');
-        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        //$tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
         $tooltipBody.find('button').attr('id','TC000008');
         break;
       case 'NA00005901':
         $tooltipHead.find('button').attr('id','TC000009');
-        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        //$tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
         $tooltipBody.find('button').attr('id','TC000008');
         break;
       case 'NA00006041':
       case 'NA00006047':
         $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_04');
-        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        //$tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
         $tooltipBody.find('button').attr('id','TC000008');
         break;
       case 'NA00005903':
@@ -319,7 +320,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
         break;
       case 'NA00005747':
         $tooltipHead.find('button').attr('id','TC000009');
-        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        //$tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
         $tooltipBody.find('button').attr('id','TC000010');
         break;
       case 'NA00005301':

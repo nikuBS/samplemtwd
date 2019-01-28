@@ -151,7 +151,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
   _makeTemplate : function (phoneNum,idx) {
     var maskedPhoneNum = {
       'serviceNumber1' : phoneNum.serviceNumber1,
-      'serviceNumber2' : phoneNum.serviceNumber2.substring(0,2)+'**',
+      'serviceNumber2' : phoneNum.serviceNumber2.substring(0,(phoneNum.serviceNumber2.length-2))+'**',
       'serviceNumber3' : phoneNum.serviceNumber3.substring(0,2)+'**'
     };
     var templateData = { phoneData : { phoneNum : maskedPhoneNum, idx : idx } };
