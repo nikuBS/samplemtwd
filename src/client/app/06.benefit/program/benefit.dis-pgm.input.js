@@ -79,6 +79,7 @@ Tw.BenefitDisPgmInput.prototype = {
       isContractPlan: this._confirmOptions.isContractPlan,
       isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this._prodId) === -1,
       setInfo: 'set-info',
+      setInfoProdId: this._prodId,
       isTerm: true,
       confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2,
       isNoticeList: true,

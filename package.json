@@ -9,7 +9,7 @@
     "client-build": "gulp build",
     "client-lint": "jshint src/client",
     "server-dev": "nodemon -e ts -w ./src/server -x npm run server-watch:dev",
-    "server-watch:dev": "ts-node ./src/server/bin/www.ts",
+    "server-watch:dev": "node -r ts-node/register --inspect=0.0.0.0:9200 ./src/server/bin/www.ts",
     "server-docker": "npm run client-deploy && pm2-docker start pm2.config.js",
     "server-lint": "tslint -p tslint.json"
   },
