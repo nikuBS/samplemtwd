@@ -13,6 +13,9 @@ Tw.CommonMemberLogin = function (target) {
 };
 
 Tw.CommonMemberLogin.prototype = {
+  ERROR_CODE: {
+    CANCEL: 1500
+  },
   _init: function () {
     this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login', $.proxy(this._onNativeLogin, this));
   },
@@ -24,21 +27,18 @@ Tw.CommonMemberLogin.prototype = {
     }
   },
   _onNativeLogin: function (resp) {
-    if(resp.resultCode === Tw.NTV_CODE.CODE_00) {
+    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._apiService.request(Tw.NODE_CMD.LOGIN_TID, resp.params)
         .done($.proxy(this._successLogin, this));
+    } else {
+      this._historyService.goBack();
     }
   },
   _successLogin: function (resp) {
     Tw.Logger.info('[Login Resp]', resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( Tw.BrowserHelper.isApp() ) {
-        this._apiService.setSession($.proxy(this._successSetSession, this));
-      } else {
-        // this._historyService.reload();
-        this._historyService.goLoad(this._target);
-        // this._historyService.goBack();
-      }
+      this._apiService.sendNativeSession(Tw.AUTH_LOGIN_TYPE.TID, $.proxy(this._successSetSession, this));
+      Tw.CommonHelper.setXtSvcInfo();
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3228 ) {
       // 고객보호비밀번호
       this._historyService.goLoad('/common/member/login/cust-pwd');
@@ -52,7 +52,6 @@ Tw.CommonMemberLogin.prototype = {
     }
   },
   _successSetSession: function (resp) {
-    // this._historyService.goBack();
-    this._historyService.goLoad(this._target);
+    this._historyService.reload();
   }
 };

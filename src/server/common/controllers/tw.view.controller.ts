@@ -59,6 +59,7 @@ abstract class TwViewController {
     const userId = req.query.userId;
     this._type = req.query.type;
 
+    console.log('init page');
     this._apiService.setCurrentReq(req, res);
     this._loginService.setCurrentReq(req, res);
 
@@ -192,7 +193,7 @@ abstract class TwViewController {
             this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
           } else {
             // login page
-            res.redirect('/common/member/login?target=' + path);
+            res.render('error.login-block.html', { target: path });
           }
         }
       } else {

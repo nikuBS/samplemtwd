@@ -72,7 +72,7 @@ export default class CommonRouter extends TwRouter {
 
     // member - login
     this.controllers.push({ url: '/member/init', controller: CommonMemberInit });
-    this.controllers.push({ url: '/member/login', controller: CommonMemberLogin });
+    // this.controllers.push({ url: '/member/login', controller: CommonMemberLogin });
     this.controllers.push({ url: '/member/login/route', controller: CommonMemberLoginRoute });
     this.controllers.push({ url: '/member/login/fail', controller: CommonMemberLoginFail});
     this.controllers.push({ url: '/member/login/exceed-fail', controller: CommonMemberLoginExceedFail });
