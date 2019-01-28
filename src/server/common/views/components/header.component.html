@@ -16,7 +16,7 @@
                 <a href="/" type="button" class="directshop">Shop</a> <!-- 활성화시 .on // -->
             </div>
             <% } else { %>
-            <div class="h-tit">
+            <div class="h-tit <% if( locals.isProductCallplan ) { %> t-none<% } %>">
                 <%- title %>
             </div>
             <% } %>
