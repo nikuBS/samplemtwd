@@ -59,9 +59,12 @@ Tw.Init.prototype = {
   },
 
   _setXtvid: function () {
-    var cookie = Tw.CommonHelper.getCookie('XTVID');
-    if ( Tw.BrowserHelper.isApp() && !Tw.FormatHelper.isEmpty(cookie) ) {
+    var cookie = Tw.CommonHelper.getCookie('XTVID'),
+      isLog = Tw.CommonHelper.getCookie('XTVID_LOG');
+
+    if ( Tw.BrowserHelper.isApp() && !Tw.FormatHelper.isEmpty(cookie) && Tw.FormatHelper.isEmpty(isLog) ) {
       this._nativeService.send(Tw.NTV_CMD.SET_XTVID, { xtvId: cookie });
+      Tw.CommonHelper.setCookie('XTVID_LOG', 'Y');
     }
   },
 
@@ -77,9 +80,12 @@ Tw.Init.prototype = {
 
   _sendXtractorLoginDummy: function () {
     var cookie = Tw.CommonHelper.getCookie('XTSVCGR');
-    if ( !Tw.BrowserHelper.isApp() || Tw.FormatHelper.isEmpty(cookie) ||
-      cookie === 'LOGGED' || Tw.FormatHelper.isEmpty(window.XtractorScript) ) {
+    if ( Tw.FormatHelper.isEmpty(cookie) || cookie === 'LOGGED' || Tw.FormatHelper.isEmpty(window.XtractorScript) ) {
       return;
+    }
+
+    if (Tw.BrowserHelper.isApp()) {
+      return Tw.CommonHelper.setXtSvcInfo();
     }
 
     try {

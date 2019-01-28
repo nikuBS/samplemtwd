@@ -92,17 +92,23 @@ class LoginService {
   }
 
   private setXtractorCookie(svcInfo: any): any {
-    if (!FormatHelper.isEmpty(svcInfo.svcMgmtNum)) {
+    if (FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTLID]) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum)) {
       this.response.cookie(COOKIE_KEY.XTLID, CryptoHelper.encrypt(svcInfo.svcMgmtNum, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB));
     }
 
-    if (!FormatHelper.isEmpty(svcInfo.userId)) {
+    if (!FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTLID]) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum)) {
+      this.response.cookie(COOKIE_KEY.XTUID, CryptoHelper.encrypt(svcInfo.svcMgmtNum, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB));
+    }
+
+    if (FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTLOGINID]) && !FormatHelper.isEmpty(svcInfo.userId)) {
       this.response.cookie(COOKIE_KEY.XTLOGINID, CryptoHelper.encrypt(svcInfo.userId, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB));
     }
 
-    this.response.cookie(COOKIE_KEY.XTLOGINTYPE, svcInfo.loginType === 'S' ? 'Z' : 'A');
+    if (FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTLOGINTYPE]) && !FormatHelper.isEmpty(svcInfo.loginType)) {
+      this.response.cookie(COOKIE_KEY.XTLOGINTYPE, svcInfo.loginType === 'S' ? 'Z' : 'A');
+    }
 
-    if (FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTSVCGR])) {
+    if (FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTSVCGR]) && !FormatHelper.isEmpty(svcInfo.svcGr)) {
       this.response.cookie(COOKIE_KEY.XTSVCGR, svcInfo.svcGr);
     }
   }

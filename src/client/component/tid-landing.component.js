@@ -120,7 +120,6 @@ Tw.TidLandingComponent.prototype = {
     Tw.Logger.info('[Login Resp]', resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._apiService.sendNativeSession(Tw.AUTH_LOGIN_TYPE.TID, $.proxy(this._successSetSession, this));
-      Tw.CommonHelper.setXtSvcInfo();
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3228 ) {
       // 고객보호비밀번호
       this._historyService.goLoad('/common/member/login/cust-pwd?target=' + target);
