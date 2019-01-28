@@ -75,8 +75,9 @@ Tw.CommonMemberLineEdit.prototype = {
   _onOpenBizSignup: function ($popupContainer) {
     $popupContainer.on('click', '#fe-bt-go-url', $.proxy(this._goUrl, this));
   },
-  _goUrl: function () {
-    Tw.CommonHelper.openUrlExternal('http://www.biztworld.co.kr');
+  _goUrl: function ($event) {
+    var url = $($event.currentTarget).data('url');
+    Tw.CommonHelper.openUrlExternal(url);
   },
   _completeEdit: function () {
     var list = this.$container.find('.fe-item-active');
