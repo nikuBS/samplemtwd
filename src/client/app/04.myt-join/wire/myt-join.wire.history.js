@@ -194,6 +194,9 @@ Tw.MyTJoinWireHistory.prototype = {
 
     this._addMoreBtn();
     //this._showOrHideMoreBtn();
+
+    // 동적 list 추가시 tip버튼 이벤트 bind
+    Tw.Tooltip.separateInit();
   },
 
 
@@ -234,6 +237,10 @@ Tw.MyTJoinWireHistory.prototype = {
    * @private
    */
   _showListDetail: function(event) {
+    // tip 버튼, tip label 클릭시 리턴
+    if($('.fe-tip').index(event.target) !== -1 || $('.fe-tip').parent().index(event.target) !== -1 ){
+      return;
+    }
 
     var num = event.currentTarget.getAttribute('data-no');
     var item = null;
