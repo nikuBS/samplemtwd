@@ -18,6 +18,7 @@ Tw.MyTDataPrepaidAlarm = function (rootEl) {
 
 Tw.MyTDataPrepaidAlarm.prototype = {
   _init: function () {
+    this.isInitializeInfo = false;
     this.typeCd = false; // 알람 기준(1 : 시간, 2 : 잔액)
     this.term = false; // 시간: 기준항목(1:발신기간, 2:수신기간, 3:번호유지기간)
     this.day = false; // 시간: 기준일(1:1일전, 2:2일전, 3:3일전)
@@ -49,6 +50,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
   _onSuccessAlarmInfo: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
+      this.isInitializeInfo = true;
       var result = res.result;
 
       if ( !!result.typeCd ) {
@@ -67,7 +69,8 @@ Tw.MyTDataPrepaidAlarm.prototype = {
         this.amt = result.amt;
       }
     } else {
-      Tw.Error(res.code, res.msg).pop();
+      this.isInitializeInfo = false;
+      // Tw.Error(res.code, res.msg).pop();
     }
   },
 
@@ -181,12 +184,13 @@ Tw.MyTDataPrepaidAlarm.prototype = {
         day: this.day.toString()
       });
 
+      // 알람 설정 하시겠습니까?
       this._popupService.openConfirmButton(
         Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.MSG_1 +
         $('.fe-alarm-category').text().trim() +
         Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.MSG_2 +
         this.day.toString() + Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.MSG_3,
-        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.TITLE,
+        this.isInitializeInfo ? Tw.ALERT_MSG_MYT_DATA.ALERT_2_A204.TITLE : Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.TITLE,
         $.proxy(this._onCancel, this),
         $.proxy(this._requestAlarm, this, htParams),
         null,
@@ -199,7 +203,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
       this._popupService.openConfirmButton(
         Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.MSG_1 + $('.fe-alarm-amount').text() + Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.MSG_2,
-        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.TITLE,
+        this.isInitializeInfo ? Tw.ALERT_MSG_MYT_DATA.ALERT_2_A204.TITLE : Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.TITLE,
         $.proxy(this._onCancel, this),
         $.proxy(this._requestAlarm, this, htParams),
         null,
@@ -221,8 +225,6 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
   _onCompleteAlarm: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      // 알람 설정 하시겠습니까?
-      // TODO after Self Authentication, go to submain
       this._historyService.replaceURL('/myt-data/submain');
     } else {
       Tw.Error(res.code, res.msg).pop();
