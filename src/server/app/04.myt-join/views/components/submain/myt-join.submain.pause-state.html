@@ -15,8 +15,13 @@
                 <span class="inner">
                 <% if (data.myPausedState.svcStCd === 'AC') { %>
                     <% if (data.myLongPausedState && data.myLongPausedState.state) { %>
-                    <span class="tit">일시정지 현황</span>
-                    <span class="text">장기일시정지 중 / <%= data.myLongPausedState.sDate %> ~ <%= data.myLongPausedState.eDate %></span>
+                        <% if (data.myLongPausedState.isArmy) { %>
+                        <span class="tit">일시정지 현황</span>
+                        <span class="text">장기일시정지 해제 중</span>
+                        <% } else { %>
+                        <span class="tit">일시정지 현황</span>
+                        <span class="text">장기일시정지 중 / <%= data.myLongPausedState.sDate %> ~ <%= data.myLongPausedState.eDate %></span>
+                        <% } %>
                     <% } else { %>
                         <% if ( data.myPausedState.armyDt ) { %>
                         <span class="tit">일시정지 현황</span>
