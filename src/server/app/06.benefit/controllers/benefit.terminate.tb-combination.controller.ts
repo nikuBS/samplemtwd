@@ -17,7 +17,7 @@ class BenefitTerminateTbCombination extends TwViewController {
     super();
   }
 
-  private _allowedProdIds = ['NH00000037', 'NH00000039', 'NH00000040', 'NH00000041'];
+  private _allowedProdIds = ['NH00000037', 'NH00000039', 'NH00000040', 'NH00000041', 'TW00000062', 'TW00000063'];
 
   /**
    * @param termInfo
