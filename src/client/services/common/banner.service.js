@@ -40,7 +40,7 @@ Tw.BannerService.prototype = {
   },
 
   _bindEvent: function() {
-    this.$container.on('click', '.fe-banner', $.proxy(this._openBannerLink, this));
+    this.$banners.on('click', '.fe-banner', $.proxy(this._openBannerLink, this));
   },
 
   _openBannerLink: function(e) {
