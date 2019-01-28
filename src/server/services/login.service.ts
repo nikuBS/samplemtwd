@@ -194,6 +194,26 @@ class LoginService {
     return this.request.cookies[COOKIE_KEY.CHANNEL];
   }
 
+  public setMenuName(menuName: string): Observable<any> {
+    return Observable.create((observer) => {
+      if ( !FormatHelper.isEmpty(this.request) && !FormatHelper.isEmpty(this.request.session) ) {
+        this.request.session.menuName = menuName;
+        this.request.session.save(() => {
+          this.logger.debug(this, '[setMenuName]', this.request.session);
+          observer.next(this.request.session.menuName);
+          observer.complete();
+        });
+      }
+    });
+  }
+
+  public getMenuName(): string {
+    if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.menuName) ) {
+      return this.request.session.menuName;
+    }
+    return this.request.menuName;
+  }
+
   public setMaskingCert(svcMgmtNum: string): Observable<any> {
     return Observable.create((observer) => {
       if ( !FormatHelper.isEmpty(this.request) ) {

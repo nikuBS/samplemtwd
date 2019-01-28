@@ -86,7 +86,7 @@ class ApiService {
         return Object.assign(header, {
           'content-type': 'application/json; charset=UTF-8',
           'x-user-ip': this.loginService.getNodeIp(),
-          'x-menu-name': '',
+          'x-menu-name': '',  // this.loginService.getMenuName(),
           'x-node-url': this.loginService.getPath(),
           'x-useragent': this.loginService.getUserAgent(),
           'x-env': this.loginService.isGreen(),

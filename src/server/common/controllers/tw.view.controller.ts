@@ -139,63 +139,66 @@ abstract class TwViewController {
     this._redisService.getData(REDIS_KEY.URL_META + path).subscribe((resp) => {
       this.logger.info(this, '[URL META]', path, resp);
       const urlMeta = new UrlMetaModel(resp.result || {});
-      const loginType = urlMeta.auth.accessTypes;
 
       if ( resp.code === API_CODE.REDIS_SUCCESS ) {
-        if ( this.checkServiceBlock(urlMeta, res) ) {
-          return;
-        }
+        const loginType = urlMeta.auth.accessTypes;
 
-        if ( loginType === '' ) {
-          // TODO: 삭제예정 admin 정보 입력 오류 (accessType이 비어있음)
-          this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-          return;
-        }
-        if ( isLogin ) {
-          urlMeta.masking = this.loginService.getMaskingCert(svcInfo.svcMgmtNum);
-          if ( loginType.indexOf(svcInfo.loginType) !== -1 ) {
-            const urlAuth = urlMeta.auth.grades;
-            const svcGr = svcInfo.svcGr;
-            // TODO 삭제예정 admin 정보 입력 오류 (접근권한이 입력되지 않음)
-            if ( urlAuth === '' ) {
-              this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-              return;
-            }
-            if ( svcInfo.totalSvcCnt === '0' || svcInfo.expsSvcCnt === '0' ) {
-              if ( urlAuth.indexOf('N') !== -1 ) {
-                // 준회원 접근 가능한 화면
+        this.loginService.setMenuName(urlMeta.menuNm).subscribe((menuResp) => {
+          if ( this.checkServiceBlock(urlMeta, res) ) {
+            return;
+          }
+
+          if ( loginType === '' ) {
+            // TODO: 삭제예정 admin 정보 입력 오류 (accessType이 비어있음)
+            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+            return;
+          }
+          if ( isLogin ) {
+            urlMeta.masking = this.loginService.getMaskingCert(svcInfo.svcMgmtNum);
+            if ( loginType.indexOf(svcInfo.loginType) !== -1 ) {
+              const urlAuth = urlMeta.auth.grades;
+              const svcGr = svcInfo.svcGr;
+              // TODO 삭제예정 admin 정보 입력 오류 (접근권한이 입력되지 않음)
+              if ( urlAuth === '' ) {
+                this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+                return;
+              }
+              if ( svcInfo.totalSvcCnt === '0' || svcInfo.expsSvcCnt === '0' ) {
+                if ( urlAuth.indexOf('N') !== -1 ) {
+                  // 준회원 접근 가능한 화면
+                  this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+                } else {
+                  // 등록된 회선 없음 + 준회원 접근 안되는 화면
+                  this.errorNoRegister(req, res, next);
+                }
+              } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
                 this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
               } else {
-                // 등록된 회선 없음 + 준회원 접근 안되는 화면
-                this.errorNoRegister(req, res, next);
+                // 접근권한 없음
+                this.errorAuth(req, res, next);
+                // this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
               }
-            } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
+            } else if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
               this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
             } else {
-              // 접근권한 없음
-              this.errorAuth(req, res, next);
-              // this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+              // 현재 로그인 방법으론 이용할 수 없음
+              if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
+                // res.redirect('/common/member/slogin/fail');
+                res.render('error.slogin-fail.html', { target: path });
+              } else {
+                // ERROR 케이스 (일반로그인에서 권한이 없는 케이스)
+                this.errorAuth(req, res, next);
+              }
             }
-          } else if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
-            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
           } else {
-            // 현재 로그인 방법으론 이용할 수 없음
-            if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
-              // res.redirect('/common/member/slogin/fail');
-              res.render('error.slogin-fail.html', { target: path });
+            if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
+              this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
             } else {
-              // ERROR 케이스 (일반로그인에서 권한이 없는 케이스)
-              this.errorAuth(req, res, next);
+              // login page
+              res.render('error.login-block.html', { target: path });
             }
           }
-        } else {
-          if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
-            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-          } else {
-            // login page
-            res.render('error.login-block.html', { target: path });
-          }
-        }
+        });
       } else {
         // 등록되지 않은 메뉴 (로그인, 인증등에서 쓰이는 URL도 있음)
         this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
