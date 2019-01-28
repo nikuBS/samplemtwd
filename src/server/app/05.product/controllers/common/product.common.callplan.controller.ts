@@ -810,7 +810,8 @@ class ProductCommonCallplan extends TwViewController {
             isJoined: this._isJoined(basicInfo.result.prodTypCd, isJoinedInfo),  // 가입 여부
             combineRequireDocumentInfo: this._convertRequireDocument(combineRequireDocumentInfo),  // 구비서류 제출 심사내역
             reservationTypeCd: this._getReservationTypeCd(basicInfo.result.prodTypCd),
-            lineProcessCase: this._getLineProcessCase(basicInfo.result.prodTypCd, allSvc, svcAttrCd) // 가입 가능 회선 타입
+            lineProcessCase: this._getLineProcessCase(basicInfo.result.prodTypCd, allSvc, svcAttrCd), // 가입 가능 회선 타입
+            isProductCallplan: true
           }].reduce((a, b) => {
             return Object.assign(a, b);
           }));
