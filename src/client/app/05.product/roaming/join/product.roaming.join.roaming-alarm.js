@@ -158,7 +158,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     this._changeList();
   },
   _bindRemoveEvt : function () {
-    this.$container.find('.list-btn button').on('click',$.proxy(this._removeEvt,this));
+    this.$container.find('.list-btn button').on('click',$.proxy(this._removeOnList,this));
   },
   _doJoin : function(data,apiService,historyService,$containerData){
 
@@ -183,10 +183,10 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
           $.proxy($containerData._goPlan,$containerData),
           'complete');
       }else{
-        this._openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
+        $containerData._openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
       }
     }, this)).fail($.proxy(function (err) {
-      this._openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
+      $containerData._openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
     }, this));
   },
   _bindCompletePopupBtnEvt : function(args1,args2){
@@ -205,7 +205,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
   },
   _showCancelAlart : function (){
     var alert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A1;
-    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, alert.BUTTON, Tw.BUTTON_LABEL.CLOSE,
+    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, Tw.BUTTON_LABEL.YES, Tw.BUTTON_LABEL.NO,
       null,
       $.proxy(this._goPlan,this),
       null);
@@ -219,7 +219,9 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
         this.$addBtn.removeAttr('style');
       }, this)
     );
-    this.$addBtn.css({'pointer-events':'none','background':'#3b98e6'});
+    if(!this.$addBtn.attr('disabled')){
+      this.$addBtn.css({'pointer-events':'none','background':'#3b98e6'});
+    }
   },
   _bindCancelPopupEvent : function (popupLayer) {
     $(popupLayer).on('click','.pos-left>button',$.proxy(this._goPlan,this));

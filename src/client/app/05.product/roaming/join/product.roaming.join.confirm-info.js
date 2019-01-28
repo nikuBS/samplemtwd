@@ -150,8 +150,8 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       null);
   },
   _confirmInfo : function () {
+    this._popupService.close();
     if(this._page===true){
-      this._popupService.close();
       this._excuteJoin();
     }else{
       this._doJoinCallBack(this._popupData,this._apiService,this._historyService,this._rootData);
