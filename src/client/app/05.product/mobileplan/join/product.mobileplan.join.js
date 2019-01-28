@@ -101,7 +101,6 @@ Tw.ProductMobileplanJoin.prototype = {
   },
 
   _convConfirmOptions: function() {
-    console.log(this._confirmOptions);
     this._confirmOptions = $.extend(this._confirmOptions, {
       isComparePlan: this._isComparePlan,
       title: Tw.PRODUCT_TYPE_NM.JOIN,
