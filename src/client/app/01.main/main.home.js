@@ -418,12 +418,12 @@ Tw.MainHome.prototype = {
     var repSvc = billData.charge.repSvcYn === 'Y';
     var totSvc = billData.charge.paidAmtMonthSvcCnt > 1;
     return {
-      chargeAmtTot: Tw.FormatHelper.addComma(billData.charge.useAmtTot),
-      usedAmtTot: Tw.FormatHelper.addComma(billData.used.useAmtTot),
-      deduckTot: Tw.FormatHelper.addComma(billData.charge.deduckTotInvAmt),
-      invEndDt: Tw.DateHelper.getShortDate(billData.charge.invDt),
-      invStartDt: Tw.DateHelper.getShortFirstDate(billData.charge.invDt),
-      invMonth: Tw.DateHelper.getCurrentMonth(Tw.DateHelper.AddMonth(billData.charge.invDt)),
+      chargeAmtTot: Tw.FormatHelper.addComma(billData.charge.useAmtTot || '0'),
+      usedAmtTot: Tw.FormatHelper.addComma(billData.used.useAmtTot || '0'),
+      deduckTot: Tw.FormatHelper.addComma(billData.charge.deduckTotInvAmt || '0'),
+      invEndDt: Tw.DateHelper.getShortDate(billData.used.invDt),
+      invStartDt: Tw.DateHelper.getShortFirstDate(billData.used.invDt),
+      invMonth: Tw.DateHelper.getCurrentMonth(Tw.DateHelper.AddMonth(billData.used.invDt)),
       type1: totSvc && repSvc,
       type2: !totSvc,
       type3: totSvc && !repSvc
