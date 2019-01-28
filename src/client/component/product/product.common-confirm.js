@@ -286,11 +286,9 @@ Tw.ProductCommonConfirm.prototype = {
     this._closePop();
   },
 
-  _closePop: function(event) {
-    var $target = event ? $(event.currentTarget) : null;
-
+  _closePop: function() {
     this._popupService.close();
-    if ( $target && $target.hasClass('set-info') ) {
+    if (this._data.selType)  {
       setTimeout($.proxy(function () {
         this._historyService.goLoad('/benefit/submain/detail/select-contract?prod_id=NA00004430&type='+ this._data.selType);
       }, this), 100);

@@ -98,7 +98,7 @@ gulp.task('js-util', function () {
     'src/client/services/**/*.js' ])
     .pipe(concat('util.js'))
     .pipe(gulp.dest(dist + 'js'))
-    // .pipe(uglify())
+    .pipe(uglify())
     .on('error', function (err) {
       gutil.log(gutil.colors.red('[Error]'), err.toString());
     })
@@ -115,7 +115,7 @@ gulp.task('js-component-client', function () {
     'src/client/common/**/*.js'])
     .pipe(concat('component.js'))
     .pipe(gulp.dest(dist + 'js'))
-    // .pipe(uglify())
+    .pipe(uglify())
     .on('error', function (err) {
       gutil.log(gutil.colors.red('[Error]'), err.toString());
     })
@@ -135,7 +135,7 @@ gulp.task('js-util-client', function () {
     'src/client/services/**/*.js' ])
     .pipe(concat('util.js'))
     .pipe(gulp.dest(dist + 'js'))
-    // .pipe(uglify())
+    .pipe(uglify())
     .on('error', function (err) {
       gutil.log(gutil.colors.red('[Error]'), err.toString());
     })
@@ -153,7 +153,7 @@ oldAppNames.map(function (app, index) {
       .pipe(sort())
       .pipe(concat(app + 'old.js'))
       .pipe(gulp.dest(dist + 'js'))
-      // .pipe(uglify())
+      .pipe(uglify())
       .on('error', function (err) {
         gutil.log(gutil.colors.red('[Error]'), err.toString());
       })
@@ -174,7 +174,7 @@ appNames.map(function (app, index) {
       .pipe(sort())
       .pipe(concat(app + '.js'))
       .pipe(gulp.dest(dist + 'js'))
-      // .pipe(uglify())
+      .pipe(uglify())
       .on('error', function (err) {
         gutil.log(gutil.colors.red('[Error]'), err.toString());
       })
@@ -195,7 +195,7 @@ appNames.map(function (app, index) {
       .pipe(sort())
       .pipe(concat(app + '.js'))
       .pipe(gulp.dest(dist + 'js'))
-      // .pipe(uglify())
+      .pipe(uglify())
       .on('error', function (err) {
         gutil.log(gutil.colors.red('[Error]'), err.toString());
       })
