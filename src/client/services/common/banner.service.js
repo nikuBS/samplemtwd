@@ -29,7 +29,7 @@ Tw.BannerService.prototype = {
           if (!this._banners || this._banners.length === 0) {
             this.$banners.parents('div.nogaps').addClass('none');
           } else {
-            this.$banners.slick('slickAdd', this._bannerTmpl({ banners: this._banners, location: target }));
+            this.$banners.slick('slickAdd', this._bannerTmpl({ banners: this._banners, location: target, CDN: CDN }));
             if (callback) {
               this.$banners.find('img').on('load', callback);
             }
@@ -85,7 +85,6 @@ Tw.BannerService.prototype = {
 
   _getProperBanners: function(type, banners) {
     var browserCode = this._getBrowserCode(),
-      CDN = Tw.Environment.cdn,
       today = new Date();
 
     if (type === Tw.REDIS_BANNER_TYPE.TOS) {
@@ -97,7 +96,7 @@ Tw.BannerService.prototype = {
           return {
             isHTML: banner.bnnrTypCd === 'H',
             isBill: banner.billYn === 'Y',
-            bnnrFilePathNm: banner.bnnrFileNm && CDN + banner.bnnrFileNm,
+            bnnrFilePathNm: banner.bnnrFileNm,
             idx: idx,
             imgLinkTrgtClCd: banner.tosImgLinkTrgtClCd,
             bnnrImgAltCtt: banner.imgAltCtt,
@@ -123,10 +122,6 @@ Tw.BannerService.prototype = {
             isBill: banner.billYn === 'Y',
             idx: nBanners.length
           };
-
-          if (banner.bnnrFilePathNm) {
-            temp.bnnrFilePathNm = CDN + banner.bnnrFilePathNm;
-          }
 
           nBanners.push($.extend(banner, temp));
 
