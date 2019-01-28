@@ -4,28 +4,28 @@
  * Date: 2018.06.22
  */
 
-Tw.TidLandingComponent = function (rootEl) {
+Tw.TidLandingComponent = function (rootEl, redirectTarget) {
   this.$container = rootEl;
   this._nativeService = Tw.Native;
   this._historyService = new Tw.HistoryService();
   this._apiService = Tw.Api;
 
   if ( !Tw.FormatHelper.isEmpty(this.$container) ) {
-    this._bindEvent();
+    this._bindEvent(redirectTarget);
   }
 };
 
 Tw.TidLandingComponent.prototype = {
-  _bindEvent: function () {
+  _bindEvent: function (redirectTarget) {
     this.$container.on('click', '.fe-bt-auth-line', $.proxy(this._onClickBtnAuthLine, this));
     this.$container.on('click', '.fe-bt-account', $.proxy(this._onClickBtAccount, this));
     this.$container.on('click', '.fe-bt-auth-withdrawal-guide', $.proxy(this._onClickBtnAuthWithdrawalGuide, this));
     this.$container.on('click', '.fe-bt-find-id', $.proxy(this._onClickBtFindId, this));
     this.$container.on('click', '.fe-bt-find-pw', $.proxy(this._onClickBtFindPw, this));
     this.$container.on('click', '.fe-bt-change-pw', $.proxy(this._onClickBtChangePw, this));
-    this.$container.on('click', '.fe-bt-login', $.proxy(this.goLogin, this));
-    this.$container.on('click', '.fe-bt-logout', $.proxy(this.goLogout, this));
-    this.$container.on('click', '.fe-bt-signup', $.proxy(this.goSignup, this));
+    this.$container.on('click', '.fe-bt-login', $.proxy(this._onClickLogin, this, redirectTarget));
+    this.$container.on('click', '.fe-bt-logout', $.proxy(this._onClickLogout, this));
+    this.$container.on('click', '.fe-bt-signup', $.proxy(this._onClickSLogin, this));
   },
   _goLoad: function (nativeCommand, url, callback) {
     if ( Tw.BrowserHelper.isApp() ) {
@@ -34,17 +34,26 @@ Tw.TidLandingComponent.prototype = {
       this._historyService.goLoad(url);
     }
   },
-  goActionSheetLogin: function () {
+  goActionSheetLogin: function (target) {
     this._apiService.request(Tw.NODE_CMD.SESSION, {})
-      .done($.proxy(this._onSuccessSession, this));
+      .done($.proxy(this._onSuccessSession, this, target));
   },
-  _onSuccessSession: function (resp) {
+  _onSuccessSession: function (target, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._apiService.sendNativeSession('');
       this._nativeService.send(Tw.NTV_CMD.LOGIN, {
         type: '1'
-      }, $.proxy(this._onNativeLogin, this, '/main/home'));
+      }, $.proxy(this._onNativeLogin, this, target));
     }
+  },
+  _onClickLogin: function(target) {
+    this.goLogin(target);
+  },
+  _onClickLogout: function () {
+    this.goLogout();
+  },
+  _onClickSLogin: function () {
+    this.goSLogin();
   },
   goLogin: function (target) {
     target = target || '/main/home';
@@ -119,7 +128,7 @@ Tw.TidLandingComponent.prototype = {
   _successLogin: function (target, resp) {
     Tw.Logger.info('[Login Resp]', resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._apiService.sendNativeSession(Tw.AUTH_LOGIN_TYPE.TID, $.proxy(this._successSetSession, this));
+      this._apiService.sendNativeSession(Tw.AUTH_LOGIN_TYPE.TID, $.proxy(this._successSetSession, this, target));
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3228 ) {
       // 고객보호비밀번호
       this._historyService.goLoad('/common/member/login/cust-pwd?target=' + target);
@@ -127,9 +136,9 @@ Tw.TidLandingComponent.prototype = {
       // 휴면계정
       this._historyService.goLoad('/common/member/login/reactive?target=' + target);
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ATH1003 ) {
-      this._historyService.goLoad('/common/member/login/exceed-fail');
+      this._historyService.replaceURL('/common/member/login/exceed-fail?target=' + target);
     } else {
-      this._historyService.goLoad('/common/member/login/fail?errorCode=' + resp.code);
+      this._historyService.replaceURL('/common/member/login/fail?errorCode=' + resp.code + '&target=' + target);
     }
   },
   _successLogout: function (resp) {
@@ -144,8 +153,12 @@ Tw.TidLandingComponent.prototype = {
     // }
     this._historyService.goLoad('/common/member/logout/complete');
   },
-  _successSetSession: function () {
-    this._historyService.reload();
+  _successSetSession: function (target) {
+    if (target.indexOf(location.pathname) !== -1) {
+      this._historyService.reload();
+    } else {
+      this._historyService.replaceURL(target);
+    }
   },
   _getMdn: function () {
     this._nativeService.send(Tw.NTV_CMD.GET_MDN, {}, $.proxy(this._onMdn, this));

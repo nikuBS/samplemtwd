@@ -13,7 +13,8 @@ class CommonMemberLoginExceedFail extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('member/common.member.login.exceed-fail.html', { svcInfo });
+    const target = req.query.target || '/main/home';
+    res.render('member/common.member.login.exceed-fail.html', { svcInfo, target });
   }
 }
 

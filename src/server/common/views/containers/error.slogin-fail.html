@@ -1,12 +1,11 @@
 <%#
-* FileName: common.logout.expire.html
+* FileName: common.login.easy-fail.html
 * Author: Ara Jo (araara.jo@sk.com)
-* Date: 2018.07.03
-* CO_01_03_02
+* Date: 2018.07.25
+* CO_01_02_06_03
 %>
 
-<% include ../../components/start.component.html %>
-<!-- body -->
+<% include ../components/start.component.html %>
 <body class="bg-white">
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -17,7 +16,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="commonLogoutExpire" class="wrap">
+<div id="commonMemberSloginFail" class="wrap">
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <div class="container">
@@ -33,21 +32,26 @@
             <div class="container">
                 <h3 class="complete-title pt60">
                     <img src="<%= CDN %>/img/ico/ico-login-fail.png" alt=""/>
-                    <span><strong>자동으로 로그아웃</strong><br />되었습니다.</span>
+                    <span><strong>아이디 로그인 후</strong><br />이용하실 수 있습니다.</span>
                 </h3>
                 <p class="complete-error-tx pt32">
-                    <span class="tx2">재로그인을 해주시기 바랍니다.</span>
+                    <span class="tx2">서비스를 이용하시려면 &acute;T아이디 로그인&acute;을<br />하시거나 &acute;T아이디 회원가입&acute; 후 이용해 주세요.</span>
                 </p>
                 <div class="complete-btn-box pt40">
                     <ul class="bt-slice">
                         <li class="bt-white2">
-                            <a class="fe-replace-history" href="/main/home">홈으로</a>
+                            <button class="fe-bt-login">아이디 로그인 하기</button>
+                        </li>
+                    </ul>
+                    <ul class="bt-slice">
+                        <li class="bt-white2">
+                            <button class="fe-bt-signup">회원가입 하기</button>
                         </li>
                     </ul>
                 </div>
                 <ul class="bt-slice full">
                     <li class="bt-red1">
-                        <button class="fe-bt-login">로그인 하기</button>
+                        <button class="fe-common-back">돌아가기</button>
                     </li>
                 </ul>
             </div>
@@ -57,11 +61,10 @@
     <!--// .popup hbs -->
 </div>
 </body>
-<% include ../../components/javascript.component.html %>
+<% include ../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CommonMemberLogoutExpire();
-    new Tw.TidLandingComponent($('#commonLogoutExpire'), '<%= target %>');
+    new Tw.TidLandingComponent($('#commonMemberSloginFail'), '<%= target %>');
   });
 </script>
-<% include ../../components/end.component.html %>
+<% include ../components/end.component.html %>
