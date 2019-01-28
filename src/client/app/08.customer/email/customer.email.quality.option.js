@@ -43,7 +43,10 @@ Tw.CustomerEmailQualityOption.prototype = {
     new Tw.CommonPostcodeMain(this.$container);
   },
 
-  _onSelectQualityPhoneLine: function () {
+  _onSelectQualityPhoneLine: function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+
     var isInternetLine = $('.fe-quality-inqSvcClCd li.checked').index() === 0;
     var filteredLine = [];
     var fnSelectLine;
@@ -94,6 +97,8 @@ Tw.CustomerEmailQualityOption.prototype = {
   },
 
   _onSelectLine: function (e) {
+    e.stopPropagation();
+    e.preventDefault();
     var $target = $(e.currentTarget);
 
     var fnFilter = function ($target, item) {
