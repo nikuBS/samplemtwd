@@ -979,16 +979,14 @@
 <script>
   setTimeout(function () {
     skt_landing.action.home_slider({ initialSlide: 1 });
-    skt_landing.widgets.widget_slider1();
-    skt_landing.widgets.widget_slider2();
+    skt_landing.action.notice_slider();
   }, 40);
 </script>
 <% } else { %>
 <script>
   setTimeout(function () {
     skt_landing.action.home_slider({ initialSlide: 0 });
-    skt_landing.widgets.widget_slider1();
-    skt_landing.widgets.widget_slider2();
+    skt_landing.action.notice_slider();
   }, 40);
 </script>
 <% } %>
