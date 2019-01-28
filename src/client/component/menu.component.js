@@ -147,7 +147,7 @@ Tw.MenuComponent.prototype = {
   },
 
   _onClickLogin: function () {
-    this._tidLanding.goLogin(location.href);
+    this._tidLanding.goLogin(location.pathname + location.search + '#menu');
   },
   _onClickLogout: function () {
     this._tidLanding.goLogout();
@@ -165,7 +165,7 @@ Tw.MenuComponent.prototype = {
               this._isMultiLine = res.result.userInfo.totalSvcCnt > 1;
               this._svcMgmtNum = res.result.userInfo.svcMgmtNum;
               this._svcAttr = res.result.userInfo.svcAttrCd;
-              this._isLogin = res.result.isLogin;
+              this._isLogin = res.result.isLogini;
               this._tid = res.result.userInfo.userId;
             }
             this._modifyMenu(

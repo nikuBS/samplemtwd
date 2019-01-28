@@ -88,20 +88,20 @@ abstract class TwViewController {
       this.apiService.requestLoginTid(tokenId, req.query.stateVal).subscribe((resp) => {
         this.renderPage(req, res, next, path);
       }, (error) => {
-        this.failLogin(req, res, next, error.code);
+        this.failLogin(req, res, next, path, error.code);
       });
     } else {
       if ( /\/test/i.test(req.baseUrl) && /\/login/i.test(req.path) ) {
         this.apiService.requestLoginLoadTest(userId).subscribe((resp) => {
           this.renderPage(req, res, next, path); // noticeTpyCd
         }, (error) => {
-          this.failLogin(req, res, next, error.code);
+          this.failLogin(req, res, next, path, error.code);
         });
       } else {
         this.apiService.requestLoginTest(userId).subscribe((resp) => {
           this.renderPage(req, res, next, path); // noticeTpyCd
         }, (error) => {
-          this.failLogin(req, res, next, error.code);
+          this.failLogin(req, res, next, path, error.code);
         });
       }
     }
@@ -181,7 +181,8 @@ abstract class TwViewController {
           } else {
             // 현재 로그인 방법으론 이용할 수 없음
             if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
-              res.redirect('/common/member/slogin/fail');
+              // res.redirect('/common/member/slogin/fail');
+              res.render('error.slogin-fail.html', { target: path });
             } else {
               // ERROR 케이스 (일반로그인에서 권한이 없는 케이스)
               this.errorAuth(req, res, next);
@@ -217,15 +218,15 @@ abstract class TwViewController {
     this.getAuth(req, res, next, path, svcInfo, allSvc, childInfo);
   }
 
-  private failLogin(req, res, next, errorCode) {
+  private failLogin(req, res, next, path, errorCode) {
     if ( errorCode === API_LOGIN_ERROR.ICAS3228 ) {    // 고객보호비밀번호
-      res.redirect('/common/member/login/cust-pwd');
+      res.redirect('/common/member/login/cust-pwd?target=' + path);
     } else if ( errorCode === API_LOGIN_ERROR.ICAS3235 ) {   // 휴면계정
-      res.redirect('/common/member/login/reactive');
+      res.redirect('/common/member/login/reactive?target=' + path);
     } else if ( errorCode === API_LOGIN_ERROR.ATH1003 ) {
-      res.redirect('/common/member/login/exceed-fail');
+      res.redirect('/common/member/login/exceed-fail?target=' + path);
     } else {
-      res.redirect('/common/member/login/fail?errorCode=' + errorCode);
+      res.redirect('/common/member/login/fail?errorCode=' + errorCode + '&target=' + path);
     }
   }
 

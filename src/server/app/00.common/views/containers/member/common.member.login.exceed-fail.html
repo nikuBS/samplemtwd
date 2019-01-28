@@ -32,7 +32,7 @@
             <h2 class="blind">내용</h2>
             <div class="container">
                 <h3 class="complete-title pt60">
-                    <img src="/img/ico/ico-login-fail.png" alt=""/>
+                    <img src="<%= CDN %>/img/ico/ico-login-fail.png" alt=""/>
                     <span>1일 로그인 <strong>허용 횟수를<br /> 초과</strong>하였습니다.</span>
                 </h3>
                 <p class="complete-error-tx pt32">
@@ -54,7 +54,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CommonMemberLoginExceedFail($('#commonLoginExceedFail'));
+    new Tw.CommonMemberLoginExceedFail($('#commonLoginExceedFail'), '<%= target %>');
   });
 </script>
 <% include ../../components/end.component.html %>

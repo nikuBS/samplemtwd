@@ -31,7 +31,7 @@
             <h2 class="blind">내용</h2>
             <div class="container">
                 <h3 class="complete-title pt60">
-                    <img src="/img/ico/ico-login-fail.png" alt=""/>
+                    <img src="<%= CDN %>/img/ico/ico-login-fail.png" alt=""/>
                     <span><strong>로그인 실패</strong></span>
                 </h3>
                 <p class="complete-error-tx pt32">
@@ -54,7 +54,7 @@
 <script>
   $(document).ready(function () {
     new Tw.CommonMemberLoginFail($('#commonLoginFail'));
-    new Tw.TidLandingComponent($('#commonLoginFail'));
+    new Tw.TidLandingComponent($('#commonLoginFail'), '<%= target %>');
   });
 </script>
 <% include ../../components/end.component.html %>

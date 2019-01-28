@@ -123,9 +123,9 @@ Tw.NativeService.prototype = {
   _completeLogout: function (isAutoLogin, resp) {
     Tw.Logger.info('[completeLogout]', isAutoLogin, resp);
     if ( isAutoLogin === 'Y' ) {
-      this._tidLanding.goActionSheetLogin();
+      this._tidLanding.goActionSheetLogin(location.pathname + location.search);
     } else {
-      this._historyService.goLoad('/common/member/logout/expire');
+      this._historyService.replaceURL('/common/member/logout/expire?target=' + location.pathname + location.search);
     }
   },
   _exitApp: function () {
