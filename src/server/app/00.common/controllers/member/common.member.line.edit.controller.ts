@@ -23,7 +23,7 @@ class CommonMemberLineEdit extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this.category = req.query.category;
     Observable.combineLatest([
-      this.apiService.request(API_CMD.BFF_03_0029, { svcCtg: this.category }),
+      this.apiService.request(API_CMD.BFF_03_0029, { svcCtg: LINE_NAME.ALL }),
       this.apiService.request(API_CMD.BFF_03_0030, { svcCtg: this.category, pageSize: DEFAULT_LIST_COUNT })
     ]).subscribe(([exposable, exposed]) => {
       if ( exposable.code === API_CODE.CODE_00 && exposed.code === API_CODE.CODE_00 ) {
@@ -31,6 +31,7 @@ class CommonMemberLineEdit extends TwViewController {
         res.render('member/common.member.line.edit.html', Object.assign(lineList, {
           category: this.category,
           lineCategory: SVC_CATEGORY[this.category],
+          otherCnt: exposed.result.totalCnt - exposed.result[this.category + 'Cnt'],
           svcInfo,
           pageInfo
         }));
