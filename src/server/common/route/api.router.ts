@@ -119,7 +119,8 @@ class ApiRouter {
           resp.result = {
             ver: resp.result.ver,
             signGateGW: resp.result.signGateGW,
-            cdn: environment[env].CDN
+            cdn: environment[env].CDN,
+            webView: resp.result.webview
           };
         }
 
