@@ -25,9 +25,10 @@ class RedisService {
     this.envRedis = EnvHelper.getEnvironment('REDIS');
     this.envTosRedis = EnvHelper.getEnvironment('REDIS_TOS');
     this.RedisStore = connect(session);
-    let redisKey = EnvHelper.getEnvironment('REDIS_PWD_KEY');
-    if (FormatHelper.isEmpty(redisKey)) {
-      redisKey = String(process.env.REDIS_PWD_KEY);
+
+    let redisKey = String(process.env.REDIS_PWD_KEY);
+    if (redisKey === 'undefined') { // Will be removed
+      redisKey = EnvHelper.getEnvironment('REDIS_PWD_KEY');
     }
     const password = CryptoHelper.decryptRedisPwd(this.envRedis.password,
         redisKey, CryptoHelper.ALGORITHM.AES256CBCHMACSHA256);
