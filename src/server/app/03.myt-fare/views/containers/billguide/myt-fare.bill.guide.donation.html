@@ -38,9 +38,8 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="fe-wrap" class="wrap" data-menuId="<%= pageInfo.menuId %>">
+<div id="fe-wrap" class="wrap popup-page nobg tw-popup fixed-btn" data-menuId="<%= pageInfo.menuId %>">
     <!-- .popup hbs -->
-    <div class="popup-page nobg tw-popup fixed-btn"><!-- .fixed-btn 하단에 고정된 버튼이 있는 경우 -->
 
         <!-- #header -->
         <div class="header-wrap">
@@ -118,7 +117,7 @@
         <!-- .popup-closeBtn -->
         <button class="popup-closeBtn fe-common-back" data-target="popupCloseBt"><span class="blind">팝업 페이지 닫기</span></button>
         <!--// .popup-closeBtn -->
-    </div>
+
     <!--// .popup hbs -->
     <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 </div>
