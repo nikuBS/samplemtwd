@@ -58,7 +58,7 @@ class MyTDataHotdata extends TwViewController {
             case SVC_ATTR_E.MOBILE_PHONE :
               option['usageData'] = this.parseCellPhoneUsageData(usageDataResp.result, svcInfo);
               if ( extraDataResp && extraDataResp['code'] === API_CODE.CODE_00 ) {
-                option['balanceAddOns'] = extraDataResp;
+                option['balanceAddOns'] = extraDataResp['result'];
               }
               view = VIEW.CIRCLE;
               break;
