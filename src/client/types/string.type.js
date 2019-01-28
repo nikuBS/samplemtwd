@@ -1529,6 +1529,7 @@ Tw.NOTI_POPUP_BTN = {
 
 Tw.MENU_STRING = {
   FREE_SMS: '무료문자 서비스는 SK텔레콤 휴대폰 번호를 등록하셔야 사용하실 수 있습니다. 지금 \'회선등록\' 버튼을 클릭하여 T월드에서 이용하실 회선을 등록해 주세요.',
+  FREE_SMS_PPS: '선불요금제 이용 고객님은 무료문자 서비스를 사용하실 수 없습니다.',
   TOTAL: '총 ',
   DESC: '개의 회선',
   SVC_COUNT: function (count) {

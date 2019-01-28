@@ -31,6 +31,7 @@ Tw.MenuComponent = function (notAboutMenu) {
     this._svcAttr = undefined;
     this._tid = undefined;
     this._memberType = undefined; // 0: normal, 1: number unregistered, 2: no svc
+    this._isPPS = false;
 
     this._isOpened = false;
     this._isMenuSet = false;
@@ -244,6 +245,17 @@ Tw.MenuComponent.prototype = {
       );
       return ;
     }
+
+    if (this._isPPS) {
+      this._popupService.openAlert(
+        Tw.MENU_STRING.FREE_SMS_PPS,
+        '',
+        Tw.BUTTON_LABEL.CONFIRM,
+        null,
+        'menu_free_sms_pps'
+      );
+      return;
+    }
     Tw.CommonHelper.openFreeSms();
     return false;
   },
@@ -270,6 +282,7 @@ Tw.MenuComponent.prototype = {
       userInfo.totalSvcCnt = parseInt(userInfo.totalSvcCnt, 10);
       userInfo.expsSvcCnt = parseInt(userInfo.expsSvcCnt, 10);
 
+      this._isPPS = userInfo.pps;
       // 0: normal, 1: number unregistered, 2: no svc
       this._memberType = userInfo.totalSvcCnt > 0 ? (userInfo.expsSvcCnt > 0 ? 0 : 1) : 2;
       switch ( this._memberType ) {

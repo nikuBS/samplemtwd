@@ -170,9 +170,10 @@ class ApiRouter {
           resp.result.isLogin = !FormatHelper.isEmpty(svcInfo);
           if ( resp.result.isLogin ) {
             resp.result.userInfo = svcInfo;
-            resp.result.userInfo.canSendFreeSMS = allSvcInfo.m.reduce((memo, elem) => {
-              if ( elem.svcAttrCd.includes('M1') || elem.svcAttrCd.includes('M3') ||
-                elem.svcAttrCd.includes('M4') ) {
+            resp.result.userInfo.canSendFree = allSvcInfo.m.length > 0;
+            resp.result.userInfo.pps = false;
+            resp.result.userInfo.pps = allSvcInfo.m.reduce((memo, elem) => {
+              if (elem.svcAttrCd.includes('M2')) {
                 return true;
               }
               return memo;
