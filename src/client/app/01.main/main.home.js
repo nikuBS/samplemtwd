@@ -347,12 +347,27 @@ Tw.MainHome.prototype = {
     this._historyService.goLoad('/common/member/line');
   },
   _openCustomerPasswordGuide: function () {
-    this._popupService.openTypeD(Tw.LOGIN_CUS_PW_GUIDE.TITLE, Tw.LOGIN_CUS_PW_GUIDE.CONTENTS, Tw.LOGIN_CUS_PW_GUIDE.BUTTON, '',
-      null, $.proxy(this._confirmCustPwGuide, this), $.proxy(this._closeCustPwGuide, this));
+    this._popupService.open({
+      hbs: 'popup',
+      title: Tw.LOGIN_CUS_PW_GUIDE.TITLE,
+      title_type: 'sub',
+      cont_align: 'tl',
+      contents: Tw.LOGIN_CUS_PW_GUIDE.CONTENTS,
+      infocopy: [{
+        info_contents : Tw.LOGIN_CUS_PW_GUIDE.INFO,
+        bt_class: 'none'
+      }],
+      bt_b: [{
+        style_class:'bt-red1 pos-right fe-go',
+        txt: Tw.LOGIN_CUS_PW_GUIDE.BUTTON
+      }],
+    }, $.proxy(this._confirmCustPwGuide, this), $.proxy(this._closeCustPwGuide, this));
   },
-  _confirmCustPwGuide: function () {
-    this._goCustPwd = true;
-    this._popupService.close();
+  _confirmCustPwGuide: function (root) {
+    root.on('click', '.fe-go', $.proxy(function () {
+      this._goCustPwd = true;
+      this._popupService.close();
+    }, this))
   },
   _closeCustPwGuide: function () {
     if ( this._goCustPwd ) {
