@@ -4,29 +4,24 @@
 * Date: 2018.09.17
 %>
 
-<%var idx = 0; %>
 <% for (var i = 0; i < data.length; i++) { %>
     <% var item = data[i];%>
-    <% for (var j = 0; j < item.length; j++) { %>
-    <% idx++; %>
-    <% if (idx < 4) { %>
     <li class="list-box">
-        <span class="badge"><i class="icon-<%= item[j].class %>"><span class="blind"><%= item[j].class %></span></i></span>
+        <span class="badge"><i class="icon-<%= item.class %>"><span class="blind"><%= item.class %></span></i></span>
         <ul class="list-con">
             <li>
                 <p class="list-text">
-                    <span class="stext-b"><%= item[j].u_type === 'data'? '데이터 충전':'음성 충전'%></span>
+                    <span class="stext-b"><%= item.u_type === 'data'? '데이터 충전':'음성 충전'%></span>
                     <span class="stext">
-                            <span class="gray-tx"><%= item[j].u_title %></span>
-                            <span class="gray-tx"><%= item[j].u_sub %></span>
+                            <span class="gray-tx"><%= item.u_title %></span>
+                            <span class="gray-tx"><%= item.u_sub %></span>
                         </span>
                 </p>
                 <div class="list-data">
-                    <p class="data-tx txt1"><%= item[j].d_title %><%= item[j].unit %></p>
-                    <span class="date"><%= item[j].d_sub %></span>
+                    <p class="data-tx txt1"><%= item.d_title %><%= item.unit %></p>
+                    <span class="date"><%= item.d_sub %></span>
                 </div>
             </li>
         </ul>
     </li>
-    <% }} %>
 <% } %>

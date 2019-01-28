@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE, API_T_FAMILY_ERROR } from '../../types/api-command.type';
 import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
-import { CURRENCY_UNIT, DATA_UNIT, MYT_DATA_CHARGE_TYPE_NAMES, MYT_T_DATA_GIFT_TYPE } from '../../types/string.type';
+import { CURRENCY_UNIT, DATA_UNIT, ETC_CENTER, MYT_DATA_CHARGE_TYPE_NAMES, MYT_T_DATA_GIFT_TYPE } from '../../types/string.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { LOGIN_TYPE, PREPAID_PAYMENT_PAY_CD, PREPAID_PAYMENT_TYPE, UNIT, UNIT_E } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
@@ -139,14 +139,14 @@ class MytDataSubmainController extends TwViewController {
             item['unit'] = CURRENCY_UNIT.WON;
           } else {
             item['class'] = (item.opTypCd === '2' || item.opTypCd === '4') ? 'send' : 'recharge';
-            item['u_title'] = item.opTypNm;
-            item['u_sub'] = item.opOrgNm;
+            item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.LIMIT_CHARGE;
+            item['u_sub'] = item.opOrgNm || ETC_CENTER;
             item['d_title'] = FormatHelper.addComma(item.amt);
             item['d_sub'] = DateHelper.getShortDate(item.opDt);
             item['unit'] = CURRENCY_UNIT.WON;
           }
         });
-        breakdownList.push(FormatHelper.groupByArray(dcBkd, 'opDt'));
+        breakdownList.push(dcBkd);
       }
       if ( dpBkd && dpBkd.length > 0 ) {
         // T끼리 선물하기 내역
@@ -160,21 +160,21 @@ class MytDataSubmainController extends TwViewController {
           item['d_sub'] = DateHelper.getShortDate(item.opDt);
           item['unit'] = DATA_UNIT.MB;
         });
-        breakdownList.push(FormatHelper.groupByArray(dpBkd, 'opDt'));
+        breakdownList.push(dpBkd);
       }
       if ( tpBkd && tpBkd.length > 0 ) {
         // 팅요금 선물하기 내역
         // opTypCd: 1 send, 2 recharge
         tpBkd.map((item) => {
           item['class'] = (item.opTypCd === '1' ? 'send' : 'recharge');
-          item['u_title'] = item.opTypNm;
+          item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.TING_GIFT;
           // custNm 명세서에서 제외됨
           item['u_sub'] = /*item.custNm ||  + ' | ' +*/ FormatHelper.conTelFormatWithDash(item.svcNum);
           item['d_title'] = FormatHelper.addComma(item.amt);
           item['d_sub'] = DateHelper.getShortDate(item.opDt);
           item['unit'] = CURRENCY_UNIT.WON;
         });
-        breakdownList.push(FormatHelper.groupByArray(tpBkd, 'opDt'));
+        breakdownList.push(tpBkd);
       }
       if ( etcBkd && etcBkd.length > 0 ) {
         // 팅/쿠키즈/안심요금 충전 내역
@@ -190,43 +190,43 @@ class MytDataSubmainController extends TwViewController {
             item['unit'] = CURRENCY_UNIT.WON;
           } else {
             item['class'] = (item.opTypCd === '2' || item.opTypCd === '4') ? 'send' : 'recharge';
-            item['u_title'] = item.opTypNm;
-            item['u_sub'] = '';
+            item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.TING_CHARGE;
+            item['u_sub'] = item.opOrgNm || ETC_CENTER;
             item['d_title'] = FormatHelper.addComma(item.amt);
             item['d_sub'] = DateHelper.getShortDate(item.opDt);
             item['unit'] = CURRENCY_UNIT.WON;
           }
         });
-        breakdownList.push(FormatHelper.groupByArray(etcBkd, 'opDt'));
+        breakdownList.push(etcBkd);
       }
       if ( refpBkd && refpBkd.length > 0 ) {
         // 리필쿠폰 선물 내역
         refpBkd.map((item) => {
           item['opDt'] = item.copnOpDt;
           item['class'] = (item.type === '1' ? 'send' : 'recharge');
-          item['u_title'] = item.opTypNm;
-          item['u_sub'] = item.copnNm + ' | ' + FormatHelper.conTelFormatWithDash(item.svcNum);
+          item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.REFILL_GIFT;
+          item['u_sub'] = FormatHelper.conTelFormatWithDash(item.svcNum);
           item['d_title'] = ''; // API response 값에 정의되어있지 않음
           item['d_sub'] = DateHelper.getShortDate(item.copnOpDt);
           item['unit'] = '';
         });
-        breakdownList.push(FormatHelper.groupByArray(refpBkd, 'opDt'));
+        breakdownList.push(refpBkd);
       }
       if ( refuBkd && refuBkd.length > 0 ) {
         // 리필쿠폰 사용이력조회
         refuBkd.map((item) => {
           item['opDt'] = item.copnUseDt;
           item['class'] = (item.type === '1' ? 'send' : 'recharge');
-          item['u_title'] = item.copnNm;
-          item['u_sub'] = '';
-          item['d_title'] = item.copnDtlClNm; // API response 값에 정의되어있지 않음
+          item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.REFILL_USAGE;
+          item['u_sub'] = item.opOrgNm || ETC_CENTER;
+          item['d_title'] = item.copnDtlClNm;
           item['d_sub'] = DateHelper.getShortDate(item.copnUseDt);
           item['unit'] = '';
         });
-        breakdownList.push(FormatHelper.groupByArray(refuBkd, 'opDt'));
+        breakdownList.push(refuBkd);
       }
       if ( breakdownList.length > 0 ) {
-        data.breakdownList = this.sortBreakdownItems(breakdownList);
+        data.breakdownList = this.sortBreakdownItems(breakdownList).slice(0, 3);
       }
       // 배너 정보 - client에서 호출하는 방식으로 변경 (19/01/22)
       // if ( banner && (banner.code === API_CODE.REDIS_SUCCESS) ) {
@@ -417,31 +417,14 @@ class MytDataSubmainController extends TwViewController {
   }
 
   sortBreakdownItems(items): any {
-    let returnVal: any = [];
-    let group: any = [];
-    items.forEach((val) => {
-      group = FormatHelper.mergeArray(group, Object.keys(val));
-    });
-    group.sort().reverse();
-    items.filter((item) => {
-      const keys = Object.keys(item);
-      for ( const key of keys ) {
-        group.map((gp) => {
-          if ( gp === key ) {
-            returnVal.push(item[gp]);
-          }
-        });
-      }
-    });
-    returnVal = returnVal.sort((a, b) => {
-      if ( a[0].opDt > b[0].opDt ) {
+    return Array.prototype.concat.apply([], items).sort((a, b) => {
+      if ( a.opDt > b.opDt ) {
         return -1;
-      } else if ( a[0].opDt < b[0].opDt ) {
+      } else if ( a.opDt < b.opDt ) {
         return 1;
       }
       return 0;
     });
-    return returnVal;
   }
 
   _getRemnantData(): Observable<any> {

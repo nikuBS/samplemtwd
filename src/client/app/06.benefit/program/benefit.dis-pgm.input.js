@@ -103,10 +103,16 @@ Tw.BenefitDisPgmInput.prototype = {
 
   _prodConfirmOk: function () {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
-
-    this._apiService.request(Tw.API_CMD.BFF_10_0063, {
-      svcAgrmtPrdCd: this._selType
-    }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this));
+    if(this._selType) {
+      this._apiService.request(Tw.API_CMD.BFF_10_0063, {
+        svcAgrmtPrdCd: this._selType
+      }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this));
+    }
+    else {
+      this._apiService.request(Tw.API_CMD.BFF_10_0035, {
+        addCd: '2'
+      }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this));
+    }
   },
 
   _procJoinRes: function (resp) {

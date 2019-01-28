@@ -13,7 +13,6 @@ import DateHelper from '../../utils/date.helper';
 import FormatHelper from '../../utils/format.helper';
 import { NEW_NUMBER_MSG } from '../../types/string.type';
 import { MYT_JOIN_SUBMAIN_TITLE } from '../../types/title.type';
-import { REDIS_KEY } from '../../types/redis.type';
 import { SVC_ATTR_NAME } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 
@@ -199,6 +198,8 @@ class MyTJoinSubmainController extends TwViewController {
             opState: data.myPausedState.svcChgRsnNm
           };
         }
+      } else if ( data.myPausedState.armyDt ) {
+        data.myLongPausedState = { state: true };
       }
 
       if ( data.myLongPausedState ) {
@@ -206,6 +207,8 @@ class MyTJoinSubmainController extends TwViewController {
         data.myLongPausedState.sDate = this.isMasking(fromDt) ? fromDt : DateHelper.getShortDateNoDot(fromDt);
         data.myLongPausedState.eDate = this.isMasking(toDt) ? toDt : DateHelper.getShortDateNoDot(toDt);
         data.myLongPausedState.state = true;
+        // 군입대로 인한 장기 일시정지
+        data.myLongPausedState.isArmy = (['5000341', '5000342'].indexOf(data.myLongPausedState.receiveCd) > -1);
       }
 
       if ( numSvc ) {
