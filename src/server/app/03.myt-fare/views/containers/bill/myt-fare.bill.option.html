@@ -186,15 +186,15 @@
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                    <ul class="noti-list">
+                    <ul class="noti-list02">
                         <% if (paymentOption.payMthdCd === '01' || paymentOption.payMthdCd === '02') { %>
-                        <li>인출(승인)일 안내<button id="MF_05_01_tip_01" class="tip-view">TIP</button></li>
-                        <li>자동납부 할인 안내<button id="MF_05_01_tip_02" class="tip-view">TIP</button></li>
+                        <li><button id="MF_05_01_tip_01" class="tip-view-btn"><span class="tip-view">TIP</span></button></li>
+                        <li><button id="MF_05_01_tip_02" class="tip-view-btn"><span class="tip-view">TIP</span></button></li>
                         <% } else { %>
-                        <li>매월 5일 이후 해지 시<button id="MF_05_01_02_tip_02" class="tip-view">TIP</button></li>
+                        <li><button id="MF_05_01_02_tip_02" class="tip-view-btn"><span class="tip-view">TIP</span></button></li>
                         <% } %>
-                        <li>이용시간 안내<button id="MF_05_01_tip_03" class="tip-view">TIP</button></li>
-                        <li>추가문의 안내<button id="MF_05_01_tip_04" class="tip-view">TIP</button></li>
+                        <li><button id="MF_05_01_tip_03" class="tip-view-btn"><span class="tip-view">TIP</span></button></li>
+                        <li><button id="MF_05_01_tip_04" class="tip-view-btn"><span class="tip-view">TIP</span></button></li>
                     </ul>
                 </div>
                 <!--// .cont-box -->

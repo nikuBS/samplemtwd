@@ -32,10 +32,13 @@
         <% if(data.noticeInfo.length){ %>
         <div class="cont-box noborder bgnone">
             <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
-            <ul class="pg-chk-list">
+            <ul class="pg-chk-list02">
                 <% data.noticeInfo.forEach(function(info){ %>
-                    <li data-list-id="<%=info.link%>"><%=info.title%><button class="btn-tip" id="<%=info.link%>" page-id="<%=info.view%>" title="정보보기" ><i class="icon-badge-tip"><span class=
-                    "blind">TIP</span></i></button></li>
+                    <li data-list-id="<%=info.link%>">
+                        <button class="btn-tip" id="<%=info.link%>" page-id="<%=info.view%>" title="정보보기" >
+                            <%=info.title%><i class="icon-badge-tip"><span class="blind">TIP</span></i>
+                        </button>
+                    </li>
                 <% }); %>
             </ul>
         </div>

@@ -75,13 +75,21 @@ Tw.TooltipService.prototype = {
     }
   },
   _setTitle: function ($target, $result) {
-    var cloneTarget = $target.first().clone();
-    var parentTarget = $target.parent();
+    // var $child = $target.find('span');
+    // if ($target.hasClass('btn-tip')) {
+    //   $child = $target.find('i');
+    // }
+    // $child.before($result.ttipTitNm);
 
-    parentTarget.text($result.ttipTitNm);
-    parentTarget.append(cloneTarget);
+    var $children = $target.children().clone();
+    $target.text($result.ttipTitNm);
+    $target.append($children);
+    // var parentTarget = $target.parent();
+    //
+    // parentTarget.text($result.ttipTitNm);
+    // parentTarget.append(cloneTarget);
 
-    parentTarget.on('click', 'button', $.proxy(this._openTip, this, $result));
+    $target.on('click', $.proxy(this._openTip, this, $result));
   },
   _openTip: function ($result) {
     this._popupService.open({

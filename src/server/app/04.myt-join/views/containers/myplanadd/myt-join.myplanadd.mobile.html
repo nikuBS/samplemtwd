@@ -111,9 +111,13 @@
                 <!-- 꼭 확인해 주세요 2018.11.02 추가 -->
 				<div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                    <ul class="noti-list">
+                    <ul class="noti-list02">
                         <% const tip = svcInfo.svcAttrCd === 'M3' ? 3 : 1%>
-                        <li>부가서비스 이용안내 <button id="MS_06_01_tip_0<%= tip %>" type="button" class="tip-view" title="부가서비스 이용안내 TIP보기" aria-haspopup="true">TIP</button></li>
+                        <li>
+                            <button id="MS_06_01_tip_0<%= tip %>" type="button" class="tip-view-btn" title="부가서비스 이용안내 TIP보기" aria-haspopup="true">부가서비스 이용안내
+                                <span class="tip-view">TIP</span>
+                            </button>
+                        </li>
                     </ul>
                 </div>
                 <!-- //꼭 확인해 주세요 -->

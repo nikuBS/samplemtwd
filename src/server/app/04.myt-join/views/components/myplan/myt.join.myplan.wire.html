@@ -71,9 +71,13 @@
         <!-- .cont-box -->
         <div class="cont-box noborder bgnone">
             <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
-            <ul class="pg-chk-list">
+            <ul class="pg-chk-list02">
                 <% for ( var i in tipList) { %>
-                <li><%= tipList[i].title %><button class="btn-tip" id="<%= tipList[i].code %>" page-id="<%= pageInfo.menuId %>"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                <li>
+                    <button class="btn-tip" id="<%= tipList[i].code %>" page-id="<%= pageInfo.menuId %>">
+                        <%= tipList[i].title %><i class="icon-badge-tip"><span class="blind">tip</span></i>
+                    </button>
+                </li>
                 <% } %>
             </ul>
         </div>

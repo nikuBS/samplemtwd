@@ -34,11 +34,11 @@
                     <div class="cont-box nogaps-top">
                         <div class="form-data-tit-wrap">
                             <strong class="tit">금액정보</strong>
-                            <button id="MF_07_04_tip_01" class="tip-view">금액정보 정보보기</button>
+                            <button id="MF_07_04_tip_01" class="tip-view-btn">금액정보 정보보기</button>
                         </div>
                         <ul class="form-data-list">
                             <li class="type2">
-                                <label class="tit">선결제 금액<button id="MF_06_04_tip_04" class="tip-view">선결제금액 정보보기</button></label>
+                                <label class="tit">선결제 금액<button id="MF_06_04_tip_04" class="tip-view-btn">선결제금액 정보보기</button></label>
                                 <button id="<%= autoPrepayInfo.cmbAutoChrgAmt %>" data-origin-id="<%= autoPrepayInfo.cmbAutoChrgAmt %>"
                                         class="bt-dropdown big fe-prepay-amount" title="선결제 금액" aria-haspopup="true">
                                     <%= autoPrepayInfo.comboChargeAmount %>만원<span class="ico"></span>
@@ -48,7 +48,7 @@
                                 </span>
                             </li>
                             <li class="type2">
-                                <label class="tit">기준금액<button id="MF_06_04_tip_03" class="tip-view">기준금액 정보보기</button></label>
+                                <label class="tit">기준금액<button id="MF_06_04_tip_03" class="tip-view-btn">기준금액 정보보기</button></label>
                                 <button id="<%= autoPrepayInfo.cmbAutoChrgStrdAmt %>" data-origin-id="<%= autoPrepayInfo.cmbAutoChrgStrdAmt %>"
                                         class="bt-dropdown big fe-standard-amount" title="기준 금액" aria-haspopup="true">
                                     <%= autoPrepayInfo.comboStandardAmount %>만원<span class="ico"></span>
@@ -129,8 +129,8 @@
                     <!-- .cont-box -->
                     <div class="cont-box nogaps-btm">
                         <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                        <ul class="noti-list">
-                            <li>이용안내 <button id="MF_06_04_tip_02" class="tip-view">TIP</button></li>
+                        <ul class="noti-list02">
+                            <li><button id="MF_06_04_tip_02" class="tip-view-btn">이용안내<span class="tip-view">TIP</span></button></li>
                         </ul>
                     </div>
                     <!--// .cont-box -->
