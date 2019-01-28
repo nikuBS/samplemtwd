@@ -142,9 +142,7 @@ abstract class TwViewController {
       const loginType = urlMeta.auth.accessTypes;
 
       if ( resp.code === API_CODE.REDIS_SUCCESS ) {
-        if ( this.checkServiceBlock(urlMeta) ) {
-          const blockUrl = urlMeta.block.url || '/common/util/service-block';
-          res.redirect(blockUrl);
+        if ( this.checkServiceBlock(urlMeta, res) ) {
           return;
         }
 
@@ -240,17 +238,21 @@ abstract class TwViewController {
     res.send(message);
   }
 
-  private checkServiceBlock(urlMeta: any) {
-    // urlMeta.block array 변경
-
-    if ( !FormatHelper.isEmpty(urlMeta.block) &&
-      !FormatHelper.isEmpty(urlMeta.block.fromDtm) && !FormatHelper.isEmpty(urlMeta.block.toDtm) ) {
-      const startTime = DateHelper.convDateFormat(urlMeta.block.fromDtm).getTime();
-      const endTime = DateHelper.convDateFormat(urlMeta.block.toDtm).getTime();
+  private checkServiceBlock(urlMeta: any, res) {
+    if ( !FormatHelper.isEmpty(urlMeta.block) && urlMeta.block.length > 0 ) {
+      const blockList = urlMeta.block;
       const today = new Date().getTime();
-      return today > startTime && today < endTime;
+      const findBlock = blockList.find((block) => {
+        const startTime = DateHelper.convDateFormat(block.fromDtm).getTime();
+        const endTime = DateHelper.convDateFormat(block.toDtm).getTime();
+        return today > startTime && today < endTime;
+      });
+      if ( !FormatHelper.isEmpty(findBlock) ) {
+        const blockUrl = findBlock.url || '/common/util/service-block';
+        res.redirect(blockUrl);
+        return true;
+      }
     }
-    return false;
   }
 }
 

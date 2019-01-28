@@ -11,7 +11,6 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
   this._popupService = Tw.Popup;
   this._nativeSrevice = Tw.Native;
   this._historyService = new Tw.HistoryService();
-  this._lineRegisterLayer = new Tw.LineRegisterComponent();
   this._tidLanding = new Tw.TidLandingComponent();
 
   this._smartCardOrder = JSON.parse(smartCard);
@@ -26,11 +25,14 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
 
   this._lineComponent = new Tw.LineComponent();
 
-  this._openEmrNotice(emrNotice);
+  this._initEmrNotice(emrNotice, isLogin === 'true');
+
   this._setBanner();
   this._cachedDefaultElement();
+
   this._bindEventStore();
   this._bindEventLogin();
+
   this._getQuickMenu(isLogin === 'true');
 
   if ( isLogin === 'true' ) {
@@ -76,6 +78,15 @@ Tw.MainHome.prototype = {
     this.$container.on('click', '#fe-bt-data-link', $.proxy(this._openDataLink, this));
     this.$container.on('click', '#fe-bt-link-broadband', $.proxy(this._onClickGoBroadband, this));
     this.$container.on('click', '#fe-bt-link-billguide', $.proxy(this._onClickGoBillGuide, this));
+
+    this.$hiddenLine = this.$container.find('#fe-bt-hidden-line-register');
+    this.$hiddenPwdGuide = this.$container.find('#fe-bt-hidden-pwd-guide');
+    this.$hiddenNotice = this.$container.find('#fe-bt-hidden-notice');
+    this.$hiddenNewLine = this.$container.find('#fe-bt-hidden-new-line');
+    this.$hiddenLine.on('click', $.proxy(this._onHiddenEventLineRegister, this));
+    this.$hiddenPwdGuide.on('click', $.proxy(this._onHiddenEventPwdGuide, this));
+    this.$hiddenNotice.on('click', $.proxy(this._onHiddenEventNotice, this));
+    this.$hiddenNewLine.on('click', $.proxy(this._onHiddenEventNewLine, this));
   },
   _bindEventStore: function () {
     this.$container.on('click', '.fe-home-external', $.proxy(this._onClickExternal, this));
@@ -214,40 +225,33 @@ Tw.MainHome.prototype = {
     this._targetDataLink = this.DATA_LINK.FAMILY;
     this._popupService.close();
   },
-  _openEmrNotice: function (notice) {
+  _initEmrNotice: function (notice, isLogin) {
     if ( notice === 'true' ) {
-      this._getHomeNotice();
+      this._getHomeNotice(isLogin);
     } else {
-      this._openLineResisterPopup();
+      this._openLineResisterPopup(isLogin);
     }
   },
-  _getHomeNotice: function () {
+  _getHomeNotice: function (isLogin) {
     this._apiService.request(Tw.NODE_CMD.GET_HOME_NOTICE, {})
-      .done($.proxy(this._successHomeNotice, this));
+      .done($.proxy(this._successHomeNotice, this, isLogin));
   },
-  _successHomeNotice: function (resp) {
+  _successHomeNotice: function (isLogin, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._openNoticePopup(resp.result.emrNotice);
+      this._openEmrNotice(resp.result.emrNotice, isLogin);
     } else {
-      this._openLineResisterPopup();
+      this._openLineResisterPopup(isLogin);
     }
   },
-  _openNoticePopup: function (notice) {
+  _openEmrNotice: function (notice, isLogin) {
     var startTime = Tw.DateHelper.convDateFormat(notice.bltnStaDtm).getTime();
     var endTime = Tw.DateHelper.convDateFormat(notice.bltnEndDtm).getTime();
     var today = new Date().getTime();
     this._emrNotice = notice;
     if ( today > startTime && today < endTime && this._checkShowEmrNotice(notice, today) ) {
-      this._popupService.open({
-        'pop_name': 'type_tx_scroll',
-        'title': notice.ntcTitNm,
-        'title_type': 'sub',
-        'cont_align': 'tl',
-        'contents': notice.ntcCtt,
-        'bt_b': this._makeBtnList(notice)
-      }, $.proxy(this._onOpenNotice, this), $.proxy(this._onCloseNotice, this));
+      this.$hiddenNotice.trigger('click', notice);
     } else {
-      this._openLineResisterPopup();
+      this._openLineResisterPopup(isLogin);
     }
   },
   _checkShowEmrNotice: function (notice, today) {
@@ -259,6 +263,16 @@ Tw.MainHome.prototype = {
       return stored.time < today;
     }
     return true;
+  },
+  _openEmrNoticePopup: function (notice) {
+    this._popupService.open({
+      'pop_name': 'type_tx_scroll',
+      'title': notice.ntcTitNm,
+      'title_type': 'sub',
+      'cont_align': 'tl',
+      'contents': notice.ntcCtt,
+      'bt_b': this._makeBtnList(notice)
+    }, $.proxy(this._onOpenNotice, this), $.proxy(this._onCloseNotice, this));
   },
   _makeBtnList: function (notice) {
     var NOTI_POPUP_STYLE = {
@@ -304,24 +318,23 @@ Tw.MainHome.prototype = {
     };
     Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.HOME_EMR_NOTICE, JSON.stringify(store));
   },
-  _openLineResisterPopup: function () {
-    var layerType = this.$container.data('layertype');
-    // var layerType = Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER;
-    Tw.Logger.info('[Home] layerType', layerType);
-    if ( !Tw.FormatHelper.isEmpty(layerType) ) {
-      this._updateNoticeType();
-      if ( layerType === Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER || layerType === Tw.LOGIN_NOTICE_TYPE.EXIST_CUSTOMER ) {
-        setTimeout($.proxy(function () {
-          this._lineRegisterLayer.openRegisterLinePopup(layerType);
-        }, this), 300);
-      } else if ( layerType === Tw.LOGIN_NOTICE_TYPE.CUSTOMER_PASSWORD ) {
-        this._openCustomerPasswordGuide();
-      } else if ( layerType === Tw.LOGIN_NOTICE_TYPE.NEW_LINE ) {
-        setTimeout($.proxy(function () {
-          this._popupService.openAlert(Tw.ALERT_MSG_HOME.NEW_LINE, null, null, $.proxy(this._closeNewLine, this));
-        }, this), 300);
+  _openLineResisterPopup: function (isLogin) {
+    if ( isLogin ) {
+      var layerType = this.$container.data('layertype');
+      // var layerType = Tw.LOGIN_NOTICE_TYPE.EXIST_CUSTOMER;
+      Tw.Logger.info('[Home] layerType', layerType);
+      if ( !Tw.FormatHelper.isEmpty(layerType) ) {
+        this._updateNoticeType();
+        if ( layerType === Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER || layerType === Tw.LOGIN_NOTICE_TYPE.EXIST_CUSTOMER ) {
+          this.$hiddenLine.trigger('click', layerType);
+        } else if ( layerType === Tw.LOGIN_NOTICE_TYPE.CUSTOMER_PASSWORD ) {
+          this.$hiddenPwdGuide.trigger('click');
+        } else if ( layerType === Tw.LOGIN_NOTICE_TYPE.NEW_LINE ) {
+          this.$hiddenNewLine.trigger('click');
+        }
       }
     }
+
   },
   _updateNoticeType: function () {
     this._apiService.request(Tw.NODE_CMD.UPDATE_NOTICE_TYPE, {})
@@ -334,10 +347,8 @@ Tw.MainHome.prototype = {
     this._historyService.goLoad('/common/member/line');
   },
   _openCustomerPasswordGuide: function () {
-    setTimeout($.proxy(function () {
-      this._popupService.openTypeD(Tw.LOGIN_CUS_PW_GUIDE.TITLE, Tw.LOGIN_CUS_PW_GUIDE.CONTENTS, Tw.LOGIN_CUS_PW_GUIDE.BUTTON, '',
-        null, $.proxy(this._confirmCustPwGuide, this), $.proxy(this._closeCustPwGuide, this));
-    }, this), 300);
+    this._popupService.openTypeD(Tw.LOGIN_CUS_PW_GUIDE.TITLE, Tw.LOGIN_CUS_PW_GUIDE.CONTENTS, Tw.LOGIN_CUS_PW_GUIDE.BUTTON, '',
+      null, $.proxy(this._confirmCustPwGuide, this), $.proxy(this._closeCustPwGuide, this));
   },
   _confirmCustPwGuide: function () {
     this._goCustPwd = true;
@@ -854,5 +865,26 @@ Tw.MainHome.prototype = {
   },
   _onChangeQuickMenu: function () {
     this._getQuickMenu(true);
+  },
+  _onHiddenEventLineRegister: function ($event, layerType) {
+    var lineRegisterLayer = new Tw.LineRegisterComponent();
+    setTimeout($.proxy(function () {
+      lineRegisterLayer.openRegisterLinePopup(layerType);
+    }, this), 1000);
+  },
+  _onHiddenEventPwdGuide: function () {
+    setTimeout($.proxy(function () {
+      this._openCustomerPasswordGuide();
+    }, this), 1000);
+  },
+  _onHiddenEventNotice: function ($event, notice) {
+    setTimeout($.proxy(function () {
+      this._openEmrNoticePopup(notice);
+    }, this), 1000);
+  },
+  _onHiddenEventNewLine: function () {
+    setTimeout($.proxy(function () {
+      this._popupService.openAlert(Tw.ALERT_MSG_HOME.NEW_LINE, null, null, $.proxy(this._closeNewLine, this));
+    }, this), 1000);
   }
 };

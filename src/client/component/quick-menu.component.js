@@ -48,7 +48,7 @@ Tw.QuickMenuComponent.prototype = {
       var menuId = menuIdStr.indexOf('|') !== -1 ? menuIdStr.replace(/\|/g, ',') + ',' + this._menuId :
         Tw.FormatHelper.isEmpty(menuIdStr) ? this._menuId : menuIdStr + ',' + this._menuId;
 
-      if ( menuId.indexOf(',') !== -1 && menuId.split(',').length >= 20 ) {
+      if ( menuId.indexOf(',') !== -1 && menuId.split(',').length > 20 ) {
         this._popupService.openAlert(Tw.ALERT_MSG_HOME.A03);
       } else {
         this._apiService.request(Tw.API_CMD.BFF_04_0003, { menuIdStr: menuId })

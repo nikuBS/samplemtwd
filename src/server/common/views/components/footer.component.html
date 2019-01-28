@@ -64,10 +64,14 @@
             <li><button type="button"><i class="icon-gnb-lock-d"><span class="blind">lock disabled</span></i></button></li>
             <% } %>
             <% if (svcInfo && locals.pageInfo) { %>
-            <li class="none"><button id="fe-bt-quick-add" type="button" data-menuid="<%= pageInfo.menuId %>"><i class="icon-gnb-pin-n"><span class="blind">pin</span></i></button></li>
-            <li><button id="fe-bt-quick-remove" type="button" data-menuid="<%= pageInfo.menuId %>"><i class="icon-gnb-pin-d"><span class="blind">pin disabled</span></i></button></li>
+            <% if (svcInfo.svcMgmtNum === '') { %>
+            <li><button type="button"><i class="icon-gnb-pin-d"><span class="blind">pin disabled</span></i></button></li>
             <% } else { %>
-            <li><button id="fe-bt-quick-err" type="button"><i class="icon-gnb-pin-d"><span class="blind">pin disabled</span></i></button></li>
+            <li class="none"><button id="fe-bt-quick-add" type="button" data-menuid="<%= pageInfo.menuId %>"><i class="icon-gnb-pin-s"><span class="blind">pin selected</span></i></button></li>
+            <li><button id="fe-bt-quick-remove" type="button" data-menuid="<%= pageInfo.menuId %>"><i class="icon-gnb-pin-n"><span class="blind">pin</span></i></button></li>
+            <% } %>
+            <% } else { %>
+            <li><button type="button"><i class="icon-gnb-pin-d"><span class="blind">pin disabled</span></i></button></li>
             <% } %>
             <% if (locals.pageInfo) { %>
             <li><button id="fe-bt-share" type="button" data-menuid="<%= pageInfo.menuId %>" data-menuurl="<%= pageInfo.menuUrl %>"><i class="icon-gnb-share-n"><span class="blind">share</span></i></button></li>
