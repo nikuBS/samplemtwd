@@ -44,53 +44,13 @@ class MyTDataHotdata extends TwViewController {
             extraDataReq = this.reqPpsCard(); // PPS 정보
             break;
         }
-        Observable.combineLatest(extraDataReq).subscribe(([extraDataResp]) => {
-          let view = VIEW.BAR;
-          const option = {
-            svcInfo,
-            pageInfo,
-            usageData: {},
-            balanceAddOns: {},
-            ppsInfo: {}
-          };
-
-          switch ( svcInfo.svcAttrCd ) {
-            case SVC_ATTR_E.MOBILE_PHONE :
-              option['usageData'] = this.parseCellPhoneUsageData(usageDataResp.result, svcInfo);
-              if ( extraDataResp && extraDataResp['code'] === API_CODE.CODE_00 ) {
-                option['balanceAddOns'] = extraDataResp['result'];
-              }
-              view = VIEW.CIRCLE;
-              break;
-            case SVC_ATTR_E.PPS :
-              // extraDataResp = {
-              //   'code': '00',
-              //   'msg': 'success',
-              //   'result': {
-              //     'prodAmt': '0',
-              //     'remained': '500',
-              //     'obEndDt': '20180615',
-              //     'inbEndDt': '20180625',
-              //     'numEndDt': '20200215',
-              //     'dataYn': 'Y',
-              //     'dataOnlyYn': 'N'
-              //   }
-              // };
-              option['usageData'] = this.parseUsageData(usageDataResp.result);
-              if ( extraDataResp && extraDataResp['code'] === API_CODE.CODE_00 ) {
-                const extraData = extraDataResp['result'];
-                extraData.showObEndDt = DateHelper.getShortDate(extraData.obEndDt);
-                extraData.showInbEndDt = DateHelper.getShortDate(extraData.inbEndDt);
-                extraData.showNumEndDt = DateHelper.getShortDate(extraData.numEndDt);
-                option['ppsInfo'] = extraData;
-              }
-              break;
-            default:
-              option['usageData'] = this.parseUsageData(usageDataResp.result);
-              break;
-          }
-          res.render(view, option);
-        });
+        if (extraDataReq) {
+          Observable.combineLatest(extraDataReq).subscribe(([extraDataResp]) => {
+            this._render(svcInfo, pageInfo, res, usageDataResp, extraDataResp);
+          });
+        } else {
+          this._render(svcInfo, pageInfo, res, usageDataResp);
+        }
       } else {
         res.render(VIEW.ERROR, { usageData: usageDataResp, svcInfo: svcInfo });
       }
@@ -210,6 +170,42 @@ class MyTDataHotdata extends TwViewController {
     });
     return usageData;
   }
+
+  private _render(svcInfo: any, pageInfo: any, res: any, usageDataResp: any, extraDataResp?: any) {
+    let view = VIEW.BAR;
+    const option = {
+      svcInfo,
+      pageInfo,
+      usageData: {},
+      balanceAddOns: {},
+      ppsInfo: {}
+    };
+
+    switch ( svcInfo.svcAttrCd ) {
+      case SVC_ATTR_E.MOBILE_PHONE :
+        option['usageData'] = this.parseCellPhoneUsageData(usageDataResp.result, svcInfo);
+        if ( extraDataResp && extraDataResp['code'] === API_CODE.CODE_00 ) {
+          option['balanceAddOns'] = extraDataResp['result'];
+        }
+        view = VIEW.CIRCLE;
+        break;
+      case SVC_ATTR_E.PPS :
+        option['usageData'] = this.parseUsageData(usageDataResp.result);
+        if ( extraDataResp && extraDataResp['code'] === API_CODE.CODE_00 ) {
+          const extraData = extraDataResp['result'];
+          extraData.showObEndDt = DateHelper.getShortDate(extraData.obEndDt);
+          extraData.showInbEndDt = DateHelper.getShortDate(extraData.inbEndDt);
+          extraData.showNumEndDt = DateHelper.getShortDate(extraData.numEndDt);
+          option['ppsInfo'] = extraData;
+        }
+        break;
+      default:
+        option['usageData'] = this.parseUsageData(usageDataResp.result);
+        break;
+    }
+    res.render(view, option);
+  }
+
 
   private setTotalRemained(usageData: any) {
     const gnrlData = usageData.gnrlData || [];
