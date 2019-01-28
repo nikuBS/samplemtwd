@@ -343,7 +343,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
       return this._toggleApplyBtn(false);
     }
 
-    if (this.$reservName.val().length < 1 || this.$reservNumber.val().length < 1) {
+    if ($.trim(this.$reservName.val()).length < 1 || this.$reservNumber.val().length < 1) {
       return this._toggleApplyBtn(false);
     }
 
@@ -419,8 +419,8 @@ Tw.ProductWireplanJoinReservation.prototype = {
         $.proxy(this._setNotSelectCombine, this), $.proxy(this._procNotSelectCombine, this), Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
     }
 
-    if (this._typeCd === 'combine' && this._prodId !== 'NH00000103' && this.$combineExplain.find('input[type=checkbox]').is(':checked')
-      && !this._logged) {
+    if (this._typeCd === 'combine' && this._prodId !== 'NH00000103' &&
+      this.$combineExplain.find('input[type=checkbox]').is(':checked') && !this._logged) {
       return this._popupService.openConfirmButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A36.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A36.TITLE,
         $.proxy(this._setGoLoginFlag, this), $.proxy(this._goLogin, this), Tw.BUTTON_LABEL.CLOSE);
     }

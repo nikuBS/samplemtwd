@@ -575,11 +575,6 @@ class ApiRouter {
   private changeSession(req: Request, res: Response, next: NextFunction) {
     const params = req.body;
     this.logger.info(this, '[chagne session]', params);
-    res.clearCookie(COOKIE_KEY.XTUID);
-
-    if ( !FormatHelper.isEmpty(req.cookies.XTLID) ) {
-      res.cookie(COOKIE_KEY.XTUID, req.cookies.XTLID);
-    }
 
     this.apiService.setCurrentReq(req, res);
     // this.loginService.setCurrentReq(req, res);

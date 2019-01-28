@@ -161,7 +161,6 @@ Tw.LineComponent.prototype = {
   _successChangeLine: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._changeLine = true;
-      Tw.CommonHelper.setXtSvcInfo();
 
       if ( this._openLineList ) {
         this._popupService.close();
