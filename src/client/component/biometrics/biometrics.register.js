@@ -37,7 +37,9 @@ Tw.BiometricsRegister.prototype = {
   _onClickCancel: function () {
     this._popupService.closeAll();
   },
-  _onClickRegister: function () {
+  _onClickRegister: function ($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
     this._nativeService.send(Tw.NTV_CMD.FIDO_REGISTER, {}, $.proxy(this._onFidoRegister, this));
   },
   _onFidoRegister: function (resp) {
