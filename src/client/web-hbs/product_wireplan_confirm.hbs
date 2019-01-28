@@ -248,11 +248,21 @@
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
                     <ul class="noti-list fe-noti-list">
-                        <li>서비스 이용안내 <button type="button" class="tip-view" id="TC000014" page-id="M000434" aria-haspopup="true">TIP</button></li>
-                        <li>서비스 이용안내 <button type="button" class="tip-view" id="TC000015" page-id="M000434" aria-haspopup="true">TIP</button></li>
+                        <li>
+                            <button type="button" class="tip-view-btn fe-btn_tip_view" id="TC000014" aria-haspopup="true" page-id="M000434">
+                                서비스 이용안내 <span class="tip-view">TIP</span>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="tip-view-btn fe-btn_tip_view" id="TC000015" aria-haspopup="true" page-id="M000434">
+                                서비스 이용안내 <span class="tip-view">TIP</span>
+                            </button>
+                        </li>
                         {{#noticeList}}
                             <li>
-                                {{noticeTit}} <button type="button" class="tip-view fe-btn_tip_view" data-title="{{noticeTit}}" aria-haspopup="true">TIP</button>
+                                <button type="button" class="tip-view-btn fe-btn_tip_view" aria-haspopup="true" data-title="{{noticeTit}}">
+                                    {{noticeTit}}<span class="tip-view">TIP</span>
+                                </button>
                                 <div class="none fe-tip_view_html">{{{noticeTxt}}}</div>
                             </li>
                         {{/noticeList}}
