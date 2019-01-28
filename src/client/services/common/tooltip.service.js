@@ -75,19 +75,9 @@ Tw.TooltipService.prototype = {
     }
   },
   _setTitle: function ($target, $result) {
-    // var $child = $target.find('span');
-    // if ($target.hasClass('btn-tip')) {
-    //   $child = $target.find('i');
-    // }
-    // $child.before($result.ttipTitNm);
-
     var $children = $target.children().clone();
     $target.text($result.ttipTitNm);
     $target.append($children);
-    // var parentTarget = $target.parent();
-    //
-    // parentTarget.text($result.ttipTitNm);
-    // parentTarget.append(cloneTarget);
 
     $target.on('click', $.proxy(this._openTip, this, $result));
   },
