@@ -196,6 +196,8 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
         this.$addBtn.removeAttr('style');
       }, this)
     );
-    this.$addBtn.css({'pointer-events':'none','background':'#3b98e6'});
+    if(!this.$addBtn.attr('disabled')){
+      this.$addBtn.css({'pointer-events':'none','background':'#3b98e6'});
+    }
   }
 };
