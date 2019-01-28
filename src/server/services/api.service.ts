@@ -211,7 +211,11 @@ class ApiService {
     if ( headers['set-cookie'] ) {
       const serverSession = this.parseSessionCookie(headers['set-cookie'][0]);
       this.logger.info(this, '[Set Session Cookie]', serverSession);
-      return this.loginService.setServerSession(serverSession);
+      if ( !FormatHelper.isEmpty(serverSession) ) {
+        return this.loginService.setServerSession(serverSession);
+      } else {
+        return Observable.of({});
+      }
     } else {
       return Observable.of({});
     }
