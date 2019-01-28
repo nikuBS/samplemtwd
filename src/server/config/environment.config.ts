@@ -94,19 +94,14 @@ const environment = {
     CDN_MANIFEST: 'http://203.236.19.151',
     SHORTCUT: 'skt.sh',
     REDIS: {
-      // host: 'backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-prd-nod',
-      // port: 6379,
-      host: '61.250.19.37',
-      port: 32300,
-      // password: 'd86fdf7bd110811a08aab1106b1aa217'
-      password: '993d2ac0c060da72f0f8298aa4c11ece',
+      host: 'backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-prd-nod',
+      port: 6379,
+      password: 'd86fdf7bd110811a08aab1106b1aa217',
       db: 0
     },
     REDIS_TOS: {
-      // host: 'backing-redis-tos-ibm-redis-ha-dev-master-svc.mtw-prd-tos',
-      // port: 6379,
-      host: '61.250.19.37',
-      port: 32400,
+      host: 'backing-redis-tos-ibm-redis-ha-dev-master-svc.mtw-prd-tos',
+      port: 6379,
       db: 0
     },
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
