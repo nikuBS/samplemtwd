@@ -102,7 +102,7 @@ Tw.BenefitDisPgmInput.prototype = {
 
   _prodConfirmOk: function () {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
-    if(this._selType) {
+    if ( this._selType ) {
       this._apiService.request(Tw.API_CMD.BFF_10_0063, {
         svcAgrmtPrdCd: this._selType
       }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this));
@@ -122,7 +122,7 @@ Tw.BenefitDisPgmInput.prototype = {
     }
 
     this._popupService.close();
-    setTimeout($.proxy(function(){
+    setTimeout($.proxy(function () {
       this._openSuccessPop();
     }, this), 100);
   },
@@ -148,6 +148,14 @@ Tw.BenefitDisPgmInput.prototype = {
 
   _bindJoinResPopup: function ($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
+    $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
+  },
+
+  _closeAndGo: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
   },
 
   _closePop: function () {
