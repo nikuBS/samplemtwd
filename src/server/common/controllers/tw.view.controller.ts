@@ -13,6 +13,7 @@ import { LOGIN_TYPE, SVC_ATTR_NAME, LINE_NAME } from '../../types/bff.type';
 import { UrlMetaModel } from '../../models/url-meta.model';
 import { REDIS_KEY } from '../../types/redis.type';
 import DateHelper from '../../utils/date.helper';
+import ParamsHelper from '../../utils/params.helper';
 
 
 abstract class TwViewController {
@@ -62,6 +63,10 @@ abstract class TwViewController {
     this._apiService.setCurrentReq(req, res);
     this._loginService.setCurrentReq(req, res);
 
+    // res.set('Cache-Control', 'no-cache');
+    // res.set('expires', '0');
+    // res.set('pragma', 'no-store');
+
     this.setChannel(req, res).subscribe((resp) => {
       if ( this.checkLogin(req.session) ) {
         this.sessionLogin(req, res, next, path);
@@ -85,7 +90,8 @@ abstract class TwViewController {
 
   private login(req, res, next, path, tokenId, userId) {
     if ( !FormatHelper.isEmpty(tokenId) ) {
-      this.apiService.requestLoginTid(tokenId, req.query.stateVal).subscribe((resp) => {
+      const state = req.query.stateVal || req.query.state;
+      this.apiService.requestLoginTid(tokenId, state).subscribe((resp) => {
         this.renderPage(req, res, next, path);
       }, (error) => {
         this.failLogin(req, res, next, path, error.code);
@@ -222,15 +228,25 @@ abstract class TwViewController {
   }
 
   private failLogin(req, res, next, path, errorCode) {
+    const target = this.getTargetUrl(path, req.query);
     if ( errorCode === API_LOGIN_ERROR.ICAS3228 ) {    // 고객보호비밀번호
-      res.redirect('/common/member/login/cust-pwd?target=' + path);
+      res.redirect('/common/member/login/cust-pwd?target=' + target);
     } else if ( errorCode === API_LOGIN_ERROR.ICAS3235 ) {   // 휴면계정
-      res.redirect('/common/member/login/reactive?target=' + path);
+      res.redirect('/common/member/login/reactive?target=' + target);
     } else if ( errorCode === API_LOGIN_ERROR.ATH1003 ) {
-      res.redirect('/common/member/login/exceed-fail?target=' + path);
+      res.redirect('/common/member/login/exceed-fail?target=' + target);
     } else {
-      res.redirect('/common/member/login/fail?errorCode=' + errorCode + '&target=' + path);
+      res.redirect('/common/member/login/fail?errorCode=' + errorCode + '&target=' + target);
     }
+  }
+  private getTargetUrl(url, query) {
+    delete query.id_token;
+    delete query.stateVal;
+    delete query.state;
+    delete query.token_type;
+    delete query.sso_session_id;
+
+    return url + ParamsHelper.setQueryParams(query);
   }
 
   private checkError(error: string, errorMessage: string) {

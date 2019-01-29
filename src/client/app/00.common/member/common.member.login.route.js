@@ -4,13 +4,13 @@
  * Date: 2018.07.12
  */
 
-Tw.CommonMemberLoginRoute = function (target, state) {
+Tw.CommonMemberLoginRoute = function (target) {
   this._historyService = new Tw.HistoryService();
-  this._init(target, state);
+  this._init(target);
 };
 
 Tw.CommonMemberLoginRoute.prototype = {
-  _init: function (target, state) {
+  _init: function (target) {
     var token = window.location.hash.replace(/^#/i, '');
     var url = target;
     var hash = '';
@@ -21,9 +21,9 @@ Tw.CommonMemberLoginRoute.prototype = {
     }
 
     if ( /\?/.test(url) ) {
-      url = url + '&stateVal=' + state + '&' + token;
+      url = url + '&' + token;
     } else {
-      url = url + '?stateVal=' + state + '&' + token;
+      url = url + '?' + token;
     }
 
     this._historyService.replaceURL(url + hash);
