@@ -259,7 +259,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
   _onSuccessJoinMembership: function (resp) {
     this.loadingView(false);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.afterRequestSuccess('/membership/mymembership/history', '/membership/submain',
+      this._popupService.afterRequestSuccess('/membership/my/history', '/membership/submain',
         Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.LINK_TITLE, Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.TITLE,
         Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.CONTENT);
       // 완료 팝업이 뜬 이후에 T Pay 관련 팝업 띄우기 위함
