@@ -287,11 +287,14 @@ Tw.ProductCommonConfirm.prototype = {
   },
 
   _closePop: function() {
-    this._popupService.close();
     if (this._data.selType)  {
       setTimeout($.proxy(function () {
-        this._historyService.goLoad('/benefit/submain/detail/select-contract?prod_id=NA00004430&type='+ this._data.selType);
+        this._historyService.goBack();
+        // this._historyService.replaceURL('/benefit/submain/detail/select-contract?prod_id=NA00004430&type='+ this._data.selType);
       }, this), 100);
+    }
+    else {
+      this._popupService.close();
     }
   },
 

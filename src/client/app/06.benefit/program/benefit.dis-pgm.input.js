@@ -58,7 +58,7 @@ Tw.BenefitDisPgmInput.prototype = {
       title: Tw.PRODUCT_TYPE_NM.JOIN,
       applyBtnText: Tw.BUTTON_LABEL.JOIN,
       joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
-      typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
+      typeText: Tw.PRODUCT_CTG_NM.DISCOUNT_PROGRAM,
       toProdName: this._confirmOptions.preinfo.reqProdInfo.prodNm,
       toProdDesc: this._confirmOptions.preinfo.reqProdInfo.prodSmryDesc,
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
@@ -73,8 +73,6 @@ Tw.BenefitDisPgmInput.prototype = {
 
   _callConfirmCommonJs: function () {
     var options = $.extend(this._confirmOptions, {
-      joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
-      typeText: Tw.PRODUCT_CTG_NM.DISCOUNT_PROGRAM,
       isSelectedProgram: true,
       isContractPlan: this._confirmOptions.isContractPlan,
       isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this._prodId) === -1,
