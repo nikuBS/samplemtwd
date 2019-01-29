@@ -129,8 +129,7 @@
   $(document).ready(function () {
     var oMyTWireInfo = new Tw.MyTJoinWireModifyProduct( $('#fe-wrap'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
-      svcInfo: <%-JSON.stringify(svcInfo) %>,
-      allSvc: <%-JSON.stringify(allSvc) %>,
+      svcAttrCd: <%-JSON.stringify(svcInfo.svcAttrCd) %>,
       resDataInfo: <%-JSON.stringify(resDataInfo) %>,
       commDataInfo: <%-JSON.stringify(commDataInfo) %>
   } );

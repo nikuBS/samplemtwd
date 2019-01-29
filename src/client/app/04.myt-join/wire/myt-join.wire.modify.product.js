@@ -264,7 +264,7 @@ Tw.MyTJoinWireModifyProduct.prototype = {
   _productBillSelectFun: function() {
 
     this.productBillSelect = _.filter( this.productBillList, $.proxy(function(item){
-      return item.id === this.resData.svcInfo.svcAttrCd;
+      return item.id === this.resData.svcAttrCd;
       // return item.id === 'S3';
     }, this) )[0];
 
@@ -272,7 +272,7 @@ Tw.MyTJoinWireModifyProduct.prototype = {
   },
   _svcCtgNmFun: function() {
 
-    var idVar = this.resData.svcInfo.svcAttrCd;
+    var idVar = this.resData.svcAttrCd;
 
     switch ( idVar) {
       case 'S1':

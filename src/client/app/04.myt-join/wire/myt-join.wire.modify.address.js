@@ -30,7 +30,7 @@ Tw.MyTJoinWireModifyAddress = function (rootEl, resData) {
     cntcPrefrPhonNum: '',       // 일반전화 번호
 
     reqSiteClCd: '03',          // 요청사이트구분 (01:T-WORLD, 02:SKB사이버고객센터, 03:모바일 T)
-    reqrNm: this.resData.svcInfo.mbrNm  // 신청인명
+    reqrNm: this.resData.mbrNm  // 신청인명
 
   };
 

@@ -56,6 +56,9 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
     Tw.Logger.info('[_lookupBtnEvt]', this.$inputPhone.val(), event );
     // var $target = $(event.currentTarget);
     var phoneNm = this._vdPhoneNm( this.$inputPhone.val() );
+    if(!phoneNm) {
+      return;
+    }
     var phoneNmArr = phoneNm.split('-');
     Tw.Logger.info('[phoneNmArr]', phoneNmArr);
     var param = {
@@ -103,7 +106,11 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
   _vdPhoneNm:function( $phoneNm ) {
     Tw.Logger.info('[휴대폰 유효성 체크]', $phoneNm);
     var phoneNm = $phoneNm;
-    Tw.ValidationHelper.checkMoreLength(phoneNm, 10, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_V9);
+    if(!Tw.ValidationHelper.isCellPhone(phoneNm) && !Tw.ValidationHelper.isTelephone(phoneNm)){
+      // this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_V9);
+      this._popupService.openAlert(Tw.MYT_JOIN_WIRE_MODIFY_PERIOD.ALERT.TEL_NUM_ERROR);
+      return;
+    }
     // phoneNm = this._noDash( phoneNm ); // 대시 삭제
     Tw.Logger.info('[휴대폰 유효성 체크 결과]', phoneNm);
     return phoneNm;
