@@ -60,7 +60,7 @@ Tw.MyTJoinInfoDiscount.prototype = {
   _productMove: function (e) {
     var $target = $(e.currentTarget);
     var prodId = $target.attr('data-id');
-    if ( prodId.indexOf('NA') > -1 ) {
+    if ( prodId ) {
       this._history.goLoad('/product/callplan/'+ prodId);
     }
     else {
