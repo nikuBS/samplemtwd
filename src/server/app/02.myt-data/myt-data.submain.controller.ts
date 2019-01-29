@@ -152,13 +152,15 @@ class MytDataSubmainController extends TwViewController {
         // T끼리 선물하기 내역
         // type: 1 send, 2 recharge
         dpBkd.map((item) => {
+          const dataQty = FormatHelper.convDataFormat(item.dataQty, 'MB');
           item['opDt'] = item.opDtm.slice(0, 8);
           item['class'] = (item.type === '1' ? 'send' : 'recharge');
           item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.DATA_GIFT;
-          item['u_sub'] = MYT_T_DATA_GIFT_TYPE[item.giftType] + ' | ' + FormatHelper.conTelFormatWithDash(item.svcNum);
-          item['d_title'] = item.dataQty;
+          // 충전/선물내역과 동일하게 처리
+          item['u_sub'] = /*MYT_T_DATA_GIFT_TYPE[item.giftType] + ' | ' + */FormatHelper.conTelFormatWithDash(item.svcNum);
+          item['d_title'] = dataQty.data;
           item['d_sub'] = DateHelper.getShortDate(item.opDt);
-          item['unit'] = DATA_UNIT.MB;
+          item['unit'] = dataQty.unit;
         });
         breakdownList.push(dpBkd);
       }
