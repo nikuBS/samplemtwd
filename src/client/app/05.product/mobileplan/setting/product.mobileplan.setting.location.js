@@ -13,7 +13,6 @@ Tw.ProductMobileplanSettingLocation = function(rootEl, options, showNumberSettin
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
-  this._maskingComp = null;
 
   this._init();
   this._bindEvent();
