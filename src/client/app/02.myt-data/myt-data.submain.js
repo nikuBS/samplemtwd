@@ -309,7 +309,7 @@ Tw.MyTDataSubMain.prototype = {
         baseTotalData += usageData;
         if ( usageData > 0 ) {
           chart_data.push({
-            t: Tw.DateHelper.getShortKoreanAfterMonth(data[idx].invMth), // 각 항목 타이틀
+            t: Tw.DateHelper.getShortKoreanMonth(data[idx].invMth), // 각 항목 타이틀
             v: this.__convertData(usageData) // 배열 평균값으로 전달
           });
         }
@@ -322,7 +322,7 @@ Tw.MyTDataSubMain.prototype = {
           data = this.data.pattern.voice;
           for ( idx = 0; idx < data.length; idx++ ) {
             chart_data.push({
-              t: Tw.DateHelper.getShortKoreanAfterMonth(data[idx].invMth), // 각 항목 타이틀
+              t: Tw.DateHelper.getShortKoreanMonth(data[idx].invMth), // 각 항목 타이틀
               v: this.__convertVoice(parseInt(data[idx].totalUsage, 10)) // 배열 평균값으로 전달
             });
           }
