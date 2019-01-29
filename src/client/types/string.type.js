@@ -1544,7 +1544,7 @@ Tw.SELECTED_DATE_STRING = {
 
 Tw.ROAMING_COMBINE_LINE_STRING = {
   COMBINE_LINE: '자회선 설정하기 >',
-  DUPLICATE_LINE : '모서비스번호와 멤버서비스번호가 동일하여 가입 처리 불가능합니다.'
+  DUPLICATE_LINE : 'T로밍도착알리미 멤버에 이미 존재하는 서비스번호입니다.'
 };
 
 Tw.SETTING_LOCATION = {
