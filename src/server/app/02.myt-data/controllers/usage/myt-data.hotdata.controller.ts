@@ -47,6 +47,8 @@ class MyTDataHotdata extends TwViewController {
         if (extraDataReq) {
           Observable.combineLatest(extraDataReq).subscribe(([extraDataResp]) => {
             this._render(svcInfo, pageInfo, res, usageDataResp, extraDataResp);
+          }, (resp) => {
+            this._render(svcInfo, pageInfo, res, usageDataResp);
           });
         } else {
           this._render(svcInfo, pageInfo, res, usageDataResp);
@@ -90,10 +92,7 @@ class MyTDataHotdata extends TwViewController {
     const spclData = usageData.spclData || [];  // 특수 데이터 공제항목
     let dataArr = new Array();
     let defaultData;                            // 기본제공데이터
-    let tOPlanSharedData;                        // 통합공유데이터
-
-    // 임시
-    // svcInfo.prodId = 'NA00005955';              // lck6464
+    let tOPlanSharedData;                       // 통합공유데이터
 
     if (gnrlData) {
       // 총데이터 잔여량 표시
