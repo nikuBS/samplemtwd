@@ -5,6 +5,7 @@ interface ErrorOptions {
   title?: string;
   code?: any;
   msg?: any;
+  isBackCheck?: boolean;
   svcInfo: any;
 }
 
@@ -28,7 +29,8 @@ class ErrorService {
       title: options.title || 'Error',
       code: options.code || '',
       msg: options.msg || '',
-      svcInfo: options.svcInfo || null
+      svcInfo: options.svcInfo || null,
+      isBackCheck: options.isBackCheck || false
     });
   }
 

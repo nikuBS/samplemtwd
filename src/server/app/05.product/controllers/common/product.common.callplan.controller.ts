@@ -350,7 +350,7 @@ class ProductCommonCallplan extends TwViewController {
         return true;
       }
 
-      if (FormatHelper.isEmpty(item.titleNm)) {
+      if (FormatHelper.isEmpty(item.titleNm) || item.titleNm === PRODUCT_CALLPLAN.JOIN_TERMINATE_CHANNEL) {
         return true;
       }
 
