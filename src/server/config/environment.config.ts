@@ -104,7 +104,7 @@ const environment = {
       port: 6379,
       db: 0
     },
-    TID_SERVER: 'https://auth-stg.skt-id.co.kr',
+    TID_SERVER: 'https://auth.skt-id.co.kr',
     SEARCH_SERVER: 'http://61.250.22.114:8080',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     // DOMAIN: 'https://beta.m.tworld.co.kr',
