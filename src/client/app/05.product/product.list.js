@@ -247,32 +247,31 @@ Tw.ProductList.prototype = {
   },
 
   _handleClickFilter: function($layer, e) {
-    var $target = $(e.currentTarget);
-    if (this._hasSelectedTag) {
+    var $target = $(e.currentTarget),
+      $selectedTag = $layer.find('.suggest-tag-list .link.active');
+    if ($selectedTag.length > 0) {
       $target.removeClass('checked').attr('aria-checked', false);
       var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A17;
       this._popupService.openConfirmButton(
         ALERT.MSG,
         ALERT.TITLE,
-        $.proxy(this._handleResetSelectedTag, this, $layer, $target),
+        $.proxy(this._handleResetSelectedTag, this, $selectedTag, $target),
         null,
         Tw.BUTTON_LABEL.CLOSE
       );
     }
   },
 
-  _handleResetSelectedTag: function($layer, $target) {
+  _handleResetSelectedTag: function($selectedTag, $target) {
     this._hasSelectedTag = false;
-    var selectedTag = $layer.find('.suggest-tag-list .link.active');
-    if (selectedTag.length > 0) {
-      selectedTag.removeClass('active');
-    }
+    $selectedTag.removeClass('active');
     $target.addClass('checked').attr('aria-checked', true);
     this._popupService.close();
   },
 
   _handleResetFilters: function($layer) {
     var selectedFilters = $layer.find('li[aria-checked="true"]'),
+      selectedTag = $layer.find('.suggest-tag-list .link.active'),
       i = 0;
 
     for (; i < selectedFilters.length; i++) {
@@ -280,6 +279,8 @@ Tw.ProductList.prototype = {
       selectedFilters[i].className = selectedFilters[i].className.replace('checked', '');
       $(selectedFilters[i].children[0]).removeAttr('checked');
     }
+
+    selectedTag.length > 0 && selectedTag.removeClass('active');
   },
 
   _openSelectTagPopup: function($layer, e) {
