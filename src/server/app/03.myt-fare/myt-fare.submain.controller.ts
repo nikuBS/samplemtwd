@@ -160,7 +160,7 @@ class MyTFareSubmainController extends TwViewController {
       }
       // 최근납부내역
       if ( totalPayment ) {
-        data.totalPayment = totalPayment.paymentRecord;
+        data.totalPayment = FormatHelper.sortObjArrDesc(totalPayment.paymentRecord, 'opDt');
       }
       // 세금계산서
       if ( taxInvoice ) {
