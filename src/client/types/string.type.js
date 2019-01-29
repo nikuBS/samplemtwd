@@ -984,7 +984,8 @@ Tw.MYT_DATA_TING = {
   A81_TITLE: '팅요금 선물을 차단하시겠습니까?',
   A81_CONTENT: '차단 시에는 팅요금 선물을 할 수 없습니다.',
   A81_BTN_CONFIRM: '차단하기',
-  SUCCESS_BLOCK: '팅 요금 선물 차단 완료 되었습니다.'
+  SUCCESS_BLOCK: '팅 요금 선물 차단 완료 되었습니다.',
+  ERROR_LIMIT: '데이터한도요금충전 서비스를 이용하실 수 없습니다. <br> 팅계열 한도요금제(팅/자녀안심/복지)는 별도 데이터 충전을 하실 수없습니다.'
 };
 
 Tw.MYT_DATA_PREPAID = {

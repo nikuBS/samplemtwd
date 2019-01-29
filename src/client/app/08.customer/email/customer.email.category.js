@@ -32,15 +32,17 @@ Tw.CustomerEmailCategory.prototype = {
     this.$select_service_depth2 = $('.fe-service_depth2');
     this.$select_quality_depth1 = $('.fe-quality_depth1');
     this.$wrap_tpl_faq = $('.fe-btn_faq');
+    this.$wrap_tpl_service = this.$container.find('.fe-wrap_tpl_service');
+    this.$wrap_tpl_quality = this.$container.find('.fe-wrap_tpl_quality');
   },
 
   _bindEvent: function () {
     this.$select_service_depth1.on('click', $.proxy(this._onClickService1Depth, this));
     this.$select_service_depth2.on('click', $.proxy(this._onClickService2Depth, this));
     this.$select_quality_depth1.on('click', $.proxy(this._onClickQuality1Depth, this));
-    this.$container.on('click touchstart', '[data-service-depth1]', $.proxy(this._onSelectService1Depth, this));
-    this.$container.on('click touchstart', '[data-service-depth2]', $.proxy(this._onSelectService2Depth, this));
-    this.$container.on('click touchstart', '[data-quality-depth1]', $.proxy(this._onSelectQuality1Depth, this));
+    this.$wrap_tpl_service.on('click', '[data-service-depth1]', $.proxy(this._onSelectService1Depth, this));
+    this.$wrap_tpl_service.on('click', '[data-service-depth2]', $.proxy(this._onSelectService2Depth, this));
+    this.$wrap_tpl_quality.on('click', '[data-quality-depth1]', $.proxy(this._onSelectQuality1Depth, this));
     this.$container.on('getCategory', $.proxy(this._getCurrentCategory, this));
     this.$container.on('getTabIndex', $.proxy(this._getCurrentTab, this));
   },
@@ -131,6 +133,9 @@ Tw.CustomerEmailCategory.prototype = {
   },
 
   _onSelectService1Depth: function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+
     this._popupService.close();
 
     var sDepth1Value = $(e.currentTarget).data('service-depth1').toString();
@@ -158,6 +163,9 @@ Tw.CustomerEmailCategory.prototype = {
   },
 
   _onSelectService2Depth: function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+
     this._popupService.close();
 
     var sDepth2Value = $(e.currentTarget).data('service-depth2').toString();
@@ -167,10 +175,13 @@ Tw.CustomerEmailCategory.prototype = {
     this.$select_service_depth2.data('service-depth2', sDepth2Value);
     this.service.depth2 = sDepth2Value;
 
-    this.$container.trigger('changeServiceTemplate', this.service);
+    // this.$container.trigger('changeServiceTemplate', this.service);
   },
 
   _onSelectQuality1Depth: function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+
     this._popupService.close();
 
     var sDepth1Value = $(e.currentTarget).data('quality-depth1');
@@ -180,7 +191,7 @@ Tw.CustomerEmailCategory.prototype = {
     this.$select_quality_depth1.data('quality-depth1', sDepth1Value);
     this.quality.depth1 = sDepth1Value;
 
-    this.$container.trigger('changeQualityTemplate', this.quality);
+    // this.$container.trigger('changeQualityTemplate', this.quality);
   },
 
   _getCurrentCategory: function () {

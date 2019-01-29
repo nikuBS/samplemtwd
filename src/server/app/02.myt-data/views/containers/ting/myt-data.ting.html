@@ -293,6 +293,10 @@
                         <div class="history-list type2">
                             <ul class="fe-wrap-block-list">
                             </ul>
+
+                            <div class="btn-more fe-history-more" style="display:none">
+                                <button>더 보기</button>
+                            </div>
                         </div>
                     </div>
                     <div class="result-none fe-block-history-empty" style="display: none">
@@ -318,7 +322,11 @@
     <li>
         <div class="li-elem">
             <div class="title-box">
-                <span class="tit">{{opClNm}}</span>
+                {{#ifCond opClCd '===' '3'}}
+                <span class="tit">충전 허용</span>
+                {{else}}
+                <span class="tit">충전 차단</span>
+                {{/ifCond}}
                 <span class="sub-tit">
                     <span>{{opOrgNm}}</span><span>{{opDt}}</span>
                 </span>

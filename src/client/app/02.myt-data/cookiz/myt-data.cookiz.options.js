@@ -18,7 +18,8 @@ Tw.MyTDataCookizOptions = function (rootEl, svcInfo) {
 
 Tw.MyTDataCookizOptions.prototype = {
   _init: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0028, { childSvcMgmtNum: '' }).done($.proxy(this._onSuccessReceiveUserInfo, this));
+    // this._apiService.request(Tw.API_CMD.BFF_06_0028, { childSvcMgmtNum: '' }).done($.proxy(this._onSuccessReceiveUserInfo, this));
+    this._initialAuthList();
   },
 
   _cachedElement: function () {
@@ -27,6 +28,31 @@ Tw.MyTDataCookizOptions.prototype = {
   _bindEvent: function () {
     this.$container.on('click', '.fe-request-gift', $.proxy(this._getRequestGift, this));
     this.$container.on('click', '.fe-auth-history', $.proxy(this._goToAuthHistory, this));
+    this.$container.on('click', '.fe-history-more', $.proxy(this._onShowMoreList, this));
+  },
+
+  _initialAuthList: function () {
+    if ( $('.fe-wrap-history-list li').size() > 20 ) {
+      $('.fe-history-more').show();
+      this._hideListItem();
+    }
+  },
+
+  _onShowMoreList: function (e) {
+    var elTarget = $(e.currentTarget);
+    var elList = $('.fe-wrap-history-list li');
+
+    if ( elList.not(':visible').size() !== 0 ) {
+      elList.not(':visible').slice(0, 20).show();
+    }
+
+    if ( elList.not(':visible').size() === 0 ) {
+      elTarget.remove();
+    }
+  },
+
+  _hideListItem: function () {
+    $('.fe-wrap-history-list li').slice(20).hide();
   },
 
   _getRequestGift: function () {
