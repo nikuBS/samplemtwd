@@ -300,7 +300,7 @@
   $(document).ready(function () {
     var oMyTFareGuide = new Tw.MyTFareBillGuideIndividual( $('#fe-wrap'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
-      svcInfo: <%-JSON.stringify(svcInfo) %>,
+      svcMgmtNum: <%-JSON.stringify(svcInfo.svcMgmtNum) %>,
       allSvc: <%-JSON.stringify(allSvc) %>,
       billpayInfo : <%-JSON.stringify(billpayInfo) %>,
       commDataInfo : <%-JSON.stringify(commDataInfo) %>,

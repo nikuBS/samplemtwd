@@ -712,7 +712,46 @@ class MyTFareBillGuide extends TwViewController {
   // -------------------------------------------------------------[클리이어튼로 전송]
   public renderView(res: Response, view: string, data: any): any {
     this.logger.info(this, '[ HTML ] : ', view);
+    data.allSvc = this.getAllSvcClone(data.allSvc);
     res.render(view, data);
+  }
+
+
+  /**
+   * allSvc에서 필요한 정보만 복사
+   * @param allSvc
+   */
+  private getAllSvcClone(allSvc: any) {
+    if ( !allSvc ) {
+      return null;
+    }
+    return {
+      'm': this.copyArr(allSvc.m),
+      's': this.copyArr(allSvc.s),
+      'o': this.copyArr(allSvc.o)
+    };
+  }
+  private copyArr(arr: Array<any>) {
+    if ( !arr ) {
+      return arr;
+    }
+    const tmpArr: Array<any> = [];
+    for ( let i = 0 ; i < arr.length; i++ ) {
+      tmpArr.push(this.copyObj(arr[i], ['svcMgmtNum', 'prodId', 'prodNm']));
+    }
+    return tmpArr;
+  }
+  private copyObj(obj: any, keys: Array<any>) {
+    if ( !obj ) {
+      return obj;
+    }
+    const tmp = {};
+    for ( let i = 0; i < keys.length; i++) {
+      if ( obj.hasOwnProperty(keys[i]) ) {
+        tmp[keys[i]] = obj[keys[i]];
+      }
+    }
+    return tmp;
   }
 
 }
