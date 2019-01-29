@@ -39,8 +39,7 @@ Tw.BenefitSelectContract.prototype = {
       isAgreement: (this.data.joinInfoTerm.stipulationInfo && this.data.joinInfoTerm.stipulationInfo.existsCount > 0)
     });
     setTimeout($.proxy(function() {
-      var box = this.$radioGroup.find('li').closest('[data-type="'+ this.data.selType +'"]');
-      box.trigger('click');
+      this.$radioGroup.find('li').closest('.checked').trigger('click');
     }, this), 100);
   },
 

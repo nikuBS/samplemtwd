@@ -58,7 +58,7 @@ Tw.BenefitDisPgmInput.prototype = {
       title: Tw.PRODUCT_TYPE_NM.JOIN,
       applyBtnText: Tw.BUTTON_LABEL.JOIN,
       joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
-      typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
+      typeText: Tw.PRODUCT_CTG_NM.DISCOUNT_PROGRAM,
       toProdName: this._confirmOptions.preinfo.reqProdInfo.prodNm,
       toProdDesc: this._confirmOptions.preinfo.reqProdInfo.prodSmryDesc,
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
@@ -73,8 +73,6 @@ Tw.BenefitDisPgmInput.prototype = {
 
   _callConfirmCommonJs: function () {
     var options = $.extend(this._confirmOptions, {
-      joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
-      typeText: Tw.PRODUCT_CTG_NM.DISCOUNT_PROGRAM,
       isSelectedProgram: true,
       isContractPlan: this._confirmOptions.isContractPlan,
       isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this._prodId) === -1,
@@ -104,7 +102,7 @@ Tw.BenefitDisPgmInput.prototype = {
 
   _prodConfirmOk: function () {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
-    if(this._selType) {
+    if ( this._selType ) {
       this._apiService.request(Tw.API_CMD.BFF_10_0063, {
         svcAgrmtPrdCd: this._selType
       }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this));
@@ -124,7 +122,7 @@ Tw.BenefitDisPgmInput.prototype = {
     }
 
     this._popupService.close();
-    setTimeout($.proxy(function(){
+    setTimeout($.proxy(function () {
       this._openSuccessPop();
     }, this), 100);
   },
@@ -150,6 +148,14 @@ Tw.BenefitDisPgmInput.prototype = {
 
   _bindJoinResPopup: function ($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
+    $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
+  },
+
+  _closeAndGo: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
   },
 
   _closePop: function () {

@@ -124,7 +124,7 @@ Tw.BenefitDisPgmCancel.prototype = {
           btClass: 'item-one',
           prodId: this._prodId,
           prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
-          prodCtgNm: Tw.PRODUCT_CTG_NM.ADDITIONS,
+          prodCtgNm: Tw.PRODUCT_CTG_NM.DISCOUNT_PROGRAM,
           typeNm: Tw.PRODUCT_TYPE_NM.TERMINATE,
           isBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
           basFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo ?

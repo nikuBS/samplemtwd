@@ -36,7 +36,8 @@ class BenefitSelectContract extends TwViewController {
         if ( joinTermInfo.code !== API_CODE.CODE_00 ) {
           return this.error.render(res, Object.assign(renderCommonInfo, {
             code: joinTermInfo.code,
-            msg: joinTermInfo.msg
+            msg: joinTermInfo.msg,
+            isBackCheck: true
           }));
         }
 

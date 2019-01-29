@@ -258,7 +258,7 @@ Tw.MyTFareSubMain.prototype = {
   },
 
   _checkBanner: function(result) {
-    return (result.bltnYn === 'Y' && result.tosLnkgYn === 'Y');
+    return (result.bltnYn === 'N' || result.tosLnkgYn === 'Y');
   },
 
   _successDrawBanner: function() {
