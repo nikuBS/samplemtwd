@@ -290,7 +290,7 @@ Tw.MyTFareBillGuideIndividual.prototype = {
   //--------------------------------------------------------------------------[SVC]
   _useSvcTypeFun: function () {
     var svcTypeList = this.resData.commDataInfo.intBillLineList;
-    var svcMgmtNum = this.resData.svcInfo.svcMgmtNum;
+    var svcMgmtNum = this.resData.svcMgmtNum;
     var selectSvcType = _.find(svcTypeList, function (item) {
       return item.svcMgmtNum === svcMgmtNum;
     });
