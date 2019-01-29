@@ -35,8 +35,6 @@ export default class MembershipMyCancel extends TwViewController {
     myCardData.showMbrCardNum = FormatHelper.addCardDash(myCardData.mbrCardNum.toString());
     myCardData.mbrGrStr = MEMBERSHIP_GROUP[myCardData.mbrGrCd];
     myCardData.mbrTypStr = MEMBERSHIP_TYPE[myCardData.mbrTypCd];
-    //myCardData.todayDate = DateHelper.getCurrentShortDate();
-    //myCardData.cardReqCd = '1';
 
     return myCardData;
   }

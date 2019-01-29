@@ -742,7 +742,7 @@ Tw.ALERT_MSG_MEMBERSHIP = {
   },
   JOIN_COMPLETE: {
     TITLE: '멤버십 가입 완료',
-    CONTENT: '발급 카드 정보 : </br> T멤버십(Leaders Clubs) 모바일 카드',
+    CONTENT: '발급 카드 정보 : </br> T멤버십(Leaders Club) 모바일 카드',
     LINK_TITLE: '발급 변경 내역 보기 >'
   },
   COMPLETE_TITLE: {
@@ -758,7 +758,7 @@ Tw.ALERT_MSG_MEMBERSHIP = {
   ALERT_1_A54: { TITLE: '알림', MSG: '주소를 입력해주세요.' },
   ALERT_1_A55: { TITLE: '알림', MSG: '전화 번호를 입력해주세요' },
   ALERT_1_A56: { TITLE: 'T멤버십 카드를 해지하시겠습니까?', MSG: '해지 취소는 해지 신청을 하신 날 24:00까지만 고객센터(114)에서 신청하실 수 있습니다.', BUTTON: '해지'},
-  ALERT_1_A58: { TITLE: 'T멤버십(리더스클럽)으로 종류를 변경하시겠습니까?', MSG: '2017년 1월 1일 부터 T멤버십(리더스클럽) 카드만 제공하고 있습니다.', BUTTON: '변경' },
+  ALERT_1_A58: { TITLE: 'T멤버십(Leaders Club)으로 종류를 변경하시겠습니까?', MSG: '2017년 1월 1일 부터 T멤버십(Leaders Club) 카드만 제공하고 있습니다.', BUTTON: '변경' },
   ALERT_1_A59: { TITLE: '알림', MSG: '이용정지 상태에서 정보를 수정을 하실 수 없습니다.' },
   ALERT_1_A61: { TITLE: '알림', MSG: '카드 신청 후 2주 이내에는 카드 재발급을 신청하실 수 없습니다.' },
   ALERT_1_A62: { TITLE: '알림', MSG: 'OK캐쉬백 기능 추가를 위해 필수동의 항목을 체크해주세요.' },
