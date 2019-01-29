@@ -31,10 +31,12 @@ class MyTJoinSuspend extends TwViewController {
 
       if ( suspendState.code === API_CODE.CODE_00 ) {
 
-        // 메인메뉴에서 진입 시 redirect 처리 필요
+        // 메인메뉴에서 진입 시 redirect 처리 필요 -> 2019.01.29 기획에서 임시 원복 요구
+        /*
         if ( this._checkRedirect(suspendState.result) ) {
           res.redirect('/myt-join/submain/suspend/status');
         }
+        */
 
         const today = DateHelper.getCurrentDateTime('YYYY-MM-DD');
         const after3Months = DateHelper.getShortDateWithFormatAddByUnit(today, 3, 'months', 'YYYY-MM-DD');
