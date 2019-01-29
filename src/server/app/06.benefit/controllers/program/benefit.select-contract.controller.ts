@@ -49,7 +49,8 @@ class BenefitSelectContractController extends TwViewController {
           code: seldisSets.code,
           msg: seldisSets.msg,
           svcInfo: svcInfo,
-          title: PRODUCT_TYPE_NM.JOIN
+          title: PRODUCT_TYPE_NM.JOIN,
+          isBackCheck: true
         });
       }
       if ( joinTermInfo.code === API_CODE.CODE_00 ) {
@@ -59,7 +60,8 @@ class BenefitSelectContractController extends TwViewController {
           code: joinTermInfo.code,
           msg: joinTermInfo.msg,
           svcInfo: svcInfo,
-          title: PRODUCT_TYPE_NM.JOIN
+          title: PRODUCT_TYPE_NM.JOIN,
+          isBackCheck: true
         });
       }
       res.render('program/benefit.select-contract.html', { data });
