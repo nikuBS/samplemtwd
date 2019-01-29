@@ -23,10 +23,10 @@
                     <span class="title"><% if(type === 'long-term'){ %>장기<% } %>일시정지 기간</span>
                     <span class="tx-cont"><%= period.from %> ~ <%= period.to %></span>
                 </li>
-                <% if(locals.resuspend){ %>
+                <% if(locals.resuspendDt){ %>
                 <li>
                     <span class="title">재시작일자</span>
-                    <span class="tx-cont"><%= resuspend %></span>
+                    <span class="tx-cont"><%= resuspendDt %></span>
                 </li>
                 <% } %>
                 <li>
