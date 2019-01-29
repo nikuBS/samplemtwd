@@ -246,7 +246,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
   },
   _goMyInfo : function(){
     var targetUrl = this._prodTypeInfo.prodTypCd==='H_P'?'/product/roaming/my-use':'/product/roaming/my-use#add';
-    this._historyService.goLoad(targetUrl);
+    this._popupService.closeAllAndGo(targetUrl);
   },
   _showCancelAlart : function (){
     var alert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A1;
