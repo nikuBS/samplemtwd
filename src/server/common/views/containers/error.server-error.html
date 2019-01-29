@@ -60,5 +60,16 @@
     </div>
     <!--// .popup hbs -->
 </div>
+<% if ( locals.isBackCheck ) { %>
+<script type="text/javascript">
+  (function() {
+    if (window.performance) {
+      if (performance.navigation.type === 2) {
+        history.back();
+      }
+    }
+  })();
+</script>
+<% } %>
 <% include ../components/javascript.component.html %>
 <% include ../components/end.component.html %>

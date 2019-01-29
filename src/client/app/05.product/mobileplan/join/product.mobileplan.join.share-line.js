@@ -117,8 +117,8 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
       autoJoinBenefitList: this._confirmOptions.preinfo.toProdInfo.chgSktProdBenfCtt,
       autoTermBenefitList: this._confirmOptions.preinfo.frProdInfo.chgSktProdBenfCtt,
       isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0 ||
-        this._confirmOptions.installmentAgreement.gapDcAmt !== '0'),
-      isInstallmentAgreement: this._confirmOptions.installmentAgreement.gapDcAmt !== '0',
+        this._confirmOptions.installmentAgreement.isInstallAgreement),
+      isInstallmentAgreement: this._confirmOptions.installmentAgreement.isInstallAgreement,
       downgrade: this._getDowngrade()
     });
   },
@@ -251,9 +251,20 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
         basFeeInfo: this._confirmOptions.isNumberBasFeeInfo ?
           this._confirmOptions.toProdBasFeeInfo + Tw.CURRENCY_UNIT.WON : ''
       }
-    }, null, $.proxy(this._onClosePop, this), 'join_success');
+    }, $.proxy(this._bindJoinResPopup, this), $.proxy(this._onClosePop, this), 'join_success');
 
     this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
+  },
+
+  _bindJoinResPopup: function($popupContainer) {
+    $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
+  },
+
+  _closeAndGo: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
   },
 
   _onClosePop: function() {

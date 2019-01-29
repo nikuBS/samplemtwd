@@ -13,7 +13,7 @@ Tw.ProductWireplanJoinReservation = function(rootEl, isProduct) {
   this._historyService = new Tw.HistoryService();
   this._tidLanding = new Tw.TidLandingComponent();
 
-  this._prodIdFamilyList = ['NA00005055', 'NH00000133', 'NH00000083'];
+  this._prodIdFamilyList = ['NA00002040', 'NH00000133', 'NH00000083'];
   this._prodIdList = $.merge(this._prodIdFamilyList, ['NH00000103']);
   this._isProduct = Tw.FormatHelper.isEmpty(isProduct) ? null : JSON.parse(isProduct);
   this._logged = false;
@@ -22,7 +22,7 @@ Tw.ProductWireplanJoinReservation = function(rootEl, isProduct) {
 
   this._convertProdIds = {
     NH00000103: 'TW00000009',
-    NA00005055: 'TW20000012',
+    NA00002040: 'TW20000010',
     NH00000083: 'TW20000008'
   };
 
@@ -240,15 +240,18 @@ Tw.ProductWireplanJoinReservation.prototype = {
         {
           'title': Tw.PRODUCT_COMBINE_PRODUCT.GROUP_FAMILY,
           'list': [
-            { 'label-attr': 'id="ra2_1"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.TITLE,
+            { 'label-attr': 'id="ra2_1"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00002040.TITLE,
+              'cont-txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00002040.EXPLAIN,
+              'radio-attr':'id="ra2_1" data-prod_id="NA00002040" ' + (this._prodId === 'NA00002040' ? 'checked' : '') },
+            { 'label-attr': 'id="ra2_2"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.TITLE,
               'cont-txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.EXPLAIN,
-              'radio-attr':'id="ra2_1" data-prod_id="NH00000133" ' + (this._prodId === 'NH00000133' ? 'checked' : '') },
-            { 'label-attr': 'id="ra2_2"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000083.TITLE,
+              'radio-attr':'id="ra2_2" data-prod_id="NH00000133" ' + (this._prodId === 'NH00000133' ? 'checked' : '') },
+            { 'label-attr': 'id="ra2_3"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000083.TITLE,
               'cont-txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000083.EXPLAIN,
-              'radio-attr':'id="ra2_2" data-prod_id="NH00000083" ' + (this._prodId === 'NH00000083' ? 'checked' : '') },
-            { 'label-attr': 'id="ra2_3"',
+              'radio-attr':'id="ra2_3" data-prod_id="NH00000083" ' + (this._prodId === 'NH00000083' ? 'checked' : '') },
+            { 'label-attr': 'id="ra2_4"',
               'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.ETC.TITLE,
-              'radio-attr':'id="ra2_3" data-prod_id="' + (!Tw.FormatHelper.isEmpty(this._prodId) &&
+              'radio-attr':'id="ra2_4" data-prod_id="' + (!Tw.FormatHelper.isEmpty(this._prodId) &&
               Tw.FormatHelper.isEmpty(Tw.PRODUCT_COMBINE_PRODUCT.ITEMS[this._prodId]) ? this._prodId : 'ETC') +
                 '" ' + ((this._isEtcProd || this._prodId === 'ETC') ? 'checked' : '') }
           ]
