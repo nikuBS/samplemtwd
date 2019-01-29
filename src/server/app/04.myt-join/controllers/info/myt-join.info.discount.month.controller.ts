@@ -13,8 +13,7 @@ import { MYT_INFO_DISCOUNT_MONTH } from '../../../../types/string.type';
 import DateHelper from '../../../../utils/date.helper';
 
 const VIEW = {
-  DEFAULT: 'info/myt-join.info.discount.month.html',
-  ERROR: 'error.server-error.html',
+  DEFAULT: 'info/myt-join.info.discount.month.html'
 };
 const MAX_ITEM_LENGTH_PER_PAGE = 20;
 
@@ -38,12 +37,7 @@ class MyTJoinInfoDiscountMonth extends TwViewController {
       ]);
 
       if ( !FormatHelper.isEmpty(apiError) ) {
-        return res.render(VIEW.ERROR, {
-          title: MYT_INFO_DISCOUNT_MONTH.TITLE,
-          code: apiError.code,
-          msg: apiError.msg,
-          svcInfo
-        });
+        return this.renderErr(res, apiError, svcInfo);
       }
 
       const data = this.getFormattedData(discountInfosMonth);
@@ -56,12 +50,7 @@ class MyTJoinInfoDiscountMonth extends TwViewController {
         pageInfo
       });
     }, (resp) => {
-      return res.render(VIEW.ERROR, {
-        title: MYT_INFO_DISCOUNT_MONTH.TITLE,
-        code: resp.code,
-        msg: resp.msg,
-        svcInfo
-      });
+      return this.renderErr(res, resp, svcInfo);
     });
   }
 
@@ -70,97 +59,6 @@ class MyTJoinInfoDiscountMonth extends TwViewController {
       svcAgrmtCdId: this._svcAgrmtDcId,
       svcAgrmtDcCd: this._svcAgrmtDcCd
     });
-
-    // return Observable.create((observer) => {
-    //   setTimeout(() => {
-    //     const resp = {
-    //       'code': '00',
-    //       'msg': 'success',
-    //       'result': {
-    //         'agrmt': [
-    //           {
-    //             'invoDt': '20170930',
-    //             'invCnt': '1',
-    //             'penEstDcAmt': '0',
-    //             'perEstRt': '0'
-    //           },
-    //           {
-    //             'invoDt': '20170831',
-    //             'invCnt': '2',
-    //             'penEstDcAmt': '0',
-    //             'perEstRt': '0'
-    //           },
-    //           {
-    //             'invoDt': '20160731',
-    //             'invCnt': '3',
-    //             'penEstDcAmt': '0',
-    //             'perEstRt': '0'
-    //           },
-    //           {
-    //             'invoDt': '20160630',
-    //             'invCnt': '4',
-    //             'penEstDcAmt': '0',
-    //             'perEstRt': '0'
-    //           },
-    //           {
-    //             'invoDt': '20150531',
-    //             'invCnt': '5',
-    //             'penEstDcAmt': '-4344',
-    //             'perEstRt': '0'
-    //           },
-    //           {
-    //             'invoDt': '20150531',
-    //             'invCnt': '6',
-    //             'penEstDcAmt': '-4344',
-    //             'perEstRt': '0'
-    //           },
-    //           {
-    //             'invoDt': '20140531',
-    //             'invCnt': '7',
-    //             'penEstDcAmt': '-4344',
-    //             'perEstRt': '0'
-    //           },
-    //           {
-    //             'invoDt': '20140531',
-    //             'invCnt': '8',
-    //             'penEstDcAmt': '-4344',
-    //             'perEstRt': '0'
-    //           },
-    //           {
-    //             'invoDt': '20140531',
-    //             'invCnt': '9',
-    //             'penEstDcAmt': '-4344',
-    //             'perEstRt': '0'
-    //           },
-    //           {
-    //             'invoDt': '20140531',
-    //             'invCnt': '10',
-    //             'penEstDcAmt': '-4344',
-    //             'perEstRt': '0'
-    //           },
-    //           {
-    //             'invoDt': '20140531',
-    //             'invCnt': '11',
-    //             'penEstDcAmt': '-4344',
-    //             'perEstRt': '0'
-    //           },
-    //           {
-    //             'invoDt': '20130531',
-    //             'invCnt': '12',
-    //             'penEstDcAmt': '-4344',
-    //             'perEstRt': '0'
-    //           }
-    //         ]
-    //       }
-    //     };
-    //     if ( resp.code === API_CODE.CODE_00 ) {
-    //       observer.next(resp);
-    //       observer.complete();
-    //     } else {
-    //       observer.error();
-    //     }
-    //   }, 500);
-    // });
   }
 
   private getFormattedData(resp: any): any {
@@ -181,6 +79,15 @@ class MyTJoinInfoDiscountMonth extends TwViewController {
     data['agrmts'] = agrmts;
 
     return data;
+  }
+
+  private renderErr(res, err, svcInfo): any {
+    return this.error.render(res, {
+      title: MYT_INFO_DISCOUNT_MONTH.TITLE,
+      code: err.code,
+      msg: err.msg,
+      svcInfo
+    });
   }
 
 }
