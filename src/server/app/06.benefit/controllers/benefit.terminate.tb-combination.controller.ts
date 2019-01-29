@@ -70,7 +70,8 @@ class BenefitTerminateTbCombination extends TwViewController {
         if (termInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, Object.assign(renderCommonInfo, {
             code: termInfo.code,
-            msg: termInfo.msg
+            msg: termInfo.msg,
+            isBackCheck: true
           }));
         }
 
