@@ -76,10 +76,12 @@ Tw.MyTFareBillGuideRoaming.prototype = {
       // Tw.Logger.info('[totalNum]', totalNum);
       // Tw.Logger.info('[param]', param);
 
+      var strTotalNum = totalNum.toFixed(1).replace('.0', '');
+
       var resData = {
-        startDt: Tw.DateHelper.getShortDateNoDot(param.startDt),
-        endDt: Tw.DateHelper.getShortDateNoDot(param.endDt),
-        totalNum: this._comComma(totalNum)
+        startDt: Tw.DateHelper.getShortDate(param.startDt),
+        endDt: Tw.DateHelper.getShortDate(param.endDt),
+        totalNum: this._comComma(strTotalNum)
       };
 
       this.$dateSelect.hide();
