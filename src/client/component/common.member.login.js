@@ -8,33 +8,32 @@ Tw.CommonMemberLogin = function (target) {
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
-  this._target = target;
-  this._init();
+  this._init(target);
 };
 
 Tw.CommonMemberLogin.prototype = {
   ERROR_CODE: {
     CANCEL: 1500
   },
-  _init: function () {
-    this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login', $.proxy(this._onNativeLogin, this));
+  _init: function (target) {
+    this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login?target=' + encodeURIComponent(target), $.proxy(this._onNativeLogin, this, target));
   },
   _goLoad: function (nativeCommand, url, callback) {
     if ( Tw.BrowserHelper.isApp() ) {
       this._nativeService.send(nativeCommand, {}, callback);
     } else {
-      this._historyService.replaceURL(url + '?target=' + this._target);
+      this._historyService.replaceURL(url);
     }
   },
-  _onNativeLogin: function (resp) {
+  _onNativeLogin: function (target, resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._apiService.request(Tw.NODE_CMD.LOGIN_TID, resp.params)
-        .done($.proxy(this._successLogin, this));
+        .done($.proxy(this._successLogin, this, target));
     } else {
       this._historyService.goBack();
     }
   },
-  _successLogin: function (resp) {
+  _successLogin: function (target, resp) {
     Tw.Logger.info('[Login Resp]', resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._apiService.sendNativeSession(Tw.AUTH_LOGIN_TYPE.TID, $.proxy(this._successSetSession, this));

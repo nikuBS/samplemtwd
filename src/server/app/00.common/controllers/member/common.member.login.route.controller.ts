@@ -18,16 +18,15 @@ class CommonMemberLoginRoute extends TwViewController {
     if ( !FormatHelper.isEmpty(query.error) ) {
       res.send(query.error_description);
     } else {
-      const param = this.getParams(query.target);
-      res.render('member/common.member.login.route.html', param);
+      res.render('member/common.member.login.route.html', this.getParams(query.target));
     }
   }
 
   private getParams(params): any {
-    if ( params.indexOf('=') !== -1 ) {
+    if ( params.indexOf('_state_') !== -1 ) {
       return {
-        target: params.split('=')[0],
-        state: params.split('=')[1]
+        target: params.split('_state_')[0],
+        state: params.split('_state_')[1]
       };
     } else {
       return {

@@ -195,7 +195,7 @@ abstract class TwViewController {
               this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
             } else {
               // login page
-              res.render('error.login-block.html', { target: path });
+              res.render('error.login-block.html', { target: req.baseUrl + req.url });
             }
           }
         });
