@@ -31,7 +31,7 @@ class CommonTidLogin extends TwViewController {
           nonce: resp.result.nonce,
           service_type: TID_SVC_TYPE.LOGIN,
           redirect_uri: 'http://' + this.loginService.getDns() +
-            '/common/member/login/route?target=' + target + '_state_' + resp.result.state,
+            '/common/member/login/route?target=' + target,
           client_type: TID.CLIENT_TYPE,
           scope: TID.SCOPE,
           response_type: TID.RESP_TYPE
