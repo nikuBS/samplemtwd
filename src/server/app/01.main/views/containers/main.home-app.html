@@ -290,21 +290,21 @@
                                 <strong class="ti"><a href="/product/callplan/<%= svcInfo.prodId %>" class="bt"><%= svcInfo.prodNm %></a></strong>
 
                                 <div id="fe-bt-link-billguide" class="main-breakdown-box">
-                                    <% if (homeData.billData.type1) { %>
-                                    <div class="stit"><%= homeData.billData.invMonth %>월 청구요금 <i class="icon-whole"><span class="blind">전체</span></i></div>
-                                    <% } else if (homeData.billData.type2) { %>
+                                    <% if (homeData.billData.type2) { %>
                                     <div class="stit"><%= homeData.billData.invMonth %>월 청구요금</div>
-                                    <% } else if (homeData.billData.type3) { %>
+                                    <% } else if (homeData.billData.type1) { %>
+                                    <div class="stit"><%= homeData.billData.invMonth %>월 청구요금 <i class="icon-whole"><span class="blind">전체</span></i></div>
+                                    <% } else { %>
                                     <div class="stit"><%= homeData.billData.invMonth %>월 이용요금</div>
                                     <% } %>
-                                    <em class="sum"><%= homeData.billData.chargeAmtTot %>원</em>
+                                    <em class="sum"><%= homeData.billData.useAmtTot %>원</em>
                                     <span class="date"><%= homeData.billData.invStartDt %>~<%= homeData.billData.invEndDt %></span>
                                     <% if (homeData.billData.type1 || homeData.billData.type2) { %>
                                     <ul class="list">
-                                        <li><strong class="ti">이용요금</strong> <em class="tx f-type"><%= homeData.billData.usedAmtTot %>원</em></li>
+                                        <li><strong class="ti">이용요금</strong> <em class="tx f-type"><%= homeData.billData.useAmtTot %>원</em></li>
                                         <li><strong class="ti">할인요금</strong> <em class="tx f-type c-point"><%= homeData.billData.deduckTot %>원</em></li>
                                     </ul>
-                                    <% } else if (homeData.billData.type3) { %>
+                                    <% } else { %>
                                     <p class="tx">고객님은 현재 통합 청구 이용 중이며<br>할인 금액을 제외한 사용요금으로 조회됩니다</p>
                                     <% } %>
                                 </div>

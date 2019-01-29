@@ -260,20 +260,19 @@ class MainHome extends TwViewController {
       }
 
       const repSvc = billData.charge.repSvcYn === 'Y';
-      const totSvc = billData.charge.paidAmtMonthSvcCnt > 1;
+      const totSvc = +billData.charge.paidAmtMonthSvcCnt;
+      const billName = repSvc ? 'charge' : 'used';
+
       return {
         isBroadband: false,
-        chargeAmtTot: FormatHelper.addComma(billData.charge.useAmtTot || '0'),
-        usedAmtTot: FormatHelper.addComma(billData.used.useAmtTot || '0'),
-        deduckTot: FormatHelper.addComma(billData.charge.deduckTotInvAmt || '0'),
-        repSvc: billData.charge.repSvcYn === 'Y',
-        totSvc: billData.charge.paidAmtMonthSvcCnt > 1,
-        invEndDt: DateHelper.getShortDate(billData.used.invDt),
-        invStartDt: DateHelper.getShortFirstDate(billData.used.invDt),
-        invMonth: DateHelper.getCurrentMonth(billData.used.invDt),
-        type1: totSvc && repSvc,
-        type2: !totSvc,
-        type3: totSvc && !repSvc
+        type1: repSvc,
+        type2: totSvc === 1,
+        type3: !repSvc && totSvc !== 1,
+        useAmtTot: FormatHelper.addComma(billData[billName].useAmtTot || '0'),
+        deduckTot: FormatHelper.addComma(billData[billName].deduckTotInvAmt || '0'),
+        invEndDt: DateHelper.getShortDate(billData[billName].invDt),
+        invStartDt: DateHelper.getShortFirstDate(billData[billName].invDt),
+        invMonth: DateHelper.getCurrentMonth(billData[billName].invDt),
       };
     }
     return null;
