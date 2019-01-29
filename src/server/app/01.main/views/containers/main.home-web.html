@@ -204,15 +204,15 @@
                     <strong class="user">반갑습니다, <%= svcInfo.mbrNm %> 고객님.</strong>
 
                     <button class="price">
-                        <% if (homeData.billData.type1) { %>
-                        <strong class="ti"><%= homeData.billData.invMonth %>월 청구요금 <i class="icon-whole"><span class="blind">전체</span></i></strong>
-                        <% } else if (homeData.billData.type2) { %>
+                        <% if (homeData.billData.type2) { %>
                         <strong class="ti"><%= homeData.billData.invMonth %>월 청구요금</strong>
-                        <% } else if (homeData.billData.type3) { %>
+                        <% } else if (homeData.billData.type1) { %>
+                        <strong class="ti"><%= homeData.billData.invMonth %>월 청구요금 <i class="icon-whole"><span class="blind">전체</span></i></strong>
+                        <% } else { %>
                         <strong class="ti"><%= homeData.billData.invMonth %>월 이용요금</strong>
                         <% } %>
 
-                        <em class="sum"><%= homeData.billData.chargeAmtTot %>원</em>
+                        <em class="sum"><%= homeData.billData.useAmtTot %>원</em>
                         <span class="date"><%= homeData.billData.invStartDt %>~<%= homeData.billData.invEndDt %></span>
                         <i class="icon-arrowmore-32"><span class="blind">more</span></i>
                     </button>

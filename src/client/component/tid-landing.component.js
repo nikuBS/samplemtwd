@@ -31,7 +31,7 @@ Tw.TidLandingComponent.prototype = {
     if ( Tw.BrowserHelper.isApp() ) {
       this._nativeService.send(nativeCommand, {}, callback);
     } else {
-      this._historyService.goLoad(url);
+      this._historyService.replaceURL(url);
     }
   },
   goActionSheetLogin: function (target) {
@@ -57,7 +57,7 @@ Tw.TidLandingComponent.prototype = {
   },
   goLogin: function (target) {
     target = target || '/main/home';
-    this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login?target=' + target, $.proxy(this._onNativeLogin, this, target));
+    this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login?target=' + encodeURIComponent(target), $.proxy(this._onNativeLogin, this, target));
   },
   goSLogin: function () {
     if ( Tw.BrowserHelper.isApp() ) {

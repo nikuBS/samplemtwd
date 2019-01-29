@@ -5,14 +5,27 @@
  */
 
 Tw.CommonMemberLoginRoute = function (target, state) {
-  this.target = target;
-  this.state = state;
-  this._init();
+  this._historyService = new Tw.HistoryService();
+  this._init(target, state);
 };
 
 Tw.CommonMemberLoginRoute.prototype = {
-  _init: function() {
-    var hash = window.location.hash.replace(/^#/i, '');
-    location.href = this.target + '?stateVal=' + this.state + '&' + hash;
+  _init: function (target, state) {
+    var token = window.location.hash.replace(/^#/i, '');
+    var url = target;
+    var hash = '';
+    if ( /urlHash/.test(target) ) {
+      target = target.replace(/urlHash/gi, '#');
+      url = target.split('#')[0];
+      hash = '#' + target.split('#')[1];
+    }
+
+    if ( /\?/.test(url) ) {
+      url = url + '&stateVal=' + state + '&' + token;
+    } else {
+      url = url + '?stateVal=' + state + '&' + token;
+    }
+
+    this._historyService.replaceURL(url + hash);
   }
 };

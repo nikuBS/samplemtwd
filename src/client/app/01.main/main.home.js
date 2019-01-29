@@ -109,7 +109,7 @@ Tw.MainHome.prototype = {
     var url = $($event.currentTarget).data('url');
     Tw.CommonHelper.openUrlExternal(url);
   },
-  _onClickInternal: function($event) {
+  _onClickInternal: function ($event) {
     var url = $($event.currentTarget).data('url');
     this._historyService.goLoad(url);
     // Tw.CommonHelper.openUrlInApp(url);
@@ -362,13 +362,13 @@ Tw.MainHome.prototype = {
       cont_align: 'tl',
       contents: Tw.LOGIN_CUS_PW_GUIDE.CONTENTS,
       infocopy: [{
-        info_contents : Tw.LOGIN_CUS_PW_GUIDE.INFO,
+        info_contents: Tw.LOGIN_CUS_PW_GUIDE.INFO,
         bt_class: 'none'
       }],
       bt_b: [{
-        style_class:'bt-red1 pos-right fe-go',
+        style_class: 'bt-red1 pos-right fe-go',
         txt: Tw.LOGIN_CUS_PW_GUIDE.BUTTON
-      }],
+      }]
     }, $.proxy(this._confirmCustPwGuide, this), $.proxy(this._closeCustPwGuide, this));
   },
   _confirmCustPwGuide: function (root) {
@@ -425,18 +425,19 @@ Tw.MainHome.prototype = {
   },
   _parseBillData: function (billData) {
     var repSvc = billData.charge.repSvcYn === 'Y';
-    var totSvc = billData.charge.paidAmtMonthSvcCnt > 1;
-    return {
-      chargeAmtTot: Tw.FormatHelper.addComma(billData.charge.useAmtTot || '0'),
-      usedAmtTot: Tw.FormatHelper.addComma(billData.used.useAmtTot || '0'),
-      deduckTot: Tw.FormatHelper.addComma(billData.charge.deduckTotInvAmt || '0'),
-      invEndDt: Tw.DateHelper.getShortDate(billData.used.invDt),
-      invStartDt: Tw.DateHelper.getShortFirstDate(billData.used.invDt),
-      invMonth: Tw.DateHelper.getCurrentMonth(Tw.DateHelper.AddMonth(billData.used.invDt)),
-      type1: totSvc && repSvc,
-      type2: !totSvc,
-      type3: totSvc && !repSvc
+    var totSvc = +billData.charge.paidAmtMonthSvcCnt;
+    var billName = repSvc ? 'charge' : 'used';
 
+    return {
+      isBroadband: false,
+      type1: repSvc,
+      type2: totSvc === 1,
+      type3: !repSvc && totSvc !== 1,
+      useAmtTot: Tw.FormatHelper.addComma(billData[billName].useAmtTot || '0'),
+      deduckTot: Tw.FormatHelper.addComma(billData[billName].deduckTotInvAmt || '0'),
+      invEndDt: Tw.DateHelper.getShortDate(billData[billName].invDt),
+      invStartDt: Tw.DateHelper.getShortFirstDate(billData[billName].invDt),
+      invMonth: Tw.DateHelper.getCurrentMonth(billData[billName].invDt)
     };
   },
   _getContentData: function (element) {
