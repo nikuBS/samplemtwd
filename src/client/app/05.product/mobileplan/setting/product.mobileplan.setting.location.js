@@ -46,13 +46,6 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
     $('#fe-prev-step').click($.proxy(this._onclickBtnClose, this));
 
-    $('#tab2').on('click', $.proxy(this._setNumTab, this));
-  },
-
-  _setNumTab: function(){
-    if(!this._maskingComp){
-      this._maskingComp = new Tw.MaskingComponent();
-    }
   },
 
   /**
