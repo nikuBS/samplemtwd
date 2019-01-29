@@ -189,7 +189,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
     }
 
     history.idx = histories.idx + idx;
-    history.date = Tw.DateHelper.getShortFirstDate(key);
+    history.date = Tw.DateHelper.getShortDate(key);
     if (Tw.PREPAID_BADGES[history.chargeTp]) {
       history.badge = Tw.PREPAID_BADGES[history.chargeTp];
     }
@@ -214,7 +214,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
       amt: Tw.FormatHelper.addComma(history.amt),
       payment:
         history.cardNm && history.wayCd === '02' ? 
-          Tw.PREPAID_PAYMENT_TYPE[history.wayCd] + '(' + history.cardNm + ')' :
+          Tw.PREPAID_PAYMENT_TYPE[history.wayCd] + '(' + history.cardNm + ')' : 
           Tw.PREPAID_PAYMENT_TYPE[history.wayCd]
     });
 
