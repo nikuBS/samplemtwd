@@ -125,6 +125,10 @@ class MyTFareBillCard extends TwViewController {
         }
       });
     }
+
+    if (FormatHelper.isEmpty(svcAttrName)) {
+      svcAttrName = SVC_ATTR_NAME.M1;
+    }
     return svcAttrName;
   }
 
