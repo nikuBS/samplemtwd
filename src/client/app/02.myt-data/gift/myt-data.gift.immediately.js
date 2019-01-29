@@ -129,7 +129,7 @@ Tw.MyTDataGiftImmediately.prototype = {
   _getReceiveUserInfo: function () {
     this.befrSvcNum = this.$inputImmediatelyGift.val();
     this.opDtm = this.$inputImmediatelyGift.data('opdtm');
-debugger;
+
     var svcNum = this.$inputImmediatelyGift.val().match(/\d+/g).join('');
     var isCellPhone = Tw.FormatHelper.isCellPhone(svcNum);
 
