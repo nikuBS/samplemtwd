@@ -197,10 +197,10 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
   },
   _sortingSettingData : function (inputData) {
     for(var i=0;i<inputData.length;i++){
-      if(!inputData[i].svcNum){
+      if(!inputData[i].svcNumMask){
         return;
       }
-      var tempArr = this._convertPhoneNumFormat(inputData[i].svcNum).split('-');
+      var tempArr = inputData[i].svcNumMask.split('-');
       inputData[i] = {
         'serviceNumber1' : tempArr[0],
         'serviceNumber2' : tempArr[1],
