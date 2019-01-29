@@ -38,7 +38,7 @@ Tw.BenefitSelectContract.prototype = {
       isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this.data.prodId) === -1,
       isAgreement: (this.data.joinInfoTerm.stipulationInfo && this.data.joinInfoTerm.stipulationInfo.existsCount > 0)
     });
-    setTimeout($.proxy(function() {
+    setTimeout($.proxy(function () {
       this.$radioGroup.find('li').closest('.checked').trigger('click');
     }, this), 100);
   },
