@@ -22,21 +22,31 @@
             <div class="container">
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <div class="cont-box nogaps">
-                    <ul class="full-link-list type02">
+                    <ul class="link-long-list">
                         <% if (isLogin) { %>
                         <li>
-                            <a href="/main/menu/settings/location">
-                                <span class="inner">
-                                    <span class="tit tx-medium">위치정보 이용동의 설정</span>
-                                </span>
-                            </a>
+                            <div class="link-long">
+                                <a href="/main/menu/settings/location">
+                                    <span class="inner">
+                                        <span class="tit tx-medium">위치정보 이용동의 설정</span>
+                                    </span>
+                                    <span class="tx-sub">
+                                        <span class="ico"><span class="blind">더보기</span>
+                                    </span>
+                                </a>
+                            </div>
                         </li>
                         <li>
-                            <a href="/main/menu/settings/notification">
-                                <span class="inner">
-                                    <span class="tit tx-medium">T알림 설정</span>
-                                </span>
-                            </a>
+                            <div class="link-long">
+                                <a href="/main/menu/settings/notification">
+                                    <span class="inner">
+                                        <span class="tit tx-medium">T알림 설정</span>
+                                    </span>
+                                    <span class="tx-sub">
+                                        <span class="ico"><span class="blind">더보기</span>
+                                    </span>
+                                </a>
+                            </div>
                         </li>
                         <% } %>
                         <% if (isApp && isLogin) { %>
@@ -50,43 +60,57 @@
                         <% } %>
                         <% if (isLogin) { %>
                         <li>
-                            <a id="fe-go-certificates" href="/main/menu/settings/certificates">
-                                <span class="inner">
-                                    <span class="tit tx-medium">공인인증 센터</span>
-                                </span>
-                            </a>
+                            <div class="link-long">
+                                <a id="fe-go-certificates" href="/main/menu/settings/certificates">
+                                    <span class="inner">
+                                        <span class="tit tx-medium">공인인증 센터</span>
+                                    </span>
+                                    <span class="tx-sub">
+                                        <span class="ico"><span class="blind">더보기</span>
+                                    </span>
+                                </a>
+                            </div>
                         </li>
                         <% } %>
                         <% if (isApp && isLogin) { %>
                         <li id="fe-bio">
-                            <a id="fe-bio-link" href="">
-                                <span class="inner">
-                                    <span class="tit tx-medium">생체인증 설정</span>
-                                </span>
-                            </a>
+                            <div class="link-long">
+                                <a id="fe-bio-link" href="">
+                                    <span class="inner">
+                                        <span class="tit tx-medium">생체인증 설정</span>
+                                    </span>
+                                    <span class="tx-sub">
+                                        <span class="ico"><span class="blind">더보기</span>
+                                    </span>
+                                </a>
+                            </div>
                         </li>
                         <% } %>
                         <% if (isApp || isLogin) { %>
                         <li id="fe-oss">
-                            <a id="fe-oss-link" href="/main/menu/settings/oss">
-                                <span class="inner">
-                                    <span class="tit tx-medium">오픈소스 라이선스</span>
+                            <div class="link-long">
+                                <a id="fe-oss-link" href="/main/menu/settings/oss">
+                                    <span class="inner">
+                                        <span class="tit tx-medium">오픈소스 라이선스</span>
+                                    </span>
+                                    <span class="tx-sub">
+                                        <span class="ico"><span class="blind">더보기</span>
+                                    </span>
                                 </span>
-                            </a>
+                                </a>
+                            </div>
                         </li>
                         <% } %>
                         <% if (isApp) { %>
                         <li>
                             <div class="link-version">
-                                <span class="inner">
-                                    <span class="tit tx-medium">
-                                        버전 정보
-                                        <span id="fe-version" class="version-info"></span>
-                                    </span>
-                                    <span id="fe-update-box" class="text none">
-                                        <button id="fe-btn-update" class="bt-link-tx underline">업데이트</button>
-                                    </span>
-                                </span>
+                                <span class="ver-title">버전정보</span>
+                                <div class="ver-number">
+                                    <span id="fe-version"></span>
+                                    <div id="fe-update-box" class="bt-alone none">
+                                        <button id="fe-btn-update" class="bt-bg-blue1">업데이트</button>
+                                    </div>
+                                </div>
                             </div>
                         </li>
                         <% } %>
