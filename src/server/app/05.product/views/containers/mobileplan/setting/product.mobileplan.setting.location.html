@@ -5,18 +5,16 @@
 %>
 <% include ../../../components/start.component.html %>
 <script id="num-list-tmplt-item" type="text/x-handlebars-template">
-    <li class="list-box" data-auditdtm="{{ auditDtm }}" data-svcnum="{{ svcNum }}">
-        <div class="list-ico"><span class="ico type5">{{ shortNm custNmMask }}</span></div>
+
+    <li class="list-box type-main" data-auditdtm="{{ auditDtm }}" data-svcnum="{{ svcNumMask }}">
         <p class="list-text">
-            <span class="mtext">{{ custNmMask }}<span class="bar"></span>
-                <!--<button type="button" class="btn-bf on" title="절친으로 등록하기">절친</button>-->
-            </span>
-            <span class="stext gray">{{ hp svcNumMask }}</span>
+            <span class="mtext">{{ hp svcNumMask }}</span>
         </p>
         <div class="list-btn">
-            <div class="bt-alone"><button class="bt-line-gray1">해지</button></div>
+            <div class="list-btn"><button class="bt-line-gray1 fe-bt-num-cancel">해지</button></div>
         </div>
     </li>
+
 </script>
 
 <!-- #skip_navigation -->
@@ -98,7 +96,7 @@
                                                 <script id="loc-list-tmplt-item" type="text/x-handlebars-template">
                                                     <li data-dcareanum="{{ dcAreaNum }}" data-auditDtm="{{ auditDtm }}" data-dcareanm="{{ dcAreaNm }}">
                                                         <span class="tit">{{ no }}. {{ dcAreaNm }}</span>
-                                                        <span class="btn"><div class="bt-alone"><button class="bt-line-gray1">해지</button></div></span>
+                                                        <span class="btn"><div class="bt-alone"><button class="bt-line-gray1 fe-bt-loc-cancel">해지</button></div></span>
                                                     </li>
                                                 </script>
                                             </ul>
@@ -144,9 +142,9 @@
                                         <!-- .cont-box -->
                                         <div class="cont-box nogaps">
                                             <div class="input-number-wrap">
-                                                <h3 class="tit type1">지정번호 신청하신 회선</h3>
+                                                <h3 class="tit type1">지정번호 신청된 회선</h3>
                                                 <div class="list-comp-thumnail">
-                                                    <ul class="comp-box">
+                                                    <ul class="comp-box discount-number">
 
                                                     </ul>
                                                 </div>
