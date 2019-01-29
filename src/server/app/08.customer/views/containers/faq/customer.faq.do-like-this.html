@@ -112,6 +112,13 @@
             Tw.CommonHelper.openUrlExternal(url);
             return false;
         })
+
+        window.onBack = function () {
+            if ($('.idpt-popup').is(':visible')) {
+                $('.idpt-popup').hide();
+            }
+            history.back();
+        };
     });
 </script>
 <% include ../../components/end.component.html %>
