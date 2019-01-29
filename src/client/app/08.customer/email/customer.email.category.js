@@ -40,9 +40,9 @@ Tw.CustomerEmailCategory.prototype = {
     this.$select_service_depth1.on('click', $.proxy(this._onClickService1Depth, this));
     this.$select_service_depth2.on('click', $.proxy(this._onClickService2Depth, this));
     this.$select_quality_depth1.on('click', $.proxy(this._onClickQuality1Depth, this));
-    this.$wrap_tpl_service.on('click', '[data-service-depth1]', $.proxy(this._onSelectService1Depth, this));
-    this.$wrap_tpl_service.on('click', '[data-service-depth2]', $.proxy(this._onSelectService2Depth, this));
-    this.$wrap_tpl_quality.on('click', '[data-quality-depth1]', $.proxy(this._onSelectQuality1Depth, this));
+    this.$container.on('click', '[data-service-depth1]', $.proxy(this._onSelectService1Depth, this));
+    this.$container.on('click', '[data-service-depth2]', $.proxy(this._onSelectService2Depth, this));
+    this.$container.on('click', '[data-quality-depth1]', $.proxy(this._onSelectQuality1Depth, this));
     this.$container.on('getCategory', $.proxy(this._getCurrentCategory, this));
     this.$container.on('getTabIndex', $.proxy(this._getCurrentTab, this));
   },
@@ -175,7 +175,7 @@ Tw.CustomerEmailCategory.prototype = {
     this.$select_service_depth2.data('service-depth2', sDepth2Value);
     this.service.depth2 = sDepth2Value;
 
-    // this.$container.trigger('changeServiceTemplate', this.service);
+    this.$container.trigger('changeServiceTemplate', this.service);
   },
 
   _onSelectQuality1Depth: function (e) {
@@ -191,7 +191,7 @@ Tw.CustomerEmailCategory.prototype = {
     this.$select_quality_depth1.data('quality-depth1', sDepth1Value);
     this.quality.depth1 = sDepth1Value;
 
-    // this.$container.trigger('changeQualityTemplate', this.quality);
+    this.$container.trigger('changeQualityTemplate', this.quality);
   },
 
   _getCurrentCategory: function () {
