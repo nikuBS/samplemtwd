@@ -5,12 +5,14 @@
 %>
 
 <script id="fe-templ-line_item" type="text/x-handlebars-template">
-    <li class="list-box" data-num="{{number}}">
+    <li class="list-box type-main" data-num="{{number}}">
         <p class="list-text">
-            <span class="stext gray">{{numMask}}</span>
+            <span class="mtext">{{numMask}}</span>
         </p>
         <div class="list-btn">
-            <div class="bt-alone"><button class="bt-line-gray1 fe-btn_del_num">삭제</button></div>
+            <div class="bt-alone">
+                <div class="bt-alone"><button class="bt-line-gray1 fe-btn_del_num">삭제</button></div>
+            </div>
         </div>
     </li>
 </script>
