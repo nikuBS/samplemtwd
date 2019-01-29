@@ -101,10 +101,11 @@ Tw.MyTDataPrepaidAlarm.prototype = {
   },
 
   _onChangeStatus: function (sListName, e) {
-    var fnSelectStatus = function (item) {
+    var $target = $(e.currentTarget);
+    var fnSelectStatus = function ($target, item) {
       return {
         value: item.text,
-        option: false,
+        option: $target.text() === item.text ? 'checked' : '',
         attr: 'data-value=' + item.value
       };
     };
@@ -114,10 +115,10 @@ Tw.MyTDataPrepaidAlarm.prototype = {
         layer: true,
         title: Tw.MYT_PREPAID_ALARM.title,
         data: [{
-          list: Tw.MYT_PREPAID_ALARM[sListName].map($.proxy(fnSelectStatus, this))
+          list: Tw.MYT_PREPAID_ALARM[sListName].map($.proxy(fnSelectStatus, this, $target))
         }]
       },
-      $.proxy(this._selectPopupCallback, this, sListName, $(e.currentTarget)),
+      $.proxy(this._selectPopupCallback, this, sListName, $target),
       null
     );
   },
@@ -242,7 +243,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
       }, this),
       $.proxy(function () {
         if ( confirmed ) {
-          this._historyService.replaceURL('/myt-data/recharge/prepaid/alarm-complete');
+          this._historyService.replaceURL('/myt-data/submain');
         }
       }, this),
       Tw.BUTTON_LABEL.NO,

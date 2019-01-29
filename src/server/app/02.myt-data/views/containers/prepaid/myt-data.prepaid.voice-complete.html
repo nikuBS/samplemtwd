@@ -37,7 +37,7 @@
                         </p>
                     </div>
                     <div class="tx-contents">
-                        <% if ( type !== 'auto' && afterAmount) { %>
+                        <% if ( type === 'voice') { %>
                         <div class="basic-list">
                             <ul>
                                 <li>
@@ -48,7 +48,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <% } else { %>
+                        <% } else if ( type === 'auto' ) { %>
                         <div class="basic-list">
                             <ul>
                                 <% if ( chargeCd === '01' ) { %>

@@ -29,17 +29,50 @@ Tw.MyTDataTingBlock.prototype = {
     this.$container.on('click', '.fe-ting-block', $.proxy(this._openTingBlock, this));
     this.$container.on('click', '.fe-close-wrap-ting-block', $.proxy(this._hideTingBlock, this));
     this.$container.on('click', '.fe-request-ting-block', $.proxy(this._onShowBlockPopup, this));
+    this.$container.on('click', '.fe-history-more', $.proxy(this._onShowMoreList, this));
+  },
+
+  _onShowMoreList: function (e) {
+    var elTarget = $(e.currentTarget);
+    var elList = $('.fe-wrap-block-list li');
+
+    if ( elList.not(':visible').size() !== 0 ) {
+      elList.not(':visible').slice(0, 20).show();
+    }
+
+    if ( elList.not(':visible').size() === 0 ) {
+      elTarget.remove();
+    }
+  },
+
+  _hideListItem: function () {
+    $('.fe-wrap-block-list li').slice(20).hide();
   },
 
   _getBlockInfo: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0027, {}).done($.proxy(this._onSuccessBlockHistory, this));
+    this._apiService.request(Tw.API_CMD.BFF_06_0027, {
+      fromDt: Tw.DateHelper.getPastYearShortDate(),
+      endDt: Tw.DateHelper.getCurrentShortDate()
+    }).done($.proxy(this._onSuccessBlockHistory, this));
   },
 
   _onSuccessBlockHistory: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var blockList = res.result;
 
+      if ( blockList.length >= 1 ) {
+        blockList = _.map(blockList, function (item) {
+          item.opDt = Tw.DateHelper.getShortDate(item.opDt);
+          return item;
+        });
+      }
+
       $('.fe-wrap-block-list').html(this.tpl_block_item({ block_list: blockList }));
+
+      if ( blockList.length > 20 ) {
+        $('.fe-history-more').show();
+        this._hideListItem();
+      }
 
       if ( blockList.length !== 0 ) {
         $('.fe-wrap-block-history').show();

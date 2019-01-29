@@ -34,7 +34,7 @@
             <% if ( authList && authList.length !== 0 ) { %>
             <div class="cont-box nogaps-btm">
                 <h3>상세내역</h3>
-                <div class="history-list type2">
+                <div class="history-list type2 fe-wrap-history-list">
                     <ul>
                         <% authList.map( (item)=> { %>
                         <li>
@@ -110,6 +110,9 @@
                         <!--</div>-->
                         <!--</li>-->
                     </ul>
+                    <div class="btn-more fe-history-more" style="display:none">
+                        <button>더 보기</button>
+                    </div>
                 </div>
             </div>
             <!--// .cont-box -->
@@ -124,6 +127,7 @@
 
 <script>
   $(document).ready(function () {
+    new Tw.MyTDataCookizOptions($('.wrap'), JSON.parse('<%- JSON.stringify(svcInfo) %>'));
   });
 </script>
 

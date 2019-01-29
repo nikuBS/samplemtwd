@@ -43,6 +43,9 @@ Tw.CustomerEmailTemplate.prototype = {
   },
 
   _changeServiceTemplate: function (e, serviceCategory) {
+    e.stopPropagation();
+    e.preventDefault();
+
     switch ( serviceCategory.depth1 ) {
       case 'CELL':
         var templatePlaceholder = this._setTemplatePlaceholder(serviceCategory);
@@ -72,6 +75,9 @@ Tw.CustomerEmailTemplate.prototype = {
   },
 
   _changeQualityTemplate: function (e, qualityCategory, qualityType) {
+    e.stopPropagation();
+    e.preventDefault();
+
     switch ( qualityCategory.depth1 ) {
       case 'cell':
         if ( qualityType && qualityType.isWibro ) {

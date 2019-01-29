@@ -203,6 +203,14 @@ class DateHelper {
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018.6.1
+   */
+  static getDashShortDateNoDot(date: any): string {
+    return moment(this.convDateFormat(date)).format('YYYY-MM-DD');
+  }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 2018.6.1 (first date of this month)
    */
   static getShortFirstDateNoDot(date: any): string {
