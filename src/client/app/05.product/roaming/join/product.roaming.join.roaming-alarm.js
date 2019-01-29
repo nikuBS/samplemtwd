@@ -202,7 +202,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
   },
   _goMyInfo : function(){
     var targetUrl = this._prodTypeInfo.prodTypCd==='H_P'?'/product/roaming/my-use':'/product/roaming/my-use#add';
-    this._historyService.goLoad(targetUrl);
+    this._popupService.closeAllAndGo(targetUrl);
   },
   _goBack : function(){
     this._historyService.goBack();
