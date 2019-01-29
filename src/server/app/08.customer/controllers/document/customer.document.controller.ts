@@ -35,7 +35,7 @@ class CustomerDocument extends TwViewController {
           pageInfo: pageInfo
         });
       } else {
-        res.render('error.server-error.html', {
+        this.error.render(res, {
           title: HEAD_TITLE.DOCUMENT,
           code: mobile.code,
           msg: mobile.msg,

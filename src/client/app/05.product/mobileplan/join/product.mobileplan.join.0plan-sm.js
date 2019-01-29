@@ -9,6 +9,7 @@ Tw.ProductMobileplanJoin0planSm = function(rootEl, prodId, displayId, sktProdBen
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
+  this._historyService.init();
 
   this._prodId = prodId;
   this._displayId = displayId;
@@ -23,6 +24,10 @@ Tw.ProductMobileplanJoin0planSm = function(rootEl, prodId, displayId, sktProdBen
   this.$container = rootEl;
   this._cachedElement();
   this._bindEvent();
+
+  if (this._historyService.isBack()) {
+    this._historyService.goBack();
+  }
 };
 
 Tw.ProductMobileplanJoin0planSm.prototype = {
