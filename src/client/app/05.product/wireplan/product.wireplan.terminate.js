@@ -35,6 +35,7 @@ Tw.ProductWireplanTerminate.prototype = {
 
     this.$container.html(html);
     this._callConfirmCommonJs();
+    Tw.Tooltip.separateInit(this.$container.find('.tip-view-btn'));
   },
 
   _convConfirmOptions: function() {
@@ -134,9 +135,8 @@ Tw.ProductWireplanTerminate.prototype = {
           prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
           typeNm: Tw.PRODUCT_TYPE_NM.TERMINATE,
           isBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
-          basFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo
-            ? this._confirmOptions.preinfo.reqProdInfo.basFeeInfo + Tw.CURRENCY_UNIT.WON
-            : ''
+          basFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo ?
+            this._confirmOptions.preinfo.reqProdInfo.basFeeInfo + Tw.CURRENCY_UNIT.WON : ''
         }
       },
       $.proxy(this._openResPopupEvent, this),
@@ -147,6 +147,14 @@ Tw.ProductWireplanTerminate.prototype = {
 
   _openResPopupEvent: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
+    $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
+  },
+
+  _closeAndGo: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
   },
 
   _openVasTermPopup: function(respResult) {

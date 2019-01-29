@@ -1,10 +1,10 @@
-import { DATA_UNIT, PRODUCT_CTG_NM } from '../types/string.type';
+import { DATA_UNIT } from '../types/string.type';
 import {PRODUCT_REPLACED_RULE, UNIT, VOICE_UNIT} from '../types/bff.type';
 import FormatHelper from './format.helper';
 import EnvHelper from './env.helper';
 
 class ProductHelper {
-  static convStipulation(stipulation: any): any {
+  static convStipulation(stipulation: any, isInstallAgreement = false): any {
     if (FormatHelper.isEmpty(stipulation)) {
       return null;
     }
@@ -33,14 +33,19 @@ class ProductHelper {
       isPsnlInfoCnsgAgree = stipulation.psnlInfoCnsgAgreeYn === 'Y',
       isPsnlInfoOfrAgree = stipulation.psnlInfoOfrAgreeYn === 'Y',
       isAdInfoOfrAgree = stipulation.adInfoOfrAgreeYn === 'Y',
-      isTermStplAgree = stipulation.termStplAgreeYn === 'Y',
-      existsCount = _getStipulationYnCnt([
+      isTermStplAgree = stipulation.termStplAgreeYn === 'Y';
+
+    let existsCount = _getStipulationYnCnt([
         stipulation.scrbStplAgreeYn,
         stipulation.psnlInfoCnsgAgreeYn,
         stipulation.psnlInfoOfrAgreeYn,
         stipulation.adInfoOfrAgreeYn,
         stipulation.termStplAgreeYn
       ]);
+
+    if (isInstallAgreement) {
+      existsCount++;
+    }
 
     return Object.assign(stipulation, {
       isScrbStplAgree: isScrbStplAgree,
@@ -150,12 +155,13 @@ class ProductHelper {
   }
 
   static convPlansJoinTermInfo(_joinTermInfo): any {
-    const joinTermInfo = JSON.parse(JSON.stringify(_joinTermInfo));
+    const joinTermInfo = JSON.parse(JSON.stringify(_joinTermInfo)),
+      convInstallAgreement = ProductHelper.convInstallmentAgreement(joinTermInfo.installmentAgreement);
 
     return Object.assign(joinTermInfo, {
       preinfo: ProductHelper.convPlanPreInfo(joinTermInfo.preinfo),
-      installmentAgreement: ProductHelper.convInstallmentAgreement(joinTermInfo.installmentAgreement),
-      stipulationInfo: ProductHelper.convStipulation(joinTermInfo.stipulationInfo)
+      installmentAgreement: convInstallAgreement,
+      stipulationInfo: ProductHelper.convStipulation(joinTermInfo.stipulationInfo, convInstallAgreement.isInstallAgreement)
     });
   }
 
@@ -192,6 +198,7 @@ class ProductHelper {
       isPremTerm = installmentAgreement.premTermYn === 'Y';
 
     return Object.assign(installmentAgreement, {
+      isInstallAgreement: installmentAgreement.gapDcAmt > 0,
       isNumberPenAmt: isNumberPenAmt,
       penAmt: isNumberPenAmt ? FormatHelper.addComma(installmentAgreement.penAmt) : installmentAgreement.penAmt,
       isNumberFrDcAmt: isNumberFrDcAmt,

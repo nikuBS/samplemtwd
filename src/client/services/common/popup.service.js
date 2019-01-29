@@ -371,6 +371,16 @@ Tw.PopupService.prototype = {
       history.go(-hashLength);
     }
   },
+  closeAllAndGo: function(targetUrl) {
+    var hashLength = this._prevHashList.length;
+    this._prevHashList = [];
+    skt_landing.action.popup.allClose();
+    history.go(-hashLength);
+
+    setTimeout(function() {
+      location.href = targetUrl;
+    }, 0);
+  },
   isPopup: function () {
     if ( /_P/.test(location.hash) || /popup/.test(location.hash) ) {
       return true;
