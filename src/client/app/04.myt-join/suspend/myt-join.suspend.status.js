@@ -166,7 +166,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
     var popup = {};
     var count = 0;
 
-    if ( this._params.progress.reason === '군입대' ) {
+    if ( this._params.progress.receiveCd === '5000341' || this._params.progress.receiveCd === '5000342') {
       popup = {
         content: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TIP,
         title: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TITLE,
@@ -194,7 +194,18 @@ Tw.MyTJoinSuspendStatus.prototype = {
 
   _onCommonFileDialogConfirmed: function (files) {
     this._files = files;
-    this._requestUpload(this._files);
+    if ( Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
+      var convFileList =  _.compact(this._files).map(function (item) {
+        return {
+          fileSize: item.size,
+          fileName: item.name,
+          filePath: item.path
+        };
+      });
+      this._requestUscan(convFileList);
+    }else{
+      this._requestUpload(this._files);
+    }
   },
 
   _requestUpload: function (files) {
@@ -215,21 +226,26 @@ Tw.MyTJoinSuspendStatus.prototype = {
         return {
           fileSize: item.size,
           fileName: item.name,
-          filePath: res.path
+          filePath: item.path
         };
       });
 
-      this._apiService.request(Tw.API_CMD.BFF_01_0046, {
-        recvFaxNum: 'skt257@sk.com',
-        proMemo: '', // TBD
-        scanFiles: convFileList
-      })
-        .done($.proxy(this._onSuccessUscanUpload, this))
-        .fail($.proxy(this._onError, this));
+      this._requestUscan(convFileList);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
   },
+
+  _requestUscan: function(convFileList){
+    this._apiService.request(Tw.API_CMD.BFF_01_0046, {
+      recvFaxNum: 'skt257@sk.com',
+      proMemo: '', // TBD 필수값임 확인필요
+      scanFiles: convFileList
+    })
+      .done($.proxy(this._onSuccessUscanUpload, this))
+      .fail($.proxy(this._onError, this));
+  },
+
   _onSuccessUscanUpload: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._requestReupload();
@@ -256,6 +272,10 @@ Tw.MyTJoinSuspendStatus.prototype = {
 
   _onError: function (res) {
     Tw.Error(res.code, res.msg).pop();
+  },
 
+  _isLowerVersionAndroid: function () {
+    var androidVersion = Tw.BrowserHelper.getAndroidVersion();
+    return androidVersion && androidVersion.indexOf('4.4') !== -1;
   }
 };
