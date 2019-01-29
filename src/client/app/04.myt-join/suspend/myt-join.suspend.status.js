@@ -79,7 +79,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
       data: {
         svcInfo: this._svcInfo,
         period: this._params.status.period,
-        resuspend: this._params.status.resuspend
+        resuspend: this._params.status.resuspendDt
       }
     }, $.proxy(this._onOpenCancelResuspendPopup, this), null, 'cancelResuspend');
   },

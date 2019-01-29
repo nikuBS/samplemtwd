@@ -45,16 +45,17 @@ class MyTJoinSuspendStatus extends TwViewController {
         const to = DateHelper.getShortDateWithFormat(suspendStatus.result.toDt, 'YYYY.MM.DD.');
         status['period'] = { from, to };
         status['reason'] = suspendStatus.result.svcChgRsnNm;
-        status['resuspend'] = null;
+        status['resuspend'] = null; // 재신청중인 사용자 -> 재신청취소 버튼 노출
+        status['resuspendDt'] = null; // 재신청일자
         status['resetable'] = true;
-        status['resuspendable'] = false;
+        status['resuspendable'] = false; // 장기일시정지(군입대) 일시해제 경우 재싱청 버튼 노출
         status['militaryAC'] = false;
         if ( suspendStatus.result.svcChgRsnCd === '21'
           || suspendStatus.result.svcChgRsnCd === '22' ) { // 장기일시정지(case 6)
           status['type'] = 'long-term';
           // status['resuspendable'] = true;
           if ( suspendStatus.result.reFormDt ) { // 장기일시정지(case 7)
-            status['resuspend'] = DateHelper.getShortDateWithFormat(suspendStatus.result.reFormDt, 'YYYY.MM.DD.');
+            status['resuspendDt'] = DateHelper.getShortDateWithFormat(suspendStatus.result.reFormDt, 'YYYY.MM.DD.');
           } else if ( suspendStatus.result.svcChgRsnCd === '21' ) {
             const months = DateHelper.getDiffByUnit(DateHelper.getCurrentDate(), suspendStatus.result.fromDt, 'months');
             if ( months >= 23 ) {
@@ -72,9 +73,13 @@ class MyTJoinSuspendStatus extends TwViewController {
         status['reason'] = MYT_SUSPEND_REASON['5000341'] ;
         status['type'] = 'long-term';
         status['resetable'] = false;
-        status['resuspendable'] = true;
         status['militaryAC'] = true;
-
+        if ( suspendStatus.result.reFromDt && suspendStatus.result.reFromDt !== '') {
+          status['resuspend'] = true;
+          status['resuspendDt'] = DateHelper.getShortDateWithFormat(suspendStatus.result.reFormDt, 'YYYY.MM.DD.');
+        } else {
+          status['resuspendable'] = true;
+        }
         options['status'] = status;
       } else {
         options['status'] = null;
@@ -83,18 +88,22 @@ class MyTJoinSuspendStatus extends TwViewController {
       // 진행사항에 대항 표시
       if ( progress.code === API_CODE.CODE_00 ) { //  현재 장기일시 정지 미신청 상태에 대한 코드가 없음
         const _progress = progress.result;
-        _progress.rgstDt = DateHelper.getShortDateWithFormat(_progress.rgstDt, 'YYYY.MM.DD.');
-        _progress.opDtm = _progress.opDtm ? DateHelper.getShortDateWithFormat(_progress.opDtm, 'YYYY.MM.DD.') : '';
-        _progress.state = MYT_SUSPEND_STATE[_progress.opStateCd];
-        _progress.fromDt = DateHelper.getShortDateWithFormat(_progress.fromDt, 'YYYY.MM.DD.');
-
-        _progress.progressReason = MYT_SUSPEND_REASON[_progress.receiveCd];
-        if ( _progress.toDt ) {
-          _progress.toDt = DateHelper.getShortDateWithFormat(_progress.toDt, 'YYYY.MM.DD.');
-        }
-        options['progress'] = _progress;
-        if ( options['status'] ) {
-          options['status']['isProgressing'] = true;
+        if ( options['status'] && status['militaryAC'] ) {
+          options['progress'] = null;
+          options['status']['isProgressing'] = false;
+        } else {
+          _progress.rgstDt = DateHelper.getShortDateWithFormat(_progress.rgstDt, 'YYYY.MM.DD.');
+          _progress.opDtm = _progress.opDtm ? DateHelper.getShortDateWithFormat(_progress.opDtm, 'YYYY.MM.DD.') : '';
+          _progress.state = MYT_SUSPEND_STATE[_progress.opStateCd];
+          _progress.fromDt = DateHelper.getShortDateWithFormat(_progress.fromDt, 'YYYY.MM.DD.');
+          _progress.progressReason = MYT_SUSPEND_REASON[_progress.receiveCd];
+          if ( _progress.toDt ) {
+            _progress.toDt = DateHelper.getShortDateWithFormat(_progress.toDt, 'YYYY.MM.DD.');
+          }
+          options['progress'] = _progress;
+          if ( options['status'] ) {
+            options['status']['isProgressing'] = true;
+          }
         }
       } else if ( progress.debugMessage && progress.debugMessage.trim() === '500' ) {
         options['progress'] = null;
