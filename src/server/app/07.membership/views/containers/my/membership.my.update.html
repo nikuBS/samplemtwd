@@ -72,7 +72,7 @@
 
                 <hr class="cont-sp type1" aria-hidden="true" />
 
-                <% if( myInfoData.ctzNumAgreeYn === 'Y' || myInfoData.ocbAccumAgreeYn === 'Y'){ %>
+                <% if( myInfoData.ctzNumAgreeYn === 'Y' && myInfoData.ocbAccumAgreeYn === 'Y'){ %>
                 <div class="cont-box">
                     <h3 class="tit-type7">OK캐쉬백 이용·약관 동의</h3>
                     <p class="subtit-info">OK캐쉬백 적립 및 이용에 동의하셨습니다.</p>
@@ -89,12 +89,12 @@
                     <p class="con-txt4">T멤버십과 함께 OK캐쉬백을 적립&middot;사용해 보세요</p>
                     <p class="con-txt5 mt10">OK캐쉬백 기능을 추가하시면, OK캐쉬백을 적립·사용하실 수 있습니다. OK캐쉬백 기능을 추가하시겠습니까?</p>
                     <div class="simple-form type2 mt30 mb5">
-                        <span class="custom-form"><input type="checkbox" id="chk8" name="checkbox2"><span class="c-type1"></span></span>
+                        <span class="custom-form"><input type="checkbox" id="chk8" name="checkbox2" onclick="return false;"><span class="c-type1"></span></span>
                         <label for="chk8">OK캐쉬백 기능 추가하기</label>
                     </div>
                 </div>
                 <!--// .cont-box -->
-                <div class="toggle-aggrement" style="display:none;">
+                <div id="fe-ok-toggle" class="toggle-aggrement" style="display:none;">
                     <div class="inner-agreement-list">
                         <ul>
                             <li>
