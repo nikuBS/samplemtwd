@@ -11,6 +11,9 @@ Tw.MyTDataUsageChildRecharge = function (rootEl, options) {
   this._historyService = new Tw.HistoryService();
 
   this._topUpLimit = parseInt(this._options.topUpLimit, 10);
+  if (this._topUpLimit <= 4000) {
+    this._topUpLimit = 4000;
+  }
 
   this._cachedElement();
   this._bindEvent();
