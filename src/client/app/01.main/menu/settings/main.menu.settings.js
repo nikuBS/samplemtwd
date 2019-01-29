@@ -69,7 +69,6 @@ Tw.MainMenuSettings.prototype = {
         this.$updateBox.removeClass('none');
       } else {
         this.$versionText.text(Tw.SETTINGS_MENU.LATEST + ' ' + this.$versionText.text());
-        this.$versionText.addClass('point');
       }
     }
   },
