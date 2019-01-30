@@ -329,7 +329,7 @@ Tw.MainHome.prototype = {
   _openLineResisterPopup: function (isLogin) {
     if ( isLogin ) {
       var layerType = this.$container.data('layertype');
-      // var layerType = Tw.LOGIN_NOTICE_TYPE.EXIST_CUSTOMER;
+      // var layerType = Tw.LOGIN_NOTICE_TYPE.CUSTOMER_PASSWORD;
       Tw.Logger.info('[Home] layerType', layerType);
       if ( !Tw.FormatHelper.isEmpty(layerType) ) {
         this._updateNoticeType();
@@ -926,21 +926,21 @@ Tw.MainHome.prototype = {
     var lineRegisterLayer = new Tw.LineRegisterComponent();
     setTimeout($.proxy(function () {
       lineRegisterLayer.openRegisterLinePopup(layerType);
-    }, this), 1000);
+    }, this), 1500);
   },
   _onHiddenEventPwdGuide: function () {
     setTimeout($.proxy(function () {
       this._openCustomerPasswordGuide();
-    }, this), 1000);
+    }, this), 1500);
   },
   _onHiddenEventNotice: function ($event, notice) {
     setTimeout($.proxy(function () {
       this._openEmrNoticePopup(notice);
-    }, this), 1000);
+    }, this), 1500);
   },
   _onHiddenEventNewLine: function () {
     setTimeout($.proxy(function () {
       this._popupService.openAlert(Tw.ALERT_MSG_HOME.NEW_LINE, null, null, $.proxy(this._closeNewLine, this));
-    }, this), 1000);
+    }, this), 1500);
   }
 };
