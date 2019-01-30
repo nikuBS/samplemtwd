@@ -15,14 +15,14 @@
         {{/if}}
         <em class="sum"><span class="ff-tg-medium">{{useAmtTot}}</span>원</em>
         <span class="date"><span class="ff-tg-light">{{invStartDt}}</span>~<span class="ff-tg-light">{{invEndDt}}</span></span>
+        {{#if type3}}
+        <p class="tx">고객님은 현재 통합청구 이용 중이며 할인요금을 제외한 이용요금으로 조회됩니다.</p>
+        {{else}}
         <ul class="list">
-            {{#if type3}}
-            <p class="tx">고객님은 현재 통합청구 이용 중이며 할인요금을 제외한 이용요금으로 조회됩니다.</p>
-            {{else}}
             <li><strong class="ti">이용요금</strong> <em class="tx f-type"><span class="ff-tg-medium">{{useAmtTot}}</span>원</em></li>
             <li><strong class="ti">할인요금</strong> <em class="tx f-type c-point"><span class="ff-tg-medium">{{deduckTot}}</span>원</em></li>
-            {{/if}}
         </ul>
+        {{/if}}
         <div class="btn-area">
             <a href="/myt-fare/billguide/guide" class="bt">자세히 보기</a>
         </div>

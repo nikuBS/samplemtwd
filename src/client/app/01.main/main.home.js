@@ -371,16 +371,17 @@ Tw.MainHome.prototype = {
       }]
     }, $.proxy(this._confirmCustPwGuide, this), $.proxy(this._closeCustPwGuide, this));
   },
-  _confirmCustPwGuide: function (root) {
-    root.on('click', '.fe-go', $.proxy(function () {
-      this._goCustPwd = true;
-      this._popupService.close();
-    }, this))
+  _confirmCustPwGuide: function ($popupContainer) {
+    $popupContainer.on('click', '.fe-go', $.proxy(this._onClickGoPwGuide, this));
   },
   _closeCustPwGuide: function () {
     if ( this._goCustPwd ) {
       this._historyService.goLoad('/myt-join/custpassword');
     }
+  },
+  _onClickGoPwGuide: function () {
+    this._goCustPwd = true;
+    this._popupService.close();
   },
   _cachedSmartCard: function () {
     for ( var i = 0; i < 16; i++ ) {
@@ -411,6 +412,7 @@ Tw.MainHome.prototype = {
       var $billTemp = $('#fe-smart-bill');
       var tplBillCard = Handlebars.compile($billTemp.html());
       element.html(tplBillCard(result));
+      element.removeClass('empty');
     } else {
       element.hide();
     }
@@ -454,6 +456,7 @@ Tw.MainHome.prototype = {
       var $contentsTemp = $('#fe-smart-contents');
       var tplContentsCard = Handlebars.compile($contentsTemp.html());
       element.html(tplContentsCard(result));
+      element.removeClass('empty');
     } else {
       element.hide();
     }
@@ -490,6 +493,7 @@ Tw.MainHome.prototype = {
       var $microTemp = $('#fe-smart-micro-pay');
       var tplMicroCard = Handlebars.compile($microTemp.html());
       element.html(tplMicroCard(result));
+      element.removeClass('empty');
     } else {
       element.hide();
     }
@@ -537,6 +541,7 @@ Tw.MainHome.prototype = {
       var $giftTemp = $('#fe-smart-gift');
       var tplGiftCard = Handlebars.compile($giftTemp.html());
       element.html(tplGiftCard(result));
+      element.removeClass('empty');
       element.on('click', '#fe-bt-go-gift', $.proxy(this._onClickBtGift, this, sender));
       element.on('click', '#fe-bt-gift-balance', $.proxy(this._onClickGiftBalance, this, element));
       this._getGiftBalance(element, 0);
@@ -619,7 +624,8 @@ Tw.MainHome.prototype = {
       var $rechargeTemp = $('#fe-smart-recharge');
       var tplRechargeCard = Handlebars.compile($rechargeTemp.html());
       element.html(tplRechargeCard({ refillCoupons: refillCoupons }));
-      $('#fe-bt-go-recharge').on('click', $.proxy(this._onClickBtRecharge, this));
+      element.removeClass('empty');
+      element.on('click', 'fe-bt-go-recharge',  $.proxy(this._onClickBtRecharge, this));
     } else {
       element.hide();
     }
