@@ -41,11 +41,12 @@ Tw.MyTDataTingBlock.prototype = {
     }
 
     if ( elList.not(':visible').size() === 0 ) {
-      elTarget.remove();
+      elTarget.hide();
     }
   },
 
   _hideListItem: function () {
+    $('.fe-history-more').show();
     $('.fe-wrap-block-list li').slice(20).hide();
   },
 
@@ -70,7 +71,6 @@ Tw.MyTDataTingBlock.prototype = {
       $('.fe-wrap-block-list').html(this.tpl_block_item({ block_list: blockList }));
 
       if ( blockList.length > 20 ) {
-        $('.fe-history-more').show();
         this._hideListItem();
       }
 
@@ -123,6 +123,7 @@ Tw.MyTDataTingBlock.prototype = {
   },
 
   _openTingBlock: function () {
+    this._hideListItem();
     $('.fe-wrap-ting-block').show();
   },
 
