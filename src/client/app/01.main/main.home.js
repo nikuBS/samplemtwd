@@ -515,20 +515,18 @@ Tw.MainHome.prototype = {
         blockUsage: true
       });
     } else {
-      this._apiService.requestArray([
-        { command: Tw.API_CMD.BFF_06_0015, params: {} },
-        { command: Tw.API_CMD.BFF_06_0014, params: { reqCnt: Tw.GIFT_REMAIN_RETRY } }
-      ]).done($.proxy(this._successGiftData, this, element))
+      this._apiService.request(Tw.API_CMD.BFF_06_0015, {})
+        .done($.proxy(this._successGiftData, this, element))
         .fail($.proxy(this._failGiftData, this));
     }
   },
-  _successGiftData: function (element, sender, remain) {
+  _successGiftData: function (element, resp) {
     var result = null;
 
-    if ( sender.code === Tw.API_CODE.CODE_00 ) {
-      result = this._parseGiftData(sender, remain);
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      result = this._parseGiftData(resp.result);
     }
-    this._drawGiftData(element, result, sender);
+    this._drawGiftData(element, result, resp);
     this._resetHeight();
   },
   _failGiftData: function () {
@@ -539,26 +537,49 @@ Tw.MainHome.prototype = {
       var $giftTemp = $('#fe-smart-gift');
       var tplGiftCard = Handlebars.compile($giftTemp.html());
       element.html(tplGiftCard(result));
-      $('#fe-bt-go-gift').on('click', $.proxy(this._onClickBtGift, this, sender));
+      element.on('click', '#fe-bt-go-gift', $.proxy(this._onClickBtGift, this, sender));
+      element.on('click', '#fe-bt-gift-balance', $.proxy(this._onClickGiftBalance, this, element));
+      this._getGiftBalance(element, 0);
     } else {
       element.hide();
     }
   },
-  _parseGiftData: function (sender, remain) {
+  _parseGiftData: function (sender) {
     return {
-      dataRemQty: this._parseRemainData(remain),
-      dataGiftCnt: sender.result.dataGiftCnt,
-      familyDataGiftCnt: sender.result.familyDataGiftCnt,
-      familyMemberYn: sender.result.familyMemberYn === 'Y',
-      goodFamilyMemberYn: sender.result.goodFamilyMemberYn === 'Y'
+      dataGiftCnt: sender.dataGiftCnt,
+      familyDataGiftCnt: sender.familyDataGiftCnt,
+      familyMemberYn: sender.familyMemberYn === 'Y',
+      goodFamilyMemberYn: sender.goodFamilyMemberYn === 'Y'
     };
   },
-  _parseRemainData: function (remain) {
-    if ( remain.code === Tw.API_CODE.CODE_00 ) {
-      return remain.result.dataRemQty;
+  _getGiftBalance: function ($element, reqCnt) {
+    setTimeout($.proxy(function () {
+      this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: reqCnt })
+        .done($.proxy(this._successGiftRemain, this, $element));
+    }, this), 3000);
+
+  },
+  _successGiftRemain: function ($element, resp) {
+    var $textBalance = $element.find('#fe-text-gift-balance');
+    var $btBalance = $element.find('#fe-bt-gift-balance');
+    var $loading = $element.find('#fe-text-gift-loading');
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      if ( resp.result.giftRequestAgainYn === 'N' ) {
+        if ( !Tw.FormatHelper.isEmpty(resp.result.dataRemQty) ) {
+          $loading.parent().addClass('none');
+          $textBalance.parent().removeClass('none');
+          $textBalance.text(resp.result.dataRemQty);
+        } else {
+          this._getGiftBalance($element, resp.result.reqCnt);
+        }
+      } else {
+        this._getGiftBalance($element, resp.result.reqCnt);
+      }
+
     } else {
-      return '32.2';
-      // Tw.Error(remain.code, remain.msg).pop();
+      // Tw.Error(resp.code, resp.msg).pop();
+      $loading.parent().addClass('none');
+      $btBalance.parent().removeClass('none');
     }
   },
   _onClickBtGift: function (sender) {
@@ -573,7 +594,15 @@ Tw.MainHome.prototype = {
     } else {
       this._popupService.openAlert(Tw.ALERT_MSG_HOME.A06);
     }
+  },
+  _onClickGiftBalance: function ($element) {
+    var $btBalance = $element.find('#fe-bt-gift-balance');
+    var $loading = $element.find('#fe-text-gift-loading');
 
+    $loading.parent().removeClass('none');
+    $btBalance.parent().addClass('none');
+
+    this._getGiftBalance($element, 0);
   },
   _getRechargeData: function (element) {
     this._apiService.request(Tw.API_CMD.BFF_06_0001, {})
