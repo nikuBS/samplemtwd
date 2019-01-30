@@ -39,7 +39,7 @@ Tw.MyTDataGift.prototype = {
     this.$remainTxt = $('.fe-txt-remain');
     this.$remainBtn = $('.fe-btn-remain');
     this.$wrapSuccessRemainApi= $('.fe-remain-api');
-    this.$wrapErrorRemainApi= $('.fe-error-api');
+    this.$wrapErrorRemainApi= $('.fe-err-api');
 
   },
 
@@ -106,6 +106,7 @@ Tw.MyTDataGift.prototype = {
     this.$wrapErrorRemainApi.show();
     this.$remainBtn.show();
     this.$remainTxt.hide();
+    this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A217);
   },
 
   _remainApiSuccess: function (){
