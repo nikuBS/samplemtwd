@@ -568,12 +568,14 @@ Tw.MainHome.prototype = {
         if ( !Tw.FormatHelper.isEmpty(resp.result.dataRemQty) ) {
           $loading.parent().addClass('none');
           $textBalance.parent().removeClass('none');
-          $textBalance.text(resp.result.dataRemQty);
+          var remain = Tw.FormatHelper.convDataFormat(resp.result.dataRemQty, 'MB');
+          $textBalance.text(remain.data);
+          $textBalance.parent().append(remain.unit);
         } else {
           this._getGiftBalance($element, resp.result.reqCnt);
         }
       } else {
-        this._getGiftBalance($element, resp.result.reqCnt);
+        $textBalance.parent().append(remainData.unit);
       }
 
     } else {
