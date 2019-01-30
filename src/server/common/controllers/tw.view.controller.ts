@@ -63,9 +63,9 @@ abstract class TwViewController {
     this._apiService.setCurrentReq(req, res);
     this._loginService.setCurrentReq(req, res);
 
-    // res.set('Cache-Control', 'no-cache');
-    // res.set('expires', '0');
-    // res.set('pragma', 'no-store');
+    res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.set('expires', '0');
+    res.set('pragma', 'no-cache');
 
     this.setChannel(req, res).subscribe((resp) => {
       if ( this.checkLogin(req.session) ) {
