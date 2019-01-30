@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE, API_T_FAMILY_ERROR } from '../../types/api-command.type';
 import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
-import { CURRENCY_UNIT, ETC_CENTER, MYT_DATA_CHARGE_TYPE_NAMES } from '../../types/string.type';
+import { CURRENCY_UNIT, ETC_CENTER, MYT_DATA_CHARGE_TYPE_NAMES, MYT_DATA_CHARGE_TYPES } from '../../types/string.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { LOGIN_TYPE, PREPAID_PAYMENT_PAY_CD, PREPAID_PAYMENT_TYPE, UNIT, UNIT_E } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
@@ -140,7 +140,7 @@ class MytDataSubmainController extends TwViewController {
           } else {
             item['class'] = (item.opTypCd === '2' || item.opTypCd === '4') ? 'send' : 'recharge';
             item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.LIMIT_CHARGE;
-            item['u_sub'] = item.opOrgNm || ETC_CENTER;
+            item['u_sub'] = item.opTypCd === '3' ? MYT_DATA_CHARGE_TYPES.FIXED : '' + ' | ' + item.opOrgNm || ETC_CENTER;
             item['d_title'] = FormatHelper.addComma(item.amt);
             item['d_sub'] = DateHelper.getShortDate(item.opDt);
             item['unit'] = CURRENCY_UNIT.WON;
@@ -153,11 +153,15 @@ class MytDataSubmainController extends TwViewController {
         // type: 1 send, 2 recharge
         dpBkd.map((item) => {
           const dataQty = FormatHelper.convDataFormat(item.dataQty, 'MB');
+          let uSubTitle = FormatHelper.conTelFormatWithDash(item.svcNum);
+          if ( item.giftType === 'GC' ) {
+            uSubTitle = MYT_DATA_CHARGE_TYPES.FIXED + ' | ' + uSubTitle;
+          }
           item['opDt'] = item.opDtm.slice(0, 8);
           item['class'] = (item.type === '1' ? 'send' : 'recharge');
           item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.DATA_GIFT;
           // 충전/선물내역과 동일하게 처리
-          item['u_sub'] = /*MYT_T_DATA_GIFT_TYPE[item.giftType] + ' | ' + */FormatHelper.conTelFormatWithDash(item.svcNum);
+          item['u_sub'] = uSubTitle;
           item['d_title'] = dataQty.data;
           item['d_sub'] = DateHelper.getShortDate(item.opDt);
           item['unit'] = dataQty.unit;
@@ -191,9 +195,15 @@ class MytDataSubmainController extends TwViewController {
             item['d_sub'] = item.data;
             item['unit'] = CURRENCY_UNIT.WON;
           } else {
+            let etcBottom = item.opOrgNm || ETC_CENTER;
+            if ( item.opTypCd === '2' || item.opTypCd === '4' ) {
+              etcBottom = MYT_DATA_CHARGE_TYPES.CANCEL + ' | ' + etcBottom;
+            } else if ( item.opTypCd === '3' ) {
+              etcBottom = MYT_DATA_CHARGE_TYPES.FIXED + ' | ' + etcBottom;
+            }
             item['class'] = (item.opTypCd === '2' || item.opTypCd === '4') ? 'send' : 'recharge';
             item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.TING_CHARGE;
-            item['u_sub'] = item.opOrgNm || ETC_CENTER;
+            item['u_sub'] = etcBottom;
             item['d_title'] = FormatHelper.addComma(item.amt);
             item['d_sub'] = DateHelper.getShortDate(item.opDt);
             item['unit'] = CURRENCY_UNIT.WON;
@@ -462,7 +472,7 @@ class MytDataSubmainController extends TwViewController {
   // T끼리 데이터 선물 버튼
   _getDataPresent() {
     return this.apiService.request(API_CMD.BFF_06_0015, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 || resp.code === 'GFT0003' || resp.code === 'GFT0004') {
+      if ( resp.code === API_CODE.CODE_00 || resp.code === 'GFT0003' || resp.code === 'GFT0004' ) {
         return resp.result;
       } else {
         // error
