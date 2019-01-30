@@ -122,7 +122,7 @@ Tw.CommonMemberLineEdit.prototype = {
   _successRegisterLineList: function (svcNumList, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._marketingSvc = resp.result.offerSvcMgmtNum;
-      Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
+      // Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
       this._checkRepSvc(resp.result, svcNumList);
     } else {
       Tw.Error(resp.code, resp.msg).pop();
