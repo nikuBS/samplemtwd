@@ -70,7 +70,8 @@ class MyTDataCookiz extends TwViewController {
       });
   }
 
-  private getAuthChangeInfo = () => this.apiService.request(API_CMD.BFF_06_0033, {})
+  private getAuthChangeInfo = () => this.apiService
+    .request(API_CMD.BFF_06_0033, { type: '0', fromDt: DateHelper.getPast6MonthsShortDate(), toDt: DateHelper.getCurrentShortDate() })
     .map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;

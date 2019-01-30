@@ -114,6 +114,14 @@ class DateHelper {
 
   /**
    * @param date {Date} or {string} : YYYYMMDD
+   * @returns {string} : currentDateTime - 6 months
+   */
+  static getPast6MonthsShortDate = function () {
+    return moment().subtract(6, 'months').format('YYYYMMDD');
+  };
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDD
    * @returns {string} : currentDateTime + 1 year
    */
   static getNextYearShortDate = function () {

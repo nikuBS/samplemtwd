@@ -99,6 +99,14 @@ Tw.DateHelper = (function () {
 
   /**
    * @param date {Date} or {string} : YYYYMMDD
+   * @returns {string} : currentDateTime - 6 months
+   */
+  var getPast6MonthsShortDate = function () {
+    return moment().subtract(6, 'months').format('YYYYMMDD');
+  };
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDD
    * @returns {string} : currentDateTime + 1 year
    */
   var getNextYearShortDate = function () {
@@ -355,6 +363,7 @@ Tw.DateHelper = (function () {
     getCurrentMonth: getCurrentMonth,
     getCurrentYear: getCurrentYear,
     getPastYearShortDate: getPastYearShortDate,
+    getPast6MonthsShortDate: getPast6MonthsShortDate,
     getNextYearShortDate: getNextYearShortDate,
     getEndOfMonth: getEndOfMonth,
     getPastShortDate: getPastShortDate,
