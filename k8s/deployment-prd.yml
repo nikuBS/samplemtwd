@@ -1,18 +1,18 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: bff-nodejs-deployment
+  name: bff-nodejs
   labels:
-    app: bff-nodejs-service
+    app: bff-nodejs
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: bff-nodejs-service
+      app: bff-nodejs
   template:
     metadata:
       labels:
-        app: bff-nodejs-service
+        app: bff-nodejs
     spec:
       containers:
       - name: bff-nodejs
