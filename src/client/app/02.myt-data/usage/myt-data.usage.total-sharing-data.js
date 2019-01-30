@@ -280,7 +280,11 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
         },
         0
       );
-      usedData = Tw.FormatHelper.convDataFormat(this._dataGiftSum, Tw.DATA_UNIT.MB);
+      if (this._dataGiftSum < 1) {
+        usedData = Tw.FormatHelper.customDataFormat(this._dataGiftSum, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.KB);
+      } else {
+        usedData = Tw.FormatHelper.convDataFormat(this._dataGiftSum, Tw.DATA_UNIT.MB);
+      }
     } else {
       usedData = Tw.FormatHelper.convDataFormat(0, Tw.DATA_UNIT.MB);
     }
