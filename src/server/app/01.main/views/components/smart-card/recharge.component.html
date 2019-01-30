@@ -12,6 +12,8 @@
         <ul class="list">
             <% if(usageData.data && usageData.data.isShow) { %>
             <li><strong class="ti">잔여 데이터</strong> <em class="tx f-type c-point"><span class="ff-tg-medium"><%= usageData.data.showMyRemained %></span></em></li>
+            <% } else { %>
+            <li><strong class="ti">잔여 데이터</strong> <em class="tx f-type c-point"><span class="ff-tg-medium">0</span>MB</em></li>
             <% } %>
             <li><strong class="ti">리필쿠폰 남은 개수</strong> <em class="tx c-point"><span class="f-type ff-tg-medium">{{ refillCoupons }}</span>장</em></li>
         </ul>
