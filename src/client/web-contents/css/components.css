@@ -2081,9 +2081,7 @@
     .list-comp-lineinfo li .lineinfo-data {
       float: right;
       width: 50%;
-      text-align: right;
-      -webkit-transform: translateY(50%);
-              transform: translateY(50%); }
+      text-align: right; }
       .list-comp-lineinfo li .lineinfo-data span {
         display: inline-block;
         vertical-align: baseline; }
@@ -2091,11 +2089,13 @@
         font-size: 0.9375rem;
         line-height: 1.0625rem;
         font-weight: 700;
-        vertical-align: top; }
+        word-break: break-all;
+        width: 90%;
+        margin-top: 0.25rem; }
       .list-comp-lineinfo li .lineinfo-data .ico {
         display: inline-block;
-        -webkit-transform: translateY(0.125rem);
-                transform: translateY(0.125rem);
+        -webkit-transform: translateY(50%);
+                transform: translateY(50%);
         margin-left: 0.25rem;
         width: 0.4375rem;
         height: 0.8125rem;
@@ -3314,21 +3314,21 @@
 
 .icon-gnb-back-d {
   display: inline-block;
-  width: 2.5rem;
+  width: 2.75rem;
   height: 2.5rem;
   background: url(/img/svg/icon_gnb_back_d.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
 .icon-gnb-back-n {
   display: inline-block;
-  width: 2.5rem;
+  width: 2.75rem;
   height: 2.5rem;
   background: url(/img/svg/icon_gnb_back_n.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
 .icon-gnb-back-p {
   display: inline-block;
-  width: 2.5rem;
+  width: 2.75rem;
   height: 2.5rem;
   background: url(/img/svg/icon_gnb_back_p.svg) no-repeat 0 0;
   background-size: 100% 100%; }
@@ -6066,7 +6066,9 @@
     padding-top: 0; }
 
 .rdo-list-type .bt-box {
-  margin: 0; }
+  margin: 0;
+  width: 100%;
+  display: inline-block; }
   .rdo-list-type .bt-box button {
     width: 100%;
     height: 2.5rem;
@@ -12754,7 +12756,7 @@ a.bt-link-tx.underline.small {
     position: relative;
     display: block;
     width: 9.375rem;
-    height: 6.25rem;
+    height: 6.5625rem;
     padding: 0.75rem 0.75rem 0.9375rem;
     border-radius: 0.3125rem;
     -webkit-box-shadow: 0px 3px 20px -2px rgba(0, 0, 0, 0.03);
@@ -27917,7 +27919,9 @@ input[type="radio"].formradio-small.type2 + label {
     position: relative;
     z-index: 2; }
     .quick-menu-list + .btn-area .bt-link-tx {
-      color: #959595; }
+      color: #959595;
+      padding: 0.625rem 3.125rem;
+      margin: -0.625rem 0; }
       .quick-menu-list + .btn-area .bt-link-tx:before {
         background: #959595; }
   .quick-menu-list.type-pd {
@@ -28257,8 +28261,7 @@ input[type="radio"].formradio-small.type2 + label {
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   font-size: 1.5625rem;
-  font-weight: 700;
-  text-align: left; }
+  font-weight: 700; }
 
 .main-direct-box > .tx {
   font-weight: 300;
@@ -28844,6 +28847,8 @@ body.apphome {
       text-align: center;
       margin: 0 auto;
       font-weight: 700; }
+      .main-chart-box > .line .bt.ff-tg-light {
+        font-weight: 300; }
     .main-chart-box > .line .coach-mark {
       top: 1.4375rem; }
       .main-chart-box > .line .coach-mark:after {
@@ -28879,7 +28884,7 @@ body.apphome {
           color: #959595;
           font-size: 0.875rem;
           font-weight: 400;
-          font-family: "TgothicMedium", Roboto, sans-serif;
+          font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Noto Sans", "Noto Sans CJK", 'Droid Sans', Roboto, sans-serif;
           letter-spacing: 0; }
         .main-chart-box .donutchart .donut-chart .ti-data .data {
           display: block;
@@ -28961,8 +28966,10 @@ body.apphome {
       background: #f76252; }
     .main-chart-box .legend .category0 .data {
       color: #ef4b49;
-      font-weight: 700;
+      font-weight: 300;
       margin-right: 0.1875rem; }
+      .main-chart-box .legend .category0 .data .ff-tg-light {
+        font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Noto Sans", "Noto Sans CJK", 'Droid Sans', Roboto, sans-serif; }
     .main-chart-box .legend .category1::before {
       background: #59bcf5; }
     .main-chart-box .legend .category1 .data {
@@ -28977,8 +28984,7 @@ body.apphome {
       width: 7.5rem;
       color: inherit;
       font-size: 1rem;
-      text-align: center;
-      font-weight: 700; }
+      text-align: center; }
       .main-chart-box .call-message [class^="bt-"] + [class^="bt-"]:before {
         content: '';
         position: absolute;
@@ -29240,7 +29246,7 @@ body.apphome {
       top: 1.0625rem;
       width: 2.75rem;
       height: 2.75rem;
-      border: 2px solid #c1c1c1;
+      border: 1px solid #c1c1c1;
       border-radius: 100%;
       font-size: 1rem;
       font-weight: 700;

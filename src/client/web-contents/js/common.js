@@ -310,7 +310,7 @@ skt_landing.action = {
     },
     allOff : function(){
       $('.tw-loading').empty().remove();
-    },
+    }
   },
   popup: { //popup 
     open: function (popup_info,callback_open,callback_fail) {

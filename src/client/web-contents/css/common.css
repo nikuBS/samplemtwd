@@ -313,7 +313,7 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
       display: block;
       overflow: hidden;
       padding: 0.5625rem 2.25rem 0.5rem 0.625rem;
-      min-height: 2.375rem;
+      height: 2.375rem;
       background: #f2f2f2;
       font-size: 0.9375rem;
       color: #000;

@@ -128,11 +128,25 @@ skt_landing.widgets = {
         }
       });
       if(field.hasClass('text-auto-expand')) {
-        field.on('input',function(){
+        field.on('input.text-auto-expand',function(){
           $(this).css('height', 'inherit');
           var scroll_height = $(this).get(0).scrollHeight;
           $(this).css('height', scroll_height + 'px');
         });
+        if(field.is('[maxlength]')) {
+          // if (!('maxLength' in field)) { // support browser check
+            var maxLength = field.attr('maxlength');
+            field.on('keyup',function(){
+              var str_length = $(this).val().length;
+              if(str_length >= maxLength){
+                // console.log(str_length);
+                $(this).val($(this).val().substr(0, maxLength));
+                $(this).trigger('input.text-auto-expand');
+                return false;
+              }
+            });
+          // }
+        }
         bt.on('click',function(){
           field.css('height', 'inherit');
         });

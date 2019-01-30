@@ -332,8 +332,7 @@ body.bg-gray {
             #common-menu .section-cont .section-gnb .bt-depth1 > .bt .ti-info .info {
               margin-left: 0.4375rem;
               color: #f76252;
-              font-size: 0.9375rem;
-              font-family: "TgothicLight", Roboto, sans-serif; }
+              font-size: 0.9375rem; }
             #common-menu .section-cont .section-gnb .bt-depth1 > .bt .ti-info .tx {
               display: block;
               margin-top: 0.4375rem;
@@ -2752,7 +2751,8 @@ body.bg-gray {
   padding: 3.75rem 1.25rem 0;
   background: #676767;
   background-repeat: no-repeat;
-  background-size: cover; }
+  background-size: cover;
+  background-position: 100%; }
   .bg-productdetail .productdetails-bg.t-logo {
     background: #676767; }
 
