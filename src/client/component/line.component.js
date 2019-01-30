@@ -206,7 +206,7 @@ Tw.LineComponent.prototype = {
     }
   },
   _completeLogin: function () {
-    Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
+    // Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
     if ( !Tw.FormatHelper.isEmpty(this._callback) ) {
       this._callback();
     } else {
