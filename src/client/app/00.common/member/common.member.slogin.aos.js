@@ -15,7 +15,6 @@ Tw.CommonMemberSloginAos = function (rootEl) {
   this.$mdn = null;
   this.$errorTxt = null;
   this.$inputBox = null;
-  this.$btDel = null;
   this._bindEvent();
 };
 
@@ -30,11 +29,10 @@ Tw.CommonMemberSloginAos.prototype = {
     this.$mdn = this.$container.find('#fe-mdn');
     this.$errorTxt = this.$container.find('.fe-error');
     this.$inputBox = this.$container.find('#fe-inputbox');
-    this.$btDel = this.$container.find('#fe-bt-del');
 
     this.$btnLogin.on('click', $.proxy(this._onClickEasyLogin, this));
     this.$inputBirth.on('input', $.proxy(this._onInputBirth, this));
-    this.$btDel.on('click', $.proxy(this._onClickDel, this));
+    this.$container.on('click', '#fe-bt-delete', $.proxy(this._onInputBirth, this));
   },
   _onClickEasyLogin: function () {
     var params = {
@@ -44,6 +42,7 @@ Tw.CommonMemberSloginAos.prototype = {
     this._requestLogin(params);
   },
   _onInputBirth: function () {
+
     var inputBirth = this.$inputBirth.val();
     if ( inputBirth.length >= Tw.BIRTH_LEN ) {
       this.$inputBirth.val(inputBirth.slice(0, Tw.BIRTH_LEN));
@@ -67,8 +66,5 @@ Tw.CommonMemberSloginAos.prototype = {
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
-  },
-  _onClickDel: function () {
-    this.$inputBirth.val('');
   }
 };
