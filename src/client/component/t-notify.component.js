@@ -7,6 +7,9 @@ Tw.TNotifyComponent = function () {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
+  this._historyService = new Tw.HistoryService();
+
+  this._goSetting = false;
 
 };
 
@@ -16,7 +19,9 @@ Tw.TNotifyComponent.prototype = {
 
   },
   _openTNotify: function (list) {
-    this._nativeService.send(Tw.NTV_CMD.SAVE, { key: Tw.NTV_STORAGE.LAST_READ_PUSH_SEQ, value: list[0].seq });
+    if ( list.length > 0 ) {
+      this._nativeService.send(Tw.NTV_CMD.SAVE, { key: Tw.NTV_STORAGE.LAST_READ_PUSH_SEQ, value: list[0].seq });
+    }
     this._popupService.open({
       hbs: 'HO_04_06_01',
       layer: true,
@@ -31,10 +36,13 @@ Tw.TNotifyComponent.prototype = {
     this.$btMore = $popupContainer.find('#fe-bt-more');
 
     this.$btMore.on('click', $.proxy(this._onClickBtMore, this));
+    $popupContainer.on('click', '#fe-bt-go-setting', $.proxy(this._onClickGoSetting, this));
     $popupContainer.on('click', '.fe-bt-link', $.proxy(this._onClickLink, this));
   },
   _onCloseTNotify: function () {
-
+    if ( this._goSetting ) {
+      this._historyService.goLoad('/main/menu/settings/notification');
+    }
   },
   _getPushDate: function (userId) {
     this._apiService.request(Tw.API_CMD.BFF_04_0004, {
@@ -43,6 +51,7 @@ Tw.TNotifyComponent.prototype = {
   },
   _successPushData: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      resp.result = [];
       this._openTNotify(this._parseList(resp.result));
     } else {
       Tw.Error(resp.code, resp.msg).pop();
@@ -74,5 +83,9 @@ Tw.TNotifyComponent.prototype = {
     if ( !Tw.FormatHelper.isEmpty(url) ) {
       Tw.CommonHelper.openUrlExternal(url);
     }
+  },
+  _onClickGoSetting: function () {
+    this._goSetting = true;
+    this._popupService.close();
   }
 };
