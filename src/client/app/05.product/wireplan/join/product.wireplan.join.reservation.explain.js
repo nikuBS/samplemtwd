@@ -64,7 +64,7 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     this.$btnExplainFileAdd.on('click', $.proxy(this._uploadExplainFile, this));
 
     this.$container.on('click', 'input[type=file]', $.proxy(this._openCustomFileChooser, this));
-    this.$familyAddWrap.on('keyup input', 'input[type=text]', $.proxy(this._procEnableAddFamilyBtn, this));
+    this.$familyAddWrap.on('keyup input', 'input[type=text],input[type=tel]', $.proxy(this._procEnableAddFamilyBtn, this));
     this.$familyAddWrap.on('click', '.fe-btn_cancel', $.proxy(this._procEnableAddFamilyBtn, this));
     this.$familyList.on('change', 'input[type=checkbox]', $.proxy(this._procEnableApplyBtn, this));
     this.$familyList.on('click', '.fe-btn_family_del', $.proxy(this._delFamily, this));
