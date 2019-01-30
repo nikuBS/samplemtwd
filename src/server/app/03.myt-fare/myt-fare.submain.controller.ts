@@ -13,7 +13,6 @@ import DateHelper from '../../utils/date.helper';
 import { API_ADD_SVC_ERROR, API_CMD, API_CODE, API_MYT_ERROR, API_TAX_REPRINT_ERROR } from '../../types/api-command.type';
 import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
 import { MYT_FARE_PAYMENT_ERROR } from '../../types/string.type';
-import { REDIS_KEY } from '../../types/redis.type';
 import { SVC_ATTR_NAME } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 
@@ -24,12 +23,12 @@ class MyTFareSubmainController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
     const data: any = {
-      svcInfo: svcInfo,
+      svcInfo: FormatHelper.objectClone(svcInfo),
       pageInfo: pageInfo,
       isMicroPayment: false,
       isNotAutoPayment: true,
       // 다른 회선 항목
-      otherLines: this.convertOtherLines(svcInfo, allSvc),
+      otherLines: this.convertOtherLines(FormatHelper.objectClone(svcInfo), FormatHelper.objectClone(allSvc)),
       // 1일 기준
       isNotFirstDate: (new Date().getDate() > 1),
       // 휴대폰, T-PocketFi 인 경우에만 실시간 요금 조회 노출
@@ -43,9 +42,9 @@ class MyTFareSubmainController extends TwViewController {
       }
     }
     // this.bannerUrl = REDIS_KEY.BANNER_ADMIN + pageInfo.menuId;
-    if ( svcInfo.svcAttrCd === 'M2' ) {
+    if ( data.svcInfo.svcAttrCd === 'M2' ) {
       data.type = 'UF';
-      this._requestPPS(req, res, data, svcInfo);
+      this._requestPPS(req, res, data);
     } else {
       this.apiService.request(API_CMD.BFF_05_0036, {}).subscribe((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
@@ -66,7 +65,7 @@ class MyTFareSubmainController extends TwViewController {
                 title: MYT_FARE_SUBMAIN_TITLE.MAIN,
                 code: API_MYT_ERROR.BIL0011,
                 msg: MYT_FARE_PAYMENT_ERROR.COM_CODE_B,
-                svcInfo: svcInfo
+                svcInfo: data.svcInfo
               });
             }
           }
@@ -75,7 +74,7 @@ class MyTFareSubmainController extends TwViewController {
             data.svcInfo.nickNm = SVC_ATTR_NAME[data.svcInfo.svcAttrCd];
           }
           if ( data.type === 'UF' ) {
-            this._requestUsageFee(req, res, data, svcInfo);
+            this._requestUsageFee(req, res, data);
           } else {
             // 청구요금
             if ( claim && claim.invDt.length > 0 ) {
@@ -93,7 +92,7 @@ class MyTFareSubmainController extends TwViewController {
             } else {
               data.isRealTime = false;
             }
-            this._requestClaim(req, res, data, svcInfo);
+            this._requestClaim(req, res, data);
           }
 
         } else {
@@ -101,7 +100,7 @@ class MyTFareSubmainController extends TwViewController {
             title: MYT_FARE_SUBMAIN_TITLE.MAIN,
             code: resp.code,
             msg: resp.msg,
-            svcInfo: svcInfo
+            svcInfo: data.svcInfo
           });
         }
       });
@@ -116,7 +115,7 @@ class MyTFareSubmainController extends TwViewController {
    * @param svcInfo :Object
    * @private
    */
-  _requestClaim(req, res, data, svcInfo) {
+  _requestClaim(req, res, data) {
     Observable.combineLatest(
       this._getNonPayment(),
       this._getPaymentInfo(),
@@ -132,7 +131,7 @@ class MyTFareSubmainController extends TwViewController {
       if ( microPay ) {
         data.microPay = microPay;
         // 휴대폰이면서 미성년자가 아닌경우
-        if ( data.microPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
+        if ( data.microPay.code !== API_ADD_SVC_ERROR.BIL0031 && data.svcInfo.svcAttrCd === 'M1' ) {
           data.isMicroPrepay = true;
         }
       }
@@ -140,7 +139,7 @@ class MyTFareSubmainController extends TwViewController {
       if ( contentPay ) {
         data.contentPay = contentPay;
         // 휴대폰이면서 미성년자가 아닌경우
-        if ( data.contentPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
+        if ( data.contentPay.code !== API_ADD_SVC_ERROR.BIL0031 && data.svcInfo.svcAttrCd === 'M1' ) {
           data.isContentPrepay = true;
         }
       }
@@ -189,7 +188,7 @@ class MyTFareSubmainController extends TwViewController {
    * @param svcInfo :Object
    * @private
    */
-  _requestUsageFee(req, res, data, svcInfo) {
+  _requestUsageFee(req, res, data) {
     Observable.combineLatest(
       this._getUsageFee(),
       this._getPaymentInfo(),
@@ -202,7 +201,7 @@ class MyTFareSubmainController extends TwViewController {
           title: MYT_FARE_SUBMAIN_TITLE.MAIN,
           code: usage.info.code,
           msg: usage.info.msg,
-          svcInfo: svcInfo
+          svcInfo: data.svcInfo
         });
       } else {
         // 사용요금
@@ -227,7 +226,7 @@ class MyTFareSubmainController extends TwViewController {
         if ( microPay ) {
           data.microPay = microPay;
           // 휴대폰이면서 미성년자가 아닌경우
-          if ( data.microPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
+          if ( data.microPay.code !== API_ADD_SVC_ERROR.BIL0031 && data.svcInfo.svcAttrCd === 'M1' ) {
             data.isMicroPrepay = true;
           }
         }
@@ -235,7 +234,7 @@ class MyTFareSubmainController extends TwViewController {
         if ( contentPay ) {
           data.contentPay = contentPay;
           // 휴대폰이면서 미성년자가 아닌경우
-          if ( data.contentPay.code !== API_ADD_SVC_ERROR.BIL0031 && svcInfo.svcAttrCd === 'M1' ) {
+          if ( data.contentPay.code !== API_ADD_SVC_ERROR.BIL0031 && data.svcInfo.svcAttrCd === 'M1' ) {
             data.isContentPrepay = true;
           }
         }
@@ -251,17 +250,17 @@ class MyTFareSubmainController extends TwViewController {
     });
   }
 
-  _requestPPS(req, res, data, svcInfo) {
+  _requestPPS(req, res, data) {
     // Observable.combineLatest(
     //   this.redisService.getData(this.bannerUrl),
     // ).subscribe(([banner]) => {
-      // 납부/청구 정보
-      // 배너 정보 - client에서 호출하는 방식으로 변경 (19/01/22)
-      // if ( banner && (banner.code === API_CODE.REDIS_SUCCESS) ) {
-      //   if ( !FormatHelper.isEmpty(banner.result) ) {
-      //     data.banner = this.parseBanner(banner.result);
-      //   }
-      // }
+    // 납부/청구 정보
+    // 배너 정보 - client에서 호출하는 방식으로 변경 (19/01/22)
+    // if ( banner && (banner.code === API_CODE.REDIS_SUCCESS) ) {
+    //   if ( !FormatHelper.isEmpty(banner.result) ) {
+    //     data.banner = this.parseBanner(banner.result);
+    //   }
+    // }
     // });
     data.isNotAutoPayment = false;
     data.isRealTime = false;
