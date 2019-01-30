@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: bff-nodejs-service
+  name: bff-nodejs
 spec:
   ports:
     - name: http
@@ -9,5 +9,5 @@ spec:
       nodePort: 31011
       targetPort: 3000
   selector:
-    app: bff-nodejs-service
+    app: bff-nodejs
   type: NodePort
