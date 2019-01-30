@@ -196,7 +196,9 @@ Tw.MyTJoinWireModifyProduct.prototype = {
     var indexOfVal = this.productBillSelect.type.indexOf(tempData);
 
     if ( indexOfVal !== -1 ) { // 존재할때 실행 체크
-      $layer.find('.chk-link-list > li').eq(indexOfVal).find('button').addClass('checked');
+      $layer.find('.chk-link-list > li').eq(indexOfVal).find('button')
+        .addClass('checked')
+        .find('input[type=radio]').prop('checked', true);
     }
 
     //팝업 속 버튼을 클릭했을 때
@@ -217,7 +219,8 @@ Tw.MyTJoinWireModifyProduct.prototype = {
       $target.text( tempDataVal );
 
       $layer.find('.chk-link-list li > button').removeClass('checked');
-      $targetChild.addClass('checked');
+      $targetChild.addClass('checked')
+        .find('input[type=radio]').prop('checked', true);
       this._popupService.close();
 
     }, this));
@@ -232,10 +235,12 @@ Tw.MyTJoinWireModifyProduct.prototype = {
   // 요금상품 선택 클릭시 실행
   select_product_billEvtOpen: function( $target, $layer ) {
     var tempData = this.productFormData.prodNm;
-    var indexOfVal = this.productBillSelect.child.indexOf(tempData);
+    var indexOfVal = this.productBillSelect.child[this.productSelect.id].indexOf(tempData);
 
     if ( indexOfVal !== -1 ) { // 존재할때 실행 체크
-      $layer.find('.chk-link-list > li').eq(indexOfVal).find('button').addClass('checked');
+      $layer.find('.chk-link-list > li').eq(indexOfVal).find('button')
+        .addClass('checked')
+        .find('input[type=radio]').prop('checked', true);
     }
 
     //팝업 속 버튼을 클릭했을 때
@@ -248,7 +253,8 @@ Tw.MyTJoinWireModifyProduct.prototype = {
       $target.text( tempDataVal );
 
       $layer.find('.chk-link-list li > button').removeClass('checked');
-      $targetChild.addClass('checked');
+      $targetChild.addClass('checked')
+        .find('input[type=radio]').prop('checked', true);
       this._popupService.close();
 
     }, this));

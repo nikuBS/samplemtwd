@@ -16,8 +16,8 @@ Tw.MyTFareBillGuideIndividual = function (rootEl, resData) {
 
   this._init();
 
-  this.paramDate = '';
-  this.paramLine = '';
+  this.paramDate = this.resData.reqQuery.date || '';
+  this.paramLine = this.resData.reqQuery.line || '';
 };
 
 Tw.MyTFareBillGuideIndividual.prototype = {

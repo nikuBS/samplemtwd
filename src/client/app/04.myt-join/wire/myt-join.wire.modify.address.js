@@ -208,12 +208,14 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     // Tw.Logger.info('[팝업 open > $target > 클릭한 버튼]', $target);
     // Tw.Logger.info('[팝업 open > $layer > 레이어 팝업]', $layer);
 
-    var building = this.addressFormData.building;
+    var building = this.addressFormData.bldTypNm;
     var indexOfVal = Tw.MYT_JOIN_WIRE_MODIFY_ADDRESS.BUILDING.indexOf(building);
 
     if ( indexOfVal !== -1 ) { // 존재할때 실행 체크
       Tw.Logger.info('[건물 유형 존재할때 실행]', indexOfVal );
-      $layer.find('.chk-link-list > li').eq(indexOfVal).find('button').addClass('checked');
+      $layer.find('.chk-link-list > li').eq(indexOfVal).find('button')
+        .addClass('checked')
+        .find('input[type=radio]').prop('checked', true);
     }
 
     //팝업 속 버튼을 클릭했을 때
@@ -224,7 +226,8 @@ Tw.MyTJoinWireModifyAddress.prototype = {
       $target.text( tempDataVal );
 
       $layer.find('.chk-link-list li > button').removeClass('checked');
-      $targetChild.addClass('checked');
+      $targetChild.addClass('checked')
+        .find('input[type=radio]').prop('checked', true);
       this._popupService.close();
 
     }, this));
