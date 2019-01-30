@@ -572,12 +572,13 @@ Tw.MainHome.prototype = {
           $textBalance.text(remain.data);
           $textBalance.parent().append(remain.unit);
         } else {
-          this._getGiftBalance($element, resp.result.reqCnt);
+          $loading.parent().addClass('none');
+          $btBalance.parent().removeClass('none');
+          // this._getGiftBalance($element, resp.result.reqCnt);
         }
       } else {
-        $textBalance.parent().append(remainData.unit);
+        this._getGiftBalance($element, resp.result.reqCnt);
       }
-
     } else {
       // Tw.Error(resp.code, resp.msg).pop();
       $loading.parent().addClass('none');
