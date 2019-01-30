@@ -338,7 +338,7 @@ class ApiRouter {
 
   private getQuickMenu(req: Request, res: Response, next: NextFunction) {
     const svcInfo = this.loginService.getSvcInfo(req);
-    if ( FormatHelper.isEmpty(svcInfo) || FormatHelper.isEmpty(svcInfo.svcMgmtNum) ) {
+    if ( FormatHelper.isEmpty(svcInfo) || svcInfo.expsSvcCnt === '0' ) {
       this.redisService.getData(REDIS_KEY.QUICK_DEFAULT + 'N')
         .subscribe((resp) => {
           if ( resp.code === API_CODE.CODE_00 ) {
@@ -352,9 +352,7 @@ class ApiRouter {
       this.redisService.getData(REDIS_KEY.QUICK_MENU + svcMgmtNum)
         .switchMap((resp) => {
           if ( resp.code === API_CODE.REDIS_SUCCESS ) {
-            if ( resp.code === API_CODE.CODE_00 ) {
-              resp.result.enableEdit = 'Y';
-            }
+            resp.result.enableEdit = 'Y';
             throw resp;
           } else {
             return this.apiService.request(API_CMD.BFF_04_0005, {});
@@ -369,6 +367,7 @@ class ApiRouter {
           }
         })
         .subscribe((resp) => {
+          resp.result.enableEdit = 'Y';
           return res.json(resp);
         }, (err) => {
           return res.json(err);
