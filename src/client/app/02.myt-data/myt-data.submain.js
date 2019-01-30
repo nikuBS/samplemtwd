@@ -303,10 +303,10 @@ Tw.MyTDataSubMain.prototype = {
       this.$patternChart.find('.tit').text(Tw.MYT_DATA_PATTERN_TITLE.DATA);
       unit = Tw.CHART_UNIT.GB;
       data = this.data.pattern.data;
-      var baseTotalData = 0;
+      var baseTotalData = 0, baseTotalVoice = 0;
       for ( idx = 0; idx < data.length; idx++ ) {
         var usageData = parseInt(data[idx].totalUsage, 10);
-        baseTotalData += usageData;
+        baseTotalData += parseInt(data[idx].basOfrQty, 10);
         if ( usageData > 0 ) {
           chart_data.push({
             t: Tw.DateHelper.getShortKoreanMonth(data[idx].invMth), // 각 항목 타이틀
@@ -314,6 +314,7 @@ Tw.MyTDataSubMain.prototype = {
           });
         }
       }
+      // 음성
       if ( baseTotalData === 0 ) {
         chart_data = [];
         if ( this.data.pattern.voice.length > 0 ) {
@@ -321,9 +322,25 @@ Tw.MyTDataSubMain.prototype = {
           unit = Tw.CHART_UNIT.TIME;
           data = this.data.pattern.voice;
           for ( idx = 0; idx < data.length; idx++ ) {
+            baseTotalVoice += parseInt(data[idx].basOfrQty, 10);
             chart_data.push({
               t: Tw.DateHelper.getShortKoreanMonth(data[idx].invMth), // 각 항목 타이틀
               v: this.__convertVoice(parseInt(data[idx].totalUsage, 10)) // 배열 평균값으로 전달
+            });
+          }
+        }
+      }
+      // 문자
+      if ( baseTotalVoice === 0 ) {
+        chart_data = [];
+        if ( this.data.pattern.sms.length > 0 ) {
+          this.$patternChart.find('.tit').text(Tw.MYT_DATA_PATTERN_TITLE.SMS);
+          unit = Tw.CHART_UNIT.SMS;
+          data = this.data.pattern.sms;
+          for ( idx = 0; idx < data.length; idx++ ) {
+            chart_data.push({
+              t: Tw.DateHelper.getShortKoreanMonth(data[idx].invMth), // 각 항목 타이틀
+              v: parseInt(data[idx].totalUsage, 10) // 배열 평균값으로 전달
             });
           }
         }
