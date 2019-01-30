@@ -31,7 +31,7 @@ class MytDataSubmainController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
     const data: any = {
-      svcInfo: FormatHelper.objectClone(svcInfo),
+      svcInfo: Object.assign({}, svcInfo),
       pageInfo: pageInfo,
       isBenefit: false,
       immCharge: true,
@@ -39,7 +39,7 @@ class MytDataSubmainController extends TwViewController {
       isPrepayment: false,
       isDataInfo: false,
       // 다른 회선 항목
-      otherLines: this.convertOtherLines(FormatHelper.objectClone(svcInfo), FormatHelper.objectClone(allSvc)),
+      otherLines: this.convertOtherLines(Object.assign({}, svcInfo), Object.assign({}, allSvc)),
       isApp: BrowserHelper.isApp(req)
     };
     this.isPPS = (data.svcInfo.svcAttrCd === 'M2');

@@ -23,12 +23,12 @@ class MyTFareSubmainController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
     const data: any = {
-      svcInfo: FormatHelper.objectClone(svcInfo),
+      svcInfo: Object.assign({}, svcInfo),
       pageInfo: pageInfo,
       isMicroPayment: false,
       isNotAutoPayment: true,
       // 다른 회선 항목
-      otherLines: this.convertOtherLines(FormatHelper.objectClone(svcInfo), FormatHelper.objectClone(allSvc)),
+      otherLines: this.convertOtherLines(Object.assign({}, svcInfo), Object.assign({}, allSvc)),
       // 1일 기준
       isNotFirstDate: (new Date().getDate() > 1),
       // 휴대폰, T-PocketFi 인 경우에만 실시간 요금 조회 노출
