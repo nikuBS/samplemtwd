@@ -1,4 +1,4 @@
-<% if ( series && series.list.length > 0 || recommends && recommends.length > 0 ) { %>
+<% if ( !series && !recommends || series && series.list.length < 1 && recommends && recommends.length < 1 ) { %>
 <hr class="cont-sp type1" aria-hidden="true"/>
 <% } %>
 <%
