@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE, API_T_FAMILY_ERROR } from '../../types/api-command.type';
 import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
-import { CURRENCY_UNIT, DATA_UNIT, ETC_CENTER, MYT_DATA_CHARGE_TYPE_NAMES, MYT_T_DATA_GIFT_TYPE } from '../../types/string.type';
+import { CURRENCY_UNIT, ETC_CENTER, MYT_DATA_CHARGE_TYPE_NAMES } from '../../types/string.type';
 import BrowserHelper from '../../utils/browser.helper';
 import { LOGIN_TYPE, PREPAID_PAYMENT_PAY_CD, PREPAID_PAYMENT_TYPE, UNIT, UNIT_E } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
@@ -31,7 +31,7 @@ class MytDataSubmainController extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
     const data: any = {
-      svcInfo: svcInfo,
+      svcInfo: FormatHelper.objectClone(svcInfo),
       pageInfo: pageInfo,
       isBenefit: false,
       immCharge: true,
@@ -39,10 +39,10 @@ class MytDataSubmainController extends TwViewController {
       isPrepayment: false,
       isDataInfo: false,
       // 다른 회선 항목
-      otherLines: this.convertOtherLines(svcInfo, allSvc),
+      otherLines: this.convertOtherLines(FormatHelper.objectClone(svcInfo), FormatHelper.objectClone(allSvc)),
       isApp: BrowserHelper.isApp(req)
     };
-    this.isPPS = (svcInfo.svcAttrCd === 'M2');
+    this.isPPS = (data.svcInfo.svcAttrCd === 'M2');
     Observable.combineLatest(
       this._getRemnantData(),
       this._getDataPresent(),
@@ -86,7 +86,7 @@ class MytDataSubmainController extends TwViewController {
         } else {
           // 미가입
           data.family = {
-            impossible: true
+            impossible: !!data.isDataShow
           };
         }
       }
@@ -95,7 +95,7 @@ class MytDataSubmainController extends TwViewController {
         data.otherLines = Object.assign(this.convertChildLines(child), data.otherLines);
       }
       // 9차: PPS, T-Login, T-PocketFi 인 경우 다른회선 잔여량이 노출되지 않도록 변경
-      if ( svcInfo.svcAttrCd === 'M2' || svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4' ) {
+      if ( data.svcInfo.svcAttrCd === 'M2' || data.svcInfo.svcAttrCd === 'M3' || data.svcInfo.svcAttrCd === 'M4' ) {
         data.otherLines = [];
       }
       // SP9 즉시충전버튼 무조건 노출로 변경
@@ -104,7 +104,7 @@ class MytDataSubmainController extends TwViewController {
         // 즉시충전버튼 영역
         data.immCharge = false;
       }*/
-      if ( svcInfo.svcAttrCd === 'M1'/* || svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4'*/ ) {
+      if ( data.svcInfo.svcAttrCd === 'M1'/* || svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4'*/ ) {
         // 데이터혜택/활용하기 영역
         // 휴대폰, T-pocketFi, T-Login  경우 노출 - 9차에서 휴대폰인 경우에만 노출
         data.isBenefit = true;
@@ -462,7 +462,7 @@ class MytDataSubmainController extends TwViewController {
   // T끼리 데이터 선물 버튼
   _getDataPresent() {
     return this.apiService.request(API_CMD.BFF_06_0015, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
+      if ( resp.code === API_CODE.CODE_00 || resp.code === 'GFT0003' || resp.code === 'GFT0004') {
         return resp.result;
       } else {
         // error

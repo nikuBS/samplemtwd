@@ -133,7 +133,8 @@ Tw.CHART_TYPE = {
 Tw.CHART_UNIT = {
   WON: '원',
   GB: 'gb',
-  TIME: 'time'
+  TIME: 'time',
+  SMS: '건'
 };
 
 Tw.SVC_CD = {
@@ -272,7 +273,8 @@ Tw.MYT_DATA_TOTAL_SHARING_DATA = {
 
 Tw.MYT_DATA_PATTERN_TITLE = {
   DATA: '최근 데이터 사용량',
-  VOICE: '최근 음성 사용량'
+  VOICE: '최근 음성 사용량',
+  SMS: '최근 문자 사용량'
 };
 
 Tw.MYT_FARE_BILL_GUIDE = {

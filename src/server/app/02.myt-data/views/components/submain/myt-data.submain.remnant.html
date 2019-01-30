@@ -121,7 +121,9 @@
                                     <% if (rvoice.isUnlimit) { %>
                                     무제한 </strong>
                                     <% } else { %>
+                                    <% if (rvoice.showRemained.hours > 0 ) { %>
                                     <%= rvoice.showRemained.hours %>시간
+                                    <% } %>
                                     <%= rvoice.showRemained.min %>분
                                     </strong>남음
                                     <% } %>
@@ -158,10 +160,10 @@
                             <span class="remain">
                                 <strong>
                                 <% if (rsms.isUnlimit) { %>
-                                    <%= rsms.total %> </strong>
+                                    <%= rsms.total %>
                                 <% } else { %>
-                                    <%= rsms.showRemained %></strong>남음
-                                <% } %>
+                                    <%= rsms.showRemained %>
+                                <% } %>건</strong> 남음
                             </span>
                             </div>
                         </div>
