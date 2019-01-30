@@ -38,8 +38,8 @@ Tw.MyTDataGift.prototype = {
     this.$remainQty = $('.fe-remain_data');
     this.$remainTxt = $('.fe-txt-remain');
     this.$remainBtn = $('.fe-btn-remain');
-    this.$wrapSuccessRemainApi= $('.fe-remain-api');
-    this.$wrapErrorRemainApi= $('.fe-err-api');
+    this.$wrapSuccessRemainApi = $('.fe-remain-api');
+    this.$wrapErrorRemainApi = $('.fe-err-api');
 
   },
 
@@ -58,8 +58,7 @@ Tw.MyTDataGift.prototype = {
     this.$remainTxt.show();
 
     setTimeout(function () {
-      this._apiService
-        .request(Tw.API_CMD.BFF_06_0014, { reqCnt: this.reqCnt })
+      this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: this.reqCnt })
         .done($.proxy(this._onSuccessRemainDataInfo, this));
     }.bind(this), 3000);
   },
@@ -76,7 +75,7 @@ Tw.MyTDataGift.prototype = {
     // this.$remainQty.text(mockData.data + mockData.unit);
     // this._setAmountUI(Number(mockDataQty));
 
-    if ( this.reqCnt > 3 ) {
+    if ( Number(this.reqCnt) > 3 ) {
       this._remainApiError();
       return;
     }
@@ -92,7 +91,7 @@ Tw.MyTDataGift.prototype = {
         this.$remainQty.text(dataQty.data + dataQty.unit);
         this._setAmountUI(Number(apiDataQty));
       } else {
-        this.reqCnt = this.reqCnt + 1;
+        this.reqCnt = result.reqCnt;
         this._getRemainDataInfo();
       }
     } else {
@@ -109,7 +108,7 @@ Tw.MyTDataGift.prototype = {
     this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A217);
   },
 
-  _remainApiSuccess: function (){
+  _remainApiSuccess: function () {
     this.$wrapSuccessRemainApi.show();
     this.$wrapErrorRemainApi.hide();
     this.$remainBtn.hide();
