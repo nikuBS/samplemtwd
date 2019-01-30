@@ -20,6 +20,8 @@ Tw.MyTDataGiftImmediately.prototype = {
   _init: function () {
     // this.reqCnt = 0;
     // this._getRemainDataInfo();
+    this._apiService.request(Tw.API_CMD.BFF_06_0015, {})
+      .done($.proxy(this._successGiftData, this));
   },
 
   _cachedElement: function () {
@@ -41,9 +43,20 @@ Tw.MyTDataGiftImmediately.prototype = {
     this.$inputImmediatelyGift.on('keyup', $.proxy(this._onKeyUpImmediatelyGiftNumber, this));
   },
 
-  // _getRemainDataInfo: function () {
-  //   this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: this.reqCnt }).done($.proxy(this._onSuccessRemainDataInfo, this));
-  // },
+  _successGiftData: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this.parsedGiftData = this._parseGiftData(resp.result);
+    }
+  },
+
+  _parseGiftData: function (sender) {
+    return {
+      dataGiftCnt: sender.dataGiftCnt,
+      familyDataGiftCnt: sender.familyDataGiftCnt,
+      familyMemberYn: sender.familyMemberYn === 'Y',
+      goodFamilyMemberYn: sender.goodFamilyMemberYn === 'Y'
+    };
+  },
 
   _onClickDataQty: function () {
     this._checkValidateSendingButton();
@@ -178,8 +191,10 @@ Tw.MyTDataGiftImmediately.prototype = {
     // this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
 
     // API DATA
-    this._apiService.request(Tw.API_CMD.BFF_06_0016, { befrSvcMgmtNum: this.paramData.befrSvcMgmtNum })
-      .done($.proxy(this._onRequestSuccessGiftData, this));
+    this._apiService.request(Tw.API_CMD.BFF_06_0016, {
+      befrSvcMgmtNum: this.paramData.befrSvcMgmtNum,
+      dataQty: this.$wrap_data_select_list.find('li.checked input').val()
+    }).done($.proxy(this._onRequestSuccessGiftData, this));
   },
 
   _onRequestSuccessGiftData: function (res) {
