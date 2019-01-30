@@ -30,7 +30,7 @@
                     <% for (var i in outlinkReport) { %>
                     <li>
                         <div class="link-long">
-                            <a href="<%= outlinkReport[i].LINK %>" class="fe-link-external" target="_blank" rel="nofollow"><%= outlinkReport[i].TEXT %>
+                            <a href="<%= outlinkReport[i].LINK %>" class="fe-link-external" rel="nofollow"><%= outlinkReport[i].TEXT %>
                                 <span class="tx-sub">
                                     <span class="ico"></span>
                                 </span>
@@ -52,7 +52,7 @@
                     <% for (var i in outlinkRelate) { %>
                     <li>
                         <div class="link-long">
-                            <a class="fe-link-external" href="<%= outlinkRelate[i].LINK %>" target="_blank"><%= outlinkRelate[i].TEXT %>
+                            <a href="<%= outlinkRelate[i].LINK %>" class="fe-link-external" rel="nofollow"><%= outlinkRelate[i].TEXT %>
                                 <span class="tx-sub">
                                     <span class="ico"></span>
                                 </span>
@@ -86,7 +86,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CustomerDamageInfoRelated();
+    new Tw.CustomerDamageInfoRelated($('.wrap'));
   });
 </script>
 <% include ../../components/end.component.html %>

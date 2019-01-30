@@ -16,9 +16,7 @@ Tw.CustomerDamageInfoRelated = function(rootEl) {
 Tw.CustomerDamageInfoRelated.prototype = {
 
   _bindEvent: function() {
-    if (Tw.BrowserHelper.isApp()) {
-      this.$container.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
-    }
+    this.$container.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
   },
 
   _confirmExternalUrl: function(e) {
@@ -33,7 +31,6 @@ Tw.CustomerDamageInfoRelated.prototype = {
   },
 
   _openExternalUrl: function(href) {
-    this._popupService.close();
     Tw.CommonHelper.openUrlExternal(href);
   }
 
