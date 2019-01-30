@@ -138,7 +138,7 @@ Tw.CustomerSvcInfoNotice.prototype = {
 
     var customParams = {};
     if (this._category === 'tworld') {
-      customParams.expsChnlCd = 'M';
+      customParams.expsChnlCd = this._tworldChannel;
     }
 
     this._apiService.request(this._getApi(), $.extend(customParams, { page: this._page, size: 20 }))
