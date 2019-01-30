@@ -49,8 +49,7 @@
                         <button class="btn-txt-more" data-id="payment-detail">더보기</button>
                     </div>
                     <ul class="review-list">
-                        <% var totPlength = data.totalPayment.length > 3 ? 3 : data.totalPayment.length; %>
-                        <% for(var i=0; i < totPlength; i++) { %>
+                        <% for(var i=0; i < data.totalPayment.length; i++) { %>
                         <%- include('../components/submain/myt-fare.submain.total-payment.html', data.totalPayment[i]) %>
                         <% } %>
                     </ul>
