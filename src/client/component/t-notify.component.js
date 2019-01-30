@@ -6,6 +6,7 @@
 Tw.TNotifyComponent = function () {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._nativeService = Tw.Native;
 
 };
 
@@ -15,6 +16,7 @@ Tw.TNotifyComponent.prototype = {
 
   },
   _openTNotify: function (list) {
+    this._nativeService.send(Tw.NTV_CMD.SAVE, { key: Tw.NTV_STORAGE.LAST_READ_PUSH_SEQ, value: list[0].seq });
     this._popupService.open({
       hbs: 'HO_04_06_01',
       layer: true,
@@ -25,7 +27,10 @@ Tw.TNotifyComponent.prototype = {
     }, $.proxy(this._onOpenTNotify, this), $.proxy(this._onCloseTNotify, this), 't-notify');
   },
   _onOpenTNotify: function ($popupContainer) {
-    $popupContainer.on('click', '#fe-bt-more', $.proxy(this._onClickBtMore, this));
+    this.$list = $popupContainer.find('.fe-list-item');
+    this.$btMore = $popupContainer.find('#fe-bt-more');
+
+    this.$btMore.on('click', $.proxy(this._onClickBtMore, this));
     $popupContainer.on('click', '.fe-bt-link', $.proxy(this._onClickLink, this));
   },
   _onCloseTNotify: function () {
@@ -44,14 +49,24 @@ Tw.TNotifyComponent.prototype = {
     }
   },
   _parseList: function (list) {
-    return _.map(list, $.proxy(function (target) {
+    return _.map(list, $.proxy(function (target, index) {
       target.showImage = target.pushType === 'M';
       target.showDate = Tw.DateHelper.getKoreanDateWithDay(target.regDate);
       target.showTime = Tw.DateHelper.getKoreanTime(target.regDate);
+      target.isShow = index < Tw.DEFAULT_LIST_COUNT;
       return target;
     }, this));
   },
   _onClickBtMore: function () {
+    var $hideList = this.$list.filter('.none');
+    var $showList = $hideList.filter(function (index) {
+      return index < Tw.DEFAULT_LIST_COUNT;
+    });
+
+    $showList.removeClass('none');
+    if ( $hideList.length - $showList.length === 0 ) {
+      this.$btMore.hide();
+    }
 
   },
   _onClickLink: function ($event) {
