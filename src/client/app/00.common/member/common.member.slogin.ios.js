@@ -99,6 +99,7 @@ Tw.CommonMemberSloginIos.prototype = {
     this.$inputCert.on('input', $.proxy(this._onInputCert, this));
 
     this.$container.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
+    this.$container.on('click', '#fe-bt-mdn-delete', $.proxy(this._onKeyupMdn, this));
   },
   _onKeyupMdn: function () {
     var mdnLength = this.$inputMdn.val().length;
