@@ -844,10 +844,10 @@ Tw.ROAMING_MANAGE_TYPE = {
 Tw.ROAMING_MFACTCD_LIST = {
     list: [
         { txt: '전체', 'radio-attr': 'id="ra0" name="r2" data-mfact-code="ALL" data-mfact-name="전체"', 'label-attr': 'id="ra0"' },
-        { txt: '삼성', 'radio-attr': 'id="ra1" name="r2" data-mfact-code="SS" data-mfact-name="삼성"', 'label-attr': 'id="ra1"' },
-        { txt: 'LG', 'radio-attr': 'id="ra2" name="r2" data-mfact-code="LG" data-mfact-name="LG"', 'label-attr': 'id="ra2"' },
-        { txt: '팬택', 'radio-attr': 'id="ra3" name="r2" data-mfact-code="PT" data-mfact-name="팬택"', 'label-attr': 'id="ra3"' },
-        { txt: '애플', 'radio-attr': 'id="ra4" name="r2" data-mfact-code="CG" data-mfact-name="애플"', 'label-attr': 'id="ra4"' },
+        { txt: '삼성', 'radio-attr': 'id="ra1" name="r2" data-mfact-code="100SS" data-mfact-name="삼성"', 'label-attr': 'id="ra1"' },
+        { txt: 'LG', 'radio-attr': 'id="ra2" name="r2" data-mfact-code="100LG" data-mfact-name="LG"', 'label-attr': 'id="ra2"' },
+        { txt: '팬택', 'radio-attr': 'id="ra3" name="r2" data-mfact-code="100PT" data-mfact-name="팬택"', 'label-attr': 'id="ra3"' },
+        { txt: '애플', 'radio-attr': 'id="ra4" name="r2" data-mfact-code="100CG" data-mfact-name="애플"', 'label-attr': 'id="ra4"' },
         { txt: '기타', 'radio-attr': 'id="ra5" name="r2" data-mfact-code="ETC" data-mfact-name="기타"', 'label-attr': 'id="ra5"' }
     ]
 };
