@@ -52,10 +52,10 @@ class MyTJoinSubmainController extends TwViewController {
       }
     }
     const data: any = {
-      svcInfo: FormatHelper.objectClone(svcInfo),
+      svcInfo: Object.assign({}, svcInfo),
       pageInfo: pageInfo,
       // 다른 회선 항목
-      otherLines: this.convertOtherLines(FormatHelper.objectClone(svcInfo), FormatHelper.objectClone(allSvc))
+      otherLines: this.convertOtherLines(Object.assign({}, svcInfo), Object.assign({}, allSvc))
     };
     // 10: 신청/60: 초기화 -> 비밀번호 설정 유도
     // 20: 사용중/21:신청+등록완료 -> 회선 변경 시 비번 입력 필요, 비밀번호 변경 가능
