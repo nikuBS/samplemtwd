@@ -36,6 +36,7 @@ class MainHome extends TwViewController {
       membershipData: null,
       billData: null,
     };
+
     const noticeCode = !BrowserHelper.isApp(req) ? CHANNEL_CODE.MWEB :
       BrowserHelper.isIos(req) ? CHANNEL_CODE.IOS : CHANNEL_CODE.ANDROID;
 
