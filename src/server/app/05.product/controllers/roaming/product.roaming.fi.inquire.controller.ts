@@ -20,7 +20,11 @@ export default class ProductRoamingFiInquire extends TwViewController {
       if ( resp.code === API_CODE.CODE_00 ) {
         countryCode = resp.result;
       } else {
-        countryCode = resp;
+        return this.error.render(res, {
+          code: resp.code,
+          msg: resp.msg,
+          svcInfo: svcInfo
+        });
       }
       svcInfo.showSvcNum =  FormatHelper.conTelFormatWithDash(svcInfo.svcNum);
 
