@@ -58,11 +58,44 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     if ( !this._validation.checkMoreLength($cardNumber, 15) ) {
       $($error.get(0)).removeClass('blind');
       $($error.get(1)).addClass('blind');
+    } else {
+      this._getCardInfo();
     }
 
     if ( $cardNumber.val() === '' ) {
       $($error.get(0)).addClass('blind');
       $($error.get(1)).removeClass('blind');
+    }
+  },
+
+  _getCardInfo: function () {
+    var cardNumber = $('.fe-card-number');
+    var cardY = $('.fe-card-y');
+    var cardM = $('.fe-card-m');
+
+    var isValid = this._validation.checkMoreLength(cardNumber, 15) &&
+      this._validation.checkMoreLength(cardY, 4) &&
+      this._validation.checkMoreLength(cardM, 2) &&
+      this._validation.checkYear(cardY) &&
+      this._validation.checkMonth(cardM, cardY)
+
+    if ( isValid ) {
+      var htParams = {
+        cardNum: $.trim(cardNumber.val()).substr(0, 6)
+      };
+
+      this._apiService.request(Tw.API_CMD.BFF_06_0065, htParams)
+        .done($.proxy(this._getCardCode, this));
+    }
+  },
+
+  _getCardCode: function (res) {
+    var cardNumber = $('.fe-card-number');
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+    } else {
+      var $credit_error = cardNumber.closest('li').find('.error-txt').get(2);
+      $($credit_error).removeClass('blind');
+      this.$request_recharge_auto.prop('disabled', true);
     }
   },
 
@@ -82,6 +115,8 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
       $($error.get(0)).removeClass('blind');
       $($error.get(1)).addClass('blind');
     }
+
+    this._getCardInfo();
   },
 
   _validateExpireDate: function (e) {
@@ -117,6 +152,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     }
 
     this.templateIndex = currentTemplateIndex;
+    this._checkIsAbled();
   },
 
   _onShowDate: function (e) {
@@ -215,7 +251,8 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
   },
 
   _checkIsAbled: function () {
-    if ( $('.fe-card-number').val() !== '' && $('.fe-card-y').val() !== '' && $('.fe-card-m').val() !== '' ) {
+    if ( !!$('.fe-select-amount').data('amount') && !!this.chargeCd && !!$('.fe-select-expire').val() &&
+      !!$('.fe-card-number').val() && !!$('.fe-card-y').val() && !!$('.fe-card-m').val() ) {
       this.$request_recharge_auto.prop('disabled', false);
     } else {
       this.$request_recharge_auto.prop('disabled', true);

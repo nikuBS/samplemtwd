@@ -79,11 +79,39 @@ Tw.MyTDataPrepaidVoice.prototype = {
     if ( !this._validation.checkMoreLength(this.$cardNumber, 15) ) {
       $($error.get(0)).removeClass('blind');
       $($error.get(1)).addClass('blind');
+    } else {
+      this._getCardInfo();
     }
 
     if ( this.$cardNumber.val() === '' ) {
       $($error.get(0)).addClass('blind');
       $($error.get(1)).removeClass('blind');
+    }
+  },
+
+  _getCardInfo: function () {
+    var isValid = this._validation.checkMoreLength(this.$cardNumber, 15) &&
+      this._validation.checkMoreLength(this.$cardY, 4) &&
+      this._validation.checkMoreLength(this.$cardM, 2) &&
+      this._validation.checkYear(this.$cardY) &&
+      this._validation.checkMonth(this.$cardM, this.$cardY)
+
+    if ( isValid ) {
+      var htParams = {
+        cardNum: $.trim(this.$cardNumber.val()).substr(0, 6)
+      };
+
+      this._apiService.request(Tw.API_CMD.BFF_06_0065, htParams)
+        .done($.proxy(this._getCardCode, this));
+    }
+  },
+
+  _getCardCode: function (res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+    } else {
+      var $credit_error = this.$cardNumber.closest('li').find('.error-txt').get(2);
+      $($credit_error).removeClass('blind');
+      this.$btnRequestCreditCard.prop('disabled', true);
     }
   },
 
@@ -100,6 +128,8 @@ Tw.MyTDataPrepaidVoice.prototype = {
       $($error.get(0)).removeClass('blind');
       $($error.get(1)).addClass('blind');
     }
+
+    this._getCardInfo();
   },
 
   _validatePwd: function (e) {
