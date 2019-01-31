@@ -45,12 +45,11 @@ Tw.MyTDataGiftImmediately.prototype = {
   },
 
   _successGiftData: function (resp) {
-    $('#tab1-tab').html(this.tpl_immediately_error());
-    // if ( resp.code === Tw.API_CODE.CODE_00 ) {
-    //   this.parsedGiftData = this._parseGiftData(resp.result);
-    // } else {
-    //   $('#tab1-tab').html(this.tpl_immediately_error());
-    // }
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this.parsedGiftData = this._parseGiftData(resp.result);
+    } else {
+      // $('#tab1-tab').html(this.tpl_immediately_error());
+    }
   },
 
   _parseGiftData: function (sender) {
