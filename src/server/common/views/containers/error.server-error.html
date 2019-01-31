@@ -12,7 +12,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div class="wrap" id="fe-error-wrap">
     <!-- #header -->
     <div id="header" class="header-wrap">
     </div>
@@ -63,10 +63,13 @@
 <% if ( isBackCheck ) { %>
 <script type="text/javascript">
   (function() {
-    if (window.performance) {
-      if (performance.navigation.type === 2) {
-        history.back();
-      }
+    var $errorWrap = document.getElementById('fe-error-wrap');
+    $errorWrap.style.display = 'none';
+
+    if (window.performance && performance.navigation.type === 2) {
+      history.back();
+    } else {
+      $errorWrap.style.display = 'block';
     }
   })();
 </script>
