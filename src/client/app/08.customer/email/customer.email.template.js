@@ -72,6 +72,7 @@ Tw.CustomerEmailTemplate.prototype = {
     }
 
     skt_landing.widgets.widget_init();
+    Tw.Tooltip.separateInit(this.$wrap_tpl_service.find('.btn-tip'));
   },
 
   _changeQualityTemplate: function (e, qualityCategory, qualityType) {
@@ -98,6 +99,7 @@ Tw.CustomerEmailTemplate.prototype = {
     }
 
     skt_landing.widgets.widget_init();
+    Tw.Tooltip.separateInit(this.$wrap_tpl_quality.find('.btn-tip'));
   },
 
   _setTemplatePlaceholder: function (serviceCategory) {
