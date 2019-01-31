@@ -11,9 +11,9 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE, API_T_FAMILY_ERROR } from '../../types/api-command.type';
 import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
-import { CURRENCY_UNIT, ETC_CENTER, MYT_DATA_CHARGE_TYPE_NAMES, MYT_DATA_CHARGE_TYPES } from '../../types/string.type';
+import { CURRENCY_UNIT, ETC_CENTER, MYT_DATA_CHARGE_TYPE_NAMES, MYT_DATA_CHARGE_TYPES, MYT_DATA_REFILL_TYPES } from '../../types/string.type';
 import BrowserHelper from '../../utils/browser.helper';
-import { LOGIN_TYPE, PREPAID_PAYMENT_PAY_CD, PREPAID_PAYMENT_TYPE, UNIT, UNIT_E } from '../../types/bff.type';
+import { LOGIN_TYPE, PREPAID_PAYMENT_PAY_CD, PREPAID_PAYMENT_TYPE, REFILL_USAGE_DATA_CODES, UNIT, UNIT_E } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 
 const skipIdList: any = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
@@ -235,7 +235,7 @@ class MytDataSubmainController extends TwViewController {
           item['class'] = 'recharge';
           item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.REFILL_USAGE;
           item['u_sub'] = item.opOrgNm || ETC_CENTER;
-          item['d_title'] = item.copnDtlClNm;
+          item['d_title'] = REFILL_USAGE_DATA_CODES.indexOf(item.copnDtlClCd) >= 0 ? MYT_DATA_REFILL_TYPES.DATA : MYT_DATA_REFILL_TYPES.VOICE;
           item['d_sub'] = DateHelper.getShortDate(item.copnUseDt);
           item['unit'] = '';
         });
