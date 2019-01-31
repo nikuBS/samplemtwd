@@ -16,7 +16,11 @@
                 </span>
                 <span class="stext">
                     <span class="black-tx">{{payNm}}</span>
-                    {{#if cardNm}}<span class="gray-tx">{{cardNm}}</span>{{/if}}
+                    {{#if cardNm}}
+                        <span class="gray-tx">{{cardNm}}</span>
+                    {{else}}
+                        <span class="gray-tx">신용카드</span>
+                    {{/if}}
                 </span>
             </p>
             <div class="list-data">
