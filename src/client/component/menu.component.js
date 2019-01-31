@@ -85,6 +85,7 @@ Tw.MenuComponent.prototype = {
 
     this.$container.on('click', '.fe-bt-login', $.proxy(this._onClickLogin, this));
     this.$container.on('click', '.fe-bt-logout', $.proxy(this._onClickLogout, this));
+    this.$container.on('click', '#fe-signup', $.proxy(this._onSignUp, this));
   },
   _componentReady: function () {
     if ( location.hash === '#menu' ) {
@@ -152,6 +153,14 @@ Tw.MenuComponent.prototype = {
   },
   _onClickLogout: function () {
     this._tidLanding.goLogout();
+  },
+  _onSignUp: function (e) {
+    if (Tw.BrowserHelper.isApp()) {
+      this._tidLanding.goSignup();
+    } else {
+      var url = e.currentTarget.value;
+      this._historyService.goLoad(url);
+    }
   },
   _onGnbBtnClicked: function () {
     this._isOpened = true;
