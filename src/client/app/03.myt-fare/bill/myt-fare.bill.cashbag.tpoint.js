@@ -114,7 +114,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     } else if (!this._validation.checkIsMore(this.$point.val(), 1000)) {
       $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V8);
     } else if (!this._validation.checkIsAvailablePoint(this.$point.val(),
-        parseInt(this.$standardPoint.attr('id'), 10))) {
+        this.$standardPoint.attr('id'))) {
       $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27);
     } else if (!this._validation.checkIsTenUnit(this.$point.val())) {
       $message.text(Tw.ALERT_MSG_MYT_FARE.TEN_POINT);
