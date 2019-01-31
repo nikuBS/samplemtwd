@@ -184,7 +184,7 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
   },
   _goPlan : function () {
     this._popupService.closeAll();
-    this._historyService.goBack();
+    setTimeout($.proxy(this._historyService.goBack,this._historyService),0);
   },
   _tooltipInit : function (prodId) {
     switch (prodId) {
