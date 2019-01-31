@@ -39,7 +39,7 @@ Tw.ProductMobileplanLookupTplan.prototype = {
   },
 
   _goTab: function(e) {
-    this._historyService.goLoad('/product/mobileplan/lookup/tplan?s_prod_id=' + this._prodId + '&tab_id=' + $(e.currentTarget).data('key'));
+    this._historyService.replaceURL('/product/mobileplan/lookup/tplan?s_prod_id=' + this._prodId + '&tab_id=' + $(e.currentTarget).data('key'));
   },
 
   _getBenefitCategory: function() {
@@ -82,7 +82,7 @@ Tw.ProductMobileplanLookupTplan.prototype = {
       return;
     }
 
-    this._historyService.goLoad('/product/mobileplan/lookup/tplan?s_prod_id=' + this._goCategoryProdId);
+    this._historyService.replaceURL('/product/mobileplan/lookup/tplan?s_prod_id=' + this._goCategoryProdId);
   },
 
   _goTop: function() {
