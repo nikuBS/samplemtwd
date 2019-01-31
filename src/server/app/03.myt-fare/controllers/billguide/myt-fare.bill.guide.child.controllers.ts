@@ -84,6 +84,15 @@ class MyTFareBillGuideChild extends TwViewController {
     this.reqQuery = req.query;
     this.pageInfo = pageInfo;
 
+    if (FormatHelper.isEmpty(req.query.line)) {
+      this.logger.error(this, `Not found parameter \'line\'`);
+      return thisMain.error.render(res, {
+        title: 'title',
+        msg: 'Requred parameter \'line\'',
+        svcInfo: svcInfo
+      });
+    }
+
     this.logger.info(this, '[ svcInfo ] : ', svcInfo);
     this.logger.info(this, '[ reqQuery ] : ', req.query);
     this.logger.info(this, '[ childInfo ] : ', childInfo);
