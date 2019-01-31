@@ -24,7 +24,11 @@ Tw.NicknameComponent.prototype = {
     this._svcMgmtNum = svcMgmtNum;
     this._popupService.open({
       hbs: 'CO_01_05_02_01',
-      layer: true
+      layer: true,
+      data: {
+        nickname: nickname,
+        nicknameLen: nickname.length
+      }
     }, $.proxy(this._onOpenNickname, this, nickname), $.proxy(this._onCloseNickname, this), 'nickname');
 
   },
@@ -35,7 +39,7 @@ Tw.NicknameComponent.prototype = {
     // this.$nicknameGuide = $popup.find('#aria-from-label1');
     this.$nicknameLength = $popup.find('#fe-span-length');
 
-    this.$nicknameInput.val(nickname);
+    // this.$nicknameInput.val(nickname);
     this.$nicknameInput.on('input', $.proxy(this._onKeyupNickname, this));
     this.$nicknameConfirm.on('click', $.proxy(this._onClickConfirmNickname, this));
   },
