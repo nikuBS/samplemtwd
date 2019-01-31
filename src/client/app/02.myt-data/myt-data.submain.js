@@ -223,16 +223,19 @@ Tw.MyTDataSubMain.prototype = {
       _.filter(
         GDATA,
         $.proxy(function (item) {
+          if ( item.unlimit === '1' || item.unlimit === 'B' || item.unlimit === 'M' ) {
+            result.totalLimit = true;
+          }
           this.__convShowData(item);
           if ( item.skipId === skipIdList[0] || item.skipId === skipIdList[1] ) {
             result.tmoa.push(item);
-            tmoaRemained += parseInt(item.remained, 10);
-            tmoaTotal += parseInt(item.total, 10);
+            tmoaRemained += parseInt(item.remained || 0, 10);
+            tmoaTotal += parseInt(item.total || 0, 10);
           }
           else {
             result.gdata.push(item);
-            etcRemained += result.totalLimit ? 100 : parseInt(item.remained, 10);
-            etcTotal += result.totalLimit ? 100 : parseInt(item.total, 10);
+            etcRemained += result.totalLimit ? 100 : parseInt(item.remained || 0, 10);
+            etcTotal += result.totalLimit ? 100 : parseInt(item.total || 0, 10);
           }
         }, this)
       );
@@ -408,8 +411,8 @@ Tw.MyTDataSubMain.prototype = {
           var item = this.__parseRemnantData(arguments[idx].result);
           if ( item.total ) {
             data = {
-              data: item.total.showRemained.data,
-              unit: item.total.showRemained.unit
+              data: item.totalLimit? Tw.COMMON_STRING.UNLIMIT : item.total.showRemained.data,
+              unit: item.totalLimit? '' : item.total.showRemained.unit
             };
           }
           else if ( item.sdata.length > 0 ) {
