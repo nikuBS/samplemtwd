@@ -169,6 +169,9 @@ Tw.ProductRoamingFiInquire.prototype = {
     if ( list.length > 0 ){
       this._totoalList = _.chunk(list, Tw.DEFAULT_LIST_COUNT);
       this._renderList(this.$list, this._totoalList.shift());
+    }else{
+      var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A87;
+      this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
     }
   },
 
