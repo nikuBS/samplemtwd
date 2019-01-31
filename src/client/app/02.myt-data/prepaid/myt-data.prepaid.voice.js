@@ -286,7 +286,8 @@ Tw.MyTDataPrepaidVoice.prototype = {
       amt: Number($('.fe-select-amount').data('amount')).toString(),
       cardNum: this.$cardNumber.val(),
       expireYY: this.$cardY.val(),
-      expireMM: this.$cardM.val()
+      expireMM: this.$cardM.val(),
+      pwd: this.$cardPwd.val()
     };
 
     this._apiService.request(Tw.API_CMD.BFF_06_0053, htParams)

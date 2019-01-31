@@ -116,6 +116,17 @@
     {{/each}}
 </script>
 
+<script type="text/x-handlebars-template" id="tpl_immediately_error">
+    <hr class="cont-sp type1" aria-hidden="true">
+    <div class="cont-box nogaps-hoz">
+        <div class="result-none type3">
+            고객님은 선물하기 불가능한 요금제이시거나, <br>
+            현재 선물하기가 불가능한 상태입니다.
+            <!--<p class="input-txt-type01 pt30">바로 공유 가능 데이터 : <strong class="txt-c1">0.76GB</strong></p>-->
+        </div>
+    </div>
+</script>
+
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
