@@ -81,6 +81,7 @@ Tw.ProductMobileplanSettingTplan.prototype = {
 
   _procClearSmartWatchLineInfo: function() {
     if (this._isDisableSmartWatchLineInfo) {
+      this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
       return;
     }
 
