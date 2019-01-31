@@ -8,7 +8,7 @@ import { Request, Response, NextFunction } from 'express';
 import { ROAMING_RECEIVE_CENTER } from '../../../../types/string.type';
 // import { Observable } from 'rxjs/Observable';
 
-export default class ProductRoamingReservationComplete extends TwViewController {
+export default class ProductRoamingFiReservationComplete extends TwViewController {
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
     const selectIdx = req.query.selectIdx;

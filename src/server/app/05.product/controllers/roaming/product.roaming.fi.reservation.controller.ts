@@ -11,7 +11,7 @@ import moment from 'moment';
 import FormatHelper from '../../../../utils/format.helper';
 // import { Observable } from 'rxjs/Observable';
 
-export default class ProductRoamingReservation extends TwViewController {
+export default class ProductRoamingFiReservation extends TwViewController {
 
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
      const minDate = moment().add(2, 'days').format('YYYY-MM-DD');
