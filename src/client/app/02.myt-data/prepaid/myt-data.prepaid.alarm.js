@@ -98,6 +98,14 @@ Tw.MyTDataPrepaidAlarm.prototype = {
     } else {
       $('.fe-alarm-amount').closest('div').find('.error-txt').addClass('blind');
     }
+
+    if ( this.typeCd === '1' && !!this.term && !!this.day ) {
+      $('.fe-setting-alarm').prop('disabled', false);
+    }
+
+    if ( this.typeCd === '2' && !!this.amt ) {
+      $('.fe-setting-alarm').prop('disabled', false);
+    }
   },
 
   _onChangeStatus: function (sListName, e) {
@@ -136,9 +144,9 @@ Tw.MyTDataPrepaidAlarm.prototype = {
     }
 
     if ( sListName === 'status_list' ) {
-      this.typeCd = $(e.currentTarget).data('value');
+      this.typeCd = $(e.currentTarget).data('value').toString();
 
-      if ( this.typeCd === 1 ) {
+      if ( this.typeCd === '1' ) {
         this.wrap_alarm.html(this.tpl_alarm_amount({ params: htParams }));
       } else {
         this.wrap_alarm.html(this.tpl_alarm_date({ params: htParams }));
@@ -159,13 +167,11 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
     if ( sListName === 'date_list' ) {
       this.day = $(e.currentTarget).data('value');
-      $('.fe-setting-alarm').prop('disabled', false);
       this._validateForm();
     }
 
     if ( sListName === 'price_list' ) {
       this.amt = $(e.currentTarget).data('value');
-      $('.fe-setting-alarm').prop('disabled', false);
       this._validateForm();
     }
 
@@ -178,9 +184,9 @@ Tw.MyTDataPrepaidAlarm.prototype = {
   _requestAlarmSetting: function () {
     var htParams = {};
 
-    if ( this.typeCd === 1 ) {
+    if ( this.typeCd === '1' ) {
       htParams = $.extend(htParams, {
-        typeCd: '1',
+        typeCd: this.typeCd,
         term: this.term.toString(),
         day: this.day.toString()
       });
