@@ -344,12 +344,12 @@ class MytDataSubmainController extends TwViewController {
         // POT10, POT20
         if ( item.skipId === skipIdList[0] || item.skipId === skipIdList[1] ) {
           result['tmoa'].push(item);
-          tmoaRemained += parseInt(item.remained, 10);
-          tmoaTotal += parseInt(item.total, 10);
+          tmoaRemained += parseInt(item.remained || 0, 10);
+          tmoaTotal += parseInt(item.total || 0, 10);
         } else {
           result['gdata'].push(item);
-          etcRemained += result.totalLimit ? 100 : parseInt(item.remained, 10);
-          etcTotal += result.totalLimit ? 100 : parseInt(item.total, 10);
+          etcRemained += result.totalLimit ? 100 : parseInt(item.remained || 0, 10);
+          etcTotal += result.totalLimit ? 100 : parseInt(item.total || 0, 10);
         }
       });
       if ( !result.totalLimit ) {
