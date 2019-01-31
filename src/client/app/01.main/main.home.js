@@ -622,7 +622,7 @@ Tw.MainHome.prototype = {
       var tplRechargeCard = Handlebars.compile($rechargeTemp.html());
       element.html(tplRechargeCard({ refillCoupons: refillCoupons }));
       element.removeClass('empty');
-      element.on('click', 'fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
+      element.on('click', '#fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
     } else {
       element.hide();
     }
