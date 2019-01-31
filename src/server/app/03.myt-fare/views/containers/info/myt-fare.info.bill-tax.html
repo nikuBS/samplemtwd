@@ -17,7 +17,6 @@
 
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <%- include('../../../../../common/views/components/header.component.html', { title: '세금 계산서 발급 내역'}); %>
-
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
@@ -119,7 +118,7 @@
         </div>
         <ul class="bt-slice item-two mt40 fe-btn-reprint">
             <li class="bt-white1">
-                <button class="fe-btn-fax" data-list-id="{{listId}}">팩스 재발행하기</button>
+                <button class="fe-btn-fax" data-list-id="{{listId}}" data-list-date="{{taxBillYearMonth}}">팩스 재발행하기</button>
             </li>
             <li class="bt-white1">
                 <button class="fe-btn-email" data-list-id="{{listId}}">이메일 재발행 하기</button>

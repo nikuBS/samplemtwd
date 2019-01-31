@@ -20,6 +20,7 @@ Tw.MyTFareInfoBillTax = function (rootEl, data) {
 
 Tw.MyTFareInfoBillTax.prototype = {
   _init: function () {
+    this.rootPathName = this._historyService.pathname;
     var initedListTemplate;
     var totalDataCounter = this.data.items.length;
     this.renderListData = {};
@@ -82,12 +83,15 @@ Tw.MyTFareInfoBillTax.prototype = {
 
   _reRequestHandler: function (e) {
     var target = $(e.currentTarget);
-
+    var targetURL = this.rootPathName.slice(-1) === '/' ? this.rootPathName.split('/').slice(0, -1).join('/') : this.rootPathName;
+    
     this.isFax  = target.attr('class').search('fax') >= 0;
     this.targetData = this.data.items[target.data('listId')];
+    
 
     if (this.isFax) {
-      this._openResendByFax(this.targetData);
+      // this._openResendByFax(this.targetData);
+      this._historyService.goLoad(targetURL + '/send-fax?date=' + target.data('listDate'));
     } else {
       this._openResendByEmail(this.targetData);
     }
