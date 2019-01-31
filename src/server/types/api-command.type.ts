@@ -8,7 +8,6 @@ export enum API_METHOD {
 export enum API_SERVER {
   BFF = 'BFF_SERVER',
   TID = 'TID_SERVER',
-  CDN = 'CDN_MANIFEST',
   SEARCH = 'SEARCH_SERVER',
   TEST = 'TEST_SERVER'
 }
@@ -848,8 +847,6 @@ export const API_CMD = {
   // TID
   OIDC: { path: '/auth/authorize.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },
   LOGOUT: { path: '/sso/web/v1/ssologout.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },
-
-  MANIFEST: { path: '/manifest.:args0.json', method: API_METHOD.GET, server: API_SERVER.CDN, bypass: false },
 
   // TEST
   BFF_08_0029_TEST: { path: '/core-modification/:version/notice-tworld-test', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
