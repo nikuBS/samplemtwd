@@ -514,25 +514,19 @@ Tw.MainHome.prototype = {
     }
   },
   _getGiftData: function (element, index) {
-    if ( new Date().getDate() === Tw.GIFT_BLOCK_USAGE ) {
-      this._drawGiftData(element, {
-        blockUsage: true
-      });
-    } else {
-      this._apiService.request(Tw.API_CMD.BFF_06_0015, {})
-        .done($.proxy(this._successGiftData, this, element))
-        .fail($.proxy(this._failGiftData, this));
-    }
+    this._apiService.request(Tw.API_CMD.BFF_06_0015, {})
+      .done($.proxy(this._successGiftData, this, element))
+      .fail($.proxy(this._failGiftData, this));
   },
   _successGiftData: function (element, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      var $giftTemp = $('#fe-smart-gift');
-      var tplGiftCard = Handlebars.compile($giftTemp.html());
-      element.html(tplGiftCard(this._parseGiftData(resp.result)));
-      element.removeClass('empty');
-      element.on('click', '#fe-bt-go-gift', $.proxy(this._onClickBtGift, this, resp.result));
-      element.on('click', '#fe-bt-gift-balance', $.proxy(this._onClickGiftBalance, this, element));
-      this._getGiftBalance(element, 0);
+      if ( new Date().getDate() === Tw.GIFT_BLOCK_USAGE ) {
+        this._drawGiftData(element, {
+          blockUsage: true
+        }, resp);
+      } else {
+        this._drawGiftData(element, this._parseGiftData(resp.result), resp);
+      }
     } else {
       element.hide();
     }
@@ -540,6 +534,17 @@ Tw.MainHome.prototype = {
   },
   _failGiftData: function () {
 
+  },
+  _drawGiftData: function (element, result, sender) {
+    var $giftTemp = $('#fe-smart-gift');
+    var tplGiftCard = Handlebars.compile($giftTemp.html());
+    element.html(tplGiftCard(result));
+    element.removeClass('empty');
+    element.on('click', '#fe-bt-go-gift', $.proxy(this._onClickBtGift, this, sender));
+    if ( !result.blockUsage ) {
+      element.on('click', '#fe-bt-gift-balance', $.proxy(this._onClickGiftBalance, this, element));
+      this._getGiftBalance(element, 0);
+    }
   },
   _parseGiftData: function (sender) {
     return {
