@@ -39,9 +39,9 @@ Tw.MyTFareBillOptionRegister.prototype = {
     this.$cardM = this.$cardWrap.find('.fe-card-m');
     this.$paymentDate = this.$cardWrap.find('.fe-payment-date');
     this.$isRadioChanged = false;
-    this.$isValid = false;
+    this.$isAccountTabValid = false;
+    this.$isCardTabValid = false;
     this.$isCardValid = true;
-    this.$isSelectValid = true;
   },
   _bindEvent: function () {
     this.$radioBox.on('change', $.proxy(this._changeRadioBox, this));
@@ -78,15 +78,21 @@ Tw.MyTFareBillOptionRegister.prototype = {
   },
   _checkPhoneNumber: function (event) {
     var $target = $(event.currentTarget);
-    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 10), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V18);
+    var isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 10), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V18);
 
-    if (this.$isValid) {
-      this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.isCellPhone($target.val()), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V9);
+    if (isValid) {
+      isValid = this._validation.showAndHideErrorMsg($target, this._validation.isCellPhone($target.val()), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V9);
+    }
+
+    if ($target.parents('.fe-wrap').hasClass('fe-bank-wrap')) {
+      this.$isAccountTabValid = isValid;
+    } else {
+      this.$isCardTabValid = isValid;
     }
   },
   _checkAccountNumber: function (event) {
     var $target = $(event.currentTarget);
-    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkEmpty($target.val()));
+    this.$isAccountTabValid = this._validation.showAndHideErrorMsg($target, this._validation.checkEmpty($target.val()));
   },
   _checkCardNumber: function (event) {
     var $target = $(event.currentTarget);
@@ -132,18 +138,18 @@ Tw.MyTFareBillOptionRegister.prototype = {
     var $target = $(event.currentTarget);
     var message = Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5;
 
-    this.$isValid = this._validation.checkEmpty($target.val());
+    this.$isCardTabValid = this._validation.checkEmpty($target.val());
 
-    if (this.$isValid) {
+    if (this.$isCardTabValid) {
       if ($target.hasClass('fe-card-y')) {
-        this.$isValid = this._validation.checkYear(this.$cardY);
+        this.$isCardTabValid = this._validation.checkYear(this.$cardY);
       } else {
-        this.$isValid = this._validation.checkMonth(this.$cardM, this.$cardY);
+        this.$isCardTabValid = this._validation.checkMonth(this.$cardM, this.$cardY);
       }
       message = Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6;
     }
 
-    if (this.$isValid) {
+    if (this.$isCardTabValid) {
       $target.parents('.fe-exp-wrap').siblings('.fe-error-msg').hide();
     } else {
       $target.parents('.fe-exp-wrap').siblings('.fe-error-msg').text(message).show();
@@ -196,11 +202,10 @@ Tw.MyTFareBillOptionRegister.prototype = {
     $target.attr('id', $selectedValue.attr('id'));
     $target.text($selectedValue.parents('label').text());
 
-    this._isSelectChanged = true;
     this._popupService.close();
   },
   _submit: function () {
-    if (this.$isValid && this.$isCardValid && this.$isSelectValid) {
+    if (this._isValid()) {
       var reqData = this._makeRequestData();
       var apiName = this._getApiName();
 
@@ -208,6 +213,16 @@ Tw.MyTFareBillOptionRegister.prototype = {
         .done($.proxy(this._success, this))
         .fail($.proxy(this._fail, this));
     }
+  },
+  _isValid: function () {
+    var isValid = false;
+    if (this.$selectedWrap.hasClass('fe-bank-wrap')) {
+      isValid = this.$isAccountTabValid && !Tw.FormatHelper.isEmpty(this.$selectBank.attr('id'));
+    } else {
+      isValid = this.$isCardTabValid && this.$isCardValid;
+    }
+
+    return isValid;
   },
   _success: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {

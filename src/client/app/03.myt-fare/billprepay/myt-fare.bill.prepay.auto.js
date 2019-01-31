@@ -43,11 +43,11 @@ Tw.MyTFareBillPrepayAuto.prototype = {
   },
   _bindEvent: function () {
     this.$container.on('change', '.fe-change-type', $.proxy(this._changeType, this));
-    this.$container.on('blur', '.fe-card-number', $.proxy(this._checkCardNumber, this));
-    this.$container.on('blur', '.fe-card-y', $.proxy(this._checkCardExpiration, this));
-    this.$container.on('blur', '.fe-card-m', $.proxy(this._checkCardExpiration, this));
-    this.$container.on('blur', '.fe-card-pw', $.proxy(this._checkPassword, this));
-    this.$container.on('blur', '.fe-card-birth', $.proxy(this._checkBirthday, this));
+    this.$cardNumber.on('blur', $.proxy(this._checkCardNumber, this));
+    this.$cardY.on('blur', $.proxy(this._checkCardExpiration, this));
+    this.$cardM.on('blur', $.proxy(this._checkCardExpiration, this));
+    this.$cardPw.on('blur', $.proxy(this._checkPassword, this));
+    this.$cardBirth.on('blur', $.proxy(this._checkBirthday, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
     this.$container.on('keyup', '.fe-card-number', $.proxy(this._resetCardInfo, this));
@@ -180,19 +180,40 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     }
   },
   _isValid: function () {
-    if (this.$isValid && this.$isCardValid) {
-      return this._validation.showAndHideErrorMsg(this.$prepayAmount, this._validation.checkIsMoreAndSet(this.$standardAmount, this.$prepayAmount));
+    var isValid = false;
+    var amountValid = this._validation.showAndHideErrorMsg(this.$prepayAmount,
+      this._validation.checkIsMoreAndSet(this.$standardAmount, this.$prepayAmount));
+
+    if (this.$type === 'change') {
+      switch (this.$changeType) {
+        case 'A':
+          isValid = amountValid && this.$isExpirationValid && this.$isPwValid;
+          break;
+        case 'C':
+          isValid = this.$isCardValid && this.$isCardNumValid &&
+            this.$isExpirationValid && this.$isPwValid;
+          break;
+        case 'T':
+          isValid = amountValid && this.$isCardValid && this.$isCardNumValid &&
+            this.$isExpirationValid && this.$isPwValid;
+          break;
+        default:
+          break;
+      }
+    } else {
+      isValid = amountValid && this.$isBirthValid && this.$isCardValid &&
+        this.$isCardNumValid && this.$isExpirationValid && this.$isPwValid;
     }
-    return false;
+    return isValid;
   },
   _checkCardNumber: function (event) {
     var $target = $(event.currentTarget);
-    this.$isValid = this._isEmpty($target, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V60) &&
-      this._validation.showAndHideErrorMsg(this.$cardNumber,
-        this._validation.checkMoreLength(this.$cardNumber, 15),
+    this.$isCardNumValid = this._isEmpty($target, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V60) &&
+      this._validation.showAndHideErrorMsg($target,
+        this._validation.checkMoreLength($target, 15),
         Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4);
 
-    if (this.$isValid) {
+    if (this.$isCardNumValid) {
       this._getCardCode();
     }
   },
@@ -227,28 +248,28 @@ Tw.MyTFareBillPrepayAuto.prototype = {
   },
   _checkBirthday: function (event) {
     var $target = $(event.currentTarget);
-    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 6));
+    this.$isBirthValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 6));
 
-    if (this.$isValid) {
-      this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.isBirthday($target.val()));
+    if (this.$isBirthValid) {
+      this.$isBirthValid = this._validation.showAndHideErrorMsg($target, this._validation.isBirthday($target.val()));
     }
   },
   _checkCardExpiration: function (event) {
     var $target = $(event.currentTarget);
     var message = Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5;
 
-    this.$isValid = this._validation.checkEmpty($target.val());
+    this.$isExpirationValid = this._validation.checkEmpty($target.val());
 
-    if (this.$isValid) {
+    if (this.$isExpirationValid) {
       if ($target.hasClass('fe-card-y')) {
-        this.$isValid = this._validation.checkYear(this.$cardY);
+        this.$isExpirationValid = this._validation.checkYear(this.$cardY);
       } else {
-        this.$isValid = this._validation.checkMonth(this.$cardM, this.$cardY);
+        this.$isExpirationValid = this._validation.checkMonth(this.$cardM, this.$cardY);
       }
       message = Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6;
     }
 
-    if (this.$isValid) {
+    if (this.$isExpirationValid) {
       $target.parents('.fe-exp-wrap').siblings('.fe-error-msg').hide();
     } else {
       $target.parents('.fe-exp-wrap').siblings('.fe-error-msg').text(message).show();
@@ -257,18 +278,16 @@ Tw.MyTFareBillPrepayAuto.prototype = {
   },
   _checkPassword: function (event) {
     var $target = $(event.currentTarget);
-    this.$isValid = this._isEmpty($target, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V58) &&
+    this.$isPwValid = this._isEmpty($target, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V58) &&
       this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 2), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V7);
   },
   _pay: function () {
-    if (this.$isValid) {
-      var reqData = this._makeRequestData();
-      var apiName = this._getApiName();
+    var reqData = this._makeRequestData();
+    var apiName = this._getApiName();
 
-      this._apiService.request(apiName, reqData)
-        .done($.proxy(this._paySuccess, this))
-        .fail($.proxy(this._payFail, this));
-    }
+    this._apiService.request(apiName, reqData)
+      .done($.proxy(this._paySuccess, this))
+      .fail($.proxy(this._payFail, this));
   },
   _makeRequestData: function () {
     var reqData = {
