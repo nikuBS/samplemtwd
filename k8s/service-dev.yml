@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: bff-nodejs
+  name: bff-nodejs-mobile
 spec:
   ports:
     - name: http
       port: 8080
-      nodePort: 31011
       targetPort: 3000
   selector:
-    app: bff-nodejs
-  type: NodePort
+    app: bff-nodejs-mobile
+    version: 0.0.1
+  type: ClusterIP
