@@ -139,7 +139,12 @@ class ApiService {
 
     if ( command.server === API_SERVER.BFF ) {
       this.setServerSession(resp.headers).subscribe(() => {
-        // TODO: session expired
+        if ( contentType.includes('json') && respData.code === API_CODE.BFF_0003 ) {
+          this.logger.error(this, '[API RESP] Session Expired', resp.code, resp.msg, this.loginService.getFullPath());
+          // TODO: session expired
+          // go /common/member/login/expired?target=this.loginService.getFullPath();
+        }
+
         observer.next(respData);
         observer.complete();
       });
