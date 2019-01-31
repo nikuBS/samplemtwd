@@ -14,12 +14,14 @@ Tw.ProductMobilePlanComparePlans = function () {
 Tw.ProductMobilePlanComparePlans.prototype = {
 
   // 요금제 비교하기 팝업생성
-  openCompare: function (prodId) {
+  openCompare: function (prodId, isShowBtn) {
     // 이미 팝업을 호출 했다면 안 띄운다. window.location.hash 대신 변수를 사용한 이유는 빠르게 여러번 호출 될 경우 hash 값이 공백으로 와서 변수로 대체함.
     if (this._isOpen) {
       return;
     }
 
+
+    this._isShowBtn = isShowBtn === undefined ? true : isShowBtn;
     this._isOpen = true;
     this._prodId = prodId;
     var callAll = function (currentProdId, basicInfo) {
@@ -135,6 +137,7 @@ Tw.ProductMobilePlanComparePlans.prototype = {
   },
 
   _afterComparePop: function (_data, $layer) {
+    $layer.find('#fe-btn-change').toggleClass('none', !this._isShowBtn);
     $layer.on('click', '[data-join-url]', $.proxy(this._goJoinUrl, this));
     this._initChart($layer, _data);
   },

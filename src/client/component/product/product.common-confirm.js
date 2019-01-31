@@ -275,7 +275,7 @@ Tw.ProductCommonConfirm.prototype = {
   },
 
   _openComparePlans: function() {
-    this._comparePlans.openCompare(this._data.preinfo.toProdInfo.prodId);
+    this._comparePlans.openCompare(this._data.preinfo.toProdInfo.prodId, false);
   },
 
   _setAgreeAndclosePop: function($wrap) {

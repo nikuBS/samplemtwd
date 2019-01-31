@@ -1,0 +1,31 @@
+<!-- .popup hbs -->
+<div class="popup-page nobg tw-popup fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <!-- #header -->
+    <div id="header" class="header-wrap noborder">
+        <div class="page-header">
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <div class="container">
+
+            <!-- 컨텐츠-->
+            {{{data.contents}}}
+            <!-- //컨텐츠-->
+
+            <div id="fe-btn-change" class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button data-join-url="{{data.joinUrl}}">요금제 변경하기</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn fe-common-back"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
+</div>
+<!--// .popup hbs -->
