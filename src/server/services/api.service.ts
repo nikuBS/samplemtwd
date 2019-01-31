@@ -139,6 +139,7 @@ class ApiService {
 
     if ( command.server === API_SERVER.BFF ) {
       this.setServerSession(resp.headers).subscribe(() => {
+        // TODO: session expired
         observer.next(respData);
         observer.complete();
       });

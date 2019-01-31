@@ -131,14 +131,14 @@ Tw.TidLandingComponent.prototype = {
       this._apiService.sendNativeSession(Tw.AUTH_LOGIN_TYPE.TID, $.proxy(this._successSetSession, this, target));
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3228 ) {
       // 고객보호비밀번호
-      this._historyService.goLoad('/common/member/login/cust-pwd?target=' + target);
+      this._historyService.goLoad('/common/member/login/cust-pwd?target=' + encodeURIComponent(target));
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3235 ) {
       // 휴면계정
-      this._historyService.goLoad('/common/member/login/reactive?target=' + target);
+      this._historyService.goLoad('/common/member/login/reactive?target=' + encodeURIComponent(target));
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ATH1003 ) {
-      this._historyService.replaceURL('/common/member/login/exceed-fail?target=' + target);
+      this._historyService.replaceURL('/common/member/login/exceed-fail?');
     } else {
-      this._historyService.replaceURL('/common/member/login/fail?errorCode=' + resp.code + '&target=' + target);
+      this._historyService.replaceURL('/common/member/login/fail?errorCode=' + resp.code + '&target=' + encodeURIComponent(target));
     }
   },
   _successLogout: function (resp) {
