@@ -15,7 +15,7 @@ Tw.MyTDataFamilyShare.prototype = {
   _cachedElement: function() {
     this.$amountInput = this.$container.find('.fe-amount');
     this.$submitBtn = this.$container.find('.fe-submit');
-    this.$error = this.$container.find('.pb10');
+    this.$error = this.$container.find('.input-txt-type02');
     this.$pRemained = this.$container.find('p.pt4');
     this.$sRemained = this.$pRemained.find('.txt-c2');
   },

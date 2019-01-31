@@ -489,6 +489,7 @@ Tw.ALERT_MSG_MYT_DATA = {
     BUTTON: '설정하기' },
   ALERT_2_A216: '공유 가능 데이터 조회 요청에 시간이 소요되고 있습니다. \'조회하기\' 를 눌러 다시 조회해 주세요.',
   ALERT_2_A217: '선물 가능한 데이터 조회 요청에 시간이 소요되고 있습니다 . \'조회하기\' 를 눌러 다시 조회해주세요.',
+  ALERT_2_A218: '변경 가능한 데이터 조회 요청에 시간이 소요되고 있습니다 . \'조회하기\' 를 눌러 다시 조회해 주세요.',
   DATA_PESTER: {
     TITLE: '[SKT] ',
     CONTENT: '님이\n"T끼리 데이터 선물 조르기"를 요청하셨습니다.\n데이터 선물 하러가기\n'
@@ -501,7 +502,12 @@ Tw.ALERT_MSG_MYT_DATA = {
   ALERT_2_A74: '충전을 취소하시겠습니까?',
   DAILY_USED_USAGE_ERROR: '데이터가 존재하지 않습니다.',
   INVALID_CARD: '카드 정보가 올바르지 않습니다.\n 카드 정보 확인 후 다시 입력해주세요.',
-  COMPLETE_RECHARGE: '충전이 완료 되었습니다.'
+  COMPLETE_RECHARGE: '충전이 완료 되었습니다.',
+  CONFIRM_SHARE_DATA_CHANGE: {
+    TITLE: '데이터를 변경하시겠습니까?',
+    CONTENTS: '나만 사용할 수 있는 데이터로 변경됩니다.',
+    BUTTON: '변경하기'
+  }
 };
 
 Tw.VALIDATE_MSG_MYT_DATA = {
@@ -975,12 +981,17 @@ Tw.MYT_DATA_FAMILY_DELETE_SHARE_MONTHLY = {
 
 Tw.MYT_DATA_FAMILY_SUCCESS_DELETE_MONTHLY = '매달 자동공유 해제';
 
+Tw.MYT_DATA_FAMILY_NOT_POSSIBLE_CHANGE = '변경불가';
+
+Tw.MYT_DATA_FAMILY_SUCCESS_CHANGE_DATA = '데이터 변경';
+
 Tw.MYT_DATA_CANCEL_MONTHLY = {
   ALERT_NOT_SK: 'SK텔레콤 사용자에게만 데이터 선물을 하실 수 있습니다.',
   TITLE: '매월 자동 충전을 취소하시겠습니까?',
   CONTENTS: '취소는 다음 달부터 적용됩니다.',
   BTN_NAME: '취소하기'
 };
+
 
 Tw.MYT_DATA_TING = {
   V31: '팅요금제 사용 고객이 아닙니다.',
