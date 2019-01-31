@@ -27,7 +27,7 @@ class CommonMemberLine extends TwViewController {
       })
     ]).subscribe(([mobile, internet]) => {
       if ( mobile.code === API_CODE.CODE_00 ) {
-        if ( mobile.result.totalCnt === 0 ) {
+        if ( mobile.result.totalCnt === '0' ) {
           res.render('member/common.member.line.empty.html', { svcInfo, pageInfo });
         } else {
           const lineInfo = this.parseLineList({
