@@ -166,7 +166,6 @@ Tw.MenuComponent.prototype = {
               this._isMultiLine = res.result.userInfo.totalSvcCnt > 1;
               this._svcMgmtNum = res.result.userInfo.svcMgmtNum;
               this._svcAttr = res.result.userInfo.svcAttrCd;
-              this._isLogin = res.result.isLogini;
               this._tid = res.result.userInfo.userId;
             }
             this._modifyMenu(
