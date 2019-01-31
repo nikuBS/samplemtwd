@@ -40,9 +40,11 @@
                                 <div class="tab-linker">
                                     <ul role="tablist">
                                         <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1">
-                                            <a href="#temporary" <% if(suspend.status) { %> class="disabled" <% } %> >일시정지</a>
+                                            <button href="#temporary" <% if(suspend.status) { %> class="disabled" <% } %> >일시정지</a>
                                         </li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                        <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="#long-term">장기일시정지</a></li>
+                                        <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2">
+                                            <button href="#long-term">장기일시정지</button>
+                                        </li>
                                     </ul>
                                 </div>
                                 <div class="tab-contents">
