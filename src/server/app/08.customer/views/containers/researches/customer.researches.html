@@ -25,6 +25,7 @@
             <h2 class="blind">내용</h2>
             <div class="container">
                 <!-- .cont-box -->
+                <% if (researches.length > 0) { %>
                 <div class="cont-box nogaps">
                     <!-- .poll-info -->
                     <div class="poll-info">
@@ -144,6 +145,14 @@
                 </div>
                 <!-- // .bt-top -->
             </div>
+            <% } else { %>
+                <div class="cont-box nogaps-hoz">
+                    <div class="contents-empty">
+                        <span class="ico type1"></span>
+                        <p class="desc">진행 중인 설문조사가 없습니다.</p>
+                    </div>
+                </div>
+            <% } %>                
         </div>
         <!--// #contents -->
         <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
