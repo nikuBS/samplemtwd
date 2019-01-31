@@ -525,29 +525,21 @@ Tw.MainHome.prototype = {
     }
   },
   _successGiftData: function (element, resp) {
-    var result = null;
-
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      result = this._parseGiftData(resp.result);
-    }
-    this._drawGiftData(element, result, resp);
-    this._resetHeight();
-  },
-  _failGiftData: function () {
-
-  },
-  _drawGiftData: function (element, result, sender) {
-    if ( !Tw.FormatHelper.isEmpty(result) ) {
       var $giftTemp = $('#fe-smart-gift');
       var tplGiftCard = Handlebars.compile($giftTemp.html());
-      element.html(tplGiftCard(result));
+      element.html(tplGiftCard(this._parseGiftData(resp.result)));
       element.removeClass('empty');
-      element.on('click', '#fe-bt-go-gift', $.proxy(this._onClickBtGift, this, sender));
+      element.on('click', '#fe-bt-go-gift', $.proxy(this._onClickBtGift, this, resp.result));
       element.on('click', '#fe-bt-gift-balance', $.proxy(this._onClickGiftBalance, this, element));
       this._getGiftBalance(element, 0);
     } else {
       element.hide();
     }
+    this._resetHeight();
+  },
+  _failGiftData: function () {
+
   },
   _parseGiftData: function (sender) {
     return {
@@ -625,7 +617,7 @@ Tw.MainHome.prototype = {
       var tplRechargeCard = Handlebars.compile($rechargeTemp.html());
       element.html(tplRechargeCard({ refillCoupons: refillCoupons }));
       element.removeClass('empty');
-      element.on('click', 'fe-bt-go-recharge',  $.proxy(this._onClickBtRecharge, this));
+      element.on('click', 'fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
     } else {
       element.hide();
     }

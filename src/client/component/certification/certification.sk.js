@@ -159,7 +159,8 @@ Tw.CertificationSk.prototype = {
         sLogin: this._svcInfo.loginType === Tw.AUTH_LOGIN_TYPE.EASY,
         masking: this._authKind === Tw.AUTH_CERTIFICATION_KIND.A,
         svcNum: this._svcInfo.svcNum,
-        enableKeyin: this._enableKeyin
+        enableKeyin: this._enableKeyin,
+        securityAuth: this._securityAuth
       }
     }, $.proxy(this._onOpenSmsOnly, this), $.proxy(this._onCloseSmsOnly, this), 'cert-sms');
   },
@@ -196,10 +197,9 @@ Tw.CertificationSk.prototype = {
     } else {
       this._checkCertType();
     }
-
-    if ( this._securityAuth ) {
-      this.$btReCert.parent().addClass('none');
-    }
+    // if ( this._securityAuth ) {
+    //   this.$btReCert.parent().addClass('none');
+    // }
   },
   _onCloseSmsOnly: function () {
     if ( !Tw.FormatHelper.isEmpty(this._callbackParam) ) {
@@ -266,13 +266,13 @@ Tw.CertificationSk.prototype = {
   _onMdn: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._securityMdn = resp.params.mdn;
-      this._requestCert();
     } else {
-      // error
+      this._securityMdn = 'usim';
     }
+    this._requestCert();
   },
   _checkCertType: function () {
-    if ( this._securityAuth && Tw.FormatHelper.isEmpty(this._securityMdn) ) {
+    if ( this._securityAuth ) {
       this._getMdn();
     } else {
       this._requestCert();
@@ -321,7 +321,7 @@ Tw.CertificationSk.prototype = {
       this._seqNo = resp.result.seqNo;
       this._clearCertError();
       this.$validCert.removeClass('none');
-      if ( !reCert ) {
+      if ( !reCert && !this._securityAuth) {
         this.$btReCert.parent().addClass('none');
         this.$btCert.parent().addClass('none');
         this.$btCertAdd.parent().removeClass('none');
