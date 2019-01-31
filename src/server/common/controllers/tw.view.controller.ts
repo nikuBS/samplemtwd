@@ -126,7 +126,7 @@ abstract class TwViewController {
       if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
         this._logger.info(this, '[Session expired]');
         res.clearCookie(COOKIE_KEY.TWM_LOGIN);
-        res.redirect('/common/member/logout/expire');
+        res.redirect('/common/member/logout/expire?target=' + req.baseUrl + req.url);
       } else {
         this._logger.info(this, '[Session empty]');
         this.renderPage(req, res, next, path);
@@ -190,7 +190,7 @@ abstract class TwViewController {
               // 현재 로그인 방법으론 이용할 수 없음
               if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
                 // res.redirect('/common/member/slogin/fail');
-                res.render('error.slogin-fail.html', { target: path });
+                res.render('error.slogin-fail.html', { target: req.baseUrl + req.url });
               } else {
                 // ERROR 케이스 (일반로그인에서 권한이 없는 케이스)
                 this.errorAuth(req, res, next);
@@ -234,7 +234,7 @@ abstract class TwViewController {
     } else if ( errorCode === API_LOGIN_ERROR.ICAS3235 ) {   // 휴면계정
       res.redirect('/common/member/login/reactive?target=' + target);
     } else if ( errorCode === API_LOGIN_ERROR.ATH1003 ) {
-      res.redirect('/common/member/login/exceed-fail?target=' + target);
+      res.redirect('/common/member/login/exceed-fail');
     } else {
       res.redirect('/common/member/login/fail?errorCode=' + errorCode + '&target=' + target);
     }

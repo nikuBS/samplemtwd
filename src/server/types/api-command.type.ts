@@ -845,7 +845,7 @@ export const API_CMD = {
 
   // TID
   OIDC: { path: '/auth/authorize.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },
-  LOGOUT: { path: '/sso/web/:version/ssologout.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },
+  LOGOUT: { path: '/sso/web/v1/ssologout.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },
 
   MANIFEST: { path: '/manifest.:args0.json', method: API_METHOD.GET, server: API_SERVER.CDN, bypass: false },
 
