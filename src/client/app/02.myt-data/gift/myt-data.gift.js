@@ -40,7 +40,6 @@ Tw.MyTDataGift.prototype = {
     this.$remainBtn = $('.fe-btn-remain');
     this.$wrapSuccessRemainApi = $('.fe-remain-api');
     this.$wrapErrorRemainApi = $('.fe-err-api');
-
   },
 
   _bindEvent: function () {
@@ -83,13 +82,17 @@ Tw.MyTDataGift.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var result = res.result;
       if ( result.giftRequestAgainYn === 'N' ) {
-        // API DATA
-        this._remainApiSuccess();
-        var apiDataQty = res.result.dataRemQty;
-        var dataQty = Tw.FormatHelper.convDataFormat(apiDataQty, 'MB');
-        this.currentRemainDataInfo = apiDataQty;
-        this.$remainQty.text(dataQty.data + dataQty.unit);
-        this._setAmountUI(Number(apiDataQty));
+        if ( Tw.FormatHelper.isEmpty(result.dataRemQty) ) {
+          this._remainApiError();
+        } else {
+          // API DATA SUCCESS
+          this._remainApiSuccess();
+          var apiDataQty = res.result.dataRemQty;
+          var dataQty = Tw.FormatHelper.convDataFormat(apiDataQty, 'MB');
+          this.currentRemainDataInfo = apiDataQty;
+          this.$remainQty.text(dataQty.data + dataQty.unit);
+          this._setAmountUI(Number(apiDataQty));
+        }
       } else {
         this.reqCnt = result.reqCnt;
         this._getRemainDataInfo();
@@ -105,7 +108,7 @@ Tw.MyTDataGift.prototype = {
     this.$wrapErrorRemainApi.show();
     this.$remainBtn.show();
     this.$remainTxt.hide();
-    this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A217);
+    // this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A217);
   },
 
   _remainApiSuccess: function () {
@@ -203,6 +206,7 @@ Tw.MyTDataGift.prototype = {
 
   _showAvailableProduct: function () {
     this.wrap_available_product.show();
+    $('.fe-layer_available_product').scrollTop(0);
   },
 
   _hideAvailableProduct: function () {
