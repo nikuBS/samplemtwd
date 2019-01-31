@@ -86,7 +86,7 @@ class MytDataSubmainController extends TwViewController {
         } else {
           // 미가입
           data.family = {
-            impossible: !!data.isDataShow
+            impossible: tmoaBelongToProdList.indexOf(data.svcInfo.prodId) > -1
           };
         }
       }
