@@ -35,11 +35,15 @@ class MyTDataUsageCancelTshare extends TwViewController {
 
       const tDataSharingsResult = this.getResult(tDataSharingsResp);
       const child = this.getChild(tDataSharingsResult.childList, cSvcMgmtNum)[0];
+      const showSvcNum = FormatHelper.conTelFormatWithDash(svcInfo.svcNum);
+      const showUsimNum = this.convUsimFormat(child.usimNum);
 
       const options = {
         child,
         svcInfo,
-        pageInfo
+        pageInfo,
+        showSvcNum,
+        showUsimNum
       };
 
       res.render(this._VIEW.DEFAULT, options);
@@ -61,6 +65,15 @@ class MyTDataUsageCancelTshare extends TwViewController {
 
   private getResult(resp: any): any {
     return resp.result;
+  }
+
+  private convUsimFormat(v: any): any {
+    if ( !v || v.replace(/-/g).trim().length < 14 ) {
+      return v || '';
+    }
+    let ret = v.replace(/-/g).trim();
+    ret = ret.substr(0, 4) + '-' + ret.substr(4, 4) + '-' + ret.substr(8, 4) + '-' + ret.substr(12, 2);
+    return ret;
   }
 
   private renderErr(res, err, svcInfo): any {
