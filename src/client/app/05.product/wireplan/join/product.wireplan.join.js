@@ -36,7 +36,7 @@ Tw.ProductWireplanJoin.prototype = {
 
     this.$container.html(html);
     this._callConfirmCommonJs();
-    Tw.Tooltip.separateInit(this.$container.find('.tip-view-btn'));
+    Tw.Tooltip.separateInit(this.$container.find('.fe-product-tip'));
   },
 
   _convConfirmOptions: function() {
