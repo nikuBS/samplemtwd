@@ -261,12 +261,14 @@ Tw.MyTFareBillPrepayAuto.prototype = {
       this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 2), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V7);
   },
   _pay: function () {
-    var reqData = this._makeRequestData();
-    var apiName = this._getApiName();
+    if (this.$isValid) {
+      var reqData = this._makeRequestData();
+      var apiName = this._getApiName();
 
-    this._apiService.request(apiName, reqData)
-      .done($.proxy(this._paySuccess, this))
-      .fail($.proxy(this._payFail, this));
+      this._apiService.request(apiName, reqData)
+        .done($.proxy(this._paySuccess, this))
+        .fail($.proxy(this._payFail, this));
+    }
   },
   _makeRequestData: function () {
     var reqData = {
