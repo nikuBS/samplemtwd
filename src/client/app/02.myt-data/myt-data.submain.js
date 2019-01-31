@@ -306,7 +306,7 @@ Tw.MyTDataSubMain.prototype = {
       var baseTotalData = 0, baseTotalVoice = 0;
       for ( idx = 0; idx < data.length; idx++ ) {
         var usageData = parseInt(data[idx].totalUsage, 10);
-        baseTotalData += parseInt(data[idx].basOfrQty, 10);
+        baseTotalData += usageData;/*parseInt(data[idx].basOfrUsage, 10)*/
         if ( usageData > 0 ) {
           chart_data.push({
             t: Tw.DateHelper.getShortKoreanMonth(data[idx].invMth), // 각 항목 타이틀
@@ -322,7 +322,7 @@ Tw.MyTDataSubMain.prototype = {
           unit = Tw.CHART_UNIT.TIME;
           data = this.data.pattern.voice;
           for ( idx = 0; idx < data.length; idx++ ) {
-            baseTotalVoice += parseInt(data[idx].basOfrQty, 10);
+            baseTotalVoice += parseInt(data[idx].totalUsage, 10);
             chart_data.push({
               t: Tw.DateHelper.getShortKoreanMonth(data[idx].invMth), // 각 항목 타이틀
               v: this.__convertVoice(parseInt(data[idx].totalUsage, 10)) // 배열 평균값으로 전달
@@ -331,7 +331,7 @@ Tw.MyTDataSubMain.prototype = {
         }
       }
       // 문자
-      if ( baseTotalVoice === 0 ) {
+      if ( baseTotalData === 0 && baseTotalVoice === 0 ) {
         chart_data = [];
         if ( this.data.pattern.sms.length > 0 ) {
           this.$patternChart.find('.tit').text(Tw.MYT_DATA_PATTERN_TITLE.SMS);

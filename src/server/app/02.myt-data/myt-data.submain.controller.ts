@@ -142,7 +142,7 @@ class MytDataSubmainController extends TwViewController {
             if ( item.opTypCd === '3' ) {
               uSubTitle = MYT_DATA_CHARGE_TYPES.FIXED + ' | ' + uSubTitle;
             }
-            item['class'] = (item.opTypCd === '2' || item.opTypCd === '4') ? 'send' : 'recharge';
+            item['class'] = 'recharge';
             item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.LIMIT_CHARGE;
             item['u_sub'] = uSubTitle;
             item['d_title'] = FormatHelper.addComma(item.amt);
@@ -162,7 +162,7 @@ class MytDataSubmainController extends TwViewController {
             uSubTitle = MYT_DATA_CHARGE_TYPES.FIXED + ' | ' + uSubTitle;
           }
           item['opDt'] = item.opDtm.slice(0, 8);
-          item['class'] = (item.type === '1' ? 'send' : 'recharge');
+          item['class'] = (item.type === '1' ? 'send' : 'recieve');
           item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.DATA_GIFT;
           // 충전/선물내역과 동일하게 처리
           item['u_sub'] = uSubTitle;
@@ -176,7 +176,7 @@ class MytDataSubmainController extends TwViewController {
         // 팅요금 선물하기 내역
         // opTypCd: 1 send, 2 recharge
         tpBkd.map((item) => {
-          item['class'] = (item.opTypCd === '1' ? 'send' : 'recharge');
+          item['class'] = (item.opTypCd === '1' ? 'send' : 'recieve');
           item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.TING_GIFT;
           // custNm 명세서에서 제외됨
           item['u_sub'] = /*item.custNm ||  + ' | ' +*/ FormatHelper.conTelFormatWithDash(item.svcNum);
@@ -205,7 +205,7 @@ class MytDataSubmainController extends TwViewController {
             } else if ( item.opTypCd === '3' ) {
               etcBottom = MYT_DATA_CHARGE_TYPES.FIXED + ' | ' + etcBottom;
             }
-            item['class'] = (item.opTypCd === '2' || item.opTypCd === '4') ? 'send' : 'recharge';
+            item['class'] = 'recharge';
             item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.TING_CHARGE;
             item['u_sub'] = etcBottom;
             item['d_title'] = FormatHelper.addComma(item.amt);
@@ -219,7 +219,7 @@ class MytDataSubmainController extends TwViewController {
         // 리필쿠폰 선물 내역
         refpBkd.map((item) => {
           item['opDt'] = item.copnOpDt;
-          item['class'] = (item.type === '1' ? 'send' : 'recharge');
+          item['class'] = (item.type === '1' ? 'send' : 'recieve');
           item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.REFILL_GIFT;
           item['u_sub'] = FormatHelper.conTelFormatWithDash(item.svcNum);
           item['d_title'] = ''; // API response 값에 정의되어있지 않음
@@ -232,7 +232,7 @@ class MytDataSubmainController extends TwViewController {
         // 리필쿠폰 사용이력조회
         refuBkd.map((item) => {
           item['opDt'] = item.copnUseDt;
-          item['class'] = (item.type === '1' ? 'send' : 'recharge');
+          item['class'] = 'recharge';
           item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.REFILL_USAGE;
           item['u_sub'] = item.opOrgNm || ETC_CENTER;
           item['d_title'] = item.copnDtlClNm;
