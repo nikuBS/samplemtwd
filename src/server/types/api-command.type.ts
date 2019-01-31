@@ -161,7 +161,7 @@ export const API_CMD = {
   BFF_05_0039: { path: '/core-bill/:version/bill-types-return-list/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0039_N: { path: '/core-bill/:version/bill-types-return', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0040: {
-    path: '/core-product/:version/services/wireless/additions/:args0',
+    path: '/core-product/:version/services/wireless/addition/:args0',
     method: API_METHOD.GET,
     server: API_SERVER.BFF,
     bypass: false
