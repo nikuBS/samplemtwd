@@ -1,7 +1,7 @@
 $(document).on('ready', function () {
   $('html').addClass('device_'+skt_landing.util.win_info.get_device());
   skt_landing.action.top_btn();
-  skt_landing.action.keyboard();
+  //skt_landing.action.keyboard();
   if($('body').hasClass('bg-productdetail')){
     skt_landing.action.prd_header();
   }

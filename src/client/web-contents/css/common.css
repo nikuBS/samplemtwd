@@ -1124,6 +1124,15 @@ button.bt-link-tx, a.bt-link-tx {
         background-position: -1.5625rem -17.1875rem; }
   .link-long.lower-h a, .link-long.lower-h button {
     padding: 0.875rem 0; }
+  .link-long.t-center .tx-sub {
+    top: 0;
+    padding-right: 1.5625rem;
+    line-height: 3.5rem; }
+    .link-long.t-center .tx-sub .ico {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      margin-top: -13px; }
 
 .box-chk-link .chk-link-list {
   padding: 0.3125rem 0 0.4375rem; }
