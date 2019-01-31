@@ -211,7 +211,7 @@ Tw.MyTFareBillOptionRegister.prototype = {
   },
   _success: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._historyService.goLoad('/myt-fare/bill/option?type=' + this.$infoWrap.attr('id'));
+      this._aftetSuccessGetOption(res);
     } else {
       this._fail(res);
     }
@@ -221,6 +221,24 @@ Tw.MyTFareBillOptionRegister.prototype = {
       this._popupService.openAlert(err.msg, Tw.POPUP_TITLE.NOTIFY);
     } else {
       Tw.Error(err.code, err.msg).pop();
+    }
+  },
+  _aftetSuccessGetOption: function (res) {
+    var reqData = {
+      authConfirm: res.result.authConfirm,
+      acntNum: this.$infoWrap.attr('data-acnt-num'),
+      rltmSerNum: res.result.rltmSerNum
+    };
+
+    this._apiService.request(Tw.API_CMD.BFF_07_0060, reqData)
+      .done($.proxy(this._afterGetSuccess, this))
+      .fail($.proxy(this._fail, this));
+  },
+  _afterGetSuccess: function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      this._historyService.goLoad('/myt-fare/bill/option?type=' + this.$infoWrap.attr('id'));
+    } else {
+      this._fail(res);
     }
   },
   _makeRequestData: function () {
