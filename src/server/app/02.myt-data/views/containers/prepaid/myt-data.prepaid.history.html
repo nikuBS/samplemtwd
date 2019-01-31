@@ -58,7 +58,7 @@
                                                 음성 충전</span>
                                                 <span class="stext">
                                                     <span class="gray-tx"><%= history.payNm %></span>
-                                                    <span class="gray-tx"><%= history.cardNm %></span>
+                                                    <% if (history.cardNm) { %><span class="gray-tx"><%= history.cardNm %></span><% } %>
                                                 </span>
                                             </p>
                                             <div class="list-data">
@@ -90,7 +90,7 @@
                                                 </span>
                                                 <span class="stext">
                                                     <span class="black-tx"><%= history.payNm %></span>
-                                                    <span class="gray-tx"><%= history.cardNm %></span>
+                                                    <% if (history.cardNm) { %><span class="gray-tx"><%= history.cardNm %></span><% } %>
                                                 </span>
                                             </p>
                                             <div class="list-data">
