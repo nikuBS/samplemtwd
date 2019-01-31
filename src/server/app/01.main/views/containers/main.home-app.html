@@ -75,7 +75,7 @@
                             <% if (homeData.usageData.code === '00') { %>
                             <!-- 모바일 회선_잔여 데이터 -->
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.usageData.showSvcNum %></button></em>
+                                <em class="line"><button class="bt fe-bt-line ff-tg-light" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.usageData.showSvcNum %></button></em>
                                 <strong class="ti"><a href="/product/callplan/<%= svcInfo.prodId %>" class="bt"><%= svcInfo.prodNm %></a></strong>
 
                                 <% if (homeData.usageData.data && homeData.usageData.data.isShow) { %>
