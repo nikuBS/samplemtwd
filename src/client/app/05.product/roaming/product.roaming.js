@@ -24,7 +24,7 @@ Tw.ProductRoaming.prototype = {
   _init : function() {
     this.nMax = this._options.banners.centerBanners.length - 1;
 
-    this.$container.show();
+    this.$container.find('.fe-slide-banner').show();
   },
   _onOpenFormInfo: function ($layer) {
     this.$prevBtn = $layer.find('#_dev_prev');
