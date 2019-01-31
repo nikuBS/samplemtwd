@@ -18,6 +18,11 @@ Tw.MyTFareBillCashbagTpoint = function (rootEl, pointType) {
 
 Tw.MyTFareBillCashbagTpoint.prototype = {
   _init: function () {
+    this.$isOneValid = false;
+    this.$isAutoValid = true;
+    this.$isAutoCardValid = true;
+    this.$isSelectValid = true;
+
     this._initVariables('tab1');
     this._bindEvent();
   },
@@ -37,9 +42,6 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
 
     this.$payBtn.show();
     this.$payBtn.siblings().hide();
-
-    this.$isValid = true;
-    this.$isSelectValid = true;
   },
   _bindEvent: function () {
     this.$container.on('click', '.fe-get-point', $.proxy(this._openGetPoint, this));
@@ -47,7 +49,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', '.fe-only-number', $.proxy(this._checkNumber, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
-    this.$container.on('blur', '.fe-point', $.proxy(this._checkPoint, this));
+    this.$container.on('blur', 'input.fe-point', $.proxy(this._checkPoint, this));
     this.$container.on('blur', '.fe-point-card', $.proxy(this._checkCardNumber, this));
     this.$container.on('blur', '.fe-point-pw', $.proxy(this._checkPassword, this));
     this.$container.on('change', '.fe-agree', $.proxy(this._checkIsAbled, this));
@@ -73,6 +75,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     this.$standardPoint.attr('id', $point).text(Tw.FormatHelper.addComma($point));
     this.$pointCardNumber.val(result.ocbCcno).attr('readonly', true);
     this.$selectedTab.siblings().find('.fe-point-card').val(result.ocbCcno).attr('readonly', true);
+    this.$isAutoCardValid = true;
 
     this.$pointWrap.removeClass('none');
     this.$getPointBtn.hide();
@@ -109,29 +112,35 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     var $message = this.$point.parent().siblings('.fe-error-msg');
     $message.empty();
 
-    if (!this._validation.checkEmpty(this.$point.val())) {
-      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V65);
-    } else if (!this._validation.checkIsMore(this.$point.val(), 1000)) {
-      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V8);
-    } else if (!this._validation.checkIsAvailablePoint(this.$point.val(),
-        this.$standardPoint.attr('id'))) {
-      $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27);
-    } else if (!this._validation.checkIsTenUnit(this.$point.val())) {
-      $message.text(Tw.ALERT_MSG_MYT_FARE.TEN_POINT);
+    if (this.$pointWrap.hasClass('none')) {
+      $message.text(Tw.ALERT_MSG_MYT_FARE.GET_POINT);
     } else {
-      isValid = true;
+      if (!this._validation.checkEmpty(this.$point.val())) {
+        $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V65);
+      } else if (!this._validation.checkIsMore(this.$point.val(), 1000)) {
+        $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V8);
+      } else if (!this._validation.checkIsAvailablePoint(this.$point.val(),
+          this.$standardPoint.attr('id'))) {
+        $message.text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27);
+      } else if (!this._validation.checkIsTenUnit(this.$point.val())) {
+        $message.text(Tw.ALERT_MSG_MYT_FARE.TEN_POINT);
+      } else {
+        isValid = true;
+      }
     }
 
-    this.$isValid = this._validation.showAndHideErrorMsg(this.$point, isValid);
+    this.$isOneValid = this._validation.showAndHideErrorMsg(this.$point, isValid);
   },
   _checkCardNumber: function (event) {
-    var $target = $(event.currentTarget);
-    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkEmpty($target.val()), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V60) &&
-      this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 16), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V26);
+    if (this.$selectedTab.attr('id') === 'tab2-tab') {
+      var $target = $(event.currentTarget);
+      this.$isAutoCardValid = this._validation.showAndHideErrorMsg($target, this._validation.checkEmpty($target.val()), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V60) &&
+        this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 16), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V26);
+    }
   },
   _checkPassword: function (event) {
     var $target = $(event.currentTarget);
-    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkEmpty($target.val()), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V58) &&
+    this.$isOneValid = this._validation.showAndHideErrorMsg($target, this._validation.checkEmpty($target.val()), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V58) &&
       this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 6), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V7);
   },
   _cancel: function () {
@@ -227,7 +236,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     }
   },
   _onePay: function () {
-    if (this.$isValid && this.$isSelectValid) {
+    if (this.$isOneValid) {
       var reqData = this._makeRequestDataForOne();
       this._apiService.request(Tw.API_CMD.BFF_07_0045, reqData)
         .done($.proxy(this._paySuccess, this, ''))
@@ -235,7 +244,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     }
   },
   _autoPay: function () {
-    if (this.$isValid && this.$isSelectValid) {
+    if (this.$isAutoValid && this.$isAutoCardValid && this.$isSelectValid) {
       var reqData = this._makeRequestDataForAuto();
       var type = 'auto';
       if (this.$autoInfo.is(':visible')) {
