@@ -248,6 +248,10 @@ Tw.NON_PAYMENT = {
   }
 };
 
+Tw.MYT_DATA_USAGE = {
+  TING_SKIPNM_PREFIX: '제공 '
+};
+
 Tw.MYT_DATA_USAGE_CHILD_RECHARGE = {
   ALERT: {
     '2_A5': {

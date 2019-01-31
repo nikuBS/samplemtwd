@@ -384,6 +384,7 @@ Tw.MyTDataUsage.prototype = {
 
     for ( var i = 0; i < data.length; i++ ) {
       data[i].skipLabel = Tw.TING_TITLE[data[i].skipId];
+      data[i].skipNm = Tw.MYT_DATA_USAGE.TING_SKIPNM_PREFIX + data[i].skipNm;
       data[i].unitLabel = Tw.CURRENCY_UNIT.WON;
     }
 
