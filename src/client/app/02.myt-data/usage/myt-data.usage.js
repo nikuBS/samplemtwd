@@ -364,7 +364,7 @@ Tw.MyTDataUsage.prototype = {
     //console.log(data);
 
     // 공제항목명
-    $('#fe-cont-data-limit .fe-skipnm').text(data.skipNm);
+    // $('#fe-cont-data-limit .fe-skipnm').text(data.skipNm);
     // 충전금액
     var tot = Tw.FormatHelper.addComma(data.total) || 0;
     $('#fe-cont-data-limit .fe-recharge-amt').text(tot);
