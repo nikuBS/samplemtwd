@@ -129,24 +129,24 @@ Tw.CustomerAgentsearchNear.prototype = {
   _showPermission: function (location) {
     var shouldGoBack = false;
     this._popupService.open({
-      ico: 'type3',
       title: Tw.BRANCH.PERMISSION_TITLE,
+      title_type: 'sub',
+      cont_align: 'tl',
       contents: Tw.BRANCH.PERMISSION_DETAIL,
-      link_list: [{
-        style_class: 'fe-link-term',
-        txt: Tw.BRANCH.VIEW_LOCATION_TERM
+      infocopy: [{
+        info_contents: Tw.BRANCH.DO_YOU_AGREE,
+        bt_class: 'fe-view-term bt-blue1'
       }],
-      bt: [{
-          style_class: 'bt-blue1',
-          txt: Tw.BRANCH.AGREE
-      }, {
-          style_class: 'bt-white2',
+      bt_b: [{
+          style_class: 'pos-left fe-close',
           txt: Tw.BRANCH.CLOSE
+      }, {
+          style_class: 'bt-red1 pos-right fe-agree',
+          txt: Tw.BRANCH.AGREE
       }]
     }, $.proxy(function (root) {
-      root.on('click', '.fe-link-term', $.proxy(function () {
-        // this._popupService.close();
-        // this._historyService.goLoad(약관 전문)
+      root.find('.fe-view-term').find('button').text(Tw.BRANCH.VIEW_LOCATION_TERM);
+      root.on('click', '.fe-view-term', $.proxy(function () {
         Tw.CommonHelper.openUrlInApp(
           'http://m2.tworld.co.kr/normal.do?serviceId=S_PUSH0011&viewId=V_MEMB2005&stplTypCd=15',
           null,
@@ -154,14 +154,21 @@ Tw.CustomerAgentsearchNear.prototype = {
         );
       }, this));
 
-      root.on('click', '.bt-white2', $.proxy(function () {
+      root.on('click', '.fe-close', $.proxy(function () {
         shouldGoBack = true;
         this._popupService.close();
       }, this));
 
       // Request location agreement
-      root.on('click', '.bt-blue1', $.proxy(function () {
+      root.on('click', '.fe-agree', $.proxy(function () {
         this._popupService.close();
+        shouldGoBack = false;
+      }, this));
+    }, this),
+    $.proxy(function () {
+      if (shouldGoBack) {
+        this._historyService.goBack();
+      } else {
         var data = { twdLocUseAgreeYn: 'Y' };
 
         this._apiService.request(Tw.API_CMD.BFF_03_0022, data)
@@ -179,11 +186,6 @@ Tw.CustomerAgentsearchNear.prototype = {
           .fail(function (err) {
             Tw.Error(err.code, err.msg).pop();
           });
-      }, this));
-    }, this),
-    $.proxy(function () {
-      if (shouldGoBack) {
-        this._historyService.goBack();
       }
     }, this)
     );
