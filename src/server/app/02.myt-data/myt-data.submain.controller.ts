@@ -138,9 +138,13 @@ class MytDataSubmainController extends TwViewController {
             item['d_sub'] = item.data;
             item['unit'] = CURRENCY_UNIT.WON;
           } else {
+            let uSubTitle = item.opOrgNm || ETC_CENTER;
+            if ( item.opTypCd === '3' ) {
+              uSubTitle = MYT_DATA_CHARGE_TYPES.FIXED + ' | ' + uSubTitle;
+            }
             item['class'] = (item.opTypCd === '2' || item.opTypCd === '4') ? 'send' : 'recharge';
             item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.LIMIT_CHARGE;
-            item['u_sub'] = item.opTypCd === '3' ? MYT_DATA_CHARGE_TYPES.FIXED : '' + ' | ' + item.opOrgNm || ETC_CENTER;
+            item['u_sub'] = uSubTitle;
             item['d_title'] = FormatHelper.addComma(item.amt);
             item['d_sub'] = DateHelper.getShortDate(item.opDt);
             item['unit'] = CURRENCY_UNIT.WON;
