@@ -75,8 +75,8 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
           break;
         }else{
           setingInfo=this._popupData.userJoinInfo.svcNumList[i].serviceNumber1+'-';
-          setingInfo+=this._popupData.userJoinInfo.svcNumList[i].serviceNumber2+'-';
-          setingInfo+=this._popupData.userJoinInfo.svcNumList[i].serviceNumber3;
+          setingInfo+=this._popupData.userJoinInfo.svcNumList[i].serviceNumber2.substring(0,this._popupData.userJoinInfo.svcNumList[i].serviceNumber2.length-2)+'**-';
+          setingInfo+=this._popupData.userJoinInfo.svcNumList[i].serviceNumber3.substring(0,this._popupData.userJoinInfo.svcNumList[i].serviceNumber3.length-2)+'**-';
         }
       }
     }
@@ -207,8 +207,11 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     $(popEvt).on('click','.fe-btn_ok',$.proxy(this._detailAgreePopupEvt,this));
   },
   _detailAgreePopupEvt : function (){
+    var $agreeElement = this._$popupContainer.find('.'+this._nowShowAgreeType);
     this._historyService.goBack();
-    this._$popupContainer.find('.'+this._nowShowAgreeType).trigger('click');
+    if($agreeElement.attr('checked')!=='checked'){
+      $agreeElement.trigger('click');
+    }
   },
   _arrangeAgree : function(data){
     var targetObj;
@@ -260,7 +263,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
   },
   _goPlan : function () {
     this._popupService.closeAll();
-    this._historyService.goBack();
+    setTimeout($.proxy(this._historyService.goBack,this._historyService),0);
   },
   _tooltipInit : function (prodId) {
     var tooltipArr = [];

@@ -18,16 +18,18 @@ class ProductRoamingLookup extends TwViewController {
     if (FormatHelper.isEmpty(prodId)) {
       return this.error.render(res, {
         svcInfo: svcInfo,
-        title: PRODUCT_TYPE_NM.JOIN
+        title: PRODUCT_TYPE_NM.CALLPLAN
       });
     }
 
     this.apiService.request(API_CMD.BFF_10_0091, {}, {}, [prodId])
       .subscribe(( prodBffInfo ) => {
-        if (FormatHelper.isEmpty(prodBffInfo)) {
+        if (prodBffInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, {
             svcInfo: svcInfo,
-            title: PRODUCT_TYPE_NM.JOIN
+            title: PRODUCT_TYPE_NM.CALLPLAN,
+            code: prodBffInfo.code,
+            msg: prodBffInfo.msg
           });
         }
         res.render( 'roaming/product.roaming.lookup.html', {
