@@ -151,7 +151,7 @@ class ApiRouter {
   }
 
   private getUrlMeta(req: Request, res: Response, next: NextFunction) {
-    const url = this.loginService.getReferer(req);
+    const url = this.loginService.getPath(req);
     this.redisService.getData(REDIS_KEY.URL_META + url)
       .subscribe((resp) => {
         res.json(resp);

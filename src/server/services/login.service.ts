@@ -88,23 +88,23 @@ class LoginService {
   }
 
   private setXtractorCookie(svcInfo: any): any {
-    if (FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTLID]) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum)) {
+    if ( FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTLID]) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum) ) {
       this.response.cookie(COOKIE_KEY.XTLID, CryptoHelper.encrypt(svcInfo.svcMgmtNum, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB));
     }
 
-    if (!FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTLID]) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum)) {
+    if ( !FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTLID]) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum) ) {
       this.response.cookie(COOKIE_KEY.XTUID, CryptoHelper.encrypt(svcInfo.svcMgmtNum, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB));
     }
 
-    if (FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTLOGINID]) && !FormatHelper.isEmpty(svcInfo.userId)) {
+    if ( FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTLOGINID]) && !FormatHelper.isEmpty(svcInfo.userId) ) {
       this.response.cookie(COOKIE_KEY.XTLOGINID, CryptoHelper.encrypt(svcInfo.userId, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB));
     }
 
-    if (FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTLOGINTYPE]) && !FormatHelper.isEmpty(svcInfo.loginType)) {
+    if ( FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTLOGINTYPE]) && !FormatHelper.isEmpty(svcInfo.loginType) ) {
       this.response.cookie(COOKIE_KEY.XTLOGINTYPE, svcInfo.loginType === 'S' ? 'Z' : 'A');
     }
 
-    if (FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTSVCGR]) && !FormatHelper.isEmpty(svcInfo.svcGr)) {
+    if ( FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTSVCGR]) && !FormatHelper.isEmpty(svcInfo.svcGr) ) {
       this.response.cookie(COOKIE_KEY.XTSVCGR, svcInfo.svcGr);
     }
   }
@@ -265,13 +265,23 @@ class LoginService {
     return '';
   }
 
-  public getPath(): string {
-    if ( !FormatHelper.isEmpty(this.request) ) {
-      const baseUrl = this.request.baseUrl;
-      if ( baseUrl.indexOf('bypass') !== -1 || baseUrl.indexOf('api') !== -1 ||  baseUrl.indexOf('native') !== -1) {
-        this.getReferer();
+  public getPath(req?: any): string {
+    const request = req || this.request;
+    let path = this.getFullPath(request);
+    if ( path.indexOf('?') !== -1 ) {
+      path = path.split('?')[0];
+    }
+    return path;
+  }
+
+  public getFullPath(req?: any): string {
+    const request = req || this.request;
+    if ( !FormatHelper.isEmpty(request) ) {
+      const baseUrl = request.baseUrl;
+      if ( baseUrl.indexOf('bypass') !== -1 || baseUrl.indexOf('api') !== -1 || baseUrl.indexOf('native') !== -1 ) {
+        return this.getReferer(request);
       } else {
-        return baseUrl + this.request.path;
+        return baseUrl + request.url;
       }
     }
     return '';
@@ -281,15 +291,11 @@ class LoginService {
     const request = req || this.request;
     const referer = request.headers.referer;
     if ( !FormatHelper.isEmpty(referer) ) {
-      let path = (request.headers.referer).match(/(https?...)?([^\/]+)(.*)/)[3];
-      if ( path.indexOf('?') !== -1 ) {
-        path = path.split('?')[0];
-      }
+      const path = (request.headers.referer).match(/(https?...)?([^\/]+)(.*)/)[3];
       return path;
     } else {
       return '';
     }
-
   }
 
   public getDns(): string {
