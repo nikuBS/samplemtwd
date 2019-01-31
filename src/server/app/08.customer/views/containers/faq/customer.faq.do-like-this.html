@@ -109,7 +109,13 @@
 
         $('.fe-link-external').on('click', function (e) {
             var url = $(e.currentTarget).attr('href');
-            Tw.CommonHelper.openUrlExternal(url);
+            if (Tw.BrowserHelper.isApp()) {
+                Tw.CommonHelper.showDataCharge(function () {
+                    Tw.CommonHelper.openUrlExternal(url);
+                });
+            } else {
+                Tw.CommonHelper.openUrlExternal(url);
+            }
             return false;
         })
 
