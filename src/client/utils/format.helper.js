@@ -50,10 +50,10 @@ Tw.FormatHelper = (function () {
       return setDecimalPlace(number, 2);
     }
     if ( number > 0 && number < 100 && number % 1 !== 0 ) {
-      return removeZero(number.toFixed(2));
+      return parseFloat(number.toFixed(2)).toString();
     }
     if ( number >= 100 && number < 1000 && number % 1 !== 0 ) {
-      return removeZero(number.toFixed(1));
+      return parseFloat(number.toFixed(1)).toString();
     }
     if ( number > 1000 ) {
       return addComma(number.toFixed(0));
@@ -445,7 +445,7 @@ Tw.FormatHelper = (function () {
   var isPhoneNum = function (str) {
     var phoneRegExp = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
     return phoneRegExp.test(str);
-  }
+  };
 
   function dataURLtoFile(dataurl, filename) {
     var arr = dataurl.split(',');

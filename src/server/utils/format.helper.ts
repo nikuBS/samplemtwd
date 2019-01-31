@@ -93,7 +93,7 @@ class FormatHelper {
       return parseFloat(number.toFixed(1)).toString();
     }
     if ( number > 1000 ) {
-      return parseFloat(number.toFixed(0)).toString();
+      return FormatHelper.addComma(number.toFixed(0));
     }
 
     return number.toString();
