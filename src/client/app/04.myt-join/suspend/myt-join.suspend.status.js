@@ -64,9 +64,10 @@ Tw.MyTJoinSuspendStatus.prototype = {
     Tw.CommonHelper.endLoading('body');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var duration = Tw.DateHelper.getFullKoreanDate(params.fromDt);
-      var desc = Tw.MYT_JOIN_SUSPEND.SUCCESS_SUSPEND_MESSAGE.replace('{DURATION}', duration)
+      var desc = Tw.MYT_JOIN_SUSPEND.SUCCESS_RESUSPEND_MESSAGE.replace('{DURATION}', duration)
         .replace('{SVC_NUMBER}', this._svcInfo.svcNum);
-      this._popupService.afterRequestSuccess('/myt-join/submain', '/myt-join/submain', null, Tw.MYT_JOIN_SUSPEND.RESUSPEND, desc);
+      this._popupService.afterRequestSuccess('/myt-join/submain/suspend/status', '/myt-join/submain',
+        Tw.MYT_JOIN_SUSPEND.GO_TO_STATUS, Tw.MYT_JOIN_SUSPEND.RESUSPEND, desc);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -99,10 +100,8 @@ Tw.MyTJoinSuspendStatus.prototype = {
   _onSuccessRequestCancel: function (params, res) {
     Tw.CommonHelper.endLoading('body');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var duration = Tw.DateHelper.getFullKoreanDate(params.fromDt);
-      var desc = Tw.MYT_JOIN_SUSPEND.SUCCESS_SUSPEND_MESSAGE.replace('{DURATION}', duration)
-        .replace('{SVC_NUMBER}', this._svcInfo.svcNum);
-      this._popupService.afterRequestSuccess('/myt-join/submain', '/myt-join/submain', null, Tw.MYT_JOIN_SUSPEND.CANCEL_RESUSPEND, desc);
+      this._popupService.afterRequestSuccess('/myt-join/submain', '/myt-join/submain', null,
+        Tw.MYT_JOIN_SUSPEND.CANCEL_RESUSPEND);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -162,7 +161,6 @@ Tw.MyTJoinSuspendStatus.prototype = {
   ///// file uploading
   // Open the suspend upload file popup
   _onClickAttachFiles: function () {
-    // TODO reasonCd로 대체
     var popup = {};
     var count = 0;
 
