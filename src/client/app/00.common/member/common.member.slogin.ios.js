@@ -224,7 +224,6 @@ Tw.CommonMemberSloginIos.prototype = {
   _successRequestLogin: function (resp) {
     this._clearLoginError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      // Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
       this._historyService.goBack();
     } else if ( resp.code === this.SMS_ERROR.ATH2007 ) {
       this.$errorLoginCert.removeClass('none');

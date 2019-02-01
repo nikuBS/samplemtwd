@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response, Router } from 'express';
 import multer from 'multer';
-import { API_CMD, API_CODE } from '../../types/api-command.type';
+import { API_CMD, API_CODE, API_METHOD } from '../../types/api-command.type';
 import LoggerService from '../../services/logger.service';
 import ApiService from '../../services/api.service';
 import LoginService from '../../services/login.service';
@@ -17,8 +17,6 @@ import BrowserHelper from '../../utils/browser.helper';
 import { NODE_API_ERROR } from '../../types/string.type';
 import { COOKIE_KEY } from '../../types/common.type';
 import { CHANNEL_CODE, MENU_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../types/redis.type';
-import CryptoHelper from '../../utils/crypto.helper';
-import { XTRACTOR_KEY } from '../../types/config.type';
 import DateHelper from '../../utils/date.helper';
 
 class ApiRouter {
@@ -33,51 +31,103 @@ class ApiRouter {
     this.setApi();
   }
 
+  NODE_CMD = {
+    CHECK_HEALTH: { path: '/health', method: API_METHOD.GET, target: this.checkHealth },
+    GET_ENVIRONMENT: { path: '/environment', method: API_METHOD.GET, target: this.getEnvironment },
+    GET_DOMAIN: { path: '/domain', method: API_METHOD.GET, target: this.getDomain },
+    LOGIN_TID: { path: '/user/sessions', method: API_METHOD.POST, target: this.loginTid },                                      // BFF_03_0008
+    LOGOUT_TID: { path: '/logout-tid', method: API_METHOD.POST, target: this.logoutTid },
+    SESSION: { path: '/session', method: API_METHOD.POST, target: this.generateSession },
+    EASY_LOGIN_AOS: { path: '/user/login/android', method: API_METHOD.POST, target: this.easyLoginAos },                        // BFF_03_0017
+    EASY_LOGIN_IOS: { path: '/user/login/ios', method: API_METHOD.POST, target: this.easyLoginIos },                            // BFF_03_0018
+    CHANGE_SESSION: { path: '/common/selected-sessions', method: API_METHOD.PUT, target: this.changeSession },                  // BFF_01_0003
+    LOGIN_SVC_PASSWORD: { path: '/user/service-password-sessions', method: API_METHOD.POST, target: this.loginSvcPassword },    // BFF_03_0009
+    LOGIN_USER_LOCK: { path: '/user/locks', method: API_METHOD.DELETE, target: this.setUserLocks },                             // BFF_03_0010
+    CHANGE_SVC_PASSWORD: { path: '/:version/my-t/service-passwords', method: API_METHOD.PUT, target: this.changeSvcPassword },  // BFF_03_0016
+    CHANGE_LINE: { path: '/user/services', method: API_METHOD.PUT, target: this.changeLine },                                   // BFF_03_0005
+    CHANGE_NICKNAME: { path: '/user/nick-names', method: API_METHOD.PUT, target: this.changeNickname },                         // BFF_03_0006
+    UPDATE_SVC: { path: '/common/selected-sessions', method: API_METHOD.GET, target: this.updateSvcInfo},                       // BFF_01_0005
+
+    UPLOAD_FILE: { path: '/uploads', method: API_METHOD.POST, target: this.uploadFile },
+    GET_SVC_INFO: { path: '/svcInfo', method: API_METHOD.GET, target: this.getSvcInfo },
+    GET_ALL_SVC: { path: '/allSvcInfo', method: API_METHOD.GET, target: this.getAllSvcInfo },
+    GET_CHILD_INFO: { path: '/childInfo', method: API_METHOD.GET, target: this.getChildInfo },
+    UPDATE_NOTICE_TYPE: { path: '/update/notice-type', method: API_METHOD.PUT, target: this.updateNoticeType },
+
+    GET_VERSION: { path: '/app-version', method: API_METHOD.GET, target: this.getVersion },
+    GET_SPLASH: { path: '/splash', method: API_METHOD.GET, target: this.getSplash },
+    GET_APP_NOTICE: { path: '/app-notice', method: API_METHOD.GET, target: this.getAppNotice },
+
+    GET_URL_META: { path: '/urlMeta', method: API_METHOD.GET, target: this.getUrlMeta },
+    GET_MENU: { path: '/menu', method: API_METHOD.GET, target: this.getMenu },
+    GET_BANNER_ADMIN: { path: '/banner/admin', method: API_METHOD.GET, target: this.getBannerAdmin },
+    GET_BANNER_TOS: { path: '/banner/tos', method: API_METHOD.GET, target: this.getBannerTos },
+    GET_MASKING_METHOD: { path: '/masking-method', method: API_METHOD.GET, target: this.getMaskingMethod },
+    SET_MASKING_COMPLETE: { path: '/masking-complete', method: API_METHOD.POST, target: this.setMaskingComplete },
+    GET_HOME_WELCOME: { path: '/home/welcome', method: API_METHOD.GET, target: this.getHomeWelcome },
+    GET_HOME_NOTICE: { path: '/home/notice', method: API_METHOD.GET, target: this.getHomeNotice },
+    GET_HOME_HELP: { path: '/home/help', method: API_METHOD.GET, target: this.getHomeHelp },
+    GET_TOOLTIP: { path: '/tooltip', method: API_METHOD.GET, target: this.getTooltip },
+    GET_QUICK_MENU: { path: '/home/quick-menu', method: API_METHOD.GET, target: this.getQuickMenu },
+    GET_QUICK_MENU_DEFAULT: { path: '/home/quick-menu/default', method: API_METHOD.GET, target: this.getDefaultQuickMenu },
+    GET_PRODUCT_COMPARISON: { path: '/product/comparison', method: API_METHOD.GET, target: this.getProductComparison },
+    GET_PRODUCT_INFO: { path: '/product/info', method: API_METHOD.GET, target: this.getProductInfo }
+  };
+
   private setApi() {
-    this.router.get('/health', this.checkHealth.bind(this));
-    this.router.get('/environment', this.getEnvironment.bind(this));
-    this.router.get('/domain', this.getDomain.bind(this));
-    // this.router.post('/device', this.setDeviceInfo.bind(this));
-    this.router.post('/user/sessions', this.loginTid.bind(this));   // BFF_03_0008
-    this.router.post('/user/login/android', this.easyLoginAos.bind(this));    // BFF_03_0017
-    this.router.post('/user/login/ios', this.easyLoginIos.bind(this));        // BFF_03_0018
-    this.router.put('/common/selected-sessions', this.changeSession.bind(this));    // BFF_01_0003
-    this.router.post('/user/service-password-sessions', this.loginSvcPassword.bind(this));    // BFF_03_0009
-    this.router.delete('/user/locks', this.setUserLocks.bind(this));    // BFF_03_0010
-    this.router.put('/core-auth/service-passwords', this.changeSvcPassword.bind(this));    // BFF_03_0016
-    this.router.put('/user/services', this.changeLine.bind(this));    // BFF_03_0005
-    this.router.put('/user/nick-names', this.changeNickname.bind(this));    // BFF_03_0006
+    Object.keys(this.NODE_CMD).map((key) => {
+      const cmd = this.NODE_CMD[key];
+        switch ( cmd.method ) {
+          case API_METHOD.GET:
+            this.setGetApi(cmd);
+            break;
+          case API_METHOD.POST:
+            this.setPostApi(cmd);
+            break;
+          case API_METHOD.PUT:
+            this.setPutApi(cmd);
+            break;
+          case API_METHOD.DELETE:
+            this.setDeleteApi(cmd);
+            break;
+        }
+    });
+  }
 
-    this.router.get('/common/selected-sessions', this.updateSvcInfo.bind(this));    // BFF_01_0005
+  private setGetApi(cmd) {
+    this.router.get(cmd.path, (req, res, next) => {
+      res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.set('expires', '0');
+      res.set('pragma', 'no-cache');
+      cmd.target.call(this, req, res, next);
+    });
+  }
 
-    this.router.post('/logout-tid', this.logoutTid.bind(this));
-    this.router.post('/session', this.generateSession.bind(this));
+  private setPostApi(cmd) {
+    this.router.post(cmd.path, (req, res, next) => {
+      res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.set('expires', '0');
+      res.set('pragma', 'no-cache');
+      cmd.target.call(this, req, res, next);
+    });
+  }
 
-    this.router.post('/uploads', this.uploadFile.bind(this));
-    this.router.get('/svcInfo', this.getSvcInfo.bind(this));
-    this.router.get('/allSvcInfo', this.getAllSvcInfo.bind(this));
-    this.router.get('/childInfo', this.getChildInfo.bind(this));
-    // this.router.get('/serverSession', this.getServerSession.bind(this));
-    this.router.put('/update/notice-type', this.updateNoticeType.bind(this));
+  private setPutApi(cmd) {
+    this.router.put(cmd.path, (req, res, next) => {
+      res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.set('expires', '0');
+      res.set('pragma', 'no-cache');
+      cmd.target.call(this, req, res, next);
+    });
+  }
 
-    this.router.get('/app-version', this.getVersion.bind(this));
-    this.router.get('/splash', this.getSplash.bind(this));
-    this.router.get('/app-notice', this.getAppNotice.bind(this));
-    this.router.get('/urlMeta', this.getUrlMeta.bind(this));
-    this.router.get('/menu', this.getMenu.bind(this));
-    this.router.get('/banner/admin', this.getBannerAdmin.bind(this));
-    this.router.get('/banner/tos', this.getBannerTos.bind(this));
-    this.router.get('/home/welcome', this.getHomeWelcome.bind(this));
-    this.router.get('/home/notice', this.getHomeNotice.bind(this));
-    this.router.get('/home/help', this.getHomeHelp.bind(this));
-    this.router.get('/tooltip', this.getTooltip.bind(this));
-    this.router.get('/home/quick-menu', this.getQuickMenu.bind(this));
-    this.router.get('/home/quick-menu/default', this.getDefaultQuickMenu.bind(this));
-    this.router.get('/product/comparison', this.getProductComparison.bind(this));
-    this.router.get('/product/info', this.getProductInfo.bind(this));
-    this.router.get('/masking-method', this.getMaskingMethod.bind(this));
-
-    this.router.post('/masking-complete', this.setMaskingComplete.bind(this));
+  private setDeleteApi(cmd) {
+    this.router.delete(cmd.path, (req, res, next) => {
+      res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.set('expires', '0');
+      res.set('pragma', 'no-cache');
+      cmd.target.call(this, req, res, next);
+    });
   }
 
   private checkHealth(req: Request, res: Response, next: NextFunction) {
@@ -164,6 +214,7 @@ class ApiRouter {
 
     const svcInfo = this.loginService.getSvcInfo(req);
     const allSvcInfo = this.loginService.getAllSvcInfo(req);
+
     this.logger.info(this, '[get menu]', req.cookies[COOKIE_KEY.TWM], this.loginService.getSessionId(req), svcInfo);
     this.redisService.getData(REDIS_KEY.MENU + code)
       .subscribe((resp) => {
@@ -174,17 +225,23 @@ class ApiRouter {
             resp.result.userInfo.canSendFreeSMS = allSvcInfo.m.length > 0;
             resp.result.userInfo.pps = false;
             resp.result.userInfo.pps = allSvcInfo.m.reduce((memo, elem) => {
-              if (elem.svcAttrCd.includes('M2')) {
+              if ( elem.svcAttrCd.includes('M2') ) {
                 return true;
               }
               return memo;
             }, false);
-            if (svcInfo.totalSvcCnt !== '0' && svcInfo.expsSvcCnt === '0') {
+            if ( svcInfo.totalSvcCnt !== '0' && svcInfo.expsSvcCnt === '0' ) {
               resp.result.userInfo.canSendFreeSMS = true;
             }
           }
+          res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+          res.set('expires', '0');
+          res.set('pragma', 'no-cache');
           res.json(resp);
         } else {
+          res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+          res.set('expires', '0');
+          res.set('pragma', 'no-cache');
           res.json(resp);
         }
       });
