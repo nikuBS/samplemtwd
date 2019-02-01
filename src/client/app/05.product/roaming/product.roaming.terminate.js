@@ -121,7 +121,7 @@ Tw.ProductRoamingTerminate.prototype = {
   },
   _bindCompletePopupEvt : function(popuEvt){
     $(popuEvt).on('click','.btn-round2',$.proxy(this._goMyInfo,this));
-    $(popuEvt).on('click','.btn-floating',$.proxy(this._goPlan,this));
+    $(popuEvt).on('click','.btn-floating',$.proxy(this._popupService.closeAll,this._popupService));
   },
   _goMyInfo : function(){
     this._popupService.closeAllAndGo('/product/roaming/my-use');

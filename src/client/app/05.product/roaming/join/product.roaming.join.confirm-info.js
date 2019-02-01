@@ -74,9 +74,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         if(i>=2){
           break;
         }else{
-          setingInfo=this._popupData.userJoinInfo.svcNumList[i].serviceNumber1+'-';
-          setingInfo+=this._popupData.userJoinInfo.svcNumList[i].serviceNumber2.substring(0,this._popupData.userJoinInfo.svcNumList[i].serviceNumber2.length-2)+'**-';
-          setingInfo+=this._popupData.userJoinInfo.svcNumList[i].serviceNumber3.substring(0,this._popupData.userJoinInfo.svcNumList[i].serviceNumber3.length-2)+'**-';
+          setingInfo = Tw.FormatHelper.getFormattedPhoneNumber(this._popupData.userJoinInfo.svcNumList[i].serviceNumber1+this._popupData.userJoinInfo.svcNumList[i].serviceNumber2+this._popupData.userJoinInfo.svcNumList[i].serviceNumber3);
         }
       }
     }
@@ -241,7 +239,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
   },
   _bindCompletePopupEvt : function (popupObj) {
     $(popupObj).on('click','.btn-round2',$.proxy(this._goMyInfo,this));
-    $(popupObj).on('click','.btn-floating',$.proxy(this._goPlan,this));
+    $(popupObj).on('click','.btn-floating',$.proxy(this._popupService.closeAll,this._popupService));
   },
   _goBack : function(){
     this._popupService.close();
