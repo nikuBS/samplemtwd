@@ -163,7 +163,9 @@ class MytJoinInfoDiscount extends TwViewController {
         switch ( priceList[i].prodId ) {
 
           case 'NA00003677': // 요금약정할인24 (730)
-            const month = DateHelper.getDiffByUnit(priceList[i].agrmtDcEndDt, priceList[i].agrmtDcStaDt, 'month'); // + 1;
+            let month = DateHelper.getDiffByUnit(priceList[i].agrmtDcEndDt, priceList[i].agrmtDcStaDt, 'month'); // + 1;
+            // 날짜계산이 730일인데 23개월로 나오는 경우 혹은 365일인데 11개월로 나오는 경우 개월수를 강제로 조정
+            month = ([11, 23].indexOf(month) !== -1 ? month + 1 : month);
             priceList[i].typeStr = 'fee_type_A';
             priceList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_A.TIT_NM + '(' + month + TIME_UNIT.MONTH + ')';
             priceList[i].svcAgrmtDcObj = {
