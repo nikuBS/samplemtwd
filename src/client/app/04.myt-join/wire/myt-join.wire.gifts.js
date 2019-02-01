@@ -45,11 +45,8 @@ Tw.MyTJoinWireGifts.prototype = {
   _initListUi: function(initData) {
     // hasSKTWire:SK브로드밴드 가입여부(Y/N), resultValue:사은품 여부(Y/N)
     if('Y' === initData.hasSKTWire ){
-      if( !Tw.Environment.cdn ) {
-        $(window).on(Tw.INIT_COMPLETE, $.proxy(this._openSkbdPopup, this));
-      } else {
-        this._openSkbdPopup();
-      }
+      // sk브로드밴드인 경우 팝업 변경 (myt-join공통함수로 처리)
+      (new Tw.MyTJoinCommon()).openSkbdAlertOnInit(this._historyService);
       //return;
     }
 
@@ -67,25 +64,6 @@ Tw.MyTJoinWireGifts.prototype = {
       $('#divNoListBox').hide();
       this._printList(initData.giftProvideList);
     }
-  },
-
-  // sk브로드밴드 팝업
-  _openSkbdPopup: function(){
-    Tw.Logger.info('cdn:', Tw.Environment.cdn);
-    this._popupService.openOneBtTypeB(
-      Tw.MYT_JOIN.BROADBAND_ERROR.TITLE,
-      Tw.MYT_JOIN.BROADBAND_ERROR.CONTENTS,
-      [{
-        style_class: 'link',
-        txt: Tw.MYT_JOIN.BROADBAND_ERROR.LINK_TXT
-      }],
-      'type1',
-      $.proxy(function ($layer) {
-        $layer.on('click', '.link', $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.MYT_JOIN.BROADBAND_ERROR.LINK));
-      }, this), $.proxy(function () {
-        this._historyService.goBack();
-      }, this)
-    );
   },
 
   /**
