@@ -9,9 +9,6 @@ import LoginService from '../../services/login.service';
 class BypassRouter {
   public router: Router;
 
-  private apiService: ApiService = new ApiService();
-  private loginService: LoginService = new LoginService();
-
   constructor() {
     this.router = express.Router();
 
@@ -53,7 +50,9 @@ class BypassRouter {
   }
 
   private sendRequest(cmd: any, req: Request, res: Response, next: NextFunction) {
-    this.apiService.setCurrentReq(req, res);
+    const apiService = new ApiService();
+    const loginService = new LoginService();
+    apiService.setCurrentReq(req, res);
     // this.loginService.setCurrentReq(req, res);
 
     const params = cmd.method === API_METHOD.GET ? req.query : req.body;
@@ -63,14 +62,14 @@ class BypassRouter {
     const headers = req.headers;
     const version = req.params['version'];
 
-    this.apiService.request(cmd, params, headers, pathVar, version)
+    apiService.request(cmd, params, headers, pathVar, version)
       .subscribe((data) => {
         // TODO: This is unpretty. Need to revise for NON JSON Object response
         if ( data instanceof Buffer ) {
           return res.end(data);
         }
 
-        const svcInfo = this.loginService.getSvcInfo(req);
+        const svcInfo = loginService.getSvcInfo(req);
         if ( !FormatHelper.isEmpty(svcInfo) ) {
           // data.serverSession = this.loginService.getServerSession();
           data.loginType = svcInfo.loginType;

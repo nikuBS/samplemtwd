@@ -82,10 +82,7 @@ Tw.MainHome.prototype = {
     this.$hiddenPwdGuide = this.$container.find('#fe-bt-hidden-pwd-guide');
     this.$hiddenNotice = this.$container.find('#fe-bt-hidden-notice');
     this.$hiddenNewLine = this.$container.find('#fe-bt-hidden-new-line');
-    this.$hiddenLine.on('click', $.proxy(this._onHiddenEventLineRegister, this));
-    this.$hiddenPwdGuide.on('click', $.proxy(this._onHiddenEventPwdGuide, this));
     this.$hiddenNotice.on('click', $.proxy(this._onHiddenEventNotice, this));
-    this.$hiddenNewLine.on('click', $.proxy(this._onHiddenEventNewLine, this));
   },
   _bindEventStore: function () {
     this.$container.on('click', '.fe-home-external', $.proxy(this._onClickExternal, this));
@@ -236,8 +233,6 @@ Tw.MainHome.prototype = {
   _initEmrNotice: function (notice, isLogin) {
     if ( notice === 'true' ) {
       this._getHomeNotice(isLogin);
-    } else {
-      this._openLineResisterPopup(isLogin);
     }
   },
   _getHomeNotice: function (isLogin) {
@@ -247,8 +242,6 @@ Tw.MainHome.prototype = {
   _successHomeNotice: function (isLogin, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._openEmrNotice(resp.result.emrNotice, isLogin);
-    } else {
-      this._openLineResisterPopup(isLogin);
     }
   },
   _openEmrNotice: function (notice, isLogin) {
@@ -258,8 +251,6 @@ Tw.MainHome.prototype = {
     this._emrNotice = notice;
     if ( today > startTime && today < endTime && this._checkShowEmrNotice(notice, today) ) {
       this.$hiddenNotice.trigger('click', notice);
-    } else {
-      this._openLineResisterPopup(isLogin);
     }
   },
   _checkShowEmrNotice: function (notice, today) {
@@ -303,7 +294,6 @@ Tw.MainHome.prototype = {
     $popupContainer.on('click', '.fe-bt-never', $.proxy(this._confirmNoticeNever));
   },
   _onCloseNotice: function () {
-    this._openLineResisterPopup();
   },
   _confirmNoticeOneday: function () {
     var today = new Date();
@@ -325,63 +315,6 @@ Tw.MainHome.prototype = {
       time: time || ''
     };
     Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.HOME_EMR_NOTICE, JSON.stringify(store));
-  },
-  _openLineResisterPopup: function (isLogin) {
-    if ( isLogin ) {
-      var layerType = this.$container.data('layertype');
-      // var layerType = Tw.LOGIN_NOTICE_TYPE.CUSTOMER_PASSWORD;
-      Tw.Logger.info('[Home] layerType', layerType);
-      if ( !Tw.FormatHelper.isEmpty(layerType) ) {
-        this._updateNoticeType();
-        if ( layerType === Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER || layerType === Tw.LOGIN_NOTICE_TYPE.EXIST_CUSTOMER ) {
-          this.$hiddenLine.trigger('click', layerType);
-        } else if ( layerType === Tw.LOGIN_NOTICE_TYPE.CUSTOMER_PASSWORD ) {
-          this.$hiddenPwdGuide.trigger('click');
-        } else if ( layerType === Tw.LOGIN_NOTICE_TYPE.NEW_LINE ) {
-          this.$hiddenNewLine.trigger('click');
-        }
-      }
-    }
-
-  },
-  _updateNoticeType: function () {
-    this._apiService.request(Tw.NODE_CMD.UPDATE_NOTICE_TYPE, {})
-      .done($.proxy(this._successUpdateNoticeType, this));
-  },
-  _successUpdateNoticeType: function (resp) {
-
-  },
-  _closeNewLine: function () {
-    this._historyService.goLoad('/common/member/line');
-  },
-  _openCustomerPasswordGuide: function () {
-    this._popupService.open({
-      hbs: 'popup',
-      title: Tw.LOGIN_CUS_PW_GUIDE.TITLE,
-      title_type: 'sub',
-      cont_align: 'tl',
-      contents: Tw.LOGIN_CUS_PW_GUIDE.CONTENTS,
-      infocopy: [{
-        info_contents: Tw.LOGIN_CUS_PW_GUIDE.INFO,
-        bt_class: 'none'
-      }],
-      bt_b: [{
-        style_class: 'bt-red1 pos-right fe-go',
-        txt: Tw.LOGIN_CUS_PW_GUIDE.BUTTON
-      }]
-    }, $.proxy(this._confirmCustPwGuide, this), $.proxy(this._closeCustPwGuide, this));
-  },
-  _confirmCustPwGuide: function ($popupContainer) {
-    $popupContainer.on('click', '.fe-go', $.proxy(this._onClickGoPwGuide, this));
-  },
-  _closeCustPwGuide: function () {
-    if ( this._goCustPwd ) {
-      this._historyService.goLoad('/myt-join/custpassword');
-    }
-  },
-  _onClickGoPwGuide: function () {
-    this._goCustPwd = true;
-    this._popupService.close();
   },
   _cachedSmartCard: function () {
     for ( var i = 0; i < 16; i++ ) {
@@ -925,25 +858,9 @@ Tw.MainHome.prototype = {
   _onChangeQuickMenu: function () {
     this._getQuickMenu(true);
   },
-  _onHiddenEventLineRegister: function ($event, layerType) {
-    var lineRegisterLayer = new Tw.LineRegisterComponent();
-    setTimeout($.proxy(function () {
-      lineRegisterLayer.openRegisterLinePopup(layerType);
-    }, this), 1500);
-  },
-  _onHiddenEventPwdGuide: function () {
-    setTimeout($.proxy(function () {
-      this._openCustomerPasswordGuide();
-    }, this), 1500);
-  },
   _onHiddenEventNotice: function ($event, notice) {
     setTimeout($.proxy(function () {
       this._openEmrNoticePopup(notice);
-    }, this), 1500);
-  },
-  _onHiddenEventNewLine: function () {
-    setTimeout($.proxy(function () {
-      this._popupService.openAlert(Tw.ALERT_MSG_HOME.NEW_LINE, null, null, $.proxy(this._closeNewLine, this));
     }, this), 1500);
   }
 };

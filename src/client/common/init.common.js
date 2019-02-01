@@ -32,6 +32,7 @@ Tw.Init.prototype = {
   _initComponent: function () {
     new Tw.MenuComponent();
     new Tw.FooterComponent();
+    new Tw.LineLayerComponent();
   },
 
   _getEnvironment: function () {

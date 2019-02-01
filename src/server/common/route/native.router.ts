@@ -1,14 +1,12 @@
 import express from 'express';
 import { Router, Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE, API_METHOD } from '../../types/api-command.type';
-import ApiService from '../../services/api.service';
 import FormatHelper from '../../utils/format.helper';
-import LoginService from '../../services/login.service';
+import ApiService from '../../services/api.service';
 
 
 class NativeRouter {
   public router: Router;
-  private apiService: ApiService = new ApiService();
 
   constructor() {
     this.router = express.Router();
@@ -51,14 +49,15 @@ class NativeRouter {
   }
 
   private sendRequest(cmd: any, req: Request, res: Response, next: NextFunction) {
-    this.apiService.setCurrentReq(req, res);
+    const apiService = new ApiService();
+    apiService.setCurrentReq(req, res);
 
     const params = cmd.method === API_METHOD.GET ? req.query : req.body;
     const pathVar = this.getPathVariable(req.params);
     const headers = req.headers;
     const version = req.params['version'];
 
-    this.apiService.request(cmd, params, headers, pathVar, version)
+    apiService.request(cmd, params, headers, pathVar, version)
       .subscribe((data) => {
         res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
         res.set('expires', '0');
