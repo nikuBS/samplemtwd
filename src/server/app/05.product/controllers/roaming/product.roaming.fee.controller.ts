@@ -11,7 +11,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import ProductHelper from '../../../../utils/product.helper';
 
-export default class ProductRoaming extends TwViewController {
+export default class ProductRoamingFee extends TwViewController {
     constructor() {
         super();
     }
