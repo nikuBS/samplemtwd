@@ -33,11 +33,9 @@ Tw.MyTJoinWireModifyProduct = function (rootEl, resData) {
 Tw.MyTJoinWireModifyProduct.prototype = {
   _init: function () {
     if(this.resData.resDataInfo.coClCd === 'B'){
-      if( !Tw.Environment.init ) {
-        $(window).on(Tw.INIT_COMPLETE, $.proxy(this._openSkbdErrorAlert, this));
-      } else {
-        this._openSkbdErrorAlert();
-      }
+      // sk브로드밴드인 경우 팝업 변경 (myt-join공통함수로 처리)
+      (new Tw.MyTJoinCommon()).openSkbdAlertOnInit(this._history);
+
       return;
     }
     this._bindEvent();
@@ -65,22 +63,6 @@ Tw.MyTJoinWireModifyProduct.prototype = {
     this.$container.on('click', '#page-prev-step', $.proxy(this._closeCheck, this));
   },
 
-  _openSkbdErrorAlert: function () {
-    Tw.Popup.openOneBtTypeB(
-      Tw.MYT_JOIN.BROADBAND_ERROR.TITLE,
-      Tw.MYT_JOIN.BROADBAND_ERROR.CONTENTS,
-      [{
-        style_class: 'link',
-        txt: Tw.MYT_JOIN.BROADBAND_ERROR.LINK_TXT
-      }],
-      'type1',
-      $.proxy(function ($layer) {
-        $layer.on('click', '.link', $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.MYT_JOIN.BROADBAND_ERROR.LINK));
-      }, this), $.proxy(function () {
-        this._history.goBack();
-      }, this)
-    );
-  },
   //--------------------------------------------------------------------------[EVENT]
   _closeCheck: function(){
 
