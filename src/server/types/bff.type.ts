@@ -435,7 +435,7 @@ export const PREPAID_PAYMENT_TYPE = {
 
 export const PREPAID_PAYMENT_PAY_CD = {
   '1': '수납',
-  '2': '당일취소',
+  '5': '당일취소',
   '9': '당일취소'
 };
 
