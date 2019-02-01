@@ -19,6 +19,9 @@ Tw.MyTDataSubMain = function (params) {
 
 Tw.MyTDataSubMain.prototype = {
   _rendered: function () {
+    if ( this._historyService.isBack() ) {
+      this._historyService.reload();
+    }
     // 실시간잔여 상세
     // this.$remnantBtn = this.$container.find('[data-id=remnant-detail]');
     // 즉시충전버튼
@@ -112,7 +115,7 @@ Tw.MyTDataSubMain.prototype = {
         new Tw.BannerService(this.$container, type, list, 'M', $.proxy(this._successDrawBanner, this));
       }
       else {
-        this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, {menuId: this.data.pageInfo.menuId})
+        this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: this.data.pageInfo.menuId })
           .done($.proxy(this._successBanner, this, Tw.REDIS_BANNER_TYPE.ADMIN))
           .fail($.proxy(this._errorRequest, this));
       }
@@ -123,11 +126,11 @@ Tw.MyTDataSubMain.prototype = {
     }
   },
 
-  _checkBanner: function(result) {
+  _checkBanner: function (result) {
     return (result.bltnYn === 'N' || result.tosLnkgYn === 'Y');
   },
 
-  _successDrawBanner: function() {
+  _successDrawBanner: function () {
     this.$bannerList = this.$container.find('[data-id=banner-list]');
     Tw.CommonHelper.resetHeight(this.$bannerList);
   },
@@ -411,8 +414,8 @@ Tw.MyTDataSubMain.prototype = {
           var item = this.__parseRemnantData(arguments[idx].result);
           if ( item.total ) {
             data = {
-              data: item.totalLimit? Tw.COMMON_STRING.UNLIMIT : item.total.showRemained.data,
-              unit: item.totalLimit? '' : item.total.showRemained.unit
+              data: item.totalLimit ? Tw.COMMON_STRING.UNLIMIT : item.total.showRemained.data,
+              unit: item.totalLimit ? '' : item.total.showRemained.unit
             };
           }
           else if ( item.sdata.length > 0 ) {
@@ -464,7 +467,7 @@ Tw.MyTDataSubMain.prototype = {
   // },
 
   _onImmChargeDetail: function () {
-    switch (  this.data.svcInfo.svcAttrCd ) {
+    switch ( this.data.svcInfo.svcAttrCd ) {
       case 'M2':
         // PPS
         new Tw.PPSRechargeLayer(this.$container);
