@@ -137,6 +137,8 @@ class MyTFareBillGuide extends TwViewController {
           if ( thisMain._billpayInfo.coClCd === 'B' ) {
             thisMain.logger.info(thisMain, '[ SK브로드밴드 가입 ]', thisMain._billpayInfo.coClCd);
             thisMain._typeChk = 'A3';
+            // TODO: 사업자가 브로드밴드인 경우 이용요금을 조회하여 화면 노출 작업 필요 (SB 선행 작업 후)
+            // thisMain.combineCommonCircuit(res, svcInfo, allSvc, childInfo);
             thisMain.skbroadbandCircuit(res, svcInfo);
           } else {
             if ( thisMain._billpayInfo.paidAmtMonthSvcCnt === 1 ) {
@@ -273,7 +275,12 @@ class MyTFareBillGuide extends TwViewController {
     const p2 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0049, {}), 'p2'); // 통합청구등록회선조회
 
     Promise.all([p1, p2]).then(function(resArr) {
-
+      // TODO: 사업자가 브로드밴드인 경우 이용요금을 조회하여 화면 노출 작업 필요 (SB 선행 작업 후)
+      // if (thisMain._billpayInfo.coClCd === 'B') {
+      //   thisMain._billpayInfo = Object.assign({
+      //     coClCd: thisMain._billpayInfo.coClCd
+      //   }, resArr[0].result);
+      // }
       thisMain._billpayInfo = resArr[0].result;
       thisMain._intBillLineInfo = resArr[1].result;
 

@@ -60,13 +60,8 @@ class MyTFareSubmainController extends TwViewController {
               res.redirect('/myt-fare/submain');
             }
             if ( claim.coClCd === 'B' ) {
-              // 사업자 브로드밴드 경우
-              this.error.render(res, {
-                title: MYT_FARE_SUBMAIN_TITLE.MAIN,
-                code: API_MYT_ERROR.BIL0011,
-                msg: MYT_FARE_PAYMENT_ERROR.COM_CODE_B,
-                svcInfo: data.svcInfo
-              });
+              data.type = 'UF';
+              data.isBroadBand = true;
             }
           }
           // PPS, 휴대폰이 아닌 경우는 서비스명 노출

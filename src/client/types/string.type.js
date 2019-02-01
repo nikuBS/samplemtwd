@@ -145,7 +145,10 @@ Tw.SVC_CD = {
   T: 'IPTV'
 };
 
-Tw.FARE_CHART_LEGEND = ['청구', '할인'];
+Tw.FARE_CHART_LEGEND = {
+  USAGE: ['이용'],
+  DEFAULT: ['청구', '할인']
+};
 
 Tw.TOAST_TEXT = {
   MYT_FARE_HISTORY_AUTOPAYMENT_BLOCK: '차단 신청이 완료되었습니다.',
