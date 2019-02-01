@@ -138,5 +138,29 @@ Tw.MyTDataFamilyHistory.prototype = {
 
   _handleOpenChangePopup: function($parent, serial, changable, $layer) {
     this._historyChange = new Tw.MyTDataFamilyHistoryChange($layer, $parent, serial, changable);
+    $layer.on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
+  },
+
+  _openCancelPopup: function() {
+    this._popupService.openConfirmButton(
+      Tw.ALERT_CANCEL,
+      null,
+      $.proxy(this._goBack, this),
+      $.proxy(this._handleAfterClose, this),
+      Tw.BUTTON_LABEL.NO,
+      Tw.BUTTON_LABEL.YES
+    );
+  },
+
+  _goBack: function() {
+    this._popupService.close();
+    this._isClose = true;
+  },
+
+  _handleAfterClose: function() {
+    if (this._isClose) {
+      history.back();
+      this._isClose = false;
+    }
   }
 };
