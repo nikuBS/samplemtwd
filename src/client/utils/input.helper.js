@@ -89,6 +89,15 @@ Tw.InputHelper = (function () {
     $input.val(Tw.StringHelper.phoneStringToDash(tel));
   }
 
+  function isEnter(event) {
+    // input keyup event (only input number)
+    var key = event.which;
+    if ( key === 13 ) {
+      return true;
+    }
+    return false;
+  }
+
   return {
     inputNumberOnly: inputNumberOnly,
     inputNumberAndAsteriskOnly: inputNumberAndAsteriskOnly,
@@ -100,6 +109,7 @@ Tw.InputHelper = (function () {
     isDeleteKey: isDeleteKey,
     getByteCount: getByteCount,
     insertDashCellPhone: insertDashCellPhone,
-    inputNumberMaxLength: inputNumberMaxLength
+    inputNumberMaxLength: inputNumberMaxLength,
+    isEnter: isEnter
   };
 })();
