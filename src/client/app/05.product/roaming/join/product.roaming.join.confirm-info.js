@@ -74,9 +74,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         if(i>=2){
           break;
         }else{
-          setingInfo=this._popupData.userJoinInfo.svcNumList[i].serviceNumber1+'-';
-          setingInfo+=this._popupData.userJoinInfo.svcNumList[i].serviceNumber2.substring(0,this._popupData.userJoinInfo.svcNumList[i].serviceNumber2.length-2)+'**-';
-          setingInfo+=this._popupData.userJoinInfo.svcNumList[i].serviceNumber3.substring(0,this._popupData.userJoinInfo.svcNumList[i].serviceNumber3.length-2)+'**-';
+          setingInfo = Tw.FormatHelper.getFormattedPhoneNumber(this._popupData.userJoinInfo.svcNumList[i].serviceNumber1+this._popupData.userJoinInfo.svcNumList[i].serviceNumber2+this._popupData.userJoinInfo.svcNumList[i].serviceNumber3);
         }
       }
     }
