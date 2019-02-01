@@ -347,7 +347,8 @@ Tw.MytJoinCustpassword.prototype = {
     } else {
 
       // main(MS)으로 이동
-      this._historyService.goLoad('/myt-join/submain');
+      // this._historyService.goLoad('/myt-join/submain');
+      this._historyService.goBack();
 
     }
   }
