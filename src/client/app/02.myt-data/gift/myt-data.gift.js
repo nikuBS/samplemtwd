@@ -209,6 +209,7 @@ Tw.MyTDataGift.prototype = {
   _showAvailableProduct: function () {
     this.wrap_available_product.show();
     $('.fe-layer_available_product').scrollTop(0);
+    $('.fe-layer_available_product').css('position', 'fixed');
   },
 
   _hideAvailableProduct: function () {
