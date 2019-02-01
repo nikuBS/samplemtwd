@@ -3,7 +3,8 @@ Tw.COMMON_STRING = {
   AGREE: '동의',
   DISAGREE: '비동의',
   UNLIMIT: '무제한',
-  TERM: '이용약관'
+  TERM: '이용약관',
+  STANDARD: '기본제공'
 };
 
 Tw.DATA_UNIT = {

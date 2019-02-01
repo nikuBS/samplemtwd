@@ -426,15 +426,25 @@ Tw.MyTDataSubMain.prototype = {
           }
           else if ( item.voice.length > 0 ) {
             data = {
-              data: item.voice[0].showRemained.hours + '시간' + item.voice[0].showRemained.min + '분',
+              data: item.voice[0].showRemained.hours + Tw.VOICE_UNIT.HOURS + item.voice[0].showRemained.min + Tw.VOICE_UNIT.MIN,
               unit: ''
             };
           }
           else if ( item.sms.length > 0 ) {
-            data = {
-              data: item.sms[0].isUnlimit ? item.sms[0].total : item.sms[0].showRemained,
-              unit: Tw.SMS_UNIT
-            };
+            var smsTotalData = item.sms[0].total;
+            if (item.sms[0].isUnlimit && smsTotalData) {
+              var isStandard = smsTotalData === Tw.COMMON_STRING.STANDARD;
+              data = {
+                data: isStandard? Tw.COMMON_STRING.UNLIMIT : smsTotalData,
+                unit: isStandard ? '' : Tw.SMS_UNIT
+              };
+            }
+            else {
+              data = {
+                data: item.sms[0].showRemained,
+                unit: Tw.SMS_UNIT
+              };
+            }
           }
         }
         else {
