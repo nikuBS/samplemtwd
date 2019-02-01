@@ -102,7 +102,7 @@
                                 </dd>
                             </dl>
                         </li>
-
+                        <% if (usedYn.isPassword) { %>
                         <li>
                             <dl>
                                 <dt>결제 비밀번호<button aria-haspopup="true"><span class="blind">정보보기</span></button></dt>
@@ -120,6 +120,7 @@
                                 <% } %>
                             </dl>
                         </li>
+                        <% } %>
                     </ul>
                 </div>
                 <!--// .cont-box -->
