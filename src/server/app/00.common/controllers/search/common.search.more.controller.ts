@@ -17,7 +17,6 @@ class CommonSearchMore extends TwViewController {
     super();
   }
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-
     const query =  encodeURI(req.query.keyword) || '';
     const collection = req.query.category || null;
     const step = req.query.step || 1;
@@ -34,8 +33,7 @@ class CommonSearchMore extends TwViewController {
 
     if (FormatHelper.isEmpty(collection)) {
       return this.error.render(res, {
-        svcInfo: svcInfo,
-        title: PRODUCT_TYPE_NM.JOIN
+        svcInfo: svcInfo
       });
     }
 
@@ -47,7 +45,8 @@ class CommonSearchMore extends TwViewController {
       if ((searchResult.code !== 0)) {
         return this.error.render(res, {
           svcInfo: svcInfo,
-          title: PRODUCT_TYPE_NM.JOIN
+          code: searchResult.code,
+          msg: searchResult.msg,
         });
       }
       if ( searchResult.result.totalcount === 0 ) {

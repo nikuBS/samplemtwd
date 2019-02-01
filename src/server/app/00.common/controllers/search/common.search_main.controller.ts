@@ -24,7 +24,7 @@ class CommonSearchMain extends TwViewController {
       this.apiService.request(API_CMD.BFF_12_0010, { mblOsTypCd : nowOsType }, {}),
       this.apiService.request(API_CMD.BFF_08_0072, { mblOsTypCd : nowOsType }, {})
     ).subscribe(([ popularKeyword, recommendKeyword , smartKeyword]) => {
-      if (popularKeyword.code !== API_CODE.CODE_00 || recommendKeyword.code !== API_CODE.CODE_00) {
+      if (popularKeyword.code !== 0 || recommendKeyword.code !== API_CODE.CODE_00) {
         return this.error.render(res, {
           svcInfo: svcInfo,
         });

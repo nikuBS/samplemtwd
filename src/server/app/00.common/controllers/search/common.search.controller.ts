@@ -33,18 +33,6 @@ class CommonSearch extends TwViewController {
       requestObj = { query , collection , researchQuery , researchCd};
     }
 
-    function showResult(searchResult: any, relatedKeyword: any): void {
-      res.render('search/common.search.html', {
-        svcInfo : svcInfo,
-        searchInfo : searchResult.result,
-        keyword : searchResult.result.query,
-        relatedKeyword : relatedKeyword,
-        inKeyword : searchResult.result.researchQuery,
-        step : step
-      });
-    }
-
-
     Observable.combineLatest(
       this.apiService.request( BrowserHelper.isApp(req) ? API_CMD.SEARCH_APP : API_CMD.SEARCH_WEB, requestObj, {}),
       this.apiService.request(API_CMD.RELATED_KEYWORD, requestObj, {})
@@ -55,6 +43,68 @@ class CommonSearch extends TwViewController {
           svcInfo: svcInfo,
           title: PRODUCT_TYPE_NM.JOIN
         });
+      }
+      if (searchResult.result.search[0].immediate.data.length <= 0 || svcInfo === null) {
+        searchResult.result.search[0].immediate.data = [];
+
+      } else {
+        searchResult.result.search[0].immediate.data[0].mainData = StringHelper.phoneStringToDash(svcInfo.svcNum);
+        switch (Number(searchResult.result.search[0].immediate.data[0].DOCID)) {
+          case 2:
+            this.apiService.request(API_CMD.BFF_05_0001, {}, {}).
+            subscribe((resultData) => {
+              if (resultData.code !== API_CODE.CODE_00) {
+                searchResult.result.search[0].immediate.data = [];
+                searchResult.result.search[0].immediate.count = 0;
+                searchResult.result.totalcount = Number(searchResult.result.totalcount) - 1;
+              } else {
+                const remainData = new MyTDataHotData().parseCellPhoneUsageData(resultData.result, svcInfo);
+                searchResult.result.search[0].immediate.data[0].subData = remainData.gnrlData[0].showRemained;
+              }
+            });
+            break;
+          case 3:
+            this.apiService.request(API_CMD.BFF_05_0047, {}, {}).
+            subscribe((resultData) => {
+              if (resultData.code !== API_CODE.CODE_00) {
+                searchResult.result.search[0].immediate.data = [];
+                searchResult.result.search[0].immediate.count = 0;
+                searchResult.result.totalcount = Number(searchResult.result.totalcount) - 1;
+              } else {
+                searchResult.result.search[0].immediate.data[0].subData = FormatHelper.addComma(resultData.result.useAmtTot);
+              }
+            });
+            break;
+          case 4:
+            this.apiService.request(API_CMD.BFF_05_0079, { payMethod : 'ALL'}, {}).
+            subscribe((resultData) => {
+              if (resultData.code !== API_CODE.CODE_00) {
+                searchResult.result.search[0].immediate.data = [];
+                searchResult.result.search[0].immediate.count = 0;
+                searchResult.result.totalcount = Number(searchResult.result.totalcount) - 1;
+              } else {
+                searchResult.result.search[0].immediate.data[0].subData = FormatHelper.addComma(resultData.result.totalSumPrice);
+              }
+            });
+            break;
+          case 5:
+            this.apiService.request(API_CMD.BFF_11_0001, {}, {}).
+            subscribe((resultData) => {
+              if (resultData.code !== API_CODE.CODE_00) {
+                searchResult.result.search[0].immediate.data = [];
+                searchResult.result.search[0].immediate.count = 0;
+                searchResult.result.totalcount = Number(searchResult.result.totalcount) - 1;
+              } else {
+                searchResult.result.search[0].immediate.data[0].mainData = resultData.result.mbrGrCd;
+                searchResult.result.search[0].immediate.data[0].subData = FormatHelper.addComma(resultData.result.mbrUsedAmt);
+                searchResult.result.search[0].immediate.data[0].barcode = resultData.result.mbrCardNum;
+              }
+            });
+            break;
+          default:
+            searchResult.result.search[0].immediate.data[0].subData = svcInfo.prodNm;
+            break;
+        }
       }
       if ( searchResult.result.totalcount === 0 ) {
         Observable.combineLatest(
@@ -80,64 +130,15 @@ class CommonSearch extends TwViewController {
             step : step
           });
         });
-      } else if (searchResult.result.search[0].immediate.data.length <= 0 || svcInfo === null) {
-        searchResult.result.search[0].immediate.data = [];
-        showResult(searchResult, relatedKeyword);
       } else {
-        searchResult.result.search[0].immediate.data[0].mainData = StringHelper.phoneStringToDash(svcInfo.svcNum);
-        switch (Number(searchResult.result.search[0].immediate.data[0].DOCID)) {
-          case 2:
-            this.apiService.request(API_CMD.BFF_05_0001, {}, {}).
-            subscribe((resultData) => {
-              if (resultData.code !== API_CODE.CODE_00) {
-                searchResult.result.search[0].immediate.data = [];
-              } else {
-                const remainData = new MyTDataHotData().parseCellPhoneUsageData(resultData.result, svcInfo);
-                searchResult.result.search[0].immediate.data[0].subData = remainData.gnrlData[0].showRemained;
-              }
-              showResult(searchResult, relatedKeyword);
-            });
-            break;
-          case 3:
-            this.apiService.request(API_CMD.BFF_05_0047, {}, {}).
-            subscribe((resultData) => {
-              if (resultData.code !== API_CODE.CODE_00) {
-                searchResult.result.search[0].immediate.data = [];
-              } else {
-                searchResult.result.search[0].immediate.data[0].subData = FormatHelper.addComma(resultData.result.useAmtTot);
-              }
-              showResult(searchResult, relatedKeyword);
-            });
-            break;
-          case 4:
-            this.apiService.request(API_CMD.BFF_05_0079, { payMethod : 'ALL'}, {}).
-            subscribe((resultData) => {
-              if (resultData.code !== API_CODE.CODE_00) {
-                searchResult.result.search[0].immediate.data = [];
-              } else {
-                searchResult.result.search[0].immediate.data[0].subData = FormatHelper.addComma(resultData.result.totalSumPrice);
-              }
-              showResult(searchResult, relatedKeyword);
-            });
-            break;
-          case 5:
-            this.apiService.request(API_CMD.BFF_11_0001, {}, {}).
-            subscribe((resultData) => {
-              if (resultData.code !== API_CODE.CODE_00) {
-                searchResult.result.search[0].immediate.data = [];
-              } else {
-                searchResult.result.search[0].immediate.data[0].mainData = resultData.result.mbrGrCd;
-                searchResult.result.search[0].immediate.data[0].subData = FormatHelper.addComma(resultData.result.mbrUsedAmt);
-                searchResult.result.search[0].immediate.data[0].barcode = resultData.result.mbrCardNum;
-              }
-              showResult(searchResult, relatedKeyword);
-            });
-            break;
-          default:
-            searchResult.result.search[0].immediate.data[0].subData = svcInfo.prodNm;
-            showResult(searchResult, relatedKeyword);
-            break;
-        }
+        res.render('search/common.search.html', {
+          svcInfo : svcInfo,
+          searchInfo : searchResult.result,
+          keyword : searchResult.result.query,
+          relatedKeyword : relatedKeyword,
+          inKeyword : searchResult.result.researchQuery,
+          step : step
+        });
       }
     });
 

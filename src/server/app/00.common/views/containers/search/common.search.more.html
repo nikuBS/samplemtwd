@@ -3,7 +3,10 @@
 * Author: Hyunkuk Lee (max5500@pineone.com)
 * Date: 2018.12.11
 %>
-
+<%
+    var moreViewUrl = '/common/search/more?keyword='+keyword+'&category='+accessQuery.category;
+    var inResultViewUrl = '/common/search/in_result?keyword='+keyword+'&category='+accessQuery.category;
+%>
 <% include ../../components/start.component.html %>
 
 <!-- body -->
@@ -60,7 +63,7 @@
             <div class="connection-searchword">
                 <dl class="searchword-list">
                     <dt class="tit">연관</dt>
-                    <% for(var i=0;i<relatedKeyword.result.Word.length||i<=5;i++){ %>
+                    <% for(var i=0;i<relatedKeyword.result.Word.length&&i<=4;i++){ %>
                     <dd><a data-param="<%= relatedKeyword.result.Word[i] %>" class="link search-element"><%= relatedKeyword.result.Word[i] %></a></dd>
                     <% } %>
                 </dl>
@@ -363,7 +366,7 @@
                         <button type="button" disabled class="prev-btn" >이전</button>
                     <% }else{ %>
                         <button type="button" class="prev-btn page-change"
-                        value="/common/search/more?keyword=<%= keyword %>&category=<%= accessQuery.category %>&page=<%= Number(pageNum)-1 %><%= accessQuery.arrange?'&arrange='+accessQuery.arrange:''%><%= accessQuery.in_keyword?'&in_keyword='+accessQuery.in_keyword:''%>&step=<%= Number(step)+1 %>">
+                        value="<%= accessQuery.in_keyword?inResultViewUrl+'&in_keyword='+accessQuery.in_keyword:moreViewUrl%>&page=<%= Number(pageNum)-1 %><%= accessQuery.arrange?'&arrange='+accessQuery.arrange:''%>&step=<%= Number(step)+1 %>">
                             이전
                         </button>
                     <!-- category=direct&keyword=갤럭시&arrange=P&pageNum-->
@@ -378,12 +381,12 @@
                         <% for(var i=1;i<=parseInt(searchInfo.totalcount/20)+(searchInfo.totalcount%20>0?1:0);i++){ %>
                             <% if(i==pageNum){ %>
                                 <option style="color: #3c3c3c" selected
-                                value="/common/search/more?keyword=<%= keyword %>&category=<%= accessQuery.category %>&page=<%= i %><%= accessQuery.arrange?'&arrange='+accessQuery.arrange:''%><%= accessQuery.in_keyword?'&in_keyword='+accessQuery.in_keyword:''%>&step=<%= Number(step)+1 %>">
+                                    value="<%= accessQuery.in_keyword?inResultViewUrl+'&in_keyword='+accessQuery.in_keyword:moreViewUrl%>&page=<%= i %><%= accessQuery.arrange?'&arrange='+accessQuery.arrange:''%>&step=<%= Number(step)+1 %>">
                                     <%= i %>
                                 </option>
                             <% }else{ %>
                                 <option style="color: #3c3c3c"
-                                value="/common/search/more?keyword=<%= keyword %>&category=<%= accessQuery.category %>&page=<%= i %><%= accessQuery.arrange?'&arrange='+accessQuery.arrange:''%><%= accessQuery.in_keyword?'&in_keyword='+accessQuery.in_keyword:''%>&step=<%= Number(step)+1 %>">
+                                    value="<%= accessQuery.in_keyword?inResultViewUrl+'&in_keyword='+accessQuery.in_keyword:moreViewUrl%>&page=<%= i %><%= accessQuery.arrange?'&arrange='+accessQuery.arrange:''%>&step=<%= Number(step)+1 %>">
                                     <%= i %>
                                 </option>
                             <% } %>
@@ -395,7 +398,7 @@
                         <button type="button" disabled class="next-btn">다음</button>
                     <% }else{ %>
                         <button type="button" class="next-btn page-change"
-                        value="/common/search/more?keyword=<%= keyword %>&category=<%= accessQuery.category %>&page=<%= Number(pageNum)+1 %><%= accessQuery.arrange?'&arrange='+accessQuery.arrange:''%><%= accessQuery.in_keyword?'&in_keyword='+accessQuery.in_keyword:''%>&step=<%= Number(step)+1 %>">
+                                value="<%= accessQuery.in_keyword?inResultViewUrl+'&in_keyword='+accessQuery.in_keyword:moreViewUrl%>&page=<%= Number(pageNum)+1 %><%= accessQuery.arrange?'&arrange='+accessQuery.arrange:''%>&step=<%= Number(step)+1 %>">>
                             다음
                         </button>
                     <% } %>

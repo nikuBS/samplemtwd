@@ -125,10 +125,10 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
     changeTarget.removeClass('placeholder');
     changeTarget.attr('data-number',dateValue.replace(/\.|\ /g, ''));
     changeTarget.attr('data-idx',$selectedTarget.parent().index());
-    this._validateDateValue();
+    this._validateDateValue(eventObj.currentTarget.dataset.name);
     this._popupService.close();
   },
-  _validateDateValue : function(){
+  _validateDateValue : function(targetId){
     var startDateElement = this.$container.find('#start_date');
     var startTimeElement = this.$container.find('#start_time');
     var startDate = startDateElement.attr('data-number');
@@ -146,9 +146,13 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
       this.$container.find('.bt-fixed-area button').removeAttr('disabled');
       var expireDate = parseInt(this._expireDate,10) + parseInt(startDateElement.attr('data-idx'),10);
       var endDate = Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,expireDate,'days',this._showDateFormat,this._dateFormat);
-      endDateElement.attr('data-number',Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,expireDate,'days',this._dateFormat,this._dateFormat));
-      endDateElement.text(endDate);
-      endTimeElement.text(startTime);
+      if(targetId==='start_date'){
+        endDateElement.attr('data-number',Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,expireDate,'days',this._dateFormat,this._dateFormat));
+        endDateElement.text(endDate);
+      }else{
+        endTimeElement.text(startTime);
+        endTimeElement.attr('data-number',startTime);
+      }
     }else{
       this.$container.find('.bt-fixed-area button').attr('disabled','disabled');
       endDateElement.text(Tw.POPUP_TITLE.SELECT);
