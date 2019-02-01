@@ -26,7 +26,7 @@ import MyTFareInfoBillTaxSendEmail from './controllers/info/myt-fare.info.bill-t
 import MyTFareInfoOverpayAccount from './controllers/info/myt-fare.info.overpay-account.controller';
 import MyTFareInfoOverpayRefund from './controllers/info/myt-fare.info.overpay-refund.controller';
 import MyTFareInfoOverpayRefundDetail from './controllers/info/myt-fare.info.overpay-refund.detail.controller';
-// import MyTFareInfoCancelDraw from './controllers/info/myt-fare.info.cancel-draw.controller';
+import MyTFareInfoCancelDraw from './controllers/info/myt-fare.info.cancel-draw.controller';
 import MyTFareBillAccount from './controllers/bill/myt-fare.bill.account.controller';
 import MyTFareBillCard from './controllers/bill/myt-fare.bill.card.controller';
 import MyTFareBillPoint from './controllers/bill/myt-fare.bill.point.controller';
@@ -108,7 +108,7 @@ class MytFareRouter extends TwRouter {
     this.controllers.push({ url: '/info/overpay-account', controller: MyTFareInfoOverpayAccount });
     this.controllers.push({ url: '/info/overpay-refund', controller: MyTFareInfoOverpayRefund });
     this.controllers.push({ url: '/info/overpay-refund/detail', controller: MyTFareInfoOverpayRefundDetail });
-    // this.controllers.push({ url: '/info/cancel-draw', controller: MyTFareInfoCancelDraw });
+    this.controllers.push({ url: '/info/cancel-draw', controller: MyTFareInfoCancelDraw });
 
     // new url
     this.controllers.push({ url: '/submain(/usagefee)?', controller: MyTFareSubMain });
