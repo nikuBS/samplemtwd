@@ -221,14 +221,14 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     return this._validation.showAndHideErrorMsg($target, this._validation.checkEmpty($target.val()), message);
   },
   _getCardCode: function () {
-    this._apiService.request(Tw.API_CMD.BFF_07_0024, { cardNum: $.trim(this.$cardNumber.val()).substr(0, 6) })
+    this._apiService.request(Tw.API_CMD.BFF_07_0068, { cardNum: $.trim(this.$cardNumber.val()).substr(0, 6) })
       .done($.proxy(this._getSuccess, this))
       .fail($.proxy(this._getFail, this));
   },
   _getSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      var cardCode = res.result.prchsCardCd;
-      var cardName = res.result.prchsCardName;
+      var cardCode = res.result.bankCardCoCd;
+      var cardName = res.result.cardNm;
 
       this.$cardNumber.attr({ 'data-code': cardCode, 'data-name': cardName });
       this.$cardNumber.parent().siblings('.fe-error-msg').hide();
