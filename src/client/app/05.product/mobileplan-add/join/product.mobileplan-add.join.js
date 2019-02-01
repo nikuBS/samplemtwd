@@ -9,11 +9,16 @@ Tw.ProductMobileplanAddJoin = function(rootEl, prodId, confirmOptions) {
   this.$container = rootEl;
 
   this._historyService = new Tw.HistoryService();
+  this._historyService.init();
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
 
   this._prodId = prodId;
   this._confirmOptions = JSON.parse(window.unescape(confirmOptions));
+
+  if (this._historyService.isBack()) {
+    this._historyService.goBack();
+  }
 
   this._init();
 };

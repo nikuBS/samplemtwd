@@ -9,6 +9,7 @@ Tw.ProductMobileplanAddJoinPayment = function(rootEl, prodId, displayId, confirm
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
+  this._historyService.init();
 
   this._prodId = prodId;
   this._displayId = displayId;
@@ -19,6 +20,10 @@ Tw.ProductMobileplanAddJoinPayment = function(rootEl, prodId, displayId, confirm
   this._isFirstSend = false;
   this._nextEnableSendTime = null;
   this._validatedNumber = null;
+
+  if (this._historyService.isBack()) {
+    this._historyService.goBack();
+  }
 
   this.$container = rootEl;
   this._cachedElement();
