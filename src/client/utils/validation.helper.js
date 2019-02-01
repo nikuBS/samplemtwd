@@ -187,7 +187,7 @@ Tw.ValidationHelper = (function () {
   /* 카드 유효기간 체크하는 function */
   function checkYear($targetY) {
     var value = $targetY.val();
-    if (value.length < 4 || value < new Date().getFullYear() || (value > new Date().getFullYear() + 100)) {
+    if (value.length < 4 || value < new Date().getFullYear()) {
       return false;
     }
     return true;
