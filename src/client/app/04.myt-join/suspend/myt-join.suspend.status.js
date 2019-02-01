@@ -63,7 +63,8 @@ Tw.MyTJoinSuspendStatus.prototype = {
   _onSuccessResuspend: function (params, res) {
     Tw.CommonHelper.endLoading('body');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var duration = Tw.DateHelper.getFullKoreanDate(params.fromDt);
+      var duration = Tw.DateHelper.getFullKoreanDate(params.fromDt) + ' - ' +
+          Tw.DateHelper.getFullKoreanDate(this._params.status.period.to.replace(/\./g, ''));
       var desc = Tw.MYT_JOIN_SUSPEND.SUCCESS_RESUSPEND_MESSAGE.replace('{DURATION}', duration)
         .replace('{SVC_NUMBER}', this._svcInfo.svcNum);
       this._popupService.afterRequestSuccess('/myt-join/submain/suspend/status', '/myt-join/submain',
