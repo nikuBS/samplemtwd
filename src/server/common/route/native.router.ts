@@ -60,6 +60,9 @@ class NativeRouter {
 
     this.apiService.request(cmd, params, headers, pathVar, version)
       .subscribe((data) => {
+        res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+        res.set('expires', '0');
+        res.set('pragma', 'no-cache');
         return res.json(data);
       });
   }

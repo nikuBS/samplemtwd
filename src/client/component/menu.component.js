@@ -183,6 +183,7 @@ Tw.MenuComponent.prototype = {
               this.tideUpMenuInfo(res.result.frontMenus, res.result.userInfo)
             );
             this._isMenuSet = true;
+            Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.CHANGE_LOGIN_STATUS, 'N');
           }
         }, this));
         /*

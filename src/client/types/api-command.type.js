@@ -507,7 +507,6 @@ Tw.API_CMD = {
 Tw.NODE_CMD = {
   GET_ENVIRONMENT: { path: '/environment', method: Tw.API_METHOD.GET },
   GET_DOMAIN: { path: '/domain', method: Tw.API_METHOD.GET },
-  SET_DEVICE: { path: '/device', method: Tw.API_METHOD.POST },
   LOGIN_TID: { path: '/user/sessions', method: Tw.API_METHOD.POST },
   LOGOUT_TID: { path: '/logout-tid', method: Tw.API_METHOD.POST },
   SESSION: { path: '/session', method: Tw.API_METHOD.POST },
@@ -522,7 +521,6 @@ Tw.NODE_CMD = {
   UPDATE_SVC: { path: '/common/selected-sessions', method: Tw.API_METHOD.GET },
 
   UPLOAD_FILE: { path: '/uploads', method: Tw.API_METHOD.POST },
-  GET_SERVER_SESSION: { path: '/serverSession', method: Tw.API_METHOD.GET },
   GET_SVC_INFO: { path: '/svcInfo', method: Tw.API_METHOD.GET },
   GET_ALL_SVC: { path: '/allSvcInfo', method: Tw.API_METHOD.GET },
   GET_CHILD_INFO: { path: '/childInfo', method: Tw.API_METHOD.GET },

@@ -57,7 +57,6 @@ Tw.CommonMemberSloginAos.prototype = {
   },
   _successLogin: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      // Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
       this._historyService.goBack();
     } else if ( resp.code === this.ERROR_CODE.ATH1004 ) {
       this.$errorTxt.removeClass('none');
