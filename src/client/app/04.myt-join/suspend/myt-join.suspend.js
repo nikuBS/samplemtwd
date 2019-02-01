@@ -23,7 +23,7 @@ Tw.MyTJoinSuspend = function (rootEl, params) {
 
 Tw.MyTJoinSuspend.prototype = {
   _cachedElement: function () {
-    this.$tabLinker = this.$container.find('.tab-linker a');
+    this.$tabLinker = this.$container.find('.tab-linker button');
     this.$tabTemp = this.$container.find('[data-id="fe-tab-temporary"]');
     this.$tabLong = this.$container.find('[data-id="fe-tab-long-term"]');
   },
@@ -47,7 +47,12 @@ Tw.MyTJoinSuspend.prototype = {
     this.$tabLinker.filter('[href="' + type + '"]').click();
   },
 
-  _onTabChanged: function () {
+  _onTabChanged: function (e) {
+    var hash = e.target.getAttribute('href');
+    if ( this._params.suspend.status && hash === this.TYPE.TEMPORARY ) {
+      e.stopPropagation();
+      return false;
+    }
     this._setActiveTab(hash);
   },
 
