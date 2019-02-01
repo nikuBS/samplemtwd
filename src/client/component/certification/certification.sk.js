@@ -39,8 +39,9 @@ Tw.CertificationSk.prototype = {
     ATH2007: 'ATH2007',     // 입력하신 인증번호가 맞지 않습니다.
     ATH2008: 'ATH2008',     // 인증번호를 입력할 수 있는 시간이 초과하였습니다.
     ATH1221: 'ATH1221',     // 인증번호 유효시간이 경과되었습니다.
+    ATH2000: 'ATH2000',
     ATH2011: 'ATH2011',     //
-    ATH2014: 'ATH2014'
+    ATH2014: 'ATH2014',
   },
   checkSmsEnable: function (svcInfo, opMethods, optMethods, methodCnt, callback) {
     if ( Tw.FormatHelper.isEmpty(this._allSvcInfo) ) {
@@ -336,9 +337,15 @@ Tw.CertificationSk.prototype = {
     } else if ( resp.code === this.SMS_ERROR.ATH2006 ) {
       this._clearCertError();
       this.$errorCertCnt.removeClass('none');
+    } else if ( resp.code === this.SMS_ERROR.ATH2000 ) {
+      this._popupService.openAlert(resp.msg, null, null, $.proxy(this._onCloseMdnCertFail, this));
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
+  },
+  _onCloseMdnCertFail: function () {
+    this._callbackParam = { code: Tw.API_CODE.CERT_SMS_BLOCK };
+    this._popupService.close();
   },
   _expireAddTime: function () {
     this.$btReCert.parent().removeClass('none');
