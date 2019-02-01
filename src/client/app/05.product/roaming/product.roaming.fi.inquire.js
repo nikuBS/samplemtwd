@@ -312,8 +312,8 @@ Tw.ProductRoamingFiInquire.prototype = {
   _onEditPopOpened : function($popupLayer){
     this.$btnRegister = $popupLayer.find('#fe-register');
     this.$inputPhone = $popupLayer.find('#flab01');
-    this.$inputSdate = $popupLayer.find('#flab02');
-    this.$inputEdate = $popupLayer.find('#flab03');
+    this.$inputEditSdate = $popupLayer.find('#flab02');
+    this.$inputEditEdate = $popupLayer.find('#flab03');
     this.$inputReceive = $popupLayer.find('#flab04');
     this.$inputReturn = $popupLayer.find('#flab05');
     this.$returnImg = $popupLayer.find('#fe-return-img');
@@ -404,7 +404,7 @@ Tw.ProductRoamingFiInquire.prototype = {
 
     var dateCheck = true;
 
-    if(this.$inputSdate.val() === '' || this.$inputEdate.val() === ''){
+    if(this.$inputEditSdate.val() === '' || this.$inputEditEdate.val() === ''){
       dateCheck = false;
     }
 
@@ -438,14 +438,14 @@ Tw.ProductRoamingFiInquire.prototype = {
     }
 
     //시작일을 종료일 이후로 설정
-    if (Tw.DateHelper.getDifference(this.$inputEdate.val(), this.$inputSdate.val()) < 0) {
+    if (Tw.DateHelper.getDifference(this.$inputEditEdate.val(), this.$inputEditSdate.val()) < 0) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A84.MSG,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A84.TITLE);
     }
 
     //시작일이 minDate(이틀 뒤)보다 작게 설정
-    var getMinDate = this.$inputSdate.attr('min');
-    if (Tw.DateHelper.getDifference(getMinDate, this.$inputSdate.val()) > 0) {
+    var getMinDate = this.$inputEditSdate.attr('min');
+    if (Tw.DateHelper.getDifference(getMinDate, this.$inputEditSdate.val()) > 0) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A85.MSG,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A85.TITLE);
     }
@@ -455,8 +455,8 @@ Tw.ProductRoamingFiInquire.prototype = {
     var boothnm = this.$inputReceive.text();
     var impbranch = this.$inputReceive.attr('data-center');
     var expbranch = this.$inputReturn.attr('data-center');
-    var rentFrom = this.$inputSdate.val().replace(/\-/gi, '');
-    var rentTo = this.$inputEdate.val().replace(/\-/gi, '');
+    var rentFrom = this.$inputEditSdate.val().replace(/\-/gi, '');
+    var rentTo = this.$inputEditEdate.val().replace(/\-/gi, '');
     var contphonenum = this.$inputPhone.val().replace(/\-/gi, '');
     var hsrsvrcvdtm = this._dateHelper.getCurrentDateTime('YYYYMMDD');
     var rentalmgmtnum = this.$btnRegister.attr('data-mgmt');
