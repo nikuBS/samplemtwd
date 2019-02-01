@@ -131,7 +131,7 @@ Tw.CommonSearchMore.prototype = {
   },
   _doSearch : function () {
     var inResult = this.$container.find('#resultsearch').is(':checked');
-    var requestUrl = inResult?'/common/search/more?category='+this._category+'&keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
+    var requestUrl = inResult?'/common/search/in_result?category='+this._category+'&keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
     requestUrl+=this.$inputElement.val();
     requestUrl+='&step='+(Number(this._step)+1);
     this._addRecentlyKeyword(this.$inputElement.val());
@@ -157,7 +157,7 @@ Tw.CommonSearchMore.prototype = {
     $(popupElement).on('click','button',$.proxy(this._filterSelectEvent,this));
   },
   _filterSelectEvent : function (btnEvt) {
-    var changeFilterUrl = '/common/search/more?category='+this._category+'&keyword='+this._accessQuery.keyword;
+    var changeFilterUrl = this._accessQuery.in_keyword?'/common/search/in_result?category='+this._category+'&keyword='+this._accessQuery.keyword:'/common/search/more?category='+this._category+'&keyword='+this._accessQuery.keyword;
     changeFilterUrl+='&arrange='+$(btnEvt.currentTarget).data('type');
     if(this._accessQuery.in_keyword){
       changeFilterUrl+='&in_keyword='+this._accessQuery.in_keyword;

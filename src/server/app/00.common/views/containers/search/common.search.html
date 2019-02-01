@@ -6,6 +6,10 @@
 
 <% include ../../components/start.component.html %>
 <!-- body -->
+<%
+    var moreViewUrl = '/common/search/more';
+    var inResultViewUrl = '/common/search/in_result';
+%>
 <body data-gr-c-s-loaded="true" class="">
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -57,7 +61,7 @@
             <div class="connection-searchword">
                 <dl class="searchword-list">
                     <dt class="tit">연관</dt>
-                    <% for(var i=0;i<relatedKeyword.result.Word.length||i<=5;i++){ %>
+                    <% for(var i=0;i<relatedKeyword.result.Word.length&&i<=4;i++){ %>
                     <dd><a data-param="<%= relatedKeyword.result.Word[i] %>" class="link search-element"><%= relatedKeyword.result.Word[i] %></a></dd>
                     <% } %>
                 </dl>
@@ -190,7 +194,11 @@
                     <h2 class="tit">바로가기</h2>
                     <div class="numberbox"><span class="num"><%= searchInfo.search[2].shortcut.count %></span>건
                         <% if(searchInfo.search[2].shortcut.count>=10){ %>
-                        <a href="/common/search/more?category=shortcut&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1 %>" class="morelink">더보기</a>
+                        <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=shortcut&keyword='+keyword:inResultViewUrl+'?category=shortcut&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                            더보기
+                        </a>
                         <% } %>
                     </div>
                 </div>
@@ -210,7 +218,11 @@
                     <div class="numberbox">
                         <span class="num"><%= searchInfo.search[3].rate.count %></span>건
                         <% if(searchInfo.search[3].rate.count>=10){%>
-                        <a  href="/common/search/more?category=rate&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1 %>" class="morelink">더보기</a>
+                        <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=rate&keyword='+keyword:inResultViewUrl+'?category=rate&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                            더보기
+                        </a>
                         <% } %>
                     </div>
                 </div>
@@ -228,7 +240,11 @@
                     <div class="numberbox">
                         <span class="num"><%= searchInfo.search[4].service.count %></span>건
                         <% if(searchInfo.search[4].service.count>=10){ %>
-                        <a  href="/common/search/more?category=service&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1 %>" class="morelink">더보기</a>
+                        <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=service&keyword='+keyword:inResultViewUrl+'?category=service&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                            더보기
+                        </a>
                         <% } %>
                     </div>
                 </div>
@@ -246,7 +262,11 @@
                     <div class="numberbox">
                         <span class="num"><%= searchInfo.search[5].tv.count %></span>건
                         <% if(searchInfo.search[5].tv.count>=10){ %>
-                        <a  href="/common/search/more?category=tv&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1 %>" class="morelink">더보기</a>
+                        <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=tv&keyword='+keyword:inResultViewUrl+'?category=tv&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                            더보기
+                        </a>
                         <% } %>
                     </div>
                 </div>
@@ -264,7 +284,11 @@
                     <div class="numberbox">
                         <span class="num"><%= searchInfo.search[6].roaming.count %></span>건
                         <% if(searchInfo.search[6].roaming.count>=10){ %>
-                        <a href="/common/search/more?category=roaming&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1 %>" class="morelink">더보기</a>
+                        <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=roaming&keyword='+keyword:inResultViewUrl+'?category=roaming&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                            더보기
+                        </a>
                         <% } %>
                     </div>
                 </div>
@@ -305,7 +329,11 @@
                     <div class="numberbox">
                         <span class="num"><%= searchInfo.search[8].direct.count %></span>건
                         <% if(searchInfo.search[8].direct.count>=10){ %>
-                        <a href="/common/search/more?category=direct&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1 %>" class="morelink">더보기</a>
+                        <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=direct&keyword='+keyword:inResultViewUrl+'?category=direct&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                            더보기
+                        </a>
                         <% } %>
                     </div>
                 </div>
@@ -330,7 +358,11 @@
                     <div class="numberbox">
                         <span class="num"><%= searchInfo.search[9].membership.count %></span>건
                         <% if(searchInfo.search[9].membership.count>=10){ %>
-                        <a href="/common/search/more?category=membership&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1 %>" class="morelink">더보기</a>
+                        <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=membership&keyword='+keyword:inResultViewUrl+'?category=membership&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                            더보기
+                        </a>
                         <% } %>
                     </div>
                 </div>
@@ -349,7 +381,11 @@
                     <div class="numberbox">
                         <span class="num"><%= searchInfo.search[10].event.count %></span>건
                         <% if(searchInfo.search[10].event.count>=10){ %>
-                        <a href="/common/search/more?category=event&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1 %>" class="morelink">더보기</a>
+                        <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=event&keyword='+keyword:inResultViewUrl+'?category=event&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                            더보기
+                        </a>
                         <% } %>
                     </div>
                 </div>
@@ -369,7 +405,11 @@
                     <div class="numberbox">
                         <span class="num"><%= searchInfo.search[11].sale.count %></span>건
                         <% if(searchInfo.search[11].sale.count>=10){ %>
-                        <a href="/common/search/more?category=sale&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1 %>" class="morelink">더보기</a>
+                        <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=sale&keyword='+keyword:inResultViewUrl+'?category=sale&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                            더보기
+                        </a>
                         <% } %>
                     </div>
                 </div>
@@ -396,7 +436,11 @@
                     <div class="numberbox">
                         <span class="num"><%= searchInfo.search[12].as.count %></span>건
                         <% if(searchInfo.search[12].as.count>=10){ %>
-                        <a href="/common/search/more?category=as&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1 %>" class="morelink">더보기</a>
+                        <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=as&keyword='+keyword:inResultViewUrl+'?category=as&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                            더보기
+                        </a>
                         <% } %>
                     </div>
                 </div>
@@ -414,7 +458,11 @@
                     <div class="numberbox">
                         <span class="num"><%= searchInfo.search[15].question.count %></span>건
                         <%if(searchInfo.search[15].question.count>=10){ %>
-                        <a href="/common/search/more?category=question&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1 %>" class="morelink">더보기</a>
+                        <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=question&keyword='+keyword:inResultViewUrl+'?category=question&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                            더보기
+                        </a>
                         <% } %>
                     </div>
                 </div>
@@ -433,7 +481,11 @@
                     <div class="numberbox">
                         <span class="num"><%= searchInfo.search[13].notice.count %></span>건
                         <% if(searchInfo.search[13].notice.count>=10){  %>
-                        <a href="/common/search/more?category=notice&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1 %>" class="morelink">더보기</a>
+                        <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=notice&keyword='+keyword:inResultViewUrl+'?category=notice&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                            더보기
+                        </a>
                         <% } %>
                     </div>
                 </div>
@@ -452,7 +504,11 @@
                     <div class="numberbox">
                         <span class="num"><%= searchInfo.search[14].prevent.count %></span>건
                         <% if(searchInfo.search[14].prevent.count>=10){ %>
-                        <a href="/common/search/more?category=prevent&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1 %>" class="morelink">더보기</a>
+                        <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=prevent&keyword='+keyword:inResultViewUrl+'?category=prevent&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                            더보기
+                        </a>
                         <% } %>
                     </div>
                 </div>
@@ -471,7 +527,11 @@
                     <div class="numberbox">
                         <span class="num"><%= searchInfo.search[16].manner.count %></span>건
                         <% if(searchInfo.search[16].manner.count>=10){ %>
-                        <a href="/common/search/more?category=manner&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1 %>" class="morelink">더보기</a>
+                        <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=manner&keyword='+keyword:inResultViewUrl+'?category=manner&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                            더보기
+                        </a>
                         <% } %>
                     </div>
                 </div>
@@ -490,7 +550,11 @@
                     <div class="numberbox">
                         <span class="num"><%= searchInfo.search[17].serviceInfo.count %></span>건
                         <% if(searchInfo.search[17].serviceInfo.count>=10){ %>
-                        <a href="/common/search/more?category=serviceInfo&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1 %>" class="morelink">더보기</a>
+                        <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=serviceInfo&keyword='+keyword:inResultViewUrl+'?category=serviceInfo&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                            더보기
+                        </a>
                         <% } %>
                     </div>
                 </div>
@@ -509,7 +573,11 @@
                     <div class="numberbox">
                         <span class="num"><%= searchInfo.search[18].siteInfo.count %></span>건
                         <% if(searchInfo.search[18].siteInfo.count>=10){ %>
-                        <a href="/common/search/more?category=siteInfo&keyword=<%= keyword %><%= keyword===inKeyword?'':'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1 %>" class="morelink">더보기</a>
+                        <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=siteInfo&keyword='+keyword:inResultViewUrl+'?category=siteInfo&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                            더보기
+                        </a>
                         <% } %>
                     </div>
                 </div>

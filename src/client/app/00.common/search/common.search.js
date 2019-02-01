@@ -120,7 +120,7 @@ Tw.CommonSearch.prototype = {
   },
   _doSearch : function () {
     var inResult = this.$container.find('#resultsearch').is(':checked');
-    var requestUrl = inResult?'/common/search?keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
+    var requestUrl = inResult?'/common/search/in_result?keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
     requestUrl+=this.$inputElement.val();
     requestUrl+='&step='+(Number(this._step)+1);
     this._addRecentlyKeyword(this.$inputElement.val());
