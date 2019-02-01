@@ -127,7 +127,7 @@ Tw.MyTFareBillPrepayAuto.prototype = {
   },
   _selectAmount: function ($list, event) {
     var $target = $(event.currentTarget);
-    var $amount = $target.attr('id');
+    var $amount = $target.attr('data-max-value');
 
     this._popupService.open({
       url: '/hbs/',

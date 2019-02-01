@@ -40,6 +40,7 @@
                             <li class="type2">
                                 <label class="tit">선결제 금액<button id="MF_06_04_tip_04" class="tip-view">선결제금액 정보보기</button></label>
                                 <button id="<%= autoPrepayInfo.cmbAutoChrgAmt %>" data-origin-id="<%= autoPrepayInfo.cmbAutoChrgAmt %>"
+                                        data-max-value="<%= autoPrepayInfo.cmbMaxAmt %>"
                                         class="bt-dropdown big fe-prepay-amount" title="선결제 금액" aria-haspopup="true">
                                     <%= autoPrepayInfo.comboChargeAmount %>만원<span class="ico"></span>
                                 </button>
@@ -50,6 +51,7 @@
                             <li class="type2">
                                 <label class="tit">기준금액<button id="MF_06_04_tip_03" class="tip-view">기준금액 정보보기</button></label>
                                 <button id="<%= autoPrepayInfo.cmbAutoChrgStrdAmt %>" data-origin-id="<%= autoPrepayInfo.cmbAutoChrgStrdAmt %>"
+                                        data-max-value="<%= autoPrepayInfo.cmbMaxAmt %>"
                                         class="bt-dropdown big fe-standard-amount" title="기준 금액" aria-haspopup="true">
                                     <%= autoPrepayInfo.comboStandardAmount %>만원<span class="ico"></span>
                                 </button>

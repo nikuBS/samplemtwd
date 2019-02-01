@@ -27,6 +27,8 @@ Tw.MyTFareBill.prototype = {
   },
   _initVariables: function (svcAttrCd) {
     this.$uri = null;
+    this.$isMobile = true;
+
     this._autoComplete = false;
     this._isAutoTarget = false;
     this._isPointTarget = true;
@@ -36,9 +38,7 @@ Tw.MyTFareBill.prototype = {
     this._tPoint = 0;
     this._rainbowPoint = 0;
 
-    if (Tw.FormatHelper.isEmpty(svcAttrCd)) {
-      this.$isMobile = false;
-    } else {
+    if (!Tw.FormatHelper.isEmpty(svcAttrCd)) {
       this.$isMobile = svcAttrCd.indexOf('M') !== -1;
     }
 
