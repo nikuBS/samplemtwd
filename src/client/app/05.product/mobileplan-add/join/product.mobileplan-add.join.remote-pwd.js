@@ -9,10 +9,15 @@ Tw.ProductMobileplanAddJoinRemotePwd = function(rootEl, prodId, displayId, confi
   this._apiService = Tw.Api;
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService();
+  this._historyService.init();
 
   this._prodId = prodId;
   this._displayId = displayId;
   this._confirmOptions = JSON.parse(window.unescape(confirmOptions));
+
+  if (this._historyService.isBack()) {
+    this._historyService.goBack();
+  }
 
   this.$container = rootEl;
   this._cachedElement();

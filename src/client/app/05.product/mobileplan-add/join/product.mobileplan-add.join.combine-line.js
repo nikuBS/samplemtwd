@@ -9,6 +9,7 @@ Tw.ProductMobileplanAddJoinCombineLine = function(rootEl, prodId, displayId, con
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
+  this._historyService.init();
 
   this._prodId = prodId;
   this._displayId = displayId;
@@ -18,6 +19,10 @@ Tw.ProductMobileplanAddJoinCombineLine = function(rootEl, prodId, displayId, con
   this._cachedElement();
   this._bindEvent();
   this._convConfirmOptions();
+
+  if (this._historyService.isBack()) {
+    this._historyService.goBack();
+  }
 };
 
 Tw.ProductMobileplanAddJoinCombineLine.prototype = {

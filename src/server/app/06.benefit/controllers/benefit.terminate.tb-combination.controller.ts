@@ -9,6 +9,7 @@ import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import { PRODUCT_TYPE_NM } from '../../../types/string.type';
+import { SVC_CD } from '../../../types/bff.type';
 import FormatHelper from '../../../utils/format.helper';
 import DateHelper from '../../../utils/date.helper';
 
@@ -29,7 +30,7 @@ class BenefitTerminateTbCombination extends TwViewController {
       combinationWirelessMember: FormatHelper.isEmpty(termInfo.combinationWirelessMemberList) ? null :
         this._convertWirelessInfo(termInfo.combinationWirelessMemberList[0]),
       combinationWireMember: FormatHelper.isEmpty(termInfo.combinationWireMemberList) ? null :
-        termInfo.combinationWireMemberList[0]
+        this._convertWireInfo(termInfo.combinationWireMemberList[0])
     });
   }
 
@@ -40,6 +41,16 @@ class BenefitTerminateTbCombination extends TwViewController {
   private _convertWirelessInfo(wireLessInfo: any): any {
     return Object.assign(wireLessInfo, {
       svcNum: FormatHelper.conTelFormatWithDash(wireLessInfo.svcNum)
+    });
+  }
+
+  /**
+   * @param wireInfo
+   * @private
+   */
+  private _convertWireInfo(wireInfo: any): any {
+    return Object.assign(wireInfo, {
+      svcCdNm: SVC_CD[wireInfo.svcCdNm]
     });
   }
 
