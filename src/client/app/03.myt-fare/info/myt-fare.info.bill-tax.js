@@ -93,7 +93,8 @@ Tw.MyTFareInfoBillTax.prototype = {
       // this._openResendByFax(this.targetData);
       this._historyService.goLoad(targetURL + '/send-fax?date=' + target.data('listDate'));
     } else {
-      this._openResendByEmail(this.targetData);
+      // this._openResendByEmail(this.targetData);
+      this._historyService.goLoad(targetURL + '/send-email?date=' + target.data('listDate'));
     }
   },
 

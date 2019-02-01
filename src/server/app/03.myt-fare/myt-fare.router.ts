@@ -22,7 +22,7 @@ import MyTFareInfoHistoryDetail from './controllers/info/myt-fare.info.history.d
 import MyTFareInfoBillCash from './controllers/info/myt-fare.info.bill-cash.controller';
 import MyTFareInfoBillTax from './controllers/info/myt-fare.info.bill-tax.controller';
 import MyTFareInfoBillTaxSendFax from './controllers/info/myt-fare.info.bill-tax.send-fax.controller';
-// import MyTFareInfoBillTaxSendEmail from './controllers/info/myt-fare.info.bill-tax.send-email.controller';
+import MyTFareInfoBillTaxSendEmail from './controllers/info/myt-fare.info.bill-tax.send-email.controller';
 import MyTFareInfoOverpayAccount from './controllers/info/myt-fare.info.overpay-account.controller';
 import MyTFareInfoOverpayRefund from './controllers/info/myt-fare.info.overpay-refund.controller';
 import MyTFareInfoOverpayRefundDetail from './controllers/info/myt-fare.info.overpay-refund.detail.controller';
@@ -103,7 +103,7 @@ class MytFareRouter extends TwRouter {
 
     this.controllers.push({ url: '/info/bill-tax', controller: MyTFareInfoBillTax });
     this.controllers.push({ url: '/info/bill-tax/send-fax', controller: MyTFareInfoBillTaxSendFax });
-    // this.controllers.push({ url: '/info/bill-tax/send-email', controller: MyTFareInfoBillTaxSendEmail });
+    this.controllers.push({ url: '/info/bill-tax/send-email', controller: MyTFareInfoBillTaxSendEmail });
     this.controllers.push({ url: '/info/bill-cash', controller: MyTFareInfoBillCash });
     this.controllers.push({ url: '/info/overpay-account', controller: MyTFareInfoOverpayAccount });
     this.controllers.push({ url: '/info/overpay-refund', controller: MyTFareInfoOverpayRefund });
