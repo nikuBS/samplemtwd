@@ -18,6 +18,7 @@ Tw.MyTFareBill.prototype = {
   _init: function (svcAttrCd) {
     this._initVariables(svcAttrCd);
     this._getAutoPayment();
+    this._getSmsList();
 
     if (this.$isMobile) {
       this._getPoint();
@@ -29,6 +30,8 @@ Tw.MyTFareBill.prototype = {
     this._autoComplete = false;
     this._isAutoTarget = false;
     this._isPointTarget = true;
+    this._isSmsTarget = false;
+    this._isSmsComplete = false;
     this._okCashbag = 0;
     this._tPoint = 0;
     this._rainbowPoint = 0;
@@ -52,6 +55,11 @@ Tw.MyTFareBill.prototype = {
       .done($.proxy(this._autoSuccess, this))
       .fail($.proxy(this._fail, this));
   },
+  _getSmsList: function () {
+    this._apiService.request(Tw.API_CMD.BFF_07_0026, {})
+      .done($.proxy(this._smsSuccess, this))
+      .fail($.proxy(this._fail, this));
+  },
   _getPoint: function () {
     this._apiService.request(Tw.API_CMD.BFF_07_0041, {})
       .done($.proxy(this._pointSuccess, this))
@@ -63,7 +71,8 @@ Tw.MyTFareBill.prototype = {
       .fail($.proxy(this._fail, this));
   },
   _isAllComplete: function () {
-    if (this._autoComplete && this._pointComplete && this._rainbowComplete) {
+    if (this._autoComplete && this._isSmsComplete &&
+      this._pointComplete && this._rainbowComplete) {
       this._openPaymentOption();
     }
   },
@@ -90,6 +99,7 @@ Tw.MyTFareBill.prototype = {
       this._setPointInfo();
     }
     this._setAutoField();
+    this._setSmsField();
     this._bindEvent();
   },
   _setAutoField: function () {
@@ -98,6 +108,11 @@ Tw.MyTFareBill.prototype = {
     } else {
       this.$layer.find('.fe-auto').find('.spot').text(Tw.MYT_FARE_PAYMENT_NAME.USING);
       this.$layer.on('click', '.fe-auto', $.proxy(this._setEvent, this, 'option'));
+    }
+  },
+  _setSmsField: function () {
+    if (!this._isSmsTarget) {
+      this.$layer.find('.fe-sms').parent().hide();
     }
   },
   _setPointInfo: function () {
@@ -150,6 +165,16 @@ Tw.MyTFareBill.prototype = {
       this._fail(res);
     }
   },
+  _smsSuccess: function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      this._setSmsTarget(res.result.virtualBankList);
+      this._isSmsComplete = true;
+
+      this._isAllComplete();
+    } else {
+      this._fail(res);
+    }
+  },
   _pointSuccess: function (res) {
     this._pointComplete = true;
     var svcYn = 'N';
@@ -175,6 +200,11 @@ Tw.MyTFareBill.prototype = {
   _setAutoPaymentTarget: function (code) {
     if (code !== '01' && code !== '02') {
       this._isAutoTarget = true;
+    }
+  },
+  _setSmsTarget: function (list) {
+    if (list.length > 0) {
+      this._isSmsTarget = true;
     }
   },
   _setPointTarget: function (svcYn) {
