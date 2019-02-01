@@ -48,6 +48,9 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     this.$container.on('keyup', '.fe-card-number', $.proxy(this._validateCard, this));
     this.$container.on('keyup', '.fe-card-y', $.proxy(this._validateExpired, this));
     this.$container.on('keyup', '.fe-card-m', $.proxy(this._validateExpired, this));
+    this.$container.on('blur', '.fe-card-number', $.proxy(this._validateCard, this));
+    this.$container.on('blur', '.fe-card-y', $.proxy(this._validateExpired, this));
+    this.$container.on('blur', '.fe-card-m', $.proxy(this._validateExpired, this));
   },
 
   _validateCard: function (e) {
@@ -70,14 +73,8 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
 
   _getCardInfo: function () {
     var cardNumber = $('.fe-card-number');
-    var cardY = $('.fe-card-y');
-    var cardM = $('.fe-card-m');
 
-    var isValid = this._validation.checkMoreLength(cardNumber, 15) &&
-      this._validation.checkMoreLength(cardY, 4) &&
-      this._validation.checkMoreLength(cardM, 2) &&
-      this._validation.checkYear(cardY) &&
-      this._validation.checkMonth(cardM, cardY)
+    var isValid = this._validation.checkMoreLength(cardNumber, 15);
 
     if ( isValid ) {
       var htParams = {
@@ -115,8 +112,6 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
       $($error.get(0)).removeClass('blind');
       $($error.get(1)).addClass('blind');
     }
-
-    this._getCardInfo();
   },
 
   _validateExpireDate: function (e) {

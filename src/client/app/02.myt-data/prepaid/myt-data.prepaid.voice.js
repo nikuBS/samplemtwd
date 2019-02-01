@@ -51,7 +51,12 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$cardPwd.on('keyup', $.proxy(this._validatePwd, this));
     this.$prepaid_card.on('keyup', $.proxy(this._validatePrepaidNumber, this));
     this.$prepaid_serial.on('keyup', $.proxy(this._validatePrepaidSerial, this));
-
+    this.$cardNumber.on('blur', $.proxy(this._validateCard, this));
+    this.$cardY.on('blur', $.proxy(this._validateExpired, this));
+    this.$cardM.on('blur', $.proxy(this._validateExpired, this));
+    this.$cardPwd.on('blur', $.proxy(this._validatePwd, this));
+    this.$prepaid_card.on('blur', $.proxy(this._validatePrepaidNumber, this));
+    this.$prepaid_serial.on('blur', $.proxy(this._validatePrepaidSerial, this));
   },
 
   _validatePrepaidNumber: function (e) {
@@ -90,11 +95,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
   },
 
   _getCardInfo: function () {
-    var isValid = this._validation.checkMoreLength(this.$cardNumber, 15) &&
-      this._validation.checkMoreLength(this.$cardY, 4) &&
-      this._validation.checkMoreLength(this.$cardM, 2) &&
-      this._validation.checkYear(this.$cardY) &&
-      this._validation.checkMonth(this.$cardM, this.$cardY)
+    var isValid = this._validation.checkMoreLength(this.$cardNumber, 15);
 
     if ( isValid ) {
       var htParams = {
@@ -128,8 +129,6 @@ Tw.MyTDataPrepaidVoice.prototype = {
       $($error.get(0)).removeClass('blind');
       $($error.get(1)).addClass('blind');
     }
-
-    this._getCardInfo();
   },
 
   _validatePwd: function (e) {
