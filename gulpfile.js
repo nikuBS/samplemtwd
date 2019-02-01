@@ -318,9 +318,8 @@ gulp.task('post-clean', function () {
 
 gulp.task('watch', function () {
   livereload.listen();
-  gulp.watch('src/client/**/*.hbs', { interval: 500 }, ['hbs']);
+  gulp.watch('src/client/**/*.hbs', { interval: 500 }, ['hbs-front']);
   gulp.watch('src/client/**/*.js', { interval: 500 }, ['client-build']);
-  gulp.watch('src/client/**/*.css', { interval: 500 }, ['css-vendor', 'css-rb']);
   gulp.watch('dist/**', { interval: 500 }).on('change', livereload.changed);
 });
 
