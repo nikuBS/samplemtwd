@@ -13,7 +13,7 @@ class CommonMemberLineEmpty extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    res.render('member/common.member.line.empty.html', { svcInfo });
+    res.render('member/common.member.line.empty.html', { svcInfo, pageInfo });
   }
 }
 
