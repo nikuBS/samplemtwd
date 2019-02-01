@@ -46,8 +46,10 @@ Tw.MyTDataTingBlock.prototype = {
   },
 
   _hideListItem: function () {
-    $('.fe-history-more').show();
-    $('.fe-wrap-block-list li').slice(20).hide();
+    if ( $('.fe-wrap-block-list li').size() > 20 ) {
+      $('.fe-history-more').show();
+      $('.fe-wrap-block-list li').slice(20).hide();
+    }
   },
 
   _getBlockInfo: function () {
@@ -69,10 +71,7 @@ Tw.MyTDataTingBlock.prototype = {
       }
 
       $('.fe-wrap-block-list').html(this.tpl_block_item({ block_list: blockList }));
-
-      if ( blockList.length > 20 ) {
-        this._hideListItem();
-      }
+      this._hideListItem();
 
       if ( blockList.length !== 0 ) {
         $('.fe-wrap-block-history').show();

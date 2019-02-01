@@ -97,6 +97,8 @@ Tw.MyTDataGift.prototype = {
         this.reqCnt = result.reqCnt;
         this._getRemainDataInfo();
       }
+    } else if ( res.code === 'GFT0004' ) {
+      this.$container.trigger('showUnableGift', res.code);
     } else {
       this._remainApiError();
       // Tw.Error(res.code, res.msg).pop();
