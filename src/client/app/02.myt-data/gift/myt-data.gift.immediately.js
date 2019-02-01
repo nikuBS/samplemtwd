@@ -27,11 +27,11 @@ Tw.MyTDataGiftImmediately.prototype = {
   _cachedElement: function () {
     // this.$remainQty = $('.fe-remain_data');
     // this.$wrap_auto_select_list = $('.fe-auto_select_list');
+    this.$wrap = $('.wrap');
     this.$btnNativeContactList = $('.fe-btn_native_contact');
     this.$btnRequestSendingData = $('.fe-request_sending_data');
     this.$inputImmediatelyGift = $('.fe-input_immediately_gift');
     this.$wrap_data_select_list = $('.fe-immediately_data_select_list');
-    this.$wrap = $('.wrap');
     this.tpl_immediately_error = Handlebars.compile($('#tpl_immediately_error').html());
   },
 
@@ -42,13 +42,39 @@ Tw.MyTDataGiftImmediately.prototype = {
     this.$btnRequestSendingData.on('click', $.proxy(this._getReceiveUserInfo, this));
     this.$wrap_data_select_list.on('click', 'input', $.proxy(this._onClickDataQty, this));
     this.$inputImmediatelyGift.on('keyup', $.proxy(this._onKeyUpImmediatelyGiftNumber, this));
+    this.$wrap.on('showUnableGift', $.proxy(this._showUnableGift, this));
+  },
+
+  _showUnableGift: function (errorCode) {
+    var $wrapImmediatelyGift = $('#tab1-tab');
+    switch ( errorCode ) {
+      case 'GFT0001':
+        $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0001 }));
+        break;
+      case 'GFT0002':
+        $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0001 }));
+        break;
+      case 'GFT0003':
+        $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0003 }));
+        break;
+      case 'GFT0004':
+        $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0004 }));
+        break;
+      case 'GFT0005':
+        $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0005 }));
+        break;
+      case 'GFT00013':
+        $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0013 }));
+        break;
+      default:
+    }
   },
 
   _successGiftData: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this.parsedGiftData = this._parseGiftData(resp.result);
     } else {
-      // $('#tab1-tab').html(this.tpl_immediately_error());
+      // this._showUnableGift(resp.code);
     }
   },
 
