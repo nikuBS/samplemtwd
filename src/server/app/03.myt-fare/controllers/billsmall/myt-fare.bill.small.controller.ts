@@ -86,8 +86,11 @@ class MyTFareBillSmall extends TwViewController {
     };
 
     if (historyInfo.code === API_CODE.CODE_00) {
-      if (historyInfo.result.rtnUseYn in usedValueList) {
-        usedYn.isUsed = true;
+      const rtnUseYn = historyInfo.result.rtnUseYn;
+      for (let i = 0; i < usedValueList.length; i++) {
+        if (rtnUseYn === usedValueList[i]) {
+          usedYn.isUsed = true;
+        }
       }
       usedYn.rtnUseYn = historyInfo.result.rtnUseYn;
     }

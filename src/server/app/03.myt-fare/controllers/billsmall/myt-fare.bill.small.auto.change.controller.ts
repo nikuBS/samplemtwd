@@ -47,6 +47,7 @@ class MyTFareBillSmallAutoChange extends TwViewController {
     if (!FormatHelper.isEmpty(result)) {
       result.comboStandardAmount = result.autoChrgStrdAmt / 10000;
       result.comboChargeAmount = result.autoChrgAmt / 10000;
+      result.comboMaxAmount = result.cmbMaxAmt / 10000;
     }
     return result;
   }

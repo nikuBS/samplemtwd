@@ -28,6 +28,7 @@ Tw.MyTFareBillPrepayAuto.prototype = {
 
     this.$standardAmount = this.$container.find('.fe-standard-amount');
     this.$prepayAmount = this.$container.find('.fe-prepay-amount');
+    this.$cardWrap = this.$container.find('.fe-card-wrap');
     this.$cardBirth = this.$container.find('.fe-card-birth');
     this.$firstCardNum = this.$container.find('.fe-card-num:first');
     this.$lastCardNum = this.$container.find('.fe-card-num:last');
@@ -64,13 +65,15 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     if ($target.hasClass('fe-money')) {
       this.$changeType = 'A';
 
+      this.$cardWrap.hide();
       this.$changeMoneyInfo.show();
-      this.$changeCardInfo.show();
-      this.$firstCardNum.show();
+      this.$changeCardInfo.hide();
+      this.$firstCardNum.hide();
       this.$lastCardNum.hide();
     } else if ($target.hasClass('fe-card')) {
       this.$changeType = 'C';
 
+      this.$cardWrap.show();
       this.$changeMoneyInfo.hide();
       this.$changeCardInfo.hide();
       this.$firstCardNum.hide();
@@ -78,6 +81,7 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     } else {
       this.$changeType = 'T';
 
+      this.$cardWrap.show();
       this.$changeMoneyInfo.show();
       this.$changeCardInfo.hide();
       this.$firstCardNum.hide();
@@ -92,7 +96,7 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     if (this.$type === 'change') {
       switch (this.$changeType) {
         case 'A':
-          isValid = this.$cardY.val() !== '' && this.$cardM.val() !== '' && this.$cardPw.val() !== '';
+          isValid = true;
           break;
         case 'C':
           isValid = this.$cardNumber.val() !== '' && this.$cardY.val() !== '' &&
@@ -127,7 +131,7 @@ Tw.MyTFareBillPrepayAuto.prototype = {
   },
   _selectAmount: function ($list, event) {
     var $target = $(event.currentTarget);
-    var $amount = $target.attr('id');
+    var $amount = $target.attr('data-max-value');
 
     this._popupService.open({
       url: '/hbs/',
@@ -187,7 +191,7 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     if (this.$type === 'change') {
       switch (this.$changeType) {
         case 'A':
-          isValid = amountValid && this.$isExpirationValid && this.$isPwValid;
+          isValid = amountValid;
           break;
         case 'C':
           isValid = this.$isCardValid && this.$isCardNumValid &&
@@ -294,13 +298,9 @@ Tw.MyTFareBillPrepayAuto.prototype = {
       checkAuto: 'N',
       autoChrgStrdAmt: this.$standardAmount.attr('id'),
       autoChrgAmt: this.$prepayAmount.attr('id'),
-      cardEffYM: $.trim(this.$cardY.val())+ $.trim(this.$cardM.val()),
-      cardPwd: $.trim(this.$cardPw.val())
     };
 
-    if (this.$type === 'auto') {
-      reqData.cardBirth = $.trim(this.$cardBirth.val());
-    } else {
+    if (this.$type === 'change') {
       reqData.checkRadio = this.$changeType;
     }
 
@@ -308,6 +308,8 @@ Tw.MyTFareBillPrepayAuto.prototype = {
       reqData.cardNum = $.trim(this.$cardNumber.val());
       reqData.cardType = this.$cardNumber.attr('data-code');
       reqData.cardNm = this.$cardNumber.attr('data-name');
+      reqData.cardEffYM = $.trim(this.$cardY.val())+ $.trim(this.$cardM.val());
+      reqData.cardPwd = $.trim(this.$cardPw.val());
     }
     return reqData;
   },
@@ -346,7 +348,7 @@ Tw.MyTFareBillPrepayAuto.prototype = {
   _isChanged: function () {
     return this.$standardAmount.attr('id') !== this.$standardAmount.attr('data-origin-id') ||
       this.$prepayAmount.attr('id') !== this.$prepayAmount.attr('data-origin-id') ||
-      !Tw.FormatHelper.isEmpty(this.$cardBirth.val()) || !Tw.FormatHelper.isEmpty(this.$cardNumber.val()) ||
+      !Tw.FormatHelper.isEmpty(this.$cardNumber.val()) ||
       !Tw.FormatHelper.isEmpty(this.$cardY.val()) || !Tw.FormatHelper.isEmpty(this.$cardM.val()) ||
       !Tw.FormatHelper.isEmpty(this.$cardPw.val()) || this.$changeType !== 'A';
   },
