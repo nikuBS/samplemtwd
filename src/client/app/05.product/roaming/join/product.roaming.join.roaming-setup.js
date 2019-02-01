@@ -223,7 +223,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
   },
   _bindCompletePopupBtnEvt : function($args1,$args2){
     $($args2).on('click','.btn-round2',$.proxy($args1._goMyInfo,$args1));
-    $($args2).on('click','.btn-floating',$.proxy($args1._goPlan,$args1));
+    $($args2).on('click','.btn-floating',$.proxy($args1._popupService.closeAll,$args1._popupService));
   },
   _goMyInfo : function(){
     var targetUrl = this._prodTypeInfo.prodTypCd==='H_P'?'/product/roaming/my-use':'/product/roaming/my-use#add';

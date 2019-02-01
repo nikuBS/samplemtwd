@@ -236,7 +236,7 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
       'complete');
   },
   _bindCompletePopupBtnEvt : function (popupEvt) {
-    $(popupEvt).on('click','.btn-floating.btn-style2',$.proxy(this._goPlan,this));
+    $(popupEvt).on('click','.btn-floating.btn-style2',$.proxy(this._popupService.closeAll,this._popupService));
   },
   _goPlan : function () {
     this._popupService.closeAll();

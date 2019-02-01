@@ -241,7 +241,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
   },
   _bindCompletePopupEvt : function (popupObj) {
     $(popupObj).on('click','.btn-round2',$.proxy(this._goMyInfo,this));
-    $(popupObj).on('click','.btn-floating',$.proxy(this._goPlan,this));
+    $(popupObj).on('click','.btn-floating',$.proxy(this._popupService.closeAll,this._popupService));
   },
   _goBack : function(){
     this._popupService.close();

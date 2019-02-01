@@ -198,7 +198,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
     }, this));
   },
   _bindCompletePopupBtnEvt : function($args1,$args2){
-    $($args2).on('click','.btn-floating',$.proxy($args1._goPlan,$args1));
+    $($args2).on('click','.btn-floating',$.proxy($args1._popupService.closeAll,$args1._popupService));
 
     if($args1._prodId==='NA00005690'||$args1._prodId==='NA00005693'){
       $($args2).on('click','#btn0.btn-round2',$.proxy($args1._goSetting,$args1));
