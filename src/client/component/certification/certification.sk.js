@@ -38,7 +38,9 @@ Tw.CertificationSk.prototype = {
     ATH2006: 'ATH2006',     // 제한시간 내에 보낼 수 있는 발송량이 초과하였습니다.
     ATH2007: 'ATH2007',     // 입력하신 인증번호가 맞지 않습니다.
     ATH2008: 'ATH2008',     // 인증번호를 입력할 수 있는 시간이 초과하였습니다.
-    ATH1221: 'ATH1221'      // 인증번호 유효시간이 경과되었습니다.
+    ATH1221: 'ATH1221',     // 인증번호 유효시간이 경과되었습니다.
+    ATH2011: 'ATH2011',     //
+    ATH2014: 'ATH2014'
   },
   checkSmsEnable: function (svcInfo, opMethods, optMethods, methodCnt, callback) {
     if ( Tw.FormatHelper.isEmpty(this._allSvcInfo) ) {
@@ -321,7 +323,7 @@ Tw.CertificationSk.prototype = {
       this._seqNo = resp.result.seqNo;
       this._clearCertError();
       this.$validCert.removeClass('none');
-      if ( !reCert && !this._securityAuth) {
+      if ( !reCert && !this._securityAuth ) {
         this.$btReCert.parent().addClass('none');
         this.$btCert.parent().addClass('none');
         this.$btCertAdd.parent().removeClass('none');
@@ -389,6 +391,10 @@ Tw.CertificationSk.prototype = {
     } else if ( resp.code === this.SMS_ERROR.ATH2008 ) {
       this._clearConfirmError();
       this.$errorConfirmTime.removeClass('none');
+    } else if ( resp.code === this.SMS_ERROR.ATH2011 ) {
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2011);
+    } else if ( resp.code === this.SMS_ERROR.ATH2014 ) {
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2014);
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }

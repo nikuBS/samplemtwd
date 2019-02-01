@@ -22,7 +22,9 @@ Tw.CertificationSkSmsRefund.prototype = {
     ATH2003: 'ATH2003', // 재전송 제한시간이 지난 후에 이용
     ATH2006: 'ATH2006', // 제한시간 내 인증번호를 보낼 수 있는 횟수 초과
     ATH2007: 'ATH2007', // 인증번호 불일치
-    ATH2008: 'ATH2008' // 인증번호 입력시간 초과
+    ATH2008: 'ATH2008', // 인증번호 입력시간 초과
+    ATH2011: 'ATH2011',
+    ATH2014: 'ATH2014'
   },
 
   openSmsPopup: function (callback) {
@@ -230,7 +232,11 @@ Tw.CertificationSkSmsRefund.prototype = {
             this._callback(res);
           }
         } else {
-          if (!!this.SMS_CERT_ERROR[res.code]) {
+          if ( res.code === this.SMS_ERROR.ATH2011 ) {
+            this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2011);
+          } else if ( res.code === this.SMS_ERROR.ATH2014 ) {
+            this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2014);
+          } else if (!!this.SMS_CERT_ERROR[res.code]) {
             this._showCertNumberError(res.code);
           } else {
             Tw.Error(res.code, res.msg).pop();
