@@ -50,6 +50,8 @@ Tw.MyTDataFamilyHistory.prototype = {
 
     if (resp.result.nextReqYn === 'Y') {
       setTimeout($.proxy(this._requestRetrieve, this, serialNumber, resp.result.reqCnt, $before, $parent), 3000);
+    } else if (!resp.result.remGbGty && !resp.result.remMbGty) {
+      this._setRetrieveStatus($before);
     } else {
       this._handleSuccessRetrieve(resp.result, $before, $parent);
     }
@@ -62,11 +64,6 @@ Tw.MyTDataFamilyHistory.prototype = {
   },
 
   _handleSuccessRetrieve: function(share, $before, $parent) {
-    if (!share.remGbGty && !share.remMbGty) {
-      this._setRetrieveStatus($before);
-      return;
-    }
-
     var serial = $before.data('serial-number');
     $before.siblings('.fe-ing').remove();
 
@@ -116,11 +113,54 @@ Tw.MyTDataFamilyHistory.prototype = {
         data: changable.data,
         histories: histories
       },
-      $.proxy(this._handleOpenChangePopup, this, $parent, serial, changable)
+      $.proxy(this._handleOpenChangePopup, this, $parent, serial, changable),
+      $.proxy(this._handleCloseChangePopup, this)
     );
   },
 
+  _handleCloseChangePopup: function() {
+    if (this._historyChange.isSuccess) {
+      this._historyChange.isSuccess = false;
+      this._popupService.open(
+        {
+          hbs: 'complete',
+          text: Tw.MYT_DATA_FAMILY_SUCCESS_CHANGE_DATA,
+          layer: true
+        },
+        $.proxy(this._handleOpenComplete, this)
+      );
+    }
+  },
+
+  _handleOpenComplete: function($layer) {
+    $layer.on('click', '.fe-submain', this._popupService.close);
+  },
+
   _handleOpenChangePopup: function($parent, serial, changable, $layer) {
-    new Tw.MyTDataFamilyHistoryChange($layer, $parent, serial, changable);
+    this._historyChange = new Tw.MyTDataFamilyHistoryChange($layer, $parent, serial, changable);
+    $layer.on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
+  },
+
+  _openCancelPopup: function() {
+    this._popupService.openConfirmButton(
+      Tw.ALERT_CANCEL,
+      null,
+      $.proxy(this._goBack, this),
+      $.proxy(this._handleAfterClose, this),
+      Tw.BUTTON_LABEL.NO,
+      Tw.BUTTON_LABEL.YES
+    );
+  },
+
+  _goBack: function() {
+    this._popupService.close();
+    this._isClose = true;
+  },
+
+  _handleAfterClose: function() {
+    if (this._isClose) {
+      history.back();
+      this._isClose = false;
+    }
   }
 };

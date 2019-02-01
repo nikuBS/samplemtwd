@@ -14,6 +14,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
   _bindEvent: function() {
     this.$container.on('click', '.btn-type01', $.proxy(this._addChangeeData, this));
     this.$container.on('click', '.cancel', $.proxy(this._validateChangeAmount, this));
+    this.$container.on('click', '.fe-retrieve', $.proxy(this._handleRerieveChangable, this, true));
     this.$input.on('focusout', $.proxy(this._validateChangeAmount, this));
     this.$input.on('keyup', $.proxy(this._validateChangeAmount, this));
     this.$submitBtn.on('click', $.proxy(this._clickSubmit, this));
@@ -23,6 +24,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     this.$input = this.$container.find('#fe-changable');
     this.$submitBtn = this.$container.find('#fe-submit');
     this.$error = this.$container.find('#fe-error');
+    this.$strong = this.$container.find('strong.txt-c2');
   },
 
   _addChangeeData: function(e) {
@@ -92,7 +94,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
       remain = 0;
     }
 
-    this._popupService.closeAll();
+    this._popupService.close();
 
     this._apiService
       .request(Tw.API_CMD.BFF_06_0074, {
@@ -105,30 +107,102 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
   },
 
   _handleDoneSubmit: function(remain, resp) {
-    // TODO: error 코드 처리 필요
-    if (resp.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(resp.code, resp.msg).pop();
-    } else {
-      this.$item.find('.modify strong').text(remain + 'GB');
-      if (remain > 0) {
-        this.$item.find('.fe-edit').data('gb', remain);
-      } else {
-        this.$item.find('.fe-edit').remove();
-        this.$item.find('.modify span').text(Tw.MYT_DATA_FAMILY_NOT_POSSIBLE_CHANGE);
-      }
+    var ALERT_MSG = '';
+    switch (resp.code) {
+      case Tw.API_CODE.CODE_00: {
+        this._popupService.close();
+        this.$item.find('.modify strong').text(remain + 'GB');
+        if (remain > 0) {
+          this.$item.find('.fe-edit').data('gb', remain);
+        } else {
+          this.$item.find('.fe-edit').remove();
+          this.$item.find('.modify span').text(Tw.MYT_DATA_FAMILY_NOT_POSSIBLE_CHANGE);
+        }
 
-      this._popupService.open(
-        {
-          hbs: 'complete',
-          text: Tw.MYT_DATA_FAMILY_SUCCESS_CHANGE_DATA,
-          layer: true
-        },
-        $.proxy(this._handleOpenComplete, this)
-      );
+        this.isSuccess = true;
+        return;
+      }
+      case 'RCG0066': {
+        ALERT_MSG = Tw.MYT_DATA_FAMILY_CHANGE_DATA_ERRORS.NOT_CMPLETE;
+        break;
+      }
+      case 'RCG0067': {
+        ALERT_MSG = Tw.MYT_DATA_FAMILY_CHANGE_DATA_ERRORS.NOT_THIS_MONTH;
+        break;
+      }
+      case 'RCG0068': {
+        ALERT_MSG = Tw.MYT_DATA_FAMILY_CHANGE_DATA_ERRORS.NOT_MINE;
+        break;
+      }
+      case 'RCG0069': {
+        ALERT_MSG = Tw.MYT_DATA_FAMILY_CHANGE_DATA_ERRORS.NOT_SAME_PLAN;
+        break;
+      }
+      case 'RCG0070': {
+        ALERT_MSG = Tw.MYT_DATA_FAMILY_CHANGE_DATA_ERRORS.GREATER_THAN_CHANGABLE;
+        break;
+      }
+      default: {
+        return Tw.Error(resp.code, resp.msg).pop();
+      }
+    }
+
+    if (ALERT_MSG) {
+      this._popupService.openAlert(ALERT_MSG, null, null, $.proxy(this._handleRerieveChangable, this));
     }
   },
 
-  _handleOpenComplete: function($layer) {
-    $layer.on('click', '.fe-submain', this._popupService.close);
+  _handleRerieveChangable: function(hasClass) {
+    this._setDisableChange(true);
+
+    if (hasClass) {
+      this.$strong.removeClass('fe-retrieve');
+    }
+
+    this.$strong.text(Tw.MYT_DATA_FAMILY_RETRIEVING);
+    this._requestRetrieve('0');
+  },
+
+  _requestRetrieve: function(requestCount) {
+    this._apiService
+      .request(Tw.API_CMD.BFF_06_0072, { reqCnt: requestCount, shrpotSerNo: this._serialNumber })
+      .done($.proxy(this._handleDoneRetrieve, this));
+  },
+
+  _handleDoneRetrieve: function(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00 || !resp.result) {
+      this._setRetrieveStatus();
+      return;
+    }
+
+    if (resp.result.nextReqYn === 'Y') {
+      setTimeout($.proxy(this._requestRetrieve, this, resp.result.reqCnt), 3000);
+    } else if (!resp.result.remGbGty && !resp.result.remMbGty) {
+      this._setRetrieveStatus($before);
+    } else {
+      this._handleSuccessRetrieve(resp.result);
+    }
+  },
+
+  _setRetrieveStatus: function() {
+    this.$strong.text(Tw.MYT_DATA_FAMILY_RETRIEVE);
+    this.$strong.addClass('fe-retrieve');
+    this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A218, Tw.POPUP_TITLE.NOTIFY);
+  },
+
+  _setDisableChange: function(disabled) {
+    this.$input.attr('disabled', disabled);
+    this.$container.find('.btn-type01').attr('disabled', disabled);
+  },
+
+  _handleSuccessRetrieve: function(share) {
+    var nData = Number(share.remGbGty) + Number(share.remMbGty) / 1000 || 0;
+    this.$strong.text(nData + 'GB');
+    if (nData > 0) {
+      this._changable.gb = Number(share.remGbGty);
+      this._changable.mb = Number(share.remMbGty);
+      this._changable.data = nData;
+      this._setDisableChange(false);
+    }
   }
 };
