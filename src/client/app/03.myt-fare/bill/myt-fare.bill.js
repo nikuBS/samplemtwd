@@ -111,8 +111,8 @@ Tw.MyTFareBill.prototype = {
     }
   },
   _setSmsField: function () {
-    if (this._isSmsTarget) {
-      this.$layer.find('.fe-sms').hide();
+    if (!this._isSmsTarget) {
+      this.$layer.find('.fe-sms').parent().hide();
     }
   },
   _setPointInfo: function () {
@@ -203,7 +203,7 @@ Tw.MyTFareBill.prototype = {
     }
   },
   _setSmsTarget: function (list) {
-    if (!Tw.FormatHelper.isEmpty(list)) {
+    if (list.length > 0) {
       this._isSmsTarget = true;
     }
   },

@@ -319,7 +319,7 @@ Tw.API_CMD = {
   BFF_07_0063: { path: '/core-bill/:version/auto-payments', method: Tw.API_METHOD.DELETE },
   BFF_07_0064: { path: '/core-bill/:version/autopay/db-req', method: Tw.API_METHOD.POST },
   BFF_07_0065: { path: '/core-bill/:version/autopay/pay-cycl-chg', method: Tw.API_METHOD.PUT },
-  BFF_07_0068: { path: '/core-bill/:version/autopay/card-info/:args0', method: Tw.API_METHOD.GET },
+  BFF_07_0068: { path: '/core-bill/:version/autopay/card-info', method: Tw.API_METHOD.GET },
   BFF_07_0069: { path: '/core-bill/:version/payment/auto-integrated-payment/cancel', method: Tw.API_METHOD.GET },
   BFF_07_0071: { path: '/core-bill/:version/micro-prepay/hist-requests', method: Tw.API_METHOD.GET },
   BFF_07_0073: { path: '/core-bill/:version/micro-prepay/requests', method: Tw.API_METHOD.GET },
