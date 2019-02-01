@@ -131,7 +131,7 @@ Tw.MyTFareBillGuideIndividual.prototype = {
   //--------------------------------------------------------------------------[EVENT]
   _feePayBtnEvt: function () {
     // Tw.Logger.info('[요금납부]', Tw.MyTFareBill);
-    this.myTFarePayment = new Tw.MyTFareBill(this.$container);
+    this.myTFarePayment = new Tw.MyTFareBill(this.$container, this.resData.svcAttrCd);
   },
   _payListBtnEvt: function () {
     // Tw.Logger.info('[납부내역조회]');
