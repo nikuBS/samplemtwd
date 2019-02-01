@@ -36,7 +36,9 @@ class MyTFareBillHotbill extends TwViewController {
         svcInfo,
         pageInfo,
         lines: [],
-        billAvailable: false
+        billAvailable: false,
+        title: MYT_FARE_HOTBILL_TITLE.MAIN,
+        preBill: false
       });
     } else {
       const svcs = this._getServiceInfo(svcInfo, childInfo, allSvc);
