@@ -8,9 +8,13 @@ Tw.MyTFareBillSetReIssue = function (rootEl, options) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._options = options;
-  this.$window = window;
+  this._historyService = new Tw.HistoryService();
   this._cachedElement();
   this._bindEvent();
+  // input 변경이 감지되면 취소확인 컨펌 띄움. 초기값 설정이후 체크해야 하기 때문에 this._initDefaultOptions() 펑션 다음에 선언해준다.
+  this.$container.on('change', 'input', $.proxy(function () {
+    this._isInputChanged = true;
+  }, this)); // input tag 변경 확인
 };
 
 Tw.MyTFareBillSetReIssue.prototype = {
@@ -33,6 +37,22 @@ Tw.MyTFareBillSetReIssue.prototype = {
 
   _bindEvent: function () {
     this.$container.on('click', '.fe-btn-submit', $.proxy(this._onClickBtnSubmit, this));
+    this.$container.on('click', '#fe-back', $.proxy(this._onCloseConfirm, this)); // 취소 확인 창
+  },
+
+  // 닫기 버튼 클릭 시 [확인]
+  _onCloseConfirm: function() {
+    if (!this._isInputChanged) {
+      this._historyService.goBack();
+      return;
+    }
+    this._popupService.openConfirmButton(
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+      $.proxy(function () {
+        this._historyService.replaceURL('/myt-fare/billsetup');
+      }, this),
+      null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
   },
 
   _onClickBtnSubmit : function () {
