@@ -51,6 +51,10 @@ class LoginService {
     return prevUrl.indexOf(currentHost) === -1;
   }
 
+  public setCookie(key: string, value: string) {
+    this.response.cookie(key, value);
+  }
+
 
   public getSvcInfo(req?): any {
     const request = req || this.request;

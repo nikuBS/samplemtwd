@@ -190,9 +190,10 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           result = resp.result;
+          this.loginService.setCookie(COOKIE_KEY.LAYER_CHECK, resp.result.noticeTypCd);
           return this.loginService.setSvcInfo({
             mbrNm: resp.result.mbrNm,
-            noticeType: resp.result.noticeTypCd,
+            // noticeType: resp.result.noticeTypCd,
             loginType: type
           });
         } else {
@@ -253,9 +254,10 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           result = resp.result;
+          this.loginService.setCookie(COOKIE_KEY.LAYER_CHECK, resp.result.noticeTypCd);
           return this.loginService.setSvcInfo({
             mbrNm: resp.result.mbrNm,
-            noticeType: resp.result.noticeTypCd,
+            // noticeType: resp.result.noticeTypCd,
             loginType: type
           });
         } else {
@@ -306,7 +308,7 @@ class ApiService {
           result = resp.result;
           return this.loginService.setSvcInfo({
             mbrNm: resp.result.mbrNm,
-            noticeType: resp.result.noticeTypCd,
+            // noticeType: resp.result.noticeTypCd,
             loginType: LOGIN_TYPE.TID
           });
         } else {
@@ -413,7 +415,7 @@ class ApiService {
           const svcInfo = this.loginService.getSvcInfo();
           const newSvc = new SvcInfoModel({
             mbrNm: svcInfo.mbrNm,
-            noticeType: svcInfo.noticeType,
+            // noticeType: svcInfo.noticeType,
             loginType: svcInfo.loginType
           });
           return this.loginService.setSvcInfo(newSvc);
