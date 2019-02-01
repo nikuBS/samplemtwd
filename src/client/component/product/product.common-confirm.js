@@ -154,9 +154,9 @@ Tw.ProductCommonConfirm.prototype = {
       return;
     }
 
-    if(this._data.setInfo) {
-      // 할인프로그램 상품인 경우 예외 처리 (Edit: KIM inHwan)
-      return this._historyService.replaceURL('/product/callplan/'+this._data.setInfoProdId);
+    if(this._data.selType) {
+      // 선택약정 상품인 경우 예외 처리
+      return this._historyService.go(-3);
     }
 
     if (!this._isPopup) {
