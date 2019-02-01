@@ -323,18 +323,6 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
       this._historyService.goLoad('/myt-data/familydata');
     } else if (this._tFamilySharingErrCode === this._ERROR_CODE.T_FAMILY_SHARE_NOT_JOINED) {
       // T가족모아 가입 가능한 요금제이나 미가입
-      // this._popupService.openOneBtTypeB(
-      //   Tw.ALERT_MSG_MYT_DATA.JOIN_ONLY_CUSTOMER_CENTER_T,
-      //   Tw.ALERT_MSG_MYT_DATA.JOIN_ONLY_CUSTOMER_CENTER_C,
-      //   [
-      //     {
-      //       style_class: 'fe-call-customer-center',
-      //       txt: Tw.ALERT_MSG_MYT_DATA.CALL_CUSTOMER_CENTER
-      //     }
-      //   ],
-      //   'type1',
-      //   $.proxy(this._tFamilyPopupOpened, this)
-      // );
       this._historyService.goLoad('/product/callplan/NA00006031');
     }
   },
