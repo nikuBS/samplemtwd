@@ -35,19 +35,11 @@ Tw.MytJoinWireSetPause.prototype = {
   _isDirty: false,
 
   _openErrorAlert: function () {
-    Tw.Popup.openOneBtTypeB(
+    this._popupService.openModalTypeATwoButton(
       Tw.MYT_JOIN.BROADBAND_ERROR.TITLE,
       Tw.MYT_JOIN.BROADBAND_ERROR.CONTENTS,
-      [{
-        style_class: 'link',
-        txt: Tw.MYT_JOIN.BROADBAND_ERROR.LINK_TXT
-      }],
-      'type1',
-      $.proxy(function ($layer) {
-        $layer.on('click', '.link', $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.MYT_JOIN.BROADBAND_ERROR.LINK));
-      }, this), $.proxy(function () {
-        this._historyService.goBack();
-      }, this)
+      Tw.MYT_JOIN.BROADBAND_ERROR.LINK_TXT,
+      Tw.BUTTON_LABEL.CLOSE, undefined, $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.MYT_JOIN.BROADBAND_ERROR.LINK)
     );
   },
 
