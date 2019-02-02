@@ -32,13 +32,19 @@
             <% } %>
         </div>
         <% if (data.type === 'UF') { %>
-            <% if (!data.isPPS) { %>
-            <p class="msg-type1 mt42">
-                <% if (data.svcCount !== 1) { %>
-                고객님은 현재 통합청구 이용 중이며<br />
-                <% } %>할인금액을 제외한 이용요금으로 조회됩니다.
-            </p>
+        <p class="msg-type1 mt42">
+            <% if (data.isBroadBand) { %>
+            SK브로드밴드를 통해 가입하신 서비스일 경우<br />
+            청구요금에 포함되지 않습니다.<br />
+            전화 106 또는 SK브로드밴드 웹사이트를 이용해 주세요.
+            <% } else { %>
+                <% if (!data.isPPS) { %>
+                    <% if (data.svcCount !== 1) { %>
+                    고객님은 현재 통합청구 이용 중이며<br />
+                    <% } %>할인금액을 제외한 이용요금으로 조회됩니다.
+                <% } %>
             <% } %>
+        </p>
         <% } else { %>
         <div class="detail-bill">
             <ul>

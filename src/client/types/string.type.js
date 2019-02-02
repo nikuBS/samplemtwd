@@ -3,7 +3,8 @@ Tw.COMMON_STRING = {
   AGREE: '동의',
   DISAGREE: '비동의',
   UNLIMIT: '무제한',
-  TERM: '이용약관'
+  TERM: '이용약관',
+  STANDARD: '기본제공'
 };
 
 Tw.DATA_UNIT = {
@@ -145,7 +146,10 @@ Tw.SVC_CD = {
   T: 'IPTV'
 };
 
-Tw.FARE_CHART_LEGEND = ['청구', '할인'];
+Tw.FARE_CHART_LEGEND = {
+  USAGE: ['이용'],
+  DEFAULT: ['청구', '할인']
+};
 
 Tw.TOAST_TEXT = {
   MYT_FARE_HISTORY_AUTOPAYMENT_BLOCK: '차단 신청이 완료되었습니다.',
