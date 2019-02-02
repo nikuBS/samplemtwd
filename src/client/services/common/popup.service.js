@@ -378,7 +378,7 @@ Tw.PopupService.prototype = {
     history.go(-hashLength);
 
     setTimeout(function() {
-      location.href = targetUrl;
+      location.replace(targetUrl);
     }, 0);
   },
   isPopup: function () {

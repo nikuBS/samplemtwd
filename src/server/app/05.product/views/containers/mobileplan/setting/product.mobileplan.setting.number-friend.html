@@ -81,7 +81,11 @@
                                         <p class="list-text">
                                             <span class="mtext"><%= numberInfo.numCoupleList[i].svcNumMask %>
                                                 <% if (numberInfo.numCoupleList[i].custNmMask !== '-') { %>
-                                                <span class="bar"></span><button type="button" class="btn-bf fe-btn_toggle_friend <%= numberInfo.numCoupleList[i].isFriendClass %>" title="절친으로 등록하기">절친</button>
+                                                    <% if (svcInfo && locals.pageInfo && pageInfo.auth && pageInfo.auth.cert && pageInfo.auth.cert.maskAuthYn === 'Y' && !pageInfo.masking) { %>
+                                                    <span class="bar"></span><button type="button" class="btn-bf fe-bt-masking <%= numberInfo.numCoupleList[i].isFriendClass %>" title="절친으로 등록하기" data-menuid="<%= pageInfo.menuId %>" data-menuurl="<%= pageInfo.menuUrl %>">절친</button>
+                                                    <% } else { %>
+                                                    <span class="bar"></span><button type="button" class="btn-bf fe-btn_toggle_friend <%= numberInfo.numCoupleList[i].isFriendClass %>" title="절친으로 등록하기">절친</button>
+                                                    <% } %>
                                                 <% } %>
                                             </span>
                                         </p>
