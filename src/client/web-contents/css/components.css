@@ -7405,7 +7405,7 @@
   .acco-style.data-famliy-group-list.type2 > ul > li .list-wrap .list-data .vol2 {
     margin-right: 0.125rem;
     font-size: 1.125rem;
-    font-family: "Noto Sans", "Noto Sans CJK"; }
+    font-family: 'Droid Sans', "Noto Sans", "Noto Sans CJK"; }
 
 .acco-style.data-famliy-group-list.type2 .bt-link-tx {
   font-size: 0.8125rem; }
@@ -12338,6 +12338,21 @@ a.bt-link-tx.underline.small {
     font-size: 0.9375rem;
     line-height: 1.3125rem;
     color: #666; }
+  .addree-no-result.no-sch {
+    padding: 3.75rem 0 8.125rem; }
+    .addree-no-result.no-sch .msg-no-sch {
+      display: block;
+      padding: 1rem 0 0 0;
+      text-align: center;
+      letter-spacing: -0.01563rem; }
+      .addree-no-result.no-sch .msg-no-sch .tit {
+        display: block;
+        text-align: center;
+        font-weight: normal;
+        font-size: 1.5625rem;
+        margin-bottom: 0.75rem; }
+      .addree-no-result.no-sch .msg-no-sch .txt {
+        font-size: 0.875rem; }
 
 .address-info dl {
   border-bottom: 1px solid #e1e1e1;
@@ -13614,7 +13629,7 @@ a.bt-link-tx.underline.small {
 
 /* 상품상세 */
 .productdetails-wrap {
-  height: auto;
+  height: 15.5rem;
   padding-bottom: 4.4375rem; }
   .productdetails-wrap .productdetails-title {
     position: relative;
@@ -13681,8 +13696,7 @@ a.bt-link-tx.underline.small {
     margin-top: 1.6875rem;
     color: #fff;
     font-size: 0.875rem;
-    line-height: 1.25rem;
-    min-height: 5.625rem; }
+    line-height: 1.25rem; }
     .productdetails-wrap .productdetails-text02.img-case {
       padding-right: 10.625rem; }
   .productdetails-wrap .productdetails-text03 {
@@ -15471,7 +15485,6 @@ a.bt-link-tx.underline.small {
 .add-prd-wrap .list-comp-lineinfo li .lineinfo-data .info-title {
   font-size: 1.125rem; }
   .add-prd-wrap .list-comp-lineinfo li .lineinfo-data .info-title.num {
-    font-family: "TgothicBlack", Roboto, sans-serif;
     letter-spacing: 0; }
   .add-prd-wrap .list-comp-lineinfo li .lineinfo-data .info-title .unit {
     font-size: 0.625rem;
@@ -15513,6 +15526,11 @@ a.bt-link-tx.underline.small {
   z-index: 2; }
   .cont-actionsheet .lineManagement-header .ac-list {
     padding: 0; }
+    .cont-actionsheet .lineManagement-header .ac-list .type1 {
+      padding: 0.875rem 0.75rem 0.375rem 1rem; }
+    .cont-actionsheet .lineManagement-header .ac-list:last-of-type {
+      padding-bottom: 0;
+      border-bottom: 0 none; }
 
 .cont-actionsheet .btn-floating {
   position: fixed;
@@ -15929,7 +15947,7 @@ a.bt-link-tx.underline.small {
           text-align: right; }
   .cont-actionsheet .ac-list:last-of-type {
     padding-bottom: 0;
-    border-bottom: 2px solid #f2f2f2; }
+    border-bottom: 1px solid #f2f2f2; }
   .cont-actionsheet .ac-list.ly-table {
     display: table; }
     .cont-actionsheet .ac-list.ly-table:last-of-type {
@@ -16051,7 +16069,7 @@ a.bt-link-tx.underline.small {
           text-align: right; }
   .cont-actionsheet .ac-list:last-of-type {
     padding-bottom: 0;
-    border-bottom: 2px solid #f2f2f2; }
+    border-bottom: 1px solid #f2f2f2; }
 
 .cont-actionsheet .btn-more {
   margin-top: 1.0625rem; }
@@ -21370,7 +21388,8 @@ a.bt-link-tx.underline.small {
       .status-list-box .list-comp-lineinfo li .btn-type .lineinfo-data {
         position: relative;
         margin-top: 0.1875rem;
-        padding-right: 0.9375rem; }
+        padding-right: 0.9375rem;
+        white-space: nowrap; }
         .status-list-box .list-comp-lineinfo li .btn-type .lineinfo-data:after {
           content: '';
           position: absolute;
@@ -25240,6 +25259,8 @@ input[type="radio"].formradio-small.type2 + label {
       border-right: 1px solid #f2f2f2; }
     .btn-link-list li.last-line {
       border-bottom: 0; }
+    .btn-link-list li.full {
+      width: 100%; }
     .btn-link-list li button, .btn-link-list li a {
       display: block;
       width: 100%;
@@ -28614,6 +28635,14 @@ input[type="radio"].formradio-small.type2 + label {
     font-size: 0.75rem;
     font-weight: 300; }
 
+.text_translation {
+  display: block;
+  padding: 1.875rem 0 2.1875rem;
+  border-radius: 0.3125rem;
+  color: #000;
+  font-size: 14px;
+  line-height: 20px; }
+
 .main-breakdown-box > .sum {
   display: block;
   padding: 0.1875rem 0;
@@ -28772,6 +28801,10 @@ input[type="radio"].formradio-small.type2 + label {
       text-align: left; }
     .main-top-group .main-breakdown-box .ti {
       font-weight: 500; }
+    .main-top-group .main-breakdown-box .text_translation {
+      color: #000;
+      font-size: 14px;
+      line-height: 20px; }
   .main-top-group .main-membershop-box {
     margin-top: 1.875rem; }
 
@@ -28845,7 +28878,6 @@ body.apphome {
       overflow: hidden;
       word-wrap: break-word;
       white-space: nowrap;
-      text-overflow: ellipsis;
       color: #666666;
       font-size: 0.75rem;
       text-decoration: underline;
@@ -28890,7 +28922,7 @@ body.apphome {
           color: #959595;
           font-size: 0.875rem;
           font-weight: 400;
-          font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Noto Sans", "Noto Sans CJK", 'Droid Sans', Roboto, sans-serif;
+          font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", 'Droid Sans', "Noto Sans", "Noto Sans CJK",  Roboto, sans-serif;
           letter-spacing: 0; }
         .main-chart-box .donutchart .donut-chart .ti-data .data {
           display: block;
@@ -28975,7 +29007,7 @@ body.apphome {
       font-weight: 300;
       margin-right: 0.1875rem; }
       .main-chart-box .legend .category0 .data .ff-tg-light {
-        font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Noto Sans", "Noto Sans CJK", 'Droid Sans', Roboto, sans-serif; }
+        font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue",'Droid Sans', "Noto Sans", "Noto Sans CJK", Roboto, sans-serif; }
     .main-chart-box .legend .category1::before {
       background: #59bcf5; }
     .main-chart-box .legend .category1 .data {
@@ -32404,8 +32436,40 @@ body.apphome {
     position: absolute;
     left: 0;
     top: 1rem;
-    background: url(/img/product/icon-roaming-product01.png) no-repeat;
     background-size: 2.75rem 2.75rem; }
+
+.roaming-product.type01 .recommendedrate-list > li.type01 .products-titleinfo:after, .shop-info .shop-txt .roaming-product.type02 .recommendedrate-list > li.type01 .products-titleinfo:after, .shop-info .shop-txt .roaming-product.type03 .recommendedrate-list > li.type01 .products-titleinfo:after, .roaming-product.type01 .shop-info .shop-txt .recommendedrate-list > li.type02 .products-titleinfo:after, .shop-info .shop-txt .roaming-product.type01 .recommendedrate-list > li.type02 .products-titleinfo:after, .shop-info .shop-txt .roaming-product.type02 .recommendedrate-list > li.type02 .products-titleinfo:after, .shop-info .shop-txt .roaming-product.type03 .recommendedrate-list > li.type02 .products-titleinfo:after, .roaming-product.type01 .shop-info .shop-txt .recommendedrate-list > li.type03 .products-titleinfo:after, .shop-info .shop-txt .roaming-product.type01 .recommendedrate-list > li.type03 .products-titleinfo:after, .shop-info .shop-txt .roaming-product.type02 .recommendedrate-list > li.type03 .products-titleinfo:after, .shop-info .shop-txt .roaming-product.type03 .recommendedrate-list > li.type03 .products-titleinfo:after {
+  content: '';
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.75rem;
+  position: absolute;
+  left: 0;
+  top: 1rem;
+  background: url(/img/product/icon_category_roaming_01.png) no-repeat;
+  background-size: 2.75rem 2.75rem; }
+
+.roaming-product.type01 .recommendedrate-list > li.type02 .products-titleinfo:after, .shop-info .shop-txt .roaming-product.type02 .recommendedrate-list > li.type02 .products-titleinfo:after, .shop-info .shop-txt .roaming-product.type03 .recommendedrate-list > li.type02 .products-titleinfo:after {
+  content: '';
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.75rem;
+  position: absolute;
+  left: 0;
+  top: 1rem;
+  background: url(/img/product/icon_category_roaming_02.png) no-repeat;
+  background-size: 2.75rem 2.75rem; }
+
+.roaming-product.type01 .recommendedrate-list > li.type03 .products-titleinfo:after, .shop-info .shop-txt .roaming-product.type02 .recommendedrate-list > li.type03 .products-titleinfo:after, .shop-info .shop-txt .roaming-product.type03 .recommendedrate-list > li.type03 .products-titleinfo:after {
+  content: '';
+  display: inline-block;
+  width: 2.75rem;
+  height: 2.75rem;
+  position: absolute;
+  left: 0;
+  top: 1rem;
+  background: url(/img/product/icon_category_roaming_03.png) no-repeat;
+  background-size: 2.75rem 2.75rem; }
 
 .link-long-list.ntype01 {
   padding: 0; }

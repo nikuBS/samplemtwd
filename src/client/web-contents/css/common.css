@@ -23,7 +23,7 @@ html, body, form, div, p, h1, h2, h3, h4, h5, h6, dl, dt, dd, ul, ol, li, fields
   padding: 0;
   font-weight: 400;
   -webkit-text-size-adjust: none;
-  font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Noto Sans", "Noto Sans CJK", 'Droid Sans', Roboto, sans-serif;
+  font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", 'Droid Sans', "Noto Sans", "Noto Sans CJK", Roboto, sans-serif;
   font-style: normal; }
 
 body {
@@ -44,7 +44,11 @@ body {
   min-height: 100%; }
 
 .noscroll {
-  overflow: hidden; }
+  overflow: hidden;
+  height: 100%; }
+
+.noscroll > .wrap {
+  position: relative; }
 
 .wrap {
   width: 100%;
@@ -4265,7 +4269,7 @@ a.ui-button:active,
   .bt-dropdown .tx-default {
     letter-spacing: 0;
     font-weight: 500;
-    font-family: "Noto Sans", "Noto Sans CJK"; }
+    font-family: 'Droid Sans', "Noto Sans", "Noto Sans CJK"; }
 
 .tx-dropdown-box {
   font-size: 1rem;
