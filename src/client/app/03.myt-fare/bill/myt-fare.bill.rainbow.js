@@ -159,13 +159,6 @@ Tw.MyTFareBillRainbow.prototype = {
 
     this.$isPointValid = this._validation.showAndHideErrorMsg(this.$point, isValid);
   },
-  _isValidForAuto: function () {
-    var isValid = this._validation.checkIsMore(parseInt(this.$standardPoint.attr('id'), 10), 1000);
-    if (!isValid) {
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.UP_TO_TEN);
-    }
-    return isValid;
-  },
   _onePay: function () {
     if (this.$isPointValid && this.$isOneSelectValid) {
       var reqData = this._makeRequestDataForOne();
@@ -175,7 +168,7 @@ Tw.MyTFareBillRainbow.prototype = {
     }
   },
   _autoPay: function () {
-    if (this._isValidForAuto() && this.$isAutoSelectValid) {
+    if (this.$isAutoSelectValid) {
       var reqData = this._makeRequestDataForAuto();
       this._apiService.request(Tw.API_CMD.BFF_07_0056, reqData)
         .done($.proxy(this._paySuccess, this, 'auto'))

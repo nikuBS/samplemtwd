@@ -271,7 +271,7 @@ Tw.MyTFareBillOptionRegister.prototype = {
       reqData.cntcNum = $.trim(this.$accountPhoneNumber.val());
     } else {
       reqData.bankCardNum = $.trim(this.$cardNumber.val());
-      reqData.cardEffYm = $.trim(this.$cardY.val()).substr(2,2)  + $.trim(this.$cardM.val());
+      reqData.cardEffYm = $.trim(this.$cardY.val()) + $.trim(this.$cardM.val());
       reqData.cntcNum = $.trim(this.$cardPhoneNumber.val());
       reqData.drwts = this.$paymentDate.attr('id').toString();
     }
