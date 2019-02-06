@@ -138,6 +138,26 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
     var $elem = $(e.currentTarget).parents('li'),
       number = $elem.data('number');
 
+    this._isChangeFriend = false;
+    this._popupService.openConfirmButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A43.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A43.TITLE,
+      $.proxy(this._setToggleFriendFlag, this), $.proxy(this._onCloseToggleFriendConfirm, this, number),
+      Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A43.BUTTON);
+  },
+
+  _setToggleFriendFlag: function() {
+    this._isChangeFriend = true;
+    this._popupService.close();
+  },
+
+  _onCloseToggleFriendConfirm: function(number) {
+    if (!this._isChangeFriend) {
+      return;
+    }
+
+    this._toggleFriendReq(number);
+  },
+
+  _toggleFriendReq: function(number) {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     this._apiService.request(Tw.API_CMD.BFF_10_0071, {
