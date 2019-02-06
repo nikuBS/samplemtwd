@@ -32,12 +32,12 @@
 					<div class="data-list-type1">
 						<ul class="type1">
                             <% histories.list.map((history, idx) => { %>
-                                <li data-idx="<%= idx %>">
+                                <li data-idx="<%= idx %>" data-serial-number="<%= history.shrPotSerNum %>">
                                     <span class="stit"><strong><%= history.shrPotGbQty %>GB</strong> 공유</span>
                                     <div class="sta">
                                         <span><%= history.shrPotDonaAplyDt %></span>
                                     </div>
-                                    <div class="use fe-before" data-serial-number="<%= history.shrPotSerNum %>">
+                                    <div class="use fe-before">
                                         <button type="button" class="btn-round2 btn-style3">조회</button>
                                     </div>
                                 </li>

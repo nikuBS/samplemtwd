@@ -1,16 +1,21 @@
-Tw.MyTDataFamilyHistoryChange = function(rootEl, item, serial, changable) {
-  this.$container = rootEl;
-  this.$item = item;
+Tw.MyTDataFamilyHistoryChange = function() {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._serialNumber = serial;
-  this._changable = changable;
-
-  this._cachedElement();
-  this._bindEvent();
 };
 
 Tw.MyTDataFamilyHistoryChange.prototype = {
+  init: function(rootEl, item, changable) {
+    this.$container = rootEl;
+    this.$item = item;
+    this._serial = item.data('serial-number');
+    this._changable = changable;
+    this._all = false;
+    this.isSuccess = false;
+
+    this._cachedElement();
+    this._bindEvent();
+  },
+
   _bindEvent: function() {
     this.$container.on('click', '.btn-type01', $.proxy(this._addChangeeData, this));
     this.$container.on('click', '.cancel', $.proxy(this._validateChangeAmount, this));
@@ -34,10 +39,16 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
       if (this._all) {
         this.$input.val('');
         this.$input.removeAttr('disabled');
+        $(e.currentTarget)
+          .siblings('.btn-type01')
+          .removeAttr('disabled');
         this._all = false;
       } else {
         this.$input.val(this._changable.data);
         this.$input.attr('disabled', true);
+        $(e.currentTarget)
+          .siblings('.btn-type01')
+          .attr('disabled', true);
         this._all = true;
       }
     } else {
@@ -98,7 +109,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
 
     this._apiService
       .request(Tw.API_CMD.BFF_06_0074, {
-        shrpotSerNo: this._serialNumber,
+        shrpotSerNo: this._serial,
         cnlClCd: type,
         reqCnlGbGty: gb,
         reqCnlMbGty: mb
@@ -165,7 +176,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
 
   _requestRetrieve: function(requestCount) {
     this._apiService
-      .request(Tw.API_CMD.BFF_06_0072, { reqCnt: requestCount, shrpotSerNo: this._serialNumber })
+      .request(Tw.API_CMD.BFF_06_0072, { reqCnt: requestCount, shrpotSerNo: this._serial })
       .done($.proxy(this._handleDoneRetrieve, this));
   },
 
