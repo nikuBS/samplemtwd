@@ -244,8 +244,7 @@
 
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                                    <strong class="ti">잠시 후 다시 이용해 주세요</strong>
-                                    <p class="tx">시스템 점검중입니다.</p>
+                                    <strong class="ti">시스템 점검중입니다.</strong>
                                     <p class="desc"><%= homeData.usageData.fromDate %> ~ <%= homeData.usageData.toDate %></p>
                                 </div>
 
@@ -342,7 +341,7 @@
                         </div>
 
                         <% if (svcType.login && svcType.mobilePhone) { %>
-                        <% if (homeData.membershipData) { %>
+                        <% if (homeData.membershipData.code === '00') { %>
                         <div id="fe-membership-extend" class="main-membershop-box">
                             <strong class="ti">membershop</strong>
                             <span id="fe-membership-gr" class="rating <%= homeData.membershipData.mbrGrStr %>" data-mbrgr="<%= homeData.membershipData.mbrGrStr %>"><%= homeData.membershipData.mbrGrStr %></span>
@@ -355,8 +354,8 @@
                             </span>
                             <% } %>
                         </div>
-                        <% } else { %>
-                        <!-- 미발급 / 이용정지-->
+                        <% } else if (homeData.membershipData.code === 'MBR0002') { %>
+                        <!-- 미발급 -->
                         <div id="fe-membership-go" class="main-membershop-box">
                             <button class="ti-tx">
                                 <strong class="ti">아직 멤버십 카드가 없으신가요?</strong>

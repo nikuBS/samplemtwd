@@ -200,10 +200,13 @@ class MainHome extends TwViewController {
   }
 
   private getMembershipData(): Observable<any> {
-    let membershipData = null;
+    let membershipData = {
+      code: ''
+    };
     return this.apiService.request(API_CMD.BFF_04_0001, {}).map((resp) => {
+      membershipData.code = resp.code;
       if ( resp.code === API_CODE.CODE_00 ) {
-        membershipData = this.parseMembershipData(resp.result);
+        membershipData = Object.assign(membershipData, this.parseMembershipData(resp.result));
       }
       return membershipData;
     });
