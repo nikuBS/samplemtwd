@@ -189,11 +189,32 @@ Tw.CommonSearch.prototype = {
       }
     );
     //Tw.CommonHelper.openUrlExternal(linkUrl);
-    this._historyService.goLoad(linkUrl);
+    if(linkUrl.indexOf('BPCP')>-1){
+      this._getBPCP(linkUrl);
+    }else{
+      this._historyService.goLoad(linkUrl);
+    }
 
   },
   _closeSearch : function () {
     this._historyService.go(Number(this._step)*-1);
+  },
+  _getBPCP: function (url) {
+    var replaceUrl = url.replace('BPCP:', '');
+    this._apiService.request(Tw.API_CMD.BFF_01_0039, { bpcpServiceId: replaceUrl })
+      .done($.proxy(this._responseBPCP, this));
+  },
+  _responseBPCP: function (resp) {
+    if ( resp.code !== Tw.API_CODE.CODE_00 ) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    var url = resp.result.svcUrl;
+    if ( !Tw.FormatHelper.isEmpty(resp.result.tParam) ) {
+      url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
+    }
+
+    Tw.CommonHelper.openUrlInApp(url);
   }
 
 

@@ -23,7 +23,7 @@ class CommonSearch extends TwViewController {
 
     const query =  encodeURI(req.query.keyword) || '';
     const collection = 'all';
-    const step = req.query.step || 1;
+    const step = req.header('referer') ? req.query.step : 1 || 1;
     let requestObj, researchCd, researchQuery;
     if (FormatHelper.isEmpty(req.query.in_keyword)) {
       requestObj = { query , collection };
