@@ -7,9 +7,9 @@
                     {{#each data}}
                         <!-- .cont-box -->
                         <div class="cont-box nogaps">
-                            <div class="box-chk-link">
+                            <div class="box-chk-link" style="padding-bottom:55px">
                                 {{#if type}}<p class="link-long-ti">{{type}}</p>{{/if}}
-                                <ul class="chk-link-list" style="bottom: 3.5rem !important;">
+                                <ul class="chk-link-list">
                                     {{#each list}}
                                         <li>
                                             <button {{{attr}}}>
@@ -33,7 +33,7 @@
                                         </li>
                                     {{/each}}
                                 </ul>
-                                <button type="button" class="btn-floating btn-style3 tw-popup-closeBtn" style="position:fixed;bottom:0">닫기</button>
+                                <button type="button" class="btn-floating btn-style3 tw-popup-closeBtn" style="position:fixed; bottom:0;">닫기</button>
                             </div>
                         </div>
                         <!--// .cont-box -->
