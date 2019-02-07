@@ -309,7 +309,7 @@ Tw.MyTDataSubMain.prototype = {
       this.$patternChart.find('.tit').text(Tw.MYT_DATA_PATTERN_TITLE.DATA);
       unit = Tw.CHART_UNIT.GB;
       data = this.data.pattern.data;
-      var baseTotalData = 0, baseTotalVoice = 0;
+      var baseTotalData = 0, baseTotalVoice = 0, baseTotalSms = 0;
       for ( idx = 0; idx < data.length; idx++ ) {
         var usageData = parseInt(data[idx].totalUsage, 10);
         baseTotalData += usageData;/*parseInt(data[idx].basOfrUsage, 10)*/
@@ -344,12 +344,17 @@ Tw.MyTDataSubMain.prototype = {
           unit = Tw.CHART_UNIT.SMS;
           data = this.data.pattern.sms;
           for ( idx = 0; idx < data.length; idx++ ) {
+            baseTotalSms += parseInt(data[idx].totalUsage, 10);
             chart_data.push({
               t: Tw.DateHelper.getShortKoreanMonth(data[idx].invMth), // 각 항목 타이틀
               v: parseInt(data[idx].totalUsage, 10) // 배열 평균값으로 전달
             });
           }
         }
+      }
+      // 최근사용량이 모두 없는 경우
+      if ( baseTotalData === 0 && baseTotalVoice === 0 && baseTotalSms === 0 ) {
+        chart_data = [];
       }
       if ( chart_data.length > 0 ) {
         this.$patternChart.chart2({
@@ -432,10 +437,10 @@ Tw.MyTDataSubMain.prototype = {
           }
           else if ( item.sms.length > 0 ) {
             var smsTotalData = item.sms[0].total;
-            if (item.sms[0].isUnlimit && smsTotalData) {
+            if ( item.sms[0].isUnlimit && smsTotalData ) {
               var isStandard = smsTotalData === Tw.COMMON_STRING.STANDARD;
               data = {
-                data: isStandard? Tw.COMMON_STRING.UNLIMIT : smsTotalData,
+                data: isStandard ? Tw.COMMON_STRING.UNLIMIT : smsTotalData,
                 unit: isStandard ? '' : Tw.SMS_UNIT
               };
             }
