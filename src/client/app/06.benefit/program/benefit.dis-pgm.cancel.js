@@ -120,7 +120,7 @@ Tw.BenefitDisPgmCancel.prototype = {
       {
         hbs: 'complete_product',
         data: {
-          mytPage: 'additions',
+          mytPage: 'submain',
           btClass: 'item-one',
           prodId: this._prodId,
           prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
@@ -139,6 +139,14 @@ Tw.BenefitDisPgmCancel.prototype = {
 
   _openResPopupEvent: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
+    $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
+  },
+
+  _closeAndGo: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
   },
 
   _openVasTermPopup: function(respResult) {
