@@ -16,3 +16,17 @@
         <span class="modify"><strong>0GB</strong>변경불가</span>
     </div>
 </script>
+
+<script id="fe-tmpl-items" type="text/x-handlebars-template">
+    {{#each items}}
+        <li data-idx="{{idx}}" data-serial-number="{{shrPotSerNum}}">
+            <span class="stit"><strong>{{shrPotGbQty}}GB</strong> 공유</span>
+            <div class="sta">
+                <span>{{shrPotDonaAplyDt}}</span>
+            </div>
+            <div class="use fe-before">
+                <button type="button" class="btn-round2 btn-style3">조회</button>
+            </div>
+        </li>
+    {{/each}}
+</script>

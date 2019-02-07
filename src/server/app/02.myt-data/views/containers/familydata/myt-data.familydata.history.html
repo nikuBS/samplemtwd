@@ -31,7 +31,9 @@
 					</div>
 					<div class="data-list-type1">
 						<ul class="type1">
-                            <% histories.list.map((history, idx) => { %>
+                            <% const DEFAULT_LIST_COUNT = 20, length = Math.min(histories.list.length, DEFAULT_LIST_COUNT);
+                            for (let idx = 0; idx < length; idx++) {
+                                const history = histories.list[idx]; %>
                                 <li data-idx="<%= idx %>" data-serial-number="<%= history.shrPotSerNum %>">
                                     <span class="stit"><strong><%= history.shrPotGbQty %>GB</strong> 공유</span>
                                     <div class="sta">
@@ -41,16 +43,18 @@
                                         <button type="button" class="btn-round2 btn-style3">조회</button>
                                     </div>
                                 </li>
-                            <% }); %>
+                            <% } %>
 						</ul>
                     </div>
                     
-                    <!-- .btn-more -->
-                    <!-- <div class="btn-more">
-                        <button>더 보기</button>
-                    </div> -->
-                    <!-- // .btn-more -->
-
+                    <% const leftCount = histories.list.length - DEFAULT_LIST_COUNT; 
+                    if (leftCount > 0) { %>
+                        <!-- .btn-more -->
+                        <div class="btn-more">
+                            <button>더 보기</button>
+                        </div>
+                        <!-- // .btn-more -->
+                    <% } %>
 				</div>
                 <!--// .cont-box -->
                 

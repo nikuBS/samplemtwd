@@ -10,6 +10,7 @@ Tw.MyTDataFamilyHistory = function(rootEl, histories) {
   this._popupService = Tw.Popup;
   this._histories = histories;
 
+  this._cachedElement();
   this._bindEvent();
   this._init();
 };
@@ -20,11 +21,18 @@ Tw.MyTDataFamilyHistory.prototype = {
     this._ingTmpl = Handlebars.compile($('#fe-tmpl-ing').html());
     this._afterTmpl = Handlebars.compile($('#fe-tmpl-after').html());
     this._noneTmpl = Handlebars.compile($('#fe-tmpl-after-none').html());
+    this._itemsTmpl = Handlebars.compile($('#fe-tmpl-items').html());
+    this._leftCount = this._histories.length - Tw.DEFAULT_LIST_COUNT;
   },
 
   _bindEvent: function() {
     this.$container.on('click', '.fe-before', $.proxy(this._handleRetrieveData, this));
     this.$container.on('click', '.fe-edit', $.proxy(this._handleClickEditData, this));
+    this.$container.on('click', '.btn-more', $.proxy(this._handleLoadMore, this));
+  },
+
+  _cachedElement: function() {
+    this.$list = this.$container.find('ul.type1');
   },
 
   _handleRetrieveData: function(e) {
@@ -162,6 +170,20 @@ Tw.MyTDataFamilyHistory.prototype = {
     if (this._isClose) {
       history.back();
       this._isClose = false;
+    }
+  },
+
+  _handleLoadMore: function(e) {
+    var display = this._histories.length - this._leftCount,
+      items = _.map(this._histories.slice(display, display + Tw.DEFAULT_LIST_COUNT), function(item, idx) {
+        item.idx = display + idx;
+        return item;
+      });
+
+    this.$list.append(this._itemsTmpl({ items: items }));
+    this._leftCount = this._leftCount - Tw.DEFAULT_LIST_COUNT;
+    if (this._leftCount <= 0) {
+      $(e.currentTarget).remove();
     }
   }
 };
