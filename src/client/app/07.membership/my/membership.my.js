@@ -80,7 +80,8 @@ Tw.MembershipMy.prototype = {
   _renderTemplate: function(params, res) {
     if(res.code === Tw.API_CODE.CODE_00){
       res = res.result;
-      if(res.length < 1){
+      if(res.length < 1){ //이용내역이 없을 때
+        this.$list.hide();
         this.$more.hide();
         this.$empty.show();
       }else{
@@ -99,6 +100,7 @@ Tw.MembershipMy.prototype = {
     var strPeriod = sDate + ' - ' + eDate;
     this.$strPeriod.text(strPeriod);
 
+    this.$list.show();
     this.$list.empty();
     this.$more.hide();
     this.$empty.hide();
@@ -189,6 +191,8 @@ Tw.MembershipMy.prototype = {
   _onActionSelected: function(currentSheet, e) {
       var dateTxt = $(e.target).parents('label').attr('value');
       $('#'+currentSheet).text(dateTxt);
+
+      this._popupService.close();
   },
 
   _requestReissueInfo: function() {
