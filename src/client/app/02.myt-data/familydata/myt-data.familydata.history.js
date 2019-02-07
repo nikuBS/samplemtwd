@@ -10,46 +10,55 @@ Tw.MyTDataFamilyHistory = function(rootEl, histories) {
   this._popupService = Tw.Popup;
   this._histories = histories;
 
+  this._cachedElement();
   this._bindEvent();
   this._init();
 };
 
 Tw.MyTDataFamilyHistory.prototype = {
   _init: function() {
+    this._historyChange = new Tw.MyTDataFamilyHistoryChange();
     this._ingTmpl = Handlebars.compile($('#fe-tmpl-ing').html());
     this._afterTmpl = Handlebars.compile($('#fe-tmpl-after').html());
     this._noneTmpl = Handlebars.compile($('#fe-tmpl-after-none').html());
+    this._itemsTmpl = Handlebars.compile($('#fe-tmpl-items').html());
+    this._leftCount = this._histories.length - Tw.DEFAULT_LIST_COUNT;
   },
 
   _bindEvent: function() {
     this.$container.on('click', '.fe-before', $.proxy(this._handleRetrieveData, this));
     this.$container.on('click', '.fe-edit', $.proxy(this._handleClickEditData, this));
+    this.$container.on('click', '.btn-more', $.proxy(this._handleLoadMore, this));
+  },
+
+  _cachedElement: function() {
+    this.$list = this.$container.find('ul.type1');
   },
 
   _handleRetrieveData: function(e) {
     var $target = $(e.currentTarget),
-      serialNumber = $target.data('serial-number'),
       $parent = $target.parent('li');
 
     $target.addClass('none');
     $parent.append(this._ingTmpl());
-    this._requestRetrieve(serialNumber, '0', $target, $parent);
+    this._requestRetrieve('0', $target, $parent);
   },
 
-  _requestRetrieve: function(serialNumber, requestCount, $before, $parent) {
+  _requestRetrieve: function(requestCount, $before, $parent) {
+    var serial = $parent.data('serial-number');
     this._apiService
-      .request(Tw.API_CMD.BFF_06_0072, { reqCnt: requestCount, shrpotSerNo: serialNumber })
-      .done($.proxy(this._handleDoneRetrieve, this, serialNumber, $before, $parent));
+      .request(Tw.API_CMD.BFF_06_0072, { reqCnt: requestCount, shrpotSerNo: serial })
+      .done($.proxy(this._handleDoneRetrieve, this, $before, $parent));
   },
 
-  _handleDoneRetrieve: function(serialNumber, $before, $parent, resp) {
+  _handleDoneRetrieve: function($before, $parent, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00 || !resp.result) {
       this._setRetrieveStatus($before);
       return;
     }
 
     if (resp.result.nextReqYn === 'Y') {
-      setTimeout($.proxy(this._requestRetrieve, this, serialNumber, resp.result.reqCnt, $before, $parent), 3000);
+      setTimeout($.proxy(this._requestRetrieve, this, resp.result.reqCnt, $before, $parent), 3000);
     } else if (!resp.result.remGbGty && !resp.result.remMbGty) {
       this._setRetrieveStatus($before);
     } else {
@@ -64,7 +73,7 @@ Tw.MyTDataFamilyHistory.prototype = {
   },
 
   _handleSuccessRetrieve: function(share, $before, $parent) {
-    var serial = $before.data('serial-number');
+    var serial = $parent.data('serial-number');
     $before.siblings('.fe-ing').remove();
 
     var nData = Number(share.remGbGty) + Number(share.remMbGty) / 1000 || 0;
@@ -79,7 +88,7 @@ Tw.MyTDataFamilyHistory.prototype = {
     var $target = $(e.currentTarget),
       $parent = $target.closest('li'),
       idx = $parent.data('idx') || 0,
-      serial = $target.data('serial-number'),
+      serial = $parent.data('serial-number'),
       changable = {
         gb: $target.data('gb'),
         mb: $target.data('mb')
@@ -90,11 +99,11 @@ Tw.MyTDataFamilyHistory.prototype = {
     if (serial) {
       this._apiService
         .request(Tw.API_CMD.BFF_06_0073, { shrpotSerNo: serial })
-        .done($.proxy(this._handleDoneGetHistories, this, $parent, serial, idx, changable));
+        .done($.proxy(this._handleDoneGetHistories, this, $parent, idx, changable));
     }
   },
 
-  _handleDoneGetHistories: function($parent, serial, idx, changable, resp) {
+  _handleDoneGetHistories: function($parent, idx, changable, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
@@ -113,7 +122,7 @@ Tw.MyTDataFamilyHistory.prototype = {
         data: changable.data,
         histories: histories
       },
-      $.proxy(this._handleOpenChangePopup, this, $parent, serial, changable),
+      $.proxy(this._handleOpenChangePopup, this, $parent, changable),
       $.proxy(this._handleCloseChangePopup, this)
     );
   },
@@ -136,8 +145,8 @@ Tw.MyTDataFamilyHistory.prototype = {
     $layer.on('click', '.fe-submain', this._popupService.close);
   },
 
-  _handleOpenChangePopup: function($parent, serial, changable, $layer) {
-    this._historyChange = new Tw.MyTDataFamilyHistoryChange($layer, $parent, serial, changable);
+  _handleOpenChangePopup: function($parent, changable, $layer) {
+    this._historyChange.init($layer, $parent, changable);
     $layer.on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
   },
 
@@ -161,6 +170,20 @@ Tw.MyTDataFamilyHistory.prototype = {
     if (this._isClose) {
       history.back();
       this._isClose = false;
+    }
+  },
+
+  _handleLoadMore: function(e) {
+    var display = this._histories.length - this._leftCount,
+      items = _.map(this._histories.slice(display, display + Tw.DEFAULT_LIST_COUNT), function(item, idx) {
+        item.idx = display + idx;
+        return item;
+      });
+
+    this.$list.append(this._itemsTmpl({ items: items }));
+    this._leftCount = this._leftCount - Tw.DEFAULT_LIST_COUNT;
+    if (this._leftCount <= 0) {
+      $(e.currentTarget).remove();
     }
   }
 };
