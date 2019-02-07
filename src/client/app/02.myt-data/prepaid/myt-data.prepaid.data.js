@@ -259,7 +259,7 @@ Tw.MyTDataPrepaidData.prototype = {
   _rechargeSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._isRechargeSuccess = true;
-      this._popupService.close();
+      this._popupService.closeAll();
     } else {
       this._rechargeFail(res);
     }
