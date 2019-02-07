@@ -182,7 +182,7 @@ Tw.CustomerEmailServiceOption.prototype = {
       var fnSelectBrand = function (item) {
         return {
           value: item.brandNm,
-          option: false,
+          option: $elButton.text() === item.brandNm ? 'checked' : '',
           attr: 'data-brandCd=' + item.brandCd
         };
       };
@@ -207,7 +207,7 @@ Tw.CustomerEmailServiceOption.prototype = {
       var fnSelectDevice = function (item) {
         return {
           value: item.modelNickName,
-          option: false,
+          option: $elButton.text() === item.modelNickName ? 'checked' : '',
           attr: 'data-phoneid=' + item.phoneId
         };
       };

@@ -45,9 +45,15 @@ Tw.MyTDataGiftImmediately.prototype = {
     this.$wrap.on('showUnableGift', $.proxy(this._showUnableGift, this));
   },
 
-  _showUnableGift: function (errorCode) {
-    var $wrapImmediatelyGift = $('#tab1-tab');
-    switch ( errorCode ) {
+  _showUnableGift: function (e, errorCode) {
+    var $wrapImmediatelyGift = $('.fe-wrap-immediately');
+    var code = e;
+
+    if ( !!errorCode ) {
+      code = errorCode;
+    }
+
+    switch ( code ) {
       case 'GFT0001':
         $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0001 }));
         break;
@@ -58,7 +64,7 @@ Tw.MyTDataGiftImmediately.prototype = {
         $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0003 }));
         break;
       case 'GFT0004':
-        $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0004 }));
+        $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0004.CONTENT1 }));
         break;
       case 'GFT0005':
         $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0005 }));
@@ -66,7 +72,11 @@ Tw.MyTDataGiftImmediately.prototype = {
       case 'GFT00013':
         $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0013 }));
         break;
+      case 'ZORDC1020':
+        $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0013 }));
+        break;
       default:
+        $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.DEFAULT }));
     }
   },
 
@@ -74,7 +84,7 @@ Tw.MyTDataGiftImmediately.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this.parsedGiftData = this._parseGiftData(resp.result);
     } else {
-      // this._showUnableGift(resp.code);
+      this._showUnableGift(resp.code);
     }
   },
 
