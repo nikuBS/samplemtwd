@@ -120,7 +120,7 @@ Tw.BenefitDisPgmCancel.prototype = {
       {
         hbs: 'complete_product',
         data: {
-          mytPage: 'additions',
+          mytPage: 'submain',
           btClass: 'item-one',
           prodId: this._prodId,
           prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
