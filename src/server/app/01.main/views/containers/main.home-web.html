@@ -181,9 +181,12 @@
                     <!-- 정지이력 -->
                     <strong class="ti"><i class="icon-warning-120"></i> 잔여량 조회 서비스를 이용하실 수 없습니다.</strong>
                     <p class="tx">회선정지 상태이거나 일시 정지 이력이 있어 잔여량 조회 서비스를 이용할 수 없습니다. 자세한 사항은 고객센터나 <a href="/customer/emailconsult" class="bt">이메일</a>로 문의해 주시기 바랍니다.</p>
+                    <% } else if (homeData.usageData.code === 'BFF0006' || homeData.usageData.code === 'BFF0007') { %>
+                    <strong class="ti"><i class="icon-warning-120"></i> 시스템 점검중입니다.</strong>
+                    <p class="tx"><%= homeData.usageData.code %><br><%= homeData.usageData.msg %></p>
                     <% } else { %>
                     <strong class="ti"><i class="icon-warning-120"></i> 잔여량 조회 서비스를 이용하실 수 없습니다.</strong>
-                    <p class="tx"><%= homeData.usageData.code %><br><%= homeData.usageData.msg %></p>
+                    <p class="tx"><%= homeData.usageData.fromDate %> ~ <%= homeData.usageData.toDate %></p>
                     <% } %>
                     <% } %>
                     <% } %>
