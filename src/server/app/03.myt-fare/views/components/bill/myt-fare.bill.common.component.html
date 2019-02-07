@@ -4,23 +4,23 @@
 * Date: 2018.09.19
 %>
 <% if (unpaidList) { %>
-<div class="user-month-bill mt0 fe-unpaid-list">
+<div class="plan-pay-title fe-unpaid-list">
     <% for (var i = 0; i < unpaidList.length; i++) { %>
     <% if (unpaidList.defaultIndex === i) { %>
-    <div class="this-month-bill">
-        <p class="stit fe-svc-name"><%= unpaidList[i].svcName %></p>
-        <p class="term fe-svc-num"><%= unpaidList[i].svcNumber %>
+    <h3 class="tit">
+        <span class="pay-name fe-svc-name"><%= unpaidList[i].svcName %></span>
+        <span class="pay-line fe-svc-num"><%= unpaidList[i].svcNumber %>
             <% if (unpaidList.cnt > 1) { %>
             <span class="fe-multi-line"> 외 <span class="fe-line-cnt"><%= unpaidList.cnt - 1 %></span>개 회선</span>
             <% } %>
-        </p>
-        <p class="price mt10">
+        </span>
+        <span class="pay-fee">
             <span class="fe-amount" data-value="<%= unpaidList[i].intMoney %>"><%= unpaidList[i].invMoney %></span>원
-        </p>
-        <% if (unpaidList.cnt > 1) { %>
-        <span class="btn-wrap fe-select-line"><button type="button" class="btn-round2 btn-style3">납부회선 추가</button></span>
-        <% } %>
-    </div>
+        </span>
+    </h3>
+    <% if (unpaidList.cnt > 1) { %>
+    <div class="bt-alone fe-select-line"><button type="button" class="bt-bg-blue1">납부회선 추가</button></div>
+    <% } %>
     <% } %>
 
     <li id="<%= i %>" class="none fe-line checkbox type01-big <% if (unpaidList.defaultIndex === i) { %> checked <% } %>"
@@ -28,7 +28,7 @@
         data-bill-acnt-num="<%= unpaidList[i].billAcntNum %>"
         role="checkbox"
         aria-checked="<% if (unpaidList.defaultIndex === i) { %><%=true%><% } else { %><%=false%><% } %>"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-        <input type="checkbox" name="checkbox" value="" title="값2" aria-labelledby="aria-comp-checkbox2"
+        <input type="checkbox" name="checkbox" value="" title="함께 납부 가능한 회선" aria-labelledby="aria-comp-checkbox2"
         <% if (unpaidList.defaultIndex === i) { %> checked <% } %> />
         <!-- 체크상태일 경우 checked="false" -->
         <div class="comp-list-layout" id="aria-comp-checkbox2" aria-hidden="true">
