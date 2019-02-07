@@ -248,14 +248,17 @@ Tw.MyTFareHotBill.arrayToGroup = function (data, fieldInfo) {
       }
     }
 
+    // 빠지는 부분이 발생하여 아래와 같이 groupS 체크하는 부분 상위로 이동 (Edit: Kiminhwan)
+    if ( groupS.indexOf('*') > -1 ) {
+      groupS = groupS.replace(/\*/g, '');
+      noVAT = true;
+    }
+    else if ( groupS.indexOf('#') > -1 ) {
+      groupS = groupS.replace(/#/g, '');
+      is3rdParty = true;
+    }
+
     if ( !group[groupL][groupS] ) {
-      if ( groupS.indexOf('*') > -1 ) {
-        groupS = groupS.replace(/\*/g, '');
-        noVAT = true;
-      } else if ( groupS.indexOf('#') > -1 ) {
-        groupS = groupS.replace(/#/g, '');
-        is3rdParty = true;
-      }
       group[groupL][groupS] = { items: [], total: 0, noVAT: noVAT, is3rdParty: is3rdParty };
     }
 

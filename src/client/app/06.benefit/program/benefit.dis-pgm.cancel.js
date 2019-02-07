@@ -56,7 +56,7 @@ Tw.BenefitDisPgmCancel.prototype = {
       applyBtnText: Tw.BUTTON_LABEL.TERMINATE,
       isMobilePlan: false,
       joinTypeText: Tw.PRODUCT_TYPE_NM.TERMINATE,
-      typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
+      typeText: Tw.PRODUCT_CTG_NM.DISCOUNT_PROGRAM,
       toProdName: this._confirmOptions.preinfo.reqProdInfo.prodNm,
       toProdDesc: this._confirmOptions.preinfo.reqProdInfo.prodSmryDesc,
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
