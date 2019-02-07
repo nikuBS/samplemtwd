@@ -1,0 +1,76 @@
+<%#
+* FileName: myt-fare.info.cancel-draw.html
+* Author: Lee Kirim (kirim@sk.com)
+* Date: 2019. 2. 1
+%>
+<% include ../../components/start.component.html %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+    <div class="popup-page tw-popup fixed-bottom h60 nobg">
+        <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>자동납부 통합 인출 해지</h1>
+                </div>
+                 <!-- .popup-closeBtn -->
+                <button class="prev-step fe-common-back">취소</button>
+                <!--// .popup-closeBtn -->
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="data-result">
+                        <p class="tit"><%=data.bankName%></p>
+                        <p class="data"><em><%=data.bankAccount%></em></p>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                <!-- 2018 09-21 마크업구조 변경-->
+                <div class="cont-box noborder nogaps">
+                    <div class="notice-comp-infolist">
+                        <dl>
+                            <dt></dt>
+                            <dd>자동납부 통합인출 서비스는 동일한 계좌로 여러 회선을 사용하는 경우 요금납부를 1건으로 통합 관리할 수 있는 서비스 입니다.</dd>
+                            <dd>인출 예정일 2일전에(영업일 기준) 서비스 해지 신청을 하시면 당월부터 기존과 같이 청구서 별 요금이 각각 출금되며, 이후에 신청하시면 다음 달 부터 적용됩니다.</dd>
+                        </dl>
+                    </div>
+                </div>
+                <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1 fe-btn-cancel">
+                            <button>해지 신청</button>
+                        </li>
+                    </ul>
+                </div>
+                <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+            </div>
+        </div>
+        <!-- // .container-wrap -->
+       
+    </div>
+</div>
+</body>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTFareInfoCancelDraw($(document), '<%- JSON.stringify(data) %>');
+  });
+</script>
+<% include ../../components/end.component.html %>
