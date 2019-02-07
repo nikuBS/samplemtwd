@@ -471,12 +471,21 @@ Tw.MainHome.prototype = {
   _drawGiftData: function (element, result, sender) {
     var $giftTemp = $('#fe-smart-gift');
     var tplGiftCard = Handlebars.compile($giftTemp.html());
+
     element.html(tplGiftCard(result));
     element.removeClass('empty');
-    element.on('click', '#fe-bt-go-gift', $.proxy(this._onClickBtGift, this, sender));
+
+    var $textBalance = element.find('#fe-text-gift-balance');
+    var $btBalance = element.find('#fe-bt-gift-balance');
+    var $loading = element.find('#fe-text-gift-loading');
+    var $textError = element.find('#fe-text-error');
+    var $btGoGift = element.find('#fe-bt-go-gift');
+    var $textErrorBalance = element.find('#fe-text-error-balance');
+
+    $btGoGift.on('click', $.proxy(this._onClickBtGift, this, sender));
     if ( !result.blockUsage ) {
-      element.on('click', '#fe-bt-gift-balance', $.proxy(this._onClickGiftBalance, this, element));
-      this._getGiftBalance(element, 0);
+      $btBalance.on('click', $.proxy(this._onClickGiftBalance, this, $textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance));
+      this._getGiftBalance(0, $textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance);
     }
   },
   _parseGiftData: function (sender) {
@@ -487,17 +496,14 @@ Tw.MainHome.prototype = {
       goodFamilyMemberYn: sender.goodFamilyMemberYn === 'Y'
     };
   },
-  _getGiftBalance: function ($element, reqCnt) {
+  _getGiftBalance: function (reqCnt, $textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance) {
     setTimeout($.proxy(function () {
       this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: reqCnt })
-        .done($.proxy(this._successGiftRemain, this, $element));
+        .done($.proxy(this._successGiftRemain, this, $textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance));
     }, this), 3000);
 
   },
-  _successGiftRemain: function ($element, resp) {
-    var $textBalance = $element.find('#fe-text-gift-balance');
-    var $btBalance = $element.find('#fe-bt-gift-balance');
-    var $loading = $element.find('#fe-text-gift-loading');
+  _successGiftRemain: function ($textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( resp.result.giftRequestAgainYn === 'N' ) {
         if ( !Tw.FormatHelper.isEmpty(resp.result.dataRemQty) ) {
@@ -509,15 +515,17 @@ Tw.MainHome.prototype = {
         } else {
           $loading.parent().addClass('none');
           $btBalance.parent().removeClass('none');
-          // this._getGiftBalance($element, resp.result.reqCnt);
         }
       } else {
-        this._getGiftBalance($element, resp.result.reqCnt);
+        this._getGiftBalance(resp.result.reqCnt, $textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance);
       }
     } else {
-      // Tw.Error(resp.code, resp.msg).pop();
+      $btGoGift.parent().addClass('none');
+      $textError.text(resp.msg);
+      $textError.removeClass('none');
+
       $loading.parent().addClass('none');
-      $btBalance.parent().removeClass('none');
+      $textErrorBalance.removeClass('none');
     }
   },
   _onClickBtGift: function (sender) {
@@ -533,14 +541,11 @@ Tw.MainHome.prototype = {
       this._popupService.openAlert(Tw.ALERT_MSG_HOME.A06);
     }
   },
-  _onClickGiftBalance: function ($element) {
-    var $btBalance = $element.find('#fe-bt-gift-balance');
-    var $loading = $element.find('#fe-text-gift-loading');
-
+  _onClickGiftBalance: function ($textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance) {
     $loading.parent().removeClass('none');
     $btBalance.parent().addClass('none');
 
-    this._getGiftBalance($element, 0);
+    this._getGiftBalance(0, $textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance);
   },
   _getRechargeData: function (element) {
     this._apiService.request(Tw.API_CMD.BFF_06_0001, {})
