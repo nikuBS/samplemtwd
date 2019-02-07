@@ -25,6 +25,7 @@ Tw.CertificationSk = function () {
   this._onKeyin = false;
   this._jobCode = null;
   this._allSvcInfo = null;
+  this._methodCnt = 0;
 
   this._addTimer = null;
   this._addTime = null;
@@ -41,7 +42,7 @@ Tw.CertificationSk.prototype = {
     ATH1221: 'ATH1221',     // 인증번호 유효시간이 경과되었습니다.
     ATH2000: 'ATH2000',
     ATH2011: 'ATH2011',     //
-    ATH2014: 'ATH2014',
+    ATH2014: 'ATH2014'
   },
   checkSmsEnable: function (svcInfo, opMethods, optMethods, methodCnt, callback) {
     if ( Tw.FormatHelper.isEmpty(this._allSvcInfo) ) {
@@ -96,6 +97,7 @@ Tw.CertificationSk.prototype = {
     this._authKind = authKind;
     this._callback = callback;
     this._prodAuthKey = prodAuthKey;
+    this._methodCnt = methodCnt;
 
     if ( Tw.FormatHelper.isEmpty(this._allSvcInfo) ) {
       this._getAllSvcInfo($.proxy(this._onSuccessAllSvcInfo, this, opMethods, optMethods, isWelcome, methodCnt));
@@ -263,6 +265,13 @@ Tw.CertificationSk.prototype = {
       }
     }
   },
+  _checkCertType: function () {
+    if ( this._securityAuth ) {
+      this._getMdn();
+    } else {
+      this._requestCert();
+    }
+  },
   _getMdn: function () {
     this._nativeService.send(Tw.NTV_CMD.GET_MDN, {}, $.proxy(this._onMdn, this));
   },
@@ -273,13 +282,6 @@ Tw.CertificationSk.prototype = {
       this._securityMdn = 'usim';
     }
     this._requestCert();
-  },
-  _checkCertType: function () {
-    if ( this._securityAuth ) {
-      this._getMdn();
-    } else {
-      this._requestCert();
-    }
   },
   _requestCert: function () {
     if ( this._authKind === Tw.AUTH_CERTIFICATION_KIND.R ) {
@@ -338,7 +340,11 @@ Tw.CertificationSk.prototype = {
       this._clearCertError();
       this.$errorCertCnt.removeClass('none');
     } else if ( resp.code === this.SMS_ERROR.ATH2000 ) {
-      this._popupService.openAlert(resp.msg, null, null, $.proxy(this._onCloseMdnCertFail, this));
+      if ( this._methodCnt === 1 ) {
+        this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_MDN_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_MDN_BLOCK.TITLE);
+      } else {
+        this._popupService.openAlert(resp.msg, null, null, $.proxy(this._onCloseMdnCertFail, this));
+      }
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
