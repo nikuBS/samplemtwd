@@ -14,7 +14,6 @@ Tw.MyTDataHistory = function(rootEl, histories) {
 };
 
 Tw.MyTDataHistory.prototype = {
-  DEFAULT_LIST_COUNT: 20,
   TYPES: {
     DATA_GIFT: 0,
     LIMIT_CHARGE: 1,
@@ -30,7 +29,7 @@ Tw.MyTDataHistory.prototype = {
     this._histories[this.TYPES.ALL] = histories.all;
 
     this._displayCount = {};
-    this._displayCount[this._type] = this.DEFAULT_LIST_COUNT;
+    this._displayCount[this._type] = Tw.DEFAULT_LIST_COUNT;
 
     if (this._type !== this.TYPES.ALL) {
       this._histories[this._type] = histories.display;
@@ -53,7 +52,7 @@ Tw.MyTDataHistory.prototype = {
 
   _handleLoadMore: function() {
     var type = this._type,
-      items = this._histories[type].slice(this._displayCount[type], this._displayCount[type] + this.DEFAULT_LIST_COUNT);
+      items = this._histories[type].slice(this._displayCount[type], this._displayCount[type] + Tw.DEFAULT_LIST_COUNT);
 
     this.$list.append(this._itemsTmpl({ items: items }));
 
