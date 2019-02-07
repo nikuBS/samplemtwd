@@ -261,7 +261,7 @@ Tw.MyTFareInfoHistory.prototype = {
     );*/
   },
 
-  _autoWithdrawalOpenCallback: function ($container) {
+  /*_autoWithdrawalOpenCallback: function ($container) {
     $container.on('click', '.bt-red1 button', $.proxy(this._processAutoWithdrawalCancel, this));
   },
 
@@ -280,7 +280,7 @@ Tw.MyTFareInfoHistory.prototype = {
     } else {
       $.proxy(this._apiError, this);
     }
-  },
+  },*/
   // 자동납부 통합인출 해지 end
 
   // 분류선택 
