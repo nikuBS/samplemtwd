@@ -20,7 +20,7 @@
             </li>
             <li>
                 <span class="title">결합회선</span>
-                <span class="tx-cont"><%= groupInfo.mblSvcCnt %>회선</span>
+                <span class="tx-cont"><%= groupInfo.mblSvcCnt + groupInfo.wirSvcCnt %>회선</span>
             </li>
             <li>
                 <span class="title">가입상태</span>
@@ -35,8 +35,8 @@
             <div class="widget-box horizontal">
                 <div class="horizontal-slide">
                     <ul class="horizontal-list" style="width: 471px;">
-                        <% const benefit = combination.combinationWirelessMemberList.length > 4 ? 4 : combination.combinationWirelessMemberList.length %>
-                        <% if (benefit > 0) { %>
+                        <% const benefit = combination.combinationWirelessMemberList.length;
+                        if (benefit > 0) { %>
                             <li>
                                 <button class="bg1">
                                     <!-- 파란색 -->
@@ -150,12 +150,6 @@
                                         </li>
                                         <li>
                                             <dl>
-                                                <dt>B인터넷 가입여부</dt>
-                                                <dd><%= member.bIdx >= 0 ? combination.combinationWireMemberList[member.bIdx].svcCdNm : '-' %></dd>
-                                            </dl>
-                                        </li>
-                                        <li>
-                                            <dl>
                                                 <dt>혜택1</dt>
                                                 <dd>
                                                     <%= member.dataBenf === '2053-DAT1G'? '데이터500M 무료' : 'LTE안심옵션 무료' %><br />
@@ -169,6 +163,55 @@
                                                 <dd><%= member.asgnNum || '-' %><br />
                                                     <% if (isMine && benefit > 2) { %><button class="bt-link-tx underline fe-benefit" data-index="2" data-benefit="<%= member.asgnNum %>">변경</button><% } %>
                                                 </dd>
+                                            </dl>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    <% }); %>
+
+                    <%  combination.combinationWireMemberList.map((member, index) => { 
+                        const isMine = svcInfo.svcMgmtNum === member.mblSvcMgmtNum; %>
+                        <li class="acco-list">
+                            <!-- on , off -->
+                            <div class="acco-title">
+                                <button role="button" aria-pressed="false">
+                                    <div class="list-wrap">
+                                        <div class="list-info">
+                                            <div>
+                                                <% if (isMine) { %>
+                                                    <strong class="me"><%= member.custNm %></strong>
+                                                    <i class="icon-<%= member.badge %> ml9"><span class="blind"><%= member.relClNm %></span></i>
+                                                    <i class="icon-me ml5"><span class="blind">나</span></i><!-- 뱃지-나 -->
+                                                <% } else { %>
+                                                    <em class="me"><%= member.custNm %></em>
+                                                    <i class="icon-<%= member.badge %> ml9"><span class="blind"><%= member.relClNm %></span></i>
+                                                <% } %>
+                                            </div>
+                                            <div class="num"><%= member.svcCdNm %></div>
+                                        </div>
+                                        <div class="list-arrow">
+                                            <span class="ico-arrow"></span>
+                                        </div>
+                                    </div>
+                                </button>
+                            </div>
+                            <div class="acco-content">
+                                <div class="data-info-list toggle-inner-list">
+                                    <ul>
+                                        <li>
+                                            <dl>
+                                                <dt>관계</dt>
+                                                <dd>
+                                                    <%= member.relClNm || '-' %><br />
+                                                </dd>
+                                            </dl>
+                                        </li>
+                                        <li>
+                                            <dl>
+                                                <dt>B인터넷 가입여부</dt>
+                                                <dd><%= member.svcCdNm %></dd>
                                             </dl>
                                         </li>
                                     </ul>

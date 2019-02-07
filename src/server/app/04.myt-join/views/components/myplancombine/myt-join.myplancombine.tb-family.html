@@ -99,17 +99,58 @@ const memberCount = groupInfo.mblSvcCnt + groupInfo.wirSvcCnt; %>
                                                     </dd>
                                                 </dl>
                                             </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        <% });                 
+                        combination.combinationWireMemberList.map(member => { 
+                            const isMine = svcInfo.svcMgmtNum === member.mblSvcMgmtNum; %>
+                            <li class="acco-list"><!-- on , off -->
+                                <div class="acco-title">
+                                    <button role="button" aria-pressed="false">
+                                        <div class="list-wrap">
+                                            <div class="list-info">
+                                                <div>
+                                                    <% if (isMine) { %>
+                                                        <strong class="me"><%= member.custNm %></strong>
+                                                        <i class="icon-<%= member.badge %> ml9"><span class="blind"><%= member.relClNm %></span></i>
+                                                        <i class="icon-me ml5"><span class="blind">나</span></i><!-- 뱃지-나 -->
+                                                    <% } else { %>
+                                                        <em class="me"><%= member.custNm %></em>
+                                                        <i class="icon-<%= member.badge %> ml9"><span class="blind"><%= member.relClNm %></span></i>
+                                                    <% } %>
+                                                </div>
+                                                <div class="num"><%= member.svcCdNm %></div>
+                                            </div>
+                                            <div class="list-arrow">
+                                                <span class="ico-arrow"></span>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                                <div class="acco-content">
+                                    <div class="data-info-list toggle-inner-list">
+                                        <ul>
+                                            <li>
+                                                <dl>
+                                                    <dt>가족대표와의 관계</dt>
+                                                    <dd>
+                                                        <%= member.relClNm || '-' %><br />
+                                                    </dd>
+                                                </dl>
+                                            </li>
                                             <li>
                                                 <dl>
                                                     <dt>결합유선상품</dt>
-                                                    <dd><%= member.bIdx >= 0 ? combination.combinationWireMemberList[member.bIdx].svcCdNm : '-' %></dd>
+                                                    <dd><%= member.svcCdNm %></dd>
                                                 </dl>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </li>
-                        <% }); %>                        
+                        <% }); %>             
                     </ul>
                 </div>
             </div>
