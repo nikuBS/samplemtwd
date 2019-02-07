@@ -35,9 +35,12 @@
                 <div class="cont-box">
                     <div class="unpaid-charges">
                         <dl class="total-box">
-                            <dt><button id="DC_09_03_tip_02" class="tip-view-btn">남은 데이터양<span class="tip-view"><span class="tip-view">TIP</span></span></button></dt>
-                            <dd class="t-point"><span class="num ff-tg-black fe-data" data-value="<%= ppsInfo.dataObj.dataValue %>">
-                                <%= ppsInfo.dataObj.data %></span><span class="ff-tg-medium">MB</span>
+                            <dt>남은 데이터양
+                                <button id="DC_09_03_tip_02" class="tip-view" title="남은 데이터 양 TIP보기" aria-haspopup="true" type="button">TIP</button>
+                            </dt>
+                            <dd class="t-point">
+                                <span class="num ff-tg-black fe-data" data-value="<%= ppsInfo.dataObj.dataValue %>"><%= ppsInfo.dataObj.data %></span>
+                                <span class="ff-tg-medium">MB</span>
                             </dd>
                         </dl>
                         <ul class="point-box mb0">
@@ -74,9 +77,9 @@
                             <label class="tit" for="formInput01">충전 데이터</label>
                             <span class="inputbox">
                                 <button data-code="<%= ppsInfo.dataYn %>" class="bt-dropdown big fe-select-data" title="충전 데이터 선택" aria-haspopup="true">
-                                    데이터 선택<span class="ico"></span>
+                                    데이터 선택<span class="ico" title="충전 데이터 선택"></span>
                                 </button>
-                                <span class="error-txt fe-error-msg" style="display:none;">
+                                <span id="aria-exp-desc3" class="error-txt fe-error-msg" style="display:none;">
                                     충전할 데이터를 선택해 주세요.
                                 </span>
                             </span>
@@ -86,10 +89,11 @@
                             <span class="inputbox">
                                 <span class="input">
                                     <input id="formInput02" type="number" inputmode="numeric" min="0" pattern="[0-9]*" maxlength="16"
-                                           placeholder="숫자만 입력" title="카드번호 입력" aria-describedby="aria-exp-desc1" class="fe-card-number required-input-field" />
+                                           placeholder="숫자만 입력" title="카드번호 숫자만 입력" aria-describedby="aria-exp-desc1"
+                                           class="fe-card-number required-input-field" />
                                     <button class="cancel"><span class="blind">삭제</span></button>
                                 </span>
-                                <span class="error-txt fe-error-msg" style="display:none;">카드번호를 입력해 주세요.</span>
+                                <span id="aria-exp-desc3" class="error-txt fe-error-msg" style="display:none;">카드번호를 입력해 주세요.</span>
                             </span>
                         </li>
                         <li>
@@ -97,20 +101,22 @@
                             <div class="input-wrap-half fe-exp-wrap">
                                 <span class="inputbox">
                                     <span class="input">
-                                        <input id="formInput03" type="number" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-card-y required-input-field"
-                                               placeholder="YYYY" title="유효 년" maxlength="4" />
+                                        <input id="formInput03" type="number" inputmode="numeric" min="0" pattern="[0-9]*"
+                                               class="fe-card-y required-input-field"
+                                               placeholder="YYYY" title="유효기간 년 YYYY" maxlength="4" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                 </span>
                                 <span class="inputbox">
                                     <span class="input">
-                                        <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-card-m required-input-field"
-                                               placeholder="MM" title="유효 월" maxlength="2" />
+                                        <input type="number" inputmode="numeric" min="0" pattern="[0-9]*"
+                                               class="fe-card-m required-input-field"
+                                               placeholder="MM" title="유효기간 월 MM" maxlength="2" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                 </span>
                             </div>
-                            <span class="error-txt fe-error-msg" style="display:none;">
+                            <span id="aria-exp-desc3" class="error-txt fe-error-msg" style="display:none;">
                                 유효기간이 올바르지 않습니다.
                             </span>
                         </li>
@@ -118,11 +124,14 @@
                             <label class="tit" for="formInput04">카드 비밀번호</label>
                             <span class="inputbox">
                                 <span class="input">
-                                    <input id="formInput04" type="number" style="-webkit-text-security: disc;" class="fe-card-pw required-input-field"  inputmode="numeric" min="0" pattern="[0-9]*"
-                                           placeholder="앞 2자리 입력" title="카드 비밀번호 입력란" value="" aria-labelledby="aria-exp-label4" maxlength="2" />
+                                    <input id="formInput04" type="number" style="-webkit-text-security: disc;"
+                                           class="fe-card-pw required-input-field"
+                                           inputmode="numeric" min="0" pattern="[0-9]*"
+                                           placeholder="앞 2자리" title="카드 비밀번호 앞 2자리 입력" value=""
+                                           aria-labelledby="aria-exp-label4" maxlength="2" />
                                     <button class="cancel"><span class="blind">삭제</span></button>
                                 </span>
-                                <span class="error-txt fe-error-msg" style="display:none;">비밀번호가 올바르지 않습니다.</span>
+                                <span id="aria-exp-desc3" class="error-txt fe-error-msg" style="display:none;">비밀번호가 올바르지 않습니다.</span>
                             </span>
                         </li>
                     </ul>
@@ -136,9 +145,11 @@
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
                     <ul class="noti-list02">
-                        <li><button type="button" id="DC_09_01_tip_01" class="tip-view-btn" title="~~정보보기" aria-haspopup="true">
-                            공인인증서 인증 안내<span class="tip-view">TIP</span>
-                        </button></li>
+                        <li>
+                            <button type="button" id="DC_09_01_tip_01" class="tip-view-btn" title="공인인증서 인증 안내 TIP보기" aria-haspopup="true">
+                                공인인증서 인증 안내<span class="tip-view">TIP</span>
+                            </button>
+                        </li>
                     </ul>
                 </div>
                 <!--// .cont-box -->
