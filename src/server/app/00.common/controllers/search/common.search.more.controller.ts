@@ -19,7 +19,7 @@ class CommonSearchMore extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const query =  encodeURI(req.query.keyword) || '';
     const collection = req.query.category || null;
-    const step = req.query.step || 1;
+    const step = req.header('referer') ? req.query.step : 1 || 1;
     const pageNum = req.query.page || 1;
     const sort = req.query.arrange || 'R';
     let requestObj, researchCd, researchQuery;

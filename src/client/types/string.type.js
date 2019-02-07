@@ -1711,3 +1711,8 @@ Tw.ROAMING_RESERVATION_STATE ={
   16 : '미수령',
   17 : '예약 취소'
 };
+
+Tw.ROAMING_RANGE_OPTION_STR = {
+  ONE_MONTH: '1개월 이내의 날짜만 선택 가능합니다.',
+  TWO_MONTH: '2개월 이내의 날짜만 선택 가능합니다.'
+}

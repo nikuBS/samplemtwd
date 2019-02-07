@@ -17,12 +17,23 @@ Tw.ProductRoamingJoinRoamingAuto = function (rootEl,prodTypeInfo,prodApiInfo,svc
   this.$tooltipBody = this.$container.find('#tip_body');
   this._showDateFormat = 'YYYY. MM. DD.';
   this._dateFormat = 'YYYYMMDD';
+  this._dateSelectRange = 30;
+  this._twoMonthFlag = false;
   this._currentDate = Tw.DateHelper.getCurrentShortDate();
-  this._tooltipInit(prodId,this.$tooltipHead,this.$tooltipBody);
-  this._bindBtnEvents();
+  this._init();
 };
 
 Tw.ProductRoamingJoinRoamingAuto.prototype = {
+  _init : function () {
+    this._tooltipInit(this._prodId,this.$tooltipHead,this.$tooltipBody);
+    if(this._twoMonthFlag){
+      this._dateSelectRange = -1*(Tw.DateHelper.getDiffByUnit(this._currentDate,Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,2,'month',this._dateFormat,this._dateFormat),'day'));
+      this.$container.find('#aria-dateset1').text(Tw.ROAMING_RANGE_OPTION_STR.TWO_MONTH);
+    }else{
+      this.$container.find('#aria-dateset1').text(Tw.ROAMING_RANGE_OPTION_STR.ONE_MONTH);
+    }
+    this._bindBtnEvents();
+  },
   _bindBtnEvents: function () {
     this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
     this.$container.on('click', '.bt-dropdown.time', $.proxy(this._btnTimeEvent, this));
@@ -64,7 +75,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
   },
   _btnDateEvent : function(eventObj){
     var nowValue = $(eventObj.currentTarget).text().trim();
-    var dateArr = this._getDateArrFromToDay(30);
+    var dateArr = this._getDateArrFromToDay(this._dateSelectRange);
     var convertedArr = this._convertDateArrForActionSheet(dateArr,'data-name="'+$(eventObj.currentTarget).attr('id')+'"',nowValue);
     var actionSheetData = this._makeActionSheetDate(convertedArr);
     if(nowValue.length<10){
@@ -257,9 +268,13 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
   },
   _tooltipInit : function (prodId,$tooltipHead,$tooltipBody) {
     switch (prodId) {
-      case 'NA00005252':
       case 'NA00005300':
       case 'NA00005505':
+      case 'NA00005252':
+        $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_02');
+        this.$container.find('.tip_body_container').hide();
+        this._twoMonthFlag = true;
+        break;
       case 'NA00005337':
         $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_02');
         this.$container.find('.tip_body_container').hide();
@@ -270,15 +285,19 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
         $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_03');
         this.$container.find('.tip_body_container').hide();
         break;
-      case 'NA00006046':
-      case 'NA00006048':
       case 'NA00006038':
       case 'NA00006040':
-      case 'NA00005900':
-      case 'NA00006050':
-      case 'NA00006052':
       case 'NA00006042':
       case 'NA00006044':
+      case 'NA00006046':
+      case 'NA00006048':
+      case 'NA00006050':
+      case 'NA00006052':
+        $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_04');
+        this.$container.find('.tip_body_container').hide();
+        this._twoMonthFlag = true;
+        break;
+      case 'NA00005900':
       case 'NA00005902':
       case 'NA00005699':
       case 'NA00005898':
