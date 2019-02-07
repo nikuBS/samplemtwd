@@ -131,7 +131,7 @@ Tw.BenefitDisPgmInput.prototype = {
     this._popupService.open({
       hbs: 'complete_product',
       data: {
-        prodCtgNm: Tw.PRODUCT_CTG_NM.ADDITIONS,
+        prodCtgNm: Tw.PRODUCT_CTG_NM.DISCOUNT_PROGRAM,
         mytPage: 'additions',
         btClass: 'item-one',
         prodId: this._prodId,
