@@ -84,7 +84,9 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
         '01': 'partner',
         '02': 'children',
         '03': 'parents',
-        '04': 'brother'
+        '04': 'brother',
+        '05': 'grandchildren',
+        '06': 'grandparents'
       };
 
       const group = resp.result.combinationGroup;
