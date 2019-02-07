@@ -33,13 +33,7 @@
 </body>
 
 <% include ../../components/javascript.component.html %>
-<% if (pageId === 'data-share') { %>
-<script>
-    $(document).ready(function() {
-        new Tw.MyTJoinCombinationsDataShare($('.wrap'), <%- JSON.stringify(combination) %>);
-    });
-</script>
-<% } else if (pageId === 'tb-free') { %>
+<% if (pageId === 'tb-free') { %>
 <script>
     $(document).ready(function() {
         new Tw.MyTJoinCombinationsTBFree($('.wrap'), <%- JSON.stringify(svcInfo) %>);
