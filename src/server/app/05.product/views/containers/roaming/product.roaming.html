@@ -9,9 +9,7 @@
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
-        <li><a href="#gnb">메뉴 바로가기</a></li>
         <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
     </ul>
 </div>
 <!--// #skip_navigation -->
@@ -21,24 +19,26 @@
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
-        <h2 class="blind">내용</h2>
         <div class="container">
-            <!-- 사용중인 상품 -->
+            <hr class="cont-sp type1" aria-hidden="true" />
             <% if (isLogin && roamingCount.prodInfoTxt) { %>
-            <div class="cont-box gaps-style01">
-                <div class="submain-myfeeproducts-wrap">
-                    <a href="/product/roaming/my-use" class="submain-myfeeproducts">
-                        <h3 class="title">사용중인 상품</h3>
-                        <p class="text"><%= roamingCount.prodInfoTxt %></p>
-                    </a>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps">
+                <div class="calling-plan">
+                    <button class="wrap-link fe-home-internal" data-url="/product/roaming/my-use" >
+                        <i class="badge icon-badge-plan-my"><span class="blind">자녀</span></i>
+                        <span class="stit"><%= roamingCount.prodInfoTxt %></span>
+                    </button>
                 </div>
             </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true" />
             <% } %>
-            <!--//사용중인 상품 -->
 
-            <!-- cont-box -->
+
+            <!-- .cont-box -->
             <div class="cont-box nogaps">
-                <div class="main-slide-banner dot-btm slide-pagingtype">
+                <div class="main-charge-box advice section-swiper-box main-banner-img">
                     <!-- .widget -->
                     <div class="widget fe-slide-banner" style="display:none;">
                         <div class="widget-box slider1">
@@ -46,112 +46,96 @@
                                 <ul class="slider">
                                     <% for (var index in banners.topBanners) { %>
                                     <li>
-                                        <a href="<%- banners.topBanners[index].imgLinkUrl %>">
+                                        <button class="fe-home-internal" data-url="<%- banners.topBanners[index].imgLinkUrl %>">
                                             <img src="<%= CDN %><%- banners.topBanners[index].bnnrFilePathNm %>" alt="<%- banners.topBanners[index].bnnrImgAltCtt %>">
-                                        </a>
+                                        </button>
                                     </li>
                                     <% } %>
-                                    <!--<li>-->
-                                        <!--<a href="/product/roaming/info/secure-troaming">-->
-                                            <!--<img src="<%= CDN %>/img/product/rm_banner_01.png" alt="로밍, 하나부터 열까지 새로고침. 자동안심 T로밍 해외 음성 매일 3분 무료+30분 음성 통화 1만원에 제공 데이터 종량 아무리 써도 일 상환 5,000원">-->
-                                        <!--</a>-->
-                                    <!--</li>-->
-                                    <!--<li>-->
-                                        <!--<a href="/product/callplan/NA00005900">-->
-                                            <!--<img src="<%= CDN %>/img/product/rm_banner_02.png" alt="아세아 여행 대표 요금제. T로밍 아시아패스 아시아 27개국에서 5일간 데이터 2GB+속도제어로 안심하고 이용할수 있는 요금제입니다.">-->
-                                        <!--</a>-->
-                                    <!--</li>-->
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <!--// .widget -->
                 </div>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true" />
 
-                <div class="wrap-gaps-top">
-                    <h3>고객님을 위한 '폼'나는 정보</h3>
-                </div>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps bgnone noborder">
+                <div class="travel-info">
+                    <div class="wrap-gaps-top">
+                        <h2>고객님을 위한 '폼'나는 정보</h2>
+                    </div>
+                    <!-- .widget -->
 
-                <!-- .widget -->
-                <div class="widget fe-slide-banner" style="display:none;">
-                    <div class="widget-box horizontal">
-                        <div class="horizontal-slide">
-                            <ul class="horizontal-list info-link-box">
-                                <% for (var index in banners.centerBanners) { %>
-                                <li>
-                                    <button class="info-link-inner" data-index="<%=index%>">
-                                        <em class="mark">“</em><%-banners.centerBanners[index].titleNm%>
-                                    </button>
-                                </li>
-                                <% } %>
-                                <!--<li>-->
-                                    <!--<button class="info-link-inner">-->
-                                        <!--<em class="mark">“</em><strong class="tit">중국/일본</strong>으로<br>떠나시나요?-->
-                                    <!--</button>-->
-                                <!--</li>-->
-                            </ul>
+                    <div class="widget fe-slide-banner" style="display:none;">
+                        <div class="widget-box horizontal">
+                            <div class="horizontal-slide">
+                                <ul class="horizontal-list info-link-box">
+                                    <% for (var index in banners.centerBanners) { %>
+                                    <li>
+                                        <button class="info-link-inner icon<%=(Number(index)+1)%>" data-index="<%=index%>">
+                                            <span class="tit"><%-banners.centerBanners[index].titleNm%></span>
+                                        </button>
+                                    </li>
+                                    <% } %>
+                                </ul>
+                            </div>
                         </div>
                     </div>
+                    <!-- .widget -->
                 </div>
-                <!-- .widget -->
             </div>
             <!-- //cont-box -->
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
 
             <!-- cont-box -->
-            <div class="cont-box nogaps-hoz">
-                <ul class="category-infoarealist">
-                    <li class="category-type">
-                        <div class="category-typetitle">
-                            <h3 class="title">로밍 카드&middot;쿠폰</h3>
-                            <div class="more"><a class="link" href="/product/roaming/coupon">더보기</a></div>
-                        </div>
-                        <div class="category-infobox type-internet">
-                            <h4 class="title">T로밍 요금제 이용</h4>
-                            <p class="text">T로밍 OnePass 요금제(기간형 포함) 1일 이용 가능</p>
-                        </div>
-                    </li>
-                    <li class="category-type">
-                        <div class="category-typetitle">
-                            <h3 class="title">T파이 임대</h3>
-                            <div class="more"><a class="link" href="/product/roaming/fi/guide">더보기</a></div>
-                        </div>
-                        <div class="category-infobox type-tel">
-                            <h4 class="title">70여 개국 무선인터넷 가능!</h4>
-                            <p class="text">전세계 70여 개국에서 무선인터넷이 가능한 T로밍 전용 와이파이 기기 임대</p>
-                        </div>
-                    </li>
-                    <li class="category-type">
-                        <div class="category-typetitle">
-                            <h3 class="title">인기 무료 로밍 부가서비스</h3>
-                            <div class="more"><a class="link" href="/product/roaming/planadd">더보기</a></div>
-                        </div>
-                        <div class="category-infobox type-tv">
-                            <h4 class="title">로밍 부가서비스를 무료로 이용</h4>
-                            <p class="text">신청하면 좋은 로밍 부가서비스를 무료로 이용</p>
-                        </div>
-                    </li>
-                </ul>
+            <div class="cont-box nogaps">
+                <div class="category-info-guide">
+                    <ul>
+                    <!-- 20190121 (정윤정 님이 요청) (11차수 긴급반영) 로밍카드/쿠폰 메뉴 히든처리 -->
+                        <!-- BPCP 서비스 연동이 늦어져서 11차수에 반영 불가능 -->
+                        <!--
+                        <li>
+                            <button class="link icon4 fe-home-internal" data-url="/product/roaming/coupon">
+                                <span class="stit">로밍 카드 &middot; 쿠폰</span>
+                                <span class="text-type1">T로밍 요금제 이용</span>
+                                <p class="text-type2">T로밍 OnePass 요금제(기간형 포함)<br/>1일 이용 가능</p>
+                            </button>
+                        </li>
+                        -->
+
+                        <li>
+                            <button class="link icon5 fe-home-internal" data-url="/product/roaming/fi/guide">
+                                <span class="stit">T파이 임대</span>
+                                <span class="text-type1">70여 개국 무선인터넷 가능!</span>
+                                <p class="text-type2">전세계 70여 개국에서 무선인터넷이<br/>가능한 T로밍 전용 와이파이 기기 임대</p>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="link icon6 fe-home-internal" data-url="/product/roaming/planadd">
+                                <span class="stit">I인기 무료 로밍 부가서비스PTV</span>
+                                <span class="text-type1">로밍 부가서비스를 무료로 이용</span>
+                                <p class="text-type2">신청하면 좋은 로밍 부가서비스를<br/>무료로 이용</p>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <!-- //cont-box -->
-
             <hr class="cont-sp type1" aria-hidden="true"/>
 
-            <!-- cont-box-->
             <div class="cont-box nogaps-hoz">
-                <div class="roaming-product">
-                    <h3><strong><%- sprateProds.expsTitNm %></strong></h3>
+                <div class="roaming-product type01">
+                    <div class="ti-caption-type01 pb20">
+                        <h2 class="tit"><%- sprateProds.expsTitNm %></h2>
+                    </div>
                     <ul class="recommendedrate-list">
-                        <!-- 왼쪽 상품 이미지가 이미지로 들어갈경우, 왼쪽 상품 이미지가 bg로 들어갈경우(아래전체 type[n]으로 처리) -->
                         <% for (var index in sprateProds.prodList) { %>
                         <li class="type01">
-                            <a class="product-infolink" href="/product/callplan/<%- sprateProds.prodList[index].prodId %>">
-                                <% if ( sprateProds.prodList[index].prodIconImgUrl ) { %>
-                                <div class="img-box"><img class="lte" src="<%= CDN %><%- sprateProds.prodList[index].prodIconImgUrl %>" alt="명칭"></div>
-                                <% } %>
+                            <button type="button" class="product-infolink fe-home-internal" data-url="/product/callplan/<%- sprateProds.prodList[index].prodId %>">
                                 <div class="products-titleinfo">
-                                    <h5 class="title"><%- sprateProds.prodList[index].prodNm %></h5>
+                                    <h3 class="title"><%- sprateProds.prodList[index].prodNm %></h3>
                                     <p class="info"><span class="money"><%- sprateProds.prodList[index].basFeeInfo %></span>원</p>
                                 </div>
                                 <div class="taglist-wrap">
@@ -160,103 +144,109 @@
                                     <% } %>
                                 </div>
                                 <p class="products-detailinfo"><%- sprateProds.prodList[index].prodSmryDesc %></p>
-                            </a>
+                            </button>
                         </li>
                         <% } %>
                     </ul>
-                    <a href="/product/roaming/fee" class="b-more">전체 로밍 요금제</a>
+                    <a href="/product/roaming/fee" class="bt-link-tx underline">전체 로밍 요금제</a>
                 </div>
             </div>
-            <!-- //cont-box -->
-
             <hr class="cont-sp type1" aria-hidden="true"/>
 
-            <div class="roaming-info-box">
-                <div class="submain-findyourplan-wrap">
-                    <a class="submain-findyourplan" href="/product/roaming/info/guide">
-                        <h3 class="title">로밍 안내</h3>
-                        <p class="text">출국 전 알아두면 좋은 로밍 정보</p>
-                    </a>
-                </div>
-                <div class="submain-findyourplan-wrap">
-                    <a class="submain-findyourplan" href="/product/roaming/do/search-before">
-                        <h3 class="title">국가별 로밍 요금 조회</h3>
-                        <p class="text">사용 중인 휴대폰 정보와 출국 국가명을 입력하시고, 로밍 이용요금 관련 각종 정보를 한번에 확인하세요.</p>
-                    </a>
-                </div>
-                <div class="submain-findyourplan-wrap">
-                    <a class="submain-findyourplan" href="/product/roaming/info/guide?reqItem=lost">
-                        <h3 class="title">분실 관련 안내 보러가기</h3>
-                        <p class="text">긴급상황! 로밍 중 휴대폰을 분실하셨나요?</p>
-                    </a>
-                </div>
-            </div>
-
-            <hr class="cont-sp type1" aria-hidden="true"/>
-
-            <ul class="shortcutslist-wrap">
-                <li class="category-type">
-                    <a class="link" href="/product/roaming/info/center">로밍센터 안내</a>
-                </li>
-                <li class="category-type">
-                    <a class="link" href="/customer/faq/category?id=1400000&title=%EB%A1%9C%EB%B0%8D">자주하는 질문</a>
-                </li>
-            </ul>
-
-            <!-- <hr class="cont-sp type1" aria-hidden="true"/> -->
-
-            <!-- 다른상품 더보기 -->
-            <!-- <div class="cont-box">
-                <h3>다른상품 더보기</h3>
-
-                <div class="widget">
-                    <div class="widget-box horizontal">
-                        <div class="horizontal-slide">
-                            <ul class="horizontal-list add-prod">
-                                <li>
-                                    <div>
-                                        <button>
-                                            <span class="ico type1"></span>
-                                            <span>요금제</span>
-                                        </button>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div>
-                                        <button>
-                                            <span class="ico type2"></span>
-                                            <span>부가서비스</span>
-                                        </button>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div>
-                                        <button>
-                                            <span class="ico type3"></span>
-                                            <span>인터넷/전화/<br>TV</span>
-                                        </button>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div>
-                                        <button>
-                                            <span class="ico type4"></span>
-                                            <span>혜택·할인</span>
-                                        </button>
-                                    </div>
-                                </li>
-                            </ul>
+            <div class="cont-box nogaps">
+                <ul class="link-long-list ntype01">
+                    <li>
+                        <div class="link-long">
+                            <button class="fe-home-internal" data-url="/product/roaming/info/guide">
+                                로밍안내
+                                <p>출국 전 알아두면 좋은 로밍 정보</p>
+                                <span class="tx-sub">
+                                    <span class="ico"><span class="blind">보기</span></span>
+                                </span>
+                            </button>
                         </div>
-                    </div>
-                </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <button class="fe-home-internal" data-url="/product/roaming/do/search-before">
+                                국가별 로밍요금 조회
+                                <p>사용 중인 휴대폰 정보와 출국 국가명을 입력하시고,<br/>로밍 이용요금 관련 각종 정보를 한번에 확인하세요. </p>
+                                <span class="tx-sub">
+                                    <span class="ico"><span class="blind">보기</span></span>
+                                </span>
+                            </button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <button class="fe-home-internal" data-url="/product/roaming/info/guide?reqItem=lost">
+                                분실 관련 안내 보러가기
+                                <p>긴급상황! 로밍 중 휴대폰을 분실하셨나요?</p>
+                                <span class="tx-sub">
+                                    <span class="ico"><span class="blind">보기</span></span>
+                                </span>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <hr class="cont-sp type1" aria-hidden="true" />
 
-            </div> -->
-            <!-- //다른상품 더보기 -->
+            <div class="cont-box nogaps">
+                <ul class="link-long-list ntype01">
+                    <li>
+                        <div class="link-long">
+                            <button class="fe-home-internal" data-url="/product/roaming/info/center">
+                                로밍센터 안내
+                                <span class="tx-sub">
+                                    <span class="ico"><span class="blind">보기</span></span>
+                                </span>
+                            </button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="link-long">
+                            <button class="fe-home-internal" data-url="/customer/faq/category?id=1400000&title=%EB%A1%9C%EB%B0%8D">
+                                자주하는 질문
+                                <span class="tx-sub">
+                                    <span class="ico"><span class="blind">보기</span></span>
+                                </span>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
 
-            <!-- 하단 link영역 -->
-            <% include ../../components/roaming/product.roaming.bottom-link.component.html %>
-            <!-- //하단 link영역 -->
-
+            <div class="cont-box noborder bgnone">
+                <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
+                <ul class="pg-link-list">
+                    <li>
+                        <button class="fe-home-internal" data-url="/product/mobileplan">
+                            <i class="icon-price-plan-40"><span class="blind">price plan</span></i>요금제
+                        </button>
+                    </li>
+                    <li>
+                        <button class="fe-home-internal" data-url="/product/mobileplan-add">
+                            <i class="icon-vas-40"><span class="blind">vas</span></i>부가서비스
+                        </button>
+                    </li>
+                    <li>
+                        <button class="fe-home-internal" data-url="/product/wireplan">
+                            <i class="icon-internet-40"><span class="blind">internet</span></i>인터넷 &middot; 집전화 &middot;  IPTV
+                        </button>
+                    </li>
+                    <li>
+                        <button class="fe-home-internal" data-url="/benefit/submain/discount">
+                            <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 &middot; 할인 &gt; 요금할인
+                        </button>
+                    </li>
+                    <li>
+                        <button class="fe-home-internal" data-url="/benefit/submain/combinations">
+                            <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 &middot; 할인 &gt; 결합할인
+                        </button>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     <!--// #contents -->
