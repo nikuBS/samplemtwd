@@ -229,6 +229,15 @@
                                     <p class="desc">2시간 동안 최대 12회 조회 가능</p>
                                 </div>
                             </div>
+                            <% } else if (homeData.usageData.code === 'BLN0002') { %>
+                            <div class="main-chart-box">
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.usageData.showSvcNum %></button></em>
+                                <div class="main-error-box">
+                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
+                                    <p class="tx">당월 혹은 전월에 기존 요금제로 재 변경한 이력이 있습니다.</p>
+                                </div>
+                            </div>
                             <% } else if (homeData.usageData.code === 'BLN0003') { %>
                             <div class="main-chart-box">
                                 <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.usageData.showSvcNum %></button></em>
@@ -236,6 +245,42 @@
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
                                     <p class="tx">회선정지 상태이거나 일시 정지 이력이 있어 <br>잔여량 조회 서비스를 이용할 수 없습니다.<br>자세한 사항은 고객센터나 <a href="/customer/emailconsult" class="bt">이메일</a>로<br> 문의해 주시기 바랍니다</p>
+                                </div>
+                            </div>
+                            <% } else if (homeData.usageData.code === 'BLN0004') { %>
+                            <div class="main-chart-box">
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.usageData.showSvcNum %></button></em>
+                                <div class="main-error-box">
+                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
+                                    <p class="tx">잔여량 조회 가능 항목이 없습니다.</p>
+                                </div>
+                            </div>
+                            <% } else if (homeData.usageData.code === 'BLN0005') { %>
+                            <div class="main-chart-box">
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.usageData.showSvcNum %></button></em>
+                                <div class="main-error-box">
+                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
+                                    <p class="tx">본인이 법정대리인으로 등록된 자녀 회선이 아닙니다.</p>
+                                </div>
+                            </div>
+                            <% } else if (homeData.usageData.code === 'BLN0006') { %>
+                            <div class="main-chart-box">
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.usageData.showSvcNum %></button></em>
+                                <div class="main-error-box">
+                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
+                                    <p class="tx">잔여량 조회에 실패하였습니다.</p>
+                                </div>
+                            </div>
+                            <% } else if (homeData.usageData.code === 'BLN0007') { %>
+                            <div class="main-chart-box">
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.usageData.showSvcNum %></button></em>
+                                <div class="main-error-box">
+                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
+                                    <p class="tx">잔여량 조회 가능 항목이 없습니다.</p>
                                 </div>
                             </div>
                             <% } else if (homeData.usageData.code === 'BFF0006' || homeData.usageData.code === 'BFF0007') { %>
