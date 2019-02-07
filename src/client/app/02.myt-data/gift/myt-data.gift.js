@@ -74,10 +74,10 @@ Tw.MyTDataGift.prototype = {
     // this.$remainQty.text(mockData.data + mockData.unit);
     // this._setAmountUI(Number(mockDataQty));
 
-    if ( Number(this.reqCnt) > 3 ) {
-      this._remainApiError();
-      return;
-    }
+    // if ( Number(this.reqCnt) > 3 ) {
+    //   this._remainApiError();
+    //   return;
+    // }
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var result = res.result;
@@ -100,7 +100,7 @@ Tw.MyTDataGift.prototype = {
     } else if ( res.code === 'GFT0004' ) {
       this.$container.trigger('showUnableGift', res.code);
     } else {
-      this._remainApiError();
+      this.$container.trigger('showUnableGift', res.code);
       // Tw.Error(res.code, res.msg).pop();
     }
   },
@@ -133,7 +133,7 @@ Tw.MyTDataGift.prototype = {
     };
 
     this.$wrap_data_select_list.find('input').each(fnCheckedUI);
-    this.$wrap_auto_select_list.find('input').each(fnCheckedUI);
+    // this.$wrap_auto_select_list.find('input').each(fnCheckedUI);
   },
 
   _onLoadRecently: function () {
