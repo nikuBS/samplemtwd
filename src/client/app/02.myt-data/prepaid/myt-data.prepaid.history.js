@@ -11,12 +11,11 @@ Tw.MyTDataPrepaidHistory = function(rootEl, histories) {
 };
 
 Tw.MyTDataPrepaidHistory.prototype = {
-  DEFAULT_COUNT: 20,
   _init: function() {
     this._currentType = this.$selectBtn.data('type');
     this._leftCount = {
-      data: Number(this.$totalCount.data('data')) - this.DEFAULT_COUNT,
-      voice: Number(this.$totalCount.data('voice')) - this.DEFAULT_COUNT
+      data: Number(this.$totalCount.data('data')) - Tw.DEFAULT_LIST_COUNT,
+      voice: Number(this.$totalCount.data('voice')) - Tw.DEFAULT_LIST_COUNT
     };
 
     this._pageCount = {
@@ -115,7 +114,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
     this._apiService
       .request(type === 'voice' ? Tw.API_CMD.BFF_06_0062 : Tw.API_CMD.BFF_06_0063, {
         pageNum: this._pageCount[type],
-        rowNum: this.DEFAULT_COUNT
+        rowNum: Tw.DEFAULT_LIST_COUNT
       })
       .done($.proxy(this._handleSuccessLoadMore, this));
   },
@@ -232,7 +231,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
   _handleCancel: function(id, pageNum, code) {
     if (Tw.FormatHelper.isEmpty(code)) {
       this._apiService
-        .request(Tw.API_CMD.BFF_06_0069, { cancelOrderId: id, pageNum: pageNum, rowNum: this.DEFAULT_COUNT })
+        .request(Tw.API_CMD.BFF_06_0069, { cancelOrderId: id, pageNum: pageNum, rowNum: Tw.DEFAULT_LIST_COUNT })
         .done($.proxy(this._handleSuccessCancel, this));
     } else {
       this._apiService.request(Tw.API_CMD.BFF_06_0070, { cancelOrderId: id, dataChargeCd: code }).done($.proxy(this._handleSuccessCancel, this));
