@@ -18,6 +18,7 @@ class CommonTidLogin extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     let target = req.query.target || '/main/home';
+    const type = req.query.type || 'back';
     if ( /\#/.test(target) ) {
       target = target.replace(/\#/gi, 'urlHash');
     }
@@ -31,7 +32,7 @@ class CommonTidLogin extends TwViewController {
           nonce: resp.result.nonce,
           service_type: TID_SVC_TYPE.LOGIN,
           redirect_uri: 'http://' + this.loginService.getDns() +
-            '/common/member/login/route?target=' + target,
+            '/common/member/login/route?target=' + target + '_type_' + type,
           client_type: TID.CLIENT_TYPE,
           scope: TID.SCOPE,
           response_type: TID.RESP_TYPE
