@@ -7,8 +7,6 @@
 Tw.ProductRoaming = function(rootEl, options) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
-  this._historyService = new Tw.HistoryService();
-
   this._options = options;
 
   this._cachedElement();
@@ -21,7 +19,6 @@ Tw.ProductRoaming.prototype = {
     this.$formInfoBtnList = this.$container.find('.info-link-inner');
   },
   _bindEvent: function () {
-    this.$container.on('click', '.fe-home-internal', $.proxy(this._onClickInternal, this));
     this.$formInfoBtnList.on('click', $.proxy(this._onClickFormInfo, this));
   },
   _init : function() {
@@ -39,13 +36,6 @@ Tw.ProductRoaming.prototype = {
     this.$nextBtn.on('click', $.proxy(this._onClickNextBtn, this));
 
     this._updateFormInfo();
-  },
-  _onClickInternal: function (event) {
-    var url = $(event.currentTarget).data('url');
-    this._historyService.goLoad(url);
-
-    event.preventDefault();
-    event.stopPropagation();
   },
   _onClickFormInfo: function(e) {
     this.idxSelect = $(e.currentTarget).data('index');
