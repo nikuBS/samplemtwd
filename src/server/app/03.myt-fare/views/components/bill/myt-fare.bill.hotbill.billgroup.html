@@ -8,14 +8,14 @@
     <div class="widget-box accordion">
         <div class="acco-cover"><!-- toggle : 한개만 열기 -->
             <div class="acco-style">
-                <ul class="acco-list pt0">
+                <ul class="acco-list">
                     {{#each billItems}}
                     <li class="acco-box">
                         <div class="acco-tit">
                             <button role="button" aria-pressed="false">
                                 <div class="in-title">
                                     <span class="tit">{{@key}}</span>
-                                    <span class="tx-cont type2">{{this.total}}원</span>
+                                    <span class="tx-cont">{{this.total}}원</span>
                                 </div>
                             </button>
                         </div>
@@ -29,10 +29,10 @@
                                             <div class="inner-top">
                                                  <span class="title">{{@key}}
                                                      {{#if noVAT}}
-                                                    <i class="icon-fnote"><span class="blind">각주 참고</span></i>
+                                                    <span class="required-mark"><span class="blind">(부가가치세 제외 대상 표시)</span></span>
                                                     {{else}}
                                                     {{#if is3rdParty}}
-                                                    <i class="icon-acompany"><span class="blind">타사</span></i>
+                                                    <span class="badge badge-other"><span class="blind">(당사에서 청구 대행하는 타사 요금 표시)</span></span>
                                                     {{/if}}
                                                     {{/if}}
                                                 </span>
@@ -48,10 +48,10 @@
                                                     <li>
                                                         <span class="title">{{name}}
                                                             {{#if noVAT}}
-                                                            <i class="icon-fnote"><span class="blind">각주 참고</span></i>
+                                                            <span class="required-mark"><span class="blind">(부가가치세 제외 대상 표시)</span></span>
                                                             {{else}}
                                                             {{#if is3rdParty}}
-                                                            <i class="icon-acompany"><span class="blind">타사</span></i>
+                                                            <span class="badge badge-other"><span class="blind">(당사에서 청구 대행하는 타사 요금 표시)</span></span>
                                                             {{/if}}
                                                             {{/if}}
                                                         </span>
@@ -67,11 +67,11 @@
                                     </ul>
                                     {{#if showDesc}}
                                     <div class="noti-words">
-                                        <span class="inner-words" id="aria-footnote-02">
-                                            <i class="icon-fnote ml6"><span class="blind">각주 참고</span></i>부가가치세 제외 대상 표시
+                                        <span class="words01" id="aria-footnote-03">
+                                            <span class="badge badge-other ml0"><span class="blind">(당사에서 청구 대행하는 타사 요금 표시)</span></span>당사에서 청구 대행하는 타사 요금
                                         </span>
-                                        <span class="inner-words" id="aria-footnote-01">
-                                            <i class="icon-acompany"><span class="blind">타사</span></i>당사에서 청구 대행하는 타사 요금
+                                        <span class="words02 mt10" id="aria-footnote-04">
+                                            <span class="required-mark"><span class="blind">(부가가치세 제외 대상 표시)</span></span> 부가가치세 제외 대상 표시
                                         </span>
                                     </div>
                                     {{/if}}

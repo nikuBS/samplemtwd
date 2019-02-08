@@ -23,62 +23,60 @@
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
+        <h2 class="blind">내용</h2>
         <div class="container">
-            <hr class="cont-sp type1" aria-hidden="true"/>
-
-            <div class="cont-box nogaps">
-                <div class="calling-plan">
-                    <a class="wrap-link" href="/product/callplan/<%= svcInfo.prodId %>">
-                        <% if(locals.child) { %>
-                        <i class="icon-badge-plan-child mr8"><span class="blind">자녀</span></i>
-                        <span class="stit"><%= locals.childProdNm %></span>
-                        <% } else {%>
-                        <i class="icon-badge-plan-my mr8"><span class="blind">my</span></i>
-                        <span class="stit"><%= svcInfo.prodNm %></span>
-                        <% } %>
-                    </a>
-                </div>
+            <div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
+                <% if(locals.child) { %>
+                <h3 class="tit" id="aria-comp-bt1"><%= locals.childProdNm %></h3>
+                <% } else {%>
+                <h3 class="tit" id="aria-comp-bt1"><%= svcInfo.prodNm %></h3>
+                <% } %>
+                <a href="/product/callplan/<%= svcInfo.prodId %>" class="detail-view" aria-labelledby="aria-comp-bt1">
+                    <span class="blind">자세히보기</span>
+                </a>
             </div>
             <!-- .cont-box -->
             <% if(billAvailable){ %>
-            <hr class="cont-sp type1" aria-hidden="true"/>
-
             <!-- .cont-box -->
-            <div class="cont-box">
-                <div class="user-month-bill mt0">
-                    <div class="this-month-bill">
+            <div class="cont-box pt10">
+                <div class="charge-guide-wrap">
+                    <div class="charge-cont">
                         <% if(locals.child) { %>
-                        <p class="stit"><%= locals.child %></p>
+                        <span class="sub-disc01">
+							<span class="elem"><%= locals.child %><span class="badge badge-fam"><span class="blind">자녀회선</span></span></span>
+						</span>
                         <% } %>
-                        <p class="price tx-bold mt0" id="fe-total">원</p>
-                        <p class="term" id="fe-period"></p>
+                        <span class="tit"><span class="charge-txt" id="fe-total"></span>원</span>
+                        <span class="sub-disc01" id="fe-period">이용기간 : </span>
                     </div>
                 </div>
             </div>
+            <!--// .cont-box -->
 
+            <!--// .cont-box -->
 
             <hr class="cont-sp type1" aria-hidden="true"/>
             <!-- .cont-box -->
             <div class="cont-box nogaps-hoz">
-                <div class="statement-cont type2">
-                    <div class="statement-detail" data-role="fe-bill-menu">
-                        <div class="cont-loading-area fe-loading-bill">
-                        </div>
+                <div class="statement-cont">
+                    <div class="statement-detail type2" data-role="fe-bill-menu">
+                        <div class="cont-loading-area fe-loading-bill"></div>
                         <!-- .widget -->
                         <!--// .widget -->
                     </div>
                 </div>
             </div>
             <!--// .cont-box -->
-            <!--// .cont-box -->
             <% } else { %>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
+            <!-- .cont-box -->
             <div class="cont-box">
-                <p class="msg-type1">
-                    <span class="tx-bold">매월 2일</span>부터 실시간 이용요금을<br>조회하실 수 있습니다.
+                <p class="cont-msg-big">
+                    <span class="tx-bold vbl">매월 2일</span>부터 실시간 <br />
+                    이용요금을 조회하실 수 있습니다.
                 </p>
             </div>
-            <!--// .cont-box -->
-
             <% } %>
             <hr class="cont-sp type1" aria-hidden="true"/>
             <% if(preBill) { %>
@@ -87,7 +85,7 @@
                     <li>
                         <a href="/myt-fare/bill/hotbill/prev" id="fe-bt-prev">
                                 <span class="inner">
-                                    <span class="tit">지난 달 요금 보기</span>
+                                    <span class="tit">지난달 요금 보기</span>
                                     <span class="text type2" id="fe-pre-amount"></span>
                                 </span>
                         </a>
@@ -97,22 +95,22 @@
             <% } %>
 
             <% if( lines.length > 0) { %>
-            <hr class="cont-sp type1" aria-hidden="true"/>
-            <div class="cont-box nogaps-btm">
-                <h3 class="tit-type6">다른 회선 실시간 이용요금</h3>
-            <!-- .cont-box -->
-                <ul class="my-line-info">
-                </ul>
+            <div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
+                <h4 class="tit">다른 회선 실시간 이용요금</h4>
+            </div>
 
+            <div class="cont-box nogaps">
+                <ul class="list-comp-lineinfo" id="fe-line-info">
+
+                </ul>
                 <div class="bt-more" style="display: none;">
                     <button id="fe-bt-more">더 보기<span>0</span></button>
                 </div>
-
             </div>
             <% } %>
             <!--// .cont-box -->
             <div class="cont-box noborder bgnone">
-                <h3 class="pg-chk-tit">꼭 확인해주세요</h3>
+                <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
                 <ul class="pg-chk-list02">
                     <li><button class="btn-tip" id="MF_03_tip_01">실시간 이용요금 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                     <li><button class="btn-tip" id="MF_03_tip_02">요금제 변경 및 일시정지하신 경우<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
