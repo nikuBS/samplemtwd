@@ -40,7 +40,7 @@ class CommonTidLogin extends TwViewController {
         this.logger.info(this, '[redirect]', url);
         res.redirect(url);
       } else {
-        res.send('login fail');
+        res.redirect('/common/member/login/fail?errorCode=' + resp.code + '&target=' + target);
       }
     });
   }
