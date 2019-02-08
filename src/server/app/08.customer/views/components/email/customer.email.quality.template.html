@@ -321,7 +321,7 @@
         <div class="inquiryform-wrap">
             <p class="title">문의하실 회선과 현상을 선택 후 내용을 기재해 주세요</p>
             <% if ( allSvc.s && allSvc.s.filter(function(item){return item.svcGr === 'U'}).length >= 2 ) {
-            var filteredLine = allSvc.s.filter(function(item){return item.svcGr === 'U'});
+                var filteredLine = allSvc.s.filter(function(item){return item.svcGr === 'U'});
             %>
             <div class="info-form-box">
                 <button class="bt-dropdown big tx-bold fe-quality-line fe-select-phone-line" title="문의하실 회선정보 선택" aria-haspopup="true"
