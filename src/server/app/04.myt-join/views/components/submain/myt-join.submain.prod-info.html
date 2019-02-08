@@ -12,7 +12,7 @@
 <div class="cont-box nogaps">
     <ul class="full-link-list">
         <li>
-            <button data-id="my-plan">
+            <button type="button" data-id="my-plan" title="나의 요금제" aria-haspopup="true">
                 <span class="inner">
                     <span class="tit">
                         나의 요금제
@@ -23,7 +23,7 @@
         </li>
         <% if (data.isAddProduct) { %>
             <li>
-                <button data-id="add-prod">
+                <button type="button" data-id="add-prod" title="나의 부가서비스" aria-haspopup="true">
                     <span class="inner">
                         <span class="tit">
                             나의 부가서비스
@@ -42,7 +42,7 @@
             <% if (data.type === 0) { %>
                 <% if (data.myAddProduct.comProdCnt > 0) { %>
                 <li>
-                    <button data-id="com-prod">
+                    <button type="button" data-id="com-prod" title="나의 결합상품" aria-haspopup="true">
                         <span class="inner">
                             <span class="tit">나의 결합상품</span>
                             <span class="text"><%= data.myAddProduct.comProdCnt %>개</span>
@@ -54,7 +54,7 @@
         <% } %>
         <% if (data.type === 2) { %>
             <li>
-                <button data-id="wire-inq">
+                <button type="button" data-id="wire-inq" title="인터넷 &middot; 집전화 &middot; IPTV 신청내역 및 조회" aria-haspopup="true">
                         <span class="inner">
                             <span class="tit">인터넷 &middot; 집전화 &middot; IPTV 신청내역 및 조회</span>
                         </span>
@@ -62,7 +62,7 @@
             </li>
             <% if (data.isWireFree) { %>
             <li>
-                <button data-id="B-target-inq">
+                <button type="button" data-id="B-target-inq" title="B끼리 무료통화 대상자 조회" aria-haspopup="true">
                     <span class="tit">B끼리 무료통화 대상자 조회</span>
                 </button>
             </li>
@@ -70,7 +70,7 @@
         <% } else { %>
             <% if (data.isInstallement) { %>
             <li>
-                <button data-id="installement">
+                <button type="button" data-id="installement" title="약정할인 &middot; 기기상환 정보" aria-haspopup="true">
                         <span class="inner">
                             <span class="tit">약정할인 &middot; 기기상환 정보</span>
                             <span class="text"><%= data.myInstallement.disProdNm %> <br/> <%= data.myInstallement.disMthCnt %>개월</span>
@@ -80,7 +80,7 @@
             <% } %>
             <% if (data.isContractPlan) { %>
             <li>
-                <button data-id="contract-plan">
+                <button type="button" data-id="contract-plan" title="무약정 플랜 포인트" aria-haspopup="true">
                         <span class="inner">
                             <span class="tit">무약정 플랜 포인트</span>
                             <% if ( data.myContractPlan.muPointYn === 'Y' ) { %>
@@ -94,7 +94,7 @@
             <% } %>
         <% } %>
         <li>
-            <button data-id="join-svc">
+            <button type="button" data-id="join-svc" title="가입상담예약 신청 및 조회" aria-haspopup="true">
                 <span class="inner">
                     <span class="tit">가입상담예약 신청 및 조회</span>
                 </span>
