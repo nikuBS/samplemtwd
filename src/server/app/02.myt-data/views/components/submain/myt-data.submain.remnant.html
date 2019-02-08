@@ -148,13 +148,12 @@
                             <span class="remain">
                                 <strong>
                                     <% if (rvoice.isUnlimit) { %>
-                                    무제한 </strong>
+                                        무제한 </strong>
                                     <% } else { %>
-                                    <% if (rvoice.showRemained.hours > 0 ) { %>
-                                    <%= rvoice.showRemained.hours %>시간
-                                    <% } %>
-                                    <%= rvoice.showRemained.min %>분
-                                    </strong>남음
+                                        <% if (rvoice.showRemained.hours > 0 ) { %>
+                                        <%= rvoice.showRemained.hours %>시간
+                                        <% } %>
+                                        <%= rvoice.showRemained.min %>분</strong>남음
                                     <% } %>
                             </span>
                             </div>
@@ -292,16 +291,17 @@
                     <div class="cont">
                         <span class="txt1"><%= rvoice.skipNm %></span>
                         <div class="date">
-                                        <span class="remain">
-                                            <strong>
-                                                <% if (rvoice.isUnlimit) { %>
-                                                무제한 </strong>
-                                                <% } else { %>
-                                                <%= rvoice.showRemained.hours %>시간
-                                                <%= rvoice.showRemained.min %>분
-                                            </strong>남음
-                                                <% } %>
-                                        </span>
+                            <span class="remain">
+                                <strong>
+                                    <% if (rvoice.isUnlimit) { %>
+                                        무제한 </strong>
+                                    <% } else { %>
+                                        <% if (rvoice.showRemained.hours > 0 ) { %>
+                                        <%= rvoice.showRemained.hours %>시간
+                                        <% } %>
+                                        <%= rvoice.showRemained.min %>분</strong>남음
+                                    <% } %>
+                            </span>
                         </div>
                     </div>
                     <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
@@ -532,11 +532,12 @@
                             <span class="remain">
                                 <strong>
                                     <% if (rvoice.isUnlimit) { %>
-                                    무제한 </strong>
+                                        무제한 </strong>
                                     <% } else { %>
-                                    <%= rvoice.showRemained.hours %>시간
-                                    <%= rvoice.showRemained.min %>분
-                                </strong>남음
+                                        <% if (rvoice.showRemained.hours > 0 ) { %>
+                                        <%= rvoice.showRemained.hours %>시간
+                                        <% } %>
+                                        <%= rvoice.showRemained.min %>분</strong>남음
                                     <% } %>
                             </span>
                         </div>
@@ -643,16 +644,17 @@
                 <div class="cont">
                     <span class="txt1"><%= rvoice.skipNm %></span>
                     <div class="date">
-                                        <span class="remain">
-                                            <strong>
-                                                <% if (rvoice.isUnlimit) { %>
-                                                무제한 </strong>
-                                                <% } else { %>
-                                                <%= rvoice.showRemained.hours %>시간
-                                                <%= rvoice.showRemained.min %>분
-                                            </strong>남음
-                                                <% } %>
-                                        </span>
+                        <span class="remain">
+                            <strong>
+                                <% if (rvoice.isUnlimit) { %>
+                                    무제한 </strong>
+                                <% } else { %>
+                                    <% if (rvoice.showRemained.hours > 0 ) { %>
+                                    <%= rvoice.showRemained.hours %>시간
+                                    <% } %>
+                                    <%= rvoice.showRemained.min %>분</strong>남음
+                                <% } %>
+                        </span>
                     </div>
                 </div>
                 <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>

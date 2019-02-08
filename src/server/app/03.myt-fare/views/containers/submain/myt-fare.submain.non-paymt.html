@@ -51,12 +51,12 @@
                 <ul class="bt-slice <%= itemTwo? 'item-two':''; %>">
                     <% if (data.possibleDay) { %>
                     <li class="bt-white2">
-                        <button data-id="day">납부가능일 선택</button>
+                        <button type="button" data-id="day" title="납부가능일 선택" aria-haspopup="true">납부가능일 선택</button>
                     </li>
                     <% } %>
                     <% if (data.suspension) { %>
                     <li class="bt-white2">
-                        <button data-id="susp">이용정지 해제</button>
+                        <button type="button" data-id="susp" title="이용정지 해제" aria-haspopup="true">이용정지 해제</button>
                     </li>
                     <% } %>
                 </ul>
