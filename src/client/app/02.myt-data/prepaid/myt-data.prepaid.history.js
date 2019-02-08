@@ -242,6 +242,8 @@ Tw.MyTDataPrepaidHistory.prototype = {
   _handleSuccessCancel: function(resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       Tw.Error(resp.code, resp.msg).pop();
+    } else {
+      Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_DATA.COMPLETE_CANCEL);
     }
   }
 };
