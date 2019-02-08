@@ -185,11 +185,13 @@ Tw.MembershipBenefitBrand.prototype = {
     var $lis = this.$categoryListInLayer.find('li');
     // var $imgs = this.$categoryListInLayer.find('img');
     $lis.removeClass('checked');
+    $lis.attr('aria-checked', false);
     // $imgs.each(function () {
     //   $(this).attr('src', $(this).attr('offSrc'));
     // });
     var $selectedli = $lis.filter('li[cate-cd="' + this._reqOptions.cateCd + '"]');
     $selectedli.addClass('checked');
+    $selectedli.attr('aria-checked', true);
     // var $img = $selectedli.find('img');
     // $img.attr('src', $img.attr('onSrc'));
   },
