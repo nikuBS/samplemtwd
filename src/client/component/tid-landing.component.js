@@ -24,6 +24,7 @@ Tw.TidLandingComponent.prototype = {
     this.$container.on('click', '.fe-bt-find-pw', $.proxy(this._onClickBtFindPw, this));
     this.$container.on('click', '.fe-bt-change-pw', $.proxy(this._onClickBtChangePw, this));
     this.$container.on('click', '.fe-bt-login', $.proxy(this._onClickLogin, this, redirectTarget));
+    this.$container.on('click', '.fe-bt-replace-login', $.proxy(this._onClickReplaceLogin, this, redirectTarget));
     this.$container.on('click', '.fe-bt-logout', $.proxy(this._onClickLogout, this));
     this.$container.on('click', '.fe-bt-signup', $.proxy(this._onClickSLogin, this));
   },
@@ -31,7 +32,7 @@ Tw.TidLandingComponent.prototype = {
     if ( Tw.BrowserHelper.isApp() ) {
       this._nativeService.send(nativeCommand, {}, callback);
     } else {
-      this._historyService.replaceURL(url);
+      this._historyService.goLoad(url);
     }
   },
   goActionSheetLogin: function (target) {
@@ -46,8 +47,13 @@ Tw.TidLandingComponent.prototype = {
       }, $.proxy(this._onNativeLogin, this, target));
     }
   },
-  _onClickLogin: function(target) {
+  _onClickLogin: function (target) {
     this.goLogin(target);
+  },
+  _onClickReplaceLogin: function (target) {
+    target = target || '/main/home';
+    this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login?target=' + encodeURIComponent(target) + '&type=reload',
+      $.proxy(this._onNativeLogin, this, target));
   },
   _onClickLogout: function () {
     this.goLogout();
@@ -154,7 +160,7 @@ Tw.TidLandingComponent.prototype = {
     this._historyService.goLoad('/common/member/logout/complete');
   },
   _successSetSession: function (target) {
-    if (target.indexOf(location.pathname) !== -1) {
+    if ( target.indexOf(location.pathname) !== -1 ) {
       this._historyService.reload();
     } else {
       this._historyService.replaceURL(target);

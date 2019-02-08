@@ -16,7 +16,7 @@ Tw.CommonMemberLogin.prototype = {
     CANCEL: 1500
   },
   _init: function (target) {
-    this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login?target=' + encodeURIComponent(target), $.proxy(this._onNativeLogin, this, target));
+    this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login?target=' + encodeURIComponent(target) + '&type=reload', $.proxy(this._onNativeLogin, this, target));
   },
   _goLoad: function (nativeCommand, url, callback) {
     if ( Tw.BrowserHelper.isApp() ) {
