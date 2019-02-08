@@ -63,41 +63,51 @@
                                 <li>
                                     <span class="inputbox"><!-- 입력 필드 오류 시 .error 추가 -->
                                         <span class="input">
-                                            <input id="flab01" type="text" value="김선호" placeholder="휴대폰 명의자 이름" aria-describedby="aria-phone-tx1">
+                                            <!--접근성 수정-->
+                                            <input id="flab01" type="text" value="김선호" placeholder="휴대폰 명의자 이름" title="휴대폰 명의자 이름을 입력해 주세요" aria-describedby="aria-phone-tx1">
+                                            <!-- //접근성 수정-->
                                             <!-- 오류메세지 추가시 aria-describedby 속성 추가, 정보가 일치하지 않을 경우 값을 aria-phone-tx2 로 변경 -->
                                             <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                         </span>
-                                        <span class="tx-box none"><!-- 입력 필드 오류 시 추가, 나타내지 않을때는 .none 추가 -->
-                                            <span id="aria-phone-tx1" class="error-txt">이름을 입력해 주세요.</span>
-                                            <!-- <span id="aria-phone-tx2" class="error-txt none" aria-hidden="true">입력하신 정보가 일치하지 않습니다.</span> -->
+                                        <!--접근성 수정-->
+                                        <span class="tx-box none" id="aria-phone-tx1"><!-- 입력 필드 오류 시 추가, 나타내지 않을때는 .none 추가 -->
+                                            <span class="error-txt">이름을 입력해 주세요.</span>
+                                            <!-- <span class="error-txt none">입력하신 정보가 일치하지 않습니다.</span> -->
                                         </span>
+                                        <!--//접근성 수정-->
                                     </span>
                                 </li>
                                 <li class="radio-stype">
                                     <span class="inputbox"><!-- 입력 필드 오류 시 .error 추가 -->
                                         <span class="input">
-                                            <input id="flab02" type="number" value="860808" placeholder="명의자의 법정 생년월일 6자리" aria-describedby="aria-birth-tx1">
+                                            <!--접근성 수정-->
+                                            <input id="flab02" type="number" value="860808" placeholder="명의자의 법정 생년월일 6자리" title="명의자의 법정 생년월일 6자리를 입력해 주세요" aria-describedby="aria-birth-tx2">
+                                            <!--//접근성 수정-->
                                             <!-- 오류메세지 추가시 aria-describedby 속성 추가, 6자리 미입력의 경우 값을 aria-birth-tx2로 변경 -->
                                             <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                         </span>
-                                        <span class="tx-box none"><!-- 입력 필드 오류 시 추가, 나타내지 않을때는 .none 추가 -->
-                                            <span id="aria-birth-tx1" class="error-txt">법정 생년월일 6자리를 입력해 주세요.</span>
-                                            <!-- <span id="aria-birth-tx2" class="error-txt">생년월일 6자리를 정확히 입력해 주세요.</span> -->
+                                        <!--접근성 수정-->
+                                        <span class="tx-box none" id="aria-birth-tx2"><!-- 입력 필드 오류 시 추가, 나타내지 않을때는 .none 추가 -->
+                                            <span class="error-txt">법정 생년월일 6자리를 입력해 주세요.</span>
+                                            <!-- <span class="error-txt">생년월일 6자리를 정확히 입력해 주세요.</span> -->
                                         </span>
+                                        <!-- //접근성 수정-->
                                     </span>
                                     <div class="inputbox"><!-- 입력 필드 오류 시 .error 추가 -->
                                         <div class="widget">
                                             <div class="widget-box radio">
+                                                <!--접근성 수정-->
                                                 <ul class="select-list" role="radiogroup">
-                                                    <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                        <input type="radio" name="radio1" value="" title="명의자 성별선택 : 남자" aria-describedby="aria-gender-tx"><!-- 체크상태일 경우 checked="checked" 오류메세지 추가시 aria-describedby 속성 추가 -->
+                                                    <li class="radiobox type01" id="aria-comp-radio1" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                        <input type="radio" name="radio1" value="" title="명의자 성별선택" aria-labelledby="aria-comp-radio1" aria-describedby="aria-gender-tx"><!-- 체크상태일 경우 checked="checked" 오류메세지 추가시 aria-describedby 속성 추가 -->
                                                         남자
                                                     </li>
-                                                    <li class="radiobox type01 checked" role="radio" aria-checked="true"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                        <input type="radio" name="radio1" value="" title="명의자 성별선택 : 여자" checked="checked" aria-describedby="aria-gender-tx"><!-- 체크상태 아닌 경우 checked="false" 오류메세지 추가시 aria-describedby 속성 추가 -->
+                                                    <li class="radiobox type01 checked" id="aria-comp-radio2" role="radio" aria-checked="true"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                        <input type="radio" name="radio1" value="" title="명의자 성별선택" aria-labelledby="aria-comp-radio2" checked="checked" aria-describedby="aria-gender-tx"><!-- 체크상태 아닌 경우 checked="false" 오류메세지 추가시 aria-describedby 속성 추가 -->
                                                         여자
                                                     </li>
                                                 </ul>
+                                                <!-- //접근성 수정-->
                                                 <span id="aria-gender-tx" class="error-txt none">성별을 선택해 주세요.</span><!-- 입력 필드 오류 시 추가, 나타내지 않을때는 .none 추가 -->
                                             </div>
                                         </div>
@@ -107,19 +117,23 @@
                                     <!-- 2019-01-17 inp-btn 추가 -->
                                     <span class="inputbox bt-add inp-btn">
                                         <span class="input">
-                                            <input type="number" id="flab03" value="01012345678" placeholder="휴대폰 번호 숫자만 입력" title="SK텔레콤 휴대폰 번호 입력">
+                                            <!--접근성 수정-->
+                                            <input type="number" id="flab03" value="01012345678" placeholder="휴대폰 번호 숫자만 입력" title="SK텔레콤 휴대폰 번호 숫자만 입력해 주세요" aria-describedby="aria-cert-num">
+                                            <!--//접근성 수정-->
                                             <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                         </span>
                                         <span class="bt-box2">
                                             <button type="button" class="btn-round2 btn-style3">시간 연장하기</button>
                                         </span>
                                     </span>
-                                    <span class="tx-box pb12"><!-- 오류 또는 정상 전송완료 메세지 추가 시, 정상 작동되지 않을때는 .none 추가 -->
-                                        <!-- span id="aria-cert-num1" class="validation-txt">입력시간이 연장되었습니다.(유효시간 5분)</span>--><!-- 인증번호 받기 클릭후 정상발송시 -->
-                                        <span id="aria-cert-num2" class="validation-txt">정상적으로 발송되었습니다.(유효시간 5분)</span><!-- 시간연장하기 클릭시 -->
-                                        <!-- <span id="aria-cert-num3" class="error-txt">재전송 제한시간(1분)이 지난 후에 이용해 주세요.</span>--><!-- 재발송가능시간 아닌경우 -->
-                                        <!-- <span id="aria-cert-num4" class="error-txt">제한시간 내 인증번호를 보낼 수 있는 횟수가 넘었습니다.</span>--><!-- 5분내 4회 초과시 -->
+                                    <!--접근성 수정-->
+                                    <span class="tx-box pb12" id="aria-cert-num"><!-- 오류 또는 정상 전송완료 메세지 추가 시, 정상 작동되지 않을때는 .none 추가 -->
+                                        <!-- span class="validation-txt">입력시간이 연장되었습니다.(유효시간 5분)</span>--><!-- 인증번호 받기 클릭후 정상발송시 -->
+                                        <span class="validation-txt">정상적으로 발송되었습니다.(유효시간 5분)</span><!-- 시간연장하기 클릭시 -->
+                                        <!-- <span class="error-txt">재전송 제한시간(1분)이 지난 후에 이용해 주세요.</span>--><!-- 재발송가능시간 아닌경우 -->
+                                        <!-- <span class="error-txt">제한시간 내 인증번호를 보낼 수 있는 횟수가 넘었습니다.</span>--><!-- 5분내 4회 초과시 -->
                                     </span>
+                                    <!-- //접근성 수정-->
                                     <span class="inputbox mt10">
                                         <span class="input">
                                             <input type="number" placeholder="인증번호 숫자 6자리" title="인증번호 숫자 6자리 입력">
@@ -130,10 +144,12 @@
                             </ul>
                         </div>
                         <div class="join-footer">
+                            <!--접근성 수정-->
                             <ul class="pg-chk-list">
-                                <li><span>간편 로그인이란? <button class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span></li>
-                                <li><span>입력정보가 일치하지 않는다면! <button class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span></li>
+                                <li><span>간편 로그인이란? <button class="btn-tip" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">간편 로그인이란? tip</span></i></button></span></li>
+                                <li><span>입력정보가 일치하지 않는다면! <button class="btn-tip" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">입력정보가 일치하지 않는다면! tip</span></i></button></span></li>
                             </ul>
+                            <!-- //접근성 수정-->
                         </div>
                     </div>
                     <!-- //.cont-box -->

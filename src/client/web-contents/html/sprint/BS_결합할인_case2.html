@@ -47,7 +47,7 @@
                     <div class="h-menu">
                         <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
                     </div>
-                    <div class="h-tit"> 혜택 &middot; 할인</div>
+                    <div class="h-tit"> 혜택 / 할인</div>
                     <div class="h-serarch">
                         <button class="icon-gnb-search"><span class="blind">검색</span></button>
                     </div>
@@ -68,7 +68,7 @@
                         <button class="wrap-link">
                             <i class="icon-badge-plan-my mr8"><span class="blind">my</span></i>
                             <span class="stit">포인트 120,400점</span>
-                            <span class="view-tx">혜택 &middot; 할인 3건</span>
+                            <span class="view-tx">혜택 / 할인 3건</span>
                         </button>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
 
                 <!-- cont-box -->
                 <div class="cont-box nogaps-btm">
-                    <h3 class="tit-type6 tx-regular pb20">SK텔레콤 혜택 &middot; 할인</h3>
+                    <h3 class="tit-type6 tx-regular pb20">SK텔레콤 혜택 / 할인</h3>
                     <!-- .widget -->
                     <div class="widget"> 
                         <div class="widget-box horizontal">
@@ -170,7 +170,7 @@
                                     <p class="text">결합시 휴대폰 월정액 &<br />전화/인터넷전화 기본료 할인</p>
                                 </div>
                                 <div class="tag-field">
-                                    <span class="tag">#개인 &middot; 가족결합</span>
+                                    <span class="tag">#개인 / 가족결합</span>
                                     <span class="tag">#휴대폰+전화</span>
                                 </div>
                                 <div class="tag-price">
@@ -196,20 +196,22 @@
 							<div class="inner-wrap">
 								 <div class="widget">
 									<div class="widget-box radio">
+                                        <!--접근성 수정-->
 										<ul class="select-list" role="radiogroup">
 											<li class="radiobox btn-type02" role="radio">
-												<input type="radio" name="radio4" value="" title="광랜 1회선" checked="checked" /><!-- 체크상태일 경우 checked="checked" -->
-												<span class="radio-txt ff-tb">광랜 1회선</span>
+												<input type="radio" name="radio4" value="" title="인터넷" aria-labelledby="aria-comp-radio1" checked="checked" /><!-- 체크상태일 경우 checked="checked" -->
+												<span class="radio-txt ff-tb" id="aria-comp-radio1">광랜 1회선</span>
 											</li>
 											<li class="radiobox btn-type02" role="radio">
-												<input type="radio" name="radio4" value="" title="광랜 2회선"/><!-- 체크상태일 경우 checked="false" -->
-												<span class="radio-txt ff-tb">광랜 2회선</span>
+												<input type="radio" name="radio4" value="" title="인터넷" aria-labelledby="aria-comp-radio2" /><!-- 체크상태일 경우 checked="false" -->
+												<span class="radio-txt ff-tb" id="aria-comp-radio2">광랜 2회선</span>
 											</li>
 											<li class="radiobox btn-type02" role="radio">
-												<input type="radio" name="radio4" value="" title="Giga"/><!-- 비활성화상태일 경우 disabled="disabled" -->
-												<span class="radio-txt ff-tb">Giga</span>
+												<input type="radio" name="radio4" value="" title="인터넷" aria-labelledby="aria-comp-radio3" /><!-- 비활성화상태일 경우 disabled="disabled" -->
+												<span class="radio-txt ff-tb" id="aria-comp-radio3">Giga</span>
 											</li>
-										</ul>
+                                        </ul>
+                                        <!--//접근성 수정-->
 									</div>
 								</div>
 							</div>
@@ -225,16 +227,18 @@
 							<div class="inner-wrap">
 								 <div class="widget">
 									<div class="widget-box radio">
+                                        <!--접근성 수정-->
 										<ul class="select-list" role="radiogroup">
 											<li class="radiobox btn-type02" role="radio" aria-disabled="true"><!-- 비활성화일경우 .disabled 클래스 추가 , aria-disabled="true" -->
-												<input type="radio" name="radio5" value="" title="값1" checked="checked" /><!-- 체크상태일 경우 checked="checked" -->
-												<span class="radio-txt ff-tb">있음</span>
+												<input type="radio" name="radio5" value="" title="TV" aria-labelledby="aria-comp-radio4" checked="checked" /><!-- 체크상태일 경우 checked="checked" -->
+												<span class="radio-txt ff-tb" id="aria-comp-radio4">있음</span>
 											</li>
 											<li class="radiobox btn-type02" role="radio">
-												<input type="radio" name="radio5" value="" title="값2" /><!-- 체크상태일 경우 checked="false" -->
-												<span class="radio-txt ff-tb">없음</span>
+												<input type="radio" name="radio5" value="" title="TV" aria-labelledby="aria-comp-radio5" /><!-- 체크상태일 경우 checked="false" -->
+												<span class="radio-txt ff-tb" id="aria-comp-radio5">없음</span>
 											</li>
-										</ul>
+                                        </ul>
+                                        <!-- //접근성 수정-->
 									</div>
 								</div>
 							</div>
@@ -254,7 +258,7 @@
                          <li>
                              <button> 
                                  <span class="inner">
-                                     <span class="tit">가입상담예약 신청 &middot; 조회</span>
+                                     <span class="tit">가입상담예약 신청 / 조회</span>
                                  </span>
                              </button>
                          </li>
@@ -272,6 +276,7 @@
 				<!-- .cont-box -->
                 <div class="cont-box noborder bgnone">
                     <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
+                    <!--접근성 수정-->
                     <ul class="pg-link-list">
                         <li>
                             <button>
@@ -285,7 +290,7 @@
                         </li>
                         <li>
                             <button>
-                                <i class="icon-internet-40"><span class="blind">discount</span></i>인터넷 · 집전화 · IPTV
+                                <i class="icon-internet-40"><span class="blind">discount</span></i>인터넷 / 집전화 / IPTV
                             </button>
                         </li>
                         <li>
@@ -294,6 +299,7 @@
                             </button>
                         </li>
                     </ul>
+                    <!-- //접근성 수정-->
                 </div>
                 <!--// .cont-box -->
 
