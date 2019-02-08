@@ -534,7 +534,8 @@ Tw.ALERT_MSG_MYT_DATA = {
     TITLE: '데이터를 변경하시겠습니까?',
     CONTENTS: '나만 사용할 수 있는 데이터로 변경됩니다.',
     BUTTON: '변경하기'
-  }
+  },
+  COMPLETE_CANCEL: '취소가 완료되었습니다.'
 };
 
 Tw.VALIDATE_MSG_MYT_DATA = {

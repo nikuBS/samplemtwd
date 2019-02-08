@@ -96,7 +96,7 @@
                                             <div class="list-data">
                                                 <button class="bt-link data-tx <%= history.isCanceled ? 'gray-tx' : 'blue-tx'%>" data-origin-idx="<%= history.idx %>"><%= history.amt %>원</button>
                                                 <% if (history.rfndPsblYn === 'Y') { %>
-                                                    <button class="bt-link-tx underline red" data-cancel-id="<%= history.cancelOrderId %>" data-charge-code="<%= history.dataChargeCd %>">취소</button>
+                                                    <button class="bt-link-tx underline red fe-cancel" data-cancel-id="<%= history.cancelOrderId %>" data-charge-code="<%= history.dataChargeCd %>">취소</button>
                                                 <% } %>
                                             </div>
                                         </li>
