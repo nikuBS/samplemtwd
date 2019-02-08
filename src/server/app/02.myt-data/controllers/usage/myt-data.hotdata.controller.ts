@@ -46,18 +46,18 @@ class MyTDataHotdata extends TwViewController {
         }
         if (extraDataReq) {
           Observable.combineLatest(extraDataReq).subscribe(([extraDataResp]) => {
-            this._render(svcInfo, pageInfo, res, usageDataResp, extraDataResp);
+            this._render(res, svcInfo, pageInfo, usageDataResp, extraDataResp);
           }, (resp) => {
-            this._render(svcInfo, pageInfo, res, usageDataResp);
+            this._render(res, svcInfo, pageInfo, usageDataResp);
           });
         } else {
-          this._render(svcInfo, pageInfo, res, usageDataResp);
+          this._render(res, svcInfo, pageInfo, usageDataResp);
         }
       } else {
-        res.render(VIEW.ERROR, { usageData: usageDataResp, svcInfo: svcInfo });
+        this._renderError(res, svcInfo, usageDataResp);
       }
     }, (resp) => {
-      res.render(VIEW.ERROR, { usageData: resp, svcInfo: svcInfo });
+      this._renderError(res, svcInfo, resp);
     });
   }
 
@@ -170,7 +170,7 @@ class MyTDataHotdata extends TwViewController {
     return usageData;
   }
 
-  private _render(svcInfo: any, pageInfo: any, res: any, usageDataResp: any, extraDataResp?: any) {
+  private _render(res: any, svcInfo: any, pageInfo: any, usageDataResp: any, extraDataResp?: any) {
     let view = VIEW.BAR;
     const option = {
       svcInfo,
@@ -203,6 +203,18 @@ class MyTDataHotdata extends TwViewController {
         break;
     }
     res.render(view, option);
+  }
+
+  private _renderError(res: any, svcInfo: any, resp: any) {
+    const error = MYT_DATA_USAGE.ERROR[resp.code] || {};
+    error.code = resp.code;
+    if (error.code !== 'BLN0001') {
+      error.title = MYT_DATA_USAGE.ERROR.DEFAULT_TITLE;
+    }
+    res.render(VIEW.ERROR, {
+      svcInfo,
+      error
+    });
   }
 
 
