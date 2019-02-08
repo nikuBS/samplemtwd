@@ -82,7 +82,7 @@ export default class MyTDataHistory extends TwViewController {
           break;
       }
 
-      if (filterIdx > 4) {
+      if (filterIdx < 4) {
         chargeData.display = histories[filterIdx];
       } else if (filterIdx === 4) {
         chargeData.display = histories[filterIdx].concat(histories[filterIdx + 1]);
