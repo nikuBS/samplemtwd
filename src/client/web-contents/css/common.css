@@ -23,7 +23,7 @@ html, body, form, div, p, h1, h2, h3, h4, h5, h6, dl, dt, dd, ul, ol, li, fields
   padding: 0;
   font-weight: 400;
   -webkit-text-size-adjust: none;
-  font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", 'Droid Sans', "Noto Sans", "Noto Sans CJK", Roboto, sans-serif;
+  font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Droid Sans", Roboto, sans-serif, "Noto Sans", "Noto Sans CJK";
   font-style: normal; }
 
 body {

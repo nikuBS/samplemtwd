@@ -12964,6 +12964,8 @@ a.bt-link-tx.underline.small {
       display: block; }
     .representcharge-list > li.current .productinfoscroll-box {
       display: block; }
+    .representcharge-list > li.current + li {
+      border-top: none; }
     .representcharge-list > li.on .representcharge-info:after {
       background: none; }
     .representcharge-list > li.on .representcharge-product {
@@ -15455,6 +15457,10 @@ a.bt-link-tx.underline.small {
     .add-prd-top-wrap .counts em {
       font-weight: 700; }
 
+.container div:first-child.add-prd-top-wrap {
+  border-top: 0 none;
+  /*나의 부가서비스*/ }
+
 .add-prd-wrap .list-comp-lineinfo li.add-con {
   padding-bottom: 1.375rem; }
   .add-prd-wrap .list-comp-lineinfo li.add-con > button {
@@ -15947,7 +15953,7 @@ a.bt-link-tx.underline.small {
           text-align: right; }
   .cont-actionsheet .ac-list:last-of-type {
     padding-bottom: 0;
-    border-bottom: 1px solid #f2f2f2; }
+    border-bottom: 0 none; }
   .cont-actionsheet .ac-list.ly-table {
     display: table; }
     .cont-actionsheet .ac-list.ly-table:last-of-type {
@@ -16069,7 +16075,7 @@ a.bt-link-tx.underline.small {
           text-align: right; }
   .cont-actionsheet .ac-list:last-of-type {
     padding-bottom: 0;
-    border-bottom: 1px solid #f2f2f2; }
+    border-bottom: none; }
 
 .cont-actionsheet .btn-more {
   margin-top: 1.0625rem; }
@@ -19156,6 +19162,7 @@ a.bt-link-tx.underline.small {
 
 .option-box .textarea-type textarea {
   padding-right: 2.5rem;
+  padding-left: 0.625rem;
   color: #000;
   font-weight: 700;
   line-height: 1.3125rem; }
@@ -28816,7 +28823,7 @@ body.apphome {
       content: '';
       position: absolute;
       left: 0;
-      bottom: -5.625rem;
+      bottom: -11.25rem;
       width: 100%;
       height: 11.25rem;
       background: url(/img/main/bg_home.png) repeat-x 0 0;
@@ -30741,7 +30748,7 @@ body.apphome {
   .bt-agree-tit .bt-dropdown {
     background: #fff;
     font-size: 1rem;
-    padding: 0.625rem 2.25rem 0.5625rem 0.75rem; }
+    padding: 0.625rem 2.25rem 0.5625rem 0; }
     .bt-agree-tit .bt-dropdown:after {
       right: 0; }
 
@@ -31667,6 +31674,8 @@ body.apphome {
   font-size: 1rem;
   text-align: center;
   border-radius: 0.3125rem; }
+  .btn-type01.btn-on {
+    font-weight: bold; }
 
 .input-txt-type01 {
   font-size: 0.75rem; }
@@ -31875,6 +31884,9 @@ body.apphome {
 
 .prepayment-coupon .horizontal-list {
   margin-top: 0; }
+
+.prepayment-coupon li:last-child {
+  margin-right: 0.75rem; }
 
 .prepayment-coupon li div {
   width: 8.4375rem;
