@@ -190,8 +190,9 @@ Tw.MembershipBenefitBrandList.prototype = {
     if(event){
       var $btn = $(event.currentTarget);
       if($btn.attr('id') === 'fe-btn-odr-n' || $btn.attr('id') === 'fe-btn-odr-r' ){
-        $('#fe-odr-btn-box button').removeClass('on');
-        $btn.addClass('on');
+        // 웹접근성, aria-selected 속성 추가
+        $('#fe-odr-btn-box button').removeClass('on').attr('aria-selected', false);
+        $btn.addClass('on').attr('aria-selected', true);
       }
     }
     var ord = $('#fe-odr-btn-box .on').attr('id') === 'fe-btn-odr-n' ? 'N' : 'R';
