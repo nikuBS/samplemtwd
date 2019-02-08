@@ -35,8 +35,6 @@ Tw.ProductRoaming.prototype = {
     this.$prevBtn.on('click', $.proxy(this._onClickPrevBtn, this));
     this.$nextBtn.on('click', $.proxy(this._onClickNextBtn, this));
 
-    $layer.find('.popup-closeBtn').on('click', $.proxy(function() { this._popupService.closeAll(); }, this));
-
     this._updateFormInfo();
   },
   _onClickFormInfo: function(e) {
