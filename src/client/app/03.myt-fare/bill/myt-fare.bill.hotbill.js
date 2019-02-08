@@ -23,13 +23,13 @@ Tw.MyTFareHotBill.prototype = {
     this._cachedElement();
     this._bindEvent();
     this._getSvcInfo();
-    this._sendBillRequest(this.childSvcMgmtNum);
     if ( this._lines.length > 0 ) {
       this._renderLines();
       this.$container.on('click', '[data-id="fe-other-line"]', $.proxy(this._onClickLine, this));
     }
-
+    
     if ( this.$amount.length > 0 ) {//서버날짜로 일 별 노출조건 세팅해서 내려옴
+      this._sendBillRequest(this.childSvcMgmtNum);
       this._billInfoAvailable = true;
       Handlebars.registerHelper('isBill', function (val, options) {
         return (Tw.MyTFareHotBill.NO_BILL_FIELDS.indexOf(val) < 0) ? options.fn(this) : options.inverse(this);
