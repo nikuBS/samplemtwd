@@ -19,8 +19,8 @@ Tw.QuickMenuComponent.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var menuIdStr = resp.result.menuIdStr.trim();
       if ( menuIdStr.indexOf(this._menuId) !== -1 ) {
-        this.$btQuickAdd.parent().removeClass('none');
-        this.$btQuickRemove.parent().addClass('none');
+        this.$btQuickAdd.removeClass('none');
+        this.$btQuickRemove.addClass('none');
       }
     }
   },
@@ -73,8 +73,8 @@ Tw.QuickMenuComponent.prototype = {
   _successAddQuickMenu: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       Tw.CommonHelper.toast(Tw.TOAST_TEXT.QUICK_ADD);
-      this.$btQuickAdd.parent().removeClass('none');
-      this.$btQuickRemove.parent().addClass('none');
+      this.$btQuickAdd.removeClass('none');
+      this.$btQuickRemove.addClass('none');
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
@@ -86,8 +86,8 @@ Tw.QuickMenuComponent.prototype = {
       } else {
         Tw.CommonHelper.toast(Tw.TOAST_TEXT.QUICK_REMOVE);
       }
-      this.$btQuickRemove.parent().removeClass('none');
-      this.$btQuickAdd.parent().addClass('none');
+      this.$btQuickRemove.removeClass('none');
+      this.$btQuickAdd.addClass('none');
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
