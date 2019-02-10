@@ -226,7 +226,6 @@
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잠시 후 다시 이용해 주세요</strong>
                                     <p class="tx">안정적으로 실시간 조회를 하실 수 있도록<br>조회 횟수를 제한하고 있습니다.</p>
-                                    <p class="desc">2시간 동안 최대 12회 조회 가능</p>
                                 </div>
                             </div>
                             <% } else if (homeData.usageData.code === 'BLN0002') { %>
@@ -244,7 +243,7 @@
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                                    <p class="tx">회선정지 상태이거나 일시 정지 이력이 있어 <br>잔여량 조회 서비스를 이용할 수 없습니다.<br>자세한 사항은 고객센터나 <a href="/customer/emailconsult" class="bt">이메일</a>로<br> 문의해 주시기 바랍니다</p>
+                                    <p class="tx">당월 혹은 전월에 정지 이력이 있습니다.</p>
                                 </div>
                             </div>
                             <% } else if (homeData.usageData.code === 'BLN0004') { %>
@@ -386,7 +385,14 @@
                         </div>
 
                         <% if (svcType.login && svcType.mobilePhone) { %>
-                        <% if (homeData.membershipData.code === '00') { %>
+                        <% if (homeData.membershipData.code === 'EASY_LOGIN') { %>
+                        <div class="main-membershop-box">
+                            <button class="ti-tx">
+                                <strong class="ti">간편 로그인 상태에서는 이용할 수 없습니다</strong>
+                                <span class="tx">T아이디(아이디/비밀번호) 로그인 후 이용해주세요</span>
+                            </button>
+                        </div>
+                        <% } else if (homeData.membershipData.code === '00') { %>
                         <div id="fe-membership-extend" class="main-membershop-box">
                             <strong class="ti">membershop</strong>
                             <span id="fe-membership-gr" class="rating <%= homeData.membershipData.mbrGrStr %>" data-mbrgr="<%= homeData.membershipData.mbrGrStr %>"><%= homeData.membershipData.mbrGrStr %></span>
