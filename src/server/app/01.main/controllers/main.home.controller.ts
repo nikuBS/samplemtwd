@@ -11,17 +11,21 @@ import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import {
   HOME_SMART_CARD,
-  LINE_NAME, MEMBERSHIP_GROUP,
+  LINE_NAME,
+  LOGIN_TYPE,
+  MEMBERSHIP_GROUP,
   MYT_FARE_BILL_CO_TYPE,
   SVC_ATTR_E,
-  SVC_ATTR_NAME, TPLAN_PROD_ID, TPLAN_SHARE_LIST,
+  SVC_ATTR_NAME,
+  TPLAN_PROD_ID,
+  TPLAN_SHARE_LIST,
   UNIT,
-  UNIT_E, UNLIMIT_CODE
+  UNIT_E,
+  UNLIMIT_CODE
 } from '../../../types/bff.type';
-import { UNIT as UNIT_STR, UNLIMIT_NAME } from '../../../types/string.type';
+import { SKIP_NAME, TIME_UNIT, UNIT as UNIT_STR, UNLIMIT_NAME } from '../../../types/string.type';
 import DateHelper from '../../../utils/date.helper';
 import { CHANNEL_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../../types/redis.type';
-import { SKIP_NAME, TIME_UNIT } from '../../../types/string.type';
 import BrowserHelper from '../../../utils/browser.helper';
 
 class MainHome extends TwViewController {
@@ -40,7 +44,7 @@ class MainHome extends TwViewController {
     const noticeCode = !BrowserHelper.isApp(req) ? CHANNEL_CODE.MWEB :
       BrowserHelper.isIos(req) ? CHANNEL_CODE.IOS : CHANNEL_CODE.ANDROID;
 
-    const flag = BrowserHelper.isApp(req) ? 'app' : 'app';
+    const flag = BrowserHelper.isApp(req) ? 'app' : 'web';
 
     // this.redisService.getStringTos(REDIS_TOS_KEY.BANNER_TOS_KEY + '0001:lee33a:7191046505')
     //   .subscribe((resp) => {
@@ -55,7 +59,7 @@ class MainHome extends TwViewController {
           // smartCard = this.getSmartCardOrder(svcInfo.svcMgmtNum);
           Observable.combineLatest(
             this.getUsageData(svcInfo),
-            this.getMembershipData(),
+            this.getMembershipData(svcInfo),
             this.getRedisData(noticeCode, svcInfo.svcMgmtNum)
           ).subscribe(([usageData, membershipData, redisData]) => {
             homeData.usageData = usageData;
@@ -199,17 +203,22 @@ class MainHome extends TwViewController {
     return resultArr;
   }
 
-  private getMembershipData(): Observable<any> {
+  private getMembershipData(svcInfo): Observable<any> {
     let membershipData = {
       code: ''
     };
-    return this.apiService.request(API_CMD.BFF_04_0001, {}).map((resp) => {
-      membershipData.code = resp.code;
-      if ( resp.code === API_CODE.CODE_00 ) {
-        membershipData = Object.assign(membershipData, this.parseMembershipData(resp.result));
-      }
-      return membershipData;
-    });
+    if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
+      membershipData.code = 'EASY_LOGIN';
+      return Observable.of(membershipData);
+    } else {
+      return this.apiService.request(API_CMD.BFF_04_0001, {}).map((resp) => {
+        membershipData.code = resp.code;
+        if ( resp.code === API_CODE.CODE_00 ) {
+          membershipData = Object.assign(membershipData, this.parseMembershipData(resp.result));
+        }
+        return membershipData;
+      });
+    }
   }
 
   private parseMembershipData(membershipData): any {

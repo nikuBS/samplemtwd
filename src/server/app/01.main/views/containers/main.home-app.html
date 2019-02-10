@@ -385,7 +385,14 @@
                         </div>
 
                         <% if (svcType.login && svcType.mobilePhone) { %>
-                        <% if (homeData.membershipData.code === '00') { %>
+                        <% if (homeData.membershipData.code === 'EASY_LOGIN') { %>
+                        <div class="main-membershop-box">
+                            <button class="ti-tx">
+                                <strong class="ti">간편 로그인 상태에서는 이용할 수 없습니다</strong>
+                                <span class="tx">T아이디(아이디/비밀번호) 로그인 후 이용해주세요</span>
+                            </button>
+                        </div>
+                        <% } else if (homeData.membershipData.code === '00') { %>
                         <div id="fe-membership-extend" class="main-membershop-box">
                             <strong class="ti">membershop</strong>
                             <span id="fe-membership-gr" class="rating <%= homeData.membershipData.mbrGrStr %>" data-mbrgr="<%= homeData.membershipData.mbrGrStr %>"><%= homeData.membershipData.mbrGrStr %></span>
