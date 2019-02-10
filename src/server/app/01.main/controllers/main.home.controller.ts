@@ -40,7 +40,7 @@ class MainHome extends TwViewController {
     const noticeCode = !BrowserHelper.isApp(req) ? CHANNEL_CODE.MWEB :
       BrowserHelper.isIos(req) ? CHANNEL_CODE.IOS : CHANNEL_CODE.ANDROID;
 
-    const flag = BrowserHelper.isApp(req) ? 'app' : 'web';
+    const flag = BrowserHelper.isApp(req) ? 'app' : 'app';
 
     // this.redisService.getStringTos(REDIS_TOS_KEY.BANNER_TOS_KEY + '0001:lee33a:7191046505')
     //   .subscribe((resp) => {
