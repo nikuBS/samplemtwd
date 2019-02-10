@@ -13,7 +13,6 @@ Tw.MyTFareHotBill = function (rootEl, params) {
   this.childSvcMgmtNum = Tw.UrlHelper.getQueryParams().child || null;
   this._isPrev = Tw.UrlHelper.getLastPath() === 'prev';
   this._lines = params.lines;
-  console.log(this._lines);
   this._init();
 };
 
@@ -42,7 +41,7 @@ Tw.MyTFareHotBill.prototype = {
     this.$period = this.$container.find('#fe-period');
     this.$preBill = this.$container.find('#fe-bt-prev');
     this.$btMore = this.$container.find('#fe-bt-more');
-    this.$lineList = this.$container.find('.my-line-info');
+    this.$lineList = this.$container.find('#fe-line-info');
   },
 
   _bindEvent: function () {
@@ -78,6 +77,7 @@ Tw.MyTFareHotBill.prototype = {
           .request(Tw.API_CMD.BFF_05_0022, params)
           .done($.proxy(this._onReceivedBillData, this, childSvcMgmtNum))
           .fail($.proxy(this._onErrorReceivedBillData, this));
+
       }, this), this._isPrev ? 5000 : 2500);
 
     } else {
@@ -87,7 +87,7 @@ Tw.MyTFareHotBill.prototype = {
 
 
   _sendBillRequest: function (child) {
-    Tw.CommonHelper.startLoading(child ? '.container' : '.fe-loading-bill', 'white', !!child);
+    Tw.CommonHelper.startLoading('.fe-loading-bill', 'white');
     this._requestCount = 0;
     var params = { count: this._requestCount++ };
 
@@ -114,7 +114,7 @@ Tw.MyTFareHotBill.prototype = {
 
       if ( this._billInfoAvailable ) {
         var total = this._isPrev ? billData.totOpenBal1 : billData.totOpenBal2;
-        this.$amount.text(total + Tw.CURRENCY_UNIT.WON);
+        this.$amount.text(total);
         var fromDt = Tw.DateHelper.getShortDateWithFormat(
           this._isPrev ? resp.result.beforeFromDt : resp.result.fromDt, 'YYYY.MM.DD.'
         );
@@ -130,7 +130,7 @@ Tw.MyTFareHotBill.prototype = {
         };
         var group = Tw.MyTFareHotBill.arrayToGroup(billData.record1, fieldInfo);
 
-        Tw.CommonHelper.endLoading(child ? '.container' : '.fe-loading-bill');
+        Tw.CommonHelper.endLoading('.fe-loading-bill');
         this._renderBillGroup(group, false, this.$container);
       }
     } else {
@@ -156,8 +156,13 @@ Tw.MyTFareHotBill.prototype = {
   },
 
   _onErrorReceivedBillData: function (resp) {
-    Tw.CommonHelper.endLoading('.container');
-    Tw.Error(resp.code, resp.msg).pop();
+    Tw.CommonHelper.endLoading('.fe-loading-bill');
+    // 애러시 노출되는 항목이 없어 alert 후 goBack 처리 필요. 공통함수(Tw.Error) 사용 불가.
+    this._popupService.openAlert(resp.msg, resp.code, null, $.proxy(this._goBackOnError, this) );
+  },
+
+  _goBackOnError: function(){
+    this._historyService.goBack();
   },
 
   _renderLines: function () {
