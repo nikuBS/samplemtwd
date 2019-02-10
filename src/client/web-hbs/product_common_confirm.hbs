@@ -15,22 +15,22 @@
             <!-- .cont-box -->
             <div class="cont-box">
                 <div class="user-info">
-                    <span class="blind">현재 선택된 회선정보 및 사용중인 {{typeText}} 정보 노출</span>
-                    <span class="ico"><span class="blind">선택된 회선정보 아이콘</span></span>
+                    <span class="blind" aria-hidden="true">현재 선택된 회선정보 및 사용중인 {{typeText}} 정보 노출</span>
+                    <span class="ico"><span class="blind">스마트폰</span></span>
                     <div class="in-info">
-                        <span class="number"><span class="blind">회선번호</span>{{svcNumMask}}</span>
+                        <span class="number lh-full"><span class="blind">회선번호</span>{{svcNumMask}}</span>
                         {{#if isMobilePlan}}
-                            <span class="sub-info">
-                                <span class="elem"><span class="blind">사용요금제명</span>{{svcProdNm}}</span>
-                                <span class="elem">
-                                    <span class="blind">월 이용요금</span>
-                                    {{#if svcProdBasFeeInfo.isNaN}}
-                                        {{svcProdBasFeeInfo.value}}
-                                    {{else}}
-                                        월 {{svcProdBasFeeInfo.value}} 원
-                                    {{/if}}
-                                </span>
+                        <span class="sub-info">
+                            <span class="elem"><span class="blind">사용요금제명</span>{{svcProdNm}}</span>
+                            <span class="elem">
+                                <span class="blind">월 이용요금</span>
+                                {{#if svcProdBasFeeInfo.isNaN}}
+                                    {{svcProdBasFeeInfo.value}}
+                                {{else}}
+                                    월 {{svcProdBasFeeInfo.value}} 원
+                                {{/if}}
                             </span>
+                        </span>
                         {{/if}}
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                                     {{#settingSummaryTexts}}
                                         <span class="{{spanClass}}">{{text}}</span>
                                     {{/settingSummaryTexts}}
-                                    <button class="fe-btn_close_confirm {{{setInfo}}}">정보입력 팝업 열기</button>
+                                    <button class="fe-btn_close_confirm {{{setInfo}}}">정보설정 팝업 열기</button>
                                 </dd>
                             </dl>
                         </li>
@@ -400,7 +400,7 @@
                                                         </p>
                                                     </div>
                                                 </div>
-                                                <button class="agree-view fe-btn_agree_view"><span class="blind">자세히 보기</span></button>
+                                                <button class="agree-view fe-btn_agree_view"><span class="blind">약관 자세히 보기</span></button>
                                             </li>
                                         {{/if}}
                                         {{#if stipulationInfo.isPsnlInfoCnsgAgree}}
@@ -424,7 +424,7 @@
                                                         </p>
                                                     </div>
                                                 </div>
-                                                <button class="agree-view fe-btn_agree_view"><span class="blind">자세히 보기</span></button>
+                                                <button class="agree-view fe-btn_agree_view"><span class="blind">약관 자세히 보기</span></button>
                                             </li>
                                         {{/if}}
                                         {{#if stipulationInfo.isPsnlInfoOfrAgree}}
@@ -448,7 +448,7 @@
                                                         </p>
                                                     </div>
                                                 </div>
-                                                <button class="agree-view fe-btn_agree_view"><span class="blind">자세히 보기</span></button>
+                                                <button class="agree-view fe-btn_agree_view"><span class="blind">약관 자세히 보기</span></button>
                                             </li>
                                         {{/if}}
                                         {{#if stipulationInfo.isAdInfoOfrAgree}}
@@ -470,7 +470,7 @@
                                                         </p>
                                                     </div>
                                                 </div>
-                                                <button class="agree-view fe-btn_agree_view"><span class="blind">자세히 보기</span></button>
+                                                <button class="agree-view fe-btn_agree_view"><span class="blind">약관 자세히 보기</span></button>
                                             </li>
                                         {{/if}}
                                         {{#if stipulationInfo.isTermStplAgree}}
@@ -492,7 +492,7 @@
                                                         </p>
                                                     </div>
                                                 </div>
-                                                <button class="agree-view fe-btn_agree_view"><span class="blind">자세히 보기</span></button>
+                                                <button class="agree-view fe-btn_agree_view"><span class="blind">약관 자세히 보기</span></button>
                                             </li>
                                         {{/if}}
                                     </ul>
