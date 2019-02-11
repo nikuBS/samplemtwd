@@ -742,6 +742,7 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A84: { TITLE: '이용 시작일이 이용 종료일 이후로 설정되었습니다.\n이용 시작일을 다시 선택해주세요.', MSG: '' },
   ALERT_3_A85: { TITLE: '예약은 2일 후 부터 가능합니다.', MSG: '' },
   ALERT_3_A87: { TITLE: '예약내역이 존재하지 않습니다.', MSG: '' },
+  ALERT_3_A88: { TITLE: '최대 5개까지 선택 가능', MSG: '' },
   ALERT_ALREADY_PRODUCT: '이미 사용중인 상품입니다.',
   ALERT_ALREADY_TERM_PRODUCT: '사용중이지 않은 상품입니다.',
   ALERT_NUMBER_MIN: '최소 한개의 지정번호는 존재해야 합니다.',

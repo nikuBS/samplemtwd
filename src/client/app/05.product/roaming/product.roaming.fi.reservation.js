@@ -145,7 +145,8 @@ Tw.ProductRoamingFiReservation.prototype = {
   _addVisitCountry: function(e){
     //추가된 국가가 5개이상이면 리턴처리
     if(this.countryArr.length > 4){
-      return;
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A88.MSG,
+        Tw.ALERT_MSG_PRODUCT.ALERT_3_A88.TITLE);
     }
 
     //중복되는 국가는 추가안함
