@@ -8,7 +8,7 @@ Tw.CommonSearchMain = function (rootEl,svcInfo,cdn,step) {
   this.$container = rootEl;
   this._svcInfo = svcInfo;
   this._cdn = cdn;
-  this._step = step;
+  this._step = parseInt(step,10);
   this._init();
 };
 
@@ -162,19 +162,27 @@ Tw.CommonSearchMain.prototype = {
       this._historyService.goBack();
     }
     this._addRecentlyKeywordList(searchKeyword);
-    this._historyService.goLoad('/common/search?keyword='+searchKeyword+'&step='+(Number(this._step)+1));
+    this._historyService.goLoad('/common/search?keyword='+searchKeyword+'&step='+(this._step+1));
   },
   _hashChange : function () {
-    if(Tw.FormatHelper.isEmpty(this._historyService.getHash())&&this._onInput){
-      this._inputBlurEvt();
-    }else if(this._historyService.getHash()==='#on_input'&&!this._onInput){
-      this._onInput = true;
-      this.$container.find('#blind_layer').css('display','block');
-      this._selectShowLayer();
+    if(Tw.FormatHelper.isEmpty(this._historyService.getHash())){
+      if(this._step>1){
+        --this._step;
+      }
+      if(this._onInput){
+        this._inputBlurEvt();
+      }
+    }else if(this._historyService.getHash()==='#on_input'){
+      ++this._step;
+      if(!this._onInput){
+        this._onInput = true;
+        this.$container.find('#blind_layer').css('display','block');
+        this._selectShowLayer();
+      }
     }
   },
   _closeSearch : function () {
-    this._historyService.go(Number(this._step)*-1);
+    this._historyService.go(this._step*-1);
   }
 
 
