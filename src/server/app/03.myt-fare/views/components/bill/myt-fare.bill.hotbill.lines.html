@@ -6,19 +6,22 @@
 <script id="fe-list-template" type="text/x-handlebars-template">
     {{#each list}}
     <li>
-        <button data-idx={{ @index  }} data-id="fe-other-line" >
-            <div class="lineinfo-user">
-                <span class="info-title">{{ eqpMdlNm }}
-                    {{#if child}}
-                    <span class="badge badge-fam"><span class="blind">자녀회선</span></span>
-                    {{/if}}
-                </span>
-                <span class="info-sub">{{ svcNum }}</span>
-            </div>
-            <div class="lineinfo-data">
-                <span class="info-title">{{ bill }}<span class="unit ml4">원</span></span>
-                <span class="ico"></span>
-            </div>
+        <button data-idx={{ @index }} data-id="fe-other-line">
+            <span class="ico-wrap">
+                {{#if isCellphone }}
+                <i class="icon-cellphone-80"><span class="blind">{{ eqpMdlNm }}</span></i>
+                {{ else }}
+                <i class="icon-tablet-80"><span class="blind">{{ eqpMdlNm }}</span></i>
+                 {{/if }}
+        </span>
+            <span class="cont">
+            <span class="info-title">{{ eqpMdlNm }}
+                {{#if child}}
+                <i class="icon-children ml6"><span class="blind">자녀</span></i></span>
+                {{/if}}
+            <span class="info-sub">{{ svcNum }}</span>
+            <span class="price">{{ bill }}원</span>
+        </span>
         </button>
     </li>
     {{/each}}
