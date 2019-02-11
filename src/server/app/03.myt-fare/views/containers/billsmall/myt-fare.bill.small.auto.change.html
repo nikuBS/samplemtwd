@@ -74,40 +74,35 @@
                     <hr class="cont-sp type1" aria-hidden="true"/>
 
                     <!-- .cont-box -->
-                    <div class="cont-box nogaps-top">
-                        <div class="fe-change-money-info">
-                            <div class="form-data-tit-wrap">
-                                <strong class="tit">금액정보</strong>
-                                <button id="MF_06_04_tip_01" class="tip-view" aria-haspopup="true">금액정보 정보보기</button>
-                            </div>
-                            <ul class="form-data-list">
-                                <li class="type2">
-                                    <label class="tit">기준금액</label>
-                                    <button id="<%= autoPrepayInfo.autoChrgStrdAmt %>" data-origin-id="<%= autoPrepayInfo.autoChrgStrdAmt %>"
-                                            data-max-value="<%= autoPrepayInfo.cmbMaxAmt %>"
-                                            class="bt-dropdown big fe-standard-amount" title="기준금액" aria-haspopup="true">
-                                        <%= autoPrepayInfo.comboStandardAmount %>만원<span class="ico"></span>
-                                    </button>
-                                </li>
-                                <li class="type2">
-                                    <label class="tit">선결제 금액</label>
-                                    <button id="<%= autoPrepayInfo.autoChrgAmt %>" data-origin-id="<%= autoPrepayInfo.autoChrgAmt %>"
-                                            data-max-value="<%= autoPrepayInfo.cmbMaxAmt %>"
-                                            class="bt-dropdown big fe-prepay-amount" title="선결제 금액" aria-haspopup="true">
-                                        <%= autoPrepayInfo.comboChargeAmount %>만원<span class="ico"></span>
-                                    </button>
-                                    <span class="error-txt fe-error-msg" style="display:none;">
-                                        선결제 가능 최대금액을 초과하였습니다.
-                                    </span>
-                                </li>
-                            </ul>
+                    <div class="cont-box nogaps-top fe-change-money-info">
+                        <div class="form-data-tit-wrap">
+                            <strong class="tit">금액정보</strong>
+                            <button id="MF_06_04_tip_01" class="tip-view" aria-haspopup="true">금액정보 정보보기</button>
                         </div>
+                        <ul class="form-data-list">
+                            <li class="type2">
+                                <label class="tit">기준금액</label>
+                                <button id="<%= autoPrepayInfo.autoChrgStrdAmt %>" data-origin-id="<%= autoPrepayInfo.autoChrgStrdAmt %>"
+                                        data-max-value="<%= autoPrepayInfo.cmbMaxAmt %>"
+                                        class="bt-dropdown big fe-standard-amount" title="기준금액" aria-haspopup="true">
+                                    <%= autoPrepayInfo.comboStandardAmount %>만원<span class="ico"></span>
+                                </button>
+                            </li>
+                            <li class="type2">
+                                <label class="tit">선결제 금액</label>
+                                <button id="<%= autoPrepayInfo.autoChrgAmt %>" data-origin-id="<%= autoPrepayInfo.autoChrgAmt %>"
+                                        data-max-value="<%= autoPrepayInfo.cmbMaxAmt %>"
+                                        class="bt-dropdown big fe-prepay-amount" title="선결제 금액" aria-haspopup="true">
+                                    <%= autoPrepayInfo.comboChargeAmount %>만원<span class="ico"></span>
+                                </button>
+                                <span class="error-txt fe-error-msg" style="display:none;">
+                                    선결제 가능 최대금액을 초과하였습니다.
+                                </span>
+                            </li>
+                        </ul>
                     </div>
                     <!--// .cont-box -->
 
-                    <hr class="cont-sp type1" aria-hidden="true"/>
-
-                    <!-- 2018-10-29 cont-box 분리 -->
                     <!-- .cont-box -->
                     <div class="cont-box fe-card-wrap" style="display:none;">
                         <div class="fom-data-gtxt pt0 pb36 fe-change-card-info">카드정보 확인을 위해<br /><span class="tx-bold">유효기간과 비밀번호를 입력</span>해주세요.</div>
