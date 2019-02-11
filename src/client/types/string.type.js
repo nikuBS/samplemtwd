@@ -712,7 +712,6 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A8: { TITLE: '지정번호 3회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
   ALERT_3_A9: { TITLE: '결합회선 4회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
   ALERT_3_A10: { TITLE: '1회선만 결합된 경우, 회선 해지가 불가합니다.', MSG: '' },
-  ALERT_3_A15: { TITLE: '3G/LTE 망 사용시 데이터 요금이 발생됩니다', MSG: '' },
   ALERT_3_A16: { TITLE: '확인을 누르시면 선택된 필터가 해제되고 태그가 선택됩니다.', MSG: '' },
   ALERT_3_A17: { TITLE: '확인을 누르시면 선택된 태그가 해제되고 필터가 선택됩니다.', MSG: '' },
   ALERT_3_A18: { TITLE: '검색 결과가 없습니다', MSG: '' },
@@ -1722,4 +1721,16 @@ Tw.ROAMING_RESERVATION_STATE ={
 Tw.ROAMING_RANGE_OPTION_STR = {
   ONE_MONTH: '1개월 이내의 날짜만 선택 가능합니다.',
   TWO_MONTH: '2개월 이내의 날짜만 선택 가능합니다.'
+};
+
+Tw.BENEFIT_TBCOMBINATION_JOIN_VALIDATION = {
+  IS_VALID: '결합 가능한 회선입니다.',
+  ALERADY_COMBINED: '이미 결합된 회선입니다.',
+  UN_VALID_PRODUCT: '가입 대상 요금상품이 아닙니다.',
+  UN_VALID_LINE: '결합가능한 회선이 없습니다.'
+};
+
+Tw.BENEFIT_TBCOMBINATION_JOIN_STATUS = {
+  IS_COMBINED: '결합가능',
+  DIS_COMBINED: '결합완료'
 };

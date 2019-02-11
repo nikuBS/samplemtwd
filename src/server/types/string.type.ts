@@ -1081,3 +1081,8 @@ export const MYT_SUSPEND_REASON = {
   5000343: '해외체류',
   5000344: '해외체류'
 };
+
+export const BENEFIT_TBCOMBINATION_JOIN_STATUS = {
+  IS_COMBINED: '결합가능',
+  DIS_COMBINED: '결합완료'
+};

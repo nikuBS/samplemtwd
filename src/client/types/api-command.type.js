@@ -441,6 +441,7 @@ Tw.API_CMD = {
   BFF_10_0100: { path: '/core-product/:version/wire/additions/:args0/joins', method: Tw.API_METHOD.DELETE },
   BFF_10_0101: { path: '/core-product/:version/wire/additions/:args0/joins/ledger-prechecks', method: Tw.API_METHOD.GET },
   BFF_10_0119: { path: '/core-product/:version/services/combinations/:args0/scrbcheck', method: Tw.API_METHOD.GET },
+  BFF_10_0142: { path: '/core-product/v1/mobiles/combinations/:args0/joins/services', method: Tw.API_METHOD.GET },
   BFF_10_0151: { path: '/core-product/:version/mobiles/fee-plans/:args0/joins/term-prechecks', method: Tw.API_METHOD.GET },
   BFF_10_0164: { path: '/core-product/:version/wire/additions/:args0/joins/ledger-prechecks/joins', method: Tw.API_METHOD.GET },
   BFF_10_0165: { path: '/core-product/:version/wire/additions/:args0/joins/ledger-prechecks/sets', method: Tw.API_METHOD.GET },

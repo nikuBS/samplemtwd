@@ -1,0 +1,113 @@
+<%#
+* FileName: benefit.terminate.tb-combination.terminate.html
+* Author: Ji Hun Yang (jihun202@sk.com)
+* Date: 2018.10.13
+%>
+<% include ../../components/start.component.html %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
+    <div class="popup-page nobg tw-popup fixed-btn"><!-- .fixed-btn 하단에 고정된 버튼이 있는 경우 -->
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>가입</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box rt-bt-type">
+                    <div class="announcement-box">
+                        <div class="announcement-tit">가입할  <strong class="tx-bold"><%= prodInfo.summary.prodNm %></strong><br />상품의 옵션을 설정하세요</div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true" />
+
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <ul class="form-data-list">
+                        <li>
+                            <label class="tit">결합 회선 설정</label>
+                            <span class="inputbox">
+                                <button class="bt-dropdown big fe-btn_select_combine_line" title="결합 회선 설정 선택" aria-haspopup="true"><%= currentSvcNum %><span class="ico"></span></button>
+                            </span>
+                            <span id="aria-exp-desc2" class="validation-txt fe-msg_valid" style="display: none"></span>
+                            <span id="aria-exp-desc3" class="error-txt fe-msg_unvalid" style="display: none"></span>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+                <div class="fe-line_list" style="display: none">
+                    <div class="ti-caption-gray">
+                        <h3 class="tit">결합 상품 설정</h3>
+                    </div>
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps-hoz">
+                        <div class="list-comp-input type02">
+                            <div class="widget">
+                                <div class="widget-box radio">
+                                    <ul class="select-list fe-line_list_html" role="group">
+                                        <% for (var i in combiWireProductList) { %>
+                                        <li class="radiobox type01-big" role="radio" aria-checked="false">
+                                            <% if ( combiWireProductList[i].isCombine ) { %>
+                                            <input type="radio" name="radio" value="" title="결합 상품 설정" aria-labelledby="aria-comp-radio<%= i %>"><!--웹접근성 수정 -->
+                                            <% } else { %>
+                                            <input type="radio" name="radio" value="" title="결합 상품 설정" aria-labelledby="aria-comp-radio<%= i %>" disabled><!--웹접근성 수정 -->
+                                            <% } %>
+                                            <div class="comp-list-layout" id="aria-comp-radio<%= i %>" aria-hidden="true">
+                                                <p class="layout-text">
+                                                    <span class="mtext"><%= combiWireProductList[i].svcCdNm %> <%= combiWireProductList[i].feeProdNm %></span>
+                                                </p>
+                                                <dl class="layout-text2">
+                                                    <dt>가입일</dt>
+                                                    <dd><%= combiWireProductList[i].combStaDt %></dd>
+                                                    <dt>결합상태</dt>
+                                                    <dd><%= combiWireProductList[i].combStatusText %></dd>
+                                                </dl>
+                                            </div>
+                                        </li>
+                                        <% } %>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+                </div>
+
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button disabled="disabled" class="fe-btn_setup_ok">설정 완료</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--// .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-common-back">취소</button>
+        <!--// .popup-closeBtn -->
+    </div>
+</div>
+</body>
+<% include ../../components/join/benefit.join.tb-combination.component.html %>
+<% include ../../components/javascript.component.html %>
+<script>$(function () {new Tw.BenefitJoinTbCombination($('.wrap'), '<%= prodId %>', '<%= svcInfo.svcMgmtNum %>');});</script>
+<% include ../../components/end.component.html %>
