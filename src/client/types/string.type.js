@@ -52,7 +52,8 @@ Tw.BUTTON_LABEL = {
   NEXT: '다음',
   HOME: '홈으로',
   YES: '예',
-  NO: '아니요'
+  NO: '아니요',
+  COMPLETE: '완료'
 };
 
 Tw.SMS_VALIDATION = {
@@ -559,7 +560,7 @@ Tw.ALERT_MSG_MYT_FARE = {
   COMPLETE_CHANGE_PASSWORD: '결제 비밀번호 변경이 완료되었습니다.',
   COMPLETE_REGISTER_PASSWORD: '결제 비밀번호 신청이 완료되었습니다.',
   NOT_ALLOWED_CHANGE_LIMIT: '한도를 변경할 수 없습니다',
-  NOT_ALLOWED_INFO_MESSAGE: '연체∙미납 중인 고객님은 납부 후<br/>한도를 변경하실 수 있습니다.',
+  NOT_ALLOWED_INFO_MESSAGE: '연체/미납 중인 고객님은 납부 후<br/>한도를 변경하실 수 있습니다.',
   GO_PAYMENT: '납부하러 가기',
   ADD_SVC: {
     BIL0030: '휴대폰 결제 이용동의 후 사용 가능합니다.',
@@ -1721,4 +1722,4 @@ Tw.ROAMING_RESERVATION_STATE ={
 Tw.ROAMING_RANGE_OPTION_STR = {
   ONE_MONTH: '1개월 이내의 날짜만 선택 가능합니다.',
   TWO_MONTH: '2개월 이내의 날짜만 선택 가능합니다.'
-}
+};

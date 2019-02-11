@@ -251,7 +251,11 @@ Tw.MyTFareBillOptionRegister.prototype = {
   },
   _afterGetSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._historyService.goLoad('/myt-fare/bill/option?type=' + this.$infoWrap.attr('id'));
+      if (res.result.returnFlag === 'autopay' || res.result.returnMsg.indexOf(Tw.BUTTON_LABEL.COMPLETE) !== -1) {
+        this._historyService.goLoad('/myt-fare/bill/option?type=' + this.$infoWrap.attr('id'));
+      } else {
+        this._popupService.openAlert(res.result.returnMsg, Tw.POPUP_TITLE.NOTIFY);
+      }
     } else {
       this._fail(res);
     }
