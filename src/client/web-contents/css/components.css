@@ -19,7 +19,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     background: #fff;
-    font-family: Apple SD Gothic Neo, 애플 SD 산돌고딕 Neo, Helvetica Neue, Roboto, Droid Sans, sans-serif, Noto Sans, Noto Sans CJK; }
+    font-family: Helvetica Neue, Roboto, sans-serif; }
     .flcarddefault .flcard-cont .flcard-area {
       position: relative; }
       .flcarddefault .flcard-cont .flcard-area .flcard-total {
@@ -174,7 +174,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     background: #fff;
-    font-family: Apple SD Gothic Neo, 애플 SD 산돌고딕 Neo, Helvetica Neue, Roboto, Droid Sans, sans-serif, Noto Sans, Noto Sans CJK; }
+    font-family: Helvetica Neue, Roboto, sans-serif; }
     .flcardcta .flcard-cont.no-btn-bottom {
       padding-bottom: 46px; }
     .flcardcta .flcard-cont .ico-ill-gift {
@@ -423,7 +423,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     background: #fff;
-    font-family: Apple SD Gothic Neo, 애플 SD 산돌고딕 Neo, Helvetica Neue, Roboto, Droid Sans, sans-serif, Noto Sans, Noto Sans CJK; }
+    font-family: Helvetica Neue, Roboto, sans-serif; }
     .flcardbarcode .flcard-cont .flcard-area {
       position: relative; }
       .flcardbarcode .flcard-cont .flcard-area .flcard-total {
@@ -560,7 +560,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     background: none;
-    font-family: Apple SD Gothic Neo, 애플 SD 산돌고딕 Neo, Helvetica Neue, Roboto, Droid Sans, sans-serif, Noto Sans, Noto Sans CJK;
+    font-family: Helvetica Neue, Roboto, sans-serif;
     overflow: hidden; }
     .flcardbanner1 .flcard-cont .flcard-area {
       position: relative;
@@ -600,7 +600,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     background: none;
-    font-family: Apple SD Gothic Neo, 애플 SD 산돌고딕 Neo, Helvetica Neue, Roboto, Droid Sans, sans-serif, Noto Sans, Noto Sans CJK;
+    font-family: Helvetica Neue, Roboto, sans-serif;
     overflow: hidden; }
     .flcardbanner2 .flcard-cont .flcard-area {
       position: relative;
@@ -619,7 +619,8 @@
           display: inline-block;
           font-size: 0.75rem;
           color: #757575;
-          vertical-align: baseline; }
+          vertical-align: baseline;
+          letter-spacing: 0; }
         .flcardbanner2 .flcard-cont .flcard-area .tx-dday .dday-count {
           display: inline-block;
           margin-left: 0.25rem;
@@ -653,7 +654,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     background: #fff;
-    font-family: Apple SD Gothic Neo, 애플 SD 산돌고딕 Neo, Helvetica Neue, Roboto, Droid Sans, sans-serif, Noto Sans, Noto Sans CJK; }
+    font-family: Helvetica Neue, Roboto, sans-serif; }
     .flcardsns .flcard-cont .flcard-area {
       position: relative;
       font-size: 0; }
@@ -671,7 +672,8 @@
         display: block;
         margin-top: 1.375rem;
         font-size: 0.75rem;
-        color: #757575; }
+        color: #757575;
+        letter-spacing: 0; }
       .flcardsns .flcard-cont .flcard-area .bt-scrap.type1 {
         display: inline-block;
         position: absolute;
@@ -804,7 +806,8 @@
     display: block; }
   .tooltip .tooltip-tx {
     font-size: 0.6875rem;
-    color: #757575; }
+    color: #757575;
+    letter-spacing: -0.03125rem; }
   .tooltip .bt-close {
     display: inline-block;
     position: absolute;
@@ -1475,7 +1478,8 @@
       display: block;
       font-size: 0.6875rem;
       font-weight: 700;
-      color: #fff; }
+      color: #fff;
+      letter-spacing: 0; }
     .coupon-cont .coupon-box .coupon-list {
       margin: 2rem 0 0 0; }
       .coupon-cont .coupon-box .coupon-list li {
@@ -1489,7 +1493,8 @@
         .coupon-cont .coupon-box .coupon-list li .list-tx {
           float: left;
           font-size: 0.6875rem;
-          color: #fff; }
+          color: #fff;
+          letter-spacing: 0; }
   .coupon-cont .coupon-bottom {
     padding: 0.625rem 1.125rem 0.75rem;
     font-size: 0;
@@ -1620,7 +1625,7 @@
       /*transform:translateX(62px);*/
       background: #e2e2e2; }
     .list-comp-input .select-list > li .comp-list-layout .layout-text {
-      padding: 1.5625rem 0 1.25rem;
+      padding: 1.25rem 0;
       vertical-align: top; }
       .list-comp-input .select-list > li .comp-list-layout .layout-text .mtext {
         display: block;
@@ -1820,11 +1825,13 @@
       .list-comp-thumnail .comp-box .list-box .list-text .stext {
         display: block;
         margin-top: 0.25rem;
-        font-size: 0.8125rem; }
+        font-size: 0.8125rem;
+        letter-spacing: 0; }
         .list-comp-thumnail .comp-box .list-box .list-text .stext:first-child {
           margin-top: 0.3125rem; }
         .list-comp-thumnail .comp-box .list-box .list-text .stext.gray {
-          color: #666; }
+          color: #666;
+          letter-spacing: -0.0625rem; }
       .list-comp-thumnail .comp-box .list-box .list-text.disabled .mtext .btn-bf {
         color: #dcdcdc; }
         .list-comp-thumnail .comp-box .list-box .list-text.disabled .mtext .btn-bf:before {
@@ -1914,7 +1921,8 @@
       text-align: right;
       vertical-align: top; }
       .list-comp-history .comp-box .list-box .list-con .list-data .data-tx {
-        font-size: 1.25rem; }
+        font-size: 1.25rem;
+        letter-spacing: -0.09375rem; }
         .list-comp-history .comp-box .list-box .list-con .list-data .data-tx.blue-tx {
           color: #178BCE; }
         .list-comp-history .comp-box .list-box .list-con .list-data .data-tx.gray-tx {
@@ -1945,6 +1953,7 @@
         font-size: 0.8125rem;
         font-weight: 700;
         text-align: right;
+        letter-spacing: -0.0625rem;
         -webkit-box-sizing: border-box;
                 box-sizing: border-box; }
         .list-comp-history .comp-box .list-box .list-con .list-data .bt-link:after {
@@ -2277,6 +2286,13 @@
   background: url(/img/svg/graphic_56px_bi_skt.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
+.icon-bi-skt-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/graphic_80px_bi_skt.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
 .icon-thumb-gift-80 {
   display: inline-block;
   width: 2.5rem;
@@ -2319,6 +2335,13 @@
   background: url(/img/svg/icon_80px_data.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
+.icon-internet-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_internet.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
 .icon-movie-80 {
   display: inline-block;
   width: 2.5rem;
@@ -2340,11 +2363,46 @@
   background: url(/img/svg/icon_80px_discount1.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
+.icon-discount2-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_discount2.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-roaming-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_roaming.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-vas-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_vas.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-watch-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_watch.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
 .icon-tablet-80 {
   display: inline-block;
   width: 2.5rem;
   height: 2.5rem;
   background: url(/img/svg/icon_80px_tablet1.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-accessory-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_accessory.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
 .icon-nugu-80 {
@@ -2508,6 +2566,13 @@
   background: url(/img/svg/graphic_120px_warning.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
+.icon-smile-120 {
+  display: inline-block;
+  width: 3.75rem;
+  height: 3.75rem;
+  background: url(/img/svg/graphic_120px_smile.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
 .icon-badge-claim {
   display: inline-block;
   width: 2.5rem;
@@ -2543,6 +2608,40 @@
   background: url(/img/svg/graphic_ci_sktelecom.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
+.icon-home-tab-my {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+  height: 100%; }
+  .icon-home-tab-my.on span.blind {
+    background-image: url(/img/svg/graphic_home_tab_my_on.svg); }
+  .icon-home-tab-my span.blind {
+    display: block;
+    margin: 0 auto;
+    position: static !important;
+    width: 4.25rem;
+    height: 1.75rem;
+    background: url(/img/svg/graphic_home_tab_my_off.svg) no-repeat 0 0;
+    background-size: 100% 100%; }
+
+.icon-home-tab-store {
+  display: inline-block;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+  height: 100%; }
+  .icon-home-tab-store.on span.blind {
+    background-image: url(/img/svg/graphic_home_tab_store_on.svg); }
+  .icon-home-tab-store span.blind {
+    display: block;
+    margin: 0 auto;
+    position: static !important;
+    width: 4.25rem;
+    height: 1.75rem;
+    background: url(/img/svg/graphic_home_tab_store_off.svg) no-repeat 0 0;
+    background-size: 100% 100%; }
+
 .icon-calender-32 {
   display: inline-block;
   width: 1rem;
@@ -2556,6 +2655,24 @@
   height: 1rem;
   background: url(/img/svg/icon_32px_arrowdown.svg) no-repeat 0 0;
   background-size: 100% 100%; }
+
+.icon-arrowmore-32 {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(/img/svg/icon_32px_arrowmore.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+  .icon-arrowmore-32.white {
+    background-image: url(/img/svg/icon_32px_arrowmore_white.svg); }
+
+.icon-arrowmore-32 {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(/img/svg/icon_32px_arrowmore.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+  .icon-arrowmore-32.white {
+    background-image: url(/img/svg/icon_32px_arrowmore_white.svg); }
 
 .icon-exit-32 {
   display: inline-block;
@@ -2597,6 +2714,13 @@
   width: 1rem;
   height: 1rem;
   background: url(/img/svg/icon_32px_list_open.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-reload-32 {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(/img/svg/icon_32px_reload.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
 .icon-setting-32 {
@@ -2786,6 +2910,13 @@
   width: 1.25rem;
   height: 1.25rem;
   background: url(/img/ico/ico-historyback.png) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-call-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48p_call.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
 .icon-wifi-48 {
@@ -3034,11 +3165,25 @@
   background: url(/img/svg/icon_48px_vas.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
+.icon-sms-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_sms.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
 .icon-notice-48 {
   display: inline-block;
   width: 1.5rem;
   height: 1.5rem;
   background: url(/img/svg/icon_48px_notice.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-call-48 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/svg/icon_48px_call.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
 .icon-dialog-emoji-56 {
@@ -3048,11 +3193,32 @@
   background: url(/img/svg/icon_56px_dialog_emoji.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
+.icon-call-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_call.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
 .icon-cellphone-80 {
   display: inline-block;
   width: 2.5rem;
   height: 2.5rem;
   background: url(/img/svg/icon_80px_cellphone.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-cellphone2-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_cellphone2.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-charge-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_charge.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
 .icon-chat-80 {
@@ -3097,6 +3263,13 @@
   background: url(/img/svg/icon_80px_discount.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
+.icon-immediate-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_immediate.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
 .icon-pc-80 {
   display: inline-block;
   width: 2.5rem;
@@ -3123,6 +3296,20 @@
   width: 2.5rem;
   height: 2.5rem;
   background: url(/img/svg/icon_80px_tfamily_gather.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-tmembership-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_tmembership.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-price-plan-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/icon_80px_price_plan.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
 .icon-gnb-back-d {
@@ -3294,6 +3481,13 @@
   background: url(/img/svg/icon_56px_dialog_emoji.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
+.icon-32px-exit {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(/img/svg/icon_32px_exit.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
 .icon-gnb-search {
   display: inline-block;
   width: 1.5rem;
@@ -3316,6 +3510,20 @@
   background-size: 50% 50%; }
   .icon-gnb-menu.white {
     background-image: url(/img/svg/icon_48px_titlebar_menu_white.svg); }
+
+.icon-gnb-home {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/graphic_80px_bi_skt_beta.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-arrowmore-blue-32 {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  background: url(/img/svg/icon_32px_arrowmore_blue.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
 
 .icon-filter-n-32 {
   display: inline-block;
@@ -3387,11 +3595,39 @@
   background: url(/img/common/badge/badge_family_08.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
+.icon-my-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/ico/icon_80px_my.png) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-sms-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/ico/icon_sms.png) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-lte {
+  display: inline-block;
+  width: 1.9375rem;
+  height: 1rem;
+  background: url(/img/ico/icon_lte.png) no-repeat 0 0;
+  background-size: 100% 100%; }
+
 .icon-whole {
   display: inline-block;
   width: 1.4375rem;
   height: 1rem;
   background: url(/img/ico/icon_whole.png) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-whole2 {
+  display: inline-block;
+  width: 1.4375rem;
+  height: 1rem;
+  background: url(/img/ico/icon_whole02.png) no-repeat 0 0;
   background-size: 100% 100%; }
 
 .icon-whole3 {
@@ -3415,12 +3651,61 @@
   background: url(/img/ico/icon_discount02.png) no-repeat 0 0;
   background-size: 100% 100%; }
 
+.icon-new {
+  display: inline-block;
+  width: 1.6875rem;
+  height: 1rem;
+  background: url(/img/ico/icon_new.png) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-hot {
+  display: inline-block;
+  width: 1.625rem;
+  height: 1rem;
+  background: url(/img/ico/icon_hot.png) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-expansion {
+  display: inline-block;
+  width: 3.125rem;
+  height: 1rem;
+  background: url(/img/ico/icon_expansion.png) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-notice-30 {
+  display: inline-block;
+  width: 0.9375rem;
+  height: 0.9375rem;
+  background: url(/img/ico/icon_notice.png) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-add-56 {
+  display: inline-block;
+  width: 1.75rem;
+  height: 1.75rem;
+  background: url(/img/ico/icon_add.png) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-gnb-bi {
+  display: inline-block;
+  width: 1.4375rem;
+  height: 1.625rem;
+  background: url(/img/ico/ico-gnb-bi.png) no-repeat 0 0;
+  background-size: 100% 100%; }
+
 .icon-acompany {
   display: inline-block;
   width: 1.4375rem;
   height: 1rem;
   background: url(/img/ico/ico-acompany.png) no-repeat 0 0;
   background-size: 1.4375rem; }
+
+.icon-alarm-red {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: url(/img/ico/icon_alarm.png) no-repeat 0 0;
+  background-size: 100% 100%; }
 
 .icon-ac-type1-44 {
   display: inline-block;
@@ -3501,7 +3786,8 @@
   .plan-line-wrap .plan-number {
     display: block;
     color: #666;
-    font-size: 0.8125rem; }
+    font-size: 0.8125rem;
+    letter-spacing: 0; }
   .plan-line-wrap .badge.badge-fam {
     vertical-align: middle; }
 
@@ -3561,6 +3847,7 @@
         font-size: 0.9375rem;
         text-align: right; }
         .myfare-result-wrap .myfare-list li .show-data dd .number {
+          letter-spacing: 0;
           vertical-align: baseline; }
       .myfare-result-wrap .myfare-list li .show-data.detail {
         padding: 0.1875rem 0; }
@@ -3593,7 +3880,8 @@
     position: absolute;
     top: 1.25rem;
     right: 1rem;
-    font-size: 0.8125rem; }
+    font-size: 0.8125rem;
+    letter-spacing: 0; }
 
 .list-comp-input.production-benefit-wrap {
   position: relative; }
@@ -6101,7 +6389,7 @@
   .ti-caption-gray .detail-view2, .data-type .detail-view2 {
     float: right;
     position: relative;
-    padding-right: 0.8125rem;
+    padding-right: 0.625rem;
     font-size: 0.8125rem;
     color: #212121; }
     .ti-caption-gray .detail-view2:after, .data-type .detail-view2:after {
@@ -6424,8 +6712,7 @@
 
 .bt-select {
   position: relative;
-  padding-right: 1rem;
-  font-size: 0.9375rem; }
+  padding-right: 1rem; }
   .bt-select:after {
     position: absolute;
     right: 0;
@@ -7118,7 +7405,7 @@
   .acco-style.data-famliy-group-list.type2 > ul > li .list-wrap .list-data .vol2 {
     margin-right: 0.125rem;
     font-size: 1.125rem;
-    font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", 'Droid Sans', "sans-serif", "Noto Sans", "Noto Sans CJK"; }
+    font-family: 'Droid Sans', "Noto Sans", "Noto Sans CJK"; }
 
 .acco-style.data-famliy-group-list.type2 .bt-link-tx {
   font-size: 0.8125rem; }
@@ -7599,7 +7886,8 @@ a.bt-link-tx.underline.small {
     text-align: left; }
     .box-myaccount .myaccount-list li .btn-acc em {
       font-size: 0.9375rem;
-      font-weight: 700; }
+      font-weight: 700;
+      letter-spacing: 0; }
     .box-myaccount .myaccount-list li .btn-acc span {
       display: block;
       margin-top: 0.1875rem;
@@ -8819,6 +9107,7 @@ a.bt-link-tx.underline.small {
     padding-top: 0.875rem;
     font-size: 2rem;
     color: #000;
+    letter-spacing: -0.1875rem;
     line-height: 2.25rem;
     font-weight: 300; }
     .agreement-title span strong {
@@ -8951,7 +9240,8 @@ a.bt-link-tx.underline.small {
         .box-authority .authority-info .authority-list li a, .box-authority .authority-info .authority-list li button {
           color: #178BCE;
           vertical-align: top;
-          border-bottom: 1px solid #178BCE; }
+          border-bottom: 1px solid #178BCE;
+          letter-spacing: 0; }
       .box-authority .authority-info .authority-list.nodot li {
         padding-left: 0; }
         .box-authority .authority-info .authority-list.nodot li:before {
@@ -9174,7 +9464,7 @@ a.bt-link-tx.underline.small {
     vertical-align: baseline; }
     .mline-list .mline-tit-wrap .mline-num .num {
       vertical-align: top;
-      font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK"; }
+      font-family: "Helvetica Neue", Roboto, sans-serif; }
 
 .mline-list .ico-like {
   position: relative;
@@ -9991,7 +10281,8 @@ a.bt-link-tx.underline.small {
       margin-top: 0.25rem;
       font-size: 0.8125rem;
       line-height: 0.9375rem;
-      font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK"; }
+      font-family: "Helvetica Neue", Roboto, sans-serif;
+      letter-spacing: 0; }
     .contents-info-list [class^="result-"] li .info-data .info-title {
       font-size: 1.125rem;
       line-height: 1.25rem;
@@ -10012,7 +10303,8 @@ a.bt-link-tx.underline.small {
       font-size: 0.8125rem;
       line-height: 0.9375rem;
       color: #666;
-      text-align: right; }
+      text-align: right;
+      letter-spacing: -.5px; }
     .contents-info-list [class^="result-"] li .info-coupon {
       position: relative; }
       .contents-info-list [class^="result-"] li .info-coupon .info-title {
@@ -10029,7 +10321,8 @@ a.bt-link-tx.underline.small {
         font-weight: 700; }
       .contents-info-list [class^="result-"] li .info-coupon .info-code {
         font-size: 0.6875rem;
-        font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK"; }
+        letter-spacing: 0;
+        font-family: "Helvetica Neue", Roboto, sans-serif; }
     .contents-info-list [class^="result-"] li .info-date {
       text-align: right;
       vertical-align: top; }
@@ -10037,7 +10330,8 @@ a.bt-link-tx.underline.small {
         font-size: 0.75rem; }
       .contents-info-list [class^="result-"] li .info-date .info-sub {
         font-size: 0.9375rem;
-        font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK"; }
+        font-family: "Helvetica Neue", Roboto, sans-serif;
+        letter-spacing: 0; }
     .contents-info-list [class^="result-"] li .info-btn {
       text-align: center; }
       .contents-info-list [class^="result-"] li .info-btn a {
@@ -10106,14 +10400,15 @@ a.bt-link-tx.underline.small {
       .contents-info-list [class^="result-"].result-coupon .result-cell .info-coupon .info-ph {
         font-size: 1.125rem;
         font-weight: 700;
-        font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK"; }
+        font-family: "Helvetica Neue", Roboto, sans-serif;
+        letter-spacing: 0; }
     .contents-info-list [class^="result-"].result-coupon .result-cell .info-date {
       padding: 0; }
       .contents-info-list [class^="result-"].result-coupon .result-cell .info-date .info-title {
         font-size: 0.75rem; }
       .contents-info-list [class^="result-"].result-coupon .result-cell .info-date .info-sub {
         font-size: 0.9375rem;
-        font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK"; }
+        font-family: "Helvetica Neue", Roboto, sans-serif; }
     .contents-info-list [class^="result-"].result-coupon .result-cell .info-validity {
       padding: 0;
       display: table-row; }
@@ -10124,7 +10419,8 @@ a.bt-link-tx.underline.small {
         display: table-cell;
         font-size: 0.75rem;
         text-align: right;
-        font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK"; }
+        letter-spacing: 0;
+        font-family: "Helvetica Neue", Roboto, sans-serif; }
     .contents-info-list [class^="result-"].result-coupon .result-cell .info-signup {
       padding: 0;
       display: table-row; }
@@ -10133,9 +10429,10 @@ a.bt-link-tx.underline.small {
         font-size: 0.75rem; }
       .contents-info-list [class^="result-"].result-coupon .result-cell .info-signup .info-code {
         display: table-cell;
+        letter-spacing: 0;
         font-size: 0.75rem;
         text-align: right;
-        font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK"; }
+        font-family: "Helvetica Neue", Roboto, sans-serif; }
   .contents-info-list .bt-more {
     margin: 0 -1.625rem;
     text-align: center;
@@ -10147,7 +10444,7 @@ a.bt-link-tx.underline.small {
     color: #757575;
     font-size: 0.875rem; }
     .contents-info-list .bt-more span {
-      font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK";
+      font-family: "Helvetica Neue", Roboto, sans-serif;
       vertical-align: baseline; }
   .contents-info-list .contents-notice {
     border-top: 1px solid #e1e1e1; }
@@ -10393,7 +10690,8 @@ a.bt-link-tx.underline.small {
         .th-use .real-remaining > dd .remaining-period .tx-period {
           display: inline-block;
           margin: 0 0 0 0.3125rem;
-          vertical-align: baseline; }
+          vertical-align: baseline;
+          letter-spacing: 0; }
       .th-use .real-remaining > dd .remaining-tx-detail {
         margin: 0.375rem 0 0 0;
         font-size: 0.8125rem;
@@ -10482,6 +10780,7 @@ a.bt-link-tx.underline.small {
             box-sizing: border-box;
     font-size: 1.125rem;
     line-height: 1.5rem;
+    letter-spacing: -1.5px;
     color: #000; }
   .main-tdate-giftbox .bt-link-tx {
     margin: 0.9375rem 0 0; }
@@ -11338,14 +11637,17 @@ a.bt-link-tx.underline.small {
 
 .chart-tit {
   position: relative;
-  font-size: 0.875rem; }
+  font-size: 0.875rem;
+  letter-spacing: -0.02em; }
   .chart-tit .spot {
-    font-weight: 700; }
+    font-weight: 700;
+    letter-spacing: -0.02em; }
   .chart-tit .rs {
     position: absolute;
     right: 0;
     top: 0;
-    color: #666; }
+    color: #666;
+    letter-spacing: -0.02em; }
 
 .unpaid-charges .total-box {
   margin: 0 0 0.9375rem 0; }
@@ -11452,7 +11754,8 @@ a.bt-link-tx.underline.small {
       margin-top: 0.125rem;
       line-height: 0.75rem;
       font-size: 0.75rem;
-      color: #666; }
+      color: #666;
+      letter-spacing: 0; }
     .line-change .select-list li.checked .txt {
       font-weight: 700; }
     .line-change .select-list li.checked .ico {
@@ -11721,6 +12024,7 @@ a.bt-link-tx.underline.small {
     padding-top: 0.9375rem;
     font-size: 2rem;
     color: #000;
+    letter-spacing: -0.04em;
     line-height: 2.25rem; }
     .complete-title span.f-size {
       font-size: 1.125rem;
@@ -11796,14 +12100,16 @@ a.bt-link-tx.underline.small {
   padding-top: 0.9375rem;
   text-align: center;
   font-size: 0.8125rem;
-  color: #8f8f8f; }
+  color: #8f8f8f;
+  letter-spacing: -0.02em; }
 
 .complete-tx2 {
   padding-top: 0.1875rem;
   text-align: center;
   font-size: 0.8125rem;
   color: #000;
-  font-weight: 700; }
+  font-weight: 700;
+  letter-spacing: -0.02em; }
 
 .complete-dot {
   width: 15.5rem;
@@ -11815,7 +12121,8 @@ a.bt-link-tx.underline.small {
     padding-left: 0.75rem;
     margin-bottom: 1.375rem;
     font-size: 0.8125rem;
-    color: #8f8f8f; }
+    color: #8f8f8f;
+    letter-spacing: -0.02em; }
     .complete-dot li:before {
       content: '';
       display: block;
@@ -12036,7 +12343,8 @@ a.bt-link-tx.underline.small {
     .addree-no-result.no-sch .msg-no-sch {
       display: block;
       padding: 1rem 0 0 0;
-      text-align: center; }
+      text-align: center;
+      letter-spacing: -0.01563rem; }
       .addree-no-result.no-sch .msg-no-sch .tit {
         display: block;
         text-align: center;
@@ -12060,6 +12368,23 @@ a.bt-link-tx.underline.small {
 
 .fs13-box {
   font-size: 0.8125rem; }
+
+.t-logo-alarm {
+  position: relative;
+  margin-bottom: 0.625rem; }
+  .t-logo-alarm .icon-bi-skt-80 {
+    width: 1.25rem;
+    height: 1.25rem;
+    vertical-align: middle;
+    position: relative;
+    top: -0.125rem;
+    margin-right: 0.3125rem; }
+  .t-logo-alarm .t-date-alarm {
+    position: absolute;
+    right: 0;
+    top: 0.1875rem;
+    font-size: 0.8125rem;
+    color: #171717; }
 
 .alarm_list .banner-box img {
   display: block;
@@ -12484,7 +12809,8 @@ a.bt-link-tx.underline.small {
         margin: 0 0.0625rem 0 0.5rem;
         font-size: 1rem;
         vertical-align: -0.0625rem;
-        font-family: "TgothicMedium", Roboto, sans-serif; }
+        font-family: "TgothicMedium", Roboto, sans-serif;
+        letter-spacing: 0; }
     .productinfoscroll-box .product-info .type {
       position: absolute;
       bottom: 0.9375rem;
@@ -12494,7 +12820,8 @@ a.bt-link-tx.underline.small {
       background-size: 0.875rem 0.875rem;
       color: #178bce;
       font-size: 0.8125rem;
-      font-family: "TgothicLight", Roboto, sans-serif; }
+      font-family: "TgothicLight", Roboto, sans-serif;
+      letter-spacing: 0; }
     .productinfoscroll-box .product-info .money-type {
       position: absolute;
       bottom: 0.625rem;
@@ -13416,7 +13743,8 @@ a.bt-link-tx.underline.small {
     margin-top: 1.125rem;
     color: #fff;
     font-size: 1.125rem;
-    font-weight: 700; }
+    font-weight: 700;
+    letter-spacing: -1px; }
 
 .productdetails-ledgercase02 {
   display: table;
@@ -13434,6 +13762,7 @@ a.bt-link-tx.underline.small {
     color: #fff;
     font-size: 1.125rem;
     font-weight: 700;
+    letter-spacing: -1px;
     text-align: right;
     vertical-align: top; }
     .productdetails-ledgercase02 .limit .bt-white1 {
@@ -14139,7 +14468,8 @@ a.bt-link-tx.underline.small {
       color: #000;
       font-size: 0.875rem;
       vertical-align: middle;
-      text-align: left; }
+      text-align: left;
+      letter-spacing: -2px; }
       .shortcutslist-wrap .category-type .link:after {
         content: '';
         position: absolute;
@@ -15160,6 +15490,8 @@ a.bt-link-tx.underline.small {
 
 .add-prd-wrap .list-comp-lineinfo li .lineinfo-data .info-title {
   font-size: 1.125rem; }
+  .add-prd-wrap .list-comp-lineinfo li .lineinfo-data .info-title.num {
+    letter-spacing: 0; }
   .add-prd-wrap .list-comp-lineinfo li .lineinfo-data .info-title .unit {
     font-size: 0.625rem;
     font-family: "TgothicMedium", Roboto, sans-serif; }
@@ -15174,7 +15506,8 @@ a.bt-link-tx.underline.small {
     position: relative; }
     .list-style.type1 > li .wrap-label {
       display: block;
-      font-size: 1rem; }
+      font-size: 1rem;
+      letter-spacing: -0.025em; }
       .list-style.type1 > li .wrap-label label {
         display: block; }
     .list-style.type1 > li .wrap-btn {
@@ -15205,9 +15538,6 @@ a.bt-link-tx.underline.small {
       padding-bottom: 0;
       border-bottom: 0 none; }
 
-.cont-actionsheet.mf-actionsheet .lineManagement-header {
-  position: relative; }
-
 .cont-actionsheet .btn-floating {
   position: fixed;
   left: 0;
@@ -15226,6 +15556,7 @@ a.bt-link-tx.underline.small {
 
 .cont-actionsheet .ac-tit {
   font-size: 0.75rem;
+  letter-spacing: -0.025em;
   color: #959595;
   width: 100%;
   padding: 0 1rem;
@@ -15332,6 +15663,7 @@ a.bt-link-tx.underline.small {
         .cont-actionsheet .ac-list .type1 .table-cell > span.txt {
           color: #000;
           font-size: 1rem;
+          letter-spacing: -0.025em;
           text-align: left;
           white-space: normal; }
         .cont-actionsheet .ac-list .type1 .table-cell > span.max {
@@ -15340,6 +15672,7 @@ a.bt-link-tx.underline.small {
           padding-right: 4.375rem;
           color: #000;
           font-size: 0.8125rem;
+          letter-spacing: -0.025em;
           padding-left: 0.5rem;
           white-space: normal; }
           .cont-actionsheet .ac-list .type1 .table-cell > span.add .badge {
@@ -15359,6 +15692,7 @@ a.bt-link-tx.underline.small {
         .cont-actionsheet .ac-list .type1 .table-cell > span.spot {
           color: #f76252;
           font-size: 1rem;
+          letter-spacing: -0.025em;
           text-align: right; }
   .cont-actionsheet .ac-list .type2 {
     float: left;
@@ -15475,6 +15809,7 @@ a.bt-link-tx.underline.small {
         .cont-actionsheet .ac-list .type3 .table-cell > span.txt {
           color: #000;
           font-size: 1rem;
+          letter-spacing: -0.025em;
           text-align: left;
           width: 100%; }
           .cont-actionsheet .ac-list .type3 .table-cell > span.txt .add {
@@ -15482,6 +15817,7 @@ a.bt-link-tx.underline.small {
             display: block;
             color: #666;
             font-size: 0.75rem;
+            letter-spacing: -0.025em;
             white-space: normal;
             width: 100%; }
         .cont-actionsheet .ac-list .type3 .table-cell > span.simbol + .txt {
@@ -15495,6 +15831,7 @@ a.bt-link-tx.underline.small {
         .cont-actionsheet .ac-list .type3 .table-cell > span.spot {
           color: #f76252;
           font-size: 1rem;
+          letter-spacing: -0.025em;
           text-align: right; }
   .cont-actionsheet .ac-list .type4 {
     display: block;
@@ -15586,18 +15923,21 @@ a.bt-link-tx.underline.small {
         .cont-actionsheet .ac-list .type4 .table-cell > span.txt {
           color: #000;
           font-size: 1rem;
+          letter-spacing: -0.025em;
           text-align: left;
           white-space: normal; }
         .cont-actionsheet .ac-list .type4 .table-cell > span.cont-txt {
           display: block;
           color: #959595;
           font-size: 0.75rem;
+          letter-spacing: -0.025em;
           text-align: left;
           line-height: 1.5; }
         .cont-actionsheet .ac-list .type4 .table-cell > span.add {
           padding-right: 4.375rem;
           color: #000;
           font-size: 0.8125rem;
+          letter-spacing: -0.025em;
           padding-left: 0.5rem;
           white-space: normal; }
         .cont-actionsheet .ac-list .type4 .table-cell > span.link {
@@ -15609,6 +15949,7 @@ a.bt-link-tx.underline.small {
         .cont-actionsheet .ac-list .type4 .table-cell > span.spot {
           color: #f76252;
           font-size: 1rem;
+          letter-spacing: -0.025em;
           text-align: right; }
   .cont-actionsheet .ac-list:last-of-type {
     padding-bottom: 0;
@@ -15704,18 +16045,21 @@ a.bt-link-tx.underline.small {
         .cont-actionsheet .ac-list .type5 .table-cell > span.txt {
           color: #000;
           font-size: 1rem;
+          letter-spacing: -0.025em;
           text-align: left;
           white-space: normal; }
         .cont-actionsheet .ac-list .type5 .table-cell > span.cont-txt {
           display: block;
           color: #959595;
           font-size: 0.75rem;
+          letter-spacing: -0.025em;
           text-align: left;
           line-height: 1.5; }
         .cont-actionsheet .ac-list .type5 .table-cell > span.add {
           padding-right: 4.375rem;
           color: #000;
           font-size: 0.8125rem;
+          letter-spacing: -0.025em;
           padding-left: 0.5rem;
           white-space: normal; }
         .cont-actionsheet .ac-list .type5 .table-cell > span.link {
@@ -15727,6 +16071,7 @@ a.bt-link-tx.underline.small {
         .cont-actionsheet .ac-list .type5 .table-cell > span.spot {
           color: #f76252;
           font-size: 1rem;
+          letter-spacing: -0.025em;
           text-align: right; }
   .cont-actionsheet .ac-list:last-of-type {
     padding-bottom: 0;
@@ -15808,7 +16153,8 @@ a.bt-link-tx.underline.small {
               left: -10%;
               text-align: center;
               font-size: 0.75rem;
-              font-weight: 500; }
+              font-weight: 500;
+              letter-spacing: -0.025em; }
     .chart-wrap.bar1 .legend {
       display: block;
       width: 100%;
@@ -15852,6 +16198,7 @@ a.bt-link-tx.underline.small {
         display: inline-block;
         text-align: right;
         font-size: 0.8125rem;
+        letter-spacing: -0.025em;
         color: #888888;
         margin-left: 0.625rem; }
         .chart-wrap.bar2 .legend [class*=category] span, .chart-wrap.bar3 .legend [class*=category] span {
@@ -15877,7 +16224,8 @@ a.bt-link-tx.underline.small {
     .chart-wrap.bar2 .tit, .chart-wrap.bar3 .tit {
       padding: 0 0 1.25rem 0;
       font-size: 1rem;
-      color: #000; }
+      color: #000;
+      letter-spacing: -0.025em; }
     .chart-wrap.bar2 .data-arry, .chart-wrap.bar3 .data-arry {
       position: relative; }
       .chart-wrap.bar2 .data-arry .dash, .chart-wrap.bar3 .data-arry .dash {
@@ -15928,7 +16276,8 @@ a.bt-link-tx.underline.small {
               bottom: 0;
               width: 100%;
               color: #959595;
-              font-size: 0.8125rem; }
+              font-size: 0.8125rem;
+              letter-spacing: -0.025em; }
               .chart-wrap.bar2 .data-arry .data-ul > li > dl > dt button, .chart-wrap.bar2 .data-arry .data-ul > li > dl > dt a, .chart-wrap.bar3 .data-arry .data-ul > li > dl > dt button, .chart-wrap.bar3 .data-arry .data-ul > li > dl > dt a {
                 text-decoration: underline;
                 color: #959595; }
@@ -15968,6 +16317,7 @@ a.bt-link-tx.underline.small {
         display: inline-block;
         text-align: right;
         font-size: 0.8125rem;
+        letter-spacing: -0.025em;
         color: #888888;
         margin-left: 0.625rem; }
         .chart-wrap.bar4 .legend [class*=category] span {
@@ -15994,7 +16344,8 @@ a.bt-link-tx.underline.small {
     .chart-wrap.bar4 .tit {
       padding: 0 0 1.25rem 0;
       font-size: 1rem;
-      color: #000; }
+      color: #000;
+      letter-spacing: -0.025em; }
     .chart-wrap.bar4 .data-arry {
       position: relative; }
       .chart-wrap.bar4 .data-arry .dash {
@@ -16045,7 +16396,8 @@ a.bt-link-tx.underline.small {
               bottom: 0;
               width: 100%;
               color: #959595;
-              font-size: 0.8125rem; }
+              font-size: 0.8125rem;
+              letter-spacing: -0.025em; }
               .chart-wrap.bar4 .data-arry .data-ul > li > dl > dt button, .chart-wrap.bar4 .data-arry .data-ul > li > dl > dt a {
                 text-decoration: underline;
                 color: #959595; }
@@ -16133,6 +16485,7 @@ a.bt-link-tx.underline.small {
       width: 100%;
       font-size: 0.9375rem;
       font-weight: 700;
+      letter-spacing: -0.025em;
       text-align: center; }
     .chart-wrap.circle .circle {
       position: relative;
@@ -16154,6 +16507,7 @@ a.bt-link-tx.underline.small {
         padding-right: 0.3125rem;
         text-align: right;
         font-size: 0.8125rem;
+        letter-spacing: -0.025em;
         color: #888888; }
         .chart-wrap.circle .legend .first::before {
           content: '';
@@ -16175,6 +16529,7 @@ a.bt-link-tx.underline.small {
         padding-left: 0.3125rem;
         text-align: left;
         font-size: 0.8125rem;
+        letter-spacing: -0.025em;
         color: #888888; }
         .chart-wrap.circle .legend .second::before {
           content: '';
@@ -17049,13 +17404,16 @@ a.bt-link-tx.underline.small {
     margin-bottom: 0.3125rem;
     font-size: 0.75rem;
     font-family: "TgothicBlack", Roboto, sans-serif;
+    letter-spacing: -0.02em;
     color: #e22f26; }
   .acco-style.required-doc .acco-list .acco-title .question {
     font-size: 0.875rem;
     font-weight: 700;
+    letter-spacing: -0.02em;
     display: block; }
   .acco-style.required-doc .acco-list .acco-title .result-txt {
     font-size: 0.875rem;
+    letter-spacing: -0.02em;
     display: none; }
   .acco-style.required-doc .acco-list .acco-content {
     padding: 1.875rem 0;
@@ -17165,7 +17523,8 @@ a.bt-link-tx.underline.small {
           display: block;
           margin-bottom: 0.1875rem;
           font-size: 0.9375rem;
-          color: #178BCE; }
+          color: #178BCE;
+          letter-spacing: -0.02em; }
         .customer-guide .result .item > li:last-child {
           margin-bottom: 0.9375rem; }
     .customer-guide .result .add {
@@ -17173,7 +17532,8 @@ a.bt-link-tx.underline.small {
       font-size: 0.75rem;
       color: #858585;
       text-indent: -0.4375rem;
-      padding-left: 0.75rem; }
+      padding-left: 0.75rem;
+      letter-spacing: -0.02em; }
       .customer-guide .result .add .title {
         font-weight: 700; }
       .customer-guide .result .add sup {
@@ -17190,6 +17550,7 @@ a.bt-link-tx.underline.small {
 .poll-box .poll-sub-tit, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .poll-sub-tit {
   font-size: 0.8125rem;
   color: #000;
+  letter-spacing: -0.02em;
   padding: 0.9375rem 0 0.3125rem; }
 
 .poll-box .bt-link-tx.underline, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .bt-link-tx.underline {
@@ -17331,6 +17692,7 @@ a.bt-link-tx.underline.small {
       text-indent: -1.375rem;
       top: 2.1875rem;
       text-align: center;
+      letter-spacing: 0;
       font-size: 1.25rem;
       background: none !important; }
   .poll-box .versus > li .detail, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .versus > li .detail {
@@ -17367,6 +17729,7 @@ a.bt-link-tx.underline.small {
     .accordion .acco-style.poll .acco-list .acco-box .acco-tit .poll-question {
       display: block;
       font-size: 0.875rem;
+      letter-spacing: -0.02em;
       padding-right: 1.25rem; }
     .accordion .acco-style.poll .acco-list .acco-box .acco-tit .poll-date {
       font-size: 0.8125rem;
@@ -17440,6 +17803,7 @@ a.bt-link-tx.underline.small {
 .poll-title .poll-question {
   display: block;
   font-size: 0.9375rem;
+  letter-spacing: -0.02em;
   padding-right: 1.25rem; }
 
 .poll-title .poll-date {
@@ -17477,7 +17841,8 @@ a.bt-link-tx.underline.small {
     width: 40%;
     vertical-align: bottom;
     text-align: right;
-    font-size: 0.9375rem; }
+    font-size: 0.9375rem;
+    letter-spacing: 0; }
   .poll-chart-box .poll-chart-sbox .poll-chart-txt .tx-bold {
     color: #000; }
 
@@ -17533,6 +17898,7 @@ a.bt-link-tx.underline.small {
 
 .box-store-home .store-home-list .list-ti {
   font-size: 1.125rem;
+  letter-spacing: -0.02em;
   margin-bottom: 0.1875rem; }
   .box-store-home .store-home-list .list-ti .store-home-link {
     display: inline-block;
@@ -17546,7 +17912,8 @@ a.bt-link-tx.underline.small {
 
 .box-store-home .store-home-list .list-tx {
   font-size: 0.8125rem;
-  color: #858585; }
+  color: #858585;
+  letter-spacing: -0.02em; }
 
 .box-store-home .store-home-list .bt-tel {
   display: inline-block;
@@ -17593,7 +17960,8 @@ a.bt-link-tx.underline.small {
         width: 100%; }
   .shop-info .shop-rating .txt-rating {
     font-size: 0.8125rem;
-    color: #858585; }
+    color: #858585;
+    letter-spacing: -0.02em; }
 
 .shop-info .shop-tag {
   margin-bottom: 1.25rem; }
@@ -17674,6 +18042,7 @@ a.bt-link-tx.underline.small {
   padding: 0.75rem 1rem;
   background: #f5f5f5;
   font-size: 0.8125rem;
+  letter-spacing: -0.02em;
   color: #212121; }
   .shop-info .shop-result em {
     font-weight: 700; }
@@ -17693,7 +18062,8 @@ a.bt-link-tx.underline.small {
 /* CS_03_01_L01 : AS 센터 찾기 > 유상 및 무상 서비스 안내 풀팝업 */
 .service-box .service-ti-case {
   margin-bottom: 1.25rem;
-  font-size: 0.9375rem; }
+  font-size: 0.9375rem;
+  letter-spacing: -0.02em; }
 
 .service-box .service-definition {
   margin-bottom: 1.5625rem; }
@@ -17751,6 +18121,7 @@ a.bt-link-tx.underline.small {
 /* CS_03_01 : AS센터 안내 */
 .as-center .as-tit {
   font-size: 0.9375rem;
+  letter-spacing: -0.02em;
   margin-bottom: 1.875rem; }
 
 .as-center .as-representative-number {
@@ -17763,16 +18134,19 @@ a.bt-link-tx.underline.small {
     display: table-cell;
     text-align: left;
     color: #858585;
-    font-size: 0.875rem; }
+    font-size: 0.875rem;
+    letter-spacing: -0.02em; }
   .as-center .as-representative-number dd {
     display: table-cell;
     text-align: right;
-    font-size: 0.9375rem; }
+    font-size: 0.9375rem;
+    letter-spacing: -0.02em; }
 
 .as-center .as-bringing {
   margin: 1.25rem 0;
   font-size: 0.75rem;
-  color: #858585; }
+  color: #858585;
+  letter-spacing: -0.02em; }
 
 .as-center .as-acco .acco-title {
   border-top: 1px solid #e1e1e1;
@@ -17799,9 +18173,11 @@ a.bt-link-tx.underline.small {
     .as-center .as-acco .acco-content .as-time-list dl {
       margin-bottom: 1.875rem; }
     .as-center .as-acco .acco-content .as-time-list dt {
-      font-size: 0.875rem; }
-    .as-center .as-acco .acco-content .as-time-list dd {
       font-size: 0.875rem;
+      letter-spacing: -0.02em; }
+    .as-center .as-acco .acco-content .as-time-list dd {
+      font-size: 0.8125rem;
+      letter-spacing: -0.02em;
       color: #858585; }
       .as-center .as-acco .acco-content .as-time-list dd .tx-notice {
         margin-top: 0.625rem;
@@ -17837,6 +18213,7 @@ a.bt-link-tx.underline.small {
   .acco-as .acco-list .list-item li {
     margin-bottom: 0.625rem;
     font-size: 0.8125rem;
+    letter-spacing: -0.02em;
     color: #858585; }
     .acco-as .acco-list .list-item li:last-of-type {
       margin-bottom: 0; }
@@ -17875,10 +18252,12 @@ a.bt-link-tx.underline.small {
   border-radius: 0.3125rem; }
   .customer-as .txt {
     font-size: 0.8125rem;
+    letter-spacing: -0.02em;
     color: #858585; }
     .customer-as .txt strong {
       display: block;
       margin-bottom: 0.625rem;
+      letter-spacing: -0.02em;
       font-size: 0.9375rem;
       color: #000; }
   .customer-as .ico {
@@ -17923,10 +18302,12 @@ a.bt-link-tx.underline.small {
     padding: 1.5625rem 6.25rem 1.5625rem 0.9375rem; }
     .search-point .bn-search .inner .txt {
       font-size: 0.9375rem;
+      letter-spacing: -0.02em;
       color: #858585; }
       .search-point .bn-search .inner .txt strong {
         display: block;
         margin-bottom: 0.625rem;
+        letter-spacing: -0.02em;
         font-size: 0.9375rem;
         color: #000; }
       .search-point .bn-search .inner .txt .bt-link-tx {
@@ -17974,10 +18355,12 @@ a.bt-link-tx.underline.small {
   .search-point .hours-of-business .as-time-list dt {
     font-size: 0.875rem;
     color: #666;
+    letter-spacing: -0.02em;
     display: table-cell;
     text-align: left; }
   .search-point .hours-of-business .as-time-list dd {
     font-size: 1rem;
+    letter-spacing: -0.02em;
     display: table-cell;
     text-align: right; }
     .search-point .hours-of-business .as-time-list dd .tx-notice {
@@ -18050,6 +18433,7 @@ a.bt-link-tx.underline.small {
   .toggle-range .data {
     display: block;
     padding: 1.125rem 0;
+    letter-spacing: -0.02em;
     font-size: 0.875rem; }
     .toggle-range .data em {
       font-weight: 700; }
@@ -18351,6 +18735,7 @@ a.bt-link-tx.underline.small {
     display: block;
     text-align: center;
     font-size: 0.75rem;
+    letter-spacing: -0.02em;
     height: 3.125rem;
     padding-top: 0.3125rem;
     -webkit-box-sizing: border-box;
@@ -18424,13 +18809,14 @@ a.bt-link-tx.underline.small {
           background-color: transparent; }
 
 /* EV_01_02 ~ EV_01_05 : 이벤트 타이틀 */
-.evt-desc .evt-tit {
-  font-size: 0.9375rem;
-  margin-bottom: 0.3125rem; }
-
-.evt-desc .evt-cont {
-  font-size: 0.8125rem;
-  color: #666; }
+.evt-desc {
+  letter-spacing: -0.02em; }
+  .evt-desc .evt-tit {
+    font-size: 0.9375rem;
+    margin-bottom: 0.3125rem; }
+  .evt-desc .evt-cont {
+    font-size: 0.8125rem;
+    color: #666; }
 
 .deletebtn-box .bt-alone {
   position: absolute;
@@ -18463,6 +18849,7 @@ a.bt-link-tx.underline.small {
     height: 3.0625rem;
     line-height: 3.0625rem;
     font-size: 0.875rem;
+    letter-spacing: -0.025em;
     color: #757575; }
     .brand_link .unit.on {
       position: relative;
@@ -19120,7 +19507,8 @@ a.bt-link-tx.underline.small {
       display: block;
       font-size: 1.5rem;
       font-weight: 400;
-      line-height: 1.875rem; }
+      line-height: 1.875rem;
+      letter-spacing: -0.125rem; }
     .howto-list-wrap .howto-list-box ul {
       margin-top: 1.125rem; }
       .howto-list-wrap .howto-list-box ul li {
@@ -19836,7 +20224,8 @@ a.bt-link-tx.underline.small {
   font-size: 0.625rem;
   font-weight: 700;
   text-align: center;
-  vertical-align: middle; }
+  vertical-align: middle;
+  letter-spacing: 0; }
 
 .rating-box-wraq .rating-list {
   margin-top: 1.875rem;
@@ -20205,6 +20594,132 @@ a.bt-link-tx.underline.small {
     font-size: 0.875rem;
     line-height: 1.1875rem;
     vertical-align: middle; }
+
+.membership-card-box {
+  position: relative;
+  height: 16.875rem;
+  padding: 1.875rem;
+  background: #fff;
+  border-radius: 0.9375rem;
+  -webkit-box-shadow: 0 0.625rem 0.9375rem #e9e9e9;
+          box-shadow: 0 0.625rem 0.9375rem #e9e9e9;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+  .membership-card-box .card-img {
+    position: absolute;
+    top: 1.875rem;
+    right: 1.875rem;
+    width: 3.5625rem;
+    height: 2.25rem; }
+    .membership-card-box .card-img img {
+      width: 100%;
+      height: 100%;
+      vertical-align: top; }
+  .membership-card-box .ico-vip {
+    display: block;
+    width: 2.125rem;
+    height: 1rem;
+    margin-bottom: 0.125rem;
+    background: #e22f26;
+    border-radius: 0.125rem;
+    color: #fff;
+    font-size: 0.625rem;
+    font-weight: 700;
+    line-height: 1rem;
+    text-align: center; }
+  .membership-card-box .card-tit {
+    display: block;
+    width: 5.8125rem;
+    height: 1.0625rem;
+    background: url(/img/benefit/tit_membership.png) no-repeat;
+    background-size: 100%;
+    font-size: 0;
+    line-height: 0; }
+  .membership-card-box .rating {
+    display: block;
+    height: 1.125rem;
+    margin-top: 0.375rem;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    color: transparent;
+    font-size: 0;
+    line-height: 0; }
+    .membership-card-box .rating.silver {
+      width: 3.75rem;
+      background-image: url(/img/main/silver.png); }
+    .membership-card-box .rating.gold {
+      width: 3.25rem;
+      background-image: url(/img/main/gold.png); }
+    .membership-card-box .rating.vip {
+      width: 2.4375rem;
+      background-image: url(/img/main/vip.png); }
+  .membership-card-box .card-name {
+    position: relative;
+    margin-left: 0.4375rem;
+    padding-left: 0.625rem;
+    font-size: 0.9375rem; }
+    .membership-card-box .card-name:before {
+      content: '';
+      position: absolute;
+      top: 0.4375rem;
+      left: 0;
+      width: 0.0625rem;
+      height: 0.5625rem;
+      background: #e1e1e1; }
+  .membership-card-box .accrue {
+    margin-top: 0.8125rem;
+    font-size: 0.6875rem;
+    line-height: 1.375rem; }
+    .membership-card-box .accrue p {
+      font-size: 1.25rem;
+      font-weight: 700; }
+  .membership-card-box .bar-code {
+    position: absolute;
+    bottom: 2.1875rem;
+    left: 1.875rem;
+    right: 1.875rem;
+    max-width: 16.75rem;
+    margin: 0 auto;
+    height: 4.6875rem; }
+    .membership-card-box .bar-code img {
+      width: 100%;
+      height: auto;
+      vertical-align: top; }
+    .membership-card-box .bar-code .bar-code-num {
+      width: 100%;
+      height: 20px;
+      text-align: center;
+      font-size: 1.125rem;
+      display: block;
+      margin-top: 0.3125rem; }
+
+.membership-event-box {
+  position: relative;
+  overflow: hidden;
+  margin-top: 0.625rem;
+  background: #fff;
+  border-radius: 0.9375rem;
+  -webkit-box-shadow: 0 0.625rem 0.9375rem #e9e9e9;
+          box-shadow: 0 0.625rem 0.9375rem #e9e9e9;
+  z-index: 1; }
+  .membership-event-box .slider-box .slick-dots {
+    overflow: initial;
+    top: 1.5625rem;
+    left: auto;
+    right: 1.5625rem; }
+    .membership-event-box .slider-box .slick-dots li {
+      width: 0.3125rem;
+      height: 0.3125rem;
+      border: 1px solid #fff; }
+      .membership-event-box .slider-box .slick-dots li span {
+        width: 0.25rem;
+        height: 0.25rem;
+        background: none; }
+      .membership-event-box .slider-box .slick-dots li.slick-active {
+        width: 0.375rem;
+        height: 0.375rem;
+        margin-top: -0.0625rem;
+        background: #fff; }
 
 .fixed-b {
   position: fixed;
@@ -21556,8 +22071,7 @@ a.bt-link-tx.underline.small {
       color: #178BCE !important;
       font-weight: 700 !important; }
     .phonefilter-wrap.benefit-icon li .text-wrap {
-      min-width: 3.5rem;
-      font-size: 0; }
+      min-width: 3.5rem; }
       .phonefilter-wrap.benefit-icon li .text-wrap .ico {
         position: relative;
         display: inline-block;
@@ -21666,7 +22180,7 @@ a.bt-link-tx.underline.small {
           float: left;
           padding: 0 0.375rem;
           height: 0.9375rem;
-          line-height: 0.9375rem;
+          line-height: 0.875rem;
           color: #fff;
           background: #119ED7;
           font-weight: 700;
@@ -22012,7 +22526,8 @@ a.bt-link-tx.underline.small {
     text-align: center;
     font-size: 0.9375rem;
     color: #fff;
-    border-radius: 100%; }
+    border-radius: 100%;
+    letter-spacing: 0; }
 
 .myinfo-wrap.membership .ico-wrap {
   top: 0.375rem; }
@@ -22062,6 +22577,7 @@ a.bt-link-tx.underline.small {
       border-radius: 1.25rem;
       text-align: center;
       background: #178BCE;
+      letter-spacing: 0;
       margin-left: 0.375rem; }
   .membership-use-particulars .bt-detail .date {
     float: right;
@@ -22105,6 +22621,7 @@ a.bt-link-tx.underline.small {
   font-family: "TgothicBlack", Roboto, sans-serif; }
   .membership-use-particulars .info-title .num span {
     display: inline-block;
+    letter-spacing: 0;
     font-family: "TgothicMedium", Roboto, sans-serif;
     font-size: 0.625rem;
     vertical-align: 0.125rem;
@@ -22143,6 +22660,7 @@ a.bt-link-tx.underline.small {
       width: auto; }
     .contract-info-wrap.mbs-reissue .contract-info > li .txt {
       display: table-cell;
+      letter-spacing: 0rem;
       width: auto; }
 
 .icon-tip {
@@ -22154,6 +22672,7 @@ a.bt-link-tx.underline.small {
   border-radius: 1.25rem;
   text-align: center;
   background: #178BCE;
+  letter-spacing: 0;
   margin-left: 0.375rem; }
 
 .notice-gray-box {
@@ -22481,8 +23000,6 @@ a.bt-link-tx.underline.small {
     padding-bottom: 2.5rem; }
     .comp-box.country-roaming .list-box .tit {
       font-size: 1.125rem !important; }
-      .comp-box.country-roaming .list-box .tit .tip-view {
-        vertical-align: inherit; }
   .comp-box.country-roaming .bt-add {
     border-bottom: 1px solid #e1e1e1;
     padding-bottom: 1.25rem; }
@@ -22700,7 +23217,8 @@ a.bt-link-tx.underline.small {
   .service-check-wrap .stit {
     display: block;
     padding: 4.6875rem 0 1.875rem;
-    font-size: 2rem; }
+    font-size: 2rem;
+    letter-spacing: -0.125rem; }
   .service-check-wrap .stxt {
     font-size: 0.8125rem;
     color: #666; }
@@ -24424,7 +24942,8 @@ input[type="radio"].formradio-small.type2 + label {
       color: #666666;
       font-size: 0.875rem;
       position: relative;
-      margin: 0 1.1875rem 0.625rem 0; }
+      margin: 0 1.1875rem 0.625rem 0;
+      letter-spacing: -0.0875rem; }
       .connection-wrap .connec-txt button:after, .connection-wrap .connec-txt a:after {
         content: '';
         width: 0.0625rem;
@@ -24617,7 +25136,8 @@ input[type="radio"].formradio-small.type2 + label {
     color: #959595;
     height: 3.25rem;
     line-height: 3.25rem;
-    font-size: 0.875rem; }
+    font-size: 0.875rem;
+    letter-spacing: -0.025em; }
     .benefit-link li .unit.on {
       color: #ef4b49;
       font-weight: 700; }
@@ -24891,15 +25411,14 @@ input[type="radio"].formradio-small.type2 + label {
         .full-link-list li .no-link .inner .tit .sub {
           display: block;
           font-size: 0.75rem;
-          color: #959595;
-          margin-top: 0.3125rem; }
+          color: #959595; }
       .full-link-list li button .inner .text, .full-link-list li a .inner .text,
       .full-link-list li .no-link .inner .text {
         display: table-cell;
         vertical-align: middle;
         font-size: 1rem;
         text-align: right;
-        font-weight: 700; }
+        /*font-weight:$fw-medium;*/ }
         .full-link-list li button .inner .text.type2, .full-link-list li a .inner .text.type2,
         .full-link-list li .no-link .inner .text.type2 {
           /*newfont*/
@@ -26634,8 +27153,6 @@ input[type="radio"].formradio-small.type2 + label {
   font-size: 15px;
   text-align: center;
   line-height: 3.25rem; }
-  .extraservice-more .btn.bbe5 {
-    border-bottom: 1px solid #e5e5e5; }
 
 .findyourplan-wrap .link {
   display: table;
@@ -27380,10 +27897,65 @@ input[type="radio"].formradio-small.type2 + label {
     .section-box .stit i {
       margin-left: 0.3125rem;
       vertical-align: -0.1875rem; }
+      .section-box .stit i.icon-arrowmore-32, .section-box .stit i.icon-arrowmore-blue-32 {
+        margin-left: -0.1875rem;
+        vertical-align: -0.1875rem; }
   .section-box .type02 {
     position: absolute;
     top: -2.8125rem;
     color: #178bce; }
+
+.quick-menu-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left; }
+  .quick-menu-list li {
+    width: 25%; }
+    .quick-menu-list li .bt {
+      display: block;
+      width: 100%;
+      color: inherit;
+      font-size: 0.875rem;
+      line-height: 1.0625rem;
+      text-align: center; }
+      .quick-menu-list li .bt i {
+        display: block;
+        width: 2.5rem;
+        height: 2.5rem;
+        margin: 0 auto 0.125rem; }
+      .quick-menu-list li .bt img {
+        display: block;
+        width: 100%; }
+    .quick-menu-list li.add-type {
+      width: 100%; }
+    .quick-menu-list li .add-bt {
+      display: block;
+      width: 100%;
+      color: #959595;
+      font-size: 0.875rem;
+      text-align: center; }
+      .quick-menu-list li .add-bt i {
+        display: block;
+        margin: 0 auto 0.625rem; }
+  .quick-menu-list + .btn-area {
+    margin-top: 1.25rem;
+    font-size: 0.8125rem;
+    text-align: center;
+    position: relative;
+    z-index: 2; }
+    .quick-menu-list + .btn-area .bt-link-tx {
+      color: #959595;
+      padding: 0.625rem 3.125rem;
+      margin: -0.625rem 0; }
+      .quick-menu-list + .btn-area .bt-link-tx:before {
+        background: #959595; }
+  .quick-menu-list.type-pd {
+    margin: 1.25rem 0; }
 
 .section-swiper-box {
   position: relative;
@@ -27443,6 +28015,128 @@ input[type="radio"].formradio-small.type2 + label {
     color: inherit;
     font-size: inherit;
     font-weight: inherit; }
+
+.main-banner-box .bt {
+  display: block;
+  width: 100%; }
+  .main-banner-box .bt img {
+    width: 100%;
+    vertical-align: top; }
+
+.main-banner-box .slider-box .slick-prev, .main-banner-box .slider-box .slick-next {
+  display: none !important; }
+
+.main-banner-box .slider-box .slick-slide button, .main-banner-box .slider-box .slick-slide a {
+  display: block;
+  width: 100%; }
+  .main-banner-box .slider-box .slick-slide button img, .main-banner-box .slider-box .slick-slide a img {
+    display: block;
+    width: 100%; }
+
+.main-banner-box .slider-box .slick-dots {
+  position: absolute;
+  top: 1.375rem;
+  left: auto;
+  right: 1.25rem;
+  bottom: auto;
+  width: auto;
+  text-align: left;
+  overflow: hidden; }
+  .main-banner-box .slider-box .slick-dots li {
+    display: block;
+    float: left;
+    margin: 0;
+    width: 0.5625rem;
+    height: 0.5625rem;
+    border-radius: 100%; }
+    .main-banner-box .slider-box .slick-dots li + li {
+      margin: 0 0 0 0.5625rem; }
+    .main-banner-box .slider-box .slick-dots li span {
+      display: block;
+      margin: 0.0625rem auto;
+      width: 0.4375rem;
+      height: 0.4375rem;
+      border-radius: 50%;
+      overflow: hidden;
+      text-indent: -625rem;
+      background: none;
+      border-color: #fff; }
+    .main-banner-box .slider-box .slick-dots li.slick-active {
+      background: #fff;
+      margin-top: 0.05rem; }
+      .main-banner-box .slider-box .slick-dots li.slick-active span {
+        border: none;
+        background-color: transparent; }
+
+.main-banner-box .slider-box .slick-list {
+  overflow: hidden; }
+
+.main-tip-box {
+  overflow: hidden; }
+  .main-tip-box.box-type .slider-box .slick-dots {
+    top: -1.1875rem; }
+  .main-tip-box .slider-box .slick-dots {
+    top: 1.5rem; }
+  .main-tip-box .main-box-cont {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 10rem;
+    background: url(/img/main/bg_main_tip.png) no-repeat right bottom;
+    background-size: auto 10rem;
+    color: inherit;
+    text-align: left; }
+    .main-tip-box .main-box-cont .ti-tx {
+      position: absolute;
+      top: 0;
+      left: 1.5rem;
+      bottom: 0;
+      right: 1.5rem; }
+    .main-tip-box .main-box-cont .ti {
+      overflow: hidden;
+      display: -webkit-box;
+      max-height: 3.75rem;
+      line-height: 1.875rem;
+      white-space: normal;
+      word-wrap: break-word;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      font-size: 1.5625rem;
+      font-weight: 700; }
+    .main-tip-box .main-box-cont .tx {
+      font-weight: 300;
+      overflow: hidden;
+      display: -webkit-box;
+      max-height: 3.5625rem;
+      line-height: 1.1875rem;
+      white-space: normal;
+      word-wrap: break-word;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      margin-top: 5px;
+      padding-right: 5.9375rem;
+      width: 100%;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+      color: #959595;
+      font-size: 0.8125rem; }
+  .main-tip-box .btn-area {
+    overflow: hidden;
+    border-top: 1px solid #f2f2f2; }
+    .main-tip-box .btn-area .bt {
+      float: left;
+      width: 50%;
+      height: 3.125rem;
+      color: inherit;
+      font-size: 0.9375rem;
+      line-height: 3.125rem;
+      text-align: center;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box; }
+      .main-tip-box .btn-area .bt + .bt {
+        border-left: 1px solid #f2f2f2; }
 
 .main-charge-box {
   overflow: hidden;
@@ -27582,6 +28276,372 @@ input[type="radio"].formradio-small.type2 + label {
       background: url(/img/main/bg_discount.png) no-repeat right bottom;
       background-size: auto 10rem; }
 
+.main-direct-box .stit {
+  color: #666666;
+  font-size: 0.875rem; }
+
+.main-direct-box > .ti {
+  overflow: hidden;
+  display: -webkit-box;
+  max-height: 3.75rem;
+  line-height: 1.875rem;
+  white-space: normal;
+  word-wrap: break-word;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  font-size: 1.5625rem;
+  font-weight: 700; }
+
+.main-direct-box > .tx {
+  font-weight: 300;
+  overflow: hidden;
+  display: -webkit-box;
+  max-height: 2.375rem;
+  line-height: 1.1875rem;
+  white-space: normal;
+  word-wrap: break-word;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  margin-top: 5px;
+  color: #959595;
+  font-size: 0.8125rem; }
+
+.main-direct-box .info {
+  overflow: hidden;
+  margin: 2.5rem -1.5rem 0; }
+  .main-direct-box .info li {
+    float: left;
+    width: 33.3333%;
+    padding: 0 0.625rem;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box; }
+    .main-direct-box .info li .bt {
+      display: block;
+      width: 100%;
+      color: inherit;
+      text-align: center; }
+    .main-direct-box .info li .img {
+      display: block;
+      height: 6.875rem; }
+      .main-direct-box .info li .img img {
+        display: inline;
+        height: 100%; }
+    .main-direct-box .info li .ti {
+      display: block;
+      margin-top: 0.625rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 0.8125rem;
+      font-weight: 300; }
+    .main-direct-box .info li .tx {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 700; }
+    .main-direct-box .info li .tag {
+      display: block;
+      margin-top: 0.3125rem;
+      vertical-align: top; }
+
+.help-list {
+  overflow: hidden;
+  margin: 1.5625rem 0 1.875rem 0; }
+  .help-list li {
+    float: left;
+    width: 33.333%; }
+    .help-list li .bt {
+      display: block;
+      width: 100%;
+      color: inherit;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      line-height: 0.875rem;
+      text-align: center; }
+      .help-list li .bt .ico {
+        position: relative;
+        overflow: hidden;
+        display: block;
+        width: 4.25rem;
+        height: 4.25rem;
+        margin: 0 auto 0.75rem;
+        border-radius: 100%;
+        z-index: 1; }
+        .help-list li .bt .ico img {
+          width: 100%;
+          height: 100%;
+          vertical-align: middle; }
+
+.notice-slide-type {
+  position: relative;
+  margin-top: 0.9375rem; }
+  .notice-slide-type .notice-slide-ti {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0.875rem 1rem; }
+  .notice-slide-type .slider-box {
+    padding: 0 0 0 2.625rem; }
+    .notice-slide-type .slider-box button, .notice-slide-type .slider-box a {
+      display: block;
+      position: relative;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+      width: 100%;
+      padding: 0.875rem 1rem 0.875rem 0;
+      text-align: left; }
+      .notice-slide-type .slider-box button .notice-list-ti, .notice-slide-type .slider-box a .notice-list-ti {
+        display: block;
+        width: 92%;
+        font-size: 0.875rem;
+        line-height: 1rem;
+        color: #666666;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap; }
+      .notice-slide-type .slider-box button .ico, .notice-slide-type .slider-box a .ico {
+        display: block;
+        position: absolute;
+        top: 0.5625rem;
+        right: 0.5rem;
+        width: 1.5625rem;
+        height: 1.5625rem;
+        background: url(/img/ico/ico-group.png) no-repeat -1.5625rem -67.1875rem;
+        background-size: 3.125rem; }
+
+.member-info-box > .ti {
+  display: block;
+  font-size: 1.125rem;
+  font-weight: 500; }
+
+.member-info-box > .tx {
+  display: block;
+  margin-top: 0.125rem;
+  font-size: 0.8125rem;
+  font-weight: 300; }
+
+.member-info-box .btn-area {
+  overflow: hidden;
+  margin-top: 1.5625rem; }
+  .member-info-box .btn-area .btn-round1 {
+    float: left;
+    width: 49%;
+    font-weight: 500; }
+    .member-info-box .btn-area .btn-round1 + .btn-round1 {
+      float: right; }
+
+.member-info-box .desc {
+  margin-top: 2.1875rem;
+  color: #666666;
+  font-size: 0.75rem;
+  line-height: 1rem; }
+  .member-info-box .desc .bt {
+    color: #178bce;
+    text-decoration: underline; }
+  .member-info-box .desc .icon-badge-tip {
+    width: 1.5rem;
+    height: 0.875rem;
+    margin: -0.0625rem 0 0 0.1875rem;
+    vertical-align: middle; }
+
+.member-info-box > .num {
+  display: block;
+  color: #666666;
+  font-size: 0.75rem;
+  text-decoration: underline; }
+
+.member-info-box .user {
+  display: block;
+  margin-top: 0.375rem;
+  font-size: 1rem;
+  font-weight: 500; }
+
+.member-info-box .chart-group {
+  position: relative;
+  margin-top: 2.1875rem; }
+  .member-info-box .chart-group .chart-box {
+    position: relative;
+    display: block;
+    width: 10.9375rem;
+    text-align: left; }
+  .member-info-box .chart-group .legend {
+    overflow: hidden;
+    display: block;
+    width: 100%;
+    margin-top: 0.9375rem;
+    font-size: 0.6875rem;
+    font-weight: 300;
+    color: #959595; }
+    .member-info-box .chart-group .legend [class*=category] {
+      float: left; }
+      .member-info-box .chart-group .legend [class*=category]::before {
+        content: '';
+        display: inline-block;
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        vertical-align: 0;
+        margin: 0 0.1875rem 0 0; }
+    .member-info-box .chart-group .legend .category0::before {
+      background: #f76252; }
+    .member-info-box .chart-group .legend .category1 {
+      margin-left: 0.9375rem; }
+      .member-info-box .chart-group .legend .category1::before {
+        background: #59bcf5; }
+  .member-info-box .chart-group .ti-num {
+    position: absolute;
+    top: 0.5rem;
+    left: 4.75rem;
+    white-space: nowrap; }
+    .member-info-box .chart-group .ti-num .ti {
+      display: inline-block;
+      color: #666666;
+      font-size: 0.9375rem;
+      font-weight: 300; }
+      .member-info-box .chart-group .ti-num .ti i {
+        vertical-align: -0.125rem; }
+    .member-info-box .chart-group .ti-num .num {
+      display: block;
+      font-size: 1.0625rem;
+      font-weight: 700; }
+  .member-info-box .chart-group .data-add {
+    position: absolute;
+    right: 0;
+    top: 1.125rem;
+    height: 1.375rem;
+    padding: 0 0.5rem;
+    border: 1px solid #ef4b49;
+    color: #ef4b49;
+    font-size: 0.8125rem;
+    line-height: 1.375rem;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    border-radius: 0.6875rem; }
+    .member-info-box .chart-group .data-add:after {
+      content: '';
+      display: inline-block;
+      width: 0.5rem;
+      height: 0.5rem;
+      margin-left: 0.3125rem;
+      background: url(/img/main/ico_add.png) no-repeat;
+      background-size: 100%;
+      vertical-align: 1px; }
+
+.member-info-box .call-message {
+  overflow: hidden;
+  margin-top: 1.25rem;
+  margin-bottom: -1.25rem;
+  border-top: 1px solid #f2f2f2; }
+  .member-info-box .call-message .call {
+    float: left;
+    width: 50%;
+    height: 3.75rem;
+    font-size: 0.9375rem;
+    font-weight: 300;
+    text-align: left;
+    line-height: 3.75rem; }
+  .member-info-box .call-message .message {
+    float: left;
+    width: 50%;
+    height: 3.75rem;
+    font-size: 0.9375rem;
+    font-weight: 300;
+    text-align: left;
+    line-height: 3.75rem; }
+    .member-info-box .call-message .message i {
+      margin-top: -0.125rem; }
+  .member-info-box .call-message i {
+    vertical-align: middle; }
+
+.member-info-box .price {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin-top: 1.875rem;
+  color: inherit;
+  text-align: left; }
+  .member-info-box .price .ti {
+    display: block;
+    color: #666666;
+    font-size: 0.875rem;
+    font-weight: 500; }
+    .member-info-box .price .ti i {
+      vertical-align: -0.1875rem; }
+  .member-info-box .price .sum {
+    display: block;
+    font-size: 1.625rem;
+    font-weight: 700; }
+  .member-info-box .price .date {
+    display: block;
+    color: #959595;
+    font-size: 0.8125rem;
+    font-weight: 300; }
+  .member-info-box .price > i {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -0.125rem;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%); }
+  .member-info-box .price + .desc {
+    margin-top: 1.25rem; }
+
+.member-info-box .t-none {
+  position: relative;
+  min-height: 1.875rem;
+  margin-top: 1.5625rem;
+  padding-left: 2rem;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.5rem; }
+  .member-info-box .t-none:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -0.125rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: url(/img/ico/icon_none.png) no-repeat;
+    background-size: 100%; }
+  .member-info-box .t-none + .desc {
+    margin-top: 0.625rem; }
+
+.member-non-box {
+  padding: 0.625rem 0; }
+  .member-non-box .ti {
+    position: relative;
+    display: block;
+    padding-left: 2rem;
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.5rem; }
+    .member-non-box .ti i {
+      position: absolute;
+      left: 0;
+      top: -0.125rem;
+      width: 1.5rem;
+      height: 1.5rem; }
+  .member-non-box .tx {
+    margin-top: 0.9375rem;
+    font-size: 0.8125rem;
+    font-weight: 300;
+    line-height: 1.1875rem; }
+    .member-non-box .tx .bt {
+      color: #178bce;
+      text-decoration: underline; }
+  .member-non-box .btn-area {
+    margin-top: 1.25rem; }
+    .member-non-box .btn-area .btn-round1 {
+      width: 8.5rem; }
+  .member-non-box .desc {
+    margin-top: 0.625rem;
+    color: #959595;
+    font-size: 0.75rem;
+    font-weight: 300; }
+
 .text_translation {
   display: block;
   padding: 1.875rem 0 2.1875rem;
@@ -27677,8 +28737,100 @@ input[type="radio"].formradio-small.type2 + label {
     line-height: 50px;
     text-align: center; }
 
+.main-top-group {
+  position: relative;
+  margin-bottom: -0.625rem;
+  padding: 0 1rem 1.875rem;
+  background: #fff; }
+  .main-top-group.group-type {
+    padding: 0; }
+    .main-top-group.group-type .quick-menu-list {
+      border: none;
+      margin-top: 0.625rem;
+      padding: 0 1rem; }
+      .main-top-group.group-type .quick-menu-list li {
+        margin-top: 1.375rem; }
+  .main-top-group .quick-menu-list {
+    margin-top: 1.5625rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #f2f2f2;
+    position: relative; }
+    .main-top-group .quick-menu-list li {
+      height: 5.3125rem; }
+      .main-top-group .quick-menu-list li.add-type {
+        height: auto;
+        margin: 0;
+        padding-top: 0; }
+    .main-top-group .quick-menu-list + .btn-area {
+      margin: -0.3125rem;
+      padding-bottom: 0.9375rem; }
+  .main-top-group .main-breakdown-box {
+    position: relative;
+    width: 17.5rem;
+    margin: 3.125rem auto 2.5rem;
+    padding: 3.125rem 1.5625rem 2.5rem 1.5625rem;
+    border: 1px solid #f0f0f0;
+    border-bottom: none;
+    -webkit-box-shadow: 0 0.625rem 1.25rem #e4e4e4;
+            box-shadow: 0 0.625rem 1.25rem #e4e4e4;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    text-align: center; }
+    .main-top-group .main-breakdown-box:before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: 3.25rem;
+      height: 3.25rem;
+      margin: -1.625rem 0 0 -1.625rem;
+      background: url(/img/ico/icon_doc.png) no-repeat;
+      background-size: 100%; }
+    .main-top-group .main-breakdown-box:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -0.1875rem;
+      height: 0.25rem;
+      background: url(/img/main/bottom_img.png) repeat-x -0.0625rem bottom;
+      background-size: 13.25rem; }
+    .main-top-group .main-breakdown-box .stit {
+      color: #666666;
+      font-size: 0.875rem; }
+      .main-top-group .main-breakdown-box .stit i {
+        margin: -0.125rem 0 0 0.25rem;
+        vertical-align: middle; }
+    .main-top-group .main-breakdown-box > .sum {
+      margin: 0.625rem 0;
+      font-size: 2rem; }
+    .main-top-group .main-breakdown-box .desc {
+      text-align: left; }
+    .main-top-group .main-breakdown-box .ti {
+      font-weight: 500; }
+    .main-top-group .main-breakdown-box .text_translation {
+      color: #000;
+      font-size: 14px;
+      line-height: 20px; }
+  .main-top-group .main-membershop-box {
+    margin-top: 1.875rem; }
+
 body.apphome {
   background: #f4f4f4; }
+  body.apphome .main-top-group {
+    z-index: 2; }
+    body.apphome .main-top-group::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -11.25rem;
+      width: 100%;
+      height: 11.25rem;
+      background: url(/img/main/bg_home.png) repeat-x 0 0;
+      background-size: 0.0625rem 11.25rem;
+      z-index: 1; }
+    body.apphome .main-top-group .quick-menu-list {
+      z-index: 2; }
   body.apphome .section-box {
     z-index: 3; }
   body.apphome .main-membershop-box {
@@ -27736,6 +28888,7 @@ body.apphome {
       color: #666666;
       font-size: 0.75rem;
       text-decoration: underline;
+      letter-spacing: 0;
       text-align: center;
       margin: 0 auto;
       font-weight: 700; }
@@ -27769,30 +28922,35 @@ body.apphome {
         -webkit-transform: translate(-50%, -50%);
                 transform: translate(-50%, -50%);
         margin-top: -0.5rem;
-        font-family: "TgothicMedium", Roboto, sans-serif; }
+        font-family: "TgothicMedium", Roboto, sans-serif;
+        letter-spacing: 0; }
         .main-chart-box .donutchart .donut-chart .ti-data .ti {
           display: block;
           color: #959595;
           font-size: 0.875rem;
           font-weight: 400;
-          font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", 'Droid Sans', "Noto Sans", "Noto Sans CJK",  Roboto, sans-serif; }
+          font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", 'Droid Sans', "Noto Sans", "Noto Sans CJK",  Roboto, sans-serif;
+          letter-spacing: 0; }
         .main-chart-box .donutchart .donut-chart .ti-data .data {
           display: block;
           font-size: 1.75rem;
           font-weight: 700;
           white-space: nowrap;
-          font-family: "TgothicMedium", Roboto, sans-serif; }
+          font-family: "TgothicMedium", Roboto, sans-serif;
+          letter-spacing: 0; }
         .main-chart-box .donutchart .donut-chart .ti-data .tx {
           display: block;
           font-size: 1.5rem;
           font-weight: 700;
-          font-family: "TgothicMedium", Roboto, sans-serif; }
+          font-family: "TgothicMedium", Roboto, sans-serif;
+          letter-spacing: 0; }
         .main-chart-box .donutchart .donut-chart .ti-data .tx2 {
           display: block;
           font-size: 1.5rem;
           font-weight: 700;
           white-space: nowrap;
-          font-family: "TgothicMedium", Roboto, sans-serif; }
+          font-family: "TgothicMedium", Roboto, sans-serif;
+          letter-spacing: 0; }
       .main-chart-box .donutchart .donut-chart.data-type .ti-data {
         margin-top: -1.0625rem; }
     .main-chart-box .donutchart .data-add {
@@ -27856,7 +29014,7 @@ body.apphome {
       font-weight: 300;
       margin-right: 0.1875rem; }
       .main-chart-box .legend .category0 .data .ff-tg-light {
-        font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", 'Droid Sans', "sans-serif", "Noto Sans", "Noto Sans CJK"; }
+        font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue",'Droid Sans', "Noto Sans", "Noto Sans CJK", Roboto, sans-serif; }
     .main-chart-box .legend .category1::before {
       background: #59bcf5; }
     .main-chart-box .legend .category1 .data {
@@ -27955,6 +29113,154 @@ body.apphome {
       max-width: 8.4375rem; }
       .device_android .main-error-box .btn-area .btn-round1 + .btn-round1 {
         margin-left: 3%; } }
+
+.dialog-box {
+  position: relative;
+  background: #eff6fb;
+  min-height: 1.75rem;
+  padding: 0.75rem 2.5rem 0.875rem 3.4375rem; }
+  .dialog-box .dialog-txt {
+    display: block;
+    color: inherit;
+    text-align: left; }
+    .dialog-box .dialog-txt .name {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 300; }
+    .dialog-box .dialog-txt .key {
+      display: block;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      line-height: 1.1875rem; }
+  .dialog-box .dialog-ico {
+    position: absolute;
+    left: 1.125rem;
+    top: 50%;
+    -webkit-transform: translate(0, -50%);
+            transform: translate(0, -50%); }
+    .dialog-box .dialog-ico i {
+      width: 1.6875rem;
+      height: 1.6875rem;
+      vertical-align: top; }
+  .dialog-box .dialog-right-btn {
+    position: absolute;
+    right: 0.9375rem;
+    top: 50%;
+    -webkit-transform: translate(0, -50%);
+            transform: translate(0, -50%); }
+
+.main-tapp-box .ti {
+  padding-top: 0.1875rem;
+  font-size: 1rem;
+  overflow: hidden;
+  display: -webkit-box;
+  line-height: 1.1875rem;
+  white-space: normal;
+  word-wrap: break-word;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis; }
+
+.main-tapp-box .app-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-top: 2.5rem; }
+  .main-tapp-box .app-list li {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 25%; }
+    .main-tapp-box .app-list li .bt {
+      display: block;
+      width: 100%;
+      color: inherit;
+      font-size: 0.8125rem;
+      text-align: center; }
+      .main-tapp-box .app-list li .bt:before {
+        content: '';
+        display: block;
+        width: 3rem;
+        height: 3rem;
+        margin: 0 auto 0.4375rem;
+        background-size: 100% 100%;
+        background-repeat: no-repeat; }
+    .main-tapp-box .app-list li.t-membership .bt:before {
+      background-image: url(/img/main/app_tmembership.png); }
+    .main-tapp-box .app-list li.t-map .bt:before {
+      background-image: url(/img/main/app_tmap.png); }
+    .main-tapp-box .app-list li.t-call .bt:before {
+      background-image: url(/img/main/app_tcall.png); }
+    .main-tapp-box .app-list li.t-pay .bt:before {
+      background-image: url(/img/main/app_tpay.png); }
+    .main-tapp-box .app-list li.t-cloudberry .bt:before {
+      background-image: url(/img/main/app_cloudberry.png); }
+
+.accessories-box {
+  position: relative;
+  border-radius: 0.9375rem;
+  -webkit-box-shadow: 0 0.625rem 0.9375rem #eaeaea;
+          box-shadow: 0 0.625rem 0.9375rem #eaeaea;
+  z-index: 1; }
+  .accessories-box .slider-box .slick-prev, .accessories-box .slider-box .slick-next {
+    display: none !important; }
+  .accessories-box .slider-box .slick-slide button, .accessories-box .slider-box .slick-slide a {
+    display: block;
+    width: 100%;
+    border: 0; }
+    .accessories-box .slider-box .slick-slide button img, .accessories-box .slider-box .slick-slide a img {
+      display: block;
+      width: 100%; }
+  .accessories-box .slider-box .slick-dots {
+    position: absolute;
+    top: 1.375rem;
+    left: auto;
+    right: 1.25rem;
+    bottom: auto;
+    width: auto;
+    text-align: left;
+    overflow: hidden; }
+    .accessories-box .slider-box .slick-dots li {
+      display: block;
+      float: left;
+      margin: 0;
+      width: 0.5625rem;
+      height: 0.5625rem;
+      border-radius: 100%; }
+      .accessories-box .slider-box .slick-dots li + li {
+        margin: 0 0 0 0.5625rem; }
+      .accessories-box .slider-box .slick-dots li span {
+        display: block;
+        margin: 0.0625rem auto;
+        width: 0.4375rem;
+        height: 0.4375rem;
+        border-radius: 50%;
+        overflow: hidden;
+        text-indent: -625rem;
+        background: none;
+        border-color: #000; }
+      .accessories-box .slider-box .slick-dots li.slick-active {
+        background: #000;
+        margin-top: 0.05rem; }
+        .accessories-box .slider-box .slick-dots li.slick-active span {
+          border: none;
+          background-color: transparent; }
+
+.main-alarm-box {
+  display: block;
+  width: 100%;
+  padding: 1.25rem 0 1.25rem 1.5rem;
+  color: inherit;
+  font-size: 0.875rem;
+  text-align: left; }
+  .main-alarm-box i {
+    margin-right: 0.3125rem;
+    vertical-align: middle; }
 
 .charge-product {
   margin-top: 1.875rem; }
@@ -28078,6 +29384,97 @@ body.apphome {
     width: 63%; }
   .charge-product.type-list .bt-cont-box .tx {
     -webkit-line-clamp: 3; }
+
+.section-menu-box .menu-depth1 > li {
+  margin-top: 0.5625rem;
+  background: #fff;
+  border-bottom: 1px solid #e5e5e5; }
+  .section-menu-box .menu-depth1 > li:first-child {
+    margin: 0; }
+  .section-menu-box .menu-depth1 > li:last-child .depth2 {
+    border-bottom: none; }
+  .section-menu-box .menu-depth1 > li > .bt {
+    position: relative;
+    display: block;
+    width: 100%;
+    min-height: 3.1875rem;
+    padding: 0.9375rem 3.125rem 0.6875rem 1rem;
+    color: inherit;
+    font-size: 16px;
+    text-align: left;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box; }
+    .section-menu-box .menu-depth1 > li > .bt .ico {
+      display: inline-block;
+      width: 1.5rem;
+      height: 1.5rem;
+      padding-right: 0.375rem;
+      vertical-align: middle;
+      font-size: 0;
+      line-height: 0; }
+      .section-menu-box .menu-depth1 > li > .bt .ico img {
+        width: 100%;
+        height: 100%;
+        margin-top: -0.125rem; }
+    .section-menu-box .menu-depth1 > li > .bt .custom-form {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      margin-top: -0.75rem; }
+  .section-menu-box .menu-depth1 > li .depth2 {
+    border-top: 1px solid #f2f2f2; }
+    .section-menu-box .menu-depth1 > li .depth2 .bt {
+      position: relative;
+      display: block;
+      width: 100%;
+      padding: 0.875rem 3.125rem 0.9375rem 3.25rem;
+      color: #666666;
+      font-size: 0.9375rem;
+      text-align: left;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box; }
+      .section-menu-box .menu-depth1 > li .depth2 .bt .custom-form {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        margin-top: -0.75rem; }
+    .section-menu-box .menu-depth1 > li .depth2 .ti {
+      display: block;
+      margin-top: 0.625rem;
+      padding: 0.625rem 3.25rem;
+      color: #959595;
+      font-size: 0.75rem;
+      font-weight: 400; }
+    .section-menu-box .menu-depth1 > li .depth2 ul {
+      position: relative;
+      padding-bottom: 0.9375rem; }
+      .section-menu-box .menu-depth1 > li .depth2 ul:after {
+        content: '';
+        position: absolute;
+        left: 1rem;
+        right: 1rem;
+        bottom: 0;
+        height: 1px;
+        background: #f2f2f2; }
+      .section-menu-box .menu-depth1 > li .depth2 ul li .bt {
+        padding-left: 3.875rem; }
+      .section-menu-box .menu-depth1 > li .depth2 ul:last-child:after {
+        display: none; }
+
+.section-menu-box .checked:after {
+  background-image: url(/img/main/menu_check_on.png) !important; }
+
+.reset-top-box {
+  overflow: hidden;
+  padding: 0 1rem 0 1rem;
+  background: #e6f2fb; }
+  .reset-top-box .reset {
+    float: right;
+    height: 2.75rem;
+    font-size: 0.8125rem;
+    line-height: 2.75rem; }
+    .reset-top-box .reset i {
+      vertical-align: -0.25rem; }
 
 .main-membershop-box {
   position: relative;
@@ -29390,10 +30787,12 @@ body.apphome {
 .list-comp-history.type01 .data-tx, .shop-info .shop-txt .list-comp-history.type02 .data-tx, .shop-info .shop-txt .list-comp-history.type03 .data-tx {
   width: 6.25rem !important;
   font-size: 1rem !important;
+  letter-spacing: 0 !important;
   line-height: 1.1875rem;
   font-weight: 700 !important; }
   .list-comp-history.type01 .data-tx span, .shop-info .shop-txt .list-comp-history.type02 .data-tx span, .shop-info .shop-txt .list-comp-history.type03 .data-tx span {
     font-size: 1rem !important;
+    letter-spacing: 0 !important;
     font-family: normal !important;
     margin-left: 0 !important; }
   .list-comp-history.type01 .data-tx.ff-tg-black, .shop-info .shop-txt .list-comp-history.type02 .data-tx.ff-tg-black, .shop-info .shop-txt .list-comp-history.type03 .data-tx.ff-tg-black {
@@ -29723,7 +31122,7 @@ body.apphome {
   height: 100%;
   background: url(/img/common/icon-go-arw01.png) no-repeat right center;
   background-size: 0.4375rem 0.6875rem;
-  /*font-size:0;*/
+  font-size: 0;
   text-indent: -9999px; }
 
 .date-graph-list + .total-data {
@@ -29803,6 +31202,7 @@ body.apphome {
         font-family: "TgothicLight", Roboto, sans-serif;
         font-size: 0.75rem;
         line-height: 16px !important;
+        letter-spacing: 0 !important;
         color: #959595;
         font-weight: 400 !important; }
       .discount-look-ahead.round .select-list li.disabled {
@@ -31314,7 +32714,8 @@ body.apphome {
   text-align: center; }
   .discountbenefit-list .category-type .link .tag-price .txt {
     display: inline-block;
-    font-weight: 700; }
+    font-weight: 700;
+    letter-spacing: -0.01563rem; }
 
 /* gnb coach mark */
 .g-coach-box li {
@@ -31375,13 +32776,15 @@ body.apphome {
     display: block;
     font-size: 0.875rem;
     color: #000;
+    letter-spacing: -0.05rem;
     line-height: 1.5;
     margin-top: 0.25rem; }
   .view-tit-wrap .sub-txt {
     display: block;
     font-size: 0.8125rem;
     color: #666;
-    margin-top: 0.25rem; }
+    margin-top: 0.25rem;
+    letter-spacing: -0.0125rem; }
     .view-tit-wrap .sub-txt:after {
       content: "";
       display: block;
@@ -31441,6 +32844,17 @@ body.apphome {
     color: #3D9ED6;
     text-decoration: underline; }
 
+/**/
+.bg-gradation {
+  padding-top: 0.3125rem;
+  background-color: #f4f4f4;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#f4f4f4));
+  background-image: linear-gradient(#ffffff, #f4f4f4); }
+  .bg-gradation .cont-box .line {
+    display: block;
+    border-top: 1px solid #f2f2f2;
+    margin-bottom: 1.5625rem; }
+
 /* 김효진 */
 /* 나은별 */
 /* 인풋 옆에 버튼이 붙는 경우 (주소록, 우편번호 검색 등...) */
@@ -31458,8 +32872,6 @@ body.apphome {
     text-indent: 0; }
     .inputbox.inp-btn .bt-box.none {
       display: none !important; }
-    .inputbox.inp-btn .bt-box.bt80 button, .inputbox.inp-btn .bt-box a {
-      width: 5rem; }
   .inputbox.inp-btn .bt-box2 {
     display: table-cell !important;
     padding-left: 0.625rem;

@@ -851,7 +851,8 @@ body.bg-gray {
     margin: 0.625rem 0 0 0;
     font-size: 0.8125rem;
     color: #666;
-    text-align: center; }
+    text-align: center;
+    letter-spacing: 0; }
 
 .all-menu-setting {
   background: #fff; }
@@ -1213,7 +1214,8 @@ body.bg-gray {
     .popup-page.coupon-type .coupon-wrap .coupon-header dt {
       margin: 0 0 0.625rem 0;
       font-size: 0.8125rem;
-      color: #000; }
+      color: #000;
+      letter-spacing: 0; }
     .popup-page.coupon-type .coupon-wrap .coupon-header dd .link-benefit {
       display: block;
       font-size: 0.8125rem; }
@@ -1364,7 +1366,7 @@ body.bg-gray {
     display: inline-block;
     padding: 0 0.9375rem;
     font-size: 0.9375rem;
-    font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK";
+    font-family: "Helvetica Neue", Roboto, sans-serif;
     font-weight: 400;
     color: #000;
     line-height: 1.625rem; }
@@ -1552,7 +1554,8 @@ body.bg-gray {
       .box-suggest .suggest-info .suggest-list li a {
         color: #425684;
         vertical-align: top;
-        border-bottom: 1px solid #425684; }
+        border-bottom: 1px solid #425684;
+        letter-spacing: 0; }
       .box-suggest .suggest-info .suggest-list li .tx-point {
         vertical-align: baseline; }
     .box-suggest .suggest-info .suggest-list.nodot li {
@@ -1707,7 +1710,7 @@ body.bg-gray {
   color: #178BCE; }
   .certify-wrap .left-time span {
     vertical-align: baseline;
-    font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK"; }
+    font-family: "Helvetica Neue", Roboto, sans-serif; }
 
 .certify-wrap .add-time {
   margin: 1.25rem 1.25rem 0 1.25rem; }
@@ -2583,6 +2586,7 @@ body.bg-gray {
   padding: 0.1875rem 0.5rem;
   color: #fff;
   text-align: center;
+  letter-spacing: -1px;
   font-size: 0.75rem;
   background: #325ec1; }
 
@@ -2597,6 +2601,7 @@ body.bg-gray {
   padding: 0.1875rem 0.5rem;
   color: #fff;
   text-align: center;
+  letter-spacing: -1px;
   font-size: 0.75rem;
   background: #325ec1; }
 
