@@ -45,10 +45,9 @@
                                         <li class="acco-box <%= research.isProceeding && 'on' %>" data-research-id="<%= research.bnnrRsrchId %>" data-type-code="<%= research.bnnrRsrchTypCd %>" data-answer-num="<%= research.canswNum %>">
                                             <div class="acco-tit">
                                                 <span class="poll-question"><%= research.bnnrRsrchTitleNm %></span>
-                                                <span class="poll-date"><%= research.staDtm %><span class="blind">에서</span><span
-                                                        class="vt" aria-hidden="true">-</span> <%= research.endDtm %></span>
+                                                <span class="poll-date"><%= research.staDtm %><span class="blind">에서</span><span class="vt" aria-hidden="true">-</span> <%= research.endDtm %></span>
                                                 <em class="poll-condition"><%= research.isProceeding? '진행 중':'종료' %></em>
-                                                <button role="button" aria-pressed="true"></button>
+                                                <button role="button" aria-pressed="true"><span class="blind"><%= research.bnnrRsrchTitleNm %></span></button><!-- 웹접근성 수정 - 내용이 고정적이지 않으므로 개발 작업 필요 -->
                                             </div>
                                             <div class="acco-cont">
                                                 <div class="cont-box">

@@ -47,9 +47,9 @@
                         </div>
                     </div>
                     <!-- // poll-chart-box -->
-                    <% research.questions.map((question, idx) => { 
+                    <% research.questions.map((question, qIdx) => { 
                         const isEssential = question.mndtAnswYn === 'Y' %>
-                        <div class="poll-box <%= idx === 0 ? '': 'none' %>" data-is-essential-="<%= isEssential %>" data-answer-type="<%= question.inqItmTypCd %>">
+                        <div class="poll-box <%= qIdx === 0 ? '': 'none' %>" data-is-essential-="<%= isEssential %>" data-answer-type="<%= question.inqItmTypCd %>">
                             <div class="poll-sub-tit"><%= question.inqDtlCtt %></div>
                             <% switch (question.inqItmTypCd) { 
                                 case '0': {
@@ -64,8 +64,14 @@
                                                 }
                                                 const content = exam.isEtc ? '기타' : exam.content %>
                                                 <li class="radiobox type01" role="radio" aria-checked="false" data-next-question="<%= exam.nxtInqItmNum %>"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                    <input type="radio" name="radio<%= research.bnnrRsrchId %>" value="" title="<%= content %>" /><!-- 체크상태일 경우 checked="checked" -->
-                                                    <%= content %>
+                                                    <% if (exam.image) { %>
+                                                        <div class="poll-img"><img src="<%= exam.image %>" /></div>
+                                                        <input type="radio" name="radio<%= research.bnnrRsrchId %>" value="" title="<%= content %>" aria-labelledby="aria-comp-q<%= qIdx %>-radio<%= idx %>"/><!-- 체크상태일 경우 checked="checked" -->
+                                                        <div class="poll-text" id="aria-comp-q<%= qIdx %>-radio<%= idx %>"><%= content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %></div>
+                                                    <% } else { %>
+                                                        <input type="radio" name="radio<%= research.bnnrRsrchId %>" value="" title="<%= content %>" /><!-- 체크상태일 경우 checked="checked" -->
+                                                        <%= content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %>
+                                                    <% } %>
                                                 </li>
                                             <% } %>
                                         </ul>
@@ -86,9 +92,15 @@
                                                     etcIdx = idx;
                                                 }
                                                 const content = exam.isEtc ? '기타' : exam.content %>
-                                                <li class="checkbox type01" role="checkbox" aria-checked="false" data-next-question="<%= exam.nextQuestion %>"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                    <input type="checkbox" name="checkbox" value="" title="<%= content %>" /><!-- 체크상태일 경우 checked="checked" -->
-                                                    <%= content %>
+                                                <li class="checkbox type01" role="checkbox" aria-checked="false" data-next-question="<%= exam.nxtInqItmNum %>"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                    <% if (exam.image) { %>
+                                                        <div class="poll-img"><img src="<%= exam.image %>" /></div>
+                                                        <input type="checkbox" name="checkbox" value="" title="<%= content %>" aria-labelledby="aria-comp-q<%= qIdx%>-checkbox<%= idx %>"/><!-- 체크상태일 경우 checked="checked" -->
+                                                        <div class="poll-text" id="aria-comp-q<%= qIdx%>-checkbox<%= idx %>"><%= content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %></div>
+                                                    <% } else { %>
+                                                        <input type="checkbox" name="checkbox" value="" title="<%= content %>" /><!-- 체크상태일 경우 checked="checked" -->
+                                                        <%= content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %>
+                                                    <% } %>
                                                 </li>
                                             <% } %>
                                         </ul>
@@ -103,7 +115,7 @@
                                 <% break;
                                 }
                             } %>
-                            <% if (idx === 0) { %>
+                            <% if (qIdx === 0) { %>
                                 <ul class="bt-slice mt30">
                                     <li class="bt-blue1 fe-go-next">
                                         <button>다음</button>
@@ -114,7 +126,7 @@
                                     <li class="bt-white2 fe-go-prev">
                                         <button>이전으로</button>
                                     </li>
-                                    <% if (idx === research.questions.length - 1) { %>
+                                    <% if (qIdx === research.questions.length - 1) { %>
                                     <li class="bt-blue1" id="fe-submit-research">
                                         <button disabled="<%= isEssential %>">참여하기</button>
                                     </li>
