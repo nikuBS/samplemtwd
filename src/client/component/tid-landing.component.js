@@ -121,9 +121,15 @@ Tw.TidLandingComponent.prototype = {
   },
   _onNativeLogin: function (target, resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
-      this._apiService.request(Tw.NODE_CMD.LOGIN_TID, resp.params)
-        .done($.proxy(this._successLogin, this, target));
+      this._successLogin(target, resp.params);
+    } else {
+      this._historyService.replaceURL('/common/member/login/fail?errorCode='+ resp.resultCode + '&target=' + encodeURIComponent(target));
     }
+
+    // if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+    //   this._apiService.request(Tw.NODE_CMD.LOGIN_TID, resp.params)
+    //     .done($.proxy(this._successLogin, this, target));
+    // }
   },
   _onNativeSignup: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {

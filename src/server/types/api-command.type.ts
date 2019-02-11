@@ -104,6 +104,7 @@ export const API_CMD = {
   BFF_03_0005: { path: '/:version/user/services', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: false },
   BFF_03_0006: { path: '/:version/user/nick-names/:args0', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_03_0007: { path: '/:version/user/tid-keys', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, native: true },
+  BFF_03_0007_old: { path: '/:version/user/old-tid-keys', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, native: true },
   BFF_03_0008: { path: '/:version/user/sessions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false, native: true },
   BFF_03_0009: { path: '/:version/user/service-password-sessions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_03_0010: { path: '/:version/user/locks', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
