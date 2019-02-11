@@ -203,6 +203,7 @@ Tw.API_CMD = {
   BFF_05_0195: { path: '/core-modification/:version/longterm-phone-pause', method: Tw.API_METHOD.PUT },
   BFF_05_0196: { path: '/core-modification/:version/loyalty-benefits', method: Tw.API_METHOD.GET },
   BFF_05_0197: { path: '/core-modification/:version/longterm-phone-pause', method: Tw.API_METHOD.POST },
+  BFF_05_0199: { path: '/core-bill/:version/bill-types-email', method: Tw.API_METHOD.PUT },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: Tw.API_METHOD.GET },

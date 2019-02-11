@@ -348,22 +348,6 @@ Tw.MyTFareBillSetChange.prototype = {
     this._changeCcurNotiYn($(e.currentTarget));
   },
 
-  // 안내서 변경 및 정보변경 모달창
-  _openModal: function (data) {
-    var _modal = {};
-
-    // 안내서가 "이메일" 일 때만 문구가 다름
-    if (this._billType === '2') {
-      _modal = Tw.MYT_FARE_BILL_SET.A43;
-    } else {
-      _modal = this._isChangeInfo ? Tw.MYT_FARE_BILL_SET.A42 : Tw.MYT_FARE_BILL_SET.A41;
-    }
-
-    this.popupService.openModalTypeA(_modal.TITLE,
-      _modal.CONTENTS,
-      Tw.BUTTON_LABEL.CHANGE, null, $.proxy(this._reqBFF_05_0027, this, data), null);
-  },
-
   // 변경 할 안내서 유형 만듬
   _convertBillType: function () {
     var _billType = this._billType;
@@ -513,21 +497,25 @@ Tw.MyTFareBillSetChange.prototype = {
   _onSubmit: function () {
     var _result = this._checkValidation();
     if (_result.result) {
-      this._reqBFF_05_0027(_result.data);
+      this._reqChangeBillType(_result.data);
     }
   },
 
-  // 안내서 변경(정보변경) 요청
-  _reqBFF_05_0027: function (data) {
-    this.popupService.close();
+  /*
+    안내서 변경(정보변경) 요청 : 이메일 포함하는 안내서와 미포함 안내서는 API 주소가 다름
+    이메일 미포함 안내서일 경우 요청 API : BFF_05_0027
+    이메일 포함 안내서의 요청 API : BFF_05_0199
+  */
+  _reqChangeBillType : function (data) {
+    var _apiUrl = ['I', 'K', 'A', '2'].indexOf(data.toBillTypeCd) > -1 ? Tw.API_CMD.BFF_05_0199 : Tw.API_CMD.BFF_05_0027;
+
     Tw.Api
-      .request(Tw.API_CMD.BFF_05_0027, data)
-      .done($.proxy(this._onSucessBFF_05_0027, this))
+      .request(_apiUrl, data)
+      .done($.proxy(this._onSucessChangeBillType, this))
       .fail($.proxy(this._onFail, this));
   },
 
-
-  _onSucessBFF_05_0027: function (resp) {
+  _onSucessChangeBillType: function (resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       this._onFail(resp);
       return;
