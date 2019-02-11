@@ -28,16 +28,21 @@ Tw.MyTFareInfoOverpayAccount.prototype = {
   },
 
   _cachedElement: function () {
-    this.$refundRequestBtn = this.$container.find('.fe-btn-refund button');
-    this.$bankList = this.$container.find('.bt-dropdown.big');
+    this.$refundRequestBtn = this.$container.find('.fe-btn-refund button'); // send btn
+    this.$bankList = this.$container.find('.bt-dropdown.big'); // 은행이름선택
+    this.$bankAccountInput = this.$container.find('#fe-bank-account'); // 계좌번호 input
+    this.$closeBtn = this.$container.find('.fe-btn-back'); // 닫기버튼
   },
 
   _bindEvent: function () {
     this.$bankList.on('click', $.proxy(this._selectBank, this));
 
-    this.$container.on('click', '.fe-btn-refund button', $.proxy(this._refundRequestSend, this));
-    this.$container.on('keyup', '#fe-bank-account', $.proxy(this._accountInputHandler, this));
-    this.$container.find('#fe-bank-account').siblings('button.cancel').eq(0).on('click', $.proxy(this._accountInputHandler, this));
+    this.$refundRequestBtn.on('click', $.proxy(this._refundRequestSend, this));
+    this.$bankAccountInput.on('keyup', $.proxy(this._accountInputHandler, this));
+    this.$bankAccountInput.siblings('button.cancel').eq(0).on('click', $.proxy(this._accountInputHandler, this));
+    this.$closeBtn.on('click', $.proxy(this._closeConfirm, this));
+
+    this._refundAccountInfoUpdateCheck();
   },
 
   _selectBank: function (event) {
@@ -77,6 +82,24 @@ Tw.MyTFareInfoOverpayAccount.prototype = {
     // this._popupService.close();
     this._historyService.goBack();
   },
+
+  // 닫기 확인
+  _closeConfirm: function() {
+    if(!Tw.FormatHelper.isEmpty(this.$bankAccountInput.val()) ||
+      !Tw.FormatHelper.isEmpty(this.refundAPI_option.rfndBankCd) 
+    ) { 
+      this._popupService.openConfirmButton(
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+        $.proxy(this._closePopAndBack, this),
+        null,
+        Tw.BUTTON_LABEL.NO,
+        Tw.BUTTON_LABEL.YES
+      );
+    } else {
+      this._goBack();
+    }
+  },
   
   _accountInputHandler: function (e) {
     this.isBankAccountNumberSeted = ($(e.currentTarget).val().length > 0);
@@ -84,5 +107,12 @@ Tw.MyTFareInfoOverpayAccount.prototype = {
     this._refundAccountInfoUpdateCheck();
   },
 
+  _closePopAndBack: function() {
+    this._popupService.close();
+    this._goBack();
+  },
 
+  _goBack: function() {
+    this._historyService.goBack();
+  }
 }
