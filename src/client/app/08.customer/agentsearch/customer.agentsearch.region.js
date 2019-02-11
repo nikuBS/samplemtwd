@@ -134,8 +134,14 @@ Tw.CustomerAgentsearchRegion.prototype = {
       if (a. districtName < b.districtName) return -1;
       return 0;
     });
+
+    var count = 1;
     this.$areaList.append(_.reduce(filteredList, function (memo, item) {
-      return memo + Tw.REGION_LIST_ITEM.getItem(item.districtName, item.middleCd);
+      var ret =  Tw.REGION_LIST_ITEM.getItem(item.districtName, item.middleCd);
+      // 웹 접근성 관련 aria-labelledby field 추가
+      ret = ret.replace(/aria-comp-radio/g, 'aria-comp-radio' + count);
+      count += 1;
+      return memo + ret;
     }, ''));
 
     $('.widget-box.tube').data('event', null);
