@@ -12,7 +12,7 @@ Tw.BenefitMyBenefitCookiz = function (rootEl) {
   this._idxLastItem = 0;
   this._totalCount = 0;
   this.NUM_OF_ITEMS = 20;
-  this._page = 1;
+  this._page = 0;
 
   this._cachedElement();
   this._bindEvent();
@@ -45,7 +45,7 @@ Tw.BenefitMyBenefitCookiz.prototype = {
   _onReceivedData: function (resp) {
     Tw.CommonHelper.endLoading('.container');
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._totalCount = resp.result.totRecCnt;
+      this._totalCount = parseInt(resp.result.totRecCnt, 10);
       if ( resp.result.length < 1 ) {
         this.$list.hide();
         this.$noItem.show();
@@ -74,7 +74,7 @@ Tw.BenefitMyBenefitCookiz.prototype = {
     var moreItems = this._totalCount - this._idxLastItem;
     if ( moreItems > 0 ) {
       this.$btMore.show();
-      this.$btMore.find('span').text('(' + moreItems + ')');
+      // this.$btMore.find('span').text('(' + moreItems + ')'); // 더보기 갯수 표시 안 함.
     } else {
       this.$btMore.hide();
     }
