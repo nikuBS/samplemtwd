@@ -49,7 +49,7 @@ class CustomerSvcInfoNotice extends TwViewController {
       if (this._category === 'tworld') {
         return Object.assign(item, {
           title: item.ntcTitNm,
-          date: DateHelper.getShortDateWithFormat(item.fstRgstDtm, 'YYYY.M.DD'),
+          date: DateHelper.getShortDateWithFormat(item.fstRgstDtm, 'YYYY.M.DD.'),
           type: FormatHelper.isEmpty(CUSTOMER_NOTICE_CTG_CD[item.ntcCtgCd]) ? '' : CUSTOMER_NOTICE_CTG_CD[item.ntcCtgCd],
           itemClass: (item.ntcTypCd === 'Y' ? 'impo ' : '') + (item.new ? 'new' : '')
         });

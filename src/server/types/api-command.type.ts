@@ -125,7 +125,8 @@ export const API_CMD = {
   BFF_03_0025: { path: '/core-auth/:version/add-fcm-user-info', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
   BFF_03_0026: { path: '/core-auth/:version/requestRegistFcmClickInfo', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
   BFF_03_0027: { path: '/core-auth/:version/users/otp', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
-  BFF_03_0028: { path: '/core-auth/:version/free-sms-availability/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, native: true },
+  BFF_03_0028: { path: '/core-auth/:version/free-sms-availability/:args0', method: API_METHOD.GET,
+    server: API_SERVER.BFF, bypass: true, native: true },
   BFF_03_0029: { path: '/core-auth/:version/exposable-services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0030: { path: '/core-auth/:version/exposed-services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   // MainHome T-Notify
@@ -757,6 +758,10 @@ export const API_CMD = {
     bypass: true
   },
   BFF_10_0139: { path: '/core-product/:version/ledger/:args0/recommend-apps', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0142: { path: '/core-product/v1/mobiles/combinations/:args0/joins/services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0143: { path: '/core-product/v1/mobiles/combinations/:args0/joins/simulations',
+    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0144: { path: '/core-product/v1/mobiles/combinations/:args0/joins', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_10_0151: {
     path: '/core-product/:version/mobiles/fee-plans/:args0/joins/term-prechecks',
     method: API_METHOD.GET,

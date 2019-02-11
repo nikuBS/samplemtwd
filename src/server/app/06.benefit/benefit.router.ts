@@ -15,6 +15,7 @@ import BenefitDisPgmCancel from './controllers/program/benefit.dis-pgm.cancel.co
 import BenefitTerminateTbCombination from './controllers/benefit.terminate.tb-combination.controller';
 import BenefitSubmainCombinationPreview from './controllers/submain/benefit.submain.combination-preview.info.controller';
 import BenefitSubmainFareInfo from './controllers/submain/benefit.submain.fare.info.controller';
+import BenefitJoinTbCombination from './controllers/benefit.join.tb-combination.controller';
 
 class BenefitRouter extends TwRouter {
   constructor() {
@@ -36,6 +37,7 @@ class BenefitRouter extends TwRouter {
     this.controllers.push({ url: '/my/rainbowpoint/adjustment/complete', controller: BenefitMyBenefitRainbowPointAdjustmentComplete });
     this.controllers.push({ url: '/my/rainbowpoint/transfer', controller: BenefitMyBenefitRainbowPointTransfer });
     this.controllers.push({ url: '/my/rainbowpoint/transfer/complete', controller: BenefitMyBenefitRainbowPointTransferComplete });
+    this.controllers.push({ url: '/join/tb-combination', controller: BenefitJoinTbCombination });
     this.controllers.push({ url: '/terminate/tb-combination', controller: BenefitTerminateTbCombination });
   }
 }
