@@ -1,36 +1,35 @@
 <div class="popup-page nobg tw-popup no-btn"><!-- .no-btn 하단에 버튼이 없을 경우 -->
-  <!-- #header -->
-  <div class="header-wrap">
-    <div class="page-header">
-      <div class="header-ti">
-        <h1>상품 상세보기</h1>
-      </div>
-    </div>
-  </div>
-  <!--// #header -->
-  <!-- .container-wrap -->
-  <div class="container-wrap">
-    <h2 class="blind">내용</h2>
-    <div class="container">
-      {{#list}}
-        {{#unless @first}}
-          <hr class="cont-sp type1" aria-hidden="true"/>
-        {{/unless}}
-        <!-- .cont-box -->
-        <div class="cont-box nogaps" data-anchor="contents_{{@index}}">
-          <div class="ti-caption-gray">
-            <span class="tit">{{title}}</span>
-          </div>
-          <div class="cont-box {{contentsClass}}">
-            {{{contents}}}
-          </div>
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>상품 상세보기</h1>
+            </div>
         </div>
-        <!--// .cont-box -->
-      {{/list}}
     </div>
-  </div>
-  <!--// .container-wrap -->
-  <!-- .popup-closeBtn -->
-  <button class="popup-closeBtn fe-common-back"><span class="blind">팝업 페이지 닫기</span></button>
-  <!--// .popup-closeBtn -->
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+        {{#list}}
+            {{#unless @first}}
+                <hr class="cont-sp type1" aria-hidden="true"/>
+            {{/unless}}
+            <!-- .cont-box -->
+            <div class="cont-box nogaps" data-anchor="contents_{{@index}}">
+                <div class="ti-caption-gray">
+                    <span class="tit">{{title}}</span>
+                </div>
+                <div class="cont-box {{contentsClass}}">
+                    {{{contents}}}
+                </div>
+            </div>
+        {{/list}}
+        </div>
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+    <!--// .popup-closeBtn -->
 </div>
