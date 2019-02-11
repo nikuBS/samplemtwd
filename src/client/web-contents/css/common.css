@@ -3,22 +3,19 @@
   font-family: 'TgothicLight';
   font-style: normal;
   font-weight: 300;
-  /* src: url(/font/TgothicLight.otf) format("opentype"), url(/font/TgothicLight.woff2) format("woff2"), url(/font/TgothicLight.woff) format("woff"), url(/font/TgothicLight.ttf) format("truetype"), url(/font/TgothicLight.eot?#iefix) format("embedded-opentype"); } */
-  src: url(/font/TgothicLight.woff2) format("woff2"), url(/font/TgothicLight.woff) format("woff"), url(/font/TgothicLight.ttf) format("truetype"), url(/font/TgothicLight.eot?#iefix) format("embedded-opentype"), url(/font/TgothicLight.otf) format("opentype"); }
+  src: url(/font/TgothicLight.otf) format("opentype"), url(/font/TgothicLight.woff2) format("woff2"), url(/font/TgothicLight.woff) format("woff"), url(/font/TgothicLight.ttf) format("truetype"), url(/font/TgothicLight.eot?#iefix) format("embedded-opentype"); }
 
 @font-face {
   font-family: 'TgothicMedium';
   font-style: normal;
   font-weight: 500;
-  /* src: url(/font/TgothicMedium.otf) format("opentype"), url(/font/TgothicMedium.woff2) format("woff2"), url(/font/TgothicMedium.woff) format("woff"), url(/font/TgothicMedium.ttf) format("truetype"), url(/font/TgothicMedium.eot?#iefix) format("embedded-opentype"); } */
-  src: url(/font/TgothicMedium.woff2) format("woff2"), url(/font/TgothicMedium.woff) format("woff"), url(/font/TgothicMedium.ttf) format("truetype"), url(/font/TgothicMedium.eot?#iefix) format("embedded-opentype"), url(/font/TgothicMedium.otf) format("opentype"); }
+  src: url(/font/TgothicMedium.otf) format("opentype"), url(/font/TgothicMedium.woff2) format("woff2"), url(/font/TgothicMedium.woff) format("woff"), url(/font/TgothicMedium.ttf) format("truetype"), url(/font/TgothicMedium.eot?#iefix) format("embedded-opentype"); }
 
 @font-face {
   font-family: 'TgothicBlack';
   font-style: normal;
   font-weight: 900;
-  /* src: url(/font/TgothicBlack.otf) format("opentype"), url(/font/TgothicBlack.woff2) format("woff2"), url(/font/TgothicBlack.woff) format("woff"), url(/font/TgothicBlack.ttf) format("truetype"), url(/font/TgothicBlack.eot?#iefix) format("embedded-opentype"); } */
-  src: url(/font/TgothicBlack.woff2) format("woff2"), url(/font/TgothicBlack.woff) format("woff"), url(/font/TgothicBlack.ttf) format("truetype"), url(/font/TgothicBlack.eot?#iefix) format("embedded-opentype"), url(/font/TgothicBlack.otf) format("opentype"); }
+  src: url(/font/TgothicBlack.otf) format("opentype"), url(/font/TgothicBlack.woff2) format("woff2"), url(/font/TgothicBlack.woff) format("woff"), url(/font/TgothicBlack.ttf) format("truetype"), url(/font/TgothicBlack.eot?#iefix) format("embedded-opentype"); }
 
 /*Default set*/
 html, body, form, div, p, h1, h2, h3, h4, h5, h6, dl, dt, dd, ul, ol, li, fieldset, a, button, input, textarea, table, th, td, figure, hr, i, b {

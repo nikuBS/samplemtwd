@@ -259,34 +259,6 @@ gulp.task('css-rb', function () {
     .pipe(gulp.dest('.'));
 });
 
-gulp.task('css-main', function () {
-  return gulp.src([
-    'src/client/web-contents/css/common.css',
-    'src/client/web-contents/css/layout.css',
-    'src/client/web-contents/css/widgets.css',
-    'src/client/web-contents/css/main.css'])
-  // .pipe(base64({
-  //   baseDir: 'src/client/web-contents/',
-  //   extensions: ['svg', 'png', /\.jpg#datauri$/i],
-  //   maxImageSize: 10 * 1024 * 1024, // bytes
-  //   debug: true
-  // }))
-    .pipe(concat('mainstyle.css'))
-    // .pipe(imagehash())
-    .pipe(cleanCSS())
-    .pipe(gulp.dest(dist + 'css'))
-    .on('error', function (err) {
-      gutil.log(gutil.colors.red('[Error]'), err.toString());
-    })
-    .pipe(rename('mainstyle.min.css'))
-    .pipe(rev())
-    .pipe(gulp.dest(dist + 'css'))
-    .pipe(rev.manifest(dist + 'tmp/css-manifest.json', {
-      merge: true
-    }))
-    .pipe(gulp.dest('.'));
-});
-
 gulp.task('css-idpt', function() {
   return gulp.src([
     'src/client/web-contents/css/idpt-reset-mobile.css',
@@ -375,7 +347,7 @@ gulp.task('js-app-client', appNames.map(function (app) {
 gulp.task('js', ['js-util', 'js-component', 'js-old-app', 'js-app']);
 gulp.task('js-client', ['js-util-client', 'js-component-client', 'js-app-client']);
 gulp.task('vendor', ['js-jquery-vendor', 'js-vendor', 'css-vendor']);
-gulp.task('rb', ['js-rb', 'css-rb', 'css-main', 'css-idpt', 'img', 'hbs', 'font']);
+gulp.task('rb', ['js-rb', 'css-rb', 'css-idpt', 'img', 'hbs', 'font']);
 
 gulp.task('task', ['vendor', 'js', 'rb', 'cab']);
 gulp.task('run', ['server', 'watch']);
