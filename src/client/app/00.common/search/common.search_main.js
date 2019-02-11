@@ -66,9 +66,8 @@ Tw.CommonSearchMain.prototype = {
   _convertAutoKeywordData : function (listStr) {
     var returnObj = {};
     returnObj.showStr =  listStr.substring(0,listStr.length-7);
-    //var linkStr;
-    returnObj.showStr = returnObj.showStr.replace('<font style=\'color:#CC33CC\'>','<span class="highlight-text">');
-    returnObj.showStr = returnObj.showStr.replace('<font style=\'font-size:13px\'>','');
+    returnObj.showStr = returnObj.showStr.replace('<font style=\'color:#CC6633\'>','<span class="highlight-text">');
+    returnObj.showStr = returnObj.showStr.replace('<font style=\'font-size:12px\'>','');
     returnObj.showStr = returnObj.showStr.replace('</font>','</span>');
     returnObj.linkStr = returnObj.showStr.replace('<span class="highlight-text">','').replace('</span>','');
     return returnObj;

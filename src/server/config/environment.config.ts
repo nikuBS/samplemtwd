@@ -18,7 +18,7 @@ const environment = {
     },
     REDIS_PWD_KEY: 'cbbfc0a5-099e-4d03-8028-a18263f2b2d6',  // Will be removed
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
-    SEARCH_SERVER: 'http://61.250.22.114:8180',
+    SEARCH_SERVER: 'http://211.188.181.123:8080',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     // DOMAIN: 'http://m.tworld.co.kr:3000',
     DOMAIN_G: 'm-dev.tworld.co.kr:3000',
@@ -46,7 +46,7 @@ const environment = {
       db: 0
     },
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
-    SEARCH_SERVER: 'http://61.250.22.114:8080',
+    SEARCH_SERVER: 'http://211.188.181.123:8080',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     // DOMAIN: 'http://icp-dev.tworld.co.kr',
     DOMAIN_G: 'devgm.tworld.co.kr',
@@ -74,7 +74,7 @@ const environment = {
       db: 0
     },
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
-    SEARCH_SERVER: 'http://61.250.22.114:8080',
+    SEARCH_SERVER: 'http://211.188.181.123:8080',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     // DOMAIN: 'http://icp-stg.tworld.co.kr',
     DOMAIN_G: 'icp-stggm.tworld.co.kr',
@@ -101,7 +101,7 @@ const environment = {
       db: 0
     },
     TID_SERVER: 'https://auth.skt-id.co.kr',
-    SEARCH_SERVER: 'http://61.250.22.114:8080',
+    SEARCH_SERVER: 'http://211.188.181.123:8080',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     // DOMAIN: 'https://beta.m.tworld.co.kr',
     DOMAIN_G: 'appg.tworld.co.kr',
