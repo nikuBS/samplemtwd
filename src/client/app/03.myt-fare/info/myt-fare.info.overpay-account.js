@@ -28,14 +28,14 @@ Tw.MyTFareInfoOverpayAccount.prototype = {
   },
 
   _cachedElement: function () {
-    this.$refundRequestBtn = this.$container.find('.bt-fixed-area button');
+    this.$refundRequestBtn = this.$container.find('.fe-btn-refund button');
     this.$bankList = this.$container.find('.bt-dropdown.big');
   },
 
   _bindEvent: function () {
     this.$bankList.on('click', $.proxy(this._selectBank, this));
 
-    this.$container.on('click', '.bt-fixed-area button', $.proxy(this._refundRequestSend, this));
+    this.$container.on('click', '.fe-btn-refund button', $.proxy(this._refundRequestSend, this));
     this.$container.on('keyup', '#fe-bank-account', $.proxy(this._accountInputHandler, this));
     this.$container.find('#fe-bank-account').siblings('button.cancel').eq(0).on('click', $.proxy(this._accountInputHandler, this));
   },
