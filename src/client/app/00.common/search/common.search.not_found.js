@@ -27,6 +27,7 @@ Tw.CommonSearchNotFound.prototype = {
     this.$container.find('#search_keyword').on('keyup',$.proxy(this._inputKeyupEvt,this));
     this.$container.find('.close-area').on('click',$.proxy(this._closeSearch,this));
     this.$container.on('click','.search-element',$.proxy(this._searchRelatedKeyword,this));
+    this.$container.on('click','.category-type',$.proxy(this._popSearch,this));
     this.$popKeywordElement = this.$container.find('.cont-box.nogaps-hoz');
   },
   _showClaimPopup : function(btnEvt){
@@ -158,7 +159,11 @@ Tw.CommonSearchNotFound.prototype = {
     }else{
       this.$popKeywordElement.addClass('none');
     }
+  },
+  _popSearch : function (targetEvt) {
+    targetEvt.preventDefault();
+    var $currentTarget = $(targetEvt.currentTarget);
+    this._addRecentlyKeyword($currentTarget.data('keyword'));
+    this._historyService.goLoad($currentTarget.attr('href'));
   }
-
-
 };

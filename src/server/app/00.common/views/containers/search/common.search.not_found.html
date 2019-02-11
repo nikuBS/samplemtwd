@@ -80,7 +80,7 @@
                 <% for(var i=0;i<popularKeyword.Query.length;i++){ %>
                 <% if(i>4) break;%>
                 <li>
-                    <a href="/common/search?keyword=<%= popularKeyword.Query[i].content %>" class="category-type">
+                    <a href="/common/search?keyword=<%= popularKeyword.Query[i].content %>&step=<%= Number(step)+1%>" data-keyword="<%= popularKeyword.Query[i].content %>" class="category-type">
                         <strong class="number"><%= i+1 %></strong>
                         <span class="text"><%= popularKeyword.Query[i].content %></span>
                     </a>
