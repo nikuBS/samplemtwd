@@ -137,7 +137,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="http://privacy.sktelecom.com/view.do?ctg=policy&name=policy" target="_blank" class="list-inner">
+                        <a href="http://privacy.sktelecom.com/view.do?ctg=policy&name=policy" class="list-inner fe-link-external">
                             <strong class="list-tit">개인정보 처리방침</strong>
                             <em class="list-date">개인정보 보호를 위한 T월드와 SK텔레콤의 기준 방침 안내</em>
                         </a>
@@ -256,4 +256,9 @@
 </div>
 </body>
 <% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.CustomerDamageInfo($('.wrap'));
+  });
+</script>
 <% include ../../components/end.component.html %>

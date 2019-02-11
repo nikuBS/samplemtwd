@@ -36,7 +36,7 @@
                                                             <% if (!series.list[i].isDiscount && !series.list[i].isCombine) { %>
                                                             <p class="info">
                                                                 <% if ( series.list[i].basFeeInfo.isNaN ) { %>
-                                                                <span class="money"><%= series.list[i].basFeeInfo.value %></span>
+                                                                <%= series.list[i].basFeeInfo.value %>
                                                                 <% } else { %>
                                                                 월<span class="money"><%= series.list[i].basFeeInfo.value %></span>원
                                                                 <% } %>
@@ -107,7 +107,7 @@
                                                             <% if (!recommends[i].isDiscount && !recommends[i].isCombine) { %>
                                                             <p class="info">
                                                                 <% if ( recommends[i].basFeeInfo.isNaN ) { %>
-                                                                <span class="money"><%= recommends[i].basFeeInfo.value %></span>
+                                                                <%= recommends[i].basFeeInfo.value %>
                                                                 <% } else { %>
                                                                 월<span class="money"><%= recommends[i].basFeeInfo.value %></span>원
                                                                 <% } %>

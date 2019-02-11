@@ -1,3 +1,9 @@
+/**
+ * FileName: customer.damage-info.js
+ * Author: Ji Hun Yang (jihun202@sk.com)
+ * Date: 2019.02.11
+ */
+
 Tw.CustomerDamageInfo = function(rootEl) {
   this.$container = rootEl;
   this._bindEvent();
