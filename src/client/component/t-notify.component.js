@@ -51,7 +51,6 @@ Tw.TNotifyComponent.prototype = {
   },
   _successPushData: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      resp.result = [];
       this._openTNotify(this._parseList(resp.result));
     } else {
       Tw.Error(resp.code, resp.msg).pop();
