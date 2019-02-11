@@ -90,8 +90,8 @@ Tw.POPUP_TPL = {
       'title': '요금 즉시 납부',
       'list': [
         { 'txt': '계좌이체 납부', 'option': 'fe-account' },
-        { 'txt': '체크 ∙ 신용카드 납부', 'option': 'fe-card' },
-        { 'txt': 'OK캐쉬백 ∙ T포인트 납부', 'option': 'fe-point' }
+        { 'txt': '체크/신용카드 납부', 'option': 'fe-card' },
+        { 'txt': 'OK캐쉬백/T포인트 납부', 'option': 'fe-point' }
       ]
     },
     {
@@ -121,7 +121,7 @@ Tw.POPUP_TPL = {
       'title': '요금 즉시 납부',
       'list': [
         { 'txt': '계좌이체 납부', 'option': 'fe-account' },
-        { 'txt': '체크 ∙ 신용카드 납부', 'option': 'fe-card' }
+        { 'txt': '체크/신용카드 납부', 'option': 'fe-card' }
       ]
     },
     {
@@ -238,7 +238,7 @@ Tw.POPUP_TPL = {
         { 'label-attr': 'id="CCBCOE0"', 'radio-attr': 'id="CCBCOE0" name="r2"', txt: '부가서비스(컬러링)' },
         { 'label-attr': 'id="CCPCRBE"', 'radio-attr': 'id="CCPCRBE" name="r2"', txt: '부가서비스(퍼팩트콜)' },
         { 'label-attr': 'id="CCPLRBE"', 'radio-attr': 'id="CCPLRBE" name="r2"', txt: '부가서비스(퍼팩트콜라이트)' },
-        { 'label-attr': 'id="CCRPGDC"', 'radio-attr': 'id="CCRPGDC" name="r2"', txt: '기본료∙월정액' },
+        { 'label-attr': 'id="CCRPGDC"', 'radio-attr': 'id="CCRPGDC" name="r2"', txt: '기본료/월정액' },
         { 'label-attr': 'id="CCRMRBE"', 'radio-attr': 'id="CCRMRBE" name="r2"', txt: '로밍 이용요금' }
       ]
     }
