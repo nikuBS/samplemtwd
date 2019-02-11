@@ -16,7 +16,7 @@
             <div class="cont-box">
                 <div class="user-info">
                     <span class="blind" aria-hidden="true">현재 선택된 회선정보 및 사용중인 {{typeText}} 정보 노출</span>
-                    <span class="ico"><span class="blind">스마트폰</span></span>
+                    <span class="ico"><span class="blind" aria-hidden="true">선택된 회선정보 아이콘</span></span>
                     <div class="in-info">
                         <span class="number lh-full"><span class="blind">회선번호</span>{{svcNumMask}}</span>
                         {{#if isMobilePlan}}
@@ -311,7 +311,7 @@
                                                 <div class="checkbox type01 all fe-checkbox_style" role="checkbox" aria-checked="false">
                                                     <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                     <input type="checkbox" class="fe-checkbox_agree_all" name="checkbox"
-                                                           value="" title="모두동의" aria-labelledby="aria-comp-checkbox-all"/>
+                                                           value="" aria-labelledby="aria-comp-checkbox-all"/>
                                                     <!-- 체크상태일 경우 checked="checked" -->
                                                     <div class="comp-list-layout" id="aria-comp-checkbox-all">
                                                         <p class="layout-text all-chk">
@@ -327,7 +327,6 @@
                                                     <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                     <input type="checkbox" name="checkbox" value=""
                                                            class="fe-checkbox_agree_item fe-checkbox_agree_need"
-                                                           title="지원금 차액 정산금 동의 (필수)"
                                                            aria-labelledby="aria-comp-checkbox-install"/>
                                                     <!-- 체크상태일 경우 checked="false" -->
                                                     <div class="comp-list-layout" id="aria-comp-checkbox-install">
@@ -385,7 +384,6 @@
                                                     <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                     <input type="checkbox" name="checkbox" value=""
                                                            class="fe-checkbox_agree_item fe-checkbox_agree_need"
-                                                           title="{{stipulationInfo.scrbStplAgreeTitNm}}"
                                                            aria-labelledby="aria-comp-checkbox-0"/>
                                                     <!-- 체크상태일 경우 checked="false" -->
                                                     <div class="comp-list-layout" id="aria-comp-checkbox-0">
@@ -409,7 +407,6 @@
                                                     <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                     <input type="checkbox" name="checkbox" value=""
                                                            class="fe-checkbox_agree_item fe-checkbox_agree_need"
-                                                           title="{{stipulationInfo.psnlInfoCnsgAgreeTitNm}}"
                                                            aria-labelledby="aria-comp-checkbox-1"/>
                                                     <!-- 체크상태일 경우 checked="false" -->
                                                     <div class="comp-list-layout" id="aria-comp-checkbox-1">
@@ -433,7 +430,6 @@
                                                     <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                     <input type="checkbox" name="checkbox" value=""
                                                            class="fe-checkbox_agree_item fe-checkbox_agree_need"
-                                                           title="{{stipulationInfo.psnlInfoOfrAgreeTitNm}}"
                                                            aria-labelledby="aria-comp-checkbox-2"/>
                                                     <!-- 체크상태일 경우 checked="false" -->
                                                     <div class="comp-list-layout" id="aria-comp-checkbox-2">
@@ -457,7 +453,6 @@
                                                     <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                     <input type="checkbox" name="checkbox" value=""
                                                            class="fe-checkbox_agree_item fe-checkbox_agree_need"
-                                                           title="{{stipulationInfo.adInfoOfrAgreeTitNm}}"
                                                            aria-labelledby="aria-comp-checkbox-3"/>
                                                     <!-- 체크상태일 경우 checked="false" -->
                                                     <div class="comp-list-layout" id="aria-comp-checkbox-3">
@@ -479,7 +474,6 @@
                                                     <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                     <input type="checkbox" name="checkbox" value=""
                                                            class="fe-checkbox_agree_item fe-checkbox_agree_need"
-                                                           title="{{stipulationInfo.termStplAgreeTitNm}}"
                                                            aria-labelledby="aria-comp-checkbox-4"/>
                                                     <!-- 체크상태일 경우 checked="false" -->
                                                     <div class="comp-list-layout" id="aria-comp-checkbox-4">
@@ -512,7 +506,7 @@
                     <ul class="noti-list02 fe-noti-list">
                         {{#noticeList}}
                             <li>
-                                <button type="button" class="tip-view-btn fe-btn_tip_view" aria-haspopup="true" data-title="{{noticeTit}}">
+                                <button type="button" class="tip-view-btn fe-btn_tip_view" aria-haspopup="true" title="{{noticeTit}}" data-title="{{noticeTit}}">
                                     {{noticeTit}}<span class="tip-view">TIP</span>
                                 </button>
                                 <div class="none fe-tip_view_html">{{{noticeTxt}}}</div>
@@ -520,14 +514,14 @@
                         {{/noticeList}}
                         {{#isMobilePlan}}
                             <li>
-                                <button type="button" class="tip-view-btn fe-product-tip" id="MP_02_02_02_tip_01" aria-haspopup="true" page-id="M001733">
+                                <button type="button" class="tip-view-btn fe-product-tip" id="MP_02_02_02_tip_01" title="서비스 이용안내 정보보기" aria-haspopup="true">
                                     서비스 이용안내 <span class="tip-view">TIP</span>
                                 </button>
                             </li>
                         {{/isMobilePlan}}
                         {{#isDiscountPgm}}
                             <li>
-                                <button type="button" class="tip-view-btn fe-product-tip" id="BS_02_01_01_02_tip_01" aria-haspopup="true">
+                                <button type="button" class="tip-view-btn fe-product-tip" id="BS_02_01_01_02_tip_01" title="할인반환금 안내 정보보기" aria-haspopup="true">
                                     할인반환금 안내 <span class="tip-view">TIP</span>
                                 </button>
                             </li>

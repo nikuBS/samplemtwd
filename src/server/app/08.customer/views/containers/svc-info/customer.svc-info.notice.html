@@ -24,7 +24,7 @@
         <!-- .cont-box -->
         <div class="cont-box nogaps noborder topborder">
           <div class="ti-caption-gray">
-            <button class="bt-select fe-btn_category" aria-haspopup="true"><%= categoryLabel %></button>
+            <button class="bt-select fe-btn_category" aria-haspopup="true" title="대상 선택"><%= categoryLabel %></button>
           </div>
         </div>
         <!--// .cont-box -->
@@ -68,7 +68,7 @@
                       <a href="<%= paging.uri%>?category=<%= category %>&page=<%= paging.prevPageIdx %>" role="button" class="prev"><span class="pg-blind">이전 페이지로 이동</span></a>
                       <% } %>
                       <% for ( var i = paging.startNum; i <= paging.endNum; i++) { %>
-                      <a href="<%= paging.uri%>?category=<%= category %>&page=<%= i %>" role="button" class="<%= (paging.curPage == i) ? 'active' : '' %>" ><%= i %></a>
+                      <a title="현재페이지" href="<%= paging.uri%>?category=<%= category %>&page=<%= i %>" role="button" class="<%= (paging.curPage == i) ? 'active' : '' %>" ><%= i %></a>
                       <% } %>
                       <% if (paging.nextPageIdx) { %>
                       <a href="<%= paging.uri%>?category=<%= category %>&page=<%= paging.nextPageIdx %>" role="button" class="next"><span class="pg-blind">다음 페이지로 이동</span></a>

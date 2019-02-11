@@ -26,7 +26,7 @@
                                             <div class="checkbox type01 deletebtn-box" role="checkbox" aria-checked="false">
                                                 <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                 <input type="checkbox" name="family_checkbox{{@index}}" value=""
-                                                       title="결합가족 목록{{@index}}"
+                                                       title="결합가족 정보{{@index}}"
                                                        aria-labelledby="aria-comp-checkbox{{@index}}"/>
                                                 <!-- 체크상태일 경우 checked="false" -->
                                                 <div class="comp-list-layout" id="aria-comp-checkbox{{@index}}">
@@ -115,11 +115,12 @@
                         <div class="widget-box file">
                             <span class="inputbox bt-add inp-btn">
                                 <span class="input">
-                                    <input class="fileview fe-explain_file_view" type="text" placeholder="서류를 등록해 주세요" title="파일명"/>
+                                    <input class="fileview fe-explain_file_view" type="text" placeholder="서류를 등록해 주세요" title="필요서류 첨"/>
                                 </span>
                                 <span class="space"></span>
                                 <span class="bt-box">
-                                    파일찾기<input class="file fe-explain_file" type="file" value="파일찾기"/>
+                                    파일첨부
+                                    <input class="file fe-explain_file" type="file" title="필요서류 첨부" value="파일첨부"/>
                                 </span>
                             </span>
                         </div>
