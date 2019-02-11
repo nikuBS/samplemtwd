@@ -681,7 +681,7 @@ Tw.CUSTOMER_EMAIL_QUALITY_QUESTION = {
 };
 
 Tw.REGION_LIST_ITEM = {
-  start: '<li role="radio" aria-checked="false"><input type="radio" name="senddata" title="" value="',
+  start: '<li role="radio" aria-checked="false" aria-labelledby="aria-comp-radio"><input type="radio" name="senddata" aria-labelledby="aria-comp-radio" value="',
   close: '</li>',
   getItem: function (name, code) {
     return this.start + code + '">' + name + this.close;
