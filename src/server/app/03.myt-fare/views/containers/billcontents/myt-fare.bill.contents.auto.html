@@ -34,11 +34,11 @@
                     <div class="cont-box nogaps-top">
                         <div class="form-data-tit-wrap">
                             <strong class="tit">금액정보</strong>
-                            <button id="MF_07_04_tip_01" class="tip-view">금액정보 정보보기</button>
+                            <button id="MF_07_04_tip_01" class="tip-view" aria-haspopup="true">금액정보 정보보기</button>
                         </div>
                         <ul class="form-data-list">
                             <li class="type2">
-                                <label class="tit">선결제 금액<button id="MF_06_04_tip_04" class="tip-view">선결제금액 정보보기</button></label>
+                                <label class="tit">선결제 금액<button id="MF_06_04_tip_04" class="tip-view" aria-haspopup="true">선결제금액 정보보기</button></label>
                                 <button id="<%= autoPrepayInfo.cmbAutoChrgAmt %>" data-origin-id="<%= autoPrepayInfo.cmbAutoChrgAmt %>"
                                         data-max-value="<%= autoPrepayInfo.cmbMaxAmt %>"
                                         class="bt-dropdown big fe-prepay-amount" title="선결제 금액" aria-haspopup="true">
@@ -49,14 +49,23 @@
                                 </span>
                             </li>
                             <li class="type2">
-                                <label class="tit">기준금액<button id="MF_06_04_tip_03" class="tip-view">기준금액 정보보기</button></label>
+                                <label class="tit">기준금액<button id="MF_06_04_tip_03" class="tip-view" aria-haspopup="true">기준금액 정보보기</button></label>
                                 <button id="<%= autoPrepayInfo.cmbAutoChrgStrdAmt %>" data-origin-id="<%= autoPrepayInfo.cmbAutoChrgStrdAmt %>"
                                         data-max-value="<%= autoPrepayInfo.cmbMaxAmt %>"
                                         class="bt-dropdown big fe-standard-amount" title="기준 금액" aria-haspopup="true">
                                     <%= autoPrepayInfo.comboStandardAmount %>만원<span class="ico"></span>
                                 </button>
                             </li>
-                            <li class="mt20">
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+
+                    <!-- .cont-box -->
+                    <div class="cont-box">
+                        <ul class="form-data-list">
+                            <li>
                                 <label class="tit" for="flab02">카드주명</label>
                                 <span class="inputbox">
                                     <span class="input">
@@ -70,7 +79,7 @@
                                 <span class="inputbox">
                                     <span class="input">
                                         <input id="flab07" class="fe-card-birth required-input-field" type="number" maxlength="6"
-                                               inputmode="numeric" min="0" pattern="[0-9]*" placeholder="예시)891124" />
+                                               inputmode="numeric" min="0" pattern="[0-9]*" title="생년월일 입력 YYMMDD" placeholder="예시)891124" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                     <span class="error-txt fe-error-msg" style="display:none;">생년월일이 올바르지 않습니다.</span>
@@ -81,7 +90,8 @@
                                 <span class="inputbox">
                                     <span class="input">
                                         <input id="flab04" class="fe-card-number required-input-field" type="number" maxlength="16"
-                                               inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" />
+                                               inputmode="numeric" min="0" pattern="[0-9]*"
+                                               placeholder="숫자만 입력" title="카드번호 숫자만 입력" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                     <span class="error-txt fe-error-msg" style="display:none;">카드번호를 입력해 주세요.</span>
@@ -94,7 +104,7 @@
                                         <span class="input">
                                             <input id="flab05" class="fe-card-y required-input-field" type="number"
                                                    inputmode="numeric" min="0" pattern="[0-9]*"
-                                                   placeholder="YYYY" title="유효 년" maxlength="4">
+                                                   placeholder="YYYY" title="유효기간 년 입력 YYYY" maxlength="4">
                                             <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                         </span>
                                     </span>
@@ -102,7 +112,7 @@
                                         <span class="input">
                                             <input class="fe-card-m required-input-field" type="number"
                                                    inputmode="numeric" min="0" pattern="[0-9]*"
-                                                   placeholder="MM" title="유효 월" maxlength="2">
+                                                   placeholder="MM" title="유효기간 월 입력 MM" maxlength="2">
                                             <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                         </span>
                                     </span>
@@ -116,7 +126,7 @@
                                 <span class="inputbox">
                                     <span class="input">
                                         <input id="flab06" class="fe-card-pw required-input-field" type="number" inputmode="numeric" min="0" pattern="[0-9]*"
-                                               placeholder="앞 2자리" maxlength="2" style="-webkit-text-security: disc;" />
+                                               placeholder="앞 2자리" title="비밀번호 앞 2자리 입력" maxlength="2" style="-webkit-text-security: disc;" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                     <span class="error-txt fe-error-msg" style="display:none;">비밀번호가 올바르지 않습니다.</span>
@@ -132,7 +142,11 @@
                     <div class="cont-box nogaps-btm">
                         <h3 class="tx-bold">꼭 확인해 주세요</h3>
                         <ul class="noti-list02">
-                            <li><button id="MF_06_04_tip_02" class="tip-view-btn">이용안내<span class="tip-view">TIP</span></button></li>
+                            <li>
+                                <button id="MF_06_04_tip_02" class="tip-view-btn" aria-haspopup="true" title="이용안내">
+                                    이용안내<span class="tip-view">TIP</span>
+                                </button>
+                            </li>
                         </ul>
                     </div>
                     <!--// .cont-box -->
