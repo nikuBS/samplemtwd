@@ -8,7 +8,7 @@ Tw.CommonSearchMain = function (rootEl,svcInfo,cdn,step) {
   this.$container = rootEl;
   this._svcInfo = svcInfo;
   this._cdn = cdn;
-  this._step = step;
+  this._step = parseInt(step,10);
   this._init();
 };
 
@@ -162,7 +162,7 @@ Tw.CommonSearchMain.prototype = {
       this._historyService.goBack();
     }
     this._addRecentlyKeywordList(searchKeyword);
-    this._historyService.goLoad('/common/search?keyword='+searchKeyword+'&step='+(Number(this._step)+1));
+    this._historyService.goLoad('/common/search?keyword='+searchKeyword+'&step='+(this._step+1));
   },
   _hashChange : function () {
     if(Tw.FormatHelper.isEmpty(this._historyService.getHash())&&this._onInput){
@@ -174,7 +174,10 @@ Tw.CommonSearchMain.prototype = {
     }
   },
   _closeSearch : function () {
-    this._historyService.go(Number(this._step)*-1);
+    if(this._historyService.getHash()==='#on_input'){
+      ++this._step;
+    }
+    this._historyService.go(this._step*-1);
   }
 
 
