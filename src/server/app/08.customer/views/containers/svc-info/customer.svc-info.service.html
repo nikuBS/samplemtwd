@@ -49,7 +49,7 @@
                                 <span class="input date-type">
                                     <button 
                                         class="bt-date fe-select-box" 
-                                        title="" 
+                                        title="<%=sub.dep_list[0].dep_title %>" 
                                         aria-haspopup="true"
                                         data-select-index="<%=selectIndex%>"
                                         data-select-subdex="<%=selectSubdex%>"
@@ -72,6 +72,7 @@
                             data-select-index="<%=selectIndex%>"
                             data-select-subdex="<%=selectSubdex%>"
                             data-list-code="<%=sub.code %>"
+                            title="<%=sub.sub_title%>"
                         >
                             <dl class="textinfo-wrap">
                                 <dt><%=sub.sub_title%></dt>
