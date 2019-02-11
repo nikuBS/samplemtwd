@@ -26,7 +26,7 @@ Tw.MyTFareHotBill.prototype = {
       this._renderLines();
       this.$container.on('click', '[data-id="fe-other-line"]', $.proxy(this._onClickLine, this));
     }
-    
+
     if ( this.$amount.length > 0 ) {//서버날짜로 일 별 노출조건 세팅해서 내려옴
       this._sendBillRequest(this.childSvcMgmtNum);
       this._billInfoAvailable = true;
@@ -46,6 +46,7 @@ Tw.MyTFareHotBill.prototype = {
 
   _bindEvent: function () {
     this.$preBill.on('click', $.proxy(this._onClickPreBill, this));
+    this.$container.on('click', '#fe-bt-more', $.proxy(this._renderLines, this));
   },
 
   _getSvcInfo: function () {
@@ -114,7 +115,7 @@ Tw.MyTFareHotBill.prototype = {
 
       if ( this._billInfoAvailable ) {
         var total = this._isPrev ? billData.totOpenBal1 : billData.totOpenBal2;
-        this.$amount.text(total);
+        this.$amount.text(total + Tw.CURRENCY_UNIT.WON);
         var fromDt = Tw.DateHelper.getShortDateWithFormat(
           this._isPrev ? resp.result.beforeFromDt : resp.result.fromDt, 'YYYY.MM.DD.'
         );
@@ -175,7 +176,7 @@ Tw.MyTFareHotBill.prototype = {
     var moreItems = this._lines.length - this._idxLastItem;
     if ( moreItems > 0 ) {
       this.$btMore.show();
-      this.$btMore.find('span').text('(' + moreItems + ')');
+      // this.$btMore.find('span').text('(' + moreItems + ')'); // 더보기 갯수 표시 안 함.
     } else {
       this.$btMore.hide();
     }
