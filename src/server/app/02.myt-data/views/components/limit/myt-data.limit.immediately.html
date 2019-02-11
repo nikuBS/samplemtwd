@@ -22,30 +22,30 @@
                     style="width: 100%;">
                     <li class="radiobox btn-type02" role="radio" aria-checked="false"
                         aria-disabled="true">
-                        <input type="radio" name="radio2" value="20000" title="값1">
+                        <input type="radio" name="radio2" value="20000" title="충전금액" aria-labelledby="aria-comp-radio1">
                         <!-- 체크상태일 경우 checked="checked" -->
-                        <span class="radio-txt">
+                        <span class="radio-txt" id="aria-comp-radio1">
                             <span>20,000</span><span class="unit">원</span>
                         </span>
                     </li>
                     <li class="radiobox btn-type02" role="radio" aria-checked="false">
-                        <input type="radio" name="radio2" value="15000" title="값2">
+                        <input type="radio" name="radio2" value="15000" title="충전금액" aria-labelledby="aria-comp-radio2">
                         <!-- 체크상태일 경우 checked="false" -->
-                        <span class="radio-txt">
+                        <span class="radio-txt" id="aria-comp-radio2">
                             <span>15,000</span><span class="unit">원</span>
                         </span>
                     </li>
                     <li class="radiobox btn-type02" role="radio" aria-checked="false">
-                        <input type="radio" name="radio2" value="10000" title="값3">
+                        <input type="radio" name="radio2" value="10000" title="충전금액" aria-labelledby="aria-comp-radio3">
                         <!-- 비활성화상태일 경우 disabled="disabled" -->
-                        <span class="radio-txt">
+                        <span class="radio-txt" id="aria-comp-radio3">
                             <span>10,000</span><span class="unit">원</span>
                         </span>
                     </li>
                     <li class="radiobox btn-type02" role="radio" aria-checked="false">
-                        <input type="radio" name="radio2" value="5000" title="값4">
+                        <input type="radio" name="radio2" value="5000" title="충전금액" aria-labelledby="aria-comp-radio4">
                         <!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
-                        <span class="radio-txt">
+                        <span class="radio-txt" id="aria-comp-radio4">
                             <span>5,000</span><span class="unit">원</span>
                         </span>
                     </li>
@@ -95,10 +95,10 @@
     <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
     <ul class="pg-chk-list02">
         <li>
-            <button class="btn-tip" id="DC_04_01_01_tip_02" page-id="DC_04_01_01">데이터 충전 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button>
+            <button class="btn-tip" aria-haspopup="true" id="DC_04_01_01_tip_02" page-id="DC_04_01_01">데이터 충전 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button>
         </li>
         <li>
-            <button class="btn-tip" id="DC_04_01_01_tip_04" page-id="DC_04_01_01">요금상품 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button>
+            <button class="btn-tip" aria-haspopup="true" id="DC_04_01_01_tip_04" page-id="DC_04_01_01">요금상품 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button>
         </li>
     </ul>
 </div>
