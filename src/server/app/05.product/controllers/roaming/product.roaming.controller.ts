@@ -31,17 +31,6 @@ export default class ProductRoaming extends TwViewController {
       this.getSprateProds()
     ).subscribe(([banners, sprateProds]) => {
 
-      console.log(banners);
-
-      const error = {
-        code: banners.code || sprateProds.code,
-        msg: banners.msg || sprateProds.msg
-      };
-
-      if ( error.code ) {
-        return this.error.render(res, { ...error, svcInfo });
-      }
-
       res.render('roaming/product.roaming.html', {
         svcInfo,
         pageInfo,
@@ -58,15 +47,6 @@ export default class ProductRoaming extends TwViewController {
       this.getBanners(pageInfo),
       this.getSprateProds()
     ).subscribe(([roamingCount, banners, sprateProds]) => {
-
-      const error = {
-        code: roamingCount.code || banners.code || sprateProds.code,
-        msg: roamingCount.msg || banners.msg || sprateProds.msg
-      };
-
-      if ( error.code ) {
-        return this.error.render(res, { ...error, svcInfo });
-      }
 
       res.render('roaming/product.roaming.html', {
         svcInfo,
@@ -89,10 +69,8 @@ export default class ProductRoaming extends TwViewController {
   private getRoamingCount(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0055, {}).map((resp) => {
       if ( resp.code !== API_CODE.CODE_00 ) {
-        return {
-          code: resp.code,
-          msg: resp.msg
-        };
+        // 부분 차단
+        return null;
       }
 
       return resp.result;
@@ -133,10 +111,8 @@ export default class ProductRoaming extends TwViewController {
   private getSprateProds(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_10_0123, {}).map((resp) => {
       if ( resp.code !== API_CODE.CODE_00 ) {
-        return {
-          code: resp.code,
-          msg: resp.msg
-        };
+        // 부분 차단
+        return null;
       }
 
       if ( FormatHelper.isEmpty(resp.result) ) {

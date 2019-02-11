@@ -24,7 +24,7 @@
         <h2 class="blind">내용</h2>
         <div class="container">
             <!-- 사용중인 상품 -->
-            <% if (isLogin && roamingCount.prodInfoTxt) { %>
+            <% if (isLogin && roamingCount && roamingCount.prodInfoTxt) { %>
             <div class="cont-box gaps-style01">
                 <div class="submain-myfeeproducts-wrap">
                     <a href="/product/roaming/my-use" class="submain-myfeeproducts">
@@ -138,6 +138,7 @@
 
             <hr class="cont-sp type1" aria-hidden="true"/>
 
+            <% if (sprateProds) { %>
             <!-- cont-box-->
             <div class="cont-box nogaps-hoz">
                 <div class="roaming-product">
@@ -170,6 +171,7 @@
             <!-- //cont-box -->
 
             <hr class="cont-sp type1" aria-hidden="true"/>
+            <% } %>
 
             <div class="roaming-info-box">
                 <div class="submain-findyourplan-wrap">
