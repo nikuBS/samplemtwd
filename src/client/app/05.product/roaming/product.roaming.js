@@ -7,6 +7,8 @@
 Tw.ProductRoaming = function(rootEl, options) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
+
   this._options = options;
 
   this._cachedElement();
@@ -22,6 +24,8 @@ Tw.ProductRoaming.prototype = {
     this.$formInfoBtnList.on('click', $.proxy(this._onClickFormInfo, this));
   },
   _init : function() {
+    this._historyService.goHash('');
+
     this.nMax = this._options.banners.centerBanners.length - 1;
 
     this.$container.find('.fe-slide-banner').show();
