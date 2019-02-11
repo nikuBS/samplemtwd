@@ -8,7 +8,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._nativeSrevice = Tw.Native;
+  this._nativeService = Tw.Native;
   this._historyService = new Tw.HistoryService();
   this._tidLanding = new Tw.TidLandingComponent();
 
@@ -39,9 +39,10 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
     this._initWelcomsMsg();
     this._bindEvent();
     this._initScroll();
+    this._setCoachMark();
   }
 
-  this._nativeSrevice.send(Tw.NTV_CMD.CLEAR_HISTORY, {});
+  this._nativeService.send(Tw.NTV_CMD.CLEAR_HISTORY, {});
 };
 
 Tw.MainHome.prototype = {
@@ -632,7 +633,7 @@ Tw.MainHome.prototype = {
   },
   _initWelcomsMsg: function () {
     if ( Tw.BrowserHelper.isApp() ) {
-      this._nativeSrevice.send(Tw.NTV_CMD.IS_APP_CREATED, { key: Tw.NTV_PAGE_KEY.HOME_WELCOME }, $.proxy(this._onAppCreated, this));
+      this._nativeService.send(Tw.NTV_CMD.IS_APP_CREATED, { key: Tw.NTV_PAGE_KEY.HOME_WELCOME }, $.proxy(this._onAppCreated, this));
     } else {
       this._getWelcomeMsg();
     }
@@ -643,7 +644,7 @@ Tw.MainHome.prototype = {
     }
   },
   _getWelcomeMsg: function () {
-    this._nativeSrevice.send(Tw.NTV_CMD.IS_APP_CREATED, { key: Tw.NTV_PAGE_KEY.HOME_WELCOME }, $.proxy(this._onAppCreated, this));
+    this._nativeService.send(Tw.NTV_CMD.IS_APP_CREATED, { key: Tw.NTV_PAGE_KEY.HOME_WELCOME }, $.proxy(this._onAppCreated, this));
 
   },
   _onAppCreated: function (resp) {
@@ -655,7 +656,7 @@ Tw.MainHome.prototype = {
   _successWelcomeMsg: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( Tw.BrowserHelper.isApp() ) {
-        this._nativeSrevice.send(Tw.NTV_CMD.LOAD, {
+        this._nativeService.send(Tw.NTV_CMD.LOAD, {
           key: Tw.NTV_STORAGE.HOME_WELCOME
         }, $.proxy(this._onHomeWelcomeForDraw, this, resp.result.welcomeMsgList));
       } else {
@@ -708,7 +709,7 @@ Tw.MainHome.prototype = {
       nonShow = nonShow + ',' + this._welcomeList[0].wmsgId;
     }
     if ( Tw.BrowserHelper.isApp() ) {
-      this._nativeSrevice.send(Tw.NTV_CMD.SAVE, {
+      this._nativeService.send(Tw.NTV_CMD.SAVE, {
         key: Tw.NTV_STORAGE.HOME_WELCOME,
         value: nonShow
       });
@@ -867,5 +868,9 @@ Tw.MainHome.prototype = {
     setTimeout($.proxy(function () {
       this._openEmrNoticePopup(notice);
     }, this), 1500);
+  },
+  _setCoachMark: function () {
+    new Tw.CoachMark(this.$container, 'fe-coach-line', Tw.NTV_STORAGE.COACH_LINE);
+    new Tw.CoachMark(this.$container, 'fe-coach-data', Tw.NTV_STORAGE.COACH_DATA);
   }
 };

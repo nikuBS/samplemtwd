@@ -75,7 +75,11 @@ Tw.NTV_STORAGE = {
   MOST_RECENT_PUSH_SEQ: 'mostRecentPushSeq',
   LAST_READ_PUSH_SEQ: 'lastReadPushSeq',
   HOME_WELCOME: 'homeWelcome',
-  FIDO_USE: 'fidoUse'
+  FIDO_USE: 'fidoUse',
+  COACH_LINE: 'coachLine',
+  COACH_DATA: 'coachData',
+  COACH_MASKING: 'coachMasking',
+  COACH_QUICK: 'coachQuick'
 };
 
 Tw.NTV_PAGE_KEY = {

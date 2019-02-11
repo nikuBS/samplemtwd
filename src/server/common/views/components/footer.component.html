@@ -52,27 +52,40 @@
         <i class="icon-gnb-share-p"><span class="blind">share press</span></i>
     -->
     <div class="g-wrap">
-        <ul class="g-list">
+        <ul class="g-list g-coach-box">
             <li><a href="/main/home" type="button"><i class="icon-gnb-bi-n"><span class="blind">bi</span></i></a></li>
             <li id="fe-back-disable" class="none"><button type="button"><i class="icon-gnb-back-d"><span class="blind">back disabled</span></i></button></li>
             <li id="fe-back-enable"><button type="button"><i class="icon-gnb-back-n fe-common-back"><span class="blind">back</span></i></button></li>
             <li id="fe-forward-disable" class="none"><button type="button"><i class="icon-gnb-next-d"><span class="blind">next disabled</span></i></button></li>
             <li id="fe-forward-enable"><button type="button"><i class="icon-gnb-next-n fe-common-forward"><span class="blind">next</span></i></button></li>
-            <% if (svcInfo && locals.pageInfo && pageInfo.auth && pageInfo.auth.cert && pageInfo.auth.cert.maskAuthYn === 'Y' && !pageInfo.masking) { %>
-            <li><button id="fe-bt-masking" type="button" data-menuid="<%= pageInfo.menuId %>" data-menuurl="<%= pageInfo.menuUrl %>"><i class="icon-gnb-lock-n"><span class="blind">lock</span></i></button></li>
-            <% } else { %>
-            <li><button type="button"><i class="icon-gnb-lock-d"><span class="blind">lock disabled</span></i></button></li>
-            <% } %>
-            <% if (svcInfo && locals.pageInfo) { %>
-            <% if (svcInfo.svcMgmtNum === '') { %>
-            <li><button type="button"><i class="icon-gnb-pin-d"><span class="blind">pin disabled</span></i></button></li>
-            <% } else { %>
-            <li class="none"><button id="fe-bt-quick-add" type="button" data-menuid="<%= pageInfo.menuId %>"><i class="icon-gnb-pin-s"><span class="blind">pin selected</span></i></button></li>
-            <li><button id="fe-bt-quick-remove" type="button" data-menuid="<%= pageInfo.menuId %>"><i class="icon-gnb-pin-n"><span class="blind">pin</span></i></button></li>
-            <% } %>
-            <% } else { %>
-            <li><button type="button"><i class="icon-gnb-pin-d"><span class="blind">pin disabled</span></i></button></li>
-            <% } %>
+            <li class="mark-lock on">
+                <% if (svcInfo && locals.pageInfo && pageInfo.auth && pageInfo.auth.cert && pageInfo.auth.cert.maskAuthYn === 'Y' && !pageInfo.masking) { %>
+                <button id="fe-bt-masking" type="button" data-menuid="<%= pageInfo.menuId %>" data-menuurl="<%= pageInfo.menuUrl %>"><i class="icon-gnb-lock-n"><span class="blind">lock</span></i></button>
+                <% } else { %>
+                <button type="button"><i class="icon-gnb-lock-d"><span class="blind">lock disabled</span></i></button>
+                <% } %>
+                <div id="fe-coach-masking" class="coach-mark none">
+                    <strong class="coach-txt"><span class="point">개인정보<br>보호모드(*)</span> 해제</strong>
+                    <button type="button" class="close">닫기</button>
+                </div>
+            </li>
+            <li class="mark-lock on">
+                <% if (svcInfo && locals.pageInfo) { %>
+                <% if (svcInfo.svcMgmtNum === '') { %>
+                <button type="button"><i class="icon-gnb-pin-d"><span class="blind">pin disabled</span></i></button>
+                <% } else { %>
+                <button id="fe-bt-quick-add" class="none" type="button" data-menuid="<%= pageInfo.menuId %>"><i class="icon-gnb-pin-s"><span class="blind">pin selected</span></i></button>
+                <button id="fe-bt-quick-remove" type="button" data-menuid="<%= pageInfo.menuId %>"><i class="icon-gnb-pin-n"><span class="blind">pin</span></i></button>
+                <% } %>
+                <% } else { %>
+                <button type="button"><i class="icon-gnb-pin-d"><span class="blind">pin disabled</span></i></button>
+                <% } %>
+                <div id="fe-coach-quick" class="coach-mark none">
+                    <strong class="coach-txt"><span class="point">MY 바로가기</span><br>추가</strong>
+                    <button type="button" class="close">닫기</button>
+                </div>
+            </li>
+
             <% if (locals.pageInfo) { %>
             <li><button id="fe-bt-share" type="button" data-menuid="<%= pageInfo.menuId %>" data-menuurl="<%= pageInfo.menuUrl %>"><i class="icon-gnb-share-n"><span class="blind">share</span></i></button></li>
             <% } else { %>
