@@ -133,7 +133,7 @@ Tw.MyTDataGift.prototype = {
     };
 
     this.$wrap_data_select_list.find('input').each(fnCheckedUI);
-    // this.$wrap_auto_select_list.find('input').each(fnCheckedUI);
+    this.$wrap_auto_select_list.find('input').each(fnCheckedUI);
   },
 
   _onLoadRecently: function () {
