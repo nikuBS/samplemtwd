@@ -175,8 +175,9 @@ Tw.CommonSearch.prototype = {
     this._historyService.goLoad(goUrl);
   },
   _goLink : function (linkEvt) {
+    linkEvt.preventDefault();
     var $linkData = $(linkEvt.currentTarget);
-    var linkUrl = $linkData.data('link');
+    var linkUrl = $linkData.attr('href');
     if(Tw.FormatHelper.isEmpty(linkUrl)){
       return;
     }
