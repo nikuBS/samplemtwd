@@ -11,7 +11,7 @@ import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import {MYT_FARE_PAYMENT_NAME} from '../../../../types/string.type';
-import {MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_TYPE, SVC_ATTR_NAME} from '../../../../types/bff.type';
+import {MYT_FARE_PAYMENT_TITLE, MYT_FARE_PAYMENT_TYPE, SVC_CD} from '../../../../types/bff.type';
 import BrowserHelper from '../../../../utils/browser.helper';
 
 class MyTFareBillAccount extends TwViewController {
@@ -70,7 +70,7 @@ class MyTFareBillAccount extends TwViewController {
         data.invYearMonth = DateHelper.getShortDateWithFormat(data.invDt, 'YYYY.M.');
         data.intMoney = this.removeZero(data.invAmt);
         data.invMoney = FormatHelper.addComma(data.intMoney);
-        data.svcName = this.getServiceName(data.svcMgmtNum, allSvc);
+        data.svcName = SVC_CD[data.svcCd];
         data.svcNumber = data.svcCd === 'I' || data.svcCd === 'T' ? this.getAddr(data.svcMgmtNum, allSvc) :
           FormatHelper.conTelFormatWithDash(data.svcNum);
 
@@ -110,24 +110,6 @@ class MyTFareBillAccount extends TwViewController {
       return result;
     }
     return null;
-  }
-
-  private getServiceName(svcMgmtNum: any, allSvc: any): any {
-    let svcAttrName = '';
-    allSvc.m.map((data) => {
-      if (data.svcMgmtNum === svcMgmtNum) {
-        svcAttrName = SVC_ATTR_NAME[data.svcAttrCd];
-      }
-    });
-
-    if (FormatHelper.isEmpty(svcAttrName)) {
-      allSvc.s.map((data) => {
-        if (data.svcMgmtNum === svcMgmtNum) {
-          svcAttrName = SVC_ATTR_NAME[data.svcAttrCd];
-        }
-      });
-    }
-    return svcAttrName;
   }
 
   private getAddr(svcMgmtNum: any, allSvc: any): any {

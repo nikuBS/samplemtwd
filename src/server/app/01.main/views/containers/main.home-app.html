@@ -54,7 +54,7 @@
                                 <strong class="ti">가입하신 회선이 없습니다.</strong>
                                 <p class="tx">SK텔레콤의 가족이 되어<br>다양하고 편리한 서비스를 이용해 보세요.</p>
                                 <div class="btn-area">
-                                    <button type="button" class="btn-round1 btn-style4 fe-bt-direct-home">휴대폰 보러가기</button>
+                                    <button type="button" class="btn-round1 btn-style4 fe-home-external" data-url="http://shop.tworld.co.kr/handler/ShopTworldMain-Start">휴대폰 보러가기</button>
                                 </div>
                             </div>
                             <!-- // 미가입 -->
@@ -75,7 +75,12 @@
                             <% if (homeData.usageData.code === '00') { %>
                             <!-- 모바일 회선_잔여 데이터 -->
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.usageData.showSvcNum %></button></em>
+                                <em class="line">
+                                    <button class="bt fe-bt-line ff-tg-light" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.usageData.showSvcNum %></button>
+                                    <% if (svcInfo.expsSvcCnt > 1) { %>
+                                    <span id="fe-coach-line" class="coach-mark none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                    <% } %>
+                                </em>
                                 <strong class="ti"><a href="/product/callplan/<%= svcInfo.prodId %>" class="bt"><%= svcInfo.prodNm %></a></strong>
 
                                 <% if (homeData.usageData.data && homeData.usageData.data.isShow) { %>
@@ -118,11 +123,14 @@
                                             </div>
                                             <span class="ti-data">
                                                 <strong class="ti">남은 데이터</strong>
-                                                <em class="data"><%= homeData.usageData.data.showAddRemained %></em>
+                                                <em class="data">
+                                                    <span class="ff-tg-medium"><%= homeData.usageData.data.showAddRemained %></span>
+                                                </em>
                                             </span>
                                         </a>
                                         <!-- // .donut-chart -->
                                         <button id="fe-bt-data-link" class="data-add">데이터</button>
+                                        <span id="fe-coach-data" class="coach-mark none"><strong class="point">충전/선물/공유를</strong> 바로 할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
                                     </div>
                                 </div>
                                 <!-- // .widget -->
@@ -224,7 +232,15 @@
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잠시 후 다시 이용해 주세요</strong>
                                     <p class="tx">안정적으로 실시간 조회를 하실 수 있도록<br>조회 횟수를 제한하고 있습니다.</p>
-                                    <p class="desc">2시간 동안 최대 12회 조회 가능</p>
+                                </div>
+                            </div>
+                            <% } else if (homeData.usageData.code === 'BLN0002') { %>
+                            <div class="main-chart-box">
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.usageData.showSvcNum %></button></em>
+                                <div class="main-error-box">
+                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
+                                    <p class="tx">당월 혹은 전월에 기존 요금제로 재 변경한 이력이 있습니다.</p>
                                 </div>
                             </div>
                             <% } else if (homeData.usageData.code === 'BLN0003') { %>
@@ -233,8 +249,55 @@
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                                    <p class="tx">회선정지 상태이거나 일시 정지 이력이 있어 <br>잔여량 조회 서비스를 이용할 수 없습니다.<br>자세한 사항은 고객센터나 <a href="/customer/emailconsult" class="bt">이메일</a>로<br> 문의해 주시기 바랍니다</p>
+                                    <p class="tx">당월 혹은 전월에 정지 이력이 있습니다.</p>
                                 </div>
+                            </div>
+                            <% } else if (homeData.usageData.code === 'BLN0004') { %>
+                            <div class="main-chart-box">
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.usageData.showSvcNum %></button></em>
+                                <div class="main-error-box">
+                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
+                                    <p class="tx">잔여량 조회 가능 항목이 없습니다.</p>
+                                </div>
+                            </div>
+                            <% } else if (homeData.usageData.code === 'BLN0005') { %>
+                            <div class="main-chart-box">
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.usageData.showSvcNum %></button></em>
+                                <div class="main-error-box">
+                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
+                                    <p class="tx">본인이 법정대리인으로 등록된 자녀 회선이 아닙니다.</p>
+                                </div>
+                            </div>
+                            <% } else if (homeData.usageData.code === 'BLN0006') { %>
+                            <div class="main-chart-box">
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.usageData.showSvcNum %></button></em>
+                                <div class="main-error-box">
+                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
+                                    <p class="tx">잔여량 조회에 실패하였습니다.</p>
+                                </div>
+                            </div>
+                            <% } else if (homeData.usageData.code === 'BLN0007') { %>
+                            <div class="main-chart-box">
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= homeData.usageData.showSvcNum %></button></em>
+                                <div class="main-error-box">
+                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
+                                    <p class="tx">잔여량 조회 가능 항목이 없습니다.</p>
+                                </div>
+                            </div>
+                            <% } else if (homeData.usageData.code === 'BFF0006' || homeData.usageData.code === 'BFF0007') { %>
+                            <div class="main-chart-box">
+                                <em class="line"><button class="bt ff-tg-light">010-12**-34**</button></em>
+
+                                <div class="main-error-box">
+                                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                                    <strong class="ti">시스템 점검중입니다.</strong>
+                                    <p class="desc"><%= homeData.usageData.fromDate %> ~ <%= homeData.usageData.toDate %></p>
+                                </div>
+
                             </div>
                             <% } else { %>
                             <div class="main-chart-box">
@@ -276,21 +339,21 @@
                                 <strong class="ti"><a href="/product/callplan/<%= svcInfo.prodId %>" class="bt"><%= svcInfo.prodNm %></a></strong>
 
                                 <div id="fe-bt-link-billguide" class="main-breakdown-box">
-                                    <% if (homeData.billData.type1) { %>
-                                    <div class="stit"><%= homeData.billData.invMonth %>월 청구요금 <i class="icon-whole"><span class="blind">전체</span></i></div>
-                                    <% } else if (homeData.billData.type2) { %>
+                                    <% if (homeData.billData.type2) { %>
                                     <div class="stit"><%= homeData.billData.invMonth %>월 청구요금</div>
-                                    <% } else if (homeData.billData.type3) { %>
+                                    <% } else if (homeData.billData.type1) { %>
+                                    <div class="stit"><%= homeData.billData.invMonth %>월 청구요금 <i class="icon-whole"><span class="blind">전체</span></i></div>
+                                    <% } else { %>
                                     <div class="stit"><%= homeData.billData.invMonth %>월 이용요금</div>
                                     <% } %>
-                                    <em class="sum"><%= homeData.billData.chargeAmtTot %>원</em>
+                                    <em class="sum"><%= homeData.billData.useAmtTot %>원</em>
                                     <span class="date"><%= homeData.billData.invStartDt %>~<%= homeData.billData.invEndDt %></span>
                                     <% if (homeData.billData.type1 || homeData.billData.type2) { %>
                                     <ul class="list">
-                                        <li><strong class="ti">이용요금</strong> <em class="tx f-type"><%= homeData.billData.usedAmtTot %>원</em></li>
+                                        <li><strong class="ti">이용요금</strong> <em class="tx f-type"><%= homeData.billData.useAmtTot %>원</em></li>
                                         <li><strong class="ti">할인요금</strong> <em class="tx f-type c-point"><%= homeData.billData.deduckTot %>원</em></li>
                                     </ul>
-                                    <% } else if (homeData.billData.type3) { %>
+                                    <% } else { %>
                                     <p class="tx">고객님은 현재 통합 청구 이용 중이며<br>할인 금액을 제외한 사용요금으로 조회됩니다</p>
                                     <% } %>
                                 </div>
@@ -328,7 +391,14 @@
                         </div>
 
                         <% if (svcType.login && svcType.mobilePhone) { %>
-                        <% if (homeData.membershipData) { %>
+                        <% if (homeData.membershipData.code === 'EASY_LOGIN') { %>
+                        <div class="main-membershop-box">
+                            <button class="ti-tx">
+                                <strong class="ti">간편 로그인 상태에서는 이용할 수 없습니다</strong>
+                                <span class="tx">T아이디(아이디/비밀번호) 로그인 후 이용해주세요</span>
+                            </button>
+                        </div>
+                        <% } else if (homeData.membershipData.code === '00') { %>
                         <div id="fe-membership-extend" class="main-membershop-box">
                             <strong class="ti">membershop</strong>
                             <span id="fe-membership-gr" class="rating <%= homeData.membershipData.mbrGrStr %>" data-mbrgr="<%= homeData.membershipData.mbrGrStr %>"><%= homeData.membershipData.mbrGrStr %></span>
@@ -336,13 +406,13 @@
                             <span class="tx">고객님의 멤버십 카드가<br><strong class="t-point">이용정지</strong> 상태입니다.</span>
                             <% } else { %>
                             <span class="bar-code">
-                                <img id="fe-membership-barcode" data-cardNum="<%= homeData.membershipData.mbrCardNum %>" alt="bar code"/>
-                                <!--<img src="<%= CDN %>/img/main/bar_code.png" alt="bar code">-->
+                                <img id="fe-membership-barcode" data-cardnum="<%= homeData.membershipData.mbrCardNum %>" data-showcard="<%= homeData.membershipData.showCardNum %>" alt="bar code"/>
+                                <p class="bar-code-num"><%= homeData.membershipData.showCardNum %></p> <!-- 2019-01-25 추가 -->
                             </span>
                             <% } %>
                         </div>
-                        <% } else { %>
-                        <!-- 미발급 / 이용정지-->
+                        <% } else if (homeData.membershipData.code === 'MBR0002') { %>
+                        <!-- 미발급 -->
                         <div id="fe-membership-go" class="main-membershop-box">
                             <button class="ti-tx">
                                 <strong class="ti">아직 멤버십 카드가 없으신가요?</strong>
@@ -622,13 +692,13 @@
                             <!-- MY 바로가기 -->
                             <ul class="quick-menu-list">
                                 <li><a href="/product/mobileplan" class="bt"><i class="icon-price-plan-80"></i>요금제</a></li>
-                                <li><a href="/product/mobileplan-add" class="bt"><i class="icon-vas-80"><span class="blind">vas</span></i>부가상품</a></li>
-                                <li><a href="/product/wireplan" class="bt"><i class="icon-internet-80"></i>인터넷 ·<br>전화 · IPTV</a></li>
+                                <li><a href="/product/mobileplan-add" class="bt"><i class="icon-vas-80"><span class="blind">vas</span></i>부가서비스</a></li>
+                                <li><a href="/product/wireplan" class="bt"><i class="icon-internet-80"></i>인터넷/<br>전화/IPTV</a></li>
                                 <li><a href="/product/roaming" class="bt"><i class="icon-roaming-80"></i>T로밍</a></li>
-                                <li><button id="fe-bt-direct-phone" class="bt"><i class="icon-cellphone2-80"></i>스마트폰</button></li>
-                                <li><button id="fe-bt-direct-tablet" class="bt"><i class="icon-watch-80"></i>태블릿 · 워치</button></li>
-                                <li><button id="fe-bt-direct-nugu" class="bt"><i class="icon-nugu-80"></i>NUGU</button></li>
-                                <li><button id="fe-bt-direct-accessory" class="bt"><i class="icon-accessory-80"></i>액세서리</button></li>
+                                <li><button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/Mobile-MobileMain?category_id=20010001&utm_source=tworld&utm_medium=app_menu&utm_campaign=phone&utm_content=store&fSiteCd=1010"><i class="icon-cellphone2-80"></i>스마트폰</button></li>
+                                <li><button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/Mobile-MobileMain?category_id=20010002&utm_source=tworld&utm_medium=app_menu&utm_campaign=tablet&utm_content=store&fSiteCd=1010"><i class="icon-tablet-80"></i>태블릿</button></li>
+                                <li><button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/Mobile-MobileMain?category_id=20010003&utm_source=tworld&utm_medium=app_menu&utm_campaign=watch&utm_content=store&fSiteCd=1010"><i class="icon-watch-80"></i>스마트워치</button></li>
+                                <li><button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/AccessoryMall-MainAcc?utm_source=tworld&utm_medium=app_menu&utm_campaign=accessory&utm_content=store&fSiteCd=1010"><i class="icon-accessory-80"></i>액세서리</button></li>
                             </ul>
                             <!-- //MY 바로가기 -->
                         </div>
@@ -636,27 +706,26 @@
                         <!-- 다이렉트샵 -->
                         <div class="section-box">
                             <div class="main-direct-box">
-                                <div class="stit c-point"><button id="fe-bt-direct-home" class="bt">다이렉트샵 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div>
-                                <strong class="ti">할인된 가격으로<br>인기 스마트폰 구매</strong>
-                                <span class="tx">SK텔레콤 고객을 위한 공시 지원금에 추가 지원금 할인</span>
-                                <ul class="info">
-                                    <li id="fe-bt-iphone-xs">
-                                        <span class="img"><img src="<%= CDN %>/img/main/img_phone01.png" alt=""></span>
-                                        <strong class="ti">iPhone XS</strong>
-                                        <em class="tx">56,270원~/월</em>
-                                        <span class="tag"><i class="icon-new"><span class="blind">NEW</span></i></span>
+                                <div class="stit c-point"><button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/ShopTworldMain-Start">다이렉트샵 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div>
+                                <strong class="ti fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/ShopTworldMain-Start">다이렉트샵에서 엄선한<br>프리미엄 스마트폰</strong>
+                                <ul class="info"><!-- 190124 가격,태그 영역 제거 -->
+                                    <li>
+                                        <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/handler/PhoneDetail-Start?PRODUCT_GRP_ID=000003292&utm_source=tworld&utm_medium=app_list&utm_campaign=iphone_xs&utm_content=store&fSiteCd=1010">
+                                            <span class="img"><img src="<%= CDN %>/img/main/img_phone01.png" alt=""></span>
+                                            <strong class="ti">iPhone XS</strong>
+                                        </button>
                                     </li>
-                                    <li id="fe-bt-iphone-xr">
-                                        <span class="img"><img src="<%= CDN %>/img/main/img_phone02.png" alt=""></span>
-                                        <strong class="ti">iPhone XR</strong>
-                                        <em class="tx">39,711원~/월</em>
-                                        <span class="tag"><i class="icon-hot"><span class="blind">HOT</span></i></span>
+                                    <li>
+                                        <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/handler/PhoneDetail-Start?PRODUCT_GRP_ID=000003132&utm_source=tworld&utm_medium=app_list&utm_campaign=galaxy_note9&utm_content=store&fSiteCd=1010">
+                                            <span class="img"><img src="<%= CDN %>/img/main/img_phone02.png" alt=""></span>
+                                            <strong class="ti">갤럭시 노트9</strong>
+                                        </button>
                                     </li>
-                                    <li id="fe-bt-galaxy-s9">
-                                        <span class="img"><img src="<%= CDN %>/img/main/img_phone03.png" alt=""></span>
-                                        <strong class="ti">갤럭시 노트9갤럭시 노트9</strong>
-                                        <em class="tx">40,415원~/월</em>
-                                        <span class="tag"><i class="icon-expansion"><span class="blind">공시금 확대</span></i></span>
+                                    <li>
+                                        <button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/PhoneDetail-Start?PRODUCT_GRP_ID=000003472&utm_source=tworld&utm_medium=app_list&utm_campaign=lg_q9&utm_content=store&fSiteCd=1010">
+                                            <span class="img"><img src="<%= CDN %>/img/main/img_phone03.png" alt=""></span>
+                                            <strong class="ti">엘지 Q9</strong>
+                                        </button>
                                     </li>
                                 </ul>
                             </div>
@@ -665,7 +734,7 @@
 
                         <!-- 공시지원금 변동 알림 -->
                         <div class="section-box nogaps">
-                            <button id="fe-bt-direct-support" class="main-alarm-box">
+                            <button class="main-alarm-box fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/Dantong-SKT?utm_source=tworld&utm_medium=app_banner&utm_campaign=dantong&utm_content=store&fSiteCd=1010">
                                 <i class="icon-alarm-red"><span class="blind">alarm</span></i>
                                 공시지원금 변동 알림을 받아 보세요
                             </button>
@@ -675,28 +744,31 @@
                         <!-- 모바일 요금제 -->
                         <div class="section-box nogaps-btm">
                             <div class="main-direct-box">
-                                <div class="stit c-point"><a href="/product/mobileplan" class="bt">모바일 요금제 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
-                                <strong class="ti">인기 있는 SK텔레콤의 대표요금제</strong>
+                                <div class="stit c-point"><a href="/product/mobileplan" class="bt">요금제 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
+                                <strong class="ti fe-home-internal" data-url="/product/mobileplan">인기 있는<br/> SK텔레콤의 대표요금제</strong>
                                 <ul class="charge-product">
                                     <li>
-                                        <a href="/product/callplan/NA00005959" class="bt-cont-box">
+                                        <a href="/product/callplan/NA00005958" class="bt-cont-box">
                                             <em class="ranking">1</em>
-                                            <strong class="ti">T플랜 <i class="icon-lte"><span class="blind">LTE폰</span></i></strong>
-                                            <span class="tx">DATA 맘껏 쓰고 나눠쓰는 T플랜</span>
+                                            <strong class="ti">패밀리 <i class="icon-lte"><span class="blind">LTE폰</span></i></strong>
+                                            <span class="tag">#데이터무제한 #가족모아데이터 #공유</span>
+                                            <span class="tx">무제한으로 데이터를 즐기면서 가족과 데이터 나눠쓰는 요금제</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product/callplan/NA00005292" class="bt-cont-box">
+                                        <a href="/product/callplan/NA00005957" class="bt-cont-box">
                                             <em class="ranking">2</em>
-                                            <strong class="ti">T시그니처 <i class="icon-lte"><span class="blind">LTE폰</span></i></strong>
-                                            <span class="tx">음성 · 데이터 무제한은 기본!<br>통신 · 단말 · 안심 영역의 프리미엄 혜택까지</span>
+                                            <strong class="ti">라지 <i class="icon-lte"><span class="blind">LTE폰</span></i></strong>
+                                            <span class="tag">#데이터무제한 #가족모아데이터</span>
+                                            <span class="tx">기본제공데이터 100GB로 넉넉하게, 모두 사용하면 5Mbps 속도제어로 더 넉넉하게 쓸 수 있는 요금제</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product/callplan/NA00005134" class="bt-cont-box">
+                                        <a href="/product/callplan/NA00006324" class="bt-cont-box">
                                             <em class="ranking">3</em>
-                                            <strong class="ti">band 데이터 <i class="icon-lte"><span class="blind">LTE폰</span></i></strong>
-                                            <span class="tx">음성 무제한 혜택을 기본 제공하는<br>스마트폰 대표 요금제!</span>
+                                            <strong class="ti">레귤러 <i class="icon-lte"><span class="blind">LTE폰</span></i></strong>
+                                            <span class="tag">#안심 #밤지킴이데이터4배 #가족모아데이터</span>
+                                            <span class="tx">제공 데이터 2GB 다 쓴 뒤에도 안심하고 쓸 수 있는 요금제</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -710,11 +782,13 @@
                                 <button><img src="/img/main/img-main-banner08.png" alt="인터넷 · 전화 · IPTV 온가족 플랜 휴대폰 월정액 & 인터넷 기본료 결합하면 최대 29,710월 할인 자세히 보기" /></button>
                             </div> -->
                             <div class="main-charge-box combination">
-                                <div class="stit"><a href="/product/wireplan" class="bt">인터넷 · 전화 · IPTV <i class="icon-arrowmore-32 white"><span class="blind">more</span></i></a></div>
-                                <div class="main-box-cont">
-                                    <strong class="ti">온가족 플랜</strong>
-                                    <span class="tx">휴대폰 월정액 & 인터넷 기본료 결합하면 최대 29,710월 할인</span>
-                                    <a href="/product/callplan/TW20000013" class="bt">자세히 보기</a>
+                                <div class="stit"><a href="/product/wireplan" class="bt02">인터넷/전화/IPTV <i class="icon-arrowmore-32 white"><span class="blind">more</span></i></a></div>
+                                <div class="main-box-cont main-box-cont-link">
+                                    <a href="/product/callplan/TW20000013" class="link-full">
+                                        <strong class="ti">온가족 플랜</strong>
+                                        <span class="tx">휴대폰 월정액 & 인터넷 기본료 결합하면 최대 29,710원 할인</span>
+                                        <p class="bt">자세히 보기</p>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -723,31 +797,31 @@
                         <!-- 모바일 부가상품 -->
                         <div class="section-box nogaps-btm">
                             <div class="main-direct-box">
-                                <div class="stit c-point"><a href="/product/mobileplan-add" class="bt">모바일 부가상품 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
-                                <strong class="ti">유용한 부가상품</strong>
+                                <div class="stit c-point"><a href="/product/mobileplan-add" class="bt">부가서비스<i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
+                                <strong class="ti fe-home-internal" data-url="/product/mobileplan-add">유용한 부가서비스</strong>
                                 <ul class="charge-product type-list">
                                     <li>
-                                        <a href="/product/callplan/NA00003362" class="bt-cont-box">
+                                        <a href="/product/callplan/NA00003362" class="bt-cont-box category-add01">
                                             <strong class="ti">LTE 안심옵션</strong>
-                                            <em class="sum">월 <span>8,800</span>원</em>
-                                            <span class="tag">데이터, 혜택 · 편의</span>
-                                            <span class="tx">기본제공 데이터를 모두 사용한 후에도 부담 없이 웹서핑 · SNS · 이메일 등을 이용 할 수 있는 부가서비스</span>
+                                            <em class="sum">월 <span class="ff-tg-medium">5,500</span>원</em>
+                                            <span class="tag">#데이터</span>
+                                            <span class="tx">데이터 모두 사용한 후 초과 과금 없이 안심하고 데이터 사용 가능한 서비스</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product/callplan/NA00005876" class="bt-cont-box">
-                                            <strong class="ti">oksusu & 안심 팩 oksusu & 안심 팩 oksusu & 안심 팩 oksusu & 안심 팩</strong>
-                                            <em class="sum">월 <span>8,800</span>원</em>
-                                            <span class="tag">콘텐츠 이용</span>
-                                            <span class="tx">실시간 TV 및 최신 영화 등의 동영상 콘텐츠(oksusu)를 마음껏 누릴 수 있습니다</span>
+                                        <a href="/product/callplan/NA00005876" class="bt-cont-box category-add05">
+                                            <strong class="ti">oksusu & 안심 팩</strong>
+                                            <em class="sum">월 <span class="ff-tg-medium">8,800</span>원</em>
+                                            <span class="tag">#콘텐츠 이용</span>
+                                            <span class="tx">실시간 TV 및 최신 영화 등의 동영상 콘텐츠(oksusu)를 마음껏 이용</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product/callplan/NA00004136" class="bt-cont-box">
-                                            <strong class="ti">분실폰찾기 분실폰찾기분실폰찾기 분실폰찾기분실폰찾기 분실폰찾기분실폰찾기 분실폰찾기</strong>
+                                        <a href="/product/callplan/NA00006031" class="bt-cont-box category-add01">
+                                            <strong class="ti ti-type">T가족모아데이터</strong>
                                             <em class="sum">무료</em>
-                                            <span class="tag">혜택 · 편의</span>
-                                            <span class="tx">스마트폰을 분실했을 때  관리할 수 있는 통합서비스(기기잠금, 개인정보 삭제, 위치조회서비스 등 제공)</span>
+                                            <span class="tag">#데이터</span>
+                                            <span class="tx">가족이 T플랜 가입하면, 가족과 데이터를 모아서 이용 가능!</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -761,11 +835,13 @@
                                 <!-- <button>
                                     <img src="/img/main/img-main-banner04.png" alt="할인혜택 선택약정할인 기기 지원금을 받지 않으셨다면 지원금 대신 요금할인혜택 제공 자세히 보기" />
                                 </button> -->
-                                <div class="stit"><a href="/benefit/submain" class="bt">할인혜택 <i class="icon-arrowmore-32 white"><span class="blind">more</span></i></a></div>
-                                <div class="main-box-cont">
-                                    <strong class="ti">선택약정할인</strong>
-                                    <span class="tx">기기 지원금을 받지 않으셨다면 지원금 대신 요금할인혜택 제공</span>
-                                    <a href="/product/callplan/NA00004430" class="bt">자세히 보기</a>
+                                <div class="stit"><a href="/benefit/submain" class="bt02">할인혜택 <i class="icon-arrowmore-32 white"><span class="blind">more</span></i></a></div>
+                                <div class="main-box-cont main-box-cont-link">
+                                    <a href="/product/callplan/NA00004430" class="link-full">
+                                        <strong class="ti">선택약정할인</strong>
+                                        <span class="tx">기기 지원금을 받지 않으셨다면 지원금 대신 요금할인혜택 제공</span>
+                                        <p class="bt">자세히 보기</p>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -774,11 +850,11 @@
                         <!-- T로밍 -->
                         <div class="section-box nogaps">
                             <div class="main-charge-box roaming section-swiper-box">
-                                <div class="stit c-point"><a href="/product/roaming" class="bt">T로밍 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
+                                <!-- <div class="stit"><button class="bt"></button></div> -->
                                 <!-- .widget -->
                                 <div class="widget">
-                                    <div class="widget-box slider1 slider1-auto">
-                                        <div class="slider-box">
+                                    <div class="widget-box slider1">
+                                        <div class="slider-box link-full-box">
                                             <!-- <ul class="slider">
                                                 <li>
                                                     <button>
@@ -798,39 +874,53 @@
                                             </ul> -->
                                             <ul class="slider">
                                                 <li>
+                                                    <div class="stit type02"><a href="/product/callplan/NA00005900" class="bt02">T로밍 아시아패스 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
                                                     <div class="main-box-cont bg-type01">
-                                                        <strong class="ti">아시아 여행을<br>계획하셨나요?</strong>
-                                                        <a href="/product/callplan/NA00005900" class="bt">로밍상품 보기</a>
+                                                        <a href="/product/callplan/NA00005900" class="link-full">
+                                                            <strong class="ti">아시아 여행을<br/>계획 중이신가요?</strong>
+                                                            <span class="tx">아시아 주요국에서 5일 동안 LTE/3G 데이터를 부담없이 이용하세요.</span>
+                                                            <p class="bt">로밍상품 보기</p>
+                                                        </a>
                                                     </div>
                                                 </li>
                                                 <li>
+                                                    <div class="stit type02"><a href="/product/callplan/NA00006038" class="bt02">T로밍 미주패스 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
                                                     <div class="main-box-cont bg-type02">
-                                                        <strong class="ti">중국 · 일본으로<br>떠나시나요?</strong>
-                                                        <a href="/product/callplan/NA00005699" class="bt">로밍상품 보기</a>
+                                                        <a href="/product/callplan/NA00006038" class="link-full">
+                                                            <strong class="ti">미주 여행을<br/>계획 중이신가요?</strong>
+                                                            <span class="tx">미주/호주 19개국에서 30일 동안 LTE/3G 데이터를 안심하고 사용하세요.</span>
+                                                            <p class="bt">로밍상품 보기</p>
+                                                        </a>
                                                     </div>
                                                 </li>
                                                 <li>
+                                                    <div class="stit type02"><a href="/product/callplan/NA00006046" class="bt02">T로밍 유럽패스 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
                                                     <div class="main-box-cont bg-type03">
-                                                        <strong class="ti">미주 여행을<br>계획하셨나요?</strong>
-                                                        <a href="/product/callplan/NA00006038" class="bt">로밍상품 보기</a>
+                                                        <a href="/product/callplan/NA00006046" class="link-full">
+                                                            <strong class="ti">유럽 여행을<br/>계획 중이신가요?</strong>
+                                                            <span class="tx">유럽 51개국에서 30일 동안 LTE/3G 데이터를 안심하고 사용하세요.</span>
+                                                            <p class="bt">로밍상품 보기</p>
+                                                        </a>
                                                     </div>
                                                 </li>
                                                 <li>
+                                                    <div class="stit type02"><a href="/product/callplan/NA00006226" class="bt02">T괌사이판 국내처럼 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
                                                     <div class="main-box-cont bg-type04">
-                                                        <strong class="ti">유럽 여행을<br>계획하셨나요?</strong>
-                                                        <a href="/product/callplan/NA00006046" class="bt">로밍상품 보기</a>
+                                                        <a href="/product/callplan/NA00006226" class="link-full">
+                                                            <strong class="ti">괌/사이판도 우리의<br/>데이터를 쓰는 나라다</strong>
+                                                            <span class="tx">괌/사이판에서 30일 동안, 국내 가입 요금제의 기본제공 데이터를 그대로 사용하세요.</span>
+                                                            <p class="bt">로밍상품 보기</p>
+                                                        </a>
                                                     </div>
                                                 </li>
                                                 <li>
+                                                    <div class="stit type02"><a href="/product/callplan/NA00003196" class="bt02">T로밍 OnePass300 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
                                                     <div class="main-box-cont bg-type05">
-                                                        <strong class="ti">짧게<br>여행 가시나요?</strong>
-                                                        <a href="/product/callplan/NA00003196" class="bt">로밍상품 보기</a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="main-box-cont bg-type06">
-                                                        <strong class="ti">길게<br>여행 가시나요?</strong>
-                                                        <a href="/product/callplan/NA00005300" class="bt">로밍상품 보기</a>
+                                                        <a href="/product/callplan/NA00003196" class="link-full">
+                                                            <strong class="ti">짧은 여행을<br/>계획 중이신가요? </strong>
+                                                            <span class="tx">전세계 주요국에서 LTE/3G 데이터를 1일 단위로 사용하세요.</span>
+                                                            <p class="bt">로밍상품 보기</p>
+                                                        </a>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -840,17 +930,40 @@
                                 <!--// .widget -->
                             </div>
                         </div>
-                        <!-- //T로밍 -->
 
-                        <!-- 프로모션 배너 -->
-                        <div class="accessories-box main-banner-img">
-                            <button class="bt fe-bt-direct-nugu"><img src="<%= CDN %>/img/main/img_accessories.jpg" alt="당신을 빛나게 해줄 인공지능 스피커 NUGU candle"></button>
-                        </div>
-                        <!-- //프로모션 배너 -->
-
-                        <!-- 프로모션 배너 -->
-                        <div class="accessories-box main-banner-img">
-                            <button class="bt fe-bt-direct-nugu"><img src="<%= CDN %>/img/main/img_accessories02.jpg" alt="당신을 빛나게 해줄 인공지능 스피커 NUGU candle"></button>
+                        <div class="section-box nogaps">
+                            <div class="main-banner-box section-swiper-box accessories-box">
+                                <!-- .widget -->
+                                <div class="widget">
+                                    <div class="widget-box slider1">
+                                        <div class="slider-box">
+                                            <ul class="slider">
+                                                <li>
+                                                    <button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/Plan-Start?PLAN_ID=P00000334&utm_source=tworld&utm_medium=app_banner&utm_campaign=marymond&utm_content=store&fSiteCd=1010">
+                                                        <img src="<%= CDN %>/img/main/img_accessories.jpg" alt="마리몬드" />
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/handler/AccessoryMall-AccView?CATEGORY_ID=10010003&ACCESSORY_ID=A05960&callGnb=02&utm_source=tworld&utm_medium=app_banner&utm_campaign=nugu&utm_content=store&fSiteCd=1010">
+                                                        <img src="<%= CDN %>/img/main/img_accessories02.jpg" alt="누구캔들" />
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/Plan-Start?PLAN_ID=P00000362&utm_source=tworld&utm_medium=app_banner&utm_campaign=apple_acc&utm_content=store&fSiteCd=1010">
+                                                        <img src="<%= CDN %>/img/main/img_accessories03.jpg" alt="애플 악세서리" />
+                                                    </button>
+                                                </li>
+                                                <li>
+                                                    <button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/Plan-Start?PLAN_ID=P00000338&utm_source=tworld&utm_medium=app_banner&utm_campaign=spigen&utm_content=store&fSiteCd=1010">
+                                                        <img src="<%= CDN %>/img/main/img_accessories04.jpg" alt="슈피겐" />
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--// .widget -->
+                            </div>
                         </div>
                         <!-- //프로모션 배너 -->
 
@@ -858,12 +971,12 @@
                         <div class="section-box">
                             <div class="main-tapp-box">
                                 <div class="stit c-point"><a href="/product/apps" class="bt">T앱 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
-                                <div class="ti">함께하면 더욱 스마트한 앱서비스</div>
+                                <div class="ti fe-home-internal" data-url="/product/apps">함께하면 더욱 좋은 앱</div>
                                 <ul class="app-list">
                                     <li class="t-membership"><a href="/product/apps/app?appId=TW50000020" class="bt">T멤버십</a></li>
                                     <li class="t-map"><a href="/product/apps/app?appId=TW50000044" class="bt">T맵</a></li>
                                     <li class="t-call"><a href="/product/apps/app?appId=TW50000002" class="bt">T전화</a></li>
-                                    <li class="t-pay"><a href="/product/apps/app?appId=TW50000015" class="bt">T페이</a></li>
+                                    <li class="t-cloudberry"><a href="/product/apps/app?appId=TW50000015" class="bt">클라우드베리</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -942,6 +1055,7 @@
         </div>
     </div>
     <!--// #contents -->
+    <button id="fe-bt-hidden-notice" class="none"></button>
 </div>
 <% include ../components/javascript.component.html %>
 <% if (svcType.login && svcType.mobilePhone) { %>
@@ -957,12 +1071,14 @@
 <script>
   setTimeout(function () {
     skt_landing.action.home_slider({ initialSlide: 1 });
+    skt_landing.action.notice_slider();
   }, 40);
 </script>
 <% } else { %>
 <script>
   setTimeout(function () {
     skt_landing.action.home_slider({ initialSlide: 0 });
+    skt_landing.action.notice_slider();
   }, 40);
 </script>
 <% } %>

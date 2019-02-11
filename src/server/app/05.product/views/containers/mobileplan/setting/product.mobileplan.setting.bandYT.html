@@ -35,7 +35,7 @@
                 <div class="ti-caption-gray">
                     <h4 class="tit">데이터 옵션 선택
                         <% var tipId = data.nonOption ? 'MP_02_02_03_12_tip_02' : 'MP_02_02_03_12_tip_01' %>
-                        <button type="button" class="tip-view" id="<%= tipId %>" aria-haspopup="true">TIP</button>
+                        <button type="button" class="tip-view" id="<%= tipId %>" aria-haspopup="true" title="데이터 옵션 선택">TIP</button>
                     </h4>
                     <p class="num"><%= data.svcInfo.svcNum %></p>
                 </div>
@@ -87,7 +87,7 @@
                 <div class="bt-fixed-area">
                     <ul class="bt-slice full">
                         <li class="bt-red1" data-id="ok">
-                            <button>변경 완료</button>
+                            <button type="button" title="변경 완료" aria-haspopup="true">변경 완료</button>
                         </li>
                     </ul>
                 </div>
@@ -95,7 +95,7 @@
         </div>
         <!-- // .container-wrap -->
         <!-- .popup-closeBtn -->
-        <button class="prev-step fe-common-back">취소</button>
+        <button type="button" class="prev-step fe-common-back">취소</button>
         <!--// .popup-closeBtn -->
     </div>
     <!-- // .popup hbs -->

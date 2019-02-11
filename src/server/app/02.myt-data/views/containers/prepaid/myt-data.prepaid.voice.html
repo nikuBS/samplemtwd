@@ -44,8 +44,8 @@
                         <ul class="point-box mb0">
                             <li>
                                 <dl>
-                                    <dt>발신 기간
-                                        <button class="tip-view" id="DC_09_01_tip_02" page-id="DC_09_01">TIP</button>
+                                    <dt>
+                                        <button class="tip-view-btn" id="DC_09_01_tip_02" page-id="DC_09_01" aria-haspopup="true">발신 기간<span class="tip-view">TIP</span></button>
                                     </dt>
                                     <dd><%-convertDate(PPSInfo.obEndDt)%></dd>
                                 </dl>
@@ -156,6 +156,7 @@
                                                         </span>
                                                         <span class="error-txt blind">카드번호가 올바르지 않습니다.</span>
                                                         <span class="error-txt blind">카드 번호를 입력해주세요.</span>
+                                                        <span class="error-txt blind">해당 카드사가 등록되어 있지 않습니다.</span>
                                                     </li>
                                                     <li>
                                                         <label class="tit" for="formInput03">유효기간</label>
@@ -217,9 +218,11 @@
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                    <ul class="noti-list">
-                        <li>공인인증서 인증 안내
-                            <button type="button" class="tip-view" title="공인인증서 인증 안내" aria-haspopup="true" id="DC_09_01_tip_01" page-id="DC_09_01">TIP</button>
+                    <ul class="noti-list02">
+                        <li>
+                            <button type="button" class="tip-view-btn" title="공인인증서 인증 안내" aria-haspopup="true" id="DC_09_01_tip_01" page-id="DC_09_01">
+                                공인인증서 인증 안내<span class="tip-view">TIP</span>
+                            </button>
                         </li>
                     </ul>
                 </div>

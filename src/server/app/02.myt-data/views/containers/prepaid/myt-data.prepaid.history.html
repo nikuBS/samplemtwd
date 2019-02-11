@@ -58,7 +58,7 @@
                                                 음성 충전</span>
                                                 <span class="stext">
                                                     <span class="gray-tx"><%= history.payNm %></span>
-                                                    <span class="gray-tx"><%= history.cardNm %></span>
+                                                    <span class="gray-tx"><%= history.cardNm || '신용카드' %></span>
                                                 </span>
                                             </p>
                                             <div class="list-data">
@@ -90,13 +90,13 @@
                                                 </span>
                                                 <span class="stext">
                                                     <span class="black-tx"><%= history.payNm %></span>
-                                                    <span class="gray-tx"><%= history.cardNm %></span>
+                                                    <span class="gray-tx"><%= history.cardNm || '신용카드' %></span>
                                                 </span>
                                             </p>
                                             <div class="list-data">
                                                 <button class="bt-link data-tx <%= history.isCanceled ? 'gray-tx' : 'blue-tx'%>" data-origin-idx="<%= history.idx %>"><%= history.amt %>원</button>
                                                 <% if (history.rfndPsblYn === 'Y') { %>
-                                                    <button class="bt-link-tx underline red" data-cancel-id="<%= history.cancelOrderId %>" data-charge-code="<%= history.dataChargeCd %>">취소</button>
+                                                    <button class="bt-link-tx underline red fe-cancel" data-cancel-id="<%= history.cancelOrderId %>" data-charge-code="<%= history.dataChargeCd %>">취소</button>
                                                 <% } %>
                                             </div>
                                         </li>
@@ -110,7 +110,7 @@
                         <button>더 보기</button>
                     </div>
                     <div class="contents-empty <%= totalCount === 0 ? '' : 'none'%>">
-                        <span class="ico type1"></span>
+                        <span class="ico type1"><span class="blind">느낌표(!)</span></span>
                         <p class="desc">선불폰 충전 내역이 없습니다.</p>
                     </div>
                 </div>

@@ -4,14 +4,14 @@
         <div class="widget formradio-style01">
             <div class="widget-box radio">
                 <ul class="select-list fe-<%-type%>-cntcNumClCd" role="radiogroup">
-                    <li class="radiobox type01 checked" role="radio" aria-checked="true">
+                    <li class="radiobox type01 checked" role="radio" aria-checked="true" id="aria-comp-radio1">
                         <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                        <input type="radio" name="radio1-big-<%-type%>" value="C" title="값1" checked=""><!-- 체크상태일 경우 checked="checked" -->
+                        <input type="radio" name="radio1-big-<%-type%>" value="C" title="값1" checked="" aria-labelledby="aria-comp-radio1"><!-- 체크상태일 경우 checked="checked" -->
                         휴대폰
                     </li>
-                    <li class="radiobox type01 ml30" role="radio" aria-checked="false">
+                    <li class="radiobox type01 ml30" role="radio" aria-checked="false" id="aria-comp-radio2">
                         <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                        <input type="radio" name="radio1-big-<%-type%>" value="P" title="값2"><!-- 체크상태일 경우 checked="false" -->
+                        <input type="radio" name="radio1-big-<%-type%>" value="P" title="값2" aria-labelledby="aria-comp-radio2"><!-- 체크상태일 경우 checked="false" -->
                         일반전화
                     </li>
                 </ul>
@@ -33,9 +33,9 @@
         <div class="widget formradio-style02">
             <div class="widget-box check">
                 <ul class="select-list fe-wrap-sms" role="group">
-                    <li class="checkbox type01" role="checkbox" aria-checked="false">
+                    <li class="checkbox type01" role="checkbox" aria-checked="false" id="aria-comp-checkbox1">
                         <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                        <input type="checkbox" name="checkbox" value="" title="값1" class="fe-<%-type%>_sms">
+                        <input type="checkbox" name="checkbox" value="" title="값1" class="fe-<%-type%>_sms" aria-labelledby="aria-comp-checkbox1">
                         <!-- 체크상태일 경우 checked="checked" -->
                         답변이 등록되면 SMS 알림을 받습니다.
                     </li>
@@ -66,9 +66,9 @@
                         <div class="widget-box check">
                             <div class="infoviewic-wrap">
                                 <ul class="select-list" role="group">
-                                    <li class="checkbox type01" role="checkbox" aria-checked="false">
+                                    <li class="checkbox type01" role="checkbox" aria-checked="false" id="aria-comp-checkbox2">
                                         <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                        <input type="checkbox" name="checkbox" value="" title="값1" class="fe-<%-type%>_term1"
+                                        <input type="checkbox" name="checkbox" value="" title="값1" class="fe-<%-type%>_term1" aria-labelledby="aria-comp-checkbox2"
                                                required><!-- 체크상태일 경우 checked="checked" -->
                                         개인정보 수집이용에 대한 동의(필수)
                                     </li>
@@ -100,9 +100,9 @@
                         <div class="widget-box check">
                             <div class="infoviewic-wrap">
                                 <ul class="select-list" role="group">
-                                    <li class="checkbox type01" role="checkbox" aria-checked="false">
+                                    <li class="checkbox type01" role="checkbox" aria-checked="false" id="aria-comp-checkbox3">
                                         <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                        <input type="checkbox" name="checkbox" value="" title="값1" class="fe-<%-type%>_term2"
+                                        <input type="checkbox" name="checkbox" value="" title="값1" class="fe-<%-type%>_term2" aria-labelledby="aria-comp-checkbox3"
                                                required><!-- 체크상태일 경우 checked="checked" -->
                                         개인정보 처리위탁에 대한 동의(필수)
                                     </li>
@@ -330,7 +330,7 @@
                         <ul class="bullet-type">
                             <li>첨부파일 용량은 1개 파일당 2MB 첨부가능합니다.</li>
                             <li>첨부파일은 최대 5개까지 등록할 수 있습니다.</li>
-                            <li>이미지(jpg, jpeg, gif, png)파일을<br>첨부할 수 있습니다.</li>
+                            <li>이미지(jpg, jpeg, gif, png)파일을 첨부할 수 있습니다.</li>
                         </ul>
                     </div>
                 </div>

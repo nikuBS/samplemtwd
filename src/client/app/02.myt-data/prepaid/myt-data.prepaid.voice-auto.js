@@ -19,6 +19,8 @@ Tw.MyTDataPrepaidVoiceAuto = function (rootEl) {
 Tw.MyTDataPrepaidVoiceAuto.prototype = {
   _init: function () {
     this.templateIndex = 0;
+    this.amt = $('.fe-select-amount').data('amount');
+    this.chargeCd = $('.fe-charge').data('amount');
   },
 
   _cachedElement: function () {
@@ -32,6 +34,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
   },
 
   _bindEvent: function () {
+    this.$container.on('click', '.fe-unsubscribe-auto-recharge', $.proxy(this._onClickUnsubscribeAutoRecharge, this));
     this.$container.on('click', '.fe-popup-close', $.proxy(this._stepBack, this));
     this.$container.on('click', 'li.fe-template-type', $.proxy(this._changeRechargeType, this));
     this.$container.on('click', '.fe-select-amount', $.proxy(this._onShowAmount, this));
@@ -45,16 +48,21 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     this.$container.on('keyup', '.fe-card-number', $.proxy(this._validateCard, this));
     this.$container.on('keyup', '.fe-card-y', $.proxy(this._validateExpired, this));
     this.$container.on('keyup', '.fe-card-m', $.proxy(this._validateExpired, this));
+    this.$container.on('blur', '.fe-card-number', $.proxy(this._validateCard, this));
+    this.$container.on('blur', '.fe-card-y', $.proxy(this._validateExpired, this));
+    this.$container.on('blur', '.fe-card-m', $.proxy(this._validateExpired, this));
   },
 
   _validateCard: function (e) {
-    var $cardNumber = $(e.currentTarget).val();
+    var $cardNumber = $(e.currentTarget);
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
     $error.addClass('blind');
 
     if ( !this._validation.checkMoreLength($cardNumber, 15) ) {
       $($error.get(0)).removeClass('blind');
       $($error.get(1)).addClass('blind');
+    } else {
+      this._getCardInfo();
     }
 
     if ( $cardNumber.val() === '' ) {
@@ -63,16 +71,44 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     }
   },
 
+  _getCardInfo: function () {
+    var cardNumber = $('.fe-card-number');
+
+    var isValid = this._validation.checkMoreLength(cardNumber, 15);
+
+    if ( isValid ) {
+      var htParams = {
+        cardNum: $.trim(cardNumber.val()).substr(0, 6)
+      };
+
+      this._apiService.request(Tw.API_CMD.BFF_06_0065, htParams)
+        .done($.proxy(this._getCardCode, this));
+    }
+  },
+
+  _getCardCode: function (res) {
+    var cardNumber = $('.fe-card-number');
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+    } else {
+      var $credit_error = cardNumber.closest('li').find('.error-txt').get(2);
+      $($credit_error).removeClass('blind');
+      this.$request_recharge_auto.prop('disabled', true);
+    }
+  },
+
   _validateExpired: function (e) {
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
+    var cardY = $('.fe-card-y');
+    var cardM = $('.fe-card-m');
+
     $error.addClass('blind');
 
-    if ( this.$cardY.val() === '' || this.$cardM.val() === '' ) {
+    if ( cardY.val() === '' || cardM.val() === '' ) {
       $($error.get(0)).addClass('blind');
       $($error.get(1)).removeClass('blind');
     }
 
-    if ( !(this._validation.checkMoreLength(this.$cardY, 4) && this._validation.checkMoreLength(this.$cardM, 2) && this._validation.checkYear(this.$cardY) && this._validation.checkMonth(this.$cardM, this.$cardY)) ) {
+    if ( !(this._validation.checkMoreLength(cardY, 4) && this._validation.checkMoreLength(cardM, 2) && this._validation.checkYear(cardY) && this._validation.checkMonth(cardM, cardY)) ) {
       $($error.get(0)).removeClass('blind');
       $($error.get(1)).addClass('blind');
     }
@@ -111,6 +147,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     }
 
     this.templateIndex = currentTemplateIndex;
+    this._checkIsAbled();
   },
 
   _onShowDate: function (e) {
@@ -178,6 +215,16 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
 
   _selectPopupCallback: function (arrParams, $layer) {
     $layer.on('click', '[data-value]', $.proxy(this._setSelectedValue, this, arrParams));
+    $layer.on('click', '.tw-popup-closeBtn', $.proxy(this._validSelectedValue, this, arrParams));
+  },
+
+  _validSelectedValue: function ($elButton) {
+    var $error = $($elButton[0]).closest('li').find('.error-txt');
+    $error.addClass('blind');
+
+    if ( !!$($elButton[0]).data('amount') === false ) {
+      $($error.get(0)).removeClass('blind');
+    }
   },
 
   _setSelectedValue: function (arrParams, e) {
@@ -190,6 +237,8 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     this._popupService.close();
     $target.text($(e.currentTarget).text());
     $target.data('amount', $(e.currentTarget).data('value'));
+
+    this._validSelectedValue($target);
   },
 
   _validateForm: function (e) {
@@ -197,7 +246,8 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
   },
 
   _checkIsAbled: function () {
-    if ( $('.fe-card-number').val() !== '' && $('.fe-card-y').val() !== '' && $('.fe-card-m').val() !== '' ) {
+    if ( !!$('.fe-select-amount').data('amount') && !!this.chargeCd && !!$('.fe-select-expire').val() &&
+      !!$('.fe-card-number').val() && !!$('.fe-card-y').val() && !!$('.fe-card-m').val() ) {
       this.$request_recharge_auto.prop('disabled', false);
     } else {
       this.$request_recharge_auto.prop('disabled', true);
@@ -236,14 +286,34 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     }
   },
 
-  // _onCompleteRechargeAutoChange: function (res) {
-  //   this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=auto&' + $.param(this.amountInfo));
-  //   // if ( res.code === Tw.API_CODE.CODE_00 ) {
-  //   //   this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete');
-  //   // } else {
-  //   //   Tw.Error(res.code, res.msg).pop();
-  //   // }
-  // },
+  _onClickUnsubscribeAutoRecharge: function () {
+    this._popupService.openModalTypeA(
+      Tw.MYT_DATA_PREPAID.A70_TITLE,
+      Tw.MYT_DATA_PREPAID.A70_CONTENT,
+      Tw.MYT_DATA_PREPAID.A70_BTN_CONFIRM,
+      null,
+      $.proxy(this._unsubscribeAutoRecharge, this),
+      $.proxy(this._closeUnsubscribeAutoRecharge, this)
+    );
+  },
+
+  _closeUnsubscribeAutoRecharge: function () {
+    this._popupService.close();
+  },
+
+  _unsubscribeAutoRecharge: function () {
+    this._popupService.close();
+    this._apiService.request(Tw.API_CMD.BFF_06_0057, {})
+      .done($.proxy(this._onSuccessUnsubscribe, this));
+  },
+
+  _onSuccessUnsubscribe: function (res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=cancel');
+    } else {
+      Tw.Error(res.code, res.msg).pop();
+    }
+  },
 
   _stepBack: function () {
     var confirmed = false;

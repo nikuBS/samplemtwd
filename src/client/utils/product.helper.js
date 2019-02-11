@@ -89,10 +89,11 @@ Tw.ProductHelper = (function () {
   };
 
   var convPlansJoinTermInfo = function(joinTermInfo) {
+    var convInstallmentAgreement = Tw.ProductHelper.convInstallmentAgreement(joinTermInfo.installmentAgreement);
     return $.extend(joinTermInfo, {
       preinfo: Tw.ProductHelper.convPlanPreInfo(joinTermInfo.preinfo),
-      installmentAgreement: Tw.ProductHelper.convInstallmentAgreement(joinTermInfo.installmentAgreement),
-      stipulationInfo: Tw.ProductHelper.convStipulation(joinTermInfo.stipulationInfo)
+      installmentAgreement: convInstallmentAgreement,
+      stipulationInfo: Tw.ProductHelper.convStipulation(joinTermInfo.stipulationInfo, convInstallmentAgreement.isInstallAgreement)
     });
   };
 
@@ -129,6 +130,7 @@ Tw.ProductHelper = (function () {
       isPremTerm = installmentAgreement.premTermYn === 'Y';
 
     return $.extend(installmentAgreement, {
+      isInstallAgreement: installmentAgreement.gapDcAmt > 0,
       isNumberPenAmt: isNumberPenAmt,
       penAmt: isNumberPenAmt ? Tw.FormatHelper.addComma(installmentAgreement.penAmt) : installmentAgreement.penAmt,
       isNumberFrDcAmt: isNumberFrDcAmt,
@@ -141,7 +143,7 @@ Tw.ProductHelper = (function () {
     });
   };
 
-  var convStipulation = function(stipulation) {
+  var convStipulation = function(stipulation, isInstallAgreement) {
     if (Tw.FormatHelper.isEmpty(stipulation)) {
       return null;
     }
@@ -178,6 +180,10 @@ Tw.ProductHelper = (function () {
         stipulation.adInfoOfrAgreeYn,
         stipulation.termStplAgreeYn
       ]);
+
+    if (isInstallAgreement) {
+      existsCount++;
+    }
 
     return $.extend(stipulation, {
       isScrbStplAgree: isScrbStplAgree,

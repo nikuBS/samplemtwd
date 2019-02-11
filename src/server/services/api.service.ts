@@ -24,7 +24,6 @@ class ApiService {
 
   public setCurrentReq(res, req) {
     this.loginService.setCurrentReq(res, req);
-    // TODO DELETE
     this.logger.info(this, '[API setCurrentReq]', !!req.session);
     this.req = req;
     this.res = res;
@@ -43,18 +42,6 @@ class ApiService {
         .catch(this.handleError.bind(this, observer, command));
     });
   }
-
-  // public nativeRequest(command: any, params: any, header?: any, ...args: any[]): Observable<any> {
-  //   const apiUrl = this.getServerUri(command);
-  //   const options = this.getOption(command, apiUrl, params, header, args);
-  //   this.logger.info(this, '[API_REQ Native]', options);
-  //
-  //   return Observable.create((observer) => {
-  //     axios(options)
-  //       .then(this.apiCallbackNative.bind(this, observer, command))
-  //       .catch(this.handleErrorNative.bind(this, observer, command));
-  //   });
-  // }
 
   public getServerUri(command: any): string {
     const buildType = (command.server === API_SERVER.BFF && this.loginService.isGreen() === BUILD_TYPE.GREEN) ? '_G' : '';
@@ -86,7 +73,6 @@ class ApiService {
         return Object.assign(header, {
           'content-type': 'application/json; charset=UTF-8',
           'x-user-ip': this.loginService.getNodeIp(),
-          'x-menu-name': '',
           'x-node-url': this.loginService.getPath(),
           'x-useragent': this.loginService.getUserAgent(),
           'x-env': this.loginService.isGreen(),
@@ -139,6 +125,12 @@ class ApiService {
 
     if ( command.server === API_SERVER.BFF ) {
       this.setServerSession(resp.headers).subscribe(() => {
+        if ( contentType.includes('json') && respData.code === API_CODE.BFF_0003 ) {
+          this.logger.error(this, '[API RESP] Session Expired', resp.code, resp.msg, this.loginService.getFullPath());
+          // TODO: session expired
+          // go /common/member/login/expired?target=this.loginService.getFullPath();
+        }
+
         observer.next(respData);
         observer.complete();
       });
@@ -147,22 +139,6 @@ class ApiService {
       observer.complete();
     }
   }
-
-  // private apiCallbackNative(observer, command, resp) {
-  //   const respData = resp.data;
-  //   let serverSession = null;
-  //   this.logger.info(this, '[API RESP Native]', respData);
-  //
-  //   if ( command.server === API_SERVER.BFF ) {
-  //     serverSession = this.setServerSession(resp.headers);
-  //   }
-  //   // console.log('api, ser', serverSession);
-  //   // respData.serverSession = serverSession;
-  //
-  //
-  //   observer.next(respData);
-  //   observer.complete();
-  // }
 
   private handleError(observer, command, err) {
     if ( !FormatHelper.isEmpty(err.response) && !FormatHelper.isEmpty(err.response.data) ) {
@@ -186,32 +162,16 @@ class ApiService {
     }
   }
 
-  // private handleErrorNative(observer, command, err) {
-  //   let serverSession = null;
-  //   if ( !FormatHelper.isEmpty(err.response) && !FormatHelper.isEmpty(err.response.data) ) {
-  //     const error = err.response.data;
-  //     const headers = err.response.headers;
-  //     this.logger.error(this, '[API ERROR Native]', error);
-  //
-  //     if ( command.server === API_SERVER.BFF ) {
-  //       serverSession = this.setServerSession(headers);
-  //     }
-  //
-  //     error.serverSession = serverSession;
-  //     observer.next(error);
-  //   } else {
-  //     this.logger.error(this, '[API ERROR Native] Exception', err.response);
-  //     observer.next({ code: API_CODE.CODE_500 });
-  //   }
-  //   observer.complete();
-  // }
-
   private setServerSession(headers): Observable<any> {
     this.logger.info(this, 'Headers: ', JSON.stringify(headers));
     if ( headers['set-cookie'] ) {
       const serverSession = this.parseSessionCookie(headers['set-cookie'][0]);
       this.logger.info(this, '[Set Session Cookie]', serverSession);
-      return this.loginService.setServerSession(serverSession);
+      if ( !FormatHelper.isEmpty(serverSession) ) {
+        return this.loginService.setServerSession(serverSession);
+      } else {
+        return Observable.of({});
+      }
     } else {
       return Observable.of({});
     }
@@ -230,9 +190,10 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           result = resp.result;
+          this.loginService.setCookie(COOKIE_KEY.LAYER_CHECK, resp.result.noticeTypCd);
           return this.loginService.setSvcInfo({
             mbrNm: resp.result.mbrNm,
-            noticeType: resp.result.noticeTypCd,
+            // noticeType: resp.result.noticeTypCd,
             loginType: type
           });
         } else {
@@ -293,9 +254,10 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           result = resp.result;
+          this.loginService.setCookie(COOKIE_KEY.LAYER_CHECK, resp.result.noticeTypCd);
           return this.loginService.setSvcInfo({
             mbrNm: resp.result.mbrNm,
-            noticeType: resp.result.noticeTypCd,
+            // noticeType: resp.result.noticeTypCd,
             loginType: type
           });
         } else {
@@ -346,7 +308,7 @@ class ApiService {
           result = resp.result;
           return this.loginService.setSvcInfo({
             mbrNm: resp.result.mbrNm,
-            noticeType: resp.result.noticeTypCd,
+            // noticeType: resp.result.noticeTypCd,
             loginType: LOGIN_TYPE.TID
           });
         } else {
@@ -453,7 +415,7 @@ class ApiService {
           const svcInfo = this.loginService.getSvcInfo();
           const newSvc = new SvcInfoModel({
             mbrNm: svcInfo.mbrNm,
-            noticeType: svcInfo.noticeType,
+            // noticeType: svcInfo.noticeType,
             loginType: svcInfo.loginType
           });
           return this.loginService.setSvcInfo(newSvc);

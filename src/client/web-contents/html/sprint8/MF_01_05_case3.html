@@ -58,7 +58,7 @@
 						<div class="wrap-gaps-top">
 							<div class="charge-guide-wrap">
 								<div class="charge-cont">
-									<span class="sub-disc01">OK캐쉬백<button aria-haspopup="true" type="button" class="tip-view">TIP</button></span>
+									<span class="sub-disc01">OK캐쉬백<button title="OK캐쉬백" aria-haspopup="true" type="button" class="tip-view">TIP</button></span>
 									<span class="tit tx-blue"><span class="charge-txt">9,120</span>점</span>
 								</div>
 								<ul class="round-dot-list type01 mb20">
@@ -92,11 +92,13 @@
 															<label class="tit" for="formInput01">납부할 포인트</label>
 															<span class="inputbox">
 																<span class="input">
-																	<input id="formInput01" type="text" placeholder="최소 1,000포인트 이상" />
+																	<input id="formInput01" type="text" placeholder="최소 1,000포인트 이상" title="납부할 포인트 최소 1,000포인트 이상 입력해 주세요"  aria-describedby="id-helper1"/>
                                                                 </span>
-                                                                <span class="error-txt">1,000점 이상 입력해주세요.</span>
-                                                                <span class="error-txt">보유하신 포인트 보다 초과 입력 하셨습니다.</span>
-                                                                <span class="error-txt">납부할 포인트를 입력해주세요.</span>
+                                                                <div id="id-helper1">
+                                                                    <span class="error-txt">1,000점 이상 입력해주세요.</span>
+                                                                    <span class="error-txt">보유하신 포인트 보다 초과 입력 하셨습니다.</span>
+                                                                    <span class="error-txt">납부할 포인트를 입력해주세요.</span>
+                                                                </div>
 																<p class="comm-indent-txt mt20">* OK캐쉬백은 1,000점 이상 10원 단위로 납부하실 수 있습니다.</p>
 															</span>
 														</li>
@@ -104,19 +106,21 @@
 															<label class="tit" for="formInput02">OK캐쉬백 카드번호</label>
 															<span class="inputbox">
 																<span class="input">
-																	<input id="formInput02" type="number" placeholder="숫자만 입력" />
+																	<input id="formInput02" type="number" placeholder="숫자만 입력" title="OK캐쉬백 카드번호 숫자만 입력해 주세요"  aria-describedby="id-helper2"/>
                                                                 </span>
-                                                                <span class="error-txt">카드번호가 올바르지 않습니다.</span>
-                                                                <span class="error-txt">카드 번호를 입력해주세요.</span>
+                                                                <div  id="id-helper2">
+                                                                    <span class="error-txt">카드번호가 올바르지 않습니다.</span>
+                                                                    <span class="error-txt">카드 번호를 입력해주세요.</span>
+                                                                </div>
 															</span>
 														</li>
 														<li>
 															<label class="tit" for="formInput03">카드 비밀번호</label>
 															<span class="inputbox">
 																<span class="input">
-																	<input id="formInput03" type="number" placeholder="비밀번호 입력" />
+																	<input id="formInput03" type="number" placeholder="비밀번호 입력"  title="카드 비밀번호 비밀번호를 입력해 주세요" aria-describedby="id-helper3"/>
                                                                 </span>
-                                                                <span class="error-txt">카드 비밀번호를 입력해주세요.</span>
+                                                                <span class="error-txt" id="id-helper3">카드 비밀번호를 입력해주세요.</span>
 																<p class="mt10"><button class="bt-link-tx underline fs-13">OK캐쉬백 비밀번호 찾기</button></p>
 															</span>
 														</li>
@@ -174,9 +178,9 @@
                     <!-- .cont-box -->
                     <div class="cont-box nogaps-btm">
                         <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                        <ul class="noti-list">
-                            <li>포인트 요금납부 이용안내 <button aria-haspopup="true" type="button" class="tip-view">TIP</button></li>
-                            <li>미납금액 <button aria-haspopup="true" type="button" class="tip-view">TIP</button></li>
+                        <ul class="noti-list02">
+                            <li><button title="포인트 요금납부 이용안내" aria-haspopup="true" type="button" class="tip-view-btn">포인트 요금납부 이용안내<span class="tip-view">TIP</span></button></li>
+                            <li><button title="미납금액" type="button" class="tip-view-btn">미납금액<span class="tip-view">TIP</span></button></li>
                         </ul>
                     </div>
                     <!--// .cont-box -->

@@ -32,13 +32,12 @@ Tw.BenefitSubmainFareInfo.prototype = {
     }
 
     // Tworld 는 과금발생 알러트 제외
-    if ($target.attr('data-no-alert') !== undefined) {
+    if ($target.attr('data-no-alert') !== undefined || !Tw.BrowserHelper.isApp()) {
       Tw.CommonHelper.openUrlExternal(_href);
     } else {
-      this._popupService.openConfirm(Tw.ALERT_MSG_BENEFIT.CONFIRM_3_A15, null, function () {
-        $this._popupService.close();
+      Tw.CommonHelper.showDataCharge($.proxy(function(){
         Tw.CommonHelper.openUrlExternal(_href);
-      });
+      },this));
     }
   }
 };

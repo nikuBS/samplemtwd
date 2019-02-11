@@ -176,11 +176,15 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
         data : completePopupData
       },
       $.proxy(this._bindCompletePopupBtnEvt,this),
-      null,
+      $.proxy(this._goPlan,this),
       'complete');
   },
   _bindCompletePopupBtnEvt : function (popupEvt) {
-    $(popupEvt).on('click','.btn-floating.btn-style2',$.proxy(this._historyService.go,this._historyService,-2));
+    $(popupEvt).on('click','.btn-floating.btn-style2',$.proxy(this._popupService.closeAll,this._popupService));
+  },
+  _goPlan : function () {
+    this._popupService.closeAll();
+    setTimeout($.proxy(this._historyService.goBack,this._historyService),0);
   },
   _tooltipInit : function (prodId) {
     switch (prodId) {

@@ -26,7 +26,7 @@ Tw.CustomerVoice.prototype = {
 
   _bindEvent: function () {
     this.$btn_register.on('click', $.proxy(this._checkHistories, this));
-    this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
+    // this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
   },
 
   _checkHistories: function () {
@@ -46,19 +46,28 @@ Tw.CustomerVoice.prototype = {
 
   _onClickRegister: function () {
     // this._history.goLoad('/customer/svc-info/voice/register');
+
     if ( this.historiesYn === 'N' ) {
       this._history.goLoad('/customer/svc-info/voice/register');
     } else {
-      this._popupService.openOneBtTypeB(
-        Tw.CUSTOMER_VOICE.EXIST_PREVIOUS_INFO,
+      this._popupService.openConfirmButton(
         Tw.CUSTOMER_VOICE.CALL_TO_CUSTOMER_CENTER,
-        [{
-          style_class: 'fe-call-customer-center',
-          txt: Tw.ALERT_MSG_MYT_DATA.CALL_CUSTOMER_CENTER
-        }],
-        'type1'
-      );
+        Tw.CUSTOMER_VOICE.EXIST_PREVIOUS_INFO,
+        $.proxy(this._onCancel, this),
+        $.proxy(this._callCustomer, this),
+        null,
+        Tw.ALERT_MSG_MYT_DATA.CALL_CUSTOMER_CENTER);
     }
+  },
+
+  _callCustomer: function () {
+    var sCustomerCall = 'tel://114';
+    this._history.goLoad(sCustomerCall);
+  },
+
+  _onCancel: function () {
+    this._isCancel = true;
+    this._popupService.close();
   },
 
   _stepBack: function () {
@@ -71,7 +80,7 @@ Tw.CustomerVoice.prototype = {
         this._popupService.close();
       }, this),
       $.proxy(function () {
-        if (confirmed) {
+        if ( confirmed ) {
           this._history.goBack();
         }
       }, this),

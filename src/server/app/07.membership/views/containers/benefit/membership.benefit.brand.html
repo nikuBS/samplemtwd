@@ -59,7 +59,7 @@
                         </div>
                         <div class="cont-box nogaps">
                             <div class="add-prd-top-wrap add-top-type">
-                                <span class="counts type-l fe-grade"><button>전체 등급</button></span>
+                                <span class="counts type-l fe-grade"><button title="등급 선택">전체 등급</button></span>
                                 <!--<span class="select type-r fe-orders">-->
 									<!--<button class="on" ord-col="L">좋아요 순</button>-->
 									<!--<button ord-col="R">최신순</button>-->
@@ -195,9 +195,9 @@
                                     <div class="widget-box radio fe-category-list-in-layer">
                                         <ul class="select-list horizontal-list" role="radiogroup">
                                             <% for (var i = 0; i < cateList.length; i++) { %>
-                                                <li class="radiobox type05 ico-type01 <%= (selectedCateCd === cateList[i].cateCd) ? 'checked': '' %>" role="radio" aria-checked="true" cate-cd="<%= cateList[i].cateCd %>">
-                                                    <img src="<%= CDN %>/<%= cateList[i].showImgUrl %>" class="ico" alt="all" />
-                                                    <input type="radio" name="radio01" value="<%= cateList[i].cateCd %>" title="<%= cateList[i].cateName %>" checked="checked">
+                                                <li class="radiobox type05 <%= (selectedCateCd === cateList[i].cateCd) ? 'checked': '' %>" role="radio" aria-checked="<%= (selectedCateCd === cateList[i].cateCd) ? 'true': 'false' %>" cate-cd="<%= cateList[i].cateCd %>" id="aria-comp-radio<%= i+1 %>">
+                                                    <img src="<%= CDN %>/<%= cateList[i].showImgUrl %>" class="ico" alt="<%= cateList[i].cateName %>" />
+                                                    <input type="radio" name="radio01" value="<%= cateList[i].cateCd %>" title="<%= cateList[i].cateName %>" <%= (selectedCateCd === cateList[i].cateCd) ? 'checked="checked"': '' %>  aria-labelledby="aria-comp-radio<%= i+1 %>">
                                                     <%= cateList[i].cateName %>
                                                 </li>
                                             <% } %>

@@ -50,7 +50,6 @@ Tw.MyTJoinPhoneNumChangeSearch.prototype = {
    * @private
    */
   _onclickSchNums: function(){
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     var param = {
       gubun: 'S',
@@ -75,6 +74,8 @@ Tw.MyTJoinPhoneNumChangeSearch.prototype = {
       //this._popupService.toast('번호 조회범위는 100을 넘을 수 없습니다.');
       return;
     }
+
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
 
     // 변경할 번호 search
     this._apiService.request(Tw.API_CMD.BFF_05_0184, param)
@@ -172,6 +173,22 @@ Tw.MyTJoinPhoneNumChangeSearch.prototype = {
 
 
   _close: function(){
-    this._popupService.close();
+    if($('#inputNum1', this.$container).val()
+      || $('#inputNum2', this.$container).val()
+      || $('.select-list .radiobox.checked input').val()){
+
+      this._popupService.openConfirmButton(
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+        $.proxy(function(){
+          this._popupService.closeAll();
+        }, this),
+        null,
+        Tw.BUTTON_LABEL.NO,
+        Tw.BUTTON_LABEL.YES);
+    } else {
+      this._popupService.close();
+    }
+
   }
 };

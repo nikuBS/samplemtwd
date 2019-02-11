@@ -38,13 +38,13 @@
     </div>
     <!--// #skip_navigation -->
     <div class="wrap">
-        <!-- .popup hbs -->
-        <div class="popup-page tw-popup pt0"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- .popup hbs --><!--190201 .nobg 추가-->
+        <div class="popup-page tw-popup pt0 nobg"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
             <!-- .container-wrap -->
             <div class="container-wrap">
                 <h2 class="blind">내용</h2>
                 <div class="container">
-                    <div class="cont-box noborder">
+                    <div class="cont-box noborder bgnone"><!--190201 .bgnone 추가-->
                         <div class="membership-card-box">
                             <span class="card-img"><img src="/img/benefit/membership-card.png" alt="card"></span>
 
@@ -56,9 +56,10 @@
                                 연간 누적혜택
                                 <p><strong class="ff-tg-medium">119,090</strong>원</p>
                             </div>
-                            <div class="bar-code">
-                                <img src="/img/benefit/membership-bar-code.png" alt="bar code">
-                            </div>
+                            <span class="bar-code">
+                                <img src="/img/main/bar_code.png" alt="bar code">
+                                <p class="bar-code-num">2496 5530 4263 1514</p> <!-- 2019-01-25 추가 -->
+                            </span>
                         </div>
 
                         <div class="membership-event-box">

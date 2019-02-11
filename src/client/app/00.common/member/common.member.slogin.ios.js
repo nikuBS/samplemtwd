@@ -57,7 +57,9 @@ Tw.CommonMemberSloginIos.prototype = {
     ATH2006: 'ATH2006',     // 제한시간 내에 보낼 수 있는 발송량이 초과하였습니다.
     ATH2007: 'ATH2007',     // 입력하신 인증번호가 맞지 않습니다.
     ATH2008: 'ATH2008',     // 인증번호를 입력할 수 있는 시간이 초과하였습니다.
-    ATH1221: 'ATH1221'      // 인증번호 유효시간이 경과되었습니다.
+    ATH1221: 'ATH1221',     // 인증번호 유효시간이 경과되었습니다.
+    ATH2011: 'ATH2011',
+    ATH2014: 'ATH2014'
   },
   _bindEvent: function () {
     this.$container.on('click', '#fe-bt-cop', $.proxy(this._onClickCopBtn, this));
@@ -99,6 +101,7 @@ Tw.CommonMemberSloginIos.prototype = {
     this.$inputCert.on('input', $.proxy(this._onInputCert, this));
 
     this.$container.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
+    this.$container.on('click', '#fe-bt-mdn-delete', $.proxy(this._onKeyupMdn, this));
   },
   _onKeyupMdn: function () {
     var mdnLength = this.$inputMdn.val().length;
@@ -138,7 +141,7 @@ Tw.CommonMemberSloginIos.prototype = {
   _onClickReCert: function () {
     this._sendCert(true);
   },
-  _sendCert: function(reCert) {
+  _sendCert: function (reCert) {
     if ( this._checkCertValidation() ) {
       this.mdn = this.$inputMdn.val();
       var params = {
@@ -223,12 +226,15 @@ Tw.CommonMemberSloginIos.prototype = {
   _successRequestLogin: function (resp) {
     this._clearLoginError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
       this._historyService.goBack();
     } else if ( resp.code === this.SMS_ERROR.ATH2007 ) {
       this.$errorLoginCert.removeClass('none');
     } else if ( resp.code === this.SMS_ERROR.ATH2008 ) {
       this.$errorLoginTime.removeClass('none');
+    } else if ( resp.code === this.SMS_ERROR.ATH2011 ) {
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2011);
+    } else if ( resp.code === this.SMS_ERROR.ATH2014 ) {
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2014);
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }

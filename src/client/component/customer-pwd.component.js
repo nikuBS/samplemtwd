@@ -65,6 +65,7 @@ Tw.CustomerPwdComponent.prototype = {
   },
   _bindEvent: function () {
     this.$pwdWrap.on('input', 'input', $.proxy(this._onInput, this));
+    this.$pwdWrap.on('keyup', 'input', $.proxy(this._checkDelete, this));
   },
   _onInput: function (event) {
     var $target = $(event.currentTarget);
@@ -80,6 +81,18 @@ Tw.CustomerPwdComponent.prototype = {
     this._hideErrMsg();
     this._setAsterisk($target);
     this._moveFocus($target);
+  },
+  _checkDelete: function (e) {
+    var $target = $(e.currentTarget);
+    if (e.key === 'Backspace' && !$target.hasClass('fe-first-pwd')) {
+      var $prev = $target.parent().prev().find('input');
+      $prev.val('');
+
+      $prev.parent().addClass('active').removeClass('entered');
+      setTimeout(function () {
+        $prev.focus();
+      }, 0);
+    }
   },
   _hideErrMsg: function () {
     this.$errMsg.hide();

@@ -1,7 +1,7 @@
 $(document).on('ready', function () {
   $('html').addClass('device_'+skt_landing.util.win_info.get_device());
   skt_landing.action.top_btn();
-  skt_landing.action.keyboard();
+  //skt_landing.action.keyboard();
   if($('body').hasClass('bg-productdetail')){
     skt_landing.action.prd_header();
   }
@@ -180,6 +180,32 @@ skt_landing.action = {
     }
     this.scroll_gap.pop();
   },
+  checkScroll: {
+    scrollTopPosition: '',
+    lockScroll: function () {
+      if(!$("html, body").hasClass('noscroll')){ // prevent lockScroll function
+        skt_landing.action.checkScroll.scrollTopPosition = $(window).scrollTop();
+        // console.log(skt_landing.action.checkScroll.scrollTopPosition);
+        $("body > .wrap").css({
+          top: - (skt_landing.action.checkScroll.scrollTopPosition)
+        });
+        $("html, body").addClass('noscroll');
+      }
+    },
+    unLockScroll: function () {
+      if($("body").hasClass('noscroll')){
+        $("body > .wrap").css({
+          top: ''
+        });
+        $("html, body").removeClass('noscroll');
+        
+        window.scrollTo(0, skt_landing.action.checkScroll.scrollTopPosition);
+        window.setTimeout(function () {
+          skt_landing.action.checkScroll.scrollTopPosition = null;
+        }, 0);
+      }
+    }
+  },
   setFocus: function(target, idx){  // target : selector(string) | jquery selector
     var target = $(target),
         idx = idx ? idx : 0;
@@ -244,27 +270,19 @@ skt_landing.action = {
     svg_id:'',
     on: function(obj){
       var ta = obj.ta,
-          co = obj.co,
+          //co = obj.co,
           size = obj.size,
           tit_id = skt_landing.action.ran_id_create(),
-          loading_box = $('<div class="loading tw-loading" role="region" aria-labelledby="'+tit_id+'"></div>'),
-          loading_ico = $('<div class="loading_ico"></div>'),
+          loading_box = $('<div class="loading tw-loading profile-main-loader" role="region" aria-labelledby="'+tit_id+'"></div>'),
+          loading_ico = $('<div class="loader"></div>'),
           loading_txt = $('<em id="'+tit_id+'">로딩중입니다.</em>'),
           svg_id = '',
-          svg_color = '',
+          //svg_color = '',
           svg = '';
       svg_id = skt_landing.action.loading.svg_id = skt_landing.action.ran_id_create();
-      if(co == 'white'){
-        svg_color = 'rgba(255,255,255,1)';
-        loading_txt.addClass('white');
-      }else if(co == 'blue'){
-        svg_color = 'rgba(50,94,193,1)';
-        loading_txt.addClass('blue');
-      }else{
-        svg_color = 'rgba(117,117,117,1)';
-        loading_txt.addClass('grey');
-      }
-      svg = '<svg id="'+svg_id+'" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><circle id="actor_12" cx="65" cy="25" r="4" opacity="1" fill="'+svg_color+'" fill-opacity="1" stroke="rgba(166,3,17,1)" stroke-width="0" stroke-opacity="1" stroke-dasharray=""></circle><circle id="actor_11" cx="75" cy="36" r="4" opacity="1" fill="'+svg_color+'" fill-opacity="1" stroke="rgba(166,3,17,1)" stroke-width="0" stroke-opacity="1" stroke-dasharray=""></circle><circle id="actor_10" cx="79" cy="50" r="4" opacity="1" fill="'+svg_color+'" fill-opacity="1" stroke="rgba(166,3,17,1)" stroke-width="0" stroke-opacity="1" stroke-dasharray=""></circle><circle id="actor_9" cx="75" cy="64" r="4" opacity="1" fill="'+svg_color+'" fill-opacity="1" stroke="rgba(166,3,17,1)" stroke-width="0" stroke-opacity="1" stroke-dasharray=""></circle><circle id="actor_8" cx="65" cy="75" r="4" opacity="1" fill="'+svg_color+'" fill-opacity="1" stroke="rgba(166,3,17,1)" stroke-width="0" stroke-opacity="1" stroke-dasharray=""></circle><circle id="actor_7" cx="50" cy="79" r="4" opacity="1" fill="'+svg_color+'" fill-opacity="1" stroke="rgba(166,3,17,1)" stroke-width="0" stroke-opacity="1" stroke-dasharray=""></circle><circle id="actor_6" cx="35" cy="75" r="4" opacity="1" fill="'+svg_color+'" fill-opacity="1" stroke="rgba(166,3,17,1)" stroke-width="0" stroke-opacity="1" stroke-dasharray=""></circle><circle id="actor_5" cx="25" cy="64" r="4" opacity="1" fill="'+svg_color+'" fill-opacity="1" stroke="rgba(166,3,17,1)" stroke-width="0" stroke-opacity="1" stroke-dasharray=""></circle><circle id="actor_4" cx="21" cy="50" r="4" opacity="1" fill="'+svg_color+'" fill-opacity="1" stroke="rgba(166,3,17,1)" stroke-width="0" stroke-opacity="1" stroke-dasharray=""></circle><circle id="actor_3" cx="25" cy="36" r="4" opacity="1" fill="'+svg_color+'" fill-opacity="1" stroke="rgba(166,3,17,1)" stroke-width="0" stroke-opacity="1" stroke-dasharray=""></circle><circle id="actor_2" cx="35" cy="25" r="4" opacity="1" fill="'+svg_color+'" fill-opacity="1" stroke="rgba(166,3,17,1)" stroke-width="0" stroke-opacity="1" stroke-dasharray=""></circle><circle id="actor_1" cx="50" cy="21" r="4" opacity="1" fill="'+svg_color+'" fill-opacity="1" stroke="rgba(166,3,17,1)" stroke-width="0" stroke-opacity="1" stroke-dasharray=""></circle></svg>';
+
+      svg = '<svg class="circular-loader"viewBox="25 25 50 50" ><circle class="loader-path" cx="50" cy="50" r="20" fill="none" stroke=#EF4B49" stroke-width="2" /></svg>';
+
       loading_box
         .css({
           width : $(ta).outerWidth(true),
@@ -285,7 +303,6 @@ skt_landing.action = {
         loading_box.addClass('full');
         loading_ico.append(loading_txt);
       }
-      skt_landing.action.loading.ani();
     },
     off: function(obj){
       var ta = obj.ta;
@@ -293,59 +310,7 @@ skt_landing.action = {
     },
     allOff : function(){
       $('.tw-loading').empty().remove();
-    },
-    ani: function(){
-      var actors = {},
-          node = document.getElementById(skt_landing.action.loading.svg_id).getElementsByTagName("circle");
-      actors.actor_1 = {node: node[11],type: "circle",cx: 50,cy: 21,dx: 8,dy: 32,opacity: 1};
-      actors.actor_2 = {node: node[10],type: "circle",cx: 35,cy: 25,dx: 8,dy: 32,opacity: 1};
-      actors.actor_3 = {node: node[9],type: "circle",cx: 25,cy: 36,dx: 8,dy: 32,opacity: 1};
-      actors.actor_4 = {node: node[8],type: "circle",cx: 21,cy: 50,dx: 8,dy: 32,opacity: 1};
-      actors.actor_5 = {node: node[7],type: "circle",cx: 25,cy: 64,dx: 8,dy: 32,opacity: 1};
-      actors.actor_6 = {node: node[6],type: "circle",cx: 35,cy: 75,dx: 8,dy: 32,opacity: 1};
-      actors.actor_7 = {node: node[5],type: "circle",cx: 50,cy: 79,dx: 8,dy: 32,opacity: 1};
-      actors.actor_8 = {node: node[4],type: "circle",cx: 65,cy: 75,dx: 8,dy: 32,opacity: 1};
-      actors.actor_9 = {node: node[3],type: "circle",cx: 75,cy: 64,dx: 8,dy: 32,opacity: 1};
-      actors.actor_10 = {node: node[2],type: "circle",cx: 79,cy: 50,dx: 8,dy: 32,opacity: 1};
-      actors.actor_11 = {node: node[1],type: "circle",cx: 75,cy: 36,dx: 8,dy: 32,opacity: 1};
-      actors.actor_12 = {node: node[0],type: "circle",cx: 65,cy: 25,dx: 8,dy: 32,opacity: 1};
-      var tricks = {};
-      tricks.trick_1 = (function (t, i) {
-        i = (function (n) {
-          return .5 > n ? 2 * n * n : -1 + (4 - 2 * n) * n
-        })(i) % 1, i = 0 > i ? 1 + i : i;
-        var _ = t.node;
-        0.2 >= i ? _.setAttribute("opacity", i * (t.opacity / 0.2)) : i >= 0.8 ? _.setAttribute("opacity", t.opacity - (i - 0.8) * (t.opacity / (1 - 0.8))) : _.setAttribute("opacity", t.opacity)
-      });
-      var scenarios = {};
-      scenarios.scenario_1 = {
-        actors: ["actor_1", "actor_12", "actor_11", "actor_10", "actor_9", "actor_8", "actor_7", "actor_6", "actor_5", "actor_4", "actor_3", "actor_2", "actor_1"],
-        tricks: [{
-          trick: "trick_1",
-          start: 0,
-          end: 1.00
-              }],
-        startAfter: 600,
-        duration: 2000,
-        actorDelay: 100,
-        repeat: 0,
-        repeatDelay: 0
-      };
-      var _reqAnimFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.oRequestAnimationFrame,
-        fnTick = function (t) {
-          var r, a, i, e, n, o, s, c, m, f, d, k, w;
-          for (c in actors) actors[c]._tMatrix = [1, 0, 0, 1, 0, 0];
-          for (s in scenarios)
-            for (o = scenarios[s], m = t - o.startAfter, r = 0, a = o.actors.length; a > r; r++) {
-              if (i = actors[o.actors[r]], i && i.node && i._tMatrix)
-                for (f = 0, m >= 0 && (d = o.duration + o.repeatDelay, o.repeat > 0 && m > d * o.repeat && (f = 1), f += m % d / o.duration), e = 0, n = o.tricks.length; n > e; e++) k = o.tricks[e], w = (f - k.start) * (1 / (k.end - k.start)), tricks[k.trick] && tricks[k.trick](i, Math.max(0, Math.min(1, w)));
-              m -= o.actorDelay
-            }
-          for (c in actors) i = actors[c], i && i.node && i._tMatrix && i.node.setAttribute("transform", "matrix(" + i._tMatrix.join() + ")");
-          _reqAnimFrame(fnTick)
-        };
-      _reqAnimFrame(fnTick);
-      }
+    }
   },
   popup: { //popup 
     open: function (popup_info,callback_open,callback_fail) {
@@ -614,6 +579,47 @@ skt_landing.action = {
         if($(this).parent().next().is('.depth2')){
           $(this).parent().parent().toggleClass('open');
         }
+    });
+  },
+  notice_slider : function(){
+    var ta = ta ? $(ta).find('.notice-slide-type') : $('.notice-slide-type');
+    $(ta).each(function(){
+      if($(this).data('event') == undefined){
+          $(this).data('event', 'bind')
+      }else{
+          return;
+      }
+      if($(this).find('.slick-initialized').length > 0){
+          $(this).find('.slider').slick('destroy');
+      }
+      var _this = $(this).find('.slider');
+      _this.slick({
+          dots: false,
+          arrows: false,
+          infinite: true,
+          speed : 700,
+          centerMode: false,
+          focusOnSelect: false,
+          vertical:true,
+          verticalSwiping:true,
+          autoplay:true,
+          autoplaySpeed:5000
+      });
+
+      var $slick = _this.slick('getSlick');
+      var $slides = $slick.$slides;
+      var slideIndex = $slick.slickCurrentSlide();
+      $slides.on('click', function () {
+          var $this = $(this);
+          slideIndex = $slides.index($this);
+          $slides.removeClass('slick-current slick-active');
+          $this.addClass('slick-current slick-active');
+      });
+      _this.on('beforeChange', function (e) {
+          setTimeout(function () {
+          $slides.eq(slideIndex).triggerHandler('click');
+          }, 0);
+      });
     });
   }
 };

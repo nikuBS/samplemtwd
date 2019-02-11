@@ -168,7 +168,7 @@ Tw.MyTJoinSubMain.prototype = {
   },
 
   _checkBanner: function (result) {
-    return (result.bltnYn === 'Y' && result.tosLnkgYn === 'Y');
+    return (result.bltnYn === 'N' || result.tosLnkgYn === 'Y');
   },
 
   _successDrawBanner: function () {
@@ -327,7 +327,7 @@ Tw.MyTJoinSubMain.prototype = {
   // 회선 변경 후 처리
   _onChangeSessionSuccess: function () {
     if ( Tw.BrowserHelper.isApp() ) {
-      this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
+      Tw.CommonHelper.toast(Tw.REMNANT_OTHER_LINE.TOAST);
     }
     setTimeout($.proxy(function () {
       if ( this.changeLineType === 'pc' ) {

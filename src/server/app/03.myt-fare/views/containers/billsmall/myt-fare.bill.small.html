@@ -50,7 +50,7 @@
                     <ul class="link-list">
                         <li>
                             <dl>
-                                <dt>선결제 가능금액<button id="MF_06_tip_01" class="tip-view">TIP</button></dt>
+                                <dt>선결제 가능금액<button id="MF_06_tip_01" class="tip-view" aria-haspopup="true" title="선결제 가능금액">TIP</button></dt>
                                 <dd>
                                     <span class="val"><span class="str fe-prepay-amount"><%= result.tmthChrgPsblAmount %></span>원</span>
                                     <button class="fe-prepay">선결제 화면 이동</button>
@@ -59,7 +59,7 @@
                         </li>
                         <li>
                             <dl>
-                                <dt>자동 선결제<button id="MF_06_tip_02" class="tip-view">TIP</button></dt>
+                                <dt>자동 선결제<button id="MF_06_tip_02" class="tip-view" aria-haspopup="true" title="자동 선결제">TIP</button></dt>
                                 <% if (result.autoChrgStCd === 'U') { %>
                                 <dd>
                                     <span class="val">변경 및 해지</span>
@@ -92,7 +92,7 @@
 												<span class="btn-switch type1 <% if (usedYn.isUsed) { %> on <% } %>">
 													<span class="switch-style" role="checkbox" aria-checked="false">
 														<span class="on-tx fe-tx">사용</span>
-														<input id="<%= usedYn.rtnUseYn %>" class="fe-set-use" type="checkbox" title="지정일부터 해제 예정" />
+														<input id="<%= usedYn.rtnUseYn %>" class="fe-set-use" type="checkbox" title="소액결제 이용설정" />
 														<span class="off-tx fe-tx">차단</span>
 													</span>
 												</span>
@@ -102,10 +102,10 @@
                                 </dd>
                             </dl>
                         </li>
-
+                        <% if (usedYn.isPassword) { %>
                         <li>
                             <dl>
-                                <dt>결제 비밀번호<button aria-haspopup="true"><span class="blind">정보보기</span></button></dt>
+                                <dt>결제 비밀번호</dt>
                                 <% if (passwordInfo.text !== '') { %>
                                 <dd>
                                     <span class="val"><%= passwordInfo.text %></span>
@@ -120,10 +120,10 @@
                                 <% } %>
                             </dl>
                         </li>
+                        <% } %>
                     </ul>
                 </div>
                 <!--// .cont-box -->
-                <hr class="cont-sp type1" aria-hidden="true"/>
             </div>
         </div>
         <!--// #contents -->

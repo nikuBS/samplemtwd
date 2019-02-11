@@ -1,3 +1,6 @@
+<% if ( !series && !recommends || series && series.list.length < 1 && recommends && recommends.length < 1 ) { %>
+<hr class="cont-sp type1" aria-hidden="true"/>
+<% } %>
 <%
     if (
         relateTags && relateTags.length > 0 && (!isCombine && !isDiscount) ||
@@ -11,8 +14,6 @@
         similarPath += '?filters=' + similarProductInfo.prodFltIds;
     }
 %>
-<hr class="cont-sp type1" aria-hidden="true"/>
-
 <div class="cont-box <%= tagsClass %>">
     <h3 class="suggest-tag-title">연관태그</h3>
     <% if ( similarProductInfo && (similarProductInfo.prodCnt > 0 || isCombine) && similarProductInfo.list.length > 0 ) { %>

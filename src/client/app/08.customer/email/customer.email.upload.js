@@ -49,7 +49,7 @@ Tw.CustomerEmailUpload.prototype = {
     if ( Tw.BrowserHelper.isAndroid() ) {
       this._nativeService.send(Tw.NTV_CMD.OPEN_FILE_CHOOSER, {
         dest: 'email',
-        acceptExt: this.acceptExt,
+        acceptExt: this._acceptExt,
         limitSize: this._limitFileByteSize
       }, $.proxy(this._nativeFileChooser, this, $target));
     }

@@ -21,6 +21,14 @@ Tw.MembershipMyUpdate.prototype = {
     this.$container.on('click', 'input[type=checkbox]', $.proxy(this._agreeCheck, this));
     this.$container.on('click', '#fe-update', $.proxy(this._requestUpdate, this));
     this.$btnPrevStep = this.$container.find('.prev-step');
+    this.$checkAll = this.$container.find('#chk1');
+    this.$checkFirst = this.$container.find('#chk2');
+    this.$checkSecond = this.$container.find('#chk3');
+    this.$checkTest = this.$container.find('#chk8');
+    this.$smsAgree = this.$container.find('#oka1');
+    this.$tmAgree = this.$container.find('#oka2');
+    this.$newsAgree = this.$container.find('#oka3');
+    this.$toggleOkCashbag = this.$container.find('#fe-ok-toggle');
 
   },
 
@@ -28,48 +36,74 @@ Tw.MembershipMyUpdate.prototype = {
     this.$btnPrevStep.on('click', $.proxy(this._goPrevStep, this));
   },
 
+  _okCashbagUncheck: function() {
+    this.$checkTest.prop('checked', false);
+    this.$checkAll.prop('checked', false);
+    this.$checkFirst.prop('checked', false);
+    this.$checkSecond.prop('checked', false);
+
+    this.$checkTest.removeAttr('checked');
+    this.$checkAll.removeAttr('checked');
+    this.$checkFirst.removeAttr('checked');
+    this.$checkSecond.removeAttr('checked');
+
+    this.$toggleOkCashbag.hide();
+    this._okCashbagShown = false;
+
+    var self = this;
+    setTimeout(function(){
+      self._popupService.close();
+    },50);
+  },
+
   _agreeCheck: function(e) {
     var selected = e.target;
 
     if($(selected).attr('checked') === 'checked'){ //체크 해제
-      $(selected).removeAttr('checked');
 
       if(selected.name === 'checkbox2'){
-        $('.toggle-aggrement').hide();
-        this._okCashbagShown = false;
+        //OK캐시백 기능 추가하기는 알럿 띄운후 체크해제
+        var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A63;
+        this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE, $.proxy(this._okCashbagUncheck, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+      }else{
+        $(selected).removeAttr('checked');
       }
 
       if(selected.id === 'chk1'){ //OK 캐시백 모두 동의 해제
-        $('#chk2').prop('checked', false);
-        $('#chk3').prop('checked', false);
+        this.$checkFirst.prop('checked', false);
+        this.$checkSecond.prop('checked', false);
         $(selected).removeAttr('checked');
-        $('#chk2').removeAttr('checked');
-        $('#chk3').removeAttr('checked');
+        this.$checkFirst.removeAttr('checked');
+        this.$checkSecond.removeAttr('checked');
       }
 
-      if(selected.id === 'chk2' || selected.id === 'chk3'){
-        $('#chk1').prop('checked', false);
-        $('#chk1').removeAttr('checked');
+      if(selected.id === 'chk2' || selected.id === 'chk3'){ //OK 캐시백 개별 해제
+        this.$checkAll.prop('checked', false);
+        this.$checkAll.removeAttr('checked');
       }
     }else{ // 체크 설정
       $(selected).attr('checked','checked');
 
-      if(selected.name === 'checkbox2'){
-        $('.toggle-aggrement').show();
-        this._okCashbagShown = true;
+      if(selected.name === 'checkbox2'){ //OK 캐시백 기능 추가하기
+        var self = this;
+        setTimeout(function(){
+          self.$checkTest.prop('checked', true);
+          $('.toggle-aggrement').show();
+          self._okCashbagShown = true;
+        },50);
       }
 
       if(selected.id === 'chk1'){ //OK 캐시백 모두 동의 설정
-        $('#chk2').prop('checked', true);
-        $('#chk3').prop('checked', true);
-        $('#chk2').attr('checked','checked');
-        $('#chk3').attr('checked','checked');
+        this.$checkFirst.prop('checked', true);
+        this.$checkSecond.prop('checked', true);
+        this.$checkFirst.attr('checked','checked');
+        this.$checkSecond.attr('checked','checked');
       }
 
-      if(selected.id === 'chk2' || selected.id === 'chk3'){
-        if($('#chk2').attr('checked') === 'checked' && $('#chk3').attr('checked') === 'checked'){
-          $('#chk1').prop('checked', true);
-          $('#chk1').attr('checked','checked');
+      if(selected.id === 'chk2' || selected.id === 'chk3'){ //OK 캐시백 개별 설정
+        if(this.$checkFirst.attr('checked') === 'checked' && this.$checkSecond.attr('checked') === 'checked'){
+          this.$checkAll.prop('checked', true);
+          this.$checkAll.attr('checked','checked');
         }
       }
     }
@@ -78,19 +112,19 @@ Tw.MembershipMyUpdate.prototype = {
   _requestUpdate: function() {
 
     //OK 캐쉬백 조건 체크
-    if(this._okCashbagShown && $('#chk1').attr('checked') !== 'checked'){
+    if(this._okCashbagShown && this.$checkAll.attr('checked') !== 'checked'){
       var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A62;
       this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
       return;
     }
 
-    this._myInfoData.smsAgreeYn = $('#oka1').attr('checked') === 'checked' ? 'Y' : 'N';
-    this._myInfoData.sktNewsYn = $('#oka2').attr('checked') === 'checked' ? 'Y' : 'N';
-    this._myInfoData.sktTmYn = $('#oka3').attr('checked') === 'checked' ? 'Y' : 'N';
+    this._myInfoData.smsAgreeYn = this.$smsAgree.attr('checked') === 'checked' ? 'Y' : 'N';
+    this._myInfoData.sktNewsYn = this.$tmAgree.attr('checked') === 'checked' ? 'Y' : 'N';
+    this._myInfoData.sktTmYn = this.$newsAgree.attr('checked') === 'checked' ? 'Y' : 'N';
 
     if(this._myInfoData.ctzNumAgreeYn === 'N' && this._myInfoData.ocbAccumAgreeYn === 'N'){
-      this._myInfoData.ctzNumAgreeYn = $('#chk1').attr('checked') === 'checked' ? 'Y' : 'N';
-      this._myInfoData.ocbAccumAgreeYn = $('#chk2').attr('checked') === 'checked' ? 'Y' : 'N';
+      this._myInfoData.ctzNumAgreeYn = this.$checkAll.attr('checked') === 'checked' ? 'Y' : 'N';
+      this._myInfoData.ocbAccumAgreeYn = this.$checkFirst.attr('checked') === 'checked' ? 'Y' : 'N';
     }
 
     var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A53;

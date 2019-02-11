@@ -6,6 +6,10 @@
 Tw.TNotifyComponent = function () {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._nativeService = Tw.Native;
+  this._historyService = new Tw.HistoryService();
+
+  this._goSetting = false;
 
 };
 
@@ -15,6 +19,9 @@ Tw.TNotifyComponent.prototype = {
 
   },
   _openTNotify: function (list) {
+    if ( list.length > 0 ) {
+      this._nativeService.send(Tw.NTV_CMD.SAVE, { key: Tw.NTV_STORAGE.LAST_READ_PUSH_SEQ, value: list[0].seq });
+    }
     this._popupService.open({
       hbs: 'HO_04_06_01',
       layer: true,
@@ -25,11 +32,17 @@ Tw.TNotifyComponent.prototype = {
     }, $.proxy(this._onOpenTNotify, this), $.proxy(this._onCloseTNotify, this), 't-notify');
   },
   _onOpenTNotify: function ($popupContainer) {
-    $popupContainer.on('click', '#fe-bt-more', $.proxy(this._onClickBtMore, this));
+    this.$list = $popupContainer.find('.fe-list-item');
+    this.$btMore = $popupContainer.find('#fe-bt-more');
+
+    this.$btMore.on('click', $.proxy(this._onClickBtMore, this));
+    $popupContainer.on('click', '#fe-bt-go-setting', $.proxy(this._onClickGoSetting, this));
     $popupContainer.on('click', '.fe-bt-link', $.proxy(this._onClickLink, this));
   },
   _onCloseTNotify: function () {
-
+    if ( this._goSetting ) {
+      this._historyService.goLoad('/main/menu/settings/notification');
+    }
   },
   _getPushDate: function (userId) {
     this._apiService.request(Tw.API_CMD.BFF_04_0004, {
@@ -44,14 +57,24 @@ Tw.TNotifyComponent.prototype = {
     }
   },
   _parseList: function (list) {
-    return _.map(list, $.proxy(function (target) {
+    return _.map(list, $.proxy(function (target, index) {
       target.showImage = target.pushType === 'M';
       target.showDate = Tw.DateHelper.getKoreanDateWithDay(target.regDate);
       target.showTime = Tw.DateHelper.getKoreanTime(target.regDate);
+      target.isShow = index < Tw.DEFAULT_LIST_COUNT;
       return target;
     }, this));
   },
   _onClickBtMore: function () {
+    var $hideList = this.$list.filter('.none');
+    var $showList = $hideList.filter(function (index) {
+      return index < Tw.DEFAULT_LIST_COUNT;
+    });
+
+    $showList.removeClass('none');
+    if ( $hideList.length - $showList.length === 0 ) {
+      this.$btMore.hide();
+    }
 
   },
   _onClickLink: function ($event) {
@@ -59,5 +82,9 @@ Tw.TNotifyComponent.prototype = {
     if ( !Tw.FormatHelper.isEmpty(url) ) {
       Tw.CommonHelper.openUrlExternal(url);
     }
+  },
+  _onClickGoSetting: function () {
+    this._goSetting = true;
+    this._popupService.close();
   }
 };

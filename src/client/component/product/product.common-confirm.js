@@ -154,8 +154,8 @@ Tw.ProductCommonConfirm.prototype = {
       return;
     }
 
-    if(this._data.setInfo) {
-      // 선택약정할인 상품인 경우 예외 처리 (Edit: KIM inHwan)
+    if(this._data.selType) {
+      // 선택약정 상품인 경우 예외 처리
       return this._historyService.go(-3);
     }
 
@@ -275,7 +275,7 @@ Tw.ProductCommonConfirm.prototype = {
   },
 
   _openComparePlans: function() {
-    this._comparePlans.openCompare(this._data.preinfo.toProdInfo.prodId);
+    this._comparePlans.openCompare(this._data.preinfo.toProdInfo.prodId, false);
   },
 
   _setAgreeAndclosePop: function($wrap) {
@@ -286,12 +286,15 @@ Tw.ProductCommonConfirm.prototype = {
     this._closePop();
   },
 
-  _closePop: function(event) {
-    var $target = event ? $(event.currentTarget) : null;
-
-    this._popupService.close();
-    if($target && $target.hasClass('set-info')) {
-      this._historyService.goBack();
+  _closePop: function() {
+    if (this._data.selType)  {
+      setTimeout($.proxy(function () {
+        this._historyService.goBack();
+        // this._historyService.replaceURL('/benefit/submain/detail/select-contract?prod_id=NA00004430&type='+ this._data.selType);
+      }, this), 100);
+    }
+    else {
+      this._popupService.close();
     }
   },
 

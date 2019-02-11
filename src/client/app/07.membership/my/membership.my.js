@@ -80,7 +80,8 @@ Tw.MembershipMy.prototype = {
   _renderTemplate: function(params, res) {
     if(res.code === Tw.API_CODE.CODE_00){
       res = res.result;
-      if(res.length < 1){
+      if(res.length < 1){ //이용내역이 없을 때
+        this.$list.hide();
         this.$more.hide();
         this.$empty.show();
       }else{
@@ -99,6 +100,7 @@ Tw.MembershipMy.prototype = {
     var strPeriod = sDate + ' - ' + eDate;
     this.$strPeriod.text(strPeriod);
 
+    this.$list.show();
     this.$list.empty();
     this.$more.hide();
     this.$empty.hide();
@@ -189,9 +191,11 @@ Tw.MembershipMy.prototype = {
   _onActionSelected: function(currentSheet, e) {
       var dateTxt = $(e.target).parents('label').attr('value');
       $('#'+currentSheet).text(dateTxt);
+
+      this._popupService.close();
   },
 
-  _requestReissueInfo: function(state) {
+  _requestReissueInfo: function() {
     //카드 발급 후 2주이내 알럿
     if(this._cardReqDt !== ''){
       var reissueLimitDate = Tw.DateHelper.getShortDateWithFormatAddByUnit(this._cardReqDt, 15, 'day', 'YYYYMMDD', 'YYYYMMDD');
@@ -204,68 +208,7 @@ Tw.MembershipMy.prototype = {
       }
     }
 
-    this._apiService
-      .request(Tw.API_CMD.BFF_11_0003, {})
-      .done($.proxy(this._successReissueInfo, this, state))
-      .fail($.proxy(this._onFail, this));
-  },
-
-  _parseReissueData: function(res) {
-    res.showGrade = Tw.MEMBERSHIP_GRADE[res.mbrGrCd];
-    res.showType = Tw.MEMBERSHIP_TYPE[res.mbrTypCd];
-    res.showSvcNum = Tw.FormatHelper.conTelFormatWithDash(res.svcNum);
-    res.showMbrCardNum = Tw.FormatHelper.addCardDash(res.mbrCardNum);
-
-    return res;
-  },
-
-  _successReissueInfo: function(state, res) {
-    if(res.code === Tw.API_CODE.CODE_00) {
-      var data = this._parseReissueData(res.result);
-
-      this._popupService.open({
-          hbs: 'BE_02_01',
-          layer: true,
-          data: data
-        },
-        $.proxy(this._onReissueOpened, this)
-      );
-    }else{
-      this._onFail(res);
-    }
-  },
-
-  _onReissueOpened: function($root) {
-    $root.on('click', '#fe-reissue-req', $.proxy(this._openReissueAlert, this));
-  },
-
-  _openReissueAlert: function() {
-    var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A51;
-    this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleReissueAlert, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A51.BUTTON);
-  },
-
-  _handleReissueAlert: function() {
-    var mbrChgRsnCd = '';
-    $('input[type=radio]').each(function(){
-      if($(this).attr('checked') === 'checked'){
-        mbrChgRsnCd = $(this).attr('data-code');
-      }
-    });
-
-    this._apiService
-      .request(Tw.API_CMD.BFF_11_0004, { mbrChgRsnCd : mbrChgRsnCd })
-      .done($.proxy(this._successReissueRequest, this))
-      .fail($.proxy(this._onFail, this));
-  },
-
-  _successReissueRequest: function(res) {
-    if(res.code === Tw.API_CODE.CODE_00){
-      this._popupService.afterRequestSuccess('/membership/my/history', '/membership/my',
-        Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.LINK_TITLE, Tw.ALERT_MSG_MEMBERSHIP.COMPLETE_TITLE.REISSUE,
-        Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.CONTENT);
-    }else{
-      this._onFail(res);
-    }
+    this._historyService.goLoad('my/reissue');
   },
 
   _cardChangeAlert: function() {

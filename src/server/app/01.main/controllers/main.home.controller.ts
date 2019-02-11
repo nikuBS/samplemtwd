@@ -11,17 +11,21 @@ import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import {
   HOME_SMART_CARD,
-  LINE_NAME, MEMBERSHIP_GROUP,
+  LINE_NAME,
+  LOGIN_TYPE,
+  MEMBERSHIP_GROUP,
   MYT_FARE_BILL_CO_TYPE,
   SVC_ATTR_E,
-  SVC_ATTR_NAME, TPLAN_PROD_ID, TPLAN_SHARE_LIST,
+  SVC_ATTR_NAME,
+  TPLAN_PROD_ID,
+  TPLAN_SHARE_LIST,
   UNIT,
-  UNIT_E, UNLIMIT_CODE
+  UNIT_E,
+  UNLIMIT_CODE
 } from '../../../types/bff.type';
-import { UNIT as UNIT_STR, UNLIMIT_NAME } from '../../../types/string.type';
+import { SKIP_NAME, TIME_UNIT, UNIT as UNIT_STR, UNLIMIT_NAME } from '../../../types/string.type';
 import DateHelper from '../../../utils/date.helper';
 import { CHANNEL_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../../types/redis.type';
-import { SKIP_NAME, TIME_UNIT } from '../../../types/string.type';
 import BrowserHelper from '../../../utils/browser.helper';
 
 class MainHome extends TwViewController {
@@ -36,6 +40,7 @@ class MainHome extends TwViewController {
       membershipData: null,
       billData: null,
     };
+
     const noticeCode = !BrowserHelper.isApp(req) ? CHANNEL_CODE.MWEB :
       BrowserHelper.isIos(req) ? CHANNEL_CODE.IOS : CHANNEL_CODE.ANDROID;
 
@@ -54,7 +59,7 @@ class MainHome extends TwViewController {
           // smartCard = this.getSmartCardOrder(svcInfo.svcMgmtNum);
           Observable.combineLatest(
             this.getUsageData(svcInfo),
-            this.getMembershipData(),
+            this.getMembershipData(svcInfo),
             this.getRedisData(noticeCode, svcInfo.svcMgmtNum)
           ).subscribe(([usageData, membershipData, redisData]) => {
             homeData.usageData = usageData;
@@ -198,19 +203,28 @@ class MainHome extends TwViewController {
     return resultArr;
   }
 
-  private getMembershipData(): Observable<any> {
-    let membershipData = null;
-    return this.apiService.request(API_CMD.BFF_04_0001, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        membershipData = this.parseMembershipData(resp.result);
-      }
-      return membershipData;
-    });
+  private getMembershipData(svcInfo): Observable<any> {
+    let membershipData = {
+      code: ''
+    };
+    if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
+      membershipData.code = 'EASY_LOGIN';
+      return Observable.of(membershipData);
+    } else {
+      return this.apiService.request(API_CMD.BFF_04_0001, {}).map((resp) => {
+        membershipData.code = resp.code;
+        if ( resp.code === API_CODE.CODE_00 ) {
+          membershipData = Object.assign(membershipData, this.parseMembershipData(resp.result));
+        }
+        return membershipData;
+      });
+    }
   }
 
   private parseMembershipData(membershipData): any {
     // membershipData.showUsedAmount = FormatHelper.addComma((+membershipData.mbrUsedAmt).toString());
     membershipData.mbrGrStr = MEMBERSHIP_GROUP[membershipData.mbrGrCd];
+    membershipData.showCardNum = FormatHelper.addCardSpace(membershipData.mbrCardNum);
     return membershipData;
   }
 
@@ -257,21 +271,21 @@ class MainHome extends TwViewController {
           isBroadband: true
         };
       }
+
       const repSvc = billData.charge.repSvcYn === 'Y';
-      const totSvc = billData.charge.paidAmtMonthSvcCnt > 1;
+      const totSvc = +billData.charge.paidAmtMonthSvcCnt;
+      const billName = repSvc ? 'charge' : 'used';
+
       return {
         isBroadband: false,
-        chargeAmtTot: FormatHelper.addComma(billData.charge.useAmtTot),
-        usedAmtTot: FormatHelper.addComma(billData.used.useAmtTot),
-        deduckTot: FormatHelper.addComma(billData.charge.deduckTotInvAmt),
-        repSvc: billData.charge.repSvcYn === 'Y',
-        totSvc: billData.charge.paidAmtMonthSvcCnt > 1,
-        invEndDt: DateHelper.getShortDate(billData.charge.invDt),
-        invStartDt: DateHelper.getShortFirstDate(billData.charge.invDt),
-        invMonth: DateHelper.getCurrentMonth(billData.charge.invDt),
-        type1: totSvc && repSvc,
-        type2: !totSvc,
-        type3: totSvc && !repSvc
+        type1: repSvc,
+        type2: totSvc === 1,
+        type3: !repSvc && totSvc !== 1,
+        useAmtTot: FormatHelper.addComma(billData[billName].useAmtTot || '0'),
+        deduckTot: FormatHelper.addComma(billData[billName].deduckTotInvAmt || '0'),
+        invEndDt: DateHelper.getShortDate(billData[billName].invDt),
+        invStartDt: DateHelper.getShortFirstDate(billData[billName].invDt),
+        invMonth: DateHelper.getCurrentMonth(billData[billName].invDt),
       };
     }
     return null;
@@ -327,6 +341,9 @@ class MainHome extends TwViewController {
     return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         usageData = Object.assign(usageData, this.parseUsageData(resp.result, svcInfo));
+      } else if ( resp.code === API_CODE.BFF_0006 || resp.code === API_CODE.BFF_0007 ) {
+        usageData['fromDate'] = DateHelper.getShortMonthDateAndTime(resp.result.fromDtm);
+        usageData['toDate'] = DateHelper.getShortMonthDateAndTime(resp.result.toDtm);
       }
       usageData.code = resp.code;
       usageData.msg = resp.msg;

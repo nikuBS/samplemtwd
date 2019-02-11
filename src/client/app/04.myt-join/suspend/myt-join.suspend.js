@@ -23,7 +23,7 @@ Tw.MyTJoinSuspend = function (rootEl, params) {
 
 Tw.MyTJoinSuspend.prototype = {
   _cachedElement: function () {
-    this.$tabLinker = this.$container.find('.tab-linker a');
+    this.$tabLinker = this.$container.find('.tab-linker button');
     this.$tabTemp = this.$container.find('[data-id="fe-tab-temporary"]');
     this.$tabLong = this.$container.find('[data-id="fe-tab-long-term"]');
   },
@@ -48,14 +48,11 @@ Tw.MyTJoinSuspend.prototype = {
   },
 
   _onTabChanged: function (e) {
-    var hash = e.target.hash;
+    var hash = e.target.getAttribute('href');
     if ( this._params.suspend.status && hash === this.TYPE.TEMPORARY ) {
-      e.preventDefault();
       e.stopPropagation();
-      e.stopImmediatePropagation();
       return false;
     }
-    window.location.hash = hash;
     this._setActiveTab(hash);
   },
 
@@ -78,14 +75,17 @@ Tw.MyTJoinSuspend.prototype = {
 
   _onClose: function () {
     if ( (this._temp && this._temp.hasChanged()) || (this._long && this._long.hasChanged()) ) {
-      this._popupService.openConfirm(
+      this._popupService.openConfirmButton(
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
         $.proxy(function () {
-          this._historyService.goLoad('/myt-join/submain');
-        }, this));
+          this._historyService.goBack();
+        }, this),
+        null,
+        Tw.BUTTON_LABEL.NO,
+        Tw.BUTTON_LABEL.YES);
     } else {
-      this._historyService.goLoad('/myt-join/submain');
+      this._historyService.goBack();
     }
   }
 };

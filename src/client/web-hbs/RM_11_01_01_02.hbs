@@ -1,4 +1,4 @@
-<div class="popup-page tw-popup fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+<div class="popup-page tw-popup fixed-bottom h60" data-menuId="M000478" ><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
     <!-- #header -->
     <div class="header-wrap">
         <div class="page-header">
@@ -248,13 +248,22 @@
             <hr class="cont-sp type1" aria-hidden="true">
 
             <!-- .cont-box -->
-            {{#ifCond data.toolTipData.length '>' '0'}}
+            {{#ifCond data.toolTipData.length '||' data.autoInfo.preinfo.joinNoticeList.length }}
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                    <ul class="noti-list">
+                    <ul class="noti-list02">
+                        {{#each data.autoInfo.preinfo.joinNoticeList}}
+                            <li>
+                                <button type="button" class="tip-view-btn bff" data-tit="{{this.noticeTit}}" data-txt="{{this.noticeTxt}}" aria-haspopup="true">
+                                    {{this.noticeTit}}<span class="tip-view">TIP</span>
+                                </button>
+                            </li>
+                        {{/each}}
                         {{#each data.toolTipData}}
-                            <li>{{this.tipTitle}}
-                                <button type="button" class="tip-view" title="정보보기" page-id="M000478" id="{{this.tipId}}" aria-haspopup="true">TIP</button>
+                            <li>
+                                <button type="button" class="tip-view-btn"  id="{{this.tipId}}" aria-haspopup="true">
+                                    {{this.tipTitle}}<span class="tip-view">TIP</span>
+                                </button>
                             </li>
                         {{/each}}
                     </ul>

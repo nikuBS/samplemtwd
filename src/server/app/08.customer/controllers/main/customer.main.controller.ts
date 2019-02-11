@@ -23,22 +23,17 @@ class CustomerMain extends TwViewController {
       const noticeList = this.parseNoticeList(BrowserHelper.isApp(req), notice);
 
       res.render('main/customer.main.html', {
-        isApp: BrowserHelper.isApp(req),
         svcInfo: svcInfo,
         banners: banners,
+        pageInfo: pageInfo,
         noticeList: noticeList,
-        pageInfo: pageInfo
+        isApp: BrowserHelper.isApp(req)
         // researchList: researchList
       });
     });
   }
 
-  private parseNoticeList(isApp, notice) {
-    if ( isApp ) {
-      return notice.content.splice(0, 3);
-    }
-    return notice.content.splice(0, 6);
-  }
+  private parseNoticeList = (isApp, notice) => isApp ? notice.content.splice(0, 3) : notice.content.splice(0, 6);
 
   private getBanners = () => this.apiService.request(API_CMD.BFF_08_0066, {})
     .map((res) => {

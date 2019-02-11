@@ -38,7 +38,7 @@
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <!-- .cont-box -->
-<div class="cont-box nogaps-hoz">
+<div class="cont-box nogaps-top">
         <!-- .widget -->
     <div class="widget">
         <div class="widget-box accordion2">
@@ -60,7 +60,7 @@
                                         <span class="vol2">T상품</span>
                                     </div>
                                     <div class="list-arrow">
-                                        <span class="ico-arrow"></span>
+                                        <span class="ico-arrow"><span class="blind">결합가족 <%= member.custNm %> 내용 자세히 보기</span></span>
                                     </div>
                                 </div>
                             </button>
@@ -89,13 +89,13 @@
                                         <div>
                                             <span class="me"><%= member.custNm %></span>
                                         </div>
-                                        <div class="num"><%= member.svcNum %></div>
+                                        <!-- <div class="num"><%= member.svcNum %></div> -->
                                     </div>
                                     <div class="list-data">
                                         <span class="vol2">B상품</span>
                                     </div>
                                     <div class="list-arrow">
-                                        <span class="ico-arrow"></span>
+                                        <span class="ico-arrow"><span class="blind">결합가족 <%= member.custNm %> 내용 자세히 보기</span></span>
                                     </div>
                                 </div>
                             </button>
@@ -132,10 +132,10 @@
 <!-- .cont-box --><!-- 2018-11-02 수정 -->
 <div class="cont-box nogaps-btm">
     <h3 class="tx-bold">꼭 확인해 주세요</h3>
-    <ul class="noti-list">
-        <li>본인인증 필요한 경우<button id="MS_07_01_06_tip_01" type="button" class="tip-view" title="본인인증 필요한 경우" aria-haspopup="true">TIP</button></li>
-        <li>결합상품 자동 해지되는 경우<button id="MS_07_01_06_tip_02" type="button" class="tip-view" title="결합상품 자동 해지되는 경우" aria-haspopup="true">TIP</button></li>
-        <li>할인 적용되는 경우<button id="MS_07_01_06_tip_03" type="button" class="tip-view" title="할인 적용되는 경우" aria-haspopup="true">TIP</button></li>
+    <ul class="noti-list02">
+        <li><button id="MS_07_01_06_tip_01" type="button" class="tip-view-btn" title="본인인증 필요한 경우" aria-haspopup="true">본인인증 필요한 경우<span class="tip-view">TIP</span></button></li>
+        <li><button id="MS_07_01_06_tip_02" type="button" class="tip-view-btn" title="결합상품 자동 해지되는 경우" aria-haspopup="true">결합상품 자동 해지되는 경우<span class="tip-view">TIP</span></button></li>
+        <li><button id="MS_07_01_06_tip_03" type="button" class="tip-view-btn" title="할인 적용되는 경우" aria-haspopup="true">할인 적용되는 경우<span class="tip-view">TIP</span></button></li>
     </ul>
 </div>
 <!--// .cont-box -->

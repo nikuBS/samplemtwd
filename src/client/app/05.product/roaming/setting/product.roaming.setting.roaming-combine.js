@@ -53,7 +53,7 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
     this.$inputElement.val(tempVal);
   },
   _addPhoneNumOnList : function () {
-    if(this._addedList.length>=5){
+    if(this._addedList.length>=4){
       this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.TITLE);
       return;
     }
@@ -116,9 +116,9 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
   },
   _phoneBookCallBack : function(res){
     if (res.resultCode === Tw.NTV_CODE.CODE_00) {
-      this.$inputElement.val(res.params.phoneNumber);
+      this.$inputElement.val(res.params.phoneNumber.replace(/\-/g,''));
       this.$inputElement.trigger('keyup');
-      this._inputBlurEvt();
+      this.$inputElement.blur();
     }
   },
   _activateAddBtn : function (inputEvt) {
@@ -196,6 +196,8 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
         this.$addBtn.removeAttr('style');
       }, this)
     );
-    this.$addBtn.css({'pointer-events':'none','background':'#3b98e6'});
+    if(!this.$addBtn.attr('disabled')){
+      this.$addBtn.css({'pointer-events':'none','background':'#3b98e6'});
+    }
   }
 };

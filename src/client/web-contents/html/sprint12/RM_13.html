@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+					<div class="h-tit">로밍 카드&middot;쿠폰</div>
+					<div class="h-serarch">
+						<button class="icon-gnb-search"><span class="blind">검색</span></button>
+					</div>
+				</div>
+			</div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="roaming-card-coupon">
+                        <h3 class="tit">로밍 카드/쿠폰</h3>
+                        <p class="desc">T로밍 요금제 이용하고 선물하실 수 있습니다.</p>
+                        <h4 class="stit">SK텔레콤만의 혜택</h4>
+                        <ul class="benefit-list">
+                            <li>T로밍 OnePass 요금제(기간형 포함) 1일 이용 가능!<br /> (LTE/3G 200~400MB + 속도제어)</li>
+                            <li>유효기간(등록일로부터) : 180일</li>
+                        </ul>
+                        <ul class="bt-slice">
+                            <li class="bt-blue1">
+                                <button>로밍 카드&middot;쿠폰 구매하기</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <div class="roaming-info-box noicon">
+                    <div class="submain-findyourplan-wrap type1">
+                        <button type="button" class="submain-findyourplan">
+                            <h3 class="title">구매&middot;선물 받은 쿠폰 등록하기</h3>
+                            <p class="text">구매하거나 선물 받은 쿠폰을 등록하실 수 있습니다.</p>
+                        </button>
+                    </div>
+                    <div class="submain-findyourplan-wrap type1">
+                        <button type="button" class="submain-findyourplan">
+                            <h3 class="title">구매내역&middot;잔여 금액 조회하기</h3>
+                            <p class="text">구매한 내역과 잔여금액에 대해 조회하실 수 있습니다.</p>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- .cont-box -->
+                <div class="card-coupon-wrap">
+                    <h3>로밍 카드&middot;쿠폰 소개</h3>
+                    <!-- .widget -->
+                    <div class="widget"> 
+                        <div class="widget-box horizontal">
+                            <div class="horizontal-slide">
+                                <ul class="horizontal-list card-coupon-box">
+                                    <li>
+                                        <button class="card-coupon-inner">
+                                            <span class="inner-box">
+                                                <span class="card"><img src="/img/product/img-card01.png" alt="T로밍 아시아패스 카드"></span>
+                                                <strong class="tit">T로밍 <strong>아시아패스</strong> 카드</strong>
+                                                <em class="send">MMS 발송</em>
+                                                <span class="price"><strong class="num">25,000</strong> 원 / 5일</span>
+                                                <span class="desc">LTE/3G 2GB + 속도제어 지속 이용</span>
+                                            </span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="card-coupon-inner">
+                                            <span class="inner-box">
+                                                <span class="card"><img src="/img/product/img-card02.png" alt="T로밍 한중일패스 카드"></span>
+                                                <strong class="tit">T로밍 <strong>한중일패스</strong> 카드</strong>
+                                                <em class="send">실물 카드 / MMS 발송</em>
+                                                <span class="price"><strong class="num">25,000</strong> 원 / 5일</span>
+                                                <span class="desc">LTE/3G 2GB + 속도제어 지속 + 음성 3.6원/초 + 문자 기본제공</span>
+                                            </span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="card-coupon-inner">
+                                            <span class="inner-box">
+                                                <span class="card"><img src="/img/product/img-card03.png" alt="T로밍 미주패스 카드"></span>
+                                                <strong class="tit">T로밍 <strong>미주패스</strong> 카드</strong>
+                                                <em class="send">MMS 발송</em>
+                                                <span class="price"><strong class="num">33,000</strong> 원  ~  <strong class="num">53,000</strong> 원 / 30일</span>
+                                                <span class="desc">LTE/3G 3GB ~ 6GB + 속도제어 지속 이용</span>
+                                            </span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="card-coupon-inner">
+                                            <span class="inner-box">
+                                                <span class="card"><img src="/img/product/img-card04.png" alt="T로밍 유럽패스 카드"></span>
+                                                <strong class="tit">T로밍 <strong>유럽패스</strong> 카드</strong>
+                                                <em class="send">MMS 발송</em>
+                                                <span class="price"><strong class="num">39,000</strong> 원  ~  <strong class="num">59,000</strong> 원 / 30일</span>
+                                                <span class="desc">LTE/3G 3GB ~ 6GB + 속도제어 지속 이용</span>
+                                            </span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="card-coupon-inner">
+                                            <span class="inner-box">
+                                                <span class="card"><img src="/img/product/img-card05.png" alt="T로밍 OnePass 카드"></span>
+                                                <strong class="tit">T로밍 <strong>OnePass</strong> 카드</strong>
+                                                <em class="send">실물카드 / MMS 발송</em>
+                                                <span class="price"><strong class="num">9,000</strong> 원  ~  <strong class="num">15,000</strong> 원</span>
+                                                <span class="desc">LTE/3G 300~500MB + 속도제어 지속 이용</span>
+                                            </span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="card-coupon-inner">
+                                            <span class="inner-box">
+                                                <span class="card"><img src="/img/product/img-card06.png" alt="T로밍 팅/실버 무한톡 쿠폰"></span>
+                                                <strong class="tit">T로밍 <strong>팅&middot;실버 무한톡</strong> 쿠폰</strong>
+                                                <em class="send">MMS 구매가능</em>
+                                                <span class="price"><strong class="num">5,000</strong> 원 / 1일</span>
+                                            </span>
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="card-coupon-inner">
+                                            <span class="inner-box">
+                                                <span class="card"><img src="/img/product/img-card07.png" alt="T로밍 정액권 쿠폰"></span>
+                                                <strong class="tit">T로밍 <strong>정액권</strong> 쿠폰</strong>
+                                                <em class="send">MMS 구매가능</em>
+                                                <span class="price"><strong class="num">5,000</strong> 원  ~  <strong class="num">100,000</strong> 원</span>
+                                            </span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- .widget -->
+                </div>
+                <!--// .cont-box -->
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <h3 class="tx-bold">로밍 카드&middot;쿠폰 등록 방법</h3>
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box accordion">
+                            <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                                <div class="acco-style coupon-way">
+                                    <ul class="acco-list">
+                                        <!-- .on: 열기 -->
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button role="button" aria-pressed="false">즉시 등록</button></div>
+                                            <div class="acco-cont">
+                                                <div class="way-cont-box">
+                                                    <p class="txt">쿠폰 등록방법을 ‘즉시 등록’으로 선택 후 구매하시면 결제 완료 후 입력하신 주문(수신) 이동전화 번호로 자동등록됩니다.</p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button role="button" aria-pressed="false">나중에 등록</button></div>
+                                            <div class="acco-cont">
+                                                <div class="way-cont-box">
+                                                    <p class="txt">쿠폰 등록방법을 ‘나중에 등록’으로 선택 후 구매하시면, 입력하신 연락처로(MMS/이메일) 쿠폰 번호가 발송됩니다.</p>
+                                                    <ul class="order">
+                                                        <li>
+                                                            <strong>온라인 등록</strong>
+                                                            <p>온라인T월드 : 로밍 > 로밍 카드&middot;쿠폰 > 쿠폰 등록하기</p>
+                                                        </li>
+                                                        <li>
+                                                            <strong>모바일 등록</strong>
+                                                            <p>로밍 > 로밍 카드&middot;쿠폰 > 구매&middot;선물 받은 쿠폰 등록하기</p>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="announcement-box">
+                                                        <div class="announcement-bullet type01">쿠폰 등록을 하셔야 T로밍 서비스 이용요금 차감 과 쿠폰 혜택이 적용됩니다.</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <h3>쿠폰 이용방법 안내</h3>
+                    <ul class="coupon-way-guided">
+                        <li class="ico-type01">
+                            T로밍카드를 등록하시면 해당 요금제에 자동가입됩니다.
+                        </li>
+                        <li class="ico-type02">
+                            특정 기간을 설정하여 사용하고 싶으시면 T로밍 OnePass200기간형 요금제로 변경하여 이용해 주세요.
+                            <span class="bt"><button class="bt-link-tx underline">자세히보기</button></span>
+                        </li>
+                        <li class="ico-type03">
+                            요금제 변경은 고객센터(국내 02-6343-9000 무료, 해외 +82-2-6343-9000 무료) 또는 온라인 T월드를 이용해 주세요.
+                            <span class="bt"><button class="bt-link-tx underline">자세히보기</button></span>
+                        </li>
+                    </ul>
+
+                    <ul class="detail-info-list">
+                        <li>
+                            <dl>
+                                <dt>결제 취소∙환불 문의</dt>
+                                <dd>
+                                    <a href="tel:1599-7963" class="tel">1599-7963</a><br>(SK엠앤서비스)
+                                </dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>쿠폰 사용∙발송 문의</dt>
+                                <dd>
+                                    <a href="tel:1599-7963" class="tel">1599-7963</a><br>(T로밍 쿠폰 고객센터)
+                                </dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>요금제 가입문의</dt>
+                                <dd>
+                                    <a href="tel:1599-7963" class="tel">02-6343-9000</a><br>(T로밍 고객센터)
+                                </dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                    <ul class="noti-list">
+                        <li>이용안내 <button type="button" class="tip-view" title="이용안내 TIP보기" aria-haspopup="true">TIP</button></li>
+                        <li>쿠폰 등록 <button type="button" class="tip-view" title="쿠폰 등록 TIP보기" aria-haspopup="true">TIP</button></li>
+                        <li>쿠폰 등록 후 요금제 가입 <button type="button" class="tip-view" title="쿠폰 등록 후 요금제 가입 TIP보기" aria-haspopup="true">TIP</button></li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

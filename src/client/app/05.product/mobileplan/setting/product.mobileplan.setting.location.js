@@ -29,14 +29,14 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    */
   _bindEvent: function() {
     // 지역할인 tab
-    $('.discount-location').on('click', '.bt-line-gray1', $.proxy(this._removeLocation, this));
+    $('.discount-location').on('click', '.fe-bt-loc-cancel', $.proxy(this._removeLocation, this));
     $('#btnSearchPop').click($.proxy(this._onclickLocSchPopup, this));
     $('#loc-search-input').click($.proxy(this._onclickLocSchPopup, this));
 
     // 지정번호 tab
     $('#btnAddr').click($.proxy(this._onClickBtnAddr, this));
     $('#btnNumAdd').click($.proxy(this._addNumber, this));
-    $('.comp-box').on('click', '.bt-line-gray1', $.proxy(this._removeNumber, this));
+    $('.discount-number').on('click', '.fe-bt-num-cancel', $.proxy(this._removeNumber, this));
     $('#num-input').on('input', $.proxy(this._oninputTelNumber, this));
     $('#num-input').on('keyup', $.proxy(this._onKeyUp, this));
     $('#num-input').on('focus', $.proxy(this._onfocusNumInput, this));
@@ -44,6 +44,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     $('#num-inputbox .cancel').on('click', $.proxy(this._onclickInputDel, this));
 
     $('#fe-prev-step').click($.proxy(this._onclickBtnClose, this));
+
   },
 
   /**
@@ -430,7 +431,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     for(var i = 0; i < list.length; i++){
       html += this._tmpltNumItem(list[i]);
     }
-    $('.comp-box').append(html);
+    $('.discount-number').append(html);
   },
 
   /**
@@ -441,13 +442,13 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
     // 3개 이상인 경우
     //3_A8
-    if($('.comp-box li').length >= 3){
+    if($('.discount-number li').length >= 3){
       this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A8.TITLE);
       return;
     }
     var num = $('#num-input').val();
     if (!this._isCellPhone2(num) && !Tw.ValidationHelper.isTelephone(num)) {
-    //if (!Tw.ValidationHelper.isCellPhone(num) ) {
+      //if (!Tw.ValidationHelper.isCellPhone(num) ) {
       this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
       return;
     }
@@ -467,7 +468,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    */
   _removeNumber: function(event){
 
-    if ($('.comp-box li').length === 1) {
+    if ($('.discount-number li').length === 1) {
       this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_NUMBER_MIN);
       return;
     }
@@ -481,7 +482,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
       $.proxy(function(){
         this._popupService.close();
         this._settingTargetNumber('2', {svcnum:svcnum, auditdtm:auditdtm}, function(){
-          $('.comp-box li').filter('[data-svcnum='+svcnum+']').remove();
+          $('.discount-number li').filter('[data-svcnum='+svcnum+']').remove();
         });
       }, this),
       null,
@@ -496,7 +497,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     //   $.proxy(function(){
     //     this._popupService.close();
     //     this._settingTargetNumber('2', {svcnum:svcnum, auditdtm:auditdtm}, function(){
-    //       $('.comp-box li').filter('[data-svcnum='+svcnum+']').remove();
+    //       $('.discount-number li').filter('[data-svcnum='+svcnum+']').remove();
     //     });
     //   }, this));
 
@@ -600,7 +601,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
           return ;
         }
 
-        $('.comp-box').html('');
+        $('.discount-number').html('');
         this._appendNumberLi(resp.result.snumSetInfoList);
 
       }, this))

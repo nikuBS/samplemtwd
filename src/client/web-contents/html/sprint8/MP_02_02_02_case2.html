@@ -56,11 +56,13 @@
 					<!-- .cont-box -->
 					<div class="cont-box">
 						<div class="user-info">
-							<span class="blind">현재 선택된 회선정보 및 사용중인 요금제 정보 노출</span>
-							<span class="ico"><span class="blind">선택된 회선정보 아이콘</span></span>
+							<span class="blind" aria-hidden="true">현재 선택된 회선정보 및 사용중인 요금제 정보 노출</span>
+							<!-- 2019.01.24 aria-hidden="true" 추가 sblee -->
+							<span class="ico"><span class="blind" aria-hidden="true">선택된 회선정보 아이콘</span></span>
+							<!-- 2019.01.24 aria-hidden="true" 추가 sblee -->
 							<div class="in-info">
-								<span class="number"><span class="blind" aria-hidden="true">회선번호</span>010-73**-06**</span>
-								<!-- 2019.01.14 aria-hidden="true" 추가 sblee -->
+								<span class="number"><span class="blind">회선번호</span>010-73**-06**</span>
+								<!-- 2019.01.10 aria-hidden="true" 삭제 sblee -->
 								<span class="sub-info">
 									<span class="elem"><span class="blind">사용요금제명</span>Band 데이터 퍼팩트</span>
 									<span class="elem"><span class="blind">월 이용요금</span>월 65,950 원</span>
@@ -310,11 +312,13 @@
 					<!-- .cont-box -->
 					<div class="cont-box nogaps-btm">
 						<h3 class="tx-bold">꼭 확인해 주세요</h3>
-						<ul class="noti-list">
-							<li>사용 중인 요금제 해지 시 유의사항 <button type="button" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
-							<li>요금제 변경하여 가입 시 유의사항 <button type="button" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
-							<li>서비스 이용안내 <button type="button" class="tip-view" title="~~정보보기" aria-haspopup="true">TIP</button></li>
+						<!-- 2019.01.24 title값 수정 -->
+						<ul class="noti-list02">
+							<li><button aria-haspopup="true" class="tip-view-btn" title="사용 중인 요금제 해지 시 유의사항 정보보기">사용 중인 요금제 해지 시 유의사항<span class="tip-view">TIP</span></button></li>
+							<li><button aria-haspopup="true" class="tip-view-btn" title="요금제 변경하여 가입 시 유의사항 정보보기">요금제 변경하여 가입 시 유의사항<span class="tip-view">TIP</span></button></li>
+							<li><button aria-haspopup="true" class="tip-view-btn" title="서비스 이용안내 정보보기">서비스 이용안내<span class="tip-view">TIP</span></button></li>
 						</ul>
+						<!--// 2019.01.24 title값 수정 -->
 					</div>
 					<!--// .cont-box -->
 	

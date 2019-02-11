@@ -69,7 +69,8 @@ class ProductMobileplanJoinShareLine extends TwViewController {
       if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, Object.assign(renderCommonInfo, {
           code: apiError.code,
-          msg: apiError.msg
+          msg: apiError.msg,
+          isBackCheck: true
         }));
       }
 

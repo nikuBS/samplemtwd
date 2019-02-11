@@ -21,10 +21,6 @@ class LoginService {
     this.request = req;
     this.response = res;
     this.logger.info(this, '[setCurrentReq]', req.session, req.cookies[COOKIE_KEY.TWM], this.getSessionId(req), req.baseUrl + req.path);
-    // console.log('[[[[[[cookie]]]]]]]', req.cookies[COOKIE_KEY.TWM], req.baseUrl + req.path);
-    // console.log(req.session);
-    // console.log(req.cookies);
-    // console.log('[[[[[Session Id]]]]]', this.getSessionId(req));
   }
 
   public sessionGenerate(req): Observable<any> {
@@ -55,13 +51,17 @@ class LoginService {
     return prevUrl.indexOf(currentHost) === -1;
   }
 
+  public setCookie(key: string, value: string) {
+    this.response.cookie(key, value);
+  }
+
 
   public getSvcInfo(req?): any {
     const request = req || this.request;
     this.logger.debug(this, '[getSvcInfo]', request.session);
     if ( !FormatHelper.isEmpty(request.session) && !FormatHelper.isEmpty(request.session.svcInfo) ) {
       this.logger.debug(this, '[getSvcInfo]', request.session.svcInfo);
-      return request.session.svcInfo;
+      return JSON.parse(JSON.stringify(request.session.svcInfo));
     }
     return null;
   }
@@ -92,17 +92,23 @@ class LoginService {
   }
 
   private setXtractorCookie(svcInfo: any): any {
-    if (!FormatHelper.isEmpty(svcInfo.svcMgmtNum)) {
+    if ( FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTLID]) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum) ) {
       this.response.cookie(COOKIE_KEY.XTLID, CryptoHelper.encrypt(svcInfo.svcMgmtNum, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB));
     }
 
-    if (!FormatHelper.isEmpty(svcInfo.userId)) {
+    if ( !FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTLID]) && !FormatHelper.isEmpty(svcInfo.svcMgmtNum) ) {
+      this.response.cookie(COOKIE_KEY.XTUID, CryptoHelper.encrypt(svcInfo.svcMgmtNum, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB));
+    }
+
+    if ( FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTLOGINID]) && !FormatHelper.isEmpty(svcInfo.userId) ) {
       this.response.cookie(COOKIE_KEY.XTLOGINID, CryptoHelper.encrypt(svcInfo.userId, XTRACTOR_KEY, CryptoHelper.ALGORITHM.AES128ECB));
     }
 
-    this.response.cookie(COOKIE_KEY.XTLOGINTYPE, svcInfo.loginType === 'S' ? 'Z' : 'A');
+    if ( FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTLOGINTYPE]) && !FormatHelper.isEmpty(svcInfo.loginType) ) {
+      this.response.cookie(COOKIE_KEY.XTLOGINTYPE, svcInfo.loginType === 'S' ? 'Z' : 'A');
+    }
 
-    if (FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTSVCGR])) {
+    if ( FormatHelper.isEmpty(this.request.cookies[COOKIE_KEY.XTSVCGR]) && !FormatHelper.isEmpty(svcInfo.svcGr) ) {
       this.response.cookie(COOKIE_KEY.XTSVCGR, svcInfo.svcGr);
     }
   }
@@ -111,7 +117,7 @@ class LoginService {
     const request = req || this.request;
     if ( !FormatHelper.isEmpty(request.session) && !FormatHelper.isEmpty(request.session.allSvcInfo) ) {
       this.logger.debug(this, '[getAllSvcInfo]', request.session.allSvcInfo);
-      return request.session.allSvcInfo;
+      return JSON.parse(JSON.stringify(request.session.allSvcInfo));
     }
     return null;
   }
@@ -131,7 +137,7 @@ class LoginService {
     const request = req || this.request;
     if ( !FormatHelper.isEmpty(request.session) && !FormatHelper.isEmpty(request.session.childInfo) ) {
       this.logger.debug(this, '[getChildInfo]', request.session.childInfo);
-      return request.session.childInfo;
+      return JSON.parse(JSON.stringify(request.session.childInfo));
     }
     return null;
   }
@@ -186,6 +192,26 @@ class LoginService {
       return this.request.session.channel;
     }
     return this.request.cookies[COOKIE_KEY.CHANNEL];
+  }
+
+  public setMenuName(menuName: string): Observable<any> {
+    return Observable.create((observer) => {
+      if ( !FormatHelper.isEmpty(this.request) && !FormatHelper.isEmpty(this.request.session) ) {
+        this.request.session.menuName = menuName;
+        this.request.session.save(() => {
+          this.logger.debug(this, '[setMenuName]', this.request.session);
+          observer.next(this.request.session.menuName);
+          observer.complete();
+        });
+      }
+    });
+  }
+
+  public getMenuName(): string {
+    if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.menuName) ) {
+      return this.request.session.menuName;
+    }
+    return this.request.menuName;
   }
 
   public setMaskingCert(svcMgmtNum: string): Observable<any> {
@@ -243,13 +269,23 @@ class LoginService {
     return '';
   }
 
-  public getPath(): string {
-    if ( !FormatHelper.isEmpty(this.request) ) {
-      const baseUrl = this.request.baseUrl;
-      if ( baseUrl.indexOf('bypass') !== -1 || baseUrl.indexOf('api') !== -1 ||  baseUrl.indexOf('native') !== -1) {
-        this.getReferer();
+  public getPath(req?: any): string {
+    const request = req || this.request;
+    let path = this.getFullPath(request);
+    if ( path.indexOf('?') !== -1 ) {
+      path = path.split('?')[0];
+    }
+    return path;
+  }
+
+  public getFullPath(req?: any): string {
+    const request = req || this.request;
+    if ( !FormatHelper.isEmpty(request) ) {
+      const baseUrl = request.baseUrl;
+      if ( baseUrl.indexOf('bypass') !== -1 || baseUrl.indexOf('api') !== -1 || baseUrl.indexOf('native') !== -1 ) {
+        return this.getReferer(request);
       } else {
-        return baseUrl + this.request.path;
+        return baseUrl + request.url;
       }
     }
     return '';
@@ -259,15 +295,11 @@ class LoginService {
     const request = req || this.request;
     const referer = request.headers.referer;
     if ( !FormatHelper.isEmpty(referer) ) {
-      let path = (request.headers.referer).match(/(https?...)?([^\/]+)(.*)/)[3];
-      if ( path.indexOf('?') !== -1 ) {
-        path = path.split('?')[0];
-      }
+      const path = (request.headers.referer).match(/(https?...)?([^\/]+)(.*)/)[3];
       return path;
     } else {
       return '';
     }
-
   }
 
   public getDns(): string {

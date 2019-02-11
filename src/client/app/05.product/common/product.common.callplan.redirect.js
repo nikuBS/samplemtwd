@@ -27,7 +27,7 @@ Tw.ProductCommonCallplanRedirect.prototype = {
       return this._procRedirect();
     }
 
-    this._popupService.openConfirm(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A15.TITLE, $.proxy(this._setConfirm, this), $.proxy(this._procRedirect, this));
+    Tw.CommonHelper.showDataCharge($.proxy(this._setConfirm, this), $.proxy(this._procRedirect, this));
   },
 
   _setConfirm: function() {

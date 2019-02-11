@@ -4,7 +4,7 @@
  * Date: 2018.10.01
  */
 
-Tw.CommonMemberLineEdit = function (rootEl, category) {
+Tw.CommonMemberLineEdit = function (rootEl, category, otherCnt) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -16,6 +16,7 @@ Tw.CommonMemberLineEdit = function (rootEl, category) {
   this._goBizRegister = false;
   this._pageNoExposable = 2;
   this._pageNoExposed = 2;
+  this._otherCnt = +otherCnt;
 
   this._init();
   this._bindEvent();
@@ -74,8 +75,9 @@ Tw.CommonMemberLineEdit.prototype = {
   _onOpenBizSignup: function ($popupContainer) {
     $popupContainer.on('click', '#fe-bt-go-url', $.proxy(this._goUrl, this));
   },
-  _goUrl: function () {
-    Tw.CommonHelper.openUrlExternal('http://www.biztworld.co.kr');
+  _goUrl: function ($event) {
+    var url = $($event.currentTarget).data('url');
+    Tw.CommonHelper.openUrlExternal(url);
   },
   _completeEdit: function () {
     var list = this.$container.find('.fe-item-active');
@@ -115,19 +117,21 @@ Tw.CommonMemberLineEdit.prototype = {
     var lineList = svcNumList.join('~');
     this._apiService.request(Tw.NODE_CMD.CHANGE_LINE, {
       params: { svcCtg: this._category, svcMgmtNumArr: lineList }
-    }).done($.proxy(this._successRegisterLineList, this));
+    }).done($.proxy(this._successRegisterLineList, this, svcNumList));
   },
-  _successRegisterLineList: function (resp) {
+  _successRegisterLineList: function (svcNumList, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._marketingSvc = resp.result.offerSvcMgmtNum;
-      Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
-      this._checkRepSvc(resp.result);
+      // Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
+      this._checkRepSvc(resp.result, svcNumList);
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
-  _checkRepSvc: function (result) {
-    if ( result.repSvcChgYn === 'Y' ) {
+  _checkRepSvc: function (result, svcNumList) {
+    if ( svcNumList.length === 0 && this._otherCnt === 0) {
+      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.L02_1, null, null, $.proxy(this._onCloseChangeRepSvc, this));
+    } else if ( result.repSvcChgYn === 'Y' ) {
       this._popupService.openAlert(Tw.ALERT_MSG_AUTH.L02, null, null, $.proxy(this._onCloseChangeRepSvc, this));
     } else {
       this._checkMarketingOffer();

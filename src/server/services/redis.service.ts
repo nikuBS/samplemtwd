@@ -8,6 +8,7 @@ import FormatHelper from '../utils/format.helper';
 import { NODE_API_ERROR } from '../types/string.type';
 import { API_CODE } from '../types/api-command.type';
 import LoggerService from './logger.service';
+import CryptoHelper from '../utils/crypto.helper';
 
 class RedisService {
   private static instance: RedisService;
@@ -24,19 +25,28 @@ class RedisService {
     this.envRedis = EnvHelper.getEnvironment('REDIS');
     this.envTosRedis = EnvHelper.getEnvironment('REDIS_TOS');
     this.RedisStore = connect(session);
+
+    let redisKey = String(process.env.REDIS_PWD_KEY);
+    if (redisKey === 'undefined') { // Will be removed
+      redisKey = EnvHelper.getEnvironment('REDIS_PWD_KEY');
+    }
+    const password = CryptoHelper.decryptRedisPwd(this.envRedis.password,
+        redisKey, CryptoHelper.ALGORITHM.AES256CBCHMACSHA256);
+
     this.redisOption = Object.assign(this.envRedis, {
-      prefix: 'session:'
+      prefix: 'session:',
+      password: password
     });
 
     this.client = redis.createClient(
       this.envRedis.port,
       this.envRedis.host,
-      { password: this.envRedis.password }
+      { password }
     );
     this.tosClient = redis.createClient(
       this.envTosRedis.port,
       this.envTosRedis.host,
-      { password: this.envRedis.password }
+      { password }
     );
   }
 

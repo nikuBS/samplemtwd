@@ -35,11 +35,9 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       this.$rootContainer.find('.tx-bold.vbl').text(this._convertPrice(this._popupData.preinfo.reqProdInfo.basFeeInfo));
     }
     this._bindPopupElementEvt(this.$rootContainer);
-    if(this._popupData.preinfo.joinNoticeList.length<=0){
-      this.$tooltipList = this.$rootContainer.find('#tooltip_list');
-      this._tooltipTemplate = Handlebars.compile(this.$rootContainer.find('#tooltip_template').html());
-      this._tooltipInit(this._prodId);
-    }
+    this.$tooltipList = this.$rootContainer.find('#tooltip_list');
+    this._tooltipTemplate = Handlebars.compile(this.$rootContainer.find('#tooltip_template').html());
+    this._tooltipInit(this._prodId);
   },
   _popupInit : function (hash) {
     if(isNaN(this._popupData.prodFee)){
@@ -76,9 +74,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         if(i>=2){
           break;
         }else{
-          setingInfo=this._popupData.userJoinInfo.svcNumList[i].serviceNumber1+'-';
-          setingInfo+=this._popupData.userJoinInfo.svcNumList[i].serviceNumber2+'-';
-          setingInfo+=this._popupData.userJoinInfo.svcNumList[i].serviceNumber3;
+          setingInfo = Tw.FormatHelper.getFormattedPhoneNumber(this._popupData.userJoinInfo.svcNumList[i].serviceNumber1+this._popupData.userJoinInfo.svcNumList[i].serviceNumber2+this._popupData.userJoinInfo.svcNumList[i].serviceNumber3);
         }
       }
     }
@@ -90,6 +86,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     this._$individualAgreeElement = this._$popupContainer.find('.individual.checkbox>input');
     $popupLayer.on('click','#do_join',$.proxy(this._doJoin,this));
     $popupLayer.on('click','.agree-view',$.proxy(this._showDetailContent,this));
+    $popupLayer.on('click','.tip-view-btn.bff',$.proxy(this._showBffToolTip,this));
     if(this._popupData.agreeCnt<=0){
       this._$popupContainer.find('#do_join').removeAttr('disabled');
     }else{
@@ -97,9 +94,6 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       $popupLayer.on('click','.individual.checkbox>input',$.proxy(this._agreeCheck,this));
     }
     if(this._page){
-      if(this._popupData.preinfo.joinNoticeList.length>0){
-        $popupLayer.on('click','.tip-view',$.proxy(this._showBffToolTip,this));
-      }
       $popupLayer.on('click','.prev-step',$.proxy(this._showCancelAlart,this));
     }else{
       if(this._closeCallback){
@@ -150,8 +144,8 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       null);
   },
   _confirmInfo : function () {
+    this._popupService.close();
     if(this._page===true){
-      this._popupService.close();
       this._excuteJoin();
     }else{
       this._doJoinCallBack(this._popupData,this._apiService,this._historyService,this._rootData);
@@ -211,8 +205,11 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     $(popEvt).on('click','.fe-btn_ok',$.proxy(this._detailAgreePopupEvt,this));
   },
   _detailAgreePopupEvt : function (){
+    var $agreeElement = this._$popupContainer.find('.'+this._nowShowAgreeType);
     this._historyService.goBack();
-    this._$popupContainer.find('.'+this._nowShowAgreeType).trigger('click');
+    if($agreeElement.attr('checked')!=='checked'){
+      $agreeElement.trigger('click');
+    }
   },
   _arrangeAgree : function(data){
     var targetObj;
@@ -242,18 +239,19 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
   },
   _bindCompletePopupEvt : function (popupObj) {
     $(popupObj).on('click','.btn-round2',$.proxy(this._goMyInfo,this));
-    $(popupObj).on('click','.btn-floating',$.proxy(this._goPlan,this));
+    $(popupObj).on('click','.btn-floating',$.proxy(this._popupService.closeAll,this._popupService));
   },
   _goBack : function(){
     this._popupService.close();
     this._historyService.goBack();
   },
-  _goMyInfo : function () {
-    this._historyService.goLoad('/product/roaming/my-use');
+  _goMyInfo : function(){
+    var targetUrl = this._prodTypeInfo.prodTypCd==='H_P'?'/product/roaming/my-use':'/product/roaming/my-use#add';
+    this._popupService.closeAllAndGo(targetUrl);
   },
   _showCancelAlart : function (){
     var alert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A1;
-    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, alert.BUTTON, Tw.BUTTON_LABEL.CLOSE,
+    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, Tw.BUTTON_LABEL.YES, Tw.BUTTON_LABEL.NO,
       null,
       $.proxy(this._goPlan,this),
       null);
@@ -263,7 +261,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
   },
   _goPlan : function () {
     this._popupService.closeAll();
-    this._historyService.goBack();
+    setTimeout($.proxy(this._historyService.goBack,this._historyService),0);
   },
   _tooltipInit : function (prodId) {
     var tooltipArr = [];
@@ -388,7 +386,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         break;
     }
     if(this._page){
-      if(tooltipArr.length<=0){
+      if(tooltipArr.length<=0&&this._popupData.preinfo.joinNoticeList.length<=0){
         this.$rootContainer.find('.tip_container').hide();
         return;
       }

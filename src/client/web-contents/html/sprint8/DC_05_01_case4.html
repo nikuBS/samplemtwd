@@ -82,7 +82,7 @@
                                 <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                                     <div class="tab-linker">
                                         <ul role="tablist">
-                                            <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="">나에게 리필하기</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                            <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="" role="button">나에게 리필하기</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
                                             <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="" role="button">가족에게 선물하기</a> <button type="button" class="tip-view" title="가족에게 선물하기 TIP보기" aria-haspopup="true">TIP</button></li><!-- 2018.11.02 추가 -->
                                         </ul>
                                     </div>
@@ -95,7 +95,7 @@
                                                     <div class="list-comp-input">
                                                         <div class="widget">
                                                             <div class="widget-box radio">
-                                                                <ul class="select-list" role="radiogroup">
+                                                                <ul class="select-list" role="group">
                                                                     <li class="radiobox type01 checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                                                         <input type="radio" name="radio" value="" title="나에게 리필하기" checked="checked" aria-labelledby="aria-comp-radio1" /><!-- 체크상태일 경우 checked="checked" -->
                                                                         <div class="comp-list-layout" id="aria-comp-radio1">
@@ -132,9 +132,9 @@
                                     <!-- 꼭 확인해주세요! 2018.11.02 추가 -->   
                                     <div class="cont-box nogaps-btm">
                                         <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                                        <ul class="noti-list">
-                                            <li>가족 간 선물하기 이용 시 유의사항 <button type="button" class="tip-view" title="가족 간 선물하기 이용 시 유의사항 TIP보기" aria-haspopup="true">TIP</button></li>
-                                            <li>이용가능한 요금제 <button type="button" class="tip-view" title="이용가능한 요금제 TIP보기" aria-haspopup="true">TIP</button></li>
+                                        <ul class="noti-list02">
+                                            <li><button type="button" class="tip-view-btn" title="가족간 선물하기 이용 유의사항 TIP보기" aria-haspopup="true">가족 간 선물하기 이용 시 유의사항<span class="tip-view">TIP</span></button></li>
+                                            <li><button type="button" class="tip-view-btn" title="이용 가능한 요금제 TIP보기" aria-haspopup="true">이용가능한 요금제<span class="tip-view">TIP</span></button></li>
                                         </ul>
                                     </div>
                                     <!-- //꼭 확인해주세요! -->

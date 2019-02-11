@@ -37,7 +37,7 @@
                 <div class="cont-box nogaps">
                     <div class="add-prd-wrap">
                         <div class="contents-empty fe-empty <%= additions.length > 0 ? 'none' : '' %>">
-                            <span class="ico type1"></span>
+                            <span class="ico type1"><span class="blind">느낌표(!)</span></span>
                             <p class="desc">현재 사용 중인 부가상품이 없습니다.</p>
                         </div>
                         <% if (additions.length > 0) { %>
@@ -61,7 +61,7 @@
                                         <% } else { %>
                                             <span class="info-title num"><%= addition.basFeeTxt || '무료' %></span>
                                         <% } %>
-                                        <% if (hasLink) { %> <span class="ico"></span><% } %>
+                                        <% if (hasLink) { %><span class="ico"><span class="blind"><%= addition.prodNm %> 자세히 보기</span></span><% } %>
                                     </div>
                                 <% if (hasLink) { %>
                                 </a>
@@ -96,7 +96,7 @@
                                     </div>
                                     <div class="lineinfo-data">
                                         <span class="info-title"><%= roaming.recentlyJoinsProdNm %><%= roaming.addProdCnt > 0 ? '외 ' + roaming.addProdCnt + '건' : '' %></span>
-                                        <span class="ico"></span>
+                                        <span class="ico"><span class="blind">나의 로밍 요금제 및 부가서비스 자세히 보기</span></span>
                                     </div>
                                 </a>
                             </li>
@@ -111,9 +111,13 @@
                 <!-- 꼭 확인해 주세요 2018.11.02 추가 -->
 				<div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                    <ul class="noti-list">
+                    <ul class="noti-list02">
                         <% const tip = svcInfo.svcAttrCd === 'M3' ? 3 : 1%>
-                        <li>부가서비스 이용안내 <button id="MS_06_01_tip_0<%= tip %>" type="button" class="tip-view" title="부가서비스 이용안내 TIP보기" aria-haspopup="true">TIP</button></li>
+                        <li>
+                            <button id="MS_06_01_tip_0<%= tip %>" type="button" class="tip-view-btn" title="부가서비스 이용안내 TIP보기" aria-haspopup="true">부가서비스 이용안내
+                                <span class="tip-view">TIP</span>
+                            </button>
+                        </li>
                     </ul>
                 </div>
                 <!-- //꼭 확인해 주세요 -->

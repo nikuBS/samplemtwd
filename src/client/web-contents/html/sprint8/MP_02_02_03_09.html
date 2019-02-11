@@ -55,13 +55,15 @@
                 <div class="container">
 
                     <div class="ti-caption-gray">
-                        <h3 class="tit" id="aria-exp-label1">할인지역 설정</h3>
+                        <h3 class="tit">할인지역 설정</h3>
+                        <!-- 2019.01.22 id값 삭제 sblee -->
                     </div>
 
                     <div class="cont-box">
                         <span class="inputbox search">
                             <span class="input">
-                                <input type="text" placeholder="지역을 검색해보세요." title="할인지역 설정 입력" value="" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1">
+                                <input type="text" placeholder="지역을 검색해보세요" title="할인지역 설정 입력 지역을 검색해보세요" value="" aria-describedby="aria-exp-desc1">
+                                <!-- 2019.01.22 title값 수정, aria-labelledby값 삭제 sblee -->
                                 <button class="cancel"><span class="blind">삭제</span></button>
                                 <button class="search">검색</button>
                             </span>
@@ -86,10 +88,10 @@
 
                     <div class="cont-box nogaps-btm">
                         <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                        <ul class="noti-list">
+                        <ul class="noti-list02">
                             <li>텍스트가 1줄인 Case입니다.</li>
-                            <li>텍스트가 1줄인 Case입니다. <button type="button" class="tip-view" title="정보보기" aria-haspopup="true">TIP</button></li>
-                            <li>텍스트가 2줄이상인<br>Case입니다. <button type="button" class="tip-view" title="정보보기" aria-haspopup="true">TIP</button></li>
+                            <li><button aria-haspopup="true" class="tip-view-btn" title="정보보기">텍스트가 1줄인 Case입니다.<span class="tip-view">TIP</span></button></li>
+                            <li><button aria-haspopup="true" class="tip-view-btn" title="정보보기">텍스트가 2줄이상인<br>Case입니다.<span class="tip-view">TIP</span></button></li>
                         </ul>
                     </div>                    
                 </div>

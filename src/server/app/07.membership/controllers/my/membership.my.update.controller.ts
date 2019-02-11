@@ -9,10 +9,8 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
 // import { Observable } from 'rxjs/Observable';
 import { API_CODE } from '../../../../types/api-command.type';
-import FormatHelper from '../../../../utils/format.helper';
-import { MEMBERSHIP_GROUP, MEMBERSHIP_TYPE } from '../../../../types/bff.type';
 
-export default class MembershipMy extends TwViewController {
+export default class MembershipMyUpdate extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
 
@@ -33,8 +31,6 @@ export default class MembershipMy extends TwViewController {
   }
 
   private parseMyInfoData(myInfoData): any {
-    myInfoData.checkHomeChecked = myInfoData.addrCd === '03' ? 'checked' : '' ;
-    myInfoData.checkOfficeChecked = myInfoData.addrCd === '04' ? 'checked' : '' ;
     myInfoData.smsAgreeChecked = myInfoData.smsAgreeYn === 'Y' ? 'checked' : '' ;
     myInfoData.sktNewsChecked = myInfoData.sktNewsYn === 'Y' ? 'checked' : '' ;
     myInfoData.sktTmChecked = myInfoData.sktTmYn === 'Y' ? 'checked' : '' ;

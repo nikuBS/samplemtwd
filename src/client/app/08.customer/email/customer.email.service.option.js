@@ -38,6 +38,8 @@ Tw.CustomerEmailServiceOption.prototype = {
   },
 
   _selectLine: function (e) {
+    e.stopPropagation();
+    e.preventDefault();
     // var $el = $(e.currentTarget);
     var category = this.$container.triggerHandler('getCategory');
     var lineList = [];
@@ -56,7 +58,7 @@ Tw.CustomerEmailServiceOption.prototype = {
       if ( item.svcGr === 'I' || item.svcGr === 'T' ) {
         sItem = item.addr;
       } else {
-        sItem = item.svcNum;
+        sItem = Tw.FormatHelper.conTelFormatWithDash(item.svcNum);
       }
 
       return {
@@ -113,6 +115,8 @@ Tw.CustomerEmailServiceOption.prototype = {
   },
 
   _getDirectBrand: function (e) {
+    e.stopPropagation();
+    e.preventDefault();
     var $elTarget = $(e.currentTarget);
 
     this._apiService.request(Tw.API_CMD.BFF_08_0015)
@@ -120,6 +124,8 @@ Tw.CustomerEmailServiceOption.prototype = {
   },
 
   _getDirectDevice: function (e) {
+    e.stopPropagation();
+    e.preventDefault();
     var $elTarget = $(e.currentTarget);
 
     if ( $('.fe-select-brand').data('brandcd') ) {
@@ -176,7 +182,7 @@ Tw.CustomerEmailServiceOption.prototype = {
       var fnSelectBrand = function (item) {
         return {
           value: item.brandNm,
-          option: false,
+          option: $elButton.text() === item.brandNm ? 'checked' : '',
           attr: 'data-brandCd=' + item.brandCd
         };
       };
@@ -201,7 +207,7 @@ Tw.CustomerEmailServiceOption.prototype = {
       var fnSelectDevice = function (item) {
         return {
           value: item.modelNickName,
-          option: false,
+          option: $elButton.text() === item.modelNickName ? 'checked' : '',
           attr: 'data-phoneid=' + item.phoneId
         };
       };

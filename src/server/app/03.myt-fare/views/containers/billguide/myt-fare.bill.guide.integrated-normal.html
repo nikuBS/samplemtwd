@@ -257,9 +257,9 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                <ul class="noti-list">
-                    <li>이용요금 <button id="MF_02_01_tip_01" type="button" class="tip-view">TIP</button></li>
-                    <li>로밍 이용요금 안내 <button id="MF_02_01_tip_02" type="button" class="tip-view">TIP</button></li>
+                <ul class="noti-list02">
+                    <li><button id="MF_02_01_tip_01" type="button" class="tip-view-btn">이용요금<span class="tip-view">TIP</span></button></li>
+                    <li><button id="MF_02_01_tip_02" type="button" class="tip-view-btn">로밍 이용요금 안내<span class="tip-view">TIP</span></button></li>
                 </ul>
             </div>
             <!--// .cont-box -->
@@ -279,7 +279,7 @@
   $(document).ready(function () {
     var oMyTFareGuide = new Tw.MyTFareBillGuideIntegratedNormal( $('#fe-wrap'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
-      svcInfo: <%-JSON.stringify(svcInfo) %>,
+      svcMgmtNum: <%-JSON.stringify(svcInfo.svcMgmtNum) %>,
       allSvc: <%-JSON.stringify(allSvc) %>,
       billpayInfo : <%-JSON.stringify(billpayInfo) %>,
       commDataInfo : <%-JSON.stringify(commDataInfo) %>,

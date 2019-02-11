@@ -48,7 +48,7 @@
         </div>
         <!--// #contents -->
 		<!-- .popup hbs -->
-		<div class="popup-page tw-popup"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+		<div class="popup-page tw-popup fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
 			<!-- #header -->
 			<div class="header-wrap">
 				<div class="page-header">
@@ -71,7 +71,7 @@
                                             <span id="aria-citation-name" class="form-ti">이름</span>
                                             <span class="inputbox">
                                                 <span class="input">
-                                                    <input type="text" value="" placeholder="이름" title="이름을 입력" aria-labelledby="aria-citation-name" aria-describedby=""/><!-- 오류일 경우 aria-sms-exp-desc1로 변경 -->
+                                                    <input type="text" value="" placeholder="이름" title="이름을 입력" /><!-- 오류일 경우 aria-sms-exp-desc1로 변경 --><!--웹접근성 수정 -->
                                                     <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
                                                 </span>
                                                 <span id="aria-sms-exp-desc1" class="error-txt none" aria-hidden="true">이름을 입력해 주세요.</span>
@@ -82,7 +82,7 @@
                                             <span id="aria-citation-birth" class="form-ti">법정 생년월일</span>
                                             <span class="inputbox">
                                                 <span class="input">
-                                                    <input type="number" placeholder="생년월일 6자리" value="" title="법정 생년월일 6자리 입력" aria-labelledby="aria-citation-birth" aria-describedby=""/><!-- 오류일 경우 aria-sms-exp-desc2로 변경 -->
+                                                    <input type="number" placeholder="생년월일 6자리" value="" title="법정 생년월일 6자리 입력" /><!-- 오류일 경우 aria-sms-exp-desc2로 변경 --><!--웹접근성 수정 -->
                                                     <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
                                                 </span>
                                                 <!--<span id="aria-sms-exp-desc2" class="error-txt none" aria-hidden="true">생년월일 6자리를 정확히 입력해 주세요.-->
@@ -92,12 +92,12 @@
                                                 <div class="widget">
                                                     <div class="widget-box radio">
                                                         <ul class="select-list" role="radiogroup" aria-describedby=""><!-- 오류일 경우 aria-sms-exp-desc5로 변경 -->
-                                                            <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                                <input type="radio" name="radio1" value="" title="남자" /><!-- 체크상태일 경우 checked="checked" -->
+                                                            <li class="radiobox type01" role="radio" aria-checked="false" id="aria-comp-radio1"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                                <input type="radio" name="radio1" value="" aria-labelledby="aria-comp-radio1" /><!-- 체크상태일 경우 checked="checked" --><!--웹접근성 수정 -->
                                                                 남자
                                                             </li>
-                                                            <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                                <input type="radio" name="radio1" value="" title="여자" /><!-- 체크상태일 경우 checked="false" -->
+                                                            <li class="radiobox type01" role="radio" aria-checked="false" id="aria-comp-radio2"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                                <input type="radio" name="radio1" value="" aria-labelledby="aria-comp-radio2" /><!-- 체크상태일 경우 checked="false" --><!--웹접근성 수정 -->
                                                                 여자
                                                             </li>
                                                         </ul>
@@ -125,7 +125,7 @@
                                 </div>
                                 <div class="inputbox">
                                     <span class="input">
-                                        <input type="text" value="" placeholder="위 이미지의 문자 입력" title="위 이미지의 문자 입력" aria-labelledby="aria-citation-name" aria-describedby=""><!-- 오류일 경우 aria-sms-exp-desc로 변경 -->
+                                        <input type="text" value="" placeholder="위 이미지의 문자 입력" title="위 이미지의 문자 입력" ><!-- 오류일 경우 aria-sms-exp-desc로 변경 --><!--웹접근성 수정 -->
                                         <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                     <span id="aria-sms-exp-desc" class="error-txt none" aria-hidden="true">보안 문자를 정확하게 입력해 주세요.</span>
@@ -145,7 +145,7 @@
                                         <!-- 2019-01-17 inp-btn 추가 -->
 							            <span class="inputbox bt-add inp-btn">
                                             <span class="input">
-                                                <input type="number" placeholder="숫자만 입력" title="휴대폰 번호" aria-labelledby="aria-citation-phone" aria-describedby="" /><!-- 통과일 경우 aria-describedby에 aria-sms-exp-desc3, 오류일 경우 aria-sms-exp-desc6 추가 -->
+                                                <input type="number" placeholder="숫자만 입력" title="휴대폰 번호"  /><!-- 통과일 경우 aria-describedby에 aria-sms-exp-desc3, 오류일 경우 aria-sms-exp-desc6 추가 --><!--웹접근성 수정 -->
                                                 <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
                                             </span>
                                             <span class="bt-box">
@@ -160,7 +160,7 @@
                                     <div class="form-cell">
                                         <span class="inputbox"><!-- 오류일 경우 class error 추가 -->
                                             <span class="input">
-                                                <input type="number" maxlength="6" placeholder="인증번호 숫자 6자리" title="휴대폰 인증번호 6자리" aria-labelledby="aria-citation-phone" aria-describedby="aria-sms-exp-desc4"/><!-- 통과일 경우 aria-describedby에 aria-sms-exp-desc4 삭제 -->
+                                                <input type="number" maxlength="6" placeholder="인증번호 숫자 6자리" title="휴대폰 인증번호 6자리" aria-describedby="aria-sms-exp-desc4"/><!-- 통과일 경우 aria-describedby에 aria-sms-exp-desc4 삭제 --><!--웹접근성 수정 -->
                                                 <button href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></button>
                                             </span>
                                             <span id="aria-sms-exp-desc4" class="error-txt none" aria-hidden="true">인증번호가 일치하지 않습니다.</span><!-- 통과일 경우 class none 삭제 -->
@@ -170,7 +170,7 @@
                             </div>
                         </div>
                         <!-- //cont-box -->
-        
+                        
                         <div class="bt-fixed-area">
                             <ul class="bt-slice full">
                                 <li class="bt-red1">

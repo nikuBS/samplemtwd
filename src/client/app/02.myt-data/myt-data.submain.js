@@ -19,6 +19,9 @@ Tw.MyTDataSubMain = function (params) {
 
 Tw.MyTDataSubMain.prototype = {
   _rendered: function () {
+    if ( this._historyService.isBack() ) {
+      this._historyService.reload();
+    }
     // 실시간잔여 상세
     // this.$remnantBtn = this.$container.find('[data-id=remnant-detail]');
     // 즉시충전버튼
@@ -112,7 +115,7 @@ Tw.MyTDataSubMain.prototype = {
         new Tw.BannerService(this.$container, type, list, 'M', $.proxy(this._successDrawBanner, this));
       }
       else {
-        this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, {menuId: this.data.pageInfo.menuId})
+        this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: this.data.pageInfo.menuId })
           .done($.proxy(this._successBanner, this, Tw.REDIS_BANNER_TYPE.ADMIN))
           .fail($.proxy(this._errorRequest, this));
       }
@@ -123,11 +126,11 @@ Tw.MyTDataSubMain.prototype = {
     }
   },
 
-  _checkBanner: function(result) {
-    return (result.bltnYn === 'Y' && result.tosLnkgYn === 'Y');
+  _checkBanner: function (result) {
+    return (result.bltnYn === 'N' || result.tosLnkgYn === 'Y');
   },
 
-  _successDrawBanner: function() {
+  _successDrawBanner: function () {
     this.$bannerList = this.$container.find('[data-id=banner-list]');
     Tw.CommonHelper.resetHeight(this.$bannerList);
   },
@@ -223,16 +226,19 @@ Tw.MyTDataSubMain.prototype = {
       _.filter(
         GDATA,
         $.proxy(function (item) {
+          if ( item.unlimit === '1' || item.unlimit === 'B' || item.unlimit === 'M' ) {
+            result.totalLimit = true;
+          }
           this.__convShowData(item);
           if ( item.skipId === skipIdList[0] || item.skipId === skipIdList[1] ) {
             result.tmoa.push(item);
-            tmoaRemained += parseInt(item.remained, 10);
-            tmoaTotal += parseInt(item.total, 10);
+            tmoaRemained += parseInt(item.remained || 0, 10);
+            tmoaTotal += parseInt(item.total || 0, 10);
           }
           else {
             result.gdata.push(item);
-            etcRemained += result.totalLimit ? 100 : parseInt(item.remained, 10);
-            etcTotal += result.totalLimit ? 100 : parseInt(item.total, 10);
+            etcRemained += result.totalLimit ? 100 : parseInt(item.remained || 0, 10);
+            etcTotal += result.totalLimit ? 100 : parseInt(item.total || 0, 10);
           }
         }, this)
       );
@@ -303,17 +309,18 @@ Tw.MyTDataSubMain.prototype = {
       this.$patternChart.find('.tit').text(Tw.MYT_DATA_PATTERN_TITLE.DATA);
       unit = Tw.CHART_UNIT.GB;
       data = this.data.pattern.data;
-      var baseTotalData = 0;
+      var baseTotalData = 0, baseTotalVoice = 0, baseTotalSms = 0;
       for ( idx = 0; idx < data.length; idx++ ) {
         var usageData = parseInt(data[idx].totalUsage, 10);
-        baseTotalData += usageData;
+        baseTotalData += usageData;/*parseInt(data[idx].basOfrUsage, 10)*/
         if ( usageData > 0 ) {
           chart_data.push({
-            t: Tw.DateHelper.getShortKoreanAfterMonth(data[idx].invMth), // 각 항목 타이틀
+            t: Tw.DateHelper.getShortKoreanMonth(data[idx].invMth), // 각 항목 타이틀
             v: this.__convertData(usageData) // 배열 평균값으로 전달
           });
         }
       }
+      // 음성
       if ( baseTotalData === 0 ) {
         chart_data = [];
         if ( this.data.pattern.voice.length > 0 ) {
@@ -321,12 +328,33 @@ Tw.MyTDataSubMain.prototype = {
           unit = Tw.CHART_UNIT.TIME;
           data = this.data.pattern.voice;
           for ( idx = 0; idx < data.length; idx++ ) {
+            baseTotalVoice += parseInt(data[idx].totalUsage, 10);
             chart_data.push({
-              t: Tw.DateHelper.getShortKoreanAfterMonth(data[idx].invMth), // 각 항목 타이틀
+              t: Tw.DateHelper.getShortKoreanMonth(data[idx].invMth), // 각 항목 타이틀
               v: this.__convertVoice(parseInt(data[idx].totalUsage, 10)) // 배열 평균값으로 전달
             });
           }
         }
+      }
+      // 문자
+      if ( baseTotalData === 0 && baseTotalVoice === 0 ) {
+        chart_data = [];
+        if ( this.data.pattern.sms.length > 0 ) {
+          this.$patternChart.find('.tit').text(Tw.MYT_DATA_PATTERN_TITLE.SMS);
+          unit = Tw.CHART_UNIT.SMS;
+          data = this.data.pattern.sms;
+          for ( idx = 0; idx < data.length; idx++ ) {
+            baseTotalSms += parseInt(data[idx].totalUsage, 10);
+            chart_data.push({
+              t: Tw.DateHelper.getShortKoreanMonth(data[idx].invMth), // 각 항목 타이틀
+              v: parseInt(data[idx].totalUsage, 10) // 배열 평균값으로 전달
+            });
+          }
+        }
+      }
+      // 최근사용량이 모두 없는 경우
+      if ( baseTotalData === 0 && baseTotalVoice === 0 && baseTotalSms === 0 ) {
+        chart_data = [];
       }
       if ( chart_data.length > 0 ) {
         this.$patternChart.chart2({
@@ -391,8 +419,8 @@ Tw.MyTDataSubMain.prototype = {
           var item = this.__parseRemnantData(arguments[idx].result);
           if ( item.total ) {
             data = {
-              data: item.total.showRemained.data,
-              unit: item.total.showRemained.unit
+              data: item.totalLimit ? Tw.COMMON_STRING.UNLIMIT : item.total.showRemained.data,
+              unit: item.totalLimit ? '' : item.total.showRemained.unit
             };
           }
           else if ( item.sdata.length > 0 ) {
@@ -403,15 +431,25 @@ Tw.MyTDataSubMain.prototype = {
           }
           else if ( item.voice.length > 0 ) {
             data = {
-              data: item.voice[0].showRemained.hours + '시간' + item.voice[0].showRemained.min + '분',
+              data: item.voice[0].showRemained.hours + Tw.VOICE_UNIT.HOURS + item.voice[0].showRemained.min + Tw.VOICE_UNIT.MIN,
               unit: ''
             };
           }
           else if ( item.sms.length > 0 ) {
-            data = {
-              data: item.sms[0].isUnlimit ? item.sms[0].total : item.sms[0].showRemained,
-              unit: Tw.SMS_UNIT
-            };
+            var smsTotalData = item.sms[0].total;
+            if ( item.sms[0].isUnlimit && smsTotalData ) {
+              var isStandard = smsTotalData === Tw.COMMON_STRING.STANDARD;
+              data = {
+                data: isStandard ? Tw.COMMON_STRING.UNLIMIT : smsTotalData,
+                unit: isStandard ? '' : Tw.SMS_UNIT
+              };
+            }
+            else {
+              data = {
+                data: item.sms[0].showRemained,
+                unit: Tw.SMS_UNIT
+              };
+            }
           }
         }
         else {
@@ -444,7 +482,7 @@ Tw.MyTDataSubMain.prototype = {
   // },
 
   _onImmChargeDetail: function () {
-    switch (  this.data.svcInfo.svcAttrCd ) {
+    switch ( this.data.svcInfo.svcAttrCd ) {
       case 'M2':
         // PPS
         new Tw.PPSRechargeLayer(this.$container);
@@ -575,7 +613,7 @@ Tw.MyTDataSubMain.prototype = {
   // 회선 변경 후 처리
   _onChangeSessionSuccess: function () {
     if ( Tw.BrowserHelper.isApp() ) {
-      this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
+      Tw.CommonHelper.toast(Tw.REMNANT_OTHER_LINE.TOAST);
     }
     setTimeout($.proxy(function () {
       this._historyService.reload();

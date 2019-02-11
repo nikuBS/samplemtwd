@@ -90,8 +90,8 @@ Tw.POPUP_TPL = {
       'title': '요금 즉시 납부',
       'list': [
         { 'txt': '계좌이체 납부', 'option': 'fe-account' },
-        { 'txt': '체크 ∙ 신용카드 납부', 'option': 'fe-card' },
-        { 'txt': 'OK캐쉬백 ∙ T포인트 납부', 'option': 'fe-point' }
+        { 'txt': '체크/신용카드 납부', 'option': 'fe-card' },
+        { 'txt': 'OK캐쉬백/T포인트 납부', 'option': 'fe-point' }
       ]
     },
     {
@@ -121,7 +121,7 @@ Tw.POPUP_TPL = {
       'title': '요금 즉시 납부',
       'list': [
         { 'txt': '계좌이체 납부', 'option': 'fe-account' },
-        { 'txt': '체크 ∙ 신용카드 납부', 'option': 'fe-card' }
+        { 'txt': '체크/신용카드 납부', 'option': 'fe-card' }
       ]
     },
     {
@@ -238,7 +238,7 @@ Tw.POPUP_TPL = {
         { 'label-attr': 'id="CCBCOE0"', 'radio-attr': 'id="CCBCOE0" name="r2"', txt: '부가서비스(컬러링)' },
         { 'label-attr': 'id="CCPCRBE"', 'radio-attr': 'id="CCPCRBE" name="r2"', txt: '부가서비스(퍼팩트콜)' },
         { 'label-attr': 'id="CCPLRBE"', 'radio-attr': 'id="CCPLRBE" name="r2"', txt: '부가서비스(퍼팩트콜라이트)' },
-        { 'label-attr': 'id="CCRPGDC"', 'radio-attr': 'id="CCRPGDC" name="r2"', txt: '기본료∙월정액' },
+        { 'label-attr': 'id="CCRPGDC"', 'radio-attr': 'id="CCRPGDC" name="r2"', txt: '기본료/월정액' },
         { 'label-attr': 'id="CCRMRBE"', 'radio-attr': 'id="CCRMRBE" name="r2"', txt: '로밍 이용요금' }
       ]
     }
@@ -681,7 +681,7 @@ Tw.CUSTOMER_EMAIL_QUALITY_QUESTION = {
 };
 
 Tw.REGION_LIST_ITEM = {
-  start: '<li role="radio" aria-checked="false"><input type="radio" name="senddata" title="" value="',
+  start: '<li role="radio" aria-checked="false" aria-labelledby="aria-comp-radio"><input type="radio" name="senddata" aria-labelledby="aria-comp-radio" value="',
   close: '</li>',
   getItem: function (name, code) {
     return this.start + code + '">' + name + this.close;
@@ -844,10 +844,10 @@ Tw.ROAMING_MANAGE_TYPE = {
 Tw.ROAMING_MFACTCD_LIST = {
     list: [
         { txt: '전체', 'radio-attr': 'id="ra0" name="r2" data-mfact-code="ALL" data-mfact-name="전체"', 'label-attr': 'id="ra0"' },
-        { txt: '삼성', 'radio-attr': 'id="ra1" name="r2" data-mfact-code="SS" data-mfact-name="삼성"', 'label-attr': 'id="ra1"' },
-        { txt: 'LG', 'radio-attr': 'id="ra2" name="r2" data-mfact-code="LG" data-mfact-name="LG"', 'label-attr': 'id="ra2"' },
-        { txt: '팬택', 'radio-attr': 'id="ra3" name="r2" data-mfact-code="PT" data-mfact-name="팬택"', 'label-attr': 'id="ra3"' },
-        { txt: '애플', 'radio-attr': 'id="ra4" name="r2" data-mfact-code="CG" data-mfact-name="애플"', 'label-attr': 'id="ra4"' },
+        { txt: '삼성', 'radio-attr': 'id="ra1" name="r2" data-mfact-code="100SS" data-mfact-name="삼성"', 'label-attr': 'id="ra1"' },
+        { txt: 'LG', 'radio-attr': 'id="ra2" name="r2" data-mfact-code="100LG" data-mfact-name="LG"', 'label-attr': 'id="ra2"' },
+        { txt: '팬택', 'radio-attr': 'id="ra3" name="r2" data-mfact-code="100PT" data-mfact-name="팬택"', 'label-attr': 'id="ra3"' },
+        { txt: '애플', 'radio-attr': 'id="ra4" name="r2" data-mfact-code="100CG" data-mfact-name="애플"', 'label-attr': 'id="ra4"' },
         { txt: '기타', 'radio-attr': 'id="ra5" name="r2" data-mfact-code="ETC" data-mfact-name="기타"', 'label-attr': 'id="ra5"' }
     ]
 };

@@ -17,6 +17,10 @@ Tw.MyTFareBillRainbow = function (rootEl) {
 
 Tw.MyTFareBillRainbow.prototype = {
   _init: function () {
+    this.$isOneSelectValid = false;
+    this.$isAutoSelectValid = true;
+    this.$isPointValid = false;
+
     this._initVariables('tab1');
     this._bindEvent();
   },
@@ -27,7 +31,6 @@ Tw.MyTFareBillRainbow.prototype = {
     this.$fareSelector = this.$selectedTab.find('.fe-select-fare');
     this.$point = this.$selectedTab.find('.fe-point');
     this.$payBtn = this.$container.find('.fe-' + $targetId + '-pay');
-    this.$isValid = false;
     this.$isSelectValid = true;
 
     this.$payBtn.show();
@@ -114,7 +117,7 @@ Tw.MyTFareBillRainbow.prototype = {
     if (Tw.FormatHelper.isEmpty(this.$fareSelector.attr('id'))) {
       this.$fareSelector.parent().siblings('.fe-error-msg').show();
       this.$fareSelector.focus();
-      this.$isSelectValid = false;
+      this._setSelectorValidation(false);
     }
     this._popupService.close();
   },
@@ -124,10 +127,17 @@ Tw.MyTFareBillRainbow.prototype = {
     $target.text($.trim($selectedValue.parents('label').text()));
 
     this.$fareSelector.parent().siblings('.fe-error-msg').hide();
-    this.$isSelectValid = true;
+    this._setSelectorValidation(true);
 
     this._checkIsAbled();
     this._popupService.close();
+  },
+  _setSelectorValidation: function (isValid) {
+    if (this.$selectedTab.attr('id') === 'tab1-tab') {
+      this.$isOneSelectValid = isValid;
+    } else {
+      this.$isAutoSelectValid = isValid;
+    }
   },
   _checkPoint: function () {
     var isValid = false;
@@ -147,17 +157,10 @@ Tw.MyTFareBillRainbow.prototype = {
       isValid = true;
     }
 
-    this.$isValid = this._validation.showAndHideErrorMsg(this.$point, isValid);
-  },
-  _isValidForAuto: function () {
-    var isValid = this._validation.checkIsMore(parseInt(this.$standardPoint.attr('id'), 10), 1000);
-    if (!isValid) {
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_FARE.UP_TO_TEN);
-    }
-    return isValid;
+    this.$isPointValid = this._validation.showAndHideErrorMsg(this.$point, isValid);
   },
   _onePay: function () {
-    if (this.$isValid && this.$isSelectValid) {
+    if (this.$isPointValid && this.$isOneSelectValid) {
       var reqData = this._makeRequestDataForOne();
       this._apiService.request(Tw.API_CMD.BFF_07_0048, reqData)
         .done($.proxy(this._paySuccess, this, ''))
@@ -165,7 +168,7 @@ Tw.MyTFareBillRainbow.prototype = {
     }
   },
   _autoPay: function () {
-    if (this._isValidForAuto() && this.$isSelectValid) {
+    if (this.$isAutoSelectValid) {
       var reqData = this._makeRequestDataForAuto();
       this._apiService.request(Tw.API_CMD.BFF_07_0056, reqData)
         .done($.proxy(this._paySuccess, this, 'auto'))
@@ -207,7 +210,8 @@ Tw.MyTFareBillRainbow.prototype = {
   _onClose: function () {
     if (this._isChanged()) {
       this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-        $.proxy(this._closePop, this), $.proxy(this._afterClose, this));
+        $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
+        Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
     } else {
       this._historyService.goBack();
     }

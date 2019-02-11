@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+					<div class="h-tit">약정할인·기기상환 정보</div>
+					<div class="h-serarch">
+						<button class="icon-gnb-search"><span class="blind">검색</span></button>
+					</div>
+				</div>
+			</div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">              
+    
+                <div class="ti-caption-gray">
+                    <h3 class="tit">요금 약정 할인</h3>
+                </div>
+
+                <!-- 요금약정할인 제도 -->
+                <div class="cont-box">
+
+                    <div class="contract-dc-wrap">
+                        <div class="dc-tit-wrap">
+                            <h4 class="dc-tit">요금약정할인 제도(24개월)</h4>
+                            <div class="bt-alone"><button class="bt-bg-blue1" title="요금약정할인 제도(24개월) 혜택 보기">혜택 보기</button></div>
+                        </div>
+
+                        <div class="contract-dc-list">
+                            <ul>
+                                <li>
+                                    <dl>
+                                        <dt>
+                                            <strong class="tit">전월 기준 할인 금액 합계</strong>
+                                            <button aria-haspopup="true" class="tip-view" title="전월 기준 할인 금액 합계 정보보기">TIP</button>
+                                        </dt>
+                                        <dd>
+                                            <span class="val-type1"><span class="str">-196,451</span>원</span>
+                                        </dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>
+                                            <strong class="tit">약정 시작/종료일</strong>
+                                            <button aria-haspopup="true" class="tip-view" title="약정 시작/종료일 정보보기">TIP</button>
+                                        </dt>
+                                        <dd>
+                                            <span class="val-type2">2018.05.23 ~ 2019.05.23</span>
+                                        </dd>
+                                    </dl>
+                                </li>
+                            </ul>
+                            <div class="amountdata-num">
+                                <div class="date-info">
+                                    <p class="data-title">잔여<span class="blind">(잔여일수)</span></p>
+                                    <p class="data-state"><span class="str">30</span>일</p>
+                                </div>
+                                <div class="date-info">
+                                    <p class="data-title">전체<span class="blind">(전체일수)</span></p>
+                                    <p class="data-state"><span class="str">365</span>일</p>
+                                </div>
+                            </div>
+                            <div class="bar-chart-hoz">
+                                <span class="data-bar red" style="width:70%"></span>
+                            </div>
+                        </div>
+                        <ul class="bt-slice">
+                            <li class="bt-white2">
+                                <button>상세 할인 내역 보기</button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="extra-txt">
+                        <p>스페셜약정할인, LTE플러스약정할인 프로그램이 ‘요금약정할인’으로 통합변경 되었습니다. 이용에 착오 없으시기 바랍니다.</p>
+                    </div>
+
+                </div>
+                <!--// 요금약정할인 제도 -->
+
+                <div class="ti-caption-gray">
+                    <h3 class="tit">단말기 분할상환 정보</h3>
+                </div>
+
+                <!-- IPHONE6S_64G -->
+                <div class="cont-box">
+
+                    <div class="contract-dc-wrap">
+                        <div class="dc-tit-wrap">
+                            <h4 class="dc-tit">IPHONE6S_64G</h4>
+                        </div>
+                        
+                        <div class="contract-dc-list type2"><!-- 하단 분할상환 시작일에만 라인이 있는 경우 type2 클래스 추가 -->
+                            <ul>
+                                <li>
+                                    <dl>
+                                        <dt>
+                                            <strong class="tit">총 분할상환 청구금액</strong>
+                                        </dt>
+                                        <dd>
+                                            <span class="val-type3"><span class="str">850,000</span>원</span>
+                                        </dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>
+                                            <strong class="tit">잔여 분할상환 청구 금액</strong>
+                                        </dt>
+                                        <dd>
+                                            <span class="val-type4"><span class="str">457,000</span>원</span>
+                                        </dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>
+                                            <strong class="tit">분할상환 시작일</strong>
+                                        </dt>
+                                        <dd>
+                                            <span class="val-type2">2018.05.23</span>
+                                        </dd>
+                                    </dl>
+                                </li>
+                            </ul>
+                            <div class="amountdata-num">
+                                <div class="date-info">
+                                    <p class="data-title">잔여<span class="blind">(잔여개월수)</span></p>
+                                    <p class="data-state"><span class="str">13</span>개월</p>
+                                </div>
+                                <div class="date-info">
+                                    <p class="data-title">전체<span class="blind">(전체개월수)</span></p>
+                                    <p class="data-state"><span class="str">24</span>개월</p>
+                                </div>
+                            </div>
+                            <div class="bar-chart-hoz">
+                                <span class="data-bar red" style="width:30%"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!--// IPHONE6S_64G -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- 갤럭시 S II_32GB -->
+                <div class="cont-box">
+
+                    <div class="contract-dc-wrap">
+                        <div class="dc-tit-wrap">
+                            <h4 class="dc-tit">갤럭시 S II_32GB</h4>
+                        </div>
+                        
+                        <div class="contract-dc-list type2"><!-- 하단 분할상환 시작일에만 라인이 있는 경우 type2 클래스 추가 -->
+                            <ul>
+                                <li>
+                                    <dl>
+                                        <dt>
+                                            <strong class="tit">총 분할상환 청구금액</strong>
+                                        </dt>
+                                        <dd>
+                                            <span class="val-type3"><span class="str">850,000</span>원</span>
+                                        </dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>
+                                            <strong class="tit">잔여 분할상환 청구 금액</strong>
+                                        </dt>
+                                        <dd>
+                                            <span class="val-type4"><span class="str">457,000</span>원</span>
+                                        </dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl>
+                                        <dt>
+                                            <strong class="tit">분할상환 시작일</strong>
+                                        </dt>
+                                        <dd>
+                                            <span class="val-type2">2018.05.23</span>
+                                        </dd>
+                                    </dl>
+                                </li>
+                            </ul>
+                            <div class="amountdata-num">
+                                <div class="date-info">
+                                    <p class="data-title">잔여<span class="blind">(잔여개월수)</span></p>
+                                    <p class="data-state"><span class="str">13</span>개월</p>
+                                </div>
+                                <div class="date-info">
+                                    <p class="data-title">전체<span class="blind">(전체개월수)</span></p>
+                                    <p class="data-state"><span class="str">24</span>개월</p>
+                                </div>
+                            </div>
+                            <div class="bar-chart-hoz">
+                                <span class="data-bar red" style="width:30%"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!--// 갤럭시 S II_32GB -->
+
+            </div>
+        </div>
+        <!--// #contents -->
+
+    </div>
+</body>
+
+</html>

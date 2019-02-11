@@ -32,6 +32,8 @@ Tw.CustomerEmailCategory.prototype = {
     this.$select_service_depth2 = $('.fe-service_depth2');
     this.$select_quality_depth1 = $('.fe-quality_depth1');
     this.$wrap_tpl_faq = $('.fe-btn_faq');
+    this.$wrap_tpl_service = this.$container.find('.fe-wrap_tpl_service');
+    this.$wrap_tpl_quality = this.$container.find('.fe-wrap_tpl_quality');
   },
 
   _bindEvent: function () {
@@ -53,7 +55,10 @@ Tw.CustomerEmailCategory.prototype = {
     }
   },
 
-  _onClickService1Depth: function () {
+  _onClickService1Depth: function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+
     var fnSelectLine = function (item) {
       return {
         value: item.title,
@@ -73,7 +78,10 @@ Tw.CustomerEmailCategory.prototype = {
     );
   },
 
-  _onClickService2Depth: function () {
+  _onClickService2Depth: function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+
     var sDepth1Category = this.$select_service_depth1.data('service-depth1');
 
     if ( sDepth1Category ) {
@@ -101,7 +109,10 @@ Tw.CustomerEmailCategory.prototype = {
     }
   },
 
-  _onClickQuality1Depth: function () {
+  _onClickQuality1Depth: function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+
     var fnSelectLine = function (item) {
       return {
         value: item.title,
@@ -122,6 +133,9 @@ Tw.CustomerEmailCategory.prototype = {
   },
 
   _onSelectService1Depth: function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+
     this._popupService.close();
 
     var sDepth1Value = $(e.currentTarget).data('service-depth1').toString();
@@ -149,6 +163,9 @@ Tw.CustomerEmailCategory.prototype = {
   },
 
   _onSelectService2Depth: function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+
     this._popupService.close();
 
     var sDepth2Value = $(e.currentTarget).data('service-depth2').toString();
@@ -162,6 +179,9 @@ Tw.CustomerEmailCategory.prototype = {
   },
 
   _onSelectQuality1Depth: function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+
     this._popupService.close();
 
     var sDepth1Value = $(e.currentTarget).data('quality-depth1');

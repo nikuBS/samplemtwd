@@ -232,8 +232,11 @@ gulp.task('js-rb', function () {
 
 gulp.task('css-rb', function () {
   return gulp.src([
-    'src/client/web-contents/css/**/*.css',
-    '!src/client/web-contents/css/**/*.min.css'])
+    'src/client/web-contents/css/common.css',
+    'src/client/web-contents/css/layout.css',
+    'src/client/web-contents/css/widgets.css',
+    'src/client/web-contents/css/components.css',
+    'src/client/web-contents/css/m_product.css'])
   // .pipe(base64({
   //   baseDir: 'src/client/web-contents/',
   //   extensions: ['svg', 'png', /\.jpg#datauri$/i],
@@ -258,7 +261,8 @@ gulp.task('css-rb', function () {
 
 gulp.task('css-idpt', function() {
   return gulp.src([
-    'src/client/web-contents/css_idpt/**/*.css'])
+    'src/client/web-contents/css/idpt-reset-mobile.css',
+    'src/client/web-contents/css/idpt-service-mobile.css'])
     .pipe(concat('style-idpt.css'))
     // .pipe(imagehash())
     .pipe(cleanCSS())
@@ -314,9 +318,8 @@ gulp.task('post-clean', function () {
 
 gulp.task('watch', function () {
   livereload.listen();
-  gulp.watch('src/client/**/*.hbs', { interval: 500 }, ['hbs']);
+  gulp.watch('src/client/**/*.hbs', { interval: 500 }, ['hbs-front']);
   gulp.watch('src/client/**/*.js', { interval: 500 }, ['client-build']);
-  gulp.watch('src/client/**/*.css', { interval: 500 }, ['css-vendor', 'css-rb']);
   gulp.watch('dist/**', { interval: 500 }).on('change', livereload.changed);
 });
 

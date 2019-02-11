@@ -62,7 +62,7 @@
 									<ul class="select-list one-line" role="group">
 										<li>
 											<div class="checkbox type01 all checked" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-												<input type="checkbox" name="checkbox" value="" title="안내사항 확인" aria-labelledby="aria-comp-checkbox1" checked /><!-- 체크상태일 경우 checked="checked" -->
+												<input type="checkbox" name="checkbox" value="" title="서비스 해지 신청" aria-labelledby="aria-comp-checkbox1" checked /><!-- 체크상태일 경우 checked="checked" -->
 												<div class="comp-list-layout" id="aria-comp-checkbox1">
 													<p class="layout-text">
 														<span class="ntext">안내사항 확인</span>
@@ -93,7 +93,7 @@
                                         <ul class="select-list btm-line" role="group">
                                             <li>
                                                 <div class="checkbox type01 checked" role="checkbox" aria-checked="true"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="checkbox" name="checkbox" value="" title="T_스마트 광랜(다이렉트)106동 206호 (잠실 장미 아파트)" aria-labelledby="aria-comp-checkbox1" checked="" /><!-- 체크상태일 경우 checked="false" -->
+                                                    <input type="checkbox" name="checkbox" value="" title="해지 신청 상품" aria-labelledby="aria-comp-checkbox1" checked="" /><!-- 체크상태일 경우 checked="false" -->
                                                     <div class="comp-list-layout" id="aria-comp-checkbox1">
                                                         <p class="layout-text">
                                                             <span class="mtext">T_스마트 광랜(다이렉트)106동 206호 (잠실 장미 아파트)</span>
@@ -103,7 +103,7 @@
                                             </li>
                                             <li>
                                                 <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input type="checkbox" name="checkbox" value="" title="T_스마트 광랜(다이렉트)106동 206호 (잠실 장미 아파트)" aria-labelledby="aria-comp-checkbox2" /><!-- 체크상태일 경우 checked="false" -->
+                                                    <input type="checkbox" name="checkbox" value="" title="해지 신청 상품" aria-labelledby="aria-comp-checkbox2" /><!-- 체크상태일 경우 checked="false" -->
                                                     <div class="comp-list-layout" id="aria-comp-checkbox2" >
                                                         <p class="layout-text">
                                                             <span class="mtext">T_스마트 광랜(다이렉트)106동 206호 (잠실 장미 아파트)</span>
@@ -132,11 +132,11 @@
                                     <div class="widget-box radio">
                                         <ul class="select-list" role="radiogroup">
                                             <li class="radiobox type01 checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                <input type="radio" name="radio1" value="" title="연락 가능한 연락처 휴대폰" checked /><!-- 체크상태일 경우 checked="checked" -->
+                                                <input type="radio" name="radio1" value="" title="연락 가능한 연락처" checked /><!-- 체크상태일 경우 checked="checked" -->
                                                 휴대폰
                                             </li>
                                             <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="radio" name="radio1" value="" title="연락 가능한 연락처 일반전화" /><!-- 체크상태일 경우 checked="false" -->
+                                                <input type="radio" name="radio1" value="" title="연락 가능한 연락처" /><!-- 체크상태일 경우 checked="false" -->
                                                 일반전화
                                             </li>
                                         </ul>
@@ -154,7 +154,7 @@
                                     <div class="widget-box check">
                                         <ul class="select-list" role="group">
                                             <li class="checkbox type01" role="checkbox" aria-checked="false"/>
-                                                <input type="checkbox" name="checkbox01" value="" title="회원정보 등록된 연락처">
+                                                <input type="checkbox" name="checkbox01" value="" title="연락 가능한 연락처">
                                                 회원정보에 등록된 연락처
                                             </li>
                                         </ul>
@@ -203,7 +203,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <h3 class="mt40">사용요금 정보<button class="tip-view" title="사용요금 정보 TIP보기">TIP</button></h3>
+                            <h3 class="mt40">사용요금 정보<button class="tip-view" title="사용요금 정보 TIP보기" aria-haspopup="true">TIP</button></h3>
                             <div class="basic-list">
                                 <ul>
                                     <li>
@@ -228,13 +228,13 @@
                 
                     <!-- .cont-box -->
 					<div class="cont-box nogaps-btm">
-						<h3 class="tx-bold">꼭 확인해 주세요</h3>
-						<ul class="noti-list">
-							<li>서비스 해지 제한 <button type="button" class="icon-tip" title="서비스 해지 제한 TIP보기">TIP</button></li>
-							<li>해지 신청 불가능한 경우 <button type="button" class="icon-tip" title="해지 신청 불가능한 경우 TIP보기">TIP</button></li>
-							<li>범용 공인인증서 <button type="button" class="icon-tip" title="범용 공인인증서 TIP보기">TIP</button></li>
-							<li>콜센터 해지 요청 <button type="button" class="icon-tip" title="콜센터 해지 요청 TIP보기">TIP</button></li>
-						</ul>
+                        <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                        <ul class="noti-list">
+                            <li><button type="button" class="tip-view-btn" title="서비스 해지 제한 TIP보기" aria-haspopup="true">서비스 해지 제한 <span class="tip-view">TIP</span></button></li>
+                            <li><button type="button" class="tip-view-btn" title="해지 신청 불가능한 경우 TIP보기" aria-haspopup="true">해지 신청 불가능한 경우 <span class="tip-view">TIP</span></button></li>
+                            <li><button type="button" class="tip-view-btn" title="범용 공인인증서 TIP보기" aria-haspopup="true">범용 공인인증서 <span class="tip-view">TIP</span></button></li>
+                            <li><button type="button" class="tip-view-btn" title="콜센터 해지 요청 TIP보기" aria-haspopup="true">콜센터 해지 요청 <span class="tip-view">TIP</span></button></li>
+                        </ul>
 					</div>
 					<!--// .cont-box -->
 

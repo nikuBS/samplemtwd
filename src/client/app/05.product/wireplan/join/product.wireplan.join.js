@@ -36,6 +36,7 @@ Tw.ProductWireplanJoin.prototype = {
 
     this.$container.html(html);
     this._callConfirmCommonJs();
+    Tw.Tooltip.separateInit(this.$container.find('.fe-product-tip'));
   },
 
   _convConfirmOptions: function() {
@@ -117,6 +118,14 @@ Tw.ProductWireplanJoin.prototype = {
 
   _bindJoinResPopup: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
+    $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
+  },
+
+  _closeAndGo: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
   },
 
   _closePop: function() {

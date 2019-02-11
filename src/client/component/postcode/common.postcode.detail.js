@@ -65,17 +65,25 @@ Tw.CommonPostcodeDetail.prototype = {
   },
   _bindEvent: function () {
     this.$layer.on('keyup', '.fe-input-number', $.proxy(this._checkNumber, this));
-    this.$layer.on('click', '.fe-search', $.proxy(this._search, this));
+    this.$layer.on('keyup', 'input[type="text"]', $.proxy(this._checkIsEnter, this));
+    this.$layer.on('click', '.fe-search', $.proxy(this._search, this, null));
     this.$layer.on('click', '.fe-more-btn', $.proxy(this._getMoreList, this));
   },
   _checkNumber: function (event) {
     this._inputHelper.inputNumberAndDashOnly(event.currentTarget);
+    this._checkIsEnter(event);
   },
-  _search: function(event) {
+  _checkIsEnter: function (event) {
+    if (Tw.InputHelper.isEnter(event)) {
+      var $target = $(event.currentTarget);
+      this._search($target.siblings('.fe-search'));
+    }
+  },
+  _search: function($target, event) {
     this.$resultBox.find('.fe-clone').remove();
     this.$resultBox.hide();
     this.$emptyBox.hide();
-    this.$searchTarget = $(event.currentTarget);
+    this.$searchTarget = $target || $(event.currentTarget);
     this._page = 0;
 
     this._getList();

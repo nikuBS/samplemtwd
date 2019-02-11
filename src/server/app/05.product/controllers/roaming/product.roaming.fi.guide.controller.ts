@@ -8,7 +8,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 // import { Observable } from 'rxjs/Observable';
 
-export default class ProductRoamingFi extends TwViewController {
+export default class ProductRoamingFiGuide extends TwViewController {
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {
       res.render('roaming/product.roaming.fi.guide.html', { svcInfo, pageInfo });
   }

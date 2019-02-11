@@ -213,7 +213,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
 
   _requestMembershipJoin: function () {
     this.loadingView(true);
-    var $items = this.$container.find('[checked=true]');
+    var $defaultOpt = this.$container.find('input[type=checkbox]');
     var params = {
       mbr_typ_cd: '0', // T 멤버십 리더스카드 만 발급 중
       svc_nominal_rel_cd: this.svcNominalRelCd, // 본인: 010, 직원: 090, 기타: 990
@@ -229,26 +229,45 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     if ( this.data.isCorporateBody ) {
       params.cust_email_addr = this.$emailAddr.val(); // email 주소
     }
-
-    for ( var i = 0; i < $items.length; i++ ) {
-      var $item = $items.eq(i);
-      switch ( $item.attr('data-type') ) {
+    var cashbagCnt = 0;
+    for ( var i = 0; i < $defaultOpt.length; i++ ) {
+      var $item = $defaultOpt.eq(i);
+      var checked = $item.prop('checked');
+      switch ( $item.parent().attr('data-type') ) {
         case 'ad':
-          params.skt_news_yn = 'Y';
+          if ( checked ) {
+            params.skt_news_yn = 'Y';
+          }
           break;
         case 'bsi':
-          params.skt_tm_yn = 'Y';
+          if ( checked ) {
+            params.skt_tm_yn = 'Y';
+          }
           break;
         case 'sms':
-          params.sms_agree_yn = 'Y';
+          if ( checked ) {
+            params.sms_agree_yn = 'Y';
+          }
           break;
-        case 'okadd':
-          params.ocb_accum_agree_yn = 'Y';
+        case 'ovc':
+          if ( this._checkOkCashbag && checked ) {
+            cashbagCnt = 1;
+          }
+          break;
+        case 'odi':
+          if ( this._checkOkCashbag && checked ) {
+            cashbagCnt = 2;
+          }
           break;
         case 'mak':
-          params.mktg_agree_yn = 'Y';
+          if ( this._checkOkCashbag && checked ) {
+            params.mktg_agree_yn = 'Y';
+          }
           break;
       }
+    }
+    if ( cashbagCnt === 2 ) {
+      params.ocb_accum_agree_yn = 'Y';
     }
     this._apiService.request(Tw.API_CMD.BFF_11_0011, params)
       .done($.proxy(this._onSuccessJoinMembership, this))
@@ -259,7 +278,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
   _onSuccessJoinMembership: function (resp) {
     this.loadingView(false);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.afterRequestSuccess('/membership/mymembership/history', '/membership/submain',
+      this._popupService.afterRequestSuccess('/membership/my/history', '/membership/submain',
         Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.LINK_TITLE, Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.TITLE,
         Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.CONTENT);
       // 완료 팝업이 뜬 이후에 T Pay 관련 팝업 띄우기 위함

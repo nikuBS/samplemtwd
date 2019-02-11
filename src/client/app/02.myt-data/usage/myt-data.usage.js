@@ -364,7 +364,7 @@ Tw.MyTDataUsage.prototype = {
     //console.log(data);
 
     // 공제항목명
-    $('#fe-cont-data-limit .fe-skipnm').text(data.skipNm);
+    // $('#fe-cont-data-limit .fe-skipnm').text(data.skipNm);
     // 충전금액
     var tot = Tw.FormatHelper.addComma(data.total) || 0;
     $('#fe-cont-data-limit .fe-recharge-amt').text(tot);
@@ -384,6 +384,7 @@ Tw.MyTDataUsage.prototype = {
 
     for ( var i = 0; i < data.length; i++ ) {
       data[i].skipLabel = Tw.TING_TITLE[data[i].skipId];
+      data[i].skipNm = Tw.MYT_DATA_USAGE.TING_SKIPNM_PREFIX + data[i].skipNm;
       data[i].unitLabel = Tw.CURRENCY_UNIT.WON;
     }
 

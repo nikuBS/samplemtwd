@@ -42,7 +42,8 @@ class MyTDataPrepaidVoiceAuto extends TwViewController {
         pageInfo: pageInfo,
         isApp: BrowserHelper.isApp(req),
         convertDate: this.convertDate,
-        convertAmount: this.convertAmount
+        convertAmount: this.convertAmount,
+        convertDashDate: this.convertDashDate
       });
     } else {
       this.error.render(res, {
@@ -70,6 +71,8 @@ class MyTDataPrepaidVoiceAuto extends TwViewController {
   }
 
   public convertDate = (sDate) => DateHelper.getShortDateNoDot(sDate);
+
+  public convertDashDate = (sDate) => DateHelper.getDashShortDateNoDot(sDate);
 
   public convertAmount = (sAmount) => FormatHelper.addComma(sAmount);
 }

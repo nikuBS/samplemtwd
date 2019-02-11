@@ -69,7 +69,7 @@
                             <label class="tit" for="formInput01">신청자 이름</label>
                             <span class="inputbox">
                                 <span class="input">
-                                    <input id="formInput01" class="fe-input_name" type="text" placeholder="이름 입력" title="신청자 이름 입력">
+                                    <input id="formInput01" class="fe-input_name" type="text" placeholder="이름 입력" title="신청자 이름 입력" maxlength="30">
                                     <button class="fe-btn_cancel fe-clear_check cancel"><span class="blind">삭제</span></button>
                                 </span>
                             </span>
@@ -79,7 +79,7 @@
                             <span class="inputbox">
                                 <span class="input">
                                     <input id="formInput02" class="fe-input_phone_number" type="tel" placeholder="숫자만 입력"
-                                         title="상담가능 번호 입력">
+                                         title="상담가능 번호 숫자만 입력">
                                     <button class="fe-btn_cancel fe-clear_check cancel"><span class="blind">삭제</span></button>
                                 </span>
                             </span>
@@ -102,7 +102,7 @@
                                         <li>
                                             <div class="checkbox type01" role="checkbox" aria-checked="false">
                                                 <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                <input type="checkbox" name="checkbox" value="" title="개인정보 제공 동의(필수)" aria-labelledby="aria-comp-checkbox1"/>
+                                                <input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox1"/>
                                                 <!-- 체크상태일 경우 checked="false" -->
                                                 <div class="comp-list-layout" id="aria-comp-checkbox1">
                                                     <p class="layout-text">
@@ -140,8 +140,7 @@
                                                 <div class="checkbox type01" role="checkbox" aria-checked="false">
                                                     <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                     <input type="checkbox" name="checkbox" class="fe-combine_selected"
-                                                           value="" title="결합상품 선택"
-                                                           aria-labelledby="aria-comp-checkbox2"/>
+                                                           value="" aria-labelledby="aria-comp-checkbox2"/>
                                                     <!-- 체크상태일 경우 checked="false" -->
                                                     <div class="comp-list-layout" id="aria-comp-checkbox2">
                                                         <p class="layout-text">
@@ -160,7 +159,6 @@
                                                                  role="checkbox" aria-checked="false">
                                                                 <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                                 <input type="checkbox" name="checkbox" value=""
-                                                                       title="개인정보 제공 동의(필수)"
                                                                        aria-labelledby="aria-comp-checkbox3"
                                                                        disabled="disabled"/>
                                                                 <!-- 체크상태일 경우 checked="false" -->
@@ -190,9 +188,9 @@
                     <!-- .cont-box -->
                     <div class="cont-box nogaps-btm">
                         <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                        <ul class="noti-list">
-                            <li>가입상담예약 안내
-                                <button type="button" class="tip-view" id="WP_02_01_tip_02" page-id="M000425">TIP</button>
+                        <ul class="noti-list02">
+                            <li>
+                                <button type="button" class="tip-view-btn" id="WP_02_01_tip_02" page-id="M000425" title="가입상담예약 안내" aria-haspopup="true">가입상담예약 안내<span class="tip-view">TIP</span></button>
                             </li>
                         </ul>
                     </div>

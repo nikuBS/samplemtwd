@@ -33,6 +33,7 @@ import MyTJoinPhoneNumChgAlarm from './controllers/submain/myt-join.submain.phon
 import MyTJoinPhoneNumChgAlarmExt from './controllers/submain/myt-join.submain.phone.extalarm.controller';
 import MyTJoinNumChange from './controllers/submain/myt-join.submain.numchange.controller';
 import MyTJoinSuspendStatus from './controllers/suspend/myt-join.suspend.status.controller';
+import MyTJoinMyPlanCombineShare from './controllers/myplancombine/myt-join.myplancombine.share.controller';
 
 class MyTJoinRouter extends TwRouter {
   constructor() {
@@ -78,6 +79,7 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/submain/phone/extalarm', controller: MyTJoinPhoneNumChgAlarmExt });
     this.controllers.push({ url: '/submain/phone/extalarm/complete', controller: MyTJoinPhoneNumChgAlarmExt });
     this.controllers.push({ url: '/additions', controller: MyTJoinMyPlanAdd });
+    this.controllers.push({ url: '/combinations/share', controller: MyTJoinMyPlanCombineShare });
     this.controllers.push({ url: '/combinations(/:combination)?', controller: MyTJoinMyPlanCombine });
   }
 }

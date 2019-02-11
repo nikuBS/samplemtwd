@@ -187,7 +187,7 @@ Tw.MyTFareSubMain.prototype = {
       target: '.chart4', //클래스명 String
       type: (this.data.type === 'UF') ? Tw.CHART_TYPE.BAR_2 : Tw.CHART_TYPE.BAR_4, //bar
       average: true, // 평균
-      legend: Tw.FARE_CHART_LEGEND, // 범례
+      legend: (this.data.type === 'UF') ? ['이용'] : Tw.FARE_CHART_LEGEND, // 범례
       link: true,
       unit: Tw.CHART_UNIT.WON, // 표기
       data_arry: data //데이터 obj,
@@ -258,7 +258,7 @@ Tw.MyTFareSubMain.prototype = {
   },
 
   _checkBanner: function(result) {
-    return (result.bltnYn === 'Y' && result.tosLnkgYn === 'Y');
+    return (result.bltnYn === 'N' || result.tosLnkgYn === 'Y');
   },
 
   _successDrawBanner: function() {
@@ -361,7 +361,7 @@ Tw.MyTFareSubMain.prototype = {
       for ( var idx = 0; idx < otherLineLength; idx++ ) {
         this._svcMgmtNumList.push(this.data.otherLines[idx].svcMgmtNum);
         requestCommand.push({
-          command: this.data.type === 'UF' ? Tw.API_CMD.BFF_05_0047 : Tw.API_CMD.BFF_05_0036,
+          command: this.data.otherLines[idx].actRepYn === 'N' ? Tw.API_CMD.BFF_05_0047 : Tw.API_CMD.BFF_05_0036,
           // 서버 명세가 변경됨 svcMgmtNum -> T-svcMgmtNum
           headers: {
             'T-svcMgmtNum': this.data.otherLines[idx].svcMgmtNum
@@ -566,7 +566,7 @@ Tw.MyTFareSubMain.prototype = {
   // 회선 변경 후 처리
   _onChangeSessionSuccess: function () {
     if ( Tw.BrowserHelper.isApp() ) {
-      this._popupService.toast(Tw.REMNANT_OTHER_LINE.TOAST);
+      Tw.CommonHelper.toast(Tw.REMNANT_OTHER_LINE.TOAST);
     }
     setTimeout($.proxy(function () {
       this._historyService.reload();

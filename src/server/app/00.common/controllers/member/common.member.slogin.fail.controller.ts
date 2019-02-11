@@ -13,7 +13,8 @@ class CommonMemberSloginFail extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    res.render('member/common.member.slogin.fail.html', { svcInfo });
+    const target = req.query.target || '/main/home';
+    res.render('member/common.member.slogin.fail.html', { svcInfo, target });
   }
 }
 

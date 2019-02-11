@@ -13,7 +13,6 @@ Tw.MyTFareHotBill = function (rootEl, params) {
   this.childSvcMgmtNum = Tw.UrlHelper.getQueryParams().child || null;
   this._isPrev = Tw.UrlHelper.getLastPath() === 'prev';
   this._lines = params.lines;
-  console.log(this._lines);
   this._init();
 };
 
@@ -23,13 +22,13 @@ Tw.MyTFareHotBill.prototype = {
     this._cachedElement();
     this._bindEvent();
     this._getSvcInfo();
-    this._sendBillRequest(this.childSvcMgmtNum);
     if ( this._lines.length > 0 ) {
       this._renderLines();
       this.$container.on('click', '[data-id="fe-other-line"]', $.proxy(this._onClickLine, this));
     }
 
     if ( this.$amount.length > 0 ) {//서버날짜로 일 별 노출조건 세팅해서 내려옴
+      this._sendBillRequest(this.childSvcMgmtNum);
       this._billInfoAvailable = true;
       Handlebars.registerHelper('isBill', function (val, options) {
         return (Tw.MyTFareHotBill.NO_BILL_FIELDS.indexOf(val) < 0) ? options.fn(this) : options.inverse(this);
@@ -42,11 +41,12 @@ Tw.MyTFareHotBill.prototype = {
     this.$period = this.$container.find('#fe-period');
     this.$preBill = this.$container.find('#fe-bt-prev');
     this.$btMore = this.$container.find('#fe-bt-more');
-    this.$lineList = this.$container.find('.my-line-info');
+    this.$lineList = this.$container.find('#fe-line-info');
   },
 
   _bindEvent: function () {
     this.$preBill.on('click', $.proxy(this._onClickPreBill, this));
+    this.$container.on('click', '#fe-bt-more', $.proxy(this._renderLines, this));
   },
 
   _getSvcInfo: function () {
@@ -78,6 +78,7 @@ Tw.MyTFareHotBill.prototype = {
           .request(Tw.API_CMD.BFF_05_0022, params)
           .done($.proxy(this._onReceivedBillData, this, childSvcMgmtNum))
           .fail($.proxy(this._onErrorReceivedBillData, this));
+
       }, this), this._isPrev ? 5000 : 2500);
 
     } else {
@@ -87,7 +88,7 @@ Tw.MyTFareHotBill.prototype = {
 
 
   _sendBillRequest: function (child) {
-    Tw.CommonHelper.startLoading(child ? '.container' : '.fe-loading-bill', 'white', !!child);
+    Tw.CommonHelper.startLoading('.fe-loading-bill', 'white');
     this._requestCount = 0;
     var params = { count: this._requestCount++ };
 
@@ -130,7 +131,7 @@ Tw.MyTFareHotBill.prototype = {
         };
         var group = Tw.MyTFareHotBill.arrayToGroup(billData.record1, fieldInfo);
 
-        Tw.CommonHelper.endLoading(child ? '.container' : '.fe-loading-bill');
+        Tw.CommonHelper.endLoading('.fe-loading-bill');
         this._renderBillGroup(group, false, this.$container);
       }
     } else {
@@ -156,8 +157,13 @@ Tw.MyTFareHotBill.prototype = {
   },
 
   _onErrorReceivedBillData: function (resp) {
-    Tw.CommonHelper.endLoading('.container');
-    Tw.Error(resp.code, resp.msg).pop();
+    Tw.CommonHelper.endLoading('.fe-loading-bill');
+    // 애러시 노출되는 항목이 없어 alert 후 goBack 처리 필요. 공통함수(Tw.Error) 사용 불가.
+    this._popupService.openAlert(resp.msg, resp.code, null, $.proxy(this._goBackOnError, this) );
+  },
+
+  _goBackOnError: function(){
+    this._historyService.goBack();
   },
 
   _renderLines: function () {
@@ -170,7 +176,7 @@ Tw.MyTFareHotBill.prototype = {
     var moreItems = this._lines.length - this._idxLastItem;
     if ( moreItems > 0 ) {
       this.$btMore.show();
-      this.$btMore.find('span').text('(' + moreItems + ')');
+      // this.$btMore.find('span').text('(' + moreItems + ')'); // 더보기 갯수 표시 안 함.
     } else {
       this.$btMore.hide();
     }
@@ -248,14 +254,17 @@ Tw.MyTFareHotBill.arrayToGroup = function (data, fieldInfo) {
       }
     }
 
+    // 빠지는 부분이 발생하여 아래와 같이 groupS 체크하는 부분 상위로 이동 (Edit: Kiminhwan)
+    if ( groupS.indexOf('*') > -1 ) {
+      groupS = groupS.replace(/\*/g, '');
+      noVAT = true;
+    }
+    else if ( groupS.indexOf('#') > -1 ) {
+      groupS = groupS.replace(/#/g, '');
+      is3rdParty = true;
+    }
+
     if ( !group[groupL][groupS] ) {
-      if ( groupS.indexOf('*') > -1 ) {
-        groupS = groupS.replace(/\*/g, '');
-        noVAT = true;
-      } else if ( groupS.indexOf('#') > -1 ) {
-        groupS = groupS.replace(/#/g, '');
-        is3rdParty = true;
-      }
       group[groupL][groupS] = { items: [], total: 0, noVAT: noVAT, is3rdParty: is3rdParty };
     }
 

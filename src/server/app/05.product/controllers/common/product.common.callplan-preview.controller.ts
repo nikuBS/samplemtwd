@@ -269,7 +269,7 @@ class ProductCommonCallplanPreview extends TwViewController {
         return true;
       }
 
-      if (FormatHelper.isEmpty(item.titleNm)) {
+      if (FormatHelper.isEmpty(item.titleNm) || item.titleNm === PRODUCT_CALLPLAN.JOIN_TERMINATE_CHANNEL) {
         return true;
       }
 
@@ -523,7 +523,8 @@ class ProductCommonCallplanPreview extends TwViewController {
           isJoined: true,  // 가입 여부
           additionsProdFilterInfo: additionsProdFilterInfo.code !== API_CODE.CODE_00 ? null : additionsProdFilterInfo.result,  // 부가서비스 카테고리 필터 리스트
           combineRequireDocumentInfo: null,  // 구비서류 제출 심사내역
-          reservationTypeCd: this._getReservationTypeCd(prodInfo.result.baseInfo.prodTypCd)
+          reservationTypeCd: this._getReservationTypeCd(prodInfo.result.baseInfo.prodTypCd),
+          isProductCallplan: true
         }].reduce((a, b) => {
           return Object.assign(a, b);
         }));

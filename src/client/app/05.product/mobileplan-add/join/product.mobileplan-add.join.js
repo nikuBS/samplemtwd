@@ -9,11 +9,16 @@ Tw.ProductMobileplanAddJoin = function(rootEl, prodId, confirmOptions) {
   this.$container = rootEl;
 
   this._historyService = new Tw.HistoryService();
+  this._historyService.init();
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
 
   this._prodId = prodId;
   this._confirmOptions = JSON.parse(window.unescape(confirmOptions));
+
+  if (this._historyService.isBack()) {
+    this._historyService.goBack();
+  }
 
   this._init();
 };
@@ -39,6 +44,7 @@ Tw.ProductMobileplanAddJoin.prototype = {
 
     this.$container.html(html);
     this._callConfirmCommonJs();
+    Tw.Tooltip.separateInit(this.$container.find('.fe-product-tip'));
   },
 
   _convConfirmOptions: function() {
@@ -108,6 +114,14 @@ Tw.ProductMobileplanAddJoin.prototype = {
 
   _bindJoinResPopup: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
+    $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
+  },
+
+  _closeAndGo: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
   },
 
   _closePop: function() {

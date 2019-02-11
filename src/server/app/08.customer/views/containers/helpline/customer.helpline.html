@@ -75,11 +75,11 @@
                                             <div class="widget-box radio">
                                                 <ul class="select-list" role="radiogroup">
                                                     <li class="radiobox type01 checked" role="radio" aria-checked="true" id="fe-cellphone">
-                                                        <input type="radio" name="radio1" value="" title="값1" checked />
+                                                        <input type="radio" name="radio1" value="" title="값1" checked aria-labelledby="fe-cellphone" />
                                                         휴대폰
                                                     </li>
                                                     <li class="radiobox type01" role="radio" aria-checked="false" id="fe-telephone">
-                                                        <input type="radio" name="radio1" value="" title="값2" />
+                                                        <input type="radio" name="radio1" value="" title="값2" aria-labelledby="fe-telephone" />
                                                         일반전화
                                                     </li>
                                                 </ul>
@@ -87,7 +87,7 @@
                                         </div>
                                         <span class="inputbox bt-add mt20"><!-- error일 경우 error 클래스 추가 -->
                                             <span class="input">
-                                                <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="받으실분 번호" title="휴대폰 번호" aria-labelledby="aria-citation-phone" aria-describedby="aria-exp-desc2"><!-- error일 경우 aria-describedby="aria-exp-desc2  aria-exp-desc3" 로 변경-->
+                                                <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="받으실분 번호" title="휴대폰 번호" aria-describedby="aria-exp-desc2"><!-- error일 경우 aria-describedby="aria-exp-desc2  aria-exp-desc3" 로 변경-->
                                                 <a href="javascript:void(0)" class="cancel"><span class="blind">삭제</span></a>
                                             </span>
                                             <% if (isApp) { %>
@@ -112,7 +112,10 @@
                                             <dd>10:00~17:00</dd>
                                         </dl>
                                         <div class="announcement-box mt18">
+                                            <!-- 2019.01.06 수정-->
                                             <p class="announcement-bullet type02">전화상담 예약서비스는 국내에서만 이용하실 수 있습니다.</p>
+                                            <p class="announcement-bullet type02 mt15">평일 10시부터 17시까지 이용 가능합니다. (12시~13시에는 점심시간으로 상담을 진행하지 않습니다.)</p>
+                                            <!-- //2019.01.06 수정-->
                                         </div>
                                     </div>
                                 </div>
@@ -136,7 +139,7 @@
             </div>
             <!-- // .container-wrap -->
             <!-- .popup-closeBtn -->
-            <button class="prev-step">취소</button>
+            <button class="prev-step"><span class="blind">팝업 페이지 닫기</span></button>
             <!--// .popup-closeBtn -->
         </div>
         <!-- // .popup hbs -->

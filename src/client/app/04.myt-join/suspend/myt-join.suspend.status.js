@@ -63,10 +63,12 @@ Tw.MyTJoinSuspendStatus.prototype = {
   _onSuccessResuspend: function (params, res) {
     Tw.CommonHelper.endLoading('body');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var duration = Tw.DateHelper.getFullKoreanDate(params.fromDt);
-      var desc = Tw.MYT_JOIN_SUSPEND.SUCCESS_SUSPEND_MESSAGE.replace('{DURATION}', duration)
+      var duration = Tw.DateHelper.getFullKoreanDate(params.fromDt) + ' - ' +
+          Tw.DateHelper.getFullKoreanDate(this._params.status.period.to.replace(/\./g, ''));
+      var desc = Tw.MYT_JOIN_SUSPEND.SUCCESS_RESUSPEND_MESSAGE.replace('{DURATION}', duration)
         .replace('{SVC_NUMBER}', this._svcInfo.svcNum);
-      this._popupService.afterRequestSuccess('/myt-join/submain', '/myt-join/submain', null, Tw.MYT_JOIN_SUSPEND.RESUSPEND, desc);
+      this._popupService.afterRequestSuccess('/myt-join/submain/suspend/status', '/myt-join/submain',
+        Tw.MYT_JOIN_SUSPEND.GO_TO_STATUS, Tw.MYT_JOIN_SUSPEND.RESUSPEND, desc);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -79,7 +81,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
       data: {
         svcInfo: this._svcInfo,
         period: this._params.status.period,
-        resuspend: this._params.status.resuspend
+        resuspend: this._params.status.resuspendDt
       }
     }, $.proxy(this._onOpenCancelResuspendPopup, this), null, 'cancelResuspend');
   },
@@ -99,10 +101,8 @@ Tw.MyTJoinSuspendStatus.prototype = {
   _onSuccessRequestCancel: function (params, res) {
     Tw.CommonHelper.endLoading('body');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var duration = Tw.DateHelper.getFullKoreanDate(params.fromDt);
-      var desc = Tw.MYT_JOIN_SUSPEND.SUCCESS_SUSPEND_MESSAGE.replace('{DURATION}', duration)
-        .replace('{SVC_NUMBER}', this._svcInfo.svcNum);
-      this._popupService.afterRequestSuccess('/myt-join/submain', '/myt-join/submain', null, Tw.MYT_JOIN_SUSPEND.CANCEL_RESUSPEND, desc);
+      this._popupService.afterRequestSuccess('/myt-join/submain', '/myt-join/submain', null,
+        Tw.MYT_JOIN_SUSPEND.CANCEL_RESUSPEND);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -162,11 +162,10 @@ Tw.MyTJoinSuspendStatus.prototype = {
   ///// file uploading
   // Open the suspend upload file popup
   _onClickAttachFiles: function () {
-    // TODO reasonCd로 대체
     var popup = {};
     var count = 0;
 
-    if ( this._params.progress.reason === '군입대' ) {
+    if ( this._params.progress.receiveCd === '5000341' || this._params.progress.receiveCd === '5000342') {
       popup = {
         content: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TIP,
         title: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TITLE,
@@ -194,7 +193,18 @@ Tw.MyTJoinSuspendStatus.prototype = {
 
   _onCommonFileDialogConfirmed: function (files) {
     this._files = files;
-    this._requestUpload(this._files);
+    if ( Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
+      var convFileList =  _.compact(this._files).map(function (item) {
+        return {
+          fileSize: item.size,
+          fileName: item.name,
+          filePath: item.path
+        };
+      });
+      this._requestUscan(convFileList);
+    }else{
+      this._requestUpload(this._files);
+    }
   },
 
   _requestUpload: function (files) {
@@ -215,21 +225,26 @@ Tw.MyTJoinSuspendStatus.prototype = {
         return {
           fileSize: item.size,
           fileName: item.name,
-          filePath: res.path
+          filePath: item.path
         };
       });
 
-      this._apiService.request(Tw.API_CMD.BFF_01_0046, {
-        recvFaxNum: 'skt257@sk.com',
-        proMemo: '', // TBD
-        scanFiles: convFileList
-      })
-        .done($.proxy(this._onSuccessUscanUpload, this))
-        .fail($.proxy(this._onError, this));
+      this._requestUscan(convFileList);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
   },
+
+  _requestUscan: function(convFileList){
+    this._apiService.request(Tw.API_CMD.BFF_01_0046, {
+      recvFaxNum: 'skt257@sk.com',
+      proMemo: '', // TBD 필수값임 확인필요
+      scanFiles: convFileList
+    })
+      .done($.proxy(this._onSuccessUscanUpload, this))
+      .fail($.proxy(this._onError, this));
+  },
+
   _onSuccessUscanUpload: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._requestReupload();
@@ -256,6 +271,10 @@ Tw.MyTJoinSuspendStatus.prototype = {
 
   _onError: function (res) {
     Tw.Error(res.code, res.msg).pop();
+  },
 
+  _isLowerVersionAndroid: function () {
+    var androidVersion = Tw.BrowserHelper.getAndroidVersion();
+    return androidVersion && androidVersion.indexOf('4.4') !== -1;
   }
 };

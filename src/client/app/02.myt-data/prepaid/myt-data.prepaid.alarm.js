@@ -18,6 +18,7 @@ Tw.MyTDataPrepaidAlarm = function (rootEl) {
 
 Tw.MyTDataPrepaidAlarm.prototype = {
   _init: function () {
+    this.isInitializeInfo = false;
     this.typeCd = false; // 알람 기준(1 : 시간, 2 : 잔액)
     this.term = false; // 시간: 기준항목(1:발신기간, 2:수신기간, 3:번호유지기간)
     this.day = false; // 시간: 기준일(1:1일전, 2:2일전, 3:3일전)
@@ -49,6 +50,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
   _onSuccessAlarmInfo: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
+      this.isInitializeInfo = true;
       var result = res.result;
 
       if ( !!result.typeCd ) {
@@ -67,7 +69,8 @@ Tw.MyTDataPrepaidAlarm.prototype = {
         this.amt = result.amt;
       }
     } else {
-      Tw.Error(res.code, res.msg).pop();
+      this.isInitializeInfo = false;
+      // Tw.Error(res.code, res.msg).pop();
     }
   },
 
@@ -95,13 +98,22 @@ Tw.MyTDataPrepaidAlarm.prototype = {
     } else {
       $('.fe-alarm-amount').closest('div').find('.error-txt').addClass('blind');
     }
+
+    if ( this.typeCd === '1' && !!this.term && !!this.day ) {
+      $('.fe-setting-alarm').prop('disabled', false);
+    }
+
+    if ( this.typeCd === '2' && !!this.amt ) {
+      $('.fe-setting-alarm').prop('disabled', false);
+    }
   },
 
   _onChangeStatus: function (sListName, e) {
-    var fnSelectStatus = function (item) {
+    var $target = $(e.currentTarget);
+    var fnSelectStatus = function ($target, item) {
       return {
         value: item.text,
-        option: false,
+        option: $target.text() === item.text ? 'checked' : '',
         attr: 'data-value=' + item.value
       };
     };
@@ -111,10 +123,10 @@ Tw.MyTDataPrepaidAlarm.prototype = {
         layer: true,
         title: Tw.MYT_PREPAID_ALARM.title,
         data: [{
-          list: Tw.MYT_PREPAID_ALARM[sListName].map($.proxy(fnSelectStatus, this))
+          list: Tw.MYT_PREPAID_ALARM[sListName].map($.proxy(fnSelectStatus, this, $target))
         }]
       },
-      $.proxy(this._selectPopupCallback, this, sListName, $(e.currentTarget)),
+      $.proxy(this._selectPopupCallback, this, sListName, $target),
       null
     );
   },
@@ -132,9 +144,9 @@ Tw.MyTDataPrepaidAlarm.prototype = {
     }
 
     if ( sListName === 'status_list' ) {
-      this.typeCd = $(e.currentTarget).data('value');
+      this.typeCd = $(e.currentTarget).data('value').toString();
 
-      if ( this.typeCd === 1 ) {
+      if ( this.typeCd === '1' ) {
         this.wrap_alarm.html(this.tpl_alarm_amount({ params: htParams }));
       } else {
         this.wrap_alarm.html(this.tpl_alarm_date({ params: htParams }));
@@ -142,6 +154,10 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
       $('.fe-setting-alarm').prop('disabled', true);
       $('.fe-alarm-status').data($(e.currentTarget).data('value'));
+
+      this.term = false; // 시간: 기준항목(1:발신기간, 2:수신기간, 3:번호유지기간)
+      this.day = false; // 시간: 기준일(1:1일전, 2:2일전, 3:3일전)
+      this.amt = false; // 금액(1:1000원, 2:2000원, 3:3000원, 5:5000원)
     }
 
     if ( sListName === 'category_list' ) {
@@ -151,13 +167,11 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
     if ( sListName === 'date_list' ) {
       this.day = $(e.currentTarget).data('value');
-      $('.fe-setting-alarm').prop('disabled', false);
       this._validateForm();
     }
 
     if ( sListName === 'price_list' ) {
       this.amt = $(e.currentTarget).data('value');
-      $('.fe-setting-alarm').prop('disabled', false);
       this._validateForm();
     }
 
@@ -170,19 +184,20 @@ Tw.MyTDataPrepaidAlarm.prototype = {
   _requestAlarmSetting: function () {
     var htParams = {};
 
-    if ( this.typeCd === 1 ) {
+    if ( this.typeCd === '1' ) {
       htParams = $.extend(htParams, {
-        typeCd: '1',
+        typeCd: this.typeCd,
         term: this.term.toString(),
         day: this.day.toString()
       });
 
+      // 알람 설정 하시겠습니까?
       this._popupService.openConfirmButton(
         Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.MSG_1 +
         $('.fe-alarm-category').text().trim() +
         Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.MSG_2 +
         this.day.toString() + Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.MSG_3,
-        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.TITLE,
+        this.isInitializeInfo ? Tw.ALERT_MSG_MYT_DATA.ALERT_2_A204.TITLE : Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.TITLE,
         $.proxy(this._onCancel, this),
         $.proxy(this._requestAlarm, this, htParams),
         null,
@@ -195,7 +210,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
       this._popupService.openConfirmButton(
         Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.MSG_1 + $('.fe-alarm-amount').text() + Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.MSG_2,
-        Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.TITLE,
+        this.isInitializeInfo ? Tw.ALERT_MSG_MYT_DATA.ALERT_2_A204.TITLE : Tw.ALERT_MSG_MYT_DATA.ALERT_2_A72.TITLE,
         $.proxy(this._onCancel, this),
         $.proxy(this._requestAlarm, this, htParams),
         null,
@@ -217,9 +232,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
   _onCompleteAlarm: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      // 알람 설정 하시겠습니까?
-      // TODO after Self Authentication, go to submain
-      this._historyService.replaceURL('/myt-data/submain');
+      this._historyService.replaceURL('/myt-data/recharge/prepaid/alarm-complete');
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

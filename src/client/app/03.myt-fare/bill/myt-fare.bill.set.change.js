@@ -6,6 +6,7 @@
 Tw.MyTFareBillSetChange = function (rootEl, data) {
   this.$container = rootEl;
   this.popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
   this.$window = window;
   this._data = data !== undefined ? JSON.parse(data) : {};
   this._init();
@@ -16,6 +17,8 @@ Tw.MyTFareBillSetChange.prototype = {
     this._initVariables();
     this._bindEvent();
     this._initDefaultOptions();
+    // input 변경이 감지되면 취소확인 컨펌 띄움. 초기값 설정이후 체크해야 하기 때문에 this._initDefaultOptions() 펑션 다음에 선언해준다.
+    this.$container.on('change', 'input', $.proxy(this._checkInputType, this)); // input tag 변경 확인
   },
 
   _initVariables: function () {
@@ -29,6 +32,8 @@ Tw.MyTFareBillSetChange.prototype = {
     this._btnAddr = this.$container.find('.fe-btn-addr'); // 주소록 버튼
     this._addrArea = this.$container.find('#fe-addr-area'); // 우편 주소 area
     this._scurMailYn = this.$container.find('#fe-scurMailYn'); // 이메일 보안 설정
+    this._isInputChanged = false;
+
   },
 
   _bindEvent: function () {
@@ -40,6 +45,25 @@ Tw.MyTFareBillSetChange.prototype = {
     this.$container.on('keyup focus change', '[data-inactive-target]', $.proxy(this._onDisableSubmitButton, this));
     this._scurMailYn.on('change', $.proxy(this._onChangeScurMailYn, this)); // 이메일 보안 설정
     this.$container.on('click', '.fe-search-zip', $.proxy(this._searchZip, this)); // 우편번호 검색
+    this.$container.on('click', '#fe-back', $.proxy(this._onCloseConfirm, this)); // 취소 확인 창
+  },
+
+  _checkInputType : function () {
+    this._isInputChanged = true;
+  },
+
+  // 닫기 버튼 클릭 시 [확인]
+  _onCloseConfirm: function() {
+    if (!this._isInputChanged) {
+      this._historyService.goBack();
+      return;
+    }
+    this.popupService.openConfirmButton(
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+      Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+      $.proxy($.proxy(function () {
+        this._historyService.replaceURL('/myt-fare/billsetup');
+      }, this), this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
   },
 
   _searchZip: function () {
@@ -324,22 +348,6 @@ Tw.MyTFareBillSetChange.prototype = {
     this._changeCcurNotiYn($(e.currentTarget));
   },
 
-  // 안내서 변경 및 정보변경 모달창
-  _openModal: function (data) {
-    var _modal = {};
-
-    // 안내서가 "이메일" 일 때만 문구가 다름
-    if (this._billType === '2') {
-      _modal = Tw.MYT_FARE_BILL_SET.A43;
-    } else {
-      _modal = this._isChangeInfo ? Tw.MYT_FARE_BILL_SET.A42 : Tw.MYT_FARE_BILL_SET.A41;
-    }
-
-    this.popupService.openModalTypeA(_modal.TITLE,
-      _modal.CONTENTS,
-      Tw.BUTTON_LABEL.CHANGE, null, $.proxy(this._reqBFF_05_0027, this, data), null);
-  },
-
   // 변경 할 안내서 유형 만듬
   _convertBillType: function () {
     var _billType = this._billType;
@@ -417,15 +425,6 @@ Tw.MyTFareBillSetChange.prototype = {
               break;
             case 'hp' :
               var _hpValue = _value.replace(/[^0-9]/g, '');
-              // 법정 대리인 번호 확인
-              if ('ccurNotiSvcNum' === _this.attr('name')) {
-                // 입력한 번호와 법정 대리인 번호가 다르면 알럿
-                if (_hpValue !== $this._data.ccurNotiSvcNum) {
-                  _result = false;
-                  Tw.Popup.openAlert(Tw.ALERT_MSG_MYT_FARE.V47);
-                  return false;
-                }
-              }
               // 입력값 전체 자릿수가 10자리 미만일 경우
               if (_hpValue.length < 10) {
                 Tw.Popup.openAlert(Tw.ALERT_MSG_MYT_FARE.V18);
@@ -436,13 +435,6 @@ Tw.MyTFareBillSetChange.prototype = {
                 Tw.Popup.openAlert(Tw.ALERT_MSG_MYT_FARE.V44);
                 return false;
               }
-
-              // 기타(우편) > 연락처 일경우 12자리로 맞춘다.
-              if ('cntcNum1' === _this.attr('name')) {
-                _hpValue = $this._getHpNum(_hpValue);
-              }
-
-              _this.val(_hpValue);
               break;
 
           }
@@ -453,7 +445,15 @@ Tw.MyTFareBillSetChange.prototype = {
         if (_this.is(':checkbox')) {
           _reqData[_name] = _this.is(':checked') ? 'Y' : 'N';
         } else {
-          _reqData[_name] = _this.val();
+          var _value2 = _this.val();
+          if (_this.data('validType') === 'hp') {
+            _value2 = _value2.replace(/[^0-9]/g, '');
+            // 기타(우편) > 연락처 일경우 12자리로 맞춘다.
+            if ('cntcNum1' === _name) {
+              _value2 = $this._getHpNum(_value2);
+            }
+          }
+          _reqData[_name] = _value2;
         }
       }// if end..
     });
@@ -497,21 +497,25 @@ Tw.MyTFareBillSetChange.prototype = {
   _onSubmit: function () {
     var _result = this._checkValidation();
     if (_result.result) {
-      this._reqBFF_05_0027(_result.data);
+      this._reqChangeBillType(_result.data);
     }
   },
 
-  // 안내서 변경(정보변경) 요청
-  _reqBFF_05_0027: function (data) {
-    this.popupService.close();
+  /*
+    안내서 변경(정보변경) 요청 : 이메일 포함하는 안내서와 미포함 안내서는 API 주소가 다름
+    이메일 미포함 안내서일 경우 요청 API : BFF_05_0027
+    이메일 포함 안내서의 요청 API : BFF_05_0199
+  */
+  _reqChangeBillType : function (data) {
+    var _apiUrl = ['I', 'K', 'A', '2'].indexOf(data.toBillTypeCd) > -1 ? Tw.API_CMD.BFF_05_0199 : Tw.API_CMD.BFF_05_0027;
+
     Tw.Api
-      .request(Tw.API_CMD.BFF_05_0027, data)
-      .done($.proxy(this._onSucessBFF_05_0027, this))
+      .request(_apiUrl, data)
+      .done($.proxy(this._onSucessChangeBillType, this))
       .fail($.proxy(this._onFail, this));
   },
 
-
-  _onSucessBFF_05_0027: function (resp) {
+  _onSucessChangeBillType: function (resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       this._onFail(resp);
       return;

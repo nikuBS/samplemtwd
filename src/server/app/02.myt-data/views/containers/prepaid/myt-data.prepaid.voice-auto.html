@@ -38,7 +38,7 @@
                         <dt>현재 카드 잔액</dt>
                         <dd class="t-point"><span class="num ff-tg-black"><%-convertAmount(PPSInfo.prodAmt)%></span>
                             <span class="ff-tg-medium">원</span>
-                            <!--<button type="button" class="tip-view" title="현재 카드 잔액" aria-haspopup="true" id="DC_09_02_tip_02" page-id="DC_09_02">TIP</button>-->
+                            <!--<button type="button" class="tip-view" title="현재 카드 잔액" aria-haspopup="true" id="DC_09_02_tip_02" page-id="DC_09_02"><span class="tip-view">TIP</span></button>-->
                         </dd>
                     </dl>
                     <% if ( AutoInfo ) { %>
@@ -64,8 +64,8 @@
                     <ul class="point-box mb20">
                         <li>
                             <dl>
-                                <dt>발신 기간
-                                    <button class="tip-view" id="DC_09_01_tip_02" page-id="DC_09_01">TIP</button>
+                                <dt>
+                                    <button class="tip-view-btn" id="DC_09_01_tip_02" page-id="DC_09_01">발신 기간<span class="tip-view">TIP</span></button>
                                 </dt>
                                 <dd><%-convertDate(PPSInfo.obEndDt)%></dd>
                             </dl>
@@ -93,7 +93,6 @@
                 </div>
             </div>
             <!--// .cont-box -->
-
             <hr class="cont-sp type1" aria-hidden="true">
             <!-- .cont-box -->
             <div class="cont-box nogaps">
@@ -102,6 +101,51 @@
                     <div class="widget">
                         <div class="widget-box radio">
                             <ul class="select-list" role="group">
+                                <% if ( AutoInfo ) { %>
+                                    <% if ( AutoInfo.amtCd === '01' || AutoInfo.amtCd === '02' ) {  %>
+                                        <li class="radiobox type01 checked fe-template-type" role="radio" aria-checked="true">
+                                            <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                            <input type="radio" name="radio" value="" title="값1" aria-labelledby="aria-comp-radio1"
+                                                   checked="checked"><!-- 체크상태일 경우 checked="checked" -->
+                                            <div class="comp-list-layout" id="aria-comp-radio1">
+                                                <p class="layout-text">
+                                                    <span class="mtext">매월 1회 자동 충전</span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li class="radiobox type01 fe-template-type" role="radio" aria-checked="false">
+                                            <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                            <input type="radio" name="radio" value="" title="값2" aria-labelledby="aria-comp-radio2">
+                                            <!-- 체크상태일 경우 checked="checked" -->
+                                            <div class="comp-list-layout" id="aria-comp-radio2">
+                                                <p class="layout-text">
+                                                    <span class="mtext">일정 금액 이하일 때 자동충전</span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                    <% } %>
+                                    <% if ( AutoInfo.amtCd === '03' || AutoInfo.amtCd === '04' || AutoInfo.amtCd === '05' || AutoInfo.amtCd === '06' ) {  %>
+                                        <li class="radiobox type01 checked fe-template-type" role="radio" aria-checked="false">
+                                            <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                            <input type="radio" name="radio" value="" title="값1" aria-labelledby="aria-comp-radio1"><!-- 체크상태일 경우 checked="checked" -->
+                                            <div class="comp-list-layout" id="aria-comp-radio1">
+                                                <p class="layout-text">
+                                                    <span class="mtext">매월 1회 자동 충전</span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li class="radiobox type01 fe-template-type" role="radio" aria-checked="true">
+                                            <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                            <input type="radio" name="radio" value="" title="값2" aria-labelledby="aria-comp-radio2" checked="checked">
+                                            <!-- 체크상태일 경우 checked="checked" -->
+                                            <div class="comp-list-layout" id="aria-comp-radio2">
+                                                <p class="layout-text">
+                                                    <span class="mtext">일정 금액 이하일 때 자동충전</span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                    <% } %>
+                                <% } else { %>
                                 <li class="radiobox type01 checked fe-template-type" role="radio" aria-checked="true">
                                     <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                     <input type="radio" name="radio" value="" title="값1" aria-labelledby="aria-comp-radio1"
@@ -118,10 +162,11 @@
                                     <!-- 체크상태일 경우 checked="checked" -->
                                     <div class="comp-list-layout" id="aria-comp-radio2">
                                         <p class="layout-text">
-                                            <span class="mtext">일정 잔액이 되면 자동 충전</span>
+                                            <span class="mtext">일정 금액 이하일 때 자동충전</span>
                                         </p>
                                     </div>
                                 </li>
+                                <% } %>
                             </ul>
                         </div>
                     </div>
@@ -138,20 +183,74 @@
                         <li>
                             <label class="tit" for="formInput01">충전금액</label>
                             <span class="inputbox">
+                                <% if ( AutoInfo.amt ) { %>
+                                <button id="formInput01" class="bt-dropdown big fe-select-amount" data-amount="<%-AutoInfo.amt%>" title="충전금액 선택" aria-haspopup="true" required><%-convertAmount(AutoInfo.amt)%>원<span class="ico"></span></button>
+                                <% } else { %>
                                 <button id="formInput01" class="bt-dropdown big fe-select-amount" title="충전금액 선택" aria-haspopup="true" required>금액 선택<span class="ico"></span></button>
+                                <% } %>
                             </span>
                             <span class="error-txt blind">충전 금액을 선택해 주세요.</span>
                         </li>
                         <li>
-                            <label class="tit" for="formInput02">충전 방식</label>
+                            <label class="tit" for="formInput02">충전 방법</label>
                             <div class="option-box">
-                                <div>
-                                    매월
-                                    <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-date" title="날짜 선택"
-                                            aria-haspopup="true" required>날짜 선택
-                                    </button>
-                                    마다 충전
-                                </div>
+                                <% if ( AutoInfo ) { %>
+                                    <% if ( AutoInfo.amtCd === '01' ) {  %>
+                                        <div>
+                                            매월
+                                            <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-date fe-charge" data-amount="01" title="날짜 선택"
+                                                    aria-haspopup="true" required>15일
+                                            </button>
+                                            마다 충전
+                                        </div>
+                                    <% } %>
+                                    <% if ( AutoInfo.amtCd === '02' ) {  %>
+                                        <div>
+                                            매월
+                                            <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-date fe-charge" data-amount="02" title="날짜 선택"
+                                                    aria-haspopup="true" required>26일
+                                            </button>
+                                            마다 충전
+                                        </div>
+                                    <% } %>
+                                    <% if ( AutoInfo.amtCd === '03' ) {  %>
+                                        <div>
+                                            잔액이
+                                            <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-remain-amount fe-charge" data-amount="03" title="금액 선택"
+                                                    aria-haspopup="true">1,000원
+                                            </button>
+                                            이하 시 충전
+                                        </div>
+                                    <% } %>
+                                    <% if ( AutoInfo.amtCd === '04' ) {  %>
+                                        <div>
+                                            잔액이
+                                            <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-remain-amount fe-charge" data-amount="04" title="금액 선택"
+                                                    aria-haspopup="true">2,000원
+                                            </button>
+                                            이하 시 충전
+                                        </div>
+                                    <% } %>
+                                    <% if ( AutoInfo.amtCd === '05' ) {  %>
+                                        <div>
+                                            잔액이
+                                            <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-remain-amount fe-charge" data-amount="05" title="금액 선택"
+                                                    aria-haspopup="true">3,000원
+                                            </button>
+                                            이하 시 충전
+                                        </div>
+                                    <% } %>
+                                    <% if ( AutoInfo.amtCd === '06' ) {  %>
+                                        <div>
+                                            잔액이
+                                            <button id="formInput02" class="bt-dropdown big w110 ml10 fe-select-remain-amount fe-charge" data-amount="06" title="금액 선택"
+                                                    aria-haspopup="true">5,000원
+                                            </button>
+                                            이하 시 충전
+                                        </div>
+                                    <% } %>
+                                <% } %>
+
                             </div>
                             <span class="error-txt blind">날짜를 선택해주세요.</span>
                         </li>
@@ -159,7 +258,7 @@
                             <label class="tit" for="formInput03">자동 충전 유효기간 (익일부터 선택가능)</label>
                             <span class="inputbox">
                                 <span class="input">
-                                    <input class="fe-select-expire" type="date" title="자동 충전 유효기간 날짜 선택" id="formInput03" required>
+                                    <input class="fe-select-expire" value="<%-convertDashDate(AutoInfo.endDt)%>" type="date" title="자동 충전 유효기간 날짜 선택" required>
                                 </span>
                             </span>
                             <span class="error-txt blind">날짜를 선택해 주세요.</span>
@@ -168,12 +267,13 @@
                             <label class="tit" for="formInput04">카드번호</label>
                             <span class="inputbox">
                                 <span class="input">
-                                    <input class="fe-card-number" id="formInput04" type="tel" placeholder="숫자만 입력" title="카드번호 입력" maxlength="16" required>
+                                    <input class="fe-card-number" value="<%=AutoInfo.cardNum%>" id="formInput04" type="tel" placeholder="숫자만 입력" title="카드번호 입력" maxlength="16" required>
                                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                 </span>
                             </span>
                             <span class="error-txt blind">카드번호가 올바르지 않습니다.</span>
                             <span class="error-txt blind">카드 번호를 입력해주세요.</span>
+                            <span class="error-txt blind">해당 카드사가 등록되어 있지 않습니다.</span>
                         </li>
                         <li>
                             <label class="tit" for="formInput05">유효기간</label>
@@ -200,9 +300,11 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                <ul class="noti-list">
-                    <li>공인인증서 인증 안내
-                        <button type="button" class="tip-view" title="공인인증서 인증 안내" aria-haspopup="true" id="DC_09_02_tip_01" page-id="DC_09_02">TIP</button>
+                <ul class="noti-list02">
+                    <li>
+                        <button type="button" class="tip-view-btn" title="공인인증서 인증 안내" aria-haspopup="true" id="DC_09_02_tip_01" page-id="DC_09_02">
+                            공인인증서 인증 안내<span class="tip-view">TIP</span>
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -210,7 +312,7 @@
             <div class="bt-fixed-area">
                 <ul class="bt-slice full">
                     <li class="bt-red1">
-                        <button class="fe-request-recharge" disabled="disabled">충전 신청하기</button>
+                        <button class="fe-request-recharge" disabled="disabled">변경하기</button>
                     </li>
                 </ul>
             </div>
@@ -235,7 +337,7 @@
                 <span class="error-txt blind">충전 금액을 선택해 주세요.</span>
             </li>
             <li>
-                <label class="tit" for="formInput02">충전 방식</label>
+                <label class="tit" for="formInput02">충전 방법</label>
                 <div class="option-box">
                     <div>
                         매월
@@ -269,6 +371,7 @@
                 </span>
                 <span class="error-txt blind">카드번호가 올바르지 않습니다.</span>
                 <span class="error-txt blind">카드 번호를 입력해주세요.</span>
+                <span class="error-txt blind">해당 카드사가 등록되어 있지 않습니다.</span>
             </li>
             <li>
                 <label class="tit" for="formInput03">유효기간</label>
@@ -309,7 +412,7 @@
                 <span class="error-txt blind">충전 금액을 선택해 주세요.</span>
             </li>
             <li>
-                <label class="tit" for="formInput02">충전 방식</label>
+                <label class="tit" for="formInput02">충전 방법</label>
                 <div class="option-box">
                     <div>
                         잔액이
@@ -344,6 +447,7 @@
                 </span>
                 <span class="error-txt blind">카드번호가 올바르지 않습니다.</span>
                 <span class="error-txt blind">카드 번호를 입력해주세요.</span>
+                <span class="error-txt blind">해당 카드사가 등록되어 있지 않습니다.</span>
             </li>
             <li>
                 <label class="tit" for="formInput03">유효기간</label>

@@ -4,21 +4,24 @@
 * Date: 2018.09.17
 %>
 
-<li class="list-box">
-    <span class="badge"><i class="icon-<%= data[0].class %>"><span class="blind"><%= data[0].class %></span></i></span>
-    <ul class="list-con">
-        <li>
-            <p class="list-text">
-                <span class="stext-b"><%= data[0].u_type === 'data'? '데이터 충전':'음성 충전'%></span>
-                <span class="stext">
-                    <span class="gray-tx"><%= data[0].u_title %></span>
-                    <span class="gray-tx"><%= data[0].u_sub %></span>
-                </span>
-            </p>
-            <div class="list-data">
-                <p class="data-tx txt1">+   <%= data[0].d_title %><%= data[0].unit %></p>
-                <span class="date"><%= data[0].d_sub %></span>
-            </div>
-        </li>
-    </ul>
-</li>
+<% for (var i = 0; i < data.length; i++) { %>
+    <% var item = data[i];%>
+    <li class="list-box">
+        <span class="badge"><i class="icon-<%= item.class %>"><span class="blind"><%= item.class %></span></i></span>
+        <ul class="list-con">
+            <li>
+                <p class="list-text">
+                    <span class="stext-b"><%= item.u_type === 'data'? '데이터 충전':'음성 충전'%></span>
+                    <span class="stext">
+                            <span class="gray-tx"><%= item.u_title %></span>
+                            <span class="gray-tx"><%= item.u_sub %></span>
+                        </span>
+                </p>
+                <div class="list-data">
+                    <p class="data-tx txt1"><%= item.d_title %><%= item.unit %></p>
+                    <span class="date"><%= item.d_sub %></span>
+                </div>
+            </li>
+        </ul>
+    </li>
+<% } %>

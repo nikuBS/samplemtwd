@@ -13,7 +13,7 @@ Tw.ProductWireplanJoinReservation = function(rootEl, isProduct) {
   this._historyService = new Tw.HistoryService();
   this._tidLanding = new Tw.TidLandingComponent();
 
-  this._prodIdFamilyList = ['NA00005055', 'NH00000133', 'NH00000083'];
+  this._prodIdFamilyList = ['NA00002040', 'NH00000133', 'NH00000083'];
   this._prodIdList = $.merge(this._prodIdFamilyList, ['NH00000103']);
   this._isProduct = Tw.FormatHelper.isEmpty(isProduct) ? null : JSON.parse(isProduct);
   this._logged = false;
@@ -22,7 +22,7 @@ Tw.ProductWireplanJoinReservation = function(rootEl, isProduct) {
 
   this._convertProdIds = {
     NH00000103: 'TW00000009',
-    NA00005055: 'TW20000012',
+    NA00002040: 'TW20000010',
     NH00000083: 'TW20000008'
   };
 
@@ -105,6 +105,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
     this.$nonCombineTip = this.$container.find('.fe-non_combine_tip');
     this.$combineExplainCheckboxWrap = this.$container.find('.fe-combine_explan_checkbox_wrap');
     this.$combineExplainAllWrap = this.$container.find('.fe-combine_explain_all_wrap');
+    this.$inputName = this.$container.find('.fe-input_name');
 
     this.$btnAgreeView = this.$container.find('.fe-btn_agree_view');
     this.$btnApply = this.$container.find('.fe-btn_apply');
@@ -239,15 +240,18 @@ Tw.ProductWireplanJoinReservation.prototype = {
         {
           'title': Tw.PRODUCT_COMBINE_PRODUCT.GROUP_FAMILY,
           'list': [
-            { 'label-attr': 'id="ra2_1"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.TITLE,
+            { 'label-attr': 'id="ra2_1"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00002040.TITLE,
+              'cont-txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NA00002040.EXPLAIN,
+              'radio-attr':'id="ra2_1" data-prod_id="NA00002040" ' + (this._prodId === 'NA00002040' ? 'checked' : '') },
+            { 'label-attr': 'id="ra2_2"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.TITLE,
               'cont-txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000133.EXPLAIN,
-              'radio-attr':'id="ra2_1" data-prod_id="NH00000133" ' + (this._prodId === 'NH00000133' ? 'checked' : '') },
-            { 'label-attr': 'id="ra2_2"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000083.TITLE,
+              'radio-attr':'id="ra2_2" data-prod_id="NH00000133" ' + (this._prodId === 'NH00000133' ? 'checked' : '') },
+            { 'label-attr': 'id="ra2_3"', 'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000083.TITLE,
               'cont-txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.NH00000083.EXPLAIN,
-              'radio-attr':'id="ra2_2" data-prod_id="NH00000083" ' + (this._prodId === 'NH00000083' ? 'checked' : '') },
-            { 'label-attr': 'id="ra2_3"',
+              'radio-attr':'id="ra2_3" data-prod_id="NH00000083" ' + (this._prodId === 'NH00000083' ? 'checked' : '') },
+            { 'label-attr': 'id="ra2_4"',
               'txt': Tw.PRODUCT_COMBINE_PRODUCT.ITEMS.ETC.TITLE,
-              'radio-attr':'id="ra2_3" data-prod_id="' + (!Tw.FormatHelper.isEmpty(this._prodId) &&
+              'radio-attr':'id="ra2_4" data-prod_id="' + (!Tw.FormatHelper.isEmpty(this._prodId) &&
               Tw.FormatHelper.isEmpty(Tw.PRODUCT_COMBINE_PRODUCT.ITEMS[this._prodId]) ? this._prodId : 'ETC') +
                 '" ' + ((this._isEtcProd || this._prodId === 'ETC') ? 'checked' : '') }
           ]
@@ -342,7 +346,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
       return this._toggleApplyBtn(false);
     }
 
-    if (this.$reservName.val().length < 1 || this.$reservNumber.val().length < 1) {
+    if ($.trim(this.$reservName.val()).length < 1 || this.$reservNumber.val().length < 1) {
       return this._toggleApplyBtn(false);
     }
 
@@ -386,6 +390,10 @@ Tw.ProductWireplanJoinReservation.prototype = {
     } else {
       $input.parent().find('.fe-btn_cancel').removeClass('block');
     }
+
+    if ($input.val().length > 30) {
+      $input.val($input.val().substr(0, 30));
+    }
   },
 
   _toggleApplyBtn: function(toggle) {
@@ -414,7 +422,8 @@ Tw.ProductWireplanJoinReservation.prototype = {
         $.proxy(this._setNotSelectCombine, this), $.proxy(this._procNotSelectCombine, this), Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
     }
 
-    if (this._typeCd === 'combine' && this._prodId !== 'NH00000103' && !this._logged) {
+    if (this._typeCd === 'combine' && this._prodId !== 'NH00000103' &&
+      this.$combineExplain.find('input[type=checkbox]').is(':checked') && !this._logged) {
       return this._popupService.openConfirmButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A36.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A36.TITLE,
         $.proxy(this._setGoLoginFlag, this), $.proxy(this._goLogin, this), Tw.BUTTON_LABEL.CLOSE);
     }

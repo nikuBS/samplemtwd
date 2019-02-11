@@ -265,7 +265,11 @@
                     <h3 class="tx-bold">꼭 확인해주세요!</h3>
                     <%for(var i=0;i<prodBffInfo.preinfo.termNoticeList.length;i++){ %>
                     <ul class="noti-list">
-                        <li><%= prodBffInfo.preinfo.termNoticeList[i].noticeTit %><button type="button" class="tip-view" data-tit="<%= prodBffInfo.preinfo.termNoticeList[i].noticeTit %>" data-txt="<%= prodBffInfo.preinfo.termNoticeList[i].noticeTxt %>">TIP</button></li>
+                        <li>
+                            <button type="button" class="tip-view-btn" data-tit="<%= prodBffInfo.preinfo.termNoticeList[i].noticeTit %>" data-txt="<%= prodBffInfo.preinfo.termNoticeList[i].noticeTxt %>" aria-haspopup="true">
+                                <%= prodBffInfo.preinfo.termNoticeList[i].noticeTit %><span class="tip-view">TIP</span>
+                            </button>
+                        </li>
                     </ul>
                     <% } %>
                 </div>

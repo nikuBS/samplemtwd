@@ -57,7 +57,7 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
     if ( Tw.CommonHelper.isLowerVersionAndroid() ) {
       this._nativeService.send(Tw.NTV_CMD.OPEN_FILE_CHOOSER, {
         dest: Tw.UPLOAD_TYPE.RESERVATION,
-        acceptExt: this.acceptExt,
+        acceptExt: this._acceptExt,
         limitSize: this._limitFileByteSize
       }, $.proxy(this._nativeFileChooser, this, $target));
     }

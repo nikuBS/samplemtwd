@@ -47,19 +47,24 @@ class ProductCommonCallplan extends TwViewController {
    * 가입여부 확인
    * @param prodTypCd
    * @param prodId
+   * @param plmProdList
    * @private
    */
-  private _getIsJoined(prodTypCd: any, prodId: any): Observable<any> {
+  private _getIsJoined(prodTypCd: any, prodId: any, plmProdList?: any): Observable<any> {
     if (['C', 'E_I', 'E_P', 'E_T', 'F', 'G', 'H_P', 'H_A'].indexOf(prodTypCd) === -1) {
       return Observable.of({});
     }
 
+    const reqParams = FormatHelper.isEmpty(plmProdList) ? {} : { mappProdIds: (plmProdList.map((item) => {
+        return item.plmProdId;
+      })).join(',') };
+
     if (['C', 'H_P', 'H_A'].indexOf(prodTypCd) !== -1) {
-      return this.apiService.request(API_CMD.BFF_05_0040, {}, {}, [prodId]);
+      return this.apiService.request(API_CMD.BFF_05_0040, reqParams, {}, [prodId]);
     }
 
     if (['E_I', 'E_P', 'E_T'].indexOf(prodTypCd) !== -1) {
-      return this.apiService.request(API_CMD.BFF_10_0109, {}, {}, [prodId]);
+      return this.apiService.request(API_CMD.BFF_10_0109, reqParams, {}, [prodId]);
     }
 
     return this.apiService.request(API_CMD.BFF_10_0119, {}, {}, [prodId]);
@@ -345,7 +350,7 @@ class ProductCommonCallplan extends TwViewController {
         return true;
       }
 
-      if (FormatHelper.isEmpty(item.titleNm)) {
+      if (FormatHelper.isEmpty(item.titleNm) || item.titleNm === PRODUCT_CALLPLAN.JOIN_TERMINATE_CHANNEL) {
         return true;
       }
 
@@ -742,7 +747,7 @@ class ProductCommonCallplan extends TwViewController {
           this._getMyContentsData(basicInfo.result.grpProdScrnConsCd, prodId),
           this._getExtendContentsData(basicInfo.result.prodGrpYn, basicInfo.result.repProdId, basicInfo.result.prodGrpRepYn),
           this._getMobilePlanCompareInfo(basicInfo.result.prodTypCd, svcInfoProdId, prodId),
-          this._getIsJoined(basicInfo.result.prodTypCd, prodId),
+          this._getIsJoined(basicInfo.result.prodTypCd, prodId, basicInfo.result.plmProdList),
           this._getAdditionsFilterListByRedis(basicInfo.result.prodTypCd, prodId),
           this._getCombineRequireDocumentStatus(basicInfo.result.prodTypCd, prodId)
         ).subscribe(([
@@ -770,9 +775,11 @@ class ProductCommonCallplan extends TwViewController {
           };
 
           // 대표, 종속상품 처리
-          const convContents = FormatHelper.isEmpty(prodRedisContentsInfo.result) ? null :
+          const convContents = FormatHelper.isEmpty(prodRedisContentsInfo.result)
+            || FormatHelper.isEmpty(prodRedisContentsInfo.result.contents) ? null :
               this._convertContents(basicInfo.result.prodStCd, prodRedisContentsInfo.result.contents),
-            convRepContents = FormatHelper.isEmpty(prodRedisExtendContentsInfo.result) ? null :
+            convRepContents = FormatHelper.isEmpty(prodRedisExtendContentsInfo.result)
+            || FormatHelper.isEmpty(prodRedisExtendContentsInfo.result.contents) ? null :
               this._convertContents(basicInfo.result.prodStCd, prodRedisExtendContentsInfo.result.contents),
             contentsResult = this._convertContentsInfo({
               convContents,
@@ -803,7 +810,8 @@ class ProductCommonCallplan extends TwViewController {
             isJoined: this._isJoined(basicInfo.result.prodTypCd, isJoinedInfo),  // 가입 여부
             combineRequireDocumentInfo: this._convertRequireDocument(combineRequireDocumentInfo),  // 구비서류 제출 심사내역
             reservationTypeCd: this._getReservationTypeCd(basicInfo.result.prodTypCd),
-            lineProcessCase: this._getLineProcessCase(basicInfo.result.prodTypCd, allSvc, svcAttrCd) // 가입 가능 회선 타입
+            lineProcessCase: this._getLineProcessCase(basicInfo.result.prodTypCd, allSvc, svcAttrCd), // 가입 가능 회선 타입
+            isProductCallplan: true
           }].reduce((a, b) => {
             return Object.assign(a, b);
           }));

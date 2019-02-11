@@ -5,38 +5,40 @@
 * id: DC_02_01
 %>
 
-<% if (Number(immediately.tFmlyShrblQty) >= 1) { %>
 <hr class="cont-sp type1" aria-hidden="true"/>
-<div class="cont-box">
+<div class="cont-box" id="fe-share">
 	<div class="ti-caption-type01">
 		<h2 class="tit">가족에게 공유할 데이터<button class="btn-tip" id="DC_02_01_tip_01"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></h2>
 	</div>
 	<div class="recently-tel-box">
 		<div class="inputbox bt-add">
 			<span class="input new">
-				<input class="fe-amount" type="number" placeholder="데이터(GB) 입력" title="가족에게 공유할 데이터" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" data-share-amount="<%= immediately.tFmlyShrblQty %>">
+				<input class="fe-amount" type="number" placeholder="데이터(GB) 입력" disabled title="가족에게 공유할 데이터" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" data-share-amount="0">
 				<button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
 			</span>
 			<span class="r-btn type01">
-				<button type="button" class="btn-type01" data-value="1">+1</button>
-				<button type="button" class="btn-type01" data-value="10">+10</button>
-				<button type="button" class="btn-type01" data-value="all">전체</button>
+				<button type="button" class="btn-type01" disabled data-value="1">+1</button>
+				<button type="button" class="btn-type01" disabled data-value="10">+10</button>
+				<button type="button" class="btn-type01" disabled data-value="all">전체</button>
 			</span>
 		</div>
 		<p class="input-txt-type02 pb10 pt6 none">공유 가능 데이터를 초과했습니다. </p>
-		<p class="input-txt-type01 pt10">바로 공유 가능 데이터 : <strong class="txt-c1"><%= immediately.tFmlyShrblQty %>GB</strong></p>
-		<p class="input-txt-type01 pt4">선물하기, 함께쓰기, 스마트 기기 공유 가능 데이터 : <strong class="txt-c2"><%= immediately.tFmlyShrblQty %>GB</strong></p>
+		<p class="input-txt-type01 pt10">바로 공유 가능 데이터 : 
+			<button class="btn-link none" id="fe-retrieve">조회하기</button>
+			<strong class="txt-c3" id="fe-ing">조회 중입니다</strong>
+			<strong class="txt-c1 none"></strong>
+		</p>
+		<p class="input-txt-type01 pt4">선물하기, 함께쓰기, 스마트 기기 공유 가능 데이터 : <strong class="txt-c2">0GB</strong></p>
 	</div>
 </div>
-<% } else { %>
-	<hr class="cont-sp type1" aria-hidden="true"/>
-	<div class="cont-box nogaps-hoz">
-		<div class="result-none type3">
-			1GB부터 공유 가능합니다.<br/>다음 달에 이용해 주세요.
-			<p class="input-txt-type01 pt30">바로 공유 가능 데이터 : <strong class="txt-c1"><%= immediately.tFmlyShrblQty || 0 %>GB</strong></p>
-		</div>
+
+<div class="cont-box nogaps-hoz none" id="fe-share-none">
+	<div class="result-none type3">
+		1GB부터 공유 가능합니다.<br/>다음 달에 이용해 주세요.
+		<p class="input-txt-type01 pt30">바로 공유 가능 데이터 : <strong class="txt-c1">0GB</strong></p>
 	</div>
-<% } %>
+</div>
+
 <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
 <div class="bt-fixed-area">
 	<ul class="bt-slice full">

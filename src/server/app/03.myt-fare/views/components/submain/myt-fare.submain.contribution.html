@@ -15,10 +15,10 @@
     <ul class="<%= ulClass %>">
         <% if (twoPiece) { %>
             <li class="last-line" data-id="taxinv">
-                <button>세금계산서 재발행</button>
+                <button type="button" title="세금계산서 재발행" aria-haspopup="true">세금계산서 재발행</button>
             </li>
             <li class="last-line" data-id="contbt">
-                <button>기부금 · 후원금 납부내역</button>
+                <button type="button" title="기부금 · 후원금 납부내역" aria-haspopup="true">기부금 · 후원금 납부내역</button>
             </li>
         <% } else { %>
             <% var btnName = '기부금 ・ 후원금 납부내역', dataId = 'contbt'; %>
@@ -26,7 +26,7 @@
             <% btnName = '세금계산서 재발행'; dataId = 'taxinv'; %>
             <% } %>
             <li data-id="<%= dataId %>">
-                <button>
+                <button type="button">
                      <span class="inner"><span class="tit"><%= btnName %></span></span>
                 </button>
             </li>

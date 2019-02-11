@@ -435,7 +435,7 @@ export const PREPAID_PAYMENT_TYPE = {
 
 export const PREPAID_PAYMENT_PAY_CD = {
   '1': '수납',
-  '2': '당일취소',
+  '5': '당일취소',
   '9': '당일취소'
 };
 
@@ -457,7 +457,8 @@ export const PRODUCT_TYP_CD_LIST = {
 
 export const PRODUCT_CALLPLAN = {
   CIA_INSPT_RSLT: '비정상',
-  SEE_CONTENTS: '상세참조'
+  SEE_CONTENTS: '상세참조',
+  JOIN_TERMINATE_CHANNEL: '가입해지채널'
 };
 
 export const PRODUCT_CALLPLAN_BENEFIT_REDIRECT = {

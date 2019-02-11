@@ -145,11 +145,11 @@
                 <!-- .cont-box --><!-- 2018-11-02 수정 -->
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                    <ul class="noti-list">
+                    <ul class="noti-list02">
                         <% let tipId = data.billIsueTypCd === '1' ? 'MF_04_01_tip_02':'MF_04_01_tip_01'%>
-                        <li>요금안내서 재발행 이용안내
-                            <button id="<%=tipId%>" type="button" class="tip-view" title="정보보기" aria-haspopup="true">
-                                TIP
+                        <li>
+                            <button id="<%=tipId%>" type="button" class="tip-view-btn" title="정보보기" aria-haspopup="true">
+                                요금안내서 재발행 이용안내<span class="tip-view">TIP</span>
                             </button>
                         </li>
                     </ul>
@@ -170,7 +170,7 @@
             data.pageInfo }); %>
         </footer>
         <!-- .popup-closeBtn -->
-        <button class="prev-step fe-common-back">취소</button>
+        <button id="fe-back" class="prev-step">취소</button>
         <!--// .popup-closeBtn -->
     </div>
 </div>

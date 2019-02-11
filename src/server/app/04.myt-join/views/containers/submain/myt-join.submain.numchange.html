@@ -46,13 +46,13 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                <ul class="noti-list">
-                    <li>이용시간 안내<button id="MS_03_03_tip_03" type="button" class="tip-view">TIP</button></li>
-                    <li>변경 안내<button id="MS_03_03_tip_02" type="button" class="tip-view">TIP</button></li>
-                    <li>번호변경 시 확인사항<button id="MS_03_03_tip_01" type="button" class="tip-view">TIP</button></li>
-                    <li>번호변경 시 서비스 안내<button id="MS_03_03_tip_04" type="button" class="tip-view">TIP</button></li>
-                    <li>번호변경 제한사항 안내<button id="MS_03_03_tip_05" type="button" class="tip-view">TIP</button></li>
-                    <li>유심 제한사항 안내<button id="MS_03_03_tip_06" type="button" class="tip-view">TIP</button></li>
+                <ul class="noti-list02">
+                    <li><button id="MS_03_03_tip_03" type="button" class="tip-view-btn">이용시간 안내<span class="tip-view">TIP</span></button></li>
+                    <li><button id="MS_03_03_tip_02" type="button" class="tip-view-btn">변경 안내<span class="tip-view">TIP</span></button></li>
+                    <li><button id="MS_03_03_tip_01" type="button" class="tip-view-btn">번호변경 시 확인사항<span class="tip-view">TIP</span></button></li>
+                    <li><button id="MS_03_03_tip_04" type="button" class="tip-view-btn">번호변경 시 서비스 안내<span class="tip-view">TIP</span></button></li>
+                    <li><button id="MS_03_03_tip_05" type="button" class="tip-view-btn">번호변경 제한사항 안내<span class="tip-view">TIP</span></button></li>
+                    <li><button id="MS_03_03_tip_06" type="button" class="tip-view-btn">유심 제한사항 안내<span class="tip-view">TIP</span></button></li>
                 </ul>
             </div>
             <!--// .cont-box -->
@@ -60,6 +60,7 @@
         </div>
     </div>
     <!--// #contents -->
+    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 </div>
 <script id="list-cont-item-tmplt" type="text/x-handlebars-template">
     <li class="radiobox type01 checked" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->

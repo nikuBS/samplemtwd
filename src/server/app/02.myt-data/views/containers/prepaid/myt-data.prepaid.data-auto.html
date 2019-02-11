@@ -34,12 +34,15 @@
                     <!-- .cont-box -->
                     <div class="cont-box">
                         <div class="unpaid-charges">
-                            <dl class="total-box">
-                                <dt>남은 데이터양 <button id="DC_09_04_tip_03" class="tip-view">TIP</button></dt>
+                            <dl class="total-box mb4">
+                                <dt>남은 데이터양
+                                    <button id="DC_09_04_tip_03" class="tip-view-btn" title="남은 데이터양 TIP보기" aria-haspopup="true" type="button">TIP</button>
+                                </dt>
                                 <dd class="t-point"><span class="num ff-tg-black fe-data" data-value="<%= ppsInfo.dataObj.dataValue %>">
                                     <%= ppsInfo.dataObj.data %></span><span class="ff-tg-medium">MB</span>
                                 </dd>
                             </dl>
+                            <p class="ctext3 mb20"><strong>데이터 1MB</strong> 이하 또는 <strong>사용기간 만료 1일 전</strong>일 때 자동충전</p>
                             <ul class="point-box mb20">
                                 <li>
                                     <dl>
@@ -60,7 +63,6 @@
                                     </dl>
                                 </li>
                             </ul>
-                            <p class="ctext3 mb20"><strong>데이터 1MB</strong> 이하 또는 <strong>사용기간 만료 1일 전</strong>일 때 자동충전</p>
                             <% if (autoInfo.isAuto) { %>
                             <ul class="bt-slice fe-cancel">
                                 <li class="bt-blue1">
@@ -83,9 +85,9 @@
                                     <button id="<%= autoInfo.id %>" data-origin-id="<%= autoInfo.id %>"
                                             class="bt-dropdown big fe-select-data" data-code="<%= ppsInfo.dataYn %>"
                                             title="충전 데이터 선택" aria-haspopup="true">
-                                        <%= autoInfo.txt %><span class="ico"></span>
+                                        <%= autoInfo.txt %><span class="ico" title="충전 데이터 선택"></span>
                                     </button>
-                                    <span class="error-txt fe-error-msg" style="display:none;">
+                                    <span id="aria-exp-desc3" class="error-txt fe-error-msg" style="display:none;">
                                         충전할 데이터를 선택해 주세요.
                                     </span>
                                 </span>
@@ -96,16 +98,17 @@
                                     <span class="input">
                                         <% if (autoInfo.isAuto) { %>
                                         <input id="formInput02" type="text" maxlength="16" value="<%= autoInfo.cardNum %>"
-                                               placeholder="숫자만 입력" title="카드번호 입력" aria-describedby="aria-exp-desc1"
+                                               placeholder="숫자만 입력" title="카드번호 숫자만 입력" aria-describedby="aria-exp-desc1"
                                                class="fe-card-number required-input-field" />
                                         <input class="none fe-hidden" value="<%= autoInfo.cardNum %>" />
                                         <% } else { %>
                                         <input id="formInput02" type="number" inputmode="numeric" min="0" pattern="[0-9]*" maxlength="16"
-                                               placeholder="숫자만 입력" title="카드번호 입력" aria-describedby="aria-exp-desc1" class="fe-card-number required-input-field" />
+                                               placeholder="숫자만 입력" title="카드번호 숫자만 입력" aria-describedby="aria-exp-desc1"
+                                               class="fe-card-number required-input-field" />
                                         <% } %>
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
-                                    <span class="error-txt fe-error-msg" style="display:none;">카드번호를 입력해 주세요.</span>
+                                    <span id="aria-exp-desc3" class="error-txt fe-error-msg" style="display:none;">카드번호를 입력해 주세요.</span>
                                 </span>
                             </li>
                             <li>
@@ -113,20 +116,22 @@
                                 <div class="input-wrap-half fe-exp-wrap">
                                     <span class="inputbox">
                                         <span class="input">
-                                            <input id="formInput03" type="number" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-card-y required-input-field"
-                                                   placeholder="YYYY" title="유효 년" maxlength="4" />
+                                            <input id="formInput03" type="number" inputmode="numeric" min="0" pattern="[0-9]*"
+                                                   class="fe-card-y required-input-field"
+                                                   placeholder="YYYY" title="유효기간 년 YYYY" maxlength="4" />
                                             <button class="cancel"><span class="blind">삭제</span></button>
                                         </span>
                                     </span>
                                     <span class="inputbox">
                                         <span class="input">
-                                            <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-card-m required-input-field"
-                                                   placeholder="MM" title="유효 월" maxlength="2" />
+                                            <input type="number" inputmode="numeric" min="0" pattern="[0-9]*"
+                                                   class="fe-card-m required-input-field"
+                                                   placeholder="MM" title="유효기간 월 MM" maxlength="2" />
                                             <button class="cancel"><span class="blind">삭제</span></button>
                                         </span>
                                     </span>
                                 </div>
-                                <span class="error-txt fe-error-msg" style="display:none;">
+                                <span id="aria-exp-desc3" class="error-txt fe-error-msg" style="display:none;">
                                     유효기간이 올바르지 않습니다.
                                 </span>
                             </li>
@@ -139,9 +144,17 @@
                     <!-- .cont-box -->
                     <div class="cont-box nogaps-btm">
                         <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                        <ul class="noti-list">
-                            <li>공인인증서 인증 안내 <button type="button" id="DC_09_02_tip_01" class="tip-view" aria-haspopup="true">TIP</button></li>
-                            <li>자동충전 안내 <button type="button" id="DC_09_04_tip_02" class="tip-view" aria-haspopup="true">TIP</button></li>
+                        <ul class="noti-list02">
+                            <li>
+                                <button type="button" id="DC_09_02_tip_01" class="tip-view-btn" title="공인인증서 인증 안내 TIP보기" aria-haspopup="true">
+                                    공인인증서 인증 안내<span class="tip-view">TIP</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" id="DC_09_04_tip_02" class="tip-view-btn" title="자동충전 안내 TIP보기" aria-haspopup="true">
+                                    자동충전 안내<span class="tip-view">TIP</span>
+                                </button>
+                            </li>
                         </ul>
                     </div>
                     <!--// .cont-box -->

@@ -16,9 +16,9 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="fe-wrap" class="wrap" data-menuId="<%= pageInfo.menuId %>">
+<div id="fe-wrap" class="wrap popup-page tw-popup fixed-btn" data-menuId="<%= pageInfo.menuId %>">
     <!-- .popup hbs -->
-    <div class="popup-page tw-popup fixed-btn"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+
         <!-- #header -->
         <div class="header-wrap">
             <div class="page-header">
@@ -66,17 +66,16 @@
         <!-- .popup-closeBtn -->
         <button class="prev-step">취소</button>
         <!--// .popup-closeBtn -->
-    </div>
+
     <!-- // .popup hbs -->
-    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+
 </div>
 
 
 <script>
   $(document).ready(function () {
     var oMyTWireInfo = new Tw.MyTJoinWireFreeCallCheck( $('#fe-wrap'), {
-      reqQuery: <%-JSON.stringify(reqQuery) %>,
-      svcInfo: <%-JSON.stringify(svcInfo) %>
+      reqQuery: <%-JSON.stringify(reqQuery) %>
   } );
   });
 </script>

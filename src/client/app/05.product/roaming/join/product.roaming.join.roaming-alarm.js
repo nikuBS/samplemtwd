@@ -66,6 +66,13 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
       'serviceNumber2' : tempPhoneNum[1],
       'serviceNumber3' : tempPhoneNum[2]
     };
+    for(var i=0;i<this._addedList.length;i++){
+      if((this._addedList[i].serviceNumber1+this._addedList[i].serviceNumber2+this._addedList[i].serviceNumber3) ===
+        (phoneObj.serviceNumber1+phoneObj.serviceNumber2+phoneObj.serviceNumber3)){
+        this._openAlert(Tw.ROAMING_COMBINE_LINE_STRING.DUPLICATE_LINE,Tw.POPUP_TITLE.ERROR);
+        return;
+      }
+    }
     if(!Tw.FormatHelper.isPhoneNum(phoneObj.serviceNumber1+phoneObj.serviceNumber2+phoneObj.serviceNumber3)){
       this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
       return;
@@ -93,9 +100,9 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
   },
   _phoneBookCallBack : function(res){
     if (res.resultCode === Tw.NTV_CODE.CODE_00) {
-      this.$inputElement.val(res.params.phoneNumber);
+      this.$inputElement.val(res.params.phoneNumber.replace(/\-/g,''));
       this.$inputElement.trigger('keyup');
-      this._inputBlurEvt();
+      this.$inputElement.blur();
     }
   },
   _activateAddBtn : function (inputEvt) {
@@ -129,7 +136,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
   _makeTemplate : function (phoneNum,idx) {
     var maskedPhoneNum = {
       serviceNumber1 : phoneNum.serviceNumber1,
-      serviceNumber2 : phoneNum.serviceNumber2.substring(0,2)+'**',
+      serviceNumber2 : phoneNum.serviceNumber2.substring(0,(phoneNum.serviceNumber2.length-2))+'**',
       serviceNumber3 : phoneNum.serviceNumber3.substring(0,2)+'**'
     };
     var templateData = { phoneData : { phoneNum : maskedPhoneNum, idx : idx } };
@@ -137,6 +144,10 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     this.$container.find('#alarm_list').append(handlebarsTemplate(templateData));
   },
   _removeEvt : function (btnEvt) {
+    if(this._addedList.length<=1){
+      this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_NUMBER_MIN);
+      return;
+    }
     this._popupService.openConfirmButton(
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE,
@@ -149,12 +160,12 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON);
   },
   _removeOnList : function (args) {
-    var selectedIndex = parseInt($(args).attr('data-idx'),10);
+    var selectedIndex = parseInt($(args.currentTarget).attr('data-idx'),10);
     this._addedList.splice(selectedIndex,1);
     this._changeList();
   },
   _bindRemoveEvt : function () {
-    this.$container.find('.list-btn button').on('click',$.proxy(this._removeEvt,this));
+    this.$container.find('.list-btn button').on('click',$.proxy(this._removeOnList,this));
   },
   _doJoin : function(data,apiService,historyService,$containerData){
 
@@ -179,29 +190,30 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
           $.proxy($containerData._goPlan,$containerData),
           'complete');
       }else{
-        this._openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
+        $containerData._openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
       }
     }, this)).fail($.proxy(function (err) {
-      this._openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
+      $containerData._openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
     }, this));
   },
   _bindCompletePopupBtnEvt : function(args1,args2){
     $(args2).on('click','.btn-round2',$.proxy(args1._goMyInfo,args1));
-    $(args2).on('click','.btn-floating',$.proxy(args1._goPlan,args1));
+    $(args2).on('click','.btn-floating',$.proxy(args1._popupService.closeAll,args1._popupService));
   },
   _goMyInfo : function(){
-    this._historyService.goLoad('/product/roaming/my-use');
+    var targetUrl = this._prodTypeInfo.prodTypCd==='H_P'?'/product/roaming/my-use':'/product/roaming/my-use#add';
+    this._popupService.closeAllAndGo(targetUrl);
   },
   _goBack : function(){
     this._historyService.goBack();
   },
   _goPlan : function () {
     this._popupService.closeAll();
-    this._historyService.goBack();
+    setTimeout($.proxy(this._historyService.goBack,this._historyService),0);
   },
   _showCancelAlart : function (){
     var alert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A1;
-    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, alert.BUTTON, Tw.BUTTON_LABEL.CLOSE,
+    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, Tw.BUTTON_LABEL.YES, Tw.BUTTON_LABEL.NO,
       null,
       $.proxy(this._goPlan,this),
       null);
@@ -215,7 +227,9 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
         this.$addBtn.removeAttr('style');
       }, this)
     );
-    this.$addBtn.css({'pointer-events':'none','background':'#3b98e6'});
+    if(!this.$addBtn.attr('disabled')){
+      this.$addBtn.css({'pointer-events':'none','background':'#3b98e6'});
+    }
   },
   _bindCancelPopupEvent : function (popupLayer) {
     $(popupLayer).on('click','.pos-left>button',$.proxy(this._goPlan,this));

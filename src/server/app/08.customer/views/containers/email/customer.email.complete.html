@@ -14,48 +14,56 @@
         <li><a href="#footer">푸터 바로가기</a></li>
     </ul>
 </div>
-<!--// #skip_navigation -->
+
 <div class="wrap">
-    <!-- .popup hbs -->
-    <div class="popup-page tw-popup"><!-- .no-btn 하단에 버튼이 없을 경우 -->
-        <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti"></div>
-            </div>
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <div class="container">
         </div>
-        <!--// #header -->
+    </div>
+    <!--// #contents -->
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup pt0 fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
         <!-- .container-wrap -->
         <div class="container-wrap">
-            <h2 class="blind">내용</h2>
             <div class="container">
-                <h1 class="complete-title">
-                    <img src="<%= CDN %>/img/dummy/dmy-complete.jpg" alt="">
-                    <span>이메일 상담 등록완료</span>
-                </h1>
-                <p class="complete-tx1">답변 받으시는 이메일 주소</p>
-                <% if ( email ) { %>
-                <p class="complete-tx2"><%-email%></p>
-                <% } %>
-                <div class="complete-btn-box pt40">
-                    <ul class="bt-slice">
-                        <li class="bt-white2">
-                            <a href="/customer/emailconsult/history">내가 쓴 글 보기</a>
-                        </li>
-                    </ul>
-                    <div class="bt-link-box">
-                        <button class="bt-link-tx fe-common-back">확인</button>
+                <div class="complete-wrap">
+                    <div class="title-box">
+                        <i class="icon-complete-120"><span class="blind">complete</span></i>
+                        <p class="tx-tit"> <span class="tx-highlight pt10">이메일 상담 등록완료</span></p>
+                    </div>
+                    <div class="tx-contents">
+                        <div class="basic-list">
+                            <ul>
+                                <li>
+                                    <span class="title">답변 받으시는 이메일 주소</span>
+                                    <span class="tx-cont"><%-email%></span>
+                                </li>
+                            </ul>
+                        </div>
+                        <ul class="bt-slice item-one">
+                            <li>
+                                <a href="/customer/emailconsult/history" class="btn-round2 btn-style3">내가 쓴 글 보기</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <!--// .container-wrap -->
-        <!-- .popup-closeBtn -->
-        <button class="popup-closeBtn fe-common-back"><span class="blind">팝업 페이지 닫기</span></button>
-        <!--// .popup-closeBtn -->
+
+        <div class="bt-fixed-area">
+            <ul class="bt-slice full">
+                <li><button type="button" class="btn-floating btn-style2 fe-common-back">확인</button></li>
+            </ul>
+        </div>
     </div>
     <!--// .popup hbs -->
 </div>
+
 <% include ../../components/javascript.component.html %>
 </body>
 <% include ../../components/end.component.html %>

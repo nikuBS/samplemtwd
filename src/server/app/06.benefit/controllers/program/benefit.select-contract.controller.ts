@@ -20,11 +20,12 @@ class BenefitSelectContractController extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
-    const prodId = req.query.prod_id || '';
+    const prodId = req.query.prod_id || '', selType = req.query.type || null;
     const data: any = {
       svcInfo: svcInfo,
       pageInfo: pageInfo,
-      prodId: prodId
+      prodId: prodId,
+      selType: selType
     };
 
     const curDate = new Date();
@@ -36,9 +37,30 @@ class BenefitSelectContractController extends TwViewController {
     };
     data.monthCode = { 'M0012': '12', 'M0024': '24' };
     Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_10_0119, {}, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, [prodId]),
       this.apiService.request(API_CMD.BFF_10_0062, {}, {}, [prodId])
-    ).subscribe(([joinTermInfo, seldisSets]) => {
+    ).subscribe(([scrbCheck, joinTermInfo, seldisSets]) => {
+      // 상품이 현재 이용중인지 미가입중인지 체크
+      if (scrbCheck.code === API_CODE.CODE_00) {
+        if (scrbCheck.result.combiProdScrbYn === 'Y') {
+          return this.error.render(res, {
+            code: scrbCheck.code,
+            msg: '',
+            svcInfo: svcInfo,
+            title: PRODUCT_TYPE_NM.JOIN,
+            isBackCheck: true
+          });
+        }
+      } else {
+        return this.error.render(res, {
+          code: scrbCheck.code,
+          msg: scrbCheck.msg,
+          svcInfo: svcInfo,
+          title: PRODUCT_TYPE_NM.JOIN
+        });
+      }
+
       // 무선 선택약정 할인제도 상품 설정 조회
       if ( seldisSets.code === API_CODE.CODE_00 ) {
         data.isContractPlan = (seldisSets.result.isNoContractPlanYn === 'Y');

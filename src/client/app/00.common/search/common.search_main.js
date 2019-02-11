@@ -8,7 +8,7 @@ Tw.CommonSearchMain = function (rootEl,svcInfo,cdn,step) {
   this.$container = rootEl;
   this._svcInfo = svcInfo;
   this._cdn = cdn;
-  this._step = step;
+  this._step = parseInt(step,10);
   this._init();
 };
 
@@ -48,7 +48,10 @@ Tw.CommonSearchMain.prototype = {
         }
       },this));
   },
-  _showAutoCompleteKeyword : function(data){
+  _showAutoCompleteKeyword : function(data,idx){
+    if(idx>=10){
+      return;
+    }
     this.$autoCompleteList.append(this.$autoCompletetTemplate({listData : this._convertAutoKeywordData(data.hkeyword)}));
   },
   _bindPopupElementEvt : function () {
@@ -63,9 +66,8 @@ Tw.CommonSearchMain.prototype = {
   _convertAutoKeywordData : function (listStr) {
     var returnObj = {};
     returnObj.showStr =  listStr.substring(0,listStr.length-7);
-    //var linkStr;
-    returnObj.showStr = returnObj.showStr.replace('<font style=\'color:#CC33CC\'>','<span class="highlight-text">');
-    returnObj.showStr = returnObj.showStr.replace('<font style=\'font-size:13px\'>','');
+    returnObj.showStr = returnObj.showStr.replace('<font style=\'color:#CC6633\'>','<span class="highlight-text">');
+    returnObj.showStr = returnObj.showStr.replace('<font style=\'font-size:12px\'>','');
     returnObj.showStr = returnObj.showStr.replace('</font>','</span>');
     returnObj.linkStr = returnObj.showStr.replace('<span class="highlight-text">','').replace('</span>','');
     return returnObj;
@@ -160,7 +162,7 @@ Tw.CommonSearchMain.prototype = {
       this._historyService.goBack();
     }
     this._addRecentlyKeywordList(searchKeyword);
-    this._historyService.goLoad('/common/search?keyword='+searchKeyword+'&step='+(Number(this._step)+1));
+    this._historyService.goLoad('/common/search?keyword='+searchKeyword+'&step='+(this._step+1));
   },
   _hashChange : function () {
     if(Tw.FormatHelper.isEmpty(this._historyService.getHash())&&this._onInput){
@@ -172,7 +174,10 @@ Tw.CommonSearchMain.prototype = {
     }
   },
   _closeSearch : function () {
-    this._historyService.go(Number(this._step)*-1);
+    if(this._historyService.getHash()==='#on_input'){
+      ++this._step;
+    }
+    this._historyService.go(this._step*-1);
   }
 
 

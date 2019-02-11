@@ -9,6 +9,7 @@ Tw.ProductMobileplanJoinTplan = function(rootEl, prodId, displayId, sktProdBenfC
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
+  this._historyService.init();
 
   this._prodId = prodId;
   this._displayId = displayId;
@@ -23,6 +24,10 @@ Tw.ProductMobileplanJoinTplan = function(rootEl, prodId, displayId, sktProdBenfC
   this.$container = rootEl;
   this._cachedElement();
   this._bindEvent();
+
+  if (this._historyService.isBack()) {
+    this._historyService.goBack();
+  }
 };
 
 Tw.ProductMobileplanJoinTplan.prototype = {
@@ -64,7 +69,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
       return true;
     }
 
-    this._smartWatchLine = this._watchInfo.watchSvcList[0].watchSvcNum;
+    this._smartWatchLine = this._watchInfo.watchSvcList[0].watchSvcMgmtNum;
     return true;
   },
 
@@ -100,7 +105,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
     return {
       'label-attr': 'id="ra' + idx + '"',
       'txt': Tw.FormatHelper.conTelFormatWithDash(item.watchSvcNumMask),
-      'radio-attr': 'id="ra' + idx + '" data-num="' + item.watchSvcNum + '" ' + (this._smartWatchLine === item.watchSvcNum ? 'checked' : '')
+      'radio-attr': 'id="ra' + idx + '" data-num="' + item.watchSvcMgmtNum + '" ' + (this._smartWatchLine === item.watchSvcMgmtNum ? 'checked' : '')
     };
   },
 
@@ -125,6 +130,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
   },
 
   _convConfirmOptions: function(result) {
+    console.log(result);
     this._confirmOptions = Tw.ProductHelper.convPlansJoinTermInfo(result);
 
     $.extend(this._confirmOptions, {
@@ -140,7 +146,9 @@ Tw.ProductMobileplanJoinTplan.prototype = {
       autoTermList: this._confirmOptions.preinfo.autoTermList,
       autoJoinBenefitList: this._confirmOptions.preinfo.toProdInfo.chgSktProdBenfCtt,
       autoTermBenefitList: this._confirmOptions.preinfo.frProdInfo.chgSktProdBenfCtt,
-      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0),
+      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0 ||
+        this._confirmOptions.installmentAgreement.isInstallAgreement),
+      isInstallmentAgreement: this._confirmOptions.installmentAgreement.isInstallAgreement,
       isMobilePlan: true,
       isNoticeList: true,
       isComparePlan: this._isComparePlan,
@@ -261,7 +269,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
 
     if (!Tw.FormatHelper.isEmpty(this._smartWatchLine) && optProdId === 'NA00006116') {
       reqParams = $.extend(reqParams, {
-        optWatchNum: this._smartWatchLine
+        optWatchMgmtNum: this._smartWatchLine
       });
     }
 
@@ -306,9 +314,20 @@ Tw.ProductMobileplanJoinTplan.prototype = {
     this._popupService.open({
       hbs: 'complete_product',
       data: completeData
-    }, null, $.proxy(this._onClosePop, this), 'join_success');
+    }, $.proxy(this._bindJoinResPopup, this), $.proxy(this._onClosePop, this), 'join_success');
 
     this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
+  },
+
+  _bindJoinResPopup: function($popupContainer) {
+    $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
+  },
+
+  _closeAndGo: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
   },
 
   _onClosePop: function() {

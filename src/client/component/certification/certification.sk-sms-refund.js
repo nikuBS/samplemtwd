@@ -12,6 +12,8 @@ Tw.CertificationSkSmsRefund = function () {
   this._isCertRequestSuccess = false;
   this._certBtnStatus = 0; // 0: 받기, 1: 시간연장하기, 2: 다시받기
 
+  this._timer = undefined;
+
   this._seqNo = undefined;
 };
 
@@ -20,7 +22,9 @@ Tw.CertificationSkSmsRefund.prototype = {
     ATH2003: 'ATH2003', // 재전송 제한시간이 지난 후에 이용
     ATH2006: 'ATH2006', // 제한시간 내 인증번호를 보낼 수 있는 횟수 초과
     ATH2007: 'ATH2007', // 인증번호 불일치
-    ATH2008: 'ATH2008' // 인증번호 입력시간 초과
+    ATH2008: 'ATH2008', // 인증번호 입력시간 초과
+    ATH2011: 'ATH2011',
+    ATH2014: 'ATH2014'
   },
 
   openSmsPopup: function (callback) {
@@ -82,6 +86,8 @@ Tw.CertificationSkSmsRefund.prototype = {
       this._apiService.request(Tw.API_CMD.BFF_01_0051, data)
         .done($.proxy(function (res) {
           if (res.code === Tw.API_CODE.CODE_00) {
+            clearTimeout(this._timer);
+            this._timer = setTimeout($.proxy(this._timeExpired, this), Tw.SMS_CERT_TIME);
             this._isCertRequestSuccess = true;
             this._seqNo = res.result.seqNo;
             this._showCertSuccess();
@@ -137,8 +143,11 @@ Tw.CertificationSkSmsRefund.prototype = {
     }
 
     // Birth
-    if (this.$inputBirth.val().trim().length !== 6) {
+    if (this.$inputBirth.val().trim().length === 0) {
       this.$container.find('#fe-birth-error').removeClass('none');
+      ret = false;
+    } else if (this.$inputBirth.val().trim().length !== 6) {
+      this.$container.find('#fe-birth-wrong').removeClass('none');
       ret = false;
     }
 
@@ -223,7 +232,11 @@ Tw.CertificationSkSmsRefund.prototype = {
             this._callback(res);
           }
         } else {
-          if (!!this.SMS_CERT_ERROR[res.code]) {
+          if ( res.code === this.SMS_ERROR.ATH2011 ) {
+            this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2011);
+          } else if ( res.code === this.SMS_ERROR.ATH2014 ) {
+            this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2014);
+          } else if (!!this.SMS_CERT_ERROR[res.code]) {
             this._showCertNumberError(res.code);
           } else {
             Tw.Error(res.code, res.msg).pop();
@@ -241,6 +254,8 @@ Tw.CertificationSkSmsRefund.prototype = {
   },
   _showTimeExpandSuccess: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      clearTimeout(this._timer);
+      this._timer = setTimeout($.proxy(this._timeExpired, this), Tw.SMS_CERT_TIME);
       this.$container.find('.fe-cert-txt').addClass('none');
       this.$container.find('#fe-time-expanded').removeClass('none');
       this._setCertBtnText();
@@ -256,4 +271,8 @@ Tw.CertificationSkSmsRefund.prototype = {
     this.$container.find('.fe-cert-number-txt').addClass('none');
     this.$container.find('.fe-cert-number-txt.' + code).removeClass('none');
   },
+  _timeExpired: function () {
+    this._showCertNumberError('ATH2008');
+    this.$btConfirm.attr('disabled', 'disabled');
+  }
 };

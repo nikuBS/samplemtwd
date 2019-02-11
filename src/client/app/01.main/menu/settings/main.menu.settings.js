@@ -64,12 +64,11 @@ Tw.MainMenuSettings.prototype = {
       var versionInfo = _.filter(res.result.ver, function (item) {
         return item.osType === currentOsType;
       });
-      var latestVersion = versionInfo[0]['new'];
+      var latestVersion = versionInfo[0]['newVer'];
       if (latestVersion > this._currentVersion) {
         this.$updateBox.removeClass('none');
       } else {
         this.$versionText.text(Tw.SETTINGS_MENU.LATEST + ' ' + this.$versionText.text());
-        this.$versionText.addClass('point');
       }
     }
   },

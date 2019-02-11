@@ -82,7 +82,6 @@ Tw.CustomerDamageInfoContents.prototype = {
   },
 
   _openExternalUrl: function(href) {
-    this._popupService.close();
     Tw.CommonHelper.openUrlExternal(href);
   },
 

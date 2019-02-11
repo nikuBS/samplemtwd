@@ -33,11 +33,9 @@ Tw.MyTJoinWireModifyProduct = function (rootEl, resData) {
 Tw.MyTJoinWireModifyProduct.prototype = {
   _init: function () {
     if(this.resData.resDataInfo.coClCd === 'B'){
-      if( !Tw.Environment.init ) {
-        $(window).on(Tw.INIT_COMPLETE, $.proxy(this._openSkbdErrorAlert, this));
-      } else {
-        this._openSkbdErrorAlert();
-      }
+      // sk브로드밴드인 경우 팝업 변경 (myt-join공통함수로 처리)
+      (new Tw.MyTJoinCommon()).openSkbdAlertOnInit(this._history);
+
       return;
     }
     this._bindEvent();
@@ -62,25 +60,9 @@ Tw.MyTJoinWireModifyProduct.prototype = {
     this.$container.on('click', '[data-target="submitApply"]', $.proxy(this.$submitApplyEvt, this));
     this.$container.on('click', '#btn_hp_del', $.proxy(this._formValidateionChk, this));
 
-    this.$container.on('click', '.prev-step', $.proxy(this._closeCheck, this));
+    this.$container.on('click', '#page-prev-step', $.proxy(this._closeCheck, this));
   },
 
-  _openSkbdErrorAlert: function () {
-    Tw.Popup.openOneBtTypeB(
-      Tw.MYT_JOIN.BROADBAND_ERROR.TITLE,
-      Tw.MYT_JOIN.BROADBAND_ERROR.CONTENTS,
-      [{
-        style_class: 'link',
-        txt: Tw.MYT_JOIN.BROADBAND_ERROR.LINK_TXT
-      }],
-      'type1',
-      $.proxy(function ($layer) {
-        $layer.on('click', '.link', $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.MYT_JOIN.BROADBAND_ERROR.LINK));
-      }, this), $.proxy(function () {
-        this._history.goBack();
-      }, this)
-    );
-  },
   //--------------------------------------------------------------------------[EVENT]
   _closeCheck: function(){
 
@@ -89,12 +71,15 @@ Tw.MyTJoinWireModifyProduct.prototype = {
       $('[data-target="input_hp"]').val() ||
       $('[data-target="input_phone"]').val()) {
 
-      this._popupService.openConfirm(
+      this._popupService.openConfirmButton(
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
         $.proxy(function(){
           this._history.goLoad('/myt-join/submain_w');
-        }, this));
+        }, this),
+        null,
+        Tw.BUTTON_LABEL.NO,
+        Tw.BUTTON_LABEL.YES);
     } else {
       this._history.goBack();
     }
@@ -193,7 +178,9 @@ Tw.MyTJoinWireModifyProduct.prototype = {
     var indexOfVal = this.productBillSelect.type.indexOf(tempData);
 
     if ( indexOfVal !== -1 ) { // 존재할때 실행 체크
-      $layer.find('.chk-link-list > li').eq(indexOfVal).find('button').addClass('checked');
+      $layer.find('.chk-link-list > li').eq(indexOfVal).find('button')
+        .addClass('checked')
+        .find('input[type=radio]').prop('checked', true);
     }
 
     //팝업 속 버튼을 클릭했을 때
@@ -214,7 +201,8 @@ Tw.MyTJoinWireModifyProduct.prototype = {
       $target.text( tempDataVal );
 
       $layer.find('.chk-link-list li > button').removeClass('checked');
-      $targetChild.addClass('checked');
+      $targetChild.addClass('checked')
+        .find('input[type=radio]').prop('checked', true);
       this._popupService.close();
 
     }, this));
@@ -229,10 +217,12 @@ Tw.MyTJoinWireModifyProduct.prototype = {
   // 요금상품 선택 클릭시 실행
   select_product_billEvtOpen: function( $target, $layer ) {
     var tempData = this.productFormData.prodNm;
-    var indexOfVal = this.productBillSelect.child.indexOf(tempData);
+    var indexOfVal = this.productBillSelect.child[this.productSelect.id].indexOf(tempData);
 
     if ( indexOfVal !== -1 ) { // 존재할때 실행 체크
-      $layer.find('.chk-link-list > li').eq(indexOfVal).find('button').addClass('checked');
+      $layer.find('.chk-link-list > li').eq(indexOfVal).find('button')
+        .addClass('checked')
+        .find('input[type=radio]').prop('checked', true);
     }
 
     //팝업 속 버튼을 클릭했을 때
@@ -245,7 +235,8 @@ Tw.MyTJoinWireModifyProduct.prototype = {
       $target.text( tempDataVal );
 
       $layer.find('.chk-link-list li > button').removeClass('checked');
-      $targetChild.addClass('checked');
+      $targetChild.addClass('checked')
+        .find('input[type=radio]').prop('checked', true);
       this._popupService.close();
 
     }, this));
@@ -261,7 +252,7 @@ Tw.MyTJoinWireModifyProduct.prototype = {
   _productBillSelectFun: function() {
 
     this.productBillSelect = _.filter( this.productBillList, $.proxy(function(item){
-      return item.id === this.resData.svcInfo.svcAttrCd;
+      return item.id === this.resData.svcAttrCd;
       // return item.id === 'S3';
     }, this) )[0];
 
@@ -269,7 +260,7 @@ Tw.MyTJoinWireModifyProduct.prototype = {
   },
   _svcCtgNmFun: function() {
 
-    var idVar = this.resData.svcInfo.svcAttrCd;
+    var idVar = this.resData.svcAttrCd;
 
     switch ( idVar) {
       case 'S1':

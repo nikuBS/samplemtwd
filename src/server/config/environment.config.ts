@@ -1,15 +1,14 @@
 const environment = {
   local: {
-    BFF_SERVER: 'http://61.250.19.37:31020',  // 개발 61.250.19.37:31010
+    BFF_SERVER: 'http://61.250.19.37:31020',
     BFF_SERVER_G: 'http://211.188.180.73:31010',
     CDN: 'http://localhost:3001',
-    CDN_MANIFEST: 'http://localhost:3001',
     SHORTCUT: 'skt.sh:3000',
     REDIS: {
       host: '61.250.19.37',
       // port: 31300,
       port: 32300,
-      password: 'stgmtwd1@',
+      password: '993d2ac0c060da72f0f8298aa4c11ece',
       db: 0
     },
     REDIS_TOS: {
@@ -17,8 +16,9 @@ const environment = {
       port: 32400,
       db: 0
     },
+    REDIS_PWD_KEY: 'cbbfc0a5-099e-4d03-8028-a18263f2b2d6',  // Will be removed
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
-    SEARCH_SERVER: 'http://61.250.22.114:8180',
+    SEARCH_SERVER: 'http://211.188.181.123:8080',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     // DOMAIN: 'http://m.tworld.co.kr:3000',
     DOMAIN_G: 'm-dev.tworld.co.kr:3000',
@@ -33,12 +33,11 @@ const environment = {
     // BFF_SERVER: 'http://211.188.180.73:31309',
     BFF_SERVER_G: 'http://bff-spring-g',
     CDN: 'https://cdnm-dev.tworld.co.kr',
-    CDN_MANIFEST: 'http://61.250.20.69',
     SHORTCUT: 'skt.sh',
     REDIS: {
       host: 'dev-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-dev-nod',
       port: 6379,
-      password: 'devmtwd1@',
+      password: 'a935fdca4ac876095bea69cda9ba08c2',
       db: 0
     },
     REDIS_TOS: {
@@ -47,7 +46,7 @@ const environment = {
       db: 0
     },
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
-    SEARCH_SERVER: 'http://61.250.22.114:8080',
+    SEARCH_SERVER: 'http://211.188.181.123:8080',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     // DOMAIN: 'http://icp-dev.tworld.co.kr',
     DOMAIN_G: 'devgm.tworld.co.kr',
@@ -62,12 +61,11 @@ const environment = {
     // BFF_SERVER: 'http://211.188.180.73:31309',
     BFF_SERVER_G: 'http://bff-spring-g',
     CDN: 'https://cdnm-stg.tworld.co.kr',
-    CDN_MANIFEST: 'http://203.236.19.151',
     SHORTCUT: 'skt.sh',
     REDIS: {
       host: 'stg-backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-stg-nod',
       port: 6379,
-      password: 'stgmtwd1@',
+      password: '993d2ac0c060da72f0f8298aa4c11ece',
       db: 0
     },
     REDIS_TOS: {
@@ -76,7 +74,7 @@ const environment = {
       db: 0
     },
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
-    SEARCH_SERVER: 'http://61.250.22.114:8080',
+    SEARCH_SERVER: 'http://211.188.181.123:8080',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     // DOMAIN: 'http://icp-stg.tworld.co.kr',
     DOMAIN_G: 'icp-stggm.tworld.co.kr',
@@ -90,26 +88,20 @@ const environment = {
     BFF_SERVER: 'http://bff-spring',
     BFF_SERVER_G: 'http://bff-spring-g',
     CDN: 'https://cdnm.tworld.co.kr',
-    CDN_MANIFEST: 'http://203.236.19.151',
     SHORTCUT: 'skt.sh',
     REDIS: {
-      // host: 'backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-prd-nod',
-      // port: 6379,
-      host: '61.250.19.37',
-      port: 32300,
-      // password: 'mtwdmtwd1@',
-      password: 'stgmtwd1@',
+      host: 'backing-redis-node-ibm-redis-ha-dev-master-svc.mtw-prd-nod',
+      port: 6379,
+      password: 'd86fdf7bd110811a08aab1106b1aa217',
       db: 0
     },
     REDIS_TOS: {
-      // host: 'backing-redis-tos-ibm-redis-ha-dev-master-svc.mtw-prd-tos',
-      // port: 6379,
-      host: '61.250.19.37',
-      port: 32400,
+      host: 'backing-redis-tos-ibm-redis-ha-dev-master-svc.mtw-prd-tos',
+      port: 6379,
       db: 0
     },
-    TID_SERVER: 'https://auth-stg.skt-id.co.kr',
-    SEARCH_SERVER: 'http://61.250.22.114:8080',
+    TID_SERVER: 'https://auth.skt-id.co.kr',
+    SEARCH_SERVER: 'http://211.188.181.123:8080',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     // DOMAIN: 'https://beta.m.tworld.co.kr',
     DOMAIN_G: 'appg.tworld.co.kr',

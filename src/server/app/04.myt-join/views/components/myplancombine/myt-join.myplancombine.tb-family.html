@@ -79,7 +79,7 @@ const memberCount = groupInfo.mblSvcCnt + groupInfo.wirSvcCnt; %>
                                                 <div class="num"><%= member.svcNum %></div>
                                             </div>
                                             <div class="list-arrow">
-                                                <span class="ico-arrow"></span>
+                                                <span class="ico-arrow"><span class="blind">결합가족 <%= member.custNm %> 내용 자세히 보기</span></span>
                                             </div>
                                         </div>
                                     </button>
@@ -90,20 +90,67 @@ const memberCount = groupInfo.mblSvcCnt + groupInfo.wirSvcCnt; %>
                                             <li>
                                                 <dl>
                                                     <dt>가족대표와의 관계</dt>
-                                                    <dd><%= member.relClNm %><%= isMine? '(내 번호)': ''%><br /></dd>
-                                                </dl>
-                                            </li>
-                                            <li>
-                                                <dl>
-                                                    <dt>결합유선상품</dt>
-                                                    <dd><%= member.bIdx >= 0 ? combination.combinationWireMemberList[member.bIdx].svcCdNm : '-' %></dd>
+                                                    <dd>
+                                                        <% if (isRep && isMine) { %>
+                                                            본인(내번호)<br />
+                                                        <% } else { %>
+                                                            <%= member.relClNm %><%= isMine? '(내번호)': ''%><br />
+                                                        <% } %>    
+                                                    </dd>
                                                 </dl>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </li>
-                        <% }); %>                        
+                        <% });                 
+                        combination.combinationWireMemberList.map(member => { 
+                            const isMine = svcInfo.svcMgmtNum === member.mblSvcMgmtNum; %>
+                            <li class="acco-list"><!-- on , off -->
+                                <div class="acco-title">
+                                    <button role="button" aria-pressed="false">
+                                        <div class="list-wrap">
+                                            <div class="list-info">
+                                                <div>
+                                                    <% if (isMine) { %>
+                                                        <strong class="me"><%= member.custNm %></strong>
+                                                        <i class="icon-<%= member.badge %> ml9"><span class="blind"><%= member.relClNm %></span></i>
+                                                        <i class="icon-me ml5"><span class="blind">나</span></i><!-- 뱃지-나 -->
+                                                    <% } else { %>
+                                                        <em class="me"><%= member.custNm %></em>
+                                                        <i class="icon-<%= member.badge %> ml9"><span class="blind"><%= member.relClNm %></span></i>
+                                                    <% } %>
+                                                </div>
+                                                <div class="num"><%= member.svcCdNm %></div>
+                                            </div>
+                                            <div class="list-arrow">
+                                                <span class="ico-arrow"><span class="blind">결합가족 <%= member.custNm %> 내용 자세히 보기</span></span>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                                <div class="acco-content">
+                                    <div class="data-info-list toggle-inner-list">
+                                        <ul>
+                                            <li>
+                                                <dl>
+                                                    <dt>가족대표와의 관계</dt>
+                                                    <dd>
+                                                        <%= member.relClNm || '-' %><br />
+                                                    </dd>
+                                                </dl>
+                                            </li>
+                                            <li>
+                                                <dl>
+                                                    <dt>결합유선상품</dt>
+                                                    <dd><%= member.svcCdNm %></dd>
+                                                </dl>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        <% }); %>             
                     </ul>
                 </div>
             </div>
@@ -117,11 +164,11 @@ const memberCount = groupInfo.mblSvcCnt + groupInfo.wirSvcCnt; %>
     <!-- .cont-box --><!-- 2018-11-02 수정 -->
     <div class="cont-box nogaps-btm">
         <h3 class="tx-bold">꼭 확인해 주세요</h3>
-        <ul class="noti-list">
-            <li>TB끼리 온가족무료 해지 할 경우<button id="MS_07_01_05_tip_01" type="button" class="tip-view" title="TB끼리 온가족무료 해지 할 경우" aria-haspopup="true">TIP</button></li>
-            <li>결합상품 자동 해지되는 경우<button id="MS_07_01_05_tip_02" type="button" class="tip-view" title="결합상품 자동 해지되는 경우" aria-haspopup="true">TIP</button></li>
-            <li>결합혜택 제공되는 경우<button id="MS_07_01_05_tip_03" type="button" class="tip-view" title="결합혜택 제공되는 경우" aria-haspopup="true">TIP</button></li>
-            <li>할인 적용되는 경우<button id="MS_07_01_05_tip_04" type="button" class="tip-view" title="할인 적용되는 경우" aria-haspopup="true">TIP</button></li>
+        <ul class="noti-list02">
+            <li><button id="MS_07_01_05_tip_01" type="button" class="tip-view-btn" title="TB끼리 온가족무료 해지 할 경우" aria-haspopup="true">TB끼리 온가족무료 해지 할 경우<span class="tip-view">TIP</span></button></li>
+            <li><button id="MS_07_01_05_tip_02" type="button" class="tip-view-btn" title="결합상품 자동 해지되는 경우" aria-haspopup="true">결합상품 자동 해지되는 경우<span class="tip-view">TIP</span></button></li>
+            <li><button id="MS_07_01_05_tip_03" type="button" class="tip-view-btn" title="결합혜택 제공되는 경우" aria-haspopup="true">결합혜택 제공되는 경우<span class="tip-view">TIP</span></button></li>
+            <li><button id="MS_07_01_05_tip_04" type="button" class="tip-view-btn" title="할인 적용되는 경우" aria-haspopup="true">할인 적용되는 경우<span class="tip-view">TIP</span></button></li>
         </ul>
     </div>
     <!--// .cont-box -->

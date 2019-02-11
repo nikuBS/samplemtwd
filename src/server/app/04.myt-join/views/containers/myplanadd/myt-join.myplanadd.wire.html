@@ -53,7 +53,7 @@
                                             <% } else { %>
                                             <span class="info-title num"><%= addition.basFeeTxt || '무료' %></span>
                                             <% } %>
-                                            <% if (hasLink) { %><span class="ico"></span><% } %>
+                                            <% if (hasLink) { %><span class="ico"><span class="blind"><%= addition.prodNm %> 자세히 보기</span></span><% } %>
                                         </div>
                                         <% if (hasButtons) { %>
                                         <span class="bt-wrap">
@@ -71,7 +71,7 @@
                             <% }); %>
                         </ul>
                         <div class="contents-empty fe-empty <%= joined.length > 0 ? 'none' : '' %>">
-                            <span class="ico type1"></span>
+                            <span class="ico type1"><span class="blind">느낌표(!)</span></span>
                             <p class="desc">현재 사용 중인 부가서비스가 없습니다.</p>
                         </div>
                     </div>
@@ -105,7 +105,7 @@
                                             <% } else { %>
                                             <span class="info-title num"><%= addition.basFeeTxt || '무료' %></span>
                                             <% } %>
-                                            <% if (hasLink) { %><span class="ico"></span><% } %>
+                                            <% if (hasLink) { %><span class="ico"><span class="blind"><%= addition.prodNm %> 자세히 보기</span></span><% } %>
                                         </div>
                                     <% if (hasButtons) { %>
                                         <span class="bt-wrap">
@@ -124,7 +124,7 @@
                             </ul>
                         <% } else { %>
                             <div class="contents-empty">
-                                <span class="ico type1"></span>
+                                <span class="ico type1"><span class="blind">느낌표(!)</span></span>
                                 <p class="desc">현재 신청 접수 중인 부가서비스가 없습니다.</p>
                             </div>
                         <% } %>
@@ -169,7 +169,7 @@
                     <div class="cont-box nogaps">
                         <div class="add-prd-wrap">
                             <div class="contents-empty">
-                                <span class="ico type1"></span>
+                                <span class="ico type1"><span class="blind">느낌표(!)</span></span>
                                 <p class="desc">현재 가입 가능한 부가서비스가 없습니다.</p>
                             </div>
                         </div>
@@ -181,8 +181,8 @@
                 <!-- 꼭 확인해 주세요 2018.11.02 추가 -->
 				<div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                    <ul class="noti-list">
-                        <li>부가서비스 이용안내 <button id="MS_06_01_tip_02" type="button" class="tip-view" title="부가서비스 이용안내 TIP보기" aria-haspopup="true">TIP</button></li>
+                    <ul class="noti-list02">
+                        <li><button id="MS_06_01_tip_02" type="button" class="tip-view-btn" title="부가서비스 이용안내 TIP보기" aria-haspopup="true">부가서비스 이용안내<span class="tip-view">TIP</span></button></li>
                     </ul>
                 </div>
                 <!-- //꼭 확인해 주세요 -->

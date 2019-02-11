@@ -21,12 +21,12 @@
             <div class="header-wrap">
                 <div class="page-header">
                     <div class="header-ti">
-                        <h1>OK캐쉬백∙T포인트 납부</h1>
+                        <h1>OK캐쉬백/T포인트 납부</h1>
                     </div>
                 </div>
             </div>
             <!--// #header -->
-            <!-- #contents -->
+            <!-- .container-wrap -->
             <div class="container-wrap">
                 <h2 class="blind">내용</h2>
                 <div class="container">
@@ -40,7 +40,9 @@
                     <div class="cont-box noborder">
                         <div class="user-info-form">
                             <div class="info-form-box">
-                                <p class="form-label" id="aria-exp-label1">납부포인트 <button id="MF_01_03_tip_01" class="tip-view">TIP</button></p>
+                                <p class="form-label" id="aria-exp-label1">
+                                    납부포인트 <button id="MF_01_03_tip_01" class="tip-view" title="납부포인트" aria-haspopup="true" type="button">TIP</button>
+                                </p>
                                 <ul class="bt-slice fe-get-point-wrapper">
                                     <li class="bt-blue1">
                                         <button class="fe-get-point">포인트 조회하기</button>
@@ -48,17 +50,19 @@
                                 </ul>
                                 <div class="select-point-box fe-point-box" style="display:none;">
                                     <div class="select-point-dropdown">
-                                        <button id="10" data-code="CPT" class="bt-dropdown big fe-select-point" title="납부 포인트 종류" aria-haspopup="true">OK캐쉬백<span class="ico"></span></button>
+                                        <button id="10" data-code="CPT" class="bt-dropdown big fe-select-point" title="납부 포인트 종류" aria-haspopup="true">
+                                            OK캐쉬백<span class="ico"></span>
+                                        </button>
                                     </div>
                                     <div class="select-point-input">
                                         <div class="inputbox">
                                             <span class="input">
                                                 <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="1,000점 이상"
-                                                       class="fe-point required-input-field fe-only-number" title="input" value=""
-                                                       aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" maxlength="8">
+                                                       class="fe-point required-input-field fe-only-number"
+                                                       title="납부 포인트를 1,000점 이상 입력해 주세요" value="" aria-describedby="aria-exp-desc1" maxlength="8">
                                                 <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                             </span>
-                                            <span class="error-txt fe-error-msg" style="display:none;"></span>
+                                            <span id="aria-exp-desc1" class="error-txt fl-type fe-error-msg" style="display:none;"></span>
                                         </div>
                                     </div>
                                     <span id="aria-exp-desc1" class="select-point-info">
@@ -68,14 +72,14 @@
                                 </div>
                             </div>
                             <div class="info-form-box top-line">
-                                <p class="form-label" id="aria-exp-label2">비밀번호</p>
+                                <p class="form-label">비밀번호</p>
                                 <span class="inputbox">
                                     <span class="input">
                                         <input type="password" class="fe-point-pw required-input-field" placeholder="비밀번호 입력"
-                                               maxlength="16" title="input" value="" aria-labelledby="aria-exp-label2">
+                                               maxlength="16" title="비밀번호 입력" value="">
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
-                                    <span class="error-txt fe-error-msg" style="display:none;">비밀번호가 올바르지 않습니다.</span>
+                                    <span id="aria-exp-desc1" class="error-txt fe-error-msg" style="display:none;">비밀번호가 올바르지 않습니다.</span>
                                 </span>
                                 <button class="bt-link-tx underline mt18 fe-find-password">OK캐쉬백 비밀번호 찾기</button>
                             </div>
@@ -88,11 +92,27 @@
                     <!-- .cont-box -->
                     <div class="cont-box nogaps-btm">
                         <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                        <ul class="noti-list">
-                            <li>요금납부 안내 <button id="MF_01_01_tip_01" class="tip-view">TIP</button></li>
-                            <li>이용정지 고객 안내 <button id="MF_01_01_tip_02" class="tip-view">TIP</button></li>
-                            <li>통합청구이용고객 안내 <button id="MF_01_01_tip_03" class="tip-view">TIP</button></li>
-                            <li>OK캐쉬백 포인트 안내 <button id="MF_01_03_tip_02" class="tip-view">TIP</button></li>
+                        <ul class="noti-list02">
+                            <li>
+                                <button id="MF_01_01_tip_01" class="tip-view-btn" title="요금납부 안내" aria-haspopup="true" type="button">
+                                    요금납부 안내<span class="tip-view">TIP</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button id="MF_01_01_tip_02" class="tip-view-btn" title="이용정지 고객 안내" aria-haspopup="true" type="button">
+                                    이용정지 고객 안내<span class="tip-view">TIP</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button id="MF_01_01_tip_03" class="tip-view-btn" title="통합청구이용고객 안내" aria-haspopup="true" type="button">
+                                    통합청구이용고객 안내<span class="tip-view">TIP</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button id="MF_01_03_tip_02" class="tip-view-btn" title="OK캐쉬백 포인트 안내" aria-haspopup="true" type="button">
+                                    OK캐쉬백 포인트 안내<span class="tip-view">TIP</span>
+                                </button>
+                            </li>
                         </ul>
                     </div>
                     <!--// .cont-box -->

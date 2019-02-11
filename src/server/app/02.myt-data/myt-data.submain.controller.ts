@@ -11,9 +11,9 @@ import { Observable } from 'rxjs/Observable';
 import { API_CMD, API_CODE, API_T_FAMILY_ERROR } from '../../types/api-command.type';
 import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
-import { CURRENCY_UNIT, DATA_UNIT, MYT_T_DATA_GIFT_TYPE, MYT_DATA_CHARGE_TYPE_NAMES } from '../../types/string.type';
+import { CURRENCY_UNIT, ETC_CENTER, MYT_DATA_CHARGE_TYPE_NAMES, MYT_DATA_CHARGE_TYPES, MYT_DATA_REFILL_TYPES } from '../../types/string.type';
 import BrowserHelper from '../../utils/browser.helper';
-import { LOGIN_TYPE, PREPAID_PAYMENT_PAY_CD, PREPAID_PAYMENT_TYPE, UNIT, UNIT_E } from '../../types/bff.type';
+import { LOGIN_TYPE, PREPAID_PAYMENT_PAY_CD, PREPAID_PAYMENT_TYPE, REFILL_USAGE_DATA_CODES, UNIT, UNIT_E } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 
 const skipIdList: any = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
@@ -25,11 +25,13 @@ class MytDataSubmainController extends TwViewController {
     super();
   }
 
+  private fromDt = DateHelper.getPastYearShortDate();
+  private toDt = DateHelper.getCurrentShortDate();
   private isPPS = false;
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
     const data: any = {
-      svcInfo: svcInfo,
+      svcInfo: Object.assign({}, svcInfo),
       pageInfo: pageInfo,
       isBenefit: false,
       immCharge: true,
@@ -37,10 +39,10 @@ class MytDataSubmainController extends TwViewController {
       isPrepayment: false,
       isDataInfo: false,
       // 다른 회선 항목
-      otherLines: this.convertOtherLines(svcInfo, allSvc),
+      otherLines: this.convertOtherLines(Object.assign({}, svcInfo), Object.assign({}, allSvc)),
       isApp: BrowserHelper.isApp(req)
     };
-    this.isPPS = (svcInfo.svcAttrCd === 'M2');
+    this.isPPS = (data.svcInfo.svcAttrCd === 'M2');
     Observable.combineLatest(
       this._getRemnantData(),
       this._getDataPresent(),
@@ -84,7 +86,7 @@ class MytDataSubmainController extends TwViewController {
         } else {
           // 미가입
           data.family = {
-            impossible: true
+            impossible: tmoaBelongToProdList.indexOf(data.svcInfo.prodId) > -1
           };
         }
       }
@@ -93,7 +95,7 @@ class MytDataSubmainController extends TwViewController {
         data.otherLines = Object.assign(this.convertChildLines(child), data.otherLines);
       }
       // 9차: PPS, T-Login, T-PocketFi 인 경우 다른회선 잔여량이 노출되지 않도록 변경
-      if ( svcInfo.svcAttrCd === 'M2' || svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4' ) {
+      if ( data.svcInfo.svcAttrCd === 'M2' || data.svcInfo.svcAttrCd === 'M3' || data.svcInfo.svcAttrCd === 'M4' ) {
         data.otherLines = [];
       }
       // SP9 즉시충전버튼 무조건 노출로 변경
@@ -102,7 +104,7 @@ class MytDataSubmainController extends TwViewController {
         // 즉시충전버튼 영역
         data.immCharge = false;
       }*/
-      if ( svcInfo.svcAttrCd === 'M1'/* || svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4'*/ ) {
+      if ( data.svcInfo.svcAttrCd === 'M1'/* || svcInfo.svcAttrCd === 'M3' || svcInfo.svcAttrCd === 'M4'*/ ) {
         // 데이터혜택/활용하기 영역
         // 휴대폰, T-pocketFi, T-Login  경우 노출 - 9차에서 휴대폰인 경우에만 노출
         data.isBenefit = true;
@@ -122,7 +124,28 @@ class MytDataSubmainController extends TwViewController {
       }
 
       // 최근 충전 및 선물 내역
+      // 충전/선불내역 페이지와 동일한 순서(myt-data.history.controller.ts)
       const breakdownList: any = [];
+      if ( dpBkd && dpBkd.length > 0 ) {
+        // T끼리 선물하기 내역
+        // type: 1 send, 2 recharge
+        dpBkd.map((item) => {
+          const dataQty = FormatHelper.convDataFormat(item.dataQty, 'MB');
+          let uSubTitle = FormatHelper.conTelFormatWithDash(item.svcNum);
+          if ( item.giftType === 'GC' ) {
+            uSubTitle = MYT_DATA_CHARGE_TYPES.FIXED + ' | ' + uSubTitle;
+          }
+          item['opDt'] = item.opDtm.slice(0, 8);
+          item['class'] = (item.type === '1' ? 'send' : 'recieve');
+          item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.DATA_GIFT;
+          // 충전/선물내역과 동일하게 처리
+          item['u_sub'] = uSubTitle;
+          item['d_title'] = dataQty.data;
+          item['d_sub'] = DateHelper.getShortDate(item.opDt);
+          item['unit'] = dataQty.unit;
+        });
+        breakdownList.push(dpBkd);
+      }
       if ( dcBkd && dcBkd.length > 0 ) {
         // 데이터한도요금제 충전내역
         dcBkd.map((item) => {
@@ -131,48 +154,24 @@ class MytDataSubmainController extends TwViewController {
             item['class'] = (item.chargeTp === '1') ? 'once' : 'auto';
             item['u_type'] = 'data';
             item['u_title'] = PREPAID_PAYMENT_PAY_CD[item.payCd];
-            item['u_sub'] = item.cardNm || PREPAID_PAYMENT_TYPE[item.wayCd];
-            item['d_title'] = item.amt;
+            item['u_sub'] = item.wayCd === '02' ? item.cardNm : PREPAID_PAYMENT_TYPE[item.wayCd];
+            item['d_title'] = FormatHelper.addComma(item.amt);
             item['d_sub'] = item.data;
             item['unit'] = CURRENCY_UNIT.WON;
           } else {
-            item['class'] = (item.opTypCd === '2' || item.opTypCd === '4') ? 'send' : 'recharge';
-            item['u_title'] = item.opTypNm;
-            item['u_sub'] = item.opOrgNm;
-            item['d_title'] = item.amt;
+            let uSubTitle = item.opOrgNm || ETC_CENTER;
+            if ( item.opTypCd === '3' ) {
+              uSubTitle = MYT_DATA_CHARGE_TYPES.FIXED + ' | ' + uSubTitle;
+            }
+            item['class'] = 'recharge';
+            item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.LIMIT_CHARGE;
+            item['u_sub'] = uSubTitle;
+            item['d_title'] = FormatHelper.addComma(item.amt);
             item['d_sub'] = DateHelper.getShortDate(item.opDt);
             item['unit'] = CURRENCY_UNIT.WON;
           }
         });
-        breakdownList.push(FormatHelper.groupByArray(dcBkd, 'opDt'));
-      }
-      if ( dpBkd && dpBkd.length > 0 ) {
-        // T끼리 선물하기 내역
-        // type: 1 send, 2 recharge
-        dpBkd.map((item) => {
-          item['opDt'] = item.opDtm.slice(0, 8);
-          item['class'] = (item.type === '1' ? 'send' : 'recharge');
-          item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.DATA_GIFT;
-          item['u_sub'] = MYT_T_DATA_GIFT_TYPE[item.giftType] + ' | ' + FormatHelper.conTelFormatWithDash(item.svcNum);
-          item['d_title'] = item.dataQty;
-          item['d_sub'] = DateHelper.getShortDate(item.opDt);
-          item['unit'] = DATA_UNIT.MB;
-        });
-        breakdownList.push(FormatHelper.groupByArray(dpBkd, 'opDt'));
-      }
-      if ( tpBkd && tpBkd.length > 0 ) {
-        // 팅요금 선물하기 내역
-        // opTypCd: 1 send, 2 recharge
-        tpBkd.map((item) => {
-          item['class'] = (item.opTypCd === '1' ? 'send' : 'recharge');
-          item['u_title'] = item.opTypNm;
-          // custNm 명세서에서 제외됨
-          item['u_sub'] = /*item.custNm ||  + ' | ' +*/ FormatHelper.conTelFormatWithDash(item.svcNum);
-          item['d_title'] = item.amt;
-          item['d_sub'] = DateHelper.getShortDate(item.opDt);
-          item['unit'] = CURRENCY_UNIT.WON;
-        });
-        breakdownList.push(FormatHelper.groupByArray(tpBkd, 'opDt'));
+        breakdownList.push(dcBkd);
       }
       if ( etcBkd && etcBkd.length > 0 ) {
         // 팅/쿠키즈/안심요금 충전 내역
@@ -182,49 +181,69 @@ class MytDataSubmainController extends TwViewController {
             item['class'] = (item.chargeTp === '1') ? 'once' : 'auto';
             item['u_type'] = 'voice';
             item['u_title'] = PREPAID_PAYMENT_PAY_CD[item.payCd];
-            item['u_sub'] = item.cardNm || PREPAID_PAYMENT_TYPE[item.wayCd];
-            item['d_title'] = item.amt;
+            item['u_sub'] = item.wayCd === '02' ? item.cardNm : PREPAID_PAYMENT_TYPE[item.wayCd];
+            item['d_title'] = FormatHelper.addComma(item.amt);
             item['d_sub'] = item.data;
             item['unit'] = CURRENCY_UNIT.WON;
           } else {
-            item['class'] = (item.opTypCd === '2' || item.opTypCd === '4') ? 'send' : 'recharge';
-            item['u_title'] = item.opTypNm;
-            item['u_sub'] = '';
-            item['d_title'] = item.amt;
+            let etcBottom = item.opOrgNm || ETC_CENTER;
+            if ( item.opTypCd === '2' || item.opTypCd === '4' ) {
+              etcBottom = MYT_DATA_CHARGE_TYPES.CANCEL + ' | ' + etcBottom;
+            } else if ( item.opTypCd === '3' ) {
+              etcBottom = MYT_DATA_CHARGE_TYPES.FIXED + ' | ' + etcBottom;
+            }
+            item['class'] = 'recharge';
+            item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.TING_CHARGE;
+            item['u_sub'] = etcBottom;
+            item['d_title'] = FormatHelper.addComma(item.amt);
             item['d_sub'] = DateHelper.getShortDate(item.opDt);
             item['unit'] = CURRENCY_UNIT.WON;
           }
         });
-        breakdownList.push(FormatHelper.groupByArray(etcBkd, 'opDt'));
+        breakdownList.push(etcBkd);
       }
-      if ( refpBkd && refpBkd.length > 0 ) {
-        // 리필쿠폰 선물 내역
-        refpBkd.map((item) => {
-          item['opDt'] = item.copnOpDt;
-          item['class'] = (item.type === '1' ? 'send' : 'recharge');
-          item['u_title'] = item.opTypNm;
-          item['u_sub'] = item.copnNm + ' | ' + FormatHelper.conTelFormatWithDash(item.svcNum);
-          item['d_title'] = ''; // API response 값에 정의되어있지 않음
-          item['d_sub'] = DateHelper.getShortDate(item.copnOpDt);
-          item['unit'] = '';
+      if ( tpBkd && tpBkd.length > 0 ) {
+        // 팅요금 선물하기 내역
+        // opTypCd: 1 send, 2 recharge
+        tpBkd.map((item) => {
+          item['class'] = (item.opTypCd === '1' ? 'send' : 'recieve');
+          item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.TING_GIFT;
+          // custNm 명세서에서 제외됨
+          item['u_sub'] = /*item.custNm ||  + ' | ' +*/ FormatHelper.conTelFormatWithDash(item.svcNum);
+          item['d_title'] = FormatHelper.addComma(item.amt);
+          item['d_sub'] = DateHelper.getShortDate(item.opDt);
+          item['unit'] = CURRENCY_UNIT.WON;
         });
-        breakdownList.push(FormatHelper.groupByArray(refpBkd, 'opDt'));
+        breakdownList.push(tpBkd);
       }
       if ( refuBkd && refuBkd.length > 0 ) {
         // 리필쿠폰 사용이력조회
         refuBkd.map((item) => {
           item['opDt'] = item.copnUseDt;
-          item['class'] = (item.type === '1' ? 'send' : 'recharge');
-          item['u_title'] = item.copnNm;
-          item['u_sub'] = '';
-          item['d_title'] = item.copnDtlClNm; // API response 값에 정의되어있지 않음
+          item['class'] = 'recharge';
+          item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.REFILL_USAGE;
+          item['u_sub'] = item.opOrgNm || ETC_CENTER;
+          item['d_title'] = REFILL_USAGE_DATA_CODES.indexOf(item.copnDtlClCd) >= 0 ? MYT_DATA_REFILL_TYPES.DATA : MYT_DATA_REFILL_TYPES.VOICE;
           item['d_sub'] = DateHelper.getShortDate(item.copnUseDt);
           item['unit'] = '';
         });
-        breakdownList.push(FormatHelper.groupByArray(refuBkd, 'opDt'));
+        breakdownList.push(refuBkd);
+      }
+      if ( refpBkd && refpBkd.length > 0 ) {
+        // 리필쿠폰 선물 내역
+        refpBkd.map((item) => {
+          item['opDt'] = item.copnOpDt;
+          item['class'] = (item.type === '1' ? 'send' : 'recieve');
+          item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.REFILL_GIFT;
+          item['u_sub'] = FormatHelper.conTelFormatWithDash(item.svcNum);
+          item['d_title'] = ''; // API response 값에 정의되어있지 않음
+          item['d_sub'] = DateHelper.getShortDate(item.copnOpDt);
+          item['unit'] = '';
+        });
+        breakdownList.push(refpBkd);
       }
       if ( breakdownList.length > 0 ) {
-        data.breakdownList = this.sortBreakdownItems(breakdownList);
+        data.breakdownList = this.sortBreakdownItems(breakdownList).slice(0, 3);
       }
       // 배너 정보 - client에서 호출하는 방식으로 변경 (19/01/22)
       // if ( banner && (banner.code === API_CODE.REDIS_SUCCESS) ) {
@@ -326,12 +345,12 @@ class MytDataSubmainController extends TwViewController {
         // POT10, POT20
         if ( item.skipId === skipIdList[0] || item.skipId === skipIdList[1] ) {
           result['tmoa'].push(item);
-          tmoaRemained += parseInt(item.remained, 10);
-          tmoaTotal += parseInt(item.total, 10);
+          tmoaRemained += parseInt(item.remained || 0, 10);
+          tmoaTotal += parseInt(item.total || 0, 10);
         } else {
           result['gdata'].push(item);
-          etcRemained += result.totalLimit ? 100 : parseInt(item.remained, 10);
-          etcTotal += result.totalLimit ? 100 : parseInt(item.total, 10);
+          etcRemained += result.totalLimit ? 100 : parseInt(item.remained || 0, 10);
+          etcTotal += result.totalLimit ? 100 : parseInt(item.total || 0, 10);
         }
       });
       if ( !result.totalLimit ) {
@@ -415,32 +434,14 @@ class MytDataSubmainController extends TwViewController {
   }
 
   sortBreakdownItems(items): any {
-    let returnVal: any = [];
-    let group: any = [];
-    items.forEach((val) => {
-      group = FormatHelper.mergeArray(group, Object.keys(val));
-    });
-    group.sort().reverse();
-    group = group.slice(0, 3);
-    items.filter((item) => {
-      const keys = Object.keys(item);
-      for ( const key of keys ) {
-        group.map((gp) => {
-          if ( gp === key ) {
-            returnVal.push(item[gp]);
-          }
-        });
-      }
-    });
-    returnVal = returnVal.sort((a, b) => {
-      if (a[0].opDt > b[0].opDt) {
+    return Array.prototype.concat.apply([], items).sort((a, b) => {
+      if ( a.opDt > b.opDt ) {
         return -1;
-      } else if (a[0].opDt < b[0].opDt) {
+      } else if ( a.opDt < b.opDt ) {
         return 1;
       }
       return 0;
     });
-    return returnVal.slice(0, 3); // 최근 기준 3개
   }
 
   _getRemnantData(): Observable<any> {
@@ -476,7 +477,7 @@ class MytDataSubmainController extends TwViewController {
   // T끼리 데이터 선물 버튼
   _getDataPresent() {
     return this.apiService.request(API_CMD.BFF_06_0015, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
+      if ( resp.code === API_CODE.CODE_00 || resp.code === 'GFT0003' || resp.code === 'GFT0004' ) {
         return resp.result;
       } else {
         // error
@@ -487,11 +488,9 @@ class MytDataSubmainController extends TwViewController {
 
   // T 끼리 선물하기 선물내역 (1년기준)
   _getDataPresentBreakdown() {
-    const fromDt = DateHelper.getPastYearShortDate();
-    const toDt = DateHelper.getCurrentShortDate();
     return this.apiService.request(API_CMD.BFF_06_0018, {
-      fromDt: fromDt,
-      toDt: toDt,
+      fromDt: this.fromDt,
+      toDt: this.toDt,
       type: '0' // 0: all, 1: send, 2: recharge
     }).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
@@ -505,7 +504,10 @@ class MytDataSubmainController extends TwViewController {
 
   // 팅요금 선물내역
   _getTingPresentBreakdown() {
-    return this.apiService.request(API_CMD.BFF_06_0026, {}).map((resp) => {
+    return this.apiService.request(API_CMD.BFF_06_0026, {
+      fromDt: this.fromDt,
+      toDt: this.toDt
+    }).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       } else {
@@ -524,6 +526,12 @@ class MytDataSubmainController extends TwViewController {
       params = {
         pageNum: 1,
         rowNum: 10
+      };
+    } else {
+      params = {
+        fromDt: this.fromDt,
+        toDt: this.toDt,
+        type: 1
       };
     }
     return this.apiService.request(url, params).map((resp) => {
@@ -550,6 +558,11 @@ class MytDataSubmainController extends TwViewController {
         pageNum: 1,
         rowNum: 10
       };
+    } else {
+      params = {
+        fromDt: this.fromDt,
+        toDt: this.toDt
+      };
     }
     return this.apiService.request(url, params).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
@@ -569,7 +582,10 @@ class MytDataSubmainController extends TwViewController {
   _getRefillUsedBreakdown() {
     return this.apiService.request(API_CMD.BFF_06_0002, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
+        return resp.result
+          .filter(item => {
+            return DateHelper.getDifference(item.copnUseDt, this.fromDt) >= 0;
+          });
       } else {
         // error
         return null;
@@ -583,7 +599,10 @@ class MytDataSubmainController extends TwViewController {
       type: '0' // 받은내역, 보낸내역 동시 조회
     }).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
+        return resp.result
+          .filter(item => {
+            return DateHelper.getDifference(item.copnOpDt, this.fromDt) >= 0;
+          });
       } else {
         // error
         return null;

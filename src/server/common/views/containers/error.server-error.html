@@ -12,7 +12,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div class="wrap" id="fe-error-wrap"<% if ( isBackCheck ) { %> style="display: none"<% } %>>
     <!-- #header -->
     <div id="header" class="header-wrap">
     </div>
@@ -60,5 +60,16 @@
     </div>
     <!--// .popup hbs -->
 </div>
+<% if ( isBackCheck ) { %>
+<script type="text/javascript">
+  (function() {
+    if (window.performance && performance.navigation.type === 2) {
+      history.back();
+    } else {
+      document.getElementById('fe-error-wrap').style.display = 'block';
+    }
+  })();
+</script>
+<% } %>
 <% include ../components/javascript.component.html %>
 <% include ../components/end.component.html %>

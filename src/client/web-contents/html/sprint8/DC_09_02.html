@@ -100,7 +100,7 @@
                                 <div class="widget-box radio">
                                     <ul class="select-list" role="group">
                                         <li class="radiobox type01 checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                            <input type="radio" name="radio" value="" title="값1" aria-labelledby="aria-comp-radio1" checked /><!-- 체크상태일 경우 checked="checked" -->
+                                            <input type="radio" name="radio" value="" aria-labelledby="aria-comp-radio1" checked /><!-- 체크상태일 경우 checked="checked" -->
                                             <div class="comp-list-layout" id="aria-comp-radio1">
                                                 <p class="layout-text">
                                                     <span class="mtext">매달 1회 자동충전</span>
@@ -108,7 +108,7 @@
                                             </div>
                                         </li>
                                         <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                            <input type="radio" name="radio" value="" title="값2" aria-labelledby="aria-comp-radio2" /><!-- 체크상태일 경우 checked="checked" -->
+                                            <input type="radio" name="radio" value="" aria-labelledby="aria-comp-radio2" /><!-- 체크상태일 경우 checked="checked" -->
                                             <div class="comp-list-layout" id="aria-comp-radio2">
                                                 <p class="layout-text">
                                                     <span class="mtext">일정 금액 이하일 때 자동충전</span>
@@ -131,14 +131,14 @@
                             <li>
                                 <label class="tit" for="formInput01">충전금액</label>
                                 <span class="inputbox">
-                                    <button id="formInput01" class="bt-dropdown big" title="충전금액 선택" aria-haspopup="true">금액 선택<span class="ico" title="충전금액 금액선택"></span></button>
+                                    <button id="formInput01" class="bt-dropdown big" aria-haspopup="true">금액 선택<span class="ico"></span></button>
                                 </span>
                             </li>
                             <li>
                                 <label class="tit" for="formInput02">충전 방법</label>
                                 <div class="option-box">
                                     <div>
-                                        매달 <button id="formInput02" class="bt-dropdown big w110 ml10" title="충전 방법 매달 날짜 선택" aria-haspopup="true">날짜 선택</button> 마다 충전
+                                        매달 <button id="formInput02" class="bt-dropdown big w110 ml10" aria-haspopup="true">날짜 선택</button> 마다 충전
                                     </div>
                                 </div>
                             </li>
@@ -194,8 +194,8 @@
                     <!-- .cont-box -->
                     <div class="cont-box nogaps-btm">
                         <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                        <ul class="noti-list">
-                            <li>공인인증서 인증 안내 <button type="button" class="tip-view" title="공인인증서 인증 안내 TIP보기" aria-haspopup="true">TIP</button></li>
+                        <ul class="noti-list02">
+                            <li><button type="button" class="tip-view-btn" title="공인인증서 인증 안내 TIP보기" aria-haspopup="true">공인인증서 인증 안내<span class="tip-view">TIP</span></button></li>
                         </ul>
                     </div>
                     <!--// .cont-box -->

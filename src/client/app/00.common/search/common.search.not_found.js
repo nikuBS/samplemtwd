@@ -27,6 +27,8 @@ Tw.CommonSearchNotFound.prototype = {
     this.$container.find('#search_keyword').on('keyup',$.proxy(this._inputKeyupEvt,this));
     this.$container.find('.close-area').on('click',$.proxy(this._closeSearch,this));
     this.$container.on('click','.search-element',$.proxy(this._searchRelatedKeyword,this));
+    this.$container.on('click','.category-type',$.proxy(this._popSearch,this));
+    this.$popKeywordElement = this.$container.find('.cont-box.nogaps-hoz');
   },
   _showClaimPopup : function(btnEvt){
     //var $selectedClaim = $(btnEvt.currentTarget);
@@ -42,23 +44,27 @@ Tw.CommonSearchNotFound.prototype = {
       hbs: 'HO_05_02_02_01_01',
       layer: true,
       data: null
-    }, $.proxy(this._bindEventForRequestKeyword, this), null, 'requestKeyword');
+    }, $.proxy(this._bindEventForRequestKeyword, this),
+      $.proxy(this._showAndHidePopKeywordList,this), 'requestKeyword');
   },
   _showSelectClaim : function () {
     this._popupService.open({
       hbs: 'HO_05_02_02_01_02',
       layer: true,
       data: this._surveyList.invstQstnAnswItm
-    }, $.proxy(this._bindEventForSelectClaim, this), null, 'selectClaim');
+    }, $.proxy(this._bindEventForSelectClaim, this),
+      $.proxy(this._showAndHidePopKeywordList,this), 'selectClaim');
   },
   _bindEventForRequestKeyword : function(popupObj){
     //keyword request
+    this._showAndHidePopKeywordList();
     this.$requestKeywordPopup = $(popupObj);
     this.$requestKeywordPopup.on('click','.request_claim',$.proxy(this._requestKeyword,this));
     this.$requestKeywordPopup.on('keyup','.input-focus',$.proxy(this._activateRequestKeywordBtn,this));
   },
   _bindEventForSelectClaim : function(popupObj){
     //claim select
+    this._showAndHidePopKeywordList();
     this.$selectClaimPopup = $(popupObj);
     this.$selectClaimPopup.on('click','.request_claim',$.proxy(this._selectClaim,this));
     this.$selectClaimPopup.on('click','.custom-form>input',$.proxy(this._activateSelectClaimBtn,this));
@@ -146,7 +152,18 @@ Tw.CommonSearchNotFound.prototype = {
   },
   _closeSearch : function () {
     this._historyService.go(Number(this._step)*-1);
+  },
+  _showAndHidePopKeywordList : function () {
+    if(this.$popKeywordElement.hasClass('none')){
+      this.$popKeywordElement.removeClass('none');
+    }else{
+      this.$popKeywordElement.addClass('none');
+    }
+  },
+  _popSearch : function (targetEvt) {
+    targetEvt.preventDefault();
+    var $currentTarget = $(targetEvt.currentTarget);
+    this._addRecentlyKeyword($currentTarget.data('keyword'));
+    this._historyService.goLoad($currentTarget.attr('href'));
   }
-
-
 };

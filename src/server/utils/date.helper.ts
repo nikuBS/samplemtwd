@@ -114,6 +114,14 @@ class DateHelper {
 
   /**
    * @param date {Date} or {string} : YYYYMMDD
+   * @returns {string} : currentDateTime - 6 months
+   */
+  static getPast6MonthsShortDate = function () {
+    return moment().subtract(6, 'months').format('YYYYMMDD');
+  };
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDD
    * @returns {string} : currentDateTime + 1 year
    */
   static getNextYearShortDate = function () {
@@ -199,6 +207,14 @@ class DateHelper {
    */
   static getShortDateNoDot(date: any): string {
     return moment(this.convDateFormat(date)).format('YYYY.M.D');
+  }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018.6.1
+   */
+  static getDashShortDateNoDot(date: any): string {
+    return moment(this.convDateFormat(date)).format('YYYY-MM-DD');
   }
 
   /**

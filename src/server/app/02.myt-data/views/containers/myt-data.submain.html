@@ -32,7 +32,9 @@
                 <div class="cont-box nogaps">
                     <div class="recharge-sum-change">
                         <span>리필쿠폰
-                            <button class="btn-tip" id="DC1_tip_01" page-id="DC1"><i class="icon-badge-tip"><span class="blind">DC1_tip_01</span></i></button>
+                            <button type="button" class="btn-tip" title="리필쿠폰" id="DC1_tip_01" page-id="DC1" aria-haspopup="true">
+                                <i class="icon-badge-tip"><span class="blind">DC1_tip_01</span></i>
+                            </button>
                         </span>
                         <button class="change txt1" data-id="refill"><%= data.refill.length %>장</button>
                     </div>
@@ -59,7 +61,7 @@
                                 <ul class="horizontal-list add-prod">
                                     <li>
                                         <div class="bg01">
-                                            <button data-type="data">
+                                            <button type="button" data-type="data" title="T 데이터" aria-haspopup="true">
                                                 <span class="stit">T 데이터</span>
                                                 <span class="txt">국내 데이터 통화<br>선불쿠폰</span>
                                             </button>
@@ -67,7 +69,7 @@
                                     </li>
                                     <li>
                                         <div class="bg02">
-                                            <button data-type="coupon">
+                                            <button type="button" data-type="coupon" title="T 쿠폰" aria-haspopup="true">
                                                 <span class="stit">T 쿠폰</span>
                                                 <span class="txt">음성, 문자, 영상,<br>데이터통화 선불쿠폰</span>
                                             </button>
@@ -75,7 +77,7 @@
                                     </li>
                                     <li>
                                         <div class="bg03">
-                                            <button data-type="jeju">
+                                            <button type="button" data-type="jeju" title="제주도 프리" aria-haspopup="true">
                                                 <span class="stit">제주도 프리</span>
                                                 <span class="txt">제주도에서<br>
 													원하는 기간 동안<br>
@@ -85,7 +87,7 @@
                                     </li>
                                     <li>
                                         <div class="bg04">
-                                            <button data-type="oksusu">
+                                            <button type="button" data-type="oksusu" title="oksusu" aria-haspopup="true">
                                                 <span class="stit">oksusu</span>
                                                 <span class="txt">데이터 프리</span>
                                             </button>
@@ -93,7 +95,7 @@
                                     </li>
                                     <li>
                                         <div class="bg05">
-                                            <button data-type="sdata">
+                                            <button type="button" data-type="sdata" title="T단기데이터" aria-haspopup="true">
                                                 <span class="stit">T단기데이터</span>
                                                 <span class="txt">번호 등록 후<br>바로 사용</span>
                                             </button>
@@ -131,12 +133,10 @@
                 </div>
                 <div class="list-comp-history type01">
                     <ul class="comp-box">
-                        <% for (var i=0; i < data.breakdownList.length; i++) { %>
                         <% if (data.svcInfo.svcAttrCd === 'M2') { %>
-                        <%- include('../components/submain/myt-data.submain.breakdown-pps.html', { data: data.breakdownList[i] }); %>
+                        <%- include('../components/submain/myt-data.submain.breakdown-pps.html', { data: data.breakdownList }); %>
                         <% } else { %>
-                        <%- include('../components/submain/myt-data.submain.breakdown.html', { data: data.breakdownList[i] }); %>
-                        <% } %>
+                        <%- include('../components/submain/myt-data.submain.breakdown.html', { data: data.breakdownList }); %>
                         <% } %>
                     </ul>
                 </div>
@@ -150,7 +150,7 @@
             <div class="cont-box nogaps">
                 <ul class="btn-link-list line-type01">
                     <li class="last-line" data-id="pester"><button>데이터 조르기</button></li>
-                    <li class="last-line" data-id="benefit"><button>데이터 혜택</button></li>
+                    <!--<li class="last-line" data-id="benefit"><button>데이터 혜택</button></li>-->
                 </ul>
             </div>
             <% } %>
@@ -179,8 +179,11 @@
                 <!-- .cont-box -->
                 <div class="cont-box noborder nogaps-btm b-line1" data-id="other-lines">
                     <div class="ti-caption-type01 pb0">
-                        <h2 class="tit">다른 회선의 실시간 잔여량</h2>
-                        <button class="btn-tip" id="DC1_tip_02" page-id="DC1"><i class="icon-badge-tip"><span class="blind">DC1_tip_02</span></i></button>
+                        <h2 class="tit">다른 회선의 실시간 잔여량
+                        <button class="btn-tip" id="DC1_tip_02" page-id="DC1">
+                            <i class="icon-badge-tip"><span class="blind">DC1_tip_02</span></i>
+                        </button>
+                        </h2>
                     </div>
 
                     <div class="my-line-info-wrap">

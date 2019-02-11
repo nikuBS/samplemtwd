@@ -7,35 +7,89 @@
 <% include ../../components/start.component.html %>
 
 <body style="height: 100%;">
-<div class="wrap" style="height: 100%; padding: 0px;">
-    <div class="popup tw-popup">
-        <div class="popup-info" role="alertdialog" aria-labelledby="alertHeading" aria-describedby="alertText">
-            <div class="popup-header">
-                <span class="ico type2"></span>
-                <h5 class="popup-title" id="alertHeading">서비스 이용이 불가능합니다.</h5>
-            </div>
-            <div class="popup-contents" id="alertText">
-                <div class="inner-contents">
-                    <p class="">
-                        팅/쿠키즈/안심 음성 요금제를
-                        <br>
-                        사용 하시는 고객 중,
-                        <br>
-                        서비스를 가입한 고객님만 이용 가능합니다.
-                    </p>
+<!--<div class="wrap" style="height: 100%; padding: 0px;">-->
+    <!--<div class="popup tw-popup">-->
+        <!--<div class="popup-info" role="alertdialog" aria-labelledby="alertHeading" aria-describedby="alertText">-->
+            <!--<div class="popup-header">-->
+                <!--<span class="ico type2"></span>-->
+                <!--<h5 class="popup-title" id="alertHeading">서비스 이용이 불가능합니다.</h5>-->
+            <!--</div>-->
+            <!--<div class="popup-contents" id="alertText">-->
+                <!--<div class="inner-contents">-->
+                    <!--<p class="">-->
+                        <!--팅/쿠키즈/안심 음성 요금제를-->
+                        <!--<br>-->
+                        <!--사용 하시는 고객 중,-->
+                        <!--<br>-->
+                        <!--서비스를 가입한 고객님만 이용 가능합니다.-->
+                    <!--</p>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="btn-box">-->
+                <!--<ul class="bt-slice">-->
+                    <!--<li class="bt-blue1">-->
+                        <!--<button class="fe-common-back">닫기</button>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="popup-blind"></div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <div class="container">
+        </div>
+    </div>
+    <!--// #contents -->
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup pt0 fixed-bottom">
+        <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <div class="container">
+                <div class="complete-wrap">
+                    <div class="title-box">
+                        <i class="icon-warning-120"><span class="blind">warning</span></i>
+                        <p class="tx-tit"><span class="tx-highlight">서비스 이용이 불가능합니다.</span></p>
+                    </div>
+                    <div class="tx-contents">
+                        <div class="inner-contents">
+                            <p class="basic-txt">
+                                팅/쿠키즈/안심 음성 요금제를
+                                <br>
+                                사용 하시는 고객 중,
+                                <br>
+                                서비스를 가입한 고객님만 이용 가능합니다.
+                            </p>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="btn-box">
-                <ul class="bt-slice">
-                    <li class="bt-blue1">
-                        <button class="fe-common-back">닫기</button>
+
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li>
+                        <button type="button" class="btn-floating btn-style2 fe-common-back">닫기</button>
                     </li>
                 </ul>
             </div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <!-- <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button> -->
+            <!--// .popup-closeBtn -->
         </div>
-        <div class="popup-blind"></div>
+        <!--// .popup hbs -->
     </div>
 </div>
+
 <% include ../../components/javascript.component.html %>
 
 </body>

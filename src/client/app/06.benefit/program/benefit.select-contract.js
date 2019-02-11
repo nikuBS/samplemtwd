@@ -38,20 +38,19 @@ Tw.BenefitSelectContract.prototype = {
       isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this.data.prodId) === -1,
       isAgreement: (this.data.joinInfoTerm.stipulationInfo && this.data.joinInfoTerm.stipulationInfo.existsCount > 0)
     });
-    var box = $(this).closest('.radiobox');
-    this.$radioGroup.is(':checked') ?
-      box.addClass('checked').attr('aria-checked', 'true')
-      : box.removeClass('checked').attr('aria-checked', 'false');
+    setTimeout($.proxy(function () {
+      this.$radioGroup.find('li').closest('.checked').trigger('click');
+    }, this), 100);
   },
 
   _onRadioGroupClicked: function (evt) {
     // 아이템 선택 시 버튼 enable 처리
+    var $target = $(evt.currentTarget);
+    var checked = $target.attr('aria-checked');
+    this.selType = $target.attr('data-type');
     if ( !this._isEnable ) {
-      var $target = $(evt.currentTarget);
-      var checked = $target.attr('aria-checked');
       if ( checked === 'true' ) {
         this._isEnable = true;
-        this.selType = $target.attr('data-type');
         this.$okBtn.removeAttr('disabled');
       }
     }

@@ -55,6 +55,7 @@ import CommonSearch from './controllers/search/common.search.controller';
 import CommonMemberInit from './controllers/member/common.member.init.controller';
 import CommonSearchMain from './controllers/search/common.search_main.controller';
 import CommonUtilServiceBlock from './controllers/util/common.util.service-block.controller';
+import CommonSearchInResult from './controllers/search/common.search.in_result.controller';
 
 export default class CommonRouter extends TwRouter {
   constructor() {
@@ -72,7 +73,7 @@ export default class CommonRouter extends TwRouter {
 
     // member - login
     this.controllers.push({ url: '/member/init', controller: CommonMemberInit });
-    this.controllers.push({ url: '/member/login', controller: CommonMemberLogin });
+    // this.controllers.push({ url: '/member/login', controller: CommonMemberLogin });
     this.controllers.push({ url: '/member/login/route', controller: CommonMemberLoginRoute });
     this.controllers.push({ url: '/member/login/fail', controller: CommonMemberLoginFail});
     this.controllers.push({ url: '/member/login/exceed-fail', controller: CommonMemberLoginExceedFail });
@@ -122,5 +123,6 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push({ url: '/search', controller: CommonSearch});
     this.controllers.push({ url: '/search_main', controller: CommonSearchMain});
     this.controllers.push({ url: '/search/more', controller: CommonSearchMore });
+    this.controllers.push({ url: '/search/in_result', controller: CommonSearchInResult });
   }
 }

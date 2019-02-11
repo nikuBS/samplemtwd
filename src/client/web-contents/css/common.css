@@ -23,7 +23,7 @@ html, body, form, div, p, h1, h2, h3, h4, h5, h6, dl, dt, dd, ul, ol, li, fields
   padding: 0;
   font-weight: 400;
   -webkit-text-size-adjust: none;
-  font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Noto Sans", "Noto Sans CJK", 'Droid Sans', Roboto, sans-serif;
+  font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Droid Sans", Roboto, sans-serif, "Noto Sans", "Noto Sans CJK";
   font-style: normal; }
 
 body {
@@ -42,6 +42,13 @@ html {
 
 body {
   min-height: 100%; }
+
+.noscroll {
+  overflow: hidden;
+  height: 100%; }
+
+.noscroll > .wrap {
+  position: relative; }
 
 .wrap {
   width: 100%;
@@ -407,7 +414,9 @@ input[type=text], input[type=file], input[type=password], input[type=number] {
           -ms-flex: 10;
               flex: 10; }
       .inputbox.bt-add .input .fileview {
-        color: #808698; }
+        color: #808698;
+        overflow: hidden;
+        text-overflow: ellipsis; }
       .inputbox.bt-add .input .bt-dropdown {
         width: 98%;
         margin: 0; }
@@ -1014,9 +1023,11 @@ button.bt-link-tx, a.bt-link-tx {
     line-height: 1rem;
     color: #000;
     font-weight: 400;
-    width: 100%;
+    width: 90%;
     text-align: left;
-    letter-spacing: -1px; }
+    letter-spacing: -1px;
+    overflow: hidden;
+    text-overflow: ellipsis; }
     .link-long a .tx-explain, .link-long button .tx-explain {
       margin-top: 0.25rem;
       padding-right: 4.375rem;
@@ -1117,6 +1128,15 @@ button.bt-link-tx, a.bt-link-tx {
         background-position: -1.5625rem -17.1875rem; }
   .link-long.lower-h a, .link-long.lower-h button {
     padding: 0.875rem 0; }
+  .link-long.t-center .tx-sub {
+    top: 0;
+    padding-right: 1.5625rem;
+    line-height: 3.5rem; }
+    .link-long.t-center .tx-sub .ico {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      margin-top: -13px; }
 
 .box-chk-link .chk-link-list {
   padding: 0.3125rem 0 0.4375rem; }
@@ -3967,10 +3987,6 @@ a.ui-button:active,
       .bt-slice > li.bt-blue1 button:disabled {
         color: #808698;
         background: #e5e8ee; }
-      .bt-slice > li.bt-blue1 button.btn_active:hover {
-        background: #178BCE; }
-      .bt-slice > li.bt-blue1 button.btn_active:active {
-        background: #90caf9; }
     .bt-slice > li.bt-blue1 a {
       color: #fff;
       background: #178BCE; }
@@ -4253,7 +4269,7 @@ a.ui-button:active,
   .bt-dropdown .tx-default {
     letter-spacing: 0;
     font-weight: 500;
-    font-family: "Noto Sans", "Noto Sans CJK"; }
+    font-family: 'Droid Sans', "Noto Sans", "Noto Sans CJK"; }
 
 .tx-dropdown-box {
   font-size: 1rem;
@@ -4318,6 +4334,10 @@ a.ui-button:active,
     border: 1px solid #ebf5fe;
     background-color: #ebf5fe;
     color: #178BCE; }
+    .bt-alone .bt-bg-blue1:disabled {
+      color: #fff;
+      background: #d1d1d1;
+      border: 1px solid #d1d1d1; }
 
 .bt-close {
   position: relative;
@@ -4396,6 +4416,92 @@ a.ui-button:active,
       top: -0.75rem;
       width: 5rem;
       height: 5rem; }
+
+/* 로딩 css 추가 */
+.profile-main-loader .loader {
+  position: absolute;
+  width: 2.5rem;
+  height: 2.5rem;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto; }
+  .profile-main-loader .loader :before {
+    content: '';
+    display: block;
+    padding-top: 100%; }
+
+.circular-loader {
+  -webkit-animation: rotate 2s linear infinite;
+  animation: rotate 2s linear infinite;
+  height: 100%;
+  -webkit-transform-origin: center center;
+  transform-origin: center center;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: auto; }
+
+.loader-path {
+  stroke-dasharray: 150,200;
+  stroke-dashoffset: -10;
+  -webkit-animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+  animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+  stroke-linecap: round; }
+
+@-webkit-keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+
+@keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+
+@-webkit-keyframes dash {
+  0% {
+    stroke-dasharray: 1,200;
+    stroke-dashoffset: 0; }
+  50% {
+    stroke-dasharray: 89,200;
+    stroke-dashoffset: -35; }
+  100% {
+    stroke-dasharray: 89,200;
+    stroke-dashoffset: -124; } }
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1,200;
+    stroke-dashoffset: 0; }
+  50% {
+    stroke-dasharray: 89,200;
+    stroke-dashoffset: -35; }
+  100% {
+    stroke-dasharray: 89,200;
+    stroke-dashoffset: -124; } }
+
+@-webkit-keyframes color {
+  0% {
+    stroke: #EF4B49; }
+  40% {
+    stroke: #EF4B49; }
+  66% {
+    stroke: #EF4B49; }
+  80%, 90% {
+    stroke: #EF4B49; } }
+
+@keyframes color {
+  0% {
+    stroke: #EF4B49; }
+  40% {
+    stroke: #EF4B49; }
+  66% {
+    stroke: #EF4B49; }
+  80%, 90% {
+    stroke: #EF4B49; } }
 
 /* 더보기 공통 */
 .bt-more {
@@ -4827,7 +4933,8 @@ a.ui-button:active,
     display: table-cell !important;
     padding-left: 0.625rem;
     vertical-align: middle;
-    text-indent: 0; }
+    text-indent: 0;
+    white-space: nowrap; }
 
 .nickname-wrap {
   display: table;

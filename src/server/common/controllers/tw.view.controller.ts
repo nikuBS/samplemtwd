@@ -13,6 +13,7 @@ import { LOGIN_TYPE, SVC_ATTR_NAME, LINE_NAME } from '../../types/bff.type';
 import { UrlMetaModel } from '../../models/url-meta.model';
 import { REDIS_KEY } from '../../types/redis.type';
 import DateHelper from '../../utils/date.helper';
+import ParamsHelper from '../../utils/params.helper';
 
 
 abstract class TwViewController {
@@ -62,6 +63,10 @@ abstract class TwViewController {
     this._apiService.setCurrentReq(req, res);
     this._loginService.setCurrentReq(req, res);
 
+    res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.set('expires', '0');
+    res.set('pragma', 'no-cache');
+
     this.setChannel(req, res).subscribe((resp) => {
       if ( this.checkLogin(req.session) ) {
         this.sessionLogin(req, res, next, path);
@@ -85,23 +90,24 @@ abstract class TwViewController {
 
   private login(req, res, next, path, tokenId, userId) {
     if ( !FormatHelper.isEmpty(tokenId) ) {
-      this.apiService.requestLoginTid(tokenId, req.query.stateVal).subscribe((resp) => {
+      const state = req.query.stateVal || req.query.state;
+      this.apiService.requestLoginTid(tokenId, state).subscribe((resp) => {
         this.renderPage(req, res, next, path);
       }, (error) => {
-        this.failLogin(req, res, next, error.code);
+        this.failLogin(req, res, next, path, error.code);
       });
     } else {
       if ( /\/test/i.test(req.baseUrl) && /\/login/i.test(req.path) ) {
         this.apiService.requestLoginLoadTest(userId).subscribe((resp) => {
           this.renderPage(req, res, next, path); // noticeTpyCd
         }, (error) => {
-          this.failLogin(req, res, next, error.code);
+          this.failLogin(req, res, next, path, error.code);
         });
       } else {
         this.apiService.requestLoginTest(userId).subscribe((resp) => {
           this.renderPage(req, res, next, path); // noticeTpyCd
         }, (error) => {
-          this.failLogin(req, res, next, error.code);
+          this.failLogin(req, res, next, path, error.code);
         });
       }
     }
@@ -120,7 +126,7 @@ abstract class TwViewController {
       if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
         this._logger.info(this, '[Session expired]');
         res.clearCookie(COOKIE_KEY.TWM_LOGIN);
-        res.redirect('/common/member/logout/expire');
+        res.redirect('/common/member/logout/expire?target=' + req.baseUrl + req.url);
       } else {
         this._logger.info(this, '[Session empty]');
         this.renderPage(req, res, next, path);
@@ -139,64 +145,66 @@ abstract class TwViewController {
     this._redisService.getData(REDIS_KEY.URL_META + path).subscribe((resp) => {
       this.logger.info(this, '[URL META]', path, resp);
       const urlMeta = new UrlMetaModel(resp.result || {});
-      const loginType = urlMeta.auth.accessTypes;
 
       if ( resp.code === API_CODE.REDIS_SUCCESS ) {
-        if ( this.checkServiceBlock(urlMeta) ) {
-          const blockUrl = urlMeta.block.url || '/common/util/service-block';
-          res.redirect(blockUrl);
-          return;
-        }
+        const loginType = urlMeta.auth.accessTypes;
 
-        if ( loginType === '' ) {
-          // TODO: 삭제예정 admin 정보 입력 오류 (accessType이 비어있음)
-          this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-          return;
-        }
-        if ( isLogin ) {
-          urlMeta.masking = this.loginService.getMaskingCert(svcInfo.svcMgmtNum);
-          if ( loginType.indexOf(svcInfo.loginType) !== -1 ) {
-            const urlAuth = urlMeta.auth.grades;
-            const svcGr = svcInfo.svcGr;
-            // TODO 삭제예정 admin 정보 입력 오류 (접근권한이 입력되지 않음)
-            if ( urlAuth === '' ) {
-              this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-              return;
-            }
-            if ( svcInfo.totalSvcCnt === '0' || svcInfo.expsSvcCnt === '0' ) {
-              if ( urlAuth.indexOf('N') !== -1 ) {
-                // 준회원 접근 가능한 화면
+        this.loginService.setMenuName(urlMeta.menuNm).subscribe((menuResp) => {
+          if ( this.checkServiceBlock(urlMeta, res) ) {
+            return;
+          }
+
+          if ( loginType === '' ) {
+            // TODO: 삭제예정 admin 정보 입력 오류 (accessType이 비어있음)
+            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+            return;
+          }
+          if ( isLogin ) {
+            urlMeta.masking = this.loginService.getMaskingCert(svcInfo.svcMgmtNum);
+            if ( loginType.indexOf(svcInfo.loginType) !== -1 ) {
+              const urlAuth = urlMeta.auth.grades;
+              const svcGr = svcInfo.svcGr;
+              // TODO 삭제예정 admin 정보 입력 오류 (접근권한이 입력되지 않음)
+              if ( urlAuth === '' ) {
+                this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+                return;
+              }
+              if ( svcInfo.totalSvcCnt === '0' || svcInfo.expsSvcCnt === '0' ) {
+                if ( urlAuth.indexOf('N') !== -1 ) {
+                  // 준회원 접근 가능한 화면
+                  this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+                } else {
+                  // 등록된 회선 없음 + 준회원 접근 안되는 화면
+                  this.errorNoRegister(req, res, next);
+                }
+              } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
                 this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
               } else {
-                // 등록된 회선 없음 + 준회원 접근 안되는 화면
-                this.errorNoRegister(req, res, next);
+                // 접근권한 없음
+                this.errorAuth(req, res, next);
+                // this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
               }
-            } else if ( urlAuth.indexOf(svcGr) !== -1 ) {
+            } else if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
               this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
             } else {
-              // 접근권한 없음
-              this.errorAuth(req, res, next);
-              // this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
+              // 현재 로그인 방법으론 이용할 수 없음
+              if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
+                // res.redirect('/common/member/slogin/fail');
+                res.render('error.slogin-fail.html', { target: req.baseUrl + req.url });
+              } else {
+                // ERROR 케이스 (일반로그인에서 권한이 없는 케이스)
+                this.errorAuth(req, res, next);
+              }
             }
-          } else if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
-            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
           } else {
-            // 현재 로그인 방법으론 이용할 수 없음
-            if ( svcInfo.loginType === LOGIN_TYPE.EASY ) {
-              res.redirect('/common/member/slogin/fail');
+            if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
+              this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
             } else {
-              // ERROR 케이스 (일반로그인에서 권한이 없는 케이스)
-              this.errorAuth(req, res, next);
+              // login page
+              res.render('error.login-block.html', { target: req.baseUrl + req.url });
             }
           }
-        } else {
-          if ( urlMeta.auth.accessTypes.indexOf(LOGIN_TYPE.NONE) !== -1 ) {
-            this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
-          } else {
-            // login page
-            res.redirect('/common/member/login?target=' + path);
-          }
-        }
+        });
       } else {
         // 등록되지 않은 메뉴 (로그인, 인증등에서 쓰이는 URL도 있음)
         this.render(req, res, next, svcInfo, allSvc, childInfo, urlMeta);
@@ -219,16 +227,26 @@ abstract class TwViewController {
     this.getAuth(req, res, next, path, svcInfo, allSvc, childInfo);
   }
 
-  private failLogin(req, res, next, errorCode) {
+  private failLogin(req, res, next, path, errorCode) {
+    const target = this.getTargetUrl(path, req.query);
     if ( errorCode === API_LOGIN_ERROR.ICAS3228 ) {    // 고객보호비밀번호
-      res.redirect('/common/member/login/cust-pwd');
+      res.redirect('/common/member/login/cust-pwd?target=' + target);
     } else if ( errorCode === API_LOGIN_ERROR.ICAS3235 ) {   // 휴면계정
-      res.redirect('/common/member/login/reactive');
+      res.redirect('/common/member/login/reactive?target=' + target);
     } else if ( errorCode === API_LOGIN_ERROR.ATH1003 ) {
       res.redirect('/common/member/login/exceed-fail');
     } else {
-      res.redirect('/common/member/login/fail?errorCode=' + errorCode);
+      res.redirect('/common/member/login/fail?errorCode=' + errorCode + '&target=' + target);
     }
+  }
+  private getTargetUrl(url, query) {
+    delete query.id_token;
+    delete query.stateVal;
+    delete query.state;
+    delete query.token_type;
+    delete query.sso_session_id;
+
+    return url + ParamsHelper.setQueryParams(query);
   }
 
   private checkError(error: string, errorMessage: string) {
@@ -240,17 +258,21 @@ abstract class TwViewController {
     res.send(message);
   }
 
-  private checkServiceBlock(urlMeta: any) {
-    // urlMeta.block array 변경
-
-    if ( !FormatHelper.isEmpty(urlMeta.block) &&
-      !FormatHelper.isEmpty(urlMeta.block.fromDtm) && !FormatHelper.isEmpty(urlMeta.block.toDtm) ) {
-      const startTime = DateHelper.convDateFormat(urlMeta.block.fromDtm).getTime();
-      const endTime = DateHelper.convDateFormat(urlMeta.block.toDtm).getTime();
+  private checkServiceBlock(urlMeta: any, res) {
+    if ( !FormatHelper.isEmpty(urlMeta.block) && urlMeta.block.length > 0 ) {
+      const blockList = urlMeta.block;
       const today = new Date().getTime();
-      return today > startTime && today < endTime;
+      const findBlock = blockList.find((block) => {
+        const startTime = DateHelper.convDateFormat(block.fromDtm).getTime();
+        const endTime = DateHelper.convDateFormat(block.toDtm).getTime();
+        return today > startTime && today < endTime;
+      });
+      if ( !FormatHelper.isEmpty(findBlock) ) {
+        const blockUrl = findBlock.url || '/common/util/service-block';
+        res.redirect(blockUrl);
+        return true;
+      }
     }
-    return false;
   }
 }
 

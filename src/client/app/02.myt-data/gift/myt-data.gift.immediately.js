@@ -18,16 +18,21 @@ Tw.MyTDataGiftImmediately = function (rootEl) {
 
 Tw.MyTDataGiftImmediately.prototype = {
   _init: function () {
+    // this.reqCnt = 0;
     // this._getRemainDataInfo();
+    this._apiService.request(Tw.API_CMD.BFF_06_0015, {})
+      .done($.proxy(this._successGiftData, this));
   },
 
   _cachedElement: function () {
-    this.$remainQty = $('.fe-remain_data');
-    this.$wrap_auto_select_list = $('.fe-auto_select_list');
+    // this.$remainQty = $('.fe-remain_data');
+    // this.$wrap_auto_select_list = $('.fe-auto_select_list');
+    this.$wrap = $('.wrap');
     this.$btnNativeContactList = $('.fe-btn_native_contact');
     this.$btnRequestSendingData = $('.fe-request_sending_data');
     this.$inputImmediatelyGift = $('.fe-input_immediately_gift');
     this.$wrap_data_select_list = $('.fe-immediately_data_select_list');
+    this.tpl_immediately_error = Handlebars.compile($('#tpl_immediately_error').html());
   },
 
   _bindEvent: function () {
@@ -37,48 +42,63 @@ Tw.MyTDataGiftImmediately.prototype = {
     this.$btnRequestSendingData.on('click', $.proxy(this._getReceiveUserInfo, this));
     this.$wrap_data_select_list.on('click', 'input', $.proxy(this._onClickDataQty, this));
     this.$inputImmediatelyGift.on('keyup', $.proxy(this._onKeyUpImmediatelyGiftNumber, this));
+    this.$wrap.on('showUnableGift', $.proxy(this._showUnableGift, this));
   },
 
-  _getRemainDataInfo: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0014, {}).done($.proxy(this._onSuccessRemainDataInfo, this));
+  _showUnableGift: function (e, errorCode) {
+    var $wrapImmediatelyGift = $('.fe-wrap-immediately');
+    var code = e;
+
+    if ( !!errorCode ) {
+      code = errorCode;
+    }
+
+    switch ( code ) {
+      case 'GFT0001':
+        $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0001 }));
+        break;
+      case 'GFT0002':
+        $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0001 }));
+        break;
+      case 'GFT0003':
+        $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0003 }));
+        break;
+      case 'GFT0004':
+        $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0004.CONTENT1 }));
+        break;
+      case 'GFT0005':
+        $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0005 }));
+        break;
+      case 'GFT00013':
+        $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0013 }));
+        break;
+      case 'ZORDC1020':
+        $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0013 }));
+        break;
+      default:
+        $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.DEFAULT }));
+    }
+  },
+
+  _successGiftData: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this.parsedGiftData = this._parseGiftData(resp.result);
+    } else {
+      this._showUnableGift(resp.code);
+    }
+  },
+
+  _parseGiftData: function (sender) {
+    return {
+      dataGiftCnt: sender.dataGiftCnt,
+      familyDataGiftCnt: sender.familyDataGiftCnt,
+      familyMemberYn: sender.familyMemberYn === 'Y',
+      goodFamilyMemberYn: sender.goodFamilyMemberYn === 'Y'
+    };
   },
 
   _onClickDataQty: function () {
     this._checkValidateSendingButton();
-  },
-
-  _onSuccessRemainDataInfo: function (res) {
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
-      // MOCK DATA
-      // var mockDataQty = '900';
-      // var mockData = Tw.FormatHelper.convDataFormat(mockDataQty, 'MB');
-      // this.beforeDataQty = mockDataQty;
-      // this.$remainQty.text(mockData.data + mockData.unit);
-      // this._setAmountUI(Number(mockDataQty));
-
-      // API DATA
-      var apiDataQty = res.result.dataRemQty;
-      var dataQty = Tw.FormatHelper.convDataFormat(apiDataQty, 'MB');
-      this.beforeDataQty = apiDataQty;
-      this.$remainQty.text(dataQty.data + dataQty.unit);
-      this._setAmountUI(Number(apiDataQty));
-    } else {
-      this._setAmountUI(Number(0));
-      Tw.Error(res.code, res.msg).pop();
-    }
-  },
-
-  _setAmountUI: function (nLimitMount) {
-    var fnCheckedUI = function (nIndex, elInput) {
-      var $input = $(elInput);
-      if ( Number($input.val()) > nLimitMount ) {
-        $input.prop('disabled', true);
-        $input.parent().parent().addClass('disabled');
-      }
-    };
-
-    this.$wrap_data_select_list.find('input').each(fnCheckedUI);
-    this.$wrap_auto_select_list.find('input').each(fnCheckedUI);
   },
 
   _onClickBtnAddr: function () {
@@ -138,7 +158,7 @@ Tw.MyTDataGiftImmediately.prototype = {
     var htParams = {
       befrSvcNum: this.$inputImmediatelyGift.val(),
       dataQty: this.$wrap_data_select_list.find('li.checked input').val(),
-      beforeDataQty: this.beforeDataQty
+      beforeDataQty: this.$wrap.triggerHandler('currentRemainDataInfo')
     };
 
     this.paramData = $.extend({}, this.paramData, htParams);
@@ -161,8 +181,10 @@ Tw.MyTDataGiftImmediately.prototype = {
     // this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
 
     // API DATA
-    this._apiService.request(Tw.API_CMD.BFF_06_0016, { befrSvcMgmtNum: this.paramData.befrSvcMgmtNum })
-      .done($.proxy(this._onRequestSuccessGiftData, this));
+    this._apiService.request(Tw.API_CMD.BFF_06_0016, {
+      befrSvcMgmtNum: this.paramData.befrSvcMgmtNum,
+      dataQty: this.$wrap_data_select_list.find('li.checked input').val()
+    }).done($.proxy(this._onRequestSuccessGiftData, this));
   },
 
   _onRequestSuccessGiftData: function (res) {

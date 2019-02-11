@@ -74,7 +74,7 @@
                             <button>설정 정보
                                 <span class="tx-sub">
                                     <span class="normal">결합 회선/상품 설정 완료</span>
-                                    <span class="ico">설정 정보 팝업 열기</span>
+                                    <span class="ico">더보기</span><!-- 웹접근성 수정 -->
                                 </span>
                             </button>
                         </div>
@@ -155,7 +155,7 @@
 										<ul class="select-list" role="group">
 											<li>
 												<div class="checkbox type01 all" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-													<input type="checkbox" name="checkbox" value="" title="모두동의" aria-labelledby="aria-comp-checkbox1"><!-- 체크상태일 경우 checked="checked" -->
+													<input type="checkbox" name="checkbox" value="" title="약관과 이용 동의" aria-labelledby="aria-comp-checkbox1"><!-- 체크상태일 경우 checked="checked" --><!--웹접근성 수정 -->
 													<div class="comp-list-layout" id="aria-comp-checkbox1">
 														<p class="layout-text all-chk">
 															<span class="mtext">모두 동의</span>
@@ -165,7 +165,7 @@
 											</li>
 											<li>
 												<div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-													<input type="checkbox" name="checkbox" value="" title="개인정보 수집, 이용 위탁 동의(필수)" aria-labelledby="aria-comp-checkbox3"><!-- 체크상태일 경우 checked="false" -->
+													<input type="checkbox" name="checkbox" value="" title="약관과 이용 동의" aria-labelledby="aria-comp-checkbox3"><!-- 체크상태일 경우 checked="false" --><!--웹접근성 수정 -->
 													<div class="comp-list-layout" id="aria-comp-checkbox3">
 														<p class="layout-text">
 															<span class="mtext">개인정보 수집, 이용 위탁 동의(필수)</span>
@@ -181,7 +181,7 @@
 											</li>
 											<li>
 												<div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-													<input type="checkbox" name="checkbox" value="" title="개인정보 수집, 이용 제3자 제공 동의(필수)" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" -->
+													<input type="checkbox" name="checkbox" value="" title="약관과 이용 동의" aria-labelledby="aria-comp-checkbox2"><!-- 체크상태일 경우 checked="false" --><!--웹접근성 수정 -->
 													<div class="comp-list-layout" id="aria-comp-checkbox2">
 														<p class="layout-text">
 															<span class="mtext">개인정보 수집, 이용 제3자 제공 동의(필수)</span>
@@ -197,7 +197,7 @@
 											</li>
 											<li>
 												<div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-													<input type="checkbox" name="checkbox" value="" title="개인정보 이용 및 보유기간 동의(필수)" aria-labelledby="aria-comp-checkbox4"><!-- 체크상태일 경우 checked="false" -->
+													<input type="checkbox" name="checkbox" value="" title="약관과 이용 동의" aria-labelledby="aria-comp-checkbox4"><!-- 체크상태일 경우 checked="false" --><!--웹접근성 수정 -->
 													<div class="comp-list-layout" id="aria-comp-checkbox4">
 														<p class="layout-text">
 															<span class="mtext">개인정보 이용 및 보유기간 동의(필수)</span>
@@ -222,10 +222,10 @@
 
 					<div class="cont-box nogaps-btm">
                         <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                        <ul class="noti-list">
-                            <li>결합 신청 안내 <button type="button" class="icon-tip">TIP</button></li>
-							<li>결합 불가 안내 <button type="button" class="icon-tip">TIP</button></li>
-							<li>가입할 상품의 가입시 유의사항 <button type="button" class="icon-tip">TIP</button></li>
+                        <ul class="noti-list02">
+                            <li><button type="button" class="tip-view-btn" title="결합 신청 안내 TIP보기" aria-haspopup="true">결합 신청 안내<span class="tip-view">TIP</span></button></li><!--웹접근성 수정 -->
+							<li><button type="button" class="tip-view-btn" title="결합 불가 안내 TIP보기" aria-haspopup="true">결합 불가 안내<span class="tip-view">TIP</span></button></li><!--웹접근성 수정 -->
+							<li><button type="button" class="tip-view-btn" title="가입할 상품의 가입시 유의사항 TIP보기" aria-haspopup="true">가입할 상품의 가입시 유의사항<span class="tip-view">TIP</span></button></li><!--웹접근성 수정 -->
                         </ul>
                     </div>
 

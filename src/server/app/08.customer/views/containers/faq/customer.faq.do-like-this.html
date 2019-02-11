@@ -109,9 +109,22 @@
 
         $('.fe-link-external').on('click', function (e) {
             var url = $(e.currentTarget).attr('href');
-            Tw.CommonHelper.openUrlExternal(url);
+            if (Tw.BrowserHelper.isApp()) {
+                Tw.CommonHelper.showDataCharge(function () {
+                    Tw.CommonHelper.openUrlExternal(url);
+                });
+            } else {
+                Tw.CommonHelper.openUrlExternal(url);
+            }
             return false;
         })
+
+        window.onBack = function () {
+            if ($('.idpt-popup').is(':visible')) {
+                $('.idpt-popup').hide();
+            }
+            history.back();
+        };
     });
 </script>
 <% include ../../components/end.component.html %>

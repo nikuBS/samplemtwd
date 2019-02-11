@@ -50,12 +50,18 @@ Tw.CommonPostcodeMain.prototype = {
   },
   _bindEvent: function () {
     this.$layer.on('click', '.fe-tab-selector > li', $.proxy(this._changeTab, this));
+    this.$layer.on('keyup', 'input[type="text"]', $.proxy(this._checkIsEnter, this));
     this.$layer.on('click', '.fe-search', $.proxy(this._search, this));
     this.$layer.on('click', '.fe-more-btn', $.proxy(this._getMoreList, this));
   },
   _changeTab: function (event) {
     var $targetId = $(event.currentTarget).attr('id');
     this._initVariables($targetId);
+  },
+  _checkIsEnter: function (event) {
+    if (Tw.InputHelper.isEnter(event)) {
+      this._search();
+    }
   },
   _search: function() {
     this.$resultBox.find('.fe-clone').remove();

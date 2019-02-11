@@ -522,6 +522,12 @@ $.fn.chart2 = function(o){
         max = (max > arry[i]) ? max : arry[i];
       }
       average = (sum / arry.length).toFixed(0);
+    }else{ // 기타
+      for(var i=0; i<arry.length; i++){
+        sum += arry[i];
+        max = (max > arry[i]) ? max : arry[i];
+      }
+      average = (sum / arry.length).toFixed(0);
     }
     if(type == 'gb'){ // gb
       for(var i=0; i<arry.length; i++){
@@ -543,6 +549,13 @@ $.fn.chart2 = function(o){
         style_pattern.push((arry[i]/max*100).toFixed(0));
       }
       text_pattern.unshift(add_comma(average) + '원');
+      style_pattern.unshift((average/max*100).toFixed(0));
+    }else{ // 기타
+      for(var i=0; i<arry.length; i++){
+        text_pattern.push(add_comma(arry[i]) + type);
+        style_pattern.push((arry[i]/max*100).toFixed(0));
+      }
+      text_pattern.unshift(add_comma(average) + type);
       style_pattern.unshift((average/max*100).toFixed(0));
     }
   }
@@ -574,6 +587,15 @@ $.fn.chart2 = function(o){
       average = (sum / arry.length).toFixed(0);
       average2 = (sum2 / arry2.length).toFixed(0);
     }else if(type == '원'){ // 원
+      for(var i=0; i<arry.length; i++){
+        sum += arry[i];
+        sum2 += arry2[i];
+        max = (max > arry[i]) ? max : arry[i];
+        max2 = (max2 > arry2[i]) ? max2 : arry2[i];
+      }
+      average = (sum / arry.length).toFixed(0);
+      average2 = (sum2 / arry2.length).toFixed(0);
+    }else{ // 기타
       for(var i=0; i<arry.length; i++){
         sum += arry[i];
         sum2 += arry2[i];
@@ -615,6 +637,17 @@ $.fn.chart2 = function(o){
       }
       text_pattern.unshift(add_comma(average) + '원');
       text2_pattern.unshift(add_comma(average2) + '원');
+      style_pattern.unshift((average/max*100).toFixed(0));
+      style2_pattern.unshift((average2/max*100).toFixed(0));
+    }else{ // 기타
+      for(var i=0; i<arry.length; i++){
+        text_pattern.push(add_comma(arry[i]) + type);
+        text2_pattern.push(add_comma(arry2[i]) + type);
+        style_pattern.push((arry[i]/max*100).toFixed(0));
+        style2_pattern.push((arry2[i]/max*100).toFixed(0));
+      }
+      text_pattern.unshift(add_comma(average) + type);
+      text2_pattern.unshift(add_comma(average2) + type);
       style_pattern.unshift((average/max*100).toFixed(0));
       style2_pattern.unshift((average2/max*100).toFixed(0));
     }

@@ -41,7 +41,9 @@ Tw.NTV_CMD = {
   LOAD: 'load',
   IS_APP_CREATED: 'isAppCreated',
   OPEN_NETWORK_ERROR_POP: 'openNetworkErrorPop',
-  OPEN_FILE_CHOOSER: 'openFileChooser'
+  OPEN_FILE_CHOOSER: 'openFileChooser',
+  CAN_GO_HISTORY: 'canGoHistory',
+  SET_SWIPE_GESTURE_ENABLED: 'setSwipeGestureEnabled'
 };
 
 Tw.NTV_CODE = {
@@ -73,7 +75,11 @@ Tw.NTV_STORAGE = {
   MOST_RECENT_PUSH_SEQ: 'mostRecentPushSeq',
   LAST_READ_PUSH_SEQ: 'lastReadPushSeq',
   HOME_WELCOME: 'homeWelcome',
-  FIDO_USE: 'fidoUse'
+  FIDO_USE: 'fidoUse',
+  COACH_LINE: 'coachLine',
+  COACH_DATA: 'coachData',
+  COACH_MASKING: 'coachMasking',
+  COACH_QUICK: 'coachQuick'
 };
 
 Tw.NTV_PAGE_KEY = {

@@ -72,6 +72,9 @@ Tw.ProductCommonCallplan.prototype = {
     this.$contents.on('click', '.dmg-contract', $.proxy(this._openCustomPopup, this, 'BS_02_01_02_01'));
     this.$contents.on('click', '.possible-product', $.proxy(this._openCustomPopup, this, 'BS_03_01_01_02'));
     this.$contents.on('click', '.save_pay', $.proxy(this._openCustomPopup, this, 'BS_04_01_01_01'));
+    this.$contents.on('click', '.fe-clubt', $.proxy(this._openCustomPopup, this, 'MP_02_02_04_01'));
+    this.$contents.on('click', '.fe-campuszone', $.proxy(this._openCustomPopup, this, 'MP_02_02_04_02'));
+    this.$contents.on('click', '.fe-concierge', $.proxy(this._openCustomPopup, this, 'MP_02_02_04_03'));
   },
 
   _showReadyOn: function() {
@@ -120,7 +123,6 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _openExternalUrl: function(href) {
-    this._popupService.close();
     Tw.CommonHelper.openUrlExternal(href);
   },
 
@@ -135,7 +137,30 @@ Tw.ProductCommonCallplan.prototype = {
     this._popupService.open({
       hbs: hbsCode,
       layer: true
-    });
+    }, $.proxy(this._bindCustomPop, this, hbsCode));
+  },
+
+  _bindCustomPop: function(hbsCode, $popupContainer) {
+    if (hbsCode !== 'MP_02_02_04_02') {
+      return;
+    }
+
+    this.$campusLists = $popupContainer.find('.data-type01-wrap');
+    $popupContainer.on('change', 'input', $.proxy(this._handleSelectList, this));
+  },
+
+  _handleSelectList: function(e) {
+    var selected = Number(e.currentTarget.getAttribute('data-idx') || 0),
+      i = 0,
+      list;
+    for (; i < this.$campusLists.length; i++) {
+      list = this.$campusLists[i];
+      if (i === selected) {
+        list.className = list.className.replace('none', '');
+      } else if (list.className.indexOf('none') < 0) {
+        list.className += ' none';
+      }
+    }
   },
 
   _procSetting: function() {
@@ -347,7 +372,7 @@ Tw.ProductCommonCallplan.prototype = {
     Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(null, resp.msg).pop();
+      return Tw.Error(resp.code, resp.msg).pop();
     }
 
     if (this._prodTypCd === 'F' && resp.result.combiProdScrbYn !== 'N' && this._joinTermCd === '01') {

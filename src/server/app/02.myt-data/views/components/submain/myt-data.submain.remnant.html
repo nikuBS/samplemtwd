@@ -21,15 +21,44 @@
                     <p class="desc">2시간 동안 최대 12회 조회 가능</p>
                 </div>
             </div>
+            <% } else if (data.remnant.info.code === 'BLN0002') { %>
+            <div class="main-chart-box">
+                <div class="main-error-box">
+                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
+                    <p class="tx">당월 혹은 전월에 기존 <br>요금제로 재 변경한 이력이 있습니다.</p>
+                </div>
+            </div>
             <% } else if (data.remnant.info.code === 'BLN0003') { %>
             <div class="main-chart-box">
                 <div class="main-error-box">
                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                     <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                    <p class="tx">
-                        회선정지 상태이거나 일시 정지 이력이 있어<br>잔여량 조회 서비스를 이용할 수 없습니다.
-                        <br>자세한 사항은 고객센터나 <button class="bt">이메일</button>로<br> 문의해 주시기 바랍니다.
-                    </p>
+                    <p class="tx">당월 혹은 전월에 정지 이력이 있습니다.</p>
+                </div>
+            </div>
+            <% } else if (data.remnant.info.code === 'BLN0005') { %>
+            <div class="main-chart-box">
+                <div class="main-error-box">
+                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
+                    <p class="tx">본인이 법정대리인으로 <br> 등록된 자녀 회선이 아닙니다.</p>
+                </div>
+            </div>
+            <% } else if (data.remnant.info.code === 'BLN0006') { %>
+            <div class="main-chart-box">
+                <div class="main-error-box">
+                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
+                    <p class="tx">잔여량 조회에 실패하였습니다.</p>
+                </div>
+            </div>
+            <% } else if (data.remnant.info.code === 'BLN0004' || data.remnant.info.code === 'BLN0007') { %>
+            <div class="main-chart-box">
+                <div class="main-error-box">
+                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
+                    <p class="tx">잔여량 조회 가능 항목이 없습니다.</p>
                 </div>
             </div>
             <% } else { %>
@@ -119,11 +148,12 @@
                             <span class="remain">
                                 <strong>
                                     <% if (rvoice.isUnlimit) { %>
-                                    무제한 </strong>
+                                        무제한 </strong>
                                     <% } else { %>
-                                    <%= rvoice.showRemained.hours %>시간
-                                    <%= rvoice.showRemained.min %>분
-                                    </strong>남음
+                                        <% if (rvoice.showRemained.hours > 0 ) { %>
+                                        <%= rvoice.showRemained.hours %>시간
+                                        <% } %>
+                                        <%= rvoice.showRemained.min %>분</strong>남음
                                     <% } %>
                             </span>
                             </div>
@@ -158,9 +188,13 @@
                             <span class="remain">
                                 <strong>
                                 <% if (rsms.isUnlimit) { %>
-                                    <%= rsms.total %> </strong>
+                                    <% if(rsms.total === '기본제공') { %>
+                                    무제한 </strong>
+                                    <% } else { %>
+                                    <%= rsms.total %>건 </strong>남음
+                                    <% } %>
                                 <% } else { %>
-                                    <%= rsms.showRemained %></strong>남음
+                                    <%= rsms.showRemained %>건 </strong> 남음
                                 <% } %>
                             </span>
                             </div>
@@ -257,16 +291,17 @@
                     <div class="cont">
                         <span class="txt1"><%= rvoice.skipNm %></span>
                         <div class="date">
-                                        <span class="remain">
-                                            <strong>
-                                                <% if (rvoice.isUnlimit) { %>
-                                                무제한 </strong>
-                                                <% } else { %>
-                                                <%= rvoice.showRemained.hours %>시간
-                                                <%= rvoice.showRemained.min %>분
-                                            </strong>남음
-                                                <% } %>
-                                        </span>
+                            <span class="remain">
+                                <strong>
+                                    <% if (rvoice.isUnlimit) { %>
+                                        무제한 </strong>
+                                    <% } else { %>
+                                        <% if (rvoice.showRemained.hours > 0 ) { %>
+                                        <%= rvoice.showRemained.hours %>시간
+                                        <% } %>
+                                        <%= rvoice.showRemained.min %>분</strong>남음
+                                    <% } %>
+                            </span>
                         </div>
                     </div>
                     <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
@@ -296,14 +331,18 @@
                     <div class="cont">
                         <span class="txt1"><%= rsms.skipNm %></span>
                         <div class="date">
-                                        <span class="remain">
-                                            <strong>
-                                            <% if (rsms.isUnlimit) { %>
-                                                <%= rsms.total %> </strong>
-                                            <% } else { %>
-                                                <%= rsms.showRemained %></strong>남음
-                                            <% } %>
-                                        </span>
+                            <span class="remain">
+                                <strong>
+                                <% if (rsms.isUnlimit) { %>
+                                    <% if(rsms.total === '기본제공') { %>
+                                    무제한 </strong>
+                                    <% } else { %>
+                                    <%= rsms.total %>건 </strong>남음
+                                    <% } %>
+                                <% } else { %>
+                                    <%= rsms.showRemained %>건 </strong>남음
+                                <% } %>
+                            </span>
                         </div>
                     </div>
                     <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
@@ -328,15 +367,44 @@
                     <p class="desc">2시간 동안 최대 12회 조회 가능</p>
                 </div>
             </div>
+            <% } else if (data.remnant.info.code === 'BLN0002') { %>
+            <div class="main-chart-box">
+                <div class="main-error-box">
+                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
+                    <p class="tx">당월 혹은 전월에 기존 <br>요금제로 재 변경한 이력이 있습니다.</p>
+                </div>
+            </div>
             <% } else if (data.remnant.info.code === 'BLN0003') { %>
             <div class="main-chart-box">
                 <div class="main-error-box">
                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                     <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                    <p class="tx">
-                        회선정지 상태이거나 일시 정지 이력이 있어<br>잔여량 조회 서비스를 이용할 수 없습니다.
-                        <br>자세한 사항은 고객센터나 <button class="bt">이메일</button>로<br> 문의해 주시기 바랍니다.
-                    </p>
+                    <p class="tx">당월 혹은 전월에 정지 이력이 있습니다.</p>
+                </div>
+            </div>
+            <% } else if (data.remnant.info.code === 'BLN0005') { %>
+            <div class="main-chart-box">
+                <div class="main-error-box">
+                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
+                    <p class="tx">본인이 법정대리인으로 <br> 등록된 자녀 회선이 아닙니다.</p>
+                </div>
+            </div>
+            <% } else if (data.remnant.info.code === 'BLN0006') { %>
+            <div class="main-chart-box">
+                <div class="main-error-box">
+                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
+                    <p class="tx">잔여량 조회에 실패하였습니다.</p>
+                </div>
+            </div>
+            <% } else if (data.remnant.info.code === 'BLN0004' || data.remnant.info.code === 'BLN0007') { %>
+            <div class="main-chart-box">
+                <div class="main-error-box">
+                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
+                    <p class="tx">잔여량 조회 가능 항목이 없습니다.</p>
                 </div>
             </div>
             <% } else { %>
@@ -464,11 +532,12 @@
                             <span class="remain">
                                 <strong>
                                     <% if (rvoice.isUnlimit) { %>
-                                    무제한 </strong>
+                                        무제한 </strong>
                                     <% } else { %>
-                                    <%= rvoice.showRemained.hours %>시간
-                                    <%= rvoice.showRemained.min %>분
-                                </strong>남음
+                                        <% if (rvoice.showRemained.hours > 0 ) { %>
+                                        <%= rvoice.showRemained.hours %>시간
+                                        <% } %>
+                                        <%= rvoice.showRemained.min %>분</strong>남음
                                     <% } %>
                             </span>
                         </div>
@@ -503,9 +572,13 @@
                             <span class="remain">
                                 <strong>
                                 <% if (rsms.isUnlimit) { %>
-                                    <%= rsms.total %> </strong>
+                                    <% if(rsms.total === '기본제공') { %>
+                                    무제한 </strong>
+                                    <% } else { %>
+                                    <%= rsms.total %>건 </strong>남음
+                                    <% } %>
                                 <% } else { %>
-                                    <%= rsms.showRemained %></strong>남음
+                                    <%= rsms.showRemained %>건 </strong>남음
                                 <% } %>
                             </span>
                         </div>
@@ -571,16 +644,17 @@
                 <div class="cont">
                     <span class="txt1"><%= rvoice.skipNm %></span>
                     <div class="date">
-                                        <span class="remain">
-                                            <strong>
-                                                <% if (rvoice.isUnlimit) { %>
-                                                무제한 </strong>
-                                                <% } else { %>
-                                                <%= rvoice.showRemained.hours %>시간
-                                                <%= rvoice.showRemained.min %>분
-                                            </strong>남음
-                                                <% } %>
-                                        </span>
+                        <span class="remain">
+                            <strong>
+                                <% if (rvoice.isUnlimit) { %>
+                                    무제한 </strong>
+                                <% } else { %>
+                                    <% if (rvoice.showRemained.hours > 0 ) { %>
+                                    <%= rvoice.showRemained.hours %>시간
+                                    <% } %>
+                                    <%= rvoice.showRemained.min %>분</strong>남음
+                                <% } %>
+                        </span>
                     </div>
                 </div>
                 <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
@@ -610,14 +684,18 @@
                 <div class="cont">
                     <span class="txt1"><%= rsms.skipNm %></span>
                     <div class="date">
-                                        <span class="remain">
-                                            <strong>
-                                            <% if (rsms.isUnlimit) { %>
-                                                <%= rsms.total %> </strong>
-                                            <% } else { %>
-                                                <%= rsms.showRemained %></strong>남음
-                                            <% } %>
-                                        </span>
+                        <span class="remain">
+                            <strong>
+                            <% if (rsms.isUnlimit) { %>
+                                <% if(rsms.total === '기본제공') { %>
+                                    무제한 </strong>
+                                    <% } else { %>
+                                    <%= rsms.total %>건 </strong>남음
+                                    <% } %>
+                            <% } else { %>
+                                <%= rsms.showRemained %>건 </strong>남음
+                            <% } %>
+                        </span>
                     </div>
                 </div>
                 <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
@@ -642,15 +720,44 @@
                     <p class="desc">2시간 동안 최대 12회 조회 가능</p>
                 </div>
             </div>
+            <% } else if (data.remnant.info.code === 'BLN0002') { %>
+            <div class="main-chart-box">
+                <div class="main-error-box">
+                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
+                    <p class="tx">당월 혹은 전월에 기존 <br>요금제로 재 변경한 이력이 있습니다.</p>
+                </div>
+            </div>
             <% } else if (data.remnant.info.code === 'BLN0003') { %>
             <div class="main-chart-box">
                 <div class="main-error-box">
                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                     <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                    <p class="tx">
-                        회선정지 상태이거나 일시 정지 이력이 있어<br>잔여량 조회 서비스를 이용할 수 없습니다.
-                        <br>자세한 사항은 고객센터나 <button class="bt">이메일</button>로<br> 문의해 주시기 바랍니다.
-                    </p>
+                    <p class="tx">당월 혹은 전월에 정지 이력이 있습니다.</p>
+                </div>
+            </div>
+            <% } else if (data.remnant.info.code === 'BLN0005') { %>
+            <div class="main-chart-box">
+                <div class="main-error-box">
+                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
+                    <p class="tx">본인이 법정대리인으로 <br> 등록된 자녀 회선이 아닙니다.</p>
+                </div>
+            </div>
+            <% } else if (data.remnant.info.code === 'BLN0006') { %>
+            <div class="main-chart-box">
+                <div class="main-error-box">
+                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
+                    <p class="tx">잔여량 조회에 실패하였습니다.</p>
+                </div>
+            </div>
+            <% } else if (data.remnant.info.code === 'BLN0004' || data.remnant.info.code === 'BLN0007') { %>
+            <div class="main-chart-box">
+                <div class="main-error-box">
+                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
+                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
+                    <p class="tx">잔여량 조회 가능 항목이 없습니다.</p>
                 </div>
             </div>
             <% } else { %>

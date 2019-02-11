@@ -8,7 +8,6 @@ export enum API_METHOD {
 export enum API_SERVER {
   BFF = 'BFF_SERVER',
   TID = 'TID_SERVER',
-  CDN = 'CDN_MANIFEST',
   SEARCH = 'SEARCH_SERVER',
   TEST = 'TEST_SERVER'
 }
@@ -27,6 +26,9 @@ export const API_CMD = {
   SEARCH_AUTO_COMPLETE: { path: '/search/tworld/autocomplete', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
   SEARCH_STACK_USER_CLICK: { path: '/search/tworld/log/save', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
   BFF_12_0010: { path: '/core-modification/:version/search/keyword', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+
+  BFF_INFO: { path: '/actuator/info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_VERSION: { path: '/actuator/version/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // SPRINT #3
   BFF_03_0003_C: { path: '/svc-catalog/detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -102,6 +104,7 @@ export const API_CMD = {
   BFF_03_0005: { path: '/:version/user/services', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: false },
   BFF_03_0006: { path: '/:version/user/nick-names/:args0', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
   BFF_03_0007: { path: '/:version/user/tid-keys', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, native: true },
+  BFF_03_0007_old: { path: '/:version/user/old-tid-keys', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, native: true },
   BFF_03_0008: { path: '/:version/user/sessions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: false, native: true },
   BFF_03_0009: { path: '/:version/user/service-password-sessions', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_03_0010: { path: '/:version/user/locks', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
@@ -122,7 +125,8 @@ export const API_CMD = {
   BFF_03_0025: { path: '/core-auth/:version/add-fcm-user-info', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
   BFF_03_0026: { path: '/core-auth/:version/requestRegistFcmClickInfo', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true, native: true },
   BFF_03_0027: { path: '/core-auth/:version/users/otp', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
-  BFF_03_0028: { path: '/core-auth/:version/free-sms-availability/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, native: true },
+  BFF_03_0028: { path: '/core-auth/:version/free-sms-availability/:args0', method: API_METHOD.GET,
+    server: API_SERVER.BFF, bypass: true, native: true },
   BFF_03_0029: { path: '/core-auth/:version/exposable-services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0030: { path: '/core-auth/:version/exposed-services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   // MainHome T-Notify
@@ -159,7 +163,7 @@ export const API_CMD = {
   BFF_05_0039: { path: '/core-bill/:version/bill-types-return-list/', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_05_0039_N: { path: '/core-bill/:version/bill-types-return', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0040: {
-    path: '/core-product/:version/services/wireless/additions/:args0',
+    path: '/core-product/:version/services/wireless/addition/:args0',
     method: API_METHOD.GET,
     server: API_SERVER.BFF,
     bypass: false
@@ -312,6 +316,7 @@ export const API_CMD = {
   BFF_05_0196: { path: '/core-modification/:version/loyalty-benefits', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0197: { path: '/core-modification/:version/longterm-phone-pause', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_05_0198: { path: '/core-modification/:version/wire/cancel-request-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0199: { path: '/core-bill/:version/bill-types-email', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -390,6 +395,8 @@ export const API_CMD = {
   BFF_06_0070: { path: '/core-bill/:version/pps-data-recharges', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_06_0071: { path: '/core-recharge/:version/tfamily-my-sharings', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_06_0072: { path: '/core-recharge/:version/tfamily-cancelable-data', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_06_0073: { path: '/core-recharge/:version/tfamily-canceling-data', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_06_0074: { path: '/core-recharge/:version/tfamily-canceling', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_06_0075: { path: '/core-bill/v1/pps-alram', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // PAYMENT
@@ -447,7 +454,7 @@ export const API_CMD = {
   BFF_07_0063: { path: '/core-bill/:version/auto-payments', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
   BFF_07_0064: { path: '/core-bill/:version/autopay/db-req', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0065: { path: '/core-bill/:version/autopay/pay-cycl-chg', method: API_METHOD.PUT, server: API_SERVER.BFF, bypass: true },
-  BFF_07_0068: { path: '/core-bill/:version/autopay/card-info/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_07_0068: { path: '/core-bill/:version/autopay/card-info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0069: { path: '/core-bill/:version/payment/auto-integrated-payment/cancel', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0070: { path: '/core-bill/:version/payment/auto-integrated-payment/account', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0071: { path: '/core-bill/:version/micro-prepay/hist-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -751,6 +758,10 @@ export const API_CMD = {
     bypass: true
   },
   BFF_10_0139: { path: '/core-product/:version/ledger/:args0/recommend-apps', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0142: { path: '/core-product/v1/mobiles/combinations/:args0/joins/services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0143: { path: '/core-product/v1/mobiles/combinations/:args0/joins/simulations',
+    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0144: { path: '/core-product/v1/mobiles/combinations/:args0/joins', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_10_0151: {
     path: '/core-product/:version/mobiles/fee-plans/:args0/joins/term-prechecks',
     method: API_METHOD.GET,
@@ -842,9 +853,7 @@ export const API_CMD = {
 
   // TID
   OIDC: { path: '/auth/authorize.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },
-  LOGOUT: { path: '/sso/web/:version/ssologout.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },
-
-  MANIFEST: { path: '/manifest.:args0.json', method: API_METHOD.GET, server: API_SERVER.CDN, bypass: false },
+  LOGOUT: { path: '/sso/web/v1/ssologout.do', method: API_METHOD.GET, server: API_SERVER.TID, bypass: false },
 
   // TEST
   BFF_08_0029_TEST: { path: '/core-modification/:version/notice-tworld-test', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

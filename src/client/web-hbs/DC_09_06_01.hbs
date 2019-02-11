@@ -33,7 +33,7 @@
                             <dd><p class="value">{{detail.amt}}원</p></dd>
                         </dl>
                     </li>
-                    {{#if data}}
+                    {{#if detail.data}}
                     <li>
                         <dl>
                             <dt>충전 데이터</dt>
@@ -73,6 +73,6 @@
     <!--// #contents -->
     <!-- // .container-wrap -->
     <!-- .popup-closeBtn -->
-    <button class="prev-step tw-popup-closeBtn">취소</button>
+    <button class="prev-step tw-popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
     <!--// .popup-closeBtn -->
 </div>

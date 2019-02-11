@@ -26,7 +26,6 @@ import ProductMobileplanSettingLocation from './controllers/mobileplan/setting/p
 import ProductMobileplanSetting0planSm from './controllers/mobileplan/setting/product.mobileplan.setting.0plan-sm.controller';
 import ProductMobileplanLookupTplan from './controllers/mobileplan/lookup/product.mobileplan.lookup.tplan.controller';
 import ProductMobileplanLookupTing from './controllers/mobileplan/lookup/product.mobileplan.lookup.ting.controller';
-import ProductMobilePlanIndividuals from './controllers/mobileplan/product.mobileplan.individuals.controller';
 
 import ProductAddition from './controllers/mobileplan-add/product.mobileplan-add.controller';
 import ProductAdditions from './controllers/mobileplan-add/product.mobileplan-add.list.controller';
@@ -86,7 +85,6 @@ class ProductRouter extends TwRouter {
     super();
 
     this.controllers.push({ url: '/mobileplan', controller: Product });
-    this.controllers.push({ url: '/mobileplan/club-t|campuszone|concierge', controller: ProductMobilePlanIndividuals });
     this.controllers.push({ url: '/mobileplan/list', controller: ProductPlans });
     this.controllers.push({ url: '/mobileplan/join/tplan', controller: ProductMobileplanJoinTplan });
     this.controllers.push({ url: '/mobileplan/join/0plan-sm', controller: ProductMobileplanJoin0planSm });

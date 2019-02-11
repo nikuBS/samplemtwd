@@ -9,6 +9,7 @@ import TwViewController from '../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../types/api-command.type';
 import { PRODUCT_TYPE_NM } from '../../../types/string.type';
+import { SVC_CD } from '../../../types/bff.type';
 import FormatHelper from '../../../utils/format.helper';
 import DateHelper from '../../../utils/date.helper';
 
@@ -16,6 +17,8 @@ class BenefitTerminateTbCombination extends TwViewController {
   constructor() {
     super();
   }
+
+  private _allowedProdIds = ['NH00000037', 'NH00000039', 'NH00000040', 'NH00000041', 'TW00000062', 'TW00000063'];
 
   /**
    * @param termInfo
@@ -27,7 +30,7 @@ class BenefitTerminateTbCombination extends TwViewController {
       combinationWirelessMember: FormatHelper.isEmpty(termInfo.combinationWirelessMemberList) ? null :
         this._convertWirelessInfo(termInfo.combinationWirelessMemberList[0]),
       combinationWireMember: FormatHelper.isEmpty(termInfo.combinationWireMemberList) ? null :
-        termInfo.combinationWireMemberList[0]
+        this._convertWireInfo(termInfo.combinationWireMemberList[0])
     });
   }
 
@@ -38,6 +41,16 @@ class BenefitTerminateTbCombination extends TwViewController {
   private _convertWirelessInfo(wireLessInfo: any): any {
     return Object.assign(wireLessInfo, {
       svcNum: FormatHelper.conTelFormatWithDash(wireLessInfo.svcNum)
+    });
+  }
+
+  /**
+   * @param wireInfo
+   * @private
+   */
+  private _convertWireInfo(wireInfo: any): any {
+    return Object.assign(wireInfo, {
+      svcCdNm: SVC_CD[wireInfo.svcCdNm]
     });
   }
 
@@ -59,7 +72,7 @@ class BenefitTerminateTbCombination extends TwViewController {
         title: PRODUCT_TYPE_NM.TERMINATE
       };
 
-    if (FormatHelper.isEmpty(prodId)) {
+    if (FormatHelper.isEmpty(prodId) || this._allowedProdIds.indexOf(prodId) === -1) {
       return this.error.render(res, renderCommonInfo);
     }
 
@@ -68,7 +81,8 @@ class BenefitTerminateTbCombination extends TwViewController {
         if (termInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, Object.assign(renderCommonInfo, {
             code: termInfo.code,
-            msg: termInfo.msg
+            msg: termInfo.msg,
+            isBackCheck: true
           }));
         }
 

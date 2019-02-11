@@ -17,12 +17,23 @@ Tw.ProductRoamingJoinRoamingAuto = function (rootEl,prodTypeInfo,prodApiInfo,svc
   this.$tooltipBody = this.$container.find('#tip_body');
   this._showDateFormat = 'YYYY. MM. DD.';
   this._dateFormat = 'YYYYMMDD';
+  this._dateSelectRange = 30;
+  this._twoMonthFlag = false;
   this._currentDate = Tw.DateHelper.getCurrentShortDate();
-  this._tooltipInit(prodId,this.$tooltipHead,this.$tooltipBody);
-  this._bindBtnEvents();
+  this._init();
 };
 
 Tw.ProductRoamingJoinRoamingAuto.prototype = {
+  _init : function () {
+    this._tooltipInit(this._prodId,this.$tooltipHead,this.$tooltipBody);
+    if(this._twoMonthFlag){
+      this._dateSelectRange = -1*(Tw.DateHelper.getDiffByUnit(this._currentDate,Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,2,'month',this._dateFormat,this._dateFormat),'day'));
+      this.$container.find('#aria-dateset1').text(Tw.ROAMING_RANGE_OPTION_STR.TWO_MONTH);
+    }else{
+      this.$container.find('#aria-dateset1').text(Tw.ROAMING_RANGE_OPTION_STR.ONE_MONTH);
+    }
+    this._bindBtnEvents();
+  },
   _bindBtnEvents: function () {
     this.$container.on('click', '.bt-dropdown.date', $.proxy(this._btnDateEvent, this));
     this.$container.on('click', '.bt-dropdown.time', $.proxy(this._btnTimeEvent, this));
@@ -64,7 +75,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
   },
   _btnDateEvent : function(eventObj){
     var nowValue = $(eventObj.currentTarget).text().trim();
-    var dateArr = this._getDateArrFromToDay(30);
+    var dateArr = this._getDateArrFromToDay(this._dateSelectRange);
     var convertedArr = this._convertDateArrForActionSheet(dateArr,'data-name="'+$(eventObj.currentTarget).attr('id')+'"',nowValue);
     var actionSheetData = this._makeActionSheetDate(convertedArr);
     if(nowValue.length<10){
@@ -198,7 +209,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
     }, this));
   },
   _bindCompletePopupBtnEvt : function($args1,$args2){
-    $($args2).on('click','.btn-floating',$.proxy($args1._goPlan,$args1));
+    $($args2).on('click','.btn-floating',$.proxy($args1._popupService.closeAll,$args1._popupService));
 
     if($args1._prodId==='NA00005690'||$args1._prodId==='NA00005693'){
       $($args2).on('click','#btn0.btn-round2',$.proxy($args1._goSetting,$args1));
@@ -208,18 +219,19 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
     }
   },
   _goMyInfo : function(){
-    this._historyService.goLoad('/product/roaming/my-use');
+    var targetUrl = this._prodTypeInfo.prodTypCd==='H_P'?'/product/roaming/my-use':'/product/roaming/my-use#add';
+    this._popupService.closeAllAndGo(targetUrl);
   },
   _goPlan : function () {
     this._popupService.closeAll();
-    this._historyService.goBack();
+    setTimeout($.proxy(this._historyService.goBack,this._historyService),0);
   },
   _goSetting : function(){
-    this._historyService.goLoad('/product/roaming/join/roaming-combine?prod_id='+this._prodId);
+    this._popupService.closeAllAndGo('/product/roaming/join/roaming-combine?prod_id='+this._prodId);
   },
   _showCancelAlart : function (){
     var alert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A1;
-    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, alert.BUTTON, Tw.BUTTON_LABEL.CLOSE,
+    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, Tw.BUTTON_LABEL.YES, Tw.BUTTON_LABEL.NO,
       null,
       $.proxy(this._goPlan,this),
       null);
@@ -256,9 +268,13 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
   },
   _tooltipInit : function (prodId,$tooltipHead,$tooltipBody) {
     switch (prodId) {
-      case 'NA00005252':
       case 'NA00005300':
       case 'NA00005505':
+      case 'NA00005252':
+        $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_02');
+        this.$container.find('.tip_body_container').hide();
+        this._twoMonthFlag = true;
+        break;
       case 'NA00005337':
         $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_02');
         this.$container.find('.tip_body_container').hide();
@@ -269,15 +285,19 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
         $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_03');
         this.$container.find('.tip_body_container').hide();
         break;
-      case 'NA00006046':
-      case 'NA00006048':
       case 'NA00006038':
       case 'NA00006040':
-      case 'NA00005900':
-      case 'NA00006050':
-      case 'NA00006052':
       case 'NA00006042':
       case 'NA00006044':
+      case 'NA00006046':
+      case 'NA00006048':
+      case 'NA00006050':
+      case 'NA00006052':
+        $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_04');
+        this.$container.find('.tip_body_container').hide();
+        this._twoMonthFlag = true;
+        break;
+      case 'NA00005900':
       case 'NA00005902':
       case 'NA00005699':
       case 'NA00005898':
@@ -299,18 +319,18 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
         break;
       case 'NA00006039':
         $tooltipHead.find('button').attr('id','TC000007');
-        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        //$tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
         $tooltipBody.find('button').attr('id','TC000008');
         break;
       case 'NA00005901':
         $tooltipHead.find('button').attr('id','TC000009');
-        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        //$tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
         $tooltipBody.find('button').attr('id','TC000008');
         break;
       case 'NA00006041':
       case 'NA00006047':
         $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_04');
-        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        //$tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
         $tooltipBody.find('button').attr('id','TC000008');
         break;
       case 'NA00005903':
@@ -319,7 +339,7 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
         break;
       case 'NA00005747':
         $tooltipHead.find('button').attr('id','TC000009');
-        $tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
+        //$tooltipBody.find('span').text(Tw.TOOLTIP_TITLE.ROAMING_SERVICE_CAUTION);
         $tooltipBody.find('button').attr('id','TC000010');
         break;
       case 'NA00005301':

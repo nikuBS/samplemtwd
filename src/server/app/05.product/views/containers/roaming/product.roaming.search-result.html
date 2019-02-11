@@ -18,7 +18,7 @@
 <!--// #skip_navigation -->
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- #header -->
-    <%- include('../../../common/views/components/header.component.html', { title: '국가별 로밍 요금 조회', svcInfo: svcInfo }); %>
+    <%- include('../../../common/views/components/header.component.html', { title: '국가별 로밍 이용요금 조회', svcInfo: svcInfo }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -72,20 +72,20 @@
                         <% if (roamingTypeData.dataRoamingYn  === 'Y') {%>
                         <li class="fe-rm-data">
                             <div class="link-long">
-                                <button><span class="icon type1"></span>데이터 로밍<span class="ico"></span></button>
+                                <button><span class="icon type1"></span>데이터로밍<span class="ico"></span></button>
                             </div>
                         </li>
                         <% } %>
                         <% if (roamingTypeData.voiceRoamingYn  === 'Y') {%>
                         <li class="fe-rm-voice">
                             <div class="link-long">
-                                <button><span class="icon type2"></span>음성 로밍<span class="ico"></span></button>
+                                <button><span class="icon type2"></span>음성로밍<span class="ico"></span></button>
                             </div>
                         </li>
                         <% } %>
                     </ul>
 
-                    <h4 class="txt pt40">로밍 서비스 방식별 종량 요금 안내</h4>
+                    <h4 class="txt pt40">로밍 서비스 방식별 종량요금 안내</h4>
                     <div class="cont-noti">
                         <span class="type3">이용할 수 있는 로밍 서비스 방식은 <br/>
                             <strong class="fe-rm-type"></strong>입니다.</span>
@@ -140,7 +140,7 @@
                                             <div class="bg1"> <!-- 보라색 -->
                                                 <a class="txt-tit">T로밍 아시아패스</a>
                                                 <span class="ico type1"></span>
-                                                <span class="txt-type1">아시아 주요 27개국에서 5일간 LTE/3G 데이터 안심하고 이용!</span>
+                                                <span class="txt-type1">아시아 주요 27개국에서 5일간 LTE/3G 데이터 안심하고 사용!</span>
                                                 <span class="txt-type2">YT 요금제 1GB 추가 제공<br/>(만 18세~29세 이하 고객 대상)</span>
                                                 <strong class="sum">25,000원/5일</strong>
                                             </div>
@@ -151,7 +151,7 @@
                                             <div class="bg2"> <!-- 녹색 -->
                                                 <a class="txt-tit">T로밍 유럽패스 3GB</a>
                                                 <span class="ico type2"></span>
-                                                <span class="txt-type1">유럽 51개국에서 LTE/3G 데이터를 저렴하게 이용!</span>
+                                                <span class="txt-type1">유럽 51개국에서 LTE/3G 데이터를 저렴하게 사용!</span>
                                                 <span class="txt-type2">YT 요금제 1GB 추가 제공<br/>(만 18세~29세 이하 고객 대상)</span>
                                                 <strong class="sum">39,000원/30일</strong>
                                             </div>
@@ -210,7 +210,7 @@
 														<span class="txt-tit">로밍 카드/쿠폰</span>
 													</span>
                                                 <span class="located bottom">
-														<span class="txt-detail">T 로밍 데이터 무제한 OnePass 요금제를 <br/>보다 편리하게 이용해 보세요.</span>
+														<span class="txt-detail">T로밍 데이터 무제한 OnePass 요금제를 <br/>보다 편리하게 이용해 보세요.</span>
 													</span>
                                                 <!--<span class="ico"><img src="<%= CDN %>/img/product/ico-roaming-service03.png" alt="T로밍 아시아패스" /></span>-->
                                             </button>
@@ -230,9 +230,9 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                <ul class="noti-list">
-                    <li>이용 관련 안내 <button type="button" class="tip-view" id="RM_03_01_01_01_tip_03" title="~~정보보기" aria-haspopup="true">TIP</button></li>
-                    <li>요금제 관련 안내 <button type="button" class="tip-view" id="RM_03_01_01_01_tip_04" title="~~정보보기" aria-haspopup="true">TIP</button></li>
+                <ul class="noti-list02">
+                    <li><button type="button" id="RM_03_01_01_01_tip_03" class="tip-view-btn" title="~~정보보기" aria-haspopup="true">이용 관련 안내 <span class="tip-view">TIP</span></button></li>
+                    <li><button type="button" id="RM_03_01_01_01_tip_04" class="tip-view-btn" title="~~정보보기" aria-haspopup="true">요금제 관련 안내 <span class="tip-view">TIP</span></button></li>
                 </ul>
             </div>
             <!--// .cont-box -->

@@ -2,16 +2,14 @@
  * FileName: main.home.js
  * Author: Ara Jo (araara.jo@sk.com)
  * Date: 2018.10.06
-
  */
 
 Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._nativeSrevice = Tw.Native;
+  this._nativeService = Tw.Native;
   this._historyService = new Tw.HistoryService();
-  this._lineRegisterLayer = new Tw.LineRegisterComponent();
   this._tidLanding = new Tw.TidLandingComponent();
 
   this._smartCardOrder = JSON.parse(smartCard);
@@ -26,11 +24,14 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
 
   this._lineComponent = new Tw.LineComponent();
 
-  this._openEmrNotice(emrNotice);
+  this._initEmrNotice(emrNotice, isLogin === 'true');
+
   this._setBanner();
   this._cachedDefaultElement();
+
   this._bindEventStore();
   this._bindEventLogin();
+
   this._getQuickMenu(isLogin === 'true');
 
   if ( isLogin === 'true' ) {
@@ -38,9 +39,10 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
     this._initWelcomsMsg();
     this._bindEvent();
     this._initScroll();
+    this._setCoachMark();
   }
 
-  this._nativeSrevice.send(Tw.NTV_CMD.CLEAR_HISTORY, {});
+  this._nativeService.send(Tw.NTV_CMD.CLEAR_HISTORY, {});
 };
 
 Tw.MainHome.prototype = {
@@ -76,19 +78,16 @@ Tw.MainHome.prototype = {
     this.$container.on('click', '#fe-bt-data-link', $.proxy(this._openDataLink, this));
     this.$container.on('click', '#fe-bt-link-broadband', $.proxy(this._onClickGoBroadband, this));
     this.$container.on('click', '#fe-bt-link-billguide', $.proxy(this._onClickGoBillGuide, this));
+
+    this.$hiddenLine = this.$container.find('#fe-bt-hidden-line-register');
+    this.$hiddenPwdGuide = this.$container.find('#fe-bt-hidden-pwd-guide');
+    this.$hiddenNotice = this.$container.find('#fe-bt-hidden-notice');
+    this.$hiddenNewLine = this.$container.find('#fe-bt-hidden-new-line');
+    this.$hiddenNotice.on('click', $.proxy(this._onHiddenEventNotice, this));
   },
   _bindEventStore: function () {
-    this.$container.on('click', '#fe-bt-direct-support', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_SUPPORT));
-    this.$container.on('click', '#fe-bt-direct-home', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_HOME));
-    this.$container.on('click', '.fe-bt-direct-home', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_HOME));
-    this.$container.on('click', '#fe-bt-direct-accessory', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_ACCESSORY));
-    this.$container.on('click', '#fe-bt-direct-phone', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_PHONE));
-    this.$container.on('click', '#fe-bt-direct-tablet', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_TABLET));
-    this.$container.on('click', '#fe-bt-direct-nugu', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_NUGU));
-    this.$container.on('click', '.fe-bt-direct-nugu', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.DIRECT_NUGU));
-    this.$container.on('click', '#fe-bt-iphone-xs', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.IPHONE_XS));
-    this.$container.on('click', '#fe-bt-iphone-xr', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.IPHONE_XR));
-    this.$container.on('click', '#fe-bt-galaxy-s9', $.proxy(this._onClickExternalLink, this, Tw.OUTLINK.GALAXY_S9));
+    this.$container.on('click', '.fe-home-external', $.proxy(this._onClickExternal, this));
+    this.$container.on('click', '.fe-home-internal', $.proxy(this._onClickInternal, this));
   },
   _bindEventLogin: function () {
     this.$container.on('click', '.fe-bt-home-login', $.proxy(this._onClickLogin, this));
@@ -104,8 +103,17 @@ Tw.MainHome.prototype = {
   _onClickSignup: function () {
     this._tidLanding.goSignup();
   },
-  _onClickExternalLink: function (url) {
+  _onClickExternal: function ($event) {
+    var url = $($event.currentTarget).data('url');
     Tw.CommonHelper.openUrlExternal(url);
+  },
+  _onClickInternal: function ($event) {
+    var url = $($event.currentTarget).data('url');
+    this._historyService.goLoad(url);
+    // Tw.CommonHelper.openUrlInApp(url);
+
+    $event.preventDefault();
+    $event.stopPropagation();
   },
   _onClickLine: function ($event) {
     var svcMgmtNum = $($event.currentTarget).data('svcmgmtnum');
@@ -115,7 +123,8 @@ Tw.MainHome.prototype = {
     var cardNum = this.$elBarcode.data('cardnum');
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
       this.$elBarcode.JsBarcode(cardNum, {
-        background: 'rgba(255, 255, 255, 0)'
+        background: 'rgba(255, 255, 255, 0)',
+        displayValue: false
       });
     }
   },
@@ -123,8 +132,9 @@ Tw.MainHome.prototype = {
     if ( this.$elBarcode.length > 0 ) {
       var cardNum = this.$elBarcode.data('cardnum');
       var mbrGr = this.$barcodeGr.data('mbrgr');
+      var showCardNum = this.$elBarcode.data('showcard');
       this._apiService.request(Tw.API_CMD.BFF_11_0001, {})
-        .done($.proxy(this._successMembership, this, mbrGr, cardNum));
+        .done($.proxy(this._successMembership, this, mbrGr, cardNum, showCardNum));
     }
 
   },
@@ -137,15 +147,15 @@ Tw.MainHome.prototype = {
       }
     }
   },
-  _successMembership: function (mbrGr, cardNum, resp) {
+  _successMembership: function (mbrGr, cardNum, showCardNum, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var usedAmt = resp.result.mbrUsedAmt;
-      this._openBarcodePopup(mbrGr, cardNum, Tw.FormatHelper.addComma((+usedAmt).toString()));
+      this._openBarcodePopup(mbrGr, cardNum, showCardNum, Tw.FormatHelper.addComma((+usedAmt).toString()));
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
-  _openBarcodePopup: function (mbrGr, cardNum, usedAmount) {
+  _openBarcodePopup: function (mbrGr, cardNum, showCardNum, usedAmount) {
     this._popupService.open({
       hbs: 'HO_01_01_02',
       layer: true,
@@ -153,6 +163,7 @@ Tw.MainHome.prototype = {
         mbrGr: mbrGr,
         mbrGrStr: mbrGr.toUpperCase(),
         cardNum: cardNum,
+        showCardNum: showCardNum,
         usedAmount: usedAmount
       }
     }, $.proxy(this._onOpenBarcode, this, cardNum));
@@ -166,7 +177,11 @@ Tw.MainHome.prototype = {
     }
 
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
-      $extendBarcode.JsBarcode(cardNum, { height: 75, margin: 0 });
+      $extendBarcode.JsBarcode(cardNum, {
+        height: 60,
+        margin: 0,
+        displayValue: false
+      });
     }
   },
   _onClickGoBroadband: function () {
@@ -216,40 +231,27 @@ Tw.MainHome.prototype = {
     this._targetDataLink = this.DATA_LINK.FAMILY;
     this._popupService.close();
   },
-  _openEmrNotice: function (notice) {
+  _initEmrNotice: function (notice, isLogin) {
     if ( notice === 'true' ) {
-      this._getHomeNotice();
-    } else {
-      this._openLineResisterPopup();
+      this._getHomeNotice(isLogin);
     }
   },
-  _getHomeNotice: function () {
+  _getHomeNotice: function (isLogin) {
     this._apiService.request(Tw.NODE_CMD.GET_HOME_NOTICE, {})
-      .done($.proxy(this._successHomeNotice, this));
+      .done($.proxy(this._successHomeNotice, this, isLogin));
   },
-  _successHomeNotice: function (resp) {
+  _successHomeNotice: function (isLogin, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._openNoticePopup(resp.result.emrNotice);
-    } else {
-      this._openLineResisterPopup();
+      this._openEmrNotice(resp.result.emrNotice, isLogin);
     }
   },
-  _openNoticePopup: function (notice) {
+  _openEmrNotice: function (notice, isLogin) {
     var startTime = Tw.DateHelper.convDateFormat(notice.bltnStaDtm).getTime();
     var endTime = Tw.DateHelper.convDateFormat(notice.bltnEndDtm).getTime();
     var today = new Date().getTime();
     this._emrNotice = notice;
     if ( today > startTime && today < endTime && this._checkShowEmrNotice(notice, today) ) {
-      this._popupService.open({
-        'pop_name': 'type_tx_scroll',
-        'title': notice.ntcTitNm,
-        'title_type': 'sub',
-        'cont_align': 'tl',
-        'contents': notice.ntcCtt,
-        'bt_b': this._makeBtnList(notice)
-      }, $.proxy(this._onOpenNotice, this), $.proxy(this._onCloseNotice, this));
-    } else {
-      this._openLineResisterPopup();
+      this.$hiddenNotice.trigger('click', notice);
     }
   },
   _checkShowEmrNotice: function (notice, today) {
@@ -261,6 +263,16 @@ Tw.MainHome.prototype = {
       return stored.time < today;
     }
     return true;
+  },
+  _openEmrNoticePopup: function (notice) {
+    this._popupService.open({
+      'pop_name': 'type_tx_scroll',
+      'title': notice.ntcTitNm,
+      'title_type': 'sub',
+      'cont_align': 'tl',
+      'contents': notice.ntcCtt,
+      'bt_b': this._makeBtnList(notice)
+    }, $.proxy(this._onOpenNotice, this), $.proxy(this._onCloseNotice, this));
   },
   _makeBtnList: function (notice) {
     var NOTI_POPUP_STYLE = {
@@ -283,7 +295,6 @@ Tw.MainHome.prototype = {
     $popupContainer.on('click', '.fe-bt-never', $.proxy(this._confirmNoticeNever));
   },
   _onCloseNotice: function () {
-    this._openLineResisterPopup();
   },
   _confirmNoticeOneday: function () {
     var today = new Date();
@@ -305,42 +316,6 @@ Tw.MainHome.prototype = {
       time: time || ''
     };
     Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.HOME_EMR_NOTICE, JSON.stringify(store));
-  },
-  _openLineResisterPopup: function () {
-    var layerType = this.$container.data('layertype');
-    // var layerType = Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER;
-    Tw.Logger.info('[Home] layerType', layerType);
-    if ( !Tw.FormatHelper.isEmpty(layerType) ) {
-      this._updateNoticeType();
-      if ( layerType === Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER || layerType === Tw.LOGIN_NOTICE_TYPE.EXIST_CUSTOMER ) {
-        setTimeout($.proxy(function () {
-          this._lineRegisterLayer.openRegisterLinePopup(layerType);
-        }, this), 100);
-      } else if ( layerType === Tw.LOGIN_NOTICE_TYPE.CUSTOMER_PASSWORD ) {
-        this._openCustomerPasswordGuide();
-      } else if ( layerType === Tw.LOGIN_NOTICE_TYPE.NEW_LINE ) {
-        setTimeout($.proxy(function () {
-          this._popupService.openAlert(Tw.ALERT_MSG_HOME.NEW_LINE, null, null, $.proxy(this._closeNewLine, this));
-        }, this), 100);
-      }
-    }
-  },
-  _updateNoticeType: function () {
-    this._apiService.request(Tw.NODE_CMD.UPDATE_NOTICE_TYPE, {})
-      .done($.proxy(this._successUpdateNoticeType, this));
-  },
-  _closeNewLine: function () {
-    this._historyService.goLoad('/common/member/line');
-  },
-  _openCustomerPasswordGuide: function () {
-    this._popupService.openTypeD(Tw.LOGIN_CUS_PW_GUIDE.TITLE, Tw.LOGIN_CUS_PW_GUIDE.CONTENTS, Tw.LOGIN_CUS_PW_GUIDE.BUTTON, '',
-      null, $.proxy(this._confirmCustPwGuide, this), $.proxy(this._closeCustPwGuide, this));
-  },
-  _confirmCustPwGuide: function () {
-    this._popupService.close();
-  },
-  _closeCustPwGuide: function () {
-    this._historyService.goLoad('/myt-join/custpassword');
   },
   _cachedSmartCard: function () {
     for ( var i = 0; i < 16; i++ ) {
@@ -371,6 +346,7 @@ Tw.MainHome.prototype = {
       var $billTemp = $('#fe-smart-bill');
       var tplBillCard = Handlebars.compile($billTemp.html());
       element.html(tplBillCard(result));
+      element.removeClass('empty');
     } else {
       element.hide();
     }
@@ -385,18 +361,19 @@ Tw.MainHome.prototype = {
   },
   _parseBillData: function (billData) {
     var repSvc = billData.charge.repSvcYn === 'Y';
-    var totSvc = billData.charge.paidAmtMonthSvcCnt > 1;
-    return {
-      chargeAmtTot: Tw.FormatHelper.addComma(billData.charge.useAmtTot),
-      usedAmtTot: Tw.FormatHelper.addComma(billData.used.useAmtTot),
-      deduckTot: Tw.FormatHelper.addComma(billData.charge.deduckTotInvAmt),
-      invEndDt: Tw.DateHelper.getShortDate(billData.charge.invDt),
-      invStartDt: Tw.DateHelper.getShortFirstDate(billData.charge.invDt),
-      invMonth: Tw.DateHelper.getCurrentMonth(Tw.DateHelper.AddMonth(billData.charge.invDt)),
-      type1: totSvc && repSvc,
-      type2: !totSvc,
-      type3: totSvc && !repSvc
+    var totSvc = +billData.charge.paidAmtMonthSvcCnt;
+    var billName = repSvc ? 'charge' : 'used';
 
+    return {
+      isBroadband: false,
+      type1: repSvc,
+      type2: totSvc === 1,
+      type3: !repSvc && totSvc !== 1,
+      useAmtTot: Tw.FormatHelper.addComma(billData[billName].useAmtTot || '0'),
+      deduckTot: Tw.FormatHelper.addComma(billData[billName].deduckTotInvAmt || '0'),
+      invEndDt: Tw.DateHelper.getShortDate(billData[billName].invDt),
+      invStartDt: Tw.DateHelper.getShortFirstDate(billData[billName].invDt),
+      invMonth: Tw.DateHelper.getCurrentMonth(billData[billName].invDt)
     };
   },
   _getContentData: function (element) {
@@ -413,6 +390,7 @@ Tw.MainHome.prototype = {
       var $contentsTemp = $('#fe-smart-contents');
       var tplContentsCard = Handlebars.compile($contentsTemp.html());
       element.html(tplContentsCard(result));
+      element.removeClass('empty');
     } else {
       element.hide();
     }
@@ -449,6 +427,7 @@ Tw.MainHome.prototype = {
       var $microTemp = $('#fe-smart-micro-pay');
       var tplMicroCard = Handlebars.compile($microTemp.html());
       element.html(tplMicroCard(result));
+      element.removeClass('empty');
     } else {
       element.hide();
     }
@@ -469,55 +448,85 @@ Tw.MainHome.prototype = {
     }
   },
   _getGiftData: function (element, index) {
-    if ( new Date().getDate() === Tw.GIFT_BLOCK_USAGE ) {
-      this._drawGiftData(element, {
-        blockUsage: true
-      });
-    } else {
-      this._apiService.requestArray([
-        { command: Tw.API_CMD.BFF_06_0015, params: {} },
-        { command: Tw.API_CMD.BFF_06_0014, params: { reqCnt: Tw.GIFT_REMAIN_RETRY } }
-      ]).done($.proxy(this._successGiftData, this, element))
-        .fail($.proxy(this._failGiftData, this));
-    }
+    this._apiService.request(Tw.API_CMD.BFF_06_0015, {})
+      .done($.proxy(this._successGiftData, this, element))
+      .fail($.proxy(this._failGiftData, this));
   },
-  _successGiftData: function (element, sender, remain) {
-    var result = null;
-
-    if ( sender.code === Tw.API_CODE.CODE_00 ) {
-      result = this._parseGiftData(sender, remain);
+  _successGiftData: function (element, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      if ( new Date().getDate() === Tw.GIFT_BLOCK_USAGE ) {
+        this._drawGiftData(element, {
+          blockUsage: true
+        }, resp);
+      } else {
+        this._drawGiftData(element, this._parseGiftData(resp.result), resp);
+      }
+    } else {
+      element.hide();
     }
-    this._drawGiftData(element, result, sender);
     this._resetHeight();
   },
   _failGiftData: function () {
 
   },
   _drawGiftData: function (element, result, sender) {
-    if ( !Tw.FormatHelper.isEmpty(result) ) {
-      var $giftTemp = $('#fe-smart-gift');
-      var tplGiftCard = Handlebars.compile($giftTemp.html());
-      element.html(tplGiftCard(result));
-      $('#fe-bt-go-gift').on('click', $.proxy(this._onClickBtGift, this, sender));
-    } else {
-      element.hide();
+    var $giftTemp = $('#fe-smart-gift');
+    var tplGiftCard = Handlebars.compile($giftTemp.html());
+
+    element.html(tplGiftCard(result));
+    element.removeClass('empty');
+
+    var $textBalance = element.find('#fe-text-gift-balance');
+    var $btBalance = element.find('#fe-bt-gift-balance');
+    var $loading = element.find('#fe-text-gift-loading');
+    var $textError = element.find('#fe-text-error');
+    var $btGoGift = element.find('#fe-bt-go-gift');
+    var $textErrorBalance = element.find('#fe-text-error-balance');
+
+    $btGoGift.on('click', $.proxy(this._onClickBtGift, this, sender));
+    if ( !result.blockUsage ) {
+      $btBalance.on('click', $.proxy(this._onClickGiftBalance, this, $textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance));
+      this._getGiftBalance(0, $textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance);
     }
   },
-  _parseGiftData: function (sender, remain) {
+  _parseGiftData: function (sender) {
     return {
-      dataRemQty: this._parseRemainData(remain),
-      dataGiftCnt: sender.result.dataGiftCnt,
-      familyDataGiftCnt: sender.result.familyDataGiftCnt,
-      familyMemberYn: sender.result.familyMemberYn === 'Y',
-      goodFamilyMemberYn: sender.result.goodFamilyMemberYn === 'Y'
+      dataGiftCnt: sender.dataGiftCnt,
+      familyDataGiftCnt: sender.familyDataGiftCnt,
+      familyMemberYn: sender.familyMemberYn === 'Y',
+      goodFamilyMemberYn: sender.goodFamilyMemberYn === 'Y'
     };
   },
-  _parseRemainData: function (remain) {
-    if ( remain.code === Tw.API_CODE.CODE_00 ) {
-      return remain.result.dataRemQty;
+  _getGiftBalance: function (reqCnt, $textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance) {
+    setTimeout($.proxy(function () {
+      this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: reqCnt })
+        .done($.proxy(this._successGiftRemain, this, $textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance));
+    }, this), 3000);
+
+  },
+  _successGiftRemain: function ($textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      if ( resp.result.giftRequestAgainYn === 'N' ) {
+        if ( !Tw.FormatHelper.isEmpty(resp.result.dataRemQty) ) {
+          $loading.parent().addClass('none');
+          $textBalance.parent().removeClass('none');
+          var remain = Tw.FormatHelper.convDataFormat(resp.result.dataRemQty, 'MB');
+          $textBalance.text(remain.data);
+          $textBalance.parent().append(remain.unit);
+        } else {
+          $loading.parent().addClass('none');
+          $btBalance.parent().removeClass('none');
+        }
+      } else {
+        this._getGiftBalance(resp.result.reqCnt, $textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance);
+      }
     } else {
-      return '32.2';
-      // Tw.Error(remain.code, remain.msg).pop();
+      $btGoGift.parent().addClass('none');
+      $textError.text(resp.msg);
+      $textError.removeClass('none');
+
+      $loading.parent().addClass('none');
+      $textErrorBalance.removeClass('none');
     }
   },
   _onClickBtGift: function (sender) {
@@ -532,7 +541,12 @@ Tw.MainHome.prototype = {
     } else {
       this._popupService.openAlert(Tw.ALERT_MSG_HOME.A06);
     }
+  },
+  _onClickGiftBalance: function ($textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance) {
+    $loading.parent().removeClass('none');
+    $btBalance.parent().addClass('none');
 
+    this._getGiftBalance(0, $textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance);
   },
   _getRechargeData: function (element) {
     this._apiService.request(Tw.API_CMD.BFF_06_0001, {})
@@ -546,7 +560,8 @@ Tw.MainHome.prototype = {
       var $rechargeTemp = $('#fe-smart-recharge');
       var tplRechargeCard = Handlebars.compile($rechargeTemp.html());
       element.html(tplRechargeCard({ refillCoupons: refillCoupons }));
-      $('#fe-bt-go-recharge').on('click', $.proxy(this._onClickBtRecharge, this));
+      element.removeClass('empty');
+      element.on('click', '#fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
     } else {
       element.hide();
     }
@@ -618,7 +633,7 @@ Tw.MainHome.prototype = {
   },
   _initWelcomsMsg: function () {
     if ( Tw.BrowserHelper.isApp() ) {
-      this._nativeSrevice.send(Tw.NTV_CMD.IS_APP_CREATED, { key: Tw.NTV_PAGE_KEY.HOME_WELCOME }, $.proxy(this._onAppCreated, this));
+      this._nativeService.send(Tw.NTV_CMD.IS_APP_CREATED, { key: Tw.NTV_PAGE_KEY.HOME_WELCOME }, $.proxy(this._onAppCreated, this));
     } else {
       this._getWelcomeMsg();
     }
@@ -629,7 +644,7 @@ Tw.MainHome.prototype = {
     }
   },
   _getWelcomeMsg: function () {
-    this._nativeSrevice.send(Tw.NTV_CMD.IS_APP_CREATED, { key: Tw.NTV_PAGE_KEY.HOME_WELCOME }, $.proxy(this._onAppCreated, this));
+    this._nativeService.send(Tw.NTV_CMD.IS_APP_CREATED, { key: Tw.NTV_PAGE_KEY.HOME_WELCOME }, $.proxy(this._onAppCreated, this));
 
   },
   _onAppCreated: function (resp) {
@@ -641,7 +656,7 @@ Tw.MainHome.prototype = {
   _successWelcomeMsg: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( Tw.BrowserHelper.isApp() ) {
-        this._nativeSrevice.send(Tw.NTV_CMD.LOAD, {
+        this._nativeService.send(Tw.NTV_CMD.LOAD, {
           key: Tw.NTV_STORAGE.HOME_WELCOME
         }, $.proxy(this._onHomeWelcomeForDraw, this, resp.result.welcomeMsgList));
       } else {
@@ -694,7 +709,7 @@ Tw.MainHome.prototype = {
       nonShow = nonShow + ',' + this._welcomeList[0].wmsgId;
     }
     if ( Tw.BrowserHelper.isApp() ) {
-      this._nativeSrevice.send(Tw.NTV_CMD.SAVE, {
+      this._nativeService.send(Tw.NTV_CMD.SAVE, {
         key: Tw.NTV_STORAGE.HOME_WELCOME,
         value: nonShow
       });
@@ -848,5 +863,14 @@ Tw.MainHome.prototype = {
   },
   _onChangeQuickMenu: function () {
     this._getQuickMenu(true);
+  },
+  _onHiddenEventNotice: function ($event, notice) {
+    setTimeout($.proxy(function () {
+      this._openEmrNoticePopup(notice);
+    }, this), 1500);
+  },
+  _setCoachMark: function () {
+    new Tw.CoachMark(this.$container, 'fe-coach-line', Tw.NTV_STORAGE.COACH_LINE);
+    new Tw.CoachMark(this.$container, 'fe-coach-data', Tw.NTV_STORAGE.COACH_DATA);
   }
 };

@@ -1,0 +1,88 @@
+<!-- .popup hbs -->
+<div class="popup-page tw-popup nobg fixed-bottom h60">
+    <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <!-- #header -->
+    <div class="header-wrap noborder">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>공유 데이터 변경하기</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <div class="container">
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="ti-caption-type01">
+                    <h2 class="tit">변경할 데이터<button class="btn-tip" id="DC_02_04_01_tip_01"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></h2>
+                </div>
+                <div class="recently-tel-box">
+                    <div class="inputbox bt-add">
+                        <span class="input new">
+                            <input id="fe-changable" type="text" title="변경할 데이터" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1">
+                            <button class="cancel"><span class="blind">삭제</span></button>
+                        </span>
+                        <span class="r-btn type01">
+                            <button type="button" class="btn-type01" data-value="1">+1</button>
+                            <button type="button" class="btn-type01" data-value="5">+5</button>
+                            <button type="button" class="btn-type01" data-value="all">전체</button>
+                        </span>
+                    </div>
+                    <p class="input-txt-type02 pt4 none" id="fe-error">공유 가능 데이터를 초과했습니다.</span></p>
+                    <p class="input-txt-type01 pt10">공유한 데이터 : <strong class="txt-c1">{{detail.shrPotGbQty}}GB</strong> <span class="txt-c3">{{detail.shrPotDonaAplyDt}}</span></p>
+                    <p class="input-txt-type01 pt4">변경 가능 데이터 : <strong class="txt-c2">{{data}}GB</strong></p>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <!-- .cont-box -->
+            {{#if histories}}
+            <div class="cont-box pb0">
+                <div class="ti-caption-type01">
+                    <h2 class="tit">공유 데이터 변경 내역</h2>
+                </div>
+                <div class="data-list-type1">
+                    <ul class="type1">
+                        {{#each histories}}
+                        <li>
+                            <span class="stit"><strong>{{cancelTotGty}}GB</strong> 변경</span>
+                            <div class="sta">
+                                <span>{{cancelAplyDt}}</span>
+                            </div>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            {{/if}}
+
+            <div class="cont-box noborder bgnone">
+                <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                <ul class="pg-chk-list02">
+                    <li><button class="btn-tip" id="DC_02_04_01_tip_02">공유 데이터 변경하기 이용안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                </ul>
+            </div>
+
+            <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button disabled="disabled" id="fe-submit">나만 사용할 수 있는 데이터로 변경하기</button>
+                    </li>
+                </ul>
+            </div>
+            <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+        </div>
+    </div>
+    <!--// .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="prev-step">취소</button>
+    <!--// .popup-closeBtn -->
+</div>
+<!--// .popup hbs -->

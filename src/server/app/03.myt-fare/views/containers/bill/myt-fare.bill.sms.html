@@ -26,8 +26,8 @@
                 </div>
             </div>
             <!--// #header -->
-            <!-- #contents -->
-            <div id="contents" class="container-wrap">
+            <!-- .container-wrap -->
+            <div class="container-wrap">
                 <h2 class="blind">내용</h2>
                 <div class="container">
                     <% if (!isAllPaid) { %>
@@ -41,22 +41,24 @@
                     <!-- .cont-box -->
                     <% if (virtualBankList.length > 0) { %>
                     <div class="cont-box noborder">
-                        <div class="user-info-form">
+                        <div class="user-info-form" role="group">
                             <div class="info-form-box">
-                                <p class="form-label" id="aria-exp-label1">문자 받는 번호</p>
+                                <p class="form-label">문자 받는 번호</p>
                                 <span class="inputbox">
                                     <span class="input">
-                                      <input type="text" placeholder="핸드폰 번호" title="input" value="<%= svcInfo.svcNumber %>" maxlength="13"
-                                             aria-labelledby="aria-exp-label1" readonly>
+                                      <input type="text" placeholder="핸드폰 번호" title="문자 받는 핸드폰 번호" value="<%= svcInfo.svcNumber %>"
+                                             maxlength="13" readonly>
                                       <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                 </span>
                             </div>
                             <div class="info-form-box">
-                                <p class="form-label" id="aria-exp-label2">입금하실 계좌번호 <button id="MF_01_04_tip_01" class="tip-view">TIP</button></p>
+                                <p class="form-label">
+                                    입금하실 계좌번호 <button id="MF_01_04_tip_01" class="tip-view" title="입금하실 계좌번호" aria-haspopup="true" type="button">TIP</button>
+                                </p>
                                 <button id="<%= virtualBankList[0].bankCd %>" data-origin-id="<%= virtualBankList[0].bankCd %>"
                                         class="bt-dropdown big fe-account-selector"
-                                        title="은행 계좌번호" aria-haspopup="true">
+                                        title="입금하실 은행 계좌번호" aria-haspopup="true">
                                     <%= virtualBankList[0].sBankNm + ' ' + virtualBankList[0].sVirtualBankNum %><span class="ico"></span>
                                 </button>
                                 <ul class="fe-account-list none">
@@ -75,11 +77,27 @@
                     <div class="cont-box nogaps-btm">
                         <h3 class="tx-bold">꼭 확인해 주세요</h3>
                         <div class="announcement-box pt10"><p class="announcement-txt">타행에서 입금하는 경우 이체수수료가 부가될 수 있습니다.</p></div>
-                        <ul class="noti-list">
-                            <li>청구요금 정보확인 <button id="MF_01_04_tip_02" class="tip-view">TIP</button></li>
-                            <li>이용시간 안내 <button id="MF_01_04_tip_03" class="tip-view">TIP</button></li>
-                            <li>입금전용계좌 안내 <button id="MF_01_04_tip_04" class="tip-view">TIP</button></li>
-                            <li>통합청구이용고객 안내 <button id="MF_01_01_tip_03" class="tip-view">TIP</button></li>
+                        <ul class="noti-list02">
+                            <li>
+                                <button id="MF_01_04_tip_02" class="tip-view-btn" title="청구요금 정보확인" aria-haspopup="true" type="button">
+                                    청구요금 정보확인<span class="tip-view">TIP</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button id="MF_01_04_tip_03" class="tip-view-btn" title="이용시간 안내" aria-haspopup="true" type="button">
+                                    이용시간 안내<span class="tip-view">TIP</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button id="MF_01_04_tip_04" class="tip-view-btn" title="입금전용계좌 안내" aria-haspopup="true" type="button">
+                                    입금전용계좌 안내<span class="tip-view">TIP</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button id="MF_01_01_tip_03" class="tip-view-btn" title="통합청구이용고객 안내" aria-haspopup="true" type="button">
+                                    통합청구이용고객 안내<span class="tip-view">TIP</span>
+                                </button>
+                            </li>
                         </ul>
                     </div>
                     <!--// .cont-box -->

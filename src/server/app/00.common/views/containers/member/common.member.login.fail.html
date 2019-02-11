@@ -6,55 +6,55 @@
 
 <% include ../../components/start.component.html %>
 <!-- #skip_navigation -->
-<body>
-    <!-- #skip_navigation -->
-    <div id="skipNav" class="skip_navi">
-        <ul>
-            <li><a href="#contents">본문 바로가기</a></li>
-        </ul>
+<body class="bg-white">
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div id="commonLoginFail" class="wrap">
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <div class="container">
+
+        </div>
     </div>
-    <!--// #skip_navigation -->
-    <div id="commonLoginFail" class="wrap">
-        <!-- #header -->
-        <div id="header" class="header-wrap"></div>
-        <!--// #header -->
-        <!-- #contents -->
-        <div id="contents" class="container-wrap">
+    <!--// #contents -->
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup fixed-btn pt0">
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
             <div class="container">
+                <h3 class="complete-title pt60">
+                    <img src="<%= CDN %>/img/ico/ico-login-fail.png" alt=""/>
+                    <span><strong>로그인 실패</strong></span>
+                </h3>
+                <p class="complete-error-tx pt32">
+                    <span class="tx2">일시적인 오류로 <strong class="str">다시 한번<br />로그인을 시도</strong>해 주시기 바랍니다.</span><br/>
+                    <span class="code">에러코드 <%= errorCode %></span>
+                </p>
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button class="fe-bt-replace-login">로그인 하기</button>
+                    </li>
+                </ul>
             </div>
         </div>
-        <!--// #contents -->
-        <!-- .popup hbs -->
-        <div class="popup-page tw-popup pt0 fixed-bottom">
-            <!-- .container-wrap -->
-            <div class="container-wrap">
-                <div class="container">
-                    <div class="complete-wrap">
-                        <div class="title-box">
-                            <i class="icon-warning-120"><span class="blind">warning</span></i>
-                            <p class="tx-tit">
-                                <span class="tx-highlight">로그인 실패</span>
-                            </p>
-                        </div>
-                        <div class="tx-contents">
-                            <p class="basic-txt">일시적인 오류로 <strong class="str">다시 한번<br />로그인을 시도</strong>해 주시기 바랍니다.</p>
-                            <ul class="bt-slice item-one">
-                                <li><button type="button" class="btn-round2 btn-style3 fe-bt-login">로그인하기</button></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--// .container-wrap -->
-        </div>
-        <!--// .popup hbs -->
+        <!--// .container-wrap -->
     </div>
+    <!--// .popup hbs -->
+</div>
 </body>
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
     new Tw.CommonMemberLoginFail($('#commonLoginFail'));
-    new Tw.TidLandingComponent($('#commonLoginFail'));
+    new Tw.TidLandingComponent($('#commonLoginFail'), '<%= target %>');
   });
 </script>
 <% include ../../components/end.component.html %>

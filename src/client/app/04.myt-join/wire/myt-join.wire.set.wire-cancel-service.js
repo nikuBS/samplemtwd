@@ -40,6 +40,13 @@ Tw.MyTJoinWireSetWireCancelService = function (rootEl, resData) {
 
   this.cancelFeeInfo = null;
 
+  if(resData.resDataInfo.skbdYn === 'Y' ){
+    // sk브로드밴드인 경우 팝업 변경 (myt-join공통함수로 처리)
+    (new Tw.MyTJoinCommon()).openSkbdAlertOnInit(this._history);
+
+    return;
+  }
+
   this._init();
 
 };
@@ -51,6 +58,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     this._memberPhoneSet();
     Tw.Logger.info('[dataModel]', this.dataModel);
   },
+
   _cachedElement: function () {
 
     this.infoLi= $('[data-target="infoLi"]'); // 안내사항 확인
@@ -88,25 +96,24 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
 
     this.$container.on('click', '#page-prev-step', $.proxy(this._closeCheck, this));
 
-    // 동적으로 화면 추가되는 경우 tip 팝업 띄우기
-    this.$container.on('click', 'button[id=MS_04_08_tip_05]', function(){
-      var item = _.find(Tw.Tooltip._contentList, function(obj){ return obj.mtwdTtipId === 'MS_04_08_tip_05' });
-      $.proxy(Tw.Tooltip._openTip, Tw.Tooltip, item)();
-    });
   },
   //--------------------------------------------------------------------------[EVENT]
   _closeCheck: function(){
 
-    if(this.dataModel.productList > 0 ||
+    if($('input[name=checkbox-conf-info]:checked').length > 0 ||
+      this.productLi.find('input[type=checkbox]:checked').length > 0 ||
       this.dataModel.TerminationDtStr ||
       $('[data-target="input_hp"]').val()) {
 
-      this._popupService.openConfirm(
+      this._popupService.openConfirmButton(
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
         $.proxy(function(){
           this._history.goLoad('/myt-join/submain_w');
-        }, this));
+        }, this),
+        null,
+        Tw.BUTTON_LABEL.NO,
+        Tw.BUTTON_LABEL.YES);
     } else {
       this._history.goBack();
     }
@@ -582,6 +589,9 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
       //   dtInfo : Tw.DateHelper.getShortDateNoDot(this.cancelFeeInfo.reqDate)
       // };
       // this._svcHbDetailList(textDtObj, this.outputDtArea, this.$entryTplDate);
+
+      // 동적으로 화면 추가되는 경우 tip 팝업 띄우기
+      Tw.Tooltip.separateInit();
 
     } else if ( res.code === 'ZINVE8888' ) {
       $('#divEmpty').show();

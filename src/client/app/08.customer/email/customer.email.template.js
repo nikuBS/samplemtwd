@@ -43,6 +43,9 @@ Tw.CustomerEmailTemplate.prototype = {
   },
 
   _changeServiceTemplate: function (e, serviceCategory) {
+    e.stopPropagation();
+    e.preventDefault();
+
     switch ( serviceCategory.depth1 ) {
       case 'CELL':
         var templatePlaceholder = this._setTemplatePlaceholder(serviceCategory);
@@ -69,9 +72,13 @@ Tw.CustomerEmailTemplate.prototype = {
     }
 
     skt_landing.widgets.widget_init();
+    Tw.Tooltip.separateInit(this.$wrap_tpl_service.find('.btn-tip'));
   },
 
   _changeQualityTemplate: function (e, qualityCategory, qualityType) {
+    e.stopPropagation();
+    e.preventDefault();
+
     switch ( qualityCategory.depth1 ) {
       case 'cell':
         if ( qualityType && qualityType.isWibro ) {
@@ -92,6 +99,7 @@ Tw.CustomerEmailTemplate.prototype = {
     }
 
     skt_landing.widgets.widget_init();
+    Tw.Tooltip.separateInit(this.$wrap_tpl_quality.find('.btn-tip'));
   },
 
   _setTemplatePlaceholder: function (serviceCategory) {

@@ -34,7 +34,9 @@
             <div class="container">
 
                 <div class="ti-caption-gray">
-                    <h4 class="tit">지정번호 설정 <button id="RM_11_01_02_01_tip_01" page-id="M000485" type="button" class="tip-view" title="지정번호 설정 정보보기" aria-haspopup="true">TIP</button></h4>
+                    <button type="button" class="tip-view-btn" id="RM_11_01_02_01_tip_01" aria-haspopup="true">
+                        지정번호 설정<span class="tip-view">TIP</span>
+                    </button>
                     <p class="num"><%= phoneNum %></p>
                 </div>
 
@@ -64,23 +66,28 @@
                 <!--// .cont-box -->
 
                 <hr class="cont-sp type1 list_contents" aria-hidden="true">
-
-                <!-- .cont-box -->
                 <div class="cont-box nogaps list_contents">
                     <div class="input-number-wrap">
                         <h3 class="tit type1">지정번호 신청된 회선</h3>
                         <div class="list-comp-thumnail">
                             <ul class="comp-box" id="alarm_list">
-                                <script id="alarm_template" type="text/x-handlebars-template">
-                                    <li class="list-box type-main"><!-- 190117 타이틀이 전화번호인 경우 -->
-                                        <p class="list-text">
-                                            <span class="mtext">{{phoneData.phoneNum.serviceNumber1}}-{{phoneData.phoneNum.serviceNumber2}}-{{phoneData.phoneNum.serviceNumber3}}</span>
-                                        </p>
-                                        <div class="list-btn">
-                                            <div class="bt-alone"><button data-idx="{{phoneData.idx}}" class="bt-line-gray1">해지</button></div>
+                                <% for(var i=0;i<prodBffInfo.combinationLineList.length;i++){ %>
+                                <li class="list-box type-main"><!-- 190117 타이틀이 전화번호인 경우 -->
+                                    <p class="list-text">
+                                        <span class="mtext">
+                                            <%= prodBffInfo.combinationLineList[i].svcNumMask %></span>
+                                    </p>
+                                    <div class="list-btn">
+                                        <div class="bt-alone">
+                                            <% if (svcInfo && locals.pageInfo && pageInfo.auth && pageInfo.auth.cert && pageInfo.auth.cert.maskAuthYn === 'Y' && !pageInfo.masking) { %>
+                                            <button class="bt-line-gray1 fe-bt-masking" type="button" data-menuid="<%= pageInfo.menuId %>" data-menuurl="<%= pageInfo.menuUrl %>">해지</button>
+                                            <% } else { %>
+                                            <button class="bt-line-gray1 fe-btn_del_num" data-idx="<%= i %>" >해지</button>
+                                            <% } %>
                                         </div>
-                                    </li>
-                                </script>
+                                    </div>
+                                </li>
+                                <% } %>
                             </ul>
                         </div>
                     </div>
@@ -91,8 +98,12 @@
 
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해주세요!</h3>
-                    <ul class="noti-list">
-                        <li>서비스 이용안내 <button type="button" id="RM_11_01_02_01_tip_02" page-id="M000485" class="tip-view" title="정보보기" aria-haspopup="true">TIP</button></li>
+                    <ul class="noti-list02">
+                        <li>
+                            <button type="button" class="tip-view-btn"  id="RM_11_01_02_01_tip_02" aria-haspopup="true">
+                                서비스 이용안내<span class="tip-view">TIP</span>
+                            </button>
+                        </li>
                     </ul>
                 </div>
 

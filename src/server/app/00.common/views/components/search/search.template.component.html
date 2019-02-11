@@ -6,7 +6,7 @@
 
 <script type="text/x-handlebars-template" id="shortcut_template">
     <li>
-        <a data-link="{{listData.MENU_URL}}" class="shortcut-element list-data" data-category="shortcut" data-id="{{listData.DOCID}}" data-tit="{{removeTag listData.MENU_NM}}">
+        <a href="{{listData.MENU_URL}}" class="shortcut-element list-data" data-category="shortcut" data-id="{{listData.DOCID}}" data-tit="{{removeTag listData.MENU_NM}}">
             <span class="main-category">{{{listData.MENU_NM}}}</span>
             <span class="sub-category">{{{listData.DEPTH_PATH}}}</span>
         </a>
@@ -15,7 +15,7 @@
 
 <script type="text/x-handlebars-template" id="rate_template">
     <li class="category-type">
-        <a class="link rate-element list-data" data-link="/product/callplan/{{listData.PRID}}" data-category="rate" data-id="{{listData.DOCID}}"  data-tit="{{removeTag listData.PROD_NM}}">
+        <a class="link rate-element list-data" href="/product/callplan/{{listData.PRID}}" data-category="rate" data-id="{{listData.DOCID}}"  data-tit="{{removeTag listData.PROD_NM}}">
             <div class="products-titleinfo">
                 <p class="title">{{{listData.PROD_NM}}}</p>
                 <p class="info">
@@ -38,13 +38,21 @@
                 {{#ifCond listData.BAS_OFR_DATA_QTY_CTT '!==' ''}}
                 <li class="category-type type01">
                     <p class="gb">
-                        <span>{{listData.BAS_OFR_DATA_QTY_CTT}}</span>GB
+                        {{#isNaN listData.BAS_OFR_DATA_QTY_CTT}}
+                            <span>{{listData.BAS_OFR_DATA_QTY_CTT}}</span>
+                        {{else}}
+                            <span>{{listData.BAS_OFR_DATA_QTY_CTT}}</span>GB
+                        {{/isNaN}}
                     </p>
                 </li>
                 {{else ifCond listData.BAS_OFR_MB_DATA_QTY_CTT '!==' ''}}
                 <li class="category-type type01">
                     <p class="gb">
-                        <span>{{listData.BAS_OFR_MB_DATA_QTY_CTT}}</span>MB
+                        {{#isNaN listData.BAS_OFR_MB_DATA_QTY_CTT}}
+                            <span>{{listData.BAS_OFR_MB_DATA_QTY_CTT}}</span>
+                        {{else}}
+                            <span>{{listData.BAS_OFR_MB_DATA_QTY_CTT}}</span>MB
+                        {{/isNaN}}
                     </p>
                 </li>
                 {{/ifCond}}
@@ -77,7 +85,7 @@
 
 <script type="text/x-handlebars-template" id="banner_template">
     <div class="search-banner">
-        <a data-link="{{listData.IMG_LINK_URL}}" class="banner-element list-data" data-id="{{listData.DOCID}}" data-category="banner" data-tit="{{removeTag listData.TITLE_NM}}">
+        <a href="{{listData.IMG_LINK_URL}}" class="banner-element list-data" data-id="{{listData.DOCID}}" data-category="banner" data-tit="{{removeTag listData.TITLE_NM}}">
             <img src="{{CDN}}{{listData.BNNR_FILE_PATH_NM}}" alt="{{listData.TITLE_NM}}">
         </a>
     </div>
@@ -86,7 +94,7 @@
 
 <script type="text/x-handlebars-template" id="service_template">
     <li class="category-type">
-        <a class="link service-element list-data" data-link="/product/callplan/{{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="service" data-tit="{{removeTag listData.PROD_NM}}">
+        <a class="link service-element list-data" href="/product/callplan/{{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="service" data-tit="{{removeTag listData.PROD_NM}}">
             <div class="products-titleinfo">
                 <p class="title">{{{listData.PROD_NM}}}</p>
                 <p class="info">
@@ -113,7 +121,7 @@
 
 <script type="text/x-handlebars-template" id="tv_template">
     <li class="category-type">
-        <a data-link="/product/callplan/{{listData.PRID}}" class="link tv-element list-data" data-id="{{listData.DOCID}}" data-category="tv" data-tit="{{removeTag listData.PROD_NM}}">
+        <a href="/product/callplan/{{listData.PRID}}" class="link tv-element list-data" data-id="{{listData.DOCID}}" data-category="tv" data-tit="{{removeTag listData.PROD_NM}}">
             <div class="products-titleinfo">
                 <p class="title">{{{listData.PROD_NM}}}</p>
                 <p class="info">
@@ -134,7 +142,7 @@
 
 <script type="text/x-handlebars-template" id="roaming_template">
     <li class="category-type">
-        <a class="link roaming-element list-data" data-link="/product/callplan/{{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="roaming" data-tit="{{removeTag listData.PROD_NM}}">
+        <a class="link roaming-element list-data" href="/product/callplan/{{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="roaming" data-tit="{{removeTag listData.PROD_NM}}">
             <div class="products-titleinfo">
                 <p class="title">{{{listData.PROD_NM}}}</p>
                 <p class="info">
@@ -159,15 +167,15 @@
 
 <script type="text/x-handlebars-template" id="app_template">
     <li>
-        <a class="app-element list-data" data-link="/product/apps/app?appId={{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="app" data-tit="{{removeTag listData.PROD_NM}}">
-            <span class="app-img"><img src="{{listData.IMG}}" alt=""></span>
+        <a class="app-element list-data" href="/product/apps/app?appId={{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="app" data-tit="{{removeTag listData.PROD_NM}}">
+            <div class="app-img"><img src="{{CDN}}{{listData.IMG}}" alt="{{removeTag listData.PROD_NM}}"></div>
             <span class="txt">{{{listData.PROD_NM}}}</span>
         </a>
     </li>
 </script>
 
 <script id="direct_template" type="text/x-handlebars-template">
-    <li class="direct-element list-data" data-link="{{listData.ALIAS}}?CATEGORY_ID={{listData.CATEGORY_ID}}&ACCESSORY_ID={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="direct" data-tit="{{removeTag listData.PRODUCT_NM}}">
+    <li class="direct-element list-data" href="{{listData.ALIAS}}?CATEGORY_ID={{listData.CATEGORY_ID}}&ACCESSORY_ID={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="direct" data-tit="{{removeTag listData.PRODUCT_NM}}">
         <div class="img"><img src="{{CDN}}{{listData.IMG}}" alt="{{listData.IMG_ALT}}"></div>
         <div class="cont">
             <div class="tit">{{{listData.PRODUCT_NM}}}</div>
@@ -181,8 +189,8 @@
 
 <script type="text/x-handlebars-template" id="membership_template">
     <li>
-        <a class="link membership-element list-data" data-link="/membership/benefit/brand-benefit?brandCd={{listData.DOCID}}&cateCd={{listData.CATE_CD}}" title="T멤버십 상세보기" data-id="{{listData.DOCID}}" data-category="membership" data-tit="{{removeTag listData.BRAND_NM}}">
-            <div class="img"><img src="{{{listData.TITLE_IMG_URL}}}" alt="{{listData.CATE_NAME}}"></div>
+        <a class="link membership-element list-data" href="/membership/benefit/brand-benefit?brandCd={{listData.DOCID}}&cateCd={{listData.CATE_CD}}" title="{{removeTag listData.BRAND_NM}}" data-id="{{listData.DOCID}}" data-category="membership" data-tit="{{removeTag listData.BRAND_NM}}">
+            <div class="img"><img src="{{{listData.APP_ICO_IMG_URL}}}" alt="{{removeTag listData.BRAND_NM}}"></div>
             <div class="cont">
                 <div class="tit">{{{listData.BRAND_NM}}}</div>
                 <div class="txt1">{{{listData.CATE_NAME}}}</div>
@@ -208,7 +216,7 @@
 
 <script type="text/x-handlebars-template" id="sale_template">
     <li>
-        <button class="list in-img sale-element list-data" type="button" data-link="/product/callplan/{{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="sale" data-tit="{{removeTag listData.PROD_NM}}">
+        <button class="list in-img sale-element list-data" type="button" href="/product/callplan/{{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="sale" data-tit="{{removeTag listData.PROD_NM}}">
             <em>{{{listData.PROD_NM}}}</em>
             <p>{{{listData.PROD_SMRY_DESC}}}</p>
             <div>
@@ -218,7 +226,7 @@
                 {{/ifCond}}
                 {{/each}}
             </div>
-            <span class="img"><img src="{{CDN}}{{listData.IMG}}" alt="무엇이든 될 수 있는 0"></span>
+            <span class="img"><img src="{{CDN}}{{listData.IMG}}" alt="{{removeTag listData.PROD_NM}}"></span>
         </button>
     </li>
 </script>
@@ -227,9 +235,9 @@
     <li>
         <div class="b-cont">
             {{#ifCond listData.ALIAS '===' 'as'}}
-                <a class="bt-t as-element list-data" data-link="/customer/agentsearch/repair-detail?code={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="as" data-tit="{{removeTag listData.STORE_NAME}}">
+                <a class="bt-t as-element list-data" href="/customer/agentsearch/repair-detail?code={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="as" data-tit="{{removeTag listData.STORE_NAME}}">
             {{else}}
-                <a class="bt-t as-element list-data" data-link="/customer/agentsearch/detail?code={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="as" data-tit="{{removeTag listData.STORE_NAME}}">
+                <a class="bt-t as-element list-data" href="/customer/agentsearch/detail?code={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="as" data-tit="{{removeTag listData.STORE_NAME}}">
             {{/ifCond}}
                 <strong class="ti">{{{listData.STORE_NAME}}}</strong>
                 <span class="tx">{{{listData.SEARCH_ADDR}}}<br>({{{listData.JIBUN_ADDR}}})</span>
@@ -250,7 +258,7 @@
 
 <script id="notice_template" type="text/x-handlebars-template">
     <li>
-        <a class="b-cont notice-element list-data" data-link="/customer/svc-info/notice/view?ntcId={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="notice" data-tit="{{removeTag listData.NTC_TIT_NM}}">
+        <a class="b-cont notice-element list-data" href="/customer/svc-info/notice/view?ntcId={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="notice" data-tit="{{removeTag listData.NTC_TIT_NM}}">
             {{{listData.NTC_TIT_NM}}}
         </a>
     </li>
@@ -258,7 +266,7 @@
 
 <script type="text/x-handlebars-template" id="prevent_template">
     <li>
-        <a class="b-cont prevent-element list-data" data-link="/customer/damage-info/warning/view?idx={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="prevent" data-tit="{{removeTag listData.ICNTS_TIT_NM}}">
+        <a class="b-cont prevent-element list-data" href="/customer/damage-info/warning/view?idx={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="prevent" data-tit="{{removeTag listData.ICNTS_TIT_NM}}">
             {{{listData.ICNTS_TIT_NM}}}
         </a>
     </li>
@@ -266,7 +274,7 @@
 
 <script type="text/x-handlebars-template" id="manner_template">
     <li>
-        <a class="b-cont manner-element list-data" data-link="/customer/faq/do-like-this?id={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="manner" data-tit="{{removeTag listData.ICNTS_TIT_NM}}">
+        <a class="b-cont manner-element list-data" href="/customer/faq/do-like-this?id={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="manner" data-tit="{{removeTag listData.ICNTS_TIT_NM}}">
             {{{listData.ICNTS_TIT_NM}}}
         </a>
     </li>
@@ -274,17 +282,17 @@
 
 <script type="text/x-handlebars-template" id="serviceInfo_template">
     <li>
-        <a class="b-cont serviceInfo-element list-data" data-link="/customer/svc-info/service/detail?code={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="serviceInfo" data-tit="{{removeTag listData.ICNTS_TIT_NM}}">
+        <a class="b-cont serviceInfo-element list-data" href="/customer/svc-info/service/detail?code={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="serviceInfo" data-tit="{{removeTag listData.ICNTS_TIT_NM}}">
             <strong class="ti">{{{listData.ICNTS_TIT_NM}}}</strong>
-            <span class="tx">{{{listData.ICNTS_TIT_NM}}}</span>
+            <span class="tx">{{{listData.ICTG_PATH}}}</span>
         </a>
     </li>
 </script>
 
 <script id="siteInfo_template" type="text/x-handlebars-template">
     <li>
-        <a class="b-cont siteInfo-element list-data" data-link="/customer/svc-info/site/detail?code={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="siteInfo" data-tit="{{removeTag listData.ICNTS_TIT_NM}}">
-            <span class="img-box"><img class="lte" src="/img/dummy/dmy_product.png" alt="샘플이미지"></span>
+        <a class="b-cont siteInfo-element list-data" href="/customer/svc-info/site/detail?code={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="siteInfo" data-tit="{{removeTag listData.ICNTS_TIT_NM}}">
+            <span class="img-box"><img class="lte" src="{{CDN}}{{listData.THMB_IMG_PATH_NM}}" alt="{{listData.THMB_IMG_ALT_CTT}}"></span>
             <strong class="ti">{{{listData.ICNTS_TIT_NM}}}</strong>
             <span class="tx">{{{listData.ICTG_PATH}}}</span>
         </a>

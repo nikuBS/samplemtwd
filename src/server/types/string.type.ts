@@ -61,6 +61,31 @@ export const MYT_DATA_USAGE = {
     VOICE: 'voice',
     SMS: 'sms',
     ETC: 'etc'
+  },
+  ERROR: {
+    DEFAULT_TITLE: '잔여량 조회 서비스를 이용하실 수 없습니다.',
+    BLN0001: {
+      title: '잠시 후 다시 이용해주세요',
+      contents: '안정적으로 실시간 조회하실 수 있도록 조회 횟수를 제한합니다.'
+    },
+    BLN0002: {
+      contents: '당월 혹은 전월에 기존요금제로 재 변경한 이력이 있어 잔여량 조회 서비스 이용할 수 없습니다. 자세한 사항은 고객센터로 문의해주세요.'
+    },
+    BLN0003: {
+      contents: '당월 혹은 전월에 정지 이력이 있어 잔여량 조회 서비스를 이용할 수 없습니다. 자세한 사항은 고객센터로 문의해주세요.'
+    },
+    BLN0004: {
+      contents: '잔여량 조회 가능 항목이 없습니다. 자세한 사항은 고객센터로 문의해주세요.'
+    },
+    BLN0005: {
+      contents: '본인이 법정대리인으로 등록된 자녀 회선이 아닙니다. 자세한 사항은 고객센터로 문의해주세요.'
+    },
+    BLN0006: {
+      contents: '잔여량 조회에 실패하였습니다. 자세한 사항은 고객센터로 문의해주세요.'
+    },
+    BLN0007: {
+      contents: '잔여량 조회 가능 항목이 없습니다. 자세한 사항은 고객센터로 문의해주세요.'
+    }
   }
 };
 
@@ -806,7 +831,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     sub_list: [
       {
         sub_title: '요금 기준',
-        sub_text: '일반∙스마트폰 요금 기준이 궁금하다면',
+        sub_text: '일반/스마트폰 요금 기준이 궁금하다면',
         type: 'B1',
         code: 'C00031'
       },
@@ -853,14 +878,14 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    unitedTitle: 'T월드 다이렉트∙T멤버십∙T로밍에 대한 안내',
+    unitedTitle: 'T월드 다이렉트/T멤버십/T로밍에 대한 안내',
     united: '_3T',
     title: 'T월드 다이렉트 이용안내',
     text: 'T월드 다이렉트에서 구매를 원한다면',
     upperCat: true,
     sub_list: [
       {
-        sub_title: '할인∙혜택',
+        sub_title: '할인/혜택',
         sub_text: '',
         dep_list: [
           {
@@ -912,7 +937,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
         ]
       },
       {
-        sub_title: '배송∙개통',
+        sub_title: '배송/개통',
         sub_text: '',
         dep_list: [
           {
@@ -935,9 +960,9 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    unitedTitle: 'T월드 다이렉트∙T멤버십∙T로밍에 대한 안내',
+    unitedTitle: 'T월드 다이렉트/T멤버십/T로밍에 대한 안내',
     united: '_3T',
-    title: 'T멤버십∙T로밍에 대한 안내',
+    title: 'T멤버십/T로밍에 대한 안내',
     text: '',
     upperCat: false,
     sub_list: [
@@ -971,7 +996,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    title: '서비스 정책∙제도에 대한 안내',
+    title: '서비스 정책/제도에 대한 안내',
     sub_list: [
       {
         sub_title: '데이터 리필하기',
@@ -1004,7 +1029,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    title: '목소리 인증∙전화상담에 대한 안내',
+    title: '목소리 인증/전화상담에 대한 안내',
     sub_list: [
       {
         sub_title: 'ARS상담 이용안내',
@@ -1055,4 +1080,9 @@ export const MYT_SUSPEND_REASON = {
   5000342: '군입대',
   5000343: '해외체류',
   5000344: '해외체류'
+};
+
+export const BENEFIT_TBCOMBINATION_JOIN_STATUS = {
+  IS_COMBINED: '결합가능',
+  DIS_COMBINED: '결합완료'
 };

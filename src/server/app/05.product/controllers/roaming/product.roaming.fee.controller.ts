@@ -11,7 +11,7 @@ import FormatHelper from '../../../../utils/format.helper';
 import { Observable } from 'rxjs/Observable';
 import ProductHelper from '../../../../utils/product.helper';
 
-export default class ProductRoaming extends TwViewController {
+export default class ProductRoamingFee extends TwViewController {
     constructor() {
         super();
     }
@@ -27,15 +27,46 @@ export default class ProductRoaming extends TwViewController {
             ...(req.query.tag ? { searchTagId: req.query.tag } : {})
         };
 
-        Observable.combineLatest(
-            this.getRoamingData(),
-            this.getRoamingPlanData(params)
-        ).subscribe(([roamingData, roamingPlanData]) => {
+        if (this.isLogin(svcInfo)) {
+            Observable.combineLatest(
+                this.getRoamingData(),
+                this.getRoamingPlanData(params)
+            ).subscribe(([roamingData, roamingPlanData]) => {
 
-            res.render('roaming/product.roaming.fee.html',
-                { svcInfo, roamingData, roamingPlanData, params, isLogin: this.isLogin(svcInfo), pageInfo });
+                const error = {
+                    code: roamingPlanData.code || roamingData.code,
+                    msg: roamingPlanData.msg || roamingData.msg
+                };
 
-        });
+                if ( error.code ) {
+                    return this.error.render(res, { ...error, svcInfo });
+                }
+
+                res.render('roaming/product.roaming.fee.html',
+                    { svcInfo, roamingData, roamingPlanData, params, isLogin: this.isLogin(svcInfo), pageInfo });
+
+            });
+        } else {
+            Observable.combineLatest(
+                this.getRoamingPlanData(params)
+            ).subscribe(([roamingPlanData]) => {
+
+                const error = {
+                    code: roamingPlanData.code,
+                    msg: roamingPlanData.msg
+                };
+
+                if ( error.code ) {
+                    return this.error.render(res, { ...error, svcInfo });
+                }
+
+                res.render('roaming/product.roaming.fee.html',
+                    { svcInfo, roamingPlanData, params, isLogin: this.isLogin(svcInfo), pageInfo });
+
+            });
+        }
+
+
     }
 
     private isLogin(svcInfo: any): boolean {
@@ -53,7 +84,8 @@ export default class ProductRoaming extends TwViewController {
                 return roamingData;
             } else {
                 return {
-                    err: resp
+                    code: resp.code,
+                    msg: resp.msg
                 };
             }
 
@@ -74,6 +106,11 @@ export default class ProductRoaming extends TwViewController {
                             basFeeAmt: ProductHelper.convProductBasfeeInfo(roamingPlan.basFeeAmt)
                         };
                     })
+                };
+            } else {
+                return {
+                    code: resp.code,
+                    msg: resp.msg
                 };
             }
         });

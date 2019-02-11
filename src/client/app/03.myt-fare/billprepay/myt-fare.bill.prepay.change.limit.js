@@ -116,6 +116,7 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     $layer.on('click', '.fe-day', $.proxy(this._selectAmount, this));
     $layer.on('click', '.fe-once', $.proxy(this._selectAmount, this));
     $layer.on('click', '.fe-change', $.proxy(this._openChangeConfirm, this));
+    $layer.on('click', '.fe-close', $.proxy(this._onClose, this));
   },
   _getLittleAmount: function (amount) {
     var defaultValue = 50;
@@ -215,5 +216,21 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
   },
   _fail: function (err) {
     Tw.Error(err.code, err.msg).pop();
+  },
+  _onClose: function () {
+    if (this._isChanged()) {
+      this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
+        $.proxy(this._closePop, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+    } else {
+      this._popupService.close();
+    }
+  },
+  _isChanged: function () {
+    return this.$monthSelector.attr('id') !== this.$monthSelector.attr('origin-value') ||
+      this.$daySelector.attr('id') !== this.$daySelector.attr('origin-value') ||
+      this.$onceSelector.attr('id') !== this.$onceSelector.attr('origin-value');
+  },
+  _closePop: function () {
+    this._popupService.closeAll();
   }
 };

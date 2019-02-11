@@ -200,13 +200,33 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
 
       // thisMain._dataInit();
 
+      let skbdYn = 'N';
+      for ( let i = 0; i < thisMain._resDataInfo.wireList.length ; i++ ) {
+        if ( thisMain._resDataInfo.wireList[i].SVC_MGMT_NUM === svcInfo.svcMgmtNum ) {
+          if ( thisMain._resDataInfo.wireList[i].CO_CL_CD === 'B' ) {
+            skbdYn = 'Y';
+            break;
+          }
+        }
+      }
+      thisMain._resDataInfo.skbdYn = skbdYn;
+
+
+      for ( let i = thisMain._resDataInfo.wireList.length - 1; i >= 0; i-- ) {
+        // skb 상품 제외
+        if ( thisMain._resDataInfo.wireList[i].CO_CL_CD === 'B' ) {
+          thisMain._resDataInfo.wireList.splice(i, 1);
+        }
+      }
+
+
       thisMain.logger.info(thisMain, '[_urlTplInfo.pageRenderView] : ', thisMain._urlTplInfo.pageRenderView);
 
       thisMain.renderView(res, thisMain._urlTplInfo.pageRenderView, {
         reqQuery: thisMain.reqQuery,
         svcInfo: svcInfo,
         pageInfo: pageInfo,
-        allSvc: allSvc,
+        allSvc: thisMain.getAllSvcClone(allSvc),
         commDataInfo: thisMain._commDataInfo,
         resDataInfo: thisMain._resDataInfo
       });
@@ -293,6 +313,46 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
     }
     return false;
   }
+
+
+  /**
+   * allSvc에서 필요한 정보만 복사
+   * @param allSvc
+   */
+  private getAllSvcClone(allSvc: any) {
+    if ( !allSvc ) {
+      return null;
+    }
+    return {
+      'm': this.copyArr(allSvc.m),
+      's': this.copyArr(allSvc.s),
+      'o': this.copyArr(allSvc.o)
+    };
+  }
+  private copyArr(arr: Array<any>) {
+    if ( !arr ) {
+      return arr;
+    }
+    const tmpArr: Array<any> = [];
+    for ( let i = 0 ; i < arr.length; i++ ) {
+      tmpArr.push(this.copyObj(arr[i], ['svcNum', 'svcGr', 'actRepYn']));
+    }
+    return tmpArr;
+  }
+  private copyObj(obj: any, keys: Array<any>) {
+    if ( !obj ) {
+      return obj;
+    }
+    const tmp = {};
+    for ( let i = 0; i < keys.length; i++) {
+      if ( obj.hasOwnProperty(keys[i]) ) {
+        tmp[keys[i]] = obj[keys[i]];
+      }
+    }
+    return tmp;
+  }
+
+
 }
 
 export default MyTJoinWireSetWireCancelService;

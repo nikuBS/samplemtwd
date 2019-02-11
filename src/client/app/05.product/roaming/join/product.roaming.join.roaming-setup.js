@@ -223,18 +223,19 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
   },
   _bindCompletePopupBtnEvt : function($args1,$args2){
     $($args2).on('click','.btn-round2',$.proxy($args1._goMyInfo,$args1));
-    $($args2).on('click','.btn-floating',$.proxy($args1._goPlan,$args1));
+    $($args2).on('click','.btn-floating',$.proxy($args1._popupService.closeAll,$args1._popupService));
   },
   _goMyInfo : function(){
-    this._historyService.goLoad('/product/roaming/my-use');
+    var targetUrl = this._prodTypeInfo.prodTypCd==='H_P'?'/product/roaming/my-use':'/product/roaming/my-use#add';
+    this._popupService.closeAllAndGo(targetUrl);
   },
   _goPlan : function () {
     this._popupService.closeAll();
-    this._historyService.goBack();
+    setTimeout($.proxy(this._historyService.goBack,this._historyService),0);
   },
   _showCancelAlart : function (){
     var alert = Tw.ALERT_MSG_PRODUCT.ALERT_3_A1;
-    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, alert.BUTTON, Tw.BUTTON_LABEL.CLOSE,
+    this._popupService.openModalTypeATwoButton(alert.TITLE, alert.MSG, Tw.BUTTON_LABEL.YES, Tw.BUTTON_LABEL.NO,
       null,
       $.proxy(this._goPlan,this),
       null);

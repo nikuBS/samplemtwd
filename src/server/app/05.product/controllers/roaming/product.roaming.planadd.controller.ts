@@ -27,15 +27,49 @@ class ProductRoamingPlanAdd extends TwViewController {
             ...(req.query.tag ? { searchTagId: req.query.tag } : {})
         };
 
-        Observable.combineLatest(
-            this.getRoamingPlanAddCntData(),
-            this.getRoamingPlanAddData(params)
-        ).subscribe(([roamingAddCntData, roamingAddData]) => {
-            this.logger.info(this, 'roamingAddData : ', roamingAddData);
-            res.render('roaming/product.roaming.planadd.html',
-                { svcInfo, roamingAddCntData, roamingAddData, params, isLogin: this.isLogin(svcInfo), pageInfo });
+        if (this.isLogin(svcInfo)) {
+            Observable.combineLatest(
+                this.getRoamingPlanAddCntData(),
+                this.getRoamingPlanAddData(params)
+            ).subscribe(([roamingAddCntData, roamingAddData]) => {
+                this.logger.info(this, 'roamingAddData : ', roamingAddData);
 
-        });
+                const error = {
+                    code: roamingAddData.code || roamingAddCntData.code,
+                    msg: roamingAddData.msg || roamingAddCntData.msg
+                };
+
+                if ( error.code ) {
+                    return this.error.render(res, { ...error, svcInfo });
+                }
+
+                res.render('roaming/product.roaming.planadd.html',
+                    { svcInfo, roamingAddCntData, roamingAddData, params, isLogin: this.isLogin(svcInfo), pageInfo });
+
+            });
+        } else {
+            Observable.combineLatest(
+                                this.getRoamingPlanAddData(params)
+            ).subscribe(([roamingAddData]) => {
+                this.logger.info(this, 'roamingAddData : ', roamingAddData);
+
+                const error = {
+                    code: roamingAddData.code,
+                    msg: roamingAddData.msg
+                };
+
+                if ( error.code ) {
+                    return this.error.render(res, { ...error, svcInfo });
+                }
+
+                res.render('roaming/product.roaming.planadd.html',
+                    { svcInfo, roamingAddData, params, isLogin: this.isLogin(svcInfo), pageInfo });
+
+            });
+
+        }
+
+
     }
 
   private isLogin(svcInfo: any): boolean {
@@ -49,9 +83,15 @@ class ProductRoamingPlanAdd extends TwViewController {
       return this.apiService.request(API_CMD.BFF_10_0121, {}).map((resp) => {
           if ( resp.code === API_CODE.CODE_00 ) {
               roamingPlanAddCntData = resp.result;
+              this.logger.info(this, 'roamingPlanAddCntData', roamingPlanAddCntData);
+              return roamingPlanAddCntData;
+          } else {
+              return {
+                  code: resp.code,
+                  msg: resp.msg
+              };
           }
-          this.logger.info(this, 'roamingPlanAddCntData', roamingPlanAddCntData);
-          return roamingPlanAddCntData;
+
       });
   }
   private getRoamingPlanAddData(params) {
@@ -68,6 +108,11 @@ class ProductRoamingPlanAdd extends TwViewController {
                           basFeeAmt: ProductHelper.convProductBasfeeInfo(roamingPlanAdd.basFeeAmt)
                       };
                   })
+              };
+          } else {
+              return {
+                  code: resp.code,
+                  msg: resp.msg
               };
           }
       });

@@ -20,20 +20,20 @@ Tw.MyTFareBillGuideSKBD = function (rootEl) {
 
 Tw.MyTFareBillGuideSKBD.prototype = {
 
+  /**
+   * sk브로드밴드인 경우 진입할 수 없다는 알림창을 오픈한다.
+   */
   _openSkbdPopup: function(){
     Tw.Logger.info('cdn:', Tw.Environment.cdn);
 
-    this._popupService.openOneBtTypeB(
+
+    Tw.Popup.openModalTypeATwoButton(
       Tw.MYT_JOIN.BROADBAND_ERROR.TITLE,
       Tw.MYT_JOIN.BROADBAND_ERROR.CONTENTS,
-      [{
-        style_class: 'link',
-        txt: Tw.MYT_JOIN.BROADBAND_ERROR.LINK_TXT
-      }],
-      'type1',
-      $.proxy(function ($layer) {
-        $layer.on('click', '.link', $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.MYT_JOIN.BROADBAND_ERROR.LINK));
-      }, this),
+      Tw.MYT_JOIN.BROADBAND_ERROR.LINK_TXT,
+      Tw.BUTTON_LABEL.CLOSE,
+      undefined,
+      $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.MYT_JOIN.BROADBAND_ERROR.LINK),
       $.proxy(function () {
         Tw.CommonHelper.startLoading('.wrap', 'grey', true);
         this._historyService.goBack();

@@ -13,6 +13,7 @@ import MainMenuSettingsLocation from './controllers/menu/settings/main.menu.sett
 import MainMenuSettingsCertificates from './controllers/menu/settings/main.menu.settings.certificates.controller';
 import MainMenuSettingsBiometrics from './controllers/menu/settings/main.menu.settings.biometrics.cotroller';
 import MainMenuSettingsFamilySites from './controllers/menu/settings/main.menu.settings.family-sites.controller';
+import MainMenuSettingsOss from './controllers/menu/settings/main.menu.settings.oss.controller';
 
 class MainRouter extends TwRouter {
   constructor() {
@@ -30,6 +31,7 @@ class MainRouter extends TwRouter {
     this.controllers.push({ url: '/menu/settings/terms', controller: MainMenuSettingsTerms });
     this.controllers.push({ url: '/menu/settings/location', controller: MainMenuSettingsLocation });
     this.controllers.push({ url: '/menu/settings/family-sites', controller: MainMenuSettingsFamilySites });
+    this.controllers.push({ url: '/menu/settings/oss', controller: MainMenuSettingsOss });
     this.controllers.push({ url: '/menu/refund', controller: MainMenuRefund });
     this.controllers.push({ url: '/search', controller: MainSearch });
   }

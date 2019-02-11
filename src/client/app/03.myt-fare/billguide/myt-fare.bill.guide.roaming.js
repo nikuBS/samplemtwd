@@ -66,20 +66,29 @@ Tw.MyTFareBillGuideRoaming.prototype = {
     // // Tw.Logger.info('[결과] _getRoamingInfoInit', param, res );
     Tw.CommonHelper.endLoading('.container');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var dataArr = res.result.roamingList;
+      var dataArr = res.result.roamingList || [];
       var totalNum = 0;
 
-      _.map(dataArr, function (item) {
-        totalNum += Number(item.amt);
-      });
+      // _.map(dataArr, function (item) {
+      //   totalNum += Number(item.amt);
+      // });
+
+      // 리스트 마지막에 합계가 나옴
+      if(dataArr.length !== 0){
+        totalNum = dataArr[dataArr.length-1].amt;
+      }
 
       // Tw.Logger.info('[totalNum]', totalNum);
       // Tw.Logger.info('[param]', param);
 
+      // 로밍 사용요금이 소숫점 하위가 나오면 버림으로 처리(로밍사업팀 김미지 회신, 2019.1.30, 이슈번호:DV001-13051)
+      // var strTotalNum = totalNum.toFixed(1).replace('.0', '');
+      var strTotalNum = Math.floor(totalNum).toString();
+
       var resData = {
-        startDt: Tw.DateHelper.getShortDateNoDot(param.startDt),
-        endDt: Tw.DateHelper.getShortDateNoDot(param.endDt),
-        totalNum: this._comComma(totalNum)
+        startDt: Tw.DateHelper.getShortDate(param.startDt),
+        endDt: Tw.DateHelper.getShortDate(param.endDt),
+        totalNum: this._comComma(strTotalNum)
       };
 
       this.$dateSelect.hide();

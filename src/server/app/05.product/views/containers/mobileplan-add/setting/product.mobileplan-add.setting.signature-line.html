@@ -34,7 +34,7 @@
             <div class="container">
                 <div class="ti-caption-gray">
                     <h4 class="tit">스마트워치 회선 설정
-                        <button type="button" id="MV_02_02_02_tip_01" page-id="<%= pageInfo.menuId %>" class="tip-view" title="내폰끼리 결합 할 회선 정보보기" aria-haspopup="true">TIP</button>
+                        <button type="button" id="MV_02_02_02_tip_01" page-id="<%= pageInfo.menuId %>" class="tip-view" title="스마트워치 회선 설정" aria-haspopup="true">TIP</button>
                     </h4>
                     <p class="num"><%= svcInfo.svcNum %></p>
                 </div>
@@ -49,12 +49,18 @@
                             <div class="list-comp-thumnail">
                                 <ul class="comp-box fe-line_list">
                                     <% for ( var i in combineLineInfo.combinationLineList) { %>
-                                    <li class="list-box">
-                                        <div class="list-ico"><span class="ico type5"><%= combineLineInfo.custNmMask[0] %></span></div>
+                                    <li class="list-box type-main">
                                         <p class="list-text">
-                                            <span class="mtext"><%= combineLineInfo.custNmMask %></span>
-                                            <span class="stext gray"><%= combineLineInfo.combinationLineList[i].svcNum %></span>
+                                            <span class="mtext"><%= combineLineInfo.combinationLineList[i].svcNumMask %></span>
                                         </p>
+                                        <div class="list-btn">
+                                            <div class="bt-alone">
+                                                <div class="bt-alone">
+                                                    <button class="fe-btn_del_num bt-line-gray1"
+                                                            data-grp_id="<%= combineLineInfo.combinationLineList[i].svcProdGrpId %>">해지</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </li>
                                     <% } %>
                                 </ul>

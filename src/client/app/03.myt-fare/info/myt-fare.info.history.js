@@ -250,17 +250,18 @@ Tw.MyTFareInfoHistory.prototype = {
 
   // 자동납부 통합인출 해지
   _openAutoPaymentLayer: function () {
-    this._popupService.open(
+    this._historyService.goLoad('/myt-fare/info/cancel-draw');
+    /* this._popupService.open(
         {
           hbs: 'MF_08_03',
           bankName: this.data.autoWithdrawalBankName,
           bankAccount: this.data.autoWithdrawalBankNumber
         },
         $.proxy(this._autoWithdrawalOpenCallback, this), null, Tw.MYT_PAYMENT_HISTORY_HASH.AUTO_WITHDRAWAL
-    );
+    );*/
   },
 
-  _autoWithdrawalOpenCallback: function ($container) {
+  /*_autoWithdrawalOpenCallback: function ($container) {
     $container.on('click', '.bt-red1 button', $.proxy(this._processAutoWithdrawalCancel, this));
   },
 
@@ -279,7 +280,7 @@ Tw.MyTFareInfoHistory.prototype = {
     } else {
       $.proxy(this._apiError, this);
     }
-  },
+  },*/
   // 자동납부 통합인출 해지 end
 
   // 분류선택 

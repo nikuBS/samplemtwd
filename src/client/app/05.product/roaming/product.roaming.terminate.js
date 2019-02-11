@@ -33,7 +33,7 @@ Tw.ProductRoamingTerminate.prototype = {
     this.$rootContainer.on('click','.agree-view',$.proxy(this._showDetailContent,this));
     this.$rootContainer.on('click','#do_confirm',$.proxy(this._doJoin,this));
     this.$rootContainer.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._goPlan,this));
-    this.$rootContainer.on('click','.tip-view',$.proxy(this._showBffToolTip,this));
+    this.$rootContainer.on('click','.tip-view-btn',$.proxy(this._showBffToolTip,this));
     if(this._prodBffInfo.agreeCnt<=0){
       this.$rootContainer.find('#do_confirm').removeAttr('disabled');
       this.$rootContainer.find('.agree-element').hide();
@@ -83,7 +83,7 @@ Tw.ProductRoamingTerminate.prototype = {
   },
   _doJoin : function () {
     //this._popupService.openModalTypeA(Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.BUTTON, null, $.proxy(this._confirmInfo,this));
-    this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.BUTTON, Tw.BUTTON_LABEL.CLOSE,
+    this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.MSG, Tw.BUTTON_LABEL.YES, Tw.BUTTON_LABEL.NO,
       null,
       $.proxy(this._confirmInfo,this),
       null);
@@ -121,14 +121,14 @@ Tw.ProductRoamingTerminate.prototype = {
   },
   _bindCompletePopupEvt : function(popuEvt){
     $(popuEvt).on('click','.btn-round2',$.proxy(this._goMyInfo,this));
-    $(popuEvt).on('click','.btn-floating',$.proxy(this._goPlan,this));
+    $(popuEvt).on('click','.btn-floating',$.proxy(this._popupService.closeAll,this._popupService));
   },
   _goMyInfo : function(){
-    this._historyService.goLoad('/product/roaming/my-use');
+    this._popupService.closeAllAndGo('/product/roaming/my-use');
   },
   _goPlan : function(){
     this._popupService.closeAll();
-    this._historyService.goBack();
+    setTimeout($.proxy(this._historyService.goBack,this._historyService),0);
   },
   _arrangeAgree : function(data){
     var targetObj;

@@ -61,7 +61,7 @@
                             <div class="form-box">
                                 <span class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
                                     <span class="input">
-                                        <input type="number" placeholder="숫자만 입력" value="" title="문자 수신 번호 등록 숫자만 입력">
+                                        <input type="number" placeholder="숫자만 입력" value="" title="문자 수신 번호 숫자만 입력">
                                         <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                     </span>
                                 </span>
@@ -73,7 +73,7 @@
                                 <div class="widget-box check">
                                     <ul class="select-list" role="group">
                                         <li class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                            <input type="checkbox" name="checkbox" value="" title="개인정보 제공 및 활용 동의"><!-- 체크상태일 경우 checked="checked" -->
+                                            <input type="checkbox" name="checkbox" value=""><!-- 체크상태일 경우 checked="checked" -->
                                             개인정보 제공 및 활용 동의
                                         </li>
                                     </ul>
@@ -93,8 +93,8 @@
 				<div class="cont-box nogaps-btm">
 					<h3 class="tx-bold">꼭 확인해 주세요</h3>
 					<ul class="noti-list">
-						<li>SMS 수신 서비스 해지 <button type="button" class="icon-tip" title="SMS 수신 서비스 해지 TIP보기">TIP</button></li>
-						<li>로그인한 무선 상품번호 <button type="button" class="icon-tip" title="로그인한 무선 상품번호 TIP보기">TIP</button></li>
+                        <li><button type="button" class="tip-view-btn" title="SMS 수신 서비스 해지 TIP보기" aria-haspopup="true">SMS 수신 서비스 해지 <span class="tip-view">TIP</span></button></li>
+                        <li><button type="button" class="tip-view-btn" title="로그인한 무선 상품번호 TIP보기" aria-haspopup="true">로그인한 무선 상품번호 <span class="tip-view">TIP</span></button></li>
 					</ul>
 				</div>
 				<!--// .cont-box -->

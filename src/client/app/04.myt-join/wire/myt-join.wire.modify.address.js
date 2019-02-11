@@ -30,7 +30,7 @@ Tw.MyTJoinWireModifyAddress = function (rootEl, resData) {
     cntcPrefrPhonNum: '',       // 일반전화 번호
 
     reqSiteClCd: '03',          // 요청사이트구분 (01:T-WORLD, 02:SKB사이버고객센터, 03:모바일 T)
-    reqrNm: this.resData.svcInfo.mbrNm  // 신청인명
+    reqrNm: this.resData.mbrNm  // 신청인명
 
   };
 
@@ -39,11 +39,9 @@ Tw.MyTJoinWireModifyAddress = function (rootEl, resData) {
 Tw.MyTJoinWireModifyAddress.prototype = {
   _init: function () {
     if(this.resData.resDataInfo.coClCd === 'B'){
-      if( !Tw.Environment.init ) {
-        $(window).on(Tw.INIT_COMPLETE, $.proxy(this._openSkbdErrorAlert, this));
-      } else {
-        this._openSkbdErrorAlert();
-      }
+      // sk브로드밴드인 경우 팝업 변경 (myt-join공통함수로 처리)
+      (new Tw.MyTJoinCommon()).openSkbdAlertOnInit(this._history);
+
       return;
     }
     this._cachedElement();
@@ -88,23 +86,6 @@ Tw.MyTJoinWireModifyAddress.prototype = {
 
   },
 
-  _openSkbdErrorAlert: function () {
-    Tw.Popup.openOneBtTypeB(
-      Tw.MYT_JOIN.BROADBAND_ERROR.TITLE,
-      Tw.MYT_JOIN.BROADBAND_ERROR.CONTENTS,
-      [{
-        style_class: 'link',
-        txt: Tw.MYT_JOIN.BROADBAND_ERROR.LINK_TXT
-      }],
-      'type1',
-      $.proxy(function ($layer) {
-        $layer.on('click', '.link', $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.MYT_JOIN.BROADBAND_ERROR.LINK));
-      }, this), $.proxy(function () {
-        this._history.goBack();
-      }, this)
-    );
-  },
-
   //--------------------------------------------------------------------------[EVENT]
   _closeCheck: function(){
 
@@ -116,12 +97,15 @@ Tw.MyTJoinWireModifyAddress.prototype = {
       $('[data-target="input_hp"]').val() ||
       $('[data-target="input_phone"]').val()) {
 
-      this._popupService.openConfirm(
+      this._popupService.openConfirmButton(
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
         $.proxy(function(){
           this._history.goLoad('/myt-join/submain_w');
-        }, this));
+        }, this),
+        null,
+        Tw.BUTTON_LABEL.NO,
+        Tw.BUTTON_LABEL.YES);
     } else {
       this._history.goBack();
     }
@@ -205,12 +189,14 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     // Tw.Logger.info('[팝업 open > $target > 클릭한 버튼]', $target);
     // Tw.Logger.info('[팝업 open > $layer > 레이어 팝업]', $layer);
 
-    var building = this.addressFormData.building;
+    var building = this.addressFormData.bldTypNm;
     var indexOfVal = Tw.MYT_JOIN_WIRE_MODIFY_ADDRESS.BUILDING.indexOf(building);
 
     if ( indexOfVal !== -1 ) { // 존재할때 실행 체크
       Tw.Logger.info('[건물 유형 존재할때 실행]', indexOfVal );
-      $layer.find('.chk-link-list > li').eq(indexOfVal).find('button').addClass('checked');
+      $layer.find('.chk-link-list > li').eq(indexOfVal).find('button')
+        .addClass('checked')
+        .find('input[type=radio]').prop('checked', true);
     }
 
     //팝업 속 버튼을 클릭했을 때
@@ -221,7 +207,8 @@ Tw.MyTJoinWireModifyAddress.prototype = {
       $target.text( tempDataVal );
 
       $layer.find('.chk-link-list li > button').removeClass('checked');
-      $targetChild.addClass('checked');
+      $targetChild.addClass('checked')
+        .find('input[type=radio]').prop('checked', true);
       this._popupService.close();
 
     }, this));

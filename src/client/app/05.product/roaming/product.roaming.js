@@ -7,6 +7,8 @@
 Tw.ProductRoaming = function(rootEl, options) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
+  this._historyService = new Tw.HistoryService();
+
   this._options = options;
 
   this._cachedElement();
@@ -22,9 +24,11 @@ Tw.ProductRoaming.prototype = {
     this.$formInfoBtnList.on('click', $.proxy(this._onClickFormInfo, this));
   },
   _init : function() {
+    this._historyService.goHash('');
+
     this.nMax = this._options.banners.centerBanners.length - 1;
 
-    this.$container.show();
+    this.$container.find('.fe-slide-banner').show();
   },
   _onOpenFormInfo: function ($layer) {
     this.$prevBtn = $layer.find('#_dev_prev');
@@ -34,8 +38,6 @@ Tw.ProductRoaming.prototype = {
 
     this.$prevBtn.on('click', $.proxy(this._onClickPrevBtn, this));
     this.$nextBtn.on('click', $.proxy(this._onClickNextBtn, this));
-
-    $layer.find('.popup-closeBtn').on('click', $.proxy(function() { this._popupService.closeAll(); }, this));
 
     this._updateFormInfo();
   },

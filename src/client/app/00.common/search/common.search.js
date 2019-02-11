@@ -120,7 +120,7 @@ Tw.CommonSearch.prototype = {
   },
   _doSearch : function () {
     var inResult = this.$container.find('#resultsearch').is(':checked');
-    var requestUrl = inResult?'/common/search?keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
+    var requestUrl = inResult?'/common/search/in_result?keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
     requestUrl+=this.$inputElement.val();
     requestUrl+='&step='+(Number(this._step)+1);
     this._addRecentlyKeyword(this.$inputElement.val());
@@ -175,8 +175,9 @@ Tw.CommonSearch.prototype = {
     this._historyService.goLoad(goUrl);
   },
   _goLink : function (linkEvt) {
+    linkEvt.preventDefault();
     var $linkData = $(linkEvt.currentTarget);
-    var linkUrl = $linkData.data('link');
+    var linkUrl = $linkData.attr('href');
     if(Tw.FormatHelper.isEmpty(linkUrl)){
       return;
     }
@@ -189,11 +190,32 @@ Tw.CommonSearch.prototype = {
       }
     );
     //Tw.CommonHelper.openUrlExternal(linkUrl);
-    this._historyService.goLoad(linkUrl);
+    if(linkUrl.indexOf('BPCP')>-1){
+      this._getBPCP(linkUrl);
+    }else{
+      this._historyService.goLoad(linkUrl);
+    }
 
   },
   _closeSearch : function () {
     this._historyService.go(Number(this._step)*-1);
+  },
+  _getBPCP: function (url) {
+    var replaceUrl = url.replace('BPCP:', '');
+    this._apiService.request(Tw.API_CMD.BFF_01_0039, { bpcpServiceId: replaceUrl })
+      .done($.proxy(this._responseBPCP, this));
+  },
+  _responseBPCP: function (resp) {
+    if ( resp.code !== Tw.API_CODE.CODE_00 ) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    var url = resp.result.svcUrl;
+    if ( !Tw.FormatHelper.isEmpty(resp.result.tParam) ) {
+      url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
+    }
+
+    Tw.CommonHelper.openUrlInApp(url);
   }
 
 

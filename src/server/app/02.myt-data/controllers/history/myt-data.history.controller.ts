@@ -13,7 +13,8 @@ import {
   MYT_DATA_CHARGE_TYPES as ChargeTypeNames,
   ETC_CENTER,
   MYT_DATA_REFILL_TYPES,
-  CURRENCY_UNIT
+  CURRENCY_UNIT,
+  MYT_DATA_CHARGE_TYPES
 } from '../../../../types/string.type';
 
 import DateHelper from '../../../../utils/date.helper';
@@ -81,7 +82,7 @@ export default class MyTDataHistory extends TwViewController {
           break;
       }
 
-      if (filterIdx > 4) {
+      if (filterIdx < 4) {
         chargeData.display = histories[filterIdx];
       } else if (filterIdx === 4) {
         chargeData.display = histories[filterIdx].concat(histories[filterIdx + 1]);
@@ -124,17 +125,20 @@ export default class MyTDataHistory extends TwViewController {
       }
 
       return resp.result.map(item => {
-        const key = item.opDt;
-        const rechargeDate = DateHelper.getShortDate(key);
+        const key = item.opDt,
+          rechargeDate = DateHelper.getShortDate(key),
+          bottom = item.opTypCd === '3' ? [MYT_DATA_CHARGE_TYPES.FIXED] : [];
+        bottom.push(item.opOrgNm || ETC_CENTER);
+
         return {
           key,
           type: RechargeTypes.LIMIT_CHARGE,
           typeName: TypeNames.LIMIT_CHARGE,
           date: DateHelper.getShortDate(key),
           badge: 'recharge',
-          refundable: item.opTypCd === '1' && this.toDt === rechargeDate,
+          refundable: (item.opTypCd === '1' || item.opTypCd === '3') && DateHelper.getDiffByUnit(this.toDt, rechargeDate, 'days') === 0,
           right: FormatHelper.addComma(item.amt) + CURRENCY_UNIT.WON,
-          bottom: [item.OpOrgNm || ETC_CENTER]
+          bottom
         };
       });
     });
@@ -147,16 +151,26 @@ export default class MyTDataHistory extends TwViewController {
       }
 
       return resp.result.map(item => {
-        const key = item.opDt;
+        const key = item.opDt,
+          rechargeDate = DateHelper.getShortDate(key),
+          bottom: string[] = [];
+
+        if (item.opTypCd === '2' || item.opTypCd === '4') {
+          bottom.push(ChargeTypeNames.CANCEL);
+        } else if (item.opTypCd === '3') {
+          bottom.push(ChargeTypeNames.FIXED);
+        }
+        bottom.push(item.opOrgNm || ETC_CENTER);
+
         return {
           key,
           type: RechargeTypes.TING_CHARGE,
           typeName: TypeNames.TING_CHARGE,
           date: DateHelper.getShortDate(item.opDt),
           badge: 'recharge',
-          refundable: item.refundableYn === 'Y',
+          refundable: (item.opTypCd === '1' || item.opTypCd === '3') && DateHelper.getDiffByUnit(this.toDt, rechargeDate, 'days') === 0,
           right: FormatHelper.addComma(item.amt) + CURRENCY_UNIT.WON,
-          bottom: item.opTypCd === '2' || item.opTypCd === '4' ? [item.opOrgNm || ETC_CENTER, ChargeTypeNames.CANCEL] : [item.opOrgNm || ETC_CENTER]
+          bottom
         };
       });
     });

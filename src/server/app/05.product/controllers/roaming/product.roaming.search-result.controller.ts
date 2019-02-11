@@ -50,6 +50,15 @@ class ProductRoamingSearchResult extends TwViewController {
           this.getManageTypeSrch(params)
           // this.getRoamingPlanData(params)
       ).subscribe(([roamingTypeData]) => {
+          const error = {
+              code: roamingTypeData.code,
+              msg: roamingTypeData.msg
+          };
+
+          if ( error.code ) {
+              return this.error.render(res, { ...error, svcInfo });
+          }
+
           res.render('roaming/product.roaming.search-result.html',
               {svcInfo, pageInfo, searchInfo, roamingTypeData, isLogin: this.isLogin(svcInfo)});
       });
@@ -65,8 +74,13 @@ class ProductRoamingSearchResult extends TwViewController {
         return this.apiService.request(API_CMD.BFF_10_0061, param).map((resp) => {
             if ( resp.code === API_CODE.CODE_00 ) {
                 roamingTypeData = resp.result;
+                return roamingTypeData;
+            } else {
+                return {
+                    code: resp.code,
+                    msg: resp.msg
+                };
             }
-            return roamingTypeData;
         });
     }
 }

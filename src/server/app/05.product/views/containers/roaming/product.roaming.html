@@ -15,16 +15,16 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="productRoaming" style="display:none;" class="wrap">
+<div id="productRoaming" class="wrap">
     <!-- #header -->
-    <%- include('../../../../../common/views/components/header.component.html', { title: '로밍', svcInfo: svcInfo }) %>
+    <%- include('../../../../../common/views/components/header.component.html', { title: 'T로밍', svcInfo: svcInfo }) %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
             <!-- 사용중인 상품 -->
-            <% if (isLogin && roamingCount.prodInfoTxt) { %>
+            <% if (isLogin && roamingCount && roamingCount.prodInfoTxt) { %>
             <div class="cont-box gaps-style01">
                 <div class="submain-myfeeproducts-wrap">
                     <a href="/product/roaming/my-use" class="submain-myfeeproducts">
@@ -40,7 +40,7 @@
             <div class="cont-box nogaps">
                 <div class="main-slide-banner dot-btm slide-pagingtype">
                     <!-- .widget -->
-                    <div class="widget">
+                    <div class="widget fe-slide-banner" style="display:none;">
                         <div class="widget-box slider1">
                             <div class="slider-box">
                                 <ul class="slider">
@@ -52,14 +52,14 @@
                                     </li>
                                     <% } %>
                                     <!--<li>-->
-                                        <!--<a href="/product/roaming/info/secure-troaming">-->
-                                            <!--<img src="<%= CDN %>/img/product/rm_banner_01.png" alt="로밍, 하나부터 열까지 새로고침. 자동안심 T로밍 해외 음성 매일 3분 무료+30분 음성 통화 1만원에 제공 데이터 종량 아무리 써도 일 상환 5,000원">-->
-                                        <!--</a>-->
+                                    <!--<a href="/product/roaming/info/secure-troaming">-->
+                                    <!--<img src="<%= CDN %>/img/product/rm_banner_01.png" alt="로밍, 하나부터 열까지 새로고침. 자동안심 T로밍 해외 음성 매일 3분 무료+30분 음성 통화 1만원에 제공 데이터 종량 아무리 써도 일 상환 5,000원">-->
+                                    <!--</a>-->
                                     <!--</li>-->
                                     <!--<li>-->
-                                        <!--<a href="/product/callplan/NA00005900">-->
-                                            <!--<img src="<%= CDN %>/img/product/rm_banner_02.png" alt="아세아 여행 대표 요금제. T로밍 아시아패스 아시아 27개국에서 5일간 데이터 2GB+속도제어로 안심하고 이용할수 있는 요금제입니다.">-->
-                                        <!--</a>-->
+                                    <!--<a href="/product/callplan/NA00005900">-->
+                                    <!--<img src="<%= CDN %>/img/product/rm_banner_02.png" alt="아세아 여행 대표 요금제. T로밍 아시아패스 아시아 27개국에서 5일간 데이터 2GB+속도제어로 안심하고 이용할수 있는 요금제입니다.">-->
+                                    <!--</a>-->
                                     <!--</li>-->
                                 </ul>
                             </div>
@@ -73,7 +73,7 @@
                 </div>
 
                 <!-- .widget -->
-                <div class="widget">
+                <div class="widget fe-slide-banner" style="display:none;">
                     <div class="widget-box horizontal">
                         <div class="horizontal-slide">
                             <ul class="horizontal-list info-link-box">
@@ -85,9 +85,9 @@
                                 </li>
                                 <% } %>
                                 <!--<li>-->
-                                    <!--<button class="info-link-inner">-->
-                                        <!--<em class="mark">“</em><strong class="tit">중국/일본</strong>으로<br>떠나시나요?-->
-                                    <!--</button>-->
+                                <!--<button class="info-link-inner">-->
+                                <!--<em class="mark">“</em><strong class="tit">중국/일본</strong>으로<br>떠나시나요?-->
+                                <!--</button>-->
                                 <!--</li>-->
                             </ul>
                         </div>
@@ -138,6 +138,7 @@
 
             <hr class="cont-sp type1" aria-hidden="true"/>
 
+            <% if (sprateProds) { %>
             <!-- cont-box-->
             <div class="cont-box nogaps-hoz">
                 <div class="roaming-product">
@@ -170,6 +171,7 @@
             <!-- //cont-box -->
 
             <hr class="cont-sp type1" aria-hidden="true"/>
+            <% } %>
 
             <div class="roaming-info-box">
                 <div class="submain-findyourplan-wrap">
@@ -271,7 +273,7 @@
   $(document).ready(function () {
     new Tw.ProductRoaming($('#productRoaming'), {
       banners: <%-JSON.stringify(banners)%>
-    });
+  });
   });
 </script>
 <% include ../../components/end.component.html %>

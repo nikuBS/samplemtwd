@@ -32,7 +32,7 @@
             <h2 class="blind">내용</h2>
             <div class="container">
                 <h3 class="complete-title pt60">
-                    <img src="/img/ico/ico-login-fail.png" alt=""/>
+                    <img src="<%= CDN %>/img/ico/ico-login-fail.png" alt=""/>
                     <span><strong>자동으로 로그아웃</strong><br />되었습니다.</span>
                 </h3>
                 <p class="complete-error-tx pt32">
@@ -47,7 +47,7 @@
                 </div>
                 <ul class="bt-slice full">
                     <li class="bt-red1">
-                        <button class="fe-bt-login">로그인 하기</button>
+                        <button class="fe-bt-replace-login">로그인 하기</button>
                     </li>
                 </ul>
             </div>
@@ -61,7 +61,7 @@
 <script>
   $(document).ready(function () {
     new Tw.CommonMemberLogoutExpire();
-    new Tw.TidLandingComponent($('#commonLogoutExpire'));
+    new Tw.TidLandingComponent($('#commonLogoutExpire'), '<%= target %>');
   });
 </script>
 <% include ../../components/end.component.html %>

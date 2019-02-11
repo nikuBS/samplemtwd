@@ -203,6 +203,7 @@ Tw.API_CMD = {
   BFF_05_0195: { path: '/core-modification/:version/longterm-phone-pause', method: Tw.API_METHOD.PUT },
   BFF_05_0196: { path: '/core-modification/:version/loyalty-benefits', method: Tw.API_METHOD.GET },
   BFF_05_0197: { path: '/core-modification/:version/longterm-phone-pause', method: Tw.API_METHOD.POST },
+  BFF_05_0199: { path: '/core-bill/:version/bill-types-email', method: Tw.API_METHOD.PUT },
 
   // RECHARGE
   BFF_06_0001: { path: '/core-recharge/:version/refill-coupons', method: Tw.API_METHOD.GET },
@@ -274,6 +275,8 @@ Tw.API_CMD = {
   BFF_06_0069: { path: '/core-bill/:version/pps-recharges', method: Tw.API_METHOD.DELETE },
   BFF_06_0070: { path: '/core-bill/:version/pps-data-recharges', method: Tw.API_METHOD.DELETE },
   BFF_06_0072: { path: '/core-recharge/:version/tfamily-cancelable-data', method: Tw.API_METHOD.GET },
+  BFF_06_0073: { path: '/core-recharge/:version/tfamily-canceling-data', method: Tw.API_METHOD.GET },
+  BFF_06_0074: { path: '/core-recharge/:version/tfamily-canceling', method: Tw.API_METHOD.POST },
   BFF_06_0075: { path: '/core-bill/v1/pps-alram', method: Tw.API_METHOD.GET },
 
   // PAYMENT
@@ -317,7 +320,7 @@ Tw.API_CMD = {
   BFF_07_0063: { path: '/core-bill/:version/auto-payments', method: Tw.API_METHOD.DELETE },
   BFF_07_0064: { path: '/core-bill/:version/autopay/db-req', method: Tw.API_METHOD.POST },
   BFF_07_0065: { path: '/core-bill/:version/autopay/pay-cycl-chg', method: Tw.API_METHOD.PUT },
-  BFF_07_0068: { path: '/core-bill/:version/autopay/card-info/:args0', method: Tw.API_METHOD.GET },
+  BFF_07_0068: { path: '/core-bill/:version/autopay/card-info', method: Tw.API_METHOD.GET },
   BFF_07_0069: { path: '/core-bill/:version/payment/auto-integrated-payment/cancel', method: Tw.API_METHOD.GET },
   BFF_07_0071: { path: '/core-bill/:version/micro-prepay/hist-requests', method: Tw.API_METHOD.GET },
   BFF_07_0073: { path: '/core-bill/:version/micro-prepay/requests', method: Tw.API_METHOD.GET },
@@ -438,6 +441,7 @@ Tw.API_CMD = {
   BFF_10_0100: { path: '/core-product/:version/wire/additions/:args0/joins', method: Tw.API_METHOD.DELETE },
   BFF_10_0101: { path: '/core-product/:version/wire/additions/:args0/joins/ledger-prechecks', method: Tw.API_METHOD.GET },
   BFF_10_0119: { path: '/core-product/:version/services/combinations/:args0/scrbcheck', method: Tw.API_METHOD.GET },
+  BFF_10_0142: { path: '/core-product/v1/mobiles/combinations/:args0/joins/services', method: Tw.API_METHOD.GET },
   BFF_10_0151: { path: '/core-product/:version/mobiles/fee-plans/:args0/joins/term-prechecks', method: Tw.API_METHOD.GET },
   BFF_10_0164: { path: '/core-product/:version/wire/additions/:args0/joins/ledger-prechecks/joins', method: Tw.API_METHOD.GET },
   BFF_10_0165: { path: '/core-product/:version/wire/additions/:args0/joins/ledger-prechecks/sets', method: Tw.API_METHOD.GET },
@@ -505,7 +509,6 @@ Tw.API_CMD = {
 Tw.NODE_CMD = {
   GET_ENVIRONMENT: { path: '/environment', method: Tw.API_METHOD.GET },
   GET_DOMAIN: { path: '/domain', method: Tw.API_METHOD.GET },
-  SET_DEVICE: { path: '/device', method: Tw.API_METHOD.POST },
   LOGIN_TID: { path: '/user/sessions', method: Tw.API_METHOD.POST },
   LOGOUT_TID: { path: '/logout-tid', method: Tw.API_METHOD.POST },
   SESSION: { path: '/session', method: Tw.API_METHOD.POST },
@@ -520,11 +523,10 @@ Tw.NODE_CMD = {
   UPDATE_SVC: { path: '/common/selected-sessions', method: Tw.API_METHOD.GET },
 
   UPLOAD_FILE: { path: '/uploads', method: Tw.API_METHOD.POST },
-  GET_SERVER_SESSION: { path: '/serverSession', method: Tw.API_METHOD.GET },
   GET_SVC_INFO: { path: '/svcInfo', method: Tw.API_METHOD.GET },
   GET_ALL_SVC: { path: '/allSvcInfo', method: Tw.API_METHOD.GET },
   GET_CHILD_INFO: { path: '/childInfo', method: Tw.API_METHOD.GET },
-  UPDATE_NOTICE_TYPE: { path: '/update/notice-type', method: Tw.API_METHOD.PUT },
+  // UPDATE_NOTICE_TYPE: { path: '/update/notice-type', method: Tw.API_METHOD.PUT },
 
   GET_VERSION: { path: '/app-version', method: Tw.API_METHOD.GET },
   GET_SPLASH: { path: '/splash', method: Tw.API_METHOD.GET },

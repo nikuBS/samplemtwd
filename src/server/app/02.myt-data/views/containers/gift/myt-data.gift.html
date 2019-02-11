@@ -73,7 +73,6 @@
 </body>
 
 <script type="text/x-handlebars-template" id="tpl-available-product">
-    <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
     <!-- #header -->
     <div class="header-wrap">
         <div class="page-header">
@@ -117,12 +116,22 @@
     {{/each}}
 </script>
 
+<script type="text/x-handlebars-template" id="tpl_immediately_error">
+    <hr class="cont-sp type1" aria-hidden="true">
+    <div class="cont-box nogaps">
+        <p class="addree-no-result result-nolist no-sch">
+            <span class="ico"></span>
+            <span class="msg-no-sch"><span class="txt fe-immediately-error">{{{content}}}</span></span>
+        </p>
+    </div>
+</script>
+
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
     var oMyTDataGiftImmediately = new Tw.MyTDataGiftImmediately($('#tab1-tab'));
     var oMyTDataGiftMonthly = new Tw.MyTDataGiftMonthly($('#tab2-tab'));
-    new Tw.MyTDataGift($('.wrap'));
+    var oMyTDataGift = new Tw.MyTDataGift($('.wrap'));
   });
 </script>
 <% include ../../components/end.component.html %>

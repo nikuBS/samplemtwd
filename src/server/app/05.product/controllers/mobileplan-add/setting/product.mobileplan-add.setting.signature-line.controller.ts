@@ -37,7 +37,7 @@ class ProductMobileplanAddSettingSignatureLine extends TwViewController {
   private _convertSvcNumMask(combinationLineList): any {
     return combinationLineList.map((item) => {
       return Object.assign(item, {
-        svcNum: FormatHelper.conTelFormatWithDash(item.svcNum)
+        svcNumMask: FormatHelper.conTelFormatWithDash(item.svcNumMask)
       });
     });
   }

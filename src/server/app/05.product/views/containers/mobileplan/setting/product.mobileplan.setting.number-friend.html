@@ -42,7 +42,7 @@
                     <div class="input-number-wrap">
                         <h3 class="tit" id="aria-citation-phone">지정번호 설정할 회선번호</h3>
                         <div class="form-box">
-                                <span class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
+                                <span class="inputbox bt-add inp-btn error"><!-- 입력 필드 오류 시 .error 추가 -->
                                     <span class="input">
                                         <input type="tel" class="fe-num_input" placeholder="숫자만 입력" title="지정번호 설정할 회선번호" aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx1" maxlength="11">
                                         <button class="cancel fe-btn_clear_num"><span class="blind">삭제</span></button>
@@ -77,18 +77,26 @@
                             <div class="list-comp-thumnail">
                                 <ul class="comp-box fe-line_list">
                                     <% for ( var i in numberInfo.numCoupleList ) { %>
-                                    <li class="list-box" data-number="<%= numberInfo.numCoupleList[i].svcNum %>" data-audit_dtm="<%= numberInfo.numCoupleList[i].auditDtm %>">
-                                        <div class="list-ico"><span class="ico type5"><%= numberInfo.numCoupleList[i].custNmMaskFirstName %></span></div>
+                                    <li class="list-box type-main" data-number="<%= numberInfo.numCoupleList[i].svcNumMask %>" data-audit_dtm="<%= numberInfo.numCoupleList[i].auditDtm %>">
                                         <p class="list-text">
-                                            <span class="mtext"><%= numberInfo.numCoupleList[i].custNmMask %>
+                                            <span class="mtext"><%= numberInfo.numCoupleList[i].svcNumMask %>
                                                 <% if (numberInfo.numCoupleList[i].custNmMask !== '-') { %>
-                                                <span class="bar"></span><button type="button" class="btn-bf fe-btn_toggle_friend <%= numberInfo.numCoupleList[i].isFriendClass %>" title="절친으로 등록하기">절친</button>
+                                                    <% if (svcInfo && locals.pageInfo && pageInfo.auth && pageInfo.auth.cert && pageInfo.auth.cert.maskAuthYn === 'Y' && !pageInfo.masking) { %>
+                                                    <span class="bar"></span><button type="button" class="btn-bf fe-bt-masking <%= numberInfo.numCoupleList[i].isFriendClass %>" title="절친으로 등록하기" data-menuid="<%= pageInfo.menuId %>" data-menuurl="<%= pageInfo.menuUrl %>">절친</button>
+                                                    <% } else { %>
+                                                    <span class="bar"></span><button type="button" class="btn-bf fe-btn_toggle_friend <%= numberInfo.numCoupleList[i].isFriendClass %>" title="절친으로 등록하기">절친</button>
+                                                    <% } %>
                                                 <% } %>
                                             </span>
-                                            <span class="stext gray"><%= numberInfo.numCoupleList[i].svcNumMask %></span>
                                         </p>
                                         <div class="list-btn">
-                                            <div class="bt-alone"><button class="bt-line-gray1 fe-btn_del_num">해지</button></div>
+                                            <div class="bt-alone">
+                                                <% if (svcInfo && locals.pageInfo && pageInfo.auth && pageInfo.auth.cert && pageInfo.auth.cert.maskAuthYn === 'Y' && !pageInfo.masking) { %>
+                                                <button class="bt-line-gray1 fe-bt-masking" type="button" data-menuid="<%= pageInfo.menuId %>" data-menuurl="<%= pageInfo.menuUrl %>">해지</button>
+                                                <% } else { %>
+                                                <button class="bt-line-gray1 fe-btn_del_num">해지</button>
+                                                <% } %>
+                                            </div>
                                         </div>
                                     </li>
                                     <% } %>

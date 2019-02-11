@@ -57,7 +57,8 @@ class ProductMobileplanJoin0planSm extends TwViewController {
       if (basicInfo.code !== API_CODE.CODE_00) {
         return this.error.render(res, Object.assign(renderCommonInfo, {
           code: basicInfo.code,
-          msg: basicInfo.msg
+          msg: basicInfo.msg,
+          isBackCheck: true
         }));
       }
 

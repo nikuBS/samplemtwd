@@ -8,7 +8,7 @@ Tw.CustomerSvcInfoMcenter = function (rootEl) {
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._history = new Tw.HistoryService(rootEl);
+  this._historyService = new Tw.HistoryService(rootEl);
   this._hash = Tw.Hash;
 
   this._cachedElement();
@@ -25,49 +25,89 @@ Tw.CustomerSvcInfoMcenter.prototype = {
 
   },
   _bindEvent: function () {
+    // 링크이동
+    this.$container.on('click', '.fe-link-external:not([href^="#"])', $.proxy(this._openExternalUrl, this));
+    this.$container.on('click', '.fe-link-internal:not([href^="#"])', $.proxy(this._openInternalUrl, this));
+    this.$container.on('click', '.fe-link-inapp:not([href^="#"])', $.proxy(this._openInApp, this));
+
+    // admin 제공된 tooltip 정보
+    this.$container.on('click', '.btn-tooltip-open', $.proxy(this._openTooltipPop, this));
+    this.$container.on('click', '.info-tooltip>p', $.proxy(this._openTooltipPop, this));
+
     // from idpt
-    this._bindUIEvent();
+    this._bindUIEvent(this.$container);
   },
 
-  _bindUIEvent: function () {
-    $('.idpt-tab', this.$container).each(function(){
+  _openExternalUrl: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this._popupService.close();
+    Tw.CommonHelper.openUrlExternal($(e.currentTarget).attr('href'));
+  },
+
+  _openInternalUrl: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this._historyService.goLoad(location.origin + $(e.currentTarget).attr('href'));
+  },
+
+  _openInApp: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    Tw.CommonHelper.openUrlInApp(location.origin + $(e.currentTarget).attr('href'));
+  },
+
+  _bindUIEvent: function ($container) {
+    $('.idpt-tab', $container).each(function(){
       var tabBtn = $(this).find('li');
       $(tabBtn).click(function(){
         var i = $(this).index();
-        $('.idpt-tab > li', this.$container).removeClass('on').eq(i).addClass('on');
-        $('.idpt-tab-content', this.$container).removeClass('show').eq(i).addClass('show');
+        $('.idpt-tab > li').removeClass('on').eq(i).addClass('on');
+        $('.idpt-tab-content').removeClass('show').eq(i).addClass('show');
       });
     });
   
     // popup
-    $('.idpt-popup-open', this.$container).click(function(){
+    $('.idpt-popup-open', $container).click(function(){
       var popId = $(this).attr('href');
-      $('.idpt-popup-wrap', this.$container).removeClass('show');
+      $('.idpt-popup-wrap').removeClass('show');
       $(popId).addClass('show');
-      $('.idpt-popup', this.$container).show();
+      $('.idpt-popup', $container).show();
     });
-    $('.idpt-popup-close', this.$container).click(function(){
-      $('.idpt-popup', this.$container).hide();
+    $('.idpt-popup-close', $container).click(function(){
+      $('.idpt-popup', $container).hide();
     });
   
-    // tooltip
-    $('.info-tooltip', this.$container).each(function(){
-      $('.btn-tooltip-open', this.$container).on('click', function(){
-        var remStandard = $('body').css('font-size').replace('px','');
-        var btnLeft = $(this).offset().left - 28;
-        var btnRem = btnLeft/remStandard
-        $('.idpt-tooltip-layer', this.$container).css('left', btnRem + 'rem');
-        $(this).next('div').show();
-      });
+    $('input[type=radio][name=call]', $container).on('click', function() {
+      var chkValue = $('input[type=radio][name=call]:checked', $container).val();
+      if (chkValue == '1') {
+        $('.call-cont01').css('display', 'block');
+        $('.call-cont02').css('display', 'none');
+      } else if (chkValue  == '2') {
+        $('.call-cont01').css('display', 'none');
+        $('.call-cont02').css('display', 'block');
+      }
     });
-    $('.btn-tooltip-close', this.$container).on('click', function(){
-      $('.idpt-tooltip-layer', this.$container).hide();
+  
+    $('input[type=radio][name=center]', $container).on('click', function() {
+      var chkValue = $('input[type=radio][name=center]:checked', $container).val();
+      if (chkValue == '1') {
+        $('.center-cont01', $container).css('display', 'block');
+        $('.center-cont02', $container).css('display', 'none');
+      } else if (chkValue  == '2') {
+        $('.center-cont01', $container).css('display', 'none');
+        $('.center-cont02', $container).css('display', 'block');
+      }
     });
   
     //accordian
-    $('.idpt-accordian > li > a', this.$container).on('click', function(){
-      $('.idpt-accordian > li > a', this.$container).removeClass('open');
-      $('.idpt-accordian-cont', this.$container).slideUp();
+    $('.idpt-accordian > li > a', $container).on('click', function(e){
+      e.preventDefault();
+      $('.idpt-accordian > li > a', $container).removeClass('open');
+      $('.idpt-accordian-cont', $container).slideUp();
       if ($(this).parent().find('.idpt-accordian-cont').is(':hidden')){
         $(this).addClass('open');
         $(this).parent().find('.idpt-accordian-cont').slideDown();
@@ -75,10 +115,34 @@ Tw.CustomerSvcInfoMcenter.prototype = {
     });
   
     //toggle (FAQ)
-    $('.idpt-toggle-btn', this.$container).each(function(){
+    $('.idpt-toggle-btn', $container).each(function(){
       $(this).click(function(){
         $(this).toggleClass('open').next('.idpt-toggle-cont').slideToggle();
       })
     });
+  },
+
+  _openTooltipPop: function (e) {
+    var isTargetTitle = !!($(e.currentTarget).siblings('.btn-tooltip-open').length);
+    var popId = isTargetTitle ? $(e.currentTarget).siblings('.btn-tooltip-open').attr('href'): $(e.currentTarget).attr('href');
+    var titleText = isTargetTitle ? $(e.currentTarget).text() : $(e.currentTarget).prev('p').text();
+    // 앞 숫자 변경
+    titleText = titleText.replace(/^\d\d?\./gi,'');
+    e.preventDefault();
+
+    this._popupService.open({
+      url: Tw.Environment.cdn + '/hbs/',
+      'pop_name': 'type_tx_scroll',
+      'title': titleText || '',
+      'title_type': 'sub',
+      'cont_align': 'tl',
+      'contents': $(popId).find('.popup-title').html().replace(/<br ?\/?>/gi, '\n'),
+      'bt_b': [{
+        style_class: 'tw-popup-closeBtn bt-red1 pos-right',
+        txt: Tw.BUTTON_LABEL.CONFIRM
+      }]
+    }, $.proxy(function($container){
+      $container.find('.popup-info').show();
+    }, this), null);
   },
 };

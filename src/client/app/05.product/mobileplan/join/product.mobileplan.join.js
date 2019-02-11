@@ -98,6 +98,7 @@ Tw.ProductMobileplanJoin.prototype = {
 
     this.$container.html(html);
     this._callConfirmCommonJs();
+    Tw.Tooltip.separateInit(this.$container.find('.fe-product-tip'));
   },
 
   _convConfirmOptions: function() {
@@ -122,7 +123,9 @@ Tw.ProductMobileplanJoin.prototype = {
       autoJoinList: this._confirmOptions.preinfo.autoJoinList,
       autoTermList: this._confirmOptions.preinfo.autoTermList,
       noticeList: $.merge(this._confirmOptions.preinfo.termNoticeList, this._confirmOptions.preinfo.joinNoticeList),
-      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0),
+      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0 ||
+        this._confirmOptions.installmentAgreement.isInstallAgreement),
+      isInstallmentAgreement: this._confirmOptions.installmentAgreement.isInstallAgreement,
       isJoinTermProducts: Tw.IGNORE_JOINTERM.indexOf(this._prodId) === -1,
       downgrade: this._getDowngrade()
     });
@@ -184,6 +187,14 @@ Tw.ProductMobileplanJoin.prototype = {
 
   _bindJoinResPopup: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
+    $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
+  },
+
+  _closeAndGo: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
   },
 
   _closePop: function() {

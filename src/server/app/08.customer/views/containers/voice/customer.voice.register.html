@@ -40,9 +40,9 @@
                         <div class="widget-box check">
                             <div class="infoviewic-wrap">
                                 <ul class="select-list" role="group">
-                                    <li class="checkbox type01" role="checkbox" aria-checked="false">
+                                    <li class="checkbox type01" role="checkbox" aria-checked="false" id="aria-comp-checkbox1">
                                         <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                        <input type="checkbox" name="checkbox" value="" title="값1" class="fe-check_voice_term">
+                                        <input type="checkbox" name="checkbox" value="" title="값1" aria-labelledby="aria-comp-checkbox1" class="fe-check_voice_term">
                                         <!-- 체크상태일 경우 checked="checked" -->
                                         목소리인증 개인정보 수집 및 이용동의(필수)
                                     </li>
@@ -93,10 +93,12 @@
     </div>
     <!--// #contents -->
     <!-- .popup-closeBtn -->
-    <button class="prev-step">취소</button>
+    <button class="prev-step fe-common-back">취소</button>
     <!--// .popup-closeBtn -->
 </div>
-<% include ../../components/javascript.component.html %>
+    <% include ../../components/javascript.component.html %>
+</div>
+
 <script>
   $(document).ready(function () {
     new Tw.CustomerVoiceRegister($('.wrap'), JSON.parse('<%-JSON.stringify(allSvc)%>'));

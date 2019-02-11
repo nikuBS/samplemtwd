@@ -15,24 +15,25 @@ class CommonMemberLoginRoute extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
     const query = req.query;
+    const params = this.getParams(req.query.target);
+
     if ( !FormatHelper.isEmpty(query.error) ) {
-      res.send(query.error_description);
+      res.redirect('/common/member/login/fail?errorCode=' + query.error_description + '&target=' + params.target);
     } else {
-      const param = this.getParams(query.target);
-      res.render('member/common.member.login.route.html', param);
+      res.render('member/common.member.login.route.html', params);
     }
   }
 
   private getParams(params): any {
-    if ( params.indexOf('=') !== -1 ) {
+    if ( params.indexOf('_type_') !== -1 ) {
       return {
-        target: params.split('=')[0],
-        state: params.split('=')[1]
+        target: params.split('_type_')[0],
+        type: params.split('_type_')[1]
       };
     } else {
       return {
         target: params,
-        state: null
+        type: null
       };
     }
   }

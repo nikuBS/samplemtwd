@@ -15,6 +15,7 @@ Tw.MenuComponent = function (notAboutMenu) {
     this._tidLanding = new Tw.TidLandingComponent();
     this._nativeService = Tw.Native;
     this._apiService = Tw.Api;
+    this._popupService = Tw.Popup;
 
     this._menuTpl = undefined;
 
@@ -29,6 +30,8 @@ Tw.MenuComponent = function (notAboutMenu) {
     this._isMultiLine = false;
     this._svcAttr = undefined;
     this._tid = undefined;
+    this._memberType = undefined; // 0: normal, 1: number unregistered, 2: no svc
+    this._isPPS = false;
 
     this._isOpened = false;
     this._isMenuSet = false;
@@ -82,6 +85,7 @@ Tw.MenuComponent.prototype = {
 
     this.$container.on('click', '.fe-bt-login', $.proxy(this._onClickLogin, this));
     this.$container.on('click', '.fe-bt-logout', $.proxy(this._onClickLogout, this));
+    this.$container.on('click', '#fe-signup', $.proxy(this._onSignUp, this));
   },
   _componentReady: function () {
     if ( location.hash === '#menu' ) {
@@ -109,7 +113,7 @@ Tw.MenuComponent.prototype = {
                 if ( res.resultCode === Tw.NTV_CODE.CODE_00 ) {
                   this._checkNewTNoti();
                 }
-              }));
+              }, this));
             }
           }, this));
       } else {
@@ -145,10 +149,18 @@ Tw.MenuComponent.prototype = {
   },
 
   _onClickLogin: function () {
-    this._tidLanding.goLogin(location.href);
+    this._tidLanding.goLogin(location.pathname + location.search + '#menu');
   },
   _onClickLogout: function () {
     this._tidLanding.goLogout();
+  },
+  _onSignUp: function (e) {
+    if (Tw.BrowserHelper.isApp()) {
+      this._tidLanding.goSignup();
+    } else {
+      var url = e.currentTarget.value;
+      this._historyService.goLoad(url);
+    }
   },
   _onGnbBtnClicked: function () {
     this._isOpened = true;
@@ -162,9 +174,8 @@ Tw.MenuComponent.prototype = {
             if ( this._isLogin ) {
               this._isMultiLine = res.result.userInfo.totalSvcCnt > 1;
               this._svcMgmtNum = res.result.userInfo.svcMgmtNum;
-              this._svcAttr = res.result.userInfo.svcAttr;
-              this._isLogin = res.result.isLogin;
-              this._tid = res.result.userInfo.tid;
+              this._svcAttr = res.result.userInfo.svcAttrCd;
+              this._tid = res.result.userInfo.userId;
             }
             this._modifyMenu(
               res.result.isLogin,
@@ -172,6 +183,7 @@ Tw.MenuComponent.prototype = {
               this.tideUpMenuInfo(res.result.frontMenus, res.result.userInfo)
             );
             this._isMenuSet = true;
+            Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.CHANGE_LOGIN_STATUS, 'N');
           }
         }, this));
         /*
@@ -231,7 +243,28 @@ Tw.MenuComponent.prototype = {
       this._historyService.goLoad(url);
     }
   },
-  _onFreeSMS: function () {
+  _onFreeSMS: function (e) {
+    if (this._memberType === 1) {
+      this._popupService.openAlert(
+        Tw.MENU_STRING.FREE_SMS,
+        '',
+        Tw.BUTTON_LABEL.CONFIRM,
+        null,
+        'menu_free_sms'
+      );
+      return ;
+    }
+
+    if (this._isPPS) {
+      this._popupService.openAlert(
+        Tw.MENU_STRING.FREE_SMS_PPS,
+        '',
+        Tw.BUTTON_LABEL.CONFIRM,
+        null,
+        'menu_free_sms_pps'
+      );
+      return;
+    }
     Tw.CommonHelper.openFreeSms();
     return false;
   },
@@ -258,19 +291,20 @@ Tw.MenuComponent.prototype = {
       userInfo.totalSvcCnt = parseInt(userInfo.totalSvcCnt, 10);
       userInfo.expsSvcCnt = parseInt(userInfo.expsSvcCnt, 10);
 
+      this._isPPS = userInfo.pps;
       // 0: normal, 1: number unregistered, 2: no svc
-      var memberType = userInfo.totalSvcCnt > 0 ? (userInfo.expsSvcCnt > 0 ? 0 : 1) : 2;
-      switch ( memberType ) {
+      this._memberType = userInfo.totalSvcCnt > 0 ? (userInfo.expsSvcCnt > 0 ? 0 : 1) : 2;
+      switch ( this._memberType ) {
         case 0:
           this.$container.find('.fe-when-login-type0').removeClass('none');
-          var nick = userInfo.nickName;
+          var nick = userInfo.nickNm;
           if ( Tw.FormatHelper.isEmpty(nick) ) {
-            nick = Tw.SVC_ATTR[userInfo.svcAttr];
+            nick = Tw.SVC_ATTR[userInfo.svcAttrCd];
           }
           this.$nickName.text(nick);
-          if (userInfo.svcAttr.indexOf('S3') !== -1) {
+          if (userInfo.svcAttrCd.indexOf('S3') !== -1) {
             this.$svcNumber.text(Tw.FormatHelper.conTelFormatWithDash(userInfo.svcNum));
-          } else if ( userInfo.svcAttr.indexOf('M') === -1 ) {
+          } else if ( userInfo.svcAttrCd.indexOf('M') === -1 ) {
             this.$svcNumber.text(userInfo.addr);
           } else {
             this.$svcNumber.text(Tw.FormatHelper.getDashedCellPhoneNumber(userInfo.svcNum));
@@ -281,7 +315,7 @@ Tw.MenuComponent.prototype = {
           break;
         case 2:
           this.$container.find('.fe-when-login-type2').removeClass('none');
-          this.$userName.text(userInfo.name);
+          this.$userName.text(userInfo.mbrNm);
           break;
         default:
           break;
@@ -400,6 +434,9 @@ Tw.MenuComponent.prototype = {
         if ( item.menuId === 'M000353' ) {
           item.expsSeq = '101';
         }
+        if (item.menuNm === '이벤트') {
+          return false;
+        }
         return item.menuId !== 'M000343'; // Remove 인터넷/집전화/IPTV menu by hard coded
       })
       .sortBy(function (item) {
@@ -445,24 +482,24 @@ Tw.MenuComponent.prototype = {
         var checkUrl = '/myt-join/submain';
         if ( menu_url ) {
           if ( menu_url.indexOf(checkUrl) > -1 && menu_url.replace(checkUrl, '').length === 0 ) {
-            if ( !!userInfo && userInfo.svcAttr.indexOf('S') > -1 ) {
+            if ( !!userInfo && userInfo.svcAttrCd.indexOf('S') > -1 ) {
               item.menuUrl = item.menuUrl.replace('submain', 'submain_w');
             }
           }
         }
 
-        if ( !!item.urlAuthClCd ) {
-          if ( loginType === 'N' && item.urlAuthClCd.indexOf(loginType) === -1 ) {
-            // item.menuUrl = item.isLink ? '/common/member/login' : item.menuUrl;
-            item.loginNeed = true;
-            // item.children = [];
-            // item.hasChildren = false;
-          } else if ( loginType === 'S' && item.urlAuthClCd.indexOf(loginType) === -1 ) {
-            item.menuUrl = item.isLink ? 'common/member/slogin/fail' : item.menuUrl;
-            // item.children = [];
-            // item.hasChildren = false;
-          }
-        }
+        // if ( !!item.urlAuthClCd ) {
+        //   if ( loginType === 'N' && item.urlAuthClCd.indexOf(loginType) === -1 ) {
+        //     // item.menuUrl = item.isLink ? '/common/member/login' : item.menuUrl;
+        //     item.loginNeed = true;
+        //     // item.children = [];
+        //     // item.hasChildren = false;
+        //   } else if ( loginType === 'S' && item.urlAuthClCd.indexOf(loginType) === -1 ) {
+        //     item.menuUrl = item.isLink ? 'common/member/slogin/fail' : item.menuUrl;
+        //     // item.children = [];
+        //     // item.hasChildren = false;
+        //   }
+        // }
 
         if ( loginType !== 'N' ) {
           if ( !!this.REAL_TIME_ITEM[item.menuId] ) {

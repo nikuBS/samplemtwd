@@ -11,6 +11,7 @@ Tw.Init = function () {
   this._getEnvironment();
   this._setXtvid();
   this._sendXtractorLoginDummy();
+  this._setGesture();
   // this._setNodeCookie();
 };
 
@@ -30,9 +31,8 @@ Tw.Init.prototype = {
 
   _initComponent: function () {
     new Tw.MenuComponent();
-    new Tw.MaskingComponent();
-    new Tw.ShareComponent();
-    new Tw.QuickMenuComponent();
+    new Tw.FooterComponent();
+    new Tw.LineLayerComponent();
   },
 
   _getEnvironment: function () {
@@ -54,15 +54,18 @@ Tw.Init.prototype = {
       //   /* jshint undef: false */
       // }
       if ( Tw.Environment.environment !== 'local' && /\/home/.test(location.href) ) {
-        Tw.Popup.toast( Tw.Environment.version);
+        Tw.Popup.toast(Tw.Environment.version);
       }
     }
   },
 
   _setXtvid: function () {
-    var cookie = Tw.CommonHelper.getCookie('XTVID');
-    if ( Tw.BrowserHelper.isApp() && !Tw.FormatHelper.isEmpty(cookie) ) {
+    var cookie = Tw.CommonHelper.getCookie('XTVID'),
+      isLog = Tw.CommonHelper.getCookie('XTVID_LOG');
+
+    if ( Tw.BrowserHelper.isApp() && !Tw.FormatHelper.isEmpty(cookie) && Tw.FormatHelper.isEmpty(isLog) ) {
       this._nativeService.send(Tw.NTV_CMD.SET_XTVID, { xtvId: cookie });
+      Tw.CommonHelper.setCookie('XTVID_LOG', 'Y');
     }
   },
 
@@ -76,11 +79,14 @@ Tw.Init.prototype = {
     }
   },
 
-  _sendXtractorLoginDummy: function() {
+  _sendXtractorLoginDummy: function () {
     var cookie = Tw.CommonHelper.getCookie('XTSVCGR');
-    if (!Tw.BrowserHelper.isApp() || Tw.FormatHelper.isEmpty(cookie) ||
-      cookie === 'LOGGED' || Tw.FormatHelper.isEmpty(window.XtractorScript)) {
+    if ( Tw.FormatHelper.isEmpty(cookie) || cookie === 'LOGGED' || Tw.FormatHelper.isEmpty(window.XtractorScript) ) {
       return;
+    }
+
+    if (Tw.BrowserHelper.isApp()) {
+      return Tw.CommonHelper.setXtSvcInfo();
     }
 
     try {
@@ -90,11 +96,24 @@ Tw.Init.prototype = {
         T_ID: Tw.CommonHelper.getCookie('XTLOGINID'),
         GRADE: Tw.CommonHelper.getCookie('XTSVCGR')
       }));
-    } catch (e) {
+    } catch ( e ) {
       console.log(e.message);
     }
 
     Tw.CommonHelper.setCookie('XTSVCGR', 'LOGGED');
+  },
+  _setGesture: function () {
+    if ( /\/home/.test(location.href) ) {
+      this._nativeService.send(Tw.NTV_CMD.SET_SWIPE_GESTURE_ENABLED, {
+        isEnabled: false
+      });
+    } else {
+      this._nativeService.send(Tw.NTV_CMD.SET_SWIPE_GESTURE_ENABLED, {
+        isEnabled: true
+      });
+    }
+
+
   }
 
 };

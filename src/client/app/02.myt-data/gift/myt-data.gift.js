@@ -21,6 +21,10 @@ Tw.MyTDataGift.prototype = {
     if ( window.location.hash === '#auto' ) {
       this._goAutoGiftTab();
     }
+
+    this.reqCnt = 0;
+    this.currentRemainDataInfo = null;
+    this._getRemainDataInfo();
   },
 
   _cachedElement: function () {
@@ -29,7 +33,13 @@ Tw.MyTDataGift.prototype = {
     this.wrap_available_product = this.$container.find('.fe-layer_available_product');
     this.tpl_recently_gift = Handlebars.compile($('#tpl_recently_gift').html());
     this.tpl_available_product = Handlebars.compile($('#tpl-available-product').html());
-    this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
+    this.$wrap_auto_select_list = $('.fe-auto_select_list');
+    this.$wrap_data_select_list = $('.fe-immediately_data_select_list');
+    this.$remainQty = $('.fe-remain_data');
+    this.$remainTxt = $('.fe-txt-remain');
+    this.$remainBtn = $('.fe-btn-remain');
+    this.$wrapSuccessRemainApi = $('.fe-remain-api');
+    this.$wrapErrorRemainApi = $('.fe-err-api');
   },
 
   _bindEvent: function () {
@@ -37,6 +47,93 @@ Tw.MyTDataGift.prototype = {
     this.$container.on('click', '.fe-close-available_product', $.proxy(this._hideAvailableProduct, this));
     this.$container.on('click', '.fe-show-more-amount', $.proxy(this._onShowMoreData, this));
     this.$inputImmediatelyGift.on('focus', $.proxy(this._onLoadRecently, this));
+    this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
+    this.$container.on('currentRemainDataInfo', $.proxy(this._currentRemainDataInfo, this));
+    this.$remainBtn.on('click', $.proxy(this._getRemainDataInfo, this));
+  },
+
+  _getRemainDataInfo: function () {
+    this.$remainBtn.hide();
+    this.$remainTxt.show();
+
+    setTimeout(function () {
+      this._apiService.request(Tw.API_CMD.BFF_06_0014, { reqCnt: this.reqCnt })
+        .done($.proxy(this._onSuccessRemainDataInfo, this));
+    }.bind(this), 3000);
+  },
+
+  _currentRemainDataInfo: function () {
+    return this.currentRemainDataInfo ? this.currentRemainDataInfo : null;
+  },
+
+  _onSuccessRemainDataInfo: function (res) {
+    // MOCK DATA
+    // var mockDataQty = '900';
+    // var mockData = Tw.FormatHelper.convDataFormat(mockDataQty, 'MB');
+    // this.currentRemainDataInfo = mockDataQty;
+    // this.$remainQty.text(mockData.data + mockData.unit);
+    // this._setAmountUI(Number(mockDataQty));
+
+    // if ( Number(this.reqCnt) > 3 ) {
+    //   this._remainApiError();
+    //   return;
+    // }
+
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      var result = res.result;
+      if ( result.giftRequestAgainYn === 'N' ) {
+        if ( Tw.FormatHelper.isEmpty(result.dataRemQty) ) {
+          this._remainApiError();
+        } else {
+          // API DATA SUCCESS
+          this._remainApiSuccess();
+          var apiDataQty = res.result.dataRemQty;
+          var dataQty = Tw.FormatHelper.convDataFormat(apiDataQty, 'MB');
+          this.currentRemainDataInfo = apiDataQty;
+          this.$remainQty.text(dataQty.data + dataQty.unit);
+          this._setAmountUI(Number(apiDataQty));
+        }
+      } else {
+        this.reqCnt = result.reqCnt;
+        this._getRemainDataInfo();
+      }
+    } else if ( res.code === 'GFT0004' ) {
+      this.$container.trigger('showUnableGift', res.code);
+    } else {
+      this.$container.trigger('showUnableGift', res.code);
+      // Tw.Error(res.code, res.msg).pop();
+    }
+  },
+
+  _remainApiError: function () {
+    this.$wrapSuccessRemainApi.hide();
+    this.$wrapErrorRemainApi.show();
+    this.$remainBtn.show();
+    this.$remainTxt.hide();
+    // this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A217);
+  },
+
+  _remainApiSuccess: function () {
+    this.$wrapSuccessRemainApi.show();
+    this.$wrapErrorRemainApi.hide();
+    this.$remainBtn.hide();
+    this.$remainTxt.show();
+  },
+
+  _setAmountUI: function (nLimitMount) {
+    var fnCheckedUI = function (nIndex, elInput) {
+      var $input = $(elInput);
+      if ( Number($input.val()) > nLimitMount ) {
+        $input.prop('disabled', true);
+        $input.parent().parent().addClass('disabled');
+      } else {
+        $input.prop('disabled', false);
+        $input.parent().parent().removeClass('disabled');
+      }
+    };
+
+    this.$wrap_data_select_list.find('input').each(fnCheckedUI);
+    this.$wrap_auto_select_list.find('input').each(fnCheckedUI);
   },
 
   _onLoadRecently: function () {
@@ -111,6 +208,8 @@ Tw.MyTDataGift.prototype = {
 
   _showAvailableProduct: function () {
     this.wrap_available_product.show();
+    $('.fe-layer_available_product').scrollTop(0);
+    $('.fe-layer_available_product').css('position', 'fixed');
   },
 
   _hideAvailableProduct: function () {

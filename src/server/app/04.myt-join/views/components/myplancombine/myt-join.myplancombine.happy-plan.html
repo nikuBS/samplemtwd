@@ -57,7 +57,7 @@
                                                 <div class="num"><%= member.svcNum %></div>
                                             </div>
                                             <div class="list-arrow">
-                                                <span class="ico-arrow"></span>
+                                                <span class="ico-arrow"><span class="blind">결합가족 <%= member.custNm %> 내용 자세히 보기</span></span>
                                             </div>
                                         </div>
                                     </button>
@@ -65,8 +65,15 @@
                                 <div class="acco-content">
                                     <div class="data-info-list toggle-inner-list">
                                         <ul>
-                                            <li><dl><dt>가족대표와의 관계</dt><dd><%= member.relClNm %><%= isMine? '(내 번호)': ''%></dd></dl></li>
-                                            <li><dl><dt>사용 중인 요금제</dt><dd><a class="bt-link-tx underline" href="/product/callplan/<%= member.feeProdId %>"><%= member.feeProdNm %></a></dd></dl></li>
+                                            <li><dl><dt>가족대표와의 관계</dt>
+                                            <dd><% if (isRep && isMine) { %>
+                                                    본인(내번호)
+                                                <% } else { %>
+                                                    <%= member.relClNm %><%= isMine? '(내번호)': ''%>
+                                                <% } %>
+                                            </dd>
+                                            </dl></li>
+                                            <li><dl><dt>사용중인 요금제</dt><dd><a class="bt-link-tx underline" href="/product/callplan/<%= member.feeProdId %>"><%= member.feeProdNm %></a></dd></dl></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -85,9 +92,9 @@
     <!-- .cont-box --><!-- 2018-11-02 수정 -->
     <div class="cont-box nogaps-btm">
         <h3 class="tx-bold">꼭 확인해 주세요</h3>
-        <ul class="noti-list">
-            <li>장기가입 할인 및 레인보우포인트 적립<button id="MS_07_01_02_tip_01" type="button" class="tip-view" title="장기가입할인 및 레인보우포인트 적립" aria-haspopup="true">TIP</button></li>
-            <li>중복 가입<button id="MS_07_01_02_tip_02" type="button" class="tip-view" title="중복가입" aria-haspopup="true">TIP</button></li>
+        <ul class="noti-list02">
+            <li><button id="MS_07_01_02_tip_01" type="button" class="tip-view-btn" title="장기가입할인 및 레인보우포인트 적립" aria-haspopup="true">장기가입할인 및 레인보우포인트 적립<span class="tip-view">TIP</span></button></li>
+            <li><button id="MS_07_01_02_tip_02" type="button" class="tip-view-btn" title="중복가입" aria-haspopup="true">중복가입<span class="tip-view">TIP</span></button></li>
         </ul>
     </div>
     <!--// .cont-box -->

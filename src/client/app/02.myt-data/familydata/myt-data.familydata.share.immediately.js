@@ -19,15 +19,71 @@ Tw.MyTDataFamilyShareImmediately = function(rootEl) {
 Tw.MyTDataFamilyShareImmediately.prototype = {
   _init: function() {
     this.MAIN_URL = '/myt-data/familydata';
+    this._getShareData(0);
   },
 
   _cachedElement: function() {
     this.$amountInput = this.$container.find('.fe-amount');
+    this.$amount = this.$container.find('.pt10 > .txt-c1');
+    this.$retrieveBtn = this.$container.find('#fe-retrieve');
   },
 
   _bindEvent: function() {
     $('.wrap').on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
     this.$container.on('click', '.fe-submit', $.proxy(this._confirmSubmit, this));
+    this.$retrieveBtn.on('click', $.proxy(this._handleClickRetrive, this));
+  },
+
+  _handleClickRetrive: function() {
+    this.$container.find('#fe-ing').removeClass('none');
+    this.$retrieveBtn.addClass('none');
+    this._getShareData(0);
+  },
+
+  _getShareData: function(requestCount) {
+    this._apiService.request(Tw.API_CMD.BFF_06_0045, { reqCnt: String(requestCount) }).done($.proxy(this._handleDoneShareData, this));
+  },
+
+  _handleDoneShareData: function(resp) {
+    if (resp.code === 'ZORDC1020') {
+      this._setRetrieveStatus();
+    } else if (resp.code === 'RCG0042') {
+      this._successGetShareData({ tFmlyShrblQty: 0 });
+    } else if (resp.code !== Tw.API_CODE.CODE_00) {
+      Tw.Error(resp.code, resp.msg).pop();
+    } else if (resp.result) {
+      if (resp.result.nextReqYn !== 'Y') {
+        this._successGetShareData(resp.result);
+      } else {
+        setTimeout($.proxy(this._getShareData, this, resp.result.reqCnt), 3000);
+      }
+    }
+  },
+
+  _setRetrieveStatus: function() {
+    this.$container.find('#fe-ing').addClass('none');
+    this.$retrieveBtn.removeClass('none');
+    this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A216, Tw.POPUP_TITLE.NOTIFY);
+  },
+
+  _successGetShareData: function(share) {
+    var amount = Number(share.tFmlyShrblQty) || 0;
+    if (share.tFmlyShrblQty) {
+      if (amount >= 1) {
+        this.$container.find('#fe-ing').addClass('none');
+        this.$amountInput.attr('data-share-amount', amount);
+        this.$amount.text(amount + Tw.DATA_UNIT.GB);
+        this.$container.find('.txt-c2').text(amount + Tw.DATA_UNIT.GB);
+        this.$amount.removeClass('none');
+        this.$container.find('.btn-type01').removeAttr('disabled');
+        this.$amountInput.removeAttr('disabled');
+      } else {
+        this.$container.find('#fe-share').addClass('none');
+        this.$container.find('#fe-share-none').removeClass('none');
+      }
+    } else {
+      this._setRetrieveStatus();
+    }
   },
 
   _confirmSubmit: function() {

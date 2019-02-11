@@ -56,7 +56,7 @@ Tw.BenefitDisPgmCancel.prototype = {
       applyBtnText: Tw.BUTTON_LABEL.TERMINATE,
       isMobilePlan: false,
       joinTypeText: Tw.PRODUCT_TYPE_NM.TERMINATE,
-      typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
+      typeText: Tw.PRODUCT_CTG_NM.DISCOUNT_PROGRAM,
       toProdName: this._confirmOptions.preinfo.reqProdInfo.prodNm,
       toProdDesc: this._confirmOptions.preinfo.reqProdInfo.prodSmryDesc,
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
@@ -120,11 +120,11 @@ Tw.BenefitDisPgmCancel.prototype = {
       {
         hbs: 'complete_product',
         data: {
-          mytPage: 'additions',
+          mytPage: 'submain',
           btClass: 'item-one',
           prodId: this._prodId,
           prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
-          prodCtgNm: Tw.PRODUCT_CTG_NM.ADDITIONS,
+          prodCtgNm: Tw.PRODUCT_CTG_NM.DISCOUNT_PROGRAM,
           typeNm: Tw.PRODUCT_TYPE_NM.TERMINATE,
           isBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
           basFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo ?
@@ -139,6 +139,14 @@ Tw.BenefitDisPgmCancel.prototype = {
 
   _openResPopupEvent: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
+    $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
+  },
+
+  _closeAndGo: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
   },
 
   _openVasTermPopup: function(respResult) {

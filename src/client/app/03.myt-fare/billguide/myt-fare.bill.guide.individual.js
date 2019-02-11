@@ -16,8 +16,8 @@ Tw.MyTFareBillGuideIndividual = function (rootEl, resData) {
 
   this._init();
 
-  this.paramDate = '';
-  this.paramLine = '';
+  this.paramDate = this.resData.reqQuery.date || '';
+  this.paramLine = this.resData.reqQuery.line || '';
 };
 
 Tw.MyTFareBillGuideIndividual.prototype = {
@@ -131,7 +131,7 @@ Tw.MyTFareBillGuideIndividual.prototype = {
   //--------------------------------------------------------------------------[EVENT]
   _feePayBtnEvt: function () {
     // Tw.Logger.info('[요금납부]', Tw.MyTFareBill);
-    this.myTFarePayment = new Tw.MyTFareBill(this.$container);
+    this.myTFarePayment = new Tw.MyTFareBill(this.$container, this.resData.svcAttrCd);
   },
   _payListBtnEvt: function () {
     // Tw.Logger.info('[납부내역조회]');
@@ -290,7 +290,7 @@ Tw.MyTFareBillGuideIndividual.prototype = {
   //--------------------------------------------------------------------------[SVC]
   _useSvcTypeFun: function () {
     var svcTypeList = this.resData.commDataInfo.intBillLineList;
-    var svcMgmtNum = this.resData.svcInfo.svcMgmtNum;
+    var svcMgmtNum = this.resData.svcMgmtNum;
     var selectSvcType = _.find(svcTypeList, function (item) {
       return item.svcMgmtNum === svcMgmtNum;
     });

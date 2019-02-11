@@ -109,8 +109,8 @@
 															<div class="radio-slide">
 																<ul class="select-list" role="radiogroup">
 																	<li class="radiobox" role="radio">
-																		<input type="radio" name="radio4" value="" title="충전금액 5,000원" checked/><!-- 체크상태일 경우 checked="false" -->
-																		<span class="radio-txt">
+																		<input type="radio" name="radio4" value="" title="충전금액" aria-labelledby="aria-comp-radio1" checked/><!-- 체크상태일 경우 checked="false" -->
+																		<span class="radio-txt" id="aria-comp-radio1">
 																			<span>5,000</span><span class="unit">원</span>
 																		</span>
 																	</li>
@@ -142,11 +142,11 @@
                     <!-- .cont-box -->
                     <div class="cont-box nogaps-btm">
                         <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                        <ul class="noti-list">
-                            <li>상한금액 안내<button aria-haspopup="true" class="tip-view" title="상한금액 안내 정보보기">TIP</button></li>
-                            <li>요금제 안내<button aria-haspopup="true" class="tip-view" title="요금상품 안내 정보보기">TIP</button></li>
-                            <li>매달 자동충전 안내<button aria-haspopup="true" class="tip-view" title="매달 자동충전 안내 정보보기">TIP</button></li>
-                            <li>충전 허용금액 변경 안내<button aria-haspopup="true" class="tip-view" title="충전 허용금액 변경 안내 정보보기">TIP</button></li>
+                        <ul class="noti-list02">
+                            <li><button aria-haspopup="true" class="tip-view-btn" title="상한금액 안내 정보보기">상한금액 안내<span class="tip-view"></span>TIP</button></li>
+                            <li><button aria-haspopup="true" class="tip-view-btn" title="요금제 안내 정보보기">요금제 안내<span class="tip-view"></span>TIP</button></li>
+                            <li><button aria-haspopup="true" class="tip-view-btn" title="매달 자동 충전 안내 정보보기">매달 자동 충전 안내<span class="tip-view"></span>TIP</button></li>
+                            <li><button aria-haspopup="true" class="tip-view-btn" title="충전 허용금액 변경 안내 정보보기">충전 허용금액 변경 안내<span class="tip-view"></span>TIP</button></li>
                         </ul>
                     </div>  
                     <!--// .cont-box -->

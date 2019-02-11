@@ -82,14 +82,19 @@ class MyTFareBillSmall extends TwViewController {
     const usedValueList = ['0', '2', '6'];
     const usedYn = {
       isUsed: false,
+      isPassword: false,
       rtnUseYn: null
     };
 
     if (historyInfo.code === API_CODE.CODE_00) {
-      if (historyInfo.result.rtnUseYn in usedValueList) {
-        usedYn.isUsed = true;
+      const rtnUseYn = historyInfo.result.rtnUseYn;
+      for (let i = 0; i < usedValueList.length; i++) {
+        if (rtnUseYn === usedValueList[i]) {
+          usedYn.isUsed = true;
+        }
       }
       usedYn.rtnUseYn = historyInfo.result.rtnUseYn;
+      usedYn.isPassword = historyInfo.result.cpmsYn === 'Y';
     }
     return usedYn;
   }
@@ -102,6 +107,7 @@ class MyTFareBillSmall extends TwViewController {
     if (passwordStatus.code === API_CODE.CODE_00) {
       const passwordResult = passwordStatus.result;
       passwordStatus.text = MYT_FARE_MICRO_NAME[passwordResult.cpinStCd];
+      passwordStatus.cpmsYn = passwordResult.cpmsYn;
     } else {
       if (passwordStatus.code === 'BIL0054') {
         passwordStatus.text = MYT_FARE_MICRO_NAME['NC'];

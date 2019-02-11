@@ -23,57 +23,66 @@
         <h2 class="blind">내용</h2>
         <div class="container">
             <!-- .cont-box -->
-            <div class="cont-box nogaps">
-                <div class="history-list">
-                    <script id="fe-discount-month-item" type="text/x-handlebars-template">
-                        <li>
-                            <div style="position: relative;">
-                                <span class="tx-date">{{ showInvoDt }}</span>
-                                <span class="tx-count">{{ invCnt }}회차</span>
-                                <div class="li-elem">
-                                    <div class="title-box">
-                                        <span class="tit">할인 금액</span>
-                                        <span class="sub-tit">할인 반환금 산정률</span>
-                                    </div>
-                                    <div class="price">
-                                        <span class="tx-price">{{ showPenEstDcAmt }}</span><span class="unit">원</span>
-                                        <span class="tx-cal">{{ perEstRt }}%</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </script>
-                    <ul class="fe-discount-month-list">
-                        <% for(var i = 0, length = data.agrmts.length; i < length; i++ ) { %>
-                        <li>
-                            <div style="position: relative;">
-                                <span class="tx-date"><%= data.agrmts[i].showInvoDt %></span>
-                                <span class="tx-count"><%= data.agrmts[i].invCnt %>회차</span>
-                                <div class="li-elem">
-                                    <div class="title-box">
-                                        <span class="tit">할인 금액</span>
-                                        <span class="sub-tit">할인 반환금 산정률</span>
-                                    </div>
-                                    <div class="price">
-                                        <span class="tx-price"><%= data.agrmts[i].showPenEstDcAmt %></span><span class="unit">원</span>
-                                        <span class="tx-cal"><%= data.agrmts[i].perEstRt %>%</span>
+            <% if (data.agrmts.length > 0) { %>
+                <div class="cont-box nogaps">
+                    <div class="history-list">
+                        <script id="fe-discount-month-item" type="text/x-handlebars-template">
+                            <li>
+                                <div style="position: relative;">
+                                    <span class="tx-date">{{ showInvoDt }}</span>
+                                    <span class="tx-count">{{ invCnt }}회차</span>
+                                    <div class="li-elem">
+                                        <div class="title-box">
+                                            <span class="tit">할인 금액</span>
+                                            <span class="sub-tit">할인 반환금 산정률</span>
+                                        </div>
+                                        <div class="price">
+                                            <span class="tx-price">{{ showPenEstDcAmt }}</span><span class="unit">원</span>
+                                            <span class="tx-cal">{{ perEstRt }}%</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
-                        <% } %>
-                    </ul>
+                            </li>
+                        </script>
+                        <ul class="fe-discount-month-list">
+                            <% for(var i = 0, length = data.agrmts.length; i < length; i++ ) { %>
+                            <li>
+                                <div style="position: relative;">
+                                    <span class="tx-date"><%= data.agrmts[i].showInvoDt %></span>
+                                    <span class="tx-count"><%= data.agrmts[i].invCnt %>회차</span>
+                                    <div class="li-elem">
+                                        <div class="title-box">
+                                            <span class="tit">할인 금액</span>
+                                            <span class="sub-tit">할인 반환금 산정률</span>
+                                        </div>
+                                        <div class="price">
+                                            <span class="tx-price"><%= data.agrmts[i].showPenEstDcAmt %></span><span class="unit">원</span>
+                                            <span class="tx-cal"><%= data.agrmts[i].perEstRt %>%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <% } %>
+                        </ul>
+                    </div>
                 </div>
-            </div>
 
-            <% if (data.showMoreBtn) { %>
-            <div class="bt-more round">
-                <button class="fe-btn-more">더보기<span></span></button>
-            </div>
+                <% if (data.showMoreBtn) { %>
+                <div class="bt-more round">
+                    <button class="fe-btn-more">더보기<span></span></button>
+                </div>
+                <% } %>
+                <div class="myt-note-wrap type2 mt20">
+                    <span class="tit">할인반환금 산식 = 월별 할인금액에 할인회차 별 할인반환금 산정율을 적용한 뒤, 합산하여 부과합니다.</span>
+                </div>
+            <% } else { %>
+                <div class="cont-box nogaps">
+                    <div class="contents-empty">
+                        <span class="ico type1"></span>
+                        <p class="desc">내역이 없습니다.</p>
+                    </div>
+                </div>
             <% } %>
-            <div class="myt-note-wrap type2 mt20">
-                <span class="tit">할인반환금 산식 = 월별 할인금액에 할인회차 별 할인반환금 산정율을 적용한 뒤, 합산하여 부과합니다.</span>
-            </div>
         </div>
     </div>
     <!--// #contents -->

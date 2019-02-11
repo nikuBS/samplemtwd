@@ -87,10 +87,10 @@ class FormatHelper {
       return FormatHelper.setDecimalPlace(number, 2).toString();
     }
     if ( number > 0 && number < 100 && number % 1 !== 0 ) {
-      return FormatHelper.removeZero(number.toFixed(2));
+      return parseFloat(number.toFixed(2)).toString();
     }
     if ( number >= 100 && number < 1000 && number % 1 !== 0 ) {
-      return FormatHelper.removeZero(number.toFixed(1));
+      return parseFloat(number.toFixed(1)).toString();
     }
     if ( number > 1000 ) {
       return FormatHelper.addComma(number.toFixed(0));
@@ -329,6 +329,14 @@ class FormatHelper {
     }
     const regexp = /\B(?=([\d|\*]{4})+(?![\d|\*]))/g;
     return value.replace(regexp, '-');
+  }
+
+  static addCardSpace(value: string): string {
+    if ( FormatHelper.isEmpty(value) ) {
+      return '';
+    }
+    const regexp = /\B(?=([\d|\*]{4})+(?![\d|\*]))/g;
+    return value.replace(regexp, ' ');
   }
 }
 

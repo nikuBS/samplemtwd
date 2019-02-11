@@ -25,8 +25,8 @@
         <h2 class="blind">내용</h2>
         <div class="container">
             <div class="ti-caption-gray bdt datail-veiw">
-                <span class="tit"><%=svcInfo.prodNm%></span>
-                <a class="detail-view" href="/product/callplan/<%=svcInfo.prodId%>"><span class="blind">자세히</span></a>
+                <span class="tit" id="aria-comp-bt1"><%=svcInfo.prodNm%></span>
+                <a class="detail-view" href="/product/callplan/<%=svcInfo.prodId%>" aria-labelledby="aria-comp-bt1"><span class="blind">자세히 보기</span></a>
             </div>
             <!-- .cont-box -->
             <div class="cont-box now-fee-box">
@@ -93,9 +93,12 @@
                     <%}%>
 
                     <!--우편, 유선 ( 문자 )일 때, 핸드폰 번호 보임 -->
-                    <%if(data.hpNum) {%>
+                    <%
+                        if(data.hpNum) {
+                        let _hpTitle = ['1', 'ADD'].indexOf(data.billInfo[0].cd) !== -1 ? '연락처':'휴대폰번호';
+                    %>
                         <dl class="info-tx1">
-                            <dt>연락처</dt>
+                            <dt><%=_hpTitle%></dt>
                             <dd><%=data.hpNum%></dd>
                         </dl>
                     <%}%>
@@ -142,15 +145,17 @@
                 <%}%>
 
                 <!--모바일 퀵 은 "반송내역", "재발행" 비노출-->
-                <%if(['D', 'E'].indexOf(data.curBillType) === -1){%>
-                <ul class="bt-slice item-two pt40">
+                <%
+                    if(['D', 'E'].indexOf(data.curBillType) === -1){
+                    let _itemClassNm = 'P' !== data.curBillType ? 'item-two' : '';
+                %>
+                <ul class="bt-slice pt40 <%=_itemClassNm%>">
                     <li class="bt-blue1">
                         <a href="/myt-fare/billsetup/historyreturn">반송내역</a>
                     </li>
                     <!--T world 확인은 재발행 기능 없음-->
                     <% if ( 'P' !== data.curBillType ) { %>
                     <li class="bt-blue1">
-                        <!--<button>재발행</button>-->
                         <a href="/myt-fare/billsetup/reissue">재발행</a>
                     </li>
                     <%}%>

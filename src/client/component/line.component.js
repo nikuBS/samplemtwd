@@ -161,7 +161,6 @@ Tw.LineComponent.prototype = {
   _successChangeLine: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._changeLine = true;
-      Tw.CommonHelper.setXtSvcInfo();
 
       if ( this._openLineList ) {
         this._popupService.close();
@@ -207,7 +206,7 @@ Tw.LineComponent.prototype = {
     }
   },
   _completeLogin: function () {
-    Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
+    // Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
     if ( !Tw.FormatHelper.isEmpty(this._callback) ) {
       this._callback();
     } else {
