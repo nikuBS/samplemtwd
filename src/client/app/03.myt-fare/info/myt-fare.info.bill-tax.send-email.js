@@ -27,7 +27,7 @@ Tw.MyTFareInfoBillTaxSendEmail.prototype = {
   _cachedElement: function() {
     this.$emailInput = this.$container.find('.input input[type="text"]');
     this.$rerequestSendBtn = this.$container.find('.fe-submit button');
-    this.$textValidation = this.$container.find('.input-txt-type02');
+    this.$textValidation = this.$container.find('.fe-txt-wrong-email');
   },
 
   _bindEvent: function() {
@@ -37,15 +37,16 @@ Tw.MyTFareInfoBillTaxSendEmail.prototype = {
     this.$emailInput.siblings('.cancel').on('click', $.proxy(function() {
       this.$emailInput.val('').trigger('keyup');
       this.$rerequestSendBtn.attr('disabled', true);
+      this._checkEmailValidation();
     }, this));
     this.$emailInput.trigger('keyup');
     this.$container.find('.fe-btn-back').on('click', $.proxy(this._closeResendByEmail, this));
   },
 
   // 이메일 인풋 포커스 아웃 시 밸리데이션
-  _checkEmailValidation: function (e) {
-    if (Tw.ValidationHelper.isEmail($(e.currentTarget).val()) || 
-      Tw.FormatHelper.isEmpty($(e.currentTarget).val())
+  _checkEmailValidation: function () {
+    if (Tw.ValidationHelper.isEmail(this.$emailInput.val()) || 
+      Tw.FormatHelper.isEmpty(this.$emailInput.val())
     ) {
       this.$textValidation.hide();
     } else {

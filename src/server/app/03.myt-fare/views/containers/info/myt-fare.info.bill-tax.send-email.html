@@ -88,21 +88,25 @@
                             <div class="inputbox bt-add">
                                 <span class="input">
                                     <!-- 2018 09-21 수정-->
-                                    <input type="text" placeholder="abcd@sktelecom.com" title="이메일 주소" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1">
+                                    <input type="text" placeholder="abcd@sktelecom.com" title="이메일 주소" aria-describedby="aria-exp-desc1">
                                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                 </span>
                             </div>
-                            <p class="input-txt-type02 pb10 pt6" style="display:none" >이메일 주소가 올바르지 않습니다.</p>
+                            <span id="aria-exp-desc1">
+                                <span class="error-txt fe-txt-wrong-email" style="display:none;">이메일 주소가 올바르지 않습니다.</span>
+                            </span>
+                            
                         </div>
                     </div>
                     <!--// .cont-box -->
-
-                    <ul class="bt-slice full">
-                        <li class="bt-red1 fe-submit">
-                            <button>전송하기</button>
-                        </li>
-                    </ul>
-
+                    <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                    <div class="bt-fixed-area">
+                        <ul class="bt-slice full">
+                            <li class="bt-red1 fe-submit">
+                                <button>전송하기</button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
