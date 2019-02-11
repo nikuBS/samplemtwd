@@ -61,7 +61,7 @@
                                         <% } else { %>
                                             <span class="info-title num"><%= addition.basFeeTxt || '무료' %></span>
                                         <% } %>
-                                        <% if (hasLink) { %> <span class="ico"></span><% } %>
+                                        <% if (hasLink) { %><span class="ico"><span class="blind"><%= addition.prodNm %> 자세히 보기</span></span><% } %>
                                     </div>
                                 <% if (hasLink) { %>
                                 </a>
@@ -96,7 +96,7 @@
                                     </div>
                                     <div class="lineinfo-data">
                                         <span class="info-title"><%= roaming.recentlyJoinsProdNm %><%= roaming.addProdCnt > 0 ? '외 ' + roaming.addProdCnt + '건' : '' %></span>
-                                        <span class="ico"></span>
+                                        <span class="ico"><span class="blind">나의 로밍 요금제 및 부가서비스 자세히 보기</span></span>
                                     </div>
                                 </a>
                             </li>
