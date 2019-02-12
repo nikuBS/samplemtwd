@@ -38,7 +38,7 @@ Tw.BenefitJoinTbCombination.prototype = {
     this.$btnSelectCombineLine.on('click', $.proxy(this._getMobileSvcInfo, this));
     this.$btnSetupOk.on('click', $.proxy(this._procConfirmReq, this));
 
-    this.$lineList.on('change', 'input[type=radio]', $.proxy(this._setWireSvcMgmtNum, this));
+    this.$lineList.on('change', 'input[type=radio]:not(:disabled)', $.proxy(this._setWireSvcMgmtNum, this));
   },
 
   _getMobileSvcInfo: function() {
@@ -85,6 +85,10 @@ Tw.BenefitJoinTbCombination.prototype = {
   },
 
   _onSelectLine: function() {
+    if (Tw.FormatHelper.isEmpty(this._svcMgmtNum)) {
+      return;
+    }
+
     this._apiService.request(Tw.API_CMD.BFF_10_0142, { choiceSvcMgmtNum: this._svcMgmtNum }, {}, [this._prodId])
       .done($.proxy(this._setUseList, this));
   },

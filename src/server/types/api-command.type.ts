@@ -757,11 +757,26 @@ export const API_CMD = {
     server: API_SERVER.BFF,
     bypass: true
   },
-  BFF_10_0139: { path: '/core-product/:version/ledger/:args0/recommend-apps', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_10_0142: { path: '/core-product/v1/mobiles/combinations/:args0/joins/services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_10_0143: { path: '/core-product/v1/mobiles/combinations/:args0/joins/simulations',
-    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_10_0144: { path: '/core-product/v1/mobiles/combinations/:args0/joins', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_10_0138: {
+    path: '/core-product/:version/wire/additions/:args0/joins/reservations',
+    method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true
+  },
+  BFF_10_0139: {
+    path: '/core-product/:version/ledger/:args0/recommend-apps',
+    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
+  BFF_10_0142: {
+    path: '/core-product/:version/mobiles/combinations/:args0/joins/services',
+    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
+  BFF_10_0143: {
+    path: '/core-product/:version/mobiles/combinations/:args0/joins/simulations',
+    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
+  BFF_10_0144: {
+    path: '/core-product/:version/mobiles/combinations/:args0/joins',
+    method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true
+  },
   BFF_10_0151: {
     path: '/core-product/:version/mobiles/fee-plans/:args0/joins/term-prechecks',
     method: API_METHOD.GET,
@@ -799,13 +814,13 @@ export const API_CMD = {
     bypass: true
   },
   BFF_10_0169: {
-    path: '/core-product/v1/mobiles/fee-plans/young-plan-mid-sets',
+    path: '/core-product/:version/mobiles/fee-plans/young-plan-mid-sets',
     method: API_METHOD.GET,
     server: API_SERVER.BFF,
     bypass: true
   },
   BFF_10_0170: {
-    path: '/core-product/v1/mobiles/fee-plans/young-plan-mid-sets',
+    path: '/core-product/:version/mobiles/fee-plans/young-plan-mid-sets',
     method: API_METHOD.PUT,
     server: API_SERVER.BFF,
     bypass: true

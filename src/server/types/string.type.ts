@@ -581,6 +581,11 @@ export const PRODUCT_TYPE_NM = {
       BUTTON: '변경하기',
       DESCRIPTION: '현재 회선으로는 이용이 불가능 합니다.<br>다른 회선으로 변경해 주세요.'
     }
+  },
+  RESERVATION_CANCEL: {
+    JOIN: '가입예약 취소',
+    TERMINATE: '해지예약 취소',
+    CHANGE: '변경예약 취소'
   }
 };
 
