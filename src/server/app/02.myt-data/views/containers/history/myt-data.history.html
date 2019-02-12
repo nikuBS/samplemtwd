@@ -61,9 +61,8 @@
                         </div>
                     </div>
 
-                    <div class="contents-empty <%= list.length > 0 ? 'none': '' %>">
-                        <span class="ico type1"></span>
-                        <p class="desc">충전/선물 내역이 없습니다.</p>
+                    <div class="result-none <%= list.length > 0 ? 'none': '' %>">
+                        충전/선물 내역이 없습니다.
                     </div>
                     <% const leftCount = list.length - DEFALUT_LIST_COUNT; %>
                     <div class="bt-more <%= leftCount > 0 ? '' : 'none' %>"><button>더 보기</button></div>

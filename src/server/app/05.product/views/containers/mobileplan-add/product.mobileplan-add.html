@@ -210,7 +210,7 @@
                         <div class="suggest-tag-list">
                             <ul>
                                 <% recommendedTags.map(tag => { %>
-                                    <li><a href="/product/mobileplan-add/list?tag=<%= tag.tagId %>" class="link">#<%= tag.tagNm %></a></li>
+                                    <li><a role="button" href="/product/mobileplan-add/list?tag=<%= tag.tagId %>" class="link">#<%= tag.tagNm %></a></li>
                                 <% }); %>
                             </ul>
                         </div>
