@@ -282,7 +282,7 @@ gulp.task('css-main', function () {
     .pipe(rename('mainstyle.min.css'))
     .pipe(rev())
     .pipe(gulp.dest(dist + 'css'))
-    .pipe(rev.manifest(dist + 'tmp/css-manifest.json', {
+    .pipe(rev.manifest(dist + 'tmp/css-main-manifest.json', {
       merge: true
     }))
     .pipe(gulp.dest('.'));
