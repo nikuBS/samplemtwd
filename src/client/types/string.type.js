@@ -363,8 +363,8 @@ Tw.MYT_FARE_BILL_SET = {
     }
   },
   BILL_GUIDECHANGE_A14: '요금안내서 재발행이 신청되었습니다.',
-  COMPLETE_TEXT_REISSUE: '안내서 재발행',
-  COMPLETE_TEXT_CHANGE: '안내서 변경',
+  COMPLETE_TEXT_REISSUE: '요금안내서 재발행',
+  COMPLETE_TEXT_CHANGE: '요금안내서 변경',
   GUIDE_CONFIRM_TEXT: '요금안내서 확인'
 };
 
