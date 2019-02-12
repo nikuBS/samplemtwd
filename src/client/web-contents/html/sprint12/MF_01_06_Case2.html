@@ -58,8 +58,10 @@
 						<div class="wrap-gaps-top">
 							<div class="charge-guide-wrap">
 								<div class="charge-cont">
+                                    <!--접근성 수정-->
 									<span class="sub-disc01">T포인트<button title="T포인트" aria-haspopup="true" type="button" class="tip-view">TIP</button></span>
-									<span class="tit tx-blue"><span class="charge-txt">9,120</span>점</span>
+                                    <!-- //접근성 수정-->
+                                    <span class="tit tx-blue"><span class="charge-txt">9,120</span>점</span>
 								</div>
 								<ul class="round-dot-list type01 mb20">
 									<li>1회 납부는 최소 1,000점 이상 입력하실 수 있습니다.</li>
@@ -102,19 +104,23 @@
 															<label class="tit" for="formInput01">납부할 포인트</label>
 															<span class="inputbox">
 																<span class="input">
+                                                                    <!--접근성 수정-->
 																	<button class="bt-dropdown big" title="납부할 포인트 선택" aria-haspopup="true">납부할 포인트 선택<span class="ico"></span></button>
-																</span>
+                                                                    <!-- //접근성 수정-->
+                                                                </span>
 																<p class="comm-indent-txt mt10">자동납부 종료예정일<span class="pl10">2018.5.20.</span></p>
                                                                 <p class="comm-indent-txt mt20">* 본인명의로 이동전화를 등록한 고객님에 한해 포인트로 이동전화요금을 납부하실 수 있습니다.</p>
 															</span>
 														</li>
 														<li>
+                                                            <!--접근성 수정-->
 															<label class="tit" for="formInput02">OK캐쉬백 카드번호</label>
 															<span class="inputbox">
 																<span class="input">
 																	<input id="formInput02" type="number" title="OK캐쉬백 카드번호 숫자만 입력" placeholder="숫자만 입력" />
 																</span>
-															</span>
+                                                            </span>
+                                                            <!-- //접근성 수정-->
 														</li>
 													</ul>
 												</div>
@@ -142,6 +148,7 @@
                                     <div class="widget-box check">
                                         <ul class="select-list one-line" role="group">
                                             <li>
+                                                <!--접근성 수정-->
                                                 <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
                                                     <input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox1" /><!-- 체크상태일 경우 checked="false" -->
                                                     <div class="comp-list-layout" id="aria-comp-checkbox1">
@@ -151,6 +158,7 @@
                                                     </div>
                                                 </div>
                                                 <button class="agree-view"><span class="blind">OK캐쉬백 제3자 정보 제공동의 자세히 보기</span></button>
+                                                <!-- //접근성 수정-->
                                             </li>
                                         </ul>
                                     </div>
@@ -164,9 +172,11 @@
                     <!-- .cont-box -->
                     <div class="cont-box nogaps-btm">
                         <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                        <ul class="noti-list">
-                            <li>포인트 요금납부 이용안내 <button title="포인트 요금납부 이용안내" aria-haspopup="true" type="button" class="tip-view">TIP</button></li>
-                            <li>미납금액 <button title="미납금액" aria-haspopup="true" type="button" class="tip-view">TIP</button></li>
+                        <ul class="noti-list02">
+                            <!--접근성 수정-->
+                            <li><button title="포인트 요금납부 이용안내" aria-haspopup="true" type="button" class="tip-view-btn">포인트 요금납부 이용안내<span class="tip-view">TIP</span></button></li>
+                            <li><button title="미납금액" type="button" class="tip-view-btn">미납금액<span class="tip-view">TIP</span></button></li>
+                            <!-- //접근성 수정-->
                         </ul>
                     </div>
                     <!--// .cont-box -->

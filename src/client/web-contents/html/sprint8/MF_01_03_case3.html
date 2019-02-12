@@ -70,21 +70,29 @@
                     <div class="cont-box noborder">
                         <div class="user-info-form" role="group">
                             <div class="info-form-box">
+                                <!--접근성 수정-->
                                 <p class="form-label">납부포인트 <button title="납부포인트 " aria-haspopup="true" class="tip-view">TIP</button></p>
+                                <!-- //접근성 수정-->
                                 <div class="select-point-box">
                                     <div class="select-point-dropdown">
+                                        <!--접근성 수정-->
                                         <button class="bt-dropdown big" title="납부 포인트 종류" aria-haspopup="true">OK캐쉬백<span class="ico"></span></button>
+                                        <!-- //접근성 수정-->
                                     </div>
                                     <div class="select-point-input">
                                         <div class="inputbox">
                                             <span class="input">
-                                                <input type="number" placeholder="1,000점 이상" title="납부포인트 1,000점 이상 입력해 주세요" value="" aria-describedby="aria-exp-desc1">
+                                                <!--접근성 수정-->
+                                                <input type="number" placeholder="1,000점 이상" title="납부포인트 1,000점 이상 입력해 주세요" value="" aria-describedby="aria-exp-desc1 aria-exp-desc2">
+                                                <!-- //접근성 수정-->
                                                 <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                             </span>
                                         </div>
                                     </div>
+                                    <!--접근성 수정-->
                                     <span class="error-txt fl-type" id="aria-exp-desc1">보유하신 포인트 보다 초과 입력 하셨습니다.</span>
-                                    <span class="error-txt fl-type" id="aria-exp-desc1">1,000점 이상 입력해주세요.</span>
+                                    <span class="error-txt fl-type" id="aria-exp-desc2">1,000점 이상 입력해주세요.</span>
+                                    <!-- //접근성 수정-->
                                     <span class="select-point-info">OK캐쉬백 <span>4,600</span>점 / 포인트 <span>1,200</span>점</span>
                                 </div>
                             </div>
@@ -92,7 +100,9 @@
                                 <p class="form-label" id="aria-exp-label2">비밀번호</p>
                                 <span class="inputbox">
                                     <span class="input">
+                                        <!--접근성 수정-->
                                         <input type="number" placeholder="숫자만 입력" title="비밀번호 숫자만 입력 해주세요" value="">
+                                        <!-- //접근성 수정-->
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                 </span>

@@ -138,7 +138,7 @@ skt_landing.widgets = {
             var maxLength = field.attr('maxlength');
             field.on('keyup',function(){
               var str_length = $(this).val().length;
-              if(str_length >= maxLength){
+              if(str_length > maxLength){
                 // console.log(str_length);
                 $(this).val($(this).val().substr(0, maxLength));
                 $(this).trigger('input.text-auto-expand');
@@ -292,6 +292,9 @@ skt_landing.widgets = {
       }else{
         return;
       }
+      if($(this).find('.slider > *').length == 1){
+        return;
+      }
       if($(this).find('.slick-initialized').length > 0){
         $(this).find('.slider').slick('destroy');
       }
@@ -305,6 +308,7 @@ skt_landing.widgets = {
         // mobileFirst : true,
         // useCSS : false,
         // useTransform : false,
+        lazyLoad: 'ondemand',
         centerMode: false,
         focusOnSelect: false,
         touchMove : true,
@@ -325,6 +329,7 @@ skt_landing.widgets = {
           // mobileFirst : true,
           // useCSS : false,
           // useTransform : false,
+          lazyLoad: 'ondemand',
           centerMode: false,
           focusOnSelect: false,
           touchMove : true,
@@ -756,7 +761,7 @@ skt_landing.widgets = {
       }else{
         return;
       }
-      var time = 1500,
+      var time = 500,
       now = 0,
       interval = 10,
       max = 100,
@@ -765,9 +770,10 @@ skt_landing.widgets = {
       _this = this;
       $(_this).find('.donut-chart .c100').each(function(){
         $(this)
-            .data('reverce', false)
+            // .data('reverce', false)
             .data('now', 0)
-            .data('unit', (max - $(this).data('percent') + loop) / (time / interval))
+            // .data('unit', (max - $(this).data('percent') + loop) / (time / interval)) // reverse operation
+            .data('unit', ($(this).data('percent')) / (time / interval))
             .data('reverse', 0)
       })
       var t = setInterval(function(){
@@ -780,8 +786,8 @@ skt_landing.widgets = {
             }
             $(this).attr('class','').addClass('c100').addClass('p'+$(this).data('now'));
             if($(this).data('now') >= max){ // reverse flag
-              $(this).data('now', max)
-              $(this).data('reverse', true)
+              //$(this).data('now', max)
+              //$(this).data('reverse', true) // reverse operation
             }
         })
         now += interval;

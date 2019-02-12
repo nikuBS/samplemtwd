@@ -20,9 +20,7 @@
     <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
     <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
     <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
-    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
-    
-
+    <link rel="stylesheet" type="text/css" href="/css/main.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
     <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
     <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
     <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
@@ -65,8 +63,8 @@
                 <div class="home-tab">
                     <div class="home-tab-belt">
                         <ul>
-                            <li class="tab"><div><button class="icon-home-tab-my on"><span class="blind">my</span></button><span class="bar"></span></div></li>
-                            <li class="tab"><div><button class="icon-home-tab-store"><span class="blind">store</span></button><span class="bar"></span></div></li>
+                            <li class="tab"><div><button class="icon-home-tab-my on" aria-selected="true"><span class="blind">my</span></button><span class="bar"></span></div></li> <!-- 접근성-선택되었을때 'true' 변경-->
+                            <li class="tab"><div><button class="icon-home-tab-store" aria-selected="false"><span class="blind">store</span></button><span class="bar"></span></div></li> <!--접근성-선택되었을때 'true' 변경-->
                         </ul>
                     </div>
                 </div>
@@ -88,17 +86,17 @@
                                                 <ul class="slider">
                                                     <li>
                                                         <button class="bt">
-                                                            <img src="/img/main/banner01.jpg" alt="">
+                                                            <img src="/img/main/banner01.jpg" alt="예약과 품절 사이 단 1초! 가장 완변한 사전예약 iPhone X5 2차 사전예약하기">
                                                         </button>
                                                     </li>
                                                     <li>
                                                         <button class="bt">
-                                                            <img src="/img/main/banner01.jpg" alt="">
+                                                            <img src="/img/main/banner01.jpg" alt="예약과 품절 사이 단 1초! 가장 완변한 사전예약 iPhone X5 2차 사전예약하기">
                                                         </button>
                                                     </li>
                                                     <li>
                                                         <button class="bt">
-                                                            <img src="/img/main/banner01.jpg" alt="">
+                                                            <img src="/img/main/banner01.jpg" alt="예약과 품절 사이 단 1초! 가장 완변한 사전예약 iPhone X5 2차 사전예약하기">
                                                         </button>
                                                     </li>
                                                 </ul>
@@ -112,7 +110,7 @@
                                 <!-- MY 바로가기 -->
                                 <ul class="quick-menu-list">
                                     <li><button class="bt"><i class="icon-price-plan-80"></i>요금제</button></li>
-                                    <li><button class="bt"><i class="icon-vas-80"><span class="blind">vas</span></i>부가서비스</button></li>
+                                    <li><button class="bt"><i class="icon-vas-80"></i>부가서비스</button></li>
                                     <li><button class="bt"><i class="icon-internet-80"></i>인터넷/<br>전화/IPTV</button></li>
                                     <li><button class="bt"><i class="icon-roaming-80"></i>T로밍</button></li>
                                     <li><button class="bt"><i class="icon-cellphone2-80"></i>스마트폰</button></li>
@@ -126,25 +124,25 @@
                             <!-- 다이렉트샵 -->
                             <div class="section-box">
                                 <div class="main-direct-box">
-                                    <div class="stit c-point"><button class="bt">다이렉트샵 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div>
+                                    <div class="stit c-point"><button class="bt">다이렉트샵 <i class="icon-arrowmore-blue-32"><span class="blind">more</span></i></button></div>
                                     <strong class="ti">다이렉트샵에서 엄선한<br>프리미엄 스마트폰</strong>
                                     <!-- <span class="tx">SK텔레콤 고객을 위한 공시 지원금에 추가 지원금 할인</span> -->
                                     <ul class="info"><!-- 190124 가격,태그 영역 제거 -->
                                         <li>
                                             <button class="bt">
-                                                <span class="img"><img src="/img/main/img_phone01.png" alt=""></span>
+                                                <span class="img"><img src="/img/main/img_phone01.png" alt="iPhone XS"></span>
                                                 <strong class="ti">iPhone XS</strong>
                                             </button>
                                         </li>
                                         <li>
                                             <button class="bt">
-                                                <span class="img"><img src="/img/main/img_phone02.png" alt=""></span>
+                                                <span class="img"><img src="/img/main/img_phone02.png" alt="갤럭시 노트9"></span>
                                                 <strong class="ti">갤럭시 노트9</strong>
                                             </button>
                                         </li>
                                         <li>
                                             <button class="bt">
-                                                <span class="img"><img src="/img/main/img_phone03.png" alt=""></span>
+                                                <span class="img"><img src="/img/main/img_phone03.png" alt="엘지 Q9"></span>
                                                 <strong class="ti">엘지 Q9</strong>
                                             </button>
                                         </li>
@@ -165,7 +163,7 @@
                             <!-- 모바일 요금제 -->
                             <div class="section-box nogaps-btm">
                                 <div class="main-direct-box">
-                                    <div class="stit c-point"><button class="bt">요금제 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div>
+                                    <div class="stit c-point"><button class="bt">요금제 <i class="icon-arrowmore-blue-32"><span class="blind">more</span></i></button></div>
                                     <strong class="ti">인기 있는<br/> SK텔레콤의 대표요금제</strong>
                                     <ul class="charge-product">
                                         <li>
@@ -200,10 +198,10 @@
                             </div>
                             <!-- //모바일 요금제 -->
 
-                            <!-- 인터넷 · 집전화 · IPTV -->
+                            <!-- 인터넷 / 집전화 / IPTV -->
                             <div class="section-box nogaps">
                                 <!-- <div class="main-banner-img">
-                                    <button><img src="/img/main/img-main-banner08.png" alt="인터넷 · 전화 · IPTV 온가족 플랜 휴대폰 월정액 & 인터넷 기본료 결합하면 최대 29,710월 할인 자세히 보기" /></button>
+                                    <button><img src="/img/main/img-main-banner08.png" alt="인터넷 / 전화 / IPTV 온가족 플랜 휴대폰 월정액 & 인터넷 기본료 결합하면 최대 29,710월 할인 자세히 보기" /></button>
                                 </div> -->
                                 <div class="main-charge-box combination">
                                     <div class="stit"><button class="bt02">인터넷/전화/IPTV <i class="icon-arrowmore-32 white"><span class="blind">more</span></i></button></div>
@@ -216,12 +214,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- //인터넷 · 집전화 · IPTV -->
+                            <!-- //인터넷 / 집전화 / IPTV -->
 
                             <!-- 모바일 부가상품 -->
                             <div class="section-box nogaps-btm">
                                 <div class="main-direct-box">
-                                    <div class="stit c-point"><button class="bt">부가서비스<i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div>
+                                    <div class="stit c-point"><button class="bt">부가서비스<i class="icon-arrowmore-blue-32"><span class="blind">more</span></i></button></div>
                                     <strong class="ti">유용한 부가서비스</strong>
                                     <ul class="charge-product type-list">
                                         <li>
@@ -306,7 +304,7 @@
                                                 </ul> -->
                                                 <ul class="slider">
                                                     <li>                                                    
-                                                        <div class="stit type02"><button class="bt02">T로밍 아시아패스 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div>
+                                                        <div class="stit type02"><button class="bt02">T로밍 아시아패스 <i class="icon-arrowmore-blue-32"><span class="blind">more</span></i></button></div>
                                                         <div class="main-box-cont bg-type01">
                                                             <button class="link-full">    
                                                                 <strong class="ti">아시아 여행을<br/>계획 중이신가요?</strong>
@@ -316,7 +314,7 @@
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="stit type02"><button class="bt02">T로밍 미주패스 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div>
+                                                        <div class="stit type02"><button class="bt02">T로밍 미주패스 <i class="icon-arrowmore-blue-32"><span class="blind">more</span></i></button></div>
                                                         <div class="main-box-cont bg-type02">
                                                             <button class="link-full">
                                                                 <strong class="ti">미주 여행을<br/>계획 중이신가요?</strong>
@@ -326,7 +324,7 @@
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="stit type02"><button class="bt02">T로밍 유럽패스 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div>
+                                                        <div class="stit type02"><button class="bt02">T로밍 유럽패스 <i class="icon-arrowmore-blue-32"><span class="blind">more</span></i></button></div>
                                                         <div class="main-box-cont bg-type03">
                                                             <button class="link-full">
                                                                 <strong class="ti">유럽 여행을<br/>계획 중이신가요?</strong>
@@ -336,7 +334,7 @@
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="stit type02"><button class="bt02">T괌사이판 국내처럼 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div>
+                                                        <div class="stit type02"><button class="bt02">T괌사이판 국내처럼 <i class="icon-arrowmore-blue-32"><span class="blind">more</span></i></button></div>
                                                         <div class="main-box-cont bg-type04">
                                                             <button class="link-full">
                                                                 <strong class="ti">괌/사이판도 우리의<br/>데이터를 쓰는 나라다</strong>
@@ -346,7 +344,7 @@
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="stit type02"><button class="bt02">T로밍 OnePass300 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div>
+                                                        <div class="stit type02"><button class="bt02">T로밍 OnePass300 <i class="icon-arrowmore-blue-32"><span class="blind">more</span></i></button></div>
                                                         <div class="main-box-cont bg-type05">
                                                             <button class="link-full">
                                                                 <strong class="ti">짧은 여행을<br/>계획 중이신가요? </strong>
@@ -429,19 +427,19 @@
                                                         <ul class="help-list">
                                                             <li>
                                                                 <button class="bt">
-                                                                    <span class="ico"><img src="/img/main/ico_help01.png" alt="데이터가 부족할 때"></span>
+                                                                    <span class="ico"><img src="/img/main/ico_help01.png" alt=""></span>
                                                                     데이터가<br>부족할 때
                                                                 </button>
                                                             </li>
                                                             <li>
                                                                 <button class="bt">
-                                                                    <span class="ico"><img src="/img/main/ico_help02.png" alt="휴대폰을 분실했을 때"></span>
+                                                                    <span class="ico"><img src="/img/main/ico_help02.png" alt=""></span>
                                                                     휴대폰을<br>분실했을 때
                                                                 </button>
                                                             </li>
                                                             <li>
                                                                 <button class="bt">
-                                                                    <span class="ico"><img src="/img/main/ico_help03.png" alt="우리 아이 스마트폰 관리"></span>
+                                                                    <span class="ico"><img src="/img/main/ico_help03.png" alt=""></span>
                                                                     우리 아이<br>스마트폰 관리
                                                                 </button>
                                                             </li>
@@ -451,19 +449,19 @@
                                                         <ul class="help-list">
                                                             <li>
                                                                 <button class="bt">
-                                                                    <span class="ico"><img src="/img/main/ico_help01.png" alt="데이터가 부족할 때"></span>
+                                                                    <span class="ico"><img src="/img/main/ico_help01.png" alt=""></span>
                                                                     데이터가<br>부족할 때
                                                                 </button>
                                                             </li>
                                                             <li>
                                                                 <button class="bt">
-                                                                    <span class="ico"><img src="/img/main/ico_help02.png" alt="휴대폰을 분실했을 때"></span>
+                                                                    <span class="ico"><img src="/img/main/ico_help02.png" alt=""></span>
                                                                     휴대폰을<br>분실했을 때
                                                                 </button>
                                                             </li>
                                                             <li>
                                                                 <button class="bt">
-                                                                    <span class="ico"><img src="/img/main/ico_help03.png" alt="우리 아이 스마트폰 관리"></span>
+                                                                    <span class="ico"><img src="/img/main/ico_help03.png" alt=""></span>
                                                                     우리 아이<br>스마트폰 관리
                                                                 </button>
                                                             </li>
@@ -473,19 +471,19 @@
                                                         <ul class="help-list">
                                                             <li>
                                                                 <button class="bt">
-                                                                    <span class="ico"><img src="/img/main/ico_help01.png" alt="데이터가 부족할 때"></span>
+                                                                    <span class="ico"><img src="/img/main/ico_help01.png" alt=""></span>
                                                                     데이터가<br>부족할 때
                                                                 </button>
                                                             </li>
                                                             <li>
                                                                 <button class="bt">
-                                                                    <span class="ico"><img src="/img/main/ico_help02.png" alt="휴대폰을 분실했을 때"></span>
+                                                                    <span class="ico"><img src="/img/main/ico_help02.png" alt=""></span>
                                                                     휴대폰을<br>분실했을 때
                                                                 </button>
                                                             </li>
                                                             <li>
                                                                 <button class="bt">
-                                                                    <span class="ico"><img src="/img/main/ico_help03.png" alt="우리 아이 스마트폰 관리"></span>
+                                                                    <span class="ico"><img src="/img/main/ico_help03.png" alt=""></span>
                                                                     우리 아이<br>스마트폰 관리
                                                                 </button>
                                                             </li>

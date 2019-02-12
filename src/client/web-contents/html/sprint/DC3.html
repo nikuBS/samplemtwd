@@ -53,7 +53,7 @@
 						<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
 					</div>
 
-                    <div class="h-tit">나의 데이터&middot;통화</div>
+                    <div class="h-tit">나의 데이터/통화</div>
                     <div class="h-serarch">
                         <button class="icon-gnb-search"><span class="blind">검색</span></button>
                     </div>
@@ -70,30 +70,32 @@
 				<div class="cont-box pt0">
 					<ul class="date-graph-list b-line">
 						<li>
-							<div class="left">
-								<!-- .donut-chart.small -->
-								<div class="donut-chart small">
-									<div class="donut-chart-area">
-										<!-- loop -->
-										<div class="c100 p60"><!-- .p+(0~100) // -->
-											<div class="red"><!-- red, yellow, green, blue, comet // -->
-												<div class="slice">
-													<div class="bar"></div>
-													<div class="fill"></div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- // .donut-chart.small -->
-							</div>
-							<div class="cont">
-								<span class="txt1">나의 데이터</span>
-								<div class="date">
-									<span class="remain"><strong>8.73GB</strong> 남음</span>
-								</div>
-							</div>
-							<a class="r-btn" href="">페이지 이동</a>
+                            <!-- 2019.02.10 링크 영역 확대 -->
+							<a class="r-btn" href="" aria-labelledby="aria-comp-bt1">
+                                <div class="left">
+                                    <!-- .donut-chart.small -->
+                                    <div class="donut-chart small">
+                                        <div class="donut-chart-area">
+                                            <!-- loop -->
+                                            <div class="c100 p60"><!-- .p+(0~100) // -->
+                                                <div class="red"><!-- red, yellow, green, blue, comet // -->
+                                                    <div class="slice">
+                                                        <div class="bar"></div>
+                                                        <div class="fill"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- // .donut-chart.small -->
+                                </div>
+                                <div class="cont">
+                                        <span class="txt1" id="aria-comp-bt1">나의 데이터</span>
+                                    <div class="date">
+                                        <span class="remain"><strong>8.73GB</strong> 남음</span>
+                                    </div>
+                                </div>
+							</a>
 						</li>
 					</ul>
 					<div class="user-month-bill mt16">
@@ -116,7 +118,8 @@
 				<!-- .cont-box -->
                 <div class="cont-box pb0">
 					<div class="ti-caption-type01 pb20">
-						<h2 class="tit">최근 데이터 사용량 <button class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></h2>
+                        <h2 class="tit">최근 데이터 사용량 <button class="btn-tip" title="최근 데이터 사용량 정보보기" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></h2>
+                        <!-- 2019.02.11 title,aria-haspopup 추가 접근성 -->
 					</div>
                     <div class="chart-wrap kjs0"></div>
                 </div>

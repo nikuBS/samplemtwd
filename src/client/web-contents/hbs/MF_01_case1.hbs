@@ -6,7 +6,31 @@
                 <!-- .cont-box -->
                 <div class="cont-box nogaps noborder">
                     <!-- .cont-actionsheet -->
-                    <div class="cont-actionsheet">
+                    <div class="cont-actionsheet mf-actionsheet">
+                        {{#if lineManagement}}
+                            {{#lineManagement}}
+                                <div class="lineManagement-header">
+                                    <ul class="ac-list">
+                                        <li class="type1">
+                                            <button {{{attr}}}>
+                                                <span class="table">
+                                                    <span class="table-row">
+                                                        <span class="table-cell">
+                                                            <span class="txt">{{{txt}}}</span>
+                                                        </span>
+                                                        <span class="table-cell right">
+                                                            {{#if spot}}<span class="spot">{{spot}}</span>{{/if}}
+                                                            <span class="link"></span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                    <hr aria-hidden="true"/>
+                                </div>
+                            {{/lineManagement}}
+                        {{/if}}
                         {{#each data}}
                             {{#if @index}}
                                 <hr aria-hidden="true"/>

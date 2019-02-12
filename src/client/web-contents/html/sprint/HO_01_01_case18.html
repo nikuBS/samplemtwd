@@ -20,11 +20,7 @@
     <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
     <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
     <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
-    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
-
-    
-    
-
+    <link rel="stylesheet" type="text/css" href="/css/main.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
     <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
     <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
     <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
@@ -85,12 +81,15 @@
                                 <div class="main-chart-box">
                                     <em class="line"><button class="bt ff-tg-light">010-12**-34**</button></em>
 
-                                    <div class="main-error-box">
-                                        <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                                        <strong class="ti">잠시 후 다시 이용해 주세요</strong>
-                                        <p class="main-error-box-text">시스템 점검 중입니다.</p>
-                                        <p class="main-error-box-date">2019.11.11. 00:00 ~ 2019.11.11. 12:00</p>
+                                    <!-- 2019.02.12 서비스 점검 중 입니다 추가 -->
+                                    <div class="cont-box nogaps b-line-none">
+                                        <div class="notice-point">
+                                            <p class="t-np1">서비스 점검 중 입니다.</p>
+                                            <p class="t-np2">잠시 후 다시 이용해 주세요.</p>
+                                            <p class="t-np3">2019.11.11. 00:00 ~ 2019.11.11. 12:00</p>
+                                        </div>
                                     </div>
+                                    <!-- //2019.02.12 서비스 점검 중 입니다 추가 -->
 
                                 </div>
                                 <!-- //모바일 회선_잔여 데이터 -->
@@ -99,7 +98,7 @@
                                 <ul class="quick-menu-list">
                                     <li><button class="bt"><i class="icon-charge-80"></i>나의 요금</button></li>
                                     <li><button class="bt"><i class="icon-tmembership-80"></i>T멤버십</button></li>
-                                    <li><button class="bt"><i class="icon-discount2-80"></i>혜택 · 할인</button></li>
+                                    <li><button class="bt"><i class="icon-discount2-80"></i>혜택 / 할인</button></li>
                                     <li><button class="bt"><i class="icon-immediate-80"></i>즉시 납부</button></li>
                                 </ul>
                                 <div class="btn-area"><button class="bt-link-tx underline">바로가기 편집</button></div>
