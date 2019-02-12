@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="contents-empty mt10" style="display: none;" id="divEmpty">
-                    <span class="ico type1"></span>
+                    <span class="ico type1"><span class="blind">느낌표(!)</span></span>
                     <p class="desc">할인 반환금 조회 내역이 없습니다.</p>
                 </div>
 
@@ -54,12 +54,12 @@
                           </script>
                         </ul>
                     </div>
-                    <h3 class="mt40">사용요금 정보</h3>
+                    <h3 class="mt40">이용요금 정보</h3>
                     <div class="basic-list" id="tot-div">
                       <script id="tot-tmplt" type="text/x-handlebars-template">
                         <ul>
                             <li>
-                                <span class="title">당월 사용 요금(할인 반환금 포함)</span>
+                                <span class="title">당월 이용요금(할인 반환금 포함)</span>
                                 <span class="tx-cont">{{ curreny hbAmt }} 원</span>
                             </li>
                             <li>
@@ -67,7 +67,7 @@
                                 <span class="tx-cont">{{ curreny colAmt }} 원</span>
                             </li>
                             <li>
-                                <span class="title">총 납부금액<br />(당월 사용요금 + 미납요금)</span>
+                                <span class="title">총 납부금액<br />(당월 이용요금 + 미납요금)</span>
                                 <span class="tx-cont"><span class="tx-bold">{{ curreny totAmt }}</span> 원</span>
                             </li>
                         </ul>
@@ -82,8 +82,8 @@
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">꼭 확인해 주세요</h3>
                 <ul class="noti-list02">
-                    <li><button id="MS_04_01_05_tip_01" type="button" class="tip-view-btn">할인반환금 조회 안내 <span class="tip-view">TIP</span></button></li>
-                    <li><button id="MS_04_01_05_tip_02" type="button" class="tip-view-btn">장비임대 고객 안내 <span class="tip-view">TIP</span></button></li>
+                    <li><button id="MS_04_01_05_tip_01" type="button" class="tip-view-btn" title="할인반환금 조회 안내 TIP보기" aria-haspopup="true">할인반환금 조회 안내 <span class="tip-view">TIP</span></button></li>
+                    <li><button id="MS_04_01_05_tip_02" type="button" class="tip-view-btn" title="장비임대 고객 안내 TIP보기" aria-haspopup="true">장비임대 고객 안내 <span class="tip-view">TIP</span></button></li>
                     <!--<li>할인반환금 조회 안내 <button id="MS_04_01_05_tip_01" type="button" class="tip-view" title="할인반환금 조회 안내 TIP보기" aria-haspopup="true">TIP</button></li>-->
                     <!--<li>장비임대 고객 안내 <button id="MS_04_01_05_tip_02" type="button" class="tip-view" title="장비임대 고객 안내 TIP보기" aria-haspopup="true">TIP</button></li>-->
                 </ul>
