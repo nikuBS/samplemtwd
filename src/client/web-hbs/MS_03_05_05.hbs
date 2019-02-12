@@ -13,14 +13,16 @@
         <h2 class="blind">내용</h2>
         <div class="container">
             <!-- .cont-box -->
-            <div class="cont-box">
-                <div class="charge-guide-wrap">
-                    <div class="charge-cont">
-								<span class="sub-disc01">
-									<span class="elem">회선번호</span>
-								</span>
-                        <span class="tit-tgothic">{{ data.svcInfo.svcNum }}</span>
-                        <span class="sub-disc04">{{ data.svcInfo.eqpMdlNm }}</span>
+            <div class="cont-box nogaps">
+                <div class="cont-box">
+                    <div class="charge-guide-wrap">
+                        <div class="charge-cont">
+                                    <span class="sub-disc01">
+                                        <span class="elem">회선번호</span>
+                                    </span>
+                            <span class="tit-tgothic">{{ data.svcInfo.svcNum }}</span>
+                            <span class="sub-disc04">{{ data.svcInfo.eqpMdlNm }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -28,14 +30,14 @@
             <hr class="cont-sp type1" aria-hidden="true"/>
 
             <!-- .cont-box -->
-            <div class="cont-box pb0">
+            <div class="cont-box nogaps-btm">
                 <h3>{{#if data.longterm}}장기{{/if}}일시정지 정보</h3>
-                <div class="info-list-type1 type01">
-                    <div class="basic-list mt0">
+                <div class="info-list-type1">
+                    <div class="basic-list mt10">
                         <ul>
                             <li>
                                 <span class="title">{{#if data.longterm}}장기{{/if}}일시정지 기간</span>
-                                <span class="tx-cont">{{ data.period.from }} ~ {{ data.period.to }}</span>
+                                <span class="tx-cont">{{ data.period.from }}~{{ data.period.to }}</span>
                             </li>
                             <li>
                                 <span class="title">사유</span>
@@ -51,14 +53,14 @@
 
             <!-- .cont-box -->
             <div class="cont-box nogaps-btm">
-                <h3 class="tx-bold">꼭 확인해주세요</h3>
+                <h3 class="tx-bold">꼭 확인해 주세요</h3>
                 <ul class="noti-list02">
                     {{#if data.longterm}}
-                        <li><button class="tip-view-btn" id="MS_03_05_03_tip_03" page-id="M000312">장기일시정지 안내 <span class="tip-view">tip</span></button></li>
+                        <li><button class="tip-view-btn" id="MS_03_05_03_tip_03" page-id="M000312" title="장기일시정지 안내 TIP보기" aria-haspopup="true">장기일시정지 안내 <span class="tip-view">tip</span></button></li>
                     {{else}}
-                        <li><button class="tip-view-btn" id="MS_03_05_01_tip_05" page-id="M000312">일시정지 신청안내 <span class="tip-view">tip</span></button></li>
-                        <li><button class="tip-view-btn" id="MS_03_05_01_tip_06" page-id="M000312">일시정지 기간안내 <span class="tip-view">tip</span></button></li>
-                        <li><button class="tip-view-btn" id="MS_03_05_01_tip_07" page-id="M000312">일시정지 요금안내 <span class="tip-view">tip</span></button></li>
+                        <li><button class="tip-view-btn" id="MS_03_05_01_tip_05" page-id="M000312" title="일시정지 신청안내 TIP보기" aria-haspopup="true">일시정지 신청안내 <span class="tip-view">tip</span></button></li>
+                        <li><button class="tip-view-btn" id="MS_03_05_01_tip_06" page-id="M000312" title="일시정지 기간안내 TIP보기" aria-haspopup="true">일시정지 기간안내 <span class="tip-view">tip</span></button></li>
+                        <li><button class="tip-view-btn" id="MS_03_05_01_tip_07" page-id="M000312" title="일시정지 요금안내 TIP보기" aria-haspopup="true">일시정지 요금안내 <span class="tip-view">tip</span></button></li>
                     {{/if}}
                 </ul>
             </div>
