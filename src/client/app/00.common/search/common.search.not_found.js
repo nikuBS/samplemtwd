@@ -26,8 +26,7 @@ Tw.CommonSearchNotFound.prototype = {
     this.$container.find('.icon-gnb-search').on('click',$.proxy(this._doSearch,this));
     this.$container.find('#search_keyword').on('keyup',$.proxy(this._inputKeyupEvt,this));
     this.$container.find('.close-area').on('click',$.proxy(this._closeSearch,this));
-    this.$container.on('click','.search-element',$.proxy(this._searchRelatedKeyword,this));
-    this.$container.on('click','.category-type',$.proxy(this._popSearch,this));
+    this.$container.on('click','.search-element',$.proxy(this._keywordSearch,this));
     this.$popKeywordElement = this.$container.find('.cont-box.nogaps-hoz');
   },
   _showClaimPopup : function(btnEvt){
@@ -39,13 +38,20 @@ Tw.CommonSearchNotFound.prototype = {
       this._showSelectClaim();
     }
   },
+  _openAlert : function (alertObj,doRequest){
+    this._popupService.openModalTypeATwoButton(alertObj.TITLE, null, null, alertObj.BUTTON,
+      null,
+      $.proxy(doRequest,this),
+      null);
+  },
   _showRequestKeyword : function () {
     this._popupService.open({
       hbs: 'HO_05_02_02_01_01',
       layer: true,
       data: null
     }, $.proxy(this._bindEventForRequestKeyword, this),
-      $.proxy(this._showAndHidePopKeywordList,this), 'requestKeyword');
+      //$.proxy(this._showAndHidePopKeywordList,this), 'requestKeyword');
+      null, 'requestKeyword');
   },
   _showSelectClaim : function () {
     this._popupService.open({
@@ -53,20 +59,21 @@ Tw.CommonSearchNotFound.prototype = {
       layer: true,
       data: this._surveyList.invstQstnAnswItm
     }, $.proxy(this._bindEventForSelectClaim, this),
-      $.proxy(this._showAndHidePopKeywordList,this), 'selectClaim');
+      //$.proxy(this._showAndHidePopKeywordList,this), 'selectClaim');
+      null, 'selectClaim');
   },
   _bindEventForRequestKeyword : function(popupObj){
     //keyword request
-    this._showAndHidePopKeywordList();
+    //this._showAndHidePopKeywordList();
     this.$requestKeywordPopup = $(popupObj);
-    this.$requestKeywordPopup.on('click','.request_claim',$.proxy(this._requestKeyword,this));
+    this.$requestKeywordPopup.on('click','.request_claim',$.proxy(this._openAlert,this,Tw.ALERT_MSG_SEARCH.ALERT_4_A40,this._requestKeyword));
     this.$requestKeywordPopup.on('keyup','.input-focus',$.proxy(this._activateRequestKeywordBtn,this));
   },
   _bindEventForSelectClaim : function(popupObj){
     //claim select
-    this._showAndHidePopKeywordList();
+    //this._showAndHidePopKeywordList();
     this.$selectClaimPopup = $(popupObj);
-    this.$selectClaimPopup.on('click','.request_claim',$.proxy(this._selectClaim,this));
+    this.$selectClaimPopup.on('click','.request_claim',$.proxy(this._openAlert,this,Tw.ALERT_MSG_SEARCH.ALERT_4_A41,this._selectClaim));
     this.$selectClaimPopup.on('click','.custom-form>input',$.proxy(this._activateSelectClaimBtn,this));
   },
   _activateRequestKeywordBtn : function(inputEvt){
@@ -80,6 +87,7 @@ Tw.CommonSearchNotFound.prototype = {
     this.$selectClaimPopup.find('.request_claim').removeAttr('disabled');
   },
   _requestKeyword : function () {
+    this._popupService.close();
     this._apiService.request(Tw.API_CMD.BFF_08_0070, { ctt : this.$requestKeywordPopup.find('.input-focus').val() }, {}).
     done($.proxy(function (res) {
       this._claimCallback(res,52);
@@ -89,6 +97,7 @@ Tw.CommonSearchNotFound.prototype = {
       }, this));
   },
   _selectClaim : function () {
+    this._popupService.close();
     this._apiService.request(Tw.API_CMD.BFF_08_0071, { inqNum : this.$selectClaimPopup.find('input[name=r1]:checked', '#claim_list').val() }, {}).
     done($.proxy(function (res) {
       this._claimCallback(res,51);
@@ -144,12 +153,6 @@ Tw.CommonSearchNotFound.prototype = {
 
     Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(recentlyKeywordData));
   },
-  _searchRelatedKeyword : function (targetEvt) {
-    var keyword = $(targetEvt.currentTarget).data('param');
-    var goUrl = '/common/search?keyword='+keyword;
-    this._addRecentlyKeyword(keyword);
-    this._historyService.goLoad(goUrl);
-  },
   _closeSearch : function () {
     this._historyService.go(Number(this._step)*-1);
   },
@@ -160,7 +163,7 @@ Tw.CommonSearchNotFound.prototype = {
       this.$popKeywordElement.addClass('none');
     }
   },
-  _popSearch : function (targetEvt) {
+  _keywordSearch : function (targetEvt) {
     targetEvt.preventDefault();
     var $currentTarget = $(targetEvt.currentTarget);
     this._addRecentlyKeyword($currentTarget.data('keyword'));

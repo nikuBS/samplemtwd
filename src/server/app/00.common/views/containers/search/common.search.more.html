@@ -47,7 +47,7 @@
     </div>
     <!--// #header -->
     <!-- #contents -->
-    <div id="contents" class="container-wrap">
+    <div id="contents" class="container-wrap none">
         <div class="container">
 
             <% if(searchInfo.suggestQuery.length>0){ %>
@@ -377,7 +377,7 @@
                             <% var totalPageNum = parseInt(searchInfo.totalcount/20)+(searchInfo.totalcount%20>0?1:0) %>
                             <strong class="str"><%= pageNum %></strong> / <%= totalPageNum %>
                         </div>
-                    <select class="sispopup" style="color : transparent">
+                    <select class="sispopup" style="color : transparent" title="페이지 더보기">
                         <% for(var i=1;i<=parseInt(searchInfo.totalcount/20)+(searchInfo.totalcount%20>0?1:0);i++){ %>
                             <% if(i==pageNum){ %>
                                 <option style="color: #3c3c3c" selected

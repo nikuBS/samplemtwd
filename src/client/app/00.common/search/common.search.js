@@ -49,6 +49,7 @@ Tw.CommonSearch.prototype = {
     this.$container.on('click','.search-element',$.proxy(this._searchRelatedKeyword,this));
     this.$container.on('click','.list-data',$.proxy(this._goLink,this));
     this.$container.on('click','.icon-gnb-search',$.proxy(this._doSearch,this));
+    this.$container.find('#contents').removeClass('none');
   },
 
   _arrangeData : function (data,category) {

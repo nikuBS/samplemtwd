@@ -39,6 +39,7 @@ Tw.CommonSearchMore.prototype = {
     this.$container.on('click','.search-element',$.proxy(this._searchRelatedKeyword,this));
     this.$container.on('click','.filterselect-btn',$.proxy(this._showSelectFilter,this));
     this.$container.on('click','.list-data',$.proxy(this._goLink,this));
+    this.$container.find('#contents').removeClass('none');
   },
   _arrangeData : function (data,category) {
     if(!data){
