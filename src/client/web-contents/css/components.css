@@ -19,7 +19,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     background: #fff;
-    font-family: Helvetica Neue, Roboto, sans-serif; }
+    font-family: Apple SD Gothic Neo, 애플 SD 산돌고딕 Neo, Helvetica Neue, Roboto, Droid Sans, sans-serif, Noto Sans, Noto Sans CJK; }
     .flcarddefault .flcard-cont .flcard-area {
       position: relative; }
       .flcarddefault .flcard-cont .flcard-area .flcard-total {
@@ -174,7 +174,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     background: #fff;
-    font-family: Helvetica Neue, Roboto, sans-serif; }
+    font-family: Apple SD Gothic Neo, 애플 SD 산돌고딕 Neo, Helvetica Neue, Roboto, Droid Sans, sans-serif, Noto Sans, Noto Sans CJK; }
     .flcardcta .flcard-cont.no-btn-bottom {
       padding-bottom: 46px; }
     .flcardcta .flcard-cont .ico-ill-gift {
@@ -423,7 +423,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     background: #fff;
-    font-family: Helvetica Neue, Roboto, sans-serif; }
+    font-family: Apple SD Gothic Neo, 애플 SD 산돌고딕 Neo, Helvetica Neue, Roboto, Droid Sans, sans-serif, Noto Sans, Noto Sans CJK; }
     .flcardbarcode .flcard-cont .flcard-area {
       position: relative; }
       .flcardbarcode .flcard-cont .flcard-area .flcard-total {
@@ -560,7 +560,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     background: none;
-    font-family: Helvetica Neue, Roboto, sans-serif;
+    font-family: Apple SD Gothic Neo, 애플 SD 산돌고딕 Neo, Helvetica Neue, Roboto, Droid Sans, sans-serif, Noto Sans, Noto Sans CJK;
     overflow: hidden; }
     .flcardbanner1 .flcard-cont .flcard-area {
       position: relative;
@@ -600,7 +600,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     background: none;
-    font-family: Helvetica Neue, Roboto, sans-serif;
+    font-family: Apple SD Gothic Neo, 애플 SD 산돌고딕 Neo, Helvetica Neue, Roboto, Droid Sans, sans-serif, Noto Sans, Noto Sans CJK;
     overflow: hidden; }
     .flcardbanner2 .flcard-cont .flcard-area {
       position: relative;
@@ -619,8 +619,7 @@
           display: inline-block;
           font-size: 0.75rem;
           color: #757575;
-          vertical-align: baseline;
-          letter-spacing: 0; }
+          vertical-align: baseline; }
         .flcardbanner2 .flcard-cont .flcard-area .tx-dday .dday-count {
           display: inline-block;
           margin-left: 0.25rem;
@@ -654,7 +653,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     background: #fff;
-    font-family: Helvetica Neue, Roboto, sans-serif; }
+    font-family: Apple SD Gothic Neo, 애플 SD 산돌고딕 Neo, Helvetica Neue, Roboto, Droid Sans, sans-serif, Noto Sans, Noto Sans CJK; }
     .flcardsns .flcard-cont .flcard-area {
       position: relative;
       font-size: 0; }
@@ -672,8 +671,7 @@
         display: block;
         margin-top: 1.375rem;
         font-size: 0.75rem;
-        color: #757575;
-        letter-spacing: 0; }
+        color: #757575; }
       .flcardsns .flcard-cont .flcard-area .bt-scrap.type1 {
         display: inline-block;
         position: absolute;
@@ -806,8 +804,7 @@
     display: block; }
   .tooltip .tooltip-tx {
     font-size: 0.6875rem;
-    color: #757575;
-    letter-spacing: -0.03125rem; }
+    color: #757575; }
   .tooltip .bt-close {
     display: inline-block;
     position: absolute;
@@ -1478,8 +1475,7 @@
       display: block;
       font-size: 0.6875rem;
       font-weight: 700;
-      color: #fff;
-      letter-spacing: 0; }
+      color: #fff; }
     .coupon-cont .coupon-box .coupon-list {
       margin: 2rem 0 0 0; }
       .coupon-cont .coupon-box .coupon-list li {
@@ -1493,8 +1489,7 @@
         .coupon-cont .coupon-box .coupon-list li .list-tx {
           float: left;
           font-size: 0.6875rem;
-          color: #fff;
-          letter-spacing: 0; }
+          color: #fff; }
   .coupon-cont .coupon-bottom {
     padding: 0.625rem 1.125rem 0.75rem;
     font-size: 0;
@@ -1625,7 +1620,7 @@
       /*transform:translateX(62px);*/
       background: #e2e2e2; }
     .list-comp-input .select-list > li .comp-list-layout .layout-text {
-      padding: 1.25rem 0;
+      padding: 1.5625rem 0 1.25rem;
       vertical-align: top; }
       .list-comp-input .select-list > li .comp-list-layout .layout-text .mtext {
         display: block;
@@ -1825,13 +1820,11 @@
       .list-comp-thumnail .comp-box .list-box .list-text .stext {
         display: block;
         margin-top: 0.25rem;
-        font-size: 0.8125rem;
-        letter-spacing: 0; }
+        font-size: 0.8125rem; }
         .list-comp-thumnail .comp-box .list-box .list-text .stext:first-child {
           margin-top: 0.3125rem; }
         .list-comp-thumnail .comp-box .list-box .list-text .stext.gray {
-          color: #666;
-          letter-spacing: -0.0625rem; }
+          color: #666; }
       .list-comp-thumnail .comp-box .list-box .list-text.disabled .mtext .btn-bf {
         color: #dcdcdc; }
         .list-comp-thumnail .comp-box .list-box .list-text.disabled .mtext .btn-bf:before {
@@ -1921,8 +1914,7 @@
       text-align: right;
       vertical-align: top; }
       .list-comp-history .comp-box .list-box .list-con .list-data .data-tx {
-        font-size: 1.25rem;
-        letter-spacing: -0.09375rem; }
+        font-size: 1.25rem; }
         .list-comp-history .comp-box .list-box .list-con .list-data .data-tx.blue-tx {
           color: #178BCE; }
         .list-comp-history .comp-box .list-box .list-con .list-data .data-tx.gray-tx {
@@ -1953,7 +1945,6 @@
         font-size: 0.8125rem;
         font-weight: 700;
         text-align: right;
-        letter-spacing: -0.0625rem;
         -webkit-box-sizing: border-box;
                 box-sizing: border-box; }
         .list-comp-history .comp-box .list-box .list-con .list-data .bt-link:after {
@@ -3786,8 +3777,7 @@
   .plan-line-wrap .plan-number {
     display: block;
     color: #666;
-    font-size: 0.8125rem;
-    letter-spacing: 0; }
+    font-size: 0.8125rem; }
   .plan-line-wrap .badge.badge-fam {
     vertical-align: middle; }
 
@@ -3847,7 +3837,6 @@
         font-size: 0.9375rem;
         text-align: right; }
         .myfare-result-wrap .myfare-list li .show-data dd .number {
-          letter-spacing: 0;
           vertical-align: baseline; }
       .myfare-result-wrap .myfare-list li .show-data.detail {
         padding: 0.1875rem 0; }
@@ -3880,8 +3869,7 @@
     position: absolute;
     top: 1.25rem;
     right: 1rem;
-    font-size: 0.8125rem;
-    letter-spacing: 0; }
+    font-size: 0.8125rem; }
 
 .list-comp-input.production-benefit-wrap {
   position: relative; }
@@ -6389,7 +6377,7 @@
   .ti-caption-gray .detail-view2, .data-type .detail-view2 {
     float: right;
     position: relative;
-    padding-right: 0.625rem;
+    padding-right: 0.8125rem;
     font-size: 0.8125rem;
     color: #212121; }
     .ti-caption-gray .detail-view2:after, .data-type .detail-view2:after {
@@ -6712,7 +6700,8 @@
 
 .bt-select {
   position: relative;
-  padding-right: 1rem; }
+  padding-right: 1rem;
+  font-size: 0.9375rem; }
   .bt-select:after {
     position: absolute;
     right: 0;
@@ -7405,7 +7394,7 @@
   .acco-style.data-famliy-group-list.type2 > ul > li .list-wrap .list-data .vol2 {
     margin-right: 0.125rem;
     font-size: 1.125rem;
-    font-family: 'Droid Sans', "Noto Sans", "Noto Sans CJK"; }
+    font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", 'Droid Sans', "sans-serif", "Noto Sans", "Noto Sans CJK"; }
 
 .acco-style.data-famliy-group-list.type2 .bt-link-tx {
   font-size: 0.8125rem; }
@@ -7886,8 +7875,7 @@ a.bt-link-tx.underline.small {
     text-align: left; }
     .box-myaccount .myaccount-list li .btn-acc em {
       font-size: 0.9375rem;
-      font-weight: 700;
-      letter-spacing: 0; }
+      font-weight: 700; }
     .box-myaccount .myaccount-list li .btn-acc span {
       display: block;
       margin-top: 0.1875rem;
@@ -9107,7 +9095,6 @@ a.bt-link-tx.underline.small {
     padding-top: 0.875rem;
     font-size: 2rem;
     color: #000;
-    letter-spacing: -0.1875rem;
     line-height: 2.25rem;
     font-weight: 300; }
     .agreement-title span strong {
@@ -9240,8 +9227,7 @@ a.bt-link-tx.underline.small {
         .box-authority .authority-info .authority-list li a, .box-authority .authority-info .authority-list li button {
           color: #178BCE;
           vertical-align: top;
-          border-bottom: 1px solid #178BCE;
-          letter-spacing: 0; }
+          border-bottom: 1px solid #178BCE; }
       .box-authority .authority-info .authority-list.nodot li {
         padding-left: 0; }
         .box-authority .authority-info .authority-list.nodot li:before {
@@ -9464,7 +9450,7 @@ a.bt-link-tx.underline.small {
     vertical-align: baseline; }
     .mline-list .mline-tit-wrap .mline-num .num {
       vertical-align: top;
-      font-family: "Helvetica Neue", Roboto, sans-serif; }
+      font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK"; }
 
 .mline-list .ico-like {
   position: relative;
@@ -10281,8 +10267,7 @@ a.bt-link-tx.underline.small {
       margin-top: 0.25rem;
       font-size: 0.8125rem;
       line-height: 0.9375rem;
-      font-family: "Helvetica Neue", Roboto, sans-serif;
-      letter-spacing: 0; }
+      font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK"; }
     .contents-info-list [class^="result-"] li .info-data .info-title {
       font-size: 1.125rem;
       line-height: 1.25rem;
@@ -10303,8 +10288,7 @@ a.bt-link-tx.underline.small {
       font-size: 0.8125rem;
       line-height: 0.9375rem;
       color: #666;
-      text-align: right;
-      letter-spacing: -.5px; }
+      text-align: right; }
     .contents-info-list [class^="result-"] li .info-coupon {
       position: relative; }
       .contents-info-list [class^="result-"] li .info-coupon .info-title {
@@ -10321,8 +10305,7 @@ a.bt-link-tx.underline.small {
         font-weight: 700; }
       .contents-info-list [class^="result-"] li .info-coupon .info-code {
         font-size: 0.6875rem;
-        letter-spacing: 0;
-        font-family: "Helvetica Neue", Roboto, sans-serif; }
+        font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK"; }
     .contents-info-list [class^="result-"] li .info-date {
       text-align: right;
       vertical-align: top; }
@@ -10330,8 +10313,7 @@ a.bt-link-tx.underline.small {
         font-size: 0.75rem; }
       .contents-info-list [class^="result-"] li .info-date .info-sub {
         font-size: 0.9375rem;
-        font-family: "Helvetica Neue", Roboto, sans-serif;
-        letter-spacing: 0; }
+        font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK"; }
     .contents-info-list [class^="result-"] li .info-btn {
       text-align: center; }
       .contents-info-list [class^="result-"] li .info-btn a {
@@ -10400,15 +10382,14 @@ a.bt-link-tx.underline.small {
       .contents-info-list [class^="result-"].result-coupon .result-cell .info-coupon .info-ph {
         font-size: 1.125rem;
         font-weight: 700;
-        font-family: "Helvetica Neue", Roboto, sans-serif;
-        letter-spacing: 0; }
+        font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK"; }
     .contents-info-list [class^="result-"].result-coupon .result-cell .info-date {
       padding: 0; }
       .contents-info-list [class^="result-"].result-coupon .result-cell .info-date .info-title {
         font-size: 0.75rem; }
       .contents-info-list [class^="result-"].result-coupon .result-cell .info-date .info-sub {
         font-size: 0.9375rem;
-        font-family: "Helvetica Neue", Roboto, sans-serif; }
+        font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK"; }
     .contents-info-list [class^="result-"].result-coupon .result-cell .info-validity {
       padding: 0;
       display: table-row; }
@@ -10419,8 +10400,7 @@ a.bt-link-tx.underline.small {
         display: table-cell;
         font-size: 0.75rem;
         text-align: right;
-        letter-spacing: 0;
-        font-family: "Helvetica Neue", Roboto, sans-serif; }
+        font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK"; }
     .contents-info-list [class^="result-"].result-coupon .result-cell .info-signup {
       padding: 0;
       display: table-row; }
@@ -10429,10 +10409,9 @@ a.bt-link-tx.underline.small {
         font-size: 0.75rem; }
       .contents-info-list [class^="result-"].result-coupon .result-cell .info-signup .info-code {
         display: table-cell;
-        letter-spacing: 0;
         font-size: 0.75rem;
         text-align: right;
-        font-family: "Helvetica Neue", Roboto, sans-serif; }
+        font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK"; }
   .contents-info-list .bt-more {
     margin: 0 -1.625rem;
     text-align: center;
@@ -10444,7 +10423,7 @@ a.bt-link-tx.underline.small {
     color: #757575;
     font-size: 0.875rem; }
     .contents-info-list .bt-more span {
-      font-family: "Helvetica Neue", Roboto, sans-serif;
+      font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK";
       vertical-align: baseline; }
   .contents-info-list .contents-notice {
     border-top: 1px solid #e1e1e1; }
@@ -10690,8 +10669,7 @@ a.bt-link-tx.underline.small {
         .th-use .real-remaining > dd .remaining-period .tx-period {
           display: inline-block;
           margin: 0 0 0 0.3125rem;
-          vertical-align: baseline;
-          letter-spacing: 0; }
+          vertical-align: baseline; }
       .th-use .real-remaining > dd .remaining-tx-detail {
         margin: 0.375rem 0 0 0;
         font-size: 0.8125rem;
@@ -10780,7 +10758,6 @@ a.bt-link-tx.underline.small {
             box-sizing: border-box;
     font-size: 1.125rem;
     line-height: 1.5rem;
-    letter-spacing: -1.5px;
     color: #000; }
   .main-tdate-giftbox .bt-link-tx {
     margin: 0.9375rem 0 0; }
@@ -11637,17 +11614,14 @@ a.bt-link-tx.underline.small {
 
 .chart-tit {
   position: relative;
-  font-size: 0.875rem;
-  letter-spacing: -0.02em; }
+  font-size: 0.875rem; }
   .chart-tit .spot {
-    font-weight: 700;
-    letter-spacing: -0.02em; }
+    font-weight: 700; }
   .chart-tit .rs {
     position: absolute;
     right: 0;
     top: 0;
-    color: #666;
-    letter-spacing: -0.02em; }
+    color: #666; }
 
 .unpaid-charges .total-box {
   margin: 0 0 0.9375rem 0; }
@@ -11754,8 +11728,7 @@ a.bt-link-tx.underline.small {
       margin-top: 0.125rem;
       line-height: 0.75rem;
       font-size: 0.75rem;
-      color: #666;
-      letter-spacing: 0; }
+      color: #666; }
     .line-change .select-list li.checked .txt {
       font-weight: 700; }
     .line-change .select-list li.checked .ico {
@@ -12024,7 +11997,6 @@ a.bt-link-tx.underline.small {
     padding-top: 0.9375rem;
     font-size: 2rem;
     color: #000;
-    letter-spacing: -0.04em;
     line-height: 2.25rem; }
     .complete-title span.f-size {
       font-size: 1.125rem;
@@ -12100,16 +12072,14 @@ a.bt-link-tx.underline.small {
   padding-top: 0.9375rem;
   text-align: center;
   font-size: 0.8125rem;
-  color: #8f8f8f;
-  letter-spacing: -0.02em; }
+  color: #8f8f8f; }
 
 .complete-tx2 {
   padding-top: 0.1875rem;
   text-align: center;
   font-size: 0.8125rem;
   color: #000;
-  font-weight: 700;
-  letter-spacing: -0.02em; }
+  font-weight: 700; }
 
 .complete-dot {
   width: 15.5rem;
@@ -12121,8 +12091,7 @@ a.bt-link-tx.underline.small {
     padding-left: 0.75rem;
     margin-bottom: 1.375rem;
     font-size: 0.8125rem;
-    color: #8f8f8f;
-    letter-spacing: -0.02em; }
+    color: #8f8f8f; }
     .complete-dot li:before {
       content: '';
       display: block;
@@ -12343,8 +12312,7 @@ a.bt-link-tx.underline.small {
     .addree-no-result.no-sch .msg-no-sch {
       display: block;
       padding: 1rem 0 0 0;
-      text-align: center;
-      letter-spacing: -0.01563rem; }
+      text-align: center; }
       .addree-no-result.no-sch .msg-no-sch .tit {
         display: block;
         text-align: center;
@@ -12809,8 +12777,7 @@ a.bt-link-tx.underline.small {
         margin: 0 0.0625rem 0 0.5rem;
         font-size: 1rem;
         vertical-align: -0.0625rem;
-        font-family: "TgothicMedium", Roboto, sans-serif;
-        letter-spacing: 0; }
+        font-family: "TgothicMedium", Roboto, sans-serif; }
     .productinfoscroll-box .product-info .type {
       position: absolute;
       bottom: 0.9375rem;
@@ -12820,8 +12787,7 @@ a.bt-link-tx.underline.small {
       background-size: 0.875rem 0.875rem;
       color: #178bce;
       font-size: 0.8125rem;
-      font-family: "TgothicLight", Roboto, sans-serif;
-      letter-spacing: 0; }
+      font-family: "TgothicLight", Roboto, sans-serif; }
     .productinfoscroll-box .product-info .money-type {
       position: absolute;
       bottom: 0.625rem;
@@ -13743,8 +13709,7 @@ a.bt-link-tx.underline.small {
     margin-top: 1.125rem;
     color: #fff;
     font-size: 1.125rem;
-    font-weight: 700;
-    letter-spacing: -1px; }
+    font-weight: 700; }
 
 .productdetails-ledgercase02 {
   display: table;
@@ -13762,7 +13727,6 @@ a.bt-link-tx.underline.small {
     color: #fff;
     font-size: 1.125rem;
     font-weight: 700;
-    letter-spacing: -1px;
     text-align: right;
     vertical-align: top; }
     .productdetails-ledgercase02 .limit .bt-white1 {
@@ -14468,8 +14432,7 @@ a.bt-link-tx.underline.small {
       color: #000;
       font-size: 0.875rem;
       vertical-align: middle;
-      text-align: left;
-      letter-spacing: -2px; }
+      text-align: left; }
       .shortcutslist-wrap .category-type .link:after {
         content: '';
         position: absolute;
@@ -15490,8 +15453,6 @@ a.bt-link-tx.underline.small {
 
 .add-prd-wrap .list-comp-lineinfo li .lineinfo-data .info-title {
   font-size: 1.125rem; }
-  .add-prd-wrap .list-comp-lineinfo li .lineinfo-data .info-title.num {
-    letter-spacing: 0; }
   .add-prd-wrap .list-comp-lineinfo li .lineinfo-data .info-title .unit {
     font-size: 0.625rem;
     font-family: "TgothicMedium", Roboto, sans-serif; }
@@ -15506,8 +15467,7 @@ a.bt-link-tx.underline.small {
     position: relative; }
     .list-style.type1 > li .wrap-label {
       display: block;
-      font-size: 1rem;
-      letter-spacing: -0.025em; }
+      font-size: 1rem; }
       .list-style.type1 > li .wrap-label label {
         display: block; }
     .list-style.type1 > li .wrap-btn {
@@ -15556,7 +15516,6 @@ a.bt-link-tx.underline.small {
 
 .cont-actionsheet .ac-tit {
   font-size: 0.75rem;
-  letter-spacing: -0.025em;
   color: #959595;
   width: 100%;
   padding: 0 1rem;
@@ -15663,7 +15622,6 @@ a.bt-link-tx.underline.small {
         .cont-actionsheet .ac-list .type1 .table-cell > span.txt {
           color: #000;
           font-size: 1rem;
-          letter-spacing: -0.025em;
           text-align: left;
           white-space: normal; }
         .cont-actionsheet .ac-list .type1 .table-cell > span.max {
@@ -15672,7 +15630,6 @@ a.bt-link-tx.underline.small {
           padding-right: 4.375rem;
           color: #000;
           font-size: 0.8125rem;
-          letter-spacing: -0.025em;
           padding-left: 0.5rem;
           white-space: normal; }
           .cont-actionsheet .ac-list .type1 .table-cell > span.add .badge {
@@ -15692,7 +15649,6 @@ a.bt-link-tx.underline.small {
         .cont-actionsheet .ac-list .type1 .table-cell > span.spot {
           color: #f76252;
           font-size: 1rem;
-          letter-spacing: -0.025em;
           text-align: right; }
   .cont-actionsheet .ac-list .type2 {
     float: left;
@@ -15809,7 +15765,6 @@ a.bt-link-tx.underline.small {
         .cont-actionsheet .ac-list .type3 .table-cell > span.txt {
           color: #000;
           font-size: 1rem;
-          letter-spacing: -0.025em;
           text-align: left;
           width: 100%; }
           .cont-actionsheet .ac-list .type3 .table-cell > span.txt .add {
@@ -15817,7 +15772,6 @@ a.bt-link-tx.underline.small {
             display: block;
             color: #666;
             font-size: 0.75rem;
-            letter-spacing: -0.025em;
             white-space: normal;
             width: 100%; }
         .cont-actionsheet .ac-list .type3 .table-cell > span.simbol + .txt {
@@ -15831,7 +15785,6 @@ a.bt-link-tx.underline.small {
         .cont-actionsheet .ac-list .type3 .table-cell > span.spot {
           color: #f76252;
           font-size: 1rem;
-          letter-spacing: -0.025em;
           text-align: right; }
   .cont-actionsheet .ac-list .type4 {
     display: block;
@@ -15923,21 +15876,18 @@ a.bt-link-tx.underline.small {
         .cont-actionsheet .ac-list .type4 .table-cell > span.txt {
           color: #000;
           font-size: 1rem;
-          letter-spacing: -0.025em;
           text-align: left;
           white-space: normal; }
         .cont-actionsheet .ac-list .type4 .table-cell > span.cont-txt {
           display: block;
           color: #959595;
           font-size: 0.75rem;
-          letter-spacing: -0.025em;
           text-align: left;
           line-height: 1.5; }
         .cont-actionsheet .ac-list .type4 .table-cell > span.add {
           padding-right: 4.375rem;
           color: #000;
           font-size: 0.8125rem;
-          letter-spacing: -0.025em;
           padding-left: 0.5rem;
           white-space: normal; }
         .cont-actionsheet .ac-list .type4 .table-cell > span.link {
@@ -15949,7 +15899,6 @@ a.bt-link-tx.underline.small {
         .cont-actionsheet .ac-list .type4 .table-cell > span.spot {
           color: #f76252;
           font-size: 1rem;
-          letter-spacing: -0.025em;
           text-align: right; }
   .cont-actionsheet .ac-list:last-of-type {
     padding-bottom: 0;
@@ -16045,21 +15994,18 @@ a.bt-link-tx.underline.small {
         .cont-actionsheet .ac-list .type5 .table-cell > span.txt {
           color: #000;
           font-size: 1rem;
-          letter-spacing: -0.025em;
           text-align: left;
           white-space: normal; }
         .cont-actionsheet .ac-list .type5 .table-cell > span.cont-txt {
           display: block;
           color: #959595;
           font-size: 0.75rem;
-          letter-spacing: -0.025em;
           text-align: left;
           line-height: 1.5; }
         .cont-actionsheet .ac-list .type5 .table-cell > span.add {
           padding-right: 4.375rem;
           color: #000;
           font-size: 0.8125rem;
-          letter-spacing: -0.025em;
           padding-left: 0.5rem;
           white-space: normal; }
         .cont-actionsheet .ac-list .type5 .table-cell > span.link {
@@ -16071,7 +16017,6 @@ a.bt-link-tx.underline.small {
         .cont-actionsheet .ac-list .type5 .table-cell > span.spot {
           color: #f76252;
           font-size: 1rem;
-          letter-spacing: -0.025em;
           text-align: right; }
   .cont-actionsheet .ac-list:last-of-type {
     padding-bottom: 0;
@@ -16153,8 +16098,7 @@ a.bt-link-tx.underline.small {
               left: -10%;
               text-align: center;
               font-size: 0.75rem;
-              font-weight: 500;
-              letter-spacing: -0.025em; }
+              font-weight: 500; }
     .chart-wrap.bar1 .legend {
       display: block;
       width: 100%;
@@ -16198,7 +16142,6 @@ a.bt-link-tx.underline.small {
         display: inline-block;
         text-align: right;
         font-size: 0.8125rem;
-        letter-spacing: -0.025em;
         color: #888888;
         margin-left: 0.625rem; }
         .chart-wrap.bar2 .legend [class*=category] span, .chart-wrap.bar3 .legend [class*=category] span {
@@ -16224,8 +16167,7 @@ a.bt-link-tx.underline.small {
     .chart-wrap.bar2 .tit, .chart-wrap.bar3 .tit {
       padding: 0 0 1.25rem 0;
       font-size: 1rem;
-      color: #000;
-      letter-spacing: -0.025em; }
+      color: #000; }
     .chart-wrap.bar2 .data-arry, .chart-wrap.bar3 .data-arry {
       position: relative; }
       .chart-wrap.bar2 .data-arry .dash, .chart-wrap.bar3 .data-arry .dash {
@@ -16276,8 +16218,7 @@ a.bt-link-tx.underline.small {
               bottom: 0;
               width: 100%;
               color: #959595;
-              font-size: 0.8125rem;
-              letter-spacing: -0.025em; }
+              font-size: 0.8125rem; }
               .chart-wrap.bar2 .data-arry .data-ul > li > dl > dt button, .chart-wrap.bar2 .data-arry .data-ul > li > dl > dt a, .chart-wrap.bar3 .data-arry .data-ul > li > dl > dt button, .chart-wrap.bar3 .data-arry .data-ul > li > dl > dt a {
                 text-decoration: underline;
                 color: #959595; }
@@ -16317,7 +16258,6 @@ a.bt-link-tx.underline.small {
         display: inline-block;
         text-align: right;
         font-size: 0.8125rem;
-        letter-spacing: -0.025em;
         color: #888888;
         margin-left: 0.625rem; }
         .chart-wrap.bar4 .legend [class*=category] span {
@@ -16344,8 +16284,7 @@ a.bt-link-tx.underline.small {
     .chart-wrap.bar4 .tit {
       padding: 0 0 1.25rem 0;
       font-size: 1rem;
-      color: #000;
-      letter-spacing: -0.025em; }
+      color: #000; }
     .chart-wrap.bar4 .data-arry {
       position: relative; }
       .chart-wrap.bar4 .data-arry .dash {
@@ -16396,8 +16335,7 @@ a.bt-link-tx.underline.small {
               bottom: 0;
               width: 100%;
               color: #959595;
-              font-size: 0.8125rem;
-              letter-spacing: -0.025em; }
+              font-size: 0.8125rem; }
               .chart-wrap.bar4 .data-arry .data-ul > li > dl > dt button, .chart-wrap.bar4 .data-arry .data-ul > li > dl > dt a {
                 text-decoration: underline;
                 color: #959595; }
@@ -16485,7 +16423,6 @@ a.bt-link-tx.underline.small {
       width: 100%;
       font-size: 0.9375rem;
       font-weight: 700;
-      letter-spacing: -0.025em;
       text-align: center; }
     .chart-wrap.circle .circle {
       position: relative;
@@ -16507,7 +16444,6 @@ a.bt-link-tx.underline.small {
         padding-right: 0.3125rem;
         text-align: right;
         font-size: 0.8125rem;
-        letter-spacing: -0.025em;
         color: #888888; }
         .chart-wrap.circle .legend .first::before {
           content: '';
@@ -16529,7 +16465,6 @@ a.bt-link-tx.underline.small {
         padding-left: 0.3125rem;
         text-align: left;
         font-size: 0.8125rem;
-        letter-spacing: -0.025em;
         color: #888888; }
         .chart-wrap.circle .legend .second::before {
           content: '';
@@ -17404,16 +17339,13 @@ a.bt-link-tx.underline.small {
     margin-bottom: 0.3125rem;
     font-size: 0.75rem;
     font-family: "TgothicBlack", Roboto, sans-serif;
-    letter-spacing: -0.02em;
     color: #e22f26; }
   .acco-style.required-doc .acco-list .acco-title .question {
     font-size: 0.875rem;
     font-weight: 700;
-    letter-spacing: -0.02em;
     display: block; }
   .acco-style.required-doc .acco-list .acco-title .result-txt {
     font-size: 0.875rem;
-    letter-spacing: -0.02em;
     display: none; }
   .acco-style.required-doc .acco-list .acco-content {
     padding: 1.875rem 0;
@@ -17523,8 +17455,7 @@ a.bt-link-tx.underline.small {
           display: block;
           margin-bottom: 0.1875rem;
           font-size: 0.9375rem;
-          color: #178BCE;
-          letter-spacing: -0.02em; }
+          color: #178BCE; }
         .customer-guide .result .item > li:last-child {
           margin-bottom: 0.9375rem; }
     .customer-guide .result .add {
@@ -17532,8 +17463,7 @@ a.bt-link-tx.underline.small {
       font-size: 0.75rem;
       color: #858585;
       text-indent: -0.4375rem;
-      padding-left: 0.75rem;
-      letter-spacing: -0.02em; }
+      padding-left: 0.75rem; }
       .customer-guide .result .add .title {
         font-weight: 700; }
       .customer-guide .result .add sup {
@@ -17550,7 +17480,6 @@ a.bt-link-tx.underline.small {
 .poll-box .poll-sub-tit, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .poll-sub-tit {
   font-size: 0.8125rem;
   color: #000;
-  letter-spacing: -0.02em;
   padding: 0.9375rem 0 0.3125rem; }
 
 .poll-box .bt-link-tx.underline, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .bt-link-tx.underline {
@@ -17692,7 +17621,6 @@ a.bt-link-tx.underline.small {
       text-indent: -1.375rem;
       top: 2.1875rem;
       text-align: center;
-      letter-spacing: 0;
       font-size: 1.25rem;
       background: none !important; }
   .poll-box .versus > li .detail, .accordion .acco-style.poll .acco-list .acco-box .acco-cont .versus > li .detail {
@@ -17729,7 +17657,6 @@ a.bt-link-tx.underline.small {
     .accordion .acco-style.poll .acco-list .acco-box .acco-tit .poll-question {
       display: block;
       font-size: 0.875rem;
-      letter-spacing: -0.02em;
       padding-right: 1.25rem; }
     .accordion .acco-style.poll .acco-list .acco-box .acco-tit .poll-date {
       font-size: 0.8125rem;
@@ -17803,7 +17730,6 @@ a.bt-link-tx.underline.small {
 .poll-title .poll-question {
   display: block;
   font-size: 0.9375rem;
-  letter-spacing: -0.02em;
   padding-right: 1.25rem; }
 
 .poll-title .poll-date {
@@ -17841,8 +17767,7 @@ a.bt-link-tx.underline.small {
     width: 40%;
     vertical-align: bottom;
     text-align: right;
-    font-size: 0.9375rem;
-    letter-spacing: 0; }
+    font-size: 0.9375rem; }
   .poll-chart-box .poll-chart-sbox .poll-chart-txt .tx-bold {
     color: #000; }
 
@@ -17898,7 +17823,6 @@ a.bt-link-tx.underline.small {
 
 .box-store-home .store-home-list .list-ti {
   font-size: 1.125rem;
-  letter-spacing: -0.02em;
   margin-bottom: 0.1875rem; }
   .box-store-home .store-home-list .list-ti .store-home-link {
     display: inline-block;
@@ -17912,8 +17836,7 @@ a.bt-link-tx.underline.small {
 
 .box-store-home .store-home-list .list-tx {
   font-size: 0.8125rem;
-  color: #858585;
-  letter-spacing: -0.02em; }
+  color: #858585; }
 
 .box-store-home .store-home-list .bt-tel {
   display: inline-block;
@@ -17960,8 +17883,7 @@ a.bt-link-tx.underline.small {
         width: 100%; }
   .shop-info .shop-rating .txt-rating {
     font-size: 0.8125rem;
-    color: #858585;
-    letter-spacing: -0.02em; }
+    color: #858585; }
 
 .shop-info .shop-tag {
   margin-bottom: 1.25rem; }
@@ -18042,7 +17964,6 @@ a.bt-link-tx.underline.small {
   padding: 0.75rem 1rem;
   background: #f5f5f5;
   font-size: 0.8125rem;
-  letter-spacing: -0.02em;
   color: #212121; }
   .shop-info .shop-result em {
     font-weight: 700; }
@@ -18062,8 +17983,7 @@ a.bt-link-tx.underline.small {
 /* CS_03_01_L01 : AS 센터 찾기 > 유상 및 무상 서비스 안내 풀팝업 */
 .service-box .service-ti-case {
   margin-bottom: 1.25rem;
-  font-size: 0.9375rem;
-  letter-spacing: -0.02em; }
+  font-size: 0.9375rem; }
 
 .service-box .service-definition {
   margin-bottom: 1.5625rem; }
@@ -18121,7 +18041,6 @@ a.bt-link-tx.underline.small {
 /* CS_03_01 : AS센터 안내 */
 .as-center .as-tit {
   font-size: 0.9375rem;
-  letter-spacing: -0.02em;
   margin-bottom: 1.875rem; }
 
 .as-center .as-representative-number {
@@ -18134,19 +18053,16 @@ a.bt-link-tx.underline.small {
     display: table-cell;
     text-align: left;
     color: #858585;
-    font-size: 0.875rem;
-    letter-spacing: -0.02em; }
+    font-size: 0.875rem; }
   .as-center .as-representative-number dd {
     display: table-cell;
     text-align: right;
-    font-size: 0.9375rem;
-    letter-spacing: -0.02em; }
+    font-size: 0.9375rem; }
 
 .as-center .as-bringing {
   margin: 1.25rem 0;
   font-size: 0.75rem;
-  color: #858585;
-  letter-spacing: -0.02em; }
+  color: #858585; }
 
 .as-center .as-acco .acco-title {
   border-top: 1px solid #e1e1e1;
@@ -18173,11 +18089,9 @@ a.bt-link-tx.underline.small {
     .as-center .as-acco .acco-content .as-time-list dl {
       margin-bottom: 1.875rem; }
     .as-center .as-acco .acco-content .as-time-list dt {
-      font-size: 0.875rem;
-      letter-spacing: -0.02em; }
+      font-size: 0.875rem; }
     .as-center .as-acco .acco-content .as-time-list dd {
-      font-size: 0.8125rem;
-      letter-spacing: -0.02em;
+      font-size: 0.875rem;
       color: #858585; }
       .as-center .as-acco .acco-content .as-time-list dd .tx-notice {
         margin-top: 0.625rem;
@@ -18213,7 +18127,6 @@ a.bt-link-tx.underline.small {
   .acco-as .acco-list .list-item li {
     margin-bottom: 0.625rem;
     font-size: 0.8125rem;
-    letter-spacing: -0.02em;
     color: #858585; }
     .acco-as .acco-list .list-item li:last-of-type {
       margin-bottom: 0; }
@@ -18252,12 +18165,10 @@ a.bt-link-tx.underline.small {
   border-radius: 0.3125rem; }
   .customer-as .txt {
     font-size: 0.8125rem;
-    letter-spacing: -0.02em;
     color: #858585; }
     .customer-as .txt strong {
       display: block;
       margin-bottom: 0.625rem;
-      letter-spacing: -0.02em;
       font-size: 0.9375rem;
       color: #000; }
   .customer-as .ico {
@@ -18302,12 +18213,10 @@ a.bt-link-tx.underline.small {
     padding: 1.5625rem 6.25rem 1.5625rem 0.9375rem; }
     .search-point .bn-search .inner .txt {
       font-size: 0.9375rem;
-      letter-spacing: -0.02em;
       color: #858585; }
       .search-point .bn-search .inner .txt strong {
         display: block;
         margin-bottom: 0.625rem;
-        letter-spacing: -0.02em;
         font-size: 0.9375rem;
         color: #000; }
       .search-point .bn-search .inner .txt .bt-link-tx {
@@ -18355,12 +18264,10 @@ a.bt-link-tx.underline.small {
   .search-point .hours-of-business .as-time-list dt {
     font-size: 0.875rem;
     color: #666;
-    letter-spacing: -0.02em;
     display: table-cell;
     text-align: left; }
   .search-point .hours-of-business .as-time-list dd {
     font-size: 1rem;
-    letter-spacing: -0.02em;
     display: table-cell;
     text-align: right; }
     .search-point .hours-of-business .as-time-list dd .tx-notice {
@@ -18433,7 +18340,6 @@ a.bt-link-tx.underline.small {
   .toggle-range .data {
     display: block;
     padding: 1.125rem 0;
-    letter-spacing: -0.02em;
     font-size: 0.875rem; }
     .toggle-range .data em {
       font-weight: 700; }
@@ -18735,7 +18641,6 @@ a.bt-link-tx.underline.small {
     display: block;
     text-align: center;
     font-size: 0.75rem;
-    letter-spacing: -0.02em;
     height: 3.125rem;
     padding-top: 0.3125rem;
     -webkit-box-sizing: border-box;
@@ -18809,14 +18714,13 @@ a.bt-link-tx.underline.small {
           background-color: transparent; }
 
 /* EV_01_02 ~ EV_01_05 : 이벤트 타이틀 */
-.evt-desc {
-  letter-spacing: -0.02em; }
-  .evt-desc .evt-tit {
-    font-size: 0.9375rem;
-    margin-bottom: 0.3125rem; }
-  .evt-desc .evt-cont {
-    font-size: 0.8125rem;
-    color: #666; }
+.evt-desc .evt-tit {
+  font-size: 0.9375rem;
+  margin-bottom: 0.3125rem; }
+
+.evt-desc .evt-cont {
+  font-size: 0.8125rem;
+  color: #666; }
 
 .deletebtn-box .bt-alone {
   position: absolute;
@@ -18849,7 +18753,6 @@ a.bt-link-tx.underline.small {
     height: 3.0625rem;
     line-height: 3.0625rem;
     font-size: 0.875rem;
-    letter-spacing: -0.025em;
     color: #757575; }
     .brand_link .unit.on {
       position: relative;
@@ -19507,8 +19410,7 @@ a.bt-link-tx.underline.small {
       display: block;
       font-size: 1.5rem;
       font-weight: 400;
-      line-height: 1.875rem;
-      letter-spacing: -0.125rem; }
+      line-height: 1.875rem; }
     .howto-list-wrap .howto-list-box ul {
       margin-top: 1.125rem; }
       .howto-list-wrap .howto-list-box ul li {
@@ -20224,8 +20126,7 @@ a.bt-link-tx.underline.small {
   font-size: 0.625rem;
   font-weight: 700;
   text-align: center;
-  vertical-align: middle;
-  letter-spacing: 0; }
+  vertical-align: middle; }
 
 .rating-box-wraq .rating-list {
   margin-top: 1.875rem;
@@ -22071,7 +21972,8 @@ a.bt-link-tx.underline.small {
       color: #178BCE !important;
       font-weight: 700 !important; }
     .phonefilter-wrap.benefit-icon li .text-wrap {
-      min-width: 3.5rem; }
+      min-width: 3.5rem;
+      font-size: 0; }
       .phonefilter-wrap.benefit-icon li .text-wrap .ico {
         position: relative;
         display: inline-block;
@@ -22180,7 +22082,7 @@ a.bt-link-tx.underline.small {
           float: left;
           padding: 0 0.375rem;
           height: 0.9375rem;
-          line-height: 0.875rem;
+          line-height: 0.9375rem;
           color: #fff;
           background: #119ED7;
           font-weight: 700;
@@ -22526,8 +22428,7 @@ a.bt-link-tx.underline.small {
     text-align: center;
     font-size: 0.9375rem;
     color: #fff;
-    border-radius: 100%;
-    letter-spacing: 0; }
+    border-radius: 100%; }
 
 .myinfo-wrap.membership .ico-wrap {
   top: 0.375rem; }
@@ -22577,7 +22478,6 @@ a.bt-link-tx.underline.small {
       border-radius: 1.25rem;
       text-align: center;
       background: #178BCE;
-      letter-spacing: 0;
       margin-left: 0.375rem; }
   .membership-use-particulars .bt-detail .date {
     float: right;
@@ -22621,7 +22521,6 @@ a.bt-link-tx.underline.small {
   font-family: "TgothicBlack", Roboto, sans-serif; }
   .membership-use-particulars .info-title .num span {
     display: inline-block;
-    letter-spacing: 0;
     font-family: "TgothicMedium", Roboto, sans-serif;
     font-size: 0.625rem;
     vertical-align: 0.125rem;
@@ -22660,7 +22559,6 @@ a.bt-link-tx.underline.small {
       width: auto; }
     .contract-info-wrap.mbs-reissue .contract-info > li .txt {
       display: table-cell;
-      letter-spacing: 0rem;
       width: auto; }
 
 .icon-tip {
@@ -22672,7 +22570,6 @@ a.bt-link-tx.underline.small {
   border-radius: 1.25rem;
   text-align: center;
   background: #178BCE;
-  letter-spacing: 0;
   margin-left: 0.375rem; }
 
 .notice-gray-box {
@@ -23000,6 +22897,8 @@ a.bt-link-tx.underline.small {
     padding-bottom: 2.5rem; }
     .comp-box.country-roaming .list-box .tit {
       font-size: 1.125rem !important; }
+      .comp-box.country-roaming .list-box .tit .tip-view {
+        vertical-align: inherit; }
   .comp-box.country-roaming .bt-add {
     border-bottom: 1px solid #e1e1e1;
     padding-bottom: 1.25rem; }
@@ -23217,8 +23116,7 @@ a.bt-link-tx.underline.small {
   .service-check-wrap .stit {
     display: block;
     padding: 4.6875rem 0 1.875rem;
-    font-size: 2rem;
-    letter-spacing: -0.125rem; }
+    font-size: 2rem; }
   .service-check-wrap .stxt {
     font-size: 0.8125rem;
     color: #666; }
@@ -24942,8 +24840,7 @@ input[type="radio"].formradio-small.type2 + label {
       color: #666666;
       font-size: 0.875rem;
       position: relative;
-      margin: 0 1.1875rem 0.625rem 0;
-      letter-spacing: -0.0875rem; }
+      margin: 0 1.1875rem 0.625rem 0; }
       .connection-wrap .connec-txt button:after, .connection-wrap .connec-txt a:after {
         content: '';
         width: 0.0625rem;
@@ -25136,8 +25033,7 @@ input[type="radio"].formradio-small.type2 + label {
     color: #959595;
     height: 3.25rem;
     line-height: 3.25rem;
-    font-size: 0.875rem;
-    letter-spacing: -0.025em; }
+    font-size: 0.875rem; }
     .benefit-link li .unit.on {
       color: #ef4b49;
       font-weight: 700; }
@@ -25411,14 +25307,15 @@ input[type="radio"].formradio-small.type2 + label {
         .full-link-list li .no-link .inner .tit .sub {
           display: block;
           font-size: 0.75rem;
-          color: #959595; }
+          color: #959595;
+          margin-top: 0.3125rem; }
       .full-link-list li button .inner .text, .full-link-list li a .inner .text,
       .full-link-list li .no-link .inner .text {
         display: table-cell;
         vertical-align: middle;
         font-size: 1rem;
         text-align: right;
-        /*font-weight:$fw-medium;*/ }
+        font-weight: 700; }
         .full-link-list li button .inner .text.type2, .full-link-list li a .inner .text.type2,
         .full-link-list li .no-link .inner .text.type2 {
           /*newfont*/
@@ -27153,6 +27050,8 @@ input[type="radio"].formradio-small.type2 + label {
   font-size: 15px;
   text-align: center;
   line-height: 3.25rem; }
+  .extraservice-more .btn.bbe5 {
+    border-bottom: 1px solid #e5e5e5; }
 
 .findyourplan-wrap .link {
   display: table;
@@ -28695,7 +28594,7 @@ input[type="radio"].formradio-small.type2 + label {
     .main-breakdown-box .list li .ti {
       float: left;
       font-size: 1rem;
-      font-weight: 300; }
+      font-weight: 300;  line-height: 1.375rem;}
     .main-breakdown-box .list li .tx {
       float: right;
       font-size: 0.9375rem;
@@ -28888,7 +28787,6 @@ body.apphome {
       color: #666666;
       font-size: 0.75rem;
       text-decoration: underline;
-      letter-spacing: 0;
       text-align: center;
       margin: 0 auto;
       font-weight: 700; }
@@ -28922,35 +28820,30 @@ body.apphome {
         -webkit-transform: translate(-50%, -50%);
                 transform: translate(-50%, -50%);
         margin-top: -0.5rem;
-        font-family: "TgothicMedium", Roboto, sans-serif;
-        letter-spacing: 0; }
+        font-family: "TgothicMedium", Roboto, sans-serif; }
         .main-chart-box .donutchart .donut-chart .ti-data .ti {
           display: block;
           color: #959595;
           font-size: 0.875rem;
           font-weight: 400;
-          font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", 'Droid Sans', "Noto Sans", "Noto Sans CJK",  Roboto, sans-serif;
-          letter-spacing: 0; }
+          font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", 'Droid Sans', "Noto Sans", "Noto Sans CJK",  Roboto, sans-serif; }
         .main-chart-box .donutchart .donut-chart .ti-data .data {
           display: block;
           font-size: 1.75rem;
           font-weight: 700;
           white-space: nowrap;
-          font-family: "TgothicMedium", Roboto, sans-serif;
-          letter-spacing: 0; }
+          font-family: "TgothicMedium", Roboto, sans-serif; }
         .main-chart-box .donutchart .donut-chart .ti-data .tx {
           display: block;
           font-size: 1.5rem;
           font-weight: 700;
-          font-family: "TgothicMedium", Roboto, sans-serif;
-          letter-spacing: 0; }
+          font-family: "TgothicMedium", Roboto, sans-serif; }
         .main-chart-box .donutchart .donut-chart .ti-data .tx2 {
           display: block;
           font-size: 1.5rem;
           font-weight: 700;
           white-space: nowrap;
-          font-family: "TgothicMedium", Roboto, sans-serif;
-          letter-spacing: 0; }
+          font-family: "TgothicMedium", Roboto, sans-serif; }
       .main-chart-box .donutchart .donut-chart.data-type .ti-data {
         margin-top: -1.0625rem; }
     .main-chart-box .donutchart .data-add {
@@ -29014,7 +28907,7 @@ body.apphome {
       font-weight: 300;
       margin-right: 0.1875rem; }
       .main-chart-box .legend .category0 .data .ff-tg-light {
-        font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue",'Droid Sans', "Noto Sans", "Noto Sans CJK", Roboto, sans-serif; }
+        font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", 'Droid Sans', "sans-serif", "Noto Sans", "Noto Sans CJK"; }
     .main-chart-box .legend .category1::before {
       background: #59bcf5; }
     .main-chart-box .legend .category1 .data {
@@ -30787,12 +30680,10 @@ body.apphome {
 .list-comp-history.type01 .data-tx, .shop-info .shop-txt .list-comp-history.type02 .data-tx, .shop-info .shop-txt .list-comp-history.type03 .data-tx {
   width: 6.25rem !important;
   font-size: 1rem !important;
-  letter-spacing: 0 !important;
   line-height: 1.1875rem;
   font-weight: 700 !important; }
   .list-comp-history.type01 .data-tx span, .shop-info .shop-txt .list-comp-history.type02 .data-tx span, .shop-info .shop-txt .list-comp-history.type03 .data-tx span {
     font-size: 1rem !important;
-    letter-spacing: 0 !important;
     font-family: normal !important;
     margin-left: 0 !important; }
   .list-comp-history.type01 .data-tx.ff-tg-black, .shop-info .shop-txt .list-comp-history.type02 .data-tx.ff-tg-black, .shop-info .shop-txt .list-comp-history.type03 .data-tx.ff-tg-black {
@@ -31122,7 +31013,7 @@ body.apphome {
   height: 100%;
   background: url(/img/common/icon-go-arw01.png) no-repeat right center;
   background-size: 0.4375rem 0.6875rem;
-  font-size: 0;
+  /*font-size:0;*/
   text-indent: -9999px; }
 
 .date-graph-list + .total-data {
@@ -31202,7 +31093,6 @@ body.apphome {
         font-family: "TgothicLight", Roboto, sans-serif;
         font-size: 0.75rem;
         line-height: 16px !important;
-        letter-spacing: 0 !important;
         color: #959595;
         font-weight: 400 !important; }
       .discount-look-ahead.round .select-list li.disabled {
@@ -32714,8 +32604,7 @@ body.apphome {
   text-align: center; }
   .discountbenefit-list .category-type .link .tag-price .txt {
     display: inline-block;
-    font-weight: 700;
-    letter-spacing: -0.01563rem; }
+    font-weight: 700; }
 
 /* gnb coach mark */
 .g-coach-box li {
@@ -32776,15 +32665,13 @@ body.apphome {
     display: block;
     font-size: 0.875rem;
     color: #000;
-    letter-spacing: -0.05rem;
     line-height: 1.5;
     margin-top: 0.25rem; }
   .view-tit-wrap .sub-txt {
     display: block;
     font-size: 0.8125rem;
     color: #666;
-    margin-top: 0.25rem;
-    letter-spacing: -0.0125rem; }
+    margin-top: 0.25rem; }
     .view-tit-wrap .sub-txt:after {
       content: "";
       display: block;
@@ -32872,6 +32759,8 @@ body.apphome {
     text-indent: 0; }
     .inputbox.inp-btn .bt-box.none {
       display: none !important; }
+    .inputbox.inp-btn .bt-box.bt80 button, .inputbox.inp-btn .bt-box a {
+      width: 5rem; }
   .inputbox.inp-btn .bt-box2 {
     display: table-cell !important;
     padding-left: 0.625rem;

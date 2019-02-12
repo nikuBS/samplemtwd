@@ -461,6 +461,7 @@
       display: block;
       /*overflow:hidden;*/
       /*color:transparent;*/
+      font-size: 0.875rem;
       width: 100%;
       text-align: left; }
       .accordion2 .acco-style .acco-list .acco-title button:after {
@@ -804,8 +805,7 @@ li.checkbox.type01 {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   text-align: center;
-  font-size: 0.6875rem;
-  letter-spacing: -0.04em; }
+  font-size: 0.6875rem; }
   .radiobox.type05:before {
     content: '';
     display: block;
@@ -917,8 +917,7 @@ li.checkbox.type01 {
         left: 0.6875rem;
         color: #757575;
         font-size: 1.125rem;
-        font-family: "TgothicMedium", Roboto, sans-serif;
-        letter-spacing: 0; }
+        font-family: "TgothicMedium", Roboto, sans-serif; }
         .radio-slide .select-list .radiobox .radio-txt span {
           vertical-align: bottom;
           vertical-align: baseline; }
@@ -1072,7 +1071,7 @@ li.checkbox.type01 {
       display: block;
       margin-bottom: 0.125rem;
       font-size: 0.75rem;
-      font-family: "Helvetica Neue", Roboto, sans-serif;
+      font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK";
       font-weight: 700; }
   .widget-box.step .step-list {
     position: absolute;
@@ -1157,7 +1156,7 @@ li.checkbox.type01 {
       font-weight: 400; }
       .widget-box.tube .tube-list li.checked .date {
         color: #98a6d6;
-        font-family: "Helvetica Neue", Roboto, sans-serif; }
+        font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK"; }
     .widget-box.tube .tube-list li.tube-select {
       padding: 0.6875rem 0.75rem;
       font-size: 0.875rem;
