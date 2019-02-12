@@ -1749,3 +1749,8 @@ Tw.PRODUCT_SUCCESS_BTN_TEXT = {
 };
 
 Tw.BENEFIT_TBCOMBINE_NEED_AUTH = '미인증 회선으로 상품을 결합하셨습니다. \n요금이나 포인트 확인, 가입서비스 설정 및 변경등 원활한 \nT world 이용을 위해 인증을 받으시기 바랍니다.';
+
+Tw.ALERT_MSG_SEARCH = {
+  ALERT_4_A40: { TITLE: '입력하신 의견을 등록하시겠습니까?', MSG: '', BUTTON: '닫기' },
+  ALERT_4_A41: { TITLE: '선택하신 내용을 접수하시겠습니까?', MSG: '', BUTTON: '닫기' }
+};

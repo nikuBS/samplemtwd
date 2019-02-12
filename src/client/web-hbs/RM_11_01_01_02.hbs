@@ -254,14 +254,14 @@
                     <ul class="noti-list02">
                         {{#each data.autoInfo.preinfo.joinNoticeList}}
                             <li>
-                                <button type="button" class="tip-view-btn bff" data-tit="{{this.noticeTit}}" data-txt="{{this.noticeTxt}}" aria-haspopup="true">
+                                <button title="{{this.noticeTit}}" type="button" class="tip-view-btn bff" data-tit="{{this.noticeTit}}" data-txt="{{this.noticeTxt}}" aria-haspopup="true">
                                     {{this.noticeTit}}<span class="tip-view">TIP</span>
                                 </button>
                             </li>
                         {{/each}}
                         {{#each data.toolTipData}}
                             <li>
-                                <button type="button" class="tip-view-btn"  id="{{this.tipId}}" aria-haspopup="true">
+                                <button type="button" title="{{this.tipTitle}}" class="tip-view-btn"  id="{{this.tipId}}" aria-haspopup="true">
                                     {{this.tipTitle}}<span class="tip-view">TIP</span>
                                 </button>
                             </li>

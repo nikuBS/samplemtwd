@@ -17,7 +17,8 @@ class CommonSearchMain extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    const nowOsType = BrowserHelper.isApp(req) ? BrowserHelper.isAndroid(req) ? 'A' : 'I' : 'X';
+    /*const nowOsType = BrowserHelper.isApp(req) ? BrowserHelper.isAndroid(req) ? 'A' : 'I' : 'X';*/
+    const nowOsType = 'A';
     const step = req.query.step || 1;
     Observable.combineLatest(
       this.apiService.request(API_CMD.POPULAR_KEYWORD, { range : 'D'}, {}),

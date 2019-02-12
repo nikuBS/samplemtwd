@@ -261,7 +261,7 @@
                 <hr class="cont-sp type1" aria-hidden="true">
                 <script type="text/x-handlebars-template" id="tooltip_template">
                     <li>
-                        <button type="button" class="tip-view-btn"  id="{{tipData.tipId}}" aria-haspopup="true">
+                        <button type="button" title="{{tipData.tipTitle}}" class="tip-view-btn"  id="{{tipData.tipId}}" aria-haspopup="true">
                             {{tipData.tipTitle}}<span class="tip-view">TIP</span>
                         </button>
                     </li>
@@ -274,7 +274,7 @@
                         <% if(prodBffInfo.preinfo.joinNoticeList.length>0){ %>
                         <% for(var i=0;i<prodBffInfo.preinfo.joinNoticeList.length;i++){ %>
                         <li>
-                            <button type="button" class="tip-view-btn bff"   aria-haspopup="true" data-tit="<%= prodBffInfo.preinfo.joinNoticeList[i].noticeTit %>" data-txt="<%= prodBffInfo.preinfo.joinNoticeList[i].noticeTxt %>">
+                            <button type="button" class="tip-view-btn bff" title="<%= prodBffInfo.preinfo.joinNoticeList[i].noticeTit %>"  aria-haspopup="true" data-tit="<%= prodBffInfo.preinfo.joinNoticeList[i].noticeTit %>" data-txt="<%= prodBffInfo.preinfo.joinNoticeList[i].noticeTxt %>">
                                 <%= prodBffInfo.preinfo.joinNoticeList[i].noticeTit %><span class="tip-view">TIP</span>
                             </button>
                         </li>

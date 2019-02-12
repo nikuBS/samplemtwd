@@ -34,7 +34,8 @@ class CommonSearch extends TwViewController {
     }
 
     Observable.combineLatest(
-      this.apiService.request( BrowserHelper.isApp(req) ? API_CMD.SEARCH_APP : API_CMD.SEARCH_WEB, requestObj, {}),
+      /*this.apiService.request( BrowserHelper.isApp(req) ? API_CMD.SEARCH_APP : API_CMD.SEARCH_WEB, requestObj, {}),*/
+      this.apiService.request( API_CMD.SEARCH_APP , requestObj, {}),
       this.apiService.request(API_CMD.RELATED_KEYWORD, requestObj, {})
     ).subscribe(([ searchResult, relatedKeyword ]) => {
 
