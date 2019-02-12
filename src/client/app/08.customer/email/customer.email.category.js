@@ -32,6 +32,8 @@ Tw.CustomerEmailCategory.prototype = {
     this.$select_service_depth2 = $('.fe-service_depth2');
     this.$select_quality_depth1 = $('.fe-quality_depth1');
     this.$wrap_tpl_faq = $('.fe-btn_faq');
+    this.$wrap_service_category = this.$container.find('.fe-wrap-service-category');
+    this.$wrap_quality_category = this.$container.find('.fe-wrap-quality-category');
     this.$wrap_tpl_service = this.$container.find('.fe-wrap_tpl_service');
     this.$wrap_tpl_quality = this.$container.find('.fe-wrap_tpl_quality');
   },
@@ -147,8 +149,14 @@ Tw.CustomerEmailCategory.prototype = {
 
     if ( sDepth1Value === 'CELL' || sDepth1Value === 'INTERNET' ) {
       this.$wrap_tpl_faq.show();
+
+      if ( sDepth1Value === 'INTERNET' ) {
+        this.$wrap_service_category.find('.emailconsulting-wrap').show();
+      }
+
     } else {
       this.$wrap_tpl_faq.hide();
+      this.$wrap_service_category.find('.emailconsulting-wrap').hide();
     }
 
     var sDepth2Category = this.$select_service_depth2.data('service-depth2');
@@ -186,6 +194,13 @@ Tw.CustomerEmailCategory.prototype = {
 
     var sDepth1Value = $(e.currentTarget).data('quality-depth1');
     var sDepth1Text = $(e.currentTarget).text().trim();
+    
+    if ( sDepth1Value === 'internet' ) {
+      this.$wrap_quality_category.find('.emailconsulting-wrap').show();
+    } else {
+      this.$wrap_quality_category.find('.emailconsulting-wrap').hide();
+    }
+
     this.$select_quality_depth1.addClass('tx-bold');
     this.$select_quality_depth1.text(sDepth1Text);
     this.$select_quality_depth1.data('quality-depth1', sDepth1Value);
