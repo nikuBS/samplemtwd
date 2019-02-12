@@ -1,0 +1,26 @@
+<%#
+* FileName: product.wireplan.reservation-cancel.html
+* Author: Ji Hun Yang (jihun202@sk.com)
+* Date: 2018.11.22
+%>
+<% include ../../components/start.component.html %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>"></div>
+</body>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(function () {
+    new Tw.ProductWireplanReservationCancel($('.wrap'), '<%= prodId %>',
+      '<%- escape(JSON.stringify(joinTermInfo)) %>', '<%- escape(JSON.stringify(currentAdditionsInfo)) %>');
+  });
+</script>
+<% include ../../components/end.component.html %>

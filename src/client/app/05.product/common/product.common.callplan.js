@@ -313,7 +313,6 @@ Tw.ProductCommonCallplan.prototype = {
   _procPreCheck: function(joinTermCd, url) {
     var preCheckApi = this._getPreCheckApiReqInfo(joinTermCd);
 
-
     this._url = url;
     this._joinTermCd = joinTermCd;
 
@@ -414,8 +413,25 @@ Tw.ProductCommonCallplan.prototype = {
     this._historyService.goLoad(this._settingGoUrl + '?prod_id=' + this._prodId);
   },
 
+  _getWireAdditionsPreCheck: function(termPrecheckResult) {
+    this._apiService.request(Tw.API_CMD.BFF_10_0098, { joinTermCd: '04' }, {}, [this._prodId])
+      .done($.proxy(this._resWireAdditionsPreCheck, this, termPrecheckResult));
+  },
+
+  _resWireAdditionsPreCheck: function(termPrecheckResult, resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(termPrecheckResult.code, termPrecheckResult.msg).pop();
+    }
+
+    this._historyService.goLoad('/product/wireplan/reservation-cancel?prod_id=' + this._prodId);
+  },
+
   _procAdvanceCheck: function(resp) {
     Tw.CommonHelper.endLoading('.container');
+
+    if (resp.code !== Tw.API_CODE.CODE_00 && ['D_I', 'D_P', 'D_T'].indexOf(this._prodTypCd) !== -1 && this._joinTermCd === '03') {
+      return this._getWireAdditionsPreCheck(resp);
+    }
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();

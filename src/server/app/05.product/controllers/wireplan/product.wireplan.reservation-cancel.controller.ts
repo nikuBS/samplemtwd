@@ -1,41 +1,27 @@
 /**
- * 상품 해지 - 유선 부가서비스
- * FileName: product.wireplan.terminate.controller.ts
+ * 예약 취소 - 유선 부가서비스
+ * FileName: product.wireplan.reservation-cancel.controller.ts
  * Author: Ji Hun Yang (jihun202@sk.com)
- * Date: 2018.10.13
+ * Date: 2019.02.12
  */
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD } from '../../../../types/api-command.type';
-import { PRODUCT_TYPE_NM } from '../../../../types/string.type';
-import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../../../utils/format.helper';
+import {Observable} from 'rxjs/Observable';
 import ProductHelper from '../../../../utils/product.helper';
 
-class ProductWireplanTerminate extends TwViewController {
+class ProductWireplanReservationCancel extends TwViewController {
   constructor() {
     super();
-  }
-
-  /**
-   * @param currentAdditionsInfo
-   * @private
-   */
-  private _getBtnData(currentAdditionsInfo: any): any {
-    if (FormatHelper.isEmpty(currentAdditionsInfo.btnData)) {
-      return null;
-    }
-
-    return currentAdditionsInfo.btnData;
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {
         pageInfo: pageInfo,
-        svcInfo: svcInfo,
-        title: PRODUCT_TYPE_NM.TERMINATE
+        svcInfo: svcInfo
       };
 
     if (FormatHelper.isEmpty(prodId)) {
@@ -43,8 +29,8 @@ class ProductWireplanTerminate extends TwViewController {
     }
 
     Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_10_0111, { joinTermCd: '03' }, {}, [prodId]),
-      this.apiService.request(API_CMD.BFF_10_0168, { joinTermCd: '03' }, {}, [prodId])
+      this.apiService.request(API_CMD.BFF_10_0111, { joinTermCd: '04' }, {}, [prodId]),
+      this.apiService.request(API_CMD.BFF_10_0166, { joinTermCd: '04' }, {}, [prodId])
     ).subscribe(([joinTermInfo, currentAdditionsInfo]) => {
       const apiError = this.error.apiError([joinTermInfo, currentAdditionsInfo]);
 
@@ -56,13 +42,12 @@ class ProductWireplanTerminate extends TwViewController {
         }));
       }
 
-      res.render('wireplan/product.wireplan.terminate.html', Object.assign(renderCommonInfo, {
-        prodId: prodId,
+      res.render('wireplan/product.wireplan.reservation-cancel', Object.assign(renderCommonInfo, {
         joinTermInfo: ProductHelper.convWireplanJoinTermInfo(joinTermInfo.result, false),
-        btnData: this._getBtnData(currentAdditionsInfo.result)
+        currentAdditionsInfo: currentAdditionsInfo.result
       }));
     });
   }
 }
 
-export default ProductWireplanTerminate;
+export default ProductWireplanReservationCancel;
