@@ -132,7 +132,7 @@ Tw.BenefitDisPgmInput.prototype = {
       hbs: 'complete_product',
       data: {
         prodCtgNm: Tw.PRODUCT_CTG_NM.DISCOUNT_PROGRAM,
-        mytPage: 'submain',
+        btList: [{ link: '/myt-join/submain', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.MYTJOIN }],
         btClass: 'item-one',
         prodId: this._prodId,
         prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,

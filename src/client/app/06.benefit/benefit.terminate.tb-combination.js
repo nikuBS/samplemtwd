@@ -81,7 +81,7 @@ Tw.BenefitTerminateTbCombination.prototype = {
     this._popupService.open({
       hbs: 'complete_product',
       data: {
-        mytPage: 'myplancombine',
+        btList: [{ link: '/myt-join/myplancombine', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.COMBINE }],
         btClass: 'item-one',
         prodId: this._prodId,
         prodNm: this._prodNm,

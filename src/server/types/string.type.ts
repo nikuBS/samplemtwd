@@ -574,7 +574,7 @@ export const PRODUCT_TYPE_NM = {
     SELECT: {
       TITLE: '회선 선택',
       BUTTON: '진행하기',
-      DESCRIPTION: '요금제를 변경할 회선을 선택해 주세요.'
+      DESCRIPTION: '변경할 회선을 선택해 주세요.'
     },
     CHANGE: {
       TITLE: '회선 변경',

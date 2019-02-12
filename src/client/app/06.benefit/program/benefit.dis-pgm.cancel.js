@@ -120,7 +120,7 @@ Tw.BenefitDisPgmCancel.prototype = {
       {
         hbs: 'complete_product',
         data: {
-          mytPage: 'submain',
+          btList: [{ link: '/myt-join/submain', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.MYTJOIN }],
           btClass: 'item-one',
           prodId: this._prodId,
           prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,

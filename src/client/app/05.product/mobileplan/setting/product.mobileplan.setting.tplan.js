@@ -167,7 +167,7 @@ Tw.ProductMobileplanSettingTplan.prototype = {
     var completeData = {
       prodCtgNm: Tw.PRODUCT_TYPE_NM.SETTING,
       typeNm: Tw.PRODUCT_TYPE_NM.CHANGE,
-      isSmartWatch: $checked.val() === 'NA00006116',
+      btList: $checked.val() === 'NA00006116' ? [{ link: '/product/callplan/NA00005381', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.SMARTWATCH }] : [],
       btClass: 'item-one'
     };
 
