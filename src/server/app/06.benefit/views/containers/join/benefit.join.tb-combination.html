@@ -32,7 +32,7 @@
                 <!-- .cont-box -->
                 <div class="cont-box rt-bt-type">
                     <div class="announcement-box">
-                        <div class="announcement-tit">가입할  <strong class="tx-bold"><%= prodInfo.summary.prodNm %></strong><br />상품의 옵션을 설정하세요</div>
+                        <div class="announcement-tit">가입할  <strong class="tx-bold"><%= prodNm %></strong><br />상품의 옵션을 설정하세요</div>
                     </div>
                 </div>
                 <!--// .cont-box -->
@@ -44,7 +44,7 @@
                         <li>
                             <label class="tit">결합 회선 설정</label>
                             <span class="inputbox">
-                                <button class="bt-dropdown big fe-btn_select_combine_line" title="결합 회선 설정 선택" aria-haspopup="true"><%= currentSvcNum %><span class="ico"></span></button>
+                                <button class="bt-dropdown big fe-btn_select_combine_line" title="결합 회선 설정 선택" aria-haspopup="true">결합 회선 선택<span class="ico"></span></button>
                             </span>
                             <span id="aria-exp-desc2" class="validation-txt fe-msg_valid" style="display: none"></span>
                             <span id="aria-exp-desc3" class="error-txt fe-msg_unvalid" style="display: none"></span>
@@ -62,28 +62,7 @@
                         <div class="list-comp-input type02">
                             <div class="widget">
                                 <div class="widget-box radio">
-                                    <ul class="select-list fe-line_list_html" role="group">
-                                        <% for (var i in combiWireProductList) { %>
-                                        <li class="radiobox type01-big" role="radio" aria-checked="false">
-                                            <% if ( combiWireProductList[i].isCombine ) { %>
-                                            <input type="radio" name="radio" value="" title="결합 상품 설정" aria-labelledby="aria-comp-radio<%= i %>"><!--웹접근성 수정 -->
-                                            <% } else { %>
-                                            <input type="radio" name="radio" value="" title="결합 상품 설정" aria-labelledby="aria-comp-radio<%= i %>" disabled><!--웹접근성 수정 -->
-                                            <% } %>
-                                            <div class="comp-list-layout" id="aria-comp-radio<%= i %>" aria-hidden="true">
-                                                <p class="layout-text">
-                                                    <span class="mtext"><%= combiWireProductList[i].svcCdNm %> <%= combiWireProductList[i].feeProdNm %></span>
-                                                </p>
-                                                <dl class="layout-text2">
-                                                    <dt>가입일</dt>
-                                                    <dd><%= combiWireProductList[i].combStaDt %></dd>
-                                                    <dt>결합상태</dt>
-                                                    <dd><%= combiWireProductList[i].combStatusText %></dd>
-                                                </dl>
-                                            </div>
-                                        </li>
-                                        <% } %>
-                                    </ul>
+                                    <ul class="select-list fe-line_list_html" role="group"></ul>
                                 </div>
                             </div>
                         </div>
@@ -109,5 +88,5 @@
 </body>
 <% include ../../components/join/benefit.join.tb-combination.component.html %>
 <% include ../../components/javascript.component.html %>
-<script>$(function () {new Tw.BenefitJoinTbCombination($('.wrap'), '<%= prodId %>', '<%= svcInfo.svcMgmtNum %>');});</script>
+<script>$(function () {new Tw.BenefitJoinTbCombination($('.wrap'), '<%= prodId %>', '<%= prodNm %>');});</script>
 <% include ../../components/end.component.html %>

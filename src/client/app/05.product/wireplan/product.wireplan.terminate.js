@@ -129,7 +129,7 @@ Tw.ProductWireplanTerminate.prototype = {
       {
         hbs: 'complete_product',
         data: {
-          mytPage: 'additions',
+          btList: [{ link: '/myt-join/additions', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.MYTJOIN }],
           btClass: 'item-one',
           prodId: this._prodId,
           prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,

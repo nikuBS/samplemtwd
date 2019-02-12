@@ -1,0 +1,263 @@
+<div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <!-- #header -->
+    <div class="header-wrap">
+        <div class="page-header">
+            <div class="header-ti">
+                <h1>가입</h1>
+            </div>
+        </div>
+    </div>
+    <!--// #header -->
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <div class="charge-guide-wrap">
+                    <div class="charge-cont">
+                                <span class="sub-disc01">
+                                    <span class="elem">가입할 결합상품</span>
+                                </span>
+                        <span class="tit-tx">{{prodNm}}</span>
+                        <p class="stxt">{{prodSmryDesc}}</p>
+                    </div>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <!-- .cont-box -->
+            <div class="cont-box set-info">
+                <div class="link-long bb0">
+                    <button class="fe-btn_close_confirm">설정 정보
+                        <span class="tx-sub">
+                            <span class="normal">결합 회선/상품 설정 완료</span>
+                            <span class="ico">더보기</span><!-- 웹접근성 수정 -->
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <!-- .cont-box -->
+            <div class="cont-box nogaps-hoz">
+                <div class="item-list">
+                    <ul>
+                        <li class="pt20">
+                            <div class="title-wrap">
+                                <span class="elem tx-bold">T상품</span>
+                                <span class="elem">{{wirelessMember.svcNum}} ({{wirelessMember.svcStNm}})</span>
+                            </div>
+                            <div class="basic-list">
+                                <ul>
+                                    <li>
+                                        <span class="title">고객명</span>
+                                        <span class="tx-cont">{{wirelessMember.custNm}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="title">요금제</span>
+                                        <span class="tx-cont">{{wirelessMember.feeProdNm}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="title">T끼리온가족할인</span>
+                                        {{#if wirelessMember.isFamlUse}}
+                                        <span class="tx-cont">할인제도 사용중</span>
+                                        {{else}}
+                                        <span class="tx-cont">할인제도 미사용</span>
+                                        {{/if}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="title-wrap">
+                                <span class="elem tx-bold">B상품</span>
+                                {{#if wireMember.svcNum}}
+                                <span class="elem">{{wireMember.svcNum}}</span>
+                                {{/if}}
+                            </div>
+                            <div class="basic-list">
+                                <ul>
+                                    <li>
+                                        <span class="title">고객명</span>
+                                        <span class="tx-cont">{{wireMember.custNm}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="title">요금제</span>
+                                        <span class="tx-cont">{{wireMember.feeProdNm}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="title">가입일</span>
+                                        <span class="tx-cont">{{wireMember.combStaDt}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="title">결합상태</span>
+                                        <span class="tx-cont">결합가능</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--// .cont-box -->
+
+            {{#if isAgreement}}
+            <div class="ti-caption-gray">
+                <h3 class="tit">약관과 이용 동의</h3>
+            </div>
+            <!-- .cont-box -->
+            <div class="cont-box nogaps fe-agree_wrap">
+                <div class="agree-chk-wrap">
+                    <div class="list-comp-input-agree">
+                        <div class="widget">
+                            <div class="widget-box check">
+                                <ul class="select-list" role="group">
+                                    {{#if prodStpl.isAllAgree}}
+                                        <li>
+                                            <div class="checkbox type01 all fe-checkbox_style" role="checkbox" aria-checked="false">
+                                                <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                <input type="checkbox" class="fe-checkbox_agree_all" name="checkbox"
+                                                       value="" aria-labelledby="aria-comp-checkbox-all"/>
+                                                <!-- 체크상태일 경우 checked="checked" -->
+                                                <div class="comp-list-layout" id="aria-comp-checkbox-all">
+                                                    <p class="layout-text all-chk">
+                                                        <span class="mtext">모두동의</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    {{/if}}
+                                    {{#if prodStpl.isScrbStplAgree}}
+                                        <li>
+                                            <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
+                                                <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                <input type="checkbox" name="checkbox" value=""
+                                                       class="fe-checkbox_agree_item fe-checkbox_agree_need"
+                                                       aria-labelledby="aria-comp-checkbox-0"/>
+                                                <!-- 체크상태일 경우 checked="false" -->
+                                                <div class="comp-list-layout" id="aria-comp-checkbox-0">
+                                                    <p class="layout-text">
+                                                        <span class="mtext">{{prodStpl.scrbStplAgreeTitNm}}</span>
+                                                        <span class="stext-bg mt20">
+                                                                <span class="stext-c">
+                                                                    {{{prodStpl.scrbStplAgreeCttSummary}}}
+                                                                </span>
+                                                            </span>
+                                                    <div class="none fe-agree_full_html">{{{prodStpl.scrbStplAgreeHtmlCtt}}}</div>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <button class="agree-view fe-btn_agree_view"><span class="blind">약관 자세히 보기</span></button>
+                                        </li>
+                                    {{/if}}
+                                    {{#if prodStpl.isPsnlInfoCnsgAgree}}
+                                        <li>
+                                            <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
+                                                <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                <input type="checkbox" name="checkbox" value=""
+                                                       class="fe-checkbox_agree_item fe-checkbox_agree_need"
+                                                       aria-labelledby="aria-comp-checkbox-1"/>
+                                                <!-- 체크상태일 경우 checked="false" -->
+                                                <div class="comp-list-layout" id="aria-comp-checkbox-1">
+                                                    <p class="layout-text">
+                                                        <span class="mtext">{{prodStpl.psnlInfoCnsgAgreeTitNm}}</span>
+                                                        <span class="stext-bg mt20">
+                                                                <span class="stext-c">
+                                                                    {{{prodStpl.psnlInfoCnsgCttSummary}}}
+                                                                </span>
+                                                            </span>
+                                                    <div class="none fe-agree_full_html">{{{prodStpl.psnlInfoCnsgHtmlCtt}}}</div>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <button class="agree-view fe-btn_agree_view"><span class="blind">약관 자세히 보기</span></button>
+                                        </li>
+                                    {{/if}}
+                                    {{#if prodStpl.isPsnlInfoOfrAgree}}
+                                        <li>
+                                            <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
+                                                <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                <input type="checkbox" name="checkbox" value=""
+                                                       class="fe-checkbox_agree_item fe-checkbox_agree_need"
+                                                       aria-labelledby="aria-comp-checkbox-2"/>
+                                                <!-- 체크상태일 경우 checked="false" -->
+                                                <div class="comp-list-layout" id="aria-comp-checkbox-2">
+                                                    <p class="layout-text">
+                                                        <span class="mtext">{{prodStpl.psnlInfoOfrAgreeTitNm}}</span>
+                                                        <span class="stext-bg mt20">
+                                                                <span class="stext-c">
+                                                                    {{{prodStpl.psnlInfoOfrCttSummary}}}
+                                                                </span>
+                                                            </span>
+                                                    <div class="none fe-agree_full_html">{{{prodStpl.psnlInfoOfrHtmlCtt}}}</div>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <button class="agree-view fe-btn_agree_view"><span class="blind">약관 자세히 보기</span></button>
+                                        </li>
+                                    {{/if}}
+                                    {{#if prodStpl.isAdInfoOfrAgree}}
+                                        <li>
+                                            <div class="checkbox type01 fe-checkbox_style" role="checkbox" aria-checked="false">
+                                                <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                <input type="checkbox" name="checkbox" value=""
+                                                       class="fe-checkbox_agree_item fe-checkbox_agree_need"
+                                                       aria-labelledby="aria-comp-checkbox-3"/>
+                                                <!-- 체크상태일 경우 checked="false" -->
+                                                <div class="comp-list-layout" id="aria-comp-checkbox-3">
+                                                    <p class="layout-text">
+                                                        <span class="mtext">{{prodStpl.adInfoOfrAgreeTitNm}}</span>
+                                                        <span class="stext-bg mt20">
+                                                                <span class="stext-c">{{{prodStpl.adInfoOfrCttSummary}}}</span>
+                                                            </span>
+                                                    <div class="none fe-agree_full_html">{{{prodStpl.psnlInfoCnsgHtmlCtt}}}</div>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <button class="agree-view fe-btn_agree_view"><span class="blind">약관 자세히 보기</span></button>
+                                        </li>
+                                    {{/if}}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/if}}
+            <!--// .cont-box -->
+            <hr class="cont-sp type1" aria-hidden="true" />
+
+            <div class="cont-box nogaps-btm">
+                <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                <ul class="noti-list02">
+                    <li><button type="button" class="tip-view-btn" title="결합 신청 안내 TIP보기" aria-haspopup="true" id="BS_07_01_01_02_tip_01">결합 신청 안내<span class="tip-view">TIP</span></button></li><!--웹접근성 수정 -->
+                    <li><button type="button" class="tip-view-btn" title="결합 불가 안내 TIP보기" aria-haspopup="true" id="BS_07_01_01_02_tip_02">결합 불가 안내<span class="tip-view">TIP</span></button></li><!--웹접근성 수정 -->
+                    {{#noticeList}}
+                        <li>
+                            <button type="button" class="tip-view-btn fe-btn_tip_view" aria-haspopup="true" title="{{noticeTit}} TIP보기" data-title="{{noticeTit}}">
+                                {{noticeTit}}<span class="tip-view">TIP</span>
+                            </button>
+                            <div class="none fe-tip_view_html">{{{noticeTxt}}}</div>
+                        </li>
+                    {{/noticeList}}
+                </ul>
+            </div>
+
+            <div class="bt-fixed-area">
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button class="fe-btn_apply" disabled>가입하기</button>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <!-- // .container-wrap -->
+    <!-- .popup-closeBtn -->
+    <button class="prev-step fe-btn_cancel_join">취소</button>
+    <!--// .popup-closeBtn -->
+</div>

@@ -49,6 +49,7 @@ Tw.BUTTON_LABEL = {
   APPLY: '신청하기',
   JOIN: '가입하기',
   TERMINATE: '해지하기',
+  BACK: '돌아가기',
   NEXT: '다음',
   HOME: '홈으로',
   YES: '예',
@@ -1723,10 +1724,15 @@ Tw.ROAMING_RANGE_OPTION_STR = {
   TWO_MONTH: '2개월 이내의 날짜만 선택 가능합니다.'
 };
 
+Tw.BENEFIT_TBCOMBINATION_ERROR = {
+  TITLE: '고객님께서는 인터넷·집전화·IPTV 이용고객이 아닙니다.',
+  CONTENT: '인터넷·집전화·IPTV 서비스를 결합해서 사용하고 할인혜택 받으세요.',
+  BTN_TEXT: '가입상담예약 >'
+};
+
 Tw.BENEFIT_TBCOMBINATION_JOIN_VALIDATION = {
   IS_VALID: '결합 가능한 회선입니다.',
   ALERADY_COMBINED: '이미 결합된 회선입니다.',
-  UN_VALID_PRODUCT: '가입 대상 요금상품이 아닙니다.',
   UN_VALID_LINE: '결합가능한 회선이 없습니다.'
 };
 
@@ -1734,3 +1740,12 @@ Tw.BENEFIT_TBCOMBINATION_JOIN_STATUS = {
   IS_COMBINED: '결합가능',
   DIS_COMBINED: '결합완료'
 };
+
+Tw.PRODUCT_SUCCESS_BTN_TEXT = {
+  SMARTWATCH: '스마트워치 할인상품 보기 >',
+  COMBINE: '나의 결합상품 확인하기 >',
+  MYTJOIN: '나의 가입정보 확인하기 >',
+  GO_AUTH: '인증받기 >'
+};
+
+Tw.BENEFIT_TBCOMBINE_NEED_AUTH = '미인증 회선으로 상품을 결합하셨습니다. \n요금이나 포인트 확인, 가입서비스 설정 및 변경등 원활한 \nT world 이용을 위해 인증을 받으시기 바랍니다.';

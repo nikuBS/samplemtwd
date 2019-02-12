@@ -1,7 +1,7 @@
 <script id="tpl_line_list" type="text/x-handlebars-template">
     {{#list}}
     <li class="radiobox type01-big" role="radio" aria-checked="false" aria-disabled="{{isDisabled}}">
-        <input type="radio" name="radio" value="" title="결합 상품 설정" aria-labelledby="aria-comp-radio{{@index}}"><!--웹접근성 수정 -->
+        <input type="radio" name="radio" value="" title="결합 상품 설정" aria-labelledby="aria-comp-radio{{@index}}" data-svc_mgmt_num="{{svcMgmtNum}}"><!--웹접근성 수정 -->
         <div class="comp-list-layout" id="aria-comp-radio{{@index}}" aria-hidden="true">
             <p class="layout-text">
                 <span class="mtext">{{feeProdNm}}</span>

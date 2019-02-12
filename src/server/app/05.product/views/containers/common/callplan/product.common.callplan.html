@@ -77,6 +77,11 @@
 </div>
 </body>
 <% include ../../../components/javascript.component.html %>
-<script>$(function () { new Tw.ProductCommonCallplan($('.wrap'), '<%= prodId %>', '<%= basicInfo.prodTypCd %>',
-  '<%- JSON.stringify(basicInfo.linkBtnList.setting) %>', '<%= lineProcessCase %>', '<%= isPreview ? "Y" : "N" %>'); });</script>
+<script>
+$(function () {
+  new Tw.ProductCommonCallplan($('.wrap'), '<%= prodId %>', '<%= basicInfo.prodTypCd %>',
+    '<%- JSON.stringify(basicInfo.linkBtnList.setting) %>', '<%= lineProcessCase %>',
+    '<%= isPreview ? "Y" : "N" %>', '<%= isAllowJoinCombine ? "Y" : "N" %>');
+});
+</script>
 <% include ../../../components/end.component.html %>
