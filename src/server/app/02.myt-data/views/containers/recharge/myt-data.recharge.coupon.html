@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <% } else { %>
-                <div class="cont-box bgnone pb0">
+                <div class="cont-box bgnone pb0 <%= list.length > 20 ? '' : '.noborder' %>"><!-- 190207 더보기 버튼이 없을 경우에 .cont-box에 .noborder 추가-->
                     <ul class="coupon-list-wrap">
                         <% for (let i = 0; i < (list.length > 20 ? 20 : list.length); i++) { %>
                         <li>
