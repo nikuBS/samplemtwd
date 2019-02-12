@@ -41,7 +41,7 @@ Tw.MyTDataHistory.prototype = {
   _cachedElement: function() {
     this.$list = this.$container.find('ul.comp-box');
     this.$moreBtn = this.$container.find('.bt-more > button');
-    this.$empty = this.$container.find('.contents-empty');
+    this.$empty = this.$container.find('.result-none');
   },
 
   _bindEvent: function() {
