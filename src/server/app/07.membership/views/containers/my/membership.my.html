@@ -69,9 +69,9 @@
                     </div>
                 </div>
                 <ul class="bt-slice item-two mt20">
-                    <li><button id="fe-go-update" data-type="<%= myInfoData.mbrStCd %>" type="button" class="btn-round1 btn-style4">정보 수정</button></li>
+                    <li><button id="fe-go-update" data-type="<%= myInfoData.mbrStCd %>" type="button" class="btn-round1 btn-style4" title="나의 멤버십">정보 수정</button></li>
                     <% if( myInfoData.mbrTypCd === '0' || myInfoData.mbrTypCd === '3' || myInfoData.mbrTypCd === '4' ) { %>
-                    <li><button id="fe-reissue" type="button" class="btn-round1 btn-style4">재발급 신청</button></li>
+                    <li><button id="fe-reissue" type="button" class="btn-round1 btn-style4" title="나의 멤버십">재발급 신청</button></li>
                     <% } %>
                 </ul>
             </div>
@@ -100,7 +100,7 @@
                     <div class="widget">
                         <div class="widget-box toggle">
                             <div class="bt-detail type1">
-                                <span class="tx-title">이용내역<button id="BE_02_tip_01" page-id="M000571" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
+                                <span class="tx-title">이용내역<button id="BE_02_tip_01" page-id="M000571" class="btn-tip" title="이용내역"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
                                 <button id="fe-period" class="bt-toggle date" role="button" aria-pressed="false" title="이용내역 더보기"><!-- 이용기간 날짜 --></button>
                             </div>
                             <div class="toggler">
