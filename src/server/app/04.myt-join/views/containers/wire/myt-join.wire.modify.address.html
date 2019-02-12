@@ -25,7 +25,7 @@
         <div class="header-wrap">
             <div class="page-header">
                 <div class="header-ti">
-                    <h1>설치 장소 변경</h1>
+                    <h1>설치장소 변경</h1>
                 </div>
             </div>
         </div>
@@ -40,7 +40,7 @@
                     <div class="myinfo-wrap">
                         <div class="myinfo-cont">
                             <div class="subtitle">
-                                <span class="name">현재 설치 장소</span>
+                                <span class="name">현재 설치장소</span>
                             </div>
                             <div class="title">
                                 <span><%=resDataInfo.basAddr %></span>
@@ -55,7 +55,7 @@
                 <!--// .cont-box -->
 
                 <div class="ti-caption-gray">
-                    <h3 class="tit">설치 장소 변경 신청</h3>
+                    <h3 class="tit">설치장소 변경 신청</h3>
                 </div>
                 <div class="cont-box">
                     <div class="form-type">
@@ -63,7 +63,7 @@
 
                         <button data-target="select_building" class="bt-dropdown big" title="건물 유형 선택" aria-haspopup="true">유형 선택<span class="ico"></span></button>
 
-                        <h3 class="form-title">변경 설치 장소</h3>
+                        <h3 class="form-title">변경 설치장소</h3>
                         <div class="form-box">
                             <div class="inputbox bt-add bg-white">
                                     <span class="input">
@@ -80,14 +80,16 @@
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                             </div>
+                            <span class="error-txt" style="display: none;" id="fe-err-no-location">변경 설치 장소를 입력해 주세요.</span>
                         </div>
 
                         <h3 class="form-title">이사 날짜</h3>
                         <span class="inputbox">
                             <span class="input">
-                                <input type="date" title="이사 날짜" data-target="select_house_input" placeholder="이사 날짜"/>
+                                <input type="date" title="이사 날짜 선택" data-target="select_house_input" placeholder="이사 날짜"/>
                             </span>
                         </span>
+                        <span class="error-txt" style="display: none;" id="fe-err-no-movdt">날짜를 선택해주세요.</span>
 
                         <!--<h3 class="form-title">중단 희망 날짜</h3>-->
                         <!--<span class="inputbox">-->
@@ -98,10 +100,11 @@
                         <h3 class="form-title"><label for="formInput02">중단 희망 날짜</label></h3>
                         <span class="inputbox">
                                 <span class="input">
-                                    <input type="date" title="중단 희망 날짜" id="formInput02" data-target="select_stop_input" />
+                                    <input type="date" title="중단 희망 날짜 오늘 이후로 선택" id="formInput02" data-target="select_stop_input" />
                                 </span>
                             </span>
                         <p class="sincetoday-txt">오늘 이후 선택 가능 합니다.</p>
+                        <span class="error-txt" style="display: none;" id="fe-err-no-stopdt">날짜를 선택해주세요.</span>
 
                         <!--<h3 class="form-title">설치 희망 날짜<button id="MS_04_04_tip_02" class="tip-view">TIP</button></h3>-->
                         <!--<span class="inputbox">-->
@@ -109,19 +112,20 @@
                         <!--<input type="date" title="설치 희망 날짜" data-target="select_install_input" placeholder="당일 이후로 선택"/>-->
                         <!--</span>-->
                         <!--</span>-->
-                        <h3 class="form-title"><label for="formInput03">설치 희망 날짜</label><button id="MS_04_04_tip_02" class="tip-view">TIP</button></h3>
+                        <h3 class="form-title"><label for="formInput03">설치 희망 날짜</label><button id="MS_04_04_tip_02" class="tip-view" title="설치 희망 날짜 TIP보기" aria-haspopup="true">TIP</button></h3>
                         <span class="inputbox">
                                 <span class="input">
-                                    <input type="date" title="설치 희망 날짜" id="formInput03" data-target="select_install_input" />
+                                    <input type="date" title="설치 희망 날짜 오늘 이후로 선택" id="formInput03" data-target="select_install_input" />
                                 </span>
                             </span>
                         <p class="sincetoday-txt">오늘 이후 선택 가능 합니다.</p>
+                        <span class="error-txt" style="display: none;" id="fe-err-no-instdt">날짜를 선택해주세요.</span>
 
                         <h3 class="form-title">휴대폰 번호</h3>
                         <div class="form-box">
                                 <span class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
                                     <span class="input">
-                                        <input data-target="input_hp" type="tel" name="" title="휴대폰 번호 입력" value=""
+                                        <input data-target="input_hp" type="tel" name="" title="휴대폰 번호 숫자만 입력" value=""
                                                placeholder="숫자만 입력" maxlength="13" />
                                         <button class="cancel" id="btn_hp_del"><span class="blind">삭제</span></button>
                                     </span>
@@ -129,11 +133,11 @@
                             <span class="error-txt" id="spanHpValid"></span>
                         </div>
 
-                        <h3 class="form-title">일반전화 (선택항목)</h3>
+                        <h3 class="form-title">일반전화 (선택)</h3>
                         <div class="form-box">
                                 <span class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
                                     <span class="input">
-                                        <input data-target="input_phone" type="tel" name="" title="일반전화 (선택항목) 입력" value=""
+                                        <input data-target="input_phone" type="tel" name="" title="일반전화(선택) 숫자만 입력" value=""
                                                placeholder="숫자만 입력" maxlength="13" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
@@ -148,10 +152,10 @@
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
                     <ul class="noti-list02">
-                        <li><button id="MS_04_04_tip_01" type="button" class="tip-view-btn">서비스 제한 <span class="tip-view">TIP</span></button></li>
-                        <li><button id="MS_04_04_tip_03" type="button" class="tip-view-btn">설치장소 변경 접수 <span class="tip-view">TIP</span></button></li>
-                        <li><button id="MS_04_04_tip_04" type="button" class="tip-view-btn">서비스 불가지역 <span class="tip-view">TIP</span></button></li>
-                        <li><button id="MS_04_04_tip_05" type="button" class="tip-view-btn">추가비용 <span class="tip-view">TIP</span></button></li>
+                        <li><button id="MS_04_04_tip_01" type="button" class="tip-view-btn" aria-haspopup="true" title="서비스 제한 TIP보기">서비스 제한 <span class="tip-view">TIP</span></button></li>
+                        <li><button id="MS_04_04_tip_03" type="button" class="tip-view-btn" aria-haspopup="true" title="설치장소 변경 접수 TIP보기">설치장소 변경 접수 <span class="tip-view">TIP</span></button></li>
+                        <li><button id="MS_04_04_tip_04" type="button" class="tip-view-btn" aria-haspopup="true" title="서비스 불가지역 TIP보기">서비스 불가지역 <span class="tip-view">TIP</span></button></li>
+                        <li><button id="MS_04_04_tip_05" type="button" class="tip-view-btn" aria-haspopup="true" title="추가비용 TIP보기">추가비용 <span class="tip-view">TIP</span></button></li>
                         <!--<li>서비스 제한 <button id="MS_04_04_tip_01" type="button" class="tip-view">TIP</button></li>-->
                         <!--<li>설치장소 변경 접수 <button id="MS_04_04_tip_03" type="button" class="tip-view">TIP</button></li>-->
                         <!--<li>서비스 불가지역 <button id="MS_04_04_tip_04" type="button" class="tip-view">TIP</button></li>-->

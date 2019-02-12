@@ -58,8 +58,9 @@ Tw.MyTFareBillGuideRoaming.prototype = {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_05_0044, param)
       .done($.proxy(this._getRoamingInfoInit, this, param))
-      .fail(function(){
+      .fail(function(err){
         Tw.CommonHelper.endLoading('.container');
+        Tw.Error(err.status, err.statusText).pop();
       });
   },
   _getRoamingInfoInit: function (param, res) {

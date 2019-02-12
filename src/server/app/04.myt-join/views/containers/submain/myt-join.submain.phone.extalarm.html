@@ -60,7 +60,7 @@
 
                     <ul class="form-data-list mb4">
                         <li>
-                            <label class="tit" for="flab01">연장 및 해지<button id="MS_03_01_03_tip_04" class="tip-view">TIP</button></label>
+                            <label class="tit" for="flab01">연장 및 해지<button id="MS_03_01_03_tip_04" class="tip-view" title="연장 및 해지 TIP보기" aria-haspopup="true">TIP</button></label>
                             <div class="list-comp-input type3">
                                 <div class="widget">
                                     <div class="widget-box radio">
@@ -125,10 +125,10 @@
                                                 </div>
                                             </li>
                                             <li class="radiobox type01 <%= data.notiType === 'N' ? 'checked' : '' %>" role="radio" aria-checked="<%= data.notiType === 'N' ? 'true' : 'false' %>">
-                                                <input type="radio" name="radio" value="N" title="알림없는 자동연결" aria-labelledby="aria-comp-radio3" <%= (data.notiType === 'N' ? 'checked="checked"' : '') %>>
+                                                <input type="radio" name="radio" value="N" title="알림 없는 자동연결" aria-labelledby="aria-comp-radio3" <%= (data.notiType === 'N' ? 'checked="checked"' : '') %>>
                                                 <div class="comp-list-layout" id="aria-comp-radio3" aria-hidden="true">
                                                     <p class="layout-text">
-                                                        <span class="mtext">알림없는 자동연결</span>
+                                                        <span class="mtext">알림 없는 자동연결</span>
                                                         <span class="stext">변경사항을 알리지 않고, 바로 변경된 번호로 연결 됩니다.</span>
                                                     </p>
                                                 </div>
@@ -149,9 +149,9 @@
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
                     <ul class="noti-list02">
-                        <li><button id="MS_03_01_03_tip_01" type="button" class="tip-view-btn">금융기관 알림 안내<span class="tip-view">TIP</span></button></li>
-                        <li><button id="MS_03_01_03_tip_02" type="button" class="tip-view-btn">신청 안내<span class="tip-view">TIP</span></button></li>
-                        <li><button id="MS_03_01_03_tip_03" type="button" class="tip-view-btn">서비스 이용 중 번호변경<span class="tip-view">TIP</span></button></li>
+                        <li><button id="MS_03_01_03_tip_01" type="button" class="tip-view-btn" aria-haspopup="true" title="금융기관 알림 안내 자세히 보기">금융기관 알림 안내<span class="tip-view">TIP</span></button></li>
+                        <li><button id="MS_03_01_03_tip_02" type="button" class="tip-view-btn" aria-haspopup="true" title="신청 안내 자세히 보기">신청 안내<span class="tip-view">TIP</span></button></li>
+                        <li><button id="MS_03_01_03_tip_03" type="button" class="tip-view-btn" aria-haspopup="true" title="서비스 이용 중 번호변경 자세히 보기">서비스 이용 중 번호변경<span class="tip-view">TIP</span></button></li>
                     </ul>
                 </div>
                 <!--// .cont-box -->

@@ -51,8 +51,8 @@
                             <button>가입 변경 신청 현황
                                 <% if ( data.newAndChgCnt && data.newAndChgCnt > 0 ) { %>
                                 <span class="tx-sub">
-                                    <span class="normal"><%= data.newAndChgCnt %>개 신청</span>
-                                    <span class="ico"></span>
+                                    <span class="normal"><%= data.newAndChgCnt %>건</span>
+                                    <span class="ico"><span class="blind">가입변경 신청현황 자세히보기</span></span>
                                 </span>
                                 <% } %>
                             </button>
@@ -64,7 +64,7 @@
                                 <% if ( data.asCnt && data.asCnt > 0 ) { %>
                                 <span class="tx-sub">
                                     <span class="normal"><%= data.asCnt %>건</span>
-                                    <span class="ico"></span>
+                                    <span class="ico"><span class="blind">장애 A/S 신청현황 자세히보기</span></span>
                                 </span>
                                 <% } %>
                             </button>

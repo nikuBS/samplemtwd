@@ -46,6 +46,7 @@
                                 <span class="sub-tit ellipsis">{{ troubleDetail }}</span>
                             </div>
                         </div>
+                        <span class="blind">{{ svcNm }} 자세히 보기</span>
                     </button>
                 </li>
             </script>
@@ -74,7 +75,7 @@
             <script id="no-data-tmplt" type="text/x-handlebars-template">
                 <div class="cont-box nogaps">
                     <div class="contents-empty">
-                        <span class="ico type1"></span>
+                        <span class="ico type1"><span class="blind">느낌표(!)</span></span>
                         <p class="desc">장애 A/S 신청 내역이 없습니다.</p>
                     </div>
                 </div>
@@ -86,8 +87,8 @@
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">꼭 확인해 주세요</h3>
                 <ul class="noti-list02">
-                    <li><button id="MS_04_01_03_tip_01" type="button" class="tip-view-btn">장애 A/S 방문 취소 <span class="tip-view">TIP</span></button></li>
-                    <li><button id="MS_04_01_03_tip_02" type="button" class="tip-view-btn">106을 통해 장애 A/S 신청한 경우 <span class="tip-view">TIP</span></button></li>
+                    <li><button id="MS_04_01_03_tip_01" type="button" class="tip-view-btn" aria-haspopup="true" title="장애 A/S 방문 취소 TIP보기">장애 A/S 방문 취소 <span class="tip-view">TIP</span></button></li>
+                    <li><button id="MS_04_01_03_tip_02" type="button" class="tip-view-btn" aria-haspopup="true" title="106을 통해 장애 A/S 신청한 경우 TIP보기">106을 통해 장애 A/S 신청한 경우 <span class="tip-view">TIP</span></button></li>
                     <!--<li>장애 A/S 방문 취소 <button id="MS_04_01_03_tip_01" type="button" class="tip-view" title="장애 A/S 방문 취소" aria-haspopup="true">TIP</button></li>-->
                     <!--<li>106을 통해 장애 A/S 신청한 경우 <button id="MS_04_01_03_tip_02" type="button" class="tip-view" title="106을 통해 장애 A/S 신청한 경우" aria-haspopup="true">TIP</button></li>-->
                 </ul>

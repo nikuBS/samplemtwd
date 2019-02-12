@@ -40,7 +40,7 @@
                     <div class="myinfo-wrap">
                         <div class="myinfo-cont">
                             <div class="subtitle">
-                                <span class="name">요금상품</span>
+                                <span class="name">요금제</span>
                             </div>
                             <div class="title">
                                 <span><%=svcInfo.prodNm %></span>
@@ -63,26 +63,27 @@
                         <button data-target="select_product" class="bt-dropdown big" title="상품 선택" aria-haspopup="true">상품 선택<span class="ico"></span></button>
                         <span class="error-txt"></span>
 
-                        <h3 class="form-title">요금상품 선택</h3>
-                        <button data-target="select_product_bill" class="bt-dropdown big" title="요금상품 선택" aria-haspopup="true" disabled >요금상품 선택<span class="ico"></span></button>
+                        <h3 class="form-title">요금제 선택</h3>
+                        <button data-target="select_product_bill" class="bt-dropdown big" title="요금제 선택" aria-haspopup="true" disabled >요금제 선택<span class="ico"></span></button>
                         <span class="error-txt"></span>
+
 
                         <h3 class="form-title">휴대폰 번호</h3>
                         <div class="form-box">
                                 <span class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
                                     <span class="input">
-                                        <input data-target="input_hp" type="tel" name="" title="휴대폰 번호 입력" value=""
+                                        <input data-target="input_hp" type="tel" name="" title="휴대폰 번호 숫자만 입력" value=""
                                                placeholder="숫자만 입력" maxlength="13" />
                                         <button class="cancel" id="btn_hp_del"><span class="blind">삭제</span></button>
                                     </span>
                                 </span>
                             <span class="error-txt" id="spanHpValid"></span>
                         </div>
-                        <h3 class="form-title">일반전화 (선택항목)</h3>
+                        <h3 class="form-title">일반전화 (선택)</h3>
                         <div class="form-box">
                                 <span class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
                                     <span class="input">
-                                        <input data-target="input_phone" type="tel" name="" title="일반전화 (선택항목) 입력" value=""
+                                        <input data-target="input_phone" type="tel" name="" title="일반전화(선택) 숫자만 입력" value=""
                                                placeholder="숫자만 입력" maxlength="13" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
@@ -97,11 +98,11 @@
                 <div class="cont-box nogaps-btm">
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
                     <ul class="noti-list02">
-                        <li><button id="MS_04_05_tip_01" type="button" class="tip-view-btn">서비스 제한 <span class="tip-view">TIP</span></button></li>
-                        <li><button id="MS_04_05_tip_02" type="button" class="tip-view-btn">가입상품 변경 <span class="tip-view">TIP</span></button></li>
-                        <li><button id="MS_04_05_tip_03" type="button" class="tip-view-btn">약정기간 <span class="tip-view">TIP</span></button></li>
-                        <li><button id="MS_04_05_tip_04" type="button" class="tip-view-btn">서비스 이용불가 <span class="tip-view">TIP</span></button></li>
-                        <li><button id="MS_04_05_tip_05" type="button" class="tip-view-btn">세트상품 <span class="tip-view">TIP</span></button></li>
+                        <li><button id="MS_04_05_tip_01" type="button" class="tip-view-btn" title="서비스 제한 TIP보기" aria-haspopup="true">서비스 제한 <span class="tip-view">TIP</span></button></li>
+                        <li><button id="MS_04_05_tip_02" type="button" class="tip-view-btn" title="가입상품 변경 TIP보기" aria-haspopup="true">가입상품 변경 <span class="tip-view">TIP</span></button></li>
+                        <li><button id="MS_04_05_tip_03" type="button" class="tip-view-btn" title="약정기간 TIP보기" aria-haspopup="true">약정기간 <span class="tip-view">TIP</span></button></li>
+                        <li><button id="MS_04_05_tip_04" type="button" class="tip-view-btn" title="서비스 이용불가 TIP보기" aria-haspopup="true">서비스 이용불가 <span class="tip-view">TIP</span></button></li>
+                        <li><button id="MS_04_05_tip_05" type="button" class="tip-view-btn" title="세트상품 TIP보기" aria-haspopup="true">세트상품 <span class="tip-view">TIP</span></button></li>
                         <!--<li>서비스 제한 <button id="MS_04_05_tip_01" type="button" class="tip-view">TIP</button></li>-->
                         <!--<li>가입상품 변경 <button id="MS_04_05_tip_02" type="button" class="tip-view">TIP</button></li>-->
                         <!--<li>약정기간 <button id="MS_04_05_tip_03" type="button" class="tip-view">TIP</button></li>-->
