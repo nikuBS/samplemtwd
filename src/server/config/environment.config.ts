@@ -29,9 +29,9 @@ const environment = {
     }
   },
   dev: {
-    BFF_SERVER: 'http://bff-spring',
+    BFF_SERVER: 'http://bff-spring-mobile',
     // BFF_SERVER: 'http://211.188.180.73:31309',
-    BFF_SERVER_G: 'http://bff-spring-g',
+    BFF_SERVER_G: 'http://bff-spring-mobile-g',
     CDN: 'https://cdnm-dev.tworld.co.kr',
     SHORTCUT: 'skt.sh',
     REDIS: {
@@ -57,9 +57,9 @@ const environment = {
     }
   },
   stg: {
-    BFF_SERVER: 'http://bff-spring',
+    BFF_SERVER: 'http://bff-spring-mobile',
     // BFF_SERVER: 'http://211.188.180.73:31309',
-    BFF_SERVER_G: 'http://bff-spring-g',
+    BFF_SERVER_G: 'http://bff-spring-mobile-g',
     CDN: 'https://cdnm-stg.tworld.co.kr',
     SHORTCUT: 'skt.sh',
     REDIS: {
@@ -85,8 +85,8 @@ const environment = {
     }
   },
   prd: {
-    BFF_SERVER: 'http://bff-spring',
-    BFF_SERVER_G: 'http://bff-spring-g',
+    BFF_SERVER: 'http://bff-spring-mobile',
+    BFF_SERVER_G: 'http://bff-spring-mobile-g',
     CDN: 'https://cdnm.tworld.co.kr',
     SHORTCUT: 'skt.sh',
     REDIS: {
