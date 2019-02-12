@@ -231,7 +231,24 @@ Tw.CustomerEmailServiceOption.prototype = {
   },
 
   _selectDevicePopupCallback: function ($target, $layer) {
+    var nMaxList = 20;
+    if ( $layer.find('li').size() > nMaxList ) {
+      $layer.find('li').slice(nMaxList).hide();
+      $layer.find('.btn-more').show();
+      $layer.on('click', '.btn-more', $.proxy(this._onShowMoreDevice, this, $layer));
+    }
+
     $layer.on('click', '[data-phoneid]', $.proxy(this._setSelectedDevice, this, $target));
+  },
+
+  _onShowMoreDevice: function ($layer) {
+    if ( $layer.find('li').not(':visible').size() !== 0 ) {
+      $layer.find('li').not(':visible').slice(0, 20).show();
+    }
+
+    if ( $layer.find('li').not(':visible').size() === 0 ) {
+      $layer.find('.btn-more').hide();
+    }
   },
 
   _setSelectedBrand: function ($target, el) {
