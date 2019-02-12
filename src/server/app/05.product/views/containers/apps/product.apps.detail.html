@@ -18,7 +18,7 @@
     <!--// #skip_navigation -->
     <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <!-- #header -->
-        <%- include('../../../common/views/components/header.component.html', { title: 'T앱', svcInfo: svcInfo }); %>
+        <%- include('../../../common/views/components/header.component.html', { title: '', svcInfo: svcInfo }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
@@ -76,27 +76,29 @@
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <!-- .cont-box -->
                 <div class="cont-box nogaps">
-                    <h3>함께하면 더욱 좋은 앱</h3>
-                    <!-- .widget -->
-                    <div class="widget"> 
-                        <div class="widget-box horizontal">
-                            <div class="horizontal-slide">
-                                <ul class="horizontal-list">
-                                    <% apps.map(app => { %>
-                                        <li>
-                                            <div>
-                                                <a class="bt" href="/product/apps/app?appId=<%= app.prodId %>">
-                                                    <img src="<%= app.appIconImgUrl %>" alt="<%= app.prodNm %>">
-                                                    <span><%= app.prodNm %></span>
-                                                </a>
-                                            </div>
-                                        </li>
-                                    <% }); %>
-                                </ul>
+                    <div class="smart-app-new">
+                        <h3>함께하면 더욱 좋은 앱</h3>
+                        <!-- .widget -->
+                        <div class="widget"> 
+                            <div class="widget-box horizontal">
+                                <div class="horizontal-slide">
+                                    <ul class="horizontal-list">
+                                        <% apps.map(app => { %>
+                                            <li>
+                                                <div>
+                                                    <a class="bt" href="/product/apps/app?appId=<%= app.prodId %>">
+                                                        <img src="<%= app.appIconImgUrl %>" alt="<%= app.prodNm %>">
+                                                        <span><%= app.prodNm %></span>
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        <% }); %>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
+                        <!-- .widget -->
                     </div>
-                    <!-- .widget -->
                 </div>
                 <% } %>
                 <!-- // .cont-box -->
