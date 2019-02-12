@@ -58,6 +58,18 @@
             $('.idpt-popup').hide();
         });
 
+        // radiobox
+        /*
+        $("input:radio[name='call']").change(function(){
+        	if ($('#call01').prop("checked", true)) {
+        		$('.call-cont01').addClass('show');
+
+        	} else {
+        		$('.call-cont01').removeClass('show');
+        		$('.call-cont02').addClass('show');
+        	}
+        });
+        */
         $('input[type=radio][name=call]').on('click', function () {
             var chkValue = $('input[type=radio][name=call]:checked').val();
             if (chkValue == '1') {
@@ -80,14 +92,29 @@
             }
         });
 
+        // tooltip popup
+        /*
+        $('.info-tooltip').each(function(){
+        	$('.btn-tooltip-open').on('click', function(){
+        		var remStandard = $('body').css('font-size').replace('px','');
+        		var btnLeft = $(this).offset().left - 28;
+        		var btnRem = btnLeft/remStandard
+        		$('.idpt-tooltip-layer').css('left', btnRem + 'rem');
+        		$(this).next('div').show();
+        	});
+        });
+        $('.btn-tooltip-close').on('click', function(){
+        	$('.idpt-tooltip-layer').hide();
+        });
+        */
         $('.btn-tooltip-open').click(function () {
             var toolpopId = $(this).attr('href');
             $('.popup-info').removeClass('show');
             $(toolpopId).addClass('show');
-            $('.tooltip-popup').show();
+            $('.idpt-tooltip-popup').show();
         });
         $('.btn_confirm').click(function () {
-            $('.tooltip-popup').hide();
+            $('.idpt-tooltip-popup').hide();
         });
 
         //accordian
@@ -106,6 +133,13 @@
                 $(this).toggleClass('open').next('.idpt-toggle-cont').slideToggle();
             })
         });
+
+        $('.idpt-tab-wrap .tab-menu > li').click(function () {
+            var i = $(this).index();
+            $('.idpt-tab-wrap .tab-menu li').removeClass('on').eq(i).addClass('on');
+            $('.idpt-tab-wrap .tab-contents').removeClass('show').eq(i).addClass('show');
+        });
+
 
         $('.fe-link-external').on('click', function (e) {
             var url = $(e.currentTarget).attr('href');
