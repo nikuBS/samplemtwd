@@ -290,6 +290,7 @@ Tw.MembershipSubmain.prototype = {
     this._mbrGrStr = this._membershipData.mbrGrStr;
     this._mbrGrCd = this._membershipData.mbrGrCd;
     this._usedAmt = this._membershipData.showUsedAmount;
+    this._showCardNum = this._membershipData.showCardNum;
 
     this._popupService.open({
       hbs: 'HO_01_01_02',
@@ -298,6 +299,7 @@ Tw.MembershipSubmain.prototype = {
         mbrGr: this._mbrGrStr.toLowerCase(),
         mbrGrStr: this._mbrGrStr,
         cardNum: cardNum,
+        showCardNum: this._showCardNum,
         usedAmount: this._usedAmt
       }
     }, $.proxy(this._onOpenBarcode, this, cardNum));
@@ -307,7 +309,11 @@ Tw.MembershipSubmain.prototype = {
   _onOpenBarcode: function (cardNum, $popupContainer) {
     var membershipBarcode = $popupContainer.find('#fe-membership-barcode-extend');
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
-      membershipBarcode.JsBarcode(cardNum, {height:75, margin:0});
+      membershipBarcode.JsBarcode(cardNum, {
+        height: 60,
+        margin: 0,
+        displayValue: false
+      });
     }
     if ( !Tw.FormatHelper.isEmpty(this._membershipPopupBanner) ) {
       new Tw.BannerService($popupContainer, this._membershipPopupBanner.type, this._membershipPopupBanner.list, '7');
