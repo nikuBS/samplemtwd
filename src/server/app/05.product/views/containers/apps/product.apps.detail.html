@@ -2,7 +2,7 @@
 * FileName: product.apps.detail.html
 * Author: Jiyoung Jo (jiyoungjo@sk.com)
 * Date: 2018.11.20
-* id: 
+* id: TA_01
 %>
 
 <% include ../../components/start.component.html %>
@@ -42,7 +42,7 @@
                         <div class="widget"> 
                             <div class="widget-box horizontal">
                                 <div class="horizontal-slide">
-                                    <ul class="horizontal-list screen-img-box" id="fe-images">
+                                    <ul class="horizontal-list screen-img-box" id="fe-images" aria-haspopup="true">
                                         <% app.images.map(image => { %>
                                         <li>
                                             <div class="item"><img src="<%= image %>" alt="" class="thum" /></div>
