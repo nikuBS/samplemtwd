@@ -249,7 +249,7 @@
                     <button class="num fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.addr %></button>
                     <strong class="user">반갑습니다, <%= svcInfo.mbrNm %> 고객님.</strong>
 
-                    <button class="price">
+                    <button id="fe-bt-link-billguide" class="price">
                         <% if (homeData.billData.type2) { %>
                         <strong class="ti"><%= homeData.billData.invMonth %>월 청구요금</strong>
                         <% } else if (homeData.billData.type1) { %>
