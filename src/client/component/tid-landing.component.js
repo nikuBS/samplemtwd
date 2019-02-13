@@ -36,14 +36,17 @@ Tw.TidLandingComponent.prototype = {
     }
   },
   goActionSheetLogin: function (target) {
-    this._apiService.request(Tw.NODE_CMD.SESSION, {})
-      .done($.proxy(this._onSuccessSession, this, target));
+    this._generateSession(target, Tw.NTV_LOGINTYPE.ACTION_SHEET);
   },
-  _onSuccessSession: function (target, resp) {
+  _generateSession: function (target, loginType) {
+    this._apiService.request(Tw.NODE_CMD.SESSION, {})
+      .done($.proxy(this._onSuccessSession, this, target, loginType));
+  },
+  _onSuccessSession: function (target, loginType, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._apiService.sendNativeSession('');
       this._nativeService.send(Tw.NTV_CMD.LOGIN, {
-        type: '1'
+        type: loginType
       }, $.proxy(this._onNativeLogin, this, target));
     }
   },
@@ -52,8 +55,12 @@ Tw.TidLandingComponent.prototype = {
   },
   _onClickReplaceLogin: function (target) {
     target = target || '/main/home';
-    this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login?target=' + encodeURIComponent(target) + '&type=reload',
-      $.proxy(this._onNativeLogin, this, target));
+    if ( Tw.BrowserHelper.isApp() && Tw.FormatHelper.isEmpty(Tw.CommonHelper.getCookie('TWM')) ) {
+      this._generateSession(target, Tw.NTV_LOGINTYPE.DEFAULT);
+    } else {
+      this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login?target=' + encodeURIComponent(target) + '&type=reload',
+        $.proxy(this._onNativeLogin, this, target));
+    }
   },
   _onClickLogout: function () {
     this.goLogout();
@@ -63,7 +70,11 @@ Tw.TidLandingComponent.prototype = {
   },
   goLogin: function (target) {
     target = target || '/main/home';
-    this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login?target=' + encodeURIComponent(target), $.proxy(this._onNativeLogin, this, target));
+    if ( Tw.BrowserHelper.isApp() && Tw.FormatHelper.isEmpty(Tw.CommonHelper.getCookie('TWM')) ) {
+      this._generateSession(target, Tw.NTV_LOGINTYPE.DEFAULT);
+    } else {
+      this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login?target=' + encodeURIComponent(target), $.proxy(this._onNativeLogin, this, target));
+    }
   },
   goSLogin: function () {
     if ( Tw.BrowserHelper.isApp() ) {
@@ -123,7 +134,7 @@ Tw.TidLandingComponent.prototype = {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._successLogin(target, resp.params);
     } else {
-      this._historyService.replaceURL('/common/member/login/fail?errorCode='+ resp.resultCode + '&target=' + encodeURIComponent(target));
+      this._historyService.replaceURL('/common/member/login/fail?errorCode=' + resp.resultCode + '&target=' + encodeURIComponent(target));
     }
 
     // if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {

@@ -71,6 +71,11 @@ Tw.NTV_LOG_T = {
   DEBUG: 1
 };
 
+Tw.NTV_LOGINTYPE = {
+  DEFAULT: 0,
+  ACTION_SHEET: 1
+};
+
 Tw.NTV_STORAGE = {
   MOST_RECENT_PUSH_SEQ: 'mostRecentPushSeq',
   LAST_READ_PUSH_SEQ: 'lastReadPushSeq',

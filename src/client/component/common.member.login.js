@@ -16,6 +16,7 @@ Tw.CommonMemberLogin.prototype = {
     CANCEL: 1500
   },
   _init: function (target) {
+    this._apiService.sendNativeSession('');
     this._goLoad(Tw.NTV_CMD.LOGIN, '/common/tid/login?target=' + encodeURIComponent(target) + '&type=reload', $.proxy(this._onNativeLogin, this, target));
   },
   _goLoad: function (nativeCommand, url, callback) {
@@ -27,11 +28,17 @@ Tw.CommonMemberLogin.prototype = {
   },
   _onNativeLogin: function (target, resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
-      this._apiService.request(Tw.NODE_CMD.LOGIN_TID, resp.params)
-        .done($.proxy(this._successLogin, this, target));
+      this._successLogin(target, resp.params);
     } else {
       this._historyService.goBack();
     }
+
+    // if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
+    //   this._apiService.request(Tw.NODE_CMD.LOGIN_TID, resp.params)
+    //     .done($.proxy(this._successLogin, this, target));
+    // } else {
+    //   this._historyService.goBack();
+    // }
   },
   _successLogin: function (target, resp) {
     Tw.Logger.info('[Login Resp]', resp);
@@ -55,5 +62,17 @@ Tw.CommonMemberLogin.prototype = {
     } else {
       this._historyService.replaceURL(target);
     }
-  }
+  },
+  _generateSession: function (target, loginType) {
+    this._apiService.request(Tw.NODE_CMD.SESSION, {})
+      .done($.proxy(this._onSuccessSession, this, target, loginType));
+  },
+  _onSuccessSession: function (target, loginType, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._apiService.sendNativeSession('');
+      this._nativeService.send(Tw.NTV_CMD.LOGIN, {
+        type: loginType
+      }, $.proxy(this._onNativeLogin, this, target));
+    }
+  },
 };
