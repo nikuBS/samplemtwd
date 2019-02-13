@@ -29,8 +29,10 @@ Tw.CommonMemberLogin.prototype = {
   _onNativeLogin: function (target, resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._successLogin(target, resp.params);
-    } else {
+    } else if ( resp.resultCode === Tw.NTV_CODE.CODE_1500 ) {
       this._historyService.goBack();
+    } else {
+      this._historyService.replaceURL('/common/member/login/fail?errorCode=' + resp.code + '&target=' + encodeURIComponent(target));
     }
 
     // if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
@@ -74,5 +76,5 @@ Tw.CommonMemberLogin.prototype = {
         type: loginType
       }, $.proxy(this._onNativeLogin, this, target));
     }
-  },
+  }
 };
