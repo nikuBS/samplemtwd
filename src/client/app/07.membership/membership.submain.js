@@ -220,7 +220,6 @@ Tw.MembershipSubmain.prototype = {
     }
   },
   _askCurrentLocation: function() {
-    Tw.Logger.info('askcurrentLocation Tw.BrowserHelper.isApp() : ' + Tw.BrowserHelper.isApp());
     if (Tw.BrowserHelper.isApp()) {
       this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function (res) {
         if (res.resultCode !== Tw.NTV_CODE.CODE_00 ) {
