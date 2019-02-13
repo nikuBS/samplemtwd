@@ -147,6 +147,9 @@ class FormatHelper {
       formatted.push({ data: min, unit: VOICE_UNIT.MIN });
     }
     const sec = data - (hours * 3600) - (min * 60);
+    if (hours > 0) {
+      return formatted;
+    }
     if ( sec !== 0 || hours + min <= 0 ) {
       formatted.push({ data: sec, unit: sec > 0 ? VOICE_UNIT.SEC : VOICE_UNIT.MIN });
     }
