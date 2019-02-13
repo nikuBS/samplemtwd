@@ -19,7 +19,7 @@ Tw.MembershipSubmain = function(rootEl, membershipData, svcInfo, membershipCheck
   this._cachedElement();
   this._bindEvent();
   this._getMembershipBanner();
-  this._checkCurrentLocation();
+  this._askCurrentLocation();
 };
 
 Tw.MembershipSubmain.prototype = {
@@ -49,7 +49,7 @@ Tw.MembershipSubmain.prototype = {
     this.$container.on('click', '.coalition-brand-list .map', $.proxy(this._getBrandDetailInfo, this));
     this.$container.on('click', '#fe-membership-join', $.proxy( this._membershipLayerPopup.onClickJoinBtn, this._membershipLayerPopup));
     this.$container.on('click', '.fe-mebership-my', $.proxy(this._goMyMembership, this));
-    this.$container.on('click', '.fe-membership-location', $.proxy(this._showAgreementPopup, this));
+    this.$container.on('click', '.fe-membership-location', $.proxy(this._checkLocationAgreement, this));
   },
   _checkLocationAgreement:function () {
     this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
@@ -57,7 +57,7 @@ Tw.MembershipSubmain.prototype = {
         if (res.code === Tw.API_CODE.CODE_00) {
           Tw.Logger.info('check loc agreement : ', res);
           if (res.result.twdLocUseAgreeYn === 'Y') {
-            this._checkCurrentLocation();
+            this._askCurrentLocation();
           } else {
             this._showAgreementPopup();
           }
@@ -88,7 +88,7 @@ Tw.MembershipSubmain.prototype = {
             this._apiService.request(Tw.API_CMD.BFF_03_0022, data)
                 .done($.proxy(function (res) {
                   if (res.code === Tw.API_CODE.CODE_00) {
-                    this._checkCurrentLocation();
+                    this._askCurrentLocation();
                   } else {
                     Tw.Error(res.code, res.msg).pop();
                   }
@@ -222,9 +222,11 @@ Tw.MembershipSubmain.prototype = {
   _askCurrentLocation: function() {
     if (Tw.BrowserHelper.isApp()) {
       this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function (res) {
-        if (res.resultCode === 401) {
-          this._historyService.goBack();
-          return;
+        if (res.resultCode !== Tw.NTV_CODE.CODE_00 ) {
+          this._getAreaByGeo({
+            mapX: '37.5600420',
+            mapY: '126.9858500'
+          });
         } else {
           this._getAreaByGeo(res.params);
         }
