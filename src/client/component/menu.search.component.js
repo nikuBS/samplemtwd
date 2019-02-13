@@ -28,6 +28,17 @@ Tw.MenuSearchComponent.prototype = {
   },
 
   _onMenuRcmd: function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      var $area = this.$container.find('.popularsearchword-list');
+      var result = res.result.rcmndMenus;
+      for (var i = 0; i < result.length; i += 1) {
+        $area.append(this._compileTplForRecommendationItem(result[i].menuUrl, result[i].menuNm));
+      }
+    }
+  },
+  _compileTplForRecommendationItem: function (href, title) {
+    return '<li><a class="category-type" href="' + href + '"><span class="text">' +
+      title + '</span></a></li>';
   },
   _cancelSearch: function () {
     this.$searchInput.val('');
