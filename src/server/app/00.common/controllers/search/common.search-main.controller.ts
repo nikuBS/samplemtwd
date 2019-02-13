@@ -1,5 +1,5 @@
 /**
- * FileName: common.search.in_result.controller.ts
+ * FileName: common.search.in-result.controller.ts
  * Author: Hyunkuk Lee (max5500@pineone.com)
  * Date: 2018.12.11
  */
@@ -17,20 +17,21 @@ class CommonSearchMain extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    /*const nowOsType = BrowserHelper.isApp(req) ? BrowserHelper.isAndroid(req) ? 'A' : 'I' : 'X';*/
-    const nowOsType = 'A';
+    const nowOsType = BrowserHelper.isApp(req) ? BrowserHelper.isAndroid(req) ? 'A' : 'I' : 'X';
     const step = req.query.step || 1;
     Observable.combineLatest(
       this.apiService.request(API_CMD.POPULAR_KEYWORD, { range : 'D'}, {}),
-      this.apiService.request(API_CMD.BFF_12_0010, { mblOsTypCd : nowOsType }, {}),
-      this.apiService.request(API_CMD.BFF_08_0072, { mblOsTypCd : nowOsType }, {})
+      this.apiService.request(API_CMD.BFF_08_0068, { mblOsTypCd : nowOsType }, {}),
+      this.apiService.request(API_CMD.BFF_08_0069, { mblOsTypCd : nowOsType }, {})
     ).subscribe(([ popularKeyword, recommendKeyword , smartKeyword]) => {
-      if (popularKeyword.code !== 0 || recommendKeyword.code !== API_CODE.CODE_00) {
+      if (popularKeyword.code !== 0 || recommendKeyword.code !== API_CODE.CODE_00 || smartKeyword.code !== API_CODE.CODE_00 ) {
         return this.error.render(res, {
           svcInfo: svcInfo,
+          code: popularKeyword.code !== 0 ? popularKeyword.code : recommendKeyword.code !== API_CODE.CODE_00 ? recommendKeyword.code : smartKeyword.code,
+          msg: popularKeyword.code !== 0 ? popularKeyword.msg : recommendKeyword.code !== API_CODE.CODE_00 ? recommendKeyword.msg : smartKeyword.msg
         });
       }
-      res.render('search/common.search_main.html', {
+      res.render('search/common.search-main.html', {
         svcInfo : svcInfo,
         popularKeyword : popularKeyword,
         recommendKeyword : recommendKeyword.result,

@@ -149,7 +149,7 @@
                     {{#isNaN listData.BAS_FEE_INFO }}
                     <span class="money">{{listData.BAS_FEE_INFO}}</span>
                     {{else}}
-                    월<span class="money">{{currencyComma listData.BAS_FEE_INFO}}</span>원
+                    <span class="money">{{currencyComma listData.BAS_FEE_INFO}}</span>원
                     {{/isNaN}}
                 </p>
             </div>
@@ -258,7 +258,7 @@
 
 <script id="notice_template" type="text/x-handlebars-template">
     <li>
-        <a class="b-cont notice-element list-data" href="/customer/svc-info/notice/view?ntcId={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="notice" data-tit="{{removeTag listData.NTC_TIT_NM}}">
+        <a class="b-cont notice-element list-data" href="/customer/svc-info/notice/view?ntcId={{removeNaN listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="notice" data-tit="{{removeTag listData.NTC_TIT_NM}}">
             {{{listData.NTC_TIT_NM}}}
         </a>
     </li>
