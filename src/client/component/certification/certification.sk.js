@@ -164,8 +164,7 @@ Tw.CertificationSk.prototype = {
         sLogin: this._svcInfo.loginType === Tw.AUTH_LOGIN_TYPE.EASY,
         masking: this._authKind === Tw.AUTH_CERTIFICATION_KIND.A,
         svcNum: this._svcInfo.svcNum,
-        enableKeyin: this._enableKeyin,
-        securityAuth: this._securityAuth
+        enableKeyin: this._enableKeyin
       }
     }, $.proxy(this._onOpenSmsOnly, this), $.proxy(this._onCloseSmsOnly, this), 'cert-sms');
   },
@@ -260,9 +259,9 @@ Tw.CertificationSk.prototype = {
       this.$inputMdn.val(this._svcInfo.svcNum);
       this.$inputMdn.parents('#fe-inputbox-mdn').addClass('readonly');
       this.$btCert.parent().addClass('none');
-      if ( !this._securityAuth ) {
-        this.$btReCert.parent().removeClass('none');
-      }
+      // if ( !this._securityAuth ) {
+      //   this.$btReCert.parent().removeClass('none');
+      // }
     }
   },
   _checkCertType: function () {
@@ -326,7 +325,7 @@ Tw.CertificationSk.prototype = {
       this._seqNo = resp.result.seqNo;
       this._clearCertError();
       this.$validCert.removeClass('none');
-      if ( !reCert && !this._securityAuth ) {
+      if ( !reCert ) {
         this.$btReCert.parent().addClass('none');
         this.$btCert.parent().addClass('none');
         this.$btCertAdd.parent().removeClass('none');
