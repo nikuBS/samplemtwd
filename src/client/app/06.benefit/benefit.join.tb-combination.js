@@ -15,7 +15,7 @@ Tw.BenefitJoinTbCombination = function(rootEl, prodId, prodNm) {
   this._svcMgmtNum = null;
   this._wireSvcMgmtNum = null;
   this._template = Handlebars.compile($('#tpl_line_list').html());
-  this._isAuthLine = false;
+  this._isNotRegisterLine = false;
 
   this._cachedElement();
   this._bindEvent();
@@ -110,7 +110,7 @@ Tw.BenefitJoinTbCombination.prototype = {
 
     skt_landing.widgets.widget_init('.fe-line_list');
 
-    this._isAuthLine = useLineInfo.needCertifyYn === 'Y';
+    this._isNotRegisterLine = useLineInfo.needCertifyYn === 'Y';
     this._setDisabledUseList();
     this._setResultText(useLineInfo);
     this._toggleSetupButton(false);
@@ -282,9 +282,9 @@ Tw.BenefitJoinTbCombination.prototype = {
       btList: [{ link: '/myt-join/combinations', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.COMBINE }]
     };
 
-    if (this._isAuthLine) {
-      successData.basicTxt = Tw.BENEFIT_TBCOMBINE_NEED_AUTH;
-      successData.btList.push({ btClass: 'fe-btn_cert', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.GO_AUTH });
+    if (this._isNotRegisterLine) {
+      successData.basicTxt = Tw.BENEFIT_TBCOMBINE_NEED_REGISTER;
+      successData.btList.push({ link: '/common/member/line/register', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.LINE_REGISTER });
     }
 
     this._popupService.open({
@@ -295,7 +295,6 @@ Tw.BenefitJoinTbCombination.prototype = {
 
   _bindJoinResPopup: function($popupContainer) {
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
-    $popupContainer.on('click', '.fe-btn_cert', $.proxy(this._doCert, this));
   },
 
   _closeAndGo: function(e) {
@@ -307,10 +306,6 @@ Tw.BenefitJoinTbCombination.prototype = {
 
   _onClosePop: function() {
     this._historyService.goBack();
-  },
-
-  _doCert: function() {
-    // @todo 인증받기 버튼 클릭시, 인증 완료 후 동작 정의 필요
   }
 
 };

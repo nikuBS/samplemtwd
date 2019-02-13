@@ -26,7 +26,7 @@ class ProductMobileplanAddJoinTFamily extends TwViewController {
       renderCommonInfo = {
         pageInfo: pageInfo,
         svcInfo: Object.assign(svcInfo, {
-          svcNum: FormatHelper.conTelFormatWithDash(svcInfo.svcNum)
+          svcNumDash: FormatHelper.conTelFormatWithDash(svcInfo.svcNum)
         }),
         title: PRODUCT_TYPE_NM.JOIN
       };
@@ -36,10 +36,10 @@ class ProductMobileplanAddJoinTFamily extends TwViewController {
     }
 
     Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, [prodId]),
+      this.apiService.request(API_CMD.BFF_10_0171, {}, {}, []),
       this.apiService.request(API_CMD.BFF_10_0017, { joinTermCd: '01' }, {}, [prodId])
-    ).subscribe(([ basicInfo, joinTermInfo ]) => {
-      const apiError = this.error.apiError([basicInfo, joinTermInfo]);
+    ).subscribe(([ preInfo, joinTermInfo ]) => {
+      const apiError = this.error.apiError([preInfo, joinTermInfo]);
 
       if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, Object.assign(renderCommonInfo, {
@@ -51,8 +51,9 @@ class ProductMobileplanAddJoinTFamily extends TwViewController {
 
       res.render('mobileplan-add/join/product.mobileplan-add.join.t-family.html', Object.assign(renderCommonInfo, {
         prodId: prodId,
-        isApp: BrowserHelper.isApp(req),
-        basicInfo: basicInfo.result,
+        preInfo: Object.assign(preInfo.result, {
+          groupRepYn: FormatHelper.isEmpty(preInfo.result.groupRepYn) ? 'N' : preInfo.result.groupRepYn
+        }),
         joinTermInfo: ProductHelper.convAdditionsJoinTermInfo(joinTermInfo.result)
       }));
     });
