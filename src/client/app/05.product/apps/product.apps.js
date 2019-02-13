@@ -96,7 +96,10 @@ Tw.ProductApps.prototype = {
       installedList,
       function(apps, app) {
         var key = Object.keys(app)[0];
-        apps[key] = app[key];
+        if (app[key]) {
+          apps[key] = app[key];
+        }
+
         return apps;
       },
       {}
@@ -110,7 +113,7 @@ Tw.ProductApps.prototype = {
       return app;
     });
 
-    if (installedList.length === 0) {
+    if (Tw.FormatHelper.isEmpty(list)) {
       this.$container.find('div.app-list-top').addClass('none');
     }
 
