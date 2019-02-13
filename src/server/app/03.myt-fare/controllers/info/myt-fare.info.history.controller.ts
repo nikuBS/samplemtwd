@@ -461,6 +461,7 @@ class MyTFareInfoHistory extends TwViewController {
 
     data.mergedListData = data.mergedListData.reduce((prev, cur, index) => {
       cur.listId = index;
+      cur.ariaIdx = index < 9 ? '0' + (index + 1) : index + 1; // 웹접근성 수정 중 aria-labelledby 속성위해 추가 19.2.13
       cur.listDt = cur.dataDt.slice(5);
 
       if (prev.length) {

@@ -103,7 +103,7 @@
             {{#if noLink}}
             <div class="inner">
             {{else}}
-            <div class="inner" data-list-id="{{listId}}">
+            <div class="inner" data-list-id="{{listId}}" id="aria-rest-cont{{ariaIdx}}">
             {{/if}}
                 <div class="txt-area">
                     <span class="tit">{{#if dataSubInfo2}}[{{dataSubInfo2}}]{{/if}} {{listTitle}}</span>
@@ -126,7 +126,7 @@
                     {{/if}}
                 </div>
             </div>
-            {{#if noLink}}{{else}}<button class="btn" data-list-id="{{listId}}">상세보기</button>{{/if}}
+            {{#if noLink}}{{else}}<button class="btn" data-list-id="{{listId}}" aria-labelledby="aria-rest-cont{{ariaIdx}}">상세보기</button>{{/if}}
         {{/each}}
     </script>
     <script id="fe-template-day" type="text/x-handlebars-template">
