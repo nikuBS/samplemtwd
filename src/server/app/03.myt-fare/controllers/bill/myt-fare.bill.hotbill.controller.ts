@@ -27,23 +27,25 @@ class MyTFareBillHotbill extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, childInfo?: any, pageInfo?: any) {
     this._svcInfo = svcInfo;
+    this._isPrev = req.url.endsWith('/prev');
+
     if ( !req.query.child && new Date().getDate() > 7 ) { // 전월요금 7일까지 보이기
       this._preBillAvailable = false;
     }
-    // 2일부터 조회 가능
-    if ( new Date().getDate() === 1 ) {
+    // 당월 요금은 2일부터 조회 가능(매월 1일은 안내 매세지 출력)
+    if ( new Date().getDate() === 1 && !this._isPrev) {
       res.render('bill/myt-fare.bill.hotbill.html', {
         svcInfo,
         pageInfo,
         lines: [],
         billAvailable: false,
         title: MYT_FARE_HOTBILL_TITLE.MAIN,
-        preBill: false
+        preBillAvailable: this._preBillAvailable,
+        isPrev:  this._isPrev
       });
     } else {
+      // 자녀 or 본인 전월 실시간 요금
       const svcs = this._getServiceInfo(svcInfo, childInfo, allSvc);
-      // let preAmount = '0';
-      this._isPrev = req.url.endsWith('/prev');
       if ( !this._isPrev && !req.query.child && svcs && svcs.length > 0 ) {
         // let preBill: any;
         Observable.from(svcs)
@@ -69,31 +71,33 @@ class MyTFareBillHotbill extends TwViewController {
               pageInfo,
               lines: svcs,
               billAvailable: true,
-              preBill: this._preBillAvailable,
-              title: MYT_FARE_HOTBILL_TITLE.MAIN
+              preBillAvailable: this._preBillAvailable,
+              title: MYT_FARE_HOTBILL_TITLE.MAIN,
+              isPrev:  this._isPrev
             });
           });
       } else {
+        // 본인 당월 실시간 요금
         const options = {
           svcInfo,
           pageInfo,
           lines: [],
-          billAvailable: true
+          billAvailable: true,
+          isPrev:  this._isPrev
         };
 
         if ( this._isPrev ) {
-          options['isPrev'] = 'true';
           options['title'] = MYT_FARE_HOTBILL_TITLE.PREV;
-          options['preBill'] =  false;
+          options['preBillAvailable'] =  false;
         } else if ( req.query.child ) {
           const child = childInfo.find(svc => svc.svcMgmtNum === req.query.child);
           options['title'] = MYT_FARE_HOTBILL_TITLE.CHILD;
           options['child'] = StringHelper.phoneStringToDash(child.svcNum);
           options['childProdNm'] = StringHelper.phoneStringToDash(child.prodNm);
-          options['preBill'] =  false;
+          options['preBillAvailable'] =  false;
         } else {
           options['title'] = MYT_FARE_HOTBILL_TITLE.MAIN;
-          options['preBill'] =  this._preBillAvailable;
+          options['preBillAvailable'] =  this._preBillAvailable;
         }
         res.render('bill/myt-fare.bill.hotbill.html', options);
       }

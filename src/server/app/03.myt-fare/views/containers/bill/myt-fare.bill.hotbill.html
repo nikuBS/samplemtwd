@@ -24,7 +24,8 @@
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <div class="container">
-            <hr class="ti-caption-gray" aria-hidden="true"/>
+            <% if(!isPrev) { %>
+            <hr class="cont-sp type1" aria-hidden="true"/>
 
             <div class="cont-box nogaps">
                 <div class="calling-plan">
@@ -39,6 +40,7 @@
                     </a>
                 </div>
             </div>
+            <% } %>
             <!-- .cont-box -->
             <% if(billAvailable){ %>
             <hr class="cont-sp type1" aria-hidden="true"/>
@@ -72,6 +74,8 @@
             <!--// .cont-box -->
             <!--// .cont-box -->
             <% } else { %>
+            <hr class="cont-sp type1" aria-hidden="true"/>
+
             <div class="cont-box">
                 <p class="msg-type1">
                     <span class="tx-bold">매월 2일</span>부터 실시간 이용요금을<br>조회하실 수 있습니다.
@@ -81,7 +85,7 @@
 
             <% } %>
             <hr class="cont-sp type1" aria-hidden="true"/>
-            <% if(preBill) { %>
+            <% if(preBillAvailable) { %>
             <div class="cont-box nogaps fe-prev-wrapper"  >
                 <ul class="full-link-list">
                     <li>
@@ -104,26 +108,28 @@
                 <ul class="my-line-info" id="fe-line-info">
                 </ul>
 
-                <div class="bt-more" style="display: none;" id="fe-bt-more">
+                <div class="btn-more" style="display: none;" id="fe-bt-more">
                     <button >더 보기<span></span></button>
                 </div>
 
             </div>
             <% } %>
             <!--// .cont-box -->
+            <% if(!isPrev) { %>
             <div class="cont-box noborder bgnone">
                 <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
                 <ul class="pg-chk-list02">
-                    <li><button class="btn-tip" id="MF_03_tip_01">실시간 이용요금 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                    <li><button class="btn-tip" id="MF_03_tip_02">요금제 변경 및 일시정지하신 경우<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                    <li><button class="btn-tip" id="MF_03_tip_03">시스템 점검 작업 시<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                    <li><button class="btn-tip" id="MF_03_tip_04">가입비 등 일회성 납부 항목<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                    <li><button class="btn-tip" id="MF_03_tip_05">분리납부 요금 사용내역<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                    <li><button class="btn-tip" id="MF_03_tip_06">신규가입 및 명의변경하신 경우<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                    <li><button class="btn-tip" id="MF_03_tip_07">타 유/무선 통신사 제공서비스 경우<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                    <li><button class="btn-tip" id="MF_03_tip_08">해외로밍 시 이용요금 조회<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li><button class="btn-tip" id="MF_03_tip_01" title="실시간 이용요금 안내 TIP보기" aria-haspopup="true">실시간 이용요금 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li><button class="btn-tip" id="MF_03_tip_02" title="요금제 변경 및 일시정지하신 경우 TIP보기" aria-haspopup="true">요금제 변경 및 일시정지하신 경우<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li><button class="btn-tip" id="MF_03_tip_03" title="스템 점검 작업 시 TIP보기" aria-haspopup="true">시스템 점검 작업 시<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li><button class="btn-tip" id="MF_03_tip_04" title="가입비 등 일회성 납부 항목 TIP보기" aria-haspopup="true">가입비 등 일회성 납부 항목<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li><button class="btn-tip" id="MF_03_tip_05" title="분리납부 요금 사용내역 TIP보기" aria-haspopup="true">분리납부 요금 사용내역<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li><button class="btn-tip" id="MF_03_tip_06" title="신규가입 및 명의변경하신 경우 TIP보기" aria-haspopup="true">신규가입 및 명의변경하신 경우<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li><button class="btn-tip" id="MF_03_tip_07" title="타 유/무선 통신사 제공서비스 경우 TIP보기" aria-haspopup="true">타 유/무선 통신사 제공서비스 경우<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li><button class="btn-tip" id="MF_03_tip_08" title="해외로밍 시 이용요금 조회 TIP보기" aria-haspopup="true">해외로밍 시 이용요금 조회<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
                 </ul>
             </div>
+            <% } %>
 
         </div>
     </div>
