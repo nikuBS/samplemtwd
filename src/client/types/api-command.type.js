@@ -540,6 +540,7 @@ Tw.NODE_CMD = {
 
   GET_URL_META: { path: '/urlMeta', method: Tw.API_METHOD.GET },
   GET_MENU: { path: '/menu', method: Tw.API_METHOD.GET },
+  GET_MENU_RCMD: { path: '/menu-rcmd', method: Tw.API_METHOD.GET },
   GET_BANNER_ADMIN: { path: '/banner/admin', method: Tw.API_METHOD.GET },
   GET_BANNER_TOS: { path: '/banner/tos', method: Tw.API_METHOD.GET },
   GET_MASKING_METHOD: { path: '/masking-method', method: Tw.API_METHOD.GET },

@@ -58,6 +58,7 @@ class ApiRouter {
 
     GET_URL_META: { path: '/urlMeta', method: API_METHOD.GET, target: this.getUrlMeta },
     GET_MENU: { path: '/menu', method: API_METHOD.GET, target: this.getMenu },
+    GET_MENU_RCMD: { path: '/menu-rcmd', method: API_METHOD.GET, target: this.getMenuRecommendation },
     GET_BANNER_ADMIN: { path: '/banner/admin', method: API_METHOD.GET, target: this.getBannerAdmin },
     GET_BANNER_TOS: { path: '/banner/tos', method: API_METHOD.GET, target: this.getBannerTos },
     GET_MASKING_METHOD: { path: '/masking-method', method: API_METHOD.GET, target: this.getMaskingMethod },
@@ -247,6 +248,16 @@ class ApiRouter {
       });
   }
 
+  private getMenuRecommendation(req: Request, res: Response, next: NextFunction) {
+    const code = BrowserHelper.isApp(req) ? MENU_CODE.MAPP : MENU_CODE.MWEB;
+    this.redisService.getData(REDIS_KEY.RCM_MENU + code)
+      .subscribe((resp) => {
+        if ( resp.code === API_CODE.REDIS_SUCCESS ) {
+          res.json(resp);
+        }
+      });
+  }
+
   private getBannerAdmin(req: Request, res: Response, next: NextFunction) {
     const menuId = req.query.menuId;
     this.redisService.getData(REDIS_KEY.BANNER_ADMIN + menuId)
@@ -408,7 +419,7 @@ class ApiRouter {
           return res.json(resp);
         });
     } else {
-      
+
       const svcMgmtNum = svcInfo.svcMgmtNum;
       this.redisService.getData(REDIS_KEY.QUICK_MENU + svcMgmtNum)
         .switchMap((resp) => {

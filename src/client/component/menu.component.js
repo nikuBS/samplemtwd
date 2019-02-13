@@ -38,6 +38,8 @@ Tw.MenuComponent = function (notAboutMenu) {
 
     this._menuRedisErrorCount = 0;
 
+    this._menuSearchComponent = null;
+
     this._init();
     this._bindEvents();
     this._componentReady();
@@ -86,6 +88,8 @@ Tw.MenuComponent.prototype = {
     this.$container.on('click', '.fe-bt-login', $.proxy(this._onClickLogin, this));
     this.$container.on('click', '.fe-bt-logout', $.proxy(this._onClickLogout, this));
     this.$container.on('click', '#fe-signup', $.proxy(this._onSignUp, this));
+
+    this.$container.on('focusin', '#fe-search-input', $.proxy(this._searchFocus, this));
   },
   _componentReady: function () {
     if ( location.hash === '#menu' ) {
@@ -163,6 +167,11 @@ Tw.MenuComponent.prototype = {
     }
   },
   _onGnbBtnClicked: function () {
+    if (this.$container.find('.fe-menu-section').hasClass('none')) {
+      this.$container.find('.fe-menu-section').removeClass('none');
+      this.$container.find('.fe-search-section').addClass('none');
+    }
+
     this._isOpened = true;
     if ( !this._isMenuSet ) {
       // retrieve redis
@@ -345,7 +354,7 @@ Tw.MenuComponent.prototype = {
       this.$container.find('.fe-when-app-or-login').removeClass('none');
     }
 
-    this.$menuArea.prepend(this._menuTpl({ list: menu }));
+    this.$menuArea.find('.section-search').after(this._menuTpl({ list: menu }));
 
     if ( isLogin ) {
       $('.fe-menu-realtime').each($.proxy(function (i, elem) {
@@ -588,5 +597,16 @@ Tw.MenuComponent.prototype = {
   close: function () {
     this.$closeBtn.click();
     this._historyService.goBack();
+  },
+
+  // 검색창 포커스 인/아웃 처리
+  _searchFocus: function (focus) {
+    this.$container.find('.fe-menu-section').addClass('none');
+    this.$container.find('.fe-search-section').removeClass('none');
+    if (!this._menuSearchComponent) {
+      this._menuSearchComponent = new Tw.MenuSearchComponent(this.$container);
+    }
+
+    this._menuSearchComponent.focus();
   }
 };
