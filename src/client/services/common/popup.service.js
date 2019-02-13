@@ -90,10 +90,16 @@ Tw.PopupService.prototype = {
     // history.pushState(this._popupObj, 'popup', hashName);
   },
   _bindEvent: function ($container) {
-    $('.popup-blind').on('click', $.proxy(this.close, this));
+    // $('.popup-blind').on('click', $.proxy(this.close, this));
+    $container.on('click', '.popup-blind', $.proxy(this._onClickBlind, this, $container));
     $container.on('click', '.popup-closeBtn', $.proxy(this.close, this));
     $container.on('click', '.tw-popup-closeBtn', $.proxy(this.close, this));
     $container.on('click', '.tw-popup-confirm', $.proxy(this._confirm, this));
+  },
+  _onClickBlind: function ($container) {
+    if ( $container.find('.fe-no-blind-close').length === 0 ) {
+      this.close();
+    }
   },
   _confirm: function () {
     if ( !Tw.FormatHelper.isEmpty(this._confirmCallback) ) {
@@ -371,13 +377,13 @@ Tw.PopupService.prototype = {
       history.go(-hashLength);
     }
   },
-  closeAllAndGo: function(targetUrl) {
+  closeAllAndGo: function (targetUrl) {
     var hashLength = this._prevHashList.length;
     this._prevHashList = [];
     skt_landing.action.popup.allClose();
     history.go(-hashLength);
 
-    setTimeout(function() {
+    setTimeout(function () {
       location.replace(targetUrl);
     }, 0);
   },
