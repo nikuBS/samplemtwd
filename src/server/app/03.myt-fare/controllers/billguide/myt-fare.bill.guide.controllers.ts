@@ -299,25 +299,25 @@ class MyTFareBillGuide extends TwViewController {
       thisMain._commDataInfo.ppsRemained = FormatHelper.addComma( thisMain._ppsInfo.prodAmt );
 
       // thisMain._commDataInfo.ppsObEndDt = moment(thisMain._ppsInfo.obEndDt).format('YYYY.MM.DD');
-      thisMain._commDataInfo.ppsObEndDt =
-        DateHelper.getShortDateWithFormat(thisMain._ppsInfo.obEndDt, 'YYYY.M.DD', 'YYYYMMDD');
+      thisMain._commDataInfo.ppsObEndDt = DateHelper.getShortDate(thisMain._ppsInfo.obEndDt);
+        // DateHelper.getShortDateWithFormat(thisMain._ppsInfo.obEndDt, 'YYYY.M.DD', 'YYYYMMDD');
 
       // thisMain._commDataInfo.ppsInbEndDt = moment(thisMain._ppsInfo.inbEndDt).format('YYYY.MM.DD');
-      thisMain._commDataInfo.ppsInbEndDt =
-        DateHelper.getShortDateWithFormat(thisMain._ppsInfo.inbEndDt, 'YYYY.M.DD', 'YYYYMMDD');
+      thisMain._commDataInfo.ppsInbEndDt = DateHelper.getShortDate(thisMain._ppsInfo.inbEndDt);
+        // DateHelper.getShortDateWithFormat(thisMain._ppsInfo.inbEndDt, 'YYYY.M.DD', 'YYYYMMDD');
 
       // thisMain._commDataInfo.ppsNumEndDt = moment(thisMain._ppsInfo.numEndDt).format('YYYY.MM.DD');
-      thisMain._commDataInfo.ppsNumEndDt =
-        DateHelper.getShortDateWithFormat(thisMain._ppsInfo.numEndDt, 'YYYY.M.DD', 'YYYYMMDD');
+      thisMain._commDataInfo.ppsNumEndDt = DateHelper.getShortDate(thisMain._ppsInfo.numEndDt);
+        // DateHelper.getShortDateWithFormat(thisMain._ppsInfo.numEndDt, 'YYYY.M.DD', 'YYYYMMDD');
 
       // thisMain._commDataInfo.ppsCurDate = thisMain.getCurDate();
-      thisMain._commDataInfo.ppsCurDate = DateHelper.getCurrentDateTime('YYYY.M.DD hh:mm');
+      thisMain._commDataInfo.ppsCurDate = DateHelper.getCurrentDateTime('YYYY.M.D. hh:mm');
 
       thisMain._commDataInfo.ppsStartDateVal = thisMain.getStartDateFormat('YYYYMM');
-      thisMain._commDataInfo.ppsStartDateTxt = thisMain.getStartDateFormat('YYYY.M');
+      thisMain._commDataInfo.ppsStartDateTxt = thisMain.getStartDateFormat('YYYY.M.');
 
       thisMain._commDataInfo.ppsEndDateVal = thisMain.getEndDateFormat('YYYYMM');
-      thisMain._commDataInfo.ppsEndDateTxt = thisMain.getEndDateFormat('YYYY.M');
+      thisMain._commDataInfo.ppsEndDateTxt = thisMain.getEndDateFormat('YYYY.M.');
 
       thisMain.logger.info(thisMain, '[_urlTplInfo.prepaidPage] : ', thisMain._urlTplInfo.prepaidPage);
       thisMain.renderView(res, thisMain._urlTplInfo.prepaidPage, {
