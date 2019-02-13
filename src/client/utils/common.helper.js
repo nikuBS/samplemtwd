@@ -162,6 +162,10 @@ Tw.CommonHelper = (function () {
     $element.slick.animateHeight();
   };
 
+  var resetPopupHeight = function () {
+    skt_landing.action.popup.layer_height_chk();
+  };
+
   var openTermLayer = function (code) {
     Tw.Api.request(Tw.API_CMD.BFF_08_0059, {
       svcType: 'MM',
@@ -224,6 +228,7 @@ Tw.CommonHelper = (function () {
     endLoading: endLoading,
     allOffLoading: allOffLoading,
     resetHeight: resetHeight,
+    resetPopupHeight: resetPopupHeight,
     openTermLayer: openTermLayer,
     fileUpload: fileUpload,
     replaceCdnUrl: replaceCdnUrl,
