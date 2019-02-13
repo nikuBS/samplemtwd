@@ -64,15 +64,18 @@ Tw.CommonSearchMore.prototype = {
           data[i][key] = Number(data[i][key].replace(/[A-Za-z]/g,''));
         }
         if(category==='direct'&&key==='ALIAS'){
-          data[i][key] = data[i][key].replace('shopacc',Tw.OUTLINK.DIRECT_ACCESSORY);
-          data[i][key] = data[i][key].replace('shopmobile',Tw.OUTLINK.DIRECT_PHONE);
+          if(data[i][key]==='shopacc'){
+            data[i].linkUrl = Tw.OUTLINK.DIRECT_ACCESSORY+'?CATEGORY_ID='+data[i].CATEGORY_ID+'&ACCESSORY_ID=';
+          }else{
+            data[i].linkUrl = Tw.OUTLINK.DIRECT_MOBILE+'?PRODUCT_GRP_ID=';
+          }
         }
         if(key==='METATAG'){
           data[i][key] = data[i][key].split('#');
         }
         if(key==='IMG'){
           var tempArr = data[i][key].split('<IMG_ALT>');
-          data[i][key] = tempArr[0];
+          data[i][key] = tempArr[0].replace(/\/n/g,'');
           if(tempArr[1]){
             data[i].IMG_ALT = tempArr[1];
           }
@@ -190,6 +193,8 @@ Tw.CommonSearchMore.prototype = {
     //Tw.CommonHelper.openUrlExternal(linkUrl);
     if(linkUrl.indexOf('BPCP')>-1){
       this._getBPCP(linkUrl);
+    }else if($linkData.hasClass('direct-element')){
+      Tw.CommonHelper.openUrlExternal(linkUrl);
     }else{
       this._historyService.goLoad(linkUrl);
     }
