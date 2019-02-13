@@ -1,4 +1,4 @@
-import { DATA_UNIT } from '../types/string.type';
+import {DATA_UNIT, PREMTERM_MSG} from '../types/string.type';
 import {PRODUCT_REPLACED_RULE, UNIT, VOICE_UNIT} from '../types/bff.type';
 import FormatHelper from './format.helper';
 import EnvHelper from './env.helper';
@@ -207,8 +207,17 @@ class ProductHelper {
       toDcAmt: isNumberToDcAmt ? FormatHelper.addComma(installmentAgreement.toDcAmt) + UNIT['110'] : installmentAgreement.toDcAmt,
       isNumberGapDcAmt: isNumberGapDcAmt,
       gapDcAmt: isNumberGapDcAmt ? FormatHelper.addComma(installmentAgreement.gapDcAmt) + UNIT['110'] : installmentAgreement.gapDcAmt,
-      isPremTerm: isPremTerm
+      isPremTerm: isPremTerm,
+      premTermMsg: isPremTerm ? ProductHelper.getPremTermMsg(installmentAgreement.agrmtUseCnt) : null
     });
+  }
+
+  static getPremTermMsg(agrmtUseCnt: any): any {
+    if (agrmtUseCnt < 181) {
+      return PREMTERM_MSG.LESS_180;
+    } else if (agrmtUseCnt > 180 && agrmtUseCnt < 366) {
+      return PREMTERM_MSG.LESS_365;
+    }
   }
 
   static convAdditionsJoinTermInfo(_joinTermInfo): any {

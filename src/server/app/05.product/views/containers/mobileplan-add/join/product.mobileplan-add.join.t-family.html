@@ -42,7 +42,7 @@
 
                 <div class="ti-caption-gray">
                     <h4 class="tit">가족그룹 추가 <button type="button" class="tip-view" title="가족그룹 추가 정보보기" id="MV_02_02_06_tip_01" aria-haspopup="true">TIP</button></h4>
-                    <p class="num"><%= svcInfo.svcNum %></p>
+                    <p class="num"><%= svcInfo.svcNumDash %></p>
                 </div>
 
                 <!-- .cont-box -->
@@ -97,8 +97,11 @@
                         <p class="txt fe-join_check_result"></p>
                     </div>
                     <ul class="bt-slice pt20">
-                        <li class="bt-blue1">
+                        <li class="bt-blue1" style="display: none">
                             <button class="fe-btn_add_line">추가하기</button>
+                        </li>
+                        <li class="bt-white2" style="display: none">
+                            <button class="fe-btn_retry">다시 입력하기</button>
                         </li>
                     </ul>
                 </div>
@@ -111,17 +114,16 @@
                     <div class="input-number-wrap">
                         <h3 class="tit type1">가족그룹 신청하신 회선</h3>
                         <div class="list-comp-thumnail">
-                            <ul class="comp-box">
+                            <ul class="comp-box fe-group_list">
                                 <li class="list-box">
-                                    <div class="list-ico"><span class="ico type5"><%= svcInfo.mbrNm.substr(0, 1) %></span></div>
                                     <p class="list-text">
-                                        <strong class="ps-name"><%= svcInfo.mbrNm %></strong>
+                                        <strong class="ps-name"><%= svcInfo.svcNumDash %></strong>
                                         <i class="icon-me"><span class="blind">나</span></i><!-- 뱃지-나 -->
                                         <span class="cate-check">
-                                                <input type="checkbox" name="schecks" id="check1" class="formcheck-small" checked="checked">
-                                                <label for="check1" class="cate-name">대표</label>
-                                            </span>
-                                        <span class="entry"><span class="pnum"><%= svcInfo.svcNum %></span><%= svcInfo.prodNm %></span>
+                                            <input type="checkbox" name="schecks" id="check0" class="formcheck-small fe-my_line fe-line_check" data-group_rep_yn="<%= preInfo.groupRepYn %>">
+                                            <label for="check0" class="cate-name">대표</label>
+                                        </span>
+                                        <span class="entry"><%= svcInfo.prodNm %></span>
                                     </p>
                                 </li>
                             </ul>
@@ -156,6 +158,7 @@
 </div>
 </body>
 <% include ../../../components/javascript.component.html %>
+<% include ../../../components/mobileplan-add/product.mobileplan-add.join.t-family.item.component.html %>
 <script>
   $(document).ready(function () {
     new Tw.ProductMobileplanAddJoinTFamily($('.wrap'), '<%= prodId %>', 'MV_02_02_06', '<%= svcInfo.svcMgmtNum %>', '<%- escape(JSON.stringify(joinTermInfo)) %>');

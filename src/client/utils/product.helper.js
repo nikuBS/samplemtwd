@@ -139,8 +139,17 @@ Tw.ProductHelper = (function () {
       toDcAmt: isNumberToDcAmt ? Tw.FormatHelper.addComma(installmentAgreement.toDcAmt) + Tw.UNIT['110'] : installmentAgreement.toDcAmt,
       isNumberGapDcAmt: isNumberGapDcAmt,
       gapDcAmt: isNumberGapDcAmt ? Tw.FormatHelper.addComma(installmentAgreement.gapDcAmt) + Tw.UNIT['110'] : installmentAgreement.gapDcAmt,
-      isPremTerm: isPremTerm
+      isPremTerm: isPremTerm,
+      premTermMsg: isPremTerm ? Tw.ProductHelper.getPremTermMsg(installmentAgreement.agrmtUseCnt) : null
     });
+  };
+
+  var getPremTermMsg = function(agrmtUseCnt) {
+    if (agrmtUseCnt < 181) {
+      return Tw.PREMTERM_MSG.LESS_180;
+    } else if (agrmtUseCnt > 180 && agrmtUseCnt < 366) {
+      return Tw.PREMTERM_MSG.LESS_365;
+    }
   };
 
   var convStipulation = function(stipulation, isInstallAgreement) {
@@ -259,6 +268,7 @@ Tw.ProductHelper = (function () {
     convInstallmentAgreement: convInstallmentAgreement,
     convStipulation: convStipulation,
     convAutoJoinTermList: convAutoJoinTermList,
-    convDataAmtIfAndBas: convDataAmtIfAndBas
+    convDataAmtIfAndBas: convDataAmtIfAndBas,
+    getPremTermMsg: getPremTermMsg
   };
 })();
