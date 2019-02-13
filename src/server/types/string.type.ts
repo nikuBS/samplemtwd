@@ -1087,6 +1087,21 @@ export const MYT_SUSPEND_REASON = {
   5000344: '해외체류'
 };
 
+export const MYT_SUSPEND_COMPLETE_MSG = {
+  SUCCESS_LONG_TERM_SUSPEND_MESSAGE_SVC: '회선번호: {SVC_INFO}<br />장기일시정지 기간: {DURATION}',
+  SUCCESS_SUSPEND_MESSAGE: '일시정지 기간: {DURATION}<br />일시정지 설정: {SUSPEND_TYPE}',
+  SUCCESS_RESUSPEND_MESSAGE: '회선번호: {SVC_NUMBER}<br />재시작 기간: {DURATION}',
+  GO_TO_STATUS: '일시정지 신청현황',
+  RESUSPEND: '재신청',
+  CANCEL_RESUSPEND: '재신청 취소',
+  RESET: '해제',
+  APPLY: '신청',
+  TYPE: {
+    ALL: '걸기/받기 모두 정지',
+    CALL: '걸기만 정지'
+  }
+};
+
 export const BENEFIT_TBCOMBINATION_JOIN_STATUS = {
   IS_COMBINED: '결합가능',
   DIS_COMBINED: '결합완료'
