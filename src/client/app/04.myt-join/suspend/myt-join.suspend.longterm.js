@@ -20,6 +20,7 @@ Tw.MyTJoinSuspendLongTerm = function (tabEl, params) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
+  this._historyService = new Tw.HistoryService();
   this._fileDialog = null;
 
   this._cachedElement();
@@ -167,7 +168,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     }
   },
 
-  _requestUscan: function(convFileList){
+  _requestUscan: function (convFileList) {
     this._apiService.request(Tw.API_CMD.BFF_01_0046, {
       recvFaxNum: 'skt257@sk.com',
       proMemo: '', // TBD 필수값임 확인필요
@@ -274,7 +275,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     this._suspendOptions = option;
 
     if ( Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
-      var convFileList =  _.compact(this._files).map(function (item) {
+      var convFileList = _.compact(this._files).map(function (item) {
         return {
           fileSize: item.size,
           fileName: item.name,
@@ -282,7 +283,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
         };
       });
       this._requestUscan(convFileList);
-    }else{
+    } else {
       this._requestUpload(this._files);
     }
   },
@@ -297,12 +298,9 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
   _onSuccessRequest: function (res) {
     Tw.CommonHelper.endLoading('.container');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var duration = Tw.DateHelper.getFullKoreanDate(this._suspendOptions.fromDt) + ' - ' +
-        Tw.DateHelper.getFullKoreanDate(this._suspendOptions.toDt);
-      var desc = Tw.MYT_JOIN_SUSPEND.SUCCESS_LONG_TERM_SUSPEND_MESSAGE_SVC.replace('{DURATION}', duration)
-        .replace('{SVC_INFO}', Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.svcNum));
-      this._popupService.afterRequestSuccess('/myt-join/submain/suspend/status', '/myt-join/submain', Tw.MYT_JOIN_SUSPEND.GO_TO_STATUS,
-        Tw.MYT_JOIN_SUSPEND.APPLY, desc);
+      this._suspendOptions.command = 'longterm';
+      this._suspendOptions.svcNum = this._svcInfo.svcNum;
+      this._historyService.replaceURL('/myt-join/submain/suspend/complete?' + $.param(this._suspendOptions));
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

@@ -79,7 +79,7 @@ Tw.MyTJoinSuspend.prototype = {
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
         $.proxy(function () {
-          this._historyService.goBack();
+          this._historyService.go(-2);
         }, this),
         null,
         Tw.BUTTON_LABEL.NO,
