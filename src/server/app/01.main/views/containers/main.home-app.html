@@ -148,10 +148,10 @@
 
                                 <div class="call-message">
                                     <% if(homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
-                                    <a href="/myt-data/hotdata" class="bt-call"><i class="icon-call-80"><span class="blind">통화</span></i> <%= homeData.usageData.voice.showRemained %></a>
+                                    <a href="/myt-data/submain" class="bt-call"><i class="icon-call-80"><span class="blind">통화</span></i> <%= homeData.usageData.voice.showRemained %></a>
                                     <% } %>
                                     <% if(homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
-                                    <a href="/myt-data/hotdata" class="bt-message"><i class="icon-sms-80"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></a>
+                                    <a href="/myt-data/submain" class="bt-message"><i class="icon-sms-80"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></a>
                                     <% } %>
                                 </div>
                                 <% } else if (homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
@@ -188,7 +188,7 @@
 
                                 <div class="call-message">
                                     <% if(homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
-                                    <a href="/myt-data/hotdata" class="bt-message"><i class="icon-sms-80"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></a>
+                                    <a href="/myt-data/submain" class="bt-message"><i class="icon-sms-80"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></a>
                                     <% } %>
                                 </div>
                                 <% } else if (homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
