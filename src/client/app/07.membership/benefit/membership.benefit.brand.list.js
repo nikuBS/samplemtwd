@@ -254,7 +254,7 @@ Tw.MembershipBenefitBrandList.prototype = {
   _goMap: function(event){
     var $bt = $(event.currentTarget);
     var param = {
-      cdCd: $bt.data('cocd'),
+      coCd: $bt.data('cocd'),
       joinCd: $bt.data('joincd'),
       mapX: $bt.data('mapx'),
       mapY: $bt.data('mapy'),
