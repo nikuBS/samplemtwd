@@ -20,9 +20,27 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
   _bindEvent: function () {
     $('#btnSearch').click($.proxy(this._requestData, this));
     $('#inputReqPhone').on('keyup', $.proxy(this._onKeyUp, this));
+    $('#inputReqPhone').on('blur', $.proxy(this._onBlurInputPhone, this));
     $('.inputbox .cancel').click($.proxy(this._onclickInputDel, this));
   },
 
+
+  /**
+   * 전화번호 입력 창에 포커스 아웃시
+   * @param event
+   * @private
+   */
+  _onBlurInputPhone: function(event){
+    $('#span-no-phonenum').hide();
+    $('#span-not-phonenum').hide();
+
+    if(!$(event.target).val()){
+      $('#span-no-phonenum').show();
+    }
+    if(!_isPhoneNum($(event.target).val())){
+      $('#span-not-phonenum').show();
+    }
+  },
 
   /**
    * input password 키 입력시
@@ -64,8 +82,7 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
   },
 
   _isPhoneNum: function(val){
-    var phoneReg = /^\d{3}-\d{3,4}-\d{4}$/;
-    return phoneReg.test(val);
+    return Tw.ValidationHelper.isTelephone(val);
   },
 
   _resetPhoneNum: function($input){
@@ -102,7 +119,7 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
     var phNum = $('input').val();
 
     if ( !this._isPhoneNum(phNum) ) {
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.A1);
+      // this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.A1);
       return;
     }
 
