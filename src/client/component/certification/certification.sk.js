@@ -347,6 +347,7 @@ Tw.CertificationSk.prototype = {
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
+    Tw.CommonHelper.resetPopupHeight();
   },
   _onCloseMdnCertFail: function () {
     this._callbackParam = { code: Tw.API_CODE.CERT_SMS_BLOCK };
