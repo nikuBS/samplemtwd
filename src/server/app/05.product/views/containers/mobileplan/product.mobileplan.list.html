@@ -45,7 +45,7 @@
                         <div class="totalfilter-wrap">
                             <span class="total">총 <span class="number-text"><%= plans.productCount %></span>건</span>
                             <!-- <button type="button" class="filter-btn">필터</button> -->
-                            <button type="button" class="filter-btn date-in fe-select-filter">
+                            <button type="button" class="filter-btn date-in fe-select-filter" aria-haspopup="true">
                                 <% const filters = plans.searchOption && plans.searchOption.searchFltIds;
                                 if (filters) { %>
                                     <span class="datebox">
@@ -67,7 +67,7 @@
                             </button>
                         </div>
                         <div class="filter-select">
-                            <button type="button" class="filterselect-btn fe-select-order">
+                            <button type="button" class="filterselect-btn fe-select-order" aria-haspopup="true">
                                 <% if (params.searchOrder === 'highprice') { %>
                                     높은 가격순
                                 <% } else if (params.searchOrder === 'lowprice') { %>
@@ -107,12 +107,13 @@
                                     <ul class="products-detailinfo02">
                                         <% if (plan.basOfrDataQtyCtt) { %>
                                         <li class="category-type type01">
-                                            <p class="gb"><%= plan.basOfrDataQtyCtt.isNaN ? plan.basOfrDataQtyCtt.value : plan.basOfrDataQtyCtt.value.data + plan.basOfrDataQtyCtt.value.unit %></p>
+                                            <p class="gb"><i class="blind">데이터</i><%= plan.basOfrDataQtyCtt.isNaN ? plan.basOfrDataQtyCtt.value : plan.basOfrDataQtyCtt.value.data + plan.basOfrDataQtyCtt.value.unit %></p>
                                         </li>
                                         <% }
                                         if (plan.basOfrVcallTmsCtt) { %>
                                         <li class="category-type type02">
                                             <p class="type">
+                                                <i class="blind">음성</i>
                                                 <%= plan.basOfrVcallTmsCtt.value %>
                                             </p>
                                         </li>
@@ -120,6 +121,7 @@
                                         if (plan.basOfrCharCntCtt) { %>
                                         <li class="category-type type03">
                                             <p class="basic">
+                                                <i class="blind">문자</i>
                                                 <%= plan.basOfrCharCntCtt.isNaN ? plan.basOfrCharCntCtt.value : plan.basOfrCharCntCtt.value + plan.basOfrCharCntCtt.unit %>
                                             </p>
                                         </li>

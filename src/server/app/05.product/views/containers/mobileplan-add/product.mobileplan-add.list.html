@@ -46,7 +46,7 @@
                         <div class="totalfilter-wrap">
                             <span class="total">총 <span class="number-text"><%= additionData.additions.productCount %></span>건</span>
                             <!-- <button type="button" class="filter-btn">필터</button> -->
-                            <button type="button" class="filter-btn date-in fe-select-filter">
+                            <button type="button" class="filter-btn date-in fe-select-filter" aria-haspopup="true">
                                 <% const searchOption = additionData.additions.searchOption, filters = searchOption && searchOption.searchFltIds;
                                 if (filters) { %>
                                     <span class="datebox">
@@ -68,7 +68,7 @@
                             </button>
                         </div>
                         <div class="filter-select">
-                            <button type="button" class="filterselect-btn fe-select-order">
+                            <button type="button" class="filterselect-btn fe-select-order" aria-haspopup="true">
                                 <% if (params.searchOrder === 'highprice') { %>
                                     높은 가격순
                                 <% } else if (params.searchOrder === 'lowprice') { %>
