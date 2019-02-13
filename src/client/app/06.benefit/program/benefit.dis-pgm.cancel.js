@@ -76,7 +76,8 @@ Tw.BenefitDisPgmCancel.prototype = {
       {
         confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A4,
         noticeList: this._confirmOptions.prodNoticeList,
-        isWidgetInit: true
+        isWidgetInit: true,
+        isTerm: true
       },
       $.proxy(this._prodConfirmOk, this)
     );
