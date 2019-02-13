@@ -58,8 +58,9 @@ Tw.MyTFareBillGuideCallGift.prototype = {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_05_0045, param)
       .done($.proxy(this._getCallGiftInfoInit, this))
-      .fail(function(){
+      .fail(function(err){
         Tw.CommonHelper.endLoading('.container');
+        Tw.Error(err.status, err.statusText).pop();
       });
   },
   _getCallGiftInfoInit: function (res) {
@@ -81,8 +82,8 @@ Tw.MyTFareBillGuideCallGift.prototype = {
         hh: resObj.hh,
         mm: resObj.mm,
         ss: resObj.ss,
-        startDt: this._getPeriod(this.selectMonthVal, 'YYYY.M.DD').startDt,
-        endDt: this._getPeriod(this.selectMonthVal, 'YYYY.M.DD').endDt
+        startDt: this._getPeriod(this.selectMonthVal, 'YYYY.M.').startDt,
+        endDt: this._getPeriod(this.selectMonthVal, 'YYYY.M.').endDt
       };
 
       this._svcHbDetailList(resData, this.$dataResult, this.$entryTpl);
@@ -111,7 +112,7 @@ Tw.MyTFareBillGuideCallGift.prototype = {
       resData: resData
     };
     var html = template(data);
-    jqTg.append(html);
+    jqTg.html(html);
   },
 
   _svcToTimeObj: function (str) {

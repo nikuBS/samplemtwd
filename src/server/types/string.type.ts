@@ -338,7 +338,7 @@ export const MYT_JOIN_CONTRACT_TERMINAL = {
     TIT_NM: 'wibro 약정'
   },
   FEE_TYPE_E: {
-    TIT_NM: '선택 약정 할인 제도'
+    TIT_NM: '선택약정할인제도'
   },
   FEE_NOTYPE: {
     TIT_NM: '정보 없음'
