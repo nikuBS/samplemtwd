@@ -4,22 +4,22 @@
 * Date: 2018.09.19
 %>
 <% if (unpaidList) { %>
-<div class="plan-pay-title fe-unpaid-list">
+<div class="user-month-bill mt0 fe-unpaid-list">
     <% for (var i = 0; i < unpaidList.length; i++) { %>
     <% if (unpaidList.defaultIndex === i) { %>
-    <h3 class="tit">
-        <span class="pay-name fe-svc-name"><%= unpaidList[i].svcName %></span>
-        <span class="pay-line fe-svc-num"><%= unpaidList[i].svcNumber %>
+    <div class="this-month-bill">
+        <p class="stit fe-svc-name"><%= unpaidList[i].svcName %></p>
+        <p class="term fe-svc-num"><%= unpaidList[i].svcNumber %>
             <% if (unpaidList.cnt > 1) { %>
             <span class="fe-multi-line"> 외 <span class="fe-line-cnt"><%= unpaidList.cnt - 1 %></span>개 회선</span>
             <% } %>
-        </span>
-        <span class="pay-fee">
+        </p>
+        <p class="price mt10">
             <span class="fe-amount" data-value="<%= unpaidList[i].intMoney %>"><%= unpaidList[i].invMoney %></span>원
-        </span>
-    </h3>
+        </p>
+    </div>
     <% if (unpaidList.cnt > 1) { %>
-    <div class="bt-alone fe-select-line"><button type="button" class="bt-bg-blue1">납부회선 추가</button></div>
+    <span class="btn-wrap fe-select-line"><button type="button" class="btn-round2 btn-style3">납부회선 추가</button></span>
     <% } %>
     <% } %>
 
