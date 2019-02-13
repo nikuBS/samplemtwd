@@ -99,8 +99,12 @@
                             <!-- // .donut-chart.small -->
                             <% if(homeData.usageData.data.isTplanUse) { %>
                             <div class="legend">
-                                <span class="category0"><span>나의 데이터</span></span>
+                                <span class="category0"><span><em class="data"><%= homeData.usageData.data.showMyRemained %></em> 나의 데이터</span></span>
+                                <% if(homeData.usageData.data.isTplanUse) { %>
+                                <span class="category1"><span><em class="data"><%= homeData.usageData.data.showShareRemained %></em> T가족모아데이터</span></span>
+                                <% } else { %>
                                 <span class="category1"><span>T가족모아데이터</span></span>
+                                <% } %>
                             </div>
                             <% } %>
                             <div class="ti-num">
