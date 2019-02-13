@@ -93,23 +93,29 @@
 												
 												<div class="cont-box">
 													<div class="ti-caption-type01">
-														<h2 class="tit">가족에게 공유할 데이터<button class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></h2>
+														<!--접근성 수정-->
+														<h2 class="tit">가족에게 공유할 데이터<button class="btn-tip" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">가족에게 공유할 데이터 tip</span></i></button></h2>
+														<!-- //접근성 수정-->
 														<span class="num type1 ft-medium">2018.10. 부터 매달</span>
 														<p class="tit-txt">데이터를 공유하고 나면 취소할 수 없습니다.</p>
 													</div>
 													<div class="recently-tel-box">
                                                         <div class="inputbox bt-add">
                                                             <span class="input new">
-                                                                <input type="text" value="1548787" title="가족에게 공유할 데이터" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1">
-                                                                <button class="cancel"><span class="blind">삭제</span></button>
+																<!--접근성 수정-->
+                                                                <input type="text" value="1548787" title="가족에게 공유할 데이터" aria-describedby="aria-exp-desc1">
+																<!-- //접근성 수정-->
+																<button class="cancel"><span class="blind">삭제</span></button>
                                                             </span>
                                                             <span class="r-btn type01">
-                                                                <button type="button" class="btn-type01">+1</button>
-																<button type="button" class="btn-type01">+10</button>
+																<!--접근성 수정-->
+                                                                <button type="button" class="btn-type01">+1<span class="blind">GB</span></button>
+																<button type="button" class="btn-type01">+10<span class="blind">GB</span></button>
 																<button type="button" class="btn-type01">전체</button>
+																<!-- //접근성 수정-->
                                                             </span>
                                                         </div>
-														<p class="input-txt-type02 pb10 pt6">공유 가능 데이터를 초과했습니다. </p>
+														<p class="input-txt-type02 pb10 pt6" id="aria-exp-desc1">공유 가능 데이터를 초과했습니다. </p>
 														<p class="input-txt-type01 pt10">매달 자동공유 가능 데이터 : <strong class="txt-c1">30GB</strong></p>
 														<p class="input-txt-type01 pt4">선물하기, 함께쓰기, 스마트 기기 공유 가능 데이터 : <strong class="txt-c2">10GB</strong></p>
                                                     </div>
@@ -137,7 +143,9 @@
 					<div class="cont-box noborder bgnone">
 						<h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
 						<ul class="pg-chk-list02">
-							<li><button class="btn-tip">T가족모아데이터 공유 설정 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+							<!--접근성 수정-->
+							<li><button class="btn-tip" aria-haspopup="true">T가족모아데이터 공유 설정 안내<i class="icon-badge-tip"><span class="blind">T가족모아데이터 공유 설정 안내 tip</span></i></button></li>
+							<!-- //접근성 수정-->
 						</ul>
 					</div>
                     

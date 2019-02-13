@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -20,177 +21,188 @@
     <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
     <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
     <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+
+	
+    
+
     <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
     <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
-    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
     <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
     <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
     <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
 </head>
 <body>
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
             <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
     <div class="wrap">
-        <!-- .popup hbs -->
-        <div class="popup-page tw-popup fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
-            <!-- #header -->
-            <div class="header-wrap">
-                <div class="page-header">
-                    <div class="header-ti">
-                        <h1>T끼리 데이터 선물</h1>
-                    </div>
-                </div>
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
             </div>
-            <!--// #header -->
-            <!-- .container-wrap -->
-            <div class="container-wrap">
-                <h2 class="blind">내용</h2>
+        </div>
+        <!--// #contents -->
+		<!-- .popup hbs -->
+		<div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+			<!-- #header -->
+			<div class="header-wrap noborder">
+				<div class="page-header">
+					<div class="header-ti">
+                        <h1>T끼리 데이터 선물</h1>
+					</div>
+				</div>
+			</div>
+			<!--// #header -->
+			<!-- .container-wrap -->
+			<div class="container-wrap">
                 <div class="container">
+
                     <!-- .cont-box -->
-                    <div class="cont-box nogaps noborder">
-                        <div class="component">
-                            <div class="component-box tabs">
-                                <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
-                                    <div class="tab-linker">
-                                        <ul role="tablist">
-                                            <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="">바로 선물</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                            <!--접근성 수정-->
-                                            <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="">자동 선물<span class="count"><i class="blind">새로운 항목</i>2<i class="blind">개</i></span></a></li>
-                                            <!-- //접근성 수정-->
-                                        </ul>
-                                    </div>
-                                    <div class="tab-contents">
-                                        <ul>
-                                            <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
-                                                <div class="cont-box">
-                                                    <!--접근성 수정-->
-                                                    <h4 class="tabcon-title0">받는 분 번호 <button class="tip-view" title="받는 분 번호" aria-haspopup="true">TIP</button></h4>
-                                                    <!-- //접근성 수정-->
-                                                    <div class="recently-tel-box">
-                                                        <!-- 2019-01-17 inp-btn 추가 -->
-														<div class="inputbox bt-add inp-btn">
-                                                            <span class="input">
-                                                                <!--접근성 수정-->
-                                                                <input type="text" placeholder="숫자만 입력" title="받는 분 번호 숫자만 입력" value="010-1">
-                                                                <!-- //접근성 수정-->
-                                                                <button class="cancel"><span class="blind">삭제</span></button>
-                                                            </span>
-                                                            <span class="bt-box">
-                                                                <button type="button">주소록</button>
-                                                            </span>
-                                                        </div>
-                                                        <ul class="recently-tel on"><!-- show : on 클래스 추가  -->
-                                                            <li>
-                                                                <button class="tel-select">010-1234-1234</button>
-                                                                <button class="del-bt">삭제</button>
-                                                            </li>
-                                                            <li>
-                                                                <button class="tel-select">010-1234-1234</button>
-                                                                <button class="del-bt">삭제</button>
-                                                            </li>
-                                                            <li>
-                                                                <button class="tel-select">010-1234-1234</button>
-                                                                <button class="del-bt">삭제</button>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <p class="ctext2"><button class="bt-link-tx underline">선물 받을 수 있는 요금제 확인</button></p>
-                                                    <!--접근성 수정-->
-                                                    <h4 class="tabcon-title0 mt30">선물할 데이터 량 <button class="tip-view" aria-haspopup="true">TIP</button><span class="title0-sub-tx0">31.2GB 남음</span></h4>
-                                                    <!-- //접근성 수정-->
-                                                    <!-- .widget -->
-                                                    <div class="widget">
-                                                        <div class="widget-box radio">
-                                                            <div class="radio-slide small">
-                                                                <ul class="select-list" role="radiogroup">
-                                                                    <!--접근성 수정-->
-                                                                    <li class="radiobox" role="radio">
-                                                                        <input type="radio" name="radio4" value="" title="선물할 데이터량" disabled aria-labelledby="aria-comp-radio1" /><!-- 체크상태일 경우 checked="checked" -->
-                                                                        <span class="radio-txt" id="aria-comp-radio1">
-                                                                            <span>2.0</span><span class="unit">GB</span>
-                                                                        </span>
-                                                                    </li>
-                                                                    <li class="radiobox" role="radio">
-                                                                        <input type="radio" name="radio4" value="" title="선물할 데이터량" checked aria-labelledby="aria-comp-radio2" /><!-- 체크상태일 경우 checked="false" -->
-                                                                        <span class="radio-txt" id="aria-comp-radio2">
-                                                                            <span>1.0</span><span class="unit">GB</span>
-                                                                        </span>
-                                                                    </li>
-                                                                    <li class="radiobox" role="radio">
-                                                                        <input type="radio" name="radio4" value="" title="선물할 데이터량" aria-labelledby="aria-comp-radio3"/><!-- 비활성화상태일 경우 disabled="disabled" -->
-                                                                        <span class="radio-txt" id="aria-comp-radio3">
-                                                                            <span>900</span><span class="unit">MB</span>
-                                                                        </span>
-                                                                    </li>
-                                                                    <li class="radiobox" role="radio">
-                                                                        <input type="radio" name="radio4" value="" title="선물할 데이터량" aria-labelledby="aria-comp-radio4" /><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
-                                                                        <span class="radio-txt" id="aria-comp-radio4">
-                                                                            <span>800</span><span class="unit">MB</span>
-                                                                        </span>
-                                                                    </li>
-                                                                    <li class="radiobox" role="radio">
-                                                                        <input type="radio" name="radio4" value="" title="선물할 데이터량" aria-labelledby="aria-comp-radio5" /><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
-                                                                        <span class="radio-txt" id="aria-comp-radio5">
-                                                                            <span>700</span><span class="unit">MB</span>
-                                                                        </span>
-                                                                    </li>
-                                                                    <!-- //접근성 수정-->
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--// .widget -->
-                                                    <p class="tabcon-tx0 pt14">* 발송된 데이터는 취소가 불가능합니다.</p>
-                                                </div>
+                    <div class="cont-box nogaps">
+						<!-- .component -->
+						<div class="component">
+							<div class="component-box tabs">
+								<div class="tab-area new01"><!-- 타입별 탭형태 변환 -->
+									<div class="tab-linker">
+										<ul role="tablist">
+											<li role="tab" aria-selected="true" aria-c0ontrols="tab1-tab" id="tab1"><a href="">바로 선물</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+											<li role="tab" aria-selected="false" aria-controls="tab3-tab" id="tab2"><a href="">자동 선물 <span>(1)</span></a></li>
+										</ul>
+									</div>
+									<div class="tab-contents">
+										<ul>
+											<li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" aria-selected="true">
+												<hr class="cont-sp type1" aria-hidden="true"/>
+												<div class="cont-box b-line">
+													<div class="ti-caption-type01">
+														<!--접근성 수정-->
+														<h2 class="tit">선물 받는 분 번호<button class="btn-tip" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">선물 받는 분 번호 tip</span></i></button></h2>
+														<!-- //접근성 수정-->
+													</div>
+													<!-- 2019-01-17 inp-btn 추가 -->
+													<div class="inputbox bt-add inp-btn">
+														<span class="input new">
+															<!--접근성 수정-->
+															<input type="text" placeholder="숫자만 입력" title="선물 받는 분 번호 숫자만 입력" aria-describedby="aria-exp-desc1 aria-exp-desc2 aria-exp-desc3">
+															<!-- //접근성 수정-->
+															<button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+														</span>
+														<span class="r-btn">
+															<button type="button" class="btn-round2 btn-style3">주소록</button>
+														</span>
+													</div>
+													<!--접근성 수정-->
+													<span id="aria-exp-desc1" class="error-txt">휴대폰번호 자릿수를 확인해주세요. (10~11자리)</span>
+													<span id="aria-exp-desc2" class="error-txt">휴대폰 번호가 올바르지 않습니다.</span>
+													<span id="aria-exp-desc3" class="error-txt">휴대폰 번호를 입력해 주세요.</span>
+													<!-- //접근성 수정-->
+													<p class="fs13 mt10"><a class="bt-link-tx underline" href="">선물 받을 수 있는 요금제 확인</a></p>
+												</div>
+												<hr class="cont-sp type1" aria-hidden="true"/>
 
-                                                <hr class="cont-sp type1" aria-hidden="true"/>
-
-                                                <div class="cont-box nogaps-btm">
-                                                    <h3 class="tx-bold">꼭 확인해주세요!</h3>
-                                                    <ul class="noti-list">
-                                                        <!--접근성 수정-->
-                                                        <li>T끼리 데이터 선물하기 조건안내 <button title="T끼리 데이터 선물하기 조건안내" class="tip-view" aria-haspopup="true">TIP</button></li>
-                                                        <li>T끼리 데이터 선물하기 조건안내 <button title="T끼리 데이터 선물하기 조건안내" class="tip-view" aria-haspopup="true">TIP</button></li>
-                                                        <li>T끼리 데이터 선물하기 조건안내 <button title="T끼리 데이터 선물하기 조건안내" class="tip-view" aria-haspopup="true">TIP</button></li>
-                                                        <!-- //접근성 수정-->
-                                                    </ul>
-                                                </div>
-                                            </li>
-                                            <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
-                                                <div class="cont-box">
-                                                    2
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+												<div class="cont-box pb0">
+													<div class="ti-caption-type01 pb0">
+														<!--접근성 수정-->
+														<h2 class="tit">선물할 데이터양<button class="btn-tip" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">선물할 데이터양 tip</span></i></button></h2>
+														<!-- //접근성 수정-->
+														<p class="num">한도 <em>11.27GB</em> <span class="ft-medium">남음</span></p>
+														<p class="tit-txt">데이터를 발송하고 나면 취소할 수 없습니다.</p>
+													</div>
+													<div class="data-gift-wrap">
+														<div class="discount-look-ahead round">
+															<div class="widget">
+																<div class="widget-box radio">
+																	<ul class="select-list" role="radiogroup">
+																		<!--접근성 수정-->
+																		 <li class="radiobox btn-type02 disabled" role="radio" aria-disabled="true" aria-checked="false">
+																			<div class="form">
+																				<input type="radio" name="radio4" value="" disabled="" title="선물할 데이터양" aria-labelledby="aria-comp-radio1">
+																				<span class="radio-txt ff-tb" id="aria-comp-radio1">2<span class="light">GB</span></span>
+																			</div>
+																		</li>
+																		<li class="radiobox btn-type02 checked" role="radio" aria-checked="true">
+																			<div class="form">
+																				<input type="radio" name="radio4" value="" title="선물할 데이터양" aria-labelledby="aria-comp-radio2" checked="checked">
+																				<span class="radio-txt ff-tb" id="aria-comp-radio2">1<span class="light">GB</span></span>
+																			</div>
+																		</li>
+																		<li class="radiobox btn-type02" role="radio" aria-checked="false">
+																			<div class="form">
+																				<input type="radio" name="radio4" value="" title="선물할 데이터양" aria-labelledby="aria-comp-radio3">
+																				<span class="radio-txt ff-tb" id="aria-comp-radio3">900<span class="light">MB</span></span>
+																			</div>
+																		</li>
+																		<li class="radiobox btn-type02" role="radio" aria-checked="false">
+																			<div class="form">
+																				<input type="radio" name="radio4" value="" title="선물할 데이터양" aria-labelledby="aria-comp-radio4">
+																				<span class="radio-txt ff-tb" id="aria-comp-radio4">800<span class="light">MB</span></span>
+																			</div>
+																		</li>
+																		<!-- //접근성 수정-->
+																	</ul>
+																</div>
+															</div>
+														</div>
+														<div class="btn-more">
+															<button>데이터양 더보기</button>
+														</div>
+													</div>
+												</div>
+												<!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+												<div class="bt-fixed-area">
+													<ul class="bt-slice full">
+														<li class="bt-red1">
+															<button>선물하기</button>
+														</li>
+													</ul>
+												</div>
+												<!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+											</li>
+											<li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" aria-selected="false">
+												<hr class="cont-sp type1" aria-hidden="true"/>
+												<div class="cont-box nogaps">
+													자동 선물 내용입니다.
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--// .component -->
+					</div>
                     <!--// .cont-box -->
 
-                    <div class="bt-fixed-area">
-                        <ul class="bt-slice full">
-                            <li class="bt-red1">
-                                <button disabled="disabled">선물하기</button>
-                            </li>
-                        </ul>
-                    </div>
+					<div class="cont-box noborder bgnone">
+						<h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+						<ul class="pg-chk-list02">
+							<!--접근성 수정-->
+							<li><button class="btn-tip" aria-haspopup="true">T끼리 데이터 선물하기 조건안내<i class="icon-badge-tip"><span class="blind">T끼리 데이터 선물하기 조건안내 tip</span></i></button></li>
+							<li><button class="btn-tip" aria-haspopup="true">T끼리 선물 받은 데이터 사용안내<i class="icon-badge-tip"><span class="blind">T끼리 선물 받은 데이터 사용안내 tip</span></i></button></li>
+							<li><button class="btn-tip" aria-haspopup="true">T끼리 데이터 선물하기 유의사항<i class="icon-badge-tip"><span class="blind">T끼리 데이터 선물하기 유의사항 tip</span></i></button></li>
+							<!-- //접근성 수정-->
+						</ul>
+					</div>
+
+                    
                 </div>
             </div>
-            <!-- // .container-wrap -->
+            <!--// .container-wrap -->
             <!-- .popup-closeBtn -->
             <button class="prev-step">취소</button>
             <!--// .popup-closeBtn -->
-        </div>
-        <!-- // .popup hbs -->
-    </div>
+		</div>
+		<!--// .popup hbs -->
+	</div>
 </body>
 </html>

@@ -323,7 +323,7 @@ skt_landing.action = {
     }
   },
   popup: { //popup 
-    open: function (popup_info,callback_open,callback_fail) {
+    open: function (popup_info,callback_open,callback_fail,toggle_btn) {
       var _this = this;
       popup_info.hbs = popup_info.hbs ? popup_info.hbs : 'popup';
       $.get(popup_info.url+popup_info.hbs+'.hbs', function (text) {
@@ -370,14 +370,43 @@ skt_landing.action = {
           });
         }
         //wai-aria
-        popups.attr('role','dialog')
-              .attr('aria-hidden','false');
-        if(popup_info.layer || popup_info.hbs == 'dropdown'){
-          popups.attr('role','')
-                .attr('aria-hidden','true');
-          createdTarget.attr('role','dialog')
-                       .attr('aria-hidden','false');
+        popups.attr('role','')
+              .attr('aria-hidden','true');
+        createdTarget.attr('role','dialog')
+                     .attr('aria-hidden','false');
+        /* move focus */
+        if(typeof toggle_btn !== 'undefined'){
+          var focusReturn = toggle_btn;
+        	if(popups.length > 0){
+            createdTarget.attr('tabindex', 0).focus();
+            createdTarget.on('focus', function(e){
+              $(this).on('keydown', function(e){
+                var keyCode = e.keyCode || e.which;
+                if(keyCode == 9) {
+                  if(e.shiftKey && $(this).is(":focus")){
+                    focusReturn.focus();
+                  }
+                }
+              })
+            });
+            
+            createdTarget.find('[data-return-focus="true"], .prev-step, .popup-closeBtn')
+            .on("click", function(){
+                focusReturn.focus();
+            })
+            .on("focus", function(e){
+              $(this).on('keydown', function(e){
+                var keyCode = e.keyCode || e.which;
+                if(keyCode == 9) {
+                  if(!e.shiftKey){
+                    focusReturn.focus();
+                  }
+                }
+              })
+            });
+          }
         }
+                     
       }).fail(function() {
         if(callback_fail){
           callback_fail();
@@ -440,6 +469,8 @@ skt_landing.action = {
           }else if(scrTop != 0 && !$('.wrap > .popup,.wrap > .popup-page').last().find('.popup-info').hasClass('scrolling-shadow')){
             $('.wrap > .popup,.wrap > .popup-page').last().find('.popup-info').addClass('scrolling-shadow');
           }
+        }).css({
+          'max-height': skt_landing.util.win_info.get_winH() - 226
         });
       }
     },

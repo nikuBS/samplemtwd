@@ -132,10 +132,11 @@
     padding: 0; }
     .main-top-group.group-type .quick-menu-list {
       border: none;
-      margin-top: 0.625rem;
+      margin: 1.125rem 0 2.5rem;
       padding: 0 1rem; }
       .main-top-group.group-type .quick-menu-list li {
-        margin-top: 1.375rem; }
+        margin-top: 1.375rem;
+        height: auto; }
   .main-top-group .quick-menu-list {
     margin-top: 1.5625rem;
     padding-top: 1.25rem;
@@ -229,7 +230,7 @@
 
 .main-breakdown-box > .ti {
   display: block;
-  margin: 0.1875rem 0;
+  margin: 0.625rem 0 0.1875rem;
   font-size: 1.5625rem;
   font-weight: 700;
   line-height: 1.875rem; }
@@ -428,7 +429,10 @@
       color: inherit;
       font-size: 1.625rem;
       font-weight: 700;
-      line-height: normal; }
+      line-height: normal;
+      padding-right: 0.6875rem;
+      background: url(/img/ico/chart_tit_arrow.png) no-repeat right 50%;
+      background-size: 4.5px 8px; }
   .main-chart-box .donutchart {
     position: relative;
     margin-bottom: -0.9375rem; }
@@ -492,16 +496,7 @@
         height: 1.375rem;
         border: 1px solid #ef4b49;
         border-radius: 0.6875rem;
-        line-height: 1.375rem; }
-        .main-chart-box .donutchart .data-add span:after {
-          content: '';
-          display: inline-block;
-          width: 0.5rem;
-          height: 0.5rem;
-          margin-left: 0.3125rem;
-          background: url(/img/main/ico_add.png) no-repeat;
-          background-size: 100%;
-          vertical-align: 1px; }
+        line-height: 1.4375rem; }
     .main-chart-box .donutchart .coach-mark {
       top: 9.6875rem; }
       .main-chart-box .donutchart .coach-mark:after {
@@ -551,23 +546,22 @@
     .main-chart-box .call-message [class^="bt-"] {
       position: relative;
       display: inline-block;
-      width: 7.5rem;
       color: inherit;
       font-size: 1rem;
       text-align: center; }
-      .main-chart-box .call-message [class^="bt-"] + [class^="bt-"]:before {
-        content: '';
+      .main-chart-box .call-message [class^="bt-"].bt-call {
+        padding-left: 1.3125rem; }
+      .main-chart-box .call-message [class^="bt-"].bt-message {
+        padding-left: 1.4375rem;
+        margin-left: 1.25rem; }
+      .main-chart-box .call-message [class^="bt-"] i {
         position: absolute;
-        top: 0;
         left: 0;
-        width: 0.0625rem;
-        height: 2.75rem;
-        background: #f2f2f2; }
-    .main-chart-box .call-message i {
-      display: block;
-      width: 2.5rem;
-      height: 2.5rem;
-      margin: 0 auto; }
+        display: block; }
+        .main-chart-box .call-message [class^="bt-"] i.icon-call-34 {
+          top: 0.1875rem; }
+        .main-chart-box .call-message [class^="bt-"] i.icon-sms-37 {
+          top: 0.25rem; }
   .main-chart-box .tx-desc {
     margin-top: 1.25rem;
     color: #666666;
@@ -580,6 +574,26 @@
   overflow: hidden; }
   .main-tip-box.box-type .slider-box .slick-dots {
     top: -1.1875rem; }
+  .main-tip-box > .stit.tit {
+    display: inline-block;
+    width: 70%;
+    color: #000 !important;
+    font-size: 1.4375rem;
+    line-height: 120%;
+    padding-right: 0.9375rem;
+    text-align: left;
+    margin-top: 0.625rem;
+    margin-bottom: 1.5625rem;
+    font-weight: bold; }
+  .main-tip-box > a.stit.tit:after, .main-tip-box button.stit.tit:after {
+    display: inline-block;
+    content: "";
+    width: 0.40625rem;
+    height: 0.6875rem;
+    background: url(/img/ico/icon-link-arrow.png) no-repeat right center;
+    background-size: 6.5px 11px;
+    margin: 0 0 0.1875rem 0.5rem;
+    color: #000 !important; }
   .main-tip-box .slider-box .slick-dots {
     top: 1.5rem; }
   .main-tip-box .main-box-cont {
@@ -643,13 +657,16 @@
       .main-tip-box .btn-area .bt + .bt {
         border-left: 1px solid #f2f2f2; }
 
-.main-membershop-box {
+.main-membershop-box .membership-cont {
   position: relative;
-  padding: 0.9375rem 0 0.9375rem 1.25rem;
-  margin: 0 1rem;
-  background: #f2f2f2;
+  display: table;
+  width: 100%;
+  height: 3.125rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 1.875rem 1.25rem 1.875rem 1.25rem;
   border-radius: 0.3125rem; }
-  .main-membershop-box > .ti {
+  .main-membershop-box .membership-cont > .ti {
     display: block;
     width: 7.25rem;
     height: 1.3125rem;
@@ -658,7 +675,7 @@
     color: transparent;
     font-size: 0;
     line-height: 0; }
-  .main-membershop-box .rating {
+  .main-membershop-box .membership-cont .rating {
     display: block;
     height: 1.125rem;
     margin-top: 0.625rem;
@@ -667,32 +684,32 @@
     color: transparent;
     font-size: 0;
     line-height: 0; }
-    .main-membershop-box .rating.silver {
+    .main-membershop-box .membership-cont .rating.silver {
       width: 3.75rem;
       background-image: url(/img/main/silver.png); }
-    .main-membershop-box .rating.gold {
+    .main-membershop-box .membership-cont .rating.gold {
       width: 3.25rem;
       background-image: url(/img/main/gold.png); }
-    .main-membershop-box .rating.vip {
+    .main-membershop-box .membership-cont .rating.vip {
       width: 2.4375rem;
       background-image: url(/img/main/vip.png); }
-  .main-membershop-box .bar-code {
+  .main-membershop-box .membership-cont .bar-code {
     position: absolute;
-    top: 40%;
-    right: 0.9375rem;
+    top: 3.125rem;
+    right: 1.25rem;
     width: 9.375rem;
     height: 3.125rem;
     margin-top: -1.5625rem; }
-    .main-membershop-box .bar-code img {
+    .main-membershop-box .membership-cont .bar-code img {
       width: 100%;
       height: 100%; }
-    .main-membershop-box .bar-code .bar-code-num {
+    .main-membershop-box .membership-cont .bar-code .bar-code-num {
       width: 100%;
       height: 20px;
       text-align: center;
       font-size: 12px;
       display: block; }
-  .main-membershop-box > .tx {
+  .main-membershop-box .membership-cont > .tx {
     position: absolute;
     top: 50%;
     right: 0.9375rem;
@@ -708,10 +725,10 @@
     text-align: center;
     -webkit-box-sizing: border-box;
             box-sizing: border-box; }
-    .main-membershop-box > .tx .t-point {
+    .main-membershop-box .membership-cont > .tx .t-point {
       color: #ef4b49;
       font-weight: 700; }
-  .main-membershop-box .ti-tx {
+  .main-membershop-box .membership-cont .ti-tx {
     display: block;
     width: 100%;
     padding-right: 7.8125rem;
@@ -720,16 +737,104 @@
     text-align: left;
     -webkit-box-sizing: border-box;
             box-sizing: border-box; }
-    .main-membershop-box .ti-tx .ti {
+    .main-membershop-box .membership-cont .ti-tx .ti {
       display: block;
       font-size: 0.9375rem;
       font-weight: 700; }
-    .main-membershop-box .ti-tx .tx {
+    .main-membershop-box .membership-cont .ti-tx .tx {
       display: block;
       margin-top: 0.25rem;
       color: #666666;
       font-size: 0.8125rem;
       line-height: 1.1875rem; }
+
+.main-membershop-box .btn-area {
+  overflow: hidden;
+  border-top: 1px solid #f2f2f2; }
+  .main-membershop-box .btn-area .bt {
+    float: left;
+    width: 50%;
+    height: 3.125rem;
+    color: inherit;
+    font-size: 0.9375rem;
+    line-height: 3.125rem;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box; }
+    .main-membershop-box .btn-area .bt + .bt {
+      border-left: 1px solid #f2f2f2; }
+
+.main-fee-box .fee-cont {
+  position: relative;
+  display: table;
+  width: 100%;
+  height: 3.125rem;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 1.875rem 1.25rem 0.5rem 1.25rem;
+  border-radius: 0.3125rem; }
+  .main-fee-box .fee-cont > .tit {
+    display: inline-block;
+    width: auto;
+    color: #000;
+    font-size: 1.4375rem;
+    line-height: 120%;
+    padding-right: 0.9375rem;
+    text-align: left;
+    margin-bottom: 1.5625rem;
+    font-weight: bold; }
+  .main-fee-box .fee-cont > a.tit:after, .main-fee-box .fee-cont button.tit:after {
+    display: inline-block;
+    content: "";
+    width: 0.40625rem;
+    height: 0.6875rem;
+    background: url(/img/ico/icon-link-arrow.png) no-repeat right center;
+    background-size: 6.5px 11px;
+    margin: 0 0 0.1875rem 0.5rem; }
+  .main-fee-box .fee-cont > .fee-info {
+    display: table;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    padding: 1.25rem 0; }
+    .main-fee-box .fee-cont > .fee-info .target {
+      float: left; }
+      .main-fee-box .fee-cont > .fee-info .target .tit {
+        display: block;
+        color: #000;
+        font-size: 1rem; }
+        .main-fee-box .fee-cont > .fee-info .target .tit .icon-whole4 {
+          margin: 0 0 0 0.1875rem;
+          vertical-align: middle; }
+      .main-fee-box .fee-cont > .fee-info .target .date {
+        display: block;
+        color: #666;
+        font-size: 0.875rem; }
+    .main-fee-box .fee-cont > .fee-info .sum {
+      float: right;
+      font-size: 1rem;
+      font-weight: bold; }
+  .main-fee-box .fee-cont .line {
+    display: table;
+    width: 100%;
+    height: 1px;
+    background: #f2f2f2; }
+
+.main-fee-box .btn-area {
+  overflow: hidden;
+  border-top: 1px solid #f2f2f2; }
+  .main-fee-box .btn-area .bt {
+    float: left;
+    width: 50%;
+    height: 3.125rem;
+    color: inherit;
+    font-size: 0.9375rem;
+    line-height: 3.125rem;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box; }
+    .main-fee-box .btn-area .bt + .bt {
+      border-left: 1px solid #f2f2f2; }
 
 @media all and (max-width: 320px) {
   .main-membershop-box .ti {
@@ -770,7 +875,7 @@ body.apphome {
 .section-box {
   position: relative;
   overflow: hidden;
-  margin: 1.5625rem 1rem 0 1rem;
+  margin: 1.5rem 1rem 0 1rem;
   padding: 1.25rem 1.5rem;
   background: #fff;
   border-radius: 0.9375rem;
@@ -1577,6 +1682,20 @@ body.apphome {
   background: url(/img/svg/icon_80px_call.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
+.icon-sms-37 {
+  display: inline-block;
+  width: 1.15625rem;
+  height: 0.875rem;
+  background: url(/img/ico/icon_37px_sms.png) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-call-34 {
+  display: inline-block;
+  width: 1.0625rem;
+  height: 1.0625rem;
+  background: url(/img/ico/icon_34px_call.png) no-repeat 0 0;
+  background-size: 100% 100%; }
+
 .icon-notice-30 {
   display: inline-block;
   width: 0.9375rem;
@@ -1645,6 +1764,13 @@ body.apphome {
   width: 1.4375rem;
   height: 1rem;
   background: url(/img/ico/icon_whole02.png) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-whole4 {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1rem;
+  background: url(/img/ico/icon_whole04.png) no-repeat 0 0;
   background-size: 100% 100%; }
 
 .icon-badge-tip {
@@ -2770,9 +2896,17 @@ body.apphome {
   font-size: 1rem;
   font-weight: 500; }
 
+.member-info-box .name {
+  display: block;
+  margin-top: 1.5625rem;
+  font-size: 1.4375rem;
+  font-weight: 500; }
+  .member-info-box .name i {
+    vertical-align: 0.0625rem; }
+
 .member-info-box .chart-group {
   position: relative;
-  margin-top: 2.1875rem; }
+  margin-top: 0.5rem; }
   .member-info-box .chart-group .chart-box {
     position: relative;
     display: block;
@@ -2832,21 +2966,14 @@ body.apphome {
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     border-radius: 0.6875rem; }
-    .member-info-box .chart-group .data-add:after {
-      content: '';
-      display: inline-block;
-      width: 0.5rem;
-      height: 0.5rem;
-      margin-left: 0.3125rem;
-      background: url(/img/main/ico_add.png) no-repeat;
-      background-size: 100%;
-      vertical-align: 1px; }
 
 .member-info-box .call-message {
   overflow: hidden;
   margin-top: 1.25rem;
   margin-bottom: -1.25rem;
   border-top: 1px solid #f2f2f2; }
+  .member-info-box .call-message.call-message-top {
+    margin-top: 1.75rem; }
   .member-info-box .call-message .call {
     float: left;
     width: 50%;
@@ -3099,3 +3226,6 @@ body.apphome {
 
 .cont-box.b-line-none {
   border-bottom: 0; }
+
+.menu-guide-img img {
+  width: 100%; }

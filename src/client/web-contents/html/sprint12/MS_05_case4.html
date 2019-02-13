@@ -27,7 +27,6 @@
     <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
     <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
     <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
-    
     <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
 </head>
 
@@ -36,160 +35,92 @@
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
             <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- #header -->
-        <div id="header" class="header-wrap">
+		<div id="header" class="header-wrap">
 			<div class="h-belt">
 				<div class="h-default">
 					<div class="h-menu">
-                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
-                    </div>
-					<div class="h-tit">나의 요금제</div>
-					<div class="h-serarch">
-						<button class="icon-gnb-search"><span class="blind">검색</span></button>
+						<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
 					</div>
+
+                    <div class="h-tit">나의 요금제</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
 				</div>
 			</div>
-        </div>
-        <!--// #header -->
+		</div>
+        <!--// #header --> 
         <!-- #contents -->
         <div id="contents" class="container-wrap">
-            <h2 class="blind">내용</h2>
             <div class="container">
-                <!-- .cont-box -->
-                <div class="cont-box">
-                    <div class="myinfo-wrap">
-                        <div class="myinfo-cont">
-                            <div class="title">
-                                <span class="blind">상품명</span>
-                                <span class="title-l">T 일반전화</span>
-                            </div>
-                        </div>
-                        <div class="ico-wrap type01"><!-- 2018-11-02 수정 -->
-                            <div class="bt-alone"><button class="bt-bg-blue1" title="나의 요금제 상세보기">상세보기</button></div>
-                        </div>
-                        <div class="info-detail mt40">
-                            <!-- 2018-11-02 삭제 <div class="tb-type">
-                                <ul>
-                                    <li>
-                                        <dl>
-                                            <dt>속도</dt>
-                                            <dd>500 Mbps</dd>
-                                        </dl>
-                                    </li>
-                                </ul>
-                            </div> -->
-                            <div class="price-wrap mt20 t-line">
-                                <span class="tx-sub"><span class="tx-bold vbl">월정액</span> 부가세포함</span>
-                                <span class="tx-price"><span class="price">34,430</span><span class="unit">원</span></span>
-                                <span class="tx-extra">3년 약정시</span>
-                            </div>
+
+                <div class="plan-compact-info">
+                    <div class="plan">
+                        <a href="#" class="tit">T Pocket-Fi 10</a>
+                        <span class="val">34,000원</span>
+                    </div>
+                    <div class="sub">
+                        <span class="rest">월정액(부가세 포함)</span>
+                    </div>
+                    <div class="service-wrap">
+                        <div class="service">
+                            <span class="sv-spec data">
+                                <i class="ico-data-plan"></i>6.0GB
+                            </span>
                         </div>
                     </div>
-                </div>
-                <!--// .cont-box -->
-				
-                <div class="ti-caption-gray">
-                    <h3 class="tit">옵션요금제</h3>
                 </div>
 
                 <!-- .cont-box -->
-                <div class="cont-box nogaps-hoz">
-                    <div class="history-list type2">
+                <div class="cont-box nogaps-btm">
+                   <h3 class="tit-type6">옵션 / 할인 프로그램</h3>
+                   <div class="separate-link-list">
                         <ul>
                             <li>
-                                <div class="li-elem">
-                                    <button class="bt-detail">
-                                        <div class="title-box">
-                                            <span class="tit">선택약정 할인 제도</span>
-                                            <span class="sub-tit">가입일 2018.8.15</span>
-                                        </div>
-                                    </button>
-                                    <button class="bt-link-tx underline">가입내역 조회</button>
+                                <div class="txt-area" id="aria-separate-list01"><!--접근성 수정 aria-labelledby추가 -->
+                                    <span class="tit">요금약정할인제도</span>
+                                    <span class="join-date">가입일 2018.8.15.</span>
+                                    <button class="bt-link-tx underline" title="요금약정할인제도">가입내역 조회</button> <!--웹접근성 수정 title 추가-->
                                 </div>
+                                <button class="btn" aria-labelledby="aria-separate-list01">상세보기</button><!--접근성 수정 aria-labelledby추가 -->
                             </li>
                         </ul>
                     </div>
                 </div>
                 <!--// .cont-box -->
 
-                <div class="ti-caption-gray">
-                    <h3 class="tit">무료 할인 혜택</h3>
-                </div>
-
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                
                 <!-- .cont-box -->
-                <div class="cont-box nogaps-hoz">
-                    <ul class="nocharge-list">
+                <div class="cont-box nogaps">
+                   <ul class="full-link-list">
                         <li>
-                            <dl>
-                                <dt>
-                                    <strong class="tit">서비스 정기 계약 할인</strong>
-                                    <div class="sub-info">
-                                        <span>기본료</span>
-                                        <span>위약금 대상</span>
-                                    </div>
-                                </dt>
-                                <dd><span class="str">13,000</span>원</dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl>
-                                <dt>
-                                    <strong class="tit">온가족 플랜</strong>
-                                    <div class="sub-info">
-                                        <span>기본료</span>
-                                    </div>
-                                </dt>
-                                <dd><span class="str">5,100</span>원</dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl>
-                                <dt>
-                                    <strong class="tit">온라인&amp;고객센터 프로모션</strong>
-                                    <div class="sub-info">
-                                        <span>기본료</span>
-                                        <span>위약금 대상</span>
-                                    </div>
-                                </dt>
-                                <dd><span class="str">2,100</span>원</dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl>
-                                <dt>
-                                    <strong class="tit">(SKT)Giga WiFi 결합 할인<br />_할인 반환금</strong>
-                                    <div class="sub-info">
-                                        <span>부가상품 기본료</span>
-                                        <span>위약금 대상</span>
-                                    </div>
-                                </dt>
-                                <dd><span class="str">2,100</span>원</dd>
-                            </dl>
+                            <button>
+                                <span class="inner">
+                                    <span class="tit">요금제 변경하기</span>
+                                </span>
+                            </button>
                         </li>
                     </ul>
                 </div>
                 <!--// .cont-box -->
 
-                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!-- .cont-box -->
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                    <ul class="pg-chk-list02">
+                        <li><button class="btn-tip">요금제 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
 
-                <!-- .cont-box --><!-- 2018-11-02 추가 -->
-				<div class="cont-box nogaps-btm">
-					<h3 class="tx-bold">꼭 확인해주세요!</h3>
-					<ul class="noti-list">
-						<li>텍스트가 1줄인 Case입니다. <button type="button" class="icon-tip" title="텍스트가 1줄인 Case입니다. TIP보기">TIP</button></li>
-						<li>텍스트가 2줄이상인<br>Case입니다. <button type="button" class="icon-tip" title="텍스트가 2줄이상인 Case입니다. TIP보기">TIP</button></li>
-					</ul>
-				</div>
-				<!--// .cont-box -->
-
-				<!-- 2018-11-02 삭제 <img src="/img/dummy/DC_02_TBD2.jpg" alt="이용안내 노출 영역" style="width:100%;vertical-align: top; margin-bottom: 3.75rem"> -->
+				
             </div>
         </div>
         <!--// #contents -->
