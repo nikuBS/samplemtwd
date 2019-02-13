@@ -1,6 +1,7 @@
 /*
  * FileName: membership.benefit.brand.map.controller.ts
  * Author: Hakjoon Sim (hakjoon.sim@sk.com)
+ * Editor: Inhwan Kim (skt.P132150@partner.sk.com)
  * Date: 2018.11.06
  */
 
@@ -32,10 +33,9 @@ class MembershipBenefitBrandMap extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
          allSvc: any, child: any, pageInfo: any) {
 
-    // Mock: test input
     const input: Input = {
-      coCd: 'C111',
-      joinCd: 'B187'
+      coCd: req.query.coCd || '',
+      joinCd: req.query.joinCd || ''
     };
 
     this.getInfo(input, res, svcInfo).subscribe(
