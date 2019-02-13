@@ -75,9 +75,17 @@ Tw.TooltipService.prototype = {
     }
   },
   _setTitle: function ($target, $result) {
-    var $children = $target.children().first().clone();
-    $target.text($result.ttipTitNm);
-    $target.append($children);
+    if ($target.hasClass('fe-insert-parent')) {
+      var $parent = $target.parent();
+      var $parentOriginal = $parent.children().first().remove().clone();
+      $parent.text($result.ttipTitNm);
+      $parent.append($parentOriginal);
+      $target = $parent.find('.fe-insert-parent');
+    } else {
+      var $children = $target.children().first().clone();
+      $target.text($result.ttipTitNm);
+      $target.append($children);
+    }
 
     $target.on('click', $.proxy(this._openTip, this, $result));
   },

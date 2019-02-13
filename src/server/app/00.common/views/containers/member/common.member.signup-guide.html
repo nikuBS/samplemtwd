@@ -5,127 +5,59 @@
 %>
 
 <% include ../../components/start.component.html %>
-
-<!-- #skip_navigation -->
-<div id="skipNav" class="skip_navi">
-    <ul>
-        <li><a href="#gnb_area">메뉴 바로가기</a></li>
-        <li><a href="#contents">본문 바로가기</a></li>
-        <li><a href="#footer">푸터 바로가기</a></li>
-    </ul>
-</div>
-<!--// #skip_navigation -->
-<div class="wrap">
-    <!-- #header -->
-    <div id="header" class="header-wrap">
-        <div class="header">
-            <div class="header-ti">
-                <h1>회원가입 안내</h1>
-            </div>
-            <button class="prev-step fe-common-back"><span class="blind">이전으로</span></button>
-        </div>
+<body class="bg-white">
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
     </div>
-    <!--// #header -->
-    <!-- #contents --
-    <div id="contents" class="container-wrap">
-        <h2 class="blind">내용</h2>
-        <div class="container">
-            <!-- .cont-box -->
-            <div class="cont-box">
-                <div class="box-suggest">
-                    <div class="suggest-info">
-                        <p class="suggest-ti"><em class="tx-bold">SK텔레콤 T아이디 회원가입을</em><br />환영합니다.</p>
-                        <ul class="suggest-list">
-                            <li>T world 신규가입은 SK텔레콤 <em class="tx-bold">T아이디 회원</em>으로 받고 있습니다.</li>
-                            <li>T아이디 회원으로 가입하시면 SK텔레콤의 <em class="tx-bold">다양한 서비스들을 동일한 아이디로 편리하게</em> 이용하실 수 있습니다.</li>
-                        </ul>
-                        <a class="bt-link-tx" target="_blank" href="/common/tid/guide">SK텔레콤 T아이디 자세히 보기<span class="ico"></span></a>
-                    </div>
-                    <div class="link-tuberound">
-                        <ul class="tuberound-list">
-                            <li><a href="/common/tid/signup-local" title="내국인 회원가입으로 이동"><span class="ico ico-person1"></span><span class="tx">내국인 회원가입</span></a></li>
-                            <li><a href="/common/tid/signup-foreigner" title="Register for Foreigner로 이동"><span class="ico ico-person2"></span><span class="tx">Register for Foreigners</span></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!--// .cont-box -->
-            <hr class="cont-sp type1" />
-            <!-- .cont-box -->
-            <div class="cont-box nogaps-hoz">
-                <div class="box-confirm">
-                    <!-- .widget -->
-                    <div class="widget">
-                        <div class="widget-box accordion">
-                            <h5 class="tit-a">꼭 확인해 주세요!</h5>
-                            <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
-                                <div class="acco-style btn-hold">
-                                    <ul class="acco-list">
-                                        <li class="acco-box">
-                                            <!-- .on: 열기 -->
-                                            <div class="acco-tit"><span class="bullet">1.</span> 누구든 가입할 수 있나요? <button role="button" aria-pressed="false">상세보기</button></div>
-                                            <div class="acco-cont">
-                                                <ul class="list-dot">
-                                                    <li class="list"><em>고객 명의의 SK텔레콤</em> 이동전화, 결합상품, 전화/인터넷 전화, 인터넷, T WiBro, T 포켓파이 <em>서비스를 이용중인 개인 고객</em>이면 가능합니다.</li>
-                                                    <li class="list"><em>법인 명의</em>의 SK텔레콤 휴대폰<em>이용중인 개인 고객</em>도 가입하실 수 있습니다.</li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li class="acco-box">
-                                            <div class="acco-tit"><span class="bullet">2.</span> 대상 요금상품 조건 <button role="button" aria-pressed="false"></button></div>
-                                            <div class="acco-cont">
-                                                <ul class="list-dot">
-                                                    <li class="list"><em>신규 회원가입은 T아이디에서 진행됩니다.</em> T아이디 가입 후 생성된 ID로 T world에서 로그인해 주세요.</li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li class="acco-box">
-                                            <div class="acco-tit"><span class="bullet">3.</span> 개인정보가 어떻게 관리되나요? <button role="button" aria-pressed="false"></button></div>
-                                            <div class="acco-cont">
-                                                <ul class="list-dot">
-                                                    <li class="list">T아이디 가입 시 T world 외 이용약관이 동의되지 않은 다른 서비스에는 <em>개인정보가 제공되지 않습니다.</em></li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li class="acco-box">
-                                            <div class="acco-tit"><span class="bullet">4.</span> 예전에 T world 회원으로 가입되어 있으면 어떻게 하나요? <button role="button" aria-pressed="false"></button></div>
-                                            <div class="acco-cont">
-                                                <ul class="list-dot">
-                                                    <li class="list">기존 T world 회원님은 <em>사용하시던 ID 그대로</em> 로그인하실 수 있습니다.</li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li class="acco-box">
-                                            <div class="acco-tit"><span class="bullet">5.</span> T아이디가 있는데 별도로 Tworld 가입을 해야 되나요? <button role="button" aria-pressed="false"></button></div>
-                                            <div class="acco-cont">
-                                                <ul class="list-dot">
-                                                    <li class="list">T아이디에 이미 가입하신 회원님은 <em>동일한 ID로 로그인</em>하실 수 있습니다.</li>
-                                                </ul>
-                                                <div class="acco-bt-slice">
-                                                    <ul class="bt-slice">
-                                                        <li class="bt-white2">
-                                                            <a href="/common/tid/login">기존 계정으로 바로 로그인 하기</a>
-                                                        </li>
-                                                        <li class="bt-white2">
-                                                            <a href="/common/member/tid-pwd">아이디 찾기/비밀번호 재설정하기</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+    <!--// #skip_navigation -->
+    <div class="wrap header-noborder" data-menuId="<%= pageInfo.menuId %>">
+        <%- include('../../../../common/views/components/header.component.html', { title: '', svcInfo: svcInfo }); %>
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+                <!--cont-box-->
+                <div class="cont-box noborder">
+                    <div class="pg-member">
+                        <div class="logo-t"><span class="blind">T</span></div>
+                        <h3 class="member-tit pt24">회원가입을 환영합니다</h3>
+                        <p class="complete-error-tx pt12">
+                            <span class="tx666">T아이디 회원으로 가입하시면<br />SK텔레콤의 다양한 서비스들을 동일한 아이디로<br />편리하게 이용하실 수 있습니다.</span>
+                        </p>
+                        <div class="btn-join pt38 pb20">
+                            <!--접근성 수정-->
+                            <a href="/common/tid/signup-local" class="btn-round1 btn-style1" role="button">가입하기</a>
+                            <!-- //접근성 수정-->
+                        </div>
+                        <div class="btn-foreign-join mb54">
+                            <a href="/common/tid/signup-foreigner" class="bt-link-tx underline">foreigner</a>
                         </div>
                     </div>
-                    <!--// .widget -->
+                    <div class="join-footer">
+                        <div class="complete-error-tx newjoin-txt">
+                            <!--접근성 수정-->
+                            <span class="tx666">T월드에서 신규가입은 SK텔레콤 <a href="/common/tid/guide" title="새 창 열림" target="_blank" class="bt-link-tx underline" role="button">T아이디</a> 회원으로 받고 있습니다.</span>
+                            <!-- //접근성 수정-->
+                        </div>
+                        <ul class="pg-chk-list">
+                            <!--접근성 수정-->
+                            <li><span>기존 T world 회원이라면 <button class="btn-tip fe-insert-parent" id="CO_ME_01_01_01" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">기존 T world 회원이라면? tip</span></i></button></span></li>
+                            <li><span>이미 T아이디가 있다면 <button class="btn-tip fe-insert-parent" id="CO_ME_01_01_02" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">이미 T아이디가 있다면? tip</span></i></button></span></li>
+                            <!-- //접근성 수정-->
+                        </ul>
+                    </div>
                 </div>
+                <!--//cont-box-->
             </div>
-            <!--// .cont-box -->
         </div>
+        <!--// #contents -->
+        <footer id="fe-all-menu">
+            <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo }); %>
+            <%- include('../../../../common/views/components/masking.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        </footer>
     </div>
-    <!--// #contents -->
-    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-</div>
+</body>
 <% include ../../components/javascript.component.html %>
 <% include ../../components/end.component.html %>
