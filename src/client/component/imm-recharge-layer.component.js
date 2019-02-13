@@ -220,7 +220,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
 
   _onImmDetailRefill: function (event) {
     var $target = $(event.target);
-    $target.attr('data-url', '/myt-data/recharge/coupon');
+    $target.attr('data-url', '/myt-data/recharge/coupon/use?auto=Y');
     this._popupService.close();
   },
 
