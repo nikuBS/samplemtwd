@@ -606,7 +606,7 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
     ]
   },
   {
-    title: '다이렉트샵',
+    title: 'T월드 다이렉트',
     category: 'DIRECT',
     list: [
       { title: '휴대폰 구매', ofrCtgSeq: '07' },
@@ -617,7 +617,7 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
     ]
   },
   {
-    title: '초코렛',
+    title: '초콜릿',
     category: 'CHOCO',
     list: [
       { title: '상품문의', ofrCtgSeq: '010700' },
@@ -640,16 +640,16 @@ Tw.CUSTOMER_EMAIL_QUALITY_QUESTION = {
       { text: '음성통화 불량(HD Voice 포함)' },
       { text: '영상통화 불량' },
       { text: '부가서비스 불량' },
-      { text: '데이터(Data) 불량' },
+      { text: '데이터 불량' },
       { text: '와이브로 품질장애/고장' }
     ]
   },
   Q_TYPE02: {
     title: '세부현상',
     list: [
-      { text: '음성발신불량, 음성수신불량, 음성발신/수신 모두 불량' },
-      { text: 'SMS발신불량, SMS수신불량, SMS발신/수신 모두불량' },
-      { text: '인터넷접속불량 특정 APP 분량, 기타' }
+      { text: '음성통화(발신, 수신, 발신/수신) 불량' },
+      { text: '문자(발신, 수신, 발신/수신) 불량' },
+      { text: '인터넷 접속 불량, 특정 앱 분량, 기타' }
     ]
   },
   Q_TYPE03: {
@@ -658,7 +658,7 @@ Tw.CUSTOMER_EMAIL_QUALITY_QUESTION = {
       { text: '건물내부(지하층)' },
       { text: '건물내부(지상층)' },
       { text: '건물외부' },
-      { text: '위치무관' }
+      { text: '위치 무관' }
     ]
   },
   Q_TYPE04: {
@@ -675,7 +675,7 @@ Tw.CUSTOMER_EMAIL_QUALITY_QUESTION = {
     list: [
       { text: '사용 중 갑자기' },
       { text: '며칠 전부터' },
-      { text: '이사/회사 이동 후 부터' }
+      { text: '이사 또는 회사 이동 후부터' }
     ]
   }
 };

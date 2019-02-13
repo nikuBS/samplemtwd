@@ -1267,15 +1267,15 @@ Tw.CUSTOMER_VOICE = {
 Tw.CUSTOMER_EMAIL = {
   SELECT_SERVICE: '서비스 선택',
   SELECT_QUESTION: '문의사항 선택',
-  SMS_ALARM: 'SMS알림 설정 시 답변이 등록되면 입력하신 휴대전화번호로 SMS가 발송됩니다.',
+  SMS_ALARM: '문자 알림을 설정할 경우, 입력하신 휴대폰 번호로 등록된 답변을 보내드립니다.',
   INVALID_PHONE: '연락처 번호를 다시 확인해 주세요.',
   INVALID_EMAIL: '이메일 주소를 다시 확인해주세요.',
   INVALID_FILE: '첨부하실 수 없는 파일입니다. <br> 다시 확인해주세요.',
   DEFAULT_PLACEHOLDER: '내용 입력',
   MEMBERSHIP_PLACEHOLDER: '멤버십 등급 산정 기준 등 \n' +
     '멤버십의 상세한 내용 확인을 위해서는 \n' +
-    '‘청구서 주소 및 멤버십 카드 뒤 3자리’가 필요합니다. 해당 정보가 없을 경우 일부 상담이 제한될 수 있습니다.\n' +
-    '청구서 주소: \n' +
+    '‘요금안내서 주소 및 멤버십 카드 뒤 3자리’가 필요합니다. 해당 정보가 없을 경우 일부 상담이 제한될 수 있습니다.\n' +
+    '요금안내 주소: \n' +
     '멤버십 카드번호 뒤 3자리:',
   NOT_SUPPORT_FILE_UPLOAD: '사용하고 계신 안드로이드 버전에서는 <br> 지원하지 않는 기능입니다.'
 };

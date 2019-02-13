@@ -18,8 +18,9 @@ class CustomerMain extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, childInfo?: any, pageInfo?: any): void {
     combineLatest(
       this.getBanners(),
-      this.getNotice()
-    ).subscribe(([banners, notice]) => {
+      this.getNotice(),
+      this.getResearch()
+    ).subscribe(([banners, notice, researchList]) => {
       const noticeList = this.parseNoticeList(BrowserHelper.isApp(req), notice);
 
       res.render('main/customer.main.html', {
@@ -27,8 +28,8 @@ class CustomerMain extends TwViewController {
         banners: banners,
         pageInfo: pageInfo,
         noticeList: noticeList,
-        isApp: BrowserHelper.isApp(req)
-        // researchList: researchList
+        isApp: BrowserHelper.isApp(req),
+        researchList: researchList
       });
     });
   }
