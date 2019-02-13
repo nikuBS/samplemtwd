@@ -157,15 +157,15 @@
             <!-- .cont-box -->
             <div class="cont-box">
                 <div class="user-month-bill">
-                    <div class="this-month-bill type3">
+                    <div class="this-month-bill">
                         <p class="stit"><%=commDataInfo.selClaimDt %>
                             <span class="bar"></span><%=commDataInfo.intBillLineList[0].label %>
                         </p>
                         <% if( billpayInfo.useAmtTot != 0 ){ %>
                         <p class="price"><%=commDataInfo.useAmtTot %>원</p>
-                        <p class="term"><%=commDataInfo.selStaDt %> ~ <%=commDataInfo.selEndDt %></p>
+                        <p class="term type2"><%=commDataInfo.selStaDt %> ~ <%=commDataInfo.selEndDt %></p>
                         <% } %>
-                        <div class="btn-wrap"><button class="btn-round2 btn-style3" data-target="conditionChangeBtn">조건 변경</button></div>
+                        <div class="btn-wrap"><button class="btn-round2 btn-style3" data-target="conditionChangeBtn">조건변경</button></div>
                     </div>
                     <% if( billpayInfo.useAmtTot == 0 ){ %>
                     <div class="result-none type2">
@@ -213,8 +213,8 @@
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">꼭 확인해 주세요</h3>
                 <ul class="noti-list02">
-                    <li><button id="MF_02_01_tip_01" type="button" class="tip-view-btn">이용요금<span class="tip-view">TIP</span></button></li>
-                    <li><button id="MF_02_01_tip_02" type="button" class="tip-view-btn">로밍 이용요금 안내<span class="tip-view">TIP</span></button></li>
+                    <li><button id="MF_02_01_tip_01" type="button" class="tip-view-btn" aria-haspopup="true" title="이용요금 안내">이용요금 안내<span class="tip-view">TIP</span></button></li>
+                    <li><button id="MF_02_01_tip_02" type="button" class="tip-view-btn" aria-haspopup="true" title="로밍 이용요금 안내">로밍 이용요금 안내<span class="tip-view">TIP</span></button></li>
                 </ul>
             </div>
             <!--// .cont-box -->

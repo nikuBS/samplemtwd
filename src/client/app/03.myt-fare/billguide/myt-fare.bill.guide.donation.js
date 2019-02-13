@@ -130,8 +130,8 @@ Tw.MyTFareBillGuideDonation.prototype = {
       var totalCount = res.result.totalCount;
 
       var resData = {
-        startDt: Tw.DateHelper.getShortDateNoDot( param.startDt ),
-        endDt: Tw.DateHelper.getShortDateNoDot( param.endDt ),
+        startDt: Tw.DateHelper.getShortDate( param.startDt ),
+        endDt: Tw.DateHelper.getShortDate( param.endDt ),
         totalNum: this._comComma(totalNum),
         list: dataArr,
         totalCount: totalCount
