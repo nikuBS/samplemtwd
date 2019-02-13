@@ -74,9 +74,7 @@
                         <li>
                             <div class="title-wrap">
                                 <span class="elem tx-bold">B상품</span>
-                                {{#if wireMember.svcNum}}
-                                <span class="elem">{{wireMember.svcNum}}</span>
-                                {{/if}}
+                                <span class="elem">{{wireMember.svcNm}}</span>
                             </div>
                             <div class="basic-list">
                                 <ul>
@@ -87,10 +85,6 @@
                                     <li>
                                         <span class="title">요금제</span>
                                         <span class="tx-cont">{{wireMember.feeProdNm}}</span>
-                                    </li>
-                                    <li>
-                                        <span class="title">가입일</span>
-                                        <span class="tx-cont">{{wireMember.combStaDt}}</span>
                                     </li>
                                     <li>
                                         <span class="title">결합상태</span>

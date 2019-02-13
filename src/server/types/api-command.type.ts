@@ -825,6 +825,18 @@ export const API_CMD = {
     server: API_SERVER.BFF,
     bypass: true
   },
+  BFF_10_0171: {
+    path: '/core-product/:version/mobiles/combinations/tfamilymoa/join/prechecks',
+    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
+  BFF_10_0172: {
+    path: '/core-product/:version/mobiles/combinations/tfamilymoa/join/oppsblcheck',
+    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
+  BFF_10_0173: {
+    path: '/core-product/:version/mobiles/combinations/tfamilymoa/join',
+    method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true
+  },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/:version/submain/products', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

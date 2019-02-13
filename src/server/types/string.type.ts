@@ -667,7 +667,7 @@ export const CUSTOMER_DAMAGEINFO_CONTENTS_TITLE = {
   page003: '파밍 피해 예방법',
   page004: '클라우드 보안 방법',
   page005: '스마트폰 보안 수칙',
-  page006: '스팸 메시지 대응 방법',
+  page006: '스팸 문자 대응 방법',
   page007: '로그인 제한 제도',
   page008: '휴면 고객 제도',
   page009: 'Tworld 비밀번호 관리',
