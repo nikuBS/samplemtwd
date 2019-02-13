@@ -388,10 +388,13 @@ Tw.PopupService.prototype = {
     }, 0);
   },
   isPopup: function () {
+    var $popups = $('.tw-popup');
+    var $currentPopup = $($popups[$popups.length - 1]);
+
     if ( /_P/.test(location.hash) || /popup/.test(location.hash) ) {
-      return true;
+      return $currentPopup;
     }
-    return false;
+    return null;
   },
   afterRequestSuccess: function (historyUrl, mainUrl, linkText, text, subText) {
     this.open({
