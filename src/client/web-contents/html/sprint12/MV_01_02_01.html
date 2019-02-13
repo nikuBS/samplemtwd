@@ -61,7 +61,8 @@
 							<span class="ico"><span class="blind" aria-hidden="true">선택된 회선정보 아이콘</span></span>
 							<!-- 2019.01.24 aria-hidden="true" 추가 sblee -->
 							<div class="in-info">
-								<span class="number"><span class="blind">회선번호</span>010-73**-06**</span>
+								<!-- 2019.02.08 한줄만 노출될 경우 lh-full 클래스 추가 -->
+								<span class="number lh-full"><span class="blind">회선번호</span>010-73**-06**</span>
 								<!-- 2019.01.10 aria-hidden="true" 삭제 sblee -->
 							</div>
 						</div>
@@ -245,8 +246,8 @@
 					<!-- .cont-box -->
 					<div class="cont-box nogaps-btm">
 						<h3 class="tx-bold">꼭 확인해 주세요</h3>
-						<ul class="noti-list">
-							<li>상품 가입 시 유의사항 <button type="button" class="tip-view" title="상품 가입 시 유의사항 정보보기" aria-haspopup="true">TIP</button></li>
+						<ul class="noti-list02">
+							<li><button aria-haspopup="true" class="tip-view-btn" title="상품 가입 시 유의사항 정보보기">상품 가입 시 유의사항<span class="tip-view">TIP</span></button></li>
 							<!-- 2019.01.23 title값 수정 -->
 						</ul>
 					</div>

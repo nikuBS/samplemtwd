@@ -17,7 +17,7 @@
                         <span class="block tx-bold"><%= state %></span>
                         <% if(opStateCd === 'A') { %>
                         <span class="block fs-13"><%= opReason %></span>
-                        <span class="block"><button class="bt-link-tx underline fs-12" id="fe-reattach-files">구비서류 재첨부하기</button></span>
+                        <span class="block"><button class="bt-link-tx underline fs-12" id="fe-reattach-files">필요서류 재첨부하기</button></span>
                         <% } %>
                     </span>
                 </li>
@@ -27,7 +27,7 @@
                 </li>
                 <li>
                     <span class="title">장기일시정지 기간</span>
-                    <span class="tx-cont"><%= fromDt %> ~ <%= toDt %></span>
+                    <span class="tx-cont"><%= fromDt %>~<%= toDt %></span>
                 </li>
                 <li>
                     <span class="title">사유</span>
@@ -38,7 +38,7 @@
                     </span>
                 </li>
                 <li>
-                    <span class="title">구비서류</span>
+                    <span class="title">필요서류</span>
                     <% if(opStateCd === 'E') { %>
                     <span class="tx-cont"><%= opDtm %> 첨부</span>
                     <% } else { %>
@@ -53,7 +53,7 @@
                         <span class="block"><%= cntcNum %></span>
                         <% } %>
                         <% if(locals.cntcNumRelNm && locals.cntcNumRelNm !== 'null') { %>
-                        <span class="block">(관계 : <%= cntcNumRelNm %>)</span>
+                        <span class="block">(관계: <%= cntcNumRelNm %>)</span>
                          <% } %>
                     </span>
                 </li>

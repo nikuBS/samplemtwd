@@ -64,13 +64,16 @@
 						<div class="cont-box pb0">
 							<p class="con-tit0 pb12" id="aria-exp-label1">이메일 주소</p>
 							<span class="inputbox">
+								<!--접근성 수정-->
 								<span class="input">
 									<input type="text" placeholder="이메일 입력" title="이메일 주소를 입력해 주세요" value="" aria-describedby="aria-exp-desc1" />
 									<button class="cancel"><span class="blind">삭제</span></button>
 								</span>
+								<!-- //접근성 수정-->
 							</span>
 							<div class="widget pt20">
 								<div class="widget-box check">
+									<!--접근성 수정-->
 									<ul class="select-list" role="group">
 										<li class="checkbox type01 mb16 checked" id="aria-comp-radio1" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
 											<input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-radio1" checked/><!-- 체크상태일 경우 checked="checked" -->
@@ -81,6 +84,7 @@
 											입력한 이메일로 다양한 혜택 정보 받기
 										</li>
 									</ul>
+									<!-- //접근성 수정-->
 								</div>
 							</div>	
 						</div>
@@ -95,7 +99,9 @@
 											<span class="btn-switch type1 on">
 												<span class="switch-style" role="checkbox" aria-checked="false">
 													<span class="off-tx">꺼짐</span>
+													<!--접근성 수정-->
 													<input type="checkbox" title="휴대폰번호 전체 표시" />
+													<!-- //접근성 수정-->
 													<span class="on-tx">켜짐</span>
 												</span>
 											</span>
@@ -109,7 +115,9 @@
 											<span class="btn-switch type1 on">
 												<span class="switch-style" role="checkbox" aria-checked="false">
 													<span class="off-tx">꺼짐</span>
+													<!--접근성 수정-->
 													<input type="checkbox" title="콘텐츠 이용 상세내역 표시" />
+													<!-- //접근성 수정-->
 													<span class="on-tx">켜짐</span>
 												</span>
 											</span>
@@ -124,8 +132,10 @@
 					<!-- .cont-box --><!-- 2018-11-02 수정 -->
                     <div class="cont-box nogaps-btm">
 						<h3 class="tx-bold">꼭 확인해 주세요</h3>
-						<ul class="noti-list">
-							<li>요금안내서 이용안내 <button type="button" class="tip-view" title="요금안내서 이용안내" aria-haspopup="true">TIP</button></li>
+						<ul class="noti-list02">
+							<!--접근성 수정-->
+							<li><button type="button" class="tip-view-btn" title="요금안내서 이용안내" aria-haspopup="true">요금안내서 이용안내<span class="tip-view">TIP</span></button></li>
+							<!-- //접근성 수정-->
 						</ul>
 					</div>
 					<!--// .cont-box -->

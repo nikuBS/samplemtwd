@@ -4,7 +4,7 @@
  * Date: 2018.09.11
  */
 
-Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, lineProcessCase, isPreview) {
+Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, lineProcessCase, isPreview, isAllowJoinCombine) {
   this.$container = rootEl;
 
   this._historyService = new Tw.HistoryService();
@@ -20,6 +20,7 @@ Tw.ProductCommonCallplan = function(rootEl, prodId, prodTypCd, settingBtnList, l
   this._settingBtnList = settingBtnList;
   this._lineProcessCase = lineProcessCase;
   this._isPreview = isPreview === 'Y';
+  this._isAllowJoinCombine = isAllowJoinCombine === 'Y';
 
   this._convertSettingBtnList();
   this._cachedElement();
@@ -75,6 +76,8 @@ Tw.ProductCommonCallplan.prototype = {
     this.$contents.on('click', '.fe-clubt', $.proxy(this._openCustomPopup, this, 'MP_02_02_04_01'));
     this.$contents.on('click', '.fe-campuszone', $.proxy(this._openCustomPopup, this, 'MP_02_02_04_02'));
     this.$contents.on('click', '.fe-concierge', $.proxy(this._openCustomPopup, this, 'MP_02_02_04_03'));
+
+    this.$contents.on('click', $.proxy(this._detectClubT, this));
   },
 
   _showReadyOn: function() {
@@ -138,6 +141,16 @@ Tw.ProductCommonCallplan.prototype = {
       hbs: hbsCode,
       layer: true
     }, $.proxy(this._bindCustomPop, this, hbsCode));
+  },
+
+  _detectClubT: function(e) {
+    var clubT = 'http://m2.tworld.co.kr/normal.do?serviceId=S_PROD2001&viewId=V_PROD2001&menuId=5,1&prod_id=TW00000103&cate=3';
+
+    if (['NA00004428', 'NA00004429'].indexOf(this._prodId) === -1 || $(e.currentTarget).attr('href') !== clubT) {
+      return;
+    }
+
+    this._openCustomPopup('MP_02_02_04_01');
   },
 
   _bindCustomPop: function(hbsCode, $popupContainer) {
@@ -285,6 +298,10 @@ Tw.ProductCommonCallplan.prototype = {
         $.proxy(this._setGoMemberLine, this), $.proxy(this._onCloseMemberLine, this));
     }
 
+    if (this._prodTypCd === 'F' && !this._isAllowJoinCombine) {
+      return this._openCombineNeedWireError();
+    }
+
     if (this._lineProcessCase === 'B' || this._lineProcessCase === 'D') {
       return this._procPreCheck(joinTermCd, url);
     }
@@ -295,7 +312,6 @@ Tw.ProductCommonCallplan.prototype = {
 
   _procPreCheck: function(joinTermCd, url) {
     var preCheckApi = this._getPreCheckApiReqInfo(joinTermCd);
-
 
     this._url = url;
     this._joinTermCd = joinTermCd;
@@ -340,6 +356,35 @@ Tw.ProductCommonCallplan.prototype = {
     $popupContainer.scrollTop($popupContainer.find('[data-anchor="contents_' + contentsIndex + '"]').offset().top - 60);
   },
 
+  _openCombineNeedWireError: function() {
+    this._popupService.open({
+      url: Tw.Environment.cdn + '/hbs/',
+      'title': Tw.BENEFIT_TBCOMBINATION_ERROR.TITLE,
+      'title_type': 'sub',
+      'cont_align': 'tl',
+      'contents': Tw.BENEFIT_TBCOMBINATION_ERROR.CONTENT,
+      'bt': [{
+        style_class: 'fe-btn_go_reservation',
+        txt: Tw.BENEFIT_TBCOMBINATION_ERROR.BTN_TEXT
+      }],
+      'bt_b': [{
+        style_class: 'pos-right tw-popup-closeBtn',
+        txt: Tw.BUTTON_LABEL.BACK
+      }]
+    }, $.proxy(this._bindCombineNeedWireError, this));
+  },
+
+  _bindCombineNeedWireError: function($popupContainer) {
+    $popupContainer.on('click', '.fe-btn_go_reservation', $.proxy(this._goReservation, this));
+  },
+
+  _goReservation: function() {
+    this._popupService.closeAll();
+    setTimeout(function() {
+      this._historyService.goLoad('/product/wireplan/join/reservation?type_cd=combine');
+    }.bind(this));
+  },
+
   _openSettingPop: function() {
     this._popupService.open({
       hbs:'actionsheet01',
@@ -368,8 +413,25 @@ Tw.ProductCommonCallplan.prototype = {
     this._historyService.goLoad(this._settingGoUrl + '?prod_id=' + this._prodId);
   },
 
+  _getWireAdditionsPreCheck: function(termPrecheckResult) {
+    this._apiService.request(Tw.API_CMD.BFF_10_0098, { joinTermCd: '04' }, {}, [this._prodId])
+      .done($.proxy(this._resWireAdditionsPreCheck, this, termPrecheckResult));
+  },
+
+  _resWireAdditionsPreCheck: function(termPrecheckResult, resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(termPrecheckResult.code, termPrecheckResult.msg).pop();
+    }
+
+    this._historyService.goLoad('/product/wireplan/reservation-cancel?prod_id=' + this._prodId);
+  },
+
   _procAdvanceCheck: function(resp) {
     Tw.CommonHelper.endLoading('.container');
+
+    if (resp.code !== Tw.API_CODE.CODE_00 && ['D_I', 'D_P', 'D_T'].indexOf(this._prodTypCd) !== -1 && this._joinTermCd === '03') {
+      return this._getWireAdditionsPreCheck(resp);
+    }
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();

@@ -49,6 +49,7 @@ Tw.BUTTON_LABEL = {
   APPLY: '신청하기',
   JOIN: '가입하기',
   TERMINATE: '해지하기',
+  BACK: '돌아가기',
   NEXT: '다음',
   HOME: '홈으로',
   YES: '예',
@@ -363,8 +364,8 @@ Tw.MYT_FARE_BILL_SET = {
     }
   },
   BILL_GUIDECHANGE_A14: '요금안내서 재발행이 신청되었습니다.',
-  COMPLETE_TEXT_REISSUE: '안내서 재발행',
-  COMPLETE_TEXT_CHANGE: '안내서 변경',
+  COMPLETE_TEXT_REISSUE: '요금안내서 재발행',
+  COMPLETE_TEXT_CHANGE: '요금안내서 변경',
   GUIDE_CONFIRM_TEXT: '요금안내서 확인'
 };
 
@@ -1198,11 +1199,11 @@ Tw.MYT_JOIN_SUSPEND = {
   },
   LONG: {
     MILITARY: {
-      TITLE: '구비서류 첨부 안내',
+      TITLE: '필요서류 첨부 안내',
       TIP:
         '<ul class="round-dot-list">' +
-        '<li>병적증명서(지방병무청, 시군구 읍면동 주민센터 등에서 발급), 입영 사실 기재 주민등록초본 or 입영통지서, 선발 통지서 등 병역법 시행규칙에서 정한 서식과 신분증 2종 필수 제출입니다.</li>' +
-        '<li>‘교육소집 기간’이 확인되는 군입대 입증 서류 필요하며, 군입대 장기 일시정지 처리 시 구비서류에 기재된 ‘입대일자‘ 확인 후 장기 일시정지 신청이 가능합니다.</li>' +
+        '<li>병적증명서(지방병무청, 시군구 읍면동 주민센터 등에서 발급), 입영 사실 기재 주민등록초본 또는 입영통지서, 선발 통지서 등 병역법 시행규칙에서 정한 서식과 신분증 2종을 필수 제출해 주세요.</li>' +
+        '<li>‘교육소집 기간’이 확인되는 군입대 입증 서류 필요하며, 군입대 장기 일시정지 처리 시 구비서류에 기재된 ‘입대일자‘ 확인 후 장기 일시정지 신청하실 수 있습니다.</li>' +
         '</ul>',
       UPLOAD_DESC: '입영통지서 등 군입증명서류, 신분증 2종 제출'
     },
@@ -1210,8 +1211,8 @@ Tw.MYT_JOIN_SUSPEND = {
       TITLE: '구비서류 첨부 안내',
       TIP:
         '<ul class="round-dot-list">' +
-        '<li>항공권 사본(편도, 왕복 모두 인정/전자항공권 인정), 출입국에 관한 사실 증명서(출입국 관리사무소, 인터넷 발급 인정) 등 해외체류입증 서류 필수 제출입니다.</li>' +
-        '<li>단, 항공권(편도, 왕복)의 경우 국내에서 국외로 출국하는 내용이 기재되어 있어야 인정됩니다.</li>' +
+        '<li>항공권 사본(편도, 왕복 모두 인정, 전자항공권 인정), 출입국에 관한 사실 증명서(출입국 관리사무소, 인터넷 발급 인정) 등 해외체류입증 서류 필수 제출해 주세요.</li>' +
+        '<li>단, 항공권(편도, 왕복)의 경우 국내에서 국외로 출국하는 내용이 기재되어 있어야합니다.</li>' +
         '</ul>',
       UPLOAD_DESC: '항공권 사본 등 해외체류입증 서류 1종 제출'
     }
@@ -1347,13 +1348,12 @@ Tw.BRANCH_SEARCH_OPTIONS = {
 };
 
 Tw.UPLOAD_FILE = {
-  UPLOAD_FILE: '파일 추가하기',
   WARNING_A00: '업로드를 실패 했습니다. 잠시 후 다시 시도해주세요.',
-  WARNING_A01: '첨부파일 용량은 2MB를 넘을 수 없습니다.',
+  WARNING_A01: '첨부파일 용량은 최대 2MB까지 첨부하실 수 있습니다.',
   WARNING_A02: '첨부파일은 최대 5개까지 등록할 수 있습니다.',
-  WARNING_A03: 'MS워드, 한글hwp, 이미지 (jpg, bmp, gif, pdf)파일을 첨부할 수 있습니다.',
-  BUTTON_ADD: '파일찾기',
-  BUTTON_DELETE: '파일삭제',
+  WARNING_A03: 'MS워드, 한글hwp, 이미지(jpg, bmp, gif, pdf)파일을 첨부하실 수 있습니다.',
+  BUTTON_ADD: '파일 찾기',
+  BUTTON_DELETE: '삭제하기',
   CONFIRM_A01: '첨부파일의 용량이 총 2MB를 초과하여 등록할 수 없습니다. 다시 확인해주세요.',
   CONFIRM_A02: '첨부하실 수 없는 파일입니다. 다시 확인해주세요.'
 };
@@ -1723,14 +1723,39 @@ Tw.ROAMING_RANGE_OPTION_STR = {
   TWO_MONTH: '2개월 이내의 날짜만 선택 가능합니다.'
 };
 
+Tw.BENEFIT_TBCOMBINATION_ERROR = {
+  TITLE: '고객님께서는 인터넷·집전화·IPTV 이용고객이 아닙니다.',
+  CONTENT: '인터넷·집전화·IPTV 서비스를 결합해서 사용하고 할인혜택 받으세요.',
+  BTN_TEXT: '가입상담예약 >'
+};
+
 Tw.BENEFIT_TBCOMBINATION_JOIN_VALIDATION = {
   IS_VALID: '결합 가능한 회선입니다.',
   ALERADY_COMBINED: '이미 결합된 회선입니다.',
-  UN_VALID_PRODUCT: '가입 대상 요금상품이 아닙니다.',
   UN_VALID_LINE: '결합가능한 회선이 없습니다.'
 };
 
 Tw.BENEFIT_TBCOMBINATION_JOIN_STATUS = {
   IS_COMBINED: '결합가능',
   DIS_COMBINED: '결합완료'
+};
+
+Tw.PRODUCT_SUCCESS_BTN_TEXT = {
+  SMARTWATCH: '스마트워치 할인상품 보기 >',
+  COMBINE: '나의 결합상품 확인하기 >',
+  MYTJOIN: '나의 가입정보 확인하기 >',
+  GO_AUTH: '인증받기 >'
+};
+
+Tw.BENEFIT_TBCOMBINE_NEED_AUTH = '미인증 회선으로 상품을 결합하셨습니다. \n요금이나 포인트 확인, 가입서비스 설정 및 변경등 원활한 \nT world 이용을 위해 인증을 받으시기 바랍니다.';
+
+Tw.RESERVATION_CANCEL = {
+  JOIN: '가입예약 취소',
+  TERMINATE: '해지예약 취소',
+  CHANGE: '변경예약 취소'
+};
+
+Tw.ALERT_MSG_SEARCH = {
+  ALERT_4_A40: { TITLE: '입력하신 의견을 등록하시겠습니까?', MSG: '', BUTTON: '닫기' },
+  ALERT_4_A41: { TITLE: '선택하신 내용을 접수하시겠습니까?', MSG: '', BUTTON: '닫기' }
 };

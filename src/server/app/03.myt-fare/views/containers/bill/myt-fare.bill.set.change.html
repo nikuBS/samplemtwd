@@ -49,9 +49,9 @@
                                 <ul class="select-list" role="group">
                                     <% data.togetherList.forEach( (v, i) => { %>
                                     <li class="radiobox type01-big mid-top" role="radio" aria-checked="false">
-                                        <input type="radio" name="together" value="<%= v.cd%>" title="<%= v.nm %>"
-                                               aria-labelledby="aria-comp-radio<%=i%>"/>
-                                        <div class="comp-list-layout" id="aria-comp-radio<%=i%>" aria-hidden="true">
+                                        <input type="radio" name="together" value="<%= v.cd%>" title="함께 받을 요금안내서 선택"
+                                               aria-labelledby="aria-comp1-radio<%=i%>"/>
+                                        <div class="comp-list-layout" id="aria-comp1-radio<%=i%>" aria-hidden="true">
                                             <p class="layout-text">
                                                 <span class="mtext"><%= v.nm%></span>
                                             </p>
@@ -73,9 +73,9 @@
                         <p class="con-tit0 pb12">이메일 주소</p>
                         <span class="inputbox">
                             <span class="input">
-                                <input type="text" placeholder="이메일 입력" title="input" name="invEmailAddr"
+                                <input type="text" placeholder="이메일 입력" title="이메일 주소를 입력해 주세요" name="invEmailAddr"
                                        value="<%= data.invEmailAddr%>"
-                                       aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1"
+                                       aria-describedby="aria-exp-desc1"
                                        data-inactive-target data-valid-type="email"/>
                                 <button class="cancel"><span class="blind">삭제</span></button>
                             </span>
@@ -83,15 +83,15 @@
                         <div class="widget pt20">
                             <div class="widget-box check">
                                 <ul class="select-list" role="group">
-                                    <li class="checkbox type01 mb16 checked" role="checkbox" aria-checked="true">
+                                    <li class="checkbox type01 mb16 checked" id="aria-comp-checkbox1" role="checkbox" aria-checked="true">
                                         <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                        <input id="fe-scurMailYn" type="checkbox" name="scurMailYn" value="Y" title="값1" checked/>
+                                        <input id="fe-scurMailYn" type="checkbox" name="scurMailYn" aria-labelledby="aria-comp-checkbox1" value="Y" checked/>
                                         <!-- 체크상태일 경우 checked="checked" -->
                                         이메일 보안 설정
                                     </li>
-                                    <li class="checkbox type01 mb16 checked" role="checkbox" aria-checked="true">
+                                    <li class="checkbox type01 mb16 checked" id="aria-comp-checkbox2" role="checkbox" aria-checked="true">
                                         <!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                        <input type="checkbox" name="emailRcvAgreeYn" value="Y" title="값2" checked/>
+                                        <input type="checkbox" name="emailRcvAgreeYn" aria-labelledby="aria-comp-checkbox2" value="Y" checked/>
                                         <!-- 체크상태일 경우 checked="false" -->
                                         입력한 이메일로 다양한 혜택 정보 받기
                                     </li>
@@ -119,14 +119,14 @@
                             </span>
                                 <span class="inputbox mt6">
                                 <span class="input">
-                                    <input type="text" class="fe-main-address" name="basAddr" title="메인 주소"
-                                           aria-labelledby="aria-citation-phone" data-valid-type="addr" disabled/>
+                                    <input type="text" class="fe-main-address" name="basAddr" title="기본 주소"
+                                           data-valid-type="addr" disabled/>
                                 </span>
                             </span>
                                 <span class="inputbox mt6">
                                 <span class="input">
                                     <input type="text" class="fe-detail-address" name="dtlAddr" placeholder="상세주소 입력"
-                                           title="상세 주소" aria-labelledby="aria-citation-phone"/>
+                                           title="상세 주소" />
                                     <button class="cancel"><span class="blind">삭제</span></button>
                                 </span>
                             </span>
@@ -151,38 +151,37 @@
                                 <div class="widget">
                                     <div class="widget-box radio">
                                         <ul class="select-list" role="group">
-                                            <li class="radiobox type01-big mid-top checked" role="radio"
-                                                aria-checked="true">
-                                                <input type="radio" name="billSndCyclCd" value="1" title="매월"
+                                            <li class="radiobox type01-big mid-top checked" role="radio" aria-checked="true">
+                                                <input type="radio" name="billSndCyclCd" value="1" title="우편물 발송주기"
                                                        aria-labelledby="aria-comp-radio1" checked=""/>
-                                                <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
+                                                <div class="comp-list-layout" id="aria-comp-radio1">
                                                     <p class="layout-text">
-                                                        <span class="mtext">매월</span>
+                                                        <span class="mtext">매달</span>
                                                     </p>
                                                 </div>
                                             </li>
                                             <li class="radiobox type01-big mid-top" role="radio" aria-checked="false">
-                                                <input type="radio" name="billSndCyclCd" value="2" title="격월"
+                                                <input type="radio" name="billSndCyclCd" value="2" title="우편물 발송주기"
                                                        aria-labelledby="aria-comp-radio2"/>
-                                                <div class="comp-list-layout" id="aria-comp-radio2" aria-hidden="true">
+                                                <div class="comp-list-layout" id="aria-comp-radio2">
                                                     <p class="layout-text">
                                                         <span class="mtext">격월</span>
                                                     </p>
                                                 </div>
                                             </li>
                                             <li class="radiobox type01-big mid-top" role="radio" aria-checked="false">
-                                                <input type="radio" name="billSndCyclCd" value="3" title="분기"
+                                                <input type="radio" name="billSndCyclCd" value="3" title="우편물 발송주기"
                                                        aria-labelledby="aria-comp-radio3"/>
-                                                <div class="comp-list-layout" id="aria-comp-radio3" aria-hidden="true">
+                                                <div class="comp-list-layout" id="aria-comp-radio3">
                                                     <p class="layout-text">
                                                         <span class="mtext">분기</span>
                                                     </p>
                                                 </div>
                                             </li>
                                             <li class="radiobox type01-big mid-top" role="radio" aria-checked="false">
-                                                <input type="radio" name="billSndCyclCd" value="4" title="반기"
+                                                <input type="radio" name="billSndCyclCd" value="4" title="우편물 발송주기"
                                                        aria-labelledby="aria-comp-radio4"/>
-                                                <div class="comp-list-layout" id="aria-comp-radio4" aria-hidden="true">
+                                                <div class="comp-list-layout" id="aria-comp-radio4">
                                                     <p class="layout-text">
                                                         <span class="mtext">반기</span>
                                                     </p>
@@ -323,7 +322,7 @@
                     <h3 class="tx-bold">꼭 확인해 주세요</h3>
                     <ul class="noti-list02">
                         <li>
-                            <button id="<%=data.tipId%>" page-id="" type="button" class="tip-view-btn" title="정보보기"
+                            <button id="<%=data.tipId%>" page-id="" type="button" class="tip-view-btn" title="요금안내서 이용안내"
                                     aria-haspopup="true">요금안내서 이용안내<span class="tip-view">TIP</span>
                             </button>
                         </li>

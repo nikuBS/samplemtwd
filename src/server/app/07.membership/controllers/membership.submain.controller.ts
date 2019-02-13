@@ -97,7 +97,8 @@ export default class MembershipSubmain extends TwViewController {
   }
 
   private parseMembershipData(membershipData): any {
-    membershipData.showCardNum = FormatHelper.addCardDash(membershipData.mbrCardNum.toString());
+    membershipData.showCardNumDash = FormatHelper.addCardDash(membershipData.mbrCardNum.toString());
+    membershipData.showCardNum = FormatHelper.addCardSpace(membershipData.mbrCardNum);
     membershipData.showUsedAmount = FormatHelper.addComma((+membershipData.mbrUsedAmt).toString());
     membershipData.mbrGrStr = MEMBERSHIP_GROUP[membershipData.mbrGrCd].toUpperCase();
     membershipData.mbrGrade = MEMBERSHIP_GROUP[membershipData.mbrGrCd].toLowerCase();

@@ -67,7 +67,7 @@
                         </div>
                         <div class="user-number-info">
                             <p class="name"><%= membershipData.custNm %> 고객님</p>
-                            <p class="num"><%= membershipData.showCardNum %></p>
+                            <p class="num"><%= membershipData.showCardNumDash %></p>
                         </div>
                         <% if (membershipData.mbrStCd === 'AC') { %>
                         <button type="button" class="barcode-area">
@@ -169,6 +169,9 @@
             </div>
             <!-- // cont-box -->
         </div>
+        <footer id="fe-all-menu">
+            <%- include('../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        </footer>
     </div>
     <!--// #contents -->
 </div>

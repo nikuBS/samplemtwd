@@ -31,7 +31,7 @@
         <div class="basic-list">
             <ul>
                 <li>
-                    <span class="title">당월 사용 요금(할인 반환금 포함)</span>
+                    <span class="title">이번 달 사용요금(할인 반환금 포함)</span>
                     <span class="tx-cont">{{resData.chargeInfo.hbAmt}} 원</span>
                 </li>
                 <li>
@@ -39,7 +39,7 @@
                     <span class="tx-cont">{{resData.chargeInfo.colAmt}} 원</span>
                 </li>
                 <li>
-                    <span class="title">총 납부금액<br />(당월 사용요금 + 미납요금)</span>
+                    <span class="title">총 납부금액<br />(이번 달 사용요금 + 미납요금)</span>
                     <span class="tx-cont"><span class="tx-bold">{{resData.chargeInfo.totAmt}}</span> 원</span>
                 </li>
             </ul>
@@ -155,7 +155,7 @@
                     </span>
                     <span class="error-txt" style="display: none;" id="span-err-date">해지 요청일을 선택해 주세요.</span>
                     <div class="cont-noti mt20">
-                        <span class="type1">신청일 기준 2일 이후부터 최대 30일까지 신청 가능합니다.</span>
+                        <span class="type1">신청일 기준 2일 이후부터 최대 30일 안에 신청하실 수 있습니다.</span>
                     </div>
 
                     <h3 class="form-title pt36">연락 가능한 연락처</h3>
@@ -164,11 +164,11 @@
                             <div class="widget-box radio">
                                 <ul data-target="hpAndTelType" class="select-list" role="radiogroup">
                                     <li class="radiobox type01 checked" role="radio" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                        <input type="radio" name="radio1" value="hp" title="휴대폰" checked /><!-- 체크상태일 경우 checked="checked" -->
+                                        <input type="radio" name="radio1" value="hp" title="연락 가능한 연락처" checked /><!-- 체크상태일 경우 checked="checked" -->
                                         휴대폰
                                     </li>
                                     <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                        <input type="radio" name="radio1" value="tel" title="일반전화" /><!-- 체크상태일 경우 checked="false" -->
+                                        <input type="radio" name="radio1" value="tel" title="연락 가능한 연락처" /><!-- 체크상태일 경우 checked="false" -->
                                         일반전화
                                     </li>
                                 </ul>
@@ -180,7 +180,7 @@
                         <div class="form-box">
                                 <span class="inputbox bt-add"><!-- 입력 필드 오류 시 .error 추가 -->
                                     <span class="input">
-                                        <input data-target="input_hp" type="tel" name="" title="연락 가능한 연락처 입력" value=""
+                                        <input data-target="input_hp" type="tel" name="" title="연락 가능한 연락처 숫자만 입력" value=""
                                                placeholder="숫자만 입력" maxlength="13" />
                                         <button class="cancel" id="btn_hp_del"><span class="blind">삭제</span></button>
                                     </span>
@@ -193,7 +193,7 @@
                             <div class="widget-box check">
                                 <ul class="select-list" role="group">
                                     <li data-target="phoneLi" class="checkbox type01" role="checkbox" aria-checked="false">
-                                        <input type="checkbox" name="checkbox-cust-cont" value="" title="회원정보 등록된 연락처">
+                                        <input type="checkbox" name="checkbox-cust-cont" value="" title="연락 가능한 연락처">
                                         회원정보 등록된 연락처
                                     </li>
                                 </ul>
@@ -246,10 +246,10 @@
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">꼭 확인해 주세요</h3>
                 <ul class="noti-list02">
-                    <li><button id="MS_04_08_tip_01" type="button" class="tip-view-btn">서비스 해지 <span class="tip-view">TIP</span></button></li>
-                    <li><button id="MS_04_08_tip_02" type="button" class="tip-view-btn">해지 신청이 불가능한 경우 <span class="tip-view">TIP</span></button></li>
-                    <li><button id="MS_04_08_tip_03" type="button" class="tip-view-btn">범용 공인인증서 <span class="tip-view">TIP</span></button></li>
-                    <li><button id="MS_04_08_tip_04" type="button" class="tip-view-btn">콜센터 해지 요청 <span class="tip-view">TIP</span></button></li>
+                    <li><button id="MS_04_08_tip_01" type="button" class="tip-view-btn" aria-haspopup="true" title="서비스 해지 TIP보기">서비스 해지 <span class="tip-view">TIP</span></button></li>
+                    <li><button id="MS_04_08_tip_02" type="button" class="tip-view-btn" aria-haspopup="true" title="해지 신청이 불가능한 경우 TIP보기">해지 신청이 불가능한 경우 <span class="tip-view">TIP</span></button></li>
+                    <li><button id="MS_04_08_tip_03" type="button" class="tip-view-btn" aria-haspopup="true" title="범용 공인인증서 TIP보기">범용 공인인증서 <span class="tip-view">TIP</span></button></li>
+                    <li><button id="MS_04_08_tip_04" type="button" class="tip-view-btn" aria-haspopup="true" title="콜센터 해지 요청 TIP보기">콜센터 해지 요청 <span class="tip-view">TIP</span></button></li>
 
                     <!--<li>서비스 해지 <button id="MS_04_08_tip_01" type="button" class="tip-view">TIP</button></li>-->
                     <!--<li>해지 신청이 불가능한 경우 <button id="MS_04_08_tip_02" type="button" class="tip-view">TIP</button></li>-->

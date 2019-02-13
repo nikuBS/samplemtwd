@@ -41,9 +41,9 @@
                                 <ul class="select-list fe-bill-isue-typs" role="radiogroup">
                                     <% for (var i = 0; i < data.billIsueTyps.length; i++) { %>
                                         <li class="radiobox <%= (i === 0) ? 'checked': ''%>" role="radio" aria-checked="<%= (i === 0) ? 'checked': ''%>">
-                                            <input type="radio" name="radio1" value="<%= data.billIsueTyps[i] %>"
-                                                   title="<%= data.billIsueTypNms[i] %>" <%= (i === 0) ? 'checked': ''%>/>
-                                            <span class="radio-txt">
+                                            <input type="radio" name="radio1" value="<%= data.billIsueTyps[i] %>" aria-labelledby="aria-comp2-radio<%=i%>"
+                                                   title="재발행 할 요금안내서" <%= (i === 0) ? 'checked': ''%>/>
+                                            <span class="radio-txt" id="aria-comp2-radio<%=i%>">
                                                 <span><%= data.billIsueTypNms[i] %></span>
                                             </span>
                                         </li>
@@ -64,15 +64,15 @@
                             <div class="radio-slide big">
                                 <ul class="select-list fe-bill-isue-typ-cds" role="radiogroup">
                                     <li class="radiobox" role="radio">
-                                        <input type="radio" name="radio4" value="" title="값1" checked/>
-                                        <span class="radio-txt">
-												<span>청구시점</span>
+                                        <input type="radio" name="radio4" value="" title="재발행 시점" aria-labelledby="aria-comp3-radio1" checked/>
+                                        <span class="radio-txt" id="aria-comp3-radio1">
+												<span>청구 시점</span>
 											</span>
                                     </li>
                                     <li class="radiobox" role="radio">
-                                        <input type="radio" name="radio4" value="" title="값2"/>
-                                        <span class="radio-txt">
-												<span>현재시점</span>
+                                        <input type="radio" name="radio4" value="" title="재발행 시점" aria-labelledby="aria-comp3-radio2"/>
+                                        <span class="radio-txt" id="aria-comp3-radio2">
+												<span>현재 시점</span>
 											</span>
                                     </li>
                                 </ul>
@@ -94,9 +94,9 @@
                                     <li class="radiobox type01-big mid-top <%= (i === 0 ? 'checked': '') %>"
                                         role="radio" aria-checked="<%= (i === 0 ? 'true': 'false') %>">
                                         <input type="radio" name="radio2" value="<%= data.reasons[i].commCdVal %>"
-                                               title="값11" aria-labelledby="aria-comp-radio11" <%= (i === 0 ?
-                                        'checked="checked"': '') %> />
-                                        <div class="comp-list-layout" id="aria-comp-radio11" aria-hidden="true">
+                                               title="재발행 사유" aria-labelledby="aria-comp1-radio<%=i%>"
+                                        <%= (i === 0 ? 'checked="checked"': '') %> />
+                                        <div class="comp-list-layout" id="aria-comp1-radio<%=i%>" aria-hidden="true">
                                             <p class="layout-text">
                                                 <span class="mtext"><%= data.reasons[i].commCdValNm %></span>
                                             </p>
@@ -113,7 +113,7 @@
                 <% if (data.halfYear && data.halfYear.length > 0 ) { %>
                 <div class="cont-box nogaps pt20">
                     <p class="con-tit0 pl16 pb6">재발행 월</p>
-                    <p class="con-txt0 pl16 pb14">이번 달부터 최근 6개월까지 선택이 가능합니다.</p>
+                    <p class="con-txt0 pl16 pb14">이번 달부터 최근 6개월까지 선택하실 수 있습니다.</p>
                     <div class="list-comp-input">
                         <div class="widget">
                             <div class="widget-box radio">
@@ -122,9 +122,9 @@
                                     <li class="radiobox type01-big mid-top <%= (i === 0 ? 'checked': '') %>"
                                         role="radio" aria-checked="<%= (i === 0 ? 'true': 'false') %>">
                                         <input type="radio" name="radio" value="<%= data.halfYear[i].type3 %>"
-                                               title="<%= data.halfYear[i].type1 %>" aria-labelledby="aria-comp-radio1"
+                                               title="재발행 월" aria-labelledby="aria-comp-radio<%=i%>"
                                         <%= (i === 0 ? 'checked="checked"': '') %> />
-                                        <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
+                                        <div class="comp-list-layout" id="aria-comp-radio<%=i%>" aria-hidden="true">
                                             <p class="layout-text">
                                                 <span class="mtext"><%= data.halfYear[i].type1 %></span>
                                             </p>
@@ -148,7 +148,7 @@
                     <ul class="noti-list02">
                         <% let tipId = data.billIsueTypCd === '1' ? 'MF_04_01_tip_02':'MF_04_01_tip_01'%>
                         <li>
-                            <button id="<%=tipId%>" type="button" class="tip-view-btn" title="정보보기" aria-haspopup="true">
+                            <button id="<%=tipId%>" type="button" class="tip-view-btn" title="요금안내서 재발행 이용안내" aria-haspopup="true">
                                 요금안내서 재발행 이용안내<span class="tip-view">TIP</span>
                             </button>
                         </li>

@@ -358,32 +358,46 @@ class MyTFareBillGuide extends TwViewController {
       startDt: DateHelper.getStartOfMonDate( String(this._billpayInfo.invDt), 'YYYYMMDD'),
       endDt: DateHelper.getEndOfMonDate( String(this._billpayInfo.invDt), 'YYYYMMDD')
     };
+
+    // 로밍api호출이 느려서 일단 무조건 노출함
     data.roamDonaCallBtnYn = {
-      roamingYn: 'N', donationYn: 'N', callgiftYn: 'N'
+      roamingYn: 'Y', donationYn: 'N', callgiftYn: 'N'
     };
 
 
     Observable.combineLatest(
-      this.apiService.request(API_CMD.BFF_05_0044, params),
+      // this.apiService.request(API_CMD.BFF_05_0044, params),
       this.apiService.request(API_CMD.BFF_05_0038, params),
       this.apiService.request(API_CMD.BFF_05_0045, params)
     ).subscribe((resp) => {
       thisMain.logger.info(thisMain, resp);
 
-      if ( resp[0].code === API_CODE.CODE_00 &&
-        resp[0].result.roamingList && resp[0].result.roamingList.length > 0 ) {
-        data.roamDonaCallBtnYn.roamingYn = 'Y';
-      }
+      // 로밍api호출이 느려서 일단 무조건 노출함 2019.2.12
 
-      if ( resp[1].code === API_CODE.CODE_00 &&
-        resp[1].result.donationList && resp[1].result.donationList.length > 0 ) {
+      // if ( resp[0].code === API_CODE.CODE_00 &&
+      //   resp[0].result.roamingList && resp[0].result.roamingList.length > 0 ) {
+      //   data.roamDonaCallBtnYn.roamingYn = 'Y';
+      // }
+      //
+      // if ( resp[1].code === API_CODE.CODE_00 &&
+      //   resp[1].result.donationList && resp[1].result.donationList.length > 0 ) {
+      //   data.roamDonaCallBtnYn.donationYn = 'Y';
+      // }
+      //
+      // if ( resp[2].code === API_CODE.CODE_00 &&
+      //   resp[2].result.callData && Number(resp[2].result.callData) ) {
+      //   data.roamDonaCallBtnYn.callgiftYn = 'Y';
+      // }
+
+      if ( resp[0].code === API_CODE.CODE_00 &&
+        resp[0].result.donationList && resp[0].result.donationList.length > 0 ) {
         data.roamDonaCallBtnYn.donationYn = 'Y';
       }
-
-      if ( resp[2].code === API_CODE.CODE_00 &&
-        resp[2].result.callData && Number(resp[2].result.callData) ) {
+      if ( resp[1].code === API_CODE.CODE_00 &&
+        resp[1].result.callData && Number(resp[1].result.callData) ) {
         data.roamDonaCallBtnYn.callgiftYn = 'Y';
       }
+
       thisMain.logger.info( thisMain, '===================== 로밍 YN : ' + data.roamDonaCallBtnYn.roamingYn);
       thisMain.logger.info( thisMain, '===================== 기부금 YN : ' + data.roamDonaCallBtnYn.donationYn);
       thisMain.logger.info( thisMain, '===================== 콜기프트 YN : ' + data.roamDonaCallBtnYn.callgiftYn);

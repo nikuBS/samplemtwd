@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+
+	
+    
+
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+            </div>
+        </div>
+        <!--// #contents -->
+		<!-- .popup hbs -->
+		<div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+			<!-- #header -->
+			<div class="header-wrap noborder">
+				<div class="page-header">
+					<div class="header-ti">
+                        <h1>공유 데이터 변경하기</h1>
+					</div>
+				</div>
+			</div>
+			<!--// #header -->
+			<!-- .container-wrap -->
+			<div class="container-wrap">
+                <div class="container">
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+
+                    <!-- .cont-box -->
+                    <div class="cont-box">
+                        <div class="ti-caption-type01">
+                            <h2 class="tit">변경할 데이터<button class="btn-tip" title="변경할 데이터 정보보기" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></h2>
+                            <!-- 2019.02.11 title,aria-haspopup 추가 접근성 -->                              
+                        </div>
+                        <div class="recently-tel-box">
+                            <div class="inputbox bt-add">
+                                <span class="input new">
+                                    <input type="text" value="데이터(GB) 입력" title="변경할 데이터" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1">
+                                    <button class="cancel"><span class="blind">삭제</span></button>
+                                </span>
+                                <span class="r-btn type01">
+                                    <button type="button" class="btn-type01">+1</button>
+                                    <button type="button" class="btn-type01">+5</button>
+                                    <button type="button" class="btn-type01">전체</button>
+                                </span>
+                            </div>
+                            <p class="input-txt-type01 pt10">공유한 데이터 : <strong class="txt-c1">30GB</strong> <span class="txt-c3">2018.10.23.</span></p>
+                            <p class="input-txt-type01 pt4">변경 가능 데이터 : <strong class="txt-c2">조회중</strong></p>
+                        </div>
+					</div>
+                    <!--// .cont-box -->
+
+					<div class="cont-box noborder bgnone">
+						<h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+						<ul class="pg-chk-list02">
+							<li><button class="btn-tip">공유 데이터 변경하기 이용안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+						</ul>
+					</div>
+                    
+					<!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                    <div class="bt-fixed-area">
+						<ul class="bt-slice full">
+							<li class="bt-red1">
+								<button disabled>나만 사용할 수 있는 데이터로 변경하기</button>
+							</li>
+						</ul>
+                    </div>
+                    <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                </div>
+            </div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="prev-step">취소</button>
+            <!--// .popup-closeBtn -->
+		</div>
+		<!--// .popup hbs -->
+	</div>
+</body>
+</html>

@@ -16,12 +16,15 @@
                     <p class="basic-txt">{{breaklines data.basicTxt}}</p>
                     {{/if}}
                     <ul class="bt-slice {{data.btClass}}">
-                        {{#if data.isSmartWatch}}
-                        <li><a href="/product/callplan/NA00005381" class="btn-round2 btn-style3">스마트워치 할인상품 보기 &gt;</a></li>
-                        {{/if}}
-                        {{#if data.mytPage}}
-                        <li><a href="/myt-join/{{data.mytPage}}" class="btn-round2 btn-style3">나의 가입정보 확인하기 &gt;</a></li>
-                        {{/if}}
+                        {{#data.btList}}
+                        <li>
+                            {{#if link}}
+                            <a href="{{link}}" class="btn-round2 btn-style3 {{btClass}}">{{{txt}}}</a>
+                            {{else}}
+                            <button class="btn-round2 btn-style3 {{btClass}}">{{{txt}}}</button>
+                            {{/if}}
+                        </li>
+                        {{/data.btList}}
                     </ul>
                 </div>
             </div>

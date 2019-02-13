@@ -143,6 +143,11 @@ skt_landing.action = {
         'transform': 'translate(0 ,' + (this.scroll_gap[this.scroll_gap.length -1] - page_height)  + 'px)'
       });
     }
+    if($('.idpt-popup').length > 0){
+      $('.idpt-popup').css({
+        'transform': 'translate(0 ,' + this.scroll_gap[this.scroll_gap.length -1] + 'px)'
+      });
+    }
     $('.skip_navi, .container-wrap:last, .header-wrap:last, .gnb-wrap').attr({
       'aria-hidden':true,
       'tabindex':-1
@@ -166,6 +171,11 @@ skt_landing.action = {
     }
     if($('.footer-wrap.fixed').length > 0){
       $('.container-wrap:last').find('.footer-wrap.fixed').css({
+        'transform': ''
+      });
+    }
+    if($('.idpt-popup').length > 0){
+      $('.idpt-popup').css({
         'transform': ''
       });
     }
@@ -374,6 +384,20 @@ skt_landing.action = {
         }
       });
     },
+    layer_height_chk : function(){
+      var layer = $('.popup .popup-page.layer'),
+          layerContainerWrap = $('.popup .popup-page.layer > .container-wrap'),
+          layerContainer = $('.popup .popup-page.layer > .container-wrap > .container'),
+          layer_h = layerContainer.innerHeight();
+          // console.log(layer_h);
+      layer.css({
+        'height':layer_h,
+        'bottom':0
+      });
+      layerContainerWrap.css({
+        'height':layer_h
+      });
+    },
     close_layer : function(callback){
       var layer = $('.popup .popup-page.layer');
       layer.css('bottom','-100%');
@@ -539,7 +563,15 @@ skt_landing.action = {
       }else{
           $('body').addClass('scroll');
       }
-    })
+    });
+    /* 2019.02.08 추가 하단에 팝업에 스크롤생성된게 왜 삭제됬는지 체크필요  */
+    $('.popup-page').scroll(function(){
+      if ($(this).scrollTop() > 0) {
+        $('.header-wrap').addClass('scrollshadow');
+      }else {
+        $('.header-wrap').removeClass('scrollshadow');
+      }
+    });   
   },
   header_shadow_popup : function(){
     $('.popup-page').each(function(){

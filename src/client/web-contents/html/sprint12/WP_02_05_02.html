@@ -62,7 +62,8 @@
                             <span class="blind">현재 선택된 회선정보 및 사용중인 요금제 정보 노출</span>
                             <span class="ico type01"><span class="blind">선택된 회선정보 아이콘</span></span>
                             <div class="in-info oneline">
-                                <span class="number">인터넷_1802****************</span>
+                                <!-- 2019.02.08 한줄만 노출될 경우 lh-full 클래스 추가 -->
+                                <span class="number lh-full">인터넷_1802****************</span>
                             </div>
                         </div>
                     </div>
@@ -150,10 +151,10 @@
 
 					<div class="cont-box nogaps-btm">
                         <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                        <ul class="noti-list">
-                            <li>상품 해지 시 유의사항 <button type="button" class="icon-tip">TIP</button></li>
-							<li>약정기간 내 해약 위약금 안내 <button type="button" class="icon-tip">TIP</button></li>
-							<li>서비스 이용 안내 <button type="button" class="icon-tip">TIP</button></li>
+                        <ul class="noti-list02">
+                            <li><button aria-haspopup="true" class="tip-view-btn" title="상품 해지 시 유의사항 정보보기">상품 해지 시 유의사항<span class="tip-view">TIP</span></button></li>
+                            <li><button aria-haspopup="true" class="tip-view-btn" title="약정기간 내 해약 위약금 안내 정보보기">약정기간 내 해약 위약금 안내<span class="tip-view">TIP</span></button></li>
+                            <li><button aria-haspopup="true" class="tip-view-btn" title="서비스 이용 안내 정보보기">서비스 이용 안내<span class="tip-view">TIP</span></button></li>
                         </ul>
                     </div>
 

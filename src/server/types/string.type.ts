@@ -271,7 +271,7 @@ export enum PRODUCT_REQUIRE_DOCUMENT_RESERVATION_RESULT {
 export const MYT_FARE_BILL_REISSUE = {
   TITLE: '요금안내서 재발행',
   REASON: {
-    '06': '요금안내서부달'
+    '06': '요금안내서 부달'
   }
 };
 
@@ -574,13 +574,18 @@ export const PRODUCT_TYPE_NM = {
     SELECT: {
       TITLE: '회선 선택',
       BUTTON: '진행하기',
-      DESCRIPTION: '요금제를 변경할 회선을 선택해 주세요.'
+      DESCRIPTION: '변경할 회선을 선택해 주세요.'
     },
     CHANGE: {
       TITLE: '회선 변경',
       BUTTON: '변경하기',
       DESCRIPTION: '현재 회선으로는 이용이 불가능 합니다.<br>다른 회선으로 변경해 주세요.'
     }
+  },
+  RESERVATION_CANCEL: {
+    JOIN: '가입예약 취소',
+    TERMINATE: '해지예약 취소',
+    CHANGE: '변경예약 취소'
   }
 };
 

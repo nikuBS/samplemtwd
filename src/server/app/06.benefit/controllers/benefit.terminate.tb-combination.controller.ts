@@ -50,7 +50,7 @@ class BenefitTerminateTbCombination extends TwViewController {
    */
   private _convertWireInfo(wireInfo: any): any {
     return Object.assign(wireInfo, {
-      svcCdNm: SVC_CD[wireInfo.svcCdNm]
+      svcCdNm: SVC_CD[wireInfo.svcCd]
     });
   }
 

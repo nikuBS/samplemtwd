@@ -23,7 +23,7 @@
         <div class="header-wrap">
             <div class="page-header">
                 <div class="header-ti">
-                    <h1>B끼리 무료 통화 대상자 조회</h1>
+                    <h1>B끼리 무료통화 대상자 조회</h1>
                 </div>
             </div>
         </div>
@@ -35,19 +35,23 @@
             <div class="container">
                 <!-- .cont-box -->
                 <div class="cont-box noborder">
-                    <p class="con-txt1">B끼리 무료통화 대상 조회는<br /><span class="tx-bold">T_B끼리 통화 무제한</span>에 가입하신<br />고객만 가능합니다.</p>
+                    <p class="con-txt1"><span class="tx-bold">T_B끼리 통화무제한</span>에 가입하신 고객만<br />B끼리 무료통화 대상자 조회가 가능합니다.</p>
                     <div class="form-type mt30">
                         <h3 class="form-title">상대방 전화번호 입력</h3>
                         <div class="form-box">
                                 <span class="inputbox bt-add error"><!-- 입력 필드 오류 시 .error 추가 -->
                                     <span class="input">
                                         <!--<input data-target="inputPhone" type="text" value="" title="상대방 전화번호 입력" aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx1">-->
-                                        <input data-target="inputPhone" type="tel" name="" title="상대방 전화번호 입력" value=""
+                                        <input data-target="inputPhone" type="tel" name="" title="B끼리 통화무제한에 가입한 상대방 전화번호 입력"
+                                               aria-labelledby="aria-citation-phone" aria-describedby="aria-phone-tx1"
+                                               value=""
                                                placeholder="" maxlength="13" data-inactive-target data-valid-type="hp" data-state="true"/>
                                         <button class="cancel"><span class="blind">삭제</span></button>
 
                                     </span>
                                 </span>
+                            <span class="error-txt" style="display: none;" id="fe-err-not-phonenum">전화 번호가 올바르지 않습니다.</span>
+                            <span class="error-txt" style="display: none;" id="fe-err-no-phonenum">전화 번호를 입력해 주세요.</span>
                         </div>
                     </div>
 

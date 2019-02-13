@@ -293,15 +293,17 @@ Tw.ProductMobileplanJoinTplan.prototype = {
 
     var completeData = {
       prodCtgNm: Tw.PRODUCT_CTG_NM.PLANS,
-      mytPage: 'myplan',
+      btList: [
+        { link: '/product/callplan/NA00005381', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.SMARTWATCH },
+        { link: '/myt-join/myplan', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.MYTJOIN }
+      ],
       btClass: '',
       prodId: this._prodId,
       prodNm: this._confirmOptions.preinfo.toProdInfo.prodNm,
       typeNm: Tw.PRODUCT_TYPE_NM.JOIN,
       isBasFeeInfo: this._confirmOptions.isNumberBasFeeInfo,
       basFeeInfo: this._confirmOptions.isNumberBasFeeInfo ?
-        this._confirmOptions.toProdBasFeeInfo + Tw.CURRENCY_UNIT.WON : '',
-      isSmartWatch: $checked.val() === 'NA00006116'
+        this._confirmOptions.toProdBasFeeInfo + Tw.CURRENCY_UNIT.WON : ''
     };
 
     if ($checked.val() === 'NA00006116') {

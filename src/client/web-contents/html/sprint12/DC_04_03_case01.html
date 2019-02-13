@@ -60,7 +60,8 @@
                     <div class="cont-box nogaps">
                         <ul class="link-long-list">
                             <li>
-                                <div class="link-long">
+                                <!-- 2019.01.31 텍스트 정렬 수정  t-center 클래스 추가 -->
+                                <div class="link-long t-center">
                                     <button>팅 선물 차단 설정
                                         <span class="tx-sub">
                                             <span class="normal"><i class="tx-bold">허용중</i></span>
@@ -82,18 +83,22 @@
                             <!-- 2019-01-17 inp-btn 추가 -->
 							<div class="inputbox bt-add inp-btn canceling">
                                 <span class="input">
+                                    <!--접근성 수정-->
                                     <input type="number" title="받는 분 전화번호 입력해 주세요" value="01012344566" aria-describedby="aria-exp-desc1">
+                                    <!-- //접근성 수정-->
                                     <button class="cancel"><span class="blind">삭제</span></button>
                                 </span>
                                 <span class="bt-box">
                                     <button type="button">주소록</button>
                                 </span>
                             </div>
+                            <!--접근성 수정-->
                             <div id="aria-exp-desc1">
                                 <div class="val-txt-type01"><span class="error-txt">휴대폰번호 자릿수를 확인해주세요. (10~11자리)</span></div>
                                 <div class="val-txt-type01"><span class="error-txt">휴대폰 번호가 올바르지 않습니다.</span></div>
                                 <div class="val-txt-type01"><span class="error-txt">팅요금제 사용 고객이 아닙니다.</span></div>
                             </div>
+                            <!-- //접근성 수정-->
                             <ul class="recently-tel"><!-- show : on 클래스 추가  -->
                                 <li>
                                     <button class="tel-select">010-1234-1234</button>
@@ -109,11 +114,14 @@
                                 </li>
                             </ul>
                         </div>
+                        <!--접근성 수정-->
                         <p class="tabcon-title0 mt26">충전 금액<button aria-haspopup="true" class="tip-view" title="충전 금액 정보보기">TIP</button></p> <!-- 2018-10-30 tip 추가 -->
+                        <!-- //접근성 수정-->
                         <div class="widget">
                             <div class="widget-box radio">
                                 <div class="radio-slide">
                                     <ul class="select-list" role="radiogroup">
+                                        <!--접근성 수정-->
                                         <li class="radiobox" role="radio">
                                             <input type="radio" name="radio4" value="" title="충전금액" aria-labelledby="aria-comp-radio1" disabled /><!-- 체크상태일 경우 checked="checked" -->
                                             <span class="radio-txt" id="aria-comp-radio1">
@@ -138,6 +146,7 @@
                                                 <span>17,000</span><span class="unit">원</span>
                                             </span>
                                         </li>
+                                        <!-- //접근성 수정-->
                                     </ul>
                                 </div>
                             </div>
@@ -152,10 +161,12 @@
                     <div class="cont-box nogaps-btm">
                         <h3 class="tx-bold">꼭 확인해주세요!</h3>
                         <ul class="noti-list">
+                            <!--접근성 수정-->
                             <li>선물 취소/환불/승계 안내<button aria-haspopup="true" class="tip-view" title="선물 취소/환불/승계 안내 정보보기">TIP</button></li>
                             <li>결제 방법 안내<button aria-haspopup="true" class="tip-view" title="결제 방법 안내 정보보기">TIP</button></li>
                             <li>충전 선물 유의사항<button aria-haspopup="true" class="tip-view" title="충전 선물 유의사항 정보보기">TIP</button></li>
                             <li>SMS 인증 안내<button aria-haspopup="true" class="tip-view" title="SMS 인증 안내 정보보기">TIP</button></li>
+                            <!-- //접근성 수정-->
                         </ul>
                     </div>  
                     <!--// .cont-box -->

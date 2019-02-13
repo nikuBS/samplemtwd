@@ -4,32 +4,24 @@
  * Date: 2019.02.11
  */
 
-Tw.BenefitJoinTbCombination = function(rootEl, prodId, svcMgmtNum) {
+Tw.BenefitJoinTbCombination = function(rootEl, prodId, prodNm) {
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
 
   this.$container = rootEl;
   this._prodId = prodId;
-  this._svcMgmtNum = svcMgmtNum;
+  this._prodNm = prodNm;
+  this._svcMgmtNum = null;
+  this._wireSvcMgmtNum = null;
   this._template = Handlebars.compile($('#tpl_line_list').html());
+  this._isAuthLine = false;
 
   this._cachedElement();
   this._bindEvent();
-  this._init();
 };
 
 Tw.BenefitJoinTbCombination.prototype = {
-
-  _init: function() {
-    if (this.$lineList.find('li').length > 0) {
-      this.$lineList.show();
-    }
-
-    if (this.$lineList.find('li input[type=radio]:not(:disabled)').length < 1 || this.$lineList.find('li').length < 1) {
-      this._setValidation(true, Tw.BENEFIT_TBCOMBINATION_JOIN_VALIDATION.UN_VALID_LINE);
-    }
-  },
 
   _cachedElement: function() {
     this.$btnSelectCombineLine = this.$container.find('.fe-btn_select_combine_line');
@@ -44,6 +36,9 @@ Tw.BenefitJoinTbCombination.prototype = {
 
   _bindEvent: function() {
     this.$btnSelectCombineLine.on('click', $.proxy(this._getMobileSvcInfo, this));
+    this.$btnSetupOk.on('click', $.proxy(this._procConfirmReq, this));
+
+    this.$lineList.on('change', 'input[type=radio]:not(:disabled)', $.proxy(this._setWireSvcMgmtNum, this));
   },
 
   _getMobileSvcInfo: function() {
@@ -85,11 +80,15 @@ Tw.BenefitJoinTbCombination.prototype = {
   _setSvcMgmtNum: function(e) {
     this.$btnSelectCombineLine.html($(e.currentTarget).data('num') +
       $('<div\>').append(this.$btnSelectCombineLine.find('.ico')).html());
-    this._svcMgmtNum = $(e.currentTarget).data('svc_mgmt_num');
+    this._svcMgmtNum = $(e.currentTarget).data('svc_mgmt_num').toString();
     this._popupService.close();
   },
 
   _onSelectLine: function() {
+    if (Tw.FormatHelper.isEmpty(this._svcMgmtNum)) {
+      return;
+    }
+
     this._apiService.request(Tw.API_CMD.BFF_10_0142, { choiceSvcMgmtNum: this._svcMgmtNum }, {}, [this._prodId])
       .done($.proxy(this._setUseList, this));
   },
@@ -99,10 +98,23 @@ Tw.BenefitJoinTbCombination.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
+    this.$lineList.hide();
     this.$lineListHtml.empty();
-    this.$lineListHtml.html(this._template(this._getConvertCombiWireProductList(resp.result)));
 
-    setTimeout($.proxy(this._setDisabledUseList, this));
+    var useLineInfo = this._getCurrentUseLineInfo(resp.result),
+      convertCombiWireProductList = this._getConvertCombiWireProductList(useLineInfo);
+
+    if (convertCombiWireProductList.list.length > 0) {
+      this.$lineListHtml.html(this._template(convertCombiWireProductList));
+      this.$lineList.show();
+    }
+
+    skt_landing.widgets.widget_init('.fe-line_list');
+
+    this._isAuthLine = useLineInfo.needCertifyYn === 'Y';
+    this._setDisabledUseList();
+    this._setResultText(useLineInfo);
+    this._toggleSetupButton(false);
   },
 
   _setDisabledUseList: function() {
@@ -125,21 +137,182 @@ Tw.BenefitJoinTbCombination.prototype = {
     $msgElem.text(statusText).show();
   },
 
-  _getConvertCombiWireProductList: function(joinInfo) {
-    if (Tw.FormatHelper.isEmpty(joinInfo.useLineList) || Tw.FormatHelper.isEmpty(joinInfo.useLineList[0].combiWireProductList)) {
+  _getCurrentUseLineInfo: function(joinInfo) {
+    if (Tw.FormatHelper.isEmpty(joinInfo.useLineList)) {
       return [];
     }
 
+    var useLineInfo = [];
+
+    _.each(joinInfo.useLineList, function(line) {
+      if (line.svcMgmtNum === this._svcMgmtNum) {
+        useLineInfo = line;
+        return false;
+      }
+    }.bind(this));
+
+    return useLineInfo;
+  },
+
+  _getConvertCombiWireProductList: function(useLineInfo) {
+    if (Tw.FormatHelper.isEmpty(useLineInfo.combiWireProductList)) {
+      return {
+        list: []
+      };
+    }
+
     return {
-      list: _.map(joinInfo.useLineList[0].combiWireProductList, function (item) {
+      list: _.map(useLineInfo.combiWireProductList, function (item) {
         return $.extend(item, {
           combStaDt: Tw.DateHelper.getShortDateWithFormat(item.combStaDt, 'YYYY.M.DD.'),
           combStatusText: Tw.FormatHelper.isEmpty(item.combYn) ? Tw.BENEFIT_TBCOMBINATION_JOIN_STATUS.IS_COMBINED :
             Tw.BENEFIT_TBCOMBINATION_JOIN_STATUS.DIS_COMBINED,
+          svcMgmtNum: item.svcMgmtNum,
           isDisabled: !Tw.FormatHelper.isEmpty(item.combYn)
         });
       })
     };
+  },
+
+  _setResultText: function(useLineInfo) {
+    var isAllowedCombineLength = this.$lineList.find('li input[type=radio]:not(:disabled)').length;
+
+    if (useLineInfo.combiLineYn === 'N' && isAllowedCombineLength.length > 0) {
+      return this._setValidation(false, Tw.BENEFIT_TBCOMBINATION_JOIN_VALIDATION.IS_VALID);
+    }
+
+    if (useLineInfo.combiLineYn === 'Y') {
+      return this._setValidation(true, Tw.BENEFIT_TBCOMBINATION_JOIN_VALIDATION.ALERADY_COMBINED);
+    }
+
+    if (isAllowedCombineLength < 1) {
+      return this._setValidation(true, Tw.BENEFIT_TBCOMBINATION_JOIN_VALIDATION.UN_VALID_LINE);
+    }
+  },
+
+  _toggleSetupButton: function(isEnable) {
+    if (isEnable) {
+      this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
+    } else {
+      this.$btnSetupOk.attr('disabled', 'disabled').prop('disabled', true);
+    }
+  },
+
+  _setWireSvcMgmtNum: function(e) {
+    this._wireSvcMgmtNum = $(e.currentTarget).data('svc_mgmt_num');
+    this._toggleSetupButton(true);
+  },
+
+  _procConfirmReq: function() {
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
+
+    this._apiService.request(Tw.API_CMD.BFF_10_0143, {
+      choiceSvcMgmtNum: this._svcMgmtNum,
+      wireSvcMgmtNum: this._wireSvcMgmtNum
+    }, {}, [this._prodId]).done($.proxy(this._openConfirm, this));
+  },
+
+  _convertData: function(confirmInfo) {
+    this._isAgreement = confirmInfo.agreeOpNeedYn === 'Y';
+    return $.extend(confirmInfo, {
+      wirelessMember: this._convertWirelessMember(confirmInfo.wirelessMember),
+      wireMember: this._convertWireMember(confirmInfo.wireMember),
+      isAgreement: this._isAgreement,
+      prodStpl: Tw.ProductHelper.convStipulation(confirmInfo.prodStpl, false)
+    });
+  },
+
+  _convertWirelessMember: function(wireless) {
+    return $.extend(wireless, {
+      svcNum: Tw.FormatHelper.conTelFormatWithDash(wireless.svcNum),
+      isFamlUse: wireless.famlUseYn === 'Y'
+    });
+  },
+
+  _convertWireMember: function(wire) {
+    return $.extend(wire, {
+      svcNum: wire.svcCd === 'P' ? Tw.FormatHelper.conTelFormatWithDash(wire.svcNum) : wire.svcNum,
+      combStaDt: Tw.DateHelper.getShortDateWithFormat(wire.combStaDt, 'YYYY.M.DD.')
+    });
+  },
+
+  _openConfirm: function(resp) {
+    Tw.CommonHelper.endLoading('.container');
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    this._popupService.open($.extend({
+      hbs: 'BS_07_01_01_02',
+      layer: true
+    }, this._convertData(resp.result)), $.proxy(this._openBindConfirmPop, this));
+  },
+
+  _openBindConfirmPop: function($popupContainer) {
+    new Tw.ProductCommonConfirm(false, $popupContainer, {}, $.proxy(this._procApply, this));
+  },
+
+  _procApply: function() {
+    var reqData = {
+      choiceSvcMgmtNum: this._svcMgmtNum,
+      wireSvcMgmtNum: this._wireSvcMgmtNum
+    };
+
+    if (this._isAgreement) {
+      reqData.agreeOpNeedYn = 'Y';
+    }
+
+    this._apiService.request(Tw.API_CMD.BFF_10_0144, reqData,
+      {}, [this._prodId]).done($.proxy(this._procApplyRes, this));
+  },
+
+  _procApplyRes: function(resp) {
+    Tw.CommonHelper.endLoading('.container');
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    this._popupService.close();
+    setTimeout($.proxy(this._openSuccessPop, this), 100);
+  },
+
+  _openSuccessPop: function() {
+    var successData = {
+      prodNm: this._prodNm,
+      prodCtgNm: Tw.PRODUCT_CTG_NM.COMBINATIONS,
+      typeNm: Tw.PRODUCT_TYPE_NM.JOIN,
+      btList: [{ link: '/myt-join/combinations', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.COMBINE }]
+    };
+
+    if (this._isAuthLine) {
+      successData.basicTxt = Tw.BENEFIT_TBCOMBINE_NEED_AUTH;
+      successData.btList.push({ btClass: 'fe-btn_cert', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.GO_AUTH });
+    }
+
+    this._popupService.open({
+      hbs: 'complete_product',
+      data: successData
+    }, $.proxy(this._bindJoinResPopup, this), $.proxy(this._onClosePop, this), 'join_success');
+  },
+
+  _bindJoinResPopup: function($popupContainer) {
+    $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
+    $popupContainer.on('click', '.fe-btn_cert', $.proxy(this._doCert, this));
+  },
+
+  _closeAndGo: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
+  },
+
+  _onClosePop: function() {
+    this._historyService.goBack();
+  },
+
+  _doCert: function() {
+    // @todo 인증받기 버튼 클릭시, 인증 완료 후 동작 정의 필요
   }
 
 };

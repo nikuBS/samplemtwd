@@ -3,7 +3,7 @@
     <div class="header-wrap">
         <div class="page-header">
             <div class="header-ti">
-                <h1>파일첨부하기</h1>
+                <h1>파일 첨부하기</h1>
             </div>
         </div>
     </div>
@@ -20,18 +20,18 @@
                             <div class="widget-box file">
                             <span class="inputbox bt-add" data-index={{@index}}>
                                 <span class="input">
-                                    <input class="fileview" type="text" placeholder="서류를 등록해주세요"
-                                           title="서류를 등록해주세요" style="pointer-events: none;" value={{oldFile.name}} >
+                                    <input class="fileview" type="text" placeholder="파일 첨부"
+                                           title="첨부파일 {{ @index }}" style="pointer-events: none;" value={{oldFile.name}} >
                                 </span>
                                 <span class="space"></span>
                                 <span class="bt-box">
                                     {{#if oldFile.name}}
-                                        <button type="button" class="fe-file-button" >파일삭제</button>
+                                        <button type="button" class="fe-file-button" >삭제하기</button>
                                         <input class="file" type="file" value="파일찾기" disabled
                                                style="pointer-events: none;" {{{attr}}} />
                                     {{else}}
-                                        <button type="button" class="fe-file-button">파일찾기</button>
-                                        <input class="file" type="file" value="파일찾기" {{{attr}}} />
+                                        <button type="button" class="fe-file-button">파일 찾기</button>
+                                        <input class="file" type="file" value="파일찾기" title="파일 찾기" {{{attr}}} />
                                     {{/if}}
 
                                 </span>

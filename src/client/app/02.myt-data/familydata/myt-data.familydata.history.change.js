@@ -33,22 +33,21 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
   },
 
   _addChangeeData: function(e) {
-    var value = e.currentTarget.getAttribute('data-value');
+    var value = e.currentTarget.getAttribute('data-value'),
+      $target = $(e.currentTarget);
 
     if (value === 'all') {
       if (this._all) {
         this.$input.val('');
         this.$input.removeAttr('disabled');
-        $(e.currentTarget)
-          .siblings('.btn-type01')
-          .removeAttr('disabled');
+        $target.siblings('.btn-type01').removeAttr('disabled');
+        $target.removeClass('btn-on');
         this._all = false;
       } else {
         this.$input.val(this._changable.data);
         this.$input.attr('disabled', true);
-        $(e.currentTarget)
-          .siblings('.btn-type01')
-          .attr('disabled', true);
+        $target.siblings('.btn-type01').attr('disabled', true);
+        $target.addClass('btn-on');
         this._all = true;
       }
     } else {

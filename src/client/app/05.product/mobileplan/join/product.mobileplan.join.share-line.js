@@ -242,7 +242,7 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
       hbs: 'complete_product',
       data: {
         prodCtgNm: Tw.PRODUCT_CTG_NM.PLANS,
-        mytPage: 'myplan',
+        btList: [{ link: '/myt-join/myplan', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.MYTJOIN }],
         btClass: 'item-one',
         prodId: this._prodId,
         prodNm: this._confirmOptions.preinfo.toProdInfo.prodNm,

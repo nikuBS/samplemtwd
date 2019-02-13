@@ -434,9 +434,6 @@ Tw.MenuComponent.prototype = {
         if ( item.menuId === 'M000353' ) {
           item.expsSeq = '101';
         }
-        if (item.menuNm === '이벤트') {
-          return false;
-        }
         return item.menuId !== 'M000343'; // Remove 인터넷/집전화/IPTV menu by hard coded
       })
       .sortBy(function (item) {

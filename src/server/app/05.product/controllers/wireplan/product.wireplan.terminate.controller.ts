@@ -56,12 +56,12 @@ class ProductWireplanTerminate extends TwViewController {
         }));
       }
 
-        res.render('wireplan/product.wireplan.terminate.html', Object.assign(renderCommonInfo, {
-          prodId: prodId,
-          joinTermInfo: ProductHelper.convWireplanJoinTermInfo(joinTermInfo.result, false),
-          btnData: this._getBtnData(currentAdditionsInfo.result)
-        }));
-      });
+      res.render('wireplan/product.wireplan.terminate.html', Object.assign(renderCommonInfo, {
+        prodId: prodId,
+        joinTermInfo: ProductHelper.convWireplanJoinTermInfo(joinTermInfo.result, false),
+        btnData: this._getBtnData(currentAdditionsInfo.result)
+      }));
+    });
   }
 }
 

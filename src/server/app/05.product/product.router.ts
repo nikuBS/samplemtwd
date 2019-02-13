@@ -46,6 +46,7 @@ import ProductWireplanJoinRequireDocumentApply from './controllers/wireplan/join
 import ProductWireplanJoinRequireDocumentHistory from './controllers/wireplan/join/product.wireplan.join.require-document.history.controller';
 import ProductWireplanJoin from './controllers/wireplan/join/product.wireplan.join.controller';
 import ProductWireplanTerminate from './controllers/wireplan/product.wireplan.terminate.controller';
+import ProductWireplanReservationCancel from './controllers/wireplan/product.wireplan.reservation-cancel.controller';
 
 import ProductRoaming from './controllers/roaming/product.roaming.controller';
 import ProductRoamingMyUse from './controllers/roaming/product.roaming.my-use.controller';
@@ -125,6 +126,7 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/wireplan/join/require-document/history', controller: ProductWireplanJoinRequireDocumentHistory });
     this.controllers.push({ url: '/wireplan/join', controller: ProductWireplanJoin });
     this.controllers.push({ url: '/wireplan/terminate', controller: ProductWireplanTerminate });
+    this.controllers.push({ url: '/wireplan/reservation-cancel', controller: ProductWireplanReservationCancel });
 
     this.controllers.push({ url: '/apps', controller: ProductApps });
     this.controllers.push({ url: '/apps/app', controller: ProductAppsDetail });
