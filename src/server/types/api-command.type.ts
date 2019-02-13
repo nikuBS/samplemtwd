@@ -25,7 +25,6 @@ export const API_CMD = {
   POPULAR_KEYWORD: { path: '/search/tworld/popword', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
   SEARCH_AUTO_COMPLETE: { path: '/search/tworld/autocomplete', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
   SEARCH_STACK_USER_CLICK: { path: '/search/tworld/log/save', method: API_METHOD.GET, server: API_SERVER.SEARCH, bypass: true },
-  BFF_12_0010: { path: '/core-modification/:version/search/keyword', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   BFF_INFO: { path: '/actuator/info', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_VERSION: { path: '/actuator/version/:args0', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -541,12 +540,13 @@ export const API_CMD = {
     bypass: true
   },
   BFF_08_0066: { path: '/core-modification/:version/center/banner', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
-  BFF_08_0069: { path: '/core-modification/:version/search/invst-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
-  // SEARCH SURVEY
-  BFF_08_0070: { path: '/core-modification/:version/search/invst-append', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
-  BFF_08_0071: { path: '/core-modification/:version/search/invst-insert', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
-  BFF_08_0072: { path: '/core-modification/:version/search/smart', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  // SEARCH
+  BFF_08_0068: { path: '/core-modification/:version/search/keyword', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0069: { path: '/core-modification/:version/search/smart', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0070: { path: '/core-modification/:version/search/invst-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0071: { path: '/core-modification/:version/search/invst-append', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0072: { path: '/core-modification/:version/search/invst-insert', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/:version/event/ing-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

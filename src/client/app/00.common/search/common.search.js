@@ -4,20 +4,24 @@
  * Date: 2018.12.11
  */
 
-Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step) {
+Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from) {
   this._cdn = cdn;
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
+  this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._svcInfo = svcInfo;
   this._searchInfo = searchInfo;
   this._step = step;
   this._accessKeyword = this._searchInfo.query;
-  this._init(this._searchInfo);
+  this._init(this._searchInfo,from);
 };
 
 Tw.CommonSearch.prototype = {
-  _init : function (searchInfo) {
+  _init : function (searchInfo,from) {
+    if(from==='menu'){
+      this._addRecentlyKeyword(this._accessKeyword);
+    }
     if(searchInfo.totalcount===0){
       return;
     }
@@ -120,11 +124,16 @@ Tw.CommonSearch.prototype = {
     }
   },
   _doSearch : function () {
+    var keyword = this.$inputElement.val();
+    if(Tw.FormatHelper.isEmpty(keyword)){
+      this._popupService.openAlert(Tw.ALERT_MSG_SEARCH.KEYWORD_ERR);
+      return;
+    }
     var inResult = this.$container.find('#resultsearch').is(':checked');
-    var requestUrl = inResult?'/common/search/in_result?keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
-    requestUrl+=this.$inputElement.val();
+    var requestUrl = inResult?'/common/search/in-result?keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
+    requestUrl+=keyword;
     requestUrl+='&step='+(Number(this._step)+1);
-    this._addRecentlyKeyword(this.$inputElement.val());
+    this._addRecentlyKeyword(keyword);
     this._historyService.goLoad(requestUrl);
   },
   _showBanner : function (data) {

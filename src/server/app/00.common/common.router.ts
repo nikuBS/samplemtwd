@@ -53,9 +53,9 @@ import CommonMemberLogin from './controllers/member/common.member.login.controll
 import CommonSearchMore from './controllers/search/common.search.more.controller';
 import CommonSearch from './controllers/search/common.search.controller';
 import CommonMemberInit from './controllers/member/common.member.init.controller';
-import CommonSearchMain from './controllers/search/common.search_main.controller';
+import CommonSearchMain from './controllers/search/common.search-main.controller';
 import CommonUtilServiceBlock from './controllers/util/common.util.service-block.controller';
-import CommonSearchInResult from './controllers/search/common.search.in_result.controller';
+import CommonSearchInResult from './controllers/search/common.search.in-result.controller';
 
 export default class CommonRouter extends TwRouter {
   constructor() {
@@ -121,8 +121,8 @@ export default class CommonRouter extends TwRouter {
 
     // search
     this.controllers.push({ url: '/search', controller: CommonSearch});
-    this.controllers.push({ url: '/search_main', controller: CommonSearchMain});
+    this.controllers.push({ url: '/search-main', controller: CommonSearchMain});
     this.controllers.push({ url: '/search/more', controller: CommonSearchMore });
-    this.controllers.push({ url: '/search/in_result', controller: CommonSearchInResult });
+    this.controllers.push({ url: '/search/in-result', controller: CommonSearchInResult });
   }
 }

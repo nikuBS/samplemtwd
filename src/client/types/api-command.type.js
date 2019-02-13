@@ -385,8 +385,8 @@ Tw.API_CMD = {
   BFF_08_0064: { path: '/core-modification/:version/guide/contents-detail/:args0', method: Tw.API_METHOD.GET },
 
   //SEARCH SURVEY
-  BFF_08_0070: { path: '/core-modification/v1/search/invst-append', method: Tw.API_METHOD.POST },
-  BFF_08_0071: { path: '/core-modification/v1/search/invst-insert', method: Tw.API_METHOD.POST },
+  BFF_08_0071: { path: '/core-modification/:version/search/invst-append', method: Tw.API_METHOD.POST },
+  BFF_08_0072: { path: '/core-modification/:version/search/invst-insert', method: Tw.API_METHOD.POST },
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/:version/event/ing-list', method: Tw.API_METHOD.GET },
