@@ -413,14 +413,42 @@ Tw.ProductCommonCallplan.prototype = {
     this._historyService.goLoad(this._settingGoUrl + '?prod_id=' + this._prodId);
   },
 
-  _getWireAdditionsPreCheck: function(termPrecheckResult) {
+  _getWireAdditionsPreCheck: function() {
+    if (['D_I', 'D_P', 'D_T'].indexOf(this._prodTypCd) === -1 || this._joinTermCd !== '03') {
+      return;
+    }
+
     this._apiService.request(Tw.API_CMD.BFF_10_0098, { joinTermCd: '04' }, {}, [this._prodId])
-      .done($.proxy(this._resWireAdditionsPreCheck, this, termPrecheckResult));
+      .done($.proxy(this._resWireAdditionsPreCheck, this));
   },
 
-  _resWireAdditionsPreCheck: function(termPrecheckResult, resp) {
+  _resWireAdditionsPreCheck: function(resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(termPrecheckResult.code, termPrecheckResult.msg).pop();
+      return;
+    }
+
+    this._apiService.request(Tw.API_CMD.BFF_10_0166, { joinTermCd: '04' }, {}, [this._prodId])
+      .done($.proxy(this._resWireAdditionsPreCheckInfo, this));
+  },
+
+  _resWireAdditionsPreCheckInfo: function(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return;
+    }
+
+    var title = resp.result.scrbTermClCd === '01' ? Tw.ALERT_MSG_PRODUCT.ALERT_3_A68 : Tw.ALERT_MSG_PRODUCT.ALERT_3_A69;
+    this._popupService.openConfirmButton(null, title, $.proxy(this._onConfirmWireAdditionsReservationCancel, this),
+      $.proxy(this._onCloseWireAdditionsReservationCancel, this));
+  },
+
+  _onConfirmWireAdditionsReservationCancel: function() {
+    this._isWireAdditionsReservationCancel = true;
+    this._popupService.close();
+  },
+
+  _onCloseWireAdditionsReservationCancel: function() {
+    if (!this._isWireAdditionsReservationCancel) {
+      return;
     }
 
     this._historyService.goLoad('/product/wireplan/reservation-cancel?prod_id=' + this._prodId);
@@ -429,12 +457,8 @@ Tw.ProductCommonCallplan.prototype = {
   _procAdvanceCheck: function(resp) {
     Tw.CommonHelper.endLoading('.container');
 
-    if (resp.code !== Tw.API_CODE.CODE_00 && ['D_I', 'D_P', 'D_T'].indexOf(this._prodTypCd) !== -1 && this._joinTermCd === '03') {
-      return this._getWireAdditionsPreCheck(resp);
-    }
-
     if (resp.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(resp.code, resp.msg).pop();
+      return Tw.Error(resp.code, resp.msg).pop($.proxy(this._getWireAdditionsPreCheck, this));
     }
 
     if (this._prodTypCd === 'F' && resp.result.combiProdScrbYn !== 'N' && this._joinTermCd === '01') {

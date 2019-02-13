@@ -44,6 +44,7 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
   _bindEvent: function() {
     this.$container.on('input', 'input', $.proxy(this._checkNumber, this));
     this.$container.on('blur', 'input', $.proxy(this._setMasking, this, 1));
+    this.$container.on('keyup', 'input', $.proxy(this._checkIsAbled, this));
     this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
   },
 
@@ -51,15 +52,16 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
     var target = event.target;
     Tw.InputHelper.inputNumberAndAsteriskOnly(target);
 
-    this._checkIsAbled();
     this._setMasking(2, event);
   },
 
   _checkIsAbled: function () {
-    var $inputPasswordVal = $.trim(this.$inputPassword.val()),
-      $confirmPasswordVal = $.trim(this.$confirmPassword.val());
+    var $inputPasswordVal = $.trim(this.$inputRealPassword.val()),
+      $confirmPasswordVal = $.trim(this.$realConfirmPassword.val());
 
     this.$btnSetupOk.attr('disabled', 'disabled');
+    this.$error0.hide();
+    this.$error1.hide();
 
     if (!this._validation.checkIsLength($inputPasswordVal, 4)) {
       return this._setErrorText(this.$error0, Tw.ALERT_MSG_PASSWORD.A16);

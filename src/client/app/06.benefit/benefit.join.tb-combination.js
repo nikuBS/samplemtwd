@@ -66,8 +66,7 @@ Tw.BenefitJoinTbCombination.prototype = {
   _getConvertListItem: function(lineInfo, idx) {
     return {
       'label-attr': 'id="ra' + idx + '"',
-      'txt': lineInfo.nickNm,
-      'add': Tw.FormatHelper.conTelFormatWithDash(lineInfo.svcNum),
+      'txt': Tw.FormatHelper.conTelFormatWithDash(lineInfo.svcNum),
       'radio-attr':'id="ra' + idx + '" data-svc_mgmt_num="' + lineInfo.svcMgmtNum + '" data-num="' +
         Tw.FormatHelper.conTelFormatWithDash(lineInfo.svcNum) + '" ' + (this._svcMgmtNum === lineInfo.svcMgmtNum ? 'checked' : '')
     };
@@ -164,7 +163,6 @@ Tw.BenefitJoinTbCombination.prototype = {
     return {
       list: _.map(useLineInfo.combiWireProductList, function (item) {
         return $.extend(item, {
-          combStaDt: Tw.DateHelper.getShortDateWithFormat(item.combStaDt, 'YYYY.M.DD.'),
           combStatusText: Tw.FormatHelper.isEmpty(item.combYn) ? Tw.BENEFIT_TBCOMBINATION_JOIN_STATUS.IS_COMBINED :
             Tw.BENEFIT_TBCOMBINATION_JOIN_STATUS.DIS_COMBINED,
           svcMgmtNum: item.svcMgmtNum,
@@ -232,7 +230,7 @@ Tw.BenefitJoinTbCombination.prototype = {
   _convertWireMember: function(wire) {
     return $.extend(wire, {
       svcNum: wire.svcCd === 'P' ? Tw.FormatHelper.conTelFormatWithDash(wire.svcNum) : wire.svcNum,
-      combStaDt: Tw.DateHelper.getShortDateWithFormat(wire.combStaDt, 'YYYY.M.DD.')
+      svcNm: Tw.SVC_CD[wire.svcCd]
     });
   },
 

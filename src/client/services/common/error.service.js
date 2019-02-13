@@ -21,7 +21,7 @@ Tw.ErrorService.prototype = {
     return msg.replace(/\\n/g, '<br>');
   },
 
-  pop: function() {
+  pop: function(closeCallback) {
     this._popupService.open({
       url: Tw.Environment.cdn + '/hbs/',
       'title': Tw.POPUP_TITLE.ERROR + '\n' + this._data.code,
@@ -34,7 +34,7 @@ Tw.ErrorService.prototype = {
       }]
     },
       $.proxy(this._request, this),
-      $.proxy(this._close, this));
+      $.proxy(this._close, this, closeCallback));
   },
 
   _request: function ($layer) {
@@ -46,9 +46,13 @@ Tw.ErrorService.prototype = {
     this._popupService.close();
   },
 
-  _close: function () {
+  _close: function (closeCallback) {
     if (this._isRequest) {
       location.href = '/customer/email';
+    }
+
+    if (closeCallback) {
+      closeCallback();
     }
   },
 
