@@ -45,8 +45,8 @@
                     <ul class="pg-chk-list02">
                         <% data.noticeInfo.forEach(function(info){ %>
                             <li data-list-id="<%=info.link%>">
-                                <button class="btn-tip" id="<%=info.link%>" page-id="<%=info.view%>" title="정보보기" >
-                                    <%=info.title%><i class="icon-badge-tip"><span class="blind">TIP</span></i>
+                                <button class="btn-tip" id="<%=info.link%>" aria-haspopup="true" title="정보보기" >
+                                    <%=info.title%><i class="icon-badge-tip"><span class="blind"><%=info.title%> tip</span></i>
                                 </button>
                             </li>
                         <% }); %>
