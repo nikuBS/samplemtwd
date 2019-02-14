@@ -79,7 +79,7 @@ Tw.NativeService.prototype = {
     var $popupContainer = this._popupService.isPopup();
 
     if ( !Tw.FormatHelper.isEmpty($popupContainer) ) {
-      if ( $popupContainer.find('.fe-no-back').length === 0 ) {
+      if ( !$popupContainer.hasClass('fe-no-back') ) {
         history.back();
       } else {
         $(window).trigger(Tw.NATIVE_BACK);
