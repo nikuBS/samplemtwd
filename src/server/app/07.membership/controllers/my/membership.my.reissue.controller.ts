@@ -27,13 +27,15 @@ export default class MembershipMyReissue extends TwViewController {
 
       res.render('my/membership.my.reissue.html', {
         myReissueData: myReissueData,
-        svcInfo: svcInfo
+        svcInfo: svcInfo,
+        pageInfo: pageInfo
       });
     });
   }
 
   private parseMyReissueData(myReissueData): any {
-    myReissueData.showGrade = MEMBERSHIP_GROUP[myReissueData.mbrGrCd]
+    const mbrGrade = MEMBERSHIP_GROUP[myReissueData.mbrGrCd];
+    myReissueData.showGrade = myReissueData.mbrGrCd === 'V' ? mbrGrade.toUpperCase() : mbrGrade.charAt(0).toUpperCase() + mbrGrade.slice(1);
     myReissueData.showType = MEMBERSHIP_TYPE[myReissueData.mbrTypCd];
     myReissueData.showSvcNum = FormatHelper.conTelFormatWithDash(myReissueData.svcNum);
     myReissueData.showMbrCardNum = FormatHelper.addCardDash(myReissueData.mbrCardNum);

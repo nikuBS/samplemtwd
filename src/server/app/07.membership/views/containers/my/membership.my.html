@@ -17,7 +17,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap">
+<div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- #header -->
     <%- include('../../../../common/views/components/header.component.html', { title: '나의 T멤버십', svcInfo: svcInfo }) %>
     <!--// #header -->
@@ -100,7 +100,7 @@
                     <div class="widget">
                         <div class="widget-box toggle">
                             <div class="bt-detail type1">
-                                <span class="tx-title">이용내역<button id="BE_02_tip_01" page-id="M000571" class="btn-tip" title="이용내역"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
+                                <span class="tx-title">이용내역<button id="BE_02_tip_01" class="btn-tip" title="이용내역"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
                                 <button id="fe-period" class="bt-toggle date" role="button" aria-pressed="false" title="이용내역 더보기"><!-- 이용기간 날짜 --></button>
                             </div>
                             <div class="toggler">
