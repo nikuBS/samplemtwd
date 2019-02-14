@@ -75,7 +75,6 @@ Tw.ProductCommonCallplan.prototype = {
     this.$contents.on('click', '.save_pay', $.proxy(this._openCustomPopup, this, 'BS_04_01_01_01'));
     this.$contents.on('click', '.fe-clubt', $.proxy(this._openCustomPopup, this, 'MP_02_02_04_01'));
     this.$contents.on('click', '.fe-campuszone', $.proxy(this._openCustomPopup, this, 'MP_02_02_04_02'));
-    this.$contents.on('click', '.fe-concierge', $.proxy(this._openCustomPopup, this, 'MP_02_02_04_03'));
 
     this.$contents.on('click', 'a', $.proxy(this._detectClubT, this));
   },
