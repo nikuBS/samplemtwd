@@ -53,6 +53,17 @@ Tw.ProductSubmain.prototype = {
         }),
         'T'
       );
+
+      if (Tw.UrlHelper.getLastPath() === 'wireplan') {
+        new Tw.BannerService(
+          this.$container,
+          Tw.REDIS_BANNER_TYPE.ADMIN,
+          _.filter(resp.result.banners, function(banner) {
+            return banner.bnnrLocCd === 'C';
+          }),
+          'C'
+        );
+      }
     }
   },
 
