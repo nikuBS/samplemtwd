@@ -229,14 +229,14 @@
                 <ul class="noti-list02">
                     <li><button type="button" class="tip-view-btn" title="결합 신청 안내 TIP보기" aria-haspopup="true" id="BS_07_01_01_02_tip_01">결합 신청 안내<span class="tip-view">TIP</span></button></li><!--웹접근성 수정 -->
                     <li><button type="button" class="tip-view-btn" title="결합 불가 안내 TIP보기" aria-haspopup="true" id="BS_07_01_01_02_tip_02">결합 불가 안내<span class="tip-view">TIP</span></button></li><!--웹접근성 수정 -->
-                    {{#noticeList}}
+                    {{#joinNoticeList}}
                         <li>
                             <button type="button" class="tip-view-btn fe-btn_tip_view" aria-haspopup="true" title="{{noticeTit}} TIP보기" data-title="{{noticeTit}}">
                                 {{noticeTit}}<span class="tip-view">TIP</span>
                             </button>
                             <div class="none fe-tip_view_html">{{{noticeTxt}}}</div>
                         </li>
-                    {{/noticeList}}
+                    {{/joinNoticeList}}
                 </ul>
             </div>
 
