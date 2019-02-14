@@ -629,7 +629,9 @@ Tw.MainHome.prototype = {
     }
   },
   _resetHeight: function () {
-    Tw.CommonHelper.resetHeight($('.home-slider .home-slider-belt')[0]);
+    if ( Tw.BrowserHelper.isApp() ) {
+      Tw.CommonHelper.resetHeight($('.home-slider .home-slider-belt')[0]);
+    }
   },
   _initWelcomsMsg: function () {
     if ( Tw.BrowserHelper.isApp() ) {
