@@ -29,7 +29,64 @@ Tw.BannerService.prototype = {
           if (!this._banners || this._banners.length === 0) {
             this.$banners.parents('div.nogaps').addClass('none');
           } else {
-            this.$banners.slick('slickAdd', this._bannerTmpl({ banners: this._banners, location: target, CDN: CDN }));
+            this.$banners.append(this._bannerTmpl({ banners: this._banners, location: target, CDN: CDN }));
+
+            if (this.$banners.hasClass('slider1-auto')) {
+              this.$banners.slick({
+                autoplay: true,
+                autoplaySpeed: 4000,
+                dots: true,
+                infinite: true,
+                speed: 500,
+                lazyLoad: 'progressive',
+                centerMode: false,
+                focusOnSelect: false,
+                touchMove: false,
+                customPaging: function(slider, i) {
+                  return $('<span />').text(i + 1);
+                }
+              });
+            } else {
+              this.$banners.slick({
+                dots: true,
+                infinite: false,
+                speed: 300,
+                lazyLoad: 'progressive',
+                centerMode: false,
+                focusOnSelect: false,
+                touchMove: false,
+                customPaging: function(slider, i) {
+                  return $('<span />').text(i + 1);
+                }
+              });
+            }
+
+            var $mainSlider = $('.home-slider .home-slider-belt');
+            if ($mainSlider.length > 0) {
+              this.$banners.on({
+                mousedown: function() {
+                  $mainSlider[0].slick.setOption({
+                    swipe: false
+                  });
+                },
+                touchstart: function() {
+                  $mainSlider[0].slick.setOption({
+                    swipe: false
+                  });
+                },
+                beforeChange: function(e) {
+                  $mainSlider[0].slick.setOption({
+                    swipe: false
+                  });
+                },
+                afterChange: function(e) {
+                  $mainSlider[0].slick.setOption({
+                    swipe: true
+                  });
+                }
+              });
+            }
+
             if (callback) {
               this.$banners.find('img').on('load', callback);
             }
