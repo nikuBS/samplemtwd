@@ -53,6 +53,7 @@ class ApiService {
       url: apiUrl + this.makePath(command.path, command.method, params, args, version),
       method: command.method,
       headers: this.makeHeader(command, header, params),
+      timeout: 30000,
       data: params
     };
 
