@@ -151,7 +151,7 @@ Tw.MytJoinSuspendUpload.prototype = {
         var uploadFile = [];
         this.$inputFile.each(function () {
           if ( this.files.length !== 0 ) {
-            uploadFile.push(this.files[0], false);
+            uploadFile.push(this.files[0]);
           }
         });
         this._callback(uploadFile);
