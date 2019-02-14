@@ -40,7 +40,7 @@
                     <button class="fe-common-back">닫기</button>
                 </li>
                 <li class="bt-red1 pos-right">
-                    <a href="/customer/emailconsult">이메일로 문의하기</a>
+                    <button id="fe-btn-emailconsult">이메일로 문의하기</button>
                 </li>
             </ul>
             <% } else { %>
@@ -57,4 +57,11 @@
     <!--// #contents -->
 </div>
 <% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    $('#fe-btn-emailconsult').click(function() {
+      window.location.href= '/customer/emailconsult';
+    });
+  });
+</script>
 <% include ../../components/end.component.html %>
