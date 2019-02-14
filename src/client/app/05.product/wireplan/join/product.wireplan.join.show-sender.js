@@ -4,7 +4,7 @@
  * Date: 2019.02.14
  */
 
-Tw.ProductWireplanJoinShowSender = function(rootEl, prodId, displayId, confirmOptions) {
+Tw.ProductWireplanJoinShowSender = function(rootEl, prodId, displayId, confirmOptions, btnData) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
@@ -14,6 +14,7 @@ Tw.ProductWireplanJoinShowSender = function(rootEl, prodId, displayId, confirmOp
   this._prodId = prodId;
   this._displayId = displayId;
   this._confirmOptions = JSON.parse(window.unescape(confirmOptions));
+  this._btnData = JSON.parse(window.unescape(btnData));
 
   this.$container = rootEl;
   this._cachedElement();

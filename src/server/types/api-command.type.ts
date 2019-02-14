@@ -750,10 +750,22 @@ export const API_CMD = {
     server: API_SERVER.BFF,
     bypass: true
   },
+  BFF_10_0115: {
+    path: '/core-product/:version/wire/additions/:args0/join-set-term-infos',
+    method: API_METHOD.GET,
+    server: API_SERVER.BFF,
+    bypass: true
+  },
   BFF_10_0116: { path: '/core-product/:version/ledger/:args0/previews', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_10_0119: {
     path: '/core-product/:version/services/combinations/:args0/scrbcheck',
     method: API_METHOD.GET,
+    server: API_SERVER.BFF,
+    bypass: true
+  },
+  BFF_10_0137: {
+    path: '/core-product/:version/wire/additions/:args0/joins',
+    method: API_METHOD.PUT,
     server: API_SERVER.BFF,
     bypass: true
   },

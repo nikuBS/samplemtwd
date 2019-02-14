@@ -37,7 +37,7 @@ export const CUSTOMER_PROTECT_GUIDE_VIDEO = [
   },
   {
     TEXT: '안전한 PC 사용을 위한 소프트웨어 업데이트의 중요성',
-    LINK: 'http://tv.naver.com/v/564858'
+    LINK: 'http://tv.naver.com/v/564819'
   },
   {
     TEXT: '랜섬웨어 감염에 주의하세요',

@@ -1,5 +1,5 @@
 <%#
-* FileName: product.wireplan.join.show-sender.html
+* FileName: product.wireplan.setting.show-sender.html
 * Author: Ji Hun Yang (jihun202@sk.com)
 * Date: 2019.02.14
 %>
@@ -22,7 +22,7 @@
         <div class="header-wrap">
             <div class="page-header">
                 <div class="header-ti">
-                    <h1>가입</h1>
+                    <h1>설정</h1>
                 </div>
             </div>
         </div>
@@ -31,14 +31,6 @@
         <div class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
-                <!-- .cont-box -->
-                <div class="cont-box rt-bt-type">
-                    <div class="announcement-box">
-                        <div class="announcement-tit">가입할 <strong class="tx-bold"><%= joinTermInfo.preinfo.reqProdInfo.prodNm %></strong><br>상품의 옵션을 설정하세요</div>
-                    </div>
-                </div>
-                <!--// .cont-box -->
-
                 <div class="ti-caption-gray">
                     <h3 class="tit">옵션 설정</h3>
                 </div>
@@ -76,7 +68,7 @@
                 <div class="bt-fixed-area">
                     <ul class="bt-slice full">
                         <li class="bt-red1">
-                            <button class="fe-btn_setup_ok" disabled="disabled">설정 완료</button>
+                            <button class="fe-btn_setup_ok" disabled="disabled">변경 완료</button>
                         </li>
                     </ul>
                 </div>
@@ -93,7 +85,7 @@
 </body>
 <% include ../../../components/javascript.component.html %>
 <script>$(function () {
-  new Tw.ProductWireplanJoinShowSender($('.wrap'), '<%= prodId %>', 'WP_02_02_01_03',
-    '<%- escape(JSON.stringify(joinTermInfo)) %>', '<%- escape(JSON.stringify(btnData)) %>');
+  new Tw.ProductWireplanSettingShowSender($('.wrap'), '<%= prodId %>', 'WP_02_02_01_03',
+    '<%= settingInfo.opCtt1 %>', '<%- escape(JSON.stringify(btnData)) %>');
 });</script>
 <% include ../../../components/end.component.html %>

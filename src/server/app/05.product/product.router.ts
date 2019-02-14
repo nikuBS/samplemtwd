@@ -49,6 +49,9 @@ import ProductWireplanJoin from './controllers/wireplan/join/product.wireplan.jo
 import ProductWireplanJoinBasicInfo from './controllers/wireplan/join/product.wireplan.join.basic-info.controller';
 import ProductWireplanJoinLettering from './controllers/wireplan/join/product.wireplan.join.lettering.controller';
 import ProductWireplanJoinShowSender from './controllers/wireplan/join/product.wireplan.join.show-sender.controller';
+import ProductWireplanSettingBasicInfo from './controllers/wireplan/setting/product.wireplan.setting.basic-info.controller';
+import ProductWireplanSettingLettering from './controllers/wireplan/setting/product.wireplan.setting.lettering.controller';
+import ProductWireplanSettingShowSender from './controllers/wireplan/setting/product.wireplan.setting.show-sender.controller';
 import ProductWireplanTerminate from './controllers/wireplan/product.wireplan.terminate.controller';
 import ProductWireplanReservationCancel from './controllers/wireplan/product.wireplan.reservation-cancel.controller';
 
@@ -133,6 +136,9 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/wireplan/join/lettering', controller: ProductWireplanJoinLettering });
     this.controllers.push({ url: '/wireplan/join/show-sender', controller: ProductWireplanJoinShowSender });
     this.controllers.push({ url: '/wireplan/join', controller: ProductWireplanJoin });
+    this.controllers.push({ url: '/wireplan/setting/basic-info', controller: ProductWireplanSettingBasicInfo });
+    this.controllers.push({ url: '/wireplan/setting/lettering', controller: ProductWireplanSettingLettering });
+    this.controllers.push({ url: '/wireplan/setting/show-sender', controller: ProductWireplanSettingShowSender });
     this.controllers.push({ url: '/wireplan/terminate', controller: ProductWireplanTerminate });
     this.controllers.push({ url: '/wireplan/reservation-cancel', controller: ProductWireplanReservationCancel });
 
