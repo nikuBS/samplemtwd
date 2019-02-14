@@ -332,10 +332,10 @@ export const MYT_JOIN_CONTRACT_TERMINAL = {
     TIT_NM: '테블릿 약정할인 12'
   },
   FEE_TYPE_C: {
-    TIT_NM: '테블릿 약정'
+    TIT_NM: '테블릿약정할인'
   },
   FEE_TYPE_D: {
-    TIT_NM: 'wibro 약정'
+    TIT_NM: '와이브로약정할인'
   },
   FEE_TYPE_E: {
     TIT_NM: '선택약정할인제도'
