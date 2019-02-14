@@ -371,7 +371,8 @@ class MytJoinInfoDiscount extends TwViewController {
 
         // 중도부분납금, 중도부분납일
         installmentList[i].allotPayAmt = FormatHelper.addComma(installmentList[i].allotPayAmt || '0');
-        installmentList[i].lastAllotPayOpTm = DateHelper.getShortDate(installmentList[i].lastAllotPayOpTm);
+        installmentList[i].lastAllotPayOpTm
+          = installmentList[i].lastAllotPayOpTm ? DateHelper.getShortDate(installmentList[i].lastAllotPayOpTm) : '-';
 
         thisMain._commDataInfo.repaymentInfo.push(installmentList[i]);
       }
@@ -466,8 +467,8 @@ class MytJoinInfoDiscount extends TwViewController {
     const startDt = start;
     const endDt = end;
 
-    dataObj.startDt = DateHelper.getShortDateWithFormat(startDt, 'YYYY.M.DD.');
-    dataObj.endDt = DateHelper.getShortDateWithFormat(endDt, 'YYYY.M.DD.');
+    dataObj.startDt = DateHelper.getShortDate(startDt);
+    dataObj.endDt = DateHelper.getShortDate(endDt);
 
     dataObj.totMt = dataObj.allotMthCnt; // 전체 개월
     dataObj.curMt = dataObj.allotMthCnt - dataObj.invRmn; // 진행 개월

@@ -9,19 +9,34 @@ Tw.MyTJoinWireInetPhoneNumChange = function (rootEl) {
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
 
+  this._cachedElement();
   this._bindEvent();
 };
 
 Tw.MyTJoinWireInetPhoneNumChange.prototype = {
+
+  /**
+   * element cache
+   * @private
+   */
+  _cachedElement: function(){
+    this.$btnSearch = this.$container.find('#btnSearch button');
+    this.$inputPhone = this.$container.find('#inputReqPhone');
+    this.$btnDelPhoneNum = this.$inputPhone.parent().find('.cancel');
+    this.$inputBoxPhone = this.$inputPhone.parents('.inputbox');
+    this.$errNoPhoneNum = this.$container.find('#span-no-phonenum');
+    this.$errNotPhoneNum = this.$container.find('#span-not-phonenum');
+  },
+
   /**
    * 이벤트 바인딩
    * @private
    */
   _bindEvent: function () {
-    $('#btnSearch').click($.proxy(this._requestData, this));
-    $('#inputReqPhone').on('keyup', $.proxy(this._onKeyUp, this));
-    $('#inputReqPhone').on('blur', $.proxy(this._onBlurInputPhone, this));
-    $('.inputbox .cancel').click($.proxy(this._onclickInputDel, this));
+    this.$btnSearch.on('click', $.proxy(this._requestData, this));
+    this.$inputPhone.on('input', $.proxy(this._onKeyUp, this));
+    this.$inputPhone.on('blur', $.proxy(this._onBlurInputPhone, this));
+    this.$btnDelPhoneNum.on('click', $.proxy(this._onclickInputDel, this));
   },
 
 
@@ -31,14 +46,15 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
    * @private
    */
   _onBlurInputPhone: function(event){
-    $('#span-no-phonenum').hide();
-    $('#span-not-phonenum').hide();
+    this.$errNoPhoneNum.hide();
+    this.$errNotPhoneNum.hide();
 
     if(!$(event.target).val()){
-      $('#span-no-phonenum').show();
+      this.$errNoPhoneNum.show();
+      return;
     }
-    if(!_isPhoneNum($(event.target).val())){
-      $('#span-not-phonenum').show();
+    if(!this._isPhoneNum($(event.target).val())){
+      this.$errNotPhoneNum.show();
     }
   },
 
@@ -62,23 +78,34 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
 
     this._resetPhoneNum($input);
 
+    if($input.val()){
+      this.$errNoPhoneNum.hide();
+      this.$errNotPhoneNum.hide();
+    }
+
     // 전화번호 체크
     if ( this._isPhoneNum($input.val()) ) {
-      $('.inputbox').removeClass('error');
-      $('#btnSearch button').removeAttr('disabled');
+      this.$inputBoxPhone.removeClass('error');
+      this.$btnSearch.removeAttr('disabled');
     } else {
-      if( !$('.inputbox').hasClass('error') ){
-        $('.inputbox').addClass('error');
+      if(value && value.length >= 9){
+        this.$errNotPhoneNum.show();
       }
-      $('#btnSearch button').attr('disabled', true);
+
+      if( !this.$inputBoxPhone.hasClass('error') ){
+        this.$inputBoxPhone.addClass('error');
+      }
+      this.$btnSearch.attr('disabled', true);
     }
   },
 
   _onclickInputDel: function(/*event*/){
-    //$('#inputReqPhone').val('');
-    $('.inputbox').removeClass('error');
-    $('#btnSearch button').attr('disabled', true);
-    $('#span-not-phonenum').hide();
+    console.log('_onclickInputDel');
+    //this.$inputPhone.val('');
+    this.$inputBoxPhone.removeClass('error');
+    this.$btnSearch.attr('disabled', true);
+    this.$errNotPhoneNum.hide();
+    this.$errNoPhoneNum.show();
   },
 
   _isPhoneNum: function(val){
@@ -86,8 +113,9 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
   },
 
   _resetPhoneNum: function($input){
+    console.log('_resetPhoneNum ',this );
     var value = $input.val();
-    $('#span-not-phonenum').hide();
+    // this.$errNotPhoneNum.hide();
     // if(value.length >= 4 && value.indexOf('-') === -1){
     //   $input.val(value + '-');
     // }
@@ -97,11 +125,8 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
     if(value.length >= 9){
       value = value.replace(/-/g, '');
       value = value.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, '$1-$2-$3');
-      $('input').val(value);
+      this.$inputPhone.val(value);
 
-      if( !Tw.ValidationHelper.isTelephone(value) ){
-        $('#span-not-phonenum').show();
-      }
     }
 
   },
@@ -116,7 +141,7 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
     //$('.process-list li').removeClass('complete');
     $('.process-list li').removeClass('off').addClass('off');
 
-    var phNum = $('input').val();
+    var phNum = this.$inputPhone.val();
 
     if ( !this._isPhoneNum(phNum) ) {
       // this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.A1);
