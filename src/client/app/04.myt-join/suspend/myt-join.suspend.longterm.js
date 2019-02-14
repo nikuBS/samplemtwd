@@ -201,7 +201,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       selected.option = 'checked';
     }
     this._popupService.open({
-      hbs: 'actionsheet_select_b_type',
+      hbs: 'actionsheet_select_a_type',
       layer: true,
       title: Tw.SUSPEND_RELATION.title,
       data: [
