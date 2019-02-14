@@ -29,13 +29,14 @@ Tw.CommonMemberLoginRoute.prototype = {
     }).done($.proxy(this._successLogin, this, url + hash, type));
   },
   _successLogin: function (target, type, resp) {
-    Tw.Logger.info('[Login Resp]', resp);
+    Tw.Logger.info('[Login Resp]', target, type, resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( type === 'reload' ) {
-        this._historyService.replaceURL(target);
-      } else {
-        this._historyService.goBack();
-      }
+      this._historyService.replaceURL(target);
+      // if ( type === 'reload' ) {
+      //   this._historyService.replaceURL(target);
+      // } else {
+      //   this._historyService.goBack();
+      // }
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3228 ) {
       // 고객보호비밀번호
       this._historyService.goLoad('/common/member/login/cust-pwd?target=' + encodeURIComponent(target));
