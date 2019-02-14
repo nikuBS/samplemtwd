@@ -137,8 +137,9 @@
                     </div>
                     <ul class="recommendedrate-list">
                         <% for (var index in sprateProds.prodList) { %>
-                        <li class="type01">
+                        <li>
                             <button type="button" class="product-infolink fe-link-internal" data-url="/product/callplan/<%- sprateProds.prodList[index].prodId %>">
+                                <div class="img-box"><img class="lte" src="<%= CDN %><%- sprateProds.prodList[index].prodIconImgUrl %>" alt=""></div>
                                 <div class="products-titleinfo">
                                     <h3 class="title"><%- sprateProds.prodList[index].prodNm %></h3>
                                     <p class="info"><span class="money"><%- sprateProds.prodList[index].basFeeInfo %></span>원</p>
