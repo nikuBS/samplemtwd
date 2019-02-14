@@ -92,16 +92,18 @@ Tw.ProductWireplanJoinBasicInfo.prototype = {
     }
   },
 
-  _blurInputNumber: function() {
-    if (this.$inputNumber.length > 8) {
-      this.$inputNumber.val(Tw.FormatHelper.conTelFormatWithDash(this.$inputNumber.val()));
+  _blurInputNumber: function(e) {
+    var $elem = $(e.currentTarget);
+    if ($elem.val().length > 8) {
+      $elem.val(Tw.FormatHelper.conTelFormatWithDash($elem.val()));
     } else {
-      this.$inputNumber.val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$inputNumber.val()));
+      $elem.val(Tw.FormatHelper.getDashedCellPhoneNumber($elem.val()));
     }
   },
 
-  _focusInputNumber: function() {
-    this.$inputNumber.val(this.$inputNumber.val().replace(/-/gi, ''));
+  _focusInputNumber: function(e) {
+    var $elem = $(e.currentTarget);
+    $elem.val($elem.val().replace(/-/gi, ''));
   },
 
   _clear: function(e) {
@@ -127,20 +129,32 @@ Tw.ProductWireplanJoinBasicInfo.prototype = {
       isNoticeList: true,
       isWireplan: true,
       isWidgetInit: true,
-      isJoin: true,
+      isPcJoin: true,
+      title: Tw.PRODUCT_TYPE_NM.JOIN,
+      applyBtnText: Tw.BUTTON_LABEL.JOIN,
+      joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
+      typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
       toProdName: this._confirmOptions.preinfo.reqProdInfo.prodNm,
       toProdDesc: this._confirmOptions.preinfo.reqProdInfo.prodSmryDesc,
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
       isNumberBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
+      svcNumMask: this._confirmOptions.preinfo.svcNumMask,
       noticeList: this._confirmOptions.noticeList,
       isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0),
-      joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
-      typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
       settingSummaryTexts: [{
         spanClass: 'val',
-        text: Tw.PRODUCT_JOIN_SETTING_AREA_CASE[this._displayId] + ' ' + this._data.addList.length + Tw.PRODUCT_JOIN_SETTING_AREA_CASE.LINE
-      }]
+        text: Tw.PRODUCT_JOIN_SETTING_AREA_CASE.INFO_SETTING_SUCCESS
+      }],
+      iconClass: this._getIcon()
     });
+  },
+
+  _getIcon: function() {
+    if (this._confirmOptions.preinfo.reqProdInfo.svcCd === 'P') {
+      return 'ico-type1';
+    }
+
+    return 'ico-type1';
   },
 
   _procConfirm: function() {

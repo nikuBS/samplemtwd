@@ -55,20 +55,32 @@ Tw.ProductWireplanJoinShowSender.prototype = {
       isNoticeList: true,
       isWireplan: true,
       isWidgetInit: true,
-      isJoin: true,
+      isPcJoin: false,
+      title: Tw.PRODUCT_TYPE_NM.JOIN,
+      applyBtnText: Tw.BUTTON_LABEL.JOIN,
+      joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
+      typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
       toProdName: this._confirmOptions.preinfo.reqProdInfo.prodNm,
       toProdDesc: this._confirmOptions.preinfo.reqProdInfo.prodSmryDesc,
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
       isNumberBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
+      svcNumMask: this._confirmOptions.preinfo.svcNumMask,
       noticeList: this._confirmOptions.noticeList,
       isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0),
-      joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
-      typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
       settingSummaryTexts: [{
         spanClass: 'val',
-        text: Tw.PRODUCT_JOIN_SETTING_AREA_CASE[this._displayId] + ' ' + this._data.addList.length + Tw.PRODUCT_JOIN_SETTING_AREA_CASE.LINE
-      }]
+        text: Tw.PRODUCT_JOIN_SETTING_AREA_CASE.INFO_SETTING_SUCCESS
+      }],
+      iconClass: this._getIcon()
     });
+  },
+
+  _getIcon: function() {
+    if (this._confirmOptions.preinfo.reqProdInfo.svcCd === 'P') {
+      return 'ico-type1';
+    }
+
+    return 'ico-type1';
   },
 
   _procConfirm: function() {

@@ -28,10 +28,18 @@ class ErrorService {
     return res.render('error.server-error.html', {
       title: options.title || 'Error',
       code: options.code || '',
-      msg: options.msg || '',
+      msg: this._replaceBreakLines(options.msg) || '',
       svcInfo: options.svcInfo || null,
       isBackCheck: options.isBackCheck || false
     });
+  }
+
+  /**
+   * @param msg
+   * @private
+   */
+  private _replaceBreakLines(msg: any): any {
+    return msg.replace(/\\n/g, '<br>');
   }
 
   /**

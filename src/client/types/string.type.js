@@ -883,7 +883,8 @@ Tw.PRODUCT_JOIN_SETTING_AREA_CASE = {
   MP_02_02_03_11: '공유회선',
   MV_02_02_03: '비밀번호 설정 완료',
   MV_02_02_04: '보호자',
-  MV_02_02_06: '가족그룹'
+  MV_02_02_06: '가족그룹',
+  INFO_SETTING_SUCCESS: '정보 입력 완료'
 };
 
 Tw.PRODUCT_MOBILEPLAN_COMPARE_PLANS = {
@@ -1440,7 +1441,7 @@ Tw.MEMBERSHIP_GRADE = {
 Tw.MEMBERSHIP_URL = {
   TDAY: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/monthly/MonthlyTmbrs.do?bannerpoc=2018_144',
   CHOCOLATE: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/shop/prod/shoppingMain.do?bannerpoc=2018_165'
-}
+};
 
 Tw.BENEFIT = {
   PAYMENT: {

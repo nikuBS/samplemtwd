@@ -138,7 +138,7 @@ Tw.ProductMobileplanSettingNumber.prototype = {
   },
 
   _blurInputNumber: function() {
-    if (this.$inputNumber.length > 8) {
+    if (this.$inputNumber.val().length > 8) {
       this.$inputNumber.val(Tw.FormatHelper.conTelFormatWithDash(this.$inputNumber.val()));
     } else {
       this.$inputNumber.val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$inputNumber.val()));
