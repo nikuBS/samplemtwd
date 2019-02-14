@@ -252,11 +252,14 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     //accordian
     $('.idpt-accordian > li > a', $container).on('click', function(e){
       e.preventDefault();
-      $('.idpt-accordian > li > a', $container).removeClass('open');
-      $('.idpt-accordian-cont', $container).slideUp();
+      // $('.idpt-accordian > li > a', $container).removeClass('open');
+      // $('.idpt-accordian-cont', $container).slideUp();
       if ($(this).parent().find('.idpt-accordian-cont').is(':hidden')){
         $(this).addClass('open');
         $(this).parent().find('.idpt-accordian-cont').slideDown();
+      } else {
+        $(this).removeClass('open');
+        $(this).parent().find('.idpt-accordian-cont').slideUp();
       }
     });
   
