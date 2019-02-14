@@ -1,6 +1,6 @@
 Tw.ParamsHelper = (function () {
   var getQueryParams = function(url) {
-    if (url.includes('?')) {
+    if (url.indexOf('?') !== -1) {
       var queryString = url.split('?')[1].split('#')[0];
       var arrParams = queryString.split('&');
       var obj = {};
