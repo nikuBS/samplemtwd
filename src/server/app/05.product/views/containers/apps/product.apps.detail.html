@@ -29,9 +29,9 @@
                 <% if (topBanner) { %>
                     <hr class="cont-sp type1" aria-hidden="true"/>
                     <% if (topBanner.bnnrImgUrl) { %>
-                        <a class="ad-banner"><img src="<%= topBanner.bnnrImgUrl %>" class="w100" alt="" /></a>
+                        <button class="ad-banner" href="<%= topBanner.bnnrLinkUrl %>"><img src="<%= topBanner.bnnrImgUrl %>" class="w100" alt="" /></button>
                     <% } else { %>
-                        <div class="ad-banner"><%- topBanner.bnnrDtlHtmlCtt %></div>
+                        <div class="ad-banner" href="<%= topBanner.bnnrLinkUrl %>"><%- topBanner.bnnrDtlHtmlCtt %></div>
                     <% } %>
                 <% } %>
 
@@ -66,9 +66,9 @@
                 if (centerBanner) { %>
                     <hr class="cont-sp type1" aria-hidden="true"/>
                     <% if (centerBanner.bnnrImgUrl) { %>
-                        <a class="ad-banner"><img src="<%= centerBanner.bnnrImgUrl %>" class="w100" alt="" /></a>
+                        <button class="ad-banner" href="<%= centerBanner.bnnrLinkUrl %>"><img src="<%= centerBanner.bnnrImgUrl %>" class="w100" alt="" /></button>
                     <% } else { %>
-                        <div class="ad-banner"><%- centerBanner.bnnrDtlHtmlCtt %></div>
+                        <div class="ad-banner" href="<%= topBanner.bnnrLinkUrl %>"><%- centerBanner.bnnrDtlHtmlCtt %></div>
                     <% } %>
                 <% } %>
                 

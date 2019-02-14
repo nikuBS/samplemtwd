@@ -24,6 +24,7 @@ Tw.ProductAppsDetail.prototype = {
     this.$container.on('click', '#fe-exe-btn', $.proxy(this._handleCheckAndOpenApp, this));
     this.$container.on('click', '#fe-open-btn', $.proxy(this._handleOpenApp, this));
     this.$container.on('click', '.bt.apple, .bt.google, .bt.one-store', $.proxy(this._handleOpenMarket, this));
+    this.$container.on('click', '.ad-banner', $.proxy(this._handleOpenLink));
   },
 
   _cachedElement: function() {
@@ -172,6 +173,24 @@ Tw.ProductAppsDetail.prototype = {
         type: Tw.NTV_BROWSER.EXTERNAL,
         href: url
       });
+    }
+  },
+
+  _handleOpenLink: function(e) {
+    var link = e.currentTarget.getAttribute('href');
+
+    if (!link) {
+      return;
+    } else if (link.indexOf('http') !== -1) {
+      if (Tw.BrowserHelper.isApp()) {
+        Tw.CommonHelper.showDataCharge(function() {
+          Tw.CommonHelper.openUrlExternal(link);
+        });
+      } else {
+        Tw.CommonHelper.openUrlExternal(link);
+      }
+    } else {
+      window.location.href = link;
     }
   }
 };
