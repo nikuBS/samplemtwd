@@ -247,9 +247,9 @@
 
                     <button id="fe-bt-link-billguide" class="price">
                         <% if (homeData.billData.type2) { %>
-                        <strong class="ti"><%= homeData.billData.invMonth %>월 청구요금</strong>
+                        <strong class="ti"><%= homeData.billData.billMonth %>월 청구요금</strong>
                         <% } else if (homeData.billData.type1) { %>
-                        <strong class="ti"><%= homeData.billData.invMonth %>월 청구요금 <i class="icon-whole"><span class="blind">전체</span></i></strong>
+                        <strong class="ti"><%= homeData.billData.billMonth %>월 청구요금 <i class="icon-whole"><span class="blind">전체</span></i></strong>
                         <% } else { %>
                         <strong class="ti"><%= homeData.billData.invMonth %>월 이용요금</strong>
                         <% } %>

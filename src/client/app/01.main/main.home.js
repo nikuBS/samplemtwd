@@ -373,7 +373,8 @@ Tw.MainHome.prototype = {
       deduckTot: Tw.FormatHelper.addComma(billData[billName].deduckTotInvAmt || '0'),
       invEndDt: Tw.DateHelper.getShortDate(billData[billName].invDt),
       invStartDt: Tw.DateHelper.getShortFirstDate(billData[billName].invDt),
-      invMonth: Tw.DateHelper.getCurrentMonth(billData[billName].invDt)
+      invMonth: Tw.DateHelper.getCurrentMonth(billData[billName].invDt),
+      billMonth: +Tw.DateHelper.getCurrentMonth(billData[billName].invDt) + 1
     };
   },
   _getContentData: function (element) {
