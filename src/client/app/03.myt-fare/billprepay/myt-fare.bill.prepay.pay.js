@@ -9,12 +9,13 @@ Tw.MyTFareBillPrepayPay = function (rootEl, title, amount, name) {
   this.$title = title;
   this._maxAmount = amount;
   this._name = name;
+  this._isPop = true;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService(rootEl);
-  this._backAlert = new Tw.BackAlert(this.$container);
+  this._backAlert = new Tw.BackAlert(this.$container, this._isPop);
 
   this._init();
 };

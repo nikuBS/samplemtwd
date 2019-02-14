@@ -17,7 +17,6 @@ Tw.BackAlert.prototype = {
     $(window).on(Tw.NATIVE_BACK, $.proxy(this.onClose, this));
   },
   onClose: function () {
-    alert(this._isPage);
     this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
       $.proxy(this._closePop, this), $.proxy(this._closeCallback, this),
       Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
