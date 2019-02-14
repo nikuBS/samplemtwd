@@ -9,6 +9,7 @@ Tw.MainMenuSettingsNotifications = function (rootEl) {
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
+  this._nativeService = Tw.Native;
 
   this._termsAgreed = {
     twdAdRcvAgreeYn: false,
@@ -28,6 +29,18 @@ Tw.MainMenuSettingsNotifications.prototype = {
     for (var i = 0; i < $agreedTerms.length; i++) {
       this._termsAgreed[$agreedTerms[i].dataset.key] = true;
     }
+
+    // check if it is from device and notification settings is on
+    if (Tw.BrowserHelper.isApp()) {
+      this._nativeService.send(Tw.NTV_CMD.GET_PERMISSION, {
+        type: 'notification'
+      }, $.proxy(function (res) {
+        if (res.resultCode === Tw.NTV_CODE.CODE_00 && res.params.permission !== 1) {
+          // Show notification guide when device notification settings is off
+          this.$container.find('.fe-device-noti').removeClass('none');
+        }
+      }, this));
+    }
   },
   _cacheElements: function () {
     this.$serviceSpan = this.$container.find('#fe-service-msg');
@@ -38,6 +51,7 @@ Tw.MainMenuSettingsNotifications.prototype = {
       'change', '#fe-chk-service, #fe-chk-recommend', $.proxy(this._onNotiChanged, this));
     this.$container.on(
       'click', '#fe-service-terms, #fe-recommend-terms', $.proxy(this._onTermsClicked, this));
+    this.$container.on('click', '#fe-go-device-noti', $.proxy(this._onDeviceNotiClicked, this));
   },
   _onNotiChanged: function (e) {
     var id = e.currentTarget.id;
@@ -155,5 +169,10 @@ Tw.MainMenuSettingsNotifications.prototype = {
     for (var key in terms) {
       this._termsAgreed[key] = terms[key];
     }
+  },
+  _onDeviceNotiClicked: function () {
+    this._nativeService.send(Tw.NTV_CMD.OPEN_SETTINGS, {
+      type: 'notification'
+    });
   }
 };
