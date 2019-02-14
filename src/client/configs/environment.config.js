@@ -1,3 +1,3 @@
 Tw.environment = {
-  version: 'QA_v4.17.1'
+  version: 'QA_v4.18.0'
 };
