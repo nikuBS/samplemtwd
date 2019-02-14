@@ -12,14 +12,14 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from) {
   this._apiService = Tw.Api;
   this._svcInfo = svcInfo;
   this._searchInfo = searchInfo;
-  this._step = step;
+  this._step = Tw.FormatHelper.isEmpty(step)?1:step;
   this._accessKeyword = this._searchInfo.query;
   this._init(this._searchInfo,from);
 };
 
 Tw.CommonSearch.prototype = {
   _init : function (searchInfo,from) {
-    if(from==='menu'){
+    if(from==='menu'&&this._historyService.isReload()===false){
       this._addRecentlyKeyword(this._accessKeyword);
     }
     if(searchInfo.totalcount===0){
