@@ -8,10 +8,12 @@ Tw.MyTFareBillPoint = function (rootEl) {
   this.$container = rootEl;
 
   this._paymentCommon = new Tw.MyTFareBillCommon(this.$container);
+  this._historyService = new Tw.HistoryService(rootEl);
+  this._backAlert = new Tw.BackAlert(this.$container);
+
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
-  this._historyService = new Tw.HistoryService(rootEl);
 
   this._init();
 };
@@ -94,15 +96,16 @@ Tw.MyTFareBillPoint.prototype = {
     Tw.CommonHelper.openUrlExternal(Tw.URL_PATH.OKCASHBAG);
   },
   _onClose: function () {
-    var $amount = this.$container.find('.fe-amount');
-    if (this.$isChanged || this.$pointPw.val() !== '' ||
-      Tw.FormatHelper.addComma($amount.attr('data-value')) !== $amount.text()) {
-      this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-        $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
-        Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-    } else {
-      this._historyService.goBack();
-    }
+    this._backAlert.onClose();
+    // var $amount = this.$container.find('.fe-amount');
+    // if (this.$isChanged || this.$pointPw.val() !== '' ||
+    //   Tw.FormatHelper.addComma($amount.attr('data-value')) !== $amount.text()) {
+    //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
+    //     $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
+    //     Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+    // } else {
+    //   this._historyService.goBack();
+    // }
   },
   _checkPay: function () {
     if (this._isValid()) {
