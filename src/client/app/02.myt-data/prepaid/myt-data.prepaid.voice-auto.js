@@ -10,6 +10,7 @@ Tw.MyTDataPrepaidVoiceAuto = function (rootEl) {
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService();
+  this._backAlert = new Tw.BackAlert(rootEl);
 
   this._cachedElement();
   this._bindEvent();
@@ -316,21 +317,22 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
   },
 
   _stepBack: function () {
-    var confirmed = false;
-    this._popupService.openConfirmButton(
-      Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
-      Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-      $.proxy(function () {
-        confirmed = true;
-        this._popupService.close();
-      }, this),
-      $.proxy(function () {
-        if ( confirmed ) {
-          this._historyService.replaceURL('/myt-data/submain');
-        }
-      }, this),
-      Tw.BUTTON_LABEL.NO,
-      Tw.BUTTON_LABEL.YES
-    );
+    this._backAlert.onClose();
+    // var confirmed = false;
+    // this._popupService.openConfirmButton(
+    //   Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+    //   Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+    //   $.proxy(function () {
+    //     confirmed = true;
+    //     this._popupService.close();
+    //   }, this),
+    //   $.proxy(function () {
+    //     if ( confirmed ) {
+    //       this._historyService.replaceURL('/myt-data/submain');
+    //     }
+    //   }, this),
+    //   Tw.BUTTON_LABEL.NO,
+    //   Tw.BUTTON_LABEL.YES
+    // );
   }
 };
