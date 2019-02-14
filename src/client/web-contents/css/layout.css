@@ -1368,7 +1368,7 @@ body.bg-gray {
     display: inline-block;
     padding: 0 0.9375rem;
     font-size: 0.9375rem;
-    font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK";
+    font-family: "Apple SD Gothic Neo", "Arial", sans-serif;
     font-weight: 400;
     color: #000;
     line-height: 1.625rem; }
@@ -1711,7 +1711,7 @@ body.bg-gray {
   color: #178BCE; }
   .certify-wrap .left-time span {
     vertical-align: baseline;
-    font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK"; }
+    font-family: "Apple SD Gothic Neo", "Arial", sans-serif; }
 
 .certify-wrap .add-time {
   margin: 1.25rem 1.25rem 0 1.25rem; }
