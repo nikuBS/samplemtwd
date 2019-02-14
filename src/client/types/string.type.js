@@ -1433,6 +1433,11 @@ Tw.MEMBERSHIP_GRADE = {
   O: '일반'
 };
 
+Tw.MEMBERSHIP_URL = {
+  TDAY: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/monthly/MonthlyTmbrs.do?bannerpoc=2018_144',
+  CHOCOLATE: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/shop/prod/shoppingMain.do?bannerpoc=2018_165'
+}
+
 Tw.BENEFIT = {
   PAYMENT: {
     TITLE: '포인트 요금 납부',
