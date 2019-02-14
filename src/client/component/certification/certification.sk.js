@@ -259,9 +259,7 @@ Tw.CertificationSk.prototype = {
       this.$inputMdn.val(this._svcInfo.svcNum);
       this.$inputMdn.parents('#fe-inputbox-mdn').addClass('readonly');
       this.$btCert.parent().addClass('none');
-      // if ( !this._securityAuth ) {
-      //   this.$btReCert.parent().removeClass('none');
-      // }
+      this.$btReCert.parent().removeClass('none');
     }
   },
   _checkCertType: function () {
