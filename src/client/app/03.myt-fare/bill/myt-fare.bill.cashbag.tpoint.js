@@ -132,10 +132,14 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     this.$isOneValid = this._validation.showAndHideErrorMsg(this.$point, isValid);
   },
   _checkCardNumber: function (event) {
-    if (this.$selectedTab.attr('id') === 'tab2-tab') {
-      var $target = $(event.currentTarget);
-      this.$isAutoCardValid = this._validation.showAndHideErrorMsg($target, this._validation.checkEmpty($target.val()), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V60) &&
-        this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 16), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V26);
+    var $target = $(event.currentTarget);
+    var isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkEmpty($target.val()), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V60) &&
+      this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 16), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V26);
+
+    if (this.$selectedTab.attr('id') === 'tab1-tab') {
+      this.$isOneValid = isValid;
+    } else {
+      this.$isAutoCardValid = isValid;
     }
   },
   _checkPassword: function (event) {

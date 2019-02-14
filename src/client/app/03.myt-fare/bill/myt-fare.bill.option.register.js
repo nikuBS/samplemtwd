@@ -10,6 +10,7 @@ Tw.MyTFareBillOptionRegister = function (rootEl, bankList) {
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService(rootEl);
+  this._backAlert = new Tw.BackAlert(this.$container);
 
   if (!(Tw.FormatHelper.isEmpty(bankList) || bankList === '[]')) {
     bankList = JSON.parse(window.unescape(bankList));
@@ -295,13 +296,14 @@ Tw.MyTFareBillOptionRegister.prototype = {
     return apiName;
   },
   _onClose: function () {
-    if (this._isChanged()) {
-      this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-        $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
-        Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-    } else {
-      this._historyService.goBack();
-    }
+    this._backAlert.onClose();
+    // if (this._isChanged()) {
+    //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
+    //     $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
+    //     Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+    // } else {
+    //   this._historyService.goBack();
+    // }
   },
   _isChanged: function () {
     var isValid = this.$isRadioChanged;

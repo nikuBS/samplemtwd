@@ -14,6 +14,7 @@ Tw.MyTFareBillPrepayPay = function (rootEl, title, amount, name) {
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService(rootEl);
+  this._backAlert = new Tw.BackAlert(this.$container);
 
   this._init();
 };
@@ -110,12 +111,13 @@ Tw.MyTFareBillPrepayPay.prototype = {
     }
   },
   _onClose: function () {
-    if (this._isChanged()) {
-      this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-        $.proxy(this._closePop, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-    } else {
-      this._historyService.goBack();
-    }
+    this._backAlert.onClose();
+    // if (this._isChanged()) {
+    //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
+    //     $.proxy(this._closePop, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+    // } else {
+    //   this._historyService.goBack();
+    // }
   },
   _isChanged: function () {
     return !Tw.FormatHelper.isEmpty(this.$prepayAmount.val()) || this.$cardTypeSelector.attr('id') !== '00' ||

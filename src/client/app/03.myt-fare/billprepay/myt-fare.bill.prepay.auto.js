@@ -8,11 +8,13 @@ Tw.MyTFareBillPrepayAuto = function (rootEl, title, type) {
   this.$container = rootEl;
   this.$title = title;
   this.$type = type;
+  this.$isPage = true;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService(rootEl);
+  this._backAlert = new Tw.BackAlert(this.$container, this.$isPage);
 
   this._init();
 };
@@ -337,13 +339,14 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     }
   },
   _onClose: function () {
-    if (this._isChanged()) {
-      this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-        $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
-        Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-    } else {
-      this._historyService.goBack();
-    }
+    this._backAlert.onClose();
+    // if (this._isChanged()) {
+    //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
+    //     $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
+    //     Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+    // } else {
+    //   this._historyService.goBack();
+    // }
   },
   _isChanged: function () {
     return this.$standardAmount.attr('id') !== this.$standardAmount.attr('data-origin-id') ||

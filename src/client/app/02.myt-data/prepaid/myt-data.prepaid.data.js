@@ -10,6 +10,7 @@ Tw.MyTDataPrepaidData = function (rootEl) {
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService(rootEl);
+  this._backAlert = new Tw.BackAlert(rootEl);
 
   this._cachedElement();
   this._bindEvent();
@@ -175,16 +176,17 @@ Tw.MyTDataPrepaidData.prototype = {
       this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 2), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V7);
   },
   _onClose: function () {
-    var isChanged = !(Tw.FormatHelper.isEmpty(this.$dataSelector.attr('id'))) || !Tw.FormatHelper.isEmpty(this.$cardNumber.val()) ||
-      !Tw.FormatHelper.isEmpty(this.$cardY.val()) || !Tw.FormatHelper.isEmpty(this.$cardM.val()) || !Tw.FormatHelper.isEmpty(this.$cardPw.val());
-
-    if (isChanged) {
-      this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-        $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
-        Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-    } else {
-      this._historyService.goBack();
-    }
+    this._backAlert.onClose();
+    // var isChanged = !(Tw.FormatHelper.isEmpty(this.$dataSelector.attr('id'))) || !Tw.FormatHelper.isEmpty(this.$cardNumber.val()) ||
+    //   !Tw.FormatHelper.isEmpty(this.$cardY.val()) || !Tw.FormatHelper.isEmpty(this.$cardM.val()) || !Tw.FormatHelper.isEmpty(this.$cardPw.val());
+    //
+    // if (isChanged) {
+    //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
+    //     $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
+    //     Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+    // } else {
+    //   this._historyService.goBack();
+    // }
   },
   _checkPay: function () {
     if (this._isValid()) {
