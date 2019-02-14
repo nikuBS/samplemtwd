@@ -48,7 +48,7 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
     if (resp.code === 'ZORDC1020') {
       this._setRetrieveStatus();
     } else if (resp.code === 'RCG0042') {
-      this._successGetShareData({ tFmlyShrblQty: 0 });
+      this._successGetShareData({ tFmlyShrblQty: '0' });
     } else if (resp.code !== Tw.API_CODE.CODE_00) {
       Tw.Error(resp.code, resp.msg).pop();
     } else if (resp.result) {
