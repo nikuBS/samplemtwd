@@ -46,12 +46,13 @@ Tw.MembershipSubmain.prototype = {
     this.$container.on('click', '.fe-benefit-title', $.proxy(this._goBenefitBrand, this));
     this.$container.on('click', '.fe-membership-grade', $.proxy(this._goMembershipGrade, this));
     this.$container.on('click', '.box-app-down', $.proxy(this._goTmembership, this));
-    this.$container.on('click', '.data-plus', $.proxy(this._goChocolate, this));
+    this.$container.on('click', '.data-plus', $.proxy(this._selectChocolate, this));
     this.$container.on('click', '.coalition-brand-list .map', $.proxy(this._getBrandDetailInfo, this));
     // this.$container.on('click', '#fe-membership-join', $.proxy( this._membershipLayerPopup.onClickJoinBtn, this._membershipLayerPopup));
     this.$container.on('click', '#fe-membership-join', $.proxy( this._membershipLoginCheck, this));
     this.$container.on('click', '.fe-mebership-my', $.proxy(this._goMyMembership, this));
     this.$container.on('click', '.fe-membership-location', $.proxy(this._checkLocationAgreement, this));
+    this.$container.on('click', '.fe-membership-tday', $.proxy(this._selectTday, this));
   },
   _checkLocationAgreement:function () {
     if(this._svcInfo) {
@@ -75,6 +76,23 @@ Tw.MembershipSubmain.prototype = {
       this._goLogin();
     }
 
+  },
+  _selectTday: function() {
+    if (Tw.BrowserHelper.isApp()) {
+      this._popupService.openConfirm(Tw.POPUP_CONTENTS.NO_WIFI, Tw.POPUP_TITLE.EXTERNAL_LINK, null, $.proxy(this._goTday, this));
+    } else {
+      this._goTday();
+    }
+  },
+  _selectChocolate: function () {
+    if (Tw.BrowserHelper.isApp()) {
+      this._popupService.openConfirm(Tw.POPUP_CONTENTS.NO_WIFI, Tw.POPUP_TITLE.EXTERNAL_LINK, null, $.proxy(this._goChocolate, this));
+    } else {
+      this._goChocolate();
+    }
+  },
+  _goTday: function () {
+    Tw.CommonHelper.openUrlExternal(Tw.MEMBERSHIP_URL.TDAY,'');
   },
   _membershipLoginCheck: function () {
     if(this._svcInfo && this._svcInfo.loginType !== Tw.AUTH_LOGIN_TYPE.EASY ) {
@@ -229,7 +247,7 @@ Tw.MembershipSubmain.prototype = {
     this._historyService.goLoad('/membership/benefit/map?' + $.param(param));
   },
   _goChocolate: function () {
-    Tw.CommonHelper.openUrlExternal(Tw.URL_PATH.CHOCOLATE_MALL,'');
+    Tw.CommonHelper.openUrlExternal(Tw.MEMBERSHIP_URL.CHOCOLATE,'');
   },
   _goTmembership: function () {
     this._historyService.goLoad('/product/apps/app?appId=TW50000020');
