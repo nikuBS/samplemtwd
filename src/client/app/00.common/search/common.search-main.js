@@ -1,5 +1,5 @@
 /**
- * FileName: common.search_main.js
+ * FileName: common.search-main.js
  * Author: Hyunkuk Lee (max5500@pineone.com)
  * Date: 2018.12.18
  */

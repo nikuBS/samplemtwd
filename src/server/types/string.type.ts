@@ -338,7 +338,7 @@ export const MYT_JOIN_CONTRACT_TERMINAL = {
     TIT_NM: 'wibro 약정'
   },
   FEE_TYPE_E: {
-    TIT_NM: '선택 약정 할인 제도'
+    TIT_NM: '선택약정할인제도'
   },
   FEE_NOTYPE: {
     TIT_NM: '정보 없음'
@@ -667,7 +667,7 @@ export const CUSTOMER_DAMAGEINFO_CONTENTS_TITLE = {
   page003: '파밍 피해 예방법',
   page004: '클라우드 보안 방법',
   page005: '스마트폰 보안 수칙',
-  page006: '스팸 메시지 대응 방법',
+  page006: '스팸 문자 대응 방법',
   page007: '로그인 제한 제도',
   page008: '휴면 고객 제도',
   page009: 'Tworld 비밀번호 관리',
@@ -1087,7 +1087,28 @@ export const MYT_SUSPEND_REASON = {
   5000344: '해외체류'
 };
 
+export const MYT_SUSPEND_COMPLETE_MSG = {
+  SUCCESS_LONG_TERM_SUSPEND_MESSAGE_SVC: '회선번호: {SVC_INFO}<br />장기일시정지 기간: {DURATION}',
+  SUCCESS_SUSPEND_MESSAGE: '일시정지 기간: {DURATION}<br />일시정지 설정: {SUSPEND_TYPE}',
+  SUCCESS_RESUSPEND_MESSAGE: '회선번호: {SVC_NUMBER}<br />재시작 기간: {DURATION}',
+  GO_TO_STATUS: '일시정지 신청현황',
+  RESUSPEND: '재신청',
+  CANCEL_RESUSPEND: '재신청 취소',
+  RESET: '해제',
+  APPLY: '신청',
+  TYPE: {
+    ALL: '걸기/받기 모두 정지',
+    CALL: '걸기만 정지'
+  }
+};
+
 export const BENEFIT_TBCOMBINATION_JOIN_STATUS = {
   IS_COMBINED: '결합가능',
   DIS_COMBINED: '결합완료'
+};
+
+export const PREMTERM_MSG = {
+  LESS_180: '프리미엄패스1 가입 후 180일이 되기 전에 낮은 요금제로 변경하시면 서비스가 자동 해지되며, 서비스 가입기간에 따라 차액 정산금과 해지 위약금이 청구됩니다.',
+  LESS_365: '프리미엄패스2 가입 후 365일 이전에 낮은 요금제로 변경하시면 서비스가 자동 해지되며, 서비스 가입기간에 따라 해지 위약금이 청구됩니다. ' +
+    '요금제를 변경한 날 다시 처음 가입하신 요금제로 변경하셔도 프리미엄패스2에 다시 가입하실 수 있습니다. 해지하신 경우 해지 위약금이 이중으로 발생하지 않습니다.'
 };

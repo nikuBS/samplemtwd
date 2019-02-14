@@ -87,7 +87,7 @@ Tw.MyTFareBillGuidePps.prototype = {
     this.detailListObj[0].curLen = this.detailListObj[0].listData.length;
 
     _.map(this.detailListObj[0].listData, function (item) {
-      item.usedDt = Tw.DateHelper.getShortDateNoDot(item.usedDt);
+      item.usedDt = Tw.DateHelper.getShortDate(item.usedDt);
 
       // 0보다 작을 경우 데이터 이외 사용 항목(음성/sms/충전 등)
       if ( Number(item.used) < 0 ) {
@@ -259,7 +259,7 @@ Tw.MyTFareBillGuidePps.prototype = {
       this.selDateObj.endDt = dataVal;
     }
     $target.attr('data-value', dataVal);
-    $target.text(momentObj.format('YYYY.M'));
+    $target.text(momentObj.format('YYYY.M.'));
 
     // Tw.Logger.info(this.selDateObj);
 

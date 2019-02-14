@@ -728,25 +728,39 @@ Tw.MainHome.prototype = {
     }
   },
   _setBanner: function () {
-    this._getTosBanner();
+    if ( Tw.BrowserHelper.isApp() ) {
+      this._getTosAppBanner();
+    } else {
+      this._getTosWebBanner();
+    }
   },
-  _getTosBanner: function () {
+  _getTosAppBanner: function () {
     this._apiService.requestArray([
       { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0001' } },
       { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0002' } },
       { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0003' } },
       { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0004' } },
       { command: Tw.NODE_CMD.GET_BANNER_TOS, params: { code: '0007' } }
-    ]).done($.proxy(this._successTosBanner, this));
+    ]).done($.proxy(this._successTosAppBanner, this));
   },
-  _successTosBanner: function (banner1, banner2, banner3, banner4, banner7) {
+  _getTosWebBanner: function () {
+    this._apiService.request(Tw.NODE_CMD.GET_BANNER_TOS, { code: '0005' })
+      .done($.proxy(this._successTosWebBanner, this));
+  },
+  _successTosAppBanner: function (banner1, banner2, banner3, banner4, banner7) {
     var result = [{ target: '1', banner: banner1 },
       { target: '2', banner: banner2 },
       { target: '3', banner: banner3 },
       { target: '4', banner: banner4 },
       { target: '7', banner: banner7 }];
+    this._drawBanner(result);
+  },
+  _successTosWebBanner: function (resp) {
+    this._drawBanner([{ target: '5', banner: resp }]);
+  },
+  _drawBanner: function (banners) {
     var adminList = [];
-    _.map(result, $.proxy(function (bnr) {
+    _.map(banners, $.proxy(function (bnr) {
       if ( this._checkTosBanner(bnr.banner, bnr.target) ) {
         if ( !Tw.FormatHelper.isEmpty(bnr.banner.result.summary) ) {
           if ( bnr.target === '7' ) {

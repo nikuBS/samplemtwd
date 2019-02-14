@@ -1,5 +1,4 @@
 <!-- #header -->
-
 <div id="header" class="header-wrap <% if(locals.home) { %> home <% } %>">
     <div class="h-belt">
 
@@ -13,7 +12,7 @@
             </div>
             <div class="h-home-tit">
                 <button type="button" class="twrold on">T world</button> <!-- 활성화시 .on // -->
-                <a href="/" type="button" class="directshop">Shop</a> <!-- 활성화시 .on // -->
+                <a href="http://shop.tworld.co.kr" type="button" class="directshop">Shop</a> <!-- 활성화시 .on // -->
             </div>
             <% } else { %>
             <div class="h-tit <% if( locals.isProductCallplan ) { %> t-none<% } %>">
@@ -21,7 +20,7 @@
             </div>
             <% } %>
             <div class="h-serarch">
-                <a href="/common/search_main" class="icon-gnb-search"><span class="blind">검색</span></a>
+                <a href="/common/search-main" class="icon-gnb-search"><span class="blind">검색</span></a>
             </div>
         </div>
     </div>
@@ -30,7 +29,7 @@
 <!-- #common-menu -->
 <div id="common-menu" class="user-type">
     <!-- 스크롤시 class scroll 추가, 로그인 후 user-type 추가 -->
-    <div class="section-userinfo">
+    <div class="section-userinfo fe-menu-section">
         <!-- 로그인 전 -->
         <button class="login fe-bt-login fe-when-logout none">로그인해주세요</button>
         <!-- //로그인 전 -->
@@ -65,18 +64,15 @@
         <button class="c-option fe-when-app-or-login fe-menu-link none" value='/main/menu/settings'><span class="blind">설정</span>
         </button>
     </div>
-    <div class="section-cont" id="fe-menu-area">
-        <!-- 검색영역 오픈시 제외
-                <div class="section-search">
-                    <span class="inputbox">
-                        <span class="input">
-                            <input type="text" placeholder="업무 검색 (예: 무료문자)" title="input" value="">
-                            <button class="cancel"><span class="blind">삭제</span></button>
-                        </span>
-                    </span>
-                </div>
-                -->
-        <!-- gnb -->
+    <div class="section-cont fe-menu-section" id="fe-menu-area">
+        <div class="section-search">
+            <span class="inputbox">
+                <span class="input">
+                    <input id="fe-search-input" type="text" placeholder="업무 검색 (예: 무료문자)" title="input" value="">
+                    <button class="cancel"><span class="blind">삭제</span></button>
+                </span>
+            </span>
+        </div>
 
         <!-- footer -->
         <div class="footer">
@@ -123,7 +119,36 @@
         <!-- //footer -->
     </div>
 
-    <button class="c-close" id="fe-close"><span class="blind">닫기</span></button>
+    <button class="c-close fe-menu-section" id="fe-close"><span class="blind">닫기</span></button>
+
+
+    <div class="searchbox-header fe-search-section none">
+        <div class="sch-form">
+            <span class="inputbox">
+                <span class="input">
+                    <!--접근성 수정-->
+                    <input id="fe-search-input2" type="text" placeholder="업무 검색 (예: 무료문자)" title="업무 검색 (예: 무료문자)" value="">
+                    <!-- //접근성 수정-->
+                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                </span>
+            </span>
+            <button class="icon-gnb-search"><span class="blind">검색</span></button>
+            <div class="searchbox-close"><button class="close-area" id="fe-cancel-search">취소</button></div>
+        </div>
+    </div>
+
+    <div class="fe-search-section none">
+        <div class="cont-box nogaps-hoz">
+            <h3 class="searchlist-title">T월드에서 가장 많이 찾는 업무</h3>
+            <ul class="popularsearchword-list">
+                <!-- <li> -->
+                    <!-- <a href="" class="category-type"> -->
+                        <!-- <span class="text">번호 변경ㅇㄴㅇㄴㅇㄴㅇㄴㅇㄴㅇㄴㅁㅁㄴㅇㅁㄴ</span> -->
+                    <!-- </a> -->
+                <!-- </li> -->
+            </ul>
+        </div>
+    </div>
 </div>
 <!-- // #common-menu -->
 

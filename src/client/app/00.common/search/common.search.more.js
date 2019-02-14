@@ -11,7 +11,7 @@ Tw.CommonSearchMore = function (rootEl,searchInfo,svcInfo,cdn,accessQuery,step) 
   //this._searchInfo = JSON.parse(this._decodeEscapeChar(searchInfo));
   this._apiService = Tw.Api;
   this._cdn = cdn;
-  this._step = step;
+  this._step = Tw.FormatHelper.isEmpty(step)?1:step;
   this._accessQuery = accessQuery;
   this._popupService = Tw.Popup;
   this._searchInfo = searchInfo;
@@ -64,15 +64,18 @@ Tw.CommonSearchMore.prototype = {
           data[i][key] = Number(data[i][key].replace(/[A-Za-z]/g,''));
         }
         if(category==='direct'&&key==='ALIAS'){
-          data[i][key] = data[i][key].replace('shopacc',Tw.OUTLINK.DIRECT_ACCESSORY);
-          data[i][key] = data[i][key].replace('shopmobile',Tw.OUTLINK.DIRECT_PHONE);
+          if(data[i][key]==='shopacc'){
+            data[i].linkUrl = Tw.OUTLINK.DIRECT_ACCESSORY+'?CATEGORY_ID='+data[i].CATEGORY_ID+'&ACCESSORY_ID=';
+          }else{
+            data[i].linkUrl = Tw.OUTLINK.DIRECT_MOBILE+'?PRODUCT_GRP_ID=';
+          }
         }
         if(key==='METATAG'){
           data[i][key] = data[i][key].split('#');
         }
         if(key==='IMG'){
           var tempArr = data[i][key].split('<IMG_ALT>');
-          data[i][key] = tempArr[0];
+          data[i][key] = tempArr[0].replace(/\/n/g,'');
           if(tempArr[1]){
             data[i].IMG_ALT = tempArr[1];
           }
@@ -131,11 +134,16 @@ Tw.CommonSearchMore.prototype = {
     this._historyService.goLoad(goUrl);
   },
   _doSearch : function () {
+    var keyword = this.$inputElement.val();
+    if(Tw.FormatHelper.isEmpty(keyword)){
+      this._popupService.openAlert(Tw.ALERT_MSG_SEARCH.KEYWORD_ERR);
+      return;
+    }
     var inResult = this.$container.find('#resultsearch').is(':checked');
-    var requestUrl = inResult?'/common/search/in_result?category='+this._category+'&keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
-    requestUrl+=this.$inputElement.val();
+    var requestUrl = inResult?'/common/search/in-result?category='+this._category+'&keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
+    requestUrl+=keyword;
     requestUrl+='&step='+(Number(this._step)+1);
-    this._addRecentlyKeyword(this.$inputElement.val());
+    this._addRecentlyKeyword(keyword);
     this._historyService.goLoad(requestUrl);
   },
   _showSelectFilter : function () {
@@ -158,7 +166,7 @@ Tw.CommonSearchMore.prototype = {
     $(popupElement).on('click','button',$.proxy(this._filterSelectEvent,this));
   },
   _filterSelectEvent : function (btnEvt) {
-    var changeFilterUrl = this._accessQuery.in_keyword?'/common/search/in_result?category='+this._category+'&keyword='+this._accessQuery.keyword:'/common/search/more?category='+this._category+'&keyword='+this._accessQuery.keyword;
+    var changeFilterUrl = this._accessQuery.in_keyword?'/common/search/in-result?category='+this._category+'&keyword='+this._accessQuery.keyword:'/common/search/more?category='+this._category+'&keyword='+this._accessQuery.keyword;
     changeFilterUrl+='&arrange='+$(btnEvt.currentTarget).data('type');
     if(this._accessQuery.in_keyword){
       changeFilterUrl+='&in_keyword='+this._accessQuery.in_keyword;
@@ -185,6 +193,8 @@ Tw.CommonSearchMore.prototype = {
     //Tw.CommonHelper.openUrlExternal(linkUrl);
     if(linkUrl.indexOf('BPCP')>-1){
       this._getBPCP(linkUrl);
+    }else if($linkData.hasClass('direct-element')){
+      Tw.CommonHelper.openUrlExternal(linkUrl);
     }else{
       this._historyService.goLoad(linkUrl);
     }

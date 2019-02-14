@@ -26,7 +26,8 @@ Tw.TidLandingComponent.prototype = {
     this.$container.on('click', '.fe-bt-login', $.proxy(this._onClickLogin, this, redirectTarget));
     this.$container.on('click', '.fe-bt-replace-login', $.proxy(this._onClickReplaceLogin, this, redirectTarget));
     this.$container.on('click', '.fe-bt-logout', $.proxy(this._onClickLogout, this));
-    this.$container.on('click', '.fe-bt-signup', $.proxy(this._onClickSLogin, this));
+    this.$container.on('click', '.fe-bt-slogin', $.proxy(this._onClickSLogin, this));
+    this.$container.on('click', '.fe-bt-signup', $.proxy(this._onClickSignup, this));
   },
   _goLoad: function (nativeCommand, url, callback) {
     if ( Tw.BrowserHelper.isApp() ) {
@@ -67,6 +68,9 @@ Tw.TidLandingComponent.prototype = {
   },
   _onClickSLogin: function () {
     this.goSLogin();
+  },
+  _onClickSignup: function () {
+    this.goSignup();
   },
   goLogin: function (target) {
     target = target || '/main/home';

@@ -55,11 +55,12 @@
             <div class="container-wrap">
                 <h2 class="blind">내용</h2>
                 <div class="container">
+                    <hr class="cont-sp type1" aria-hidden="true">
                     <!-- .cont-box -->
                     <div class="cont-box nogaps-btm">
                         <div class="contract-info-wrap mbs-reissue">
-                            <h3>카드 발급현황</h3>
-							<ul class="contract-info pt8">
+                            <h3 class="tit-type7">카드 발급현황</h3>
+							<ul class="contract-info">
 								<li>
 									<span class="tit">고객명</span>
 									<span class="txt-r">윤*연</span>
@@ -70,7 +71,7 @@
 								</li>
 								<li>
 									<span class="tit">카드 종류</span>
-									<span class="txt-r">T멤버십 (리더스클럽)</span>
+									<span class="txt-r">T멤버십(리더스클럽)</span>
 								</li>
 								<li>
 									<span class="tit">카드번호</span>
@@ -78,7 +79,7 @@
 								</li>
 								<li>
 									<span class="tit">발급 유형</span>
-									<span class="txt-r"><button type="button" class="icon-tip" title="모바일 카드 TIP보기" aria-haspopup="true">TIP</button>모바일 카드</span><!--웹접근성 수정 -->
+									<span class="txt-r">모바일 카드<button class="btn-tip" title="모바일 카드"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
 								</li>
 								<li>
 									<span class="tit">T멤버십 등급</span>
@@ -87,24 +88,20 @@
 								<li>
 									<span class="tit">재발급 사유</span>
 									<div class="txt">
-										<div class="widget">
-											<div class="widget-box radio">
-												<ul class="select-list" role="radiogroup">
-													<li class="radiobox type01 checked" role="radio" aria-checked="true" id="aria-comp-radio1"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-														<input type="radio" name="radio1" value="" title="카드 재발급 사유" aria-labelledby="aria-comp-radio1" checked /><!-- 체크상태일 경우 checked="checked" --><!-- 웹접근성 수정 -->
-														고객정보 변경
-													</li>
-													<li class="radiobox type01" role="radio" aria-checked="false" id="aria-comp-radio2"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-														<input type="radio" name="radio1" value="" title="카드 재발급 사유" aria-labelledby="aria-comp-radio2" /><!-- 체크상태일 경우 checked="false" --><!-- 웹접근성 수정 -->
-														T멤버십 종류 변경
-													</li>
-													<li class="radiobox type01" role="radio" aria-checked="false" id="aria-comp-radio3"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-														<input type="radio" name="radio1" value="" title="카드 재발급 사유" aria-labelledby="aria-comp-radio3" /><!-- 체크상태일 경우 checked="false" --><!-- 웹접근성 수정 -->
-														기타(카드 변경 등)
-													</li>
-												</ul>
-											</div>
-										</div>
+                                        <ul class="radio-list-type">
+                                            <li>
+                                                <span class="custom-form"><input type="radio" id="radio1" name="r1" checked="checked"><span class="r-type1"></span></span>
+                                                <label for="radio1" class="lab">고객정보 변경</label>
+                                            </li>
+                                            <li>
+                                                <span class="custom-form"><input type="radio" id="radio2" name="r1"><span class="r-type1"></span></span>
+                                                <label for="radio2" class="lab">T멤버십 종류 변경</label>
+                                            </li>
+                                            <li>
+                                                <span class="custom-form"><input type="radio" id="radio3" name="r1"><span class="r-type1"></span></span>
+                                                <label for="radio3" class="lab">기타(카드 변경 등)</label>
+                                            </li>
+                                        </ul>
 									</div>
 								</li>
 							</ul>
@@ -112,14 +109,16 @@
                     </div>
                     <!--// .cont-box -->
 
-                    <div class="notice-comp-infolist type3">
-                        <dl>
-                            <dd>플라스틱 카드 재발급은 PC나 고객센터(114)에서 신청하실 수 있습니다.</dd>
-                            <dd>2017년 1월 1일 부터 T멤버십(리더스클럽) 카드만 제공하고 있습니다. 가입 중지된 카드의 재발급은 기존 카드 소지 고객의 경우에만 가능합니다.</dd>
-                            <dd>재발급 신청 취소는 신청하신 날 24시까지만 취소하실 수 있습니다.</dd>
-                        </dl>
+                    <div class="cont-box bgnone noborder">
+                        <div class="announcement-box fs12">
+                            <ul>
+                                <li class="announcement-bullet type01">플라스틱 카드 재발급은 PC나 고객센터(114)에서 신청하실 수 있습니다.</li>
+                                <li class="announcement-bullet type01">2017년 1월 1일 부터 T멤버십(리더스클럽) 카드만 제공하고 있습니다. 가입 중지된 카드의 재발급은 기존 카드 소지 고객의 경우에만 가능합니다.</li>
+                                <li class="announcement-bullet type01">재발급 신청 취소는 신청하신 날 24시까지만 취소하실 수 있습니다.</li>
+                            </ul>
+                        </div>
                     </div>
-                   
+
 					<div class="bt-fixed-area">
                         <ul class="bt-slice full">
                             <li class="bt-red1">

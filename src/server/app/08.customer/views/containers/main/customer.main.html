@@ -82,7 +82,7 @@
                 <div class="main-faq-menu">
                     <ul>
                         <li>
-                            <a href="/customer/faq/category?id=1100000&title=요금상품" class="menu-bt ico-type01"><span class="ico"></span>요금상품</a>
+                            <a href="/customer/faq/category?id=1100000&title=요금제" class="menu-bt ico-type01"><span class="ico"></span>요금제</a>
                         </li>
                         <li>
                             <a href="/customer/faq/category?id=1200000&title=가입/변경/해지" class="menu-bt ico-type02"><span class="ico"></span>가입/변경/해지</a>
@@ -131,6 +131,28 @@
                 </div>
             </div>
 
+            <% if ( researchList && researchList.length !== 0 ) { %>
+            <hr class="cont-sp type1" aria-hidden="true">
+            <!-- .cont-box -->
+            <div class="survey-box2">
+                <!-- .widget -->
+                <div class="widget">
+                    <div class="widget-box slider1">
+                        <div class="slider-box">
+                            <ul class="slider">
+                                <% researchList.map( item => { %>
+                                <li>
+                                    <a href="/svc-info/researches/result?id=<%-item.bnnrRsrcId%>"><img src="<%=CDN%><%-item.custCntrSubmHtmlImglPathNm%>" alt="<%-item.bnnrRsrchTitleNm%>" /></a>
+                                </li>
+                                <% }) %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--// .widget -->
+            </div>
+            <% } %>
+
             <hr class="cont-sp type1" aria-hidden="true">
             <!-- .cont-box -->
 
@@ -141,7 +163,7 @@
                 <ul>
                     <li>
                         <div class="link-long">
-                            <a href="/customer/document">가입/변경/해지 구비서류 안내
+                            <a href="/customer/document">가입/변경/해지 필요서류 안내
                                 <span class="tx-sub">
                                     <span class="ico"></span>
                                 </span>
@@ -195,9 +217,11 @@
                     </li>
                 </ul>
             </div>
+
+            <% if ( noticeList && noticeList.length !== 0 ) { %>
             <hr class="cont-sp type1" aria-hidden="true">
             <!--// .cont-box -->
-            <% if ( noticeList && noticeList.length !== 0 ) { %>
+
             <div class="cont-box nogaps">
                 <div class="box-main-type">
                     <div class="list-comp-title">공지사항</div>

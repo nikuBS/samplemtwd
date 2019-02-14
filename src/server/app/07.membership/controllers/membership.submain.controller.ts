@@ -23,7 +23,6 @@ export default class MembershipSubmain extends TwViewController {
         this.getMembershipData(),
         this.getPopBrandData()
       ).subscribe(([membershipCheckData, membershipData, popBrandData]) => {
-
         const error = {
           code: membershipData.code || popBrandData.code,
           msg: membershipData.msg || popBrandData.msg
@@ -83,16 +82,19 @@ export default class MembershipSubmain extends TwViewController {
   private getMembershipData(): Observable<any> {
     let membershipData = null;
     return this.apiService.request(API_CMD.BFF_11_0001, {}).map((resp) => {
-      if ( resp.code !== API_CODE.CODE_00 ) {
+      if ( resp.code === 'MBR0001' || resp.code === 'MBR0002' || resp.code === 'MBR0008' ) {
+        resp.code = null;
+        membershipData = resp;
+        return membershipData;
+      } else if ( resp.code === API_CODE.CODE_00 ) {
+        membershipData = this.parseMembershipData(resp.result);
+        return membershipData;
+      } else {
         return {
           code: resp.code,
           msg: resp.msg
         };
-      } else {
-        membershipData = this.parseMembershipData(resp.result);
       }
-
-      return resp.result;
     });
   }
 

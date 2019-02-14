@@ -63,12 +63,10 @@ Tw.MyTJoinSuspendStatus.prototype = {
   _onSuccessResuspend: function (params, res) {
     Tw.CommonHelper.endLoading('body');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var duration = Tw.DateHelper.getFullKoreanDate(params.fromDt) + ' - ' +
-          Tw.DateHelper.getFullKoreanDate(this._params.status.period.to.replace(/\./g, ''));
-      var desc = Tw.MYT_JOIN_SUSPEND.SUCCESS_RESUSPEND_MESSAGE.replace('{DURATION}', duration)
-        .replace('{SVC_NUMBER}', this._svcInfo.svcNum);
-      this._popupService.afterRequestSuccess('/myt-join/submain/suspend/status', '/myt-join/submain',
-        Tw.MYT_JOIN_SUSPEND.GO_TO_STATUS, Tw.MYT_JOIN_SUSPEND.RESUSPEND, desc);
+      params.command = 'resuspend';
+      params.svcNum = this._svcInfo.svcNum;
+      params.toDt = this._params.status.period.to.replace(/\./g, '');
+      this._historyService.replaceURL('/myt-join/submain/suspend/complete?' + $.param(params));
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -101,8 +99,9 @@ Tw.MyTJoinSuspendStatus.prototype = {
   _onSuccessRequestCancel: function (params, res) {
     Tw.CommonHelper.endLoading('body');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.afterRequestSuccess('/myt-join/submain', '/myt-join/submain', null,
-        Tw.MYT_JOIN_SUSPEND.CANCEL_RESUSPEND);
+      params.command = 'cancel-resuspend';
+      params.svcInfo = this._svcInfo.svcNum;
+      this._historyService.replaceURL('/myt-join/submain/suspend/complete?' + $.param(params));
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -135,10 +134,9 @@ Tw.MyTJoinSuspendStatus.prototype = {
   _onSuccessRequestReset: function (res) {
     Tw.CommonHelper.endLoading('body');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.afterRequestSuccess('', '/myt-join/submain', null, Tw.MYT_JOIN_SUSPEND.RESET, null);
-
       // update svcInfo
       this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
+      this._historyService.replaceURL('/myt-join/submain/suspend/complete?' + $.param({ command: 'reset' }));
     } else if ( res.code === 'MOD0022' ) {
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ALERT_EXCEED.MESSAGE, Tw.MYT_JOIN_SUSPEND.ALERT_EXCEED.TITLE);
     } else {
@@ -154,7 +152,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
   _successSvcInfo: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._svcInfo = _.clone(resp.result);
-      this._svcInfo.svcNum = Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.svcNum.replace(/-/g,''));
+      this._svcInfo.svcNum = Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.svcNum.replace(/-/g, ''));
       this._bindEvent();
     }
   },
@@ -165,7 +163,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
     var popup = {};
     var count = 0;
 
-    if ( this._params.progress.receiveCd === '5000341' || this._params.progress.receiveCd === '5000342') {
+    if ( this._params.progress.receiveCd === '5000341' || this._params.progress.receiveCd === '5000342' ) {
       popup = {
         content: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TIP,
         title: Tw.MYT_JOIN_SUSPEND.LONG.MILITARY.TITLE,
@@ -194,7 +192,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
   _onCommonFileDialogConfirmed: function (files) {
     this._files = files;
     if ( Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
-      var convFileList =  _.compact(this._files).map(function (item) {
+      var convFileList = _.compact(this._files).map(function (item) {
         return {
           fileSize: item.size,
           fileName: item.name,
@@ -202,7 +200,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
         };
       });
       this._requestUscan(convFileList);
-    }else{
+    } else {
       this._requestUpload(this._files);
     }
   },
@@ -235,7 +233,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
     }
   },
 
-  _requestUscan: function(convFileList){
+  _requestUscan: function (convFileList) {
     this._apiService.request(Tw.API_CMD.BFF_01_0046, {
       recvFaxNum: 'skt257@sk.com',
       proMemo: '', // TBD 필수값임 확인필요
@@ -254,7 +252,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
   },
 
   // 파일 재첨부
-  _requestReupload: function(){
+  _requestReupload: function () {
     this._apiService.request(Tw.API_CMD.BFF_05_0195, {
       seq: this._params.progress.seq
     })

@@ -1,0 +1,167 @@
+<%#
+* FileName: product.mobileplan-add.join.t-family.html
+* Author: Ji Hun Yang (jihun202@sk.com)
+* Date: 2019.02.12
+%>
+<% include ../../../components/start.component.html %>
+<body>
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap step" data-menuId="<%= pageInfo.menuId %>">
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup nobg fixed-bottom h60">
+        <!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>가입</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+
+                <hr class="cont-sp type1" aria-hidden="true">
+                <div class="cont-box">
+                    <div class="product-tit-wrap">
+                        <span class="tit-small">가입할 상품 옵션 설정하세요.</span>
+                        <span class="tit-big">T가족모아 데이터</span>
+                    </div>
+                </div>
+
+                <div class="ti-caption-gray">
+                    <h4 class="tit">가족그룹 추가 <button type="button" class="tip-view" title="가족그룹 추가 정보보기" id="MV_02_02_06_tip_01" aria-haspopup="true">TIP</button></h4>
+                    <p class="num"><%= svcInfo.svcNumDash %></p>
+                </div>
+
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="input-number-wrap">
+                        <div class="form-box">
+                            <ul class="form-data-list">
+                                <li>
+                                    <label class="tit mb0" for="flab03">휴대폰번호</label>
+                                    <span class="inputbox bt-add">
+                                        <span class="input">
+                                            <!--접근성 수정-->
+                                            <input type="tel" id="flab03" class="fe-num_input" placeholder="숫자만 입력" title="휴대폰번호 숫자만 입력해 주세요">
+                                            <!-- //접근성 수정-->
+                                            <button class="cancel fe-btn_clear_num" style="display: none;"><span class="blind">삭제</span></button>
+                                        </span>
+                                    </span>
+                                    <span id="aria-exp-desc1" class="error-txt fe-error0" style="display: none"></span>
+                                </li>
+                                <li class="radio-stype">
+                                    <label class="tit mb0" for="flab02">법정 생년월일</label>
+                                    <span class="inputbox">
+                                        <span class="input">
+                                            <!--접근성 수정-->
+                                            <input id="flab02" type="number" class="fe-input_birth" placeholder="숫자만 입력 (ex. 19900101)" title="법정 생년월일 숫자만 입력해 주세요 (ex. 19900101)" maxlength="8">
+                                            <!-- //접근성 수정-->
+                                            <button class="cancel fe-btn_clear_num" style="display: none;"><span class="blind">삭제</span></button>
+                                        </span>
+                                    </span>
+                                    <span id="aria-exp-desc2" class="error-txt fe-error1" style="display: none"></span>
+                                </li>
+                            </ul>
+                            <span id="aria-phone-tx1" class="input-comment">최소 2개~최대 5개 번호까지 T가족모아데이터<br>가족결합으로 가입할 수 있습니다.</span>
+                            <ul class="bt-slice pt26">
+                                <li class="bt-gray1">
+                                    <button disabled="disabled" class="fe-btn_check_join">가입가능여부 확인하기</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <!-- .cont-box -->
+                <div class="cont-box fe-is_join_check" style="display: none">
+                    <h3 class="tx-normal">가입가능여부 결과</h3>
+                    <div class="pg-member join-able">
+                        <dl>
+                            <dt class="tit">요금제</dt>
+                            <dd class="tit-goods fe-join_check_prod_nm"></dd>
+                        </dl>
+                        <p class="txt fe-join_check_result"></p>
+                    </div>
+                    <ul class="bt-slice pt20">
+                        <li class="bt-blue1" style="display: none">
+                            <button class="fe-btn_add_line">추가하기</button>
+                        </li>
+                        <li class="bt-white2" style="display: none">
+                            <button class="fe-btn_retry">다시 입력하기</button>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true">
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <div class="input-number-wrap">
+                        <h3 class="tit type1">가족그룹 신청하신 회선</h3>
+                        <div class="list-comp-thumnail">
+                            <ul class="comp-box fe-group_list">
+                                <li class="list-box">
+                                    <p class="list-text">
+                                        <strong class="ps-name"><%= svcInfo.svcNumDash %></strong>
+                                        <i class="icon-me"><span class="blind">나</span></i><!-- 뱃지-나 -->
+                                        <span class="cate-check">
+                                            <input type="checkbox" name="schecks" id="check0" class="formcheck-small fe-my_line fe-line_check" data-group_rep_yn="<%= preInfo.groupRepYn %>">
+                                            <label for="check0" class="cate-name">대표</label>
+                                        </span>
+                                        <span class="entry"><%= svcInfo.prodNm %></span>
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <!-- .cont-box -->
+                <div class="cont-box bgnone noborder">
+                    <div class="announcement-box">
+                        <p class="announcement-bullet type01">가족그룹 결합 가능한 요금제는 T플랜/0플랜/주말엔 팅/쿠키즈 스마트/band/T시그니처 요금제이며, 그룹 대표 회선은 T플랜 Data인피니티,패밀리,0플랜 라지 요금제만 가입 가능합니다.</p>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1">
+                            <button class="fe-btn_setup_ok" disabled="disabled">설정 완료</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- // .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-common-back">취소</button>
+        <!--// .popup-closeBtn -->
+    </div>
+    <!-- // .popup hbs -->
+</div>
+</body>
+<% include ../../../components/javascript.component.html %>
+<% include ../../../components/mobileplan-add/product.mobileplan-add.join.t-family.item.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.ProductMobileplanAddJoinTFamily($('.wrap'), '<%= prodId %>', 'MV_02_02_06', '<%= svcInfo.svcMgmtNum %>', '<%- escape(JSON.stringify(joinTermInfo)) %>');
+  });
+</script>
+<% include ../../../components/end.component.html %>

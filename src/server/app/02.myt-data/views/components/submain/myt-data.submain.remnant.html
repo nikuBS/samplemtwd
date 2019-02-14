@@ -105,7 +105,7 @@
                         <!-- // .donut-chart.small -->
                     </div>
                     <div class="cont">
-                        <span class="txt1">나의 데이터</span>
+                        <span class="txt1" id="aria-comp-bt1">나의 데이터</span>
                         <div class="date">
                             <span class="remain">
                                 <% if (data.remnantData.totalLimit) { %>
@@ -116,7 +116,7 @@
                             </span>
                         </div>
                     </div>
-                    <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
+                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt1"><span class="blind">페이지 이동</span></a>
                 </li>
             </ul>
             <% } else if (data.isVoiceShow || data.isSmsShow) { %>
@@ -143,7 +143,7 @@
                             <!-- // .donut-chart.small -->
                         </div>
                         <div class="cont">
-                            <span class="txt1"><%= rvoice.skipNm %></span>
+                            <span class="txt1" id="aria-comp-bt2"><%= rvoice.skipNm %></span>
                             <div class="date">
                             <span class="remain">
                                 <strong>
@@ -158,7 +158,7 @@
                             </span>
                             </div>
                         </div>
-                        <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
+                        <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt2"><span class="blind">페이지 이동</span></a>
                     </li>
                     <% } %>
                     <% if (data.isSmsShow) { %>
@@ -183,7 +183,7 @@
                             <!-- // .donut-chart.small -->
                         </div>
                         <div class="cont">
-                            <span class="txt1"><%= rsms.skipNm %></span>
+                            <span class="txt1" id="aria-comp-bt3"><%= rsms.skipNm %></span>
                             <div class="date">
                             <span class="remain">
                                 <strong>
@@ -199,7 +199,7 @@
                             </span>
                             </div>
                         </div>
-                        <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
+                        <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt3"><span class="blind">페이지 이동</span></a>
                     </li>
                     <% } %>
                 </ul>
@@ -289,7 +289,7 @@
                         <!-- // .donut-chart.small -->
                     </div>
                     <div class="cont">
-                        <span class="txt1"><%= rvoice.skipNm %></span>
+                        <span class="txt1" id="aria-comp-bt4"><%= rvoice.skipNm %></span>
                         <div class="date">
                             <span class="remain">
                                 <strong>
@@ -304,7 +304,7 @@
                             </span>
                         </div>
                     </div>
-                    <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
+                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt4"><span class="blind">페이지 이동</span></a>
                 </li>
                 <% } %>
                 <% if (data.isSmsShow) { %>
@@ -329,7 +329,7 @@
                         <!-- // .donut-chart.small -->
                     </div>
                     <div class="cont">
-                        <span class="txt1"><%= rsms.skipNm %></span>
+                        <span class="txt1" id="aria-comp-bt5"><%= rsms.skipNm %></span>
                         <div class="date">
                             <span class="remain">
                                 <strong>
@@ -345,7 +345,7 @@
                             </span>
                         </div>
                     </div>
-                    <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
+                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt5"><span class="blind">페이지 이동</span></a>
                 </li>
                 <% } %>
             </ul>
@@ -451,7 +451,7 @@
                         <!-- // .donut-chart.small -->
                     </div>
                     <div class="cont">
-                        <span class="txt1">나의 데이터</span>
+                        <span class="txt1" id="aria-comp-bt6">나의 데이터</span>
                         <div class="date">
                             <span class="remain">
                                 <% if (data.remnantData.totalLimit) { %>
@@ -462,7 +462,7 @@
                             </span>
                         </div>
                     </div>
-                    <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
+                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt6"><span class="blind">페이지 이동</span></a>
                 </li>
             </ul>
             <% } else if (data.isSpDataShow || data.isVoiceShow || data.isSmsShow) { %>
@@ -489,7 +489,7 @@
                         <!-- // .donut-chart.small -->
                     </div>
                     <div class="cont">
-                        <span class="txt1"><%= sdata.skipNm %></span>
+                        <span class="txt1" id="aria-comp-bt7"><%= sdata.skipNm %></span>
                         <div class="date">
                                 <span class="remain">
                                     <strong>
@@ -502,7 +502,7 @@
                                 </span>
                         </div>
                     </div>
-                    <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
+                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt7"><span class="blind">페이지 이동</span></a>
                 </li>
                 <% } %>
                 <% if (data.isVoiceShow) { %>
@@ -527,7 +527,7 @@
                         <!-- // .donut-chart.small -->
                     </div>
                     <div class="cont">
-                        <span class="txt1"><%= rvoice.skipNm %></span>
+                        <span class="txt1" id="aria-comp-bt8"><%= rvoice.skipNm %></span>
                         <div class="date">
                             <span class="remain">
                                 <strong>
@@ -542,7 +542,7 @@
                             </span>
                         </div>
                     </div>
-                    <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
+                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt8"><span class="blind">페이지 이동</span></a>
                 </li>
                 <% } %>
                 <% if (data.isSmsShow) { %>
@@ -567,7 +567,7 @@
                         <!-- // .donut-chart.small -->
                     </div>
                     <div class="cont">
-                        <span class="txt1"><%= rsms.skipNm %></span>
+                        <span class="txt1" id="aria-comp-bt9"><%= rsms.skipNm %></span>
                         <div class="date">
                             <span class="remain">
                                 <strong>
@@ -583,7 +583,7 @@
                             </span>
                         </div>
                     </div>
-                    <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
+                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt9"><span class="blind">페이지 이동</span></a>
                 </li>
                 <% } %>
             </ul>
@@ -642,7 +642,7 @@
                     <!-- // .donut-chart.small -->
                 </div>
                 <div class="cont">
-                    <span class="txt1"><%= rvoice.skipNm %></span>
+                    <span class="txt1" id="aria-comp-bt10"><%= rvoice.skipNm %></span>
                     <div class="date">
                         <span class="remain">
                             <strong>
@@ -657,7 +657,7 @@
                         </span>
                     </div>
                 </div>
-                <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
+                <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt10"><span class="blind">페이지 이동</span></a>
             </li>
             <% } %>
             <% if (data.isSmsShow) { %>
@@ -682,7 +682,7 @@
                     <!-- // .donut-chart.small -->
                 </div>
                 <div class="cont">
-                    <span class="txt1"><%= rsms.skipNm %></span>
+                    <span class="txt1" id="aria-comp-bt11"><%= rsms.skipNm %></span>
                     <div class="date">
                         <span class="remain">
                             <strong>
@@ -698,7 +698,7 @@
                         </span>
                     </div>
                 </div>
-                <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
+                <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt11"><span class="blind">페이지 이동</span></a>
             </li>
             <% } %>
         </ul>
@@ -804,7 +804,7 @@
                         <!-- // .donut-chart.small -->
                     </div>
                     <div class="cont">
-                        <span class="txt1">나의 데이터</span>
+                        <span class="txt1" id="aria-comp-bt12">나의 데이터</span>
                         <div class="date">
                             <% if (data.remnantData.totalLimit) { %>
                             <strong>무제한</strong>
@@ -813,7 +813,7 @@
                             <% } %>
                         </div>
                     </div>
-                    <a class="r-btn" href="/myt-data/hotdata">페이지 이동</a>
+                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt12"><span class="blind">페이지 이동</span></a>
                 </li>
             </ul>
             <% } %>
@@ -834,7 +834,9 @@
             </div>
         <% } %>
         <ul class="bt-slice solid mt20">
-            <li data-id="immCharge"><button type="button" class="btn-round1 btn-style1">즉시 충전</button></li>
+            <li data-id="immCharge">
+                <button type="button" title="즉시 충전"  class="btn-round1 btn-style1">즉시 충전</button>
+            </li>
         </ul>
     </div>
     <!-- T-PocketFi & T-Login -->

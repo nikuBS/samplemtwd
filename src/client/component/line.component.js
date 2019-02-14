@@ -85,11 +85,11 @@ Tw.LineComponent.prototype = {
     this.$list = $popupContainer.find('.fe-item');
     this.$btMore = $popupContainer.find('#fe-bt-more');
 
-
     this.$btMore.on('click', $.proxy(this._onClickMore, this));
     $popupContainer.on('click', '.fe-radio-line', $.proxy(this._onSelectLine, this));
     $popupContainer.on('click', '#fe-bt-line', $.proxy(this._onClickLineButton, this));
   },
+
   _onCloseListPopup: function () {
     if ( this._changeLine ) {
       this._completeLogin();

@@ -15,7 +15,7 @@ Tw.BenefitJoinTbCombination = function(rootEl, prodId, prodNm) {
   this._svcMgmtNum = null;
   this._wireSvcMgmtNum = null;
   this._template = Handlebars.compile($('#tpl_line_list').html());
-  this._isAuthLine = false;
+  this._isNotRegisterLine = false;
 
   this._cachedElement();
   this._bindEvent();
@@ -66,8 +66,7 @@ Tw.BenefitJoinTbCombination.prototype = {
   _getConvertListItem: function(lineInfo, idx) {
     return {
       'label-attr': 'id="ra' + idx + '"',
-      'txt': lineInfo.nickNm,
-      'add': Tw.FormatHelper.conTelFormatWithDash(lineInfo.svcNum),
+      'txt': Tw.FormatHelper.conTelFormatWithDash(lineInfo.svcNum),
       'radio-attr':'id="ra' + idx + '" data-svc_mgmt_num="' + lineInfo.svcMgmtNum + '" data-num="' +
         Tw.FormatHelper.conTelFormatWithDash(lineInfo.svcNum) + '" ' + (this._svcMgmtNum === lineInfo.svcMgmtNum ? 'checked' : '')
     };
@@ -111,7 +110,7 @@ Tw.BenefitJoinTbCombination.prototype = {
 
     skt_landing.widgets.widget_init('.fe-line_list');
 
-    this._isAuthLine = useLineInfo.needCertifyYn === 'Y';
+    this._isNotRegisterLine = useLineInfo.needCertifyYn === 'Y';
     this._setDisabledUseList();
     this._setResultText(useLineInfo);
     this._toggleSetupButton(false);
@@ -164,7 +163,6 @@ Tw.BenefitJoinTbCombination.prototype = {
     return {
       list: _.map(useLineInfo.combiWireProductList, function (item) {
         return $.extend(item, {
-          combStaDt: Tw.DateHelper.getShortDateWithFormat(item.combStaDt, 'YYYY.M.DD.'),
           combStatusText: Tw.FormatHelper.isEmpty(item.combYn) ? Tw.BENEFIT_TBCOMBINATION_JOIN_STATUS.IS_COMBINED :
             Tw.BENEFIT_TBCOMBINATION_JOIN_STATUS.DIS_COMBINED,
           svcMgmtNum: item.svcMgmtNum,
@@ -232,7 +230,7 @@ Tw.BenefitJoinTbCombination.prototype = {
   _convertWireMember: function(wire) {
     return $.extend(wire, {
       svcNum: wire.svcCd === 'P' ? Tw.FormatHelper.conTelFormatWithDash(wire.svcNum) : wire.svcNum,
-      combStaDt: Tw.DateHelper.getShortDateWithFormat(wire.combStaDt, 'YYYY.M.DD.')
+      svcNm: Tw.SVC_CD[wire.svcCd]
     });
   },
 
@@ -284,9 +282,9 @@ Tw.BenefitJoinTbCombination.prototype = {
       btList: [{ link: '/myt-join/combinations', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.COMBINE }]
     };
 
-    if (this._isAuthLine) {
-      successData.basicTxt = Tw.BENEFIT_TBCOMBINE_NEED_AUTH;
-      successData.btList.push({ btClass: 'fe-btn_cert', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.GO_AUTH });
+    if (this._isNotRegisterLine) {
+      successData.basicTxt = Tw.BENEFIT_TBCOMBINE_NEED_REGISTER;
+      successData.btList.push({ link: '/common/member/line/register', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.LINE_REGISTER });
     }
 
     this._popupService.open({
@@ -297,7 +295,6 @@ Tw.BenefitJoinTbCombination.prototype = {
 
   _bindJoinResPopup: function($popupContainer) {
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
-    $popupContainer.on('click', '.fe-btn_cert', $.proxy(this._doCert, this));
   },
 
   _closeAndGo: function(e) {
@@ -309,10 +306,6 @@ Tw.BenefitJoinTbCombination.prototype = {
 
   _onClosePop: function() {
     this._historyService.goBack();
-  },
-
-  _doCert: function() {
-    // @todo 인증받기 버튼 클릭시, 인증 완료 후 동작 정의 필요
   }
 
 };

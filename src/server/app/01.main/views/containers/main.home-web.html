@@ -68,7 +68,7 @@
 
                     <% if (homeData.usageData.data && homeData.usageData.data.isShow) { %>
                     <div class="chart-group">
-                        <a href="/myt-data/hotdata" class="chart-box">
+                        <a href="/myt-data/submain" class="chart-box">
                             <!-- .donut-chart.small -->
                             <div class="donut-chart small">
                                 <div class="donut-chart-area">
@@ -99,8 +99,12 @@
                             <!-- // .donut-chart.small -->
                             <% if(homeData.usageData.data.isTplanUse) { %>
                             <div class="legend">
-                                <span class="category0"><span>나의 데이터</span></span>
+                                <span class="category0"><span><em class="data"><%= homeData.usageData.data.showMyRemained %></em> 나의 데이터</span></span>
+                                <% if(homeData.usageData.data.isTplanUse) { %>
+                                <span class="category1"><span><em class="data"><%= homeData.usageData.data.showShareRemained %></em> T가족모아데이터</span></span>
+                                <% } else { %>
                                 <span class="category1"><span>T가족모아데이터</span></span>
+                                <% } %>
                             </div>
                             <% } %>
                             <div class="ti-num">
@@ -113,15 +117,15 @@
 
                     <div class="call-message">
                         <% if(homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
-                        <a href="/myt-data/hotdata" class="call"><i class="icon-call-48"><span class="blind">통화</span></i> <%= homeData.usageData.voice.showRemained %></a>
+                        <a href="/myt-data/submain" class="call"><i class="icon-call-48"><span class="blind">통화</span></i> <%= homeData.usageData.voice.showRemained %></a>
                         <% } %>
                         <% if(homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
-                        <a href="/myt-data/hotdata" class="message"><i class="icon-sms-48"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></a>
+                        <a href="/myt-data/submain" class="message"><i class="icon-sms-48"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></a>
                         <% } %>
                     </div>
                     <% } else if (homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
                     <div class="chart-group">
-                        <a href="/myt-data/hotdata" class="chart-box">
+                        <a href="/myt-data/submain" class="chart-box">
                             <!-- .donut-chart.small -->
                             <div class="donut-chart small">
                                 <div class="donut-chart-area">
@@ -146,12 +150,12 @@
                     </div>
                     <div class="call-message">
                         <% if(homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
-                        <a href="/myt-data/hotdata" class="message"><i class="icon-sms-48"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></a>
+                        <a href="/myt-data/submain" class="message"><i class="icon-sms-48"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></a>
                         <% } %>
                     </div>
                     <% } else if (homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
                     <div class="chart-group">
-                        <a href="/myt-data/hotdata" class="chart-box">
+                        <a href="/myt-data/submain" class="chart-box">
                             <!-- .donut-chart.small -->
                             <div class="donut-chart small">
                                 <div class="donut-chart-area">
@@ -245,7 +249,7 @@
                     <button class="num fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.addr %></button>
                     <strong class="user">반갑습니다, <%= svcInfo.mbrNm %> 고객님.</strong>
 
-                    <button class="price">
+                    <button id="fe-bt-link-billguide" class="price">
                         <% if (homeData.billData.type2) { %>
                         <strong class="ti"><%= homeData.billData.invMonth %>월 청구요금</strong>
                         <% } else if (homeData.billData.type1) { %>
@@ -308,10 +312,10 @@
                                     </li>
                                     <li>
                                         <ul class="quick-menu-list">
-                                            <li><button id="fe-bt-direct-phone" class="bt"><i class="icon-cellphone2-80"></i>스마트폰</button></li>
-                                            <li><button id="fe-bt-direct-tablet" class="bt"><i class="icon-watch-80"></i>태블릿 · 워치</button></li>
-                                            <li><button id="fe-bt-direct-nugu" class="bt"><i class="icon-nugu-80"></i>NUGU</button></li>
-                                            <li><button id="fe-bt-direct-accessory" class="bt"><i class="icon-accessory-80"></i>액세서리</button></li>
+                                            <li><button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/Mobile-MobileMain?category_id=20010001&utm_source=tworld&utm_medium=app_menu&utm_campaign=phone&utm_content=store&fSiteCd=1010"><i class="icon-cellphone2-80"></i>스마트폰</button></li>
+                                            <li><button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/Mobile-MobileMain?category_id=20010002&utm_source=tworld&utm_medium=app_menu&utm_campaign=tablet&utm_content=store&fSiteCd=1010"><i class="icon-tablet-80"></i>태블릿</button></li>
+                                            <li><button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/Mobile-MobileMain?category_id=20010003&utm_source=tworld&utm_medium=app_menu&utm_campaign=watch&utm_content=store&fSiteCd=1010"><i class="icon-watch-80"></i>스마트워치</button></li>
+                                            <li><button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/AccessoryMall-MainAcc?utm_source=tworld&utm_medium=app_menu&utm_campaign=accessory&utm_content=store&fSiteCd=1010"><i class="icon-accessory-80"></i>액세서리</button></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -509,7 +513,7 @@
             <% if(redisData.mainNotice && redisData.mainNotice.length > 0) { %>
             <!-- 공지사항 -->
             <div class="notice-slide-type">
-                <span class="notice-slide-ti"><i class="icon-notice-30"><span class="blind">공지사항</span></i></span>
+                <a href="/customer/svc-info/notice" class="notice-slide-ti"><i class="icon-notice-30"><span class="blind">공지사항</span></i></a>
                 <!-- .widget -->
                 <div class="widget">
                     <div class="widget-box slider2">

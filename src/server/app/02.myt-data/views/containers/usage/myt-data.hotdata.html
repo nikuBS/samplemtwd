@@ -97,7 +97,7 @@
                                 <span>
                                         {{ svcStNm }}
                                         {{#if isUsing }}
-                                        <a class="bt-link-tx underline" href="/myt-data/hotdata/cancel-tshare?cSvcMgmtNum={{cSvcMgmtNum}}">해지하기</a>
+                                        <a class="bt-link-tx underline" href="/myt-data/hotdata/cancel-tshare?cSvcMgmtNum={{cSvcMgmtNum}}" role="button">해지하기</a>
                                         {{/if}}
                                     </span>
                             </div>
@@ -330,13 +330,15 @@
             <div class="cont-box noborder bgnone">
                 <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
                 <ul class="pg-chk-list02">
+                    <!--접근성 수정-->
                     <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_01">실시간 사용량 조회 안내<i class="icon-badge-tip"><span class="blind">실시간 사용량 조회 안내 tip</span></i></button></li>
                     <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_02">실시간 사용량 조회가 불가능한 경우<i class="icon-badge-tip"><span class="blind">실시간 사용량 조회가 불가능한 경우 tip</span></i></button></li>
                     <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_03">월중 요금상품 변경, 일시정지 시 유의사항<i class="icon-badge-tip"><span class="blind">월중 요금상품 변경, 일시정지 시 유의사항 tip</span></i></button></li>
-                    <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_04">마이벨 서비스·다다익선요금제 이용 가능 고객 안내<i class="icon-badge-tip"><span class="blind">마이벨 서비스·다다익선요금제 이용 가능 고객 안내 tip</span></i></button></li>
+                    <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_04">마이벨 서비스/다다익선요금제 이용 가능 고객 안내<i class="icon-badge-tip"><span class="blind">마이벨 서비스/다다익선요금제 이용 가능 고객 안내 tip</span></i></button></li>
                     <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_07">사용량 조회 안내<i class="icon-badge-tip"><span class="blind">사용량 조회 안내 tip</span></i></button></li>
-                    <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_05">이용제한·자동해지 안내<i class="icon-badge-tip"><span class="blind">이용제한·자동해지 안내 tip</span></i></button></li>
+                    <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_05">이용제한/자동해지 안내<i class="icon-badge-tip"><span class="blind">이용제한/자동해지 안내 tip</span></i></button></li>
                     <li><button class="btn-tip" aria-haspopup="true" id="DC_01_01_tip_06">유심 안내<i class="icon-badge-tip"><span class="blind">유심 안내 tip</span></i></button></li>
+                    <!-- //접근성 수정-->
                 </ul>
             </div>
 

@@ -4,20 +4,24 @@
  * Date: 2018.12.11
  */
 
-Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step) {
+Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from) {
   this._cdn = cdn;
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
+  this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._svcInfo = svcInfo;
   this._searchInfo = searchInfo;
-  this._step = step;
+  this._step = Tw.FormatHelper.isEmpty(step)?1:step;
   this._accessKeyword = this._searchInfo.query;
-  this._init(this._searchInfo);
+  this._init(this._searchInfo,from);
 };
 
 Tw.CommonSearch.prototype = {
-  _init : function (searchInfo) {
+  _init : function (searchInfo,from) {
+    if(from==='menu'&&this._historyService.isReload()===false){
+      this._addRecentlyKeyword(this._accessKeyword);
+    }
     if(searchInfo.totalcount===0){
       return;
     }
@@ -37,9 +41,9 @@ Tw.CommonSearch.prototype = {
         }
         continue;
       }
-      if(keyName==='direct'){
-        this.$container.find('.direct-element.home').data('link',Tw.OUTLINK.DIRECT_HOME);
-      }
+      // if(keyName==='direct'){
+      //   this.$container.find('.direct-element.home').data('link',Tw.OUTLINK.DIRECT_HOME);
+      // }
       this._showShortcutList(this._arrangeData(searchInfo.search[i][keyName].data,keyName),keyName,this._cdn);
     }
     this.$inputElement =this.$container.find('#keyword');
@@ -75,15 +79,18 @@ Tw.CommonSearch.prototype = {
           data[i][key] = Number(data[i][key].replace(/[A-Za-z]/g,''));
         }
         if(category==='direct'&&key==='ALIAS'){
-          data[i][key] = data[i][key].replace('shopacc',Tw.OUTLINK.DIRECT_ACCESSORY);
-          data[i][key] = data[i][key].replace('shopmobile',Tw.OUTLINK.DIRECT_PHONE);
+          if(data[i][key]==='shopacc'){
+            data[i].linkUrl = Tw.OUTLINK.DIRECT_ACCESSORY+'?CATEGORY_ID='+data[i].CATEGORY_ID+'&ACCESSORY_ID=';
+          }else{
+            data[i].linkUrl = Tw.OUTLINK.DIRECT_MOBILE+'?PRODUCT_GRP_ID=';
+          }
         }
         if(key==='METATAG'){
           data[i][key] = data[i][key].split('#');
         }
         if(key==='IMG'){
           var tempArr = data[i][key].split('<IMG_ALT>');
-          data[i][key] = tempArr[0];
+          data[i][key] = tempArr[0].replace(/\/n/g,'');
           if(tempArr[1]){
             data[i].IMG_ALT = tempArr[1];
           }
@@ -120,11 +127,16 @@ Tw.CommonSearch.prototype = {
     }
   },
   _doSearch : function () {
+    var keyword = this.$inputElement.val();
+    if(Tw.FormatHelper.isEmpty(keyword)){
+      this._popupService.openAlert(Tw.ALERT_MSG_SEARCH.KEYWORD_ERR);
+      return;
+    }
     var inResult = this.$container.find('#resultsearch').is(':checked');
-    var requestUrl = inResult?'/common/search/in_result?keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
-    requestUrl+=this.$inputElement.val();
+    var requestUrl = inResult?'/common/search/in-result?keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
+    requestUrl+=keyword;
     requestUrl+='&step='+(Number(this._step)+1);
-    this._addRecentlyKeyword(this.$inputElement.val());
+    this._addRecentlyKeyword(keyword);
     this._historyService.goLoad(requestUrl);
   },
   _showBanner : function (data) {
@@ -182,17 +194,20 @@ Tw.CommonSearch.prototype = {
     if(Tw.FormatHelper.isEmpty(linkUrl)){
       return;
     }
-    this._apiService.request(Tw.API_CMD.STACK_SEARCH_USER_CLICK,
-      {
-        'docId' : $linkData.data('id'),
-        'section' : $linkData.data('category'),
-        'title' : encodeURI($linkData.data('tit')),
-        'keyword' : encodeURI(this._searchInfo.researchQuery)
-      }
-    );
-    //Tw.CommonHelper.openUrlExternal(linkUrl);
+    if(!$linkData.hasClass('home')){
+      this._apiService.request(Tw.API_CMD.STACK_SEARCH_USER_CLICK,
+        {
+          'docId' : $linkData.data('id'),
+          'section' : $linkData.data('category'),
+          'title' : encodeURI($linkData.data('tit')),
+          'keyword' : encodeURI(this._searchInfo.researchQuery)
+        }
+      );
+    }
     if(linkUrl.indexOf('BPCP')>-1){
       this._getBPCP(linkUrl);
+    }else if($linkData.hasClass('direct-element')){
+      Tw.CommonHelper.openUrlExternal(linkUrl);
     }else{
       this._historyService.goLoad(linkUrl);
     }

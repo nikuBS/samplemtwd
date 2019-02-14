@@ -17,16 +17,16 @@
 	<div class="recently-tel-box">
 		<div class="inputbox bt-add">
 			<span class="input new">
-				<input class="fe-amount" type="text" placeholder="데이터(GB) 입력" title="가족에게 공유할 데이터" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc1" data-share-amount="<%= monthly.shrblData %>">
+				<input class="fe-amount" type="number" placeholder="데이터(GB) 입력" title="가족에게 공유할 데이터" aria-describedby="aria-exp-desc2" data-share-amount="<%= monthly.shrblData %>">
 				<button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
 			</span>
 			<span class="r-btn type01">
-				<button type="button" class="btn-type01" data-value="1">+1</button>
-				<button type="button" class="btn-type01" data-value="10">+10</button>
+				<button type="button" class="btn-type01" data-value="1">+1<span class="blind">GB</span></button>
+				<button type="button" class="btn-type01" data-value="10">+10<span class="blind">GB</span></button>
 				<button type="button" class="btn-type01" data-value="all">전체</button>
 			</span>
 		</div>
-		<p class="input-txt-type02 pb10 pt6 none">공유 가능 데이터를 초과했습니다. </p>
+		<p class="input-txt-type02 pb10 pt6 none" id="aria-exp-desc2">공유 가능 데이터를 초과했습니다. </p>
 		<p class="input-txt-type01 pt10">매달 자동공유 가능 데이터 : <strong class="txt-c1"><%= monthly.shrblData %>GB</strong></p>
 		<p class="input-txt-type01 pt4">선물하기, 함께쓰기, 스마트 기기 공유 가능 데이터 : <strong class="txt-c2"><%= monthly.shrblData %>GB</strong></p>
 	</div>

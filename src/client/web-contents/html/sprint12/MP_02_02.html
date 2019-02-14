@@ -20,7 +20,7 @@
     <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
     <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
     <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
-    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->   
     <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
     <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
     <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
@@ -30,47 +30,42 @@
 </head>
 
 <body class="bg-productdetail"><!-- 2017.10.29 수정/추가 상품상세 페이지 BG변경되는 페이지에서 클래스 추가필요 -->
-    <!-- #skip_navigation -->
-    <div id="skipNav" class="skip_navi">
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
             <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- #header -->
-        <div id="header" class="header-wrap">
-            <div class="h-belt">
-                <div class="h-default">
-                    <div class="h-menu">
-                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
-                    </div>
-                    <div class="h-tit">상품상세</div>
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+					</div>
+                    <!-- 2019-01-26 h-tit에 t-none 클래스 추가 -->
+                    <div class="h-tit t-none">DATA 인피니티</div>
                     <div class="h-serarch">
                         <button class="icon-gnb-search"><span class="blind">검색</span></button>
                     </div>
-                </div>
-            </div>
-        </div>
-        <!--// #header -->
+				</div>
+			</div>
+		</div>
+        <!--// #header --> 
         <!-- #contents -->
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
 
                 <!-- 상품타이틀 -->
-                <div class="cont-box nogaps-hoz productdetails-bg" style="background:#676767;"><!-- 2017.10.29 추가  어드민에서 등록되는 컬러값으로 inline style 추가 예시) style="background:어드민등록값,이미지삽입" -->
+                <div class="cont-box nogaps-hoz productdetails-bg" style="background:#3583e3;"><!-- 2017.10.29 추가  어드민에서 등록되는 컬러값으로 inline style 추가 예시) style="background:어드민등록값,이미지삽입" -->
                     <div class="productdetails-wrap">
                         <h3 class="productdetails-title">
-                            <span class="sub">Data 맘껏쓰고 나눠쓰는 T플랜</span>
-                            <div class="title">DATA 인피니티 DATA</div>
+                            <span class="sub">DATA 맘껏쓰고 나눠쓰는 T플랜</span>
+                            <div class="title">DATA 인피니티 </div>
                         </h3>
-                        <div class="productdetails-taglist">
-                            <button class="tag-text">#LTE</button>
-                            <button class="tag-text">#30대 신규가입 1위</button>
-                        </div>
                         <ul class="productdetails-text">
                             <li class="data">데이터 무제한, 최대 40GB 가족공유</li>
                             <li class="service">여행 / 영화 / 스마트워치 단말교체지원</li>
@@ -84,105 +79,41 @@
                             <span class="unit">원</span>
                         </p>
                         <div class="btn">
-                            <button type="button" class="bt-white1" style="color:#676767;">가입</button><!-- 2017.10.29 추가  어드민에서 등록되는 컬러값으로 inline style 추가 예시) style="color:어드민등록값" -->
+                            <button type="button" class="bt-white1" style="color:#3583e3;">요금제 변경</button><!-- 2017.10.29 추가  어드민에서 등록되는 컬러값으로 inline style 추가 예시) style="color:어드민등록값" -->
                         </div>
-
-                        <!-- 해당 상품을 이용중인 회선으로 로그인 시 해지 기능만 있는 경우
-                        <p class="price-text">
-                            월정액(부가세포함)<br>
-                            <strong class="price-type">100,000</strong>
-                            <span class="unit">원</span>
-                        </p>
-                        <div class="btn">
-                            <button type="button" class="bt-white2">해지</button>
-                        </div> -->
-
-                        <!-- 가입가능 상품인 경우일대   가입x/ 가입상담예약 O 일경우
-                        <p class="price-text">
-                            월정액(부가세포함)<br>
-                            <strong class="price-type">100,000</strong>
-                            <span class="unit">원</span>
-                        </p>
-                         -->
-                         
-                        <!--  서류제출/조회 노출 케이스  제출 전/제출 후 미비로 재 업로드 필요 시 
-                        <p class="price-text">
-                            월정액(부가세포함)<br>
-                            <strong class="price-type">100,000</strong>
-                            <span class="unit">원</span>
-                        </p>
-                         -->
-
-                        <!-- 가입제한/불가 상품인 경우
-                        <p class="price-text">
-                            월정액(부가세포함)<br>
-                            <strong class="price-type">100,000</strong>
-                            <span class="unit">원</span>
-                        </p>
-                        <div class="limit">
-                            가입제한 상품
-                        </div>
-                         -->
                     </div>
                     <ul class="productdetails-utill">
                         <li>- 데이터 <strong class="str">무제한</strong></li>
                         <li>- 음성 <strong class="str">집 / 이동전화 무제한</strong></li>
                         <li>- 문자 <strong class="str">기본제공</strong></li>
                     </ul>
-                    <!-- <ul class="productdetails-utill">
-                        <li>- 데이터 <strong class="str">기본제공금액 조절사용</strong></li>
-                        <li>- 문자 <strong class="str">기본제공</strong></li>
-                    </ul>
-                    <ul class="productdetails-utill">
-                        <li>- 데이터 <strong class="str">기본제공금액 조절사용</strong></li>
-                    </ul> -->
                 </div>
                 <!-- //상품타이틀 -->
 
                 <hr class="cont-sp type1" aria-hidden="true"/>
 
-                <!-- 가입상담  -->
-                <div class="joinconsulting-wrap">
-                    <p class="text">가입상담을 받아보시겠어요?</p>
-                    <div class="btn">
-                        <div class="bt-alone"><button class="bt-line-blue1">예약</button></div>
-                    </div>
-                </div>
-                <!-- //가입상담  -->
-
-                <hr class="cont-sp type1" aria-hidden="true"/>
-
-                <!-- 서류제출기한  -->
-                <div class="joinconsulting-wrap">
-                    <p class="text">서류제출기한이 종료되었습니다.</p>
-                    <div class="btn">
-                        <div class="bt-alone"><button class="bt-line-blue1">조회</button></div>
-                    </div>
-                </div>
-                <!-- //서류제출기한  -->
-
-                <hr class="cont-sp type1" aria-hidden="true"/>
-
-                <div class="offer-save-wrap">
-                    <p>이 요금제로 바꾸면 월 <span class="str">8,000</span> 원 절약됩니다.</p>
-                    <button class="btn">요금제 상세보기</button>
+                <div class="plansaving-wrap">
+                    <button class="link">
+                        <p class="text02">영화, 드라마를 데이터 걱정없이 무제한으로!</p>
+                    </button>
                 </div>
 
                 <hr class="cont-sp type1" aria-hidden="true"/>
 
-                <!-- dummy -->
-                <div class="product-visualization"><img src="/img/dummy/dmy-mp-02-02.png" alt="" style="width:100%;" /></div>
-                <!-- // dummy -->
+                
+                <!-- dummy : 일반 html 컨텐츠가 올수도있음 -->
+                <div class="cont-box nogaps noborder"><img src="/img/dummy/dmy-mp-02-02.png" alt="" style="width:100%;font-size:0;line-height:0;" /></div>
+                <!-- dummy : 일반 html 컨텐츠가 올수도있음 -->
 
                 <hr class="cont-sp type1" aria-hidden="true"/>
 
                 <!-- 팝업 띄우는 링크 -->
-                <div class="cont-box nogaps noborder">
+                <div class="cont-box nogaps">
                     <ul class="link-long-list">
                         <li>
                             <div class="link-long">
                                 <button>
-                                    이용요금 및 기본혜택
+                                    이용요금 및 혜택사항
                                     <span class="tx-sub">
                                         <span class="ico"><span class="blind">보기</span></span>
                                     </span>
@@ -192,7 +123,7 @@
                         <li>
                             <div class="link-long">
                                 <button>
-                                    주요/부가 혜택
+                                    상품사용방법
                                     <span class="tx-sub">
                                         <span class="ico"><span class="blind">보기</span></span>
                                     </span>
@@ -202,7 +133,27 @@
                         <li>
                             <div class="link-long">
                                 <button>
-                                    가입/해지 유의사항
+                                    가입/해지 방법 및 유의사항
+                                    <span class="tx-sub">
+                                        <span class="ico"><span class="blind">보기</span></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    가입해지채널
+                                    <span class="tx-sub">
+                                        <span class="ico"><span class="blind">보기</span></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    FAQ
                                     <span class="tx-sub">
                                         <span class="ico"><span class="blind">보기</span></span>
                                     </span>
@@ -214,300 +165,176 @@
                 <!-- //팝업 띄우는 링크 -->
 
                 <hr class="cont-sp type1" aria-hidden="true"/>
-                
-                <!-- 상품 -->
-                <div class="cont-box nogaps-hoz">
-                    <div class="widget-box">
-                        <ul class="representcharge-list">
-                            <li class="on">
-                                <div role="button" aria-pressed="false" class="representcharge-info">
-                                    <h4 class="title">T플랜 <i class="product-badge badge-lte">LTE폰</i><img class="lte" src="/img/product/bg_products_badge.png" alt="LTE폰"></h4>
-                                    <div class="img-box"><img class="lte" src="/img/dummy/img_sample01.png" alt=""></div>
-                                    <!-- 2019.01.17 alt값 수정 sblee -->
-                                    <p class="text">음성, 데이터 무제한은 기본!<br />통신/단말/안심 영역의 프리미엄 혜택까지</p>
-                                </div>
-                                <ul class="representcharge-product">
-                                    <li>
-                                        <button type="button" class="product-infolink">
-                                            <div class="products-titleinfo">
-                                                <h5 class="title">스몰</h5>
-                                                <p class="info">월<span class="money">33,000</span>원</p>
-                                            </div>
-                                            <dl class="products-additionalinfo">
-                                                <dt>데이터</dt>
-                                                <dd class="point">1.2GB</dd>
-                                                <dt>음성</dt>
-                                                <dd>집전화, 이동전화 무제한</dd>
-                                                <dt>문자</dt>
-                                                <dd>기본제공</dd>
-                                            </dl>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button type="button" class="product-infolink">
-                                            <div class="products-titleinfo">
-                                                <h5 class="title">미디엄</h5>
-                                                <p class="info">월<span class="money">33,000</span>원</p>
-                                            </div>
-                                            <dl class="products-additionalinfo">
-                                                <dt>데이터</dt>
-                                                <dd class="point">1.2GB</dd>
-                                                <dt>음성</dt>
-                                                <dd>집전화, 이동전화 무제한</dd>
-                                                <dt>문자</dt>
-                                                <dd>기본제공</dd>
-                                            </dl>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button type="button" class="product-infolink">
-                                            <div class="products-titleinfo">
-                                                <h5 class="title">라지</h5>
-                                                <p class="info">월<span class="money">33,000</span>원</p>
-                                            </div>
-                                            <dl class="products-additionalinfo">
-                                                <dt>데이터</dt>
-                                                <dd class="point">1.2GB</dd>
-                                                <dt>음성</dt>
-                                                <dd>집전화, 이동전화 무제한</dd>
-                                                <dt>문자</dt>
-                                                <dd>기본제공</dd>
-                                            </dl>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button type="button" class="product-infolink">
-                                            <div class="products-titleinfo">
-                                                <h5 class="title">패밀리</h5>
-                                                <p class="info">월<span class="money">33,000</span>원</p>
-                                            </div>
-                                            <dl class="products-additionalinfo">
-                                                <dt>데이터</dt>
-                                                <dd class="point">1.2GB</dd>
-                                                <dt>음성</dt>
-                                                <dd>집전화, 이동전화 무제한</dd>
-                                                <dt>문자</dt>
-                                                <dd>기본제공</dd>
-                                            </dl>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button type="button" class="product-infolink">
-                                            <div class="products-titleinfo">
-                                                <h5 class="title">Data 인피니티</h5>
-                                                <p class="info">월<span class="money">33,000</span>원</p>
-                                            </div>
-                                            <dl class="products-additionalinfo">
-                                                <dt>데이터</dt>
-                                                <dd class="point">1.2GB</dd>
-                                                <dt>음성</dt>
-                                                <dd>집전화, 이동전화 무제한</dd>
-                                                <dt>문자</dt>
-                                                <dd>기본제공</dd>
-                                            </dl>
-                                        </button>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
+
+                <!-- 배너 -->
+                <div class="cont-box nogaps noborder">
+                    <div class="bannerbox-wrap">
+                        <img src="/img/dummy/dmy_product02.png" alt="">
                     </div>
                 </div>
-                <!-- //상품 -->
+                <!-- //배너 -->
 
-                <hr class="cont-sp type1" aria-hidden="true"/>
+                <hr class="cont-sp type5" aria-hidden="true"/>
 
-                <!-- 유사한 요금제 찾기-->
-                <div class="cont-box">
-                    <div class="recommendedrate-wrap">
-                        <h3 class="title">유사한 요금제 찾기</h3>
-                        <div class="more"><button class="link">더보기</button></div>
-                    </div>
-                    <div class="recommendedratetaglist-wrap">
-                        <span class="tag-text">#LTE폰</span>
-                        <span class="tag-text">#8GB</a>
-                        <span class="tag-text">#일반</a>
-                    </div>
-                    <ul class="recommendedrate-list">
-                        <!-- 왼쪽 상품 이미지가 이미지로 들어갈경우 -->
-                        <li class="type01">
-                            <button type="button" class="product-infolink">
-                                <div class="img-box"><img class="lte" src="/img/dummy/img_sample01.png" alt=""></div>
-                                <!-- 2019.01.17 alt값 수정 sblee -->
-                                <div class="products-titleinfo">
-                                    <h5 class="title">스몰</h5>
-                                    <p class="info">월<span class="money">33,000</span>원</p>
+                <!-- .cont-box -->
+                <div class="cont-box nogaps noborder"><!-- 2019.01.27 수정 클래스추가 -->
+                    <!-- .component -->
+                    <div class="component">
+                        <div class="component-box tabs">
+                            <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                                <div class="tab-linker">
+                                    <ul role="tablist" class="tab-style01">
+                                        <li role="tab" aria-selected="true" aria-controls="tab1-tab2" id="tab12"><button>T플랜 시리즈</button></li>
+                                        <li role="tab" aria-selected="false" aria-controls="tab2-tab2" id="tab22"><button>함께하면 유용한 상품</button></li>
+                                    </ul>
                                 </div>
-                                <div class="taglist-wrap">
-                                    <span class="tag-text">#LTE폰</span>
-                                    <span class="tag-text">#8GB</a>
-                                    <span class="tag-text">#일반</a>
+                                <div class="tab-contents">
+                                    <ul>
+                                        <li role="tabpanel" id="tab1-tab2" aria-labelledby="tab12">
+                                            <div class="cont-box nogaps-hoz bgnone">
+                                                <div class="productinfoscroll-box block-type">
+                                                    <!-- .widget -->
+                                                    <div class="widget"> 
+                                                        <div class="widget-box horizontal">
+                                                            <div class="horizontal-slide">
+                                                                <ul class="horizontal-list">
+                                                                    <li>
+                                                                        <button type="button" class="product-info">
+                                                                            <h5 class="title">스몰</h5>
+                                                                            <p class="info">월<span class="money">33,000</span>원</p>
+                                                                            <div class="type">
+                                                                                <span class="str">1.2</span>GB
+                                                                            </div>
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button type="button" class="product-info">
+                                                                            <h5 class="title">미디엄</h5>
+                                                                            <p class="info">월<span class="money">50,000</span>원</p>
+                                                                            <div class="type">
+                                                                                <span class="str">1.2</span>GB
+                                                                            </div>
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button type="button" class="product-info">
+                                                                            <h5 class="title">스몰</h5>
+                                                                            <p class="info">월<span class="money">33,000</span>원</p>
+                                                                            <div class="type">
+                                                                                <span class="str">1.2</span>GB
+                                                                            </div>
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button type="button" class="product-info">
+                                                                            <h5 class="title">스몰</h5>
+                                                                            <p class="info">월<span class="money">33,000</span>원</p>
+                                                                            <div class="type">
+                                                                                <span class="str">1.2</span>GB
+                                                                            </div>
+                                                                        </button>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- .widget -->
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li role="tabpanel" id="tab2-tab2" aria-labelledby="tab22">
+                                            <div class="cont-box nogaps-hoz bgnone">
+                                                <div class="productinfoscroll-box block-type">
+                                                    <!-- .widget -->
+                                                    <div class="widget"> 
+                                                        <div class="widget-box horizontal">
+                                                            <div class="horizontal-slide">
+                                                                <ul class="horizontal-list">
+                                                                    <li>
+                                                                        <button type="button" class="product-info">
+                                                                            <h5 class="title">스몰</h5>
+                                                                            <p class="info"><span class="unit">무료</span></p><!--2019.02.09 무료/상세참조등 텍스트만 있을 경우-->
+                                                                            <div class="type">
+                                                                                <span class="str">1.2</span>GB
+                                                                            </div>
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button type="button" class="product-info">
+                                                                            <h5 class="title">미디엄</h5>
+                                                                            <p class="info">월<span class="money">50,000</span>원</p>
+                                                                            <div class="type">
+                                                                                <span class="str">1.2</span>GB
+                                                                            </div>
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button type="button" class="product-info">
+                                                                            <h5 class="title">스몰</h5>
+                                                                            <p class="info">월<span class="money">33,000</span>원</p>
+                                                                            <div class="type">
+                                                                                <span class="str">1.2</span>GB
+                                                                            </div>
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button type="button" class="product-info">
+                                                                            <h5 class="title">스몰</h5>
+                                                                            <p class="info">월<span class="money">33,000</span>원</p>
+                                                                            <div class="type">
+                                                                                <span class="str">1.2</span>GB
+                                                                            </div>
+                                                                        </button>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- .widget -->
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <dl class="products-additionalinfo">
-                                    <dt>데이터</dt>
-                                    <dd><span class="point">1.2GB</span></dd>
-                                    <dt>음성</dt>
-                                    <dd>집전화, 이동전화 무제한</dd>
-                                    <dt>문자</dt>
-                                    <dd>기본제공</dd>
-                                </dl>
-                            </button>
-                        </li>
-                        <!-- 왼쪽 상품 이미지가 bg로 들어갈경우(아래전체 type[n]으로 처리) -->
-                        <li class="type01">
-                            <button type="button" class="product-infolink">
-                                <div class="products-titleinfo">
-                                    <h5 class="title">스몰</h5>
-                                    <p class="info">월<span class="money">33,000</span>원</p>
-                                </div>
-                                <div class="taglist-wrap">
-                                    <span class="tag-text">#LTE폰</span>
-                                    <span class="tag-text">#8GB</a>
-                                    <span class="tag-text">#일반</a>
-                                </div>
-                                <dl class="products-additionalinfo">
-                                    <dt>데이터</dt>
-                                    <dd><span class="point">1.2GB</span></dd>
-                                    <dt>음성</dt>
-                                    <dd>집전화, 이동전화 무제한</dd>
-                                    <dt>문자</dt>
-                                    <dd>기본제공</dd>
-                                </dl>
-                            </button>
-                        </li>
-                        <li class="type02">
-                            <button type="button" class="product-infolink">
-                                <div class="products-titleinfo">
-                                    <h5 class="title">미디엄</h5>
-                                    <p class="info">월<span class="money">33,000</span>원</p>
-                                </div>
-                                <div class="taglist-wrap">
-                                    <span class="tag-text">#LTE폰</span>
-                                    <span class="tag-text">#8GB</a>
-                                    <span class="tag-text">#일반</span>
-                                </div>
-                                <dl class="products-additionalinfo">
-                                    <dt>데이터</dt>
-                                    <dd><span class="point">1.2GB</span></dd>
-                                    <dt>음성</dt>
-                                    <dd>집전화, 이동전화 무제한</dd>
-                                    <dt>문자</dt>
-                                    <dd>기본제공</dd>
-                                </dl>
-                            </button>
-                        </li>
-                        <li class="type03">
-                            <button type="button" class="product-infolink">
-                                <div class="products-titleinfo">
-                                    <h5 class="title">라지</h5>
-                                    <p class="info">월<span class="money">33,000</span>원</p>
-                                </div>
-                                <div class="taglist-wrap">
-                                    <span class="tag-text">#LTE폰</span>
-                                    <span class="tag-text">#8GB</a>
-                                    <span class="tag-text">#일반</span>
-                                </div>
-                                <dl class="products-additionalinfo">
-                                    <dt>데이터</dt>
-                                    <dd><span class="point">1.2GB</span></dd>
-                                    <dt>음성</dt>
-                                    <dd>집전화, 이동전화 무제한</dd>
-                                    <dt>문자</dt>
-                                    <dd>기본제공</dd>
-                                </dl>
-                            </button>
-                        </li>
-                        <li class="type04">
-                            <button type="button" class="product-infolink">
-                                <div class="products-titleinfo">
-                                    <h5 class="title">패밀리</h5>
-                                    <p class="info">월<span class="money">33,000</span>원</p>
-                                </div>
-                                <div class="taglist-wrap">
-                                    <span class="tag-text">#LTE폰</span>
-                                    <span class="tag-text">#8GB</a>
-                                    <span class="tag-text">#일반</a>
-                                </div>
-                                <dl class="products-additionalinfo">
-                                    <dt>데이터</dt>
-                                    <dd><span class="point">1.2GB</span></dd>
-                                    <dt>음성</dt>
-                                    <dd>집전화, 이동전화 무제한</dd>
-                                    <dt>문자</dt>
-                                    <dd>기본제공</dd>
-                                </dl>
-                            </button>
-                        </li>
-                        <li class="type05">
-                            <button type="button" class="product-infolink">
-                                <div class="products-titleinfo">
-                                    <h5 class="title">Data 인피니티</h5>
-                                    <p class="info">월<span class="money">33,000</span>원</p>
-                                </div>
-                                <div class="taglist-wrap">
-                                    <span class="tag-text">#LTE폰</a>
-                                    <span class="tag-text">#8GB</span>
-                                    <span class="tag-text">#일반</a>
-                                </div>
-                                <dl class="products-additionalinfo">
-                                    <dt>데이터</dt>
-                                    <dd><span class="point">1.2GB</span>
-                                        <p class="tip-text">*테더링 30GB, 함께쓰기 등 40GB 별도제공</p>
-                                    </dd>
-                                    <dt>음성</dt>
-                                    <dd>집전화, 이동전화 무제한</dd>
-                                    <dt>문자</dt>
-                                    <dd>기본제공</dd>
-                                </dl>
-                            </button>
-                        </li>
-                    </ul>
-                </div>
-                <!-- //유사한 요금제 찾기 -->
-
-                <hr class="cont-sp type1" aria-hidden="true"/>
-                
-                <!-- 함께하면 더욱 유용한 상품 -->
-                <div class="cont-box">
-                    <h3>함께하면 더욱 유용한 상품</h3>
-                    <!-- .widget -->
-                    <div class="widget"> 
-                        <div class="widget-box horizontal">
-                            <div class="horizontal-slide">
-                                <ul class="horizontal-list useful-goods">
-                                    <li>
-                                        <div>
-                                            <button class="bg1"> <!-- 보라색 -->
-                                                <span class="located top">
-                                                    <span class="txt-tit">LTE 안심옵션</span>
-                                                    <span class="txt-type">부가상품</span>
-                                                </span>
-                                                <span class="located bottom">
-                                                    <span class="txt-detail">기본 데이터 소진 후 요금 부담 없이 데이터 이용하기</span>
-                                                </span>
-                                                <span class="ico"></span>
-                                            </button>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <button class="bg2"> <!-- 녹색 -->
-                                                <span class="located top">
-                                                    <span class="txt-tit">LTE 안심옵션</span>
-                                                    <span class="txt-type">부가상품</span>
-                                                </span>
-                                                <span class="located bottom">
-                                                    <span class="txt-detail">기본 데이터 소진 후 요금 부담 없이 데이터 이용하기</span>
-                                                </span>
-                                            </button>
-                                        </div>
-                                    </li>
-                                </ul>
                             </div>
                         </div>
                     </div>
-                    <!-- .widget -->
+                    <!--// .component -->
                 </div>
-                <!-- //함께하면 더욱 유용한 상품 -->
+                <!--// .cont-box -->
+
+                <!-- 연관태그 -->
+                <div class="cont-box nogaps-btm widget">
+                    <h3 class="suggest-tag-title">연관태그</h3>
+                    <div class="suggest-tag-titlebox">
+                        <button class="suggest-tag-link">
+                            <p class="text">
+                                유사한 요금제를 찾아보세요! 
+                                <span class="textnumber">(<span class="number">16</span>개) </span>
+                            </p>
+                            <div class="taglist-wrap">
+                                <span class="tag-text">#LTE폰</span>
+                                <span class="tag-text">#5~8GB</span>
+                                <span class="tag-text">#~3만원대</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="widget-box toggle02">
+                        <div class="suggest-tag-list openlist-wrap">
+                            <ul>
+                                <!--접근성 수정-->
+                                <li><a href="#" class="link" role="button">#여행 갈 때 좋은 부가서비스</a></li>
+                                <li><a href="#" class="link" role="button">#효도 부가서비스</a></li>
+                                <li><a href="#" class="link" role="button">#휴식</a></li>
+                                <li><a href="#" class="link" role="button">#자녀를 위한 부가서비스</a></li>
+                                <!-- //접근성 수정-->
+                                <li><button type="button" class="link">#여행 갈 때 좋은 요금제</button></li>
+                                <li><button type="button" class="link">#여행 갈 때 좋은 요금제</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--//연관태그 -->
 
                 <hr class="cont-sp type1" aria-hidden="true"/>
 
@@ -549,7 +376,7 @@
                                         <div>
                                             <button>
                                                 <span class="ico type4"></span>
-                                                <span>Dummy</span>
+                                                <span>SKT스마트홈</span>
                                             </button>
                                         </div>
                                     </li>
@@ -557,7 +384,7 @@
                                         <div>
                                             <button>
                                                 <span class="ico type4"></span>
-                                                <span>Dummy</span>
+                                                <span>Tmap 택시</span>
                                             </button>
                                         </div>
                                     </li>
@@ -565,7 +392,7 @@
                                         <div>
                                             <button>
                                                 <span class="ico type4"></span>
-                                                <span>Dummy</span>
+                                                <span>함께하면 더욱 스마트한 앱서비스</span>
                                             </button>
                                         </div>
                                     </li>
@@ -594,25 +421,14 @@
                 <!-- // 함께하면 더욱 스마트한 앱서비스 -->
 
                 <hr class="cont-sp type1" aria-hidden="true"/>
-                <!-- cont-box --> 
-                <div class="cont-box gaps-style02">
-                    <h3 class="suggest-tag-title">추천태그</h3>
-                    <ul class="suggest-tag-list openlist-wrap">
-                        <li><a href="#" class="link">#여행 갈 때 좋은 요금제</a></li>
-                        <li><a href="#" class="link">#가족모두사용</a></li>
-                        <li><a href="#" class="link">#커플요금제</a></li>
-                        <li><a href="#" class="link">#소확행</a></li>
-                        <li><a href="#" class="link">#자녀를 위한 요금제</a></li>
-                        <li><button type="button" class="link">#데이터나눔요금제</button></li>
-                    </ul>
+
+                <!-- 배너 -->
+                <div class="cont-box nogaps noborder">
+                    <div class="bannerbox-wrap">
+                        <img src="/img/dummy/dmy_product02.png" alt="">
+                    </div>
                 </div>
-                <!--//cont-box -->
-                <hr class="cont-sp type1" aria-hidden="true"/>
-                <ul class="bt-slice share">
-                    <li class="bt-white3">
-                        <button>공유하기</button>
-                    </li>
-                </ul>
+                <!-- //배너 -->
 
             </div>
         </div>

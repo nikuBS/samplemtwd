@@ -11,6 +11,7 @@ Tw.MembershipSubmain = function(rootEl, membershipData, svcInfo, membershipCheck
   this._membershipLayerPopup = new Tw.MembershipInfoLayerPopup(this.$container);
   this._nativeService = Tw.Native;
   this._historyService = new Tw.HistoryService();
+  this._tidLanding = new Tw.TidLandingComponent();
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._map = undefined;
@@ -19,7 +20,7 @@ Tw.MembershipSubmain = function(rootEl, membershipData, svcInfo, membershipCheck
   this._cachedElement();
   this._bindEvent();
   this._getMembershipBanner();
-  this._checkCurrentLocation();
+  this._askCurrentLocation();
 };
 
 Tw.MembershipSubmain.prototype = {
@@ -47,27 +48,54 @@ Tw.MembershipSubmain.prototype = {
     this.$container.on('click', '.box-app-down', $.proxy(this._goTmembership, this));
     this.$container.on('click', '.data-plus', $.proxy(this._goChocolate, this));
     this.$container.on('click', '.coalition-brand-list .map', $.proxy(this._getBrandDetailInfo, this));
-    this.$container.on('click', '#fe-membership-join', $.proxy( this._membershipLayerPopup.onClickJoinBtn, this._membershipLayerPopup));
+    // this.$container.on('click', '#fe-membership-join', $.proxy( this._membershipLayerPopup.onClickJoinBtn, this._membershipLayerPopup));
+    this.$container.on('click', '#fe-membership-join', $.proxy( this._membershipLoginCheck, this));
     this.$container.on('click', '.fe-mebership-my', $.proxy(this._goMyMembership, this));
-    this.$container.on('click', '.fe-membership-location', $.proxy(this._showAgreementPopup, this));
+    this.$container.on('click', '.fe-membership-location', $.proxy(this._checkLocationAgreement, this));
   },
   _checkLocationAgreement:function () {
-    this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
-      .done($.proxy(function (res) {
-        if (res.code === Tw.API_CODE.CODE_00) {
-          Tw.Logger.info('check loc agreement : ', res);
-          if (res.result.twdLocUseAgreeYn === 'Y') {
-            this._checkCurrentLocation();
-          } else {
-            this._showAgreementPopup();
-          }
-        } else {
-          Tw.Error(res.code, res.msg).pop();
-        }
-      }, this))
-      .fail(function (err) {
-        Tw.Error(err.code, err.msg).pop();
-      });
+    if(this._svcInfo) {
+      this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
+          .done($.proxy(function (res) {
+            if (res.code === Tw.API_CODE.CODE_00) {
+              Tw.Logger.info('check loc agreement : ', res);
+              if (res.result.twdLocUseAgreeYn === 'Y') {
+                this._askCurrentLocation();
+              } else {
+                this._showAgreementPopup();
+              }
+            } else {
+              Tw.Error(res.code, res.msg).pop();
+            }
+          }, this))
+          .fail(function (err) {
+            Tw.Error(err.code, err.msg).pop();
+          });
+    } else {
+      this._goLogin();
+    }
+
+  },
+  _membershipLoginCheck: function () {
+    if(this._svcInfo && this._svcInfo.loginType !== Tw.AUTH_LOGIN_TYPE.EASY ) {
+      this._membershipLayerPopup.onClickJoinBtn();
+    } else {
+      this._popupService.openConfirmButton(
+          Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A68.MSG,
+          Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A68.TITLE,
+          $.proxy(function () {
+            this._goLogin();
+          }, this),
+          $.proxy(function () {
+            this._popupService.close();
+          }, this),
+          Tw.BUTTON_LABEL.CLOSE,
+          Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A68.BUTTON
+      );
+    }
+  },
+  _goLogin: function () {
+    this._tidLanding.goLogin();
   },
   _showAgreementPopup: function () {
     this._popupService.open({
@@ -88,7 +116,7 @@ Tw.MembershipSubmain.prototype = {
             this._apiService.request(Tw.API_CMD.BFF_03_0022, data)
                 .done($.proxy(function (res) {
                   if (res.code === Tw.API_CODE.CODE_00) {
-                    this._checkCurrentLocation();
+                    this._askCurrentLocation();
                   } else {
                     Tw.Error(res.code, res.msg).pop();
                   }
@@ -222,9 +250,11 @@ Tw.MembershipSubmain.prototype = {
   _askCurrentLocation: function() {
     if (Tw.BrowserHelper.isApp()) {
       this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function (res) {
-        if (res.resultCode === 401) {
-          this._historyService.goBack();
-          return;
+        if (res.resultCode !== Tw.NTV_CODE.CODE_00 ) {
+          this._getAreaByGeo({
+            mapX: '37.5600420',
+            mapY: '126.9858500'
+          });
         } else {
           this._getAreaByGeo(res.params);
         }

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -20,59 +21,68 @@
     <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
     <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
     <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+
+	
+    
+
     <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
     <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
-    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
     <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
     <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
     <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
 </head>
 <body>
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
             <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
     <div class="wrap">
-        <!-- .popup hbs -->
-        <div class="popup-page tw-popup nobg fixed-btn"><!-- 2018-10-30 클래스변경 -->
-            <!-- #header -->
-            <div class="header-wrap">
-                <div class="page-header">
-                    <div class="header-ti">
-                        <h1>데이터 한도 요금제</h1>
-                    </div>
-                </div>
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
             </div>
-            <!--// #header -->
-            <!-- .container-wrap -->
-            <div class="container-wrap">
-                <h2 class="blind">내용</h2>
-                <div class="container">
-
-                	<div class="ti-caption-gray">
-						<!-- 2018-10-30 tip 추가 -->
-						<!--접근성 수정-->
-						<span class="tit">데이터 차단<button aria-haspopup="true" class="tip-view" title="데이터 차단 정보보기">TIP</button></span>
-						<!-- //접근성 수정-->
+        </div>
+        <!--// #contents -->
+		<!-- .popup hbs -->
+		<div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+			<!-- #header -->
+			<div class="header-wrap">
+				<div class="page-header">
+					<div class="header-ti">
+                        <h1>데이터한도요금제</h1>
 					</div>
+				</div>
+			</div>
+			<!--// #header -->
+			<!-- .container-wrap -->
+			<div class="container-wrap">
+                <div class="container">
+					<hr class="cont-sp type1" aria-hidden="true"/>
+
 					<!-- .cont-box -->
-					<div class="cont-box nogaps-hoz">
-						<ul class="on-off-list">
+					<div class="cont-box pb0">
+						<div class="ti-caption-type01 pb20">
+							<h2 class="tit">데이터 차단<button class="btn-tip" title="데이터 차단 정보보기" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></h2>
+							<!-- 2019.02.12 title,aria-haspopup 접근성 추가 -->			
+						</div>
+						<ul class="on-off-list new">
 							<li>
 								이번 달 차단
 								<span class="widget">
 									<span class="widget-box switch">
-										<span class="btn-switch type1">
-											<span class="switch-style" role="checkbox" aria-checked="false">
+										<span class="btn-switch type1 on">
+											<span class="switch-style" role="checkbox" aria-checked="true">
 												<span class="off-tx">꺼짐</span>
-												<!--접근성 수정-->
-												<input type="checkbox" title="이번 달 차단" />
-												<!--//접근성 수정-->
+												<input type="checkbox" title="이번 달 차단" checked="checked" />
 												<span class="on-tx">켜짐</span>
 											</span>
 										</span>
@@ -83,12 +93,10 @@
 								다음 달부터 차단
 								<span class="widget">
 									<span class="widget-box switch">
-										<span class="btn-switch type1 on">
+										<span class="btn-switch type1">
 											<span class="switch-style" role="checkbox" aria-checked="false">
 												<span class="off-tx">꺼짐</span>
-												<!--접근성 수정-->
-												<input type="checkbox" title="다음 달부터 차단" checked="checked" />
-												<!--//접근성 수정-->
+												<input type="checkbox" title="이번 달 차단"/>
 												<span class="on-tx">켜짐</span>
 											</span>
 										</span>
@@ -98,74 +106,58 @@
 						</ul>              			
 					</div>
 					<!--// .cont-box -->
-
 					<hr class="cont-sp type1" aria-hidden="true"/>
 
 					<!-- .cont-box -->
 					<div class="cont-box nogaps">
+						<!-- .component -->
 						<div class="component">
 							<div class="component-box tabs">
-								<div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+								<div class="tab-area new"><!-- 타입별 탭형태 변환 -->
 									<div class="tab-linker">
 										<ul role="tablist">
-											<li role="tab" aria-selected="false" aria-controls="tab1-tab" id="tab1"><a href="">당월 충전</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-											<li role="tab" aria-selected="true" aria-controls="tab2-tab" id="tab2"><a href="">매월 자동 충전</a></li>
+											<li role="tab" aria-selected="false" aria-controls="tab1-tab" id="tab1"><a href="">이번 달 충전</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+											<li role="tab" aria-selected="true" aria-controls="tab3-tab" id="tab2"><a href="">매달 자동충전</a></li>
 										</ul>
 									</div>
 									<div class="tab-contents">
 										<ul>
-											<li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+											<li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" aria-selected="false">
 												<div class="cont-box">
 													당월 충전 내용입니다.
 												</div>
 											</li>
-											<li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+											<li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" aria-selected="true">
 												<div class="cont-box">
-													<!--접근성 수정-->
-													<p class="tabcon-title0">충전 금액<button aria-haspopup="true" class="tip-view" title="충전 금액 정보보기">TIP</button></p> <!-- 2018-10-30 tip 추가 -->
-													<!-- //접근성 수정-->
-													<div class="widget">
-														<div class="widget-box radio">
-															<div class="radio-slide">
+													<div class="ti-caption-type01 pb20">
+														<h2 class="tit">충전 금액<button class="btn-tip" title="충전 금액 정보보기" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></h2>
+														<!-- 2019.02.12 title,aria-haspopup 접근성 추가 -->			
+													</div>
+
+													<div class="discount-look-ahead type01">
+														<div class="widget">
+															<div class="widget-box radio">
 																<ul class="select-list" role="radiogroup">
-																	<!--접근성 수정-->
-																	<li class="radiobox" role="radio">
-																		<input type="radio" name="radio4" value="" aria-labelledby="aria-comp-radio1" title="충전금액" disabled /><!-- 체크상태일 경우 checked="checked" -->
-																		<span class="radio-txt" id="aria-comp-radio1">
-																			<span>20,000</span><span class="unit">원</span>
-																		</span>
+																	 <li class="radiobox btn-type02 checked" role="radio" aria-checked="true">
+																		<input type="radio" name="radio4" value="" title="20,000원" checked="checked">
+																		<span class="radio-txt ff-tb">20,000원</span>
 																	</li>
-																	<li class="radiobox" role="radio">
-																		<input type="radio" name="radio4" value="" aria-labelledby="aria-comp-radio2" title="충전금액" checked/><!-- 체크상태일 경우 checked="false" -->
-																		<span class="radio-txt" id="aria-comp-radio2">
-																			<span>15,000</span><span class="unit">원</span>
-																		</span>
+																	<li class="radiobox btn-type02" role="radio" aria-checked="false">
+																		<input type="radio" name="radio4" value="" title="15,000원">
+																		<span class="radio-txt ff-tb">15,000원</span>
 																	</li>
-																	<li class="radiobox" role="radio">
-																		<input type="radio" name="radio4" value="" aria-labelledby="aria-comp-radio3" title="충전금액"/><!-- 비활성화상태일 경우 disabled="disabled" -->
-																		<span class="radio-txt" id="aria-comp-radio3">
-																			<span>10,000</span><span class="unit">원</span>
-																		</span>
+																	<li class="radiobox btn-type02" role="radio" aria-checked="false">
+																		<input type="radio" name="radio4" value="" title="10,000원">
+																		<span class="radio-txt ff-tb">10,000원</span>
 																	</li>
-																	<li class="radiobox" role="radio">
-																		<input type="radio" name="radio4" aria-labelledby="aria-comp-radio4" value="" title="충전금액" /><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
-																		<span class="radio-txt" id="aria-comp-radio4">
-																			<span>5,000</span><span class="unit">원</span>
-																		</span>
+																	<li class="radiobox btn-type02 disabled" role="radio" aria-disabled="true" aria-checked="false">
+																		<input type="radio" name="radio4" value="" disabled="" title="5,000원">
+																		<span class="radio-txt ff-tb">5,000원</span>
 																	</li>
-																	<!-- //접근성 수정-->
 																</ul>
 															</div>
 														</div>
 													</div>
-												</div>
-
-												<div class="bt-fixed-area">
-													<ul class="bt-slice full">
-														<li class="bt-red1">
-															<button>충전하기</button>
-														</li>
-													</ul>
 												</div>
 											</li>
 										</ul>
@@ -173,32 +165,35 @@
 								</div>
 							</div>
 						</div>
+						<!--// .component -->
 					</div>
 					<!--// .cont-box -->
 
-					<hr class="cont-sp type1" aria-hidden="true"/>
+					<div class="cont-box noborder bgnone">
+						<h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+						<ul class="pg-chk-list02">
+							<li><button class="btn-tip">데이터 충전 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+							<li><button class="btn-tip">요금제 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+						</ul>
+					</div>
 
-					<!-- 2018-10-30 추가 -->
-	                <!-- .cont-box -->
-	                <div class="cont-box nogaps-btm">
-	                    <h3 class="tx-bold">꼭 확인해주세요!</h3>
-	                    <ul class="noti-list">
-							<!--접근성 수정-->
-	                        <li>데이터 충전 안내 <button aria-haspopup="true" class="tip-view" title="데이터 충전 안내 정보보기">TIP</button></li>
-							<li>요금상품 안내 <button aria-haspopup="true" class="tip-view" title="요금상품 안내 정보보기">TIP</button></li>
-							<!-- //접근성 수정-->
-	                    </ul>
-	                </div>  
-	                <!--// .cont-box -->
-	                <!--// 2018-10-30 추가 -->
+                    <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                    <div class="bt-fixed-area">
+                        <ul class="bt-slice full">
+                            <li class="bt-red1">
+                                <button>충전하기</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
                 </div>
             </div>
-            <!-- // .container-wrap -->
+            <!--// .container-wrap -->
             <!-- .popup-closeBtn -->
             <button class="prev-step">취소</button>
             <!--// .popup-closeBtn -->
-        </div>
-        <!-- // .popup hbs -->
-    </div>
+		</div>
+		<!--// .popup hbs -->
+	</div>
 </body>
 </html>

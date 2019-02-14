@@ -30,7 +30,6 @@ Tw.MyTJoinSuspendTemporary.prototype = {
     this.$inputEmail = this.$container.find('[data-id="fe-input-email"]');
     this.$inputTel = this.$container.find('[data-id="fe-input-tel"]');
     this.$btSuspend = this.$container.find('[data-id="fe-bt-suspend"]');
-    this.$btReset = this.$container.find('[data-id="fe-bt-reset"]');
   },
 
   _bindEvent: function () {
@@ -40,7 +39,6 @@ Tw.MyTJoinSuspendTemporary.prototype = {
     this.$checkSMSnoti.on('change', $.proxy(this._onNotiMethodChanged, this));
     this.$inputTel.on('keyup', $.proxy(Tw.InputHelper.insertDashCellPhone, this, this.$inputTel));
     this.$btSuspend.on('click', $.proxy(this._onClickBtnSuspend, this));
-    this.$btReset.on('click', $.proxy(this._onClickBtnReset, this));
     this.$inputEmail.on('change', $.proxy(this._checkSuspendable, this, true));
     this.$inputTel.on('change', $.proxy(this._checkSuspendable, this, true));
   },
@@ -132,12 +130,6 @@ Tw.MyTJoinSuspendTemporary.prototype = {
     this._requestSuspend();
   },
 
-  _onClickBtnReset: function () {
-    //TODO check unpaid
-    this._popupService.openModalTypeA(Tw.MYT_JOIN_SUSPEND.CONFIRM_RESET.TITLE, Tw.MYT_JOIN_SUSPEND.CONFIRM_RESET.MESSAGE,
-      Tw.MYT_JOIN_SUSPEND.CONFIRM_RESET.BTNAME, null, $.proxy(this._requestReset, this), null);
-  },
-
   _requestSuspend: function () {
     this._popupService.close();
     Tw.CommonHelper.startLoading('.container', 'grey', true);
@@ -161,42 +153,15 @@ Tw.MyTJoinSuspendTemporary.prototype = {
       .fail($.proxy(this._onError, this));
   },
 
-  _requestReset: function () {
-    this._popupService.close();
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
-    this._apiService.request(Tw.API_CMD.BFF_05_0152, {})
-      .done($.proxy(this._onSuccessRequestReset, this))
-      .fail($.proxy(this._onError, this));
-  },
-
   _onSuccessRequestSuspend: function (params, res) {
     Tw.CommonHelper.endLoading('.container');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var duration =  Tw.DateHelper.getShortDateWithFormat(params.fromDt, 'YYYY.MM.DD.') + ' - ' +
-        Tw.DateHelper.getShortDateWithFormat(params.toDt, 'YYYY.MM.DD.');
-      var type = params.icallPhbYn === 'Y' ?
-        Tw.MYT_JOIN_SUSPEND.TYPE.ALL : Tw.MYT_JOIN_SUSPEND.TYPE.CALL;
-      var desc = Tw.MYT_JOIN_SUSPEND.SUCCESS_SUSPEND_MESSAGE.replace('{DURATION}', duration)
-        .replace('{SUSPEND_TYPE}', type);
-      this._popupService.afterRequestSuccess('/myt-join/submain', '/myt-join/submain', null, Tw.MYT_JOIN_SUSPEND.APPLY, desc);
-
+      params.command = 'temporary';
+      this._historyService.replaceURL('/myt-join/submain/suspend/complete?' + $.param(params));
       // update svcInfo
       this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
     } else if ( res.code === 'MOD0022' ) { // 월 5회 이상 신청 시
       this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ALERT_EXCEED.MESSAGE, Tw.MYT_JOIN_SUSPEND.ALERT_EXCEED.TITLE);
-    } else {
-      Tw.Error(res.code, res.msg).pop();
-    }
-  },
-
-  _onSuccessRequestReset: function (res) {
-    Tw.CommonHelper.endLoading('.container');
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.afterRequestSuccess('/myt-join/submain/suspend#temporary', '/myt-join/submain',
-        null, Tw.MYT_JOIN_SUSPEND.RESET);
-
-      // update svcInfo
-      this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

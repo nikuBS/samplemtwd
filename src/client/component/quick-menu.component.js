@@ -25,8 +25,8 @@ Tw.QuickMenuComponent.prototype = {
     }
   },
   _bindEvent: function () {
-    this.$btQuickAdd = $('#fe-bt-quick-add');
-    this.$btQuickRemove = $('#fe-bt-quick-remove');
+    this.$btQuickAdd = $('.fe-bt-quick-add');
+    this.$btQuickRemove = $('.fe-bt-quick-remove');
     if ( this.$btQuickAdd.length > 0 ) {
       this._menuId = this.$btQuickAdd.data('menuid');
       this.$btQuickAdd.on('click', $.proxy(this._onClickRemoveQuickMenu, this));

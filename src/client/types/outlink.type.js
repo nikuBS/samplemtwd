@@ -7,6 +7,8 @@ Tw.OUTLINK = {
   APP_STORE: 'https://itunes.apple.com/kr/app/%EB%AA%A8%EB%B0%94%EC%9D%BCtworld/id428872117?mt=8',
   BROADBAND: 'http://www.skbroadband.com/Main.do',
   ONE_STORE_PREFIX: 'onestore://common/product/',
+  DIRECT_MOBILE: 'http://shop.tworld.co.kr/handler/PhoneDetail',
+  DIRECT_ACCESSORY: 'https://shop.tworld.co.kr/handler/AccessoryMall-AccView',
   DATA_COUPON: {
     T_DATA: 'BPCP:0000105171',
     T_COUPON: 'BPCP:0000105151',

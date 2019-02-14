@@ -22,6 +22,7 @@
         <%- include('../../../common/views/components/header.component.html', { title: '요금제', svcInfo: svcInfo }); %>
         <!--// #header -->
         <!-- #contents -->
+        <% const BENEFIT = { type: '데이터', 'money-type': '음성', sms: '문자' }; %>
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
@@ -77,7 +78,7 @@
                             <li>
                                 <button role="button" aria-pressed="false" class="representcharge-info">
                                     <h4 class="title"><%= group.prodGrpNm %><% if (group.prodGrpFlagImgUrl) { %><img class="lte" src="<%= group.prodGrpFlagImgUrl %>"><% } %></h4>
-                                    <% if (group.prodGrpIconImgUrl) { %> <div class="img-box"><% if (group.prodGrpIconImgUrl) { %><img src="<%= group.prodGrpIconImgUrl %>" alt=""><% } %></div><% } %>
+                                    <% if (group.prodGrpIconImgUrl) { %> <div class="img-box"><% if (group.prodGrpIconImgUrl) { %><img src="<%= group.prodGrpIconImgUrl %>" alt="<%= group.prodGrpNm %>"><% } %></div><% } %>
                                     <p class="text"><%= group.prodGrpDesc %></p>
                                 </button>
 
@@ -98,6 +99,7 @@
                                                             <% } %>
                                                             <% if (product.displayInfo) { %>
                                                             <div class="<%= product.displayInfo.icon %>">
+                                                                <span class="blind"><%= BENEFIT[product.displayInfo.icon] %></span>
                                                                 <span class="str"><%= product.displayInfo.value %></span><%= product.displayInfo.unit %>
                                                             </div>
                                                             <% } %>
@@ -202,6 +204,7 @@
                                                 <% } %>
                                                 <% if (plan.displayInfo) { %>
                                                     <div class="<%= plan.displayInfo.icon %>">
+                                                        <span class="blind"><%= BENEFIT[plan.displayInfo.icon] %></span>
                                                         <span class="str"><%= plan.displayInfo.value %></span><%= plan.displayInfo.unit || '' %>
                                                     </div>
                                                 <% } %>

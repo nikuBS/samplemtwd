@@ -65,11 +65,11 @@
                                         <div class="widget-box radio">
                                             <ul class="select-list" role="radiogroup">
                                                 <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                                    <input class="fe-radio-gender" type="radio" name="radio1" value="1" title="명의자 성별선택 : 남자" aria-describedby="aria-gender-tx"><!-- 체크상태일 경우 checked="checked" 오류메세지 추가시 aria-describedby 속성 추가 -->
+                                                    <input class="fe-radio-gender" type="radio" name="radio1" value="1" title="명의자 성별선택 : 남자" aria-labelledby="aria-comp-radio1" aria-describedby="aria-gender-tx"><!-- 체크상태일 경우 checked="checked" 오류메세지 추가시 aria-describedby 속성 추가 -->
                                                     남자
                                                 </li>
                                                 <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
-                                                    <input class="fe-radio-gender" type="radio" name="radio1" value="2" title="명의자 성별선택 : 여자" aria-describedby="aria-gender-tx"><!-- 체크상태 아닌 경우 checked="false" 오류메세지 추가시 aria-describedby 속성 추가 -->
+                                                    <input class="fe-radio-gender" type="radio" name="radio1" value="2" title="명의자 성별선택 : 여자" aria-labelledby="aria-comp-radio2" aria-describedby="aria-gender-tx"><!-- 체크상태 아닌 경우 checked="false" 오류메세지 추가시 aria-describedby 속성 추가 -->
                                                     여자
                                                 </li>
                                             </ul>
@@ -110,8 +110,8 @@
                     </div>
                     <div>
                         <ul class="pg-chk-list">
-                            <li><button id="CO_ME_01_02_06_02_01" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
-                            <li><button id="CO_ME_01_02_06_02_02" class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                            <li><button id="CO_ME_01_02_06_02_01" class="btn-tip" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">간편 로그인이란? tip</span></i></button></li>
+                            <li><button id="CO_ME_01_02_06_02_02" class="btn-tip" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">입력정보가 일치하지 않는다면! tip</span></i></button></li>
                         </ul>
                     </div>
                 </div>

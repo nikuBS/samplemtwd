@@ -46,4 +46,8 @@ Tw.HandlebarHelper = (function () {
   Handlebars.registerHelper('removeTag', function(str) {
     return str.replace(/<([^>]+)>/ig,'');
   });
+
+  Handlebars.registerHelper('removeNaN', function(str) {
+    return str.replace(/[^0-9.]/g, '');
+  });
 })();

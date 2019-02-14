@@ -1,0 +1,22 @@
+<%#
+* FileName: product.mobileplan-add.join.t-family.item.component.html
+* Author: Ji Hun Yang (jihun202@sk.com)
+* Date: 2019.02.12
+%>
+
+<script id="fe-templ-line_item" type="text/x-handlebars-template">
+<li class="list-box" data-svc_mgmt_num="{{svcMgmtNum}}" data-svc_num="{{svcNumNoMasq}}">
+    <p class="list-text">
+        <strong class="ps-name">{{svcNumDash}}</strong>
+        {{#if isMe}}<i class="icon-me"><span class="blind">나</span></i>{{/if}}
+        <span class="cate-check">
+            <input type="checkbox" name="schecks" id="check{{index}}" class="formcheck-small fe-line_check" data-group_rep_yn="{{groupRepYn}}">
+            <label for="check{{index}}" class="cate-name">대표</label>
+        </span>
+        <span class="entry">{{prodNm}}</span>
+    </p>
+    <div class="list-btn">
+        <div class="bt-alone fe-btn_delete"><button class="bt-line-gray1">삭제</button></div>
+    </div>
+</li>
+</script>

@@ -385,8 +385,8 @@ Tw.API_CMD = {
   BFF_08_0064: { path: '/core-modification/:version/guide/contents-detail/:args0', method: Tw.API_METHOD.GET },
 
   //SEARCH SURVEY
-  BFF_08_0070: { path: '/core-modification/v1/search/invst-append', method: Tw.API_METHOD.POST },
-  BFF_08_0071: { path: '/core-modification/v1/search/invst-insert', method: Tw.API_METHOD.POST },
+  BFF_08_0071: { path: '/core-modification/:version/search/invst-append', method: Tw.API_METHOD.POST },
+  BFF_08_0072: { path: '/core-modification/:version/search/invst-insert', method: Tw.API_METHOD.POST },
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/:version/event/ing-list', method: Tw.API_METHOD.GET },
@@ -453,6 +453,9 @@ Tw.API_CMD = {
   BFF_10_0168: { path: '/core-product/:version/wire/additions/:args0/joins/ledger-prechecks/terms', method: Tw.API_METHOD.GET },
   BFF_10_0169: { path: '/core-product/:version/mobiles/fee-plans/young-plan-mid-sets', method: Tw.API_METHOD.GET },
   BFF_10_0170: { path: '/core-product/:version/mobiles/fee-plans/young-plan-mid-sets', method: Tw.API_METHOD.PUT },
+  BFF_10_0171: { path: '/core-product/:version/mobiles/combinations/tfamilymoa/join/prechecks', method: Tw.API_METHOD.GET },
+  BFF_10_0172: { path: '/core-product/:version/mobiles/combinations/tfamilymoa/join/oppsblcheck', method: Tw.API_METHOD.GET },
+  BFF_10_0173: { path: '/core-product/:version/mobiles/combinations/tfamilymoa/join', method: Tw.API_METHOD.POST },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/:version/submain/products', method: Tw.API_METHOD.GET },
@@ -537,6 +540,7 @@ Tw.NODE_CMD = {
 
   GET_URL_META: { path: '/urlMeta', method: Tw.API_METHOD.GET },
   GET_MENU: { path: '/menu', method: Tw.API_METHOD.GET },
+  GET_MENU_RCMD: { path: '/menu-rcmd', method: Tw.API_METHOD.GET },
   GET_BANNER_ADMIN: { path: '/banner/admin', method: Tw.API_METHOD.GET },
   GET_BANNER_TOS: { path: '/banner/tos', method: Tw.API_METHOD.GET },
   GET_MASKING_METHOD: { path: '/masking-method', method: Tw.API_METHOD.GET },

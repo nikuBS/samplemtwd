@@ -148,10 +148,10 @@
 
                                 <div class="call-message">
                                     <% if(homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
-                                    <a href="/myt-data/hotdata" class="bt-call"><i class="icon-call-80"><span class="blind">통화</span></i> <%= homeData.usageData.voice.showRemained %></a>
+                                    <a href="/myt-data/submain" class="bt-call"><i class="icon-call-80"><span class="blind">통화</span></i> <%= homeData.usageData.voice.showRemained %></a>
                                     <% } %>
                                     <% if(homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
-                                    <a href="/myt-data/hotdata" class="bt-message"><i class="icon-sms-80"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></a>
+                                    <a href="/myt-data/submain" class="bt-message"><i class="icon-sms-80"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></a>
                                     <% } %>
                                 </div>
                                 <% } else if (homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
@@ -188,7 +188,7 @@
 
                                 <div class="call-message">
                                     <% if(homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
-                                    <a href="/myt-data/hotdata" class="bt-message"><i class="icon-sms-80"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></a>
+                                    <a href="/myt-data/submain" class="bt-message"><i class="icon-sms-80"><span class="blind">문자</span></i> <%= homeData.usageData.sms.showRemained %></a>
                                     <% } %>
                                 </div>
                                 <% } else if (homeData.usageData.sms && homeData.usageData.sms.isShow) { %>
@@ -645,7 +645,7 @@
                         <% if(redisData.mainNotice && redisData.mainNotice.length > 0) { %>
                         <!-- 공지사항 -->
                         <div class="notice-slide-type">
-                            <span class="notice-slide-ti"><i class="icon-notice-30"><span class="blind">공지사항</span></i></span>
+                            <a href="/customer/svc-info/notice" class="notice-slide-ti"><i class="icon-notice-30"><span class="blind">공지사항</span></i></a>
                             <!-- .widget -->
                             <div class="widget">
                                 <div class="widget-box slider2">
@@ -1026,7 +1026,7 @@
                         <% if(redisData.mainNotice && redisData.mainNotice.length > 0) { %>
                         <!-- 공지사항 -->
                         <div class="notice-slide-type">
-                            <span class="notice-slide-ti"><i class="icon-notice-30"><span class="blind">공지사항</span></i></span>
+                            <a href="/customer/svc-info/notice" class="notice-slide-ti"><i class="icon-notice-30"><span class="blind">공지사항</span></i></a>
                             <!-- .widget -->
                             <div class="widget">
                                 <div class="widget-box slider2">

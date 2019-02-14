@@ -8,9 +8,8 @@
 <!-- body -->
 <%
     var moreViewUrl = '/common/search/more';
-    var inResultViewUrl = '/common/search/in_result';
+    var inResultViewUrl = '/common/search/in-result';
 %>
-<body data-gr-c-s-loaded="true" class="">
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
@@ -342,7 +341,7 @@
 
                     </ul>
                     <div class="btn-more">
-                        <a class="list-data direct-element home">다이렉트샵 가기</a>
+                        <a href="http://shop.tworld.co.kr" class="list-data direct-element home">다이렉트샵 가기</a>
                     </div>
                 </div>
             </div>
@@ -595,12 +594,11 @@
 
     </div>
 </div>
-</body>
 <% include ../../components/javascript.component.html %>
 <% include ../../components/search/search.template.component.html %>
 <script>
     $(document).ready(function () {
-        new Tw.CommonSearch($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>,<%- JSON.stringify(svcInfo) %>,'<%- CDN %>','<%- step %>');
+        new Tw.CommonSearch($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>,<%- JSON.stringify(svcInfo) %>,'<%- CDN %>','<%- step %>','<%- from %>');
     });
 </script>
 <% include ../../components/end.component.html %>

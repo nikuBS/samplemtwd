@@ -1,5 +1,5 @@
 /**
- * FileName: common.search.in_result.controller.ts
+ * FileName: common.search.in-result.controller.ts
  * Author: Hyunkuk Lee ( max5500@pineone.com )
  * Date: 2019.02.01
  */
@@ -16,9 +16,9 @@ class CommonSearchInResult extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     if ( req.query.category ) {
-      new CommonSearchMore().render(req, res, next, svcInfo, allSvc, childInfo, pageInfo);
+      new CommonSearchMore().initPage(req, res, next);
     } else {
-      new CommonSearch().render(req, res, next, svcInfo, allSvc, childInfo, pageInfo);
+      new CommonSearch().initPage(req, res, next);
     }
 
   }

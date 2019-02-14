@@ -46,7 +46,7 @@
                 <div class="cont-box nogaps-btm">
                     <div class="tit-wrap">
                         <h3 class="tit-type6 iblock tx-regular">최근 납부 내역</h3>
-                        <button type="button" class="btn-txt-more" data-id="payment-detail">더보기</button>
+                        <button type="button" title="최근 납부내역" class="btn-txt-more" data-id="payment-detail">더보기</button>
                     </div>
                     <ul class="review-list">
                         <% for(var i=0; i < data.totalPayment.length; i++) { %>
@@ -96,7 +96,7 @@
             <div class="cont-box nogaps-btm" data-id="other-line">
                 <div class="tit-wrap">
                     <h3 class="tit-type6 iblock">다른 회선 요금 조회
-                    <button type="button" class="btn-tip" id="MF1_tip_01" page-id="<%= data.pageInfo.menuId %>">
+                    <button title="다른 회선 요금 조회" type="button" class="btn-tip" id="MF1_tip_01" page-id="<%= data.pageInfo.menuId %>">
                         <i class="icon-badge-tip"><span class="blind">tip</span></i>
                     </button>
                     </h3>

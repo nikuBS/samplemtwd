@@ -223,6 +223,12 @@ Tw.MyTJoinWireModifyAddress.prototype = {
   // 이사 날짜
   select_house_input_changeEvt: function () {
     Tw.Logger.info('[select_house_input_changeEvt]');
+
+    $('#fe-err-no-movdt').hide();
+    if(!this.$select_house_input.val()){
+      $('#fe-err-no-movdt').show();
+    }
+
     var tempDt = this.$select_house_input.val();
 
     this.$select_house_input.val( tempDt );
@@ -235,6 +241,12 @@ Tw.MyTJoinWireModifyAddress.prototype = {
   // 중단 희망 날짜
   select_stop_input_changeEvt: function () {
     Tw.Logger.info('[select_stop_input_changeEvt]');
+
+    $('#fe-err-no-stopdt').hide();
+    if(!this.$select_stop_input.val()){
+      $('#fe-err-no-stopdt').show();
+    }
+
     var tempDt = this.$select_stop_input.val();
 
     this.$select_stop_input.val( tempDt );
@@ -247,6 +259,12 @@ Tw.MyTJoinWireModifyAddress.prototype = {
   // 설치 희망 날짜
   select_install_input_changeEvt: function () {
     // Tw.Logger.info('[select_install_input_changeEvt]');
+
+    $('#fe-err-no-instdt').hide();
+    if(!this.$select_install_input.val()){
+      $('#fe-err-no-instdt').show();
+    }
+
     var curDt = Tw.DateHelper.getCurrentDateTime('YYYY-MM-DD');
     var endDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 14, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
     var tempDt = this.$select_install_input.val();

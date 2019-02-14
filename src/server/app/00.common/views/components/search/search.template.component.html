@@ -149,7 +149,7 @@
                     {{#isNaN listData.BAS_FEE_INFO }}
                     <span class="money">{{listData.BAS_FEE_INFO}}</span>
                     {{else}}
-                    월<span class="money">{{currencyComma listData.BAS_FEE_INFO}}</span>원
+                    <span class="money">{{currencyComma listData.BAS_FEE_INFO}}</span>원
                     {{/isNaN}}
                 </p>
             </div>
@@ -175,8 +175,8 @@
 </script>
 
 <script id="direct_template" type="text/x-handlebars-template">
-    <li class="direct-element list-data" href="{{listData.ALIAS}}?CATEGORY_ID={{listData.CATEGORY_ID}}&ACCESSORY_ID={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="direct" data-tit="{{removeTag listData.PRODUCT_NM}}">
-        <div class="img"><img src="{{CDN}}{{listData.IMG}}" alt="{{listData.IMG_ALT}}"></div>
+    <li class="direct-element list-data" href="{{listData.linkUrl}}{{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="direct" data-tit="{{removeTag listData.PRODUCT_NM}}">
+        <div class="img"><img src="https://shop.tworld.co.kr/pimg/phone{{listData.IMG}}" alt="{{listData.IMG_ALT}}"></div>
         <div class="cont">
             <div class="tit">{{{listData.PRODUCT_NM}}}</div>
             <div class="price">{{currencyComma listData.PRODUCT_PRICE}}원~/월</div>
@@ -258,7 +258,7 @@
 
 <script id="notice_template" type="text/x-handlebars-template">
     <li>
-        <a class="b-cont notice-element list-data" href="/customer/svc-info/notice/view?ntcId={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="notice" data-tit="{{removeTag listData.NTC_TIT_NM}}">
+        <a class="b-cont notice-element list-data" href="/customer/svc-info/notice/view?ntcId={{removeNaN listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="notice" data-tit="{{removeTag listData.NTC_TIT_NM}}">
             {{{listData.NTC_TIT_NM}}}
         </a>
     </li>

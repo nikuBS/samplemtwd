@@ -130,7 +130,6 @@ Tw.ProductMobileplanJoinTplan.prototype = {
   },
 
   _convConfirmOptions: function(result) {
-    console.log(result);
     this._confirmOptions = Tw.ProductHelper.convPlansJoinTermInfo(result);
 
     $.extend(this._confirmOptions, {

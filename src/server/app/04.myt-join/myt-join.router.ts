@@ -34,6 +34,7 @@ import MyTJoinPhoneNumChgAlarmExt from './controllers/submain/myt-join.submain.p
 import MyTJoinNumChange from './controllers/submain/myt-join.submain.numchange.controller';
 import MyTJoinSuspendStatus from './controllers/suspend/myt-join.suspend.status.controller';
 import MyTJoinMyPlanCombineShare from './controllers/myplancombine/myt-join.myplancombine.share.controller';
+import MyTJoinSuspendComplete from './controllers/suspend/myt-join.suspend.complete';
 
 class MyTJoinRouter extends TwRouter {
   constructor() {
@@ -69,6 +70,7 @@ class MyTJoinRouter extends TwRouter {
     this.controllers.push({ url: '/submain/wire/changeowner', controller: MyTJoinWireGuideChangeOwnership });
     this.controllers.push({ url: '/submain/suspend', controller: MyTJoinSuspend });
     this.controllers.push({ url: '/submain/suspend/status', controller: MyTJoinSuspendStatus });
+    this.controllers.push({ url: '/submain/suspend/complete', controller: MyTJoinSuspendComplete });
     this.controllers.push({ url: '/myplan', controller: MyTJoinMyplan });
     this.controllers.push({ url: '/myplan/alarm', controller: MyTJoinMyplanAlarm });
     this.controllers.push({ url: '/myplan/alarmterminate', controller: MyTJoinMyplanAlarmterminate });

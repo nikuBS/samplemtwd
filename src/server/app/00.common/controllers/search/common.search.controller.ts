@@ -20,10 +20,10 @@ class CommonSearch extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-
     const query =  encodeURI(req.query.keyword) || '';
     const collection = 'all';
-    const step = req.header('referer') ? req.query.step : 1 || 1;
+    const step = req.header('referer') ? req.query.step ? req.query.step : 1 : 1;
+    const from = req.header('referer') ? req.query.from : null;
     let requestObj, researchCd, researchQuery;
     if (FormatHelper.isEmpty(req.query.in_keyword)) {
       requestObj = { query , collection };
@@ -34,15 +34,15 @@ class CommonSearch extends TwViewController {
     }
 
     Observable.combineLatest(
-      /*this.apiService.request( BrowserHelper.isApp(req) ? API_CMD.SEARCH_APP : API_CMD.SEARCH_WEB, requestObj, {}),*/
-      this.apiService.request( API_CMD.SEARCH_APP , requestObj, {}),
+      this.apiService.request( BrowserHelper.isApp(req) ? API_CMD.SEARCH_APP : API_CMD.SEARCH_WEB, requestObj, {}),
       this.apiService.request(API_CMD.RELATED_KEYWORD, requestObj, {})
     ).subscribe(([ searchResult, relatedKeyword ]) => {
 
-      if ((searchResult.code !== 0)) {
+      if ( searchResult.code !== 0 || relatedKeyword.code !== 0 ) {
         return this.error.render(res, {
           svcInfo: svcInfo,
-          title: PRODUCT_TYPE_NM.JOIN
+          code : searchResult.code !== 0 ? searchResult.code : relatedKeyword.code,
+          msg : searchResult.code !== 0 ? searchResult.msg : relatedKeyword.msg
         });
       }
       if (searchResult.result.search[0].immediate.data.length <= 0 || svcInfo === null) {
@@ -109,18 +109,18 @@ class CommonSearch extends TwViewController {
       }
       if ( searchResult.result.totalcount === 0 ) {
         Observable.combineLatest(
-          this.apiService.request(API_CMD.BFF_08_0069, {srchId : '52'}, {}),
+          this.apiService.request(API_CMD.BFF_08_0070, {}, {}),
           this.apiService.request(API_CMD.POPULAR_KEYWORD, {range : 'D'}, {})
         ).
         subscribe(([surveyList, popularKeyword]) => {
-          if (surveyList.code !== API_CODE.CODE_00) {
+          if (surveyList.code !== API_CODE.CODE_00 || popularKeyword.code !== 0) {
             return this.error.render(res, {
               svcInfo: svcInfo,
-              code: surveyList.code,
-              msg: surveyList.msg
+              code: surveyList.code !== API_CODE.CODE_00 ? surveyList.code : popularKeyword.code,
+              msg: surveyList.code !== API_CODE.CODE_00 ? surveyList.msg : popularKeyword.msg
             });
           }
-          res.render('search/common.search.not_found.html', {
+          res.render('search/common.search.not-found.html', {
             svcInfo : svcInfo,
             popularKeyword : popularKeyword.result,
             keyword : searchResult.result.query,
@@ -128,7 +128,8 @@ class CommonSearch extends TwViewController {
             inKeyword : searchResult.result.researchQuery,
             surveyList : surveyList.result,
             suggestQuery : searchResult.result.suggestQuery,
-            step : step
+            step : step,
+            from : from
           });
         });
       } else {
@@ -138,7 +139,8 @@ class CommonSearch extends TwViewController {
           keyword : searchResult.result.query,
           relatedKeyword : relatedKeyword,
           inKeyword : searchResult.result.researchQuery,
-          step : step
+          step : step,
+          from : from
         });
       }
     });

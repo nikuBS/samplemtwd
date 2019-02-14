@@ -36,6 +36,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
     this.$container.on('click', '.cancel', $.proxy(this._onNumberCancel, this));
     this.$container.on('click', '#fe-btn-contacts', $.proxy(this._onClickContacts, this));
     this.$container.on('click', '.prev-step', $.proxy(this._onCancel, this));
+    this.$container.on('click', 'button.fe-replace-url', $.proxy(this._onReplaceUrl, this));
     this.$btnUse.on('click', $.proxy(this._onSubmitClicked, this));
   },
   _init: function () {
@@ -151,6 +152,9 @@ Tw.MyTDataRechargeCouponUse.prototype = {
       default:
         break;
     }
+  },
+  _onReplaceUrl: function () {
+    this._historyService.goLoad('/myt-data/recharge/coupon');
   },
   _refill: function () {
     var desc = this.$container.find('input[type=radio]:checked')[0].value;

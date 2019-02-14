@@ -1,10 +1,10 @@
 /**
- * FileName: common.search.not_found.js
+ * FileName: common.search.not-found.js
  * Author: Hyunkuk Lee (max5500@pineone.com)
  * Date: 2018.12.31
  */
 
-Tw.CommonSearchNotFound = function (rootEl,svcInfo,surveyList,step) {
+Tw.CommonSearchNotFound = function (rootEl,svcInfo,surveyList,step,from,keywrod) {
   //this._cdn = cdn;
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
@@ -13,7 +13,7 @@ Tw.CommonSearchNotFound = function (rootEl,svcInfo,surveyList,step) {
   this._surveyList = surveyList;
   this._popupService = Tw.Popup;
   this._step = step;
-  this._init();
+  this._init(from,keywrod);
   /*
   HO_05_02_02_01_01.hbs : 검색 의견 신청 텍스트
   HO_05_02_02_01_02.hbs : 검새 의견 신청 선택
@@ -21,13 +21,16 @@ Tw.CommonSearchNotFound = function (rootEl,svcInfo,surveyList,step) {
 };
 
 Tw.CommonSearchNotFound.prototype = {
-  _init : function () {
+  _init : function (from,keywrod) {
     this.$container.find('.request_keyword').on('click',$.proxy(this._showClaimPopup,this));
     this.$container.find('.icon-gnb-search').on('click',$.proxy(this._doSearch,this));
     this.$container.find('#search_keyword').on('keyup',$.proxy(this._inputKeyupEvt,this));
     this.$container.find('.close-area').on('click',$.proxy(this._closeSearch,this));
     this.$container.on('click','.search-element',$.proxy(this._keywordSearch,this));
     this.$popKeywordElement = this.$container.find('.cont-box.nogaps-hoz');
+    if(from==='menu'){
+      this._addRecentlyKeyword(keywrod);
+    }
   },
   _showClaimPopup : function(btnEvt){
     //var $selectedClaim = $(btnEvt.currentTarget);
@@ -88,7 +91,7 @@ Tw.CommonSearchNotFound.prototype = {
   },
   _requestKeyword : function () {
     this._popupService.close();
-    this._apiService.request(Tw.API_CMD.BFF_08_0070, { ctt : this.$requestKeywordPopup.find('.input-focus').val() }, {}).
+    this._apiService.request(Tw.API_CMD.BFF_08_0071, { ctt : this.$requestKeywordPopup.find('.input-focus').val() }, {}).
     done($.proxy(function (res) {
       this._claimCallback(res,52);
     }, this))
@@ -98,7 +101,7 @@ Tw.CommonSearchNotFound.prototype = {
   },
   _selectClaim : function () {
     this._popupService.close();
-    this._apiService.request(Tw.API_CMD.BFF_08_0071, { inqNum : this.$selectClaimPopup.find('input[name=r1]:checked', '#claim_list').val() }, {}).
+    this._apiService.request(Tw.API_CMD.BFF_08_0072, { inqNum : this.$selectClaimPopup.find('input[name=r1]:checked', '#claim_list').val() }, {}).
     done($.proxy(function (res) {
       this._claimCallback(res,51);
     }, this))
@@ -127,7 +130,8 @@ Tw.CommonSearchNotFound.prototype = {
   },
   _doSearch : function () {
     var searchKeyword = this.$container.find('#search_keyword').val();
-    if(searchKeyword.length<=0){
+    if(Tw.FormatHelper.isEmpty(searchKeyword)){
+      this._popupService.openAlert(Tw.ALERT_MSG_SEARCH.KEYWORD_ERR);
       return;
     }
     this._addRecentlyKeyword(searchKeyword);
