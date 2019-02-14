@@ -249,7 +249,7 @@
                     <button class="num fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>"><%= svcInfo.addr %></button>
                     <strong class="user">반갑습니다, <%= svcInfo.mbrNm %> 고객님.</strong>
 
-                    <button class="price">
+                    <button id="fe-bt-link-billguide" class="price">
                         <% if (homeData.billData.type2) { %>
                         <strong class="ti"><%= homeData.billData.invMonth %>월 청구요금</strong>
                         <% } else if (homeData.billData.type1) { %>
@@ -513,7 +513,7 @@
             <% if(redisData.mainNotice && redisData.mainNotice.length > 0) { %>
             <!-- 공지사항 -->
             <div class="notice-slide-type">
-                <span class="notice-slide-ti"><i class="icon-notice-30"><span class="blind">공지사항</span></i></span>
+                <a href="/customer/svc-info/notice" class="notice-slide-ti"><i class="icon-notice-30"><span class="blind">공지사항</span></i></a>
                 <!-- .widget -->
                 <div class="widget">
                     <div class="widget-box slider2">

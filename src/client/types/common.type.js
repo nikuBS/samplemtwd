@@ -15,6 +15,7 @@ Tw.UPLOAD_TYPE = {
 };
 
 Tw.INIT_COMPLETE = 'env';
+Tw.NATIVE_BACK = 'back';
 
 Tw.COOKIE_KEY = {
   DEVICE: 'TWM_DEVICE',
