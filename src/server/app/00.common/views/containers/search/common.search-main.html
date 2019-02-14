@@ -35,7 +35,7 @@
             <ul class="popularsearchword-list search-keyword" id="auto_complete_list">
                 <script type="text/x-handlebars-template" id="auto_complete_template">
                 <li>
-                    <a data-param="{{listData.linkStr}}" class="category-type search-element">
+                    <a href="/common/search?step=<%= step+1 %>&keyword={{listData.linkStr}}" data-param="{{listData.linkStr}}" class="category-type search-element">
                         <p class="text">{{{listData.showStr}}}</p>
                     </a>
                 </li>
@@ -47,7 +47,7 @@
 
 <!--  최근검색어 -->
 
-<div class="searchbox-layer02" id="recently_keyword_layer">
+<div class="searchbox-layer02 none" id="recently_keyword_layer">
     <div class="lately-searchtext">
         <p class="text">최근검색어</p>
         <div class="btn">
@@ -58,7 +58,7 @@
         <ul class="list" id="recently_keyword_list">
             <script type="text/x-handlebars-template" id="recently_keyword_template">
             <li>
-                <a data-param="{{data.keyword}}" class="searchword-text search-element">{{data.keyword}}</a>
+                <a href="/common/search?step=<%= step+1 %>&keyword={{data.keyword}}" class="searchword-text search-element link">{{data.keyword}}</a>
                 <div class="date">
                     <span class="str">{{data.searchTime}}</span>
                     <button class="del remove-recently-list" data-index="{{index}}">삭제</button>
@@ -83,7 +83,7 @@
                 <% if(popularKeyword.result&&popularKeyword.result.Query){ %>
                     <% for(var i=0;i<popularKeyword.result.Query.length;i++){ %>
                     <li>
-                        <a data-param="<%= popularKeyword.result.Query[i].content %>" class="category-type search-element">
+                        <a href="/common/search?step=<%= step+1 %>&keyword=<%= popularKeyword.result.Query[i].content %>" data-param="<%= popularKeyword.result.Query[i].content %>" class="category-type search-element">
                             <strong class="number"><%= i+1 %></strong>
                             <span class="text"><%= popularKeyword.result.Query[i].content %></span>
                         </a>
@@ -104,23 +104,23 @@
         <ul class="plantype-list <%= smartKeyword.bnnrBotBtnNm3?'cell3': smartKeyword.bnnrBotBtnNm2?'':'cell1'%>">
             <%if(smartKeyword.bnnrBotBtnNm1){ %>
             <li class="category-type">
-                <button data-param="<%= smartKeyword.bnnrBotBtnUrl1 %>" type="button" class="link search-element">
+                <a href="<%= smartKeyword.bnnrBotBtnUrl1 %>" type="button" class="link search-element">
                     <%= smartKeyword.bnnrBotBtnNm1 %>
-                </button>
+                </a>
             </li>
             <% } %>
             <% if(smartKeyword.bnnrBotBtnNm2){ %>
             <li class="category-type">
-                <button data-param="<%= smartKeyword.bnnrBotBtnUrl2 %>" type="button" class="link search-element">
+                <a href="<%= smartKeyword.bnnrBotBtnUrl2 %>" type="button" class="link search-element">
                     <%= smartKeyword.bnnrBotBtnNm2 %>
-                </button>
+                </a>
             </li>
             <% } %>
             <% if(smartKeyword.bnnrBotBtnNm3){ %>
             <li class="category-type">
-                <button data-param="<%= smartKeyword.bnnrBotBtnUrl3 %>" type="button" class="link search-element">
+                <a  href="<%= smartKeyword.bnnrBotBtnUrl3 %>" type="button" class="link search-element">
                     <%= smartKeyword.bnnrBotBtnNm3 %>
-                </button>
+                </a>
             </li>
             <% } %>
         </ul>
