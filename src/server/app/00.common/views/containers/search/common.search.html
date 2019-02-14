@@ -9,6 +9,13 @@
 <%
     var moreViewUrl = '/common/search/more';
     var inResultViewUrl = '/common/search/in-result';
+    function recognizeLastChar(keyword){
+        if(!keyword||keyword.length<=0){
+            return '';
+        }
+        var endCharIdx = (keyword.charCodeAt(keyword.length-1) - parseInt('0xac00',16)) % 28;
+        return endCharIdx>0 ? '으' : '';
+    }
 %>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -51,7 +58,7 @@
             <% if(searchInfo.suggestQuery.length>0){ %>
             <div class="cont-box noborder gaps-style03">
                 <p class="re-searchword">
-                    혹시 이것을 찾으시나요? <a data-param="<%= searchInfo.suggestQuery %>"class="re-searchword-text search-element"><%= searchInfo.suggestQuery %>로 검색하기</a>
+                    혹시 이것을 찾으시나요? <a data-param="<%= searchInfo.suggestQuery %>"class="re-searchword-text search-element"><%= searchInfo.suggestQuery %><%= recognizeLastChar(searchInfo.suggestQuery) %>로 검색하기</a>
                 </p>
             </div>
             <% } %>

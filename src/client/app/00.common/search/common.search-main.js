@@ -23,12 +23,12 @@ Tw.CommonSearchMain.prototype = {
     this.$recentlyKeywordList = this.$container.find('#recently_keyword_list');
     this.$autoCompletetTemplate = Handlebars.compile(this.$container.find('#auto_complete_template').html());
     this.$recentlyKeywordTemplate = Handlebars.compile(this.$container.find('#recently_keyword_template').html());
-    this.$container.find('#recently_keyword_layer').hide();
     this.$inputElement.val('');
     window.onhashchange = $.proxy(this._hashChange,this);
     this._onInput = false;
     this._recentlyKeywordInit();
     this._bindPopupElementEvt();
+    //this.$container.find('#recently_keyword_layer').removeClass('none').hide();
   },
   _keyInputEvt : function (inputEvtObj) {
     if(inputEvtObj.keyCode===13){
@@ -84,16 +84,17 @@ Tw.CommonSearchMain.prototype = {
       this._historyService.goBack();
     }
     this.$container.find('#blind_layer').css('display','none');
-    this.$container.find('#recently_keyword_layer').hide();
+    this.$container.find('#auto_complete_layer').addClass('none');
+    this.$container.find('#recently_keyword_layer').addClass('none');
     this.$inputElement.blur();
   },
   _selectShowLayer : function () {
     if(this.$inputElement.val().trim().length<=0){
-      this.$container.find('#recently_keyword_layer').show();
-      this.$container.find('#auto_complete_layer').hide();
+      this.$container.find('#recently_keyword_layer').removeClass('none');
+      this.$container.find('#auto_complete_layer').addClass('none');
     }else{
-      this.$container.find('#recently_keyword_layer').hide();
-      this.$container.find('#auto_complete_layer').show();
+      this.$container.find('#recently_keyword_layer').addClass('none');
+      this.$container.find('#auto_complete_layer').removeClass('none');
     }
   },
   _removeRecentlyKeywordList : function (args) {
@@ -148,13 +149,15 @@ Tw.CommonSearchMain.prototype = {
     this._doSearch(searchKeyword);
   },
   _searchByElement : function(linkEvt){
+    linkEvt.preventDefault();
     var $target = $(linkEvt.currentTarget);
-    var param = $target.data('param');
     if($target.hasClass('link')){
-      //Tw.CommonHelper.openUrlExternal(param);
-      this._historyService.goLoad(param);
+      if(this._historyService.getHash()==='#on_input'){
+        this._historyService.goBack();
+      }
+      this._historyService.goLoad($target.attr('href'));
     }else{
-      this._doSearch(param);
+      this._doSearch($target.data('param'));
     }
   },
   _doSearch : function (searchKeyword) {

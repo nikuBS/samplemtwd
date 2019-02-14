@@ -172,5 +172,14 @@ Tw.CommonSearchNotFound.prototype = {
     var $currentTarget = $(targetEvt.currentTarget);
     this._addRecentlyKeyword($currentTarget.data('keyword'));
     this._historyService.goLoad($currentTarget.attr('href'));
+  },
+  _recognizeLastChar : function (keyword){
+    if(Tw.FormatHelper.isEmpty(keyword)){
+      return;
+    }
+    var endCharIdx = (keyword.charCodeAt(keyword.length-1) - parseInt('0xac00',16)) % 28;
+    if(endCharIdx>0){
+      this.$container.find('#suggest_comment').text('으'+this.$container.find('#suggest_comment').text());
+    }
   }
 };
