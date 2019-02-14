@@ -110,7 +110,7 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_10_0071, {
       opClCd: '2',
-      asgnNum: number,
+      asgnNum: number.replace(/-/gi, ''),
       auditDtm: auditDtm
     }, {}, this._prodId).done($.proxy(this._addDelNumRes, this));
   },
@@ -162,7 +162,7 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_10_0071, {
       opClCd: '7',
-      asgnNum: number,
+      asgnNum: number.replace(/-/gi, ''),
       frBestAsgnNum: this._frBestAsgnNum
     }).done($.proxy(this._toggleFriendRes, this, number));
   },
