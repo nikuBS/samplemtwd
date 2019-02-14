@@ -46,6 +46,9 @@ import ProductWireplanJoinReservation from './controllers/wireplan/join/product.
 import ProductWireplanJoinRequireDocumentApply from './controllers/wireplan/join/product.wireplan.join.require-document.apply.controller';
 import ProductWireplanJoinRequireDocumentHistory from './controllers/wireplan/join/product.wireplan.join.require-document.history.controller';
 import ProductWireplanJoin from './controllers/wireplan/join/product.wireplan.join.controller';
+import ProductWireplanJoinBasicInfo from './controllers/wireplan/join/product.wireplan.join.basic-info.controller';
+import ProductWireplanJoinLettering from './controllers/wireplan/join/product.wireplan.join.lettering.controller';
+import ProductWireplanJoinShowSender from './controllers/wireplan/join/product.wireplan.join.show-sender.controller';
 import ProductWireplanTerminate from './controllers/wireplan/product.wireplan.terminate.controller';
 import ProductWireplanReservationCancel from './controllers/wireplan/product.wireplan.reservation-cancel.controller';
 
@@ -126,6 +129,9 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/wireplan/join/reservation', controller: ProductWireplanJoinReservation });
     this.controllers.push({ url: '/wireplan/join/require-document/apply', controller: ProductWireplanJoinRequireDocumentApply });
     this.controllers.push({ url: '/wireplan/join/require-document/history', controller: ProductWireplanJoinRequireDocumentHistory });
+    this.controllers.push({ url: '/wireplan/join/basic-info', controller: ProductWireplanJoinBasicInfo });
+    this.controllers.push({ url: '/wireplan/join/lettering', controller: ProductWireplanJoinLettering });
+    this.controllers.push({ url: '/wireplan/join/show-sender', controller: ProductWireplanJoinShowSender });
     this.controllers.push({ url: '/wireplan/join', controller: ProductWireplanJoin });
     this.controllers.push({ url: '/wireplan/terminate', controller: ProductWireplanTerminate });
     this.controllers.push({ url: '/wireplan/reservation-cancel', controller: ProductWireplanReservationCancel });

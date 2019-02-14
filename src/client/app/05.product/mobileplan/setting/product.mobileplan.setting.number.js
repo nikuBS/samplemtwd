@@ -101,7 +101,7 @@ Tw.ProductMobileplanSettingNumber.prototype = {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_10_0074, {
       opClCd: '2',
-      asgnNum: number,
+      asgnNum: number.replace(/-/gi, ''),
       auditDtm: auditDtm
     }, {}, this._prodId).done($.proxy(this._addDelNumRes, this));
   },
