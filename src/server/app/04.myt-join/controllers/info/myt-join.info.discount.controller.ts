@@ -233,21 +233,21 @@ class MytJoinInfoDiscount extends TwViewController {
       thisMain._commDataInfo.feeInfo.push(tablet);
     }
 
-    // 와이브로
-    if ( this.getSizeObjOrArr(wibro) > 0 ) {
-
-      wibro.typeStr = 'fee_noType';
-      wibro.titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_D.TIT_NM;
-      wibro.agrmtDcAmt = FormatHelper.addComma(tablet.agrmtDcAmt);
-      wibro.agrmtDayCnt = FormatHelper.addComma(tablet.agrmtDayCnt);
-      wibro.aGrmtPenAmt = FormatHelper.addComma(tablet.aGrmtPenAmt);
-      thisMain._proDate(
-        wibro,
-        wibro.agrmtDcStaDt,
-        wibro.agrmtDcEndDt);
-
-      thisMain._commDataInfo.feeInfo.push(wibro);
-    }
+    // // 와이브로
+    // if ( this.getSizeObjOrArr(wibro) > 0 ) {
+    //
+    //   wibro.typeStr = 'fee_noType';
+    //   wibro.titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_D.TIT_NM;
+    //   wibro.agrmtDcAmt = FormatHelper.addComma(tablet.agrmtDcAmt);
+    //   wibro.agrmtDayCnt = FormatHelper.addComma(tablet.agrmtDayCnt);
+    //   wibro.aGrmtPenAmt = FormatHelper.addComma(tablet.aGrmtPenAmt);
+    //   thisMain._proDate(
+    //     wibro,
+    //     wibro.agrmtDcStaDt,
+    //     wibro.agrmtDcEndDt);
+    //
+    //   thisMain._commDataInfo.feeInfo.push(wibro);
+    // }
 
 
 
