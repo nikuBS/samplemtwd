@@ -75,6 +75,7 @@ Tw.CustomerSvcInfoSite.prototype = {
   _activeCurrentHashTab: function() {
     if(!this._hasTab) return false;
     this._currentHashIndex = _.indexOf(this._ownHash, this._hash._currentHashNav);
+    if(this._currentHashIndex < 0) return false; // 메뉴 클릭시 해당이벤트 간섭하는 것 수정
     this._currentHashIndex = this._currentHashIndex > 0 ? this._currentHashIndex : 0;
     this.$tabLinker.eq(this._currentHashIndex).click();
     _.map(this.$tabLinker.parent('li'), function(o, i) {
