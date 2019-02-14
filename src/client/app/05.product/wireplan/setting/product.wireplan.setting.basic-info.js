@@ -1,10 +1,10 @@
 /**
- * FileName: product.wireplan.join.basic-info.js
+ * FileName: product.wireplan.setting.basic-info.js
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2019.02.14
  */
 
-Tw.ProductWireplanJoinBasicInfo = function(rootEl, prodId, displayId, confirmOptions, btnData) {
+Tw.ProductWireplanSettingBasicInfo = function(rootEl, prodId, displayId, btnData) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
@@ -13,20 +13,18 @@ Tw.ProductWireplanJoinBasicInfo = function(rootEl, prodId, displayId, confirmOpt
 
   this._prodId = prodId;
   this._displayId = displayId;
-  this._confirmOptions = JSON.parse(window.unescape(confirmOptions));
   this._btnData = JSON.parse(window.unescape(btnData));
 
   this.$container = rootEl;
   this._cachedElement();
   this._bindEvent();
-  this._convConfirmOptions();
 
   if (this._historyService.isBack()) {
     this._historyService.goBack();
   }
 };
 
-Tw.ProductWireplanJoinBasicInfo.prototype = {
+Tw.ProductWireplanSettingBasicInfo.prototype = {
 
   _cachedElement: function() {
     this.$inputPhone = this.$container.find('.fe-num_phone');
@@ -123,55 +121,10 @@ Tw.ProductWireplanJoinBasicInfo.prototype = {
     }
   },
 
-  _convConfirmOptions: function() {
-    this._confirmOptions = $.extend(this._confirmOptions, {
-      isTerm: false,
-      isNoticeList: true,
-      isWireplan: true,
-      isWidgetInit: true,
-      isPcJoin: true,
-      title: Tw.PRODUCT_TYPE_NM.JOIN,
-      applyBtnText: Tw.BUTTON_LABEL.JOIN,
-      joinTypeText: Tw.PRODUCT_TYPE_NM.JOIN,
-      typeText: Tw.PRODUCT_CTG_NM.ADDITIONS,
-      toProdName: this._confirmOptions.preinfo.reqProdInfo.prodNm,
-      toProdDesc: this._confirmOptions.preinfo.reqProdInfo.prodSmryDesc,
-      toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
-      isNumberBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
-      svcNumMask: this._confirmOptions.preinfo.svcNumMask,
-      noticeList: this._confirmOptions.noticeList,
-      isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0),
-      settingSummaryTexts: [{
-        spanClass: 'val',
-        text: Tw.PRODUCT_JOIN_SETTING_AREA_CASE.INFO_SETTING_SUCCESS
-      }],
-      iconClass: this._getIcon()
-    });
-  },
-
-  _getIcon: function() {
-    if (this._confirmOptions.preinfo.reqProdInfo.svcCd === 'P') {
-      return 'ico-type1';
-    }
-
-    return 'ico-type1';
-  },
-
   _procConfirm: function() {
-    this._popupService.open($.extend(this._confirmOptions, {
-      hbs: 'product_wireplan_confirm',
-      layer: true
-    }), $.proxy(this._bindConfirm, this));
-  },
-
-  _bindConfirm: function($popupContainer) {
-    new Tw.ProductCommonConfirm(false, $popupContainer, this._confirmOptions, $.proxy(this._prodConfirmOk, this));
-  },
-
-  _prodConfirmOk: function() {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0099, {
+    this._apiService.request(Tw.API_CMD.BFF_10_0137, {
       addInfoExistYn: this._btnData.addInfoExistYn,
       addInfoRelScrnId: this._btnData.addInfoRelScrnId,
       addSvcAddYn: this._btnData.addSvcAddYn,
@@ -180,10 +133,10 @@ Tw.ProductWireplanJoinBasicInfo.prototype = {
       email: this.$inputEmail.val(),
       mobileNum: this.$inputCellPhone.val(),
       phoneNum: this.$inputPhone.val()
-    }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this));
+    }, {}, [this._prodId]).done($.proxy(this._procSettingRes, this));
   },
 
-  _procJoinRes: function(resp) {
+  _procSettingRes: function(resp) {
     Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
@@ -198,20 +151,15 @@ Tw.ProductWireplanJoinBasicInfo.prototype = {
     this._popupService.open({
       hbs: 'complete_product',
       data: {
-        prodCtgNm: Tw.PRODUCT_CTG_NM.ADDITIONS,
-        btList: [{ link: '/myt-join/additions', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.MYTJOIN }],
-        btClass: 'item-one',
-        prodId: this._prodId,
-        prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
-        typeNm: Tw.PRODUCT_TYPE_NM.JOIN,
-        isBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
-        basFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo ?
-          this._confirmOptions.preinfo.reqProdInfo.basFeeInfo + Tw.CURRENCY_UNIT.WON : ''
+        prodCtgNm: Tw.PRODUCT_TYPE_NM.SETTING,
+        typeNm: Tw.PRODUCT_TYPE_NM.CHANGE,
+        btList: [],
+        btClass: 'item-one'
       }
-    }, $.proxy(this._bindJoinResPopup, this), $.proxy(this._onClosePop, this), 'join_success');
+    }, $.proxy(this._bindSettingResPopup, this), $.proxy(this._onClosePop, this), 'setting_success');
   },
 
-  _bindJoinResPopup: function($popupContainer) {
+  _bindSettingResPopup: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
     $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
   },
