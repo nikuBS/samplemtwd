@@ -18,8 +18,8 @@
                     <span class="blind" aria-hidden="true">현재 선택된 회선정보 및 사용중인 {{typeText}} 정보 노출</span>
                     <span class="ico"><span class="blind" aria-hidden="true">선택된 회선정보 아이콘</span></span>
                     <div class="in-info">
-                        <span class="number lh-full"><span class="blind">회선번호</span>{{svcNumMask}}</span>
                         {{#if isMobilePlan}}
+                        <span class="number"><span class="blind">회선번호</span>{{svcNumMask}}</span>
                         <span class="sub-info">
                             <span class="elem"><span class="blind">사용요금제명</span>{{svcProdNm}}</span>
                             <span class="elem">
@@ -31,6 +31,8 @@
                                 {{/if}}
                             </span>
                         </span>
+                        {{else}}
+                        <span class="number lh-full"><span class="blind">회선번호</span>{{svcNumMask}}</span>
                         {{/if}}
                     </div>
                 </div>

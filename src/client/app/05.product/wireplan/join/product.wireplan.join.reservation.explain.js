@@ -198,7 +198,7 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
   _clearFamilyAddWrap: function() {
     this._familyType = null;
     this.$btnFamilyType.html(Tw.FAMILY_TYPE.DEFAULT + $('<div\>').append(this.$btnFamilyType.find('.ico')).html());
-    this.$familyAddWrap.find('input[type=text]').val('').blur();
+    this.$familyAddWrap.find('input').val('');
     this.$familyAddWrap.find('.fe-btn_cancel').removeClass('block');
   },
 
