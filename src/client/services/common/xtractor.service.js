@@ -14,21 +14,21 @@ Tw.XtractorService.prototype = {
   },
 
   _onLoadBV: function() {
-    _.each(this.$container.find('[data-xt_eid][data-xt_cs_id][data-xt_action="BV"]'), $.proxy(this._sendBV, this));
+    _.each(this.$container.find('[data-xt_eid][data-xt_csid][data-xt_action="BV"]'), $.proxy(this._sendBV, this));
   },
 
   _bindBC: function() {
-    this.$container.on('click', '[data-xt_eid][data-xt_cs_id][data-xt_action="BC"]', $.proxy(this._sendBC, this));
+    this.$container.on('click', '[data-xt_eid][data-xt_csid][data-xt_action="BC"]', $.proxy(this._sendBC, this));
   },
 
   _sendBV: function(elem) {
     var $elem = $(elem);
-    this.logView($elem.data('xt_eid'), $elem.data('xt_cs_id'));
+    this.logView($elem.data('xt_eid'), $elem.data('xt_csid'));
   },
 
   _sendBC: function(e) {
     var $elem = $(e.currentTarget);
-    this.logClick($elem.data('xt_eid'), $elem.data('xt_cs_id'));
+    this.logClick($elem.data('xt_eid'), $elem.data('xt_csid'));
   },
 
   logClick: function(E_ID, CS_ID) {
