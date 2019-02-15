@@ -14,21 +14,35 @@ Tw.XtractorService.prototype = {
   },
 
   _onLoadBV: function() {
-    _.each(this.$container.find('[data-xt_eid][data-xt_csid][data-xt_action="BV"]'), $.proxy(this._sendBV, this));
+    _.each(this.$container.find('[data-xt_action="BV"]'), $.proxy(this._sendBV, this));
   },
 
   _bindBC: function() {
-    this.$container.on('click', '[data-xt_eid][data-xt_csid][data-xt_action="BC"]', $.proxy(this._sendBC, this));
+    this.$container.on('click', '[data-xt_action="BC"]', $.proxy(this._sendBC, this));
   },
 
   _sendBV: function(elem) {
-    var $elem = $(elem);
-    this.logView($elem.data('xt_eid'), $elem.data('xt_csid'));
+    var $elem = $(elem),
+      E_ID = $elem.data('xt_eid'),
+      CS_ID = $elem.data('xt_csid');
+
+    if (Tw.FormatHelper.isEmpty(E_ID) || Tw.FormatHelper.isEmpty(CS_ID)) {
+      return false;
+    }
+
+    this.logView(E_ID, CS_ID);
   },
 
   _sendBC: function(e) {
-    var $elem = $(e.currentTarget);
-    this.logClick($elem.data('xt_eid'), $elem.data('xt_csid'));
+    var $elem = $(e.currentTarget),
+      E_ID = $elem.data('xt_eid'),
+      CS_ID = $elem.data('xt_csid');
+
+    if (Tw.FormatHelper.isEmpty(E_ID) || Tw.FormatHelper.isEmpty(CS_ID)) {
+      return false;
+    }
+
+    this.logClick(E_ID, CS_ID);
   },
 
   logClick: function(E_ID, CS_ID) {
