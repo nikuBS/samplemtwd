@@ -37,7 +37,7 @@ Tw.MyTFareInfoBillTaxSendFax.prototype = {
       this.$rerequestSendBtn.attr('disabled', true);
     }, this));
     this.$faxNumberInput.trigger('keyup');
-    this.$container.find('.fe-btn-back').on('click', $.proxy(this._closeResendByFax, this));
+    this.$container.find('.fe-btn-back').on('click', $.proxy(this._goBack, this)); // _closeResendByFax -> _goBack
   },
 
   // 닫기 확인

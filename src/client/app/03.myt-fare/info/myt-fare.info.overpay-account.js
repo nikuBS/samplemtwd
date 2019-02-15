@@ -40,7 +40,7 @@ Tw.MyTFareInfoOverpayAccount.prototype = {
     this.$refundRequestBtn.on('click', $.proxy(this._refundRequestSend, this));
     this.$bankAccountInput.on('keyup', $.proxy(this._accountInputHandler, this));
     this.$bankAccountInput.siblings('button.cancel').eq(0).on('click', $.proxy(this._accountInputHandler, this));
-    this.$closeBtn.on('click', $.proxy(this._closeConfirm, this));
+    this.$closeBtn.on('click', $.proxy(this._goBack, this)); // _closeConfirm -> _goBack
 
     this._refundAccountInfoUpdateCheck();
   },
