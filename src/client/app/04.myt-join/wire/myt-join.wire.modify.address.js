@@ -12,6 +12,9 @@ Tw.MyTJoinWireModifyAddress = function (rootEl, resData) {
   this._popupService = Tw.Popup;
 
   this._history = new Tw.HistoryService(this.$container);
+  if(this.resData.resDataInfo.coClCd !== 'B'){
+    this._backAlert = new Tw.BackAlert(this.$container, true);
+  }
 
   this._init();
 
@@ -88,27 +91,28 @@ Tw.MyTJoinWireModifyAddress.prototype = {
 
   //--------------------------------------------------------------------------[EVENT]
   _closeCheck: function(){
+    this._backAlert.onClose();
 
-    if(this.addressFormData.bldTypNm ||
-      this.addressFormData.basAddr ||
-      this.addressFormData.mvDt ||
-      this.addressFormData.stopPrefrDt ||
-      this.addressFormData.setPrefrDt ||
-      $('[data-target="input_hp"]').val() ||
-      $('[data-target="input_phone"]').val()) {
-
-      this._popupService.openConfirmButton(
-        Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
-        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-        $.proxy(function(){
-          this._history.goLoad('/myt-join/submain_w');
-        }, this),
-        null,
-        Tw.BUTTON_LABEL.NO,
-        Tw.BUTTON_LABEL.YES);
-    } else {
-      this._history.goBack();
-    }
+    // if(this.addressFormData.bldTypNm ||
+    //   this.addressFormData.basAddr ||
+    //   this.addressFormData.mvDt ||
+    //   this.addressFormData.stopPrefrDt ||
+    //   this.addressFormData.setPrefrDt ||
+    //   $('[data-target="input_hp"]').val() ||
+    //   $('[data-target="input_phone"]').val()) {
+    //
+    //   this._popupService.openConfirmButton(
+    //     Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+    //     Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+    //     $.proxy(function(){
+    //       this._history.goLoad('/myt-join/submain_w');
+    //     }, this),
+    //     null,
+    //     Tw.BUTTON_LABEL.NO,
+    //     Tw.BUTTON_LABEL.YES);
+    // } else {
+    //   this._history.goBack();
+    // }
   },
 
   $submitApplyEvt: function(event) {

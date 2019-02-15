@@ -1068,7 +1068,7 @@ li.checkbox.type01 {
       display: block;
       margin-bottom: 0.125rem;
       font-size: 0.75rem;
-      font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK";
+      font-family: "Apple SD Gothic Neo", "Arial", sans-serif;
       font-weight: 700; }
   .widget-box.step .step-list {
     position: absolute;
@@ -1153,7 +1153,7 @@ li.checkbox.type01 {
       font-weight: 400; }
       .widget-box.tube .tube-list li.checked .date {
         color: #98a6d6;
-        font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK"; }
+        font-family: "Apple SD Gothic Neo", "Arial", sans-serif; }
     .widget-box.tube .tube-list li.tube-select {
       padding: 0.6875rem 0.75rem;
       font-size: 0.875rem;

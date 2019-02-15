@@ -5,6 +5,15 @@
 %>
 
 <% include ../../components/start.component.html %>
+<%
+function recognizeLastChar(keyword){
+    if(!keyword||keyword.length<=0){
+      return '';
+    }
+    var endCharIdx = (keyword.charCodeAt(keyword.length-1) - parseInt('0xac00',16)) % 28;
+    return endCharIdx>0 ? '으' : '';
+}
+%>
 <!-- body -->
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -31,7 +40,7 @@
     <% if(suggestQuery.length>0){ %>
     <div class="cont-box noborder gaps-style03">
         <p class="re-searchword">
-            혹시 이것을 찾으시나요?<a href="/common/search?keyword=<%= suggestQuery %>&step=<%= Number(step)+1%>" data-keyword="<%= suggestQuery %>" class="re-searchword-text search-element"><%= suggestQuery %>로 검색하기</a>
+            혹시 이것을 찾으시나요?<a href="/common/search?keyword=<%= suggestQuery %>&step=<%= Number(step)+1%>" data-keyword="<%= suggestQuery %>" class="re-searchword-text search-element"><%= suggestQuery %><%= recognizeLastChar(suggestQuery) %>로 검색하기</a>
         </p>
     </div>
     <% } %>

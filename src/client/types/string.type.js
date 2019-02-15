@@ -71,7 +71,8 @@ Tw.SMS_VALIDATION = {
   ATH2007: '인증번호가 일치하지 않습니다.',
   ATH2008: '인증번호 입력 시간이 초과했습니다.',
   ATH2011: '인증번호의 입력 오류 횟수가 초과되었습니다.',
-  ATH2014: '잘못된 인증요청입니다.'
+  ATH2014: '잘못된 인증요청입니다.',
+  ATH2000: '로그인한 계정의 회선 번호와 사용중인 휴대폰 번호가 일치하지 않습니다. 두 번호가 일치할 경우에만 휴대폰 인증이 가능합니다.'
 };
 
 Tw.POPUP_TITLE = {
@@ -436,7 +437,7 @@ Tw.ALERT_MSG_COMMON = {
     MSG: '인증할 수 있는 회선번호가 없습니다.<br />고객센터(114)로 문의주세요.'
   },
   CERT_MDN_BLOCK: {
-    TITLE: 'SMS인증을 사용할 수 없슨니다.',
+    TITLE: 'SMS인증을 사용할 수 없습니다.',
     MSG: 'T world에 로그인하신 계정의 이동전화번호와 일치하는 휴대폰에서만 인증 받으실 수 있습니다.<br />고객센터(114)로 문의주세요.'
   },
   STEP_CANCEL: { TITLE: ' ', MSG: '입력하신 정보는 모두 취소됩니다. <br> 창을 닫으시겠습니까?' },
@@ -883,7 +884,8 @@ Tw.PRODUCT_JOIN_SETTING_AREA_CASE = {
   MP_02_02_03_11: '공유회선',
   MV_02_02_03: '비밀번호 설정 완료',
   MV_02_02_04: '보호자',
-  MV_02_02_06: '가족그룹'
+  MV_02_02_06: '가족그룹',
+  INFO_SETTING_SUCCESS: '정보 입력 완료'
 };
 
 Tw.PRODUCT_MOBILEPLAN_COMPARE_PLANS = {
@@ -944,7 +946,11 @@ Tw.URL_PATH = {
   BILL_LETTER_DOWNLOAD_APP_STORE: 'https://itunes.apple.com/kr/app/%EC%9A%94%EA%B8%88%EC%95%88%EB%82%B4%EC%84%9C-bill-letter/id435060754?mt=8',
   BILL_LETTER_DOWNLOAD_PLAY_STORE: 'https://play.google.com/store/apps/details?id=com.skt.smartbill&hl=ko',
   CAR_LIFE_DETAIL: 'http://m.tmembership.tworld.co.kr/mobileWeb/html/coupon/CtgViewMain.jsp?BRAND_CD=2012000026&PAGE_UCD=30',
-  SMART_CHOICE: 'http://www.smartchoice.or.kr'
+  SMART_CHOICE: 'http://www.smartchoice.or.kr',
+  MEMBERSHIP_MOVIE_APP: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/culture/movieList.do?bannerpoc=2018_168',
+  MEMBERSHIP_MOVIE_WEB: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/culture/movieList.do?bannerpoc=2018_169',
+  MEMBERSHIP_CULTURE_APP: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/culture/cultureList.do?bannerpoc=2018_166',
+  MEMBERSHIP_CULTURE_WEB: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/culture/cultureList.do?bannerpoc=2018_164'
 };
 
 Tw.PRODUCT_INFINITY_CATEGORY = {
@@ -1431,6 +1437,11 @@ Tw.MEMBERSHIP_GRADE = {
   G: 'Gold',
   S: 'Silver',
   O: '일반'
+};
+
+Tw.MEMBERSHIP_URL = {
+  TDAY: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/monthly/MonthlyTmbrs.do?bannerpoc=2018_144',
+  CHOCOLATE: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/benefit/shop/prod/shoppingMain.do?bannerpoc=2018_165'
 };
 
 Tw.BENEFIT = {

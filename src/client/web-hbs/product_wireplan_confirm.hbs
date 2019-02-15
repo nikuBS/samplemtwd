@@ -45,11 +45,10 @@
                             <p class="type1">{{{toProdDesc}}}</p>
                         </div>
                     {{/if}}
-                    {{#if isJoin}}
+                    {{#if isPcJoin}}
                         <div class="product-bx">
                             <strong class="product">PC대수</strong> <em class="num">1</em>
                         </div>
-                        <p class="ctext">* 최초 가입신청 후 추가신청을 하여 PC 대수를 추가할 수 있습니다.</p>
                     {{/if}}
                 </div>
             </div>
@@ -57,15 +56,26 @@
 
             <!-- .cont-box -->
             <div class="cont-box set-info">
-                {{#if settingSummaryText}}
-                <div class="link-long">
-                    <button class="fe-btn_close_confirm">설정 정보
-                        <span class="tx-sub">
-                            <span class="normal">{{settingSummaryText}}</span>
-                            <span class="ico">설정 정보 팝업 열기</span>
-                        </span>
-                    </button>
-                </div>
+                {{#if settingSummaryTexts}}
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps-hoz">
+                        <ul class="link-list {{{setInfo}}}">
+                            <li>
+                                <dl>
+                                    <dt>설정 정보</dt>
+                                    <dd>
+                                        {{#settingSummaryTexts}}
+                                            <span class="{{spanClass}}">{{text}}</span>
+                                        {{/settingSummaryTexts}}
+                                        <button class="fe-btn_close_confirm {{{setInfo}}}">정보설정 팝업 열기</button>
+                                    </dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
                 {{/if}}
                 {{#if isTerm}}
                 <ul class="form-data-list">

@@ -53,6 +53,19 @@ Tw.ProductSubmain.prototype = {
         }),
         'T'
       );
+
+      if (Tw.UrlHelper.getLastPath() === 'wireplan') {
+        var cBanners = _.filter(resp.result.banners, function(banner) {
+          return banner.bnnrLocCd === 'C';
+        });
+
+        if (cBanners.length > 0) {
+          console.log(cBanners);
+          new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.ADMIN, cBanners, 'C');
+        } else {
+          this.$container.find('#fe-comb-banner').remove();
+        }
+      }
     }
   },
 

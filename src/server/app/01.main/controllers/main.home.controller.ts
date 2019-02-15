@@ -286,6 +286,7 @@ class MainHome extends TwViewController {
         invEndDt: DateHelper.getShortDate(billData[billName].invDt),
         invStartDt: DateHelper.getShortFirstDate(billData[billName].invDt),
         invMonth: DateHelper.getCurrentMonth(billData[billName].invDt),
+        billMonth: +DateHelper.getCurrentMonth(billData[billName].invDt) + 1,
       };
     }
     return null;

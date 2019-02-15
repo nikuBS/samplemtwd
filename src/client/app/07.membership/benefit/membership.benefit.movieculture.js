@@ -19,8 +19,10 @@ Tw.MembershipBenefitMovieCulture.prototype = {
    * @private
    */
   _bindEvent: function () {
-    $('#btnMovTicket').click($.proxy(this._onClickFindTiketing, this, $.proxy(this._goMovieTicketing, this)));
-    $('#btnFindTicket').click($.proxy(this._onClickFindTiketing, this, $.proxy(this._goCulture, this)));
+    this.$container.find('#btnMovTicket').click(
+      $.proxy(this._onClickFindTiketing, this, $.proxy(this._goMovieTicketing, this)));
+    this.$container.find('#btnFindTicket').click(
+      $.proxy(this._onClickFindTiketing, this, $.proxy(this._goCulture, this)));
   },
 
   _onClickFindTiketing: function (callback) {
@@ -35,9 +37,9 @@ Tw.MembershipBenefitMovieCulture.prototype = {
    */
   _goMovieTicketing: function () {
     if ( Tw.BrowserHelper.isApp() ) {
-      Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.MEMBERSHIP_MOVIE_APP);
+      Tw.CommonHelper.openUrlExternal(Tw.URL_PATH.MEMBERSHIP_MOVIE_APP);
     } else {
-      Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.MEMBERSHIP_MOVIE_WEB);
+      Tw.CommonHelper.openUrlExternal(Tw.URL_PATH.MEMBERSHIP_MOVIE_WEB);
     }
     this._popupService.close();
   },
@@ -49,7 +51,7 @@ Tw.MembershipBenefitMovieCulture.prototype = {
 
   _goCulture: function () {
     if ( Tw.BrowserHelper.isApp() ) {
-      Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.MEMBERSHIP_CULTURE_APP);
+      Tw.CommonHelper.openUrlExternal(Tw.URL_PATH.MEMBERSHIP_CULTURE_APP);
     } else {
       Tw.CommonHelper.openUrlExternal(Tw.URL_PATH.MEMBERSHIP_CULTURE_WEB);
     }

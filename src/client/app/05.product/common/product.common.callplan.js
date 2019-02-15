@@ -75,9 +75,8 @@ Tw.ProductCommonCallplan.prototype = {
     this.$contents.on('click', '.save_pay', $.proxy(this._openCustomPopup, this, 'BS_04_01_01_01'));
     this.$contents.on('click', '.fe-clubt', $.proxy(this._openCustomPopup, this, 'MP_02_02_04_01'));
     this.$contents.on('click', '.fe-campuszone', $.proxy(this._openCustomPopup, this, 'MP_02_02_04_02'));
-    this.$contents.on('click', '.fe-concierge', $.proxy(this._openCustomPopup, this, 'MP_02_02_04_03'));
 
-    this.$contents.on('click', $.proxy(this._detectClubT, this));
+    this.$contents.on('click', 'a', $.proxy(this._detectClubT, this));
   },
 
   _showReadyOn: function() {
@@ -107,11 +106,23 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _onBannerLink: function(e) {
-    if (Tw.FormatHelper.isEmpty($(e.currentTarget).attr('href').match(/http:\/\/|https:\/\//gi))) {
+    var href = Tw.FormatHelper.isEmpty($(e.currentTarget).attr('href')) ? '' : $(e.currentTarget).attr('href');
+    if (href.indexOf('custom:') !== -1) {
+      return this._onBannerCustomPop(e, href);
+    }
+
+    if (Tw.FormatHelper.isEmpty(href.match(/http:\/\/|https:\/\//gi))) {
       return true;
     }
 
     this._confirmExternalUrl(e);
+  },
+
+  _onBannerCustomPop: function(e, href) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this._openCustomPopup(href.replace('custom:', ''));
   },
 
   _confirmExternalUrl: function(e) {
@@ -150,6 +161,8 @@ Tw.ProductCommonCallplan.prototype = {
       return;
     }
 
+    e.preventDefault();
+    e.stopPropagation();
     this._openCustomPopup('MP_02_02_04_01');
   },
 

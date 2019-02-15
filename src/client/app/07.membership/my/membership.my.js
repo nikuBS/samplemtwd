@@ -32,7 +32,6 @@ Tw.MembershipMy.prototype = {
     this.$inquire = this.$container.find('#fe-inquire');
     this.$list = this.$container.find('#fe-list');
     this.$more = this.$container.find('.btn-more');
-    this.$moreCnt = this.$container.find('#fe-more-cnt');
     this.$empty = this.$container.find('#fe-empty');
     this.$goUpdate = this.$container.find('#fe-go-update');
   },
@@ -65,6 +64,12 @@ Tw.MembershipMy.prototype = {
 
     startDate = this.$inputSdate.val() === undefined ? currentYear +'01' : startDate;
     endDate = this.$inputEdate.val() === undefined ? this._dateHelper.getCurrentDateTime('YYYYMM') : endDate;
+
+    //시작조회일이 더 클 경우 Alert 호출
+    if(Number(startDate) - Number(endDate) > 0){
+      return this._popupService.openAlert(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A50.MSG,
+        Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A50.TITLE);
+    }
 
     var params = {
       startDate : startDate,
@@ -137,7 +142,6 @@ Tw.MembershipMy.prototype = {
     var nextList = _.first(this._totoalList);
 
     if ( nextList ) {
-      this.$moreCnt.text( '(0)'.replace('0', nextList.length) );
       this.$more.show();
     } else {
       this.$more.hide();

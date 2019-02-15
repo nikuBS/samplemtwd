@@ -9,11 +9,13 @@ Tw.MyTFareBillSms = function (rootEl) {
   this.$accountSelector = this.$container.find('.fe-account-selector');
   this.$accountList = this.$container.find('.fe-account-list');
 
-  this._paymentCommon = new Tw.MyTFareBillCommon(this.$container);
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
+
+  this._paymentCommon = new Tw.MyTFareBillCommon(this.$container);
   this._historyService = new Tw.HistoryService(rootEl);
+  this._backAlert = new Tw.BackAlert(this.$container);
 
   this._init();
 };
@@ -70,13 +72,14 @@ Tw.MyTFareBillSms.prototype = {
     return accountList;
   },
   _onClose: function () {
-    if (this._isChanged()) {
-      this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-        $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
-        Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-    } else {
-      this._historyService.goBack();
-    }
+    this._backAlert.onClose();
+    // if (this._isChanged()) {
+    //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
+    //     $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
+    //     Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+    // } else {
+    //   this._historyService.goBack();
+    // }
   },
   _isChanged: function () {
     var $amount = this.$container.find('.fe-amount');

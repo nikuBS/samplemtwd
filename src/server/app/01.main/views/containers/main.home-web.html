@@ -26,9 +26,9 @@
             <div class="main-banner-box section-swiper-box">
                 <!-- .widget -->
                 <div class="widget">
-                    <div class="widget-box slider1 slider1-auto">
+                    <div class="widget-box">
                         <div class="slider-box">
-                            <ul class="slider" data-location="5">
+                            <ul class="slider slider1-auto" data-location="5">
                             </ul>
                         </div>
                     </div>
@@ -99,12 +99,8 @@
                             <!-- // .donut-chart.small -->
                             <% if(homeData.usageData.data.isTplanUse) { %>
                             <div class="legend">
-                                <span class="category0"><span><em class="data"><%= homeData.usageData.data.showMyRemained %></em> 나의 데이터</span></span>
-                                <% if(homeData.usageData.data.isTplanUse) { %>
-                                <span class="category1"><span><em class="data"><%= homeData.usageData.data.showShareRemained %></em> T가족모아데이터</span></span>
-                                <% } else { %>
+                                <span class="category0"><span>나의 데이터</span></span>
                                 <span class="category1"><span>T가족모아데이터</span></span>
-                                <% } %>
                             </div>
                             <% } %>
                             <div class="ti-num">
@@ -112,7 +108,7 @@
                                 <em class="num"><%= homeData.usageData.data.showAddRemained %></em>
                             </div>
                         </a>
-                        <button id="fe-bt-data-link" class="data-add">데이터</button>
+                        <button id="fe-bt-data-link" class="data-add">충전/선물</button>
                     </div>
 
                     <div class="call-message">
@@ -251,9 +247,9 @@
 
                     <button id="fe-bt-link-billguide" class="price">
                         <% if (homeData.billData.type2) { %>
-                        <strong class="ti"><%= homeData.billData.invMonth %>월 청구요금</strong>
+                        <strong class="ti"><%= homeData.billData.billMonth %>월 청구요금</strong>
                         <% } else if (homeData.billData.type1) { %>
-                        <strong class="ti"><%= homeData.billData.invMonth %>월 청구요금 <i class="icon-whole"><span class="blind">전체</span></i></strong>
+                        <strong class="ti"><%= homeData.billData.billMonth %>월 청구요금 <i class="icon-whole"><span class="blind">전체</span></i></strong>
                         <% } else { %>
                         <strong class="ti"><%= homeData.billData.invMonth %>월 이용요금</strong>
                         <% } %>

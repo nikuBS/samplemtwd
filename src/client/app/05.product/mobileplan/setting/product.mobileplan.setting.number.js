@@ -101,7 +101,7 @@ Tw.ProductMobileplanSettingNumber.prototype = {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_10_0074, {
       opClCd: '2',
-      asgnNum: number,
+      asgnNum: number.replace(/-/gi, ''),
       auditDtm: auditDtm
     }, {}, this._prodId).done($.proxy(this._addDelNumRes, this));
   },
@@ -138,7 +138,7 @@ Tw.ProductMobileplanSettingNumber.prototype = {
   },
 
   _blurInputNumber: function() {
-    if (this.$inputNumber.length > 8) {
+    if (this.$inputNumber.val().length > 8) {
       this.$inputNumber.val(Tw.FormatHelper.conTelFormatWithDash(this.$inputNumber.val()));
     } else {
       this.$inputNumber.val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$inputNumber.val()));

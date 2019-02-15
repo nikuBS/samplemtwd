@@ -332,10 +332,10 @@ export const MYT_JOIN_CONTRACT_TERMINAL = {
     TIT_NM: '테블릿 약정할인 12'
   },
   FEE_TYPE_C: {
-    TIT_NM: '테블릿 약정'
+    TIT_NM: '테블릿약정할인'
   },
   FEE_TYPE_D: {
-    TIT_NM: 'wibro 약정'
+    TIT_NM: '와이브로약정할인'
   },
   FEE_TYPE_E: {
     TIT_NM: '선택약정할인제도'
@@ -675,8 +675,8 @@ export const CUSTOMER_DAMAGEINFO_CONTENTS_TITLE = {
   page011: '가려진 정보보기(마스킹)',
   page012: '꼭 지켜야 할 정보보호 실천수칙 10가지',
   page013: '명의도용 피해예방법',
-  page014: '결합상품 피해예방법',
-  page015: '소액결제 피해예방법',
+  page014: '소액상품 피해예방법',
+  page015: '결합결제 피해예방법',
   page016: '해외 로밍 피해예방법',
   page017: 'SNS 개인정보 보호 꿀팁! (2단계 인증설정)',
   page018: 'SNS 개인정보 보호 꿀팁! (사진 속 개인정보 확인)'
@@ -836,7 +836,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     sub_list: [
       {
         sub_title: '요금 기준',
-        sub_text: '일반/스마트폰 요금 기준이 궁금하다면',
+        sub_text: '일반·스마트폰 요금 기준이 궁금하다면',
         type: 'B1',
         code: 'C00031'
       },
@@ -883,14 +883,14 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    unitedTitle: 'T월드 다이렉트/T멤버십/T로밍에 대한 안내',
+    unitedTitle: 'T월드 다이렉트·T멤버십·T로밍에 대한 안내',
     united: '_3T',
     title: 'T월드 다이렉트 이용안내',
     text: 'T월드 다이렉트에서 구매를 원한다면',
     upperCat: true,
     sub_list: [
       {
-        sub_title: '할인/혜택',
+        sub_title: '할인·혜택',
         sub_text: '',
         dep_list: [
           {
@@ -965,9 +965,9 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    unitedTitle: 'T월드 다이렉트/T멤버십/T로밍에 대한 안내',
+    unitedTitle: 'T월드 다이렉트·T멤버십·T로밍에 대한 안내',
     united: '_3T',
-    title: 'T멤버십/T로밍에 대한 안내',
+    title: 'T멤버십·T로밍에 대한 안내',
     text: '',
     upperCat: false,
     sub_list: [
@@ -1001,7 +1001,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    title: '서비스 정책/제도에 대한 안내',
+    title: '서비스 정책·제도에 대한 안내',
     sub_list: [
       {
         sub_title: '데이터 리필하기',
@@ -1026,7 +1026,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
         ]
       },
       {
-        sub_title: 'T 기본약정 요금정책',
+        sub_title: 'T기본약정 요금정책',
         sub_text: 'T기본약정 요금정책과 제도가 궁금하다면',
         type: 'B1',
         code: 'C00039'
@@ -1034,7 +1034,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    title: '목소리 인증/전화상담에 대한 안내',
+    title: '목소리 인증·ARS상담에 대한 안내',
     sub_list: [
       {
         sub_title: 'ARS상담 이용안내',

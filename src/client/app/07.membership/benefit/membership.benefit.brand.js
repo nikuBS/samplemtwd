@@ -74,6 +74,7 @@ Tw.MembershipBenefitBrand.prototype = {
     this.$container.on('click', '.fe-grade', $.proxy(this._onClickBtnSelectGrade, this));
     this.$container.on('click', '.fe-btn-search', $.proxy(this._onClickBtnSearch, this));
     this.$container.on('keyup', '.fe-input-co-ptnr-nm', $.proxy(this._onKeyupInputCoPtnrNm, this));
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._onInitComplete, this));
     // this.$container.on('click', '.fe-orders button', $.proxy(this._onClickBtnOrder, this));
   },
 
@@ -92,6 +93,10 @@ Tw.MembershipBenefitBrand.prototype = {
     this._gradeList = this._gradeCd[0].list;
 
     this._setGrade();
+  },
+
+  _onInitComplete: function() {
+    this._setScrollLeft(this._reqOptions.cateCd);
   },
 
   _toggleCategoryLayer: function (open) {

@@ -34,11 +34,7 @@
     </li>
     <% } %>
 <% } else { %>
-    <% if (data.hsDate === null) { %>
-    <li>
-        <span class="title">2017.03.01 이후 신규 가입자에  한하여 확인가능 합니다.</span>
-    </li>
-    <% } else { %>
+    <% if (data.hsDate) { %>
     <li>
         <span class="title">개통 일자</span>
         <span class="tx-cont"><%= data.hsDate %></span>

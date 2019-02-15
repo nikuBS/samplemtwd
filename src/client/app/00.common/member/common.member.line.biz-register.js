@@ -47,7 +47,7 @@ Tw.CommonMemberLineBizRegister.prototype = {
     this.$inputCopNum.on('input', $.proxy(this._onInputCopNum, this));
   },
   _onClickNickname: function () {
-    this._nicknamePopup.openNickname(null, null, $.proxy(this._onCloseNickname, this));
+    this._nicknamePopup.openNickname('', null, $.proxy(this._onCloseNickname, this));
   },
   _onClickRegister: function () {
     this._sendBizSession();

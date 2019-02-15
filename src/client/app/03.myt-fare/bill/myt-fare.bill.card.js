@@ -9,6 +9,7 @@ Tw.MyTFareBillCard = function (rootEl) {
 
   this._paymentCommon = new Tw.MyTFareBillCommon(this.$container);
   this._bankList = new Tw.MyTFareBillBankList(this.$container);
+  this._backAlert = new Tw.BackAlert(this.$container);
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -238,35 +239,36 @@ Tw.MyTFareBillCard.prototype = {
     }
   },
   _onClose: function () {
-    if (!this.$isChanged) {
-      var $amount = this.$container.find('.fe-amount');
-      if (Tw.FormatHelper.addComma($amount.attr('data-value')) !== $amount.text()) {
-        this.$isChanged = true;
-      }
-    }
-
-    if (!this.$isChanged) {
-      if (this.$cardNumber.val() !== '' || this.$cardY.val() !== '' ||
-      this.$cardM.val() !== '' || this.$cardPw.val() !== '') {
-        this.$isChanged = true;
-      }
-    }
-
-    if (!this.$isChanged) {
-      if (this.$refundBank.attr('disabled') !== 'disabled') {
-        if (!Tw.FormatHelper.isEmpty(this.$refundBank.attr('id')) || this.$refundNumber.val() !== '') {
-          this.$isChanged = true;
-        }
-      }
-    }
-
-    if (this.$isChanged) {
-      this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-        $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
-        Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-    } else {
-      this._historyService.goBack();
-    }
+    this._backAlert.onClose();
+    // if (!this.$isChanged) {
+    //   var $amount = this.$container.find('.fe-amount');
+    //   if (Tw.FormatHelper.addComma($amount.attr('data-value')) !== $amount.text()) {
+    //     this.$isChanged = true;
+    //   }
+    // }
+    //
+    // if (!this.$isChanged) {
+    //   if (this.$cardNumber.val() !== '' || this.$cardY.val() !== '' ||
+    //   this.$cardM.val() !== '' || this.$cardPw.val() !== '') {
+    //     this.$isChanged = true;
+    //   }
+    // }
+    //
+    // if (!this.$isChanged) {
+    //   if (this.$refundBank.attr('disabled') !== 'disabled') {
+    //     if (!Tw.FormatHelper.isEmpty(this.$refundBank.attr('id')) || this.$refundNumber.val() !== '') {
+    //       this.$isChanged = true;
+    //     }
+    //   }
+    // }
+    //
+    // if (this.$isChanged) {
+    //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
+    //     $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
+    //     Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+    // } else {
+    //   this._historyService.goBack();
+    // }
   },
   _openCheckPay: function ($layer) {
     this._setData($layer);

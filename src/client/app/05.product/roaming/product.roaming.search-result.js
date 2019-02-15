@@ -301,6 +301,7 @@ Tw.ProductRoamingSearchResult.prototype = {
             noticeParam.ableShown = false;
         }
 
+        _result.dMoChargeMin = Number(_result.dMoChargeMin);
         noticeParam.attentionShown = (_result.svcAttention) ? true : false;
 
         Tw.Logger.info('result noticeParam = ', JSON.stringify(noticeParam));

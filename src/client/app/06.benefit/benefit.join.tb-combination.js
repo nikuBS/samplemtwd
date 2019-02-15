@@ -247,7 +247,9 @@ Tw.BenefitJoinTbCombination.prototype = {
   },
 
   _openBindConfirmPop: function($popupContainer) {
-    new Tw.ProductCommonConfirm(false, $popupContainer, {}, $.proxy(this._procApply, this));
+    new Tw.ProductCommonConfirm(false, $popupContainer, {
+      isWidgetInit: true
+    }, $.proxy(this._procApply, this));
   },
 
   _procApply: function() {

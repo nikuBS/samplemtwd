@@ -4,3 +4,71 @@
 * Date: 2018.10.05
 * info: 정해지지 않은 요금 약정할인
 %>
+<!-- 테블릿,와이브로 약정 -->
+<div class="cont-box">
+
+    <div class="contract-dc-wrap">
+        <div class="dc-tit-wrap">
+            <h4 class="dc-tit"><%=commDataInfo.feeInfo[i].titNm %></h4>
+            <!--<div class="bt-alone">
+                <button class="bt-bg-blue1 fe-prod-btn" title="<%=commDataInfo.feeInfo[i].titNm %> 혜택 보기" data-id="<%= commDataInfo.feeInfo[i].prodId %>">
+                    혜택 보기
+                </button>
+            </div>-->
+        </div>
+
+        <div class="contract-dc-list type3"><!-- 상단 기 할인 받은 금액에만 라인이 있는 경우 type3 클래스 추가 -->
+            <ul>
+                <li>
+                    <dl class="ex-txt"><!-- 하단에 설명 텍스트가 있는 경우 ex-txt 클래스 추가 -->
+                        <dt>
+                            <strong class="tit">할인 받은 금액</strong>
+                        </dt>
+                        <dd>
+                            <span class="val-type1"><span class="str"><%=commDataInfo.feeInfo[i].agrmtDcAmt%></span>원</span>
+                        </dd>
+                        <dd>
+                            <p>해지 하시는 경우 약정위약금은 <em><%=commDataInfo.feeInfo[i].aGrmtPenAmt%></em>원 입니다.</p>
+                        </dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>
+                            <strong class="tit">사용 일수</strong>
+                        </dt>
+                        <dd>
+                            <span class="val-type2"><span class="tx-bold"><%=commDataInfo.feeInfo[i].agrmtDayCnt%></span>일</span>
+                        </dd>
+                    </dl>
+                </li>
+                <li>
+                    <dl>
+                        <dt>
+                            <strong class="tit">약정 시작/종료일</strong>
+                            <button id="MS_09_tip_07" aria-haspopup="true" class="tip-view" title="약정 시작/종료일 정보보기">TIP</button>
+                        </dt>
+                        <dd>
+                            <span class="val-type2"><%=commDataInfo.feeInfo[i].startDt%> ~ <%=commDataInfo.feeInfo[i].endDt%></span>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+            <div class="amountdata-num">
+                <div class="date-info">
+                    <p class="data-title">잔여<span class="blind">(잔여일수)</span></p>
+                    <p class="data-state"><span class="str"><%=commDataInfo.feeInfo[i].remDt%></span>일</p>
+                </div>
+                <div class="date-info">
+                    <p class="data-title">전체<span class="blind">(전체일수)</span></p>
+                    <p class="data-state"><span class="str"><%=commDataInfo.feeInfo[i].totDt%></span>일</p>
+                </div>
+            </div>
+            <div class="bar-chart-hoz">
+                <span class="data-bar red" style="width: <%=commDataInfo.feeInfo[i].perDt%>%"></span>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--// 테블릿,와이브로 약정 -->

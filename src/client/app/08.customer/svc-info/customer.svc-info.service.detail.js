@@ -204,6 +204,17 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
         $('.idpt-tab-content').removeClass('show').eq(i).addClass('show');
       });
     });
+    $('.idpt-tab-wrap', $container).each(function(){
+      var $tabContents = $('.tab-contents', $(this));
+      $('.tab-menu li', $(this)).each(function(index){
+        var $tabBtn = $(this);
+        $tabBtn.click(function(){
+          $tabBtn.addClass('on').siblings().removeClass('on');
+          $tabContents.removeClass('show');
+          $tabContents.eq(index).addClass('show');
+        });
+      })
+    });
   
     // popup
     /*$('.idpt-popup-open', $container).click(function(){
@@ -252,11 +263,14 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     //accordian
     $('.idpt-accordian > li > a', $container).on('click', function(e){
       e.preventDefault();
-      $('.idpt-accordian > li > a', $container).removeClass('open');
-      $('.idpt-accordian-cont', $container).slideUp();
+      // $('.idpt-accordian > li > a', $container).removeClass('open');
+      // $('.idpt-accordian-cont', $container).slideUp();
       if ($(this).parent().find('.idpt-accordian-cont').is(':hidden')){
         $(this).addClass('open');
         $(this).parent().find('.idpt-accordian-cont').slideDown();
+      } else {
+        $(this).removeClass('open');
+        $(this).parent().find('.idpt-accordian-cont').slideUp();
       }
     });
   

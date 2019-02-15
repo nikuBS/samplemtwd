@@ -70,7 +70,7 @@ Tw.CommonSearch.prototype = {
           if(data[i][key].charAt(0)==='|'){
             data[i][key] = data[i][key].replace('|','');
           }
-          data[i][key] = data[i][key].replace(/\ /g,' > ').replace(/\|/g,' / ').replace(/MyT/g,' my T ');
+          data[i][key] = data[i][key].replace(/\|/g,' > ').replace(/MyT/g,' my T ');
         }
         if(key==='MENU_URL'){
           data[i][key] = data[i][key].replace('https://app.tworld.co.kr','');
@@ -100,7 +100,7 @@ Tw.CommonSearch.prototype = {
     return data;
   },
   _showBarcode : function (barcodNum,$barcodElement) {
-    $barcodElement.JsBarcode(Tw.FormatHelper.addCardDash(barcodNum),{background : '#edeef0',height : $barcodElement.parent().height()});
+    $barcodElement.JsBarcode(Tw.FormatHelper.addCardDash(barcodNum),{background : '#edeef0',height : 60});
   },
   _showShortcutList : function (data,dataKey,cdn) {
     var $template = $('#'+dataKey+'_template');
@@ -182,6 +182,7 @@ Tw.CommonSearch.prototype = {
     Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(recentlyKeywordData));
   },
   _searchRelatedKeyword : function (targetEvt) {
+    targetEvt.preventDefault();
     var keyword = $(targetEvt.currentTarget).data('param');
     var goUrl = '/common/search?keyword='+keyword+'&step='+(Number(this._step)+1);
     this._addRecentlyKeyword(keyword);

@@ -10,6 +10,7 @@ Tw.CustomerEmail = function (rootEl) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._history = new Tw.HistoryService();
+  this._backAlert = new Tw.BackAlert(rootEl);
 
   this._cachedElement();
   this._bindEvent();
@@ -177,22 +178,23 @@ Tw.CustomerEmail.prototype = {
   },
 
   _stepBack: function () {
-    var confirmed = false;
-    this._popupService.openConfirmButton(
-      Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
-      Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-      $.proxy(function () {
-        confirmed = true;
-        this._popupService.close();
-      }, this),
-      $.proxy(function () {
-        if ( confirmed ) {
-          this._history.goBack();
-        }
-      }, this),
-      Tw.BUTTON_LABEL.NO,
-      Tw.BUTTON_LABEL.YES
-    );
+    this._backAlert.onClose();
+    // var confirmed = false;
+    // this._popupService.openConfirmButton(
+    //   Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+    //   Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+    //   $.proxy(function () {
+    //     confirmed = true;
+    //     this._popupService.close();
+    //   }, this),
+    //   $.proxy(function () {
+    //     if ( confirmed ) {
+    //       this._history.goBack();
+    //     }
+    //   }, this),
+    //   Tw.BUTTON_LABEL.NO,
+    //   Tw.BUTTON_LABEL.YES
+    // );
   },
 
   _openTermLayer: function (sCode) {

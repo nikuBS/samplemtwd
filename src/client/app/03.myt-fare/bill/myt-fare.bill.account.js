@@ -9,6 +9,7 @@ Tw.MyTFareBillAccount = function (rootEl) {
 
   this._paymentCommon = new Tw.MyTFareBillCommon(this.$container);
   this._bankList = new Tw.MyTFareBillBankList(this.$container);
+  this._backAlert = new Tw.BackAlert(this.$container);
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -151,45 +152,37 @@ Tw.MyTFareBillAccount.prototype = {
     }
   },
   _onClose: function () {
-    if (!this.$isChanged) {
-      var $amount = this.$container.find('.fe-amount');
-      if (Tw.FormatHelper.addComma($amount.attr('data-value')) !== $amount.text()) {
-        this.$isChanged = true;
-      }
-    }
-
-    if (!this.$isChanged) {
-      if (this.$accountNumber.attr('disabled') !== 'disabled') {
-        if (this.$accountNumber.val() !== '') {
-          this.$isChanged = true;
-        }
-      }
-    }
-
-    if (!this.$isChanged) {
-      if (this.$refundNumber.attr('disabled') !== 'disabled') {
-        if (this.$refundNumber.val() !== '') {
-          this.$isChanged = true;
-        }
-      }
-    }
-
-    if (this.$isChanged) {
-      this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-        $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
-        Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-    } else {
-      this._historyService.goBack();
-    }
-  },
-  _closePop: function () {
-    this._isClose = true;
-    this._popupService.closeAll();
-  },
-  _afterClose: function () {
-    if (this._isClose) {
-      this._historyService.goBack();
-    }
+    this._backAlert.onClose();
+    // if (!this.$isChanged) {
+    //   var $amount = this.$container.find('.fe-amount');
+    //   if (Tw.FormatHelper.addComma($amount.attr('data-value')) !== $amount.text()) {
+    //     this.$isChanged = true;
+    //   }
+    // }
+    //
+    // if (!this.$isChanged) {
+    //   if (this.$accountNumber.attr('disabled') !== 'disabled') {
+    //     if (this.$accountNumber.val() !== '') {
+    //       this.$isChanged = true;
+    //     }
+    //   }
+    // }
+    //
+    // if (!this.$isChanged) {
+    //   if (this.$refundNumber.attr('disabled') !== 'disabled') {
+    //     if (this.$refundNumber.val() !== '') {
+    //       this.$isChanged = true;
+    //     }
+    //   }
+    // }
+    //
+    // if (this.$isChanged) {
+    //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
+    //     $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
+    //     Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+    // } else {
+    //   this._historyService.goBack();
+    // }
   },
   _checkPay: function () {
     if (this.$isValid && this.$isSelectValid) {
@@ -258,7 +251,16 @@ Tw.MyTFareBillAccount.prototype = {
   },
   _checkClose: function () {
     this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.TITLE,
-      $.proxy(this._closePop, this), $.proxy(this._afterClose, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.BUTTON);
+      $.proxy(this._closePop, this), $.proxy(this._closeCallback, this), null, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A101.BUTTON);
+  },
+  _closePop: function () {
+    this._isClose = true;
+    this._popupService.closeAll();
+  },
+  _closeCallback: function () {
+    if (this._isClose) {
+      this._historyService.goBack();
+    }
   },
   _pay: function () {
     var reqData = this._makeRequestData();

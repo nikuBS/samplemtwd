@@ -259,9 +259,7 @@ Tw.CertificationSk.prototype = {
       this.$inputMdn.val(this._svcInfo.svcNum);
       this.$inputMdn.parents('#fe-inputbox-mdn').addClass('readonly');
       this.$btCert.parent().addClass('none');
-      // if ( !this._securityAuth ) {
-      //   this.$btReCert.parent().removeClass('none');
-      // }
+      this.$btReCert.parent().removeClass('none');
     }
   },
   _checkCertType: function () {
@@ -340,17 +338,19 @@ Tw.CertificationSk.prototype = {
       this.$errorCertCnt.removeClass('none');
     } else if ( resp.code === this.SMS_ERROR.ATH2000 ) {
       if ( this._methodCnt === 1 ) {
-        this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_MDN_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_MDN_BLOCK.TITLE);
+        // this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_MDN_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_MDN_BLOCK.TITLE);
+        this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2000, null, null, $.proxy(this._onCloseMdnCertFail, this));
       } else {
-        this._popupService.openAlert(resp.msg, null, null, $.proxy(this._onCloseMdnCertFail, this));
+        this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2000);
       }
+
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
     Tw.CommonHelper.resetPopupHeight();
   },
   _onCloseMdnCertFail: function () {
-    this._callbackParam = { code: Tw.API_CODE.CERT_SMS_BLOCK };
+    // this._callbackParam = { code: Tw.API_CODE.CERT_SMS_BLOCK };
     this._popupService.close();
   },
   _expireAddTime: function () {

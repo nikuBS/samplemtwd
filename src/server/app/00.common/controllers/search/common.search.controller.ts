@@ -7,7 +7,6 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 import FormatHelper from '../../../../utils/format.helper';
-import {PRODUCT_TYPE_NM} from '../../../../types/string.type';
 import {Observable} from 'rxjs/Observable';
 import {API_CMD, API_CODE} from '../../../../types/api-command.type';
 import StringHelper from '../../../../utils/string.helper';
@@ -25,6 +24,44 @@ class CommonSearch extends TwViewController {
     const step = req.header('referer') ? req.query.step ? req.query.step : 1 : 1;
     const from = req.header('referer') ? req.query.from : null;
     let requestObj, researchCd, researchQuery;
+    function showSearchResult(searchResult, relatedKeyword , thisObj) {
+      if ( searchResult.result.totalcount === 0 ) {
+        Observable.combineLatest(
+          thisObj.apiService.request(API_CMD.BFF_08_0070, {}, {}),
+          thisObj.apiService.request(API_CMD.POPULAR_KEYWORD, {range : 'D'}, {})
+        ).subscribe((resultObj) => {
+          if (resultObj[0].code !== API_CODE.CODE_00 || resultObj[1].code !== 0) {
+            return thisObj.error.render(res, {
+              svcInfo: svcInfo,
+              code: resultObj[0].code !== API_CODE.CODE_00 ? resultObj[0].code : resultObj[1].code,
+              msg: resultObj[0].code !== API_CODE.CODE_00 ? resultObj[0].msg : resultObj[1].msg
+            });
+          }
+          res.render('search/common.search.not-found.html', {
+            svcInfo : svcInfo,
+            popularKeyword : resultObj[1].result,
+            keyword : searchResult.result.query,
+            relatedKeyword : relatedKeyword,
+            inKeyword : searchResult.result.researchQuery,
+            surveyList : resultObj[0].result,
+            suggestQuery : searchResult.result.suggestQuery,
+            step : step,
+            from : from
+          });
+        });
+
+      } else {
+        res.render('search/common.search.html', {
+          svcInfo : svcInfo,
+          searchInfo : searchResult.result,
+          keyword : searchResult.result.query,
+          relatedKeyword : relatedKeyword,
+          inKeyword : searchResult.result.researchQuery,
+          step : step,
+          from : from
+        });
+      }
+    }
     if (FormatHelper.isEmpty(req.query.in_keyword)) {
       requestObj = { query , collection };
     } else {
@@ -47,7 +84,7 @@ class CommonSearch extends TwViewController {
       }
       if (searchResult.result.search[0].immediate.data.length <= 0 || svcInfo === null) {
         searchResult.result.search[0].immediate.data = [];
-
+        showSearchResult(searchResult, relatedKeyword , this);
       } else {
         searchResult.result.search[0].immediate.data[0].mainData = StringHelper.phoneStringToDash(svcInfo.svcNum);
         switch (Number(searchResult.result.search[0].immediate.data[0].DOCID)) {
@@ -62,6 +99,7 @@ class CommonSearch extends TwViewController {
                 const remainData = new MyTDataHotData().parseCellPhoneUsageData(resultData.result, svcInfo);
                 searchResult.result.search[0].immediate.data[0].subData = remainData.gnrlData[0].showRemained;
               }
+              showSearchResult(searchResult, relatedKeyword , this);
             });
             break;
           case 3:
@@ -74,6 +112,7 @@ class CommonSearch extends TwViewController {
               } else {
                 searchResult.result.search[0].immediate.data[0].subData = FormatHelper.addComma(resultData.result.useAmtTot);
               }
+              showSearchResult(searchResult, relatedKeyword , this);
             });
             break;
           case 4:
@@ -86,6 +125,7 @@ class CommonSearch extends TwViewController {
               } else {
                 searchResult.result.search[0].immediate.data[0].subData = FormatHelper.addComma(resultData.result.totalSumPrice);
               }
+              showSearchResult(searchResult, relatedKeyword , this);
             });
             break;
           case 5:
@@ -100,48 +140,14 @@ class CommonSearch extends TwViewController {
                 searchResult.result.search[0].immediate.data[0].subData = FormatHelper.addComma(resultData.result.mbrUsedAmt);
                 searchResult.result.search[0].immediate.data[0].barcode = resultData.result.mbrCardNum;
               }
+              showSearchResult(searchResult, relatedKeyword , this);
             });
             break;
           default:
             searchResult.result.search[0].immediate.data[0].subData = svcInfo.prodNm;
+            showSearchResult(searchResult, relatedKeyword , this);
             break;
         }
-      }
-      if ( searchResult.result.totalcount === 0 ) {
-        Observable.combineLatest(
-          this.apiService.request(API_CMD.BFF_08_0070, {}, {}),
-          this.apiService.request(API_CMD.POPULAR_KEYWORD, {range : 'D'}, {})
-        ).
-        subscribe(([surveyList, popularKeyword]) => {
-          if (surveyList.code !== API_CODE.CODE_00 || popularKeyword.code !== 0) {
-            return this.error.render(res, {
-              svcInfo: svcInfo,
-              code: surveyList.code !== API_CODE.CODE_00 ? surveyList.code : popularKeyword.code,
-              msg: surveyList.code !== API_CODE.CODE_00 ? surveyList.msg : popularKeyword.msg
-            });
-          }
-          res.render('search/common.search.not-found.html', {
-            svcInfo : svcInfo,
-            popularKeyword : popularKeyword.result,
-            keyword : searchResult.result.query,
-            relatedKeyword : relatedKeyword,
-            inKeyword : searchResult.result.researchQuery,
-            surveyList : surveyList.result,
-            suggestQuery : searchResult.result.suggestQuery,
-            step : step,
-            from : from
-          });
-        });
-      } else {
-        res.render('search/common.search.html', {
-          svcInfo : svcInfo,
-          searchInfo : searchResult.result,
-          keyword : searchResult.result.query,
-          relatedKeyword : relatedKeyword,
-          inKeyword : searchResult.result.researchQuery,
-          step : step,
-          from : from
-        });
       }
     });
 
