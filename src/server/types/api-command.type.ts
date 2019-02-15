@@ -850,6 +850,10 @@ export const API_CMD = {
     path: '/core-product/:version/mobiles/combinations/tfamilymoa/join',
     method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true
   },
+  BFF_10_0174: {
+    path: '/core-product/:version/roaming/auto-dial',
+    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
+  },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/:version/submain/products', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },

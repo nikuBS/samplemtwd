@@ -40,6 +40,10 @@ Tw.ProductCommonCallplan.prototype = {
     if (this._historyService.isBack()) {
       this._historyService.reload();
     }
+
+    if (this.$contents.find('.fe-btn_roaming_auto').length > 0) {
+      this._bindRoamingAuto();
+    }
   },
 
   _cachedElement: function() {
@@ -75,6 +79,7 @@ Tw.ProductCommonCallplan.prototype = {
     this.$contents.on('click', '.save_pay', $.proxy(this._openCustomPopup, this, 'BS_04_01_01_01'));
     this.$contents.on('click', '.fe-clubt', $.proxy(this._openCustomPopup, this, 'MP_02_02_04_01'));
     this.$contents.on('click', '.fe-campuszone', $.proxy(this._openCustomPopup, this, 'MP_02_02_04_02'));
+    this.$contents.on('click', '.fe-btn_roaming_auto', $.proxy(this._procRoamingAuto, this));
 
     this.$contents.on('click', 'a', $.proxy(this._detectClubT, this));
   },
@@ -487,6 +492,47 @@ Tw.ProductCommonCallplan.prototype = {
     }
 
     this._historyService.goLoad(this._url + '?prod_id=' + this._prodId);
+  },
+
+  _bindRoamingAuto: function() {
+    var $container = this.$contents.find('.fe-btn_roaming_auto').parents('.idpt-form-wrap');
+    $container.on('keyup input', '#phoneNum02', $.proxy(this._detectRoamingAutoInput, this));
+  },
+
+  _detectRoamingAutoInput: function(e) {
+    var $input = $(e.currentTarget);
+    $input.val($input.val().replace(/[^0-9]/g, ''));
+  },
+
+  _procRoamingAuto: function(e) {
+    var $form = $(e.currentTarget).parents('.idpt-form-wrap'),
+      $phoneNum01 = $form.find('#phoneNum01'),
+      $phoneNum02 = $form.find('#phoneNum02');
+
+    if (Tw.FormatHelper.isEmpty($phoneNum01.val()) || Tw.FormatHelper.isEmpty($phoneNum02.val())) {
+      return;
+    }
+
+    this._apiService.request(Tw.API_CMD.BFF_10_0174, {
+      roamCp1: $phoneNum01.val(),
+      roamCp2: $phoneNum02.val()
+    }).done($.proxy(this._procRoamingAutoRes, this));
+  },
+
+  _procRoamingAutoRes: function(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    if (resp.result.mySvcNumYN !== 'Y') {
+      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A81);
+    }
+
+    if (resp.result.autoDialPhone === '1' || resp.result.autoDialPhone === '3') {
+      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A79);
+    }
+
+    this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A80);
   }
 
 };
