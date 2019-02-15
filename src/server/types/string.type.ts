@@ -836,7 +836,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     sub_list: [
       {
         sub_title: '요금 기준',
-        sub_text: '일반/스마트폰 요금 기준이 궁금하다면',
+        sub_text: '일반·스마트폰 요금 기준이 궁금하다면',
         type: 'B1',
         code: 'C00031'
       },
@@ -883,14 +883,14 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    unitedTitle: 'T월드 다이렉트/T멤버십/T로밍에 대한 안내',
+    unitedTitle: 'T월드 다이렉트·T멤버십·T로밍에 대한 안내',
     united: '_3T',
     title: 'T월드 다이렉트 이용안내',
     text: 'T월드 다이렉트에서 구매를 원한다면',
     upperCat: true,
     sub_list: [
       {
-        sub_title: '할인/혜택',
+        sub_title: '할인·혜택',
         sub_text: '',
         dep_list: [
           {
@@ -965,9 +965,9 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    unitedTitle: 'T월드 다이렉트/T멤버십/T로밍에 대한 안내',
+    unitedTitle: 'T월드 다이렉트·T멤버십·T로밍에 대한 안내',
     united: '_3T',
-    title: 'T멤버십/T로밍에 대한 안내',
+    title: 'T멤버십·T로밍에 대한 안내',
     text: '',
     upperCat: false,
     sub_list: [
@@ -1001,7 +1001,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    title: '서비스 정책/제도에 대한 안내',
+    title: '서비스 정책·제도에 대한 안내',
     sub_list: [
       {
         sub_title: '데이터 리필하기',
@@ -1026,7 +1026,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
         ]
       },
       {
-        sub_title: 'T 기본약정 요금정책',
+        sub_title: 'T기본약정 요금정책',
         sub_text: 'T기본약정 요금정책과 제도가 궁금하다면',
         type: 'B1',
         code: 'C00039'
@@ -1034,7 +1034,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    title: '목소리 인증/전화상담에 대한 안내',
+    title: '목소리 인증·ARS상담에 대한 안내',
     sub_list: [
       {
         sub_title: 'ARS상담 이용안내',

@@ -204,6 +204,17 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
         $('.idpt-tab-content').removeClass('show').eq(i).addClass('show');
       });
     });
+    $('.idpt-tab-wrap', $container).each(function(){
+      var $tabContents = $('.tab-contents', $(this));
+      $('.tab-menu li', $(this)).each(function(index){
+        var $tabBtn = $(this);
+        $tabBtn.click(function(){
+          $tabBtn.addClass('on').siblings().removeClass('on');
+          $tabContents.removeClass('show');
+          $tabContents.eq(index).addClass('show');
+        });
+      })
+    });
   
     // popup
     /*$('.idpt-popup-open', $container).click(function(){
