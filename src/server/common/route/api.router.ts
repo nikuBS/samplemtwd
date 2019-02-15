@@ -39,12 +39,20 @@ class ApiRouter {
     EASY_LOGIN_AOS: { path: '/user/login/android', method: API_METHOD.POST, target: this.easyLoginAos },                        // BFF_03_0017
     EASY_LOGIN_IOS: { path: '/user/login/ios', method: API_METHOD.POST, target: this.easyLoginIos },                            // BFF_03_0018
     CHANGE_SESSION: { path: '/common/selected-sessions', method: API_METHOD.PUT, target: this.changeSession },                  // BFF_01_0003
-    LOGIN_SVC_PASSWORD: { path: '/user/service-password-sessions', method: API_METHOD.POST, target: this.loginSvcPassword },    // BFF_03_0009
+    LOGIN_SVC_PASSWORD: {
+      path: '/user/service-password-sessions',
+      method: API_METHOD.POST,
+      target: this.loginSvcPassword
+    },    // BFF_03_0009
     LOGIN_USER_LOCK: { path: '/user/locks', method: API_METHOD.DELETE, target: this.setUserLocks },                             // BFF_03_0010
-    CHANGE_SVC_PASSWORD: { path: '/:version/my-t/service-passwords', method: API_METHOD.PUT, target: this.changeSvcPassword },  // BFF_03_0016
+    CHANGE_SVC_PASSWORD: {
+      path: '/:version/my-t/service-passwords',
+      method: API_METHOD.PUT,
+      target: this.changeSvcPassword
+    },  // BFF_03_0016
     CHANGE_LINE: { path: '/user/services', method: API_METHOD.PUT, target: this.changeLine },                                   // BFF_03_0005
     CHANGE_NICKNAME: { path: '/user/nick-names', method: API_METHOD.PUT, target: this.changeNickname },                         // BFF_03_0006
-    UPDATE_SVC: { path: '/common/selected-sessions', method: API_METHOD.GET, target: this.updateSvcInfo},                       // BFF_01_0005
+    UPDATE_SVC: { path: '/common/selected-sessions', method: API_METHOD.GET, target: this.updateSvcInfo },                       // BFF_01_0005
 
     UPLOAD_FILE: { path: '/uploads', method: API_METHOD.POST, target: this.uploadFile },
     GET_SVC_INFO: { path: '/svcInfo', method: API_METHOD.GET, target: this.getSvcInfo },
@@ -68,7 +76,11 @@ class ApiRouter {
     GET_HOME_HELP: { path: '/home/help', method: API_METHOD.GET, target: this.getHomeHelp },
     GET_TOOLTIP: { path: '/tooltip', method: API_METHOD.GET, target: this.getTooltip },
     GET_QUICK_MENU: { path: '/home/quick-menu', method: API_METHOD.GET, target: this.getQuickMenu },
-    GET_QUICK_MENU_DEFAULT: { path: '/home/quick-menu/default', method: API_METHOD.GET, target: this.getDefaultQuickMenu },
+    GET_QUICK_MENU_DEFAULT: {
+      path: '/home/quick-menu/default',
+      method: API_METHOD.GET,
+      target: this.getDefaultQuickMenu
+    },
     GET_PRODUCT_COMPARISON: { path: '/product/comparison', method: API_METHOD.GET, target: this.getProductComparison },
     GET_PRODUCT_INFO: { path: '/product/info', method: API_METHOD.GET, target: this.getProductInfo }
   };
@@ -76,20 +88,20 @@ class ApiRouter {
   private setApi() {
     Object.keys(this.NODE_CMD).map((key) => {
       const cmd = this.NODE_CMD[key];
-        switch ( cmd.method ) {
-          case API_METHOD.GET:
-            this.setGetApi(cmd);
-            break;
-          case API_METHOD.POST:
-            this.setPostApi(cmd);
-            break;
-          case API_METHOD.PUT:
-            this.setPutApi(cmd);
-            break;
-          case API_METHOD.DELETE:
-            this.setDeleteApi(cmd);
-            break;
-        }
+      switch ( cmd.method ) {
+        case API_METHOD.GET:
+          this.setGetApi(cmd);
+          break;
+        case API_METHOD.POST:
+          this.setPostApi(cmd);
+          break;
+        case API_METHOD.PUT:
+          this.setPutApi(cmd);
+          break;
+        case API_METHOD.DELETE:
+          this.setDeleteApi(cmd);
+          break;
+      }
     });
   }
 
@@ -421,28 +433,19 @@ class ApiRouter {
     } else {
 
       const svcMgmtNum = svcInfo.svcMgmtNum;
+      const svcGr = svcInfo.svcGr;
       this.redisService.getData(REDIS_KEY.QUICK_MENU + svcMgmtNum)
         .switchMap((resp) => {
           if ( resp.code === API_CODE.REDIS_SUCCESS ) {
             resp.result.enableEdit = 'Y';
-            throw resp;
+            return Observable.of(resp);
           } else {
-            return apiService.request(API_CMD.BFF_04_0005, {});
-          }
-        })
-        .switchMap((resp) => {
-          if ( resp.code === API_CODE.CODE_00 ) {
-            const defaultCode = resp.result;
-            return this.redisService.getData(REDIS_KEY.QUICK_DEFAULT + defaultCode);
-          } else {
-            throw resp;
+            return this.redisService.getData(REDIS_KEY.QUICK_DEFAULT + svcGr);
           }
         })
         .subscribe((resp) => {
           resp.result.enableEdit = 'Y';
           return res.json(resp);
-        }, (err) => {
-          return res.json(err);
         });
     }
   }
@@ -458,20 +461,10 @@ class ApiRouter {
         msg: NODE_API_ERROR[API_CODE.NODE_1001]
       });
     }
-
-    apiService.request(API_CMD.BFF_04_0005, {})
-      .switchMap((resp) => {
-        if ( resp.code === API_CODE.CODE_00 ) {
-          const defaultCode = resp.result;
-          return this.redisService.getData(REDIS_KEY.QUICK_DEFAULT + defaultCode);
-        } else {
-          throw resp;
-        }
-      })
+    const svcGr = svcInfo.svcGr;
+    this.redisService.getData(REDIS_KEY.QUICK_DEFAULT + svcGr)
       .subscribe((resp) => {
         return res.json(resp);
-      }, (err) => {
-        return res.json(err);
       });
   }
 
