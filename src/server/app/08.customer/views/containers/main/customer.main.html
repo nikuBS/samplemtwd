@@ -82,7 +82,8 @@
                 <div class="main-faq-menu">
                     <ul>
                         <li>
-                            <a href="/customer/faq/category?id=1100000&title=요금제" class="menu-bt ico-type01"><span class="ico"></span>요금제</a>
+                            <a href="/customer/faq/category?id=1100000&title=요금제" class="menu-bt ico-type01"><span
+                                class="ico"></span>요금제</a>
                         </li>
                         <li>
                             <a href="/customer/faq/category?id=1200000&title=가입/변경/해지" class="menu-bt ico-type02"><span class="ico"></span>가입/변경/해지</a>
@@ -139,10 +140,12 @@
                 <div class="widget">
                     <div class="widget-box slider1">
                         <div class="slider-box">
-                            <ul class="slider">
+                            <ul class="slider" style="overflow:hidden;max-height:200px">
                                 <% researchList.map( item => { %>
                                 <li>
-                                    <a href="/svc-info/researches/result?id=<%-item.bnnrRsrcId%>"><img src="<%=CDN%><%-item.custCntrSubmHtmlImglPathNm%>" alt="<%-item.bnnrRsrchTitleNm%>" /></a>
+                                    <a href="/customer/svc-info/researches/result?id=<%-item.bnnrRsrchId%>"><img
+                                        src="http://cdnm.tworld.co.kr<%-item.custCntrSubmImgflPathNm%>"
+                                        alt="<%-item.bnnrRsrchTitleNm%>"/></a>
                                 </li>
                                 <% }) %>
                             </ul>
