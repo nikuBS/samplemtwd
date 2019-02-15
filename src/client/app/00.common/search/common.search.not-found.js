@@ -31,6 +31,7 @@ Tw.CommonSearchNotFound.prototype = {
     if(from==='menu'){
       this._addRecentlyKeyword(keywrod);
     }
+    new Tw.XtractorService(this.$container);
   },
   _showClaimPopup : function(btnEvt){
     //var $selectedClaim = $(btnEvt.currentTarget);
@@ -131,7 +132,7 @@ Tw.CommonSearchNotFound.prototype = {
   _doSearch : function () {
     var searchKeyword = this.$container.find('#search_keyword').val();
     if(Tw.FormatHelper.isEmpty(searchKeyword)){
-      this._popupService.openAlert(Tw.ALERT_MSG_SEARCH.KEYWORD_ERR);
+      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR);
       return;
     }
     this._addRecentlyKeyword(searchKeyword);

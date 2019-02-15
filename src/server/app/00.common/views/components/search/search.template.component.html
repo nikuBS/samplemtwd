@@ -249,7 +249,7 @@
 
 <script type="text/x-handlebars-template" id="question_template">
     <li>
-        <a class="b-cont question-element list-data" data-id="{{listData.DOCID}}" data-category="question" data-tit="{{removeTag listData.INQ_CTT}}">
+        <a href="/customer/faq/view?category={{listData.CATEGORY}}&faq_Id={{listData.DOCID}}" class="b-cont question-element list-data" data-id="{{listData.DOCID}}" data-category="question" data-tit="{{removeTag listData.INQ_CTT}}">
             <strong class="ti">{{{listData.INQ_CTT}}}</strong>
             <span class="tx">{{{listData.CATEGORY}}}</span>
         </a>

@@ -40,6 +40,7 @@ Tw.CommonSearchMore.prototype = {
     this.$container.on('click','.filterselect-btn',$.proxy(this._showSelectFilter,this));
     this.$container.on('click','.list-data',$.proxy(this._goLink,this));
     this.$container.find('#contents').removeClass('none');
+    new Tw.XtractorService(this.$container);
   },
   _arrangeData : function (data,category) {
     if(!data){
@@ -129,15 +130,17 @@ Tw.CommonSearchMore.prototype = {
     Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(recentlyKeywordData));
   },
   _searchRelatedKeyword : function (targetEvt) {
-    var keyword = $(targetEvt.currentTarget).data('param');
-    var goUrl = '/common/search?keyword='+keyword+'&step='+(Number(this._step)+1);
+    targetEvt.preventDefault();
+    var $targetElement = $(targetEvt.currentTarget);
+    var keyword = $targetElement.data('param');
+    //var goUrl = '/common/search?keyword='+keyword+'&step='+(Number(this._step)+1);
     this._addRecentlyKeyword(keyword);
-    this._historyService.goLoad(goUrl);
+    this._historyService.goLoad($targetElement.attr('href'));
   },
   _doSearch : function () {
     var keyword = this.$inputElement.val();
     if(Tw.FormatHelper.isEmpty(keyword)){
-      this._popupService.openAlert(Tw.ALERT_MSG_SEARCH.KEYWORD_ERR);
+      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR);
       return;
     }
     var inResult = this.$container.find('#resultsearch').is(':checked');
@@ -164,7 +167,7 @@ Tw.CommonSearchMore.prototype = {
       'select_filter');
   },
   _bindPopupElementEvt : function(popupElement){
-    $(popupElement).on('click','button',$.proxy(this._filterSelectEvent,this));
+    $(popupElement).on('click','.chk-link-list button',$.proxy(this._filterSelectEvent,this));
   },
   _filterSelectEvent : function (btnEvt) {
     var changeFilterUrl = this._accessQuery.in_keyword?'/common/search/in-result?category='+this._category+'&keyword='+this._accessQuery.keyword:'/common/search/more?category='+this._category+'&keyword='+this._accessQuery.keyword;

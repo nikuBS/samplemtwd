@@ -35,7 +35,7 @@
             <ul class="popularsearchword-list search-keyword" id="auto_complete_list">
                 <script type="text/x-handlebars-template" id="auto_complete_template">
                 <li>
-                    <a href="/common/search?step=<%= step+1 %>&keyword={{listData.linkStr}}" data-param="{{listData.linkStr}}" class="category-type search-element">
+                    <a href="/common/search?step=<%= step+1 %>&keyword={{listData.linkStr}}" data-xt_eid="CMMA_A11_B4-2{{xtractorIndex}}" data-xt_csid="NO" data-xt_action="BC" data-param="{{listData.linkStr}}" class="category-type search-element xtractor">
                         <p class="text">{{{listData.showStr}}}</p>
                     </a>
                 </li>
@@ -58,7 +58,9 @@
         <ul class="list" id="recently_keyword_list">
             <script type="text/x-handlebars-template" id="recently_keyword_template">
             <li>
-                <a href="/common/search?step=<%= step+1 %>&keyword={{data.keyword}}" class="searchword-text search-element link">{{data.keyword}}</a>
+                <a href="/common/search?step=<%= step+1 %>&keyword={{data.keyword}}"  data-xt_eid="CMMA_A11_B4-1{{xtractorIndex}}" data-xt_csid="NO" data-xt_action="BC" class="searchword-text search-element link xtractor">
+                    {{data.keyword}}
+                </a>
                 <div class="date">
                     <span class="str">{{data.searchTime}}</span>
                     <button class="del remove-recently-list" data-index="{{index}}">삭제</button>
@@ -83,7 +85,7 @@
                 <% if(popularKeyword.result&&popularKeyword.result.Query){ %>
                     <% for(var i=0;i<popularKeyword.result.Query.length;i++){ %>
                     <li>
-                        <a href="/common/search?step=<%= step+1 %>&keyword=<%= popularKeyword.result.Query[i].content %>" data-param="<%= popularKeyword.result.Query[i].content %>" class="category-type search-element">
+                        <a href="/common/search?step=<%= step+1 %>&keyword=<%= popularKeyword.result.Query[i].content %>" data-xt_eid="CMMA_A11_B4-<%= i+1 %>" data-xt_csid="NO"  data-xt_action="BC" data-param="<%= popularKeyword.result.Query[i].content %>" class="category-type search-element xtractor">
                             <strong class="number"><%= i+1 %></strong>
                             <span class="text"><%= popularKeyword.result.Query[i].content %></span>
                         </a>
@@ -97,28 +99,30 @@
     <hr class="cont-sp type1" aria-hidden="true">
     <% if(smartKeyword.smartSrchUrl){ %>
     <div class="banner-area">
-        <a data-param="<%= smartKeyword.smartSrchUrl %>" class="link search-element"><img src="<%= CDN %><%= smartKeyword.bnnrIos320Url %>" alt="<%= smartKeyword.smartSrchDesc%>"></a>
+        <a data-xt_eid="CMMA_A11_B4-36" data-xt_csid="NO" data-xt_action="BC" href="<%= smartKeyword.smartSrchUrl %>" data-param="<%= smartKeyword.smartSrchUrl %>" class="link search-element xtractor">
+            <img src="<%= CDN %><%= smartKeyword.bnnrIos320Url %>" alt="<%= smartKeyword.smartSrchDesc%>">
+        </a>
     </div>
     <% } %>
     <div class="cont-box nogaps">
         <ul class="plantype-list <%= smartKeyword.bnnrBotBtnNm3?'cell3': smartKeyword.bnnrBotBtnNm2?'':'cell1'%>">
             <%if(smartKeyword.bnnrBotBtnNm1){ %>
             <li class="category-type">
-                <a href="<%= smartKeyword.bnnrBotBtnUrl1 %>" type="button" class="link search-element">
+                <a data-xt_eid="CMMA_A11_B4-37" data-xt_csid="NO" data-xt_action="BC" href="<%= smartKeyword.bnnrBotBtnUrl1 %>" type="button" class="link search-element xtractor">
                     <%= smartKeyword.bnnrBotBtnNm1 %>
                 </a>
             </li>
             <% } %>
             <% if(smartKeyword.bnnrBotBtnNm2){ %>
             <li class="category-type">
-                <a href="<%= smartKeyword.bnnrBotBtnUrl2 %>" type="button" class="link search-element">
+                <a data-xt_eid="CMMA_A11_B4-38" data-xt_csid="NO" data-xt_action="BC" href="<%= smartKeyword.bnnrBotBtnUrl2 %>" type="button" class="link search-element xtractor">
                     <%= smartKeyword.bnnrBotBtnNm2 %>
                 </a>
             </li>
             <% } %>
             <% if(smartKeyword.bnnrBotBtnNm3){ %>
             <li class="category-type">
-                <a  href="<%= smartKeyword.bnnrBotBtnUrl3 %>" type="button" class="link search-element">
+                <a data-xt_eid="CMMA_A11_B4-39" data-xt_csid="NO" data-xt_action="BC" href="<%= smartKeyword.bnnrBotBtnUrl3 %>" type="button" class="link search-element xtractor">
                     <%= smartKeyword.bnnrBotBtnNm3 %>
                 </a>
             </li>
