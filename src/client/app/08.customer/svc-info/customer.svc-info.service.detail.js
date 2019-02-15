@@ -155,8 +155,8 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
 
   // 팝업열려는 해쉬값과 같으면 네이밍 변경(팝업이 안닫히는 이슈 해결)
   _setPopupHash: function(hashName) {
-    var curHash = this._historyService.getHash();
-    return (curHash.indexOf(hashName) === 1  ? 're' : '') + hashName ;
+    var curHash = this._historyService.getHash(); // #hashName_P 로 받아옴
+    return (curHash.indexOf(hashName) === 1  ? 're' : '') + hashName; 
   },
 
   _USIMActionSheetEvent: function ($container) {

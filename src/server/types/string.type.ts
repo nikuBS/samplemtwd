@@ -1050,19 +1050,17 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
             type: 'A2',
             code: 'C00021'
           },
-          /* {
+          {
             dep_title: '음성인식 ARS',
             type: 'A2',
             code: 'C00022'
-          }*/
+          }
         ]
       },
       {
         sub_title: '목소리 인증 이용안내',
         sub_text: '더 안전한 ARS이용을 원하신다면',
-        code: 'C00024',
-        type: 'B1'
-        /*dep_list: [
+        dep_list: [
           {
             dep_title: '목소리 인증',
             type: 'A2',
@@ -1071,9 +1069,9 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           {
             dep_title: '목소리 등록 문자받기',
             type: 'A2',
-            code: 'C00026'
+            code: 'url:/customer/svc-info/voice'
           }
-        ]*/
+        ]
       }
     ]
   }

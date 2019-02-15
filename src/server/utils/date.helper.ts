@@ -81,6 +81,17 @@ class DateHelper {
   }
 
   /**
+   *  @param data {Date} or {string} : YYYYMMDDhhmmss
+   *  @return {string} : 20186
+   */
+  static getYearMonthFromDate(date: Date | string): string {
+    const next = this.convDateFormat(date);
+    next.setDate(1);
+    next.setMonth(next.getMonth() + 1);
+    return moment(next).format('YYYY.M.');
+  }
+
+  /**
    * @param date {Date} or {string} : YYYYMMDD
    * @returns {string} : 2018.06.01 12:00:00
    */
