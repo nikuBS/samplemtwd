@@ -51,9 +51,9 @@
                         <li>
                             <dl>
                                 <dt>선결제 가능금액<button id="MF_07_tip_01" class="tip-view" aria-haspopup="true" title="선결제 가능금액">TIP</button></dt>
-                                <dd>
+                                <dd class="fe-prepay">
                                     <span class="val"><span class="str fe-prepay-amount"><%= result.tmthChrgPsblAmount %></span>원</span>
-                                    <button class="fe-prepay">선결제 화면 이동</button>
+                                    <button type="button">선결제 화면 이동</button>
                                 </dd>
                             </dl>
                         </li>
@@ -61,14 +61,14 @@
                             <dl>
                                 <dt>자동 선결제<button id="MF_07_tip_02" class="tip-view" aria-haspopup="true" title="자동 선결제">TIP</button></dt>
                                 <% if (result.autoChrgStCd === 'U') { %>
-                                <dd>
+                                <dd class="fe-auto-prepay-change">
                                     <span class="val">변경 및 해지</span>
-                                    <button class="fe-auto-prepay-change">자동선결제 변경 및 해지</button>
+                                    <button type="button">자동선결제 변경 및 해지</button>
                                 </dd>
                                 <% } else { %>
-                                <dd>
+                                <dd class="fe-auto-prepay">
                                     <span class="val">신청</span>
-                                    <button class="fe-auto-prepay">자동선결제 신청</button>
+                                    <button type="button">자동선결제 신청</button>
                                 </dd>
                                 <% } %>
                             </dl>
