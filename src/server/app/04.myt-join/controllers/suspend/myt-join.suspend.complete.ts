@@ -66,7 +66,7 @@ class MyTJoinSuspendComplete extends TwViewController {
         break;
     }
     return data;
-  };
+  }
 }
 
 export default MyTJoinSuspendComplete;
