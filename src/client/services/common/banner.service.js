@@ -35,7 +35,7 @@ Tw.BannerService.prototype = {
               this.$banners.slick({
                 autoplay: true,
                 autoplaySpeed: 4000,
-                dots: true,
+                dots: this._banners.length !== 1,
                 infinite: true,
                 speed: 500,
                 lazyLoad: 'progressive',
@@ -48,7 +48,7 @@ Tw.BannerService.prototype = {
               });
             } else {
               this.$banners.slick({
-                dots: true,
+                dots: this._banners.length !== 1,
                 infinite: false,
                 speed: 300,
                 lazyLoad: 'progressive',
