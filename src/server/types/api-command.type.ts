@@ -540,6 +540,7 @@ export const API_CMD = {
     bypass: true
   },
   BFF_08_0066: { path: '/core-modification/:version/center/banner', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0067: { path: '/core-modification/v1/region-rent-center', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
 
   // SEARCH
   BFF_08_0068: { path: '/core-modification/:version/search/keyword', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
