@@ -59,7 +59,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     this.$container.on('click', '.fe-agree-view', $.proxy(this._openAgreePop, this));
     this.$container.on('click', '.fe-tab1-pay', $.proxy(this._onePay, this));
     this.$container.on('click', '.fe-tab2-pay', $.proxy(this._autoPay, this));
-    this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
+    // this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
   },
   _openGetPoint: function () {
     new Tw.MyTFareBillGetPoint(this.$container, $.proxy(this._setPointInfo, this));

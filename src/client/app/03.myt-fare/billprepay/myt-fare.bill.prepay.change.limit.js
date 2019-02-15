@@ -116,7 +116,7 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     $layer.on('click', '.fe-day', $.proxy(this._selectAmount, this));
     $layer.on('click', '.fe-once', $.proxy(this._selectAmount, this));
     $layer.on('click', '.fe-change', $.proxy(this._openChangeConfirm, this));
-    $layer.on('click', '.fe-close', $.proxy(this._onClose, this));
+    // $layer.on('click', '.fe-close', $.proxy(this._onClose, this));
   },
   _getLittleAmount: function (amount) {
     var defaultValue = 50;
