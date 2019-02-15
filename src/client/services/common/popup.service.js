@@ -295,7 +295,7 @@ Tw.PopupService.prototype = {
     var option = {
       title: title,
       title_type: 'sub-c',
-      cont_align: 'tc',
+      cont_align: 'tl',
       contents: contents,
       bt_b: [{
         style_class: 'pos-left tw-popup-closeBtn',
@@ -314,7 +314,7 @@ Tw.PopupService.prototype = {
     var option = {
       title: title,
       title_type: 'sub-c',
-      cont_align: 'tc',
+      cont_align: 'tl',
       contents: contents,
       bt_b: [{
         style_class: 'pos-left tw-popup-closeBtn',
