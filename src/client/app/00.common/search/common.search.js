@@ -100,7 +100,7 @@ Tw.CommonSearch.prototype = {
     return data;
   },
   _showBarcode : function (barcodNum,$barcodElement) {
-    $barcodElement.JsBarcode(Tw.FormatHelper.addCardDash(barcodNum),{background : '#edeef0',height : $barcodElement.parent().height()});
+    $barcodElement.JsBarcode(Tw.FormatHelper.addCardDash(barcodNum),{background : '#edeef0',height : 60});
   },
   _showShortcutList : function (data,dataKey,cdn) {
     var $template = $('#'+dataKey+'_template');
