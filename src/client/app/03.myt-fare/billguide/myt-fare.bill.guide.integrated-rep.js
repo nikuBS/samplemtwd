@@ -30,7 +30,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     this._bindEvent();
     this._hbRegisterHelper();
 
-    if ( this.resData.childLineInfo ) {
+    if ( this.resData.childLineInfo && this.resData.childLineInfo.length > 0 ) {
       this._getChildBillInfo();
     } else {
       $('#divChildListHaeder').hide();
@@ -199,6 +199,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       date: this.paramDate,
       line: this.paramLine
     };
+    Tw.CommonHelper.startLoading(this.$container, 'grey', true);
     // // Tw.Logger.info('[param]', param);
     // // Tw.Logger.info('[param]2', '/myt-fare/billguide/guide?'+ $.param(param));
     this._history.goLoad('/myt-fare/billguide/guide?' + $.param(param));
@@ -237,6 +238,9 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       selDateValObj.trigger('click');
       // // Tw.Logger.info('[dateBtnArea]', $('[data-target="dateBtnArea"]'));
       // // Tw.Logger.info('[obj]', obj);
+    }else {
+      var firstDateValObj = this.$dateBtnArea.find('input').eq(0);
+      firstDateValObj.trigger('click');
     }
 
     if ( selLineVal ) {

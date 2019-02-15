@@ -11,8 +11,8 @@
         <div class="dc-tit-wrap">
             <h4 class="dc-tit"><%=commDataInfo.feeInfo[i].titNm %></h4>
             <div class="bt-alone">
-                <button class="bt-bg-blue1 fe-prod-btn" title="선택 약정 할인 제도 혜택 보기" data-id="<%= commDataInfo.feeInfo[i].prodId %>">
-                    혜택 보기
+                <button class="bt-bg-blue1 fe-prod-btn" title="선택 약정 할인 제도 상품 정보보기" data-id="<%= commDataInfo.feeInfo[i].prodId %>">
+                    상품 정보보기
                 </button>
             </div>
         </div>
@@ -59,7 +59,7 @@
         <ul class="bt-slice">
             <li class="bt-white2">
                 <button data-target="detailList"
-                        data-value='<%-JSON.stringify(commDataInfo.feeInfo[i].svcAgrmtDcObj) %>' >상세 할인내역 보기</button>
+                        data-value='<%-JSON.stringify(commDataInfo.feeInfo[i].svcAgrmtDcObj) %>' >월별 상세 할인내역 보기</button>
             </li>
         </ul>
     </div>
