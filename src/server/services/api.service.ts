@@ -186,11 +186,10 @@ class ApiService {
   }
 
   private requestLogin(command, params, type): Observable<any> {
-    let result = null;
+    let result = {};
     return this.request(command, params)
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          result = resp.result;
           this.loginService.setCookie(COOKIE_KEY.LAYER_CHECK, resp.result.noticeTypCd);
           return this.loginService.setSvcInfo({
             mbrNm: resp.result.mbrNm,
@@ -205,7 +204,7 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           const category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
-          const currentSvcInfo = {
+          result = {
             userId: resp.result.userId,
             xtUserId: resp.result.xtUserId,
             totalSvcCnt: resp.result.totalSvcCnt,
@@ -216,7 +215,7 @@ class ApiService {
             if ( !FormatHelper.isEmpty(curLine) ) {
               curLine.map((target) => {
                 if ( target.expsSeq === '1' ) {
-                  Object.assign(currentSvcInfo, target);
+                  Object.assign(result, target);
                 }
               });
               // delete resp.result.userId;
@@ -228,7 +227,7 @@ class ApiService {
 
           this.loginService.clearXtCookie();
           return Observable.combineLatest(
-            this.loginService.setSvcInfo(currentSvcInfo),
+            this.loginService.setSvcInfo(result),
             this.loginService.setAllSvcInfo(resp.result));
         } else {
           return Observable.combineLatest(
@@ -250,11 +249,10 @@ class ApiService {
   }
 
   private requestSLogin(command, params, type): Observable<any> {
-    let result = null;
+    let result = {};
     return this.request(command, params)
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          result = resp.result;
           this.loginService.setCookie(COOKIE_KEY.LAYER_CHECK, resp.result.noticeTypCd);
           return this.loginService.setSvcInfo({
             mbrNm: resp.result.mbrNm,
@@ -268,15 +266,14 @@ class ApiService {
       .switchMap((resp) => this.request(API_CMD.BFF_01_0005, {}))
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          const category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
-          const currentSvcInfo = {
+          result = {
             totalSvcCnt: 1,
             expsSvcCnt: 1
           };
-          Object.assign(currentSvcInfo, resp.result);
+          Object.assign(result, resp.result);
 
           this.loginService.clearXtCookie();
-          return this.loginService.setSvcInfo(currentSvcInfo);
+          return this.loginService.setSvcInfo(result);
         } else {
           return this.loginService.setSvcInfo(null);
         }
