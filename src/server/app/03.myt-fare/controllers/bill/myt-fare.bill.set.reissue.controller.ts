@@ -1,6 +1,6 @@
 /**
  * FileName: myt-fare.bill.set.reissue.controller.ts
- * Author: 이정민 (skt.p130713@partner.sk.com)
+ * Author: 양정규 (skt.P130715@partner.sk.com)
  * Date: 2018.10.01
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';

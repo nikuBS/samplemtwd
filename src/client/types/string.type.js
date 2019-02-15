@@ -780,7 +780,7 @@ Tw.ALERT_MSG_MEMBERSHIP = {
   NO_JOIN: {
     TITLE: 'T멤버십에 가입하실 수 없습니다.',
     CONTENTS: '본인 명의의 SK텔레콤 모바일 회선을 등록 및 선택하시고 T멤버십 가입해보세요',
-    TXT: '회선 관리하기'
+    TXT: '멤버십 가입 조건 및 이용안내'
   },
   JOIN: {
     TITLE: '멤버십에 가입하시겠습니까?',

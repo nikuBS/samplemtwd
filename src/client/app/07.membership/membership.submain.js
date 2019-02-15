@@ -8,7 +8,7 @@ Tw.MembershipSubmain = function(rootEl, membershipData, svcInfo, membershipCheck
   this.$container = rootEl;
   this._membershipData = membershipData;
   this._svcInfo = svcInfo;
-  this._membershipLayerPopup = new Tw.MembershipInfoLayerPopup(this.$container);
+  this._membershipLayerPopup = new Tw.MembershipInfoLayerPopup(this.$container, this._svcInfo);
   this._nativeService = Tw.Native;
   this._historyService = new Tw.HistoryService();
   this._tidLanding = new Tw.TidLandingComponent();
@@ -16,7 +16,6 @@ Tw.MembershipSubmain = function(rootEl, membershipData, svcInfo, membershipCheck
   this._apiService = Tw.Api;
   this._map = undefined;
   this._menuId = menuId;
-  this._membershipInit();
   this._cachedElement();
   this._bindEvent();
   this._getMembershipBanner();
@@ -29,11 +28,6 @@ Tw.MembershipSubmain.prototype = {
     G: 'gold',
     S: 'silver',
     A: 'all'
-  },
-  _membershipInit: function () {
-    if(this._svcInfo){
-      this._membershipLayerPopup.reqPossibleJoin();
-    }
   },
   _cachedElement: function() {
     this.$barCode = this.$container.find('#fe-barcode-img');
@@ -48,8 +42,8 @@ Tw.MembershipSubmain.prototype = {
     this.$container.on('click', '.box-app-down', $.proxy(this._goTmembership, this));
     this.$container.on('click', '.data-plus', $.proxy(this._selectChocolate, this));
     this.$container.on('click', '.coalition-brand-list .map', $.proxy(this._getBrandDetailInfo, this));
-    // this.$container.on('click', '#fe-membership-join', $.proxy( this._membershipLayerPopup.onClickJoinBtn, this._membershipLayerPopup));
-    this.$container.on('click', '#fe-membership-join', $.proxy( this._membershipLoginCheck, this));
+    this.$container.on('click', '#fe-membership-join', $.proxy( this._membershipLayerPopup.onClickJoinBtn, this._membershipLayerPopup));
+    // this.$container.on('click', '#fe-membership-join', $.proxy( this._membershipLoginCheck, this));
     this.$container.on('click', '.fe-mebership-my', $.proxy(this._goMyMembership, this));
     this.$container.on('click', '.fe-membership-location', $.proxy(this._checkLocationAgreement, this));
     this.$container.on('click', '.fe-membership-tday', $.proxy(this._selectTday, this));
@@ -94,7 +88,7 @@ Tw.MembershipSubmain.prototype = {
   _goTday: function () {
     Tw.CommonHelper.openUrlExternal(Tw.MEMBERSHIP_URL.TDAY,'');
   },
-  _membershipLoginCheck: function () {
+  /*_membershipLoginCheck: function () {
     if(this._svcInfo && this._svcInfo.loginType !== Tw.AUTH_LOGIN_TYPE.EASY ) {
       this._membershipLayerPopup.onClickJoinBtn();
     } else {
@@ -111,7 +105,7 @@ Tw.MembershipSubmain.prototype = {
           Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A68.BUTTON
       );
     }
-  },
+  },*/
   _goLogin: function () {
     this._tidLanding.goLogin();
   },

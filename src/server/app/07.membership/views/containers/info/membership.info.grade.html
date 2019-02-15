@@ -230,7 +230,7 @@
 
 <script>
   $(document).ready(function () {
-    new Tw.MembershipInfoGrade();
+    new Tw.MembershipInfoGrade(JSON.parse('<%- JSON.stringify(svcInfo) %>'));
   });
 </script>
 <% include ../../components/end.component.html %>
