@@ -49,7 +49,8 @@
             </li>
             <% } %>
             <li>
-                <button type="button" data-id="pay-mthd" title="납부방법" aria-haspopup="true">
+                <button type="button" data-id="pay-mthd" title="납부방법" aria-haspopup="true"
+                        class="<%= data.type === 'UF'? 'no-link':''; %>">
                     <span class="inner">
                         <span class="tit">납부방법</span>
                         <% if (data.type === 'UF') { %>

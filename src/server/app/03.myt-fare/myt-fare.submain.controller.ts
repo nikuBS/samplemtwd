@@ -323,7 +323,7 @@ class MyTFareSubmainController extends TwViewController {
           return {
             info: {
               code: '',
-              msg: MYT_FARE_PAYMENT_ERROR.DEFAULT
+              msg: ''
             }
           };
         }

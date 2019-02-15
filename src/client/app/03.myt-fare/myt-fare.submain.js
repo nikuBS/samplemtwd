@@ -278,8 +278,9 @@ Tw.MyTFareSubMain.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( !Tw.FormatHelper.isEmpty(resp.result) && resp.result.recentUsageList.length > 0 ) {
         var items = resp.result.recentUsageList;
+        var length = items.length > 6 ? 6 : items.length;
         var chart_data = [];
-        for ( var idx = items.length - 1; idx > -1; idx-- ) {
+        for ( var idx = 0; idx < length; idx++ ) {
           var item = items[idx];
           var date = item.invDt; // this.getLastDate(item.invDt);
           var amtStr = item.invAmt.replace(',', '');
@@ -324,7 +325,7 @@ Tw.MyTFareSubMain.prototype = {
         var items = resp.result.recentUsageList;
         var length = items.length > 6 ? 6 : items.length;
         var chart_data = [];
-        for ( var idx = length - 1; idx > -1; idx-- ) {
+        for ( var idx = 0; idx < length; idx++ ) {
           var item = items[idx];
           var date = item.invDt; // this.getLastDate(item.invDt);
           var amtStr = item.invAmt.replace(',', '');
