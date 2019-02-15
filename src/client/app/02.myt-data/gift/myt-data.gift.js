@@ -78,12 +78,15 @@ Tw.MyTDataGift.prototype = {
     //   this._remainApiError();
     //   return;
     // }
+    var nLimitedGiftUsage = 500;
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var result = res.result;
       if ( result.giftRequestAgainYn === 'N' ) {
         if ( Tw.FormatHelper.isEmpty(result.dataRemQty) ) {
           this._remainApiError();
+        } else if ( Number(result.dataRemQty) < nLimitedGiftUsage ) {
+          this.$container.trigger('showUnableGift', 'GFT0004');
         } else {
           // API DATA SUCCESS
           this._remainApiSuccess();
