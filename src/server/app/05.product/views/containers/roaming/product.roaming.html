@@ -47,8 +47,8 @@
                             <div class="slider-box">
                                 <ul class="slider">
                                     <% for (var index in banners.topBanners) { %>
-                                    <li>
-                                        <button class="fe-link-internal" data-url="<%- banners.topBanners[index].imgLinkUrl %>">
+                                    <li data-xt_eid="<%- banners.topBanners[index].oferStcCd %>" data-xt_csid="NO" data-xt_action="BV">
+                                        <button class="fe-link-internal" data-url="<%- banners.topBanners[index].imgLinkUrl %>" data-xt_eid="<%- banners.topBanners[index].oferStcCd %>" data-xt_csid="NO" data-xt_action="BC">
                                             <img src="<%= CDN %><%- banners.topBanners[index].bnnrFilePathNm %>" alt="<%- banners.topBanners[index].bnnrImgAltCtt %>">
                                         </button>
                                     </li>
