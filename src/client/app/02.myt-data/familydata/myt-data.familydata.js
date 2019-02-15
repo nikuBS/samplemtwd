@@ -106,7 +106,13 @@ Tw.MyTDataFamily.prototype = {
   },
 
   _handleChangeLimitation: function($layer, e) {
-    var value = e.currentTarget.value;
+    var value = e.currentTarget.value,
+      lastChar = value[value.length - 1];
+
+    if (lastChar === '.' || lastChar === '-') {
+      e.currentTarget.value = value.slice(0, -1);
+    }
+
     $layer.find('.bt-red1 > button').attr('disabled', value.length === 0);
     this._limitation = value;
   },

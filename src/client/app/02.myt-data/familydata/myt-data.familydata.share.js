@@ -40,6 +40,12 @@ Tw.MyTDataFamilyShare.prototype = {
   },
 
   _validateShareAmount: function() {
+    var sValue = this.$amountInput.val(),
+      lastChar = sValue[sValue.length - 1];
+    if (lastChar === '.' || lastChar === '-') {
+      this.$amountInput.val(sValue.slice(0, -1));
+    }
+
     var value = Number(this.$amountInput.val()),
       limit = Number(this.$amountInput.data('share-amount'));
 
