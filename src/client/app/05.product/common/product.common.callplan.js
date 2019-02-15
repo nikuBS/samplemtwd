@@ -315,7 +315,7 @@ Tw.ProductCommonCallplan.prototype = {
       return this._openCombineNeedWireError();
     }
 
-    if (this._lineProcessCase === 'B' || this._lineProcessCase === 'D') {
+    if (joinTermCd === '01' && (this._lineProcessCase === 'B' || this._lineProcessCase === 'D') || joinTermCd !== '01') {
       return this._procPreCheck(joinTermCd, url);
     }
 
