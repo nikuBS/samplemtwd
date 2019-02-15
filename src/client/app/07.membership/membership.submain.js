@@ -307,10 +307,7 @@ Tw.MembershipSubmain.prototype = {
           .done($.proxy(this._handleSuccessNeaBrand, this))
           .fail($.proxy(this._handleFailCallBack, this));
     } else {
-      this._getAreaByGeo({
-        mapX: '37.5600420',
-        mapY: '126.9858500'
-      });
+      Tw.Error(_result.code, _result.msg).pop();
     }
   },
   _changeIcoGrade: function(ico) {
