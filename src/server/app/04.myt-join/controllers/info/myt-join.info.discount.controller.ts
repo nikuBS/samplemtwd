@@ -148,6 +148,11 @@ class MytJoinInfoDiscount extends TwViewController {
     const installmentList = thisMain._resDataInfo.installmentList;
     this.logger.info(this, '[ (installmentList) ]', this.getSizeObjOrArr(installmentList));
 
+    const tablet = thisMain._resDataInfo.tablet;
+    const wibro = thisMain._resDataInfo.wibro;
+    this.logger.info(this, '[ (tablet) ]', this.getSizeObjOrArr(tablet));
+    this.logger.info(this, '[ (wibro) ]', this.getSizeObjOrArr(wibro));
+
     // -------------------------------------------------------------[1. 요금약정할인 정보]
     /*
     * 상품코드 분류(priceList.prodId)
@@ -211,6 +216,42 @@ class MytJoinInfoDiscount extends TwViewController {
         thisMain._commDataInfo.feeInfo.push(priceList[i]);
       }
     }
+
+    // 테블릿
+    if ( this.getSizeObjOrArr(tablet) > 0 ) {
+
+      tablet.typeStr = 'fee_noType';
+      tablet.titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_C.TIT_NM;
+      tablet.agrmtDcAmt = FormatHelper.addComma(tablet.agrmtDcAmt);
+      tablet.agrmtDayCnt = FormatHelper.addComma(tablet.agrmtDayCnt);
+      tablet.aGrmtPenAmt = FormatHelper.addComma(tablet.aGrmtPenAmt);
+      thisMain._proDate(
+        tablet,
+        tablet.agrmtDcStaDt,
+        tablet.agrmtDcEndDt);
+
+      thisMain._commDataInfo.feeInfo.push(tablet);
+    }
+
+    // // 와이브로
+    // if ( this.getSizeObjOrArr(wibro) > 0 ) {
+    //
+    //   wibro.typeStr = 'fee_noType';
+    //   wibro.titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_D.TIT_NM;
+    //   wibro.agrmtDcAmt = FormatHelper.addComma(tablet.agrmtDcAmt);
+    //   wibro.agrmtDayCnt = FormatHelper.addComma(tablet.agrmtDayCnt);
+    //   wibro.aGrmtPenAmt = FormatHelper.addComma(tablet.aGrmtPenAmt);
+    //   thisMain._proDate(
+    //     wibro,
+    //     wibro.agrmtDcStaDt,
+    //     wibro.agrmtDcEndDt);
+    //
+    //   thisMain._commDataInfo.feeInfo.push(wibro);
+    // }
+
+
+
+
     this.logger.info(this, '[ 1. this._commDataInfo.feeInfo ]');
     // console.dir(this._commDataInfo.feeInfo);
 
