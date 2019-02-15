@@ -64,6 +64,7 @@ Tw.MyTDataFamilyShareMonthly.prototype = {
   _openDeleteMonthlyDataPopup: function() {
     var POPUP = Tw.MYT_DATA_FAMILY_DELETE_SHARE_MONTHLY;
     this._popupService.openModalTypeA(POPUP.TITLE, POPUP.CONTENTS, POPUP.BTN_NAME, null, $.proxy(this._deleteMonthlyData, this));
+    return false;
   },
 
   _deleteMonthlyData: function() {
