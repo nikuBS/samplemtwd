@@ -347,6 +347,8 @@ Tw.MainHome.prototype = {
       var tplBillCard = Handlebars.compile($billTemp.html());
       element.html(tplBillCard(result));
       element.removeClass('empty');
+      // element.addClass('nogaps');
+      // element.on('click', '#fe-bt-payment', $.proxy(this._onClickPayment, this));
     } else {
       element.hide();
     }
@@ -357,7 +359,7 @@ Tw.MainHome.prototype = {
 
   },
   _onClickPayment: function () {
-    new Tw.MyTFareBill(this.$container);
+    // new Tw.MyTFareBill(this.$container);
   },
   _parseBillData: function (billData) {
     var repSvc = billData.charge.repSvcYn === 'Y';
@@ -413,6 +415,24 @@ Tw.MainHome.prototype = {
       };
     }
   },
+  // _getMicroContentsData: function (element) {
+  //   this._apiService.requestArray([
+  //     { command: Tw.API_CMD.BFF_05_0079, params: {} },
+  //     { command: Tw.API_CMD.BFF_05_0064, params: {} }
+  //   ]).done($.proxy(this._successMicroContentsData, this, element));
+  // },
+  // _successMicroContentsData: function (element, microResp, contentsResp) {
+  //   var result = {
+  //     micro: null,
+  //     contents: null
+  //   };
+  //   if ( microResp.code === Tw.API_CODE.CODE_00 ) {
+  //     result.micro = this._parseMicroData(microResp.result);
+  //   }
+  //   if ( contentsResp.code === Tw.API_CODE.CODE_00 ) {
+  //     result.contents = this._parseContentsData(contentsResp.result);
+  //   }
+  // },
   _getMicroPayData: function (element) {
     // $.ajax('/mock/home.micro-pay.json')
     this._apiService.request(Tw.API_CMD.BFF_05_0079, {})
