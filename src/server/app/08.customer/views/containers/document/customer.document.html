@@ -32,10 +32,10 @@
                                 <ul role="tablist">
                                     <% if (isEtc) { %>
                                     <li role="tab" aria-selected="false" aria-controls="tab1-tab" id="tab1"><a>휴대폰</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                    <li role="tab" aria-selected="true" aria-controls="tab2-tab" id="tab2"><a>인터넷∙집전화∙IPTV</a></li>
+                                    <li role="tab" aria-selected="true" aria-controls="tab2-tab" id="tab2"><a>인터넷/집전화/IPTV</a></li>
                                     <% } else { %>
                                     <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a>휴대폰</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
-                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a>인터넷∙집전화∙IPTV</a></li>
+                                    <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a>인터넷/집전화/IPTV</a></li>
                                     <% } %>
                                 </ul>
                             </div>
@@ -51,7 +51,7 @@
                                                         <ul class="acco-box">
                                                             <li class="acco-list on" data-index="1"><!-- on , off -->
                                                                 <div class="acco-title">
-                                                                    <button role="button" aria-pressed="" class="">
+                                                                    <button role="button" aria-pressed="" class="" title="가입">
                                                                         <i class="step">STEP 1</i>
                                                                         <span class="question">어떤 서비스를 이용하려고 하시나요?</span>
                                                                         <span class="result-txt"></span>
@@ -62,8 +62,8 @@
                                                                         <div class="widget-box radio">
                                                                             <ul class="select-list division-four skin01" role="radiogroup">
                                                                                 <% for (var i = 0; i < mobileCategoryList.length; i++) { %>
-                                                                                <li class="radiobox type05 ico0<%=i+1%>" role="radio" aria-checked="false">
-                                                                                    <input type="radio" name="radio1" value=""
+                                                                                <li class="radiobox type05 ico0<%=i+1%>" role="radio" aria-checked="false" id="aria-comp-radio<%=i+1%>">
+                                                                                    <input type="radio" name="radio1" value="" aria-labelledby="aria-comp-radio<%=i+1%>"
                                                                                            id="<%= mobileCategoryList[i].ncssDocGuidClId %>"
                                                                                            title="<%= mobileCategoryList[i].ncssDocGuidClNm %>" />
                                                                                     <% if (mobileCategoryList[i].isLong) { %>
@@ -84,7 +84,7 @@
                                                             </li>
                                                             <li class="acco-list off" data-index="2"><!-- on , off -->
                                                                 <div class="acco-title">
-                                                                    <button role="button" aria-pressed="" class="none-event">
+                                                                    <button role="button" aria-pressed="" class="none-event" title="법인(장애법인)_국가기관 신규가입">
                                                                         <i class="step">STEP 2</i>
                                                                         <span class="question">처리하실 상세 서비스를 선택해 주세요.</span>
                                                                         <span class="result-txt"></span>
@@ -100,7 +100,7 @@
                                                             </li>
                                                             <li class="acco-list off" data-index="3"><!-- on , off -->
                                                                 <div class="acco-title">
-                                                                    <button role="button" aria-pressed="" class="none-event">
+                                                                    <button role="button" aria-pressed="" class="none-event" title="">
                                                                         <i class="step">STEP 3</i>
                                                                         <span class="question">처리하실 세부 서비스를 선택해 주세요.</span>
                                                                         <span class="result-txt"></span>
@@ -116,7 +116,7 @@
                                                             </li>
                                                             <li class="acco-list off" data-index="4"><!-- on , off -->
                                                                 <div class="acco-title">
-                                                                    <button role="button" aria-pressed="" class="none-event">
+                                                                    <button role="button" aria-pressed="" class="none-event" title="상장/비상장/공공법인">
                                                                         <i class="step">STEP 4</i>
                                                                         <span class="question">이용대상자를 선택해 주세요.</span>
                                                                         <span class="result-txt"></span>
@@ -132,7 +132,7 @@
                                                             </li>
                                                             <li class="acco-list off" data-index="5"><!-- on , off -->
                                                                 <div class="acco-title">
-                                                                    <button role="button" aria-pressed="" class="none-event">
+                                                                    <button role="button" aria-pressed="" class="none-event" title="대표자">
                                                                         <i class="step">STEP 5</i>
                                                                         <span class="question">지점∙대리점 방문자를 선택해주세요.</span>
                                                                         <span class="result-txt"></span>
@@ -164,7 +164,7 @@
                                                         <ul class="acco-box">
                                                             <li class="acco-list on" data-index="1"><!-- on , off -->
                                                                 <div class="acco-title">
-                                                                    <button role="button" aria-pressed="">
+                                                                    <button role="button" aria-pressed="" class="" title="가입">
                                                                         <i class="step">STEP 1</i>
                                                                         <span class="question">어떤 서비스를 이용하려고 하시나요?</span>
                                                                         <span class="result-txt"></span>
@@ -175,8 +175,8 @@
                                                                         <div class="widget-box radio">
                                                                             <ul class="select-list division-four skin01" role="radiogroup">
                                                                                 <% for (var i = 0; i < etcCategoryList.length; i++) { %>
-                                                                                <li class="radiobox type05 ico0<%=i+1%>" role="radio" aria-checked="false">
-                                                                                    <input type="radio" name="radio1" value=""
+                                                                                <li class="radiobox type05 ico0<%=i+1%>" role="radio" aria-checked="false" id="aria-comp-radio<%=i+1%>">
+                                                                                    <input type="radio" name="radio1" value="" aria-labelledby="aria-comp-radio<%=i+1%>"
                                                                                            id="<%= etcCategoryList[i].ncssDocGuidClId %>"
                                                                                            title="<%= etcCategoryList[i].ncssDocGuidClNm %>" />
                                                                                     <% if (etcCategoryList[i].isLong) { %>
@@ -197,7 +197,7 @@
                                                             </li>
                                                             <li class="acco-list off" data-index="2"><!-- on , off -->
                                                                 <div class="acco-title">
-                                                                    <button role="button" aria-pressed="" class="none-event">
+                                                                    <button role="button" aria-pressed="" class="none-event" title="신규가입_인터넷/전화/IPTV">
                                                                         <i class="step">STEP 2</i>
                                                                         <span class="question">처리하실 상세 서비스를 선택해 주세요.</span>
                                                                         <span class="result-txt"></span>
@@ -213,7 +213,7 @@
                                                             </li>
                                                             <li class="acco-list off" data-index="3"><!-- on , off -->
                                                                 <div class="acco-title">
-                                                                    <button role="button" aria-pressed="" class="none-event">
+                                                                    <button role="button" aria-pressed="" class="none-event" title="">
                                                                         <i class="step">STEP 3</i>
                                                                         <span class="question">처리하실 세부 서비스를 선택해 주세요.</span>
                                                                         <span class="result-txt"></span>
@@ -229,7 +229,7 @@
                                                             </li>
                                                             <li class="acco-list off" data-index="4"><!-- on , off -->
                                                                 <div class="acco-title">
-                                                                    <button role="button" aria-pressed="" class="none-event">
+                                                                    <button role="button" aria-pressed="" class="none-event" title="개인">
                                                                         <i class="step">STEP 4</i>
                                                                         <span class="question">이용대상자를 선택해 주세요.</span>
                                                                         <span class="result-txt"></span>
@@ -245,7 +245,7 @@
                                                             </li>
                                                             <li class="acco-list off" data-index="5"><!-- on , off -->
                                                                 <div class="acco-title">
-                                                                    <button role="button" aria-pressed="" class="none-event">
+                                                                    <button role="button" aria-pressed="" class="none-event" title="대리인">
                                                                         <i class="step">STEP 5</i>
                                                                         <span class="question">지점∙대리점 방문자를 선택해주세요.</span>
                                                                         <span class="result-txt"></span>
