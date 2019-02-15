@@ -83,9 +83,11 @@ Tw.MyTFareBill.prototype = {
     }
 
     this._popupService.open({
+      url: '/hbs/',
       hbs: 'MF_01',// hbs의 파일명
       layer: true,
       data: data,
+      lineManagement: { 'txt': Tw.MYT_FARE_PAYMENT_NAME.AUTO_PAYMENT, 'option': 'fe-auto', 'spot': Tw.MYT_FARE_PAYMENT_NAME.REQUEST },
       btnfloating: { 'txt': Tw.BUTTON_LABEL.CLOSE }
     },
       $.proxy(this._onOpenPopup, this),

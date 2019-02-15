@@ -51,9 +51,9 @@
                         <li>
                             <dl>
                                 <dt>선결제 가능금액<button id="MF_06_tip_01" class="tip-view" aria-haspopup="true" title="선결제 가능금액">TIP</button></dt>
-                                <dd>
+                                <dd class="fe-prepay">
                                     <span class="val"><span class="str fe-prepay-amount"><%= result.tmthChrgPsblAmount %></span>원</span>
-                                    <button class="fe-prepay">선결제 화면 이동</button>
+                                    <button type="button">선결제 화면 이동</button>
                                 </dd>
                             </dl>
                         </li>
@@ -61,14 +61,14 @@
                             <dl>
                                 <dt>자동 선결제<button id="MF_06_tip_02" class="tip-view" aria-haspopup="true" title="자동 선결제">TIP</button></dt>
                                 <% if (result.autoChrgStCd === 'U') { %>
-                                <dd>
+                                <dd class="fe-auto-prepay-change">
                                     <span class="val">변경 및 해지</span>
-                                    <button class="fe-auto-prepay-change">자동선결제 변경 및 해지</button>
+                                    <button type="button">자동선결제 변경 및 해지</button>
                                 </dd>
                                 <% } else { %>
-                                <dd>
+                                <dd class="fe-auto-prepay">
                                     <span class="val">신청</span>
-                                    <button class="fe-auto-prepay">자동선결제 신청</button>
+                                    <button type="button">자동선결제 신청</button>
                                 </dd>
                                 <% } %>
                             </dl>
@@ -81,8 +81,8 @@
 
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-hoz">
-                    <ul class="link-list">
-                        <li>
+                    <ul class="on-off-list new">
+                        <li class="line">
                             <dl>
                                 <dt>소액결제 이용설정</dt>
                                 <dd>
@@ -90,7 +90,7 @@
 										<span class="widget">
 											<span class="widget-box switch">
 												<span class="btn-switch type1 <% if (usedYn.isUsed) { %> on <% } %>">
-													<span class="switch-style" role="checkbox" aria-checked="false">
+													<span class="switch-style" role="checkbox" aria-checked="false" aria-disabled="false">
 														<span class="on-tx fe-tx">사용</span>
 														<input id="<%= usedYn.rtnUseYn %>" class="fe-set-use" type="checkbox" title="소액결제 이용설정" />
 														<span class="off-tx fe-tx">차단</span>
@@ -102,26 +102,28 @@
                                 </dd>
                             </dl>
                         </li>
-                        <% if (usedYn.isPassword) { %>
+                    </ul>
+                    <% if (usedYn.isPassword) { %>
+                    <ul class="link-list">
                         <li>
                             <dl>
                                 <dt>결제 비밀번호</dt>
                                 <% if (passwordInfo.text !== '') { %>
-                                <dd>
+                                <dd class="fe-set-password" data-cpin="<%= passwordInfo.result.cpinStCd %>"
+                                    data-code="<%= passwordInfo.code %>"
+                                    data-msg="<%= passwordInfo.msg %>"
+                                    <% if (passwordInfo.result.bDay) { %>
+                                    data-birth="<%= passwordInfo.result.bDay %>"
+                                    <% } %>
+                                >
                                     <span class="val"><%= passwordInfo.text %></span>
-                                    <button class="fe-set-password" data-cpin="<%= passwordInfo.result.cpinStCd %>"
-                                            data-code="<%= passwordInfo.code %>"
-                                            data-msg="<%= passwordInfo.msg %>"
-                                            <% if (passwordInfo.result.bDay) { %> data-birth="<%= passwordInfo.result.bDay %>" <% } %>
-                                    >
-                                        결제 비밀번호 설정 화면 이동
-                                    </button>
+                                    <button type="button">결제 비밀번호 설정 화면 이동</button>
                                 </dd>
                                 <% } %>
                             </dl>
                         </li>
-                        <% } %>
                     </ul>
+                    <% } %>
                 </div>
                 <!--// .cont-box -->
             </div>
