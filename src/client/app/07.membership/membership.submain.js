@@ -286,8 +286,8 @@ Tw.MembershipSubmain.prototype = {
   _getAreaByGeo: function (location) {
     Tw.Logger.info('current location : ', location);
     this.currentLocation = {
-      mapX: location.mapX,
-      mapY: location.mapY
+      mapX: location.latitude,
+      mapY: location.longitude
     };
     this._apiService.request(Tw.API_CMD.BFF_11_0026, this.currentLocation)
     // $.ajax('http://localhost:3000/mock/product.roaming.BFF_10_0059.json')
@@ -307,7 +307,10 @@ Tw.MembershipSubmain.prototype = {
           .done($.proxy(this._handleSuccessNeaBrand, this))
           .fail($.proxy(this._handleFailCallBack, this));
     } else {
-      Tw.Error(resp.code, resp.msg).pop();
+      this._getAreaByGeo({
+        mapX: '37.5600420',
+        mapY: '126.9858500'
+      });
     }
   },
   _changeIcoGrade: function(ico) {
@@ -327,6 +330,7 @@ Tw.MembershipSubmain.prototype = {
       this.nearBrandData[idx].showIcoGrd4 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk4);
     }
     Tw.Logger.info('near brand resp :', this.nearBrandData);
+    this.$nearBrand.empty();
     this.$nearBrand.append(this._nearBrandTmpl({ list : this.nearBrandData }));
   },
   _handleFailCallBack: function () {
