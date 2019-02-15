@@ -54,11 +54,13 @@
             <% } %>
         </div>
 
-        <% if ( svcInfo.svcAttrCd === 'M1' ) { %>
+        <% if ( svcInfo.svcAttrCd === 'M1' ) {
+            const fullClass = feePlan.feePlanProd.btnList && feePlan.feePlanProd.btnList.length > 0 ? '' : 'full';
+        %>
         <!-- .cont-box -->
         <div class="cont-box nogaps">
             <ul class="btn-link-list">
-                <li class="last-line"><a href="/benefit/my">나의 혜택 보기</a></li>
+                <li class="last-line <%= fullClass %>"><a href="/benefit/my">나의 혜택 보기</a></li>
                 <% if ( feePlan.feePlanProd.btnList && feePlan.feePlanProd.btnList.length > 0 ) { %>
                 <% for (var i in feePlan.feePlanProd.btnList) { %>
                 <li class="last-line"><a href="<%= feePlan.feePlanProd.btnList[i].btnLinkUrl %>?prod_id=<%= feePlan.feePlanProd.linkProdId %>"><%= feePlan.feePlanProd.btnList[i].btnNm %></a></li>
@@ -97,17 +99,17 @@
                 <ul>
                     <% for (var i in feePlan.optionAndDiscountProgramList) { %>
                     <li>
-                        <div class="txt-area">
+                        <div class="txt-area" id="aria-separate-list<%= i %>">
                             <span class="tit"><%= feePlan.optionAndDiscountProgramList[i].prodNm %></span>
                             <span class="join-date">가입일 <%= feePlan.optionAndDiscountProgramList[i].scrbDt %></span>
                             <% for (var j in feePlan.optionAndDiscountProgramList[i].btnList) { %>
-                            <a href="<%= feePlan.optionAndDiscountProgramList[i].btnList[j].btnLinkUrl %>?prod_id=<%= feePlan.optionAndDiscountProgramList[i].linkProdId %>" class="bt-link-tx underline">
+                            <a title="<%= feePlan.optionAndDiscountProgramList[i].btnList[j].btnNm %>" href="<%= feePlan.optionAndDiscountProgramList[i].btnList[j].btnLinkUrl %>?prod_id=<%= feePlan.optionAndDiscountProgramList[i].linkProdId %>" class="bt-link-tx underline">
                                 <%= feePlan.optionAndDiscountProgramList[i].btnList[j].btnNm %>
                             </a>
                             <% } %>
                         </div>
                         <% if ( feePlan.optionAndDiscountProgramList[i].prodLinkYn === 'Y' ) { %>
-                        <a href="/product/callplan/<%= feePlan.optionAndDiscountProgramList[i].linkProdId %>" class="btn">상세보기</a>
+                        <a href="/product/callplan/<%= feePlan.optionAndDiscountProgramList[i].linkProdId %>" aria-labelledby="aria-separate-list<%= i %>" class="btn">상세보기</a>
                         <% } %>
                     </li>
                     <% } %>
