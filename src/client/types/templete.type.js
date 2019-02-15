@@ -82,22 +82,17 @@ Tw.POPUP_TPL = {
   }],
   FARE_PAYMENT_LAYER_DATA: [
     {
-      'list': [
-        { 'txt': '자동납부', 'option': 'fe-auto', 'spot': '신청' }
-      ]
-    },
-    {
       'title': '요금 즉시 납부',
       'list': [
-        { 'txt': '계좌이체 납부', 'option': 'fe-account' },
-        { 'txt': '체크/신용카드 납부', 'option': 'fe-card' },
-        { 'txt': 'OK캐쉬백/T포인트 납부', 'option': 'fe-point' }
+        { 'button-attr': 'type="button"', 'txt': '계좌이체 납부', 'option': 'fe-account' },
+        { 'button-attr': 'type="button"', 'txt': '체크/신용카드 납부', 'option': 'fe-card' },
+        { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백/T포인트 납부', 'option': 'fe-point' }
       ]
     },
     {
       'list': [
         {
-          'txt': '입금전용계좌 문자 신청', 'option': 'fe-sms',
+          'button-attr': 'type="button"', 'txt': '입금전용계좌 문자 신청', 'option': 'fe-sms',
           'add': '입금전용계좌 정보를 문자로 전송합니다.\n자동납부 인출 중이 아닌 경우에만 이용 가능합니다.', 'spot': '신청'
         }
       ]
@@ -105,29 +100,24 @@ Tw.POPUP_TPL = {
     {
       'title': '포인트 요금 납부 예약',
       'list': [
-        { 'txt': 'OK캐쉬백', 'option': 'fe-ok-cashbag' },
-        { 'txt': 'T포인트', 'option': 'fe-t-point' },
-        { 'txt': '레인보우포인트', 'option': 'fe-rainbow-point' }
+        { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백', 'option': 'fe-ok-cashbag' },
+        { 'button-attr': 'type="button"', 'txt': 'T포인트', 'option': 'fe-t-point' },
+        { 'button-attr': 'type="button"', 'txt': '레인보우포인트', 'option': 'fe-rainbow-point' }
       ]
     }
   ],
   FARE_PAYMENT_LAYER_DATA_EXCEPT_POINT: [
     {
-      'list': [
-        { 'txt': '자동납부', 'option': 'fe-auto', 'spot': '신청' }
-      ]
-    },
-    {
       'title': '요금 즉시 납부',
       'list': [
-        { 'txt': '계좌이체 납부', 'option': 'fe-account' },
-        { 'txt': '체크/신용카드 납부', 'option': 'fe-card' }
+        { 'button-attr': 'type="button"', 'txt': '계좌이체 납부', 'option': 'fe-account' },
+        { 'button-attr': 'type="button"', 'txt': '체크/신용카드 납부', 'option': 'fe-card' }
       ]
     },
     {
       'list': [
         {
-          'txt': '입금전용계좌 문자 신청', 'option': 'fe-sms',
+          'button-attr': 'type="button"', 'txt': '입금전용계좌 문자 신청', 'option': 'fe-sms',
           'add': '입금전용계좌 정보를 문자로 전송합니다.\n자동납부 인출 중이 아닌 경우에만 이용 가능합니다.', 'spot': '신청'
         }
       ]

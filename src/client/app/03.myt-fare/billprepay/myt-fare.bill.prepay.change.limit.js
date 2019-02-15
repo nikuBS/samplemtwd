@@ -86,8 +86,12 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     }, $.proxy(this._openChangeLimit, this, result), null, 'change-limit');
   },
   _openChangeLimit: function (result, $layer) {
+    this._initLayerVar($layer);
     this._setLimitData(result, $layer);
     this._setLimitEvent($layer);
+  },
+  _initLayerVar: function ($layer) {
+    this.$changeBtn = $layer.find('.fe-change');
   },
   _setLimitData: function (result, $layer) {
     this.$monthSelector = $layer.find('.fe-month');
@@ -153,7 +157,15 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     $target.attr('id', $selectedValue.attr('id'));
     $target.text($selectedValue.parents('label').text());
 
+    this._checkIsChanged();
     this._popupService.close();
+  },
+  _checkIsChanged: function () {
+    if (this._isChanged()) {
+      this.$changeBtn.removeAttr('disabled');
+    } else {
+      this.$changeBtn.attr('disabled', 'disabled');
+    }
   },
   _openChangeConfirm: function () {
     this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.TITLE,

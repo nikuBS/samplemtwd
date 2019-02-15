@@ -388,6 +388,7 @@ Tw.MYT_FARE_PAYMENT_NAME = {
   INQUIRE: '조회하기',
   PAYMENT: '납부',
   RESERVATION: '납부 예약',
+  AUTO_PAYMENT: '자동납부',
   AUTO: '자동납부 신청',
   GO_PAYMENT_HISTORY: '납부내역 보기',
   PREPAY: '선결제',
