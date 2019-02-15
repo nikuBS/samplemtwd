@@ -82,7 +82,7 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
         this.$container.find('#fe-share-none').removeClass('none');
       }
     } else {
-      this._setRetrieveStatus();
+      setTimeout($.proxy(this._setRetrieveStatus, this), 3000);
     }
   },
 
@@ -107,7 +107,12 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
       Tw.Error(resp.code, resp.msg).pop();
     } else {
       var ALERT = Tw.MYT_DATA_FAMILY_SUCCESS_SHARE;
-      this._popupService.afterRequestSuccess(this.MAIN_URL, this.MAIN_URL, undefined, ALERT.TITLE, undefined);
+      setTimeout(
+        $.proxy(function() {
+          this._popupService.afterRequestSuccess(this.MAIN_URL, this.MAIN_URL, undefined, ALERT.TITLE, undefined);
+        }, this),
+        3000
+      );
     }
   },
 
