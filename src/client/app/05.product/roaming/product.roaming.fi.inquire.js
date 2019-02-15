@@ -15,6 +15,7 @@ Tw.ProductRoamingFiInquire = function (rootEl, countryCode) {
   this._receiveObj = {};
   this._returnObj = {};
   this._impbranchObj = {};
+  this._requestYn = false;
   this._init();
 };
 
@@ -71,6 +72,16 @@ Tw.ProductRoamingFiInquire.prototype = {
   },
 
   _getTfiResponse: function() {
+    //연속 선택 방지
+    if(this._requestYn){
+      return;
+    }
+    this._requestYn = true;
+    var self = this;
+    setTimeout(function(){
+      self._requestYn = false;
+    },500);
+
     var sdate = this.$inputSdate.val() === undefined ? moment().format('YYYY[-]MM[-]DD') : this.$inputSdate.val();
     var edate = this.$inputEdate.val() === undefined ? moment().add(+6, 'month').format('YYYY[-]MM[-]DD') : this.$inputEdate.val();
 
