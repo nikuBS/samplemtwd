@@ -9,7 +9,8 @@ Tw.BackAlert = function (rootEl, isPage) {
   this._historyService = new Tw.HistoryService(rootEl);
   this._isPage = isPage;
 
-  this.init();
+  // back key event init
+  // this.init();
 };
 
 Tw.BackAlert.prototype = {

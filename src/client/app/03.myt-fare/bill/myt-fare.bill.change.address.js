@@ -28,7 +28,7 @@ Tw.MyTFareBillChangeAddress.prototype = {
     this.$container.on('click', '.cancel', $.proxy(this._setChangeBtnAble, this));
     this.$container.on('click', '.fe-post', $.proxy(this._getPostcode, this));
     this.$container.on('click', '.fe-change', $.proxy(this._changeAddress, this));
-    this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
+    // this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
   },
   _checkNumber: function (event) {
     Tw.InputHelper.inputNumberOnly(event.target);

@@ -105,7 +105,7 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     this.$layer.on('blur', '.fe-confirm-password', $.proxy(this._checkConfirmPassword, this));
     this.$layer.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$layer.on('click', '.fe-set', $.proxy(this._setPassword, this));
-    this.$layer.on('click', '.fe-close', $.proxy(this._onClose, this));
+    // this.$layer.on('click', '.fe-close', $.proxy(this._onClose, this));
   },
   _checkIsAbled: function () {
     var isValid = false;
