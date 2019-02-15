@@ -9,6 +9,7 @@ Tw.ProductMobileplanSetting0planSm = function(rootEl, prodId, displayId, zeroPla
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
+  this._historyService.init();
 
   this._prodId = prodId;
   this._displayId = displayId;
@@ -20,6 +21,10 @@ Tw.ProductMobileplanSetting0planSm = function(rootEl, prodId, displayId, zeroPla
   this._cachedElement();
   this._bindEvent();
   this._init();
+
+  if (this._historyService.isBack()) {
+    this._historyService.goBack();
+  }
 };
 
 Tw.ProductMobileplanSetting0planSm.prototype = {
@@ -172,6 +177,14 @@ Tw.ProductMobileplanSetting0planSm.prototype = {
 
   _bindSuccessPopup: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
+    $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
+  },
+
+  _closeAndGo: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
   },
 
   _closePop: function() {

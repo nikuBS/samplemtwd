@@ -1759,11 +1759,11 @@ Tw.BENEFIT_TBCOMBINATION_JOIN_STATUS = {
 };
 
 Tw.PRODUCT_SUCCESS_BTN_TEXT = {
-  SMARTWATCH: '스마트워치 할인상품 보기 >',
-  COMBINE: '나의 결합상품 확인하기 >',
-  MYTJOIN: '나의 가입정보 확인하기 >',
-  LINE_REGISTER: '회선 등록하기 >',
-  TFAMILY: 'T가족모아데이터 공유 설정하기 >'
+  SMARTWATCH: '스마트워치 할인상품 보기',
+  COMBINE: '나의 결합상품 확인하기',
+  MYTJOIN: '나의 가입정보 확인하기',
+  LINE_REGISTER: '회선 등록하기',
+  TFAMILY: 'T가족모아데이터 공유 설정하기'
 };
 
 Tw.BENEFIT_TBCOMBINE_NEED_REGISTER = '미등록 회선으로 상품을 결합하셨습니다. \n요금이나 포인트 확인, 가입서비스 설정 및 변경등 원활한 \nT월드 이용을 위해 회선을 등록하시기 바랍니다.';

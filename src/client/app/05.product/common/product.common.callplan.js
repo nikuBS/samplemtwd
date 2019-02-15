@@ -305,20 +305,24 @@ Tw.ProductCommonCallplan.prototype = {
       return this._tidLanding.goLogin(location.origin + url + '?prod_id=' + this._prodId);
     }
 
+    // 미등록 회선일 경우
     if (Tw.FormatHelper.isEmpty(resp.result.svcMgmtNum)) {
       this._isGoMemberLine = false;
       return this._popupService.openConfirm(null, Tw.ALERT_MSG_PRODUCT.NEED_LINE,
         $.proxy(this._setGoMemberLine, this), $.proxy(this._onCloseMemberLine, this));
     }
 
-    if (this._prodTypCd === 'F' && !this._isAllowJoinCombine) {
+    // 인터넷/집전화/TV 이용고객이 아닌 회선이 결합상품 가입 시도시
+    if (joinTermCd === '01' && this._prodTypCd === 'F' && !this._isAllowJoinCombine) {
       return this._openCombineNeedWireError();
     }
 
-    if (this._lineProcessCase === 'B' || this._lineProcessCase === 'D') {
+    // 해지 및 회선변경 프로세스 case 2, 4 에 해당되면 즉시 사전체크 호출
+    if (joinTermCd === '01' && (this._lineProcessCase === 'B' || this._lineProcessCase === 'D') || joinTermCd !== '01') {
       return this._procPreCheck(joinTermCd, url);
     }
 
+    // 회선변경 프로세스 진입
     this._historyService.goLoad('/product/line-change?p_mod=' + (this._lineProcessCase === 'A' ? 'select' : 'change') +
       '&t_prod_id=' + this._prodId + '&t_url=' + encodeURIComponent(url + '?prod_id=' + this._prodId));
   },
