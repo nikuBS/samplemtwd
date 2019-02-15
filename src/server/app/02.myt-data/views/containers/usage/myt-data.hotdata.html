@@ -37,7 +37,6 @@
             <%- include('../../components/usage/myt-data.usage.circle-graphbox.html', { type: 'data', color: 'red', typeStr: '데이터', items: usageData.data, usageData: usageData }); %>
             <% } %>
             <!--// .cont-box -->
-            <hr class="cont-sp type1" aria-hidden="true" />
 
             <% if (usageData && !usageData.hasDefaultData && balanceAddOns && balanceAddOns.dataSharing === 'Y') { %>
             <div id="fe-data-share" class="cont-box pb0">
@@ -122,6 +121,7 @@
                     </a>
                 </div>
             </div>
+            <hr class="cont-sp type1" aria-hidden="true" />
             <% } %>
 
             <% if (balanceAddOns && balanceAddOns.troamingSharing === 'Y') { %>
