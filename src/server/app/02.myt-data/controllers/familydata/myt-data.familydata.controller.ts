@@ -58,10 +58,10 @@ export default class MyTDataFamily extends TwViewController {
         data =
           mine.limitedYn === 'Y'
             ? {
-                remained: limit === 0 ? 0 : Number(mine.limitation) * 1000 - Number(mine.used),
+                remained: limit === 0 ? 0 : Math.min(Number(mine.limitation), Number(resp.result.total)) * 1024 - Number(mine.used),
                 total: limit
               }
-            : { remained: Number(resp.result.remained), total: Number(resp.result.total) };
+            : { remained: Number(mine.remained), total: Number(resp.result.total) };
 
       return {
         ...resp.result,
