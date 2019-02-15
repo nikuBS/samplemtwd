@@ -883,7 +883,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    unitedTitle: 'T월드 다이렉트·T멤버십·T로밍에 대한 안내',
+    unitedTitle: '다이렉트샵/멤버십/로밍에 대한 안내',
     united: '_3T',
     title: 'T월드 다이렉트 이용안내',
     text: 'T월드 다이렉트에서 구매를 원한다면',
@@ -965,7 +965,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    unitedTitle: 'T월드 다이렉트·T멤버십·T로밍에 대한 안내',
+    unitedTitle: '다이렉트샵/멤버십/로밍에 대한 안내',
     united: '_3T',
     title: 'T멤버십·T로밍에 대한 안내',
     text: '',
