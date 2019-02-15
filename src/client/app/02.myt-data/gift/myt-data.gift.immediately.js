@@ -64,7 +64,7 @@ Tw.MyTDataGiftImmediately.prototype = {
         $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0003 }));
         break;
       case 'GFT0004':
-        $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0004.CONTENT1 }));
+        $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0004 }));
         break;
       case 'GFT0005':
         $wrapImmediatelyGift.html(this.tpl_immediately_error({ content: Tw.MYT_DATA_GIFT.GFT0005 }));
