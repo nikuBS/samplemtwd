@@ -20,7 +20,11 @@ export default class MembershipMyUpdate extends TwViewController {
       if ( resp.code === API_CODE.CODE_00 ) {
         myInfoData = this.parseMyInfoData(resp.result);
       } else {
-        myInfoData = resp;
+        return this.error.render(res, {
+          code: resp.code,
+          msg: resp.msg,
+          svcInfo: svcInfo
+        });
       }
 
       res.render('my/membership.my.update.html', {

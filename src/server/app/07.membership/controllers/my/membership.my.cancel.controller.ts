@@ -21,7 +21,11 @@ export default class MembershipMyCancel extends TwViewController {
       if ( resp.code === API_CODE.CODE_00 ) {
         myCardData = this.parseMyCardData(resp.result);
       } else {
-        myCardData = resp;
+        return this.error.render(res, {
+          code: resp.code,
+          msg: resp.msg,
+          svcInfo: svcInfo
+        });
       }
 
       res.render('my/membership.my.cancel.html', {

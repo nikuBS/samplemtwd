@@ -21,6 +21,16 @@ export default class MembershipMy extends TwViewController {
       this.getMyInfoData(),
       this.getMembershipData()
     ).subscribe(([myInfoData, membershipData]) => {
+
+      const error = {
+        code: myInfoData.code || membershipData.code,
+        msg: myInfoData.msg || membershipData.msg
+      };
+
+      if ( error.code ) {
+        return this.error.render(res, { ...error, svcInfo });
+      }
+
       res.render('my/membership.my.html', {
         myInfoData: myInfoData,
         membershipData: membershipData,
