@@ -42,16 +42,16 @@
                 <% if (svcType.login) { %>
                 <% if (svcInfo.totalSvcCnt === '0') { %>
                 <!-- 미가임 -->
-                <div class="member-info-box">
+                <div class="member-non-box">
                     <strong class="ti"><i class="icon-warning-120"></i> 가입하신 회선이 없습니다.</strong>
                     <p class="tx">SK텔레콤의 가족이 되어 다양하고 편리한 서비스를 이용해 보세요.</p>
                     <div class="btn-area">
-                        <button type="button" class="btn-round1 btn-style4 fe-bt-direct-home">휴대폰 보러가기</button>
+                        <button type="button" class="btn-round1 btn-style4 fe-home-external" data-url="http://shop.tworld.co.kr/handler/ShopTworldMain-Start">휴대폰 보러가기</button>
                     </div>
                 </div>
                 <% } else if ( svcInfo.expsSvcCnt === '0') { %>
                 <!-- 미등록 -->
-                <div class="member-info-box">
+                <div class="member-non-box">
                     <strong class="ti"><i class="icon-warning-120"></i> 회선 등록이 필요합니다.</strong>
                     <p class="tx">아직 등록되지 않은 회선이 12개 있습니다.<br>원활한 서비스 이용을 위해서 적어도 1개의 회선은 등록하셔야 합니다.</p>
                     <div class="btn-area">
