@@ -3,17 +3,17 @@
  * Author: 양정규 (skt.P130715@partner.sk.com)
  * Date: 2018.10.31
  */
-Tw.MembershipInfoGrade = function (rootEl) {
-  this.$container = rootEl || $('.wrap');
+Tw.MembershipInfoGrade = function (svcInfo) {
+  this.$container = $('.wrap');
+  this._svcInfo = svcInfo;
   this._apiService = Tw.Api;
-  this._membershipLayerPopup = new Tw.MembershipInfoLayerPopup(this.$container);
+  this._membershipLayerPopup = new Tw.MembershipInfoLayerPopup(this.$container, this._svcInfo);
   this._init();
 };
 
 Tw.MembershipInfoGrade.prototype = {
   _init: function () {
     this._initVariables();
-    this._membershipLayerPopup.reqPossibleJoin();
     this._bindEvent();
   },
 

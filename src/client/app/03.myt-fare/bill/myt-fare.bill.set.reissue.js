@@ -1,6 +1,6 @@
 /**
  * FileName: myt-fare.bill.set.reissue.js
- * Author: 이정민 (skt.p130713@partner.sk.com)
+ * Author: 양정규 (skt.P130715@partner.sk.com)
  * Date: 2018.10.01
  */
 Tw.MyTFareBillSetReIssue = function (rootEl, options) {
