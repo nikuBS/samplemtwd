@@ -269,8 +269,8 @@ Tw.MembershipSubmain.prototype = {
       this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function (res) {
         if (res.resultCode !== Tw.NTV_CODE.CODE_00 ) {
           this._getAreaByGeo({
-            mapX: '37.5600420',
-            mapY: '126.9858500'
+            latitude: '37.5600420',
+            longitude: '126.9858500'
           });
         } else {
           this._getAreaByGeo(res.params);
@@ -278,8 +278,8 @@ Tw.MembershipSubmain.prototype = {
       }, this));
     } else {
       this._getAreaByGeo({
-        mapX: '37.5600420',
-        mapY: '126.9858500'
+        latitude: '37.5600420',
+        longitude: '126.9858500'
       });
     }
   },
@@ -307,10 +307,7 @@ Tw.MembershipSubmain.prototype = {
           .done($.proxy(this._handleSuccessNeaBrand, this))
           .fail($.proxy(this._handleFailCallBack, this));
     } else {
-      this._getAreaByGeo({
-        mapX: '37.5600420',
-        mapY: '126.9858500'
-      });
+      Tw.Error(resp.code, resp.code).pop();
     }
   },
   _changeIcoGrade: function(ico) {
