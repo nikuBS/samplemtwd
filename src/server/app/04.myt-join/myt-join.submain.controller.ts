@@ -148,7 +148,7 @@ class MyTJoinSubmainController extends TwViewController {
       if ( data.myHistory ) {
         if ( data.myHistory.length > 0 ) {
           const h_chgDt = data.myHistory[0].chgDt;
-          data.hsDate = this.isMasking(h_chgDt) ? h_chgDt : DateHelper.getShortDateNoDot(h_chgDt);
+          data.hsDate = this.isMasking(h_chgDt) ? this.dateMaskingReplace(h_chgDt) : DateHelper.getShortDateNoDot(h_chgDt);
         } else {
           data.hsDate = null;
         }
@@ -277,6 +277,12 @@ class MyTJoinSubmainController extends TwViewController {
     const difference_ms = (date1_ms - date2_ms);
     // Convert back to days and return
     return Math.round(difference_ms / ONE_DAY);
+  }
+
+  dateMaskingReplace(target): string {
+    const reg1 = /\B((?=([\*]{2})(?![\*])))/g;
+    const reg2 = /\B((?=([\.\*]{5})(?![\.\*])))/g;
+    return target.replace(reg1, '.').replace(reg2, '.');
   }
 
   isMasking(target): boolean {
