@@ -1050,11 +1050,11 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
             type: 'A2',
             code: 'C00021'
           },
-          /* {
+          {
             dep_title: '음성인식 ARS',
             type: 'A2',
             code: 'C00022'
-          }*/
+          }
         ]
       },
       {
