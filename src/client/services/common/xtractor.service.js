@@ -25,7 +25,6 @@ Tw.XtractorService.prototype = {
     var $elem = $(elem),
       E_ID = $elem.data('xt_eid'),
       CS_ID = $elem.data('xt_csid');
-
     if (Tw.FormatHelper.isEmpty(E_ID) || Tw.FormatHelper.isEmpty(CS_ID)) {
       return false;
     }
