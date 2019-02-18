@@ -135,25 +135,72 @@
             <% if ( researchList && researchList.length !== 0 ) { %>
             <hr class="cont-sp type1" aria-hidden="true">
             <!-- .cont-box -->
-            <div class="survey-box2">
-                <!-- .widget -->
+            <!--<div class="survey-box2">-->
+                <!--&lt;!&ndash; .widget &ndash;&gt;-->
+                <!--<div class="widget">-->
+                    <!--<div class="widget-box slider1">-->
+                        <!--<div class="slider-box">-->
+                            <!--<ul class="slider" style="overflow:hidden;max-height:200px">-->
+                                <!--<% researchList.map( item => { %>-->
+                                <!--<li>-->
+                                    <!--<a href="/customer/svc-info/researches/result?id=<%-item.bnnrRsrchId%>"><img-->
+                                        <!--src="http://cdnm.tworld.co.kr<%-item.custCntrSubmImgflPathNm%>"-->
+                                        <!--alt="<%-item.bnnrRsrchTitleNm%>"/></a>-->
+                                <!--</li>-->
+                                <!--<% }) %>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--&lt;!&ndash;// .widget &ndash;&gt;-->
+            <!--</div>-->
+
+            <div class="survey-box">
                 <div class="widget">
                     <div class="widget-box slider1">
-                        <div class="slider-box">
-                            <ul class="slider" style="overflow:hidden;max-height:200px">
-                                <% researchList.map( item => { %>
-                                <li>
-                                    <a href="/customer/svc-info/researches/result?id=<%-item.bnnrRsrchId%>"><img
-                                        src="http://cdnm.tworld.co.kr<%-item.custCntrSubmImgflPathNm%>"
-                                        alt="<%-item.bnnrRsrchTitleNm%>"/></a>
-                                </li>
-                                <% }) %>
-                            </ul>
+                        <div class="coupon-genre-banner-slide">
+                            <div class="slider-box">
+                                <ul class="slider">
+                                    <% researchList.map( item => { %>
+
+                                    <% if ( item.bnnrRsrchTypCd === 'R' ) { %>
+                                    <li>
+                                        <div class="survey-banner">
+                                            <strong class="banner-tit"><%-item.bnnrRsrchTitleNm%></strong>
+                                            <div><a class="bt-link-tx underline" href="/customer/svc-info/researches?id=<%-item.bnnrRsrchId%>">오늘의 설문 참여하기</a></div>
+                                            <a href="/customer/svc-info/researches/result?id=<%-item.bnnrRsrchId%>" class="icon">설문 참여하기</a>
+                                        </div>
+                                    </li>
+                                    <% } %>
+
+                                    <% if ( item.bnnrRsrchTypCd === 'P' ) { %>
+                                    <li>
+                                        <div class="survey-banner">
+                                            <strong class="banner-tit"><%-item.bnnrRsrchTitleNm%></strong>
+                                            <div><a class="bt-link-tx underline" href="/customer/svc-info/researches?id=<%-item.bnnrRsrchId%>">퀵 서베이 투표 및 결과보기</a></div>
+                                            <a href="/customer/svc-info/researches?id=<%-item.bnnrRsrchId%>" class="icon">설문 참여하기</a>
+                                        </div>
+                                    </li>
+                                    <% } %>
+
+                                    <% if ( item.bnnrRsrchTypCd === 'Q' ) { %>
+                                    <li>
+                                        <div class="survey-banner">
+                                            <strong class="banner-tit"><%-item.bnnrRsrchTitleNm%></strong>
+                                            <div><a class="bt-link-tx underline" href="/customer/svc-info/researches?id=<%-item.bnnrRsrchId%>">퀴즈 참여 및 결과보기</a></div>
+                                            <a href="/customer/svc-info/researches?id=<%-item.bnnrRsrchId%>" class="icon">설문 참여하기</a>
+                                        </div>
+                                    </li>
+                                    <% } %>
+
+                                    <% }) %>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!--// .widget -->
             </div>
+
             <% } %>
 
             <hr class="cont-sp type1" aria-hidden="true">
