@@ -306,7 +306,7 @@ Tw.MyTDataSubMain.prototype = {
           data,
           chart_data = [],
           idx;
-      this.$patternChart.find('.tit').text(Tw.MYT_DATA_PATTERN_TITLE.DATA);
+      this.$patternChart.find('.tit > span').text(Tw.MYT_DATA_PATTERN_TITLE.DATA);
       unit = Tw.CHART_UNIT.GB;
       data = this.data.pattern.data;
       var baseTotalData = 0, baseTotalVoice = 0, baseTotalSms = 0;
@@ -324,7 +324,7 @@ Tw.MyTDataSubMain.prototype = {
       if ( baseTotalData === 0 ) {
         chart_data = [];
         if ( this.data.pattern.voice.length > 0 ) {
-          this.$patternChart.find('.tit').text(Tw.MYT_DATA_PATTERN_TITLE.VOICE);
+          this.$patternChart.find('.tit > span').text(Tw.MYT_DATA_PATTERN_TITLE.VOICE);
           unit = Tw.CHART_UNIT.TIME;
           data = this.data.pattern.voice;
           for ( idx = 0; idx < data.length; idx++ ) {
@@ -340,7 +340,7 @@ Tw.MyTDataSubMain.prototype = {
       if ( baseTotalData === 0 && baseTotalVoice === 0 ) {
         chart_data = [];
         if ( this.data.pattern.sms.length > 0 ) {
-          this.$patternChart.find('.tit').text(Tw.MYT_DATA_PATTERN_TITLE.SMS);
+          this.$patternChart.find('.tit > span').text(Tw.MYT_DATA_PATTERN_TITLE.SMS);
           unit = Tw.CHART_UNIT.SMS;
           data = this.data.pattern.sms;
           for ( idx = 0; idx < data.length; idx++ ) {
