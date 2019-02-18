@@ -310,7 +310,7 @@ Tw.MyTFareBillOptionRegister.prototype = {
           !Tw.FormatHelper.isEmpty(this.$container.find('.fe-select-bank').attr('id'));
       } else {
         isValid = !Tw.FormatHelper.isEmpty(this.$cardPhoneNumber.val()) || !Tw.FormatHelper.isEmpty(this.$cardNumber.val()) ||
-          !Tw.FormatHelper.isEmpty(this.$cardY.val()) || !Tw.FormatHelper.isEmpty(this.$cardM.val()) || this._isSelectChanged;
+          !Tw.FormatHelper.isEmpty(this.$cardY.val()) || !Tw.FormatHelper.isEmpty(this.$cardM.val());
       }
     }
     return isValid;
