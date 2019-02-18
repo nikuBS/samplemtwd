@@ -85,7 +85,7 @@
                 <!-- 부가서비스 목록 -->
                 <% const additions = additionData.additions.products;
                 if (additions) { %>
-                <div class="cont-box bgnone nogaps-hoz">
+                <div class="cont-box bgnone nogaps-hoz noborder"><!-- 더보기 버튼이 있을때 noborder 필요 -->
                     <ul class="extraservice-list">
                         <% additions.map(addition => { %>
                         <li class="category-type">
@@ -107,8 +107,8 @@
                         <% }); %>
                     </ul>
                     <% const leftCount = additionData.additions.productCount - additions.length, last = additions[additions.length - 1]; %>
-                    <div class="extraservice-more">
-                        <button class="<%= leftCount ? '' : 'none' %> btn" data-last-product="<%= last && last.prodId %>" data-left-count="<%= leftCount %>">더 보기</button>
+                    <div class="extraservice-more full-width"><!-- cont-box에 noborder추가시 full-width 추가 -->
+                        <button class="<%= leftCount ? '' : 'none' %> btn bbe5" data-last-product="<%= last && last.prodId %>" data-left-count="<%= leftCount %>">더 보기</button>
                     </div>
                 </div>
                 <% } %>
