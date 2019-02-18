@@ -148,8 +148,9 @@ class MyTJoinSubmainController extends TwViewController {
       if ( data.myHistory ) {
         if ( data.myHistory.length > 0 ) {
           const h_chgDt = data.myHistory[0].chgDt;
-          // data.hsDate = this.isMasking(h_chgDt) ? this.dateMaskingReplace(h_chgDt) : DateHelper.getShortDateNoDot(h_chgDt);
-          data.hsDate = this.isMasking(h_chgDt) ? h_chgDt : DateHelper.getShortDateNoDot(h_chgDt);
+          // 개통일자 DV001-13951 (마스킹시 ****.**.** 이와 같이 변경)
+          data.hsDate = this.isMasking(h_chgDt) ? this.dateMaskingReplace(h_chgDt) : DateHelper.getShortDateNoDot(h_chgDt);
+          // data.hsDate = this.isMasking(h_chgDt) ? h_chgDt : DateHelper.getShortDateNoDot(h_chgDt);
         } else {
           data.hsDate = null;
         }
