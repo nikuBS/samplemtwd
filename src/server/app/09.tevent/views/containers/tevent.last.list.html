@@ -26,6 +26,7 @@
                 <div class="sort-area">
                     <button class="btn-select fe-select-event" title="이벤트 메뉴 선택" aria-haspopup="true">지난 이벤트</button>
                 </div>
+                <% if (isExist) { %>
                 <div class="cont-box nogaps-hoz">
                     <div class="event-article-list">
                         <% if (content) { %>
@@ -52,6 +53,15 @@
                     </div>
                     <% } %>
                 </div>
+                <% } else { %>
+                <div class="cont-box">
+                    <div class="result-none type2">
+                        <div class="title-box">
+                            지난 이벤트가 없습니다.
+                        </div>
+                    </div>
+                </div>
+                <% } %>
             </div>
         </div>
         <!--// #contents -->

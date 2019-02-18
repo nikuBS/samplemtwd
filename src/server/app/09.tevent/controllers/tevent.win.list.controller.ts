@@ -26,6 +26,7 @@ class TeventWinList extends TwViewController {
       if (resp.code === API_CODE.CODE_00) {
         const result = resp.result;
         res.render('tevent.win.list.html', {
+          isExist: result.content.length > 0,
           content: this.parseData(result.content),
           totalPages: result.totalPages,
           totalElements: result.totalElements,
