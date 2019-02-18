@@ -105,6 +105,8 @@ Tw.MyTDataTing.prototype = {
       this._requestSendingData();
     } else if ( res.code === 'ZPAYE0077' ) {
       this._popupService.openAlert(Tw.MYT_DATA_TING.V31);
+    } else if ( res.code === 'ZINVE8164' ) {
+      this._popupService.openAlert(Tw.MYT_DATA_TING.NOT_TING_SKT);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

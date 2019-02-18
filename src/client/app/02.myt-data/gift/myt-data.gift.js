@@ -47,7 +47,7 @@ Tw.MyTDataGift.prototype = {
     this.$container.on('click', '.fe-close-available_product', $.proxy(this._hideAvailableProduct, this));
     this.$container.on('click', '.fe-show-more-amount', $.proxy(this._onShowMoreData, this));
     this.$inputImmediatelyGift.on('focus', $.proxy(this._onLoadRecently, this));
-    this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
+    // this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
     this.$container.on('currentRemainDataInfo', $.proxy(this._currentRemainDataInfo, this));
     this.$remainBtn.on('click', $.proxy(this._getRemainDataInfo, this));
   },

@@ -1054,6 +1054,7 @@ Tw.MYT_DATA_CANCEL_MONTHLY = {
 
 Tw.MYT_DATA_TING = {
   V31: '팅요금제 사용 고객이 아닙니다.',
+  NOT_TING_SKT: '팅 요금 충전 선물 서비스를 이용하실 수 없습니다.\n 대상자가 아니거나, 서비스를 이용할 수 없는 상태입니다.',
   A81_TITLE: '팅요금 선물을 차단하시겠습니까?',
   A81_CONTENT: '차단 시에는 팅요금 선물을 할 수 없습니다.',
   A81_BTN_CONFIRM: '차단하기',
