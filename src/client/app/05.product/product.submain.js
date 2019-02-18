@@ -7,6 +7,7 @@
 Tw.ProductSubmain = function(rootEl, menuId) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
+  this._xTractorService = new Tw.XtractorService(rootEl);
 
   this._menuId = menuId;
   this._getTosBanner();
