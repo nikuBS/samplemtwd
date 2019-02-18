@@ -8,7 +8,7 @@
     <li>
         <a href="{{listData.MENU_URL}}" class="shortcut-element list-data" data-category="shortcut" data-id="{{listData.DOCID}}" data-tit="{{removeTag listData.MENU_NM}}">
             <span class="main-category">{{{listData.MENU_NM}}}</span>
-            <span class="sub-category">{{{listData.DEPTH_PATH}}}</span>
+            <span class="sub-category">{{{replace listData.DEPTH_PATH '\|,MyT' ' > , my T '}}}</span>
         </a>
     </li>
 </script>
@@ -258,7 +258,7 @@
 
 <script id="notice_template" type="text/x-handlebars-template">
     <li>
-        <a class="b-cont notice-element list-data" href="/customer/svc-info/notice/view?ntcId={{removeNaN listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="notice" data-tit="{{removeTag listData.NTC_TIT_NM}}">
+        <a class="b-cont notice-element list-data" href="/customer/svc-info/notice/view?ntcId={{replace listData.DOCID '[^0-9.]' ''}}" data-id="{{listData.DOCID}}" data-category="notice" data-tit="{{removeTag listData.NTC_TIT_NM}}">
             {{{listData.NTC_TIT_NM}}}
         </a>
     </li>

@@ -72,7 +72,7 @@ Tw.CommonSearch.prototype = {
           if(data[i][key].charAt(0)==='|'){
             data[i][key] = data[i][key].replace('|','');
           }
-          data[i][key] = data[i][key].replace(/\|/g,' > ').replace(/MyT/g,' my T ');
+          //data[i][key] = data[i][key].replace(/\|/g,' > ').replace(/MyT/g,' my T ');
         }
         // if(key==='MENU_URL'){
         //   data[i][key] = data[i][key].replace('https://app.tworld.co.kr','');
