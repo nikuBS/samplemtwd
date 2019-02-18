@@ -76,7 +76,7 @@ function recognizeLastChar(keyword){
             <li class="opinion-selectbox" data-type="<%= surveyList.invstQstnInqItm[i].srchId %>">
                 <p class="text"><%= surveyList.invstQstnInqItm[i].title %></p>
                 <div class="btn">
-                    <button type="button" class="btn-round3 btn-style3 request_keyword" data-type="<%= surveyList.invstQstnInqItm[i].srchId %>">입력하기</button>
+                    <button type="button" class="btn-round3 btn-style3 request_keyword" data-type="<%= surveyList.invstQstnInqItm[i].srchId %>"><%= i==0? '입력하기' : '신청하기'%></button>
                 </div>
             </li>
             <% } %>

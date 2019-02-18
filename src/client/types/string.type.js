@@ -1781,7 +1781,8 @@ Tw.RESERVATION_CANCEL = {
 Tw.ALERT_MSG_SEARCH = {
   ALERT_4_A40: { TITLE: '입력하신 의견을 등록하시겠습니까?', MSG: '', BUTTON: '닫기' },
   ALERT_4_A41: { TITLE: '선택하신 내용을 접수하시겠습니까?', MSG: '', BUTTON: '닫기' },
-  KEYWORD_ERR : '검색어를 입력해 주세요.'
+  KEYWORD_ERR : '검색어를 입력해 주세요.',
+  REQUEST_CLAIM : '검색의견 신청이 접수되었습니다.'
 };
 
 Tw.PRODUCT_TFAMILY = {

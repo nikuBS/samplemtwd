@@ -116,6 +116,7 @@ Tw.CommonSearchNotFound.prototype = {
       $selectedEl.each(function (idx) {
         if($selectedEl.eq(idx).data('type')===srchId){
           $selectedEl.eq(idx).children('.btn').hide();
+          $selectedEl.eq(idx).children('.text').text(Tw.ALERT_MSG_SEARCH.REQUEST_CLAIM);
           $selectedEl.eq(idx).removeClass();
         }
       });
