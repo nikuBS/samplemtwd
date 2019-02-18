@@ -89,8 +89,10 @@
                             <dl>
                                 <dt>선결제 가능금액</dt>
                                 <dd>
-                                    <span class="val"><span class="str">40,000</span>원</span>
-                                    <button>선결제 화면 이동</button>
+                                    <!-- 2019.02.15 리스트 터치 영역 확대 수정 -->
+                                    <button class="link-full" title="선결제 화면 이동">
+                                        <span class="val"><span class="str">40,000</span>원</span>
+                                    </button>
                                 </dd>
                             </dl>                            
                         </li>
@@ -101,8 +103,10 @@
                                 <dt>자동 선결제<button aria-haspopup="true" class="tip-view" title="자동 선결제" aria-haspopup="true">TIP</button></dt>
                                 <!-- //접근성 수정-->
                                 <dd>
-                                    <span class="val">신청</span>
-                                    <button>자동선결제 설정 화면 이동</button>
+                                    <!-- 2019.02.15 리스트 터치 영역 확대 수정 -->
+                                    <button class="link-full" title="자동선결제 설정 화면 이동">
+                                        <span class="val">신청</span>
+                                    </button>
                                 </dd>
                             </dl>
                         </li>
@@ -114,8 +118,10 @@
                                 <dt>자동 선결제<button aria-haspopup="true" class="tip-view" title="자동 선결제" aria-haspopup="true">TIP</button></dt>
                                 <!-- //접근성 수정-->
                                 <dd>
-                                    <span class="val">변경 및 해지</span>
-                                    <button>자동 선결제 변경 및 해지정보  화면 이동</button>
+                                    <!-- 2019.02.15 리스트 터치 영역 확대 수정 -->
+                                    <button class="link-full" title="자동 선결제 변경 및 해지정보  화면 이동">
+                                        <span class="val">변경 및 해지</span>
+                                    </button>
                                 </dd>
                             </dl>
                         </li>
@@ -128,9 +134,9 @@
 
                 <!-- .cont-box -->
                 <div class="cont-box nogaps-hoz">
-                   <ul class="link-list">
-                       <!-- CASE 1 : 소액결제 사용중인 경우 --><!-- 2018-09-21 수정 -->
-                        <li>
+                   <ul class="on-off-list new"><!-- 2019-01-15 수정 -->
+                       <!-- CASE 1 : 소액결제 사용중인 경우 -->
+                        <li class="line"><!-- 2019-01-15 수정 -->
                             <dl>
                                 <dt>소액결제 이용설정</dt>
                                 <dd>
@@ -154,7 +160,7 @@
                         </li>
                         <!--// CASE 1 : 소액결제 사용중인 경우 -->
                         <!-- CASE 2 : 소액결제 차단중인 경우 --><!-- 2018-09-21 수정 -->
-                        <li>
+                        <li class="line"><!-- 2019-01-15 수정 -->
                             <dl>
                                 <dt>소액결제 사용설정</dt>
                                 <dd>
@@ -177,7 +183,9 @@
                             </dl>                            
                         </li>
                         <!--// CASE 2 : 소액결제 차단중인 경우 -->
-                        
+                        </ul>
+                        <hr class="" aria-hidden="true"/>
+                        <ul class="link-list">
                         <!-- CASE 1 : 미사용 인 경우 -->
                         <li>
                             <dl>
@@ -185,8 +193,10 @@
                                 <dt>결제 비밀번호<button class="tip-view" title="결제 비밀번호" aria-haspopup="true"><span class="blind">정보보기</span></button></dt>
                                 <!-- //접근성 수정-->
                                 <dd>
-                                    <span class="val">신청</span>
-                                    <button>결제 비밀번호 설정 화면 이동</button>
+                                    <!-- 2019.02.15 리스트 터치 영역 확대 수정 -->
+                                    <button class="link-full" title="결제 비밀번호 설정 화면 이동">
+                                        <span class="val">신청</span>
+                                    </button>
                                 </dd>
                             </dl>
                         </li>
@@ -198,8 +208,10 @@
                                 <dt>결제 비밀번호<button class="tip-view" title="결제 비밀번호" aria-haspopup="true"><span class="blind">정보보기</span></button></dt>
                                 <!-- //접근성 수정-->
                                 <dd>
-                                    <span class="val">변경</span>
-                                    <button>결제 비밀번호 설정 화면 이동</button>
+                                    <!-- 2019.02.15 리스트 터치 영역 확대 수정 -->
+                                    <button class="link-full" title="결제 비밀번호 설정 화면 이동">
+                                        <span class="val">변경</span>
+                                    </button>
                                 </dd>
                             </dl>
                         </li>

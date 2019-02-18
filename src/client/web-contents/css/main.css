@@ -15,7 +15,7 @@
       display: block;
       width: 100%;
       color: inherit;
-      font-size: 0.875rem;
+      font-size: 0.8125rem;
       line-height: 1.0625rem;
       text-align: center; }
       .quick-menu-list li .bt .tit {
@@ -226,7 +226,7 @@
 .main-breakdown-box > .sum {
   display: block;
   padding: 0.1875rem 0;
-  font-size: 1.375rem;
+  font-size: 1.6875rem;
   font-weight: 700;
   line-height: 1.875rem; }
   .main-breakdown-box > .sum .ff-tg-medium {
@@ -270,7 +270,7 @@
       line-height: 1.375rem; }
     .main-breakdown-box .list li .tx {
       float: right;
-      font-size: 0.9375rem;
+      font-size: 1rem;
       font-weight: 700; }
       .main-breakdown-box .list li .tx button {
         color: #ef4b49; }
@@ -282,6 +282,8 @@
       color: #959595; }
     .main-breakdown-box .list li .font-normal {
       font-weight: 300; }
+  .main-breakdown-box .list + .btn-area {
+    margin-top: 1.0625rem; }
 
 .main-breakdown-box .desc {
   margin-top: 0.625rem;
@@ -718,12 +720,13 @@
     margin-top: -1.5625rem; }
     .main-membershop-box .membership-cont .bar-code img {
       width: 100%;
-      height: 100%; }
+      height: 2.1875rem; }
     .main-membershop-box .membership-cont .bar-code .bar-code-num {
       width: 100%;
-      height: 20px;
+      height: 0.9375rem;
+      line-height: 0.9375rem;
       text-align: center;
-      font-size: 12px;
+      font-size: 0.75rem;
       display: block; }
   .main-membershop-box .membership-cont > .tx {
     position: absolute;
@@ -744,12 +747,18 @@
     .main-membershop-box .membership-cont > .tx .t-point {
       color: #ef4b49;
       font-weight: 700; }
+  .main-membershop-box .membership-cont > .msg {
+    display: block;
+    margin-top: 0.625rem;
+    color: #666666;
+    font-size: 0.8125rem;
+    line-height: 1.25rem; }
   .main-membershop-box .membership-cont .ti-tx {
     display: block;
     width: 100%;
-    padding-right: 7.8125rem;
-    background: url(/img/main/bg_membership.png) no-repeat right center;
-    background-size: 7.5rem 2.875rem;
+    padding-right: 6.875rem;
+    background: url(/img/main/bg_membership2.png) no-repeat right center;
+    background-size: 6.5rem 2.84375rem;
     text-align: left;
     -webkit-box-sizing: border-box;
             box-sizing: border-box; }
@@ -787,7 +796,7 @@
   height: 3.125rem;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  padding: 1.75rem 1.25rem 0.1875rem 1.25rem;
+  padding: 1.75rem 1.25rem 0.5rem 1.25rem;
   border-radius: 0.3125rem; }
   .main-fee-box .fee-cont > .tit {
     display: inline-block;
@@ -799,6 +808,8 @@
     text-align: left;
     margin-bottom: 1.5625rem;
     font-weight: bold; }
+    .main-fee-box .fee-cont > .tit + .fee-info {
+      padding: 1.5625rem 0 1.25rem; }
   .main-fee-box .fee-cont > a.tit:after, .main-fee-box .fee-cont button.tit:after {
     display: inline-block;
     content: "";
@@ -1980,7 +1991,7 @@ body.apphome {
     position: static !important;
     width: 4.25rem;
     height: 1.75rem;
-    background: url(/img/main/graphic_home_tab_my_off.png) no-repeat 0 0;
+    background: url(/img/svg/graphic_home_tab_my_off.svg) no-repeat 0 0;
     background-size: 100% 100%; }
 
 .icon-home-tab-store {
@@ -1997,7 +2008,7 @@ body.apphome {
     position: static !important;
     width: 4.25rem;
     height: 1.75rem;
-    background: url(/img/main/graphic_home_tab_store_off.png) no-repeat 0 0;
+    background: url(/img/svg/graphic_home_tab_store_off.svg) no-repeat 0 0;
     background-size: 100% 100%; }
 
 .icon-gnb-menu {
@@ -2184,7 +2195,7 @@ body.apphome {
   background: url(/img/svg/icon_80px_cellphone2.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
-.icon-tablet-80 {
+.icon-tablet-80-1 {
   display: inline-block;
   width: 2.5rem;
   height: 2.5rem;
@@ -2644,7 +2655,8 @@ body.apphome {
     .main-charge-box.roaming .slider-box .slick-dots li.slick-active span {
       background: #000; }
     .main-charge-box.roaming .main-box-cont {
-      background-position: right bottom;
+      overflow: hidden;
+      background-position: right bottom -1px;
       background-repeat: right bottom;
       background-size: auto 10rem; }
       .main-charge-box.roaming .main-box-cont.bg-type01 {
@@ -2952,6 +2964,17 @@ body.apphome {
   text-overflow: ellipsis;
   font-size: 1.5625rem;
   font-weight: 700; }
+  .main-direct-box > .ti span {
+    position: relative;
+    display: inline-block; }
+    .main-direct-box > .ti span:after {
+      display: inline-block;
+      content: "";
+      width: 0.40625rem;
+      height: 0.6875rem;
+      background: url(/img/ico/icon-link-arrow.png) no-repeat right center;
+      background-size: 6.5px 11px;
+      margin: 0 0 0.1875rem 0.5rem; }
 
 .main-direct-box > .tx {
   font-weight: 300;

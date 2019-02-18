@@ -1,15 +1,23 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <!-- Generator: Sketch 53 (72520) - https://sketchapp.com -->
     <title>icon_80px_cellphone</title>
     <desc>Created with Sketch.</desc>
-    <defs></defs>
+    <defs>
+        <path d="M54.0199075,65.952315 L19.9799075,65.952315 C19.4286075,65.952315 18.9624075,65.528665 18.9624075,65.027315 L18.9624075,57.164815 L55.0374075,57.164815 L55.0374075,65.027315 C55.0374075,65.443565 54.5675075,65.952315 54.0199075,65.952315 M19.9799075,8.047315 L54.0199075,8.047315 C54.5712075,8.047315 55.0374075,8.470965 55.0374075,8.972315 L55.0374075,54.389815 L18.9624075,54.389815 L18.9624075,8.972315 C18.9624075,8.33684 19.4896575,8.047315 19.9799075,8.047315 M54.0199075,5.272315 L19.9799075,5.272315 C17.8533325,5.272315 16.1874075,6.89754 16.1874075,8.972315 L16.1874075,65.027315 C16.1874075,67.067865 17.8884825,68.727315 19.9799075,68.727315 L54.0199075,68.727315 C56.0752575,68.727315 57.8124075,67.032715 57.8124075,65.027315 L57.8124075,8.972315 C57.8124075,6.931765 56.1113325,5.272315 54.0199075,5.272315 M33.3925925,16.5574075 L40.7000925,16.5574075 C41.4659925,16.5574075 42.0875925,15.9367325 42.0875925,15.1699075 C42.0875925,14.4040075 41.4659925,13.7824075 40.7000925,13.7824075 L33.3925925,13.7824075 C32.6257675,13.7824075 32.0050925,14.4040075 32.0050925,15.1699075 C32.0050925,15.9367325 32.6257675,16.5574075 33.3925925,16.5574075" id="path-1"></path>
+    </defs>
     <g id="Icon_Badge_Graphic" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="##Icon/80/CellPhone">
+            <g id="📌IMG-/-Device_Cellphone" transform="translate(3.000000, 3.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Mask"></g>
+                <g id="🎨Color-/-#333333" mask="url(#mask-2)" fill="#333333" fill-rule="evenodd">
+                    <rect id="Rectangle-2" x="0" y="0" width="74" height="74"></rect>
+                </g>
+            </g>
             <rect id="Icon_Area" fill-opacity="0" fill="#FFFFFF" x="0" y="0" width="80" height="80"></rect>
-            <rect id="Rectangle" stroke="#333333" stroke-width="3" x="25" y="16" width="30" height="47" rx="1.8583425"></rect>
-            <path d="M37,22.5 L43,22.5" id="Line-2" stroke="#333333" stroke-width="3" stroke-linecap="round"></path>
-            <path d="M26,54 L55,54" id="Line-2-Copy" stroke="#333333" stroke-width="3" stroke-linecap="round"></path>
         </g>
     </g>
 </svg>

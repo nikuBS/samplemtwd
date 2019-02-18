@@ -921,7 +921,7 @@ li.checkbox.type01 {
           .radio-slide .select-list .radiobox .radio-txt span.unit {
             display: inline-block;
             margin-left: 0.125rem;
-            font-size: 0.625rem; }
+            font-size: 1.125rem; }
       .radio-slide .select-list .radiobox.checked {
         background-color: #f44333; }
         .radio-slide .select-list .radiobox.checked .radio-txt {

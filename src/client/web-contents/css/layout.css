@@ -977,6 +977,9 @@ body.bg-gray {
       .cont-box .sub-top-box0 .total-num-tx strong {
         font-weight: bold; }
 
+.p-bot-0 {
+  padding-bottom: 0; }
+
 .cont-ti {
   margin-bottom: 1.5rem; }
 

@@ -338,6 +338,9 @@ skt_landing.widgets = {
           },
         });
       }
+      if(_this.find('.slick-slide').length == 1){
+        _this.addClass('slick-dotted-none');
+      }
       var $slick = _this.slick('getSlick');
       var $slides = $slick.$slides;
       var slideIndex = $slick.slickCurrentSlide();
