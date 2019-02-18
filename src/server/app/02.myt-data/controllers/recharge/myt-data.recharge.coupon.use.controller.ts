@@ -68,7 +68,7 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
               name = coupon.copnNm;
               period = coupon.usePsblStaDt + '~' + coupon.usePsblEndDt;
               tab = 'refill';
-              isGift = false;
+              isGift = coupon.isGift || false;
               this.renderCouponUse(res, svcInfo, pageInfo, no, name, period, tab, isGift, auto);
             } else {
               this.error.render(res, { code: '', msg: '', svcInfo });
