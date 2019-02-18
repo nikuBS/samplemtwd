@@ -1,70 +1,27 @@
 <div id="contents" class="container-wrap">
     <div class="container">
 
+        <% if (feePlan.feePlanProd.prodLinkYn === 'Y' && feePlan.feePlanProd.linkProdId) { %>
+        <a class="plan-compact-info" href="/product/callplan/<%= feePlan.feePlanProd.linkProdId %>">
+            <%- include('./myt.join.myplan.wireless.header-info.html') %>
+        </a>
+        <% } else { %>
         <div class="plan-compact-info">
-            <div class="plan">
-                <% if (feePlan.feePlanProd.prodLinkYn === 'Y' && feePlan.feePlanProd.linkProdId) { %>
-                <a href="/product/callplan/<%= feePlan.feePlanProd.linkProdId %>" class="tit"><%= feePlan.feePlanProd.prodNm %></a>
-                <% } else { %>
-                <span class="tit"><%= feePlan.feePlanProd.prodNm %></span>
-                <% } %>
-                <% if ( feePlan.feePlanProd.basFeeInfo && !feePlan.feePlanProd.basFeeInfo.isNaN ) { %>
-                <span class="val"><%= feePlan.feePlanProd.basFeeInfo.value %>원</span>
-                <% } %>
-                <% if ( feePlan.feePlanProd.basFeeInfo && feePlan.feePlanProd.basFeeInfo.isNaN ) { %>
-                <span class="val"><%= feePlan.feePlanProd.basFeeInfo.value %></span>
-                <% } %>
-            </div>
-            <div class="sub">
-                <% if ( feePlan.feePlanProd.prodFltNm ) { %>
-                <span class="hash">#<%= feePlan.feePlanProd.prodFltNm %></span>
-                <% } %>
-                <% if ( feePlan.feePlanProd.basFeeInfo && !feePlan.feePlanProd.basFeeInfo.isNaN ) { %>
-                <span class="rest">월정액(부가세 포함)</span>
-                <% } %>
-            </div>
-            <% if ( feePlan.feePlanProd.basOfrDataQtyCtt || feePlan.feePlanProd.basOfrVcallTmsCtt || feePlan.feePlanProd.basOfrCharCntCtt ) { %>
-            <div class="service-wrap">
-                <div class="service">
-                    <% if ( feePlan.feePlanProd.basOfrDataQtyCtt ) { %>
-                    <span class="sv-spec data">
-                        <% if ( feePlan.feePlanProd.basOfrDataQtyCtt.isNaN ) { %>
-                        <i class="ico-data-plan"></i><%= feePlan.feePlanProd.basOfrDataQtyCtt.value %>
-                        <% } else { %>
-                        <i class="ico-data-plan"></i><%= feePlan.feePlanProd.basOfrDataQtyCtt.value.data + feePlan.feePlanProd.basOfrDataQtyCtt.value.unit %>
-                        <% } %>
-                    </span>
-                    <% } %>
-                    <% if ( feePlan.feePlanProd.basOfrVcallTmsCtt ) { %>
-                    <span class="sv-spec">
-                        <i class="ico-phone-plan"></i><%= feePlan.feePlanProd.basOfrVcallTmsCtt.value %>
-                    </span>
-                    <% } %>
-                    <% if ( feePlan.feePlanProd.basOfrCharCntCtt ) { %>
-                    <span class="sv-spec">
-                        <% if ( feePlan.feePlanProd.basOfrCharCntCtt.isNaN ) { %>
-                        <i class="ico-msg-plan"></i><%= feePlan.feePlanProd.basOfrCharCntCtt.value %>
-                        <% } else { %>
-                        <i class="ico-msg-plan"></i><%= feePlan.feePlanProd.basOfrCharCntCtt.value + feePlan.feePlanProd.basOfrCharCntCtt.unit %>
-                        <% } %>
-                    </span>
-                    <% } %>
-                </div>
-            </div>
-            <% } %>
+            <%- include('./myt.join.myplan.wireless.header-info.html') %>
         </div>
+        <% } %>
 
-        <% if ( svcInfo.svcAttrCd === 'M1' ) {
-            const fullClass = feePlan.feePlanProd.btnList && feePlan.feePlanProd.btnList.length > 0 ? '' : 'full';
-        %>
+        <% if ( svcInfo.svcAttrCd === 'M1' ) { %>
         <!-- .cont-box -->
         <div class="cont-box nogaps">
             <ul class="btn-link-list">
-                <li class="last-line <%= fullClass %>"><a href="/benefit/my">나의 혜택 보기</a></li>
+                <li class="last-line"><a href="/benefit/my">나의 혜택 보기</a></li>
                 <% if ( feePlan.feePlanProd.btnList && feePlan.feePlanProd.btnList.length > 0 ) { %>
                 <% for (var i in feePlan.feePlanProd.btnList) { %>
                 <li class="last-line"><a href="<%= feePlan.feePlanProd.btnList[i].btnLinkUrl %>?prod_id=<%= feePlan.feePlanProd.linkProdId %>"><%= feePlan.feePlanProd.btnList[i].btnNm %></a></li>
                 <% } %>
+                <% } else { %>
+                <li class="last-line"><button class="disabled">옵션 변경</button></li>
                 <% } %>
             </ul>
         </div>
@@ -94,7 +51,7 @@
 
         <!-- .cont-box -->
         <div class="cont-box nogaps-btm">
-            <h3 class="tit-type6">옵션 &middot; 할인 프로그램</h3>
+            <h3 class="tit-type7">옵션 &middot; 할인 프로그램</h3>
             <div class="separate-link-list">
                 <ul>
                     <% for (var i in feePlan.optionAndDiscountProgramList) { %>
