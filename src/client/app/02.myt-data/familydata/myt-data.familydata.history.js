@@ -147,31 +147,32 @@ Tw.MyTDataFamilyHistory.prototype = {
 
   _handleOpenChangePopup: function($parent, changable, $layer) {
     this._historyChange.init($layer, $parent, changable);
-    $layer.on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
+    $layer.on('click', '.prev-step', this._popupService.close);
   },
 
-  _openCancelPopup: function() {
-    this._popupService.openConfirmButton(
-      Tw.ALERT_CANCEL,
-      null,
-      $.proxy(this._goBack, this),
-      $.proxy(this._handleAfterClose, this),
-      Tw.BUTTON_LABEL.NO,
-      Tw.BUTTON_LABEL.YES
-    );
-  },
+  // _handleClickClose: function() {
+  //   this._popupService.close();
+  // this._popupService.openConfirmButton(
+  //   Tw.ALERT_CANCEL,
+  //   null,
+  //   $.proxy(this._goBack, this),
+  //   $.proxy(this._handleAfterClose, this),
+  //   Tw.BUTTON_LABEL.NO,
+  //   Tw.BUTTON_LABEL.YES
+  // );
+  // },
 
-  _goBack: function() {
-    this._popupService.close();
-    this._isClose = true;
-  },
+  // _goBack: function() {
+  //   this._popupService.close();
+  //   this._isClose = true;
+  // },
 
-  _handleAfterClose: function() {
-    if (this._isClose) {
-      history.back();
-      this._isClose = false;
-    }
-  },
+  // _handleAfterClose: function() {
+  //   if (this._isClose) {
+  //     history.back();
+  //     this._isClose = false;
+  //   }
+  // },
 
   _handleLoadMore: function(e) {
     var display = this._histories.length - this._leftCount,

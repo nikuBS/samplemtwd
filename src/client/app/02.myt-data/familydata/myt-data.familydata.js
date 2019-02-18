@@ -62,7 +62,7 @@ Tw.MyTDataFamily.prototype = {
 
   _handleOpenChangeLimitation: function(mgmtNum, limitation, $layer) {
     $layer.on('click', '.bt-red1', $.proxy(this._handleSubmitLimitation, this, mgmtNum, limitation));
-    $layer.on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
+    $layer.on('click', '.prev-step', this._popupService.close);
     $layer.on('change', 'input[type="radio"]', $.proxy(this._handleChangeLimitType, this, $layer));
     $layer.on('keyup', 'span.input input', $.proxy(this._handleChangeLimitation, this, $layer));
   },
@@ -115,28 +115,29 @@ Tw.MyTDataFamily.prototype = {
 
     $layer.find('.bt-red1 > button').attr('disabled', value.length === 0);
     this._limitation = value;
-  },
-
-  _openCancelPopup: function() {
-    this._popupService.openConfirmButton(
-      Tw.ALERT_CANCEL,
-      null,
-      $.proxy(this._goBack, this),
-      $.proxy(this._handleAfterClose, this),
-      Tw.BUTTON_LABEL.NO,
-      Tw.BUTTON_LABEL.YES
-    );
-  },
-
-  _goBack: function() {
-    this._popupService.close();
-    this._isClose = true;
-  },
-
-  _handleAfterClose: function() {
-    if (this._isClose) {
-      history.back();
-      this._isClose = false;
-    }
   }
+
+  // _handleClickClose: function() {
+  //   this._popupService.close();
+  // this._popupService.openConfirmButton(
+  //   Tw.ALERT_CANCEL,
+  //   null,
+  //   $.proxy(this._goBack, this),
+  //   $.proxy(this._handleAfterClose, this),
+  //   Tw.BUTTON_LABEL.NO,
+  //   Tw.BUTTON_LABEL.YES
+  // );
+  // }
+
+  // _goBack: function() {
+  //   this._popupService.close();
+  //   this._isClose = true;
+  // },
+
+  // _handleAfterClose: function() {
+  //   if (this._isClose) {
+  //     history.back();
+  //     this._isClose = false;
+  //   }
+  // }
 };

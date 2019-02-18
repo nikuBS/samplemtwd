@@ -18,7 +18,7 @@ Tw.MyTJoinCombinationsDataShare = function(rootEl, group) {
 
 Tw.MyTJoinCombinationsDataShare.prototype = {
   _bindEvent: function() {
-    this.$container.on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
+    // this.$container.on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
     this.$container.on('click', '.list-comp-input li', $.proxy(this._handleSelectSubject, this));
     this.$container.on('click', '.radio-slide li', $.proxy(this._handleSelectAmount, this));
     this.$container.on('click', '#fe-submit', $.proxy(this._handleSubmitShare, this));
@@ -81,27 +81,27 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
 
   _closeCompletePopup: function() {
     history.back();
-  },
-
-  _openCancelPopup: function() {
-    this._popupService.openConfirmButton(
-      Tw.ALERT_CANCEL,
-      null,
-      $.proxy(this._goBack, this),
-      $.proxy(this._handleAfterClose, this),
-      Tw.BUTTON_LABEL.NO,
-      Tw.BUTTON_LABEL.YES
-    );
-  },
-
-  _goBack: function() {
-    this._popupService.close();
-    this._isClose = true;
-  },
-
-  _handleAfterClose: function() {
-    if (this._isClose) {
-      history.back();
-    }
   }
+
+  // _openCancelPopup: function() {
+  //   this._popupService.openConfirmButton(
+  //     Tw.ALERT_CANCEL,
+  //     null,
+  //     $.proxy(this._goBack, this),
+  //     $.proxy(this._handleAfterClose, this),
+  //     Tw.BUTTON_LABEL.NO,
+  //     Tw.BUTTON_LABEL.YES
+  //   );
+  // },
+
+  // _goBack: function() {
+  //   this._popupService.close();
+  //   this._isClose = true;
+  // },
+
+  // _handleAfterClose: function() {
+  //   if (this._isClose) {
+  //     history.back();
+  //   }
+  // }
 };

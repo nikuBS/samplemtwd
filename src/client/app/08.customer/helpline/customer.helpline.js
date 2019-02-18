@@ -26,7 +26,7 @@ Tw.CustomerHelpline.prototype = {
   },
 
   _bindEvent: function() {
-    this.$container.on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
+    // this.$container.on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
     this.$container.on('click', 'span.bt-box', $.proxy(this._openContacts, this));
     this.$areaPhone.on('keyup', 'input', $.proxy(this._handleTypePhoneNumber, this));
     this.$areaPhone.on('change', 'input', $.proxy(this._validatePhoneNumber, this));
@@ -46,13 +46,13 @@ Tw.CustomerHelpline.prototype = {
     this.$telephone = this.$container.find('#fe-telephone');
   },
 
-  _openCancelPopup: function() {
-    this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null, $.proxy(this._handleCancel, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-  },
+  // _openCancelPopup: function() {
+  //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null, $.proxy(this._handleCancel, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+  // },
 
-  _handleCancel: function() {
-    this._historyService.go(-2);
-  },
+  // _handleCancel: function() {
+  //   this._historyService.go(-2);
+  // },
 
   _openContacts: function() {
     this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._handleGetContact, this));

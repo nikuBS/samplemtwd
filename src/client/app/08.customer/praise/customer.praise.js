@@ -30,7 +30,7 @@ Tw.CustomerPraise.prototype = {
   _bindEvent: function() {
     this.$container.on('keyup', '.input > input', $.proxy(this._setAvailableSubmit, this));
     this.$container.on('click', '.cancel', $.proxy(this._setAvailableSubmit, this, true));
-    this.$container.on('click', '.prev-step', $.proxy(this._handleClickCancel, this));
+    // this.$container.on('click', '.prev-step', $.proxy(this._handleClickCancel, this));
     this.$typeBtn.on('click', $.proxy(this._openSelectTypePopup, this));
     this.$reasons.on('keyup', $.proxy(this._handleTypeReasons, this));
     this.$area.on('click', $.proxy(this._openSelectAreaPopup, this));
@@ -292,14 +292,15 @@ Tw.CustomerPraise.prototype = {
     this.$typeBtn.text(Tw.CUSTOMER_PRAISE_DEFAULT.TYPE);
     this.$area.find('button').text(Tw.CUSTOMER_PRAISE_DEFAULT.AREA);
     this._setAvailableSubmit(true);
-  },
-
-  _handleClickCancel: function() {
-    this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null, $.proxy(this._handleConfirmCancel, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-  },
-
-  _handleConfirmCancel: function() {
-    this._clearForm();
-    window.history.go(-2);
   }
+
+  // _handleClickCancel: function() {
+  //   this._historyService.goBack();
+  // this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null, $.proxy(this._handleConfirmCancel, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+  // }
+
+  // _handleConfirmCancel: function() {
+  //   this._clearForm();
+  //   window.history.go(-2);
+  // }
 };

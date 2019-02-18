@@ -29,7 +29,7 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
   },
 
   _bindEvent: function() {
-    $('.wrap').on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
+    // $('.wrap').on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
     this.$container.on('click', '.fe-submit', $.proxy(this._confirmSubmit, this));
     this.$retrieveBtn.on('click', $.proxy(this._handleClickRetrive, this));
   },
@@ -114,28 +114,28 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
         3000
       );
     }
-  },
-
-  _openCancelPopup: function() {
-    this._popupService.openConfirmButton(
-      Tw.ALERT_CANCEL,
-      null,
-      $.proxy(this._goBack, this),
-      $.proxy(this._handleAfterClose, this),
-      Tw.BUTTON_LABEL.NO,
-      Tw.BUTTON_LABEL.YES
-    );
-  },
-
-  _goBack: function() {
-    this._popupService.close();
-    this._isClose = true;
-  },
-
-  _handleAfterClose: function() {
-    if (this._isClose) {
-      history.back();
-      this._isClose = false;
-    }
   }
+
+  // _openCancelPopup: function() {
+  //   this._popupService.openConfirmButton(
+  //     Tw.ALERT_CANCEL,
+  //     null,
+  //     $.proxy(this._goBack, this),
+  //     $.proxy(this._handleAfterClose, this),
+  //     Tw.BUTTON_LABEL.NO,
+  //     Tw.BUTTON_LABEL.YES
+  //   );
+  // },
+
+  // _goBack: function() {
+  //   this._popupService.close();
+  //   this._isClose = true;
+  // },
+
+  // _handleAfterClose: function() {
+  //   if (this._isClose) {
+  //     history.back();
+  //     this._isClose = false;
+  //   }
+  // }
 };
