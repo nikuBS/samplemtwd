@@ -186,7 +186,7 @@ Tw.MyTJoinWireModifyProduct.prototype = {
     //팝업 속 버튼을 클릭했을 때
     $layer.on('click', '[data-target="selectBtn"]', $.proxy( function(event) {
       this.$select_product_bill.attr('disabled', false); // 요금상품 선택 버튼 활성화
-      this.$select_product_bill.text('요금상품 선택');
+      this.$select_product_bill.text(Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT.SEL_PROD_TYPE_DEF);
       this.productFormData.prodNm = '';
 
 
