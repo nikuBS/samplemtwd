@@ -30,6 +30,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     this.$submitBtn = this.$container.find('#fe-submit');
     this.$error = this.$container.find('#fe-error');
     this.$strong = this.$container.find('strong.txt-c2');
+    this.$cancel = this.$container.find('.cancel');
   },
 
   _addChangeeData: function(e) {
@@ -48,10 +49,12 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
         this.$input.attr('disabled', true);
         $target.siblings('.btn-type01').attr('disabled', true);
         $target.addClass('btn-on');
+        this.$cancel.css('display', 'none');
         this._all = true;
       }
     } else {
       this.$input.val(Number(this.$input.val()) + Number(value));
+      this.$cancel.css('display', 'inline-block');
     }
 
     this._validateChangeAmount();
