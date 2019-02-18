@@ -477,7 +477,7 @@ Tw.MYT_TPL = {
       '{{else}}'+
       '<span class="info-sub">{{svcNum}}</span>' +
       '{{/if}}' +
-    '<span class="price">{{amt}} 원</span>' +
+    '<span class="price">{{amt}}</span>' +
     '</span></button></li>'
   },
   JOIN_SUBMAIN: {

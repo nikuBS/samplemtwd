@@ -351,57 +351,62 @@ Tw.MyTFareSubMain.prototype = {
 
   // 다른회선청구요금 조회-1
   _otherLineBills: function () {
-    var otherLineLength = this.data.otherLines.length;
-    if ( otherLineLength > 0 ) {
-      var requestCommand = [];
-      for ( var idx = 0; idx < otherLineLength; idx++ ) {
-        this._svcMgmtNumList.push(this.data.otherLines[idx].svcMgmtNum);
-        requestCommand.push({
-          command: this.data.otherLines[idx].actRepYn === 'N' ? Tw.API_CMD.BFF_05_0047 : Tw.API_CMD.BFF_05_0036,
-          // 서버 명세가 변경됨 svcMgmtNum -> T-svcMgmtNum
-          headers: {
-            'T-svcMgmtNum': this.data.otherLines[idx].svcMgmtNum
-          }
-        });
-      }
-      this._apiService.requestArray(requestCommand)
-        .done($.proxy(this._responseOtherLineBills, this))
-        .fail($.proxy(this._errorRequest, this));
-    }
-    else {
-      this._responseOtherLineBills();
-    }
+    // 성능 개선 항목으로 요금조회 하지 않고 화면 표시하도록 수
+    // var otherLineLength = this.data.otherLines.length;
+    // if ( otherLineLength > 0 ) {
+    //   var requestCommand = [];
+    //   for ( var idx = 0; idx < otherLineLength; idx++ ) {
+    //     this._svcMgmtNumList.push(this.data.otherLines[idx].svcMgmtNum);
+    //     requestCommand.push({
+    //       command: this.data.otherLines[idx].actRepYn === 'N' ? Tw.API_CMD.BFF_05_0047 : Tw.API_CMD.BFF_05_0036,
+    //       // 서버 명세가 변경됨 svcMgmtNum -> T-svcMgmtNum
+    //       headers: {
+    //         'T-svcMgmtNum': this.data.otherLines[idx].svcMgmtNum
+    //       }
+    //     });
+    //   }
+    //   this._apiService.requestArray(requestCommand)
+    //     .done($.proxy(this._responseOtherLineBills, this))
+    //     .fail($.proxy(this._errorRequest, this));
+    // }
+    // else {
+    //   this._responseOtherLineBills();
+    // }
+    this._responseOtherLineBills();
   },
 
   // 다른회선청구요금 조회-2
   _responseOtherLineBills: function () {
+    var otherLineLength = this.data.otherLines.length;
     var combinList = [];
     var individualList = [];
-    if ( arguments.length > 0 ) {
-      for ( var idx = 0; idx < arguments.length; idx++ ) {
-        if ( arguments[idx].code === Tw.API_CODE.CODE_00 ) {
-          var item = arguments[idx].result;
-          var amt = parseInt(item.useAmtTot || 0, 10);
-          var isCombine = (item.paidAmtMonthSvcCnt > 1); // 통합청구여부
-          var repSvc = (item.repSvcYn === 'Y'); // 대표청구여부
-          var selectLine = this.__selectOtherLine(this._svcMgmtNumList[idx]);
-          var data = _.extend({
-            combine: isCombine,
-            repSvc: repSvc,
-            amt: Tw.FormatHelper.addComma(amt.toString()),
-            svcType: this.__selectSvcType(selectLine.svcAttrCd),
-            isAddr: (['S1', 'S2'].indexOf(selectLine.svcAttrCd) > -1)
-          }, selectLine);
-          if ( isCombine ) {
-            combinList.push(data);
-          }
-          else {
-            individualList.push(data);
-          }
+    if ( otherLineLength > 0 ) {
+      for ( var idx = 0; idx < otherLineLength; idx++ ) {
+        // if ( arguments[idx].code === Tw.API_CODE.CODE_00 ) {
+        // var item = arguments[idx].result;
+        // var amt = parseInt(item.useAmtTot || 0, 10);
+        var item = this.data.otherLines[idx];
+        // TODO: 전체회선 조회에서는 통합청구여부 정보를 확인 할 수 없다. 다른 정보확인 필요
+        // var isCombine = (item.paidAmtMonthSvcCnt > 1); // 통합청구여부
+        var isCombine = false;
+        var repSvc = (item.actRepYn === 'Y'); // 대표청구여부
+        var data = _.extend({
+          combine: isCombine,
+          repSvc: repSvc,
+          amt: '',
+          svcType: this.__selectSvcType(item.svcAttrCd),
+          isAddr: (['S1', 'S2'].indexOf(item.svcAttrCd) > -1)
+        }, item);
+        if ( isCombine ) {
+          combinList.push(data);
         }
+        else {
+          individualList.push(data);
+        }
+        // }
       }
     }
-    this._svcMgmtNumList = [];
+    // this._svcMgmtNumList = [];
     // 통합청구리스트, 개별청구리스트
     this._initOtherLineList(combinList.concat(individualList));
   },
