@@ -56,6 +56,7 @@ Tw.ProductCommonCallplan.prototype = {
     this.$goProd = this.$container.find('.fe-go_prod');
 
     this.$contentsDetailItem = this.$container.find('.fe-contents_detail_item');
+    this.$contentsBtnRoamingAuto = this.$container.find('.fe-btn_roaming_auto');
     this.$contents = this.$container.find('.fe-contents');
   },
 
@@ -79,9 +80,12 @@ Tw.ProductCommonCallplan.prototype = {
     this.$contents.on('click', '.save_pay', $.proxy(this._openCustomPopup, this, 'BS_04_01_01_01'));
     this.$contents.on('click', '.fe-clubt', $.proxy(this._openCustomPopup, this, 'MP_02_02_04_01'));
     this.$contents.on('click', '.fe-campuszone', $.proxy(this._openCustomPopup, this, 'MP_02_02_04_02'));
-    this.$contents.on('click', '.fe-btn_roaming_auto', $.proxy(this._procRoamingAuto, this));
 
     this.$contents.on('click', 'a', $.proxy(this._detectClubT, this));
+
+    if (this.$contentsBtnRoamingAuto.length > 0) {
+      this.$contentsBtnRoamingAuto.on('click', $.proxy(this._procRoamingAuto, this));
+    }
   },
 
   _showReadyOn: function() {
@@ -502,6 +506,12 @@ Tw.ProductCommonCallplan.prototype = {
   _detectRoamingAutoInput: function(e) {
     var $input = $(e.currentTarget);
     $input.val($input.val().replace(/[^0-9]/g, ''));
+
+    if ($input.val().length > 0 && Tw.ValidationHelper.isCellPhone('010' + $input.val())) {
+      this.$contentsBtnRoamingAuto.removeAttr('disabled').prop('disabled', true);
+    } else {
+      this.$contentsBtnRoamingAuto.attr('disabled', 'disabled').prop('disabled', false);
+    }
   },
 
   _procRoamingAuto: function(e) {
