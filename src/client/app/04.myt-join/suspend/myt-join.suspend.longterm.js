@@ -253,9 +253,12 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       from = Tw.DateHelper.getCurrentShortDate();
       $period = this.$container.find('.fe-abroad.fe-date');
       to = $period.find('[data-role="fe-from-dt"]').val().replace(/-/g, '');
-      diff = Tw.DateHelper.getDiffByUnit(from, to, 'days');
+      diff = Tw.DateHelper.getDiffByUnit(to, from, 'days');
       if ( diff < 0 ) {
         this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE);
+        return;
+      }else if( diff > 30 ){
+        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE_01);
         return;
       }
       option.svcChgRsnCd = '22';
