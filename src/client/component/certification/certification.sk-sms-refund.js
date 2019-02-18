@@ -232,9 +232,9 @@ Tw.CertificationSkSmsRefund.prototype = {
             this._callback(res);
           }
         } else {
-          if ( res.code === this.SMS_ERROR.ATH2011 ) {
+          if ( res.code === this.SMS_CERT_ERROR.ATH2011 ) {
             this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2011);
-          } else if ( res.code === this.SMS_ERROR.ATH2014 ) {
+          } else if ( res.code === this.SMS_CERT_ERROR.ATH2014 ) {
             this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2014);
           } else if (!!this.SMS_CERT_ERROR[res.code]) {
             this._showCertNumberError(res.code);
@@ -272,7 +272,8 @@ Tw.CertificationSkSmsRefund.prototype = {
     this.$container.find('.fe-cert-number-txt.' + code).removeClass('none');
   },
   _timeExpired: function () {
-    this._showCertNumberError('ATH2008');
-    this.$btConfirm.attr('disabled', 'disabled');
+    this._certBtnStatus = 1;
+    this._setCertBtnText();
+    this._certBtnStatus = 0;
   }
 };
