@@ -34,30 +34,19 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
   _cachedElement: function() {
     this.$inputPassword = this.$container.find('.fe-input-password');
     this.$confirmPassword = this.$container.find('.fe-confirm-password');
-    this.$inputRealPassword = this.$container.find('.fe-input-real-password');
-    this.$realConfirmPassword = this.$container.find('.fe-real-confirm-password');
     this.$error0 = this.$container.find('.fe-error0');
     this.$error1 = this.$container.find('.fe-error1');
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
   },
 
   _bindEvent: function() {
-    this.$container.on('input', 'input', $.proxy(this._checkNumber, this));
-    this.$container.on('blur', 'input', $.proxy(this._setMasking, this, 1));
     this.$container.on('keyup', 'input', $.proxy(this._checkIsAbled, this));
     this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
   },
 
-  _checkNumber: function (event) {
-    var target = event.target;
-    Tw.InputHelper.inputNumberAndAsteriskOnly(target);
-
-    this._setMasking(2, event);
-  },
-
   _checkIsAbled: function () {
-    var $inputPasswordVal = $.trim(this.$inputRealPassword.val()),
-      $confirmPasswordVal = $.trim(this.$realConfirmPassword.val());
+    var $inputPasswordVal = $.trim(this.$inputPassword.val()),
+      $confirmPasswordVal = $.trim(this.$confirmPassword.val());
 
     this.$btnSetupOk.attr('disabled', 'disabled');
     this.$error0.hide();
@@ -99,35 +88,6 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
 
   _setErrorText: function ($elem, text) {
     $elem.text(text).show();
-  },
-
-  _setMasking: function (standardLength, event) {
-    var $target = $(event.currentTarget);
-    var $hiddenTarget = $target.siblings('input');
-    var $value = $target.val();
-    var length = $value.length;
-
-    var inputData = null;
-
-    if ($target.val().length > $hiddenTarget.val().length) {
-      inputData = $target.val()[$target.val().length - 1];
-    }
-
-    if ($target.val().length < $hiddenTarget.val().length) {
-      inputData = null;
-    }
-
-    if (inputData !== undefined && !isNaN(inputData)) {
-      if (inputData === null) {
-        $hiddenTarget.val($hiddenTarget.val().substring(length, 0));
-      } else {
-        $hiddenTarget.val($hiddenTarget.val() + inputData);
-      }
-    }
-
-    if (length > 1) {
-      $target.val($value.replace($value[length - standardLength], '*'));
-    }
   },
 
   _convConfirmOptions: function() {

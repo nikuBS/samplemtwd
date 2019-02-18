@@ -51,9 +51,9 @@
                             <label class="tit">비밀번호 입력</label>
                             <span class="inputbox">
                                 <span class="input">
-                                    <input type="text" class="fe-input-password"
-                                           placeholder="4자리 숫자 입력" title="비밀번호 4자리 숫자 입력하세요" maxlength="4">
-                                    <input type="hidden" class="fe-input-real-password" />
+                                    <input type="number" style="-webkit-text-security:disc;" class="fe-input-password"
+                                           placeholder="4자리 숫자 입력" title="비밀번호 4자리 숫자 입력하세요"
+                                           maxlength="4" pattern="[0-9]*" inputmode="numeric">
                                     <button class="cancel"><span class="blind">삭제</span></button>
                                 </span>
                             </span>
@@ -63,9 +63,9 @@
                             <label class="tit">비밀번호 확인</label>
                             <span class="inputbox">
                                 <span class="input">
-                                    <input type="text" class="fe-confirm-password"
-                                           placeholder="4자리 숫자 입력" title="비밀번호 4자리 숫자 입력하세요" maxlength="4">
-                                    <input type="hidden" class="fe-real-confirm-password" />
+                                    <input type="number" style="-webkit-text-security:disc;" class="fe-confirm-password"
+                                           placeholder="4자리 숫자 입력" title="비밀번호 4자리 숫자 입력하세요"
+                                           maxlength="4" pattern="[0-9]*" inputmode="numeric">
                                     <button class="cancel"><span class="blind">삭제</span></button>
                                 </span>
                             </span>
