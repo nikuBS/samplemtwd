@@ -212,7 +212,7 @@ Tw.MenuComponent.prototype = {
     if ( !this._tNotifyComp ) {
       this._tNotifyComp = new Tw.TNotifyComponent();
     }
-    this._tNotifyComp.open(this._tid);
+    this._tNotifyComp.openWithHash(this._tid, 'menu');
   },
   _onUserInfo: function () {
     if ( this._isMultiLine ) {
