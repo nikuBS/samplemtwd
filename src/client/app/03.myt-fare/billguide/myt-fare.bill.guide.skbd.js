@@ -36,7 +36,9 @@ Tw.MyTFareBillGuideSKBD.prototype = {
       $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.MYT_JOIN.BROADBAND_ERROR.LINK),
       $.proxy(function () {
         Tw.CommonHelper.startLoading('.wrap', 'grey', true);
-        this._historyService.goBack();
+        // this._historyService.goBack();
+        // 동일 화면에서 회선변경 등으로 들어오는 경우 back하면 동일화면으로 이동되기 때문에 서브메인가도록 수정
+        this._historyService.go('/myt-fare/submain');
       }, this)
     );
   }
