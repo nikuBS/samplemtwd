@@ -72,7 +72,7 @@ export default class MyTDataFamily extends TwViewController {
         mine: {
           ...mine,
           remained: FormatHelper.convDataFormat(data.remained, DATA_UNIT.MB),
-          ratio: Math.round(data.remained / data.total / 10),
+          ratio: Math.round((data.remained / 1024 / data.total) * 100),
           used: FormatHelper.convDataFormat(Number(mine.used), DATA_UNIT.MB),
           shared: FormatHelper.addComma(mine.shared),
           limitation: FormatHelper.addComma(mine.limitation),
