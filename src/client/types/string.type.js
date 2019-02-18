@@ -159,8 +159,10 @@ Tw.FARE_CHART_LEGEND = {
 Tw.TOAST_TEXT = {
   MYT_FARE_HISTORY_AUTOPAYMENT_BLOCK: '차단 신청이 완료되었습니다.',
   MTY_FARE_HISTORY_AUTOPAYMENT_UNBLOCK: '헤제 신청이 완료되었습니다.',
-  MYT_DATA_LIMIT_BLOCK: '데이터 차단이 설정되었습니다.',
+  MYT_DATA_LIMIT_BLOCK: '데이터 차단이 해제되었습니다.',
   MYT_DATA_LIMIT_UNBLOCK: '데이터 차단해제가 설정되었습니다.',
+  MYT_DATA_LIMIT_MONTHLY_BLOCK: '다음 달부터 데이터 차단이 해제됩니다.',
+  MYT_DATA_LIMIT_MONTHLY_UNBLOCK: '다음 달부터 데이터 차단이 설정됩니다.',
   QUICK_ADD: 'MY 바로가기에 추가되었습니다.',
   QUICK_REMOVE: 'MY 바로가기에서 제거되었습니다.',
   FIDO_USE: '생체인증을 사용합니다.',
