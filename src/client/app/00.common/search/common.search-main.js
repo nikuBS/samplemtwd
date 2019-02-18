@@ -156,7 +156,10 @@ Tw.CommonSearchMain.prototype = {
       if(this._historyService.getHash()==='#on_input'){
         this._historyService.goBack();
       }
-      this._historyService.goLoad($target.attr('href'));
+      setTimeout($.proxy(function () {
+        this._historyService.goLoad($target.attr('href'));
+      },this));
+
     }else{
       this._doSearch($target.data('param'));
     }
@@ -165,8 +168,10 @@ Tw.CommonSearchMain.prototype = {
     if(this._historyService.getHash()){
       this._historyService.goBack();
     }
-    this._addRecentlyKeywordList(searchKeyword);
-    this._historyService.goLoad('/common/search?keyword='+searchKeyword+'&step='+(this._step+1));
+    setTimeout($.proxy(function () {
+      this._addRecentlyKeywordList(searchKeyword);
+      this._historyService.goLoad('/common/search?keyword='+searchKeyword+'&step='+(this._step+1));
+    },this));
   },
   _hashChange : function () {
     if(Tw.FormatHelper.isEmpty(this._historyService.getHash())&&this._onInput){
