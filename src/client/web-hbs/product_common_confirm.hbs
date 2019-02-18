@@ -54,7 +54,7 @@
                             <span class="tit-tx"><span class="blind">{{joinTypeText}}할 상품정보</span>{{toProdName}}</span>
                         {{/if}}
                         {{#if isNumberBasFeeInfo}}
-                            <span class="sub-disc03"><span class="tx-bold vbl">{{toProdBasFeeInfo}}원</span> 부가세포함</span>
+                            <span class="sub-disc03"><span class="tx-bold vbl">월 {{toProdBasFeeInfo}}원</span> 부가세포함</span>
                         {{else}}
                             <span class="sub-disc03"><span class="tx-bold vbl">{{toProdBasFeeInfo}}</span></span>
                         {{/if}}
@@ -68,7 +68,7 @@
                         <div class="pt30">
                             <ul class="bt-slice">
                                 <li class="bt-blue1">
-                                    <button class="fe-btn_compare_plans">사용중인 요금제와 비교하기</button>
+                                    <button class="fe-btn_compare_plans">사용 중인 요금제와 비교하기</button>
                                 </li>
                             </ul>
                         </div>
@@ -106,8 +106,8 @@
                         <ul>
                             <li>
                                 <div class="tit-area">
-                                    <span class="tit">자동 가입</span>
-                                    <span class="sub-tit">서비스 및 혜택</span>
+                                    <span class="tit">자동</span>
+                                    <span class="sub-tit">가입되는 항목</span>
                                 </div>
                                 <div class="cont-area">
                                     {{#if autoJoinList}}
@@ -151,8 +151,8 @@
                             </li>
                             <li>
                                 <div class="tit-area">
-                                    <span class="tit">자동 해지</span>
-                                    <span class="sub-tit">서비스 및 혜택</span>
+                                    <span class="tit">자동</span>
+                                    <span class="sub-tit">해지되는 항목</span>
                                 </div>
                                 <div class="cont-area">
                                     {{#if autoTermList}}
