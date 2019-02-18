@@ -100,7 +100,12 @@ Tw.ProductMobileplanAddSettingCombineLine.prototype = {
     }, {}, [this._prodId]).done($.proxy(this._addDelNumRes, this));
   },
 
-  _detectInputNumber: function() {
+  _detectInputNumber: function(e) {
+    if (Tw.InputHelper.isEnter(e)) {
+      this.$btnAddNum.trigger('click');
+      return;
+    }
+
     this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9]/g, ''));
 
     if (this.$inputNumber.val().length > 11) {

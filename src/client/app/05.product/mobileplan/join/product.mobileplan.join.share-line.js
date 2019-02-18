@@ -57,7 +57,12 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
     this._toggleClearBtn();
   },
 
-  _detectInputNumber: function() {
+  _detectInputNumber: function(e) {
+    if (Tw.InputHelper.isEnter(e)) {
+      this.$btnSetupOk.trigger('click');
+      return;
+    }
+
     this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9]/g, ''));
 
     if (this.$inputNumber.val().length > 11) {
