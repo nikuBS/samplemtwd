@@ -23,6 +23,7 @@ Tw.ProductMobileplanAddJoinRemotePwd = function(rootEl, prodId, displayId, confi
   this._cachedElement();
   this._bindEvent();
   this._convConfirmOptions();
+  this._procWebkitCheck();
 };
 
 Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
@@ -42,6 +43,15 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
   _bindEvent: function() {
     this.$container.on('keyup', 'input', $.proxy(this._checkIsAbled, this));
     this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
+  },
+
+  _procWebkitCheck: function() {
+    if ('webkitLineBreak' in document.documentElement.style) {
+      return;
+    }
+
+    this.$inputPassword.attr('type', 'password');
+    this.$confirmPassword.attr('type', 'password');
   },
 
   _checkIsAbled: function () {
