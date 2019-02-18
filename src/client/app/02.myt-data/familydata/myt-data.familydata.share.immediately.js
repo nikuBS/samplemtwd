@@ -79,6 +79,7 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
         this.$amountInput.removeAttr('disabled');
       } else {
         this.$container.find('#fe-share').addClass('none');
+        this.$container.find('.fe-submit').remove();
         this.$container.find('#fe-share-none').removeClass('none');
       }
     } else {
