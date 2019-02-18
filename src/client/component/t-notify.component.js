@@ -16,7 +16,10 @@ Tw.TNotifyComponent = function () {
 Tw.TNotifyComponent.prototype = {
   open: function (userId) {
     this._getPushDate(userId);
-
+  },
+  openWithHash: function (userId, hash) {
+    this._extraHash = hash;
+    this._getPushDate(userId);
   },
   _openTNotify: function (list) {
     if ( list.length > 0 ) {
@@ -29,7 +32,7 @@ Tw.TNotifyComponent.prototype = {
         list: list,
         showMore: list.length > Tw.DEFAULT_LIST_COUNT
       }
-    }, $.proxy(this._onOpenTNotify, this), $.proxy(this._onCloseTNotify, this), 't-notify');
+    }, $.proxy(this._onOpenTNotify, this), $.proxy(this._onCloseTNotify, this), this._extraHash ? this._extraHash + '-t-notify' : 't-notify');
   },
   _onOpenTNotify: function ($popupContainer) {
     this.$list = $popupContainer.find('.fe-list-item');
