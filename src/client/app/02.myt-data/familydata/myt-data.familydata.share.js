@@ -18,6 +18,7 @@ Tw.MyTDataFamilyShare.prototype = {
     this.$error = this.$container.find('.input-txt-type02');
     this.$pRemained = this.$container.find('p.pt4');
     this.$sRemained = this.$pRemained.find('.txt-c2');
+    this.$cancel = this.$container.find('.cancel');
   },
 
   _bindEvent: function() {
@@ -35,6 +36,8 @@ Tw.MyTDataFamilyShare.prototype = {
     } else {
       this.$amountInput.val(Number(this.$amountInput.val()) + Number(value));
     }
+
+    this.$cancel.css('display', 'inline-block');
 
     this._validateShareAmount();
   },
