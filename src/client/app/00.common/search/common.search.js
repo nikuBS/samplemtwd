@@ -19,7 +19,7 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from) {
 
 Tw.CommonSearch.prototype = {
   _init : function (searchInfo,from) {
-    if(from==='menu'&&this._historyService.isReload()===false){
+    if(from==='menu'&&this._historyService.isReload()===false&&this._historyService.isBack()){
       this._addRecentlyKeyword(this._accessKeyword);
     }
     if(searchInfo.totalcount===0){
@@ -54,6 +54,7 @@ Tw.CommonSearch.prototype = {
     this.$container.on('click','.list-data',$.proxy(this._goLink,this));
     this.$container.on('click','.icon-gnb-search',$.proxy(this._doSearch,this));
     this.$container.find('#contents').removeClass('none');
+    new Tw.XtractorService(this.$container);
   },
 
   _arrangeData : function (data,category) {
@@ -129,7 +130,7 @@ Tw.CommonSearch.prototype = {
   _doSearch : function () {
     var keyword = this.$inputElement.val();
     if(Tw.FormatHelper.isEmpty(keyword)){
-      this._popupService.openAlert(Tw.ALERT_MSG_SEARCH.KEYWORD_ERR);
+      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR);
       return;
     }
     var inResult = this.$container.find('#resultsearch').is(':checked');
@@ -183,10 +184,11 @@ Tw.CommonSearch.prototype = {
   },
   _searchRelatedKeyword : function (targetEvt) {
     targetEvt.preventDefault();
-    var keyword = $(targetEvt.currentTarget).data('param');
-    var goUrl = '/common/search?keyword='+keyword+'&step='+(Number(this._step)+1);
+    var $targetElement = $(targetEvt.currentTarget);
+    var keyword = $targetElement.data('param');
+    //var goUrl = '/common/search?keyword='+keyword+'&step='+(Number(this._step)+1);
     this._addRecentlyKeyword(keyword);
-    this._historyService.goLoad(goUrl);
+    this._historyService.goLoad($targetElement.attr('href'));
   },
   _goLink : function (linkEvt) {
     linkEvt.preventDefault();

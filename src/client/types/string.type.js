@@ -55,7 +55,7 @@ Tw.BUTTON_LABEL = {
   NEXT: '다음',
   HOME: '홈으로',
   YES: '예',
-  NO: '아니요',
+  NO: '아니오',
   COMPLETE: '완료'
 };
 
@@ -739,7 +739,7 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A69: { TITLE: '해당 상품의 해지예약신청 이력이 있습니다. 해지예약을 취소하시겠습니까?', BUTTON: '취소하기' },
   ALERT_3_A70: { TITLE: '해당 상품의 변경예약신청 이력이 있습니다. 변경예약을 취소하시겠습니까?', BUTTON: '취소하기' },
   ALERT_3_A73: { TITLE: '스마트워치 회선이 존재하지 않습니다.\n회선 없이 \'인피니티_스마트워치\' 옵션을 선택하시겠습니까?', MSG: '' },
-  ALERT_3_A74: { TITLE: '선택하신 상품 해지를 취소 하시겠습니까?', MSG: '', BUTTON: '계속하기' },
+  ALERT_3_A74: { TITLE: '선택하신 상품 해지를 취소하시겠습니까?', MSG: '', BUTTON: '계속하기' },
   ALERT_3_A77: { TITLE: '지역 추가 시, 1개 지역당 1,650원(부가세포함)씩 과금이 추가됩니다.지역을 추가하시겠습니까?', MSG: '' },
   ALERT_3_A78: { TITLE: '할인지역은 최대 2개까지 등록가능합니다', MSG: '' },
   ALERT_3_A79: { TITLE: '고객님의 휴대폰은 로밍오토다이얼이 가능합니다.', MSG: '' },
@@ -1619,7 +1619,7 @@ Tw.SELECTED_DATE_STRING = {
 };
 
 Tw.ROAMING_COMBINE_LINE_STRING = {
-  COMBINE_LINE: '자회선 설정하기 >',
+  COMBINE_LINE: '자회선 설정하기',
   DUPLICATE_LINE : 'T로밍도착알리미 멤버에 이미 존재하는 서비스번호입니다.'
 };
 

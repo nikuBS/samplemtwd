@@ -58,7 +58,7 @@
             <% if(searchInfo.suggestQuery.length>0){ %>
             <div class="cont-box noborder gaps-style03">
                 <p class="re-searchword">
-                    혹시 이것을 찾으시나요? <a data-param="<%= searchInfo.suggestQuery %>"class="re-searchword-text search-element"><%= searchInfo.suggestQuery %><%= recognizeLastChar(searchInfo.suggestQuery) %>로 검색하기</a>
+                    혹시 이것을 찾으시나요? <a href="/common/search?step=<%= Number(step)+1 %>&keyword=<%= searchInfo.suggestQuery %>" data-param="<%= searchInfo.suggestQuery %>"class="re-searchword-text search-element"><%= searchInfo.suggestQuery %><%= recognizeLastChar(searchInfo.suggestQuery) %>로 검색하기</a>
                 </p>
             </div>
             <% } %>
@@ -68,7 +68,11 @@
                 <dl class="searchword-list">
                     <dt class="tit">연관</dt>
                     <% for(var i=0;i<relatedKeyword.result.Word.length&&i<=4;i++){ %>
-                    <dd><a data-param="<%= relatedKeyword.result.Word[i] %>" class="link search-element"><%= relatedKeyword.result.Word[i] %></a></dd>
+                    <dd>
+                        <a href="/common/search?step=<%= Number(step)+1 %>&keyword=<%= relatedKeyword.result.Word[i] %>" data-xt_csid="NO" data-xt_action="BC" data-xt_eid="CMMA_A11_B4-3<%= i+1 %>" data-param="<%= relatedKeyword.result.Word[i] %>" class="link search-element xtractor">
+                            <%= relatedKeyword.result.Word[i] %>
+                        </a>
+                    </dd>
                     <% } %>
                 </dl>
             </div>
