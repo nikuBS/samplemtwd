@@ -1300,6 +1300,7 @@ Tw.CUSTOMER_HELPLINE_COMPLETE = {
 };
 
 Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT = {
+  SEL_PROD_TYPE_DEF: '요금제 선택',
   SVCCTG: {
     S1: '인터넷',
     S2: 'IPTV',
