@@ -280,6 +280,7 @@ class MytDataSubmainController extends TwViewController {
   }
 
   convShowData(data: any) {
+    // 실시간데이터 잔여량 표기 방법 표시
     data.isUnlimit = !isFinite(data.total);
     data.remainedRatio = 100;
     data.showUsed = this.convFormat(data.used, data.unit);
@@ -291,6 +292,7 @@ class MytDataSubmainController extends TwViewController {
   }
 
   calculationData(tmoaremained: number, tmoatotal: number, etcremained: number, etctotal: number): any {
+    // 실시간데이터 잔여량 표기 방법 표시
     const result: any = {};
     const total = tmoatotal + etctotal;
     const totalRemained = tmoaremained + etcremained;
@@ -305,6 +307,7 @@ class MytDataSubmainController extends TwViewController {
   }
 
   convFormat(data: string, unit: string): string {
+    // 실시간데이터 잔여량 데이터 포맷 설정
     switch ( unit ) {
       case UNIT_E.DATA:
         return FormatHelper.convDataFormat(data, UNIT[unit]);
@@ -319,6 +322,7 @@ class MytDataSubmainController extends TwViewController {
   }
 
   parseRemnantData(remnant: any): any {
+    // 실시간잔여량 데이터 parse
     const GDATA = remnant['gnrlData'] || [];
     const SDATA = remnant['spclData'] || [];
     const VOICE = remnant['voice'] || [];
@@ -386,6 +390,7 @@ class MytDataSubmainController extends TwViewController {
   }
 
   convertChildLines(items): any {
+    // 자녀회선 분리코드
     const list: any = [];
     items.filter((item) => {
       list.push({
@@ -399,6 +404,7 @@ class MytDataSubmainController extends TwViewController {
   }
 
   compare(a, b) {
+    // 다른회선조회시 순서 정렬
     const codeA = a.svcAttrCd.toUpperCase();
     const codeB = b.svcAttrCd.toUpperCase();
 
@@ -434,6 +440,7 @@ class MytDataSubmainController extends TwViewController {
   }
 
   sortBreakdownItems(items): any {
+    // 최근 충전/선물 내역 정렬
     return Array.prototype.concat.apply([], items).sort((a, b) => {
       if ( a.opDt > b.opDt ) {
         return -1;
@@ -444,6 +451,7 @@ class MytDataSubmainController extends TwViewController {
     });
   }
 
+  // 실시간잔여량
   _getRemnantData(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
@@ -469,11 +477,6 @@ class MytDataSubmainController extends TwViewController {
     });
   }
 
-  /**
-   * 선불형 쿠폰 TBD 항목
-   _getPrepayCoupon():  Observable<any> {
-
-  }*/
   // T끼리 데이터 선물 버튼
   _getDataPresent() {
     return this.apiService.request(API_CMD.BFF_06_0015, {}).map((resp) => {
