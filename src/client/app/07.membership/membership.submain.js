@@ -12,6 +12,7 @@ Tw.MembershipSubmain = function(rootEl, membershipData, svcInfo, membershipCheck
   this._nativeService = Tw.Native;
   this._historyService = new Tw.HistoryService();
   this._tidLanding = new Tw.TidLandingComponent();
+  this._xTractorService = new Tw.XtractorService(this.$container);
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._map = undefined;
@@ -259,7 +260,7 @@ Tw.MembershipSubmain.prototype = {
     }
   },
   _askCurrentLocation: function() {
-    if (Tw.BrowserHelper.isApp()) {
+    if (Tw.BrowserHelper.isApp() && this._svcInfo) {
       this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function (res) {
         if (res.resultCode !== Tw.NTV_CODE.CODE_00 ) {
           this._getAreaByGeo({
@@ -283,6 +284,8 @@ Tw.MembershipSubmain.prototype = {
       mapX: location.latitude,
       mapY: location.longitude
     };
+
+    Tw.Logger.info('this.currentLocation : ', this.currentLocation);
     this._apiService.request(Tw.API_CMD.BFF_11_0026, this.currentLocation)
     // $.ajax('http://localhost:3000/mock/product.roaming.BFF_10_0059.json')
         .done($.proxy(this._handleSuccessAreaByGeo, this))
