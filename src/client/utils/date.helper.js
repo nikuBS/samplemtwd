@@ -261,18 +261,26 @@ Tw.DateHelper = (function () {
   /**
    * @input 12월
    * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @returns {string} : 11월
+   * @returns {string} : 11월 | 18년12월
    */
-  var getShortKoreanAfterMonth = function (date) {
-    return moment(convDateFormat(date)).add('1', 'months').format('M월');
+  var getShortKoreanAfterMonth = function (date, isYear) {
+    var opt = 'M월';
+    if ( isYear ) {
+      opt = 'YY년M월';
+    }
+    return moment(convDateFormat(date)).add('1', 'months').format(opt);
   };
 
   /**
    * @param date {Date} or {string} : YYYYMMDD
-   * @returns {string} : 12월
+   * @returns {string} : 12월 | 18년12월
    */
-  var getShortKoreanMonth = function (date) {
-    return moment(convDateFormat(date)).format('M월');
+  var getShortKoreanMonth = function (date, isYear) {
+    var opt = 'M월';
+    if ( isYear ) {
+      opt = 'YY년M월';
+    }
+    return moment(convDateFormat(date)).format(opt);
   };
 
   /**

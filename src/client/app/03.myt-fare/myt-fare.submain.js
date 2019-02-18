@@ -289,7 +289,7 @@ Tw.MyTFareSubMain.prototype = {
           var amt = parseInt(amtStr, 10);
           // var absDeduck = Math.abs(parseInt(absDeduckStr, 10));
           chart_data.push({
-            't': Tw.DateHelper.getShortKoreanAfterMonth(date), // 날짜
+            't': this._recentChartDate(date), // 날짜
             'v': amt // 사용금액
             // 'v2': absDeduck // 할인금액
           });
@@ -334,7 +334,7 @@ Tw.MyTFareSubMain.prototype = {
           var amt = parseInt(amtStr, 10);
           var absDeduck = Math.abs(parseInt(absDeduckStr, 10));
           chart_data.push({
-            't': Tw.DateHelper.getShortKoreanAfterMonth(date), // 날짜
+            't': this._recentChartDate(date), // 날짜
             'v': amt, // 사용금액
             'v2': absDeduck // 할인금액
           });
@@ -453,6 +453,13 @@ Tw.MyTFareSubMain.prototype = {
     else {
       this._onErrorReceivedBillData(resp);
     }
+  },
+
+  // 최근사용요금 월표시 (당해년 제외 년월로 표시)
+  _recentChartDate: function (date) {
+    var curYear = new Date().getFullYear();
+    var inputYear = Tw.DateHelper.convDateFormat(date).getFullYear();
+    return Tw.DateHelper.getShortKoreanAfterMonth(date, (curYear !== inputYear));
   },
 
   // 요금안내서 이동(main)

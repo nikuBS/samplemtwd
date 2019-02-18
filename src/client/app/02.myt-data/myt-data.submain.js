@@ -315,7 +315,7 @@ Tw.MyTDataSubMain.prototype = {
         baseTotalData += usageData;/*parseInt(data[idx].basOfrUsage, 10)*/
         if ( usageData > 0 ) {
           chart_data.push({
-            t: Tw.DateHelper.getShortKoreanMonth(data[idx].invMth), // 각 항목 타이틀
+            t: this._recentChartDate(data[idx].invMth), // 각 항목 타이틀
             v: this.__convertData(usageData) // 배열 평균값으로 전달
           });
         }
@@ -330,7 +330,7 @@ Tw.MyTDataSubMain.prototype = {
           for ( idx = 0; idx < data.length; idx++ ) {
             baseTotalVoice += parseInt(data[idx].totalUsage, 10);
             chart_data.push({
-              t: Tw.DateHelper.getShortKoreanMonth(data[idx].invMth), // 각 항목 타이틀
+              t: this._recentChartDate(data[idx].invMth), // 각 항목 타이틀
               v: this.__convertVoice(parseInt(data[idx].totalUsage, 10)) // 배열 평균값으로 전달
             });
           }
@@ -346,7 +346,7 @@ Tw.MyTDataSubMain.prototype = {
           for ( idx = 0; idx < data.length; idx++ ) {
             baseTotalSms += parseInt(data[idx].totalUsage, 10);
             chart_data.push({
-              t: Tw.DateHelper.getShortKoreanMonth(data[idx].invMth), // 각 항목 타이틀
+              t: this._recentChartDate(data[idx].invMth), // 각 항목 타이틀
               v: parseInt(data[idx].totalUsage, 10) // 배열 평균값으로 전달
             });
           }
@@ -476,10 +476,12 @@ Tw.MyTDataSubMain.prototype = {
     }
   },
 
-  // event callback funtion
-  // _onRemnantDetail: function () {
-  //   this._historyService.goLoad('/myt-data/hotdata');
-  // },
+  // 최근데이터사용량 월표시 (당해년 제외 년월로 표시)
+  _recentChartDate: function (date) {
+    var curYear = new Date().getFullYear();
+    var inputYear = Tw.DateHelper.convDateFormat(date).getFullYear();
+    return Tw.DateHelper.getShortKoreanMonth(date, (curYear !== inputYear));
+  },
 
   _onImmChargeDetail: function () {
     switch ( this.data.svcInfo.svcAttrCd ) {
@@ -498,6 +500,7 @@ Tw.MyTDataSubMain.prototype = {
     }
   },
 
+  // pps 인 경우 자동알람서비스 그 외 데이터선물하기
   _onTPresentDetail: function () {
     if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
       // PPS 인 경우 자동알람서비스
