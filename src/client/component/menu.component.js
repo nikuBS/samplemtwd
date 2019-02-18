@@ -361,10 +361,10 @@ Tw.MenuComponent.prototype = {
         var type = elem.getAttribute('data-value');
         switch ( type ) {
           case 'svcCnt':
-            if ( userInfo.totalSvcCnt !== 0 && userInfo.expsSvcCnt !== 0 ) {
-              $(elem).text(Tw.MENU_STRING.SVC_COUNT(userInfo.expsSvcCnt));
-            } else {
+            if (Tw.FormatHelper.isEmpty(userInfo.prodNm)) {
               $(elem).remove();
+            } else {
+              $(elem).text(userInfo.prodNm);
             }
             break;
           case 'bill':
@@ -377,8 +377,10 @@ Tw.MenuComponent.prototype = {
                     return;
                   }
                   var total = info.useAmtTot ? parseInt(info.useAmtTot, 10) : 0;
+                  var month =
+                    parseInt(info.invDt.match(/\d\d\d\d(\d\d)\d\d/)[1], 10) + Tw.DATE_UNIT.MONTH_S;
                   $(elem).text(
-                    Tw.FormatHelper.convNumFormat(total) + Tw.CURRENCY_UNIT.WON);
+                    month + ' ' + Tw.FormatHelper.convNumFormat(total) + Tw.CURRENCY_UNIT.WON);
                 } else {
                   $(elem).remove();
                 }
@@ -415,7 +417,7 @@ Tw.MenuComponent.prototype = {
                     S: 'silver',
                     O: 'default'
                   };
-                  $(elem).text(group[res.result.mbrGrCd]);
+                  $(elem).text(group[res.result.mbrGrCd].toUpperCase());
                 } else {
                   $(elem).remove();
                 }
