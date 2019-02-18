@@ -26,7 +26,6 @@ Tw.MembershipMyHistory.prototype = {
     this.$btnPopupClose = this.$container.find('.popup-closeBtn');
     this.$list = this.$container.find('#fe-list');
     this.$more = this.$container.find('.btn-more');
-    this.$moreCnt = this.$container.find('#fe-more-cnt');
     this.$empty = this.$container.find('#fe-empty');
     this.$btnPrevStep = this.$container.find('.prev-step');
   },
@@ -82,7 +81,6 @@ Tw.MembershipMyHistory.prototype = {
     var nextList = _.first(this._totoalList);
 
     if ( nextList ) {
-      this.$moreCnt.text( '(0)'.replace('0', nextList.length) );
       this.$more.show();
     } else {
       this.$more.hide();
