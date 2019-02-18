@@ -40,6 +40,7 @@ Tw.CommonSearchMore.prototype = {
     this.$container.on('click','.filterselect-btn',$.proxy(this._showSelectFilter,this));
     this.$container.on('click','.list-data',$.proxy(this._goLink,this));
     this.$container.find('#contents').removeClass('none');
+    this._removeDuplicatedSpace(this.$container.find('.cont-sp'),'cont-sp');
     new Tw.XtractorService(this.$container);
   },
   _arrangeData : function (data,category) {
@@ -59,12 +60,12 @@ Tw.CommonSearchMore.prototype = {
           }
           data[i][key] = data[i][key].replace(/\|/g,' > ').replace(/MyT/g,' my T ');
         }
-        if(key==='MENU_URL'){
-          data[i][key] = data[i][key].replace('https://app.tworld.co.kr','');
-        }
-        if(category==='prevent'&&key==='DOCID'){
-          data[i][key] = Number(data[i][key].replace(/[A-Za-z]/g,''));
-        }
+        // if(key==='MENU_URL'){
+        //   data[i][key] = data[i][key].replace('https://app.tworld.co.kr','');
+        // }
+        // if(category==='prevent'&&key==='DOCID'){
+        //   data[i][key] = Number(data[i][key].replace(/[A-Za-z]/g,''));
+        // }
         if(category==='direct'&&key==='ALIAS'){
           if(data[i][key]==='shopacc'){
             data[i].linkUrl = Tw.OUTLINK.DIRECT_ACCESSORY+'?CATEGORY_ID='+data[i].CATEGORY_ID+'&ACCESSORY_ID=';
@@ -86,14 +87,14 @@ Tw.CommonSearchMore.prototype = {
     }
     return data;
   },
-  _showShortcutList : function (data,template,parent) {
+  _showShortcutList : function (data,template,$parent) {
     var shortcutTemplate = template.html();
     var templateData = Handlebars.compile(shortcutTemplate);
     if(data.length<=0){
-      parent.hide();
+      $parent.addClass('none');
     }
     _.each(data,function (listData) {
-      parent.append(templateData({listData : listData , CDN : this._cdn}));
+      $parent.append(templateData({listData : listData , CDN : this._cdn}));
     });
   },
   _decodeEscapeChar : function (targetString) {
@@ -102,7 +103,7 @@ Tw.CommonSearchMore.prototype = {
     return returnStr;
   },
   _inputChangeEvent : function (args) {
-    if(args.keyCode===13){
+    if(Tw.InputHelper.isEnter(args)){
       this._doSearch();
     }
   },
@@ -222,5 +223,13 @@ Tw.CommonSearchMore.prototype = {
     }
 
     this._historyService.goLoad(url);
+  },
+  _removeDuplicatedSpace : function ($selectedArr,className) {
+    $selectedArr.each(function(){
+      var $target = $(this);
+      if($target.next().hasClass(className)){
+        $target.addClass('none');
+      }
+    });
   }
 };

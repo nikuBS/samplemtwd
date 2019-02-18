@@ -46,7 +46,6 @@ Tw.ProductRoamingLookup.prototype = {
       case 'NA00005692':
       case 'NA00005695':
         this.$serviceTipElement.attr('id','RM_11_01_02_06_tip_01_02');
-        this.$container.find('.cont-box.nogaps-btm').css('display','block');
         break;
       case 'NA00005821':
         this.$serviceTipElement.attr('id','RM_11_01_02_06_tip_01_03');
