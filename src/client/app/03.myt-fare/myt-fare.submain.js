@@ -29,11 +29,6 @@ Tw.MyTFareSubMain.prototype = {
     }
   },
 
-  getLastDate: function (date) {
-    var lDate = new Date(date.slice(0, 4), date.slice(4, 6), 0).getDate().toString();
-    return date + lDate;
-  },
-
   _rendered: function () {
     if ( this.data.type === 'UF' ) {
       if ( this.data.svcInfo.svcAttrCd === 'M2' ) {

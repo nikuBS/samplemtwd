@@ -68,7 +68,8 @@
                     <% } else { %>
                     최근 청구요금내역
                     <% } %>
-                    <button title="최근 요금 내역" type="button" class="btn-tip" id="MF1_tip_02" page-id="<%= data.pageInfo.menuId %>">
+                    <button title="최근 요금 내역" type="button" class="btn-tip" page-id="<%= data.pageInfo.menuId %>"
+                            id="<%= data.type === 'UF'? 'TC000025':'TC000024' %>">
                         <i class="icon-badge-tip"><span class="blind">tip</span></i>
                     </button>
                 </h3>

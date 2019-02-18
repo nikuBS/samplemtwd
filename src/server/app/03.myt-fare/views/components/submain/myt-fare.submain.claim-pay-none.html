@@ -10,7 +10,7 @@
         <div class="this-month-bill">
             <div class="exception-case">
                 <i class="icon-warning-120"><span class="blind">warning</span></i>
-                <p class="msg">최근 6개월 내 청구된 <br>요금이 없습니다.</p>
+                <p class="msg">최근 6개월 내 <%= data.type === 'UF'? '이용한': '청구된' %> <br>요금이 없습니다.</p>
             </div>
         </div>
     </div>
