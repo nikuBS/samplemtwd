@@ -38,6 +38,8 @@
             <hr class="cont-sp type1" aria-hidden="true" />
             <% } %>
 
+            <% if (banners) { %>
+            <% if (banners.topBanners.length > 0) { %>
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <div class="main-charge-box advice section-swiper-box main-banner-img">
@@ -62,7 +64,9 @@
             </div>
             <!--// .cont-box -->
             <hr class="cont-sp type1" aria-hidden="true" />
+            <% } %>
 
+            <% if (banners.centerBanners.length > 0) { %>
             <!-- .cont-box -->
             <div class="cont-box nogaps bgnone noborder">
                 <div class="travel-info">
@@ -89,6 +93,8 @@
                 </div>
             </div>
             <!--// .cont-box -->
+            <% } %>
+            <% } %>
 
             <!-- .cont-box -->
             <div class="cont-box nogaps">

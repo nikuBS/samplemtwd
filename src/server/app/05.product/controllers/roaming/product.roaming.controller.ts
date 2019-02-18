@@ -80,10 +80,8 @@ export default class ProductRoaming extends TwViewController {
   private getBanners(pageInfo): Observable<any> {
     return this.redisService.getData(REDIS_KEY.BANNER_ADMIN + pageInfo.menuId).map((resp) => {
       if ( resp.code !== API_CODE.REDIS_SUCCESS ) {
-        return {
-          code: resp.code,
-          msg: resp.msg
-        };
+        // 부분 차단
+        return null;
       }
 
       if ( FormatHelper.isEmpty(resp.result) ) {
