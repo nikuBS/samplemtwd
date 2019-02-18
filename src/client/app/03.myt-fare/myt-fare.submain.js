@@ -94,13 +94,13 @@ Tw.MyTFareSubMain.prototype = {
       }
     }
     // 세금계산서
-    if ( this.data.taxInvoice ) {
-      this.$taxInv = this.$container.find('[data-id=taxinv]');
-    }
+    // if ( this.data.taxInvoice ) {
+    this.$taxInv = this.$container.find('[data-id=taxinv]');
+    // }
     // 기부금/후원금
-    if ( this.data.contribution ) {
-      this.$contribution = this.$container.find('[data-id=contbt]');
-    }
+    // if ( this.data.contribution ) {
+    this.$contribution = this.$container.find('[data-id=contbt]');
+    // }
     this.$otherPages = this.$container.find('[data-id=other-pages]');
   },
 
@@ -166,14 +166,34 @@ Tw.MyTFareSubMain.prototype = {
       }
     }
     // 세금계산서
-    if ( this.data.taxInvoice ) {
-      this.$taxInv.on('click', $.proxy(this._onClickedTaxInvoice, this));
-    }
+    // if ( this.data.taxInvoice ) {
+    this.$taxInv.on('click', $.proxy(this._onClickedTaxInvoice, this));
+    // }
     // 기부금/후원금
-    if ( this.data.contribution ) {
-      this.$contribution.on('click', $.proxy(this._onClickedContribution, this));
-    }
+    // if ( this.data.contribution ) {
+    this.$contribution.on('click', $.proxy(this._onClickedContribution, this));
+    // }
     this.$otherPages.find('li').on('click', $.proxy(this._onOtherPages, this));
+  },
+
+  _initScroll: function () {
+    this._checkScroll();
+    $(window).scroll($.proxy(function () {
+      this._checkScroll();
+    }, this));
+  },
+
+  _checkScroll: function () {
+    if ( !this._isRequestTax && this._elementScrolled(this.$taxInv.parent()) ) {
+      this._requestTaxContribute();
+    }
+  },
+
+  _elementScrolled: function (element) {
+    var docViewTop = $(window).scrollTop();
+    var docViewBottom = docViewTop + $(window).height();
+    var elemTop = element.offset().top;
+    return ((elemTop <= docViewBottom) && (elemTop >= docViewTop));
   },
 
   // chart create
@@ -209,6 +229,7 @@ Tw.MyTFareSubMain.prototype = {
     this._svcMgmtNumList = [];
     this._feeChartInfo = [];
     this._initBanners();
+    this._initScroll();
     /**
      * /청구요금인 경우
      * 1. 최근요금내역
@@ -241,7 +262,7 @@ Tw.MyTFareSubMain.prototype = {
         new Tw.BannerService(this.$container, type, list, 'M', $.proxy(this._successDrawBanner, this));
       }
       else {
-        this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, {menuId: this.data.pageInfo.menuId})
+        this._apiService.request(Tw.NODE_CMD.GET_BANNER_ADMIN, { menuId: this.data.pageInfo.menuId })
           .done($.proxy(this._successBanner, this, Tw.REDIS_BANNER_TYPE.ADMIN))
           .fail($.proxy(this._errorRequest, this));
       }
@@ -252,11 +273,11 @@ Tw.MyTFareSubMain.prototype = {
     }
   },
 
-  _checkBanner: function(result) {
+  _checkBanner: function (result) {
     return (result.bltnYn === 'N' || result.tosLnkgYn === 'Y');
   },
 
-  _successDrawBanner: function() {
+  _successDrawBanner: function () {
     this.$bannerList = this.$container.find('[data-id=banner-list]');
     Tw.CommonHelper.resetHeight(this.$bannerList);
   },
@@ -455,6 +476,43 @@ Tw.MyTFareSubMain.prototype = {
     }
   },
 
+  _requestTaxContribute: function () {
+    this._isRequestTax = true;
+    this._apiService.requestArray([
+      { command: Tw.API_CMD.BFF_07_0017 },
+      { command: Tw.API_CMD.BFF_05_0038 }
+    ]).done($.proxy(this._responseTaxContribute, this))
+      .fail($.proxy(this._errorRequest, this));
+  },
+
+  _responseTaxContribute: function (tax, cont) {
+    if ( cont.code === Tw.API_CODE.CODE_00 ) {
+      if ( cont.result.donationList && cont.result.donationList.length > 0 ) {
+        this.data.contribution = cont.result;
+      }
+    }
+
+    if ( tax.code === Tw.API_CODE.CODE_00 ) {
+      this.data.taxInvoice = tax.result;
+    }
+    //if ( tax.code === 'BIL0018' ) {}
+    // 사업자 번호를 조회할 수 없는 상황
+
+    var twoPiece = this.data.taxInvoice && this.data.contribution;
+    if ( !twoPiece ) {
+      if ( !this.data.taxInvoice && !this.data.contribution ) {
+        this.$container.find('[data-id="tc-container-empty"]').hide();
+        this.$container.find('[data-id="tc-container"]').hide();
+      }
+      else if ( this.data.taxInvoice ) {
+        this.$taxInv.parent().removeClass('btn-link-list').addClass('full-link-list');
+      }
+      else if ( this.data.contribution ) {
+        this.$contribution.parent().removeClass('btn-link-list').addClass('full-link-list');
+      }
+    }
+  },
+
   // 최근사용요금 월표시 (당해년 제외 년월로 표시)
   _recentChartDate: function (date) {
     var curYear = new Date().getFullYear();
@@ -523,7 +581,7 @@ Tw.MyTFareSubMain.prototype = {
       var defaultLineInfo = this.data.svcInfo.svcNum + ' ' + (this.data.svcInfo.nickNm || this.data.svcInfo.eqpMdlNm);
       var selectLineInfo = number + ' ' + name;
       if ( ['S1', 'S2'].indexOf(this.data.svcInfo.svcAttrCd) > -1 ) {
-        defaultLineInfo = this.data.svcInfo.addr + ' ' +  (this.data.svcInfo.nickNm || this.data.svcInfo.eqpMdlNm);
+        defaultLineInfo = this.data.svcInfo.addr + ' ' + (this.data.svcInfo.nickNm || this.data.svcInfo.eqpMdlNm);
       }
       this.changeLineMgmtNum = mgmtNum;
       this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,
@@ -547,13 +605,17 @@ Tw.MyTFareSubMain.prototype = {
 
   // 세금계산서 이동
   _onClickedTaxInvoice: function (/*event*/) {
-    // SB 상 납부내역상세로 진입하도록 정의되어있음
-    this._historyService.goLoad('/myt-fare/info/history');
+    if ( this.data.taxInvoice ) {
+      // SB 상 납부내역상세로 진입하도록 정의되어있음
+      this._historyService.goLoad('/myt-fare/info/history');
+    }
   },
 
   // 기부금/후원금
   _onClickedContribution: function (/*event*/) {
-    this._historyService.goLoad('/myt-fare/billguide/donation');
+    if ( this.data.contribution ) {
+      this._historyService.goLoad('/myt-fare/billguide/donation');
+    }
   },
 
   // 요금안내서 이동(chart)
