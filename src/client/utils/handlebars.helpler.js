@@ -47,7 +47,16 @@ Tw.HandlebarHelper = (function () {
     return str.replace(/<([^>]+)>/ig,'');
   });
 
-  Handlebars.registerHelper('removeNaN', function(str) {
-    return str.replace(/[^0-9.]/g, '');
+  Handlebars.registerHelper('replace', function(targetStr,regEx,replaceStr) {
+    regEx = regEx.split(',');
+    replaceStr = replaceStr.split(',');
+    var tempRegEx;
+    if(regEx.length===replaceStr.length){
+      for(var i=0;i<regEx.length;i++){
+        tempRegEx = new RegExp(regEx[i],'g');
+        targetStr = targetStr.replace(tempRegEx,replaceStr[i]);
+      }
+    }
+    return targetStr;
   });
 })();
