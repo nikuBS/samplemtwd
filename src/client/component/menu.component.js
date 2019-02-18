@@ -43,6 +43,8 @@ Tw.MenuComponent = function (notAboutMenu) {
     this._init();
     this._bindEvents();
     this._componentReady();
+
+    new Tw.XtractorService(this.$container);
   }, this));
 };
 
