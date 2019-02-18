@@ -299,7 +299,16 @@ Tw.CustomerAgentsearchNear.prototype = {
   _onMore: function () {
     var currentCount = this.$resultList.children().length;
 
-    var shops = this._nearShops;
+    var shops;
+    if (this._currentBranchType === 0) {
+      shops = this._nearShops;
+    } else {
+      var currentType = this._currentBranchType;
+      shops = _.filter(this._nearShops, function (item) {
+        return parseInt(item.storeType, 10) === currentType;
+      });
+    }
+
     var listToShow = shops.length - currentCount;
     if (listToShow > 20) {
       listToShow = 20;
@@ -310,14 +319,6 @@ Tw.CustomerAgentsearchNear.prototype = {
 
     if (currentCount + listToShow >= shops.length) {
       this.$btnMore.addClass('none');
-    }
-
-    if (this._currentBranchType === 1) {
-      this.$resultList.find('.fe-type-1').removeClass('none');
-      this.$resultList.find('.fe-type-2').addClass('none');
-    } else if (this._currentBranchType === 2) {
-      this.$resultList.find('.fe-type-2').removeClass('none');
-      this.$resultList.find('.fe-type-1').addClass('none');
     }
   },
   _onMarkerClicked: function () {
@@ -357,9 +358,9 @@ Tw.CustomerAgentsearchNear.prototype = {
   },
   _onTypeOption: function () {
     var list = [
-          { value: Tw.BRANCH.SELECT_BRANCH_TYPE[0], attr: 'value="0"' },
-          { value: Tw.BRANCH.SELECT_BRANCH_TYPE[1], attr: 'value="1"' },
-          { value: Tw.BRANCH.SELECT_BRANCH_TYPE[2], attr: 'value="2"' }
+          { value: Tw.BRANCH.SELECT_BRANCH_TYPE[0], attr: 'class="fe-type" value="0"' },
+          { value: Tw.BRANCH.SELECT_BRANCH_TYPE[1], attr: 'class="fe-type" value="1"' },
+          { value: Tw.BRANCH.SELECT_BRANCH_TYPE[2], attr: 'class="fe-type" value="2"' }
     ];
     list[this._currentBranchType].option = 'checked';
 
@@ -371,7 +372,7 @@ Tw.CustomerAgentsearchNear.prototype = {
         list: list
       }]
     }, $.proxy(function (root) {
-      root.on('click', 'button', $.proxy(this._onBranchTypeChanged, this));
+      root.on('click', '.fe-type', $.proxy(this._onBranchTypeChanged, this));
     }, this));
   },
   _onBranchTypeChanged: function (e) {
@@ -383,26 +384,29 @@ Tw.CustomerAgentsearchNear.prototype = {
         this._markerLayer1.setVisibility(true);
         this._markerLayer2.setVisibility(true);
 
-        this.$resultList.find('.fe-type-1').removeClass('none');
-        this.$resultList.find('.fe-type-2').removeClass('none');
+        this.$resultCount.text(this._nearShops.length);
         break;
       case 1:
         this._markerLayer1.setVisibility(true);
         this._markerLayer2.setVisibility(false);
 
-        this.$resultList.find('.fe-type-1').removeClass('none');
-        this.$resultList.find('.fe-type-2').addClass('none');
+        this.$resultCount.text(_.filter(this._nearShops, function (item) {
+          return item.storeType === '1';
+        }).length);
         break;
       case 2:
         this._markerLayer1.setVisibility(false);
         this._markerLayer2.setVisibility(true);
 
-        this.$resultList.find('.fe-type-2').removeClass('none');
-        this.$resultList.find('.fe-type-1').addClass('none');
+        this.$resultCount.text(_.filter(this._nearShops, function (item) {
+          return item.storeType === '2';
+        }).length);
         break;
       default:
         break;
     }
+    this.$resultList.empty();
+    this._onMore();
   },
   _switchToList: function () {
     this.$divMap.addClass('none');
