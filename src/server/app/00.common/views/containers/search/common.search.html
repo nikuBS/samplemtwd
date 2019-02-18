@@ -86,7 +86,7 @@
             <% if(searchInfo.search[0].immediate.data[0].DOCID==1){  %>
             <p class="paymentcharge-box type01">
                 이용하고 계신
-                <a class="list-data" href="/myt-join/submain" class="phonnumber search-element"
+                <a href="/myt-join/submain" class="phonnumber search-element list-data"
                    data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
                     <%= searchInfo.search[0].immediate.data[0].mainData %>
                 </a>회선의<br>요금제는<span class="str">
@@ -98,7 +98,7 @@
             <% } else if(searchInfo.search[0].immediate.data[0].DOCID==2){ %>
             <p class="paymentcharge-box type02">
                 이용하고 계신
-                <a class="list-data" href="/myt-join/submain" class="phonnumber"
+                <a href="/myt-join/submain" class="phonnumber list-data"
                    data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
                     <%= searchInfo.search[0].immediate.data[0].mainData %>
                 </a>회선의<br>총 데이터 잔여량은<span class="str">
@@ -110,7 +110,7 @@
             <% } else if(searchInfo.search[0].immediate.data[0].DOCID==3){ %>
             <p class="paymentcharge-box type03">
                 이용하고 계신
-                <a class="list-data" href="/myt-join/submain" class="phonnumber"
+                <a href="/myt-join/submain" class="phonnumber list-data"
                    data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
                     <%= searchInfo.search[0].immediate.data[0].mainData %>
                 </a>회선의<br>실시간 이용요금은<span class="str">
@@ -122,7 +122,7 @@
             <% } else if(searchInfo.search[0].immediate.data[0].DOCID==4){ %>
             <p class="paymentcharge-box type04">
                 이용하고 계신
-                <a class="list-data" href="/myt-join/submain" class="phonnumber"
+                <a href="/myt-join/submain" class="phonnumber list-data"
                    data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
                     <%= searchInfo.search[0].immediate.data[0].mainData %>
                 </a>회선의<br>소액결제 이용요금은<span class="str">
@@ -238,7 +238,7 @@
                 </div>
             </div>
 
-            <div class="cont-box list bgnone  gaps-style05 rate">
+            <div class="cont-box list bgnone noborder gaps-style05 rate">
                 <ul class="extraservice-list" id="rate_list">
 
                 </ul>

@@ -125,7 +125,7 @@ Tw.CommonSearchNotFound.prototype = {
     }
   },
   _inputKeyupEvt : function (evt) {
-    if(evt.keyCode===13){
+    if(Tw.InputHelper.isEnter(evt)){
       this.$container.find('.icon-gnb-search').trigger('click');
     }
   },

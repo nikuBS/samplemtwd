@@ -32,7 +32,7 @@ Tw.CommonSearchMain.prototype = {
     //this.$container.find('#recently_keyword_layer').removeClass('none').hide();
   },
   _keyInputEvt : function (inputEvtObj) {
-    if(inputEvtObj.keyCode===13){
+    if(Tw.InputHelper.isEnter(inputEvtObj)){
       this._searchByInputValue();
       return;
     }
