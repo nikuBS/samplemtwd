@@ -759,7 +759,7 @@ export const CUSTOMER_STIE_OPTION_TYPE = [
 
 export const CUSTOMER_SERVICE_OPTION_TYPE = [
   {
-    title: '휴대폰 가입·변경에 대한 안내',
+    title: '휴대폰 가입·변경 안내',
     sub_list: [
       {
         sub_title: '휴대폰 가입',
@@ -832,7 +832,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    title: '휴대폰 요금 기준에 대한 안내',
+    title: '휴대폰 요금 기준 안내',
     sub_list: [
       {
         sub_title: '요금 기준',
@@ -883,7 +883,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    unitedTitle: '다이렉트샵/멤버십/로밍에 대한 안내',
+    unitedTitle: '다이렉트샵/멤버십/로밍 안내',
     united: '_3T',
     title: 'T월드 다이렉트 이용안내',
     text: 'T월드 다이렉트에서 구매를 원한다면',
@@ -965,9 +965,9 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    unitedTitle: '다이렉트샵/멤버십/로밍에 대한 안내',
+    unitedTitle: '다이렉트샵/멤버십/로밍 안내',
     united: '_3T',
-    title: 'T멤버십·T로밍에 대한 안내',
+    title: 'T멤버십·T로밍 안내',
     text: '',
     upperCat: false,
     sub_list: [
@@ -1001,7 +1001,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    title: '서비스 정책·제도에 대한 안내',
+    title: '서비스 정책·제도 안내',
     sub_list: [
       {
         sub_title: '데이터 리필하기',
@@ -1034,7 +1034,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    title: '목소리 인증·ARS상담에 대한 안내',
+    title: '목소리 인증·ARS상담 안내',
     sub_list: [
       {
         sub_title: 'ARS상담 이용안내',
