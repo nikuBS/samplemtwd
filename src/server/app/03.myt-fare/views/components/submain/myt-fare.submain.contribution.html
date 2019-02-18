@@ -5,33 +5,17 @@
 * Update: 2018.11.27
 %>
 
-<% if (data.taxInvoice || data.contribution) { %>
-<hr class="cont-sp type1" aria-hidden="true"/>
+<hr class="cont-sp type1" aria-hidden="true" data-id="tc-container-empty"/>
 
 <!-- .cont-box -->
-<div class="cont-box nogaps">
-    <% var twoPiece = (data.taxInvoice && data.contribution); %>
-    <% var ulClass = twoPiece ? 'btn-link-list' : 'full-link-list'; %>
-    <ul class="<%= ulClass %>">
-        <% if (twoPiece) { %>
-            <li class="last-line" data-id="taxinv">
-                <button type="button" title="세금계산서 재발행" aria-haspopup="true">세금계산서 재발행</button>
-            </li>
-            <li class="last-line" data-id="contbt">
-                <button type="button" title="기부금 · 후원금 납부내역" aria-haspopup="true">기부금 · 후원금 납부내역</button>
-            </li>
-        <% } else { %>
-            <% var btnName = '기부금 ・ 후원금 납부내역', dataId = 'contbt'; %>
-            <% if (data.taxInvoice) { %>
-            <% btnName = '세금계산서 재발행'; dataId = 'taxinv'; %>
-            <% } %>
-            <li data-id="<%= dataId %>">
-                <button type="button">
-                     <span class="inner"><span class="tit"><%= btnName %></span></span>
-                </button>
-            </li>
-        <% } %>
+<div class="cont-box nogaps" data-id="tc-container">
+    <ul class="btn-link-list">
+        <li class="last-line" data-id="taxinv">
+            <button type="button" title="세금계산서 재발행" aria-haspopup="true">세금계산서 재발행</button>
+        </li>
+        <li class="last-line" data-id="contbt">
+            <button type="button" title="기부금 · 후원금 납부내역" aria-haspopup="true">기부금 · 후원금 납부내역</button>
+        </li>
     </ul>
 </div>
 <!--// .cont-box -->
-<% } %>

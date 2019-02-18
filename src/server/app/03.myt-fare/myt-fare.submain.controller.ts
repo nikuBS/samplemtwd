@@ -116,13 +116,13 @@ class MyTFareSubmainController extends TwViewController {
       this._getNonPayment(),
       this._getPaymentInfo(),
       this._getTotalPayment(),
-      this._getTaxInvoice(),
-      this._getContribution(),
+      // this._getTaxInvoice(),
+      // this._getContribution(),
       this._getMicroPrepay(),
       this._getContentPrepay()
       // this.redisService.getData(this.bannerUrl)
     ).subscribe(([nonpayment, paymentInfo, totalPayment,
-                   taxInvoice, contribution, microPay, contentPay/*, banner*/]) => {
+                   /*taxInvoice, contribution,*/ microPay, contentPay/*, banner*/]) => {
       // 소액결제
       if ( microPay ) {
         data.microPay = microPay;
@@ -158,13 +158,13 @@ class MyTFareSubmainController extends TwViewController {
         data.totalPayment = totalPayment.paymentRecord.slice(0, 3);
       }
       // 세금계산서
-      if ( taxInvoice ) {
-        data.taxInvoice = taxInvoice;
-      }
-      // 기부금/후원금
-      if ( contribution ) {
-        data.contribution = contribution;
-      }
+      // if ( taxInvoice ) {
+      //   data.taxInvoice = taxInvoice;
+      // }
+      // // 기부금/후원금
+      // if ( contribution ) {
+      //   data.contribution = contribution;
+      // }
       // 배너 정보 - client에서 호출하는 방식으로 변경 (19/01/22)
       // if ( banner.code === API_CODE.REDIS_SUCCESS ) {
       //   if ( !FormatHelper.isEmpty(banner.result) ) {
