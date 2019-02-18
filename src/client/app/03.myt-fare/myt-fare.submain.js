@@ -29,11 +29,6 @@ Tw.MyTFareSubMain.prototype = {
     }
   },
 
-  getLastDate: function (date) {
-    var lDate = new Date(date.slice(0, 4), date.slice(4, 6), 0).getDate().toString();
-    return date + lDate;
-  },
-
   _rendered: function () {
     if ( this.data.type === 'UF' ) {
       if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
@@ -193,7 +188,7 @@ Tw.MyTFareSubMain.prototype = {
       data_arry: data //데이터 obj,
     });
     // chart 생성 후 event bind 처리
-    this.$billChart.on('click', 'button', $.proxy(this._onClickedBillReport, this));
+    this.$billChart.on('click', '.chart4 button', $.proxy(this._onClickedBillReport, this));
   },
 
   // 다른회선내역 리스트

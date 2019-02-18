@@ -127,7 +127,7 @@ Tw.POPUP_TPL = {
     TITLE: '충전방법 선택',
     REFILL: {
       TYPE: '나의 보유 쿠폰 사용',
-      VALUE: '나의 리필 쿠폰',
+      VALUE: '리필쿠폰',
       UNIT: '장'
     },
     PREPAY: {
