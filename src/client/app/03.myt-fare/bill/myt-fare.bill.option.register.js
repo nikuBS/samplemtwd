@@ -227,11 +227,7 @@ Tw.MyTFareBillOptionRegister.prototype = {
   },
   _success: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      if (res.result.returnFlag === 'autopay' || res.result.returnMsg.indexOf(Tw.BUTTON_LABEL.COMPLETE) !== -1) {
-        this._aftetSuccessGetOption(res);
-      } else {
-        this._popupService.openAlert(res.result.returnMsg, Tw.POPUP_TITLE.NOTIFY);
-      }
+      this._aftetSuccessGetOption(res);
     } else {
       this._fail(res);
     }
