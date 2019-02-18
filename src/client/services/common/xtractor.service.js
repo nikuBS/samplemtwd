@@ -1,5 +1,6 @@
 Tw.XtractorService = function($container) {
   this.$container = $container;
+  Tw.Logger.info('[Xtractor] init container', this.$container);
 
   this._init();
   this._onLoadBV();
@@ -18,7 +19,7 @@ Tw.XtractorService.prototype = {
   },
 
   _bindBC: function() {
-    this.$container.on('click', '[data-xt_action="BC"]', $.proxy(this._sendBC, this));
+    this.$container.on('mousedown', '[data-xt_action="BC"]', $.proxy(this._sendBC, this));
   },
 
   _sendBV: function(elem) {
@@ -27,6 +28,7 @@ Tw.XtractorService.prototype = {
       CS_ID = $elem.data('xt_csid');
 
     if (Tw.FormatHelper.isEmpty(E_ID) || Tw.FormatHelper.isEmpty(CS_ID)) {
+      Tw.Logger.warn('[Xtractor] E_ID and CS_ID is required.', { E_ID: E_ID, CS_ID: CS_ID });
       return false;
     }
 
@@ -39,6 +41,7 @@ Tw.XtractorService.prototype = {
       CS_ID = $elem.data('xt_csid');
 
     if (Tw.FormatHelper.isEmpty(E_ID) || Tw.FormatHelper.isEmpty(CS_ID)) {
+      Tw.Logger.warn('[Xtractor] E_ID and CS_ID is required.', { E_ID: E_ID, CS_ID: CS_ID });
       return false;
     }
 
@@ -57,6 +60,7 @@ Tw.XtractorService.prototype = {
     var key = E_ID + '|' + CS_ID + '|' + ACTION;
 
     if (!this._isScript || this._loggedList.indexOf(key) !== -1) {
+      Tw.Logger.warn('[Xtractor] Logger is failed.');
       return false;
     }
 
