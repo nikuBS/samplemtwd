@@ -105,7 +105,7 @@ class MyTFareBillHotbill extends TwViewController {
   }
 
   /**
-   * 본의의 선택회선 외 회선과 자녀회선의 당월요금은 노드에서 요청한다.
+   * 본의의 선택회선 외 회선과 자녀회선의 실시간 요금은 노드에서 요청한다.
    * @param svcInfo
    * @param childInfo
    * @param allSvc
@@ -129,6 +129,11 @@ class MyTFareBillHotbill extends TwViewController {
     });
   }
 
+  /**
+   * 실시간 사용요금 생성 요청을 보낸다.(BFF_05_0022 count:0 일 때 생성 요청)
+   * @param svc
+   * @private
+   */
   private _requestHotbillInfo(svc): Observable<any> {
     const self = this;
     const params = { count: 0 };
@@ -137,7 +142,7 @@ class MyTFareBillHotbill extends TwViewController {
 
     return self.apiService.request(API_CMD.BFF_05_0022, params, headers)
       .pipe(
-        delay(2500),
+        delay(2500), // 요청 후 2.5초 후 조회
         mergeMap(res => {
             return self._getBillResponse(svc, false)
               .catch(error => {
@@ -152,6 +157,12 @@ class MyTFareBillHotbill extends TwViewController {
       );
   }
 
+  /**
+   * 요청한 실시간 사용요금을 조회한다.(BFF_05_0022 count:1,2 일 때 조회)
+   * @param svc
+   * @param isRetry
+   * @private
+   */
   private _getBillResponse(svc: object, isRetry: boolean): Observable<any> {
     const self = this;
     const params = { count: !isRetry ? 1 : 2 };
