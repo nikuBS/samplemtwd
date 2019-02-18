@@ -220,7 +220,8 @@ Tw.MyTFareSubMain.prototype = {
         $ul.append(result);
       }
     }
-    setTimeout($.proxy(this._realTimeBillRequest, this), 300);
+    // FIXME: 성능개선으로 실시간요금 조회하지 않도록 수정
+    // setTimeout($.proxy(this._realTimeBillRequest, this), 300);
   },
 
   _initialize: function () {
