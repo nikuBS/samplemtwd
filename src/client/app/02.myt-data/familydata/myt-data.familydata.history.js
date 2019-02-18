@@ -123,7 +123,8 @@ Tw.MyTDataFamilyHistory.prototype = {
         histories: histories
       },
       $.proxy(this._handleOpenChangePopup, this, $parent, changable),
-      $.proxy(this._handleCloseChangePopup, this)
+      $.proxy(this._handleCloseChangePopup, this),
+      'change'
     );
   },
 
