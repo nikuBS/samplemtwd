@@ -61,7 +61,7 @@
             <% } %>
             <hr class="cont-sp type1" aria-hidden="true" data-id="bill-chart-empty"/>
             <!-- .cont-box -->
-            <div class="cont-box nogaps-ver pb0">
+            <div class="cont-box nogaps-ver pb0" data-id="bill-chart">
                 <h3 class="graph-tit">
                     <% if(data.type === 'UF') { %>
                     최근 이용요금내역
@@ -73,7 +73,7 @@
                         <i class="icon-badge-tip"><span class="blind">tip</span></i>
                     </button>
                 </h3>
-                <div class="chart-wrap chart4" data-id="bill-chart"></div>
+                <div class="chart-wrap chart4"></div>
             </div>
             <!--// .cont-box -->
             <%- include('../components/submain/myt-fare.submain.contribution.html', data) %>
