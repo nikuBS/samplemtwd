@@ -49,9 +49,9 @@ Tw.MyTDataLimitMonthly.prototype = {
   _onSuccessBlockMonthly: function (sCheckType, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       if ( sCheckType === 'block' ) {
-        Tw.CommonHelper.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_BLOCK);
+        Tw.CommonHelper.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_MONTHLY_BLOCK);
       } else {
-        Tw.CommonHelper.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_UNBLOCK);
+        Tw.CommonHelper.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_MONTHLY_UNBLOCK);
       }
     } else if ( res.code === 'ZNGME0000' ) {
       this._popupService.openAlert(Tw.MYT_DATA_TING.ERROR_LIMIT, null, null, $.proxy(this._goSubmain, this));
