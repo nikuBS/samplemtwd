@@ -759,11 +759,11 @@ export const CUSTOMER_STIE_OPTION_TYPE = [
 
 export const CUSTOMER_SERVICE_OPTION_TYPE = [
   {
-    title: '휴대폰 가입·변경 안내',
+    title: '휴대폰 가입/변경 안내',
     sub_list: [
       {
         sub_title: '휴대폰 가입',
-        sub_text: '가입·번호이동·기기 안내를 원한다면',
+        sub_text: '가입/번호이동/기기 안내를 원한다면',
         dep_list: [
           {
             dep_title: '휴대폰 가입',
@@ -789,7 +789,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
       },
       {
         sub_title: '미성년자 가입',
-        sub_text: '가입방법·부모동의 절차가 궁금하다면',
+        sub_text: '가입방법/부모동의 절차가 궁금하다면',
         dep_list: [
           {
             dep_title: '미성년자 가입',
@@ -836,7 +836,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     sub_list: [
       {
         sub_title: '요금 기준',
-        sub_text: '일반·스마트폰 요금 기준이 궁금하다면',
+        sub_text: '일반/스마트폰 요금 기준이 궁금하다면',
         type: 'B1',
         code: 'C00031'
       },
@@ -890,7 +890,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     upperCat: true,
     sub_list: [
       {
-        sub_title: '할인·혜택',
+        sub_title: '할인/혜택',
         sub_text: '',
         dep_list: [
           {
@@ -967,7 +967,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
   {
     unitedTitle: '다이렉트샵/멤버십/로밍 안내',
     united: '_3T',
-    title: 'T멤버십·T로밍 안내',
+    title: 'T멤버십/T로밍 안내',
     text: '',
     upperCat: false,
     sub_list: [
@@ -1001,7 +1001,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    title: '서비스 정책·제도 안내',
+    title: '서비스 정책/제도 안내',
     sub_list: [
       {
         sub_title: '데이터 리필하기',
@@ -1034,7 +1034,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    title: '목소리 인증·ARS상담 안내',
+    title: '목소리 인증/ARS상담 안내',
     sub_list: [
       {
         sub_title: 'ARS상담 이용안내',
