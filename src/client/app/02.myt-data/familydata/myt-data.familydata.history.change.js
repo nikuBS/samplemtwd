@@ -61,11 +61,11 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     var value = Number(this.$input.val());
 
     if (!value) {
-      this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.V17);
+      this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.NON_CHANGE_DATA);
       this.$error.removeClass('none');
       this._setDisableSubmit(true);
     } else if (value > this._changable.data) {
-      this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.V16);
+      this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.GREATER_THAN_CHANGABLE_DATA);
       this.$error.removeClass('none');
       this._setDisableSubmit(true);
     } else {
@@ -120,7 +120,6 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     var ALERT_MSG = '';
     switch (resp.code) {
       case Tw.API_CODE.CODE_00: {
-        this._popupService.close();
         this.$item.find('.modify strong').text(remain + 'GB');
         if (remain > 0) {
           this.$item.find('.fe-edit').data('gb', remain);
@@ -129,7 +128,12 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
           this.$item.find('.modify span').text(Tw.MYT_DATA_FAMILY_NOT_POSSIBLE_CHANGE);
         }
 
-        this.isSuccess = true;
+        setTimeout(
+          $.proxy(function() {
+            this._popupService.close();
+            this.isSuccess = true;
+          }, this)
+        );
         return;
       }
       case 'RCG0066': {
