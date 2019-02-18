@@ -49,8 +49,8 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
     ['NA00004145', 0],
     ['NA00004102', 0],
     ['NA00004705', 0],
-    ['NA00005957', 15],
-    ['NA00005958', 20],
+    ['NA00005957', 15], // T plan large
+    ['NA00005958', 20], // T plan family
     ['NA00006155', 15]
   ]);
 
@@ -68,7 +68,7 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
               name = coupon.copnNm;
               period = coupon.usePsblStaDt + '~' + coupon.usePsblEndDt;
               tab = 'refill';
-              isGift = false;
+              isGift = coupon.isGift || false;
               this.renderCouponUse(res, svcInfo, pageInfo, no, name, period, tab, isGift, auto);
             } else {
               this.error.render(res, { code: '', msg: '', svcInfo });
@@ -191,6 +191,7 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
   private purifyCouponOptions(options: Array<Option>, productInfo: Product,
                               plan: string): Array<Option> {
     return options.map((option) => {
+      option.copnDtlClNm += ' ';
       if (this.planType.has(plan)) {
         if (this.planType.get(plan) === 0) {
           option.qttText = '0';
@@ -198,6 +199,10 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
         } else if (option.dataVoiceClCd === 'D') {
           const converted = FormatHelper.convDataFormat(this.planType.get(plan), DATA_UNIT.GB);
           option.qttText = converted.data + ' ' + converted.unit;
+          if (plan === 'NA00005957' || plan === 'NA00005958') { // Tplan large/family의 경우 '최대' 삽입
+            option.qttText = '최대 ' + option.qttText;
+            option.copnDtlClNm = option.copnDtlClNm.replace('100%', '').trim();
+          }
           option.isTplan = true;
           return option;
         }
