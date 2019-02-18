@@ -29,15 +29,28 @@ Tw.MyTDataFamilyShare.prototype = {
   },
 
   _addShareData: function(e) {
-    var value = e.currentTarget.getAttribute('data-value');
+    var value = e.currentTarget.getAttribute('data-value'),
+      $target = $(e.currentTarget);
 
     if (value === 'all') {
-      this.$amountInput.val(this.$amountInput.data('share-amount'));
+      if (this._all) {
+        this.$amountInput.val('');
+        this.$amountInput.removeAttr('disabled');
+        $target.siblings('.btn-type01').removeAttr('disabled');
+        $target.removeClass('btn-on');
+        this._all = false;
+      } else {
+        this.$amountInput.val(this.$amountInput.data('share-amount'));
+        this.$amountInput.attr('disabled', true);
+        $target.siblings('.btn-type01').attr('disabled', true);
+        $target.addClass('btn-on');
+        this.$cancel.css('display', 'none');
+        this._all = true;
+      }
     } else {
       this.$amountInput.val(Number(this.$amountInput.val()) + Number(value));
+      this.$cancel.css('display', 'inline-block');
     }
-
-    this.$cancel.css('display', 'inline-block');
 
     this._validateShareAmount();
   },
