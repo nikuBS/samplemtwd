@@ -3,8 +3,9 @@
  * Author: Hakjoon Sim (hakjoon.sim@sk.com)
  * Date: 2019.2.12
  */
-Tw.MenuSearchComponent = function (container) {
+Tw.MenuSearchComponent = function (container, menu) {
   this.$container = container;
+  this.$menu = menu;
 
   this._apiService = Tw.Api;
   this._historyService = new Tw.HistoryService();
@@ -44,6 +45,9 @@ Tw.MenuSearchComponent.prototype = {
     this.$searchInput.val('');
     this.$container.find('.fe-menu-section').removeClass('none');
     this.$container.find('.fe-search-section').addClass('none');
+    if (this.$menu) {
+      this.$menu.addClass('user-type');
+    }
   },
   _onSearch: function (e) {
     if (e.keyCode !== 13) { // Enter 인 경우 검색

@@ -607,8 +607,15 @@ Tw.MenuComponent.prototype = {
   _searchFocus: function (focus) {
     this.$container.find('.fe-menu-section').addClass('none');
     this.$container.find('.fe-search-section').removeClass('none');
+    var $menu = $('#common-menu');
+    if ($menu.hasClass('user-type')) {
+      $menu.removeClass('user-type');
+    } else {
+      $menu = null;
+    }
+
     if (!this._menuSearchComponent) {
-      this._menuSearchComponent = new Tw.MenuSearchComponent(this.$container);
+      this._menuSearchComponent = new Tw.MenuSearchComponent(this.$container, $menu);
     }
 
     this._menuSearchComponent.focus();
