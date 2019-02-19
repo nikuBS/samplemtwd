@@ -157,6 +157,10 @@ Tw.QuickMenuEditComponent.prototype = {
           return result;
         }
       } else {
+        // if ( target.menuScutExpsYn === 'Y' ) {
+        //   target.quickAdded = false;
+        //   result.push(target);
+        // }
         if ( this._checkNotShow(target.menuId) ) {
           target.quickAdded = false;
           result.push(target);

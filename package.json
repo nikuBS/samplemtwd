@@ -10,7 +10,7 @@
     "client-lint": "jshint src/client",
     "server-dev": "nodemon -e ts -w ./src/server -x npm run server-watch:dev",
     "server-watch:dev": "ts-node ./src/server/bin/www.ts",
-    "server-docker": "npm run client-deploy && pm2-docker start pm2.config.js",
+    "server-docker": "pm2-docker start pm2.config.js",
     "server-lint": "tslint -p tslint.json"
   },
   "author": "SKTechx@2018",
