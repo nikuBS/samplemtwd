@@ -64,6 +64,12 @@ class CommonSearch extends TwViewController {
         });
       }
     }
+    function removeImmediateData(searchResult) {
+      searchResult.result.search[0].immediate.data = [];
+      searchResult.result.search[0].immediate.count = 0;
+      searchResult.result.totalcount = Number(searchResult.result.totalcount) - 1;
+      return searchResult;
+    }
     if (FormatHelper.isEmpty(req.query.in_keyword)) {
       requestObj = { query , collection };
     } else {
@@ -105,20 +111,17 @@ class CommonSearch extends TwViewController {
             });
             break;
           case 3:
-            this._requestHotbillInfo(svcInfo).
+            this._requestHotbillInfo().
             subscribe((resultData) => {
               if (resultData.resp.code !== API_CODE.CODE_00) {
-                searchResult.result.search[0].immediate.data = [];
-                searchResult.result.search[0].immediate.count = 0;
-                searchResult.result.totalcount = Number(searchResult.result.totalcount) - 1;
+                searchResult = removeImmediateData(searchResult);
               } else {
                 searchResult.result.search[0].immediate.data[0].subData = resultData.resp.result.hotBillInfo[0].totOpenBal2;
               }
             },
               () => {
-                searchResult.result.search[0].immediate.data = [];
-                searchResult.result.search[0].immediate.count = 0;
-                searchResult.result.totalcount = Number(searchResult.result.totalcount) - 1;
+                searchResult = removeImmediateData(searchResult);
+                showSearchResult(searchResult, relatedKeyword , this);
               },
               () => {
                 showSearchResult(searchResult, relatedKeyword , this);
@@ -128,9 +131,7 @@ class CommonSearch extends TwViewController {
             this.apiService.request(API_CMD.BFF_05_0079, { payMethod : 'ALL'}, {}).
             subscribe((resultData) => {
               if (resultData.code !== API_CODE.CODE_00) {
-                searchResult.result.search[0].immediate.data = [];
-                searchResult.result.search[0].immediate.count = 0;
-                searchResult.result.totalcount = Number(searchResult.result.totalcount) - 1;
+                searchResult = removeImmediateData(searchResult);
               } else {
                 searchResult.result.search[0].immediate.data[0].subData = FormatHelper.addComma(resultData.result.totalSumPrice);
               }
@@ -141,9 +142,7 @@ class CommonSearch extends TwViewController {
             this.apiService.request(API_CMD.BFF_11_0001, {}, {}).
             subscribe((resultData) => {
               if (resultData.code !== API_CODE.CODE_00) {
-                searchResult.result.search[0].immediate.data = [];
-                searchResult.result.search[0].immediate.count = 0;
-                searchResult.result.totalcount = Number(searchResult.result.totalcount) - 1;
+                searchResult = removeImmediateData(searchResult);
               } else {
                 searchResult.result.search[0].immediate.data[0].mainData = resultData.result.mbrGrCd;
                 searchResult.result.search[0].immediate.data[0].subData = FormatHelper.addComma(resultData.result.mbrUsedAmt);
@@ -162,17 +161,17 @@ class CommonSearch extends TwViewController {
 
   }
 
-  private _requestHotbillInfo(svc): Observable<any> {
+  private _requestHotbillInfo(): Observable<any> {
     const self = this;
     const params = { count: 0 };
     return self.apiService.request(API_CMD.BFF_05_0022, params, {})
       .pipe(
         delay(2500), // 요청 후 2.5초 후 조회
         mergeMap(res => {
-            return self._getBillResponse(svc, false)
+            return self._getBillResponse(false)
               .catch(error => {
                 if ( error.message === 'Retry again' ) {
-                  return self._getBillResponse(svc, true);
+                  return self._getBillResponse(true);
                 } else {
                   throw Error(error.message);
                 }
@@ -182,7 +181,7 @@ class CommonSearch extends TwViewController {
       );
   }
 
-  private _getBillResponse(svc: object, isRetry: boolean): Observable<any> {
+  private _getBillResponse(isRetry: boolean): Observable<any> {
     const self = this;
     const params = { count: !isRetry ? 1 : 2 };
     return self.apiService.request(API_CMD.BFF_05_0022, params, {})

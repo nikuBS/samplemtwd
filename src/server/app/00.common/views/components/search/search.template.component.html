@@ -179,9 +179,13 @@
         <div class="img"><img src="{{listData.IMG}}" alt="{{listData.IMG_ALT}}"></div>
         <div class="cont">
             <div class="tit">{{{listData.PRODUCT_NM}}}</div>
-            <div class="price">{{currencyComma listData.PRODUCT_PRICE}}원~/월</div>
-            {{#ifCond listData.SALE_PRICE '!==' ''}}
-            <span class="price2">{{currencyComma listData.SALE_PRICE}}원</span>
+            <div class="price">{{currencyComma listData.SALE_PRICE}}
+                {{#ifCond listData.ALIAS '===' 'shopmobile'}}
+                원~/월
+                {{/ifCond}}
+            </div>
+            {{#ifCond listData.PRODUCT_PRICE '!==' ''}}
+            <span class="price2">{{currencyComma listData.PRODUCT_PRICE}}원</span>
             {{/ifCond}}
         </div>
     </li>
