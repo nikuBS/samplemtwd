@@ -55,8 +55,8 @@ Tw.ProductCommonLineChange.prototype = {
   },
 
   _showMoreList: function() {
-    var idxLimit = this._page * 20;
-    $.each(this.$lineList, function(elem, idx) {
+    var idxLimit = ++this._page * 20;
+    $.each(this.$lineList.find('li'), function(idx, elem) {
       if (idx > idxLimit) {
         return false;
       }
@@ -64,7 +64,6 @@ Tw.ProductCommonLineChange.prototype = {
       $(elem).show();
     });
 
-    this._page++;
     if (this.$lineList.find('li:not(:visible)').length < 1) {
       this.$btnMore.remove();
     }

@@ -117,7 +117,7 @@ Tw.CustomerSvcInfoNotice.prototype = {
   },
 
   _goCategory: function() {
-    if (this.$container.data('category') === this._category) {
+    if (this._category === this._category) {
       return;
     }
 

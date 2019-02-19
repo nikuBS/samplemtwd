@@ -37,7 +37,7 @@ class ProductCommonLineChange extends TwViewController {
 
       allowedLineList.push({
         svcMgmtNum: lineInfo.svcMgmtNum,
-        svcNum: lineInfo.svcNum,
+        svcNum: FormatHelper.conTelFormatWithDash(lineInfo.svcNum),
         svcAttrCd: lineInfo.svcAttrCd,
         fullNm: lineInfo.svcAttrCd === 'M1' || lineInfo.svcAttrCd === 'M2' ?
           MYT_JOIN_WIRE_SVCATTRCD[lineInfo.svcAttrCd] + ' ' + lineInfo.eqpMdlNm : MYT_JOIN_WIRE_SVCATTRCD[lineInfo.svcAttrCd],
