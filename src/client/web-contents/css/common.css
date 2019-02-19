@@ -418,7 +418,7 @@ input[type=text], input[type=file], input[type=password], input[type=number], in
     background: #dedede; }
   .inputbox.readonly .input input {
     color: #000000;
-    background: #fff; }
+    background: #dedede !important; }
   .inputbox.validation .input {
     /*input[type=text],
             input[type=password],
@@ -1077,8 +1077,7 @@ button.bt-link-tx, a.bt-link-tx {
     line-height: 1rem;
     color: #000;
     font-weight: 400;
-    width: 100%;
-    padding-right: 10%;
+    width: 90%;
     text-align: left;
     overflow: hidden;
     text-overflow: ellipsis; }

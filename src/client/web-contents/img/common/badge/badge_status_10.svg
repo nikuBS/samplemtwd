@@ -1,13 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="62px" height="32px" viewBox="0 0 62 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
-    <title>graphic_badge_status_10</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Icon_Badge_Graphic" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="##Element/Badge/Status10">
-            <rect id="Rectangle-2" fill="#E6F2FB" x="0" y="0" width="62" height="32" rx="4"></rect>
-            <path d="M9,22.2 L9,8.5 L11.06,8.5 L11.06,20.48 L17,20.48 L17,22.2 L9,22.2 Z M21.06,22.2 L21.06,10.22 L17.04,10.22 L17.04,8.5 L27.1,8.5 L27.1,10.22 L23.12,10.22 L23.12,22.2 L21.06,22.2 Z M28.16,22.2 L28.16,8.5 L36.48,8.5 L36.48,10.22 L30.22,10.22 L30.22,14.3 L35.08,14.3 L35.08,16 L30.22,16 L30.22,20.48 L36.56,20.48 L36.56,22.2 L28.16,22.2 Z M53.4,18.08 L37.3,18.08 L37.3,16.44 L44.28,16.44 L44.28,14.68 L38.88,14.68 L38.88,13.02 L41.56,13.02 L41.08,9.96 L43.1,9.72 L43.48,13.02 L47.12,13.02 L47.56,9.7 L49.6,10 L49.04,13.02 L51.74,13.02 L51.74,14.68 L46.32,14.68 L46.32,16.44 L53.4,16.44 L53.4,18.08 Z M51.54,24.1 L39.36,24.1 L39.36,19.18 L41.42,19.18 L41.42,22.46 L51.54,22.46 L51.54,24.1 Z M51.76,9.14 L38.84,9.14 L38.84,7.5 L51.76,7.5 L51.76,9.14 Z" id="LTE폰" fill="#178BCE"></path>
-        </g>
-    </g>
-</svg>
+<svg height="32" viewBox="0 0 62 32" width="62" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><rect fill="#e6f2fb" height="32" rx="4" width="62"/><path d="m9 22.2v-13.7h2.06v11.98h5.94v1.72zm12.06 0v-11.98h-4.02v-1.72h10.06v1.72h-3.98v11.98zm7.1 0v-13.7h8.32v1.72h-6.26v4.08h4.86v1.7h-4.86v4.48h6.34v1.72zm25.24-4.12h-16.1v-1.64h6.98v-1.76h-5.4v-1.66h2.68l-.48-3.06 2.02-.24.38 3.3h3.64l.44-3.32 2.04.3-.56 3.02h2.7v1.66h-5.42v1.76h7.08zm-1.86 6.02h-12.18v-4.92h2.06v3.28h10.12zm.22-14.96h-12.92v-1.64h12.92z" fill="#178bce"/></g></svg>

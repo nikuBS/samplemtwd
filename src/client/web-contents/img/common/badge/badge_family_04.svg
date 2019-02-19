@@ -1,13 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="48px" height="32px" viewBox="0 0 48 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
-    <title>graphic_badge_family_04</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Icon_Badge_Graphic" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="##Element/Badge/Family04">
-            <rect id="Rectangle-2" fill="#119ED7" x="0" y="0" width="48" height="32" rx="4"></rect>
-            <path d="M19.24,19.14 L18.06,20.62 C16.4,19.7 14.24,17.42 13.68,15.58 C13.22,17.48 11.44,19.84 9.28,21.02 L8,19.5 C10.84,17.92 12.62,15.04 12.62,11.46 L12.62,10.52 L8.9,10.52 L8.9,8.86 L18.36,8.86 L18.36,10.52 L14.74,10.52 L14.74,11.46 C14.74,15.08 16.64,17.7 19.24,19.14 Z M22.24,7 L22.24,13.98 L24.94,13.98 L24.94,15.7 L22.24,15.7 L22.24,24.82 L20.18,24.82 L20.18,7 L22.24,7 Z M32.66,12.64 L32.66,10.96 L37.28,10.96 L37.28,7 L39.32,7 L39.32,24.82 L37.28,24.82 L37.28,16.84 L32.66,16.84 L32.66,15.18 L37.28,15.18 L37.28,12.64 L32.66,12.64 Z M34.52,18.46 L34.82,20.12 C32.72,20.7 29.58,20.86 27.38,20.86 L25.56,20.88 L25.56,8.74 L27.6,8.74 L27.6,19.14 C30.04,19.14 32.56,18.94 34.52,18.46 Z" id="자녀" fill="#FFFFFF"></path>
-        </g>
-    </g>
-</svg>
+<svg height="32" viewBox="0 0 48 32" width="48" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><rect fill="#119ed7" height="32" rx="4" width="48"/><path d="m19.24 19.14-1.18 1.48c-1.66-.92-3.82-3.2-4.38-5.04-.46 1.9-2.24 4.26-4.4 5.44l-1.28-1.52c2.84-1.58 4.62-4.46 4.62-8.04v-.94h-3.72v-1.66h9.46v1.66h-3.62v.94c0 3.62 1.9 6.24 4.5 7.68zm3-12.14v6.98h2.7v1.72h-2.7v9.12h-2.06v-17.82zm10.42 5.64v-1.68h4.62v-3.96h2.04v17.82h-2.04v-7.98h-4.62v-1.66h4.62v-2.54zm1.86 5.82.3 1.66c-2.1.58-5.24.74-7.44.74l-1.82.02v-12.14h2.04v10.4c2.44 0 4.96-.2 6.92-.68z" fill="#fff"/></g></svg>

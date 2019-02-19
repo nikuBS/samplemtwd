@@ -1223,7 +1223,7 @@ body.apphome {
       content: '';
       position: absolute;
       left: 0;
-      bottom: -86px;
+      bottom: -18px;
       width: 100%;
       height: 11.25rem;
       background: url(/img/main/bg_home.png) repeat-x 0 0;

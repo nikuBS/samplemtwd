@@ -1430,7 +1430,8 @@
           display: block;
           font-size: 1.125rem;
           font-weight: 400;
-          line-height: 1.375rem; }
+          line-height: 1.375rem;
+          word-break: break-all; }
   .list-comp-input-agree .select-list > li .agree-view {
     position: absolute;
     z-index: 2;
@@ -14755,6 +14756,7 @@ a.bt-link-tx.underline.small {
 .add-prd-top-wrap {
   padding: 0.875rem 1rem;
   position: relative;
+  min-height: 1.375rem;
   background: #f5f5f5;
   border-top: 0.0625rem solid #e1e1e1; }
   .add-prd-top-wrap .select {
@@ -14785,6 +14787,8 @@ a.bt-link-tx.underline.small {
     color: #212121; }
     .add-prd-top-wrap .counts em {
       font-weight: 700; }
+    .add-prd-top-wrap .counts.type-r {
+      top: 0; }
 
 .container div:first-child.add-prd-top-wrap {
   border-top: 0 none;
@@ -18049,7 +18053,7 @@ a.bt-link-tx.underline.small {
 .brand_link {
   position: relative;
   display: table;
-  padding: 0 2.125rem 0 1rem;
+  padding: 0 2.125rem 0 0;
   height: 49px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box; }
@@ -18065,7 +18069,7 @@ a.bt-link-tx.underline.small {
     padding-left: 1.875rem;
     float: none !important; }
     .brand_link > li:first-of-type {
-      padding-left: 0; }
+      padding-left: 16px; }
   .brand_link .unit {
     position: relative;
     display: inline-block;
@@ -19528,6 +19532,9 @@ a.bt-link-tx.underline.small {
   color: inherit;
   font-size: 0.8125rem; }
 
+.add-top-type .bt-gps.type-r {
+  top: 2px; }
+
 .benefit-popularity-box li:first-child {
   padding-left: 1rem; }
 
@@ -19801,6 +19808,8 @@ a.bt-link-tx.underline.small {
     top: 1rem;
     left: 1rem; }
   .add-top-type .type-r {
+    position: relative;
+    top: -2px;
     float: right; }
 
 .brand-search-warap .input .bt-search {
@@ -20530,7 +20539,7 @@ a.bt-link-tx.underline.small {
     font-size: 0.8125rem;
     line-height: 1.75rem; }
   .roaming-product .recommendedrate-list {
-    margin-top: 1.25rem; }
+    margin-top: 0.9375rem; }
 
 .roaming-info-box .submain-findyourplan {
   min-height: 6.875rem;
@@ -25337,8 +25346,8 @@ input[type="radio"].formradio-small.type2 + label {
   line-height: 2.625rem; }
 
 .form-wrap .form-address .inputbox .input input[readonly] {
-  background: #dcdcdc;
-  color: #c1c1c1; }
+  color: #000000;
+  background: #fff; }
 
 .form-wrap .form-address .btn-area {
   font-size: 0; }
@@ -27873,7 +27882,8 @@ body.apphome {
     border-radius: 100%;
     border: 0;
     top: 0.0625rem;
-    left: 1px; }
+    left: 1px;
+    outline: 0; }
     .on-off-list.new .btn-switch .switch-style > span {
       text-indent: -9999px;
       visibility: hidden; }
@@ -28225,8 +28235,7 @@ body.apphome {
     display: block;
     text-align: right;
     font-size: 0.875rem;
-    padding-top: 0.1875rem;
-    float: right; }
+    padding-top: 0.1875rem; }
 
 .data-list-type1 .type1 li:first-child {
   padding-top: 0;
@@ -28658,8 +28667,8 @@ body.apphome {
   .category-info-guide li .text-type1 {
     display: block;
     font-size: 1.125rem;
-    color: #000;
-    padding: 0 4.375rem 0.3125rem 0; }
+    padding: 0 4.375rem 0.3125rem 0;
+    color: #000; }
   .category-info-guide li .text-type2 {
     display: block;
     font-size: 0.8125rem;
@@ -29176,5 +29185,18 @@ body.apphome {
   padding-right: 1rem;
   text-indent: 0;
   text-align: right; }
+
+/* 회선관리 뱃지 */
+.badge-co {
+  position: relative;
+  display: inline-block;
+  top: 0.125rem;
+  margin-left: 0.3125rem;
+  /* 기준 */ }
+  .badge-co.t-standard {
+    width: 1.5rem;
+    height: 1rem;
+    background: url(/img/svg/badge_status_00.svg) no-repeat;
+    background-size: 1.5rem auto; }
 
 /* 정민수 */
