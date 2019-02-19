@@ -230,12 +230,12 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     Tw.Error(err.code, err.msg).pop();
   },
   _onClose: function () {
-    if (this._isChanged()) {
-      this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-        $.proxy(this._closePop, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-    } else {
-      this._popupService.close();
-    }
+    // if (this._isChanged()) {
+    //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
+    //     $.proxy(this._closePop, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+    // } else {
+    //   this._popupService.close();
+    // }
   },
   _isChanged: function () {
     return this.$monthSelector.attr('id') !== this.$monthSelector.attr('origin-value') ||

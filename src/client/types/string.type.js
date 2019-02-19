@@ -823,7 +823,10 @@ Tw.ALERT_MSG_MEMBERSHIP = {
   ALERT_1_A68: { TITLE: '로그인 하시겠습니까?', MSG: 'T아이디(아이디/비밀번호) 로그인 후 이용 가능합니다.', BUTTON: '로그인'}
 };
 
-Tw.ALERT_CANCEL = '입력하신 정보는 모두 취소됩니다.<br>창을 닫으시겠습니까?';
+Tw.ALERT_CANCEL = {
+  TITLE: '화면을 닫고 이동하시겠습니까?',
+  CONTENTS: '입력 및 선택하신 정보는 모두 취소됩니다.'
+};
 
 Tw.ALERT_MSG_CUSTOMER = {
   ALERT_HELPLINE_A01: '예약을 취소하시면 작성하신 모든 정보가 초기화됩니다.',
