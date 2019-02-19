@@ -204,14 +204,18 @@ Tw.MyTFareHotBill.prototype = {
    */
   _onErrorReceivedBillData: function (resp) {
     Tw.CommonHelper.endLoading('.fe-loading-bill');
-    // 애러시 노출되는 항목이 없어 alert 후 goBack 처리 필요. 공통함수(Tw.Error) 사용 불가.
-    this._popupService.openAlert(resp.msg, resp.code, null, $.proxy(this._goBackOnError, this) );
+    if ( resp.code === Tw.MyTFareHotBill.CODE.ERROR.BILL_NOT_AVAILABLE ) {
+      Tw.Error(resp.code, Tw.HOTBILL_ERROR_ZINVE8106).page();
+    } else {
+      // 애러시 노출되는 항목이 없어 alert 후 goBack 처리 필요. 공통함수(Tw.Error) 사용 불가.
+      this._popupService.openAlert(resp.msg, resp.code, null, $.proxy(this._goBackOnError, this));
+    }
   },
   /**
    * Go to the previous page on Error.
    * @private
    */
-  _goBackOnError: function(){
+  _goBackOnError: function () {
     this._historyService.goBack();
   },
   /**
@@ -272,9 +276,9 @@ Tw.MyTFareHotBill.prototype = {
    */
   _confirmSwitchLine: function (target) {
     var defaultLineInfo = Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.svcNum.replace(/-/g, '')) + ' ' +
-      (_.isEmpty(this._svcInfo.nickNm) ? this._svcInfo.eqpMdlNm : this._svcInfo.nickNm );
+      (_.isEmpty(this._svcInfo.nickNm) ? this._svcInfo.eqpMdlNm : this._svcInfo.nickNm);
     var selectLineInfo = Tw.FormatHelper.getDashedCellPhoneNumber(target.svcNum.replace(/-/g, '')) + ' ' +
-      (_.isEmpty(target.nickNm) ? target.eqpMdlNm : target.nickNm );
+      (_.isEmpty(target.nickNm) ? target.eqpMdlNm : target.nickNm);
     this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,
       defaultLineInfo + Tw.MYT_TPL.DATA_SUBMAIN.SP_TEMP + selectLineInfo,
       Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._requestSwitchLine, this, target), null);
@@ -314,7 +318,8 @@ Tw.MyTFareHotBill.NO_BILL_FIELDS = ['total', 'noVAT', 'is3rdParty', 'showDesc', 
  */
 Tw.MyTFareHotBill.CODE = {
   ERROR: {
-    NO_BILL_REQUEST_EXIST: 'ZINVN8888'
+    NO_BILL_REQUEST_EXIST: 'ZINVN8888',
+    BILL_NOT_AVAILABLE: 'ZINVE8106'
   }
 };
 /**
@@ -349,8 +354,7 @@ Tw.MyTFareHotBill.arrayToGroup = function (data, fieldInfo) {
     if ( groupS.indexOf('*') > -1 ) {
       groupS = groupS.replace(/\*/g, '');
       noVAT = true;
-    }
-    else if ( groupS.indexOf('#') > -1 ) {
+    } else if ( groupS.indexOf('#') > -1 ) {
       groupS = groupS.replace(/#/g, '');
       is3rdParty = true;
     }
