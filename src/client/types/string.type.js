@@ -55,7 +55,7 @@ Tw.BUTTON_LABEL = {
   NEXT: '다음',
   HOME: '홈으로',
   YES: '예',
-  NO: '아니오',
+  NO: '아니요',
   COMPLETE: '완료'
 };
 
@@ -439,7 +439,7 @@ Tw.ALERT_MSG_COMMON = {
     TITLE: 'SMS인증을 사용할 수 없습니다.',
     MSG: 'T world에 로그인하신 계정의 이동전화번호와 일치하는 휴대폰에서만 인증 받으실 수 있습니다.<br />고객센터(114)로 문의주세요.'
   },
-  STEP_CANCEL: { TITLE: ' ', MSG: '입력하신 정보는 모두 취소됩니다. <br> 창을 닫으시겠습니까?' },
+  STEP_CANCEL: { TITLE: '화면을 닫고 이동하시겠습니까?', MSG: '입력 및 선택하신 정보는 모두 취소됩니다.' },
   CHANGE: '변경하시겠습니까?'
 };
 
