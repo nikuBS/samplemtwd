@@ -439,13 +439,13 @@ Tw.ProductCommonCallplan.prototype = {
     this._historyService.goLoad(this._settingGoUrl + '?prod_id=' + this._prodId);
   },
 
-  _getWireAdditionsPreCheck: function() {
-    if (['D_I', 'D_P', 'D_T'].indexOf(this._prodTypCd) === -1 || this._joinTermCd !== '03') {
-      return;
-    }
-
-    this._apiService.request(Tw.API_CMD.BFF_10_0098, { joinTermCd: '04' }, {}, [this._prodId])
-      .done($.proxy(this._resWireAdditionsPreCheck, this));
+  _getWireAdditionsPreCheck: function() { // @TODO 예약취소 GrandOpen 이후 범위
+    // if (['D_I', 'D_P', 'D_T'].indexOf(this._prodTypCd) === -1 || this._joinTermCd !== '03') {
+    //   return;
+    // }
+    //
+    // this._apiService.request(Tw.API_CMD.BFF_10_0098, { joinTermCd: '04' }, {}, [this._prodId])
+    //   .done($.proxy(this._resWireAdditionsPreCheck, this));
   },
 
   _resWireAdditionsPreCheck: function(resp) {
