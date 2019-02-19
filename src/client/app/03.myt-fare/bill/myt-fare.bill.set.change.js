@@ -1,6 +1,7 @@
 /**
  * FileName: myt-fare.bill.set.change.js
  * Author: 양정규 (skt.P130715@partner.sk.com)
+ * 요금 안내서 설정 > 안내서 변경
  * Date: 2018. 9. 21
  */
 Tw.MyTFareBillSetChange = function (rootEl, data) {
@@ -12,14 +13,22 @@ Tw.MyTFareBillSetChange = function (rootEl, data) {
   this._init();
 };
 Tw.MyTFareBillSetChange.prototype = {
+  /**
+   * 최초 실행
+   * @private
+   */
   _init: function () {
     this._initVariables();
     this._bindEvent();
     this._initDefaultOptions();
     // input 변경이 감지되면 취소확인 컨펌 띄움. 초기값 설정이후 체크해야 하기 때문에 this._initDefaultOptions() 펑션 다음에 선언해준다.
-    this.$container.one('change', 'input', $.proxy(this._checkInputType, this)); // input tag 변경 확인
+    // this.$container.one('change', 'input', $.proxy(this._checkInputType, this)); // input tag 변경 확인
   },
 
+  /**
+   * 초기값 설정
+   * @private
+   */
   _initVariables: function () {
     this._billType = Tw.UrlHelper.getQueryParams().billType; // 메인 안내서 유형
     this._subBillType = Tw.UrlHelper.getQueryParams().subBillType || 'X';  // 함께 받는 안내서 유형
@@ -31,9 +40,13 @@ Tw.MyTFareBillSetChange.prototype = {
     this._btnAddr = this.$container.find('.fe-btn-addr'); // 주소록 버튼
     this._addrArea = this.$container.find('#fe-addr-area'); // 우편 주소 area
     this._scurMailYn = this.$container.find('#fe-scurMailYn'); // 이메일 보안 설정
-    this._isInputChanged = false;     // 모든 input 필드(radio, checkobx 포함) 변경여부
+    // this._isInputChanged = false;     // 모든 input 필드(radio, checkobx 포함) 변경여부
   },
 
+  /**
+   * 이벤트 설정
+   * @private
+   */
   _bindEvent: function () {
     this.$container.on('change', 'input[name="together"]', $.proxy(this._onChangeTogetherBill, this));
     this._btnAddr.on('click', $.proxy(this._onClickBtnAddr, this));
@@ -43,7 +56,7 @@ Tw.MyTFareBillSetChange.prototype = {
     this.$container.on('keyup focus change', '[data-inactive-target]', $.proxy(this._onCheckedInput, this));
     this._scurMailYn.on('change', $.proxy(this._onChangeScurMailYn, this)); // 이메일 보안 설정
     this.$container.on('click', '.fe-search-zip', $.proxy(this._searchZip, this)); // 우편번호 검색
-    this.$container.on('click', '#fe-back', $.proxy(this._onCloseConfirm, this)); // 취소 확인 창
+    // this.$container.on('click', '#fe-back', $.proxy(this._onCloseConfirm, this)); // 취소 확인 창
   },
 
   /**
@@ -55,7 +68,10 @@ Tw.MyTFareBillSetChange.prototype = {
     this._isInputChanged = true;
   },
 
-  // 닫기 버튼 클릭 시 [확인]
+  /**
+   * 닫기 버튼 클릭 시
+   * @private
+   */
   _onCloseConfirm: function() {
     if (!this._isInputChanged) {
       this._historyService.goBack();
@@ -69,10 +85,19 @@ Tw.MyTFareBillSetChange.prototype = {
       }, this), this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
   },
 
+  /**
+   * 우편번호 조회 서비스 호출
+   * @private
+   */
   _searchZip: function () {
     new Tw.CommonPostcodeMain(this.$container, $.proxy(this._callBackSearchZip, this));
   },
 
+  /**
+   * 우편번호 조회 서비스 콜백
+   * @param resp
+   * @private
+   */
   _callBackSearchZip: function (resp) {
     this._setAddrData({
       zip: resp.zip,
@@ -85,7 +110,11 @@ Tw.MyTFareBillSetChange.prototype = {
     this._addrArea.find('input[name="dtlAddr"]').data('state', true);
   },
 
-  // 기타(우편) 데이터 설정
+  /**
+   * 기타(우편) 데이터 설정
+   * @param data : 주소 데이터 {zip: 우편번호, basAddr: 기본주소, dtlAddr: 상세주소}
+   * @private
+   */
   _setAddrData: function (data) {
     this.$container.find('#fe-no-addr-area').addClass('none');
     this._addrArea.addClass('none');
@@ -100,11 +129,13 @@ Tw.MyTFareBillSetChange.prototype = {
     this._onDisableSubmitButton();
   },
 
-  // 이메일 보안설정 이벤트
-  _onChangeScurMailYn: function () {
-    this._setOptionsContents(true);
-  },
-
+  /**
+   * "옵션설정" 항목 enabled/disabled 처리
+   * (check 상태는 그대로 유지)
+   * @param context
+   * @param disabled
+   * @private
+   */
   _disabledOptions: function (context, disabled) {
     if (disabled) {
       context.find('.btn-switch')
@@ -117,7 +148,13 @@ Tw.MyTFareBillSetChange.prototype = {
     }
   },
 
-  // 스위치 체크박스 disabled / enabled
+  /**
+   * "옵션설정" 항목 enabled/disabled 처리
+   * (check 상태는 false)
+   * @param context
+   * @param disabled
+   * @private
+   */
   _toggleDisabledCheckbox: function (context, disabled) {
     if (disabled) {
       context.find('.btn-switch').removeClass('on').addClass('disabled')
@@ -130,11 +167,21 @@ Tw.MyTFareBillSetChange.prototype = {
     }
   },
 
-  // 함께 받을 요금 안내서 값
+  /**
+   * 함께 받을 요금 안내서 값 반환
+   * @returns {this | string | number | string[] | * | jQuery}
+   * @private
+   */
   _getTogetherVal: function () {
     return this.$container.find('input[name="together"]:checked').val() || '';
   },
 
+  /**
+   * input(checkbox, radio) 체크하기
+   * @param _$el    : 셀렉터
+   * @param checked : 체크 상태 (true|false)
+   * @private
+   */
   _prop: function (_$el, checked) {
     var _parent = _$el.prop('checked', checked)
       .parent()
@@ -148,7 +195,12 @@ Tw.MyTFareBillSetChange.prototype = {
     }
   },
 
-  // 체크박스/ 라디오 버튼 체크표시
+  /**
+   * 체크박스/ 라디오 버튼 체크표시
+   * @param name  : 엘리먼트 이름
+   * @param value : 값
+   * @private
+   */
   _checkedElement: function (name, value) {
     var _$this = this;
     this.$container.find('[name=' + name + ']')
@@ -157,7 +209,12 @@ Tw.MyTFareBillSetChange.prototype = {
       });
   },
 
-  // 슬라이더형식 체크 박스 체크표시
+  /**
+   * 슬라이더형식 체크 박스 체크표시
+   * @param name
+   * @param value
+   * @private
+   */
   _checkedSlideCheckbox: function (name, value) {
     var _$curCheckbox = this.$container.find('[name="{0}"]'.replace('{0}', name));
     var isCheck = _$curCheckbox.val() === value ? true : false;
@@ -174,7 +231,10 @@ Tw.MyTFareBillSetChange.prototype = {
     }
   },
 
-  // 옵션 설정 Default 설정
+  /**
+   * 옵션 설정 Default 설정
+   * @private
+   */
   _initDefaultOptions: function () {
     var _data = this._data;
 
@@ -204,9 +264,21 @@ Tw.MyTFareBillSetChange.prototype = {
     this._setOptions(1); // 옵션 보이기
   },
 
-  // 콘텐츠 이용 상세내역 표시
-  // "infoInvDtlDispChkYn": 콘텐츠이용료 청구 사용가능 여부 확인 이 N 이면 disable
-  // scurMailYn : 이메일 요금안내서 보안여부 N 이면 disable
+  /**
+   * 이메일 보안설정 이벤트
+   * @private
+   */
+  _onChangeScurMailYn: function () {
+    this._setOptionsContents(true);
+  },
+
+  /**
+   * 콘텐츠 이용 상세내역 표시
+   * "infoInvDtlDispChkYn": 콘텐츠이용료 청구 사용가능 여부 확인 이 N 이면 disable
+   * scurMailYn : 이메일 요금안내서 보안여부 N 이면 disable
+   * @param isShow
+   * @private
+   */
   _setOptionsContents: function(isShow) {
     var _data = this._data;
     var _infoInvDtlDispYnName = 'infoInvDtlDispYn';
@@ -220,7 +292,11 @@ Tw.MyTFareBillSetChange.prototype = {
     }
   },
 
-  // gubun 1: 노출여부 , 2: 옵션 체크
+  /**
+   * "옵션설정" 설정
+   * @param gubun : 1: 노출여부 , 2: 옵션 체크
+   * @private
+   */
   _setOptions: function (gubun) {
     var billType = this._billType;
     var isDisplay = gubun === 1 ? true : false;
@@ -285,21 +361,34 @@ Tw.MyTFareBillSetChange.prototype = {
     }
   },
 
-  // 함께 받을 요금 안내서 변경 시
+  /**
+   * 함께 받을 요금 안내서 변경 시
+   * @param e
+   * @private
+   */
   _onChangeTogetherBill: function (e) {
     // 이메일 인경우 이메일 입력 부분 보이기
     this._toggleElement('fe-email-area', $(e.currentTarget).val() === '2');
     this._setOptions(1);
   },
 
-  // 엘리먼트 토글
+  /**
+   * tag 엘리먼트 보임/숨김 및 하위 input 에 state 설정 (*state : 안내서 변경 요청 파라미터 생성시 state 상태를 보고 생성함)
+   * @param context
+   * @param state
+   * @private
+   */
   _toggleElement: function (context, state) {
     context = (typeof context === 'string') ? this.$container.find('#' + context) : context;
     context.toggleClass('none', !state).find('input').data('state', state);
     this._onDisableSubmitButton();
   },
 
-  // 휴대폰 번호 입력 시 자동 하이픈 넣기
+  /**
+   * 휴대폰 번호 입력 시 자동 하이픈 넣기
+   * @param e
+   * @private
+   */
   _onFormatHpNum: function (e) {
     var _$this = $(e.currentTarget);
     var data = _$this.val();
@@ -327,11 +416,21 @@ Tw.MyTFareBillSetChange.prototype = {
     _$this.val(data);
   },
 
-  // Native 주소록 호출
+  /**
+   * Native 주소록 호출
+   * @param e
+   * @private
+   */
   _onClickBtnAddr: function (e) {
     Tw.Native.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._onContact, this, e));
   },
 
+  /**
+   * Native 주소록 호출 후 콜백. 전화번호 input에 값을 입력해준다.
+   * @param e
+   * @param resp
+   * @private
+   */
   _onContact: function (e, resp) {
     if (resp.resultCode === Tw.NTV_CODE.CODE_00) {
       var params = resp.params;
@@ -341,17 +440,30 @@ Tw.MyTFareBillSetChange.prototype = {
     this._onDisableSubmitButton();
   },
 
+  /**
+   * 법정대리인 함께 수령 스위칭
+   * @param context
+   * @private
+   */
   _changeCcurNotiYn: function(context) {
     var _isChecked = context.is(':checked');
     this._toggleElement(context.data('toggleId'), _isChecked);
   },
 
-  // 법정대리인 함께 수령 스위칭
+  /**
+   * 법정대리인 함께 수령 스위칭
+   * @param e
+   * @private
+   */
   _onChangeCcurNotiYn: function (e) {
     this._changeCcurNotiYn($(e.currentTarget));
   },
 
-  // 변경 할 안내서 유형 만듬
+  /**
+   * 변경 할 안내서 유형 생성
+   * @returns {string|*}
+   * @private
+   */
   _convertBillType: function () {
     var _billType = this._billType;
     var _together = this._getTogetherVal();
@@ -393,7 +505,11 @@ Tw.MyTFareBillSetChange.prototype = {
     return _toBillType;
   },
 
-  // 유효성(밸리데이션) 체크
+  /**
+   * 유효성(밸리데이션) 체크
+   * @returns {{result: boolean, data}}
+   * @private
+   */
   _checkValidation: function () {
     var $this = this;
     var _valid = Tw.ValidationHelper;
@@ -482,11 +598,21 @@ Tw.MyTFareBillSetChange.prototype = {
     return {data: _reqData, result: _result};
   },
 
+  /**
+   * input focus 및 변경 이벤트.
+   * @param e
+   * @private
+   */
   _onCheckedInput : function (e) {
     this._clearInput(e);
     this._onDisableSubmitButton();
   },
 
+  /**
+   * input focus 시에 입력된 값을 지운다.
+   * @param e
+   * @private
+   */
   _clearInput : function (e) {
     var $target = $(e.currentTarget);
     var _validType = $target.data('validType');
@@ -504,7 +630,10 @@ Tw.MyTFareBillSetChange.prototype = {
     }
   },
 
-  // 변경하기 버튼 disable / enable
+  /**
+   * 변경하기 버튼 disable / enable
+   * @private
+   */
   _onDisableSubmitButton: function () {
     var _$target = this.$container.find('[data-inactive-target]');
     var _isDisable = false;
@@ -524,15 +653,23 @@ Tw.MyTFareBillSetChange.prototype = {
     this._submit.prop('disabled', _isDisable);
   },
 
-  // 우편안내서 > 연락처 값 변환 (12자리로 맞춰서 보내야 함)
-  // 예) 011-728-4508 -> 001107284508
+  /**
+   * 우편안내서 > 연락처 값 변환 (12자리로 맞춰서 보내야 함)
+   * 예) 011-728-4508 -> 001107284508
+   * @param hpNum
+   * @returns {*}
+   * @private
+   */
   _getHpNum: function (hpNum) {
     var lpad = Tw.FormatHelper.lpad;
     var _hpNums = Tw.FormatHelper.conTelFormatWithDash(hpNum).split('-');
     return lpad(_hpNums[0], 4, '0') + lpad(_hpNums[1], 4, '0') + _hpNums[2];
   },
 
-  // 변경하기 클릭 이벤트
+  /**
+   * 변경하기 클릭 이벤트
+   * @private
+   */
   _onSubmit: function () {
     var _result = this._checkValidation();
     if (_result.result) {
@@ -540,11 +677,13 @@ Tw.MyTFareBillSetChange.prototype = {
     }
   },
 
-  /*
-    안내서 변경(정보변경) 요청 : 이메일 포함하는 안내서와 미포함 안내서는 API 주소가 다름
-    이메일 미포함 안내서일 경우 요청 API : BFF_05_0027
-    이메일 포함 안내서의 요청 API : BFF_05_0199
-  */
+  /**
+   * 안내서 변경(정보변경) 요청 : 이메일 포함하는 안내서와 미포함 안내서는 API 주소가 다름
+   * 이메일 미포함 안내서일 경우 요청 API : BFF_05_0027
+   * 이메일 포함 안내서의 요청 API : BFF_05_0199
+   * @param data
+   * @private
+   */
   _reqChangeBillType : function (data) {
     var _apiUrl = ['I', 'K', 'A', '2'].indexOf(data.toBillTypeCd) > -1 ? Tw.API_CMD.BFF_05_0199 : Tw.API_CMD.BFF_05_0027;
 
@@ -554,6 +693,11 @@ Tw.MyTFareBillSetChange.prototype = {
       .fail($.proxy(this._onFail, this));
   },
 
+  /**
+   * _reqChangeBillType 성공 콜백
+   * @param resp
+   * @private
+   */
   _onSucessChangeBillType: function (resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       this._onFail(resp);
@@ -567,7 +711,11 @@ Tw.MyTFareBillSetChange.prototype = {
       Tw.MYT_FARE_BILL_SET.COMPLETE_TEXT_CHANGE);
   },
 
-  // API Fail
+  /**
+   * API Fail
+   * @param err
+   * @private
+   */
   _onFail: function (err) {
     Tw.Error(err.code, err.msg).pop();
   }

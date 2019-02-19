@@ -126,7 +126,7 @@
                                         <%= (i === 0 ? 'checked="checked"': '') %> />
                                         <div class="comp-list-layout" id="aria-comp-radio<%=i%>" aria-hidden="true">
                                             <p class="layout-text">
-                                                <span class="mtext"><%= data.halfYear[i].type1%> (<%= data.halfYear[i].type2%>)</span>
+                                                <span class="mtext"><%= data.halfYear[i].type1%></span> <span class="tx-normal">(<%= data.halfYear[i].type2%>)</span>
                                             </p>
                                         </div>
                                     </li>
@@ -170,7 +170,7 @@
             data.pageInfo }); %>
         </footer>
         <!-- .popup-closeBtn -->
-        <button id="fe-back" class="prev-step">취소</button>
+        <button id="fe-back" class="prev-step fe-common-back">취소</button>
         <!--// .popup-closeBtn -->
     </div>
 </div>

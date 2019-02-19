@@ -1,6 +1,7 @@
 /**
  * FileName: myt-fare.bill.set.return-history.js
  * Author: 양정규 (skt.P130715@partner.sk.com)
+ * 요금안내서 반송내역
  * Date: 2018. 9. 14
  */
 Tw.MyTFareBillSetReturnHistory = function (rootEl) {
@@ -10,22 +11,36 @@ Tw.MyTFareBillSetReturnHistory = function (rootEl) {
 };
 
 Tw.MyTFareBillSetReturnHistory.prototype = {
+  /**
+   * 최초 실행
+   * @private
+   */
   _init : function() {
     this._initVariables();
     this._bindEvent();
     this._registerHelper();
     this._reqReturnHistory();
-    // this._reqMock();
   },
+  /**
+   * 초기값 설정
+   * @private
+   */
   _initVariables: function () {
     this.returnHistory = this.$container.find('#fe-return-history');
     this._totalCount =  this.$container.find('#fe-total-cnt');
   },
+  /**
+   * 이벤트 설정
+   * @private
+   */
   _bindEvent: function () {
 
   },
 
-  // 요금 안내서 반송내역 조회
+  /**
+   * 요금 안내서 반송내역 조회
+   * @private
+   */
   _reqReturnHistory : function () {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     Tw.Api
@@ -34,34 +49,11 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
       .fail($.proxy(this._onFail, this));
   },
 
-  // 요금 안내서 반송내역 조회 (목업)
-  _reqMock : function () {
-    $.ajax('/mock/myt.return-history.json')
-      .done($.proxy(this._successReturnHistory, this))
-      .fail($.proxy(this._onFail, this));
-  },
-
-  // 데이터 파싱
-  _parseData : function (list) {
-    // 반송 등록일 기준으로 내림차순 정렬
-    list = Tw.FormatHelper.sortObjArrDesc(list, 'undlvRgstDt');
-    _.forEach(list, function(data){
-      data.undlvRgstDt = Tw.DateHelper.getShortDate(data.undlvRgstDt);
-      data.invDt = Tw.DateHelper.getShortDate(data.invDt);
-      data.sndDt = Tw.DateHelper.getShortDate(data.sndDt);
-      data.billTyp = Tw.MYT_FARE_BILL_SET.RETURN_HISTORY.BILL_TYPE_NAME[$.trim(data.billTyp)] || data.billTyp;
-    });
-  },
-
-  _parseDate : function (date) {
-    return Tw.DateHelper.getShortDateWithFormat(date, 'MM.DD','MMDD');
-  },
-
-  _registerHelper : function() {
-    Handlebars.registerHelper('formatDate', this._parseDate);
-  },
-
-  // 반송내역조회 호출 후 > 반송내역 리스트 더보기 세팅
+  /**
+   * _reqReturnHistory() 성공 콜백. 반송내역 리스트 더보기 세팅
+   * @param res : API Response
+   * @private
+   */
   _successReturnHistory : function (res) {
     Tw.CommonHelper.endLoading('.container');
     // 발행내역 없는 경우
@@ -88,7 +80,45 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
     });
   },
 
-  // 반송내역 리스트 생성
+  /**
+   * 수신 데이터 파싱
+   * @param list : 반송내역 리스트
+   * @private
+   */
+  _parseData : function (list) {
+    // 반송 등록일 기준으로 내림차순 정렬
+    list = Tw.FormatHelper.sortObjArrDesc(list, 'undlvRgstDt');
+    _.forEach(list, function(data){
+      data.undlvRgstDt = Tw.DateHelper.getShortDate(data.undlvRgstDt);
+      data.invDt = Tw.DateHelper.getShortDate(data.invDt);
+      data.sndDt = Tw.DateHelper.getShortDate(data.sndDt);
+      data.billTyp = Tw.MYT_FARE_BILL_SET.RETURN_HISTORY.BILL_TYPE_NAME[$.trim(data.billTyp)] || data.billTyp;
+    });
+  },
+
+  /**
+   * 핸들바스 파일에서 사용할 펑션 등록
+   * @private
+   */
+  _registerHelper : function() {
+    Handlebars.registerHelper('formatDate', this._parseDate);
+  },
+
+  /**
+   * 날짜 포맷팅
+   * @param date : 포맷팅 할 날짜(MMDD)
+   * @returns {Date}
+   * @private
+   */
+  _parseDate : function (date) {
+    return Tw.DateHelper.getShortDateWithFormat(date, 'MM.DD','MMDD');
+  },
+
+  /**
+   * 반송내역 리스트 생성
+   * @param res
+   * @private
+   */
   _renderList : function (res) {
     var source = $('#tmplMore').html();
     var template = Handlebars.compile(source);
@@ -96,7 +126,11 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
     this.returnHistory.append(output);
   },
 
-  // API Fail
+  /**
+   * API Fail
+   * @param err
+   * @private
+   */
   _onFail: function (err) {
     Tw.CommonHelper.endLoading('.container');
     Tw.Error(err.code,err.msg).pop();

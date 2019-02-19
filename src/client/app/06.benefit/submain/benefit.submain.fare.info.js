@@ -1,6 +1,7 @@
 /**
  * FileName: benefit.submain.fare.info.js
  * Author: 양정규 (skt.P130715@partner.sk.com)
+ * 단통법관련문의안내 팝업
  * Date: 2018.12.19
  */
 Tw.BenefitSubmainFareInfo = function () {
@@ -11,20 +12,31 @@ Tw.BenefitSubmainFareInfo = function () {
 
 Tw.BenefitSubmainFareInfo.prototype = {
 
+  /**
+   * 최초 실행
+   * @private
+   */
   _init: function () {
     this._bindEvent();
   },
 
+  /**
+   * 이벤트 설정
+   * @private
+   */
   _bindEvent: function () {
     this.$container.on('click', '#fe-external-url a', $.proxy(this._alertCharge, this));
   },
 
-  // 과금발생 알러트
+  /**
+   * 과금발생 알러트
+   * @param e
+   * @private
+   */
   _alertCharge: function (e) {
     e.preventDefault();
 
     var $target = $(e.currentTarget);
-    var $this = this;
     var _href = $target.attr('href');
 
     if (Tw.FormatHelper.isEmpty($target.attr('href'))) {
