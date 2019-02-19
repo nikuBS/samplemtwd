@@ -294,7 +294,7 @@ Tw.PopupService.prototype = {
   openModalTypeA: function (title, contents, btName, openCallback, confirmCallback, closeCallback, hashName) {
     var option = {
       title: title,
-      title_type: 'sub-c',
+      title_type: 'sub',
       cont_align: 'tl',
       contents: contents,
       bt_b: [{
@@ -313,7 +313,7 @@ Tw.PopupService.prototype = {
   openModalTypeATwoButton: function (title, contents, btName, closeBtName, openCallback, confirmCallback, closeCallback, hashName) {
     var option = {
       title: title,
-      title_type: 'sub-c',
+      title_type: 'sub',
       cont_align: 'tl',
       contents: contents,
       bt_b: [{
