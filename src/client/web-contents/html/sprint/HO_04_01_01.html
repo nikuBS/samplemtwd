@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+
+    
+    
+
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+					</div>
+
+            <div class="h-tit">위치정보 이용동의 설정</div>
+            <div class="h-serarch">
+                <button class="icon-gnb-search"><span class="blind">검색</span></button>
+            </div>
+				</div>
+			</div>
+		</div>
+        <!--// #header --> 
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <div class="cont-box nogaps">
+                    <div class="list-comp-input location-agree">
+                        <div class="widget">
+                            <div class="agree-ckbox-wrap">
+                                <div class="ckbox">
+                                    <span class="custom-form"><input type="checkbox" id="ck_agree" name="r2"><span class="c-type1"></span></span>
+                                </div>
+                                <div class="comp-list-layout" id="aria-comp-agree">
+                                    <p class="layout-text">
+                                        <label for="ck_agree">위치정보 이용동의(선택)</label>
+                                        <span class="stext">위치정보 이용동의 후 모바일 T월드가 내 위치정보를 확인할 수 있습니다.</span>
+                                    </p>
+                                    <!--접근성 수정-->
+                                    <button class="agree-view" title="위치정보 이용동의"><span class="blind">자세히 보기</span></button>
+                                    <!-- //접근성 수정-->
+                                </div>
+                            </div>
+                            <!--이용동의 내용-->
+                            <div class="agree-cont">
+                                <div class="cont-border">
+                                    <h3 class="mt20">수집 / 이용목적</h3>
+                                    <p class="mt10">단말기의 위치정보에 기반하여 자기 위치 주변의 <strong>T월드</strong> 매장찾기 서비스 제공. 기지국 기반으로 모바일 <strong>T월드 앱 푸시</strong>를 통한 추천서비스 및 주변 매장 이벤트 등 SK텔레콤 또는 기타 제휴사의  상품/서비스에 관한 정보/광고 안내 서비스 제공</p>
+                                    <h3 class="mt20">수집 항목</h3>
+                                    <p class="mt10">서비스를 이용하는 시점에 기기 위치 정보 및 위치 기지국 정보</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="cont-box noborder bgnone">
+                    <ul class="middot-list">
+                        <li>위치기반서비스를 이용하기 위해서는 위치 선택 접근권한에 먼저 동의하셔야 합니다.</li>
+                        <li>선택 접근권한은 동의하지 않아도 서비스를 이용할 수 있으나, 해당 권한이 필요한 기능은 이용이 제한될 수 있습니다.</li>
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

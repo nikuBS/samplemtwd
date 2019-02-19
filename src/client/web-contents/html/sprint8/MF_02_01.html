@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no, address=no, email=no" />
+		<link rel="shortcut icon" href="/img/common/favicon.ico" />
+		<link rel="shortcut icon" href="/img/common/favicon.png" />
+		<link rel="apple-touch-icon" href="/img/common/favicon.png" />
+		<meta name="description" content="페이지설명" />
+		<meta name="keywords" content="서비스키워드" />
+		<meta property="og:title" content="SKT 홈페이지" />
+		<meta property="og:site_name" content="SKT" />
+		<meta property="og:image" content="/image/common/skt_facebook.jpg" />
+		<meta property="og:description" content="SKT framework" />
+		<title>SKT</title>
+		<link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+		<link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+		<link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+		<link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+		<script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+		<script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+		<script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+		<script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+		<script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+		<script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+		
+	</head>
+
+
+	<body class="bg-gray">
+		<!-- #skip_navigation -->
+		<div id="skipNav" class="skip_navi">
+			<ul>
+				<li><a href="#gnb">메뉴 바로가기</a></li>
+				<li><a href="#contents">본문 바로가기</a></li>
+				<li><a href="#footer">푸터 바로가기</a></li>
+			</ul>
+		</div>
+		<!--// #skip_navigation -->
+		<div class="wrap">
+			<!-- #header -->
+	        <div id="header" class="header-wrap">
+	            <div class="h-belt">
+	                <div class="h-default">
+	                    <div class="h-menu">
+	                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+	                    </div>
+	                    <div class="h-tit">요금안내서</div>
+	                    <div class="h-serarch">
+	                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	        <!--// #header -->
+			<!-- #contents -->
+			<div id="contents" class="container-wrap">
+				<h2 class="blind">내용</h2>
+				<div class="container">
+					<!--접근성 수정-->
+					<div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
+		                <h3 class="tit" id="aria-comp-bt1">뉴 T끼리 맞춤형 (100분+6GB)</h3>
+		                <button class="detail-view" aria-labelledby="aria-comp-bt1"><span class="blind">자세히보기</span></button>
+					</div>
+					<!-- //접근성 수정-->
+					<!-- .cont-box -->
+					<div class="cont-box">
+						<div class="charge-guide-wrap">
+							<div class="charge-cont">
+								<span class="sub-disc01">
+									<span class="elem">2018년 8월</span>
+									<span class="elem ellipsis">서비스 전체</span>
+								</span>
+								<span class="tit"><span class="charge-txt">119,090</span>원</span>
+								<span class="sub-disc01">사용기간 : 2018.7.1~7.31</span>
+							</div>
+
+							<div class="bt-alone"><button class="bt-bg-blue1">조건 변경</button></div>
+
+							<div class="charge-cont pt38">
+								<span class="sub-disc02">이번 달에는 <span class="tx-bold vbl">요금할인을 20,000원</span> 받으셨어요.<br />SK텔레콤과 함께 해주셔서 감사합니다.</span>
+								<div class="basic-list bg-type mt14">
+									<ul>
+										<li>
+											<span class="title">휴대폰</span>
+											<span class="tx-cont">100,000 원</span>
+										</li>
+										<li>
+											<span class="title">인터넷</span>
+											<span class="tx-cont">3,940 원</span>
+										</li>
+										<li>
+											<span class="title">T Pocket-Fi</span>
+											<span class="tx-cont">13,340 원</span>
+										</li>
+									</ul>
+								</div>
+								<p class="txt-desc2 mt16">SK브로드밴드를 통해 가입하신 서비스일 경우 청구요금에 포함되지 않습니다. 전화 106 또는 SK브로드밴드 홈페이지를 이용해 주시기 바랍니다.</p>
+							</div>
+						</div>
+					</div>
+					<!--// .cont-box -->
+
+					<hr class="cont-sp type1" aria-hidden="true"/>
+
+					<!-- .cont-box -->
+					<div class="cont-box nogaps-btm">
+						<div class="statement-cont">
+							<div class="single-list">
+								<span class="title"><span class="in-tx">휴대폰 010-12**-34**</span><a class="bt-link-tx underline" href="">뉴 T끼리 맞춤형 (100분+6GB)</a></span>
+								<span class="num"><em>100,000</em> 원</span>
+							</div>
+							<div class="statement-detail">
+								<!-- .widget -->
+						        <div class="widget">
+						            <div class="widget-box accordion">
+						                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+						                    <div class="acco-style">
+						                        <ul class="acco-list">
+						                            <li class="acco-box">
+						                                <div class="acco-tit">
+						                                	<button role="button" aria-pressed="false">
+						                                		<div class="in-title">
+							                                		<span class="tit">통신 서비스 요금</span>
+							                                		<span class="tx-cont">35,100 원</span>
+							                                	</div>
+						                                	</button>
+						                                </div>
+						                                <div class="acco-cont">
+						                                    <div class="in-cont">
+						                                    	<div class="basic-list">
+						                                    		<ul>
+						                                    			<li>
+						                                    				<span class="title">월정액</span>
+						                                    				<span class="tx-cont">24,480 원</span>
+						                                    			</li>
+						                                    			<li>
+						                                    				<div class="inner-top">
+						                                    					<span class="title">국내통화료</span>
+						                                    					<span class="tx-cont">0 원</span>
+						                                    				</div>
+						                                    				<div class="inner-row">
+						                                    					<ul>
+						                                    						<li>
+						                                    							<span class="title">음성통화료</span>
+						                                    							<span class="tx-cont">0 원</span>
+						                                    						</li>
+						                                    					</ul>
+						                                    				</div>
+						                                    			</li>
+						                                    			<li>
+						                                    				<span class="title">데이터통화료</span>
+						                                    				<span class="tx-cont">24,480 원</span>
+						                                    			</li>
+						                                    			<li>
+						                                    				<div class="inner-top">
+						                                    					<span class="title">요금할인</span>
+						                                    					<span class="tx-cont tx-red tx-bold">- 4,900 원</span>
+						                                    				</div>
+						                                    				<div class="inner-row">
+						                                    					<ul>
+						                                    						<li>
+						                                    							<span class="title">온가족+B인터넷할인</span>
+						                                    							<span class="tx-cont tx-red">- 3,840 원</span>
+						                                    						</li>
+						                                    						<li>
+						                                    							<span class="title">oksusu_쿠폰할인</span>
+						                                    							<span class="tx-cont tx-red">- 852 원</span>
+						                                    						</li>
+						                                    						<li>
+						                                    							<span class="title">oksusu_요금할인</span>
+						                                    							<span class="tx-cont tx-red">- 208 원</span>
+						                                    						</li>
+						                                    					</ul>
+						                                    				</div>
+						                                    			</li>
+						                                    			<li>
+																			<!--접근성 수정-->
+						                                    				<div class="inner-top">
+						                                    					<span class="title" role="note" aria-labelledby="aria-footnote-02">부가가치세(세금)<span class="required-mark"><span class="blind">(부가가치세 제외 대상 표시)</span></span></span>
+						                                    					<span class="tx-cont">15,520 원</span>
+						                                    				</div>
+						                                    				<div class="inner-row">
+						                                    					<ul>
+						                                    						<li>
+						                                    							<span class="title" role="note" aria-labelledby="aria-footnote-02">부가세총액<span class="required-mark"><span class="blind">(부가가치세 제외 대상 표시)</span></span></span>
+						                                    							<span class="tx-cont">2,579 원</span>
+						                                    						</li>
+						                                    						<li>
+						                                    							<span class="title" role="note" aria-labelledby="aria-footnote-02">할인부가세<span class="required-mark"><span class="blind">(부가가치세 제외 대상 표시)</span></span></span>
+						                                    							<span class="tx-cont tx-red">- 322 원</span>
+						                                    						</li>
+						                                    					</ul>
+																			</div>
+																			<!-- //접근성 수정-->
+						                                    			</li>
+						                                    		</ul>
+						                                    		<div class="noti-words">
+																		<!--접근성 수정-->
+						                                    			<span class="words01" id="aria-footnote-01">
+						                                    				<span class="badge badge-other ml0"><span class="blind">(당사에서 청구 대행하는 타사 요금 표시)</span></span>당사에서 청구 대행하는 타사 요금
+						                                    			</span>
+						                                    			<span class="words02 mt10" id="aria-footnote-02">
+						                                    				<span class="required-mark"><span class="blind">(부가가치세 제외 대상 표시)</span></span> 부가가치세 제외 대상 표시
+																		</span>
+																		<!-- //접근성 수정-->
+						                                    		</div>
+						                                    	</div>
+						                                    </div>
+						                                </div>
+						                            </li>
+						                            <li class="acco-box">
+						                                <div class="acco-tit">
+						                                	<button role="button" aria-pressed="false">
+						                                		<div class="in-title">
+							                                		<span class="tit">부가 사용 금액</span>
+							                                		<span class="tx-cont">28,000 원</span>
+							                                	</div>
+						                                	</button>
+						                                </div>
+						                                <div class="acco-cont">
+						                                    <div class="in-cont">
+						                                    	<div class="basic-list">
+						                                    		<ul>
+						                                    			<li>
+						                                    				<div class="inner-top">
+						                                    					<span class="title">부가서비스이용료</span>
+						                                    					<span class="tx-cont">10,000 원</span>
+						                                    				</div>
+						                                    				<div class="inner-row">
+						                                    					<ul>
+						                                    						<li>
+						                                    							<span class="title">착신전환서비스</span>
+						                                    							<span class="tx-cont">500 원</span>
+						                                    						</li>
+						                                    						<li>
+						                                    							<span class="title">oksusu_기본월정액</span>
+						                                    							<span class="tx-cont">9,500 원</span>
+						                                    						</li>
+						                                    					</ul>
+						                                    				</div>
+																		</li>
+																		<!--접근성 수정-->
+						                                    			<li>
+						                                    				<div class="inner-top">
+						                                    					<span class="title" role="note" aria-labelledby="aria-footnote-03">콘텐츠이용료<span class="badge badge-other"><span class="blind">(당사에서 청구 대행하는 타사 요금 표시)</span></span></span>
+						                                    					<span class="tx-cont">8,100 원</span>
+						                                    				</div>
+						                                    				<div class="inner-row">
+						                                    					<ul>
+						                                    						<li>
+						                                    							<span class="title" role="note" aria-labelledby="aria-footnote-04">티스토어콘텐츠<span class="required-mark"><span class="blind">(부가가치세 제외 대상 표시)</span></span></span>
+						                                    							<span class="tx-cont">8,100 원</span>
+						                                    						</li>
+						                                    					</ul>
+						                                    				</div>
+						                                    				<span class="bt-detail">
+						                                    					<button>자세히 보기</button>
+						                                    				</span>
+						                                    			</li>
+						                                    			<li>
+						                                    				<div class="inner-top">
+						                                    					<span class="title" role="note" aria-labelledby="aria-footnote-03">소액결제<span class="badge badge-other"><span class="blind">(당사에서 청구 대행하는 타사 요금 표시)</span></span></span>
+						                                    					<span class="tx-cont">9,900 원</span>
+						                                    				</div>
+						                                    				<div class="inner-row">
+						                                    					<ul>
+						                                    						<li>
+						                                    							<span class="title" role="note" aria-labelledby="aria-footnote-04">소액결제다날<span class="required-mark"><span class="blind">(부가가치세 제외 대상 표시)</span></span></span>
+						                                    							<span class="tx-cont">9,900 원</span>
+						                                    						</li>
+						                                    					</ul>
+						                                    				</div>
+						                                    				<span class="bt-detail">
+						                                    					<button>자세히 보기</button>
+						                                    				</span>
+																		</li>
+																		<!-- //접근성 수정-->
+																	</ul>
+																	<!--접근성 수정-->
+						                                    		<div class="noti-words">
+						                                    			<span class="words01" id="aria-footnote-03">
+						                                    				<span class="badge badge-other ml0"><span class="blind">(당사에서 청구 대행하는 타사 요금 표시)</span></span>당사에서 청구 대행하는 타사 요금
+						                                    			</span>
+						                                    			<span class="words02 mt10" id="aria-footnote-04">
+						                                    				<span class="required-mark"><span class="blind">(부가가치세 제외 대상 표시)</span></span> 부가가치세 제외 대상 표시
+						                                    			</span>
+																	</div>
+																	<!-- //접근성 수정-->
+						                                    	</div>
+						                                    </div>
+						                                </div>
+						                            </li>
+						                            <li class="acco-box">
+						                                <div class="acco-tit">
+						                                	<button role="button" aria-pressed="false">
+						                                		<div class="in-title">
+							                                		<span class="tit">단말기 할부금</span>
+							                                		<span class="tx-cont">27,500 원</span>
+							                                	</div>
+						                                	</button>
+						                                </div>
+						                                <div class="acco-cont">
+						                                	<div class="in-cont">
+						                                    	<div class="basic-list">
+						                                    		<ul>
+																		<!--접근성 수정-->
+						                                    			<li>
+						                                    				<div class="inner-top">
+						                                    					<span class="title" role="note" aria-labelledby="aria-footnote-05">단말기할부금<span class="badge badge-other"><span class="blind">(당사에서 청구 대행하는 타사 요금 표시)</span></span></span>
+						                                    					<span class="tx-cont">27,500 원</span>
+						                                    				</div>
+						                                    				<div class="inner-row">
+						                                    					<ul>
+						                                    						<li>
+						                                    							<span class="title" role="note" aria-labelledby="aria-footnote-06">단말기할부원금<span class="required-mark"><span class="blind">(부가가치세 제외 대상 표시)</span></span></span>
+						                                    							<span class="tx-cont">27,050 원</span>
+						                                    						</li>
+						                                    						<li>
+						                                    							<span class="title" role="note" aria-labelledby="aria-footnote-06">단말기할부이자<span class="required-mark"><span class="blind">(부가가치세 제외 대상 표시)</span></span></span>
+						                                    							<span class="tx-cont">450 원</span>
+						                                    						</li>
+						                                    					</ul>
+						                                    				</div>
+																		</li>
+																		<!-- //접근성 수정-->
+																	</ul>
+																	<!--접근성 수정-->
+						                                    		<div class="noti-words">
+						                                    			<span class="words01" id="aria-footnote-05">
+						                                    				<span class="badge badge-other ml0"><span class="blind">(당사에서 청구 대행하는 타사 요금 표시)</span></span>당사에서 청구 대행하는 타사 요금 요금
+						                                    			</span>
+						                                    			<span class="words02 mt10" id="aria-footnote-06">
+						                                    				<span class="required-mark"><span class="blind">(부가가치세 제외 대상 표시)</span></span> 부가가치세 제외 대상 표시
+						                                    			</span>
+																	</div>
+																	<!-- //접근성 수정-->
+						                                    	</div>
+						                                    </div>
+						                                </div>
+						                            </li>
+						                            <li class="acco-box">
+						                                <div class="acco-tit">
+						                                	<button role="button" aria-pressed="false">
+						                                		<div class="in-title">
+							                                		<span class="tit">기타요금</span>
+							                                		<span class="tx-cont">9,400 원</span>
+							                                	</div>
+						                                	</button>
+						                                </div>
+						                                <div class="acco-cont">
+						                                    <div class="in-cont">
+						                                    	<div class="basic-list">
+						                                    		<ul>
+						                                    			<li>
+						                                    				<span class="title">미리납부하신금액</span>
+						                                    				<span class="tx-cont tx-bold tx-red">- 4,980 원</span>
+						                                    			</li>
+																	</ul>
+																	<!--접근성 수정-->
+						                                    		<div class="noti-words">
+						                                    			<span class="words01" id="aria-footnote-07">
+						                                    				<span class="badge badge-other ml0"><span class="blind">(당사에서 청구 대행하는 타사 요금 표시)</span></span>당사에서 청구 대행하는 타사 요금
+						                                    			</span>
+						                                    			<span class="words02 mt10"  id="aria-footnote-08">
+						                                    				<span class="required-mark"><span class="blind">(부가가치세 제외 대상 표시)</span></span> 부가가치세 제외 대상 표시
+						                                    			</span>
+																	</div>
+																	<!-- //접근성 수정-->
+						                                    	</div>
+						                                    </div>
+						                                </div>
+						                            </li>
+						                        </ul>
+						                    </div>
+						                </div>
+						            </div>
+						        </div>
+						        <!--// .widget -->
+							</div>	
+						</div>
+					</div>
+					<!--// .cont-box -->
+
+					<hr class="cont-sp type1" aria-hidden="true"/>
+
+					<!-- .cont-box -->
+					<div class="cont-box nogaps-btm">
+						<div class="statement-cont">
+							<div class="single-list">
+								<span class="title"><span class="in-tx">인터넷  인천 연********</span><a class="bt-link-tx underline" href="">사용중인상품명</a></span>
+								<span class="num"><em>3,940</em> 원</span>
+							</div>
+							<div class="statement-detail">
+								<!-- .widget -->
+						        <div class="widget">
+						            <div class="widget-box accordion">
+						                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+						                    <div class="acco-style">
+						                        <ul class="acco-list">
+						                            <li class="acco-box">
+						                                <div class="acco-tit">
+						                                	<button role="button" aria-pressed="false">
+						                                		<div class="in-title">
+							                                		<span class="tit">사용요금</span>
+							                                		<span class="tx-cont">12,550 원</span>
+							                                	</div>
+						                                	</button>
+						                                </div>
+						                                <div class="acco-cont">
+						                                    <div class="in-cont">
+						                                    	<div class="basic-list">
+						                                    		<ul>
+						                                    			<li>
+						                                    				<span class="title">기본료</span>
+						                                    				<span class="tx-cont">12,550 원</span>
+						                                    			</li>
+						                                    			<li>
+						                                    				<div class="inner-top">
+						                                    					<span class="title">장비임대료</span>
+						                                    					<span class="tx-cont">12,550 원</span>
+						                                    				</div>
+						                                    				<div class="inner-row">
+						                                    					<ul>
+						                                    						<li>
+						                                    							<span class="title">셋톱박스임대료</span>
+						                                    							<span class="tx-cont">8,000 원</span>
+						                                    						</li>
+						                                    					</ul>
+						                                    				</div>
+						                                    			</li>
+						                                    		</ul>
+						                                    	</div>
+						                                    </div>
+						                                </div>
+						                            </li>
+						                            <li class="acco-box">
+						                                <div class="acco-tit">
+						                                	<button role="button" aria-pressed="false">
+						                                		<div class="in-title">
+							                                		<span class="tit">요금할인</span>
+							                                		<span class="tx-cont tx-red">- 10,000 원</span>
+							                                	</div>
+						                                	</button>
+						                                </div>
+						                                <div class="acco-cont">
+						                                    <div class="in-cont">
+						                                    	<div class="basic-list">
+						                                    		<ul>
+						                                    			<li>
+						                                    				<span class="title">약정할인</span>
+						                                    				<span class="tx-cont tx-red">- 1,499 원</span>
+						                                    			</li>
+						                                    			<li>
+						                                    				<span class="title">결합할인</span>
+						                                    				<span class="tx-cont tx-red">- 1,760 원</span>
+						                                    			</li>
+						                                    			<li>
+						                                    				<span class="title">프로모션할인</span>
+						                                    				<span class="tx-cont tx-red">- 1,760 원</span>
+						                                    			</li>
+						                                    			<li>
+																			<!--접근성 수정-->
+						                                    				<span class="title" role="note" aria-labelledby="aria-footnote-10">원단위조정금액<span class="required-mark"><span class="blind">(부가가치세 제외 대상 표시)</span></span></span>
+																			<!-- //접근성 수정-->
+																			<span class="tx-cont tx-red">- 14,610 원</span>
+						                                    			</li>
+						                                    		</ul>
+						                                    		<div class="noti-words">
+																		<!--접근성 수정-->
+																		<span class="words01" id="aria-footnote-09">
+						                                    				<span class="badge badge-other ml0"><span class="blind">(당사에서 청구 대행하는 타사 요금 표시)</span></span>당사에서 청구 대행하는 타사 요금
+						                                    			</span>
+						                                    			<span class="words02 mt10" id="aria-footnote-10">
+						                                    				<span class="required-mark"><span class="blind">(부가가치세 제외 대상 표시)</span></span> 부가가치세 제외 대상 표시
+																		</span>
+																		<!-- //접근성 수정-->
+						                                    		</div>
+						                                    	</div>
+						                                    </div>
+						                                </div>
+						                            </li>
+						                            <li class="acco-box">
+						                                <div class="acco-tit">
+						                                	<button role="button" aria-pressed="false">
+						                                		<div class="in-title">
+							                                		<span class="tit">부가가치세(세금)</span>
+							                                		<span class="tx-cont">1,390 원</span>
+							                                	</div>
+						                                	</button>
+						                                </div>
+						                                <div class="acco-cont">
+						                                	<div class="in-cont">
+						                                    	<div class="basic-list">
+																	<!--접근성 수정-->
+																	<ul>
+						                                    			<li>
+						                                    				<span class="title" role="note">부가세(T)</span>
+						                                    				<span class="tx-cont">14,610 원</span>
+						                                    			</li>
+						                                    			<li>
+						                                    				<span class="title" role="note" aria-labelledby="aria-footnote-12">할인부가세(T)<span class="required-mark"><span class="blind">(부가가치세 제외 대상 표시)</span></span></span>
+						                                    				<span class="tx-cont tx-red">- 14,610 원</span>
+						                                    			</li>
+						                                    		</ul>
+						                                    		<div class="noti-words">
+						                                    			<span class="words01" id="aria-footnote-11">
+						                                    				<span class="badge badge-other ml0"><span class="blind">(당사에서 청구 대행하는 타사 요금 표시)</span></span>당사에서 청구 대행하는 타사 요금
+						                                    			</span>
+						                                    			<span class="words02 mt10" id="aria-footnote-12">
+						                                    				<span class="required-mark"><span class="blind">(부가가치세 제외 대상 표시)</span></span> 부가가치세 제외 대상 표시
+						                                    			</span>
+																	</div>
+																	<!-- //접근성 수정-->
+						                                    	</div>
+						                                    </div>
+						                                </div>
+						                            </li>
+						                        </ul>
+						                    </div>
+						                </div>
+						            </div>
+						        </div>
+						        <!--// .widget -->
+							</div>	
+						</div>
+					</div>
+					<!--// .cont-box -->
+
+					<hr class="cont-sp type1" aria-hidden="true"/>
+
+					<!-- .cont-box -->
+					<div class="cont-box nogaps-btm">
+						<div class="statement-cont">
+							<div class="single-list">
+								<span class="title"><span class="in-tx">TV 인천 연******** TV 인천 연********TV 인천 연********</span><a class="bt-link-tx underline" href="">사용중인상품명</a></span>
+								<span class="num"><em>13,340</em> 원</span>
+							</div>
+							<div class="statement-detail">
+								<!-- .widget -->
+						        <div class="widget">
+						            <div class="widget-box accordion">
+						                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+						                    <div class="acco-style">
+						                        <ul class="acco-list">
+						                            <li class="acco-box">
+						                                <div class="acco-tit">
+						                                	<button role="button" aria-pressed="false">
+						                                		<div class="in-title">
+							                                		<span class="tit">사용요금</span>
+							                                		<span class="tx-cont">15,000 원</span>
+							                                	</div>
+						                                	</button>
+						                                </div>
+						                                <div class="acco-cont">
+						                                    <div class="in-cont">
+						                                    	<div class="basic-list">
+						                                    		<ul>
+						                                    			<li>
+						                                    				<span class="title">기본료</span>
+						                                    				<span class="tx-cont">12,550 원</span>
+						                                    			</li>
+						                                    			<li>
+						                                    				<div class="inner-top">
+						                                    					<span class="title">장비임대료</span>
+						                                    					<span class="tx-cont">12,550 원</span>
+						                                    				</div>
+						                                    				<div class="inner-row">
+						                                    					<ul>
+						                                    						<li>
+						                                    							<span class="title">셋톱박스임대료</span>
+						                                    							<span class="tx-cont">8,000 원</span>
+						                                    						</li>
+						                                    					</ul>
+						                                    				</div>
+						                                    			</li>
+						                                    		</ul>
+						                                    	</div>
+						                                    </div>
+						                                </div>
+						                            </li>
+						                            <li class="acco-box">
+						                                <div class="acco-tit">
+						                                	<button role="button" aria-pressed="false">
+						                                		<div class="in-title">
+							                                		<span class="tit">요금할인</span>
+							                                		<span class="tx-cont tx-red">- 5,000 원</span>
+							                                	</div>
+						                                	</button>
+						                                </div>
+						                                <div class="acco-cont">
+						                                    <div class="in-cont">
+						                                    	<div class="basic-list">
+						                                    		<ul>
+						                                    			<li>
+						                                    				<span class="title">약정할인</span>
+						                                    				<span class="tx-cont tx-red">- 1,499 원</span>
+						                                    			</li>
+						                                    			<li>
+						                                    				<span class="title">결합할인</span>
+						                                    				<span class="tx-cont tx-red">- 1,760 원</span>
+						                                    			</li>
+						                                    			<li>
+						                                    				<span class="title">프로모션할인</span>
+						                                    				<span class="tx-cont tx-red">- 1,760 원</span>
+																		</li>
+																		<!--접근성 수정-->
+						                                    			<li>
+						                                    				<span class="title" role="note" aria-labelledby="aria-footnote-14">원단위조정금액<span class="required-mark"><span class="blind">(부가가치세 제외 대상 표시)표시</span></span></span>
+						                                    				<span class="tx-cont tx-red">- 14,610 원</span>
+																		</li>
+																		<!-- //접근성 수정-->
+																	</ul>
+																	<!--접근성 수정-->
+						                                    		<div class="noti-words">
+						                                    			<span class="words01" id="aria-footnote-13">
+						                                    				<span class="badge badge-other ml0"><span class="blind">(당사에서 청구 대행하는 타사 요금 표시)</span></span>당사에서 청구 대행하는 타사 요금
+						                                    			</span>
+						                                    			<span class="words02 mt10" id="aria-footnote-14">
+						                                    				<span class="required-mark"><span class="blind">(부가가치세 제외 대상 표시)</span></span> 부가가치세 제외 대상 표시
+						                                    			</span>
+																	</div>
+																	<!-- //접근성 수정-->
+						                                    	</div>
+						                                    </div>
+						                                </div>
+						                            </li>
+						                            <li class="acco-box">
+						                                <div class="acco-tit">
+						                                	<button role="button" aria-pressed="false">
+						                                		<div class="in-title">
+							                                		<span class="tit">부가가치세(세금)</span>
+							                                		<span class="tx-cont">1,390 원</span>
+							                                	</div>
+						                                	</button>
+						                                </div>
+						                                <div class="acco-cont">
+						                                	<div class="in-cont">
+						                                    	<div class="basic-list">
+																	<!--접근성 수정-->
+																	<ul>
+						                                    			<li>
+						                                    				<span class="title" role="note" aria-labelledby="aria-footnote-16">부가세(B)<span class="required-mark"><span class="blind">(부가가치세 제외 대상 표시)</span></span></span>
+						                                    				<span class="tx-cont tx-red">- 14,610 원</span>
+						                                    			</li>
+						                                    		</ul>
+						                                    		<div class="noti-words">
+						                                    			<span class="words01" id="aria-footnote-15">
+						                                    				<span class="badge badge-other ml0"><span class="blind">(당사에서 청구 대행하는 타사 요금 표시)</span></span>당사에서 청구 대행하는 타사 요금
+						                                    			</span>
+						                                    			<span class="words02 mt10" id="aria-footnote-16">
+						                                    				<span class="required-mark"><span class="blind">(부가가치세 제외 대상 표시)</span></span> 부가가치세 제외 대상 표시
+						                                    			</span>
+																	</div>
+																	<!-- //접근성 수정-->
+						                                    	</div>
+						                                    </div>
+						                                </div>
+						                            </li>
+						                        </ul>
+						                    </div>
+						                </div>
+						            </div>
+						        </div>
+						        <!--// .widget -->
+							</div>	
+						</div>
+					</div>
+					<!--// .cont-box -->
+
+					<hr class="cont-sp type1" aria-hidden="true"/>
+
+					<!-- .cont-box -->
+					<div class="cont-box">
+						<ul class="bt-slice item-two">
+	                        <li class="bt-blue1">
+	                            <button>요금 납부</button>
+	                        </li>
+	                        <li class="bt-blue1">
+	                            <button>납부 내역 조회</button>
+	                        </li>
+	                    </ul>
+					</div>
+					<!--// .cont-box -->
+
+					<div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
+                        <h4 class="tit">자녀 회선 사용요금</h4>
+                    </div>
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps">
+                    	<ul class="list-comp-lineinfo">
+	                        <li>
+	                            <button>
+	                                <div class="lineinfo-user">
+										<!--접근성 수정-->
+	                                    <span class="info-title">갤럭시 S7<span class="badge badge-fam"><span class="blind">자녀회선</span></span></span>
+										<!-- //접근성 수정-->
+										<span class="info-sub">010-46**-10**</span>
+	                                </div>
+	                                <div class="lineinfo-data">
+	                                    <span class="info-title">23,367<span class="unit ml4">원</span></span>
+	                                    <span class="ico"></span>
+	                                </div>
+	                            </button>
+	                        </li>
+	                    </ul>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+
+                    <!-- .cont-box -->
+                	<div class="cont-box nogaps">
+	                    <ul class="link-long-list">
+	                        <li>
+	                            <div class="link-long">
+	                                <button>콜기프트 사용요금
+	                                    <span class="tx-sub">
+	                                        <span class="ico"></span>
+	                                    </span>
+	                                </button>
+	                            </div>
+	                        </li>
+	                        <li>
+	                            <div class="link-long">
+	                                <button>
+	                                    로밍 사용요금
+	                                    <span class="tx-sub">
+	                                        <span class="ico"></span>
+	                                    </span>
+	                                </button>
+	                            </div>
+	                        </li>
+	                        <li>
+	                            <div class="link-long">
+	                                <button>
+	                                    기부금/후원금
+	                                    <span class="tx-sub">
+	                                        <span class="ico"></span>
+	                                    </span>
+	                                </button>
+	                            </div>
+	                        </li>
+	                    </ul>
+	                </div>
+                    <!--// .cont-box -->
+
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+
+					<!-- .cont-box -->
+					<div class="cont-box nogaps-btm">
+						<h3 class="tx-bold">꼭 확인해주세요!</h3>
+						<ul class="noti-list">
+							<li>텍스트가 1줄인 Case입니다.</li>
+							<li>텍스트가 1줄인 Case입니다. <button type="button" class="tip-view" aria-haspopup="true">TIP</button></li>
+							<li>텍스트가 2줄이상인<br>Case입니다. <button type="button" class="tip-view" aria-haspopup="true">TIP</button></li>
+						</ul>
+					</div>
+					<!--// .cont-box -->
+
+				</div>
+			</div>
+			<!--// #contents -->
+		</div>
+	</body>
+
+</html>

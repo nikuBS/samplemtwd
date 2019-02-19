@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="h-belt">
+                <div class="h-default">
+                    <div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <div class="h-tit">데이터/통화 관리</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="box-data-family-banner">
+                        <div class="info-data-family-banner">
+                            <dl class="data-family-list">
+                                <!--접근성 수정-->
+                                <dt>나의 T가족모아 데이터<button class="ico"><span class="blind">나의 T가족모아 데이터 상세보기</span></button></dt>
+                                <!-- //접근성 수정-->
+                                <dd><em class="data">10.6</em><em class="unit">GB</em><span class="tx">남음</span></dd>
+                            </dl>
+                            <span class="ico-data-family"></span>
+                            <span class="data-family-limit">무제한</span>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="box-data-family-banner">
+                        <div class="info-data-family-banner">
+                            <dl class="data-family-list">
+                                <!--접근성 수정-->
+                                <dt>나의 T가족모아 데이터<button class="ico"><span class="blind">나의 T가족모아 데이터 상세보기</span></button></dt>
+                                <!-- //접근성 수정-->
+                                <dd><em class="data">10.6</em><em class="unit">GB</em><span class="tx">남음</span></dd>
+                            </dl>
+                            <span class="ico-data-family"></span>
+                            <span class="data-family-limit">자유사용</span>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="box-data-family-banner">
+                        <div class="info-data-family-banner">
+                            <dl class="data-family-list">
+                                <!--접근성 수정-->
+                                <dt>나의 T가족모아 데이터<button class="ico"><span class="blind">나의 T가족모아 데이터 상세보기</span></button></dt>
+                                <!-- //접근성 수정-->
+                                <dd><em class="data">1</em><em class="unit">GB</em><span class="tx">남음</span></dd>
+                            </dl>
+                            <span class="ico-data-family"></span>
+                            <span class="data-family-limit">한도 1GB</span>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="box-data-family-banner">
+                        <div class="info-data-family-banner">
+                            <dl class="data-family-list">
+                                <!--접근성 수정-->
+                                <dt>나의 T가족모아 데이터<button class="ico"><span class="blind">나의 T가족모아 데이터 상세보기</span></button></dt>
+                                <!-- //접근성 수정-->
+                                <dd><em class="data">모두 소진</em></dd>
+                            </dl>
+                            <span class="ico-data-family"></span>
+                            <span class="data-family-limit">한도 1GB</span>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="box-data-family-banner">
+                        <div class="info-data-family-banner">
+                            <dl class="data-family-list">
+                                <!--접근성 수정-->
+                                <dt>나의 T가족모아 데이터<button class="ico"><span class="blind">나의 T가족모아 데이터 상세보기</span></button></dt>
+                                <!-- //접근성 수정-->
+                                <dd><em class="data">0</em><em class="unit">GB</em><span class="tx">남음</span></dd>
+                            </dl>
+                            <span class="ico-data-family"></span>
+                            <span class="data-family-limit">이용불가</span>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="box-data-family-banner">
+                        <div class="info-data-family-banner">
+                            <dl class="data-family-list">
+                                <dt><span class="guide">T가족모아 데이터를<br /> 가입해보세요!</span></dt>
+                                <dd><span class="guide">T플랜을 이용중이시군요 가족과 자유롭게 데이터 공유를 하는 방법 (114 또는 대리점 방문으로 신청 가능합니다)</span></dd>
+                            </dl>
+                            <span class="ico-data-family"></span>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

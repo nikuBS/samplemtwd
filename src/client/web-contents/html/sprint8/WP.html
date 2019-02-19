@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+					<div class="h-tit">인터넷/전화/TV</div>
+					<div class="h-serarch">
+						<button class="icon-gnb-search"><span class="blind">검색</span></button>
+					</div>
+				</div>
+			</div>
+        </div>
+        <!--// #header -->
+
+        <!-- case1-1, case1-2, case1-3, case2-2
+        <div id="header" class="header-wrap">
+            <div class="header">
+                <div class="header-ti align-l">
+                    <h1>인터넷/전화/TV</h1>
+                </div>
+                <button class="prev-step"><span class="blind">이전으로</span></button><button class="bt-dropdown small" title="회선 선택" aria-haspopup="true">010-87**-13**<span class="ico"></span></button>
+            </div>
+        </div>
+         //case1-1, case1-2, case1-3, case2-2-->
+
+        <!-- Case2-1 이동전화 회선 선택 or 로그아웃 상태 - > 로그아웃 상태 영역 미 노출 
+        <div id="header" class="header-wrap">
+            <div class="header">
+                <div class="header-ti align-l">
+                    <h1>인터넷/전화/TV</h1>
+                </div>
+            </div>
+        </div>
+         //case2-1-->
+
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- 사용중인 상품
+                    ////////////////////////////////////////////////
+                    인터넷/ 전화/TV 회선선택한 경우
+                    Case1-3 로그인 & 가입상품 없을 시 미 노출  
+                    ------------------------------------------------
+                    이동전화 회선 선택 or 로그아웃 상태 
+                    Case2-1 로그아웃 상태 영역 미 노출
+                    Case2-2 로그인 & 이동전화 회선 선택 시 영역 미 노출  
+                    ////////////////////////////////////////////////
+                -->
+                <div class="cont-box gaps-style01">
+                   <div class="submain-myfeeproducts-wrap">
+                        <!-- <a href="#" class="submain-myfeeproducts">
+                            <h3 class="title">사용중인 상품</h3>
+                            <p class="text">band 데이터 퍼펙트S</p>
+                        </a> -->
+                       <button type="button" class="submain-myfeeproducts">
+                           <h3 class="title">사용중인 상품</h3>
+                           <p class="text">band 데이터 퍼펙트S</p>
+                       </button>
+                   </div>
+                </div>
+                <!--//사용중인 상품 -->
+
+                <!-- 스와이프 -->
+                <div class="cont-box nogaps noborder">
+                    <div class="main-slide-banner dot-btm slide-pagingtype">
+                        <!-- .widget -->
+                        <div class="widget">
+                            <div class="widget-box slider1">
+                                <div class="slider-box">
+                                    <ul class="slider">
+                                        <li>
+                                            <button>
+                                                <img src="/img/dummy/img_MP.png" alt="">
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button>
+                                                <img src="/img/dummy/img_MP.png" alt="">
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button>
+                                                <img src="/img/dummy/img_MP.png" alt="">
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--// .widget -->
+                    </div>
+                </div>
+                <!-- //스와이프 -->
+
+                <div class="cont-box nogaps-hoz">
+                    <ul class="category-infoarealist">
+                        <li class="category-type">
+                            <div class="category-typetitle">
+                                <h3 class="title">인터넷</h3>
+                                <div class="more"><button class="link">더보기</button></div>
+                            </div>
+                            <div class="category-infobox type-internet">
+                                <h4 class="title">최대 10배 빠른 Giga 인터넷</h4>
+                                <p class="text">내게 더 이상 기다림은 없다! 터치 한번에 OK</p>
+                            </div>
+                        </li>
+                        <li class="category-type">
+                            <div class="category-typetitle">
+                                <h3 class="title">전화</h3>  
+                                <div class="more"><button class="link">더보기</button></div>
+                            </div> 
+                            <div class="category-infobox type-tel">
+                                <h4 class="title">프리미엄 통화품질 SKT 전화</h4>
+                                <p class="text">이보다 더 저렴할 없다! 전화 / 인터넷 전화는 SKT</p>
+                            </div>
+                        </li>
+                        <li class="category-type">
+                            <div class="category-typetitle">
+                                <h3 class="title">TV</h3>
+                                <div class="more"><button class="link">더보기</button></div>
+                            </div>
+                            <div class="category-infobox type-tv">
+                                <h4 class="title">최신 VOD는 역시 Btv</h4>
+                                <p class="text">나보다 나를 잘 아는 스마트 무비! 가족 모두 행복한 채널 Btv</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+              
+
+                <ul class="shortcutslist-wrap">
+                    <li class="category-type">
+                        <button class="link">가입상담예약</button>
+                    </li>
+                    <li class="category-type">
+                        <button class="link">서비스 가능지역 조회</button>
+                    </li>
+                </ul>
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- 결합혜택 정보 안내 영역 -->
+                <div class="cont-box">
+                    <h3>모이면 모일수록 커지는 <strong>결합혜택!</strong></h3>
+                    <p class="combinedbenefits-text">T 가족회선, 인터넷, TV, 유선전화 결합하고 할인받으세요 </p>
+                    <!-- .widget -->
+                    <div class="widget"> 
+                        <div class="widget-box horizontal">
+                            <div class="horizontal-slide">
+
+                                <ul class="combinedbenefits-list horizontal-list">
+                                    <li class="category-type">
+                                        <button class="link">
+                                            <h4 class="card-title">한가족 할인</h4>
+                                            <p class="card-text">개인형 결합</p>
+                                            <ul class="card-type">
+                                                <li class="type-style"><i class="ico type01"></i><span class="text">휴대폰</span></li>
+                                                <li class="type-style"><i class="ico type02"></i><span class="text">인터넷</span></li>
+                                            </ul>
+                                            <dl class="card-benefits">
+                                                <dt>8,800원 할인</dt>
+                                                <dd>초고속 인터넷 기본료 할인 </dd>
+                                            </dl>
+                                        </button>
+                                    </li>
+                                    <li class="category-type">
+                                        <button class="link">
+                                            <h4 class="card-title">TB끼리 TV플러스</h4>
+                                            <p class="card-text">개인형 결합</p>
+                                            <ul class="card-type">
+                                                <li class="type-style"><i class="ico type01"></i><span class="text">휴대폰</span></li>
+                                                <li class="type-style"><i class="ico type02"></i><span class="text">인터넷</span></li>
+                                            </ul>
+                                            <dl class="card-benefits">
+                                                <dt>총 2,200원 할인</dt>
+                                                <dd>휴대폰 월정액 &amp; TV 기본료 추가할인</dd>
+                                            </dl>
+                                        </button>
+                                    </li>
+                                    <li class="category-type ctype01"><!-- ctype01으로 색상변경 -->
+                                        <button class="link">
+                                            <h4 class="card-title">온가족 플랜</h4>
+                                            <p class="card-text">가족형 결합</p>
+                                            <ul class="card-type">
+                                                <li class="type-style"><i class="ico type03"></i><span class="text">2~5회선</span></li>
+                                                <li class="type-style"><i class="ico type04"></i><span class="text">인터넷</span></li>
+                                            </ul>
+                                            <dl class="card-benefits">
+                                                <dt>결합최대 총 29,810원 할인</dt>
+                                                <dd>휴대폰 월정액 &amp; 인터넷 기본료 할인</dd>
+                                            </dl>
+                                        </button>
+                                    </li>
+                                    <li class="category-type ctype01"><!-- ctype01으로 색상변경 -->
+                                        <button class="link">
+                                            <h4 class="card-title">TB끼리 TV플러스</h4>
+                                            <p class="card-text">가족형 결합</p>
+                                            <ul class="card-type">
+                                                <li class="type-style"><i class="ico type03"></i><span class="text">1~4회선</span></li>
+                                                <li class="type-style"><i class="ico type05"></i><span class="text">인터넷</span></li>
+                                            </ul>
+                                            <dl class="card-benefits">
+                                                <dt>결합최대 총 14,300원 할인</dt>
+                                                <dd>휴대폰 월정액 &amp; 인터넷 기본료 할인 + LTE 안심옵션 or 500MB 무료제공 </dd>
+                                            </dl>
+                                        </button>
+                                    </li>
+                                    <li class="category-type ctype01"><!-- ctype01으로 색상변경 -->
+                                        <button class="link">
+                                            <h4 class="card-title">T+B전화/인터넷전화</h4>
+                                            <p class="card-text">가족형 결합</p>
+                                            <ul class="card-type">
+                                                <li class="type-style"><i class="ico type03"></i><span class="text">1~4회선</span></li>
+                                                <li class="type-style"><i class="ico type04"></i><span class="text">전화</span></li>
+                                                <li class="type-style"><i class="ico type05"></i><span class="text">인터넷 전화</span></li>
+                                            </ul>
+                                            <dl class="card-benefits">
+                                                <dt>50% 할인</dt>
+                                                <dd>휴대폰 월정액 &amp; 전화 or 인터넷 전화 통화료/기본료 할인</dd>
+                                            </dl>
+                                        </button>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- .widget -->
+                </div>
+                <!-- //결합혜택 정보 안내 영역 -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- 다른상품 더보기 -->
+                <div class="cont-box">
+                    <h3>다른상품 더보기</h3>
+                    <!-- .widget -->
+                    <div class="widget"> 
+                        <div class="widget-box horizontal">
+                            <div class="horizontal-slide">
+                                <ul class="horizontal-list add-prod">
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type1"></span>
+                                                <span>모바일<br/>부가상품</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type2"></span>
+                                                <span>혜택과 할인</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type3"></span>
+                                                <span>T 로밍</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type4"></span>
+                                                <span>인터넷/전화/IPTV</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type5"></span>
+                                                <span>NUGU 서비스</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type5"></span>
+                                                <span>스마트홈<br />서비스</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type5"></span>
+                                                <span>보안솔루션<br />서비스</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type5"></span>
+                                                <span>T apps<br />서비스</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- .widget -->
+                </div>
+                <!-- //다른상품 더보기 -->
+                <!-- 하단 link영역 -->
+                <div class="cont-box nogaps noborder">
+                    <ul class="link-long-list nobg">
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    <span class="ico-thum"></span>결합할인
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    <span class="ico-thum"></span>나의 가입정보
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    <span class="ico-thum"></span>멤버십 이용안내
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    <span class="ico-thum"></span>내게 맞는 요금제
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- //하단 link영역 -->
+
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

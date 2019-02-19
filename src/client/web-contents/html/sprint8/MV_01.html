@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+					<div class="h-tit">모바일 부가상품</div>
+					<div class="h-serarch">
+						<button class="icon-gnb-search"><span class="blind">검색</span></button>
+					</div>
+				</div>
+			</div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- 사용중인 상품 -->
+                <div class="cont-box noborder gaps-style01">
+                   <div class="submain-myfeeproducts-wrap">
+                        <!-- <a href="#" class="submain-myfeeproducts">
+                            <h3 class="title">사용중인 상품</h3>
+                            <p class="text">band 데이터 퍼펙트S</p>
+                        </a> -->
+                       <button type="button" class="submain-myfeeproducts">
+                           <h3 class="title">사용중인 상품</h3>
+                           <p class="text">Oksusu 기본월정액</p>
+                       </button>
+                   </div>
+                </div>
+                <!--//사용중인 상품 -->
+
+                <div class="selecttitle-wrap">
+                    <button class="bt-select" title="정렬 선택" aria-haspopup="true">추천순</button>
+                    <span class="taglist">#LTE  #2~5GB   #2~5GB  #2~5GB  #2~5GB  #2~5GB  #2~5GB  #2~5GB </span>
+                    <button class="bt-select" title="조건 선택" aria-haspopup="true">
+                       외 2건
+                    </button>
+                </div>
+
+                <!-- 이런 요금제는 어떠세요? -->
+                <div class="cont-box nogaps-hoz">
+                    <ul class="recommendedrate-list">
+                        <!-- 왼쪽 상품 이미지가 이미지로 들어갈경우 -->
+                        <li class="type01">
+                            <button type="button" class="product-infolink">
+                                <div class="img-box"><img class="lte" src="/img/dummy/img_sample01.png" alt=""></div>
+                                <div class="products-titleinfo">
+                                    <h5 class="title">oksusu &amp; 안심 팩</h5>
+                                    <p class="info">월<span class="money">33,000</span>원</p>
+                                </div>
+                                <div class="taglist-wrap">
+                                    #데이터 한줄 유형입니다. 말줄임 (..) 처리일때난 span태그로 감싸지 않고 텍스트만 뿌려주시면 됩니다.
+                                </div>
+                                <!-- <div class="taglist-wrap">
+                                    <span class="tag-text">#데이터</span>
+                                    <span class="tag-text">#혜택/편의</span>
+                                </div> -->
+                                <p class="products-detailinfo">매월 제휴사 상품 일정금액 이상 소비시<br>통신비 할인</p>
+                            </button>
+                        </li>
+                        <!-- 왼쪽 상품 이미지가 bg로 들어갈경우(아래전체 type[n]으로 처리) -->  
+                        <li class="type01">
+                            <button type="button" class="product-infolink">
+                                <div class="products-titleinfo">
+                                    <h5 class="title">oksusu &amp; 안심 팩</h5>
+                                    <p class="info">월<span class="money">33,000</span>원</p>
+                                </div>
+                                <div class="taglist-wrap">
+                                    <span class="tag-text">#데이터</span>
+                                    <span class="tag-text">#혜택/편의</span>
+                                </div>
+                                <p class="products-detailinfo">매월 제휴사 상품 일정금액 이상 소비시<br>통신비 할인</p>
+                            </button>
+                        </li>
+                        <li class="type02">
+                            <button type="button" class="product-infolink">
+                                <div class="products-titleinfo">
+                                    <h5 class="title">oksusu 데이터 프리</h5>
+                                    <p class="info">월<span class="money">33,000</span>원</p>
+                                </div>
+                                <div class="taglist-wrap">
+                                    <span class="tag-text">#데이터</span>
+                                    <span class="tag-text">#혜택/편의</span>
+                                </div>
+                                <p class="products-detailinfo">실시간 TV 및 최신 영화 등의 동영상 콘텐츠<br>(oksusu)를 마음껏 누릴 수 있는 전용데이터<br>제공서비스</p>
+                            </button>
+                        </li>
+                        <li class="type03">
+                            <button type="button" class="product-infolink">
+                                <div class="products-titleinfo">
+                                    <h5 class="title">컬러링</h5>
+                                    <p class="info">월<span class="money">33,000</span>원</p>
+                                </div>
+                                <div class="taglist-wrap">
+                                    <span class="tag-text">#데이터</span>
+                                    <span class="tag-text">#혜택/편의</span>
+                                </div>
+                                <p class="products-detailinfo">단순한 통화연결음은 그만! 톡톡 튀는<br>나만의 컬러링 서비스~!</p>
+                            </button>
+                        </li>
+                    </ul>
+                    <div class="bt-more gap-style">
+                        <button>더보기</button>
+                    </div>
+                </div>
+                <!-- //이런 요금제는 어떠세요? -->
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!-- cont-box -->
+                <div class="cont-box">
+                    <h3>다른상품 더보기</h3>
+                    <!-- .widget -->
+                    <div class="widget"> 
+                        <div class="widget-box horizontal">
+                            <div class="horizontal-slide">
+                                <ul class="horizontal-list add-prod">
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type1"></span>
+                                                <span>모바일<br/>부가상품</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type2"></span>
+                                                <span>혜택과 할인</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type3"></span>
+                                                <span>T 로밍</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type4"></span>
+                                                <span>인터넷/전화/IPTV</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type5"></span>
+                                                <span>NUGU 서비스</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type5"></span>
+                                                <span>스마트홈<br />서비스</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type5"></span>
+                                                <span>보안솔루션<br />서비스</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type5"></span>
+                                                <span>T apps<br />서비스</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- .widget -->
+                </div>
+                <!-- // cont-box -->
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

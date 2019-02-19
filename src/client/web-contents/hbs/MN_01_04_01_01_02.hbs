@@ -1,0 +1,42 @@
+<div class="popup tw-popup">
+    <div class="popup-page nobg layer">
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti align-l">
+                    <h1>미환급 금액 상세내역</h1>
+                </div>
+        <!-- .popup-closeBtn -->
+        <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+        <!--// .popup-closeBtn -->
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="item-list type1">
+                        {{#each data}}
+                        <ul>
+                            {{#each list}}
+                            <li>
+                                <div class="single-list">
+                                    <span class="title">{{txt}} <span class="tx-sub">{{number}}</span></span>
+                                    <span class="tx-cont tx-bold">{{price}}원</span>
+                                </div>
+                            </li>
+                            {{/each}}
+                        </ul>
+                        {{/each}}
+                    </div>
+                </div>
+                <!--// .cont-box -->
+            </div>
+        </div>
+        <!--// .container-wrap -->
+    </div>
+    <div class="popup-blind"></div>
+</div>

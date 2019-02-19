@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="h-belt">
+                <div class="h-default">
+                    <div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <div class="h-tit">나의 요금</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- 사용중인 상품 -->
+                <div class="cont-box noborder gaps-style01">
+                   <div class="submain-myfeeproducts-wrap">
+                        <!-- <a href="#" class="submain-myfeeproducts">
+                            <h3 class="title">사용중인 상품</h3>
+                            <p class="text">band 데이터 퍼펙트S</p>
+                        </a> -->
+                       <button type="button" class="submain-myfeeproducts">
+                           <h3 class="title">사용중인 상품</h3>
+                           <p class="text">band 데이터 퍼펙트S</p>
+                       </button>
+                   </div>
+                </div>
+                <!--//사용중인 상품 -->
+
+                <div class="selecttitle-wrap">
+                    <button class="bt-select" title="정렬 선택" aria-haspopup="true">추천추천순</button>
+                    <span class="taglist">#LTE  #2~5GB   #2~5GB  #2~5GB  #2~5GB  #2~5GB  #2~5GB  #2~5GB </span>
+                    <button class="bt-select" title="조건 선택" aria-haspopup="true">
+                       외 2건
+                    </button>
+                </div>
+
+                <!-- 이런 요금제는 어떠세요? -->
+                <div class="cont-box nogaps-hoz">
+                    <ul class="recommendedrate-list">
+                        <!-- 왼쪽 상품 이미지가 이미지로 들어갈경우 -->
+                        <li class="type01">
+                            <button type="button" class="product-infolink">
+                                <div class="img-box"><img class="lte" src="/img/dummy/img_sample01.png" alt=""></div>
+                                <div class="products-titleinfo">
+                                    <h5 class="title">스몰</h5>
+                                    <p class="info">월<span class="money">33,000</span>원</p>
+                                </div>
+                                <div class="taglist-wrap"> <!-- 디자인요소가 들어감으로 html이 들어가여 css로 1줄 이상시 말줄임이 불가능하기에 개발적인 처리가 필요합니다. -->
+                                    <span class="tag-text">#LTE폰</span>
+                                    <span class="tag-text">#8GB</span>
+                                    <span class="tag-text">#일반</span>
+                                </div>
+                                <dl class="products-additionalinfo">
+                                    <dt>데이터</dt>
+                                    <dd><span class="point">1.2GB</span></dd>
+                                    <dt>음성</dt>
+                                    <dd>집전화, 이동전화 무제한</dd>
+                                    <dt>문자</dt>
+                                    <dd>기본제공</dd>
+                                </dl>
+                            </button>
+                        </li>
+                        <!-- 왼쪽 상품 이미지가 bg로 들어갈경우(아래전체 type[n]으로 처리) -->                        
+                        <li class="type01">
+                            <button type="button" class="product-infolink">
+                                <div class="products-titleinfo">
+                                    <h5 class="title">T시그니처 Classic</h5>
+                                    <p class="info">월<span class="money">33,000</span>원</p>
+                                </div>
+                                <div class="taglist-wrap">
+                                    <span class="tag-text">#LTE폰</span>
+                                    <span class="tag-text">#8GB</span>
+                                    <span class="tag-text">#일반</span>
+                                </div>
+                                <dl class="products-additionalinfo">
+                                    <dt>데이터</dt>
+                                    <dd><span class="point">1.2GB</span></dd>
+                                    <dt>음성</dt>
+                                    <dd>집전화, 이동전화 무제한</dd>
+                                    <dt>문자</dt>
+                                    <dd>기본제공</dd>
+                                </dl>
+                            </button>
+                        </li>
+                        <li class="type02">
+                            <button type="button" class="product-infolink">
+                                <div class="products-titleinfo">
+                                    <h5 class="title">T시그니처 Master</h5>
+                                    <p class="info">월<span class="money">33,000</span>원</p>
+                                </div>
+                                <div class="taglist-wrap">
+                                    <span class="tag-text">#LTE폰</span>
+                                    <span class="tag-text">#8GB</span>
+                                    <span class="tag-text">#일반</span>
+                                </div>
+                                <dl class="products-additionalinfo">
+                                    <dt>데이터</dt>
+                                    <dd><span class="point">1.2GB</span></dd>
+                                    <dt>음성</dt>
+                                    <dd>집전화, 이동전화 무제한</dd>
+                                    <dt>문자</dt>
+                                    <dd>기본제공</dd>
+                                </dl>
+                            </button>
+                        </li>
+                        <li class="type03">
+                            <button type="button" class="product-infolink">
+                                <div class="products-titleinfo">
+                                    <h5 class="title">뉴 T끼리 맞춤형<br>(100분+6GB)</h5>
+                                    <p class="info">월<span class="money">33,000</span>원</p>
+                                </div>
+                                <div class="taglist-wrap">
+                                    <span class="tag-text">#LTE폰</span>
+                                    <span class="tag-text">#8GB</span>
+                                    <span class="tag-text">#일반</span>
+                                </div>
+                                <dl class="products-additionalinfo">
+                                    <dt>데이터</dt>
+                                    <dd><span class="point">1.2GB</span></dd>
+                                    <dt>음성</dt>
+                                    <dd>집전화, 이동전화 무제한</dd>
+                                    <dt>문자</dt>
+                                    <dd>기본제공</dd>
+                                </dl>
+                            </button>
+                        </li>
+                    </ul>
+                    <div class="bt-more gap-style">
+                        <button>더보기</button>
+                    </div>
+                </div>
+                <!-- //이런 요금제는 어떠세요? -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- 내게 맞는 요금제 찾기 -->
+                <div class="submain-findyourplan-wrap">
+                    <!-- <a href="#" class="submain-findyourplan">
+                        <h3 class="title">내게 맞는 요금제 찾기</h3>
+                        <p class="text">나의 사용패턴, 할인정보에 딱 맞는 요금제를 추천해드려요.</p>
+                    </a> -->
+                    <button type="button" class="submain-findyourplan">
+                        <h3 class="title">내게 맞는 요금제 찾기</h3>
+                        <p class="text">나의 사용패턴, 할인정보에 딱 맞는 요금제를<br />추천해드려요.</p>
+                    </button>
+                </div>
+                <!--//내게 맞는 요금제 찾기-->
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!-- cont-box -->
+                <div class="cont-box">
+                    <h3>다른상품 더보기</h3>
+                    <!-- .widget -->
+                    <div class="widget"> 
+                        <div class="widget-box horizontal">
+                            <div class="horizontal-slide">
+                                <ul class="horizontal-list add-prod">
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type1"></span>
+                                                <span>모바일<br/>부가상품</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type2"></span>
+                                                <span>혜택과 할인</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type3"></span>
+                                                <span>T 로밍</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type4"></span>
+                                                <span>인터넷/전화/IPTV</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type5"></span>
+                                                <span>NUGU 서비스</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type5"></span>
+                                                <span>스마트홈<br />서비스</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type5"></span>
+                                                <span>보안솔루션<br />서비스</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type5"></span>
+                                                <span>T apps<br />서비스</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- .widget -->
+                </div>
+                <!-- // cont-box -->
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

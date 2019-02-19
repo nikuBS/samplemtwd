@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.3 (67297) - http://www.bohemiancoding.com/sketch -->
+    <title>a</title>
+    <desc>Created with Sketch.</desc>
+    <g id="a" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
+        <g id="Group-7" transform="translate(13.000000, 10.000000)" stroke="#333333" stroke-width="3">
+            <path d="M17.5001,22.5 L17.5001,10.356 C17.5001,4.935 22.0001,0.5 27.5001,0.5 C33.0001,0.5 37.5001,4.935 37.5001,10.356 L37.5001,22.5" id="Stroke-1"></path>
+            <polygon id="Stroke-3" stroke-linejoin="round" points="27.5001 30 30.2811 35.596 36.5001 36.493 32.0001 40.85 33.0621 47 27.5001 44.096 21.9381 47 23.0001 40.85 18.5001 36.493 24.7191 35.596"></polygon>
+            <path d="M54.4791,56.5498 L54.4321,56.1638 L52.2261,15.4998 L27.5001,15.4998 L2.7741,15.4998 L0.5671,56.1638 L0.5211,56.5498 C0.5161,56.6168 0.5001,56.6818 0.5001,56.7498 C0.5001,58.2688 1.7671,59.4998 3.3301,59.4998 L27.5001,59.4998 L51.6691,59.4998 C53.2331,59.4998 54.5001,58.2688 54.5001,56.7498 C54.5001,56.6818 54.4841,56.6168 54.4791,56.5498 Z" id="Stroke-5" stroke-linejoin="round"></path>
+        </g>
+    </g>
+</svg>

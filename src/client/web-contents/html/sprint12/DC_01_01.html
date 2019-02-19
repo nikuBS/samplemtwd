@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+
+    
+    
+
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+					</div>
+
+                    <div class="h-tit">실시간 잔여량</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+				</div>
+			</div>
+		</div>
+        <!--// #header --> 
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+				<hr class="cont-sp type1" aria-hidden="true" />
+				<!-- .cont-box -->
+				<div class="cont-box nogaps">
+					<div class="calling-plan">
+						<button class="wrap-link">
+							<i class="badge icon-badge-plan-my"><span class="blind">my</span></i>
+							<span class="stit">뉴 T끼리 맞춤형(200분+6GB)</span>
+						</button>
+					</div>
+				</div>
+				<!--// .cont-box -->
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<!-- .cont-box -->
+				<div class="cont-box pb0">
+					<div class="ti-caption-type01 pb20">
+						<h2 class="tit">데이터</h2>
+						<p class="num">총 데이터 잔여량 <em>36.7</em>GB</p>
+					</div>
+					<ul class="date-graph-list">
+						<li>
+							<div class="left">
+								<div class="donut-chart small">
+									<div class="donut-chart-area">
+										<!-- loop -->
+										<div class="c100 p70"><!-- .p+(0~100) // -->
+											<div class="red"><!-- red, yellow, green, blue // -->
+												<div class="slice">
+													<div class="bar"></div>
+													<div class="fill"></div>
+												</div>
+											</div>
+										</div>
+										<!-- // loop -->
+									</div>
+								</div>
+							</div>
+							<div class="cont">
+								<span class="txt1">기본 제공 데이터 100GB</span>
+								<div class="date">
+									<span class="remain"><strong>35GB</strong> 남음</span>
+									<span class="use"><strong>65GB</strong> 사용</span>
+								</div>
+							</div>
+						</li>
+					</ul>
+					<div class="calling-plan type01">
+						<button class="wrap-link fs-type01">
+							<span class="left"><strong class="ff-tb">25GB</strong> 공유 가능</span>
+							<span class="right fc-type01"><strong class="ff-tb fs-type02">15GB</strong> 공유</span>
+						</button>
+					</div>
+				</div>
+				<!--// .cont-box -->
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<!-- .cont-box -->
+				<div class="cont-box nogaps-hoz">
+					<ul class="date-graph-list">
+						<li>
+							<div class="left">
+								<div class="donut-chart small">
+									<div class="donut-chart-area">
+										<!-- loop -->
+										<div class="c100 p70"><!-- .p+(0~100) // -->
+											<div class="red"><!-- red, yellow, green, blue // -->
+												<div class="slice">
+													<div class="bar"></div>
+													<div class="fill"></div>
+												</div>
+											</div>
+										</div>
+										<!-- // loop -->
+									</div>
+								</div>
+							</div>
+							<div class="cont">
+								<span class="txt1">데이터 리필 8GB</span>
+								<div class="date">
+									<span class="remain"><strong>6GB</strong> 남음</span>
+									<span class="use"><strong>2GB</strong> 사용</span>
+								</div>
+								<span class="txt2">쿠폰 등록일 2018.5.23.</span>
+							</div>
+						</li>
+						<li>
+							<div class="left">
+								<div class="donut-chart small">
+									<div class="donut-chart-area">
+										<!-- loop -->
+										<div class="c100 p50"><!-- .p+(0~100) // -->
+											<div class="red"><!-- red, yellow, green, blue // -->
+												<div class="slice">
+													<div class="bar"></div>
+													<div class="fill"></div>
+												</div>
+											</div>
+										</div>
+										<!-- // loop -->
+									</div>
+								</div>
+							</div>
+							<div class="cont">
+								<span class="txt1">데이터 통화 매일 8GB</span>
+								<div class="date">
+									<span class="remain"><strong>4GB</strong> 남음</span>
+									<span class="use"><strong>4GB</strong> 오늘사용</span>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="left">
+								<div class="donut-chart small">
+									<div class="donut-chart-area">
+										<!-- loop -->
+										<div class="c100 p70"><!-- .p+(0~100) // -->
+											<div class="red"><!-- red, yellow, green, blue // -->
+												<div class="slice">
+													<div class="bar"></div>
+													<div class="fill"></div>
+												</div>
+											</div>
+										</div>
+										<!-- // loop -->
+									</div>
+								</div>
+							</div>
+							<div class="cont">
+								<span class="txt1">B tv 모바일 PACK</span>
+								<div class="date">
+									<span class="remain"><strong>6GB</strong> 남음</span>
+									<button class="bt-link-tx underline ml6">당일 사용량 조회</button>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="left">
+								<div class="donut-chart small">
+									<div class="donut-chart-area">
+										<!-- loop -->
+										<div class="c100 p0"><!-- .p+(0~100) // -->
+											<div class="red"><!-- red, yellow, green, blue // -->
+												<div class="slice">
+													<div class="bar"></div>
+													<div class="fill"></div>
+												</div>
+											</div>
+										</div>
+										<!-- // loop -->
+									</div>
+								</div>
+							</div>
+							<div class="cont">
+								<span class="txt1">멜론 익스트리밍 2.4GB</span>
+								<div class="date">
+									<span class="remain"><strong>0GB</strong> 남음</span>
+									<span class="use"><strong>2.4GB</strong> 사용</span>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="left">
+								<div class="donut-chart small">
+									<div class="donut-chart-area">
+										<!-- loop -->
+										<div class="c100 p100"><!-- .p+(0~100) // -->
+											<div class="red"><!-- red, yellow, green, blue // -->
+												<div class="slice">
+													<div class="bar"></div>
+													<div class="fill"></div>
+												</div>
+											</div>
+										</div>
+										<!-- // loop -->
+									</div>
+								</div>
+							</div>
+							<div class="cont">
+								<span class="txt1">한도 초과하면 데이터 무료</span>
+								<div class="date">
+									<span class="remain"><strong class="normal">무제한</strong></span>
+									<span class="use"><strong>5GB</strong> 사용</span>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<!--// .cont-box -->
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<!-- .cont-box -->
+				<div class="cont-box pb0">
+					<div class="ti-caption-type01">
+						<h2 class="tit">T데이터셰어링 40GB</h2>
+						<p class="num">총 사용 <em>36.7</em>GB</p>
+					</div>
+					<div class="data-list-type1">
+						<ul class="type1">
+							<li>
+								<span class="stit">1010-1003-7399-1F</span>
+								<div class="sta">
+									<span>2018.7.12.</span>
+									<span>사용 중 <a class="bt-link-tx underline" href="" role="button">해지하기</a></span>
+								</div>
+								<span class="use"><strong>300MB</strong>사용</span>
+							</li>
+							<li>
+								<span class="stit">1010-1003-7399-1F</span>
+								<div class="sta">
+									<span>2018.7.12.</span>
+									<span>분실신고</span>
+								</div>
+								<span class="use"><strong>300MB</strong>사용</span>
+							</li>
+							<li>
+								<span class="stit">1010-1003-7399-1F</span>
+								<div class="sta">
+									<span>2018.7.12.</span>
+									<span>정지</span>
+								</div>
+								<span class="use"><strong>300MB</strong>사용</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!--// .cont-box -->
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<!-- .cont-box -->
+				<div class="cont-box pb0">
+					<div class="ti-caption-type01 pb20">
+						<h2 class="tit">T로밍 함께쓰기 잔여량</h2>
+						<p class="num">총 잔여량 <em>36.7</em>GB</p>
+					</div>
+					<ul class="date-graph-list">
+						<li>
+							<div class="left">
+								<div class="donut-chart small">
+									<div class="donut-chart-area">
+										<!-- loop -->
+										<div class="c100 p80"><!-- .p+(0~100) // -->
+											<div class="red"><!-- red, yellow, green, blue // -->
+												<div class="slice">
+													<div class="bar"></div>
+													<div class="fill"></div>
+												</div>
+											</div>
+										</div>
+										<!-- // loop -->
+									</div>
+								</div>
+							</div>
+							<div class="cont">
+								<span class="txt1">T로밍 함께쓰기 60GB</span>
+								<div class="date">
+									<span class="remain"><strong>6GB</strong> 남음</span>
+									<span class="use"><strong>2GB</strong> 남음</span>
+								</div>
+								<span class="txt3">4일 18시간 남음</span>
+							</div>
+						</li>
+					</ul>
+					<div class="data-list-type1">
+						<ul>
+							<li>
+								<span class="stit">010-12**-56**</span>
+								<div class="sta">
+									<span>설정일 2018.5.23.</span>
+								</div>
+								<span class="use"><strong>300MB</strong>사용</span>
+							</li>
+							<li>
+								<span class="stit">010-12**-56**</span>
+								<div class="sta">
+									<span>설정일 2018.5.23.</span>
+								</div>
+								<span class="use"><strong>300MB</strong>사용</span>
+							</li>
+							<li>
+								<span class="stit">010-12**-56**</span>
+								<div class="sta">
+									<span>설정일 2018.5.23.</span>
+								</div>
+								<span class="use"><strong>300MB</strong>사용</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!--// .cont-box -->
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<!-- .cont-box -->
+				<div class="cont-box pb0">
+					<div class="ti-caption-type01">
+						<h2 class="tit">데이터 한도 요금제 잔여량</h2>
+						<p class="r-btn"><button type="button" class="btn-round3 btn-style3">충전하기</button></p>
+					</div>
+					<div class="data-list-type1">
+						<ul class="type1">
+							<li>
+								<span class="stit">기본 데이터 충전</span>
+								<div class="sta">
+									<span>충전 금액 5,000원</span>
+								</div>
+								<span class="use"><strong>1,800원</strong>남음</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!--// .cont-box -->
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<!-- .cont-box -->
+				<div class="cont-box pb0">
+					<div class="ti-caption-type01">
+						<!--접근성 수정-->
+						<h2 class="tit">팅 요금제 잔여량<button class="btn-tip" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">팅 요금제 잔여량 tip</span></i></button></h2>
+						<!-- //접근성 수정-->
+					</div>
+					<div class="data-list-type1">
+						<ul class="type1">
+							<li>
+								<span class="stit">통화 가능 금액</span>
+								<div class="sta">
+									<span>제공(충전) 금액 5,000원</span>
+								</div>
+								<span class="use"><strong>1,800원</strong>남음</span>
+							</li>
+							<li>
+								<span class="stit">충전 금액</span>
+								<div class="sta">
+									<span>제공(충전) 금액 5,000원</span>
+								</div>
+								<span class="use"><strong>1,800원</strong>남음</span>
+							</li>
+							<li>
+								<span class="stit">선물충전 금액</span>
+								<div class="sta">
+									<span>제공(충전) 금액 5,000원</span>
+								</div>
+								<span class="use"><strong>1,800원</strong>남음</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!--// .cont-box -->
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<!-- .cont-box -->
+				<div class="cont-box pb0">
+					<div class="ti-caption-type01">
+						<!--접근성 수정-->
+						<h2 class="tit">24시간 데이터 50% 할인 사용량<button class="btn-tip" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">24시간 데이터 50% 할인 사용량 tip</span></i></button></h2>
+						<!-- //접근성 수정-->
+					</div>
+					<div class="data-list-type1">
+						<ul class="type1">
+							<li>
+								<span class="stit">할인된 데이터 사용</span>
+								<div class="sta">
+									<span>2018.7.11. 14:10~2018.8.22. 14:09</span>
+								</div>
+								<span class="use"><strong>900MB</strong></span>
+							</li>
+						</ul>
+						<div class="btn-more">
+							<button>실시간 이용요금 바로가기</button>
+						</div>
+					</div>
+				</div>
+				<!--// .cont-box -->
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<!-- .cont-box -->
+				<div class="cont-box pb0">
+					<div class="ti-caption-type01">
+						<h2 class="tit">내폰끼리 결합 사용량</h2>
+						<p class="num">총 사용 <em>900</em>GB</p>
+					</div>
+					<div class="data-list-type1">
+						<ul class="type1">
+							<li>
+								<span class="stit">LTE함께쓰기Basic(스마트폰)</span>
+								<div class="sta">
+									<span>설정일 2018.7.12.</span>
+									<span class="f-type1">010-12**-56**</span>
+								</div>
+								<span class="use"><button type="button" class="btn-round2 btn-style3">조회</button></span>
+							</li>
+							<li>
+								<span class="stit">LTE함께쓰기Basic</span>
+								<div class="sta">
+									<span>설정일 2018.7.12.</span>
+									<span class="f-type1">010-12**-56**</span>
+								</div>
+								<span class="use"><button type="button" class="btn-round2 btn-style3">조회</button></span>
+							</li>
+							<li>
+								<span class="stit">LTE함께쓰기Basic(스마트폰)</span>
+								<div class="sta">
+									<span>설정일 2018.7.12.</span>
+									<span class="f-type1">010-12**-56**</span>
+								</div>
+								<span class="use"><strong>300MB</strong>사용</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!--// .cont-box -->
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<!-- .cont-box -->
+				<div class="cont-box pb0">
+					<div class="ti-caption-type01 pb20">
+						<h2 class="tit">음성통화/영상통화</h2>
+					</div>
+					<ul class="date-graph-list">
+						<li>
+							<div class="left">
+								<div class="donut-chart small">
+									<div class="donut-chart-area">
+										<!-- loop -->
+										<div class="c100 p80"><!-- .p+(0~100) // -->
+											<div class="green"><!-- red, yellow, green, blue // -->
+												<div class="slice">
+													<div class="bar"></div>
+													<div class="fill"></div>
+												</div>
+											</div>
+										</div>
+										<!-- // loop -->
+									</div>
+								</div>
+							</div>
+							<div class="cont">
+								<span class="txt1">영상/부가통화 300분</span>
+								<div class="date">
+									<span class="remain"><strong>4시간 50분</strong> 남음</span>
+									<span class="use"><strong>10분</strong> 사용</span>
+								</div>
+								<span class="txt2">쿠폰 등록일 2018.5.23.</span>
+							</div>
+						</li>
+						<li>
+							<div class="left">
+								<div class="donut-chart small">
+									<div class="donut-chart-area">
+										<!-- loop -->
+										<div class="c100 p100"><!-- .p+(0~100) // -->
+											<div class="green"><!-- red, yellow, green, blue // -->
+												<div class="slice">
+													<div class="bar"></div>
+													<div class="fill"></div>
+												</div>
+											</div>
+										</div>
+										<!-- // loop -->
+									</div>
+								</div>
+							</div>
+							<div class="cont">
+								<span class="txt1">SKT텔레콤 고객 간 음성 무제한</span>
+								<div class="date">
+									<span class="remain"><strong class="normal">무제한</strong></span>
+									<span class="use"><strong>1시간 5분</strong> 사용</span>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="left">
+								<div class="donut-chart small">
+									<div class="donut-chart-area">
+										<!-- loop -->
+										<div class="c100 p100"><!-- .p+(0~100) // -->
+											<div class="green"><!-- red, yellow, green, blue // -->
+												<div class="slice">
+													<div class="bar"></div>
+													<div class="fill"></div>
+												</div>
+											</div>
+										</div>
+										<!-- // loop -->
+									</div>
+								</div>
+							</div>
+							<div class="cont">
+								<span class="txt1">집전화/이동전화 음성 무제한</span>
+								<div class="date">
+									<span class="remain"><strong class="normal">무제한</strong></span>
+									<span class="use"><strong>35초</strong> 사용</span>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<!--// .cont-box -->
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<!-- .cont-box -->
+				<div class="cont-box pb0">
+					<div class="ti-caption-type01 pb20">
+						<h2 class="tit">문자</h2>
+					</div>
+					<ul class="date-graph-list">
+						<li>
+							<div class="left">
+								<div class="donut-chart small">
+									<div class="donut-chart-area">
+										<!-- loop -->
+										<div class="c100 p80"><!-- .p+(0~100) // -->
+											<div class="yellow"><!-- red, yellow, green, blue // -->
+												<div class="slice">
+													<div class="bar"></div>
+													<div class="fill"></div>
+												</div>
+											</div>
+										</div>
+										<!-- // loop -->
+									</div>
+								</div>
+							</div>
+							<div class="cont">
+								<span class="txt1">SMS/MMS/ⓜ메신저 200건</span>
+								<div class="date">
+									<span class="remain"><strong>125건</strong> 남음</span>
+									<span class="use"><strong>75건</strong> 사용</span>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="left">
+								<div class="donut-chart small">
+									<div class="donut-chart-area">
+										<!-- loop -->
+										<div class="c100 p100"><!-- .p+(0~100) // -->
+											<div class="yellow"><!-- red, yellow, green, blue // -->
+												<div class="slice">
+													<div class="bar"></div>
+													<div class="fill"></div>
+												</div>
+											</div>
+										</div>
+										<!-- // loop -->
+									</div>
+								</div>
+							</div>
+							<div class="cont">
+								<span class="txt1">SMS/MMS/ⓜ메신저 기본제공</span>
+								<div class="date">
+									<span class="remain"><strong>기본제공</strong></span>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<!--// .cont-box -->
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<!-- .cont-box -->
+				<div class="cont-box pb0">
+					<div class="ti-caption-type01 pb20">
+						<h2 class="tit">기타</h2>
+					</div>
+					<ul class="date-graph-list">
+						<li>
+							<div class="left">
+								<div class="donut-chart small">
+									<div class="donut-chart-area">
+										<!-- loop -->
+										<div class="c100 p80"><!-- .p+(0~100) // -->
+											<div class="comet"><!-- red, yellow, green, blue // -->
+												<div class="slice">
+													<div class="bar"></div>
+													<div class="fill"></div>
+												</div>
+											</div>
+										</div>
+										<!-- // loop -->
+									</div>
+								</div>
+							</div>
+							<div class="cont">
+								<span class="txt1">T쿠폰 10000 프로모션</span>
+								<div class="date">
+									<span class="remain"><strong>8,600원</strong> 남음</span>
+									<span class="use"><strong>1,400원</strong> 사용</span>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<!--// .cont-box -->
+
+				<div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                    <ul class="pg-chk-list02">
+						<!--접근성 수정-->
+                        <li><button class="btn-tip" aria-haspopup="true">실시간 사용량 조회 안내<i class="icon-badge-tip"><span class="blind">실시간 사용량 조회 안내 tip</span></i></button></li>
+                        <li><button class="btn-tip" aria-haspopup="true">실시간 사용량 조회가 불가능한 경우<i class="icon-badge-tip"><span class="blind">실시간 사용량 조회가 불가능한 경우 tip</span></i></button></li>
+						<li><button class="btn-tip" aria-haspopup="true">월중 요금상품 변경, 일시정지 시 유의사항<i class="icon-badge-tip"><span class="blind">월중 요금상품 변경, 일시정지 시 유의사항 tip</span></i></button></li>
+						<li><button class="btn-tip" aria-haspopup="true">마이벨 서비스/다다익선요금제 이용 가능 고객 안내<i class="icon-badge-tip"><span class="blind">마이벨 서비스/다다익선요금제 이용 가능 고객 안내 tip</span></i></button></li>
+						<li><button class="btn-tip" aria-haspopup="true">사용량 조회 안내<i class="icon-badge-tip"><span class="blind">사용량 조회 안내 tip</span></i></button></li>
+						<li><button class="btn-tip" aria-haspopup="true">이용제한/자동해지 안내<i class="icon-badge-tip"><span class="blind">이용제한/자동해지 안내 tip</span></i></button></li>
+						<li><button class="btn-tip" aria-haspopup="true">유심 안내<i class="icon-badge-tip"><span class="blind">유심 안내 tip</span></i></button></li>
+						<!-- //접근성 수정-->
+					</ul>
+                </div>
+
+			</div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

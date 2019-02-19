@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- .popup hbs -->
+        <div class="popup-page tw-popup fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>과납 내역 환불 받기</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+                    <div class="data-select-wrap">
+                        <span class="data-tit">과납 내역</span>
+                    </div>
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps">
+                        <ul class="list-comp-lineinfo type2 no-bt">
+                            <li>
+                                <div class="lineinfo-user">
+                                    <span class="info-title">과납금액</span>
+                                    <span class="info-sub">2018.05.23</span>
+                                </div>
+                                <div class="lineinfo-data">
+                                    <span class="info-title"><span class="num ff-tg-black">27,000</span><span class="ff-tg-medium">원</span></span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="lineinfo-user">
+                                    <span class="info-title">과납금액</span>
+                                    <span class="info-sub">2018.05.23</span>
+                                </div>
+                                <div class="lineinfo-data">
+                                    <span class="info-title"><span class="num ff-tg-black">27,000</span><span class="ff-tg-medium">원</span></span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="lineinfo-user">
+                                    <span class="info-title">과납금액</span>
+                                    <span class="info-sub">2018.05.23</span>
+                                </div>
+                                <div class="lineinfo-data">
+                                    <span class="info-title"><span class="num ff-tg-black">27,000</span><span class="ff-tg-medium">원</span></span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="lineinfo-user">
+                                    <span class="info-title tx-bold">환불 총 금액</span>
+                                </div>
+                                <div class="lineinfo-data">
+                                    <span class="info-title point-color"><span class="num ff-tg-black">81,000</span><span class="ff-tg-medium">원</span></span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+                    <div class="data-select-wrap">
+                        <span class="data-tit">환불 계좌 입력</span>
+                    </div>
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps-top">
+                        <!-- 2018-09-18 info-wrap 삭제 -->
+                        <h3 class="tabcon-title0 pt20">은행명</h3>
+                        <!--접근성 수정-->
+                        <div class="inp-tx-wrap">
+                            <button class="bt-dropdown big" title="은행선택"  aria-describedby="aria-exp-desc1">은행선택<span class="ico"></span></button>
+                            <span class="error-txt"  id="aria-exp-desc1">은행을 선택해주세요.</span>
+                            <div class="inputbox bt-add mt6">
+                                <span class="input">
+                                    <input type="number" placeholder="계좌번호(숫자만 입력)" title="계좌번호(숫자만 입력)" aria-labelledby="aria-exp-label1" aria-describedby="aria-exp-desc2">
+                                    <button class="cancel"><span class="blind">삭제</span></button>
+                                </span>
+                            </div>
+                            <div id="aria-exp-desc2">
+                                <span class="error-txt">계좌 정보가 올바르지 않습니다.</span>
+                                <span class="error-txt">계좌번호를 입력해주세요.</span>
+                            </div>
+                        </div>	
+                        <!-- //접근성 수정-->
+                    </div>
+                    <!--// .cont-box -->
+                    <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                    <div class="bt-fixed-area">
+                        <ul class="bt-slice full">
+                            <li class="bt-red1">
+                                <button>환불 요청</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                </div>
+            </div>
+            <!-- // .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="prev-step">취소</button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!-- // .popup hbs -->
+    </div>
+</body>
+</html>

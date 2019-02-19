@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/main.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap search-height"><!-- .header-wrap min-height:52px .rescan시 min-height:97px -->
+            <div class="h-belt"><!-- border-bottom : 1px -->
+                <div class="sch-form">
+                    <span class="inputbox">
+                        <span class="input">
+                            <input type="text" placeholder="T world 2019-옥의 티를 찾아라!" title="검색어 입력" value="">
+                            <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                        </span>
+                    </span>
+                    <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    <div class="searchbox-close"><button class="close-area">취소</button></div>
+                </div>
+                <div class="resultsearch-box">
+                    <span class="custom-form"><input type="checkbox" id="resultsearch" name="resultsearch"><span class="c-type1"></span></span><label for="resultsearch">결과 내 재검색</label>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+
+                <div class="connection-searchword">
+                    <dl class="searchword-list">
+                        <dt class="tit">연관</dt>
+                        <dd><a href="" class="link">분실 폰 찾기 플러스</a></dd>
+                        <dd><a href="" class="link">친구찾기</a></dd>
+                        <dd><button type="button" class="link">휴대폰임대</button></dd>
+                        <dd><a href="" class="link">분실파손</a></dd>
+                        <dd><a href="" class="link">분실 폰 찾기 플러스</a></dd>
+                        <dd><a href="" class="link">분실 폰 찾기 플러스</a></dd>
+                        <dd><a href="" class="link">친구찾기</a></dd>
+                        <dd><button type="button" class="link">휴대폰임대</button></dd>
+                        <dd><a href="" class="link">분실파손</a></dd>
+                    </dl>
+                </div>
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <div class="searchnumbox-wrap">
+                        <h2 class="tit">바로가기</h2>
+                        <div class="numberbox"><span class="num">5</span>건</div>
+                    </div>
+                    <div class="keyword-search-list">
+                        <ul>
+                            <li>
+                                <button>
+                                    <span class="main-category">휴대폰 분실신고/해제</span>
+                                    <span class="sub-category">my T > 분실/정지/해제 > 휴대폰 분실/정지/해제 > 휴대폰 분실 신고/해제</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button>
+                                    <span class="main-category">휴대폰 분실신고/해제</span>
+                                    <span class="sub-category">my T > 분실/정지/해제 > 휴대폰 분실/정지/해제 > 휴대폰 분실 신고/해제</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button>
+                                    <span class="main-category">휴대폰 분실신고/해제</span>
+                                    <span class="sub-category">my T > 분실/정지/해제 > 휴대폰 분실/정지/해제 > 휴대폰 분실 신고/해제</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button>
+                                    <span class="main-category">휴대폰 분실신고/해제</span>
+                                    <span class="sub-category">my T > 분실/정지/해제 > 휴대폰 분실/정지/해제 > 휴대폰 분실 신고/해제</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button>
+                                    <span class="main-category">휴대폰 분실신고/해제</span>
+                                    <span class="sub-category">my T > 분실/정지/해제 > 휴대폰 분실/정지/해제 > 휴대폰 분실 신고/해제</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!-- 페이징 -->
+                <div class="newpaging-wrap">
+                    <div class="prev">
+                        <button type="button" class="prev-btn">이전</button>
+                    </div>
+                    <div class="numberbox">
+                        <span class="number">
+                            <strong class="str">1</strong> / 5
+                        </span>
+                        <select class="sispopup" title="페이지 더보기"> <!--접근성 수정-->
+                            <option></option>
+                        </select>
+                    </div>
+                    <div class="next">
+                        <button type="button" class="next-btn">다음</button>
+                    </div>
+                </div>
+                <!-- //페이징 -->
+
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+</html>

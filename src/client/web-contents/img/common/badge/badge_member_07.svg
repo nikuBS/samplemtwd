@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>graphic_badge_member_07</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Icon_Badge_Graphic" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="##Element/Badge/Member07">
+            <rect id="Rectangle-2" fill="#119ED7" x="0" y="0" width="32" height="32" rx="4"></rect>
+            <path d="M18.2800004,17.44 L15.8600004,11.84 L13.4600004,17.44 L18.2800004,17.44 Z M14.7600004,8.9 L17.0400004,8.9 L23.2000004,23 L20.6000004,23 L19.1800004,19.62 L12.5600004,19.62 L11.1200004,23 L8.60000038,23 L14.7600004,8.9 Z" id="A" fill="#FFFFFF"></path>
+        </g>
+    </g>
+</svg>

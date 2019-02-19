@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>icon_48px_pin</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="New-GUI" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="##Icon/48/Pin">
+            <rect id="Icon_Area" fill-opacity="0" fill="#FFFFFF" x="0" y="0" width="48" height="48"></rect>
+            <path d="M19.7006962,9.69592594 L35.6114659,9.69592594 C36.1637507,9.69592594 36.6114659,10.1436412 36.6114659,10.6959259 L36.6114659,26.0179446 L40.2511817,31.6162362 L15.0609804,31.6162362 L18.7006962,26.0179446 L18.7006962,10.6959259 C18.7006962,10.1436412 19.1484114,9.69592594 19.7006962,9.69592594 Z" id="Rectangle-3" stroke="#333333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(27.656081, 20.656081) rotate(-315.000000) translate(-27.656081, -20.656081) "></path>
+            <path d="M20,29 L8,41" id="Line" stroke="#333333" stroke-width="2" stroke-linecap="round"></path>
+        </g>
+    </g>
+</svg>

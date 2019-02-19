@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+
+<body class="bg-productdetail"><!-- 2017.10.29 수정/추가 상품상세 페이지 BG변경되는 페이지에서 클래스 추가필요 -->
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+					<div class="h-tit">상품상세</div>
+					<div class="h-serarch">
+						<button class="icon-gnb-search"><span class="blind">검색</span></button>
+					</div>
+				</div>
+			</div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+
+                <!-- 상품타이틀 -->
+                <div class="cont-box nogaps-hoz productdetails-bg" style="background:#6957a5;"><!-- 2017.10.29 추가  어드민에서 등록되는 컬러값으로 inline style 추가 예시) style="background:어드민등록값,이미지삽입" -->
+                    <div class="productdetails-wrap">
+                        <h3 class="productdetails-title">
+                            <div class="title">DATA 인피니티 DATA</div>
+                        </h3>
+                        <p class="productdetails-text02">가장 경제적인 100M급 초고속 인터넷 요금제<br>최대속도 : 100Mbps</p>
+                        <p class="productdetails-text03">서비스 제공 : SK테크엑스(주)</p>
+                    </div>
+                    <div class="productdetails-ledgercase">
+                        <p class="price-text">
+                            이용요금(부가세포함)<br>
+                            <strong class="price-type">100,000</strong>
+                            <span class="unit">원</span>
+                        </p>
+                        <div class="btn">
+                            <button type="button" class="bt-white1" style="color:#676767;">가입</button><!-- 2017.10.29 추가  어드민에서 등록되는 컬러값으로 inline style 추가 예시) style="color:어드민등록값" -->
+                        </div>
+
+                        <!-- 해당 상품을 이용중인 회선으로 로그인 시 해지 기능만 있는 경우
+                        <p class="price-text">
+                            월정액(부가세포함)<br>
+                            <strong class="price-type">100,000</strong>
+                            <span class="unit">원</span>
+                        </p>
+                        <div class="btn">
+                            <button type="button" class="bt-white2">해지</button>
+                        </div> -->
+
+                        <!-- 가입가능 상품인 경우일대   가입x/ 가입상담예약 O 일경우
+                        <p class="price-text">
+                            월정액(부가세포함)<br>
+                            <strong class="price-type">100,000</strong>
+                            <span class="unit">원</span>
+                        </p>
+                         -->
+                         
+                        <!--  서류제출/조회 노출 케이스  제출 전/제출 후 미비로 재 업로드 필요 시 
+                        <p class="price-text">
+                            월정액(부가세포함)<br>
+                            <strong class="price-type">100,000</strong>
+                            <span class="unit">원</span>
+                        </p>
+                         -->
+
+                        <!-- 가입제한/불가 상품인 경우
+                        <p class="price-text">
+                            월정액(부가세포함)<br>
+                            <strong class="price-type">100,000</strong>
+                            <span class="unit">원</span>
+                        </p>
+                        <div class="limit">
+                            가입제한 상품
+                        </div>
+                         -->
+                    </div>
+                    <!-- <ul class="productdetails-utill">
+                        <li>- 데이터 <strong class="str">기본제공금액 조절사용</strong></li>
+                        <li>- 문자 <strong class="str">기본제공</strong></li>
+                    </ul>
+                    <ul class="productdetails-utill">
+                        <li>- 데이터 <strong class="str">기본제공금액 조절사용</strong></li>
+                    </ul> -->
+                </div>
+                <!-- //상품타이틀 -->
+
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- 가입상담  -->
+                <div class="joinconsulting-wrap">
+                    <p class="text">가입상담을 받아보시겠어요?</p>
+                    <div class="btn">
+                        <div class="bt-alone"><button class="bt-line-blue1">예약</button></div>
+                    </div>
+                </div>
+                <!-- //가입상담  -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- SKT만의 혜택 -->
+                <div class="submain-findyourplan-wrap type01">
+                    <!-- <a href="#" class="submain-findyourplan">
+                        <h3 class="title">KST만의 혜택</h3>
+                        <p class="text">어르신께는 안심옵션 할인 제공 SKT만의 혜택<br> SKT만의 혜택 SKT만의 혜택 SKT만의 혜택</p>
+                    </a> -->
+                    <button type="button" class="submain-findyourplan">
+                        <h3 class="title">SKT만의 혜택</h3>
+                        <p class="text">어르신께는 안심옵션 할인 제공 SKT만의 혜택<br> SKT만의 혜택 SKT만의 혜택 SKT만의 혜택</p>
+                    </button>
+                </div>
+                <!--//SKT만의 혜택 -->
+
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

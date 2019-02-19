@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- .popup hbs -->
+        <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>정보 수정</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps">
+						<div class="ti-caption-gray">
+							<span class="tit">개인정보 수정</span>
+						</div>
+						<div class="membership-info-modify">
+							<div class="board-type01">
+								<em class="tit">카드수령 정보</em>
+								<div class="cont">
+									<p class="card-info-txt">
+										<strong>모바일 카드</strong>가<br/><strong>발급</strong>되었습니다.
+									</p>
+								</div>
+							</div>
+						</div>
+                    </div>
+                    <!--// .cont-box -->
+
+					<!-- .cont-box -->
+					<div class="cont-box membership-info-modify01">
+						<div class="ti-caption-gray">
+							<span class="tit">T멤버십 이용/약관 동의</span>
+						</div>
+						<div class="agree-chk-wrap agree-chk-type">
+                            <div class="list-comp-input-agree">
+                                <div class="widget">
+                                    <div class="widget-box check">
+                                        <ul class="select-list" role="group">
+                                            <li>
+                                                <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                    <input type="checkbox" name="checkbox" value="" title="T멤버십 이용/약관 동의" aria-labelledby="aria-comp-checkbox2" /><!-- 체크상태일 경우 checked="false" --><!--웹접근성 수정 -->
+                                                    <div class="comp-list-layout" id="aria-comp-checkbox2">
+                                                        <p class="layout-text">
+                                                            <span class="mtext">T멤버십 이용내역 안내 서비스 가입 (선택)</span>
+															<span class="stext-ellipsis">SK 텔레콤 T멤버십 이용내역을 문자메세지(SMS/MMS)로 안내해드리는 무료 서비스입니다.</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                    <input type="checkbox" name="checkbox" value="" title="T멤버십 이용/약관 동의" aria-labelledby="aria-comp-checkbox3" /><!-- 체크상태일 경우 checked="false" --><!--웹접근성 수정 -->
+                                                    <div class="comp-list-layout" id="aria-comp-checkbox3">
+                                                        <p class="layout-text">
+                                                            <span class="mtext">광고성 정보 수신 동의 (선택)</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                                                    <input type="checkbox" name="checkbox" value="" title="T멤버십 이용/약관 동의" aria-labelledby="aria-comp-checkbox4" /><!-- 체크상태일 경우 checked="false" --><!--웹접근성 수정 -->
+                                                    <div class="comp-list-layout" id="aria-comp-checkbox4">
+                                                        <p class="layout-text">
+                                                            <span class="mtext">고객님께 혜택을 드리기 위한<br/>개인정보 수집/이용 동의(선택)</span>
+															<span class="stext-ellipsis"><strong>2018년 10월 4일</strong> T멤버십 광고 및 정보 알림에 대한 고객님의 수신 동의 정보가 갱신되었습니다.</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+					</div>
+					<!--// .cont-box -->
+
+					<hr class="cont-sp type1" aria-hidden="true" />
+
+					<!-- .cont-box -->
+					<div class="cont-box membership-info-modify01">
+						<div class="cont-box pb0">
+							<p class="con-txt1"><strong>T멤버십과 함께</strong> <br/>OK캐쉬백을 적립/사용해 보세요</p>
+							<p class="con-txt3 pt6">OK캐쉬백 기능을 추가하시면, OK캐쉬백을 적립/사용하실 수 있습니다. OK캐쉬백 기능을 추가하시겠습니까?</p>
+						</div>
+						<!-- .widget -->
+						<div class="widget">
+							<div class="widget-box accordion">
+								<div class="acco-cover"><!-- toggle : 한개만 열기 -->
+									<div class="acco-style btn-hold">
+										<ul class="acco-list">
+												<!-- .on: 열기 -->
+											<li class="acco-box">
+												<div class="acco-tit"><div class="checkbox type01" id="aria-comp-checkbox5"><input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox5" checked/>OK캐쉬백 기능 추가하기</div> <button role="button" aria-pressed="false" title="약관 동의 목록 더보기"></button></div><!-- 웹접근성 수정 -->
+												<div class="acco-cont type01">
+													<div class="agree-chk-wrap agree-chk-type">
+														<div class="list-comp-input-agree">
+															<div class="widget">
+																<div class="widget-box check">
+																	<ul class="select-list" role="group">
+																		<li>
+																			<div class="checkbox type01 all" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+																				<input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox6" /><!-- 체크상태일 경우 checked="checked" --><!--웹접근성 수정 -->
+																				<div class="comp-list-layout" id="aria-comp-checkbox6">
+																					<p class="layout-text all-chk">
+																						<span class="mtext">모두동의</span>
+																					</p>
+																				</div>
+																			</div>
+																		</li>
+																		<li>
+																			<div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+																				<input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox7" /><!-- 체크상태일 경우 checked="false" --><!--웹접근성 수정 -->
+																				<div class="comp-list-layout" id="aria-comp-checkbox7">
+																					<p class="layout-text">
+																						<span class="mtext">OK캐쉬백 카드 서비스 이용약관 확인 (필수)</span>
+																					</p>
+																				</div>
+																			</div>
+																		</li>
+																		<li>
+																			<div class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+																				<input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox8" /><!-- 체크상태일 경우 checked="false" --><!--웹접근성 수정 -->
+																				<div class="comp-list-layout" id="aria-comp-checkbox8">
+																					<p class="layout-text">
+																						<span class="mtext">OK캐쉬백 암호화된 동일인<br />식별정보 제공 동의 (필수)</span>
+																					</p>
+																				</div>
+																			</div>
+																		</li>
+																		<li>
+																			<div class="agreement-info-txt">
+																				필수 동의사항에 동의하셔야, OK캐쉬백 포인트가 적립됩니다.<br/>
+																				단, 포인트가 적립될  때에는 OK캐쉬백 수수료 정책에 따라 <strong>서비스 이용수수료로 차감</strong>된 후 최종 적립됩니다.
+																			</div>
+																		</li>
+																	</ul>
+																</div>
+															</div>
+														</div>
+													</div>
+
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--// .widget -->
+					</div>
+					<!--// .cont-box -->
+
+					<div class="bt-fixed-area">
+                        <ul class="bt-slice full">
+                            <li class="bt-red1">
+                                <button>수정하기</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- // .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="prev-step">취소</button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!-- // .popup hbs -->
+    </div>
+</body>
+
+</html>

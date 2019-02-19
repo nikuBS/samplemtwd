@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <!-- gap -->
+                    <div class="h-tit">T앱</div>
+                    <!-- // gap -->
+					<div class="h-serarch">
+						<button class="icon-gnb-search"><span class="blind">검색</span></button>
+					</div>
+				</div>
+			</div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- gap -->
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!-- // gap -->
+                <!-- 스와이프 -->
+                <div class="cont-box nogaps noborder">
+                    <div class="main-slide-banner dot-btm slide-pagingtype">
+                        <!-- .widget -->
+                        <div class="widget">
+                            <div class="widget-box slider1">
+                                <div class="slider-box">
+                                    <ul class="slider">
+                                        <li>
+                                            <button>
+                                                <img src="/img/dummy/img_MP.png" alt="">
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button>
+                                                <img src="/img/dummy/img_MP.png" alt="">
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button>
+                                                <img src="/img/dummy/img_MP.png" alt="">
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--// .widget -->
+                    </div>
+                </div>
+                <!-- //스와이프 -->
+                <div class="pl16"><button class="bt-dropdown text-type01" title="정렬조건" aria-haspopup="true">최신순</button></div>
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <!-- .app-list -->
+                    <div class="app-list">
+                        <div class="app-list-bottom">
+                            <ul>
+                                <li class="item">
+                                    <span class="app-ico">
+                                        <img src="/img/dummy/dmy-app01.png" alt="t전화" class="ico" />
+                                    </span>
+                                    <span class="app-name">T 전화</span>
+                                </li>
+                                <li class="item">
+                                    <span class="app-ico">
+                                        <img src="/img/dummy/dmy-app02.png" alt="T 통화 매니저" class="ico" />
+                                    </span>
+                                    <span class="app-name">T 통화 매니저</span>
+                                </li>
+                                <li class="item">
+                                    <span class="app-ico">
+                                        <img src="/img/dummy/dmy-app03.png" alt="T 연락처" class="ico" />
+                                    </span>
+                                    <span class="app-name">T 연락처</span>
+                                </li>
+                                <li class="item">
+                                    <span class="app-ico">
+                                        <img src="/img/dummy/dmy-app04.png" alt="T ARS" class="ico" />
+                                    </span>
+                                    <span class="app-name">T ARS</span>
+                                </li>
+                                <li class="item">
+                                    <span class="app-ico">
+                                        <img src="/img/dummy/dmy-app05.png" alt="T PAY" class="ico" />
+                                    </span>
+                                    <span class="app-name">T PAY</span>
+                                </li>
+                                <li class="item">
+                                    <span class="app-ico">
+                                        <img src="/img/dummy/dmy-app06.png" alt="T 멤버쉽" class="ico" />
+                                    </span>
+                                    <span class="app-name">T 멤버쉽</span>
+                                </li>
+                                <li class="item">
+                                    <span class="app-ico">
+                                        <img src="/img/dummy/dmy-app07.png" alt="T map" class="ico" />
+                                    </span>
+                                    <span class="app-name">T map</span>
+                                </li>
+                                <li class="item">
+                                    <span class="app-ico">
+                                        <img src="/img/dummy/dmy-app08.png" alt="클라우드 베리" class="ico" />
+                                    </span>
+                                    <span class="app-name">클라우드 베리</span>
+                                </li>
+                                <li class="item">
+                                    <span class="app-ico">
+                                        <img src="/img/dummy/dmy-app09.png" alt="행복을 들려 주는도서관" class="ico" />
+                                    </span>
+                                    <span class="app-name">행복을 들려 주는도서관</span>
+                                </li>
+                                <li class="item">
+                                    <span class="app-ico">
+                                        <img src="/img/dummy/dmy-app02.png" alt="T 통화 매니저" class="ico" />
+                                    </span>
+                                    <span class="app-name">T 통화 매니저</span>
+                                </li>
+                                <li class="item">
+                                    <span class="app-ico">
+                                        <img src="/img/dummy/dmy-app03.png" alt="T 연락처" class="ico" />
+                                    </span>
+                                    <span class="app-name">T 연락처</span>
+                                </li>
+                                <li class="item">
+                                    <span class="app-ico">
+                                        <img src="/img/dummy/dmy-app04.png" alt="T ARS" class="ico" />
+                                    </span>
+                                    <span class="app-name">T ARS</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- // .app-list -->
+                </div>
+                <!-- // .cont-box -->
+                <!-- gap -->
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
+                    <ul class="pg-link-list">
+                        <li>
+                            <button>
+                                <i class="icon-my-40"></i>나의 가입 정보 &gt; 나의 요금제<!-- 웹접근성 수정 -->
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-my-40"></i>나의 가입 정보 &gt; 나의 부가서비스 <!-- 웹접근성 수정 -->
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-charge-40"></i>나의  요금 &gt; 요금안내서<!-- 웹접근성 수정 -->
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-charge-40"></i>나의 요금 &gt; 실시간 이용요금<!-- 웹접근성 수정 -->
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-roaming-40"></i>T로밍 &gt; 나의 로밍<!-- 웹접근성 수정 -->
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <!-- // gap -->
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

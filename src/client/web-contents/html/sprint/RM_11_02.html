@@ -1,0 +1,454 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+<body class="bg-productdetail">
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+					</div>
+
+                    <div class="h-tit"></div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+				</div>
+			</div>
+		</div>
+        <!--// #header --> 
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+
+                <!-- 상품타이틀 -->
+                <div class="cont-box nogaps-hoz productdetails-bg" style="background:#cd684d;">
+
+                    <div class="productdetails-wrap">
+                        <h3 class="productdetails-title">
+                            <div class="title">T로밍 아시아패스</div>
+                        </h3>
+                        <p class="productdetails-text02">아시아 26개국에서 5일 동안 25,000원으로 <br>데이터(2GB)를 부담 없이 이용 가능한 요금제!</p>
+                        <p class="productdetails-text03">LTE/3G 데이터 2GB + 속도제어</p>
+                    </div>
+                    <div class="productdetails-ledgercase">
+                        <p class="price-text">
+                            이용요금 (부가세포함)<br>
+                            <strong class="price-type">5,000</strong>
+                            <span class="unit">원</span>
+                        </p>
+                        <div class="btn">
+                            <button type="button" class="bt-white1" style="color:#cd684d;">가입</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- //상품타이틀 -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- 내게 맞는 요금제 찾기 -->
+                <div class="submain-findyourplan-wrap type01">
+                    <!-- <a href="#" class="submain-findyourplan">
+                        <h3 class="title">KST만의 혜택</h3>
+                        <p class="text">어르신께는 안심옵션 할인 제공 SKT만의 혜택<br> SKT만의 혜택 SKT만의 혜택 SKT만의 혜택</p>
+                    </a> -->
+                    <button type="button" class="submain-findyourplan">
+                        <h3 class="title">SKT만의 혜택</h3>
+                        <p class="text">어르신께는 안심옵션 할인 제공 SKT만의 혜택<br> SKT만의 혜택 SKT만의 혜택 SKT만의 혜택</p>
+                    </button>
+                </div>
+                <!--//내게 맞는 요금제 찾기-->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- dummy -->
+                <div class="product-visualization"><img src="/img/dummy/dmy-mv-01-02.png" alt="" style="width:100%;" /></div>
+                <!-- // dummy -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- 팝업 띄우는 링크 -->
+                <div class="cont-box nogaps">
+                    <ul class="link-long-list">
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    이용요금 및 혜택사항
+                                    <span class="tx-sub">
+                                        <span class="ico"><span class="blind">보기</span></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    상품사용방법
+                                    <span class="tx-sub">
+                                        <span class="ico"><span class="blind">보기</span></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    가입/해지 방법 및 유의사항
+                                    <span class="tx-sub">
+                                        <span class="ico"><span class="blind">보기</span></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                        가입해지채널
+                                    <span class="tx-sub">
+                                        <span class="ico"><span class="blind">보기</span></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                        FAQ
+                                    <span class="tx-sub">
+                                        <span class="ico"><span class="blind">보기</span></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- //팝업 띄우는 링크 -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- 배너 -->
+                <div class="cont-box nogaps noborder">
+                    <div class="bannerbox-wrap">
+                        <img src="/img/dummy/dmy_product02.png" alt="">
+                    </div>
+                </div>
+                <!-- //배너 -->
+                <hr class="cont-sp type5" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <!-- .component -->
+                    <div class="component">
+                        <div class="component-box tabs">
+                            <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                                <div class="tab-linker">
+                                    <ul role="tablist" class="tab-style01">
+                                        <li role="tab" aria-selected="true" aria-controls="tab1-tab2" id="tab12"><button>T플랜 시리즈</button></li>
+                                        <li role="tab" aria-selected="false" aria-controls="tab2-tab2" id="tab22"><button>함께하면 유용한 상품</button></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-contents">
+                                    <ul>
+                                        <li role="tabpanel" id="tab1-tab2" aria-labelledby="tab12">
+                                            <div class="cont-box nogaps-hoz bgnone">
+                                                <div class="productinfoscroll-box block-type">
+                                                    <!-- .widget -->
+                                                    <div class="widget"> 
+                                                        <div class="widget-box horizontal">
+                                                            <div class="horizontal-slide">
+                                                                <ul class="horizontal-list">
+                                                                    <li>
+                                                                        <button type="button" class="product-info">
+                                                                            <h5 class="title">스몰</h5>
+                                                                            <div class="text-type02">
+                                                                                이동전화 (2회선~5회선) + 인터넷
+                                                                            </div>
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button type="button" class="product-info">
+                                                                            <h5 class="title">스몰</h5>
+                                                                            <p class="info">월<span class="money">33,000</span>원</p>
+                                                                            <div class="text-type">
+                                                                                <span class="str">1.2</span>GB
+                                                                            </div>
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button type="button" class="product-info">
+                                                                            <h5 class="title">스몰</h5>
+                                                                            <p class="info">월<span class="money">33,000</span>원</p>
+                                                                            <div class="money-type">
+                                                                                <span class="str">1.2</span>원/초
+                                                                            </div>
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button type="button" class="product-info">
+                                                                            <h5 class="title">미디엄</h5>
+                                                                            <p class="info">월<span class="money">50,000</span>원</p>
+                                                                            <div class="sms">
+                                                                                기본제공<span class="str">50</span>건
+                                                                            </div>
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button type="button" class="product-info">
+                                                                            <h5 class="title">미디엄</h5>
+                                                                            <p class="info">월<span class="money">50,000</span>원</p>
+                                                                            <div class="sms">
+                                                                                기본제공<span class="str">50</span>건
+                                                                            </div>
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button type="button" class="product-info">
+                                                                            <h5 class="title">미디엄</h5>
+                                                                            <p class="info">월<span class="money">50,000</span>원</p>
+                                                                            <div class="sms">
+                                                                                기본제공<span class="str">50</span>건
+                                                                            </div>
+                                                                        </button>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- .widget -->
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li role="tabpanel" id="tab2-tab2" aria-labelledby="tab22">
+                                            <div class="cont-box nogaps-hoz bgnone">
+                                                <div class="productinfoscroll-box block-type">
+                                                    <!-- .widget -->
+                                                    <div class="widget"> 
+                                                        <div class="widget-box horizontal">
+                                                            <div class="horizontal-slide">
+                                                                <ul class="horizontal-list">
+                                                                    <li>
+                                                                        <button type="button" class="product-info">
+                                                                            <h5 class="title">스몰</h5>
+                                                                            <p class="info">월<span class="money">33,000</span>원</p>
+                                                                            <div class="money-type">
+                                                                                <span class="str">1.2</span>원/초
+                                                                            </div>
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button type="button" class="product-info">
+                                                                            <h5 class="title">미디엄</h5>
+                                                                            <p class="info">월<span class="money">50,000</span>원</p>
+                                                                            <div class="sms">
+                                                                                기본제공<span class="str">50</span>건
+                                                                            </div>
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button type="button" class="product-info">
+                                                                            <h5 class="title">스몰</h5>
+                                                                            <p class="info">월<span class="money">33,000</span>원</p>
+                                                                            <div class="type">
+                                                                                <span class="str">1.2</span>GB
+                                                                            </div>
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <button type="button" class="product-info">
+                                                                            <h5 class="title">스몰</h5>
+                                                                            <p class="info">월<span class="money">33,000</span>원</p>
+                                                                            <div class="type">
+                                                                                <span class="str">1.2</span>GB
+                                                                            </div>
+                                                                        </button>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- .widget -->
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .component -->
+                </div>
+                <!--// .cont-box -->
+                <!-- 연관태그 -->
+                <div class="cont-box nogaps-btm widget">
+                    <h3 class="suggest-tag-title">연관 태그</h3>
+                    <div class="suggest-tag-titlebox">
+                        <button class="suggest-tag-link">
+                            <p class="text">
+                                유사한 요금제를 찾아보세요! 
+                                <span class="textnumber">(<span class="number">16</span>개) </span>
+                            </p>
+                            <div class="taglist-wrap">
+                                <span class="tag-text">#LTE폰</span>
+                                <span class="tag-text">#5~8GB</span>
+                                <span class="tag-text">#~3만원대</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="widget-box toggle02">
+                        <div class="suggest-tag-list openlist-wrap">
+                            <ul>
+                                <!--접근성 수정-->
+                                <li><a href="#" class="link" role="button">#여행 갈 때 좋은 부가서비스</a></li>
+                                <li><a href="#" class="link" role="button">#효도 부가서비스</a></li>
+                                <li><a href="#" class="link" role="button">#휴식</a></li>
+                                <li><a href="#" class="link" role="button">#자녀를 위한 부가서비스</a></li>
+                                <!-- //접근성 수정-->
+                                <li><button type="button" class="link">#여행 갈 때 좋은 요금제</button></li>
+                                <li><button type="button" class="link">#여행 갈 때 좋은 요금제</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--//연관태그 -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- 함께하면 더욱 스마트한 앱서비스 -->
+                <div class="cont-box">
+                    <h3>함께하면 더욱 스마트한 앱서비스</h3>
+                    <!-- .widget -->
+                    <div class="widget"> 
+                        <div class="widget-box horizontal">
+                            <div class="horizontal-slide">
+                                <ul class="horizontal-list smart-app">
+                                    <!-- img태그 & a링크 타입 // -->
+                                    <li>
+                                        <div>
+                                            <a href="#">
+                                                <img src="/img/common/ico-app-tworld.png" alt="" />
+                                                <span>T전화</span>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <!-- // img태그 & a링크 타입 // -->
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type2"></span>
+                                                <span>T map</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type3"></span>
+                                                <span>Oksusu</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type4"></span>
+                                                <span>Dummy</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type4"></span>
+                                                <span>Dummy</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type4"></span>
+                                                <span>Dummy</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type4"></span>
+                                                <span>Dummy</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <button>
+                                                <span class="ico type4"></span>
+                                                <span>Dummy</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- .widget -->
+                </div>
+                <!-- // 함께하면 더욱 스마트한 앱서비스 -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- 배너 -->
+                <div class="cont-box nogaps noborder">
+                    <div class="bannerbox-wrap">
+                        <img src="/img/dummy/dmy_product02.png" alt="">
+                    </div>
+                </div>
+                <!-- //배너 -->           
+
+
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+</html>

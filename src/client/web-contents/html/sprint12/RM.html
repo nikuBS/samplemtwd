@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+
+    
+    
+
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+					</div>
+
+                    <div class="h-tit">로밍</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+				</div>
+			</div>
+		</div>
+        <!--// #header --> 
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+				<hr class="cont-sp type1" aria-hidden="true" />
+				<!-- .cont-box -->
+				<div class="cont-box nogaps">
+					<div class="calling-plan">
+						<button class="wrap-link">
+							<!--접근성 수정-->
+							<i class="badge icon-badge-plan-my"><span class="blind">MY</span></i>
+							<!-- //접근성 수정-->
+							<span class="stit">T로밍 OnePass300</span>
+						</button>
+					</div>
+				</div>
+				<!--// .cont-box -->
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<!-- .cont-box -->
+				<div class="cont-box nogaps">
+					<div class="main-charge-box advice section-swiper-box main-banner-img">
+						<!-- .widget -->
+						<div class="widget">
+							<div class="widget-box slider1">
+								<div class="slider-box">
+									<ul class="slider">
+										<li>
+										   <button>
+											<img src="/img/dummy/img-pdt-banner01-2.png" alt="인터넷과 와이파이를 한번에 T_Giga프리미엄+WiFi Giga프리미엄 인터넷(1G)과 Giga WiFi를 한번에, 할인된 가격으로 제공하는 요금제 자세히 보기" />
+										   </button>
+										</li>
+										<li>
+										   <button>
+											<img src="/img/dummy/img-pdt-banner01-2.png" alt="인터넷과 와이파이를 한번에 T_Giga프리미엄+WiFi Giga프리미엄 인터넷(1G)과 Giga WiFi를 한번에, 할인된 가격으로 제공하는 요금제 자세히 보기" />
+										   </button>
+										</li>
+										<li>
+										   <button>
+											<img src="/img/dummy/img-pdt-banner01-2.png" alt="인터넷과 와이파이를 한번에 T_Giga프리미엄+WiFi Giga프리미엄 인터넷(1G)과 Giga WiFi를 한번에, 할인된 가격으로 제공하는 요금제 자세히 보기" />
+										   </button>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<!--// .widget -->
+					</div>
+				</div>
+				<!--// .cont-box -->
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<!-- .cont-box -->
+				<div class="cont-box nogaps bgnone noborder">
+					<div class="travel-info">
+						<div class="wrap-gaps-top">
+							<h2>고객님을 위한 '폼'나는 정보</h2>
+						</div>
+						<!-- .widget -->
+						<div class="widget">
+							<div class="widget-box horizontal">
+								<div class="horizontal-slide">
+									<ul class="horizontal-list info-link-box">
+										<li>
+											<button class="info-link-inner icon1">
+												<span class="tit">아시아 여행을<br/>계획하셨나요?</span>
+											</button>
+										</li>
+										<li>
+											<button class="info-link-inner icon2">
+												<span class="tit">중국/일본으로<br/>떠나시나요?</span>
+											</button>
+										</li>
+										<li>
+											<button class="info-link-inner icon3">
+												<span class="tit">미주 여행을<br/>계획하셨나요?</span>
+											</button>
+										</li>
+										<li>
+											<button class="info-link-inner icon4">
+												<span class="tit">유럽 여행을<br/>계획하셨나요?</span>
+											</button>
+										</li>
+										<li>
+											<button class="info-link-inner icon5">
+												<span class="tit">짧게<br/>여행 가시나요?</span>
+											</button>
+										</li>
+										<li>
+											<button class="info-link-inner icon6">
+												<span class="tit">길게<br/>여행 가시나요?</span>
+											</button>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<!-- .widget -->
+					</div>
+				</div>
+				<!--// .cont-box -->
+
+				<!-- .cont-box -->
+				<div class="cont-box nogaps">
+					<div class="category-info-guide">
+						<ul>
+							<li>
+								<button class="link icon4">
+									<span class="stit">로밍 카드 / 쿠폰</span>
+									<span class="text-type1">T로밍 요금제 이용</span>
+									<p class="text-type2">T로밍 OnePass 요금제(기간형 포함)<br/>1일 이용 가능</p>
+								</button>
+							</li>
+							<li>
+								<button class="link icon5">
+									<span class="stit">T파이 임대</span>
+									<span class="text-type1">70여 개국 무선인터넷 가능!</span>
+									<p class="text-type2">전세계 70여 개국에서 무선인터넷이<br/>가능한 T로밍 전용 와이파이 기기 임대</p>
+								</button>
+							</li>
+							<li>
+								<button class="link icon6">
+									<span class="stit">I인기 무료 로밍 부가서비스PTV</span>
+									<span class="text-type1">로밍 부가서비스를 무료로 이용</span>
+									<p class="text-type2">신청하면 좋은 로밍 부가서비스를<br/>무료로 이용</p>
+								</button>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!--// .cont-box -->
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<div class="cont-box nogaps-hoz">
+                    <div class="roaming-product type01">
+						<div class="ti-caption-type01 pb20">
+							<h2 class="tit">인기 로밍 요금제</h2>
+						</div>
+                        <ul class="recommendedrate-list">
+                            <li class="type01">
+                                <button type="button" class="product-infolink">
+                                    <div class="products-titleinfo">
+                                        <h3 class="title">T로밍 아시아패스</h3>
+                                        <p class="info"><span class="money">25,000</span>원</p>
+                                    </div>
+                                    <div class="taglist-wrap">
+                                        <span class="tag-text">#추천하는, 데이터</span>
+                                    </div>
+                                    <p class="products-detailinfo">아시아 26개국에서 5일 동안 25,000원으로 데이터(2GB)를 부담 없이 이용할 수 있는 요금제</p>
+                                </button>
+                            </li>
+                            <li class="type02"><!-- 190201 클래스명변경 type01->type02-->
+                                <button type="button" class="product-infolink">
+                                    <div class="products-titleinfo">
+                                        <h3 class="title">T로밍 한중일패스</h3>
+                                        <p class="info"><span class="money">25,000</span>원</p>
+                                    </div>
+                                    <div class="taglist-wrap">
+                                        <span class="tag-text">#추천하는, 데이터</span>
+                                    </div>
+                                    <p class="products-detailinfo">중국/일본에서 5일 간 데이터 2GB, 음성 3.6원/초, 문자 기본 제공</p>
+                                </button>
+                            </li>
+                            <li class="type03"><!-- 190201 클래스명변경 type01->type03-->
+                                <button type="button" class="product-infolink">
+                                    <div class="products-titleinfo">
+                                        <h3 class="title">T로밍 미주패스 3GB</h3>
+                                        <p class="info"><span class="money">33,000</span>원</p>
+                                    </div>
+                                    <div class="taglist-wrap">
+                                        <span class="tag-text">#추천하는, 데이터</span>
+                                    </div>
+                                    <p class="products-detailinfo">미주 15개국에서 30일 간 LTE/3G 데이터 3GB 제공</p>
+                                </button>
+                            </li>
+						</ul>
+						<!--접근성 수정-->
+                        <a href="#" class="bt-link-tx underline" role="button">전체 로밍 요금제</a>
+						<!-- //접근성 수정-->
+					</div>
+                </div>
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<div class="cont-box nogaps">
+					<ul class="link-long-list ntype01">
+						<li>
+							<div class="link-long">
+								<button>
+										로밍안내
+										<p>출국 전 알아두면 좋은 로밍 정보</p>
+									<span class="tx-sub">
+										<span class="ico"><span class="blind">보기</span></span>
+									</span>
+								</button>
+							</div>
+						</li>
+						<li>
+							<div class="link-long">
+								<button>
+										국가별 로밍요금 조회
+										<p>사용 중인 휴대폰 정보와 출국 국가명을 입력하시고,<br/>로밍 이용요금 관련 각종 정보를 한번에 확인하세요. </p>
+									<span class="tx-sub">
+										<span class="ico"><span class="blind">보기</span></span>
+									</span>
+								</button>
+							</div>
+						</li>
+						<li>
+							<div class="link-long">
+								<button>
+										분실 관련 안내 보러가기
+										<p>긴급상황! 로밍 중 휴대폰을 분실하셨나요?</p>
+									<span class="tx-sub">
+										<span class="ico"><span class="blind">보기</span></span>
+									</span>
+								</button>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<div class="cont-box nogaps">
+					<ul class="link-long-list ntype01">
+						<li>
+							<div class="link-long">
+								<button>
+										로밍센터 안내
+									<span class="tx-sub">
+										<span class="ico"><span class="blind">보기</span></span>
+									</span>
+								</button>
+							</div>
+						</li>
+						<li>
+							<div class="link-long">
+								<button>
+										자주하는 질문
+									<span class="tx-sub">
+										<span class="ico"><span class="blind">보기</span></span>
+									</span>
+								</button>
+							</div>
+						</li>
+					</ul>
+				</div>
+
+				<div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
+                    <ul class="pg-link-list">
+						<!--접근성 수정-->
+						<li>
+                            <button>
+                                <i class="icon-price-plan-40"><span class="blind"></span></i>요금제
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-vas-40"><span class="blind"></span></i>부가서비스
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-internet-40"><span class="blind"></span></i>인터넷 / 집전화 /  IPTV
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-discount-40"><span class="blind"></span></i>혜택 / 할인 &gt; 요금할인
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-discount-40"><span class="blind"></span></i>혜택 / 할인 &gt; 결합할인  
+                            </button>
+						</li>
+						<!-- //접근성 수정-->
+                    </ul>
+                </div>
+
+			</div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

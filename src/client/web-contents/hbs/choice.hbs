@@ -1,0 +1,37 @@
+<div class="popup tw-popup">
+    <div class="popup-info" role="dialog" {{#if title}}aria-labelledby="alertHeading"{{/if}}>
+        {{#if title}}
+        <div class="popup-header">
+            <h5 class="popup-title" id="alertHeading">{{title}}</h5>
+        </div>
+        {{/if}}
+        <div class="popup-contents">
+            <div class="popup-choice{{#if list_type}} {{list_type}}{{/if}}">
+                <ul>
+                    {{#each list}}
+                    {{#if ../list_tag}}
+                    <li class="popup-choice-list"><a {{{attr}}}>{{{text}}}</a></li>
+                    {{else}}
+                    <li class="popup-choice-list"><button {{{attr}}}>{{{text}}}</button></li>
+                    {{/if}}
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+		{{#if type}}
+		<div class="btn-box">
+            <ul class="bt-slice item-{{bt_num}}">
+            {{#type}}
+            <li class="{{style_class}}">
+              <button>{{txt}}</button>
+            </li>
+            {{/type}}
+            </ul>
+        </div>
+		{{/if}}
+        {{#if close_bt}}
+            <button class="popup-closeBtn">팝업닫기<span class="ico"></span></button>
+        {{/if}}
+    </div>
+    <div class="popup-blind"></div>
+</div>

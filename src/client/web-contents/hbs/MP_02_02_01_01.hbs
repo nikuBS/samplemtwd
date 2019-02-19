@@ -1,0 +1,58 @@
+<div class="popup tw-popup">
+    <div class="popup-info" role="alertdialog" {{#if title}}aria-labelledby="alertHeading"{{/if}} aria-describedby="alertText">
+        <div class="popup-header">
+            {{#if ico}}
+            <span class="ico {{ico}}"></span>
+            {{/if}}
+            {{#if title}}
+            <h5 class="popup-title {{title_type}}" id="alertHeading">{{{title}}}</h5>
+            {{/if}}
+        </div>
+        <div class="popup-contents {{notice_has}}" id="alertText">
+            <div class="inner-contents">
+                {{#if basic-list}}
+                <div class="basic-list in-popup">
+                    <ul>
+                        {{#basic-list}}
+                        <li>
+                            <span class="title">{{value}}</span>
+                            <span class="tx-cont">{{txt1}}</span>
+                        </li>
+                        {{/basic-list}}
+                    </ul>
+                </div>
+                {{/if}}
+                {{#if single-list}}
+                <div class="single-list in-popup">
+                    {{#single-list}}
+                    <span class="title">{{value1}}<span class="sub-tit">{{value2}}</span></span>
+                    <span class="tx-cont">
+                        <span class="price">{{num}}</span>
+                        <span class="unit">{{unit}}</span>
+                    </span>
+                    {{/single-list}}
+                </div>
+                {{/if}}
+                {{#if cont-noti}}
+                <div class="cont-noti pt30 pb20">
+                    {{#cont-noti}}
+                    <span class="{{style_class}}">{{txt}}</span>
+                    {{/cont-noti}}
+                </div>
+                {{/if}}
+            </div>
+        </div>
+        {{#if bt}}
+        <div class="btn-box2">
+            <ul class="bt-slice">
+            {{#bt}}
+            <li class="{{style_class}}">
+              <button>{{txt}}</button>
+            </li>
+            {{/bt}}
+            </ul>
+        </div>
+        {{/if}}
+    </div>
+    <div class="popup-blind"></div>
+</div>

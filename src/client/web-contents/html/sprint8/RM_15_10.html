@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- .popup hbs -->
+        <div class="popup-page nobg tw-popup">
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>국가별 수신자 부담 전화번호 안내</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+                    <div class="cont-box nogaps-hoz">
+                        <ul class="national-call-info">
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>괌(Guam)<br />/사이판(Saipan)</p>
+                                <p class="txt"><span class="blind">전화번호</span>1-800-789-1782</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>그리스(Greece)</p>
+                                <p class="txt"><span class="blind">전화번호</span>00800-12-5907</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>네덜란드(Netherlands)</p>
+                                <p class="txt"><span class="blind">전화번호</span>0800-022-7428</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>뉴질랜드(new zealand)</p>
+                                <p class="txt"><span class="blind">전화번호</span>0800-881-855</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>대만(Taiwan)</p>
+                                <p class="txt"><span class="blind">전화번호</span>0080-182-0075</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>독일(Germany)</p>
+                                <p class="txt"><span class="blind">전화번호</span>0800-187-3559</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>마카오(Macau)</p>
+                                <p class="txt"><span class="blind">전화번호</span>0800-870</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>말레이시아(Malaysia)</p>
+                                <p class="txt"><span class="blind">전화번호</span>1-800-80-4527</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>미국(United States)<br />/하와이(Hawaii)</p>
+                                <p class="txt"><span class="blind">전화번호</span>1800-435-6575</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>멕시코(Mexico)</p>
+                                <p class="txt"><span class="blind">전화번호</span>001-866-869-8441</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>베트남(Vietnam)</p>
+                                <p class="txt"><span class="blind">전화번호</span>120-82-007</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>벨기에(Belgium)</p>
+                                <p class="txt"><span class="blind">전화번호</span>0800-11261</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>브라질(Brazil)</p>
+                                <p class="txt"><span class="blind">전화번호</span>0800-891-9483</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>스웨덴(Sweden)</p>
+                                <p class="txt"><span class="blind">전화번호</span>020-79-0067</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>스위스(Switzerland)</p>
+                                <p class="txt"><span class="blind">전화번호</span>0800-563-798</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>스페인(Spain)</p>
+                                <p class="txt"><span class="blind">전화번호</span>900-98-8318</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>싱가포르(Singapore)</p>
+                                <p class="txt"><span class="blind">전화번호</span>800-008-2021<br />800-852-3574</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>영국(United Kingdom)</p>
+                                <p class="txt"><span class="blind">전화번호</span>0800-404-8980</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>오스트리아(Austria)</p>
+                                <p class="txt"><span class="blind">전화번호</span>0800-293-528</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>이스라엘(Israel)</p>
+                                <p class="txt"><span class="blind">전화번호</span>1-80-921-3878</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>이집트(Egypt)</p>
+                                <p class="txt"><span class="blind">전화번호</span>1-80-921-3878</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>이탈리아(Italy)</p>
+                                <p class="txt"><span class="blind">전화번호</span>1-800-789-1782</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>인도(India)</p>
+                                <p class="txt"><span class="blind">전화번호</span>000-800-100-6239</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>인도네시아(Indonesia)</p>
+                                <p class="txt"><span class="blind">전화번호</span>007-801-8213</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>일본(Japan)</p>
+                                <p class="txt"><span class="blind">전화번호</span>00531-008-266</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>중국(China) 북부</p>
+                                <p class="txt"><span class="blind">전화번호</span>108-824</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>중국(China) 남부</p>
+                                <p class="txt"><span class="blind">전화번호</span>10800-152-1096</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>캐나다(Canada)</p>
+                                <p class="txt"><span class="blind">전화번호</span>1-888-431-5699</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>태국(Thailand)</p>
+                                <p class="txt"><span class="blind">전화번호</span>001-999-82-4000(일반전화)<br />1800-0082-40(공중전화)</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>페루(Peru)</p>
+                                <p class="txt"><span class="blind">전화번호</span>0-800-50010 + 영어 멘트 중 3838</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>폴란드(Poland)</p>
+                                <p class="txt"><span class="blind">전화번호</span>00800-111-2096</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>프랑스(France)</p>
+                                <p class="txt"> <span class="blind">전화번호</span>0800-91-7351</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>필리핀(Philippines)</p>
+                                <p class="txt"><span class="blind">전화번호</span>105-826</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>헝가리(Hungary)</p>
+                                <p class="txt"><span class="blind">전화번호</span>06-8001-8238</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>호주(Australia)</p>
+                                <p class="txt"><span class="blind">전화번호</span>1800-106-846</p>
+                            </li>
+                            <li>
+                                <p class="tit"><span class="blind">국가명</span>홍콩(Hongkong)</p>
+                                <p class="txt"><span class="blind">전화번호</span>800-93-2701</p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="cont-box noborder bgnone">
+                        <ul class="announcement-box">
+                            <li class="announcement-bullet type01">수신자부담 전화 이용 시 <span class="tx-bold">해외현지 국내 발신요금은</span> 부과됩니다. 호텔 전화 이용 시 호텔에 따라 <span class="tx-bold">추가 요금</span>이 부과 될 수 있습니다.</li>
+                            <li class="announcement-bullet type01">중국북부:북경, 천진, 호남성, 산동성, 산서성, 하북성, 요녕성, 길림성, 흑룡강성, 내몽고자치구</li>
+                            <li class="announcement-bullet type01">중국남부:북부에 속해 있는 성, 시 이외의 지역</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!--// .popup hbs -->
+    </div>
+</body>
+</html>

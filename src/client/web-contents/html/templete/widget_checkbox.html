@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+<style>
+body{background:#fff;padding:10px;box-sizing:border-box;}
+xmp{box-sizing:border-box;max-width:100%;padding:10px;border-radius:5px;background:#000;color:#fff;}
+.guide-sample{box-sizing:border-box;padding:10px;}
+.guide-desc{padding:10px;}
+</style>
+<h1>check</h1>
+<pre class="guide-desc">
+- .widget 다음에는 .widget-box 만 올수있음
+- .widget-box 에는 정해진 class명 외에 사용금지 widgets.js 참조
+- 특정 style이 필요할시 .widget .widget-box 두 태그의 구조만 바꾸지 않고 자유롭게 수정가능
+ex) .widget 상위에 class지정
+ex) .widget-box 내부에 태그추가 & class 추가
+</pre>
+<div class="guide-sample">
+<!-- .widget -->
+<div class="widget">
+    <div class="widget-box check">
+        <ul class="select-list" role="group">
+            <li class="checkbox type01 checked" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                <input type="checkbox" name="checkbox" value="" title="값1" checked/><!-- 체크상태일 경우 checked="checked" -->
+                값1
+            </li>
+            <li class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                <input type="checkbox" name="checkbox" value="" title="값2" /><!-- 체크상태일 경우 checked="false" -->
+                값2
+            </li>
+            <li class="checkbox type01 disabled" role="checkbox" aria-checked="false" aria-disabled="true"><!-- 비활성화일경우 .disabled 클래스 추가 , aria-disabled="true" -->
+                <input type="checkbox" name="checkbox" value="" title="값3" disabled /><!-- 비활성화상태일 경우 disabled="disabled" -->
+                값3
+            </li>
+            <li class="checkbox type01 disabled checked" role="checkbox" aria-checked="true" aria-disabled="true"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                <input type="checkbox" name="checkbox" value="" title="값4" disabled checked /><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                값4
+            </li>
+        </ul>
+    </div>
+</div>
+<!--// .widget -->
+</div>
+
+
+<xmp class="guide-desc">
+<!-- .widget -->
+<div class="widget">
+    <div class="widget-box check">
+        <ul class="select-list" role="group">
+            <li class="checkbox type01 checked" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                <input type="checkbox" name="checkbox" value="" title="값1" checked/><!-- 체크상태일 경우 checked="checked" -->
+                값1
+            </li>
+            <li class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                <input type="checkbox" name="checkbox" value="" title="값2" /><!-- 체크상태일 경우 checked="false" -->
+                값2
+            </li>
+            <li class="checkbox type01 disabled" role="checkbox" aria-checked="false" aria-disabled="true"><!-- 비활성화일경우 .disabled 클래스 추가 , aria-disabled="true" -->
+                <input type="checkbox" name="checkbox" value="" title="값3" disabled /><!-- 비활성화상태일 경우 disabled="disabled" -->
+                값3
+            </li>
+            <li class="checkbox type01 disabled checked" role="checkbox" aria-checked="true" aria-disabled="true"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                <input type="checkbox" name="checkbox" value="" title="값4" disabled checked /><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                값4
+            </li>
+        </ul>
+    </div>
+</div>
+<!--// .widget -->
+</xmp>
+
+
+
+
+
+
+<div class="guide-sample">
+<!-- .widget -->
+<div class="widget">
+    <div class="widget-box check">
+        <ul class="select-list" role="group">
+            <li class="checkbox type01-big checked" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                <input type="checkbox" name="checkbox" value="" title="값1" checked/><!-- 체크상태일 경우 checked="checked" -->
+                값1
+            </li>
+            <li class="checkbox type01-big" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                <input type="checkbox" name="checkbox" value="" title="값2" /><!-- 체크상태일 경우 checked="false" -->
+                값2
+            </li>
+            <li class="checkbox type01-big disabled" role="checkbox" aria-checked="false" aria-disabled="true"><!-- 비활성화일경우 .disabled 클래스 추가 , aria-disabled="true" -->
+                <input type="checkbox" name="checkbox" value="" title="값3" disabled /><!-- 비활성화상태일 경우 disabled="disabled" -->
+                값3
+            </li>
+            <li class="checkbox type01-big disabled checked" role="checkbox" aria-checked="true" aria-disabled="true"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                <input type="checkbox" name="checkbox" value="" title="값4" disabled checked /><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                값4
+            </li>
+        </ul>
+    </div>
+</div>
+<!--// .widget -->
+</div>
+
+<!-- code -->
+<xmp class="guide-desc">
+<!-- .widget -->
+<div class="widget">
+    <div class="widget-box check">
+        <ul class="select-list" role="group">
+            <li class="checkbox type01-big checked" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                <input type="checkbox" name="checkbox" value="" title="값1" checked/><!-- 체크상태일 경우 checked="checked" -->
+                값1
+            </li>
+            <li class="checkbox type01-big" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                <input type="checkbox" name="checkbox" value="" title="값2" /><!-- 체크상태일 경우 checked="false" -->
+                값2
+            </li>
+            <li class="checkbox type01-big disabled" role="checkbox" aria-checked="false" aria-disabled="true"><!-- 비활성화일경우 .disabled 클래스 추가 , aria-disabled="true" -->
+                <input type="checkbox" name="checkbox" value="" title="값3" disabled /><!-- 비활성화상태일 경우 disabled="disabled" -->
+                값3
+            </li>
+            <li class="checkbox type01-big disabled checked" role="checkbox" aria-checked="true" aria-disabled="true"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                <input type="checkbox" name="checkbox" value="" title="값4" disabled checked /><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                값4
+            </li>
+        </ul>
+    </div>
+</div>
+<!--// .widget -->
+</xmp>
+<!-- // code -->
+
+
+
+
+<div class="guide-sample">
+<!-- .widget -->
+<div class="widget">
+    <div class="widget-box check">
+        <ul class="select-list" role="group">
+            <li class="checkbox type01 checked" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                <input type="checkbox" name="checkbox" value="" title="값1" aria-describedby="aria-survey-tx" checked/><!-- 체크상태일 경우 checked="checked", 오류 문구 있을시는 aria-describedby 추가 -->
+                값1
+            </li>
+            <li class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                <input type="checkbox" name="checkbox" value="" title="값2" aria-describedby="aria-survey-tx" /><!-- 체크상태일 경우 checked="false", 오류 문구 있을시는 aria-describedby 추가 -->
+                값2
+            </li>
+            <li class="checkbox type01 disabled" role="checkbox" aria-checked="false" aria-disabled="true"><!-- 비활성화일경우 .disabled 클래스 추가 , aria-disabled="true" -->
+                <input type="checkbox" name="checkbox" value="" title="값3" aria-describedby="aria-survey-tx" disabled /><!-- 비활성화상태일 경우 disabled="disabled", 오류 문구 있을시는 aria-describedby 추가 -->
+                값3
+            </li>
+            <li class="checkbox type01 disabled checked" role="checkbox" aria-checked="true" aria-disabled="true"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                <input type="checkbox" name="checkbox" value="" title="값4" aria-describedby="aria-survey-tx" disabled checked /><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용, 오류 문구 있을시는 aria-describedby 추가 -->
+                값4
+            </li>
+        </ul>
+        <!-- error -->
+        <span id="aria-survey-tx" class="error-msg">설문조사를 체크해주세요.</span>
+        <!-- // error -->
+    </div>
+</div>
+<!--// .widget -->
+</div>
+    
+    
+<xmp class="guide-desc">
+<!-- .widget -->
+<div class="widget">
+    <div class="widget-box check">
+        <ul class="select-list" role="group">
+            <li class="checkbox type01 checked" role="checkbox" aria-checked="true"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                <input type="checkbox" name="checkbox" value="" title="값1" aria-describedby="aria-survey-tx" checked/><!-- 체크상태일 경우 checked="checked", 오류 문구 있을시는 aria-describedby 추가 -->
+                값1
+            </li>
+            <li class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" -->
+                <input type="checkbox" name="checkbox" value="" title="값2" aria-describedby="aria-survey-tx" /><!-- 체크상태일 경우 checked="false", 오류 문구 있을시는 aria-describedby 추가 -->
+                값2
+            </li>
+            <li class="checkbox type01 disabled" role="checkbox" aria-checked="false" aria-disabled="true"><!-- 비활성화일경우 .disabled 클래스 추가 , aria-disabled="true" -->
+                <input type="checkbox" name="checkbox" value="" title="값3" aria-describedby="aria-survey-tx" disabled /><!-- 비활성화상태일 경우 disabled="disabled", 오류 문구 있을시는 aria-describedby 추가 -->
+                값3
+            </li>
+            <li class="checkbox type01 disabled checked" role="checkbox" aria-checked="true" aria-disabled="true"><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용 -->
+                <input type="checkbox" name="checkbox" value="" title="값4" aria-describedby="aria-survey-tx" disabled checked /><!-- 체크된 비활성화 상태일 경우 체크상태와 비활성화 상태를 전부 적용, 오류 문구 있을시는 aria-describedby 추가 -->
+                값4
+            </li>
+        </ul>
+        <!-- error -->
+        <span id="aria-survey-tx" class="error-msg">설문조사를 체크해주세요.</span>
+        <!-- // error -->
+    </div>
+</div>
+<!--// .widget -->
+</xmp>
+
+
+
+
+
+
+
+</body>
+</html>

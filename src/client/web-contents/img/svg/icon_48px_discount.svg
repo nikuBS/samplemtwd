@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>mdpi/##Icon/48/Discount</title>
+    <desc>Created with Sketch.</desc>
+    <g id="##Icon/48/Discount" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Icon_Area" fill-opacity="0" fill="#FFFFFF" x="0" y="0" width="48" height="48"></rect>
+        <g id="Group-19" transform="translate(3.000000, 3.000000)" stroke="#333333">
+            <path d="M3,17.0303 L3,39.6183 C3,40.3983 3.62,41.0303 4.385,41.0303 L37.615,41.0303 C38.38,41.0303 39,40.3983 39,39.6183 L39,17.0303" id="Stroke-3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M40,16.0698 L2,16.0698 C0.896,16.0698 0,15.1738 0,14.0698 L0,7.0698 C0,5.9648 0.896,5.0698 2,5.0698 L40,5.0698 C41.104,5.0698 42,5.9648 42,7.0698 L42,14.0698 C42,15.1738 41.104,16.0698 40,16.0698 Z" id="Stroke-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <polyline id="Stroke-7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="25 0.9697 21 4.5007 17 0.9697"></polyline>
+            <path d="M14,5.5698 L14,15.5698" id="Stroke-9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M28,5.5698 L28,15.5698" id="Stroke-11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M15.4346,28.5234 C16.7796,28.5234 17.8696,27.4334 17.8696,26.0884 C17.8696,24.7444 16.7796,23.6534 15.4346,23.6534 C14.0896,23.6534 12.9996,24.7444 12.9996,26.0884 C12.9996,27.4334 14.0896,28.5234 15.4346,28.5234 Z" id="Stroke-13" stroke-width="2"></path>
+            <path d="M26.5654,34.0889 C27.9104,34.0889 29.0004,32.9989 29.0004,31.6539 C29.0004,30.3089 27.9104,29.2189 26.5654,29.2189 C25.2204,29.2189 24.1304,30.3089 24.1304,31.6539 C24.1304,32.9989 25.2204,34.0889 26.5654,34.0889 Z" id="Stroke-15" stroke-width="2"></path>
+            <path d="M15.6973,33.7407 L27.0633,23.0697" id="Stroke-17" stroke-width="2"></path>
+        </g>
+    </g>
+</svg>

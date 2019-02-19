@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+					<div class="h-tit">국가별 로밍 이용요금 조회</div>
+					<div class="h-serarch">
+						<button class="icon-gnb-search"><span class="blind">검색</span></button>
+					</div>
+				</div>
+			</div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+				<div class="cont-box pt0 bb0">
+					<div class="list-comp-thumnail refill-coupon-top">
+						<div class="comp-box country-roaming">
+							<div class="list-box cont-noti">
+								<h3 class="tit">출국 국가 검색<button class="tip-view" title="출국 국가 검색 TIP보기" aria-haspopup="true">TIP</button></h3>
+								<span class="type1">아래에서 국가명을 입력하신 후 검색 버튼을 클릭해주세요.</span>
+							</div>
+							<!-- 2019-01-17 inp-btn 추가 -->
+							<div class="inputbox bt-add inp-btn">
+								<span class="input">
+									<input type="text" placeholder="국가명을 입력하세요." title="출국 국가명 입력" />
+								</span>
+								<span class="bt-box bt80">
+									<button type="button">검색</button>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--// .cont-box -->
+
+				<!-- .cont-box -->
+				<div class="cont-box pt0">
+					<div class="list-comp-thumnail refill-coupon-top">
+						<div class="comp-box country-roaming">
+							<div class="list-box cont-noti pt0">
+								<h3 class="tit">휴대폰 선택<button class="tip-view" title="휴대폰 선택 TIP보기" aria-haspopup="true">TIP</button></h3>
+								<span class="type1">출국 국가 검색 후 휴대폰 모델을 선택하시면 해당 국가에서 이용 가능한 로밍 서비스 방식과 요금을 확인하실 수 있습니다.</span>
+							</div>
+							<div class="phone-name">
+								<strong>갤럭시 그랜드(그랜드2)</strong>
+							</div>
+							<ul class="bt-slice pt20">
+								<li class="bt-white2">
+									<button>변경</button>
+								</li>
+							</ul>
+							<!-- <p class="comm-indent-txt pt20">* 로그인을 하시면 가입된 휴대폰 정보로 확인하실 수 있습니다.</p> -->
+						</div>
+					</div>
+				</div>
+				<!--// .cont-box -->
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<!-- .cont-box -->
+				<div class="cont-box">
+					<div class="roaming-info-wrap">
+						<p class="info-txt"><strong>보스니아 헤르체고비나</strong>의<br/>로딩 맞춤 정보를 안내해 드립니다.</p>
+						<h4 class="txt">이용 가능 로밍 서비스</h4>
+						<ul class="link-long-list">
+							<li>
+								<div class="link-long">
+									<button><span class="icon type1"></span>데이터로밍<span class="ico"></span></button>
+								</div>
+							</li>
+							<li>
+								<div class="link-long">
+									<button><span class="icon type2"></span>음성로밍<span class="ico"></span></button>
+								</div>
+							</li>
+						</ul>
+
+						<h4 class="txt pt40">로밍 서비스 방식별 종량요금 안내</h4>
+						<div class="cont-noti">
+							<span class="type3">이용할 수 있는 로밍 서비스 방식은 <br/><strong class="">LTE 자동로밍, 3G 자동로밍, 2G 자동로밍, GSM 자동로밍, 임대로밍</strong>입니다.</span>
+						</div>
+						<p class="mt20"><button class="bt-dropdown big" title="사용 가능 서비스" aria-haspopup="true">LTE 자동로밍<span class="ico"></span></button></p>
+						<p class="comm-indent-txt pt20">* 안내 요금은 부가세가 포함된 금액입니다.</p>
+					</div>
+				</div>
+				<!--// .cont-box -->
+				<!-- .cont-box -->
+				<div class="cont-box">
+					<div class="roaming-info-wrap">
+						<h4 class="txt">데이터(정보이용료 별도)<button class="tip-view">TIP</button></h4>
+						<div class="unpaid-charges mt12">
+							<ul class="point-box mb0">
+                                <li>
+                                    <dl>
+                                        <dt>데이터</dt>
+                                        <dd>0.275원/패킷</dd>
+                                    </dl>
+                                </li>
+                            </ul>
+						</div>
+						<ul class="round-dot-list mt20 pb20">
+							<li>임대로밍의 경우 일임대료는 2,200원(부가세 포함)입니다. 상기 요금은 3G∙GSM 기준이며, 대여 받으시는 임대폰의 기종에 따라 요금은 상이할 수 있습니다.</li>
+							<li><strong>LTE 자동로밍</strong>을 이용하셔도 <strong>음성 로밍은 3G/GSM망으로 연결되어 3G 자동로밍 요금</strong>이 적용됩니다.<br/>자세한 사항은 3G 자동로밍을 선택해서 확인하세요.</li>
+							<li>선택하신 국가는 통화버튼을 누른 시점부터 로밍 요금이 발생되오니 유의하시기 바랍니다.</li>
+							<li><strong>T로밍 데이터 안심서비스!</strong><br />데이터 사용요금이 5,000원 일 상한 도달하면 원패스 제휴 사업자 접속의 경우 200kbps 속도제어, 비 제휴사업자 접속의 경우 데이터가 차단됩니다.</li>
+							<li><strong>3/23부터는 음성 통화 요금이 분당 과금에서 초당 과금으로 변경됩니다.</strong></li>
+						</ul>
+
+						<h4 class="txt tline">음성</h4>
+						<div class="unpaid-charges mt12 pb20">
+							<ul class="point-box mb0">
+                                <li>
+                                    <dl>
+                                        <dt>방문국에서 방문국으로</dt>
+                                        <dd>20.1원/초</dd>
+                                    </dl>
+                                </li>
+								<li>
+                                    <dl>
+                                        <dt>방문국에서 한국/해외로</dt>
+                                        <dd>40.3원/초</dd>
+                                    </dl>
+                                </li>
+								<li>
+                                    <dl>
+                                        <dt>수신</dt>
+                                        <dd>21.8원/초</dd>
+                                    </dl>
+                                </li>
+                            </ul>
+						</div>
+
+						<h3 class="txt tline">문자</h3>
+						<div class="unpaid-charges mt12">
+							<ul class="point-box mb0">
+                                <li>
+                                    <dl>
+                                        <dt>SMS 발신</dt>
+                                        <dd>165원/건</dd>
+                                    </dl>
+                                </li>
+								<li>
+                                    <dl>
+                                        <dt>SMS 수신</dt>
+                                        <dd>무료</dd>
+                                    </dl>
+                                </li>
+								<li>
+                                    <dl>
+                                        <dt>MMS 텍스트 발신</dt>
+                                        <dd>330원/건</dd>
+                                    </dl>
+                                </li>
+								<li>
+                                    <dl>
+                                        <dt>MMS 멀티미디어 발신</dt>
+                                        <dd>440원/건</dd>
+                                    </dl>
+                                </li>
+								<li>
+                                    <dl>
+                                        <dt>MMS 수신</dt>
+                                        <dd>무료</dd>
+                                    </dl>
+                                </li>
+                            </ul>
+						</div>
+					</div>
+				</div>
+				<!--// .cont-box -->
+
+				<!-- .cont-box -->
+				<div class="cont-box nogaps-hoz">
+					<div class="confirm-noti charge-info">
+						<!-- .widget -->
+						<div class="widget">
+							<div class="widget-box accordion">
+								<div class="acco-cover"><!-- toggle : 한개만 열기 -->
+									<div class="acco-style btn-hold">
+										<ul class="acco-list pt0">
+											<li class="acco-box">
+												<div class="acco-tit"><span class="icon type1"></span>음성통화 수신요금 안내<button role="button" aria-pressed="false" title="음성통화 수신요금 안내 자세히 보기"></button></div>
+												<div class="acco-cont">
+													<ul class="round-dot-list">
+														<li>
+															음성통화 수신요금: SK텔링크 기준이며, SK브로드밴드 257.4원(부가세 포함), LG U+ 277.2원(부가세 포함), KT 277.2원(부가세 포함), 온세통신 261.36원(부가세 포함)입니다.
+														</li>
+														<li>
+															음성통화 수신을 위한 국제전화사업자를 선택하실 수 있으며, 미선택 시 SK텔링크로 자동 설정됩니다. 
+															<p><button class="bt-link-tx underline">국제전화 사업자 선택 자세히 보기</button></p>
+														</li>
+														<li>부가서비스: 발신자표시서비스(무료), 로밍 안내 방송서비스(무료)</li>
+													</ul>
+												</div>
+											</li>
+											<li class="acco-box">
+												<div class="acco-tit"><span class="icon type2"></span>문자 이용요금 안내<button role="button" aria-pressed="false" title="문자 이용요금 안내 자세히 보기"></button></div>
+												<div class="acco-cont">
+													<ul class="round-dot-list">
+														<li>
+															현지 발신 또는 제 3국 발신 SMS의 경우 국제전화사업자가 부과하는 국제 SMS 비용(건당 최대 165원, 부가세 포함)이 추가로 발생합니다.
+														</li>
+													</ul>
+												</div>
+											</li>
+											<!-- 주석처리 요청 #12 gui/pub 수정 -->
+											<!--
+											<li class="acco-box">
+												<div class="acco-tit"><span class="icon"><img src="/img/product/ico-info03.png" alt="이것만은 꼭 확인하세요" /></span>이것만은 꼭 확인하세요<button role="button" aria-pressed="false"></button></div>
+												<div class="acco-cont">
+													<ul class="round-dot-list">
+														<li>
+															해당 국가의 경우 2G 자동 로밍 서비스 방식이 지원되지만, 
+															지역에 따라 로밍 가능 여부가 달라질 수 있습니다. 
+															<p><button class="bt-link-tx underline">서비스 이용가능 지역 자세히 보기</button></p>
+														</li>
+													</ul>
+												</div>
+											</li>
+											-->
+											<li class="acco-box">
+												<div class="acco-tit"><span class="icon type3"></span>로밍 시 국가별 주의사항<button role="button" aria-pressed="false" title="로밍 시 국가별 주의사항 자세히 보기"></button></div>
+												<div class="acco-cont">
+													<ul class="round-dot-list">
+														<li>
+															수신요금은 현지사업자의 요금과 국제전화사업자의 요금이 
+															합산된 금액이며, 현지사업자의 수신요금은 분당 과금, 
+															국제전화사업자의 수신요금은 초당 과금됩니다.
+														</li>
+														<li>
+															현지사업자의 수신요금은 음성통화 과금을 1분단위로 이루어집니다.(예) 45초 통화시 1분 과금, 5분 10초 통화시 6분 과금 수신을 위한 국제전화사업자(SK텔링크, SK브로드밴드, 데이콤, KT, 온세텔레콤)는 로밍센터 방문 또는 T로밍 고객센터 1599-2011(유료), T월드에서 선택하실 수 있으며, 선택하지 않을 경우 SK텔링크로 자동 설정됩니다.  
+															<p><button class="bt-link-tx underline">국제전화 사업자 선택 자세히 보기 </button></p>
+														</li>
+														<li>수신요금은 국제전화사업자의 요금정책에 따라 차이가 
+														있을 수 있으며, 초당 과금됩니다.</li>
+														<li>로밍요금 전체금액에 대한 10%가 부가세로 적용됩니다.</li>
+													</ul>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--// .widget -->
+					</div>
+				</div>
+				<!--// .cont-box -->
+
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<!-- .cont-box -->
+				<div class="cont-box">
+					<h3 class="tit">추천 요금제</h3>
+					<div class="recommend-charge">
+						<!-- .widget -->
+						<div class="widget"> 
+							<div class="widget-box horizontal">
+								<div class="horizontal-slide">
+									<ul class="horizontal-list useful-goods">
+										<li>
+											<div class="box-wrap">
+												<div class="bg1"> <!-- 보라색 -->
+													<button class="txt-tit">T로밍 아시아패스</button>
+													<span class="ico type1"></span>
+													<span class="txt-type1">아시아 주요 27개국에서 5일간<br />LTE/3G 데이터 안심하고 사용!</span>
+													<span class="txt-type2">YT 요금제 1GB 추가 제공<br/>(만 18세~29세 이하 고객 대상)</span>
+													<strong class="sum">25,000원/5일</strong>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="box-wrap">
+												<div class="bg2"> <!-- 녹색 -->
+													<button class="txt-tit">T로밍 유럽패스 3GB</button>
+													<span class="ico type2"></span>
+													<span class="txt-type1">유럽 51개국에서 LTE/3G 데이터를 저렴하게 사용!</span>
+													<span class="txt-type2">YT 요금제 1GB 추가 제공<br/>(만 18세~29세 이하 고객 대상)</span>
+													<strong class="sum">39,000원/30일</strong>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<!-- .widget -->
+					</div>
+				</div>
+				<!--// .cont-box -->
+
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<!-- .cont-box -->
+				<div class="cont-box">
+					<h3 class="tit">현명하게 즐기는 로밍 서비스</h3>
+					<div class="roaming-service-wrap">
+						<!-- .widget -->
+						<div class="widget"> 
+							<div class="widget-box horizontal">
+								<div class="horizontal-slide">
+									<ul class="horizontal-list useful-goods">
+										<li>
+											<div>
+												<button class="bg3"> <!-- 보라색 -->
+													<span class="located top">
+														<span class="txt-tit">로밍 요금제</span>
+													</span>
+													<span class="located bottom">
+														<span class="txt-detail">사용 패턴별/국가별로<br/>설계된 다양한 로밍 요금제</span>
+													</span>
+												</button>
+											</div>
+										</li>
+										<li>
+											<div>
+												<button class="bg3"> <!-- 보라색 -->
+													<span class="located top">
+														<span class="txt-tit">로밍 부가서비스</span>
+													</span>
+													<span class="located bottom">
+														<span class="txt-detail">로밍 이용 시 함께하면 좋은 <br/>무료 부가 서비스를 추천해 드립니다.</span>
+													</span>
+												</button>
+											</div>
+										</li>
+										<li>
+											<div>
+												<button class="bg3"> <!-- 보라색 -->
+													<span class="located top">
+														<span class="txt-tit">로밍 카드/쿠폰</span>
+													</span>
+													<span class="located bottom">
+														<span class="txt-detail">T 로밍 데이터 무제한 OnePass 요금제를 <br/>보다 편리하게 이용해 보세요.</span>
+													</span>
+												</button>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<!-- .widget -->
+					</div>
+				</div>
+				<!--// .cont-box -->
+
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<!-- .cont-box -->
+				<div class="cont-box noborder bgnone">
+					<h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+					<ul class="pg-chk-list02">
+						<li><button class="btn-tip">데이터 충전 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+						<li><button class="btn-tip">요금제 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+					</ul>
+				</div>
+				<!--// .cont-box -->
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+</html>

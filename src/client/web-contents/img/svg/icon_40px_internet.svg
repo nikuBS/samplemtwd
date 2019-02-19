@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="41px" height="41px" viewBox="0 0 41 41" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>icon_40px_internet</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Icon_Badge_Graphic" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="##Icon/40/Internet">
+            <rect id="Icon_Area" fill-opacity="0" fill="#FFFFFF" x="0" y="0" width="40.32" height="40.32"></rect>
+            <circle id="Oval" stroke="#666666" stroke-width="2" cx="20.16" cy="20.16" r="17.64"></circle>
+            <path d="M6.3586087,10.08 L34.6300352,10.08" id="Line-3" stroke="#666666" stroke-width="2" stroke-linecap="round"></path>
+            <path d="M2.64710174,20.16 L37.604213,20.16" id="Line-3-Copy" stroke="#666666" stroke-width="2" stroke-linecap="round"></path>
+            <path d="M6.0700352,29.4 L35.09108,29.4" id="Line-3-Copy-2" stroke="#666666" stroke-width="2" stroke-linecap="round"></path>
+            <ellipse id="Oval-Copy-2" stroke="#666666" stroke-width="2" cx="20.16" cy="20.16" rx="7.56" ry="17.64"></ellipse>
+        </g>
+    </g>
+</svg>

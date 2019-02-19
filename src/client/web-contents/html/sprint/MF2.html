@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+					</div>
+
+                    <div class="h-tit">나의 요금</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+				</div>
+			</div>
+		</div>
+        <!--// #header --> 
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+
+                <div class="user-greeting">
+                    <i class="icon-dialog-emoji-56"><span class="blind">dialog emoji</span></i>
+                    <p class="msg">김민정님,<br /><span class="str">변함없이 저희와 함께해 주셔서 감사합니다.</span></p>
+                </div>
+
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="user-month-bill">
+                        <div class="this-month-bill">
+                            <p class="stit">이번 달 이용요금</p>
+                            <p class="price">82,500원</p>
+                            <p class="term">2018.7.1.~2018.7.31.</p>
+                        </div>
+                        <p class="msg-type1 mt42">고객님은 현재 통합청구 이용 중이며<br />할인금액을 제외한 이용요금으로 조회됩니다.</p>
+                    </div>
+                    <ul class="bt-slice solid mt20 mb4">
+                        <li><button type="button" class="btn-round1 btn-style4">이용요금 자세히보기</button></li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                   <ul class="full-link-list">
+                        <li>
+                            <button>
+                                <span class="inner">
+                                    <span class="tit">실시간 요금</span>
+                                    <span class="text type2">79,561원</span>
+                                </span>
+                            </button>
+                        </li>
+                        <li>
+                            <div class="no-link">
+                                <span class="inner">
+                                    <span class="tit">납부방법</span>
+                                    <span class="text type2">통합청구 이용 중</span>
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <ul class="btn-link-list">
+                        <li class="last-line"><button>소액결제</button></li>
+                        <li class="last-line"><button>콘텐츠 이용요금</button></li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-ver pb0">
+                    <h3 class="graph-tit">최근 이용요금 내역</h3>
+                    <div class="chart-wrap kjs"></div>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                
+                <div class="cont-box nogaps noborder">
+                    <div class="main-slide-banner slide-pagingtype pg-rtop">
+                        <!-- .widget -->
+                        <div class="widget">
+                            <div class="widget-box slider1">
+                                <div class="slider-box">
+                                    <ul class="slider">
+                                        <li>
+                                            <button>
+                                                <img src="/img/dummy/dummy-banner01.jpg" alt="">
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button>
+                                                <img src="/img/dummy/dummy-banner01.jpg" alt="">
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button>
+                                                <img src="/img/dummy/dummy-banner01.jpg" alt="">
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--// .widget -->
+                    </div>
+                </div>
+
+                <!-- .cont-box -->
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
+                    <ul class="pg-link-list">
+                        <li>
+                            <button>
+                                <i class="icon-my-40"><span class="blind">my</span></i>나의 가입정보 &gt; 약정할인 / 기기상환 정보
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 / 할인 &gt; 요금할인  
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 / 할인 &gt; 나의 할인 혜택  
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 / 할인 &gt; 나의 포인트 혜택  
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-my-40"><span class="blind">my</span></i>나의 가입정보 &gt; 나의 요금제
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-my-40"><span class="blind">my</span></i>나의 가입정보 &gt; 나의 부가서비스
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+				
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+    <script>
+        /*
+        average : 평균 제공 여부
+        legend : 범례 1개
+        unit : gb, 원, time
+        link : 링크여부 (button태그로 link0 ~ 숫자 증가하는식의 class명)
+        data_arry.t : 기준일
+        data_arry.v : 숫자
+        data_arry.length 에 맞춰서 style 자동 조절
+        ex) 4개 이상일 경우 가로 스크롤 제공
+        */
+        $('body').chart2({
+            target:'.kjs',
+            type : 'bar3',
+            average : true,
+            legend : ['사용'],
+            link : true,
+            unit : '원', // gb, 원, time
+            data_arry : [
+                {
+                    t : '9월',
+                    v : 182500
+                },
+                {
+                    t : '8월',
+                    v : 182500
+                },
+                {
+                    t : '7월',
+                    v : 82500
+                },
+                {
+                    t : '6월',
+                    v : 12500
+                },
+                {
+                    t : '5월',
+                    v : 120000
+                },
+                {
+                    t : '4월',
+                    v : 20000
+                }
+            ]
+        });
+    </script>
+</body>
+
+</html>

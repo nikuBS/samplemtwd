@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- .popup hbs -->
+        <div class="popup-page tw-popup fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>포인트 조회</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+                    <!-- cont-box -->
+                    <div class="cont-box noborder">
+                        <div class="user-info-form">
+                            <div class="info-form-box">
+                                <p class="form-label">카드번호</p>
+                                <span class="inputbox">
+                                    <span class="input">
+                                        <!--접근성 수정-->
+                                        <input type="text" placeholder="숫자만 입력" title="카드번호를 숫자만 입력해 주세요" value="">
+                                        <!-- //접근성 수정-->
+                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="agree-list type-03">
+                                <div class="widget">
+                                    <div class="widget-box accordion">
+                                        <div class="acco-cover on"><!-- toggle : 한개만 열기 -->
+                                            <div class="acco-style btn-hold">
+                                                <ul class="acco-list pt20"><!-- .on: 열기 -->
+                                                    <li class="acco-box imp-view">
+                                                        <div class="acco-tit">
+                                                            <div class="widget">
+                                                                <div class="widget-box check">
+                                                                    <div class="checkbox type01 checked all_chk" role="checkbox" aria-checked="false">
+                                                                        <i class="ico"></i>
+                                                                        <!--접근성 수정-->
+                                                                        <input type="checkbox" name="checkbox" value="" aria-labelledby="aria-comp-checkbox">
+                                                                        <span  id="aria-comp-checkbox">OK캐쉬백 제3자 정보 제공동의(필수)</span>
+                                                                        <!-- //접근성 수정-->
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="acco-cont">
+                                                            <div class="agree-cont">
+                                                                <p class="agree-cont-defined">
+                                                                    본인은 OK캐쉬백 포인트 조회/사용을 위해 본인의 카드번호 및 비밀번호를 회원 본인확인 및 OK캐쉬백 포인트 조회, 사용으로만 SK 플래닛에 제공하는 것에 동의합니다. 제공된 정보는 별도로 저장되지 않습니다.<br/><br/>고객님께서는 동의거부 권리가 있으며, 동의거부 시 포인트 조회 및 사용이 불가합니다. OK캐쉬백 제 3자 정보게종에 동의하시려면 아래 동의에 체크해 주시기 바랍니다.
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--// .widget -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- // cont-box -->
+                    <!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                    <div class="bt-fixed-area">
+                        <ul class="bt-slice full">
+                            <li class="bt-red1">
+                                <button disabled>조회하기</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+                </div>
+            </div>
+            <!-- // .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="prev-step">취소</button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!-- // .popup hbs -->
+    </div>
+</body>
+</html>

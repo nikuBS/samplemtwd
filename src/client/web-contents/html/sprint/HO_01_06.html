@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/main.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap home"><!-- .home : 홈 -->
+            <div class="h-belt">
+                <div class="h-default">
+                    <div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <div class="h-logo"><button class="icon-gnb-home"><span class="blind">홈으로</span></button></div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+                <!-- .home-tab -->
+                <div class="home-tab">
+                    <div class="home-tab-belt">
+                        <ul>
+                            <li class="tab"><div><button class="icon-home-tab-my on"><span class="blind">my</span></button><span class="bar"></span></div></li>
+                            <li class="tab"><div><button class="icon-home-tab-store"><span class="blind">store</span></button><span class="bar"></span></div></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- // .home-tab -->
+                <!-- .home-slider -->
+                <div class="home-slider">
+                    <!-- .home-slider-belt -->
+                    <div class="home-slider-belt">
+                        <!-- .home-slider-my -->
+                        <div class="home-slider-my">
+
+                            <div class="main-top-group mb0 pb0"><!-- 190126 .main-top-group영역 분리, mb0,pb0추가-->
+                                <div class="main-error-box welcome">
+                                    <span class="ico"><i class="icon-smile-120"><span class="blind">smile</span></i></span>
+                                    <strong class="ti">반갑습니다. 고객님</strong>
+                                    <p class="tx">로그인 후<br>고객님의 정보를 확인하세요.</p>
+                                    <div class="btn-area">
+                                        <button type="button" class="btn-round1 btn-style4">간편 로그인하기</button>
+                                        <button type="button" class="btn-round1 btn-style1">로그인하기</button>
+                                    </div>
+                                    <p class="desc2">아직 T월드 회원이 아니시라면 <button class="bt">회원가입</button> 후 이용해 주세요</p>
+                                </div>
+                            </div>
+                            <!-- 190126 MY 바로가기bg영역,이럴땐 이렇게 하세요,공지사항 영역 추가 -->
+                            <div class="bg-gradation">
+                                <div class="cont-box nogaps-hoz noborder">
+                                    <hr class="line" />
+                                </div>
+                                <!-- MY 바로가기 -->
+                                <ul class="quick-menu-list">
+                                    <li><button class="bt"><i class="icon-charge-80"></i>나의 요금</button></li>
+                                    <li><button class="bt"><i class="icon-tmembership-80"></i>T멤버십</button></li>
+                                    <li><button class="bt"><i class="icon-discount2-80"></i>혜택 / 할인</button></li>
+                                    <li><button class="bt"><i class="icon-immediate-80"></i>즉시 납부</button></li>
+                                </ul>
+                                <div class="btn-area"><button class="bt-link-tx underline">바로가기 편집</button></div>
+                                <!-- //MY 바로가기 -->
+                                
+                                <!-- 이럴 땐 이렇게 하세요 -->
+                                <div class="section-box nogaps">
+                                    <div class="main-tip-box box-type section-swiper-box">
+                                        <!--<div class="stit c-point">이럴 땐 이렇게 하세요</div>-->
+                                        <button type="button" class="stit tit">이럴 땐<br>이렇게 하세요</button><!--2019.02.14 변경-->
+                                        <!-- .widget -->
+                                        <div class="widget">
+                                            <div class="widget-box slider1">
+                                                <div class="slider-box">
+                                                    <ul class="slider">
+                                                        <li>
+                                                            <ul class="help-list">
+                                                                <li>
+                                                                    <button class="bt">
+                                                                        <span class="ico"><img src="/img/main/ico_help01.png" alt="데이터가 부족할 때"></span>
+                                                                        데이터가<br>부족할 때
+                                                                    </button>
+                                                                </li>
+                                                                <li>
+                                                                    <button class="bt">
+                                                                        <span class="ico"><img src="/img/main/ico_help02.png" alt="휴대폰을 분실했을 때"></span>
+                                                                        휴대폰을<br>분실했을 때
+                                                                    </button>
+                                                                </li>
+                                                                <li>
+                                                                    <button class="bt">
+                                                                        <span class="ico"><img src="/img/main/ico_help03.png" alt="우리 아이 스마트폰 관리"></span>
+                                                                        우리 아이<br>스마트폰 관리
+                                                                    </button>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li>
+                                                            <ul class="help-list">
+                                                                <li>
+                                                                    <button class="bt">
+                                                                        <span class="ico"><img src="/img/main/ico_help01.png" alt="데이터가 부족할 때"></span>
+                                                                        데이터가<br>부족할 때
+                                                                    </button>
+                                                                </li>
+                                                                <li>
+                                                                    <button class="bt">
+                                                                        <span class="ico"><img src="/img/main/ico_help02.png" alt="휴대폰을 분실했을 때"></span>
+                                                                        휴대폰을<br>분실했을 때
+                                                                    </button>
+                                                                </li>
+                                                                <li>
+                                                                    <button class="bt">
+                                                                        <span class="ico"><img src="/img/main/ico_help03.png" alt="우리 아이 스마트폰 관리"></span>
+                                                                        우리 아이<br>스마트폰 관리
+                                                                    </button>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li>
+                                                            <ul class="help-list">
+                                                                <li>
+                                                                    <button class="bt">
+                                                                        <span class="ico"><img src="/img/main/ico_help01.png" alt="데이터가 부족할 때"></span>
+                                                                        데이터가<br>부족할 때
+                                                                    </button>
+                                                                </li>
+                                                                <li>
+                                                                    <button class="bt">
+                                                                        <span class="ico"><img src="/img/main/ico_help02.png" alt="휴대폰을 분실했을 때"></span>
+                                                                        휴대폰을<br>분실했을 때
+                                                                    </button>
+                                                                </li>
+                                                                <li>
+                                                                    <button class="bt">
+                                                                        <span class="ico"><img src="/img/main/ico_help03.png" alt="우리 아이 스마트폰 관리"></span>
+                                                                        우리 아이<br>스마트폰 관리
+                                                                    </button>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--// .widget -->
+                                        <div class="btn-area">
+                                            <button class="bt">매장 찾기</button>
+                                            <button class="bt">A/S센터 찾기</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- //이럴 땐 이렇게 하세요 -->
+    
+                                <!-- 공지사항 -->
+                                <div class="notice-slide-type">
+                                    <a href="#none" class="notice-slide-ti"><i class="icon-notice-30"><span class="blind">공지사항</span></i></a><!--2019.02.14 span->a 태그로 변경-->
+                                    <!-- .widget -->
+                                    <div class="widget">
+                                        <div class="widget-box slider2">
+                                            <div class="slider-box">
+                                                <ul class="slider">
+                                                    <li>
+                                                        <button>
+                                                            <span class="notice-list-ti">새로워진 SK Telecom 업데이트</span>
+                                                            <span class="ico"></span>
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <button>
+                                                            <span class="notice-list-ti">새로워진 SK Telecom 업데이트 새로워진 SK Telecom 업데이트</span>
+                                                            <span class="ico"></span>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--// .widget -->
+                                </div>
+                                <!-- //공지사항 -->
+                            </div>
+                            <!-- //190126 MY 바로가기bg영역,이럴땐 이렇게 하세요,공지사항 영역 추가 -->
+
+                        </div>
+                        <!-- // .home-slider-my -->
+                        <!-- .home-slider-store -->
+                        <div class="home-slider-store">
+                            <div style="height:1500px;background:yellow;">
+                            </div>
+                        </div>
+                        <!-- // .home-slider-store -->
+                    </div>
+                    <!-- // .home-slider-belt -->
+                </div>
+                <!-- // .home-slider -->
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+    <script>
+        $(document).on('ready',function(){
+            skt_landing.action.home_slider({
+                initialSlide: 0
+            });
+            skt_landing.widgets.widget_slider1();
+            skt_landing.widgets.widget_slider2();
+        });
+    </script>
+</body>
+</html>

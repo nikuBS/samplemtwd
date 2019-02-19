@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-ui.js"></script><!-- [C] jquery UI API -->
+    <script type="text/javascript" src="/lib/jquery.ui.touch-punch.min.js"></script><!-- [C] jquery touch API -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+					</div>
+					<div class="h-tit">임대폰 제공 매장</div>
+					<div class="h-serarch">
+						<button class="icon-gnb-search"><span class="blind">검색</span></button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+                <h2 class="blind">내용</h2>
+                <hr class="cont-sp type1" aria-hidden="true" />
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-hoz">
+                    <!-- .filter -->
+                    <div class="filter">
+                        <div class="inline">
+                            <button class="bt-dropdown text-type01" title="전화번호 선택" aria-haspopup="true">전체</button>
+                        </div>
+                    </div>
+                    <!-- // .filter -->
+                </div>
+                <!-- // .cont-box -->
+
+                <!-- .ti-caption-gray -->
+                <div class="ti-caption-gray">
+                    <h3 class="tit">총 <span class="tx-bold">26</span>개의 매장이 검색되었습니다.</h3>
+                </div>
+                <!-- // .ti-caption-gray -->
+
+                <div class="cont-box nogaps-hoz">
+                    <!-- .search-point -->
+                    <div class="search-point">
+                        <!-- .shop-info -->
+                        <div class="shop-info">
+                            <div class="shop-txt">
+                                <ul>
+                                    <li>
+                                        <dl class="type02">
+                                            <dt>PS&M1 대리점 역삼역점</dt>
+                                            <dd>서울시 중구 만리재로 175, 상가2동 102호<br>(만리동 2가 37-2)<button class="bt-tel"><span role="img" class="blind">매장으로 전화하기</span></button></dd>
+                                        </dl>
+                                    </li>
+                                    <li>
+                                        <dl class="type02">
+                                            <dt>PS&M4 대리점 연수 T프리미엄 스토어점</dt>
+                                            <dd>서울 관악구 관악로 201<br>(봉천동 859-40)<button class="bt-tel"><span role="img" class="blind">매장으로 전화하기</span></button></dd>
+                                        </dl>
+                                    </li>
+                                    <li>
+                                        <dl class="type02">
+                                            <dt>에스알대리점 모란직영점(수진-태평점)</dt>
+                                            <dd>서울시 양천구 목동동로 379, 106호<br>(목동 907-17)<button class="bt-tel"><span role="img" class="blind">매장으로 전화하기</span></button></dd>
+                                        </dl>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- // .shop-info -->
+                        
+                        <div class="btn-more">
+                            <button>더 보기</button>
+                        </div>
+                        <!-- // .btn-more -->
+                    </div>
+                    <!-- // .search-point -->
+                </div>
+                <!-- // .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true" />
+                
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-top">
+                    <!-- .search-point -->
+                    <div class="search-point">
+                        <!-- .hours-of-business -->
+                        <div class="hours-of-business">
+                            <div class="tit">임대 가능 시간</div>
+                            <div class="as-time-list">
+                                <dl>
+                                    <dt>지점</dt>
+                                    <dd>(월~금) 09:00 ~ 18:00<br>토,일요일 및 공휴일 휴무</dd>
+                                </dl>
+                                <dl>
+                                    <dt>대리점<br>(일반/T프리미엄스토어)</dt>
+                                    <dd>(월~토) 09:00 ~ 18:00<br>토,일요일 및 공휴일 휴무</dd>
+                                </dl>
+                            </div>
+                            <p class="dot">대리점(일반/T프리미엄스토어)은 09:00~11:00 방문 시,<br>사전에 매장으로 연락 부탁드립니다.</p>
+                        </div>
+                        <!-- // .hours-of-business -->
+                    </div>
+                    <!-- // .search-point -->
+                </div>
+                <!-- // .cont-box -->
+
+                <!-- .cont-box -->
+                <div class="cont-box bgnone nogaps-hoz">
+                    <!-- .search-point -->
+                    <div class="search-point">
+                        <!-- .bn-search -->
+                        <div class="bn-search">
+                            <div class="inner">
+                                <span class="ico ico-paper"></span>
+                                <div class="txt">
+                                    <strong>필요한 서류는 챙기셨나요?</strong> 
+                                    <p>필요한 서류는 고객센터<br>((무료)114, (유료)1599-0011) 또는<br>가까운 임대폰 제공 매장으로 문의 바랍니다.</p>
+                                    <a class="bt-link-tx underline" href="">필요서류 안내</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- // .bn-search -->
+                    </div>
+                    <!-- // .search-point -->
+                </div>
+                <!-- // .cont-box -->
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <!-- .widget -->
+                    <div class="widget">
+                        <div class="widget-box accordion">
+                            <div class="acco-cover toggle"><!-- toggle : 한개만 열기 -->
+                                <div class="acco-style type-qa qa-lease">
+                                    <ul class="acco-list">
+                                        <li class="acco-box">
+                                            <!-- .on: 열기 -->
+                                            <div class="acco-tit"><button role="button" aria-pressed="false">임대폰 서비스 신청방법</button></div>
+                                            <div class="acco-cont">
+                                                임대폰 서비스는 분실/파손 신고 접수 후에 신청 가능합니다.<br>분실신고는 고객센터((무료)114, (유료)1599-0011),<br> 가까운 지점 또는 대리점에서 가능합니다.   
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button role="button" aria-pressed="false">임대폰 제도 안내</button></div>
+                                            <div class="acco-cont">
+                                                <p class="tit">프리미엄 임대폰(플래그쉽) 임대 요금</p>
+                                                <ul>
+                                                    <li>임대 시작일 포함 31일까지 일 660원(부가세 포함)</li>
+                                                    <li>임대 시작일 포함 32일 부터 일 1,320원(부가세포함)</li>
+                                                </ul>
+
+                                                <p class="tit mt20">일반 임대폰(출시 3년 이상) 임대 요금</p>
+                                                <ul>
+                                                    <li>임대 시작일 포함 14일 무료 이용</li>
+                                                    <li>임대 시작일 포함 15일 ~ 31일까지 일 660원(부가세 포함)</li>
+                                                    <li>임대 시작일 포함 32일 부터 일 1,320원(부가세 포함)</li>
+                                                </ul>
+                                                <p class="tit mt20">공통사항</p>
+                                                <ul>
+                                                    <li>최대 연 3회 임대 서비스 사용 가능합니다.<br>(프리미엄/일반 임대폰 구분없이 통합 횟수)</li>
+                                                    <li>단말 종류는 지점/매장 별로 상이할 수 있으며, 특정 단말은 조기 소진 될 수 있습니다.</li>
+                                                    <li>임대폰 사용료는 요금청구 시 합산 또는 레인보우 포인트로 결제 가능합니다.</li>
+                                                    <li>프리미엄 임대폰 무료 혜택이 포함된 서비스는 각각의 규정에 의해 혜택이 적용됩니다.<br>(자세한 사항은 해당상품의 상세혜택내역 참고 바랍니다.)</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="acco-box">
+                                            <div class="acco-tit"><button role="button" aria-pressed="false">기기변경 서비스 안내</button></div>
+                                            <div class="acco-cont info-service">
+                                                <p class="tit">새로운 단말로 교체 시</p>
+                                                <p class="txt-d">T월드 다이렉트(SK텔레콤 공식 온라인샵)에서 다양한 혜택을 만나보세요.</p>
+                                                <a class="bt-link-tx underline mt6" href="">T월드 다이렉트 바로가기</a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .widget -->                    
+                </div>
+                <!--// .cont-box -->
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+</html>

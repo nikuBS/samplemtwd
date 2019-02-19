@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+		<!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="h-belt">
+                <div class="h-default">
+                    <div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <div class="h-tit">제휴 브랜드</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-hoz">
+                    <div class="category-box-wrap tab-type01">
+						<h3 class="link-long type01">
+							<button title="전체 카테고리 보기">
+								<span class="tx-sub">
+									<span class="ico"></span>
+								</span>
+							</button>
+						</h3>
+                        <!-- .widget -->
+						<div class="widget"> 
+							<div class="widget-box horizontal">
+								<div class="horizontal-slide">
+									<ul class="horizontal-list brand_link">
+										<li><button type="button" class="unit on">All</a></li>
+										<li><button type="button" class="unit">베이커리</button></li>
+										<li><button type="button" class="unit">편의점</button></li>
+										<li><button type="button" class="unit">영화관</button></li>
+										<li><button type="button" class="unit">피자</button></li>
+										<li><button type="button" class="unit">커피</button></li>
+										<li><button type="button" class="unit">패밀리 레스토랑</button></li>
+										<li><button type="button" class="unit">F&amp;B</button></li>
+										<li><button type="button" class="unit">테마파크</button></li>
+										<li><button type="button" class="unit">모바일&amp;미디어</button></li>
+										<li><button type="button" class="unit">쇼핑</button></li>
+										<li><button type="button" class="unit">교통</button></li>
+										<li><button type="button" class="unit">공연</button></li>
+										<li><button type="button" class="unit">여행</button></li>
+										<li><button type="button" class="unit">교육</button></li>
+										<li><button type="button" class="unit">금융</button></li>
+										<li><button type="button" class="unit">뷰티&amp;패션</button></li>
+										<li><button type="button" class="unit">스포츠</button></li>
+										<li><button type="button" class="unit">제주도</button></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<!-- .widget -->
+						<div class="cont-box inborder">
+							<span class="inputbox brand-search-warap">
+								<span class="input">
+									<input type="text" title="제휴 브랜드명을 검색" placeholder="제휴 브랜드명을 검색해 보세요">
+									<button class="cancel"><span class="blind">삭제</span></button>
+									<button class="bt-search">검색</button>
+								</span>
+							</span>
+						</div>
+						<div class="cont-box nogaps">
+							<div class="add-prd-top-wrap add-top-type">
+								<span class="counts type-l"><button title="등급 선택">전체 등급</button></span><!-- 웹접근성 수정 -->
+								<span class="select type-r">
+									<button class="on" role="tab" aria-selected="true">좋아요 순</button><!-- 웹접근성 수정 -->
+									<button role="tab" aria-selected="false">최신순</button><!-- 웹접근성 수정 -->
+								</span>
+							</div>
+							<!-- .cont-box -->
+							<div class="cont-box nogaps">
+								<ul class="coalition-brand-list type-like">
+									<li>
+										<button class="brand-inner">
+											<span class="inner">
+												<span class="logo"><img src="/img/benefit/coalition-brand04.png" alt=""></span><!-- 웹접근성 수정 -->
+												<span class="intro">
+													<span class="category">베이커리</span>
+													<strong class="brand-name">뚜레쥬르</strong>
+													<span class="section">
+														<em class="ico-s all-tag">All</em>
+														천원당 100원 할인
+													</span>
+												</span>
+											</span>
+										</button>
+										<button class="bt-like on" title="좋아요 해제하기"><span class="blind">좋아요</span>10,312</button><!-- 웹접근성 수정 -->
+									</li>
+									<li>
+										<button class="brand-inner">
+											<span class="inner">
+												<span class="logo"><img src="/img/benefit/coalition-brand02.png" alt=""></span><!-- 웹접근성 수정 -->
+												<span class="intro">
+													<span class="category">베이커리</span>
+													<strong class="brand-name">CU(구)훼미리마트 CU(구)훼미리마트</strong>
+													<span class="section">
+														<em class="ico-s vip-tag">Vip</em>
+														<em class="ico-s gold-tag">Gold</em>
+														천원당 100원 할인
+													</span>
+													<span class="section">
+														<em class="ico-s silver-tag">Silver</em>
+														혜택 안내
+													</span>
+												</span>
+											</span>
+										</button>
+										<button class="bt-like on" title="좋아요 해제하기"><span class="blind">좋아요</span>10,312</button><!-- 웹접근성 수정 -->
+									</li>
+									<li>
+										<button class="brand-inner">
+											<span class="inner">
+												<span class="logo"><img src="/img/benefit/coalition-brand01.png" alt=""></span><!-- 웹접근성 수정 -->
+												<span class="intro">
+													<span class="category">편의점</span>
+													<strong class="brand-name">CU(구)훼미리마트</strong>
+													<span class="section">
+														<em class="ico-s vip-tag">Vip</em>
+														<em class="ico-s gold-tag">Gold</em>
+														천원당 100원 할인
+													</span>
+													<span class="section">
+														<em class="ico-s silver-tag">Silver</em>
+														혜택 안내
+													</span>
+												</span>
+											</span>
+										</button>
+										<button class="bt-like" title="좋아요 선택하기"><span class="blind">좋아요</span>1,312</button><!-- 웹접근성 수정 -->
+									</li>
+									<li>
+										<button class="brand-inner">
+											<span class="inner">
+												<span class="logo"><img src="/img/benefit/coalition-brand03.png" alt=""></span><!-- 웹접근성 수정 -->
+												<span class="intro">
+													<span class="category">편의점</span>
+													<strong class="brand-name">CU(구)훼미리마트</strong>
+													<span class="section">
+														<em class="ico-s vip-tag">Vip</em>
+														<em class="ico-s gold-tag">Gold</em>
+														천원당 100원 할인
+													</span>
+													<span class="section">
+														<em class="ico-s silver-tag">Silver</em>
+														혜택 안내
+													</span>
+												</span>
+											</span>
+										</button>
+										<button class="bt-like" title="좋아요 선택하기"><span class="blind">좋아요</span>312</button><!-- 웹접근성 수정 -->
+									</li>
+								</ul>
+								<div class="bt-more">
+									<button>더 보기</button>
+								</div>
+							</div>
+							<!--// .cont-box -->
+						</div>
+						<div class="cont-layer" style="display:none;"><!-- 전체 카테고리 영역 -->
+                            <div class="cont-layer-info">
+                                <h3 class="link-long">
+                                    <button title="전체 카테고리 보기">전체 카테고리
+                                        <span class="tx-sub">
+                                            <span class="ico"></span>
+                                        </span>
+                                    </button>
+                                </h3>
+                                <!-- .widget -->
+                                <div class="widget">
+                                    <div class="widget-box radio">
+                                        <ul class="select-list horizontal-list" role="radiogroup">
+                                            <li class="radiobox type05 ico-type01 checked" role="radio" aria-checked="true" id="aria-comp-radio1"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" --><!-- 웹접근성 수정 -->
+												<img src="/img/benefit/ico-category01.png" class="ico" alt="" />
+												<input type="radio" name="radio01" value=""  checked="" aria-labelledby="aria-comp-radio1"><!-- 체크상태일 경우 checked="checked" -->
+                                                All
+                                            </li>
+                                            <li class="radiobox type05 ico-type02" role="radio" aria-checked="false" id="aria-comp-radio2"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" --><!-- 웹접근성 수정 -->
+												<img src="/img/benefit/ico-category02.png" class="ico" alt="" />
+												<input type="radio" name="radio01" value="" aria-labelledby="aria-comp-radio2"><!-- 체크상태일 경우 checked="false" -->
+                                                베이커리
+                                            </li>
+                                            <li class="radiobox type05 ico-type03" role="radio" aria-checked="false" id="aria-comp-radio3"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" --><!-- 웹접근성 수정 -->
+												<img src="/img/benefit/ico-category03.png" class="ico" alt="" />
+												<input type="radio" name="radio01" value="" aria-labelledby="aria-comp-radio3"><!-- 체크상태일 경우 checked="false" -->
+                                                편의점
+                                            </li>
+                                            <li class="radiobox type05 ico-type04" role="radio" aria-checked="false" id="aria-comp-radio4"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" --><!-- 웹접근성 수정 -->
+												<img src="/img/benefit/ico-category04.png" class="ico" alt="" />
+												<input type="radio" name="radio01" value="" aria-labelledby="aria-comp-radio4"><!-- 체크상태일 경우 checked="false" -->
+                                                영화관
+                                            </li>
+                                            <li class="radiobox type05 ico-type05" role="radio" aria-checked="false" id="aria-comp-radio5"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" --><!-- 웹접근성 수정 -->
+												<img src="/img/benefit/ico-category05.png" class="ico" alt="" />
+												<input type="radio" name="radio01" value="" aria-labelledby="aria-comp-radio5"><!-- 체크상태일 경우 checked="false" -->
+                                                피자
+                                            </li>
+                                            <li class="radiobox type05 ico-type06" role="radio" aria-checked="false" id="aria-comp-radio6"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" --><!-- 웹접근성 수정 -->
+												<img src="/img/benefit/ico-category06.png" class="ico" alt="" />
+												<input type="radio" name="radio01" value="" aria-labelledby="aria-comp-radio6"><!-- 체크상태일 경우 checked="false" -->
+                                                커피
+                                            </li>
+                                            <li class="radiobox type05 ico-type07" role="radio" aria-checked="false" id="aria-comp-radio7"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" --><!-- 웹접근성 수정 -->
+												<img src="/img/benefit/ico-category07.png" class="ico" alt="" />
+												<input type="radio" name="radio01" value="" aria-labelledby="aria-comp-radio7"><!-- 체크상태일 경우 checked="false" -->
+                                                패밀리<br>레스토랑
+                                            </li>
+                                            <li class="radiobox type05 ico-type08" role="radio" aria-checked="false" id="aria-comp-radio8"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" --><!-- 웹접근성 수정 -->
+												<img src="/img/benefit/ico-category08.png" class="ico" alt="" />
+												<input type="radio" name="radio01" value="" aria-labelledby="aria-comp-radio8"><!-- 체크상태일 경우 checked="false" -->
+                                                F&amp;B
+                                            </li>
+                                            <li class="radiobox type05 ico-type09" role="radio" aria-checked="false" id="aria-comp-radio9"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" --><!-- 웹접근성 수정 -->
+												<img src="/img/benefit/ico-category09.png" class="ico" alt="" />
+												<input type="radio" name="radio01" value="" aria-labelledby="aria-comp-radio9"><!-- 체크상태일 경우 checked="false" -->
+                                                테마파크
+                                            </li>
+                                            <li class="radiobox type05 ico-type10" role="radio" aria-checked="false" id="aria-comp-radio10"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" --><!-- 웹접근성 수정 -->
+												<img src="/img/benefit/ico-category10.png" class="ico" alt="" />
+												<input type="radio" name="radio01" value="" aria-labelledby="aria-comp-radio10"><!-- 체크상태일 경우 checked="false" -->
+                                                모바일<br>&amp;미디어
+                                            </li>
+                                            <li class="radiobox type05 ico-type11" role="radio" aria-checked="false" id="aria-comp-radio11"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" --><!-- 웹접근성 수정 -->
+												<img src="/img/benefit/ico-category11.png" class="ico" alt="" />
+												<input type="radio" name="radio01" value="" aria-labelledby="aria-comp-radio11"><!-- 체크상태일 경우 checked="false" -->
+                                                쇼핑
+                                            </li>
+                                            <li class="radiobox type05 ico-type12" role="radio" aria-checked="false" id="aria-comp-radio12"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" --><!-- 웹접근성 수정 -->
+												<img src="/img/benefit/ico-category12.png" class="ico" alt="" />
+												<input type="radio" name="radio01" value="" aria-labelledby="aria-comp-radio12"><!-- 체크상태일 경우 checked="false" -->
+                                                교통
+                                            </li>
+                                            <li class="radiobox type05 ico-type13" role="radio" aria-checked="false" id="aria-comp-radio13"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" --><!-- 웹접근성 수정 -->
+												<img src="/img/benefit/ico-category13.png" class="ico" alt="" />
+												<input type="radio" name="radio01" value="" aria-labelledby="aria-comp-radio13"><!-- 체크상태일 경우 checked="false" -->
+                                                공연
+                                            </li>
+                                            <li class="radiobox type05 ico-type14" role="radio" aria-checked="false" id="aria-comp-radio14"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" --><!-- 웹접근성 수정 -->
+												<img src="/img/benefit/ico-category14.png" class="ico" alt="" />
+												<input type="radio" name="radio01" value="" aria-labelledby="aria-comp-radio14"><!-- 체크상태일 경우 checked="false" -->
+                                                여행
+                                            </li>
+                                            <li class="radiobox type05 ico-type15" role="radio" aria-checked="false" id="aria-comp-radio15"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" --><!-- 웹접근성 수정 -->
+												<img src="/img/benefit/ico-category15.png" class="ico" alt="" />
+												<input type="radio" name="radio01" value="" aria-labelledby="aria-comp-radio15"><!-- 체크상태일 경우 checked="false" -->
+                                                교육
+                                            </li>
+                                            <li class="radiobox type05 ico-type16" role="radio" aria-checked="false" id="aria-comp-radio16"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" --><!-- 웹접근성 수정 -->
+												<img src="/img/benefit/ico-category16.png" class="ico" alt="" />
+												<input type="radio" name="radio01" value="" aria-labelledby="aria-comp-radio16"><!-- 체크상태일 경우 checked="false" -->
+                                                금융
+                                            </li>
+                                            <li class="radiobox type05 ico-type17" role="radio" aria-checked="false" id="aria-comp-radio17"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" --><!-- 웹접근성 수정 -->
+												<img src="/img/benefit/ico-category17.png" class="ico" alt="" />
+												<input type="radio" name="radio01" value="" aria-labelledby="aria-comp-radio17"><!-- 체크상태일 경우 checked="false" -->
+                                                뷰티&amp;패션
+                                            </li>
+                                            <li class="radiobox type05 ico-type18" role="radio" aria-checked="false" id="aria-comp-radio18"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" --><!-- 웹접근성 수정 -->
+												<img src="/img/benefit/ico-category18.png" class="ico" alt="" />
+												<input type="radio" name="radio01" value="" aria-labelledby="aria-comp-radio18"><!-- 체크상태일 경우 checked="false" -->
+                                                스포츠
+                                            </li>
+                                            <li class="radiobox type05 ico-type19" role="radio" aria-checked="false" id="aria-comp-radio19"><!-- 체크 상태가 아닐 경우 .checked 클래스 삭제, aria-checked="false" --><!-- 웹접근성 수정 -->
+												<img src="/img/benefit/ico-category19.png" class="ico" alt="" />
+												<input type="radio" name="radio01" value="" aria-labelledby="aria-comp-radio19"><!-- 체크상태일 경우 checked="false" -->
+                                                제주도
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!--// .widget -->
+                            </div>
+                            <div class="cont-layer-blind"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+</html>

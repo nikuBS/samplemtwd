@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.min.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/main.css" media="all" /><!-- [C] 공통 스타일 -->
+
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script>
+        $(document).on('ready',function(){
+            skt_landing.action.home_slider({
+                initialSlide: 0
+            }); // skt_landing.widgets 보다 먼저 실행되어야지 도넛그래프 애니메이션이 정상적으로 보임
+            skt_landing.widgets.widget_slider1(); // onload 후 실행됨
+            skt_landing.widgets.widget_slider2(); // onload 후 실행됨
+        });
+    </script> 
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body class="apphome"><!-- app홈 전용 // -->
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap home"><!-- .home : 홈 -->
+            <div class="h-belt">
+                <div class="h-default">
+                    <div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <h1 class="h-logo"><button class="icon-gnb-home"><span class="blind">홈으로</span></button></h1>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+                <!-- .home-tab -->
+                <div class="home-tab">
+                    <div class="home-tab-belt">
+                        <ul role="tablist">
+                            <li class="tab" role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><div><button class="icon-home-tab-my"><span class="blind">my</span></button><span class="bar"></span></div></li>
+                            <li class="tab" role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><div><button class="icon-home-tab-store"><span class="blind">store</span></button><span class="bar"></span></div></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- // .home-tab -->
+                <!-- .home-slider -->
+                <div class="home-slider">
+                    <!-- .home-slider-belt -->
+                    <div class="home-slider-belt">
+                        <!-- .home-slider-my -->
+                        <div class="home-slider-my" role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+
+                            <!-- .layer-noti -->
+                            <div class="dialog-box" role="dialog" aria-labelledby="dialog2_label" aria-describedby="dialog2_desc">
+                                <h2 class="blind" id="dialog2_label">이번달 요금안내서</h2>
+                                <div class="dialog-ico"><i class="icon-dialog-emoji-56"><span class="blind">emoji</span></i></div>
+                                <a class="dialog-txt" href="#" title="홈 노티 이동">
+                                    <div id="dialog2_desc">
+                                        <span class="name">윤*연 고객님, 안녕하세요.</span>
+                                        <span class="key">이번 달 요금안내서가 발행되었습니다.</span>
+                                    </div>
+                                </a>
+                                <div class="dialog-right-btn"><button class="icon-32px-exit" type="button"><span class="blind">닫기</span></button></div>
+                            </div>
+                            <!-- // .layer-noti -->
+
+                            <div class="main-top-group">
+                                <!-- 모바일 회선_잔여 데이터 -->
+                                <div class="main-chart-box">
+                                    <em class="line"><button class="bt">010-12**-34**</button></em>
+                                    <strong class="ti"><button class="bt">T플랜 패밀리</button></strong>
+
+                                    <!-- .widget -->
+                                    <div class="widget">
+                                        <div class="widget-box donutchart">
+                                            <!-- .donut-chart -->
+                                            <a class="donut-chart data-type"><!-- 데이터 경우 data-type 추가 -->
+                                                <div class="donut-chart-area">
+                                                    <!-- loop -->
+                                                    <div class="c100 p0" data-percent="70"><!-- data-percent :0 ~ 100 -->
+                                                        <div class="blue"><!-- red, yellow, green, blue -->
+                                                            <div class="slice">
+                                                                <div class="bar"></div>
+                                                                <div class="fill"></div>
+                                                            </div>
+                                                            <div class="slice transparent">
+                                                                <div class="bar"></div>
+                                                                <div class="fill"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- // loop -->
+                                                    <!-- loop -->
+                                                    <div class="c100 p0" data-percent="60"><!-- data-percent :0 ~ 100 -->
+                                                        <div class="red"><!-- red, yellow, green, blue -->
+                                                            <div class="slice">
+                                                                <div class="bar"></div>
+                                                                <div class="fill"></div>
+                                                            </div>
+                                                            <div class="slice transparent">
+                                                                <div class="bar"></div>
+                                                                <div class="fill"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- // loop -->
+                                                </div>
+                                                <span class="ti-data">
+                                                    <strong class="ti">남은 데이터</strong>
+                                                    <em class="data">36.7GB</em>
+                                                </span>
+                                            </a>
+                                            <!-- // .donut-chart -->
+                                            <!-- 2019.02.12 터치 영역 수정 -->
+                                            <button class="data-add"><span>충전/선물</span></button>
+                                        </div>
+                                    </div>
+                                    <!-- // .widget -->
+                                    <!--
+                                    <div class="legend">
+                                        <span class="category0"><span><em class="data">12.56GB</em> 나의 데이터</span></span>
+                                        <span class="category1"><span>T가족모아데이터</span><button class="btn-tip"><i class="icon-badge-tip"><span class="blind">tip</span></i></button></span>
+                                    </div>-->
+
+                                    <div class="call-message">
+                                        <button class="bt-call"><i class="icon-call-34"><span class="blind">통화</span></i> 1시간 45분</button>
+                                        <button class="bt-message"><i class="icon-sms-37"><span class="blind">문자</span></i> 기본제공</button>
+                                    </div>
+                                </div>
+                                <!-- //모바일 회선_잔여 데이터 -->
+
+                                <!-- MY 바로가기 -->
+                                <h2 class="blind">서브메뉴 바로가기</h2>
+                                <ul class="quick-menu-list">
+                                    <li><button class="bt"><i class="icon-charge-80"></i>나의 요금</button></li>
+                                    <li><button class="bt"><i class="icon-tmembership-80"></i>T멤버십</button></li>
+                                    <li><button class="bt"><i class="icon-discount2-80"></i>혜택 / 할인</button></li>
+                                    <li><button class="bt"><i class="icon-immediate-80"></i>즉시 납부</button></li>
+                                </ul>
+                                <div class="btn-area"><button class="bt-link-tx underline">바로가기 편집</button></div>
+                                <!-- //MY 바로가기 -->
+                            </div>
+
+                            <!-- 이번 달 청구요금 -->
+                            <!--
+                            <div class="section-box">
+                                <div class="main-breakdown-box">
+                                    <div class="stit c-point">이번 달 청구요금 <i class="icon-whole2"><span class="blind">전체</span></i></div>
+                                    <em class="sum">82,500원</em>
+                                    <span class="date">2018.7.1.~2018.7.31.</span>
+                                    <ul class="list">
+                                        <li><strong class="ti">이용요금</strong> <em class="tx f-type">94,560원</em></li>
+                                        <li><strong class="ti">할인요금</strong> <em class="tx f-type c-point">-12,060원</em></li>
+                                    </ul>
+                                    <div class="btn-area">
+                                        <button class="bt">자세히 보기</button>
+                                    </div>
+                                </div>
+                            </div>
+                            -->
+                            <!-- //이번 달 청구요금 -->
+                            <div class="main-membershop-box">
+                                <h3 class="ti">membershop</h3>
+                                <span class="rating silver">silver</span>
+                                <!-- <span class="rating gold">gold</span>
+                                <span class="rating vip">vip</span> -->
+                                <span class="bar-code"><img src="/img/main/bar_code.png" alt="bar code"></span>
+                            </div>
+
+                            <!-- 이번 달 콘텐츠 이용내역 -->
+                            <div class="section-box">
+                                <div class="main-breakdown-box">
+                                    <h3 class="stit c-point">이번 달 콘텐츠 이용내역</h3>
+                                    <em class="sum">82,500원</em>
+                                    <span class="date">2018.7.1.~2018.7.31.</span>
+                                    <ul class="list">
+                                        <li><strong class="ti">이용횟수</strong> <em class="tx"><span class="f-type">3</span>회</em></li>
+                                    </ul>
+                                    <div class="btn-area">
+                                        <a title="실시간 결제내역 보기" href="" class="bt">결제내역 보기</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- //이번 달 콘텐츠 이용내역 -->
+
+                            <!-- 이번 달 소액결제 이용내역 -->
+                            <div class="section-box">
+                                <div class="main-breakdown-box">
+                                    <h3 class="stit c-point">이번 달 소액결제 이용내역</h3>
+                                    <em class="sum">82,500원</em>
+                                    <span class="date">2018.7.1.~2018.7.31.</span>
+                                    <ul class="list">
+                                        <li><strong class="ti">이용횟수</strong> <em class="tx"><span class="f-type">3</span>회</em></li>
+                                    </ul>
+                                    <div class="btn-area">
+                                        <a href="#" title="실시간 결제내역보기" class="bt">결제내역 보기</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- //이번 달 소액결제 이용내역 -->
+
+                            <!-- 멤버십 혜택 -->
+                            <h3 class="blind">멤버십 혜택</h3>
+                            <div class="section-box nogaps">
+                                <div class="main-charge-box benefit section-swiper-box main-banner-img">
+                                    <!-- .widget -->
+                                    <div class="widget">
+                                        <div class="widget-box slider1">
+											<div class="slider-box">
+                                                <ul class="slider">
+                                                    <li>
+                                                        <a href="#" title="혜택보러가기">
+														<img src="/img/main/img-main-banner01.png" alt="김민정님을 위한 멤버십 혜택 20대 여성 고객님<br>취향저격 혜택 멤버십 고객을 위한  혜택 추천 혜택보러 가기" />
+                                                        </a>
+                                                    </li>
+													<li>
+                                                        <a href="#" title="혜택보러가기">
+														<img src="/img/main/img-main-banner01.png" alt="김민정님을 위한 멤버십 혜택 20대 여성 고객님<br>취향저격 혜택 멤버십 고객을 위한  혜택 추천 혜택보러 가기" />
+													   </a>
+                                                    </li>
+													<li>
+                                                       <a href="#" title="혜택보러가기">
+														<img src="/img/main/img-main-banner01.png" alt="김민정님을 위한 멤버십 혜택 20대 여성 고객님<br>취향저격 혜택 멤버십 고객을 위한  혜택 추천 혜택보러 가기" />
+													   </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <!-- <div class="slider-box">
+                                                <ul class="slider">
+                                                    <li>
+                                                        <div class="stit">김민정님을 위한 멤버십 혜택</div>
+                                                        <div class="main-box-cont">
+                                                            <strong class="ti">20대 여성 고객님<br>취향저격 혜택</strong>
+                                                            <span class="tx">T멤버십 고객을 위한  혜택 추천</span>
+                                                            <button class="bt">혜택보러 가기</button>
+                                                        </div>
+                                                    </li>
+													<li>
+                                                        <div class="stit">김민정님을 위한 멤버십 혜택</div>
+                                                        <div class="main-box-cont">
+                                                            <strong class="ti">20대 여성 고객님<br>취향저격 혜택</strong>
+                                                            <span class="tx">T멤버십 고객을 위한  혜택 추천</span>
+                                                            <button class="bt">혜택보러 가기</button>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="stit">김민정님을 위한 멤버십 혜택</div>
+                                                        <div class="main-box-cont">
+                                                            <strong class="ti">20대 여성 고객님<br>취향저격 혜택</strong>
+                                                            <span class="tx">T멤버십 고객을 위한  혜택 추천</span>
+                                                            <button class="bt">혜택보러 가기</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                    <!--// .widget -->
+                                </div>
+                            </div>
+                            <!-- //멤버십 혜택 -->
+
+                            <!-- T끼리 데이터 선물 -->
+                            <div class="section-box">
+                                <div class="main-breakdown-box">
+                                    <h3 class="stit c-point">T끼리 데이터 선물</h3>
+                                    <strong class="ti">잔여 데이터를 가족과 친구에게 선물해 보세요</strong>
+                                    <ul class="list">
+                                        <li><strong class="ti">선물할 수 있는 데이터</strong> <em class="tx f-type c-point">36.7GB</em></li>
+                                        <li><strong class="ti">선물하기 남은 횟수</strong> <em class="tx c-point">T끼리 <span class="f-type">1</span>회</em></li>
+                                    </ul>
+                                    <div class="btn-area">
+                                        <a href="#" title="선물하기" class="bt">선물하기</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- //T끼리 데이터 선물 -->
+
+                            <!-- 데이터 충전 -->
+                            <div class="section-box">
+                                <div class="main-breakdown-box">
+                                    <h3 class="stit c-point">데이터 충전</h3>
+                                    <strong class="ti">데이터가 부족하시다면 즉시 충전해 보세요</strong>
+                                    <ul class="list">
+                                        <li><strong class="ti">잔여 데이터</strong> <em class="tx f-type c-point">500MB</em></li>
+                                        <li><strong class="ti">리필쿠폰 남은 개수</strong> <em class="tx c-point"><span class="f-type">2</span>장</em></li>
+                                    </ul>
+                                    <div class="btn-area">
+                                        <a href="#" title="선물하기" class="bt">충전하기</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- //데이터 충전 -->
+
+                            <!-- 당신을 위한 기획전 -->
+                            <h3 class="blind">당신을 위한 기획전</h3>
+                            <div class="section-box nogaps">
+                                <div class="main-charge-box advice section-swiper-box main-banner-img">
+                                    <!-- .widget -->
+                                    <div class="widget">
+                                        <div class="widget-box slider1">
+                                            <div class="slider-box">
+                                                <ul class="slider">
+                                                    <li>
+                                                        <a href="#" title="기획전 보러가기">
+														    <img src="/img/main/img-main-banner02.png" alt="당신을 위한 기획전 단 30일동안 최대 10% 까지 T멤버십 고객에게만 해외쇼핑 지원 상담하러 가기" />
+													    </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#" title="기획전 보러가기">
+														    <img src="/img/main/img-main-banner02.png" alt="당신을 위한 기획전 단 30일동안 최대 10% 까지 T멤버십 고객에게만 해외쇼핑 지원 상담하러 가기" />
+                                                        </a>
+                                                    </li>
+													<li>
+                                                        <a href="#" title="기획전 보러가기">
+														    <img src="/img/main/img-main-banner02.png" alt="당신을 위한 기획전 단 30일동안 최대 10% 까지 T멤버십 고객에게만 해외쇼핑 지원 상담하러 가기" />
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+											<!-- <div class="slider-box">
+                                                <ul class="slider">
+                                                    <li>
+                                                        <div class="stit">당신을 위한 기획전</div>
+                                                        <div class="main-box-cont">
+                                                            <strong class="ti">단 30일동안 최대<br>10% 까지</strong>
+                                                            <span class="tx">T멤버십 고객에게만 해외쇼핑 지원</span>
+                                                            <button class="bt">상담하러 가기</button>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="stit">당신을 위한 기획전</div>
+                                                        <div class="main-box-cont">
+                                                            <strong class="ti">단 30일동안 최대<br>10% 까지</strong>
+                                                            <span class="tx">T멤버십 고객에게만 해외쇼핑 지원</span>
+                                                            <button class="bt">상담하러 가기</button>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="stit">당신을 위한 기획전</div>
+                                                        <div class="main-box-cont">
+                                                            <strong class="ti">단 30일동안 최대<br>10% 까지</strong>
+                                                            <span class="tx">T멤버십 고객에게만 해외쇼핑 지원</span>
+                                                            <button class="bt">상담하러 가기</button>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                    <!--// .widget -->
+                                </div>
+                            </div>
+                            <!-- //당신을 위한 기획전 -->
+
+                            <!-- 이럴 땐 이렇게 하세요 -->
+                            <div class="section-box nogaps">
+                                <div class="main-tip-box box-type section-swiper-box">
+                                    <h3 class="stit c-point">이럴 땐 이렇게 하세요</h3>
+                                    <!-- .widget -->
+                                    <div class="widget">
+                                        <div class="widget-box slider1">
+                                            <div class="slider-box">
+                                                <ul class="slider">
+                                                    <li>
+                                                        <ul class="help-list">
+                                                            <li class="list-t01"><button class="bt">데이터가<br>부족할 때</button></li>
+                                                            <li class="list-t02"><button class="bt">휴대폰을<br>분실했을 때</button></li>
+                                                            <li class="list-t03"><button class="bt">우리 아이<br>스마트폰 관리</button></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <ul class="help-list">
+                                                            <li class="list-t01"><button class="bt">데이터가<br>부족할 때</button></li>
+                                                            <li class="list-t02"><button class="bt">휴대폰을<br>분실했을 때</button></li>
+                                                            <li class="list-t03"><button class="bt">우리 아이<br>스마트폰 관리</button></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>
+                                                        <ul class="help-list">
+                                                            <li class="list-t01"><button class="bt">데이터가<br>부족할 때</button></li>
+                                                            <li class="list-t02"><button class="bt">휴대폰을<br>분실했을 때</button></li>
+                                                            <li class="list-t03"><button class="bt">우리 아이<br>스마트폰 관리</button></li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--// .widget -->
+                                    <div class="btn-area">
+                                        <a href="#" title="선물하기" class="bt">매장 찾기</a>
+                                        <a href="#" title="선물하기" class="bt">A/S센터 찾기</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- //이럴 땐 이렇게 하세요 -->
+
+                            <!-- 공지사항 -->
+                            <div class="notice-slide-type">
+                                <a href="#none" class="notice-slide-ti"><i class="icon-notice-30"><span class="blind">공지사항</span></i></a><!--2019.02.14 h3->a 태그로 변경-->
+                                <!-- .widget -->
+                                <div class="widget">
+                                    <div class="widget-box slider2">
+                                        <div class="slider-box">
+                                            <ul class="slider">
+                                                <li>
+                                                    <a href="#" title="페이지로 이동하기">
+                                                        <span class="notice-list-ti">새로워진 SK Telecom 업데이트</span>
+                                                        <span class="ico"></span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" title="페이지로 이동하기">
+                                                        <span class="notice-list-ti">새로워진 SK Telecom 업데이트 새로워진 SK Telecom 업데이트</span>
+                                                        <span class="ico"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--// .widget -->
+                            </div>
+                            <!-- //공지사항 -->
+
+                        </div>
+                        <!-- // .home-slider-my -->
+                        <!-- .home-slider-store -->
+                        <div class="home-slider-store" role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+                            <div class="main-top-group group-type" style="overflow:hidden;">
+                                <!-- MY 바로가기 -->
+                                <ul class="quick-menu-list">
+                                    <li><a href="javascript:void(0)" class="bt" tabindex="0"><i class="icon-price-plan-80"></i>요금제</a></li>
+                                    <li><a href="/product/mobileplan-add" class="bt" tabindex="0"><i class="icon-vas-80"><span class="blind">vas</span></i>부가상품</a></li>
+                                    <li><a href="/product/wireplan" class="bt" tabindex="0"><i class="icon-internet-80"></i>인터넷 /<br>전화 / IPTV</a></li>
+                                    <li><a href="/product/roaming" class="bt" tabindex="0"><i class="icon-roaming-80"></i>T로밍</a></li>
+                                    <li><button id="fe-bt-direct-phone" class="bt" tabindex="0"><i class="icon-cellphone2-80"></i>스마트폰</button></li>
+                                    <li><button id="fe-bt-direct-tablet" class="bt" tabindex="0"><i class="icon-watch-80"></i>태블릿 / 워치</button></li>
+                                    <li><button id="fe-bt-direct-nugu" class="bt" tabindex="0"><i class="icon-nugu-80"></i>NUGU</button></li>
+                                    <li><button id="fe-bt-direct-accessory" class="bt" tabindex="0"><i class="icon-accessory-80"></i>액세서리</button></li>
+                                </ul>
+                                <!-- //MY 바로가기 -->
+                            </div>
+                            <div style="height:1500px;background:yellow;">
+                            </div>
+                        </div>
+                        <!-- // .home-slider-store -->
+                    </div>
+                    <!-- // .home-slider-belt -->
+                </div>
+                <!-- // .home-slider -->
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+
+    <!-- <style>
+        /* home-slider(slick slider) */
+        .home-slider .home-slider-my {
+            visibility: visible !important;
+        }
+    </style> -->
+    <!-- <script>
+        $(document).on('ready',function(){
+            skt_landing.action.home_slider({
+                initialSlide: 0
+            });
+            skt_landing.widgets.widget_slider1();
+            skt_landing.widgets.widget_slider2();
+        }); // .home-slider .home-slider-my의 visibility속성을 visible로 변경해야지 도넛그래프 애니메이션이 정상적으로 보임 (개발된 페이지에서는 정상적으로 보임)
+    </script> -->
+</body>
+</html>

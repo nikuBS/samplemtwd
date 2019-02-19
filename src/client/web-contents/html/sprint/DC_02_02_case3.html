@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+
+	
+    
+
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+            </div>
+        </div>
+        <!--// #contents -->
+		<!-- .popup hbs -->
+		<div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+			<!-- #header -->
+			<div class="header-wrap noborder">
+				<div class="page-header">
+					<div class="header-ti">
+                        <h1>T가족모아데이터 공유 설정</h1>
+					</div>
+				</div>
+			</div>
+			<!--// #header -->
+			<!-- .container-wrap -->
+			<div class="container-wrap">
+                <div class="container">
+
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps">
+						<!-- .component -->
+						<div class="component">
+							<div class="component-box tabs">
+								<div class="tab-area new01"><!-- 타입별 탭형태 변환 -->
+									<div class="tab-linker">
+										<ul role="tablist">
+											<li role="tab" aria-selected="false" aria-c0ontrols="tab1-tab" id="tab1"><a href="">바로 공유</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+											<li role="tab" aria-selected="true" aria-controls="tab3-tab" id="tab2"><a href="">매달 자동공유</a></li>
+										</ul>
+									</div>
+									<div class="tab-contents">
+										<ul>
+											<li role="tabpanel" id="tab1-tab" aria-labelledby="tab1" aria-selected="false">
+												<hr class="cont-sp type1" aria-hidden="true"/>
+												<div class="cont-box">
+													바로 공유 내용입니다.
+												</div>
+												
+											</li>
+											<li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" aria-selected="true">
+												<hr class="cont-sp type1" aria-hidden="true"/>
+												
+												<div class="cont-box">
+													<div class="ti-caption-type01">
+														<!--접근성 수정-->
+														<h2 class="tit">가족에게 공유할 데이터<button class="btn-tip" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">가족에게 공유할 데이터 tip</span></i></button></h2>
+														<!-- //접근성 수정-->
+														<span class="num type1 ft-medium">2018.10. 부터 매달</span>
+														<p class="tit-txt">데이터를 공유하고 나면 취소할 수 없습니다.</p>
+													</div>
+													<div class="recently-tel-box">
+                                                        <div class="inputbox bt-add">
+                                                            <span class="input new">
+																<!--접근성 수정-->
+                                                                <input type="text" value="20" title="가족에게 공유할 데이터" aria-describedby="aria-exp-desc1">
+																<!-- //접근성 수정-->
+																<button class="cancel"><span class="blind">삭제</span></button>
+                                                            </span>
+                                                            <span class="r-btn type01">
+																<!--접근성 수정-->
+                                                                <button type="button" class="btn-type01">+1<span class="blind">GB</span></button>
+																<button type="button" class="btn-type01">+10<span class="blind">GB</span></button>
+																<button type="button" class="btn-type01">전체</button>
+																<!-- //접근성 수정-->
+                                                            </span>
+                                                        </div>
+														<p class="input-txt-type01 pt10">매달 자동공유 가능 데이터 : <strong class="txt-c1">30GB</strong></p>
+														<p class="input-txt-type01 pt4">선물하기, 함께쓰기, 스마트 기기 공유 가능 데이터 : <strong class="txt-c2">10GB</strong></p>
+                                                    </div>
+												</div>
+												<hr class="cont-sp type1" aria-hidden="true"/>
+												<div class="cont-box nogaps-hoz">
+													<ul class="on-off-list new">
+														<li>
+															자동공유 사용중
+															<span class="widget">
+																<span class="widget-box switch">
+																	<span class="btn-switch type1 on">
+																		<span class="switch-style" role="checkbox" aria-checked="true" aria-disabled="false">
+																			<span class="off-tx">꺼짐</span>
+																			<!--접근성 수정-->
+																			<input type="checkbox" title="자동공유 사용중" checked="checked">
+																			<!-- //접근성 수정-->
+																			<span class="on-tx">켜짐</span>
+																		</span>
+																	</span>
+																</span>
+															</span>
+														</li>
+													</ul>
+												</div>
+												<!-- .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+												<div class="bt-fixed-area">
+													<ul class="bt-slice full">
+														<li class="bt-red1">
+															<button>설정하기</button>
+														</li>
+													</ul>
+												</div>
+												<!-- // .bt-fixed-area 바닥고정 버튼은 이 안에다가 추가 -->
+
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--// .component -->
+					</div>
+                    <!--// .cont-box -->
+
+					<div class="cont-box noborder bgnone">
+						<h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+						<ul class="pg-chk-list02">
+							<!--접근성 수정-->
+							<li><button class="btn-tip" aria-haspopup="true">T가족모아데이터 공유 설정 안내<i class="icon-badge-tip"><span class="blind">T가족모아데이터 공유 설정 안내 tip</span></i></button></li>
+							<!-- //접근성 수정-->
+						</ul>
+					</div>
+                    
+                </div>
+            </div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="prev-step">취소</button>
+            <!--// .popup-closeBtn -->
+		</div>
+		<!--// .popup hbs -->
+	</div>
+</body>
+</html>

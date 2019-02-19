@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+					</div>
+
+                    <div class="h-tit">T앱</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+				</div>
+			</div>
+		</div>
+        <!--// #header --> 
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+
+                <!-- 스와이프 -->
+                <div class="cont-box nogaps noborder">
+                    <div class="main-slide-banner slide-pagingtype">
+                        <!-- .widget -->
+                        <div class="widget">
+                            <div class="widget-box slider1">
+                                <div class="slider-box">
+                                    <ul class="slider">
+                                        <li>
+                                            <button>
+                                                <img src="/img/product/banner-ta01.png" alt="">
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button>
+                                                <img src="/img/product/banner-ta01.png" alt="">
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button>
+                                                <img src="/img/product/banner-ta01.png" alt="">
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--// .widget -->
+                    </div>
+                </div>
+                <!-- //스와이프 -->
+
+                <div class="filter-r"><button class="bt-dropdown text-type01" title="정렬조건" aria-haspopup="true">최신순</button></div>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <!-- .app-list -->
+                    <div class="app-list app-list-new">
+                        <div class="app-list-top">
+                            <div class="app-list-tit">설치된 앱 표시 <span class="i-atv"><span class="blind">active</span></span></div>
+                            <div class="app-list-toggle on-off-list new">
+                                <span class="widget">
+                                    <span class="widget-box switch">
+                                        <span class="btn-switch type1 on">
+                                            <span class="switch-style" role="checkbox" aria-checked="true" aria-disabled="false">
+                                                <span class="off-tx">꺼짐</span>
+                                                <input type="checkbox" title="설치된 앱 표시" checked="checked">
+                                                <span class="on-tx">켜짐</span>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="app-list-bottom">
+                            <ul>
+                                <li class="item">
+                                    <button class="bt">
+                                        <span class="app-ico">
+                                            <img src="/img/product/t-app01.png" alt="T전화" class="ico" />
+                                            <span class="i-new"><span class="blind">new</span></span>
+                                        </span>
+                                        <span class="app-name">T전화</span>
+                                    </button>
+                                </li>
+                                <li class="item">
+                                    <button class="bt">
+                                        <span class="app-ico">
+                                            <img src="/img/product/t-app02.png" alt="T연락처" class="ico" />
+                                        </span>
+                                        <span class="app-name">T연락처</span>
+                                    </button>
+                                </li>
+                                <li class="item">
+                                    <button class="bt">
+                                        <span class="app-ico">
+                                            <img src="/img/product/t-app03.png" alt="T맵" class="ico" />
+                                        </span>
+                                        <span class="app-name">T맵</span>
+                                    </button>
+                                </li>
+                                <li class="item">
+                                    <button class="bt">
+                                        <span class="app-ico">
+                                            <img src="/img/product/t-app04.png" alt="T ARS" class="ico" />
+                                        </span>
+                                        <span class="app-name">T ARS</span>
+                                    </button>
+                                </li>
+                                <li class="item">
+                                    <button class="bt">
+                                        <span class="app-ico">
+                                            <img src="/img/product/t-app05.png" alt="T페이" class="ico" />
+                                            <span class="i-atv"><span class="blind">active</span></span>
+                                        </span>
+                                        <span class="app-name">T페이</span>
+                                    </button>
+                                </li>
+                                <li class="item">
+                                    <button class="bt">
+                                        <span class="app-ico">
+                                            <img src="/img/product/t-app06.png" alt="T통화매니저" class="ico" />
+                                            <span class="i-atv"><span class="blind">active</span></span>
+                                        </span>
+                                        <span class="app-name">T통화매니저</span>
+                                    </button>
+                                </li>
+                                <li class="item">
+                                    <button class="bt">
+                                        <span class="app-ico">
+                                            <img src="/img/product/t-app07.png" alt="행복을 들려주는 도서관..." class="ico" />
+                                            <span class="i-atv"><span class="blind">active</span></span>
+                                        </span>
+                                        <span class="app-name">행복을 들려<br>주는 도서관</span>
+                                    </button>
+                                </li>
+                                <li class="item">
+                                    <button class="bt">
+                                        <span class="app-ico">
+                                            <img src="/img/product/t-app08.png" alt="T펫" class="ico" />
+                                            <span class="i-atv"><span class="blind">active</span></span>
+                                        </span>
+                                        <span class="app-name">T펫</span>
+                                    </button>
+                                </li>
+                                <li class="item">
+                                    <button class="bt">
+                                        <span class="app-ico">
+                                            <img src="/img/product/t-app09.png" alt="T데이터쿠폰" class="ico" />
+                                        </span>
+                                        <span class="app-name">T데이터쿠폰</span>
+                                    </button>
+                                </li>
+                                <li class="item">
+                                    <button class="bt">
+                                        <span class="app-ico">
+                                            <img src="/img/product/t-app10.png" alt="클라우드베리" class="ico" />
+                                        </span>
+                                        <span class="app-name">클라우드베리</span>
+                                    </button>
+                                </li>
+                                <li class="item">
+                                    <button class="bt">
+                                        <span class="app-ico">
+                                            <img src="/img/product/t-app11.png" alt="T멤버십" class="ico" />
+                                        </span>
+                                        <span class="app-name">T멤버십</span>
+                                    </button>
+                                </li>
+                                <li class="item">
+                                    <button class="bt">
+                                        <span class="app-ico">
+                                            <img src="/img/product/t-app12.png" alt="SKT 스마트홈" class="ico" />
+                                        </span>
+                                        <span class="app-name">SKT 스마트홈</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- // .app-list -->
+                </div>
+                <!-- // .cont-box -->
+                <!-- gap -->
+
+                <div class="etc-page-list">
+                    <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
+                    <ul class="pg-link-list">
+                        <li>
+                            <button class="bt">
+                                <i class="icon-price-plan-40"><span class="blind">요금제</span></i>요금제
+                            </button>
+                        </li>
+                        <li>
+                            <button class="bt">
+                                <i class="icon-vas-40"><span class="blind">부가서비스</span></i>부가서비스
+                            </button>
+                        </li>
+                        <li>
+                            <button class="bt">
+                                <i class="icon-internet-40"><span class="blind">인터넷 / 집전화 /  IPTV</span></i>인터넷 / 집전화 /  IPTV
+                            </button>
+                        </li> 
+                        <li>
+                            <button class="bt">
+                                <i class="icon-roaming-40"><span class="blind">T로밍</span></i>T로밍
+
+                            </button>
+                        </li>                                               
+                        <li>
+                            <button class="bt">
+                                <i class="icon-discount-40"><span class="blind">혜택 / 할인 > 요금할인</span></i>혜택 / 할인 > 요금할인
+                            </button>
+                        </li>
+                        <li>
+                            <button class="bt">
+                                <i class="icon-discount-40"><span class="blind">혜택 / 할인 > 결합할인</span></i>혜택 / 할인 > 결합할인
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <!-- // gap -->
+
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

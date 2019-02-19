@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+					<div class="h-tit">공항 T로밍센터</div>
+					<div class="h-serarch">
+						<button class="icon-gnb-search"><span class="blind">검색</span></button>
+					</div>
+				</div>
+			</div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="widget">
+                        <div class="widget-box tube">
+                            <ul class="tube-list three" role="group">
+                                <li role="radio" aria-checked="false" class=""><input type="radio" name="senddata">인천공항 1터미널</li>
+                                <li role="radio" aria-checked="false" class=""><input type="radio" name="senddata">인천공항 2터미널</li>
+                                <li role="radio" aria-checked="false" class=""><input type="radio" name="senddata">김포공항</li>
+                                <li role="radio" aria-checked="true" class="checked"><input type="radio" name="senddata" checked>제주공항</li>
+                                <li role="radio" aria-checked="false" class=""><input type="radio" name="senddata">김해공항</li>
+                                <li role="radio" aria-checked="false" class=""><input type="radio" name="senddata">대구공항</li>
+                                <li role="radio" aria-checked="false" class=""><input type="radio" name="senddata">인천항</li>
+                                <li role="radio" aria-checked="false" class=""><input type="radio" name="senddata">부산항</li>
+                                <li role="radio" aria-checked="false" class=""><input type="radio" name="senddata">제주신항</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="mapimg-area pt0"><img src="/img/product/place-img-04.png" alt="제주공항 5번 GATE 옆 SKT 로밍센터"/></div>
+                    <table class="data-a mt20">
+                        <caption>제주공항 로밍센터 처리업무, 위치, 업무시간 안내입니다.</caption>
+                        <colgroup>
+                            <col style="width:30%" />
+                            <col style="width:40%" />
+                            <col style="width:30%" />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th class="t-l" scope="col">처리업무</th>
+                                <th class="t-l" scope="col">위치</th>
+                                <th class="t-l" scope="col">업무시간</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="t-l">T파이 임대/<br />로밍폰 임대</td>
+                                <td class="t-l" rowspan="2">국제선 1층 입국장<br />맞은편 (5번 Gate 옆)</td>
+                                <td class="t-l" rowspan="2">09:00~19:00</td>
+                            </tr>
+                            <tr>
+                                <td class="t-l">자동로밍</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--// .cont-box -->
+                
+                <div class="ti-caption-gray">
+                    <span class="tit">로밍 업무는 각 지점에서도 이용하실 수 있습니다.</span>
+                </div>
+
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="place-list">
+                        <dl>
+                            <dt>강남, 강북, 수원, 보라매, 분당, 신촌, 안양, 영등포, 인천, 일산, 을지로, 의정부, 테크노마트 지점</dt>
+                            <dd class="time">AM 09:00 ~ PM 06:00</dd>
+                            <dd class="sub-tx">(토, 일, 공휴일 휴무)</dd>
+                            <dd>
+                                <ul class="ico-list">
+                                    <li><span class="ico type01"></span>자동로밍</li>
+                                    <li><span class="ico type02"></span>IB렌탈서비스</li>
+                                    <li><span class="ico type03"></span>로밍폰 임대</li>
+                                </ul>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>대구지점</dt>
+                            <dd class="time">AM 09:00 ~ PM 06:00</dd>
+                            <dd class="sub-tx">(토, 일, 공휴일 휴무)</dd>
+                            <dd>
+                                <ul class="ico-list">
+                                    <li><span class="ico type04"></span>자동로밍</li>
+                                    <li><span class="ico type05"></span>T파이 임대 (SKT 황금점)</li>
+                                    <li><span class="ico type06"></span>로밍폰 임대</li>
+                                </ul>
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="announcement-box top-line">
+                        <p class="announcement-bullet type01">T파이 임대 업무는 온라인 또는 고객센터 사전 예약 후 SKT 황금점 매장에서만 수령하실 수 있습니다.(주소: 대구 수성구 동대구로 98, 일요일 휴무)</p>
+                        <p class="announcement-bullet type01">I/B (Inbound) 렌탈서비스는 국내에 여행오신 분들과 단기 거주하시는 분들을 위해 국내에서 사용하실 수 있는 휴대폰/Sim을 임대해 드리는 서비스입니다.</p>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                    <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                    <ul class="noti-list02">
+                        <li><button aria-haspopup="true" class="tip-view-btn" title="고객센터(로밍폰 이용 시) TIP보기">고객센터(로밍폰 이용 시)<span class="tip-view">TIP</span></button></li>
+                        <li><button aria-haspopup="true" class="tip-view-btn" title="고객센터(해외에서 일반/공중/호텔전화 이용 시) TIP보기">고객센터(해외에서 일반/공중/호텔전화 이용 시)<span class="tip-view">TIP</span></button></li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

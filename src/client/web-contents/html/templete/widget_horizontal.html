@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+<body>
+<style>
+body{background:#fff;padding:10px;box-sizing:border-box;}
+xmp{box-sizing:border-box;max-width:100%;padding:10px;border-radius:5px;background:#000;color:#fff;}
+.guide-sample{box-sizing:border-box;padding:10px;}
+.guide-desc{padding:10px;}
+</style>
+<h1>horizontal</h1>
+<pre class="guide-desc">
+- .widget 다음에는 .widget-box 만 올수있음
+- .widget-box 에는 정해진 class명 외에 사용금지 widgets.js 참조
+- 특정 style이 필요할시 .widget .widget-box 두 태그의 구조만 바꾸지 않고 자유롭게 수정가능
+ex) .widget 상위에 class지정
+ex) .widget-box 내부에 태그추가 & class 추가
+- .horizontal-list > li의 총 width값을 합하여 .horizontal-slide 과 비교하여 .horizontal-list 의 width값을 설정
+</pre>
+
+
+<div class="guide-sample">
+<!-- .widget -->
+<div class="widget"> 
+    <div class="widget-box horizontal">
+        <div class="horizontal-slide">
+            <ul class="horizontal-list">
+                <li><div style="width:100px;height:100px;margin:10px;background:red;"></div></li>
+                <li><div style="width:100px;height:100px;margin:10px;background:red;"></div></li>
+                <li><div style="width:100px;height:100px;margin:10px;background:red;"></div></li>
+                <li><div style="width:100px;height:100px;margin:10px;background:red;"></div></li>
+                <li><div style="width:100px;height:100px;margin:10px;background:red;"></div></li>
+                <li><div style="width:100px;height:100px;margin:10px;background:red;"></div></li>
+                <li><div style="width:100px;height:100px;margin:10px;background:red;"></div></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- .widget -->
+</div>
+
+<xmp class="guide-desc">
+<!-- .widget -->
+<div class="widget"> 
+    <div class="widget-box horizontal">
+        <div class="horizontal-slide">
+            <ul class="horizontal-list">
+                <li><div style="width:100px;height:100px;margin:10px;background:red;"></div></li>
+                <li><div style="width:100px;height:100px;margin:10px;background:red;"></div></li>
+                <li><div style="width:100px;height:100px;margin:10px;background:red;"></div></li>
+                <li><div style="width:100px;height:100px;margin:10px;background:red;"></div></li>
+                <li><div style="width:100px;height:100px;margin:10px;background:red;"></div></li>
+                <li><div style="width:100px;height:100px;margin:10px;background:red;"></div></li>
+                <li><div style="width:100px;height:100px;margin:10px;background:red;"></div></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- .widget -->
+</xmp>
+
+<div class="guide-sample">
+<h3>다른상품 더보기</h3>
+<!-- .widget -->
+<div class="widget"> 
+    <div class="widget-box horizontal">
+        <div class="horizontal-slide">
+            <ul class="horizontal-list add-prod">
+                <li>
+                    <div>
+                        <button>
+                            <span class="ico type1"></span>
+                            <span>모바일<br/>부가상품</span>
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button>
+                            <span class="ico type2"></span>
+                            <span>혜택과 할인</span>
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button>
+                            <span class="ico type3"></span>
+                            <span>T 로밍</span>
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button>
+                            <span class="ico type4"></span>
+                            <span>인터넷/전화/IPTV</span>
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button>
+                            <span class="ico type5"></span>
+                            <span>NUGU 서비스</span>
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button>
+                            <span class="ico type5"></span>
+                            <span>스마트홈<br />서비스</span>
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button>
+                            <span class="ico type5"></span>
+                            <span>보안솔루션<br />서비스</span>
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button>
+                            <span class="ico type5"></span>
+                            <span>T apps<br />서비스</span>
+                        </button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- .widget -->
+</div>
+
+<xmp class="guide-desc">
+<h3>다른상품 더보기</h3>
+<!-- .widget -->
+<div class="widget"> 
+    <div class="widget-box horizontal">
+        <div class="horizontal-slide">
+            <ul class="horizontal-list add-prod">
+                <li>
+                    <div>
+                        <button>
+                            <span class="ico type1"></span>
+                            <span>모바일<br/>부가상품</span>
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button>
+                            <span class="ico type2"></span>
+                            <span>혜택과 할인</span>
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button>
+                            <span class="ico type3"></span>
+                            <span>T 로밍</span>
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button>
+                            <span class="ico type4"></span>
+                            <span>인터넷/전화/IPTV</span>
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button>
+                            <span class="ico type5"></span>
+                            <span>NUGU 서비스</span>
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button>
+                            <span class="ico type5"></span>
+                            <span>스마트홈<br />서비스</span>
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button>
+                            <span class="ico type5"></span>
+                            <span>보안솔루션<br />서비스</span>
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button>
+                            <span class="ico type5"></span>
+                            <span>T apps<br />서비스</span>
+                        </button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- .widget -->
+</xmp>
+
+<div class="guide-sample">
+<h3>함께하면 더욱 유용한 상품</h3>
+<!-- .widget -->
+<div class="widget"> 
+    <div class="widget-box horizontal">
+        <div class="horizontal-slide">
+            <ul class="horizontal-list useful-goods">
+                <li>
+                    <div>
+                        <button class="bg1"> <!-- 보라색 -->
+                            <span class="located top">
+                                <span class="txt-tit">LTE 안심옵션</span>
+                                <span class="txt-type">부가상품</span>
+                            </span>
+                            <span class="located bottom">
+                                <span class="txt-detail">기본 데이터 소진 후 요금 부담 없이 데이터 이용하기</span>
+                            </span>
+                            <span class="ico"></span>
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button class="bg2"> <!-- 녹색 -->
+                            <span class="located top">
+                                <span class="txt-tit">LTE 안심옵션</span>
+                                <span class="txt-type">부가상품</span>
+                            </span>
+                            <span class="located bottom">
+                                <span class="txt-detail">기본 데이터 소진 후 요금 부담 없이 데이터 이용하기</span>
+                            </span>
+                        </button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- .widget -->
+</div>
+
+<xmp class="guide-desc">
+<h3>함께하면 더욱 유용한 상품</h3>
+<!-- .widget -->
+<div class="widget"> 
+    <div class="widget-box horizontal">
+        <div class="horizontal-slide">
+            <ul class="horizontal-list useful-goods">
+                <li>
+                    <div>
+                        <button class="bg1"> <!-- 보라색 -->
+                            <span class="located top">
+                                <span class="txt-tit">LTE 안심옵션</span>
+                                <span class="txt-type">부가상품</span>
+                            </span>
+                            <span class="located bottom">
+                                <span class="txt-detail">기본 데이터 소진 후 요금 부담 없이 데이터 이용하기</span>
+                            </span>
+                            <span class="ico"></span>
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <button class="bg2"> <!-- 녹색 -->
+                            <span class="located top">
+                                <span class="txt-tit">LTE 안심옵션</span>
+                                <span class="txt-type">부가상품</span>
+                            </span>
+                            <span class="located bottom">
+                                <span class="txt-detail">기본 데이터 소진 후 요금 부담 없이 데이터 이용하기</span>
+                            </span>
+                        </button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- .widget -->
+</xmp>
+
+</body>
+</html>

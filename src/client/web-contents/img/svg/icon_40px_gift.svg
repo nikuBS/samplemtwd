@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="41px" height="41px" viewBox="0 0 41 41" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>icon_40px_gift</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Icon_Badge_Graphic" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="##Icon/40/Gift">
+            <rect id="Icon_Area" fill-opacity="0" fill="#FFFFFF" x="0" y="0" width="40.32" height="40.32"></rect>
+            <rect id="Rectangle-2" stroke="#666666" stroke-width="2" x="2.52" y="7.56" width="35.28" height="10.92"></rect>
+            <polyline id="Rectangle-4" stroke="#666666" stroke-width="2" stroke-linecap="round" stroke-linejoin="bevel" transform="translate(19.740000, 4.620000) rotate(-315.000000) translate(-19.740000, -4.620000) " points="21.84 2.52 21.594049 6.47404897 17.64 6.72"></polyline>
+            <polyline id="Rectangle-2-Copy" stroke="#666666" stroke-width="2" points="35.28 18.48 35.28 36.12 5.04 36.12 5.04 18.48 5.04 18.48"></polyline>
+            <path d="M14.7,8.022 L14.7,34.8816485" id="Line-4" stroke="#666666" stroke-width="2" stroke-linecap="square"></path>
+            <path d="M25.62,8.022 L25.62,34.8816485" id="Line-4-Copy" stroke="#666666" stroke-width="2" stroke-linecap="square"></path>
+        </g>
+    </g>
+</svg>

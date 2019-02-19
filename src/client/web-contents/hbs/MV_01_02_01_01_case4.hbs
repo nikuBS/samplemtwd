@@ -1,0 +1,67 @@
+<div class="popup tw-popup">
+    <div class="popup-page nobg layer">
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti align-l">
+                    <h1>법정대리인 동의하기</h1>
+                </div>
+        <!-- .popup-closeBtn -->
+        <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+        <!--// .popup-closeBtn -->
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-top">
+                    <div class="sms-confirm-box">
+                        <h3 class="tit-type3 bk">문자인증</h3>
+                        <div class="sms-confirm-des tx-black3">미성년자는 법정대리인의 동의(문자 인증)가 있어야 해당 서비스를 이용하실 수 있습니다. </div>
+                        <ul class="form-data-list pt26">
+                            <li>
+                                <label class="tit">휴대폰번호</label>
+                                <!-- 2019-01-17 inp-btn 추가 -->
+                                <div class="inputbox bt-add inp-btn pt6">
+                                    <span class="input">
+                                        <input type="text" value="010-12**-56**" title="휴대폰번호" aria-describedby="aria-phone-tx1" readonly="readonly">
+                                    </span>
+                                    <span class="bt-box">
+                                        <button type="button">인증번호 받기</button>
+                                    </span>
+                                </div>
+                                <span class="tx-box">
+                                    <span id="aria-phone-tx1" class="validation-txt">정상적으로 발송되었습니다.</span><!-- 정상 작동되지 않을때는 .none 추가 -->
+                                </span>
+                                <span class="inputbox pt20">
+                                    <span class="input">
+                                        <input type="number" value="123456" title="인증번호 숫자 6자리 입력하세요" aria-describedby="aria-phone-tx2">
+                                        <button class="cancel"><span class="blind">삭제</span></button>
+                                    </span>
+                                    <span class="tx-box">
+                                        <span id="aria-phone-tx2" class="error-txt">인증번호가 일치하지 않습니다.</span><!-- 정상 작동되지 않을때는 .none 추가 -->
+                                    </span>
+                                </span>
+                            </li>
+                        </ul>
+                        <div class="announcement-box pt20">
+                            <p class="announcement-bullet type02">미리 등록하신 법정대리인 명의의 이동전화번호(SK텔레콤 회선만 가능)로만 인증번호를 선택하실 수 있습니다.</p>
+                        </div>
+                    </div>
+                    
+                </div>
+                <!--// .cont-box -->
+                <ul class="bt-slice full">
+                    <li class="bt-red1">
+                        <button>인증하기</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--// .container-wrap -->
+    </div>
+    <div class="popup-blind"></div>
+</div>

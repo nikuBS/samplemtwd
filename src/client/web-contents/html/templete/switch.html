@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+</head>
+
+
+<body>
+   <div class="cont-box">
+        <!-- .widget -->
+        <span class="widget">
+            <span class="widget-box switch">
+                <span class="btn-switch type1">
+                    <span class="switch-style" role="checkbox" aria-checked="false">
+                        <span class="off-tx">꺼짐</span>
+                         <input type="checkbox" title="이번 달 차단" />
+                        <span class="on-tx">켜짐</span>
+                    </span>
+                </span>
+            </span>
+        </span>
+        <br>
+        <span class="widget">
+            <span class="widget-box switch">
+                <span class="btn-switch type1 on">
+                    <span class="switch-style" role="checkbox" aria-checked="true">
+                        <span class="off-tx">해제</span>
+                        <input type="checkbox" title="다음 달부터 차단" checked />
+                        <span class="on-tx">차단</span>
+                    </span>
+                </span>
+            </span>
+        </span>
+        <br>
+        <span class="widget">
+            <span class="widget-box switch">
+                <span class="btn-switch type1 disabled"><!-- 비활성화 class .disabled 추가 -->
+                    <span class="switch-style" role="checkbox" aria-checked="false" aria-disabled="true"><!-- 비활성화 aria-disabled="true" 추가 -->
+                        <span class="off-tx">꺼짐</span>
+                         <input type="checkbox" title="생체인증" disabled /><!-- 비활성화 attr disabled 추가 -->
+                        <span class="on-tx">켜짐</span>
+                    </span>
+                </span>
+            </span>
+        </span>
+        <br>
+        <br>
+        <div class="widget">
+            <div class="widget-box switch2">
+                <div class="btn-switch type2">
+                   <ul>
+                       <li role="radio" aria-checked="true" class="checked"><input name="gbmb" type="radio" title="용량 타입 선택" checked/>GB</li>
+                       <li role="radio" aria-checked="false"><input name="gbmb" type="radio" title="용량 타입 선택"/>MB</li>
+                   </ul>
+                </div>
+            </div>
+        </div>
+        <!-- //.widget -->
+    </div>
+</body>
+
+</html>

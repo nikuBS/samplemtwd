@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name="format-detection" content="telephone=no, address=no, email=no" />
+		<link rel="shortcut icon" href="/img/common/favicon.ico" />
+		<link rel="shortcut icon" href="/img/common/favicon.png" />
+		<link rel="apple-touch-icon" href="/img/common/favicon.png" />
+		<meta name="description" content="페이지설명" />
+		<meta name="keywords" content="서비스키워드" />
+		<meta property="og:title" content="SKT 홈페이지" />
+		<meta property="og:site_name" content="SKT" />
+		<meta property="og:image" content="/image/common/skt_facebook.jpg" />
+		<meta property="og:description" content="SKT framework" />
+		<title>SKT</title>
+		<link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+		<link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+		<link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+		<link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+		<script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+		<script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+		<script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+		<script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+		<script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+		<script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+		
+	</head>
+
+
+	<body>
+		<!-- #skip_navigation -->
+		<div id="skipNav" class="skip_navi">
+			<ul>
+				<li><a href="#gnb">메뉴 바로가기</a></li>
+				<li><a href="#contents">본문 바로가기</a></li>
+				<li><a href="#footer">푸터 바로가기</a></li>
+			</ul>
+		</div>
+		<!--// #skip_navigation -->
+		<div class="wrap">
+			<!-- #header -->
+			<div id="header" class="header-wrap">
+				<div class="header">
+					<div class="header-ti home">
+						<h1><a class="logo" href=""><img src="/img/common/logo-tworld.png" alt="Tworld" /></a></h1>
+					</div>
+					<button class="bt-dropdown small" title="회선 선택" aria-haspopup="true">010-87**-13**<span class="ico"></span></button>
+				</div>
+			</div>
+			<!--// #header -->
+			<!-- #contents -->
+			<div id="contents" class="container-wrap">
+				<h2 class="blind">내용</h2>
+				<div class="container">
+					<div class="ti-caption-gray bgnone">
+						<p class="tit">2018년 09월</p>
+					</div>
+					<!-- .cont-box -->
+					<div class="cont-box bgnone noborder nogaps-hoz">
+						<div class="shadow-box">
+							<div class="alarm_list">
+								<div class="con-box">
+									<p class="con0">
+										<span>09월 06일 목요일</span>
+										<span>오전 11시 09분</span>
+									</p>
+									<p class="con1"><strong>데이터 선물하기</strong><br/>홍*동(010-12**-34**)님에게 데이터<br/>선물을 완료했습니다.</p>
+									<p class="con2">선물 한 데이터 <strong>500 MB</strong></p>
+								</div>
+								<button class="detail-view">선물내역 보기<i class="detail-view-ic"></i></button>
+							</div>
+						</div>
+						<div class="shadow-box mt8">
+							<div class="alarm_list">
+								<div class="con-box">
+									<p class="con0">
+										<span>09월 06일 목요일</span>
+										<span>오전 10시 21분</span>
+									</p>
+									<p class="con1"><strong>요금제 변경</strong><br/>band 데이터 6.5G 요금제에서 T시그니처 Master<br/>요금제로 변경 되었습니다.</p>
+									<p class="con2">변경된 요금제 <strong>T 시그니처 Master</strong></p>
+								</div>
+								<button class="detail-view">더보기<i class="detail-view-ic"></i></button>
+							</div>
+						</div>
+						<div class="shadow-box mt8">
+							<div class="alarm_list">
+								<div class="con-box">
+									<p class="con0">
+										<span>09월 02일 일요일</span>
+										<span>오후 01시 30분</span>
+									</p>
+									<p class="con1"><strong>부가서비스 신청</strong><br/>부가서비스 가입이 완료 되었습니다.</p>
+									<p class="con2">가입한 부가서비스 <strong>060발신차단서비스</strong></p>
+								</div>
+								<button class="detail-view">나의 부가서비스 보기<i class="detail-view-ic"></i></button>
+							</div>
+						</div>
+						<div class="shadow-box mt8">
+							<div class="alarm_list">
+								<div class="con-box">
+									<p class="con0">
+										<span>09월 02일 일요일</span>
+										<span>오후 01시 30분</span>
+									</p>
+									<p class="con1"><strong>부가서비스 해지</strong><br/>부가서비스 해지가 완료 되었습니다.</p>
+									<p class="con2">해지한 부가서비스 <strong>레터링</strong></p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--// .cont-box -->
+					
+					<div class="ti-caption-gray bgnone">
+						<!--접근성 수정-->
+						<p class="tit" id="aria-comp-bt">2018년 08월 <button aria-labelledby="aria-comp-bt" class="open-ic"><i class="blind">상세보기</i></button></p>
+						<!-- //접근성 수정-->
+					</div>
+					<!-- .cont-box -->
+					<div class="cont-box bgnone noborder nogaps-hoz">
+						<!-- 알림 리스트 영역 -->
+					</div>
+					<!--// .cont-box -->
+				</div>
+			</div>
+			<!--// #contents -->
+		</div>
+	</body>
+
+</html>

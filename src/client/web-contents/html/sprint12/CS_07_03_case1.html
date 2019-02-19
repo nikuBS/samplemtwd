@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="h-belt">
+                <div class="h-default">
+                    <div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <div class="h-tit">주요 용어</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+
+                <div class="cont-box">
+                    <div class="info-form-box">
+                        <p class="form-label" id="aria-exp-label2">유심 잠금해제 주요 용어</p>
+                        <button class="bt-dropdown big mt14" title="유심 잠금해제 주요 용어" aria-haspopup="true">기변(기기변경) 관련 용어<span class="ico"></span></button><!-- 웹접근성 수정 -->
+                    </div>
+                </div>
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <div class="cont-box">
+                    <h3 class="information-use-title">유심기변</h3>
+                    <p class="information-use-text03">고객님의 기기에 들어있는 유심 카드를 뽑아 다른 기기에 꽂은 다음, 별도 전산 변경 절차 없이 바로 사용하실 수 있습니다.</p>
+                    <h3 class="information-use-title">전산기변</h3>
+                    <p class="information-use-text03">대리점을 방문하여 기기변경 하는 것입니다. 대리점에서 기기변경 시 전산에 기기정보를 등록하기 때문에 전산기변이라고 합니다. 유심기변과 달리 기기에 대해 소유권을 인정해 드립니다.</p>
+                    <h3 class="information-use-title">확정기변</h3>
+                    <p class="information-use-text03">유심기변을 한 기기를 나의 소유로 전산에 등록하는 것입니다. 예를 들어, 친구 기기를 사는 경우, 유심기변을 해서 직접 사용해보고 친구와 함께 대리점에 방문하여 고객님 명의로 전산 등록하는 것입니다.</p>
+                    <p class="information-use-text04">* 확정기변을 하실 때는 꼭 기기의 원소유자와 동반하셔야 합니다. 도난∙분실 된 기기를 다른 사람이 함부로 사용할 수 없도록 기기의 원소유자를 확인합니다.</p>
+                </div>
+            </div>  
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+</html>

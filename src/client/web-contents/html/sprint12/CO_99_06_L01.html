@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="h-belt">
+                <div class="h-default">
+                    <div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <div class="h-tit">메뉴명최대열한자까지됨</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                    <!-- .component -->
+                    <div class="component">
+                        <div class="component-box tabs">
+                            <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
+                                <div class="tab-linker">
+                                    <ul role="tablist">
+                                        <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1"><a href="">선물내역</a></li><!-- true 열림 -->
+                                        <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2"><a href="">조르기내역</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-contents">
+                                    <ul>
+                                        <li role="tabpanel" id="tab1-tab" aria-labelledby="tab1">
+                                            <div class="inner">
+                                                <div class="contents-info-list">
+                                                    <p class="ti-desc"><strong><span class="num">23</span>개</strong> 선물 내역이 있습니다.</p>
+                                                    <div class="list-top">
+                                                        <button class="bt-dropdown small" title="셀렉트 선택">전체 / 3개월<span class="ico"></span></button>
+                                                    </div>
+                                                    <ul class="result-history">
+                                                        <li>
+                                                            <div class="info-change">
+                                                                <span class="arrow-receive"><span class="blind">받음</span></span>
+                                                            </div>
+                                                            <div class="info-user">
+                                                                <span class="info-title">김한림</span>
+                                                                <span class="info-sub">010-46**-10**</span>
+                                                            </div>
+                                                            <div class="info-data">
+                                                                <!-- 1기가 미만인 경우 -->
+                                                                <span class="info-title">500MB</span>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="info-change">
+                                                                <span class="arrow-send"><span class="blind">보냄</span></span>
+                                                            </div>
+                                                            <div class="info-user">
+                                                                <span class="info-title">김종준</span>
+                                                                <span class="info-sub">010-46**-10**</span>
+                                                            </div>
+                                                            <div class="info-data">
+                                                                <!-- 1기가 이상인 경우 -->
+                                                                <span class="info-title">4GB</span>
+                                                                <span class="info-sub">4,240MB</span>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="info-change">
+                                                                <span class="arrow-send"><span class="blind">보냄</span></span>
+                                                            </div>
+                                                            <div class="info-user">
+                                                                <span class="info-title">김종준</span>
+                                                                <span class="info-sub">010-46**-10**</span>
+                                                            </div>
+                                                            <div class="info-data">
+                                                                <span class="info-title">4GB</span>
+                                                                <span class="info-sub">4,240MB</span>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="info-change">
+                                                                <span class="arrow-send"><span class="blind">보냄</span></span>
+                                                            </div>
+                                                            <div class="info-user">
+                                                                <span class="info-title">김종준</span>
+                                                                <span class="info-sub">010-46**-10**</span>
+                                                            </div>
+                                                            <div class="info-data">
+                                                                <span class="info-title">4GB</span>
+                                                                <span class="info-sub">4,240MB</span>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="info-change">
+                                                                <span class="arrow-receive"><span class="blind">받음</span></span>
+                                                            </div>
+                                                            <div class="info-user">
+                                                                <span class="info-title">김종준<span class="mark-auto">자동</span></span>
+                                                                <span class="info-sub">010-46**-10**</span>
+                                                            </div>
+                                                            <div class="info-data">
+                                                                <span class="info-title">4GB</span>
+                                                                <span class="info-sub">4,240MB</span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                    <a class="bt-more" href="">더보기<span>(20)</span></a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li role="tabpanel" id="tab2-tab" aria-labelledby="tab2">
+                                            2
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+    <script>
+    $(document).ready(function(){
+        skt_landing.action.popup.open({
+            url:'/hbs/',
+            'hbs':'dropdown',
+             'group':[{
+                'title':'모바일',
+                'list':[
+                    {'txt':'가나다라마바사','option':'checked','representation':true,/*'integration':true,*/'line':'010-46**-12**'},
+                    {'txt':'선불폰','option':'disabled',/*'representation':false,*/'integration':true,'line':'010-11**-12**'},
+                    {'txt':'T WiBro','option':'disabled',/*'representation':false,'integration':false,*/'line':'P******'},
+                    {'txt':'인터넷','option':'',/*'representation':false,'integration':false,*/'line':'인천 연********'},
+                    {'txt':'포인트캠','option':'',/*'representation':false,'integration':false,*/'line':'010-46**-**'}
+                ]
+            },{
+                'title':'인터넷/IPTV/집전화',
+                'list':[
+                    {'txt':'인터넷','option':'',/*'representation':false,'integration':false,*/'line':'인천 연********'}
+                ]
+            },{
+                'title':'보안솔루션',
+                'list':[
+                    {'txt':'포인트캠','option':'',/*'representation':false,'integration':false,*/'line':'7080163491'}
+                ]
+            }],
+        'bt_txt':'회선관리'});
+    });
+
+    //skt_landing.action.popup.close();   //닫기
+    //skt_landing.action.popup.dropdown_size_chk(); //더보기시 스크롤 계산
+    </script>
+</body>
+
+</html>

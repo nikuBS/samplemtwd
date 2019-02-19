@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+					</div>
+
+                    <div class="h-tit">나의 요금제</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+				</div>
+			</div>
+		</div>
+        <!--// #header --> 
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+
+                <a href="#none" class="plan-compact-info"><!--2019.02.14 태그변경-->
+                    <div class="plan">
+                        <strong class="tit">뉴 T끼리 맞춤형(200분+6GB)</strong><!--2019.02.14 태그변경-->
+                        <span class="val">34,000원</span>
+                    </div>
+                    <div class="sub">
+                        <span class="hash">#LTE폰</span>
+                        <span class="rest">월정액(부가세 포함)</span>
+                    </div>
+                    <div class="service-wrap">
+                        <div class="service">
+                            <span class="sv-spec data">
+                                <i class="ico-data-plan"></i>6.0GB
+                            </span>
+                            <span class="sv-spec">
+                                <i class="ico-phone-plan"></i>SK텔레콤<br />고객 간 무제한
+                            </span>
+                            <span class="sv-spec">
+                                <i class="ico-msg-plan"></i>기본문자
+                            </span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                   <ul class="btn-link-list">
+                        <li class="last-line"><button>나의 혜택 보기</button></li>
+                        <li class="last-line"><button>옵션 변경</button></li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                   <ul class="full-link-list">
+                        <li>
+                            <button>
+                                <span class="inner">
+                                    <span class="tit">요금제 변경 가능 알림 서비스</span>
+                                </span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-btm">
+                   <h3 class="tit-type7">옵션 / 할인 프로그램</h3>
+                   <div class="separate-link-list">
+                        <ul>
+                            <li>
+                                <div class="txt-area" id="aria-separate-list01"><!--접근성 수정 aria-labelledby추가 -->
+                                    <span class="tit">선택약정 할인 제도</span>
+                                    <span class="join-date">가입일 2018.8.15.</span>
+                                    <button class="bt-link-tx underline" title="선택약정 할인 제도">가입내역 조회</button> <!--웹접근성 title-->
+                                </div>
+                                <button class="btn" aria-labelledby="aria-separate-list02">상세보기</button><!--접근성 수정 aria-labelledby추가 -->
+                            </li>
+                            <li>
+                                <div class="txt-area" id="aria-separate-list02"><!--접근성 수정 aria-labelledby추가 -->
+                                    <span class="tit">요금약정 할인 제도</span>
+                                    <span class="join-date">가입일 2018.8.15.</span>
+                                    <button class="bt-link-tx underline" title="요금약정 할인 제도">가입내역 조회 </button><!--웹접근성 title-->
+                                </div>
+                                <button class="btn" aria-labelledby="aria-separate-list02">상세보기</button><!--접근성 수정 aria-labelledby추가 -->
+                            </li>
+                            <li>
+                                <div class="txt-area" id="aria-separate-list03"><!--접근성 수정 aria-labelledby추가 -->
+                                    <span class="tit">가족나눔데이터</span>
+                                    <span class="join-date">가입일 2018.8.15.</span>
+                                </div>
+                                <button class="btn" aria-labelledby="aria-separate-list03">상세보기</button><!--접근성 수정 aria-labelledby추가 -->
+                            </li>
+                            <li>
+                                <div class="txt-area" id="aria-separate-list04"><!--접근성 수정 aria-labelledby추가 -->
+                                    <span class="tit">TB끼리 온가족 무료</span>
+                                    <span class="join-date">가입일 2018.8.15.</span>
+                                </div>
+                                <button class="btn" aria-labelledby="aria-separate-list04">상세보기</button><!--접근성 수정 aria-labelledby추가 -->
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                
+                <!-- .cont-box -->
+                <div class="cont-box nogaps">
+                   <ul class="full-link-list">
+                        <li>
+                            <button>
+                                <span class="inner">
+                                    <span class="tit">요금제 변경하기</span>
+                                </span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+                <!-- .cont-box -->
+                <div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                    <ul class="pg-chk-list02">
+                        <li><button class="btn-tip">요금제 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+				
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

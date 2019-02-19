@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+
+</head>
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="header">
+                <div class="header-ti home">
+                    <h1><a class="logo" href=""><img src="/img/common/logo-tworld.png" alt="Tworld" /></a></h1>
+                </div>
+                <!--<button class="bt-dropdown small" title="회선 선택" aria-haspopup="true">010-87**-13**<span class="ico"></span></button>-->
+                <!--<button class="bt-dropdown small" title="회선 선택" aria-haspopup="true"><span class="tx-default">인터넷</span><span class="ico"></span></button>-->
+                <!--<button class="bt-user-status">신규 개통</button>-->
+                <button class="bt-user-status">로그인</button>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box noborder">
+                    <div class="main-login-ti">
+                        <p class="login-ment">로그인 후 T 회원만을 위한 혜택과 서비스를 이용해보세요.</p>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                <!-- .cont-box -->
+                <div class="cont-box nogaps noborder">
+                    <div class="main-slide-banner">
+                        <!-- .widget -->
+                        <div class="widget">
+                            <div class="widget-box slider1">
+                                <div class="slider-box">
+                                    <ul class="slider">
+                                        <li>
+                                            <button>
+                                                <img src="/img/dummy/dmy-th3-1.png" alt="O CAMPUS 지금 바로 신청해! 오직 대학생을 위한 혜택! 대용량 클라우드 & 캠퍼스 데이터">
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button>
+                                                <img src="/img/dummy/dmy-th3-1.png" alt="O CAMPUS 지금 바로 신청해! 오직 대학생을 위한 혜택! 대용량 클라우드 & 캠퍼스 데이터">
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button>
+                                                <img src="/img/dummy/dmy-th3-1.png" alt="O CAMPUS 지금 바로 신청해! 오직 대학생을 위한 혜택! 대용량 클라우드 & 캠퍼스 데이터">
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--// .widget -->
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <!-- 2018-10-23 영역 추가 -->
+                <div class="ti-caption-gray">
+                    <span class="tit">바로가기</span>
+                    <button class="btn-txt" title="바로가기 편집하기">편집</button>
+                </div>
+                <!--// 2018-10-23 영역 추가 -->
+                
+                <!-- 2018-10-23 슬라이드로 수정 -->
+                <div class="cont-box nogaps">
+                    <!-- .widget -->
+                    <div class="widget"> 
+                        <div class="widget-box horizontal">
+                            <div class="horizontal-slide main-quick-menu">
+                                <ul class="horizontal-list">
+                                    <li><button class="plan"><span class="ico"></span>요금제</button></li>
+                                    <li><button class="optional"><span class="ico"></span>부가서비스</button></li>
+                                    <li><button class="subscr"><span class="ico"></span>가입정보</button></li>
+                                    <li><button class="data"><span class="ico"></span>데이터</button></li>
+                                    <li><button class="line"><span class="ico"></span>집전화/<br/>인터넷/TV</button></li>
+                                    <li><button class="roaming"><span class="ico"></span>T로밍</button></li>
+                                    <li><button class="charge"><span class="ico"></span>요금</button></li>
+                                    <li><button class="benefit"><span class="ico"></span>혜택</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- .widget -->
+                </div>
+                <!--// 2018-10-23 슬라이드로 수정 -->
+
+                <hr class="cont-sp type1" aria-hidden="true" />
+                <!-- .cont-box -->
+                <div class="cont-box bgnone noborder nogaps-hoz">
+                    <div class="shadow-box mt30">
+                        <div class="cont-card-ti fixed">
+                            <button>
+                                <span class="card-ti-txt">할인혜택</span>
+                                <span class="ico"></span>
+                            </button>
+                        </div>
+                        <div class="main-slide-banner dot-btm">
+                            <!-- .widget -->
+                            <div class="widget">
+                                <div class="widget-box slider1">
+                                    <div class="slider-box">
+                                        <ul class="slider">
+                                            <li>
+                                                <button>
+                                                    <img src="/img/dummy/dmy-th3-2.png" alt="SKT의 가족에게 드리는 특별한 혜택 첫 번째! 결합 할인. 할인 혜택 보기">
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button>
+                                                    <img src="/img/dummy/dmy-th3-2.png" alt="SKT의 가족에게 드리는 특별한 혜택 첫 번째! 결합 할인. 할인 혜택 보기">
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button>
+                                                    <img src="/img/dummy/dmy-th3-2.png" alt="SKT의 가족에게 드리는 특별한 혜택 첫 번째! 결합 할인. 할인 혜택 보기">
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--// .widget -->
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                <!-- .cont-box -->
+                <div class="cont-box bgnone noborder nogaps-hoz">
+                    <div class="shadow-box mt30">
+                        <div class="main-slide-banner">
+                            <!-- .widget -->
+                            <div class="widget">
+                                <div class="widget-box slider1">
+                                    <div class="slider-box">
+                                        <ul class="slider">
+                                            <li>
+                                                <button>
+                                                    <img src="/img/dummy/dmy-th3-3.png" alt="세상이 요구하는 1순위? 오직 내가! 0 순위!">
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button>
+                                                    <img src="/img/dummy/dmy-th3-3.png" alt="세상이 요구하는 1순위? 오직 내가! 0 순위!">
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button>
+                                                    <img src="/img/dummy/dmy-th3-3.png" alt="세상이 요구하는 1순위? 오직 내가! 0 순위!">
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--// .widget -->
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                <!-- .cont-box -->
+                <div class="cont-box bgnone noborder nogaps-hoz">
+                    <div class="shadow-box mt30">
+                        <div class="cont-card-ti">
+                            <button>
+                                <span class="card-ti-txt">이럴때 이렇게 하세요.</span>
+                                <span class="ico"></span>
+                            </button>
+                        </div>
+                        <div class="main-faq-box">
+                            <ul>
+                                <li>
+                                    <button>
+                                        <img src="/img/ico/ico-main-faq-data.png" alt="데이터 아이콘">
+                                        데이터가 부족할때
+                                    </button>
+                                </li>
+                                <li>
+                                    <button>
+                                        <img src="/img/ico/ico-main-faq-miss.png" alt="분실 아이콘">
+                                        휴대폰을 분실했을 때
+                                    </button>
+                                </li>
+                                <li>
+                                    <button>
+                                        <img src="/img/ico/ico-main-faq-child.png" alt="아이 아이콘">
+                                        우리 아이 스마트폰 관리
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                <!-- .cont-box -->
+                <div class="cont-box bgnone noborder nogaps-hoz">
+                    <div class="shadow-box mt30">
+                        <div class="cont-card-ti fixed">
+                            <button>
+                                <span class="card-ti-txt">이벤트</span>
+                                <span class="ico"></span>
+                            </button>
+                        </div>
+                        <div class="main-slide-banner dot-btm">
+                            <!-- .widget -->
+                            <div class="widget">
+                                <div class="widget-box slider1">
+                                    <div class="slider-box">
+                                        <ul class="slider">
+                                            <li>
+                                                <button>
+                                                    <img src="/img/dummy/dmy-th3-4.png" alt="Galaxy Note9와 T플랜으로 가족을 9하라. 이벤트 보기">
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button>
+                                                    <img src="/img/dummy/dmy-th3-4.png" alt="Galaxy Note9와 T플랜으로 가족을 9하라. 이벤트 보기">
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button>
+                                                    <img src="/img/dummy/dmy-th3-4.png" alt="Galaxy Note9와 T플랜으로 가족을 9하라. 이벤트 보기">
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--// .widget -->
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+                <!-- .cont-box -->
+                <div class="cont-box bgnone noborder nogaps-hoz">
+                    <div class="shadow-box mt30">
+                        <div class="cont-card-ti">
+                            <button>
+                                <span class="card-ti-txt">T Apps</span>
+                                <span class="ico"></span>
+                            </button>
+                        </div>
+                        <div class="main-tapps-box">
+                            <ul>
+                                <li>
+                                    <button>
+                                        <img src="/img/ico/ico-main-tapps-smart.png" alt="SMART HOME 앱 아이콘">
+                                        SMART HOME
+                                    </button>
+                                </li>
+                                <li>
+                                    <button>
+                                        <img src="/img/ico/ico-main-tapps-tmap.png" alt="T MAP 앱 아이콘">
+                                        T MAP
+                                    </button>
+                                </li>
+                                <li>
+                                    <button>
+                                        <img src="/img/ico/ico-main-tapps-tdial.png" alt="T 전화 앱 아이콘">
+                                        T 전화
+                                    </button>
+                                </li>
+                                <li>
+                                    <button>
+                                        <img src="/img/ico/ico-main-tapps-cloud.png" alt="CLOUD BERRY 앱 아이콘">
+                                        CLOUD BERRY
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--// .cont-box -->
+            </div>
+        </div>
+        <!--// #contents -->
+        <!-- #footer -->
+        <div id="footer" class="footer-wrap">
+            <div class="footer-info">
+                <!-- .cont-box -->
+                <div class="cont-box nogaps noborder mt30">
+                    <div class="notice-slide-box">
+                        <button class="notice-slide-ti"><span class="ico"></span>공지사항<span class="blind">바로가기</span></button>
+                        <!-- .widget -->
+                        <div class="widget">
+                            <div class="widget-box slider2">
+                                <div class="slider-box">
+                                    <ul class="slider">
+                                        <li>
+                                            <button>
+                                                <span class="notice-list-ti">새로워진 SK Telecom 업데이트</span>
+                                                <span class="ico"></span>
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button>
+                                                <span class="notice-list-ti">새로워진 SK Telecom 업데이트 새로워진 SK Telecom 업데이트</span>
+                                                <span class="ico"></span>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!--// .widget -->
+                    </div>
+                </div>
+                <!--// .cont-box -->
+
+                <!-- .cont-box -->
+                <div class="cont-box bgnone noborder">
+                    <ul class="main-link-btn">
+                        <li><button>T월드 매장 찾기</button></li>
+                        <li><button>고객 센터</button></li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+            </div>
+        </div>
+        <!--// #footer -->
+    </div>
+</body>
+
+</html>

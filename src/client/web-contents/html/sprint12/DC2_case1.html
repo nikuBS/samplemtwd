@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+
+    
+    
+
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+		<div id="header" class="header-wrap">
+			<div class="h-belt">
+				<div class="h-default">
+					<div class="h-menu">
+						<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+					</div>
+
+                    <div class="h-tit">나의 데이터/통화</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+				</div>
+			</div>
+		</div>
+        <!--// #header --> 
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <div class="container">
+				<hr class="cont-sp type1" aria-hidden="true" />
+
+				<!-- .cont-box -->
+				<div class="cont-box pt0">
+                    <ul class="date-graph-list">
+						<li>
+							<div class="left">
+								<!-- .donut-chart.small -->
+								<div class="donut-chart small">
+									<div class="donut-chart-area">
+										<!-- loop -->
+										<div class="c100 p80"><!-- .p+(0~100) // -->
+											<div class="green"><!-- red, yellow, green, blue, comet // -->
+												<div class="slice">
+													<div class="bar"></div>
+													<div class="fill"></div>
+												</div>
+											</div>
+										</div>
+										<!-- // loop -->
+									</div>
+								</div>
+								<!-- // .donut-chart.small -->
+							</div>
+							<!--접근성 작업-->
+							<div class="cont">
+								<span class="txt1" id="aria-comp-bt1">SK텔레콤 고객 간 음성</span>
+								<div class="date">
+									<span class="remain"><strong>3시간 24분</strong> 남음</span>
+								</div>
+							</div>
+							<a class="r-btn" href="" aria-labelledby="aria-comp-bt1">페이지 이동</a>
+							<!-- //접근성 작업-->
+						</li>
+						<li>
+							<div class="left">
+								<!-- .donut-chart.small -->
+								<div class="donut-chart small">
+									<div class="donut-chart-area">
+										<!-- loop -->
+										<div class="c100 p70"><!-- .p+(0~100) // -->
+											<div class="yellow"><!-- red, yellow, green, blue, comet // -->
+												<div class="slice">
+													<div class="bar"></div>
+													<div class="fill"></div>
+												</div>
+											</div>
+										</div>
+										<!-- // loop -->
+									</div>
+								</div>
+								<!-- // .donut-chart.small -->
+							</div>
+							<!--접근성 작업-->
+							<div class="cont">
+								<span class="txt1" id="aria-comp-bt2">SMS/MMS/ⓜ메신저 기본제공</span>
+								<div class="date">
+									<span class="remain"><strong>56건</strong> 남음</span>
+								</div>
+							</div>
+							<a class="r-btn" href="" aria-labelledby="aria-comp-bt2">페이지 이동</a>
+							<!-- //접근성 작업-->
+						</li>
+					</ul>
+					<ul class="bt-slice solid mt20">
+                        <li><button type="button" class="btn-round1 btn-style1">즉시 충전</button></li>
+                    </ul>
+                </div>
+				<!--// .cont-box -->
+				<hr class="cont-sp type1" aria-hidden="true" />
+				
+				<div class="cont-box pb0">
+					<div class="ti-caption-type01 pb20">
+						<h2 class="tit">충전내역</h2>
+						<span class="r-btn"><a href="" class="more">더보기</a></span>
+					</div>
+					<div class="list-comp-history type01">
+						<ul class="comp-box">
+							<li class="list-box">
+								<span class="badge"><i class="icon-auto"><span class="blind">자동</span></i></span>
+								<ul class="list-con">
+									<li>
+										<p class="list-text">
+											<span class="stext-b">음성 충전</span>
+											<span class="stext"><span class="gray-tx">당일취소</span><span class="gray-tx">신한카드</span></span>
+										</p>
+										<div class="list-data">
+											<p class="data-tx txt1">+10,000원</p>
+										</div>
+									</li>
+								</ul>
+							</li>
+							<li class="list-box">
+								<span class="badge"><i class="icon-once"><span class="blind">1회</span></i></span>
+								<ul class="list-con">
+									<li>
+										<p class="list-text">
+											<span class="stext-b">데이터 충전</span>
+											<span class="stext"><span class="gray-tx">수납</span><span class="gray-tx">기타</span></span>
+										</p>
+										<div class="list-data">
+											<p class="data-tx txt1">+10,000원</p>
+											<span class="date">500MB</span>
+										</div>
+									</li>
+								</ul>
+							</li>
+							<li class="list-box">
+								<span class="badge"><i class="icon-once"><span class="blind">1회</span></i></span>
+								<ul class="list-con">
+									<li>
+										<p class="list-text">
+											<span class="stext-b">데이터 충전</span>
+											<span class="stext"><span class="gray-tx">당일취소</span><span class="gray-tx">신한카드</span></span>
+										</p>
+										<div class="list-data">
+											<p class="data-tx txt1">+10,000원</p>
+											<span class="date">1GB</span>
+										</div>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="cont-box noborder bgnone">
+                    <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
+					<!--접근성 수정-->
+					<ul class="pg-link-list">
+                        <li>
+                            <button>
+                                <i class="icon-my-40"><span class="blind"></span></i>나의 가입 정보 &gt; 나의 요금제
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-my-40"><span class="blind"></span></i>나의 가입 정보 &gt; 나의 부가서비스 
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-charge-40"><span class="blind"></span></i>나의  요금 &gt; 요금안내서
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-charge-40"><span class="blind"></span></i>나의 요금 &gt; 실시간 이용요금
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i class="icon-roaming-40"><span class="blind">my</span></i>T로밍 &gt; 나의 로밍
+                            </button>
+                        </li>
+					</ul>
+					<!-- //접근성 수정-->
+                </div>
+
+			</div>
+        </div>
+        <!--// #contents -->
+    </div>
+	
+</body>
+
+</html>

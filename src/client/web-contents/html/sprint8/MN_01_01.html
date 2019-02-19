@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="header">
+                <div class="header-ti align-l">
+                    <h1>이용약관</h1>
+                </div>
+                <button class="prev-step"><span class="blind">이전으로</span>
+                </button>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+        
+            </div>
+        </div>
+        <!--// #contents -->
+        
+        <!-- .popup hbs -->
+         <div class="popup-page nobg no-btn tw-popup"><!-- .no-btn 하단에 버튼이 없을 경우 -->
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>전체메뉴</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+                    <!-- .cont-box -->
+                    <div class="cont-box">
+                        <div class="plan-title">
+                            <h3 class="tit">010-12**-34**</h3>
+                            <div class="bt-alone mt4"><button type="button" class="bt-bg-blue1">무료 문자</button></div>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps">
+                        <!-- .widget -->
+                        <div class="widget all-menu">
+                            <div class="widget-box accordion">
+                                <h5 class="tit-a">myT</h5>
+                                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                                    <div class="acco-style btn-hold">
+                                        <ul class="acco-list">
+                                                <!-- .on: 열기 -->
+                                            <li class="acco-box">
+                                                <div class="acco-tit">
+                                                    <a class="link" href="">데이터/통화 관리<span class="detail">83 GB / 57 분</span></a>
+                                                    <button role="button" aria-pressed="false"><span class="blind">데이터/통화 관리 내역</span></button><!-- 웹접근성 수정 -->
+                                                </div>
+                                                <div class="acco-cont">
+                                                    <ul class="all-menu-sub">
+                                                        <li><button>T가족모아데이터</button></li>
+                                                        <li><button>나의 리필쿠폰</button></li>
+                                                        <li><button>선불형 쿠폰</button></li>
+                                                        <li><a href="#">충전/선물 내역</a></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="acco-box">
+                                                <div class="acco-tit">
+                                                    <a class="link" href="">나의 요금<span class="detail">54,630 원</span></a>
+                                                    <button role="button" aria-pressed="false"><span class="blind">나의 요금 내역</span></button><!-- 웹접근성 수정 -->
+                                                </div>
+                                                <div class="acco-cont">
+                                                    <ul class="all-menu-sub">
+                                                        <li><button>미납요금</button></li>
+                                                        <li><button>실시간 사용요금</button></li>
+                                                        <li><button>요금안내서 설정</button></li>
+                                                        <li><button>소액결제</button></li>
+                                                        <li><button>콘텐츠 이용료</button></li>
+                                                        <li><a href="#">요금납부 내역 조회</a></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="acco-box">
+                                                <div class="acco-tit">
+                                                    <a class="link" href="">나의 가입 정보<span class="detail">총 1개의 회선</span></a>
+                                                    <button role="button" aria-pressed="false"><span class="blind">나의 가입 정보 내역</span></button><!-- 웹접근성 수정 -->
+                                                </div>
+                                                <div class="acco-cont">
+                                                    <ul class="all-menu-sub">
+                                                        <li><button>나의 요금제</button></li>
+                                                        <li><button>나의 부가상품</button></li>
+                                                        <li><button>나의 결합상품</button></li>
+                                                        <li><button>무약정 플랜 포인트</button></li>
+                                                        <li><a href="#">약정할인 및 단말상환 정보</a></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <h5 class="tit-a">T만의 특별한 혜택</h5>
+                                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                                    <div class="acco-style btn-hold">
+                                        <ul class="acco-list">
+                                                <!-- .on: 열기 -->
+                                            <li class="acco-box">
+                                                <div class="acco-tit">
+                                                    <a class="link" href="">T멤버십<span class="detail">Gold</span></a>
+                                                    <button role="button" aria-pressed="false"><span class="blind">T멤버십 내역</span></button><!-- 웹접근성 수정 -->
+                                                </div>
+                                                <div class="acco-cont">
+                                                    <ul class="all-menu-sub">
+                                                        <li><button>멤버십 이용 안내</button></li>
+                                                        <li><button>카드 관리</button></li>
+                                                        <li><a href="#">my멤버십</a></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="acco-box">
+                                                <div class="acco-tit">
+                                                    <a class="link" href="">할인 혜택<span class="detail"></span></a>
+                                                    <button role="button" aria-pressed="false"><span class="blind">할인 혜택 내역</span></button><!-- 웹접근성 수정 -->
+                                                </div>
+                                                <div class="acco-cont">
+                                                    <ul class="all-menu-sub">
+                                                        <li><button>결합 할인</button></li>
+                                                        <li><button>장기고객 할인</button></li>
+                                                        <li><button>요금 할인</button></li>
+                                                        <li><button>약정 할인</button></li>
+                                                        <li><a href="#">제휴 할인</a></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <h5 class="tit-a">상품 서비스</h5>
+                                <div class="acco-cover">
+                                    <div class="acco-style btn-hold">
+                                        <ul class="all-menu-product">
+                                            <li class="list-comp-title"><button>모바일 요금제</button><span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 --></li>
+                                            <li class="list-comp-title"><button>모바일 부가상품</button><span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 --></li>
+                                            <li class="list-comp-title"><button>T로밍</button><span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 --></li>
+                                            <li class="list-comp-title"><a href="#">인터넷/전화/IPTV</a><span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 --></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--// .widget -->
+                    </div>
+                    <!--// .cont-box -->
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <!-- .cont-box -->
+                    <div class="cont-box">
+                        <ul class="app-down">
+                            <li class="app-t"><button><span class="img"></span>T APPS</button></li>
+                            <li class="app-nugu"><button><span class="img"></span>NUGU</button></li>
+                            <li class="app-smart"><button><span class="img"></span>스마트홈</button></li>
+                            <li class="app-dummy"><a href="#"><span class="img"></span>Dummy</a></li>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps">
+                        <!-- .widget -->
+                        <div class="widget all-menu">
+                            <div class="widget-box accordion">
+                                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                                    <div class="acco-style btn-hold">
+                                        <ul class="acco-list">
+                                                <!-- .on: 열기 -->
+                                            <li class="acco-box">
+                                                <div class="acco-tit">다이렉트샵<span class="detail"></span><button role="button" aria-pressed="false"><span class="blind">다이렉트샵 내역</span></button></div><!-- 웹접근성 수정 -->
+                                                <div class="acco-cont">
+                                                    <ul class="all-menu-sub1">
+                                                        <li class="tit"><button>나의 다이렉트샵</button></li>
+                                                        <li class="tit"><button>유선상품</button></li>
+                                                        <li class="tit"><button>모바일</button></li>
+                                                        <li><button>휴대폰</button></li>
+                                                        <li><button>태블릿</button></li>
+                                                        <li><button>스마트워치</button></li>
+                                                        <li><button>휴대용 와이파이</button></li>
+                                                        <li><button>키즈</button></li>
+                                                        <li><a href="#">공기계/중고폰 개통</a></li>
+                                                        <li class="tit"><a href="#">NUGU</a></li>
+                                                        <li class="tit"><button>스마트홈</button></li>
+                                                        <li class="tit"><button>악세서리</button></li>
+                                                        <li class="tit"><button>기획전</button></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <div class="all-menu-banner">
+                                            <button><img src="/img/dummy/all_menu_banner.jpg" alt="아이폰 X 37,081원~/월"/></button><!-- 웹접근성 수정 -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps">
+                        <!-- .widget -->
+                        <div class="widget all-menu">
+                            <div class="widget-box accordion">
+                                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                                    <div class="acco-style btn-hold">
+                                        <ul class="acco-list">
+                                                <!-- .on: 열기 -->
+                                            <li class="acco-box">
+                                                <div class="acco-tit">
+                                                    <a class="link" href="#">이벤트</a>
+                                                    <button role="button" aria-pressed="false"><span class="blind">이벤트 내역</span></button></div><!-- 웹접근성 수정 -->
+                                                <div class="acco-cont">
+                                                    <ul class="all-menu-sub">
+                                                        <li><button>진행중인 이벤트</button></li>
+                                                        <li><button>지난 이벤트</button></li>
+                                                        <li><a href="#">당첨자 발표</a></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li class="acco-box">
+                                                <div class="acco-tit">
+                                                    <a class="link" href="#">이용안내</a>
+                                                    <button role="button" aria-pressed="false"><span class="blind">이용안내</span></button><!-- 웹접근성 수정 -->
+                                                </div>
+                                                <div class="acco-cont">
+                                                    <ul class="all-menu-sub1">
+                                                        <li class="tit"><button>매장 및 AS센터 찾기</button></li>
+                                                        <li><button>지점/대리점 찾기</button></li>
+                                                        <li><button>AS센터 찾기</button></li>
+                                                        <li><button>로밍센터 찾기</button></li>
+                                                        <li class="tit"><button>이메일 상담</button></li>
+                                                        <li class="tit"><button>자주 찾는 질문</button></li>
+                                                        <li class="tit"><button>서비스 안내</button></li>
+                                                        <li><button>사이트 이용방법</button></li>
+                                                        <li><button>서비스 이용방법</button></li>
+                                                        <li><button>목소리 인증 서비스</button></li>
+                                                        <li class="tit"><button>구비서류 안내</button></li>
+                                                        <li class="tit"><button>공지사항</button></li>
+                                                        <li class="tit"><button>고객의견</button></li>
+                                                        <li><button>칭찬합니다</button></li>
+                                                        <li><button>설문조사</button></li>
+                                                        <li><a href="#">제안합니다</a></li>
+                                                        <li class="tit"><a href="#">이용자 피해예방센터</a></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps">
+                        <!-- .widget -->
+                        <div class="widget all-menu">
+                            <div class="widget-box accordion">
+                                <div class="acco-cover"><!-- toggle : 한개만 열기 -->
+                                    <div class="acco-style btn-hold">
+                                        <h5 class="tit-a family-tit">Family Sites</h5>
+                                        <div class="acco-cover">
+                                            <div class="acco-style btn-hold">
+                                                <ul class="all-menu-family">
+                                                    <li class="list-comp-title"><button>기업 T world</button><span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 --></li>
+                                                    <li class="list-comp-title"><button>English</button><span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 --></li>
+                                                    <li class="list-comp-title"><button>NUGU</button><span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 --></li>
+                                                    <li class="list-comp-title"><a href="#">무엇이든 될 수 있는 O</a><span class="ico"><span class="blind">더보기</span></span><!-- 웹접근성 수정 --></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+                    <!-- .cont-box -->
+                    <div class="cont-box noborder ">
+                        <div class="member-footer">
+                            <ul>
+                                <li class="member-info"><button><span class="ico"></span><span class="txt">회원정보</span></button></li>
+                                <li class="member-setting"><button><span class="ico"></span><span class="txt">설정</span></button></li>
+                                <li class="member-log"><button><span class="ico"></span><span class="txt">로그아웃</span></button></li>
+                            </ul>
+                        </div>
+                        <div class="mnfooter-box">
+                            <div class="linkbox-wrap">
+                                <button class="bt-link-tx underline">문의하기</button>
+                                <button class="bt-link-tx underline">미환급금 조회</button>
+                            </div>
+                            <p class="address-text">
+                                SK TELECOM
+                            </p>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+                </div>
+            </div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!--// .popup hbs -->
+    </div>
+</body>
+
+</html>

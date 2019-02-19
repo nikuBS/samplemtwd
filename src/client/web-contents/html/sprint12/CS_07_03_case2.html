@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="h-belt">
+                <div class="h-default">
+                    <div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <div class="h-tit">주요 용어</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+
+                <div class="cont-box">
+                    <div class="info-form-box">
+                        <p class="form-label" id="aria-exp-label2">유심 잠금해제 주요용어</p>
+                        <button class="bt-dropdown big mt14" title="유심 잠금해제 주요용어" aria-haspopup="true">기기 관련 용어<span class="ico"></span></button><!-- 웹접근성 수정 -->
+                    </div>
+                </div>
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <div class="cont-box">
+                    <h3 class="information-use-title">기기 소유권자</h3>
+                    <p class="information-use-text03">기기 주인을 말합니다. 신규가입이나 기기변경을 할 때, 대리점에서 고객 이름과 기기 정보를 전산에 입력하는데, 이때 등록된 고객이 해당 기기의 소유권자입니다. 이렇게 서비스 명의자와 기기 소유권자가 동일하기 때문에 전화번호 1개 당 1개의 기기에 소유권이 생기며, 서비스를 해지하거나 기기변경 후 남은 공기기에는 소유권자가 존재하지 않습니다. 고객님의 기기에 친구가 유심을 끼워 사용하는 경우 기기 소유권자는 고객님으로 유지됩니다.</p>
+                    <h3 class="information-use-title">유심기변 기기</h3>
+                    <p class="information-use-text03">고객님이 유심기변 하여 사용중인 기기를 의미합니다. 고객님의 기기에 있는 유심을 친구의 기기에 꽂아서 이용하신다면 친구의 기기가  고객님의 유심기변 기기가 되는 것입니다.</p>
+                    <h3 class="information-use-title">원 소유 기기</h3>
+                    <p class="information-use-text03">SK텔레콤에 고객님의 이름으로 등록된 기기를 의미합니다. 신규 가입고객, 전산기변(확정기변 포함) 고객, 명의변경 고객이 소지한 기기가 원 소유 기기이고, 고객님은 그 기기의 기기 소유권자가 되시는 겁니다.</p>
+                    <h3 class="information-use-title">현 사용 기기</h3>
+                    <p class="information-use-text03">현재 고객님이 사용 중인 기기로, 원 소유 기기 또는 유심기변 기기에 상관없이 현재 고객님이 유심 카드를 꽂아서 사용하면 모두 현 사용 기기입니다.</p>
+                    <h3 class="information-use-title">공기기</h3>
+                    <p class="information-use-text03">개통 이력이 없는 신규 기기거나 기기변경, 해지 등으로 회선과 분리된 기기를 의미하며 공기기는 소유권자가 따로 없습니다.</p>
+                </div>
+            </div>  
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+</html>

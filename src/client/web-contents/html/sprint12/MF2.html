@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <div class="wrap">
+        <!-- #header -->
+        <div id="header" class="header-wrap">
+            <div class="h-belt">
+                <div class="h-default">
+                    <div class="h-menu">
+                        <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
+                    </div>
+                    <div class="h-tit">나의 요금</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box">
+                    <div class="mf-use">
+                        <div class="mf-box">
+                            <p class="param-tit">고객님, 변함없이 <br/>저희와 함께해 주셔서 <br/>감사합니다.<span class="ico"></span></p>
+                            <dl class="cost-payment">
+                                <dt>8월 청구요금</dt>
+                                <dd>
+                                    <div class="payment-amount"><span class="num ff-tg-black">82,500</span><span class="ff-tg-medium">원</span></div>
+                                </dd>
+                            </dl>
+                            <p class="param-cont2">고객님은 현재 통합 청구 이용 중이며<br/>할인 금액을 제외한 사용요금으로 조회됩니다.</p>
+                        </div>
+                    </div>
+                    <ul class="bt-slice">
+                        <li class="bt-white2">
+                            <button>사용요금 자세히보기</button>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <!-- .cont-box -->
+                <div class="cont-box nogaps noborder">
+                    <ul class="link-long-list">
+                        <li>
+                            <div class="link-long">
+                                <button>실시간 요금
+                                    <span class="tx-sub">
+                                        <span class="normal"><i class="tx-bold">79,561</i> 원</span>
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>납부 방법
+                                    <span class="tx-sub mr8">
+                                        <span class="normal">통합청구 이용중</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- //.cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                            
+                <!-- .cont-box -->
+                <div class="cont-box noborder">
+                    <ul class="bt-slice item-two">
+                        <li class="bt-blue1">
+                            <button>소액결제</button>
+                        </li>
+                        <li class="bt-blue1">
+                            <button>콘텐츠 이용료</button>
+                        </li>
+                    </ul>
+                </div>
+                <!-- //.cont-box -->
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                
+                <div class="cont-box graph-back">
+                    <h3>최근 요금 내역 <button class="btn-tip" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">최근 요금 내역 tip</span></i></button></h3>
+                    <div class="graph-area-type3 chart4">
+                    </div>
+                </div>
+                <script>
+                var chart_data4 = {
+                    da_arr:[
+                        {
+                            na:'3월',
+                            data:[3000]
+                        },{
+                            na:'4월',
+                            data:[12100]
+                        },{
+                            na:'5월',
+                            data:[52100]
+                        },
+                        {
+                            na:'6월',
+                            data:[82500]
+                        },{
+                            na:'7월',
+                            data:[0]
+                        },{
+                            na:'8월',
+                            data:[72500]
+                        }
+                    ]
+                };
+
+                $('body').chart({
+                    type:'bar2', //bar
+                    container: 'chart4', //클래스명 String
+                    unit:'원', //x축 이름
+                    legend : ['사용'], // 범례명
+                    decimal:'won', //소숫점자리
+                    data:chart_data4 //데이터 obj
+                });
+
+
+                </script>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true"/>
+
+                <div class="cont-box nogaps noborder">
+                    <ul class="link-long-list nobg">
+                        <!--접근성 수정-->
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    <span class="ico-thum"></span>약정할인 및 단말분할상환정보
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    <span class="ico-thum"></span>요금할인혜택
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    <span class="ico-thum"></span>나의 할인혜택
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    <span class="ico-thum"></span>나의 포인트 혜택
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    <span class="ico-thum"></span>나의 요금제
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="link-long">
+                                <button>
+                                    <span class="ico-thum"></span>나의 부가상품
+                                    <span class="tx-sub">
+                                        <span class="ico"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </li>
+                        <!--접근성 수정-->
+                    </ul>
+                </div>
+                <!-- //.cont-box -->
+            </div>
+        </div>
+        <!--// #contents -->
+    </div>
+</body>
+
+</html>

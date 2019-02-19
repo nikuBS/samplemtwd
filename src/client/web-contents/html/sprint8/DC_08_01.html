@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <link rel="shortcut icon" href="/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <meta name="description" content="페이지설명" />
+    <meta name="keywords" content="서비스키워드" />
+    <meta property="og:title" content="SKT 홈페이지" />
+    <meta property="og:site_name" content="SKT" />
+    <meta property="og:image" content="/image/common/skt_facebook.jpg" />
+    <meta property="og:description" content="SKT framework" />
+    <title>SKT</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" media="all" /><!-- [C] 공통 스타일 -->
+    <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
+    <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
+    <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+    <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
+    <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
+    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+</head>
+
+
+<body>
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#gnb">메뉴 바로가기</a></li>
+            <li><a href="#contents">본문 바로가기</a></li>
+            <li><a href="#footer">푸터 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+     <div class="wrap">
+         <!-- .popup hbs -->
+         <div class="popup-page nobg tw-popup"><!-- .no-btn 하단에 버튼이 없을 경우 -->
+            <!-- #header -->
+            <div class="header-wrap">
+                <div class="page-header">
+                    <div class="header-ti">
+                        <h1>자녀 실시간 잔여량</h1>
+                    </div>
+                </div>
+            </div>
+            <!--// #header -->
+            <!-- .container-wrap -->
+            <div class="container-wrap">
+                <h2 class="blind">내용</h2>
+                <div class="container">
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps-hoz">
+                        <div class="plan-title">
+                            <h3 class="tit">주말엔 팅 3.0G</h3><!-- 2018-11-02 수정 -->
+                            <div class="bt-alone"><button class="bt-bg-blue1">자녀 요금제</button></div>
+                        </div>
+                        <div class="plan-line-wrap">
+                            <span class="plan-number">010-****-2396<span class="blind">자녀</span><i class="badge badge-fam"></i></span>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+
+					<!-- .cont-box -->
+					<div class="cont-box nogaps-hoz"><!-- 2018-11-02 추가 -->
+						<ul class="link-list type2">
+	                        <li>
+	                            <dl>
+	                                <dt>충전 허용금액<button type="button" class="tip-view" title="충전 허용금액 TIP보기" aria-haspopup="true">TIP</button></dt>
+	                                <dd>
+	                                    <button class="txt-btn">변경</button>
+	                                </dd>
+	                            </dl>
+	                        </li>
+	                    </ul>
+					</div>
+					<!-- //.cont-box -->
+
+                    <div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
+                        <h4 class="tit">데이터</h4>
+                        <p class="num">총 데이터 잔여량 <em>36.7</em> GB</p>
+                    </div>
+
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps-hoz">
+                        <ul class="graphlist-wrap">
+                            <li class="graphbox-li">
+                                <h5 class="graphbox-title">기본 제공 데이터 100GB</h5>
+                                <div class="amountdata-num">
+                                    <div class="date-info">
+                                        <p class="data-title">남음<span class="blind">(데이터량)</span></p>
+                                        <p class="data-state"><span class="str">35</span>GB</p>
+                                    </div>
+                                    <div class="date-info">
+                                        <p class="data-title">사용<span class="blind">(데이터량)</span></p>
+                                        <p class="data-state"><span class="str">50</span>GB</p>
+                                    </div>
+                                </div>
+                                <div class="bar-chart-hoz">
+                                    <span class="data-bar red" style="width:30%"></span>
+                                </div>
+                                <div class="share-info mt20">
+                                    <p class="data">공유 25GB 가능<!-- 2018-11-02 삭제 <button aria-haspopup="true" class="info-view-ic">정보보기</button> --></p>
+                                    <span class="btn-share txt">15GB 공유 중</span><!-- 2018-11-02 태그변경 -->
+                                </div>
+                            </li>
+                            <li class="graphbox-li">
+                                <h5 class="graphbox-title">데이터 리필 8GB</h5>
+                                <div class="amountdata-num">
+                                    <div class="date-info">
+                                        <p class="data-title">남음<span class="blind">(데이터량)</span></p>
+                                        <p class="data-state"><span class="str">6</span>GB</p>
+                                    </div>
+                                    <div class="date-info">
+                                        <p class="data-title">사용<span class="blind">(데이터량)</span></p>
+                                        <p class="data-state"><span class="str">2</span>GB</p>
+                                    </div>
+                                </div>
+                                <div class="bar-chart-hoz">
+                                    <span class="data-bar red" style="width:30%"></span>
+                                </div>
+                                <p class="chargedate-box">쿠폰등록일 <span>2018.01.01</span></p>
+                            </li>
+                            <li class="graphbox-li">
+                                <h5 class="graphbox-title">B tv 모바일 PACK</h5>
+                                <div class="amountdata-num">
+                                    <div class="date-info">
+                                        <p class="data-title">남음<span class="blind">(데이터량)</span></p>
+                                        <p class="data-state"><span class="str">35</span>GB</p>
+                                    </div>
+                                    <div class="date-info">
+                                        <p class="data-title">오늘사용<span class="blind">(데이터량)</span></p>
+                                        <p class="data-state"><span class="str">0</span>GB</p>
+                                    </div>
+                                </div>
+                                <div class="bar-chart-hoz">
+                                    <span class="data-bar red" style="width:30%"></span>
+                                </div>
+                            </li>
+                            <li class="graphbox-li runout"><!-- 데이터 소진시 runout 클래스 추가 -->
+                                <span class="blind">소진된 데이터 입니다.</span>
+                                <h5 class="graphbox-title">멜론 익스트리밍 2.4GB</h5>
+                                <div class="amountdata-num">
+                                    <div class="date-info">
+                                        <p class="data-title">남음<span class="blind">(데이터량)</span></p>
+                                        <p class="data-state"><span class="str">0</span>GB</p>
+                                    </div>
+                                    <div class="date-info">
+                                        <p class="data-title">오늘사용<span class="blind">(데이터량)</span></p>
+                                        <p class="data-state"><span class="str">2.4</span>GB</p>
+                                    </div>
+                                </div>
+                                <div class="bar-chart-hoz">
+                                    <span class="data-bar"></span><!-- 데이터 없을때 -->
+                                </div>
+                            </li>
+                            <li class="graphbox-li unlimited"><!-- 무제한 데이터 unlimited 클래스 추가 -->
+                                <h5 class="graphbox-title">한도초과후 데이터 무료</h5>
+                                <div class="amountdata-num">
+                                    <div class="date-info">
+                                        <p class="data-title">남음<span class="blind">(데이터량)</span></p>
+                                        <p class="data-state"><span class="str">무제한</span></p>
+                                    </div>
+                                    <div class="date-info">
+                                        <p class="data-title">사용<span class="blind">(데이터량)</span></p>
+                                        <p class="data-state"><span class="str">0</span>GB</p>
+                                    </div>
+                                </div>
+                                <div class="bar-chart-hoz">
+                                    <span class="data-bar blue-stripe" style="width:100%;"></span><!-- 무제한 데이터 -->
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
+                        <h4 class="tit">음성/영상</h4>
+                    </div>
+
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps-hoz">
+                        <ul class="graphlist-wrap">
+                            <li class="graphbox-li">
+                                <h5 class="graphbox-title">영상, 부가 전화 300분</h5>
+                                <div class="amountdata-num">
+                                    <div class="date-info">
+                                        <p class="data-title">남음</p>
+                                        <p class="data-state"><span class="str">4</span>시간<span class="str ml4">40</span>분</p>
+                                    </div>
+                                    <div class="date-info">
+                                        <p class="data-title">사용</p>
+                                        <p class="data-state"><span class="str">19</span>분<span class="str ml4">40</span>초</p>
+                                    </div>
+                                </div>
+                                <div class="bar-chart-hoz">
+                                    <span class="data-bar red" style="width:30%"></span>
+                                </div>
+                                <p class="chargedate-box">쿠폰등록일 <span>2018.01.01</span></p>
+                            </li>
+                            <li class="graphbox-li unlimited"><!-- 무제한 데이터 unlimited 클래스 추가 -->
+                                <h5 class="graphbox-title">SKT 고객간 음성 무제한</h5>
+                                <div class="amountdata-num">
+                                    <div class="date-info">
+                                        <p class="data-title">남음<span class="blind">(데이터량)</span></p>
+                                        <p class="data-state"><span class="str">무제한</span></p>
+                                    </div>
+                                    <div class="date-info">
+                                        <p class="data-title">사용<span class="blind">(데이터량)</span></p>
+                                        <p class="data-state"><span class="str">14</span>분<span class="str ml4">40</span>초</p>
+                                    </div>
+                                </div>
+                                <div class="bar-chart-hoz">
+                                    <span class="data-bar blue-stripe" style="width:100%;"></span><!-- 무제한 데이터 -->
+                                </div>
+                            </li>
+                            <li class="graphbox-li unlimited">
+                                <h5 class="graphbox-title">집전화, 이동전화 음성 무제한</h5>
+                                <div class="amountdata-num">
+                                    <div class="date-info">
+                                        <p class="data-title">남음<span class="blind">(데이터량)</span></p>
+                                        <p class="data-state"><span class="str">무제한</span></p>
+                                    </div>
+                                    <div class="date-info">
+                                        <p class="data-title">사용<span class="blind">(데이터량)</span></p>
+                                        <p class="data-state"><span class="str">40</span>초</p>
+                                    </div>
+                                </div>
+                                <div class="bar-chart-hoz">
+                                    <span class="data-bar blue-stripe" style="width:100%;"></span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <div class="ti-caption-gray"><!-- 2018-09-19 클래스명 변경 -->
+                        <h4 class="tit">문자</h4>
+                    </div>
+
+                    <!-- .cont-box -->
+                    <div class="cont-box nogaps-hoz">
+                        <ul class="graphlist-wrap">
+                            <li class="graphbox-li">
+                                <h5 class="graphbox-title">SMS/MMS/ⓜ메신저 200건</h5>
+                                <div class="amountdata-num">
+                                    <div class="date-info">
+                                        <p class="data-title">남음</p>
+                                        <p class="data-state"><span class="str">125</span>건</p>
+                                    </div>
+                                    <div class="date-info">
+                                        <p class="data-title">사용</p>
+                                        <p class="data-state"><span class="str">75</span>건</p>
+                                    </div>
+                                </div>
+                                <div class="bar-chart-hoz">
+                                    <span class="data-bar red" style="width:30%"></span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--// .cont-box -->
+
+                </div>
+            </div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+            <!--// .popup-closeBtn -->
+        </div>
+        <!--// .popup hbs -->
+    </div>
+</body>
+
+</html>
