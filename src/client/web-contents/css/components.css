@@ -19,7 +19,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     background: #fff;
-    font-family: Apple SD Gothic Neo, Arial, sans-serif; }
+    font-family: Roboto; }
     .flcarddefault .flcard-cont .flcard-area {
       position: relative; }
       .flcarddefault .flcard-cont .flcard-area .flcard-total {
@@ -174,7 +174,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     background: #fff;
-    font-family: Apple SD Gothic Neo, Arial, sans-serif; }
+    font-family: Roboto; }
     .flcardcta .flcard-cont.no-btn-bottom {
       padding-bottom: 46px; }
     .flcardcta .flcard-cont .ico-ill-gift {
@@ -423,7 +423,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     background: #fff;
-    font-family: Apple SD Gothic Neo, Arial, sans-serif; }
+    font-family: Roboto; }
     .flcardbarcode .flcard-cont .flcard-area {
       position: relative; }
       .flcardbarcode .flcard-cont .flcard-area .flcard-total {
@@ -560,7 +560,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     background: none;
-    font-family: Apple SD Gothic Neo, Arial, sans-serif;
+    font-family: Roboto;
     overflow: hidden; }
     .flcardbanner1 .flcard-cont .flcard-area {
       position: relative;
@@ -600,7 +600,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     background: none;
-    font-family: Apple SD Gothic Neo, Arial, sans-serif;
+    font-family: Roboto;
     overflow: hidden; }
     .flcardbanner2 .flcard-cont .flcard-area {
       position: relative;
@@ -653,7 +653,7 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     background: #fff;
-    font-family: Apple SD Gothic Neo, Arial, sans-serif; }
+    font-family: Roboto; }
     .flcardsns .flcard-cont .flcard-area {
       position: relative;
       font-size: 0; }
@@ -1345,7 +1345,7 @@
       padding: 1.5625rem 0 1.25rem;
       vertical-align: top; }
       .list-comp-input .select-list > li .comp-list-layout .layout-text .mtext {
-        display: block;
+        display: inline-block;
         font-size: 1.125rem;
         font-weight: 400; }
       .list-comp-input .select-list > li .comp-list-layout .layout-text .ntext {
@@ -1803,7 +1803,6 @@
         line-height: 1.0625rem;
         font-weight: 700;
         word-break: break-all;
-        width: 90%;
         margin-top: 0.25rem; }
       .list-comp-lineinfo li .lineinfo-data .ico {
         display: inline-block;
@@ -1877,7 +1876,7 @@
   .list-comp-lineinfo.type5 {
     padding: 0 1rem; }
     .list-comp-lineinfo.type5 li .lineinfo-user {
-      width: auto; }
+      width: 76%; }
       .list-comp-lineinfo.type5 li .lineinfo-user .info-title {
         font-size: 1.125rem;
         line-height: 1; }
@@ -1897,7 +1896,7 @@
             background: #e1e1e1;
             position: absolute;
             left: 0;
-            top: 50%;
+            top: 49%;
             -webkit-transform: translate(0, -50%);
             transform: translate(0, -50%); }
           .list-comp-lineinfo.type5 li .lineinfo-user .info-sub .elem:first-of-type {
@@ -1913,7 +1912,7 @@
         display: block;
         font-size: 1.125rem; }
         .list-comp-lineinfo.type5 li .lineinfo-data .info-title .unit {
-          font-size: 0.625rem;
+          font-size: 1.125rem;
           font-weight: 400;
           padding-left: 0.125rem; }
   .list-comp-lineinfo.no-bt li {
@@ -2256,6 +2255,13 @@
   width: 2rem;
   height: 1.25rem;
   background: url(/img/svg/graphic_badge_plan_my.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
+.icon-badge-plan-use {
+  display: inline-block;
+  width: 2rem;
+  height: 1.25rem;
+  background: url(/img/svg/graphic_badge_plan_use.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
 .icon-ci-sktelecom {
@@ -2774,7 +2780,7 @@
   display: inline-block;
   width: 2.5rem;
   height: 2.5rem;
-  background: url(/img/svg/icon_80px_cellphone.svg) no-repeat 0 0;
+  background: url(/img/svg/icon_80px_cellphone1.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
 .icon-chat-80 {
@@ -3557,7 +3563,7 @@
       font-size: 1.5rem;
       font-weight: 700;
       line-height: 1;
-      vertical-align: sub; }
+      vertical-align: inherit; }
   .charge-guide-wrap .tit-tx {
     display: block;
     padding: 0.5rem 0 0.75rem;
@@ -3854,7 +3860,7 @@
     float: right;
     width: 35%;
     text-align: right;
-    font-size: 0.625rem;
+    font-size: 1.125rem;
     color: #212121; }
     .single-list .num em {
       font-weight: 700;
@@ -4714,7 +4720,7 @@
       font-weight: 700; }
     .info-list-type1 .basic-list ul li .tx-cont .tx-unit {
       padding-left: 0.1875rem;
-      font-size: 0.625rem;
+      font-size: 1.125rem;
       vertical-align: 0.0625rem; }
   .info-list-type1 .basic-list:last-of-type li:last-of-type {
     border-bottom: none; }
@@ -4930,7 +4936,7 @@
         display: inline-block;
         padding-left: 0.1875rem;
         vertical-align: text-bottom;
-        font-size: 0.75rem; }
+        font-size: 1.5rem; }
 
 .info-detail .bt-toggle.open:after {
   -webkit-transform: rotate(0deg);
@@ -6424,7 +6430,7 @@
     display: table-cell;
     width: 50%;
     height: 4.0625rem;
-    font-size: 0.625rem;
+    font-size: 1.125rem;
     vertical-align: middle;
     text-align: right;
     color: #178BCE; }
@@ -6495,7 +6501,7 @@
         padding: 0.9375rem 0;
         text-align: right; }
         .contract-dc-list li dl dd .val-type1 {
-          font-size: 0.625rem;
+          font-size: 1.125rem;
           color: #e22f26; }
           .contract-dc-list li dl dd .val-type1 .str {
             margin-right: 0.25rem;
@@ -6506,7 +6512,7 @@
         .contract-dc-list li dl dd .val-type2 {
           font-size: 0.875rem; }
         .contract-dc-list li dl dd .val-type3 {
-          font-size: 0.625rem; }
+          font-size: 1.125rem; }
           .contract-dc-list li dl dd .val-type3 .str {
             margin-right: 0.25rem;
             font-size: 1.125rem;
@@ -6514,7 +6520,7 @@
             vertical-align: baseline;
             line-height: 1.25rem; }
         .contract-dc-list li dl dd .val-type4 {
-          font-size: 0.625rem;
+          font-size: 1.125rem;
           color: #178BCE; }
           .contract-dc-list li dl dd .val-type4 .str {
             margin-right: 0.25rem;
@@ -6552,7 +6558,7 @@
     .contract-dc-list .amountdata-num .date-info .data-state {
       margin-top: 0.5rem;
       color: #e22f26;
-      font-size: 0.625rem;
+      font-size: 1.125rem;
       vertical-align: baseline;
       line-height: 1; }
       .contract-dc-list .amountdata-num .date-info .data-state .str {
@@ -6654,7 +6660,7 @@
       display: table-cell;
       width: 35%;
       text-align: right;
-      font-size: 0.625rem;
+      font-size: 1.125rem;
       color: #e22f26; }
       .nocharge-list li dl dd .str {
         margin-right: 0.25rem;
@@ -6754,7 +6760,7 @@
     font-size: 0.8125rem; }
   .bundle-tit-wrap .subtxt .val {
     color: #e22f26;
-    font-size: 0.75rem; }
+    font-size: 1.5rem; }
     .bundle-tit-wrap .subtxt .val .str {
       margin-right: 0.3125rem;
       font-size: 1.5rem;
@@ -6762,7 +6768,7 @@
 
 .bundle-tit-wrap .data-num {
   color: #e22f26;
-  font-size: 0.75rem; }
+  font-size: 1.5rem; }
   .bundle-tit-wrap .data-num .str {
     margin-right: 0.125rem;
     font-size: 1.5rem;
@@ -6780,7 +6786,7 @@
   font-weight: 700; }
 
 .acco-style.data-famliy-group-list.type2 > ul > li .list-wrap .list-data {
-  font-size: 0.625rem; }
+  font-size: 1.125rem; }
   .acco-style.data-famliy-group-list.type2 > ul > li .list-wrap .list-data .vol {
     margin-right: 0.125rem;
     font-weight: 700; }
@@ -7737,17 +7743,6 @@ a.bt-link-tx.underline.small {
       font-weight: 700; }
       .loaming-tel-info li .tel-num .sub {
         color: #666666; }
-    .loaming-tel-info li:after {
-      position: absolute;
-      right: 0;
-      top: 50%;
-      -webkit-transform: translateY(-50%);
-              transform: translateY(-50%);
-      width: 3.5rem;
-      height: 3.5rem;
-      content: '';
-      background: url(/img/product/bg-loaming-tel-info.png);
-      background-size: 3.5rem; }
     .loaming-tel-info li:first-child {
       border: 0; }
 
@@ -8841,7 +8836,7 @@ a.bt-link-tx.underline.small {
     vertical-align: baseline; }
     .mline-list .mline-tit-wrap .mline-num .num {
       vertical-align: top;
-      font-family: "Apple SD Gothic Neo", "Arial", sans-serif; }
+      font-family: "Roboto"; }
 
 .mline-list .ico-like {
   position: relative;
@@ -9657,7 +9652,7 @@ a.bt-link-tx.underline.small {
       margin-top: 0.25rem;
       font-size: 0.8125rem;
       line-height: 0.9375rem;
-      font-family: "Apple SD Gothic Neo", "Arial", sans-serif; }
+      font-family: "Roboto"; }
     .contents-info-list [class^="result-"] li .info-data .info-title {
       font-size: 1.125rem;
       line-height: 1.25rem;
@@ -9694,7 +9689,7 @@ a.bt-link-tx.underline.small {
         font-weight: 700; }
       .contents-info-list [class^="result-"] li .info-coupon .info-code {
         font-size: 0.6875rem;
-        font-family: "Apple SD Gothic Neo", "Arial", sans-serif; }
+        font-family: "Roboto"; }
     .contents-info-list [class^="result-"] li .info-date {
       text-align: right;
       vertical-align: top; }
@@ -9702,7 +9697,7 @@ a.bt-link-tx.underline.small {
         font-size: 0.75rem; }
       .contents-info-list [class^="result-"] li .info-date .info-sub {
         font-size: 0.9375rem;
-        font-family: "Apple SD Gothic Neo", "Arial", sans-serif; }
+        font-family: "Roboto"; }
     .contents-info-list [class^="result-"] li .info-btn {
       text-align: center; }
       .contents-info-list [class^="result-"] li .info-btn a {
@@ -9771,14 +9766,14 @@ a.bt-link-tx.underline.small {
       .contents-info-list [class^="result-"].result-coupon .result-cell .info-coupon .info-ph {
         font-size: 1.125rem;
         font-weight: 700;
-        font-family: "Apple SD Gothic Neo", "Arial", sans-serif; }
+        font-family: "Roboto"; }
     .contents-info-list [class^="result-"].result-coupon .result-cell .info-date {
       padding: 0; }
       .contents-info-list [class^="result-"].result-coupon .result-cell .info-date .info-title {
         font-size: 0.75rem; }
       .contents-info-list [class^="result-"].result-coupon .result-cell .info-date .info-sub {
         font-size: 0.9375rem;
-        font-family: "Apple SD Gothic Neo", "Arial", sans-serif; }
+        font-family: "Roboto"; }
     .contents-info-list [class^="result-"].result-coupon .result-cell .info-validity {
       padding: 0;
       display: table-row; }
@@ -9789,7 +9784,7 @@ a.bt-link-tx.underline.small {
         display: table-cell;
         font-size: 0.75rem;
         text-align: right;
-        font-family: "Apple SD Gothic Neo", "Arial", sans-serif; }
+        font-family: "Roboto"; }
     .contents-info-list [class^="result-"].result-coupon .result-cell .info-signup {
       padding: 0;
       display: table-row; }
@@ -9800,7 +9795,7 @@ a.bt-link-tx.underline.small {
         display: table-cell;
         font-size: 0.75rem;
         text-align: right;
-        font-family: "Apple SD Gothic Neo", "Arial", sans-serif; }
+        font-family: "Roboto"; }
   .contents-info-list .bt-more {
     margin: 0 -1.625rem;
     text-align: center;
@@ -9812,7 +9807,7 @@ a.bt-link-tx.underline.small {
     color: #757575;
     font-size: 0.875rem; }
     .contents-info-list .bt-more span {
-      font-family: "Apple SD Gothic Neo", "Arial", sans-serif;
+      font-family: "Roboto";
       vertical-align: baseline; }
   .contents-info-list .contents-notice {
     border-top: 1px solid #e1e1e1; }
@@ -12269,7 +12264,7 @@ a.bt-link-tx.underline.small {
               font-weight: 700; }
             .representcharge-list > li .representcharge-product > li .product-infolink .products-titleinfo .info {
               color: #e22f26;
-              font-size: 0.625rem; }
+              font-size: 1.125rem; }
               .representcharge-list > li .representcharge-product > li .product-infolink .products-titleinfo .info .money {
                 display: inline-block;
                 margin: 0 0.25rem;
@@ -12974,8 +12969,7 @@ a.bt-link-tx.underline.small {
 
 /* 상품상세 */
 .productdetails-wrap {
-  height: 15.5rem;
-  padding-bottom: 4.4375rem; }
+  padding-bottom: 4.375rem; }
   .productdetails-wrap .productdetails-title {
     position: relative;
     padding-top: 1.75rem; }
@@ -13019,9 +13013,9 @@ a.bt-link-tx.underline.small {
         height: 0.0625rem;
         background-color: #fff; }
   .productdetails-wrap .productdetails-text {
-    margin-top: 1.875rem; }
+    margin-top: 1.5625rem; }
     .productdetails-wrap .productdetails-text li {
-      margin-top: 0.5625rem;
+      margin-top: 0.375rem;
       padding: 0.125rem 0 0.125rem 1.875rem;
       color: #fff;
       font-size: 0.875rem;
@@ -13043,7 +13037,7 @@ a.bt-link-tx.underline.small {
     font-size: 0.875rem;
     line-height: 1.25rem; }
     .productdetails-wrap .productdetails-text02.img-case {
-      padding-right: 10.625rem; }
+      padding-right: 2.5rem; }
   .productdetails-wrap .productdetails-text03 {
     margin-top: 0.9375rem;
     color: #fff;
@@ -13063,6 +13057,9 @@ a.bt-link-tx.underline.small {
   .productdetails-ledgercase .price-text {
     color: #fff;
     font-size: 0.8125rem; }
+    .productdetails-ledgercase .price-text .opacity80 {
+      opacity: 0.8;
+      filter: Alpha(Opacity=80); }
     .productdetails-ledgercase .price-text .price-type {
       color: #fff;
       font-size: 1.125rem;
@@ -13071,8 +13068,7 @@ a.bt-link-tx.underline.small {
       display: inline-block;
       color: #fff;
       font-size: 1.125rem;
-      font-weight: normal;
-      vertical-align: 2px; }
+      font-weight: normal; }
   .productdetails-ledgercase .btn {
     width: 7.5rem;
     margin-top: 0.125rem; }
@@ -13131,6 +13127,9 @@ a.bt-link-tx.underline.small {
   .productdetails-utill li {
     color: #fff;
     font-size: 0.8125rem; }
+    .productdetails-utill li .opacity80 {
+      opacity: 0.8;
+      filter: Alpha(Opacity=80); }
     .productdetails-utill li .str {
       display: inline-block;
       margin-left: 0.3125rem;
@@ -14097,13 +14096,13 @@ a.bt-link-tx.underline.small {
         .recommendcharge-list > li .details-info .info-box .info-gap .info tfoot td {
           padding-top: 0.625rem;
           color: #000;
-          font-size: 0.625rem;
+          font-size: 1.125rem;
           vertical-align: middle;
           text-align: right; }
           .recommendcharge-list > li .details-info .info-box .info-gap .info tfoot td .money {
             display: inline-block;
             margin: 0 0.125rem 0 0.0625rem;
-            font-size: 18px;
+            font-size: 1.125rem;
             font-weight: 700; }
   .recommendcharge-list > li .bt-slice {
     padding-bottom: 1.25rem; }
@@ -14821,7 +14820,7 @@ a.bt-link-tx.underline.small {
 .add-prd-wrap .list-comp-lineinfo li .lineinfo-data .info-title {
   font-size: 1.125rem; }
   .add-prd-wrap .list-comp-lineinfo li .lineinfo-data .info-title .unit {
-    font-size: 0.625rem; }
+    font-size: 1.125rem; }
 
 /* 임지선 ~ 2018.10.05 */
 /* 김재성 */
@@ -17701,7 +17700,7 @@ a.bt-link-tx.underline.small {
       display: block; }
     .custom-range .value .val {
       display: block;
-      font-size: 0.625rem; }
+      font-size: 1.125rem; }
       .custom-range .value .val .set {
         font-weight: 700;
         font-size: 1.125rem; }
@@ -18293,7 +18292,9 @@ a.bt-link-tx.underline.small {
     color: #000;
     font-size: 0.9375rem;
     font-weight: 400;
-    line-height: 1.3125rem; }
+    line-height: 1.3125rem;
+    display: block;
+    width: 70%; }
     .survey-banner .banner-tit .tit-point {
       display: block;
       font-weight: 700; }
@@ -20070,7 +20071,6 @@ a.bt-link-tx.underline.small {
     top: 50%;
     left: 50%;
     width: 4.8125rem;
-    height: 4rem;
     -webkit-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%); }
 
@@ -20617,7 +20617,7 @@ a.bt-link-tx.underline.small {
       display: block;
       margin-top: 0.9375rem;
       color: #e22f26;
-      font-size: 0.625rem; }
+      font-size: 1.125rem; }
       .card-coupon-box .card-coupon-inner .price .num {
         font-size: 1.125rem;
         font-weight: 700; }
@@ -21480,7 +21480,7 @@ a.bt-link-tx.underline.small {
   font-size: 1.5rem;
   color: #178BCE; }
   .year-accumulate-benefit strong span {
-    font-size: 0.75rem;
+    font-size: 1.5rem;
     display: inline-block; }
 
 .membership-use-particulars .bt-detail {
@@ -23094,7 +23094,7 @@ a.bt-link-tx.underline.small {
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     line-height: 0;
-    line-height: 0; }
+    color: #000; }
     .calling-plan .wrap-link:after {
       content: '';
       display: inline-block;
@@ -28225,7 +28225,8 @@ body.apphome {
     display: block;
     text-align: right;
     font-size: 0.875rem;
-    padding-top: 0.1875rem; }
+    padding-top: 0.1875rem;
+    float: right; }
 
 .data-list-type1 .type1 li:first-child {
   padding-top: 0;
@@ -28657,6 +28658,7 @@ body.apphome {
   .category-info-guide li .text-type1 {
     display: block;
     font-size: 1.125rem;
+    color: #000;
     padding: 0 4.375rem 0.3125rem 0; }
   .category-info-guide li .text-type2 {
     display: block;

@@ -133,6 +133,8 @@
     color: inherit;
     font-size: inherit;
     font-weight: inherit; }
+    .section-swiper-box .link-full .ti {
+      padding-top: 1.75rem; }
 
 .main-top-group {
   position: relative;
@@ -426,7 +428,6 @@
       white-space: nowrap;
       color: #666666;
       font-size: 0.75rem;
-      text-decoration: underline;
       text-align: center;
       margin: 0 auto;
       font-weight: 700; }
@@ -438,7 +439,7 @@
         right: 26%; }
   .main-chart-box > .ti {
     display: block;
-    margin-top: 0.3125rem; }
+    margin-top: 0.5625rem; }
     .main-chart-box > .ti .bt {
       color: inherit;
       font-size: 1.625rem;
@@ -591,7 +592,7 @@
 .main-tip-box {
   overflow: hidden; }
   .main-tip-box.box-type .slider-box .slick-dots {
-    top: -1.1875rem; }
+    top: -3.75rem; }
   .main-tip-box > .stit.tit {
     display: inline-block;
     width: 70%;
@@ -1222,7 +1223,7 @@ body.apphome {
       content: '';
       position: absolute;
       left: 0;
-      bottom: 0;
+      bottom: -86px;
       width: 100%;
       height: 11.25rem;
       background: url(/img/main/bg_home.png) repeat-x 0 0;
@@ -1255,12 +1256,14 @@ body.apphome {
   -webkit-box-shadow: 0 0.625rem 0.9375rem #eaeaea;
           box-shadow: 0 0.625rem 0.9375rem #eaeaea;
   z-index: 3; }
+  .section-box.pdtb-main-box {
+    padding: 1.5rem 1.5rem 1.625rem; }
   .section-box.empty {
     min-height: 12.5rem; }
   .section-box.nogaps {
     padding: 0; }
     .section-box.nogaps .stit {
-      margin: 1.25rem 1.5rem 0.625rem 1.5rem; }
+      margin: 1.5rem 1.5rem 0.625rem 1.5rem; }
   .section-box.nogaps-top {
     padding: 0 1.5rem 1.25rem; }
   .section-box.nogaps-btm {
@@ -2525,6 +2528,9 @@ body.apphome {
   overflow: hidden;
   background: #3583e3;
   color: #fff; }
+  .main-charge-box > button {
+    color: #fff;
+    text-align: left; }
   .main-charge-box .slider-box .slick-dots {
     top: -1.1875rem; }
     .main-charge-box .slider-box .slick-dots li span {
@@ -3029,6 +3035,40 @@ body.apphome {
       margin-top: 0.3125rem;
       vertical-align: top; }
 
+.main-direct-box > button,
+.main-tapp-box > button {
+  text-align: left; }
+  .main-direct-box > button .ti,
+  .main-tapp-box > button .ti {
+    overflow: hidden;
+    display: -webkit-box;
+    max-height: 3.75rem;
+    line-height: 1.875rem;
+    white-space: normal;
+    word-wrap: break-word;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    font-size: 1.5625rem;
+    font-weight: 700; }
+    .main-direct-box > button .ti span,
+    .main-tapp-box > button .ti span {
+      position: relative;
+      display: inline-block; }
+      .main-direct-box > button .ti span:after,
+      .main-tapp-box > button .ti span:after {
+        display: inline-block;
+        content: "";
+        width: 0.40625rem;
+        height: 0.6875rem;
+        background: url(/img/ico/icon-link-arrow.png) no-repeat right center;
+        background-size: 6.5px 11px;
+        margin: 0 0 0.1875rem 0.5rem; }
+  .main-direct-box > button .tx,
+  .main-tapp-box > button .tx {
+    display: block;
+    margin-top: 0.3125rem; }
+
 .main-alarm-box {
   display: block;
   width: 100%;
@@ -3076,7 +3116,7 @@ body.apphome {
       top: 1.0625rem;
       width: 2.75rem;
       height: 2.75rem;
-      border: 2px solid #c1c1c1;
+      border: 1px solid #c1c1c1;
       border-radius: 100%;
       font-size: 1rem;
       font-weight: 700;
@@ -3123,6 +3163,7 @@ body.apphome {
       text-overflow: ellipsis; }
     .charge-product .bt-cont-box .tag {
       display: block;
+      margin-top: 0.1875rem;
       font-size: 0.75rem;
       color: #178bce; }
     .charge-product .bt-cont-box .sum {

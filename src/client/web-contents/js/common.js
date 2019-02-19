@@ -595,14 +595,6 @@ skt_landing.action = {
           $('body').addClass('scroll');
       }
     });
-    /* 2019.02.08 추가 하단에 팝업에 스크롤생성된게 왜 삭제됬는지 체크필요  */
-    $('.popup-page').scroll(function(){
-      if ($(this).scrollTop() > 0) {
-        $('.header-wrap').addClass('scrollshadow');
-      }else {
-        $('.header-wrap').removeClass('scrollshadow');
-      }
-    });   
   },
   header_shadow_popup : function(){
     $('.popup-page').each(function(){
@@ -617,6 +609,14 @@ skt_landing.action = {
         })
       }
     })
+    /* 2019.02.08 추가 하단에 팝업에 스크롤생성된게 왜 삭제됬는지 체크필요  */
+    $('.popup-page').scroll(function(){
+      if ($(this).scrollTop() > 0) {
+        $('.header-wrap').addClass('scrollshadow');
+      }else {
+        $('.header-wrap').removeClass('scrollshadow');
+      }
+    });    
   },
   gnb : function(){
     $('.icon-gnb-menu').bind('click', function(){

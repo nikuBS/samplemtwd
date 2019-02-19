@@ -63,8 +63,8 @@
                 <div class="home-tab">
                     <div class="home-tab-belt">
                         <ul>
-                            <li class="tab"><div><button class="icon-home-tab-my on" aria-selected="true"><span class="blind">my</span></button><span class="bar"></span></div></li> <!-- 접근성-선택되었을때 'true' 변경-->
-                            <li class="tab"><div><button class="icon-home-tab-store" aria-selected="false"><span class="blind">store</span></button><span class="bar"></span></div></li> <!--접근성-선택되었을때 'true' 변경-->
+                            <li class="tab"><div><button class="icon-home-tab-my" aria-selected="false"><span class="blind">my</span></button><span class="bar"></span></div></li> <!-- 접근성-선택되었을때 'true' 변경-->
+                            <li class="tab"><div><button class="icon-home-tab-store on" aria-selected="true"><span class="blind">store</span></button><span class="bar"></span></div></li> <!--접근성-선택되었을때 'true' 변경-->
                         </ul>
                     </div>
                 </div>
@@ -78,6 +78,7 @@
 
                             <div class="main-top-group group-type">
                                 <!-- 메인 배너 -->
+                                <!-- 2019.02.19 수정 - 이미지 변경 (사이즈) -->
                                 <div class="main-banner-box section-swiper-box">
                                     <!-- .widget -->
                                     <div class="widget">
@@ -86,17 +87,7 @@
                                                 <ul class="slider">
                                                     <li>
                                                         <button class="bt">
-                                                            <img src="/img/main/banner01.jpg" alt="예약과 품절 사이 단 1초! 가장 완변한 사전예약 iPhone X5 2차 사전예약하기">
-                                                        </button>
-                                                    </li>
-                                                    <li>
-                                                        <button class="bt">
-                                                            <img src="/img/main/banner01.jpg" alt="예약과 품절 사이 단 1초! 가장 완변한 사전예약 iPhone X5 2차 사전예약하기">
-                                                        </button>
-                                                    </li>
-                                                    <li>
-                                                        <button class="bt">
-                                                            <img src="/img/main/banner01.jpg" alt="예약과 품절 사이 단 1초! 가장 완변한 사전예약 iPhone X5 2차 사전예약하기">
+                                                            <img src="/img/main/img-main-banner02_01.png" alt="지금 당신의 음악 FLO, FLO 출시 기념 2개월 무료 음악 헤택 자세히보기">
                                                         </button>
                                                     </li>
                                                 </ul>
@@ -122,11 +113,13 @@
                             </div>
 
                             <!-- 다이렉트샵 -->
-                            <div class="section-box">
+                            <!-- 2019.02.19 수정 - 타이틀 클릭영역 -->
+                            <div class="section-box pdtb-main-box">
                                 <div class="main-direct-box">
-                                    <div class="stit c-point"><button class="bt">다이렉트샵 <i class="icon-arrowmore-blue-32"><span class="blind">more</span></i></button></div>
-                                    <strong class="ti">다이렉트샵에서 엄선한<br>프리미엄 스마트폰</strong>
-                                    <!-- <span class="tx">SK텔레콤 고객을 위한 공시 지원금에 추가 지원금 할인</span> -->
+                                    <button>
+                                        <strong class="ti"><span>다이렉트샵</span></strong>
+                                        <span class="tx">다이렉트샵에서 엄선한 프리미엄 스마트폰</span>
+                                    </button>
                                     <ul class="info"><!-- 190124 가격,태그 영역 제거 -->
                                         <li>
                                             <button class="bt">
@@ -163,8 +156,10 @@
                             <!-- 모바일 요금제 -->
                             <div class="section-box nogaps-btm">
                                 <div class="main-direct-box">
-                                    <!-- <div class="stit c-point"><button class="bt">요금제 <i class="icon-arrowmore-blue-32"><span class="blind">more</span></i></button></div> -->
-                                    <strong class="ti"><span>인기 있는<br/> SK텔레콤의 대표요금제</span></strong>
+                                    <!-- 2019.02.19 수정 - 타이틀 클릭영역 -->
+                                    <button>
+                                        <strong class="ti"><span>인기 있는<br/> SK텔레콤의 대표요금제</span></strong>
+                                    </button>
                                     <ul class="charge-product">
                                         <li>
                                             <button class="bt-cont-box">
@@ -203,15 +198,18 @@
                                 <!-- <div class="main-banner-img">
                                     <button><img src="/img/main/img-main-banner08.png" alt="인터넷 / 전화 / IPTV 온가족 플랜 휴대폰 월정액 & 인터넷 기본료 결합하면 최대 29,710월 할인 자세히 보기" /></button>
                                 </div> -->
+                                <!-- 2019.02.19 수정 - 클릭영역 변경 -->
                                 <div class="main-charge-box combination">
-                                    <div class="stit"><button class="bt02">인터넷/전화/IPTV </button></div>
-                                    <div class="main-box-cont main-box-cont-link">
-                                        <button class="link-full">
-                                            <strong class="ti">온가족 플랜</strong>
-                                            <span class="tx">휴대폰 월정액 & 인터넷 기본료 결합하면 최대 29,710원 할인</span>
-                                            <p class="bt">자세히 보기</p>
-                                        </button>
-                                    </div>
+                                    <button>
+                                        <div class="stit">인터넷/전화/IPTV</div>
+                                        <div class="main-box-cont main-box-cont-link">
+                                            <div class="link-full">
+                                                <strong class="ti">온가족 플랜</strong>
+                                                <span class="tx">휴대폰 월정액 & 인터넷 기본료 결합하면 최대 29,710원 할인</span>
+                                                <p class="bt">자세히 보기</p>
+                                            </div>
+                                        </div>
+                                    </button>
                                 </div>
                             </div>
                             <!-- //인터넷 / 집전화 / IPTV -->
@@ -221,13 +219,16 @@
                             <div class="section-box nogaps-btm">
                                 <div class="main-direct-box">
                                     <!-- <div class="stit c-point"><button class="bt">부가서비스<i class="icon-arrowmore-blue-32"><span class="blind">more</span></i></button></div> -->
-                                    <strong class="ti"><span>모바일 부가상품</span></strong>
+                                    <!-- 2019.02.19 수정 - 타이틀 클릭영역 -->
+                                    <button>
+                                        <strong class="ti"><span>모바일 부가서비스</span></strong>
+                                    </button>
                                     <ul class="charge-product type-list">
                                         <li>
                                             <button class="bt-cont-box category-add01">
                                                 <strong class="ti">LTE 안심옵션</strong>
                                                 <em class="sum">월 <span class="ff-tg-medium">5,500</span>원</em>
-                                                <!-- <span class="tag">#데이터</span> -->
+                                                <span class="tag">데이터</span>
                                                 <span class="tx">데이터 모두 사용한 후 초과 과금 없이 안심하고 데이터 사용 가능한 서비스</span>
                                             </button>
                                         </li>
@@ -243,7 +244,7 @@
                                             <button class="bt-cont-box category-add05">
                                                 <strong class="ti">oksusu & 안심 팩</strong>
                                                 <em class="sum">월 <span class="ff-tg-medium">8,800</span>원</em>
-                                                <!-- <span class="tag">#콘텐츠 이용</span> -->
+                                                <span class="tag">콘텐츠 이용</span>
                                                 <span class="tx">실시간 TV 및 최신 영화 등의 동영상 콘텐츠(oksusu)를 마음껏 이용</span>
                                             </button>
                                         </li>
@@ -251,7 +252,7 @@
                                             <button class="bt-cont-box category-add01">
                                                 <strong class="ti ti-type">T가족모아데이터</strong>
                                                 <em class="sum">무료</em>
-                                                <!-- <span class="tag">#데이터</span> -->
+                                                <span class="tag">데이터</span>
                                                 <span class="tx">가족이 T플랜 가입하면, 가족과 데이터를 모아서 이용 가능!</span>
                                             </button>
                                         </li>
@@ -259,53 +260,38 @@
                                 </div>
                             </div>
                             <!-- //모바일 부가상품 -->
-
                             <!-- 할인혜택 --> 
                             <div class="section-box nogaps">
+                                <!-- 2019.02.19 수정 - 클릭영역 변경 -->
                                 <div class="main-charge-box discount">
 									<!-- <button>
 										<img src="/img/main/img-main-banner04.png" alt="할인혜택 선택약정할인 기기 지원금을 받지 않으셨다면 지원금 대신 요금할인혜택 제공 자세히 보기" />
-									</button> -->
-                                    <div class="stit"><button class="bt02">할인혜택</button></div>
-                                    <div class="main-box-cont main-box-cont-link">
-                                        <button class="link-full">
-                                            <strong class="ti">선택약정할인</strong>
-                                            <span class="tx">기기 지원금을 받지 않으셨다면 지원금 대신 요금할인혜택 제공</span>
-                                            <p class="bt">자세히 보기</p>
-                                        </button>
-                                    </div>
+                                    </button> -->
+                                    <button>
+                                        <div class="stit">할인혜택</div>
+                                        <div class="main-box-cont main-box-cont-link">
+                                            <div class="link-full">
+                                                <strong class="ti">선택약정할인</strong>
+                                                <span class="tx">기기 지원금을 받지 않으셨다면 지원금 대신 요금할인혜택 제공</span>
+                                                <p class="bt">자세히 보기</p>
+                                            </div>
+                                        </div>
+                                    </button>
                                 </div>
                             </div>
                             <!-- //할인혜택 -->
 
                             <!-- T로밍 -->
                             <div class="section-box nogaps">
+                                <!-- 2019.02.19 수정 - 배너 타이틀 변경 -->
                                 <div class="main-charge-box roaming section-swiper-box">
                                     <!-- <div class="stit"><button class="bt"></button></div> -->
                                     <!-- .widget -->
                                     <div class="widget">
                                         <div class="widget-box slider1 slider1-auto">
                                             <div class="slider-box link-full-box">
-												<!-- <ul class="slider">
-                                                    <li>
-                                                        <button>
-															<img src="/img/main/img-main-banner05-1.png" alt="아시아 여행을 계획하셨나요? 아시아 주요 27개국에서 유ㄹ 상품 로밍상품 보기" />
-														</button>
-                                                    </li>
-                                                    <li>
-                                                        <button>
-															<img src="/img/main/img-main-banner05-1.png" alt="아시아 여행을 계획하셨나요? 아시아 주요 27개국에서 유용한 상품 로밍상품 보기" />
-														</button>
-                                                    </li>
-													<li>
-                                                        <button>
-															<img src="/img/main/img-main-banner05-1.png" alt="아시아 여행을 계획하셨나요? 아시아 주요 27개국에서 유용한 상품 로밍상품 보기" />
-														</button>
-                                                    </li>
-                                                </ul> -->
                                                 <ul class="slider">
-                                                    <li>                                                    
-                                                        <div class="stit type02"><button class="bt02">T로밍 아시아패스 <i class="icon-arrowmore-blue-32"><span class="blind">more</span></i></button></div>
+                                                    <li>                                     
                                                         <div class="main-box-cont bg-type01">
                                                             <button class="link-full">    
                                                                 <strong class="ti">아시아 여행을<br/>계획 중이신가요?</strong>
@@ -315,27 +301,24 @@
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="stit type02"><button class="bt02">T로밍 미주패스 <i class="icon-arrowmore-blue-32"><span class="blind">more</span></i></button></div>
                                                         <div class="main-box-cont bg-type02">
                                                             <button class="link-full">
                                                                 <strong class="ti">미주 여행을<br/>계획 중이신가요?</strong>
-                                                                <span class="tx">미주/호주 19개국에서 30일 동안 LTE/3G 데이터를 안심하고 사용하세요.</span>
+                                                                <span class="tx">미주/오세아니아 주요국에서 30일 동안 LTE/3G 데이터를 안심하고 사용하세요.</span>
                                                                 <p class="bt">로밍상품 보기</p>
                                                             </button>
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="stit type02"><button class="bt02">T로밍 유럽패스 <i class="icon-arrowmore-blue-32"><span class="blind">more</span></i></button></div>
                                                         <div class="main-box-cont bg-type03">
                                                             <button class="link-full">
                                                                 <strong class="ti">유럽 여행을<br/>계획 중이신가요?</strong>
-                                                                <span class="tx">유럽 51개국에서 30일 동안 LTE/3G 데이터를 안심하고 사용하세요.</span>
+                                                                <span class="tx">유럽 주요국에서 30일 동안 LTE/3G 데이터를 안심하고 사용하세요.</span>
                                                                 <p class="bt">로밍상품 보기</p>
                                                             </button>
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="stit type02"><button class="bt02">T괌사이판 국내처럼 <i class="icon-arrowmore-blue-32"><span class="blind">more</span></i></button></div>
                                                         <div class="main-box-cont bg-type04">
                                                             <button class="link-full">
                                                                 <strong class="ti">괌/사이판도 우리의<br/>데이터를 쓰는 나라다</strong>
@@ -345,7 +328,6 @@
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div class="stit type02"><button class="bt02">T로밍 OnePass300 <i class="icon-arrowmore-blue-32"><span class="blind">more</span></i></button></div>
                                                         <div class="main-box-cont bg-type05">
                                                             <button class="link-full">
                                                                 <strong class="ti">짧은 여행을<br/>계획 중이신가요? </strong>
@@ -402,9 +384,12 @@
 
                             <!-- T앱 -->
                             <div class="section-box">
-                                <div class="main-tapp-box">
-                                    <div class="stit c-point"><button class="bt">T앱 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div>
-                                    <div class="ti">함께하면 더욱 좋은 앱</div>
+                                <div class="main-tapp-box main-direct-box">
+                                    <!-- 2019.02.19 수정 - 타이틀 클릭영역 -->
+                                    <button>
+                                        <strong class="ti"><span>T앱</span></strong>
+                                        <span class="tx">함께하면 더욱 스마트한 앱서비스</span>
+                                    </button>
                                     <ul class="app-list">
                                         <li class="t-membership"><button class="bt">T멤버십</button></li>
                                         <li class="t-map"><button class="bt">T맵</button></li>
@@ -418,7 +403,8 @@
                             <!-- 이럴 땐 이렇게 하세요 -->
                             <div class="section-box nogaps">
                                 <div class="main-tip-box box-type section-swiper-box">
-                                    <div class="stit c-point"><button class="bt">이럴 땐 이렇게 하세요 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div>
+                                    <!-- 2019.02.19 수정 - 타이틀 클릭영역 -->
+                                    <button type="button" class="stit tit" tabindex="0">이럴 땐<br>이렇게 하세요</button>
                                     <!-- .widget -->
                                     <div class="widget">
                                         <div class="widget-box slider1">
