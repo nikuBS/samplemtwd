@@ -90,6 +90,8 @@ Tw.CustomerAgentsearch.prototype = {
     this.$container.on('click', '.bt-more button', $.proxy(this._onMoreRequested, this));
     this.$container.on('click', '.fe-branch-detail', $.proxy(this._onBranchDetail, this));
     this.$container.on('click', '.fe-custom-replace-history', $.proxy(this._onTabChanged, this));
+    this.$container.on('click', '#fe-cancel-name,#fe-cancel-addr,#fe-cancel-tube',
+      $.proxy(this._onCancelInput, this));
   },
   _onTabChanged: function (e) {
     if (this._isSearched && this._prevTab !== $(e.currentTarget).attr('href')) {
@@ -274,5 +276,15 @@ Tw.CustomerAgentsearch.prototype = {
         onConfirm();
       }, this)
     );
+  },
+  _onCancelInput: function (e) {
+    var $target = $(e.currentTarget);
+    if ($target.attr('id').indexOf('name') !== -1) {
+      this.$btnSearchName.attr('disabled', 'disabled');
+    } else if ($target.attr('id').indexOf('addr') !== -1) {
+      this.$btnSearchAddr.attr('disabled', 'disabled');
+    } else if ($target.attr('id').indexOf('tube') !== -1) {
+      this.$btnSearchTube.attr('disabled', 'disabled');
+    }
   }
 };
