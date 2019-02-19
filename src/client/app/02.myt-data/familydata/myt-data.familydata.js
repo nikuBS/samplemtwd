@@ -74,7 +74,7 @@ Tw.MyTDataFamily.prototype = {
     var limitation = typeof this._limitation === 'boolean' ? this._limitation : Number(this._limitation);
 
     if (originLimit === limitation) {
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.A5);
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.A5, undefined, undefined, undefined);
     } else if (limitation === false) {
       this._popupService.close();
       this._apiService.request(Tw.API_CMD.BFF_06_0051, {}, {}, [mgmtNum]).done($.proxy(this._successChangeLimitation, this));
