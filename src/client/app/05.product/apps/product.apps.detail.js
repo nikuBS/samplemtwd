@@ -129,6 +129,10 @@ Tw.ProductAppsDetail.prototype = {
         window.location.replace(store);
       },
       openConfirm = $.proxy(function() {
+        if (document.webkitHidden) {
+          return;
+        }
+
         if (isIos) {
           window.location.replace(store);
         } else {
