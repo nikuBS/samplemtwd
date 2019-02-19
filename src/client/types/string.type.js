@@ -1138,7 +1138,7 @@ Tw.MYT_JOIN_WIRE_SET_PAUSE = {
     COMPLETE_TEXT: '일시 정지'
   },
   CANCEL: {
-    TITLE: '일지 정지 해제 하시겠습니까 ?',
+    TITLE: '일지정지를 해제 하시겠습니까?',
     BTNAME: '해제하기',
     COMPLETE_TEXT: '일시 정지 해제'
   }
@@ -1150,7 +1150,7 @@ Tw.MYT_JOIN_WIRE_MODIFY_PERIOD = {
     CONTENTS: '조회까지 10초에서 15초까지 걸릴 수 있습니다.'
   },
   ERROR_ALERT: {
-    TITLE: '사용에 불편을 드려 죄송합니다.',
+    TITLE: '이용에 불편을 드려 죄송합니다.',
     CONTENTS: '잠시 후에 다시 조회해 <br />주시기 바랍니다.',
     BT_NAME: '닫기'
   },

@@ -22,7 +22,7 @@ Tw.MytJoinWireSetPause.prototype = {
   },
   _DATE_FORMAT: {
     INPUT: 'YYYY-MM-DD',
-    LABEL: 'YYYY.MM.DD'
+    LABEL: 'YYYY.M.DD.'
   },
   _SELECTABLE_PAUSE_RANGE: 93, // 정지종료일 선택가능 기간(일)
   _DAYS_PER_MONTH: 31, // 1개월 추정 일 수
@@ -159,8 +159,8 @@ Tw.MytJoinWireSetPause.prototype = {
     var title, contents, btName, closeBtName, apiCmd, params;
     switch ( this._options.svcStCd ) {
       case this._SVC_ST_CD.AC:
-        var sDate = Tw.DateHelper.getShortDateNoDot(this._startDate);
-        var eDate = Tw.DateHelper.getShortDateNoDot(this._endDate);
+        var sDate = Tw.DateHelper.getShortDate(this._startDate);
+        var eDate = Tw.DateHelper.getShortDate(this._endDate);
         title = Tw.MYT_JOIN_WIRE_SET_PAUSE.SET.TITLE;
         contents = Tw.MYT_JOIN_WIRE_SET_PAUSE.SET.CONTENTS;
         contents = contents.replace('[sDate]', sDate);

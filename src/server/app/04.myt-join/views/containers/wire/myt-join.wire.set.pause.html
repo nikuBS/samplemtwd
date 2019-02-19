@@ -22,7 +22,7 @@
     <div class="header-wrap">
         <div class="page-header">
             <div class="header-ti">
-                <h1>일시 정지/해제</h1>
+                <h1>일시정지 신청.해제</h1>
             </div>
         </div>
     </div>
@@ -49,7 +49,7 @@
                             <input type="date" class="fe-input-start-date" min="<%= startDate.min %>" max="<%= startDate.max %>" value="<%= startDate.min %>" >
                         </div>
                         <div class="cont-noti mt20">
-                            <span class="type1">당일 이후 선택 가능 합니다.</span>
+                            <span class="type1">오늘 이후 선택 가능 합니다.</span>
                         </div>
                         <span class="form-title">정지 종료일</span>
                         <!--<button class="bt-dropdown big fe-btn-end-date" title="정지 종료일" aria-haspopup="true">선택<span class="ico"></span></button>-->
@@ -58,16 +58,16 @@
                         </div>
                     </div>
                     <div class="cont-noti mt20">
-                        <span class="type1">총 93일(3개월) 신청가능 합니다.</span>
+                        <span class="type1">총 93일(3개월) 신청하실 수 있습니다.</span>
                     </div>
                     <div class="data-result mt30 fe-pause-range-info" style="display: none;">
-                        <p class="tit">이용 중단 기간</p>
+                        <p class="tit">이용 정지 기간</p>
                         <p class="data"><em class="fe-pause-date"></em></p>
                         <p class="tit">(<span class="fe-pause-range"></span>)</p>
                     </div>
                     <% } else if (wirePauseInfo.svc_st_cd === 'SP') { %>
                     <div class="data-result mt30">
-                        <p class="tit">이용 중단 기간</p>
+                        <p class="tit">이용 정지 기간</p>
                         <p class="data"><em>
                             <%= wirePauseInfo.showLastSuspDtFr %>
                             ~
@@ -111,9 +111,9 @@
                 <ul class="bt-slice full">
                     <li class="bt-red1">
                         <% if (wirePauseInfo.svc_st_cd === 'AC') { %>
-                        <button class="fe-btn-submit" disabled>일시 정지 신청</button>
+                        <button class="fe-btn-submit" disabled>일시정지 신청</button>
                         <% } else if (wirePauseInfo.svc_st_cd === 'SP') { %>
-                        <button class="fe-btn-submit">일시 정지 해제</button>
+                        <button class="fe-btn-submit">일시정지 해제</button>
                         <% } %>
                     </li>
                 </ul>
