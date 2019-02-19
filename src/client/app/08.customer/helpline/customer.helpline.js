@@ -263,7 +263,7 @@ Tw.CustomerHelpline.prototype = {
   _successSubmit: function(resp) {
     if (resp.code === Tw.API_CODE.CODE_00) {
       if (resp.result.historiesYn === 'Y') {
-        this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_HELPLINE_A02, Tw.POPUP_TITLE.ALREADY_EXIST_RESERVATION);
+        this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_HELPLINE_A02);
       } else {
         this.$areaPhone.find('input').val('');
         this._popupService.open({

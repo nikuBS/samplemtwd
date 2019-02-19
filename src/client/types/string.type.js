@@ -97,7 +97,6 @@ Tw.POPUP_TITLE = {
   SELECT_ORDER: '정렬 기준을 선택해주세요',
   CONFIRM_SHARE: '데이터를 공유 하시겠습니까?',
   CANCEL_HELPLINE: '예약을 취소하시겠습니까?',
-  ALREADY_EXIST_RESERVATION: '이미 예약하신 정보가 있습니다.',
   AGREED_PERIOD: '약정기간',
   SELECT_RESERVATION_COMBINE_PRODUCT: '결합 상품 선택',
   EXTERNAL_LINK: '외부 사이트로 연결됩니다.',
