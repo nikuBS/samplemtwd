@@ -34,7 +34,7 @@ Tw.MyTDataTing.prototype = {
     this.$btn_native_contact_list.on('click', $.proxy(this._onClickBtnAddr, this));
     this.$input_ting_receiver.on('keyup', $.proxy(this._onKeyUpTingGiftNumber, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkValidateSendingButton, this));
-    this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
+    // this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
   },
 
   _getRemainDataInfo: function () {
@@ -84,7 +84,7 @@ Tw.MyTDataTing.prototype = {
 
   _onKeyUpTingGiftNumber: function () {
     this._checkValidateSendingButton();
-    this.$input_ting_receiver.val(this._convertDashNumber(this.$input_ting_receiver.val()));
+    this.$input_ting_receiver.val(Tw.StringHelper.phoneStringToDash(this.$input_ting_receiver.val()));
 
     this._validatePhoneNumber();
   },
