@@ -11,14 +11,13 @@ Tw.MyTFareBillSetChange = function (rootEl, data) {
   this._data = data !== undefined ? JSON.parse(data) : {};
   this._init();
 };
-
 Tw.MyTFareBillSetChange.prototype = {
   _init: function () {
     this._initVariables();
     this._bindEvent();
     this._initDefaultOptions();
     // input 변경이 감지되면 취소확인 컨펌 띄움. 초기값 설정이후 체크해야 하기 때문에 this._initDefaultOptions() 펑션 다음에 선언해준다.
-    this.$container.on('change', 'input', $.proxy(this._checkInputType, this)); // input tag 변경 확인
+    this.$container.one('change', 'input', $.proxy(this._checkInputType, this)); // input tag 변경 확인
   },
 
   _initVariables: function () {
@@ -32,8 +31,7 @@ Tw.MyTFareBillSetChange.prototype = {
     this._btnAddr = this.$container.find('.fe-btn-addr'); // 주소록 버튼
     this._addrArea = this.$container.find('#fe-addr-area'); // 우편 주소 area
     this._scurMailYn = this.$container.find('#fe-scurMailYn'); // 이메일 보안 설정
-    this._isInputChanged = false;
-
+    this._isInputChanged = false;     // 모든 input 필드(radio, checkobx 포함) 변경여부
   },
 
   _bindEvent: function () {
@@ -42,12 +40,17 @@ Tw.MyTFareBillSetChange.prototype = {
     this._inputHpNum.on('keyup input', _.debounce( $.proxy(this._onFormatHpNum, this), 150));
     this._submit.on('click', $.proxy(this._onSubmit, this));
     this.$container.on('change', 'input[name="ccurNotiYn"]', $.proxy(this._onChangeCcurNotiYn, this)); // 옵션 설정 > 법정대리인
-    this.$container.on('keyup focus change', '[data-inactive-target]', $.proxy(this._onDisableSubmitButton, this));
+    this.$container.on('keyup focus change', '[data-inactive-target]', $.proxy(this._onCheckedInput, this));
     this._scurMailYn.on('change', $.proxy(this._onChangeScurMailYn, this)); // 이메일 보안 설정
     this.$container.on('click', '.fe-search-zip', $.proxy(this._searchZip, this)); // 우편번호 검색
     this.$container.on('click', '#fe-back', $.proxy(this._onCloseConfirm, this)); // 취소 확인 창
   },
 
+  /**
+   * 모든 input 필드(radio, checkobx 포함) 변경유무 확인
+   * @param e event
+   * @private
+   */
   _checkInputType : function () {
     this._isInputChanged = true;
   },
@@ -418,6 +421,9 @@ Tw.MyTFareBillSetChange.prototype = {
               }
               break;
             case 'email' :
+              if (_valid.checkEmpty(_value) && !_this.data('isChange') ) {
+                return true;
+              }
               if (!(_result = _valid.isEmail(_value))) {
                 Tw.Popup.openAlert(Tw.ALERT_MSG_MYT_FARE.V21);
                 return false;
@@ -425,6 +431,9 @@ Tw.MyTFareBillSetChange.prototype = {
               break;
             case 'hp' :
               var _hpValue = _value.replace(/[^0-9]/g, '');
+              if (_valid.checkEmpty(_hpValue) && !_this.data('isChange') ) {
+                return true;
+              }
               // 입력값 전체 자릿수가 10자리 미만일 경우
               if (_hpValue.length < 10) {
                 Tw.Popup.openAlert(Tw.ALERT_MSG_MYT_FARE.V18);
@@ -444,7 +453,16 @@ Tw.MyTFareBillSetChange.prototype = {
         var _name = _this.attr('name');
         if (_this.is(':checkbox')) {
           _reqData[_name] = _this.is(':checked') ? 'Y' : 'N';
+        } else if (_this.is(':radio')) {
+          if (_reqData[_name] === undefined) {
+            _reqData[_name] = $this.$container.find('[name="' + _name + '"]:checked').val();
+          }
         } else {
+          // 사용자가 직접 수정한 input만 전송 데이터로 만든다.
+          if (!_this.data('isChange')) {
+            return true;
+          }
+
           var _value2 = _this.val();
           if (_this.data('validType') === 'hp') {
             _value2 = _value2.replace(/[^0-9]/g, '');
@@ -455,13 +473,35 @@ Tw.MyTFareBillSetChange.prototype = {
           }
           _reqData[_name] = _value2;
         }
+        // 요청 데이터 만들기 끝
       }// if end..
     });
-
 
     _reqData.toBillTypeCd = this._convertBillType();
 
     return {data: _reqData, result: _result};
+  },
+
+  _onCheckedInput : function (e) {
+    this._clearInput(e);
+    this._onDisableSubmitButton();
+  },
+
+  _clearInput : function (e) {
+    var $target = $(e.currentTarget);
+    var _validType = $target.data('validType');
+    if (['addr', 'email', 'hp'].indexOf(_validType) !== -1 ) {
+      $target.data('isChange', true);
+      // focus 인 경우 값 초기화
+      if (e.type === 'focusin') {
+        // 우편주소 일경우 우편번호, 기본주소, 상세주소 3개 초기화
+        if (_validType === 'addr') {
+          this.$container.find('[data-valid-type="addr"]').val('');
+        } else {
+          $target.val('');
+        }
+      }
+    }
   },
 
   // 변경하기 버튼 disable / enable
@@ -481,7 +521,6 @@ Tw.MyTFareBillSetChange.prototype = {
         if (_isDisable) return false;
       }
     });
-
     this._submit.prop('disabled', _isDisable);
   },
 
