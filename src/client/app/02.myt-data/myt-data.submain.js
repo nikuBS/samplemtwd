@@ -316,10 +316,13 @@ Tw.MyTDataSubMain.prototype = {
         var usageData = parseInt(data[idx].totalUsage, 10);
         baseTotalData += usageData;/*parseInt(data[idx].basOfrUsage, 10)*/
         if ( usageData > 0 ) {
-          chart_data.push({
-            t: this._recentChartDate(data[idx].invMth), // 각 항목 타이틀
-            v: this.__convertData(usageData) // 배열 평균값으로 전달
-          });
+          var convVal = this.__convertData(usageData); // 배열 평균값으로 전달
+          if ( convVal > 0 ) {
+            chart_data.push({
+              t: this._recentChartDate(data[idx].invMth), // 각 항목 타이틀
+              v: convVal
+            });
+          }
         }
       }
       // 음성
@@ -331,10 +334,13 @@ Tw.MyTDataSubMain.prototype = {
           data = this.data.pattern.voice;
           for ( idx = 0; idx < data.length; idx++ ) {
             baseTotalVoice += parseInt(data[idx].totalUsage, 10);
-            chart_data.push({
-              t: this._recentChartDate(data[idx].invMth), // 각 항목 타이틀
-              v: this.__convertVoice(parseInt(data[idx].totalUsage, 10)) // 배열 평균값으로 전달
-            });
+            var convVal_v = this.__convertVoice(parseInt(data[idx].totalUsage, 10)); // 배열 평균값으로 전달
+            if ( convVal_v > 0 ) {
+              chart_data.push({
+                t: this._recentChartDate(data[idx].invMth), // 각 항목 타이틀
+                v: convVal_v
+              });
+            }
           }
         }
       }
@@ -347,10 +353,13 @@ Tw.MyTDataSubMain.prototype = {
           data = this.data.pattern.sms;
           for ( idx = 0; idx < data.length; idx++ ) {
             baseTotalSms += parseInt(data[idx].totalUsage, 10);
-            chart_data.push({
-              t: this._recentChartDate(data[idx].invMth), // 각 항목 타이틀
-              v: parseInt(data[idx].totalUsage, 10) // 배열 평균값으로 전달
-            });
+            var convVal_s = parseInt(data[idx].totalUsage, 10); // 배열 평균값으로 전달
+            if ( convVal_s > 0 ) {
+              chart_data.push({
+                t: this._recentChartDate(data[idx].invMth), // 각 항목 타이틀
+                v: convVal_s
+              });
+            }
           }
         }
       }
