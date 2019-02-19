@@ -33,6 +33,7 @@
     {{/each}}
 </script>
 
+<!-- 개별 -->
 <script id="fe-entryTplUseBill" type="text/x-handlebars-template">
 
     <!-- .cont-box -->
@@ -41,7 +42,7 @@
             <div class="single-list">
                 <span class="title">
                     {{!-- 주석 아이콘 --}}
-                    {{#if_icon rootItem.label }}
+                    {{#if_icon resData.useSvcType.svcType }}
                     {{/if_icon}}
                     <span class="in-tx type2">{{resData.useSvcType.svcType}}</span>
                 </span>
@@ -128,6 +129,7 @@
 
 </script>
 
+<!-- 통합 -->
 <script id="fe-entryTplBill" type="text/x-handlebars-template">
     {{!-- 주석 : svcMgmtNum --}}
     {{# each resData as |rootItem rootIndex|}}
@@ -300,7 +302,7 @@
                         <p class="price"><%=commDataInfo.useAmtTot %>원</p>
                         <p class="term"><%=commDataInfo.selStaDt %> ~ <%=commDataInfo.selEndDt %></p>
                         <% } %>
-                        <div class="btn-wrap"><button class="btn-round2 btn-style3" data-target="conditionChangeBtn">조건변경</button></div>
+                        <div class="btn-wrap"><button class="btn-round2 btn-style3" data-target="conditionChangeBtn">청구월 변경</button></div>
                     </div>
                     <% if( !billpayInfo.existBill ) { %>
                     <div class="result-none type2">
