@@ -3,7 +3,7 @@
     <% if ( prodRedisInfo.summary.basFeeInfo ) { %>
     <p class="price-text">
         <% if ( !isDiscount ) { %>
-        <%= ( isRoaming || isWireplanAdd || isMobileplanAdd ) ? '이용요금' : '월정액' %>(<%= basFeeSubText %>)<br>
+        <span class="opacity80"><%= ( isRoaming || isWireplanAdd || isMobileplanAdd ) ? '이용요금' : '월정액' %>(<%= basFeeSubText %>)</span><br>
         <strong class="price-type"><%= prodRedisInfo.summary.basFeeInfo.value %></strong>
         <% if ( !prodRedisInfo.summary.basFeeInfo.isNaN ) { %>
         <span class="unit">원</span>

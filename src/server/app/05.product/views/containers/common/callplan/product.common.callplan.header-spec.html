@@ -1,7 +1,7 @@
 <% if ( isMobileplan && (prodRedisInfo.summary.basOfrDataQtyCtt || prodRedisInfo.summary.basOfrVcallTmsCtt || prodRedisInfo.summary.basOfrCharCntCtt) ) { %>
 <ul class="productdetails-utill">
     <% if ( prodRedisInfo.summary.basOfrDataQtyCtt ) { %>
-    <li>- 데이터 <strong class="str">
+    <li>- <span class="opacity80">데이터</span> <strong class="str">
         <% if ( prodRedisInfo.summary.basOfrDataQtyCtt.isNaN ) { %>
         <%= prodRedisInfo.summary.basOfrDataQtyCtt.value %>
         <% } else { %>
@@ -11,12 +11,12 @@
     </strong></li>
     <% } %>
     <% if ( prodRedisInfo.summary.basOfrVcallTmsCtt ) { %>
-    <li>- 음성 <strong class="str">
+    <li>- <span class="opacity80">음성</span> <strong class="str">
         <%= prodRedisInfo.summary.basOfrVcallTmsCtt.value %>
     </strong></li>
     <% } %>
     <% if ( prodRedisInfo.summary.basOfrCharCntCtt ) { %>
-    <li>- 문자 <strong class="str">
+    <li>- <span class="opacity80">문자</span> <strong class="str">
         <% if ( prodRedisInfo.summary.basOfrCharCntCtt.isNaN ) { %>
         <%= prodRedisInfo.summary.basOfrCharCntCtt.value %>
         <% } else { %>
