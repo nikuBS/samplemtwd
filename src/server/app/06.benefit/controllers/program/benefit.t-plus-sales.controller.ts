@@ -10,6 +10,7 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import { PRODUCT_TYPE_NM } from '../../../../types/string.type';
+import FormatHelper from '../../../../utils/format.helper';
 
 class BenefitTPlusSalesController extends TwViewController {
   constructor() {
@@ -19,7 +20,7 @@ class BenefitTPlusSalesController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
     const prodId = req.query.prod_id || '';
     const data: any = {
-      svcInfo: svcInfo,
+      svcInfo: Object.assign(svcInfo, { svcNumDash: FormatHelper.conTelFormatWithDash(svcInfo.svcNum) }),
       pageInfo: pageInfo,
       prodId: prodId
     };

@@ -22,7 +22,7 @@ class BenefitSelectContractController extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, child: any, pageInfo: any) {
     const prodId = req.query.prod_id || '', selType = req.query.type || null;
     const data: any = {
-      svcInfo: svcInfo,
+      svcInfo: Object.assign(svcInfo, { svcNumDash: FormatHelper.conTelFormatWithDash(svcInfo.svcNum) }),
       pageInfo: pageInfo,
       prodId: prodId,
       selType: selType

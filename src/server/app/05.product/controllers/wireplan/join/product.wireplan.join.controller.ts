@@ -34,7 +34,7 @@ class ProductWireplanJoin extends TwViewController {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {
         pageInfo: pageInfo,
-        svcInfo: svcInfo,
+        svcInfo: Object.assign(svcInfo, { svcNumDash: FormatHelper.conTelFormatWithDash(svcInfo.svcNum) }),
         title: PRODUCT_TYPE_NM.JOIN
       };
 

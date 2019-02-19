@@ -126,7 +126,7 @@ class ProductWireplanJoinRequireDocumentApply extends TwViewController {
       reqParams: any = {},
       renderCommonInfo = {
         pageInfo: pageInfo,
-        svcInfo: svcInfo,
+        svcInfo: Object.assign(svcInfo, { svcNumDash: FormatHelper.conTelFormatWithDash(svcInfo.svcNum) }),
         title: PRODUCT_REQUIRE_DOCUMENT_TYPE_NM.history
       };
 
