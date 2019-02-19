@@ -278,6 +278,7 @@ Tw.ProductCommonCallplan.prototype = {
       return this._getBpcp(url);
     }
 
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
       .done($.proxy(this._getSvcInfoRes, this, joinTermCd, url));
   },
@@ -312,6 +313,7 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _getSvcInfoRes: function(joinTermCd, url, resp) {
+    Tw.CommonHelper.endLoading('.container');
     if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
       return this._tidLanding.goLogin(location.origin + url + '?prod_id=' + this._prodId);
     }
