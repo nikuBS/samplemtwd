@@ -18,11 +18,26 @@ class BenefitMyBenefit extends TwViewController {
     super();
   }
 
+  /**
+   * 서버 데이터 처리.
+   * @param point
+   * @private
+   */
   _dataPreprocess(point: any): any {
     this._total += parseInt(point, 10);
     return FormatHelper.addComma(point);
   }
 
+  /**
+   * Render this page.
+   * @param req
+   * @param res
+   * @param next
+   * @param svcInfo
+   * @param allSvc
+   * @param childInfo
+   * @param pageInfo
+   */
   render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, childInfo?: any, pageInfo?: any) {
     Observable.combineLatest(
       this.apiService.request(API_CMD.BFF_11_0001, {}), // membership: MBR0001, MBR0002
@@ -36,8 +51,6 @@ class BenefitMyBenefit extends TwViewController {
       this.apiService.request(API_CMD.BFF_05_0196, {}),
       this.apiService.request(API_CMD.BFF_06_0001, {}), // 리필쿠폰 내역
       this.apiService.request(API_CMD.BFF_05_0068, {}) // 가입정보 조회
-
-
     ).subscribe(([membership, ocb, rainbow, noContract, cookiz, military, bill, combination, loyalty, refillCoupons, joininfo]) => {
 
         // checks all API errors except that the API has valid code not API_CODE.CODE_00
