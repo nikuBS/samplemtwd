@@ -4,8 +4,9 @@
  * Date: 2018.10.13
  */
 
-Tw.BiometricsCert = function (target) {
+Tw.BiometricsCert = function (target, svcMgmtNum) {
   this._target = target;
+  this._svcMgmtNum = svcMgmtNum;
   this._callback = null;
 
   this._apiService = Tw.Api;
@@ -78,7 +79,7 @@ Tw.BiometricsCert.prototype = {
   },
   _completeIdentification: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      var biometricsRegister = new Tw.BiometricsRegister(this._target);
+      var biometricsRegister = new Tw.BiometricsRegister(this._target, this._svcMgmtNum);
       biometricsRegister.open(this._callback);
     } else if ( resp.code === Tw.API_CODE.CERT_SMS_BLOCK ) {
       this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_SMS_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_SMS_BLOCK.TITLE, Tw.BUTTON_LABEL.CLOSE);
