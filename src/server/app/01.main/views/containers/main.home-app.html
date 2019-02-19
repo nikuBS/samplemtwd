@@ -393,11 +393,15 @@
                         <% if (svcType.login && svcType.mobilePhone) { %>
                         <% if (homeData.membershipData.code === 'EASY_LOGIN') { %>
                         <div class="section-box nogaps">
-                            <div class="main-membershop-box">
-                                <button class="ti-tx fe-bt-home-login">
-                                    <strong class="ti">간편 로그인 상태에서는 이용할 수 없습니다</strong>
-                                    <span class="tx">T아이디(아이디/비밀번호) 로그인 후 이용해주세요</span>
-                                </button>
+                            <div class="main-membershop-box fe-bt-home-login">
+                                <div class="membership-cont">
+                                    <strong class="ti">아직 멤버십 카드가 없으신가요?</strong>
+                                    <span class="msg">간편 로그인 상태에서는 이용할 수 없습니다.<br>T아이디(아이디/비밀번호) 로그인 후 이용해주세요.</span>
+                                </div>
+                                <div class="btn-area">
+                                    <a href="/membership/submain" class="bt">T멤버십</a>
+                                    <a href="/membership/benefit/brand" class="bt">제휴 브랜드</a>
+                                </div>
                             </div>
                         </div>
                         <% } else if (homeData.membershipData.code === '00') { %>
@@ -427,10 +431,16 @@
                         <!-- 미발급 -->
                         <div class="section-box nogaps">
                             <div id="fe-membership-go" class="main-membershop-box">
-                                <button class="ti-tx">
-                                    <strong class="ti">아직 멤버십 카드가 없으신가요?</strong>
-                                    <span class="tx">T멤버십을 신청하고 <br>SK텔레콤의 혜택을 이용해 보세요</span>
-                                </button>
+                                <div class="membership-cont">
+                                    <p class="ti-tx">
+                                        <strong class="ti">아직 멤버십 카드가 없으신가요?</strong>
+                                        <span class="tx">T멤버십을 신청하고 <br>SK텔레콤의 혜택을 이용해 보세요</span>
+                                    </p>
+                                </div>
+                                <div class="btn-area">
+                                    <a href="/membership/submain" class="bt">T멤버십</a>
+                                    <a href="/membership/benefit/brand" class="bt">제휴 브랜드</a>
+                                </div>
                             </div>
                         </div>
                         <% } %>

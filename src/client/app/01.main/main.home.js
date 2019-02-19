@@ -139,13 +139,7 @@ Tw.MainHome.prototype = {
 
   },
   _onClickBarcodeGo: function () {
-    if ( Tw.BrowserHelper.isApp() ) {
-      if ( Tw.BrowserHelper.isAndroid() ) {
-        Tw.CommonHelper.openUrlExternal('http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/recommend/recommendMain.do?bannerpoc=2018_155');
-      } else {
-        Tw.CommonHelper.openUrlExternal('http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl=/recommend/recommendMain.do?bannerpoc=2018_156');
-      }
-    }
+    this._historyService.goLoad('/membership/submain');
   },
   _successMembership: function (mbrGr, cardNum, showCardNum, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
