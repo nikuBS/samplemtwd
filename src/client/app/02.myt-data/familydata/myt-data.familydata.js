@@ -109,12 +109,9 @@ Tw.MyTDataFamily.prototype = {
   },
 
   _handleChangeLimitation: function($layer, e) {
-    var value = e.currentTarget.value,
-      lastChar = value[value.length - 1];
+    var value = e.currentTarget.value.replace(/[^0-9]/g, '');
 
-    if (lastChar === '.' || lastChar === '-') {
-      e.currentTarget.value = value.slice(0, -1);
-    }
+    e.currentTarget.value = value;
 
     $layer.find('.bt-red1 > button').attr('disabled', value.length === 0);
     this._limitation = value;
