@@ -15,6 +15,8 @@ Tw.MyTDataSubMain = function (params) {
   this._rendered();
   this._bindEvent();
   this._initialize();
+  // 배너 관련 통계 이벤트(xtractor)
+  new Tw.XtractorService(this.$container);
 };
 
 Tw.MyTDataSubMain.prototype = {
