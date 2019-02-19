@@ -155,11 +155,7 @@ Tw.CustomerHelpline.prototype = {
   },
 
   _openSelectTimePopup: function() {
-    var currentHours = new Date().getHours();
     var times = _.chain(this._availableTimes)
-      .filter(function(time) {
-        return Number(time) > currentHours;
-      })
       .map(function(time) {
         if (time === this._reservationTime) {
           return {
