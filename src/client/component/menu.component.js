@@ -135,11 +135,11 @@ Tw.MenuComponent.prototype = {
             if ( res.params.value !== latestSeq ) {
               // Show red dot!
               self.$container.find('.fe-t-noti').addClass('on');
-              $('.fe-bt-menu').addClass('on');
+              $('.h-menu').addClass('on');
             }
           } else if ( res.resultCode === Tw.NTV_CODE.CODE_ERROR ) {
             self.$container.find('.fe-t-noti').addClass('on');
-            $('.fe-bt-menu').addClass('on');
+            $('.h-menu').addClass('on');
           }
         }, self)
       );
@@ -147,7 +147,7 @@ Tw.MenuComponent.prototype = {
 
     this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.MOST_RECENT_PUSH_SEQ },
       $.proxy(function (res) {
-        if ( res.resultCode === Tw.NTV_CMD.CODE_00 ) {
+        if ( res.resultCode === Tw.NTV_CODE.CODE_00 ) {
           showNotiIfNeeded(res.params.value, this);
         }
       }, this)
