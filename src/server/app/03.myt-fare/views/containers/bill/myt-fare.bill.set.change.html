@@ -110,8 +110,8 @@
                             <div id="fe-addr-area" class="none">
                             <span class="inputbox bt-add">
                                 <span class="input">
-                                    <input type="text" class="fe-zip" name="zip" title="우편번호" data-valid-type="addr" data-state="true"
-                                           data-inactive-target disabled/>
+                                    <input type="text" class="fe-zip" name="zip" title="우편번호"
+                                           data-inactive-target data-valid-type="addr" disabled/>
                                 </span>
                                 <span class="bt-box">
                                     <button type="button" class="fe-search-zip">우편번호 검색</button>
@@ -120,13 +120,13 @@
                                 <span class="inputbox mt6">
                                 <span class="input">
                                     <input type="text" class="fe-main-address" name="basAddr" title="기본 주소"
-                                           data-valid-type="addr" disabled/>
+                                           data-inactive-target data-valid-type="addr" disabled/>
                                 </span>
                             </span>
                                 <span class="inputbox mt6">
                                 <span class="input">
                                     <input type="text" class="fe-detail-address" name="dtlAddr" placeholder="상세주소 입력"
-                                           title="상세 주소" />
+                                           title="상세 주소" data-inactive-target data-valid-type="addr"/>
                                     <button class="cancel"><span class="blind">삭제</span></button>
                                 </span>
                             </span>
@@ -153,7 +153,7 @@
                                         <ul class="select-list" role="group">
                                             <li class="radiobox type01-big mid-top checked" role="radio" aria-checked="true">
                                                 <input type="radio" name="billSndCyclCd" value="1" title="우편물 발송주기"
-                                                       aria-labelledby="aria-comp-radio1" checked=""/>
+                                                       aria-labelledby="aria-comp-radio1" checked="" data-state="true"/>
                                                 <div class="comp-list-layout" id="aria-comp-radio1">
                                                     <p class="layout-text">
                                                         <span class="mtext">매달</span>
@@ -162,7 +162,7 @@
                                             </li>
                                             <li class="radiobox type01-big mid-top" role="radio" aria-checked="false">
                                                 <input type="radio" name="billSndCyclCd" value="2" title="우편물 발송주기"
-                                                       aria-labelledby="aria-comp-radio2"/>
+                                                       aria-labelledby="aria-comp-radio2" data-state="true"/>
                                                 <div class="comp-list-layout" id="aria-comp-radio2">
                                                     <p class="layout-text">
                                                         <span class="mtext">격월</span>
@@ -171,7 +171,7 @@
                                             </li>
                                             <li class="radiobox type01-big mid-top" role="radio" aria-checked="false">
                                                 <input type="radio" name="billSndCyclCd" value="3" title="우편물 발송주기"
-                                                       aria-labelledby="aria-comp-radio3"/>
+                                                       aria-labelledby="aria-comp-radio3" data-state="true"/>
                                                 <div class="comp-list-layout" id="aria-comp-radio3">
                                                     <p class="layout-text">
                                                         <span class="mtext">분기</span>
@@ -180,7 +180,7 @@
                                             </li>
                                             <li class="radiobox type01-big mid-top" role="radio" aria-checked="false">
                                                 <input type="radio" name="billSndCyclCd" value="4" title="우편물 발송주기"
-                                                       aria-labelledby="aria-comp-radio4"/>
+                                                       aria-labelledby="aria-comp-radio4" data-state="true"/>
                                                 <div class="comp-list-layout" id="aria-comp-radio4">
                                                     <p class="layout-text">
                                                         <span class="mtext">반기</span>
