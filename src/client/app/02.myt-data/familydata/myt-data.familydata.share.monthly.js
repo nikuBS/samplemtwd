@@ -24,10 +24,11 @@ Tw.MyTDataFamilyShareMonthly.prototype = {
 
   _cachedElement: function() {
     this.$amountInput = this.$container.find('.fe-amount');
+    this.$switch = this.$container.find('');
   },
 
   _bindEvent: function() {
-    this.$container.on('click', 'span.btn-switch', $.proxy(this._openDeleteMonthlyDataPopup, this));
+    this.$container.on('touchstart click', 'span.btn-switch', $.proxy(this._openDeleteMonthlyDataPopup, this));
     this.$container.on('click', '.fe-submit', $.proxy(this._confirmSubmit, this));
   },
 

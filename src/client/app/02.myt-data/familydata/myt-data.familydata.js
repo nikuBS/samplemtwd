@@ -48,6 +48,8 @@ Tw.MyTDataFamily.prototype = {
       member = $li.data('member'),
       limitation = $target.data('limitation');
 
+    limitation = typeof limitation === 'boolean' ? limitation : Number(limitation);
+
     this.$limitBtn = $target;
     this._popupService.open(
       {
@@ -56,19 +58,20 @@ Tw.MyTDataFamily.prototype = {
         limitation: limitation,
         data: $li.find('.r-txt').html()
       },
-      $.proxy(this._handleOpenChangeLimitation, this, member.mgmtNum, limitation)
+      $.proxy(this._handleOpenChangeLimitation, this, member.mgmtNum, limitation),
+      undefined,
+      'limit'
     );
   },
 
   _handleOpenChangeLimitation: function(mgmtNum, limitation, $layer) {
     $layer.on('click', '.bt-red1', $.proxy(this._handleSubmitLimitation, this, mgmtNum, limitation));
-    $layer.on('click', '.prev-step', this._popupService.close);
     $layer.on('change', 'input[type="radio"]', $.proxy(this._handleChangeLimitType, this, $layer));
     $layer.on('keyup', 'span.input input', $.proxy(this._handleChangeLimitation, this, $layer));
   },
 
   _handleSubmitLimitation: function(mgmtNum, originLimit) {
-    var limitation = this._limitation;
+    var limitation = typeof this._limitation === 'boolean' ? this._limitation : Number(this._limitation);
 
     if (originLimit === limitation) {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.A5);
