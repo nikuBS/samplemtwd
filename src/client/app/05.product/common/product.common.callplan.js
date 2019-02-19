@@ -209,6 +209,10 @@ Tw.ProductCommonCallplan.prototype = {
     if (this._settingBtnList.length > 1) {
       this._openSettingPop();
     } else {
+      if (this._settingBtnList[0].url.indexOf('BPCP:') !== -1) {
+        return this._getBpcp(this._settingBtnList[0].url);
+      }
+
       this._historyService.goLoad(this._settingBtnList[0].url + '?prod_id=' + this._prodId);
     }
   },

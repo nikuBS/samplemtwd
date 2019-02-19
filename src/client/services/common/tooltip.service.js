@@ -94,7 +94,7 @@ Tw.TooltipService.prototype = {
       url: Tw.Environment.cdn + '/hbs/',
       'pop_name': 'type_tx_scroll',
       'title': $result.ttipTitNm,
-      'title_type': 'sub',
+      'title_type': 'tit-tooltip',
       'cont_align': 'tl',
       'contents': $result.ttipCtt,
       'bt_b': [{
