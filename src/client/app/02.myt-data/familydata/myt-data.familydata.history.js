@@ -109,7 +109,7 @@ Tw.MyTDataFamilyHistory.prototype = {
     }
 
     var detail = this._histories[idx];
-    var histories = _.map(resp.result.cancelSharePot || [], function(history) {
+    var histories = _.map(resp.result.sharePotCancel || [], function(history) {
       history.cancelAplyDt = Tw.DateHelper.getShortDate(history.cancelAplyDt);
       return history;
     });
