@@ -272,7 +272,7 @@ Tw.CustomerHelpline.prototype = {
           title: Tw.CUSTOMER_HELPLINE_COMPLETE.TITLE,
           items: [
             { key: Tw.CUSTOMER_HELPLINE_COMPLETE.DATE, value: Tw.DateHelper.getShortDate(resp.result.date) + '(' + resp.result.weekName + ')' },
-            { key: Tw.CUSTOMER_HELPLINE_COMPLETE.TIME, value: resp.result.hour.replace('00', ':00') },
+            { key: Tw.CUSTOMER_HELPLINE_COMPLETE.TIME, value: resp.result.hour.replace(/00$/, ':00') },
             { key: Tw.CUSTOMER_HELPLINE_COMPLETE.TYPE, value: resp.result.reserveType },
             { key: Tw.CUSTOMER_HELPLINE_COMPLETE.AREA, value: resp.result.reserveArea },
             { key: Tw.CUSTOMER_HELPLINE_COMPLETE.PHONE_NUMBER, value: Tw.FormatHelper.getDashedPhoneNumber(resp.result.reserveSvcNum) }
