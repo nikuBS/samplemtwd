@@ -35,7 +35,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
     this.$numberInput.on('keyup', $.proxy(this._onNumberChanged, this));
     this.$container.on('click', '.cancel', $.proxy(this._onNumberCancel, this));
     this.$container.on('click', '#fe-btn-contacts', $.proxy(this._onClickContacts, this));
-    this.$container.on('click', '.prev-step', $.proxy(this._onCancel, this));
+    // this.$container.on('click', '.prev-step', $.proxy(this._onCancel, this));
     this.$container.on('click', 'button.fe-replace-url', $.proxy(this._onReplaceUrl, this));
     this.$btnUse.on('click', $.proxy(this._onSubmitClicked, this));
   },
@@ -244,7 +244,8 @@ Tw.MyTDataRechargeCouponUse.prototype = {
   },
   _fail: function (err) {
     Tw.Error(err.code, err.msg).pop();
-  },
+  }
+  /* 취소팝업 삭제
   _onCancel: function () {
     var needToPop = false;
     if (this._currentTab === 'refill') {
@@ -279,4 +280,5 @@ Tw.MyTDataRechargeCouponUse.prototype = {
       this._historyService.goBack();
     }
   }
+  */
 };
