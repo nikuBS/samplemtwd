@@ -46,7 +46,7 @@
                     <strong class="ti"><i class="icon-warning-120"></i> 가입하신 회선이 없습니다.</strong>
                     <p class="tx">SK텔레콤의 가족이 되어 다양하고 편리한 서비스를 이용해 보세요.</p>
                     <div class="btn-area">
-                        <button type="button" class="btn-round1 btn-style4 fe-home-external" data-url="http://shop.tworld.co.kr/handler/ShopTworldMain-Start">휴대폰 보러가기</button>
+                        <button type="button" class="btn-round1 btn-style4 fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/list">휴대폰 보러가기</button>
                     </div>
                 </div>
                 <% } else if ( svcInfo.expsSvcCnt === '0') { %>
@@ -97,8 +97,8 @@
                                 </div>
                             </div>
                             <!-- // .donut-chart.small -->
-                            <% if(homeData.usageData.data.isTplanUse) { %>
-                            <div class="legend">
+                            <% if(homeData.usageData.data.isTplanUse || homeData.usageData.data.isTplanProd) { %>
+                            <div id="fe-tplan" class="legend">
                                 <span class="category0"><span>나의 데이터</span></span>
                                 <span class="category1"><span>T가족모아데이터</span></span>
                             </div>
@@ -308,10 +308,10 @@
                                     </li>
                                     <li>
                                         <ul class="quick-menu-list">
-                                            <li><button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/Mobile-MobileMain?category_id=20010001&utm_source=tworld&utm_medium=app_menu&utm_campaign=phone&utm_content=store&fSiteCd=1010"><i class="icon-cellphone2-80"></i>스마트폰</button></li>
-                                            <li><button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/Mobile-MobileMain?category_id=20010002&utm_source=tworld&utm_medium=app_menu&utm_campaign=tablet&utm_content=store&fSiteCd=1010"><i class="icon-tablet-80"></i>태블릿</button></li>
-                                            <li><button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/Mobile-MobileMain?category_id=20010003&utm_source=tworld&utm_medium=app_menu&utm_campaign=watch&utm_content=store&fSiteCd=1010"><i class="icon-watch-80"></i>스마트워치</button></li>
-                                            <li><button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/AccessoryMall-MainAcc?utm_source=tworld&utm_medium=app_menu&utm_campaign=accessory&utm_content=store&fSiteCd=1010"><i class="icon-accessory-80"></i>액세서리</button></li>
+                                            <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010001"><i class="icon-cellphone2-80"></i>스마트폰</button></li>
+                                            <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010002"><i class="icon-tablet-80-1"></i>태블릿</button></li>
+                                            <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010003"><i class="icon-watch-80"></i>스마트워치</button></li>
+                                            <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/accessory/submain"><i class="icon-accessory-80"></i>액세서리</button></li>
                                         </ul>
                                     </li>
                                 </ul>
