@@ -21,10 +21,13 @@
                         <li>
                             <span class="icon"><i class="icon-cellphone-48"><span class="blind">cellphone</span></i></span>
                             <div class="info">
-                                <span class="stit">{{member.name}}<span class="phone">{{member.svcNum}}</span>
-                                {{#if member.isRepresentation}}
-                                <span class="ml0 sicon"><i class="icon-f-delegate"><span class="blind">가족대표</span></i></span></span>
-                                {{/if}}
+                                <span class="stit">
+                                    {{member.name}}
+                                    <span class="phone">{{member.svcNum}}</span>
+                                    {{#if member.isRepresentation}}
+                                        <span class="ml0 sicon"><i class="icon-f-delegate"><span class="blind">가족대표</span></i></span>
+                                    {{/if}}
+                                </span>
                                 <span class="mb">{{{data}}}</span>
                             </div>
                         </li>
@@ -80,7 +83,7 @@
     </div>
     <!--// .container-wrap -->
     <!-- .popup-closeBtn -->
-    <button class="prev-step">취소</button>
+    <button class="popup-closeBtn">취소</button>
     <!--// .popup-closeBtn -->
 </div>
 <!--// .popup hbs -->
