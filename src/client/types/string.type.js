@@ -1109,7 +1109,7 @@ Tw.MYT_JOIN_MGMT_NUMCHG = {
   ALERT_SVC_FAIL: '010전환 번호변경 조회가 실패하였습니다. <BR>3분 후 재이용 부탁 드립니다.',
   ALERT_NO_TARGET: {
     TITLE: '010 전환  번호변경서비스를 <BR>이용하실 수 없습니다.',
-    CONTENTS: '010 전환 번호변경서비스 이용을 원하시면 온라인 T월드∙지점∙대리점을 이용해 주세요.'
+    CONTENTS: '010 전환 번호변경서비스 이용을 원하시면 온라인 T월드/지점/대리점을 이용해 주세요.'
   }
 };
 
@@ -1419,7 +1419,7 @@ Tw.PRODUCT_COMBINE_PRODUCT = {
     },
     NH00000083: {
       TITLE: 'TB끼리 온가족프리',
-      EXPLAIN: '이동전화와 인터넷을 결합하면 이동전화·인터넷 기본료 할인에 추가 혜택 제공'
+      EXPLAIN: '이동전화와 인터넷을 결합하면 이동전화/인터넷 기본료 할인에 추가 혜택 제공'
     },
     NONE: {
       TITLE: '결합상품을 선택해 주세요'
@@ -1730,7 +1730,7 @@ Tw.ROAMING_SVCTIME_SETTING_ERR_CASE = {
 };
 
 Tw.ROAMING_BPCP = {
-  BUY: '쿠폰 구매·선물',
+  BUY: '쿠폰 구매/선물',
   REGISTER: 'T로밍쿠폰 상세'
 };
 
@@ -1751,8 +1751,8 @@ Tw.ROAMING_RANGE_OPTION_STR = {
 };
 
 Tw.BENEFIT_TBCOMBINATION_ERROR = {
-  TITLE: '고객님께서는 인터넷·집전화·IPTV 이용고객이 아닙니다.',
-  CONTENT: '인터넷·집전화·IPTV 서비스를 결합해서 사용하고 할인혜택 받으세요.',
+  TITLE: '고객님께서는 인터넷/집전화/IPTV 이용고객이 아닙니다.',
+  CONTENT: '인터넷/집전화/IPTV 서비스를 결합해서 사용하고 할인혜택 받으세요.',
   BTN_TEXT: '가입상담예약 >'
 };
 
