@@ -523,7 +523,8 @@ Tw.MyTDataSubMain.prototype = {
 
   // T가족모아
   _onFamilyMoaDetail: function () {
-    this._historyService.goLoad('/myt-data/familydata');
+    // 공유 버튼
+    this._historyService.goLoad('/myt-data/familydata/share');
   },
 
   // 데이터 혜텍
