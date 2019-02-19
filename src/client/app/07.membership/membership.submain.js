@@ -74,19 +74,28 @@ Tw.MembershipSubmain.prototype = {
   },
   _selectTday: function() {
     if (Tw.BrowserHelper.isApp()) {
-      this._popupService.openConfirm(Tw.POPUP_CONTENTS.NO_WIFI, Tw.POPUP_TITLE.EXTERNAL_LINK, null, $.proxy(this._goTday, this));
+      this._popupService.openConfirm(Tw.POPUP_CONTENTS.NO_WIFI, Tw.POPUP_TITLE.EXTERNAL_LINK,
+          $.proxy(this._goTday, this),
+          $.proxy(function () {
+            this._popupService.close();
+          }, this));
     } else {
       this._goTday();
     }
   },
   _selectChocolate: function () {
     if (Tw.BrowserHelper.isApp()) {
-      this._popupService.openConfirm(Tw.POPUP_CONTENTS.NO_WIFI, Tw.POPUP_TITLE.EXTERNAL_LINK, null, $.proxy(this._goChocolate, this));
+      this._popupService.openConfirm(Tw.POPUP_CONTENTS.NO_WIFI, Tw.POPUP_TITLE.EXTERNAL_LINK,
+          $.proxy(this._goChocolate, this),
+          $.proxy(function () {
+            this._popupService.close();
+          }, this));
     } else {
       this._goChocolate();
     }
   },
   _goTday: function () {
+    this._popupService.close();
     Tw.CommonHelper.openUrlExternal(Tw.MEMBERSHIP_URL.TDAY,'');
   },
   /*_membershipLoginCheck: function () {
@@ -241,6 +250,7 @@ Tw.MembershipSubmain.prototype = {
     this._historyService.goLoad('/membership/benefit/map?' + $.param(param));
   },
   _goChocolate: function () {
+    this._popupService.close();
     Tw.CommonHelper.openUrlExternal(Tw.MEMBERSHIP_URL.CHOCOLATE,'');
   },
   _goTmembership: function () {
