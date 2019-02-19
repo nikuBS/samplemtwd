@@ -18,7 +18,9 @@ Tw.MainMenuSettingsBusinessInfo.prototype = {
   },
   _onLink: function (e) {
     var url = $(e.currentTarget).attr('href');
-    Tw.CommonHelper.openUrlExternal(url);
+    Tw.CommonHelper.showDataCharge(function () {
+      Tw.CommonHelper.openUrlExternal(url);
+    });
     return false;
   }
 };
