@@ -53,6 +53,7 @@ Tw.NTV_CODE = {
   CODE_01: 1, // (FIDO_TUYPE: face)
   CODE_02: 2,
   CODE_1500: 1500,
+  CODE_3114: 3114,
   CODE_ERROR: -1,
 
   CODE_A80: 'A80'

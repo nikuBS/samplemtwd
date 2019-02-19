@@ -96,7 +96,7 @@ Tw.CertificationSelect.prototype = {
     }
   },
   _checkFido: function () {
-    this._nativeService.send(Tw.NTV_CMD.FIDO_CHECK, {}, $.proxy(this._onCheckFido, this));
+    this._nativeService.send(Tw.NTV_CMD.FIDO_CHECK, { svcMgmtNum: this._svcInfo.svcMgmtNum }, $.proxy(this._onCheckFido, this));
   },
   _onCheckFido: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
@@ -249,7 +249,7 @@ Tw.CertificationSelect.prototype = {
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.BIO:
         this._certBio = new Tw.CertificationBio();
-        this._certBio.open(this._authUrl, this._authKind, this._prodAuthKey, $.proxy(this._completeCert, this), this._registerFido, this._fidoTarget);
+        this._certBio.open(this._authUrl, this._authKind, this._prodAuthKey, this._svcInfo, $.proxy(this._completeCert, this), this._registerFido, this._fidoTarget);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.FINANCE_AUTH:
         this._certFinance = new Tw.CertificationFinance();

@@ -90,7 +90,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MainMenuSettingsBiometrics($('#commonBiometricsMenu'), '<%= target %>');
+    new Tw.MainMenuSettingsBiometrics($('#commonBiometricsMenu'), '<%= target %>', '<%= svcInfo.svcMgmtNum %>');
   });
 </script>
 <% include ../../../components/end.component.html %>
