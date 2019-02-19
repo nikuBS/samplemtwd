@@ -32,7 +32,7 @@ Tw.MytJoinWireSetPause.prototype = {
   },
   _startDate: null, // 정지 시작일
   _endDate: null, // 정지 종료일
-  _isDirty: false,
+  // _isDirty: false,
 
   _openErrorAlert: function () {
     this._popupService.openModalTypeATwoButton(
@@ -54,7 +54,7 @@ Tw.MytJoinWireSetPause.prototype = {
     this.$container.on('change', '.fe-input-start-date', $.proxy(this._onChangeInputStartDate, this));
     this.$container.on('change', '.fe-input-end-date', $.proxy(this._onChangeInputEndDate, this));
     this.$container.on('click', '.fe-btn-submit', $.proxy(this._onClickBtnSubmit, this));
-    this.$container.on('click', '.fe-btn-back', $.proxy(this._onClickBtnBack, this));
+    // this.$container.on('click', '.fe-btn-back', $.proxy(this._onClickBtnBack, this));
   },
 
   _init: function () {
@@ -136,7 +136,7 @@ Tw.MytJoinWireSetPause.prototype = {
       this._showPauseRangeInfo();
       this._setSubmitBtnStatus();
     }
-    this._isDirty = true;
+    // this._isDirty = true;
   },
 
   _onChangeInputEndDate: function (event) {
@@ -152,7 +152,7 @@ Tw.MytJoinWireSetPause.prototype = {
     }
     this._showPauseRangeInfo();
     this._setSubmitBtnStatus();
-    this._isDirty = true;
+    // this._isDirty = true;
   },
 
   _onClickBtnSubmit: function () {
@@ -203,19 +203,19 @@ Tw.MytJoinWireSetPause.prototype = {
 
   _reqFail: function (err) {
     this._popupService.openAlert(err.msg, err.code);
-  },
-
-  _onClickBtnBack: function() {
-    if (!this._isDirty) {
-      this._historyService.goBack();
-      return;
-    }
-    this._popupService.openConfirmButton(Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG, Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-      $.proxy($.proxy(function () {
-        this._popupService.close();
-        this._historyService.goBack();
-      }, this), this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
   }
+
+  // _onClickBtnBack: function() {
+  //   if (!this._isDirty) {
+  //     this._historyService.goBack();
+  //     return;
+  //   }
+  //   this._popupService.openConfirmButton(Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG, Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+  //     $.proxy($.proxy(function () {
+  //       this._popupService.close();
+  //       this._historyService.goBack();
+  //     }, this), this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+  // }
 
 };
 
