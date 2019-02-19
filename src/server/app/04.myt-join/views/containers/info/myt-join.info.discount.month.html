@@ -31,14 +31,16 @@
                                 <div style="position: relative;">
                                     <span class="tx-date">{{ showInvoDt }}</span>
                                     <span class="tx-count">{{ invCnt }}회차</span>
-                                    <div class="li-elem">
-                                        <div class="title-box">
-                                            <span class="tit">할인 금액</span>
-                                            <span class="sub-tit">할인 반환금 산정률</span>
-                                        </div>
-                                        <div class="price">
-                                            <span class="tx-price">{{ showPenEstDcAmt }}</span><span class="unit">원</span>
-                                            <span class="tx-cal">{{ perEstRt }}%</span>
+                                    <div class="no-link">
+                                        <div class="li-elem">
+                                            <div class="title-box">
+                                                <span class="tit">할인 금액</span>
+                                                <span class="sub-tit">할인 반환금 산정률</span>
+                                            </div>
+                                            <div class="price">
+                                                <span class="tx-price">{{ showPenEstDcAmt }}</span><span class="unit">원</span>
+                                                <span class="tx-cal">{{ perEstRt }}%</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -50,14 +52,16 @@
                                 <div style="position: relative;">
                                     <span class="tx-date"><%= data.agrmts[i].showInvoDt %></span>
                                     <span class="tx-count"><%= data.agrmts[i].invCnt %>회차</span>
-                                    <div class="li-elem">
-                                        <div class="title-box">
-                                            <span class="tit">할인 금액</span>
-                                            <span class="sub-tit">할인 반환금 산정률</span>
-                                        </div>
-                                        <div class="price">
-                                            <span class="tx-price"><%= data.agrmts[i].showPenEstDcAmt %></span><span class="unit">원</span>
-                                            <span class="tx-cal"><%= data.agrmts[i].perEstRt %>%</span>
+                                    <div class="no-link">
+                                        <div class="li-elem">
+                                            <div class="title-box">
+                                                <span class="tit">할인 금액</span>
+                                                <span class="sub-tit">할인 반환금 산정률</span>
+                                            </div>
+                                            <div class="price">
+                                                <span class="tx-price"><%= data.agrmts[i].showPenEstDcAmt %></span><span class="unit">원</span>
+                                                <span class="tx-cal"><%= data.agrmts[i].perEstRt %>%</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
