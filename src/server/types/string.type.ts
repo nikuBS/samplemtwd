@@ -108,7 +108,9 @@ export const MYT_FARE_BILL_GUIDE = {
   FIRST_SVCTYPE: '전체',
   PHONE_SVCTYPE: '휴대폰',
   PHONE_TYPE_0: '이동전화',
-  PHONE_TYPE_1: '휴대폰'
+  PHONE_TYPE_1: '휴대폰',
+  TEL_TYPE_0: '집전화',
+  TEL_TYPE_1: '유선전화'
 };
 
 export enum MYT_FARE_PAYMENT_NAME {

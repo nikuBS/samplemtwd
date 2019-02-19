@@ -32,7 +32,7 @@
             <div class="single-list">
                 <span class="title">
                     {{!-- 주석 아이콘 --}}
-                    {{#if_icon rootItem.label }}
+                    {{#if_icon resData.useSvcType.svcType }}
                     {{/if_icon}}
                     <span class="in-tx type2">{{resData.useSvcType.svcType}}</span>
                 </span>
@@ -190,7 +190,7 @@
                                 %>
                             </span>에<br />통합청구되었습니다.</p>
                         <p class="term"><%=commDataInfo.selStaDt %> ~ <%=commDataInfo.selEndDt %></p>
-                        <div class="btn-wrap"><button class="btn-round2 btn-style3" data-target="conditionChangeBtn">조건변경</button></div>
+                        <div class="btn-wrap"><button class="btn-round2 btn-style3" data-target="conditionChangeBtn">청구월 변경</button></div>
                     </div>
                 </div>
                 <% if( billpayInfo.coClCd === 'B' ){ %>

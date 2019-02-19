@@ -546,8 +546,13 @@ class MyTFareBillGuide extends TwViewController {
     const paidAmtSvcCdList = thisMain._billpayInfo.paidAmtSvcCdList || [];
     for ( let i = 0; i < paidAmtSvcCdList.length; i++ ) {
       paidAmtSvcCdList[i].amt = FormatHelper.addComma(paidAmtSvcCdList[i].amt);
+      // 이동전화 -> 휴대폰
       if ( paidAmtSvcCdList[i].svcNm === MYT_FARE_BILL_GUIDE.PHONE_TYPE_0) {
         paidAmtSvcCdList[i].svcNm = MYT_FARE_BILL_GUIDE.PHONE_TYPE_1;
+      }
+      // 유선전화 -> 집전화
+      if ( paidAmtSvcCdList[i].svcNm === MYT_FARE_BILL_GUIDE.TEL_TYPE_1) {
+        paidAmtSvcCdList[i].svcNm = MYT_FARE_BILL_GUIDE.TEL_TYPE_0;
       }
     }
     return paidAmtSvcCdList;
