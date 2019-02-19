@@ -53,8 +53,10 @@ class ProductMobileplanSettingBandYT extends TwViewController {
     list.filter((item) => {
       if ( item.isMyNum ) {
         data.myInfo = item;
+        data.myInfo.number = FormatHelper.conTelFormatWithDash(item.svcNumMask);
       } else {
         data.otherInfo = item;
+        data.otherInfo.number = FormatHelper.conTelFormatWithDash(item.svcNumMask);
       }
     });
     return data;
