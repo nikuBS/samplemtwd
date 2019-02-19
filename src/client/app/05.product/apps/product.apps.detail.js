@@ -34,7 +34,7 @@ Tw.ProductAppsDetail.prototype = {
   _handleLoadInfo: function(app) {
     this._stores = this._getStoreUrl(app.appStoreLinkBtnList || []);
 
-    if (Tw.BrowserHelper.isApp() && app.lnkgAppScmCtt) {
+    if (Tw.BrowserHelper.isApp()) {
       app.stores = this._stores;
       app.isApp = true;
 
