@@ -29,7 +29,7 @@ Tw.CommonMemberLogin.prototype = {
   _onNativeLogin: function (target, resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._successLogin(target, resp.params);
-    } else if ( resp.resultCode === Tw.NTV_CODE.CODE_1500 ) {
+    } else if ( resp.resultCode === Tw.NTV_CODE.CODE_1500 || resp.resultCode === Tw.NTV_CODE.CODE_3114 ) {
       this._historyService.goBack();
     } else {
       this._historyService.replaceURL('/common/member/login/fail?errorCode=' + resp.code + '&target=' + encodeURIComponent(target));
