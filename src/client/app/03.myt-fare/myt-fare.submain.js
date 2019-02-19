@@ -589,7 +589,8 @@ Tw.MyTFareSubMain.prototype = {
       this.changeLineMgmtNum = mgmtNum;
       this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,
         defaultLineInfo + Tw.MYT_TPL.DATA_SUBMAIN.SP_TEMP + selectLineInfo,
-        Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._onChangeLineConfirmed, this), null);
+        Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._onChangeLineConfirmed, this),
+        null, 'change_line', 'tc');
     }
   },
 

@@ -313,13 +313,14 @@ Tw.MyTJoinSubMain.prototype = {
       var defaultLineInfo = this.data.svcInfo.svcNum + ' ' + (this.data.svcInfo.nickNm || this.data.svcInfo.eqpMdlNm);
       var selectLineInfo = number + ' ' + name;
       if ( ['S1', 'S2'].indexOf(this.data.svcInfo.svcAttrCd) > -1 ) {
-        defaultLineInfo = this.data.svcInfo.addr + ' ' +  (this.data.svcInfo.nickNm || this.data.svcInfo.eqpMdlNm);
+        defaultLineInfo = this.data.svcInfo.addr + ' ' + (this.data.svcInfo.nickNm || this.data.svcInfo.eqpMdlNm);
       }
       this.changeLineType = type;
       this.changeLineMgmtNum = mgmtNum;
       this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,
         defaultLineInfo + Tw.MYT_TPL.DATA_SUBMAIN.SP_TEMP + selectLineInfo,
-        Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._onChangeLineConfirmed, this), null);
+        Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._onChangeLineConfirmed, this),
+        null, 'change_line', 'tc');
     }
   },
 
