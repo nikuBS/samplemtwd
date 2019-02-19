@@ -69,10 +69,11 @@ Tw.MyTDataRechargeCouponUse.prototype = {
     }
   },
   _onNumberChanged: function () {
-    this.$numberInput.val(Tw.StringHelper.phoneStringToDash(this.$numberInput.val()).trim());
     var number = this.$numberInput.val().trim();
+    this.$numberInput.val(number.replace(/[^0-9]/gi, '').trim());
+    this.$numberInput.val(Tw.StringHelper.phoneStringToDash(this.$numberInput.val()).trim());
 
-    var pureNumber = number.replace(/[^0-9]/gi, '');
+    var pureNumber = number.replace(/[^0-9]/gi, '').trim();
     /*
     if (pureNumber.length === 0) {
       this.$errorSpan.addClass('none');
