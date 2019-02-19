@@ -36,7 +36,7 @@ class ProductMobileplanSettingNumberFriend extends TwViewController {
 
     numCoupleList.map((item) => {
       if (item.cuplYn === '1') {
-        frBestAsgnNum = item.svcNum;
+        frBestAsgnNum = FormatHelper.conTelFormatWithDash(item.svcNumMask);
       }
 
       return Object.assign(item, {
