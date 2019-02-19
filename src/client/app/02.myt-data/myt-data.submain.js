@@ -599,7 +599,9 @@ Tw.MyTDataSubMain.prototype = {
           Tw.REMNANT_OTHER_LINE.BTNAME,
           null,
           $.proxy(this._onChangeLineConfirmed, this),
-          null
+          null,
+          'change_line',
+          'tc'
         );
       }
     }
