@@ -229,12 +229,12 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     this._historyService.goLoad('/product/callplan/' + this.$target.attr('data-cpin'));
   },
   _onClose: function () {
-    if (this._isChanged()) {
-      this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-        $.proxy(this._closePop, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-    } else {
-      this._popupService.close();
-    }
+    // if (this._isChanged()) {
+    //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
+    //     $.proxy(this._closePop, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+    // } else {
+    //   this._popupService.close();
+    // }
   },
   _isChanged: function () {
     var isChanged = !Tw.FormatHelper.isEmpty(this.$newPassword.val()) || !Tw.FormatHelper.isEmpty(this.$confirmPassword.val());

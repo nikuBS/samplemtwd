@@ -12,6 +12,7 @@ Tw.MyTFareBillCashbagTpoint = function (rootEl, pointType) {
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService(rootEl);
+  this._backAlert = new Tw.BackAlert(rootEl);
 
   this._init();
 };
@@ -59,7 +60,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     this.$container.on('click', '.fe-agree-view', $.proxy(this._openAgreePop, this));
     this.$container.on('click', '.fe-tab1-pay', $.proxy(this._onePay, this));
     this.$container.on('click', '.fe-tab2-pay', $.proxy(this._autoPay, this));
-    // this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
+    this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
   },
   _openGetPoint: function () {
     new Tw.MyTFareBillGetPoint(this.$container, $.proxy(this._setPointInfo, this));
@@ -314,13 +315,14 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     return 1;
   },
   _onClose: function () {
-    if (this._isChanged()) {
-      this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-        $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
-        Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-    } else {
-      this._historyService.goBack();
-    }
+    this._backAlert.onClose();
+    // if (this._isChanged()) {
+    //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
+    //     $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
+    //     Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+    // } else {
+    //   this._historyService.goBack();
+    // }
   },
   _isChanged: function () {
     var isChanged = false;
