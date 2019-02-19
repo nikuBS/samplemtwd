@@ -17,10 +17,10 @@
         <p class="price mt10">
             <span class="fe-amount" data-value="<%= unpaidList[i].intMoney %>"><%= unpaidList[i].invMoney %></span>원
         </p>
+        <% if (unpaidList.cnt > 1) { %>
+        <span class="btn-wrap fe-select-line"><button type="button" class="btn-round2 btn-style3">납부회선 추가</button></span>
+        <% } %>
     </div>
-    <% if (unpaidList.cnt > 1) { %>
-    <span class="btn-wrap fe-select-line"><button type="button" class="btn-round2 btn-style3">납부회선 추가</button></span>
-    <% } %>
     <% } %>
 
     <li id="<%= i %>" class="none fe-line checkbox type01-big <% if (unpaidList.defaultIndex === i) { %> checked <% } %>"
