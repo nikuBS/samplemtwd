@@ -6,7 +6,7 @@
 <script id="fe-home-quick" type="text/x-handlebars-template">
     <ul class="quick-menu-list">
         {{#each list}}
-        <li><a href="{{menuUrl}}" class="bt"><i><img src="<%= cdn %>{{iconImgFilePathNm}}" alt="{{menuNm}}"></i>{{menuNm}}</a></li>
+        <li><a href="{{menuUrl}}" class="bt"><i><img src="<%= cdn %>{{iconImgFilePathNm}}" alt="{{menuNm}}"></i><span class="tit">{{menuNm}}</span></a></li>
         {{/each}}
     </ul>
     {{#if enableEdit}}
