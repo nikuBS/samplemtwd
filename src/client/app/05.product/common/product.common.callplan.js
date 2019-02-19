@@ -176,6 +176,8 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _bindCustomPop: function(hbsCode, $popupContainer) {
+    $popupContainer.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
+
     if (hbsCode !== 'MP_02_02_04_02') {
       return;
     }
