@@ -55,14 +55,15 @@ Tw.MyTDataFamilyShare.prototype = {
     this._validateShareAmount();
   },
 
-  _validateShareAmount: function() {
-    var sValue = this.$amountInput.val(),
-      lastChar = sValue[sValue.length - 1];
-    if (lastChar === '.' || lastChar === '-') {
-      this.$amountInput.val(sValue.slice(0, -1));
-    }
+  _validateShareAmount: function(e) {
+    var sValue = this.$amountInput
+      .val()
+      .replace(/^0*/, '')
+      .replace(/[^0-9]/g, '');
 
-    var value = Number(this.$amountInput.val()),
+    this.$amountInput.val(sValue);
+
+    var value = Number(sValue),
       limit = Number(this.$amountInput.data('share-amount'));
 
     if (!value) {

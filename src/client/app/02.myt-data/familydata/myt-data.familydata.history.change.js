@@ -61,7 +61,14 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
   },
 
   _validateChangeAmount: function() {
-    var value = Number(this.$input.val());
+    var sValue = this.$input
+      .val()
+      .replace(/^0*/, '')
+      .replace(/[^0-9]/g, '');
+
+    this.$input.val(sValue);
+
+    var value = Number(sValue);
 
     if (!value) {
       this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.NON_CHANGE_DATA);
