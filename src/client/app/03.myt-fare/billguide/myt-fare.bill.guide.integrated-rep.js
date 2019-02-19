@@ -448,10 +448,8 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
 
     if ( selectSvcType.svcType === Tw.MYT_FARE_BILL_GUIDE.FIRST_SVCTYPE ) {
       templt = this.$searchNmSvcTypeTplAll;
-    } else if ( selectSvcType.svcType === Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_1 ) {
-      textVal = Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_1 + '(' + selectSvcType.label + ')';
     } else {
-      textVal = selectSvcType.svcType + '(' + this._getShortStr(selectSvcType.addr) + ')';
+      textVal = selectSvcType.svcType + '(' + this._getShortStr(selectSvcType.label) + ')';
     }
 
     this.$searchNmSvcType.html(templt({svcType: textVal}));
