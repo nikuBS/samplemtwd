@@ -33,6 +33,7 @@ Tw.MyTDataTing.prototype = {
     this.$btn_send_gift.on('click', $.proxy(this._getReceiveUserInfo, this));
     this.$btn_native_contact_list.on('click', $.proxy(this._onClickBtnAddr, this));
     this.$input_ting_receiver.on('keyup', $.proxy(this._onKeyUpTingGiftNumber, this));
+    this.$wrap_amount_select_list.on('click', $.proxy(this._checkValidateSendingButton, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkValidateSendingButton, this));
     // this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
   },
@@ -131,7 +132,9 @@ Tw.MyTDataTing.prototype = {
   },
 
   _checkValidateSendingButton: function () {
-    if ( this._validatePhoneNumber() ) {
+    var elAmount = this.$wrap_amount_select_list.find('li input:checked');
+
+    if ( !Tw.FormatHelper.isEmpty(elAmount.val()) && this._validatePhoneNumber() ) {
       this.$btn_send_gift.attr('disabled', false);
     } else {
       this.$btn_send_gift.attr('disabled', true);
