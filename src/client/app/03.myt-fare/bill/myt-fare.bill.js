@@ -53,22 +53,22 @@ Tw.MyTFareBill.prototype = {
   _getAutoPayment: function () {
     this._apiService.request(Tw.API_CMD.BFF_05_0058, {})
       .done($.proxy(this._autoSuccess, this))
-      .fail($.proxy(this._fail, this));
+      .fail($.proxy(this._autoFail, this));
   },
   _getSmsList: function () {
     this._apiService.request(Tw.API_CMD.BFF_07_0026, {})
       .done($.proxy(this._smsSuccess, this))
-      .fail($.proxy(this._fail, this));
+      .fail($.proxy(this._smsFail, this));
   },
   _getPoint: function () {
     this._apiService.request(Tw.API_CMD.BFF_07_0041, {})
       .done($.proxy(this._pointSuccess, this))
-      .fail($.proxy(this._fail, this));
+      .fail($.proxy(this._pointFail, this));
   },
   _getRainbowPoint: function () {
     this._apiService.request(Tw.API_CMD.BFF_07_0042, {})
       .done($.proxy(this._rainbowSuccess, this))
-      .fail($.proxy(this._fail, this));
+      .fail($.proxy(this._rainbowFail, this));
   },
   _isAllComplete: function () {
     if (this._autoComplete && this._isSmsComplete &&
@@ -87,7 +87,7 @@ Tw.MyTFareBill.prototype = {
       hbs: 'MF_01',// hbs의 파일명
       layer: true,
       data: data,
-      lineManagement: { 'txt': Tw.MYT_FARE_PAYMENT_NAME.AUTO_PAYMENT, 'option': 'fe-auto', 'spot': Tw.MYT_FARE_PAYMENT_NAME.REQUEST },
+      lineManagement: { 'txt': Tw.MYT_FARE_PAYMENT_NAME.AUTO_PAYMENT, 'spot': Tw.MYT_FARE_PAYMENT_NAME.REQUEST },
       btnfloating: { 'txt': Tw.BUTTON_LABEL.CLOSE }
     },
       $.proxy(this._onOpenPopup, this),
@@ -164,8 +164,14 @@ Tw.MyTFareBill.prototype = {
 
       this._isAllComplete();
     } else {
-      this._fail(res);
+      this._autoFail();
     }
+  },
+  _autoFail: function () {
+    this._isAutoTarget = false;
+    this._autoComplete = true;
+
+    this._isAllComplete();
   },
   _smsSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
@@ -174,8 +180,14 @@ Tw.MyTFareBill.prototype = {
 
       this._isAllComplete();
     } else {
-      this._fail(res);
+      this._smsFail();
     }
+  },
+  _smsFail: function () {
+    this._isSmsTarget = false;
+    this._isSmsComplete = true;
+
+    this._isAllComplete();
   },
   _pointSuccess: function (res) {
     this._pointComplete = true;
@@ -189,14 +201,25 @@ Tw.MyTFareBill.prototype = {
     this._setPointTarget(svcYn);
     this._isAllComplete();
   },
+  _pointFail: function () {
+    this._isPointTarget = false;
+    this._pointComplete = true;
+
+    this._isAllComplete();
+  },
   _rainbowSuccess: function (res) {
     this._rainbowComplete = true;
 
     if (res.code === Tw.API_CODE.CODE_00) {
       this._rainbowPoint = res.result.usableRbpPt;
     } else {
-      this._fail(res);
+      this._rainbowFail(res);
     }
+    this._isAllComplete();
+  },
+  _rainbowFail: function () {
+    this._rainbowComplete = true;
+
     this._isAllComplete();
   },
   _setAutoPaymentTarget: function (code) {
@@ -213,8 +236,5 @@ Tw.MyTFareBill.prototype = {
     if (svcYn === 'N') {
       this._isPointTarget = false;
     }
-  },
-  _fail: function (err) {
-    Tw.Error(err.code, err.msg).pop();
   }
 };
