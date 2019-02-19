@@ -75,7 +75,7 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
   _clickedTerm: '',
   _selectedTerm: '',
   _phoneNum: '',
-  _isDirty: false,
+  // _isDirty: false,
 
   _openErrorAlert: function () {
     this._popupService.openModalTypeATwoButton(
@@ -117,7 +117,7 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     this._$fePhone2.on('input', $.proxy(this._onKeyupInputPhone, this));
     this._$fePhone3.on('input', $.proxy(this._onKeyupInputPhone, this));
     this._$feTel1.on('click', $.proxy(this._onClickTel1, this));
-    this.$container.on('click', '.fe-btn-back', $.proxy(this._onClickBtnBack, this));
+    // this.$container.on('click', '.fe-btn-back', $.proxy(this._onClickBtnBack, this));
   },
 
   _init: function () {
@@ -219,7 +219,7 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
       this._$fePhone1.data('phone', $target.data('phone'));
       this._popupService.close();
       this._setRequestBtnStatus();
-      this._isDirty = true;
+      // this._isDirty = true;
     }, this));
   },
 
@@ -231,7 +231,7 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
       this._$feTel1.text(text);
       this._$feTel1.data('tel', $target.data('tel'));
       this._popupService.close();
-      this._isDirty = true;
+      // this._isDirty = true;
     }, this));
   },
 
@@ -293,7 +293,7 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
     this._$termBrchAmt.text(Tw.FormatHelper.addComma(termBrchAmt));
     this._$agreementsPenaltyResult.show();
     this._setRequestBtnStatus();
-    this._isDirty = true;
+    // this._isDirty = true;
   },
 
   _getCellphoneNumber: function () {
@@ -404,29 +404,29 @@ Tw.MyTJoinWireModifyPeriod.prototype = {
 
   _go: function (hash) {
     window.location.hash = hash;
-  },
-
-  _isDirtyFn: function() {
-    if (this._isDirty) {
-      return true;
-    }
-    if (this._$fePhone2.val() || this._$fePhone3.val() || this._$feTel2.val() || this._$feTel3.val()) {
-      return true;
-    }
-    return false;
-  },
-
-  _onClickBtnBack: function() {
-    if (!this._isDirtyFn()) {
-      this._historyService.goBack();
-      return;
-    }
-    this._popupService.openConfirmButton(Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG, Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-      $.proxy($.proxy(function () {
-        this._popupService.close();
-        this._historyService.goBack();
-      }, this), this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
   }
+
+  // _isDirtyFn: function() {
+  //   if (this._isDirty) {
+  //     return true;
+  //   }
+  //   if (this._$fePhone2.val() || this._$fePhone3.val() || this._$feTel2.val() || this._$feTel3.val()) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
+
+  // _onClickBtnBack: function() {
+  //   if (!this._isDirtyFn()) {
+  //     this._historyService.goBack();
+  //     return;
+  //   }
+  //   this._popupService.openConfirmButton(Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG, Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+  //     $.proxy($.proxy(function () {
+  //       this._popupService.close();
+  //       this._historyService.goBack();
+  //     }, this), this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+  // }
 
 };
 
