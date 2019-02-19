@@ -21,6 +21,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
   this._emrNotice = null;
   this._targetDataLink = '';
   this._membershipBanner = null;
+  this._isTplan = false;
 
   this._lineComponent = new Tw.LineComponent();
 
@@ -66,6 +67,7 @@ Tw.MainHome.prototype = {
     this.$elBarcode = this.$container.find('#fe-membership-barcode');
     this.$barcodeGr = this.$container.find('#fe-membership-gr');
 
+    this._isTplan = this.$container.find('#fe-tplan').length > 0;
     this._cachedSmartCard();
     this._cachedSmartCardTemplate();
     this._makeBarcode();
@@ -185,10 +187,15 @@ Tw.MainHome.prototype = {
     this._historyService.goLoad('/myt-fare/billguide/guide');
   },
   _openDataLink: function () {
+    this._apiService.request(Tw.API_CMD.BFF_06_0015, {})
+      .done($.proxy(this._successGiftSender, this));
+  },
+  _successGiftSender: function (resp) {
     this._popupService.open({
-      hbs: 'actionsheet03',
+      hbs: 'actionsheet_data',
       layer: true,
-      data: Tw.HOME_DATA_LINK
+      enableTplan: this._isTplan,
+      enableGift: resp.code === Tw.API_CODE.CODE_00
     }, $.proxy(this._onOpenDataLink, this), $.proxy(this._onCloseDataLink, this));
   },
   _onOpenDataLink: function ($popupContainer) {

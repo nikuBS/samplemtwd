@@ -1,0 +1,50 @@
+<div class="popup tw-popup">
+    <div class="popup-page nobg layer actionsheet has-floating"><!-- actionsheet, has-floating, has-header // -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box nogaps noborder">
+                    <!-- .cont-actionsheet -->
+                    <div class="cont-actionsheet">
+                        <ul class="ac-list ac3">
+                            <li class="type2">
+                                <button type="button" id="fe-bt-recharge-link">
+                                    <span class="circle">
+                                        <span class="simbol ico1"></span>
+                                    </span>
+                                    <span class="txt">데이터 충전</span>
+                                </button>
+                            </li>
+                            {{#if enableGift}}
+                            <li class="type2">
+                                <button type="button" id="fe-bt-gift-link">
+                                    <span class="circle">
+                                        <span class="simbol ico2"></span>
+                                    </span>
+                                    <span class="txt">데이터 선물</span>
+                                </button>
+                            </li>
+                            {{/if}}
+                            {{#if enableTplan}}
+                            <li class="type2">
+                                <button type="button" id="fe-bt-family-link">
+                                    <span class="circle">
+                                        <span class="simbol ico3"></span>
+                                    </span>
+                                    <span class="txt">T가족모아</span>
+                                </button>
+                            </li>
+                            {{/if}}
+                        </ul>
+                        <button type="button" class="btn-floating btn-style3 fe-close tw-popup-closeBtn">닫기</button>
+                    </div>
+                    <!-- // .cont-actionsheet -->
+                </div>
+                <!--// .cont-box -->
+            </div>
+        </div>
+        <!--// .container-wrap -->
+    </div>
+    <div class="popup-blind"></div>
+</div>
