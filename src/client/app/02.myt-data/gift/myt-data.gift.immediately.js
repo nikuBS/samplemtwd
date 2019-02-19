@@ -223,15 +223,18 @@ Tw.MyTDataGiftImmediately.prototype = {
   _validateInputNumber: function () {
     var sPhoneNumber = this.$inputImmediatelyGift.val() ? this.$inputImmediatelyGift.val().replace(/-/g, '') : '';
 
-    if ( sPhoneNumber.length < 10 ) {
+    if ( sPhoneNumber.length !== 0 && sPhoneNumber.length < 10 ) {
       this._removeErrorComment();
       this.$container.find('.fe-error-phone01').removeClass('blind');
+    } else if ( sPhoneNumber.length === 0 ) {
+      this._removeErrorComment();
+      this.$container.find('.fe-error-phone03').removeClass('blind');
     } else if ( !Tw.FormatHelper.isCellPhone(sPhoneNumber) ) {
       this._removeErrorComment();
       this.$container.find('.fe-error-phone02').removeClass('blind');
     }
 
-    if ( sPhoneNumber.length === 0 || Tw.FormatHelper.isCellPhone(sPhoneNumber) ) {
+    if ( Tw.FormatHelper.isCellPhone(sPhoneNumber) ) {
       this._removeErrorComment();
     }
   },
