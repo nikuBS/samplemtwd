@@ -245,6 +245,8 @@ Tw.CertificationSk.prototype = {
     this._addTimer = null;
     this._addTime = null;
 
+    this._clearCertError();
+
     if ( $target.is(':checked') ) {
       this._onKeyin = true;
       this.$inputMdn.prop('readonly', false);
