@@ -47,7 +47,7 @@
 
         <div class="bt-fixed-area">
             <ul class="bt-slice full">
-                <li><button type="button" class="btn-floating btn-style2 fe-common-back">확인</button></li>
+                <li><button id="fe-btn-go-submain" type="button" class="btn-floating btn-style2">확인</button></li>
             </ul>
         </div>
     </div>
@@ -55,3 +55,11 @@
 </div>
 
 <% include ../../components/end.component.html %>
+
+<script>
+  $(document).ready(function () {
+    $('#fe-btn-go-submain').click(function () {
+      (new Tw.HistoryService()).replaceURL('/myt-join/submain_w');
+    });
+  });
+</script>
