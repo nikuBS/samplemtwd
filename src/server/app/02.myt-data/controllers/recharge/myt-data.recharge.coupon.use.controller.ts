@@ -208,7 +208,10 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
         }
       }
       if (option.dataVoiceClCd === 'D') {
-        const converted = FormatHelper.convDataFormat(productInfo.basOfrGbDataQtyCtt, DATA_UNIT.GB);
+        const offer = productInfo.basOfrGbDataQtyCtt ?
+          productInfo.basOfrGbDataQtyCtt : productInfo.basOfrMbDataQtyCtt;
+        const unit = productInfo.basOfrGbDataQtyCtt ? DATA_UNIT.GB : DATA_UNIT.MB;
+        const converted = FormatHelper.convDataFormat(offer, unit);
         option.qttText = converted.data + ' ' + converted.unit;
       } else {
         option.qttText = '0'; // Do not show voice amount that expected
