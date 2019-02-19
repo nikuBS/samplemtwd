@@ -1292,7 +1292,11 @@ Tw.CUSTOMER_EMAIL = {
     '‘요금안내서 주소 및 멤버십 카드 뒤 3자리’가 필요합니다. 해당 정보가 없을 경우 일부 상담이 제한될 수 있습니다.\n' +
     '요금안내 주소: \n' +
     '멤버십 카드번호 뒤 3자리:',
-  NOT_SUPPORT_FILE_UPLOAD: '사용하고 계신 안드로이드 버전에서는 <br> 지원하지 않는 기능입니다.'
+  NOT_SUPPORT_FILE_UPLOAD: '사용하고 계신 안드로이드 버전에서는 <br> 지원하지 않는 기능입니다.',
+  HISTORY_DELETE: {
+    TITLE: '문의 내역을 삭제하시겠습니까?',
+    CONTENT: '선택한 문의 내역을 삭제할 경우 추가 문의한 내역도 함께 삭제됩니다.'
+  }
 };
 
 Tw.CUSTOMER_HELPLINE_COMPLETE = {
