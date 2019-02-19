@@ -20,16 +20,27 @@ Tw.BenefitMyBenefitCookiz = function (rootEl) {
 };
 
 Tw.BenefitMyBenefitCookiz.prototype = {
+  /**
+   * Cache elements for binding events.
+   * @private
+   */
   _cachedElement: function () {
     this.$list = this.$container.find('#fe-list');
     this.$btMore = this.$container.find('#fe-bt-more');
     this.$noItem = this.$container.find('#fe-no-item');
   },
-
+  /**
+   * Bind events to elements.
+   * @private
+   */
   _bindEvent: function () {
     this.$btMore.on('click', $.proxy(this._onClickMore, this));
   },
 
+  /**
+   * Request the cookiz point list.
+   * @private
+   */
   _requestPoints: function () {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService
@@ -38,10 +49,18 @@ Tw.BenefitMyBenefitCookiz.prototype = {
       .fail($.proxy(this._onError, this));
   },
 
+  /**
+   * Event listener for the button click on #fe-bt-more(더보기)
+   * @private
+   */
   _onClickMore: function () {
     this._requestPoints();
   },
-
+  /**
+   * Success callback for _requestPoints.
+   * @param resp
+   * @private
+   */
   _onReceivedData: function (resp) {
     Tw.CommonHelper.endLoading('.container');
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
@@ -63,7 +82,11 @@ Tw.BenefitMyBenefitCookiz.prototype = {
       Tw.Error(resp.code, resp.msg).page();
     }
   },
-
+  /**
+   * Render the point list.
+   * @param items
+   * @private
+   */
   _renderItems: function (items) {
     var source = $('#fe-list-template').html();
     var template = Handlebars.compile(source);
@@ -79,7 +102,11 @@ Tw.BenefitMyBenefitCookiz.prototype = {
       this.$btMore.hide();
     }
   },
-
+  /**
+   * Error callback for _requestPoints.
+   * @param resp
+   * @private
+   */
   _onError: function (resp) {
     Tw.Error(resp.code, resp.msg).page();
   }
