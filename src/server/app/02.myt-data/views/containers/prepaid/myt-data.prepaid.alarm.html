@@ -275,6 +275,20 @@
     </li>
 </script>
 
+<script type="text/template" id="tpl_alarm_delete">
+    <li class="tpl_default">
+        <label class="tit" for="formInput01">자동 알람 설정 정보</label>
+        <div class="option-box">
+            <div>
+                <button id="formInput01" class="bt-dropdown big tx-bold fe-alarm-status" title="자동 알람 설정"
+                        aria-haspopup="true">설정 안함
+                </button>
+            </div>
+        </div>
+        <span class="error-txt blind">자동알람 설정 정보를 선택해 주세요.</span>
+    </li>
+</script>
+
 <script>
   $(document).ready(function () {
     new Tw.MyTDataPrepaidAlarm($('.wrap'));
