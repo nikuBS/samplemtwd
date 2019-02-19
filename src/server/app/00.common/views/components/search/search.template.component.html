@@ -179,9 +179,9 @@
         <div class="img"><img src="{{listData.IMG}}" alt="{{listData.IMG_ALT}}"></div>
         <div class="cont">
             <div class="tit">{{{listData.PRODUCT_NM}}}</div>
-            <div class="price">{{currencyComma listData.SALE_PRICE}}
+            <div class="price">{{currencyComma listData.SALE_PRICE}}원
                 {{#ifCond listData.ALIAS '===' 'shopmobile'}}
-                원~/월
+                ~/월
                 {{/ifCond}}
             </div>
             {{#ifCond listData.PRODUCT_PRICE '!==' ''}}
