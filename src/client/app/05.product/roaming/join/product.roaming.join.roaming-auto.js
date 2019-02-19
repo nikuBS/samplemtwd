@@ -302,23 +302,23 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
         this._twoMonthFlag = true;
         break;
       case 'NA00005900':
-        $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_04');
+        $tooltipHead.find('button').attr('id','TC000029');
         $tooltipBody.find('button').attr('id','RM_11_01_02_05_tip_01_07');
         break;
       case 'NA00005699':
-        $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_04');
+        $tooltipHead.find('button').attr('id','TC000029');
         $tooltipBody.find('button').attr('id','RM_11_01_02_05_tip_01_08');
         break;
       case 'NA00005898':
-        $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_04');
+        $tooltipHead.find('button').attr('id','TC000029');
         $tooltipBody.find('button').attr('id','RM_11_01_02_05_tip_01_09');
         break;
       case 'NA00005902':
-        $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_04');
+        $tooltipHead.find('button').attr('id','TC000029');
         $tooltipBody.find('button').attr('id','RM_11_01_02_05_tip_01_10');
         break;
       case 'NA00006229':
-        $tooltipHead.find('button').attr('id','RM_11_01_02_05_tip_01_04');
+        $tooltipHead.find('button').attr('id','TC000028');
         $tooltipBody.find('button').attr('id','RM_11_01_02_05_tip_01_11');
         break;
       case 'NA00006226':

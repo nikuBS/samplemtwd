@@ -68,9 +68,9 @@ Tw.CommonSearchMore.prototype = {
         // }
         if(category==='direct'&&key==='ALIAS'){
           if(data[i][key]==='shopacc'){
-            data[i].linkUrl = Tw.OUTLINK.DIRECT_ACCESSORY+'?CATEGORY_ID='+data[i].CATEGORY_ID+'&ACCESSORY_ID=';
+            data[i].linkUrl = Tw.OUTLINK.DIRECT_ACCESSORY+'?categoryId='+data[i].CATEGORY_ID+'&accessoryId=';
           }else{
-            data[i].linkUrl = Tw.OUTLINK.DIRECT_MOBILE+'?PRODUCT_GRP_ID=';
+            data[i].linkUrl = Tw.OUTLINK.DIRECT_MOBILE+'?categoryId=20010001&productGrpId=';
           }
         }
         if(key==='METATAG'){
