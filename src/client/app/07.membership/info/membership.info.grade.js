@@ -24,6 +24,7 @@ Tw.MembershipInfoGrade.prototype = {
     this.$container.on('click', '[data-popup-id]', $.proxy(this._openPopup,this));
     this.$container.on('click', '[data-external-url]', $.proxy(this._goExternalUrl,this));
     this.$container.on('click', '#fe-req-join', $.proxy( this._membershipLayerPopup.onClickJoinBtn, this._membershipLayerPopup));
+    this.$container.on('click', '[data-url]', $.proxy(this._goUrl, this));
   },
 
   // 팝업 오픈
@@ -35,6 +36,15 @@ Tw.MembershipInfoGrade.prototype = {
   _goExternalUrl : function (e) {
     var _url = Tw.URL_PATH[$(e.currentTarget).data('externalUrl')];
     Tw.CommonHelper.openUrlExternal(_url);
+  },
+
+  /**
+   * data-url attribute 에 입력된 URL로 이동시켜준다.
+   * @param e event
+   * @private
+   */
+  _goUrl: function (e) {
+    window.location.href = $(e.currentTarget).data('url');
   }
 
 
