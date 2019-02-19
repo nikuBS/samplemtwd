@@ -1,6 +1,7 @@
 /**
  * FileName: benefit.index.js
  * Author: 양정규 (skt.P130715@partner.sk.com)
+ * 혜택 할인 Index
  * Date: 2018.10.26
  */
 Tw.BenefitIndex = function (rootEl, svcInfo) {
@@ -15,6 +16,10 @@ Tw.BenefitIndex = function (rootEl, svcInfo) {
 };
 
 Tw.BenefitIndex.prototype = {
+  /**
+   * 최초 실행
+   * @private
+   */
   _init: function () {
     this._initVariables();
     this._bindEvent();
@@ -22,6 +27,10 @@ Tw.BenefitIndex.prototype = {
     this._reqMyBenefitDiscountInfo();
     this._loadTab();
   },
+  /**
+   * 초기값 설정
+   * @private
+   */
   _initVariables: function () {
     this.$benefitArea = this.$container.find('#fe-my-benefit-area');
     this.$membership = this.$container.find('#fe-membership');
@@ -39,33 +48,37 @@ Tw.BenefitIndex.prototype = {
     this.$withTax = this.$container.find('#fe-with-tax');
     this.$useCondition = this.$container.find('#fe-use-condition'); // 이용조건
     this.$combinationPreview = this.$container.find('#fe-combination-preview');
+    this._G1 = 'G1'; // Giga code값
   },
+  /**
+   * 이벤트 설정
+   * @private
+   */
   _bindEvent: function () {
     // this.$categoryTab.find('button').on('click', $.proxy(this._onClickCategory, this));
     this.$container.on('click', '[data-url]', $.proxy(this._goUrl, this));
     this.$container.on('change', '[data-check-disabled]', $.proxy(this._onCheckDisabled, this));
     this.$container.on('click', '.plus, .minus', $.proxy(this._onVariations, this));
     this.$internetType.on('click', $.proxy(this._checkStateLine, this));
-    this.$showDiscountBtn.on('click', $.proxy(this._onViewDiscountAmt, this));
+    this.$showDiscountBtn.on('click', $.proxy(this._reqDiscountAmt, this));
     this.$container.on('click', '[data-benefit-id]', $.proxy(this._onClickProduct, this)); // 카테고리 하위 리스트 클릭
-
-    /*window.onpopstate = $.proxy(function() {
-      this._loadTab();
-    },this);*/
   },
 
-  // 카테고리 하위 리스트 클릭
+  /**
+   * 리스트 내의 카테고리 클릭 시 해당 상품 원장으로 이동
+   * @param e
+   * @private
+   */
   _onClickProduct: function (e) {
     var $target = $(e.currentTarget);
     location.href= '/product/callplan/' + $target.data('benefitId');
   },
 
-  // 할인금액 보기 클릭 이벤트
-  _onViewDiscountAmt: function () {
-    this._reqDiscountAmt();
-  },
-
-  // 이동전화 회선수 체크
+  /**
+   * 인터넷 회선 선택에 따른, 이동전화 증/감(+,-) 버튼 Disabled 처리함.
+   * @param e
+   * @private
+   */
   _checkStateLine: function (e) {
     var $this = $(e.currentTarget);
     var $lineCnt = this.$mblPhonLineCnt;
@@ -82,7 +95,7 @@ Tw.BenefitIndex.prototype = {
     };
 
     // Giga 선택시
-    if ($this.val() === 'G1') {
+    if ($this.val() === this._G1) {
       if (_cnt < 5) {
         fnAddBtnDisabled(false);
       } else {
@@ -99,7 +112,11 @@ Tw.BenefitIndex.prototype = {
 
   },
 
-  // 이동전화 회선 증/감
+  /**
+   * 이동전화 회선 증/감 클릭 이벤트
+   * @param e
+   * @private
+   */
   _onVariations: function (e) {
     var $this = $(e.currentTarget);
     var $lineCnt = this.$mblPhonLineCnt;
@@ -117,7 +134,7 @@ Tw.BenefitIndex.prototype = {
     // 증가 클릭
     else {
       // 광랜 4회선, Giga : 5회선
-      var _maxCnt = this.$internetType.filter(':checked').val() === 'G1' ? 5 : 4;
+      var _maxCnt = this.$internetType.filter(':checked').val() === this._G1 ? 5 : 4;
       $lineCnt.text(_cnt++ > _maxCnt ? _maxCnt : _cnt);
       if (_cnt >= _maxCnt) {
         $this.prop('disabled', true).addClass('disabled');
@@ -125,7 +142,10 @@ Tw.BenefitIndex.prototype = {
     }
   },
 
-  // '할인금액 보기' 버튼 disabled 체크 (인터넷 & TV 가 체크 되어야 활성화)
+  /**
+   * '할인금액 보기' 버튼 disabled 체크 (인터넷 & TV 가 체크 되어야 활성화)
+   * @private
+   */
   _onCheckDisabled: function () {
     var isDisabled = false;
     this.$container.find('[data-check-disabled]').each(function () {
@@ -138,10 +158,19 @@ Tw.BenefitIndex.prototype = {
     this.$showDiscountBtn.toggleClass('disabled',isDisabled).prop('disabled', isDisabled);
   },
 
+  /**
+   * 페이지 이동
+   * @param e
+   * @private
+   */
   _goUrl: function (e) {
     window.location.href = $(e.currentTarget).data('url');
   },
 
+  /**
+   * 핸들바스 파일에서 사용할 펑션 등록
+   * @private
+   */
   _registerHelper: function () {
     Handlebars.registerHelper('numComma', function(val){
       return Tw.FormatHelper.isEmpty(val) ? val:Tw.FormatHelper.addComma(val.toString());
@@ -160,7 +189,10 @@ Tw.BenefitIndex.prototype = {
     });
   },
 
-  // 상단 > 나의 혜택.할인 정보 API들 호출 (9개 호출해서 계산)
+  /**
+   * 상단 > 나의 혜택.할인 정보 API들 호출 (9개 호출해서 계산)
+   * @private
+   */
   _reqMyBenefitDiscountInfo: function () {
     // 미 로그인, 준회원, 유선인 경우 건너뜀
     if (!this._isLogin || this._svcInfo.svcAttrCd === '' || ['S1','S2','S3'].indexOf(this._svcInfo.svcAttrCd) > -1) {
@@ -180,6 +212,11 @@ Tw.BenefitIndex.prototype = {
       .fail($.proxy(this._onFail, this));
   },
 
+  /**
+   * _reqMyBenefitDiscountInfo 성공 콜백
+   * 상단 > 나의 혜택.할인 정보 값 설정
+   * @private
+   */
   _successMyBenefitDiscountInfo: function () {
     var data = {
       membership: '',
@@ -238,24 +275,11 @@ Tw.BenefitIndex.prototype = {
     this.$benefitArea.removeClass('none');
   },
 
-  // 카테고리 클릭 이벤트
-  _onClickCategory: function (e) {
-    var lastPath = {
-      'F01421': 'discount'      ,
-      'F01422': 'combinations'  ,
-      'F01423': 'long-term'     ,
-      'F01424': 'participation' ,
-      'X'     : 'submain'
-    };
-    var category = $(e.currentTarget).data('category');
-    var last = lastPath[category || 'X'];
-    if (Tw.UrlHelper.getLastPath() !== last ) {
-      this._history.pushUrl('/benefit/submain' + (last === 'submain' ? '':'/'+last));
-    }
-    this._switchTab(category);
-  },
-
-  // 카테고리 '탭' 선택
+  /**
+   * 카테고리 '탭' 선택
+   * @param categoryId
+   * @private
+   */
   _switchTab: function (categoryId) {
     // 모두 체크해제 , 현재 탭 활성화
     this.$categoryTab.find('[data-category]').removeClass('on');
@@ -271,6 +295,10 @@ Tw.BenefitIndex.prototype = {
     }
   },
 
+  /**
+   * 호출 URL에 따른 카테고리 아이디의 탭 부분 호출
+   * @private
+   */
   _loadTab: function() {
     var categoryId = {
       'discount'      : 'F01421',
@@ -282,28 +310,28 @@ Tw.BenefitIndex.prototype = {
     this._switchTab(categoryId[Tw.UrlHelper.getLastPath()]);
   },
 
-  // 상품 리스트 조회요청
+  /**
+   * 상품 리스트 조회요청
+   * @param category
+   * @private
+   */
   _reqProductList: function (category) {
-    var mockup = function (category) {
-      $.ajax('/mock/benefit.index.products.json')
-        .done($.proxy(this._successProductList, this, category))
-        .fail($.proxy(this._onFail, this));
-    };
-
-    var real = function (category) {
-      this._apiService
-        .request(Tw.API_CMD.BFF_10_0054, {
-          idxCtgCd: 'F01400',
-          benefitCtgCd: category,
-          searchListCount: 50
-        })
-        .done($.proxy(this._successProductList, this, category))
-        .fail($.proxy(this._onFail, this));
-    };
-    real.call(this, category);
+    this._apiService
+      .request(Tw.API_CMD.BFF_10_0054, {
+        idxCtgCd: 'F01400',
+        benefitCtgCd: category,
+        searchListCount: 50
+      })
+      .done($.proxy(this._successProductList, this, category))
+      .fail($.proxy(this._onFail, this));
   },
 
-  // 상품 리스트 성공시
+  /**
+   * _reqProductList() 성공시 콜백
+   * @param category
+   * @param resp
+   * @private
+   */
   _successProductList: function (category, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       this._onFail(resp);
@@ -320,7 +348,12 @@ Tw.BenefitIndex.prototype = {
     });
   },
 
-  // 리스트 render
+  /**
+   * 상품 리스트 렌더
+   * @param category
+   * @param res
+   * @private
+   */
   _renderList: function (category, res) {
     var source = $('#productList').html();
 
@@ -332,28 +365,26 @@ Tw.BenefitIndex.prototype = {
     this.$list.append(output);
   },
 
-  // 할인금액 보기 조회 요청
+  /**
+   * 할인금액 보기 조회 요청
+   * @private
+   */
   _reqDiscountAmt: function () {
-    var mockup = function () {
-      $.ajax('/mock/BFF_10_0039.json')
-        .done($.proxy(this._successDiscountAmt, this))
-        .fail($.proxy(this._onFail, this));
-    };
-
-    var real = function () {
-      this._apiService
-        .request(Tw.API_CMD.BFF_10_0039, {
-          inetTypCd: this.$internetType.filter(':checked').val(),
-          mblPhonLineCnt: this.$mblPhonLineCnt.text(),
-          btvUseYn: this.$btvUseYn.filter(':checked').val()
-        })
-        .done($.proxy(this._successDiscountAmt, this))
-        .fail($.proxy(this._onFail, this));
-    };
-    real.call(this);
+    this._apiService
+      .request(Tw.API_CMD.BFF_10_0039, {
+        inetTypCd: this.$internetType.filter(':checked').val(),
+        mblPhonLineCnt: this.$mblPhonLineCnt.text(),
+        btvUseYn: this.$btvUseYn.filter(':checked').val()
+      })
+      .done($.proxy(this._successDiscountAmt, this))
+      .fail($.proxy(this._onFail, this));
   },
 
-  // 할인금액 보기 조회 요청 성공시
+  /**
+   * 할인금액 보기 조회 요청 성공시
+   * @param resp
+   * @private
+   */
   _successDiscountAmt: function (resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       this._onFail(resp);
@@ -371,7 +402,11 @@ Tw.BenefitIndex.prototype = {
     this.$discountResult.removeClass('none');
   },
 
-  // API Fail
+  /**
+   * API Fail
+   * @param err
+   * @private
+   */
   _onFail: function (err) {
     Tw.Error(err.code, err.msg).pop();
   }

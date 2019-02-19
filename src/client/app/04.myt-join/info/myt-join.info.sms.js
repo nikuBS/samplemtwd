@@ -2,6 +2,7 @@
  * FileName: myt-join.info.sms.js
  * Author: 양정규 (skt.P130715@partner.sk.com)
  * Date: 2018. 10. 15
+ * 망 작업 SMS 알림 신청
  */
 Tw.MyTJoinInfoSms = function (rootEl) {
   this.$container = rootEl;
@@ -12,22 +13,37 @@ Tw.MyTJoinInfoSms = function (rootEl) {
 };
 
 Tw.MyTJoinInfoSms.prototype = {
+  /**
+   * 최초 실행
+   * @private
+   */
   _init: function () {
     this._initVariables();
     this._bindEvent();
   },
+  /**
+   * 초기값 설정
+   * @private
+   */
   _initVariables: function () {
     this.$btnSubmit = this.$container.find('#fe-btn-submit');
     this.$tel = this.$container.find('#fe-hp-tel');
     this.$telErrorTxt = this.$container.find('#fe-tel-error-txt');
   },
+  /**
+   * 이벤트 설정
+   * @private
+   */
   _bindEvent: function () {
     this.$container.on('keyup focus change', '[data-require]', $.proxy(this._onDisableStatus, this));
     this.$btnSubmit.on('click', $.proxy(this._reqSms, this));
-    this.$container.on('click', '#fe-back', $.proxy(this._onCloseConfirm, this));
+    // this.$container.on('click', '#fe-back', $.proxy(this._onCloseConfirm, this));
   },
 
-  // 닫기 버튼 클릭 시 [확인]
+  /**
+   * 닫기 버튼 클릭 시 [확인]
+   * @private
+   */
   _onCloseConfirm: function() {
     this._popupService.openConfirmButton(Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG, Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
       $.proxy($.proxy(function () {
@@ -36,6 +52,11 @@ Tw.MyTJoinInfoSms.prototype = {
       }, this), this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
   },
 
+  /**
+   * 필수값 입력 유무에 따른 "[신청|변경]하기" 버튼 disabled/enabled 처리
+   * @param e
+   * @private
+   */
   _onDisableStatus: function (e) {
     var isOk = false;
     var $super = this;
@@ -63,7 +84,10 @@ Tw.MyTJoinInfoSms.prototype = {
     this.$btnSubmit.prop('disabled', !isOk);
   },
 
-  // 무약정 플랜 포인트 내역 조회
+  /**
+   * 망 작업 SMS 알림 신청 요청
+   * @private
+   */
   _reqSms: function () {
     var _tels = this.$tel.val().split('-');
     var param = {
@@ -77,13 +101,11 @@ Tw.MyTJoinInfoSms.prototype = {
       .fail($.proxy(this._onFail, this));
   },
 
-  // Mockup
-  _mockReqSms: function () {
-    $.ajax('/mock/myt.join.sms.json')
-      .done($.proxy(this._onSuccess, this))
-      .fail($.proxy(this._onFail, this));
-  },
-
+  /**
+   * _reqSms 성공 콜백. 신청|변경 완료 알러트 띄움
+   * @param resp
+   * @private
+   */
   _onSuccess: function (resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       this._onFail(resp);
@@ -95,11 +117,19 @@ Tw.MyTJoinInfoSms.prototype = {
       null, null, $.proxy(this._onClose, this));
   },
 
+  /**
+   * 뒤로가기
+   * @private
+   */
   _onClose: function () {
     this._historyService.goBack();
   },
 
-  // API Fail
+  /**
+   * API Fail
+   * @param err
+   * @private
+   */
   _onFail: function (err) {
     Tw.Error(err.code, err.msg).pop();
   }
