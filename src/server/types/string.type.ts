@@ -757,6 +757,13 @@ export const CUSTOMER_STIE_OPTION_TYPE = [
   }
 ];
 
+export const DIRECTSHOP_LINK = {
+  common: 'https://m.shop.tworld.co.kr/shopguide',
+  discount: '/bnft?utm_source=tworld&utm_medium=moweb_menu&utm_campaign=sub_cs&utm_content=guide5&fSiteCd=1010',
+  buy: '/dc-agrmt-typ?utm_source=tworld&utm_medium=moweb_menu&utm_campaign=sub_cs&utm_content=guide6&fSiteCd=1010',
+  delivery: '/dvc-dlv?utm_source=tworld&utm_medium=moweb_menu&utm_campaign=sub_cs&utm_content=guide7&fSiteCd=1010'
+};
+
 export const CUSTOMER_SERVICE_OPTION_TYPE = [
   {
     title: '휴대폰 가입/변경 안내',
@@ -896,7 +903,8 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           {
             dep_title: '요금약정할인',
             type: 'A1',
-            code: 'C00001'
+            code: `url:${DIRECTSHOP_LINK.common}${DIRECTSHOP_LINK.discount}`
+            // code: 'C00001'
           },
           {
             dep_title: '결합할인',
@@ -917,7 +925,8 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           {
             dep_title: '구매 전 꿀팁',
             type: 'A2',
-            code: 'C00011'
+            code: `url:${DIRECTSHOP_LINK.common}${DIRECTSHOP_LINK.buy}`
+            // code: 'C00011'
           },
           {
             dep_title: '다이렉트샵구매가이드',
@@ -948,7 +957,8 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           {
             dep_title: '배송방법',
             type: 'A2',
-            code: 'C00002'
+            code: `url:${DIRECTSHOP_LINK.common}${DIRECTSHOP_LINK.delivery}`
+            // code: 'C00002'
           },
           {
             dep_title: '개통방법',
@@ -1076,6 +1086,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   }
 ];
+
 export const MYT_JOIN_PERSONAL = '개인';
 export const MYT_JOIN_FAMILY = '패밀리';
 export const MYT_SUSPEND_REASON = {
