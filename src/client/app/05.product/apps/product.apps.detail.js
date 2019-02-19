@@ -34,7 +34,7 @@ Tw.ProductAppsDetail.prototype = {
   _handleLoadInfo: function(app) {
     this._stores = this._getStoreUrl(app.appStoreLinkBtnList || []);
 
-    if (Tw.BrowserHelper.isApp()) {
+    if (Tw.BrowserHelper.isApp() && app.lnkgAppScmCtt) {
       app.stores = this._stores;
       app.isApp = true;
 
@@ -73,11 +73,11 @@ Tw.ProductAppsDetail.prototype = {
         var name = button.linkNm.toLowerCase();
 
         if (name.indexOf(STORES.PLAY_STORE) >= 0) {
-          urls.playStore = button.linkUrl;
+          urls.playStore = encodeURI(button.linkUrl);
         } else if (name.indexOf(STORES.APP_STORE) >= 0) {
-          urls.appStore = button.linkUrl;
+          urls.appStore = encodeURI(button.linkUrl);
         } else if (name.indexOf(STORES.ONE_STORE) >= 0) {
-          urls.oneStore = button.linkUrl;
+          urls.oneStore = encodeURI(button.linkUrl);
         }
 
         return urls;
