@@ -35,7 +35,7 @@ Tw.ShareComponent.prototype = {
   _onClickShare: function () {
     this._nativeService.send(Tw.NTV_CMD.SHARE, {
       // content: 'http://' + this._domain + '/common/share/bridge?target=' + encodeURIComponent(this._url) + '&loginType=T'
-      content: 'http://skt.sh/' + this._menuId
+      content: 'https://skt.sh/' + this._menuId
     });
   }
 };
