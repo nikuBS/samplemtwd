@@ -23,8 +23,8 @@ Tw.QuickMenuComponent.prototype = {
     }
   },
   _init: function () {
-    this._getQuickMenu();
-    // this._getAllMenu();
+    // this._getQuickMenu();
+    this._getAllMenu();
   },
   _getAllMenu: function () {
     this._apiService.request(Tw.NODE_CMD.GET_MENU, {})
