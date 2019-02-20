@@ -86,6 +86,8 @@ Tw.ProductCommonCallplan.prototype = {
     if (this.$contentsBtnRoamingAuto.length > 0) {
       this.$contentsBtnRoamingAuto.on('click', $.proxy(this._procRoamingAuto, this));
     }
+
+    $(window).on('message', $.proxy(this._getWindowMessage, this));
   },
 
   _showReadyOn: function() {
@@ -311,7 +313,21 @@ Tw.ProductCommonCallplan.prototype = {
       url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
     }
 
-    Tw.CommonHelper.openUrlInApp(url);
+    url += '&ref_origin=' + encodeURIComponent(location.origin);
+
+    this._popupService.open({
+      hbs: 'product_bpcp',
+      iframeUrl: url
+    }, null, $.proxy(function() {
+      this._historyService.reload();
+    }, this));
+  },
+
+  _getWindowMessage: function(e) {
+    var data = e.data || e.originalEvent.data;
+    if (data === 'popup_close') {
+      this._popupService.close();
+    }
   },
 
   _getSvcInfoRes: function(joinTermCd, url, resp) {
