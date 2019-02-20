@@ -128,6 +128,8 @@ Tw.ValidationService.prototype = {
         this._getCardCode($target);
       } else if ($target.hasClass('fe-card-y') || $target.hasClass('fe-card-m')) {
         isWrong = !this._validation.checkExpiration(this.$container.find('.fe-card-y'), this.$container.find('.fe-card-m'));
+      } else if ($target.hasClass('fe-birth')) {
+        isWrong = !this._validation.isBirthday($target.val());
       }
     }
     return isWrong;

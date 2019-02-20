@@ -125,7 +125,8 @@
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                     <span class="input fe-card-num" style="display:none;">
-                                        <input id="flab07" class="fe-card-number required-input-field" maxlength="16"
+                                        <input id="flab07" class="fe-card-number required-input-field fe-only-number"
+                                               maxlength="16" minlength="15" data-valid-label="card"
                                                type="number" inputmode="numeric" min="0" pattern="[0-9]*"
                                                placeholder="숫자만 입력" title="카드번호 숫자만 입력" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
@@ -138,17 +139,17 @@
                                 <div class="input-wrap-half fe-exp-wrap">
                                     <span class="inputbox">
                                         <span class="input">
-                                            <input id="flab05" class="fe-card-y required-input-field" type="number"
-                                                   inputmode="numeric" min="0" pattern="[0-9]*"
-                                                   placeholder="YYYY" title="유효기간 년 입력 YYYY" maxlength="4">
+                                            <input id="flab05" class="fe-card-y required-input-field fe-only-number" type="number"
+                                                   inputmode="numeric" min="0" pattern="[0-9]*" data-valid-label="expiration"
+                                                   placeholder="YYYY" title="유효기간 년 입력 YYYY" maxlength="4" minlength="4">
                                             <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                         </span>
                                     </span>
                                     <span class="inputbox">
                                         <span class="input">
-                                            <input class="fe-card-m required-input-field" type="number"
-                                                   inputmode="numeric" min="0" pattern="[0-9]*"
-                                                   placeholder="MM" title="유효기간 월 입력 MM" maxlength="2">
+                                            <input class="fe-card-m required-input-field fe-only-number" type="number"
+                                                   inputmode="numeric" min="0" pattern="[0-9]*" data-valid-label="expiration"
+                                                   placeholder="MM" title="유효기간 월 입력 MM" maxlength="2" minlength="2">
                                             <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                         </span>
                                     </span>
@@ -161,9 +162,9 @@
                                 <label class="tit" for="flab06">비밀번호</label>
                                 <span class="inputbox">
                                     <span class="input">
-                                        <input id="flab06" class="fe-card-pw required-input-field" type="number"
-                                               inputmode="numeric" min="0" pattern="[0-9]*"
-                                               placeholder="앞 2자리" title="비밀번호 앞 2자리 입력" maxlength="2" style="-webkit-text-security: disc;" />
+                                        <input id="flab06" class="fe-card-pw required-input-field fe-only-number" type="number"
+                                               inputmode="numeric" min="0" pattern="[0-9]*" data-valid-label="password"
+                                               placeholder="앞 2자리" title="비밀번호 앞 2자리 입력" maxlength="2" minlength="2" style="-webkit-text-security: disc;" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                     <span class="error-txt fe-error-msg" style="display:none;">비밀번호가 올바르지 않습니다.</span>
