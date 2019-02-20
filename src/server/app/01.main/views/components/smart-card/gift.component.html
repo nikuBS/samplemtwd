@@ -10,6 +10,7 @@
         {{#if blockUsage}}
         <p class="tx">매월 1일은 데이터 조회량이 많아 데이터를 선물할 수 있는지 실시간으로 알려드리기 어렵습니다.</p>
         {{else}}
+        <a tabindex="0" href="/myt-data/submain">
         <ul class="list">
             <li><strong class="ti">선물할 수 있는 데이터</strong>
                 <em class="tx f-type c-point none"><span id="fe-text-gift-balance" class="ff-tg-medium"></span></em>
@@ -27,6 +28,7 @@
                 </em>
             </li>
         </ul>
+        </a>
         {{/if}}
         <div class="btn-area">
             <button id="fe-bt-go-gift" class="bt">선물하기</button>

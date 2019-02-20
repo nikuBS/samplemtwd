@@ -371,6 +371,10 @@ Tw.CertificationSk.prototype = {
       .done($.proxy(this._successCertAdd, this));
   },
   _successCertAdd: function (resp) {
+    if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
+      clearTimeout(this._addTimer);
+    }
+
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._clearCertError();
       this.$btReCert.parent().removeClass('none');
