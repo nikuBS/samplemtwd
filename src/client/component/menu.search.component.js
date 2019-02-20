@@ -22,6 +22,7 @@ Tw.MenuSearchComponent.prototype = {
   _bindEvents: function () {
     this.$searchInput.on('keyup', $.proxy(this._onSearch, this));
     this.$container.on('click', '#fe-cancel-search', $.proxy(this._cancelSearch, this));
+    this.$container.on('click', '.fe-replace', $.proxy(this._onLink, this));
   },
   _init: function () {
     this._apiService.request(Tw.NODE_CMD.GET_MENU_RCMD, {})
@@ -38,7 +39,7 @@ Tw.MenuSearchComponent.prototype = {
     }
   },
   _compileTplForRecommendationItem: function (href, title) {
-    return '<li><a class="category-type" href="' + href + '"><span class="text">' +
+    return '<li><a class="category-type fe-replace" href="' + href + '"><span class="text">' +
       title + '</span></a></li>';
   },
   _cancelSearch: function () {
@@ -59,7 +60,12 @@ Tw.MenuSearchComponent.prototype = {
       return;
     }
 
-    this._historyService.goLoad('/common/search?keyword=' + keyword + '&from=menu');
+    this._historyService.replaceURL('/common/search?keyword=' + keyword + '&from=menu');
+  },
+  _onLink: function (e) {
+    var url = e.currentTarget.href;
+    this._historyService.replaceURL(url);
+    return false;
   },
 
   focus: function () {

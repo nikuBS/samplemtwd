@@ -94,11 +94,13 @@ Tw.MenuComponent.prototype = {
     this.$container.on('focusin', '#fe-search-input', $.proxy(this._searchFocus, this));
   },
   _componentReady: function () {
+    /* history back에서 메뉴 삭제
     if ( location.hash === '#menu' ) {
       setTimeout($.proxy(function () {
         this.$gnbBtn.click();
       }, this), 100);
     }
+    */
 
     this._tid = this.$container.find('.fe-t-noti').data('tid').trim();
     if ( !Tw.BrowserHelper.isApp() || Tw.FormatHelper.isEmpty(this._tid) ) {
@@ -155,7 +157,7 @@ Tw.MenuComponent.prototype = {
   },
 
   _onClickLogin: function () {
-    this._tidLanding.goLogin(location.pathname + location.search + '#menu');
+    this._tidLanding.goLogin(location.pathname + location.search);
   },
   _onClickLogout: function () {
     this._tidLanding.goLogout();
@@ -165,7 +167,7 @@ Tw.MenuComponent.prototype = {
       this._tidLanding.goSignup();
     } else {
       var url = e.currentTarget.value;
-      this._historyService.goLoad(url);
+      this._historyService.replaceURL(url);
     }
   },
   _onGnbBtnClicked: function () {
@@ -251,7 +253,7 @@ Tw.MenuComponent.prototype = {
     if ( url.indexOf('http') !== -1 ) {
       Tw.CommonHelper.openUrlExternal(url);
     } else {
-      this._historyService.goLoad(url);
+      this._historyService.replaceURL(url);
     }
   },
   _onFreeSMS: function (e) {
@@ -284,10 +286,10 @@ Tw.MenuComponent.prototype = {
       (new Tw.CertificationSelect()).open({
         authClCd: Tw.AUTH_CERTIFICATION_KIND.F
       }, '', null, null, $.proxy(function () {
-        this._historyService.goLoad(e.currentTarget.value);
+        this._historyService.replaceURL(e.currentTarget.value);
       }, this));
     } else {
-      this._historyService.goLoad(e.currentTarget.value);
+      this._historyService.replaceURL(e.currentTarget.value);
     }
   },
 
