@@ -31,7 +31,7 @@
                 <div class="cont-box nogaps">
                     <div class="calling-plan">
                         <a href="/myt-join/myplan" class="wrap-link">
-                            <i class="badge icon-badge-plan-my"><span class="blind">my</span></i>
+                            <i class="badge icon-badge-plan-use"><span class="blind">이용중</span></i>
                             <span class="stit"><%= svcInfo.prodNm %></span>
                         </a>
                     </div>
@@ -84,7 +84,7 @@
                 <!-- 이런 요금제는 어떠세요? -->
                 <% const products = plans.products;
                 if (products) { %>
-                <div class="cont-box bgnone nogaps-hoz">
+                <div class="cont-box bgnone nogaps-hoz noborder"><!-- 더보기 버튼이 있을때 noborder 필요 -->
                     <ul class="extraservice-list">
                         <% products.map(plan => { %>
                             <li class="category-type">
@@ -133,8 +133,8 @@
                     </ul>
 
                     <% const leftCount = plans.productCount - products.length, last = products[products.length - 1]; %>
-                    <div class="extraservice-more">
-                        <button class="<%= leftCount ? '' : 'none' %> btn" data-last-product="<%= last && last.prodId %>" data-left-count="<%= leftCount %>">
+                    <div class="extraservice-more full-width">
+                        <button class="<%= leftCount ? '' : 'none' %> btn bbe5" data-last-product="<%= last && last.prodId %>" data-left-count="<%= leftCount %>">
                             더 보기
                         </button>
                     </div>

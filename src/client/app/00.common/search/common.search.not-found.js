@@ -31,6 +31,7 @@ Tw.CommonSearchNotFound.prototype = {
     if(from==='menu'){
       this._addRecentlyKeyword(keywrod);
     }
+    new Tw.XtractorService(this.$container);
   },
   _showClaimPopup : function(btnEvt){
     //var $selectedClaim = $(btnEvt.currentTarget);
@@ -71,6 +72,7 @@ Tw.CommonSearchNotFound.prototype = {
     this.$requestKeywordPopup = $(popupObj);
     this.$requestKeywordPopup.on('click','.request_claim',$.proxy(this._openAlert,this,Tw.ALERT_MSG_SEARCH.ALERT_4_A40,this._requestKeyword));
     this.$requestKeywordPopup.on('keyup','.input-focus',$.proxy(this._activateRequestKeywordBtn,this));
+    this.$requestKeywordPopup.on('click','.cancel',$.proxy(this._activateRequestKeywordBtn,this));
   },
   _bindEventForSelectClaim : function(popupObj){
     //claim select
@@ -80,11 +82,27 @@ Tw.CommonSearchNotFound.prototype = {
     this.$selectClaimPopup.on('click','.custom-form>input',$.proxy(this._activateSelectClaimBtn,this));
   },
   _activateRequestKeywordBtn : function(inputEvt){
-    if($(inputEvt.currentTarget).val().length>0){
+    var $inputEvt = $(inputEvt.currentTarget);
+    var inputLength = $inputEvt.val().length;
+    this.$requestKeywordPopup.find('.byte-current').text(inputLength);
+    if(inputLength>0){
       this.$requestKeywordPopup.find('.request_claim').removeAttr('disabled');
     }else{
       this.$requestKeywordPopup.find('.request_claim').attr('disabled','disabled');
     }
+    this._validateMaxLength($inputEvt);
+  },
+  _validateMaxLength : function ($inputEvt) {
+    var maxLength = $inputEvt.attr('maxlength');
+    var nowTargetVal = $inputEvt.val();
+    if(nowTargetVal.length>maxLength){
+      $inputEvt.val(nowTargetVal.substring(0,maxLength));
+      $inputEvt.blur();
+      setTimeout(function () {
+        $inputEvt.focus();
+      });
+    }
+    this.$requestKeywordPopup.find('.byte-current').text($inputEvt.val().length);
   },
   _activateSelectClaimBtn : function(){
     this.$selectClaimPopup.find('.request_claim').removeAttr('disabled');
@@ -115,6 +133,7 @@ Tw.CommonSearchNotFound.prototype = {
       $selectedEl.each(function (idx) {
         if($selectedEl.eq(idx).data('type')===srchId){
           $selectedEl.eq(idx).children('.btn').hide();
+          $selectedEl.eq(idx).children('.text').text(Tw.ALERT_MSG_SEARCH.REQUEST_CLAIM);
           $selectedEl.eq(idx).removeClass();
         }
       });
@@ -124,14 +143,14 @@ Tw.CommonSearchNotFound.prototype = {
     }
   },
   _inputKeyupEvt : function (evt) {
-    if(evt.keyCode===13){
+    if(Tw.InputHelper.isEnter(evt)){
       this.$container.find('.icon-gnb-search').trigger('click');
     }
   },
   _doSearch : function () {
     var searchKeyword = this.$container.find('#search_keyword').val();
     if(Tw.FormatHelper.isEmpty(searchKeyword)){
-      this._popupService.openAlert(Tw.ALERT_MSG_SEARCH.KEYWORD_ERR);
+      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR);
       return;
     }
     this._addRecentlyKeyword(searchKeyword);

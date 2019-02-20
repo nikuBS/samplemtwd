@@ -49,7 +49,11 @@ function recognizeLastChar(keyword){
         <dl class="searchword-list">
             <dt class="tit">연관</dt>
             <% for(var i=0;i<relatedKeyword.result.Word.length&&i<5;i++){ %>
-            <dd><a href="/common/search?keyword=<%= relatedKeyword.result.Word[i] %>&step=<%= Number(step)+1%>" data-keyword="<%= relatedKeyword.result.Word[i] %>" class="link search-element"><%= relatedKeyword.result.Word[i] %></a></dd>
+            <dd>
+                <a href="/common/search?step=<%= Number(step)+1 %>&keyword=<%= relatedKeyword.result.Word[i] %>" data-xt_csid="NO" data-xt_action="BC" data-xt_eid="CMMA_A11_B4-3<%= i+1 %>" data-param="<%= relatedKeyword.result.Word[i] %>" class="link search-element xtractor">
+                    <%= relatedKeyword.result.Word[i] %>
+                </a>
+            </dd>
             <% } %>
         </dl>
     </div>
@@ -72,7 +76,7 @@ function recognizeLastChar(keyword){
             <li class="opinion-selectbox" data-type="<%= surveyList.invstQstnInqItm[i].srchId %>">
                 <p class="text"><%= surveyList.invstQstnInqItm[i].title %></p>
                 <div class="btn">
-                    <button type="button" class="btn-round3 btn-style3 request_keyword" data-type="<%= surveyList.invstQstnInqItm[i].srchId %>">입력하기</button>
+                    <button type="button" class="btn-round3 btn-style3 request_keyword" data-type="<%= surveyList.invstQstnInqItm[i].srchId %>"><%= i==0? '입력하기' : '신청하기'%></button>
                 </div>
             </li>
             <% } %>

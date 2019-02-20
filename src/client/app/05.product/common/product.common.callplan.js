@@ -40,6 +40,10 @@ Tw.ProductCommonCallplan.prototype = {
     if (this._historyService.isBack()) {
       this._historyService.reload();
     }
+
+    if (this.$contents.find('.fe-btn_roaming_auto').length > 0) {
+      this._bindRoamingAuto();
+    }
   },
 
   _cachedElement: function() {
@@ -52,6 +56,7 @@ Tw.ProductCommonCallplan.prototype = {
     this.$goProd = this.$container.find('.fe-go_prod');
 
     this.$contentsDetailItem = this.$container.find('.fe-contents_detail_item');
+    this.$contentsBtnRoamingAuto = this.$container.find('.fe-btn_roaming_auto');
     this.$contents = this.$container.find('.fe-contents');
   },
 
@@ -77,6 +82,10 @@ Tw.ProductCommonCallplan.prototype = {
     this.$contents.on('click', '.fe-campuszone', $.proxy(this._openCustomPopup, this, 'MP_02_02_04_02'));
 
     this.$contents.on('click', 'a', $.proxy(this._detectClubT, this));
+
+    if (this.$contentsBtnRoamingAuto.length > 0) {
+      this.$contentsBtnRoamingAuto.on('click', $.proxy(this._procRoamingAuto, this));
+    }
   },
 
   _showReadyOn: function() {
@@ -167,6 +176,8 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _bindCustomPop: function(hbsCode, $popupContainer) {
+    $popupContainer.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
+
     if (hbsCode !== 'MP_02_02_04_02') {
       return;
     }
@@ -198,6 +209,10 @@ Tw.ProductCommonCallplan.prototype = {
     if (this._settingBtnList.length > 1) {
       this._openSettingPop();
     } else {
+      if (this._settingBtnList[0].url.indexOf('BPCP:') !== -1) {
+        return this._getBpcp(this._settingBtnList[0].url);
+      }
+
       this._historyService.goLoad(this._settingBtnList[0].url + '?prod_id=' + this._prodId);
     }
   },
@@ -267,6 +282,7 @@ Tw.ProductCommonCallplan.prototype = {
       return this._getBpcp(url);
     }
 
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
       .done($.proxy(this._getSvcInfoRes, this, joinTermCd, url));
   },
@@ -301,24 +317,29 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _getSvcInfoRes: function(joinTermCd, url, resp) {
+    Tw.CommonHelper.endLoading('.container');
     if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
       return this._tidLanding.goLogin(location.origin + url + '?prod_id=' + this._prodId);
     }
 
+    // 미등록 회선일 경우
     if (Tw.FormatHelper.isEmpty(resp.result.svcMgmtNum)) {
       this._isGoMemberLine = false;
       return this._popupService.openConfirm(null, Tw.ALERT_MSG_PRODUCT.NEED_LINE,
         $.proxy(this._setGoMemberLine, this), $.proxy(this._onCloseMemberLine, this));
     }
 
-    if (this._prodTypCd === 'F' && !this._isAllowJoinCombine) {
+    // 인터넷/집전화/TV 이용고객이 아닌 회선이 결합상품 가입 시도시
+    if (joinTermCd === '01' && this._prodTypCd === 'F' && !this._isAllowJoinCombine) {
       return this._openCombineNeedWireError();
     }
 
-    if (this._lineProcessCase === 'B' || this._lineProcessCase === 'D') {
+    // 해지 및 회선변경 프로세스 case 2, 4 에 해당되면 즉시 사전체크 호출
+    if (joinTermCd === '01' && (this._lineProcessCase === 'B' || this._lineProcessCase === 'D') || joinTermCd !== '01') {
       return this._procPreCheck(joinTermCd, url);
     }
 
+    // 회선변경 프로세스 진입
     this._historyService.goLoad('/product/line-change?p_mod=' + (this._lineProcessCase === 'A' ? 'select' : 'change') +
       '&t_prod_id=' + this._prodId + '&t_url=' + encodeURIComponent(url + '?prod_id=' + this._prodId));
   },
@@ -426,13 +447,13 @@ Tw.ProductCommonCallplan.prototype = {
     this._historyService.goLoad(this._settingGoUrl + '?prod_id=' + this._prodId);
   },
 
-  _getWireAdditionsPreCheck: function() {
-    if (['D_I', 'D_P', 'D_T'].indexOf(this._prodTypCd) === -1 || this._joinTermCd !== '03') {
-      return;
-    }
-
-    this._apiService.request(Tw.API_CMD.BFF_10_0098, { joinTermCd: '04' }, {}, [this._prodId])
-      .done($.proxy(this._resWireAdditionsPreCheck, this));
+  _getWireAdditionsPreCheck: function() { // @TODO 예약취소 GrandOpen 이후 범위
+    // if (['D_I', 'D_P', 'D_T'].indexOf(this._prodTypCd) === -1 || this._joinTermCd !== '03') {
+    //   return;
+    // }
+    //
+    // this._apiService.request(Tw.API_CMD.BFF_10_0098, { joinTermCd: '04' }, {}, [this._prodId])
+    //   .done($.proxy(this._resWireAdditionsPreCheck, this));
   },
 
   _resWireAdditionsPreCheck: function(resp) {
@@ -483,6 +504,53 @@ Tw.ProductCommonCallplan.prototype = {
     }
 
     this._historyService.goLoad(this._url + '?prod_id=' + this._prodId);
+  },
+
+  _bindRoamingAuto: function() {
+    var $container = this.$contents.find('.fe-btn_roaming_auto').parents('.idpt-form-wrap');
+    $container.on('keyup input', '#phoneNum02', $.proxy(this._detectRoamingAutoInput, this));
+  },
+
+  _detectRoamingAutoInput: function(e) {
+    var $input = $(e.currentTarget);
+    $input.val($input.val().replace(/[^0-9]/g, ''));
+
+    if ($input.val().length > 0 && Tw.ValidationHelper.isCellPhone('010' + $input.val())) {
+      this.$contentsBtnRoamingAuto.removeAttr('disabled').prop('disabled', true);
+    } else {
+      this.$contentsBtnRoamingAuto.attr('disabled', 'disabled').prop('disabled', false);
+    }
+  },
+
+  _procRoamingAuto: function(e) {
+    var $form = $(e.currentTarget).parents('.idpt-form-wrap'),
+      $phoneNum01 = $form.find('#phoneNum01'),
+      $phoneNum02 = $form.find('#phoneNum02');
+
+    if (Tw.FormatHelper.isEmpty($phoneNum01.val()) || Tw.FormatHelper.isEmpty($phoneNum02.val())) {
+      return;
+    }
+
+    this._apiService.request(Tw.API_CMD.BFF_10_0174, {
+      roamCp1: $phoneNum01.val(),
+      roamCp2: $phoneNum02.val()
+    }).done($.proxy(this._procRoamingAutoRes, this));
+  },
+
+  _procRoamingAutoRes: function(resp) {
+    if (resp.code !== Tw.API_CODE.CODE_00) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    if (resp.result.mySvcNumYN !== 'Y') {
+      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A81);
+    }
+
+    if (resp.result.autoDialPhone === '1' || resp.result.autoDialPhone === '3') {
+      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A79);
+    }
+
+    this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A80);
   }
 
 };

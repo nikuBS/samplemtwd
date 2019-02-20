@@ -18,7 +18,15 @@
                 {{/if}}
             {{/if}}
         {{else}}
-            <button class="bt action" id="fe-exe-btn">앱 실행하기</button>
+            {{#if isIos}}
+                {{#if stores.appStore}}<button class="bt action" id="fe-exe-btn">앱 실행하기</button>{{/if}}
+            {{else}}
+                {{#if stores.playStore}}
+                    <button class="bt action" id="fe-exe-btn">앱 실행하기</button>
+                {{else}}
+                    {{#if stores.oneStore}}<button class="bt action" id="fe-exe-btn">앱 실행하기</button>{{/if}}
+                {{/if}}
+            {{/if}}
         {{/if}}
     </div>
 </script>

@@ -4,9 +4,10 @@
  * Date: 2018.10.10
  */
 
-Tw.MainMenuSettingsBiometrics = function (rootEl, target) {
+Tw.MainMenuSettingsBiometrics = function (rootEl, target, svcMgmtNum) {
   this.$container = rootEl;
   this._target = target;
+  this._svcMgmtNum = svcMgmtNum;
 
   this._nativeService = Tw.Native;
 
@@ -29,14 +30,14 @@ Tw.MainMenuSettingsBiometrics.prototype = {
     this.$container.on('click', '#fe-bt-register-' + this._target, $.proxy(this._onClickRegisterFido, this));
   },
   _checkFido: function () {
-    this._nativeService.send(Tw.NTV_CMD.FIDO_CHECK, {}, $.proxy(this._onFidoCheck, this));
+    this._nativeService.send(Tw.NTV_CMD.FIDO_CHECK, { svcMgmtNum: this._svcMgmtNum }, $.proxy(this._onFidoCheck, this));
   },
   _onClickRegisterFido: function () {
-    var biometricsTerm = new Tw.BiometricsTerms(this._target);
+    var biometricsTerm = new Tw.BiometricsTerms(this._target, this._svcMgmtNum);
     biometricsTerm.open($.proxy(this._updateFidoInfo, this));
   },
   _onClickCancelFido: function () {
-    var biometricsDeregister = new Tw.BiometricsDeregister(this._target);
+    var biometricsDeregister = new Tw.BiometricsDeregister(this._target, this._svcMgmtNum);
     biometricsDeregister.openPopup($.proxy(this._updateFidoInfo, this));
   },
   _onFidoCheck: function (resp) {

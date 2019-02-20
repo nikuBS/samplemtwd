@@ -97,7 +97,6 @@ Tw.POPUP_TITLE = {
   SELECT_ORDER: '정렬 기준을 선택해주세요',
   CONFIRM_SHARE: '데이터를 공유 하시겠습니까?',
   CANCEL_HELPLINE: '예약을 취소하시겠습니까?',
-  ALREADY_EXIST_RESERVATION: '이미 예약하신 정보가 있습니다.',
   AGREED_PERIOD: '약정기간',
   SELECT_RESERVATION_COMBINE_PRODUCT: '결합 상품 선택',
   EXTERNAL_LINK: '외부 사이트로 연결됩니다.',
@@ -159,8 +158,10 @@ Tw.FARE_CHART_LEGEND = {
 Tw.TOAST_TEXT = {
   MYT_FARE_HISTORY_AUTOPAYMENT_BLOCK: '차단 신청이 완료되었습니다.',
   MTY_FARE_HISTORY_AUTOPAYMENT_UNBLOCK: '헤제 신청이 완료되었습니다.',
-  MYT_DATA_LIMIT_BLOCK: '데이터 차단이 설정되었습니다.',
+  MYT_DATA_LIMIT_BLOCK: '데이터 차단이 해제되었습니다.',
   MYT_DATA_LIMIT_UNBLOCK: '데이터 차단해제가 설정되었습니다.',
+  MYT_DATA_LIMIT_MONTHLY_BLOCK: '다음 달부터 데이터 차단이 해제됩니다.',
+  MYT_DATA_LIMIT_MONTHLY_UNBLOCK: '다음 달부터 데이터 차단이 설정됩니다.',
   QUICK_ADD: 'MY 바로가기에 추가되었습니다.',
   QUICK_REMOVE: 'MY 바로가기에서 제거되었습니다.',
   FIDO_USE: '생체인증을 사용합니다.',
@@ -295,11 +296,7 @@ Tw.MYT_DATA_PATTERN_TITLE = {
 Tw.MYT_DATA_GIFT = {
   GFT0001: '고객님은 선물하기 불가능한 요금제이시거나, <br>현재 선물하기가 불가능한 상태입니다.',
   GFT0003: '선물하시는 고객님의 선물하기 횟수가 초과 되었습니다. (회선당 월2회까지 선물하기 가능)',
-  GFT0004: {
-    CONTENT1: '선물하시는 고객님의 기본 잔여데이터가 500MB 미만입니다.<br>',
-    CONTENT2: '선물가능 데이터 한도 : ',
-    CONTENT3: '남음'
-  },
+  GFT0004: '선물하시는 고객님의 기본 잔여데이터가 500MB 미만입니다',
   GFT0005: '미성년자 고객님은 T끼리 데이터 선물하기 서비스를 이용하실 수없습니다.',
   GFT0013: '시스템 상의 오류로<br> 현재 T끼리 데이터 선물하기 서비스를 이용하실 수 없으니, <br>잠시 후 이용해주세요.',
   DEFAULT: '선물 가능한 데이터 조회 요청에 시간이 소요되고 있습니다. <br>잠시 후 다시 이용해주세요.'
@@ -313,6 +310,14 @@ Tw.MYT_FARE_BILL_GUIDE = {
   PHONE_SVCTYPE: '휴대폰',
   PHONE_TYPE_0: '이동전화',
   PHONE_TYPE_1: '휴대폰',
+  SVCNM_TPOCKET:'T Pocket Fi',
+  SVCNM_TLOGIN:'T Login',
+  SVCNM_TWIBRO:'T Wibro',
+  SVCNM_TEL_0:'집전화',
+  SVCNM_TEL_1:'유선전화',
+  SVCNM_TV:'TV',
+  SVCNM_IPTV:'IPTV',
+  SVCNM_INET:'인터넷',
   POP_TITLE_TYPE_0: '조건 변경',
   POP_TITLE_TYPE_1: '납부 방법 선택'
 };
@@ -392,6 +397,7 @@ Tw.MYT_FARE_PAYMENT_NAME = {
   INQUIRE: '조회하기',
   PAYMENT: '납부',
   RESERVATION: '납부 예약',
+  AUTO_PAYMENT: '자동납부',
   AUTO: '자동납부 신청',
   GO_PAYMENT_HISTORY: '납부내역 보기',
   PREPAY: '선결제',
@@ -440,7 +446,7 @@ Tw.ALERT_MSG_COMMON = {
     TITLE: 'SMS인증을 사용할 수 없습니다.',
     MSG: 'T world에 로그인하신 계정의 이동전화번호와 일치하는 휴대폰에서만 인증 받으실 수 있습니다.<br />고객센터(114)로 문의주세요.'
   },
-  STEP_CANCEL: { TITLE: ' ', MSG: '입력하신 정보는 모두 취소됩니다. <br> 창을 닫으시겠습니까?' },
+  STEP_CANCEL: { TITLE: '화면을 닫고 이동하시겠습니까?', MSG: '입력 및 선택하신 정보는 모두 취소됩니다.' },
   CHANGE: '변경하시겠습니까?'
 };
 
@@ -547,7 +553,9 @@ Tw.VALIDATE_MSG_MYT_DATA = {
   V9: '휴대폰 번호가 올바르지 않습니다.',
   V16: '공유 가능 데이터를 초과했습니다.',
   V17: '가족에게 공유할 데이터를 입력해주세요.',
-  V18: '휴대폰번호 자릿수를 확인해주세요. (10~11자리)'
+  V18: '휴대폰번호 자릿수를 확인해주세요. (10~11자리)',
+  GREATER_THAN_CHANGABLE_DATA: '변경 가능 데이터를 초과했습니다.',
+  NON_CHANGE_DATA: '변경할 데이터를 입력해주세요.'
 };
 
 Tw.ALERT_MSG_MYT_FARE = {
@@ -705,7 +713,7 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A1: { TITLE: '선택하신 상품 가입을 취소하시겠습니까?', MSG: '', BUTTON: '계속하기' },
   ALERT_3_A2: {
     TITLE: '가입 시 유의사항을 모두 확인하였으며,\n선택하신 상품으로\n가입하시겠습니까?',
-    MSG: '사용 중인 요금제는 자동 해지되며,\n1개월동안 다른 상품으로 가입하실 수 없습니다.',
+    MSG: '사용 중인 요금제는 자동으로 해지되며,\n1개월 동안 다른 상품으로 가입하실 수 없습니다.',
     BUTTON: '가입하기'
   },
   ALERT_3_A3: { TITLE: '가입 시 유의사항을 모두 확인하였으며,\n선택하신 상품에 가입하시겠습니까?', MSG: '', BUTTON: '가입하기' },
@@ -742,9 +750,12 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A69: { TITLE: '해당 상품의 해지예약신청 이력이 있습니다. 해지예약을 취소하시겠습니까?', BUTTON: '취소하기' },
   ALERT_3_A70: { TITLE: '해당 상품의 변경예약신청 이력이 있습니다. 변경예약을 취소하시겠습니까?', BUTTON: '취소하기' },
   ALERT_3_A73: { TITLE: '스마트워치 회선이 존재하지 않습니다.\n회선 없이 \'인피니티_스마트워치\' 옵션을 선택하시겠습니까?', MSG: '' },
-  ALERT_3_A74: { TITLE: '선택하신 상품 해지를 취소 하시겠습니까?', MSG: '', BUTTON: '계속하기' },
+  ALERT_3_A74: { TITLE: '선택하신 상품 해지를 취소하시겠습니까?', MSG: '', BUTTON: '계속하기' },
   ALERT_3_A77: { TITLE: '지역 추가 시, 1개 지역당 1,650원(부가세포함)씩 과금이 추가됩니다.지역을 추가하시겠습니까?', MSG: '' },
   ALERT_3_A78: { TITLE: '할인지역은 최대 2개까지 등록가능합니다', MSG: '' },
+  ALERT_3_A79: { TITLE: '고객님의 휴대폰은 로밍오토다이얼이 가능합니다.', MSG: '' },
+  ALERT_3_A80: { TITLE: '고객님의 휴대폰은 로밍오토다이얼 기능이 없습니다.', MSG: '' },
+  ALERT_3_A81: { TITLE: '본인 명의의 SK텔레콤 회선만 조회 가능합니다.', MSG: '' },
   ALERT_3_A82: { TITLE: '해당 옵션은 2019년 1월 18일자로 가입 종료되었습니다.', MSG: '' },
   ALERT_3_A84: { TITLE: '이용 시작일이 이용 종료일 이후로 설정되었습니다.\n이용 시작일을 다시 선택해주세요.', MSG: '' },
   ALERT_3_A85: { TITLE: '예약은 2일 후 부터 가능합니다.', MSG: '' },
@@ -780,7 +791,7 @@ Tw.ALERT_MSG_MEMBERSHIP = {
   NO_JOIN: {
     TITLE: 'T멤버십에 가입하실 수 없습니다.',
     CONTENTS: '본인 명의의 SK텔레콤 모바일 회선을 등록 및 선택하시고 T멤버십 가입해보세요',
-    TXT: '회선 관리하기'
+    TXT: '멤버십 가입 조건 및 이용안내'
   },
   JOIN: {
     TITLE: '멤버십에 가입하시겠습니까?',
@@ -819,7 +830,10 @@ Tw.ALERT_MSG_MEMBERSHIP = {
   ALERT_1_A68: { TITLE: '로그인 하시겠습니까?', MSG: 'T아이디(아이디/비밀번호) 로그인 후 이용 가능합니다.', BUTTON: '로그인'}
 };
 
-Tw.ALERT_CANCEL = '입력하신 정보는 모두 취소됩니다.<br>창을 닫으시겠습니까?';
+Tw.ALERT_CANCEL = {
+  TITLE: '화면을 닫고 이동하시겠습니까?',
+  CONTENTS: '입력 및 선택하신 정보는 모두 취소됩니다.'
+};
 
 Tw.ALERT_MSG_CUSTOMER = {
   ALERT_HELPLINE_A01: '예약을 취소하시면 작성하신 모든 정보가 초기화됩니다.',
@@ -968,6 +982,7 @@ Tw.PRODUCT_INFINITY_CATEGORY_DESC = {
 };
 
 Tw.HOTBILL_UNPAID_TITLE = '미납요금';
+Tw.HOTBILL_ERROR_ZINVE8106 = '실시간 요금조회에서의 전월요금 조회는 매월초 임시제공되며, 정확한 사용요금은 \'사용내역/<a href="/myt-fare/billguide/guide">청구요금조회</a>\'에서 확인 가능합니다.';
 
 Tw.SETTINGS_MENU = {
   LATEST: '최신'
@@ -1034,7 +1049,7 @@ Tw.MYT_DATA_FAMILY_SUCCESS_CHANGE_DATA = '데이터 변경';
 Tw.MYT_DATA_FAMILY_CHANGE_DATA_ERRORS = {
   NOT_CMPLETE: '공유가 완료되지 않은 데이터는 변경이 불가능합니다.',
   NOT_THIS_MONTH: '이번 달 공유한 데이터만 변경이 가능합니다.',
-  NOT_MINE: '다른 가족이 공유한 내역은 변경이 불가능합니다.', 
+  NOT_MINE: '다른 가족이 공유한 내역은 변경이 불가능합니다.',
   NOT_SAME_PLAN: '요금제가 변경되었습니다.<br />공유할 때 이용 중이었던 요금제일 경우에만 데이터 변경이 가능합니다.',
   GREATER_THAN_CHANGABLE: '신청량이 가능 데이터보다 커, 변경이 불가능합니다.'
 };
@@ -1052,11 +1067,15 @@ Tw.MYT_DATA_CANCEL_MONTHLY = {
 
 Tw.MYT_DATA_TING = {
   V31: '팅요금제 사용 고객이 아닙니다.',
+  NOT_TING_SKT: '팅 요금 충전 선물 서비스를 이용하실 수 없습니다.\n 대상자가 아니거나, 서비스를 이용할 수 없는 상태입니다.',
   A81_TITLE: '팅요금 선물을 차단하시겠습니까?',
   A81_CONTENT: '차단 시에는 팅요금 선물을 할 수 없습니다.',
   A81_BTN_CONFIRM: '차단하기',
   SUCCESS_BLOCK: '팅 요금 선물 차단 완료 되었습니다.',
-  ERROR_LIMIT: '데이터한도요금충전 서비스를 이용하실 수 없습니다. <br> 팅계열 한도요금제(팅/자녀안심/복지)는 별도 데이터 충전을 하실 수없습니다.'
+  ERROR_LIMIT: {
+    TITLE: '데이터한도요금충전 서비스를 이용하실 수 없습니다.',
+    CONTENT: '자세한 사항은 고객센터로 문의해주세요. '
+  }
 };
 
 Tw.MYT_DATA_PREPAID = {
@@ -1101,7 +1120,7 @@ Tw.MYT_JOIN_MGMT_NUMCHG = {
   ALERT_SVC_FAIL: '010전환 번호변경 조회가 실패하였습니다. <BR>3분 후 재이용 부탁 드립니다.',
   ALERT_NO_TARGET: {
     TITLE: '010 전환  번호변경서비스를 <BR>이용하실 수 없습니다.',
-    CONTENTS: '010 전환 번호변경서비스 이용을 원하시면 온라인 T월드∙지점∙대리점을 이용해 주세요.'
+    CONTENTS: '010 전환 번호변경서비스 이용을 원하시면 온라인 T월드/지점/대리점을 이용해 주세요.'
   }
 };
 
@@ -1133,7 +1152,7 @@ Tw.MYT_JOIN_WIRE_SET_PAUSE = {
     COMPLETE_TEXT: '일시 정지'
   },
   CANCEL: {
-    TITLE: '일지 정지 해제 하시겠습니까 ?',
+    TITLE: '일지정지를 해제 하시겠습니까?',
     BTNAME: '해제하기',
     COMPLETE_TEXT: '일시 정지 해제'
   }
@@ -1145,7 +1164,7 @@ Tw.MYT_JOIN_WIRE_MODIFY_PERIOD = {
     CONTENTS: '조회까지 10초에서 15초까지 걸릴 수 있습니다.'
   },
   ERROR_ALERT: {
-    TITLE: '사용에 불편을 드려 죄송합니다.',
+    TITLE: '이용에 불편을 드려 죄송합니다.',
     CONTENTS: '잠시 후에 다시 조회해 <br />주시기 바랍니다.',
     BT_NAME: '닫기'
   },
@@ -1284,7 +1303,11 @@ Tw.CUSTOMER_EMAIL = {
     '‘요금안내서 주소 및 멤버십 카드 뒤 3자리’가 필요합니다. 해당 정보가 없을 경우 일부 상담이 제한될 수 있습니다.\n' +
     '요금안내 주소: \n' +
     '멤버십 카드번호 뒤 3자리:',
-  NOT_SUPPORT_FILE_UPLOAD: '사용하고 계신 안드로이드 버전에서는 <br> 지원하지 않는 기능입니다.'
+  NOT_SUPPORT_FILE_UPLOAD: '사용하고 계신 안드로이드 버전에서는 <br> 지원하지 않는 기능입니다.',
+  HISTORY_DELETE: {
+    TITLE: '문의 내역을 삭제하시겠습니까?',
+    CONTENT: '선택한 문의 내역을 삭제할 경우 추가 문의한 내역도 함께 삭제됩니다.'
+  }
 };
 
 Tw.CUSTOMER_HELPLINE_COMPLETE = {
@@ -1297,6 +1320,7 @@ Tw.CUSTOMER_HELPLINE_COMPLETE = {
 };
 
 Tw.MYT_JOIN_WIRE_MODIFY_PRODUCT = {
+  SEL_PROD_TYPE_DEF: '요금제 선택',
   SVCCTG: {
     S1: '인터넷',
     S2: 'IPTV',
@@ -1350,8 +1374,8 @@ Tw.BRANCH_SEARCH_OPTIONS = {
   0: '전체',
   1: '지점',
   2: '대리점',
-  premium: 'T Premium  Store',
-  direct: '바로픽업',
+  premium: 'T프리미엄스토어',
+  direct: '바로 픽업',
   rent: '임대폰',
   skb: 'SK브로드밴드',
   apple: '애플취급점',
@@ -1361,7 +1385,7 @@ Tw.BRANCH_SEARCH_OPTIONS = {
 };
 
 Tw.UPLOAD_FILE = {
-  WARNING_A00: '업로드를 실패 했습니다. 잠시 후 다시 시도해주세요.',
+  WARNING_A00: '파일 업로드를 실패 했습니다. 잠시 후 다시 시도해주세요.',
   WARNING_A01: '첨부파일 용량은 최대 2MB까지 첨부하실 수 있습니다.',
   WARNING_A02: '첨부파일은 최대 5개까지 등록할 수 있습니다.',
   WARNING_A03: 'MS워드, 한글hwp, 이미지(jpg, bmp, gif, pdf)파일을 첨부하실 수 있습니다.',
@@ -1410,7 +1434,7 @@ Tw.PRODUCT_COMBINE_PRODUCT = {
     },
     NH00000083: {
       TITLE: 'TB끼리 온가족프리',
-      EXPLAIN: '이동전화와 인터넷을 결합하면 이동전화·인터넷 기본료 할인에 추가 혜택 제공'
+      EXPLAIN: '이동전화와 인터넷을 결합하면 이동전화/인터넷 기본료 할인에 추가 혜택 제공'
     },
     NONE: {
       TITLE: '결합상품을 선택해 주세요'
@@ -1619,7 +1643,7 @@ Tw.SELECTED_DATE_STRING = {
 };
 
 Tw.ROAMING_COMBINE_LINE_STRING = {
-  COMBINE_LINE: '자회선 설정하기 >',
+  COMBINE_LINE: '자회선 설정하기',
   DUPLICATE_LINE : 'T로밍도착알리미 멤버에 이미 존재하는 서비스번호입니다.'
 };
 
@@ -1721,7 +1745,7 @@ Tw.ROAMING_SVCTIME_SETTING_ERR_CASE = {
 };
 
 Tw.ROAMING_BPCP = {
-  BUY: '쿠폰 구매·선물',
+  BUY: '쿠폰 구매/선물',
   REGISTER: 'T로밍쿠폰 상세'
 };
 
@@ -1737,13 +1761,13 @@ Tw.ROAMING_RESERVATION_STATE ={
 };
 
 Tw.ROAMING_RANGE_OPTION_STR = {
-  ONE_MONTH: '1개월 이내의 날짜만 선택 가능합니다.',
-  TWO_MONTH: '2개월 이내의 날짜만 선택 가능합니다.'
+  ONE_MONTH: '1개월 이내의 날짜를 선택하세요.',
+  TWO_MONTH: '2개월 이내의 날짜를 선택하세요.'
 };
 
 Tw.BENEFIT_TBCOMBINATION_ERROR = {
-  TITLE: '고객님께서는 인터넷·집전화·IPTV 이용고객이 아닙니다.',
-  CONTENT: '인터넷·집전화·IPTV 서비스를 결합해서 사용하고 할인혜택 받으세요.',
+  TITLE: '고객님께서는 인터넷/집전화/IPTV 이용고객이 아닙니다.',
+  CONTENT: '인터넷/집전화/IPTV 서비스를 결합해서 사용하고 할인혜택 받으세요.',
   BTN_TEXT: '가입상담예약 >'
 };
 
@@ -1759,11 +1783,11 @@ Tw.BENEFIT_TBCOMBINATION_JOIN_STATUS = {
 };
 
 Tw.PRODUCT_SUCCESS_BTN_TEXT = {
-  SMARTWATCH: '스마트워치 할인상품 보기 >',
-  COMBINE: '나의 결합상품 확인하기 >',
-  MYTJOIN: '나의 가입정보 확인하기 >',
-  LINE_REGISTER: '회선 등록하기 >',
-  TFAMILY: 'T가족모아데이터 공유 설정하기 >'
+  SMARTWATCH: '스마트워치 할인상품 보기',
+  COMBINE: '나의 결합상품 확인하기',
+  MYTJOIN: '나의 가입정보 확인하기',
+  LINE_REGISTER: '회선 등록하기',
+  TFAMILY: 'T가족모아데이터 공유 설정하기'
 };
 
 Tw.BENEFIT_TBCOMBINE_NEED_REGISTER = '미등록 회선으로 상품을 결합하셨습니다. \n요금이나 포인트 확인, 가입서비스 설정 및 변경등 원활한 \nT월드 이용을 위해 회선을 등록하시기 바랍니다.';
@@ -1777,7 +1801,8 @@ Tw.RESERVATION_CANCEL = {
 Tw.ALERT_MSG_SEARCH = {
   ALERT_4_A40: { TITLE: '입력하신 의견을 등록하시겠습니까?', MSG: '', BUTTON: '닫기' },
   ALERT_4_A41: { TITLE: '선택하신 내용을 접수하시겠습니까?', MSG: '', BUTTON: '닫기' },
-  KEYWORD_ERR : '검색어를 입력해 주세요.'
+  KEYWORD_ERR : '검색어를 입력해 주세요.',
+  REQUEST_CLAIM : '검색의견 신청이 접수되었습니다.'
 };
 
 Tw.PRODUCT_TFAMILY = {

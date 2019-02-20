@@ -35,17 +35,12 @@
                 <hr class="cont-sp type1" aria-hidden="true" />
 
                 <div class="cont-box pb24">
-                    <%= description %>
+                    <%- description %>
                 </div>
 
                 <hr class="cont-sp type1" aria-hidden="true" />
 
                 <% if (pageMode === 'change') { %>
-                <div class="cont-box pb24">
-                    현재 회선으로는 이용이 불가능 합니다.<br>다른 회선으로 변경해 주세요.
-                </div>
-
-                <hr class="cont-sp type1" aria-hidden="true" />
 
                 <div class="cont-box nogaps-hoz">
                     <div class="list-comp-input type01">
@@ -61,7 +56,11 @@
                                                      <%= currentLine.eqpMdlNm %>
                                                 <% } %>
                                                 </span>
+                                                <% if (currentLine.svcAttrCd === 'S1' || currentLine.svcAttrCd === 'S2') { %>
+                                                <span class="stext"><%= currentLine.addr %></span>
+                                                <% } else { %>
                                                 <span class="stext"><%= currentLine.svcNum %></span>
+                                                <% } %>
                                             </p>
                                         </div>
                                     </li>
@@ -104,17 +103,17 @@
                                     </li>
                                     <% } %>
                                 </ul>
-                                <% if (allowedLineList && allowedLineList.length > 20) { %>
-                                <div class="bt-more">
-                                    <button class="fe-btn_more">더보기</button>
-                                </div>
-                                <% } %>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!--// 2019.01.07  aria-hidden="true" 삭제 sblee -->
                 <!--// .cont-box -->
+                <% if (allowedLineList && allowedLineList.length > 20) { %>
+                <div class="bt-more">
+                    <button class="fe-btn_more">더보기</button>
+                </div>
+                <% } %>
 
                 <div class="bt-fixed-area">
                     <ul class="bt-slice full">

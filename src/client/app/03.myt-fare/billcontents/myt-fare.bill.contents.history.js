@@ -104,7 +104,7 @@ Tw.MyTFareBillContentsHitstory.prototype = {
         month -= month_limit;
       }
       tempArr.push({
-        value:month + Tw.PERIOD_UNIT.MONTH,
+        value:year+ Tw.PERIOD_UNIT.YEAR + ' ' + month + Tw.PERIOD_UNIT.MONTH,
         attr: 'data-year = \''+ year + '\' data-month=\''+ month + '\'',
         option:(this.data.selectedYear === year && this.data.selectedMonth === month.toString()) ? "checked" : ""
       })

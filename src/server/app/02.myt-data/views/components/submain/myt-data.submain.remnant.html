@@ -76,6 +76,8 @@
             <% var totalData = data.remnantData.total; %>
             <ul class="date-graph-list b-line">
                 <li>
+                    <!-- 2019.02.10 링크 영역 확대 -->
+                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt1">
                     <div class="left">
                         <!-- .donut-chart.small -->
                         <div class="donut-chart small">
@@ -116,7 +118,8 @@
                             </span>
                         </div>
                     </div>
-                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt1"><span class="blind">페이지 이동</span></a>
+                    </a>
+                    <!-- //접근성 수정-->
                 </li>
             </ul>
             <% } else if (data.isVoiceShow || data.isSmsShow) { %>
@@ -124,6 +127,8 @@
                     <% if (data.isVoiceShow) { %>
                     <% var rvoice = data.remnantData.voice[0]; %>
                     <li>
+                        <!-- 2019.02.10 링크 영역 확대 -->
+                        <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt2">
                         <div class="left">
                             <!-- .donut-chart.small -->
                             <div class="donut-chart small">
@@ -158,12 +163,15 @@
                             </span>
                             </div>
                         </div>
-                        <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt2"><span class="blind">페이지 이동</span></a>
+                        </a>
+                        <!-- //접근성 수정-->
                     </li>
                     <% } %>
                     <% if (data.isSmsShow) { %>
                     <% var rsms = data.remnantData.sms[0]; %>
                     <li>
+                        <!-- 2019.02.10 링크 영역 확대 -->
+                        <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt3">
                         <div class="left">
                             <!-- .donut-chart.small -->
                             <div class="donut-chart small">
@@ -199,10 +207,52 @@
                             </span>
                             </div>
                         </div>
-                        <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt3"><span class="blind">페이지 이동</span></a>
+                        </a>
+                        <!-- //접근성 수정-->
                     </li>
                     <% } %>
                 </ul>
+            <% } else if (data.isSpDataShow) { %>
+            <% var sdata = data.remnantData.sdata[0]; %>
+            <ul class="date-graph-list b-line">
+                <li>
+                    <!-- 2019.02.10 링크 영역 확대 -->
+                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt13">
+                        <div class="left">
+                            <!-- .donut-chart.small -->
+                            <div class="donut-chart small">
+                                <div class="donut-chart-area">
+                                    <!-- loop -->
+                                    <div class="c100 p<%= sdata.remainedRatio %>"><!-- .p+(0~100) // -->
+                                        <div class="red"><!-- red, yellow, green, blue, comet // -->
+                                            <div class="slice">
+                                                <div class="bar"></div>
+                                                <div class="fill"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- // loop -->
+                                </div>
+                            </div>
+                            <!-- // .donut-chart.small -->
+                        </div>
+                        <div class="cont">
+                            <span class="txt1" id="aria-comp-bt13"><%= sdata.skipNm %></span>
+                            <div class="date">
+                                <span class="remain">
+                                    <strong>
+                                        <% if (sdata.isUnlimit) { %>
+                                        무제한 </strong>
+                                        <% } else { %>
+                                        <%= sdata.showRemained %>원 </strong>남음
+                                        <% } %>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                    <!-- //접근성 수정-->
+                </li>
+            </ul>
             <% } %>
             <div class="user-month-bill mt16">
                 <div class="detail-bill type1">
@@ -221,26 +271,29 @@
                         </li>
                         <% } %>
                         <!-- (T가족모아옵션)  -->
-                        <% if (data.family) { %>
+                        <!-- -->
+                        <% if (data.isTmoaData) { %>
                         <li>
                             <span class="tit">
-                                <% if (data.family.impossible) { %>
-                                T가족모아데이터를
-                                <a class="bt-link-tx underline" href="/product/callplan/NA00006031">가입</a>
-                                해보세요!
-                                <% } else { %>
                                 T가족모아데이터
-                                    <% if (data.family.noshare) { %>
-                                    <span class="ml8"><a class="bt-link-tx small underline" href="/myt-data/familydata">자세히</a></span>
-                                    <% } else { %>
-                                    <button type="button" class="ml10 btn-round3 btn-style3" data-id="family-moa">공유</button>
-                                    <% } %>
+                                <% if (data.isTmoaInsProdId && data.isTmoaProdId) { %>
+                                <button type="button" class="ml10 btn-round3 btn-style3" data-id="family-moa">공유</button>
+                                <% } else { %>
+                                <span class="ml8"><a class="bt-link-tx small underline" href="/myt-data/familydata">자세히</a></span>
                                 <% } %>
                             </span>
-                            <% if (!data.family.impossible) { %>
-                                <span class="value type2"><strong><%= data.family.remained %><%= data.family.remained === '0'? 'KB' : '' %></strong> 남음</span>
-                            <% } %>
+                            <span class="value type2"><strong><%= data.family.remained %><%= data.family.remained === '0'? 'KB' : '' %></strong> 남음</span>
                         </li>
+                        <% } else { %>
+                            <% if (data.isTmoaInsProdId) { %>
+                            <li>
+                                <span class="tit">
+                                    T가족모아데이터를
+                                    <a class="bt-link-tx underline" href="/product/callplan/NA00006031">가입</a>
+                                    해보세요!
+                                </span>
+                            </li>
+                            <% } %>
                         <% } %>
                     </ul>
                 </div>
@@ -270,6 +323,8 @@
                 <% if (data.isVoiceShow) { %>
                 <% var rvoice = data.remnantData.voice[0]; %>
                 <li>
+                    <!-- 2019.02.10 링크 영역 확대 -->
+                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt4">
                     <div class="left">
                         <!-- .donut-chart.small -->
                         <div class="donut-chart small">
@@ -304,12 +359,15 @@
                             </span>
                         </div>
                     </div>
-                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt4"><span class="blind">페이지 이동</span></a>
+                    </a>
+                    <!-- //접근성 수정-->
                 </li>
                 <% } %>
                 <% if (data.isSmsShow) { %>
                 <% var rsms = data.remnantData.sms[0]; %>
                 <li>
+                    <!-- 2019.02.10 링크 영역 확대 -->
+                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt5">
                     <div class="left">
                         <!-- .donut-chart.small -->
                         <div class="donut-chart small">
@@ -345,7 +403,8 @@
                             </span>
                         </div>
                     </div>
-                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt5"><span class="blind">페이지 이동</span></a>
+                    </a>
+                    <!-- //접근성 수정-->
                 </li>
                 <% } %>
             </ul>
@@ -422,6 +481,8 @@
             <% var totalData = data.remnantData.total; %>
             <ul class="date-graph-list b-line">
                 <li>
+                    <!-- 2019.02.10 링크 영역 확대 -->
+                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt6">
                     <div class="left">
                         <!-- .donut-chart.small -->
                         <div class="donut-chart small">
@@ -462,7 +523,8 @@
                             </span>
                         </div>
                     </div>
-                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt6"><span class="blind">페이지 이동</span></a>
+                    </a>
+                    <!-- //접근성 수정-->
                 </li>
             </ul>
             <% } else if (data.isSpDataShow || data.isVoiceShow || data.isSmsShow) { %>
@@ -470,13 +532,15 @@
                 <% if (data.isSpDataShow) { %>
                 <% var sdata = data.remnantData.sdata[0]; %>
                 <li>
+                    <!-- 2019.02.10 링크 영역 확대 -->
+                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt7">
                     <div class="left">
                         <!-- .donut-chart.small -->
                         <div class="donut-chart small">
                             <div class="donut-chart-area">
                                 <!-- loop -->
                                 <div class="c100 p<%= sdata.remainedRatio %>"><!-- .p+(0~100) // -->
-                                    <div class="green"><!-- red, yellow, green, blue, comet // -->
+                                    <div class="red"><!-- red, yellow, green, blue, comet // -->
                                         <div class="slice">
                                             <div class="bar"></div>
                                             <div class="fill"></div>
@@ -496,18 +560,20 @@
                                         <% if (sdata.isUnlimit) { %>
                                         무제한 </strong>
                                         <% } else { %>
-                                        <%= sdata.showRemained.data %><%= sdata.showRemained.unit %></strong> 남음
-                                    </strong>남음
+                                        <%= sdata.showRemained %>원 </strong>남음
                                         <% } %>
                                 </span>
                         </div>
                     </div>
-                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt7"><span class="blind">페이지 이동</span></a>
+                    </a>
+                    <!-- //접근성 수정-->
                 </li>
                 <% } %>
                 <% if (data.isVoiceShow) { %>
                 <% var rvoice = data.remnantData.voice[0]; %>
                 <li>
+                    <!-- 2019.02.10 링크 영역 확대 -->
+                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt8">
                     <div class="left">
                         <!-- .donut-chart.small -->
                         <div class="donut-chart small">
@@ -542,12 +608,15 @@
                             </span>
                         </div>
                     </div>
-                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt8"><span class="blind">페이지 이동</span></a>
+                    </a>
+                    <!-- //접근성 수정-->
                 </li>
                 <% } %>
                 <% if (data.isSmsShow) { %>
                 <% var rsms = data.remnantData.sms[0]; %>
                 <li>
+                    <!-- 2019.02.10 링크 영역 확대 -->
+                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt9">
                     <div class="left">
                         <!-- .donut-chart.small -->
                         <div class="donut-chart small">
@@ -583,7 +652,8 @@
                             </span>
                         </div>
                     </div>
-                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt9"><span class="blind">페이지 이동</span></a>
+                    </a>
+                    <!-- //접근성 수정-->
                 </li>
                 <% } %>
             </ul>
@@ -623,6 +693,8 @@
             <% if (data.isVoiceShow) { %>
             <% var rvoice = data.remnantData.voice[0]; %>
             <li>
+                <!-- 2019.02.10 링크 영역 확대 -->
+                <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt10">
                 <div class="left">
                     <!-- .donut-chart.small -->
                     <div class="donut-chart small">
@@ -657,12 +729,15 @@
                         </span>
                     </div>
                 </div>
-                <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt10"><span class="blind">페이지 이동</span></a>
+                </a>
+                <!-- //접근성 수정-->
             </li>
             <% } %>
             <% if (data.isSmsShow) { %>
             <% var rsms = data.remnantData.sms[0]; %>
             <li>
+                <!-- 2019.02.10 링크 영역 확대 -->
+                <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt11">
                 <div class="left">
                     <!-- .donut-chart.small -->
                     <div class="donut-chart small">
@@ -698,7 +773,8 @@
                         </span>
                     </div>
                 </div>
-                <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt11"><span class="blind">페이지 이동</span></a>
+                </a>
+                <!-- //접근성 수정-->
             </li>
             <% } %>
         </ul>
@@ -775,6 +851,8 @@
             <% var totalData = data.remnantData.total; %>
             <ul class="date-graph-list b-line">
                 <li>
+                    <!-- 2019.02.10 링크 영역 확대 -->
+                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt12">
                     <div class="left">
                         <!-- .donut-chart.small -->
                         <div class="donut-chart small">
@@ -813,7 +891,8 @@
                             <% } %>
                         </div>
                     </div>
-                    <a class="r-btn" href="/myt-data/hotdata" aria-labelledby="aria-comp-bt12"><span class="blind">페이지 이동</span></a>
+                    </a>
+                    <!-- //접근성 수정-->
                 </li>
             </ul>
             <% } %>
@@ -835,7 +914,7 @@
         <% } %>
         <ul class="bt-slice solid mt20">
             <li data-id="immCharge">
-                <button type="button" title="즉시 충전"  class="btn-round1 btn-style1">즉시 충전</button>
+                <button type="button" title="즉시 충전" class="btn-round1 btn-style1">즉시 충전</button>
             </li>
         </ul>
     </div>

@@ -37,17 +37,6 @@ Tw.ProductRoamingSearchBefore.prototype = {
     this._rmPhoneInfoTmpl = Handlebars.compile($('#fe-phone-info').html());
     this._rmPhoneSelectTmpl = Handlebars.compile($('#fe-phone-select').html());
 
-    if(this._svcInfo !== null){
-        if(this._svcInfo.eqpMdlNm !== ''){
-          this._phoneInfo.eqpMdlNm = this._svcInfo.eqpMdlNm;
-          this._phoneInfo.eqpMdlCd = this._svcInfo.eqpMdlCd;
-          this.$userPhoneInfo.append(this._rmPhoneInfoTmpl({ items: this._svcInfo }));
-        }else {
-          this.$userPhoneInfo.append(this._rmPhoneSelectTmpl({ items: this._svcInfo }));
-        }
-    }else {
-        this.$userPhoneInfo.append(this._rmPhoneSelectTmpl({ items: this._svcInfo }));
-    }
     this._desciptionInit();
   },
   _desciptionInit: function () {
@@ -58,6 +47,8 @@ Tw.ProductRoamingSearchBefore.prototype = {
               if(this._svcAttrCd !== 'M'){
                   this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_LINE_MSG);
                   this.$container.find('.fe-bottom-msg').html('');
+                  this._svcInfo.eqpMdlNm = '';
+                  this._svcInfo.eqpMdlCd = '';
               } else {
                   if(this._phoneInfo.eqpMdlNm !== ''){
                       this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_NOTI_MSG);
@@ -88,6 +79,18 @@ Tw.ProductRoamingSearchBefore.prototype = {
       }else {
           this.$container.find('.fe-header-msg').html(Tw.ROAMING_DESC.HEADER_NOTI_MSG);
           this.$container.find('.fe-bottom-msg').html(Tw.ROAMING_DESC.BOTTOM_NOTI_LOGIN_MSG);
+      }
+
+      if(this._svcInfo !== null){
+          if(this._svcInfo.eqpMdlNm !== ''){
+              this._phoneInfo.eqpMdlNm = this._svcInfo.eqpMdlNm;
+              this._phoneInfo.eqpMdlCd = this._svcInfo.eqpMdlCd;
+              this.$userPhoneInfo.append(this._rmPhoneInfoTmpl({ items: this._svcInfo }));
+          }else {
+              this.$userPhoneInfo.append(this._rmPhoneSelectTmpl({ items: this._svcInfo }));
+          }
+      }else {
+          this.$userPhoneInfo.append(this._rmPhoneSelectTmpl({ items: this._svcInfo }));
       }
   },
   _bindEvents: function () {

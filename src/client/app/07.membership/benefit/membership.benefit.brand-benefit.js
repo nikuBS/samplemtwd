@@ -158,9 +158,17 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_11_0023, param)
       .done($.proxy(function(resp){
+        if(!resp.result.list || resp.result.list.length === 0){
+          $('#fe-contents-empty').show();
+          return;
+        } else {
+          $('#fe-contents-empty').hide();
+        }
+
         var list = resp.result.list;
         var tmp = '';
         var $frchsBox = $('.franchisee-list');
+        $frchsBox.find('li').remove();
         for(var i = 0; i < list.length; i++){
           tmp = this._feFrchListItem(list[i]);
           $frchsBox.append(tmp);

@@ -48,6 +48,8 @@ Tw.MyTDataFamily.prototype = {
       member = $li.data('member'),
       limitation = $target.data('limitation');
 
+    limitation = typeof limitation === 'boolean' ? limitation : Number(limitation);
+
     this.$limitBtn = $target;
     this._popupService.open(
       {
@@ -56,22 +58,23 @@ Tw.MyTDataFamily.prototype = {
         limitation: limitation,
         data: $li.find('.r-txt').html()
       },
-      $.proxy(this._handleOpenChangeLimitation, this, member.mgmtNum, limitation)
+      $.proxy(this._handleOpenChangeLimitation, this, member.mgmtNum, limitation),
+      undefined,
+      'limit'
     );
   },
 
   _handleOpenChangeLimitation: function(mgmtNum, limitation, $layer) {
     $layer.on('click', '.bt-red1', $.proxy(this._handleSubmitLimitation, this, mgmtNum, limitation));
-    $layer.on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
     $layer.on('change', 'input[type="radio"]', $.proxy(this._handleChangeLimitType, this, $layer));
     $layer.on('keyup', 'span.input input', $.proxy(this._handleChangeLimitation, this, $layer));
   },
 
   _handleSubmitLimitation: function(mgmtNum, originLimit) {
-    var limitation = this._limitation;
+    var limitation = typeof this._limitation === 'boolean' ? this._limitation : Number(this._limitation);
 
     if (originLimit === limitation) {
-      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.A5);
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.A5, undefined, undefined, undefined);
     } else if (limitation === false) {
       this._popupService.close();
       this._apiService.request(Tw.API_CMD.BFF_06_0051, {}, {}, [mgmtNum]).done($.proxy(this._successChangeLimitation, this));
@@ -106,31 +109,35 @@ Tw.MyTDataFamily.prototype = {
   },
 
   _handleChangeLimitation: function($layer, e) {
-    var value = e.currentTarget.value;
+    var value = e.currentTarget.value.replace(/[^0-9]/g, '');
+
+    e.currentTarget.value = value;
+
     $layer.find('.bt-red1 > button').attr('disabled', value.length === 0);
     this._limitation = value;
-  },
-
-  _openCancelPopup: function() {
-    this._popupService.openConfirmButton(
-      Tw.ALERT_CANCEL,
-      null,
-      $.proxy(this._goBack, this),
-      $.proxy(this._handleAfterClose, this),
-      Tw.BUTTON_LABEL.NO,
-      Tw.BUTTON_LABEL.YES
-    );
-  },
-
-  _goBack: function() {
-    this._popupService.close();
-    this._isClose = true;
-  },
-
-  _handleAfterClose: function() {
-    if (this._isClose) {
-      history.back();
-      this._isClose = false;
-    }
   }
+
+  // _handleClickClose: function() {
+  //   this._popupService.close();
+  // this._popupService.openConfirmButton(
+  //   Tw.ALERT_CANCEL,
+  //   null,
+  //   $.proxy(this._goBack, this),
+  //   $.proxy(this._handleAfterClose, this),
+  //   Tw.BUTTON_LABEL.NO,
+  //   Tw.BUTTON_LABEL.YES
+  // );
+  // }
+
+  // _goBack: function() {
+  //   this._popupService.close();
+  //   this._isClose = true;
+  // },
+
+  // _handleAfterClose: function() {
+  //   if (this._isClose) {
+  //     history.back();
+  //     this._isClose = false;
+  //   }
+  // }
 };

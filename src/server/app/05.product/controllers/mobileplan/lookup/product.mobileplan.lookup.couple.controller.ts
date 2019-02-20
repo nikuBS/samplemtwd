@@ -23,7 +23,7 @@ class ProductMobileplanSettingBandYT extends TwViewController {
     const prodId = req.query.prod_id || null;
     const data: any = {
       pageInfo: pageInfo,
-      svcInfo: svcInfo,
+      svcInfo: Object.assign(svcInfo, { svcNumDash: FormatHelper.conTelFormatWithDash(svcInfo.svcNum) }),
       title: PRODUCT_TYPE_NM.SETTING
     };
 
@@ -53,8 +53,10 @@ class ProductMobileplanSettingBandYT extends TwViewController {
     list.filter((item) => {
       if ( item.isMyNum ) {
         data.myInfo = item;
+        data.myInfo.number = FormatHelper.conTelFormatWithDash(item.svcNumMask);
       } else {
         data.otherInfo = item;
+        data.otherInfo.number = FormatHelper.conTelFormatWithDash(item.svcNumMask);
       }
     });
     return data;

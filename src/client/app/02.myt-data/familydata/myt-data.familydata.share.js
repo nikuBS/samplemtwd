@@ -18,6 +18,7 @@ Tw.MyTDataFamilyShare.prototype = {
     this.$error = this.$container.find('.input-txt-type02');
     this.$pRemained = this.$container.find('p.pt4');
     this.$sRemained = this.$pRemained.find('.txt-c2');
+    this.$cancel = this.$container.find('.cancel');
   },
 
   _bindEvent: function() {
@@ -28,19 +29,41 @@ Tw.MyTDataFamilyShare.prototype = {
   },
 
   _addShareData: function(e) {
-    var value = e.currentTarget.getAttribute('data-value');
+    var value = e.currentTarget.getAttribute('data-value'),
+      $target = $(e.currentTarget);
 
     if (value === 'all') {
-      this.$amountInput.val(this.$amountInput.data('share-amount'));
+      if (this._all) {
+        this.$amountInput.val('');
+        this.$amountInput.removeAttr('disabled');
+        $target.siblings('.btn-type01').removeAttr('disabled');
+        $target.removeClass('btn-on');
+        this._all = false;
+      } else {
+        this.$amountInput.val(this.$amountInput.data('share-amount'));
+        this.$amountInput.attr('disabled', true);
+        $target.siblings('.btn-type01').attr('disabled', true);
+        $target.addClass('btn-on');
+        this.$cancel.css('display', 'none');
+        this._all = true;
+      }
     } else {
       this.$amountInput.val(Number(this.$amountInput.val()) + Number(value));
+      this.$cancel.css('display', 'inline-block');
     }
 
     this._validateShareAmount();
   },
 
-  _validateShareAmount: function() {
-    var value = Number(this.$amountInput.val()),
+  _validateShareAmount: function(e) {
+    var sValue = this.$amountInput
+      .val()
+      .replace(/^0*/, '')
+      .replace(/[^0-9]/g, '');
+
+    this.$amountInput.val(sValue);
+
+    var value = Number(sValue),
       limit = Number(this.$amountInput.data('share-amount'));
 
     if (!value) {

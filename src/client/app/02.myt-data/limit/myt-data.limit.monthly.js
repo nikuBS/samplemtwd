@@ -49,14 +49,12 @@ Tw.MyTDataLimitMonthly.prototype = {
   _onSuccessBlockMonthly: function (sCheckType, res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       if ( sCheckType === 'block' ) {
-        Tw.CommonHelper.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_BLOCK);
+        Tw.CommonHelper.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_MONTHLY_BLOCK);
       } else {
-        Tw.CommonHelper.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_UNBLOCK);
+        Tw.CommonHelper.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_MONTHLY_UNBLOCK);
       }
-    } else if ( res.code === 'ZNGME0000' ) {
-      this._popupService.openAlert(Tw.MYT_DATA_TING.ERROR_LIMIT, null, null, $.proxy(this._goSubmain, this));
     } else {
-      Tw.Error(res.code, res.msg).pop();
+      this._popupService.openAlert(res.msg + Tw.MYT_DATA_TING.ERROR_LIMIT.CONTENT, Tw.MYT_DATA_TING.ERROR_LIMIT.TITLE, null, $.proxy(this._goSubmain, this));
     }
   },
 
@@ -79,10 +77,8 @@ Tw.MyTDataLimitMonthly.prototype = {
   _onSuccessLimitRechargeMonthly: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.replaceURL('/myt-data/recharge/limit/complete');
-    } else if ( res.code === 'ZNGME0000' ) {
-      this._popupService.openAlert(Tw.MYT_DATA_TING.ERROR_LIMIT, null, null, $.proxy(this._goSubmain, this));
     } else {
-      Tw.Error(res.code, res.msg).pop();
+      this._popupService.openAlert(res.msg + Tw.MYT_DATA_TING.ERROR_LIMIT.CONTENT, Tw.MYT_DATA_TING.ERROR_LIMIT.TITLE, null, $.proxy(this._goSubmain, this));
     }
   },
 
@@ -104,10 +100,8 @@ Tw.MyTDataLimitMonthly.prototype = {
   _onSuccessCancelMonthlyRecharge: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.reload();
-    } else if ( res.code === 'ZNGME0000' ) {
-      this._popupService.openAlert(Tw.MYT_DATA_TING.ERROR_LIMIT, null, null, $.proxy(this._goSubmain, this));
     } else {
-      Tw.Error(res.code, res.msg).pop();
+      this._popupService.openAlert(res.msg + Tw.MYT_DATA_TING.ERROR_LIMIT.CONTENT, Tw.MYT_DATA_TING.ERROR_LIMIT.TITLE, null, $.proxy(this._goSubmain, this));
     }
   },
 

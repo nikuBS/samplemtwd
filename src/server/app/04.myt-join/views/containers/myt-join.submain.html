@@ -22,6 +22,7 @@
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container" data-id="submain-container">
+            <hr class="cont-sp type1" aria-hidden="true">
             <!-- .cont-box -->
             <div class="cont-box">
                 <div class="my-subscription-wrap">
@@ -116,7 +117,7 @@
             <!-- .cont-box -->
             <div class="cont-box noborder bgnone">
                 <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
-                <ul class="pg-link-list">
+                <ul class="pg-link-list" data-id="other-pages">
                     <li>
                         <a href="/common/member/manage">
                             <i class="icon-member-40"><span class="blind">member</span></i>회원정보관리
@@ -130,50 +131,50 @@
                     <% if (data.type === 2) { %>
                     <li>
                         <a href="/benefit/submain?filters=F01422">
-                            <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 &middot; 할인 &gt; 결합할인
+                            <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 &middot; 할인 --&gt; 결합할인
                         </a>
                     </li>
                     <li>
                         <a href="/myt-fare/bill/option">
-                            <i class="icon-charge-40"><span class="blind">charge</span></i>나의 요금 &gt; 납부방법
+                            <i class="icon-charge-40"><span class="blind">charge</span></i>나의 요금 --&gt; 납부방법
                         </a>
                     </li>
                     <li>
                         <a href="/product/wireplan/service-area">
-                            <i class="icon-discount-40"><span class="blind">discount</span></i>인터넷/전화/IPTV 상품 &gt; 서비스 가능지역 조회
+                            <i class="icon-discount-40"><span class="blind">discount</span></i>인터넷/전화/IPTV 상품 --&gt; 서비스 가능지역 조회
                         </a>
                     </li>
                     <li>
                         <a href="/myt-join/submain/wire/discountrefund">
-                            <i class="icon-my-40"><span class="blind">discount</span></i>나의 가입 정보 &gt; 할인 반환금 조회
+                            <i class="icon-my-40"><span class="blind">discount</span></i>나의 가입 정보 --&gt; 할인 반환금 조회
                         </a>
                     </li>
                     <li>
                         <a href="/myt-join/submain/wire/gifts">
-                            <i class="icon-my-40"><span class="blind">discount</span></i>나의 가입 정보 &gt; 사은품 조회
+                            <i class="icon-my-40"><span class="blind">discount</span></i>나의 가입 정보 --&gt; 사은품 조회
                         </a>
                     </li>
                     <% } else if (data.type === 1) { %>
                     <!-- DV001-10531 -->
                     <li>
                         <a href="/common/member/line">
-                            <i class="icon-member-40"><span class="blind">member</span></i>회원정보관리 &gt; 회선관리
+                            <i class="icon-member-40"><span class="blind">member</span></i>회원정보관리 --&gt; 회선관리
                         </a>
                     </li>
                     <% } else { %>
                     <li>
                         <a href="/common/member/line">
-                            <i class="icon-member-40"><span class="blind">member</span></i>회원정보관리 &gt; 회선관리
+                            <i class="icon-member-40"><span class="blind">member</span></i>회원정보관리 --&gt; 회선관리
                         </a>
                     </li>
                     <li>
                         <a href="/myt-fare/bill/option">
-                            <i class="icon-charge-40"><span class="blind">charge</span></i>나의 요금 &gt; 납부방법
+                            <i class="icon-charge-40"><span class="blind">charge</span></i>나의 요금 --&gt; 납부방법
                         </a>
                     </li>
                     <li>
                         <a href="/benefit/my">
-                            <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 &middot; 할인 &gt; 나의 할인 혜택
+                            <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 &middot; 할인 --&gt; 나의 할인 혜택
                         </a>
                     </li>
                     <% } %>

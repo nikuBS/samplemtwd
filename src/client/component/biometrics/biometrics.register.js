@@ -4,8 +4,9 @@
  * Date: 2018.10.10
  */
 
-Tw.BiometricsRegister = function (target) {
+Tw.BiometricsRegister = function (target, svcMgmtNum) {
   this._target = target;
+  this._svcMgmtNum = svcMgmtNum;
   this._callback = null;
 
   this._popupService = Tw.Popup;
@@ -32,7 +33,7 @@ Tw.BiometricsRegister.prototype = {
     $popupContainer.on('click', '#fe-bt-register-finger', $.proxy(this._onClickRegister, this));
     $popupContainer.on('click', '#fe-bt-register-face', $.proxy(this._onClickRegister, this));
     $popupContainer.on('click', '#fe-cancel', $.proxy(this._onClickCancel, this));
-    this._nativeService.send(Tw.NTV_CMD.FIDO_REGISTER, {}, $.proxy(this._onFidoRegister, this));
+    this._nativeService.send(Tw.NTV_CMD.FIDO_REGISTER, { svcMgmtNum: this._svcMgmtNum }, $.proxy(this._onFidoRegister, this));
   },
   _onClickCancel: function () {
     this._popupService.closeAll();
@@ -40,7 +41,7 @@ Tw.BiometricsRegister.prototype = {
   _onClickRegister: function ($event) {
     $event.preventDefault();
     $event.stopPropagation();
-    this._nativeService.send(Tw.NTV_CMD.FIDO_REGISTER, {}, $.proxy(this._onFidoRegister, this));
+    this._nativeService.send(Tw.NTV_CMD.FIDO_REGISTER, { svcMgmtNum: this._svcMgmtNum }, $.proxy(this._onFidoRegister, this));
   },
   _onFidoRegister: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {

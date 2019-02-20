@@ -33,8 +33,9 @@ Tw.MyTDataTing.prototype = {
     this.$btn_send_gift.on('click', $.proxy(this._getReceiveUserInfo, this));
     this.$btn_native_contact_list.on('click', $.proxy(this._onClickBtnAddr, this));
     this.$input_ting_receiver.on('keyup', $.proxy(this._onKeyUpTingGiftNumber, this));
+    this.$wrap_amount_select_list.on('click', $.proxy(this._checkValidateSendingButton, this));
     this.$container.on('click', '.cancel', $.proxy(this._checkValidateSendingButton, this));
-    this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
+    // this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
   },
 
   _getRemainDataInfo: function () {
@@ -84,7 +85,7 @@ Tw.MyTDataTing.prototype = {
 
   _onKeyUpTingGiftNumber: function () {
     this._checkValidateSendingButton();
-    this.$input_ting_receiver.val(this._convertDashNumber(this.$input_ting_receiver.val()));
+    this.$input_ting_receiver.val(Tw.StringHelper.phoneStringToDash(this.$input_ting_receiver.val()));
 
     this._validatePhoneNumber();
   },
@@ -105,6 +106,8 @@ Tw.MyTDataTing.prototype = {
       this._requestSendingData();
     } else if ( res.code === 'ZPAYE0077' ) {
       this._popupService.openAlert(Tw.MYT_DATA_TING.V31);
+    } else if ( res.code === 'ZINVE8164' ) {
+      this._popupService.openAlert(Tw.MYT_DATA_TING.NOT_TING_SKT);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -129,7 +132,9 @@ Tw.MyTDataTing.prototype = {
   },
 
   _checkValidateSendingButton: function () {
-    if ( this._validatePhoneNumber() ) {
+    var elAmount = this.$wrap_amount_select_list.find('li input:checked');
+
+    if ( !Tw.FormatHelper.isEmpty(elAmount.val()) && this._validatePhoneNumber() ) {
       this.$btn_send_gift.attr('disabled', false);
     } else {
       this.$btn_send_gift.attr('disabled', true);

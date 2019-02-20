@@ -278,6 +278,7 @@ Tw.API_CMD = {
   BFF_06_0073: { path: '/core-recharge/:version/tfamily-canceling-data', method: Tw.API_METHOD.GET },
   BFF_06_0074: { path: '/core-recharge/:version/tfamily-canceling', method: Tw.API_METHOD.POST },
   BFF_06_0075: { path: '/core-bill/v1/pps-alram', method: Tw.API_METHOD.GET },
+  BFF_06_0076: { path: '/core-bill/v1/pps-alram', method: Tw.API_METHOD.DELETE },
 
   // PAYMENT
   BFF_07_0004: { path: '/core-bill/:version/cash-receipts-issue-history', method: Tw.API_METHOD.GET },
@@ -457,6 +458,7 @@ Tw.API_CMD = {
   BFF_10_0171: { path: '/core-product/:version/mobiles/combinations/tfamilymoa/join/prechecks', method: Tw.API_METHOD.GET },
   BFF_10_0172: { path: '/core-product/:version/mobiles/combinations/tfamilymoa/join/oppsblcheck', method: Tw.API_METHOD.GET },
   BFF_10_0173: { path: '/core-product/:version/mobiles/combinations/tfamilymoa/join', method: Tw.API_METHOD.POST },
+  BFF_10_0174: { path: '/core-product/:version/roaming/auto-dial', method: Tw.API_METHOD.GET },
 
   // ROAMING
   BFF_10_0000: { path: '/core-product/:version/submain/products', method: Tw.API_METHOD.GET },
@@ -521,12 +523,12 @@ Tw.NODE_CMD = {
   SESSION: { path: '/session', method: Tw.API_METHOD.POST },
   EASY_LOGIN_AOS: { path: '/user/login/android', method: Tw.API_METHOD.POST },
   EASY_LOGIN_IOS: { path: '/user/login/ios', method: Tw.API_METHOD.POST },
-  CHANGE_SESSION: { path: '/common/selected-sessions', method: Tw.API_METHOD.PUT },
+  CHANGE_SESSION: { path: '/common/selected-sessions', method: Tw.API_METHOD.POST },
   LOGIN_SVC_PASSWORD: { path: '/user/service-password-sessions', method: Tw.API_METHOD.POST },
   LOGIN_USER_LOCK: { path: '/user/locks', method: Tw.API_METHOD.DELETE },
-  CHANGE_SVC_PASSWORD: { path: '/:version/my-t/service-passwords', method: Tw.API_METHOD.PUT },
-  CHANGE_LINE: { path: '/user/services', method: Tw.API_METHOD.PUT },
-  CHANGE_NICKNAME: { path: '/user/nick-names', method: Tw.API_METHOD.PUT },
+  CHANGE_SVC_PASSWORD: { path: '/my-t/service-passwords', method: Tw.API_METHOD.POST },
+  CHANGE_LINE: { path: '/user/services', method: Tw.API_METHOD.POST },
+  CHANGE_NICKNAME: { path: '/user/nick-names', method: Tw.API_METHOD.POST },
   UPDATE_SVC: { path: '/common/selected-sessions', method: Tw.API_METHOD.GET },
 
   UPLOAD_FILE: { path: '/uploads', method: Tw.API_METHOD.POST },

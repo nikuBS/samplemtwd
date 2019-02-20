@@ -1,4 +1,4 @@
-<div class="popup-page tw-popup fixed-bottom h60" data-menuId="M000478" ><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+<div class="popup-page tw-popup fixed-bottom h60 nobg" data-menuId="M000478" ><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
     <!-- #header -->
     <div class="header-wrap">
         <div class="page-header">
@@ -36,7 +36,7 @@
                         <span class="tit-tx">{{data.prodNm}}</span>
                         <span class="sub-disc03"><span class="tx-bold vbl">{{data.prodFee}}</span>
                             {{#if data.showTex}}
-                                부가세포함
+                                부가세 포함
                             {{/if}}
                         </span>
                         <div class="cont-noti pt36">
@@ -120,7 +120,7 @@
             <!--// .cont-box -->
             {{#ifCond data.agreeCnt '>' '0'}}
                 <div class="ti-caption-gray">
-                    <h3 class="tit">약관 및 이용동의</h3>
+                    <h3 class="tit">약관과 이용 동의</h3>
                 </div>
             {{/ifCond}}
 

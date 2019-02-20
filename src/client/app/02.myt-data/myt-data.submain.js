@@ -15,6 +15,8 @@ Tw.MyTDataSubMain = function (params) {
   this._rendered();
   this._bindEvent();
   this._initialize();
+  // 배너 관련 통계 이벤트(xtractor)
+  new Tw.XtractorService(this.$container);
 };
 
 Tw.MyTDataSubMain.prototype = {
@@ -306,7 +308,7 @@ Tw.MyTDataSubMain.prototype = {
           data,
           chart_data = [],
           idx;
-      this.$patternChart.find('.tit').text(Tw.MYT_DATA_PATTERN_TITLE.DATA);
+      this.$patternChart.find('.tit > span').text(Tw.MYT_DATA_PATTERN_TITLE.DATA);
       unit = Tw.CHART_UNIT.GB;
       data = this.data.pattern.data;
       var baseTotalData = 0, baseTotalVoice = 0, baseTotalSms = 0;
@@ -314,25 +316,31 @@ Tw.MyTDataSubMain.prototype = {
         var usageData = parseInt(data[idx].totalUsage, 10);
         baseTotalData += usageData;/*parseInt(data[idx].basOfrUsage, 10)*/
         if ( usageData > 0 ) {
-          chart_data.push({
-            t: Tw.DateHelper.getShortKoreanMonth(data[idx].invMth), // 각 항목 타이틀
-            v: this.__convertData(usageData) // 배열 평균값으로 전달
-          });
+          var convVal = this.__convertData(usageData); // 배열 평균값으로 전달
+          if ( convVal > 0 ) {
+            chart_data.push({
+              t: this._recentChartDate(data[idx].invMth), // 각 항목 타이틀
+              v: convVal
+            });
+          }
         }
       }
       // 음성
       if ( baseTotalData === 0 ) {
         chart_data = [];
         if ( this.data.pattern.voice.length > 0 ) {
-          this.$patternChart.find('.tit').text(Tw.MYT_DATA_PATTERN_TITLE.VOICE);
+          this.$patternChart.find('.tit > span').text(Tw.MYT_DATA_PATTERN_TITLE.VOICE);
           unit = Tw.CHART_UNIT.TIME;
           data = this.data.pattern.voice;
           for ( idx = 0; idx < data.length; idx++ ) {
             baseTotalVoice += parseInt(data[idx].totalUsage, 10);
-            chart_data.push({
-              t: Tw.DateHelper.getShortKoreanMonth(data[idx].invMth), // 각 항목 타이틀
-              v: this.__convertVoice(parseInt(data[idx].totalUsage, 10)) // 배열 평균값으로 전달
-            });
+            var convVal_v = this.__convertVoice(parseInt(data[idx].totalUsage, 10)); // 배열 평균값으로 전달
+            if ( convVal_v > 0 ) {
+              chart_data.push({
+                t: this._recentChartDate(data[idx].invMth), // 각 항목 타이틀
+                v: convVal_v
+              });
+            }
           }
         }
       }
@@ -340,15 +348,18 @@ Tw.MyTDataSubMain.prototype = {
       if ( baseTotalData === 0 && baseTotalVoice === 0 ) {
         chart_data = [];
         if ( this.data.pattern.sms.length > 0 ) {
-          this.$patternChart.find('.tit').text(Tw.MYT_DATA_PATTERN_TITLE.SMS);
+          this.$patternChart.find('.tit > span').text(Tw.MYT_DATA_PATTERN_TITLE.SMS);
           unit = Tw.CHART_UNIT.SMS;
           data = this.data.pattern.sms;
           for ( idx = 0; idx < data.length; idx++ ) {
             baseTotalSms += parseInt(data[idx].totalUsage, 10);
-            chart_data.push({
-              t: Tw.DateHelper.getShortKoreanMonth(data[idx].invMth), // 각 항목 타이틀
-              v: parseInt(data[idx].totalUsage, 10) // 배열 평균값으로 전달
-            });
+            var convVal_s = parseInt(data[idx].totalUsage, 10); // 배열 평균값으로 전달
+            if ( convVal_s > 0 ) {
+              chart_data.push({
+                t: this._recentChartDate(data[idx].invMth), // 각 항목 타이틀
+                v: convVal_s
+              });
+            }
           }
         }
       }
@@ -476,10 +487,12 @@ Tw.MyTDataSubMain.prototype = {
     }
   },
 
-  // event callback funtion
-  // _onRemnantDetail: function () {
-  //   this._historyService.goLoad('/myt-data/hotdata');
-  // },
+  // 최근데이터사용량 월표시 (당해년 제외 년월로 표시)
+  _recentChartDate: function (date) {
+    var curYear = new Date().getFullYear();
+    var inputYear = Tw.DateHelper.convDateFormat(date).getFullYear();
+    return Tw.DateHelper.getShortKoreanMonth(date, (curYear !== inputYear));
+  },
 
   _onImmChargeDetail: function () {
     switch ( this.data.svcInfo.svcAttrCd ) {
@@ -498,6 +511,7 @@ Tw.MyTDataSubMain.prototype = {
     }
   },
 
+  // pps 인 경우 자동알람서비스 그 외 데이터선물하기
   _onTPresentDetail: function () {
     if ( this.data.svcInfo.svcAttrCd === 'M2' ) {
       // PPS 인 경우 자동알람서비스
@@ -518,7 +532,8 @@ Tw.MyTDataSubMain.prototype = {
 
   // T가족모아
   _onFamilyMoaDetail: function () {
-    this._historyService.goLoad('/myt-data/familydata');
+    // 공유 버튼
+    this._historyService.goLoad('/myt-data/familydata/share');
   },
 
   // 데이터 혜텍
@@ -584,7 +599,9 @@ Tw.MyTDataSubMain.prototype = {
           Tw.REMNANT_OTHER_LINE.BTNAME,
           null,
           $.proxy(this._onChangeLineConfirmed, this),
-          null
+          null,
+          'change_line',
+          'tc'
         );
       }
     }

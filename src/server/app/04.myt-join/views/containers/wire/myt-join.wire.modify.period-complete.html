@@ -35,7 +35,10 @@
                     <div class="title-box">
                         <i class="icon-complete-120"><span class="blind">complete</span></i>
                         <p class="tx-tit">
-                            <span class="tx-highlight pt10"><em>약정기간 변경 신청</em> 완료</span>
+                            <span class="tx-highlight pt10"><em>
+                                약정기간 변경 신청이 <br />
+                                완료되었습니다.
+                            </em></span>
                         </p>
                     </div>
                 </div>
@@ -44,7 +47,7 @@
 
         <div class="bt-fixed-area">
             <ul class="bt-slice full">
-                <li><button type="button" class="btn-floating btn-style2 fe-common-back">확인</button></li>
+                <li><button id="fe-btn-go-submain" type="button" class="btn-floating btn-style2">확인</button></li>
             </ul>
         </div>
     </div>
@@ -52,3 +55,11 @@
 </div>
 
 <% include ../../components/end.component.html %>
+
+<script>
+  $(document).ready(function () {
+    $('#fe-btn-go-submain').click(function () {
+      (new Tw.HistoryService()).replaceURL('/myt-join/submain_w');
+    });
+  });
+</script>

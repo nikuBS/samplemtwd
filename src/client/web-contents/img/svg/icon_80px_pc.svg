@@ -1,15 +1,21 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <!-- Generator: Sketch 53 (72520) - https://sketchapp.com -->
     <title>icon_80px_pc</title>
     <desc>Created with Sketch.</desc>
-    <defs></defs>
+    <defs>
+        <path d="M50.917725,35.18325 C50.917725,35.50145 50.658725,35.76045 50.340525,35.76045 L3.5272,35.76045 C3.209,35.76045 2.95,35.50145 2.95,35.18325 L2.95,4.2272 C2.95,3.908075 3.209,3.65 3.5272,3.65 L50.340525,3.65 C50.658725,3.65 50.917725,3.908075 50.917725,4.2272 L50.917725,35.18325 Z M50.340525,0.875 L3.5272,0.875 C1.67905,0.875 0.175,2.378125 0.175,4.2272 L0.175,35.18325 C0.175,37.032325 1.67905,38.53545 3.5272,38.53545 L25.5459,38.53545 L25.5459,45.275 L17.419775,45.275 C16.65295,45.275 16.032275,45.895675 16.032275,46.6625 C16.032275,47.4284 16.65295,48.05 17.419775,48.05 L36.44795,48.05 C37.214775,48.05 37.83545,47.4284 37.83545,46.6625 C37.83545,45.895675 37.214775,45.275 36.44795,45.275 L28.3209,45.275 L28.3209,38.53545 L50.340525,38.53545 C52.188675,38.53545 53.692725,37.032325 53.692725,35.18325 L53.692725,4.2272 C53.692725,2.378125 52.188675,0.875 50.340525,0.875 L50.340525,0.875 Z" id="path-1"></path>
+    </defs>
     <g id="Icon_Badge_Graphic" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="##Icon/80/PC">
+            <g id="📌IMG-/-MyAccount" transform="translate(13.000000, 16.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Mask" fill="#333333" xlink:href="#path-1"></use>
+            </g>
             <rect id="Icon_Area" fill-opacity="0" fill="#FFFFFF" x="0" y="0" width="80" height="80"></rect>
-            <rect id="Rectangle" stroke="#333333" stroke-width="3" x="16" y="19" width="48" height="33" rx="1.8583425"></rect>
-            <path d="M40,60 L40,52.5" id="Line-2" stroke="#333333" stroke-width="3" stroke-linecap="round"></path>
-            <path d="M31,61 L49,61" id="Line-2-Copy" stroke="#333333" stroke-width="3" stroke-linecap="round"></path>
         </g>
+        <rect id="Rectangle-Copy" stroke="#50E3C2" stroke-width="5" fill-rule="nonzero" x="-14.5" y="-274.5" width="812" height="394"></rect>
     </g>
 </svg>

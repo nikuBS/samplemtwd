@@ -397,6 +397,7 @@ export const API_CMD = {
   BFF_06_0073: { path: '/core-recharge/:version/tfamily-canceling-data', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_06_0074: { path: '/core-recharge/:version/tfamily-canceling', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_06_0075: { path: '/core-bill/v1/pps-alram', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_06_0076: { path: '/core-bill/v1/pps-alram', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
 
   // PAYMENT
   BFF_07_0004: { path: '/core-bill/:version/cash-receipts-issue-history', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -540,6 +541,7 @@ export const API_CMD = {
     bypass: true
   },
   BFF_08_0066: { path: '/core-modification/:version/center/banner', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0067: { path: '/core-modification/v1/region-rent-center', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
 
   // SEARCH
   BFF_08_0068: { path: '/core-modification/:version/search/keyword', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -547,6 +549,7 @@ export const API_CMD = {
   BFF_08_0070: { path: '/core-modification/:version/search/invst-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_08_0071: { path: '/core-modification/:version/search/invst-append', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_08_0072: { path: '/core-modification/:version/search/invst-insert', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
+  BFF_08_0073: { path: '/core-modification/:version/ifaq/iFaq-detail', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
 
   // EVENT
   BFF_09_0001: { path: '/core-membership/:version/event/ing-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -848,6 +851,10 @@ export const API_CMD = {
   BFF_10_0173: {
     path: '/core-product/:version/mobiles/combinations/tfamilymoa/join',
     method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true
+  },
+  BFF_10_0174: {
+    path: '/core-product/:version/roaming/auto-dial',
+    method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true
   },
 
   // ROAMING

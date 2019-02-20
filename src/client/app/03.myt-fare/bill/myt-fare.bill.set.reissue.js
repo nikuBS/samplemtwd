@@ -1,6 +1,7 @@
 /**
  * FileName: myt-fare.bill.set.reissue.js
- * Author: 이정민 (skt.p130713@partner.sk.com)
+ * Author: 양정규 (skt.P130715@partner.sk.com)
+ * 요금안내서 재발행
  * Date: 2018.10.01
  */
 Tw.MyTFareBillSetReIssue = function (rootEl, options) {
@@ -12,9 +13,9 @@ Tw.MyTFareBillSetReIssue = function (rootEl, options) {
   this._cachedElement();
   this._bindEvent();
   // input 변경이 감지되면 취소확인 컨펌 띄움. 초기값 설정이후 체크해야 하기 때문에 this._initDefaultOptions() 펑션 다음에 선언해준다.
-  this.$container.on('change', 'input', $.proxy(function () {
+  /*this.$container.on('change', 'input', $.proxy(function () {
     this._isInputChanged = true;
-  }, this)); // input tag 변경 확인
+  }, this));*/ // input tag 변경 확인
 };
 
 Tw.MyTFareBillSetReIssue.prototype = {
@@ -28,6 +29,10 @@ Tw.MyTFareBillSetReIssue.prototype = {
     '1' : ['02', '01']  // 우편
   },
 
+  /**
+   * 초기값 설정
+   * @private
+   */
   _cachedElement: function () {
     this._$billIsueTyps = this.$container.find('.fe-bill-isue-typs input[type="radio"]');
     this._$billIsueTypCds = this.$container.find('.fe-bill-isue-typ-cds input[type="radio"]');
@@ -35,12 +40,19 @@ Tw.MyTFareBillSetReIssue.prototype = {
     this._$reisuRsnCds = this.$container.find('.fe-reisu-rsn-cd input[type="radio"]');
   },
 
+  /**
+   * 이벤트 설정
+   * @private
+   */
   _bindEvent: function () {
     this.$container.on('click', '.fe-btn-submit', $.proxy(this._onClickBtnSubmit, this));
-    this.$container.on('click', '#fe-back', $.proxy(this._onCloseConfirm, this)); // 취소 확인 창
+    // this.$container.on('click', '#fe-back', $.proxy(this._onCloseConfirm, this)); // 취소 확인 창
   },
 
-  // 닫기 버튼 클릭 시 [확인]
+  /**
+   * 닫기 버튼 클릭 시 [확인]
+   * @private
+   */
   _onCloseConfirm: function() {
     if (!this._isInputChanged) {
       this._historyService.goBack();
@@ -55,14 +67,27 @@ Tw.MyTFareBillSetReIssue.prototype = {
       null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
   },
 
+  /**
+   * 재발행 요청
+   * @private
+   */
   _onClickBtnSubmit : function () {
     this._requestReissue();
   },
 
+  /**
+   * 재발행 타입 존재 유무
+   * @returns {string|any|boolean}
+   * @private
+   */
   _isComplexBill: function () {
     return this._options.billIsueTyps && this._options.billIsueTyps.length > 0;
   },
 
+  /**
+   * 재발행 요청 파라미터 생성
+   * @private
+   */
   _getReqData: function () {
     var data = {};
     var reisuType; // 재발행코드종류
@@ -103,6 +128,10 @@ Tw.MyTFareBillSetReIssue.prototype = {
     return data;
   },
 
+  /**
+   * 재발행 요청
+   * @private
+   */
   _requestReissue: function () {
     this._popupService.close();
     var data = this._getReqData();
@@ -112,6 +141,11 @@ Tw.MyTFareBillSetReIssue.prototype = {
       .fail($.proxy(this._onApiError, this));
   },
 
+  /**
+   * 재발행 요청 성공 콜백
+   * @param params
+   * @private
+   */
   _onApiSuccess: function (params) {
     if ( params.code && params.code === 'ZORDE1206' ) {
       // 기 발행 건인 경우에 대한 처리
@@ -128,6 +162,10 @@ Tw.MyTFareBillSetReIssue.prototype = {
     this._popupService.openAlert(err.msg, err.code);
   },
 
+  /**
+   * 재발행 성공 시 화면 이동
+   * @private
+   */
   _goToComplete: function () {
     this._popupService.afterRequestSuccess(
       '/myt-fare/billguide/guide',

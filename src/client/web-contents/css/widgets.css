@@ -921,7 +921,7 @@ li.checkbox.type01 {
           .radio-slide .select-list .radiobox .radio-txt span.unit {
             display: inline-block;
             margin-left: 0.125rem;
-            font-size: 0.625rem; }
+            font-size: 1.125rem; }
       .radio-slide .select-list .radiobox.checked {
         background-color: #f44333; }
         .radio-slide .select-list .radiobox.checked .radio-txt {
@@ -1068,7 +1068,7 @@ li.checkbox.type01 {
       display: block;
       margin-bottom: 0.125rem;
       font-size: 0.75rem;
-      font-family: "Apple SD Gothic Neo", "Arial", sans-serif;
+      font-family: "Roboto";
       font-weight: 700; }
   .widget-box.step .step-list {
     position: absolute;
@@ -1153,7 +1153,7 @@ li.checkbox.type01 {
       font-weight: 400; }
       .widget-box.tube .tube-list li.checked .date {
         color: #98a6d6;
-        font-family: "Apple SD Gothic Neo", "Arial", sans-serif; }
+        font-family: "Roboto"; }
     .widget-box.tube .tube-list li.tube-select {
       padding: 0.6875rem 0.75rem;
       font-size: 0.875rem;

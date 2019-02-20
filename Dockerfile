@@ -21,6 +21,7 @@ RUN npm --verbose install -g gulp
 RUN pm2 install typescript
 
 COPY . .
+RUN gulp build
 
 ARG NODE=dev
 ENV NODE_ENV ${NODE}

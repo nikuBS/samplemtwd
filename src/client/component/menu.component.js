@@ -43,6 +43,8 @@ Tw.MenuComponent = function (notAboutMenu) {
     this._init();
     this._bindEvents();
     this._componentReady();
+
+    new Tw.XtractorService(this.$container);
   }, this));
 };
 
@@ -133,11 +135,11 @@ Tw.MenuComponent.prototype = {
             if ( res.params.value !== latestSeq ) {
               // Show red dot!
               self.$container.find('.fe-t-noti').addClass('on');
-              $('.fe-bt-menu').addClass('on');
+              $('.h-menu').addClass('on');
             }
           } else if ( res.resultCode === Tw.NTV_CODE.CODE_ERROR ) {
             self.$container.find('.fe-t-noti').addClass('on');
-            $('.fe-bt-menu').addClass('on');
+            $('.h-menu').addClass('on');
           }
         }, self)
       );
@@ -145,7 +147,7 @@ Tw.MenuComponent.prototype = {
 
     this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.MOST_RECENT_PUSH_SEQ },
       $.proxy(function (res) {
-        if ( res.resultCode === Tw.NTV_CMD.CODE_00 ) {
+        if ( res.resultCode === Tw.NTV_CODE.CODE_00 ) {
           showNotiIfNeeded(res.params.value, this);
         }
       }, this)
@@ -212,7 +214,7 @@ Tw.MenuComponent.prototype = {
     if ( !this._tNotifyComp ) {
       this._tNotifyComp = new Tw.TNotifyComponent();
     }
-    this._tNotifyComp.open(this._tid);
+    this._tNotifyComp.openWithHash(this._tid, 'menu');
   },
   _onUserInfo: function () {
     if ( this._isMultiLine ) {
@@ -347,11 +349,13 @@ Tw.MenuComponent.prototype = {
     // When logout and app
     if ( isApp && !isLogin ) {
       this.$container.find('.fe-when-logout-and-app').removeClass('none');
+      this.$container.find('.fe-remove-when-app').remove();
     }
 
     // When app or login
     if ( isApp || isLogin ) {
       this.$container.find('.fe-when-app-or-login').removeClass('none');
+      this.$container.find('.fe-remove-when-app').remove();
     }
 
     this.$menuArea.find('.section-search').after(this._menuTpl({ list: menu }));
@@ -361,10 +365,10 @@ Tw.MenuComponent.prototype = {
         var type = elem.getAttribute('data-value');
         switch ( type ) {
           case 'svcCnt':
-            if ( userInfo.totalSvcCnt !== 0 && userInfo.expsSvcCnt !== 0 ) {
-              $(elem).text(Tw.MENU_STRING.SVC_COUNT(userInfo.expsSvcCnt));
-            } else {
+            if (Tw.FormatHelper.isEmpty(userInfo.prodNm)) {
               $(elem).remove();
+            } else {
+              $(elem).text(userInfo.prodNm);
             }
             break;
           case 'bill':
@@ -377,8 +381,10 @@ Tw.MenuComponent.prototype = {
                     return;
                   }
                   var total = info.useAmtTot ? parseInt(info.useAmtTot, 10) : 0;
+                  var month =
+                    parseInt(info.invDt.match(/\d\d\d\d(\d\d)\d\d/)[1], 10) + Tw.DATE_UNIT.MONTH_S;
                   $(elem).text(
-                    Tw.FormatHelper.convNumFormat(total) + Tw.CURRENCY_UNIT.WON);
+                    month + ' ' + Tw.FormatHelper.convNumFormat(total) + Tw.CURRENCY_UNIT.WON);
                 } else {
                   $(elem).remove();
                 }
@@ -415,7 +421,7 @@ Tw.MenuComponent.prototype = {
                     S: 'silver',
                     O: 'default'
                   };
-                  $(elem).text(group[res.result.mbrGrCd]);
+                  $(elem).text(group[res.result.mbrGrCd].toUpperCase());
                 } else {
                   $(elem).remove();
                 }
@@ -603,8 +609,15 @@ Tw.MenuComponent.prototype = {
   _searchFocus: function (focus) {
     this.$container.find('.fe-menu-section').addClass('none');
     this.$container.find('.fe-search-section').removeClass('none');
+    var $menu = $('#common-menu');
+    if ($menu.hasClass('user-type')) {
+      $menu.removeClass('user-type');
+    } else {
+      $menu = null;
+    }
+
     if (!this._menuSearchComponent) {
-      this._menuSearchComponent = new Tw.MenuSearchComponent(this.$container);
+      this._menuSearchComponent = new Tw.MenuSearchComponent(this.$container, $menu);
     }
 
     this._menuSearchComponent.focus();

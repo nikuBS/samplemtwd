@@ -32,7 +32,7 @@
                     <div class="cont-box nogaps">
                         <div class="calling-plan">
                            <a href="/myt-join/additions" class="wrap-link">
-                                <i class="badge icon-badge-plan-my"><span class="blind">my</span></i>
+                                <i class="badge icon-badge-plan-use"><span class="blind">이용중</span></i>
                                 <span class="stit"><%= productData.myAdditions.recentlyJoinsProdNm %><% if (productData.myAdditions.addProdCnt > 1) { %> 외 <%= productData.myAdditions.addProdCnt - 1 %>건<% } %></span>
                            </a>
                        </div>
@@ -40,7 +40,7 @@
                 <% } %>
                 <!--//사용중인 상품 -->
 
-                <hr class="cont-sp type1" aria-hidden="true"/>
+                <hr class="cont-sp type1" aria-hidden="true" id="fe-header-t"/>
 
                 <!-- 스와이프 -->
                 <div class="cont-box nogaps noborder">
@@ -49,7 +49,7 @@
                         <div class="widget">
                             <div class="widget-box">
                                 <div class="slider-box">
-                                    <ul class="slider" data-location="T"></ul>
+                                    <ul class="slider" data-location="T" id="fe-banner-t"></ul>
                                 </div>
                             </div>
                         </div>
@@ -143,7 +143,7 @@
                 <% } %>
                 <!-- //SKT의 대표 부가상품 -->
 
-                <hr class="cont-sp type1" aria-hidden="true"/>
+                <hr class="cont-sp type1" aria-hidden="true" id="fe-header-c"/>
                 <!-- 스와이프 -->
                 <div class="cont-box nogaps noborder">
                     <div class="main-slide-banner slide-pagingtype">
@@ -151,7 +151,7 @@
                         <div class="widget">
                             <div class="widget-box">
                                 <div class="slider-box">
-                                    <ul class="slider" data-location="C"></ul>
+                                    <ul class="slider" data-location="C" id="fe-banner-c"></ul>
                                 </div>
                             </div>
                         </div>

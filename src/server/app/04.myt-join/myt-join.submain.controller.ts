@@ -82,10 +82,10 @@ class MyTJoinSubmainController extends TwViewController {
       this._getPausedState(),
       this._getLongPausedState(),
       this._getWireFreeCall(),
-      this._getOldNumberInfo(),
+      // this._getOldNumberInfo(), // 성능이슈로 해당 API 호춯 하지 않도록 변경 (DV001-14167)
       this._getChangeNumInfoService()
       // this.redisService.getData(REDIS_KEY.BANNER_ADMIN + pageInfo.menuId)
-    ).subscribe(([myline, myif, myhs, myap, mycpp, myinsp, myps, mylps, wirefree, oldnum, numSvc/*, banner*/]) => {
+    ).subscribe(([myline, myif, myhs, myap, mycpp, myinsp, myps, mylps, wirefree, /*oldnum,*/ numSvc/*, banner*/]) => {
       // 가입정보가 없는 경우에는 에러페이지 이동 (PPS는 가입정보 API로 조회불가하여 무선이력으로 확인)
       if ( this.type === 1 ) {
         if ( myhs.info ) {
@@ -124,7 +124,7 @@ class MyTJoinSubmainController extends TwViewController {
       // 가입정보
       switch ( this.type ) {
         case 0:
-          data.isOldNumber = oldnum && (oldnum.numChgTarget || oldnum.numChgTarget === 'true');
+          data.isOldNumber = this.isCheckingChgNum(data.svcInfo.svcNum);
           data.myInfo = myif;
           break;
         case 2:
@@ -148,7 +148,9 @@ class MyTJoinSubmainController extends TwViewController {
       if ( data.myHistory ) {
         if ( data.myHistory.length > 0 ) {
           const h_chgDt = data.myHistory[0].chgDt;
-          data.hsDate = this.isMasking(h_chgDt) ? h_chgDt : DateHelper.getShortDateNoDot(h_chgDt);
+          // 개통일자 DV001-13951 (마스킹시 ****.**.** 이와 같이 변경)
+          data.hsDate = this.isMasking(h_chgDt) ? this.dateMaskingReplace(h_chgDt) : DateHelper.getShortDateNoDot(h_chgDt);
+          // data.hsDate = this.isMasking(h_chgDt) ? h_chgDt : DateHelper.getShortDateNoDot(h_chgDt);
         } else {
           data.hsDate = null;
         }
@@ -279,6 +281,12 @@ class MyTJoinSubmainController extends TwViewController {
     return Math.round(difference_ms / ONE_DAY);
   }
 
+  dateMaskingReplace(target): string {
+    const reg1 = /\B((?=([\*]{2})(?![\*])))/g;
+    const reg2 = /\B((?=([\.\*]{5})(?![\.\*])))/g;
+    return target.replace(reg1, '.').replace(reg2, '.');
+  }
+
   isMasking(target): boolean {
     let result = false;
     const MASK_CODE = '*';
@@ -286,6 +294,11 @@ class MyTJoinSubmainController extends TwViewController {
       result = true;
     }
     return result;
+  }
+
+  isCheckingChgNum(target): boolean {
+    const regexp = /^01([1-9]{1})/g;
+    return regexp.test(target);
   }
 
   recompare(a, b) {

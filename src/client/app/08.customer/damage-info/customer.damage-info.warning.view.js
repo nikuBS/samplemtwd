@@ -13,7 +13,7 @@ Tw.CustomerDamageInfoWarningView = function(rootEl) {
 Tw.CustomerDamageInfoWarningView.prototype = {
 
   _bindEvent: function() {
-    this.$contents.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
+    this.$container.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
   },
 
   _confirmExternalUrl: function(e) {

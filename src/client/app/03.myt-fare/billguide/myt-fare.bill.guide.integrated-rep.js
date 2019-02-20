@@ -30,7 +30,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     this._bindEvent();
     this._hbRegisterHelper();
 
-    if ( this.resData.childLineInfo ) {
+    if ( this.resData.childLineInfo && this.resData.childLineInfo.length > 0 ) {
       this._getChildBillInfo();
     } else {
       $('#divChildListHaeder').hide();
@@ -45,7 +45,12 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     else {
       // 서비스 전체
       this._getBillsDetailInfo();
-      this._svcHbDetailList(this.resData.commDataInfo.joinSvcList, this.$hbPaidAmtSvcCdListArea, this.$entryTplPaidAmtSvcCdList);
+
+      this._svcHbDetailList(
+        this._sortBySvcType(this.resData.commDataInfo.joinSvcList),
+        this.$hbPaidAmtSvcCdListArea,
+        this.$entryTplPaidAmtSvcCdList
+      );
     }
 
   },
@@ -199,6 +204,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       date: this.paramDate,
       line: this.paramLine
     };
+    Tw.CommonHelper.startLoading(this.$container, 'grey', true);
     // // Tw.Logger.info('[param]', param);
     // // Tw.Logger.info('[param]2', '/myt-fare/billguide/guide?'+ $.param(param));
     this._history.goLoad('/myt-fare/billguide/guide?' + $.param(param));
@@ -237,6 +243,9 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       selDateValObj.trigger('click');
       // // Tw.Logger.info('[dateBtnArea]', $('[data-target="dateBtnArea"]'));
       // // Tw.Logger.info('[obj]', obj);
+    }else {
+      var firstDateValObj = this.$dateBtnArea.find('input').eq(0);
+      firstDateValObj.trigger('click');
     }
 
     if ( selLineVal ) {
@@ -383,7 +392,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       });
 
       // Tw.Logger.info('[ rootNodes ] : ', rootNodes);
-      this._svcHbDetailList(rootNodes, this.$hbDetailListArea, this.$entryTplBill);
+      this._svcHbDetailList(this._sortBySvcType(rootNodes), this.$hbDetailListArea, this.$entryTplBill);
 
       //위젯 아코디언 초기화
       skt_landing.widgets.widget_accordion($('.widget'));
@@ -444,10 +453,8 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
 
     if ( selectSvcType.svcType === Tw.MYT_FARE_BILL_GUIDE.FIRST_SVCTYPE ) {
       templt = this.$searchNmSvcTypeTplAll;
-    } else if ( selectSvcType.svcType === Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_1 ) {
-      textVal = Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_1 + '(' + selectSvcType.label + ')';
     } else {
-      textVal = selectSvcType.svcType + '(' + this._getShortStr(selectSvcType.addr) + ')';
+      textVal = selectSvcType.svcType + '(' + this._getShortStr(selectSvcType.label) + ')';
     }
 
     this.$searchNmSvcType.html(templt({svcType: textVal}));
@@ -495,6 +502,33 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     }
     return {id: '', nm: ''};
   },
+
+  /**
+   * svc 이름으로 소팅
+   * @param arr
+   * @returns {*} 정렬된 배열
+   * @private
+   */
+  _sortBySvcType: function(arr){
+    arr = _.sortBy(arr, function(obj){
+      var sortNo = 0;
+      switch ( obj.label || obj.svcNm ) {
+        case Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_0 :
+        case Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_1 : sortNo = 0; break;
+        case Tw.MYT_FARE_BILL_GUIDE.SVCNM_TPOCKET : sortNo = 1; break;
+        case Tw.MYT_FARE_BILL_GUIDE.SVCNM_TLOGIN : sortNo = 2; break;
+        case Tw.MYT_FARE_BILL_GUIDE.SVCNM_TWIBRO : sortNo = 3; break;
+        case Tw.MYT_FARE_BILL_GUIDE.SVCNM_TEL_0 :
+        case Tw.MYT_FARE_BILL_GUIDE.SVCNM_TEL_1 : sortNo = 4; break;
+        case Tw.MYT_FARE_BILL_GUIDE.SVCNM_TV :
+        case Tw.MYT_FARE_BILL_GUIDE.SVCNM_IPTV : sortNo = 5; break;
+        case Tw.MYT_FARE_BILL_GUIDE.SVCNM_INET : sortNo = 6; break;
+      }
+      return sortNo;
+    });
+    return arr;
+  },
+
 
   //--------------------------------------------------------------------------[COM]
   _comTraverse: function ($data, $groupKey, $priceKey) {

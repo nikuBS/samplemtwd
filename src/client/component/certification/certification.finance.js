@@ -90,14 +90,14 @@ Tw.CertificationFinance.prototype = {
     this._checkFido();
   },
   _checkFido: function () {
-    this._nativeService.send(Tw.NTV_CMD.FIDO_CHECK, {}, $.proxy(this._onCheckFido, this));
+    this._nativeService.send(Tw.NTV_CMD.FIDO_CHECK, { svcMgmtNum: this._svcInfo.svcMgmtNum }, $.proxy(this._onCheckFido, this));
   },
   _onCheckFido: function (resp) {
     this._certBio = new Tw.CertificationBio();
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
-      this._certBio.open(this._authUrl, this._authKind, this._prodAuthKey, $.proxy(this._completeIdentification, this), true, this._fidoTarget);
+      this._certBio.open(this._authUrl, this._authKind, this._prodAuthKey, this._svcInfo, $.proxy(this._completeIdentification, this), true, this._fidoTarget);
     } else {
-      this._certBio.open(this._authUrl, this._authKind, this._prodAuthKey, $.proxy(this._completeIdentification, this), false, this._fidoTarget);
+      this._certBio.open(this._authUrl, this._authKind, this._prodAuthKey, this._svcInfo, $.proxy(this._completeIdentification, this), false, this._fidoTarget);
     }
   },
   _completeIdentification: function (result) {

@@ -180,8 +180,11 @@ Tw.FormatHelper = (function () {
       }
     }
 
+    var regExr = str.length < 11 ? /(^02.{0}|^01.{1}|[0-9]{3})([0-9]{3})([0-9]{3,4})/ :
+      /(^02.{0}|^01.{1}|[0-9]{3})([0-9]{3,4})([0-9]{3,4})/;
+
     str = str.replace(/\*/gi, '0');
-    str = str.replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, '$1-$2-$3');
+    str = str.replace(regExr, '$1-$2-$3');
 
     for ( var b = 0; b < str.length; b++ ) {
       if ( str[b] === '-' ) {

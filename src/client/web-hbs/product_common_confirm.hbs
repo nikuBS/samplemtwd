@@ -1,4 +1,4 @@
-<div class="popup-page tw-popup fixed-bottom h60" data-menuId="M001733">
+<div class="popup-page tw-popup fixed-bottom h60 nobg" data-menuId="M001733">
     <!-- #header -->
     <div class="header-wrap">
         <div class="page-header">
@@ -18,8 +18,8 @@
                     <span class="blind" aria-hidden="true">현재 선택된 회선정보 및 사용중인 {{typeText}} 정보 노출</span>
                     <span class="ico"><span class="blind" aria-hidden="true">선택된 회선정보 아이콘</span></span>
                     <div class="in-info">
-                        <span class="number lh-full"><span class="blind">회선번호</span>{{svcNumMask}}</span>
                         {{#if isMobilePlan}}
+                        <span class="number"><span class="blind">회선번호</span>{{svcNumMask}}</span>
                         <span class="sub-info">
                             <span class="elem"><span class="blind">사용요금제명</span>{{svcProdNm}}</span>
                             <span class="elem">
@@ -31,6 +31,8 @@
                                 {{/if}}
                             </span>
                         </span>
+                        {{else}}
+                        <span class="number lh-full"><span class="blind">회선번호</span>{{svcNumMask}}</span>
                         {{/if}}
                     </div>
                 </div>
@@ -52,7 +54,7 @@
                             <span class="tit-tx"><span class="blind">{{joinTypeText}}할 상품정보</span>{{toProdName}}</span>
                         {{/if}}
                         {{#if isNumberBasFeeInfo}}
-                            <span class="sub-disc03"><span class="tx-bold vbl">{{toProdBasFeeInfo}}원</span> 부가세포함</span>
+                            <span class="sub-disc03"><span class="tx-bold vbl">월 {{toProdBasFeeInfo}}원</span> 부가세포함</span>
                         {{else}}
                             <span class="sub-disc03"><span class="tx-bold vbl">{{toProdBasFeeInfo}}</span></span>
                         {{/if}}
@@ -66,7 +68,7 @@
                         <div class="pt30">
                             <ul class="bt-slice">
                                 <li class="bt-blue1">
-                                    <button class="fe-btn_compare_plans">사용중인 요금제와 비교하기</button>
+                                    <button class="fe-btn_compare_plans">사용 중인 요금제와 비교하기</button>
                                 </li>
                             </ul>
                         </div>
@@ -104,8 +106,8 @@
                         <ul>
                             <li>
                                 <div class="tit-area">
-                                    <span class="tit">자동 가입</span>
-                                    <span class="sub-tit">서비스 및 혜택</span>
+                                    <span class="tit">자동</span>
+                                    <span class="sub-tit">가입되는 항목</span>
                                 </div>
                                 <div class="cont-area">
                                     {{#if autoJoinList}}
@@ -149,8 +151,8 @@
                             </li>
                             <li>
                                 <div class="tit-area">
-                                    <span class="tit">자동 해지</span>
-                                    <span class="sub-tit">서비스 및 혜택</span>
+                                    <span class="tit">자동</span>
+                                    <span class="sub-tit">해지되는 항목</span>
                                 </div>
                                 <div class="cont-area">
                                     {{#if autoTermList}}
@@ -297,7 +299,7 @@
             {{/if}}
             {{#if isAgreement}}
                 <div class="ti-caption-gray">
-                    <h3 class="tit">약관 및 이용동의</h3>
+                    <h3 class="tit">약관과 이용 동의</h3>
                 </div>
                 <!-- .cont-box -->
                 <div class="cont-box nogaps fe-agree_wrap">
@@ -357,7 +359,7 @@
                                                                                     <span class="tx-cont">{{installmentAgreement.gapDcCd}}{{installmentAgreement.gapDcAmt}}</span>
                                                                                 </li>
                                                                                 <li>
-                                                                                    <span class="title">사용기간/약정기</span>
+                                                                                    <span class="title">사용기간/약정기간</span>
                                                                                     <span class="tx-cont">{{installmentAgreement.agrmtUseCnt}}일/{{installmentAgreement.agrmtDayCnt}}일</span>
                                                                                 </li>
                                                                             </ul>

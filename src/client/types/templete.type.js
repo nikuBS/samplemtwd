@@ -82,22 +82,17 @@ Tw.POPUP_TPL = {
   }],
   FARE_PAYMENT_LAYER_DATA: [
     {
-      'list': [
-        { 'txt': '자동납부', 'option': 'fe-auto', 'spot': '신청' }
-      ]
-    },
-    {
       'title': '요금 즉시 납부',
       'list': [
-        { 'txt': '계좌이체 납부', 'option': 'fe-account' },
-        { 'txt': '체크/신용카드 납부', 'option': 'fe-card' },
-        { 'txt': 'OK캐쉬백/T포인트 납부', 'option': 'fe-point' }
+        { 'button-attr': 'type="button"', 'txt': '계좌이체 납부', 'option': 'fe-account' },
+        { 'button-attr': 'type="button"', 'txt': '체크/신용카드 납부', 'option': 'fe-card' },
+        { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백/T포인트 납부', 'option': 'fe-point' }
       ]
     },
     {
       'list': [
         {
-          'txt': '입금전용계좌 문자 신청', 'option': 'fe-sms',
+          'button-attr': 'type="button"', 'txt': '입금전용계좌 문자 신청', 'option': 'fe-sms',
           'add': '입금전용계좌 정보를 문자로 전송합니다.\n자동납부 인출 중이 아닌 경우에만 이용 가능합니다.', 'spot': '신청'
         }
       ]
@@ -105,29 +100,24 @@ Tw.POPUP_TPL = {
     {
       'title': '포인트 요금 납부 예약',
       'list': [
-        { 'txt': 'OK캐쉬백', 'option': 'fe-ok-cashbag' },
-        { 'txt': 'T포인트', 'option': 'fe-t-point' },
-        { 'txt': '레인보우포인트', 'option': 'fe-rainbow-point' }
+        { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백', 'option': 'fe-ok-cashbag' },
+        { 'button-attr': 'type="button"', 'txt': 'T포인트', 'option': 'fe-t-point' },
+        { 'button-attr': 'type="button"', 'txt': '레인보우포인트', 'option': 'fe-rainbow-point' }
       ]
     }
   ],
   FARE_PAYMENT_LAYER_DATA_EXCEPT_POINT: [
     {
-      'list': [
-        { 'txt': '자동납부', 'option': 'fe-auto', 'spot': '신청' }
-      ]
-    },
-    {
       'title': '요금 즉시 납부',
       'list': [
-        { 'txt': '계좌이체 납부', 'option': 'fe-account' },
-        { 'txt': '체크/신용카드 납부', 'option': 'fe-card' }
+        { 'button-attr': 'type="button"', 'txt': '계좌이체 납부', 'option': 'fe-account' },
+        { 'button-attr': 'type="button"', 'txt': '체크/신용카드 납부', 'option': 'fe-card' }
       ]
     },
     {
       'list': [
         {
-          'txt': '입금전용계좌 문자 신청', 'option': 'fe-sms',
+          'button-attr': 'type="button"', 'txt': '입금전용계좌 문자 신청', 'option': 'fe-sms',
           'add': '입금전용계좌 정보를 문자로 전송합니다.\n자동납부 인출 중이 아닌 경우에만 이용 가능합니다.', 'spot': '신청'
         }
       ]
@@ -137,7 +127,7 @@ Tw.POPUP_TPL = {
     TITLE: '충전방법 선택',
     REFILL: {
       TYPE: '나의 보유 쿠폰 사용',
-      VALUE: '나의 리필 쿠폰',
+      VALUE: '리필쿠폰',
       UNIT: '장'
     },
     PREPAY: {
@@ -487,7 +477,7 @@ Tw.MYT_TPL = {
       '{{else}}'+
       '<span class="info-sub">{{svcNum}}</span>' +
       '{{/if}}' +
-    '<span class="price">{{amt}} 원</span>' +
+    '<span class="price">{{amt}}</span>' +
     '</span></button></li>'
   },
   JOIN_SUBMAIN: {
@@ -587,13 +577,13 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
       { title: '단말기 관련', ofrCtgSeq: '5000274' },
       { title: '요금제 부가서비스', ofrCtgSeq: '5000270' },
       { title: '가입/변경/해지', ofrCtgSeq: '5000271' },
-      { title: '멤버쉽', ofrCtgSeq: '5000275' },
+      { title: 'T멤버십', ofrCtgSeq: '5000275' },
       { title: '휴대폰 정지', ofrCtgSeq: '5000269' },
       { title: '기타', ofrCtgSeq: '5000280' }
     ]
   },
   {
-    title: '인터넷/집전화/TV',
+    title: '인터넷/집전화/IPTV',
     category: 'INTERNET',
     list: [
       { title: '요금조회/납부', ofrCtgSeq: '5000141' },
@@ -605,17 +595,17 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
       { title: '기타', ofrCtgSeq: '5000153' }
     ]
   },
-  {
-    title: 'T월드 다이렉트',
-    category: 'DIRECT',
-    list: [
-      { title: '휴대폰 구매', ofrCtgSeq: '07' },
-      { title: '기타 문의', ofrCtgSeq: '10' },
-      { title: 'T기프트/액세서리', ofrCtgSeq: '12' },
-      { title: '휴대폰배송', ofrCtgSeq: '08' },
-      { title: '휴대폰 교환/반품', ofrCtgSeq: '09' }
-    ]
-  },
+  // { TODO: 공효원M 요청사항 (2019.02.15) 해당 메뉴 비노출 요청
+  //   title: 'T월드 다이렉트',
+  //   category: 'DIRECT',
+  //   list: [
+  //     { title: '휴대폰 구매', ofrCtgSeq: '07' },
+  //     { title: '기타 문의', ofrCtgSeq: '10' },
+  //     { title: 'T기프트/액세서리', ofrCtgSeq: '12' },
+  //     { title: '휴대폰배송', ofrCtgSeq: '08' },
+  //     { title: '휴대폰 교환/반품', ofrCtgSeq: '09' }
+  //   ]
+  // },
   {
     title: '초콜릿',
     category: 'CHOCO',
@@ -630,7 +620,7 @@ Tw.CUSTOMER_EMAIL_SERVICE_CATEGORY = [
 
 Tw.CUSTOMER_EMAIL_QUALITY_CATEGORY = [
   { title: '휴대폰/와이브로', category: 'cell' },
-  { title: '인터넷/TV/집전화', category: 'internet' }
+  { title: '인터넷/집전화/IPTV', category: 'internet' }
 ];
 
 Tw.CUSTOMER_EMAIL_QUALITY_QUESTION = {
@@ -813,19 +803,6 @@ Tw.ANDROID_STORE = [
       {'attr': 'type="button" id="one"', 'img': { src: '/img/common/icon-app-one-store.png', alt: 'one store' }, 'value':'원스토어'}
     ],
     'btn-floating':[
-      {'attr':'type="button"', 'txt':'닫기'}
-    ]
-  }
-];
-
-Tw.HOME_DATA_LINK = [
-  {
-    'list': [
-      {'attr':'type="button" id="fe-bt-recharge-link"','simbol':'ico1','value':'데이터 충전'},
-      {'attr':'type="button" id="fe-bt-gift-link"','simbol':'ico2','value':'데이터 선물'},
-      {'attr':'type="button" id="fe-bt-family-link"','simbol':'ico3','value':'T가족모아'}
-    ],
-    'btn-floating': [
       {'attr':'type="button"', 'txt':'닫기'}
     ]
   }

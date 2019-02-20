@@ -40,14 +40,12 @@
 
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <!-- .cont-box -->
-                <div class="cont-box noborder bgnone">
-                    <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
-                    <ul class="pg-chk-list02">
+                <div class="cont-box nogaps-btm">
+                    <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                    <ul class="noti-list02">
                         <% data.noticeInfo.forEach(function(info){ %>
                             <li data-list-id="<%=info.link%>">
-                                <button class="btn-tip" id="<%=info.link%>" aria-haspopup="true" title="정보보기" >
-                                    <%=info.title%><i class="icon-badge-tip"><span class="blind"><%=info.title%> tip</span></i>
-                                </button>
+                                <button aria-haspopup="true" class="tip-view-btn" id="<%=info.link%>" title="정보보기"><%=info.title%><span class="tip-view"><%=info.title%> tip</span></button>
                             </li>
                         <% }); %>
                     </ul>

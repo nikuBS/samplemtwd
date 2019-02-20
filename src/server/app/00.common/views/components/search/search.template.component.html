@@ -8,7 +8,7 @@
     <li>
         <a href="{{listData.MENU_URL}}" class="shortcut-element list-data" data-category="shortcut" data-id="{{listData.DOCID}}" data-tit="{{removeTag listData.MENU_NM}}">
             <span class="main-category">{{{listData.MENU_NM}}}</span>
-            <span class="sub-category">{{{listData.DEPTH_PATH}}}</span>
+            <span class="sub-category">{{{replace listData.DEPTH_PATH '\|,MyT' ' > , my T '}}}</span>
         </a>
     </li>
 </script>
@@ -179,9 +179,13 @@
         <div class="img"><img src="{{listData.IMG}}" alt="{{listData.IMG_ALT}}"></div>
         <div class="cont">
             <div class="tit">{{{listData.PRODUCT_NM}}}</div>
-            <div class="price">{{currencyComma listData.PRODUCT_PRICE}}원~/월</div>
-            {{#ifCond listData.SALE_PRICE '!==' ''}}
-            <span class="price2">{{currencyComma listData.SALE_PRICE}}원</span>
+            <div class="price">{{currencyComma listData.SALE_PRICE}}원
+                {{#ifCond listData.ALIAS '===' 'shopmobile'}}
+                ~/월
+                {{/ifCond}}
+            </div>
+            {{#ifCond listData.PRODUCT_PRICE '!==' '0'}}
+            <span class="price2">{{currencyComma listData.PRODUCT_PRICE}}원</span>
             {{/ifCond}}
         </div>
     </li>
@@ -249,7 +253,7 @@
 
 <script type="text/x-handlebars-template" id="question_template">
     <li>
-        <a class="b-cont question-element list-data" data-id="{{listData.DOCID}}" data-category="question" data-tit="{{removeTag listData.INQ_CTT}}">
+        <a href="/customer/faq/view?category={{listData.CATEGORY}}&faq_Id={{listData.DOCID}}" class="b-cont question-element list-data" data-id="{{listData.DOCID}}" data-category="question" data-tit="{{removeTag listData.INQ_CTT}}">
             <strong class="ti">{{{listData.INQ_CTT}}}</strong>
             <span class="tx">{{{listData.CATEGORY}}}</span>
         </a>
@@ -258,7 +262,7 @@
 
 <script id="notice_template" type="text/x-handlebars-template">
     <li>
-        <a class="b-cont notice-element list-data" href="/customer/svc-info/notice/view?ntcId={{removeNaN listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="notice" data-tit="{{removeTag listData.NTC_TIT_NM}}">
+        <a class="b-cont notice-element list-data" href="/customer/svc-info/notice/view?ntcId={{replace listData.DOCID '[^0-9.]' ''}}" data-id="{{listData.DOCID}}" data-category="notice" data-tit="{{removeTag listData.NTC_TIT_NM}}">
             {{{listData.NTC_TIT_NM}}}
         </a>
     </li>
@@ -266,7 +270,7 @@
 
 <script type="text/x-handlebars-template" id="prevent_template">
     <li>
-        <a class="b-cont prevent-element list-data" href="/customer/damage-info/warning/view?idx={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="prevent" data-tit="{{removeTag listData.ICNTS_TIT_NM}}">
+        <a class="b-cont prevent-element list-data" href="/customer/damage-info/warning/view?icntsId={{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="prevent" data-tit="{{removeTag listData.ICNTS_TIT_NM}}">
             {{{listData.ICNTS_TIT_NM}}}
         </a>
     </li>

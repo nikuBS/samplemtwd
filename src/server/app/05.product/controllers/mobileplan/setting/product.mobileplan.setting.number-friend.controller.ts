@@ -36,7 +36,7 @@ class ProductMobileplanSettingNumberFriend extends TwViewController {
 
     numCoupleList.map((item) => {
       if (item.cuplYn === '1') {
-        frBestAsgnNum = item.svcNum;
+        frBestAsgnNum = FormatHelper.conTelFormatWithDash(item.svcNumMask);
       }
 
       return Object.assign(item, {
@@ -57,7 +57,7 @@ class ProductMobileplanSettingNumberFriend extends TwViewController {
     const prodId = req.query.prod_id || null,
       renderCommonInfo = {
         pageInfo: pageInfo,
-        svcInfo: svcInfo,
+        svcInfo: Object.assign(svcInfo, { svcNumDash: FormatHelper.conTelFormatWithDash(svcInfo.svcNum) }),
         title: PRODUCT_TYPE_NM.SETTING
       };
 

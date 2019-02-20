@@ -1,5 +1,5 @@
 <%#
-* FileName: product.roaming.join.roaming-auto.html
+* FileName: product.roaming.join.confirm-info.html
 * Author: Hyunkuk Lee (max5500@pineone.com)
 * Date: 2018.12.04
 %>
@@ -18,7 +18,7 @@
 <!--// #skip_navigation -->
 <div class="wrap" data-menuId ="<%= pageInfo.menuId?pageInfo.menuId:'M000478' %>">
     <!-- .popup hbs -->
-    <div class="popup-page tw-popup fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+    <div class="popup-page tw-popup fixed-bottom h60 nobg"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
         <!-- #header -->
         <div class="header-wrap">
             <div class="page-header">
@@ -54,7 +54,7 @@
 									<span class="elem">가입할 로밍 <%= prodTypeInfo.prodTypCd==='H_P'?'요금제':'부가서비스'%></span>
 								</span>
                             <span class="tit-tx"><%= prodBffInfo.preinfo.reqProdInfo.prodNm %></span>
-                            <span class="sub-disc03"><span class="tx-bold vbl">무료</span><span id="tex"> 부가세포함</span></span>
+                            <span class="sub-disc03"><span class="tx-bold vbl">무료</span><span id="tex"> 부가세 포함</span></span>
                             <div class="cont-noti pt36">
                                 <span class="type3"><%= prodBffInfo.preinfo.reqProdInfo.prodSmryDesc %></span>
                             </div>
@@ -137,7 +137,7 @@
                 <!--// .cont-box -->
                 <% if(Object.keys(prodBffInfo.stipulationInfo).length>0){ %>
                 <div class="ti-caption-gray">
-                    <h3 class="tit">약관 및 이용동의</h3>
+                    <h3 class="tit">약관과 이용 동의</h3>
                 </div>
 
                 <!-- .cont-box -->

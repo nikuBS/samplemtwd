@@ -8,6 +8,7 @@ Tw.ProductRoaming = function(rootEl, options) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
+  this._xTractorService = new Tw.XtractorService(this.$container);
 
   this._options = options;
 

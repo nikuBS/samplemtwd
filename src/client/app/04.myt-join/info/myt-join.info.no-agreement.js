@@ -2,6 +2,7 @@
  * FileName: myt-join.info.no-agreement.js
  * Author: 양정규 (skt.P130715@partner.sk.com)
  * Date: 2018. 10. 08
+ * 무약정 플랜 포인트 내역
  */
 Tw.MyTJoinInfoNoAgreement = function (rootEl) {
   this.$container = rootEl;
@@ -13,12 +14,20 @@ Tw.MyTJoinInfoNoAgreement = function (rootEl) {
 };
 
 Tw.MyTJoinInfoNoAgreement.prototype = {
+  /**
+   * 최초 실행
+   * @private
+   */
   _init : function() {
     this._initVariables();
     this._bindEvent();
     this._registerHelper();
     this._reqNoAgreement();
   },
+  /**
+   * 초기값 설정
+   * @private
+   */
   _initVariables: function () {
     this._data = {};  // 무약정 플랜 조회 데이타
     
@@ -33,12 +42,20 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
     this.$totalSave = this.$container.find('#fe-total-save'); // 총 적립
     this.$totalUse = this.$container.find('#fe-total-use'); // 총 사용
     this.$totalRemove = this.$container.find('#fe-total-remove'); // 총 소멸
-
   },
+  /**
+   * 이벤트 설정
+   * @private
+   */
   _bindEvent: function () {
     this.$btnCondition.on('click', $.proxy(this._changeCondition, this));
   },
 
+  /**
+   * 무약정 플랜 포인트 내역 조회 파라미터 설정
+   * @returns {{startMonth: (*|string), startDay: (*|string), endDay: (*|string), startYear: (*|string), endMonth: (*|string), endYear: (*|string)}}
+   * @private
+   */
   _makeParam : function () {
     var edate = this._dateHelper.getCurrentShortDate(new Date());
     var sdate = this._periodDate(edate, -3, 'years');
@@ -53,7 +70,10 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
     };
   },
 
-  // 무약정 플랜 포인트 내역 조회
+  /**
+   * 무약정 플랜 포인트 내역 API 조회
+   * @private
+   */
   _reqNoAgreement : function () {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService
@@ -62,52 +82,11 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
       .fail($.proxy(this._onFail, this));
   },
 
-  // Mockup
-  _mockReqNoAgreement : function () {
-    $.ajax('/mock/myt.join.info.no-agreement.json')
-      .done($.proxy(this._onSuccess, this))
-      .fail($.proxy(this._onFail, this));
-  },
-
-  _dateForamt : function (date) {
-    return Tw.FormatHelper.isEmpty(date) ? date:Tw.DateHelper.getShortDate(date);
-  },
-
-  _dateForamtConvert : function (date, format) {
-    if (!Tw.DateHelper.isValid(date)) {
-      return '';
-    }
-    return Tw.DateHelper.getShortDateWithFormat(date, format,'YYYYMMDD');
-  },
-
-  _periodDate : function (date, amount, unit) {
-    var format = 'YYYYMMDD';
-
-    return Tw.DateHelper.getShortDateWithFormatAddByUnit(date,amount,unit,format,format);
-  },
-
-  _parseData : function (resp) {
-    var _format = Tw.FormatHelper;
-    resp.usablePt = _format.addComma(resp.usablePt);
-    resp.extnSchdDt = this._dateForamt(resp.extnSchdDt);
-    resp.extnSchdPt = _format.addComma(resp.extnSchdPt);
-    resp.totAccumPt = _format.addComma(resp.totAccumPt);
-    resp.totUsedPt = _format.addComma(resp.totUsedPt);
-    resp.totExtnPt = _format.addComma(resp.totExtnPt);
-  },
-
-  _setData : function (resp) {
-    this.$usablePoint.text(resp.usablePt);
-    if (Number(Tw.FormatHelper.removeComma(resp.extnSchdPt)) > 0 && resp.extnSchdDt !== '') {
-      this.$removeDate.text(resp.extnSchdDt).parent().removeClass('none');
-    }
-    this.$removePoint.text(resp.extnSchdPt);
-    this.$totalCount.text(resp.datas.length);
-    this.$totalSave.text(resp.totAccumPt);
-    this.$totalUse.text(resp.totUsedPt);
-    this.$totalRemove.text(resp.totExtnPt);
-  },
-
+  /**
+   * 무약정 플랜 포인트 내역 조회 성공시
+   * @param resp : API response
+   * @private
+   */
   _onSuccess : function (resp) {
     if ( resp.code !== Tw.API_CODE.CODE_00 ) {
       this._onFail(resp);
@@ -121,6 +100,42 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
     Tw.CommonHelper.endLoading('.container');
   },
 
+  /**
+   * 수신 데이터 파싱
+   * @param resp
+   * @private
+   */
+  _parseData : function (resp) {
+    var _format = Tw.FormatHelper;
+    resp.usablePt = _format.addComma(resp.usablePt);
+    resp.extnSchdDt = this._dateForamt(resp.extnSchdDt);
+    resp.extnSchdPt = _format.addComma(resp.extnSchdPt);
+    resp.totAccumPt = _format.addComma(resp.totAccumPt);
+    resp.totUsedPt = _format.addComma(resp.totUsedPt);
+    resp.totExtnPt = _format.addComma(resp.totExtnPt);
+  },
+
+  /**
+   * 수신 데이터 일러먼트에 값 설정
+   * @param resp
+   * @private
+   */
+  _setData : function (resp) {
+    this.$usablePoint.text(resp.usablePt);
+    if (Number(Tw.FormatHelper.removeComma(resp.extnSchdPt)) > 0 && resp.extnSchdDt !== '') {
+      this.$removeDate.text(resp.extnSchdDt).parent().removeClass('none');
+    }
+    this.$removePoint.text(resp.extnSchdPt);
+    this.$totalCount.text(resp.datas.length);
+    this.$totalSave.text(resp.totAccumPt);
+    this.$totalUse.text(resp.totUsedPt);
+    this.$totalRemove.text(resp.totExtnPt);
+  },
+
+  /**
+   * 수신한 무약정 플랜 데이터를 가지고 리스트 생성
+   * @private
+   */
   _search : function () {
     var _list = this._data.datas;
     var _type = this.$btnCondition.attr('id');
@@ -148,6 +163,49 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
     });
   },
 
+  /**
+   * 날짜 포맷 설정
+   * @param date
+   * @returns {string} : YYYY.M.D. ex) 2018.6.1.
+   * @private
+   */
+  _dateForamt : function (date) {
+    return Tw.FormatHelper.isEmpty(date) ? date:Tw.DateHelper.getShortDate(date);
+  },
+
+  /**
+   * 날짜 포맷 설정
+   * @param date : 변환하려는 날짜 (YYYYMMDD)
+   * @param format : 변환하려는 포맷
+   * @returns {*}
+   * @private
+   */
+  _dateForamtConvert : function (date, format) {
+    if (!Tw.DateHelper.isValid(date)) {
+      return '';
+    }
+    return Tw.DateHelper.getShortDateWithFormat(date, format,'YYYYMMDD');
+  },
+
+  /**
+   * 주어진 날짜에서 특정 기간의 날짜 구하기
+   * @param date    : 날짜 (YYYYMMDD)
+   * @param amount  : 기간 ( -1 , 2 ..)
+   * @param unit    : 단위 (years, month, day ..)
+   * @returns {Date}
+   * @private
+   */
+  _periodDate : function (date, amount, unit) {
+    var format = 'YYYYMMDD';
+
+    return Tw.DateHelper.getShortDateWithFormatAddByUnit(date,amount,unit,format,format);
+  },
+
+  /**
+   * 핸들바스로 리스트 생성
+   * @param res
+   * @private
+   */
   _renderList : function (res) {
     var source = $('#tmplList').html();
     var template = Handlebars.compile(source);
@@ -155,11 +213,20 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
     this.$list.append(output);
   },
 
+  /**
+   * 핸들바스 파일에서 사용할 펑션 등록
+   * @private
+   */
   _registerHelper : function() {
     Handlebars.registerHelper('formatDate', this._dateForamt);
     Handlebars.registerHelper('removeKorean', this._removeKorean);
   },
 
+  /**
+   * 포인트 사용유형 조회 조건 액션시트
+   * @param event
+   * @private
+   */
   _changeCondition: function (event) {
     var $target = $(event.currentTarget);
     var options = {
@@ -171,6 +238,12 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
     this._popupService.open(options, $.proxy(this._selectPopupCallback, this, $target));
   },
 
+  /**
+   * [포인트 사용유형 조회 조건] 오픈 후 콜백 함수. 액션시트 내의 항목에 대한 클릭 이벤트 설정한다.
+   * @param $searchType : 조회조건 (0:전체, 1:포인트 사용, 2:포인트 적립, 3:포인트 소멸)
+   * @param $layer
+   * @private
+   */
   _selectPopupCallback: function ($searchType, $layer) {
     // 아이템 클릭이벤트 및 checked 설정
     $layer.find('[name="r1"]')
@@ -181,6 +254,13 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
     $layer.one('click', '#fe-back', this._popupService.close);
   },
 
+  /**
+   * _selectPopupCallback() 에서 선택항목 클릭 시 처리하는 함수
+   * _selectPopupCallback()에서 선택한 항목의 리스트를 다시 호출
+   * @param $searchType
+   * @param event
+   * @private
+   */
   _setSelectedValue: function ($searchType, event) {
     var $target = $(event.currentTarget);
     $searchType.attr('id', $target.attr('id'));
@@ -191,12 +271,21 @@ Tw.MyTJoinInfoNoAgreement.prototype = {
     this._popupService.close();
   },
 
-  // 한글 삭제
+  /**
+   * 한글 삭제 함수
+   * @param str : 한글 삭제할 텍스트
+   * @returns {*} : 한글이 삭제된 값 반환
+   * @private
+   */
   _removeKorean : function (str) {
     return str.replace(/[가-힣]/g,'');
   },
 
-  // API Fail
+  /**
+   * API Fail 시 호출
+   * @param err
+   * @private
+   */
   _onFail: function (err) {
     Tw.CommonHelper.endLoading('.container');
     Tw.Error(err.code,err.msg).pop();

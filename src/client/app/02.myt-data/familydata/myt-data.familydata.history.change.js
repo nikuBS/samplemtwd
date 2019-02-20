@@ -30,6 +30,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     this.$submitBtn = this.$container.find('#fe-submit');
     this.$error = this.$container.find('#fe-error');
     this.$strong = this.$container.find('strong.txt-c2');
+    this.$cancel = this.$container.find('.cancel');
   },
 
   _addChangeeData: function(e) {
@@ -48,24 +49,33 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
         this.$input.attr('disabled', true);
         $target.siblings('.btn-type01').attr('disabled', true);
         $target.addClass('btn-on');
+        this.$cancel.css('display', 'none');
         this._all = true;
       }
     } else {
       this.$input.val(Number(this.$input.val()) + Number(value));
+      this.$cancel.css('display', 'inline-block');
     }
 
     this._validateChangeAmount();
   },
 
   _validateChangeAmount: function() {
-    var value = Number(this.$input.val());
+    var sValue = this.$input
+      .val()
+      .replace(/^0*/, '')
+      .replace(/[^0-9]/g, '');
+
+    this.$input.val(sValue);
+
+    var value = Number(sValue);
 
     if (!value) {
-      this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.V17);
+      this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.NON_CHANGE_DATA);
       this.$error.removeClass('none');
       this._setDisableSubmit(true);
     } else if (value > this._changable.data) {
-      this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.V16);
+      this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.GREATER_THAN_CHANGABLE_DATA);
       this.$error.removeClass('none');
       this._setDisableSubmit(true);
     } else {
@@ -120,7 +130,6 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     var ALERT_MSG = '';
     switch (resp.code) {
       case Tw.API_CODE.CODE_00: {
-        this._popupService.close();
         this.$item.find('.modify strong').text(remain + 'GB');
         if (remain > 0) {
           this.$item.find('.fe-edit').data('gb', remain);
@@ -129,7 +138,12 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
           this.$item.find('.modify span').text(Tw.MYT_DATA_FAMILY_NOT_POSSIBLE_CHANGE);
         }
 
-        this.isSuccess = true;
+        setTimeout(
+          $.proxy(function() {
+            this._popupService.close();
+            this.isSuccess = true;
+          }, this)
+        );
         return;
       }
       case 'RCG0066': {

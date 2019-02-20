@@ -153,6 +153,7 @@
             </div>
             <!--// .cont-box -->
 
+            <hr class="cont-sp type1" aria-hidden="true"/>
 
             <!-- .cont-box -->
             <div class="cont-box">
@@ -165,18 +166,13 @@
                         <p class="price"><%=commDataInfo.useAmtTot %>원</p>
                         <p class="term type2"><%=commDataInfo.selStaDt %> ~ <%=commDataInfo.selEndDt %></p>
                         <% } %>
-                        <div class="btn-wrap"><button class="btn-round2 btn-style3" data-target="conditionChangeBtn">조건변경</button></div>
+                        <div class="btn-wrap"><button class="btn-round2 btn-style3" data-target="conditionChangeBtn">청구월 변경</button></div>
                     </div>
                     <% if( billpayInfo.useAmtTot == 0 ){ %>
                     <div class="result-none type2">
                         이번 달에 사용하신 이용요금이 없습니다.
                     </div>
                     <% } %>
-
-                    <div class="detail-bill">
-                        <ul data-target="hbPaidAmtSvcCdListArea">
-                        </ul>
-                    </div>
                 </div>
                 <% if( billpayInfo.coClCd === 'B' ){ %>
                 <p class="txt-desc2 tx-normal mt22">SK브로드밴드를 통해 가입하신 서비스일 경우 청구요금에 포함되지 않습니다. 전화 106 또는 SK브로드밴드 웹사이트를 이용해 주세요.</p>
@@ -210,11 +206,15 @@
             <!--// .cont-box -->
 
             <!-- .cont-box -->
-            <div class="cont-box nogaps-btm">
-                <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                <ul class="noti-list02">
+            <div class="cont-box noborder bgnone">
+                <h3 class="pg-chk-tit">꼭 확인해 주세요</h3>
+                <ul class="pg-chk-list02">
+                    <li><button id="MF_02_01_tip_01" type="button" class="btn-tip" aria-haspopup="tree" title="이용요금 안내">이용요금 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <li><button id="MF_02_01_tip_02" type="button" class="btn-tip" aria-haspopup="tree" title="로밍 이용요금 안내">로밍 이용요금 안내<i class="icon-badge-tip"><span class="blind">tip</span></i></button></li>
+                    <!--
                     <li><button id="MF_02_01_tip_01" type="button" class="tip-view-btn" aria-haspopup="true" title="이용요금 안내">이용요금 안내<span class="tip-view">TIP</span></button></li>
                     <li><button id="MF_02_01_tip_02" type="button" class="tip-view-btn" aria-haspopup="true" title="로밍 이용요금 안내">로밍 이용요금 안내<span class="tip-view">TIP</span></button></li>
+                    -->
                 </ul>
             </div>
             <!--// .cont-box -->

@@ -10,9 +10,8 @@ import TwViewController from '../../common/controllers/tw.view.controller';
 import { Observable } from 'rxjs/Observable';
 import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
-import { API_ADD_SVC_ERROR, API_CMD, API_CODE, API_MYT_ERROR, API_TAX_REPRINT_ERROR } from '../../types/api-command.type';
+import { API_ADD_SVC_ERROR, API_CMD, API_CODE, API_TAX_REPRINT_ERROR } from '../../types/api-command.type';
 import { MYT_FARE_SUBMAIN_TITLE } from '../../types/title.type';
-import { MYT_FARE_PAYMENT_ERROR } from '../../types/string.type';
 import { SVC_ATTR_NAME } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 
@@ -25,7 +24,9 @@ class MyTFareSubmainController extends TwViewController {
     const data: any = {
       svcInfo: Object.assign({}, svcInfo),
       pageInfo: pageInfo,
+      // 소액결제 버튼 노출 여부
       isMicroPayment: false,
+      // 납부청구 관련 버튼 노출 여부
       isNotAutoPayment: true,
       // 다른 회선 항목
       otherLines: this.convertOtherLines(Object.assign({}, svcInfo), Object.assign({}, allSvc)),
@@ -115,13 +116,13 @@ class MyTFareSubmainController extends TwViewController {
       this._getNonPayment(),
       this._getPaymentInfo(),
       this._getTotalPayment(),
-      this._getTaxInvoice(),
-      this._getContribution(),
+      // this._getTaxInvoice(),
+      // this._getContribution(),
       this._getMicroPrepay(),
       this._getContentPrepay()
       // this.redisService.getData(this.bannerUrl)
     ).subscribe(([nonpayment, paymentInfo, totalPayment,
-                   taxInvoice, contribution, microPay, contentPay/*, banner*/]) => {
+                   /*taxInvoice, contribution,*/ microPay, contentPay/*, banner*/]) => {
       // 소액결제
       if ( microPay ) {
         data.microPay = microPay;
@@ -157,13 +158,13 @@ class MyTFareSubmainController extends TwViewController {
         data.totalPayment = totalPayment.paymentRecord.slice(0, 3);
       }
       // 세금계산서
-      if ( taxInvoice ) {
-        data.taxInvoice = taxInvoice;
-      }
-      // 기부금/후원금
-      if ( contribution ) {
-        data.contribution = contribution;
-      }
+      // if ( taxInvoice ) {
+      //   data.taxInvoice = taxInvoice;
+      // }
+      // // 기부금/후원금
+      // if ( contribution ) {
+      //   data.contribution = contribution;
+      // }
       // 배너 정보 - client에서 호출하는 방식으로 변경 (19/01/22)
       // if ( banner.code === API_CODE.REDIS_SUCCESS ) {
       //   if ( !FormatHelper.isEmpty(banner.result) ) {
@@ -191,7 +192,7 @@ class MyTFareSubmainController extends TwViewController {
       this._getContentPrepay()
       // this.redisService.getData(this.bannerUrl),
     ).subscribe(([usage, paymentInfo, microPay, contentPay/*, banner*/]) => {
-      if ( usage.info ) {
+      if ( usage && usage.info ) {
         this.error.render(res, {
           title: MYT_FARE_SUBMAIN_TITLE.MAIN,
           code: usage.info.code,
@@ -207,6 +208,8 @@ class MyTFareSubmainController extends TwViewController {
           // 사용요금
           const usedAmt = parseInt(usage.useAmtTot, 10);
           data.useAmtTot = FormatHelper.addComma(usedAmt.toString() || '0');
+        } else {
+          data.isRealTime = false;
         }
         // 납부/청구 정보
         if ( paymentInfo ) {
@@ -320,12 +323,7 @@ class MyTFareSubmainController extends TwViewController {
       if ( resp.code === API_CODE.CODE_00 ) {
         if ( resp.result.invDt.length === 0 ) {
           // no data
-          return {
-            info: {
-              code: '',
-              msg: MYT_FARE_PAYMENT_ERROR.DEFAULT
-            }
-          };
+          return null;
         }
         return resp.result;
       } else {

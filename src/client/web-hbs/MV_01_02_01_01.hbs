@@ -7,7 +7,7 @@
                     <h1>법정대리인 동의하기</h1>
                 </div>
                 <!-- .popup-closeBtn -->
-                <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+                <button class="popup-closeBtn fe-no-blind-close"><span class="blind">팝업 페이지 닫기</span></button>
                 <!--// .popup-closeBtn -->
             </div>
         </div>
@@ -26,17 +26,15 @@
                                 {{#if one}}
                                 <label class="tit">휴대폰번호</label>
                                 <div class="inputbox bt-add inp-btn pt6">
-                                <span class="input">
-                                    <input id="fe-input-mdn" type="text" value="{{ list.0.txt }}" title="휴대폰번호" aria-describedby="aria-phone-tx1" readonly="readonly">
-                                </span>
-                                    <span class="bt-box">
-                                    <button id="fe-bt-cert" type="button">인증번호 받기</button>
-                                </span>
-                                <span id="fe-txt-cert" class="tx-box none">
-                                    <span id="aria-phone-tx1" class="validation-txt">정상적으로 발송되었습니다.</span><!-- 정상 작동되지 않을때는 .none 추가 -->
-                                </span>
+                                    <span class="input">
+                                        <input id="fe-input-mdn" type="text" value="{{ list.0.txt }}" title="휴대폰번호" aria-describedby="aria-phone-tx1" readonly="readonly">
+                                    </span>
+                                        <span class="bt-box">
+                                        <button id="fe-bt-cert" type="button">인증번호 받기</button>
+                                    </span>
                                 </div>
                                 <span class="tx-box">
+                                    <span id="fe-txt-cert" class="validation-txt none">정상적으로 발송되었습니다.</span>
                                     <span id="fe-error-cert-time" class="error-txt none">재전송 제한시간(1분)이 지난 후에 이용해 주세요.</span>
                                     <span id="fe-error-cert-cnt" class="error-txt none">제한시간 내 인증번호를 보낼 수 있는 횟수가 넘었습니다.</span>
                                 </span>

@@ -1,4 +1,4 @@
-<div class="popup-page tw-popup fixed-bottom h60" data-menuId="M000434">
+<div class="popup-page tw-popup fixed-bottom h60 nobg" data-menuId="M000434">
     <!-- #header -->
     <div class="header-wrap">
         <div class="page-header">
@@ -18,7 +18,7 @@
                     <span class="blind">현재 선택된 회선정보 및 사용중인 {{typeText}} 정보 노출</span>
                     <span class="{{iconClass}}"><span class="blind">선택된 회선정보 아이콘</span></span>
                     <div class="in-info">
-                        <span class="number"><span class="blind">회선번호</span>{{svcNumMask}}</span>
+                        <span class="number lh-full"><span class="blind">회선번호</span>{{svcNickname}}_{{svcNumMask}}</span>
                     </div>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                         </span>
                         <span class="tit-tx"><span class="blind">{{joinTypeText}}할 상품정보</span>{{toProdName}}</span>
                         {{#if isNumberBasFeeInfo}}
-                            <span class="sub-disc03"><span class="tx-bold vbl">{{toProdBasFeeInfo}}원</span> 부가세포함</span>
+                            <span class="sub-disc03"><span class="tx-bold vbl">월 {{toProdBasFeeInfo}}원</span> 부가세포함</span>
                         {{else}}
                             <span class="sub-disc03"><span class="tx-bold vbl">{{toProdBasFeeInfo}}</span></span>
                         {{/if}}
@@ -103,7 +103,7 @@
 
             {{#if isAgreement}}
                 <div class="ti-caption-gray">
-                    <h3 class="tit">약관 및 이용동의</h3>
+                    <h3 class="tit">약관과 이용 동의</h3>
                 </div>
                 <!-- .cont-box -->
                 <div class="cont-box nogaps fe-agree_wrap">

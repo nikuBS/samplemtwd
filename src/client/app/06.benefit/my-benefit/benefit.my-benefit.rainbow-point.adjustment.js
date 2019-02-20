@@ -38,7 +38,8 @@ Tw.BenefitMyBenefitRainbowPointCommon.prototype = {
   },
 
   _changeLine: function (line, $target) {
-    $target.find('.fe-svc-num').text(line.svcNum);
+    var dashedSvcNum = Tw.FormatHelper.conTelFormatWithDash(line.svcNum);
+    $target.find('.fe-svc-num').text(dashedSvcNum);
     $target.data('svc-mgmt-num', line.svcMgmtNum);
   },
 

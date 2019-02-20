@@ -249,9 +249,13 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     $('#fe-err-no-stopdt').hide();
     if(!this.$select_stop_input.val()){
       $('#fe-err-no-stopdt').show();
+      this.addressFormData.stopPrefrDt = '';
+      return;
     }
 
+    var curDt = Tw.DateHelper.getCurrentDateTime('YYYY-MM-DD');
     var tempDt = this.$select_stop_input.val();
+    tempDt = (tempDt < curDt ? curDt : tempDt);
 
     this.$select_stop_input.val( tempDt );
     this.addressFormData.stopPrefrDt = tempDt;
@@ -267,6 +271,8 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     $('#fe-err-no-instdt').hide();
     if(!this.$select_install_input.val()){
       $('#fe-err-no-instdt').show();
+      this.addressFormData.setPrefrDt = '';
+      return;
     }
 
     var curDt = Tw.DateHelper.getCurrentDateTime('YYYY-MM-DD');
@@ -278,16 +284,18 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     this.$select_install_input.val( tempDt );
     this.addressFormData.setPrefrDt = tempDt;
 
-    // //유효성 체크
-    // if ( this._dateChkBetween(tempDt, curDt, endDt) ) {
-    //   Tw.Logger.info('[범위에 포함]');
-    //   this.$select_install_input.val( tempDt );
-    //   this.addressFormData.setPrefrDt = tempDt;
-    //
-    // } else {
-    //   Tw.Logger.info('[범위에 포함 안됨!!]', this.$select_install_input);
-    //   this.$select_install_input.val('');
-    // }
+    //유효성 체크
+    if ( this._dateChkBetween(tempDt, curDt, endDt) ) {
+      Tw.Logger.info('[범위에 포함]');
+      this.$select_install_input.val( tempDt );
+      this.addressFormData.setPrefrDt = tempDt;
+
+    } else {
+      Tw.Logger.info('[범위에 포함 안됨!!]', this.$select_install_input);
+      tempDt = (tempDt > endDt ? endDt : curDt);
+      this.$select_install_input.val(tempDt);
+      this.addressFormData.setPrefrDt = tempDt;
+    }
 
     this._formValidateionChk();
     Tw.Logger.info('[addressFormData]', this.addressFormData);
@@ -377,17 +385,6 @@ Tw.MyTJoinWireModifyAddress.prototype = {
         Tw.CommonHelper.endLoading('.container');
         Tw.Error(err.status, err.statusText).pop();
       });
-
-    // var thisMain = this;
-    // $.ajax('http://localhost:3000/mock/wire.BFF_05_0160.json')
-    //   .done(function (resp) {
-    //     Tw.Logger.info(resp);
-    //     thisMain._freeCallCheckInfoInit(resp);
-    //   })
-    //   .fail(function (err) {
-    //     Tw.Logger.info(err);
-    //   });
-
   },
   _chgWireAddrInfoInit: function (res) {
     Tw.CommonHelper.endLoading('.container');

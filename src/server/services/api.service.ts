@@ -186,7 +186,6 @@ class ApiService {
   }
 
   private requestLogin(command, params, type): Observable<any> {
-    let result = {};
     return this.request(command, params)
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
@@ -204,7 +203,7 @@ class ApiService {
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
           const category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
-          result = {
+          const curSvcInfo = {
             userId: resp.result.userId,
             xtUserId: resp.result.xtUserId,
             totalSvcCnt: resp.result.totalSvcCnt,
@@ -215,7 +214,7 @@ class ApiService {
             if ( !FormatHelper.isEmpty(curLine) ) {
               curLine.map((target) => {
                 if ( target.expsSeq === '1' ) {
-                  Object.assign(result, target);
+                  Object.assign(curSvcInfo, target);
                 }
               });
               // delete resp.result.userId;
@@ -227,7 +226,7 @@ class ApiService {
 
           this.loginService.clearXtCookie();
           return Observable.combineLatest(
-            this.loginService.setSvcInfo(result),
+            this.loginService.setSvcInfo(curSvcInfo),
             this.loginService.setAllSvcInfo(resp.result));
         } else {
           return Observable.combineLatest(
@@ -244,12 +243,11 @@ class ApiService {
         }
       })
       .map((resp) => {
-        return { code: API_CODE.CODE_00, result: result };
+        return { code: API_CODE.CODE_00, result: this.loginService.getSvcInfo() };
       });
   }
 
   private requestSLogin(command, params, type): Observable<any> {
-    let result = {};
     return this.request(command, params)
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
@@ -266,14 +264,14 @@ class ApiService {
       .switchMap((resp) => this.request(API_CMD.BFF_01_0005, {}))
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          result = {
+          const curSvcInfo = {
             totalSvcCnt: 1,
             expsSvcCnt: 1
           };
-          Object.assign(result, resp.result);
+          Object.assign(curSvcInfo, resp.result);
 
           this.loginService.clearXtCookie();
-          return this.loginService.setSvcInfo(result);
+          return this.loginService.setSvcInfo(curSvcInfo);
         } else {
           return this.loginService.setSvcInfo(null);
         }
@@ -294,7 +292,7 @@ class ApiService {
           return this.loginService.setChildInfo(null);
         }
       }).map((resp) => {
-        return { code: API_CODE.CODE_00, result: result };
+        return { code: API_CODE.CODE_00, result: this.loginService.getSvcInfo() };
       });
   }
 

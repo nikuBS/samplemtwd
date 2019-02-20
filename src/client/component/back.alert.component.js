@@ -9,7 +9,8 @@ Tw.BackAlert = function (rootEl, isPage) {
   this._historyService = new Tw.HistoryService(rootEl);
   this._isPage = isPage;
 
-  this.init();
+  // back key event init
+  // this.init();
 };
 
 Tw.BackAlert.prototype = {
@@ -17,7 +18,7 @@ Tw.BackAlert.prototype = {
     $(window).on(Tw.NATIVE_BACK, $.proxy(this.onClose, this));
   },
   onClose: function () {
-    this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
+    this._popupService.openConfirmButton(Tw.ALERT_CANCEL.CONTENTS, Tw.ALERT_CANCEL.TITLE,
       $.proxy(this._closePop, this), $.proxy(this._closeCallback, this),
       Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
   },

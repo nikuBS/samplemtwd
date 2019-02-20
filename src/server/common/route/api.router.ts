@@ -38,7 +38,7 @@ class ApiRouter {
     SESSION: { path: '/session', method: API_METHOD.POST, target: this.generateSession },
     EASY_LOGIN_AOS: { path: '/user/login/android', method: API_METHOD.POST, target: this.easyLoginAos },                        // BFF_03_0017
     EASY_LOGIN_IOS: { path: '/user/login/ios', method: API_METHOD.POST, target: this.easyLoginIos },                            // BFF_03_0018
-    CHANGE_SESSION: { path: '/common/selected-sessions', method: API_METHOD.PUT, target: this.changeSession },                  // BFF_01_0003
+    CHANGE_SESSION: { path: '/common/selected-sessions', method: API_METHOD.POST, target: this.changeSession },                  // BFF_01_0003
     LOGIN_SVC_PASSWORD: {
       path: '/user/service-password-sessions',
       method: API_METHOD.POST,
@@ -46,12 +46,12 @@ class ApiRouter {
     },    // BFF_03_0009
     LOGIN_USER_LOCK: { path: '/user/locks', method: API_METHOD.DELETE, target: this.setUserLocks },                             // BFF_03_0010
     CHANGE_SVC_PASSWORD: {
-      path: '/:version/my-t/service-passwords',
-      method: API_METHOD.PUT,
+      path: '/my-t/service-passwords',
+      method: API_METHOD.POST,
       target: this.changeSvcPassword
     },  // BFF_03_0016
-    CHANGE_LINE: { path: '/user/services', method: API_METHOD.PUT, target: this.changeLine },                                   // BFF_03_0005
-    CHANGE_NICKNAME: { path: '/user/nick-names', method: API_METHOD.PUT, target: this.changeNickname },                         // BFF_03_0006
+    CHANGE_LINE: { path: '/user/services', method: API_METHOD.POST, target: this.changeLine },                                   // BFF_03_0005
+    CHANGE_NICKNAME: { path: '/user/nick-names', method: API_METHOD.POST, target: this.changeNickname },                         // BFF_03_0006
     UPDATE_SVC: { path: '/common/selected-sessions', method: API_METHOD.GET, target: this.updateSvcInfo },                       // BFF_01_0005
 
     UPLOAD_FILE: { path: '/uploads', method: API_METHOD.POST, target: this.uploadFile },

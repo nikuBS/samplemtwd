@@ -18,16 +18,13 @@ Tw.MyTDataTingBlock = function (rootEl) {
 
 Tw.MyTDataTingBlock.prototype = {
   _init: function () {
-    this._getBlockInfo();
+    this._hideListItem();
   },
 
   _cachedElement: function () {
-    this.tpl_block_item = Handlebars.compile($('#tpl-ting-block-item').html());
   },
 
   _bindEvent: function () {
-    this.$container.on('click', '.fe-ting-block', $.proxy(this._openTingBlock, this));
-    this.$container.on('click', '.fe-close-wrap-ting-block', $.proxy(this._hideTingBlock, this));
     this.$container.on('click', '.fe-request-ting-block', $.proxy(this._onShowBlockPopup, this));
     this.$container.on('click', '.fe-history-more', $.proxy(this._onShowMoreList, this));
   },
@@ -51,41 +48,6 @@ Tw.MyTDataTingBlock.prototype = {
       $('.fe-wrap-block-list li').slice(20).hide();
     }
   },
-
-  _getBlockInfo: function () {
-    this._apiService.request(Tw.API_CMD.BFF_06_0027, {
-      fromDt: Tw.DateHelper.getPastYearShortDate(),
-      endDt: Tw.DateHelper.getCurrentShortDate()
-    }).done($.proxy(this._onSuccessBlockHistory, this));
-  },
-
-  _onSuccessBlockHistory: function (res) {
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var blockList = res.result;
-
-      if ( blockList.length >= 1 ) {
-        blockList = _.map(blockList, function (item) {
-          item.opDt = Tw.DateHelper.getShortDate(item.opDt);
-          return item;
-        });
-      }
-
-      $('.fe-wrap-block-list').html(this.tpl_block_item({ block_list: blockList }));
-      this._hideListItem();
-
-      if ( blockList.length !== 0 ) {
-        $('.fe-wrap-block-history').show();
-        $('.fe-block-history-empty').hide();
-      } else {
-        $('.fe-wrap-block-history').hide();
-        $('.fe-block-history-empty').show();
-      }
-
-    } else {
-      Tw.Error(res.code, res.msg).pop();
-    }
-  },
-
   _onShowBlockPopup: function () {
     this._popupService.openModalTypeA(
       Tw.MYT_DATA_TING.A81_TITLE,
@@ -111,7 +73,6 @@ Tw.MyTDataTingBlock.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       Tw.CommonHelper.toast(Tw.MYT_DATA_TING.SUCCESS_BLOCK);
       this._goToMytMain();
-      // this._popupService.openAlert(Tw.MYT_DATA_TING.SUCCESS_BLOCK, null, null, $.proxy(this._goToMytMain, this));
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -123,10 +84,5 @@ Tw.MyTDataTingBlock.prototype = {
 
   _openTingBlock: function () {
     this._hideListItem();
-    $('.fe-wrap-ting-block').show();
-  },
-
-  _hideTingBlock: function () {
-    $('.fe-wrap-ting-block').hide();
   }
 };

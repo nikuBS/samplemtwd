@@ -1,0 +1,108 @@
+<%#
+* FileName: myt-data.ting.block.html
+* Author: Jiman Park (jiman.park@sk.com)
+* Date: 2019.02.15
+%>
+
+<% include ../../components/start.component.html %>
+
+<body style="height: 100%;">
+
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <div class="container">
+        </div>
+    </div>
+    <!--// #contents -->
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup fe-wrap-ting-block">
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>팅 선물 차단 설정</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+
+                <hr class="cont-sp type1" aria-hidden="true">
+
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-hoz">
+                    <ul class="liststyle-type01">
+                        <li class="category-type">
+                            <p class="title tx-bold">선물 허용 중</p>
+                            <div class="infobox">
+                                <div class="bt-alone">
+                                    <button class="bt-line-red1 fe-request-ting-block">차단하기</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!--// .cont-box -->
+
+                <hr class="cont-sp type1" aria-hidden="true">
+                <!-- .cont-box -->
+
+                <% if ( blockList.length === 0 ) { %>
+                <div class="result-none fe-block-history-empty">
+                    설정내역이 없습니다.
+                </div>
+                <% } else { %>
+                <div class="cont-box nogaps-btm fe-wrap-block-history">
+                    <h3>상세내역</h3>
+                    <div class="history-list type2">
+                        <ul class="fe-wrap-block-list">
+                            <% blockList.map( item => { %>
+                            <li>
+                                <div class="li-elem">
+                                    <div class="title-box">
+                                        <% if( item.opClCd === '3' ) { %>
+                                        <span class="tit">충전 허용</span>
+                                        <% } else { %>
+                                        <span class="tit">충전 차단</span>
+                                        <% } %>
+                                        <span class="sub-tit">
+                                                <span><%-item.opOrgNm%></span><span><%-convertDate(item.opDt)%></span>
+                                            </span>
+                                        <% }) %>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <% if ( blockList.length > 20 ) { %>
+                        <div class="btn-more fe-history-more">
+                            <button>더 보기</button>
+                        </div>
+                        <% } %>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+        </div>
+        <!-- // .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="popup-closeBtn fe-common-back fe-close-wrap-ting-block"><span class="blind">팝업 페이지 닫기</span></button>
+        <!--// .popup-closeBtn -->
+    </div>
+</div>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    var oMyTDataTingBlock = new Tw.MyTDataTingBlock($('.wrap'));
+  });
+</script>
+</body>
+<% include ../../components/end.component.html %>

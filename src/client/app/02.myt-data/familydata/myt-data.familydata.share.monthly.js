@@ -24,10 +24,11 @@ Tw.MyTDataFamilyShareMonthly.prototype = {
 
   _cachedElement: function() {
     this.$amountInput = this.$container.find('.fe-amount');
+    this.$switch = this.$container.find('');
   },
 
   _bindEvent: function() {
-    this.$container.on('click', 'span.btn-switch', $.proxy(this._openDeleteMonthlyDataPopup, this));
+    this.$container.on('touchstart click', 'span.btn-switch', $.proxy(this._openDeleteMonthlyDataPopup, this));
     this.$container.on('click', '.fe-submit', $.proxy(this._confirmSubmit, this));
   },
 
@@ -64,6 +65,7 @@ Tw.MyTDataFamilyShareMonthly.prototype = {
   _openDeleteMonthlyDataPopup: function() {
     var POPUP = Tw.MYT_DATA_FAMILY_DELETE_SHARE_MONTHLY;
     this._popupService.openModalTypeA(POPUP.TITLE, POPUP.CONTENTS, POPUP.BTN_NAME, null, $.proxy(this._deleteMonthlyData, this));
+    return false;
   },
 
   _deleteMonthlyData: function() {

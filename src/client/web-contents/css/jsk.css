@@ -1650,6 +1650,9 @@
       clip: rect(0em, 60px, 60px, 30px); }
 
 /* widget */
+.horizon-fullbox .widget-box {
+  margin: 0 -1rem; }
+
 .widget-box .horizontal-slide {
   width: 100%;
   overflow-x: auto; }
@@ -2872,7 +2875,7 @@
       display: block; }
     .custom-range .value .val {
       display: block;
-      font-size: 0.625rem; }
+      font-size: 1.125rem; }
       .custom-range .value .val .set {
         font-weight: 700;
         font-size: 1.125rem; }
@@ -2995,7 +2998,7 @@
       color: #178BCE; }
     .list-comp-charging .info-right .unit {
       margin-left: 0.3125rem;
-      font-size: 0.625rem;
+      font-size: 1.125rem;
       color: #178BCE; }
   .list-comp-charging .badge {
     vertical-align: middle;
@@ -3219,7 +3222,12 @@
 
 /* BE_03_01 */
 .brand_link {
-  position: relative; }
+  position: relative;
+  display: table;
+  padding: 0 2.125rem 0 1rem;
+  height: 49px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
   .brand_link:after {
     content: '';
     position: absolute;
@@ -3228,11 +3236,11 @@
     bottom: 0;
     border-bottom: 1px solid #f1f1f1; }
   .brand_link > li {
-    padding-left: 1.875rem; }
+    display: table-cell;
+    padding-left: 1.875rem;
+    float: none !important; }
     .brand_link > li:first-of-type {
-      padding-left: 1rem; }
-    .brand_link > li:last-of-type {
-      padding-right: 1.875rem; }
+      padding-left: 0; }
   .brand_link .unit {
     position: relative;
     display: inline-block;

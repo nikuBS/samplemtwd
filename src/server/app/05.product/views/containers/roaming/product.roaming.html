@@ -38,6 +38,8 @@
             <hr class="cont-sp type1" aria-hidden="true" />
             <% } %>
 
+            <% if (banners) { %>
+            <% if (banners.topBanners.length > 0) { %>
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <div class="main-charge-box advice section-swiper-box main-banner-img">
@@ -47,8 +49,8 @@
                             <div class="slider-box">
                                 <ul class="slider">
                                     <% for (var index in banners.topBanners) { %>
-                                    <li>
-                                        <button class="fe-link-internal" data-url="<%- banners.topBanners[index].imgLinkUrl %>">
+                                    <li data-xt_eid="<%- banners.topBanners[index].oferStcCd %>" data-xt_csid="NO" data-xt_action="BV">
+                                        <button class="fe-link-internal" data-url="<%- banners.topBanners[index].imgLinkUrl %>" data-xt_eid="<%- banners.topBanners[index].oferStcCd %>" data-xt_csid="NO" data-xt_action="BC">
                                             <img src="<%= CDN %><%- banners.topBanners[index].bnnrFilePathNm %>" alt="<%- banners.topBanners[index].bnnrImgAltCtt %>">
                                         </button>
                                     </li>
@@ -62,7 +64,9 @@
             </div>
             <!--// .cont-box -->
             <hr class="cont-sp type1" aria-hidden="true" />
+            <% } %>
 
+            <% if (banners.centerBanners.length > 0) { %>
             <!-- .cont-box -->
             <div class="cont-box nogaps bgnone noborder">
                 <div class="travel-info">
@@ -89,6 +93,8 @@
                 </div>
             </div>
             <!--// .cont-box -->
+            <% } %>
+            <% } %>
 
             <!-- .cont-box -->
             <div class="cont-box nogaps">
@@ -132,7 +138,7 @@
             <% if (sprateProds) { %>
             <div class="cont-box nogaps-hoz">
                 <div class="roaming-product type01">
-                    <div class="ti-caption-type01 pb20">
+                    <div class="ti-caption-type01 pb0">
                         <h2 class="tit"><%- sprateProds.expsTitNm %></h2>
                     </div>
                     <ul class="recommendedrate-list">

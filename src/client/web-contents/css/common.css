@@ -1,11 +1,90 @@
 @charset "UTF-8";
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 100;
+  src: local("Noto Sans KR Thin"), local("NotoSansKR-Thin"), url("../fonts/noto-sans-kr-v8-korean_latin-100.woff2") format("woff2"), url("../fonts/noto-sans-kr-v8-korean_latin-100.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
+
+/* noto-sans-kr-300 - korean_latin */
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 300;
+  src: local("Noto Sans KR Light"), local("NotoSansKR-Light"), url("../fonts/noto-sans-kr-v8-korean_latin-300.woff2") format("woff2"), url("../fonts/noto-sans-kr-v8-korean_latin-300.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
+
+/* noto-sans-kr-regular - korean_latin */
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  src: local("Noto Sans KR Regular"), local("NotoSansKR-Regular"), url("../fonts/noto-sans-kr-v8-korean_latin-regular.woff2") format("woff2"), url("../fonts/noto-sans-kr-v8-korean_latin-regular.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
+
+/* noto-sans-kr-500 - korean_latin */
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  src: local("Noto Sans KR Medium"), local("NotoSansKR-Medium"), url("../fonts/noto-sans-kr-v8-korean_latin-500.woff2") format("woff2"), url("../fonts/noto-sans-kr-v8-korean_latin-500.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
+
+/* noto-sans-kr-700 - korean_latin */
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  src: local("Noto Sans KR Bold"), local("NotoSansKR-Bold"), url("../fonts/noto-sans-kr-v8-korean_latin-700.woff2") format("woff2"), url("../fonts/noto-sans-kr-v8-korean_latin-700.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
+
+/* roboto-100 - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 100;
+  src: local("Roboto Thin"), local("Roboto-Thin"), url("../fonts/roboto-v18-latin-100.woff2") format("woff2"), url("../fonts/roboto-v18-latin-100.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
+
+/* roboto-300 - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  src: local("Roboto Light"), local("Roboto-Light"), url("../fonts/roboto-v18-latin-300.woff2") format("woff2"), url("../fonts/roboto-v18-latin-300.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
+
+/* roboto-regular - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local("Roboto"), local("Roboto-Regular"), url("../fonts/roboto-v18-latin-regular.woff2") format("woff2"), url("../fonts/roboto-v18-latin-regular.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
+
+/* roboto-500 - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: local("Roboto Medium"), local("Roboto-Medium"), url("../fonts/roboto-v18-latin-500.woff2") format("woff2"), url("../fonts/roboto-v18-latin-500.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
+
+/* roboto-700 - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  src: local("Roboto Bold"), local("Roboto-Bold"), url("../fonts/roboto-v18-latin-700.woff2") format("woff2"), url("../fonts/roboto-v18-latin-700.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
+
 /*Default set*/
 html, body, form, div, p, h1, h2, h3, h4, h5, h6, dl, dt, dd, ul, ol, li, fieldset, a, button, input, textarea, table, th, td, figure, hr, i, b {
   margin: 0;
   padding: 0;
   font-weight: 400;
   -webkit-text-size-adjust: none;
-  font-family: 'Apple SD Gothic Neo', 'Arial', sans-serif;
+  font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", 'Droid Sans', "sans-serif", "Noto Sans", "Noto Sans CJK";
   font-style: normal; }
 
 body {
@@ -45,7 +124,7 @@ body {
 
 /*font basic*/
 .ff-hn {
-  font-family: "Apple SD Gothic Neo", "Arial", sans-serif; }
+  font-family: "Apple SD Gothic Neo", "애플 SD 산돌고딕 Neo", "Helvetica Neue", "Roboto", "Droid Sans", "sans-serif", "Noto Sans", "Noto Sans CJK"; }
 
 .tx-normal {
   font-weight: 300 !important; }
@@ -89,7 +168,7 @@ input[type=text], input[type=file], input[type=password], input[type=number], in
     -webkit-box-flex: 1;
         -ms-flex: 1;
             flex: 1;
-    margin: 0 0 0 0.625rem;
+    margin: 0 0 0 0.375rem;
     text-align: center;
     font-size: 0.875rem;
     font-weight: 400;
@@ -104,7 +183,7 @@ input[type=text], input[type=file], input[type=password], input[type=number], in
               box-sizing: border-box;
       min-height: 2.375rem;
       border-radius: 0.3125rem;
-      padding: 0 0.5rem;
+      padding: 0 1rem;
       font-size: 0.875rem;
       font-weight: 400;
       color: #178BCE;
@@ -895,7 +974,9 @@ button.bt-link-tx, a.bt-link-tx {
     position: relative;
     font-size: inherit;
     color: #178BCE;
-    text-decoration: underline; }
+    text-decoration: underline;
+    padding: 0.625rem !important;
+    margin: -0.625rem; }
   button.bt-link-tx.disabled, a.bt-link-tx.disabled {
     border-color: #d1d1d1;
     color: #757575; }
@@ -4488,6 +4569,9 @@ a.ui-button:active,
           position: absolute;
           bottom: 0.75rem;
           left: 0.9375rem; }
+        .popup .popup-info .popup-contents .infocopy .underlink {
+          text-decoration: underline;
+          color: #178BCE; }
       .popup .popup-info .popup-contents .notice-list {
         padding: 0.9375rem;
         border-radius: 0.5rem;
@@ -4739,7 +4823,7 @@ a.ui-button:active,
   margin-bottom: 1.375rem;
   font-size: 1.25rem; }
   .ti-desc .num {
-    font-family: "Apple SD Gothic Neo", "Arial", sans-serif;
+    font-family: "Roboto";
     vertical-align: baseline; }
 
 .ti-normal {
@@ -4885,7 +4969,7 @@ a.ui-button:active,
     padding: 0.8125rem 0;
     width: 100%; }
   .bt-more span {
-    font-family: "Apple SD Gothic Neo", "Arial", sans-serif;
+    font-family: "Roboto";
     vertical-align: baseline; }
   .bt-more.round {
     border: none;
@@ -4931,6 +5015,8 @@ a.ui-button:active,
   -ms-touch-action: pan-y;
   touch-action: pan-y;
   -webkit-tap-highlight-color: transparent; }
+  .slick-slider.slick-dotted-none .slick-dots {
+    display: none; }
 
 .slick-list {
   position: relative;
@@ -5897,6 +5983,9 @@ a.ui-button:active,
       color: #000000;
       text-align: center;
       /*font-weight:$fw-normal;*/ }
+      .btn-link-list li button.disabled, .btn-link-list li a.disabled {
+        color: #dcdcdc;
+        pointer-events: none; }
   .btn-link-list.col3 li {
     width: 33.33333333333333%;
     border-left: 1px solid #f2f2f2; }

@@ -22,7 +22,11 @@ export default class MembershipMyReissue extends TwViewController {
       if ( resp.code === API_CODE.CODE_00 ) {
         myReissueData = this.parseMyReissueData(resp.result);
       } else {
-        myReissueData = resp;
+        return this.error.render(res, {
+          code: resp.code,
+          msg: resp.msg,
+          svcInfo: svcInfo
+        });
       }
 
       res.render('my/membership.my.reissue.html', {

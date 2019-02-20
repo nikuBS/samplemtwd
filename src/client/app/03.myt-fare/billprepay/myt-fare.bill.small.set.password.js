@@ -105,7 +105,7 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     this.$layer.on('blur', '.fe-confirm-password', $.proxy(this._checkConfirmPassword, this));
     this.$layer.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$layer.on('click', '.fe-set', $.proxy(this._setPassword, this));
-    this.$layer.on('click', '.fe-close', $.proxy(this._onClose, this));
+    // this.$layer.on('click', '.fe-close', $.proxy(this._onClose, this));
   },
   _checkIsAbled: function () {
     var isValid = false;
@@ -229,12 +229,12 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     this._historyService.goLoad('/product/callplan/' + this.$target.attr('data-cpin'));
   },
   _onClose: function () {
-    if (this._isChanged()) {
-      this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-        $.proxy(this._closePop, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-    } else {
-      this._popupService.close();
-    }
+    // if (this._isChanged()) {
+    //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
+    //     $.proxy(this._closePop, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+    // } else {
+    //   this._popupService.close();
+    // }
   },
   _isChanged: function () {
     var isChanged = !Tw.FormatHelper.isEmpty(this.$newPassword.val()) || !Tw.FormatHelper.isEmpty(this.$confirmPassword.val());

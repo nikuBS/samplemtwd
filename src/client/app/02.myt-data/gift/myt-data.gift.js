@@ -47,7 +47,7 @@ Tw.MyTDataGift.prototype = {
     this.$container.on('click', '.fe-close-available_product', $.proxy(this._hideAvailableProduct, this));
     this.$container.on('click', '.fe-show-more-amount', $.proxy(this._onShowMoreData, this));
     this.$inputImmediatelyGift.on('focus', $.proxy(this._onLoadRecently, this));
-    this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
+    // this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
     this.$container.on('currentRemainDataInfo', $.proxy(this._currentRemainDataInfo, this));
     this.$remainBtn.on('click', $.proxy(this._getRemainDataInfo, this));
   },
@@ -78,12 +78,15 @@ Tw.MyTDataGift.prototype = {
     //   this._remainApiError();
     //   return;
     // }
+    var nLimitedGiftUsage = 500;
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       var result = res.result;
       if ( result.giftRequestAgainYn === 'N' ) {
         if ( Tw.FormatHelper.isEmpty(result.dataRemQty) ) {
           this._remainApiError();
+        } else if ( Number(result.dataRemQty) < nLimitedGiftUsage ) {
+          this.$container.trigger('showUnableGift', 'GFT0004');
         } else {
           // API DATA SUCCESS
           this._remainApiSuccess();

@@ -157,23 +157,27 @@ Tw.QuickMenuEditComponent.prototype = {
           return result;
         }
       } else {
-        if ( this._checkNotShow(target.menuId) ) {
+        if ( target.menuScutExpsYn === 'Y' ) {
           target.quickAdded = false;
           result.push(target);
         }
+        // if ( this._checkNotShow(target.menuId) ) {
+        //   target.quickAdded = false;
+        //   result.push(target);
+        // }
         return result;
       }
     }, initial, this);
   },
   _mergeList: function (menuList, quickList) {
     this._findAddedMenu(menuList, quickList);
-    var notMenu = _.filter(quickList, function (quick) {
-      return !quick.notUsed;
-    });
-    _.map(notMenu, $.proxy(function (menu) {
-      menu.quickAdded = true;
-    }, this));
-    menuList = menuList.concat(notMenu);
+    // var notMenu = _.filter(quickList, function (quick) {
+    //   return !quick.notUsed;
+    // });
+    // _.map(notMenu, $.proxy(function (menu) {
+    //   menu.quickAdded = true;
+    // }, this));
+    // menuList = menuList.concat(notMenu);
     return menuList;
   },
   _findAddedMenu: function (menuList, quickList) {

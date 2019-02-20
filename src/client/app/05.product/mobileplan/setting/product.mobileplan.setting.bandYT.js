@@ -10,10 +10,15 @@ Tw.ProductMobileplanSettingBandYT = function (params) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
+  this._historyService.init();
 
   this._render();
   this._bindEvent();
   this._initialize();
+
+  if (this._historyService.isBack()) {
+    this._historyService.goBack();
+  }
 };
 
 Tw.ProductMobileplanSettingBandYT.prototype = {
@@ -79,6 +84,14 @@ Tw.ProductMobileplanSettingBandYT.prototype = {
 
   _bindSuccessPopup: function ($popupContainer) {
     $popupContainer.on('click', '.fe-btn_success_close', $.proxy(this._closePop, this));
+    $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
+  },
+
+  _closeAndGo: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
   },
 
   _closePop: function () {

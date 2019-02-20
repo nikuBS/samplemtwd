@@ -94,7 +94,7 @@ Tw.ProductCommonConfirm.prototype = {
     this._popupService.open({
       'pop_name': 'type_tx_scroll',
       'title': $btn.data('title'),
-      'title_type': 'sub',
+      'title_type': 'tit-tooltip',
       'cont_align':'tl',
       'contents': $btn.parent().find('.fe-tip_view_html').html(),
       'bt_b': [{

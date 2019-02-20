@@ -40,6 +40,8 @@ Tw.CommonSearchMore.prototype = {
     this.$container.on('click','.filterselect-btn',$.proxy(this._showSelectFilter,this));
     this.$container.on('click','.list-data',$.proxy(this._goLink,this));
     this.$container.find('#contents').removeClass('none');
+    this._removeDuplicatedSpace(this.$container.find('.cont-sp'),'cont-sp');
+    new Tw.XtractorService(this.$container);
   },
   _arrangeData : function (data,category) {
     if(!data){
@@ -56,19 +58,19 @@ Tw.CommonSearchMore.prototype = {
           if(data[i][key].charAt(0)==='|'){
             data[i][key] = data[i][key].replace('|','');
           }
-          data[i][key] = data[i][key].replace(/\|/g,' > ').replace(/MyT/g,' my T ');
+          //data[i][key] = data[i][key].replace(/\|/g,' > ').replace(/MyT/g,' my T ');
         }
-        if(key==='MENU_URL'){
-          data[i][key] = data[i][key].replace('https://app.tworld.co.kr','');
-        }
-        if(category==='prevent'&&key==='DOCID'){
-          data[i][key] = Number(data[i][key].replace(/[A-Za-z]/g,''));
-        }
+        // if(key==='MENU_URL'){
+        //   data[i][key] = data[i][key].replace('https://app.tworld.co.kr','');
+        // }
+        // if(category==='prevent'&&key==='DOCID'){
+        //   data[i][key] = Number(data[i][key].replace(/[A-Za-z]/g,''));
+        // }
         if(category==='direct'&&key==='ALIAS'){
           if(data[i][key]==='shopacc'){
-            data[i].linkUrl = Tw.OUTLINK.DIRECT_ACCESSORY+'?CATEGORY_ID='+data[i].CATEGORY_ID+'&ACCESSORY_ID=';
+            data[i].linkUrl = Tw.OUTLINK.DIRECT_ACCESSORY+'?categoryId='+data[i].CATEGORY_ID+'&accessoryId=';
           }else{
-            data[i].linkUrl = Tw.OUTLINK.DIRECT_MOBILE+'?PRODUCT_GRP_ID=';
+            data[i].linkUrl = Tw.OUTLINK.DIRECT_MOBILE+'?categoryId=20010001&productGrpId=';
           }
         }
         if(key==='METATAG'){
@@ -85,14 +87,14 @@ Tw.CommonSearchMore.prototype = {
     }
     return data;
   },
-  _showShortcutList : function (data,template,parent) {
+  _showShortcutList : function (data,template,$parent) {
     var shortcutTemplate = template.html();
     var templateData = Handlebars.compile(shortcutTemplate);
     if(data.length<=0){
-      parent.hide();
+      $parent.addClass('none');
     }
     _.each(data,function (listData) {
-      parent.append(templateData({listData : listData , CDN : this._cdn}));
+      $parent.append(templateData({listData : listData , CDN : this._cdn}));
     });
   },
   _decodeEscapeChar : function (targetString) {
@@ -101,7 +103,7 @@ Tw.CommonSearchMore.prototype = {
     return returnStr;
   },
   _inputChangeEvent : function (args) {
-    if(args.keyCode===13){
+    if(Tw.InputHelper.isEnter(args)){
       this._doSearch();
     }
   },
@@ -129,15 +131,17 @@ Tw.CommonSearchMore.prototype = {
     Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(recentlyKeywordData));
   },
   _searchRelatedKeyword : function (targetEvt) {
-    var keyword = $(targetEvt.currentTarget).data('param');
-    var goUrl = '/common/search?keyword='+keyword+'&step='+(Number(this._step)+1);
+    targetEvt.preventDefault();
+    var $targetElement = $(targetEvt.currentTarget);
+    var keyword = $targetElement.data('param');
+    //var goUrl = '/common/search?keyword='+keyword+'&step='+(Number(this._step)+1);
     this._addRecentlyKeyword(keyword);
-    this._historyService.goLoad(goUrl);
+    this._historyService.goLoad($targetElement.attr('href'));
   },
   _doSearch : function () {
     var keyword = this.$inputElement.val();
     if(Tw.FormatHelper.isEmpty(keyword)){
-      this._popupService.openAlert(Tw.ALERT_MSG_SEARCH.KEYWORD_ERR);
+      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR);
       return;
     }
     var inResult = this.$container.find('#resultsearch').is(':checked');
@@ -164,7 +168,7 @@ Tw.CommonSearchMore.prototype = {
       'select_filter');
   },
   _bindPopupElementEvt : function(popupElement){
-    $(popupElement).on('click','button',$.proxy(this._filterSelectEvent,this));
+    $(popupElement).on('click','.chk-link-list button',$.proxy(this._filterSelectEvent,this));
   },
   _filterSelectEvent : function (btnEvt) {
     var changeFilterUrl = this._accessQuery.in_keyword?'/common/search/in-result?category='+this._category+'&keyword='+this._accessQuery.keyword:'/common/search/more?category='+this._category+'&keyword='+this._accessQuery.keyword;
@@ -219,5 +223,13 @@ Tw.CommonSearchMore.prototype = {
     }
 
     this._historyService.goLoad(url);
+  },
+  _removeDuplicatedSpace : function ($selectedArr,className) {
+    $selectedArr.each(function(){
+      var $target = $(this);
+      if($target.next().hasClass(className)){
+        $target.addClass('none');
+      }
+    });
   }
 };

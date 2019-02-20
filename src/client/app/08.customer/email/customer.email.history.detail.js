@@ -44,6 +44,20 @@ Tw.CustomerEmailHistoryDetail.prototype = {
   _removeInquiry: function (e) {
     var inqId = $(e.currentTarget).data('inqid');
     var inqClCd = $(e.currentTarget).data('inqclcd');
+
+    this._popupService.openConfirmButton(
+      Tw.CUSTOMER_EMAIL.HISTORY_DELETE.CONTENT,
+      Tw.CUSTOMER_EMAIL.HISTORY_DELETE.TITLE,
+      $.proxy(this._requestRemoveInquiry, this, inqId, inqClCd),
+      null,
+      Tw.BUTTON_LABEL.NO,
+      Tw.BUTTON_LABEL.YES
+    );
+  },
+
+  _requestRemoveInquiry: function (inqId, inqClCd) {
+    this._popupService.close();
+
     this._apiService.request(Tw.API_CMD.BFF_08_0062, {
       inqId: inqId,
       inqClCd: inqClCd

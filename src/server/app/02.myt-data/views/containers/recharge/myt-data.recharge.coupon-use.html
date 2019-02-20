@@ -47,7 +47,7 @@
                                     <span class="icon"><i class="<%= isGift ? 'icon-gift-80' : 'icon-discount1-80' %>"><span class="blind"><%= isGift ? 'gift' : 'discount' %></span></i></span>
                                     <div class="cont">
                                         <h2 class="tit"><%= name %></h2>
-                                        <span class="txt1">유효기간 <%= period %></span>
+                                        <span class="txt1">유효기간 : <%= period %></span>
                                     </div>
                                     <span class="btn-r">
                                         <div class="bt-alone">
@@ -93,16 +93,16 @@
                                                             <% for (let i = 0; i < options.length; i++) { %>
                                                             <li class="<%= options[i].isTplan ? 'type01' : ''; %>" >
                                                                 <span class="form">
-                                                                    <input type="radio" name="sradio1" id="sradio<%= i + 1 %>" class="formradio-small" value="<%= options[i].ofrRt %>::<%= options[i].copnDtlClCd %>::<%= options[i].dataVoiceClCd %>">
+                                                                    <input type="radio" name="sradio1" id="sradio<%= i + 1 %>" class="formradio-small <%= options[i].dataVoiceClCd === 'V' ? 'type2' : '' %>" value="<%= options[i].ofrRt %>::<%= options[i].copnDtlClCd %>::<%= options[i].dataVoiceClCd %>">
                                                                     <label for="sradio<%= i + 1 %>">라디오박스</label>
                                                                 </span>
                                                                 <div class="cont">
-                                                                    <span class="stit"><%= options[i].copnDtlClNm %> 리필</span>
+                                                                    <span class="stit"><%= options[i].copnDtlClNm %>리필</span>
                                                                     <% if (options[i].qttText !== '0') { %>
                                                                     <p class="stxt1"><%= options[i].qttText %></p>
                                                                     <% } %>
                                                                     <% if (options[i].isTplan) { %>
-                                                                    <span class="stext02">T플랜 라지/패밀리/Data인피니티요금제의 경우에는 별도의 기준을 적용합니다.</span>
+                                                                    <span class="stext02">라지는 최대 15GB, 패밀리/0플랜 라지는 최대 20GB까지 리필되며, Data인피니티는 데이터무제한으로 데이터 리필 할수 없습니다.</span>
                                                                     <% } %>
                                                                 </div>
                                                             </li>
@@ -165,7 +165,7 @@
             </div>
             <!--// .container-wrap -->
             <!-- .popup-closeBtn -->
-            <button class="prev-step">취소</button>
+            <button class="prev-step fe-common-back">취소</button>
             <!--// .popup-closeBtn -->
         </div>
         <!--// .popup hbs -->

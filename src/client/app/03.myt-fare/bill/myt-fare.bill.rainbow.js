@@ -11,6 +11,7 @@ Tw.MyTFareBillRainbow = function (rootEl) {
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService(rootEl);
+  this._backAlert = new Tw.BackAlert(rootEl);
 
   this._init();
 };
@@ -208,13 +209,14 @@ Tw.MyTFareBillRainbow.prototype = {
     return reqData;
   },
   _onClose: function () {
-    if (this._isChanged()) {
-      this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-        $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
-        Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-    } else {
-      this._historyService.goBack();
-    }
+    this._backAlert.onClose();
+    // if (this._isChanged()) {
+    //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
+    //     $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
+    //     Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+    // } else {
+    //   this._historyService.goBack();
+    // }
   },
   _isChanged: function () {
     if (this.$selectedTab.attr('id') === 'tab1-tab') {

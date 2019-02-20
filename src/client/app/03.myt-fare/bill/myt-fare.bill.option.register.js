@@ -10,7 +10,7 @@ Tw.MyTFareBillOptionRegister = function (rootEl, bankList) {
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService(rootEl);
-  this._backAlert = new Tw.BackAlert(this.$container);
+  this._backAlert = new Tw.BackAlert(this.$container, true);
 
   if (!(Tw.FormatHelper.isEmpty(bankList) || bankList === '[]')) {
     bankList = JSON.parse(window.unescape(bankList));
@@ -252,11 +252,7 @@ Tw.MyTFareBillOptionRegister.prototype = {
   },
   _afterGetSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      if (res.result.returnFlag === 'autopay' || res.result.returnMsg.indexOf(Tw.BUTTON_LABEL.COMPLETE) !== -1) {
-        this._historyService.goLoad('/myt-fare/bill/option?type=' + this.$infoWrap.attr('id'));
-      } else {
-        this._popupService.openAlert(res.result.returnMsg, Tw.POPUP_TITLE.NOTIFY);
-      }
+      this._historyService.goLoad('/myt-fare/bill/option?type=' + this.$infoWrap.attr('id'));
     } else {
       this._fail(res);
     }
@@ -314,7 +310,7 @@ Tw.MyTFareBillOptionRegister.prototype = {
           !Tw.FormatHelper.isEmpty(this.$container.find('.fe-select-bank').attr('id'));
       } else {
         isValid = !Tw.FormatHelper.isEmpty(this.$cardPhoneNumber.val()) || !Tw.FormatHelper.isEmpty(this.$cardNumber.val()) ||
-          !Tw.FormatHelper.isEmpty(this.$cardY.val()) || !Tw.FormatHelper.isEmpty(this.$cardM.val()) || this._isSelectChanged;
+          !Tw.FormatHelper.isEmpty(this.$cardY.val()) || !Tw.FormatHelper.isEmpty(this.$cardM.val());
       }
     }
     return isValid;

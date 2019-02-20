@@ -1,20 +1,22 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <!-- Generator: Sketch 53 (72520) - https://sketchapp.com -->
     <title>icon_fab_lock_s</title>
     <desc>Created with Sketch.</desc>
-    <defs></defs>
     <g id="Icon_Badge_Graphic" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="##Icon/FAB/Lock/3Selected">
-            <rect id="Icon_Area" fill-opacity="0" fill="#FFFFFF" x="0" y="0" width="80" height="80"></rect>
             <g id="icon_FAB_80px_lock_p">
                 <circle id="Oval" fill="#FFFFFF" fill-rule="nonzero" cx="40" cy="40" r="40"></circle>
-                <g id="Lock" transform="translate(26.000000, 21.000000)">
-                    <rect id="Rectangle-3" stroke="#333333" stroke-width="2" fill="#333333" x="0" y="12" width="28" height="22" rx="2"></rect>
-                    <path d="M7,13 L7,7 C7,3.13400675 10.1340068,0 14,0 C17.8659932,0 21,3.13400675 21,7 L21,13" id="Rectangle-4" stroke="#333333" stroke-width="2"></path>
+                <g id="Group-2" transform="translate(26.000000, 21.000000)">
                     <polygon id="*" fill="#FFFFFF" points="12.8360656 27.7295082 12.9672131 24.2540984 10.1147541 26.1229508 9 24.057377 12.0163934 22.6147541 9 21.1721311 10.1147541 19.1065574 12.9672131 20.942623 12.8360656 17.5 15.1967213 17.5 15.0655738 20.942623 17.8196721 19.1065574 19 21.1721311 16.0163934 22.6147541 19 24.057377 17.8196721 26.1229508 15.0655738 24.2540984 15.1967213 27.7295082"></polygon>
+                    <g id="Lock">
+                        <rect id="Rectangle-3" stroke="#F76252" stroke-width="2" fill="#F76252" x="0" y="12" width="28" height="22" rx="2"></rect>
+                        <path d="M22,13 L22,7 C22,3.13400675 25.1340068,0 29,0 C32.8659932,0 36,3.13400675 36,7 L36,13" id="Rectangle-4" stroke="#F76252" stroke-width="2"></path>
+                        <polygon id="*" fill="#FFFFFF" points="12.8360656 27.7295082 12.9672131 24.2540984 10.1147541 26.1229508 9 24.057377 12.0163934 22.6147541 9 21.1721311 10.1147541 19.1065574 12.9672131 20.942623 12.8360656 17.5 15.1967213 17.5 15.0655738 20.942623 17.8196721 19.1065574 19 21.1721311 16.0163934 22.6147541 19 24.057377 17.8196721 26.1229508 15.0655738 24.2540984 15.1967213 27.7295082"></polygon>
+                    </g>
                 </g>
             </g>
+            <rect id="Icon_Area" fill-opacity="0" fill="#FFFFFF" x="0" y="0" width="80" height="80"></rect>
         </g>
     </g>
 </svg>

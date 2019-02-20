@@ -5,12 +5,14 @@
  *
  */
 
-Tw.MembershipInfoLayerPopup = function ($element) {
+Tw.MembershipInfoLayerPopup = function ($element, svcInfo) {
   this.$container = $element;
+  this._svcInfo = svcInfo;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(this.$container);
   this._historyService.init('hash');
   this._apiService = Tw.Api;
+  this._tidLanding = new Tw.TidLandingComponent();
 };
 
 Tw.MembershipInfoLayerPopup.prototype = {
@@ -32,7 +34,6 @@ Tw.MembershipInfoLayerPopup.prototype = {
 
   _openCallback: function ($element) {
     if ( this._hbs === 'BE_04_01_L02' ) {
-      this.reqPossibleJoin();
       $element.find('button[data-id=join]').off().on('click', $.proxy(this.onClickJoinBtn, this));
     }
     else if ( this._hbs === 'BE_04_01_L01' ) {
@@ -52,7 +53,6 @@ Tw.MembershipInfoLayerPopup.prototype = {
     if ( !Tw.FormatHelper.isEmpty(this._isJoinOk) ) {
       return;
     }
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
     /*
       $.ajax('/mock/membership.info.BFF_11_0015.json')
         .done($.proxy(this._onSuccess, this))
@@ -71,43 +71,87 @@ Tw.MembershipInfoLayerPopup.prototype = {
       return false;
     }
     this._isJoinOk = resp.result.cardCreatableYn;
-    Tw.CommonHelper.endLoading('.container');
+    this._onPopupNoJoin();
   },
 
   _closeCallback: function () {
     this._popupService.close();
   },
 
-  onClickJoinBtn: function () {
+  // T멤버십 가입불가 팝업
+  _onPopupNoJoin : function () {
     if (this._isJoinOk === 'N') {
       var param = Tw.ALERT_MSG_MEMBERSHIP.NO_JOIN;
-      this._popupService.openOneBtTypeB(
-        param.TITLE,
-        param.CONTENTS,
-        [{
-          style_class: 'fe-manage-line',
-          txt: param.TXT
-        }],
-        'type1',
-        $.proxy(this._noJoinOpenCallBack,this), null
-        );
+      this._popupService.open({
+          title: param.TITLE,
+          title_type: 'sub',
+          cont_align: 'tl',
+          contents: param.CONTENTS,
+          infocopy: [{
+            info_contents: param.TXT,
+            bt_class: 'fe-more bt-blue1'
+          }],
+          bt_b: [{
+            style_class: 'pos-left fe-close',
+            txt: Tw.BUTTON_LABEL.CLOSE
+          }, {
+            style_class: 'bt-red1 pos-right fe-line',
+            txt: Tw.BUTTON_LABEL.LINE
+          }]
+        },
+        $.proxy(function($layer){
+          // 더 알아보기 클릭
+          $layer.on('click', '.fe-more', $.proxy(function(){
+            this.open('BE_04_01_L02');
+          },this));
+          // 닫기 클릭
+          $layer.on('click', '.fe-close', $.proxy(function(){
+            this._popupService.close();
+          },this));
+          // 회선관리 클릭
+          $layer.on('click', '.fe-line', $.proxy(function(){
+            this._popupService.close();
+            this._historyService.goLoad('/common/member/line');
+          },this));
+        }, this)
+      );
       return;
     }
-
-    this._historyService.goLoad('/benefit/membership/join');
   },
 
-  _noJoinOpenCallBack : function ($layer) {
-    $layer.on('click', '.fe-manage-line', $.proxy(this._goManageLine, this));
-  },
-
-  _goManageLine : function () {
-    this._historyService.goLoad('/common/member/line');
+  // 가입하기 버튼 클릭
+  onClickJoinBtn: function () {
+    // 로그인 유형이 간편 로그인이 아닌경우
+    if(this._svcInfo && this._svcInfo.loginType !== Tw.AUTH_LOGIN_TYPE.EASY ) {
+      // 가입 가능여부 API 기 호출시 호출하지 않음.
+      if ( Tw.FormatHelper.isEmpty(this._isJoinOk) ) {
+        this.reqPossibleJoin();
+      } else {
+        // 가입불가일 때, 안내 팝업 띄움
+        if (this._isJoinOk === 'N') {
+          this._onPopupNoJoin();
+        } else {
+          this._historyService.goLoad('/benefit/membership/join');
+        }
+      }
+    } else { // 비 로그인시 팝업띄움
+      this._popupService.openConfirmButton(
+        Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A68.MSG,
+        Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A68.TITLE,
+        $.proxy(function () {
+          this._tidLanding.goLogin();
+        }, this),
+        $.proxy(function () {
+          this._popupService.close();
+        }, this),
+        Tw.BUTTON_LABEL.CLOSE,
+        Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A68.BUTTON
+      );
+    }
   },
 
   // API Fail
   _onFail: function (err) {
-    Tw.CommonHelper.endLoading('.container');
     Tw.Error(err.code, err.msg).pop();
   }
 };

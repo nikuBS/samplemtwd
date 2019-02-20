@@ -14,37 +14,37 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from) {
   this._searchInfo = searchInfo;
   this._step = Tw.FormatHelper.isEmpty(step)?1:step;
   this._accessKeyword = this._searchInfo.query;
-  this._init(this._searchInfo,from);
+  this._init(from);
 };
 
 Tw.CommonSearch.prototype = {
-  _init : function (searchInfo,from) {
-    if(from==='menu'&&this._historyService.isReload()===false){
+  _init : function (from) {
+    if(from==='menu'&&this._historyService.isReload()===false&&this._historyService.isBack()){
       this._addRecentlyKeyword(this._accessKeyword);
     }
-    if(searchInfo.totalcount===0){
+    if(this._searchInfo.totalcount===0){
       return;
     }
     var keyName,contentsCnt;
-    for(var i=0;i<searchInfo.search.length;i++){
-      keyName =  Object.keys(searchInfo.search[i])[0];
-      contentsCnt = Number(searchInfo.search[i][keyName].count);
+    for(var i=0;i<this._searchInfo.search.length;i++){
+      keyName =  Object.keys(this._searchInfo.search[i])[0];
+      contentsCnt = Number(this._searchInfo.search[i][keyName].count);
       if(keyName==='smart'||keyName==='immediate'||keyName==='banner'||contentsCnt<=0){
         if(contentsCnt<=0){
-          this.$container.find('.'+keyName).hide();
+          this.$container.find('.'+keyName).addClass('none');
         }
         if(keyName==='banner'){
-          this._showBanner(this._arrangeData(searchInfo.search[i][keyName].data,keyName));
+          this._showBanner(this._arrangeData(this._searchInfo.search[i][keyName].data,keyName));
         }
-        if(keyName==='immediate'&&searchInfo.search[i][keyName].data[0]&&searchInfo.search[i][keyName].data[0].DOCID==5){
-          this._showBarcode(searchInfo.search[i][keyName].data[0].barcode,this.$container.find('#membership-barcode'));
+        if(keyName==='immediate'&&this._searchInfo.search[i][keyName].data[0]&&this._searchInfo.search[i][keyName].data[0].DOCID==5){
+          this._showBarcode(this._searchInfo.search[i][keyName].data[0].barcode,this.$container.find('#membership-barcode'));
         }
         continue;
       }
       // if(keyName==='direct'){
       //   this.$container.find('.direct-element.home').data('link',Tw.OUTLINK.DIRECT_HOME);
       // }
-      this._showShortcutList(this._arrangeData(searchInfo.search[i][keyName].data,keyName),keyName,this._cdn);
+      this._showShortcutList(this._arrangeData(this._searchInfo.search[i][keyName].data,keyName),keyName,this._cdn);
     }
     this.$inputElement =this.$container.find('#keyword');
     this.$container.on('keyup','#keyword',$.proxy(this._inputChangeEvent,this));
@@ -54,6 +54,8 @@ Tw.CommonSearch.prototype = {
     this.$container.on('click','.list-data',$.proxy(this._goLink,this));
     this.$container.on('click','.icon-gnb-search',$.proxy(this._doSearch,this));
     this.$container.find('#contents').removeClass('none');
+    this._removeDuplicatedSpace(this.$container.find('.cont-sp'),'cont-sp');
+    new Tw.XtractorService(this.$container);
   },
 
   _arrangeData : function (data,category) {
@@ -70,19 +72,19 @@ Tw.CommonSearch.prototype = {
           if(data[i][key].charAt(0)==='|'){
             data[i][key] = data[i][key].replace('|','');
           }
-          data[i][key] = data[i][key].replace(/\|/g,' > ').replace(/MyT/g,' my T ');
+          //data[i][key] = data[i][key].replace(/\|/g,' > ').replace(/MyT/g,' my T ');
         }
-        if(key==='MENU_URL'){
-          data[i][key] = data[i][key].replace('https://app.tworld.co.kr','');
-        }
-        if(category==='prevent'&&key==='DOCID'){
-          data[i][key] = Number(data[i][key].replace(/[A-Za-z]/g,''));
-        }
+        // if(key==='MENU_URL'){
+        //   data[i][key] = data[i][key].replace('https://app.tworld.co.kr','');
+        // }
+        // if(category==='prevent'&&key==='DOCID'){
+        //   data[i][key] = Number(data[i][key].replace(/[A-Za-z]/g,''));
+        // }
         if(category==='direct'&&key==='ALIAS'){
           if(data[i][key]==='shopacc'){
-            data[i].linkUrl = Tw.OUTLINK.DIRECT_ACCESSORY+'?CATEGORY_ID='+data[i].CATEGORY_ID+'&ACCESSORY_ID=';
+            data[i].linkUrl = Tw.OUTLINK.DIRECT_ACCESSORY+'?categoryId='+data[i].CATEGORY_ID+'&accessoryId=';
           }else{
-            data[i].linkUrl = Tw.OUTLINK.DIRECT_MOBILE+'?PRODUCT_GRP_ID=';
+            data[i].linkUrl = Tw.OUTLINK.DIRECT_MOBILE+'?categoryId=20010001&productGrpId=';
           }
         }
         if(key==='METATAG'){
@@ -108,7 +110,7 @@ Tw.CommonSearch.prototype = {
     var shortcutTemplate = $template.html();
     var templateData = Handlebars.compile(shortcutTemplate);
     if(data.length<=0){
-      $list.hide();
+      $list.addClass('none');
     }
     _.each(data,function (listData,index) {
       if(index>=3){
@@ -122,14 +124,14 @@ Tw.CommonSearch.prototype = {
     return returnStr;
   },
   _inputChangeEvent : function (args) {
-    if(args.keyCode===13){
+    if(Tw.InputHelper.isEnter(args)){
       this._doSearch();
     }
   },
   _doSearch : function () {
     var keyword = this.$inputElement.val();
     if(Tw.FormatHelper.isEmpty(keyword)){
-      this._popupService.openAlert(Tw.ALERT_MSG_SEARCH.KEYWORD_ERR);
+      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR);
       return;
     }
     var inResult = this.$container.find('#resultsearch').is(':checked');
@@ -183,10 +185,11 @@ Tw.CommonSearch.prototype = {
   },
   _searchRelatedKeyword : function (targetEvt) {
     targetEvt.preventDefault();
-    var keyword = $(targetEvt.currentTarget).data('param');
-    var goUrl = '/common/search?keyword='+keyword+'&step='+(Number(this._step)+1);
+    var $targetElement = $(targetEvt.currentTarget);
+    var keyword = $targetElement.data('param');
+    //var goUrl = '/common/search?keyword='+keyword+'&step='+(Number(this._step)+1);
     this._addRecentlyKeyword(keyword);
-    this._historyService.goLoad(goUrl);
+    this._historyService.goLoad($targetElement.attr('href'));
   },
   _goLink : function (linkEvt) {
     linkEvt.preventDefault();
@@ -233,6 +236,14 @@ Tw.CommonSearch.prototype = {
     }
 
     Tw.CommonHelper.openUrlInApp(url);
+  },
+  _removeDuplicatedSpace : function ($selectedArr,className) {
+    $selectedArr.each(function(){
+      var $target = $(this);
+      if($target.next().hasClass(className)){
+        $target.addClass('none');
+      }
+    });
   }
 
 

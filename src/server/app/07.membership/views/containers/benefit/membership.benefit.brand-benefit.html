@@ -25,11 +25,11 @@
             <!-- .cont-box -->
             <div class="cont-box">
                 <div class="brand-benefit-wrap">
-                    <span class="logo"><img src="<%= data.appLogoImgUrl %>" alt="<%= data.appLogoImgAlt %>"></span>
+                    <span class="logo"><img src="<%= data.appIcoImgUrl %>" alt="<%= data.appLogoImgAlt %>"></span>
                     <strong class="brand-tit"><%= data.coPtnrNm %></strong>
                     <p class="bramd-txt"><%= data.brandSubtitleMob %></p>
                     <!--<button class="bt-like on" data-mylikecount="<%= data.aaaa %>"><%= data.totLikeCount %></button>-->
-                    <h3 class="stit">혜택 정보</h3>
+                    <h3 class="stit type01">혜택 정보</h3>
                     <h4 class="sstit">혜택</h4>
                     <div class="benefit-list" style="display: none;"><%- data.coBenefitDtl %></div>
                     <!--<ul class="benefit-list">-->
@@ -88,6 +88,16 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <ul class="franchisee-list">
+
+
+                    <div class="contents-empty" style="display: none;" id="fe-contents-empty">
+                        <span class="ico type1"></span>
+                        <p class="desc">
+                            내 주변에 가맹점이 없습니다.
+                        </p>
+                    </div>
+
+
                     <script id="fe-franchisee-list-item" type="text/x-handlebars-template">
                         <li>
                             <button class="tit-addr">
@@ -195,7 +205,7 @@
                                 </script>
                                 <script id="fe-brand-list-item" type="text/x-handlebars-template">
                                     <li><button class="bt-logo" data-catecd="{{ cateCd }}" data-brandcd="{{ brandCd }}">
-                                        <img src="{{ appLogoImgUrl }}" alt="{{ appLogoImgAlt }}">
+                                        <img src="{{ appIcoImgUrl }}" alt="{{ appLogoImgAlt }}">
                                     </button></li>
                                 </script>
 

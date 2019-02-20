@@ -291,11 +291,11 @@ Tw.PopupService.prototype = {
     this._addHash(closeCallback);
     this._open(option);
   },
-  openModalTypeA: function (title, contents, btName, openCallback, confirmCallback, closeCallback, hashName) {
+  openModalTypeA: function (title, contents, btName, openCallback, confirmCallback, closeCallback, hashName, align) {
     var option = {
       title: title,
-      title_type: 'sub-c',
-      cont_align: 'tc',
+      title_type: 'sub',
+      cont_align: align || 'tl', // 기본 룰 예외로 중앙정렬 처리가 필요하여 추가 [DV001-14268]
       contents: contents,
       bt_b: [{
         style_class: 'pos-left tw-popup-closeBtn',
@@ -313,8 +313,8 @@ Tw.PopupService.prototype = {
   openModalTypeATwoButton: function (title, contents, btName, closeBtName, openCallback, confirmCallback, closeCallback, hashName) {
     var option = {
       title: title,
-      title_type: 'sub-c',
-      cont_align: 'tc',
+      title_type: 'sub',
+      cont_align: 'tl',
       contents: contents,
       bt_b: [{
         style_class: 'pos-left tw-popup-closeBtn',

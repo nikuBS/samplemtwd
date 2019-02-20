@@ -30,6 +30,7 @@ class ProductCommonLineChange extends TwViewController {
       allowedLineList: any = [];
 
     allSvc[allowedSvcAttrInfo.group].forEach((lineInfo) => {
+      console.log(lineInfo);
       if (allowedSvcAttrInfo.svcAttrCds.indexOf(lineInfo.svcAttrCd) === -1 || lineInfo.prodId === targetProdId ||
         pageMode === 'change' && currentSvcMgmtNum === lineInfo.svcMgmtNum) {
         return true;
@@ -37,7 +38,7 @@ class ProductCommonLineChange extends TwViewController {
 
       allowedLineList.push({
         svcMgmtNum: lineInfo.svcMgmtNum,
-        svcNum: lineInfo.svcNum,
+        svcNum: FormatHelper.conTelFormatWithDash(lineInfo.svcNum),
         svcAttrCd: lineInfo.svcAttrCd,
         fullNm: lineInfo.svcAttrCd === 'M1' || lineInfo.svcAttrCd === 'M2' ?
           MYT_JOIN_WIRE_SVCATTRCD[lineInfo.svcAttrCd] + ' ' + lineInfo.eqpMdlNm : MYT_JOIN_WIRE_SVCATTRCD[lineInfo.svcAttrCd],
@@ -94,6 +95,7 @@ class ProductCommonLineChange extends TwViewController {
    */
   private _convertCurrentLine(svcInfo: any): any {
     return {
+      addr: svcInfo.addr,
       svcMgmtNum: svcInfo.svcMgmtNum,
       svcNum: svcInfo.svcNum,
       svcAttrCd: svcInfo.svcAttrCd,

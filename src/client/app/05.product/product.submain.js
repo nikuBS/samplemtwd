@@ -7,6 +7,7 @@
 Tw.ProductSubmain = function(rootEl, menuId) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
+  this._xTractorService = new Tw.XtractorService(rootEl);
 
   this._menuId = menuId;
   this._getTosBanner();
@@ -27,7 +28,8 @@ Tw.ProductSubmain.prototype = {
       if (!Tw.FormatHelper.isEmpty(resp.result.summary)) {
         new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.TOS, resp.result.imgList, 'T');
       } else {
-        this.$container.find('ul.slider').remove();
+        this.$container.find('#fe-header-t').remove();
+        this.$container.find('#fe-banner-t').remove();
       }
     } else {
       this._getAdminBanners(this._menuId);
@@ -45,25 +47,27 @@ Tw.ProductSubmain.prototype = {
 
   _handleLoadBanners: function(resp) {
     if (resp.result && resp.result.banners) {
-      new Tw.BannerService(
-        this.$container,
-        Tw.REDIS_BANNER_TYPE.ADMIN,
-        _.filter(resp.result.banners, function(banner) {
-          return banner.bnnrLocCd === 'T';
-        }),
-        'T'
-      );
+      var topBanners = _.filter(resp.result.banners, function(banner) {
+        return banner.bnnrLocCd === 'T';
+      });
 
-      if (Tw.UrlHelper.getLastPath() === 'wireplan') {
+      if (topBanners.length > 0) {
+        new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.ADMIN, topBanners, 'T');
+      } else {
+        this.$container.find('#fe-header-t').remove();
+        this.$container.find('#fe-banner-t').remove();
+      }
+
+      if (Tw.UrlHelper.getLastPath() !== 'mobileplan') {
         var cBanners = _.filter(resp.result.banners, function(banner) {
           return banner.bnnrLocCd === 'C';
         });
 
         if (cBanners.length > 0) {
-          console.log(cBanners);
           new Tw.BannerService(this.$container, Tw.REDIS_BANNER_TYPE.ADMIN, cBanners, 'C');
         } else {
-          this.$container.find('#fe-comb-banner').remove();
+          this.$container.find('#fe-header-c').remove();
+          this.$container.find('#fe-banner-c').remove();
         }
       }
     }

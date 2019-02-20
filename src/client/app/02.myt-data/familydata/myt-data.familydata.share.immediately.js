@@ -29,7 +29,7 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
   },
 
   _bindEvent: function() {
-    $('.wrap').on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
+    // $('.wrap').on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
     this.$container.on('click', '.fe-submit', $.proxy(this._confirmSubmit, this));
     this.$retrieveBtn.on('click', $.proxy(this._handleClickRetrive, this));
   },
@@ -79,10 +79,11 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
         this.$amountInput.removeAttr('disabled');
       } else {
         this.$container.find('#fe-share').addClass('none');
+        this.$container.find('.fe-submit').remove();
         this.$container.find('#fe-share-none').removeClass('none');
       }
     } else {
-      this._setRetrieveStatus();
+      setTimeout($.proxy(this._setRetrieveStatus, this), 3000);
     }
   },
 
@@ -107,30 +108,35 @@ Tw.MyTDataFamilyShareImmediately.prototype = {
       Tw.Error(resp.code, resp.msg).pop();
     } else {
       var ALERT = Tw.MYT_DATA_FAMILY_SUCCESS_SHARE;
-      this._popupService.afterRequestSuccess(this.MAIN_URL, this.MAIN_URL, undefined, ALERT.TITLE, undefined);
-    }
-  },
-
-  _openCancelPopup: function() {
-    this._popupService.openConfirmButton(
-      Tw.ALERT_CANCEL,
-      null,
-      $.proxy(this._goBack, this),
-      $.proxy(this._handleAfterClose, this),
-      Tw.BUTTON_LABEL.NO,
-      Tw.BUTTON_LABEL.YES
-    );
-  },
-
-  _goBack: function() {
-    this._popupService.close();
-    this._isClose = true;
-  },
-
-  _handleAfterClose: function() {
-    if (this._isClose) {
-      history.back();
-      this._isClose = false;
+      setTimeout(
+        $.proxy(function() {
+          this._popupService.afterRequestSuccess(this.MAIN_URL, this.MAIN_URL, undefined, ALERT.TITLE, undefined);
+        }, this),
+        3000
+      );
     }
   }
+
+  // _openCancelPopup: function() {
+  //   this._popupService.openConfirmButton(
+  //     Tw.ALERT_CANCEL,
+  //     null,
+  //     $.proxy(this._goBack, this),
+  //     $.proxy(this._handleAfterClose, this),
+  //     Tw.BUTTON_LABEL.NO,
+  //     Tw.BUTTON_LABEL.YES
+  //   );
+  // },
+
+  // _goBack: function() {
+  //   this._popupService.close();
+  //   this._isClose = true;
+  // },
+
+  // _handleAfterClose: function() {
+  //   if (this._isClose) {
+  //     history.back();
+  //     this._isClose = false;
+  //   }
+  // }
 };

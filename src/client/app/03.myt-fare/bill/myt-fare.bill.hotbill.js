@@ -17,6 +17,10 @@ Tw.MyTFareHotBill = function (rootEl, params) {
 };
 
 Tw.MyTFareHotBill.prototype = {
+  /**
+   * Initialize this page.
+   * @private
+   */
   _init: function () {
     this._idxLastItem = 0;
     this._cachedElement();
@@ -35,7 +39,10 @@ Tw.MyTFareHotBill.prototype = {
       });
     }
   },
-
+  /**
+   * Cache elements for binding events.
+   * @private
+   */
   _cachedElement: function () {
     this.$amount = this.$container.find('#fe-total');
     this.$period = this.$container.find('#fe-period');
@@ -43,28 +50,48 @@ Tw.MyTFareHotBill.prototype = {
     this.$btMore = this.$container.find('#fe-bt-more');
     this.$lineList = this.$container.find('#fe-line-info');
   },
-
+  /**
+   * Bind events to elements.
+   * @private
+   */
   _bindEvent: function () {
     this.$preBill.on('click', $.proxy(this._onClickPreBill, this));
     this.$container.on('click', '#fe-bt-more', $.proxy(this._renderLines, this));
   },
-
+  /**
+   * Get the service information.
+   * @private
+   */
   _getSvcInfo: function () {
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
       .done($.proxy(this._successSvcInfo, this))
       .fail($.proxy(this._failSvcInfo, this));
   },
-
+  /**
+   * Success callback for _getSvcInfo
+   * @param resp
+   * @private
+   */
   _successSvcInfo: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._svcInfo = resp.result;
     }
   },
-
+  /**
+   * Error callback for _getSvcInfo
+   * @param resp
+   * @private
+   */
   _failSvcInfo: function (resp) {
     Tw.Error(resp.code, resp.msg).pop();
   },
-
+  /**
+   * Success callback for _sendBillRequest.
+   * 실시간 이용요금 생성 요청 후 자료를 다시 조회한다.(대기시간 필요: 전월 5초, 당월 2.5초)
+   * @param childSvcMgmtNum
+   * @param resp
+   * @private
+   */
   _getBillResponse: function (childSvcMgmtNum, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       setTimeout($.proxy(function () {
@@ -85,8 +112,11 @@ Tw.MyTFareHotBill.prototype = {
       this._onErrorReceivedBillData(resp);
     }
   },
-
-
+  /**
+   * Request to create the hot-bill data.
+   * @param child 자녀 svcInfo(Service Information): 자녀 실시간 요금 조회 시
+   * @private
+   */
   _sendBillRequest: function (child) {
     Tw.CommonHelper.startLoading('.fe-loading-bill', 'white');
     this._requestCount = 0;
@@ -104,7 +134,12 @@ Tw.MyTFareHotBill.prototype = {
       .fail($.proxy(this._onErrorReceivedBillData, this));
   },
 
-
+  /**
+   * Success callback for _getBillResponse
+   * @param child
+   * @param resp
+   * @private
+   */
   _onReceivedBillData: function (child, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       if ( !resp.result || !resp.result.hotBillInfo ) {
@@ -114,6 +149,7 @@ Tw.MyTFareHotBill.prototype = {
       var billData = resp.result.hotBillInfo[0];
 
       if ( this._billInfoAvailable ) {
+        // 서버에서 받은 데이터 formatting
         var total = this._isPrev ? billData.totOpenBal1 : billData.totOpenBal2;
         this.$amount.text(total + Tw.CURRENCY_UNIT.WON);
         var fromDt = Tw.DateHelper.getShortDateWithFormat(
@@ -143,7 +179,13 @@ Tw.MyTFareHotBill.prototype = {
       this._onErrorReceivedBillData(resp);
     }
   },
-
+  /**
+   * 요금 정보를 아코디언 메뉴에 표시한다.
+   * @param group the bill data grouped by categories.
+   * @param child
+   * @param wrapper the element which to append the accordion menu.
+   * @private
+   */
   _renderBillGroup: function (group, child, wrapper) {
     var source = $('#tmplBillGroup').html();
     var template = Handlebars.compile(source);
@@ -155,17 +197,31 @@ Tw.MyTFareHotBill.prototype = {
       skt_landing.widgets.widget_accordion(wrapper);
     }
   },
-
+  /**
+   * Error callback for API requests(_onErrorReceivedBillData, _onReceivedBillData)
+   * @param resp
+   * @private
+   */
   _onErrorReceivedBillData: function (resp) {
     Tw.CommonHelper.endLoading('.fe-loading-bill');
-    // 애러시 노출되는 항목이 없어 alert 후 goBack 처리 필요. 공통함수(Tw.Error) 사용 불가.
-    this._popupService.openAlert(resp.msg, resp.code, null, $.proxy(this._goBackOnError, this) );
+    if ( resp.code === Tw.MyTFareHotBill.CODE.ERROR.BILL_NOT_AVAILABLE ) {
+      Tw.Error(resp.code, Tw.HOTBILL_ERROR_ZINVE8106).page();
+    } else {
+      // 애러시 노출되는 항목이 없어 alert 후 goBack 처리 필요. 공통함수(Tw.Error) 사용 불가.
+      this._popupService.openAlert(resp.msg, resp.code, null, $.proxy(this._goBackOnError, this));
+    }
   },
-
-  _goBackOnError: function(){
+  /**
+   * Go to the previous page on Error.
+   * @private
+   */
+  _goBackOnError: function () {
     this._historyService.goBack();
   },
-
+  /**
+   * 당월 본인 실시간 이용요금 화면에서 다른 회선 및 자녀회선에 대해 요금과 같이 표시해준다.
+   * @private
+   */
   _renderLines: function () {
     var items = this._lines.slice(this._idxLastItem, this._idxLastItem + this.NUM_OF_ITEMS);
     var source = $('#fe-list-template').html();
@@ -181,7 +237,13 @@ Tw.MyTFareHotBill.prototype = {
       this.$btMore.hide();
     }
   },
-
+  /**
+   * Event listener for the button click on [data-id="fe-other-line"](다른회선 요금).
+   * 다른 회선: 선택회선 변경
+   * 자녀회선: 자녀 실시간 이용요금 페이지로 이동
+   * @param e
+   * @private
+   */
   _onClickLine: function (e) {
     var idx = e.currentTarget.getAttribute('data-idx');
     var targetSvc = this._lines[idx];
@@ -191,32 +253,51 @@ Tw.MyTFareHotBill.prototype = {
       this._confirmSwitchLine(targetSvc);
     }
   },
-
+  /**
+   * Event listener for the button click on $preBill(전월요금보기)
+   * @private
+   */
   _onClickPreBill: function () {
     this._historyService.goLoad('/myt-fare/bill/hotbill/prev');
   },
 
+  /**
+   * 자녀회선 클릭 시 자녀 실시간 이용요금으로 이동.
+   * @param target
+   * @private
+   */
   _onClickChild: function (target) {
     this._historyService.goLoad('/myt-fare/bill/hotbill/child?child=' + target.svcMgmtNum);
   },
-
+  /**
+   * 다른 회선 클릭 시 회선변경 확인.
+   * @param target the selected line
+   * @private
+   */
   _confirmSwitchLine: function (target) {
     var defaultLineInfo = Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.svcNum.replace(/-/g, '')) + ' ' +
-      (_.isEmpty(this._svcInfo.nickNm) ? this._svcInfo.eqpMdlNm : this._svcInfo.nickNm );
+      (_.isEmpty(this._svcInfo.nickNm) ? this._svcInfo.eqpMdlNm : this._svcInfo.nickNm);
     var selectLineInfo = Tw.FormatHelper.getDashedCellPhoneNumber(target.svcNum.replace(/-/g, '')) + ' ' +
-      (_.isEmpty(target.nickNm) ? target.eqpMdlNm : target.nickNm );
+      (_.isEmpty(target.nickNm) ? target.eqpMdlNm : target.nickNm);
     this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,
       defaultLineInfo + Tw.MYT_TPL.DATA_SUBMAIN.SP_TEMP + selectLineInfo,
       Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._requestSwitchLine, this, target), null);
   },
-
+  /**
+   * Request to switch the current line.
+   * @param target
+   * @private
+   */
   _requestSwitchLine: function (target) {
     var lineComponent = new Tw.LineComponent();
     this._popupService.close();
     Tw.CommonHelper.startLoading('.container');
     lineComponent.changeLine(target.svcMgmtNum, null, $.proxy(this._onChangeSessionSuccess, this));
   },
-
+  /**
+   * Success callback for _requestSwitchLine.
+   * @private
+   */
   _onChangeSessionSuccess: function () {
     if ( Tw.BrowserHelper.isApp() ) {
       this._commonHelper.toast(Tw.REMNANT_OTHER_LINE.TOAST);
@@ -225,13 +306,28 @@ Tw.MyTFareHotBill.prototype = {
   }
 };
 
+/**
+ * 서버 요금 데이터 중 제외 항목 정의.
+ * @type {string[]}
+ */
 Tw.MyTFareHotBill.NO_BILL_FIELDS = ['total', 'noVAT', 'is3rdParty', 'showDesc', 'discount'];
+
+/**
+ * Bill 정보 생성 없이 조회 시 애러코드
+ * @type {{ERROR: {NO_BILL_REQUEST_EXIST: string}}}
+ */
 Tw.MyTFareHotBill.CODE = {
   ERROR: {
-    NO_BILL_REQUEST_EXIST: 'ZINVN8888'
+    NO_BILL_REQUEST_EXIST: 'ZINVN8888',
+    BILL_NOT_AVAILABLE: 'ZINVE8106'
   }
 };
-
+/**
+ * Create a grouped data by the bill category.
+ * @param data the array of bill data
+ * @param fieldInfo
+ * @return a grouped bill data
+ */
 Tw.MyTFareHotBill.arrayToGroup = function (data, fieldInfo) {
   // var self = this;
   var amount = 0;
@@ -258,8 +354,7 @@ Tw.MyTFareHotBill.arrayToGroup = function (data, fieldInfo) {
     if ( groupS.indexOf('*') > -1 ) {
       groupS = groupS.replace(/\*/g, '');
       noVAT = true;
-    }
-    else if ( groupS.indexOf('#') > -1 ) {
+    } else if ( groupS.indexOf('#') > -1 ) {
       groupS = groupS.replace(/#/g, '');
       is3rdParty = true;
     }

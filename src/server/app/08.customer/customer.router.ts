@@ -35,6 +35,8 @@ import CustomerAgentsearchRepairManufacturer from './controllers/agentsearch/cus
 import CustomerFaqDoLikeThis from './controllers/faq/customer.faq.do-like-this.controller';
 import CustomerDocument from './controllers/document/customer.document.controller';
 import CustomerResearchesResult from './controllers/researches/customer.researches.result.controller';
+import CustomerAgentsearchRentPhone from './controllers/agentsearch/customer.agentsearch.rentphone.controller';
+import CustomerFaqView from './controllers/faq/customer.faq.view.controller';
 
 class CustomerRouter extends TwRouter {
   constructor() {
@@ -65,6 +67,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/damage-info/related', controller: CustomerDamageInfoRelated });
     this.controllers.push({ url: '/damage-info/contents/:pageNo', controller: CustomerDamageInfoContents });
     this.controllers.push({ url: '/agentsearch', controller: CustomerAgentsearch });
+    this.controllers.push({ url: '/agentsearch/rentphone', controller: CustomerAgentsearchRentPhone });
     this.controllers.push({ url: '/agentsearch/search', controller: CustomerAgentsearch });
     this.controllers.push({ url: '/agentsearch/detail', controller: CustomerAgentsearchDetail });
     this.controllers.push({ url: '/agentsearch/near', controller: CustomerAgentsearchNear });
@@ -74,6 +77,7 @@ class CustomerRouter extends TwRouter {
     this.controllers.push({ url: '/faq', controller: CustomerFaq });
     this.controllers.push({ url: '/faq/search', controller: CustomerFaqSearch });
     this.controllers.push({ url: '/faq/category', controller: CustomerFaqCategory });
+    this.controllers.push({ url: '/faq/view', controller: CustomerFaqView });
     this.controllers.push({ url: '/faq/do-like-this', controller: CustomerFaqDoLikeThis });
     this.controllers.push({ url: '/svc-info/praise', controller: CustomerPraise });
     this.controllers.push({ url: '/svc-info/researches', controller: CustomerResearches });

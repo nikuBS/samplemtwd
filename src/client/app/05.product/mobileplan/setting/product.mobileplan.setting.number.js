@@ -106,7 +106,12 @@ Tw.ProductMobileplanSettingNumber.prototype = {
     }, {}, this._prodId).done($.proxy(this._addDelNumRes, this));
   },
 
-  _detectInputNumber: function() {
+  _detectInputNumber: function(e) {
+    if (Tw.InputHelper.isEnter(e)) {
+      this.$btnAddNum.trigger('click');
+      return;
+    }
+
     this.$inputNumber.val(this.$inputNumber.val().replace(/[^0-9]/g, ''));
 
     if (this.$inputNumber.val().length > 11) {
@@ -138,11 +143,7 @@ Tw.ProductMobileplanSettingNumber.prototype = {
   },
 
   _blurInputNumber: function() {
-    if (this.$inputNumber.val().length > 8) {
-      this.$inputNumber.val(Tw.FormatHelper.conTelFormatWithDash(this.$inputNumber.val()));
-    } else {
-      this.$inputNumber.val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$inputNumber.val()));
-    }
+    this.$inputNumber.val(Tw.FormatHelper.conTelFormatWithDash(this.$inputNumber.val()));
   },
 
   _focusInputNumber: function() {

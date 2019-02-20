@@ -68,6 +68,10 @@
                     <% } else { %>
                     최근 청구요금내역
                     <% } %>
+                    <button title="최근 요금 내역" type="button" class="btn-tip" page-id="<%= data.pageInfo.menuId %>"
+                            id="<%= data.type === 'UF'? 'TC000025':'TC000024' %>">
+                        <i class="icon-badge-tip"><span class="blind">tip</span></i>
+                    </button>
                 </h3>
                 <div class="chart-wrap chart4"></div>
             </div>
@@ -119,40 +123,40 @@
                 <ul class="pg-link-list" data-id="other-pages">
                     <li>
                         <button type="button" data-href="/myt-join/myplancombine/infodiscount"
-                                title="나의 가입정보 &gt; 약정할인 &middot; 기기상환 정보" aria-haspopup="true">
-                            <i class="icon-my-40"><span class="blind">my</span></i>나의 가입정보 &gt; 약정할인 &middot; 기기상환 정보
+                                title="나의 가입정보 --&gt; 약정할인 &middot; 기기상환 정보" aria-haspopup="true">
+                            <i class="icon-my-40"><span class="blind">my</span></i>나의 가입정보 --&gt; 약정할인 &middot; 기기상환 정보
                         </button>
                     </li>
                     <li>
                         <button type="button" data-href="/benefit/submain/discount"
-                                title="혜택 &middot; 할인 &gt; 요금할인" aria-haspopup="true">
-                            <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 &middot; 할인 &gt; 요금할인
+                                title="혜택 / 할인 --&gt; 요금할인" aria-haspopup="true">
+                            <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 / 할인 --&gt; 요금할인
                         </button>
                     </li>
                     <li>
                         <button type="button" data-href="/benefit/my"
-                                title="혜택 &middot; 할인 &gt; 나의 할인 혜택" aria-haspopup="true">
-                            <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 &middot; 할인 &gt; 나의 할인 혜택
+                                title="혜택 / 할인 --&gt; 나의 할인 혜택" aria-haspopup="true">
+                            <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 / 할인 --&gt; 나의 할인 혜택
                         </button>
                     </li>
                     <% if( ['P', 'S'].indexOf(data.svcInfo.svcGr) === -1) {%>
                     <li>
                         <button type="button" data-href="/benefit/my"
-                                title="혜택 &middot; 할인 &gt; 나의 포인트 혜택" aria-haspopup="true">
-                            <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 &middot; 할인 &gt; 나의 포인트 혜택
+                                title="혜택 / 할인 --&gt; 나의 포인트 혜택" aria-haspopup="true">
+                            <i class="icon-discount-40"><span class="blind">discount</span></i>혜택 / 할인 --&gt; 나의 포인트 혜택
                         </button>
                     </li>
                     <% } %>
                     <li>
                         <button type="button" data-href="/myt-join/myplan"
-                                title="나의 가입정보 &gt; 나의 요금제" aria-haspopup="true">
-                            <i class="icon-my-40"><span class="blind">my</span></i>나의 가입정보 &gt; 나의 요금제
+                                title="나의 가입정보 --&gt; 나의 요금제" aria-haspopup="true">
+                            <i class="icon-my-40"><span class="blind">my</span></i>나의 가입정보 --&gt; 나의 요금제
                         </button>
                     </li>
                     <li>
                         <button type="button" data-href="/myt-join/additions"
-                                title="나의 가입정보 &gt; 나의 부가서비스" aria-haspopup="true">
-                            <i class="icon-my-40"><span class="blind">my</span></i>나의 가입정보 &gt; 나의 부가서비스
+                                title="나의 가입정보 --&gt; 나의 부가서비스" aria-haspopup="true">
+                            <i class="icon-my-40"><span class="blind">my</span></i>나의 가입정보 --&gt; 나의 부가서비스
                         </button>
                     </li>
                 </ul>

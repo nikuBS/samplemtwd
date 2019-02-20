@@ -33,7 +33,7 @@
                 <div class="cont-box nogaps">
                     <div class="calling-plan">
                         <a class="wrap-link" href="/myt-join/myplan">
-                            <i class="badge icon-badge-plan-my"><span class="blind">my</span></i>
+                            <i class="badge icon-badge-plan-use"><span class="blind">이용중</span></i>
                             <span class="stit"><%= svcInfo.prodNm %></span>
                         </a>
                     </div>
@@ -41,7 +41,7 @@
                 <!--//my -->
                 <% } %>
                 
-                <hr class="cont-sp type1" aria-hidden="true"/>
+                <hr class="cont-sp type1" aria-hidden="true" id="fe-header-t"/>
                 <!-- 스와이프 -->
                 <div class="cont-box nogaps noborder">
                     <div class="main-slide-banner slide-pagingtype">
@@ -49,7 +49,7 @@
                         <div class="widget">
                             <div class="widget-box">
                                 <div class="slider-box">
-                                    <ul class="slider" data-location="T"></ul>
+                                    <ul class="slider" data-location="T" id="fe-banner-t"></ul>
                                 </div>
                             </div>
                         </div>
@@ -62,7 +62,7 @@
                 <% const groups = productData.groups.grpProdList; %>
                 <% if (groups && groups.length > 0) { %> 
                 <hr class="cont-sp type1" aria-hidden="true" />
-                <div class="cont-box nogaps-btm widget">
+                <div class="cont-box nogaps-btm widget noborder">
                     <div class="headingbox-wrap">
                         <h3 class="title"><%= productData.groups.expsTitNm %></h3>
                         <div class="btn">

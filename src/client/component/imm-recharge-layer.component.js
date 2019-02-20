@@ -39,6 +39,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
   // api request
   _immediatelyChargeRequest: function () {
     var apiList = [
+      { command: Tw.API_CMD.BFF_06_0009, params: {} },
       { command: Tw.API_CMD.BFF_06_0001, params: {} },
       { command: Tw.API_CMD.BFF_06_0020, params: {} },
       { command: Tw.API_CMD.BFF_06_0028, params: {} },
@@ -46,7 +47,26 @@ Tw.ImmediatelyRechargeLayer.prototype = {
       { command: Tw.API_CMD.BFF_05_0136, params: {} }
     ];
     this._apiService.requestArray(apiList)
-      .done($.proxy(function (refill, ting, etc, limit, optSvc) {
+      .done($.proxy(function (available, refill, ting, etc, limit, optSvc) {
+        if (available.code === Tw.API_CODE.CODE_00) {
+          if (_.isEmpty(available.result.option)) {
+            this.immChargeData.available = 'NONE';
+          }
+          var availableFunc = available.result.option.reduce(function(memo, item) {
+            return (memo + item.dataVoiceClCd);
+          }, '');
+
+          if (availableFunc.includes('D') && availableFunc.includes('V')) {
+            this.immChargeData.available = 'ALL';
+          }
+          if (availableFunc.includes('D')) {
+            this.immChargeData.available = 'DATA';
+          }
+          this.immChargeData.available = 'VOICE';
+        }
+        else {
+          this.immChargeData.available = null;
+        }
         if ( refill.code === Tw.API_CODE.CODE_00 ) {
           this.immChargeData.refill = refill.result;
         }
@@ -98,7 +118,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
   _openPopup: function () {
     var data = [];
     if ( this.immChargeData ) {
-      if ( !_.isEmpty(this.immChargeData.refill) ) {
+      if ( this.immChargeData.available !== 'NONE' && !_.isEmpty(this.immChargeData.refill) ) {
         data.push({
           title: Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.REFILL.TYPE,
           list: [{
@@ -111,7 +131,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
         });
       }
       // TODO: 11차수에서 hidden 처리, 환경설정 및 개발 완료 후 enable 처리
-      // data.push(Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.PREPAY);
+      data.push(Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.PREPAY);
       var subList = [];
       if ( !_.isEmpty(this.immChargeData.limit) ) {
         var curLimit = parseInt(this.immChargeData.limit.currentTopUpLimit, 10);

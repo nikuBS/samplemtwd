@@ -977,6 +977,9 @@ body.bg-gray {
       .cont-box .sub-top-box0 .total-num-tx strong {
         font-weight: bold; }
 
+.p-bot-0 {
+  padding-bottom: 0; }
+
 .cont-ti {
   margin-bottom: 1.5rem; }
 
@@ -1167,6 +1170,21 @@ body.bg-gray {
           background: url(/img/svg/icon_48px_lock_s.svg) no-repeat 0 0; }
         .popup-page .header-wrap .page-header .header-mask .btn-mask.disabled, .popup-page .header-wrap .page-header .header-mask .btn-mask:disabled {
           background: url(/img/svg/icon_48px_lock_d.svg) no-repeat 0 0; }
+  .popup-page.txt2-popup {
+    padding: 4.4375rem 0 0; }
+    .popup-page.txt2-popup .header-wrap .page-header {
+      position: relative; }
+      .popup-page.txt2-popup .header-wrap .page-header .header-ti {
+        text-overflow: inherit;
+        white-space: inherit;
+        word-wrap: inherit;
+        overflow: hidden; }
+        .popup-page.txt2-popup .header-wrap .page-header .header-ti h1 {
+          display: block;
+          line-height: 1.5;
+          padding: 0.625rem 0; }
+    .popup-page.txt2-popup .popup-closeBtn {
+      top: 1.375rem; }
   .popup-page .gnb-wrap .page-gnb {
     position: fixed;
     bottom: 0;
@@ -1368,7 +1386,7 @@ body.bg-gray {
     display: inline-block;
     padding: 0 0.9375rem;
     font-size: 0.9375rem;
-    font-family: "Apple SD Gothic Neo", "Arial", sans-serif;
+    font-family: "Roboto";
     font-weight: 400;
     color: #000;
     line-height: 1.625rem; }
@@ -1711,7 +1729,7 @@ body.bg-gray {
   color: #178BCE; }
   .certify-wrap .left-time span {
     vertical-align: baseline;
-    font-family: "Apple SD Gothic Neo", "Arial", sans-serif; }
+    font-family: "Roboto"; }
 
 .certify-wrap .add-time {
   margin: 1.25rem 1.25rem 0 1.25rem; }

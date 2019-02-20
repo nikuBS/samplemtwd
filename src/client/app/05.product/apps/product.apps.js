@@ -9,6 +9,7 @@ Tw.ProductApps = function(rootEl, menuId) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
+  this._xTractorService = new Tw.XtractorService(rootEl);
 
   this._getBanners(menuId);
 

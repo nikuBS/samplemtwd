@@ -8,15 +8,15 @@ Tw.MembershipSubmain = function(rootEl, membershipData, svcInfo, membershipCheck
   this.$container = rootEl;
   this._membershipData = membershipData;
   this._svcInfo = svcInfo;
-  this._membershipLayerPopup = new Tw.MembershipInfoLayerPopup(this.$container);
+  this._membershipLayerPopup = new Tw.MembershipInfoLayerPopup(this.$container, this._svcInfo);
   this._nativeService = Tw.Native;
   this._historyService = new Tw.HistoryService();
   this._tidLanding = new Tw.TidLandingComponent();
+  this._xTractorService = new Tw.XtractorService(this.$container);
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
   this._map = undefined;
   this._menuId = menuId;
-  this._membershipInit();
   this._cachedElement();
   this._bindEvent();
   this._getMembershipBanner();
@@ -29,11 +29,6 @@ Tw.MembershipSubmain.prototype = {
     G: 'gold',
     S: 'silver',
     A: 'all'
-  },
-  _membershipInit: function () {
-    if(this._svcInfo){
-      this._membershipLayerPopup.reqPossibleJoin();
-    }
   },
   _cachedElement: function() {
     this.$barCode = this.$container.find('#fe-barcode-img');
@@ -48,8 +43,8 @@ Tw.MembershipSubmain.prototype = {
     this.$container.on('click', '.box-app-down', $.proxy(this._goTmembership, this));
     this.$container.on('click', '.data-plus', $.proxy(this._selectChocolate, this));
     this.$container.on('click', '.coalition-brand-list .map', $.proxy(this._getBrandDetailInfo, this));
-    // this.$container.on('click', '#fe-membership-join', $.proxy( this._membershipLayerPopup.onClickJoinBtn, this._membershipLayerPopup));
-    this.$container.on('click', '#fe-membership-join', $.proxy( this._membershipLoginCheck, this));
+    this.$container.on('click', '#fe-membership-join', $.proxy( this._membershipLayerPopup.onClickJoinBtn, this._membershipLayerPopup));
+    // this.$container.on('click', '#fe-membership-join', $.proxy( this._membershipLoginCheck, this));
     this.$container.on('click', '.fe-mebership-my', $.proxy(this._goMyMembership, this));
     this.$container.on('click', '.fe-membership-location', $.proxy(this._checkLocationAgreement, this));
     this.$container.on('click', '.fe-membership-tday', $.proxy(this._selectTday, this));
@@ -79,22 +74,31 @@ Tw.MembershipSubmain.prototype = {
   },
   _selectTday: function() {
     if (Tw.BrowserHelper.isApp()) {
-      this._popupService.openConfirm(Tw.POPUP_CONTENTS.NO_WIFI, Tw.POPUP_TITLE.EXTERNAL_LINK, null, $.proxy(this._goTday, this));
+      this._popupService.openConfirm(Tw.POPUP_CONTENTS.NO_WIFI, Tw.POPUP_TITLE.EXTERNAL_LINK,
+          $.proxy(this._goTday, this),
+          $.proxy(function () {
+            this._popupService.close();
+          }, this));
     } else {
       this._goTday();
     }
   },
   _selectChocolate: function () {
     if (Tw.BrowserHelper.isApp()) {
-      this._popupService.openConfirm(Tw.POPUP_CONTENTS.NO_WIFI, Tw.POPUP_TITLE.EXTERNAL_LINK, null, $.proxy(this._goChocolate, this));
+      this._popupService.openConfirm(Tw.POPUP_CONTENTS.NO_WIFI, Tw.POPUP_TITLE.EXTERNAL_LINK,
+          $.proxy(this._goChocolate, this),
+          $.proxy(function () {
+            this._popupService.close();
+          }, this));
     } else {
       this._goChocolate();
     }
   },
   _goTday: function () {
+    this._popupService.close();
     Tw.CommonHelper.openUrlExternal(Tw.MEMBERSHIP_URL.TDAY,'');
   },
-  _membershipLoginCheck: function () {
+  /*_membershipLoginCheck: function () {
     if(this._svcInfo && this._svcInfo.loginType !== Tw.AUTH_LOGIN_TYPE.EASY ) {
       this._membershipLayerPopup.onClickJoinBtn();
     } else {
@@ -111,7 +115,7 @@ Tw.MembershipSubmain.prototype = {
           Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A68.BUTTON
       );
     }
-  },
+  },*/
   _goLogin: function () {
     this._tidLanding.goLogin();
   },
@@ -246,6 +250,7 @@ Tw.MembershipSubmain.prototype = {
     this._historyService.goLoad('/membership/benefit/map?' + $.param(param));
   },
   _goChocolate: function () {
+    this._popupService.close();
     Tw.CommonHelper.openUrlExternal(Tw.MEMBERSHIP_URL.CHOCOLATE,'');
   },
   _goTmembership: function () {
@@ -265,12 +270,12 @@ Tw.MembershipSubmain.prototype = {
     }
   },
   _askCurrentLocation: function() {
-    if (Tw.BrowserHelper.isApp()) {
+    if (Tw.BrowserHelper.isApp() && this._svcInfo) {
       this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function (res) {
         if (res.resultCode !== Tw.NTV_CODE.CODE_00 ) {
           this._getAreaByGeo({
-            mapX: '37.5600420',
-            mapY: '126.9858500'
+            latitude: '37.5600420',
+            longitude: '126.9858500'
           });
         } else {
           this._getAreaByGeo(res.params);
@@ -278,17 +283,19 @@ Tw.MembershipSubmain.prototype = {
       }, this));
     } else {
       this._getAreaByGeo({
-        mapX: '37.5600420',
-        mapY: '126.9858500'
+        latitude: '37.5600420',
+        longitude: '126.9858500'
       });
     }
   },
   _getAreaByGeo: function (location) {
     Tw.Logger.info('current location : ', location);
     this.currentLocation = {
-      mapX: location.mapX,
-      mapY: location.mapY
+      mapX: location.latitude,
+      mapY: location.longitude
     };
+
+    Tw.Logger.info('this.currentLocation : ', this.currentLocation);
     this._apiService.request(Tw.API_CMD.BFF_11_0026, this.currentLocation)
     // $.ajax('http://localhost:3000/mock/product.roaming.BFF_10_0059.json')
         .done($.proxy(this._handleSuccessAreaByGeo, this))
@@ -307,7 +314,7 @@ Tw.MembershipSubmain.prototype = {
           .done($.proxy(this._handleSuccessNeaBrand, this))
           .fail($.proxy(this._handleFailCallBack, this));
     } else {
-      Tw.Error(resp.code, resp.msg).pop();
+      Tw.Error(resp.code, resp.code).pop();
     }
   },
   _changeIcoGrade: function(ico) {
@@ -327,6 +334,7 @@ Tw.MembershipSubmain.prototype = {
       this.nearBrandData[idx].showIcoGrd4 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk4);
     }
     Tw.Logger.info('near brand resp :', this.nearBrandData);
+    this.$nearBrand.empty();
     this.$nearBrand.append(this._nearBrandTmpl({ list : this.nearBrandData }));
   },
   _handleFailCallBack: function () {

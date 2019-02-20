@@ -108,7 +108,9 @@ export const MYT_FARE_BILL_GUIDE = {
   FIRST_SVCTYPE: '전체',
   PHONE_SVCTYPE: '휴대폰',
   PHONE_TYPE_0: '이동전화',
-  PHONE_TYPE_1: '휴대폰'
+  PHONE_TYPE_1: '휴대폰',
+  TEL_TYPE_0: '집전화',
+  TEL_TYPE_1: '유선전화'
 };
 
 export enum MYT_FARE_PAYMENT_NAME {
@@ -551,8 +553,8 @@ export const BRANCH_SEARCH_OPTIONS = {
   0: '전체',
   1: '지점',
   2: '대리점',
-  premium: 'T Premium  Store',
-  direct: '바로픽업',
+  premium: 'T프리미엄스토어',
+  direct: '바로 픽업',
   rent: '임대폰',
   skb: 'SK브로드밴드',
   apple: '애플취급점',
@@ -757,13 +759,20 @@ export const CUSTOMER_STIE_OPTION_TYPE = [
   }
 ];
 
+export const DIRECTSHOP_LINK = {
+  common: 'https://m.shop.tworld.co.kr/shopguide',
+  discount: '/bnft?utm_source=tworld&utm_medium=moweb_menu&utm_campaign=sub_cs&utm_content=guide5&fSiteCd=1010',
+  buy: '/dc-agrmt-typ?utm_source=tworld&utm_medium=moweb_menu&utm_campaign=sub_cs&utm_content=guide6&fSiteCd=1010',
+  delivery: '/dvc-dlv?utm_source=tworld&utm_medium=moweb_menu&utm_campaign=sub_cs&utm_content=guide7&fSiteCd=1010'
+};
+
 export const CUSTOMER_SERVICE_OPTION_TYPE = [
   {
-    title: '휴대폰 가입·변경에 대한 안내',
+    title: '휴대폰 가입/변경 안내',
     sub_list: [
       {
         sub_title: '휴대폰 가입',
-        sub_text: '가입·번호이동·기기 안내를 원한다면',
+        sub_text: '가입/번호이동/기기 안내를 원한다면',
         dep_list: [
           {
             dep_title: '휴대폰 가입',
@@ -789,7 +798,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
       },
       {
         sub_title: '미성년자 가입',
-        sub_text: '가입방법·부모동의 절차가 궁금하다면',
+        sub_text: '가입방법/부모동의 절차가 궁금하다면',
         dep_list: [
           {
             dep_title: '미성년자 가입',
@@ -832,11 +841,11 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    title: '휴대폰 요금 기준에 대한 안내',
+    title: '휴대폰 요금 기준 안내',
     sub_list: [
       {
         sub_title: '요금 기준',
-        sub_text: '일반·스마트폰 요금 기준이 궁금하다면',
+        sub_text: '일반/스마트폰 요금 기준이 궁금하다면',
         type: 'B1',
         code: 'C00031'
       },
@@ -883,20 +892,21 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    unitedTitle: 'T월드 다이렉트·T멤버십·T로밍에 대한 안내',
+    unitedTitle: '다이렉트샵/멤버십/로밍 안내',
     united: '_3T',
     title: 'T월드 다이렉트 이용안내',
     text: 'T월드 다이렉트에서 구매를 원한다면',
     upperCat: true,
     sub_list: [
       {
-        sub_title: '할인·혜택',
+        sub_title: '할인/혜택',
         sub_text: '',
         dep_list: [
           {
             dep_title: '요금약정할인',
             type: 'A1',
-            code: 'C00001'
+            code: `url:${DIRECTSHOP_LINK.common}${DIRECTSHOP_LINK.discount}`
+            // code: 'C00001'
           },
           {
             dep_title: '결합할인',
@@ -917,7 +927,8 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           {
             dep_title: '구매 전 꿀팁',
             type: 'A2',
-            code: 'C00011'
+            code: `url:${DIRECTSHOP_LINK.common}${DIRECTSHOP_LINK.buy}`
+            // code: 'C00011'
           },
           {
             dep_title: '다이렉트샵구매가이드',
@@ -948,7 +959,8 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           {
             dep_title: '배송방법',
             type: 'A2',
-            code: 'C00002'
+            code: `url:${DIRECTSHOP_LINK.common}${DIRECTSHOP_LINK.delivery}`
+            // code: 'C00002'
           },
           {
             dep_title: '개통방법',
@@ -965,9 +977,9 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    unitedTitle: 'T월드 다이렉트·T멤버십·T로밍에 대한 안내',
+    unitedTitle: '다이렉트샵/멤버십/로밍 안내',
     united: '_3T',
-    title: 'T멤버십·T로밍에 대한 안내',
+    title: 'T멤버십/T로밍 안내',
     text: '',
     upperCat: false,
     sub_list: [
@@ -1001,7 +1013,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    title: '서비스 정책·제도에 대한 안내',
+    title: '서비스 정책/제도 안내',
     sub_list: [
       {
         sub_title: '데이터 리필하기',
@@ -1034,7 +1046,7 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
     ]
   },
   {
-    title: '목소리 인증·ARS상담에 대한 안내',
+    title: '목소리 인증/ARS상담 안내',
     sub_list: [
       {
         sub_title: 'ARS상담 이용안내',
@@ -1050,19 +1062,17 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
             type: 'A2',
             code: 'C00021'
           },
-          /* {
+          {
             dep_title: '음성인식 ARS',
             type: 'A2',
             code: 'C00022'
-          }*/
+          }
         ]
       },
       {
         sub_title: '목소리 인증 이용안내',
         sub_text: '더 안전한 ARS이용을 원하신다면',
-        code: 'C00024',
-        type: 'B1'
-        /*dep_list: [
+        dep_list: [
           {
             dep_title: '목소리 인증',
             type: 'A2',
@@ -1071,13 +1081,14 @@ export const CUSTOMER_SERVICE_OPTION_TYPE = [
           {
             dep_title: '목소리 등록 문자받기',
             type: 'A2',
-            code: 'C00026'
+            code: 'url:/customer/svc-info/voice'
           }
-        ]*/
+        ]
       }
     ]
   }
 ];
+
 export const MYT_JOIN_PERSONAL = '개인';
 export const MYT_JOIN_FAMILY = '패밀리';
 export const MYT_SUSPEND_REASON = {

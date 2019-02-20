@@ -40,7 +40,7 @@ Tw.MyTFareInfoBillTaxSendEmail.prototype = {
       this._checkEmailValidation();
     }, this));
     this.$emailInput.trigger('keyup');
-    this.$container.find('.fe-btn-back').on('click', $.proxy(this._closeResendByEmail, this));
+    this.$container.find('.fe-btn-back').on('click', $.proxy(this._goBack, this)); // _closeResendByEmail -> _goBack
   },
 
   // 이메일 인풋 포커스 아웃 시 밸리데이션

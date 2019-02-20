@@ -4,12 +4,13 @@
  * Date: 2018.11.30
  */
 
-Tw.BiometricsDeregister = function (target) {
+Tw.BiometricsDeregister = function (target, svcMgmtNum) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._historyService = Tw.HistoryService();
 
   this._target = target;
+  this._svcMgmtNum = svcMgmtNum;
   this._cancelFido = false;
   this._goRegister = false;
 
@@ -36,7 +37,7 @@ Tw.BiometricsDeregister.prototype = {
         key: Tw.NTV_STORAGE.FIDO_USE,
         value: 'N'
       });
-      this._nativeService.send(Tw.NTV_CMD.FIDO_DEREGISTER, {}, $.proxy(this._onFidoDeRegister, this));
+      this._nativeService.send(Tw.NTV_CMD.FIDO_DEREGISTER, { svcMgmtNum: this._svcMgmtNum }, $.proxy(this._onFidoDeRegister, this));
     }
   },
   _onFidoDeRegister: function (resp) {
@@ -71,7 +72,7 @@ Tw.BiometricsDeregister.prototype = {
   },
   _onCloseBioDeRegister: function () {
     if ( this._goRegister ) {
-      this._biometricsTerm = new Tw.BiometricsTerms(this._target);
+      this._biometricsTerm = new Tw.BiometricsTerms(this._target, this._svcMgmtNum);
       this._biometricsTerm.open();
     }
   }

@@ -39,7 +39,7 @@
             <ul>
                 <% for (var i in relateTags) { %>
                 <% if (basicInfo.prodTypListPath) { %>
-                <li><a href="/<%= basicInfo.prodTypListPath %>?tag=<%= relateTags[i].tagId %>" class="link">#<%= relateTags[i].tagNm %></a></li>
+                <li><a href="/<%= basicInfo.prodTypListPath %>?tag=<%= relateTags[i].tagId %>" class="link" role="button">#<%= relateTags[i].tagNm %></a></li>
                 <% } else { %>
                 <li><button type="button" class="link">#<%= relateTags[i].tagNm %></button></li>
                 <% } %>

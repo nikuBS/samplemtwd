@@ -104,7 +104,7 @@ const environment = {
     SEARCH_SERVER: 'http://211.188.181.123:8080',
     TEST_SERVER: 'https://jsonplaceholder.typicode.com',
     // DOMAIN: 'https://beta.m.tworld.co.kr',
-    DOMAIN_G: 'appg.tworld.co.kr',
+    DOMAIN_G: 'gapp.tworld.co.kr',
     TMAP: 'https://api2.sktelecom.com/tmap/js?version=1&format=javascript&appKey=ecfeceac-3660-4618-bc3b-37a11f952441',
     SIGNGATE: {
       host: 'relay.signgate.com',

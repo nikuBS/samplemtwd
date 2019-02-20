@@ -28,10 +28,11 @@ Tw.CommonSearchMain.prototype = {
     this._onInput = false;
     this._recentlyKeywordInit();
     this._bindPopupElementEvt();
+    new Tw.XtractorService(this.$container);
     //this.$container.find('#recently_keyword_layer').removeClass('none').hide();
   },
   _keyInputEvt : function (inputEvtObj) {
-    if(inputEvtObj.keyCode===13){
+    if(Tw.InputHelper.isEnter(inputEvtObj)){
       this._searchByInputValue();
       return;
     }
@@ -52,7 +53,7 @@ Tw.CommonSearchMain.prototype = {
     if(idx>=10){
       return;
     }
-    this.$autoCompleteList.append(this.$autoCompletetTemplate({listData : this._convertAutoKeywordData(data.hkeyword)}));
+    this.$autoCompleteList.append(this.$autoCompletetTemplate({listData : this._convertAutoKeywordData(data.hkeyword),xtractorIndex : idx+1}));
   },
   _bindPopupElementEvt : function () {
     this.$container.find('.close-area').on('click',$.proxy(this._closeSearch,this));
@@ -117,7 +118,7 @@ Tw.CommonSearchMain.prototype = {
       if(moment(data.searchTime, 'YY.M.D.') < saveBottomLineDate){
         this._recentlyKeywordListData[this._nowUser].splice(index,1);
       }
-      $recentlyKeywordList.append($recentlyKeywordTemplate({data : data, index : index}));
+      $recentlyKeywordList.append($recentlyKeywordTemplate({data : data, index : index , xtractorIndex: index+1 }));
     });
     Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(this._recentlyKeywordListData));
   },
@@ -155,7 +156,10 @@ Tw.CommonSearchMain.prototype = {
       if(this._historyService.getHash()==='#on_input'){
         this._historyService.goBack();
       }
-      this._historyService.goLoad($target.attr('href'));
+      setTimeout($.proxy(function () {
+        this._historyService.goLoad($target.attr('href'));
+      },this));
+
     }else{
       this._doSearch($target.data('param'));
     }
@@ -164,8 +168,10 @@ Tw.CommonSearchMain.prototype = {
     if(this._historyService.getHash()){
       this._historyService.goBack();
     }
-    this._addRecentlyKeywordList(searchKeyword);
-    this._historyService.goLoad('/common/search?keyword='+searchKeyword+'&step='+(this._step+1));
+    setTimeout($.proxy(function () {
+      this._addRecentlyKeywordList(searchKeyword);
+      this._historyService.goLoad('/common/search?keyword='+searchKeyword+'&step='+(this._step+1));
+    },this));
   },
   _hashChange : function () {
     if(Tw.FormatHelper.isEmpty(this._historyService.getHash())&&this._onInput){

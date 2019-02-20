@@ -76,7 +76,7 @@
                         <div class="widget-box horizontal">
                             <div class="horizontal-slide">
                                 <ul class="horizontal-list benefit-banner-box">
-                                    <li>
+                                    <li data-url="/membership/benefit/brand?cateCd=3">
                                         <div class="benefit-banner brand-inner">
                                             <button class="section-tit">
                                                 <span class="ico bakery"></span>
@@ -109,7 +109,7 @@
                                                 </span>
                                         </div>
                                     </li>
-                                    <li>
+                                    <li data-url="/membership/benefit/brand?cateCd=3">
                                         <div class="benefit-banner brand-inner">
                                             <button class="section-tit">
                                                 <span class="ico bakery"></span>
@@ -230,7 +230,7 @@
 
 <script>
   $(document).ready(function () {
-    new Tw.MembershipInfoGrade();
+    new Tw.MembershipInfoGrade(JSON.parse('<%- JSON.stringify(svcInfo) %>'));
   });
 </script>
 <% include ../../components/end.component.html %>

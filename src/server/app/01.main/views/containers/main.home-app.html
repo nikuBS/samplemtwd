@@ -54,7 +54,7 @@
                                 <strong class="ti">가입하신 회선이 없습니다.</strong>
                                 <p class="tx">SK텔레콤의 가족이 되어<br>다양하고 편리한 서비스를 이용해 보세요.</p>
                                 <div class="btn-area">
-                                    <button type="button" class="btn-round1 btn-style4 fe-home-external" data-url="http://shop.tworld.co.kr/handler/ShopTworldMain-Start">휴대폰 보러가기</button>
+                                    <button type="button" class="btn-round1 btn-style4 fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/list ">휴대폰 보러가기</button>
                                 </div>
                             </div>
                             <!-- // 미가입 -->
@@ -136,7 +136,7 @@
                                 <!-- // .widget -->
 
                                 <% if(homeData.usageData.data.isTplanUse || homeData.usageData.data.isTplanProd) { %>
-                                <div class="legend">
+                                <div id="fe-tplan" class="legend" data-tplanuse="<%= homeData.usageData.data.isTplanUse %>" data-tplanprod="<%= homeData.usageData.data.isTplanProd %>">
                                     <span class="category0"><span><em class="data"><%= homeData.usageData.data.showMyRemained %></em> 나의 데이터</span></span>
                                     <% if(homeData.usageData.data.isTplanUse) { %>
                                     <span class="category1"><span><em class="data"><%= homeData.usageData.data.showShareRemained %></em>T가족모아데이터</span></span>
@@ -393,11 +393,15 @@
                         <% if (svcType.login && svcType.mobilePhone) { %>
                         <% if (homeData.membershipData.code === 'EASY_LOGIN') { %>
                         <div class="section-box nogaps">
-                            <div class="main-membershop-box">
-                                <button class="ti-tx">
-                                    <strong class="ti">간편 로그인 상태에서는 이용할 수 없습니다</strong>
-                                    <span class="tx">T아이디(아이디/비밀번호) 로그인 후 이용해주세요</span>
-                                </button>
+                            <div class="main-membershop-box fe-bt-home-login">
+                                <div class="membership-cont">
+                                    <strong class="ti">아직 멤버십 카드가 없으신가요?</strong>
+                                    <span class="msg">간편 로그인 상태에서는 이용할 수 없습니다.<br>T아이디(아이디/비밀번호) 로그인 후 이용해주세요.</span>
+                                </div>
+                                <div class="btn-area">
+                                    <a href="/membership/submain" class="bt">T멤버십</a>
+                                    <a href="/membership/benefit/brand" class="bt">제휴 브랜드</a>
+                                </div>
                             </div>
                         </div>
                         <% } else if (homeData.membershipData.code === '00') { %>
@@ -427,10 +431,16 @@
                         <!-- 미발급 -->
                         <div class="section-box nogaps">
                             <div id="fe-membership-go" class="main-membershop-box">
-                                <button class="ti-tx">
-                                    <strong class="ti">아직 멤버십 카드가 없으신가요?</strong>
-                                    <span class="tx">T멤버십을 신청하고 <br>SK텔레콤의 혜택을 이용해 보세요</span>
-                                </button>
+                                <div class="membership-cont">
+                                    <p class="ti-tx">
+                                        <strong class="ti">아직 멤버십 카드가 없으신가요?</strong>
+                                        <span class="tx">T멤버십을 신청하고 <br>SK텔레콤의 혜택을 이용해 보세요</span>
+                                    </p>
+                                </div>
+                                <div class="btn-area">
+                                    <a href="/membership/submain" class="bt">T멤버십</a>
+                                    <a href="/membership/benefit/brand" class="bt">제휴 브랜드</a>
+                                </div>
                             </div>
                         </div>
                         <% } %>
@@ -440,7 +450,7 @@
                         <% if (redisData.smartCard.length > 0 && redisData.smartCard[0]) { %>
                         <div class="section-box empty fe-smart-0 fe-smart-<%= redisData.smartCard[0].no %>" data-smartCard="<%= redisData.smartCard[0].no %>">
                             <div class="main-breakdown-box">
-                                <div class="stit c-point"><%= redisData.smartCard[0].title %></div>
+                                <!--<div class="stit c-point"><%= redisData.smartCard[0].title %></div>-->
                             </div>
                         </div>
                         <% } %>
@@ -495,7 +505,7 @@
                         <% if (redisData.smartCard.length > 0 && redisData.smartCard[1]) { %>
                         <div class="section-box empty fe-smart-1 fe-smart-<%= redisData.smartCard[1].no %>" data-smartCard="<%= redisData.smartCard[1].no %>">
                             <div class="main-breakdown-box">
-                                <div class="stit c-point"><%= redisData.smartCard[1].title %></div>
+                                <!--<div class="stit c-point"><%= redisData.smartCard[1].title %></div>-->
                             </div>
                         </div>
                         <% } %>
@@ -504,7 +514,7 @@
                         <% if (redisData.smartCard.length > 0 && redisData.smartCard[2]) { %>
                         <div class="section-box empty fe-smart-2 fe-smart-<%= redisData.smartCard[2].no %>" data-smartCard="<%= redisData.smartCard[2].no %>">
                             <div class="main-breakdown-box">
-                                <div class="stit c-point"><%= redisData.smartCard[2].title %></div>
+                                <!--<div class="stit c-point"><%= redisData.smartCard[2].title %></div>-->
                             </div>
                         </div>
                         <% } %>
@@ -558,20 +568,20 @@
                         <% if (redisData.smartCard.length > 0 && redisData.smartCard[3]) { %>
                         <div class="section-box empty fe-smart-3 fe-smart-<%= redisData.smartCard[3].no %>" data-smartCard="<%= redisData.smartCard[3].no %>">
                             <div class="main-breakdown-box">
-                                <div class="stit c-point"><%= redisData.smartCard[3].title %></div>
+                                <!--<div class="stit c-point"><%= redisData.smartCard[3].title %></div>-->
                             </div>
                         </div>
                         <% }%>
                         <% } %>
-                        <% if (svcType.login && svcType.mobilePhone) { %>
-                        <% if (redisData.smartCard.length > 0 && redisData.smartCard[4]) { %>
-                        <div class="section-box empty fe-smart-4 fe-smart-<%= redisData.smartCard[4].no %>" data-smartCard="<%= redisData.smartCard[4].no %>">
-                            <div class="main-breakdown-box">
-                                <div class="stit c-point"><%= redisData.smartCard[4].title %></div>
-                            </div>
-                        </div>
-                        <% } %>
-                        <% } %>
+                        <!--<% if (svcType.login && svcType.mobilePhone) { %>-->
+                        <!--<% if (redisData.smartCard.length > 0 && redisData.smartCard[4]) { %>-->
+                        <!--<div class="section-box empty fe-smart-4 fe-smart-<%= redisData.smartCard[4].no %>" data-smartCard="<%= redisData.smartCard[4].no %>">-->
+                            <!--<div class="main-breakdown-box">-->
+                                <!--<div class="stit c-point"><%= redisData.smartCard[4].title %></div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<% } %>-->
+                        <!--<% } %>-->
 
                         <!-- 프로모션 배너 3 -->
                         <div class="section-box nogaps">
@@ -622,7 +632,7 @@
                         <!-- 이럴 땐 이렇게 하세요 -->
                         <div class="section-box nogaps">
                             <div class="main-tip-box box-type section-swiper-box">
-                                <div class="stit c-point">이럴 땐 이렇게 하세요</div>
+                                <a href="/customer/faq" type="button" class="stit tit">이럴 땐<br>이렇게 하세요</a>
                                 <!-- .widget -->
                                 <div class="widget">
                                     <div class="widget-box slider1">
@@ -709,10 +719,10 @@
                                 <li><a href="/product/mobileplan-add" class="bt"><i class="icon-vas-80"><span class="blind">vas</span></i>부가서비스</a></li>
                                 <li><a href="/product/wireplan" class="bt"><i class="icon-internet-80"></i>인터넷/<br>전화/IPTV</a></li>
                                 <li><a href="/product/roaming" class="bt"><i class="icon-roaming-80"></i>T로밍</a></li>
-                                <li><button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/Mobile-MobileMain?category_id=20010001&utm_source=tworld&utm_medium=app_menu&utm_campaign=phone&utm_content=store&fSiteCd=1010"><i class="icon-cellphone2-80"></i>스마트폰</button></li>
-                                <li><button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/Mobile-MobileMain?category_id=20010002&utm_source=tworld&utm_medium=app_menu&utm_campaign=tablet&utm_content=store&fSiteCd=1010"><i class="icon-tablet-80"></i>태블릿</button></li>
-                                <li><button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/Mobile-MobileMain?category_id=20010003&utm_source=tworld&utm_medium=app_menu&utm_campaign=watch&utm_content=store&fSiteCd=1010"><i class="icon-watch-80"></i>스마트워치</button></li>
-                                <li><button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/AccessoryMall-MainAcc?utm_source=tworld&utm_medium=app_menu&utm_campaign=accessory&utm_content=store&fSiteCd=1010"><i class="icon-accessory-80"></i>액세서리</button></li>
+                                <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010001"><i class="icon-cellphone2-80"></i>스마트폰</button></li>
+                                <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010002"><i class="icon-tablet-80-1"></i>태블릿</button></li>
+                                <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010003"><i class="icon-watch-80"></i>스마트워치</button></li>
+                                <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/accessory/submain"><i class="icon-accessory-80"></i>액세서리</button></li>
                             </ul>
                             <!-- //MY 바로가기 -->
                         </div>
@@ -720,23 +730,23 @@
                         <!-- 다이렉트샵 -->
                         <div class="section-box">
                             <div class="main-direct-box">
-                                <div class="stit c-point"><button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/ShopTworldMain-Start">다이렉트샵 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div>
+                                <div class="stit c-point"><button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/shop/main?utm_source=tworld&utm_medium=app_menu&utm_campaign=familysite&utm_content=brand&fSiteCd=1010">다이렉트샵 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div>
                                 <strong class="ti fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/ShopTworldMain-Start">다이렉트샵에서 엄선한<br>프리미엄 스마트폰</strong>
                                 <ul class="info"><!-- 190124 가격,태그 영역 제거 -->
                                     <li>
-                                        <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/handler/PhoneDetail-Start?PRODUCT_GRP_ID=000003292&utm_source=tworld&utm_medium=app_list&utm_campaign=iphone_xs&utm_content=store&fSiteCd=1010">
+                                        <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010001&productGrpId=000003292">
                                             <span class="img"><img src="<%= CDN %>/img/main/img_phone01.png" alt=""></span>
                                             <strong class="ti">iPhone XS</strong>
                                         </button>
                                     </li>
                                     <li>
-                                        <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/handler/PhoneDetail-Start?PRODUCT_GRP_ID=000003132&utm_source=tworld&utm_medium=app_list&utm_campaign=galaxy_note9&utm_content=store&fSiteCd=1010">
+                                        <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010001&productGrpId=000003132">
                                             <span class="img"><img src="<%= CDN %>/img/main/img_phone02.png" alt=""></span>
                                             <strong class="ti">갤럭시 노트9</strong>
                                         </button>
                                     </li>
                                     <li>
-                                        <button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/PhoneDetail-Start?PRODUCT_GRP_ID=000003472&utm_source=tworld&utm_medium=app_list&utm_campaign=lg_q9&utm_content=store&fSiteCd=1010">
+                                        <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010001&productGrpId=000003472">
                                             <span class="img"><img src="<%= CDN %>/img/main/img_phone03.png" alt=""></span>
                                             <strong class="ti">엘지 Q9</strong>
                                         </button>
@@ -748,7 +758,7 @@
 
                         <!-- 공시지원금 변동 알림 -->
                         <div class="section-box nogaps">
-                            <button class="main-alarm-box fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/Dantong-SKT?utm_source=tworld&utm_medium=app_banner&utm_campaign=dantong&utm_content=store&fSiteCd=1010">
+                            <button class="main-alarm-box fe-home-external" data-url="https://m.shop.tworld.co.kr/notice">
                                 <i class="icon-alarm-red"><span class="blind">alarm</span></i>
                                 공시지원금 변동 알림을 받아 보세요
                             </button>
@@ -956,22 +966,22 @@
                                         <div class="slider-box">
                                             <ul class="slider">
                                                 <li>
-                                                    <button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/Plan-Start?PLAN_ID=P00000334&utm_source=tworld&utm_medium=app_banner&utm_campaign=marymond&utm_content=store&fSiteCd=1010">
+                                                    <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000013">
                                                         <img src="<%= CDN %>/img/main/img_accessories.jpg" alt="마리몬드" />
                                                     </button>
                                                 </li>
                                                 <li>
-                                                    <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/handler/AccessoryMall-AccView?CATEGORY_ID=10010003&ACCESSORY_ID=A05960&callGnb=02&utm_source=tworld&utm_medium=app_banner&utm_campaign=nugu&utm_content=store&fSiteCd=1010">
+                                                    <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/iot/nugu/view?productId=N05960&categoryId=70010012&productType=04">
                                                         <img src="<%= CDN %>/img/main/img_accessories02.jpg" alt="누구캔들" />
                                                     </button>
                                                 </li>
                                                 <li>
-                                                    <button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/Plan-Start?PLAN_ID=P00000362&utm_source=tworld&utm_medium=app_banner&utm_campaign=apple_acc&utm_content=store&fSiteCd=1010">
+                                                    <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000029">
                                                         <img src="<%= CDN %>/img/main/img_accessories03.jpg" alt="애플 악세서리" />
                                                     </button>
                                                 </li>
                                                 <li>
-                                                    <button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/Plan-Start?PLAN_ID=P00000338&utm_source=tworld&utm_medium=app_banner&utm_campaign=spigen&utm_content=store&fSiteCd=1010">
+                                                    <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000014">
                                                         <img src="<%= CDN %>/img/main/img_accessories04.jpg" alt="슈피겐" />
                                                     </button>
                                                 </li>
@@ -993,7 +1003,7 @@
                                     <li class="t-membership"><a href="/product/apps/app?appId=TW50000020" class="bt">T멤버십</a></li>
                                     <li class="t-map"><a href="/product/apps/app?appId=TW50000044" class="bt">T맵</a></li>
                                     <li class="t-call"><a href="/product/apps/app?appId=TW50000002" class="bt">T전화</a></li>
-                                    <li class="t-cloudberry"><a href="/product/apps/app?appId=TW50000015" class="bt">클라우드베리</a></li>
+                                    <li class="t-cloudberry"><a href="/product/apps/app?appId=TW50000043" class="bt">클라우드베리</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -1003,7 +1013,7 @@
                         <!-- 이럴 땐 이렇게 하세요 -->
                         <div class="section-box nogaps">
                             <div class="main-tip-box box-type section-swiper-box">
-                                <div class="stit c-point">이럴 땐 이렇게 하세요</div>
+                                <a href="/customer/faq" type="button" class="stit tit">이럴 땐<br>이렇게 하세요</a>
                                 <!-- .widget -->
                                 <div class="widget">
                                     <div class="widget-box slider1">
@@ -1076,10 +1086,9 @@
 </div>
 <% include ../components/javascript.component.html %>
 <% if (svcType.login && svcType.mobilePhone) { %>
-<% include ../components/smart-card/bill.component.html %>
-<% include ../components/smart-card/contents.component.html %>
-<% include ../components/smart-card/gift.component.html %>
-<% include ../components/smart-card/micro-pay.component.html %>
+<%- include('../components/smart-card/bill.component.html', { svcInfo: svcInfo }); %>
+<%- include('../components/smart-card/gift.component.html'); %>
+<%- include('../components/smart-card/micro-contents.component.html'); %>
 <%- include('../components/smart-card/recharge.component.html', { usageData: homeData.usageData }); %>
 <%- include('../components/home/home.welcome.component.html', { svcInfo: svcInfo }); %>
 <% } %>

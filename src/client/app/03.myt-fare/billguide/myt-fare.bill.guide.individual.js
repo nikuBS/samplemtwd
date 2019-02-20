@@ -27,7 +27,7 @@ Tw.MyTFareBillGuideIndividual.prototype = {
     this._bindEvent();
     this._hbRegisterHelper();
 
-    if ( this.resData.childLineInfo ) {
+    if ( this.resData.childLineInfo && this.resData.childLineInfo.length > 0 ) {
       this._getChildBillInfo();
     } else {
       $('#divChildListHaeder').hide();
@@ -161,7 +161,7 @@ Tw.MyTFareBillGuideIndividual.prototype = {
     var conditionChangeDtList = this.resData.commDataInfo.conditionChangeDtList; // value
     var listData = _.map(invDtArr, function (item, idx) {
       var radioAttr = 'id="ra'+idx+'" name="r1" data-value="' + invDtArr[idx] + '"';
-      if(reqDate === invDtArr[idx]){
+      if(reqDate === invDtArr[idx] || (idx === 0 && !reqDate)){
         radioAttr += ' checked';
       }
       return {
@@ -190,15 +190,27 @@ Tw.MyTFareBillGuideIndividual.prototype = {
     var $tg = $(event.currentTarget);
     this.paramDate = $tg.find('input[type=radio]').attr('data-value');
     // Tw.Logger.info('[선택 : ]', this.paramDate);
-    this._conditionChangeEvtClose();
+
+    if(this.paramDate === this.resData.reqQuery.date){
+      this._popupService.close();
+    } else {
+
+      var param = {
+        date: this.paramDate
+      };
+      Tw.CommonHelper.startLoading(this.$container, 'grey', true);
+      this._history.goLoad('/myt-fare/billguide/guide?' + $.param(param));
+    }
+
+    //this._conditionChangeEvtClose();
   },
   _conditionChangeEvtClose: function () {
     // Tw.Logger.info('[팝업 닫기 : actionsheet_select_a_type]');
-    var param = {
-      date: this.paramDate
-    };
-
-    this._history.goLoad('/myt-fare/billguide/guide?' + $.param(param));
+    // var param = {
+    //   date: this.paramDate
+    // };
+    //
+    // this._history.goLoad('/myt-fare/billguide/guide?' + $.param(param));
     // this._popupService.close();
   },
   //--------------------------------------------------------------------------[API]

@@ -78,7 +78,7 @@ Tw.MembershipBenefitBrandMap.prototype = {
     var lonlat = new Tmap.LonLat(shopLat, shopLon).transform('EPSG:4326', 'EPSG:3857');
     var size = new Tmap.Size(24, 38);
     var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
-    var icon = new Tmap.Icon('/img/ico/ico-tmap-pin.png', size, offset);
+    var icon = new Tmap.Icon(Tw.Environment.cdn + Tw.TMAP.PIN, size, offset);
 
     var marker = new Tmap.Marker(lonlat, icon);
     markerLayer.addMarker(marker);

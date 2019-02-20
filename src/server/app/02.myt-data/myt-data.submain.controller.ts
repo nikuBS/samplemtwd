@@ -16,9 +16,16 @@ import BrowserHelper from '../../utils/browser.helper';
 import { LOGIN_TYPE, PREPAID_PAYMENT_PAY_CD, PREPAID_PAYMENT_TYPE, REFILL_USAGE_DATA_CODES, UNIT, UNIT_E } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 
+// 실시간잔여량 공제항목
 const skipIdList: any = ['POT10', 'POT20', 'DDZ25', 'DDZ23', 'DD0PB', 'DD3CX', 'DD3CU', 'DD4D5', 'LT'];
-const tmoaBelongToProdList: any = ['NA00005959', 'NA00005958', 'NA00005957', 'NA00005956', 'NA00005955', 'NA00006157', 'NA00006156',
-  'NA00006155', 'NA00005627', 'NA00005628', 'NA00005629', 'NA00004891'];
+// T가족모아 공유 가능 요금제
+const tmoaBelongToProdList: any = ['NA00005959', 'NA00005958'];
+// T가족모아 가입 가능 요금제
+const tmoaInsertToProdList: any = ['NA00005959', 'NA00005958', 'NA00005957', 'NA00005956', 'NA00005955', 'NA00006157', 'NA00006156',
+  'NA00006155', 'NA00005627', 'NA00005628', 'NA00005629', 'NA00004891', 'NA00004769', 'NA00004770', 'NA00004771', 'NA00004772', 'NA00004773',
+  'NA00004792', 'NA00004793', 'NA00004794', 'NA00004796', 'NA00004808', 'NA00004809', 'NA00004810', 'NA00004811', 'NA00004812', 'NA00004813',
+  'NA00005012', 'NA00005013', 'NA00005014', 'NA00005016', 'NA00005017', 'NA00005134', 'NA00005292', 'NA00005293', 'NA00004825', 'NA00004826',
+  'NA00004827', 'NA00004828', 'NA00004829', 'NA00004830', 'NA00004775', 'NA00004790', 'NA00004791'];
 
 class MytDataSubmainController extends TwViewController {
   constructor() {
@@ -77,17 +84,19 @@ class MytDataSubmainController extends TwViewController {
           data.isDataShow = true;
           data.emptyData = true;
         }
+        // T가족모아 가입가능한 요금제
+        // 실시간잔여량에 가족모아 데이터가 있는 경우 [DV001-13997]
+        // T가족모아 가입도 가능 공유도 가능한 경우 (공유 노출)
+        // T가족모아 서비스는 가입되어있지만 공유 불가능한 요금제인 경우 (자세히노출)
+        // 가입이 불가한 요금제이지만 가족모아 데이터가 있는 경우 (공유받은상태 - 자세히노출)
+        data.isTmoaInsProdId = tmoaInsertToProdList.indexOf(data.svcInfo.prodId) > -1;
         if ( data.remnantData.tmoa && data.remnantData.tmoa.length > 0 ) {
           // 가입
+          data.isTmoaData = true;
           data.family = data.remnantData.tmoa[0];
           data.family.remained = data.family.showRemained.data + data.family.showRemained.unit;
-          // T가족모아 가입가능한 요금제
-          data.family.isProdId = tmoaBelongToProdList.indexOf(data.svcInfo.prodId) > -1;
-        } else {
-          // 미가입
-          data.family = {
-            impossible: tmoaBelongToProdList.indexOf(data.svcInfo.prodId) > -1
-          };
+          // T가족모아 공유가능한 요금제
+          data.isTmoaProdId = tmoaBelongToProdList.indexOf(data.svcInfo.prodId) > -1;
         }
       }
 
@@ -252,7 +261,8 @@ class MytDataSubmainController extends TwViewController {
       //   }
       // }
 
-      if ( data.family && data.family.impossible ) {
+      // FIXME: 성능이슈로 해당 부분 호출 하지 않고 처리하도록 수정
+      /*if ( data.family && data.family.impossible ) {
         res.render('myt-data.submain.html', { data });
       } else {
         // 가입이 가능한 경우에만
@@ -275,11 +285,13 @@ class MytDataSubmainController extends TwViewController {
         } else {
           res.render('myt-data.submain.html', { data });
         }
-      }
+      }*/
+      res.render('myt-data.submain.html', { data });
     });
   }
 
   convShowData(data: any) {
+    // 실시간데이터 잔여량 표기 방법 표시
     data.isUnlimit = !isFinite(data.total);
     data.remainedRatio = 100;
     data.showUsed = this.convFormat(data.used, data.unit);
@@ -291,6 +303,7 @@ class MytDataSubmainController extends TwViewController {
   }
 
   calculationData(tmoaremained: number, tmoatotal: number, etcremained: number, etctotal: number): any {
+    // 실시간데이터 잔여량 표기 방법 표시
     const result: any = {};
     const total = tmoatotal + etctotal;
     const totalRemained = tmoaremained + etcremained;
@@ -305,11 +318,13 @@ class MytDataSubmainController extends TwViewController {
   }
 
   convFormat(data: string, unit: string): string {
+    // 실시간데이터 잔여량 데이터 포맷 설정
     switch ( unit ) {
       case UNIT_E.DATA:
         return FormatHelper.convDataFormat(data, UNIT[unit]);
       case UNIT_E.VOICE:
         return FormatHelper.convVoiceFormat(data);
+      case UNIT_E.FEE:
       case UNIT_E.SMS:
       case UNIT_E.SMS_2:
         return FormatHelper.addComma(data);
@@ -319,6 +334,7 @@ class MytDataSubmainController extends TwViewController {
   }
 
   parseRemnantData(remnant: any): any {
+    // 실시간잔여량 데이터 parse
     const GDATA = remnant['gnrlData'] || [];
     const SDATA = remnant['spclData'] || [];
     const VOICE = remnant['voice'] || [];
@@ -386,6 +402,7 @@ class MytDataSubmainController extends TwViewController {
   }
 
   convertChildLines(items): any {
+    // 자녀회선 분리코드
     const list: any = [];
     items.filter((item) => {
       list.push({
@@ -399,6 +416,7 @@ class MytDataSubmainController extends TwViewController {
   }
 
   compare(a, b) {
+    // 다른회선조회시 순서 정렬
     const codeA = a.svcAttrCd.toUpperCase();
     const codeB = b.svcAttrCd.toUpperCase();
 
@@ -434,6 +452,7 @@ class MytDataSubmainController extends TwViewController {
   }
 
   sortBreakdownItems(items): any {
+    // 최근 충전/선물 내역 정렬
     return Array.prototype.concat.apply([], items).sort((a, b) => {
       if ( a.opDt > b.opDt ) {
         return -1;
@@ -444,6 +463,7 @@ class MytDataSubmainController extends TwViewController {
     });
   }
 
+  // 실시간잔여량
   _getRemnantData(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
@@ -469,11 +489,6 @@ class MytDataSubmainController extends TwViewController {
     });
   }
 
-  /**
-   * 선불형 쿠폰 TBD 항목
-   _getPrepayCoupon():  Observable<any> {
-
-  }*/
   // T끼리 데이터 선물 버튼
   _getDataPresent() {
     return this.apiService.request(API_CMD.BFF_06_0015, {}).map((resp) => {

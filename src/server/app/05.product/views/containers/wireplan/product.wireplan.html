@@ -31,7 +31,7 @@
                 <div class="cont-box nogaps">
                     <div class="calling-plan">
                         <a class="wrap-link" href="/myt-join/myplan">
-                            <i class="badge icon-badge-plan-my"><span class="blind">my</span></i>
+                            <i class="badge icon-badge-plan-use"><span class="blind">이용중</span></i>
                             <span class="stit"><%= myWire.productJoinsInfo.recentlyJoinsProdNm %><% if (myWire.productJoinsInfo.productCount > 0) { %> 외 <%= myWire.productJoinsInfo.productCount %>건<% } %></span>
                         </a>
                     </div>
@@ -39,14 +39,14 @@
                 <!--//my -->
                 <% } %>
 
-                <hr class="cont-sp type1" aria-hidden="true"/>
+                <hr class="cont-sp type1" aria-hidden="true" id="fe-header-t"/>
                 <div class="cont-box nogaps">
                     <div class="main-charge-box advice section-swiper-box main-banner-img">
                         <!-- .widget -->
                         <div class="widget">
                             <div class="widget-box">
                                 <div class="slider-box">
-                                    <ul class="slider" data-location="T"></ul>
+                                    <ul class="slider" data-location="T" id="fe-banner-t"></ul>
                                 </div>
                             </div>
                             <!--// .widget -->
@@ -106,10 +106,10 @@
                     </ul>
                 </div>
 
-                <hr class="cont-sp type1" aria-hidden="true" />
+                <hr class="cont-sp type1" aria-hidden="true" id="fe-header-c"/>
 
                 <!-- 결합혜택 정보 안내 영역 -->
-                <div class="cont-box nogaps bgnone" id="fe-comb-banner">
+                <div class="cont-box nogaps bgnone" id="fe-banner-c">
                     <div class="combine-benefit-wrap">
                         <h2 class="stit">모이면 모일수록 커지는 결합혜택</h2>
                         <p class="stit-txt">T 가족회선, 인터넷, 집전화, IPTV 결합하고 할인받으세요 </p>

@@ -86,8 +86,12 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     }, $.proxy(this._openChangeLimit, this, result), null, 'change-limit');
   },
   _openChangeLimit: function (result, $layer) {
+    this._initLayerVar($layer);
     this._setLimitData(result, $layer);
     this._setLimitEvent($layer);
+  },
+  _initLayerVar: function ($layer) {
+    this.$changeBtn = $layer.find('.fe-change');
   },
   _setLimitData: function (result, $layer) {
     this.$monthSelector = $layer.find('.fe-month');
@@ -116,7 +120,7 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     $layer.on('click', '.fe-day', $.proxy(this._selectAmount, this));
     $layer.on('click', '.fe-once', $.proxy(this._selectAmount, this));
     $layer.on('click', '.fe-change', $.proxy(this._openChangeConfirm, this));
-    $layer.on('click', '.fe-close', $.proxy(this._onClose, this));
+    // $layer.on('click', '.fe-close', $.proxy(this._onClose, this));
   },
   _getLittleAmount: function (amount) {
     var defaultValue = 50;
@@ -153,7 +157,15 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     $target.attr('id', $selectedValue.attr('id'));
     $target.text($selectedValue.parents('label').text());
 
+    this._checkIsChanged();
     this._popupService.close();
+  },
+  _checkIsChanged: function () {
+    if (this._isChanged()) {
+      this.$changeBtn.removeAttr('disabled');
+    } else {
+      this.$changeBtn.attr('disabled', 'disabled');
+    }
   },
   _openChangeConfirm: function () {
     this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.MSG, Tw.ALERT_MSG_MYT_FARE.ALERT_2_A96.TITLE,
@@ -218,12 +230,12 @@ Tw.MyTFareBillPrepayChangeLimit.prototype = {
     Tw.Error(err.code, err.msg).pop();
   },
   _onClose: function () {
-    if (this._isChanged()) {
-      this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-        $.proxy(this._closePop, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-    } else {
-      this._popupService.close();
-    }
+    // if (this._isChanged()) {
+    //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
+    //     $.proxy(this._closePop, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+    // } else {
+    //   this._popupService.close();
+    // }
   },
   _isChanged: function () {
     return this.$monthSelector.attr('id') !== this.$monthSelector.attr('origin-value') ||

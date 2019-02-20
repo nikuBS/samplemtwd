@@ -17,7 +17,7 @@ Tw.MyTJoinCommon.prototype = {
     if(closeCallback && typeof closeCallback === 'object'){
       var historyService = closeCallback;
       closeCallback = function(){
-        historyService.back();
+        historyService.goBack();
       };
     }
 

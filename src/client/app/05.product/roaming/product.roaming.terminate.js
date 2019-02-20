@@ -103,7 +103,7 @@ Tw.ProductRoamingTerminate.prototype = {
           isBasFeeInfo : this._convertPrice(this._prodBffInfo.preinfo.reqProdInfo.basFeeInfo),
           typeNm : Tw.NOTICE.ROAMING+' '+(this._prodTypeInfo.prodTypCd==='H_P'?Tw.PRODUCT_CTG_NM.PLANS:Tw.PRODUCT_CTG_NM.ADDITIONS),
           settingType : Tw.PRODUCT_TYPE_NM.TERMINATE,
-          btnNmList : [Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE]
+          btnNmList : [Tw.PRODUCT_SUCCESS_BTN_TEXT.MYTJOIN]
         };
         this._popupService.open({
             hbs: 'complete_product_roaming',

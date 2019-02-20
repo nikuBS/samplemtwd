@@ -73,11 +73,11 @@ Tw.ProductAppsDetail.prototype = {
         var name = button.linkNm.toLowerCase();
 
         if (name.indexOf(STORES.PLAY_STORE) >= 0) {
-          urls.playStore = button.linkUrl;
+          urls.playStore = encodeURI(button.linkUrl);
         } else if (name.indexOf(STORES.APP_STORE) >= 0) {
-          urls.appStore = button.linkUrl;
+          urls.appStore = encodeURI(button.linkUrl);
         } else if (name.indexOf(STORES.ONE_STORE) >= 0) {
-          urls.oneStore = button.linkUrl;
+          urls.oneStore = encodeURI(button.linkUrl);
         }
 
         return urls;
@@ -129,6 +129,10 @@ Tw.ProductAppsDetail.prototype = {
         window.location.replace(store);
       },
       openConfirm = $.proxy(function() {
+        if (document.webkitHidden) {
+          return;
+        }
+
         if (isIos) {
           window.location.replace(store);
         } else {
