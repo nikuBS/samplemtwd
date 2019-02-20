@@ -57,6 +57,13 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     this._bindEvent();
     this._memberPhoneSet();
     Tw.Logger.info('[dataModel]', this.dataModel);
+
+    // 해지 요청일 min, max 지정
+    var curDt = Tw.DateHelper.getCurrentDateTime('YYYY-MM-DD');
+    var cancelableSttDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 2, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
+    var cancelableEndDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 30, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
+    this.select_Termination_input.attr('min', cancelableSttDt);
+    this.select_Termination_input.attr('max', cancelableEndDt);
   },
 
   _cachedElement: function () {
