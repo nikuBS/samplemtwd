@@ -11,6 +11,7 @@ Tw.MyTFareBillCashbagTpoint = function (rootEl, pointType) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
+  this._validationService = new Tw.ValidationService(rootEl);
   this._historyService = new Tw.HistoryService(rootEl);
   this._backAlert = new Tw.BackAlert(rootEl);
 
@@ -70,7 +71,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     if (this.$pointType === 'CPT') {
       $point = result.availPt;
     } else {
-      $point = result.availTpt;
+      $point = result.availTPt;
     }
 
     this.$standardPoint.attr('id', $point).text(Tw.FormatHelper.addComma($point));
@@ -241,23 +242,27 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     }
   },
   _onePay: function () {
-    if (this.$isOneValid) {
-      var reqData = this._makeRequestDataForOne();
-      this._apiService.request(Tw.API_CMD.BFF_07_0045, reqData)
-        .done($.proxy(this._paySuccess, this, ''))
-        .fail($.proxy(this.fail, this));
+    if (this._validationService.isAllValid()) {
+      if (this.$isOneValid) {
+        var reqData = this._makeRequestDataForOne();
+        this._apiService.request(Tw.API_CMD.BFF_07_0045, reqData)
+          .done($.proxy(this._paySuccess, this, ''))
+          .fail($.proxy(this.fail, this));
+      }
     }
   },
   _autoPay: function () {
-    if (this.$isAutoValid && this.$isAutoCardValid && this.$isSelectValid) {
-      var reqData = this._makeRequestDataForAuto();
-      var type = 'auto';
-      if (this.$autoInfo.is(':visible')) {
-        type = 'change';
+    if (this._validationService.isAllValid()) {
+      if (this.$isAutoValid && this.$isAutoCardValid && this.$isSelectValid) {
+        var reqData = this._makeRequestDataForAuto();
+        var type = 'auto';
+        if (this.$autoInfo.is(':visible')) {
+          type = 'change';
+        }
+        this._apiService.request(Tw.API_CMD.BFF_07_0054, reqData)
+          .done($.proxy(this._paySuccess, this, type))
+          .fail($.proxy(this.fail, this));
       }
-      this._apiService.request(Tw.API_CMD.BFF_07_0054, reqData)
-        .done($.proxy(this._paySuccess, this, type))
-        .fail($.proxy(this.fail, this));
     }
   },
   _paySuccess: function (type, res) {

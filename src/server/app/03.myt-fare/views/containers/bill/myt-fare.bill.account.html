@@ -78,14 +78,16 @@
                                                         <span class="tx-tit">직접입력</span>
                                                         <span class="form-wrap half-type mt14">
                                                             <span class="select">
-                                                                <button class="bt-dropdown big select-bank fe-select-bank" disabled="" title="계좌정보 은행 선택" aria-haspopup="true">
+                                                                <button class="bt-dropdown big select-bank fe-select-bank fe-required-select"
+                                                                        disabled="" title="계좌정보 은행 선택" aria-haspopup="true">
                                                                     은행 선택<span class="ico"></span>
                                                                 </button>
                                                             </span>
                                                             <span class="inputbox ml8">
                                                                 <span class="input">
                                                                     <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" maxlength="20"
-                                                                           title="계좌정보 숫자만 입력" disabled="" class="fe-account-number required-input-field" />
+                                                                           title="계좌정보 숫자만 입력" disabled="" class="fe-account-number required-input-field fe-only-number"
+                                                                           data-valid-label="account" />
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
                                                                 </span>
                                                             </span>
@@ -104,14 +106,16 @@
                                                 <li class="pt0 fe-account-input checked fe-bank-wrap">
                                                     <span class="form-wrap half-type">
                                                         <span class="select">
-                                                            <button class="bt-dropdown big select-bank fe-select-bank" title="계좌정보 은행 선택" aria-haspopup="true">
+                                                            <button class="bt-dropdown big select-bank fe-select-bank fe-required-select"
+                                                                    title="계좌정보 은행 선택" aria-haspopup="true">
                                                                 은행 선택<span class="ico"></span>
                                                             </button>
                                                         </span>
                                                         <span class="inputbox ml8">
                                                             <span class="input">
                                                                 <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" maxlength="20"
-                                                                       title="계좌정보 숫자만 입력" class="fe-account-number required-input-field" />
+                                                                       title="계좌정보 숫자만 입력" class="fe-account-number required-input-field fe-only-number"
+                                                                       data-valid-label="account" />
                                                                 <button class="cancel"><span class="blind">삭제</span></button>
                                                             </span>
                                                         </span>
@@ -160,14 +164,16 @@
                                                 <span class="tx-tit">직접입력</span>
                                                 <span class="form-wrap half-type mt14">
                                                     <span class="select">
-                                                        <button class="bt-dropdown big select-bank fe-select-refund-bank" disabled="" title="환불계좌 은행 선택" aria-haspopup="true">
+                                                        <button class="bt-dropdown big select-bank fe-select-refund-bank fe-required-select"
+                                                                disabled="" title="환불계좌 은행 선택" aria-haspopup="true">
                                                             은행 선택<span class="ico"></span>
                                                         </button>
                                                     </span>
                                                     <span class="inputbox ml8">
                                                         <span class="input">
                                                             <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" maxlength="20"
-                                                                   title="환불계좌 숫자만 입력" disabled="" class="fe-refund-account-number required-input-field" />
+                                                                   title="환불계좌 숫자만 입력" disabled="" class="fe-refund-account-number required-input-field fe-only-number"
+                                                                   data-valid-label="account" />
                                                             <button class="cancel"><span class="blind">삭제</span></button>
                                                         </span>
                                                     </span>
@@ -182,14 +188,15 @@
                                         <li class="pt20 fe-refund-input checked fe-bank-wrap">
                                             <span class="form-wrap half-type">
                                                 <span class="select">
-                                                    <button class="bt-dropdown big select-bank fe-select-refund-bank" title="환불계좌 은행 선택" aria-haspopup="true">
+                                                    <button class="bt-dropdown big select-bank fe-select-refund-bank fe-required-select" title="환불계좌 은행 선택" aria-haspopup="true">
                                                         은행 선택<span class="ico"></span>
                                                     </button>
                                                 </span>
                                                 <span class="inputbox ml8">
                                                     <span class="input">
                                                         <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" maxlength="20"
-                                                               title="환불계좌 숫자만 입력" class="fe-refund-account-number required-input-field" />
+                                                               title="환불계좌 숫자만 입력" class="fe-refund-account-number required-input-field fe-only-number"
+                                                               data-valid-label="account" />
                                                         <button class="cancel"><span class="blind">삭제</span></button>
                                                     </span>
                                                 </span>

@@ -293,7 +293,6 @@ Tw.ValidationHelper = (function () {
       if (message) {
         $message.text(message);
       }
-      $target.focus();
     }
     return false;
   }

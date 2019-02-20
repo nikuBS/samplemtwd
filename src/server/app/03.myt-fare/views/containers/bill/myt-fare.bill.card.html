@@ -61,7 +61,7 @@
                                             <span class="inputbox">
                                                 <span class="input">
                                                     <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" minlength="15" maxlength="16"
-                                                           title="카드번호 숫자만 입력" class="fe-card-number required-input-field" data-valid-label="card" />
+                                                           title="카드번호 숫자만 입력" class="fe-card-number required-input-field fe-only-number" data-valid-label="card" />
                                                     <button class="cancel"><span class="blind">삭제</span></button>
                                                 </span>
                                                 <span class="error-txt fe-error-msg" style="display:none;">카드번호를 입력해 주세요.</span>
@@ -75,14 +75,14 @@
                                         <span class="form-wrap half-type">
                                             <span class="inputbox">
                                                 <span class="input">
-                                                    <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-card-y required-input-field"
+                                                    <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-card-y required-input-field fe-only-number"
                                                            placeholder="YYYY" title="유효기간 년 입력" minlength="4" maxlength="4" data-valid-label="expiration" />
                                                     <button class="cancel"><span class="blind">삭제</span></button>
                                                 </span>
                                             </span>
                                             <span class="inputbox ml8">
                                                 <span class="input">
-                                                    <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-card-m required-input-field"
+                                                    <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" class="fe-card-m required-input-field fe-only-number"
                                                            placeholder="MM" title="유효기간 월 입력" minlength="2" maxlength="2" data-valid-label="expiration" />
                                                     <button class="cancel"><span class="blind">삭제</span></button>
                                                 </span>
@@ -97,8 +97,9 @@
                                         <span class="form-wrap">
                                             <span class="inputbox">
                                                 <span class="input">
-                                                    <input type="number" style="-webkit-text-security: disc;" class="fe-card-pw required-input-field" inputmode="numeric" min="0" pattern="[0-9]*"
-                                                           placeholder="앞2자리" title="비밀번호 앞2자리 입력" minlength="2" maxlength="2" data-valid-label="password" />
+                                                    <input type="number" style="-webkit-text-security: disc;" class="fe-card-pw required-input-field fe-only-number"
+                                                           inputmode="numeric" min="0" pattern="[0-9]*" placeholder="앞2자리" title="비밀번호 앞2자리 입력"
+                                                           minlength="2" maxlength="2" data-valid-label="password" />
                                                     <button class="cancel"><span class="blind">삭제</span></button>
                                                 </span>
                                                 <span class="error-txt fe-error-msg" style="display:none;">비밀번호가 올바르지 않습니다.</span>
@@ -142,14 +143,16 @@
                                                 <span class="tx-tit">직접입력</span>
                                                 <span class="form-wrap half-type mt14">
                                                     <span class="select">
-                                                        <button class="bt-dropdown big select-bank fe-select-refund-bank" disabled="" title="환불계좌 은행 선택" aria-haspopup="true">
+                                                        <button class="bt-dropdown big select-bank fe-select-refund-bank fe-required-select"
+                                                                disabled="" title="환불계좌 은행 선택" aria-haspopup="true">
                                                             은행 선택<span class="ico"></span>
                                                         </button>
                                                     </span>
                                                     <span class="inputbox ml8">
                                                         <span class="input">
                                                             <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" maxlength="20"
-                                                                   title="환불계좌 숫자만 입력" disabled="" class="fe-refund-account-number required-input-field" />
+                                                                   title="환불계좌 숫자만 입력" disabled="" class="fe-refund-account-number required-input-field fe-only-number"
+                                                                   data-valid-label="account" />
                                                             <button class="cancel"><span class="blind">삭제</span></button>
                                                         </span>
                                                     </span>
@@ -172,7 +175,8 @@
                                                 <span class="inputbox ml8">
                                                     <span class="input">
                                                         <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="숫자만 입력" maxlength="20"
-                                                               title="환불계좌 숫자만 입력" class="fe-refund-account-number required-input-field" data-valid-label="account" />
+                                                               title="환불계좌 숫자만 입력" class="fe-refund-account-number required-input-field fe-only-number"
+                                                               data-valid-label="account" />
                                                         <button class="cancel"><span class="blind">삭제</span></button>
                                                     </span>
                                                 </span>

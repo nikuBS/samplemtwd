@@ -58,7 +58,7 @@
                                         <div class="inputbox">
                                             <span class="input">
                                                 <input type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="1,000점 이상"
-                                                       class="fe-point required-input-field fe-only-number"
+                                                       class="fe-point required-input-field fe-only-number" data-valid-label="point"
                                                        title="납부 포인트를 1,000점 이상 입력해 주세요" value="" aria-describedby="aria-exp-desc1" maxlength="8">
                                                 <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                             </span>
@@ -76,7 +76,7 @@
                                 <span class="inputbox">
                                     <span class="input">
                                         <input type="password" class="fe-point-pw required-input-field" placeholder="비밀번호 입력"
-                                               maxlength="16" title="비밀번호 입력" value="">
+                                               minlength="6" maxlength="16" title="비밀번호 입력" value="" data-valid-label="password">
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                     <span id="aria-exp-desc1" class="error-txt fe-error-msg" style="display:none;">비밀번호가 올바르지 않습니다.</span>
