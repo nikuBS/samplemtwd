@@ -19,11 +19,7 @@
 
 <div id="fe-my-benefit-rainbow-point" class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- #header -->
-    <div id="header" class="header-wrap">
-        <!-- #header -->
-        <%- include('../../../../../common/views/components/header.component.html', { title: '레인보우 포인트', svcInfo: svcInfo }); %>
-        <!--// #header -->
-    </div>
+    <%- include('../../../../common/views/components/header.component.html', { title: '레인보우 포인트', svcInfo: svcInfo }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -169,7 +165,7 @@
         </div>
     </div>
     <!--// #contents -->
-    <%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 </div>
 
 <script>
