@@ -84,7 +84,7 @@ Tw.CustomerHelpline.prototype = {
       number = $input.val(),
       isValid = false;
 
-    if (!number && this._isCheckedLen) {
+    if (this._isCheckedLen && (!number || !number.length)) {
       this._isCheckedLen = false;
     }
 
