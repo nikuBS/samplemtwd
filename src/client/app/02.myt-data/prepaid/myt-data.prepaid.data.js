@@ -177,16 +177,6 @@ Tw.MyTDataPrepaidData.prototype = {
   },
   _onClose: function () {
     this._backAlert.onClose();
-    // var isChanged = !(Tw.FormatHelper.isEmpty(this.$dataSelector.attr('id'))) || !Tw.FormatHelper.isEmpty(this.$cardNumber.val()) ||
-    //   !Tw.FormatHelper.isEmpty(this.$cardY.val()) || !Tw.FormatHelper.isEmpty(this.$cardM.val()) || !Tw.FormatHelper.isEmpty(this.$cardPw.val());
-    //
-    // if (isChanged) {
-    //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-    //     $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
-    //     Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-    // } else {
-    //   this._historyService.goBack();
-    // }
   },
   _checkPay: function () {
     if (this._isValid()) {

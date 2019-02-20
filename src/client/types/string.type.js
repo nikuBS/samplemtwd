@@ -1832,6 +1832,7 @@ Tw.VALIDATION_LABEL = {
   PASSWORD: '비밀번호',
   BIRTH: '생년월일',
   ACCOUNT: '계좌번호',
+  PREPAY: '선결제 금액',
   I: '이',
   G: '가',
   U: '을',
