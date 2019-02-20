@@ -70,7 +70,7 @@ class MyTDataPrepaidVoiceAuto extends TwViewController {
     return result;
   }
 
-  public convertDate = (sDate) => DateHelper.getShortDateNoDot(sDate);
+  public convertDate = (sDate) => DateHelper.getShortDate(sDate);
 
   public convertDashDate = (sDate) => DateHelper.getDashShortDateNoDot(sDate);
 
