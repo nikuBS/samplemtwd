@@ -20,14 +20,14 @@ class MyTDataPrepaidVoiceAuto extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    // if ( BrowserHelper.isApp(req) ) {
-    //   this.renderPrepaidVoiceAuto(req, res, next, svcInfo, pageInfo);
-    // } else {
-    //   res.render('share/common.share.app-install.info.html', {
-    //     svcInfo: svcInfo, isAndroid: BrowserHelper.isAndroid(req)
-    //   });
-    // }
-    this.renderPrepaidVoiceAuto(req, res, next, svcInfo, pageInfo);
+    if ( BrowserHelper.isApp(req) ) {
+      this.renderPrepaidVoiceAuto(req, res, next, svcInfo, pageInfo);
+    } else {
+      res.render('share/common.share.app-install.info.html', {
+        svcInfo: svcInfo, isAndroid: BrowserHelper.isAndroid(req)
+      });
+    }
+    // this.renderPrepaidVoiceAuto(req, res, next, svcInfo, pageInfo);
   }
 
   public renderPrepaidVoiceAuto = (req: Request, res: Response, next: NextFunction, svcInfo, pageInfo) => Observable.combineLatest(
