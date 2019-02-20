@@ -44,13 +44,13 @@
                                 <div class="widget-box radio">
                                     <ul class="select-list" role="group">
                                         <% members.map((member, i) => { %>
-                                        <li class="radiobox type01 <%= i === 0 ? 'checked' : '' %>" role="radio" aria-checked="<%= i === 0 ? 'true' : 'false' %>" data-svc="<%= member.svcMgmtNum %>" data-name="<%= member.custNm %>">
+                                        <li class="radiobox type01 <%= i === 0 ? 'checked' : '' %>" role="radio" aria-checked="<%= i === 0 ? 'true' : 'false' %>" data-svc="<%= member.svcNum %>" data-name="<%= member.custNm %>">
                                             <!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                             <input type="radio" name="radio" value="" title="<%= member.custNm %>" aria-labelledby="aria-comp-radio1" <%= i === 0 ? 'checked' : '' %>><!-- 체크상태일 경우 checked="checked" -->
                                             <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
                                                 <p class="layout-text">
                                                     <span class="mtext"><%= member.custNm %><i class="icon-<%= member.badge %> ml9"><span class="blind"><%= member.relClNm %></span></i>
-                                                    <span class="stext"><%= member.membOfrPt ? `{member.membOfrPt}MB 받음` : '받은 적 없음' %></span>
+                                                    <span class="stext"><%= member.membOfrPt ? `${member.membOfrPt}MB 받음` : '받은 적 없음' %></span>
                                                 </p>
                                             </div>
                                         </li>
@@ -71,25 +71,45 @@
                             <h3 class="tit">나눠쓰기 할 데이터양</h3>
                             <p class="stxt">한도: <%= group.grpRemainPt %>MB 남음</p>
                         </div>
-                        <!-- .widget -->
-                        <div class="widget">
-                            <div class="widget-box radio">
-                                <div class="radio-slide small">
-                                    <ul class="select-list" role="radiogroup">
-                                        <% const max = Number(group.grpOfrPt) / 100, remain = Number(group.grpRemainPt) / 100; 
-                                        for (let i = 1; i <= max; i++) { %>
-                                            <li class="radiobox" role="radio" aria-checked="false" data-amount="<%= i * 100 %>">
-                                                <input type="radio" name="radio1" value="" title="<%= i === 10 ? '1,0' : i %>00MB" <%= i > remain ? 'disabled' : '' %> />
-                                                <span class="radio-txt">
-                                                    <span class="fe-value"><%= i === 10 ? '1,0' : i %>00</span><span class="unit">MB</span>
-                                                </span>
-                                            </li>
-                                        <% } %>
-                                    </ul>
+                        <div class="data-gift-wrap">
+                            <div class="discount-look-ahead round">
+                                <!-- .widget -->
+                                <div class="widget">
+                                    <div class="widget-box radio">
+                                        <ul class="select-list" role="radiogroup">
+                                            <% const max = Number(group.grpOfrPt) / 100, remain = Number(group.grpRemainPt) / 100; 
+                                            if (max === 10) { 
+                                                const defaultAmount = [1,3,5,10]; 
+                                                for (let i = max; i > 0; i--) { 
+                                                    const isDefault = defaultAmount.indexOf(i) !== -1; %>
+                                                    <li class="radiobox btn-type02 <%= isDefault ? '' : 'none' %>" role="radio" aria-checked="false" data-amount="<%= i * 100 %>">
+                                                        <div class="form">
+                                                            <input type="radio" name="radio4" value="<%= i === 10 ? '1,0' : i %>00" title="<%= i === 10 ? '1,0' : i %>00MB" aria-labelledby="aria-comp-radio<%= i %>" <%= i > remain ? 'disabled' : '' %> >
+                                                            <span class="radio-txt ff-tb" id="aria-comp-radio<%= i %>"><%= i === 10 ? '1,0' : i %>00<span class="light">MB</span></span>
+                                                        </div>
+                                                    </li>
+                                                <% }
+                                            } else { 
+                                                for (let i = max; i > 0; i--) { %>
+                                                    <li class="radiobox btn-type02" role="radio" aria-checked="false" data-amount="<%= i * 100 %>">
+                                                        <div class="form">
+                                                            <input type="radio" name="radio4" value="<%= i * 100 %>" title="<%= i * 100 %>MB" aria-labelledby="aria-comp-radio<%= i %>" <%= i > remain ? 'disabled' : '' %> >
+                                                            <span class="radio-txt ff-tb" id="aria-comp-radio<%= i %>"><%= i * 100 %><span class="light">MB</span></span>
+                                                        </div>
+                                                    </li>
+                                                <% }
+                                            } %>
+                                        </ul>
+                                    </div>
                                 </div>
+                                <!--// .widget -->
                             </div>
+                            <% if (max === 10) { %>
+                            <div class="btn-more">
+                                <button>데이터양 더보기</button>
+                            </div>
+                            <% } %>
                         </div>
-                        <!--// .widget -->
                     </div>
                     <!--// .cont-box -->
         
