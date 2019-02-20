@@ -20,6 +20,7 @@ Tw.MyTDataSubMain = function (params) {
 };
 
 Tw.MyTDataSubMain.prototype = {
+  _OTHER_LINE_MAX_COUNT: 20, // 다른 회선 최대 노출 카운트
   _rendered: function () {
     if ( this._historyService.isBack() ) {
       this._historyService.reload();
@@ -56,7 +57,7 @@ Tw.MyTDataSubMain.prototype = {
       this.$otherLines = this.$container.find('[data-id=other-lines]');
       this.$moreTempleate = Handlebars.compile(Tw.MYT_TPL.DATA_SUBMAIN.MORE_LINE_TEMP);
       if ( this.data.otherLines.length > 20 ) {
-        this.$otherLinesMoreBtn = this.$otherLines.find('.bt-more button');
+        this.$otherLinesMoreBtn = this.$otherLines.find('.btn-more button');
       }
     }
     this.$otherPages = this.$container.find('[data-id=other-pages]');
@@ -99,7 +100,10 @@ Tw.MyTDataSubMain.prototype = {
     this._svcMgmtNumList = [];
     this._initScroll();
     this._initBanners();
-    setTimeout($.proxy(this._initOtherLinesInfo, this), 200);
+    var otherLinesLength = this.data.otherLines.length > this._OTHER_LINE_MAX_COUNT ? this._OTHER_LINE_MAX_COUNT : this.data.otherLines.length;
+    if (otherLinesLength > 0) {
+      setTimeout($.proxy(this._initOtherLinesInfo, this, 0, otherLinesLength), 200);
+    }
   },
 
   _initBanners: function () {
@@ -387,11 +391,9 @@ Tw.MyTDataSubMain.prototype = {
     }
   },
 
-  _initOtherLinesInfo: function () {
-    var otherLineLength = this.data.otherLines.length;
-    if ( otherLineLength > 0 ) {
+  _initOtherLinesInfo: function (from, end) {
       var requestCommand = [];
-      for ( var idx = 0; idx < otherLineLength; idx++ ) {
+      for ( var idx = from; idx < end; idx++ ) {
         this._svcMgmtNumList.push(this.data.otherLines[idx].svcMgmtNum);
         var param = { command: Tw.API_CMD.BFF_05_0001 };
         if ( this.data.otherLines[idx].child ) {
@@ -417,7 +419,6 @@ Tw.MyTDataSubMain.prototype = {
         this.$container.find('[data-id=empty-other-lines]').hide();
         this.$otherLines.hide();
       }
-    }
   },
 
   _responseOtherLine: function () {
@@ -609,13 +610,23 @@ Tw.MyTDataSubMain.prototype = {
 
   // 다른 회선 더보기
   _onOtherLinesMore: function () {
-    var totalCount = this.data.otherLines.length - this.$otherLines.length;
-    if ( totalCount > 0 ) {
-      this.data.otherLines.splice(0, totalCount);
-      var length = this.data.otherLines.length > 20 ? 20 : this.data.otherLines.length;
-      for ( var i = 0; i < length; i++ ) {
-        var result = this.$moreTempleate(this.data.otherLines[i]);
-        this.$container.find('ul.my-line-info').append(result);
+    var renderedListCnt = this.$otherLines.find('.my-line-info li').length;
+    var gapCnt = this.data.otherLines.length - renderedListCnt;
+    var isMore = false;
+    if ( gapCnt > this._OTHER_LINE_MAX_COUNT ) {
+      gapCnt = this._OTHER_LINE_MAX_COUNT;
+      isMore = true;
+    } else {
+      gapCnt = gapCnt;
+    }
+    var fromCnt = renderedListCnt;
+    var endCnt = fromCnt + gapCnt;
+    if ( gapCnt > 0 ) {
+      this._initOtherLinesInfo(fromCnt, endCnt);
+      if (isMore) {
+        this.$otherLines.find('.btn-more').show();
+      } else {
+        this.$otherLines.find('.btn-more').hide();
       }
     }
   },
