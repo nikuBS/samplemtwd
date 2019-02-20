@@ -58,7 +58,7 @@ class ApiRouter {
     GET_SVC_INFO: { path: '/svcInfo', method: API_METHOD.GET, target: this.getSvcInfo },
     GET_ALL_SVC: { path: '/allSvcInfo', method: API_METHOD.GET, target: this.getAllSvcInfo },
     GET_CHILD_INFO: { path: '/childInfo', method: API_METHOD.GET, target: this.getChildInfo },
-    // UPDATE_NOTICE_TYPE: { path: '/update/notice-type', method: API_METHOD.PUT, target: this.updateNoticeType },
+    UPDATE_NOTICE_TYPE: { path: '/update/notice-type', method: API_METHOD.PUT, target: this.updateNoticeType },
 
     GET_VERSION: { path: '/app-version', method: API_METHOD.GET, target: this.getVersion },
     GET_SPLASH: { path: '/splash', method: API_METHOD.GET, target: this.getSplash },
@@ -599,16 +599,14 @@ class ApiRouter {
     });
   }
 
-  // private updateNoticeType(req: Request, res: Response, next: NextFunction) {
-  //   const loginService = new LoginService();
-  //   this.logger.info(this, '[update noticeType]');
-  //   loginService.setCurrentReq(req, res);
-  //   loginService.setSvcInfo({
-  //     noticeType: ''
-  //   }).subscribe((resp) => {
-  //     res.json(resp);
-  //   });
-  // }
+  private updateNoticeType(req: Request, res: Response, next: NextFunction) {
+    const loginService = new LoginService();
+    this.logger.info(this, '[update noticeType]');
+    loginService.setCurrentReq(req, res);
+    loginService.setNoticeType('').subscribe((resp) => {
+      res.json(resp);
+    });
+  }
 
   private changeSession(req: Request, res: Response, next: NextFunction) {
     const apiService = new ApiService();

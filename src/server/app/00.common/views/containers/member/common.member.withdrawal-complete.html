@@ -13,7 +13,7 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div class="wrap">
+    <div id="commonMemberWithdrawalComplete" class="wrap">
         <!-- #header -->
         <div id="header" class="header-wrap">
         </div>
@@ -80,9 +80,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-      $('#fe-withdrawal-tid', '.wrap').on('click', function () {
-        Tw.CommonHelper.openUrlExternal(Tw.URL_PATH.SKT_ID);
-      });
+      new Tw.CommonMemberWithdrawalComplete($('#commonMemberWithdrawalComplete'));
     });
 </script>
 <% include ../../components/end.component.html %>
