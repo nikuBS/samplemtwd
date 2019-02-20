@@ -21,7 +21,6 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
   this._emrNotice = null;
   this._targetDataLink = '';
   this._membershipBanner = null;
-  this._isTplan = false;
 
   this._lineComponent = new Tw.LineComponent();
 
@@ -58,7 +57,8 @@ Tw.MainHome.prototype = {
   DATA_LINK: {
     RECHARGE: 'recharge',
     GIFT: 'gift',
-    FAMILY: 'family'
+    TPLAN_DATA: 'tplan_data',
+    TPLAN_PROD: 'tplan_prod'
   },
   _cachedDefaultElement: function () {
     // this.$tabStore = this.$container.find('.icon-home-tab-store');
@@ -67,7 +67,7 @@ Tw.MainHome.prototype = {
     this.$elBarcode = this.$container.find('#fe-membership-barcode');
     this.$barcodeGr = this.$container.find('#fe-membership-gr');
 
-    this._isTplan = this.$container.find('#fe-tplan').length > 0;
+    this.$isTplan = this.$container.find('#fe-tplan');
     this._cachedSmartCard();
     this._cachedSmartCardTemplate();
     this._makeBarcode();
@@ -194,8 +194,9 @@ Tw.MainHome.prototype = {
     this._popupService.open({
       hbs: 'actionsheet_data',
       layer: true,
-      enableTplan: this._isTplan,
-      enableGift: resp.code === Tw.API_CODE.CODE_00
+      enableTplan: this.$isTplan.length > 0,
+      enableGift: resp.code === Tw.API_CODE.CODE_00,
+      tplanProd: this.$isTplan.data('tplanprod')
     }, $.proxy(this._onOpenDataLink, this), $.proxy(this._onCloseDataLink, this));
   },
   _onOpenDataLink: function ($popupContainer) {
@@ -211,8 +212,11 @@ Tw.MainHome.prototype = {
       case this.DATA_LINK.GIFT:
         this._historyService.goLoad('/myt-data/giftdata');
         break;
-      case this.DATA_LINK.FAMILY:
+      case this.DATA_LINK.TPLAN_DATA:
         this._historyService.goLoad('/myt-data/familydata');
+        break;
+      case this.DATA_LINK.TPLAN_PROD:
+        this._historyService.goLoad('/product/callplan/NA00006031');
         break;
       default:
         break;
@@ -228,8 +232,12 @@ Tw.MainHome.prototype = {
     this._targetDataLink = this.DATA_LINK.GIFT;
     this._popupService.close();
   },
-  _onClickFamilyLink: function () {
-    this._targetDataLink = this.DATA_LINK.FAMILY;
+  _onClickFamilyLink: function ($event) {
+    if ( $($event.currentTarget).data('tplanprod') ) {
+      this._targetDataLink = this.DATA_LINK.TPLAN_DATA;
+    } else {
+      this._targetDataLink = this.DATA_LINK.TPLAN_PROD;
+    }
     this._popupService.close();
   },
   _initEmrNotice: function (notice, isLogin) {

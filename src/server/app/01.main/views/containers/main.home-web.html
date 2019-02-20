@@ -98,7 +98,7 @@
                             </div>
                             <!-- // .donut-chart.small -->
                             <% if(homeData.usageData.data.isTplanUse || homeData.usageData.data.isTplanProd) { %>
-                            <div id="fe-tplan" class="legend">
+                            <div id="fe-tplan" class="legend" data-tplanuse="<%= homeData.usageData.data.isTplanUse %>" data-tplanprod="<%= homeData.usageData.data.isTplanProd %>">
                                 <span class="category0"><span>나의 데이터</span></span>
                                 <span class="category1"><span>T가족모아데이터</span></span>
                             </div>
