@@ -185,7 +185,7 @@
                             <!--2019.02.13 멤버십 변경-->
                             <div class="section-box nogaps">
                                 <div class="main-membershop-box">
-                                    <div class="membership-cont">
+                                    <button class="membership-cont">
                                         <strong class="ti">membershop</strong>
                                         <span class="rating silver">silver</span>
                                         <!-- <span class="rating gold">gold</span>
@@ -194,7 +194,7 @@
                                             <img src="/img/main/bar_code.png" alt="bar code">
                                             <p class="bar-code-num">2496 5530 4263 1514</p>
                                         </span>
-                                    </div>
+                                    </button>
                                     <div class="btn-area">
                                         <button class="bt">멤버십 혜택</button>
                                         <button class="bt">제휴 브랜드</button>
@@ -207,17 +207,18 @@
                                 <div class="main-fee-box">
                                     <div class="fee-cont">
                                         <button class="tit">나의 요금을 확인해 보세요</button>
-                                        <div class="fee-info">
+                                        <button class="fee-info"><!-- 2019-02-20 수정 -->
                                             <p class="target">
                                                 <span class="tit">이번 달 청구요금<i class="icon-whole4"><span class="blind">전체</span></i></span>
                                                 <span class="date"><span>2018.7.1.</span>~<span>2018.7.31.</span></span>
                                             </p>
                                             <p class="sum"><span>82,500</span>원</p>
-                                        </div>
+                                        </button>
                                     </div>
                                     <div class="btn-area">
                                         <button class="bt">납부하기</button>
                                         <button class="bt">실시간 사용요금</button>
+                                        <!-- <button class="bt full">실시간 사용요금</button> 미청구 회선일 경우 버튼, 버튼 한개일 경우 'full' 클래스 추가  2019-02-20 수정 -->
                                     </div>
                                 </div>
                             </div>
@@ -268,21 +269,21 @@
                                 <div class="main-fee-box">
                                     <div class="fee-cont">
                                         <strong class="tit">소액결제 및 콘텐츠<br>이용요금을 안내해 드립니다</strong>
-                                        <div class="fee-info">
+                                        <button class="fee-info"><!--2019-02-20 터치영역수정-->
                                             <p class="target">
                                                 <span class="tit">소액결제 이용요금</span>
                                                 <span class="date"><span>2018.7.1.</span>~<span>2018.7.31.</span></span>
                                             </p>
                                             <p class="sum"><span>15,500</span>원</p>
-                                        </div>
+                                        </button>
                                         <hr class="line">
-                                        <div class="fee-info">
+                                        <button class="fee-info"><!--2019-02-20 터치영역수정-->
                                             <p class="target">
                                                 <span class="tit">콘텐츠 이용요금</span>
                                                 <span class="date"><span>2018.7.1.</span>~<span>2018.7.31.</span></span>
                                             </p>
                                             <p class="sum"><span>28,500</span>원</p>
-                                        </div>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -353,10 +354,14 @@
                                 <div class="main-breakdown-box">
                                     <!--<div class="stit c-point">T끼리 데이터 선물</div>--><!--2019.02.13 변경-->
                                     <strong class="ti">잔여 데이터를 가족과 친구에게 선물해 보세요</strong>
-                                    <ul class="list">
-                                        <li><strong class="ti">선물할 수 있는 데이터</strong> <em class="tx f-type c-point"><span class="ff-tg-medium">36.78</span>GB</em></li>
-                                        <li><strong class="ti">선물하기 남은 횟수</strong> <em class="tx c-point">T끼리 <span class="f-type ff-tg-medium">1</span>회</em></li>
-                                    </ul>
+                                    <!--2019-02-20 터치영역수정-->
+                                    <button>
+                                        <ul class="list">
+                                            <li><strong class="ti">선물할 수 있는 데이터</strong> <em class="tx f-type c-point"><span class="ff-tg-medium">36.78</span>GB</em></li>
+                                            <li><strong class="ti">선물하기 남은 횟수</strong> <em class="tx c-point">T끼리 <span class="f-type ff-tg-medium">1</span>회</em></li>
+                                        </ul>
+                                    </button>
+                                    <!--//2019-02-20 터치영역수정-->
                                     <div class="btn-area">
                                         <button class="bt">선물하기</button>
                                     </div>
@@ -369,10 +374,14 @@
                                 <div class="main-breakdown-box">
                                     <!--<div class="stit c-point">데이터 충전</div>--><!--2019.02.13 변경-->
                                     <strong class="ti">데이터가 부족하시다면 즉시 충전해 보세요</strong>
-                                    <ul class="list">
-                                        <li><strong class="ti">잔여 데이터</strong> <em class="tx f-type c-point"><span class="ff-tg-medium">500</span>MB</em></li>
-                                        <li><strong class="ti">리필쿠폰 남은 개수</strong> <em class="tx c-point"><span class="f-type ff-tg-medium">2</span>장</em></li>
-                                    </ul>
+                                    <!--2019-02-20 터치영역수정-->
+                                    <button>
+                                        <ul class="list">
+                                            <li><strong class="ti">잔여 데이터</strong> <em class="tx f-type c-point"><span class="ff-tg-medium">500</span>MB</em></li>
+                                            <li><strong class="ti">리필쿠폰 남은 개수</strong> <em class="tx c-point"><span class="f-type ff-tg-medium">2</span>장</em></li>
+                                        </ul>
+                                    </button>
+                                    <!-- //2019-02-20 터치영역수정-->
                                     <div class="btn-area">
                                         <button class="bt">충전하기</button>
                                     </div>
