@@ -733,7 +733,8 @@ Tw.MYT_PREPAID_ALARM = {
   title: '선택',
   status_list: [
     { text: '기준 시간으로 알람', value: '1' },
-    { text: '잔액 기준으로 알람', value: '2' }
+    { text: '잔액 기준으로 알람', value: '2' },
+    { text: '설정 안함', value: '0' }
   ],
   category_list: [
     { text: '발신기간', value: '1' },

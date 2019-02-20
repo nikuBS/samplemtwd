@@ -46,18 +46,12 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$container.on('change input blur click', '#tab1-tab [required]', $.proxy(this._validatePrepaidCard, this));
     this.$container.on('change input blur click', '#tab2-tab [required]', $.proxy(this._checkIsAbled, this));
     this.$container.on('keyup', 'input[type=tel]', $.proxy(this._checkMaxLength, this));
-    this.$cardNumber.on('keyup', $.proxy(this._validateCard, this));
-    this.$cardY.on('keyup', $.proxy(this._validateExpired, this));
-    this.$cardM.on('keyup', $.proxy(this._validateExpired, this));
-    this.$cardPwd.on('keyup', $.proxy(this._validatePwd, this));
-    this.$prepaid_card.on('keyup', $.proxy(this._validatePrepaidNumber, this));
-    this.$prepaid_serial.on('keyup', $.proxy(this._validatePrepaidSerial, this));
-    this.$cardNumber.on('blur', $.proxy(this._validateCard, this));
-    this.$cardY.on('blur', $.proxy(this._validateExpired, this));
-    this.$cardM.on('blur', $.proxy(this._validateExpired, this));
-    this.$cardPwd.on('blur', $.proxy(this._validatePwd, this));
-    this.$prepaid_card.on('blur', $.proxy(this._validatePrepaidNumber, this));
-    this.$prepaid_serial.on('blur', $.proxy(this._validatePrepaidSerial, this));
+    this.$cardNumber.on('keyup blur', $.proxy(this._validateCard, this));
+    this.$cardY.on('keyup blur', $.proxy(this._validateExpired, this));
+    this.$cardM.on('keyup blur', $.proxy(this._validateExpired, this));
+    this.$cardPwd.on('keyup blur', $.proxy(this._validatePwd, this));
+    this.$prepaid_card.on('keyup blur', $.proxy(this._validatePrepaidNumber, this));
+    this.$prepaid_serial.on('keyup blur', $.proxy(this._validatePrepaidSerial, this));
   },
 
   _validatePrepaidNumber: function (e) {
