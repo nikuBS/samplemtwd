@@ -85,7 +85,12 @@ Tw.MyTDataTing.prototype = {
 
   _onKeyUpTingGiftNumber: function () {
     this._checkValidateSendingButton();
-    this.$input_ting_receiver.val(Tw.StringHelper.phoneStringToDash(this.$input_ting_receiver.val()));
+
+    if ( this.$input_ting_receiver.val() ) {
+      Tw.InputHelper.inputNumberOnly(this.$input_ting_receiver);
+    }
+
+    this.$input_ting_receiver.val(this._convertDashNumber(this.$input_ting_receiver.val()));
 
     this._validatePhoneNumber();
   },

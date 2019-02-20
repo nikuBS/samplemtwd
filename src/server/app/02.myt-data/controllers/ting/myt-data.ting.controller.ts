@@ -71,9 +71,9 @@ class MyTDataTing extends TwViewController {
     } else {
       return null;
     }
-  });
+  })
 
-  public convertDate = (sDate) => DateHelper.getShortDateNoDot(sDate);
+  public convertDate = (sDate) => DateHelper.getShortDate(sDate);
 }
 
 export default MyTDataTing;

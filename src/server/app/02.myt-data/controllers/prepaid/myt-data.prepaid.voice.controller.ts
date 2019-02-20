@@ -17,15 +17,15 @@ class MyTDataPrepaidVoice extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    if ( BrowserHelper.isApp(req) ) {
-      this.renderPrepaidVoice(req, res, next, svcInfo, pageInfo);
-    } else {
-      res.render('share/common.share.app-install.info.html', {
-        svcInfo: svcInfo, isAndroid: BrowserHelper.isAndroid(req)
-      });
-    }
+    // if ( BrowserHelper.isApp(req) ) {
+    //   this.renderPrepaidVoice(req, res, next, svcInfo, pageInfo);
+    // } else {
+    //   res.render('share/common.share.app-install.info.html', {
+    //     svcInfo: svcInfo, isAndroid: BrowserHelper.isAndroid(req)
+    //   });
+    // }
 
-    // this.renderPrepaidVoice(req, res, next, svcInfo, pageInfo);
+    this.renderPrepaidVoice(req, res, next, svcInfo, pageInfo);
   }
 
   public renderPrepaidVoice = (req: Request, res: Response, next: NextFunction, svcInfo, pageInfo) =>
@@ -54,7 +54,7 @@ class MyTDataPrepaidVoice extends TwViewController {
 
   public getPPSInfo = () => this.apiService.request(API_CMD.BFF_05_0013, {});
 
-  public convertDate = (sDate) => DateHelper.getShortDateNoDot(sDate);
+  public convertDate = (sDate) => DateHelper.getShortDate(sDate);
 
   public convertAmount = (sAmount) => FormatHelper.addComma(sAmount);
 }
