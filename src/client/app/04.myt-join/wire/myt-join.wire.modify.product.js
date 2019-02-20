@@ -65,24 +65,25 @@ Tw.MyTJoinWireModifyProduct.prototype = {
 
   //--------------------------------------------------------------------------[EVENT]
   _closeCheck: function(){
+    this._history.goLoad('/myt-join/submain_w');
 
-    if(this.productFormData.prodMediaNm ||
-      this.productFormData.prodNm ||
-      $('[data-target="input_hp"]').val() ||
-      $('[data-target="input_phone"]').val()) {
-
-      this._popupService.openConfirmButton(
-        Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
-        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-        $.proxy(function(){
-          this._history.goLoad('/myt-join/submain_w');
-        }, this),
-        null,
-        Tw.BUTTON_LABEL.NO,
-        Tw.BUTTON_LABEL.YES);
-    } else {
-      this._history.goBack();
-    }
+    //if(this.productFormData.prodMediaNm ||
+    //  this.productFormData.prodNm ||
+    //  $('[data-target="input_hp"]').val() ||
+    //  $('[data-target="input_phone"]').val()) {
+    //
+    //  this._popupService.openConfirmButton(
+    //    Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+    //    Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+    //    $.proxy(function(){
+    //      this._history.goLoad('/myt-join/submain_w');
+    //    }, this),
+    //    null,
+    //    Tw.BUTTON_LABEL.NO,
+    //    Tw.BUTTON_LABEL.YES);
+    //} else {
+    //  this._history.goBack();
+    //}//
   },
   $select_productEvt: function(event) {
     Tw.Logger.info('[상품 선택]', event);

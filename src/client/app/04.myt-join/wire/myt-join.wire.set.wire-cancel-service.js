@@ -99,24 +99,25 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
   },
   //--------------------------------------------------------------------------[EVENT]
   _closeCheck: function(){
+    this._history.goLoad('/myt-join/submain_w');
 
-    if($('input[name=checkbox-conf-info]:checked').length > 0 ||
-      this.productLi.find('input[type=checkbox]:checked').length > 0 ||
-      this.dataModel.TerminationDtStr ||
-      $('[data-target="input_hp"]').val()) {
-
-      this._popupService.openConfirmButton(
-        Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
-        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-        $.proxy(function(){
-          this._history.goLoad('/myt-join/submain_w');
-        }, this),
-        null,
-        Tw.BUTTON_LABEL.NO,
-        Tw.BUTTON_LABEL.YES);
-    } else {
-      this._history.goBack();
-    }
+    //if($('input[name=checkbox-conf-info]:checked').length > 0 ||
+    //  this.productLi.find('input[type=checkbox]:checked').length > 0 ||
+    //  this.dataModel.TerminationDtStr ||
+    //  $('[data-target="input_hp"]').val()) {
+    //
+    //  this._popupService.openConfirmButton(
+    //    Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+    //    Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+    //    $.proxy(function(){
+    //      this._history.goLoad('/myt-join/submain_w');
+    //    }, this),
+    //    null,
+    //    Tw.BUTTON_LABEL.NO,
+    //    Tw.BUTTON_LABEL.YES);
+    //} else {
+    //  this._history.goBack();
+    //}
   },
   /*
   * 할인반환금 조회
