@@ -41,6 +41,22 @@
                 </div>
                 <!--// .cont-box -->
                 <% } %>
+            <% } else if (data.svcInfo.svcAttrCd === 'M2') { %>
+                <% if (data.ppsAlarm || data.ppsInfo) { %>
+                <hr class="cont-sp type1" aria-hidden="true"/>
+                <div class="cont-box nogaps-hoz">
+                    <ul class="full-link-list type1">
+                        <li>
+                            <button data-id="present">
+                                    <span class="inner">
+                                        <span class="tit">음성1회 자동알람 서비스</span>
+                                        <span class="text"><strong>설정하기</strong></span>
+                                    </span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <% } %>
             <% } %>
             <!-- //.cont-box -->
 

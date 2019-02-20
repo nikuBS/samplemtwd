@@ -33,7 +33,7 @@ class MyTFareSubmainController extends TwViewController {
       // 1일 기준
       isNotFirstDate: (new Date().getDate() > 1),
       // 휴대폰, T-PocketFi 인 경우에만 실시간 요금 조회 노출
-      isRealTime: (['M1', 'M4'].indexOf(svcInfo.svcAttrCd) > -1)
+      isRealTime: (['M1', 'M3'].indexOf(svcInfo.svcAttrCd) > -1)
     };
 
     if ( req.params && req.params[0] === '/usagefee' ) {
