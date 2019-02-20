@@ -310,7 +310,12 @@ class MyTFareSubmainController extends TwViewController {
           if ( ['M1', 'M2'].indexOf(item.svcAttrCd) === -1 ) {
             item.nickNm = SVC_ATTR_NAME[item.svcAttrCd];
           }
-          item.svcNum = StringHelper.phoneStringToDash(item.svcNum);
+          // IPTV, 인터넷 인 경우 주소표시
+          if (['S1', 'S2'].indexOf(item.svcAttrCd) > -1) {
+            item.svcNum = item.addr;
+          } else {
+            item.svcNum = StringHelper.phoneStringToDash(item.svcNum);
+          }
           list.push(item);
         }
       });
