@@ -306,13 +306,10 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
       url: Tw.Environment.cdn + '/hbs/',
       'pop_name': 'type_tx_scroll',
       'title': titleText || '',
-      'title_type': 'sub',
+      'title_type': 'tit-tooltip',
       'cont_align': 'tl',
       'contents': $(popId).find('.popup-title').html().replace(/<br ?\/?>/gi, '\n'),
-      'bt_b': [{
-        style_class: 'tw-popup-closeBtn bt-red1 pos-right',
-        txt: Tw.BUTTON_LABEL.CONFIRM
-      }]
+      'btn-close':'btn-tooltip-close tw-popup-closeBtn'
     }, $.proxy(function($container){
       $container.find('.popup-info').show();
     }, this), null);
