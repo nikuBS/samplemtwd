@@ -105,17 +105,15 @@ Tw.MyTFareBillCard.prototype = {
   },
   _checkPay: function () {
     if (this._validationService.isAllValid()) {
-      if (!Tw.FormatHelper.isEmpty(this.$cardNumber.attr('data-code'))) {
-        this._popupService.open({
-            'hbs': 'MF_01_01_01',
-            'title': Tw.MYT_FARE_PAYMENT_NAME.CARD,
-            'unit': Tw.CURRENCY_UNIT.WON
-          },
-          $.proxy(this._openCheckPay, this),
-          $.proxy(this._afterPaySuccess, this),
-          'check-pay'
-        );
-      }
+      this._popupService.open({
+          'hbs': 'MF_01_01_01',
+          'title': Tw.MYT_FARE_PAYMENT_NAME.CARD,
+          'unit': Tw.CURRENCY_UNIT.WON
+        },
+        $.proxy(this._openCheckPay, this),
+        $.proxy(this._afterPaySuccess, this),
+        'check-pay'
+      );
     }
   },
   _onClose: function () {

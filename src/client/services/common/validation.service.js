@@ -1,4 +1,4 @@
-Tw.ValidationService = function (rootEl, submitBtn) {
+Tw.ValidationService = function (rootEl, submitBtn, change) {
   this.$container = rootEl;
   this.$submitBtn = submitBtn;
   this.$disabled = true;
@@ -7,11 +7,13 @@ Tw.ValidationService = function (rootEl, submitBtn) {
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
 
-  this._bindEvent();
+  if (Tw.FormatHelper.isEmpty(change)) {
+    this.bindEvent();
+  }
 };
 
 Tw.ValidationService.prototype = {
-  _bindEvent: function () {
+  bindEvent: function () {
     this.$container.find('.cancel').on('click', $.proxy(this._setButtonAbility, this, false));
     this.$container.find('input.fe-only-number:visible').on('keyup', $.proxy(this._checkNumber, this));
     this.$container.find('input.required-input-field:visible').on('keyup', $.proxy(this.checkIsAbled, this));
@@ -81,6 +83,20 @@ Tw.ValidationService.prototype = {
       }
     }
 
+    if ($target.hasClass('fe-phone-number')) {
+      isValid = this._validation.checkMoreLength($target, 10);
+      if (!isValid) {
+        message = Tw.ALERT_MSG_MYT_FARE.ALERT_2_V18;
+      }
+
+      if (isValid) {
+        isValid = this._validation.isCellPhone($target.val());
+        if (!isValid) {
+          message = Tw.ALERT_MSG_MYT_FARE.ALERT_2_V9;
+        }
+      }
+    }
+
     if (isValid) {
       $messageTarget.hide();
     } else {
@@ -96,10 +112,8 @@ Tw.ValidationService.prototype = {
     if (!isWrong) {
       if ($target.hasClass('fe-card-number')) {
         this._getCardCode($target);
-      } else if ($target.hasClass('fe-card-y')) {
-        isWrong = !this._validation.checkYear($target);
-      } else if ($target.hasClass('fe-card-m')) {
-        isWrong = !this._validation.checkMonth($target, this.$container.find('.fe-card-y'));
+      } else if ($target.hasClass('fe-card-y') || $target.hasClass('fe-card-m')) {
+        isWrong = !this._validation.checkExpiration(this.$container.find('.fe-card-y'), this.$container.find('.fe-card-m'));
       }
     }
     return isWrong;
@@ -185,6 +199,14 @@ Tw.ValidationService.prototype = {
     } else if (this.$container.find('.fe-bank-error-msg').is(':visible')) {
       this.$container.find('.select-bank').focus();
       return false;
+    }
+
+    if (this.$container.find('.fe-card-number').is(':visible')) {
+      if (!Tw.FormatHelper.isEmpty(this.$container.find('.fe-card-number').attr('data-code'))) {
+        return true;
+      } else {
+        return false;
+      }
     }
     return true;
   }

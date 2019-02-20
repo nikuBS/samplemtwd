@@ -205,27 +205,17 @@ Tw.ValidationHelper = (function () {
   }
 
   function checkExpiration($targetY, $targetM) {
-    var $focusTarget = null;
     var isValid = false;
-    var message = Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6;
 
-    if (parseInt($.trim($targetY.val()), 10) < new Date().getFullYear()) {
-      $focusTarget = $targetY;
-    } else if ((parseInt($.trim($targetY.val()), 10) === new Date().getFullYear() &&
-      parseInt($.trim($targetM.val()), 10) < new Date().getMonth() + 1)) {
-      $focusTarget = $targetM;
-    } else if (!this.checkMonth($targetM)) {
-      $focusTarget = $targetM;
+    if (parseInt($.trim($targetY.val()), 10) < new Date().getFullYear() ||
+      (parseInt($.trim($targetY.val()), 10) === new Date().getFullYear() &&
+      parseInt($.trim($targetM.val()), 10) < new Date().getMonth() + 1) ||
+      !this.checkMonth($targetM, $targetY)) {
+      isValid = false;
     } else {
       isValid = true;
     }
 
-    if (isValid) {
-      $targetY.parents('.fe-exp-wrap').siblings('.fe-error-msg').hide();
-    } else {
-      $targetY.parents('.fe-exp-wrap').siblings('.fe-error-msg').text(message).show();
-      $focusTarget.focus();
-    }
     return isValid;
   }
 
