@@ -94,7 +94,7 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
         ...resp.result,
         combinationGroup: {
           ...group,
-          svcProdGrpNm: type && type === '1' ? group.svcProdGrpNm.replace(MYT_JOIN_FAMILY, MYT_JOIN_PERSONAL) : group.svcProdGrpNm,
+          combProdNm: type && type === '1' ? group.combProdNm.replace(MYT_JOIN_FAMILY, MYT_JOIN_PERSONAL) : group.combProdNm,
           totBasFeeDcTx: FormatHelper.addComma(String(group.totBasFeeDcTx)),
           combStaDt: DateHelper.getShortDate(group.combStaDt),
           isRepresentation: group.svcMgmtNum === svcInfo.svcMgmtNum
