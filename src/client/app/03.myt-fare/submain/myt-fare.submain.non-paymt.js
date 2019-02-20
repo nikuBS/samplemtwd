@@ -103,11 +103,12 @@ Tw.MyTFareSubMainNonPayment.prototype = {
     var claimList = this._setClaimList();
     var paymentList = this._setPaymentList();
     this._popupService.open({
-        hbs: 'MF_02_06',
-        layer: true,
-        claimList: claimList,
-        paymentList: paymentList
-      }, $.proxy(this._onOpendPossibleDayPopup, this), null, 'MF_02_06');
+      hbs: 'MF_02_06',
+      layer: true,
+      claimList: claimList,
+      paymentList: paymentList,
+      pageid: this.data.pageInfo.menuId
+    }, $.proxy(this._onOpendPossibleDayPopup, this), null, 'MF_02_06');
   },
 
   // 납부가능일 팝업 열린 후 처리
@@ -146,10 +147,10 @@ Tw.MyTFareSubMainNonPayment.prototype = {
       .fail($.proxy(this._onErrorPdayInput, this));
   },
 
-  _onSuccessPdayInput: function(resp) {
-    if(resp.code === Tw.API_CODE.CODE_00) {
+  _onSuccessPdayInput: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var result = resp.result;
-      if(result.success === Tw.NON_PAYMENT.SUCCESS.Y) {
+      if ( result.success === Tw.NON_PAYMENT.SUCCESS.Y ) {
         this._popupService.close();
         this._popupService.toast(Tw.NON_PAYMENT.TOAST.P);
         // 납부가능일이 선택되어 선택버튼이 서버데이터도 변경되어 노출이 되면 안된다.
@@ -157,7 +158,7 @@ Tw.MyTFareSubMainNonPayment.prototype = {
           this._historyService.reload();
         }, this), 300);
       }
-      else if (result.success === Tw.NON_PAYMENT.SUCCESS.R) {
+      else if ( result.success === Tw.NON_PAYMENT.SUCCESS.R ) {
         this._popupService.openAlert(Tw.NON_PAYMENT.ERROR.P_R);
       }
       else {
@@ -169,7 +170,7 @@ Tw.MyTFareSubMainNonPayment.prototype = {
     }
   },
 
-  _onErrorPdayInput: function(resp) {
+  _onErrorPdayInput: function (resp) {
     Tw.Error(resp.code, resp.msg).pop();
   },
 
@@ -196,16 +197,16 @@ Tw.MyTFareSubMainNonPayment.prototype = {
   _onSuccessSuspesionCancel: function (resp) {
     // close를 먼저 호출하여 처리
     this._popupService.close();
-    if(resp.result === Tw.API_CODE.CODE_00) {
+    if ( resp.result === Tw.API_CODE.CODE_00 ) {
       var result = resp.result;
-      if(result.success === Tw.NON_PAYMENT.SUCCESS.Y) {
+      if ( result.success === Tw.NON_PAYMENT.SUCCESS.Y ) {
         this._popupService.toast(Tw.NON_PAYMENT.TOAST.S);
         // 이용정지해제가 완료되어 이용정지해제버튼이 서버데이터도 변경되어 노출이 되면 안된다.
         setTimeout($.proxy(function () {
           this._historyService.reload();
         }, this), 300);
       }
-      else if(result.success === Tw.NON_PAYMENT.SUCCESS.R) {
+      else if ( result.success === Tw.NON_PAYMENT.SUCCESS.R ) {
         this._popupService.openAlert(Tw.NON_PAYMENT.ERROR.S_R);
       }
       else {

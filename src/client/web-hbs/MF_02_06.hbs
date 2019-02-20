@@ -1,14 +1,11 @@
 <div class="popup tw-popup">
     <div class="popup-page nobg"><!-- .half 화면에서 50%로 보여질때 -->
         <!-- #header -->
-        <div id="header" class="header-wrap">
-            <div class="header">
-                <div class="header-ti align-l">
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
                     <h1>납부가능일 선택</h1>
                 </div>
-                <!-- 팝업 관련 재정의 완료 후 처리 예정-->
-                <!--<button class="prev-step">취소</button>-->
-                <button class="popup-closeBtn"><span class="blind">취소</span></button>
             </div>
         </div>
         <!--// #header -->
@@ -17,11 +14,11 @@
             <h2 class="blind">내용</h2>
             <div class="container">
                 <!-- .cont-box -->
+                {{#each claimList}}
                 <div class="cont-box">
                     <div class="charge-box">
                         <h2>청구일정</h2>
                         <ul class="charge-list">
-                            {{#each claimList}}
                                 <li>
                                     <dl>
                                         <dt>{{index}}차 청구</dt>
@@ -41,11 +38,12 @@
                                         {{/if}}
                                     </dl>
                                 </li>
-                            {{/each}}
                         </ul>
                     </div>
                 </div>
+                {{/each}}
                 <!--// .cont-box -->
+                {{#each paymentList}}
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <!-- .cont-box -->
                 <div class="cont-box nogaps pt20">
@@ -54,7 +52,6 @@
                         <div class="widget">
                             <div class="widget-box radio">
                                 <ul class="select-list" role="group">
-                                    {{#each paymentList}}
                                         <li class="radiobox type01-big mid-top" role="radio" aria-checked="false">
                                             <input type="radio" name="radio" value="" title="{{title}}" aria-labelledby="aria-comp-radio1" />
                                             <div class="comp-list-layout" id="aria-comp-radio1" aria-hidden="true">
@@ -63,17 +60,24 @@
                                                 </p>
                                             </div>
                                         </li>
-                                    {{/each}}
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
+                {{/each}}
                 <!--// .cont-box -->
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <!-- .cont-box -->
-                <div class="cont-box noborder">
-                    유의사항안내 노출
+                <div class="cont-box nogaps-btm">
+                    <h3 class="tx-bold">꼭 확인해 주세요</h3>
+                    <ul class="noti-list02">
+                        <li>
+                            <button type="button" class="tip-view-btn" id="MF_02_06_tip_01" page-id="{{pageid}}" aria-haspopup="true">
+                                납부가능일 선택 안내<span class="tip-view">TIP</span>
+                            </button>
+                        </li>
+                    </ul>
                 </div>
                 <!--// .cont-box -->
                 <ul class="bt-slice full">
@@ -84,6 +88,9 @@
             </div>
         </div>
         <!--// #contents -->
+        <!-- .popup-closeBtn -->
+        <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+        <!--// .popup-closeBtn -->
     </div>
     <div class="popup-blind"></div>
 </div>

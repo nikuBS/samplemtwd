@@ -49,7 +49,9 @@ class MyTFarePaymentOver extends TwViewController {
         }
         if ( possibleDay ) {
           data.possibleDay = possibleDay;
-          data.suspStaDt = DateHelper.getShortKoreanMonth(possibleDay.suspStaDt);
+          if ( possibleDay.suspStaDt ) {
+            data.suspStaDt = DateHelper.getShortKoreanMonth(possibleDay.suspStaDt);
+          }
         }
         if ( claimDate ) {
           data.claimDate = claimDate;
@@ -64,7 +66,7 @@ class MyTFarePaymentOver extends TwViewController {
       Observable.combineLatest(
         this._getChildNonPayment()
       ).subscribe(([childPayment]) => {
-        if (childPayment) {
+        if ( childPayment ) {
           const convChildInfo = this._convChildInfo(childPayment);
           data.unPaidAmtList = convChildInfo.list;
           data.unPaidTotSum = FormatHelper.addComma(convChildInfo.totSum);
