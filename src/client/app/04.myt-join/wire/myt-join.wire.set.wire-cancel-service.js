@@ -57,6 +57,13 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     this._bindEvent();
     this._memberPhoneSet();
     Tw.Logger.info('[dataModel]', this.dataModel);
+
+    // 해지 요청일 min, max 지정
+    var curDt = Tw.DateHelper.getCurrentDateTime('YYYY-MM-DD');
+    var cancelableSttDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 2, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
+    var cancelableEndDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 30, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
+    this.select_Termination_input.attr('min', cancelableSttDt);
+    this.select_Termination_input.attr('max', cancelableEndDt);
   },
 
   _cachedElement: function () {
@@ -89,34 +96,36 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     this.hpAndTelType.on('click', 'input:radio[name=radio1]', $.proxy(this.hpAndTelTypeEvt, this));
     this.$container.on('input', '[data-target="select_Termination_input"]', $.proxy(this.select_Termination_inputEvt, this));
     this.$container.on('keyup', '[data-target="input_hp"]', $.proxy(this.input_hpEvt, this));
+    this.$container.on('blur', '[data-target="input_hp"]', $.proxy(this._showInputPhoneValid, this));
     this.phoneLi.on('click', 'input[type=checkbox]', $.proxy(this.phoneLiEvt, this));
     this.$container.on('click', '[data-target="submitApply"]', $.proxy(this.$submitApplyEvt, this));
     this.$container.on('click', '[data-target="saleRepaymentInfo"]', $.proxy(this.saleRepaymentInfoEvt, this));
-    this.$container.on('click', '#btn_hp_del', $.proxy(this._formValidateionChk, this));
+    this.$container.on('click', '#btn_hp_del', $.proxy(this.input_hpEvt, this));
 
     this.$container.on('click', '#page-prev-step', $.proxy(this._closeCheck, this));
 
   },
   //--------------------------------------------------------------------------[EVENT]
   _closeCheck: function(){
+    this._history.goLoad('/myt-join/submain_w');
 
-    if($('input[name=checkbox-conf-info]:checked').length > 0 ||
-      this.productLi.find('input[type=checkbox]:checked').length > 0 ||
-      this.dataModel.TerminationDtStr ||
-      $('[data-target="input_hp"]').val()) {
-
-      this._popupService.openConfirmButton(
-        Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
-        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-        $.proxy(function(){
-          this._history.goLoad('/myt-join/submain_w');
-        }, this),
-        null,
-        Tw.BUTTON_LABEL.NO,
-        Tw.BUTTON_LABEL.YES);
-    } else {
-      this._history.goBack();
-    }
+    //if($('input[name=checkbox-conf-info]:checked').length > 0 ||
+    //  this.productLi.find('input[type=checkbox]:checked').length > 0 ||
+    //  this.dataModel.TerminationDtStr ||
+    //  $('[data-target="input_hp"]').val()) {
+    //
+    //  this._popupService.openConfirmButton(
+    //    Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+    //    Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+    //    $.proxy(function(){
+    //      this._history.goLoad('/myt-join/submain_w');
+    //    }, this),
+    //    null,
+    //    Tw.BUTTON_LABEL.NO,
+    //    Tw.BUTTON_LABEL.YES);
+    //} else {
+    //  this._history.goBack();
+    //}
   },
   /*
   * 할인반환금 조회
@@ -233,21 +242,52 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
   },
 
   // 연락처 입력
-  input_hpEvt: function(event) {
-    var tempNum = this._onFormatHpNum(event);
+  input_hpEvt: function() {
+    var $target = this.input_hp;
+    var tempNum = this._onFormatHpNum($target);
 
-    if(Tw.ValidationHelper.isCellPhone($('[data-target="input_hp"]').val()) ||
-       Tw.ValidationHelper.isTelephone($('[data-target="input_hp"]').val())){  //
+    this.dataModel.phoenNmStr = '';
+    if(Tw.ValidationHelper.isCellPhone($target.val()) ||
+      Tw.ValidationHelper.isTelephone($target.val())){  //
       this.dataModel.phoenNmStr = tempNum;
-      $('#spanHpValid').text('');
-    } else {
-      this.dataModel.phoenNmStr = '';
-      if(this.hpAndTelType.find('input:radio[name=radio1]:checked').val() === 'hp'){
-        $('#spanHpValid').text(Tw.VALIDATE_MSG_MYT_DATA.V9);
-      }
     }
+
+    this.uncheckPhoneLi();
+    this._showInputPhoneValid();
     this._formValidateionChk();
     Tw.Logger.info('[dataModel]', this.dataModel);
+  },
+
+
+  /**
+   * 연락처 입력항목을 validation 하고, 그 결과를 화면에 출력한다.
+   * @private
+   */
+  _showInputPhoneValid: function(){
+
+    var val = this.input_hp.val();
+    $('#spanHpValid').text('');
+
+    if(!val){
+      $('#spanHpValid').text(Tw.MYT_JOIN_WIRE_CANCEL_SERVICE.NO_PHONE);   // 2_V55
+
+    } else {
+
+      /*
+      if(this.phoneLi.find('input[type=checkbox]').prop('checked')){
+        return;
+      }*/
+
+      if(this.hpAndTelType.find('input:radio[name=radio1]:checked').val() === 'hp'){
+        if(!Tw.ValidationHelper.isCellPhone(val)){
+          $('#spanHpValid').text(Tw.VALIDATE_MSG_MYT_DATA.V9);
+        }
+      } else {
+        if(!Tw.ValidationHelper.isTelephone(val)){
+          $('#spanHpValid').text(Tw.MYT_JOIN_WIRE_CANCEL_SERVICE.INVALID_PHONE);
+        }
+      }
+    }
   },
 
   phoneLiEvt: function(event) {
@@ -290,6 +330,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     // Tw.Logger.info('[memberPhoneObj]', this.memberPhoneObj);
     // Tw.Logger.info('[dataModel]', this.dataModel);
 
+    this._showInputPhoneValid();
     this._formValidateionChk();
     Tw.Logger.info('[dataModel]', this.dataModel);
 
@@ -319,6 +360,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
 
     $('#spanHpValid').text('');
     Tw.Logger.info('[연락 가능한 연락처 타입]', this.dataModel);
+    this._showInputPhoneValid();
     this._formValidateionChk();
   },
 
@@ -486,19 +528,16 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
 
           if(nType === 'hp'){
             if(!Tw.ValidationHelper.isCellPhone($('[data-target="input_hp"]').val())){
-              $('#spanHpValid').text(Tw.VALIDATE_MSG_MYT_DATA.V9);
               Tw.Logger.info('[값을 입력하세요.]', key);
               throw new Error('break');
             }
           } else if(nType === 'tel'){
             if(!Tw.ValidationHelper.isTelephone($('[data-target="input_hp"]').val())){
-              $('#spanHpValid').text(Tw.MYT_JOIN_WIRE_CANCEL_SERVICE.INVALID_PHONE);
               Tw.Logger.info('[값을 입력하세요.]', key);
               throw new Error('break');
             }
           }
 
-          $('#spanHpValid').text('');
         }
 
       });
@@ -683,23 +722,23 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     // window.location.hash = hash;
   },
   // 휴대폰/일반전화 입력 시 자동 하이픈 넣기
-  _onFormatHpNum : function (e) {
-    var _$this = $(e.currentTarget);
-    var data = this._noDash(_$this.val());
+  _onFormatHpNum : function ($target) {
+
+    var data = this._noDash($target.val());
     var returnVal;
 
     //숫자,대시를 제외한 값이 들어 같을 경우
     if ( Tw.ValidationHelper.regExpTest(/[^\d-]/g, data) ) {
       returnVal = data.replace(/[^\d-]/g, ''); // 숫자가 아닌 문자 제거
       Tw.Logger.info('[returnVal 1]', returnVal);
-      _$this.val(returnVal);
+      $target.val(returnVal);
       return returnVal;
 
     } else {
       var rexTypeA = /(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/g;
       returnVal = data.replace(rexTypeA, '$1-$2-$3');
       Tw.Logger.info('[returnVal 2]', returnVal);
-      _$this.val(returnVal);
+      $target.val(returnVal);
       return returnVal;
     }
 
