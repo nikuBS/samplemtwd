@@ -118,6 +118,7 @@ Tw.MyTFareSubMainNonPayment.prototype = {
     var $selectedBtn = $container.find('li.bt-red1 button');
     $selectList.on('click', $.proxy(this._onClickedSelectedDate, this));
     $selectedBtn.on('click', $.proxy(this._onClickedSelectedBtn, this));
+    Tw.Tooltip.popInit(this.$popupContainer.find('#MF_02_06_tip_01'));
   },
 
   // 납부가능일 팝업에서 아이템 선택
