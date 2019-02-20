@@ -94,6 +94,7 @@ class MyTFareBillHotbill extends TwViewController {
           options['title'] = MYT_FARE_HOTBILL_TITLE.CHILD;
           options['child'] = StringHelper.phoneStringToDash(child.svcNum);
           options['childProdNm'] = StringHelper.phoneStringToDash(child.prodNm);
+          options['childProdId'] = child.prodId;
           options['preBillAvailable'] =  false;
         } else {
           options['title'] = MYT_FARE_HOTBILL_TITLE.MAIN;
