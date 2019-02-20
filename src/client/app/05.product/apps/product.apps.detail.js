@@ -12,11 +12,14 @@ Tw.ProductAppsDetail = function(rootEl, app) {
 Tw.ProductAppsDetail.prototype = {
   _init: function(app) {
     this._app = app;
+    this._stores = this._getStoreUrl(app.appStoreLinkBtnList || []);
+    this._app.stores = this._stores;
+
     this._params = Tw.UrlHelper.getQueryParams();
     this._images = app.images;
     this._appTmpl = Handlebars.compile($('#fe-tmpl-app').html());
 
-    this._handleLoadInfo(app);
+    this._handleLoadInfo(this._app);
   },
 
   _bindEvent: function() {
@@ -32,10 +35,7 @@ Tw.ProductAppsDetail.prototype = {
   },
 
   _handleLoadInfo: function(app) {
-    this._stores = this._getStoreUrl(app.appStoreLinkBtnList || []);
-
     if (Tw.BrowserHelper.isApp()) {
-      app.stores = this._stores;
       app.isApp = true;
 
       this._nativeService.send(
@@ -126,6 +126,7 @@ Tw.ProductAppsDetail.prototype = {
     }
 
     var openMarket = function() {
+        this._popupService.close();
         window.location.replace(store);
       },
       openConfirm = $.proxy(function() {
@@ -138,9 +139,9 @@ Tw.ProductAppsDetail.prototype = {
         } else {
           this._popupService.openConfirmButton(
             this._app.prodNm + Tw.POPUP_CONTENTS.APP_NOT_INSTALLED,
-            ' ',
-            openMarket,
-            null,
+            undefined,
+            $.proxy(openMarket, this),
+            undefined,
             Tw.BUTTON_LABEL.NO,
             Tw.BUTTON_LABEL.YES
           );
