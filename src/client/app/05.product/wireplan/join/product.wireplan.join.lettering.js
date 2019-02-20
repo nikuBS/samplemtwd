@@ -102,7 +102,7 @@ Tw.ProductWireplanJoinLettering.prototype = {
 
   _getIcon: function() {
     if (this._confirmOptions.preinfo.reqProdInfo.svcCd === 'P') {
-      return 'ico-type1';
+      return 'ico-type2';
     }
 
     return 'ico-type1';

@@ -60,7 +60,7 @@ Tw.MembershipMyHistory.prototype = {
 
   _parseList: function(history) {
     for(var idx in history){
-      history[idx].show_chg_dt_cnt2 = this._dateHelper.getShortDateWithFormat(history[idx].chg_dt_cnt2,'YYYY.M.DD.','YYYYMMDDhhmmss');
+      history[idx].show_chg_dt_cnt2 = this._dateHelper.getShortDateWithFormat(history[idx].chg_dt_cnt2,'YYYY.M.D.','YYYYMMDDhhmmss');
     }
     return history;
   },

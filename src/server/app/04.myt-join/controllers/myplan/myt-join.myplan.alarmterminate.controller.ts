@@ -35,7 +35,7 @@ class MyTJoinMyplanAlarmterminate extends TwViewController {
    */
   private _convertFeePlanInfo(feePlan): any {
     return Object.assign(feePlan, {
-      scrbDt: DateHelper.getShortDateWithFormat(feePlan.scrbDt, 'YYYY.M.DD.')
+      scrbDt: DateHelper.getShortDateWithFormat(feePlan.scrbDt, 'YYYY.M.D.')
     });
   }
 
@@ -45,9 +45,9 @@ class MyTJoinMyplanAlarmterminate extends TwViewController {
    */
   private _convertAlarmStatusInfo(alarmStatus): any {
     return Object.assign(alarmStatus, {
-      notiSchdDt: DateHelper.getShortDateWithFormat(alarmStatus.notiSchdDt, 'YYYY.M.DD.'),
+      notiSchdDt: DateHelper.getShortDateWithFormat(alarmStatus.notiSchdDt, 'YYYY.M.D.'),
       svcNum: FormatHelper.conTelFormatWithDash(alarmStatus.svcNum),
-      reqDt: DateHelper.getShortDateWithFormat(alarmStatus.reqDt, 'YYYY.M.DD.')
+      reqDt: DateHelper.getShortDateWithFormat(alarmStatus.reqDt, 'YYYY.M.D.')
     });
   }
 

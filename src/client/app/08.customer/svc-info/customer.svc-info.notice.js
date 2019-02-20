@@ -186,10 +186,10 @@ Tw.CustomerSvcInfoNotice.prototype = {
 
   _setDate: function(item) {
     if (this._category === 'tworld') {
-      return Tw.DateHelper.getShortDateWithFormat(item.auditDtm, 'YYYY.M.DD.');
+      return Tw.DateHelper.getShortDateWithFormat(item.auditDtm, 'YYYY.M.D.');
     }
 
-    return Tw.DateHelper.getShortDateWithFormat(item.rgstDt, 'YYYY.M.DD.');
+    return Tw.DateHelper.getShortDateWithFormat(item.rgstDt, 'YYYY.M.D.');
   },
 
   _setItemType: function(item) {

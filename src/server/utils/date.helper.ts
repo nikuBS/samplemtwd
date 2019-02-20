@@ -136,7 +136,7 @@ class DateHelper {
    * @returns {string} : currentDateTime + 1 year
    */
   static getNextYearShortDate = function () {
-    return moment().add(1, 'years').format('YYYY.M.DD.');
+    return moment().add(1, 'years').format('YYYY.M.D.');
   };
 
   /**
@@ -303,7 +303,7 @@ class DateHelper {
    * @returns {string} : 2018.06.01 12:00:00
    */
   static getFullDateAndTimeWithDot(date) {
-    return moment(this.convDateFormat(date)).format('YYYY.M.DD. hh:mm:ss');
+    return moment(this.convDateFormat(date)).format('YYYY.M.D. hh:mm:ss');
   }
 
   /**
@@ -406,7 +406,7 @@ class DateHelper {
    * @returns {string} : yyyy-mm-01
    */
   static getMonthFirstDay( date: any): any {
-    return moment(this.convDateFormat(date)).date(1).format('YYYY.M.DD.');
+    return moment(this.convDateFormat(date)).date(1).format('YYYY.M.D.');
   }
 
   /**
@@ -414,7 +414,7 @@ class DateHelper {
    * @returns {string} : yyyy-mm-30 or 31
    */
   static getMonthLastDay( date: any): any {
-    return moment(this.convDateFormat(date)).add(1, 'months').date(0).format('YYYY.M.DD.');
+    return moment(this.convDateFormat(date)).add(1, 'months').date(0).format('YYYY.M.D.');
   }
 
   /**

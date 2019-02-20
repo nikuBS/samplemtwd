@@ -49,7 +49,7 @@ export default class MembershipMyHistory extends TwViewController {
     }
 
     myHistoryData.record1.show_card_req_cd = MEMBERSHIP_DELIVERY_CODE[myHistoryData.record1[0].card_req_cd];
-    myHistoryData.record1.show_card_req_dt = DateHelper.getShortDateWithFormat(myHistoryData.record1.card_req_dt, 'YYYY.M.DD.', 'YYYYMMDD');
+    myHistoryData.record1.show_card_req_dt = DateHelper.getShortDateWithFormat(myHistoryData.record1.card_req_dt, 'YYYY.M.D.', 'YYYYMMDD');
 
     return myHistoryData;
   }

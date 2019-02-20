@@ -44,7 +44,7 @@ Tw.ProductMobileplanAddJoin.prototype = {
 
     this.$container.html(html);
     this._callConfirmCommonJs();
-    Tw.Tooltip.separateInit(this.$container.find('.fe-product-tip'));
+    Tw.Tooltip.separateMultiInit(this.$container);
   },
 
   _convConfirmOptions: function() {
