@@ -46,12 +46,9 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     this.$container.on('change input blur click', '.fe-wrap-template [required]', $.proxy(this._validateForm, this));
     this.$container.on('click', '.fe-request-recharge', $.proxy(this._requestRechargeAuto, this));
     this.$container.on('keyup', 'input[type=tel]', $.proxy(this._checkMaxLength, this));
-    this.$container.on('keyup', '.fe-card-number', $.proxy(this._validateCard, this));
-    this.$container.on('keyup', '.fe-card-y', $.proxy(this._validateExpired, this));
-    this.$container.on('keyup', '.fe-card-m', $.proxy(this._validateExpired, this));
-    this.$container.on('blur', '.fe-card-number', $.proxy(this._validateCard, this));
-    this.$container.on('blur', '.fe-card-y', $.proxy(this._validateExpired, this));
-    this.$container.on('blur', '.fe-card-m', $.proxy(this._validateExpired, this));
+    this.$container.on('keyup blur', '.fe-card-number', $.proxy(this._validateCard, this));
+    this.$container.on('keyup blur', '.fe-card-y', $.proxy(this._validateExpired, this));
+    this.$container.on('keyup blur', '.fe-card-m', $.proxy(this._validateExpired, this));
   },
 
   _validateCard: function (e) {

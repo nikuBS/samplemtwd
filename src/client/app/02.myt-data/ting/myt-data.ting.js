@@ -105,9 +105,9 @@ Tw.MyTDataTing.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._requestSendingData();
     } else if ( res.code === 'ZPAYE0077' ) {
-      this._popupService.openAlert(Tw.MYT_DATA_TING.V31);
+      this._popupService.openAlert(Tw.MYT_DATA_TING.V31, null, null, $.proxy(this._goSubmain, this));
     } else if ( res.code === 'ZINVE8164' ) {
-      this._popupService.openAlert(Tw.MYT_DATA_TING.NOT_TING_SKT);
+      this._popupService.openAlert(Tw.MYT_DATA_TING.NOT_TING_SKT, null, null, $.proxy(this._goSubmain, this));
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -178,5 +178,9 @@ Tw.MyTDataTing.prototype = {
       Tw.BUTTON_LABEL.NO,
       Tw.BUTTON_LABEL.YES
     );
+  },
+
+  _goSubmain: function () {
+    this._historyService.replaceURL('/myt-data/submain');
   }
 };

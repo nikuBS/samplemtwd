@@ -19,7 +19,7 @@ Tw.MyTDataPrepaidAlarm = function (rootEl) {
 Tw.MyTDataPrepaidAlarm.prototype = {
   _init: function () {
     this.isInitializeInfo = false;
-    this.typeCd = false; // 알람 기준(1 : 시간, 2 : 잔액)
+    this.typeCd = false; // 알람 기준(0: 설정안함 1 : 시간, 2 : 잔액)
     this.term = false; // 시간: 기준항목(1:발신기간, 2:수신기간, 3:번호유지기간)
     this.day = false; // 시간: 기준일(1:1일전, 2:2일전, 3:3일전)
     this.amt = false; // 금액(1:1000원, 2:2000원, 3:3000원, 5:5000원)
@@ -31,6 +31,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
     this.wrap_alarm = this.$container.find('.fe-wrap-alarm');
     this.tpl_alarm_date = Handlebars.compile($('#tpl_alarm_date').html());
     this.tpl_alarm_amount = Handlebars.compile($('#tpl_alarm_amount').html());
+    this.tpl_alarm_delete = Handlebars.compile($('#tpl_alarm_delete').html());
   },
 
   _bindEvent: function () {
@@ -136,6 +137,8 @@ Tw.MyTDataPrepaidAlarm.prototype = {
   },
 
   _setSelectedValue: function (sListName, $target, e) {
+    this._popupService.close();
+
     var htParams = {
       typeCd: this.typeCd,
       term: this.term,
@@ -146,14 +149,21 @@ Tw.MyTDataPrepaidAlarm.prototype = {
     if ( sListName === 'status_list' ) {
       this.typeCd = $(e.currentTarget).data('value').toString();
 
-      if ( this.typeCd === '1' ) {
+      if ( this.typeCd === '0' ) {
+        this.wrap_alarm.html(this.tpl_alarm_delete({ params: htParams }));
+      } else if ( this.typeCd === '1' ) {
         this.wrap_alarm.html(this.tpl_alarm_amount({ params: htParams }));
       } else {
         this.wrap_alarm.html(this.tpl_alarm_date({ params: htParams }));
       }
 
-      $('.fe-setting-alarm').prop('disabled', true);
-      $('.fe-alarm-status').data($(e.currentTarget).data('value'));
+      if ( this.typeCd !== '0' ) {
+        $('.fe-setting-alarm').prop('disabled', true);
+        $('.fe-alarm-status').data($(e.currentTarget).data('value'));
+      } else {
+        $('.fe-setting-alarm').prop('disabled', false);
+        $('.fe-alarm-status').data($(e.currentTarget).data('value'));
+      }
 
       this.term = false; // 시간: 기준항목(1:발신기간, 2:수신기간, 3:번호유지기간)
       this.day = false; // 시간: 기준일(1:1일전, 2:2일전, 3:3일전)
@@ -177,14 +187,14 @@ Tw.MyTDataPrepaidAlarm.prototype = {
 
     $target.data($(e.currentTarget).data());
     $target.text($.trim($(e.currentTarget).text()));
-
-    this._popupService.close();
   },
 
   _requestAlarmSetting: function () {
     var htParams = {};
+    if ( this.typeCd === '0' ) {
+      this._requestAlarm();
 
-    if ( this.typeCd === '1' ) {
+    } else if ( this.typeCd === '1' ) {
       htParams = $.extend(htParams, {
         typeCd: this.typeCd,
         term: this.term.toString(),
@@ -202,6 +212,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
         $.proxy(this._requestAlarm, this, htParams),
         null,
         Tw.ALERT_MSG_MYT_DATA.ALERT_2_A71.BUTTON);
+
     } else {
       htParams = $.extend(htParams, {
         typeCd: '2',
@@ -224,9 +235,14 @@ Tw.MyTDataPrepaidAlarm.prototype = {
   },
 
   _requestAlarm: function (htParams) {
-    if ( this._isCancel ) {
-      this._apiService.request(Tw.API_CMD.BFF_06_0064, htParams)
+    if ( this.typeCd === '0' ) {
+      this._apiService.request(Tw.API_CMD.BFF_06_0076, {})
         .done($.proxy(this._onCompleteAlarm, this));
+    } else {
+      if ( this._isCancel ) {
+        this._apiService.request(Tw.API_CMD.BFF_06_0064, htParams)
+          .done($.proxy(this._onCompleteAlarm, this));
+      }
     }
   },
 
