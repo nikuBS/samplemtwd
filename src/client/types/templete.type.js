@@ -482,11 +482,11 @@ Tw.MYT_TPL = {
   },
   JOIN_SUBMAIN: {
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"' +
-    'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
-    '<div class="lineinfo-user d-table"><div class="ico2"><i></i></div>' +
-    '<div class="cont"><span class="info-title">{{nickNm}}' +
-    '</span><span class="info-sub">{{svcNum}}</span></div>' +
-    '</div><div class="lineinfo-data"><span class="ico"></span></div></button></li>'
+      'data-name="{{nickNm}}" data-num="{{number}}"><button>' +
+      '<span class="ico-wrap"><i class="icon-{{className}}-80">' +
+      '<span class="blind">{{className}}</span></i></span><span class="cont">' +
+      '<span class="info-title">{{nickNm}}</span><span class="info-sub">{{number}}</span>' +
+      '</span></button></li>'
   },
   MORE_BTN: '<div class="bt-more"><button>더보기</button></div>'
 };
