@@ -204,7 +204,7 @@ Tw.MyTFareSubMain.prototype = {
       target: '.chart4', //클래스명 String
       type: (this.data.type === 'UF') ? Tw.CHART_TYPE.BAR_2 : Tw.CHART_TYPE.BAR_4, //bar
       average: true, // 평균
-      legend: (this.data.type === 'UF') ? ['이용'] : Tw.FARE_CHART_LEGEND, // 범례
+      legend: (this.data.type === 'UF') ? Tw.FARE_CHART_LEGEND.USAGE : Tw.FARE_CHART_LEGEND.DEFAULT, // 범례
       link: true,
       unit: Tw.CHART_UNIT.WON, // 표기
       data_arry: data //데이터 obj,
