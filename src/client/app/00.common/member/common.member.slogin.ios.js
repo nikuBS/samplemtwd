@@ -174,10 +174,13 @@ Tw.CommonMemberSloginIos.prototype = {
     }
   },
   _expireAddTime: function () {
-    this.$btReCert.parent().removeClass('none');
-    this.$btCertAdd.parent().addClass('none');
+    this.$btReCert.removeClass('none');
+    this.$btCertAdd.addClass('none');
   },
   _successRequestCertAdd: function (resp) {
+    if ( !Tw.FormatHelper.isEmpty(this._addTimer) ) {
+      clearTimeout(this._addTimer);
+    }
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._clearCertError();
       this.$btCertAdd.addClass('none');
@@ -185,8 +188,8 @@ Tw.CommonMemberSloginIos.prototype = {
       this.$validAddCert.removeClass('none');
     } else if ( resp.code === this.SMS_ERROR.ATH1221 ) {
       this._clearCertError();
-      this.$btCertAdd.parent().addClass('none');
-      this.$btReCert.parent().removeClass('none');
+      this.$btCertAdd.addClass('none');
+      this.$btReCert.removeClass('none');
       this.$errorCertAddTime.removeClass('none');
     } else {
       this._checkCertError(resp.code, resp.msg);
