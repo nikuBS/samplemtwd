@@ -20,6 +20,7 @@ class TeventLastList extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any): void {
     this.apiService.request(API_CMD.BFF_09_0003, {
       svcDvcClCd: 'M',
+      mtwdExpYn: 'Y',
       page: 0,
       size: DEFAULT_LIST_COUNT
     }).subscribe((resp) => {

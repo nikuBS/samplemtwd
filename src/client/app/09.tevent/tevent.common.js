@@ -90,6 +90,7 @@ Tw.TeventCommon.prototype = {
   _makeRequestData: function () {
     return {
       svcDvcClCd: 'M',
+      mtwdExpYn: 'Y',
       page: this._page,
       size: Tw.DEFAULT_LIST_COUNT
     };
