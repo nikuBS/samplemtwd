@@ -808,19 +808,6 @@ Tw.ANDROID_STORE = [
   }
 ];
 
-Tw.HOME_DATA_LINK = [
-  {
-    'list': [
-      {'attr':'type="button" id="fe-bt-recharge-link"','simbol':'ico1','value':'데이터 충전'},
-      {'attr':'type="button" id="fe-bt-gift-link"','simbol':'ico2','value':'데이터 선물'},
-      {'attr':'type="button" id="fe-bt-family-link"','simbol':'ico3','value':'T가족모아'}
-    ],
-    'btn-floating': [
-      {'attr':'type="button"', 'txt':'닫기'}
-    ]
-  }
-];
-
 Tw.ROAMING_MANAGE_TYPE = {
   list:[
       { txt: 'LTE 자동로밍', 'radio-attr': 'id="ra0" name="r2" data-manage-type="L"', 'label-attr': 'id="ra0"', type: 'L' },

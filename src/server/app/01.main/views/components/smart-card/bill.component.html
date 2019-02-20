@@ -4,49 +4,26 @@
 * Date: 2018.10.06
 %>
 <script id="fe-smart-bill" type="text/x-handlebars-template">
-    <!--<div class="main-fee-box">-->
-        <!--<div class="fee-cont">-->
-            <!--<a href="/myt-fare/billguide/guide" class="tit">나의 요금을 확인해 보세요</a>-->
-            <!--<div class="fee-info">-->
-                <!--<p class="target">-->
-                    <!--{{#if type2}}-->
-                    <!--<span class="tit">{{billMonth}}월 청구요금</span>-->
-                    <!--{{else if type1}}-->
-                    <!--<span class="tit">{{billMonth}}월 청구요금<i class="icon-whole4"><span class="blind">전체</span></i></span>-->
-                    <!--{{else}}-->
-                    <!--<span class="tit">{{invMonth}}월 이용요금</span>-->
-                    <!--{{/if}}-->
-                    <!--<span class="date"><span>{{invStartDt}}.</span>~<span>{{invEndDt}}</span></span>-->
-                <!--</p>-->
-                <!--<p class="sum"><span>{{useAmtTot}}</span>원</p>-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="btn-area">-->
-            <!--<button id="fe-bt-payment" class="bt">납부하기</button>-->
-            <!--<a href="/myt-data/hotdata" class="bt">실시간 사용요금</a>-->
-        <!--</div>-->
-    <!--</div>-->
-
-    <div class="main-breakdown-box">
-        {{#if type2}}
-        <div class="stit c-point">{{billMonth}}월 청구요금</div>
-        {{else if type1}}
-        <div class="stit c-point">{{billMonth}}월 청구요금 <i class="icon-whole2"><span class="blind">전체</span></i></div>
-        {{else}}
-        <div class="stit c-point">{{invMonth}}월 이용요금</div>
-        {{/if}}
-        <em class="sum"><span class="ff-tg-medium">{{useAmtTot}}</span>원</em>
-        <span class="date"><span class="ff-tg-light">{{invStartDt}}</span>~<span class="ff-tg-light">{{invEndDt}}</span></span>
-        {{#if type3}}
-        <p class="tx">고객님은 현재 통합청구 이용 중이며 할인요금을 제외한 이용요금으로 조회됩니다.</p>
-        {{else}}
-        <ul class="list">
-            <li><strong class="ti">이용요금</strong> <em class="tx f-type"><span class="ff-tg-medium">{{useAmtTot}}</span>원</em></li>
-            <li><strong class="ti">할인요금</strong> <em class="tx f-type c-point"><span class="ff-tg-medium">{{deduckTot}}</span>원</em></li>
-        </ul>
-        {{/if}}
+    <div class="main-fee-box">
+        <div class="fee-cont">
+            <a href="/myt-fare/billguide/guide" class="tit">나의 요금을 확인해 보세요</a>
+            <div class="fee-info">
+                <p class="target">
+                    {{#if type2}}
+                    <span class="tit">{{billMonth}}월 청구요금</span>
+                    {{else if type1}}
+                    <span class="tit">{{billMonth}}월 청구요금<i class="icon-whole4"><span class="blind">전체</span></i></span>
+                    {{else}}
+                    <span class="tit">{{invMonth}}월 이용요금</span>
+                    {{/if}}
+                    <span class="date"><span>{{invStartDt}}.</span>~<span>{{invEndDt}}</span></span>
+                </p>
+                <p class="sum"><span>{{useAmtTot}}</span>원</p>
+            </div>
+        </div>
         <div class="btn-area">
-            <a href="/myt-fare/billguide/guide" class="bt">자세히 보기</a>
+            <button id="fe-bt-payment" class="bt" data-svcattrcd="<%= svcInfo.svcAttrCd %>">납부하기</button>
+            <a href="/myt-data/hotdata" class="bt">실시간 사용요금</a>
         </div>
     </div>
 </script>

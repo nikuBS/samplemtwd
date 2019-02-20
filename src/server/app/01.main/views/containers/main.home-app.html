@@ -54,7 +54,7 @@
                                 <strong class="ti">가입하신 회선이 없습니다.</strong>
                                 <p class="tx">SK텔레콤의 가족이 되어<br>다양하고 편리한 서비스를 이용해 보세요.</p>
                                 <div class="btn-area">
-                                    <button type="button" class="btn-round1 btn-style4 fe-home-external" data-url="http://shop.tworld.co.kr/handler/ShopTworldMain-Start">휴대폰 보러가기</button>
+                                    <button type="button" class="btn-round1 btn-style4 fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/list ">휴대폰 보러가기</button>
                                 </div>
                             </div>
                             <!-- // 미가입 -->
@@ -136,7 +136,7 @@
                                 <!-- // .widget -->
 
                                 <% if(homeData.usageData.data.isTplanUse || homeData.usageData.data.isTplanProd) { %>
-                                <div class="legend">
+                                <div id="fe-tplan" class="legend" data-tplanuse="<%= homeData.usageData.data.isTplanUse %>" data-tplanprod="<%= homeData.usageData.data.isTplanProd %>">
                                     <span class="category0"><span><em class="data"><%= homeData.usageData.data.showMyRemained %></em> 나의 데이터</span></span>
                                     <% if(homeData.usageData.data.isTplanUse) { %>
                                     <span class="category1"><span><em class="data"><%= homeData.usageData.data.showShareRemained %></em>T가족모아데이터</span></span>
@@ -450,7 +450,7 @@
                         <% if (redisData.smartCard.length > 0 && redisData.smartCard[0]) { %>
                         <div class="section-box empty fe-smart-0 fe-smart-<%= redisData.smartCard[0].no %>" data-smartCard="<%= redisData.smartCard[0].no %>">
                             <div class="main-breakdown-box">
-                                <div class="stit c-point"><%= redisData.smartCard[0].title %></div>
+                                <!--<div class="stit c-point"><%= redisData.smartCard[0].title %></div>-->
                             </div>
                         </div>
                         <% } %>
@@ -505,7 +505,7 @@
                         <% if (redisData.smartCard.length > 0 && redisData.smartCard[1]) { %>
                         <div class="section-box empty fe-smart-1 fe-smart-<%= redisData.smartCard[1].no %>" data-smartCard="<%= redisData.smartCard[1].no %>">
                             <div class="main-breakdown-box">
-                                <div class="stit c-point"><%= redisData.smartCard[1].title %></div>
+                                <!--<div class="stit c-point"><%= redisData.smartCard[1].title %></div>-->
                             </div>
                         </div>
                         <% } %>
@@ -514,7 +514,7 @@
                         <% if (redisData.smartCard.length > 0 && redisData.smartCard[2]) { %>
                         <div class="section-box empty fe-smart-2 fe-smart-<%= redisData.smartCard[2].no %>" data-smartCard="<%= redisData.smartCard[2].no %>">
                             <div class="main-breakdown-box">
-                                <div class="stit c-point"><%= redisData.smartCard[2].title %></div>
+                                <!--<div class="stit c-point"><%= redisData.smartCard[2].title %></div>-->
                             </div>
                         </div>
                         <% } %>
@@ -568,20 +568,20 @@
                         <% if (redisData.smartCard.length > 0 && redisData.smartCard[3]) { %>
                         <div class="section-box empty fe-smart-3 fe-smart-<%= redisData.smartCard[3].no %>" data-smartCard="<%= redisData.smartCard[3].no %>">
                             <div class="main-breakdown-box">
-                                <div class="stit c-point"><%= redisData.smartCard[3].title %></div>
+                                <!--<div class="stit c-point"><%= redisData.smartCard[3].title %></div>-->
                             </div>
                         </div>
                         <% }%>
                         <% } %>
-                        <% if (svcType.login && svcType.mobilePhone) { %>
-                        <% if (redisData.smartCard.length > 0 && redisData.smartCard[4]) { %>
-                        <div class="section-box empty fe-smart-4 fe-smart-<%= redisData.smartCard[4].no %>" data-smartCard="<%= redisData.smartCard[4].no %>">
-                            <div class="main-breakdown-box">
-                                <div class="stit c-point"><%= redisData.smartCard[4].title %></div>
-                            </div>
-                        </div>
-                        <% } %>
-                        <% } %>
+                        <!--<% if (svcType.login && svcType.mobilePhone) { %>-->
+                        <!--<% if (redisData.smartCard.length > 0 && redisData.smartCard[4]) { %>-->
+                        <!--<div class="section-box empty fe-smart-4 fe-smart-<%= redisData.smartCard[4].no %>" data-smartCard="<%= redisData.smartCard[4].no %>">-->
+                            <!--<div class="main-breakdown-box">-->
+                                <!--<div class="stit c-point"><%= redisData.smartCard[4].title %></div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<% } %>-->
+                        <!--<% } %>-->
 
                         <!-- 프로모션 배너 3 -->
                         <div class="section-box nogaps">
@@ -1086,10 +1086,9 @@
 </div>
 <% include ../components/javascript.component.html %>
 <% if (svcType.login && svcType.mobilePhone) { %>
-<% include ../components/smart-card/bill.component.html %>
-<% include ../components/smart-card/contents.component.html %>
-<% include ../components/smart-card/gift.component.html %>
-<% include ../components/smart-card/micro-pay.component.html %>
+<%- include('../components/smart-card/bill.component.html', { svcInfo: svcInfo }); %>
+<%- include('../components/smart-card/gift.component.html'); %>
+<%- include('../components/smart-card/micro-contents.component.html'); %>
 <%- include('../components/smart-card/recharge.component.html', { usageData: homeData.usageData }); %>
 <%- include('../components/home/home.welcome.component.html', { svcInfo: svcInfo }); %>
 <% } %>
