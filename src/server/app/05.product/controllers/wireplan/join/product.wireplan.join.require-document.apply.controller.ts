@@ -37,7 +37,7 @@ class ProductWireplanJoinRequireDocumentApply extends TwViewController {
   private _converRequireDocumentInfo(reqDocInfo: any, isJoined: boolean): any {
     return Object.assign(reqDocInfo, {
       opDtm: FormatHelper.isEmpty(reqDocInfo.opDtm) ? null :
-        DateHelper.getShortDateWithFormat(reqDocInfo.opDtm, 'YYYY.M.DD.'),
+        DateHelper.getShortDateWithFormat(reqDocInfo.opDtm, 'YYYY.M.D.'),
       resultText: this._getResultText(reqDocInfo, isJoined)
     });
   }
@@ -60,7 +60,7 @@ class ProductWireplanJoinRequireDocumentApply extends TwViewController {
     if (reqDocInfo.ciaInsptRslt === PRODUCT_REQUIRE_DOCUMENT.ABNORMAL) {
       const ciaInsptRsnCd: any = reqDocInfo.ciaInsptRsnCd.split(','),
         nextSchdDt = FormatHelper.isEmpty(reqDocInfo.nextSchdDt) ? null :
-          DateHelper.getShortDateWithFormat(reqDocInfo.nextSchdDt, 'YYYY.M.DD.'),
+          DateHelper.getShortDateWithFormat(reqDocInfo.nextSchdDt, 'YYYY.M.D.'),
         rsnCdList = this._getRsnCdList(ciaInsptRsnCd, nextSchdDt);
 
       if (rsnCdList.indexOf('000') !== -1 || rsnCdList.indexOf('174') !== -1) {

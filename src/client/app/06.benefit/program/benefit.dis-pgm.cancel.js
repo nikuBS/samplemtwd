@@ -180,6 +180,7 @@ Tw.BenefitDisPgmCancel.prototype = {
 
   _bindVasTermPopupEvent: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_back>button', $.proxy(this._closeAndOpenResultPopup, this));
+    $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
   },
 
   _closeAndOpenResultPopup: function() {

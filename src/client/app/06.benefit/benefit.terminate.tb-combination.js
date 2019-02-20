@@ -81,7 +81,7 @@ Tw.BenefitTerminateTbCombination.prototype = {
     this._popupService.open({
       hbs: 'complete_product',
       data: {
-        btList: [{ link: '/myt-join/myplancombine', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.COMBINE }],
+        btList: [{ link: '/myt-join/combinations', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.COMBINE }],
         btClass: 'item-one',
         prodId: this._prodId,
         prodNm: this._prodNm,
@@ -134,6 +134,7 @@ Tw.BenefitTerminateTbCombination.prototype = {
 
   _bindVasTermPopupEvent: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_back>button', $.proxy(this._closeAndOpenResultPopup, this));
+    $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
   },
 
   _closeAndOpenResultPopup: function() {

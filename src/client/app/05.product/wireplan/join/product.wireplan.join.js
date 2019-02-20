@@ -36,7 +36,7 @@ Tw.ProductWireplanJoin.prototype = {
 
     this.$container.html(html);
     this._callConfirmCommonJs();
-    Tw.Tooltip.separateInit(this.$container.find('.fe-product-tip'));
+    Tw.Tooltip.separateMultiInit(this.$container);
   },
 
   _convConfirmOptions: function() {
@@ -61,7 +61,7 @@ Tw.ProductWireplanJoin.prototype = {
 
   _getIcon: function() {
     if (this._confirmOptions.preinfo.reqProdInfo.svcCd === 'P') {
-      return 'ico-type1';
+      return 'ico-type2';
     }
 
     return 'ico-type1';

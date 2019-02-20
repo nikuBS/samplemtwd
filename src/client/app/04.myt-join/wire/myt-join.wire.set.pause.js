@@ -22,7 +22,7 @@ Tw.MytJoinWireSetPause.prototype = {
   },
   _DATE_FORMAT: {
     INPUT: 'YYYY-MM-DD',
-    LABEL: 'YYYY.M.DD.'
+    LABEL: 'YYYY.M.D.'
   },
   _SELECTABLE_PAUSE_RANGE: 93, // 정지종료일 선택가능 기간(일)
   _DAYS_PER_MONTH: 31, // 1개월 추정 일 수

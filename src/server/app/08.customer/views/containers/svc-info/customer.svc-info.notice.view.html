@@ -15,36 +15,44 @@
 </div>
 <!--// #skip_navigation -->
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
-    <%- include('../../../../common/views/components/header.component.html', { title: title, svcInfo: svcInfo }); %>
-    <!-- #contents -->
-    <div id="contents" class="container-wrap">
-        <h2 class="blind">내용</h2>
-        <div class="container">
-
-            <hr class="cont-sp type1" aria-hidden="true">
-
-            <div class="cont-box nogaps-btm noborder">
-                <div class="view-tit-wrap">
-                    <span class="tit"><%= data.ntcTitNm %></span>
-                    <p class="sub-txt">
-                        <% if (data.type) { %><span class="item"><%= data.type %></span><% } %>
-                        <span class="date"><%= data.date %></span>
-                    </p>
+    <div class="popup-page tw-popup fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>공지사항</h1>
                 </div>
             </div>
-
-            <div class="cont-box gaps-style01 noborder">
-                <%- data.content %>
-            </div>
-
         </div>
+        <!--// #header -->
+        <!-- #contents -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+
+                <hr class="cont-sp type1" aria-hidden="true">
+
+                <div class="cont-box nogaps-btm noborder">
+                    <div class="view-tit-wrap">
+                        <span class="tit"><%= data.ntcTitNm %></span>
+                        <p class="sub-txt">
+                            <% if (data.type) { %><span class="item"><%= data.type %></span><% } %>
+                            <span class="date"><%= data.date %></span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="cont-box gaps-style01 noborder">
+                    <%- data.content %>
+                </div>
+
+            </div>
+        </div>
+        <!--// #contents -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-common-back">취소</button>
+        <!--// .popup-closeBtn -->
     </div>
-    <!--// #contents -->
-    <!-- #footer -->
-    <footer id="fe-all-menu">
-        <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
-    </footer>
-    <!--// #footer -->
 </div>
 </body>
 <% include ../../components/javascript.component.html %>

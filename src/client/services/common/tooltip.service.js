@@ -34,6 +34,10 @@ Tw.TooltipService.prototype = {
   separateInit: function ($target) {
     this._getContents($target);
   },
+  separateMultiInit: function (rootEl) {
+    this.$container = rootEl;
+    this._getContents();
+  },
   _getTip: function () {
     if (this.$menuId) {
       this._apiService.request(Tw.NODE_CMD.GET_TOOLTIP, {menuId: this.$menuId})

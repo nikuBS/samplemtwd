@@ -35,7 +35,7 @@ Tw.ProductWireplanTerminate.prototype = {
 
     this.$container.html(html);
     this._callConfirmCommonJs();
-    Tw.Tooltip.separateInit(this.$container.find('.fe-product-tip'));
+    Tw.Tooltip.separateMultiInit(this.$container);
   },
 
   _convConfirmOptions: function() {
@@ -60,7 +60,7 @@ Tw.ProductWireplanTerminate.prototype = {
 
   _getIcon: function() {
     if (this._confirmOptions.preinfo.reqProdInfo.svcCd === 'P') {
-      return 'ico-type1';
+      return 'ico-type2';
     }
 
     return 'ico-type1';
@@ -188,6 +188,7 @@ Tw.ProductWireplanTerminate.prototype = {
 
   _bindVasTermPopupEvent: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_back>button', $.proxy(this._closeAndOpenResultPopup, this));
+    $popupContainer.on('click', 'a', $.proxy(this._closeAndGo, this));
   },
 
   _closeAndOpenResultPopup: function() {
