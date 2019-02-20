@@ -96,11 +96,8 @@ Tw.ProductCommonConfirm.prototype = {
       'title': $btn.data('title'),
       'title_type': 'tit-tooltip',
       'cont_align':'tl',
-      'contents': $btn.parent().find('.fe-tip_view_html').html(),
-      'bt_b': [{
-        style_class:'pos-left fe-btn_close',
-        txt: Tw.BUTTON_LABEL.CONFIRM
-      }]
+      'btn-close':'btn-tooltip-close tw-popup-closeBtn',
+      'contents': $btn.parent().find('.fe-tip_view_html').html()
     }, $.proxy(this._bindTipView, this));
 
     e.preventDefault();
