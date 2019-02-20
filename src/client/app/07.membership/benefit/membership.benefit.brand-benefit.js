@@ -132,6 +132,8 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
               return $('<span />').text(i + 1);
             }
           });
+          // 슬릭 버그로 화면이 가로 스크롤 되는 현상이 있어서 강제로 조정
+          $('.slick-dots').css('width', '90%');
         }
 
       }, this))

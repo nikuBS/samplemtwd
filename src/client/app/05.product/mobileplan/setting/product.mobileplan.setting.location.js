@@ -68,6 +68,11 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     this._tmpltLocItem = Handlebars.compile($('#loc-list-tmplt-item').html());
     this._tmpltNumItem = Handlebars.compile($('#num-list-tmplt-item').html());
     this._tmpltLocSchItem = Handlebars.compile($('#loc-search-list-tmplt-item').html())
+
+    // 웹인 경우 주소록버튼 숨김
+    if(!Tw.BrowserHelper.isApp()){
+      $('#btnAddr', this.$container).parent().hide();
+    }
   },
 
   _onclickBtnClose: function(){
@@ -165,7 +170,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    * @private
    */
   _checkAddNumberBtn: function(){
-    var disabled = !($('#num-input').val().replace(/-/g,'').length >= 8);
+    var disabled = !($('#num-input').val().replace(/-/g,'').length >= 9);
     $('#btnNumAdd').prop('disabled', disabled);
   },
 
