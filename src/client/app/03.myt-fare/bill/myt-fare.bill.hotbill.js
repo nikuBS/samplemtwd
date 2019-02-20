@@ -281,7 +281,8 @@ Tw.MyTFareHotBill.prototype = {
       (_.isEmpty(target.nickNm) ? target.eqpMdlNm : target.nickNm);
     this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,
       defaultLineInfo + Tw.MYT_TPL.DATA_SUBMAIN.SP_TEMP + selectLineInfo,
-      Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._requestSwitchLine, this, target), null);
+      Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._requestSwitchLine, this, target), null
+    , null, 'tc');
   },
   /**
    * Request to switch the current line.
