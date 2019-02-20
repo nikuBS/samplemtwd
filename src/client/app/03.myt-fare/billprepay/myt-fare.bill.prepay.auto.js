@@ -14,7 +14,7 @@ Tw.MyTFareBillPrepayAuto = function (rootEl, title, type) {
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService(rootEl);
-  this._backAlert = new Tw.BackAlert(this.$container, this.$isPage);
+  this._backAlert = new Tw.BackAlert(this.$container);
 
   this._init();
 };
