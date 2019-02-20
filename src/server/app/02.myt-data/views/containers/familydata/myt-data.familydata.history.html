@@ -27,13 +27,13 @@
 				<div class="cont-box pb0">
 					<div class="ti-caption-type01">
 						<h2 class="tit">나의 총 공유 데이터 <button class="btn-tip" id="TC000022" aria-haspopup="true"><i class="icon-badge-tip"><span class="blind">나의 총 공유 데이터 tip</span></i></button></h2>
-						<p class="num"><em><%= histories.total %></em>GB</p>
+						<p class="num"><em><%= total %></em>GB</p>
 					</div>
 					<div class="data-list-type1">
 						<ul class="type1">
-                            <% const DEFAULT_LIST_COUNT = 20, length = Math.min(histories.list.length, DEFAULT_LIST_COUNT);
+                            <% const DEFAULT_LIST_COUNT = 20, length = Math.min(histories.length, DEFAULT_LIST_COUNT);
                             for (let idx = 0; idx < length; idx++) {
-                                const history = histories.list[idx]; %>
+                                const history = histories[idx]; %>
                                 <li data-idx="<%= idx %>" data-serial-number="<%= history.shrPotSerNum %>">
                                     <span class="stit"><strong><%= history.shrPotGbQty %>GB</strong> 공유</span>
                                     <div class="sta">
@@ -47,7 +47,7 @@
 						</ul>
                     </div>
                     
-                    <% const leftCount = histories.list.length - DEFAULT_LIST_COUNT; 
+                    <% const leftCount = histories.length - DEFAULT_LIST_COUNT; 
                     if (leftCount > 0) { %>
                         <!-- .btn-more -->
                         <div class="btn-more">
@@ -75,7 +75,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-      new Tw.MyTDataFamilyHistory($('.wrap'), <%- JSON.stringify(histories.list) %>);
+      new Tw.MyTDataFamilyHistory($('.wrap'), <%- JSON.stringify(histories) %>);
   });
 </script>
 <% include ../../components/end.component.html %>
