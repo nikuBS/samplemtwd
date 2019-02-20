@@ -97,7 +97,7 @@ Tw.MyTFareBillGuidePps.prototype = {
         item.used = thisMain._comComma(item.used);
       }
 
-      item.rate = thisMain._comComma(item.rate);
+      item.rate = thisMain._comComma(Number(item.rate||0).toFixed());
       return item;
     });
     // Tw.Logger.info('[ _proData end ]', this.detailListObj[0]);
@@ -420,6 +420,7 @@ Tw.MyTFareBillGuidePps.prototype = {
 
   //--------------------------------------------------------------------------[COM]
   _comComma: function (str) {
+    if(!str) return '';
     str = String(str);
     return Tw.FormatHelper.addComma(str);
   }
