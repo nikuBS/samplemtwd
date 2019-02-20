@@ -69,7 +69,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     for(var i=0;i<this._addedList.length;i++){
       if((this._addedList[i].serviceNumber1+this._addedList[i].serviceNumber2+this._addedList[i].serviceNumber3) ===
         (phoneObj.serviceNumber1+phoneObj.serviceNumber2+phoneObj.serviceNumber3)){
-        this._openAlert(Tw.ROAMING_COMBINE_LINE_STRING.DUPLICATE_LINE,Tw.POPUP_TITLE.ERROR);
+        this._openAlert(Tw.ROAMING_JOIN_STRING.DUPLICATE_LINE,Tw.POPUP_TITLE.ERROR);
         return;
       }
     }
@@ -179,7 +179,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
           isBasFeeInfo : data.prodFee,
           typeNm : data.prodType,
           settingType : data.processNm,
-          btnNmList : [Tw.PRODUCT_SUCCESS_BTN_TEXT.MYTJOIN]
+          btnNmList : [Tw.ROAMING_JOIN_STRING.MY_ROAMING_STATE]
         };
         $containerData._popupService.open({
             hbs: 'complete_product_roaming',

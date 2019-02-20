@@ -185,10 +185,10 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
       isBasFeeInfo : data.prodFee,
       typeNm : data.prodType,
       settingType : data.processNm,
-      btnNmList : [Tw.PRODUCT_SUCCESS_BTN_TEXT.MYTJOIN]
+      btnNmList : [Tw.ROAMING_JOIN_STRING.MY_ROAMING_STATE]
     };
     if($containerData._prodId==='NA00005690'||$containerData._prodId==='NA00005693'){
-      completePopupData.btnNmList.unshift(Tw.ROAMING_COMBINE_LINE_STRING.COMBINE_LINE);
+      completePopupData.btnNmList.unshift(Tw.ROAMING_JOIN_STRING.COMBINE_LINE);
     }
     apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},[data.prodId]).
     done($.proxy(function (res) {
