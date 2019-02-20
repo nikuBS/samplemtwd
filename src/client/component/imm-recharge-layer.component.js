@@ -49,9 +49,6 @@ Tw.ImmediatelyRechargeLayer.prototype = {
     this._apiService.requestArray(apiList)
       .done($.proxy(function (available, refill, ting, etc, limit, optSvc) {
         if (available.code === Tw.API_CODE.CODE_00) {
-          if (_.isEmpty(available.result.option)) {
-            this.immChargeData.available = 'NONE';
-          }
           var availableFunc = available.result.option.reduce(function(memo, item) {
             return (memo + item.dataVoiceClCd);
           }, '');
@@ -62,7 +59,12 @@ Tw.ImmediatelyRechargeLayer.prototype = {
           if (availableFunc.includes('D')) {
             this.immChargeData.available = 'DATA';
           }
-          this.immChargeData.available = 'VOICE';
+          if (_.isEmpty(available.result.option)) {
+            this.immChargeData.available = 'NONE';
+          }
+          else {
+            this.immChargeData.available = 'VOICE';
+          }
         }
         else {
           this.immChargeData.available = null;
