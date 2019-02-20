@@ -62,6 +62,21 @@ Tw.BenefitIndex.prototype = {
     this.$internetType.on('click', $.proxy(this._checkStateLine, this));
     this.$showDiscountBtn.on('click', $.proxy(this._reqDiscountAmt, this));
     this.$container.on('click', '[data-benefit-id]', $.proxy(this._onClickProduct, this)); // 카테고리 하위 리스트 클릭
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(function(){
+      this._setScrollLeft(this._convertPathToCategory());
+    }, this));
+  },
+
+  /**
+   * 카테고리 아이디에 해당하는 탭 위치로 스크롤
+   * @param categoryId
+   * @private
+   */
+  _setScrollLeft: function (categoryId) {
+    var $target = this.$categoryTab.find('[data-category="' + categoryId + '"]').parent();
+    var x = parseInt($target.position().left, 10);
+    var parentLeft = parseInt(this.$categoryTab.position().left, 10);
+    this.$categoryTab.scrollLeft(x - parentLeft);
   },
 
   /**
@@ -296,10 +311,11 @@ Tw.BenefitIndex.prototype = {
   },
 
   /**
-   * 호출 URL에 따른 카테고리 아이디의 탭 부분 호출
+   * URL 마지막 Path 에 해당하는 카테고리 아이디 반환
+   * @returns {*}
    * @private
    */
-  _loadTab: function() {
+  _convertPathToCategory : function () {
     var categoryId = {
       'discount'      : 'F01421',
       'combinations'  : 'F01422',
@@ -307,7 +323,15 @@ Tw.BenefitIndex.prototype = {
       'participation' : 'F01424',
       'submain'       : ''
     };
-    this._switchTab(categoryId[Tw.UrlHelper.getLastPath()]);
+    return categoryId[Tw.UrlHelper.getLastPath()];
+  },
+
+  /**
+   * 호출 URL에 따른 카테고리 아이디의 탭 부분 호출
+   * @private
+   */
+  _loadTab: function() {
+    this._switchTab(this._convertPathToCategory());
   },
 
   /**
