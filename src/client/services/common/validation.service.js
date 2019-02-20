@@ -41,6 +41,10 @@ Tw.ValidationService.prototype = {
     callback(true);
   },
   _setButtonAbility: function (isValid) {
+    if (this.$submitBtn === undefined) {
+      this.$submitBtn = this.$container.find('.fe-pay:visible');
+    }
+
     if (isValid) {
       this.$submitBtn.removeAttr('disabled');
       this.$disabled = false;

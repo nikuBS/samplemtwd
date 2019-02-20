@@ -166,6 +166,12 @@ Tw.MyTFareBillRainbow.prototype = {
       this._apiService.request(Tw.API_CMD.BFF_07_0048, reqData)
         .done($.proxy(this._paySuccess, this, ''))
         .fail($.proxy(this._fail, this));
+    } else {
+      if (!this.$isPointValid) {
+        this.$point.focus();
+      } else {
+        this.$fareSelector.focus();
+      }
     }
   },
   _autoPay: function () {
@@ -174,6 +180,8 @@ Tw.MyTFareBillRainbow.prototype = {
       this._apiService.request(Tw.API_CMD.BFF_07_0056, reqData)
         .done($.proxy(this._paySuccess, this, 'auto'))
         .fail($.proxy(this._fail, this));
+    } else {
+      this.$fareSelector.focus();
     }
   },
   _paySuccess: function (type, res) {
@@ -210,13 +218,6 @@ Tw.MyTFareBillRainbow.prototype = {
   },
   _onClose: function () {
     this._backAlert.onClose();
-    // if (this._isChanged()) {
-    //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-    //     $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
-    //     Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-    // } else {
-    //   this._historyService.goBack();
-    // }
   },
   _isChanged: function () {
     if (this.$selectedTab.attr('id') === 'tab1-tab') {
