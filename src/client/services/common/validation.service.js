@@ -97,6 +97,20 @@ Tw.ValidationService.prototype = {
       }
     }
 
+    if ($target.hasClass('fe-prepay-amount')) {
+      isValid = false;
+      var _prepayAmount = $target.val();
+      if (!this._validation.checkIsAvailablePoint(_prepayAmount, this.$container.find('.fe-max-amount').attr('id'))) {
+        message = Tw.ALERT_MSG_MYT_FARE.ALERT_2_V10;
+      } else if (!this._validation.checkIsMore(_prepayAmount, 9999)) {
+        message = Tw.ALERT_MSG_MYT_FARE.TEN_THOUSAND;
+      } else if (!this._validation.checkMultiple(_prepayAmount, 10000)) {
+        message = Tw.ALERT_MSG_MYT_FARE.TEN_THOUSAND;
+      } else {
+        isValid = true;
+      }
+    }
+
     if (isValid) {
       $messageTarget.hide();
     } else {
@@ -127,7 +141,7 @@ Tw.ValidationService.prototype = {
   },
   _getEmptyMessage: function (label) {
     var message = label;
-    if (label === Tw.VALIDATION_LABEL.EXPIRATION || label === Tw.VALIDATION_LABEL.BIRTH) {
+    if (label === Tw.VALIDATION_LABEL.EXPIRATION || label === Tw.VALIDATION_LABEL.BIRTH || label === Tw.VALIDATION_LABEL.PREPAY) {
       message += Tw.VALIDATION_LABEL.U;
     } else {
       message += Tw.VALIDATION_LABEL.R;
@@ -137,7 +151,7 @@ Tw.ValidationService.prototype = {
   },
   _getWrongMessage: function (label) {
     var message = label;
-    if (label === Tw.VALIDATION_LABEL.EXPIRATION || label === Tw.VALIDATION_LABEL.BIRTH) {
+    if (label === Tw.VALIDATION_LABEL.EXPIRATION || label === Tw.VALIDATION_LABEL.BIRTH || label === Tw.VALIDATION_LABEL.PREPAY) {
       message += Tw.VALIDATION_LABEL.I;
     } else {
       message += Tw.VALIDATION_LABEL.G;
