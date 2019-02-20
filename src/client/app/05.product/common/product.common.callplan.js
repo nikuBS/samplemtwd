@@ -319,7 +319,7 @@ Tw.ProductCommonCallplan.prototype = {
       hbs: 'product_bpcp',
       iframeUrl: url
     }, null, $.proxy(function() {
-      this._historyService.reload();
+      this._historyService.replaceURL('/product/callplan/' + this._prodId);
     }, this));
   },
 
