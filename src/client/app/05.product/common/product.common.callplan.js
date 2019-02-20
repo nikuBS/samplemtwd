@@ -70,10 +70,10 @@ Tw.ProductCommonCallplan.prototype = {
 
     this.$container.on('click', '.fe-bpcp', $.proxy(this._detectBpcp, this));
     this.$container.on('click', '.fe-banner_link', $.proxy(this._onBannerLink, this));
+    this.$container.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
+    this.$container.on('click', '.fe-link-internal', $.proxy(this._openInternalUrl, this));
 
     this.$contents.on('click', '[data-contents]', $.proxy(this._openContentsDetailPop, this, 'contents'));
-    this.$contents.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
-    this.$contents.on('click', '.fe-link-internal', $.proxy(this._openInternalUrl, this));
 
     this.$contents.on('click', '.dmg-contract', $.proxy(this._openCustomPopup, this, 'BS_02_01_02_01'));
     this.$contents.on('click', '.possible-product', $.proxy(this._openCustomPopup, this, 'BS_03_01_01_02'));
@@ -176,8 +176,6 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _bindCustomPop: function(hbsCode, $popupContainer) {
-    $popupContainer.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
-
     if (hbsCode !== 'MP_02_02_04_02') {
       return;
     }
