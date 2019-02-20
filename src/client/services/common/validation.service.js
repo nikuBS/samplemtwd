@@ -1,25 +1,21 @@
 Tw.ValidationService = function (rootEl, submitBtn) {
   this.$container = rootEl;
   this.$submitBtn = submitBtn;
+  this.$disabled = true;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
-
-  this.$inputField = this.$container.find('input.required-input-field:visible');
-  this.$cancelBtn = this.$inputField.siblings('.cancel');
-  this.$selectField = this.$container.find('.fe-required-select');
-  this.$disabled = true;
 
   this._bindEvent();
 };
 
 Tw.ValidationService.prototype = {
   _bindEvent: function () {
-    this.$cancelBtn.on('click', $.proxy(this._setButtonAbility, this, false));
-    this.$inputField.on('keyup', $.proxy(this.checkIsAbled, this));
-    this.$inputField.on('keyup', $.proxy(this._checkNumber, this));
-    this.$inputField.on('blur', $.proxy(this._checkValidation, this));
+    this.$container.find('.cancel').on('click', $.proxy(this._setButtonAbility, this, false));
+    this.$container.find('input.fe-only-number:visible').on('keyup', $.proxy(this._checkNumber, this));
+    this.$container.find('input.required-input-field:visible').on('keyup', $.proxy(this.checkIsAbled, this));
+    this.$container.find('input.required-input-field:visible').on('blur', $.proxy(this.checkValidation, this));
   },
   checkIsAbled: function () {
     this.$container.find('input.required-input-field:visible').each($.proxy(this._checkNull, this,
@@ -28,7 +24,6 @@ Tw.ValidationService.prototype = {
     if (!this.$disabled) {
       this.$container.find('.fe-required-select:visible').each($.proxy(this._checkNull, this,
         $.proxy(this._setButtonAbility, this)));
-      this._setButtonAbility(!Tw.FormatHelper.isEmpty(this.$selectField.attr('id')));
     }
   },
   _checkNull: function (callback, idx, target) {
@@ -58,7 +53,7 @@ Tw.ValidationService.prototype = {
     var target = event.target;
     Tw.InputHelper.inputNumberOnly(target);
   },
-  _checkValidation: function (event) {
+  checkValidation: function (event) {
     var $target = $(event.currentTarget);
     var $messageTarget = this._getMessageTarget($target);
     var label = Tw.VALIDATION_LABEL[$target.attr('data-valid-label').toUpperCase()];
@@ -71,6 +66,15 @@ Tw.ValidationService.prototype = {
       message = this._getWrongMessage(label);
     } else {
       isValid = true;
+    }
+
+    if ($target.hasClass('fe-point')) {
+      message = this._getPointMessage($target);
+      if (Tw.FormatHelper.isEmpty(message)) {
+        isValid = true;
+      } else {
+        isValid = false;
+      }
     }
 
     if (isValid) {
@@ -145,6 +149,25 @@ Tw.ValidationService.prototype = {
   },
   _getFail: function ($target) {
     $target.parent().siblings('.fe-error-msg').empty().text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V28).show();
+  },
+  _getPointMessage: function ($target) {
+    var $isSelectedPoint = this.$container.find('.fe-select-point').attr('id');
+    var className = '.fe-cashbag-point';
+    if ( $isSelectedPoint === Tw.PAYMENT_POINT_VALUE.T_POINT ) {
+      className = '.fe-t-point';
+    }
+
+    var message = '';
+    if (!this._validation.checkIsAvailablePoint($target.val(),
+        parseInt(this.$container.find(className).attr('id'), 10))) {
+      message = Tw.ALERT_MSG_MYT_FARE.ALERT_2_V27;
+    } else if (!this._validation.checkIsMore($target.val(), 1000)) {
+      message = Tw.ALERT_MSG_MYT_FARE.ALERT_2_V8;
+    } else if (!this._validation.checkIsTenUnit($target.val())) {
+      message = Tw.ALERT_MSG_MYT_FARE.TEN_POINT;
+    }
+
+    return message;
   },
   isAllValid: function () {
     if (this.$container.find('.fe-error-msg').is(':visible')) {
