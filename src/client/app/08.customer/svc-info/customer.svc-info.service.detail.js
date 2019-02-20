@@ -319,11 +319,13 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
   },
 
   _openPagePop: function (e) {
-    var popId = $(e.currentTarget).attr('href');
+    var popId = $(e.currentTarget).data('popup') ? "#" + $(e.currentTarget).data('popup') : $(e.currentTarget).attr('href');
     e.preventDefault();
+    
     this._popupService.open({
         hbs: 'svc-info.service.popup',
-        'title': $(popId).find('.popup-title').text(),
+        'title': $(popId).find('.popup-title').html(),
+        'isDoubleTitle': $(popId).find('.popup-title').find('br').length >= 0 ? 'txt2-popup' : '',
         'contents': $(popId).find('.idpt-popup-cont').html()
       },
       $.proxy(function($container) {
