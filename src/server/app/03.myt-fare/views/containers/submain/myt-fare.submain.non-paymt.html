@@ -71,7 +71,9 @@
                             <li>고객님은 현재 미납된 요금이 있습니다.<br/>이용에 불편이 없도록 미납요금을 납부하시기 바랍니다.</li>
                             <% if (data.possibleDay) { %>
                             <li>즉시 요금납부가 어려우시면 납부가능일을 선택해 주세요.</li>
-                            <li>고객님의 이용정지 예정일은 <%= data.suspStaDt %> 입니다.</li>
+                                <% if (data.suspStaDt) { %>
+                                <li>고객님의 이용정지 예정일은 <%= data.suspStaDt %> 입니다.</li>
+                                <% } %>
                             <% } %>
                         </ul>
                     </div>

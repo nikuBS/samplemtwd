@@ -243,6 +243,11 @@ class MyTFareSubmainController extends TwViewController {
         //   }
         // }
 
+        // PocketFi or T Login 인 경우 이용요금자세히버튼 노출
+        if ( ['M3', 'M4'].indexOf(data.svcInfo.svcAttrCd) > -1 ) {
+          data.isNotAutoPayment = false;
+        }
+
         res.render('myt-fare.submain.html', { data });
       }
     });
@@ -310,7 +315,12 @@ class MyTFareSubmainController extends TwViewController {
           if ( ['M1', 'M2'].indexOf(item.svcAttrCd) === -1 ) {
             item.nickNm = SVC_ATTR_NAME[item.svcAttrCd];
           }
-          item.svcNum = StringHelper.phoneStringToDash(item.svcNum);
+          // IPTV, 인터넷 인 경우 주소표시
+          if ( ['S1', 'S2'].indexOf(item.svcAttrCd) > -1 ) {
+            item.svcNum = item.addr;
+          } else {
+            item.svcNum = StringHelper.phoneStringToDash(item.svcNum);
+          }
           list.push(item);
         }
       });
