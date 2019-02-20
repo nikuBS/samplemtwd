@@ -9,7 +9,7 @@
         <div class="fee-cont">
             <strong class="tit">소액결제 및 콘텐츠<br>이용요금을 안내해 드립니다</strong>
             {{#if micro}}
-            <a href="/myt-fare/bill/small/history" class="fee-info">
+            <a class="fee-info" tabindex="0" href="/myt-fare/bill/small/history" class="fee-info">
                 <p class="target">
                     <span class="tit">소액결제 이용요금</span>
                     <span class="date"><span>{{ micro.invStartDt }}</span>~<span>{{ micro.invEndDt }}</span></span>
@@ -27,7 +27,7 @@
             {{/if}}
             <hr class="line">
             {{#if contents}}
-            <a href="/myt-fare/bill/contents/history" class="fee-info">
+            <a class="fee-info" tabindex="0" href="/myt-fare/bill/contents/history" class="fee-info">
                 <p class="target">
                     <span class="tit">콘텐츠 이용요금</span>
                     <span class="date"><span>{{ contents.invStartDt }}</span>~<span>{{ contents.invEndDt }}</span></span>
