@@ -139,7 +139,7 @@ Tw.ProductWireplanJoinBasicInfo.prototype = {
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
       isNumberBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
       svcNumMask: this._confirmOptions.preinfo.svcNumMask,
-      svcNickname: Tw.SVC_CD[this._confirmOptions.preinfo.svcCd],
+      svcNickname: Tw.SVC_CD[this._confirmOptions.preinfo.reqProdInfo.svcCd],
       noticeList: this._confirmOptions.noticeList,
       isAgreement: (this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.existsCount > 0),
       settingSummaryTexts: [{

@@ -52,7 +52,7 @@ Tw.ProductWireplanTerminate.prototype = {
       toProdBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.basFeeInfo,
       isNumberBasFeeInfo: this._confirmOptions.preinfo.reqProdInfo.isNumberBasFeeInfo,
       svcNumMask: this._confirmOptions.preinfo.svcNumMask,
-      svcNickname: Tw.SVC_CD[this._confirmOptions.preinfo.svcCd],
+      svcNickname: Tw.SVC_CD[this._confirmOptions.preinfo.reqProdInfo.svcCd],
       isAgreement: this._confirmOptions.stipulationInfo && this._confirmOptions.stipulationInfo.isTermStplAgree,
       iconClass: this._getIcon()
     });
