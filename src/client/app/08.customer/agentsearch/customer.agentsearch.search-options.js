@@ -58,6 +58,7 @@ Tw.CustomerAgentsearchSearchOptions.prototype = {
     }
   },
   _onClose: function () {
+    /*  취소확인 팝업 삭제
     var confirmed = false;
     this._popupService.openConfirmButton(
       Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
@@ -74,5 +75,8 @@ Tw.CustomerAgentsearchSearchOptions.prototype = {
       Tw.BUTTON_LABEL.NO,
       Tw.BUTTON_LABEL.YES
     );
+    */
+
+    this._popupService.close();
   }
 };
