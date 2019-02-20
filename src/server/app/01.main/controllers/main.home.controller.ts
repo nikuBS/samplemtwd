@@ -56,7 +56,6 @@ class MainHome extends TwViewController {
       if ( svcType.svcCategory === LINE_NAME.MOBILE ) {
         if ( svcType.mobilePhone ) {
           // 모바일 - 휴대폰 회선
-          // smartCard = this.getSmartCardOrder(svcInfo.svcMgmtNum);
           Observable.combineLatest(
             this.getUsageData(svcInfo),
             this.getMembershipData(svcInfo),
@@ -112,8 +111,8 @@ class MainHome extends TwViewController {
         }
       }).map((resp) => {
         this.logger.info(this, '[Smart Card]', resp);
-        // let order = ['00001', '00002', '00003', '00004', '00005'];
-        let order = [];
+        let order = ['00001', '00002', '00003', '00004', '00005'];
+        // let order = [];
         if ( resp.code === API_CODE.CODE_00 ) {
           order = resp.result.split(',');
         }

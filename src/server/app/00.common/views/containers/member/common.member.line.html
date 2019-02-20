@@ -44,13 +44,12 @@
                                     <% lineList.m.map((line, index) => { %>
                                     <% if(index < showParam.defaultCnt) { %>
                                     <li class="acco-box fe-line <% if(line.repSvcYn === 'Y') { %> pin <% } %> <% if(line.expsYn === 'N') { %> none-event <% } %>"  data-svcMgmtNum="<%= line.svcMgmtNum%>">
-                                        <div class="acco-tit"><button role="button" aria-pressed="false">
-                                            <span class="txt fe-show-name"><%= line.showName %></span>
-                                            <% if(line.repSvcYn === 'Y') { %>
-                                            <span class="blind">기준</span>
-                                            <% } %>
-                                            <span class="line"><%= line.showDetail %></span>
-                                        </button></div>
+                                        <div class="acco-tit">
+                                            <button role="button" aria-pressed="false">
+                                                <span class="txt fe-show-name"><%= line.showName %><% if(line.repSvcYn === 'Y') { %><span class="badge-co t-standard"><span class="blind">기준</span></span><% } %></span>
+                                                <span class="line"><%= line.showDetail %></span>
+                                            </button>
+                                        </div>
                                         <div class="acco-cont">
                                             <div class="line-change-cont">
                                                 <ul>

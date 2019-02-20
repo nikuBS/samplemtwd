@@ -4,9 +4,8 @@
 * Date: 2018.10.06
 %>
 <script id="fe-smart-gift" type="text/x-handlebars-template">
-    <!--<div class="section-box">-->
     <div class="main-breakdown-box">
-        <div class="stit c-point">T끼리 데이터 선물</div>
+        <!--<div class="stit c-point">T끼리 데이터 선물</div>--><!--2019.02.13 삭제-->
         <strong class="ti">잔여 데이터를 가족과 친구에게 선물해 보세요</strong>
         {{#if blockUsage}}
         <p class="tx">매월 1일은 데이터 조회량이 많아 데이터를 선물할 수 있는지 실시간으로 알려드리기 어렵습니다.</p>
@@ -20,11 +19,11 @@
             </li>
             <li><strong class="ti">선물하기 남은 횟수</strong>
                 <em class="tx c-point">T끼리 <span class="f-type ff-tg-medium">{{dataGiftCnt}}</span>회
-                {{#if goodFamilyMEmberYn}}
-                 / 가족 <span class="f-type">무제한</span>
-                {{else if familyMemberYn}}
-                 / 가족 <span class="f-type ff-tg-medium">{{familyDataGiftCnt}}</span>회
-                {{/if}}
+                    {{#if goodFamilyMEmberYn}}
+                    / 가족 <span class="f-type">무제한</span>
+                    {{else if familyMemberYn}}
+                    / 가족 <span class="f-type ff-tg-medium">{{familyDataGiftCnt}}</span>회
+                    {{/if}}
                 </em>
             </li>
         </ul>
@@ -32,8 +31,6 @@
         <div class="btn-area">
             <button id="fe-bt-go-gift" class="bt">선물하기</button>
         </div>
-
+        <p id="fe-text-error" class="text_translation none"></p>
     </div>
-    <p id="fe-text-error" class="text_translation none"></p>
-    <!--</div>-->
 </script>

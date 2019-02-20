@@ -348,8 +348,8 @@ Tw.MainHome.prototype = {
       var tplBillCard = Handlebars.compile($billTemp.html());
       element.html(tplBillCard(result));
       element.removeClass('empty');
-      // element.addClass('nogaps');
-      // element.on('click', '#fe-bt-payment', $.proxy(this._onClickPayment, this));
+      element.addClass('nogaps');
+      element.on('click', '#fe-bt-payment', $.proxy(this._onClickPayment, this));
     } else {
       element.hide();
     }
@@ -359,8 +359,9 @@ Tw.MainHome.prototype = {
   _failBillData: function () {
 
   },
-  _onClickPayment: function () {
-    // new Tw.MyTFareBill(this.$container);
+  _onClickPayment: function ($event) {
+    var svcAttrCd = $($event.currentTarget).data('svcattrcd');
+    new Tw.MyTFareBill(this.$container, svcAttrCd);
   },
   _parseBillData: function (billData) {
     var repSvc = billData.charge.repSvcYn === 'Y';
@@ -415,25 +416,39 @@ Tw.MainHome.prototype = {
         listLength: contents.useConAmtDetailList.length
       };
     }
+    return null;
   },
-  // _getMicroContentsData: function (element) {
-  //   this._apiService.requestArray([
-  //     { command: Tw.API_CMD.BFF_05_0079, params: {} },
-  //     { command: Tw.API_CMD.BFF_05_0064, params: {} }
-  //   ]).done($.proxy(this._successMicroContentsData, this, element));
-  // },
-  // _successMicroContentsData: function (element, microResp, contentsResp) {
-  //   var result = {
-  //     micro: null,
-  //     contents: null
-  //   };
-  //   if ( microResp.code === Tw.API_CODE.CODE_00 ) {
-  //     result.micro = this._parseMicroData(microResp.result);
-  //   }
-  //   if ( contentsResp.code === Tw.API_CODE.CODE_00 ) {
-  //     result.contents = this._parseContentsData(contentsResp.result);
-  //   }
-  // },
+  _getMicroContentsData: function (element) {
+    this._apiService.requestArray([
+      { command: Tw.API_CMD.BFF_05_0079, params: {} },
+      { command: Tw.API_CMD.BFF_05_0064, params: {} }
+    ]).done($.proxy(this._successMicroContentsData, this, element));
+  },
+  _successMicroContentsData: function (element, microResp, contentsResp) {
+    var result = {
+      micro: null,
+      contents: null
+    };
+    if ( microResp.code === Tw.API_CODE.CODE_00 ) {
+      result.micro = this._parseMicroData(microResp.result);
+    }
+    if ( contentsResp.code === Tw.API_CODE.CODE_00 ) {
+      result.contents = this._parseContentsData(contentsResp.result);
+    }
+
+    if ( !Tw.FormatHelper.isEmpty(result.micro) || !Tw.FormatHelper.isEmpty(result.contents) ) {
+      var $microContentsTemp = $('#fe-smart-micro-contents');
+      var tplMicroContentsCard = Handlebars.compile($microContentsTemp.html());
+      element.html(tplMicroContentsCard(result));
+      element.removeClass('empty');
+      element.addClass('nogaps');
+    } else {
+      element.hide();
+    }
+    this._resetHeight();
+  },
+
+
   _getMicroPayData: function (element) {
     // $.ajax('/mock/home.micro-pay.json')
     this._apiService.request(Tw.API_CMD.BFF_05_0079, {})
@@ -468,6 +483,7 @@ Tw.MainHome.prototype = {
         listLength: microData.payHistoryCnt
       };
     }
+    return null;
   },
   _getGiftData: function (element, index) {
     this._apiService.request(Tw.API_CMD.BFF_06_0015, {})
@@ -634,11 +650,12 @@ Tw.MainHome.prototype = {
       case Tw.HOME_SMART_CARD_E.BILL:
         this._getBillData(this.$elArrSmartCard[index]);
         break;
-      case Tw.HOME_SMART_CARD_E.CONTENT:
-        this._getContentData(this.$elArrSmartCard[index]);
-        break;
+      // case Tw.HOME_SMART_CARD_E.CONTENT:
+      //   this._getContentData(this.$elArrSmartCard[index]);
+      //   break;
       case Tw.HOME_SMART_CARD_E.MICRO_PAY:
-        this._getMicroPayData(this.$elArrSmartCard[index]);
+        this._getMicroContentsData(this.$elArrSmartCard[index]);
+        // this._getMicroPayData(this.$elArrSmartCard[index]);
         break;
       case Tw.HOME_SMART_CARD_E.GIFT:
         this._getGiftData(this.$elArrSmartCard[index], index);
