@@ -634,6 +634,7 @@ Tw.MyTDataSubMain.prototype = {
   // 다른 회선 팝업에서 변경하기 눌렀을 경우
   _onChangeLineConfirmed: function () {
     // 회선변경 API 호출
+    this._popupService.close();
     var lineService = new Tw.LineComponent();
     lineService.changeLine(this.changeLineMgmtNum, null, $.proxy(this._onChangeSessionSuccess, this));
   },
