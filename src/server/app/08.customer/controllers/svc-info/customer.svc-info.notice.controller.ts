@@ -13,6 +13,7 @@ import DateHelper from '../../../../utils/date.helper';
 import FormatHelper from '../../../../utils/format.helper';
 import sanitizeHtml from 'sanitize-html';
 import BrowserHelper from '../../../../utils/browser.helper';
+import CommonHelper from '../../../../utils/common.helper';
 
 class CustomerSvcInfoNotice extends TwViewController {
   constructor() {
@@ -110,35 +111,6 @@ class CustomerSvcInfoNotice extends TwViewController {
     return count < 0 ? 0 : count;
   }
 
-  /**
-   * @param uri
-   * @param itemLengthPerPage
-   * @param pagesetLength
-   * @param curPage
-   * @param total
-   * @private
-   */
-  private _getPaging(uri: string, itemLengthPerPage: number, pagesetLength: number, curPage: number, total: number): any {
-    const startNum = (Math.floor((curPage - 1) / pagesetLength) * pagesetLength) + 1;
-    const totalPage = Math.ceil((total / itemLengthPerPage));
-    const totalPageset = Math.ceil(totalPage / pagesetLength);
-    const currentPageset = Math.floor((curPage - 1) / pagesetLength) + 1;
-    const endNum = currentPageset < totalPageset ? startNum + pagesetLength - 1 : totalPage;
-    const prevPageIdx = currentPageset > 0 ? ((currentPageset - 1) * pagesetLength) : null;
-    const nextPageIdx = totalPageset > currentPageset ? (currentPageset * pagesetLength) + 1 : null;
-    const needPaging = total > itemLengthPerPage;
-    return {
-      needPaging,
-      uri,
-      startNum,
-      endNum,
-      curPage,
-      total,
-      prevPageIdx,
-      nextPageIdx
-    };
-  }
-
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const page = req.query.page || 1,
       ntcId = req.query.ntcId || null,
@@ -167,7 +139,7 @@ class CustomerSvcInfoNotice extends TwViewController {
           category: this._category,
           categoryLabel: CUSTOMER_NOTICE_CATEGORY[this._category.toUpperCase()],
           data: this._convertData(data.result),
-          paging: this._getPaging(this._baseUrl, 20, 5, page, data.result.totalElements),
+          paging: CommonHelper.getPaging(this._baseUrl, 20, 5, page, data.result.totalElements),
           tworldChannel: tworldChannel
         }));
       });

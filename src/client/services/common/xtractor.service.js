@@ -19,7 +19,7 @@ Tw.XtractorService.prototype = {
   },
 
   _bindBC: function() {
-    this.$container.on('mousedown', '[data-xt_action="BC"]', $.proxy(this._sendBC, this));
+    this.$container.on('mousedown', '[data-xt_action="BC"],[data-xt_action2="BC"]', $.proxy(this._sendBC, this));
   },
 
   _sendBV: function(elem) {

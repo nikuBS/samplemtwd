@@ -8,8 +8,8 @@ Tw.Init = function () {
 
   this._initService();
   this._initComponent();
+  this._initXtvId();
   this._getEnvironment();
-  this._setXtvid();
   this._sendXtractorLoginDummy();
   this._setGesture();
   // this._setNodeCookie();
@@ -59,14 +59,26 @@ Tw.Init.prototype = {
     }
   },
 
-  _setXtvid: function () {
-    var cookie = Tw.CommonHelper.getCookie('XTVID'),
-      isLog = Tw.CommonHelper.getCookie('XTVID_LOG');
-
-    if ( Tw.BrowserHelper.isApp() && !Tw.FormatHelper.isEmpty(cookie) && Tw.FormatHelper.isEmpty(isLog) ) {
-      this._nativeService.send(Tw.NTV_CMD.SET_XTVID, { xtvId: cookie });
-      Tw.CommonHelper.setCookie('XTVID_LOG', 'Y');
+  _initXtvId: function () {
+    if ( !Tw.BrowserHelper.isApp() ) {
+      return;
     }
+
+    this._nativeService.send(Tw.NTV_CMD.LOAD, {
+      key: Tw.NTV_STORAGE.XTVID
+    }, $.proxy(function(res) {
+      if ( res.resultCode === Tw.NTV_CODE.CODE_00 ) {
+        return Tw.CommonHelper.setCookie('XTVID', res.params.value);
+      }
+
+      var cookie = Tw.CommonHelper.getCookie('XTVID');
+      if ( res.resultCode !== Tw.NTV_CODE.CODE_00 && !Tw.FormatHelper.isEmpty(cookie) ) {
+        this._nativeService.send(Tw.NTV_CMD.SAVE, {
+          key: Tw.NTV_STORAGE.XTVID,
+          value: cookie
+        });
+      }
+    }, this));
   },
 
   _setNodeCookie: function () {

@@ -36,7 +36,6 @@ Tw.NTV_CMD = {
   SHARE: 'share',
   IS_INSTALLED: 'isAppInstall',
   FREE_SMS: 'freeSMS',
-  SET_XTVID: 'setXtvId',
   SET_XTSVCINFO: 'setXtSvcInfo',
   OPEN_APP: 'openApp',
   SAVE: 'save',
@@ -88,7 +87,8 @@ Tw.NTV_STORAGE = {
   COACH_LINE: 'coachLine',
   COACH_DATA: 'coachData',
   COACH_MASKING: 'coachMasking',
-  COACH_QUICK: 'coachQuick'
+  COACH_QUICK: 'coachQuick',
+  XTVID: 'xtvId'
 };
 
 Tw.NTV_PAGE_KEY = {
