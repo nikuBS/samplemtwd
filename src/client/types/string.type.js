@@ -1642,9 +1642,10 @@ Tw.SELECTED_DATE_STRING = {
   TOMORROW: '내일'
 };
 
-Tw.ROAMING_COMBINE_LINE_STRING = {
+Tw.ROAMING_JOIN_STRING = {
   COMBINE_LINE: '자회선 설정하기',
-  DUPLICATE_LINE : 'T로밍도착알리미 멤버에 이미 존재하는 서비스번호입니다.'
+  MY_ROAMING_STATE: '나의 로밍 이용 현황 확인하기',
+  DUPLICATE_LINE: 'T로밍도착알리미 멤버에 이미 존재하는 서비스번호입니다.'
 };
 
 Tw.SETTING_LOCATION = {
@@ -1711,7 +1712,8 @@ Tw.TOOLTIP_TITLE = {
   ROAMING_USE_GUIDE: '로밍 사용안내',
   SERVICE_START_GUIDE: '서비스개시일/시간안내',
   ROAMING_SERVICE_CAUTION: '서비스 유의사항',
-  ROAMING_SERVICE_TERM: '로밍 서비스 기간 설정'
+  ROAMING_SERVICE_TERM: '로밍 서비스 기간 설정',
+  ROAMING_COMMON_GUIDE: '로밍 요금상품 공통 안내'
 };
 
 Tw.MEMBERSHIP = {

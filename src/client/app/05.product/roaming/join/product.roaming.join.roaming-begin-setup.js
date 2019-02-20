@@ -132,7 +132,7 @@ Tw.ProductRoamingJoinRoamingBeginSetup.prototype = {
       isBasFeeInfo : data.prodFee,
       typeNm : data.prodType,
       settingType : data.processNm,
-      btnNmList : [Tw.PRODUCT_SUCCESS_BTN_TEXT.MYTJOIN]
+      btnNmList : [Tw.ROAMING_JOIN_STRING.MY_ROAMING_STATE]
     };
     apiService.request(Tw.API_CMD.BFF_10_0084, data.userJoinInfo, {},[data.prodId]).
     done($.proxy(function (res) {
