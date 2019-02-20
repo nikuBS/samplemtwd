@@ -53,7 +53,7 @@ Tw.MyTDataFamilyHistory.prototype = {
 
   _handleDoneRetrieve: function($before, $parent, resp) {
     if (resp.code !== Tw.API_CODE.CODE_00 || !resp.result) {
-      this._setRetrieveStatus($before);
+      this._setRetrieveStatus($before, resp);
       return;
     }
 
@@ -66,10 +66,14 @@ Tw.MyTDataFamilyHistory.prototype = {
     }
   },
 
-  _setRetrieveStatus: function($before) {
+  _setRetrieveStatus: function($before, resp) {
     $before.removeClass('none');
     $before.siblings('.fe-ing').addClass('none');
-    this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A218, Tw.POPUP_TITLE.NOTIFY);
+    if (resp && resp.code) {
+      Tw.Error(resp.code, resp.msg).pop();
+    } else {
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A218, Tw.POPUP_TITLE.NOTIFY);
+    }
   },
 
   _handleSuccessRetrieve: function(share, $before, $parent) {
