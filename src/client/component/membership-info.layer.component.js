@@ -139,6 +139,7 @@ Tw.MembershipInfoLayerPopup.prototype = {
         Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A68.MSG,
         Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A68.TITLE,
         $.proxy(function () {
+          this._popupService.close();
           this._tidLanding.goLogin();
         }, this),
         $.proxy(function () {
