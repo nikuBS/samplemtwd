@@ -1146,7 +1146,7 @@ Tw.MYT_JOIN_WIRE_SET_PAUSE = {
   DAY: '일',
   SET: {
     TITLE: '요청하신 기간 동안 <br />일시 정지 하시겠습니까 ?',
-    CONTENTS: '이용 중단 기간 <br />[sDate] ~ [eDate]',
+    CONTENTS: '이용 정지 기간 <br />[sDate] ~ [eDate]',
     DATE_SELECT_ERROR: '선택할 수 있는 날짜가 아닙니다.<br /> 다른 날짜를 선택해주세요.',
     BTNAME: '정지하기',
     COMPLETE_TEXT: '일시 정지'
