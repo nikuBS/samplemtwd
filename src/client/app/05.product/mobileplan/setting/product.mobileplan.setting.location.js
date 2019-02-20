@@ -170,7 +170,7 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    * @private
    */
   _checkAddNumberBtn: function(){
-    var disabled = !($('#num-input').val().replace(/-/g,'').length >= 8);
+    var disabled = !($('#num-input').val().replace(/-/g,'').length >= 9);
     $('#btnNumAdd').prop('disabled', disabled);
   },
 
