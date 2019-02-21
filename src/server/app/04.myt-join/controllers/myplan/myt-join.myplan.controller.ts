@@ -57,9 +57,9 @@ class MyTJoinMyplan extends TwViewController {
   private _convertOptionAndDiscountProgramList(optionAndDiscountProgramList): any {
     return optionAndDiscountProgramList.map((item) => {
       return Object.assign(item, {
-        scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.M.DD.'),
+        scrbDt: DateHelper.getShortDateWithFormat(item.scrbDt, 'YYYY.M.D.'),
         btnList: this._convertBtnList(item.btnList, item.prodSetYn),
-        dcStaDt: FormatHelper.isEmpty(item.dcStaDt) ? null : DateHelper.getShortDateWithFormat(item.dcStaDt, 'YYYY.M.DD.'),
+        dcStaDt: FormatHelper.isEmpty(item.dcStaDt) ? null : DateHelper.getShortDateWithFormat(item.dcStaDt, 'YYYY.M.D.'),
         dcEndDt: FormatHelper.isEmpty(item.dcEndDt) ? null : this._getDcEndDt(item.dcEndDt)
       });
     });
@@ -74,7 +74,7 @@ class MyTJoinMyplan extends TwViewController {
       return MYT_FEEPLAN_BENEFIT.ENDLESS;
     }
 
-    return DateHelper.getShortDateWithFormat(dcEndDt, 'YYYY.M.DD.');
+    return DateHelper.getShortDateWithFormat(dcEndDt, 'YYYY.M.D.');
   }
 
   /**
@@ -95,7 +95,7 @@ class MyTJoinMyplan extends TwViewController {
     return Object.assign(wirePlan, {
       basFeeAmt: isNumberBasFeeAmt && parseInt(wirePlan.basFeeAmt, 10) > 0 ? FormatHelper.addComma(wirePlan.basFeeAmt.toString()) : 0,
       isDisplayFeeAmt: (wirePlan.coClCd === 'T' && wirePlan.basFeeAmt > 0),
-      svcScrbDt: DateHelper.getShortDateWithFormat(wirePlan.svcScrbDt, 'YYYY.M.DD.'),
+      svcScrbDt: DateHelper.getShortDateWithFormat(wirePlan.svcScrbDt, 'YYYY.M.D.'),
       dcBenefits: this._convertWireDcBenefits(wirePlan.dcBenefits)
     });
   }
@@ -108,8 +108,8 @@ class MyTJoinMyplan extends TwViewController {
     return dcBenefits.map((item) => {
       return Object.assign(item, {
         penText: (item.penYn === 'Y') ? MYT_FEEPLAN_BENEFIT.PEN_Y : MYT_FEEPLAN_BENEFIT.PEN_N,
-        dcStaDt: DateHelper.getShortDateWithFormat(item.dcStaDt, 'YYYY.M.DD.'),
-        dcEndDt: (item.dcEndDt !== '99991231') ? DateHelper.getShortDateWithFormat(item.dcEndDt, 'YYYY.M.DD.')
+        dcStaDt: DateHelper.getShortDateWithFormat(item.dcStaDt, 'YYYY.M.D.'),
+        dcEndDt: (item.dcEndDt !== '99991231') ? DateHelper.getShortDateWithFormat(item.dcEndDt, 'YYYY.M.D.')
             : MYT_FEEPLAN_BENEFIT.ENDLESS,
         dcVal: item.dcCttClCd === '01' ? FormatHelper.addComma(item.dcVal.toString()) : item.dcVal
       });
@@ -138,7 +138,7 @@ class MyTJoinMyplan extends TwViewController {
 
     return Object.assign(wirelessPlan, {
       feePlanProd: FormatHelper.isEmpty(wirelessPlan.feePlanProd) ? null : Object.assign(wirelessPlan.feePlanProd, {
-        scrbDt: DateHelper.getShortDateWithFormat(wirelessPlan.feePlanProd.scrbDt, 'YYYY.M.DD.'),
+        scrbDt: DateHelper.getShortDateWithFormat(wirelessPlan.feePlanProd.scrbDt, 'YYYY.M.D.'),
         basFeeInfo: spec.basFeeInfo,
         basOfrDataQtyCtt: spec.basOfrDataQtyCtt,
         basOfrVcallTmsCtt: spec.basOfrVcallTmsCtt,

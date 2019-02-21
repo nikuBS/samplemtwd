@@ -61,7 +61,7 @@ class ProductMobileplanLookupTplan extends TwViewController {
             return true;
           }
 
-          const benfStaDtKey = DateHelper.getShortDateWithFormat(item.benfStaDt, 'YYYY.M.DD.'),
+          const benfStaDtKey = DateHelper.getShortDateWithFormat(item.benfStaDt, 'YYYY.M.D.'),
             yearKey = DateHelper.getShortDateWithFormat(item.benfStaDt, 'YYYY');
 
           if (FormatHelper.isEmpty(resultList[yearKey])) {
@@ -79,8 +79,8 @@ class ProductMobileplanLookupTplan extends TwViewController {
           resultList[yearKey][benfStaDtKey].list.push(Object.assign(item, {
             prodNm: printProdId === 'NA00006116' ? item.watchDcNm : item.primProdNm,
             prodLabel: PRODUCT_INFINITY_BENEFIT_PROD_NM[printProdId],
-            benfStaDt: FormatHelper.isEmpty(item.benfStaDt) ? '' : DateHelper.getShortDateWithFormat(item.benfStaDt, 'YYYY.M.DD.'),
-            benfEndDt: FormatHelper.isEmpty(item.benfEndDt) ? '' : DateHelper.getShortDateWithFormat(item.benfEndDt, 'YYYY.M.DD.')
+            benfStaDt: FormatHelper.isEmpty(item.benfStaDt) ? '' : DateHelper.getShortDateWithFormat(item.benfStaDt, 'YYYY.M.D.'),
+            benfEndDt: FormatHelper.isEmpty(item.benfEndDt) ? '' : DateHelper.getShortDateWithFormat(item.benfEndDt, 'YYYY.M.D.')
           }));
         });
         break;
@@ -106,7 +106,7 @@ class ProductMobileplanLookupTplan extends TwViewController {
         return true;
       }
 
-      const issueDtKey = DateHelper.getShortDateWithFormat(item.issueDt, 'YYYY.M.DD.'),
+      const issueDtKey = DateHelper.getShortDateWithFormat(item.issueDt, 'YYYY.M.D.'),
         yearKey = DateHelper.getShortDateWithFormat(item.issueDt, 'YYYY');
 
       if (FormatHelper.isEmpty(resultList[yearKey])) {
@@ -122,9 +122,9 @@ class ProductMobileplanLookupTplan extends TwViewController {
 
       listTotal++;
       resultList[yearKey][issueDtKey].list.push(Object.assign(item, {
-        issueDt: FormatHelper.isEmpty(item.issueDt) ? '' : DateHelper.getShortDateWithFormat(item.issueDt, 'YYYY.M.DD.'),
-        hpnDt: FormatHelper.isEmpty(item.hpnDt) ? '' : DateHelper.getShortDateWithFormat(item.hpnDt, 'YYYY.M.DD.'),
-        effDt: FormatHelper.isEmpty(item.effDt) ? '' : DateHelper.getShortDateWithFormat(item.effDt, 'YYYY.M.DD.')
+        issueDt: FormatHelper.isEmpty(item.issueDt) ? '' : DateHelper.getShortDateWithFormat(item.issueDt, 'YYYY.M.D.'),
+        hpnDt: FormatHelper.isEmpty(item.hpnDt) ? '' : DateHelper.getShortDateWithFormat(item.hpnDt, 'YYYY.M.D.'),
+        effDt: FormatHelper.isEmpty(item.effDt) ? '' : DateHelper.getShortDateWithFormat(item.effDt, 'YYYY.M.D.')
       }));
     });
 

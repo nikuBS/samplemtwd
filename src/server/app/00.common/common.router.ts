@@ -16,6 +16,7 @@ import CommonMemberLine from './controllers/member/common.member.line.controller
 import CommonMemberLineEdit from './controllers/member/common.member.line.edit.controller';
 import CommonMemberLineBizRegister from './controllers/member/common.member.line.biz-register.controller';
 import CommonMemberLineEmpty from './controllers/member/common.member.line.empty.controller';
+import CommonMemberLineRegister from './controllers/member/common.member.line.register.controller';
 import CommonMemberLogoutComplete from './controllers/member/common.member.logout.complete.controller';
 import CommonMemberLogoutExpire from './controllers/member/common.member.logout.expire.controller';
 import CommonMemberLogoutRoute from './controllers/member/common.member.logout.route.controller';
@@ -93,6 +94,7 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push({ url: '/member/line/edit', controller: CommonMemberLineEdit });
     this.controllers.push({ url: '/member/line/biz-register', controller: CommonMemberLineBizRegister });
     this.controllers.push({ url: '/member/line/empty', controller: CommonMemberLineEmpty });
+    this.controllers.push({ url: '/member/line/register', controller: CommonMemberLineRegister });
     // member
     this.controllers.push({ url: '/member/manage', controller: CommonMemberManage });
     this.controllers.push({ url: '/member/tid-pwd', controller: CommonMemberTidPwd });

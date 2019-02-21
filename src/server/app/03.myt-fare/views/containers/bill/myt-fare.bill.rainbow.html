@@ -76,7 +76,8 @@
                                                             <label class="tit">요금정보 선택</label>
                                                             <span class="inputbox">
 																<span class="input">
-																	<button id="" class="bt-dropdown big fe-select-fare" title="요금 정보 선택" aria-haspopup="true">
+																	<button id="" class="bt-dropdown big fe-select-fare fe-required-select"
+                                                                            title="요금 정보 선택" aria-haspopup="true">
                                                                         선택<span class="ico"></span>
                                                                     </button>
 																</span>
@@ -87,7 +88,8 @@
                                                             <label class="tit" for="formInput02">납부할 포인트</label>
                                                             <span class="inputbox">
 																<span class="input">
-																	<input id="formInput02" class="fe-point required-input-field" inputmode="numeric" min="0" pattern="[0-9]*"
+																	<input id="formInput02" class="fe-point required-input-field fe-only-number"
+                                                                           inputmode="numeric" min="0" pattern="[0-9]*" data-valid-label="point"
                                                                            type="number" title="납부할 포인트 최소 1포인트 이상으로 입력해 주세요" placeholder="최소 1포인트 이상" />
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
 																</span>
@@ -106,7 +108,7 @@
                                                             <span class="inputbox">
 																<span class="input">
 																	<button id="<%= autoInfo.autoFareCode %>" data-origin-id="<%= autoInfo.autoFareCode %>"
-                                                                            class="bt-dropdown big fe-select-fare"
+                                                                            class="bt-dropdown big fe-select-fare fe-required-select"
                                                                             title="요금 정보 선택" aria-haspopup="true">
                                                                         <%= autoInfo.autoFareText %><span class="ico"></span>
                                                                     </button>
@@ -161,8 +163,8 @@
                     <div class="bt-fixed-area">
                         <ul class="bt-slice full">
                             <li class="bt-red1">
-                                <button class="fe-tab1-pay" disabled>납부 예약하기</button>
-                                <button class="fe-tab2-pay" style="display:none;" disabled>
+                                <button class="fe-tab1-pay fe-pay" disabled>납부 예약하기</button>
+                                <button class="fe-tab2-pay fe-pay" style="display:none;" disabled>
                                     <% if (autoInfo.isAuto) { %>자동납부 변경<% } else { %>자동납부 신청<% } %>
                                 </button>
                             </li>
@@ -173,7 +175,7 @@
             </div>
             <!--// #contents -->
             <!-- .popup-closeBtn -->
-            <button class="prev-step fe-common-back">취소</button>
+            <button class="prev-step fe-close">취소</button>
             <!--// .popup-closeBtn -->
         </div>
         <footer id="fe-all-menu">

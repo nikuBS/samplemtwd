@@ -8,7 +8,7 @@
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../common/controllers/tw.view.controller';
 import { Observable } from 'rxjs/Observable';
-import { API_CMD, API_CODE, API_T_FAMILY_ERROR } from '../../types/api-command.type';
+import { API_CMD, API_CODE } from '../../types/api-command.type';
 import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
 import { CURRENCY_UNIT, ETC_CENTER, MYT_DATA_CHARGE_TYPE_NAMES, MYT_DATA_CHARGE_TYPES, MYT_DATA_REFILL_TYPES } from '../../types/string.type';
@@ -45,6 +45,8 @@ class MytDataSubmainController extends TwViewController {
       present: false,
       isPrepayment: false,
       isDataInfo: false,
+      ppsAlarm: false,
+      ppsInfo: false,
       // 다른 회선 항목
       otherLines: this.convertOtherLines(Object.assign({}, svcInfo), Object.assign({}, allSvc)),
       isApp: BrowserHelper.isApp(req)
@@ -261,6 +263,30 @@ class MytDataSubmainController extends TwViewController {
       //   }
       // }
 
+      // 음성충전알람서비스 신청 내역 - 13차
+      if ( this.isPPS ) {
+        Observable.combineLatest(
+          this._getPPSAutoAlarm(),
+          this._getPPSAutoInfo()
+        ).subscribe(([alarm, info]) => {
+          if ( alarm.code === API_CODE.CODE_00 ) {
+            // 음성 자동 충전 되어 있지 않은 경우 버튼 노출
+            if ( alarm.result.typeCd === 0 ) {
+              data.ppsAlarm = true;
+            }
+          }
+          if (info.code === API_CODE.CODE_00) {
+            // 자동알람 신청이 되어 있지 않은 경우 버튼 노출
+            if (FormatHelper.isEmpty(info.result.amtCd)) {
+              data.ppsInfo = true;
+            }
+          }
+          res.render('myt-data.submain.html', { data });
+        });
+      } else {
+        res.render('myt-data.submain.html', { data });
+      }
+
       // FIXME: 성능이슈로 해당 부분 호출 하지 않고 처리하도록 수정
       /*if ( data.family && data.family.impossible ) {
         res.render('myt-data.submain.html', { data });
@@ -286,7 +312,6 @@ class MytDataSubmainController extends TwViewController {
           res.render('myt-data.submain.html', { data });
         }
       }*/
-      res.render('myt-data.submain.html', { data });
     });
   }
 
@@ -623,6 +648,16 @@ class MytDataSubmainController extends TwViewController {
         return null;
       }
     });
+  }
+
+  // PPS 자동알람설정내역
+  _getPPSAutoAlarm() {
+    return this.apiService.request(API_CMD.BFF_06_0075, {});
+  }
+
+  // PPS 음성자동충전내역
+  _getPPSAutoInfo() {
+    return this.apiService.request(API_CMD.BFF_06_0060, {});
   }
 }
 

@@ -95,6 +95,7 @@ Tw.CustomerSvcInfoNotice.prototype = {
   },
 
   _openCategorySelectPopup: function() {
+    this._isCategoryMove = false;
     this._popupService.open({
       hbs:'actionsheet01',
       layer:true,
@@ -117,7 +118,7 @@ Tw.CustomerSvcInfoNotice.prototype = {
   },
 
   _goCategory: function() {
-    if (this._category === this._category) {
+    if (!this._isCategoryMove) {
       return;
     }
 
@@ -129,6 +130,7 @@ Tw.CustomerSvcInfoNotice.prototype = {
   },
 
   _applyCategory: function(e) {
+    this._isCategoryMove = true;
     this._category = $(e.currentTarget).data('category');
     this._popupService.close();
   },
@@ -184,10 +186,10 @@ Tw.CustomerSvcInfoNotice.prototype = {
 
   _setDate: function(item) {
     if (this._category === 'tworld') {
-      return Tw.DateHelper.getShortDateWithFormat(item.auditDtm, 'YYYY.M.DD.');
+      return Tw.DateHelper.getShortDateWithFormat(item.auditDtm, 'YYYY.M.D.');
     }
 
-    return Tw.DateHelper.getShortDateWithFormat(item.rgstDt, 'YYYY.M.DD.');
+    return Tw.DateHelper.getShortDateWithFormat(item.rgstDt, 'YYYY.M.D.');
   },
 
   _setItemType: function(item) {

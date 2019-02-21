@@ -55,10 +55,14 @@ class LoginService {
     this.response.cookie(key, value);
   }
 
+  public getCookie(key: string) {
+    return this.request.cookies[key];
+  }
+
 
   public getSvcInfo(req?): any {
     const request = req || this.request;
-    this.logger.debug(this, '[getSvcInfo]', request.session);
+    // this.logger.debug(this, '[getSvcInfo]', request.session);
     if ( !FormatHelper.isEmpty(request.session) && !FormatHelper.isEmpty(request.session.svcInfo) ) {
       this.logger.debug(this, '[getSvcInfo]', request.session.svcInfo);
       return JSON.parse(JSON.stringify(request.session.svcInfo));
@@ -222,7 +226,7 @@ class LoginService {
         }
         this.request.session.masking.push(svcMgmtNum);
         this.request.session.save(() => {
-          this.logger.debug(this, '[setServerSession]', this.request.session);
+          this.logger.debug(this, '[setMaskingCert]', this.request.session);
           observer.next(this.request.session.masking);
           observer.complete();
         });
@@ -235,6 +239,29 @@ class LoginService {
       return this.request.session.masking.indexOf(svcMgmtNum) !== -1;
     }
     return false;
+  }
+
+  public setNoticeType(noticeType: string): Observable<any> {
+    return Observable.create((observer) => {
+      if ( !FormatHelper.isEmpty(this.request) ) {
+        if ( FormatHelper.isEmpty(this.request.masking) ) {
+          this.request.session.noticeType = '';
+        }
+        this.request.session.noticeType = noticeType;
+        this.request.session.save(() => {
+          this.logger.debug(this, '[setNoticeType]', this.request.session, this.request.session.noticeType);
+          observer.next(this.request.session.noticeType);
+          observer.complete();
+        });
+      }
+    });
+  }
+
+  public getNoticeType(): string {
+    if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.noticeType) ) {
+      return this.request.session.noticeType;
+    }
+    return '';
 
   }
 

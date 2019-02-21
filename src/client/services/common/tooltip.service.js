@@ -34,6 +34,10 @@ Tw.TooltipService.prototype = {
   separateInit: function ($target) {
     this._getContents($target);
   },
+  separateMultiInit: function (rootEl) {
+    this.$container = rootEl;
+    this._getContents();
+  },
   _getTip: function () {
     if (this.$menuId) {
       this._apiService.request(Tw.NODE_CMD.GET_TOOLTIP, {menuId: this.$menuId})
@@ -97,10 +101,7 @@ Tw.TooltipService.prototype = {
       'title_type': 'tit-tooltip',
       'cont_align': 'tl',
       'contents': $result.ttipCtt,
-      'bt_b': [{
-        style_class: 'tw-popup-closeBtn bt-red1 pos-right',
-        txt: Tw.BUTTON_LABEL.CONFIRM
-      }]
+      'btn-close':'btn-tooltip-close tw-popup-closeBtn'
     },
       $.proxy(this._onOpen, this),
       $.proxy(this._onClose, this));

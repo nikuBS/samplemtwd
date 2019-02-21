@@ -13,7 +13,7 @@ Tw.MyTJoinWireModifyAddress = function (rootEl, resData) {
 
   this._history = new Tw.HistoryService(this.$container);
   if(this.resData.resDataInfo.coClCd !== 'B'){
-    this._backAlert = new Tw.BackAlert(this.$container, true);
+    this._backAlert = new Tw.BackAlert(this.$container);
   }
 
   this._init();

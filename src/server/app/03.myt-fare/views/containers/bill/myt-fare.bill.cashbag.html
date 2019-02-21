@@ -92,6 +92,7 @@
 																<span class="input">
 																	<input id="formInput01" class="fe-point required-input-field fe-only-number"
                                                                            type="number" inputmode="numeric" min="0" pattern="[0-9]*" maxlength="8"
+                                                                           data-valid-label="point"
                                                                            title="납부할 포인트 최소 1,000포인트 이상 입력해주세요" placeholder="최소 1,000포인트 이상" />
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
 																</span>
@@ -106,7 +107,8 @@
                                                                     <% if (cashbag.svcYN === 'Y') { %>
                                                                     <input id="formInput02" class="fe-point-card" type="text" value="<%= cashbag.ocbCcno %>" readonly />
                                                                     <% } else { %>
-																	<input id="formInput02" class="fe-point-card required-input-field fe-only-number" maxlength="16"
+																	<input id="formInput02" class="fe-point-card required-input-field fe-only-number"
+                                                                           minlength="16" maxlength="16" data-valid-label="card"
                                                                            inputmode="numeric" min="0" pattern="[0-9]*" type="number"
                                                                            title="OK캐쉬백 카드번호 숫자만 입력해 주세요" placeholder="숫자만 입력" />
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
@@ -120,7 +122,7 @@
                                                             <span class="inputbox">
 																<span class="input">
 																	<input id="formInput03" class="fe-point-pw required-input-field"
-                                                                           type="password" maxlength="16"
+                                                                           type="password" minlength="6" maxlength="16" data-valid-label="password"
                                                                            title="카드 비밀번호를 입력해 주세요" placeholder="비밀번호 입력" />
                                                                     <button class="cancel"><span class="blind">삭제</span></button>
 																</span>
@@ -138,7 +140,8 @@
                                                             <label class="tit" for="formInput01">납부할 포인트</label>
                                                             <span class="inputbox">
 																<span class="input">
-																	<button id="<%= autoInfo.amtId %>" data-origin-id="<%= autoInfo.amtId %>" class="bt-dropdown big fe-select-point"
+																	<button id="<%= autoInfo.amtId %>" data-origin-id="<%= autoInfo.amtId %>"
+                                                                            class="bt-dropdown big fe-select-point fe-required-select"
                                                                             title="납부할 포인트 선택" aria-haspopup="true">
                                                                         <%= autoInfo.amtText %><span class="ico"></span>
                                                                     </button>
@@ -160,7 +163,7 @@
                                                                         <input class="fe-point-card" type="text" value="<%= cashbag.ocbCcno %>" readonly />
                                                                         <% } else { %>
                                                                         <input id="formInput02" class="fe-point-card required-input-field fe-only-number"
-                                                                               inputmode="numeric" min="0" pattern="[0-9]*" type="number"
+                                                                               inputmode="numeric" min="0" pattern="[0-9]*" type="number" minlength="16" data-valid-label="card"
                                                                                maxlength="16" title="OK캐쉬백 카드번호 숫자만 입력해 주세요" placeholder="숫자만 입력" />
                                                                         <% } %>
                                                                     <% } %>
@@ -237,8 +240,8 @@
                     <div class="bt-fixed-area">
                         <ul class="bt-slice full">
                             <li class="bt-red1">
-                                <button class="fe-tab1-pay" disabled>납부 예약하기</button>
-                                <button class="fe-tab2-pay" style="display:none;" disabled>
+                                <button class="fe-tab1-pay fe-pay" disabled>납부 예약하기</button>
+                                <button class="fe-tab2-pay fe-pay" style="display:none;" disabled>
                                     <% if (autoInfo.isAuto) { %>자동납부 변경<% } else { %>자동납부 신청<% } %>
                                 </button>
                             </li>
@@ -249,7 +252,7 @@
             </div>
             <!-- // .container-wrap -->
             <!-- .popup-closeBtn -->
-            <button class="prev-step fe-common-back">취소</button>
+            <button class="prev-step fe-close">취소</button>
             <!--// .popup-closeBtn -->
         </div>
         <footer id="fe-all-menu">

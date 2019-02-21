@@ -135,7 +135,7 @@ Tw.LineComponent.prototype = {
         add: Tw.LINE_NAME[category] === 's' ? line.svcAttrCd !== 'S3' ? line.addr :
           Tw.FormatHelper.conTelFormatWithDash(line.svcNum) : Tw.FormatHelper.conTelFormatWithDash(line.svcNum),
         svcMgmtNum: line.svcMgmtNum,
-        icon: 'ico7'
+        icon: Tw.LINE_NAME[category] === 'm' ? 'ico7' : line.svcAttrCd === 'S1' ? 'ico10' : line.svcAttrCd === 'S2' ? 'ico11' : 'ico12'
       });
     }, this));
     return result;

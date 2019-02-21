@@ -70,7 +70,7 @@ Tw.MyTJoinSubMain.prototype = {
       if ( this.data.otherLines.length > 0 ) {
         this.$otherLines = this.$container.find('[data-id=other-lines]');
         if ( this.data.otherLines.length > 20 ) {
-          this.$otherLinesMoreBtn = this.$otherLines.find('.bt-more button');
+          this.$otherLinesMoreBtn = this.$otherLines.find('.btn-more button');
           this.$moreTempleate = Handlebars.compile(Tw.MYT_TPL.JOIN_SUBMAIN.MORE_LINE_TEMP);
         }
       }
@@ -347,15 +347,22 @@ Tw.MyTJoinSubMain.prototype = {
 
   // 다른 회선 더보기
   _onOtherLinesMore: function () {
-    var totalCount = this.data.otherLines.length - this.$otherLines.length;
-    if ( totalCount > 0 ) {
-      this.data.otherLines.splice(0, totalCount);
-      var length = this.data.otherLines.length > 20 ? 20 : this.data.otherLines.length;
-      for ( var i = 0; i < length; i++ ) {
-        var result = this.$moreTempleate(this.data.otherLines[i]);
-        this.$container.parents('ul.my-line-info').append(result);
-      }
+    var index = this.$otherLines.find('li').length;
+    var totalCount = this.data.otherLines.length - index;
+    if (totalCount === 0) {
+      this.$otherLinesMoreBtn.hide();
+      return;
     }
+    var length = totalCount > 20 ? 20 : totalCount;
+    for ( var i = 0; i < length; i++ ) {
+      var item = this.data.otherLines[index + i];
+      var data = _.extend({
+        number: (['S1', 'S2'].indexOf(item.svcAttrCd) > -1) ? item.addr : item.svcNum
+      }, item);
+      var result = this.$moreTempleate(data);
+      this.$container.find('ul.my-line-info').append(result);
+    }
+
   },
 
   // 공인인증센터

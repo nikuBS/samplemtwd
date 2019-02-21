@@ -76,6 +76,8 @@ Tw.MyTFareBillChangeAddress.prototype = {
       this._apiService.request(Tw.API_CMD.BFF_05_0147, this._makeRequestData())
         .done($.proxy(this._changeSuccess, this))
         .fail($.proxy(this._changeFail, this));
+    } else {
+      this.$container.find('.fe-phone').focus();
     }
   },
   _makeRequestData: function () {

@@ -113,9 +113,6 @@ Tw.CommonSearch.prototype = {
       $list.addClass('none');
     }
     _.each(data,function (listData,index) {
-      if(index>=3){
-        return;
-      }
       $list.append(templateData({listData : listData , CDN : cdn}));
     });
   },

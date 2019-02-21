@@ -306,24 +306,23 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
       url: Tw.Environment.cdn + '/hbs/',
       'pop_name': 'type_tx_scroll',
       'title': titleText || '',
-      'title_type': 'sub',
+      'title_type': 'tit-tooltip',
       'cont_align': 'tl',
       'contents': $(popId).find('.popup-title').html().replace(/<br ?\/?>/gi, '\n'),
-      'bt_b': [{
-        style_class: 'tw-popup-closeBtn bt-red1 pos-right',
-        txt: Tw.BUTTON_LABEL.CONFIRM
-      }]
+      'btn-close':'btn-tooltip-close tw-popup-closeBtn'
     }, $.proxy(function($container){
       $container.find('.popup-info').show();
     }, this), null);
   },
 
   _openPagePop: function (e) {
-    var popId = $(e.currentTarget).attr('href');
+    var popId = $(e.currentTarget).data('popup') ? "#" + $(e.currentTarget).data('popup') : $(e.currentTarget).attr('href');
     e.preventDefault();
+    
     this._popupService.open({
         hbs: 'svc-info.service.popup',
-        'title': $(popId).find('.popup-title').text(),
+        'title': $(popId).find('.popup-title').html(),
+        'isDoubleTitle': $(popId).find('.popup-title').find('br').length >= 0 ? 'txt2-popup' : '',
         'contents': $(popId).find('.idpt-popup-cont').html()
       },
       $.proxy(function($container) {

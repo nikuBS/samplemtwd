@@ -183,7 +183,7 @@
                         <li>
                             <label class="tit" for="formInput01">충전금액</label>
                             <span class="inputbox">
-                                <% if ( AutoInfo.amt ) { %>
+                                <% if ( AutoInfo ) { %>
                                 <button id="formInput01" class="bt-dropdown big fe-select-amount" data-amount="<%-AutoInfo.amt%>" title="충전금액 선택" aria-haspopup="true" required><%-convertAmount(AutoInfo.amt)%>원<span class="ico"></span></button>
                                 <% } else { %>
                                 <button id="formInput01" class="bt-dropdown big fe-select-amount" title="충전금액 선택" aria-haspopup="true" required>금액 선택<span class="ico"></span></button>
@@ -258,7 +258,11 @@
                             <label class="tit" for="formInput03">자동 충전 유효기간 (익일부터 선택가능)</label>
                             <span class="inputbox">
                                 <span class="input">
+                                    <% if ( AutoInfo ) { %>
                                     <input class="fe-select-expire" value="<%-convertDashDate(AutoInfo.endDt)%>" type="date" title="자동 충전 유효기간 날짜 선택" required>
+                                    <% } else { %>
+                                    <input class="fe-select-expire" type="date" title="자동 충전 유효기간 날짜 선택" required>
+                                    <% } %>
                                 </span>
                             </span>
                             <span class="error-txt blind">날짜를 선택해 주세요.</span>
@@ -267,7 +271,11 @@
                             <label class="tit" for="formInput04">카드번호</label>
                             <span class="inputbox">
                                 <span class="input">
+                                    <% if ( AutoInfo ) { %>
                                     <input class="fe-card-number" value="<%=AutoInfo.cardNum%>" id="formInput04" type="tel" placeholder="숫자만 입력" title="카드번호 입력" maxlength="16" required>
+                                    <% } else { %>
+                                    <input class="fe-card-number" value="" id="formInput04" type="tel" placeholder="숫자만 입력" title="카드번호 입력" maxlength="16" required>
+                                    <% } %>
                                     <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
                                 </span>
                             </span>

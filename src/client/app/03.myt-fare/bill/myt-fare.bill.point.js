@@ -10,6 +10,7 @@ Tw.MyTFareBillPoint = function (rootEl) {
   this._paymentCommon = new Tw.MyTFareBillCommon(this.$container);
   this._historyService = new Tw.HistoryService(rootEl);
   this._backAlert = new Tw.BackAlert(this.$container);
+  this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-check-pay'));
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -53,6 +54,10 @@ Tw.MyTFareBillPoint.prototype = {
   _setPointInfo: function (result) {
     this.$container.find('.fe-cashbag-point').attr('id', result.availPt).text(Tw.FormatHelper.addComma(result.availPt.toString()));
     this.$container.find('.fe-t-point').attr('id', result.availTPt).text(Tw.FormatHelper.addComma(result.availTPt.toString()));
+    this._pointCardNumber = result.ocbCcno;
+
+    this.$getPointBtn.hide();
+    this.$pointBox.show();
   },
   _checkIsAbled: function () {
     if (this.$point.val() !== '' && this.$pointPw.val() !== '') {
@@ -97,18 +102,9 @@ Tw.MyTFareBillPoint.prototype = {
   },
   _onClose: function () {
     this._backAlert.onClose();
-    // var $amount = this.$container.find('.fe-amount');
-    // if (this.$isChanged || this.$pointPw.val() !== '' ||
-    //   Tw.FormatHelper.addComma($amount.attr('data-value')) !== $amount.text()) {
-    //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-    //     $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
-    //     Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-    // } else {
-    //   this._historyService.goBack();
-    // }
   },
   _checkPay: function () {
-    if (this._isValid()) {
+    if (this._validationService.isAllValid()) {
       this._popupService.open({
           'hbs': 'MF_01_01_01',
           'title': Tw.MYT_FARE_PAYMENT_NAME.OK_CASHBAG,
@@ -182,13 +178,11 @@ Tw.MyTFareBillPoint.prototype = {
     }
   },
   _pay: function () {
-    if (this.$isValid) {
-      var reqData = this._makeRequestData();
+    var reqData = this._makeRequestData();
 
-      this._apiService.request(Tw.API_CMD.BFF_07_0087, reqData)
-        .done($.proxy(this._paySuccess, this))
-        .fail($.proxy(this._payFail, this));
-    }
+    this._apiService.request(Tw.API_CMD.BFF_07_0087, reqData)
+      .done($.proxy(this._paySuccess, this))
+      .fail($.proxy(this._payFail, this));
   },
   _makeRequestData: function () {
     var reqData = {

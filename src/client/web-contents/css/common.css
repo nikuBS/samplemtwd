@@ -189,6 +189,15 @@ input[type=text], input[type=file], input[type=password], input[type=number], in
       color: #178BCE;
       white-space: nowrap;
       background: #ebf5fe; }
+      .inputbox .bt-box button.btn-sch {
+        border: 1px solid #e5e5e5;
+        color: #000;
+        background: #fff;
+        padding: 0;
+        width: 3.4375rem;
+        min-height: inherit;
+        height: 2rem;
+        border-radius: 1.875rem; }
     .inputbox .bt-box.disabled button:disabled {
       color: #fff;
       background: #d1d1d1; }
@@ -335,8 +344,7 @@ input[type=text], input[type=file], input[type=password], input[type=number], in
     .inputbox .input input[type=number][readonly],
     .inputbox .input input[type=file][readonly],
     .inputbox .input input[type=file][email] {
-      background-color: #fff;
-      border-color: #d1d1d1; }
+      background-color: #fff; }
       .inputbox .input input[type=text][readonly] .cancel,
       .inputbox .input input[type=password][readonly] .cancel,
       .inputbox .input input[type=number][readonly] .cancel,
@@ -415,10 +423,10 @@ input[type=text], input[type=file], input[type=password], input[type=number], in
     font-size: 0.75rem; }
   .inputbox.readonly.placeholder .input input {
     color: #000000;
-    background: #dedede; }
+    background: #fff; }
   .inputbox.readonly .input input {
     color: #000000;
-    background: #dedede !important; }
+    background: #fff; }
   .inputbox.validation .input {
     /*input[type=text],
             input[type=password],
@@ -888,7 +896,8 @@ select {
   color: #3c3c3c; }
 
 input[type=number][readonly], input[type=text][readonly] {
-  background: #fff; }
+  background: #fff;
+  border: 1px solid #d1d1d1; }
 
 /*textarea*/
 textarea {
@@ -1067,7 +1076,7 @@ button.bt-link-tx, a.bt-link-tx {
 
 .link-long {
   position: relative;
-  border-bottom: 2px solid #f2f2f2; }
+  border-bottom: 1px solid #f2f2f2; }
   .link-long.last {
     border-bottom: 0; }
   .link-long a, .link-long button {
@@ -1077,7 +1086,8 @@ button.bt-link-tx, a.bt-link-tx {
     line-height: 1rem;
     color: #000;
     font-weight: 400;
-    width: 90%;
+    width: 100%;
+    padding-right: 10%;
     text-align: left;
     overflow: hidden;
     text-overflow: ellipsis; }
@@ -4517,7 +4527,7 @@ a.ui-button:active,
       .popup .popup-info.scrolling .popup-contents {
         margin: 1rem 0 0;
         max-height: 264px;
-        overflow-y: scroll; }
+        overflow-y: auto; }
       .popup .popup-info.scrolling .bt-bottom {
         margin-top: 0; }
     .popup .popup-info .popup-contents {
@@ -4959,7 +4969,6 @@ a.ui-button:active,
   color: #212121;
   font-size: 0.875rem;
   text-align: center;
-  border-top: 1px solid #e2e2e2;
   overflow: hidden; }
   .bt-more button {
     padding: 0.8125rem 0;
@@ -6939,3 +6948,84 @@ a.ui-button:active,
       color: transparent; }
   .captcha-box .inputbox {
     margin-top: 0.625rem; }
+
+.list-comp-input .select-list > li {
+  position: relative;
+  display: block; }
+  .list-comp-input .select-list > li.type01:before {
+    position: absolute;
+    top: 1.5625rem;
+    left: 1rem; }
+  .list-comp-input .select-list > li.type01-big:before {
+    position: absolute;
+    top: 1.5rem;
+    left: 1rem; }
+  .list-comp-input .select-list > li.type01-big.mid-top:before {
+    top: 50%;
+    margin-top: -1rem; }
+  .list-comp-input .select-list > li:last-of-type .comp-list-layout:before {
+    display: none; }
+  .list-comp-input .select-list > li .comp-list-layout {
+    position: relative;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    width: 100%;
+    overflow-x: hidden;
+    padding: 0 5.625rem 0 3.875rem; }
+    .list-comp-input .select-list > li .comp-list-layout.type2 {
+      padding-right: 1.25rem; }
+    .list-comp-input .select-list > li .comp-list-layout:before {
+      content: "";
+      display: block;
+      position: absolute;
+      bottom: 0;
+      /*left:0;*/
+      left: 3.875rem;
+      width: 100%;
+      height: 1px;
+      /*transform:translateX(62px);*/
+      background: #f2f2f2; }
+    .list-comp-input .select-list > li .comp-list-layout .layout-text {
+      padding: 1.5625rem 0 1.25rem;
+      vertical-align: top; }
+      .list-comp-input .select-list > li .comp-list-layout .layout-text .mtext {
+        display: inline-block;
+        font-size: 1.125rem;
+        font-weight: 400; }
+      .list-comp-input .select-list > li .comp-list-layout .layout-text .ntext {
+        display: block;
+        font-size: 0.9375rem;
+        font-weight: 400; }
+      .list-comp-input .select-list > li .comp-list-layout .layout-text .stext {
+        display: block;
+        margin: 0.3125rem 0 0;
+        font-size: 0.8125rem;
+        font-weight: 400;
+        color: #666; }
+        .list-comp-input .select-list > li .comp-list-layout .layout-text .stext .info {
+          display: inline-block;
+          padding: 0 0.5rem 0 0; }
+          .list-comp-input .select-list > li .comp-list-layout .layout-text .stext .info + .info {
+            position: relative;
+            padding: 0 0 0 0.5rem; }
+            .list-comp-input .select-list > li .comp-list-layout .layout-text .stext .info + .info:before {
+              content: "";
+              position: absolute;
+              top: 50%;
+              left: 0;
+              width: 0.125rem;
+              height: 0.625rem;
+              background-color: #e1e1e1; }
+    .list-comp-input .select-list > li .comp-list-layout .tx-data {
+      display: inline-block;
+      position: absolute;
+      top: 1.25rem;
+      right: 1rem;
+      font-weight: 700;
+      font-size: 0.875rem;
+      color: #178BCE; }
+  .list-comp-input .select-list > li.all .comp-list-layout:before {
+    background: #f2f2f2; }
+
+.list-comp-input .select-list.btm-line > li:last-of-type .comp-list-layout:before {
+  display: block; }

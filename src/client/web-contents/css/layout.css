@@ -1383,8 +1383,11 @@ body.bg-gray {
   text-align: center;
   font-size: 0; }
   .paging a, .paging button {
+    position: relative;
     display: inline-block;
-    padding: 0 0.9375rem;
+    top: -6px;
+    padding: 0 0.5rem;
+    min-width: 0.9375rem;
     font-size: 0.9375rem;
     font-family: "Roboto";
     font-weight: 400;
@@ -1392,55 +1395,74 @@ body.bg-gray {
     line-height: 1.625rem; }
     .paging a.active, .paging button.active {
       font-weight: 700; }
+  .paging .first,
   .paging .prev,
-  .paging .next {
+  .paging .next,
+  .paging .last {
     overflow: hidden;
-    position: absolute;
+    position: relative;
+    top: 0;
+    left: 0;
     display: inline-block;
-    content: "";
-    width: 1.625rem;
-    height: 1.625rem;
     padding: 0;
-    border: 1px solid #d1d1d1;
+    width: 1.5rem;
+    height: 1.5rem;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
-    border-radius: 0.25rem;
-    text-indent: 100%;
+    text-indent: -9999px;
     white-space: nowrap; }
+    .paging .first:after,
     .paging .prev:after,
-    .paging .next:after {
+    .paging .next:after,
+    .paging .last:after {
       position: absolute;
-      left: 0.4375rem;
-      top: 0.3125rem;
-      width: 0.4375rem;
-      height: 0.75rem;
-      content: "";
-      background-image: url(/img/ico/ico-group2.png);
-      background-size: 3.125rem; }
-    .paging .prev:focus:not(.disabled), .paging .prev:hover:not(.disabled),
+      top: 0;
+      left: 0;
+      width: 1.5rem;
+      height: 1.5rem;
+      content: ""; }
+    .paging .first:focus:not(.disabled), .paging .first:hover:not(.disabled),
+    .paging .prev:focus:not(.disabled),
+    .paging .prev:hover:not(.disabled),
     .paging .next:focus:not(.disabled),
-    .paging .next:hover:not(.disabled) {
+    .paging .next:hover:not(.disabled),
+    .paging .last:focus:not(.disabled),
+    .paging .last:hover:not(.disabled) {
       background-color: #d1d1d1;
       border-color: #d1d1d1; }
-    .paging .prev.disabled, .paging .prev:disabled,
-    .paging .next.disabled,
-    .paging .next:disabled {
-      background-color: #e5e8ee;
-      border-color: #e5e8ee; }
+  .paging .first:after {
+    background: url(/img/svg/icon_48px_arrow_left_double.svg) no-repeat 0 0;
+    background-size: 1.5rem 1.5rem; }
+  .paging .first.disabled:after {
+    background: url(/img/svg/icon_48px_arrow_left_double_d.svg) no-repeat 0 0;
+    background-size: 1.5rem 1.5rem; }
   .paging .prev {
-    left: 0;
-    top: 0; }
+    margin-left: 0.3125rem; }
     .paging .prev:after {
-      background-position: -2.125rem -3.5rem; }
+      background: url(/img/svg/icon_48px_arrow_left_single.svg) no-repeat 0 0;
+      background-size: 1.5rem 1.5rem; }
     .paging .prev.disabled:after {
-      background-position: -2.125rem -5.0625rem; }
+      background: url(/img/svg/icon_48px_arrow_left_single_d.svg) no-repeat 0 0;
+      background-size: 1.5rem 1.5rem; }
   .paging .next {
-    right: 0;
-    top: 0; }
+    margin-right: 0.3125rem; }
     .paging .next:after {
-      background-position: -0.5625rem -3.5rem; }
+      background: url(/img/svg/icon_48px_arrow_right_single.svg) no-repeat 0 0;
+      background-size: 1.5rem 1.5rem; }
     .paging .next.disabled:after {
-      background-position: -0.5625rem -5.0625rem; }
+      background: url(/img/svg/icon_48px_arrow_right_single_d.svg) no-repeat 0 0;
+      background-size: 1.5rem 1.5rem; }
+  .paging .last:after {
+    background: url(/img/svg/icon_48px_arrow_right_double.svg) no-repeat 0 0;
+    background-size: 1.5rem 1.5rem; }
+  .paging .last.disabled:after {
+    background: url(/img/svg/icon_48px_arrow_right_double_d.svg) no-repeat 0 0;
+    background-size: 1.5rem 1.5rem; }
+
+.paging-wrap.top-line .paging .prev,
+.paging-wrap.top-line .paging .next {
+  top: 0;
+  left: 0; }
 
 /* floating bottom */
 .floating-bottom {

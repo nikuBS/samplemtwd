@@ -35,20 +35,22 @@ Tw.MyTJoinPhoneNumChgAlarm.prototype = {
   },
 
   _onclickBtnClose: function(){
-    if(this.$inputPrd.val() || this.$radioAlarmType.checkedVal()) {
+    this._historyService.goLoad('/myt-join/submain');
 
-      this._popupService.openConfirmButton(
-        Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
-        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-        $.proxy(function(){
-          this._historyService.goLoad('/myt-join/submain');
-        }, this),
-        null,
-        Tw.BUTTON_LABEL.NO,
-        Tw.BUTTON_LABEL.YES);
-    } else {
-      this._historyService.goBack();
-    }
+    //if(this.$inputPrd.val() || this.$radioAlarmType.checkedVal()) {
+    //
+    //  this._popupService.openConfirmButton(
+    //    Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+    //    Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+    //    $.proxy(function(){
+    //      this._historyService.goLoad('/myt-join/submain');
+    //    }, this),
+    //    null,
+    //    Tw.BUTTON_LABEL.NO,
+    //    Tw.BUTTON_LABEL.YES);
+    //} else {
+    //  this._historyService.goBack();
+    //}
   },
 
   /**

@@ -48,8 +48,10 @@
             <hr class="cont-sp type1" aria-hidden="true"/>
 
             <!-- .cont-box -->
+
+            <% if(isLogin && svcInfo.loginType === 'T') { %>
             <% const checkData = membershipCheckData; %>
-            <% if (isLogin && checkData.cardCreatableYn === 'N') { %>
+            <% if ( checkData.cardCreatableYn === 'N') { %>
             <div class="cont-box nogaps-top">
                 <div class="card-wrap">
                     <button class="solid-link fe-mebership-my">나의 T멤버십
@@ -91,7 +93,17 @@
                     </div>
                 </div>
             </div>
-
+            <% } %>
+            <% } else { %>
+            <div class="cont-box nogaps-top">
+                <div class="card-wrap">
+                    <button class="solid-link fe-membership-grade">T멤버십 카드/등급 안내<i class="ico"></i></button>
+                    <div class="box-card-apl">
+                        <p class="card-txt"><span class="point">T멤버십 카드를 신청</span>하시고<br />다양한 혜택을 받으세요</p>
+                        <div class="btn-wrap"><button class="btn-round1 btn-style1" id="fe-membership-join">가입하기</button></div>
+                    </div>
+                </div>
+            </div>
             <% } %>
             <!--// .cont-box -->
 

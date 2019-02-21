@@ -20,7 +20,7 @@ Tw.MembershipSubmain = function(rootEl, membershipData, svcInfo, membershipCheck
   this._cachedElement();
   this._bindEvent();
   this._getMembershipBanner();
-  this._askCurrentLocation();
+  this._checkLocationAgreement();
 };
 
 Tw.MembershipSubmain.prototype = {
@@ -46,10 +46,10 @@ Tw.MembershipSubmain.prototype = {
     this.$container.on('click', '#fe-membership-join', $.proxy( this._membershipLayerPopup.onClickJoinBtn, this._membershipLayerPopup));
     // this.$container.on('click', '#fe-membership-join', $.proxy( this._membershipLoginCheck, this));
     this.$container.on('click', '.fe-mebership-my', $.proxy(this._goMyMembership, this));
-    this.$container.on('click', '.fe-membership-location', $.proxy(this._checkLocationAgreement, this));
+    this.$container.on('click', '.fe-membership-location', $.proxy(this._selectLocationAgreement, this));
     this.$container.on('click', '.fe-membership-tday', $.proxy(this._selectTday, this));
   },
-  _checkLocationAgreement:function () {
+  _selectLocationAgreement:function () {
     if(this._svcInfo) {
       this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
           .done($.proxy(function (res) {
@@ -70,7 +70,34 @@ Tw.MembershipSubmain.prototype = {
     } else {
       this._goLogin();
     }
-
+  },
+  _checkLocationAgreement:function () {
+    if(this._svcInfo) {
+      this._apiService.request(Tw.API_CMD.BFF_03_0021, {})
+          .done($.proxy(function (res) {
+            if (res.code === Tw.API_CODE.CODE_00) {
+              Tw.Logger.info('check loc agreement : ', res);
+              if (res.result.twdLocUseAgreeYn === 'Y') {
+                this._askCurrentLocation();
+              } else {
+                this._getAreaByGeo({
+                  latitude: '37.5600420',
+                  longitude: '126.9858500'
+                });
+              }
+            } else {
+              Tw.Error(res.code, res.msg).pop();
+            }
+          }, this))
+          .fail(function (err) {
+            Tw.Error(err.code, err.msg).pop();
+          });
+    } else {
+      this._getAreaByGeo({
+        latitude: '37.5600420',
+        longitude: '126.9858500'
+      });
+    }
   },
   _selectTday: function() {
     if (Tw.BrowserHelper.isApp()) {

@@ -38,18 +38,19 @@ Tw.MyTJoinWireFreeCallCheck.prototype = {
   },
   //--------------------------------------------------------------------------[EVENT]
   _closeCheck: function(){
+    this._history.goLoad('/myt-join/submain_w');
 
-    if($('[data-target="inputPhone"]').val()) {
-
-      this._popupService.openConfirm(
-        Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
-        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-        $.proxy(function(){
-          this._history.goLoad('/myt-join/submain_w');
-        }, this));
-    } else {
-      this._history.goBack();
-    }
+    //if($('[data-target="inputPhone"]').val()) {
+    //
+    //  this._popupService.openConfirm(
+    //    Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+    //    Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+    //    $.proxy(function(){
+    //      this._history.goLoad('/myt-join/submain_w');
+    //    }, this));
+    //} else {
+    //  this._history.goBack();
+    //}
   },
 
   _lookupBtnEvt: function(event) {

@@ -189,12 +189,15 @@ class ApiService {
     return this.request(command, params)
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          this.loginService.setCookie(COOKIE_KEY.LAYER_CHECK, resp.result.noticeTypCd);
-          return this.loginService.setSvcInfo({
-            mbrNm: resp.result.mbrNm,
-            // noticeType: resp.result.noticeTypCd,
-            loginType: type
-          });
+          return Observable.combineLatest([
+            this.loginService.setSvcInfo({
+              mbrNm: resp.result.mbrNm,
+              // noticeType: resp.result.noticeTypCd,
+              loginType: type
+            }),
+            this.loginService.setNoticeType(resp.result.noticeTypCd)
+            // this.loginService.setNoticeType('01')
+          ]);
         } else {
           throw resp;
         }
@@ -251,12 +254,14 @@ class ApiService {
     return this.request(command, params)
       .switchMap((resp) => {
         if ( resp.code === API_CODE.CODE_00 ) {
-          this.loginService.setCookie(COOKIE_KEY.LAYER_CHECK, resp.result.noticeTypCd);
-          return this.loginService.setSvcInfo({
-            mbrNm: resp.result.mbrNm,
-            // noticeType: resp.result.noticeTypCd,
-            loginType: type
-          });
+          return Observable.combineLatest([
+            this.loginService.setSvcInfo({
+              mbrNm: resp.result.mbrNm,
+              // noticeType: resp.result.noticeTypCd,
+              loginType: type
+            }),
+            this.loginService.setNoticeType(resp.result.noticeTypCd)
+          ]);
         } else {
           throw resp;
         }

@@ -28,7 +28,7 @@ class TestCustomerSvcInfoNoticeTworldNohyst extends TwViewController {
       list: resultData.content.map(item => {
         return Object.assign(item, {
           title: item.ntcTitNm,
-          date: DateHelper.getShortDateWithFormat(item.rgstDt, 'YYYY.M.DD.'),
+          date: DateHelper.getShortDateWithFormat(item.rgstDt, 'YYYY.M.D.'),
           type: FormatHelper.isEmpty(CUSTOMER_NOTICE_CTG_CD[item.ntcCtgCd]) ? '' : CUSTOMER_NOTICE_CTG_CD[item.ntcCtgCd],
           itemClass: (item.ntcTypCd === 'Y' ? 'impo ' : '') + (item.new ? 'new' : '')
         });

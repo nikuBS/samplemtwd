@@ -45,24 +45,27 @@
                         <div class="totalfilter-wrap">
                             <span class="total">총 <span class="number-text"><%= plans.productCount %></span>건</span>
                             <!-- <button type="button" class="filter-btn">필터</button> -->
-                            <button type="button" class="filter-btn date-in fe-select-filter" aria-haspopup="true">
                                 <% const filters = plans.searchOption && plans.searchOption.searchFltIds;
                                 if (filters) { %>
-                                    <span class="datebox">
-                                    <% for (let i = 0; i < Math.min(2, filters.length); i++) {
-                                        if (i > 0) { %>, <% } %>
-                                        <%= filters[i].prodFltNm %>
-                                    <% } %>
-                                    </span>
-                                    <% if (filters.length > 2) { %>
-                                        <span class="text">외</span> 
-                                        <span class="number"><%= filters.length - 2 %></span>
-                                        <span class="text">건</span>
-                                    <% }
-                                } else if (plans.searchOption && plans.searchOption.searchProdTagNm) { %>
-                                    <span class="datebox"><%= plans.searchOption.searchProdTagNm %></span>
+                                    <button type="button" class="filter-btn date-in fe-select-filter" aria-haspopup="true">
+                                        <span class="datebox">
+                                        <% for (let i = 0; i < Math.min(2, filters.length); i++) {
+                                            if (i > 0) { %>, <% } %>
+                                            <%= filters[i].prodFltNm %>
+                                        <% } %>
+                                        </span>
+                                        <% if (filters.length > 2) { %>
+                                            <span class="text">외</span> 
+                                            <span class="number"><%= filters.length - 2 %></span>
+                                            <span class="text">건</span>
+                                        <% } %>
+                                    </button>
+                                <% } else if (plans.searchOption && plans.searchOption.searchProdTagNm) { %>
+                                    <button type="button" class="filter-btn date-in fe-select-filter" aria-haspopup="true">
+                                        <span class="datebox"><%= plans.searchOption.searchProdTagNm %></span>
+                                    </button>
                                 <% } else { %>
-                                    <span class="datebox">전체 요금제</span>
+                                    <button type="button" class="filter-btn fe-select-filter">전체 요금제</button>
                                 <% } %>
                             </button>
                         </div>

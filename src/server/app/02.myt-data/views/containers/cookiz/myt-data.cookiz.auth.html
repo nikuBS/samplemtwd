@@ -27,7 +27,7 @@
         <div class="container">
             <div class="notice-comp-infolist">
                 <dl>
-                    <dd>법정대리인이 충전허용금액을 사전 설정 시,<br>충전허용금액 내 충전은 법정대리인 동의 없이<br>신청 가능합니다.</dd>
+                    <dd>법정대리인이 충전허용금액을 사전 설정 시,<br>충전허용금액 내 충전은 법정대리인 동의 없이<br>충전할 수 있습니다.</dd>
                 </dl>
             </div>
             <!-- .cont-box -->
@@ -116,8 +116,11 @@
                 </div>
             </div>
             <!--// .cont-box -->
+            <% } else { %>
+            <div class="result-none fe-block-history-empty">
+                변경내역이 없습니다.
+            </div>
             <% } %>
-
         </div>
     </div>
     <!--// #contents -->

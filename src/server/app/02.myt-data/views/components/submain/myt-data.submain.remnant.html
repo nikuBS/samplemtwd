@@ -13,62 +13,46 @@
     <div class="cont-box pt0" data-id="remnant-container">
         <% if (data.remnant && data.remnant.info) { %>
             <% if (data.remnant.info.code === 'BLN0001') { %>
-            <div class="main-chart-box">
-                <div class="main-error-box">
-                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                    <strong class="ti">잠시 후 다시 이용해 주세요</strong>
-                    <p class="tx">안정적으로 실시간 조회를 하실 수 있도록<br>조회 횟수를 제한하고 있습니다.</p>
-                    <p class="desc">2시간 동안 최대 12회 조회 가능</p>
-                </div>
+            <div class="notice-point">
+                <p class="t-np1">잠시 후 다시 이용해 주세요</p>
+                <p class="t-np2">안정적으로 실시간 조회를 하실 수 있도록<br>조회 횟수를 제한하고 있습니다.</p>
+                <p class="t-np3">2시간 동안 최대 12회 조회 가능</p>
             </div>
             <% } else if (data.remnant.info.code === 'BLN0002') { %>
-            <div class="main-chart-box">
-                <div class="main-error-box">
-                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                    <p class="tx">당월 혹은 전월에 기존 <br>요금제로 재 변경한 이력이 있습니다.</p>
-                </div>
+            <div class="notice-point">
+                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                <p class="t-np2">당월 혹은 전월에 기존 <br>요금제로 재 변경한 이력이 있습니다.</p>
+                <p class="t-np3"></p>
             </div>
             <% } else if (data.remnant.info.code === 'BLN0003') { %>
-            <div class="main-chart-box">
-                <div class="main-error-box">
-                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                    <p class="tx">당월 혹은 전월에 정지 이력이 있습니다.</p>
-                </div>
+            <div class="notice-point">
+                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                <p class="t-np2">당월 혹은 전월에 정지 이력이 있습니다.</p>
+                <p class="t-np3"></p>
             </div>
             <% } else if (data.remnant.info.code === 'BLN0005') { %>
-            <div class="main-chart-box">
-                <div class="main-error-box">
-                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                    <p class="tx">본인이 법정대리인으로 <br> 등록된 자녀 회선이 아닙니다.</p>
-                </div>
+            <div class="notice-point">
+                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                <p class="t-np2">본인이 법정대리인으로 <br> 등록된 자녀 회선이 아닙니다.</p>
+                <p class="t-np3"></p>
             </div>
             <% } else if (data.remnant.info.code === 'BLN0006') { %>
-            <div class="main-chart-box">
-                <div class="main-error-box">
-                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                    <p class="tx">잔여량 조회에 실패하였습니다.</p>
-                </div>
+            <div class="notice-point">
+                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                <p class="t-np2">잔여량 조회에 실패하였습니다.</p>
+                <p class="t-np3"></p>
             </div>
             <% } else if (data.remnant.info.code === 'BLN0004' || data.remnant.info.code === 'BLN0007') { %>
-            <div class="main-chart-box">
-                <div class="main-error-box">
-                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                    <p class="tx">잔여량 조회 가능 항목이 없습니다.</p>
-                </div>
+            <div class="notice-point">
+                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                <p class="t-np2">잔여량 조회 가능 항목이 없습니다.</p>
+                <p class="t-np3"></p>
             </div>
             <% } else { %>
-            <div class="main-chart-box">
-                <div class="main-error-box">
-                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                    <p class="tx"><%= data.remnant.info.code %><br><%= data.remnant.info.msg %></p>
-                </div>
-
+            <div class="notice-point">
+                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                <p class="t-np2"><%= data.remnant.info.code %></p>
+                <p class="t-np3"><%= data.remnant.info.msg %></p>
             </div>
             <% } %>
         <% } else { %>
@@ -418,62 +402,46 @@
     <div class="cont-box pt0" data-id="remnant-container">
         <% if (data.remnant && data.remnant.info) { %>
             <% if (data.remnant.info.code === 'BLN0001') { %>
-            <div class="main-chart-box">
-                <div class="main-error-box">
-                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                    <strong class="ti">잠시 후 다시 이용해 주세요</strong>
-                    <p class="tx">안정적으로 실시간 조회를 하실 수 있도록<br>조회 횟수를 제한하고 있습니다.</p>
-                    <p class="desc">2시간 동안 최대 12회 조회 가능</p>
-                </div>
+            <div class="notice-point">
+                <p class="t-np1">잠시 후 다시 이용해 주세요</p>
+                <p class="t-np2">안정적으로 실시간 조회를 하실 수 있도록<br>조회 횟수를 제한하고 있습니다.</p>
+                <p class="t-np3">2시간 동안 최대 12회 조회 가능</p>
             </div>
             <% } else if (data.remnant.info.code === 'BLN0002') { %>
-            <div class="main-chart-box">
-                <div class="main-error-box">
-                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                    <p class="tx">당월 혹은 전월에 기존 <br>요금제로 재 변경한 이력이 있습니다.</p>
-                </div>
+            <div class="notice-point">
+                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                <p class="t-np2">당월 혹은 전월에 기존 <br>요금제로 재 변경한 이력이 있습니다.</p>
+                <p class="t-np3"></p>
             </div>
             <% } else if (data.remnant.info.code === 'BLN0003') { %>
-            <div class="main-chart-box">
-                <div class="main-error-box">
-                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                    <p class="tx">당월 혹은 전월에 정지 이력이 있습니다.</p>
-                </div>
+            <div class="notice-point">
+                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                <p class="t-np2">당월 혹은 전월에 정지 이력이 있습니다.</p>
+                <p class="t-np3"></p>
             </div>
             <% } else if (data.remnant.info.code === 'BLN0005') { %>
-            <div class="main-chart-box">
-                <div class="main-error-box">
-                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                    <p class="tx">본인이 법정대리인으로 <br> 등록된 자녀 회선이 아닙니다.</p>
-                </div>
+            <div class="notice-point">
+                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                <p class="t-np2">본인이 법정대리인으로 <br> 등록된 자녀 회선이 아닙니다.</p>
+                <p class="t-np3"></p>
             </div>
             <% } else if (data.remnant.info.code === 'BLN0006') { %>
-            <div class="main-chart-box">
-                <div class="main-error-box">
-                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                    <p class="tx">잔여량 조회에 실패하였습니다.</p>
-                </div>
+            <div class="notice-point">
+                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                <p class="t-np2">잔여량 조회에 실패하였습니다.</p>
+                <p class="t-np3"></p>
             </div>
             <% } else if (data.remnant.info.code === 'BLN0004' || data.remnant.info.code === 'BLN0007') { %>
-            <div class="main-chart-box">
-                <div class="main-error-box">
-                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                    <p class="tx">잔여량 조회 가능 항목이 없습니다.</p>
-                </div>
+            <div class="notice-point">
+                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                <p class="t-np2">잔여량 조회 가능 항목이 없습니다.</p>
+                <p class="t-np3"></p>
             </div>
             <% } else { %>
-            <div class="main-chart-box">
-                <div class="main-error-box">
-                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                    <p class="tx"><%= data.remnant.info.code %><br><%= data.remnant.info.msg %></p>
-                </div>
-
+            <div class="notice-point">
+                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                <p class="t-np2"><%= data.remnant.info.code %></p>
+                <p class="t-np3"><%= data.remnant.info.msg %></p>
             </div>
             <% } %>
         <% } else { %>
@@ -676,12 +644,9 @@
             </div>
             <% } %>
         <% } %>
-        <ul class="bt-slice item-two mt20">
+        <ul class="bt-slice solid mt20">
             <li data-id="immCharge">
                 <button class="btn-round1 btn-style1">선불폰 충전</button>
-            </li>
-            <li data-id="present">
-                <button class="btn-round1 btn-style1">자동알람 서비스</button>
             </li>
         </ul>
     </div>
@@ -788,62 +753,46 @@
     <div class="cont-box pt0" data-id="remnant-container">
         <% if (data.remnant && data.remnant.info) { %>
             <% if (data.remnant.info.code === 'BLN0001') { %>
-            <div class="main-chart-box">
-                <div class="main-error-box">
-                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                    <strong class="ti">잠시 후 다시 이용해 주세요</strong>
-                    <p class="tx">안정적으로 실시간 조회를 하실 수 있도록<br>조회 횟수를 제한하고 있습니다.</p>
-                    <p class="desc">2시간 동안 최대 12회 조회 가능</p>
-                </div>
+            <div class="notice-point">
+                <p class="t-np1">잠시 후 다시 이용해 주세요</p>
+                <p class="t-np2">안정적으로 실시간 조회를 하실 수 있도록<br>조회 횟수를 제한하고 있습니다.</p>
+                <p class="t-np3">2시간 동안 최대 12회 조회 가능</p>
             </div>
             <% } else if (data.remnant.info.code === 'BLN0002') { %>
-            <div class="main-chart-box">
-                <div class="main-error-box">
-                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                    <p class="tx">당월 혹은 전월에 기존 <br>요금제로 재 변경한 이력이 있습니다.</p>
-                </div>
+            <div class="notice-point">
+                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                <p class="t-np2">당월 혹은 전월에 기존 <br>요금제로 재 변경한 이력이 있습니다.</p>
+                <p class="t-np3"></p>
             </div>
             <% } else if (data.remnant.info.code === 'BLN0003') { %>
-            <div class="main-chart-box">
-                <div class="main-error-box">
-                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                    <p class="tx">당월 혹은 전월에 정지 이력이 있습니다.</p>
-                </div>
+            <div class="notice-point">
+                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                <p class="t-np2">당월 혹은 전월에 정지 이력이 있습니다.</p>
+                <p class="t-np3"></p>
             </div>
             <% } else if (data.remnant.info.code === 'BLN0005') { %>
-            <div class="main-chart-box">
-                <div class="main-error-box">
-                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                    <p class="tx">본인이 법정대리인으로 <br> 등록된 자녀 회선이 아닙니다.</p>
-                </div>
+            <div class="notice-point">
+                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                <p class="t-np2">본인이 법정대리인으로 <br> 등록된 자녀 회선이 아닙니다.</p>
+                <p class="t-np3"></p>
             </div>
             <% } else if (data.remnant.info.code === 'BLN0006') { %>
-            <div class="main-chart-box">
-                <div class="main-error-box">
-                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                    <p class="tx">잔여량 조회에 실패하였습니다.</p>
-                </div>
+            <div class="notice-point">
+                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                <p class="t-np2">잔여량 조회에 실패하였습니다.</p>
+                <p class="t-np3"></p>
             </div>
             <% } else if (data.remnant.info.code === 'BLN0004' || data.remnant.info.code === 'BLN0007') { %>
-            <div class="main-chart-box">
-                <div class="main-error-box">
-                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                    <p class="tx">잔여량 조회 가능 항목이 없습니다.</p>
-                </div>
+            <div class="notice-point">
+                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                <p class="t-np2">잔여량 조회 가능 항목이 없습니다.</p>
+                <p class="t-np3"></p>
             </div>
             <% } else { %>
-            <div class="main-chart-box">
-                <div class="main-error-box">
-                    <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
-                    <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
-                    <p class="tx"><%= data.remnant.info.code %><br><%= data.remnant.info.msg %></p>
-                </div>
-
+            <div class="notice-point">
+                <p class="t-np1">잔여량 조회 서비스를<br>이용하실 수 없습니다</p>
+                <p class="t-np2"><%= data.remnant.info.code %></p>
+                <p class="t-np3"><%= data.remnant.info.msg %></p>
             </div>
             <% } %>
         <% } else { %>

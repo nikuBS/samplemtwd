@@ -173,22 +173,24 @@ Tw.MyTJoinPhoneNumChangeSearch.prototype = {
 
 
   _close: function(){
-    if($('#inputNum1', this.$container).val()
-      || $('#inputNum2', this.$container).val()
-      || $('.select-list .radiobox.checked input').val()){
+    this._popupService.close();
 
-      this._popupService.openConfirmButton(
-        Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
-        Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
-        $.proxy(function(){
-          this._popupService.closeAll();
-        }, this),
-        null,
-        Tw.BUTTON_LABEL.NO,
-        Tw.BUTTON_LABEL.YES);
-    } else {
-      this._popupService.close();
-    }
+    //if($('#inputNum1', this.$container).val()
+    //  || $('#inputNum2', this.$container).val()
+    //  || $('.select-list .radiobox.checked input').val()){
+    //
+    //  this._popupService.openConfirmButton(
+    //    Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
+    //  //  Tw.ALERT_MSG_COMMON.STEP_CANCEL.TITLE,
+    //    $.proxy(function(){
+    //      this._popupService.closeAll();
+    //    }, this),
+    //    null,
+    //    Tw.BUTTON_LABEL.NO,
+    //    Tw.BUTTON_LABEL.YES);
+    //} else {
+    //  this._popupService.close();
+    //}
 
   }
 };

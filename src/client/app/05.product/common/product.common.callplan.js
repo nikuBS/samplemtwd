@@ -70,10 +70,10 @@ Tw.ProductCommonCallplan.prototype = {
 
     this.$container.on('click', '.fe-bpcp', $.proxy(this._detectBpcp, this));
     this.$container.on('click', '.fe-banner_link', $.proxy(this._onBannerLink, this));
+    this.$container.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
+    this.$container.on('click', '.fe-link-internal', $.proxy(this._openInternalUrl, this));
 
     this.$contents.on('click', '[data-contents]', $.proxy(this._openContentsDetailPop, this, 'contents'));
-    this.$contents.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
-    this.$contents.on('click', '.fe-link-internal', $.proxy(this._openInternalUrl, this));
 
     this.$contents.on('click', '.dmg-contract', $.proxy(this._openCustomPopup, this, 'BS_02_01_02_01'));
     this.$contents.on('click', '.possible-product', $.proxy(this._openCustomPopup, this, 'BS_03_01_01_02'));
@@ -86,6 +86,8 @@ Tw.ProductCommonCallplan.prototype = {
     if (this.$contentsBtnRoamingAuto.length > 0) {
       this.$contentsBtnRoamingAuto.on('click', $.proxy(this._procRoamingAuto, this));
     }
+
+    $(window).on('message', $.proxy(this._getWindowMessage, this));
   },
 
   _showReadyOn: function() {
@@ -176,8 +178,6 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _bindCustomPop: function(hbsCode, $popupContainer) {
-    $popupContainer.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
-
     if (hbsCode !== 'MP_02_02_04_02') {
       return;
     }
@@ -313,7 +313,21 @@ Tw.ProductCommonCallplan.prototype = {
       url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
     }
 
-    Tw.CommonHelper.openUrlInApp(url);
+    url += '&ref_origin=' + encodeURIComponent(location.origin);
+
+    this._popupService.open({
+      hbs: 'product_bpcp',
+      iframeUrl: url
+    }, null, $.proxy(function() {
+      this._historyService.replaceURL('/product/callplan/' + this._prodId);
+    }, this));
+  },
+
+  _getWindowMessage: function(e) {
+    var data = e.data || e.originalEvent.data;
+    if (data === 'popup_close') {
+      this._popupService.close();
+    }
   },
 
   _getSvcInfoRes: function(joinTermCd, url, resp) {

@@ -17,12 +17,8 @@
 <!--// #skip_navigation -->
 
 <div class="wrap" id="fe-benefit-military" data-menuId="<%= pageInfo.menuId %>">
-    <div id="header" class="header-wrap">
-        <!-- #header -->
-        <%- include('../../../../common/views/components/header.component.html',
-        { title: '현역플랜포인트', svcInfo: svcInfo }); %>
-        <!--// #header -->
-    </div>
+    <%- include('../../../../common/views/components/header.component.html',
+    { title: '현역플랜포인트', svcInfo: svcInfo }); %>
     <!-- #contents -->
     <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
@@ -72,8 +68,9 @@
         </div>
     </div>
     <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 </div>
-<%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
+
 <script>
   $(document).ready(function () {
     new Tw.BenefitMyBenefitMilitary($('#fe-benefit-military'));

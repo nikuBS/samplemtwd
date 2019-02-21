@@ -21,7 +21,7 @@ class CustomerDamageInfoWarningView extends TwViewController {
    */
   private _convertData(data): any {
     return Object.assign(data, {
-      date: DateHelper.getShortDateWithFormat(data.auditDt, 'YYYY.M.DD.')
+      date: DateHelper.getShortDateWithFormat(data.auditDt, 'YYYY.M.D.')
     });
   }
 

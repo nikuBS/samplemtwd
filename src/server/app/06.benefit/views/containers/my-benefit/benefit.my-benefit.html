@@ -6,7 +6,6 @@
 
 <% include ../../components/start.component.html %>
 <% include ../../components/javascript.component.html %>
-
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
     <ul>
@@ -17,15 +16,11 @@
 </div>
 <!--// #skip_navigation -->
 
-<div class="wrap" id="fe-benefit-my">
-    <div id="header" class="header-wrap">
-        <!-- #header -->
-        <%- include('../../../../common/views/components/header.component.html',
-        { title: '나의 혜택/할인', svcInfo: svcInfo}); %>
-        <!--// #header -->
-    </div>
+<div class="wrap" id="fe-benefit-my" data-menuId="<%= pageInfo.menuId %>">
+    <%- include('../../../../common/views/components/header.component.html',
+    { title: '나의 혜택/할인', svcInfo: svcInfo}); %>
     <!-- #contents -->
-    <div id="contents" class="container-wrap" data-menuId="<%= pageInfo.menuId %>">
+    <div id="contents" class="container-wrap">
         <h2 class="blind">내용</h2>
         <div class="container">
             <!-- .cont-box -->
@@ -75,9 +70,9 @@
                         <div class="link-long">
                             <a href="/benefit/my/rainbowpoint">레인보우포인트
                                 <span class="tx-sub">
-	                                        <span class="normal"><i class="tx-bold"><%= rainbow %></i> 점</span>
-	                                        <span class="ico"><span class="blind">레인보우 포인트 자세히보기</span></span>
-	                                    </span>
+                                            <span class="normal"><i class="tx-bold"><%= rainbow %></i> 점</span>
+                                            <span class="ico"><span class="blind">레인보우 포인트 자세히보기</span></span>
+                                        </span>
                             </a>
                         </div>
                     </li>
@@ -87,9 +82,9 @@
                         <div class="link-long">
                             <a href="/myt/join/join-info/no-contract">무약정플랜포인트
                                 <span class="tx-sub">
-	                                        <span class="normal"><i class="tx-bold"><%= noContract %></i> 점</span>
-	                                        <span class="ico"><span class="blind">무약정플랜 포인트 자세히보기</span></span>
-	                                    </span>
+                                            <span class="normal"><i class="tx-bold"><%= noContract %></i> 점</span>
+                                            <span class="ico"><span class="blind">무약정플랜 포인트 자세히보기</span></span>
+                                        </span>
                             </a>
                         </div>
                     </li>
@@ -99,9 +94,9 @@
                         <div class="link-long">
                             <a href="/benefit/my/military">지켜줘서 고마워 현역플랜포인트
                                 <span class="tx-sub">
-	                                        <span class="normal"><i class="tx-bold"><%= military %></i> 점</span>
-	                                        <span class="ico"><span class="blind">지켜줘서 고마워 현역플랜 포인트 자세히보기</span></span>
-	                                    </span>
+                                            <span class="normal"><i class="tx-bold"><%= military %></i> 점</span>
+                                            <span class="ico"><span class="blind">지켜줘서 고마워 현역플랜 포인트 자세히보기</span></span>
+                                        </span>
                             </a>
                         </div>
                     </li>
@@ -111,9 +106,9 @@
                         <div class="link-long">
                             <a href="/benefit/my/cookiz">쿠키즈팅포인트
                                 <span class="tx-sub">
-	                                        <span class="normal"><i class="tx-bold"><%= cookiz %></i> 점</span>
-	                                        <span class="ico"><span class="blind">쿠키즈팅 포인트 자세히보기</span></span>
-	                                    </span>
+                                            <span class="normal"><i class="tx-bold"><%= cookiz %></i> 점</span>
+                                            <span class="ico"><span class="blind">쿠키즈팅 포인트 자세히보기</span></span>
+                                        </span>
                             </a>
                         </div>
                     </li>
@@ -147,10 +142,10 @@
                         <% if(locals.welfare) { %>
                         <li>
                             <div class="li-elem">
-                                <a href="/myt-join/myplancombine" class="bt-detail-top">
+                                <a href="/product/callplan/TW20000016" class="bt-detail-top">
                                     <div class="title-box">
                                         <span class="sub-tit02">요금 할인</span>
-                                        <span class="tit">복지고객할인 <% if(welfare.total > 1) { %> 외 <%= welfare.total-1 %>건 <% }%></span>
+                                        <span class="tit">복지고객할인 <%= welfare.total %>건</span>
                                     </div>
                                 </a>
                             </div>
@@ -201,8 +196,8 @@
         </div>
     </div>
     <!--// #contents -->
+    <%- include('../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 </div>
-<%- include('../../../../../common/views/components/footer.component.html', { svcInfo: svcInfo, pageInfo: pageInfo }); %>
 <script>
   $(document).ready(function () {
     new Tw.BenefitMyBenefit($('#fe-benefit-my'), '<%= okCashback %>', '<%= t %>', '<%= rainbow %>');

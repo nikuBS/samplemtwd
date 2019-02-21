@@ -96,6 +96,8 @@ gulp.task('js-util', function () {
     'src/client/types/**/*.js',
     'src/client/utils/**/*.js',
     'src/client/services/**/*.js' ])
+    .pipe(plumber())
+    .pipe(sort())
     .pipe(concat('util.js'))
     .pipe(gulp.dest(dist + 'js'))
     .pipe(uglify())
@@ -113,6 +115,8 @@ gulp.task('js-component-client', function () {
   return gulp.src([
     'src/client/component/**/*.js',
     'src/client/common/**/*.js'])
+    .pipe(plumber())
+    .pipe(sort())
     .pipe(concat('component.js'))
     .pipe(gulp.dest(dist + 'js'))
     .pipe(uglify())
@@ -133,6 +137,8 @@ gulp.task('js-util-client', function () {
     'src/client/types/**/*.js',
     'src/client/utils/**/*.js',
     'src/client/services/**/*.js' ])
+    .pipe(plumber())
+    .pipe(sort())
     .pipe(concat('util.js'))
     .pipe(gulp.dest(dist + 'js'))
     .pipe(uglify())
@@ -215,6 +221,8 @@ gulp.task('js-rb', function () {
   return gulp.src([
     'src/client/web-contents/js/**/*.js', '!src/client/web-contents/js/**/*.min.js'
   ])
+    .pipe(plumber())
+    .pipe(sort())
     .pipe(concat('script.js'))
     .pipe(gulp.dest(dist + 'js'))
     .pipe(uglify())

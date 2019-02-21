@@ -29,6 +29,7 @@ Tw.CustomerHelpline.prototype = {
     // this.$container.on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
     this.$container.on('click', 'span.bt-box', $.proxy(this._openContacts, this));
     this.$areaPhone.on('keyup', 'input', $.proxy(this._validatePhoneNumber, this));
+    this.$areaPhone.on('focusout', 'input', $.proxy(this.handleFocusoutInput, this));
     this.$container.on('click', '.cancel', $.proxy(this._validatePhoneNumber, this));
     this.$container.on('change', '.radiobox input', $.proxy(this._validatePhoneNumber, this));
     this.$btnSubmit.on('click', $.proxy(this._handleSubmit, this));
@@ -71,6 +72,11 @@ Tw.CustomerHelpline.prototype = {
     }
   },
 
+  handleFocusoutInput: function() {
+    this._isCheckedLen = true;
+    this._validatePhoneNumber();
+  },
+
   _validatePhoneNumber: function() {
     var $errorText = this.$areaPhone.find('#aria-phone-tx1'),
       $input = this.$areaPhone.find('input'),
@@ -78,19 +84,23 @@ Tw.CustomerHelpline.prototype = {
       number = $input.val(),
       isValid = false;
 
+    if (this._isCheckedLen && (!number || !number.length)) {
+      this._isCheckedLen = false;
+    }
+
     if (this.$cellphone.hasClass('checked')) {
       var validLength = number.indexOf('010') === 0 ? 11 : 10;
-      if (!this._validLength && number.length === validLength) {
-        this._validLength = true;
+      if (!this._isCheckedLen && number.length === validLength) {
+        this._isCheckedLen = true;
       }
 
-      isValid = !this._validLength || Tw.ValidationHelper.isCellPhone(number);
+      isValid = !this._isCheckedLen || Tw.ValidationHelper.isCellPhone(number);
     } else {
       var validLength = number.indexOf('02') === 0 ? 9 : 10;
-      if (!this._validLength && number.length === validLength) {
-        this._validLength = true;
+      if (!this._isCheckedLen && number.length === validLength) {
+        this._isCheckedLen = true;
       }
-      isValid = !this._validLength || Tw.ValidationHelper.isTelephone(number);
+      isValid = !this._isCheckedLen || Tw.ValidationHelper.isTelephone(number);
     }
 
     if (!isValid) {
@@ -108,7 +118,7 @@ Tw.CustomerHelpline.prototype = {
         $errorText.addClass('none');
       }
 
-      if (this._validLength) {
+      if (this._isCheckedLen) {
         this._setSubmitState(true);
       }
     }

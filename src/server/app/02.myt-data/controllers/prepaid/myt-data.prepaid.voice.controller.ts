@@ -54,7 +54,7 @@ class MyTDataPrepaidVoice extends TwViewController {
 
   public getPPSInfo = () => this.apiService.request(API_CMD.BFF_05_0013, {});
 
-  public convertDate = (sDate) => DateHelper.getShortDateNoDot(sDate);
+  public convertDate = (sDate) => DateHelper.getShortDate(sDate);
 
   public convertAmount = (sAmount) => FormatHelper.addComma(sAmount);
 }

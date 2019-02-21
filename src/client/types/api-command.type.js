@@ -535,7 +535,7 @@ Tw.NODE_CMD = {
   GET_SVC_INFO: { path: '/svcInfo', method: Tw.API_METHOD.GET },
   GET_ALL_SVC: { path: '/allSvcInfo', method: Tw.API_METHOD.GET },
   GET_CHILD_INFO: { path: '/childInfo', method: Tw.API_METHOD.GET },
-  // UPDATE_NOTICE_TYPE: { path: '/update/notice-type', method: Tw.API_METHOD.PUT },
+  UPDATE_NOTICE_TYPE: { path: '/update/notice-type', method: Tw.API_METHOD.PUT },
 
   GET_VERSION: { path: '/app-version', method: Tw.API_METHOD.GET },
   GET_SPLASH: { path: '/splash', method: Tw.API_METHOD.GET },

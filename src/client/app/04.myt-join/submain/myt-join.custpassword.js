@@ -47,7 +47,8 @@ Tw.MytJoinCustpassword.prototype = {
     // 변경 혹은 설정
     $('#btn-change').on('click', $.proxy(this._onOkClicked, this));
     // 취소버튼
-    $('.prev-step').on('click', $.proxy(this._onclickBtnCancel, this));
+    // $('.prev-step').on('click', $.proxy(this._onclickBtnCancel, this));
+    $('.prev-step').on('click', $.proxy(this._confirmBack, this));
 
   },
 

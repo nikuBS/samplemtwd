@@ -482,11 +482,11 @@ Tw.MYT_TPL = {
   },
   JOIN_SUBMAIN: {
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"' +
-    'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
-    '<div class="lineinfo-user d-table"><div class="ico2"><i></i></div>' +
-    '<div class="cont"><span class="info-title">{{nickNm}}' +
-    '</span><span class="info-sub">{{svcNum}}</span></div>' +
-    '</div><div class="lineinfo-data"><span class="ico"></span></div></button></li>'
+      'data-name="{{nickNm}}" data-num="{{number}}"><button>' +
+      '<span class="ico-wrap"><i class="icon-{{className}}-80">' +
+      '<span class="blind">{{className}}</span></i></span><span class="cont">' +
+      '<span class="info-title">{{nickNm}}</span><span class="info-sub">{{number}}</span>' +
+      '</span></button></li>'
   },
   MORE_BTN: '<div class="bt-more"><button>더보기</button></div>'
 };
@@ -733,7 +733,8 @@ Tw.MYT_PREPAID_ALARM = {
   title: '선택',
   status_list: [
     { text: '기준 시간으로 알람', value: '1' },
-    { text: '잔액 기준으로 알람', value: '2' }
+    { text: '잔액 기준으로 알람', value: '2' },
+    { text: '설정 안함', value: '0' }
   ],
   category_list: [
     { text: '발신기간', value: '1' },

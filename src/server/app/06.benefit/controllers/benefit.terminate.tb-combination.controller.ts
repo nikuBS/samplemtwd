@@ -60,7 +60,7 @@ class BenefitTerminateTbCombination extends TwViewController {
    */
   private _convCombinationGroup(combinationGroup: any): any {
     return Object.assign(combinationGroup, {
-      combStaDt: DateHelper.getShortDateWithFormat(combinationGroup.combStaDt, 'YYYY.M.DD.')
+      combStaDt: DateHelper.getShortDateWithFormat(combinationGroup.combStaDt, 'YYYY.M.D.')
     });
   }
 

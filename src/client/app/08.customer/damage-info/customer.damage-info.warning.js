@@ -43,7 +43,7 @@ Tw.CustomerDamageInfoWarning.prototype = {
 
     this.$list.append(this._template({
       list: _.map(res.result.content, function(item) {
-        item.date = Tw.DateHelper.getShortDateWithFormat(item.rgstDtm, 'YYYY.M.DD.');
+        item.date = Tw.DateHelper.getShortDateWithFormat(item.rgstDtm, 'YYYY.M.D.');
         return item;
       })
     }));

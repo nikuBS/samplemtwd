@@ -204,7 +204,7 @@ Tw.ProductRoamingJoinRoamingSetup.prototype = {
           isBasFeeInfo : data.prodFee,
           typeNm : data.prodType,
           settingType : data.processNm,
-          btnNmList : [Tw.BENEFIT.DISCOUNT_PGM.SELECTED.FINISH.LINK_TITLE]
+          btnNmList : [Tw.ROAMING_JOIN_STRING.MY_ROAMING_STATE]
         };
         $containerData._popupService.open({
             hbs: 'complete_product_roaming',

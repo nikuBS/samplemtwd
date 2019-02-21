@@ -92,7 +92,7 @@ Tw.MyTFareSubMain.prototype = {
       this.$otherLines = this.$container.find('[data-id=other-line]');
       this.$moreTempleate = Handlebars.compile(Tw.MYT_TPL.FARE_SUBMAIN.MORE_LINE_TEMP);
       if ( this.data.otherLines.length > 20 ) {
-        this.$otherLinesMoreBtn = this.$otherLines.find('.bt-more button');
+        this.$otherLinesMoreBtn = this.$otherLines.find('.btn-more button');
       }
     }
     // 세금계산서
@@ -204,7 +204,7 @@ Tw.MyTFareSubMain.prototype = {
       target: '.chart4', //클래스명 String
       type: (this.data.type === 'UF') ? Tw.CHART_TYPE.BAR_2 : Tw.CHART_TYPE.BAR_4, //bar
       average: true, // 평균
-      legend: (this.data.type === 'UF') ? ['이용'] : Tw.FARE_CHART_LEGEND, // 범례
+      legend: (this.data.type === 'UF') ? Tw.FARE_CHART_LEGEND.USAGE : Tw.FARE_CHART_LEGEND.DEFAULT, // 범례
       link: true,
       unit: Tw.CHART_UNIT.WON, // 표기
       data_arry: data //데이터 obj,
@@ -401,7 +401,7 @@ Tw.MyTFareSubMain.prototype = {
 
   // 다른회선청구요금 조회-2
   _responseOtherLineBills: function () {
-    var otherLineLength = this.data.otherLines.length;
+    var otherLineLength = this.data.otherLines.length > 20 ? 20 : this.data.otherLines.length;
     var combinList = [];
     var individualList = [];
     if ( otherLineLength > 0 ) {
@@ -596,14 +596,28 @@ Tw.MyTFareSubMain.prototype = {
 
   // 다른 회선 더보기
   _onOtherLinesMore: function () {
-    var totalCount = this.data.otherLines.length - this.$otherLines.length;
-    if ( totalCount > 0 ) {
-      this.data.otherLines.splice(0, totalCount);
-      var length = this.data.otherLines.length > 20 ? 20 : this.data.otherLines.length;
-      for ( var i = 0; i < length; i++ ) {
-        var result = this.$moreTempleate(this.data.otherLines[i]);
-        this.$container.find('ul.my-line-info').append(result);
-      }
+    var index = this.$otherLines.find('li').length;
+    var totalCount = this.data.otherLines.length - index;
+    if (totalCount === 0) {
+      this.$otherLinesMoreBtn.hide();
+      return;
+    }
+    var length = totalCount > 20 ? 20 : totalCount;
+    for ( var i = 0; i < length; i++ ) {
+      var item = this.data.otherLines[index + i];
+      // TODO: 전체회선 조회에서는 통합청구여부 정보를 확인 할 수 없다. 다른 정보확인 필요
+      // var isCombine = (item.paidAmtMonthSvcCnt > 1); // 통합청구여부
+      var isCombine = false;
+      var repSvc = (item.actRepYn === 'Y'); // 대표청구여부
+      var data = _.extend({
+        combine: isCombine,
+        repSvc: repSvc,
+        amt: '',
+        svcType: this.__selectSvcType(item.svcAttrCd),
+        isAddr: (['S1', 'S2'].indexOf(item.svcAttrCd) > -1)
+      }, item);
+      var result = this.$moreTempleate(data);
+      this.$container.find('ul.my-line-info').append(result);
     }
   },
 

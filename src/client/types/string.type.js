@@ -716,8 +716,8 @@ Tw.ALERT_MSG_PRODUCT = {
     MSG: '사용 중인 요금제는 자동으로 해지되며,\n1개월 동안 다른 상품으로 가입하실 수 없습니다.',
     BUTTON: '가입하기'
   },
-  ALERT_3_A3: { TITLE: '가입 시 유의사항을 모두 확인하였으며,\n선택하신 상품에 가입하시겠습니까?', MSG: '', BUTTON: '가입하기' },
-  ALERT_3_A4: { TITLE: '해지 시 유의사항을 모두 확인하였으며,\n선택하신 상품을 해지하시겠습니까?', MSG: '', BUTTON: '해지하기' },
+  ALERT_3_A3: { TITLE: '가입 시 유의사항을 모두 확인 하였으며,\n선택하신 상품으로 가입하시겠습니까?', MSG: '', BUTTON: '가입하기' },
+  ALERT_3_A4: { TITLE: '해지 시 유의사항을 모두 확인 하였으며,\n선택하신 상품을 해지하시겠습니까?', MSG: '', BUTTON: '해지하기' },
   ALERT_3_A5: { TITLE: '선택한 회선을 해지하시겠습니까?', MSG: '해지하시면, 해당 회선은 서비스 이용이 불가합니다.', BUTTON: '해지하기' },
   ALERT_3_A6: { TITLE: '선택한 지역을 해지하시겠습니까?', MSG: '해지하시면, 해당 지역은 서비스 이용이 불가합니다.', BUTTON: '해지하기' },
   ALERT_3_A7: { TITLE: '지정번호 5회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
@@ -736,7 +736,7 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A30: { TITLE: '현재 사용중인 옵션과 동일한 옵션을 선택하였습니다. 변경할 옵션을 선택해주세요.', MSG: '' },
   ALERT_3_A31: { TITLE: '결합상품명을 미선택하셨습니다.\n선택하지 않고 예약을 진행하시겠습니까?', MSG: '' },
   ALERT_3_A32: { TITLE: '파일당 제한용량(2MB)을 초과하여 첨부파일을 등록할 수 없습니다. 다시 확인해주세요.', MSG: '' },
-  ALERT_3_A33: { TITLE: '파일 확장자가 jpg, jpeg, png인 파일만 첨부할 수 있습니다. 다시 확인해주세요.', MSG: '' },
+  ALERT_3_A33: { TITLE: '파일 확장자가 jpg, jpeg, png, gif인 파일만 첨부할 수 있습니다. 다시 확인해주세요.', MSG: '' },
   ALERT_3_A34: { TITLE: '파일 업로드를 실패 했습니다. 잠시 후 다시 시도해주세요.', MSG: '' },
   ALERT_3_A35: { TITLE: '지정번호 6회선 모두 등록되었습니다.\n기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
   ALERT_3_A36: { TITLE: '로그인 하시겠습니까?', MSG: '로그인 후 가족정보 입력 및 서류제출이 가능합니다. 로그인하시겠습니까?' },
@@ -751,7 +751,7 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A70: { TITLE: '해당 상품의 변경예약신청 이력이 있습니다. 변경예약을 취소하시겠습니까?', BUTTON: '취소하기' },
   ALERT_3_A73: { TITLE: '스마트워치 회선이 존재하지 않습니다.\n회선 없이 \'인피니티_스마트워치\' 옵션을 선택하시겠습니까?', MSG: '' },
   ALERT_3_A74: { TITLE: '선택하신 상품 해지를 취소하시겠습니까?', MSG: '', BUTTON: '계속하기' },
-  ALERT_3_A77: { TITLE: '지역 추가 시, 1개 지역당 1,650원(부가세포함)씩 과금이 추가됩니다.지역을 추가하시겠습니까?', MSG: '' },
+  ALERT_3_A77: { TITLE: '지역 추가 시, 1개 지역당 1,650원(부가세포함)씩 과금이 추가됩니다. 지역을 추가하시겠습니까?', MSG: '' },
   ALERT_3_A78: { TITLE: '할인지역은 최대 2개까지 등록가능합니다', MSG: '' },
   ALERT_3_A79: { TITLE: '고객님의 휴대폰은 로밍오토다이얼이 가능합니다.', MSG: '' },
   ALERT_3_A80: { TITLE: '고객님의 휴대폰은 로밍오토다이얼 기능이 없습니다.', MSG: '' },
@@ -1146,7 +1146,7 @@ Tw.MYT_JOIN_WIRE_SET_PAUSE = {
   DAY: '일',
   SET: {
     TITLE: '요청하신 기간 동안 <br />일시 정지 하시겠습니까 ?',
-    CONTENTS: '이용 중단 기간 <br />[sDate] ~ [eDate]',
+    CONTENTS: '이용 정지 기간 <br />[sDate] ~ [eDate]',
     DATE_SELECT_ERROR: '선택할 수 있는 날짜가 아닙니다.<br /> 다른 날짜를 선택해주세요.',
     BTNAME: '정지하기',
     COMPLETE_TEXT: '일시 정지'
@@ -1642,9 +1642,10 @@ Tw.SELECTED_DATE_STRING = {
   TOMORROW: '내일'
 };
 
-Tw.ROAMING_COMBINE_LINE_STRING = {
+Tw.ROAMING_JOIN_STRING = {
   COMBINE_LINE: '자회선 설정하기',
-  DUPLICATE_LINE : 'T로밍도착알리미 멤버에 이미 존재하는 서비스번호입니다.'
+  MY_ROAMING_STATE: '나의 로밍 이용 현황 확인하기',
+  DUPLICATE_LINE: 'T로밍도착알리미 멤버에 이미 존재하는 서비스번호입니다.'
 };
 
 Tw.SETTING_LOCATION = {
@@ -1711,7 +1712,8 @@ Tw.TOOLTIP_TITLE = {
   ROAMING_USE_GUIDE: '로밍 사용안내',
   SERVICE_START_GUIDE: '서비스개시일/시간안내',
   ROAMING_SERVICE_CAUTION: '서비스 유의사항',
-  ROAMING_SERVICE_TERM: '로밍 서비스 기간 설정'
+  ROAMING_SERVICE_TERM: '로밍 서비스 기간 설정',
+  ROAMING_COMMON_GUIDE: '로밍 요금상품 공통 안내'
 };
 
 Tw.MEMBERSHIP = {
@@ -1820,4 +1822,21 @@ Tw.PREMTERM_MSG = {
   LESS_180: '프리미엄패스1 가입 후 180일이 되기 전에 낮은 요금제로 변경하시면 서비스가 자동 해지되며, 서비스 가입기간에 따라 차액 정산금과 해지 위약금이 청구됩니다.',
   LESS_365: '프리미엄패스2 가입 후 365일 이전에 낮은 요금제로 변경하시면 서비스가 자동 해지되며, 서비스 가입기간에 따라 해지 위약금이 청구됩니다. ' +
     '요금제를 변경한 날 다시 처음 가입하신 요금제로 변경하셔도 프리미엄패스2에 다시 가입하실 수 있습니다. 해지하신 경우 해지 위약금이 이중으로 발생하지 않습니다.'
+};
+
+Tw.VALIDATION_LABEL = {
+  CARD: '카드번호',
+  PHONE: '휴대폰 번호',
+  EXPIRATION: '유효기간',
+  POINT: '포인트',
+  PASSWORD: '비밀번호',
+  BIRTH: '생년월일',
+  ACCOUNT: '계좌번호',
+  PREPAY: '선결제 금액',
+  I: '이',
+  G: '가',
+  U: '을',
+  R: '를',
+  MESSAGE_EMPTY: ' 입력해 주세요.',
+  MESSAGE_WRONG: ' 올바르지 않습니다.'
 };

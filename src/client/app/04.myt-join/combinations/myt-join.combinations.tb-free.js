@@ -117,10 +117,17 @@ Tw.MyTJoinCombinationsTBFree.prototype = {
     var number = value.replace(/-/g, '');
     var validLenth = number.indexOf('010') === 0 ? 11 : 10;
 
-    if (number.length !== validLenth) {
+    if (number.indexOf('010') === 0) {
+      if (number.length !== 11) {
+        this._setInvalidInput($error, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_V18);
+        return false;
+      }
+    } else if (number.length !== 11 && number.length !== 10) {
       this._setInvalidInput($error, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_V18);
       return false;
-    } else if (!Tw.ValidationHelper.isCellPhone(number)) {
+    }
+
+    if (!Tw.ValidationHelper.isCellPhone(number)) {
       this._setInvalidInput($error, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_V9);
       return false;
     } else {
@@ -155,10 +162,14 @@ Tw.MyTJoinCombinationsTBFree.prototype = {
     var value = $input.val(),
       validLenth = value.indexOf('010') === 0 ? 11 : 10;
 
-    if (value.length === validLenth) {
-      if (this._validPhoneNumber(value, $error)) {
-        $submitBtn.removeAttr('disabled');
-      }
+    if (this._isCheckedLen && (!value || !value.length)) {
+      this._isCheckedLen = false;
+    } else if (!this._isCheckedLen && value.length === validLenth) {
+      this._isCheckedLen = true;
+    }
+
+    if (this._isCheckedLen && this._validPhoneNumber(value, $error)) {
+      $submitBtn.removeAttr('disabled');
     } else {
       $submitBtn.attr('disabled', true);
     }

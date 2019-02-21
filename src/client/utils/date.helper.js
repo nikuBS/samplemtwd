@@ -110,7 +110,7 @@ Tw.DateHelper = (function () {
    * @returns {string} : currentDateTime + 1 year
    */
   var getNextYearShortDate = function () {
-    return moment().add(1, 'years').format('YYYY.M.DD.');
+    return moment().add(1, 'years').format('YYYY.M.D.');
   };
 
   /**
@@ -197,7 +197,7 @@ Tw.DateHelper = (function () {
    * @returns {string} : 2018.06.01 12:00
    */
   var getShortDateAndTime = function (date) {
-    return moment(convDateFormat(date)).format('YYYY.M.DD. hh:mm');
+    return moment(convDateFormat(date)).format('YYYY.M.D. hh:mm');
   };
 
   /**

@@ -13,8 +13,8 @@ Tw.MyTFareBillCard = function (rootEl) {
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService(rootEl);
+  this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-check-pay'));
 
   this._init();
 };
@@ -35,9 +35,6 @@ Tw.MyTFareBillCard.prototype = {
     this.$refundBox = this.$container.find('.fe-refund-box');
     this.$refundInputBox = this.$container.find('.fe-refund-input');
     this.$payBtn = this.$container.find('.fe-check-pay');
-    this.$isValid = false;
-    this.$isCardValid = false;
-    this.$isChanged = false;
 
     this._refundAutoYn = 'N';
     this._isPaySuccess = false;
@@ -46,15 +43,6 @@ Tw.MyTFareBillCard.prototype = {
     this.$container.on('change', '.fe-auto-info > li', $.proxy(this._onChangeOption, this));
     this.$container.on('change', '.fe-auto-info', $.proxy(this._checkIsAbled, this));
     this.$container.on('change', '.fe-refund-check-btn input[type="checkbox"]', $.proxy(this._showAndHideAccount, this));
-    this.$container.on('blur', '.fe-card-number', $.proxy(this._checkCardNumber, this));
-    this.$container.on('blur', '.fe-card-y', $.proxy(this._checkCardExpiration, this));
-    this.$container.on('blur', '.fe-card-m', $.proxy(this._checkCardExpiration, this));
-    this.$container.on('blur', '.fe-card-pw', $.proxy(this._checkPassword, this));
-    this.$container.on('blur', '.fe-refund-account-number', $.proxy(this._checkAccountNumber, this));
-    this.$container.on('keyup', '.required-input-field', $.proxy(this._checkIsAbled, this));
-    this.$container.on('keyup', '.required-input-field', $.proxy(this._checkNumber, this));
-    this.$container.on('keyup', '.fe-card-number', $.proxy(this._resetCardInfo, this));
-    this.$container.on('click', '.cancel', $.proxy(this._checkIsAbled, this));
     this.$container.on('click', '.fe-select-card-type', $.proxy(this._selectCardType, this));
     this.$container.on('click', '.select-bank', $.proxy(this._selectBank, this));
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
@@ -74,8 +62,6 @@ Tw.MyTFareBillCard.prototype = {
       this.$refundNumber.parents('.fe-bank-wrap').find('.fe-error-msg').hide();
       this.$refundNumber.parents('.fe-bank-wrap').find('.fe-bank-error-msg').hide();
     }
-
-    this.$isChanged = true;
   },
   _showAndHideAccount: function (event) {
     var $target = $(event.currentTarget);
@@ -109,46 +95,16 @@ Tw.MyTFareBillCard.prototype = {
     $target.attr('id', $selectedValue.attr('id'));
     $target.text($selectedValue.parents('label').text());
 
-    this.$isChanged = true;
     this._popupService.close();
   },
   _selectBank: function (event) {
-    this._bankList.init(event, $.proxy(this._checkBank, this));
-  },
-  _checkBank: function ($target) {
-    if (!Tw.FormatHelper.isEmpty($target.attr('id'))) {
-      this.$isChanged = true;
-    }
-    this._checkIsAbled();
+    this._bankList.init(event, $.proxy(this._checkIsAbled, this));
   },
   _checkIsAbled: function () {
-    if (this._checkIsAbledWithInputVisibility() && this.$cardNumber.val() !== '' &&
-      this.$cardY.val() !== '' && this.$cardM.val() !== '' && this.$cardPw.val() !== '') {
-      this.$payBtn.removeAttr('disabled');
-    } else {
-      this.$payBtn.attr('disabled', 'disabled');
-    }
-  },
-  _checkIsAbledWithInputVisibility: function () {
-    var isAbled = true;
-
-    if (this.$refundInputBox.hasClass('checked')) {
-      if (this.$refundBank.attr('id') === undefined || this.$refundNumber.val() === '') {
-        isAbled = false;
-      }
-    }
-    return isAbled;
-  },
-  _resetCardInfo: function () {
-    this.$cardNumber.removeAttr('data-code');
-    this.$cardNumber.removeAttr('data-name');
-  },
-  _checkNumber: function (event) {
-    var target = event.target;
-    Tw.InputHelper.inputNumberOnly(target);
+    this._validationService.checkIsAbled();
   },
   _checkPay: function () {
-    if (this.$isValid && this.$isCardValid) {
+    if (this._validationService.isAllValid()) {
       this._popupService.open({
           'hbs': 'MF_01_01_01',
           'title': Tw.MYT_FARE_PAYMENT_NAME.CARD,
@@ -160,115 +116,8 @@ Tw.MyTFareBillCard.prototype = {
       );
     }
   },
-  _checkCardNumber: function (event) {
-    var $target = $(event.currentTarget);
-    this.$isValid = this._isEmpty($target, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V60) &&
-      this._validation.showAndHideErrorMsg(this.$cardNumber,
-        this._validation.checkMoreLength(this.$cardNumber, 15),
-        Tw.ALERT_MSG_MYT_FARE.ALERT_2_V4);
-
-    if (this.$isValid) {
-      this._getCardCode();
-    }
-  },
-  _isEmpty: function ($target, message) {
-    return this._validation.showAndHideErrorMsg($target, this._validation.checkEmpty($target.val()), message);
-  },
-  _getCardCode: function () {
-    this._apiService.request(Tw.API_CMD.BFF_07_0068, { cardNum: $.trim(this.$cardNumber.val()).substr(0, 6) })
-      .done($.proxy(this._getSuccess, this))
-      .fail($.proxy(this._getFail, this));
-  },
-  _getSuccess: function (res) {
-    if (res.code === Tw.API_CODE.CODE_00) {
-      var cardCode = res.result.bankCardCoCd;
-      var cardName = res.result.cardNm;
-
-      this.$cardNumber.attr({ 'data-code': cardCode, 'data-name': cardName });
-      this.$cardNumber.parent().siblings('.fe-error-msg').hide();
-      this.$isCardValid = true;
-
-      if (Tw.FormatHelper.isEmpty(cardCode)) {
-        this._getFail();
-      }
-    } else {
-      this._getFail();
-    }
-  },
-  _getFail: function () {
-    this.$cardNumber.parent().siblings('.fe-error-msg').empty().text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V28).show();
-    this.$cardNumber.focus();
-    this.$isCardValid = false;
-  },
-  _checkCardExpiration: function (event) {
-    var $target = $(event.currentTarget);
-    var message = Tw.ALERT_MSG_MYT_FARE.ALERT_2_V5;
-
-    this.$isValid = this._validation.checkEmpty($target.val());
-
-    if (this.$isValid) {
-      if ($target.hasClass('fe-card-y')) {
-        this.$isValid = this._validation.checkYear(this.$cardY);
-      } else {
-        this.$isValid = this._validation.checkMonth(this.$cardM, this.$cardY);
-      }
-      message = Tw.ALERT_MSG_MYT_FARE.ALERT_2_V6;
-    }
-
-    if (this.$isValid) {
-      $target.parents('.fe-exp-wrap').siblings('.fe-error-msg').hide();
-    } else {
-      $target.parents('.fe-exp-wrap').siblings('.fe-error-msg').text(message).show();
-      $target.focus();
-    }
-  },
-  _checkPassword: function (event) {
-    var $target = $(event.currentTarget);
-    this.$isValid = this._isEmpty($target, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V58) &&
-      this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 2), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V7);
-  },
-  _checkAccountNumber: function (event) {
-    var $target = $(event.currentTarget);
-    this.$isValid = this._validation.checkEmpty($target.val());
-
-    if (this.$isValid) {
-      $target.parents('.fe-bank-wrap').find('.fe-error-msg').hide();
-    } else {
-      $target.parents('.fe-bank-wrap').find('.fe-error-msg').show();
-      $target.focus();
-    }
-  },
   _onClose: function () {
     this._backAlert.onClose();
-    // if (!this.$isChanged) {
-    //   var $amount = this.$container.find('.fe-amount');
-    //   if (Tw.FormatHelper.addComma($amount.attr('data-value')) !== $amount.text()) {
-    //     this.$isChanged = true;
-    //   }
-    // }
-    //
-    // if (!this.$isChanged) {
-    //   if (this.$cardNumber.val() !== '' || this.$cardY.val() !== '' ||
-    //   this.$cardM.val() !== '' || this.$cardPw.val() !== '') {
-    //     this.$isChanged = true;
-    //   }
-    // }
-    //
-    // if (!this.$isChanged) {
-    //   if (this.$refundBank.attr('disabled') !== 'disabled') {
-    //     if (!Tw.FormatHelper.isEmpty(this.$refundBank.attr('id')) || this.$refundNumber.val() !== '') {
-    //       this.$isChanged = true;
-    //     }
-    //   }
-    // }
-    //
-    // if (this.$isChanged) {
-    //   this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null,
-    //     $.proxy(this._closePop, this), $.proxy(this._afterClose, this),
-    //     Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-    // } else {
-    //   this._historyService.goBack();
-    // }
   },
   _openCheckPay: function ($layer) {
     this._setData($layer);

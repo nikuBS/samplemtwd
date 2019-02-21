@@ -1584,7 +1584,7 @@
       font-size: 0.875rem;
       color: #000; }
   .list-comp-history .comp-box .list-box .list-con {
-    padding: 0 0 0 4.3125rem; }
+    padding: 0 0 0 3.375rem; }
     .list-comp-history .comp-box .list-box .list-con li {
       display: table;
       table-layout: fixed;
@@ -2253,7 +2253,7 @@
 
 .icon-badge-plan-my {
   display: inline-block;
-  width: 2rem;
+  width: 2.625rem;
   height: 1.25rem;
   background: url(/img/svg/graphic_badge_plan_my.svg) no-repeat 0 0;
   background-size: 100% 100%; }
@@ -4463,10 +4463,10 @@
     left: 0;
     top: 0; }
   .user-info .ico-type2 {
-    width: 2.75rem;
-    height: 2.75rem;
+    width: 2rem;
+    height: 2rem;
     background: url(/img/svg/icon_80px_call.svg) center center no-repeat;
-    background-size: 2.5rem;
+    background-size: 2rem;
     position: absolute;
     left: 0;
     top: 0;
@@ -15501,6 +15501,10 @@ a.bt-link-tx.underline.small {
         .chart-wrap.bar1 .legend .category1::before {
           background: #3583e3 url(/img/chart/pattern9.gif) repeat 0 0;
           background-size: 0.25rem 0.5rem; }
+      .chart-wrap.bar1 .legend .bt {
+        color: #178bce;
+        text-decoration: underline;
+        font-size: 0.75rem; }
   .chart-wrap.bar2, .chart-wrap.bar3 {
     position: relative;
     background: #fff; }
@@ -15536,6 +15540,10 @@ a.bt-link-tx.underline.small {
         background: #59bcf5;
         vertical-align: top;
         margin: 0.3125rem 0.1875rem 0 0; }
+      .chart-wrap.bar2 .legend .bt, .chart-wrap.bar3 .legend .bt {
+        color: #178bce;
+        text-decoration: underline;
+        font-size: 0.75rem; }
     .chart-wrap.bar2 .tit, .chart-wrap.bar3 .tit {
       padding: 0 0 1.25rem 0;
       font-size: 1rem;
@@ -15653,6 +15661,10 @@ a.bt-link-tx.underline.small {
         background-size: 0.25rem 0.5rem;
         vertical-align: top;
         margin: 0.3125rem 0.1875rem 0 0; }
+      .chart-wrap.bar4 .legend .bt {
+        color: #178bce;
+        text-decoration: underline;
+        font-size: 0.75rem; }
     .chart-wrap.bar4 .tit {
       padding: 0 0 1.25rem 0;
       font-size: 1rem;
@@ -15851,6 +15863,10 @@ a.bt-link-tx.underline.small {
       .chart-wrap.circle .legend strong {
         padding-left: 0.3125rem;
         font-weight: 700; }
+      .chart-wrap.circle .legend .bt {
+        color: #178bce;
+        text-decoration: underline;
+        font-size: 0.75rem; }
     .chart-wrap.circle .shapes {
       position: absolute;
       left: 50%;
@@ -18202,6 +18218,7 @@ a.bt-link-tx.underline.small {
     margin-top: 1.875rem;
     text-align: center; }
     .main-faq-menu ul li .menu-bt {
+      padding: 0.75rem 0;
       color: #000;
       font-size: 0.875rem;
       text-align: center; }
@@ -18209,7 +18226,7 @@ a.bt-link-tx.underline.small {
         display: block;
         width: 44px;
         height: 44px;
-        margin: 0 auto;
+        margin: 0 auto 0.1875rem;
         background-repeat: no-repeat;
         background-size: 100%; }
       .main-faq-menu ul li .menu-bt.ico-type01 .ico {
@@ -22836,6 +22853,11 @@ a.bt-link-tx.underline.small {
 .op_60 {
   opacity: 0.6; }
 
+.cont-box .no-brand {
+  text-align: center;
+  font-size: 0.875rem;
+  padding: 1.5625rem 0; }
+
 /* 주미숙 */
 /* cont-actionsheet */
 /* 앱 다운받기 */
@@ -25800,10 +25822,11 @@ input[type="radio"].formradio-small.type2 + label {
       padding: 0 0.75rem 0 1.625rem;
       border: 1px solid #aaaaaa;
       border-radius: 5px;
-      background: url(/img/svg/icon_32px_filter_n.svg) no-repeat 8px 6px;
+      background: url(/img/svg/icon_32px_filter_n.svg) no-repeat 8px center;
       background-size: 16px 16px;
       color: #000000;
-      font-size: 0.8125rem; }
+      font-size: 0.8125rem;
+      line-height: 1.625rem; }
       .contheader-box .totalfilter-wrap .filter-btn.date-in {
         display: inline-block;
         padding-top: 0.0625rem;
@@ -27015,13 +27038,20 @@ body.apphome {
 .location-agree .agree-view {
   position: absolute;
   z-index: 2;
-  right: 0.5rem;
-  top: 1.125rem;
-  width: 1.5625rem;
-  height: 1.5625rem;
-  background-image: url(/img/ico/ico-group.png);
-  background-size: 3.125rem;
-  background-position: 0 -67.1875rem; }
+  right: 0;
+  top: 0;
+  width: 5.625rem;
+  height: 100%; }
+  .location-agree .agree-view:after {
+    content: "";
+    position: absolute;
+    top: 1.125rem;
+    right: 0.5rem;
+    width: 1.5625rem;
+    height: 1.5625rem;
+    background-image: url(/img/ico/ico-group.png);
+    background-size: 3.125rem;
+    background-position: 0 -67.1875rem; }
 
 .middot-list li {
   position: relative;
@@ -27250,7 +27280,7 @@ body.apphome {
 .result-none {
   text-align: center;
   font-size: 1rem;
-  color: #666666;
+  color: #000;
   padding: 13.125rem 0 8.125rem;
   background: url(/img/common/icon-result-none.png) no-repeat;
   background-position: center 8.3125rem;
@@ -29087,6 +29117,30 @@ body.apphome {
     display: inline-block;
     color: #3D9ED6;
     text-decoration: underline; }
+
+.charge-cont .sub-disc01 .elem {
+  font-weight: 700;
+  font-size: 1.125rem; }
+
+.sub-depth-txt {
+  position: relative;
+  font-size: 0.75rem;
+  color: #666;
+  padding: 1rem 1rem 1rem 2.125rem;
+  line-height: 170%; }
+  .sub-depth-txt:before {
+    position: absolute;
+    left: 1rem;
+    top: 16px;
+    display: block;
+    content: "";
+    width: 1.125rem;
+    height: 1.125rem;
+    background: url(/img/ico/bg-dot2.png) no-repeat center center;
+    background-size: 3px 3px; }
+  .sub-depth-txt a {
+    display: inline-block;
+    margin-left: -0.3125rem !important; }
 
 /* 김효진 */
 /* 나은별 */
