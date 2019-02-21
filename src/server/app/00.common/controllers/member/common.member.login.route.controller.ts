@@ -20,7 +20,7 @@ class CommonMemberLoginRoute extends TwViewController {
     if ( !FormatHelper.isEmpty(query.error) ) {
       res.redirect('/common/member/login/fail?errorCode=' + query.error_description + '&target=' + params.target);
     } else {
-      res.render('member/common.member.login.route.html', params);
+      res.render('member/common.member.login.route.html', { params, svcInfo });
     }
   }
 
