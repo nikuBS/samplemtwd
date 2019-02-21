@@ -13,6 +13,7 @@ Tw.ProductMobileplanSettingLocation = function(rootEl, options, showNumberSettin
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
+  this._maskingComp = null;
 
   this._init();
   this._bindEvent();
@@ -45,6 +46,17 @@ Tw.ProductMobileplanSettingLocation.prototype = {
 
     $('#fe-prev-step').click($.proxy(this._onclickBtnClose, this));
 
+    $('#tab2').on('click', $.proxy(this._setNumTab, this));
+  },
+
+  /**
+   * 지정번호 텝 선택시
+   * @private
+   */
+  _setNumTab: function(){
+    if(!this._maskingComp){
+      this._maskingComp = new Tw.MaskingComponent();
+    }
   },
 
   /**
