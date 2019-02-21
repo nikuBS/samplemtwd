@@ -238,6 +238,9 @@ Tw.MenuComponent.prototype = {
   },
   _checkAndClose: function () {
     if ( window.location.hash.indexOf('menu') === -1 && this._isOpened ) {
+      if (this.$container.find('.fe-menu-section').hasClass('none')) {
+        this._menuSearchComponent && this._menuSearchComponent.cancelSearch();
+      }
       this.$closeBtn.click();
     }
   },
@@ -383,10 +386,14 @@ Tw.MenuComponent.prototype = {
                     return;
                   }
                   var total = info.useAmtTot ? parseInt(info.useAmtTot, 10) : 0;
-                  var month =
-                    parseInt(info.invDt.match(/\d\d\d\d(\d\d)\d\d/)[1], 10) + Tw.DATE_UNIT.MONTH_S;
-                  $(elem).text(
-                    month + ' ' + Tw.FormatHelper.convNumFormat(total) + Tw.CURRENCY_UNIT.WON);
+                  var month = info.invDt.match(/\d\d\d\d(\d\d)\d\d/);
+                  if (month) {
+                    month = parseInt(month[1], 10) + Tw.DATE_UNIT.MONTH_S;
+                    $(elem).text(
+                      month + ' ' + Tw.FormatHelper.convNumFormat(total) + Tw.CURRENCY_UNIT.WON);
+                  } else {
+                    $(elem).remove();
+                  }
                 } else {
                   $(elem).remove();
                 }

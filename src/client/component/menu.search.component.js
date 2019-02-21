@@ -42,7 +42,7 @@ Tw.MenuSearchComponent.prototype = {
     return '<li><a class="category-type fe-replace" href="' + href + '"><span class="text">' +
       title + '</span></a></li>';
   },
-  _cancelSearch: function () {
+  cancelSearch: function () {
     this.$searchInput.val('');
     this.$container.find('.fe-menu-section').removeClass('none');
     this.$container.find('.fe-search-section').addClass('none');
