@@ -28,6 +28,7 @@ Tw.CommonSearchMain.prototype = {
     this._onInput = false;
     this._recentlyKeywordInit();
     this._bindPopupElementEvt();
+    this._platForm = Tw.BrowserHelper.isApp()?'app':'web';
     new Tw.XtractorService(this.$container);
     //this.$container.find('#recently_keyword_layer').removeClass('none').hide();
   },
@@ -37,15 +38,21 @@ Tw.CommonSearchMain.prototype = {
       return;
     }
     this._selectShowLayer();
-    if(this.$inputElement.val().trim().length<=0){
+    var requestKeyword = this.$inputElement.val();
+    if(requestKeyword.trim().length<=0){
       return;
     }
-    var requestParam = { query : encodeURI(this.$inputElement.val()) };
+    var requestParam = { query : encodeURI(requestKeyword) };
+    var autoCompleteArr = this._getRecentKeywordByInitial(requestKeyword);
     this._apiService.request(Tw.API_CMD.SEARCH_AUTO_COMPLETE,requestParam)
       .done($.proxy(function (res) {
         this.$autoCompleteList.empty();
         if(res.code===0&&res.result.length>0){
-          _.each(res.result[0].items,$.proxy(this._showAutoCompleteKeyword,this));
+          _.each(res.result[0].items,$.proxy(function (data) {
+            autoCompleteArr.push(this._convertAutoKeywordData(data.hkeyword));
+          },this));
+          autoCompleteArr = Tw.FormatHelper.removeDuplicateElement(autoCompleteArr);
+          _.each(autoCompleteArr,$.proxy(this._showAutoCompleteKeyword,this));
         }
       },this));
   },
@@ -53,7 +60,8 @@ Tw.CommonSearchMain.prototype = {
     if(idx>=10){
       return;
     }
-    this.$autoCompleteList.append(this.$autoCompletetTemplate({listData : this._convertAutoKeywordData(data.hkeyword),xtractorIndex : idx+1}));
+    //this.$autoCompleteList.append(this.$autoCompletetTemplate({listData : this._convertAutoKeywordData(data.hkeyword),xtractorIndex : idx+1}));
+    this.$autoCompleteList.append(this.$autoCompletetTemplate({listData : data ,xtractorIndex : idx+1}));
   },
   _bindPopupElementEvt : function () {
     this.$container.find('.close-area').on('click',$.proxy(this._closeSearch,this));
@@ -123,7 +131,13 @@ Tw.CommonSearchMain.prototype = {
     Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(this._recentlyKeywordListData));
   },
   _addRecentlyKeywordList : function (keyword) {
-    this._recentlyKeywordListData[this._nowUser].push({ keyword : keyword, searchTime : moment().format('YY.M.D.')});
+    this._recentlyKeywordListData[this._nowUser].push(
+      {
+        keyword : keyword,
+        searchTime : moment().format('YY.M.D.'),
+        platForm : this._platForm,
+        initial : Tw.StringHelper.getKorInitialChar(keyword)
+      });
     while (this._recentlyKeywordListData[this._nowUser].length>10){
       this._recentlyKeywordListData[this._nowUser].shift();
     }
@@ -187,6 +201,26 @@ Tw.CommonSearchMain.prototype = {
       ++this._step;
     }
     this._historyService.go(this._step*-1);
+  },
+  _getRecentKeywordByInitial : function (keyword) {
+    var returnData = [];
+    for(var i=0;i<this._recentlyKeywordListData[this._nowUser].length;i++){
+      if(this._recentlyKeywordListData[this._nowUser][i].keyword.indexOf(keyword)>-1||
+        (!Tw.FormatHelper.isEmpty(this._recentlyKeywordListData[this._nowUser][i].initial)&&this._recentlyKeywordListData[this._nowUser][i].initial.indexOf(keyword)>-1)){
+        if(
+          this._nowUser==='logOutUser'&&
+          !Tw.FormatHelper.isEmpty(this._recentlyKeywordListData[this._nowUser][i].platForm)&&
+          this._platForm!==this._recentlyKeywordListData[this._nowUser][i].platForm
+        ){
+          continue;
+        }
+        returnData.push({
+          showStr : this._recentlyKeywordListData[this._nowUser][i].keyword.replace(new RegExp(keyword,'g'),'<span class="highlight-text">'+keyword+'</span>'),
+          linkStr : this._recentlyKeywordListData[this._nowUser][i].keyword
+        });
+      }
+    }
+    return returnData;
   }
 
 

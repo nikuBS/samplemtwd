@@ -77,6 +77,21 @@ Tw.StringHelper = (function () {
     return src;
   };
 
+  var getKorInitialChar = function (targetStr) {
+    var initialArr = Tw.KOR_INITIAL_CHAR_ARR;
+    var result = '';
+    var code;
+    for(var i=0;i<targetStr.length;i++) {
+      code = targetStr.charCodeAt(i)-44032;
+      if(code>-1 && code<11172){
+        result += initialArr[Math.floor(code/588)];
+      }else{
+        result += targetStr.charAt(i);
+      }
+    }
+    return result;
+  };
+
   return {
     replaceAt: replaceAt,
     masking: masking,
@@ -84,6 +99,7 @@ Tw.StringHelper = (function () {
     replaceDateNotaionWithDot: replaceDateNotaionWithDot,
     parseCommaedStringToInt: parseCommaedStringToInt,
     phoneStringToDash: phoneStringToDash,
-    stringf : stringf
+    stringf : stringf,
+    getKorInitialChar : getKorInitialChar
   };
 })();

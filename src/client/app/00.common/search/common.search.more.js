@@ -23,6 +23,7 @@ Tw.CommonSearchMore = function (rootEl,searchInfo,svcInfo,cdn,accessQuery,step) 
 
 Tw.CommonSearchMore.prototype = {
   _init : function (searchInfo,category) {
+    this._platForm = Tw.BrowserHelper.isApp()?'app':'web';
     if(searchInfo.search.length<=0){
       return;
     }
@@ -123,7 +124,11 @@ Tw.CommonSearchMore.prototype = {
       //makin nowUser's recentlySearchKeyword based on svcMgmtNum
       recentlyKeywordData[userId] = [];
     }
-    recentlyKeywordData[userId].push({ keyword : keyword, searchTime : moment().format('YY.M.D.')});
+    recentlyKeywordData[userId].push({
+      keyword : keyword, searchTime : moment().format('YY.M.D.'),
+      platForm : this._platForm,
+      initial : Tw.StringHelper.getKorInitialChar(keyword)
+    });
     while (recentlyKeywordData[userId].length>10){
       recentlyKeywordData[userId].shift();
     }
@@ -153,11 +158,11 @@ Tw.CommonSearchMore.prototype = {
   },
   _showSelectFilter : function () {
     var listData = [
-      {value : '추천순' , option : this._searchInfo.search[0].direct.sort==='R'?'checked':'' , attr : 'data-type="R"'},
-      {value : '인기순' , option : this._searchInfo.search[0].direct.sort==='P'?'checked':'' , attr : 'data-type="P"'},
-      {value : '최신순' , option : this._searchInfo.search[0].direct.sort==='D'?'checked':'' , attr : 'data-type="D"'},
-      {value : '낮은 가격순' , option : this._searchInfo.search[0].direct.sort==='H'?'checked':'' , attr : 'data-type="H"'},
-      {value : '높은 가격순' , option : this._searchInfo.search[0].direct.sort==='L'?'checked':'' , attr : 'data-type="L"'}
+      {value : Tw.SEARCH_FILTER_STR.RECOMMEND , option : this._searchInfo.search[0].direct.sort==='R'?'checked':'' , attr : 'data-type="R"'},
+      {value : Tw.SEARCH_FILTER_STR.POP , option : this._searchInfo.search[0].direct.sort==='P'?'checked':'' , attr : 'data-type="P"'},
+      {value : Tw.SEARCH_FILTER_STR.NEW , option : this._searchInfo.search[0].direct.sort==='D'?'checked':'' , attr : 'data-type="D"'},
+      {value : Tw.SEARCH_FILTER_STR.LOW , option : this._searchInfo.search[0].direct.sort==='L'?'checked':'' , attr : 'data-type="L"'},
+      {value : Tw.SEARCH_FILTER_STR.HIGH , option : this._searchInfo.search[0].direct.sort==='H'?'checked':'' , attr : 'data-type="H"'}
     ];
     this._popupService.open({
         hbs: 'actionsheet_select_a_type',
@@ -177,7 +182,10 @@ Tw.CommonSearchMore.prototype = {
       changeFilterUrl+='&in_keyword='+this._accessQuery.in_keyword;
     }
     changeFilterUrl+='&step='+(Number(this._step)+1);
-    this._historyService.goLoad(changeFilterUrl);
+    this._popupService.close();
+    setTimeout($.proxy(function () {
+      this._historyService.goLoad(changeFilterUrl);
+    },this));
   },
   _goLink : function (linkEvt) {
     linkEvt.preventDefault();

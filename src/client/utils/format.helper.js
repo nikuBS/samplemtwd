@@ -465,6 +465,22 @@ Tw.FormatHelper = (function () {
     return regNumber.test(number);
   }
 
+  function removeDuplicateElement(targetArr) {
+    var returnArr = [];
+    targetArr.forEach(function(itm) {
+      var unique = true;
+      returnArr.forEach(function(itm2) {
+        if(_.isEqual(itm, itm2)){
+          unique = false;
+        }
+      });
+      if(unique){
+        returnArr.push(itm);
+      }
+    });
+    return returnArr;
+  }
+
   return {
     leadingZeros: leadingZeros,
     isEmpty: isEmpty,
@@ -506,6 +522,7 @@ Tw.FormatHelper = (function () {
     dataURLtoFile: dataURLtoFile,
     isNumber: isNumber,
     addLineCommonPhoneNumberFormat : addLineCommonPhoneNumberFormat,
-    isPhoneNum : isPhoneNum
+    isPhoneNum : isPhoneNum,
+    removeDuplicateElement : removeDuplicateElement
   };
 })();
