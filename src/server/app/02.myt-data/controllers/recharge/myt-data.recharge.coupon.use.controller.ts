@@ -51,7 +51,7 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
     ['NA00004705', 0],
     ['NA00005957', 15], // T plan large
     ['NA00005958', 20], // T plan family
-    ['NA00006155', 15]
+    ['NA00006157', 15] // 0 plan large
   ]);
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
