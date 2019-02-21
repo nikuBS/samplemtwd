@@ -65,7 +65,7 @@ class MyTJoinWireASDetail extends TwViewController {
           data['svcNm'] = svcNm;
           data['stNm'] = stNm;
           data['troubleDetail'] = troubleDetail;
-          data['operSchdDtm'] = DateHelper.getFullDateAndTimeWithDot(data['operSchdDtm']);
+          data['operSchdDtm'] = DateHelper.getFullDateAndTime(data['operSchdDtm']);
           data['cntcNum'] = StringHelper.phoneStringToDash(data['cntcNum']);
 
           const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: data};

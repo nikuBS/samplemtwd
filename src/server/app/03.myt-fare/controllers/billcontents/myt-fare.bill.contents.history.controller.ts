@@ -59,7 +59,7 @@ class MyTFareBillContentsHistory extends TwViewController {
         data.useConAmtDetailList.reverse().map((o, index) => {
           o.listId = index; 
           o.useServiceNm = o.useServiceNm || o.payFlag; 
-          o.FullDate = DateHelper.getShortDateAndTimeWithDot(o.payTime);
+          o.FullDate = DateHelper.getFullDateAndTime(o.payTime);
           o.useAmt = FormatHelper.addComma(o.useCharge); // 이용금액
           o.dedAmt = FormatHelper.addComma(o.deductionCharge); // 공제금액
         });

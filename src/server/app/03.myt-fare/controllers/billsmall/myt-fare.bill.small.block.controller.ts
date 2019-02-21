@@ -39,8 +39,8 @@ class MyTFareBillSmallHistoryDetail extends TwViewController {
           const plainTime = o.useDt.replace(/-/gi, '').replace(/:/gi, '').replace(/ /gi, ''); // YYYY-MM-DD hh:mm--> YYYYMMDDhhmm
           const plainApply = o.applyMonth.replace(/-/gi, ''); // YYYY-MM-DD hh:mm--> YYYYMMDDhhmm
           o.listId = index;
-          o.FullDate = DateHelper.getShortMonthDate(plainTime);
-          o.applyDate = DateHelper.getShortMonthDate(plainApply);
+          o.FullDate = DateHelper.getShortDate(plainTime);
+          o.applyDate = DateHelper.getShortDate(plainApply);
           // API 에서 cpState를 받아올 수 없음 기준일로 판단
           o.cpState = (parseFloat(DateHelper.getCurrentShortDate(DateHelper.getNextMonth())) > parseFloat(plainApply)) ? 'A0' : 'A1';
           o.blockState = MYT_FARE_HISTORY_MICRO_BLOCK_TYPE[o.cpState];

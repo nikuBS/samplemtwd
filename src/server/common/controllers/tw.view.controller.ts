@@ -274,7 +274,7 @@ abstract class TwViewController {
       });
       if ( !FormatHelper.isEmpty(findBlock) ) {
         const blockUrl = findBlock.url || '/common/util/service-block';
-        res.redirect(blockUrl);
+        res.redirect(blockUrl + '?fromDtm=' + findBlock.fromDtm + '&toDtm=' + findBlock.toDtm );
         return true;
       }
     }
