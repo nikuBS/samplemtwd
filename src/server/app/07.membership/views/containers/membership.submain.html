@@ -50,7 +50,7 @@
             <!-- .cont-box -->
 
             <% if(isLogin && svcInfo.loginType === 'T') { %>
-            <% const checkData = membershipCheckData; %>
+            <% const checkData = membershipCheckData.joinCheckData; %>
             <% if ( checkData.cardCreatableYn === 'N') { %>
             <div class="cont-box nogaps-top">
                 <div class="card-wrap">
@@ -84,6 +84,13 @@
                 </div>
             </div>
             <% } else { %>
+            <% if (membershipCheckData.joinYn === 'N') { %>
+            <div class="cont-box nogaps-hoz"><!--2019.02.19 수정-->
+                <div class="card-wrap">
+                    <button class="solid-link fe-membership-grade">T멤버십 카드/등급 안내<i class="ico"></i></button>
+                </div>
+            </div>
+            <% } else { %>
             <div class="cont-box nogaps-top">
                 <div class="card-wrap">
                     <button class="solid-link fe-membership-grade">T멤버십 카드/등급 안내<i class="ico"></i></button>
@@ -93,6 +100,7 @@
                     </div>
                 </div>
             </div>
+            <% } %>
             <% } %>
             <% } else { %>
             <div class="cont-box nogaps-top">
