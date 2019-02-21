@@ -4,9 +4,7 @@
 * Date: 2018.11.08
 %>
 
-
 <% include ../../components/start.component.html %>
-
 <body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -19,16 +17,7 @@
 <!--// #skip_navigation -->
 <div class="wrap">
     <!-- #header -->
-    <div id="header" class="header-wrap">
-        <%- include('../../../common/views/components/header.component.html', { title: '자동로밍', svcInfo: svcInfo }); %>
-        <!--<div class="header">-->
-            <!--<div class="header-ti align-l">-->
-                <!--<h1>자동로밍</h1>-->
-            <!--</div>-->
-            <!--<button class="prev-step"><span class="blind">이전으로</span></button>-->
-            <!--<button class="bt-dropdown small" title="회선 선택" aria-haspopup="true">010-87**-13**<span class="ico"></span></button>-->
-        <!--</div>-->
-    <!--</div>-->
+    <%- include('../../../common/views/components/header.component.html', { title: '자동로밍', svcInfo: svcInfo }); %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
