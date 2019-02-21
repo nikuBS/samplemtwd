@@ -546,7 +546,9 @@ Tw.ALERT_MSG_MYT_DATA = {
     CONTENTS: '나만 사용할 수 있는 데이터로 변경됩니다.',
     BUTTON: '변경하기'
   },
-  COMPLETE_CANCEL: '취소가 완료되었습니다.'
+  COMPLETE_CANCEL: '취소가 완료되었습니다.',
+  ALERT_2_A210: '자동 알람 서비스가 해제되었습니다',
+  ALERT_2_A220: '자동 알람 서비스를 해제하시겠습니까?'
 };
 
 Tw.VALIDATE_MSG_MYT_DATA = {

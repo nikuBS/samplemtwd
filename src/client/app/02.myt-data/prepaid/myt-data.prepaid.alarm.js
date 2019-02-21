@@ -192,7 +192,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
   _requestAlarmSetting: function () {
     var htParams = {};
     if ( this.typeCd === '0' ) {
-      this._requestAlarm();
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A220, null, null, $.proxy(this._requestAlarm, this));
 
     } else if ( this.typeCd === '1' ) {
       htParams = $.extend(htParams, {
@@ -237,7 +237,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
   _requestAlarm: function (htParams) {
     if ( this.typeCd === '0' ) {
       this._apiService.request(Tw.API_CMD.BFF_06_0076, {})
-        .done($.proxy(this._onCompleteAlarm, this));
+        .done($.proxy(this._onCompleteUnsubscribeAlarm, this));
     } else {
       if ( this._isCancel ) {
         this._apiService.request(Tw.API_CMD.BFF_06_0064, htParams)
@@ -252,6 +252,19 @@ Tw.MyTDataPrepaidAlarm.prototype = {
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
+  },
+
+  _onCompleteUnsubscribeAlarm: function (res) {
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A210, null, null, $.proxy(this._gotoSubmain, this));
+    } else {
+      Tw.Error(res.code, res.msg).pop();
+    }
+  },
+
+  _gotoSubmain: function () {
+    this._popupService.close();
+    this._historyService.replaceURL('/myt-data/submain');
   },
 
   _stepBack: function () {
