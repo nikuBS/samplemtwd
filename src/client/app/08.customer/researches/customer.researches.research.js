@@ -148,7 +148,9 @@ Tw.CustomerResearch.prototype = {
 
   _submitResearch: function() {
     // submit
+    this._setAnswer();
     var values = Object.values(this._answers);
+
     this._apiService
       .request(Tw.API_CMD.BFF_08_0036, {
         qstnId: this.$container.data('research-id'),
@@ -162,18 +164,14 @@ Tw.CustomerResearch.prototype = {
     if (resp.code === Tw.API_CODE.CODE_00) {
       switch (resp.result) {
         case 'DUPLICATE':
-          this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A01, undefined, undefined, this._goBack);
+          this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A01, undefined, undefined, this._popupService.close);
           break;
         case 'SUCCESS':
-          this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A02, undefined, undefined, this._goBack);
+          this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A02, undefined, undefined, this._popupService.close);
           break;
       }
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
-  },
-
-  _goBack: function() {
-    window.history.back();
   }
 };
