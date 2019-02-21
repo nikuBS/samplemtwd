@@ -20,9 +20,8 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
   _bindEvent: function() {
     // this.$container.on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
     this.$container.on('click', '.list-comp-input li', $.proxy(this._handleSelectSubject, this));
-    this.$container.on('click', '.round li', $.proxy(this._handleSelectAmount, this));
+    this.$container.on('click', '.small li', $.proxy(this._handleSelectAmount, this));
     this.$container.on('click', '#fe-submit', $.proxy(this._handleSubmitShare, this));
-    this.$container.on('click', '.btn-more', $.proxy(this._showAllAmounts, this));
   },
 
   _handleSelectSubject: function(e) {
@@ -83,11 +82,6 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
 
   _closeCompletePopup: function() {
     history.back();
-  },
-
-  _showAllAmounts: function(e) {
-    this.$container.find('.round li').removeClass('none');
-    $(e.currentTarget).remove();
   }
 
   // _openCancelPopup: function() {
