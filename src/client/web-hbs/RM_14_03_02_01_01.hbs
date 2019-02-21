@@ -31,13 +31,13 @@
                         <label class="tit" for="flab01">국내 휴대폰 번호<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
                         <div class="inputbox">
                                     <span class="input">
-                                        <input id="flab01" type="text" value="{{data.rominfo.tmp_cntc_num}}" placeholder="휴대폰 번호 (숫자만 입력)" title="국내 연락번호 휴대폰 번호 (숫자만 입력) 입력" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" >
+                                        <input id="flab01" type="text" value="{{data.rominfo.tmp_cntc_num}}" placeholder="숫자만 입력" title="국내 연락번호 휴대폰 번호 (숫자만 입력) 입력" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" >
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                         </div>
                     </li>
                     <li>
-                        <label class="tit" for="flab02">임대시작 일자<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
+                        <label class="tit" for="flab02">임대 시작 일자<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
                         <div class="inputbox date-selcet mt0">
                             <span class="date-type full"><input id="flab02" type="date" value="{{data.rominfo.rental_schd_sta_dtm}}" min="{{data.minDate}}" max="{{data.maxDate}}" title="임대시작 일자 선택"></span>
                         </div>
@@ -49,12 +49,12 @@
                         </div>
                     </li>
                     <li>
-                        <label class="tit" for="flab04">수령장소 선택<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
+                        <label class="tit" for="flab04">수령 장소 선택<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
                         <button id="flab04" class="bt-dropdown big" title="수령장소 선택" aria-haspopup="true" data-center="{{data.rominfo.rental_sale_org_id}}" data-booth="{{data.rominfo.rental_booth_org_id}}">{{data.rominfo.show_rental_sale_org_nm}}<span class="ico"></span></button>
                         <div class="mapimg-area pt10"><img id="fe-receive-img" src="{{cdn}}/img/product/{{data.rominfo.receive_center_img}}.png" alt="{{data.rominfo.rental_sale_org_nm}}"/></div>
                     </li>
                     <li>
-                        <label class="tit" for="flab05">반납장소 선택<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
+                        <label class="tit" for="flab05">반납 장소 선택<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
                         <button id="flab05" class="bt-dropdown big" title="반납장소 선택" aria-haspopup="true" data-center="{{data.rominfo.rtn_sale_org_id}}">{{data.rominfo.show_rtn_sale_org_nm}}<span class="ico"></span></button>
                         <div class="mapimg-area pt10"><img id="fe-return-img" src="{{cdn}}/img/product/{{data.rominfo.return_center_img}}.png" alt="{{data.rominfo.rtn_sale_org_nm}}"/></div>
                     </li>
@@ -74,7 +74,7 @@
             <div class="cont-box nogaps-btm">
                 <h3 class="tx-bold">꼭 확인해 주세요</h3>
                 <ul class="noti-list02">
-                    <li><button id="RM_14_02_01_tip_01" type="button" class="tip-view-btn" title="예약 확인사항 TIP보기">예약 확인 사항<span class="tip-view">TIP</span></button></li>
+                    <li><button id="RM_14_02_01_tip_01" type="button" class="tip-view-btn" title="예약 확인사항 TIP보기">예약 확인사항<span class="tip-view">TIP</span></button></li>
                 </ul>
             </div>
             <!--// .cont-box -->
