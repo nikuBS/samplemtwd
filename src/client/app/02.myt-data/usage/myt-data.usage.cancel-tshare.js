@@ -15,9 +15,9 @@ Tw.MyTDataUsageCancelTshare = function (rootEl, options) {
 
 Tw.MyTDataUsageCancelTshare.prototype = {
   _URL: {
-    MYT_DATA_USAGE: '/myt-data/hotdata'
+    MYT_DATA_USAGE: '/myt-data/hotdata',
+    COMPLETE: '/myt-data/hotdata/cancel-tshare/complete'
   },
-  _COMPLETE_POPUP_HBS: 'DC_01_01_end',
 
   _bindEvent: function () {
     this.$container.on('click', '.btn-cancel-tshare', $.proxy(this._onClickBtnCancelTshare, this));
@@ -31,14 +31,7 @@ Tw.MyTDataUsageCancelTshare.prototype = {
 
   _onDoneCancelTshare: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.open({
-        hbs: this._COMPLETE_POPUP_HBS,
-        layer: true,
-        data: {
-          usimNum: this._options.usimNum,
-          date: Tw.DateHelper.getShortDate(new Date())
-        }
-      }, null, null, this._COMPLETE_POPUP_HBS);
+      this._historyService.replaceURL(this._URL.COMPLETE + '?date=' + Tw.DateHelper.getShortDate(new Date()) + '&usimNum=' + this._options.usimNum);
     } else {
       this._popupService.openAlert(resp.msg, resp.code);
     }

@@ -1,0 +1,71 @@
+<%#
+* FileName: myt-data.usage.cancel-tshare-complete.html
+* Author: 이정민 (skt.p130713@partner.sk.com)
+* Date: 2018.2.21
+%>
+
+<% include ../../components/start.component.html %>
+<% include ../../components/javascript.component.html %>
+
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#contents">본문 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+
+<div class="wrap">
+    <!-- #header -->
+    <div id="header" class="header-wrap">
+    </div>
+    <!--// #header -->
+    <!-- #contents -->
+    <div id="contents" class="container-wrap">
+        <div class="container">
+        </div>
+    </div>
+    <!--// #contents -->
+    <!-- .popup hbs -->
+    <div class="popup-page tw-popup pt0 fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <div class="container">
+                <div class="complete-wrap">
+                    <div class="title-box">
+                        <i class="icon-complete-120"><span class="blind">complete</span></i>
+                        <p class="tx-tit">
+                            <span class="tx-highlight pt10"><em>T데이터 셰어링 유심</em> <br> 해지 완료</span></p>
+                    </div>
+                    <div class="tx-contents">
+                        <div class="basic-list">
+                            <ul>
+                                <li>
+                                    <span class="title">해지일</span>
+                                    <span class="tx-cont"><%= date %></span>
+                                </li>
+                                <li>
+                                    <span class="title">해지 유심 번호</span>
+                                    <span class="tx-cont"><%= usimNum %></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bt-fixed-area">
+            <ul class="bt-slice full">
+                <li><a href="/myt-data/hotdata" role="button" class="btn-floating btn-style2">확인</a></li>
+            </ul>
+        </div>
+        <!--// .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <!-- <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button> -->
+        <!--// .popup-closeBtn -->
+    </div>
+    <!--// .popup hbs -->
+</div>
+
+<% include ../../components/end.component.html %>

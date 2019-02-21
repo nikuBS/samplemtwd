@@ -101,7 +101,11 @@ Tw.MyTDataUsageChildRecharge.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.replaceURL(this._URL.COMPLETE);
     } else {
-      this._popupService.openAlert(resp.msg, resp.code);
+      var msg = resp.msg;
+      if (resp.code === 'RCG0061') {
+          msg = Tw.MYT_DATA_USAGE_CHILD_RECHARGE.ALERT.RCG0061;
+      }
+      this._popupService.openAlert(msg, Tw.POPUP_TITLE.NOTIFY);
     }
   },
 
