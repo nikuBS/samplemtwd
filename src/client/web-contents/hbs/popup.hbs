@@ -7,11 +7,21 @@
             {{#if title}}
             <h5 class="popup-title {{title_type}}" id="alertHeading">{{{breaklines title}}}</h5>
             {{/if}}
+            {{#if btn-close}}
+                <a href="#none" class="{{btn-close}}">닫기</a>
+            {{/if}}
         </div>
         <div class="popup-contents {{notice_has}}" id="alertText">
             <div class="inner-contents">
                 <p class="{{cont_align}}">{{{breaklines contents}}}</p>
             </div>
+            {{#if tooltip_cont}}
+            <ul class="cont-tooltip-li">
+                {{#tooltip_cont}}
+                <li>{{txt}}</li>
+                {{/tooltip_cont}}
+            </ul>
+            {{/if}}
             {{#if link_list}}
             <ul class="link-list">
                 {{#link_list}}
