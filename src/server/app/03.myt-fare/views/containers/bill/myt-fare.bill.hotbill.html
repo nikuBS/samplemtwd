@@ -30,12 +30,12 @@
             <div class="cont-box nogaps">
                 <div class="calling-plan">
                     <% if(locals.child) { %>
-                    <a class="wrap-link" href="/product/callplan/<%= locals.childProdId %>">
+                    <a class="wrap-link" href="/product/callplan?prod_id=<%= locals.childProdId %>">
                         <i class="icon-badge-plan-child mr8"><span class="blind">자녀</span></i>
                         <span class="stit"><%= locals.childProdNm %></span>
                     </a>
                     <% } else {%>
-                    <a class="wrap-link" href="/product/callplan/<%= svcInfo.prodId %>">
+                    <a class="wrap-link" href="/product/callplan?prod_id=<%= svcInfo.prodId %>">
                         <i class="icon-badge-plan-my mr8"><span class="blind">my</span></i>
                         <span class="stit"><%= svcInfo.prodNm %></span>
                     </a>

@@ -226,7 +226,7 @@ Tw.MyTFareBillSmallSetPassword.prototype = {
     }
   },
   _goProductService: function () {
-    this._historyService.goLoad('/product/callplan/' + this.$target.attr('data-cpin'));
+    this._historyService.goLoad('/product/callplan?prod_id=' + this.$target.attr('data-cpin'));
   },
   _onClose: function () {
     // if (this._isChanged()) {

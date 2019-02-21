@@ -577,7 +577,7 @@ Tw.TestMyTFareSubMain.prototype = {
     if ( $moreBtn.length > 0 ) {
       $moreBtn.on('click', $.proxy(function () {
         this._popupService.close();
-        this._historyService.goLoad('/product/callplan/NA00004184');
+        this._historyService.goLoad('/product/callplan?prod_id=NA00004184');
       }, this));
     }
     $closeBtn.on('click', $.proxy(function () {

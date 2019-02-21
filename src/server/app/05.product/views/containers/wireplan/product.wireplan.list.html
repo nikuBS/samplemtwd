@@ -50,7 +50,7 @@
 
                         <% plan.products.map(prod => { %>
                             <div class="plan-compact-info type01">
-                                <a href="/product/callplan/<%= prod.prodId %>">
+                                <a href="/product/callplan?prod_id=<%= prod.prodId %>">
                                     <div class="plan">
                                         <span class="tit"><%= prod.prodNm %></span>
                                         <% if (/^[0-9,]+$/.test(prod.basFeeAmt)) { %>
@@ -85,7 +85,7 @@
                         </div>
                         <% additions.products.map(prod => { %>
                             <div class="plan-compact-info type01">
-                                <a href="/product/callplan/<%= prod.prodId %>">
+                                <a href="/product/callplan?prod_id=<%= prod.prodId %>">
                                     <div class="plan">
                                         <span class="tit"><%= prod.prodNm %></span>
                                         <% if (/^[0-9,]+$/.test(prod.basFeeAmt)) { %>

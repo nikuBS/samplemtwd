@@ -323,7 +323,7 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
       this._historyService.goLoad('/myt-data/familydata');
     } else if (this._tFamilySharingErrCode === this._ERROR_CODE.T_FAMILY_SHARE_NOT_JOINED) {
       // T가족모아 가입 가능한 요금제이나 미가입
-      this._historyService.goLoad('/product/callplan/NA00006031');
+      this._historyService.goLoad('/product/callplan?prod_id=NA00006031');
     }
   },
 
@@ -344,7 +344,7 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     if (this._options.dataSharingJoined === 'Y') {
       this._historyService.goHash('datashare_P');
     } else {
-      // this._historyService.goLoad('/product/callplan/' + this._DATA_SHARING_PROD_ID); // LTE 데이터 함께쓰기 상품원장 상세 페이지로 이동
+      // this._historyService.goLoad('/product/callplan?prod_id=' + this._DATA_SHARING_PROD_ID); // LTE 데이터 함께쓰기 상품원장 상세 페이지로 이동
       this._historyService.goLoad('/common/search?keyword='+Tw.MYT_DATA_TOTAL_SHARING_DATA.SEARCH_KEYWORD);
     }
   },

@@ -15,7 +15,7 @@
 
 <script type="text/x-handlebars-template" id="rate_template">
     <li class="category-type">
-        <a class="link rate-element list-data" href="/product/callplan/{{listData.PRID}}" data-category="rate" data-id="{{listData.DOCID}}"  data-tit="{{removeTag listData.PROD_NM}}">
+        <a class="link rate-element list-data" href="/product/callplan?prod_id={{listData.PRID}}" data-category="rate" data-id="{{listData.DOCID}}"  data-tit="{{removeTag listData.PROD_NM}}">
             <div class="products-titleinfo">
                 <p class="title">{{{listData.PROD_NM}}}</p>
                 <p class="info">
@@ -94,7 +94,7 @@
 
 <script type="text/x-handlebars-template" id="service_template">
     <li class="category-type">
-        <a class="link service-element list-data" href="/product/callplan/{{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="service" data-tit="{{removeTag listData.PROD_NM}}">
+        <a class="link service-element list-data" href="/product/callplan?prod_id={{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="service" data-tit="{{removeTag listData.PROD_NM}}">
             <div class="products-titleinfo">
                 <p class="title">{{{listData.PROD_NM}}}</p>
                 <p class="info">
@@ -121,7 +121,7 @@
 
 <script type="text/x-handlebars-template" id="tv_template">
     <li class="category-type">
-        <a href="/product/callplan/{{listData.PRID}}" class="link tv-element list-data" data-id="{{listData.DOCID}}" data-category="tv" data-tit="{{removeTag listData.PROD_NM}}">
+        <a href="/product/callplan?prod_id={{listData.PRID}}" class="link tv-element list-data" data-id="{{listData.DOCID}}" data-category="tv" data-tit="{{removeTag listData.PROD_NM}}">
             <div class="products-titleinfo">
                 <p class="title">{{{listData.PROD_NM}}}</p>
                 <p class="info">
@@ -142,7 +142,7 @@
 
 <script type="text/x-handlebars-template" id="roaming_template">
     <li class="category-type">
-        <a class="link roaming-element list-data" href="/product/callplan/{{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="roaming" data-tit="{{removeTag listData.PROD_NM}}">
+        <a class="link roaming-element list-data" href="/product/callplan?prod_id={{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="roaming" data-tit="{{removeTag listData.PROD_NM}}">
             <div class="products-titleinfo">
                 <p class="title">{{{listData.PROD_NM}}}</p>
                 <p class="info">
@@ -220,7 +220,7 @@
 
 <script type="text/x-handlebars-template" id="sale_template">
     <li>
-        <button class="list in-img sale-element list-data" type="button" href="/product/callplan/{{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="sale" data-tit="{{removeTag listData.PROD_NM}}">
+        <button class="list in-img sale-element list-data" type="button" href="/product/callplan?prod_id={{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="sale" data-tit="{{removeTag listData.PROD_NM}}">
             <em>{{{listData.PROD_NM}}}</em>
             <p>{{{listData.PROD_SMRY_DESC}}}</p>
             <div>

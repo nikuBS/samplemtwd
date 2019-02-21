@@ -92,7 +92,7 @@
                     <ul class="extraservice-list">
                         <% additions.map(addition => { %>
                         <li class="category-type">
-                            <a class="link" href="/product/callplan/<%= addition.prodId %>">
+                            <a class="link" href="/product/callplan?prod_id=<%= addition.prodId %>">
                                 <div class="products-titleinfo">
                                     <p class="title"><%= addition.prodNm %></p>
                                     <p class="info"><span class="money"><%= addition.basFeeAmt.value %></span><% if (!addition.basFeeAmt.isNaN) { %>원<% } %></p>
