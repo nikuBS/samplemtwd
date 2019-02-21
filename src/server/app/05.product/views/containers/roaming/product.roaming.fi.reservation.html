@@ -325,13 +325,13 @@
                             <label class="tit" for="flab01">국내 휴대폰 번호<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
                             <div class="inputbox">
                                     <span class="input">
-                                        <input id="flab01" type="text" placeholder="휴대폰 번호 (숫자만 입력)" title="국내 연락번호 휴대폰 번호 (숫자만 입력)" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" >
+                                        <input id="flab01" type="text" placeholder="숫자만 입력" title="국내 연락번호 휴대폰 번호 (숫자만 입력)" maxlength="11" onInput="return Tw.InputHelper.inputNumberOnly(this);" >
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                             </div>
                         </li>
                         <li>
-                            <label class="tit" for="flab02">임대시작 일자<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
+                            <label class="tit" for="flab02">임대 시작 일자<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
                             <div class="inputbox date-selcet mt0">
                                 <span class="date-type full"><input id="flab02" type="date" value="<%= formatDate.minDate %>" min="<%= formatDate.minDate %>" max="<%= formatDate.maxDate %>" title="임대시작 일자 선택"></span>
                             </div>
@@ -343,12 +343,12 @@
                             </div>
                         </li>
                         <li>
-                            <label class="tit" for="flab04">수령장소 선택<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
+                            <label class="tit" for="flab04">수령 장소 선택<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
                             <button id="flab04" class="bt-dropdown big" title="수령장소 선택" aria-haspopup="true">인천공항 1터미널 3층 로밍센터(E-F 카운터)<span class="ico"></span></button>
                             <div class="mapimg-area pt10"><img id="fe-receive-img" src="<%= CDN %>/img/product/place-img-01.png" alt="인천공항 1터미널 3층 로밍 센터(E-F 카운터)"/></div>
                         </li>
                         <li>
-                            <label class="tit" for="flab05">반납장소 선택<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
+                            <label class="tit" for="flab05">반납 장소 선택<span class="required-mark2" aria-labelledby="aria-required-01"><span class="blind">필수입력</span>*</span></label>
                             <button id="flab05" class="bt-dropdown big" title="반납장소 선택" aria-haspopup="true">인천공항 1터미널 1층 로밍센터<span class="ico"></span></button>
                             <div class="mapimg-area pt10"><img id="fe-return-img" src="<%= CDN %>/img/product/place-img-01-1.png" alt="인천공항 1터미널 1층 로밍 센터"/></div>
                         </li>
