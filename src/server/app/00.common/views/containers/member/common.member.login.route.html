@@ -6,10 +6,12 @@
 
 <% include ../../components/start.component.html %>
 <!-- body -->
+<body>
+</body>
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CommonMemberLoginRoute('<%= target %>', '<%= type %>');
+    new Tw.CommonMemberLoginRoute('<%= params.target %>', '<%= params.type %>', '<%= svcInfo !== null %>');
   });
 </script>
 <% include ../../components/end.component.html %>
