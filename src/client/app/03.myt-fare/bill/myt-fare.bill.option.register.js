@@ -90,13 +90,14 @@ Tw.MyTFareBillOptionRegister.prototype = {
       url: '/hbs/',
       hbs: 'actionsheet01',
       layer: true,
-      data: Tw.POPUP_TPL.FARE_PAYMENT_CARD_DATE
+      data: Tw.POPUP_TPL.FARE_PAYMENT_CARD_DATE,
+      btnfloating: { 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE }
     }, $.proxy(this._selectPopupCallback, this, $target));
   },
   _selectPopupCallback: function ($target, $layer) {
     var $id = $target.attr('id');
     if (!Tw.FormatHelper.isEmpty($id)) {
-      $layer.find('input[data-value="' + $id + '"]').attr('checked', 'checked');
+      $layer.find('input#' + $id).attr('checked', 'checked');
     }
     $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
   },
