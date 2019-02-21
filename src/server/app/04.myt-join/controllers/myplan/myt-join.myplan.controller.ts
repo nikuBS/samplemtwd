@@ -92,6 +92,7 @@ class MyTJoinMyplan extends TwViewController {
    */
   private _convertWirePlan(wirePlan): any {
     const isNumberBasFeeAmt = !isNaN(Number(wirePlan.basFeeAmt));
+
     return Object.assign(wirePlan, {
       basFeeAmt: isNumberBasFeeAmt && parseInt(wirePlan.basFeeAmt, 10) > 0 ? FormatHelper.addComma(wirePlan.basFeeAmt.toString()) : 0,
       isDisplayFeeAmt: (wirePlan.coClCd === 'T' && wirePlan.basFeeAmt > 0),
@@ -105,14 +106,53 @@ class MyTJoinMyplan extends TwViewController {
    * @private
    */
   private _convertWireDcBenefits(dcBenefits): any {
-    return dcBenefits.map((item) => {
-      return Object.assign(item, {
-        penText: (item.penYn === 'Y') ? MYT_FEEPLAN_BENEFIT.PEN_Y : MYT_FEEPLAN_BENEFIT.PEN_N,
-        dcStaDt: DateHelper.getShortDateWithFormat(item.dcStaDt, 'YYYY.M.D.'),
-        dcEndDt: (item.dcEndDt !== '99991231') ? DateHelper.getShortDateWithFormat(item.dcEndDt, 'YYYY.M.D.')
-            : MYT_FEEPLAN_BENEFIT.ENDLESS,
-        dcVal: item.dcCttClCd === '01' ? FormatHelper.addComma(item.dcVal.toString()) : item.dcVal
+    const dcTypeMoneyList: any = [],
+      dcTypePercentList: any = [];
+
+    dcBenefits.forEach((item) => {
+      if (item.dcCttClCd === '01') {
+        dcTypeMoneyList.push(item);
+        return true;
+      }
+
+      dcTypePercentList.push(item);
+    });
+
+    return [...this._sortByHigher(dcTypeMoneyList), ...this._sortByHigher(dcTypePercentList)]
+      .map((item) => {
+        return this._convertWireDcBenefitItem(item);
       });
+  }
+
+  /**
+   * @param list
+   * @private
+   */
+  private _sortByHigher(list: any): any {
+    return list.sort((itemA, itemB) => {
+      if (itemA.dcVal > itemB.dcVal) {
+        return -1;
+      }
+
+      if (itemA.dcVal < itemB.dcVal) {
+        return 1;
+      }
+
+      return 0;
+    });
+  }
+
+  /**
+   * @param dcBenefitItem
+   * @private
+   */
+  private _convertWireDcBenefitItem(dcBenefitItem: any): any {
+    return Object.assign(dcBenefitItem, {
+      penText: (dcBenefitItem.penYn === 'Y') ? MYT_FEEPLAN_BENEFIT.PEN_Y : MYT_FEEPLAN_BENEFIT.PEN_N,
+      dcStaDt: DateHelper.getShortDateWithFormat(dcBenefitItem.dcStaDt, 'YYYY.M.D.'),
+      dcEndDt: (dcBenefitItem.dcEndDt !== '99991231') ? DateHelper.getShortDateWithFormat(dcBenefitItem.dcEndDt, 'YYYY.M.D.')
+        : MYT_FEEPLAN_BENEFIT.ENDLESS,
+      dcVal: dcBenefitItem.dcCttClCd === '01' ? FormatHelper.addComma(dcBenefitItem.dcVal.toString()) : dcBenefitItem.dcVal
     });
   }
 
