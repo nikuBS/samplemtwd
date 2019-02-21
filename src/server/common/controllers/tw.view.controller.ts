@@ -161,6 +161,9 @@ abstract class TwViewController {
             return;
           }
           if ( isLogin ) {
+            this.loginService.setCookie(COOKIE_KEY.LAYER_CHECK, this.loginService.getNoticeType());
+            this.loginService.setNoticeType('').subscribe();
+
             urlMeta.masking = this.loginService.getMaskingCert(svcInfo.svcMgmtNum);
             if ( loginType.indexOf(svcInfo.loginType) !== -1 ) {
               const urlAuth = urlMeta.auth.grades;
@@ -240,6 +243,7 @@ abstract class TwViewController {
       res.redirect('/common/member/login/fail?errorCode=' + errorCode + '&target=' + target);
     }
   }
+
   private getTargetUrl(url, query) {
     delete query.id_token;
     delete query.stateVal;

@@ -7,12 +7,12 @@
 Tw.LineLayerComponent = function () {
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
+  this._apiService = Tw.Api;
   var layerType = Tw.CommonHelper.getCookie(Tw.COOKIE_KEY.LAYER_CHECK);
   Tw.Logger.info('[LineLayerComponent]', layerType);
 
   if ( !Tw.FormatHelper.isEmpty(layerType) ) {
     this._checkLayerType(layerType);
-    Tw.CommonHelper.setCookie(Tw.COOKIE_KEY.LAYER_CHECK, '');
   }
 };
 
@@ -29,10 +29,13 @@ Tw.LineLayerComponent.prototype = {
       }
     }
   },
-  // _updateNoticeType: function () {
-  //   this._apiService.request(Tw.NODE_CMD.UPDATE_NOTICE_TYPE, {})
-  //     .done($.proxy(this._successUpdateNoticeType, this));
-  // },
+  _updateNoticeType: function () {
+    this._apiService.request(Tw.NODE_CMD.UPDATE_NOTICE_TYPE, {})
+      .done($.proxy(this._successUpdateNoticeType, this));
+  },
+  _successUpdateNoticeType: function(resp) {
+    Tw.CommonHelper.setCookie(Tw.COOKIE_KEY.LAYER_CHECK, '');
+  },
   _openLineResisterPopup: function (layerType) {
     var lineRegisterLayer = new Tw.LineRegisterComponent();
     setTimeout($.proxy(function () {
