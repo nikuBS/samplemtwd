@@ -19,7 +19,7 @@ Tw.MyTFareBillRainbow = function (rootEl) {
 Tw.MyTFareBillRainbow.prototype = {
   _init: function () {
     this.$isOneSelectValid = false;
-    this.$isAutoSelectValid = true;
+    this.$isAutoSelectValid = false;
     this.$isPointValid = false;
 
     this._initVariables('tab1');
@@ -62,7 +62,7 @@ Tw.MyTFareBillRainbow.prototype = {
         this.$payBtn.attr('disabled', 'disabled');
       }
     } else {
-      if (this.$fareSelector.attr('id') !== '') {
+      if (this.$fareSelector.attr('id') !== this.$fareSelector.attr('data-origin-id')) {
         this.$payBtn.removeAttr('disabled');
       } else {
         this.$payBtn.attr('disabled', 'disabled');
@@ -114,14 +114,6 @@ Tw.MyTFareBillRainbow.prototype = {
     $layer.on('change', '.ac-list', $.proxy(this._setSelectedValue, this, $target));
     $layer.on('click', '.fe-popup-close', $.proxy(this._checkSelected, this));
   },
-  _checkSelected: function () {
-    if (Tw.FormatHelper.isEmpty(this.$fareSelector.attr('id'))) {
-      this.$fareSelector.parent().siblings('.fe-error-msg').show();
-      this.$fareSelector.focus();
-      this._setSelectorValidation(false);
-    }
-    this._popupService.close();
-  },
   _setSelectedValue: function ($target, event) {
     var $selectedValue = $(event.target);
     $target.attr('id', $selectedValue.attr('id'));
@@ -139,6 +131,14 @@ Tw.MyTFareBillRainbow.prototype = {
     } else {
       this.$isAutoSelectValid = isValid;
     }
+  },
+  _checkSelected: function () {
+    if (Tw.FormatHelper.isEmpty(this.$fareSelector.attr('id'))) {
+      this.$fareSelector.parent().siblings('.fe-error-msg').show();
+      this.$fareSelector.focus();
+      this._setSelectorValidation(false);
+    }
+    this._popupService.close();
   },
   _checkPoint: function () {
     var isValid = false;

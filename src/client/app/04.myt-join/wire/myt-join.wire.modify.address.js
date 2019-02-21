@@ -11,9 +11,9 @@ Tw.MyTJoinWireModifyAddress = function (rootEl, resData) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 
-  this._history = new Tw.HistoryService(this.$container);
+  this._history = new Tw.HistoryService(rootEl);
   if(this.resData.resDataInfo.coClCd !== 'B'){
-    this._backAlert = new Tw.BackAlert(this.$container);
+    this._backAlert = new Tw.BackAlert(rootEl, true);
   }
 
   this._init();
