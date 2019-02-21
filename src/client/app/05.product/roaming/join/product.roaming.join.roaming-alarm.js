@@ -9,18 +9,23 @@ Tw.ProductRoamingJoinRoamingAlarm = function (rootEl,prodTypeInfo,prodBffInfo,sv
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
-  this._bindElementEvt();
   this._nativeService = Tw.Native;
   this._addedList = [];
-  this._changeList();
   this._prodTypeInfo = JSON.parse(prodTypeInfo);
   this._prodBffInfo = prodBffInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
+  this._init();
 };
 
 Tw.ProductRoamingJoinRoamingAlarm.prototype = {
-
+  _init : function () {
+    if(!Tw.BrowserHelper.isApp()){
+      this.$container.find('#phone_book').hide();
+    }
+    this._bindElementEvt();
+    this._changeList();
+  },
   _bindElementEvt : function () {
     this.$container.on('keyup', '#input_phone', $.proxy(this._activateAddBtn, this));
     this.$container.on('blur', '#input_phone', $.proxy(this._inputBlurEvt, this));
@@ -85,6 +90,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     this._activateConfirmBtn();
     this._clearInput();
     this._changeList();
+    this.$inputElement.blur();
   },
   _changeList : function(){
     this.$container.find('.list-box').remove();
@@ -98,6 +104,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     }else{
       this.$container.find('.list_contents').show();
     }
+    this.$inputElement.blur();
   },
   _showPhoneBook : function () {
     this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._phoneBookCallBack,this));
@@ -110,7 +117,8 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     }
   },
   _activateAddBtn : function (inputEvt) {
-    if(Tw.InputHelper.isEnter(inputEvt)){
+    console.log(inputEvt);
+    if(inputEvt&&Tw.InputHelper.isEnter(inputEvt)){
       this.$addBtn.trigger('click');
     }
     var inputVal = this.$inputElement.val();

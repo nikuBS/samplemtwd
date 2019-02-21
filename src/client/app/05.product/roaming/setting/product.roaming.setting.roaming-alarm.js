@@ -16,12 +16,17 @@ Tw.ProductRoamingSettingRoamingAlarm = function (rootEl,prodTypeInfo,prodBffInfo
   this._svcInfo = svcInfo;
   this._prodId = prodId;
   this._apiService = Tw.Api;
-  this._bindElementEvt();
+  this._init();
   //this._changeList();
 };
 
 Tw.ProductRoamingSettingRoamingAlarm.prototype = {
-
+  _init : function () {
+    if(!Tw.BrowserHelper.isApp()){
+      this.$container.find('#phone_book').hide();
+    }
+    this._bindElementEvt();
+  },
   _bindElementEvt : function () {
     this.$container.on('click','.fe-btn_del_num',$.proxy(this._removeEvt,this));
     this.$inputElement = this.$container.find('#input_phone');
@@ -114,7 +119,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
     }
   },
   _activateAddBtn : function (inputEvt) {
-    if(Tw.InputHelper.isEnter(inputEvt)){
+    if(inputEvt&&Tw.InputHelper.isEnter(inputEvt)){
       this.$addBtn.trigger('click');
     }
     var inputVal = this.$inputElement.val();

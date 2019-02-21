@@ -16,15 +16,19 @@ Tw.ProductRoamingJoinRoamingCombine = function (rootEl,prodRedisInfo,prodBffInfo
   this._svcInfo = svcInfo;
   this._prodId = prodId;
   this._apiService = Tw.Api;
-  this._bindElementEvt();
   this._addedList = this._sortingSettingData(this._prodBffInfo.togetherMemList);
-  this._changeList();
+  this._init();
 
 };
 
 Tw.ProductRoamingJoinRoamingCombine.prototype = {
-
-
+  _init : function () {
+    if(!Tw.BrowserHelper.isApp()){
+      this.$container.find('#phone_book').hide();
+    }
+    this._bindElementEvt();
+    this._changeList();
+  },
   _bindElementEvt : function () {
     this.$container.on('keyup', '#input_phone', $.proxy(this._activateAddBtn, this));
     this.$container.on('focus', '#input_phone', $.proxy(this._inputFocusEvt, this));
@@ -32,7 +36,7 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
     this.$container.on('click', '#phone_book', $.proxy(this._showPhoneBook, this));
     this.$container.on('click', '#add_list', $.proxy(this._addPhoneNumOnList, this));
     this.$container.on('click','.cancel',$.proxy(this._clearInput,this));
-    this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._historyService.go,this._historyService,-4));
+    this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._historyService.goBack,this._historyService));
     this.$inputElement = this.$container.find('#input_phone');
     this.$addBtn = this.$container.find('#add_list');
     this.$confirmBtn = this.$container.find('#confirm_info');
@@ -121,7 +125,7 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
     }
   },
   _activateAddBtn : function (inputEvt) {
-    if(Tw.InputHelper.isEnter(inputEvt)){
+    if(inputEvt&&Tw.InputHelper.isEnter(inputEvt)){
       this.$addBtn.trigger('click');
     }
     var inputVal = this.$inputElement.val();
