@@ -386,10 +386,14 @@ Tw.MenuComponent.prototype = {
                     return;
                   }
                   var total = info.useAmtTot ? parseInt(info.useAmtTot, 10) : 0;
-                  var month =
-                    parseInt(info.invDt.match(/\d\d\d\d(\d\d)\d\d/)[1], 10) + Tw.DATE_UNIT.MONTH_S;
-                  $(elem).text(
-                    month + ' ' + Tw.FormatHelper.convNumFormat(total) + Tw.CURRENCY_UNIT.WON);
+                  var month = info.invDt.match(/\d\d\d\d(\d\d)\d\d/);
+                  if (month) {
+                    month = parseInt(month[1], 10) + Tw.DATE_UNIT.MONTH_S;
+                    $(elem).text(
+                      month + ' ' + Tw.FormatHelper.convNumFormat(total) + Tw.CURRENCY_UNIT.WON);
+                  } else {
+                    $(elem).remove();
+                  }
                 } else {
                   $(elem).remove();
                 }
