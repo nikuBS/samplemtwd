@@ -121,6 +121,9 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
     }
   },
   _activateAddBtn : function (inputEvt) {
+    if(Tw.InputHelper.isEnter(inputEvt)){
+      this.$addBtn.trigger('click');
+    }
     var inputVal = this.$inputElement.val();
     var numReg = /[^0-9]/g;
     if(inputVal.length>0&&numReg.test(inputVal)){
