@@ -31,7 +31,7 @@ Tw.BenefitMyBenefit.prototype = {
 
   _onClickPay: function () {
     this._popupService.open({
-      hbs: 'actionsheet01',
+      hbs: 'actionsheet04',
       layer: true,
       btnfloating: { 'attr': 'type="button" data-role="fe-bt-close"', 'txt': '닫기' },
       data: [{
