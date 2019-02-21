@@ -1549,7 +1549,7 @@ body.apphome {
   position: relative;
   width: 13.5rem;
   height: 13.5rem;
-  background: url(/img/ico/bg-donut.png) no-repeat 0 0;
+  background: url(/img/main/bg-donut.png) no-repeat 0 0;
   background-size: 100% 100%;
   /* color code */
   /* size small */ }
@@ -1566,6 +1566,25 @@ body.apphome {
     width: 100%;
     height: 100%;
     border-radius: 50%; }
+  .donut-chart .dot {
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: url(/img/main/bg_dot.png) no-repeat 0 0;
+    background-size: 100%; }
+  .donut-chart .highlight {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 9;
+    background: url(/img/main/graph_highlight.png) no-repeat 0 0;
+    background-size: 100%; }
   .donut-chart .c100.p51 .slice, .donut-chart .c100.p52 .slice, .donut-chart .c100.p53 .slice, .donut-chart .c100.p54 .slice, .donut-chart .c100.p55 .slice, .donut-chart .c100.p56 .slice, .donut-chart .c100.p57 .slice, .donut-chart .c100.p58 .slice, .donut-chart .c100.p59 .slice, .donut-chart .c100.p60 .slice, .donut-chart .c100.p61 .slice, .donut-chart .c100.p62 .slice, .donut-chart .c100.p63 .slice, .donut-chart .c100.p64 .slice, .donut-chart .c100.p65 .slice, .donut-chart .c100.p66 .slice, .donut-chart .c100.p67 .slice, .donut-chart .c100.p68 .slice, .donut-chart .c100.p69 .slice, .donut-chart .c100.p70 .slice, .donut-chart .c100.p71 .slice, .donut-chart .c100.p72 .slice, .donut-chart .c100.p73 .slice, .donut-chart .c100.p74 .slice, .donut-chart .c100.p75 .slice, .donut-chart .c100.p76 .slice, .donut-chart .c100.p77 .slice, .donut-chart .c100.p78 .slice, .donut-chart .c100.p79 .slice, .donut-chart .c100.p80 .slice, .donut-chart .c100.p81 .slice, .donut-chart .c100.p82 .slice, .donut-chart .c100.p83 .slice, .donut-chart .c100.p84 .slice, .donut-chart .c100.p85 .slice, .donut-chart .c100.p86 .slice, .donut-chart .c100.p87 .slice, .donut-chart .c100.p88 .slice, .donut-chart .c100.p89 .slice, .donut-chart .c100.p90 .slice, .donut-chart .c100.p91 .slice, .donut-chart .c100.p92 .slice, .donut-chart .c100.p93 .slice, .donut-chart .c100.p94 .slice, .donut-chart .c100.p95 .slice, .donut-chart .c100.p96 .slice, .donut-chart .c100.p97 .slice, .donut-chart .c100.p98 .slice, .donut-chart .c100.p99 .slice, .donut-chart .c100.p100 .slice {
     clip: rect(auto, auto, auto, auto); }
   .donut-chart .c100 .bar, .donut-chart .c100.p51 .fill, .donut-chart .c100.p52 .fill, .donut-chart .c100.p53 .fill, .donut-chart .c100.p54 .fill, .donut-chart .c100.p55 .fill, .donut-chart .c100.p56 .fill, .donut-chart .c100.p57 .fill, .donut-chart .c100.p58 .fill, .donut-chart .c100.p59 .fill, .donut-chart .c100.p60 .fill, .donut-chart .c100.p61 .fill, .donut-chart .c100.p62 .fill, .donut-chart .c100.p63 .fill, .donut-chart .c100.p64 .fill, .donut-chart .c100.p65 .fill, .donut-chart .c100.p66 .fill, .donut-chart .c100.p67 .fill, .donut-chart .c100.p68 .fill, .donut-chart .c100.p69 .fill, .donut-chart .c100.p70 .fill, .donut-chart .c100.p71 .fill, .donut-chart .c100.p72 .fill, .donut-chart .c100.p73 .fill, .donut-chart .c100.p74 .fill, .donut-chart .c100.p75 .fill, .donut-chart .c100.p76 .fill, .donut-chart .c100.p77 .fill, .donut-chart .c100.p78 .fill, .donut-chart .c100.p79 .fill, .donut-chart .c100.p80 .fill, .donut-chart .c100.p81 .fill, .donut-chart .c100.p82 .fill, .donut-chart .c100.p83 .fill, .donut-chart .c100.p84 .fill, .donut-chart .c100.p85 .fill, .donut-chart .c100.p86 .fill, .donut-chart .c100.p87 .fill, .donut-chart .c100.p88 .fill, .donut-chart .c100.p89 .fill, .donut-chart .c100.p90 .fill, .donut-chart .c100.p91 .fill, .donut-chart .c100.p92 .fill, .donut-chart .c100.p93 .fill, .donut-chart .c100.p94 .fill, .donut-chart .c100.p95 .fill, .donut-chart .c100.p96 .fill, .donut-chart .c100.p97 .fill, .donut-chart .c100.p98 .fill, .donut-chart .c100.p99 .fill, .donut-chart .c100.p100 .fill {
@@ -2611,17 +2630,9 @@ body.apphome {
       font-weight: 700; }
     .main-charge-box .main-box-cont .tx {
       font-weight: 300;
-      overflow: hidden;
-      display: -webkit-box;
       max-height: 2.375rem;
       line-height: 1.1875rem;
-      white-space: normal;
-      word-wrap: break-word;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      text-overflow: ellipsis;
       margin-top: 5px;
-      padding-right: 7.8125rem;
       font-size: 0.8125rem; }
     .main-charge-box .main-box-cont .bt {
       position: absolute;

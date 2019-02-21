@@ -8,7 +8,7 @@
             <h5 class="popup-title {{title_type}}" id="alertHeading">{{{breaklines title}}}</h5>
             {{/if}}
             {{#if btn-close}}
-                <a href="#none" class="{{btn-close}}">닫기</a>
+                <button type="button" class="{{btn-close}}">닫기</button><!--2019.02.21 a태그 button으로 변경-->
             {{/if}}
         </div>
         <div class="popup-contents {{notice_has}}" id="alertText">

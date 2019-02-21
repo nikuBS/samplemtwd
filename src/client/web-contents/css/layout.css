@@ -243,7 +243,6 @@ body.bg-gray {
         transition: transform 0.7s;
         transition: transform 0.7s, -webkit-transform 0.7s; }
         #common-menu .section-userinfo .userinfo .tx.underline {
-          display: block;
           max-width: 185px;
           overflow: hidden;
           white-space: nowrap;
