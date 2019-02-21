@@ -137,8 +137,14 @@ Tw.MyTDataGiftMonthly.prototype = {
 
   _onSuccessUnsubscribeAutoGift: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT_COMPLETE);
-      this._historyService.reload();
+      if ( Tw.BrowserHelper.isApp() ) {
+        Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT_COMPLETE);
+        this._historyService.reload();
+      } else {
+        this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT_COMPLETE, null, null, $.proxy(function(){
+          this._historyService.reload();
+        }, this));
+      }
       return true;
     } else {
       Tw.Error(res.code, res.msg).pop();
