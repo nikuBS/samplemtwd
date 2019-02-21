@@ -9,6 +9,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 import BrowserHelper from '../../../../utils/browser.helper';
+import { REDIS_KEY } from '../../../../types/redis.type';
 
 class CustomerMain extends TwViewController {
   constructor() {
@@ -44,6 +45,12 @@ class CustomerMain extends TwViewController {
         return null;
       }
     })
+
+  // TODO: NOT YET VERIFIED: NOTICE API -> REDIS DATA from <doohj1@sk.com> by SMS
+  // private getBanners = () => this.redisService.getData(REDIS_KEY.SUBMAIN_BANNER)
+  //   .map((resp) => {
+  //     return resp.result;
+  //   })
 
   private getResearch = () => this.apiService.request(API_CMD.BFF_08_0025, {})
     .map((res) => {

@@ -20,7 +20,8 @@ export enum REDIS_KEY {
   HOME_NOTI = 'WelcomeMsg:WelcomeMsgList',
   HOME_NOTICE = 'HomeNotice:',
   HOME_HELP = 'HomeCicntsList',
-  MENU_URL = 'MenuUrl:'
+  MENU_URL = 'MenuUrl:',
+  SUBMAIN_BANNER = 'SubmainBanner:'
 }
 
 export enum REDIS_TOS_KEY {
