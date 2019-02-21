@@ -18,7 +18,7 @@ class CommonShareLanding extends TwViewController {
 
     if ( url.indexOf('mtworldapp2://') !== -1 ) {
       const result = ParamsHelper.getQueryParams(url);
-      res.render('share/common.share.landing.html', { result, isLogin: !FormatHelper.isEmpty(svcInfo) });
+      res.render('share/common.share.landing.html', { result, isLogin: !FormatHelper.isEmpty(svcInfo), pageInfo});
     } else {
       res.json(url);
     }
