@@ -175,19 +175,21 @@
 </script>
 
 <script id="direct_template" type="text/x-handlebars-template">
-    <li class="direct-element list-data" href="{{listData.linkUrl}}{{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="direct" data-tit="{{removeTag listData.PRODUCT_NM}}">
-        <div class="img"><img src="{{listData.IMG}}" alt="{{listData.IMG_ALT}}"></div>
-        <div class="cont">
-            <div class="tit">{{{listData.PRODUCT_NM}}}</div>
-            <div class="price">{{currencyComma listData.SALE_PRICE}}원
-                {{#ifCond listData.ALIAS '===' 'shopmobile'}}
-                ~/월
+    <li>
+        <a class="direct-element list-data" href="{{listData.linkUrl}}{{listData.DOCID}}" data-id="{{listData.DOCID}}" data-category="direct" data-tit="{{removeTag listData.PRODUCT_NM}}">
+            <div class="img"><img src="{{listData.IMG}}" alt="{{listData.IMG_ALT}}"></div>
+            <div class="cont">
+                <div class="tit">{{{listData.PRODUCT_NM}}}</div>
+                <div class="price">{{currencyComma listData.SALE_PRICE}}원
+                    {{#ifCond listData.ALIAS '===' 'shopmobile'}}
+                    ~/월
+                    {{/ifCond}}
+                </div>
+                {{#ifCond listData.PRODUCT_PRICE '!==' '0'}}
+                <span class="price2">{{currencyComma listData.PRODUCT_PRICE}}원</span>
                 {{/ifCond}}
             </div>
-            {{#ifCond listData.PRODUCT_PRICE '!==' '0'}}
-            <span class="price2">{{currencyComma listData.PRODUCT_PRICE}}원</span>
-            {{/ifCond}}
-        </div>
+        </a>
     </li>
 </script>
 
@@ -205,9 +207,9 @@
 
 <script id="event_template" type="text/x-handlebars-template">
     <li>
-        <button class="event-datail event-element list-data" title="이벤트 상세페이지 보기" data-id="{{listData.DOCID}}" data-category="event" data-tit="{{removeTag listData.PR_NM}}">
+        <a href="/tevent/detail?id={{listData.DOCID}}" class="event-datail event-element list-data" title="이벤트 상세페이지 보기" data-id="{{listData.DOCID}}" data-category="event" data-tit="{{removeTag listData.PR_NM}}">
             <img src="{{CDN}}{{listData.FILE_PATH}}" alt="{{{removeTag listData.PR_NM}}}">
-        </button>
+        </a>
         <div class="event-info">
             <span class="info-date">{{{listData.PR_STA_DT}}}~{{{listData.PR_END_DT}}}</span>
             {{#ifCond listData.PR_TYP_CD '!==' 'N'}}

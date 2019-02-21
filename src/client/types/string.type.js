@@ -1648,7 +1648,8 @@ Tw.SELECTED_DATE_STRING = {
 Tw.ROAMING_JOIN_STRING = {
   COMBINE_LINE: '자회선 설정하기',
   MY_ROAMING_STATE: '나의 로밍 이용 현황 확인하기',
-  DUPLICATE_LINE: 'T로밍도착알리미 멤버에 이미 존재하는 서비스번호입니다.'
+  DUPLICATE_LINE: 'T로밍도착알리미 멤버에 이미 존재하는 서비스번호입니다.',
+  LINE_NUM : '지정번호 :number회선'
 };
 
 Tw.SETTING_LOCATION = {

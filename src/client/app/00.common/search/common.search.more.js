@@ -28,7 +28,7 @@ Tw.CommonSearchMore.prototype = {
     }
     this._listData =this._arrangeData(searchInfo.search[0][category].data,category);
     //this._showShortcutList(this._listData,this.$container.find('#'+category+'_template'),this.$container.find('#'+category+'_list'));
-    this._showShortcutList(this._listData,$('#'+category+'_template'),this.$container.find('#'+category+'_list'));
+    this._showShortcutList(this._listData,$('#'+category+'_template'),this.$container.find('#'+category+'_list'),this._cdn);
     this.$inputElement =this.$container.find('#keyword');
     this.$inputElement.on('keyup',$.proxy(this._inputChangeEvent,this));
     this.$container.on('click','.icon-historyback-40',$.proxy(this._historyService.goBack,this));
@@ -87,14 +87,14 @@ Tw.CommonSearchMore.prototype = {
     }
     return data;
   },
-  _showShortcutList : function (data,template,$parent) {
+  _showShortcutList : function (data,template,$parent,cdn) {
     var shortcutTemplate = template.html();
     var templateData = Handlebars.compile(shortcutTemplate);
     if(data.length<=0){
       $parent.addClass('none');
     }
     _.each(data,function (listData) {
-      $parent.append(templateData({listData : listData , CDN : this._cdn}));
+      $parent.append(templateData({listData : listData , CDN : cdn}));
     });
   },
   _decodeEscapeChar : function (targetString) {

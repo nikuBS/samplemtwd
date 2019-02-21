@@ -17,13 +17,18 @@ Tw.ProductRoamingSettingRoamingCombine = function (rootEl,prodRedisInfo,prodBffI
   this._svcInfo = svcInfo;
   this._prodId = prodId;
   this._apiService = Tw.Api;
-  this._bindElementEvt();
   this._addedList = this._sortingSettingData(this._prodBffInfo.togetherMemList);
-  this._changeList();
+  this._init();
 };
 
 Tw.ProductRoamingSettingRoamingCombine.prototype = {
-
+  _init : function () {
+    if(!Tw.BrowserHelper.isApp()){
+      this.$container.find('#phone_book').hide();
+    }
+    this._bindElementEvt();
+    this._changeList();
+  },
   _bindElementEvt : function () {
     this.$container.on('keyup', '#input_phone', $.proxy(this._activateAddBtn, this));
     this.$container.on('focus', '#input_phone', $.proxy(this._inputFocusEvt, this));
@@ -122,7 +127,7 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
     }
   },
   _activateAddBtn : function (inputEvt) {
-    if(Tw.InputHelper.isEnter(inputEvt)){
+    if(inputEvt&&Tw.InputHelper.isEnter(inputEvt)){
       this.$addBtn.trigger('click');
     }
     var inputVal = this.$inputElement.val();

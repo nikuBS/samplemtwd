@@ -70,13 +70,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     }else if(this._popupData.joinType==='begin'){
       setingInfo = Tw.DateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcStartDt,this._showDateFormat,this._dateFormat);
     }else if(this._popupData.joinType==='alarm'){
-      for(var i=0;i<this._popupData.userJoinInfo.svcNumList.length;i++){
-        if(i>=2){
-          break;
-        }else{
-          setingInfo = Tw.FormatHelper.getFormattedPhoneNumber(this._popupData.userJoinInfo.svcNumList[i].serviceNumber1+this._popupData.userJoinInfo.svcNumList[i].serviceNumber2+this._popupData.userJoinInfo.svcNumList[i].serviceNumber3);
-        }
-      }
+      setingInfo = Tw.ROAMING_JOIN_STRING.LINE_NUM.replace(':number',this._popupData.userJoinInfo.svcNumList.length);
     }
     this._$popupContainer.find('.term').text(setingInfo);
   },
