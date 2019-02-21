@@ -22,6 +22,7 @@ Tw.CommonSearchNotFound = function (rootEl,svcInfo,surveyList,step,from,keywrod)
 
 Tw.CommonSearchNotFound.prototype = {
   _init : function (from,keywrod) {
+    this._platForm = Tw.BrowserHelper.isApp()?'app':'web';
     this.$container.find('.request_keyword').on('click',$.proxy(this._showClaimPopup,this));
     this.$container.find('.icon-gnb-search').on('click',$.proxy(this._doSearch,this));
     this.$container.find('#search_keyword').on('keyup',$.proxy(this._inputKeyupEvt,this));
@@ -169,7 +170,11 @@ Tw.CommonSearchNotFound.prototype = {
       //makin nowUser's recentlySearchKeyword based on svcMgmtNum
       recentlyKeywordData[userId] = [];
     }
-    recentlyKeywordData[userId].push({ keyword : keyword, searchTime : moment().format('YY.M.D.')});
+    recentlyKeywordData[userId].push({
+      keyword : keyword, searchTime : moment().format('YY.M.D.'),
+      platForm : this._platForm,
+      initial : Tw.StringHelper.getKorInitialChar(keyword)
+    });
     while (recentlyKeywordData[userId].length>10){
       recentlyKeywordData[userId].shift();
     }

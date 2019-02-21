@@ -19,6 +19,7 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from) {
 
 Tw.CommonSearch.prototype = {
   _init : function (from) {
+    this._platForm = Tw.BrowserHelper.isApp()?'app':'web';
     if(from==='menu'&&this._historyService.isReload()===false&&this._historyService.isBack()){
       this._addRecentlyKeyword(this._accessKeyword);
     }
@@ -174,7 +175,11 @@ Tw.CommonSearch.prototype = {
       //makin nowUser's recentlySearchKeyword based on svcMgmtNum
       recentlyKeywordData[userId] = [];
     }
-    recentlyKeywordData[userId].push({ keyword : keyword, searchTime : moment().format('YY.M.D.')});
+    recentlyKeywordData[userId].push({
+      keyword : keyword, searchTime : moment().format('YY.M.D.'),
+      platForm : this._platForm,
+      initial : Tw.StringHelper.getKorInitialChar(keyword)
+    });
     while (recentlyKeywordData[userId].length>10){
       recentlyKeywordData[userId].shift();
     }

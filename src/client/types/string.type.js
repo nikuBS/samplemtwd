@@ -1844,3 +1844,13 @@ Tw.VALIDATION_LABEL = {
   MESSAGE_EMPTY: ' 입력해 주세요.',
   MESSAGE_WRONG: ' 올바르지 않습니다.'
 };
+
+Tw.KOR_INITIAL_CHAR_ARR = ['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+
+Tw.SEARCH_FILTER_STR = {
+  RECOMMEND: '추천순',
+  POP: '인기순',
+  NEW: '최신순',
+  LOW: '낮은 가격순',
+  HIGH: '높은 가격순'
+};
