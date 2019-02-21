@@ -68,17 +68,29 @@ Tw.Init.prototype = {
       key: Tw.NTV_STORAGE.XTVID
     }, $.proxy(function(res) {
       if ( res.resultCode === Tw.NTV_CODE.CODE_00 ) {
+        this._sendXtvId(res.params.value);
         return Tw.CommonHelper.setCookie('XTVID', res.params.value);
       }
 
       var cookie = Tw.CommonHelper.getCookie('XTVID');
       if ( res.resultCode !== Tw.NTV_CODE.CODE_00 && !Tw.FormatHelper.isEmpty(cookie) ) {
+        this._sendXtvId(cookie);
         this._nativeService.send(Tw.NTV_CMD.SAVE, {
           key: Tw.NTV_STORAGE.XTVID,
           value: cookie
         });
       }
     }, this));
+  },
+
+  _sendXtvId: function(xtvId) {
+    var isLog = Tw.CommonHelper.getCookie('XTVID_LOG');
+    if ( !Tw.FormatHelper.isEmpty(isLog) ) {
+      return;
+    }
+
+    this._nativeService.send(Tw.NTV_CMD.SET_XTVID, { xtvId: xtvId });
+    Tw.CommonHelper.setCookie('XTVID_LOG', 'Y');
   },
 
   _setNodeCookie: function () {
