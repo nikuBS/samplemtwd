@@ -12136,14 +12136,15 @@ a.bt-link-tx.underline.small {
       word-break: break-all;
       color: #000;
       font-size: 0.875rem;
-      font-weight: 700;
-      line-height: 1.4; }
+      font-weight: 400;
+      line-height: 1.2; }
     .productinfoscroll-box .product-info .info {
       margin-top: 0.0625rem;
       margin-bottom: 1.75rem;
       color: #f76252;
       font-size: 1rem;
-      min-height: 1.3125rem; }
+      min-height: 1.3125rem;
+      font-weight: 700; }
       .productinfoscroll-box .product-info .info .money {
         display: inline-block;
         margin: 0 0.0625rem 0 0.5rem;
@@ -12154,9 +12155,10 @@ a.bt-link-tx.underline.small {
     .productinfoscroll-box .product-info .type {
       position: absolute;
       bottom: 0.9375rem;
-      height: 16px;
+      height: 1rem;
+      line-height: 1rem;
       padding-left: 1.25rem;
-      background: url(/img/product/icon_32px_data.png) no-repeat 0 2px;
+      background: url(/img/product/icon_32px_data.png) no-repeat 0 0;
       background-size: 0.875rem 0.875rem;
       color: #178bce;
       font-size: 0.8125rem; }
@@ -12462,7 +12464,8 @@ a.bt-link-tx.underline.small {
     padding-bottom: 1.5625rem; }
 
 .suggest-tag-morewrap {
-  margin: 0.625rem -1rem 0; }
+  margin: 0.625rem -1rem 0;
+  padding: 0 1rem; }
   .suggest-tag-morewrap .suggest-tag-more {
     display: block;
     width: 100%;
@@ -19828,7 +19831,8 @@ a.bt-link-tx.underline.small {
   border: none; }
   .add-top-type .type-l {
     top: 1rem;
-    left: 1rem; }
+    left: 1rem;
+    right: auto; }
   .add-top-type .type-r {
     position: relative;
     top: -2px;

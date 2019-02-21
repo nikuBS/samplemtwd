@@ -4510,7 +4510,8 @@ a.ui-button:active,
         .popup .popup-info .popup-header .popup-title.tit-tooltip {
           color: #178bce;
           font-size: 1.125rem;
-          text-align: left; }
+          text-align: left;
+          padding-right: 1.875rem; }
       .popup .popup-info .popup-header .btn-tooltip-close {
         position: absolute;
         right: 4px;
@@ -4541,6 +4542,8 @@ a.ui-button:active,
         word-break: keep-all;
         text-align: center;
         color: #777; }
+      .popup .popup-info .popup-contents .inner-contents .tl p {
+        text-align: left; }
       .popup .popup-info .popup-contents .cont-tooltip-li {
         margin-top: 0.1875rem; }
         .popup .popup-info .popup-contents .cont-tooltip-li li {

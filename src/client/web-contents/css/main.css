@@ -954,7 +954,8 @@
         .popup .popup-info .popup-header .popup-title.tit-tooltip {
           color: #178bce;
           font-size: 1.125rem;
-          text-align: left; }
+          text-align: left;
+          padding-right: 1.875rem; }
       .popup .popup-info .popup-header .btn-tooltip-close {
         position: absolute;
         right: 4px;
