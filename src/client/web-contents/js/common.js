@@ -20,6 +20,11 @@ $(window).on('resize', function () {
   if($(window).width() + $(window).height() === skt_landing._originalSize){
     $('.popup-page').removeClass('focusin');
   }
+  if($(window).width() + $(window).height() != skt_landing._originalSize){
+    $("#gnb.on .g-wrap").css("position","relative");  
+  }else{
+    $("#gnb.on .g-wrap").css("position","fixed");  
+  }
 }).on('scroll', function () {
   for (var fn in scroll_fn) {
     eval(scroll_fn[fn]);

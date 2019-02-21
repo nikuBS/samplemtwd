@@ -4543,7 +4543,7 @@ a.ui-button:active,
         text-align: center;
         color: #777; }
       .popup .popup-info .popup-contents .inner-contents .tl p {
-        text-align: left; }
+        text-align: left !important; }
       .popup .popup-info .popup-contents .cont-tooltip-li {
         margin-top: 0.1875rem; }
         .popup .popup-info .popup-contents .cont-tooltip-li li {
