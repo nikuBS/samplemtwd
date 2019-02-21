@@ -117,7 +117,6 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     }
   },
   _activateAddBtn : function (inputEvt) {
-    console.log(inputEvt);
     if(inputEvt&&Tw.InputHelper.isEnter(inputEvt)){
       this.$addBtn.trigger('click');
     }
