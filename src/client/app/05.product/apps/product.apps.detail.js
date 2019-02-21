@@ -14,6 +14,7 @@ Tw.ProductAppsDetail.prototype = {
     this._app = app;
     this._stores = this._getStoreUrl(app.appStoreLinkBtnList || []);
     this._app.stores = this._stores;
+    this._app.isIos = Tw.BrowserHelper.isIos();
 
     this._params = Tw.UrlHelper.getQueryParams();
     this._images = app.images;
@@ -87,7 +88,6 @@ Tw.ProductAppsDetail.prototype = {
   },
 
   _handleConfirmAppInstalled: function(app, resp) {
-    app.isIos = Tw.BrowserHelper.isIos();
     if (resp.params && resp.params.list) {
       var isInstalled = resp.params.list[0][app.prodNm];
       app.isInstalled = isInstalled || false;
