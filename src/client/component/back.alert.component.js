@@ -4,11 +4,11 @@
  * Date: 2019.02.14
  */
 
-Tw.BackAlert = function (rootEl, isPop) {
+Tw.BackAlert = function (rootEl, isPage) {
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(rootEl);
 
-  this._isPop = isPop;
+  this._isPage = isPage;
   this._isClose = false;
 };
 
@@ -24,7 +24,7 @@ Tw.BackAlert.prototype = {
   _closePop: function () {
     this._isClose = true;
 
-    if (this._isPop) {
+    if (this._isPage) {
       this._popupService.close();
     } else {
       this._popupService.closeAll();
