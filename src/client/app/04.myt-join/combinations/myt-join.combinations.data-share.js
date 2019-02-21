@@ -33,8 +33,9 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
   },
 
   _handleSelectAmount: function(e) {
-    this._selected = e.currentTarget.getAttribute('data-amount');
-    if (!this._enable) {
+    var $target = $(e.currentTarget);
+    this._selected = $target.data('amount');
+    if (!$target.hasClass('disabled') && !this._enable) {
       this.$container.find('#fe-submit').removeAttr('disabled');
       this._enable = true;
     }
