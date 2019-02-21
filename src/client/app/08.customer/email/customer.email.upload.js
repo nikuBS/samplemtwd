@@ -106,15 +106,29 @@ Tw.CustomerEmailUpload.prototype = {
     if ( this._isLowerVersionAndroid() ) {
       this._successUploadFile();
     } else {
-      var formData = new FormData();
-      formData.append('dest', Tw.UPLOAD_TYPE.EMAIL);
+      var uploadQueue = [];
 
-      this.uploadFiles.map(function (file) {
+      var fnMakeUploadForm = function (file) {
+        var formData = new FormData();
+        formData.append('dest', Tw.UPLOAD_TYPE.EMAIL);
         formData.append('file', file);
-      });
 
-      this._apiService.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData)
-        .done($.proxy(this._successUploadFile, this));
+        uploadQueue.push(this._apiService.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData));
+      };
+
+      this.uploadFiles.map($.proxy(fnMakeUploadForm, this));
+
+      var fnSuccessUpload = function () {
+        var res = { code: Tw.API_CODE.CODE_00, result: [] };
+
+        for ( var i = 0; i < arguments.length; i++ ) {
+          res.result = res.result.concat(arguments[i][0].result);
+        }
+
+        this._successUploadFile(res);
+      };
+
+      $.when.apply(undefined, uploadQueue).then($.proxy(fnSuccessUpload, this, arguments));
     }
   },
 
