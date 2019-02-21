@@ -101,7 +101,7 @@ Tw.TooltipService.prototype = {
       'title_type': 'tit-tooltip',
       'cont_align': 'tl',
       'contents': $result.ttipCtt,
-      'btn-close':'btn-tooltip-close'
+      'btn-close':'btn-tooltip-close tw-popup-closeBtn'
     },
       $.proxy(this._onOpen, this),
       $.proxy(this._onClose, this));

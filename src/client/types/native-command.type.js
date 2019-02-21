@@ -36,6 +36,7 @@ Tw.NTV_CMD = {
   SHARE: 'share',
   IS_INSTALLED: 'isAppInstall',
   FREE_SMS: 'freeSMS',
+  SET_XTVID: 'setXtvId',
   SET_XTSVCINFO: 'setXtSvcInfo',
   OPEN_APP: 'openApp',
   SAVE: 'save',
