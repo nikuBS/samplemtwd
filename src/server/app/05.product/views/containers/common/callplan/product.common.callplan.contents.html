@@ -21,19 +21,16 @@
 </div>
 <% } %>
 <% if ( contents.LIST && contents.LIST.length > 0 ) { %>
-<hr class="cont-sp type1" aria-hidden="true"/>
-
-<!-- 팝업 띄우는 링크 -->
 <div class="cont-box nogaps noborder">
-    <ul class="link-long-list">
+    <ul class="link-long-list ntype02">
         <% for (var i in contents.LIST) { %>
         <li>
             <div class="link-long">
                 <button class="fe-btn_contents_detail" data-contents_idx="<%= i %>">
                     <%= contents.LIST[i].titleNm %>
                     <span class="tx-sub">
-                            <span class="ico"><span class="blind">보기</span></span>
-                        </span>
+                        <span class="ico"><span class="blind">보기</span></span>
+                    </span>
                 </button>
             </div>
             <div class="none fe-contents_detail_item" aria-hidden="true"
