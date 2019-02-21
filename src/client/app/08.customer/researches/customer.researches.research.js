@@ -1,6 +1,7 @@
 Tw.CustomerResearch = function(rootEl) {
   this.$container = rootEl;
   this._popupService = Tw.Popup;
+  this._apiService = Tw.Api;
 
   this._cachedElement();
   this._bindEvent();
