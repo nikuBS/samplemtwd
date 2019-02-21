@@ -131,7 +131,7 @@ Tw.MembershipInfoLayerPopup.prototype = {
         if (this._isJoinOk === 'N') {
           this._onPopupNoJoin();
         } else {
-          this._historyService.goLoad('/benefit/membership/join');
+          this._historyService.goLoad('/membership/join');
         }
       }
     } else { // 비 로그인시 팝업띄움
