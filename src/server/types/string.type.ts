@@ -302,6 +302,7 @@ export const MYT_INFO_DISCOUNT_MONTH = {
 
 export const MYT_FARE_PAYMENT_HISTORY_TYPE = {
   all: '전체',
+  lastAll: '최근 납부 내역',
   direct: '즉시납부',
   auto: '자동납부',
   autoAll: '자동 납부 통합 인출',

@@ -34,6 +34,7 @@ interface PaymentData {
   isPersonalBiz?: boolean;
   // personalBizNum?: string;
   listData?: PaymentList;
+  getLastPaymentData?: boolean; // BFF_07_0030 전체납부내역 paymentRecord 를 데이터에 포함시킬지 여부
 }
 
 interface PaymentList {
@@ -64,7 +65,15 @@ class MyTFareInfoHistory extends TwViewController {
     };
 
     if (query.sortType === 'payment' || query.sortType === undefined) {
-      this.getAllPaymentData(req, res, next, query, svcInfo, pageInfo);
+      // 2019.02.21 전체납부내역 -> 최근납부내역 BFF_07_0030 의 데이터로 수정 노출 결정 
+      // this.getAllPaymentData(req, res, next, query, svcInfo, pageInfo); // deprecated
+      Observable.combineLatest(
+          this.checkHasPersonalBizNumber(),
+          this.getAutoWithdrawalAccountInfo(),
+          this.getOverAndRefundPaymentData({getPayList: true}),
+      ).subscribe(histories => {
+        this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
+      });
     } else {
       switch (query.sortType) {
         // 즉시납부
@@ -72,7 +81,7 @@ class MyTFareInfoHistory extends TwViewController {
           Observable.combineLatest(
               this.checkHasPersonalBizNumber(),
               this.getAutoWithdrawalAccountInfo(),
-              this.getOverAndRefundPaymentData(query.current),
+              this.getOverAndRefundPaymentData(),
               this.getDirectPaymentData()
           ).subscribe(histories => {
             this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
@@ -83,7 +92,7 @@ class MyTFareInfoHistory extends TwViewController {
           Observable.combineLatest(
               this.checkHasPersonalBizNumber(),
               this.getAutoWithdrawalAccountInfo(),
-              this.getOverAndRefundPaymentData(query.current),
+              this.getOverAndRefundPaymentData(),
               this.getAutoPaymentData()
           ).subscribe(histories => {
             this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
@@ -94,7 +103,7 @@ class MyTFareInfoHistory extends TwViewController {
           Observable.combineLatest(
               this.checkHasPersonalBizNumber(),
               this.getAutoWithdrawalAccountInfo(),
-              this.getOverAndRefundPaymentData(query.current),
+              this.getOverAndRefundPaymentData(),
               this.getAutoUnitedPaymentData()
           ).subscribe(histories => {
             this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
@@ -105,7 +114,7 @@ class MyTFareInfoHistory extends TwViewController {
           Observable.combineLatest(
               this.checkHasPersonalBizNumber(),
               this.getAutoWithdrawalAccountInfo(),
-              this.getOverAndRefundPaymentData(query.current),
+              this.getOverAndRefundPaymentData(),
               this.getMicroPaymentData()
           ).subscribe(histories => {
             this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
@@ -116,7 +125,7 @@ class MyTFareInfoHistory extends TwViewController {
           Observable.combineLatest(
               this.checkHasPersonalBizNumber(),
               this.getAutoWithdrawalAccountInfo(),
-              this.getOverAndRefundPaymentData(query.current),
+              this.getOverAndRefundPaymentData(),
               this.getContentsPaymentData()
           ).subscribe(histories => {
             this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
@@ -127,7 +136,7 @@ class MyTFareInfoHistory extends TwViewController {
           Observable.combineLatest(
               this.checkHasPersonalBizNumber(),
               this.getAutoWithdrawalAccountInfo(),
-              this.getOverAndRefundPaymentData(query.current),
+              this.getOverAndRefundPaymentData(),
               this.getPointReservePaymentData()
           ).subscribe(histories => {
             this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
@@ -138,7 +147,7 @@ class MyTFareInfoHistory extends TwViewController {
           Observable.combineLatest(
               this.checkHasPersonalBizNumber(),
               this.getAutoWithdrawalAccountInfo(),
-              this.getOverAndRefundPaymentData(query.current),
+              this.getOverAndRefundPaymentData(),
               this.getPointAutoPaymentData()
           ).subscribe(histories => {
             this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo: pageInfo});
@@ -155,7 +164,7 @@ class MyTFareInfoHistory extends TwViewController {
     res.render('info/myt-fare.info.history.html', {
       svcInfo: data.svcInfo,
       pageInfo: data.pageInfo,
-      currentString: data.query.sortType ? this.getKorStringWithQuery(data.query.sortType) : MYT_FARE_PAYMENT_HISTORY_TYPE.all,
+      currentString: data.query.sortType ? this.getKorStringWithQuery(data.query.sortType) : MYT_FARE_PAYMENT_HISTORY_TYPE.lastAll,
       data: {
         isAutoWithdrawalUse: this.paymentData.isAutoWithdrawalUse,
         autoWithdrawalBankName: this.paymentData.withdrawalBankName,
@@ -208,7 +217,8 @@ class MyTFareInfoHistory extends TwViewController {
     });
   }
 
-  private getAllPaymentData(req: Request, res: Response, next: NextFunction, query: Query, svcInfo: any, pageInfo: any) {
+  // 2019.02.21 deprecated
+  /* private getAllPaymentData(req: Request, res: Response, next: NextFunction, query: Query, svcInfo: any, pageInfo: any) {
     Observable.combineLatest(
         this.checkHasPersonalBizNumber(),
         this.getAutoWithdrawalAccountInfo(),
@@ -223,9 +233,9 @@ class MyTFareInfoHistory extends TwViewController {
     ).subscribe(histories => {
       this.renderView(req, res, next, {query: query, listData: histories, svcInfo: svcInfo, pageInfo });
     });
-  }
+  } */
 
-  private getOverAndRefundPaymentData = (current?: string): Observable<any | null> => {
+  private getOverAndRefundPaymentData = (opt: {getPayList?: boolean} = {}): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0030, {}).map((resp: { code: string; result: any }) => {
       if (resp.code !== API_CODE.CODE_00) {
         return null;
@@ -253,6 +263,19 @@ class MyTFareInfoHistory extends TwViewController {
         o.dataDt = DateHelper.getShortDate(o.opDt);
         o.dataAmt = FormatHelper.addComma(o.svcBamt);
       });
+
+      // 최근납부내역 2019.02.21
+      if (opt.getPayList) {
+        this.paymentData.getLastPaymentData = true;
+        resp.result.paymentRecord.map(o => {
+          o.sortDt = o.opDt;
+          o.dataDt = DateHelper.getShortDate(o.opDt);
+          o.listTitle = o.payMthdCdNm; 
+          o.dataAmt = FormatHelper.addComma(o.payAmt);
+          o.noLink = true;
+        });
+      }
+
 
       return resp.result;
     });
@@ -445,7 +468,9 @@ class MyTFareInfoHistory extends TwViewController {
         } else if (cur.reservePointList) {
           prev.mergedListData = prev.mergedListData.concat(cur.reservePointList);
         }
-
+        if (this.paymentData.getLastPaymentData && cur.paymentRecord) {
+          prev.mergedListData = prev.mergedListData.concat(cur.paymentRecord);
+        }
         /*if (cur.refundPaymentRecord && !prev.refundRecordList) {
           prev.refundRecordList = cur.refundPaymentRecord;
         }*/
