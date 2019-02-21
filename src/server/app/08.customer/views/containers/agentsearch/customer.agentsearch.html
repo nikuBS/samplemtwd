@@ -192,12 +192,31 @@
                             </div>
                             <!-- // .shop-info -->
                             <!-- .btn-more -->
-                            <div class="btn-more <%= isSearch && result.lastPageType === 'N' ? undefined : 'none' %>">
-                                <div class="bt-more">
-                                    <button role="button" title="">더보기</button>
+                            <!-- <div class="btn-more <ejs isSearch && result.lastPageType === 'N' ? undefined : 'none' ejs>"> -->
+                                <!-- <div class="bt-more"> -->
+                                    <!-- <button role="button" title="">더보기</button> -->
+                                <!-- </div> -->
+                            <!-- </div> -->
+                            <!-- // .btn-more -->
+                            <% if (isSearch && result.totalCount > 20) { %>
+                            <div class="paging-wrap top-line type1">
+                                <div class="paging">
+                                    <a href="javascript:void(0)" role="button" id="fe-go-first" data-page="1" class="first <%= page === 1 ? 'disabled' : '' %>"><span class="pg-blind">처음 페이지로 이동</span></a>
+                                    <a href="javascript:void(0)" role="button" id="fe-go-prev" data-page="<%= page - 1 %>" class="prev <%= page === 1 ? 'disabled' : '' %>"><span class="pg-blind">이전 페이지로 이동</span></a>
+                                    <% const start = page - (page % 3 === 0 ? 2 : page % 3 - 1) %>
+                                    <% const end = start + 2 >= lastPage ? lastPage : start + 2; %>
+                                    <% for (let i = start; i <= end; i += 1) { %>
+                                    <% if (i === page) { %>
+                                    <a href="javascript:void(0)" role="button" class="active fe-go-page" title="현재페이지"><%= i %></a>
+                                    <% } else { %>
+                                    <a href="javascript:void(0)" role="button" class="fe-go-page"><%= i %></a>
+                                    <% } %>
+                                    <% } %>
+                                    <a href="javascript:void(0)" role="button" id="fe-go-next" data-page="<%= page + 1 %>" class="next <%= page === lastPage ? 'disabled' : '' %>"><span class="pg-blind">다음 페이지로 이동</span></a><!-- 비활성화시 disabled 클래스 추가 -->
+                                    <a href="javascript:void(0)" role="button" id="fe-go-last" data-page="<%= lastPage %>" class="last <%= page === lastPage ? 'disabled' : '' %>"><span class="pg-blind">마지막 페이지로 이동</span></a>
                                 </div>
                             </div>
-                            <!-- // .btn-more -->
+                            <% } %>
                         </div>
 
                         <!-- .bn-search -->
@@ -220,9 +239,19 @@
                                     <dt>일반지점</dt>
                                     <dd>09:00 ~ 18:00</dd>
                                 </dl>
-                                <dl>
-                                    <dt>경주, 거제 소형지점</dt>
-                                    <dd>09:30 ~ 18:00</dd>
+                                <p class="stitle">소형지점</p>
+                                <dl class="subtext-dl">
+                                    <dt class="title">테크노마트 지점</dt>
+                                    <dd class="text">(월~금) 09:00 ~ 19:00</dd>
+
+                                </dl>
+                                <dl class="subtext-dl">
+                                    <dt class="title">경주, 거제</dt>
+                                    <dd class="text">(월~금) 09:00 ~ 18:00</dd>
+                                </dl>
+                                <dl class="subtext-dl">
+                                    <dt class="title">부천, 구미, 충주, 서산, 순천, 군산</dt>
+                                    <dd class="text">(월~금) 09:00 ~ 18:00</dd>
                                 </dl>
                             </div>
                             <div class="dot">대리점 업무시간은 매장 별로 상이합니다.</div>
