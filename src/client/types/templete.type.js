@@ -135,7 +135,7 @@ Tw.POPUP_TPL = {
       'list': [
         { 'option': 'data_coupon', 'button-attr': 'type="button"" target="_blank"', 'icon': 'ico2', 'txt': 'T데이터쿠폰' },
         { 'option': 't_coupon', 'button-attr': 'type="button"', 'icon': 'ico3', 'txt': 'T쿠폰' },
-        { 'option': 'jeju_coupon', 'button-attr': 'type="button"', 'icon': 'ico1', 'txt': '제주도 프리쿠폰' }
+        { 'option': 'jeju_coupon', 'button-attr': 'type="button"', 'icon': 'ico13', 'txt': '제주도 프리쿠폰' }
 
       ]
     },
