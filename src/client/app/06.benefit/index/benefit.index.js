@@ -97,11 +97,31 @@ Tw.BenefitIndex.prototype = {
         TW20000014 : Tw.OUTLINK.BECOME_ANYTHING,
         TW20000018 : Tw.OUTLINK.T_HONORS_CLUB
       };
-      Tw.CommonHelper.openUrlExternal(externalUrl[_benefitId]);
+      this._alertCharge(externalUrl[_benefitId]);
     } else if ('TW20000019' === _benefitId) {
       this._getBPCP(Tw.OUTLINK.DATA_COUPON.DATA_FACTORY);
     } else {
       location.href= '/product/callplan?prod_id=' + _benefitId;
+    }
+  },
+
+  /**
+   * 과금발생 알러트
+   * @param e
+   * @private
+   */
+  _alertCharge: function (_href) {
+    if (Tw.FormatHelper.isEmpty(_href)) {
+      return;
+    }
+
+    // app 이 아니면 알러트 제외
+    if (!Tw.BrowserHelper.isApp()) {
+      Tw.CommonHelper.openUrlExternal(_href);
+    } else {
+      Tw.CommonHelper.showDataCharge($.proxy(function(){
+        Tw.CommonHelper.openUrlExternal(_href);
+      },this));
     }
   },
 
