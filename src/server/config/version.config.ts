@@ -1,3 +1,3 @@
-const VERSION = 'QA_v4.20.0';
+const VERSION = 'QA_v4.21.0';
 
 export default VERSION;
