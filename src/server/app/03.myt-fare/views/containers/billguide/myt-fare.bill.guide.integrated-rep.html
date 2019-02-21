@@ -143,7 +143,7 @@
                     {{/if_icon}}
                     <span class="in-tx">{{rootItem.label}}<span class="val">{{rootItem.svcInfoNm}}</span></span>
                     {{#if rootItem.prodId }}
-                    <button class="bt-link-tx underline"><a href="/product/callplan/{{rootItem.prodId}}">{{rootItem.prodNm}}</a></button>
+                    <button class="bt-link-tx underline"><a href="/product/callplan?prod_id={{rootItem.prodId}}">{{rootItem.prodNm}}</a></button>
                     {{else}}
                     <button>{{rootItem.prodNm}}</button>
                     {{/if}}
@@ -277,7 +277,7 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps">
                 <div class="calling-plan">
-                    <a href="/product/callplan/<%= svcInfo.prodId %>">
+                    <a href="/product/callplan?prod_id=<%= svcInfo.prodId %>">
                     <button class="wrap-link">
                         <i class="icon-badge-plan-my mr8"><span class="blind">my</span></i>
                         <span class="stit"><%= svcInfo.prodNm %></span>

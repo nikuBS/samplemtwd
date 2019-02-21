@@ -86,7 +86,7 @@ Tw.BenefitIndex.prototype = {
    */
   _onClickProduct: function (e) {
     var $target = $(e.currentTarget);
-    location.href= '/product/callplan/' + $target.data('benefitId');
+    location.href= '/product/callplan?prod_id=' + $target.data('benefitId');
   },
 
   /**

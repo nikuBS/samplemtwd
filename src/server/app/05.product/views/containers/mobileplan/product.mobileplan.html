@@ -89,7 +89,7 @@
                                             <div class="horizontal-slide">
                                                 <ul class="horizontal-list">
                                                     <% group.prodList.map(product => { %>
-                                                    <li data-url="/product/callplan/<%= product.prodId %>" class="fe-go-plan">
+                                                    <li data-url="/product/callplan?prod_id=<%= product.prodId %>" class="fe-go-plan">
                                                         <div class="product-info">
                                                             <h5 class="title"><%= product.prodNm %></h5>
                                                             <% if (product.basFeeInfo.isNaN) { %>
@@ -195,7 +195,7 @@
                                         for (let i = 0; i < Math.min(recommendedPlans.length, PLANS_MAX_COUNT); i++) {
                                         const plan = recommendedPlans[i]; %>
                                         <li>
-                                            <a type="button" class="product-info" href="/product/callplan/<%= plan.prodId %>">
+                                            <a type="button" class="product-info" href="/product/callplan?prod_id=<%= plan.prodId %>">
                                                 <h5 class="title"><%= plan.prodNm %></h5>
                                                 <% if (plan.basFeeInfo.isNaN) { %>
                                                     <p class="info"><span class="money"><%= plan.basFeeInfo.value %></span></p>

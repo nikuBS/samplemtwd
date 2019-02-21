@@ -21,7 +21,7 @@ Tw.ProductRoamingSecureTroaming.prototype = {
     this.$container.on('click', '.fe-roaming-europe', $.proxy(this._goLoadProduct, this, 'NA00006046'));
   },
   _goLoadProduct: function (prodId) {
-    var reqUrl = '/product/callplan/' + prodId;
+    var reqUrl = '/product/callplan?prod_id=' + prodId;
     this._history.goLoad(reqUrl);
   }
 };

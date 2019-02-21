@@ -77,7 +77,7 @@
                 <ul class="recommendedrate-list mt0 no-icon-type" id="fe-roaming-list">
                     <% products.map(plan => { %>
                     <li class="type01">
-                        <a href="/product/callplan/<%= plan.prodId %>" class="product-infolink">
+                        <a href="/product/callplan?prod_id=<%= plan.prodId %>" class="product-infolink">
                             <div class="products-titleinfo">
                                 <h5 class="title"><%= plan.prodNm %></h5>
                                 <% if (plan.basFeeAmt.isNaN) { %>

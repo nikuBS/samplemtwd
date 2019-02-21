@@ -293,7 +293,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
     var completeData = {
       prodCtgNm: Tw.PRODUCT_CTG_NM.PLANS,
       btList: [
-        { link: '/product/callplan/NA00005381', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.SMARTWATCH },
+        { link: '/product/callplan?prod_id=NA00005381', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.SMARTWATCH },
         { link: '/myt-join/myplan', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.MYTJOIN }
       ],
       btClass: '',

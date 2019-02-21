@@ -7,7 +7,7 @@
 <script id="fe-templ-additions" type="text/x-handlebars-template">
     {{#each items}}
         <li class="category-type">
-            <a class="link" href="/product/callplan/{{prodId}}">
+            <a class="link" href="/product/callplan?prod_id={{prodId}}">
                 <div class="products-titleinfo">
                     <p class="title">{{prodNm}}</p>
                     <p class="info"><span class="money">{{basFeeAmt}}</span>{{#if isNumber}}원{{/if}}</p>

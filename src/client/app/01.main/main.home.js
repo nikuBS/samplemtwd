@@ -216,7 +216,7 @@ Tw.MainHome.prototype = {
         this._historyService.goLoad('/myt-data/familydata');
         break;
       case this.DATA_LINK.TPLAN_PROD:
-        this._historyService.goLoad('/product/callplan/NA00006031');
+        this._historyService.goLoad('/product/callplan?prod_id=NA00006031');
         break;
       default:
         break;
