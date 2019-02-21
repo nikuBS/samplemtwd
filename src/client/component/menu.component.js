@@ -238,6 +238,9 @@ Tw.MenuComponent.prototype = {
   },
   _checkAndClose: function () {
     if ( window.location.hash.indexOf('menu') === -1 && this._isOpened ) {
+      if (this.$container.find('.fe-menu-section').hasClass('none')) {
+        this._menuSearchComponent && this._menuSearchComponent.cancelSearch();
+      }
       this.$closeBtn.click();
     }
   },
