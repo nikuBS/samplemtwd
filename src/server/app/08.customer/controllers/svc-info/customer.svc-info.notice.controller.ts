@@ -139,7 +139,7 @@ class CustomerSvcInfoNotice extends TwViewController {
           category: this._category,
           categoryLabel: CUSTOMER_NOTICE_CATEGORY[this._category.toUpperCase()],
           data: this._convertData(data.result),
-          paging: CommonHelper.getPaging(this._baseUrl, 20, 5, page, data.result.totalElements),
+          paging: CommonHelper.getPaging(this._baseUrl, 20, 3, page, data.result.totalElements),
           tworldChannel: tworldChannel
         }));
       });
