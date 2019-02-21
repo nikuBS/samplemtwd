@@ -4544,6 +4544,9 @@ a.ui-button:active,
         color: #777; }
       .popup .popup-info .popup-contents .inner-contents .tl p {
         text-align: left !important; }
+      .popup .popup-info .popup-contents .inner-contents .fe-link-internal {
+        text-decoration: underline;
+        color: #178BCE; }
       .popup .popup-info .popup-contents .cont-tooltip-li {
         margin-top: 0.1875rem; }
         .popup .popup-info .popup-contents .cont-tooltip-li li {
