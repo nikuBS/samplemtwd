@@ -1058,7 +1058,6 @@ Tw.MYT_DATA_FAMILY_CHANGE_DATA_ERRORS = {
 };
 
 Tw.MYT_DATA_FAMILY_RETRIEVING = '조회중입니다.';
-Tw.MYT_DATA_FAMILY_RETRIEVE = '조회하기';
 
 Tw.MYT_DATA_CANCEL_MONTHLY = {
   ALERT_NOT_SK: 'SK텔레콤 사용자에게만 데이터 선물을 하실 수 있습니다.',

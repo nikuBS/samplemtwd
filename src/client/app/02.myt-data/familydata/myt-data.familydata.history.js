@@ -46,6 +46,7 @@ Tw.MyTDataFamilyHistory.prototype = {
 
   _requestRetrieve: function(requestCount, $before, $parent) {
     var serial = $parent.data('serial-number');
+    // this._handleDoneRetrieve($before, $parent, { code: '00', result: { remGbGty: '1', remMbGty: '0' } });
     this._apiService
       .request(Tw.API_CMD.BFF_06_0072, { reqCnt: requestCount, shrpotSerNo: serial })
       .done($.proxy(this._handleDoneRetrieve, this, $before, $parent));
