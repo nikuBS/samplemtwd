@@ -134,6 +134,10 @@ export const API_CMD = {
   BFF_04_0003: { path: '/core-modification/:version/quick-menu/saveInfo', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_04_0004: { path: '/core-auth/:version/get-fcm-push-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_04_0005: { path: '/core-modification/:version/quick-menu/getMbrCond', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_04_0006: { path: '/core-bill/v1/use-contents/total-amt', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_04_0007: { path: '/core-bill/v1/micro-pay/total-amt', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_04_0008: { path: '/core-bill/v1/bill-pay/use-amt-main', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_04_0009: { path: '/core-bill/v1/bill-pay/bill-main', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   // MYT
   BFF_05_0001: { path: '/:version/my-t/balances', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, native: true },
   BFF_05_0002: { path: '/core-balance/:version/balance-add-ons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
