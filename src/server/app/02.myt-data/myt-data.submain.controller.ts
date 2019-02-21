@@ -87,10 +87,7 @@ class MytDataSubmainController extends TwViewController {
           data.emptyData = true;
         }
         // T가족모아 가입가능한 요금제
-        // 실시간잔여량에 가족모아 데이터가 있는 경우 [DV001-13997]
-        // T가족모아 가입도 가능 공유도 가능한 경우 (공유 노출)
-        // T가족모아 서비스는 가입되어있지만 공유 불가능한 요금제인 경우 (자세히노출)
-        // 가입이 불가한 요금제이지만 가족모아 데이터가 있는 경우 (공유받은상태 - 자세히노출)
+        // 실시간잔여량에 가족모아 데이터가 있는 경우 [DV001-13997])
         data.isTmoaInsProdId = tmoaInsertToProdList.indexOf(data.svcInfo.prodId) > -1;
         if ( data.remnantData.tmoa && data.remnantData.tmoa.length > 0 ) {
           // 가입
@@ -275,43 +272,45 @@ class MytDataSubmainController extends TwViewController {
               data.ppsAlarm = true;
             }
           }
-          if (info.code === API_CODE.CODE_00) {
+          if ( info.code === API_CODE.CODE_00 ) {
             // 자동알람 신청이 되어 있지 않은 경우 버튼 노출
-            if (FormatHelper.isEmpty(info.result.amtCd)) {
+            if ( FormatHelper.isEmpty(info.result.amtCd) ) {
               data.ppsInfo = true;
             }
           }
           res.render('myt-data.submain.html', { data });
         });
       } else {
-        res.render('myt-data.submain.html', { data });
-      }
-
-      // FIXME: 성능이슈로 해당 부분 호출 하지 않고 처리하도록 수정
-      /*if ( data.family && data.family.impossible ) {
-        res.render('myt-data.submain.html', { data });
-      } else {
-        // 가입이 가능한 경우에만
-        if ( data.family ) {
+        /**
+         * T가족모아 관련 내용 - 공유데이터(실시간잔여량에 조회된 데이터)
+         * 1. 가입이 가능한 요금제이나 공유불가능한 요금제 & 공유데이터가 있는 경우 (자세히 버튼노출)
+         * 2. 가입이 불가한 요금제이지만 가족모아 데이터가 있는 경우 (자세히 버튼노출)
+         * 3. 가입이 가능한 요금제이면서 공유가능한 요금제
+         *  3-1 미성년자 인 경우 (자세히 버튼노출)
+         *  3-2 공유가능한 데이터가 0인 경우 (공유 버튼노출)
+         *  3-3 공유가능한 데이터가 있는 경우 (자세히 버튼노출)
+         * 4. 가입 및 공유 불가능한 요금제 인 경우 (가입 안내버튼 및 메시지 노출)
+         */
+        // T가족모아 공유 및 가입이 가능 한 경우
+        if ( data.isTmoaProdId && data.isTmoaProdId ) {
           this.apiService.request(API_CMD.BFF_06_0044, {}).subscribe((family) => {
             if ( family.code === API_CODE.CODE_00 ) {
-              // T가족모아 서비스는 가입되어있지만 공유 불가능한 요금제이면서 미성년인 경우
-              if ( data.family.isProdId || family.result.adultYn === 'N' ) {
-                data.family.noshare = true;
+              // 미성년자인 경우
+              if ( family.result.adultYn === 'N' ) {
+                data.isTmoaProdId = false;
               }
-            } else if ( family.code === API_T_FAMILY_ERROR.BLN0010 ) {
-              // T가족모아 가입 가능한 요금제이나 미가입으로 가입유도 화면 노출
-              data.family.impossible = true;
-            } else {
-              // 가입불가능한 요금제인 경우
-              data.family = null;
+              // 공유가능데이터가 0인 경우 공유버튼 노출
+              if ( family.result.total !== '0' ) {
+                data.isTmoaProdId = false;
+              }
             }
             res.render('myt-data.submain.html', { data });
           });
         } else {
+          // 가입이 가능한 경우에만
           res.render('myt-data.submain.html', { data });
         }
-      }*/
+      }
     });
   }
 
