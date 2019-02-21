@@ -194,18 +194,17 @@ Tw.DateHelper = (function () {
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @returns {string} : 2018.06.01 12:00
+   * @returns {string} : 2018.6.1. 12:00
    */
   var getShortDateAndTime = function (date) {
     return moment(convDateFormat(date)).format('YYYY.M.D. hh:mm');
   };
-
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @returns {string} : 2018.06.01 12:00:00
+   * @returns {string} : 2018.6.1. 12:00:00
    */
   var getFullDateAndTime = function (date) {
-    return moment(convDateFormat(date)).format('YYYY.M.DD hh:mm:ss');
+    return moment(convDateFormat(date)).format('YYYY.M.D. hh:mm:ss');
   };
 
   /**

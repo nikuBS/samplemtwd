@@ -241,7 +241,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
         return this._renderError(resp.code, MYT_PAYMENT_DETAIL_ERROR.MSG, res, svcInfo);
       }
 
-      resultData.dataFullDt = DateHelper.getShortDateAndTimeWithDot(resultData.opDt + resultData.payOpTm); // 결제일자
+      resultData.dataFullDt = DateHelper.getFullDateAndTime(resultData.opDt + resultData.payOpTm); // 결제일자
       resultData.dataAmt = FormatHelper.addComma(resultData.chrgAmt); // 선결제 금액
       resultData.listTitle = resultData.settlWayNm; // 결제수단
       resultData.isAutoCharg = (resultData.autoChrgYn === 'Y'); // 상세내역에서 기준납부 영역 노출여부를 결정
@@ -264,7 +264,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
         return this._renderError(resp.code, MYT_PAYMENT_DETAIL_ERROR.MSG, res, svcInfo);
       }
     
-      resultData.dataFullDt = DateHelper.getShortDateAndTimeWithDot(resultData.opDt + resultData.payOpTm); // 결제일자
+      resultData.dataFullDt = DateHelper.getFullDateAndTime(resultData.opDt + resultData.payOpTm); // 결제일자
       resultData.dataAmt = FormatHelper.addComma(resultData.chrgAmt); // 선결제금액
       
       this.renderView(renderObj, resultData);
@@ -340,7 +340,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
       date.setMonth(date.getMonth() + 1);
     }
     return list; 
-  }
+  };
 
   private getBillTaxList = (date: string): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0017, {selType: 'M', selSearch: date}).map((resp: {code: string, msg: string, result: any}) => {
