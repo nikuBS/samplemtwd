@@ -31,11 +31,15 @@ class CustomerAgentsearch extends TwViewController {
       const storeType = req.query.storeType;  // 0: 전체, 1: 지점, 2: 대리점
       const keyword = req.query.keyword;
       const optionsString = req.query.options;
-      this.getQueryResult(type, storeType, keyword, optionsString, res, svcInfo).subscribe(
+      const page = req.query.page ? parseInt(req.query.page, 10) : 1;
+      this.getQueryResult(type, storeType, keyword, optionsString, page, res, svcInfo).subscribe(
         (result) => {
           if (FormatHelper.isEmpty(result)) {
             return;
           }
+
+          const total = parseInt(result.totalCount, 10);
+          const lastPage = Math.floor(total / 20) + (total % 20 ? 1 : 0);
           res.render('agentsearch/customer.agentsearch.html', {
             isSearch: true,
             type,
@@ -43,6 +47,8 @@ class CustomerAgentsearch extends TwViewController {
             optionsText: this.makeOptionsText(storeType, optionsString),
             result,
             params: this.queryParams,
+            page,
+            lastPage,
             svcInfo,
             pageInfo
           });
@@ -59,7 +65,7 @@ class CustomerAgentsearch extends TwViewController {
   }
 
   private getQueryResult(type: string, storeType: string, keyword: string, options: string,
-                         res: Response, svcInfo: any): Observable<any> {
+                         page: number, res: Response, svcInfo: any): Observable<any> {
     let api = API_CMD.BFF_08_0004;
     switch (type) {
       case SearchType.NAME:
@@ -77,7 +83,8 @@ class CustomerAgentsearch extends TwViewController {
 
     const params = {
       searchText: encodeURIComponent(keyword),
-      storeType
+      storeType,
+      currentPage: page
     };
 
     if (!FormatHelper.isEmpty(options)) {

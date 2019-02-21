@@ -14,7 +14,7 @@ Tw.CustomerAgentsearch = function (rootEl, params) {
   this._searchedItemTemplate = Handlebars.compile($('#tpl_search_result_item').html());
 
   this._options = {
-    storeType: 0  // 0: 전체, 1: 지점, 2: 대리점
+    storeType: 0 // 0: 전체, 1: 지점, 2: 대리점
   };
 
   this._init(params);
@@ -32,8 +32,8 @@ Tw.CustomerAgentsearch.prototype = {
       }, this), 0);
     }
 
-    // Save current search result's query detail
     if (!Tw.FormatHelper.isEmpty(params)) {
+      /* // More btn 삭제
       this._page = 2;
       $.extend(true, this._options, params);
       delete this._options.searchText;
@@ -50,20 +50,21 @@ Tw.CustomerAgentsearch.prototype = {
 
       this._lastQueryParams = params;
       this._lastQueryParams.searchText = encodeURIComponent(params.searchText);
+      */
 
       this._isSearched = true;
     }
 
     if (!String.prototype.endsWith) {
-      String.prototype.endsWith = function(searchString, position) {
-          var subjectString = this.toString();
-          if (typeof position !== 'number' || !isFinite(position) ||
-              Math.floor(position) !== position || position > subjectString.length) {
-            position = subjectString.length;
-          }
-          position -= searchString.length;
-          var lastIndex = subjectString.indexOf(searchString, position);
-          return lastIndex !== -1 && lastIndex === position;
+      String.prototype.endsWith = function (searchString, position) {
+        var subjectString = this.toString();
+        if (typeof position !== 'number' || !isFinite(position) ||
+          Math.floor(position) !== position || position > subjectString.length) {
+          position = subjectString.length;
+        }
+        position -= searchString.length;
+        var lastIndex = subjectString.indexOf(searchString, position);
+        return lastIndex !== -1 && lastIndex === position;
       };
     }
   },
@@ -87,11 +88,13 @@ Tw.CustomerAgentsearch.prototype = {
     this.$container.on('click', '#fe-btn-search-name, #fe-btn-search-addr, #fe-btn-search-tube',
       $.proxy(this._onSearchRequested, this));
     this.$btnOptions.on('click', $.proxy(this._onOptionsClicked, this));
-    this.$container.on('click', '.bt-more button', $.proxy(this._onMoreRequested, this));
+    // this.$container.on('click', '.bt-more button', $.proxy(this._onMoreRequested, this));  // page navigation으로 변경
     this.$container.on('click', '.fe-branch-detail', $.proxy(this._onBranchDetail, this));
     this.$container.on('click', '.fe-custom-replace-history', $.proxy(this._onTabChanged, this));
     this.$container.on('click', '#fe-cancel-name,#fe-cancel-addr,#fe-cancel-tube',
       $.proxy(this._onCancelInput, this));
+    this.$container.on('click', '.fe-go-page,#fe-go-first,#fe-go-prev,#fe-go-next,#fe-go-last',
+      $.proxy(this._onPaging, this));
   },
   _onTabChanged: function (e) {
     if (this._isSearched && this._prevTab !== $(e.currentTarget).attr('href')) {
@@ -136,8 +139,9 @@ Tw.CustomerAgentsearch.prototype = {
     }
   },
   _onOptionsClicked: function () {
-    this._popupService.open(
-      { hbs: 'CS_02_01_01' },
+    this._popupService.open({
+        hbs: 'CS_02_01_01'
+      },
       $.proxy(function ($root) {
         new Tw.CustomerAgentsearchSearchOptions(
           $root, this._options, $.proxy(this._onOptionsChanged, this));
@@ -167,7 +171,11 @@ Tw.CustomerAgentsearch.prototype = {
             break;
         }
 
-        this._onSearchRequested({ currentTarget: { id: id } });
+        this._onSearchRequested({
+          currentTarget: {
+            id: id
+          }
+        });
         return;
       }
 
@@ -194,23 +202,61 @@ Tw.CustomerAgentsearch.prototype = {
     }
   },
   _onSearchRequested: function (e) {
+    this._historyService.replaceURL(this._getSearchUrl(e, true));
+  },
+  _onPaging: function (e) {
+    var $target = $(e.currentTarget);
+    if ($target.hasClass('active') || $target.hasClass('disabled')) {
+      return;
+    }
+
+    var page = undefined;
+    if ($target.hasClass('fe-go-page')) {
+      page = $target.text();
+    } else {
+      page = $target.data('page');
+    }
+
+    this._historyService.goLoad(this._getSearchUrl(null, false, page));
+  },
+  _getSearchUrl: function (e, bySearchBtn, page) {  // bySearchBtn: true - 처음검색, false - page 검색
     var url = '/customer/agentsearch/search?type=';
     var hash = '#name';
 
-    switch (e.currentTarget.id) {
-      case 'fe-btn-search-name':
-        url += 'name&keyword=' + this.$inputName.val();
-        break;
-      case 'fe-btn-search-addr':
-        url += 'addr&keyword=' + this.$inputAddr.val();
-        hash = '#addr';
-        break;
-      case 'fe-btn-search-tube':
-        url += 'tube&keyword=' + this.$inputTube.val();
-        hash = '#tube';
-        break;
-      default:
-        return;
+    if (bySearchBtn) {
+      switch (e.currentTarget.id) {
+        case 'fe-btn-search-name':
+          url += 'name&keyword=' + this.$inputName.val();
+          break;
+        case 'fe-btn-search-addr':
+          url += 'addr&keyword=' + this.$inputAddr.val();
+          hash = '#addr';
+          break;
+        case 'fe-btn-search-tube':
+          url += 'tube&keyword=' + this.$inputTube.val();
+          hash = '#tube';
+          break;
+        default:
+          return;
+      }
+    } else {
+      var currentHash = location.href.match(/#.*/)[0];
+      switch (currentHash) {
+        case '#name':
+          url += 'name&keyword=' + this.$inputName.val();
+          break;
+        case '#addr':
+          url += 'addr&keyword=' + this.$inputAddr.val();
+          hash = '#addr';
+          break;
+        case '#tube':
+          url += 'tube&keyword=' + this.$inputTube.val();
+          hash = '#tube';
+          break;
+        default:
+          return;
+      }
+      url += '&page=' + page;
     }
 
     url += '&storeType=' + this._options.storeType;
@@ -231,8 +277,9 @@ Tw.CustomerAgentsearch.prototype = {
     }
     url += hash;
 
-    this._historyService.replaceURL(url);
+    return url;
   },
+  /*  // page navigation으로 변경
   _onMoreRequested: function () {
     this._lastQueryParams.currentPage = this._page;
     this._apiService.request(this._lastCmd, this._lastQueryParams)
@@ -258,6 +305,7 @@ Tw.CustomerAgentsearch.prototype = {
       Tw.Error(res.code, res.msg).pop();
     }
   },
+  */
   _onBranchDetail: function (e) {
     if (e.target.nodeName.toLowerCase() === 'a') {
       return;
