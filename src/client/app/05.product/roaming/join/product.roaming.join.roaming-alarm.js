@@ -59,7 +59,11 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.TITLE);
       return;
     }
-    var tempPhoneNum = this.$inputElement.val().split('-');
+    var targetValue = this.$inputElement.val();
+    if(targetValue.indexOf('-')<0){
+      targetValue = Tw.FormatHelper.addLineCommonPhoneNumberFormat(targetValue);
+    }
+    var tempPhoneNum = targetValue.split('-');
     //var phonReg = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
     var phoneObj = {
       'serviceNumber1' : tempPhoneNum[0],
@@ -106,6 +110,9 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     }
   },
   _activateAddBtn : function (inputEvt) {
+    if(Tw.InputHelper.isEnter(inputEvt)){
+      this.$addBtn.trigger('click');
+    }
     var inputVal = this.$inputElement.val();
     var numReg = /[^0-9]/g;
     if(inputVal.length>0&&numReg.test(inputVal)){
