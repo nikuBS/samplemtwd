@@ -2257,6 +2257,9 @@
   height: 1.25rem;
   background: url(/img/svg/graphic_badge_plan_my.svg) no-repeat 0 0;
   background-size: 100% 100%; }
+  .icon-badge-plan-my.use {
+    background: url(/img/svg/badge_plan_my.svg) no-repeat 0 0;
+    background-size: 100% 100%; }
 
 .icon-badge-plan-use {
   display: inline-block;
