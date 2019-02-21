@@ -150,6 +150,8 @@ Tw.MyTDataGiftImmediately.prototype = {
       this._requestSendingData();
     } else if ( res.code === 'ZNGME0008' ) {
       this._popupService.openAlert(Tw.MYT_DATA_CANCEL_MONTHLY.ALERT_NOT_SK);
+    } else if ( res.code === 'GFT0008' ) {
+      this._popupService.openAlert(Tw.MYT_DATA_GIFT.GFT0008);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -191,6 +193,8 @@ Tw.MyTDataGiftImmediately.prototype = {
   _onRequestSuccessGiftData: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
+    } else if ( res.code === 'GFT0008' ) {
+      this._popupService.openAlert(Tw.MYT_DATA_GIFT.GFT0008);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
