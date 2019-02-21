@@ -95,13 +95,13 @@ Tw.TooltipService.prototype = {
   },
   _openTip: function ($result) {
     this._popupService.open({
-      url: Tw.Environment.cdn + '/hbs/',
-      'pop_name': 'type_tx_scroll',
+      url: '/hbs/',
+      hbs: 'popup',
       'title': $result.ttipTitNm,
       'title_type': 'tit-tooltip',
       'cont_align': 'tl',
       'contents': $result.ttipCtt,
-      'btn-close':'btn-tooltip-close tw-popup-closeBtn'
+      'btn-close':'btn-tooltip-close'
     },
       $.proxy(this._onOpen, this),
       $.proxy(this._onClose, this));
