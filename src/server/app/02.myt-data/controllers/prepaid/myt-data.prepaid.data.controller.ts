@@ -11,7 +11,6 @@ import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import {DATA_UNIT} from '../../../../types/string.type';
-import PrepaidDataInfo from '../../../../mock/server/data/myt-fare.data.prepaid.data.mock';
 import {Observable} from 'rxjs/Observable';
 
 class MyTDataPrepaidData extends TwViewController {
@@ -20,7 +19,6 @@ class MyTDataPrepaidData extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-
     if (BrowserHelper.isApp(req)) {
       Observable.combineLatest(
         this.getPPSInfo(),
