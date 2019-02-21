@@ -154,33 +154,37 @@ Tw.CustomerEmailUpload.prototype = {
   _successUploadFile: function (res) {
     this._hideUploadPopup();
 
-    if ( this._getCurrentType() === 'service' ) {
-      this.serviceUploadFiles = this.uploadFiles.slice(0);
-      if ( this._isLowerVersionAndroid() ) {
-        this.wrap_service.find('.filename-list').html(this.tpl_upload_list({ files: this.serviceUploadFiles }));
-      } else {
-        this.wrap_service.find('.filename-list').html(this.tpl_upload_list({ files: res.result }));
-      }
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      if ( this._getCurrentType() === 'service' ) {
+        this.serviceUploadFiles = this.uploadFiles.slice(0);
+        if ( this._isLowerVersionAndroid() ) {
+          this.wrap_service.find('.filename-list').html(this.tpl_upload_list({ files: this.serviceUploadFiles }));
+        } else {
+          this.wrap_service.find('.filename-list').html(this.tpl_upload_list({ files: res.result }));
+        }
 
-      if ( this.uploadFiles.length > 5 ) {
-        $('.fe-upload-file-service').prop('disabled', true);
+        if ( this.uploadFiles.length > 5 ) {
+          $('.fe-upload-file-service').prop('disabled', true);
+        } else {
+          $('.fe-upload-file-service').prop('disabled', false);
+        }
       } else {
-        $('.fe-upload-file-service').prop('disabled', false);
+        this.qualityUploadFiles = this.uploadFiles.slice(0);
+
+        if ( this._isLowerVersionAndroid() ) {
+          this.wrap_quality.find('.filename-list').html(this.tpl_upload_list({ files: this.qualityUploadFiles }));
+        } else {
+          this.wrap_quality.find('.filename-list').html(this.tpl_upload_list({ files: res.result }));
+        }
+
+        if ( this.uploadFiles.length > 5 ) {
+          $('.fe-upload-file-quality').prop('disabled', true);
+        } else {
+          $('.fe-upload-file-quality').prop('disabled', false);
+        }
       }
     } else {
-      this.qualityUploadFiles = this.uploadFiles.slice(0);
-
-      if ( this._isLowerVersionAndroid() ) {
-        this.wrap_quality.find('.filename-list').html(this.tpl_upload_list({ files: this.qualityUploadFiles }));
-      } else {
-        this.wrap_quality.find('.filename-list').html(this.tpl_upload_list({ files: res.result }));
-      }
-
-      if ( this.uploadFiles.length > 5 ) {
-        $('.fe-upload-file-quality').prop('disabled', true);
-      } else {
-        $('.fe-upload-file-quality').prop('disabled', false);
-      }
+      Tw.Error(res.code, res.msg).pop();
     }
   },
 
