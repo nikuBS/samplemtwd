@@ -119,7 +119,7 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
         }
         // skt_landing.widgets.widget_slider1를 쓰려고 했지만 안먹혀서 그냥 slick함수를 사용
         $('.slider').slick('unslick');
-        if(list.length > 6){
+        // if(list.length > 6){
           $('.slider').slick({
             dots: true,
             arrows: true,
@@ -134,7 +134,12 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
           });
           // 슬릭 버그로 화면이 가로 스크롤 되는 현상이 있어서 강제로 조정
           $('.slick-dots').css('width', '90%');
-        }
+
+          // 6개 이하는 슬릭 적용 안하니 양 옆 padding이 없는 현상이 있으므로 슬릭 지정하고 하단 slick-dots만 숨김
+          if(list.length <= 6){
+            $('.slick-dots').hide();
+          }
+        // }
 
       }, this))
       .fail(function (err) {
