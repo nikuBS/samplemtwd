@@ -37,7 +37,7 @@ class MyTDataLimit extends TwViewController {
             responseData
           );
 
-          if ( limitUserInfo && limitUserInfo.currentTopUpLimit !== '0' && limitUserInfo.blockYn === 'N') {
+          if ( limitUserInfo && limitUserInfo.blockYn === 'N') {
             res.render('limit/myt-data.limit.html', response);
           } else {
             res.render('limit/myt-data.limit.error.html', response);
