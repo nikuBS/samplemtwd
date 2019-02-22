@@ -99,6 +99,7 @@ export default class CustomerResearches extends TwViewController {
           }
 
           question.examples[exampleIdx] = {
+            ...example,
             content: example.answItmCtt || '',
             nextQuestion: Number(example.nxtInqItmNum),
             isEtc
