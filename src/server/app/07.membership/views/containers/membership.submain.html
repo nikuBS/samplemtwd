@@ -49,7 +49,7 @@
 
             <!-- .cont-box -->
 
-            <% if(isLogin && svcInfo.loginType === 'T') { %>
+            <% if(isLogin && svcInfo.loginType === 'T' && svcInfo.svcGr !== '') { %>
             <% const checkData = membershipCheckData.joinCheckData; %>
             <% if ( checkData.cardCreatableYn === 'N') { %>
             <div class="cont-box nogaps-top">
@@ -103,6 +103,13 @@
             <% } %>
             <% } %>
             <% } else { %>
+            <% if(isLogin && svcInfo.svcGr === '') { %>
+            <div class="cont-box nogaps-hoz">
+                <div class="card-wrap">
+                    <button class="solid-link fe-membership-grade">T멤버십 카드/등급 안내<i class="ico"></i></button>
+                </div>
+            </div>
+            <% } else { %>
             <div class="cont-box nogaps-top">
                 <div class="card-wrap">
                     <button class="solid-link fe-membership-grade">T멤버십 카드/등급 안내<i class="ico"></i></button>
@@ -112,6 +119,7 @@
                     </div>
                 </div>
             </div>
+            <% } %>
             <% } %>
             <!--// .cont-box -->
 
