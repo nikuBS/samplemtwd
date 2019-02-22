@@ -242,6 +242,8 @@ Tw.MenuComponent.prototype = {
         this._menuSearchComponent && this._menuSearchComponent.cancelSearch();
       }
       this.$closeBtn.click();
+    } else if (this._tid && !this.$container.hasClass('user-type')) {
+      this.$container.addClass('user-type');
     }
   },
   _onSimpleLogin: function () {

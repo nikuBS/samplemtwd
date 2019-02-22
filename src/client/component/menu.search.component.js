@@ -21,7 +21,7 @@ Tw.MenuSearchComponent.prototype = {
   },
   _bindEvents: function () {
     this.$searchInput.on('keyup', $.proxy(this._onSearch, this));
-    this.$container.on('click', '#fe-cancel-search', $.proxy(this._cancelSearch, this));
+    this.$container.on('click', '#fe-cancel-search', $.proxy(this.cancelSearch, this));
     this.$container.on('click', '.fe-replace', $.proxy(this._onLink, this));
   },
   _init: function () {
