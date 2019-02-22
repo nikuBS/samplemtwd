@@ -77,6 +77,8 @@ gulp.task('js-component', function () {
   return gulp.src([
     'src/client/component/**/*.js',
     'src/client/common/**/*.js'])
+    .pipe(plumber())
+    .pipe(sort())
     .pipe(concat('component.js'))
     .pipe(gulp.dest(dist + 'js'))
     .pipe(uglify())
