@@ -50,10 +50,13 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
   _onCurrentLocation: function(result){
     // console.log('location 파악  result');
 
-    if(result && result.code === Tw.NTV_CODE.CODE_00){
+    if(result && result.resultCode === Tw.NTV_CODE.CODE_00){
       this._options.mapX = result.params.latitude;
       this._options.mapY = result.params.longitude;
       this._getAreaByMapXY(this._options.mapX, this._options.mapY);
+    } else {
+
+      this._reqeustNearShopList();
     }
 
   },
@@ -69,7 +72,10 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
           this._setArea(resp.result.cityDo, resp.result.guGun);
           this._reqeustNearShopList();
         }
-      }, this));
+      }, this))
+      .fail(function (err) {
+        Tw.Error(err.status, err.statusText).pop();
+      });
   },
 
   _setArea: function(area1, area2){
