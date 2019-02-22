@@ -17,7 +17,7 @@ export default class MembershipSubmain extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    if (this.isLogin(svcInfo)) {
+    if (this.isLogin(svcInfo) && svcInfo.svcGr !== '') {
       Observable.combineLatest(
         this.getMembershipCheck(svcInfo),
         this.getMembershipData(),
