@@ -25,7 +25,8 @@ export default class MembershipMyReissue extends TwViewController {
         return this.error.render(res, {
           code: resp.code,
           msg: resp.msg,
-          svcInfo: svcInfo
+          svcInfo: svcInfo,
+          pageInfo: pageInfo
         });
       }
 
