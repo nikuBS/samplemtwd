@@ -40,8 +40,8 @@ Tw.MembershipMyCancel.prototype = {
   _cancleComplete: function(res) {
     if(res.code === Tw.API_CODE.CODE_00) {
       //완료 페이지 이동
-      this._popupService.afterRequestSuccess('/membership/my/history', '/membership/submain',
-        Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.LINK_TITLE, Tw.ALERT_MSG_MEMBERSHIP.COMPLETE_TITLE.CANCEL);
+      this._popupService.afterRequestSuccess('/membership/submain', '/membership/submain',
+        null, Tw.ALERT_MSG_MEMBERSHIP.COMPLETE_TITLE.CANCEL);
     }else{
       this._onFail(res);
     }
