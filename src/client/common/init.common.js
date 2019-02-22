@@ -11,7 +11,7 @@ Tw.Init = function () {
   this._initXtvId();
   this._getEnvironment();
   this._sendXtractorLoginDummy();
-  this._setGesture();
+  // this._setGesture();
   // this._setNodeCookie();
 };
 
