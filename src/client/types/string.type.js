@@ -991,7 +991,8 @@ Tw.PRODUCT_INFINITY_CATEGORY_DESC = {
 };
 
 Tw.HOTBILL_UNPAID_TITLE = '미납요금';
-Tw.HOTBILL_ERROR_ZINVE8106 = '실시간 요금조회에서의 전월요금 조회는 매월초 임시제공되며, 정확한 사용요금은 \'사용내역/<a href="/myt-fare/billguide/guide">청구요금조회</a>\'에서 확인 가능합니다.';
+Tw.HOTBILL_ERROR_ZINVE8106 = '실시간 요금조회에서의 전월요금 조회는 매월초 임시제공되며, 정확한 사용요금은 \'사용내역/' +
+  '<a href="/myt-fare/billguide/guide" class="bt-link-tx underline">청구요금조회</a>\'에서 확인 가능합니다.';
 
 Tw.SETTINGS_MENU = {
   LATEST: '최신'
