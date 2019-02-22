@@ -118,9 +118,7 @@ Tw.CustomerHelpline.prototype = {
         $errorText.addClass('none');
       }
 
-      if (this._isCheckedLen) {
-        this._setSubmitState(true);
-      }
+      this._setSubmitState(this._isCheckedLen);
     }
 
     return isValid;
