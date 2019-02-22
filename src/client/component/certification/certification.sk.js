@@ -35,13 +35,16 @@ Tw.CertificationSk = function () {
 
 Tw.CertificationSk.prototype = {
   SMS_ERROR: {
+    ATH2001: 'ATH2001',
     ATH2003: 'ATH2003',     // 재전송 제한시간이 지난 후에 이용하시기 바랍니다.
     ATH2006: 'ATH2006',     // 제한시간 내에 보낼 수 있는 발송량이 초과하였습니다.
     ATH2007: 'ATH2007',     // 입력하신 인증번호가 맞지 않습니다.
     ATH2008: 'ATH2008',     // 인증번호를 입력할 수 있는 시간이 초과하였습니다.
+    ATH2009: 'ATH2009',
     ATH1221: 'ATH1221',     // 인증번호 유효시간이 경과되었습니다.
     ATH2000: 'ATH2000',
     ATH2011: 'ATH2011',     //
+    ATH2013: 'ATH2013',
     ATH2014: 'ATH2014'
   },
   checkSmsEnable: function (svcInfo, opMethods, optMethods, methodCnt, callback) {
@@ -183,6 +186,7 @@ Tw.CertificationSk.prototype = {
     this.$errorConfirm = $popupContainer.find('#aria-sms-exp-desc5');
     this.$errorConfirmTime = $popupContainer.find('#aria-sms-exp-desc6');
     this.$errorCertAddTime = $popupContainer.find('#aria-sms-exp-desc7');
+    this.$errorConfirmCnt = $popupContainer.find('#aria-sms-exp-desc8');
 
     $popupContainer.on('click', '#fe-other-cert', $.proxy(this._onClickOtherCert, this));
     $popupContainer.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
@@ -401,17 +405,22 @@ Tw.CertificationSk.prototype = {
     }).done($.proxy(this._successConfirm, this));
   },
   _successConfirm: function (resp) {
+    this._clearConfirmError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._callbackParam = resp;
       this._popupService.close();
     } else if ( resp.code === this.SMS_ERROR.ATH2007 ) {
-      this._clearConfirmError();
       this.$errorConfirm.removeClass('none');
     } else if ( resp.code === this.SMS_ERROR.ATH2008 ) {
-      this._clearConfirmError();
       this.$errorConfirmTime.removeClass('none');
     } else if ( resp.code === this.SMS_ERROR.ATH2011 ) {
-      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2011);
+      this.$errorConfirmCnt.removeClass('none');
+    } else if ( resp.code === this.SMS_ERROR.ATH2001 ) {
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2001);
+    } else if ( resp.code === this.SMS_ERROR.ATH2009 ) {
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2009);
+    } else if ( resp.code === this.SMS_ERROR.ATH2013 ) {
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2013);
     } else if ( resp.code === this.SMS_ERROR.ATH2014 ) {
       this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2014);
     } else {
