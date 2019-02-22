@@ -40,6 +40,7 @@ class MyTDataPrepaidDataAuto extends TwViewController {
           this.error.render(res, {
             code: ppsInfo.code === API_CODE.CODE_00 ? autoInfo.code : ppsInfo.code,
             msg: ppsInfo.code === API_CODE.CODE_00 ? autoInfo.msg : ppsInfo.msg,
+            pageInfo: pageInfo,
             svcInfo: svcInfo
           });
         }

@@ -31,7 +31,7 @@ class BenefitMyBenefitRainbowPointTransfer extends TwViewController {
       ]);
 
       if ( !FormatHelper.isEmpty(apiError) ) {
-        return this.renderErr(res, apiError, svcInfo);
+        return this.renderErr(res, apiError, svcInfo, pageInfo);
       }
 
       const lines = this.getLineWithRainbowPointFamilies(rainbowPointFamilies);
@@ -45,6 +45,7 @@ class BenefitMyBenefitRainbowPointTransfer extends TwViewController {
         return this.error.render(res, {
           title: MY_BENEFIT_RAINBOW_POINT_TRANSFER.TITLE,
           msg: MY_BENEFIT_RAINBOW_POINT_TRANSFER.ERROR,
+          pageInfo: pageInfo,
           svcInfo
         });
       }
@@ -64,7 +65,7 @@ class BenefitMyBenefitRainbowPointTransfer extends TwViewController {
 
       res.render(this._VIEW.DEFAULT, options);
     }, (resp) => {
-      return this.renderErr(res, resp, svcInfo);
+      return this.renderErr(res, resp, svcInfo, pageInfo);
     });
   }
 
@@ -119,11 +120,12 @@ class BenefitMyBenefitRainbowPointTransfer extends TwViewController {
     return selectedLine.relCd === RAINBOW_POINT_REL_CD.C;
   }
 
-  private renderErr(res, err, svcInfo): any {
+  private renderErr(res, err, svcInfo, pageInfo): any {
     return this.error.render(res, {
       title: MY_BENEFIT_RAINBOW_POINT_TRANSFER.TITLE,
       code: err.code,
       msg: err.msg,
+      pageInfo: pageInfo,
       svcInfo
     });
   }

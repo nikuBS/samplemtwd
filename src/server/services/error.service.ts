@@ -31,8 +31,8 @@ class ErrorService {
       code: options.code || '',
       msg: this._replaceBreakLines(options.msg) || '',
       svcInfo: options.svcInfo || null,
-      pageInfo: options.pageInfo || null,
-      isBackCheck: options.isBackCheck || false
+      isBackCheck: options.isBackCheck || false,
+      pageInfo: options.pageInfo
     });
   }
 

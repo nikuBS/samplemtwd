@@ -38,6 +38,7 @@ export default class MyTDataPrepaidHistory extends TwViewController {
       if (error.code) {
         return this.error.render(res, {
           ...error,
+          pageInfo: pageInfo,
           svcInfo
         });
       }

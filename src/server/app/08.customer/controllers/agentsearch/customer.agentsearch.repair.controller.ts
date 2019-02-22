@@ -24,7 +24,7 @@ class CustomerAgentsearchRepair extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
          allSvc: any, childInfo: any, pageInfo: any): void {
-    this.getRepairShopList(res, svcInfo).subscribe(
+    this.getRepairShopList(res, svcInfo, pageInfo).subscribe(
       (result: Array<Centre>) => {
         if (!!result) {
           res.render('agentsearch/customer.agentsearch.repair.html', {
@@ -45,13 +45,14 @@ class CustomerAgentsearchRepair extends TwViewController {
           title: '매장 및 AS 센터',
           code: err.code,
           msg: err.msg,
+          pageInfo: pageInfo,
           svcInfo: svcInfo
         });
       }
     );
   }
 
-  private getRepairShopList(res: Response, svcInfo: any): Observable<any> {
+  private getRepairShopList(res: Response, svcInfo: any, pageInfo: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_08_0049, {})
       .map((resp)  => {
         if (resp.code === API_CODE.CODE_00) {
@@ -62,6 +63,7 @@ class CustomerAgentsearchRepair extends TwViewController {
           title: '매장 및 AS 센터',
           code: resp.code,
           msg: resp.msg,
+          pageInfo: pageInfo,
           svcInfo: svcInfo
         });
 

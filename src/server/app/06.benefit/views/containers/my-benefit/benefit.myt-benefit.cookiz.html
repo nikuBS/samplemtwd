@@ -3,7 +3,7 @@
 * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
 * Date: 2018. 11. 1.
 %>
-<% include ../../components/start.component.html %>
+<%- include('../../components/start.component.html', { pageInfo: pageInfo }); %>
 <% include ../../components/javascript.component.html %>
 <% include ../../components/my-benefit/benefit.my-benefit.military.list.html %>
 <!-- #skip_navigation -->

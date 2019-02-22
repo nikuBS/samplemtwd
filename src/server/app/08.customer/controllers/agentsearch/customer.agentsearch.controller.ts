@@ -32,7 +32,7 @@ class CustomerAgentsearch extends TwViewController {
       const keyword = req.query.keyword;
       const optionsString = req.query.options;
       const page = req.query.page ? parseInt(req.query.page, 10) : 1;
-      this.getQueryResult(type, storeType, keyword, optionsString, page, res, svcInfo).subscribe(
+      this.getQueryResult(type, storeType, keyword, optionsString, page, res, svcInfo, pageInfo).subscribe(
         (result) => {
           if (FormatHelper.isEmpty(result)) {
             return;
@@ -57,6 +57,7 @@ class CustomerAgentsearch extends TwViewController {
           this.error.render(res, {
             code: err.code,
             msg: err.msg,
+            pageInfo: pageInfo,
             svcInfo
           });
         }
@@ -65,7 +66,7 @@ class CustomerAgentsearch extends TwViewController {
   }
 
   private getQueryResult(type: string, storeType: string, keyword: string, options: string,
-                         page: number, res: Response, svcInfo: any): Observable<any> {
+                         page: number, res: Response, svcInfo: any, pageInfo: any): Observable<any> {
     let api = API_CMD.BFF_08_0004;
     switch (type) {
       case SearchType.NAME:
@@ -101,6 +102,7 @@ class CustomerAgentsearch extends TwViewController {
       this.error.render(res, {
         code: resp.code,
         msg: resp.msg,
+        pageInfo: pageInfo,
         svcInfo
       });
 

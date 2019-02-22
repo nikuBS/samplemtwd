@@ -60,7 +60,7 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
     let no: string, name: string, period: string, tab: string, isGift: boolean;
     const auto = req.query.auto === 'Y';
     if (auto) {
-      this.getMostSuitableCoupon(res, svcInfo)
+      this.getMostSuitableCoupon(res, svcInfo, pageInfo)
         .subscribe(
           (coupon: Coupon) => {
             if (coupon) {
@@ -71,11 +71,11 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
               isGift = coupon.isGift || false;
               this.renderCouponUse(res, svcInfo, pageInfo, no, name, period, tab, isGift, auto);
             } else {
-              this.error.render(res, { code: '', msg: '', svcInfo });
+              this.error.render(res, { code: '', msg: '', pageInfo, svcInfo });
             }
           },
           err => {
-            this.error.render(res, { code: err.code, msg: err.msg, svcInfo });
+            this.error.render(res, { code: err.code, msg: err.msg, pageInfo, svcInfo });
           }
         );
       return;
@@ -94,8 +94,8 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
   private renderCouponUse(res: Response, svcInfo: any, pageInfo: any, no: string, name: string,
                           period: string, tab: string, isGift: boolean, isAuto: boolean) {
     Observable.combineLatest(
-      this.getCouponUsageOptions(res, svcInfo),
-      this.getRedisProductInfo(res, svcInfo, svcInfo.prodId)
+      this.getCouponUsageOptions(res, svcInfo, pageInfo),
+      this.getRedisProductInfo(res, svcInfo, pageInfo, svcInfo.prodId)
     ).subscribe(
       ([couponUsage, productSummary]) => {
         if (!FormatHelper.isEmpty(couponUsage) && !FormatHelper.isEmpty(productSummary)) {
@@ -106,12 +106,12 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
         }
       },
       (err) => {
-        this.error.render(res, { code: err.code, msg: err.msg, svcInfo });
+        this.error.render(res, { code: err.code, msg: err.msg, pageInfo, svcInfo });
       }
     );
   }
 
-  private getCouponUsageOptions(res: Response, svcInfo: any): Observable<any> {
+  private getCouponUsageOptions(res: Response, svcInfo: any, pageInfo: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_06_0009, {}).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         return resp.result.option;
@@ -120,24 +120,25 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
       this.error.render(res, {
         code: resp.code,
         msg: resp.msg,
+        pageInfo: pageInfo,
         svcInfo
       });
       return null;
     });
   }
 
-  private getRedisProductInfo(res: Response, svcInfo: any, prodId: any): Observable<any> {
+  private getRedisProductInfo(res: Response, svcInfo: any, pageInfo: any, prodId: any): Observable<any> {
     return this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId).map(resp => {
       if (!FormatHelper.isEmpty(resp.result)) {
         return resp.result.summary;
       }
 
-      this.error.render(res, { code: resp.code, msg: resp.msg, svcInfo });
+      this.error.render(res, { code: resp.code, msg: resp.msg, pageInfo, svcInfo });
       return null;
     });
   }
 
-  private getMostSuitableCoupon(res: Response, svcInfo: any): Observable<any> {
+  private getMostSuitableCoupon(res: Response, svcInfo: any, pageInfo: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_06_0001, {}).map(resp => {
       if (resp.code === API_CODE.CODE_00) {
         return this.purifyCouponData(resp.result);
@@ -146,6 +147,7 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
       this.error.render(res, {
         code: resp.code,
         msg: resp.msg,
+        pageInfo: pageInfo,
         svcInfo
       });
 

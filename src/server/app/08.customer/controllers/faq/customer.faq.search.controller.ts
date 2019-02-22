@@ -14,7 +14,7 @@ class CustomerFaqSearch extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any,
          childInfo: any, pageInfo: any) {
     const keyword = req.query.keyword;
-    this.getSearchResult(keyword, res, svcInfo).subscribe(
+    this.getSearchResult(keyword, res, svcInfo, pageInfo).subscribe(
       (result) => {
         if (!FormatHelper.isEmpty(result)) {
           res.render('faq/customer.faq.search.html', {
@@ -29,13 +29,14 @@ class CustomerFaqSearch extends TwViewController {
         this.error.render(res, {
           code: err.code,
           msg: err.msg,
+          pageInfo: pageInfo,
           svcInfo
         });
       }
     );
   }
 
-  private getSearchResult(keyword: string, res: Response, svcInfo: any): Observable<any> {
+  private getSearchResult(keyword: string, res: Response, svcInfo: any, pageInfo: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_08_0050, {
       srchKey: encodeURIComponent(keyword),
       page: 0,
@@ -48,6 +49,7 @@ class CustomerFaqSearch extends TwViewController {
       this.error.render(res, {
         code: resp.code,
         msg: resp.msg,
+        pageInfo: pageInfo,
         svcInfo
       });
 

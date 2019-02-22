@@ -39,6 +39,7 @@ class CustomerDocument extends TwViewController {
           title: HEAD_TITLE.DOCUMENT,
           code: mobile.code,
           msg: mobile.msg,
+          pageInfo: pageInfo,
           svcInfo: svcInfo
         });
       }

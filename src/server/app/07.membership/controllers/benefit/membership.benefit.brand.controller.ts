@@ -40,7 +40,7 @@ class MembershipBenefitBrand extends TwViewController {
       ]);
 
       if ( !FormatHelper.isEmpty(apiError) ) {
-        return this.renderErr(res, apiError, svcInfo);
+        return this.renderErr(res, apiError, svcInfo, pageInfo);
       }
 
       const cateList = this.getCateList(respCateList);
@@ -67,7 +67,7 @@ class MembershipBenefitBrand extends TwViewController {
 
       res.render(this.VIEW.DEFAULT, options);
     }, (resp) => {
-      return this.renderErr(res, resp, svcInfo);
+      return this.renderErr(res, resp, svcInfo, pageInfo);
     });
   }
 
@@ -92,11 +92,12 @@ class MembershipBenefitBrand extends TwViewController {
     return this.apiService.request(API_CMD.BFF_11_0001, {});
   }
 
-  private renderErr(res, err, svcInfo): any {
+  private renderErr(res, err, svcInfo, pageInfo): any {
     return this.error.render(res, {
       title: T_MEMBERSHIP_BENEFIT_BRAND.TITLE,
       code: err.code,
       msg: err.msg,
+      pageInfo: pageInfo,
       svcInfo
     });
   }

@@ -33,6 +33,7 @@ class BenefitCookiz extends TwViewController {
           return this.error.render(res, {
             title: MY_BENEFIT.MAIN,
             svcInfo: svcInfo,
+            pageInfo: pageInfo,
             msg: cookiz.msg,
             code: cookiz.code
           });

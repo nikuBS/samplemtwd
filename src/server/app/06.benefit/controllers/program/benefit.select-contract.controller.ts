@@ -47,6 +47,7 @@ class BenefitSelectContractController extends TwViewController {
           return this.error.render(res, {
             code: scrbCheck.code,
             msg: '',
+            pageInfo: pageInfo,
             svcInfo: svcInfo,
             title: PRODUCT_TYPE_NM.JOIN,
             isBackCheck: true
@@ -56,6 +57,7 @@ class BenefitSelectContractController extends TwViewController {
         return this.error.render(res, {
           code: scrbCheck.code,
           msg: scrbCheck.msg,
+          pageInfo: pageInfo,
           svcInfo: svcInfo,
           title: PRODUCT_TYPE_NM.JOIN
         });
@@ -69,6 +71,7 @@ class BenefitSelectContractController extends TwViewController {
         return this.error.render(res, {
           code: seldisSets.code,
           msg: seldisSets.msg,
+          pageInfo: pageInfo,
           svcInfo: svcInfo,
           title: PRODUCT_TYPE_NM.JOIN
         });
@@ -79,6 +82,7 @@ class BenefitSelectContractController extends TwViewController {
         return this.error.render(res, {
           code: joinTermInfo.code,
           msg: joinTermInfo.msg,
+          pageInfo: pageInfo,
           svcInfo: svcInfo,
           title: PRODUCT_TYPE_NM.JOIN
         });

@@ -4,7 +4,7 @@
 * Date: 2018.12.31
 %>
 
-<% include ../../components/start.component.html %>
+<%- include('../../components/start.component.html', { pageInfo: pageInfo }); %>
 <%
 function recognizeLastChar(keyword){
     if(!keyword||keyword.length<=0){

@@ -45,11 +45,12 @@ class MyTDataPrepaidVoice extends TwViewController {
           this.error.render(res, {
             code: resp.code,
             msg: resp.msg,
+            pageInfo: pageInfo,
             svcInfo: svcInfo
           });
         }
       }, (err) => {
-        this.error.render(res, { code: err.code, msg: err.msg, svcInfo });
+        this.error.render(res, { code: err.code, msg: err.msg, pageInfo, svcInfo });
       })
 
   public getPPSInfo = () => this.apiService.request(API_CMD.BFF_05_0013, {});

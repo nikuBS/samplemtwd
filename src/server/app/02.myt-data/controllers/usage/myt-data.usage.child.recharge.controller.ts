@@ -20,7 +20,7 @@ class MytDataUsageChildRecharge extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this.childSvcMgmtNum = req.query.childSvcMgmtNum;
     if ( FormatHelper.isEmpty(this.childSvcMgmtNum) ) {
-      return this.renderErr(res, svcInfo, {});
+      return this.renderErr(res, svcInfo, pageInfo, {});
     }
     Observable.combineLatest(
       this.reqTingSubscriptions()
@@ -30,7 +30,7 @@ class MytDataUsageChildRecharge extends TwViewController {
       ]);
 
       if ( !FormatHelper.isEmpty(apiError) ) {
-        return this.renderErr(res, apiError, svcInfo);
+        return this.renderErr(res, svcInfo, pageInfo, apiError);
       }
 
       const tingSubscriptions = this.getTingSubscriptions(tingSubscriptionsResp);
@@ -44,7 +44,7 @@ class MytDataUsageChildRecharge extends TwViewController {
 
       res.render(this._VIEW.DEFAULT, options);
     }, (resp) => {
-      return this.renderErr(res, resp, svcInfo);
+      return this.renderErr(res, svcInfo, pageInfo, resp);
     });
   }
 
@@ -60,9 +60,10 @@ class MytDataUsageChildRecharge extends TwViewController {
     return result;
   }
 
-  private renderErr(res, svcInfo, err): any {
+  private renderErr(res, svcInfo, pageInfo, err): any {
     const option = {
       title: MYT_DATA_CHILD_USAGE.TITLE,
+      pageInfo: pageInfo,
       svcInfo
     };
     if ( err ) {

@@ -3,7 +3,7 @@
 * Author: Ara Jo (araara.jo@sk.com)
 * Date: 2018.08.23
 %>
-<% include ../../components/start.component.html %>
+<%- include('../../components/start.component.html', { pageInfo: pageInfo }); %>
 <form id="applyForm" method="post" action="https://nice.checkplus.co.kr/CheckPlusSafeModel/checkplus.cb">
     <input type="hidden" name="m" value="checkplusSerivce"/>
     <input type="hidden" name="EncodeData" value="<%= data %>"/>

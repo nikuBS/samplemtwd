@@ -20,6 +20,7 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
 
       if (!pageId) {
         return this.error.render(res, {
+          pageInfo: pageInfo,
           svcInfo
         });
       }
@@ -27,6 +28,7 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
       this.getCombination(prodId, svcInfo, req.query.type).subscribe(combination => {
         if (combination.code) {
           return this.error.render(res, {
+            pageInfo: pageInfo,
             ...combination,
             svcInfo
           });
@@ -38,6 +40,7 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
       this.getCombinations().subscribe(combinations => {
         if (combinations.code) {
           return this.error.render(res, {
+            pageInfo: pageInfo,
             ...combinations,
             svcInfo
           });
