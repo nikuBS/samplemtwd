@@ -33,8 +33,8 @@ class MyTFareBillTPoint extends TwViewController {
         this.error.render(res, {
           code: tpoint.code,
           msg: tpoint.msg,
-          svcInfo: svcInfo,
-          pageInfo: pageInfo
+          pageInfo: pageInfo,
+          svcInfo: svcInfo
         });
       }
     });

@@ -16,7 +16,7 @@ class CommonMemberLogoutExpire extends TwViewController {
     const target = req.query.target || '/main/home';
     this.loginService.sessionGenerate(req).subscribe(() => {
       this.logger.info(this, this.loginService.getSessionId(req));
-      res.render('member/common.member.logout.expire.html', { svcInfo, target });
+      res.render('member/common.member.logout.expire.html', { svcInfo, pageInfo, target });
     });
   }
 }

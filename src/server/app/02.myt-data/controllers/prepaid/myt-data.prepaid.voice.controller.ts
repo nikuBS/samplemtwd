@@ -21,7 +21,7 @@ class MyTDataPrepaidVoice extends TwViewController {
       this.renderPrepaidVoice(req, res, next, svcInfo, pageInfo);
     } else {
       res.render('share/common.share.app-install.info.html', {
-        svcInfo: svcInfo, isAndroid: BrowserHelper.isAndroid(req)
+        svcInfo: svcInfo, pageInfo, isAndroid: BrowserHelper.isAndroid(req)
       });
     }
 

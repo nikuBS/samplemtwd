@@ -6,8 +6,8 @@ class MainSearch extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any) {
-    res.render('main.search.html', { svcInfo });
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    res.render('main.search.html', { svcInfo, pageInfo });
   }
 }
 

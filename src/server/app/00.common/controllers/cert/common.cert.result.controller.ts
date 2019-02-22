@@ -15,25 +15,25 @@ class CommonCertResult extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
     const certType = req.query.type;
     const certKind = req.query.kind;
 
-    this.checkCertKind(req, res, certType, certKind);
+    this.checkCertKind(req, res, certType, certKind, pageInfo);
   }
 
-  private checkCertKind(req, res, certType, certKind) {
+  private checkCertKind(req, res, certType, certKind, pageInfo) {
     if ( certType === NICE_TYPE.IPIN ) {
       if ( certKind === AUTH_CERTIFICATION_KIND.F ) {
-        this.sendResult(req, res, API_CMD.BFF_01_0048, { enc_data: req.body.enc_data });
+        this.sendResult(req, res, API_CMD.BFF_01_0048, { enc_data: req.body.enc_data }, pageInfo);
       } else {
-        this.sendResult(req, res, API_CMD.BFF_01_0023, { enc_data: req.body.enc_data });
+        this.sendResult(req, res, API_CMD.BFF_01_0023, { enc_data: req.body.enc_data }, pageInfo);
       }
     } else if ( certType === NICE_TYPE.NICE ) {
       if ( certKind === AUTH_CERTIFICATION_KIND.F ) {
-        this.sendResult(req, res, API_CMD.BFF_01_0050, { EncodeData: req.body.EncodeData });
+        this.sendResult(req, res, API_CMD.BFF_01_0050, { EncodeData: req.body.EncodeData }, pageInfo);
       } else {
-        this.sendResult(req, res, API_CMD.BFF_01_0025, { EncodeData: req.body.EncodeData });
+        this.sendResult(req, res, API_CMD.BFF_01_0025, { EncodeData: req.body.EncodeData }, pageInfo);
       }
     } else {
       res.render('cert/common.cert.result.html', {
@@ -44,16 +44,18 @@ class CommonCertResult extends TwViewController {
     }
   }
 
-  private sendResult(req, res, command, params) {
+  private sendResult(req, res, command, params, pageInfo) {
     this.apiService.request(command, params).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         res.render('cert/common.cert.result.html', {
+          pageInfo,
           target: AUTH_CERTIFICATION_METHOD.IPIN,
           code: resp.code,
           msg: resp.msg
         });
       } else {
         res.render('cert/common.cert.result.html', {
+          pageInfo,
           target: AUTH_CERTIFICATION_METHOD.IPIN,
           code: resp.code,
           msg: resp.msg

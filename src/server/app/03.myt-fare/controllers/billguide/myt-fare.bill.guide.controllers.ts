@@ -116,7 +116,7 @@ class MyTFareBillGuide extends TwViewController {
       this._typeChk = 'A1';
       thisMain.logger.info(thisMain, '-------------------------------------[Type Check END]');
       thisMain.logger.info(thisMain, '[ 페이지 진입 ] this._typeChk : ', thisMain._typeChk);
-      this.prepaidCircuit(res, svcInfo, allSvc, childInfo);
+      this.prepaidCircuit(res, svcInfo, allSvc, childInfo, pageInfo);
       return ;
 
     } else if ( svcInfo.svcAttrCd === 'O1' ) {
@@ -268,6 +268,7 @@ class MyTFareBillGuide extends TwViewController {
         title: 'title',
         code: err.code,
         msg: err.msg,
+        pageInfo: pageInfo,
         svcInfo: svcInfo
       });
     });
@@ -276,7 +277,7 @@ class MyTFareBillGuide extends TwViewController {
 
 
   // PPS 선불폰
-  private prepaidCircuit(res, svcInfo, allSvc, childInfo) {
+  private prepaidCircuit(res, svcInfo, allSvc, childInfo, pageInfo) {
     const thisMain = this;
 
     const p1 = this._getPromiseApi(this.apiService.request(API_CMD.BFF_05_0013, {
@@ -334,6 +335,7 @@ class MyTFareBillGuide extends TwViewController {
         title: 'title',
         code: err.code,
         msg: err.msg,
+        pageInfo: pageInfo,
         svcInfo: svcInfo
       });
     });

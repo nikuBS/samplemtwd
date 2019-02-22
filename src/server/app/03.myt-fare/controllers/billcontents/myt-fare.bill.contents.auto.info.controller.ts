@@ -33,8 +33,8 @@ class MyTFareBillContentsAutoInfo extends TwViewController {
         this.error.render(res, {
           code: errorResponse.code,
           msg: errorResponse.msg,
-          svcInfo: svcInfo,
-          pageInfo: pageInfo
+          pageInfo: pageInfo,
+          svcInfo: svcInfo
         });
       }
     });

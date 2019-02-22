@@ -97,8 +97,8 @@ class MyTJoinWireModifyPeriod extends TwViewController {
       title: MYT_JOIN_WIRE_MODIFY_PERIOD.TITLE,
       code: err.code,
       msg: err.msg,
-      svcInfo,
-      pageInfo
+      pageInfo,
+      svcInfo
     });
   }
 

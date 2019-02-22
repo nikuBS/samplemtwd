@@ -45,6 +45,7 @@ class CommonMemberLine extends TwViewController {
       } else {
         return this.error.render(res, {
           svcInfo: svcInfo,
+          pageInfo: pageInfo,
           code: mobile.code,
           msg: mobile.msg
         });

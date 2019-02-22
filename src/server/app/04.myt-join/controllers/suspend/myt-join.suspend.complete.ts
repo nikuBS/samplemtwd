@@ -18,7 +18,7 @@ class MyTJoinSuspendComplete extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const queryObject: any = ParamsHelper.getQueryParams(req.url);
     const data = this._setParam(queryObject);
-    res.render('suspend/myt-join.suspend.complete.html', { data });
+    res.render('suspend/myt-join.suspend.complete.html', { data, pageInfo });
   }
 
   private _setParam = (params) => {

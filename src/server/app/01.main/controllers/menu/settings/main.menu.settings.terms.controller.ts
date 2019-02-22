@@ -44,7 +44,7 @@ export default class MainMenuSettingsTerms extends TwViewController {
         return;
       }
 
-      this.getTermContent(res, svcInfo, id).subscribe(
+      this.getTermContent(res, svcInfo, pageInfo, id).subscribe(
         (resp) => {
           if (!FormatHelper.isEmpty(resp)) {
             const title = !!this.titleMap[id] ? this.titleMap[id] : resp.title;
@@ -58,6 +58,7 @@ export default class MainMenuSettingsTerms extends TwViewController {
           this.error.render(res, {
             code: err.code,
             msg: err.msg,
+            pageInfo: pageInfo,
             svcInfo
           });
         }
@@ -67,7 +68,7 @@ export default class MainMenuSettingsTerms extends TwViewController {
     }
   }
 
-  private getTermContent(res: Response, svcInfo: any, id: string): Observable<any> {
+  private getTermContent(res: Response, svcInfo: any, pageInfo: any, id: string): Observable<any> {
     return this.apiService.request(API_CMD.BFF_08_0059, {
       svcType: 'MM',
       serNum: id
@@ -79,6 +80,7 @@ export default class MainMenuSettingsTerms extends TwViewController {
       this.error.render(res, {
         code: resp.code,
         msg: resp.msg,
+        pageInfo: pageInfo,
         svcInfo
       });
 

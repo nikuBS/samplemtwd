@@ -86,8 +86,8 @@ class MyTJoinInfoDiscountMonth extends TwViewController {
       title: MYT_INFO_DISCOUNT_MONTH.TITLE,
       code: err.code,
       msg: err.msg,
-      svcInfo,
-      pageInfo
+      pageInfo,
+      svcInfo
     });
   }
 

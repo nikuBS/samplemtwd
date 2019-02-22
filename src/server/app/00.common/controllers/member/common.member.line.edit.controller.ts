@@ -39,12 +39,14 @@ class CommonMemberLineEdit extends TwViewController {
         if ( exposable.code === API_CODE.CODE_00 ) {
           return this.error.render(res, {
             svcInfo: svcInfo,
+            pageInfo: pageInfo,
             code: exposed.code,
             msg: exposed.msg
           });
         } else {
           return this.error.render(res, {
             svcInfo: svcInfo,
+            pageInfo: pageInfo,
             code: exposable.code,
             msg: exposable.msg
           });

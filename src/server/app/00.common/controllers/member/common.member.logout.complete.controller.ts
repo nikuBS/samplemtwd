@@ -15,7 +15,7 @@ class CommonMemberLogoutComplete extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this.loginService.sessionGenerate(req).subscribe(() => {
       this.logger.info(this, this.loginService.getSessionId(req));
-      res.render('member/common.member.logout.complete.html', { svcInfo });
+      res.render('member/common.member.logout.complete.html', { svcInfo, pageInfo });
     });
   }
 }

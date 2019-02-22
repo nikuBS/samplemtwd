@@ -28,6 +28,7 @@ class MyTJoinSuspendStatus extends TwViewController {
         return this.error.render(res, {
           title: MYT_JOIN_SUSPEND.STATE,
           svcInfo: svcInfo,
+          pageInfo: pageInfo,
           msg: apiError.msg,
           code: apiError.code
         });
@@ -114,6 +115,7 @@ class MyTJoinSuspendStatus extends TwViewController {
         return this.error.render(res, {
           title: MYT_JOIN_SUSPEND.STATE,
           svcInfo: svcInfo,
+          pageInfo: pageInfo,
           msg: progress.msg,
           code: progress.code
         });
@@ -123,6 +125,7 @@ class MyTJoinSuspendStatus extends TwViewController {
         return this.error.render(res, {
           title: MYT_JOIN_SUSPEND.STATE,
           svcInfo: svcInfo,
+          pageInfo: pageInfo,
           msg: MYT_SUSPEND_ERROR_MSG.NOT_SUSPENDED
         });
       }

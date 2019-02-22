@@ -77,6 +77,7 @@ class MyTJoinWireModifyProduct extends TwViewController {
         title: MYT_JOIN_WIRE.MODIFY_PRODUCT.TITLE,
         code: err.code,
         msg: err.msg,
+        pageInfo: pageInfo,
         svcInfo: svcInfo
       });
     });

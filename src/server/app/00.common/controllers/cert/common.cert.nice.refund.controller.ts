@@ -14,7 +14,7 @@ class CommonCertNiceRefund extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
     const mobileco = req.query.niceKind;
     const authKind = req.query.authKind;
     this.apiService.request(API_CMD.BFF_01_0049, {
@@ -23,7 +23,7 @@ class CommonCertNiceRefund extends TwViewController {
       // resultUrl: 'http://150.28.69.23:3000' + '/common/cert/result?type=ipin&kind=' + + authKind
     }).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        res.render('cert/common.cert.nice.html', { data: resp.result });
+        res.render('cert/common.cert.nice.html', { data: resp.result, pageInfo });
       }
     });
   }

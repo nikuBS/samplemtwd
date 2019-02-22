@@ -51,6 +51,7 @@ class MyTJoinPhoneNumChange extends TwViewController {
             title: '010번호 전환변경',
             code: resp.code,
             msg: resp.msg,
+            pageInfo: pageInfo,
             svcInfo: svcInfo
           });
         }
@@ -59,6 +60,7 @@ class MyTJoinPhoneNumChange extends TwViewController {
           title: '010번호 전환변경',
           code: resp.code,
           msg: resp.msg,
+          pageInfo: pageInfo,
           svcInfo: svcInfo
         });
       });

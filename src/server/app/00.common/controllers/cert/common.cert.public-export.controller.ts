@@ -17,7 +17,8 @@ class CommonCertPublicExport extends TwViewController {
     const signgateInfo = EnvHelper.getEnvironment('SIGNGATE');
     res.render('cert/common.cert.public-export.html', {
       signgate_host: signgateInfo.host,
-      signgate_port: signgateInfo.port
+      signgate_port: signgateInfo.port,
+      pageInfo
     });
   }
 }

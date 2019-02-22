@@ -62,6 +62,7 @@ class MyTFareInfoBillTax extends TwViewController {
         this.error.render(res, {
           code: this.returnErrorInfo.code,
           msg: this.returnErrorInfo.msg,
+          pageInfo: pageInfo,
           svcInfo: svcInfo
         });
       } else {

@@ -30,8 +30,8 @@ export default class MembershipMyHistory extends TwViewController {
         return this.error.render(res, {
           code: resp.code,
           msg: resp.msg,
-          svcInfo: svcInfo,
-          pageInfo: pageInfo
+          pageInfo: pageInfo,
+          svcInfo: svcInfo
         });
       }
 

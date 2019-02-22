@@ -13,7 +13,7 @@ class MyTJoinWireModifyPeriodComplete extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    res.render('wire/myt-join.wire.modify.period-complete.html');
+    res.render('wire/myt-join.wire.modify.period-complete.html', { pageInfo });
   }
 
 }

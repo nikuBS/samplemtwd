@@ -18,7 +18,7 @@ class CommonTidRoute extends TwViewController {
     if ( !FormatHelper.isEmpty(query.error) ) {
       res.send(query.error_description);
     } else {
-      res.render('tid/common.tid.route.html');
+      res.render('tid/common.tid.route.html', { pageInfo });
     }
   }
 }

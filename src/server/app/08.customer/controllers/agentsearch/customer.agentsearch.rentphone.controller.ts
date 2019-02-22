@@ -26,7 +26,7 @@ class CustomerAgentsearchRentPhone extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
          allSvc: any, childInfo: any, pageInfo: any) {
 
-    this.getRentPhoneStores(res, svcInfo).subscribe(
+    this.getRentPhoneStores(res, svcInfo, pageInfo).subscribe(
       (resp: Array<Store> | null) => {
         if (resp) {
           const currentList = resp.filter((item) => { // default 서울 지역만 filter
@@ -41,13 +41,14 @@ class CustomerAgentsearchRentPhone extends TwViewController {
         this.error.render(res, {
           code: err.code,
           msg: err.msg,
+          pageInfo,
           svcInfo
         });
       }
     );
   }
 
-  private getRentPhoneStores(res: Response, svcInfo: any): Observable<Array<Store> | null> {
+  private getRentPhoneStores(res: Response, svcInfo: any, pageInfo: any): Observable<Array<Store> | null> {
     return this.apiService.request(API_CMD.BFF_08_0067, {}).map(((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         return resp.result;
@@ -56,6 +57,7 @@ class CustomerAgentsearchRentPhone extends TwViewController {
       this.error.render(res, {
         code: resp.code,
         msg: resp.msg,
+        pageInfo,
         svcInfo
       });
 

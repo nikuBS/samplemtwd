@@ -39,13 +39,13 @@ class MyTFareBillAccount extends TwViewController {
           });
         } else {
           this.error.render(res, {
-            code: unpaidList.code, msg: unpaidList.msg, svcInfo: svcInfo, pageInfo: pageInfo
+            code: unpaidList.code, msg: unpaidList.msg, pageInfo: pageInfo, svcInfo: svcInfo
           });
         }
       });
     } else {
       res.render('share/common.share.app-install.info.html', {
-        svcInfo: svcInfo, isAndroid: BrowserHelper.isAndroid(req)
+        svcInfo: svcInfo, pageInfo: pageInfo, isAndroid: BrowserHelper.isAndroid(req)
       });
     }
   }

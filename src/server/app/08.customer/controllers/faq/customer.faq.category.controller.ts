@@ -16,7 +16,7 @@ class CustomerFaqCategory extends TwViewController {
 
     const categoryId = req.query.id;
     const title = req.query.title;
-    this.getCategoryList(res, svcInfo, categoryId)
+    this.getCategoryList(res, svcInfo, pageInfo, categoryId)
       .subscribe(
         (result) => {
           if (!FormatHelper.isEmpty(result)) {
@@ -34,7 +34,7 @@ class CustomerFaqCategory extends TwViewController {
             };
 
             const group = is2depth ? data.depth1[0].ifaqGrpCd : categoryId;
-            this.getFaqList(res, svcInfo, group, 2).subscribe(
+            this.getFaqList(res, svcInfo, pageInfo, group, 2).subscribe(
               (result2) => {
                 data.list = result2.list;
                 data.isLast = result2.isLast;
@@ -46,6 +46,7 @@ class CustomerFaqCategory extends TwViewController {
                 this.error.render(res, {
                   code: err.code,
                   msg: err.msg,
+                  pageInfo,
                   svcInfo
                 });
               }
@@ -56,13 +57,14 @@ class CustomerFaqCategory extends TwViewController {
           this.error.render(res, {
             code: err.code,
             msg: err.msg,
+            pageInfo,
             svcInfo
           });
         }
       );
   }
 
-  private getCategoryList(res: Response, svcInfo: any, id: string): Observable<any> {
+  private getCategoryList(res: Response, svcInfo: any, pageInfo: any, id: string): Observable<any> {
     return this.apiService.request(API_CMD.BFF_08_0051, { ifaqGrpCd: id }).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         return resp.result;
@@ -71,6 +73,7 @@ class CustomerFaqCategory extends TwViewController {
       this.error.render(res, {
         code: resp.code,
         msg: resp.msg,
+        pageInfo,
         svcInfo
       });
 
@@ -78,7 +81,7 @@ class CustomerFaqCategory extends TwViewController {
     });
   }
 
-  private getFaqList(res: Response, svcInfo: any, group: string, depth: number): Observable<any> {
+  private getFaqList(res: Response, svcInfo: any, pageInfo: any, group: string, depth: number): Observable<any> {
     return this.apiService.request(API_CMD.BFF_08_0052, {
       faqDepthGrpCd: group,
       faqDepthCd: depth,
@@ -95,6 +98,7 @@ class CustomerFaqCategory extends TwViewController {
       this.error.render(res, {
         code: resp.code,
         msg: resp.msg,
+        pageInfo,
         svcInfo
       });
 

@@ -26,15 +26,16 @@ export default class ProductRoamingMyUse extends TwViewController {
       ).subscribe(([roamingFeePlan, roamingAdd, wirelessAdd]) => {
 
         const error = {
-          code:　roamingFeePlan.code || roamingAdd.code || wirelessAdd.code,
-          msg:　roamingFeePlan.msg || roamingAdd.msg || wirelessAdd.msg
+          code: roamingFeePlan.code || roamingAdd.code || wirelessAdd.code,
+          msg: roamingFeePlan.msg || roamingAdd.msg || wirelessAdd.msg
         };
 
         if (error.code) {
           return this.error.render(res, { ...error, svcInfo, pageInfo });
         }
 
-        res.render('roaming/product.roaming.my-use.html', { svcInfo, pageInfo, roamingFeePlan, roamingAdd , wirelessAdd, isLogin: this.isLogin(svcInfo)});
+        res.render('roaming/product.roaming.my-use.html', { svcInfo, pageInfo,
+          roamingFeePlan, roamingAdd , wirelessAdd, isLogin: this.isLogin(svcInfo)});
       });
     } else {
       res.render('roaming/product.roaming.my-use.html', { svcInfo, pageInfo, isLogin: this.isLogin(svcInfo)});
@@ -69,9 +70,9 @@ export default class ProductRoamingMyUse extends TwViewController {
         roamingProdList: resp.result.roamingProdList.map(prod => {
           return {
             ...prod,
-            basFeeTxt: (prod.basFeeTxt === "" || prod.basFeeTxt === "무료") ? "0" : FormatHelper.numberWithCommas(Number(prod.basFeeTxt)),
+            basFeeTxt: (prod.basFeeTxt === '' || prod.basFeeTxt === '무료') ? '0' : FormatHelper.numberWithCommas(Number(prod.basFeeTxt)),
             scrbDt: DateHelper.getShortDate(prod.scrbDt),
-            btnList: prod.prodSetYn !== 'Y' ? [] : prod.btnList.filter(btn => btn.btnTypCd === "SE")
+            btnList: prod.prodSetYn !== 'Y' ? [] : prod.btnList.filter(btn => btn.btnTypCd === 'SE')
           };
         })
       };
@@ -97,9 +98,9 @@ export default class ProductRoamingMyUse extends TwViewController {
         roamingProdList: resp.result.roamingProdList.map(prod => {
           return {
             ...prod,
-            basFeeTxt: (prod.basFeeTxt === "" || prod.basFeeTxt === "무료") ? "0" : FormatHelper.numberWithCommas(Number(prod.basFeeTxt)),
+            basFeeTxt: (prod.basFeeTxt === '' || prod.basFeeTxt === '무료') ? '0' : FormatHelper.numberWithCommas(Number(prod.basFeeTxt)),
             scrbDt: DateHelper.getShortDate(prod.scrbDt),
-            btnList: prod.prodSetYn !== 'Y' ? [] : prod.btnList.filter(btn => btn.btnTypCd === "SE")
+            btnList: prod.prodSetYn !== 'Y' ? [] : prod.btnList.filter(btn => btn.btnTypCd === 'SE')
           };
         })
       };

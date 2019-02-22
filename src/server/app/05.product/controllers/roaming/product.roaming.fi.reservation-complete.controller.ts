@@ -18,35 +18,35 @@ export default class ProductRoamingFiReservationComplete extends TwViewControlle
 
     switch (selectIdx) {
       case '0':
-        //인천공항 1터미널 3층 로밍센터(E-F 카운터)
+        // 인천공항 1터미널 3층 로밍센터(E-F 카운터)
         centerImg = 'place-img-01';
         break;
       case '1' :
-        //인천공항 1터미널 3층 로밍센터(G-H 카운터)
+        // 인천공항 1터미널 3층 로밍센터(G-H 카운터)
         centerImg = 'place-img-01';
         break;
       case '2' :
-        //인천공항 2터미널 3층 로밍센터(D-E 카운터)
+        // 인천공항 2터미널 3층 로밍센터(D-E 카운터)
         centerImg = 'place-img-02';
         break;
       case '3' :
-        //김포공항 1층 로밍센터
+        // 김포공항 1층 로밍센터
         centerImg = 'place-img-03';
         break;
       case '4' :
-        //제주공항 국제선 1층 로밍센터
+        // 제주공항 국제선 1층 로밍센터
         centerImg = 'place-img-04';
         break;
       case '5' :
-        //김해공항 3층 로밍센터
+        // 김해공항 3층 로밍센터
         centerImg = 'place-img-05';
         break;
       case '6' :
-        //대구공항 2층 로밍센터
+        // 대구공항 2층 로밍센터
         centerImg = 'place-img-06';
         break;
       case '7' :
-        //대구 SKT 황금점 매장
+        // 대구 SKT 황금점 매장
         centerImg = 'place-img-10';
         break;
       default : break;
