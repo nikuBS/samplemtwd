@@ -24,6 +24,7 @@ export default class ProductWire extends TwViewController {
         if (myWire && myWire.code) {
           return this.error.render(res, {
             ...myWire,
+            pageInfo,
             svcInfo
           });
         }

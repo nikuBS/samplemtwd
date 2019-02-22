@@ -29,7 +29,7 @@ export default class ProductAddition extends TwViewController {
       };
 
       if (error.code) {
-        return this.error.render(res, { ...error, svcInfo });
+        return this.error.render(res, { ...error, pageInfo, svcInfo });
       }
 
       const productData = {

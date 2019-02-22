@@ -22,7 +22,7 @@ export default class MyTDataFamilyHistory extends TwViewController {
       };
 
       if (error.code) {
-        return this.error.render(res, { ...error, svcInfo });
+        return this.error.render(res, { ...error, pageInfo, svcInfo });
       }
 
       res.render('familydata/myt-data.familydata.history.html', { svcInfo, pageInfo, histories, total });

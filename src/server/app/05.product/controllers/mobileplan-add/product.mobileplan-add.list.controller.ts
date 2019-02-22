@@ -31,7 +31,7 @@ export default class ProductAdditions extends TwViewController {
         };
 
         if (error.code) {
-          return this.error.render(res, { ...error, svcInfo });
+          return this.error.render(res, { ...error, pageInfo, svcInfo });
         }
 
         res.render('mobileplan-add/product.mobileplan-add.list.html', { svcInfo, additionData: { myAdditions, additions }, params, pageInfo });
