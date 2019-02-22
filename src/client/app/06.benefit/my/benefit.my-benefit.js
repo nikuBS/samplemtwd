@@ -31,21 +31,21 @@ Tw.BenefitMyBenefit.prototype = {
 
   _onClickPay: function () {
     this._popupService.open({
-      hbs: 'actionsheet04',
+      hbs: 'actionsheet01',
       layer: true,
       btnfloating: { 'attr': 'type="button" data-role="fe-bt-close"', 'txt': '닫기' },
       data: [{
         'list': [
           {
-            'button-attr': 'data-role="fe-link" data-url="/myt-fare/bill/cashbag"',
+            'button-attr': 'data-role="fe-link" data-url="/myt-fare/bill/cashbag"', 'check-attr': 'tit-full',
             txt: Tw.BENEFIT.PAYMENT.TYPE.OK + ' (' + this._points.ocb + Tw.BENEFIT.PAYMENT.UNIT + ')'
           },
           {
-            'button-attr': 'data-role="fe-link" data-url="/myt-fare/bill/tpoint"',
+            'button-attr': 'data-role="fe-link" data-url="/myt-fare/bill/tpoint"', 'check-attr': 'tit-full',
             txt: Tw.BENEFIT.PAYMENT.TYPE.T + ' (' + this._points.t + Tw.BENEFIT.PAYMENT.UNIT + ')'
           },
           {
-            'button-attr': 'data-role="fe-link" data-url="/myt-fare/bill/rainbow"',
+            'button-attr': 'data-role="fe-link" data-url="/myt-fare/bill/rainbow"', 'check-attr': 'tit-full',
             txt: Tw.BENEFIT.PAYMENT.TYPE.RAINBOW + '  (' + this._points.rainbow + Tw.BENEFIT.PAYMENT.UNIT + ')'
           }
         ]
