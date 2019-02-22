@@ -26,9 +26,9 @@ export default class ProductPlans extends TwViewController {
     this.getPlans(params).subscribe(plans => {
       if (plans.code) {
         this.error.render(res, {
-          code: plans.code,
-          msg: plans.msg,
-          svcInfo: svcInfo
+          ...plans,
+          svcInfo,
+          pageInfo
         });
       }
 

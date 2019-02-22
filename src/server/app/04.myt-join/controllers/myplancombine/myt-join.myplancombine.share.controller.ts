@@ -24,7 +24,8 @@ export default class MyTJoinMyPlanCombineShare extends TwViewController {
       });
     } else {
       this.error.render(res, {
-        svcInfo
+        svcInfo,
+        pageInfo
       });
     }
   }

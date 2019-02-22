@@ -51,6 +51,7 @@ export default class MyTDataHistory extends TwViewController {
         const error: { code: string; msg: string } = histories[errorIdx];
         return this.error.render(res, {
           ...error,
+          pageInfo,
           svcInfo
         });
       }
