@@ -33,8 +33,8 @@ class MyTFareBillContentsHistoryDetail extends TwViewController {
         return this.error.render(res, {
           code: resp.code,
           msg: resp.msg,
+          pageInfo: pageInfo,
           svcInfo: svcInfo
-          //  ,pageInfo: pageInfo
         });
       }
 

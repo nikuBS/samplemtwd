@@ -27,6 +27,7 @@ class MyTFareBillOptionChangeAddress extends TwViewController {
         this.error.render(res, {
           code: addrInfo.code,
           msg: addrInfo.msg,
+          pageInfo: pageInfo,
           svcInfo: svcInfo
         });
       }

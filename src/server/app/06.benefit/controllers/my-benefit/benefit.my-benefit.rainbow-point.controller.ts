@@ -65,7 +65,7 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
       ]);
 
       if ( !FormatHelper.isEmpty(apiError) ) {
-        return this.renderErr(res, apiError, svcInfo);
+        return this.renderErr(res, apiError, svcInfo, pageInfo);
       }
 
       const rainbowPointsInfo = this.getRainbowPointsInfo(respRainbowPointsInfo);
@@ -96,7 +96,7 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
       res.render(this._VIEW.DEFAULT, options);
 
     }, (resp) => {
-      return this.renderErr(res, resp, svcInfo);
+      return this.renderErr(res, resp, svcInfo, pageInfo);
     });
   }
 
@@ -144,11 +144,12 @@ class BenefitMyBenefitRainbowPoint extends TwViewController {
     return lines.length > 1;
   }
 
-  private renderErr(res, err, svcInfo): any {
+  private renderErr(res, err, svcInfo, pageInfo): any {
     return this.error.render(res, {
       title: MY_BENEFIT_RAINBOW_POINT.TITLE,
       code: err.code,
       msg: err.msg,
+      pageInfo: pageInfo,
       svcInfo: svcInfo
     });
   }

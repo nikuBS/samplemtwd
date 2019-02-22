@@ -17,6 +17,7 @@ export default class CustomerResearches extends TwViewController {
       this.getResearch(req.query.id).subscribe(research => {
         if (research.code) {
           return this.error.render(res, {
+            pageInfo: pageInfo,
             svcInfo,
             ...research
           });
@@ -28,6 +29,7 @@ export default class CustomerResearches extends TwViewController {
       this.getResearches().subscribe(researches => {
         if (researches.code) {
           return this.error.render(res, {
+            pageInfo: pageInfo,
             svcInfo,
             ...researches
           });

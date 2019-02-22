@@ -36,6 +36,7 @@ class BenefitTPlusSalesController extends TwViewController {
           code: tplusInfo.code,
           msg: tplusInfo.msg,
           svcInfo: svcInfo,
+          pageInfo: pageInfo,
           title: PRODUCT_TYPE_NM.JOIN
         });
       }

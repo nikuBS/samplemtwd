@@ -4,7 +4,7 @@
 * Date: 2018.09.14
 %>
 
-<% include ../../components/start.component.html %>
+<%- include('../../components/start.component.html', { pageInfo: pageInfo }); %>
 <% include ../../components/bill/myt-fare.bill.set.return-history.components.html %>
 <body>
 <!-- #skip_navigation -->

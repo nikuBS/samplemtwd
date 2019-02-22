@@ -19,6 +19,7 @@ class MembershipBenefitBrandList extends TwViewController {
       this.error.render(res, {
         code: '',
         msg: 'not found brand name or brand code',
+        pageInfo: pageInfo,
         svcInfo
       });
       return;

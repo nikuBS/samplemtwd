@@ -32,6 +32,7 @@ class CommonSearchMore extends TwViewController {
 
     if (FormatHelper.isEmpty(collection)) {
       return this.error.render(res, {
+        pageInfo: pageInfo,
         svcInfo: svcInfo
       });
     }
@@ -44,6 +45,7 @@ class CommonSearchMore extends TwViewController {
       if (searchResult.code !== 0 || relatedKeyword.code !== 0) {
         return this.error.render(res, {
           svcInfo: svcInfo,
+          pageInfo: pageInfo,
           code: searchResult.code !== 0 ? searchResult.code : relatedKeyword.code,
           msg: searchResult.code !== 0 ? searchResult.msg : relatedKeyword.msg
         });
@@ -57,12 +59,14 @@ class CommonSearchMore extends TwViewController {
           if (surveyList.code !== API_CODE.CODE_00 || popularKeyword.code !== 0) {
             return this.error.render(res, {
               svcInfo: svcInfo,
+              pageInfo: pageInfo,
               code: surveyList.code !== API_CODE.CODE_00 ? surveyList.code : popularKeyword.code,
               msg: surveyList.code !== API_CODE.CODE_00 ? surveyList.msg : popularKeyword.msg
             });
           }
           res.render('search/common.search.not-found.html', {
             svcInfo : svcInfo,
+            pageInfo: pageInfo,
             popularKeyword : popularKeyword.result,
             keyword : searchResult.result.query,
             relatedKeyword : relatedKeyword,
@@ -76,6 +80,7 @@ class CommonSearchMore extends TwViewController {
       } else {
         res.render('search/common.search.more.html', {
           svcInfo : svcInfo,
+          pageInfo: pageInfo,
           searchInfo : searchResult.result,
           keyword : searchResult.result.query,
           pageNum : pageNum,

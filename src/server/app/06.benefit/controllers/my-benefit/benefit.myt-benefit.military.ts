@@ -30,6 +30,7 @@ class BenefitMilitary extends TwViewController {
           return this.error.render(res, {
             title: MY_BENEFIT.MAIN,
             svcInfo: svcInfo,
+            pageInfo: pageInfo,
             msg: military.msg,
             code: military.code
           });

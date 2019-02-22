@@ -25,7 +25,7 @@ export default class MyTDataRechargeCouponComplete extends TwViewController {
         break;
       case 'gift':
         const number = req.query.number;
-        this.getUsableCouponList(res, svcInfo).subscribe(
+        this.getUsableCouponList(res, svcInfo, pageInfo).subscribe(
           (result) => {
             if (!FormatHelper.isEmpty(result)) {
               res.render('recharge/myt-data.recharge.coupon-complete-gift.html', {
@@ -35,7 +35,7 @@ export default class MyTDataRechargeCouponComplete extends TwViewController {
             }
           },
           (err) => {
-            this.error.render(res, { code: err.code, msg: err.msg, svcInfo });
+            this.error.render(res, { code: err.code, msg: err.msg, pageInfo, svcInfo });
           }
         );
         break;
@@ -44,7 +44,7 @@ export default class MyTDataRechargeCouponComplete extends TwViewController {
     }
   }
 
-  private getUsableCouponList(res: Response, svcInfo: any): Observable<any> {
+  private getUsableCouponList(res: Response, svcInfo: any, pageInfo: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_06_0001, {}).map(resp => {
       if (resp.code === API_CODE.CODE_00) {
         return resp.result;
@@ -53,6 +53,7 @@ export default class MyTDataRechargeCouponComplete extends TwViewController {
       this.error.render(res, {
         code: resp.code,
         msg: resp.msg,
+        pageInfo: pageInfo,
         svcInfo
       });
 

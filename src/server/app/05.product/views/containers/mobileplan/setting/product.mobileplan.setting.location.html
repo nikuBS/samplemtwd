@@ -3,7 +3,7 @@
 * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
 * Date: 2018.11.14
 %>
-<% include ../../../components/start.component.html %>
+<%- include('../../../components/start.component.html', { pageInfo: pageInfo }); %>
 <script id="num-list-tmplt-item" type="text/x-handlebars-template">
 
     <li class="list-box type-main" data-auditdtm="{{ auditDtm }}" data-svcnum="{{ svcNumMask }}">
