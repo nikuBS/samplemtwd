@@ -34,7 +34,7 @@ Tw.MyTFareBillSetChange.prototype = {
     this._subBillType = Tw.UrlHelper.getQueryParams().subBillType || 'X';  // 함께 받는 안내서 유형
     this._isChangeInfo = Tw.UrlHelper.getQueryParams().isChangeInfo === 'Y' ? true : false; // 정보변경 유무
 
-    this._options = this.$container.find('.on-off-list > li'); // 옵션 설정 엘리먼트들
+    this._options = this.$container.find('.fe-option-list > li'); // 옵션 설정 엘리먼트들
     this._inputHpNum = this.$container.find('.fe-hp-num'); // 핸드폰번호 input
     this._submit = this.$container.find('#fe-submit'); // 변경하기 버튼
     this._btnAddr = this.$container.find('.fe-btn-addr'); // 주소록 버튼
@@ -304,7 +304,7 @@ Tw.MyTFareBillSetChange.prototype = {
     var mergeType = billType + subBillType;
     var lineType = this._data.lineType;
 
-    this._options.addClass('none').find('input').data('state', false);
+    this._options.addClass('none').removeClass('bb0').find('input').data('state', false);
     var _data = this._data;
 
     var _selectOptions = function (name, isShow) {
@@ -358,6 +358,11 @@ Tw.MyTFareBillSetChange.prototype = {
           this._disabledOptions(_$currContext,true);
         }
       }
+    }
+
+    // 옵션 보이기 일때. li 태그 마지막에 border-bottom 을 제거해준다.
+    if (isDisplay) {
+      this._options.filter(':not(.none)').last().addClass('bb0');
     }
   },
 
