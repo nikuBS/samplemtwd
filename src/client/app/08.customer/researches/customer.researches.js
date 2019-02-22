@@ -9,7 +9,7 @@ Tw.CustomerResearches = function(rootEl) {
 
 Tw.CustomerResearches.prototype = {
   _bindEvent: function() {
-    this.$container.on('click', '.item-two > .bt-blue1', $.proxy(this._handleSubmit, this));
+    this.$container.on('click', '.fe-submit', $.proxy(this._handleSubmit, this));
     this.$container.on('click', 'ul.select-list > li', $.proxy(this._setEnableSubmit, this));
     this.$container.on('click', '.fe-hint', $.proxy(this._goHint, this));
   },
@@ -40,7 +40,7 @@ Tw.CustomerResearches.prototype = {
       }
     }
 
-    this._apiService.request(Tw.API_CMD.BFF_08_0035, options).done($.proxy(this._successParticipation, this));
+    this._apiService.request(Tw.API_CMD.BFF_08_0035, options).done($.proxy(this._handleSuccessSubmit, this));
   },
 
   _handleSuccessSubmit: function(resp) {

@@ -68,9 +68,12 @@ Tw.SMS_VALIDATION = {
   ALREADY_AUTH: '이미 인증을 받은 번호입니다.',
   SUCCESS: '인증이 완료 되었습니다.',
   EMPTY_CERT: '인증번호를 입력해 주세요.',
+  ATH2001: '시스템 사정으로 SMS서비스를 일시적으로 이용하실 수 없습니다. 불편을 드려 죄송합니다. 잠시 후 다시 확인해 주세요.',
   ATH2007: '인증번호가 일치하지 않습니다.',
   ATH2008: '인증번호 입력 시간이 초과했습니다.',
+  ATH2009: '시스템 사정으로 SMS서비스를 일시적으로 이용하실 수 없습니다. 불편을 드려 죄송합니다. 잠시 후 다시 확인해 주세요.',
   ATH2011: '인증번호의 입력 오류 횟수가 초과되었습니다.',
+  ATH2013: '이미 인증을 받은 번호입니다.',
   ATH2014: '잘못된 인증요청입니다.',
   ATH2000: '로그인한 계정의 회선 번호와 사용중인 휴대폰 번호가 일치하지 않습니다. 두 번호가 일치할 경우에만 휴대폰 인증이 가능합니다.'
 };
@@ -159,7 +162,7 @@ Tw.TOAST_TEXT = {
   MYT_FARE_HISTORY_AUTOPAYMENT_BLOCK: '차단 신청이 완료되었습니다.',
   MTY_FARE_HISTORY_AUTOPAYMENT_UNBLOCK: '헤제 신청이 완료되었습니다.',
   MYT_DATA_LIMIT_BLOCK: '데이터 차단이 해제되었습니다.',
-  MYT_DATA_LIMIT_UNBLOCK: '데이터 차단해제가 설정되었습니다.',
+  MYT_DATA_LIMIT_UNBLOCK: '데이터 차단이 설정되었습니다.',
   MYT_DATA_LIMIT_MONTHLY_BLOCK: '다음 달부터 데이터 차단이 해제됩니다.',
   MYT_DATA_LIMIT_MONTHLY_UNBLOCK: '다음 달부터 데이터 차단이 설정됩니다.',
   QUICK_ADD: 'MY 바로가기에 추가되었습니다.',
@@ -269,7 +272,8 @@ Tw.MYT_DATA_USAGE_CHILD_RECHARGE = {
     '2_A5': {
       TITLE: '변경 불가',
       CONTENTS: '변경 정보가 없습니다.'
-    }
+    },
+    RCG0061: '고객님은 현재 조회중인 자녀회선의 법정대리인이 아닙니다. 자녀의 충전 허용금액은 법정대리인만 변경할 수있습니다.'
   },
   MSG: {
     CHANGE: '변경'
@@ -298,6 +302,7 @@ Tw.MYT_DATA_GIFT = {
   GFT0003: '선물하시는 고객님의 선물하기 횟수가 초과 되었습니다. (회선당 월2회까지 선물하기 가능)',
   GFT0004: '선물하시는 고객님의 기본 잔여데이터가 500MB 미만입니다',
   GFT0005: '미성년자 고객님은 T끼리 데이터 선물하기 서비스를 이용하실 수없습니다.',
+  GFT0008: '선물하실 번호는 이미 선물 받기 가능 횟수가 초과되었습니다. 선물은 월 2회까지만 받을 수 있습니다.',
   GFT0013: '시스템 상의 오류로<br> 현재 T끼리 데이터 선물하기 서비스를 이용하실 수 없으니, <br>잠시 후 이용해주세요.',
   DEFAULT: '선물 가능한 데이터 조회 요청에 시간이 소요되고 있습니다. <br>잠시 후 다시 이용해주세요.'
 };
@@ -546,7 +551,9 @@ Tw.ALERT_MSG_MYT_DATA = {
     CONTENTS: '나만 사용할 수 있는 데이터로 변경됩니다.',
     BUTTON: '변경하기'
   },
-  COMPLETE_CANCEL: '취소가 완료되었습니다.'
+  COMPLETE_CANCEL: '취소가 완료되었습니다.',
+  ALERT_2_A210: '자동 알람 서비스가 해제되었습니다',
+  ALERT_2_A220: '자동 알람 서비스를 해제하시겠습니까?'
 };
 
 Tw.VALIDATE_MSG_MYT_DATA = {
@@ -722,7 +729,7 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A6: { TITLE: '선택한 지역을 해지하시겠습니까?', MSG: '해지하시면, 해당 지역은 서비스 이용이 불가합니다.', BUTTON: '해지하기' },
   ALERT_3_A7: { TITLE: '지정번호 5회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
   ALERT_3_A8: { TITLE: '지정번호 3회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
-  ALERT_3_A9: { TITLE: '결합회선 4회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
+  ALERT_3_A9: { TITLE: '결합회선 5회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
   ALERT_3_A10: { TITLE: '1회선만 결합된 경우, 회선 해지가 불가합니다.', MSG: '' },
   ALERT_3_A16: { TITLE: '확인을 누르시면 선택된 필터가 해제되고 태그가 선택됩니다.', MSG: '' },
   ALERT_3_A17: { TITLE: '확인을 누르시면 선택된 태그가 해제되고 필터가 선택됩니다.', MSG: '' },
@@ -1055,7 +1062,6 @@ Tw.MYT_DATA_FAMILY_CHANGE_DATA_ERRORS = {
 };
 
 Tw.MYT_DATA_FAMILY_RETRIEVING = '조회중입니다.';
-Tw.MYT_DATA_FAMILY_RETRIEVE = '조회하기';
 
 Tw.MYT_DATA_CANCEL_MONTHLY = {
   ALERT_NOT_SK: 'SK텔레콤 사용자에게만 데이터 선물을 하실 수 있습니다.',
@@ -1524,7 +1530,7 @@ Tw.BENEFIT_MY_BENEFIT_RAINBOW_POINT = {
   A2: '포인트 합산하기를 종료하시겠습니까?',
   A3: '포인트 양도하기를 종료하시겠습니까?',
   A4: '포인트 양도를 취소하시겠습니까?',
-  A8: '보유하신 포인트를 초과 하였습니다.',
+  A8: '보유하신 포인트 보다 초과 입력 하셨습니다.',
   A13: '동일회선 간에는 포인트 합산이 불가합니다.',
   A14: '동일회선 간에는 포인트 양도가 불가합니다.',
   '2_A15': '복수회선이 아닌 경우 포인트 합산을 이용할 수 없습니다.',
@@ -1645,7 +1651,8 @@ Tw.SELECTED_DATE_STRING = {
 Tw.ROAMING_JOIN_STRING = {
   COMBINE_LINE: '자회선 설정하기',
   MY_ROAMING_STATE: '나의 로밍 이용 현황 확인하기',
-  DUPLICATE_LINE: 'T로밍도착알리미 멤버에 이미 존재하는 서비스번호입니다.'
+  DUPLICATE_LINE: 'T로밍도착알리미 멤버에 이미 존재하는 서비스번호입니다.',
+  LINE_NUM : '지정번호 :number회선'
 };
 
 Tw.SETTING_LOCATION = {
@@ -1839,4 +1846,14 @@ Tw.VALIDATION_LABEL = {
   R: '를',
   MESSAGE_EMPTY: ' 입력해 주세요.',
   MESSAGE_WRONG: ' 올바르지 않습니다.'
+};
+
+Tw.KOR_INITIAL_CHAR_ARR = ['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+
+Tw.SEARCH_FILTER_STR = {
+  RECOMMEND: '추천순',
+  POP: '인기순',
+  NEW: '최신순',
+  LOW: '낮은 가격순',
+  HIGH: '높은 가격순'
 };

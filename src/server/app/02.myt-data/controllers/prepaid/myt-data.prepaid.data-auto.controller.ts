@@ -13,8 +13,6 @@ import DateHelper from '../../../../utils/date.helper';
 import {DATA_UNIT, MYT_DATA_RECHARGE_MSG} from '../../../../types/string.type';
 import {RECHARGE_DATA_CODE} from '../../../../types/bff.type';
 import {Observable} from 'rxjs/Observable';
-import PrepaidDataInfo from '../../../../mock/server/data/myt-fare.data.prepaid.data.mock';
-import PrepaidAutoInfo from '../../../../mock/server/data/myt-fare.data.prepaid.auto.mock';
 
 class MyTDataPrepaidDataAuto extends TwViewController {
   constructor() {
@@ -22,7 +20,6 @@ class MyTDataPrepaidDataAuto extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-
     if (BrowserHelper.isApp(req)) {
       Observable.combineLatest(
         this.getPPSInfo(),

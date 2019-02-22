@@ -33,6 +33,9 @@ Tw.BiometricsRegister.prototype = {
     $popupContainer.on('click', '#fe-bt-register-finger', $.proxy(this._onClickRegister, this));
     $popupContainer.on('click', '#fe-bt-register-face', $.proxy(this._onClickRegister, this));
     $popupContainer.on('click', '#fe-cancel', $.proxy(this._onClickCancel, this));
+
+    this.$infoIng = $popupContainer.find('.fe-info-ing');
+    this.$infoClick = $popupContainer.find('.fe-info-click');
     this._nativeService.send(Tw.NTV_CMD.FIDO_REGISTER, { svcMgmtNum: this._svcMgmtNum }, $.proxy(this._onFidoRegister, this));
   },
   _onClickCancel: function () {
@@ -41,6 +44,8 @@ Tw.BiometricsRegister.prototype = {
   _onClickRegister: function ($event) {
     $event.preventDefault();
     $event.stopPropagation();
+    this.$infoClick.addClass('none');
+    this.$infoIng.removeClass('none');
     this._nativeService.send(Tw.NTV_CMD.FIDO_REGISTER, { svcMgmtNum: this._svcMgmtNum }, $.proxy(this._onFidoRegister, this));
   },
   _onFidoRegister: function (resp) {
@@ -53,6 +58,8 @@ Tw.BiometricsRegister.prototype = {
       });
     } else if ( resp.resultCode === this.ERROR_CODE.CANCEL ) {
       Tw.Logger.log('[FIDO] Cancel');
+      this.$infoIng.addClass('none');
+      this.$infoClick.removeClass('none');
     } else {
       Tw.Error(resp.resultCode, 'error').pop();
     }

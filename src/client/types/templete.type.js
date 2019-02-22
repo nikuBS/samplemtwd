@@ -135,7 +135,7 @@ Tw.POPUP_TPL = {
       'list': [
         { 'option': 'data_coupon', 'button-attr': 'type="button"" target="_blank"', 'icon': 'ico2', 'txt': 'T데이터쿠폰' },
         { 'option': 't_coupon', 'button-attr': 'type="button"', 'icon': 'ico3', 'txt': 'T쿠폰' },
-        { 'option': 'jeju_coupon', 'button-attr': 'type="button"', 'icon': 'ico1', 'txt': '제주도 프리쿠폰' }
+        { 'option': 'jeju_coupon', 'button-attr': 'type="button"', 'icon': 'ico13', 'txt': '제주도 프리쿠폰' }
 
       ]
     },
@@ -324,7 +324,7 @@ Tw.POPUP_TPL = {
   PAYMENT_HISTORY_TYPE: [
     {
       list: [
-        { txt: '전체', 'radio-attr': 'name="myTHistory" value="0" checked' },
+        { txt: '최근 납부 내역', 'radio-attr': 'name="myTHistory" value="0" checked' },
         { txt: '즉시납부', 'radio-attr': 'name="myTHistory" value="1"' },
         { txt: '자동납부', 'radio-attr': 'name="myTHistory" value="2"' },
         { txt: '자동 납부 통합인출', 'radio-attr': 'name="myTHistory" value="3"' },

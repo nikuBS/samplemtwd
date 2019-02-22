@@ -13,10 +13,18 @@ $(document).on('ready', function () {
   }
   skt_landing.action.header_shadow(); // header shadow effect (page)
   skt_landing.action.header_shadow_popup(); // header shadow effect (popup)
-  skt_landing.action.focus_mousedown_style(document); 
+  skt_landing.action.focus_mousedown_style(document);
+  skt_landing._originalSize = $(window).width() + $(window).height();
 });
 $(window).on('resize', function () {
-
+  if($(window).width() + $(window).height() === skt_landing._originalSize){
+    $('.popup-page').removeClass('focusin');
+  }
+  if($(window).width() + $(window).height() != skt_landing._originalSize){
+    $("#gnb.on .g-wrap").css("position","relative");  
+  }else{
+    $("#gnb.on .g-wrap").css("position","fixed");  
+  }
 }).on('scroll', function () {
   for (var fn in scroll_fn) {
     eval(scroll_fn[fn]);
@@ -414,10 +422,14 @@ skt_landing.action = {
       });
     },
     layer_height_chk : function(){
-      var layer = $('.popup .popup-page.layer'),
+      var win_h = skt_landing.util.win_info.get_winH(),
+          layer = $('.popup .popup-page.layer'),
           layerContainerWrap = $('.popup .popup-page.layer > .container-wrap'),
           layerContainer = $('.popup .popup-page.layer > .container-wrap > .container'),
           layer_h = layerContainer.innerHeight();
+          if(layer_h > (win_h * .90)) {
+            layer_h = win_h * .90;
+          }
           // console.log(layer_h);
       layer.css({
         'height':layer_h,

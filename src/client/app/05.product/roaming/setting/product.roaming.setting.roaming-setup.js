@@ -92,9 +92,11 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
     return returnActionSheetData;
   },
   _btnDateEvent : function(eventObj){
-    var nowValue = $(eventObj.currentTarget).text().trim();
-    var dateArr = this._getDateArrFromToDay(30);
-    var convertedArr = this._convertDateArrForActionSheet(dateArr,'data-name="'+$(eventObj.currentTarget).attr('id')+'"',nowValue);
+    var $currentTarget = $(eventObj.currentTarget);
+    var nowTargetId = $currentTarget.attr('id');
+    var nowValue = $currentTarget.text().trim();
+    var dateArr = this._getDateArrFromToDay(nowTargetId==='end_date'?60:30);
+    var convertedArr = this._convertDateArrForActionSheet(dateArr,'data-name="'+nowTargetId+'"',nowValue);
     var actionSheetData = this._makeActionSheetDate(convertedArr);
     if(nowValue.length<10){
       actionSheetData[0].list[0].option = 'checked';

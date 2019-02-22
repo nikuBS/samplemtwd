@@ -49,7 +49,7 @@ class MyTFareBillContentsHistoryDetail extends TwViewController {
       }
 
       resultData.useServiceNm = resultData.useServiceNm || resultData.payFlag; 
-      resultData.FullDate = DateHelper.getShortDateAndTimeWithDot(resultData.payTime);
+      resultData.FullDate = DateHelper.getFullDateAndTime(resultData.payTime);
       resultData.useAmt = FormatHelper.addComma(resultData.useCharge); // 이용금액
       resultData.dedAmt = FormatHelper.addComma(resultData.deductionCharge); // 공제금액
 

@@ -7,7 +7,7 @@
 <script id="fe-rmtmpl-plan" type="text/x-handlebars-template">
     {{#each items}}
         <li class="type01">
-            <a href="/product/callplan/{{prodId}}" class="product-infolink">
+            <a href="/product/callplan?prod_id={{prodId}}" class="product-infolink">
                 <div class="products-titleinfo">
                     <h5 class="title">{{prodNm}}</h5>
                       <p class="info">{{#if isNumber}}월{{/if}}<span class="money">{{basFeeAmt}}</span>{{#if isNumber}}원{{/if}}</p>

@@ -9,18 +9,23 @@ Tw.ProductRoamingJoinRoamingAlarm = function (rootEl,prodTypeInfo,prodBffInfo,sv
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
-  this._bindElementEvt();
   this._nativeService = Tw.Native;
   this._addedList = [];
-  this._changeList();
   this._prodTypeInfo = JSON.parse(prodTypeInfo);
   this._prodBffInfo = prodBffInfo;
   this._svcInfo = svcInfo;
   this._prodId = prodId;
+  this._init();
 };
 
 Tw.ProductRoamingJoinRoamingAlarm.prototype = {
-
+  _init : function () {
+    if(!Tw.BrowserHelper.isApp()){
+      this.$container.find('#phone_book').hide();
+    }
+    this._bindElementEvt();
+    this._changeList();
+  },
   _bindElementEvt : function () {
     this.$container.on('keyup', '#input_phone', $.proxy(this._activateAddBtn, this));
     this.$container.on('blur', '#input_phone', $.proxy(this._inputBlurEvt, this));
@@ -59,7 +64,11 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.TITLE);
       return;
     }
-    var tempPhoneNum = this.$inputElement.val().split('-');
+    var targetValue = this.$inputElement.val();
+    if(targetValue.indexOf('-')<0){
+      targetValue = Tw.FormatHelper.addLineCommonPhoneNumberFormat(targetValue);
+    }
+    var tempPhoneNum = targetValue.split('-');
     //var phonReg = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
     var phoneObj = {
       'serviceNumber1' : tempPhoneNum[0],
@@ -81,6 +90,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     this._activateConfirmBtn();
     this._clearInput();
     this._changeList();
+    this.$inputElement.blur();
   },
   _changeList : function(){
     this.$container.find('.list-box').remove();
@@ -94,6 +104,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     }else{
       this.$container.find('.list_contents').show();
     }
+    this.$inputElement.blur();
   },
   _showPhoneBook : function () {
     this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._phoneBookCallBack,this));
@@ -106,6 +117,9 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
     }
   },
   _activateAddBtn : function (inputEvt) {
+    if(inputEvt&&Tw.InputHelper.isEnter(inputEvt)){
+      this.$addBtn.trigger('click');
+    }
     var inputVal = this.$inputElement.val();
     var numReg = /[^0-9]/g;
     if(inputVal.length>0&&numReg.test(inputVal)){

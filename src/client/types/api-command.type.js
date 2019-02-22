@@ -94,6 +94,10 @@ Tw.API_CMD = {
   BFF_04_0001: { path: '/core-membership/:version/card/home', method: Tw.API_METHOD.GET },
   BFF_04_0003: { path: '/core-modification/:version/quick-menu/saveInfo', method: Tw.API_METHOD.POST },
   BFF_04_0004: { path: '/core-auth/:version/get-fcm-push-list', method: Tw.API_METHOD.GET },
+  BFF_04_0006: { path: '/core-bill/v1/use-contents/total-amt', method: Tw.API_METHOD.GET },
+  BFF_04_0007: { path: '/core-bill/v1/micro-pay/total-amt', method: Tw.API_METHOD.GET },
+  BFF_04_0008: { path: '/core-bill/v1/bill-pay/use-amt-main', method: Tw.API_METHOD.GET },
+  BFF_04_0009: { path: '/core-bill/v1/bill-pay/bill-main', method: Tw.API_METHOD.GET },
 
   // MYT
   BFF_05_0001: { path: '/:version/my-t/balances', method: Tw.API_METHOD.GET },

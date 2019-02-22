@@ -9,7 +9,6 @@ Tw.ProductRoamingSettingRoamingAlarm = function (rootEl,prodTypeInfo,prodBffInfo
   this.$container = rootEl;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
-  this._bindElementEvt();
   this._nativeService = Tw.Native;
   this._addedList = this._sortingSettingData(prodBffInfo.combinationLineList);
   this._prodTypeInfo = prodTypeInfo;
@@ -17,13 +16,19 @@ Tw.ProductRoamingSettingRoamingAlarm = function (rootEl,prodTypeInfo,prodBffInfo
   this._svcInfo = svcInfo;
   this._prodId = prodId;
   this._apiService = Tw.Api;
-  this.$container.on('click','.fe-btn_del_num',$.proxy(this._removeEvt,this));
+  this._init();
   //this._changeList();
 };
 
 Tw.ProductRoamingSettingRoamingAlarm.prototype = {
-
+  _init : function () {
+    if(!Tw.BrowserHelper.isApp()){
+      this.$container.find('#phone_book').hide();
+    }
+    this._bindElementEvt();
+  },
   _bindElementEvt : function () {
+    this.$container.on('click','.fe-btn_del_num',$.proxy(this._removeEvt,this));
     this.$inputElement = this.$container.find('#input_phone');
     this.$addBtn = this.$container.find('#add_list');
     this.$confirmBtn = this.$container.find('#confirm_info');
@@ -61,7 +66,11 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A7.TITLE);
       return;
     }
-    var tempPhoneNum = this.$inputElement.val().split('-');
+    var targetValue = this.$inputElement.val();
+    if(targetValue.indexOf('-')<0){
+      targetValue = Tw.FormatHelper.addLineCommonPhoneNumberFormat(targetValue);
+    }
+    var tempPhoneNum = targetValue.split('-');
     //var phonReg = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
     var phoneObj = {
       'serviceNumber1' : tempPhoneNum[0],
@@ -110,6 +119,9 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
     }
   },
   _activateAddBtn : function (inputEvt) {
+    if(inputEvt&&Tw.InputHelper.isEnter(inputEvt)){
+      this.$addBtn.trigger('click');
+    }
     var inputVal = this.$inputElement.val();
     var numReg = /[^0-9]/g;
     if(inputVal.length>0&&numReg.test(inputVal)){

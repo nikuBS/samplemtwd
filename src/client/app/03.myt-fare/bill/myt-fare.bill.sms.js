@@ -13,9 +13,9 @@ Tw.MyTFareBillSms = function (rootEl) {
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
 
-  this._paymentCommon = new Tw.MyTFareBillCommon(this.$container);
+  this._paymentCommon = new Tw.MyTFareBillCommon(rootEl);
   this._historyService = new Tw.HistoryService(rootEl);
-  this._backAlert = new Tw.BackAlert(this.$container);
+  this._backAlert = new Tw.BackAlert(rootEl);
 
   this._init();
 };

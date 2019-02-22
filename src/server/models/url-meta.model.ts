@@ -10,6 +10,7 @@ export interface IUrlMeta {
   block: any;
   masking: boolean;
   isApp: boolean;
+  fullUrl: string;
 }
 
 export class UrlMetaModel implements IUrlMeta {
@@ -24,6 +25,7 @@ export class UrlMetaModel implements IUrlMeta {
   block: any = {};
   masking: boolean = false;
   isApp: boolean = false;
+  fullUrl: string = '';
   constructor(object) {
     this.menuId = object.menuId || this.menuId;
     this.menuNm = object.menuNm || this.menuNm;
@@ -36,5 +38,6 @@ export class UrlMetaModel implements IUrlMeta {
     this.block = object.block || this.block;
     this.masking = object.masking || this.masking;
     this.isApp = object.isApp || this.isApp;
+    this.fullUrl = object.fullUrl || this.fullUrl;
   }
 }

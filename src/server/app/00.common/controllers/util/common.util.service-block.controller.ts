@@ -6,6 +6,7 @@
 
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import {NextFunction, Request, Response} from 'express';
+import DateHelper from '../../../../utils/date.helper';
 
 class CommonUtilServiceBlock extends TwViewController {
   constructor() {
@@ -13,7 +14,9 @@ class CommonUtilServiceBlock extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('util/common.util.service-block.html');
+    const fromDtm = DateHelper.getShortDateAnd24Time(req.query.fromDtm);
+    const toDtm = DateHelper.getShortDateAnd24Time(req.query.toDtm);
+    res.render('util/common.util.service-block.html', { fromDtm, toDtm });
 
   }
 }

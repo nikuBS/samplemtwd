@@ -3,7 +3,7 @@
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 100;
-  src: local("Noto Sans KR Thin"), local("NotoSansKR-Thin"), url("../fonts/noto-sans-kr-v8-korean_latin-100.woff2") format("woff2"), url("../fonts/noto-sans-kr-v8-korean_latin-100.woff") format("woff");
+  src: local("Noto Sans KR Thin"), local("NotoSansKR-Thin"), url("../font/noto-sans-kr-v8-korean_latin-100.woff2") format("woff2"), url("../font/noto-sans-kr-v8-korean_latin-100.woff") format("woff");
   /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
 
 /* noto-sans-kr-300 - korean_latin */
@@ -11,7 +11,7 @@
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 300;
-  src: local("Noto Sans KR Light"), local("NotoSansKR-Light"), url("../fonts/noto-sans-kr-v8-korean_latin-300.woff2") format("woff2"), url("../fonts/noto-sans-kr-v8-korean_latin-300.woff") format("woff");
+  src: local("Noto Sans KR Light"), local("NotoSansKR-Light"), url("../font/noto-sans-kr-v8-korean_latin-300.woff2") format("woff2"), url("../font/noto-sans-kr-v8-korean_latin-300.woff") format("woff");
   /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
 
 /* noto-sans-kr-regular - korean_latin */
@@ -19,7 +19,7 @@
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 400;
-  src: local("Noto Sans KR Regular"), local("NotoSansKR-Regular"), url("../fonts/noto-sans-kr-v8-korean_latin-regular.woff2") format("woff2"), url("../fonts/noto-sans-kr-v8-korean_latin-regular.woff") format("woff");
+  src: local("Noto Sans KR Regular"), local("NotoSansKR-Regular"), url("../font/noto-sans-kr-v8-korean_latin-regular.woff2") format("woff2"), url("../font/noto-sans-kr-v8-korean_latin-regular.woff") format("woff");
   /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
 
 /* noto-sans-kr-500 - korean_latin */
@@ -27,7 +27,7 @@
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 500;
-  src: local("Noto Sans KR Medium"), local("NotoSansKR-Medium"), url("../fonts/noto-sans-kr-v8-korean_latin-500.woff2") format("woff2"), url("../fonts/noto-sans-kr-v8-korean_latin-500.woff") format("woff");
+  src: local("Noto Sans KR Medium"), local("NotoSansKR-Medium"), url("../font/noto-sans-kr-v8-korean_latin-500.woff2") format("woff2"), url("../font/noto-sans-kr-v8-korean_latin-500.woff") format("woff");
   /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
 
 /* noto-sans-kr-700 - korean_latin */
@@ -35,7 +35,7 @@
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 700;
-  src: local("Noto Sans KR Bold"), local("NotoSansKR-Bold"), url("../fonts/noto-sans-kr-v8-korean_latin-700.woff2") format("woff2"), url("../fonts/noto-sans-kr-v8-korean_latin-700.woff") format("woff");
+  src: local("Noto Sans KR Bold"), local("NotoSansKR-Bold"), url("../font/noto-sans-kr-v8-korean_latin-700.woff2") format("woff2"), url("../font/noto-sans-kr-v8-korean_latin-700.woff") format("woff");
   /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
 
 /* roboto-100 - latin */
@@ -43,7 +43,7 @@
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 100;
-  src: local("Roboto Thin"), local("Roboto-Thin"), url("../fonts/roboto-v18-latin-100.woff2") format("woff2"), url("../fonts/roboto-v18-latin-100.woff") format("woff");
+  src: local("Roboto Thin"), local("Roboto-Thin"), url("../font/roboto-v18-latin-100.woff2") format("woff2"), url("../font/roboto-v18-latin-100.woff") format("woff");
   /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
 
 /* roboto-300 - latin */
@@ -51,7 +51,7 @@
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 300;
-  src: local("Roboto Light"), local("Roboto-Light"), url("../fonts/roboto-v18-latin-300.woff2") format("woff2"), url("../fonts/roboto-v18-latin-300.woff") format("woff");
+  src: local("Roboto Light"), local("Roboto-Light"), url("../font/roboto-v18-latin-300.woff2") format("woff2"), url("../font/roboto-v18-latin-300.woff") format("woff");
   /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
 
 /* roboto-regular - latin */
@@ -59,7 +59,7 @@
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
-  src: local("Roboto"), local("Roboto-Regular"), url("../fonts/roboto-v18-latin-regular.woff2") format("woff2"), url("../fonts/roboto-v18-latin-regular.woff") format("woff");
+  src: local("Roboto"), local("Roboto-Regular"), url("../font/roboto-v18-latin-regular.woff2") format("woff2"), url("../font/roboto-v18-latin-regular.woff") format("woff");
   /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
 
 /* roboto-500 - latin */
@@ -67,7 +67,7 @@
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 500;
-  src: local("Roboto Medium"), local("Roboto-Medium"), url("../fonts/roboto-v18-latin-500.woff2") format("woff2"), url("../fonts/roboto-v18-latin-500.woff") format("woff");
+  src: local("Roboto Medium"), local("Roboto-Medium"), url("../font/roboto-v18-latin-500.woff2") format("woff2"), url("../font/roboto-v18-latin-500.woff") format("woff");
   /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
 
 /* roboto-700 - latin */
@@ -75,7 +75,7 @@
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 700;
-  src: local("Roboto Bold"), local("Roboto-Bold"), url("../fonts/roboto-v18-latin-700.woff2") format("woff2"), url("../fonts/roboto-v18-latin-700.woff") format("woff");
+  src: local("Roboto Bold"), local("Roboto-Bold"), url("../font/roboto-v18-latin-700.woff2") format("woff2"), url("../font/roboto-v18-latin-700.woff") format("woff");
   /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */ }
 
 /*Default set*/
@@ -4510,7 +4510,8 @@ a.ui-button:active,
         .popup .popup-info .popup-header .popup-title.tit-tooltip {
           color: #178bce;
           font-size: 1.125rem;
-          text-align: left; }
+          text-align: left;
+          padding-right: 1.875rem; }
       .popup .popup-info .popup-header .btn-tooltip-close {
         position: absolute;
         right: 4px;
@@ -4541,6 +4542,11 @@ a.ui-button:active,
         word-break: keep-all;
         text-align: center;
         color: #777; }
+      .popup .popup-info .popup-contents .inner-contents .tl p {
+        text-align: left !important; }
+      .popup .popup-info .popup-contents .inner-contents .fe-link-internal {
+        text-decoration: underline;
+        color: #178BCE; }
       .popup .popup-info .popup-contents .cont-tooltip-li {
         margin-top: 0.1875rem; }
         .popup .popup-info .popup-contents .cont-tooltip-li li {

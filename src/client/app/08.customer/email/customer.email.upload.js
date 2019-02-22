@@ -106,15 +106,29 @@ Tw.CustomerEmailUpload.prototype = {
     if ( this._isLowerVersionAndroid() ) {
       this._successUploadFile();
     } else {
-      var formData = new FormData();
-      formData.append('dest', Tw.UPLOAD_TYPE.EMAIL);
+      var uploadQueue = [];
 
-      this.uploadFiles.map(function (file) {
+      var fnMakeUploadForm = function (file) {
+        var formData = new FormData();
+        formData.append('dest', Tw.UPLOAD_TYPE.EMAIL);
         formData.append('file', file);
-      });
 
-      this._apiService.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData)
-        .done($.proxy(this._successUploadFile, this));
+        uploadQueue.push(this._apiService.requestForm(Tw.NODE_CMD.UPLOAD_FILE, formData));
+      };
+
+      this.uploadFiles.map($.proxy(fnMakeUploadForm, this));
+
+      var fnSuccessUpload = function () {
+        var res = { code: Tw.API_CODE.CODE_00, result: [] };
+
+        for ( var i = 0; i < arguments.length; i++ ) {
+          res.result = res.result.concat(arguments[i][0].result);
+        }
+
+        this._successUploadFile(res);
+      };
+
+      $.when.apply(undefined, uploadQueue).then($.proxy(fnSuccessUpload, this, arguments));
     }
   },
 
@@ -154,33 +168,37 @@ Tw.CustomerEmailUpload.prototype = {
   _successUploadFile: function (res) {
     this._hideUploadPopup();
 
-    if ( this._getCurrentType() === 'service' ) {
-      this.serviceUploadFiles = this.uploadFiles.slice(0);
-      if ( this._isLowerVersionAndroid() ) {
-        this.wrap_service.find('.filename-list').html(this.tpl_upload_list({ files: this.serviceUploadFiles }));
-      } else {
-        this.wrap_service.find('.filename-list').html(this.tpl_upload_list({ files: res.result }));
-      }
+    if ( res.code === Tw.API_CODE.CODE_00 ) {
+      if ( this._getCurrentType() === 'service' ) {
+        this.serviceUploadFiles = this.uploadFiles.slice(0);
+        if ( this._isLowerVersionAndroid() ) {
+          this.wrap_service.find('.filename-list').html(this.tpl_upload_list({ files: this.serviceUploadFiles }));
+        } else {
+          this.wrap_service.find('.filename-list').html(this.tpl_upload_list({ files: res.result }));
+        }
 
-      if ( this.uploadFiles.length > 5 ) {
-        $('.fe-upload-file-service').prop('disabled', true);
+        if ( this.uploadFiles.length > 5 ) {
+          $('.fe-upload-file-service').prop('disabled', true);
+        } else {
+          $('.fe-upload-file-service').prop('disabled', false);
+        }
       } else {
-        $('.fe-upload-file-service').prop('disabled', false);
+        this.qualityUploadFiles = this.uploadFiles.slice(0);
+
+        if ( this._isLowerVersionAndroid() ) {
+          this.wrap_quality.find('.filename-list').html(this.tpl_upload_list({ files: this.qualityUploadFiles }));
+        } else {
+          this.wrap_quality.find('.filename-list').html(this.tpl_upload_list({ files: res.result }));
+        }
+
+        if ( this.uploadFiles.length > 5 ) {
+          $('.fe-upload-file-quality').prop('disabled', true);
+        } else {
+          $('.fe-upload-file-quality').prop('disabled', false);
+        }
       }
     } else {
-      this.qualityUploadFiles = this.uploadFiles.slice(0);
-
-      if ( this._isLowerVersionAndroid() ) {
-        this.wrap_quality.find('.filename-list').html(this.tpl_upload_list({ files: this.qualityUploadFiles }));
-      } else {
-        this.wrap_quality.find('.filename-list').html(this.tpl_upload_list({ files: res.result }));
-      }
-
-      if ( this.uploadFiles.length > 5 ) {
-        $('.fe-upload-file-quality').prop('disabled', true);
-      } else {
-        $('.fe-upload-file-quality').prop('disabled', false);
-      }
+      Tw.Error(res.code, res.msg).pop();
     }
   },
 

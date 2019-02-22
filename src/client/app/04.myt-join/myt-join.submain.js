@@ -245,7 +245,7 @@ Tw.MyTJoinSubMain.prototype = {
   _onMovedContractPlan: function () {
     var url = '/myt-join/myplancombine/noagreement';
     if ( this.data.myContractPlan.muPointYn === 'N' ) {
-      url = '/product/callplan/NA00005923';
+      url = '/product/callplan?prod_id=NA00005923';
     }
     this._historyService.goLoad(url);
   },

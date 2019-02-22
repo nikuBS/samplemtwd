@@ -119,7 +119,7 @@
                         <% for (let i = 0; i < bestLen; i++) { %>
                             <% const addition = bestAdditions[i]; %>
                             <li>
-                                <a type="button" class="product-infolink" href="/product/callplan/<%= addition.prodId %>">
+                                <a type="button" class="product-infolink" href="/product/callplan?prod_id=<%= addition.prodId %>">
                                     <% if (addition.prodIconImgUrl) { %> 
                                     <div class="img-box"><img class="lte" src="<%= addition.prodIconImgUrl %>" alt="<%= addition.prodNm %>"></div>
                                     <% } %>
@@ -175,7 +175,7 @@
                         <% for (let i = 0; i < recommendLen; i++) { %>
                             <% const addition = recommendedAdditions[i]; %>
                             <li>
-                                <a type="button" class="product-infolink" href="/product/callplan/<%= addition.prodId %>">
+                                <a type="button" class="product-infolink" href="/product/callplan?prod_id=<%= addition.prodId %>">
                                     <% if (addition.prodIconImgUrl) { %> 
                                         <div class="img-box"><img class="lte" src="<%= addition.prodIconImgUrl %>" alt="<%= addition.prodNm %>"></div>
                                     <% } %>

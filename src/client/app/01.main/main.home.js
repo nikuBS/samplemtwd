@@ -141,8 +141,10 @@ Tw.MainHome.prototype = {
 
   },
   _onClickBarcodeGo: function () {
-    this._historyService.goLoad('/membership/submain');
+    // this._historyService.goLoad('/membership/submain');
+    Tw.CommonHelper.openUrlExternal('http://m.tmembership.tworld.co.kr/mobileWeb/html/main.jsp');
   },
+
   _successMembership: function (mbrGr, cardNum, showCardNum, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var usedAmt = resp.result.mbrUsedAmt;
@@ -216,7 +218,7 @@ Tw.MainHome.prototype = {
         this._historyService.goLoad('/myt-data/familydata');
         break;
       case this.DATA_LINK.TPLAN_PROD:
-        this._historyService.goLoad('/product/callplan/NA00006031');
+        this._historyService.goLoad('/product/callplan?prod_id=NA00006031');
         break;
       default:
         break;

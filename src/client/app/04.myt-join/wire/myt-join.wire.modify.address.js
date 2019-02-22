@@ -11,9 +11,9 @@ Tw.MyTJoinWireModifyAddress = function (rootEl, resData) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
 
-  this._history = new Tw.HistoryService(this.$container);
+  this._history = new Tw.HistoryService(rootEl);
   if(this.resData.resDataInfo.coClCd !== 'B'){
-    this._backAlert = new Tw.BackAlert(this.$container);
+    this._backAlert = new Tw.BackAlert(rootEl, true);
   }
 
   this._init();
@@ -254,8 +254,9 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     }
 
     var curDt = Tw.DateHelper.getCurrentDateTime('YYYY-MM-DD');
+    var sttDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 1, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
     var tempDt = this.$select_stop_input.val();
-    tempDt = (tempDt < curDt ? curDt : tempDt);
+    tempDt = (tempDt < sttDt ? sttDt : tempDt);
 
     this.$select_stop_input.val( tempDt );
     this.addressFormData.stopPrefrDt = tempDt;
@@ -276,23 +277,24 @@ Tw.MyTJoinWireModifyAddress.prototype = {
     }
 
     var curDt = Tw.DateHelper.getCurrentDateTime('YYYY-MM-DD');
+    var sttDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 1, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
     var endDt = Tw.DateHelper.getShortDateWithFormatAddByUnit(curDt, 14, 'day', 'YYYY-MM-DD', 'YYYY-MM-DD');
     var tempDt = this.$select_install_input.val();
-    Tw.Logger.info('[설치희망날짜]', tempDt, curDt, endDt);
+    Tw.Logger.info('[설치희망날짜]', tempDt, sttDt, endDt);
 
     // 범위에포함되야함?
     this.$select_install_input.val( tempDt );
     this.addressFormData.setPrefrDt = tempDt;
 
     //유효성 체크
-    if ( this._dateChkBetween(tempDt, curDt, endDt) ) {
+    if ( this._dateChkBetween(tempDt, sttDt, endDt) ) {
       Tw.Logger.info('[범위에 포함]');
       this.$select_install_input.val( tempDt );
       this.addressFormData.setPrefrDt = tempDt;
 
     } else {
       Tw.Logger.info('[범위에 포함 안됨!!]', this.$select_install_input);
-      tempDt = (tempDt > endDt ? endDt : curDt);
+      tempDt = (tempDt > endDt ? endDt : sttDt);
       this.$select_install_input.val(tempDt);
       this.addressFormData.setPrefrDt = tempDt;
     }

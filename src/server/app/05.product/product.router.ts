@@ -2,6 +2,7 @@ import TwRouter from '../../common/route/tw.router';
 
 import ProductCommonCallplan from './controllers/common/product.common.callplan.controller';
 import ProductCommonCallplanPreview from './controllers/common/product.common.callplan-preview.controller';
+import ProductCommonLineChange from './controllers/common/product.common.line-change.controller';
 
 import ProductApps from './controllers/apps/product.apps.controller';
 import ProductAppsDetail from './controllers/apps/product.apps.detail.controller';
@@ -86,7 +87,7 @@ import ProductRoamingSettingRoamingCombine from './controllers/roaming/setting/p
 import ProductRoamingJoinRoamingCombine from './controllers/roaming/join/product.roaming.join.roaming-combine.controller';
 import ProductRoamingTerminate from './controllers/roaming/product.roaming.terminate.controller';
 import ProductRoamingInfoPhBook from './controllers/roaming/product.roaming.info.ph-book.controller';
-import ProductCommonLineChange from './controllers/common/product.common.line-change.controller';
+import ProductCommonCallplanBackup from './controllers/common/product.common.callplan-backup.controller';
 
 class ProductRouter extends TwRouter {
   constructor() {
@@ -175,7 +176,8 @@ class ProductRouter extends TwRouter {
     this.controllers.push({ url: '/roaming/my-use', controller: ProductRoamingMyUse });
     this.controllers.push({ url: '/roaming/lookup', controller: ProductRoamingLookup });
 
-    this.controllers.push({ url: '/callplan/:prodId', controller: ProductCommonCallplan });
+    this.controllers.push({ url: '/callplan', controller: ProductCommonCallplan });
+    this.controllers.push({ url: '/callplan/:prodId', controller: ProductCommonCallplanBackup });
     this.controllers.push({ url: '/callplan-preview', controller: ProductCommonCallplanPreview });
     this.controllers.push({ url: '/line-change', controller: ProductCommonLineChange });
 

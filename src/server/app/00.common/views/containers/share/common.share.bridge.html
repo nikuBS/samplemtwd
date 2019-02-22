@@ -4,7 +4,7 @@
 * Date: 2018.11.20
 %>
 
-<% include ../components/start.component.html %>
+<%- include('../components/start.component.html', { pageInfo: pageInfo }); %>
 <body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -35,7 +35,7 @@
                     <p>Copyright ⓒ SK Telecom</p>
 
                     <div class="link-wrap pt26">
-                        <button class="bt-link-tx underline">괜찮습니다. 모바일웹으로 볼게요.</button>
+                        <a href="/main/home" class="bt-link-tx underline">괜찮습니다. 모바일웹으로 볼게요.</a>
                     </div>
                 </div>
 

@@ -81,12 +81,78 @@ Tw.BenefitIndex.prototype = {
 
   /**
    * 리스트 내의 카테고리 클릭 시 해당 상품 원장으로 이동
+   * 예외 case
+   * + 외부 브라우저로 띄우기
+   *  무엇이든 될 수 있는0(TW20000014)
+   *  T 아너스 클럽(TW20000018)
+   * + in app 으로 띄우기
+   *  데이터 충전소(TW20000019) : 이건 BPCP 호출
    * @param e
    * @private
    */
   _onClickProduct: function (e) {
-    var $target = $(e.currentTarget);
-    location.href= '/product/callplan/' + $target.data('benefitId');
+    var _benefitId = $(e.currentTarget).data('benefitId');
+    if (['TW20000014', 'TW20000018'].indexOf(_benefitId) > -1) {
+      var externalUrl = {
+        TW20000014 : Tw.OUTLINK.BECOME_ANYTHING,
+        TW20000018 : Tw.OUTLINK.T_HONORS_CLUB
+      };
+      this._alertCharge(externalUrl[_benefitId]);
+    } else if ('TW20000019' === _benefitId) {
+      this._getBPCP(Tw.OUTLINK.DATA_COUPON.DATA_FACTORY);
+    } else {
+      location.href= '/product/callplan?prod_id=' + _benefitId;
+    }
+  },
+
+  /**
+   * 과금발생 알러트
+   * @param e
+   * @private
+   */
+  _alertCharge: function (_href) {
+    if (Tw.FormatHelper.isEmpty(_href)) {
+      return;
+    }
+
+    // app 이 아니면 알러트 제외
+    if (!Tw.BrowserHelper.isApp()) {
+      Tw.CommonHelper.openUrlExternal(_href);
+    } else {
+      Tw.CommonHelper.showDataCharge($.proxy(function(){
+        Tw.CommonHelper.openUrlExternal(_href);
+      },this));
+    }
+  },
+
+  /**
+   * BPCP 호출
+   * @param url
+   * @private
+   */
+  _getBPCP: function (url) {
+    var replaceUrl = url.replace('BPCP:', '');
+    this._apiService.request(Tw.API_CMD.BFF_01_0039, { bpcpServiceId: replaceUrl })
+      .done($.proxy(this._responseBPCP, this));
+  },
+
+  /**
+   * BPCP 호출 완료시
+   * @param resp
+   * @returns {*}
+   * @private
+   */
+  _responseBPCP: function (resp) {
+    if ( resp.code !== Tw.API_CODE.CODE_00 ) {
+      return Tw.Error(resp.code, resp.msg).pop();
+    }
+
+    var url = resp.result.svcUrl;
+    if ( !Tw.FormatHelper.isEmpty(resp.result.tParam) ) {
+      url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
+    }
+
+    Tw.CommonHelper.openUrlInApp(url);
   },
 
   /**

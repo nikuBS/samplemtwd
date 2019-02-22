@@ -35,7 +35,7 @@ class CommonTidLogout extends TwViewController {
     }).subscribe((resp) => {
       const params = {
         client_id: clientId,
-        redirect_uri: 'http://' + this.loginService.getDns() +
+        redirect_uri: this.loginService.getProtocol() + this.loginService.getDns() +
           '/common/member/logout/route?target=' + target,
         client_type: TID.CLIENT_TYPE,
       };

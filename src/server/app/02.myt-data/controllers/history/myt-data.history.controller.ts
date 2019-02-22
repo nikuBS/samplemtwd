@@ -99,14 +99,14 @@ export default class MyTDataHistory extends TwViewController {
       }
 
       return resp.result.map(item => {
-        const key = item.opDtm.substring(0, 8),
+        const key = item.opDtm || item.opDt,
           amount = FormatHelper.convDataFormat(item.dataQty, 'MB');
 
         return {
           key,
           type: RechargeTypes.DATA_GIFT,
           typeName: TypeNames.DATA_GIFT,
-          date: DateHelper.getShortDate(key),
+          date: DateHelper.getShortDate(key.substring(0, 8)),
           badge: item.type === '1' ? 'send' : 'recieve',
           right: amount.data + amount.unit,
           bottom:
@@ -125,7 +125,7 @@ export default class MyTDataHistory extends TwViewController {
       }
 
       return resp.result.map(item => {
-        const key = item.opDt,
+        const key = item.opDtm || item.opDt,
           rechargeDate = DateHelper.getShortDate(key),
           bottom = item.opTypCd === '3' ? [MYT_DATA_CHARGE_TYPES.FIXED] : [];
         bottom.push(item.opOrgNm || ETC_CENTER);
@@ -134,7 +134,7 @@ export default class MyTDataHistory extends TwViewController {
           key,
           type: RechargeTypes.LIMIT_CHARGE,
           typeName: TypeNames.LIMIT_CHARGE,
-          date: DateHelper.getShortDate(key),
+          date: DateHelper.getShortDate(key.substring(0, 8)),
           badge: 'recharge',
           refundable: (item.opTypCd === '1' || item.opTypCd === '3') && DateHelper.getDiffByUnit(this.toDt, rechargeDate, 'days') === 0,
           right: FormatHelper.addComma(item.amt) + CURRENCY_UNIT.WON,
@@ -151,7 +151,7 @@ export default class MyTDataHistory extends TwViewController {
       }
 
       return resp.result.map(item => {
-        const key = item.opDt,
+        const key = item.opDtm || item.opDt,
           rechargeDate = DateHelper.getShortDate(key),
           bottom: string[] = [];
 
@@ -166,7 +166,7 @@ export default class MyTDataHistory extends TwViewController {
           key,
           type: RechargeTypes.TING_CHARGE,
           typeName: TypeNames.TING_CHARGE,
-          date: DateHelper.getShortDate(item.opDt),
+          date: DateHelper.getShortDate(key.substring(0.8)),
           badge: 'recharge',
           refundable: (item.opTypCd === '1' || item.opTypCd === '3') && DateHelper.getDiffByUnit(this.toDt, rechargeDate, 'days') === 0,
           right: FormatHelper.addComma(item.amt) + CURRENCY_UNIT.WON,
@@ -183,12 +183,12 @@ export default class MyTDataHistory extends TwViewController {
       }
 
       return resp.result.map(item => {
-        const key = item.opDt;
+        const key = item.opDtm || item.opDt;
         return {
           key,
           type: RechargeTypes.TING_GIFT,
           typeName: TypeNames.TING_GIFT,
-          date: DateHelper.getShortDate(key),
+          date: DateHelper.getShortDate(key.substring(0, 8)),
           badge: item.opTypCd === '1' ? 'send' : 'recieve',
           right: FormatHelper.addComma(item.amt) + CURRENCY_UNIT.WON,
           bottom: [FormatHelper.conTelFormatWithDash(item.svcNum)]
@@ -205,15 +205,15 @@ export default class MyTDataHistory extends TwViewController {
 
       return resp.result
         .filter(item => {
-          return DateHelper.getDifference(item.copnUseDt, this.fromDt) >= 0;
+          return DateHelper.getDifference((item.copnUseDtm || item.copnUseDt).substring(0, 8), this.fromDt) >= 0;
         })
         .map(item => {
-          const key = item.copnUseDt;
+          const key = item.copnUseDtm || item.copnUseDt;
           return {
             key,
             type: RechargeTypes.REFILL,
             typeName: TypeNames.REFILL_USAGE,
-            date: DateHelper.getShortDate(key),
+            date: DateHelper.getShortDate(key.substring(0, 8)),
             badge: 'recharge',
             right: REFILL_USAGE_DATA_CODES.indexOf(item.copnDtlClCd) >= 0 ? MYT_DATA_REFILL_TYPES.DATA : MYT_DATA_REFILL_TYPES.VOICE,
             bottom: [item.opOrgNm || ETC_CENTER]
@@ -230,15 +230,15 @@ export default class MyTDataHistory extends TwViewController {
 
       return resp.result
         .filter(item => {
-          return DateHelper.getDifference(item.copnOpDt, this.fromDt) >= 0;
+          return DateHelper.getDifference((item.copnOpDtm || item.copnOpDt).substring(0, 8), this.fromDt) >= 0;
         })
         .map(item => {
-          const key = item.copnOpDt;
+          const key = item.copnOpDtm || item.copnOpDt;
           return {
             key,
             type: RechargeTypes.REFILL,
             typeName: TypeNames.REFILL_GIFT,
-            date: DateHelper.getShortDate(key),
+            date: DateHelper.getShortDate(key.substring(0, 8)),
             badge: item.type === '1' ? 'send' : 'recieve',
             bottom: [FormatHelper.conTelFormatWithDash(item.svcNum)]
           };

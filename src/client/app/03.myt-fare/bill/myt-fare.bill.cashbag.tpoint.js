@@ -23,7 +23,7 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
     this.$isOneValid = false;
     this.$isAutoValid = true;
     this.$isAutoCardValid = true;
-    this.$isSelectValid = true;
+    this.$isSelectValid = false;
 
     this._initVariables('tab1');
     this._bindEvent();
@@ -97,7 +97,8 @@ Tw.MyTFareBillCashbagTpoint.prototype = {
         this.$payBtn.attr('disabled', 'disabled');
       }
     } else {
-      if ((this.$pointSelector.attr('id') !== '') && ($.trim(this.$pointCardNumber.val()) !== '') &&
+      if ((this.$pointSelector.attr('id') !== this.$pointSelector.attr('data-origin-id')) &&
+        ($.trim(this.$pointCardNumber.val()) !== '') &&
         (this.$agree.is(':checked'))) {
         this.$payBtn.removeAttr('disabled');
       } else {

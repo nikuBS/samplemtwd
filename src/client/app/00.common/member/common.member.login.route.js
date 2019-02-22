@@ -4,14 +4,14 @@
  * Date: 2018.07.12
  */
 
-Tw.CommonMemberLoginRoute = function (target, type) {
+Tw.CommonMemberLoginRoute = function (target, type, isLogin) {
   this._historyService = new Tw.HistoryService();
   this._apiService = Tw.Api;
-  this._init(target, type);
+  this._init(target, type, isLogin === 'true');
 };
 
 Tw.CommonMemberLoginRoute.prototype = {
-  _init: function (target, type) {
+  _init: function (target, type, isLogin) {
     var token = window.location.hash.replace(/^#/i, '');
     var url = target;
     var hash = '';
@@ -23,10 +23,14 @@ Tw.CommonMemberLoginRoute.prototype = {
 
     var tidResp = Tw.ParamsHelper.getQueryParams('?' + token);
 
-    this._apiService.request(Tw.NODE_CMD.LOGIN_TID, {
-      tokenId: tidResp.id_token,
-      state: tidResp.state
-    }).done($.proxy(this._successLogin, this, url + hash, type));
+    if ( isLogin ) {
+      this._historyService.goBack();
+    } else {
+      this._apiService.request(Tw.NODE_CMD.LOGIN_TID, {
+        tokenId: tidResp.id_token,
+        state: tidResp.state
+      }).done($.proxy(this._successLogin, this, url + hash, type));
+    }
   },
   _successLogin: function (target, type, resp) {
     Tw.Logger.info('[Login Resp]', target, type, resp);

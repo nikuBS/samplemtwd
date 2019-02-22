@@ -133,7 +133,7 @@ Tw.CertificationFinance.prototype = {
     if ( this.$privacyCheck.is(':checked') ) {
       this.$btConfirm.attr('disabled', false);
     } else {
-      this.$btConfirm.attr('disabled', false);
+      this.$btConfirm.attr('disabled', true);
     }
   },
   _onClickConfirm: function () {

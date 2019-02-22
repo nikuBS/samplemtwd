@@ -9,7 +9,7 @@ $.fn.chart2 = function(o){
     prdname : 상품명 // circle 타입에서 사용
     link : dt영역 링크 여부
   */
-  var d = {target:null,type:null,tit:null,legend:null,average:null,unit:null,data_arry:null,unlimited:false,prdname:null,link:null}
+  var d = {target:null,type:null,tit:null,legend:null,average:null,average_place:'left',unit:null,data_arry:null,unlimited:false,prdname:null,link:null}
   var max = 0, // 최대값
     max2 = 0, // 최대값2
     text_pattern = [], // 노출 텍스트
@@ -134,7 +134,7 @@ $.fn.chart2 = function(o){
       }
     }
 
-    if(d.average){ // 평균
+    if(d.average && d.average_place == 'left'){ // 평균
       $(d.target).find('.data-arry').append($('<span>').addClass('dash').append($('<span>').css('bottom', style_pattern[0]+'%')));
       $(d.target).find('.data-ul')
         .append(
@@ -146,7 +146,6 @@ $.fn.chart2 = function(o){
                 )
                 .append(
                   $('<dd>')
-                    
                     .append(
                       $('<span>').addClass('v').css('bottom', style_pattern[0]+'%').text(text_pattern[0])
                     )
@@ -178,6 +177,32 @@ $.fn.chart2 = function(o){
               )
           )
         )
+    }
+
+    if(d.average && d.average_place == 'right'){ // 평균
+      $(d.target).find('.data-arry').append($('<span>').addClass('dash').append($('<span>').css('bottom', style_pattern[0]+'%')));
+      $(d.target).find('.data-ul')
+        .append(
+          $('<li>').addClass('average').data('value', average)
+            .append(
+              $('<dl>')
+                .append(
+                  $('<dt>').text('평균')
+                )
+                .append(
+                  $('<dd>')
+                    .append(
+                      $('<span>').addClass('v').css('bottom', style_pattern[0]+'%').text(text_pattern[0])
+                    )
+                    .append(
+                      $('<span>').addClass('bar').css('height', style_pattern[0]+'%')
+                    )
+                )
+            )
+        );
+        setTimeout(function () {
+          $(d.target).find('.data-belt').scrollLeft($(d.target).find('.data-belt').width());
+        }, 500);
     }
 
     $(d.target).find('.data-ul > li').css('width', (100 / $(d.target).find('.data-ul > li').length) + '%');

@@ -322,7 +322,7 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     this._popupService.open({
         hbs: 'svc-info.service.popup',
         'title': $(popId).find('.popup-title').html(),
-        'isDoubleTitle': $(popId).find('.popup-title').find('br').length >= 0 ? 'txt2-popup' : '',
+        'isDoubleTitle': $(popId).find('.popup-title').find('br').length > 0 ? 'txt2-popup' : '',
         'contents': $(popId).find('.idpt-popup-cont').html()
       },
       $.proxy(function($container) {

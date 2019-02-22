@@ -60,7 +60,7 @@ class MyTFareBillContentsAutoInfo extends TwViewController {
     if (!FormatHelper.isEmpty(record)) {
       record.map((data) => {
         data.name = MYT_FARE_PREPAY_NAME[data.autoChrgReqClCd];
-        data.date = DateHelper.getFullDateAndTimeWithDot(data.operDtm);
+        data.date = DateHelper.getFullDateAndTime(data.operDtm);
         data.autoChrgStrdAmount = FormatHelper.addComma(parseInt(data.autoChrgStrdAmt, 10).toString());
         data.autoChrgAmount = FormatHelper.addComma(parseInt(data.autoChrgAmt, 10).toString());
       });

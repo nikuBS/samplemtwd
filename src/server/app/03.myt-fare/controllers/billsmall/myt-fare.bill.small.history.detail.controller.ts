@@ -55,7 +55,7 @@ class MyTFareBillSmallHistoryDetail extends TwViewController {
                          null : MYT_FARE_HISTORY_MICRO_BLOCK_TYPE[resultData.cpState];
       const plainTime = resultData.useDt.replace(/-/gi, '').replace(/:/gi, '').replace(/ /gi, ''); // YYYY-MM-DD hh:mm--> YYYYMMDDhhmm
       const data = Object.assign(resultData, {
-        FullDate: DateHelper.getShortMonthDateAndTime(plainTime),
+        FullDate: DateHelper.getShortDateAndTime(plainTime),
         useAmt: FormatHelper.addComma(resultData.sumPrice), // 이용금액
         payMethodNm: MYT_FARE_HISTORY_MICRO_TYPE[resultData.payMethod] || '', // 결제구분
         payWay: MYT_FARE_HISTORY_MICRO_PAY_TYPE[resultData.wapYn],

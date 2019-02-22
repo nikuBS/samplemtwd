@@ -7,7 +7,7 @@
 <script id="fe-templ-plans" type="text/x-handlebars-template">
     {{#each items}}
         <li class="category-type">
-            <a href="/product/callplan/{{prodId}}" class="link">
+            <a href="/product/callplan?prod_id={{prodId}}" class="link">
                 <div class="products-titleinfo">
                     <p class="title">{{prodNm}}</p>
                     {{#if isNumber}}

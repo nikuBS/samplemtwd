@@ -29,19 +29,30 @@ Tw.CommonShareAppInstallInfo.prototype = {
   },
   _onClickTworld: function () {
     var appCustomScheme = 'mtworldapp2://tworld?target=' + encodeURIComponent(this._target) + '&loginType=' + this._loginType;
-    setTimeout($.proxy(this._openStore, this), 500);
 
-    window.location.href = appCustomScheme;
-  },
-  _openStore: function () {
     if (this._isAndroid) {
-      this._openHbs();
+      setTimeout($.proxy(this._checkStoreForAndroid, this), 1000);
     }
 
     if (this._isIos) {
+      setTimeout($.proxy(this._checkStoreForIos, this), 1000);
+    }
+
+    setTimeout($.proxy(this._goApp, this, appCustomScheme), 0);
+  },
+  _checkStoreForAndroid: function () {
+    if (!document.webkitHidden) {
+      this._openHbs();
+    }
+  },
+  _checkStoreForIos: function () {
+    if (!document.webkitHidden) {
       this._href = Tw.OUTLINK.APP_STORE;
       this._goStore(true);
     }
+  },
+  _goApp: function (appCustomScheme) {
+    window.location.href = appCustomScheme;
   },
   _openHbs: function () {
     this._popupService.open({

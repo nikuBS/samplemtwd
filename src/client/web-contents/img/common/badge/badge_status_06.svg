@@ -1,1 +1,13 @@
-<svg height="32" viewBox="0 0 48 32" width="48" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><rect fill="#6d7583" height="32" rx="4" width="48"/><path d="m15.78 13.66v1.6h-5.76v3.8c2.76 0 5.26-.12 7.34-.56l.28 1.6c-2 .44-4.5.6-7.76.62l-1.88.02v-12.14h8.16v1.62h-6.14v3.44zm8 1.86h-2.68v9.3h-2.04v-17.82h2.04v6.8h2.68zm13.64-8.52v6.96h2.68v1.72h-2.68v9.14h-2.06v-17.82zm-3.18 11.92-1.22 1.54c-1.52-.98-3.6-3.26-4.24-5.22-.62 2.12-2.4 4.36-4.36 5.54l-1.26-1.5c2.78-1.8 4.54-4.74 4.54-8.14v-2.6h2.1v2.48c0 3.42 1.82 6.26 4.44 7.9z" fill="#fff"/></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="48px" height="32px" viewBox="0 0 48 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>graphic_badge_status_06</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Icon_Badge_Graphic" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="##Element/Badge/Status06">
+            <rect id="Rectangle-2" fill="#6D7583" x="0" y="0" width="48" height="32" rx="4"></rect>
+            <path d="M15.78,13.66 L15.78,15.26 L10.02,15.26 L10.02,19.06 C12.78,19.06 15.28,18.94 17.36,18.5 L17.64,20.1 C15.64,20.54 13.14,20.7 9.88,20.72 L8,20.74 L8,8.6 L16.16,8.6 L16.16,10.22 L10.02,10.22 L10.02,13.66 L15.78,13.66 Z M23.78,15.52 L21.1,15.52 L21.1,24.82 L19.06,24.82 L19.06,7 L21.1,7 L21.1,13.8 L23.78,13.8 L23.78,15.52 Z M37.42,7 L37.42,13.96 L40.1,13.96 L40.1,15.68 L37.42,15.68 L37.42,24.82 L35.36,24.82 L35.36,7 L37.42,7 Z M34.24,18.92 L33.02,20.46 C31.5,19.48 29.42,17.2 28.78,15.24 C28.16,17.36 26.38,19.6 24.42,20.78 L23.16,19.28 C25.94,17.48 27.7,14.54 27.7,11.14 L27.7,8.54 L29.8,8.54 L29.8,11.02 C29.8,14.44 31.62,17.28 34.24,18.92 Z" id="타사" fill="#FFFFFF"></path>
+        </g>
+    </g>
+</svg>

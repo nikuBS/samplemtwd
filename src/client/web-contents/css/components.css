@@ -2257,6 +2257,9 @@
   height: 1.25rem;
   background: url(/img/svg/graphic_badge_plan_my.svg) no-repeat 0 0;
   background-size: 100% 100%; }
+  .icon-badge-plan-my.use {
+    background: url(/img/svg/badge_plan_my.svg) no-repeat 0 0;
+    background-size: 100% 100%; }
 
 .icon-badge-plan-use {
   display: inline-block;
@@ -7648,8 +7651,10 @@ a.bt-link-tx.underline.small {
   background: #e6f2fe;
   border-radius: 0.1875rem;
   margin-right: 0.625rem; }
+  .loaming-slide li:first-child {
+    margin-left: 0.625rem; }
   .loaming-slide li:last-child {
-    margin-right: 0; }
+    margin-right: 0.625rem; }
   .loaming-slide li .ico {
     display: inline-block;
     width: 3.5rem;
@@ -12131,14 +12136,15 @@ a.bt-link-tx.underline.small {
       word-break: break-all;
       color: #000;
       font-size: 0.875rem;
-      font-weight: 700;
-      line-height: 1.4; }
+      font-weight: 400;
+      line-height: 1.2; }
     .productinfoscroll-box .product-info .info {
       margin-top: 0.0625rem;
       margin-bottom: 1.75rem;
       color: #f76252;
       font-size: 1rem;
-      min-height: 1.3125rem; }
+      min-height: 1.3125rem;
+      font-weight: 700; }
       .productinfoscroll-box .product-info .info .money {
         display: inline-block;
         margin: 0 0.0625rem 0 0.5rem;
@@ -12149,9 +12155,10 @@ a.bt-link-tx.underline.small {
     .productinfoscroll-box .product-info .type {
       position: absolute;
       bottom: 0.9375rem;
-      height: 16px;
+      height: 1rem;
+      line-height: 1rem;
       padding-left: 1.25rem;
-      background: url(/img/product/icon_32px_data.png) no-repeat 0 2px;
+      background: url(/img/product/icon_32px_data.png) no-repeat 0 0;
       background-size: 0.875rem 0.875rem;
       color: #178bce;
       font-size: 0.8125rem; }
@@ -12457,7 +12464,8 @@ a.bt-link-tx.underline.small {
     padding-bottom: 1.5625rem; }
 
 .suggest-tag-morewrap {
-  margin: 0.625rem -1rem 0; }
+  margin: 0.625rem -1rem 0;
+  padding: 0 1rem; }
   .suggest-tag-morewrap .suggest-tag-more {
     display: block;
     width: 100%;
@@ -19823,7 +19831,8 @@ a.bt-link-tx.underline.small {
   border: none; }
   .add-top-type .type-l {
     top: 1rem;
-    left: 1rem; }
+    left: 1rem;
+    right: auto; }
   .add-top-type .type-r {
     position: relative;
     top: -2px;
@@ -23106,6 +23115,9 @@ a.bt-link-tx.underline.small {
 .device_android .btn-round3 {
   line-height: 1.625rem; }
 
+.device_android .bt-slice .btn-round2 {
+  line-height: 2.5rem; }
+
 .calling-plan {
   padding: 0 1rem; }
   .calling-plan .wrap-link {
@@ -24014,6 +24026,15 @@ input[type="radio"].formradio-small.type2 + label {
   height: 1.125rem;
   background: url(/img/svg/badge_status_04_01.svg);
   background-size: 2.625rem auto; }
+
+.discountbenefit-list .category-type .link .state-tx01 {
+  position: absolute;
+  right: 0.625rem;
+  top: 0.625rem;
+  width: 2.625rem;
+  height: 1.125rem;
+  background: url(/img/svg/badge_plan_my.svg);
+  background-size: 2.625rem 1.125rem; }
 
 /* 김연주 */
 /* 공통 시작 */
@@ -25681,17 +25702,20 @@ input[type="radio"].formradio-small.type2 + label {
 
 .total-discount-info .td-txt {
   overflow: hidden;
-  padding: 0 1rem; }
+  padding: 1.125rem 1rem 0; }
   .total-discount-info .td-txt .tit {
-    float: left;
+    display: block;
+    margin-top: 0.3125rem;
     font-size: 0.9375rem;
-    line-height: 3.25rem; }
+    text-align: center; }
+    .total-discount-info .td-txt .tit span {
+      text-align: right; }
   .total-discount-info .td-txt .value {
-    float: right;
+    display: block;
     font-size: 0.9375rem;
-    line-height: 3.25rem;
     color: #ef4b49;
-    font-weight: 700; }
+    font-weight: 700;
+    text-align: center; }
 
 .total-discount-info .condition {
   padding: 0.875rem 1rem 1.125rem; }
@@ -28119,6 +28143,9 @@ body.apphome {
   .input-txt-type01 .txt-c3 {
     color: #b2b2b2;
     margin-left: 0; }
+  .input-txt-type01 .txt-c4 {
+    color: #959595;
+    font-weight: 300; }
   .input-txt-type01 .btn-link {
     color: #178bce;
     font-size: 0.75rem;

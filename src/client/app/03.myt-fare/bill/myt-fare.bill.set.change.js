@@ -700,7 +700,12 @@ Tw.MyTFareBillSetChange.prototype = {
    */
   _onSucessChangeBillType: function (resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
-      this._onFail(resp);
+      // 법정 대리인 번호 틀렸을때
+      if ('ZORDE3500' === resp.code){
+        this.popupService.openAlert(resp.msg);
+      } else {
+        this._onFail(resp);
+      }
       return;
     }
 

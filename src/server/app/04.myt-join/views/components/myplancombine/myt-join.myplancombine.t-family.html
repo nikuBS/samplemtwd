@@ -86,14 +86,14 @@
                                                     <% } else { %>
                                                         <%= member.relClNm %><%= isMine? '(내번호)': ''%><br />
                                                     <% } %>
-                                                    <% if (isMine && isRep || groupInfo.mblSvcCnt < 2) { %><a class="bt-link-tx underline red" href="/product/callplan/<%= prodId %>">해지</a><% } %>
+                                                    <% if (isMine && isRep || groupInfo.mblSvcCnt < 2) { %><a class="bt-link-tx underline red" href="/product/callplan?prod_id=<%= prodId %>">해지</a><% } %>
                                                 </dd>
                                             </dl>
                                         </li>
                                         <li><dl><dt>휴대폰 가입 연수</dt><dd><%= member.useYySum %>년</dd></dl></li>
                                         <li><dl><dt>B가입기간</dt><dd><%= member.bIdx >= 0 ? combination.combinationWireMemberList[member.bIdx].useYySum + '년' : '-' %></dd></dl></li>
                                         <li><dl><dt>월정액 할인율</dt><dd><%= member.tcFeeBenf %></dd></dl></li>
-                                        <li><dl><dt>사용중인 요금제</dt><dd><a class="bt-link-tx underline" href="/product/callplan/<%= member.feeProdId %>"><%= member.feeProdNm %></a></dd></dl></li>
+                                        <li><dl><dt>사용중인 요금제</dt><dd><a class="bt-link-tx underline" href="/product/callplan?prod_id=<%= member.feeProdId %>"><%= member.feeProdNm %></a></dd></dl></li>
                                         <li><dl><dt>할인 전 금액</dt><dd><%= member.basFeeAmtTx %> 원</dd></dl></li>
                                         <li><dl><dt>할인금액</dt><dd>- <%= member.basFeeDcTx %> 원</dd></dl></li>
                                         <li><dl><dt>할인 후 금액</dt><dd><strong><%= member.aftBasFeeAmtTx %></strong> 원</dd></dl></li>

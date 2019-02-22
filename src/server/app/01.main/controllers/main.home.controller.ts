@@ -342,8 +342,8 @@ class MainHome extends TwViewController {
       if ( resp.code === API_CODE.CODE_00 ) {
         usageData = Object.assign(usageData, this.parseUsageData(resp.result, svcInfo));
       } else if ( resp.code === API_CODE.BFF_0006 || resp.code === API_CODE.BFF_0007 ) {
-        usageData['fromDate'] = DateHelper.getShortMonthDateAndTime(resp.result.fromDtm);
-        usageData['toDate'] = DateHelper.getShortMonthDateAndTime(resp.result.toDtm);
+        usageData['fromDate'] = DateHelper.getShortDateAnd24Time(resp.result.fromDtm);
+        usageData['toDate'] = DateHelper.getShortDateAnd24Time(resp.result.toDtm);
       }
       usageData.code = resp.code;
       usageData.msg = resp.msg;

@@ -19,7 +19,7 @@ export default class MembershipSubmain extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     if (this.isLogin(svcInfo)) {
       Observable.combineLatest(
-        this.getMembershipCheck(),
+        this.getMembershipCheck(svcInfo),
         this.getMembershipData(),
         this.getPopBrandData()
       ).subscribe(([membershipCheckData, membershipData, popBrandData]) => {
@@ -69,11 +69,19 @@ export default class MembershipSubmain extends TwViewController {
     return true;
   }
 
-  private getMembershipCheck(): Observable<any> {
-    let membershipCheckData = null;
+  private getMembershipCheck(svcInfo): Observable<any> {
+    const membershipCheckData = {
+      joinYn: '',
+      joinCheckData : ''
+    };
     return this.apiService.request(API_CMD.BFF_11_0015, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        membershipCheckData = resp.result;
+        membershipCheckData.joinCheckData = resp.result;
+        if ( svcInfo.svcGr === 'P' || svcInfo.svcGr === 'I' || svcInfo.svcGr === 'T' || svcInfo.svcGr === 'U' || svcInfo.svcGr === '' ) {
+          membershipCheckData.joinYn = 'N';
+        } else {
+          membershipCheckData.joinYn = 'Y';
+        }
       }
       return membershipCheckData;
     });

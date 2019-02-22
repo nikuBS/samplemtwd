@@ -3,10 +3,13 @@
 * Author: Jiyoung Jo (jiyoungjo@sk.com)
 * Date: 2018.10.26
 * id: MS_07_01_06
-%>
 
 <!-- #contents -->
-<% const groupInfo = combination.combinationGroup; %>
+%>
+<% const groupInfo = combination.combinationGroup, code = ['NH00000037', 'NH00000039', 'TW00000062'].indexOf(prodId) !== -1 ? 'I' : 'P';
+const wireMembers = (combination.combinationWireMemberList || []).filter(member => {
+    return member.svcCd === code;
+}) %>
 <!-- .cont-box -->
 <div class="cont-box">
     <div class="bundle-tit-wrap">
@@ -28,7 +31,7 @@
             </li>
             <li>
                 <span class="title">결합회선</span>
-                <span class="tx-cont"><%= groupInfo.mblSvcCnt + groupInfo.wirSvcCnt %>회선</span>
+                <span class="tx-cont"><%= groupInfo.mblSvcCnt + wireMembers.length %>회선</span>
             </li>
         </ul>
     </div>
@@ -79,7 +82,7 @@
                     </li>
                 <% }); %>
                 
-                <% combination.combinationWireMemberList.map(member => { 
+                <% wireMembers.map(member => { 
                     const isRep = member.relClCd === '00'; %>
                     <li class="acco-list"><!-- on , off -->
                         <div class="acco-title">
@@ -121,7 +124,7 @@
     <% if (combination.combinationGroup.isRepresentation) { %>
     <ul class="bt-slice">
         <li class="bt-white2">
-            <a href="/product/callplan/<%= prodId %>">해지하기</a>
+            <a href="/product/callplan?prod_id=<%= prodId %>">해지하기</a>
         </li>
     </ul>
     <% } %>

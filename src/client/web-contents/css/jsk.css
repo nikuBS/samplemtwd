@@ -672,6 +672,10 @@
         .chart-wrap.bar1 .legend .category1::before {
           background: #3583e3 url(/img/chart/pattern9.gif) repeat 0 0;
           background-size: 0.25rem 0.5rem; }
+      .chart-wrap.bar1 .legend .bt {
+        color: #178bce;
+        text-decoration: underline;
+        font-size: 0.75rem; }
   .chart-wrap.bar2, .chart-wrap.bar3 {
     position: relative;
     background: #fff; }
@@ -707,6 +711,10 @@
         background: #59bcf5;
         vertical-align: top;
         margin: 0.3125rem 0.1875rem 0 0; }
+      .chart-wrap.bar2 .legend .bt, .chart-wrap.bar3 .legend .bt {
+        color: #178bce;
+        text-decoration: underline;
+        font-size: 0.75rem; }
     .chart-wrap.bar2 .tit, .chart-wrap.bar3 .tit {
       padding: 0 0 1.25rem 0;
       font-size: 1rem;
@@ -824,6 +832,10 @@
         background-size: 0.25rem 0.5rem;
         vertical-align: top;
         margin: 0.3125rem 0.1875rem 0 0; }
+      .chart-wrap.bar4 .legend .bt {
+        color: #178bce;
+        text-decoration: underline;
+        font-size: 0.75rem; }
     .chart-wrap.bar4 .tit {
       padding: 0 0 1.25rem 0;
       font-size: 1rem;
@@ -1022,6 +1034,10 @@
       .chart-wrap.circle .legend strong {
         padding-left: 0.3125rem;
         font-weight: 700; }
+      .chart-wrap.circle .legend .bt {
+        color: #178bce;
+        text-decoration: underline;
+        font-size: 0.75rem; }
     .chart-wrap.circle .shapes {
       position: absolute;
       left: 50%;
@@ -3224,7 +3240,7 @@
 .brand_link {
   position: relative;
   display: table;
-  padding: 0 2.125rem 0 1rem;
+  padding: 0 2.125rem 0 0;
   height: 49px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box; }
@@ -3240,7 +3256,7 @@
     padding-left: 1.875rem;
     float: none !important; }
     .brand_link > li:first-of-type {
-      padding-left: 0; }
+      padding-left: 16px; }
   .brand_link .unit {
     position: relative;
     display: inline-block;

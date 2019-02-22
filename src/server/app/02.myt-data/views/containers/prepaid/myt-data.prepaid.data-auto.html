@@ -83,7 +83,8 @@
                                 <label class="tit" for="formInput01">충전 데이터</label>
                                 <span class="inputbox">
                                     <button id="<%= autoInfo.id %>" data-origin-id="<%= autoInfo.id %>"
-                                            class="bt-dropdown big fe-select-data" data-code="<%= ppsInfo.dataYn %>"
+                                            data-code="<%= ppsInfo.dataYn %>"
+                                            class="bt-dropdown big fe-select-data fe-required-select"
                                             title="충전 데이터 선택" aria-haspopup="true">
                                         <%= autoInfo.txt %><span class="ico" title="충전 데이터 선택"></span>
                                     </button>
@@ -97,14 +98,15 @@
                                 <span class="inputbox">
                                     <span class="input">
                                         <% if (autoInfo.isAuto) { %>
-                                        <input id="formInput02" type="text" maxlength="16" value="<%= autoInfo.cardNum %>"
+                                        <input id="formInput02" type="text" minlength="15" maxlength="16" value="<%= autoInfo.cardNum %>"
                                                placeholder="숫자만 입력" title="카드번호 숫자만 입력" aria-describedby="aria-exp-desc1"
-                                               class="fe-card-number required-input-field" />
+                                               class="fe-card-number required-input-field fe-only-number" data-valid-label="card" />
                                         <input class="none fe-hidden" value="<%= autoInfo.cardNum %>" />
                                         <% } else { %>
-                                        <input id="formInput02" type="number" inputmode="numeric" min="0" pattern="[0-9]*" maxlength="16"
+                                        <input id="formInput02" type="number" inputmode="numeric" min="0" pattern="[0-9]*"
+                                               minlength="15" maxlength="16" data-valid-label="card"
                                                placeholder="숫자만 입력" title="카드번호 숫자만 입력" aria-describedby="aria-exp-desc1"
-                                               class="fe-card-number required-input-field" />
+                                               class="fe-card-number required-input-field fe-only-number" />
                                         <% } %>
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
@@ -117,16 +119,16 @@
                                     <span class="inputbox">
                                         <span class="input">
                                             <input id="formInput03" type="number" inputmode="numeric" min="0" pattern="[0-9]*"
-                                                   class="fe-card-y required-input-field"
-                                                   placeholder="YYYY" title="유효기간 년 YYYY" maxlength="4" />
+                                                   class="fe-card-y required-input-field fe-only-number" data-valid-label="expiration"
+                                                   placeholder="YYYY" title="유효기간 년 YYYY" minlength="4" maxlength="4" />
                                             <button class="cancel"><span class="blind">삭제</span></button>
                                         </span>
                                     </span>
                                     <span class="inputbox">
                                         <span class="input">
                                             <input type="number" inputmode="numeric" min="0" pattern="[0-9]*"
-                                                   class="fe-card-m required-input-field"
-                                                   placeholder="MM" title="유효기간 월 MM" maxlength="2" />
+                                                   class="fe-card-m required-input-field fe-only-number" data-valid-label="expiration"
+                                                   placeholder="MM" title="유효기간 월 MM" minlength="2" maxlength="2" />
                                             <button class="cancel"><span class="blind">삭제</span></button>
                                         </span>
                                     </span>

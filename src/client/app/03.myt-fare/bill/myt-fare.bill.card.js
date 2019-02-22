@@ -7,9 +7,9 @@
 Tw.MyTFareBillCard = function (rootEl) {
   this.$container = rootEl;
 
-  this._paymentCommon = new Tw.MyTFareBillCommon(this.$container);
-  this._bankList = new Tw.MyTFareBillBankList(this.$container);
-  this._backAlert = new Tw.BackAlert(this.$container);
+  this._paymentCommon = new Tw.MyTFareBillCommon(rootEl);
+  this._bankList = new Tw.MyTFareBillBankList(rootEl);
+  this._backAlert = new Tw.BackAlert(rootEl);
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;

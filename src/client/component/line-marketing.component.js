@@ -35,6 +35,7 @@ Tw.LineMarketingComponent.prototype = {
       data: {
         showName: showName,
         svcNum: svcNum,
+        showSvcNum: Tw.FormatHelper.conTelFormatWithDash(svcNum),
         agr201Yn: agr201Yn === 'Y',
         agr203Yn: agr203Yn === 'Y'
       }

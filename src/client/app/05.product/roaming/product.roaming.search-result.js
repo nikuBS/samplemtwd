@@ -209,10 +209,10 @@ Tw.ProductRoamingSearchResult.prototype = {
         }
     },
     _goAsiaPassPlan: function () {
-        this._history.goLoad('/product/callplan/NA00005900');
+        this._history.goLoad('/product/callplan?prod_id=NA00005900');
     },
     _goEuropePassPlan: function () {
-        this._history.goLoad('/product/callplan/NA00006046');
+        this._history.goLoad('/product/callplan?prod_id=NA00006046');
     },
     _onClickSelectBtn: function () {
         if(this.modelValue === undefined || this.modelValue === ''){
@@ -323,7 +323,7 @@ Tw.ProductRoamingSearchResult.prototype = {
                     layer: true
                 }, $.proxy(this._closeRusNotiPopup, this), null);
         }
-        this.$container.find('.round-dot-list li > a').attr('href', '/product/callplan/TW61000002');
+        this.$container.find('.round-dot-list li > a').attr('href', '/product/callplan?prod_id=TW61000002');
         this.$container.find('.round-dot-list li > a').removeAttr('target');
 
         if(_result.dablYn === 'Y') {

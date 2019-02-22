@@ -165,7 +165,7 @@ class ApiRouter {
     const resp = {
       code: API_CODE.CODE_00,
       result: {
-        domain: req.headers.host
+        domain: req.protocol + '://' + req.headers.host
       }
     };
 

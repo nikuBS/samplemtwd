@@ -61,7 +61,7 @@ Tw.MyTJoinInfoDiscount.prototype = {
     var $target = $(e.currentTarget);
     var prodId = $target.attr('data-id');
     if ( prodId ) {
-      this._history.goLoad('/product/callplan/'+ prodId);
+      this._history.goLoad('/product/callplan?prod_id='+ prodId);
     }
     else {
       // 상품코드가 나오지 않은 아이템

@@ -206,7 +206,7 @@ Tw.TestMyTDataSubMain.prototype = {
   _onFamilyMoaDetail: function () {
     if ( this.data.family.possible ) {
       // TODO: 미가입 관련 상태 업데이트 후 처리
-      this._historyService.goLoad('/product/callplan/NA00006031');
+      this._historyService.goLoad('/product/callplan?prod_id=NA00006031');
     }
     else {
       this._historyService.goLoad('/myt-data/familydata');

@@ -7,10 +7,9 @@
 Tw.BackAlert = function (rootEl, isPage) {
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(rootEl);
-  this._isPage = isPage;
 
-  // back key event init
-  // this.init();
+  this._isPage = isPage;
+  this._isClose = false;
 };
 
 Tw.BackAlert.prototype = {

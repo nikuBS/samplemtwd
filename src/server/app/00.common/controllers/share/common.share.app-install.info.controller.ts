@@ -12,8 +12,8 @@ class CommonShareAppInstallInfo extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('share/common.share.app-install.info.html', { isAndroid: BrowserHelper.isAndroid(req) });
+  render(req: Request, res: Response, next: NextFunction,  svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    res.render('share/common.share.app-install.info.html', { isAndroid: BrowserHelper.isAndroid(req), pageInfo });
 
   }
 }

@@ -429,6 +429,8 @@ skt_landing.widgets = {
         speed : 700,
         centerMode: false,
         focusOnSelect: false,
+        draggable: false,
+        touchMove: false,
         vertical:true,
         verticalSwiping:true,
         autoplay:true,

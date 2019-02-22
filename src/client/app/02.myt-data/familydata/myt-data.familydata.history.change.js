@@ -17,9 +17,9 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
   },
 
   _bindEvent: function() {
-    this.$container.on('click', '.btn-type01', $.proxy(this._addChangeeData, this));
+    this.$container.on('click', '.btn-type01', $.proxy(this._addChangeData, this));
     this.$container.on('click', '.cancel', $.proxy(this._validateChangeAmount, this));
-    this.$container.on('click', '.fe-retrieve', $.proxy(this._handleRerieveChangable, this, true));
+    this.$retrieveBtn.on('click', $.proxy(this._handleRerieveChangable, this, true));
     this.$input.on('focusout', $.proxy(this._validateChangeAmount, this));
     this.$input.on('keyup', $.proxy(this._validateChangeAmount, this));
     this.$submitBtn.on('click', $.proxy(this._clickSubmit, this));
@@ -30,10 +30,11 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     this.$submitBtn = this.$container.find('#fe-submit');
     this.$error = this.$container.find('#fe-error');
     this.$strong = this.$container.find('strong.txt-c2');
+    this.$retrieveBtn = this.$container.find('.fe-retrieve');
     this.$cancel = this.$container.find('.cancel');
   },
 
-  _addChangeeData: function(e) {
+  _addChangeData: function(e) {
     var value = e.currentTarget.getAttribute('data-value'),
       $target = $(e.currentTarget);
 
@@ -179,11 +180,10 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
   _handleRerieveChangable: function(hasClass) {
     this._setDisableChange(true);
 
-    if (hasClass) {
-      this.$strong.removeClass('fe-retrieve');
-    }
+    hasClass && this.$retrieveBtn.addClass('none');
 
-    this.$strong.text(Tw.MYT_DATA_FAMILY_RETRIEVING);
+    this.$strong.text(Tw.MYT_DATA_FAMILY_RETRIEVING).switchClass('txt-c2 none', 'txt-c4');
+    // setTimeout($.proxy(this._handleDoneRetrieve, this, { code: '00', result: { remGbGty: '1', remMbGty: '0' } }), 1000);
     this._requestRetrieve('0');
   },
 
@@ -202,15 +202,15 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     if (resp.result.nextReqYn === 'Y') {
       setTimeout($.proxy(this._requestRetrieve, this, resp.result.reqCnt), 3000);
     } else if (!resp.result.remGbGty && !resp.result.remMbGty) {
-      this._setRetrieveStatus($before);
+      this._setRetrieveStatus();
     } else {
       this._handleSuccessRetrieve(resp.result);
     }
   },
 
   _setRetrieveStatus: function() {
-    this.$strong.text(Tw.MYT_DATA_FAMILY_RETRIEVE);
-    this.$strong.addClass('fe-retrieve');
+    this.$retrieveBtn.removeClass('none');
+    this.$strong.addClass('none');
     this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A218, Tw.POPUP_TITLE.NOTIFY);
   },
 
@@ -221,7 +221,8 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
 
   _handleSuccessRetrieve: function(share) {
     var nData = Number(share.remGbGty) + Number(share.remMbGty) / 1000 || 0;
-    this.$strong.text(nData + 'GB');
+    this.$strong.text(nData + 'GB').switchClass('txt-c4', 'txt-c2');
+    this.$retrieveBtn.remove();
     if (nData > 0) {
       this._changable.gb = Number(share.remGbGty);
       this._changable.mb = Number(share.remMbGty);

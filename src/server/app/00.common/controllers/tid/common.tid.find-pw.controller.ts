@@ -25,7 +25,7 @@ class CommonTidFindPw extends TwViewController {
           state: resp.result.state,
           nonce: resp.result.nonce,
           service_type: TID_SVC_TYPE.FIND_PW,
-          redirect_uri: 'http://' + this.loginService.getDns() + '/common/tid/route',
+          redirect_uri: this.loginService.getProtocol() + this.loginService.getDns() + '/common/tid/route',
           client_type: TID.CLIENT_TYPE,
           scope: TID.SCOPE,
           response_type: TID.RESP_TYPE

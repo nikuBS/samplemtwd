@@ -6,6 +6,7 @@ import MyTDataUsageChildRecharge from './controllers/usage/myt-data.usage.child.
 import MyTDataUsageChildRechargeComplete from './controllers/usage/myt-data.usage.child.recharge-complete.controller';
 import MyTDataUsageTotalSharingData from './controllers/usage/myt-data.usage.total-sharing-data.controller';
 import MyTDataUsageCancelTshare from './controllers/usage/myt-data.usage.cancel-tshare.controller';
+import MyTDataUsageCancelTshareComplete from './controllers/usage/myt-data.usage.cancel-tshare-complete.controller';
 import MyTDataRechargeCoupon from './controllers/recharge/myt-data.recharge.coupon.controller';
 import MyTDataRechargeCouponUse from './controllers/recharge/myt-data.recharge.coupon.use.controller';
 import MyTDataTing from './controllers/ting/myt-data.ting.controller';
@@ -26,6 +27,7 @@ import MyTDataPrepaidVoiceAuto from './controllers/prepaid/myt-data.prepaid.voic
 import MyTDataPrepaidVoiceComplete from './controllers/prepaid/myt-data.prepaid.voice-complete.controller';
 import MyTDataFamilyHistory from './controllers/familydata/myt-data.familydata.history.controller';
 import MyTDataPrepaidAlarmComplete from './controllers/prepaid/myt-data.prepaid.alarm-complete.controller';
+import MyTDataPrepaidVoiceInfo from './controllers/prepaid/myt-data.prepaid.voice-info.controller';
 
 class MytDataRouter extends TwRouter {
   constructor() {
@@ -50,8 +52,10 @@ class MytDataRouter extends TwRouter {
     this.controllers.push({ url: '/hotdata', controller: MyTDataHotdata });
     this.controllers.push({ url: '/hotdata/total-sharing', controller: MyTDataUsageTotalSharingData });
     this.controllers.push({ url: '/hotdata/cancel-tshare', controller: MyTDataUsageCancelTshare });
+    this.controllers.push({ url: '/hotdata/cancel-tshare/complete', controller: MyTDataUsageCancelTshareComplete });
     this.controllers.push({ url: '/recharge/prepaid/history', controller: MyTDataPrepaidHistory });
     this.controllers.push({ url: '/recharge/prepaid/voice', controller: MyTDataPrepaidVoice });
+    this.controllers.push({ url: '/recharge/prepaid/voice-info', controller: MyTDataPrepaidVoiceInfo });
     this.controllers.push({ url: '/recharge/prepaid/voice-auto', controller: MyTDataPrepaidVoiceAuto });
     this.controllers.push({ url: '/recharge/prepaid/voice-complete', controller: MyTDataPrepaidVoiceComplete });
     this.controllers.push({ url: '/recharge/prepaid/data', controller: MyTDataPrepaidData });

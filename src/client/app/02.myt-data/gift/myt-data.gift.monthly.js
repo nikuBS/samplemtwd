@@ -109,9 +109,9 @@ Tw.MyTDataGiftMonthly.prototype = {
     if ( res.code === 'ZNGME0008' ) {
       this._popupService.openAlert(Tw.MYT_DATA_CANCEL_MONTHLY.ALERT_NOT_SK);
       return false;
+    } else {
+      Tw.Error(res.code, res.msg).pop();
     }
-
-    Tw.Error(res.code, res.msg).pop();
   },
 
   _subscribeAutoGift: function () {
@@ -130,15 +130,23 @@ Tw.MyTDataGiftMonthly.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.replaceURL('/myt-data/giftdata/auto-complete?' + $.param(this.paramData));
       return false;
+    } else if ( res.code === 'GFT0008' ) {
+      this._popupService.openAlert(Tw.MYT_DATA_GIFT.GFT0008);
+    } else {
+      Tw.Error(res.code, res.msg).pop();
     }
-
-    Tw.Error(res.code, res.msg).pop();
   },
 
   _onSuccessUnsubscribeAutoGift: function (res) {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT_COMPLETE);
-      this._historyService.reload();
+      if ( Tw.BrowserHelper.isApp() ) {
+        Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT_COMPLETE);
+        this._historyService.reload();
+      } else {
+        this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.UNSUBSCRIBE_MONTHLY_GIFT_COMPLETE, null, null, $.proxy(function () {
+          this._historyService.reload();
+        }, this));
+      }
       return true;
     } else {
       Tw.Error(res.code, res.msg).pop();

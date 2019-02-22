@@ -26,7 +26,7 @@ class CommonTidCertPw extends TwViewController {
           state: resp.result.state,
           nonce: resp.result.nonce,
           service_type: TID_SVC_TYPE.CERT,
-          redirect_uri: 'http://' + this.loginService.getDns() + '/common/cert/complete?target=' + AUTH_CERTIFICATION_METHOD.PASSWORD,
+          redirect_uri: this.loginService.getProtocol() + this.loginService.getDns() + '/common/cert/complete?target=' + AUTH_CERTIFICATION_METHOD.PASSWORD,
           client_type: TID.CLIENT_TYPE,
           scope: TID.SCOPE,
           response_type: TID.RESP_TYPE

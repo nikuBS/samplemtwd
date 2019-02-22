@@ -5,7 +5,7 @@
 * HO_03
 %>
 
-<% include ../components/main.start.component.html %>
+<%- include('../components/main.start.component.html', { pageInfo: pageInfo }); %>
 <body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -410,7 +410,7 @@
                     <div class="main-box-cont">
                         <strong class="ti">Data 인피니티</strong>
                         <span class="tx">완전 무제한 데이터에<br>프리미엄 VIP혜택까지</span>
-                        <a href="/product/callplan/NA00005959" class="bt">자세히 보기</a>
+                        <a href="/product/callplan?prod_id=NA00005959" class="bt">자세히 보기</a>
                     </div>
                 </div>
             </div>
@@ -462,7 +462,7 @@
                     <div class="main-box-cont">
                         <strong class="ti">온가족 플랜</strong>
                         <span class="tx">휴대폰 월정액 & 인터넷 기본료 결합하면 최대 29,710월 할인</span>
-                        <a href="/product/callplan/TW20000013" class="bt">자세히 보기</a>
+                        <a href="/product/callplan?prod_id=TW20000013" class="bt">자세히 보기</a>
                     </div>
                 </div>
             </div>

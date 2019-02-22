@@ -42,6 +42,7 @@ Tw.BannerService.prototype = {
                 centerMode: false,
                 focusOnSelect: false,
                 touchMove: false,
+                pauseOnFocus: false,
                 customPaging: function(slider, i) {
                   return $('<span />').text(i + 1);
                 }
