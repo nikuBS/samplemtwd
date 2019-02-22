@@ -126,16 +126,14 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     this.$selectButtons.find('input').prop('checked', false);
     $(e.currentTarget).find('input').prop('checked', true);
 
-    // popup close
-    this._popupService.close();
-
     // move 
     this._moveDetailPage( $(e.currentTarget).find('input').val() );
   },
 
   _moveDetailPage: function (code) {
     var targetURL = this.rootPathName.slice(-1) === '/' ? this.rootPathName.split('/').slice(0, -1).join('/') : this.rootPathName;
-    this._historyService.goLoad(targetURL + '?code=' + code);
+    
+    this._popupService.closeAllAndGo(targetURL + '?code=' + code);
   },
 
   // 유심용어 정리 바로가기 액션시트 start
