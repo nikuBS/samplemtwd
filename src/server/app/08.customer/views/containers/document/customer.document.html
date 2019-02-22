@@ -62,8 +62,10 @@
                                                                         <div class="widget-box radio">
                                                                             <ul class="select-list division-four skin01" role="radiogroup">
                                                                                 <% for (var i = 0; i < mobileCategoryList.length; i++) { %>
-                                                                                <li class="radiobox type05 ico0<%=i+1%>" role="radio" aria-checked="false" id="aria-comp-radio<%=i+1%>">
-                                                                                    <input type="radio" name="radio1" value="" aria-labelledby="aria-comp-radio<%=i+1%>"
+                                                                                <li class="radiobox type05 ico0<%= mobileCategoryList[i].expsSeq %>" role="radio" aria-checked="false"
+                                                                                    id="aria-comp-radio<%= mobileCategoryList[i].expsSeq %>">
+                                                                                    <input type="radio" name="radio1" value=""
+                                                                                           aria-labelledby="aria-comp-radio<%= mobileCategoryList[i].expsSeq %>"
                                                                                            id="<%= mobileCategoryList[i].ncssDocGuidClId %>"
                                                                                            title="<%= mobileCategoryList[i].ncssDocGuidClNm %>" />
                                                                                     <% if (mobileCategoryList[i].isLong) { %>
@@ -175,8 +177,10 @@
                                                                         <div class="widget-box radio">
                                                                             <ul class="select-list division-four skin01" role="radiogroup">
                                                                                 <% for (var i = 0; i < etcCategoryList.length; i++) { %>
-                                                                                <li class="radiobox type05 ico0<%=i+1%>" role="radio" aria-checked="false" id="aria-comp-radio<%=i+1%>">
-                                                                                    <input type="radio" name="radio1" value="" aria-labelledby="aria-comp-radio<%=i+1%>"
+                                                                                <li class="radiobox type05 ico0<%= etcCategoryList[i].expsSeq %>" role="radio" aria-checked="false"
+                                                                                    id="aria-comp-radio<%= etcCategoryList[i].expsSeq %>">
+                                                                                    <input type="radio" name="radio1" value=""
+                                                                                           aria-labelledby="aria-comp-radio<%= etcCategoryList[i].expsSeq %>"
                                                                                            id="<%= etcCategoryList[i].ncssDocGuidClId %>"
                                                                                            title="<%= etcCategoryList[i].ncssDocGuidClNm %>" />
                                                                                     <% if (etcCategoryList[i].isLong) { %>
