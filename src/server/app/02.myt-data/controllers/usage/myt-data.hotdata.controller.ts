@@ -61,6 +61,11 @@ class MyTDataHotdata extends TwViewController {
     });
   }
 
+  /**
+   * 사용량 데이터 가공(휴대폰 제외)
+   * @param usageData
+   * @public
+   */
   public parseUsageData(usageData: any): any {
     const kinds = [
       MYT_DATA_USAGE.DATA_TYPE.DATA,
@@ -81,6 +86,13 @@ class MyTDataHotdata extends TwViewController {
     return usageData;
   }
 
+
+  /**
+   * 사용량 데이터 가공(휴대폰)
+   * @param usageData
+   * @param svcInfo
+   * @public
+   */
   public parseCellPhoneUsageData(usageData: any, svcInfo: any): any {
     const kinds = [
       MYT_DATA_USAGE.DATA_TYPE.DATA,
@@ -170,6 +182,15 @@ class MyTDataHotdata extends TwViewController {
     return usageData;
   }
 
+  /**
+   * 회선 타입에 따른 화면 렌더링
+   * @param res
+   * @param svcInfo
+   * @param pageInfo
+   * @param usageDataResp
+   * @param extraDataResp?
+   * @private
+   */
   private _render(res: any, svcInfo: any, pageInfo: any, usageDataResp: any, extraDataResp?: any) {
     let view = VIEW.BAR;
     const option = {
@@ -205,6 +226,13 @@ class MyTDataHotdata extends TwViewController {
     res.render(view, option);
   }
 
+  /**
+   * 에러 화면 렌더링
+   * @param res
+   * @param svcInfo
+   * @param resp
+   * @private
+   */
   private _renderError(res: any, svcInfo: any, resp: any) {
     const error = MYT_DATA_USAGE.ERROR[resp.code] || {};
     error.code = resp.code;
@@ -217,7 +245,11 @@ class MyTDataHotdata extends TwViewController {
     });
   }
 
-
+  /**
+   * 총데이터 잔여량 세팅
+   * @param usageData
+   * @private
+   */
   private setTotalRemained(usageData: any) {
     const gnrlData = usageData.gnrlData || [];
     let totalRemainUnLimited = false;
@@ -237,18 +269,40 @@ class MyTDataHotdata extends TwViewController {
     }
   }
 
+  /**
+   * 실시간 잔여량 요청
+   * @private
+   * return Observable
+   */
   private reqBalances(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0001, {});
   }
 
+  /**
+   * 실시간 잔여량 - 상세 노출 대상 상품 가입여부 요청
+   * @private
+   * return Observable
+   */
   private reqBalanceAddOns(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0002, {});
   }
 
+  /**
+   * PPS 정보조회
+   * @private
+   * return Observable
+   */
   private reqPpsCard(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0013, {});
   }
 
+  /**
+   * dataArray중 target의 공제ID에 해당하는 데이터 반환
+   * @param target
+   * @param dataArray
+   * @private
+   * return data
+   */
   private getDataInTarget(target: any, dataArray: any): any {
     let data;
     dataArray.map((_data) => {
