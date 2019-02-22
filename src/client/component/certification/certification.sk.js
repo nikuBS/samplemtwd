@@ -250,6 +250,7 @@ Tw.CertificationSk.prototype = {
     this._addTime = null;
 
     this._clearCertError();
+    this._clearConfirmError();
 
     if ( $target.is(':checked') ) {
       this._onKeyin = true;
