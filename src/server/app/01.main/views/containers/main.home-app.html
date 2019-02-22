@@ -5,7 +5,7 @@
 * HO_01_01
 %>
 
-<% include ../components/main.start.component.html %>
+<%- include('../components/main.start.component.html', { pageInfo: pageInfo }); %>
 <body class="apphome"><!-- app홈 전용 // -->
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -398,8 +398,10 @@
                                     <span class="msg">간편 로그인 상태에서는 이용할 수 없습니다.<br>T아이디(아이디/비밀번호) 로그인 후 이용해주세요.</span>
                                 </div>
                                 <div class="btn-area">
-                                    <a href="/membership/submain" class="bt">T멤버십</a>
-                                    <a href="/membership/benefit/brand" class="bt">제휴 브랜드</a>
+                                    <!--<a href="/membership/submain" class="bt">T멤버십</a>-->
+                                    <!--<a href="/membership/benefit/brand" class="bt">제휴 브랜드</a>-->
+                                    <button class="bt fe-home-external" data-url="http://m.tmembership.tworld.co.kr/mobileWeb/html/main.jsp">T멤버십</button>
+                                    <button class="bt fe-home-external" data-url="http://m.tmembership.tworld.co.kr/mobileWeb/html/coupon/CtgListMain.jsp">제휴 브랜드</button>
                                 </div>
                             </div>
                         </div>
@@ -421,8 +423,10 @@
                                     <% } %>
                                 </div>
                                 <div class="btn-area">
-                                    <a href="/membership/submain" class="bt">T멤버십</a>
-                                    <a href="/membership/benefit/brand" class="bt">제휴 브랜드</a>
+                                    <!--<a href="/membership/submain" class="bt">T멤버십</a>-->
+                                    <!--<a href="/membership/benefit/brand" class="bt">제휴 브랜드</a>-->
+                                    <button class="bt fe-home-external" data-url="http://m.tmembership.tworld.co.kr/mobileWeb/html/main.jsp">T멤버십</button>
+                                    <button class="bt fe-home-external" data-url="http://m.tmembership.tworld.co.kr/mobileWeb/html/coupon/CtgListMain.jsp">제휴 브랜드</button>
                                 </div>
                             </div>
                         </div>
@@ -437,8 +441,10 @@
                                     </p>
                                 </div>
                                 <div class="btn-area">
-                                    <a href="/membership/submain" class="bt">T멤버십</a>
-                                    <a href="/membership/benefit/brand" class="bt">제휴 브랜드</a>
+                                    <!--<a href="/membership/submain" class="bt">T멤버십</a>-->
+                                    <!--<a href="/membership/benefit/brand" class="bt">제휴 브랜드</a>-->
+                                    <button class="bt fe-home-external" data-url="http://m.tmembership.tworld.co.kr/mobileWeb/html/main.jsp">T멤버십</button>
+                                    <button class="bt fe-home-external" data-url="http://m.tmembership.tworld.co.kr/mobileWeb/html/coupon/CtgListMain.jsp">제휴 브랜드</button>
                                 </div>
                             </div>
                         </div>

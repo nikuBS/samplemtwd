@@ -26,12 +26,15 @@ Tw.CertificationRepresentative = function () {
 
 Tw.CertificationRepresentative.prototype = {
   SMS_ERROR: {
+    ATH2001: 'ATH2001',
     ATH2003: 'ATH2003',     // 재전송 제한시간이 지난 후에 이용하시기 바랍니다.
     ATH2006: 'ATH2006',     // 제한시간 내에 보낼 수 있는 발송량이 초과하였습니다.
     ATH2007: 'ATH2007',     // 입력하신 인증번호가 맞지 않습니다.
     ATH2008: 'ATH2008',     // 인증번호를 입력할 수 있는 시간이 초과하였습니다.
+    ATH2009: 'ATH2009',
     ATH1221: 'ATH1221',     // 인증번호 유효시간이 경과되었습니다.
     ATH2011: 'ATH2011',
+    ATH2013: 'ATH2013',
     ATH2014: 'ATH2014'
   },
   open: function (certInfo, authUrl, command, deferred, callback) {
@@ -67,6 +70,7 @@ Tw.CertificationRepresentative.prototype = {
     this.$errorCertCnt = $popupContainer.find('#fe-error-cert-cnt');
     this.$errorConfirm = $popupContainer.find('#fe-error-confirm');
     this.$errorConfirmTime = $popupContainer.find('#fe-error-confirm-time');
+    this.$errorConfirmCnt = $popupContainer.find('#fe-error-confirm-cnt');
 
     this.$btCert.on('click', $.proxy(this._onClickCert, this));
     this.$btConfirm.on('click', $.proxy(this._onClickConfirm, this));
@@ -142,7 +146,13 @@ Tw.CertificationRepresentative.prototype = {
       this._clearConfirmError();
       this.$errorConfirmTime.removeClass('none');
     } else if ( resp.code === this.SMS_ERROR.ATH2011 ) {
-      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2011);
+      this.$errorConfirmCnt.removeClass('none');
+    } else if ( resp.code === this.SMS_ERROR.ATH2001 ) {
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2001);
+    } else if ( resp.code === this.SMS_ERROR.ATH2009 ) {
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2009);
+    } else if ( resp.code === this.SMS_ERROR.ATH2013 ) {
+      this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2013);
     } else if ( resp.code === this.SMS_ERROR.ATH2014 ) {
       this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2014);
     } else {

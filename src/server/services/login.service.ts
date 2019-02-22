@@ -336,6 +336,13 @@ class LoginService {
     return '';
   }
 
+  public getProtocol(): string {
+    if ( !FormatHelper.isEmpty(this.request) ) {
+      return this.request.protocol + '://';
+    }
+    return 'https://';
+  }
+
   public isGreen(): string {
     const dns = this.getDns();
     if ( dns === EnvHelper.getEnvironment('DOMAIN_G') ) {

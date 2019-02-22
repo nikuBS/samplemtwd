@@ -25,7 +25,7 @@ class CommonTidSignUpForeigner extends TwViewController {
           state: resp.result.state,
           nonce: resp.result.nonce,
           service_type: TID_SVC_TYPE.SIGN_UP,
-          redirect_uri: 'http://' + this.loginService.getDns() +
+          redirect_uri: this.loginService.getProtocol() + this.loginService.getDns() +
           '/common/member/login/route?target=/main/home=' + resp.result.state,
           client_type: TID.CLIENT_TYPE,
           scope: TID.SCOPE,

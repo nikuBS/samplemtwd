@@ -146,6 +146,7 @@ abstract class TwViewController {
       this.logger.info(this, '[URL META]', path, resp);
       const urlMeta = new UrlMetaModel(resp.result || {});
       urlMeta.isApp = BrowserHelper.isApp(req);
+      urlMeta.fullUrl = this.loginService.getProtocol() + this.loginService.getDns() + this.loginService.getFullPath();
 
       if ( resp.code === API_CODE.REDIS_SUCCESS ) {
         const loginType = urlMeta.auth.accessTypes;
