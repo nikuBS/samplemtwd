@@ -31,7 +31,7 @@ export default class ProductRoamingMyUse extends TwViewController {
         };
 
         if (error.code) {
-          return this.error.render(res, { ...error, svcInfo });
+          return this.error.render(res, { ...error, svcInfo, pageInfo });
         }
 
         res.render('roaming/product.roaming.my-use.html', { svcInfo, pageInfo, roamingFeePlan, roamingAdd , wirelessAdd, isLogin: this.isLogin(svcInfo)});

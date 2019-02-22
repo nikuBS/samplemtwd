@@ -23,7 +23,8 @@ export default class ProductRoamingFiInquire extends TwViewController {
         return this.error.render(res, {
           code: resp.code,
           msg: resp.msg,
-          svcInfo: svcInfo
+          svcInfo: svcInfo,
+          pageInfo: pageInfo
         });
       }
       svcInfo.showSvcNum =  FormatHelper.conTelFormatWithDash(svcInfo.svcNum);

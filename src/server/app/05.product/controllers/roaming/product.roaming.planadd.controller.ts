@@ -40,7 +40,7 @@ class ProductRoamingPlanAdd extends TwViewController {
                 };
 
                 if ( error.code ) {
-                    return this.error.render(res, { ...error, svcInfo });
+                    return this.error.render(res, { ...error, svcInfo, pageInfo });
                 }
 
                 res.render('roaming/product.roaming.planadd.html',
@@ -59,7 +59,7 @@ class ProductRoamingPlanAdd extends TwViewController {
                 };
 
                 if ( error.code ) {
-                    return this.error.render(res, { ...error, svcInfo });
+                    return this.error.render(res, { ...error, svcInfo, pageInfo });
                 }
 
                 res.render('roaming/product.roaming.planadd.html',
