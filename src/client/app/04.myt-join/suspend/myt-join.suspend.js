@@ -74,6 +74,9 @@ Tw.MyTJoinSuspend.prototype = {
 
 
   _onClose: function () {
+    this._historyService.goBack();
+    // 입력값 있을 경우 확인창
+    /*
     if ( (this._temp && this._temp.hasChanged()) || (this._long && this._long.hasChanged()) ) {
       this._popupService.openConfirmButton(
         Tw.ALERT_MSG_COMMON.STEP_CANCEL.MSG,
@@ -87,5 +90,6 @@ Tw.MyTJoinSuspend.prototype = {
     } else {
       this._historyService.goBack();
     }
+    */
   }
 };
