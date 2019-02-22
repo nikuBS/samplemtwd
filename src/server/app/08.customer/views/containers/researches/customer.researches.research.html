@@ -119,11 +119,11 @@
                                 <ul class="bt-slice mt30">
                                     <% if (qIdx === research.questions.length - 1 ) { %>
                                         <li class="bt-blue1" id="fe-submit-research">
-                                            <button disabled="<%= isEssential %>">참여하기</button>
+                                            <button <%= isEssential ? 'disabled' : '' %>>참여하기</button>
                                         </li>
                                     <% } else { %>
                                         <li class="bt-blue1 fe-go-next">
-                                            <button>다음으로</button>
+                                            <button <%= isEssential ? 'disabled' : '' %>>다음으로</button>
                                         </li>
                                     <% } %>
                                 </ul>
@@ -134,11 +134,11 @@
                                     </li>
                                     <% if (qIdx === research.questions.length - 1) { %>
                                     <li class="bt-blue1" id="fe-submit-research">
-                                        <button disabled="<%= isEssential %>">참여하기</button>
+                                        <button <%= isEssential ? 'disabled' : '' %>>참여하기</button>
                                     </li>
                                     <% } else { %>
                                     <li class="bt-blue1 fe-go-next" >
-                                        <button disabled="<%= isEssential %>">다음으로</button>
+                                        <button <%= isEssential ? 'disabled' : '' %>>다음으로</button>
                                     </li>
                                     <% } %>
                                 </ul>
