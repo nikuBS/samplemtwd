@@ -63,6 +63,7 @@ Tw.MyTFareBillPrepayAutoInfo.prototype = {
   },
   _cancelSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
+      Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_FARE.COMPLETE_CANCEL_AUTO_PREPAY);
       this._historyService.goLoad('/myt-fare/bill/' + this.$title);
     } else {
       this._cancelFail(res);
