@@ -2,6 +2,7 @@ Tw.ValidationService = function (rootEl, submitBtn, change) {
   this.$container = rootEl;
   this.$submitBtn = submitBtn;
   this.$disabled = true;
+  this.$expirationTarget = this.$container.find('.fe-card-m');
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -121,15 +122,38 @@ Tw.ValidationService.prototype = {
     return Tw.FormatHelper.isEmpty($target.val());
   },
   _isWrong: function ($target) {
-    var isWrong = $target.val().length < $target.attr('minLength');
+    var isWrong = true;
+
+    if ($target.hasClass('fe-card-y') || $target.hasClass('fe-card-m')) {
+      isWrong = this._expirationValid($target, isWrong);
+    } else {
+      isWrong = $target.val().length < $target.attr('minLength');
+
+      if (!isWrong) {
+        if ($target.hasClass('fe-card-number')) {
+          this._getCardCode($target);
+        } else if ($target.hasClass('fe-birth')) {
+          isWrong = !this._validation.isBirthday($target.val());
+        }
+      }
+    }
+    return isWrong;
+  },
+  _expirationValid: function ($target, isWrong) {
+    if ($target.hasClass('fe-card-y')) {
+      isWrong = this._validation.isYearInvalid($target);
+    } else {
+      isWrong = this._validation.isMonthInvalid($target);
+    }
+    this.$expirationTarget = $target;
 
     if (!isWrong) {
-      if ($target.hasClass('fe-card-number')) {
-        this._getCardCode($target);
-      } else if ($target.hasClass('fe-card-y') || $target.hasClass('fe-card-m')) {
-        isWrong = !this._validation.checkExpiration(this.$container.find('.fe-card-y'), this.$container.find('.fe-card-m'));
-      } else if ($target.hasClass('fe-birth')) {
-        isWrong = !this._validation.isBirthday($target.val());
+      var cardY = this.$container.find('.fe-card-y');
+      var cardM = this.$container.find('.fe-card-m');
+
+      isWrong = this._validation.checkExpiration(cardY, cardM);
+      if (isWrong) {
+        this.$expirationTarget = cardY;
       }
     }
     return isWrong;
@@ -208,7 +232,7 @@ Tw.ValidationService.prototype = {
       var $target = this.$container.find('.fe-error-msg:visible').first();
       var $inputTarget = $target.siblings('.input').find('input.required-input-field');
       if ($target.text().indexOf(Tw.VALIDATION_LABEL.EXPIRATION) !== -1) {
-        $inputTarget = this.$container.find('.fe-card-y');
+        $inputTarget = this.$expirationTarget;
       }
       $inputTarget.focus();
       return false;
