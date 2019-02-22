@@ -83,6 +83,8 @@
       width: 100%; }
       .cont-actionsheet .ac-list .type1 > a .table-cell.cell-title, .cont-actionsheet .ac-list .type1 button .table-cell.cell-title {
         width: 60%; }
+      .cont-actionsheet .ac-list .type1 > a .table-cell.tit-full, .cont-actionsheet .ac-list .type1 button .table-cell.tit-full {
+        width: 85%; }
       .cont-actionsheet .ac-list .type1 > a .table-cell > span.link, .cont-actionsheet .ac-list .type1 button .table-cell > span.link {
         display: inline-block; }
     .cont-actionsheet .ac-list .type1 > label .table-cell.cell-title {
@@ -905,7 +907,8 @@
                 color: #f76252;
                 font-size: 0.75rem;
                 font-weight: 700;
-                text-indent: -1.0625rem; }
+                text-indent: -1.0625rem;
+                z-index: 1; }
               .chart-wrap.bar4 .data-arry .data-ul > li > dl > dd .bar {
                 position: absolute;
                 left: 50%;
@@ -2694,9 +2697,36 @@
     color: #178BCE;
     font-size: 0.75rem; }
 
+.device_android .search-point .filter.subway .bt-dropdown.text-type02 {
+  padding-top: 0.0625rem; }
+
 /* CS_02_01 : 지점/대리점 찾기 */
 .search-point .filter {
   margin-bottom: 1.25rem; }
+  .search-point .filter.subway {
+    margin-bottom: 0.625rem; }
+    .search-point .filter.subway .inline {
+      float: left;
+      width: 40%; }
+      .search-point .filter.subway .inline + .inline {
+        float: right;
+        width: 58%; }
+      .search-point .filter.subway .inline button {
+        width: 100%; }
+    .search-point .filter.subway:after {
+      display: block;
+      clear: both;
+      content: ""; }
+    .search-point .filter.subway .bt-dropdown.text-type02 {
+      padding: 0 2.25rem 0 0.75rem;
+      height: 2.625rem;
+      line-height: 2.625rem; }
+      .search-point .filter.subway .bt-dropdown.text-type02:after {
+        margin-top: -0.25rem;
+        width: 0.75rem;
+        height: 0.4375rem;
+        background: url(/img/ico/btn-select.png) no-repeat;
+        background-size: 12px auto; }
 
 .search-point .btn-search {
   margin-bottom: 1.25rem; }

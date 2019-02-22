@@ -249,7 +249,7 @@ body.bg-gray {
           text-decoration: underline; }
       #common-menu .section-userinfo .userinfo .bt {
         position: relative;
-        top: 0;
+        top: -1px;
         display: inline-block;
         margin-left: 0.5rem;
         color: inherit;
@@ -432,6 +432,8 @@ body.bg-gray {
                 bottom: 0;
                 height: 0.0625rem;
                 background: #e5e5e5; }
+            #common-menu .section-cont .section-gnb .gnb-depth1 > li .depth2 .line:last-child .bt:after {
+              background: none; }
         #common-menu .section-cont .section-gnb .gnb-depth1:first-child {
           border-top: none; }
           #common-menu .section-cont .section-gnb .gnb-depth1:first-child > .bt {
