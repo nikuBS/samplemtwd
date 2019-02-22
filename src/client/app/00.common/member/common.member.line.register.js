@@ -4,7 +4,8 @@
  * Date: 2018.10.01
  */
 
-Tw.CommonMemberLineRegister = function () {
+Tw.CommonMemberLineRegister = function ($container) {
+  this.$container = $container;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this.lineMarketingLayer = new Tw.LineMarketingComponent();
@@ -20,81 +21,18 @@ Tw.CommonMemberLineRegister = function () {
   this.$allCheck = null;
   this.$list = null;
   this.$btMore = null;
+
+  this._bindEvent();
 };
 
 Tw.CommonMemberLineRegister.prototype = {
-  openRegisterLinePopup: function (type) {
-    this._getLineInfo(type);
-  },
-  _getLineInfo: function (type) {
-    this._apiService.request(Tw.API_CMD.BFF_03_0029, {
-      svcCtg: Tw.LINE_NAME.All,
-      pageSize: Tw.DEFAULT_LIST_COUNT,
-      pageNo: this._pageNo
-    }).done($.proxy(this._successGetLineInfo, this, type));
-  },
-  _successGetLineInfo: function (type, exposable) {
-    if ( exposable.code === Tw.API_CODE.CODE_00 ) {
-      this._pageNo = this._pageNo + 1;
-      this._openRegisterLine(this._parseLineInfo(exposable.result), type, exposable.result.totalCnt);
-    } else {
-      Tw.Error(exposable.code, exposable.msg).pop();
-    }
-  },
-  _failGetLineInfo: function (error) {
-    Tw.Error(error.code, error.msg).pop();
-  },
-  _parseLineInfo: function (lineList) {
-    var category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
-    var list = [];
-    _.map(category, $.proxy(function (line) {
-      if ( !Tw.FormatHelper.isEmpty(lineList[Tw.LINE_NAME[line]]) ) {
-        list = list.concat(this._convLineData(lineList[Tw.LINE_NAME[line]], Tw.LINE_NAME[line]));
-      }
-    }, this));
-
-    return list;
-  },
-
-  _convLineData: function (lineData, type) {
-    Tw.FormatHelper.sortObjArrAsc(lineData, 'expsSeq');
-    var result = [];
-    _.map(lineData, $.proxy(function (line) {
-      line.showSvcAttrCd = Tw.SVC_ATTR[line.svcAttrCd];
-      line.showSvcScrbDtm = Tw.DateHelper.getShortDateNoDot(line.svcScrbDt);
-      line.showName = Tw.FormatHelper.isEmpty(line.nickNm) ? Tw.SVC_ATTR[line.svcAttrCd] : line.nickNm;
-      line.showPet = type === Tw.LINE_NAME.MOBILE;
-      line.showDetail = type === Tw.LINE_NAME.MOBILE ? Tw.FormatHelper.conTelFormatWithDash(line.svcNum) :
-        line.svcAttrCd === Tw.SVC_ATTR_E.TELEPHONE ? Tw.FormatHelper.conTelFormatWithDash(line.svcNum) : line.addr;
-      result.push(line);
-    }, this));
-
-    return result;
-  },
-  _openRegisterLine: function (data, type, totalCnt) {
-    if ( totalCnt > 0 ) {
-      this._popupService.open({
-        hbs: 'CO_01_02_04_01',
-        layer: true,
-        new_customer: type === Tw.LOGIN_NOTICE_TYPE.NEW_CUSTOMER,
-        list_length: totalCnt,
-        bt_more: totalCnt > Tw.DEFAULT_LIST_COUNT,
-        data: data
-      }, $.proxy(this._onOpenRegisterLine, this), $.proxy(this._onCloseRegisterLine, this), 'line-register');
-    } else {
-      Tw.Logger.info('[LineRegister] Empty');
-    }
-  },
-  _onOpenRegisterLine: function ($layer) {
-    this._bindEvent($layer);
-  },
-  _bindEvent: function ($layer) {
-    this.$btnRegister = $layer.find('#fe-bt-complete');
-    this.$childChecks = $layer.find('.fe-check-child');
-    this.$allCheck = $layer.find('#fe-check-all');
-    this.$list = $layer.find('.fe-item');
-    this.$btMore = $layer.find('#fe-bt-more');
-    this.$lineList = $layer.find('#fe-list-line');
+  _bindEvent: function () {
+    this.$btnRegister = this.$container.find('#fe-bt-complete');
+    this.$childChecks = this.$container.find('.fe-check-child');
+    this.$allCheck = this.$container.find('#fe-check-all');
+    this.$list = this.$container.find('.fe-item');
+    this.$btMore = this.$container.find('#fe-bt-more');
+    this.$lineList = this.$container.find('#fe-list-line');
 
     this.$btnRegister.on('click', $.proxy(this._onClickRegister, this));
     this.$childChecks.on('change', $.proxy(this._onClickChildCheck, this));
@@ -133,13 +71,13 @@ Tw.CommonMemberLineRegister.prototype = {
       Tw.Error(resp.code, resp.msg);
     }
   },
-  _getExposedSvcNumList: function(lineList) {
+  _getExposedSvcNumList: function (lineList) {
     var category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
     var list = [];
     _.map(category, $.proxy(function (line) {
       var curLine = lineList[Tw.LINE_NAME[line]];
       if ( !Tw.FormatHelper.isEmpty(curLine) ) {
-        _.map(curLine, $.proxy(function(target) {
+        _.map(curLine, $.proxy(function (target) {
           list.push(target.svcMgmtNum);
         }, this));
       }
@@ -205,18 +143,15 @@ Tw.CommonMemberLineRegister.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._registerLength = registerLength;
       this._marketingSvc = resp.result.offerSvcMgmtNum;
-      this._popupService.close();
+      if ( this._registerLength > 0 ) {
+        this._openCompletePopup();
+      }
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
   _failRegisterLineList: function (error) {
     Tw.Error(error.code, error.msg).pop();
-  },
-  _onCloseRegisterLine: function () {
-    if ( this._registerLength > 0 ) {
-      this._openCompletePopup();
-    }
   },
   _openCompletePopup: function () {
     this._popupService.open({
@@ -228,7 +163,7 @@ Tw.CommonMemberLineRegister.prototype = {
     }, $.proxy(this._onOpenCompletePopup, this), $.proxy(this._onCloseCompletePopup, this), 'line-complete');
   },
   _onOpenCompletePopup: function ($layer) {
-    $layer.on('click', '#fe-bt-home', $.proxy(this._closeCompletePopup, this));
+    $layer.on('click', '#fe-bt-home', $.proxy(this._goHome, this));
     $layer.on('click', '#fe-bt-line', $.proxy(this._goAuthLine, this));
 
     this._openMarketingOfferPopup();
@@ -260,19 +195,24 @@ Tw.CommonMemberLineRegister.prototype = {
   _closeCompletePopup: function () {
     this._popupService.close();
   },
+  _goHome: function () {
+    this._goHomeFlag = true;
+    this._popupService.close();
+  },
   _goAuthLine: function () {
-    this._goAuth = true;
+    this._goAuthFlag = true;
     this._popupService.close();
   },
   _onCloseMarketingOfferPopup: function () {
     this._closeCompletePopup();
   },
   _onCloseCompletePopup: function () {
-    if ( this._goAuth ) {
-      Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
-      this._historyService.goLoad('/common/member/line');
+    if ( this._goHomeFlag ) {
+      this._historyService.replaceURL('/main/home');
+    } else if ( this._goAuthFlag ) {
+      this._historyService.replaceURL('/common/member/line');
     } else if ( this._registerLength > 0 ) {
-      this._historyService.reload();
+      this._historyService.goBack();
     }
   }
 };
