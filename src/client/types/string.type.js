@@ -130,7 +130,8 @@ Tw.POPUP_CONTENTS = {
   BIO_REGISTER: '생체정보(지문,Face ID)로 본인인증을 하실 수 있습니다.<br />지금 등록하시겠습니까?',
   APP_NOT_INSTALLED: ' 앱이 설치되어 있지 않습니다. <br />설치하시겠습니까?',
   TPLAN_WATCH_NON_LINE: '스마트워치 회선이<br>존재하지 않습니다',
-  TPLAN_WATCH: '스마트워치 회선<br>'
+  TPLAN_WATCH: '스마트워치 회선<br>',
+  POPUP_BLOCKED: '팝업이 차단되어 있습니다.<br>계속 이용하시려면 팝업을 허용해주세요.'
 };
 
 Tw.CHART_TYPE = {
