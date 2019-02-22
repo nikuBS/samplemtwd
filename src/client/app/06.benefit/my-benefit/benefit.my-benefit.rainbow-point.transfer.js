@@ -29,7 +29,6 @@ Tw.BenefitMyBenefitRainbowPointTransfer.prototype = $.extend({}, Tw.BenefitMyBen
   },
 
   _onClickBtnCancel: function (event) {
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
     var serNum = $(event.currentTarget).data('ser-num');
     // this._popupService.openConfirm(Tw.POPUP_TITLE.CONFIRM, Tw.BENEFIT_MY_BENEFIT_RAINBOW_POINT.A4, $.proxy(this._cancelTransfer, this, serNum));
     this._cancelTransfer(serNum);
@@ -43,7 +42,6 @@ Tw.BenefitMyBenefitRainbowPointTransfer.prototype = $.extend({}, Tw.BenefitMyBen
   },
 
   _cancelTransferDone: function (resp) {
-    Tw.CommonHelper.endLoading('.container');
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       Tw.CommonHelper.toast(Tw.BENEFIT_MY_BENEFIT_RAINBOW_POINT.TRANSFER_CANCELED);
       window.setTimeout($.proxy(function () {
