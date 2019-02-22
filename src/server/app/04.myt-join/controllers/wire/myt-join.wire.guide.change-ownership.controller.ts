@@ -18,8 +18,7 @@ class MyTJoinWireGuideChangeOwnership extends TwViewController {
       return this.error.render(res, {
         title: MYT_JOIN_WIRE_GUIDE_CHANGE_OWNERSHIP.TITLE,
         pageInfo,
-        svcInfo,
-        pageInfo
+        svcInfo
       });
     }
 
