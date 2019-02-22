@@ -12,8 +12,7 @@ class BrowserHelper {
   }
 
   static isApp(req): boolean {
-    return true;
-    // return /TWM_APP/i.test(req.useragent.source);
+    return /TWM_APP/i.test(req.useragent.source);
   }
 
   static isOnline(req): boolean {
