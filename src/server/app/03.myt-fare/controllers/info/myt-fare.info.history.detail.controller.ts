@@ -151,7 +151,8 @@ class MyTFareInfoHistoryDetail extends TwViewController {
       const resultData = resp.result; 
             
       resultData.dataAmt = FormatHelper.addComma(resultData.cardAmt); // 납부금액
-      resultData.invYearMonth = DateHelper.getYearMonthFromDate(resultData.invDt), // 납부내용 (청구년월: 청구일자의 익월(다음달))
+      resultData.invYearMonth = DateHelper.getYearNextMonthFromDate(resultData.invDt), // 납부내용 (청구년월: 청구일자의 익월(다음달)) YYYY.M.
+      resultData.invYearNoDotMonth = DateHelper.getYearNextNoDotMonthFromDate(resultData.invDt), // 납부내용 (청구년월: 청구일자의 익월(다음달)) YYYY.M
       resultData.dataProcCode = MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE[resultData.cardProcCd]; // 요청결과
       resultData.reqDate = DateHelper.getShortDate(parseFloat(resultData.reqDtm) ? resultData.reqDtm : opDt); // 요청일시
       resultData.comDate = DateHelper.getShortDate(resultData.opDt); // 납부일자
@@ -184,7 +185,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
       resultData.dataDt = DateHelper.getShortDate(resultData.drwDt); // 납부일자 YYYY.M.D.
       resultData.dataAmt = FormatHelper.addComma(resultData.drwAmt); // 납부금액 
       resultData.dataRequestAmt = FormatHelper.addComma(resultData.drwReqAmt); // 청구금액
-      resultData.dataReqYearMonth = DateHelper.getYearMonthFromDate(resultData.lastInvDt); // 청구년월 YYYY.M.
+      resultData.dataReqYearMonth = DateHelper.getYearNextMonthFromDate(resultData.lastInvDt); // 청구년월 YYYY.M.
       resultData.dataUseTermStart = DateHelper.getShortFirstDate(resultData.lastInvDt); // 이용기간 YYYY.M.1.
       resultData.dataLastInvDt = DateHelper.getShortDate(resultData.lastInvDt); // 이용기간 ~ YYYY.M.D.
       resultData.dataIsBank = !this.isCard(resultData.bankCardCoCdNm); // 은행인지 여부(텍스트로 판단)
@@ -340,7 +341,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
       date.setMonth(date.getMonth() + 1);
     }
     return list; 
-  };
+  }
 
   private getBillTaxList = (date: string): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0017, {selType: 'M', selSearch: date}).map((resp: {code: string, msg: string, result: any}) => {
