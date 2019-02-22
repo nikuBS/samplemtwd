@@ -266,23 +266,23 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       case 'NA00005047':
       case 'NA00005502':
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_01', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_01', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
+        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
         break;
       case 'NA00004941':
       case 'NA00004942':
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_02', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_01', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
+        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
         break;
       case 'NA00005137':
       case 'NA00005138':
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_03', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_01', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
+        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
         break;
       case 'NA00005632':
       case 'NA00005634':
       case 'NA00005635':
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_04', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_01', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
+        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
         break;
       case 'NA00005821':
         //'RM_11_01_01_02_tip_03_23'	Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE
@@ -293,7 +293,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       case 'NA00003015':
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_07', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_08', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_01', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
+        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
         break;
       case 'NA00004229':
       case 'NA00004230':
@@ -302,20 +302,20 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       case 'NA00005301':
       case 'NA00005337':
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_09', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_02', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
+        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
         break;
       case 'NA00005252':
       case 'NA00005300':
       case 'NA00005505':
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_10', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_02', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
+        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
         break;
       case 'NA00003178':
       case 'NA00003177':
       case 'NA00004226':
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_11', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_12', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_02', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
+        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
         break;
       case 'NA00006046':
       case 'NA00006048':
@@ -331,7 +331,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       case 'NA00006053':
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_13', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_14', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_01', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
+        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
         break;
       case 'NA00006050':
       case 'NA00006052':
@@ -340,7 +340,7 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       case 'NA00005902':
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_14', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_15', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_01', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
+        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
         break;
       case 'NA00005903':
       case 'NA00006043':
@@ -351,12 +351,12 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       case 'NA00005699':
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_17', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_18', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_01', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
+        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
         break;
       case 'NA00005898':
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_19', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_20', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_01', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
+        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
         break;
       case 'NA00005899':
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_20', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
@@ -370,25 +370,24 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       case 'NA00005695':
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_21', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_22', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_01', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
+        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
         break;
       case 'NA00005049':
       case 'NA00005501':
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_26', tipTitle : Tw.TOOLTIP_TITLE.SERVICE_START_GUIDE });
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_27', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_USE_GUIDE });
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_28', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_29', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
+        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
         break;
       case 'NA00005633':
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_30', tipTitle : Tw.TOOLTIP_TITLE.SERVICE_START_GUIDE });
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_31', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_29', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_32', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
+        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
         break;
       case 'NA00003196':
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_33', tipTitle : Tw.TOOLTIP_TITLE.SERVICE_START_GUIDE });
         tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_35', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
-        tooltipArr.push({ tipId : 'RM_11_01_01_02_tip_03_36', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
+        tooltipArr.push({ tipId : 'TC000030', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_COMMON_GUIDE });
         break;
       case 'NA00005747':
         tooltipArr.push({ tipId : 'TC000006', tipTitle : Tw.TOOLTIP_TITLE.ROAMING_PAY_GUIDE });
