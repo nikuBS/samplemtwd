@@ -79,7 +79,7 @@ Tw.BenefitDisPgmInput.prototype = {
       setInfo: 'set-info',
       setInfoProdId: this._prodId,
       isTerm: false,
-      confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A2,
+      confirmAlert: Tw.ALERT_MSG_PRODUCT.ALERT_3_A3,
       isNoticeList: true,
       isMobilePlan: false,
       isDiscountPgm: true
