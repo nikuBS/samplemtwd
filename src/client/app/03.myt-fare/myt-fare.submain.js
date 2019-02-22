@@ -204,6 +204,7 @@ Tw.MyTFareSubMain.prototype = {
       target: '.chart4', //클래스명 String
       type: (this.data.type === 'UF') ? Tw.CHART_TYPE.BAR_2 : Tw.CHART_TYPE.BAR_4, //bar
       average: true, // 평균
+      average_place: 'right',
       legend: (this.data.type === 'UF') ? Tw.FARE_CHART_LEGEND.USAGE : Tw.FARE_CHART_LEGEND.DEFAULT, // 범례
       link: true,
       unit: Tw.CHART_UNIT.WON, // 표기
@@ -299,7 +300,7 @@ Tw.MyTFareSubMain.prototype = {
         var items = resp.result.recentUsageList;
         var length = items.length > 6 ? 6 : items.length;
         var chart_data = [];
-        for ( var idx = 0; idx < length; idx++ ) {
+        for ( var idx = length - 1; idx > -1; idx-- ) {
           var item = items[idx];
           var date = item.invDt; // this.getLastDate(item.invDt);
           var amtStr = item.invAmt.replace(',', '');
@@ -344,7 +345,7 @@ Tw.MyTFareSubMain.prototype = {
         var items = resp.result.recentUsageList;
         var length = items.length > 6 ? 6 : items.length;
         var chart_data = [];
-        for ( var idx = 0; idx < length; idx++ ) {
+        for ( var idx = length - 1; idx > -1; idx-- ) {
           var item = items[idx];
           var date = item.invDt; // this.getLastDate(item.invDt);
           var amtStr = item.invAmt.replace(',', '');
@@ -598,7 +599,7 @@ Tw.MyTFareSubMain.prototype = {
   _onOtherLinesMore: function () {
     var index = this.$otherLines.find('li').length;
     var totalCount = this.data.otherLines.length - index;
-    if (totalCount === 0) {
+    if ( totalCount === 0 ) {
       this.$otherLinesMoreBtn.hide();
       return;
     }
