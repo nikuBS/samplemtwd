@@ -29,7 +29,7 @@ export default class MembershipSubmain extends TwViewController {
         };
 
         if ( error.code ) {
-          return this.error.render(res, { ...error, svcInfo });
+          return this.error.render(res, { ...error, svcInfo, pageInfo });
         }
 
         this.logger.info(this, 'membershipCheckData1 : ', membershipCheckData);
@@ -48,7 +48,7 @@ export default class MembershipSubmain extends TwViewController {
         };
 
         if ( error.code ) {
-          return this.error.render(res, { ...error, svcInfo });
+          return this.error.render(res, { ...error, svcInfo, pageInfo });
         }
 
         const membershipData = null;
