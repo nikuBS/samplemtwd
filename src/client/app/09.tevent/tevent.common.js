@@ -138,7 +138,7 @@ Tw.TeventCommon.prototype = {
 
       if (this._uri === 'ing') {
         $liNode.find('.fe-event-img img').attr({
-          'src': Tw.Environment.cdn + $content[i].filePath,
+          'src': $content[i].filePath,
           'alt': $content[i].prCtt
         });
       } else if (this._uri === 'win') {
