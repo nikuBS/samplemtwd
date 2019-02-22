@@ -218,15 +218,26 @@ Tw.CertificationSk.prototype = {
     var mdnLength = this.$inputMdn.val().length;
     if ( mdnLength === Tw.MIN_MDN_LEN || mdnLength === Tw.MAX_MDN_LEN ) {
       this.$btCert.attr('disabled', false);
+      if ( this.$inputCert.val().length >= Tw.DEFAULT_CERT_LEN ) {
+        this.$btConfirm.attr('disabled', false);
+      }
     } else {
       this.$btCert.attr('disabled', true);
+      this.$btConfirm.attr('disabled', true);
     }
   },
   _onInputCert: function () {
     var inputCert = this.$inputCert.val();
     if ( inputCert.length >= Tw.DEFAULT_CERT_LEN ) {
       this.$inputCert.val(inputCert.slice(0, Tw.DEFAULT_CERT_LEN));
-      this.$btConfirm.attr('disabled', false);
+      if ( this._onKeyin ) {
+        var inputMdnLength = this.$inputMdn.val().length;
+        if ( inputMdnLength === Tw.MIN_MDN_LEN || inputMdnLength === Tw.MAX_MDN_LEN ) {
+          this.$btConfirm.attr('disabled', false);
+        }
+      } else {
+        this.$btConfirm.attr('disabled', false);
+      }
     } else {
       this.$btConfirm.attr('disabled', true);
     }
