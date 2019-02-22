@@ -19,7 +19,7 @@ Tw.MyTFareBillPrepayAutoInfo = function (rootEl, title) {
 Tw.MyTFareBillPrepayAutoInfo.prototype = {
   _init: function () {
     this._initVariables();
-    this.$selectList.find('li').each($.proxy(this._setEventEachData, this));
+    this.$selectList.find('> li').each($.proxy(this._setEventEachData, this));
   },
   _initVariables: function () {
     this.$selectList = this.$container.find('.fe-history-list');
