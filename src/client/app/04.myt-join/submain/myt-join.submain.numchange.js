@@ -11,6 +11,28 @@ Tw.MyTJoinPhoneNumChange = function (rootEl, options) {
   this._historyService = new Tw.HistoryService();
 
   if(this._options === false){
+    if( !Tw.Environment.init ) {
+      $(window).on(Tw.INIT_COMPLETE, $.proxy(this._openDisableSvcPopup, this));
+    } else {
+      this._openDisableSvcPopup();
+    }
+
+    return;
+  }
+
+  this._registHelper();
+  this._bindEvent();
+  this._listItemTmpl = Handlebars.compile($('#list-cont-item-tmplt').html());
+};
+
+Tw.MyTJoinPhoneNumChange.prototype = {
+
+  /**
+   * 서비스 이용불가 팝업 열기
+   * @private
+   */
+  _openDisableSvcPopup: function(){
+
     var option = {
       title: Tw.MYT_JOIN_MGMT_NUMCHG.ALERT_NO_TARGET.TITLE,
       contents: Tw.MYT_JOIN_MGMT_NUMCHG.ALERT_NO_TARGET.CONTENTS,
@@ -29,17 +51,8 @@ Tw.MyTJoinPhoneNumChange = function (rootEl, options) {
         this._historyService.goLoad('/myt-join/submain');
       }, this),
       'disable-service'
-      );
-
-    return;
-  }
-
-  this._registHelper();
-  this._bindEvent();
-  this._listItemTmpl = Handlebars.compile($('#list-cont-item-tmplt').html());
-};
-
-Tw.MyTJoinPhoneNumChange.prototype = {
+    );
+  },
 
   /**
    * 이벤트 바인딩
