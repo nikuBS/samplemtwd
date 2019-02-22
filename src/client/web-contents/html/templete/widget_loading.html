@@ -39,9 +39,9 @@ xmp{box-sizing:border-box;max-width:100%;padding:10px;border-radius:5px;backgrou
 - .wrap 안에 컨텐츠만 대상으로 할수있음
 - 대상의 outerWidth, outerHeight, offset().top, offset().left 를 계산하여 위치시킴
 - .tw-loading의 갯수를 확인하여 현재 로딩중인지 확인가능
-ex) skt_landing.action.loading.on({ta:'셀렉터',co:'white',size:true}); // 설정
+ex) skt_landing.action.loading.on({ta:'셀렉터',size:true}); // 설정
 ex) skt_landing.action.loading.off({ta:'셀렉터'}); // 해제
-ex) skt_landing.action.loading.on({ta:'셀렉터',co:'blue',size:false}); // 설정
+ex) skt_landing.action.loading.on({ta:'셀렉터',size:false}); // 설정
 ex) skt_landing.action.loading.off({ta:'셀렉터'}); // 해제
 ex) skt_landing.action.loading.allOff(); // 전체해제
 </pre>
@@ -49,19 +49,19 @@ ex) skt_landing.action.loading.allOff(); // 전체해제
 <div class="guide-sample">
     <div class="wrap">
         <span class="test" style="display:block;padding:100px;border:5px solid red;">테스트 셀렉터</span>
-        <button type="button" onclick="skt_landing.action.loading.on({ta:'.test',co:'white',size:true});">설정</button>
+        <button type="button" onclick="skt_landing.action.loading.on({ta:'.test',size:true});">설정</button>
         <button type="button" onclick="skt_landing.action.loading.off({ta:'.test'});">해제</button>
         <span class="test2" style="display:block;padding:100px;border:5px solid red;">테스트 셀렉터</span>
-        <button type="button" onclick="skt_landing.action.loading.on({ta:'.test2',co:'blue',size:false});">설정</button>
+        <button type="button" onclick="skt_landing.action.loading.on({ta:'.test2',size:false});">설정</button>
         <button type="button" onclick="skt_landing.action.loading.off({ta:'.test2'});">해제</button>
         <button type="button" onclick="skt_landing.action.loading.allOff();">전체해제</button>
     </div>
 </div>
 <xmp class="guide-desc">
 <script>
-ex) skt_landing.action.loading.on({ta:'셀렉터',co:'white',size:true}); // 설정
+ex) skt_landing.action.loading.on({ta:'셀렉터',size:true}); // 설정
 ex) skt_landing.action.loading.off({ta:'셀렉터'}); // 해제
-ex) skt_landing.action.loading.on({ta:'셀렉터',co:'blue',size:false}); // 설정
+ex) skt_landing.action.loading.on({ta:'셀렉터',size:false}); // 설정
 ex) skt_landing.action.loading.off({ta:'셀렉터'}); // 해제
 ex) skt_landing.action.loading.allOff(); // 전체해제
 </script>

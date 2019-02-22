@@ -64,7 +64,7 @@
         <!--// #contents -->
 
 
-        <button onclick="skt_landing.action.popup.allClose()" style="position:fixed;right:0;top:0;background:red;padding:10px;z-index:9999;color:#fff;">팝업 전체닫기</button>
+        <button onclick="skt_landing.action.popup.allClose()" style="position:fixed;right:50px;top:0;background:red;padding:10px;z-index:9999;color:#fff;">팝업 전체닫기</button>
     </div>
 
     <script>
@@ -72,7 +72,7 @@
             skt_landing.action.popup.open({
                 url:'/hbs/',
                 hbs:'test'
-            });
+            },'','',this);
         })
         
         $(document).on('click', '.fixed-bottom .prev-step', function(){
@@ -85,7 +85,7 @@
                 url:'/hbs/',
                 hbs:'CO_02_01_01_01_case1',
                 layer:true
-            });
+            },'','',this);
         })
 
 
@@ -94,7 +94,7 @@
                 url:'/hbs/',
                 hbs:'CO_02_01_01_01_case1',
                 layer:true
-            });
+            },'','',this);
         })
 
 

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
@@ -21,42 +20,14 @@
     <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
     <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
     <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
-
-    
-    
-
     <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
     <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
-    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
+    <script type="text/javascript" src="/lib/slick.js"></script><!--[C] slick API -->
     <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
     <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
     <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
-    
-	<script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
-	
-	<script type="text/javascript">
-		$(document).on('ready',function() {
-			skt_landing.action.popup.open({
-				url:'/hbs/',
-            	hbs:'popup',
-				'title':'이용요금 안내',
-				'btn-close':'btn-tooltip-close',
-				'title_type': 'tit-tooltip',
-                'cont_align':'tl',
-                'contents': '새로운 버전의 T world가 업데이트 되었습니다.새로운 버전의 T world가 업데이트 되었습니다. 새로운 버전의 T world가 업데이트 되었습니다.  ',
-				//'tooltip_cont': [{txt: '1. 월 중 번호 이동하신 경우, 시스템 사정으로 인해 사용기간이 1일 부터 말일까지 표시됨을 양해해 주시기 바랍니다.'},
-				//{txt: '2. 사용요금은 번호 이동 후부터 말일까지 사용 요금입니다.'},
-				//{txt: '3. 이번 달 청구금액에 대한 미납요금은 다음달 초에 확인하실 수 있습니다.'},
-				//{txt: '4. 상기 사용요금 외 한국통신(KT) 국제전화 이용시 사업자에게 별도 청구됩니다.'},
-				//{txt: '5. 자동납부로 납부하는 경우에는 인출일로부터 3~4일 이후 확인 가능합니다.'},
-				//{txt: '6. 고객님이 사용하신 요금제에 따른 옥수수 월정액 무료혜택을 받고 있으신 경우에는 이용 상세내역에 할인으로 별도 표기되지 않습니다.'}]
-			});
-		});
-	
-	</script>
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 차트 -->
 </head>
-
-
 <body>
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
@@ -67,29 +38,41 @@
     <!--// #skip_navigation -->
     <div class="wrap">
         <!-- #header -->
-		<div id="header" class="header-wrap">
-			<div class="h-belt">
-				<div class="h-default">
-					<div class="h-menu">
-						<button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
-					</div>
-
-                    <div class="h-tit">나의 데이터/통화</div>
-                    <div class="h-serarch">
-                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
-                    </div>
-				</div>
-			</div>
-		</div>
-        <!--// #header --> 
+        <div id="header" class="header-wrap">
+        </div>
+        <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
-            <h2 class="blind">내용</h2>
             <div class="container">
             </div>
         </div>
         <!--// #contents -->
+		<!-- .popup hbs -->
+		<div class="popup-page tw-popup txt2-popup"><!-- 타이틀 2줄로 적용시  -->
+			<!-- #header -->
+			<div class="header-wrap">
+				<div class="page-header">
+					<div class="header-ti">
+                        <h1>긴제목 테스트 긴제목<br />긴제목 테스트</h1><!-- 처음부터 br써서 2줄로 만들어야함 -->
+                    </div>
+                    <div class="header-mask">
+                        <button type="button" class="btn-mask"><span class="blind">마스킹 해제</span></button><!-- 선택됨 : .seleted,  선택불가 : .disabled // -->
+                    </div>
+				</div>
+			</div>
+			<!--// #header -->
+			<!-- .container-wrap -->
+			<div class="container-wrap">
+				<div class="container">
+                    내용
+				</div>
+			</div>
+            <!--// .container-wrap -->
+            <!-- .popup-closeBtn -->
+            <button class="popup-closeBtn"><span class="blind">팝업 페이지 닫기</span></button>
+            <!--// .popup-closeBtn -->
+		</div>
+		<!--// .popup hbs -->
     </div>
 </body>
-
 </html>

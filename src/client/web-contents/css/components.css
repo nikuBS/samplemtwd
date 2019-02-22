@@ -12983,6 +12983,7 @@ a.bt-link-tx.underline.small {
 
 /* 상품상세 */
 .productdetails-wrap {
+  min-height: 15rem;
   padding-bottom: 4.375rem; }
   .productdetails-wrap .productdetails-title {
     position: relative;

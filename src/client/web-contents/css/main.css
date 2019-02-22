@@ -126,7 +126,7 @@
     .section-swiper-box .slider-box.link-full-box .main-box-cont .link-full {
       padding: 0 1.5rem;
       position: relative;
-      padding-bottom: 4.375rem;
+      padding-bottom: 1.25rem;
       height: 100%; }
       .section-swiper-box .slider-box.link-full-box .main-box-cont .link-full .bt {
         position: absolute;
@@ -623,8 +623,7 @@
     padding-right: 0.9375rem;
     text-align: left;
     margin-top: 0.625rem;
-    margin-bottom: 1.5625rem;
-    font-weight: bold; }
+    margin-bottom: 1.5625rem; }
   .main-tip-box > a.stit.tit:after, .main-tip-box button.stit.tit:after {
     display: inline-block;
     content: "";
@@ -661,8 +660,7 @@
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       text-overflow: ellipsis;
-      font-size: 1.5625rem;
-      font-weight: 700; }
+      font-size: 1.5625rem; }
     .main-tip-box .main-box-cont .tx {
       font-weight: 300;
       overflow: hidden;
@@ -2657,8 +2655,7 @@ body.apphome {
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       text-overflow: ellipsis;
-      font-size: 1.5625rem;
-      font-weight: 700; }
+      font-size: 1.5625rem; }
     .main-charge-box .main-box-cont .tx {
       font-weight: 300;
       max-height: 2.375rem;
@@ -2733,7 +2730,17 @@ body.apphome {
       .main-charge-box.roaming .main-box-cont.bg-type06 {
         background-image: url(/img/main/bg_roaming06.png); }
       .main-charge-box.roaming .main-box-cont .tx {
-        color: #959595; }
+        color: #959595;
+        width: 70%;
+        overflow: hidden;
+        display: inline-block;
+        white-space: normal;
+        word-wrap: break-word;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        margin-top: 0;
+        max-height: 4.1875rem; }
       .main-charge-box.roaming .main-box-cont .bt {
         border: 1px solid #e5e5e5;
         background: #fff;
@@ -3023,8 +3030,7 @@ body.apphome {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
-  font-size: 1.5625rem;
-  font-weight: 700; }
+  font-size: 1.5625rem; }
   .main-direct-box > .ti span {
     position: relative;
     display: inline-block; }
@@ -3104,8 +3110,7 @@ body.apphome {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
-    font-size: 1.5625rem;
-    font-weight: 700; }
+    font-size: 1.5625rem; }
     .main-direct-box > button .ti span,
     .main-tapp-box > button .ti span {
       position: relative;
