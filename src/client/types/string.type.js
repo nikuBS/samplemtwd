@@ -1082,8 +1082,8 @@ Tw.MYT_DATA_TING = {
   A81_BTN_CONFIRM: '차단하기',
   SUCCESS_BLOCK: '팅 요금 선물 차단 완료 되었습니다.',
   ERROR_LIMIT: {
-    TITLE: '데이터한도요금충전 서비스를 이용하실 수 없습니다.',
-    CONTENT: '자세한 사항은 고객센터로 문의해주세요. '
+    TITLE: '데이터 한도 요금 충전 서비스를 이용하실 수 없습니다.',
+    CONTENT: '<br />자세한 사항은 고객센터로 문의해주세요.'
   }
 };
 

@@ -35,7 +35,7 @@ Tw.MyTDataGiftMonthly.prototype = {
     this.$btn_add_contact.on('click', $.proxy(this._showAddUI, this));
     this.$btn_auto_contact.on('click', $.proxy(this._onClickBtnAddr, this));
     this.$btnRequestSendingAuto.on('click', $.proxy(this._getReceiveUserInfo, this));
-    this.$input_auto_gift.on('keyup', $.proxy(this._onKeyUpAutoGiftNumber, this));
+    this.$input_auto_gift.on('keyup blur', $.proxy(this._onKeyUpAutoGiftNumber, this));
     this.$btn_unsubscribe_auto_gift.on('click', $.proxy(this._unSubscribeAutoGift, this));
     this.$wrap_auto_select_list.on('click', 'input', $.proxy(this._onClickDataQty, this));
   },
@@ -181,22 +181,6 @@ Tw.MyTDataGiftMonthly.prototype = {
 
     return true;
   },
-
-  // _validateInputNumber: function () {
-  //   var sPhoneNumber = this.$input_auto_gift.val() ? this.$input_auto_gift.val().replace(/-/g, '') : '';
-  //
-  //   if ( sPhoneNumber.length < 10 ) {
-  //     this._removeErrorComment();
-  //     this.$container.find('.fe-error-phone01').removeClass('blind');
-  //   } else if ( !Tw.FormatHelper.isCellPhone(sPhoneNumber) ) {
-  //     this._removeErrorComment();
-  //     this.$container.find('.fe-error-phone02').removeClass('blind');
-  //   }
-  //
-  //   if ( sPhoneNumber.length === 0 || Tw.FormatHelper.isCellPhone(sPhoneNumber) ) {
-  //     this._removeErrorComment();
-  //   }
-  // },
 
   _validateInputNumber: function () {
     var sPhoneNumber = this.$input_auto_gift.val() ? this.$input_auto_gift.val().replace(/-/g, '') : '';

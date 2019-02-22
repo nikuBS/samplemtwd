@@ -99,6 +99,9 @@
     <script>
       $(document).ready(function () {
         new Tw.CustomerVoice($('.wrap'));
+        setTimeout(function(){
+          $('.popup-page').scrollTop(1);
+        }, 1000)
       });
     </script>
 </body>
