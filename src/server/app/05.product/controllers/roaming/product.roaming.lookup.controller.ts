@@ -18,6 +18,7 @@ class ProductRoamingLookup extends TwViewController {
     if (FormatHelper.isEmpty(prodId)) {
       return this.error.render(res, {
         svcInfo: svcInfo,
+        pageInfo: pageInfo,
         title: PRODUCT_TYPE_NM.CALLPLAN
       });
     }
@@ -27,6 +28,7 @@ class ProductRoamingLookup extends TwViewController {
         if (prodBffInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, {
             svcInfo: svcInfo,
+            pageInfo: pageInfo,
             title: PRODUCT_TYPE_NM.CALLPLAN,
             code: prodBffInfo.code,
             msg: prodBffInfo.msg

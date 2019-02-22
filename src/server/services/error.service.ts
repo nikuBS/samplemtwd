@@ -7,6 +7,7 @@ interface ErrorOptions {
   msg?: any;
   isBackCheck?: boolean;
   svcInfo: any;
+  pageInfo: any;
 }
 
 class ErrorService {
@@ -30,6 +31,7 @@ class ErrorService {
       code: options.code || '',
       msg: this._replaceBreakLines(options.msg) || '',
       svcInfo: options.svcInfo || null,
+      pageInfo: options.pageInfo || null,
       isBackCheck: options.isBackCheck || false
     });
   }

@@ -57,6 +57,7 @@ export default class ProductRoamingFiReservationComplete extends TwViewControlle
       centerImg
     };
 
-    res.render('roaming/product.roaming.fi.reservation-complete.html', { svcInfo : svcInfo , data : data });
+    res.render('roaming/product.roaming.fi.reservation-complete.html',
+      { svcInfo : svcInfo , pageInfo : pageInfo, data : data });
   }
 }
