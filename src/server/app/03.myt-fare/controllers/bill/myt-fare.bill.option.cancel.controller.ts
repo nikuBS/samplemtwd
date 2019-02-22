@@ -24,7 +24,8 @@ class MyTFareBillOptionCancel extends TwViewController {
         this.error.render(res, {
           code: paymentOption.code,
           msg: paymentOption.msg,
-          svcInfo: svcInfo
+          svcInfo: svcInfo,
+          pageInfo: pageInfo
         });
       }
     });

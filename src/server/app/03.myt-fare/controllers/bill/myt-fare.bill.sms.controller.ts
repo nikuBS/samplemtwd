@@ -34,7 +34,8 @@ class MyTFareBillSms extends TwViewController {
         this.error.render(res, {
           code: unpaidList.code,
           msg: unpaidList.msg,
-          svcInfo: svcInfo
+          svcInfo: svcInfo,
+          pageInfo: pageInfo
         });
       }
     });

@@ -30,7 +30,7 @@ class MyTFareBillPoint extends TwViewController {
           });
         } else {
           this.error.render(res, {
-            code: unpaidList.code, msg: unpaidList.msg, svcInfo: svcInfo
+            code: unpaidList.code, msg: unpaidList.msg, svcInfo: svcInfo, pageInfo: pageInfo
           });
         }
       });
