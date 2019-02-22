@@ -99,6 +99,7 @@ Tw.MyTFareBillSetChange.prototype = {
    * @private
    */
   _callBackSearchZip: function (resp) {
+    this._addrArea.find('input[name="dtlAddr"]').trigger('focusin');
     this._setAddrData({
       zip: resp.zip,
       basAddr: resp.main,
@@ -259,7 +260,7 @@ Tw.MyTFareBillSetChange.prototype = {
       this._toggleElement('fe-email-area', this._billType === '2');
     }
 
-    this._setAddrData(this._isChangeInfo ? this._data:'');
+    this._setAddrData(this._data);
     this._setOptions(2); // 옵션 설정
     this._setOptions(1); // 옵션 보이기
   },
@@ -273,13 +274,17 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * 콘텐츠 이용 상세내역 표시
+   * 콘텐츠 이용 상세내역 표시 ( 무선 회선일때만 )
    * "infoInvDtlDispChkYn": 콘텐츠이용료 청구 사용가능 여부 확인 이 N 이면 disable
    * scurMailYn : 이메일 요금안내서 보안여부 N 이면 disable
    * @param isShow
    * @private
    */
   _setOptionsContents: function(isShow) {
+    // 무선 회선일때만
+    if (this._data.lineType !== 'M') {
+      return;
+    }
     var _data = this._data;
     var _infoInvDtlDispYnName = 'infoInvDtlDispYn';
     var isDisabled = _data.infoInvDtlDispChkYn !== 'Y';
@@ -627,10 +632,11 @@ Tw.MyTFareBillSetChange.prototype = {
       if (e.type === 'focusin') {
         // 우편주소 일경우 우편번호, 기본주소, 상세주소 3개 초기화
         if (_validType === 'addr') {
-          this.$container.find('[data-valid-type="addr"]').val('');
+          this.$container.find('[data-valid-type="addr"]').data('isChange', true).val('');
         } else {
           $target.val('');
         }
+        $target.trigger('change');
       }
     }
   },
@@ -683,17 +689,13 @@ Tw.MyTFareBillSetChange.prototype = {
   },
 
   /**
-   * 안내서 변경(정보변경) 요청 : 이메일 포함하는 안내서와 미포함 안내서는 API 주소가 다름
-   * 이메일 미포함 안내서일 경우 요청 API : BFF_05_0027
-   * 이메일 포함 안내서의 요청 API : BFF_05_0199
+   * 안내서 변경(정보변경) 요청
    * @param data
    * @private
    */
   _reqChangeBillType : function (data) {
-    var _apiUrl = ['I', 'K', 'A', '2'].indexOf(data.toBillTypeCd) > -1 ? Tw.API_CMD.BFF_05_0199 : Tw.API_CMD.BFF_05_0027;
-
     Tw.Api
-      .request(_apiUrl, data)
+      .request(Tw.API_CMD.BFF_05_0027, data)
       .done($.proxy(this._onSucessChangeBillType, this))
       .fail($.proxy(this._onFail, this));
   },

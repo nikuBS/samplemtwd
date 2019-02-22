@@ -144,7 +144,6 @@ Tw.ProductMobilePlanComparePlans.prototype = {
 
   _closeComparePop: function () {
     this._isOpen = false;
-    this._popupService.close();
   },
 
   // 요금제 데이타 파싱
