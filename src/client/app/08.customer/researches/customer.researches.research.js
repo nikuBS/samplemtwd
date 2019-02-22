@@ -35,7 +35,7 @@ Tw.CustomerResearch.prototype = {
   _handleSelectAnswer: function(e) {
     var next = e.currentTarget.getAttribute('data-next-question');
     if (e.currentTarget.getAttribute('aria-checked') === 'true') {
-      if (next) {
+      if (next !== undefined) {
         this._nextIdx = Number(next) - 1;
       }
     } else {
@@ -44,8 +44,13 @@ Tw.CustomerResearch.prototype = {
   },
 
   _goNext: function(e) {
-    var next = this._nextIdx || this._currentIdx + 1,
-      $next = this.$questions[next];
+    var next = this._currentIdx + 1;
+
+    if (this._nextIdx !== undefined) {
+      next = this._nextIdx;
+    }
+
+    var $next = this.$questions[next];
 
     e.currentTarget.setAttribute('data-next-question', next);
     this.$questions[this._currentIdx].addClass('none');
