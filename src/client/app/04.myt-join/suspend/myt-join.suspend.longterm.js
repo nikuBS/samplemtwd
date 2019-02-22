@@ -292,14 +292,12 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
   },
 
   _requestSuspend: function () {
-    Tw.CommonHelper.startLoading('.container');
     this._apiService.request(Tw.API_CMD.BFF_05_0197, this._suspendOptions)
       .done($.proxy(this._onSuccessRequest, this))
       .fail($.proxy(this._onError, this));
   },
 
   _onSuccessRequest: function (res) {
-    Tw.CommonHelper.endLoading('.container');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._suspendOptions.command = 'longterm';
       this._suspendOptions.svcNum = this._svcInfo.svcNum;

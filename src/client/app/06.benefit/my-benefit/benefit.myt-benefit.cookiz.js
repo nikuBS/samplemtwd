@@ -42,7 +42,6 @@ Tw.BenefitMyBenefitCookiz.prototype = {
    * @private
    */
   _requestPoints: function () {
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService
       .request(Tw.API_CMD.BFF_05_0122, { page: this._page++, size: this.NUM_OF_ITEMS })
       .done($.proxy(this._onReceivedData, this))
@@ -62,7 +61,6 @@ Tw.BenefitMyBenefitCookiz.prototype = {
    * @private
    */
   _onReceivedData: function (resp) {
-    Tw.CommonHelper.endLoading('.container');
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._totalCount = parseInt(resp.result.totRecCnt, 10);
       if ( resp.result.length < 1 ) {
