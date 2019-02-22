@@ -831,7 +831,9 @@
             box-sizing: border-box;
     padding: 1.25rem 0 0.9375rem; }
     .main-fee-box .fee-cont > .fee-info .target {
-      float: left; }
+      float: left;
+      display: block;
+      font-size: 0.875rem; }
       .main-fee-box .fee-cont > .fee-info .target .tit {
         display: block;
         color: #000;
@@ -3725,3 +3727,25 @@ body.apphome {
 
 .menu-guide-img img {
   width: 100%; }
+
+.toast-popup .toast-layer {
+  position: fixed;
+  z-index: 1000;
+  left: 1rem;
+  right: 1rem;
+  bottom: -100%;
+  /*min-height:rem(88px);*/
+  padding: 0.8125rem 0;
+  border-radius: 0.25rem;
+  background-color: rgba(16, 20, 31, 0.87);
+  /*10141F*/
+  -webkit-transition: bottom .8s;
+  transition: bottom .8s; }
+  .toast-popup .toast-layer .toast-txt {
+    max-width: 16.25rem;
+    margin: 0 auto;
+    font-size: 0.875rem;
+    color: #fff;
+    text-align: center; }
+  .toast-popup .toast-layer.on {
+    bottom: 1.5rem; }

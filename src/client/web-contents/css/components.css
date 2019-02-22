@@ -1728,9 +1728,9 @@
   padding: 0 1rem; }
   .list-comp-lineinfo li {
     overflow: hidden;
-    border-bottom: 1px solid #e1e1e1; }
-    .list-comp-lineinfo li:last-of-type {
-      border-bottom: 0; }
+    border-top: 1px solid #e1e1e1; }
+    .list-comp-lineinfo li:first-child {
+      border-top: 0; }
     .list-comp-lineinfo li button {
       display: block;
       width: 100%;
@@ -2258,6 +2258,7 @@
   background: url(/img/svg/graphic_badge_plan_my.svg) no-repeat 0 0;
   background-size: 100% 100%; }
   .icon-badge-plan-my.use {
+    margin-right: 0.5rem !important;
     background: url(/img/svg/badge_plan_my.svg) no-repeat 0 0;
     background-size: 100% 100%; }
 
@@ -28767,38 +28768,8 @@ body.apphome {
   font-size: 0.875rem;
   line-height: 1.125rem;
   border: 1px solid #e3e4e6;
-  padding: 0.8125rem 0 0 1rem; }
-  .travel-info .info-link-box .info-link-inner .tit {
-    position: absolute;
-    left: 16px;
-    top: 15px;
-    z-index: 3; }
-  .travel-info .info-link-box .info-link-inner:after {
-    content: '';
-    display: inline-block;
-    width: 5rem;
-    height: 5rem;
-    position: absolute;
-    right: 0;
-    bottom: 0; }
-  .travel-info .info-link-box .info-link-inner.icon1:after {
-    background: url(/img/product/icon-travel-info01.png) no-repeat;
-    background-size: 5rem 5rem; }
-  .travel-info .info-link-box .info-link-inner.icon2:after {
-    background: url(/img/product/icon-travel-info02.png) no-repeat;
-    background-size: 5rem 5rem; }
-  .travel-info .info-link-box .info-link-inner.icon3:after {
-    background: url(/img/product/icon-travel-info03.png) no-repeat;
-    background-size: 5rem 5rem; }
-  .travel-info .info-link-box .info-link-inner.icon4:after {
-    background: url(/img/product/icon-travel-info04.png) no-repeat;
-    background-size: 5rem 5rem; }
-  .travel-info .info-link-box .info-link-inner.icon5:after {
-    background: url(/img/product/icon-travel-info05.png) no-repeat;
-    background-size: 5rem 5rem; }
-  .travel-info .info-link-box .info-link-inner.icon6:after {
-    background: url(/img/product/icon-travel-info06.png) no-repeat;
-    background-size: 5rem 5rem; }
+  padding: 0;
+  text-align: center; }
 
 .travel-info .wrap-gaps-top h2 {
   font-size: 1rem; }

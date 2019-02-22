@@ -335,7 +335,14 @@ body.bg-gray {
             #common-menu .section-cont .section-gnb .bt-depth1 > .bt .ti-info .info {
               margin-left: 0.4375rem;
               color: #f76252;
-              font-size: 0.9375rem; }
+              font-size: 0.9375rem;
+              display: inline-block;
+              position: relative;
+              top: 4px;
+              max-width: 86px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap; }
             #common-menu .section-cont .section-gnb .bt-depth1 > .bt .ti-info .tx {
               display: block;
               margin-top: 0.4375rem;
