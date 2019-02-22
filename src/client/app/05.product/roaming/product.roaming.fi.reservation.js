@@ -69,7 +69,9 @@ Tw.ProductRoamingFiReservation.prototype = {
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A85.TITLE);
     }
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0060, {keyword : ''}).done($.proxy(this._handleSuccessSearchCountry, this));
+    this._apiService.request(Tw.API_CMD.BFF_10_0060, {keyword : ''})
+      .done($.proxy(this._handleSuccessSearchCountry, this))
+      .fail($.proxy(this._onFail, this));
   },
 
   _handleSuccessSearchCountry: function(res){
@@ -131,7 +133,9 @@ Tw.ProductRoamingFiReservation.prototype = {
       'type': 'I'
     };
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0065, params).done($.proxy(this._handleSuccessFiReservation, this));
+    this._apiService.request(Tw.API_CMD.BFF_10_0065, params)
+      .done($.proxy(this._handleSuccessFiReservation, this))
+      .fail($.proxy(this._onFail, this));
   },
 
   _handleSuccessFiReservation: function(res){

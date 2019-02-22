@@ -34,12 +34,13 @@ Tw.ProductRoamingCoupon.prototype = {
   _getBPCP: function(url) {
     var replaceUrl = url.replace('BPCP:', '');
     this._apiService.request(Tw.API_CMD.BFF_01_0039, { bpcpServiceId: replaceUrl })
-      .done($.proxy(this._responseBPCP, this));
+      .done($.proxy(this._responseBPCP, this))
+      .fail($.proxy(this._onFail, this));
   },
 
   _responseBPCP: function(resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
-      return Tw.Error(resp.code, resp.msg).pop();
+      this._onFail(resp);
     }
 
     var url = resp.result.svcUrl;
@@ -49,4 +50,8 @@ Tw.ProductRoamingCoupon.prototype = {
 
     Tw.CommonHelper.openUrlInApp(url, null, Tw.ROAMING_BPCP[this._title]);
   },
+
+  _onFail: function(err) {
+    Tw.Error(err.code,err.msg).pop();
+  }
 };
