@@ -21,7 +21,7 @@ class CommonSearchMore extends TwViewController {
     const step = req.header('referer') ? req.query.step ? req.query.step : 1 : 1;
     const pageNum = req.query.page || 1;
     const sort = req.query.arrange || 'R';
-    let requestObj, researchCd, researchQuery;
+    let requestObj, researchCd, researchQuery, searchApi;
     if (FormatHelper.isEmpty(req.query.in_keyword)) {
       requestObj = { query , collection , pageNum , sort };
     } else {
@@ -37,9 +37,20 @@ class CommonSearchMore extends TwViewController {
       });
     }
 
+    if (BrowserHelper.isApp(req)) {
+      searchApi = API_CMD.SEARCH_APP;
+      if ( BrowserHelper.isIos(req) ) {
+        requestObj.device = 'I';
+      } else {
+        requestObj.device = 'A';
+      }
+    } else {
+      searchApi = API_CMD.SEARCH_WEB;
+    }
+
 
     Observable.combineLatest(
-      this.apiService.request( BrowserHelper.isApp(req) ? API_CMD.SEARCH_APP : API_CMD.SEARCH_WEB, requestObj, {}),
+      this.apiService.request( searchApi, requestObj, {}),
       this.apiService.request(API_CMD.RELATED_KEYWORD, requestObj, {})
     ).subscribe(([ searchResult, relatedKeyword ]) => {
       if (searchResult.code !== 0 || relatedKeyword.code !== 0) {

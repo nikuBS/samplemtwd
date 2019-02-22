@@ -167,10 +167,10 @@
 
 <script type="text/x-handlebars-template" id="app_template">
     <li>
-        <a class="app-element list-data" href="/product/apps/app?appId={{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="app" data-tit="{{removeTag listData.PROD_NM}}">
+        <button class="app-element list-data" href="/product/apps/app?appId={{listData.PRID}}" data-id="{{listData.DOCID}}" data-category="app" data-tit="{{removeTag listData.PROD_NM}}">
             <div class="app-img"><img src="{{CDN}}{{listData.IMG}}" alt="{{removeTag listData.PROD_NM}}"></div>
             <span class="txt">{{{listData.PROD_NM}}}</span>
-        </a>
+        </button>
     </li>
 </script>
 
