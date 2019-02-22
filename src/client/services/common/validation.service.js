@@ -2,7 +2,6 @@ Tw.ValidationService = function (rootEl, submitBtn, change) {
   this.$container = rootEl;
   this.$submitBtn = submitBtn;
   this.$disabled = true;
-  this.$expirationTarget = this.$container.find('.fe-card-m');
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
