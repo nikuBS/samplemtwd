@@ -93,8 +93,8 @@ class MyTJoinSubmainController extends TwViewController {
             title: MYT_JOIN_SUBMAIN_TITLE.MAIN,
             code: myhs.info.code,
             msg: myhs.info.msg,
-            svcInfo: data.svcInfo,
-            pageInfo
+            pageInfo: pageInfo,
+            svcInfo: data.svcInfo
           });
           return false;
         }
@@ -104,8 +104,8 @@ class MyTJoinSubmainController extends TwViewController {
             title: MYT_JOIN_SUBMAIN_TITLE.MAIN,
             code: myif.info.code,
             msg: myif.info.msg,
-            svcInfo: data.svcInfo,
-            pageInfo
+            pageInfo: pageInfo,
+            svcInfo: data.svcInfo
           });
           return false;
         }

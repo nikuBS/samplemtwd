@@ -96,6 +96,7 @@ class MyTFareSubmainController extends TwViewController {
             title: MYT_FARE_SUBMAIN_TITLE.MAIN,
             code: resp.code,
             msg: resp.msg,
+            pageInfo: data.pageInfo,
             svcInfo: data.svcInfo
           });
         }
@@ -197,6 +198,7 @@ class MyTFareSubmainController extends TwViewController {
           title: MYT_FARE_SUBMAIN_TITLE.MAIN,
           code: usage.info.code,
           msg: usage.info.msg,
+          pageInfo: data.pageInfo,
           svcInfo: data.svcInfo
         });
       } else {

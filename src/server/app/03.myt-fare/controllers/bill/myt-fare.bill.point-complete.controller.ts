@@ -35,7 +35,8 @@ class MyTFareBillPointComplete extends TwViewController {
       isRight: title === 'rainbow' && type === '',
       centerName: MYT_FARE_COMPLETE_MSG.HISTORY,
       centerUrl: '/myt-fare/info/history',
-      confirmUrl: '/myt-fare/submain'
+      confirmUrl: '/myt-fare/submain',
+      pageInfo
     });
   }
 

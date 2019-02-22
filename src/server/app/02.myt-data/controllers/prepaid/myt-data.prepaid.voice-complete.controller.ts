@@ -19,7 +19,7 @@ class MyTDataPrepaidVoiceComplete extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const queryObject: any = ParamsHelper.getQueryParams(req.url);
     const response = Object.assign(
-      {},
+      { pageInfo },
       queryObject,
       this.makeResponseParams(queryObject),
       {

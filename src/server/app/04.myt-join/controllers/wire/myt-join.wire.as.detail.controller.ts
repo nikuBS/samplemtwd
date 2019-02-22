@@ -34,6 +34,7 @@ class MyTJoinWireASDetail extends TwViewController {
     if ( !troubleNum ) {
       this.error.render(res, {
         title: MYT_JOIN_WIRE.AS_DETAIL.TITLE,
+        pageInfo: pageInfo,
         svcInfo: svcInfo
       });
       return;
@@ -76,6 +77,7 @@ class MyTJoinWireASDetail extends TwViewController {
             title: MYT_JOIN_WIRE.AS_DETAIL.TITLE,
             code: resp.code,
             msg: resp.msg,
+            pageInfo: pageInfo,
             svcInfo: svcInfo
           });
         }
@@ -84,6 +86,7 @@ class MyTJoinWireASDetail extends TwViewController {
           title: MYT_JOIN_WIRE.AS_DETAIL.TITLE,
           code: resp.code,
           msg: resp.msg,
+          pageInfo: pageInfo,
           svcInfo: svcInfo
         });
       });

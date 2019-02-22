@@ -73,6 +73,7 @@ class MytJoinInfoDiscount extends TwViewController {
         title: 'title',
         code: err.code,
         msg: err.msg,
+        pageInfo: pageInfo,
         svcInfo: svcInfo
       });
     });

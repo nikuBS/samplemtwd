@@ -102,8 +102,8 @@ class MyTJoinWireSetPause extends TwViewController {
       title: MYT_JOIN_WIRE_SET_PAUSE.TITLE,
       code: err.code,
       msg: err.msg,
-      svcInfo,
-      pageInfo
+      pageInfo,
+      svcInfo
     });
   }
 

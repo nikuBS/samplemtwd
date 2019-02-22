@@ -17,7 +17,7 @@ class MyTDataPrepaidDataComplete extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const queryObject = ParamsHelper.getQueryParams(req.url);
-    res.render('prepaid/myt-data.prepaid.data-complete.html', this._getData(queryObject));
+    res.render('prepaid/myt-data.prepaid.data-complete.html', Object.assign(this._getData(queryObject), { pageInfo }));
   }
 
   private _getData(queryObject: any): any {

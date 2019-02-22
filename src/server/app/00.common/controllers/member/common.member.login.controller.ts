@@ -14,7 +14,7 @@ class CommonMemberLogin extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const target = req.query.target || '/main/home';
-    res.render('member/error.login-block.html', { target, svcInfo });
+    res.render('member/error.login-block.html', { target, svcInfo, pageInfo });
   }
 }
 

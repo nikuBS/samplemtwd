@@ -266,6 +266,7 @@ class MyTJoinWire extends TwViewController {
           title: MYT_JOIN_WIRE.TITLE,
           code: resp.code,
           msg: resp.msg,
+          pageInfo: pageInfo,
           svcInfo: svcInfo
         });
       });

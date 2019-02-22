@@ -17,7 +17,7 @@ class MyTFareBillPayComplete extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const queryObject = ParamsHelper.getQueryParams(req.url);
-    res.render('bill/myt-fare.bill.pay-complete.html', this._getData(queryObject));
+    res.render('bill/myt-fare.bill.pay-complete.html', Object.assign(this._getData(queryObject), { pageInfo }));
   }
 
   private _getData(queryObject: any): any {

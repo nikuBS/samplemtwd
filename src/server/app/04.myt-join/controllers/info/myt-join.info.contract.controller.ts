@@ -66,8 +66,8 @@ class MyTJoinInfoContract extends TwViewController {
     this.error.render(res, {
       code: data.code,
       msg: data.msg,
-      svcInfo: svcInfo,
-      pageInfo: pageInfo
+      pageInfo: pageInfo,
+      svcInfo: svcInfo
     });
   }
 }

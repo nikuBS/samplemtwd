@@ -29,7 +29,7 @@ export default class MembershipSubmain extends TwViewController {
         };
 
         if ( error.code ) {
-          return this.error.render(res, { ...error, svcInfo, pageInfo });
+          return this.error.render(res, { ...error, pageInfo, svcInfo });
         }
 
         this.logger.info(this, 'membershipCheckData1 : ', membershipCheckData);

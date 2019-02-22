@@ -47,6 +47,7 @@ class MembershipJoinController extends TwViewController {
           title: CUSTOMER_NOTICE_CATEGORY.MEMBERSHIP,
           code: createInfo.code,
           msg: createInfo.msg,
+          pageInfo: pageInfo,
           svcInfo: svcInfo
         });
       }

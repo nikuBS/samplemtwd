@@ -28,14 +28,14 @@ class MyTFareBillContentsAuto extends TwViewController {
           this.error.render(res, {
             code: resp.code,
             msg: resp.msg,
-            svcInfo: svcInfo,
-            pageInfo: pageInfo
+            pageInfo: pageInfo,
+            svcInfo: svcInfo
           });
         }
       });
     } else {
       res.render('share/common.share.app-install.info.html', {
-        svcInfo: svcInfo, isAndroid: BrowserHelper.isAndroid(req)
+        svcInfo: svcInfo, pageInfo: pageInfo, isAndroid: BrowserHelper.isAndroid(req)
       });
     }
   }

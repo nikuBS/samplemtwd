@@ -17,7 +17,8 @@ class MyTJoinWireSetPauseComplete extends TwViewController {
     const svcStCd = req.query.svcStCd;
 
     res.render('wire/myt-join.wire.set.pause-complete.html', {
-      completeTxt: MYT_JOIN_WIRE_SET_PAUSE[svcStCd]
+      completeTxt: MYT_JOIN_WIRE_SET_PAUSE[svcStCd],
+      pageInfo
     });
   }
 

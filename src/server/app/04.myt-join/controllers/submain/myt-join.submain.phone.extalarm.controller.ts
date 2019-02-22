@@ -57,6 +57,7 @@ class MyTJoinPhoneNumChgAlarmExt extends TwViewController {
             title: '번호변경 안내 서비스',
             code: resp.code,
             msg: resp.msg,
+            pageInfo: pageInfo,
             svcInfo: svcInfo
           });
         }
@@ -65,6 +66,7 @@ class MyTJoinPhoneNumChgAlarmExt extends TwViewController {
           title: '번호변경 안내 서비스',
           code: resp.code,
           msg: resp.msg,
+          pageInfo: pageInfo,
           svcInfo: svcInfo
         });
       });

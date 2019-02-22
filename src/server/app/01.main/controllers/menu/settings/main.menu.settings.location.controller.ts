@@ -14,7 +14,7 @@ export default class MainMenuSettingsLocation extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
          allSvc: any, childInfo: any, pageInfo: any) {
-    this.isLocationTermAgreed(res, svcInfo).subscribe(
+    this.isLocationTermAgreed(res, svcInfo, pageInfo).subscribe(
       (isAgree) => {
         if (!FormatHelper.isEmpty(isAgree)) {
           res.render('menu/settings/main.menu.settings.location.html', {
@@ -22,11 +22,11 @@ export default class MainMenuSettingsLocation extends TwViewController {
           });
         }
       },
-      (err) => this.showError(res, svcInfo, err.code, err.msg)
+      (err) => this.showError(res, svcInfo, pageInfo, err.code, err.msg)
     );
   }
 
-  private isLocationTermAgreed(res: Response, svcInfo: any): Observable<any> {
+  private isLocationTermAgreed(res: Response, svcInfo: any, pageInfo: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_03_0021, {}).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         if (resp.result.twdLocUseAgreeYn === 'Y') {
@@ -35,15 +35,16 @@ export default class MainMenuSettingsLocation extends TwViewController {
           return false;
         }
       }
-      this.showError(res, svcInfo, resp.code, resp.msg);
+      this.showError(res, svcInfo, pageInfo, resp.code, resp.msg);
       return null;
     });
   }
 
-  private showError(res: Response, svcInfo: any, code: string, msg: string) {
+  private showError(res: Response, svcInfo: any, pageInfo: any, code: string, msg: string) {
     this.error.render(res, {
       code: code,
       msg: msg,
+      pageInfo: pageInfo,
       svcInfo: svcInfo
     });
   }

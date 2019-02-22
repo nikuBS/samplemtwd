@@ -14,7 +14,7 @@ class CommonMemberSloginAos extends TwViewController {
   }
 
   render(req: Request, res:
-    Response, next: NextFunction, svcInfo: any) {
+    Response, next: NextFunction, svcInfo: any, pageInfo: any) {
     const query = req.query;
     if ( FormatHelper.isEmpty(query) ) {
       res.redirect('/common/member/slogin/fail');
@@ -24,7 +24,7 @@ class CommonMemberSloginAos extends TwViewController {
       show: FormatHelper.conTelFormatWithDash(query.mdn)
     };
 
-    res.render('member/common.member.slogin.aos.html', { svcInfo, mdn });
+    res.render('member/common.member.slogin.aos.html', { svcInfo, pageInfo, mdn });
   }
 }
 

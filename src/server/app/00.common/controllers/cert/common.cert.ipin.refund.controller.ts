@@ -15,7 +15,7 @@ class CommonCertIpinRefund extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
     const authKind = req.query.authKind;
     const params = {
       resultUrl: this.loginService.getProtocol() + this.loginService.getDns() + '/common/cert/result?type=ipin&kind=' + authKind,
@@ -23,7 +23,7 @@ class CommonCertIpinRefund extends TwViewController {
     };
     this.apiService.request(API_CMD.BFF_01_0047, params).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        res.render('cert/common.cert.ipin.html', { data: resp.result });
+        res.render('cert/common.cert.ipin.html', { data: resp.result, pageInfo });
       }
     });
   }

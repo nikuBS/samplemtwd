@@ -12,8 +12,8 @@ class CommonMemberLoginCustPwdFail extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
-    res.render('member/common.member.login.cust-pwdfail.html', { svcInfo: svcInfo });
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+    res.render('member/common.member.login.cust-pwdfail.html', { svcInfo: svcInfo, pageInfo: pageInfo });
   }
 }
 

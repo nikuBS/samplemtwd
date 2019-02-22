@@ -19,7 +19,8 @@ class CustomerFaqView extends TwViewController {
 
     if (FormatHelper.isEmpty(ifaqId) || FormatHelper.isEmpty(category)) {
       return this.error.render(res, {
-        svcInfo: svcInfo,
+        pageInfo: pageInfo,
+        svcInfo: svcInfo
       });
     }
 
@@ -28,6 +29,7 @@ class CustomerFaqView extends TwViewController {
     .subscribe(( faqInfo ) => {
       if ( faqInfo.code !== API_CODE.CODE_00 ) {
         return this.error.render(res, {
+          pageInfo: pageInfo,
           svcInfo: svcInfo,
           code: faqInfo.code,
           msg: faqInfo.msg

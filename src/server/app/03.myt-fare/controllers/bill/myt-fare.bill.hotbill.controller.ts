@@ -62,8 +62,8 @@ class MyTFareBillHotbill extends TwViewController {
             return this.error.render(res, {
               title: MYT_FARE_HOTBILL_TITLE.MAIN,
               msg: err.message,
-              svcInfo: svcInfo,
-              pageInfo: pageInfo
+              pageInfo: pageInfo,
+              svcInfo: svcInfo
             });
           },
           () => {

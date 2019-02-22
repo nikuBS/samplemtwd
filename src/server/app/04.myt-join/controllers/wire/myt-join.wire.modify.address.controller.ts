@@ -77,6 +77,7 @@ class MyTJoinWireModifyAddress extends TwViewController {
         title: MYT_JOIN_WIRE.MODIFY_ADDRESS.TITLE,
         code: err.code,
         msg: err.msg,
+        pageInfo: pageInfo,
         svcInfo: svcInfo
       });
     });

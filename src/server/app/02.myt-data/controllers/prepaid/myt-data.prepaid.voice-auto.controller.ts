@@ -24,7 +24,7 @@ class MyTDataPrepaidVoiceAuto extends TwViewController {
       this.renderPrepaidVoiceAuto(req, res, next, svcInfo, pageInfo);
     } else {
       res.render('share/common.share.app-install.info.html', {
-        svcInfo: svcInfo, isAndroid: BrowserHelper.isAndroid(req)
+        svcInfo: svcInfo, pageInfo, isAndroid: BrowserHelper.isAndroid(req)
       });
     }
 
@@ -50,6 +50,7 @@ class MyTDataPrepaidVoiceAuto extends TwViewController {
       this.error.render(res, {
         code: PPSInfo.code,
         msg: PPSInfo.msg,
+        pageInfo: pageInfo,
         svcInfo: svcInfo
       });
     }

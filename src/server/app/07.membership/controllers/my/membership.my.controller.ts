@@ -28,7 +28,7 @@ export default class MembershipMy extends TwViewController {
       };
 
       if ( error.code ) {
-        return this.error.render(res, { ...error, svcInfo, pageInfo });
+        return this.error.render(res, { ...error, pageInfo, svcInfo });
       }
 
       res.render('my/membership.my.html', {

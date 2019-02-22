@@ -12,9 +12,9 @@ class CommonMemberLoginCustPwd extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
     const target = req.query.target || '/main/home';
-    res.render('member/common.member.login.cust-pwd.html', { svcInfo: svcInfo, target: target });
+    res.render('member/common.member.login.cust-pwd.html', { svcInfo: svcInfo, target: target, pageInfo: pageInfo });
   }
 }
 

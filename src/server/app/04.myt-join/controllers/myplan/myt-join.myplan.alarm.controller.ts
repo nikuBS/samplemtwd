@@ -17,6 +17,7 @@ class MyTJoinMyplanAlarm extends TwViewController {
     if (['M1', 'M2'].indexOf(svcInfo.svcAttrCd) === -1) {
       return this.error.render(res, {
         title: '요금제 변경 가능일 알람',
+        pageInfo: pageInfo,
         svcInfo: svcInfo
       });
     }
@@ -25,6 +26,7 @@ class MyTJoinMyplanAlarm extends TwViewController {
       .subscribe((alarmInfo) => {
         if (alarmInfo.code !== API_CODE.CODE_00) {
           return this.error.render(res, {
+            pageInfo: pageInfo,
             svcInfo: svcInfo,
             code: alarmInfo.code,
             msg: alarmInfo.msg,

@@ -31,6 +31,7 @@ export default class MembershipMyCancel extends TwViewController {
 
       res.render('my/membership.my.cancel.html', {
         myCardData: myCardData,
+        pageInfo: pageInfo,
         svcInfo: svcInfo
       });
     });

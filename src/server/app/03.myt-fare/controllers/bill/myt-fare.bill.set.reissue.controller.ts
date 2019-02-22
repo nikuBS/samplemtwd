@@ -134,8 +134,8 @@ class MyTFareBillSetReissue extends TwViewController {
       title: MYT_FARE_BILL_REISSUE.TITLE,
       code: err.code,
       msg: err.msg,
-      svcInfo,
-      pageInfo
+      pageInfo,
+      svcInfo
     });
   }
 

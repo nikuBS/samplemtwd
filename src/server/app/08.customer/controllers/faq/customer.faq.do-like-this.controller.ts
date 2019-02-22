@@ -15,7 +15,7 @@ class CustomerFaqDoLikeThis extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any,
          childInfo: any, pageInfo: any) {
     const id = req.query.id;
-    this.getContent(res, svcInfo, id).subscribe(
+    this.getContent(res, svcInfo, pageInfo, id).subscribe(
       (content) => {
         if (!FormatHelper.isEmpty(content)) {
           res.render('faq/customer.faq.do-like-this.html', {
@@ -27,13 +27,14 @@ class CustomerFaqDoLikeThis extends TwViewController {
         this.error.render(res, {
           code: err.code,
           msg: err.msg,
+          pageInfo,
           svcInfo
         });
       }
     );
   }
 
-  private getContent(res: Response, svcInfo: any, id: string): Observable<any> {
+  private getContent(res: Response, svcInfo: any, pageInfo: any, id: string): Observable<any> {
     // return this.apiService.request(API_CMD.BFF_08_0053, { mtwdBltn1CntsId: id }).map((resp) => {
     return this.apiService.request(API_CMD.BFF_08_0064, {}, null, [id]).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
@@ -120,6 +121,7 @@ class CustomerFaqDoLikeThis extends TwViewController {
       this.error.render(res, {
         code: resp.code,
         msg: resp.msg,
+        pageInfo,
         svcInfo
       });
 
