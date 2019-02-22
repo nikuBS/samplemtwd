@@ -25,8 +25,8 @@
             <div class="home-tab">
                 <div class="home-tab-belt">
                     <ul>
-                        <li class="tab"><div><button class="icon-home-tab-my"><span class="blind">my</span></button><span class="bar"></span></div></li>
-                        <li class="tab"><div><button class="icon-home-tab-store"><span class="blind">store</span></button><span class="bar"></span></div></li>
+                        <li class="tab"><div><a href="#" class="icon-home-tab-my fe-replace-history"><span class="blind">my</span></a><span class="bar"></span></div></li>
+                        <li class="tab"><div><a href="#store" class="icon-home-tab-store fe-replace-history"><span class="blind">store</span></a><span class="bar"></span></div></li>
                     </ul>
                 </div>
             </div>
@@ -1098,21 +1098,6 @@
 <%- include('../components/home/home.welcome.component.html', { svcInfo: svcInfo }); %>
 <% } %>
 <%- include('../components/home/home.quick-menu.component.html', { cdn: CDN }); %>
-<% if (svcInfo === null) { %>
-<script>
-  setTimeout(function () {
-    skt_landing.action.home_slider({ initialSlide: 1 });
-    skt_landing.action.notice_slider();
-  }, 40);
-</script>
-<% } else { %>
-<script>
-  setTimeout(function () {
-    skt_landing.action.home_slider({ initialSlide: 0 });
-    skt_landing.action.notice_slider();
-  }, 40);
-</script>
-<% } %>
 <script>
   $(document).ready(function () {
     new Tw.MainHome($('#mainHome'), '<%-JSON.stringify(redisData.smartCard) %>', '<%= redisData.embNotice !== null %>', '<%= pageInfo.menuId %>', '<%= svcInfo !== null %>');

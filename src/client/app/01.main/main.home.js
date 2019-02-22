@@ -24,6 +24,18 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
 
   this._lineComponent = new Tw.LineComponent();
 
+  if ( location.hash === '#store' ) {
+    setTimeout(function () {
+      skt_landing.action.home_slider({ initialSlide: 1 });
+      skt_landing.action.notice_slider();
+    }, 40);
+  } else {
+    setTimeout(function () {
+      skt_landing.action.home_slider({ initialSlide: 0 });
+      skt_landing.action.notice_slider();
+    }, 40);
+  }
+
   this._initEmrNotice(emrNotice, isLogin === 'true');
 
   this._setBanner();

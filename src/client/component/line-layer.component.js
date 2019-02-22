@@ -33,14 +33,25 @@ Tw.LineLayerComponent.prototype = {
     this._apiService.request(Tw.NODE_CMD.UPDATE_NOTICE_TYPE, {})
       .done($.proxy(this._successUpdateNoticeType, this));
   },
-  _successUpdateNoticeType: function(resp) {
+  _successUpdateNoticeType: function (resp) {
     Tw.CommonHelper.setCookie(Tw.COOKIE_KEY.LAYER_CHECK, '');
   },
   _openLineResisterPopup: function (layerType) {
-    var lineRegisterLayer = new Tw.LineRegisterComponent();
-    setTimeout($.proxy(function () {
-      lineRegisterLayer.openRegisterLinePopup(layerType);
-    }, this), 2000);
+    this._apiService.request(Tw.API_CMD.BFF_03_0029, {
+      svcCtg: Tw.LINE_NAME.ALL,
+      pageSize: Tw.DEFAULT_LIST_COUNT,
+      pageNo: 1
+    }).done($.proxy(this._successExposableLine, this, layerType));
+
+    // var lineRegisterLayer = new Tw.LineRegisterComponent();
+    // setTimeout($.proxy(function () {
+    //   lineRegisterLayer.openRegisterLinePopup(layerType);
+    // }, this), 2000);
+  },
+  _successExposableLine: function (layerType, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 && resp.result.totalCnt > 0 ) {
+      this._historyService.goLoad('/common/member/line/register?type=' + layerType);
+    }
   },
   _openPasswordGuide: function () {
     setTimeout($.proxy(function () {
