@@ -37,7 +37,7 @@ class MyTJoinInfoDiscountMonth extends TwViewController {
       ]);
 
       if ( !FormatHelper.isEmpty(apiError) ) {
-        return this.renderErr(res, apiError, svcInfo);
+        return this.renderErr(res, apiError, svcInfo, pageInfo);
       }
 
       const data = this.getFormattedData(discountInfosMonth);
@@ -50,7 +50,7 @@ class MyTJoinInfoDiscountMonth extends TwViewController {
         pageInfo
       });
     }, (resp) => {
-      return this.renderErr(res, resp, svcInfo);
+      return this.renderErr(res, resp, svcInfo, pageInfo);
     });
   }
 
@@ -81,12 +81,13 @@ class MyTJoinInfoDiscountMonth extends TwViewController {
     return data;
   }
 
-  private renderErr(res, err, svcInfo): any {
+  private renderErr(res, err, svcInfo, pageInfo): any {
     return this.error.render(res, {
       title: MYT_INFO_DISCOUNT_MONTH.TITLE,
       code: err.code,
       msg: err.msg,
-      svcInfo
+      svcInfo,
+      pageInfo
     });
   }
 

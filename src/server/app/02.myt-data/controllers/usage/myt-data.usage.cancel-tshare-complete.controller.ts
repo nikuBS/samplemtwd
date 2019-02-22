@@ -21,7 +21,8 @@ class MyTDataUsageCancelTshareComplete extends TwViewController {
       const option = {
         title: MYT_DATA_USAGE_CANCEL_TSHARE.TITLE,
         msg: '',
-        svcInfo
+        svcInfo,
+        pageInfo
       };
       return this.error.render(res, option);
     }

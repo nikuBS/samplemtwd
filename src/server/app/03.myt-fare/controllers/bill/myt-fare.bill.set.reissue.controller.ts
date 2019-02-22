@@ -50,14 +50,14 @@ class MyTFareBillSetReissue extends TwViewController {
       ]);
 
       if ( !FormatHelper.isEmpty(apiError) ) {
-        return this.renderErr(res, apiError, svcInfo);
+        return this.renderErr(res, apiError, svcInfo, pageInfo);
       }
 
       // 화면 데이터 설정
       const data = this.convertData(reissueData, svcInfo, pageInfo);
       res.render('bill/myt-fare.bill.set.reissue.html', { data });
     }, (resp) => {
-      return this.renderErr(res, resp, svcInfo);
+      return this.renderErr(res, resp, svcInfo, pageInfo);
     });
   }
 
@@ -129,12 +129,13 @@ class MyTFareBillSetReissue extends TwViewController {
     return result;
   }
 
-  private renderErr(res, err, svcInfo): any {
+  private renderErr(res, err, svcInfo, pageInfo): any {
     return this.error.render(res, {
       title: MYT_FARE_BILL_REISSUE.TITLE,
       code: err.code,
       msg: err.msg,
-      svcInfo
+      svcInfo,
+      pageInfo
     });
   }
 
