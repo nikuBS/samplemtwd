@@ -852,6 +852,11 @@ Tw.ALERT_MSG_CUSTOMER = {
   ALERT_RESEARCHES_A02: '설문에 참여해 주셔서 감사합니다.'
 };
 
+Tw.CUSTOMER_RESEARCHES_BUTTONS = {
+  NEXT: '다음으로',
+  SUBMIT: '참여하기'
+};
+
 Tw.ALERT_MSG_TEVENT = {};
 
 Tw.ALERT_MSG_AUTH = {

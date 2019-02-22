@@ -16,12 +16,11 @@ Tw.CustomerResearch.prototype = {
   },
 
   _bindEvent: function() {
-    this.$container.on('click', '.select-list > li', $.proxy(this._handleSelectAnswer, this));
+    this.$container.on('change', 'li input', $.proxy(this._handleSelectAnswer, this));
     this.$container.on('click', '.fe-go-next', $.proxy(this._goNext, this));
     this.$container.on('click', '.fe-go-prev', $.proxy(this._goPrev, this));
-    this.$container.on('change', 'ul.select-list input', $.proxy(this._setAvailableBtn, this));
     this.$container.on('keyup', 'textarea.mt10', $.proxy(this._handleTypeEssay, this));
-    this.$container.on('click', '#fe-submit-research', $.proxy(this._submitResearch, this));
+    this.$container.on('click', '.fe-submit-research', $.proxy(this._submitResearch, this));
   },
 
   _cachedElement: function() {
@@ -33,12 +32,35 @@ Tw.CustomerResearch.prototype = {
   },
 
   _handleSelectAnswer: function(e) {
-    var next = e.currentTarget.getAttribute('data-next-question');
-    if (e.currentTarget.getAttribute('aria-checked') === 'true') {
-      if (next !== undefined) {
-        this._nextIdx = Number(next) - 1;
+    var $root = this.$questions[this._currentIdx],
+      next = e.currentTarget.getAttribute('data-next-question'),
+      $btn = $root.find('.bt-blue1 button');
+
+    if ($root.find('li.checked').length > 0) {
+      this._nextIdx = this._currentIdx + 1;
+      if (e.currentTarget.getAttribute('type') === 'radio') {
+        switch (Number(next)) {
+          case 99: {
+            $btn.text(Tw.CUSTOMER_RESEARCHES_BUTTONS.SUBMIT).switchClass('fe-go-next', 'fe-submit-research');
+            this._nextIdx = this._questionCount;
+            break;
+          }
+          case 0: {
+            this._nextIdx !== this._questionCount && $btn.text(Tw.CUSTOMER_RESEARCHES_BUTTONS.NEXT).switchClass('fe-submit-research', 'fe-go-next');
+            break;
+          }
+          default: {
+            $btn.text(Tw.CUSTOMER_RESEARCHES_BUTTONS.NEXT).switchClass('fe-submit-research', 'fe-go-next');
+            this._nextIdx = Number(next) - 1;
+            break;
+          }
+        }
       }
+      $btn.attr('disabled', false);
+      this._setProgress(this._nextIdx);
     } else {
+      $root.find('.bt-blue1 button').attr('disabled', true);
+      this._setProgress(this._currentIdx);
       delete this._nextIdx;
     }
   },
@@ -46,7 +68,7 @@ Tw.CustomerResearch.prototype = {
   _goNext: function(e) {
     var next = this._currentIdx + 1;
 
-    if (this._nextIdx !== undefined) {
+    if (this._nextIdx) {
       next = this._nextIdx;
     }
 
@@ -78,7 +100,7 @@ Tw.CustomerResearch.prototype = {
     this._nextIdx = this._currentIdx;
     delete this._answers[prev];
     this._currentIdx = prev;
-    this._setProgress(prev);
+    this._setProgress(this._nextIdx);
   },
 
   _setProgress: function(idx) {
@@ -87,25 +109,21 @@ Tw.CustomerResearch.prototype = {
     this.$rateBar.width(rate);
   },
 
-  _setAvailableBtn: function(e) {
-    var $root = this.$questions[this._currentIdx];
-    var selectedLi = $root.find('ul.select-list li[aria-checked="true"]');
-    var $btn = $root.find('.bt-blue1 button');
-
-    if (selectedLi.length === 0 && !e.target.getAttribute('checked')) {
-      $btn.attr('disabled', true);
-    } else if ($btn.attr('disabled')) {
-      $btn.attr('disabled', false);
-    }
-  },
-
   _handleTypeEssay: function(e) {
     var target = e.currentTarget;
     var $root = this.$questions[this._currentIdx];
 
     var $btn = $root.find('.bt-blue1 button');
 
-    if ($root.data('is-essential') && (!target.value || target.value === '')) {
+    if (!this._nextIdx || this._nextIdx === this._currentIdx) {
+      this._setProgress(this._currentIdx + 1);
+      this._nextIdx = this._currentIdx + 1;
+    } else if (target.value.length === 0) {
+      this._setProgress(this._currentIdx);
+      this._nextIdx = this._currentIdx;
+    }
+
+    if ($root.data('is-essential') && !target.value.length) {
       $btn.attr('disabled', true);
     } else if ($btn.attr('disabled')) {
       $btn.attr('disabled', false);
@@ -162,21 +180,25 @@ Tw.CustomerResearch.prototype = {
         totalCnt: this._questionCount,
         agrmt: values
       })
-      .done($.proxy(this._successParticipation, this));
+      .done($.proxy(this._successSubmit, this));
   },
 
-  _successParticipation: function(resp) {
+  _successSubmit: function(resp) {
     if (resp.code === Tw.API_CODE.CODE_00) {
       switch (resp.result) {
         case 'DUPLICATE':
-          this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A01, undefined, undefined, this._popupService.close);
+          this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A01, undefined, undefined, this._cloaseResearch);
           break;
         case 'SUCCESS':
-          this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A02, undefined, undefined, this._popupService.close);
+          this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_RESEARCHES_A02, undefined, undefined, this._cloaseResearch);
           break;
       }
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
+  },
+
+  _cloaseResearch: function() {
+    history.back();
   }
 };
