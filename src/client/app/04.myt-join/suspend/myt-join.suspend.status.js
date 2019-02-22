@@ -53,7 +53,6 @@ Tw.MyTJoinSuspendStatus.prototype = {
       return;
     }
 
-    Tw.CommonHelper.startLoading('body', 'grey', true);
     var params = { fromDt: fromDate.replace(/-/g, '') };
     this._apiService.request(Tw.API_CMD.BFF_05_0151, params)
       .done($.proxy(this._onSuccessResuspend, this, params))
@@ -61,7 +60,6 @@ Tw.MyTJoinSuspendStatus.prototype = {
   },
 
   _onSuccessResuspend: function (params, res) {
-    Tw.CommonHelper.endLoading('body');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       params.command = 'resuspend';
       params.svcNum = this._svcInfo.svcNum;
@@ -89,7 +87,6 @@ Tw.MyTJoinSuspendStatus.prototype = {
   },
 
   _requesCancelResuspend: function () {
-    Tw.CommonHelper.startLoading('body', 'grey', true);
     var params = { isReserveCancel: 'Y' };
     this._apiService.request(Tw.API_CMD.BFF_05_0151, params)
       .done($.proxy(this._onSuccessRequestCancel, this, params))
@@ -97,7 +94,6 @@ Tw.MyTJoinSuspendStatus.prototype = {
   },
 
   _onSuccessRequestCancel: function (params, res) {
-    Tw.CommonHelper.endLoading('body');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       params.command = 'cancel-resuspend';
       params.svcInfo = this._svcInfo.svcNum;
@@ -125,14 +121,12 @@ Tw.MyTJoinSuspendStatus.prototype = {
   },
 
   _requestReset: function () {
-    Tw.CommonHelper.startLoading('body', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_05_0152, {})
       .done($.proxy(this._onSuccessRequestReset, this))
       .fail($.proxy(this._onError, this));
   },
 
   _onSuccessRequestReset: function (res) {
-    Tw.CommonHelper.endLoading('body');
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       // update svcInfo
       this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
