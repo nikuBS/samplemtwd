@@ -341,7 +341,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
       date.setMonth(date.getMonth() + 1);
     }
     return list; 
-  };
+  }
 
   private getBillTaxList = (date: string): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0017, {selType: 'M', selSearch: date}).map((resp: {code: string, msg: string, result: any}) => {
