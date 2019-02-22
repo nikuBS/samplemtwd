@@ -26,7 +26,7 @@ class MyTJoinInfoSms extends TwViewController {
         const data = this.getData(resp.result, svcInfo, pageInfo);
         res.render( 'info/myt-join.info.sms.html', data );
       } else {
-        this.fail(res, resp, svcInfo);
+        this.fail(res, resp, svcInfo, pageInfo);
       }
     });
   }
@@ -62,11 +62,12 @@ class MyTJoinInfoSms extends TwViewController {
   }
 
   // API Response fail
-  private fail(res: Response, data: any, svcInfo: any): void {
+  private fail(res: Response, data: any, svcInfo: any, pageInfo: any): void {
     this.error.render(res, {
       code: data.code,
       msg: data.msg,
-      svcInfo: svcInfo
+      svcInfo: svcInfo,
+      pageInfo: pageInfo
     });
   }
 }

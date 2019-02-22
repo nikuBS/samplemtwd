@@ -21,7 +21,7 @@ class MyTFareBillSet extends MyTFareBillSetCommon {
     ).subscribe(([resBillType]) => {
       const apiError = this.error.apiError([resBillType]);
       if ( !FormatHelper.isEmpty(apiError) ) {
-        this.fail(res, apiError, svcInfo);
+        this.fail(res, apiError, svcInfo, pageInfo);
         return;
       }
 
