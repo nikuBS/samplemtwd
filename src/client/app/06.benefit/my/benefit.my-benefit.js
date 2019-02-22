@@ -60,6 +60,8 @@ Tw.BenefitMyBenefit.prototype = {
 
   _onClickPayByPointLinK: function (e) {
     var settingGoUrl = $(e.currentTarget).attr('data-url');
+    // back으로 돌아오면 url에 hash 때문에 actionsheet 오동작
+    this._historyService.replace('/benefit/my');
     this._historyService.goLoad(settingGoUrl);
   }
 };
