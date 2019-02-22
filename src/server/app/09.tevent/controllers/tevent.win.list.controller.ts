@@ -38,7 +38,8 @@ class TeventWinList extends TwViewController {
         this.error.render(res, {
           code: resp.code,
           msg: resp.msg,
-          svcInfo: svcInfo
+          svcInfo: svcInfo,
+          pageInfo: pageInfo
         });
       }
     });
