@@ -142,6 +142,8 @@ abstract class TwViewController {
 
   private getAuth(req, res, next, path, svcInfo, allSvc, childInfo) {
     const isLogin = !FormatHelper.isEmpty(svcInfo);
+    this.loginService.setCookie(COOKIE_KEY.LAYER_CHECK, this.loginService.getNoticeType());
+    this.loginService.setNoticeType('').subscribe();
     this._redisService.getData(REDIS_KEY.URL_META + path).subscribe((resp) => {
       this.logger.info(this, '[URL META]', path, resp);
       const urlMeta = new UrlMetaModel(resp.result || {});
@@ -162,9 +164,6 @@ abstract class TwViewController {
             return;
           }
           if ( isLogin ) {
-            this.loginService.setCookie(COOKIE_KEY.LAYER_CHECK, this.loginService.getNoticeType());
-            this.loginService.setNoticeType('').subscribe();
-
             urlMeta.masking = this.loginService.getMaskingCert(svcInfo.svcMgmtNum);
             if ( loginType.indexOf(svcInfo.loginType) !== -1 ) {
               const urlAuth = urlMeta.auth.grades;
