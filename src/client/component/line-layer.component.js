@@ -37,16 +37,20 @@ Tw.LineLayerComponent.prototype = {
     Tw.CommonHelper.setCookie(Tw.COOKIE_KEY.LAYER_CHECK, '');
   },
   _openLineResisterPopup: function (layerType) {
-    this._apiService.request(Tw.API_CMD.BFF_03_0029, {
-      svcCtg: Tw.LINE_NAME.ALL,
-      pageSize: Tw.DEFAULT_LIST_COUNT,
-      pageNo: 1
-    }).done($.proxy(this._successExposableLine, this, layerType));
+    this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
+      .done($.proxy(this._successGetSvcInfo, this, layerType));
 
     // var lineRegisterLayer = new Tw.LineRegisterComponent();
     // setTimeout($.proxy(function () {
     //   lineRegisterLayer.openRegisterLinePopup(layerType);
     // }, this), 2000);
+  },
+  _successGetSvcInfo: function (layerType, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      var cnt = resp.result.totalSvcCnt - resp.result.expsSvcCnt;
+      if ( cnt > 0 )
+        this._historyService.goLoad('/common/member/line/register?type=' + layerType);
+    }
   },
   _successExposableLine: function (layerType, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 && resp.result.totalCnt > 0 ) {

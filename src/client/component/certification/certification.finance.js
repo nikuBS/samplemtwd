@@ -54,7 +54,7 @@ Tw.CertificationFinance.prototype = {
       hbs: 'CO_02_02_01',
       layer: true,
       enableFido: enableFido
-    }, $.proxy(this._onOpenFinancePopup, this), $.proxy(this._onCloseFinancePopup, this));
+    }, $.proxy(this._onOpenFinancePopup, this), null);
   },
   _onOpenFinancePopup: function ($popupContainer) {
     $popupContainer.on('click', '#fe-bt-sk', $.proxy(this._onClickSkSms, this));
@@ -62,11 +62,6 @@ Tw.CertificationFinance.prototype = {
     $popupContainer.on('click', '#fe-bt-lg', $.proxy(this._onClickLgSms, this));
     $popupContainer.on('click', '#fe-bt-ipin', $.proxy(this._onClickIpin, this));
     $popupContainer.on('click', '#fe-bt-bio', $.proxy(this._onClickBio, this));
-  },
-  _onCloseFinancePopup: function () {
-    if ( this._isCompleteIden ) {
-      this._openPublic();
-    }
   },
   _onClickSkSms: function () {
     this._certSkFull = new Tw.CertificationSkFull();
@@ -102,8 +97,6 @@ Tw.CertificationFinance.prototype = {
   },
   _completeIdentification: function (result) {
     if ( result.code === Tw.API_CODE.CODE_00 ) {
-      // this._isCompleteIden = true;
-      // this._popupService.close();
       this._openPublic();
     } else {
       Tw.Error(result.code, result.msg).pop();
@@ -122,11 +115,11 @@ Tw.CertificationFinance.prototype = {
     this.$privacyCheck.on('change', $.proxy(this._onChangePrivacy, this));
     this.$btConfirm.on('click', $.proxy(this._onClickConfirm, this));
 
+    $popupContainer.on('click', '#fe-cancel', $.proxy(this._onClickCancel, this));
   },
   _onClosePublicPopup: function () {
-    if ( this._isCheckTerm ) {
-      this._certPublic = new Tw.CertificationPublic();
-      this._certPublic.open(this._authUrl, this._authKind, this._prodAuthKey, this._command, this._callback);
+    if ( this._allClose ) {
+      this._popupService.close();
     }
   },
   _onChangePrivacy: function () {
@@ -137,7 +130,11 @@ Tw.CertificationFinance.prototype = {
     }
   },
   _onClickConfirm: function () {
-    this._isCheckTerm = true;
+    this._certPublic = new Tw.CertificationPublic();
+    this._certPublic.open(this._authUrl, this._authKind, this._prodAuthKey, this._command, this._callback);
+  },
+  _onClickCancel: function () {
+    this._allClose = true;
     this._popupService.close();
   }
 };

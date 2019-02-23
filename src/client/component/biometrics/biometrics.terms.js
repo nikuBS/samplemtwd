@@ -13,6 +13,10 @@ Tw.BiometricsTerms = function (target, svcMgmtNum) {
 };
 
 Tw.BiometricsTerms.prototype = {
+  RESULT: {
+    COMPLETE: '00',
+    CANCEL: '01'
+  },
   open: function (callback) {
     this._callback = callback;
     this._popupService.open({
@@ -21,7 +25,7 @@ Tw.BiometricsTerms.prototype = {
       data: {
         isFinger: this._target === Tw.FIDO_TYPE.FINGER
       }
-    }, $.proxy(this._onOpenBioTerms, this), null, 'terms');
+    }, $.proxy(this._onOpenBioTerms, this), $.proxy(this._onCloseBioTerms, this), 'terms');
   },
   _onOpenBioTerms: function ($popupContainer) {
     this.$allCheck = $popupContainer.find('#fe-check-all');
@@ -33,6 +37,14 @@ Tw.BiometricsTerms.prototype = {
     this.$btConfirm.on('click', $.proxy(this.onClickConfirm, this));
 
     this._enableBtns();
+  },
+  _onCloseBioTerms: function () {
+    if ( this._closeCode === this.RESULT.COMPLETE ) {
+      setTimeout($.proxy(function () {
+        var biometricsComplete = new Tw.BiometricsComplete(this._target);
+        biometricsComplete.open(this._callback);
+      }, this), 100);
+    }
   },
   _onClickAllCheck: function ($event) {
     var $currentTarget = $($event.currentTarget);
@@ -49,7 +61,7 @@ Tw.BiometricsTerms.prototype = {
   },
   onClickConfirm: function () {
     var biometiricsCert = new Tw.BiometricsCert(this._target, this._svcMgmtNum);
-    biometiricsCert.open(this._callback);
+    biometiricsCert.open(this._callback, $.proxy(this._onCloseCallback, this));
   },
   _checkElement: function ($element) {
     $element.prop('checked', true);
@@ -77,5 +89,9 @@ Tw.BiometricsTerms.prototype = {
     } else {
       this.$btConfirm.attr('disabled', false);
     }
+  },
+  _onCloseCallback: function (code) {
+    this._closeCode = code;
+    this._popupService.close();
   }
 };
