@@ -381,15 +381,11 @@ Tw.MenuComponent.prototype = {
             }
             break;
           case 'bill':
-            this._apiService.request(Tw.API_CMD.BFF_05_0036, {})
+            this._apiService.request(Tw.API_CMD.BFF_04_0009, {})
               .then($.proxy(function (res) {
                 if ( res.code === Tw.API_CODE.CODE_00 ) {
                   var info = res.result;
-                  if ( info.coClCd === Tw.MYT_FARE_BILL_CO_TYPE.BROADBAND ) {
-                    $(elem).remove();
-                    return;
-                  }
-                  var total = info.useAmtTot ? parseInt(info.useAmtTot, 10) : 0;
+                  var total = info.amt;
                   var month = info.invDt.match(/\d\d\d\d(\d\d)\d\d/);
                   if (month) {
                     month = parseInt(month[1], 10) + Tw.DATE_UNIT.MONTH_S;
