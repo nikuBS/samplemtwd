@@ -110,7 +110,7 @@ Tw.POPUP_TITLE = {
   ROAMING_SERVICE_COUNTRY: 'LTE 자동로밍 서비스 이용 가능 국가',
   REFUND_BANK_SELECT: '환불신청계좌 은행 선택',
   EVENT: '이벤트',
-  TPLAN_SMARTWATCH: '스마트워치 회선 선택'
+  TPLAN_SMARTWATCH: '스마트워치 회선 선택',
 };
 
 Tw.POPUP_CONTENTS = {
@@ -131,7 +131,7 @@ Tw.POPUP_CONTENTS = {
   APP_NOT_INSTALLED: ' 앱이 설치되어 있지 않습니다. <br />설치하시겠습니까?',
   TPLAN_WATCH_NON_LINE: '스마트워치 회선이<br>존재하지 않습니다',
   TPLAN_WATCH: '스마트워치 회선<br>',
-  POPUP_BLOCKED: '팝업이 차단되어 있습니다.<br>계속 이용하시려면 팝업을 허용해주세요.'
+  POPUP_BLOCKED: '팝업이 차단되어 있습니다.<br>계속 이용하시려면 팝업을 허용해주세요.',
 };
 
 Tw.CHART_TYPE = {
@@ -464,6 +464,7 @@ Tw.ALERT_MSG_HOME = {
   A04: 'MY 바로가기를 모두 제거 했습니다. MY 바로가기를 추가해 T월드를 보다 쉽게 사용해 보세요.',
   A05: '고객님께서 가입한 요금제는 T끼리 데이터 선물이 불가능합니다.',
   A06: '선물 후 잔여 데이터가 500MB 이상, 선물 가능 횟수가 남아 있어야 T끼리 선물하기가 가능합니다.',
+  A08: { TITLE: 'T가족모아 데이터', MSG: 'T가족모아 데이터에 가입해보세요! 통신비는 내려가고, 데이터량은 늘어나는 혜택을 누릴 수 있습니다.', BUTTON: '가입하기' },
   A50: '',
   A51: '',
   A52: '',
