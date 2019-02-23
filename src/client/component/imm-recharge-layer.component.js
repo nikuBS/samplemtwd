@@ -271,7 +271,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
   _getBPCP: function (url) {
     var replaceUrl = url.replace('BPCP:', '');
     this._apiService.request(Tw.API_CMD.BFF_01_0039, { bpcpServiceId: replaceUrl })
-      .done($.proxy(this._responseBPCP, this));
+      .done($.proxy(this._responseBPCP, this)).fail($.proxy(this._responseFail, this));
   },
 
   _responseBPCP: function (resp) {
@@ -285,6 +285,10 @@ Tw.ImmediatelyRechargeLayer.prototype = {
     }
 
     Tw.CommonHelper.openUrlInApp(url);
+  },
+
+  _responseFail: function (err) {
+    Tw.Error(err.code, err.msg).pop();
   },
 
   // BPCP 페이지에서 X 버튼 누른 경우에 대한 이벤트 처리
