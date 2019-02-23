@@ -84,7 +84,8 @@ Tw.ProductWireplanJoin.prototype = {
       addSvcAddYn: this._btnData.addSvcAddYn,
       cntcPlcInfoRgstYn: this._btnData.cntcPlcInfoRgstYn,
       svcProdGrpCd: this._btnData.svcProdGrpCd
-    }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this));
+    }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this))
+      .fail(Tw.CommonHelper.endLoading('.container'));
   },
 
   _procJoinRes: function(resp) {

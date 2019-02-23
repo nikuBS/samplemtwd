@@ -81,7 +81,8 @@ Tw.ProductWireplanSettingLettering.prototype = {
       cntcPlcInfoRgstYn: this._btnData.cntcPlcInfoRgstYn,
       svcProdGrpCd: this._btnData.svcProdGrpCd,
       opCtt1: this.$inputText.val()
-    }, {}, [this._prodId]).done($.proxy(this._procSettingRes, this));
+    }, {}, [this._prodId]).done($.proxy(this._procSettingRes, this))
+      .fail(Tw.CommonHelper.endLoading('.container'));
   },
 
   _procSettingRes: function(resp) {

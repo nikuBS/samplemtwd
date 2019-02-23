@@ -763,8 +763,6 @@ class ProductCommonCallplan extends TwViewController {
             }));
           }
 
-          console.log(basicInfo.result);
-
           // 카테고리 및 상품 월정액 서브 텍스트 처리
           const isCategory = this._getIsCategory(basicInfo.result.prodTypCd),
             basFeeSubText: any = isCategory.isWireplan && !FormatHelper.isEmpty(prodRedisInfo.result.summary.feeManlSetTitNm) ?

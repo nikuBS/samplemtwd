@@ -69,7 +69,8 @@ Tw.ProductMobileplanAddSettingCombineLine.prototype = {
       svcProdGrpId: this._svcProdGrpId,
       svcNumList: [this._getServiceNumberFormat(number)]
     }, {}, [this._prodId])
-      .done($.proxy(this._addDelNumRes, this));
+      .done($.proxy(this._addDelNumRes, this))
+      .fail(Tw.CommonHelper.endLoading('.container'));
   },
 
   _addDelNumRes: function(resp) {
@@ -97,7 +98,8 @@ Tw.ProductMobileplanAddSettingCombineLine.prototype = {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_10_0019, {
       chldSvcMgmtNum: grpId
-    }, {}, [this._prodId]).done($.proxy(this._addDelNumRes, this));
+    }, {}, [this._prodId]).done($.proxy(this._addDelNumRes, this))
+      .fail(Tw.CommonHelper.endLoading('.container'));
   },
 
   _detectInputNumber: function(e) {

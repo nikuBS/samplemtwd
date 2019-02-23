@@ -74,7 +74,9 @@ Tw.ProductMobileplanAddTerminate.prototype = {
   _prodConfirmOk: function() {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0036, {}, {}, [this._prodId]).done($.proxy(this._procTerminateRes, this));
+    this._apiService.request(Tw.API_CMD.BFF_10_0036, {}, {}, [this._prodId])
+      .done($.proxy(this._procTerminateRes, this))
+      .fail(Tw.CommonHelper.endLoading('.container'));
   },
 
   _procTerminateRes: function(resp) {
