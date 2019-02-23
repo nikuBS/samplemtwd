@@ -109,7 +109,7 @@ Tw.POPUP_TITLE = {
   ROAMING_SERVICE_COUNTRY: 'LTE 자동로밍 서비스 이용 가능 국가',
   REFUND_BANK_SELECT: '환불신청계좌 은행 선택',
   EVENT: '이벤트',
-  TPLAN_SMARTWATCH: '스마트워치 회선 선택',
+  TPLAN_SMARTWATCH: '스마트워치 회선 선택'
 };
 
 Tw.POPUP_CONTENTS = {
@@ -130,7 +130,7 @@ Tw.POPUP_CONTENTS = {
   APP_NOT_INSTALLED: ' 앱이 설치되어 있지 않습니다. <br />설치하시겠습니까?',
   TPLAN_WATCH_NON_LINE: '스마트워치 회선이<br>존재하지 않습니다',
   TPLAN_WATCH: '스마트워치 회선<br>',
-  POPUP_BLOCKED: '팝업이 차단되어 있습니다.<br>계속 이용하시려면 팝업을 허용해주세요.',
+  POPUP_BLOCKED: '팝업이 차단되어 있습니다.<br>계속 이용하시려면 팝업을 허용해주세요.'
 };
 
 Tw.CHART_TYPE = {
@@ -315,14 +315,14 @@ Tw.MYT_FARE_BILL_GUIDE = {
   PHONE_SVCTYPE: '휴대폰',
   PHONE_TYPE_0: '이동전화',
   PHONE_TYPE_1: '휴대폰',
-  SVCNM_TPOCKET:'T Pocket Fi',
-  SVCNM_TLOGIN:'T Login',
-  SVCNM_TWIBRO:'T Wibro',
-  SVCNM_TEL_0:'집전화',
-  SVCNM_TEL_1:'유선전화',
-  SVCNM_TV:'TV',
-  SVCNM_IPTV:'IPTV',
-  SVCNM_INET:'인터넷',
+  SVCNM_TPOCKET: 'T Pocket Fi',
+  SVCNM_TLOGIN: 'T Login',
+  SVCNM_TWIBRO: 'T Wibro',
+  SVCNM_TEL_0: '집전화',
+  SVCNM_TEL_1: '유선전화',
+  SVCNM_TV: 'TV',
+  SVCNM_IPTV: 'IPTV',
+  SVCNM_INET: '인터넷',
   POP_TITLE_TYPE_0: '조건 변경',
   POP_TITLE_TYPE_1: '납부 방법 선택'
 };
@@ -513,24 +513,28 @@ Tw.ALERT_MSG_MYT_DATA = {
   ALERT_2_A70: {
     TITLE: '자동 충전을 해지하시겠습니까?',
     MSG: '해지 요청일 이후부터 자동 충전되지 않으며 해지 전에 충전된 충전분은 취소되지 않습니다.',
-    BUTTON: '해지하기' },
+    BUTTON: '해지하기'
+  },
   ALERT_2_A71: {
     TITLE: '알람 설정 하시겠습니까?',
     MSG_1: '사용중인 선불폰 이동전화의 ',
     MSG_2: '이[',
     MSG_3: '일]전이면 SMS로 알림 메시지가 전송됩니다.',
-    BUTTON: '설정하기' },
+    BUTTON: '설정하기'
+  },
   ALERT_2_A72: {
     TITLE: '알람 설정 하시겠습니까?',
     MSG_1: '사용중인 선불폰 이동전화의 잔액이[',
     MSG_2: ']이면 SMS로 알림 메시지가 전송됩니다.',
-    BUTTON: '설정하기' },
+    BUTTON: '설정하기'
+  },
   ALERT_2_A204: {
     TITLE: '알람 설정 변경 하시겠습니까?',
     MSG_1: '사용중인 선불폰 이동전화의 ',
     MSG_2: '이[',
     MSG_3: '일]전이면 SMS로 알림 메시지가 전송됩니다.',
-    BUTTON: '설정하기' },
+    BUTTON: '설정하기'
+  },
   ALERT_2_A216: '공유 가능 데이터 조회 요청에 시간이 소요되고 있습니다. \'조회하기\' 를 눌러 다시 조회해 주세요.',
   ALERT_2_A217: '선물 가능한 데이터 조회 요청에 시간이 소요되고 있습니다 . \'조회하기\' 를 눌러 다시 조회해주세요.',
   ALERT_2_A218: '변경 가능한 데이터 조회 요청에 시간이 소요되고 있습니다 . \'조회하기\' 를 눌러 다시 조회해 주세요.',
@@ -825,8 +829,16 @@ Tw.ALERT_MSG_MEMBERSHIP = {
   ALERT_1_A53: { TITLE: 'T멤버십 회원정보를 수정하시겠습니까?', MSG: '수정하신 내용은 바로 적용됩니다.', BUTTON: '수정' },
   ALERT_1_A54: { TITLE: '알림', MSG: '주소를 입력해주세요.' },
   ALERT_1_A55: { TITLE: '알림', MSG: '전화 번호를 입력해주세요' },
-  ALERT_1_A56: { TITLE: 'T멤버십 카드를 해지하시겠습니까?', MSG: '해지 취소는 해지 신청을 하신 날 24:00까지만 고객센터(114)에서 신청하실 수 있습니다.', BUTTON: '해지'},
-  ALERT_1_A58: { TITLE: 'T멤버십(Leaders Club)으로 종류를 변경하시겠습니까?', MSG: '2017년 1월 1일 부터 T멤버십(Leaders Club) 카드만 제공하고 있습니다.', BUTTON: '변경' },
+  ALERT_1_A56: {
+    TITLE: 'T멤버십 카드를 해지하시겠습니까?',
+    MSG: '해지 취소는 해지 신청을 하신 날 24:00까지만 고객센터(114)에서 신청하실 수 있습니다.',
+    BUTTON: '해지'
+  },
+  ALERT_1_A58: {
+    TITLE: 'T멤버십(Leaders Club)으로 종류를 변경하시겠습니까?',
+    MSG: '2017년 1월 1일 부터 T멤버십(Leaders Club) 카드만 제공하고 있습니다.',
+    BUTTON: '변경'
+  },
   ALERT_1_A59: { TITLE: '알림', MSG: '이용정지 상태에서 정보를 수정을 하실 수 없습니다.' },
   ALERT_1_A61: { TITLE: '알림', MSG: '카드 신청 후 2주 이내에는 카드 재발급을 신청하실 수 없습니다.' },
   ALERT_1_A62: { TITLE: '알림', MSG: 'OK캐쉬백 기능 추가를 위해 필수동의 항목을 체크해주세요.' },
@@ -836,7 +848,7 @@ Tw.ALERT_MSG_MEMBERSHIP = {
     MSG: '재발급을 신청한 날 24:00까지 결제기능을 추가하지 않은 모바일 카드 이용 고객님만 재발급 신청을 취소하실 수 있습니다.',
     BUTTON: '발급 변경내역'
   },
-  ALERT_1_A68: { TITLE: '로그인 하시겠습니까?', MSG: 'T아이디(아이디/비밀번호) 로그인 후 이용 가능합니다.', BUTTON: '로그인'},
+  ALERT_1_A68: { TITLE: '로그인 하시겠습니까?', MSG: 'T아이디(아이디/비밀번호) 로그인 후 이용 가능합니다.', BUTTON: '로그인' },
   ALERT_1_A69: { TITLE: '알림', MSG: '현재 위치를 가져오지 못했습니다. 잠시 후 다시 시도해 주세요.' }
 };
 
@@ -1114,7 +1126,8 @@ Tw.MYT_JOIN = {
     CONTENTS: '전화 106 또는 SK브로드밴드 홈페이지를 이용해 주시기 바랍니다.',
     LINK: 'http://www.skbroadband.com/Main.do',
     LINK_TXT: 'SK브로드밴드 바로가기'
-  }
+  },
+  WIRE_GIFT: ' 사은품'
 };
 
 Tw.MYT_JOIN_CUSTPASS = {
@@ -1661,7 +1674,7 @@ Tw.ROAMING_JOIN_STRING = {
   COMBINE_LINE: '자회선 설정하기',
   MY_ROAMING_STATE: '나의 로밍 이용 현황 확인하기',
   DUPLICATE_LINE: 'T로밍도착알리미 멤버에 이미 존재하는 서비스번호입니다.',
-  LINE_NUM : '지정번호 :number회선'
+  LINE_NUM: '지정번호 :number회선'
 };
 
 Tw.SETTING_LOCATION = {
@@ -1737,7 +1750,7 @@ Tw.MEMBERSHIP = {
     TITLE: 'T멤버십 앱으로 이동하시겠습니까?',
     MESSAGE: '컬처 예매는 T멤버십 앱을 통해서만 가능합니다.'
   },
-  BENEFIT : {
+  BENEFIT: {
     BRAND: {
       GRADE: {
         A: '전체 등급',
@@ -1760,11 +1773,11 @@ Tw.MEMBERSHIP = {
 };
 
 Tw.ROAMING_SVCTIME_SETTING_ERR_CASE = {
-  ERR_START_TIME : '서비스 개시일 시간 설정은 당일 현재시간 이후만 가능합니다.',
-  ERR_START_DATE : '서비스 개시일 설정은 당일 이후만 가능합니다.',
-  ERR_END_DATE : '서비스 종료일 설정은 당일 이후만 가능합니다.',
-  ERR_END_EVT_START : '서비스 개시일 설정은 종료일 이전만 설정 가능합니다.',
-  ERR_END_EVT_END : '서비스 종료일 설정은 개시일 이후만 가능합니다.'
+  ERR_START_TIME: '서비스 개시일 시간 설정은 당일 현재시간 이후만 가능합니다.',
+  ERR_START_DATE: '서비스 개시일 설정은 당일 이후만 가능합니다.',
+  ERR_END_DATE: '서비스 종료일 설정은 당일 이후만 가능합니다.',
+  ERR_END_EVT_START: '서비스 개시일 설정은 종료일 이전만 설정 가능합니다.',
+  ERR_END_EVT_END: '서비스 종료일 설정은 개시일 이후만 가능합니다.'
 };
 
 Tw.ROAMING_BPCP = {
@@ -1776,11 +1789,11 @@ Tw.POSTCODE_MESSAGE = {
   NONE: '건물명 없음'
 };
 
-Tw.ROAMING_RESERVATION_STATE ={
-  11 : '예약 대기 중',
-  12 : '예약 완료',
-  16 : '미수령',
-  17 : '예약 취소'
+Tw.ROAMING_RESERVATION_STATE = {
+  11: '예약 대기 중',
+  12: '예약 완료',
+  16: '미수령',
+  17: '예약 취소'
 };
 
 Tw.ROAMING_RANGE_OPTION_STR = {
@@ -1824,8 +1837,8 @@ Tw.RESERVATION_CANCEL = {
 Tw.ALERT_MSG_SEARCH = {
   ALERT_4_A40: { TITLE: '입력하신 의견을 등록하시겠습니까?', MSG: '', BUTTON: '닫기' },
   ALERT_4_A41: { TITLE: '선택하신 내용을 접수하시겠습니까?', MSG: '', BUTTON: '닫기' },
-  KEYWORD_ERR : '검색어를 입력해 주세요.',
-  REQUEST_CLAIM : '검색의견 신청이 접수되었습니다.'
+  KEYWORD_ERR: '검색어를 입력해 주세요.',
+  REQUEST_CLAIM: '검색의견 신청이 접수되었습니다.'
 };
 
 Tw.PRODUCT_TFAMILY = {
@@ -1862,7 +1875,7 @@ Tw.VALIDATION_LABEL = {
   MESSAGE_WRONG: ' 올바르지 않습니다.'
 };
 
-Tw.KOR_INITIAL_CHAR_ARR = ['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+Tw.KOR_INITIAL_CHAR_ARR = ['ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'];
 
 Tw.SEARCH_FILTER_STR = {
   RECOMMEND: '추천순',
@@ -1871,3 +1884,4 @@ Tw.SEARCH_FILTER_STR = {
   LOW: '낮은 가격순',
   HIGH: '높은 가격순'
 };
+
