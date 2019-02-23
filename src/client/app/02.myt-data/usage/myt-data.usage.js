@@ -151,10 +151,8 @@ Tw.MyTDataUsage.prototype = {
   },
 
   _setDailyUsed: function (event) {
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_05_0001)
       .done($.proxy(function (resp) {
-        Tw.CommonHelper.endLoading('.container');
         if ( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result ) {
           this._showErrorAlert(resp.code, resp.msg);
           return;
@@ -174,7 +172,6 @@ Tw.MyTDataUsage.prototype = {
         }
       }, this))
       .fail(function () {
-        Tw.CommonHelper.endLoading('.container');
       });
   },
 
@@ -229,8 +226,6 @@ Tw.MyTDataUsage.prototype = {
       return;
     }
 
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
-
     this._apiService.requestArray(reqList)
       .done($.proxy(function () {
 
@@ -268,7 +263,6 @@ Tw.MyTDataUsage.prototype = {
               break;
           }
         }
-        Tw.CommonHelper.endLoading('.container');
 
       }, this))
       .fail($.proxy(this._requestFail, this));
@@ -277,7 +271,6 @@ Tw.MyTDataUsage.prototype = {
 
   _requestFail: function (resp) {
     this._showErrorAlert(resp.code, resp.msg);
-    Tw.CommonHelper.endLoading('.container');
   },
 
 
@@ -465,14 +458,11 @@ Tw.MyTDataUsage.prototype = {
     var $btnContainer = $(event.target).parent();
     var svcNum = $btnContainer.attr('data-child-svcnum');
 
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
-
     this._apiService.request(Tw.API_CMD.BFF_05_0009, { cSvcMgmtNum: svcNum })
       .done($.proxy(function (resp) {
 
         if ( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result ) {
           this._showErrorAlert(resp.code, resp.msg);
-          Tw.CommonHelper.endLoading('.container');
           return;
         }
 
@@ -480,7 +470,6 @@ Tw.MyTDataUsage.prototype = {
         var html = tmpl(resp.result);
 
         $btnContainer.html(html);
-        Tw.CommonHelper.endLoading('.container');
       }, this))
       .fail($.proxy(this._requestFail, this));
 

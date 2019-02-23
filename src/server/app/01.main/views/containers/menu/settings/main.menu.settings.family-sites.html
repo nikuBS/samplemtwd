@@ -4,7 +4,7 @@
 * Date: 2018.11.26
 %>
 
-<% include ../../../components/start.component.html %>
+<%- include('../../../components/start.component.html', { pageInfo: pageInfo }); %>
 <body>
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
@@ -60,7 +60,7 @@
                              </button>
                          </li>
                          <li>
-                             <button href="https://m.adtcaps.co.kr" class="fe-outlink fe-charge">
+                             <button href="https://m.adtcaps.co.kr" class="fe-outlink fe-charge">
                                  <span class="inner">
                                      <span class="tit tx-medium">ADT캡스</span>
                                  </span>

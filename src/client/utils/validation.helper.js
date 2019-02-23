@@ -204,19 +204,30 @@ Tw.ValidationHelper = (function () {
     return true;
   }
 
-  function checkExpiration($targetY, $targetM) {
-    var isValid = false;
-
-    if (parseInt($.trim($targetY.val()), 10) < new Date().getFullYear() ||
-      (parseInt($.trim($targetY.val()), 10) === new Date().getFullYear() &&
-      parseInt($.trim($targetM.val()), 10) < new Date().getMonth() + 1) ||
-      !this.checkMonth($targetM, $targetY)) {
-      isValid = false;
-    } else {
-      isValid = true;
+  function isYearInvalid($target) {
+    var value = $target.val();
+    if (value.length < 4 || value < new Date().getFullYear()) {
+      return true;
     }
+    return false;
+  }
 
-    return isValid;
+  function isMonthInvalid($target) {
+    var value = $target.val();
+    var months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+
+    if (months.indexOf(value) === -1 || value.length < 2) {
+      return true;
+    }
+    return false;
+  }
+
+  function checkExpiration($targetY, $targetM) {
+    if (parseInt($.trim($targetY.val()), 10) === new Date().getFullYear() &&
+      parseInt($.trim($targetM.val()), 10) < new Date().getMonth() + 1) {
+      return false;
+    }
+    return true;
   }
 
   /* 배수 체크하는 function */
@@ -310,6 +321,8 @@ Tw.ValidationHelper = (function () {
     checkIsSelected: checkIsSelected,
     checkYear: checkYear,
     checkMonth: checkMonth,
+    isYearInvalid: isYearInvalid,
+    isMonthInvalid: isMonthInvalid,
     checkMultiple: checkMultiple,
     checkIsStraight: checkIsStraight,
     checkIsSameLetters: checkIsSameLetters,

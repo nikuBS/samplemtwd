@@ -20,6 +20,7 @@ Tw.ProductMobileplanJoinTplan = function(rootEl, prodId, displayId, sktProdBenfC
   this._isSetOverPayReq = false;
   this._overpayRetryCnt = 0;
   this._smartWatchLine = null;
+  this._smartWatchLineNumber = null;
 
   this.$container = rootEl;
   this._cachedElement();
@@ -55,6 +56,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
   _selectSmartWatchItem: function() {
     this._isDisableSmartWatchLineInfo = false;
     this._smartWatchLine = null;
+    this._smartWatchLineNumber = null;
 
     if (this._watchInfo.watchCase === 'C' || this._watchInfo.watchSvcList.length < 1) {
       return this._popupService.openConfirmButton(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A73.TITLE,
@@ -70,6 +72,8 @@ Tw.ProductMobileplanJoinTplan.prototype = {
     }
 
     this._smartWatchLine = this._watchInfo.watchSvcList[0].watchSvcMgmtNum;
+    this._smartWatchLineNumber = Tw.FormatHelper.conTelFormatWithDash(this._watchInfo.watchSvcList[0].watchSvcNumMask);
+    this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
     return true;
   },
 
@@ -105,7 +109,8 @@ Tw.ProductMobileplanJoinTplan.prototype = {
     return {
       'label-attr': 'id="ra' + idx + '"',
       'txt': Tw.FormatHelper.conTelFormatWithDash(item.watchSvcNumMask),
-      'radio-attr': 'id="ra' + idx + '" data-num="' + item.watchSvcMgmtNum + '" ' + (this._smartWatchLine === item.watchSvcMgmtNum ? 'checked' : '')
+      'radio-attr': 'id="ra' + idx + '" data-num="' + item.watchSvcMgmtNum + '"' +
+        ' data-svcnum="' + item.watchSvcNumMask + '" ' + (this._smartWatchLine === item.watchSvcMgmtNum ? 'checked' : '')
     };
   },
 
@@ -115,6 +120,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
 
   _setSmartWatchLine: function(e) {
     this._smartWatchLine = $(e.currentTarget).data('num');
+    this._smartWatchLineNumber = $(e.currentTarget).data('svcnum');
     this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
     this._popupService.close();
   },
@@ -293,8 +299,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
     var completeData = {
       prodCtgNm: Tw.PRODUCT_CTG_NM.PLANS,
       btList: [
-        { link: '/product/callplan?prod_id=NA00005381', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.SMARTWATCH },
-        { link: '/myt-join/myplan', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.MYTJOIN }
+        { link: '/myt-join/submain', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.MYTJOIN }
       ],
       btClass: '',
       prodId: this._prodId,
@@ -307,8 +312,12 @@ Tw.ProductMobileplanJoinTplan.prototype = {
 
     if ($checked.val() === 'NA00006116') {
       completeData = $.extend(completeData, {
-        basicTxt: Tw.FormatHelper.isEmpty(this._smartWatchLine) ? Tw.POPUP_CONTENTS.TPLAN_WATCH_NON_LINE :
-          Tw.POPUP_CONTENTS.TPLAN_WATCH + Tw.FormatHelper.getFormattedPhoneNumber(this._smartWatchLine)
+        basicTxt: Tw.FormatHelper.isEmpty(this._smartWatchLineNumber) ? Tw.POPUP_CONTENTS.TPLAN_WATCH_NON_LINE :
+          Tw.POPUP_CONTENTS.TPLAN_WATCH + this._smartWatchLineNumber,
+        btList: [
+          { link: '/product/callplan?prod_id=NA00005381', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.SMARTWATCH },
+          { link: '/myt-join/submain', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.MYTJOIN }
+        ]
       });
     }
 

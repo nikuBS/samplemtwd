@@ -4,7 +4,7 @@
 * Date: 2018.10.24
 %>
 
-<% include ../../components/start.component.html %>
+<%- include('../../components/start.component.html', { pageInfo: pageInfo }); %>
 <body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -99,6 +99,9 @@
     <script>
       $(document).ready(function () {
         new Tw.CustomerVoice($('.wrap'));
+        setTimeout(function(){
+          $('.popup-page').scrollTop(1);
+        }, 1000)
       });
     </script>
 </body>

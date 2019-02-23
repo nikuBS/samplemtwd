@@ -35,6 +35,7 @@ class CustomerUseguideService extends TwViewController {
         return this.error.render(res, {
           code: resp.code,
           msg: resp.msg,
+          pageInfo,
           svcInfo
         });
       }

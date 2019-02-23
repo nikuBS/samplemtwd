@@ -28,7 +28,7 @@ class CommonCertNice extends TwViewController {
       prodAuthKey
     }).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        res.render('cert/common.cert.nice.html', { data: resp.result });
+        res.render('cert/common.cert.nice.html', { data: resp.result, pageInfo });
       }
     });
   }

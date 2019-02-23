@@ -24,6 +24,18 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
 
   this._lineComponent = new Tw.LineComponent();
 
+  if ( location.hash === '#store' ) {
+    setTimeout(function () {
+      skt_landing.action.home_slider({ initialSlide: 1 });
+      skt_landing.action.notice_slider();
+    }, 40);
+  } else {
+    setTimeout(function () {
+      skt_landing.action.home_slider({ initialSlide: 0 });
+      skt_landing.action.notice_slider();
+    }, 40);
+  }
+
   this._initEmrNotice(emrNotice, isLogin === 'true');
 
   this._setBanner();
@@ -67,7 +79,6 @@ Tw.MainHome.prototype = {
     this.$elBarcode = this.$container.find('#fe-membership-barcode');
     this.$barcodeGr = this.$container.find('#fe-membership-gr');
 
-    this.$isTplan = this.$container.find('#fe-tplan');
     this._cachedSmartCard();
     this._cachedSmartCardTemplate();
     this._makeBarcode();
@@ -77,7 +88,7 @@ Tw.MainHome.prototype = {
     this.$container.on('click', '#fe-membership-go', $.proxy(this._onClickBarcodeGo, this));
     this.$container.on('click', '.fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
     this.$container.on('click', '.fe-bt-line', $.proxy(this._onClickLine, this));
-    this.$container.on('click', '#fe-bt-data-link', $.proxy(this._openDataLink, this));
+    this.$container.on('click', '#fe-bt-data-link', $.proxy(this._onClickDataLink, this));
     this.$container.on('click', '#fe-bt-link-broadband', $.proxy(this._onClickGoBroadband, this));
     this.$container.on('click', '#fe-bt-link-billguide', $.proxy(this._onClickGoBillGuide, this));
 
@@ -188,17 +199,20 @@ Tw.MainHome.prototype = {
   _onClickGoBillGuide: function () {
     this._historyService.goLoad('/myt-fare/billguide/guide');
   },
-  _openDataLink: function () {
+  _onClickDataLink: function ($event) {
+    var dataLink = $($event.currentTarget);
+    var isTplanUse = dataLink.data('tplanuse');
+    var isTplanProd = dataLink.data('tplanprod');
     this._apiService.request(Tw.API_CMD.BFF_06_0015, {})
-      .done($.proxy(this._successGiftSender, this));
+      .done($.proxy(this._successGiftSender, this, isTplanUse, isTplanProd));
   },
-  _successGiftSender: function (resp) {
+  _successGiftSender: function (isTplanUse, isTplanProd, resp) {
     this._popupService.open({
       hbs: 'actionsheet_data',
       layer: true,
-      enableTplan: this.$isTplan.length > 0,
+      enableTplan: isTplanUse,
       enableGift: resp.code === Tw.API_CODE.CODE_00,
-      tplanProd: this.$isTplan.data('tplanprod')
+      tplanProd: isTplanProd
     }, $.proxy(this._onOpenDataLink, this), $.proxy(this._onCloseDataLink, this));
   },
   _onOpenDataLink: function ($popupContainer) {
@@ -218,13 +232,23 @@ Tw.MainHome.prototype = {
         this._historyService.goLoad('/myt-data/familydata');
         break;
       case this.DATA_LINK.TPLAN_PROD:
-        this._historyService.goLoad('/product/callplan?prod_id=NA00006031');
+        this._popupService.openConfirmButton(Tw.ALERT_MSG_HOME.A08.TITLE, Tw.ALERT_MSG_HOME.A08.MSG,
+          $.proxy(this._onConfirmTplanProd, this), $.proxy(this._onCloseTplanProd, this),
+          Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_HOME.A08.BUTTON);
         break;
       default:
         break;
     }
     this._targetDataLink = '';
-
+  },
+  _onConfirmTplanProd: function () {
+    this._goTplan = true;
+    this._popupService.close();
+  },
+  _onCloseTplanProd: function () {
+    if ( this._goTplan ) {
+      this._historyService.goLoad('/product/callplan?prod_id=NA00006031');
+    }
   },
   _onClickRechargeLink: function () {
     this._targetDataLink = this.DATA_LINK.RECHARGE;

@@ -13,7 +13,7 @@ class MytDataUsageChildRechargeComplete extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    res.render('usage/myt-data.usage.child.recharge-complete.html');
+    res.render('usage/myt-data.usage.child.recharge-complete.html', { pageInfo });
   }
 
 }

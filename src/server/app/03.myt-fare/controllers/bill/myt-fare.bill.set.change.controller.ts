@@ -26,7 +26,7 @@ class MyTFareBillSetChange extends MyTFareBillSetCommon {
 
         res.render('bill/myt-fare.bill.set.change.html', data);
       } else {
-        this.fail(res, resBillType, svcInfo);
+        this.fail(res, resBillType, pageInfo, svcInfo);
       }
     });
   }

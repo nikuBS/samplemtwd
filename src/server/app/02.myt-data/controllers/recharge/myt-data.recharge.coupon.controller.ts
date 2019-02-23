@@ -28,7 +28,7 @@ export default class MyTDataRechargeCoupon extends TwViewController {
          allSvc: any, childInfo: any, pageInfo: any) {
 
     Observable.combineLatest(
-      this.getUsableCouponList(res, svcInfo), this.getAvailability(res, svcInfo)).subscribe(
+      this.getUsableCouponList(res, svcInfo, pageInfo), this.getAvailability(res, svcInfo, pageInfo)).subscribe(
         ([coupons, available]) => {
           if (coupons !== null && !FormatHelper.isEmpty(available)) {
             res.render('recharge/myt-data.recharge.coupon.html', {
@@ -42,12 +42,12 @@ export default class MyTDataRechargeCoupon extends TwViewController {
           }
         },
         (err) => {
-          this.error.render(res, { code: err.code, msg: err.msg, svcInfo });
+          this.error.render(res, { code: err.code, msg: err.msg, pageInfo, svcInfo });
         }
       );
   }
 
-  private getUsableCouponList(res: Response, svcInfo: any): Observable<any> {
+  private getUsableCouponList(res: Response, svcInfo: any, pageInfo: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_06_0001, {}).map(resp => {
       if (resp.code === API_CODE.CODE_00) {
         return this.purifyCouponData(resp.result);
@@ -56,6 +56,7 @@ export default class MyTDataRechargeCoupon extends TwViewController {
       this.error.render(res, {
         code: resp.code,
         msg: resp.msg,
+        pageInfo: pageInfo,
         svcInfo
       });
 
@@ -63,7 +64,7 @@ export default class MyTDataRechargeCoupon extends TwViewController {
     });
   }
 
-  private getAvailability(res: Response, svcInfo: any): Observable<any> {
+  private getAvailability(res: Response, svcInfo: any, pageInfo: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_06_0009, {}).map(resp => {
       if (resp.code === API_CODE.CODE_00) {
         if (FormatHelper.isEmpty(resp.result.option)) {
@@ -86,6 +87,7 @@ export default class MyTDataRechargeCoupon extends TwViewController {
       this.error.render(res, {
         code: resp.code,
         msg: resp.msg,
+        pageInfo: pageInfo,
         svcInfo
       });
 
@@ -104,7 +106,7 @@ export default class MyTDataRechargeCoupon extends TwViewController {
   }
 
 
-  private renderCouponComplete(req: Request, res: Response, svcInfo: any, category: string): void {
+  private renderCouponComplete(req: Request, res: Response, svcInfo: any, pageInfo: any, category: string): void {
     switch (category) {
       case 'data':
         res.render('recharge/myt-data.recharge.coupon-complete-data.html');
@@ -114,7 +116,7 @@ export default class MyTDataRechargeCoupon extends TwViewController {
         break;
       case 'gift':
         const number = req.query.number;
-        this.getUsableCouponList(res, svcInfo).subscribe(
+        this.getUsableCouponList(res, svcInfo, pageInfo).subscribe(
           (resp) => {
             if (resp.code === API_CODE.CODE_00) {
               res.render('recharge/myt-data.recharge.coupon-complete-gift.html', {
@@ -122,11 +124,11 @@ export default class MyTDataRechargeCoupon extends TwViewController {
                 number: number
               });
             } else {
-              this.showError(res, svcInfo, '리필 쿠폰 사용', resp.code, resp.msg);
+              this.showError(res, svcInfo, pageInfo, '리필 쿠폰 사용', resp.code, resp.msg);
             }
           },
           (err) => {
-            this.showError(res, svcInfo, '리필 쿠폰 사용', err.code, err.msg);
+            this.showError(res, svcInfo, pageInfo, '리필 쿠폰 사용', err.code, err.msg);
           }
         );
         break;
@@ -135,9 +137,10 @@ export default class MyTDataRechargeCoupon extends TwViewController {
     }
   }
 
-  private showError(res: Response, svcInfo: any, title: string, code: string, msg: string): void {
+  private showError(res: Response, svcInfo: any, pageInfo: any, title: string, code: string, msg: string): void {
     this.error.render(res, {
       svcInfo: svcInfo,
+      pageInfo: pageInfo,
       title: title,
       code: code,
       msg: msg

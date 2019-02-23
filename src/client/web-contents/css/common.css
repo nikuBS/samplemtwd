@@ -4462,7 +4462,8 @@ a.ui-button:active,
     border-radius: 0.5625rem;
     background: #fff;
     overflow: hidden;
-    z-index: 30; }
+    z-index: 30;
+    font-size: 0.875rem; }
     .popup .popup-info .popup-header {
       position: relative;
       text-align: center; }
@@ -4514,13 +4515,20 @@ a.ui-button:active,
           padding-right: 1.875rem; }
       .popup .popup-info .popup-header .btn-tooltip-close {
         position: absolute;
-        right: 4px;
-        top: 8px;
-        width: 0.75rem;
-        height: 0.75rem;
-        background: url(/img/common/pop-tooltip-close.png) no-repeat right center;
-        background-size: 0.75rem 0.75rem;
+        right: -4px;
+        top: 0;
+        width: 28px;
+        height: 28px;
         font-size: 0; }
+        .popup .popup-info .popup-header .btn-tooltip-close:after {
+          content: "";
+          position: absolute;
+          right: 8px;
+          top: 8px;
+          width: 0.75rem;
+          height: 0.75rem;
+          background: url(/img/common/pop-tooltip-close.png) no-repeat right center;
+          background-size: 0.75rem 0.75rem; }
     .popup .popup-info.scrolling {
       padding: 1rem 1.25rem; }
       .popup .popup-info.scrolling.scrolling-shadow .popup-header::before {
@@ -6906,14 +6914,36 @@ a.ui-button:active,
   left: 0;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
+  margin-top: -3.125rem;
   text-align: center;
   color: #000; }
+  .checking_wrap.wrap {
+    padding-bottom: 0; }
   .checking_wrap .tit {
     font-size: 1.5625rem;
     font-weight: 700;
     margin: 0.9375rem 0 0.5625rem; }
   .checking_wrap .txt {
     font-size: 0.9375rem; }
+  .checking_wrap .subTxt {
+    font-size: 0.9375rem;
+    color: #959595;
+    margin-top: 0.5625rem; }
+
+.checking_btn {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 25;
+  width: 100%; }
+  .checking_btn a, .checking_btn button {
+    display: block;
+    width: 100%;
+    font-size: 0.9375rem;
+    text-align: center;
+    line-height: 3.125rem;
+    color: #000000;
+    border-top: 1px solid #e5e5e5; }
 
 .captcha-box {
   margin-top: 0.9375rem; }

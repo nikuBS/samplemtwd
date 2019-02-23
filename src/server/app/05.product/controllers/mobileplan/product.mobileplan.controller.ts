@@ -33,7 +33,7 @@ export default class Product extends TwViewController {
       };
 
       if (error.code) {
-        return this.error.render(res, { ...error, svcInfo });
+        return this.error.render(res, { ...error, pageInfo, svcInfo });
       }
 
       const productData = { groups, myFilters, recommendedPlans, recommendedTags };

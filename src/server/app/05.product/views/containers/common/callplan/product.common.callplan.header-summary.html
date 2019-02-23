@@ -19,6 +19,8 @@ const imgCaseClass = basicInfo.bgimgUrl ? 'img-case' : '';
     <%- prodRedisInfo.summary.smryHtmlCtt %>
     <% } %>
 
+    <% console.log(prodRedisInfo.summaryCase) %>
+
     <% if (( isMobileplanAdd || isWireplan || isWireplanAdd || isRoaming || isCombine ) &&
     ( prodRedisInfo.summary.prodSmryDesc || prodRedisInfo.summary.prodBasBenfCtt ) && prodRedisInfo.summaryCase !== '3') { %>
     <p class="productdetails-text02 <%= imgCaseClass %>">

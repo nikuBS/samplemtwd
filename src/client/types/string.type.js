@@ -110,7 +110,7 @@ Tw.POPUP_TITLE = {
   ROAMING_SERVICE_COUNTRY: 'LTE 자동로밍 서비스 이용 가능 국가',
   REFUND_BANK_SELECT: '환불신청계좌 은행 선택',
   EVENT: '이벤트',
-  TPLAN_SMARTWATCH: '스마트워치 회선 선택'
+  TPLAN_SMARTWATCH: '스마트워치 회선 선택',
 };
 
 Tw.POPUP_CONTENTS = {
@@ -130,7 +130,8 @@ Tw.POPUP_CONTENTS = {
   BIO_REGISTER: '생체정보(지문,Face ID)로 본인인증을 하실 수 있습니다.<br />지금 등록하시겠습니까?',
   APP_NOT_INSTALLED: ' 앱이 설치되어 있지 않습니다. <br />설치하시겠습니까?',
   TPLAN_WATCH_NON_LINE: '스마트워치 회선이<br>존재하지 않습니다',
-  TPLAN_WATCH: '스마트워치 회선<br>'
+  TPLAN_WATCH: '스마트워치 회선<br>',
+  POPUP_BLOCKED: '팝업이 차단되어 있습니다.<br>계속 이용하시려면 팝업을 허용해주세요.',
 };
 
 Tw.CHART_TYPE = {
@@ -463,6 +464,7 @@ Tw.ALERT_MSG_HOME = {
   A04: 'MY 바로가기를 모두 제거 했습니다. MY 바로가기를 추가해 T월드를 보다 쉽게 사용해 보세요.',
   A05: '고객님께서 가입한 요금제는 T끼리 데이터 선물이 불가능합니다.',
   A06: '선물 후 잔여 데이터가 500MB 이상, 선물 가능 횟수가 남아 있어야 T끼리 선물하기가 가능합니다.',
+  A08: { TITLE: 'T가족모아 데이터', MSG: 'T가족모아 데이터에 가입해보세요! 통신비는 내려가고, 데이터량은 늘어나는 혜택을 누릴 수 있습니다.', BUTTON: '가입하기' },
   A50: '',
   A51: '',
   A52: '',
@@ -578,6 +580,7 @@ Tw.ALERT_MSG_MYT_FARE = {
   COMPLETE_CHANGE_LIMIT: '한도변경이 완료되었습니다.',
   COMPLETE_CHANGE_PASSWORD: '결제 비밀번호 변경이 완료되었습니다.',
   COMPLETE_REGISTER_PASSWORD: '결제 비밀번호 신청이 완료되었습니다.',
+  COMPLETE_CANCEL_AUTO_PREPAY: '자동 선결제가 해지되었습니다.',
   NOT_ALLOWED_CHANGE_LIMIT: '한도를 변경할 수 없습니다',
   NOT_ALLOWED_INFO_MESSAGE: '연체/미납 중인 고객님은 납부 후<br/>한도를 변경하실 수 있습니다.',
   GO_PAYMENT: '납부하러 가기',
@@ -834,7 +837,8 @@ Tw.ALERT_MSG_MEMBERSHIP = {
     MSG: '재발급을 신청한 날 24:00까지 결제기능을 추가하지 않은 모바일 카드 이용 고객님만 재발급 신청을 취소하실 수 있습니다.',
     BUTTON: '발급 변경내역'
   },
-  ALERT_1_A68: { TITLE: '로그인 하시겠습니까?', MSG: 'T아이디(아이디/비밀번호) 로그인 후 이용 가능합니다.', BUTTON: '로그인'}
+  ALERT_1_A68: { TITLE: '로그인 하시겠습니까?', MSG: 'T아이디(아이디/비밀번호) 로그인 후 이용 가능합니다.', BUTTON: '로그인'},
+  ALERT_1_A69: { TITLE: '알림', MSG: '현재 위치를 가져오지 못했습니다. 잠시 후 다시 시도해 주세요.' }
 };
 
 Tw.ALERT_CANCEL = {
@@ -848,6 +852,11 @@ Tw.ALERT_MSG_CUSTOMER = {
   ALERT_PRAISE_COMPLETE: '고객님의 소중한 칭찬글이<br /> 등록되었습니다.',
   ALERT_RESEARCHES_A01: '이미 참여하신 설문입니다.',
   ALERT_RESEARCHES_A02: '설문에 참여해 주셔서 감사합니다.'
+};
+
+Tw.CUSTOMER_RESEARCHES_BUTTONS = {
+  NEXT: '다음으로',
+  SUBMIT: '참여하기'
 };
 
 Tw.ALERT_MSG_TEVENT = {};
@@ -989,7 +998,8 @@ Tw.PRODUCT_INFINITY_CATEGORY_DESC = {
 };
 
 Tw.HOTBILL_UNPAID_TITLE = '미납요금';
-Tw.HOTBILL_ERROR_ZINVE8106 = '실시간 요금조회에서의 전월요금 조회는 매월초 임시제공되며, 정확한 사용요금은 \'사용내역/<a href="/myt-fare/billguide/guide">청구요금조회</a>\'에서 확인 가능합니다.';
+Tw.HOTBILL_ERROR_ZINVE8106 = '실시간 요금조회에서의 전월요금 조회는 매월초 임시제공되며, 정확한 사용요금은 \'사용내역/' +
+  '<a href="/myt-fare/billguide/guide" class="bt-link-tx underline">청구요금조회</a>\'에서 확인 가능합니다.';
 
 Tw.SETTINGS_MENU = {
   LATEST: '최신'
@@ -1079,8 +1089,8 @@ Tw.MYT_DATA_TING = {
   A81_BTN_CONFIRM: '차단하기',
   SUCCESS_BLOCK: '팅 요금 선물 차단 완료 되었습니다.',
   ERROR_LIMIT: {
-    TITLE: '데이터한도요금충전 서비스를 이용하실 수 없습니다.',
-    CONTENT: '자세한 사항은 고객센터로 문의해주세요. '
+    TITLE: '데이터 한도 요금 충전 서비스를 이용하실 수 없습니다.',
+    CONTENT: '<br />자세한 사항은 고객센터로 문의해주세요.'
   }
 };
 
@@ -1720,7 +1730,7 @@ Tw.TOOLTIP_TITLE = {
   SERVICE_START_GUIDE: '서비스개시일/시간안내',
   ROAMING_SERVICE_CAUTION: '서비스 유의사항',
   ROAMING_SERVICE_TERM: '로밍 서비스 기간 설정',
-  ROAMING_COMMON_GUIDE: '로밍 요금상품 공통 안내'
+  ROAMING_COMMON_GUIDE: '로밍 요금상품 공통 안내사항'
 };
 
 Tw.MEMBERSHIP = {
@@ -1735,6 +1745,11 @@ Tw.MEMBERSHIP = {
         V: 'VIP 등급',
         M: '내 등급'
       }
+    },
+    BRAND_BENEFIT: {
+      MOV_TMEM_CONF_TIT: 'T멤버십 앱으로 이동하시겠습니까?',
+      MOV_TMEM_CONF_MSG: '해당 기능은 T멤버십 앱에서 가능합니다.',
+      MOV_TMEM_CONF_URL: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl='
     },
     DEFAULT_AREA: {
       AREA1: '서울',

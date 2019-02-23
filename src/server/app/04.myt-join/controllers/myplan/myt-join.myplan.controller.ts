@@ -258,6 +258,7 @@ class MyTJoinMyplan extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const defaultOptions = {
       title: '나의 요금제',
+      pageInfo: pageInfo,
       svcInfo: svcInfo
     };
 

@@ -61,10 +61,11 @@ abstract class MyTFareBillSetCommon extends TwViewController {
   }
 
   // API Response fail
-  protected fail(res: Response, data: any, svcInfo: any): void {
+  protected fail(res: Response, data: any, svcInfo: any, pageInfo: any): void {
     this.error.render(res, {
       code: data.code,
       msg: data.msg,
+      pageInfo: pageInfo,
       svcInfo: svcInfo
     });
   }

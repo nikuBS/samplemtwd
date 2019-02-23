@@ -12,7 +12,7 @@ class MyTFareBillOptionSms extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    res.render('bill/myt-fare.bill.option.sms.html', {});
+    res.render('bill/myt-fare.bill.option.sms.html', { pageInfo });
   }
 }
 

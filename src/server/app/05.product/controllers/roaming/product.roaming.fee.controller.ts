@@ -39,7 +39,7 @@ export default class ProductRoamingFee extends TwViewController {
                 };
 
                 if ( error.code ) {
-                    return this.error.render(res, { ...error, svcInfo });
+                    return this.error.render(res, { ...error, svcInfo, pageInfo });
                 }
 
                 res.render('roaming/product.roaming.fee.html',
@@ -57,7 +57,7 @@ export default class ProductRoamingFee extends TwViewController {
                 };
 
                 if ( error.code ) {
-                    return this.error.render(res, { ...error, svcInfo });
+                    return this.error.render(res, { ...error, svcInfo, pageInfo });
                 }
 
                 res.render('roaming/product.roaming.fee.html',

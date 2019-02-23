@@ -427,6 +427,7 @@
 <div></div>
 <% include ../../components/javascript.component.html %>
 <% include ../../components/search/search.template.component.html %>
+<% include ../../components/search/search.keyword-list.component.html %>
 <script>
     $(document).ready(function () {
         new Tw.CommonSearchMore($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>,<%- JSON.stringify(svcInfo) %>,'<%- CDN %>',<%- JSON.stringify(accessQuery)%>,'<%- step %>');

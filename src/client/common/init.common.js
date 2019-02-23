@@ -11,7 +11,7 @@ Tw.Init = function () {
   this._initXtvId();
   this._getEnvironment();
   this._sendXtractorLoginDummy();
-  this._setGesture();
+  // this._setGesture();
   // this._setNodeCookie();
 };
 
@@ -105,7 +105,7 @@ Tw.Init.prototype = {
 
   _sendXtractorLoginDummy: function () {
     var cookie = Tw.CommonHelper.getCookie('XTSVCGR');
-    if ( Tw.FormatHelper.isEmpty(cookie) || cookie === 'LOGGED' || Tw.FormatHelper.isEmpty(window.XtractorScript) ) {
+    if ( Tw.FormatHelper.isEmpty(cookie) || cookie === 'LOGGED' || Tw.FormatHelper.isEmpty(window.XtractorScript) && !Tw.BrowserHelper.isApp() ) {
       return;
     }
 

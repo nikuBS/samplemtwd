@@ -5,7 +5,7 @@
 * ID: RM_14_02_02
 %>
 
-<% include ../../components/start.component.html %>
+<%- include('../../components/start.component.html', { pageInfo: pageInfo }); %>
 <body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -392,7 +392,7 @@
 
                     <div class="announcement-box top-line mt0">
                         <p class="announcement-bullet type01">이용약관 미동의 시 예약 신청이 되지 않습니다.</p>
-                            <p class="announcement-bullet type01">청구기준은 한국시간 기준으로 임대일로부터 반납일까지 입니다. 단, 출국&middot;귀국 비행시간을 고려하여 2일 이상 시 전체 임대 기간에서 1일 이용요금이 무료 제공됩니다.</p>
+                            <p class="announcement-bullet type01">청구기준은 한국시간 기준으로 임대일로부터 반납일까지 입니다. 단, 출국/귀국 비행시간을 고려하여 2일 이상 시 전체 임대 기간에서 1일 이용요금이 무료 제공됩니다.</p>
                             <p class="announcement-bullet type01">대구 SKT 황금점 매장은 매주 일요일 휴무이므로 임대 시작일∙반납일자가 일요일인 경우 다른 장소를 선택해 주세요.</p>
                             <p class="announcement-bullet type01">로밍센터별 근무시간이 상이하므로 사전에 업무시간을 확인하신 후 방문해 주세요.<button id="goLink" class="bt-link-tx underline block">업무시간 상세보기</button></p>
                     </div>

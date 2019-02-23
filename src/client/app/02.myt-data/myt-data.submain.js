@@ -101,7 +101,7 @@ Tw.MyTDataSubMain.prototype = {
     this._initScroll();
     this._initBanners();
     var otherLinesLength = this.data.otherLines.length > this._OTHER_LINE_MAX_COUNT ? this._OTHER_LINE_MAX_COUNT : this.data.otherLines.length;
-    if (otherLinesLength > 0) {
+    if ( otherLinesLength > 0 ) {
       setTimeout($.proxy(this._initOtherLinesInfo, this, 0, otherLinesLength), 200);
     }
   },
@@ -316,7 +316,9 @@ Tw.MyTDataSubMain.prototype = {
       unit = Tw.CHART_UNIT.GB;
       data = this.data.pattern.data;
       var baseTotalData = 0, baseTotalVoice = 0, baseTotalSms = 0;
-      for ( idx = 0; idx < data.length; idx++ ) {
+      // [DVI001-13652] SKT 요청사항
+      // for ( idx = 0; idx < data.length; idx++ ) {
+      for ( idx = data.length - 1; idx >= 0; idx-- ) {
         var usageData = parseInt(data[idx].totalUsage, 10);
         baseTotalData += usageData;/*parseInt(data[idx].basOfrUsage, 10)*/
         if ( usageData > 0 ) {
@@ -336,13 +338,15 @@ Tw.MyTDataSubMain.prototype = {
           this.$patternChart.find('.tit > span').text(Tw.MYT_DATA_PATTERN_TITLE.VOICE);
           unit = Tw.CHART_UNIT.TIME;
           data = this.data.pattern.voice;
-          for ( idx = 0; idx < data.length; idx++ ) {
-            baseTotalVoice += parseInt(data[idx].totalUsage, 10);
-            var convVal_v = this.__convertVoice(parseInt(data[idx].totalUsage, 10)); // 배열 평균값으로 전달
+          // [DVI001-13652] SKT 요청사항
+          // for ( idx = 0; idx < data.length; idx++ ) {
+          for ( idx = data.length - 1; idx >= 0; idx-- ) {
+            var convVal_v = parseInt(data[idx].totalUsage, 10);
+            baseTotalVoice += convVal_v;
             if ( convVal_v > 0 ) {
               chart_data.push({
                 t: this._recentChartDate(data[idx].invMth), // 각 항목 타이틀
-                v: convVal_v
+                v: this.__convertVoice(parseInt(data[idx].totalUsage, 10)) // 배열 평균값으로 전달
               });
             }
           }
@@ -355,7 +359,9 @@ Tw.MyTDataSubMain.prototype = {
           this.$patternChart.find('.tit > span').text(Tw.MYT_DATA_PATTERN_TITLE.SMS);
           unit = Tw.CHART_UNIT.SMS;
           data = this.data.pattern.sms;
-          for ( idx = 0; idx < data.length; idx++ ) {
+          // [DVI001-13652] SKT 요청사항
+          // for ( idx = 0; idx < data.length; idx++ ) {
+          for ( idx = data.length - 1; idx >= 0; idx-- ) {
             baseTotalSms += parseInt(data[idx].totalUsage, 10);
             var convVal_s = parseInt(data[idx].totalUsage, 10); // 배열 평균값으로 전달
             if ( convVal_s > 0 ) {
@@ -376,6 +382,8 @@ Tw.MyTDataSubMain.prototype = {
           type: Tw.CHART_TYPE.BAR_2, //bar
           target: '.pattern', //클래스명 String
           average: true,
+          // [DVI001-13652] SKT 요청사항
+          average_place: 'right',
           unit: unit, //x축 이름
           data_arry: chart_data //데이터 obj
         });
@@ -392,33 +400,33 @@ Tw.MyTDataSubMain.prototype = {
   },
 
   _initOtherLinesInfo: function (from, end) {
-      var requestCommand = [];
-      for ( var idx = from; idx < end; idx++ ) {
-        this._svcMgmtNumList.push(this.data.otherLines[idx].svcMgmtNum);
-        var param = { command: Tw.API_CMD.BFF_05_0001 };
-        if ( this.data.otherLines[idx].child ) {
-          param.params = { childSvcMgmtNum: this.data.otherLines[idx].svcMgmtNum };
-        }
-        else {
-          // 간편로그인이 아닌 경우에만 다른회선잔여량도 포함시킨다.
-          if ( this.data.svcInfo.loginType !== Tw.AUTH_LOGIN_TYPE.EASY ) {
-            // 서버 명세가 변경됨 svcMgmtNum -> T-svcMgmtNum
-            param.headers = { 'T-svcMgmtNum': this.data.otherLines[idx].svcMgmtNum };
-          }
-        }
-        requestCommand.push(param);
-      }
-      if ( requestCommand.length > 0 ) {
-        this._apiService
-          .requestArray(requestCommand)
-          .done($.proxy(this._responseOtherLine, this))
-          .fail($.proxy(this._errorRequest, this));
+    var requestCommand = [];
+    for ( var idx = from; idx < end; idx++ ) {
+      this._svcMgmtNumList.push(this.data.otherLines[idx].svcMgmtNum);
+      var param = { command: Tw.API_CMD.BFF_05_0001 };
+      if ( this.data.otherLines[idx].child ) {
+        param.params = { childSvcMgmtNum: this.data.otherLines[idx].svcMgmtNum };
       }
       else {
-        // 다른 회선 정보는 있지만 조회할 수 없는 경우 숨김
-        this.$container.find('[data-id=empty-other-lines]').hide();
-        this.$otherLines.hide();
+        // 간편로그인이 아닌 경우에만 다른회선잔여량도 포함시킨다.
+        if ( this.data.svcInfo.loginType !== Tw.AUTH_LOGIN_TYPE.EASY ) {
+          // 서버 명세가 변경됨 svcMgmtNum -> T-svcMgmtNum
+          param.headers = { 'T-svcMgmtNum': this.data.otherLines[idx].svcMgmtNum };
+        }
       }
+      requestCommand.push(param);
+    }
+    if ( requestCommand.length > 0 ) {
+      this._apiService
+        .requestArray(requestCommand)
+        .done($.proxy(this._responseOtherLine, this))
+        .fail($.proxy(this._errorRequest, this));
+    }
+    else {
+      // 다른 회선 정보는 있지만 조회할 수 없는 경우 숨김
+      this.$container.find('[data-id=empty-other-lines]').hide();
+      this.$otherLines.hide();
+    }
   },
 
   _responseOtherLine: function () {
@@ -615,16 +623,18 @@ Tw.MyTDataSubMain.prototype = {
     if ( gapCnt > this._OTHER_LINE_MAX_COUNT ) {
       gapCnt = this._OTHER_LINE_MAX_COUNT;
       isMore = true;
-    } else {
+    }
+    else {
       gapCnt = gapCnt;
     }
     var fromCnt = renderedListCnt;
     var endCnt = fromCnt + gapCnt;
     if ( gapCnt > 0 ) {
       this._initOtherLinesInfo(fromCnt, endCnt);
-      if (isMore) {
+      if ( isMore ) {
         this.$otherLines.find('.btn-more').show();
-      } else {
+      }
+      else {
         this.$otherLines.find('.btn-more').hide();
       }
     }

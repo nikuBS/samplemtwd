@@ -1728,9 +1728,9 @@
   padding: 0 1rem; }
   .list-comp-lineinfo li {
     overflow: hidden;
-    border-bottom: 1px solid #e1e1e1; }
-    .list-comp-lineinfo li:last-of-type {
-      border-bottom: 0; }
+    border-top: 1px solid #e1e1e1; }
+    .list-comp-lineinfo li:first-child {
+      border-top: 0; }
     .list-comp-lineinfo li button {
       display: block;
       width: 100%;
@@ -2258,6 +2258,7 @@
   background: url(/img/svg/graphic_badge_plan_my.svg) no-repeat 0 0;
   background-size: 100% 100%; }
   .icon-badge-plan-my.use {
+    margin-right: 0.5rem !important;
     background: url(/img/svg/badge_plan_my.svg) no-repeat 0 0;
     background-size: 100% 100%; }
 
@@ -3886,6 +3887,10 @@
       font-weight: bold; }
     .single-list.in-popup .tx-cont .unit {
       font-size: 0.9375rem; }
+  .single-list.item1 .in-tx {
+    margin-top: 0.625rem; }
+  .single-list.item1 .price {
+    margin-top: 0.625rem; }
 
 .in-title {
   display: table;
@@ -12978,6 +12983,7 @@ a.bt-link-tx.underline.small {
 
 /* 상품상세 */
 .productdetails-wrap {
+  min-height: 15rem;
   padding-bottom: 4.375rem; }
   .productdetails-wrap .productdetails-title {
     position: relative;
@@ -13046,7 +13052,7 @@ a.bt-link-tx.underline.small {
     font-size: 0.875rem;
     line-height: 1.25rem; }
     .productdetails-wrap .productdetails-text02.img-case {
-      padding-right: 2.5rem; }
+      max-width: 70%; }
   .productdetails-wrap .productdetails-text03 {
     margin-top: 0.9375rem;
     color: #fff;
@@ -14296,7 +14302,7 @@ a.bt-link-tx.underline.small {
   width: 2.375rem;
   height: 0.9375rem;
   margin-left: 0.4375rem;
-  background: url(/img/ico/ico-badge-partner.png);
+  background: url(/img/ico/badge_family_03.svg);
   background-size: 2.375rem; }
 
 .badge-siblings {
@@ -14304,22 +14310,15 @@ a.bt-link-tx.underline.small {
   width: 2.9375rem;
   height: 0.9375rem;
   margin-left: 0.4375rem;
-  background: url(/img/ico/ico-badge-siblings.png);
+  background: url(/img/ico/badge_family_06.svg);
   background-size: 2.9375rem; }
 
 .badge-grandparents {
   display: inline-block;
   width: 3.1875rem;
   height: 0.9375rem;
-  background: url(/img/ico/ico-badge-grandparents.png);
+  background: url(/img/ico/badge_family_07.svg);
   background-size: 3.1875rem; }
-
-.badge-grandchildren {
-  display: inline-block;
-  width: 2.375rem;
-  height: 0.9375rem;
-  background: url(/img/ico/ico-badge-grandchildren.png);
-  background-size: 2.375rem; }
 
 .data-famliy-group-summary .dc-use.small.type2 {
   position: relative; }
@@ -14920,6 +14919,8 @@ a.bt-link-tx.underline.small {
       width: 100%; }
       .cont-actionsheet .ac-list .type1 > a .table-cell.cell-title, .cont-actionsheet .ac-list .type1 button .table-cell.cell-title {
         width: 60%; }
+      .cont-actionsheet .ac-list .type1 > a .table-cell.tit-full, .cont-actionsheet .ac-list .type1 button .table-cell.tit-full {
+        width: 85%; }
       .cont-actionsheet .ac-list .type1 > a .table-cell > span.link, .cont-actionsheet .ac-list .type1 button .table-cell > span.link {
         display: inline-block; }
     .cont-actionsheet .ac-list .type1 > label .table-cell.cell-title {
@@ -15742,7 +15743,8 @@ a.bt-link-tx.underline.small {
                 color: #f76252;
                 font-size: 0.75rem;
                 font-weight: 700;
-                text-indent: -1.0625rem; }
+                text-indent: -1.0625rem;
+                z-index: 1; }
               .chart-wrap.bar4 .data-arry .data-ul > li > dl > dd .bar {
                 position: absolute;
                 left: 50%;
@@ -17531,9 +17533,36 @@ a.bt-link-tx.underline.small {
     color: #178BCE;
     font-size: 0.75rem; }
 
+.device_android .search-point .filter.subway .bt-dropdown.text-type02 {
+  padding-top: 0.0625rem; }
+
 /* CS_02_01 : 지점/대리점 찾기 */
 .search-point .filter {
   margin-bottom: 1.25rem; }
+  .search-point .filter.subway {
+    margin-bottom: 0.625rem; }
+    .search-point .filter.subway .inline {
+      float: left;
+      width: 40%; }
+      .search-point .filter.subway .inline + .inline {
+        float: right;
+        width: 58%; }
+      .search-point .filter.subway .inline button {
+        width: 100%; }
+    .search-point .filter.subway:after {
+      display: block;
+      clear: both;
+      content: ""; }
+    .search-point .filter.subway .bt-dropdown.text-type02 {
+      padding: 0 2.25rem 0 0.75rem;
+      height: 2.625rem;
+      line-height: 2.625rem; }
+      .search-point .filter.subway .bt-dropdown.text-type02:after {
+        margin-top: -0.25rem;
+        width: 0.75rem;
+        height: 0.4375rem;
+        background: url(/img/ico/btn-select.png) no-repeat;
+        background-size: 12px auto; }
 
 .search-point .btn-search {
   margin-bottom: 1.25rem; }
@@ -28767,38 +28796,8 @@ body.apphome {
   font-size: 0.875rem;
   line-height: 1.125rem;
   border: 1px solid #e3e4e6;
-  padding: 0.8125rem 0 0 1rem; }
-  .travel-info .info-link-box .info-link-inner .tit {
-    position: absolute;
-    left: 16px;
-    top: 15px;
-    z-index: 3; }
-  .travel-info .info-link-box .info-link-inner:after {
-    content: '';
-    display: inline-block;
-    width: 5rem;
-    height: 5rem;
-    position: absolute;
-    right: 0;
-    bottom: 0; }
-  .travel-info .info-link-box .info-link-inner.icon1:after {
-    background: url(/img/product/icon-travel-info01.png) no-repeat;
-    background-size: 5rem 5rem; }
-  .travel-info .info-link-box .info-link-inner.icon2:after {
-    background: url(/img/product/icon-travel-info02.png) no-repeat;
-    background-size: 5rem 5rem; }
-  .travel-info .info-link-box .info-link-inner.icon3:after {
-    background: url(/img/product/icon-travel-info03.png) no-repeat;
-    background-size: 5rem 5rem; }
-  .travel-info .info-link-box .info-link-inner.icon4:after {
-    background: url(/img/product/icon-travel-info04.png) no-repeat;
-    background-size: 5rem 5rem; }
-  .travel-info .info-link-box .info-link-inner.icon5:after {
-    background: url(/img/product/icon-travel-info05.png) no-repeat;
-    background-size: 5rem 5rem; }
-  .travel-info .info-link-box .info-link-inner.icon6:after {
-    background: url(/img/product/icon-travel-info06.png) no-repeat;
-    background-size: 5rem 5rem; }
+  padding: 0;
+  text-align: center; }
 
 .travel-info .wrap-gaps-top h2 {
   font-size: 1rem; }

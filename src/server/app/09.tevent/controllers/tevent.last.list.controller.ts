@@ -38,6 +38,7 @@ class TeventLastList extends TwViewController {
         this.error.render(res, {
           code: resp.code,
           msg: resp.msg,
+          pageInfo: pageInfo,
           svcInfo: svcInfo
         });
       }

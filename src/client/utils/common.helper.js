@@ -15,7 +15,7 @@ Tw.CommonHelper = (function () {
     } else {
       var windowPopup = window.open(url, '_blank', option);
       if ( Tw.FormatHelper.isEmpty(windowPopup) ) {
-        Tw.Popup.openAlert('Pop-up blocked');
+        Tw.Popup.openAlert(Tw.POPUP_CONTENTS.POPUP_BLOCKED);
       }
     }
   };

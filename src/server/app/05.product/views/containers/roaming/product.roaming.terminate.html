@@ -5,7 +5,7 @@
 %>
 
 
-<% include ../../components/start.component.html %>
+<%- include('../../components/start.component.html', { pageInfo: pageInfo }); %>
 <body data-gr-c-s-loaded="true">
 <!-- #skip_navigation
 <div id="skipNav" class="skip_navi">
@@ -54,7 +54,7 @@
 									<span class="elem">해지할 로밍 <%= prodTypeInfo.prodTypCd==='H_P'?'요금제':'부가서비스'%></span>
 								</span>
                             <span class="tit-tx"><%= prodBffInfo.preinfo.reqProdInfo.prodNm %></span>
-                            <span class="sub-disc03"><span class="tx-bold vbl"><%= prodBffInfo.preinfo.reqProdInfo.basFeeInfo%></span><span id="showTex"> 부가세포함</span></span>
+                            <span class="sub-disc03"><span class="tx-bold vbl"><%= prodBffInfo.preinfo.reqProdInfo.basFeeInfo%></span><span id="showTex"> 부가세 포함</span></span>
                             <div class="cont-noti pt36">
                                 <span class="type3"><%= prodBffInfo.preinfo.reqProdInfo.prodSmryDesc %></span>
                             </div>

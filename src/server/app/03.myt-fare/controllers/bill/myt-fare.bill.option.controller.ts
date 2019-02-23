@@ -33,6 +33,7 @@ class MyTFareBillOption extends TwViewController {
         this.error.render(res, {
           code: paymentOption.code === API_CODE.CODE_00 ? addrInfo.code : paymentOption.code,
           msg: paymentOption.code === API_CODE.CODE_00 ? addrInfo.msg : paymentOption.msg,
+          pageInfo: pageInfo,
           svcInfo: svcInfo
         });
       }

@@ -16,6 +16,7 @@ Tw.ProductMobileplanSettingTplan = function(rootEl, prodId, displayId, currentBe
   this._currentBenefitProdId = currentBenefitProdId;
   this._watchInfo = JSON.parse(watchInfo);
   this._smartWatchLine = null;
+  this._smartWatchLineNumber = null;
 
   this.$container = rootEl;
   this._cachedElement();
@@ -61,6 +62,7 @@ Tw.ProductMobileplanSettingTplan.prototype = {
   _selectSmartWatchItem: function() {
     this._isDisableSmartWatchLineInfo = false;
     this._smartWatchLine = null;
+    this._smartWatchLineNumber = null;
 
     if (this._watchInfo.watchCase === 'C' || this._watchInfo.watchSvcList.length < 1) {
       return this._popupService.openConfirmButton(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A73.TITLE,
@@ -76,6 +78,8 @@ Tw.ProductMobileplanSettingTplan.prototype = {
     }
 
     this._smartWatchLine = this._watchInfo.watchSvcList[0].watchSvcMgmtNum;
+    this._smartWatchLineNumber = Tw.FormatHelper.conTelFormatWithDash(this._watchInfo.watchSvcList[0].watchSvcNumMask);
+    this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
     return true;
   },
 
@@ -111,7 +115,8 @@ Tw.ProductMobileplanSettingTplan.prototype = {
     return {
       'label-attr': 'id="ra' + idx + '"',
       'txt': Tw.FormatHelper.conTelFormatWithDash(item.watchSvcNumMask),
-      'radio-attr': 'id="ra' + idx + '" data-num="' + item.watchSvcMgmtNum + '" ' + (this._smartWatchLine === item.watchSvcMgmtNum ? 'checked' : '')
+      'radio-attr': 'id="ra' + idx + '" data-num="' + item.watchSvcMgmtNum + '"' +
+        ' data-svcnum="' + item.watchSvcNumMask + '" ' + (this._smartWatchLine === item.watchSvcMgmtNum ? 'checked' : '')
     };
   },
 
@@ -121,6 +126,7 @@ Tw.ProductMobileplanSettingTplan.prototype = {
 
   _setSmartWatchLine: function(e) {
     this._smartWatchLine = $(e.currentTarget).data('num');
+    this._smartWatchLineNumber = $(e.currentTarget).data('svcnum');
     this._popupService.close();
   },
 
@@ -178,8 +184,8 @@ Tw.ProductMobileplanSettingTplan.prototype = {
 
     if ($checked.val() === 'NA00006116') {
       completeData = $.extend(completeData, {
-        basicTxt: Tw.FormatHelper.isEmpty(this._smartWatchLine) ? Tw.POPUP_CONTENTS.TPLAN_WATCH_NON_LINE :
-          Tw.POPUP_CONTENTS.TPLAN_WATCH + Tw.FormatHelper.getFormattedPhoneNumber(this._smartWatchLine)
+        basicTxt: Tw.FormatHelper.isEmpty(this._smartWatchLineNumber) ? Tw.POPUP_CONTENTS.TPLAN_WATCH_NON_LINE :
+          Tw.POPUP_CONTENTS.TPLAN_WATCH + this._smartWatchLineNumber
       });
     }
 

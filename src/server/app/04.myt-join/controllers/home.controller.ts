@@ -12,8 +12,8 @@ class Home extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string) {
-    res.render('main.home.html');
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, layerType: string, pageInfo: any) {
+    res.render('main.home.html', { pageInfo });
   }
 }
 

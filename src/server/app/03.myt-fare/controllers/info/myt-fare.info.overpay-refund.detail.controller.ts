@@ -33,6 +33,7 @@ class MyTFareInfoOverpayRefund extends TwViewController {
           return this.error.render(res, {
             code: resp.code,
             msg: resp.msg,
+            pageInfo: pageInfo,
             svcInfo: svcInfo
           });
         }
@@ -40,7 +41,7 @@ class MyTFareInfoOverpayRefund extends TwViewController {
         const resultData = resp.result.refundPaymentRecord[listId];
 
         if (!resultData || !listId) {
-          return this._renderError(null, MYT_PAYMENT_DETAIL_ERROR.MSG, res, svcInfo);
+          return this._renderError(null, MYT_PAYMENT_DETAIL_ERROR.MSG, res, svcInfo, pageInfo);
         }
 
         resultData.reqDt = DateHelper.getShortDate(resultData.effStaDt); // 신청일자
@@ -56,15 +57,16 @@ class MyTFareInfoOverpayRefund extends TwViewController {
       });
 
     } else {
-      return this._renderError(null, MYT_PAYMENT_DETAIL_ERROR.MSG, res, svcInfo);
+      return this._renderError(null, MYT_PAYMENT_DETAIL_ERROR.MSG, res, svcInfo, pageInfo);
     }
   }
 
   // 오류 페이지
-  private _renderError(code, msg, res, svcInfo) {
+  private _renderError(code, msg, res, svcInfo, pageInfo) {
     return this.error.render(res, {
       code,
       msg,
+      pageInfo,
       svcInfo
     });
   }

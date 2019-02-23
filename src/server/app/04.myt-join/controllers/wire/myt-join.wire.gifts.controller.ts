@@ -107,6 +107,7 @@ class MyTJoinWireGifts extends TwViewController {
             title: MYT_JOIN_WIRE.GIFTS.TITLE,
             code: resp.code,
             msg: resp.msg,
+            pageInfo: pageInfo,
             svcInfo: svcInfo
           });
         }
@@ -115,6 +116,7 @@ class MyTJoinWireGifts extends TwViewController {
           title: MYT_JOIN_WIRE.GIFTS.TITLE,
           code: resp.code,
           msg: resp.msg,
+          pageInfo: pageInfo,
           svcInfo: svcInfo
         });
       });

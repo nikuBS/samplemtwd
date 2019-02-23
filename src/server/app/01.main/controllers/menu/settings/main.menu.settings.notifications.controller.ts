@@ -15,8 +15,8 @@ export default class MainMenuSettingsNotifications extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
          allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest(
-      this.checkNotiAgreedInfo(res, svcInfo),
-      this.checkTworldAgreedInfo(res, svcInfo)
+      this.checkNotiAgreedInfo(res, svcInfo, pageInfo),
+      this.checkTworldAgreedInfo(res, svcInfo, pageInfo)
     ).subscribe(
       ([respNoti, respTworld]) => {
         if (FormatHelper.isEmpty(respNoti) || FormatHelper.isEmpty(respTworld)) {
@@ -33,21 +33,21 @@ export default class MainMenuSettingsNotifications extends TwViewController {
           isLocationOn: respTworld.twdLocUseAgreeYn === 'Y' ? true : false
         });
       },
-      (err) => this.showError(res, svcInfo, err.code, err.msg)
+      (err) => this.showError(res, svcInfo, pageInfo, err.code, err.msg)
     );
   }
 
-  private checkNotiAgreedInfo(res: Response, svcInfo: any): Observable<any> {
+  private checkNotiAgreedInfo(res: Response, svcInfo: any, pageInfo: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_03_0023, {}).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         return resp.result;
       }
-      this.showError(res, svcInfo, resp.code, resp.msg);
+      this.showError(res, svcInfo, pageInfo, resp.code, resp.msg);
       return null;
     });
   }
 
-  private checkTworldAgreedInfo(res: Response, svcInfo: any): Observable<any> {
+  private checkTworldAgreedInfo(res: Response, svcInfo: any, pageInfo: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_03_0021, {}).map((resp) => {
       // Mock
       /*
@@ -60,15 +60,16 @@ export default class MainMenuSettingsNotifications extends TwViewController {
       if (resp.code === API_CODE.CODE_00) {
         return resp.result;
       }
-      this.showError(res, svcInfo, resp.code, resp.msg);
+      this.showError(res, svcInfo, pageInfo, resp.code, resp.msg);
       return null;
     });
   }
 
-  private showError(res: Response, svcInfo: any, code: string, msg: string) {
+  private showError(res: Response, svcInfo: any, pageInfo: any, code: string, msg: string) {
     this.error.render(res, {
       code: code,
       msg: msg,
+      pageInfo: pageInfo,
       svcInfo: svcInfo
     });
   }

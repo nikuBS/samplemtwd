@@ -209,7 +209,7 @@ $.fn.chart2 = function(o){
     if($(d.target).find('.data-ul > li').length > 4){
       $(d.target).addClass('over');
       $(d.target).find('.data-ul > li').css('width', (100 / $(d.target).find('.data-ul > li').length) + '%');
-      $(d.target).find('.data-ul').css('width', (21.5 * $(d.target).find('.data-ul > li').length) + 1 + '%');
+      $(d.target).find('.data-ul').css('width', (25 * $(d.target).find('.data-ul > li').length) + 1 + '%');
     }
     if(d.link){
       $(d.target).find('.data-ul > li:not(".average")').each(function(i){
@@ -296,7 +296,7 @@ $.fn.chart2 = function(o){
     if($(d.target).find('.data-ul > li').length > 4){
       $(d.target).addClass('over');
       $(d.target).find('.data-ul > li').css('width', (100 / $(d.target).find('.data-ul > li').length) + '%');
-      $(d.target).find('.data-ul').css('width', (21.5 * $(d.target).find('.data-ul > li').length) + 1 + '%');
+      $(d.target).find('.data-ul').css('width', (25 * $(d.target).find('.data-ul > li').length) + 1 + '%');
     }
     if(d.link){
       $(d.target).find('.data-ul > li:not(".average")').each(function(i){
@@ -330,7 +330,8 @@ $.fn.chart2 = function(o){
       }
     }
 
-    if(d.average){ // 평균
+    if(d.average && d.average_place == 'left'){ // 평균
+      var style2_pattern_average_height = (style2_pattern[0] > 110)? 110 : style2_pattern[0];
       $(d.target).find('.data-arry').append($('<span>').addClass('dash').append($('<span>').css('bottom', style_pattern[0]+'%')));
       $(d.target).find('.data-ul')
         .append(
@@ -358,7 +359,7 @@ $.fn.chart2 = function(o){
                       $('<span>').addClass('blind').text(text2_pattern[0])
                     )
                     .append(
-                      $('<span>').addClass('bar2').css('height', style2_pattern[0]+'%')
+                      $('<span>').addClass('bar2').css('height', style2_pattern_average_height+'%')
                     )
                 )
             )
@@ -366,6 +367,7 @@ $.fn.chart2 = function(o){
     }
 
     for(var i=0; i < d.data_arry.length; i++){
+      var style2_pattern_height = (style2_pattern[i+1] > 110)? 110 : style2_pattern[i+1];
       $(d.target).find('.data-ul')
         .append(
           $('<li>')
@@ -392,18 +394,57 @@ $.fn.chart2 = function(o){
                     $('<span>').addClass('blind').text(text2_pattern[i+1])
                   )
                   .append(
-                    $('<span>').addClass('bar2').css('height', style2_pattern[i+1]+'%')
+                    $('<span>').addClass('bar2').css('height', style2_pattern_height+'%')
                   )
               )
           )
         )
     }
 
+    if(d.average && d.average_place == 'right'){ // 평균
+      var style2_pattern_average_height = (style2_pattern[0] > 110)? 110 : style2_pattern[0];
+      $(d.target).find('.data-arry').append($('<span>').addClass('dash').append($('<span>').css('bottom', style_pattern[0]+'%')));
+      $(d.target).find('.data-ul')
+        .append(
+          $('<li>').addClass('average').data('value', average)
+            .append(
+              $('<dl>')
+                .append(
+                  $('<dt>').text('평균')
+                )
+                .append(
+                  $('<dd>')
+                    .append(
+                      $('<span>').addClass('blind').text(d.legend[0])
+                    )
+                    .append(
+                      $('<span>').addClass('v').css('bottom', style_pattern[0]+'%').text(text_pattern[0])
+                    )
+                    .append(
+                      $('<span>').addClass('bar').css('height', style_pattern[0]+'%')
+                    )
+                    .append(
+                      $('<span>').addClass('blind').text(d.legend[1])
+                    )
+                    .append(
+                      $('<span>').addClass('blind').text(text2_pattern[0])
+                    )
+                    .append(
+                      $('<span>').addClass('bar2').css('height', style2_pattern_average_height+'%')
+                    )
+                )
+            )
+        )
+        setTimeout(function () {
+          $(d.target).find('.data-belt').scrollLeft($(d.target).find('.data-belt').width());
+        }, 500);
+    }
+
     $(d.target).find('.data-ul > li').css('width', (100 / $(d.target).find('.data-ul > li').length) + '%');
     if($(d.target).find('.data-ul > li').length > 4){
       $(d.target).addClass('over');
       $(d.target).find('.data-ul > li').css('width', (100 / $(d.target).find('.data-ul > li').length) + '%');
-      $(d.target).find('.data-ul').css('width', (21.5 * $(d.target).find('.data-ul > li').length) + 1 + '%');
+      $(d.target).find('.data-ul').css('width', (25 * $(d.target).find('.data-ul > li').length) + 1 + '%');
     }
     if(d.link){
       $(d.target).find('.data-ul > li:not(".average")').each(function(i){

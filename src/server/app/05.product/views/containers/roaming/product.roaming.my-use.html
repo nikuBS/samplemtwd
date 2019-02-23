@@ -4,7 +4,7 @@
 * Date: 2018.11.20
 %>
 
-<% include ../../components/start.component.html %>
+<%- include('../../components/start.component.html', { pageInfo: pageInfo }); %>
 <body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -32,7 +32,7 @@
                         <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker">
                                 <ul role="tablist">
-                                    <li role="tab" aria-selected="true" aria-controls="tab1-tab" id="tab1" class="fee-tab"><a>로밍 요금제</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                    <li role="tab" aria-selected="false" aria-controls="tab1-tab" id="tab1" class="fee-tab"><a>로밍 요금제</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
                                     <li role="tab" aria-selected="false" aria-controls="tab2-tab" id="tab2" class="add-tab"><a>로밍 부가서비스</a></li>
                                 </ul>
                             </div>

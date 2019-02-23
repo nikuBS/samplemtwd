@@ -33,6 +33,7 @@ export default class ProductAppsDetail extends TwViewController {
         if (error.code) {
           return this.error.render(res, {
             ...error,
+            pageInfo,
             svcInfo
           });
         }
@@ -62,7 +63,7 @@ export default class ProductAppsDetail extends TwViewController {
         }, images)
       };
     });
-  };
+  }
 
   private getRecommendedApps = appId => {
     return this.apiService.request(API_CMD.BFF_10_0139, {}, {}, [appId]).map(resp => {
@@ -77,7 +78,7 @@ export default class ProductAppsDetail extends TwViewController {
         };
       });
     });
-  };
+  }
 
   private getProductInfo = appId => {
     return this.redisService.getData(REDIS_KEY.PRODUCT_INFO + appId).map(resp => {

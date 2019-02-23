@@ -25,8 +25,8 @@
             <div class="home-tab">
                 <div class="home-tab-belt">
                     <ul>
-                        <li class="tab"><div><button class="icon-home-tab-my"><span class="blind">my</span></button><span class="bar"></span></div></li>
-                        <li class="tab"><div><button class="icon-home-tab-store"><span class="blind">store</span></button><span class="bar"></span></div></li>
+                        <li class="tab"><div><a href="#" class="icon-home-tab-my fe-replace-history"><span class="blind">my</span></a><span class="bar"></span></div></li>
+                        <li class="tab"><div><a href="#store" class="icon-home-tab-store fe-replace-history"><span class="blind">store</span></a><span class="bar"></span></div></li>
                     </ul>
                 </div>
             </div>
@@ -129,22 +129,22 @@
                                             </span>
                                         </a>
                                         <!-- // .donut-chart -->
-                                        <button id="fe-bt-data-link" class="data-add" data-xt_eid="CMMA_A2_B6-3" data-xt_csid="NO" data-xt_action="BC"><span>충전/선물</span></button>
+                                        <button id="fe-bt-data-link" class="data-add" data-tplanuse="<%= homeData.usageData.data.isTplanUse %>" data-tplanprod="<%= homeData.usageData.data.isTplanProd %>" data-xt_eid="CMMA_A2_B6-3" data-xt_csid="NO" data-xt_action="BC"><span>충전/선물</span></button>
                                         <span id="fe-coach-data" class="coach-mark none"><strong class="point">충전/선물/공유를</strong> 바로 할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
                                     </div>
                                 </div>
                                 <!-- // .widget -->
 
-                                <% if(homeData.usageData.data.isTplanUse || homeData.usageData.data.isTplanProd) { %>
-                                <div id="fe-tplan" class="legend" data-tplanuse="<%= homeData.usageData.data.isTplanUse %>" data-tplanprod="<%= homeData.usageData.data.isTplanProd %>">
-                                    <span class="category0"><span><em class="data"><%= homeData.usageData.data.showMyRemained %></em> 나의 데이터</span></span>
-                                    <% if(homeData.usageData.data.isTplanUse) { %>
-                                    <span class="category1"><span><em class="data"><%= homeData.usageData.data.showShareRemained %></em>T가족모아데이터</span></span>
-                                    <% } else { %>
-                                    <span class="category1"><span>T가족모아데이터</span><button data-xt_eid="CMMA_A2_B6-4" data-xt_csid="NO" data-xt_action="BC"><span class="blind">가입하기</span></button></span>
-                                    <% } %>
-                                </div>
-                                <% } %>
+                                <!--<% if(homeData.usageData.data.isTplanUse || homeData.usageData.data.isTplanProd) { %>-->
+                                <!--<div id="fe-tplan" class="legend" data-tplanuse="<%= homeData.usageData.data.isTplanUse %>" data-tplanprod="<%= homeData.usageData.data.isTplanProd %>">-->
+                                    <!--<span class="category0"><span><em class="data"><%= homeData.usageData.data.showMyRemained %></em> 나의 데이터</span></span>-->
+                                    <!--<% if(homeData.usageData.data.isTplanUse) { %>-->
+                                    <!--<span class="category1"><span><em class="data"><%= homeData.usageData.data.showShareRemained %></em>T가족모아데이터</span></span>-->
+                                    <!--<% } else { %>-->
+                                    <!--<span class="category1"><span>T가족모아데이터</span><button data-xt_eid="CMMA_A2_B6-4" data-xt_csid="NO" data-xt_action="BC"><span class="blind">가입하기</span></button></span>-->
+                                    <!--<% } %>-->
+                                <!--</div>-->
+                                <!--<% } %>-->
 
                                 <div class="call-message">
                                     <% if(homeData.usageData.voice && homeData.usageData.voice.isShow) { %>
@@ -1098,21 +1098,6 @@
 <%- include('../components/home/home.welcome.component.html', { svcInfo: svcInfo }); %>
 <% } %>
 <%- include('../components/home/home.quick-menu.component.html', { cdn: CDN }); %>
-<% if (svcInfo === null) { %>
-<script>
-  setTimeout(function () {
-    skt_landing.action.home_slider({ initialSlide: 1 });
-    skt_landing.action.notice_slider();
-  }, 40);
-</script>
-<% } else { %>
-<script>
-  setTimeout(function () {
-    skt_landing.action.home_slider({ initialSlide: 0 });
-    skt_landing.action.notice_slider();
-  }, 40);
-</script>
-<% } %>
 <script>
   $(document).ready(function () {
     new Tw.MainHome($('#mainHome'), '<%-JSON.stringify(redisData.smartCard) %>', '<%= redisData.embNotice !== null %>', '<%= pageInfo.menuId %>', '<%= svcInfo !== null %>');

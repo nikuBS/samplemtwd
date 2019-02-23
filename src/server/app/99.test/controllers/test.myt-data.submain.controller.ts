@@ -56,6 +56,7 @@ class TestMytDataSubmainController extends TwViewController {
           title: MYT_DATA_SUBMAIN_TITLE.MAIN,
           code: present.info.code,
           msg: present.info.msg,
+          pageInfo: pageInfo,
           svcInfo: svcInfo
         });
         return false;

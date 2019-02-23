@@ -17,13 +17,15 @@ export default class MyTJoinMyPlanCombineShare extends TwViewController {
         if (comb.code) {
           return this.error.render(res, {
             ...comb,
-            svcInfo
+            svcInfo,
+            pageInfo
           });
         }
         res.render('myplancombine/myt-join.myplancombine.share.html', { svcInfo, pageInfo, ...comb });
       });
     } else {
       this.error.render(res, {
+        pageInfo,
         svcInfo
       });
     }

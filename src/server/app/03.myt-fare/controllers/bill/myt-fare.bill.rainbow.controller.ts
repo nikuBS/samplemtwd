@@ -31,6 +31,7 @@ class MyTFareBillRainbow extends TwViewController {
         this.error.render(res, {
           code: rainbow.code,
           msg: rainbow.msg,
+          pageInfo: pageInfo,
           svcInfo: svcInfo
         });
       }

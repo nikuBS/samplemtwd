@@ -13,7 +13,7 @@ class BenefitMyBenefitRainbowPointAdjustmentComplete extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    res.render('my-benefit/benefit.my-benefit.rainbow-point.adjustment-complete.html');
+    res.render('my-benefit/benefit.my-benefit.rainbow-point.adjustment-complete.html', { pageInfo });
   }
 
 }

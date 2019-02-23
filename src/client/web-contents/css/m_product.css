@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 
 /* PLM 원장 */
 .plm {padding-bottom:30px;}
@@ -52,7 +52,7 @@
 
 
 /* 시각화원장 - 텍스트시각화 */
-.prCont-txt {padding-bottom:30px;}
+.prCont-txt {padding-bottom:1.875rem;}
 /*
 .prCont-txt h1 {padding-top:25px !important;color:#000 !important;font-size:32px !important;line-height:37px;}
 .prCont-txt h1 * {color:#000 !important;font-size:32px !important;}
@@ -69,32 +69,53 @@
 
 
 /* PLM원장 - 텍스트시각화 */
-.prCont-txt .txt_summary1 {padding-top:25px !important;padding-left:15px !important;padding-right:15px !important;color:#000 !important;font-size:32px !important;line-height:37px;}
+/* .prCont-txt .txt_summary1 {padding-top:25px !important;padding-left:15px !important;padding-right:15px !important;color:#000 !important;font-size:32px !important;line-height:37px;}
 .prCont-txt .txt_summary1 * {color:#000 !important;font-size:32px !important;}
 .prCont-txt .txt_summary2 {padding-top:30px !important;padding-left:15px !important;padding-right:15px !important;color:#000 !important;font-size:15px !important;font-weight:bold !important;}
 .prCont-txt .txt_summary2 * {color:#000 !important;font-size:15px !important;font-weight:bold !important;}
 .prCont-txt .txt_summary2:first-child {padding-top:20px !important;font-weight:bold !important;}
 .prCont-txt .txt_summary3 {padding-top:10px !important;padding-left:15px !important;padding-right:15px !important;color:#000 !important;font-size:15px !important;}
-.prCont-txt .txt_summary3 * {color:#000 !important;font-size:15px !important;}
+.prCont-txt .txt_summary3 * {color:#000 !important;font-size:15px !important;} */
+.prCont-txt .txt_summary1 {padding-top:37px!important;padding-left:15px !important;padding-right:15px !important;color:#000 !important;font-size:22px !important;line-height:30px!important;font-weight: 300!important;}
+.prCont-txt .txt_summary1 * {color:#000 !important;font-size:22px !important;}
+.prCont-txt .txt_summary1 strong { font-weight: 600!important;}
+.prCont-txt .txt_summary2 {padding-top:0!important; padding-left:15px !important;padding-right:15px !important;color:#000 !important;font-size:16px !important;font-weight:500 !important;line-height:22px!important;}
+.prCont-txt .txt_summary2 * {color:#000 !important;font-size:16px !important;font-weight:500 !important;}
+.prCont-txt .txt_summary2:first-child {padding-top:20px !important;font-weight:bold !important;}
+.prCont-txt .txt_summary3 {padding-top:0!important; padding-left:15px !important;padding-right:15px !important;color:#858585 !important;font-size:13px !important;line-height:20px!important;}
+.prCont-txt .txt_summary3 * {color:#858585 !important;font-size:18px !important; }
+
+.prCont-txt .txt_summary1 + .txt_summary2 { margin-top:30px; }
+.prCont-txt .txt_summary2 + .txt_summary3 { margin-top:5px; }
+.prCont-txt .txt_summary3 + .txt_summary2 { margin-top:28px; }
 
 .prCont-txt .txt_center {text-align:center !important;}
 
-
-
 .prCont-txt p,
-.prCont-txt div {padding-top:10px !important; color:#000 !important;font-size:15px !important;}
+.prCont-txt div {padding-top:10px !important; color:#000 !important;font-size:1rem !important;}
 .prCont-txt div *,
 .prCont-txt p * {color:#000 !important;font-size:15px !important;}
 .prCont-txt ul,
 .prCont-txt ol {padding-top:25px !important;}
-.prCont-txt ul li,
-.prCont-txt ol li {position:relative !important;padding-left:18px !important;color:#000 !important;font-size:15px !important;line-height:20px !important;}
+/* .prCont-txt ul li,
+.prCont-txt ol li {position:relative !important;padding-left:18px !important;color:#000 !important;font-size:1rem !important;line-height:20px !important;}
 .prCont-txt > ul > li:after,
-.prCont-txt > ol > li:after{content:"" !important;position:absolute !important;top:9px !important;left:5px !important;width:3px !important;height:3px !important;background-color:#000 !important;border-radius:20px;}
+.prCont-txt > ol > li:after{content:"" !important;position:absolute !important;top:9px !important;left:5px !important;width:3px !important;height:3px !important;background-color:#000 !important;border-radius:50%;}
 .prCont-txt ul li ul,
 .prCont-txt ol li ol{padding:10px 0 20px !important;}
 .prCont-txt ul li *,
-.prCont-txt ol li * {color:#000 !important;font-size:15px !important;line-height:20px !important;}
+.prCont-txt ol li * {color:#000 !important;font-size:15px !important;line-height:20px !important;} */
+
+.prCont-txt ul li,
+.prCont-txt ol li {position:relative !important;padding-left:18px !important;color:#858585 !important;font-size:13px !important;line-height:20px !important;}
+.prCont-txt > ul > li:after,
+.prCont-txt > ol > li:after{content:"" !important;position:absolute !important;top:0.5rem !important;left:5px !important;width:0.1875rem !important;height:0.1875rem !important;background-color:#858585 !important;border-radius:50%;}
+.prCont-txt ul li ul,
+.prCont-txt ol li ol{padding:10px 0 20px !important;}
+.prCont-txt ul li *,
+.prCont-txt ol li * {color:#858585 !important;font-size:13px !important;line-height:20px !important;}
+.prCont-txt ul li + li,
+.prCont-txt ol li + li { margin-top:12px; }
 
 .prCont-txt table {width:100% !important;margin-top:10px !important;border:0 !important;}
 .prCont-txt table * {word-break:break-all;}
@@ -102,6 +123,16 @@
 .prCont-txt table td {height:auto !important;padding:13px 5px;border:1px solid #e1e1e1 !important;background:#ffffff !important;color:#000 !important;font-size:13px !important;vertical-align:top !important;}
 .prCont-txt table th * {padding:0 !important;color:#666 !important;font-size:13px !important;text-align:center !important;}
 .prCont-txt table td * {padding:0 !important;color:#000 !important;font-size:13px !important;}
+
+.prCont-txt .synopsis-list { margin-top:13px; padding:0 15px 0!important; }
+.prCont-txt .synopsis-list > li { color:#858585!important; font-size:13px !important; padding-left:1rem!important; line-height:20px!important; }
+.prCont-txt .synopsis-list > li:after { top:0.5rem!important; width:0.1875rem!important; height:0.1875rem!important; border-radius:50%!important;  background-color:#858585!important; }
+.prCont-txt .synopsis-list > li + li { margin-top:12px; }
+
+.prCont-txt ul.title-usage li,
+.prCont-txt ol.title-usage li {position:relative !important;padding-left:18px !important;color:#000 !important;font-size:1rem !important;line-height:20px !important;}
+.prCont-txt > ul.title-usage > li:after,
+.prCont-txt > ol.title-usage > li:after{content:"" !important;position:absolute !important;top:9px !important;left:5px !important;width:3px !important;height:3px !important;background-color:#000 !important;border-radius:50%;}
 
 
 /* 시각화 원장 */

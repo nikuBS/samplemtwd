@@ -38,7 +38,7 @@ class MembershipBenefitBrandMap extends TwViewController {
       joinCd: req.query.joinCd || ''
     };
 
-    this.getInfo(input, res, svcInfo).subscribe(
+    this.getInfo(input, res, svcInfo, pageInfo).subscribe(
       (result: Result) => {
         if (!FormatHelper.isEmpty(result)) {
           res.render('benefit/membership.benefit.brand.map.html', {
@@ -50,13 +50,14 @@ class MembershipBenefitBrandMap extends TwViewController {
         this.error.render(svcInfo, {
           code: err.code,
           msg: err.msg,
+          pageInfo: pageInfo,
           svcInfo
         });
       }
     );
   }
 
-  private getInfo(input: Input, res: Response, svcInfo: any): Observable<any> {
+  private getInfo(input: Input, res: Response, svcInfo: any, pageInfo: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_11_0024, input).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         return resp.result;
@@ -65,6 +66,7 @@ class MembershipBenefitBrandMap extends TwViewController {
       this.error.render(res, {
         code: resp.code,
         msg: resp.smg,
+        pageInfo: pageInfo,
         svcInfo
       });
 

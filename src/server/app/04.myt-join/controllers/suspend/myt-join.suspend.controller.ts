@@ -62,6 +62,7 @@ class MyTJoinSuspend extends TwViewController {
           title: MYT_JOIN_SUSPEND.MAIN,
           msg: suspendState.msg,
           svcInfo: svcInfo,
+          pageInfo: pageInfo,
           code: suspendState.code
         });
       }

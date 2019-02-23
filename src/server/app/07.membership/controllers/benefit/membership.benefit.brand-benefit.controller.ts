@@ -18,6 +18,7 @@ class MembershipBenefitBrandBenefit extends TwViewController {
       this.error.render(res, {
         code: '',
         msg: 'not found category or brand code',
+        pageInfo: pageInfo,
         svcInfo
       });
       return;
@@ -55,6 +56,7 @@ class MembershipBenefitBrandBenefit extends TwViewController {
           this.error.render(res, {
             code: resp.code,
             msg: resp.msg,
+            pageInfo: pageInfo,
             svcInfo
           });
         }
@@ -63,6 +65,7 @@ class MembershipBenefitBrandBenefit extends TwViewController {
       this.error.render(res, {
         code: err.code,
         msg: err.msg,
+        pageInfo: pageInfo,
         svcInfo
       });
     });

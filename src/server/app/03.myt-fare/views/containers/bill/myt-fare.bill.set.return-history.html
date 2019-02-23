@@ -4,7 +4,7 @@
 * Date: 2018.09.14
 %>
 
-<% include ../../components/start.component.html %>
+<%- include('../../components/start.component.html', { pageInfo: pageInfo }); %>
 <% include ../../components/bill/myt-fare.bill.set.return-history.components.html %>
 <body>
 <!-- #skip_navigation -->
@@ -42,7 +42,7 @@
             </div>
             <!--// .cont-box -->
             <div class="bt-more none">
-                <button>더보기<span>0</span></button>
+                <button>더보기</button>
             </div>
         </div>
     </div>

@@ -25,7 +25,7 @@ class CommonSearch extends TwViewController {
     const collection = 'all';
     const step = req.header('referer') ? req.query.step ? req.query.step : 1 : 1;
     const from = req.header('referer') ? req.query.from : null;
-    let requestObj, researchCd, researchQuery;
+    let requestObj, researchCd, researchQuery, searchApi ;
     function showSearchResult(searchResult, relatedKeyword , thisObj) {
       if ( searchResult.result.totalcount === 0 ) {
         Observable.combineLatest(
@@ -35,12 +35,14 @@ class CommonSearch extends TwViewController {
           if (resultObj[0].code !== API_CODE.CODE_00 || resultObj[1].code !== 0) {
             return thisObj.error.render(res, {
               svcInfo: svcInfo,
+              pageInfo: pageInfo,
               code: resultObj[0].code !== API_CODE.CODE_00 ? resultObj[0].code : resultObj[1].code,
               msg: resultObj[0].code !== API_CODE.CODE_00 ? resultObj[0].msg : resultObj[1].msg
             });
           }
           res.render('search/common.search.not-found.html', {
             svcInfo : svcInfo,
+            pageInfo: pageInfo,
             popularKeyword : resultObj[1].result,
             keyword : searchResult.result.query,
             relatedKeyword : relatedKeyword,
@@ -55,6 +57,7 @@ class CommonSearch extends TwViewController {
       } else {
         res.render('search/common.search.html', {
           svcInfo : svcInfo,
+          pageInfo: pageInfo,
           searchInfo : searchResult.result,
           keyword : searchResult.result.query,
           relatedKeyword : relatedKeyword,
@@ -78,14 +81,26 @@ class CommonSearch extends TwViewController {
       requestObj = { query , collection , researchQuery , researchCd};
     }
 
+    if (BrowserHelper.isApp(req)) {
+      searchApi = API_CMD.SEARCH_APP;
+      if ( BrowserHelper.isIos(req) ) {
+        requestObj.device = 'I';
+      } else {
+        requestObj.device = 'A';
+      }
+    } else {
+      searchApi = API_CMD.SEARCH_WEB;
+    }
+
     Observable.combineLatest(
-      this.apiService.request( BrowserHelper.isApp(req) ? API_CMD.SEARCH_APP : API_CMD.SEARCH_WEB, requestObj, {}),
+      this.apiService.request( searchApi , requestObj, {}),
       this.apiService.request(API_CMD.RELATED_KEYWORD, requestObj, {})
     ).subscribe(([ searchResult, relatedKeyword ]) => {
 
       if ( searchResult.code !== 0 || relatedKeyword.code !== 0 ) {
         return this.error.render(res, {
           svcInfo: svcInfo,
+          pageInfo: pageInfo,
           code : searchResult.code !== 0 ? searchResult.code : relatedKeyword.code,
           msg : searchResult.code !== 0 ? searchResult.msg : relatedKeyword.msg
         });
@@ -105,7 +120,11 @@ class CommonSearch extends TwViewController {
                 searchResult.result.totalcount = Number(searchResult.result.totalcount) - 1;
               } else {
                 const remainData = new MyTDataHotData().parseCellPhoneUsageData(resultData.result, svcInfo);
-                searchResult.result.search[0].immediate.data[0].subData = remainData.gnrlData[0].showRemained;
+                if ( searchResult.result.search[0].immediate.data[0].subData = remainData.gnrlData[0].showRemained ) {
+                  searchResult.result.search[0].immediate.data[0].subData = remainData.gnrlData[0].showRemained;
+                } else {
+                  searchResult.result.search[0].immediate.data[0].subData = remainData.gnrlData[0].tOPlanSharedData.showRemained;
+                }
               }
               showSearchResult(searchResult, relatedKeyword , this);
             });

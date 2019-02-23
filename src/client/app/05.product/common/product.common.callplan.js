@@ -95,7 +95,7 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _goProd: function(e) {
-    this._historyService.goLoad($(e.currentTarget).data('prod_id'));
+    this._historyService.goLoad('/product/callplan?prod_id=' + $(e.currentTarget).data('prod_id'));
   },
 
   _convertSettingBtnList: function() {

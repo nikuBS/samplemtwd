@@ -97,18 +97,18 @@
                                 </div>
                             </div>
                             <!-- // .donut-chart.small -->
-                            <% if(homeData.usageData.data.isTplanUse || homeData.usageData.data.isTplanProd) { %>
-                            <div id="fe-tplan" class="legend" data-tplanuse="<%= homeData.usageData.data.isTplanUse %>" data-tplanprod="<%= homeData.usageData.data.isTplanProd %>">
-                                <span class="category0"><span>나의 데이터</span></span>
-                                <span class="category1"><span>T가족모아데이터</span></span>
-                            </div>
-                            <% } %>
+                            <!--<% if(homeData.usageData.data.isTplanUse || homeData.usageData.data.isTplanProd) { %>-->
+                            <!--<div id="fe-tplan" class="legend" data-tplanuse="<%= homeData.usageData.data.isTplanUse %>" data-tplanprod="<%= homeData.usageData.data.isTplanProd %>">-->
+                                <!--<span class="category0"><span>나의 데이터</span></span>-->
+                                <!--<span class="category1"><span>T가족모아데이터</span></span>-->
+                            <!--</div>-->
+                            <!--<% } %>-->
                             <div class="ti-num">
                                 <strong class="ti">남은 데이터<i class="icon-arrowmore-32"><span class="blind">more</span></i></strong>
                                 <em class="num"><%= homeData.usageData.data.showAddRemained %></em>
                             </div>
                         </a>
-                        <button id="fe-bt-data-link" class="data-add">충전/선물</button>
+                        <button id="fe-bt-data-link" class="data-add" data-tplanuse="<%= homeData.usageData.data.isTplanUse %>" data-tplanprod="<%= homeData.usageData.data.isTplanProd %>">충전/선물</button>
                     </div>
 
                     <div class="call-message">

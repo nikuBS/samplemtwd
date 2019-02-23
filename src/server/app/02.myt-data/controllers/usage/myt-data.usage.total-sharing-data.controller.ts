@@ -30,7 +30,7 @@ class MyTDataUsageTotalSharingData extends TwViewController {
       ]);
 
       if (!FormatHelper.isEmpty(apiError)) {
-        return this.renderErr(res, apiError, svcInfo);
+        return this.renderErr(res, apiError, svcInfo, pageInfo);
       }
 
       const usageData = this.myTDataHotData.parseCellPhoneUsageData(balancesResp.result, svcInfo);
@@ -50,7 +50,7 @@ class MyTDataUsageTotalSharingData extends TwViewController {
       res.render('usage/myt-data.usage.total-sharing-data.html', option);
 
     }, (resp) => {
-      return this.renderErr(res, resp, svcInfo);
+      return this.renderErr(res, resp, svcInfo, pageInfo);
     });
   }
 
@@ -66,11 +66,12 @@ class MyTDataUsageTotalSharingData extends TwViewController {
     data.isUnlimited = !isFinite(data.total);
   }
 
-  private renderErr(res, err, svcInfo): any {
+  private renderErr(res, err, svcInfo, pageInfo): any {
     return this.error.render(res, {
       title: MYT_DATA_USAGE_TOTAL_SHARING_DATA.TITLE,
       code: err.code,
       msg: err.msg,
+      pageInfo: pageInfo,
       svcInfo
     });
   }

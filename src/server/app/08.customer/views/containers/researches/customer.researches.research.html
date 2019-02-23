@@ -47,9 +47,11 @@
                         </div>
                     </div>
                     <!-- // poll-chart-box -->
-                    <% research.questions.map((question, qIdx) => { 
-                        const isEssential = question.mndtAnswYn === 'Y' %>
-                        <div class="poll-box <%= qIdx === 0 ? '': 'none' %>" data-is-essential-="<%= isEssential %>" data-answer-type="<%= question.inqItmTypCd %>">
+                    <% const END_INDEX = '99';
+                        research.questions.map((question, qIdx) => { 
+                        const isEssential = question.mndtAnswYn === 'Y';
+                        let hasEnd = false; %>
+                        <div class="poll-box <%= qIdx === 0 ? '': 'none' %>" data-is-essential="<%= isEssential %>" data-answer-type="<%= question.inqItmTypCd %>">
                             <div class="poll-sub-tit"><%= question.inqDtlCtt %></div>
                             <% switch (question.inqItmTypCd) { 
                                 case '0': {
@@ -62,14 +64,19 @@
                                                 if (exam.isEtc) {
                                                     etcIdx = idx;
                                                 }
+
+                                                if (exam.nxtInqItmNum === END_INDEX) {
+                                                    hasEnd = true;
+                                                }
+
                                                 const content = exam.isEtc ? '기타' : exam.content %>
-                                                <li class="radiobox type01" role="radio" aria-checked="false" data-next-question="<%= exam.nxtInqItmNum %>"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                                     <% if (exam.image) { %>
-                                                        <div class="poll-img"><img src="<%= exam.image %>" /></div>
-                                                        <input type="radio" name="radio<%= qIdx %>" value="" title="<%= content %>" aria-labelledby="aria-comp-q<%= qIdx %>-radio<%= idx %>"/><!-- 체크상태일 경우 checked="checked" -->
+                                                        <div class="poll-img"><img src="<%= CDN %><%= exam.image %>" /></div>
+                                                        <input type="radio" name="radio<%= qIdx %>" title="<%= content %>" aria-labelledby="aria-comp-q<%= qIdx %>-radio<%= idx %>" data-next-question="<%= exam.nxtInqItmNum %>" /><!-- 체크상태일 경우 checked="checked" -->
                                                         <div class="poll-text" id="aria-comp-q<%= qIdx %>-radio<%= idx %>"><%= content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %></div>
                                                     <% } else { %>
-                                                        <input type="radio" name="radio<%= qIdx %>" value="" title="<%= content %>" /><!-- 체크상태일 경우 checked="checked" -->
+                                                        <input type="radio" name="radio<%= qIdx %>" title="<%= content %>"  data-next-question="<%= exam.nxtInqItmNum %>" /><!-- 체크상태일 경우 checked="checked" -->
                                                         <%= content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %>
                                                     <% } %>
                                                 </li>
@@ -91,10 +98,15 @@
                                                 if (exam.isEtc) {
                                                     etcIdx = idx;
                                                 }
+
+                                                if (exam.nxtInqItmNum === END_INDEX) {
+                                                    hasEnd = true;
+                                                }
+
                                                 const content = exam.isEtc ? '기타' : exam.content %>
-                                                <li class="checkbox type01" role="checkbox" aria-checked="false" data-next-question="<%= exam.nxtInqItmNum %>"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                                <li class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
                                                     <% if (exam.image) { %>
-                                                        <div class="poll-img"><img src="<%= exam.image %>" /></div>
+                                                        <div class="poll-img"><img src="<%= CDN %><%= exam.image %>" /></div>
                                                         <input type="checkbox" name="checkbox" value="" title="<%= content %>" aria-labelledby="aria-comp-q<%= qIdx%>-checkbox<%= idx %>"/><!-- 체크상태일 경우 checked="checked" -->
                                                         <div class="poll-text" id="aria-comp-q<%= qIdx%>-checkbox<%= idx %>"><%= content %><% if (exam.motHtml) { %><br/><%- exam.motHtml %><% } %></div>
                                                     <% } else { %>
@@ -118,28 +130,28 @@
                             <% if (qIdx === 0) { %>
                                 <ul class="bt-slice mt30">
                                     <% if (qIdx === research.questions.length - 1 ) { %>
-                                        <li class="bt-blue1" id="fe-submit-research">
-                                            <button disabled="<%= isEssential %>">참여하기</button>
+                                        <li class="bt-blue1">
+                                            <button class="fe-submit-research" <%= isEssential? 'disabled' : '' %>>참여하기</button>
                                         </li>
                                     <% } else { %>
-                                        <li class="bt-blue1 fe-go-next">
-                                            <button>다음</button>
+                                        <li class="bt-blue1">
+                                            <button class="fe-go-next" <%= isEssential? 'disabled' : '' %>>다음으로</button>
                                         </li>
                                     <% } %>
                                 </ul>
                             <% } else { %>
                                 <ul class="bt-slice mt30 item-two">
-                                    <li class="bt-white2 fe-go-prev">
-                                        <button>이전으로</button>
+                                    <li class="bt-white2">
+                                        <button class="fe-go-prev">이전으로</button>
                                     </li>
                                     <% if (qIdx === research.questions.length - 1) { %>
-                                    <li class="bt-blue1" id="fe-submit-research">
-                                        <button disabled="<%= isEssential %>">참여하기</button>
-                                    </li>
+                                        <li class="bt-blue1">
+                                            <button class="fe-submit-research" <%= isEssential? 'disabled' : '' %>>참여하기</button>
+                                        </li>
                                     <% } else { %>
-                                    <li class="bt-blue1 fe-go-next" >
-                                        <button disabled="<%= isEssential %>">다음</button>
-                                    </li>
+                                        <li class="bt-blue1" >
+                                            <button class="fe-go-next" <%= isEssential? 'disabled' : '' %>>다음으로</button>
+                                        </li>
                                     <% } %>
                                 </ul>
                             <% } %>

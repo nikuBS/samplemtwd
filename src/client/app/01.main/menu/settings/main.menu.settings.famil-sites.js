@@ -21,9 +21,13 @@ Tw.MainMenuSettingsFamilySites.prototype = {
   _onLink: function (e) {
     var url = $(e.currentTarget).attr('href');
 
-    Tw.CommonHelper.showDataCharge(function () {
+    if (Tw.BrowserHelper.isApp()) {
+      Tw.CommonHelper.showDataCharge(function () {
+        Tw.CommonHelper.openUrlExternal(url);
+      })
+    } else {
       Tw.CommonHelper.openUrlExternal(url);
-    })
+    }
   },
   _onAppLink: function (e) {
     var appKey = 'gtwd';

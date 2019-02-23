@@ -13,10 +13,10 @@ class CommonUtilServiceBlock extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
     const fromDtm = DateHelper.getShortDateAnd24Time(req.query.fromDtm);
     const toDtm = DateHelper.getShortDateAnd24Time(req.query.toDtm);
-    res.render('util/common.util.service-block.html', { fromDtm, toDtm });
+    res.render('util/common.util.service-block.html', { fromDtm, toDtm, pageInfo });
 
   }
 }

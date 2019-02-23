@@ -5,7 +5,7 @@
 * ID: BE_02
 %>
 
-<% include ../../components/start.component.html %>
+<%- include('../../components/start.component.html', { pageInfo: pageInfo }); %>
 <% include ../../components/my/membership.my.component.html %>
 <body>
 <!-- #skip_navigation -->
@@ -152,7 +152,7 @@
                     <li>
                         <a href="/membership/membership_info/mbrs_0001">
                                 <span class="inner">
-                                    <span class="tit">T멤버십 카드·등급 안내</span>
+                                    <span class="tit">T멤버십 카드/등급 안내</span>
                                 </span>
                         </a>
                     </li>

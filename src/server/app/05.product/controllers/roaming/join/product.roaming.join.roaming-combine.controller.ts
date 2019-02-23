@@ -25,6 +25,7 @@ class ProductRoamingJoinRoamingCombine extends TwViewController {
     if (FormatHelper.isEmpty(prodId)) {
       return this.error.render(res, {
         svcInfo: svcInfo,
+        pageInfo: pageInfo,
         title: PRODUCT_TYPE_NM.JOIN
       });
     }
@@ -36,6 +37,7 @@ class ProductRoamingJoinRoamingCombine extends TwViewController {
       if (FormatHelper.isEmpty(prodRedisInfo) || (prodBffInfo.code !== API_CODE.CODE_00)) {
         return this.error.render(res, {
           svcInfo: svcInfo,
+          pageInfo: pageInfo,
           title: PRODUCT_TYPE_NM.JOIN,
           code: prodBffInfo.code,
           msg: prodBffInfo.msg,

@@ -236,6 +236,7 @@ class MyTJoinWireSetWireCancelService extends TwViewController {
         title: MYT_JOIN_WIRE.SET_WIRE_CANCEL.TITLE,
         code: err.code,
         msg: err.msg,
+        pageInfo: pageInfo,
         svcInfo: svcInfo
       });
     });

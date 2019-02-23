@@ -1,5 +1,12 @@
 @charset "UTF-8";
 /** main **/
+/* home-slider(slick slider) */
+.home-slider .home-slider-my {
+  visibility: hidden; }
+
+.home-slider .home-slider-belt-active .home-slider-my {
+  visibility: visible; }
+
 .quick-menu-list {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -105,9 +112,8 @@
   .section-swiper-box .slider-box .slick-list {
     overflow: inherit; }
   .section-swiper-box .slider-box.link-full-box .slick-dots {
-    top: 0;
-    padding: 1.1875rem 1.5rem;
-    right: 0; }
+    top: 1.75rem;
+    right: 1.5rem; }
   .section-swiper-box .slider-box.link-full-box .type02 {
     position: relative;
     top: 0;
@@ -115,11 +121,13 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box; }
   .section-swiper-box .slider-box.link-full-box .main-box-cont {
-    padding: 0; }
+    padding: 0;
+    height: 12.75rem; }
     .section-swiper-box .slider-box.link-full-box .main-box-cont .link-full {
       padding: 0 1.5rem;
       position: relative;
-      padding-bottom: 4.375rem; }
+      padding-bottom: 1.25rem;
+      height: 100%; }
       .section-swiper-box .slider-box.link-full-box .main-box-cont .link-full .bt {
         position: absolute;
         left: 1.5rem;
@@ -134,7 +142,8 @@
     font-size: inherit;
     font-weight: inherit; }
     .section-swiper-box .link-full .ti {
-      padding-top: 1.75rem; }
+      margin-top: -1.375rem;
+      padding-top: 0; }
 
 .main-top-group {
   position: relative;
@@ -243,13 +252,13 @@
 
 .main-breakdown-box > .ti {
   display: block;
-  margin: 0.625rem 0 0.1875rem;
+  margin: 0 0 0.1875rem;
   font-size: 1.5625rem;
   font-weight: 700;
   line-height: 1.875rem; }
 
 .main-breakdown-box > .tx {
-  margin-top: 1.875rem;
+  margin-top: 3.4375rem;
   font-size: 0.875rem;
   font-weight: 300;
   line-height: 1.25rem; }
@@ -313,6 +322,14 @@
     font-size: 0.9375rem;
     line-height: 50px;
     text-align: center; }
+
+.main-breakdown-box .text_translation {
+  display: block;
+  padding: 0.625rem 0 0 0;
+  border-radius: 0.3125rem;
+  color: #000;
+  font-size: 0.75rem;
+  line-height: 1.25rem; }
 
 .main-error-box {
   position: relative;
@@ -467,7 +484,7 @@
         .main-chart-box .donutchart .donut-chart .ti-data .ti {
           display: inline-block;
           padding-right: 0.5rem;
-          background: url(/img/ico/chart-data-ar.png) no-repeat right center;
+          background: url(/img/ico/chart-data-ar.png) no-repeat right 2px;
           background-size: 5px auto;
           color: #959595;
           font-size: 0.875rem;
@@ -505,11 +522,10 @@
       .main-chart-box .donutchart .data-add span {
         position: relative;
         display: inline-block;
-        padding: 0 0.5rem;
-        height: 1.375rem;
+        padding: 0.4375rem 0.5625rem 0.375rem;
         border: 1px solid #ef4b49;
-        border-radius: 0.6875rem;
-        line-height: 1.4375rem; }
+        border-radius: 1.625rem;
+        line-height: 1; }
     .main-chart-box .donutchart .coach-mark {
       top: 9.6875rem; }
       .main-chart-box .donutchart .coach-mark:after {
@@ -575,7 +591,7 @@
         left: 0;
         display: block; }
         .main-chart-box .call-message [class^="bt-"] i.icon-call-34 {
-          top: 0.1875rem; }
+          top: 0.125rem; }
         .main-chart-box .call-message [class^="bt-"] i.icon-sms-37 {
           top: 0.25rem; }
   .main-chart-box .tx-desc {
@@ -607,8 +623,7 @@
     padding-right: 0.9375rem;
     text-align: left;
     margin-top: 0.625rem;
-    margin-bottom: 1.5625rem;
-    font-weight: bold; }
+    margin-bottom: 1.5625rem; }
   .main-tip-box > a.stit.tit:after, .main-tip-box button.stit.tit:after {
     display: inline-block;
     content: "";
@@ -645,8 +660,7 @@
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       text-overflow: ellipsis;
-      font-size: 1.5625rem;
-      font-weight: 700; }
+      font-size: 1.5625rem; }
     .main-tip-box .main-box-cont .tx {
       font-weight: 300;
       overflow: hidden;
@@ -802,7 +816,7 @@
   height: 3.125rem;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  padding: 1.75rem 1.25rem 0.5rem 1.25rem;
+  padding: 1.75rem 1.5rem 0.5rem 1.5rem;
   border-radius: 0.3125rem; }
   .main-fee-box .fee-cont > .tit {
     display: inline-block;
@@ -810,7 +824,6 @@
     color: #000;
     font-size: 1.4375rem;
     line-height: 120%;
-    padding-right: 0.9375rem;
     text-align: left;
     margin-bottom: 1.5625rem;
     font-weight: bold; }
@@ -831,7 +844,10 @@
             box-sizing: border-box;
     padding: 1.25rem 0 0.9375rem; }
     .main-fee-box .fee-cont > .fee-info .target {
-      float: left; }
+      float: left;
+      display: block;
+      font-size: 0.875rem;
+      text-align: left; }
       .main-fee-box .fee-cont > .fee-info .target .tit {
         display: block;
         color: #000;
@@ -958,13 +974,20 @@
           padding-right: 1.875rem; }
       .popup .popup-info .popup-header .btn-tooltip-close {
         position: absolute;
-        right: 4px;
-        top: 8px;
-        width: 0.75rem;
-        height: 0.75rem;
-        background: url(/img/common/pop-tooltip-close.png) no-repeat right center;
-        background-size: 0.75rem 0.75rem;
+        right: -4px;
+        top: 0;
+        width: 28px;
+        height: 28px;
         font-size: 0; }
+        .popup .popup-info .popup-header .btn-tooltip-close:after {
+          content: "";
+          position: absolute;
+          right: 8px;
+          top: 8px;
+          width: 0.75rem;
+          height: 0.75rem;
+          background: url(/img/common/pop-tooltip-close.png) no-repeat right center;
+          background-size: 0.75rem 0.75rem; }
     .popup .popup-info.scrolling {
       padding: 1rem 1.25rem; }
       .popup .popup-info.scrolling.scrolling-shadow .popup-header::before {
@@ -1272,6 +1295,8 @@ body.apphome {
     padding: 0; }
     .section-box.nogaps .stit {
       margin: 1.5rem 1.5rem 0.625rem 1.5rem; }
+    .section-box.nogaps .main-charge-box .stit {
+      margin-top: 23px; }
   .section-box.nogaps-top {
     padding: 0 1.5rem 1.25rem; }
   .section-box.nogaps-btm {
@@ -2553,9 +2578,12 @@ body.apphome {
 
 .main-charge-box {
   overflow: hidden;
+  height: 12.75rem;
   background: #3583e3;
   color: #fff; }
   .main-charge-box > button {
+    width: 100%;
+    height: 100%;
     color: #fff;
     text-align: left; }
   .main-charge-box .slider-box .slick-dots {
@@ -2595,7 +2623,6 @@ body.apphome {
     background-size: auto 10rem; }
   .main-charge-box .main-box-cont {
     position: relative;
-    min-height: 10.9375rem;
     padding: 0 1.5rem 4.375rem;
     background: url(/img/main/bg_main_charge.png) no-repeat right bottom;
     background-size: auto 10rem;
@@ -2603,23 +2630,24 @@ body.apphome {
     -webkit-box-sizing: border-box;
             box-sizing: border-box; }
     .main-charge-box .main-box-cont.main-box-cont-link {
-      padding: 0; }
+      padding: 0;
+      height: 9.4375rem; }
       .main-charge-box .main-box-cont.main-box-cont-link .link-full {
         display: block;
-        width: 100%;
         padding: 0 1.5rem;
         text-align: left;
         color: inherit;
         font-size: inherit;
         font-weight: inherit;
         position: relative;
-        padding-bottom: 5.5rem; }
+        height: 100%; }
         .main-charge-box .main-box-cont.main-box-cont-link .link-full .bt {
           left: 1.5rem;
-          bottom: 1.125rem; }
+          bottom: 1.4375rem; }
     .main-charge-box .main-box-cont .ti {
       overflow: hidden;
       display: -webkit-box;
+      margin-bottom: 0.1875rem;
       max-height: 3.75rem;
       line-height: 1.875rem;
       white-space: normal;
@@ -2627,8 +2655,7 @@ body.apphome {
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       text-overflow: ellipsis;
-      font-size: 1.5625rem;
-      font-weight: 700; }
+      font-size: 1.5625rem; }
     .main-charge-box .main-box-cont .tx {
       font-weight: 300;
       max-height: 2.375rem;
@@ -2688,7 +2715,7 @@ body.apphome {
     .main-charge-box.roaming .main-box-cont {
       overflow: hidden;
       background-position: right bottom -1px;
-      background-repeat: right bottom;
+      background-repeat: no-repeat;
       background-size: auto 10rem; }
       .main-charge-box.roaming .main-box-cont.bg-type01 {
         background-image: url(/img/main/bg_roaming01.png); }
@@ -2703,7 +2730,17 @@ body.apphome {
       .main-charge-box.roaming .main-box-cont.bg-type06 {
         background-image: url(/img/main/bg_roaming06.png); }
       .main-charge-box.roaming .main-box-cont .tx {
-        color: #959595; }
+        color: #959595;
+        width: 70%;
+        overflow: hidden;
+        display: inline-block;
+        white-space: normal;
+        word-wrap: break-word;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        margin-top: 0;
+        max-height: 4.1875rem; }
       .main-charge-box.roaming .main-box-cont .bt {
         border: 1px solid #e5e5e5;
         background: #fff;
@@ -2993,8 +3030,7 @@ body.apphome {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
-  font-size: 1.5625rem;
-  font-weight: 700; }
+  font-size: 1.5625rem; }
   .main-direct-box > .ti span {
     position: relative;
     display: inline-block; }
@@ -3074,8 +3110,7 @@ body.apphome {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
-    font-size: 1.5625rem;
-    font-weight: 700; }
+    font-size: 1.5625rem; }
     .main-direct-box > button .ti span,
     .main-tapp-box > button .ti span {
       position: relative;
@@ -3092,7 +3127,9 @@ body.apphome {
   .main-direct-box > button .tx,
   .main-tapp-box > button .tx {
     display: block;
-    margin-top: 0.3125rem; }
+    margin-top: 0.3125rem;
+    font-size: 0.8125rem;
+    color: #959595; }
 
 .main-alarm-box {
   display: block;
@@ -3442,8 +3479,15 @@ body.apphome {
       color: #666666;
       font-size: 0.9375rem;
       font-weight: 300; }
-      .member-info-box .chart-group .ti-num .ti i {
-        vertical-align: -0.125rem; }
+      .member-info-box .chart-group .ti-num .ti:after {
+        content: "";
+        position: absolute;
+        top: 4px;
+        right: -10px;
+        width: 5px;
+        height: 9px;
+        background: url(/img/ico/chart-data-ar.png) no-repeat 0 0;
+        background-size: 5px auto; }
     .member-info-box .chart-group .ti-num .num {
       display: block;
       font-size: 1.0625rem;
@@ -3452,16 +3496,15 @@ body.apphome {
     position: absolute;
     right: 0;
     top: 1.125rem;
-    height: 1.375rem;
-    padding: 0 0.5rem;
+    padding: 0.4375rem 0.5rem 0.375rem;
     border: 1px solid #ef4b49;
     color: #ef4b49;
     font-size: 0.8125rem;
-    line-height: 1.375rem;
+    line-height: 1;
     text-align: center;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
-    border-radius: 0.6875rem; }
+    border-radius: 1.625rem; }
 
 .member-info-box .call-message {
   overflow: hidden;
@@ -3478,6 +3521,9 @@ body.apphome {
     font-weight: 300;
     text-align: left;
     line-height: 3.75rem; }
+    .member-info-box .call-message .call .icon-call-48 {
+      position: relative;
+      top: -2px; }
   .member-info-box .call-message .message {
     float: left;
     width: 50%;
@@ -3486,8 +3532,9 @@ body.apphome {
     font-weight: 300;
     text-align: left;
     line-height: 3.75rem; }
-    .member-info-box .call-message .message i {
-      margin-top: -0.125rem; }
+    .member-info-box .call-message .message .icon-sms-48 {
+      position: relative;
+      top: -2px; }
   .member-info-box .call-message i {
     vertical-align: middle; }
 
@@ -3543,6 +3590,15 @@ body.apphome {
     background-size: 100%; }
   .member-info-box .t-none + .desc {
     margin-top: 0.625rem; }
+
+.device_android .call-message .call .icon-call-48 {
+  top: 1px; }
+
+.device_android .call-message .message .icon-sms-48 {
+  top: -1px; }
+
+.device_android .member-info-box .chart-group .ti-num .ti:after {
+  top: 5px; }
 
 .member-non-box {
   padding: 0.625rem 0; }
@@ -3725,3 +3781,30 @@ body.apphome {
 
 .menu-guide-img img {
   width: 100%; }
+
+.toast-popup .toast-layer {
+  position: fixed;
+  z-index: 1000;
+  left: 1rem;
+  right: 1rem;
+  bottom: -100%;
+  /*min-height:rem(88px);*/
+  padding: 0.8125rem 0;
+  border-radius: 0.25rem;
+  background-color: rgba(16, 20, 31, 0.87);
+  /*10141F*/
+  -webkit-transition: bottom .8s;
+  transition: bottom .8s; }
+  .toast-popup .toast-layer .toast-txt {
+    max-width: 16.25rem;
+    margin: 0 auto;
+    font-size: 0.875rem;
+    color: #fff;
+    text-align: center; }
+  .toast-popup .toast-layer.on {
+    bottom: 1.5rem; }
+
+@media all and (max-width: 359px) {
+  .main-membershop-box .membership-cont .bar-code {
+    width: 7rem !important;
+    height: 2.375rem !important; } }

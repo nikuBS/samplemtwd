@@ -96,7 +96,8 @@ Tw.ProductRoamingFiInquire.prototype = {
         rentfrom : rentfrom,
         rentto : rentto
       })
-      .done($.proxy(this._renderTemplate, this));
+      .done($.proxy(this._renderTemplate, this))
+      .fail($.proxy(this._onFail, this));
   },
 
   _renderTemplate: function(res) {
@@ -233,7 +234,8 @@ Tw.ProductRoamingFiInquire.prototype = {
         rsvrcvdtm : rsvrcvdtm,
         rentalgubun : rentalgubun
       })
-      .done($.proxy(this._openEditPop, this, changeCountry));
+      .done($.proxy(this._openEditPop, this, changeCountry))
+      .fail($.proxy(this._onFail, this));
   },
 
   _clickCancelBtn : function(selected){
@@ -273,7 +275,8 @@ Tw.ProductRoamingFiInquire.prototype = {
     
     this._apiService
       .request(Tw.API_CMD.BFF_10_0066, params )
-      .done($.proxy(this._openCancelAlert, this));
+      .done($.proxy(this._openCancelAlert, this))
+      .fail($.proxy(this._onFail, this));
   },
 
   _openCancelAlert: function (res) {
@@ -490,7 +493,9 @@ Tw.ProductRoamingFiInquire.prototype = {
       'type': 'U'
     };
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0066, params).done($.proxy(this._handleSuccessEditReservation, this));
+    this._apiService.request(Tw.API_CMD.BFF_10_0066, params)
+      .done($.proxy(this._handleSuccessEditReservation, this))
+      .fail($.proxy(this._onFail, this));
   },
 
   _handleSuccessEditReservation: function(res) {

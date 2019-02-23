@@ -32,10 +32,10 @@ class TestMyTFareSubmainController extends TwViewController {
     if ( req && req.params.usagefee === 'usagefee' ) {
       // 사용요금
       data.type = 'UF';
-      this._requestUsageFee(req, res, data, svcInfo);
+      this._requestUsageFee(req, res, data, svcInfo, pageInfo);
     } else {
       // 청구요금
-      this._requestClaim(req, res, data, svcInfo);
+      this._requestClaim(req, res, data, svcInfo, pageInfo);
     }
   }
 
@@ -47,7 +47,7 @@ class TestMyTFareSubmainController extends TwViewController {
    * @param svcInfo :Object
    * @private
    */
-  _requestClaim(req, res, data, svcInfo) {
+  _requestClaim(req, res, data, svcInfo, pageInfo) {
     Observable.combineLatest(
       this._getTypesFee(data.type),
       this._getNonPayment(),
@@ -88,6 +88,7 @@ class TestMyTFareSubmainController extends TwViewController {
           title: MYT_FARE_SUBMAIN_TITLE.MAIN,
           code: claim.info.code,
           msg: claim.info.msg,
+          pageInfo: pageInfo,
           svcInfo: svcInfo
         });
       } else {
@@ -163,7 +164,7 @@ class TestMyTFareSubmainController extends TwViewController {
    * @param svcInfo :Object
    * @private
    */
-  _requestUsageFee(req, res, data, svcInfo) {
+  _requestUsageFee(req, res, data, svcInfo, pageInfo) {
     Observable.combineLatest(
       this._getTypesFee(data.type),
       this._getPaymentInfo(),
@@ -199,6 +200,7 @@ class TestMyTFareSubmainController extends TwViewController {
           title: MYT_FARE_SUBMAIN_TITLE.MAIN,
           code: usage.info.code,
           msg: usage.info.msg,
+          pageInfo: pageInfo,
           svcInfo: svcInfo
         });
       } else {

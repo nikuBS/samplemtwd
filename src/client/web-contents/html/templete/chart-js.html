@@ -35,6 +35,8 @@
 <body>
     <div class="chart-wrap kjs9"></div>
     <br />
+    <div class="chart-wrap kjs9-1"></div>
+    <br />
     <script>
     /*
         average : 평균 제공 여부
@@ -54,6 +56,46 @@
         legend : ['청구', '할인'],
         link : true,
         unit : '원', // gb, 원, time
+        data_arry : [
+            {
+                t : '8월',
+                v : 10000,
+                v2 : 1000,
+                class : 'className1'
+            },
+            {
+                t : '7월',
+                v : 50000,
+                v2 : 3000,
+                class : 'className2'
+            },
+            {
+                t : '5월',
+                v : 60000,
+                v2 : 30000,
+                class : 'className3'
+            },
+            {
+                t : '4월',
+                v : 120000,
+                v2 : 70000,
+                class : 'className4'
+            },
+            {
+                t : '3월',
+                v : 20000,
+                v2 : 10000,
+                class : 'className5'
+            }
+        ]
+    });
+    $('body').chart2({
+        target:'.kjs9-1',
+        type : 'bar4',
+        average : true,
+        legend : ['청구', '할인'],
+        link : true,
+        unit : 'etc', // gb, 원, time
         data_arry : [
             {
                 t : '8월',
@@ -139,6 +181,8 @@
     <br />
     <div class="chart-wrap kjs2"></div>
     <br />
+    <div class="chart-wrap kjs2-1"></div>
+    <br />
     <script>
     /*
         average : 평균 제공 여부
@@ -154,18 +198,31 @@
         target:'.kjs0',
         type : 'bar2',
         average : true,
+        average_place : 'right',
         unit : 'gb', // gb, 원, time
         data_arry : [
             {
-                t : '8월',
+                t : '18년 9월',
                 v : 100
             },
             {
-                t : '7월',
+                t : '18년 10월',
                 v : 50
             },
             {
-                t : '5월',
+                t : '18년 11월',
+                v : 100
+            },
+            {
+                t : '18년 12월',
+                v : 50
+            },
+            {
+                t : '1월',
+                v : 100
+            },
+            {
+                t : '2월',
                 v : 100
             }
         ]
@@ -219,6 +276,26 @@
             {
                 t : '3월',
                 v : 50000
+            }
+        ]
+    });
+    $('body').chart2({
+        target:'.kjs2-1',
+        type : 'bar2',
+        average : true,
+        unit : '$', // gb, 원, time
+        data_arry : [
+            {
+                t : '8월',
+                v : 1000
+            },
+            {
+                t : '7월',
+                v : 50
+            },
+            {
+                t : '5월',
+                v : 100
             }
         ]
     });

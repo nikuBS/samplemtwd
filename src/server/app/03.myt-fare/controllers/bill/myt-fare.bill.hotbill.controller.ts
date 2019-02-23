@@ -47,7 +47,18 @@ class MyTFareBillHotbill extends TwViewController {
       // 자녀 or 본인 전월 실시간 요금
       const svcs = this._getServiceInfo(svcInfo, childInfo, allSvc);
       if ( !this._isPrev && !req.query.child && svcs && svcs.length > 0 ) {
-        // let preBill: any;
+        res.render('bill/myt-fare.bill.hotbill.html', {
+          svcInfo,
+          pageInfo,
+          lines: svcs,
+          billAvailable: true,
+          preBillAvailable: this._preBillAvailable,
+          title: MYT_FARE_HOTBILL_TITLE.MAIN,
+          isPrev:  this._isPrev
+        });
+
+        // 다른 회선도 JS에서 API처리로 변경(아래 주석 처리)
+        /*
         Observable.from(svcs)
           .pipe(
             mergeMap(svc => this._requestHotbillInfo(svc))
@@ -62,6 +73,7 @@ class MyTFareBillHotbill extends TwViewController {
             return this.error.render(res, {
               title: MYT_FARE_HOTBILL_TITLE.MAIN,
               msg: err.message,
+              pageInfo: pageInfo,
               svcInfo: svcInfo
             });
           },
@@ -76,6 +88,7 @@ class MyTFareBillHotbill extends TwViewController {
               isPrev:  this._isPrev
             });
           });
+          */
       } else {
         // 본인 당월 실시간 요금
         const options = {

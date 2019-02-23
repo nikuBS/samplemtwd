@@ -17,7 +17,7 @@ export default class MembershipSubmain extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    if (this.isLogin(svcInfo)) {
+    if (this.isLogin(svcInfo) && svcInfo.svcGr !== '') {
       Observable.combineLatest(
         this.getMembershipCheck(svcInfo),
         this.getMembershipData(),
@@ -29,7 +29,7 @@ export default class MembershipSubmain extends TwViewController {
         };
 
         if ( error.code ) {
-          return this.error.render(res, { ...error, svcInfo });
+          return this.error.render(res, { ...error, pageInfo, svcInfo });
         }
 
         this.logger.info(this, 'membershipCheckData1 : ', membershipCheckData);
@@ -48,7 +48,7 @@ export default class MembershipSubmain extends TwViewController {
         };
 
         if ( error.code ) {
-          return this.error.render(res, { ...error, svcInfo });
+          return this.error.render(res, { ...error, svcInfo, pageInfo });
         }
 
         const membershipData = null;

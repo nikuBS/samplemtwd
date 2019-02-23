@@ -48,7 +48,8 @@ class ProductWireplanJoin extends TwViewController {
         return this.error.render(res, Object.assign(renderCommonInfo, {
           code: apiError.code,
           msg: apiError.msg,
-          isBackCheck: true
+          isBackCheck: true,
+          pageInfo: pageInfo
         }));
       }
 

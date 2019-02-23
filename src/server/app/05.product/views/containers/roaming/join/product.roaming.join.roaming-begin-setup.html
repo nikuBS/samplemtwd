@@ -5,7 +5,7 @@
 %>
 
 
-<% include ../../../components/start.component.html %>
+<%- include('../../../components/start.component.html', { pageInfo: pageInfo }); %>
 <body data-gr-c-s-loaded="true">
 <!-- #skip_navigation
 <div id="skipNav" class="skip_navi">
@@ -36,7 +36,7 @@
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <div class="product-tit-wrap">
-                        <span class="tit-small">가입할 상품 옵션을 설정하세요.</span>
+                        <span class="tit-small">가입할 상품의 옵션을 설정하세요.</span>
                         <h3 class="tit-big"><%= prodApiInfo.preinfo.reqProdInfo.prodNm %></h3>
                     </div>
                 </div>

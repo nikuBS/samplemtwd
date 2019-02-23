@@ -27,6 +27,7 @@ class ProductMobileplanAddTerminate extends TwViewController {
 
     if (FormatHelper.isEmpty(prodId)) {
       return this.error.render(res, {
+        pageInfo: pageInfo,
         svcInfo: svcInfo
       });
     }

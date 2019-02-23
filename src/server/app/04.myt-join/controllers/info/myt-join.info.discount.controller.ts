@@ -73,6 +73,7 @@ class MytJoinInfoDiscount extends TwViewController {
         title: 'title',
         code: err.code,
         msg: err.msg,
+        pageInfo: pageInfo,
         svcInfo: svcInfo
       });
     });
@@ -449,7 +450,7 @@ class MytJoinInfoDiscount extends TwViewController {
     dataObj.curDt = moment(useDt, 'YYYYMMDD').diff(startDt, 'day'); // 진행 일수
     dataObj.remDt = dataObj.totDt - dataObj.curDt; // 잔여일수
 
-    dataObj.perDt = Math.floor((dataObj.curDt / dataObj.totDt) * 100); // 퍼센트
+    dataObj.perDt = 100 - Math.floor((dataObj.curDt / dataObj.totDt) * 100); // 퍼센트
     dataObj.perDt = this.limitMinMax(dataObj.perDt, 0, 100);
     dataObj.totMt = Math.round(
       moment(endDt, 'YYYYMMDD').diff(startDt, 'months', true)
@@ -492,7 +493,7 @@ class MytJoinInfoDiscount extends TwViewController {
     dataObj.curDt = moment(endDt, 'YYYYMMDD').diff(remnantDt, 'day'); // 진행 일수
     dataObj.remDt = dataObj.totDt - dataObj.curDt; // 잔여일수
 
-    dataObj.perDt = Math.floor((dataObj.curDt / dataObj.totDt) * 100); // 퍼센트
+    dataObj.perDt = 100 - Math.floor((dataObj.curDt / dataObj.totDt) * 100); // 퍼센트
     dataObj.perDt = this.limitMinMax(dataObj.perDt, 0, 100);
     dataObj.totMt = Math.round(
       moment(endDt, 'YYYYMMDD').diff(startDt, 'months', true)
@@ -515,7 +516,7 @@ class MytJoinInfoDiscount extends TwViewController {
     dataObj.curMt = dataObj.allotMthCnt - dataObj.invRmn; // 진행 개월
     dataObj.remMt = dataObj.invRmn; // 잔여 개월
 
-    dataObj.perMt = Math.floor((dataObj.curMt / dataObj.totMt) * 100); // 퍼센트
+    dataObj.perMt = 100 - Math.floor((dataObj.curMt / dataObj.totMt) * 100); // 퍼센트
     dataObj.perMt = this.limitMinMax(dataObj.perMt, 0, 100);
   }
 

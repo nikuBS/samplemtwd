@@ -3,7 +3,7 @@
 * Author: Ji Hun Yang (jihun202@sk.com)
 * Date: 2018.11.14
 %>
-<% include ../../../components/start.component.html %>
+<%- include('../../../components/start.component.html', { pageInfo: pageInfo }); %>
 <body>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
@@ -70,7 +70,7 @@
                                             <span class="ico ico-watch"></span>
                                             <p class="layout-text">
                                                 <span class="mtext">인피니티 스마트워치</span>
-                                                <span class="stext">스마트워치 요금지원</span>
+                                                <span class="stext">스마트워치 요금지원(별도가입 필요)</span>
                                             </p>
                                         </div>
                                     </li>
@@ -81,7 +81,7 @@
                                             <span class="ico ico-club"></span>
                                             <p class="layout-text">
                                                 <span class="mtext">인피니티 클럽 할인</span>
-                                                <span class="stext">'인피니티 클럽'가입 및 만6개월 사용 후 휴대폰 교체 시 남은 할부금(출고가의 최대 70%까지)을 면제</span>
+                                                <span class="stext">스마트폰 구입 6개월 후 새로 구입 시 기존 할부금 할인(출고가의 70%까지) 해주는 '인피니티 클럽' 요금지원 (스마트폰 구입 7일 내 별도 가입 필요)</span>
                                             </p>
                                         </div>
                                     </li>

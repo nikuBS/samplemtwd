@@ -28,6 +28,7 @@ export default class ProductPlans extends TwViewController {
         this.error.render(res, {
           code: plans.code,
           msg: plans.msg,
+          pageInfo: pageInfo,
           svcInfo: svcInfo
         });
       }

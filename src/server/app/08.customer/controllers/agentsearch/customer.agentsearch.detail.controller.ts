@@ -44,7 +44,7 @@ class CustomerAgentsearchDetail extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
          allSvc: any, childInfo: any, pageInfo: any) {
     const branchCode = req.query.code;
-    this.getBranchDetailInfo(res, svcInfo, branchCode).subscribe(
+    this.getBranchDetailInfo(res, svcInfo, pageInfo, branchCode).subscribe(
       (detail) => {
         if (!FormatHelper.isEmpty(detail)) {
           res.render('agentsearch/customer.agentsearch.detail.html', { detail, svcInfo, pageInfo });
@@ -54,13 +54,14 @@ class CustomerAgentsearchDetail extends TwViewController {
         this.error.render(res, {
           code: err.code,
           msg: err.msg,
+          pageInfo: pageInfo,
           svcInfo
         });
       }
     );
   }
 
-  private getBranchDetailInfo(res: Response, svcInfo: any, code: string): Observable<BranchDetail | undefined> {
+  private getBranchDetailInfo(res: Response, svcInfo: any, pageInfo: any, code: string): Observable<BranchDetail | undefined> {
     return this.apiService.request(API_CMD.BFF_08_0007, { locCode: code }).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         return this.purifyDetailInfo(resp.result);
@@ -69,6 +70,7 @@ class CustomerAgentsearchDetail extends TwViewController {
       this.error.render(res, {
         code: resp.code,
         msg: resp.msg,
+        pageInfo: pageInfo,
         svcInfo: svcInfo
       });
 

@@ -28,6 +28,7 @@ class MyTJoinMyPlanAdd extends TwViewController {
           return this.error.render(res, {
             ...mobile,
             svcInfo: svcInfo,
+            pageInfo: pageInfo,
             title: '나의 부가서비스'
           });
         }
@@ -40,6 +41,7 @@ class MyTJoinMyPlanAdd extends TwViewController {
           return this.error.render(res, {
             ...wire,
             svcInfo: svcInfo,
+            pageInfo: pageInfo,
             title: '나의 부가서비스'
           });
         }

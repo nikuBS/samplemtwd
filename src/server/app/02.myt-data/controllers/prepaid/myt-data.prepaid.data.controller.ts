@@ -37,6 +37,7 @@ class MyTDataPrepaidData extends TwViewController {
           this.error.render(res, {
             code: ppsInfo.code,
             msg: ppsInfo.msg,
+            pageInfo: pageInfo,
             svcInfo: svcInfo
           });
         }

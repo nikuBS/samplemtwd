@@ -29,7 +29,7 @@ class MyTDataUsageChild extends TwViewController {
     const self = this;
     this.childSvcMgmtNum = req.query.childSvcMgmtNum;
     if (FormatHelper.isEmpty(this.childSvcMgmtNum)) {
-      return this.renderErr(res, svcInfo, {});
+      return this.renderErr(res, svcInfo, pageInfo, {});
     }
     Observable.combineLatest(
       this.reqBalances(),
@@ -41,7 +41,7 @@ class MyTDataUsageChild extends TwViewController {
       ]);
 
       if ( !FormatHelper.isEmpty(apiError) ) {
-        return this.renderErr(res, svcInfo, apiError);
+        return this.renderErr(res, svcInfo, pageInfo, apiError);
       }
 
       const usageDataResult = usageDataResp.result;
@@ -63,13 +63,14 @@ class MyTDataUsageChild extends TwViewController {
       };
       res.render(VIEW.DEFAULT, option);
     }, (resp) => {
-      return this.renderErr(res, svcInfo, resp);
+      return this.renderErr(res, svcInfo, pageInfo, resp);
     });
   }
 
-  private renderErr(res, svcInfo, err): any {
+  private renderErr(res, svcInfo, pageInfo, err): any {
     const option = {
       title: MYT_DATA_CHILD_USAGE.TITLE,
+      pageInfo: pageInfo,
       svcInfo
     };
     if (err) {

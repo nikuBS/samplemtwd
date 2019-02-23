@@ -53,14 +53,14 @@ class MainMenuRefund extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any,
          childInfo: any, pageInfo: any) {
 
-    this.getRefundInfo(res, svcInfo).subscribe(
+    this.getRefundInfo(res, svcInfo, pageInfo).subscribe(
       (data: RefundInfo) => {
         if (FormatHelper.isEmpty(data)) {
           return;
         }
 
         if (data.totalCount === 0) {
-          res.render('menu/main.menu.refund-empty.html');
+          res.render('menu/main.menu.refund-empty.html', { pageInfo });
           return;
         }
 
@@ -74,13 +74,14 @@ class MainMenuRefund extends TwViewController {
         this.error.render(res, {
           code: err.code,
           msg: err.msg,
-          svcInfo
+          svcInfo,
+          pageInfo
         });
       }
     );
   }
 
-  private getRefundInfo(res: Response, svcInfo: any, ): Observable<any> {
+  private getRefundInfo(res: Response, svcInfo: any, pageInfo: any): Observable<any> {
     return this.apiService.request(API_CMD.BFF_01_0042, {}).map((resp) => {
       if (resp.code === API_CODE.CODE_00) {
         if (resp.result.cancelRefund.length === 0) {
@@ -96,7 +97,8 @@ class MainMenuRefund extends TwViewController {
       this.error.render(res, {
         code: resp.code,
         msg: resp.msg,
-        svcInfo
+        svcInfo,
+        pageInfo
       });
       return null;
     });

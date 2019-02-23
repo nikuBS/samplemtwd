@@ -289,7 +289,7 @@ class MytDataSubmainController extends TwViewController {
          *  3-1 미성년자 인 경우 (자세히 버튼노출)
          *  3-2 공유가능한 데이터가 0인 경우 (공유 버튼노출)
          *  3-3 공유가능한 데이터가 있는 경우 (자세히 버튼노출)
-         * 4. 가입 및 공유 불가능한 요금제 인 경우 (가입 안내버튼 및 메시지 노출)
+         * 4. 공유데이터가 있고 가입이 가능한 요금제 인 경우 (가입 안내버튼 및 메시지 노출)
          */
         // T가족모아 공유 및 가입이 가능 한 경우
         if ( data.isTmoaProdId && data.isTmoaProdId ) {

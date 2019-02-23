@@ -140,18 +140,19 @@ class MyTFareInfoHistoryDetail extends TwViewController {
 
   // 즉시납부
   private getDirectPaymentData(renderObj: RenderObj) {
-    const { res, svcInfo, opDt, payOpTm } = renderObj;
+    const { res, svcInfo, pageInfo, opDt, payOpTm } = renderObj;
     return this.apiService.request(API_CMD.BFF_07_0091, {opDt, payOpTm}).subscribe((resp) => {
 
       
       if (resp.code !== API_CODE.CODE_00) {
-        return this._renderError(resp.code, resp.msg, res, svcInfo);
+        return this._renderError(resp.code, resp.msg, res, svcInfo, pageInfo);
       }
 
       const resultData = resp.result; 
             
       resultData.dataAmt = FormatHelper.addComma(resultData.cardAmt); // 납부금액
-      resultData.invYearMonth = DateHelper.getYearMonthFromDate(resultData.invDt), // 납부내용 (청구년월: 청구일자의 익월(다음달))
+      resultData.invYearMonth = DateHelper.getYearNextMonthFromDate(resultData.invDt), // 납부내용 (청구년월: 청구일자의 익월(다음달)) YYYY.M.
+      resultData.invYearNoDotMonth = DateHelper.getYearNextNoDotMonthFromDate(resultData.invDt), // 납부내용 (청구년월: 청구일자의 익월(다음달)) YYYY.M
       resultData.dataProcCode = MYT_PAYMENT_HISTORY_DIRECT_PAY_TYPE[resultData.cardProcCd]; // 요청결과
       resultData.reqDate = DateHelper.getShortDate(parseFloat(resultData.reqDtm) ? resultData.reqDtm : opDt); // 요청일시
       resultData.comDate = DateHelper.getShortDate(resultData.opDt); // 납부일자
@@ -169,22 +170,22 @@ class MyTFareInfoHistoryDetail extends TwViewController {
 
   // 자동납부
   private getAutoPaymentData(renderObj: RenderObj) {
-    const { res, svcInfo, innerIndex } = renderObj;
+    const { res, svcInfo, pageInfo, innerIndex } = renderObj;
     return this.apiService.request(API_CMD.BFF_07_0092, {}).subscribe((resp) => {
       if (resp.code !== API_CODE.CODE_00) {
-        return this._renderError(resp.code, resp.msg, res, svcInfo);
+        return this._renderError(resp.code, resp.msg, res, svcInfo, pageInfo);
       }
       // index
       const resultData = resp.result[innerIndex || 0];
 
       if (!resultData || !innerIndex) {
-        return this._renderError(resp.code, MYT_PAYMENT_DETAIL_ERROR.MSG, res, svcInfo);
+        return this._renderError(resp.code, MYT_PAYMENT_DETAIL_ERROR.MSG, res, svcInfo, pageInfo);
       }
 
       resultData.dataDt = DateHelper.getShortDate(resultData.drwDt); // 납부일자 YYYY.M.D.
       resultData.dataAmt = FormatHelper.addComma(resultData.drwAmt); // 납부금액 
       resultData.dataRequestAmt = FormatHelper.addComma(resultData.drwReqAmt); // 청구금액
-      resultData.dataReqYearMonth = DateHelper.getYearMonthFromDate(resultData.lastInvDt); // 청구년월 YYYY.M.
+      resultData.dataReqYearMonth = DateHelper.getYearNextMonthFromDate(resultData.lastInvDt); // 청구년월 YYYY.M.
       resultData.dataUseTermStart = DateHelper.getShortFirstDate(resultData.lastInvDt); // 이용기간 YYYY.M.1.
       resultData.dataLastInvDt = DateHelper.getShortDate(resultData.lastInvDt); // 이용기간 ~ YYYY.M.D.
       resultData.dataIsBank = !this.isCard(resultData.bankCardCoCdNm); // 은행인지 여부(텍스트로 판단)
@@ -202,16 +203,16 @@ class MyTFareInfoHistoryDetail extends TwViewController {
 
   // 통합납부
   private getAutoUnitedPaymentData(renderObj: RenderObj) {
-    const { res, svcInfo, innerIndex } = renderObj;
+    const { res, svcInfo, pageInfo, innerIndex } = renderObj;
     return this.apiService.request(API_CMD.BFF_07_0089, {}).subscribe((resp) => {
       if (resp.code !== API_CODE.CODE_00) {
-        return this._renderError(resp.code, resp.msg, res, svcInfo);
+        return this._renderError(resp.code, resp.msg, res, svcInfo, pageInfo);
       }
       // index
       const resultData = resp.result[innerIndex || 0];
 
       if (!resultData || !innerIndex) {
-        return this._renderError(resp.code, MYT_PAYMENT_DETAIL_ERROR.MSG, res, svcInfo);
+        return this._renderError(resp.code, MYT_PAYMENT_DETAIL_ERROR.MSG, res, svcInfo, pageInfo);
       }
 
       resultData.dataDt = DateHelper.getShortDate(resultData.drwDt); // 납부일자 YYYY.M.D.
@@ -229,16 +230,16 @@ class MyTFareInfoHistoryDetail extends TwViewController {
 
   // 소액결제 선결제
   private getMicroPaymentData(renderObj: RenderObj) {
-    const { res, svcInfo, innerIndex } = renderObj;
+    const { res, svcInfo, pageInfo, innerIndex } = renderObj;
     return this.apiService.request(API_CMD.BFF_07_0071, {}).subscribe((resp) => {
       if (resp.code !== API_CODE.CODE_00) {
-        return this._renderError(resp.code, resp.msg, res, svcInfo);
+        return this._renderError(resp.code, resp.msg, res, svcInfo, pageInfo);
       }
       // index
       const resultData = resp.result.microPrepayRecord[innerIndex || 0];
 
       if (!resultData || !innerIndex) {
-        return this._renderError(resp.code, MYT_PAYMENT_DETAIL_ERROR.MSG, res, svcInfo);
+        return this._renderError(resp.code, MYT_PAYMENT_DETAIL_ERROR.MSG, res, svcInfo, pageInfo);
       }
 
       resultData.dataFullDt = DateHelper.getFullDateAndTime(resultData.opDt + resultData.payOpTm); // 결제일자
@@ -252,16 +253,16 @@ class MyTFareInfoHistoryDetail extends TwViewController {
 
   // 콘텐츠 선결제
   private getContentsPaymentData(renderObj: RenderObj) {
-    const { res, svcInfo, innerIndex } = renderObj;
+    const { res, svcInfo, pageInfo, innerIndex } = renderObj;
     return this.apiService.request(API_CMD.BFF_07_0078, {}).subscribe((resp) => {
       if (resp.code !== API_CODE.CODE_00) {
-        return this._renderError(resp.code, resp.msg, res, svcInfo);
+        return this._renderError(resp.code, resp.msg, res, svcInfo, pageInfo);
       }
       // index
       const resultData = resp.result.useContentsPrepayRecord[innerIndex || 0];
 
       if (!resultData || !innerIndex) {
-        return this._renderError(resp.code, MYT_PAYMENT_DETAIL_ERROR.MSG, res, svcInfo);
+        return this._renderError(resp.code, MYT_PAYMENT_DETAIL_ERROR.MSG, res, svcInfo, pageInfo);
       }
     
       resultData.dataFullDt = DateHelper.getFullDateAndTime(resultData.opDt + resultData.payOpTm); // 결제일자
@@ -274,16 +275,16 @@ class MyTFareInfoHistoryDetail extends TwViewController {
 
   // 포인트 자동납부
   private getPointAutoPaymentData(renderObj: RenderObj) {
-    const { res, svcInfo, innerIndex } = renderObj;
+    const { res, svcInfo, pageInfo, innerIndex } = renderObj;
     return this.apiService.request(API_CMD.BFF_07_0094, {}).subscribe((resp) => {
       if (resp.code !== API_CODE.CODE_00) {
-        return this._renderError(resp.code, resp.msg, res, svcInfo);
+        return this._renderError(resp.code, resp.msg, res, svcInfo, pageInfo);
       }
       // index
       const resultData = resp.result[innerIndex || 0];
 
       if (!resultData || !innerIndex) {
-        return this._renderError(resp.code, MYT_PAYMENT_DETAIL_ERROR.MSG, res, svcInfo);
+        return this._renderError(resp.code, MYT_PAYMENT_DETAIL_ERROR.MSG, res, svcInfo, pageInfo);
       }
 
       resultData.dataAmt = FormatHelper.addComma(resultData.point); // 신청포인트
@@ -297,16 +298,16 @@ class MyTFareInfoHistoryDetail extends TwViewController {
 
   // 포인트 납부예약
   private getPointReservePaymentData(renderObj: RenderObj) {
-    const { res, svcInfo, innerIndex } = renderObj;
+    const { res, svcInfo, pageInfo, innerIndex } = renderObj;
     return this.apiService.request(API_CMD.BFF_07_0093, {}).subscribe((resp) => {
       if (resp.code !== API_CODE.CODE_00) {
-         return this._renderError(resp.code, resp.msg, res, svcInfo);
+         return this._renderError(resp.code, resp.msg, res, svcInfo, pageInfo);
       }
       // index
       const resultData = resp.result[innerIndex || 0];
 
       if (!resultData || !innerIndex) {
-        return this._renderError(resp.code, MYT_PAYMENT_DETAIL_ERROR.MSG, res, svcInfo);
+        return this._renderError(resp.code, MYT_PAYMENT_DETAIL_ERROR.MSG, res, svcInfo, pageInfo);
       }
 
       resultData.dataDt = DateHelper.getShortDate(resultData.opDt); // 신청일자
@@ -340,7 +341,7 @@ class MyTFareInfoHistoryDetail extends TwViewController {
       date.setMonth(date.getMonth() + 1);
     }
     return list; 
-  };
+  }
 
   private getBillTaxList = (date: string): Observable<any | null> => {
     return this.apiService.request(API_CMD.BFF_07_0017, {selType: 'M', selSearch: date}).map((resp: {code: string, msg: string, result: any}) => {
@@ -367,11 +368,12 @@ class MyTFareInfoHistoryDetail extends TwViewController {
   }
 
   // 오류 페이지
-  private _renderError(code, msg, res, svcInfo) {
+  private _renderError(code, msg, res, svcInfo, pageInfo) {
     return this.error.render(res, {
       code,
       msg,
-      svcInfo
+      svcInfo,
+      pageInfo
     });
   }
 

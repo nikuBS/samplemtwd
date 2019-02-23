@@ -26,6 +26,7 @@ class ProductRoamingTerminate extends TwViewController {
     if (FormatHelper.isEmpty(prodId)) {
       return this.error.render(res, {
         svcInfo: svcInfo,
+        pageInfo: pageInfo,
         title: PRODUCT_TYPE_NM.TERMINATE
       });
     }
@@ -38,6 +39,7 @@ class ProductRoamingTerminate extends TwViewController {
       if ((prodTypeInfo.code !== API_CODE.CODE_00) || (prodBffInfo.code !== API_CODE.CODE_00)) {
         return this.error.render(res, {
           svcInfo: svcInfo,
+          pageInfo: pageInfo,
           title: PRODUCT_TYPE_NM.TERMINATE,
           code: prodTypeInfo.code !== API_CODE.CODE_00 ? prodTypeInfo.code : prodBffInfo.code,
           msg: prodTypeInfo.code !== API_CODE.CODE_00 ? prodTypeInfo.msg : prodBffInfo.msg,

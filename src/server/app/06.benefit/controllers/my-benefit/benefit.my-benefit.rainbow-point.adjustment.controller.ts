@@ -30,7 +30,7 @@ class BenefitMyBenefitRainbowPointAdjustment extends TwViewController {
       ]);
 
       if ( !FormatHelper.isEmpty(apiError) ) {
-        return this.renderErr(res, apiError, svcInfo);
+        return this.renderErr(res, apiError, svcInfo, pageInfo);
       }
 
       const lines = this.getLineWithRainbowPoint(rainbowPointServices);
@@ -44,6 +44,7 @@ class BenefitMyBenefitRainbowPointAdjustment extends TwViewController {
         return this.error.render(res, {
           title: MY_BENEFIT_RAINBOW_POINT_ADJUSTMENT.TITLE,
           msg: MY_BENEFIT_RAINBOW_POINT_ADJUSTMENT.ERROR,
+          pageInfo: pageInfo,
           svcInfo
         });
       }
@@ -67,7 +68,7 @@ class BenefitMyBenefitRainbowPointAdjustment extends TwViewController {
 
       res.render(this._VIEW.DEFAULT, options);
     }, (resp) => {
-      return this.renderErr(res, resp, svcInfo);
+      return this.renderErr(res, resp, svcInfo, pageInfo);
     });
   }
 
@@ -103,11 +104,12 @@ class BenefitMyBenefitRainbowPointAdjustment extends TwViewController {
     return result;
   }
 
-  private renderErr(res, err, svcInfo): any {
+  private renderErr(res, err, svcInfo, pageInfo): any {
     return this.error.render(res, {
       title: MY_BENEFIT_RAINBOW_POINT_ADJUSTMENT.TITLE,
       code: err.code,
       msg: err.msg,
+      pageInfo: pageInfo,
       svcInfo
     });
   }

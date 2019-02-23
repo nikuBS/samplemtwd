@@ -30,7 +30,7 @@ class MyTDataUsageCancelTshare extends TwViewController {
       ]);
 
       if (!FormatHelper.isEmpty(apiError)) {
-        return this.renderErr(res, apiError, svcInfo);
+        return this.renderErr(res, apiError, svcInfo, pageInfo);
       }
 
       const tDataSharingsResult = this.getResult(tDataSharingsResp);
@@ -49,7 +49,7 @@ class MyTDataUsageCancelTshare extends TwViewController {
       res.render(this._VIEW.DEFAULT, options);
 
     }, (resp) => {
-      return this.renderErr(res, resp, svcInfo);
+      return this.renderErr(res, resp, svcInfo, pageInfo);
     });
   }
 
@@ -76,11 +76,12 @@ class MyTDataUsageCancelTshare extends TwViewController {
     return ret;
   }
 
-  private renderErr(res, err, svcInfo): any {
+  private renderErr(res, err, svcInfo, pageInfo): any {
     return this.error.render(res, {
       title: MYT_DATA_USAGE_CANCEL_TSHARE.TITLE,
       code: err.code,
       msg: err.msg,
+      pageInfo: pageInfo,
       svcInfo
     });
   }

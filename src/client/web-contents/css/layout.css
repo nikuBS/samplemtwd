@@ -249,7 +249,7 @@ body.bg-gray {
           text-decoration: underline; }
       #common-menu .section-userinfo .userinfo .bt {
         position: relative;
-        top: 0;
+        top: -1px;
         display: inline-block;
         margin-left: 0.5rem;
         color: inherit;
@@ -335,7 +335,14 @@ body.bg-gray {
             #common-menu .section-cont .section-gnb .bt-depth1 > .bt .ti-info .info {
               margin-left: 0.4375rem;
               color: #f76252;
-              font-size: 0.9375rem; }
+              font-size: 0.9375rem;
+              display: inline-block;
+              position: relative;
+              top: 4px;
+              max-width: 86px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap; }
             #common-menu .section-cont .section-gnb .bt-depth1 > .bt .ti-info .tx {
               display: block;
               margin-top: 0.4375rem;
@@ -425,6 +432,8 @@ body.bg-gray {
                 bottom: 0;
                 height: 0.0625rem;
                 background: #e5e5e5; }
+            #common-menu .section-cont .section-gnb .gnb-depth1 > li .depth2 .line:last-child .bt:after {
+              background: none; }
         #common-menu .section-cont .section-gnb .gnb-depth1:first-child {
           border-top: none; }
           #common-menu .section-cont .section-gnb .gnb-depth1:first-child > .bt {

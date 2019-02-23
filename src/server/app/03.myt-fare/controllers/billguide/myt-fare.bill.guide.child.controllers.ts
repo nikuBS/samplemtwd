@@ -89,6 +89,7 @@ class MyTFareBillGuideChild extends TwViewController {
       return thisMain.error.render(res, {
         title: 'title',
         msg: 'Requred parameter \'line\'',
+        pageInfo: pageInfo,
         svcInfo: svcInfo
       });
     }
@@ -98,10 +99,10 @@ class MyTFareBillGuideChild extends TwViewController {
     this.logger.info(this, '[ childInfo ] : ', childInfo);
     allSvc = allSvc || { 's': [], 'o': [], 'm': [] };
 
-    thisMain.childBillGuide(res, svcInfo, allSvc, childInfo);
+    thisMain.childBillGuide(res, svcInfo, allSvc, pageInfo, childInfo);
   }
 
-  private childBillGuide(res, svcInfo, allSvc, childInfo) {
+  private childBillGuide(res, svcInfo, allSvc, pageInfo, childInfo) {
     const thisMain = this;
     this.reqQuery.line = (this.reqQuery.line) ? this.reqQuery.line : '';
     this.reqQuery.date = (this.reqQuery.date) ? this.reqQuery.date : '';
@@ -150,6 +151,7 @@ class MyTFareBillGuideChild extends TwViewController {
         title: 'title',
         code: err.code,
         msg: err.msg,
+        pageInfo: pageInfo,
         svcInfo: svcInfo
       });
     });

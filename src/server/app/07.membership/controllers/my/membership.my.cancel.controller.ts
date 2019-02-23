@@ -24,12 +24,14 @@ export default class MembershipMyCancel extends TwViewController {
         return this.error.render(res, {
           code: resp.code,
           msg: resp.msg,
-          svcInfo: svcInfo
+          svcInfo: svcInfo,
+          pageInfo: pageInfo
         });
       }
 
       res.render('my/membership.my.cancel.html', {
         myCardData: myCardData,
+        pageInfo: pageInfo,
         svcInfo: svcInfo
       });
     });

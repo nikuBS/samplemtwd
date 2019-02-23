@@ -99,6 +99,7 @@ class ProductWireplanJoinReservation extends TwViewController {
     if (FormatHelper.isEmpty(typeCd) || FormatHelper.isEmpty(PRODUCT_RESERVATION_TYPE_NM[typeCd])) {
       return this.error.render(res, {
         svcInfo: svcInfo,
+        pageInfo: pageInfo,
         title: PRODUCT_RESERVATION_TYPE_NM.title
       });
     }

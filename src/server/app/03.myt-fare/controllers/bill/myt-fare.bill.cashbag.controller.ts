@@ -33,6 +33,7 @@ class MyTFareBillCashbag extends TwViewController {
         this.error.render(res, {
           code: cashbag.code,
           msg: cashbag.msg,
+          pageInfo: pageInfo,
           svcInfo: svcInfo
         });
       }

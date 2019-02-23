@@ -64,6 +64,8 @@ Tw.MyTFareBillPrepayAuto.prototype = {
       this.$changeCardInfo.hide();
       this.$firstCardNum.hide();
       this.$lastCardNum.hide();
+
+      this._checkSelected();
     } else if ($target.hasClass('fe-card')) {
       this.$changeType = 'C';
 
@@ -120,7 +122,14 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     $target.attr('id', $selectedValue.attr('id'));
     $target.text($selectedValue.parents('label').text());
 
+    this._checkSelected();
     this._popupService.close();
+  },
+  _checkSelected: function () {
+    if (this.$prepayAmount.attr('id') !== this.$prepayAmount.attr('data-origin-id') ||
+    this.$standardAmount.attr('id') !== this.$standardAmount.attr('data-origin-id')) {
+      this._validationService._setButtonAbility($.proxy(this._isAmountValid, this));
+    }
   },
   _getAmountList: function ($amountList, $amount) {
     if (Tw.FormatHelper.isEmpty($amountList)) {
@@ -166,7 +175,7 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     var reqData = {
       checkAuto: 'N',
       autoChrgStrdAmt: this.$standardAmount.attr('id'),
-      autoChrgAmt: this.$prepayAmount.attr('id'),
+      autoChrgAmt: this.$prepayAmount.attr('id')
     };
 
     if (this.$type === 'change') {

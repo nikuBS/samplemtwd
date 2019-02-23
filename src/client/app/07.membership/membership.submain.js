@@ -299,13 +299,17 @@ Tw.MembershipSubmain.prototype = {
   _askCurrentLocation: function() {
     if (Tw.BrowserHelper.isApp() && this._svcInfo) {
       this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function (res) {
-        if (res.resultCode !== Tw.NTV_CODE.CODE_00 ) {
-          this._getAreaByGeo({
-            latitude: '37.5600420',
-            longitude: '126.9858500'
-          });
-        } else {
+        if (res.resultCode === Tw.NTV_CODE.CODE_00 ) {
           this._getAreaByGeo(res.params);
+        } else {
+          var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
+          this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
+              $.proxy(function () {
+                this._getAreaByGeo({
+                  latitude: '37.5600420',
+                  longitude: '126.9858500'
+                });
+              }, this));
         }
       }, this));
     } else {

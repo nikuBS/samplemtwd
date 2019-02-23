@@ -4,7 +4,7 @@
 * Date: 2018.12.11
 %>
 
-<% include ../../components/start.component.html %>
+<%- include('../../components/start.component.html', { pageInfo: pageInfo }); %>
 <!-- body -->
 <%
     var moreViewUrl = '/common/search/more';
@@ -86,7 +86,7 @@
             <% if(searchInfo.search[0].immediate.data[0].DOCID==1){  %>
             <p class="paymentcharge-box type01">
                 이용하고 계신
-                <a href="/myt-join/submain" class="phonnumber search-element list-data"
+                <a href="/myt-join/submain" class="phonnumber list-data"
                    data-id="<%= searchInfo.search[0].immediate.data[0].DOCID %>" data-category="immediate" data-tit="<%= searchInfo.search[0].immediate.data[0].DOCID %>">
                     <%= searchInfo.search[0].immediate.data[0].mainData %>
                 </a>회선의<br>요금제는<span class="str">
@@ -607,6 +607,7 @@
 </div>
 <% include ../../components/javascript.component.html %>
 <% include ../../components/search/search.template.component.html %>
+<% include ../../components/search/search.keyword-list.component.html %>
 <script>
     $(document).ready(function () {
         new Tw.CommonSearch($('.wrap'),<%- JSON.stringify(searchInfo).replace(/\\"/g,"&quot;").replace(/\\/gi,'/').replace(/\n/g,'') %>,<%- JSON.stringify(svcInfo) %>,'<%- CDN %>','<%- step %>','<%- from %>');

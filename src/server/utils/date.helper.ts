@@ -82,13 +82,24 @@ class DateHelper {
 
   /**
    *  @param data {Date} or {string} : YYYYMMDDhhmmss
-   *  @return {string} : 20186
+   *  @return {string} : 2018.6.
    */
-  static getYearMonthFromDate(date: Date | string): string {
+  static getYearNextMonthFromDate(date: Date | string): string {
     const next = this.convDateFormat(date);
     next.setDate(1);
     next.setMonth(next.getMonth() + 1);
     return moment(next).format('YYYY.M.');
+  }
+
+  /**
+   *  @param data {Date} or {string} : YYYYMMDDhhmmss
+   *  @return {string} : 2018.6
+   */
+  static getYearNextNoDotMonthFromDate(date: Date | string): string {
+    const next = this.convDateFormat(date);
+    next.setDate(1);
+    next.setMonth(next.getMonth() + 1);
+    return moment(next).format('YYYY.M');
   }
 
   /**

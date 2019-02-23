@@ -12,13 +12,14 @@ class CommonError extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
     const code = req.query.code || '',
       msg = req.query.msg || '';
 
     this.error.render(res, {
       code: code,
       msg: msg,
+      pageInfo: pageInfo,
       svcInfo: svcInfo
     });
   }

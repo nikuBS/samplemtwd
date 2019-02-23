@@ -28,10 +28,10 @@ class MyTFareBillContents extends TwViewController {
           currentMonth: this.getCurrentMonth()
         });
       } else {
-        this.errorRender(res, contentsRemain, svcInfo);
+        this.errorRender(res, contentsRemain, svcInfo, pageInfo);
       }
     }, (error) => {
-      this.errorRender(res, error, svcInfo);
+      this.errorRender(res, error, svcInfo, pageInfo);
     });
   }
 
@@ -89,10 +89,11 @@ class MyTFareBillContents extends TwViewController {
     return DateHelper.getCurrentMonth();
   }
 
-  private errorRender(res, resp, svcInfo): any {
+  private errorRender(res, resp, svcInfo, pageInfo): any {
     this.error.render(res, {
       code: resp.code,
       msg: resp.msg,
+      pageInfo: pageInfo,
       svcInfo: svcInfo
     });
   }

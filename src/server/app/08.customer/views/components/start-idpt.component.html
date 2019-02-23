@@ -6,16 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <link rel="shortcut icon" href="/img/common/favicon.ico" />
-    <link rel="shortcut icon" href="/img/common/favicon.png" />
-    <link rel="apple-touch-icon" href="/img/common/favicon.png" />
+    <link rel="shortcut icon" href="<%= CDN %>/img/common/favicon.ico" />
+    <link rel="shortcut icon" href="<%= CDN %>/img/common/favicon.png" />
+    <link rel="apple-touch-icon" href="<%= CDN %>/img/common/favicon.png" />
     <meta name="description" content="페이지설명" />
-    <meta name="keywords" content="서비스키워드" />
-    <meta property="og:title" content="SKT 홈페이지" />
+    <meta name="keywords" content="<%= locals.pageInfo ? locals.pageInfo.seoMetaTagKwdCtt : '' %>" />
+    <meta property="og:title" content="<%= locals.pageInfo ? locals.pageInfo.seoMetaTagTitNm : 'SKT' %>" />
     <meta property="og:site_name" content="SKT" />
     <meta property="og:image" content="<%= CDN %>/img/dummy/kakao_share.jpg" />
     <meta property="og:description" content="SKT framework" />
-    <title>SKT</title>
+    <title><%= locals.pageInfo ? locals.pageInfo.seoMetaTagTitNm : 'SKT' %></title>
     <% include ../components/stylesheet.component.html %>
     <link rel="stylesheet" type="text/css" href="<%= CDN %>/css/<%= styleidpt %>" media="all" />
     <script src="https://xtr.tos.sktelecom.com/js/xtractor_script.js"></script>

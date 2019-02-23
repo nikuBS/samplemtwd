@@ -27,6 +27,7 @@ export default class MyTDataFamily extends TwViewController {
       if (error.code) {
         return this.error.render(res, {
           ...error,
+          pageInfo,
           svcInfo
         });
       }

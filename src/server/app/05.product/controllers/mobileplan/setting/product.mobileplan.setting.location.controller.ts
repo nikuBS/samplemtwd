@@ -95,6 +95,7 @@ class ProductMobileplanSettingLocation extends TwViewController {
             title: PRODUCT_TYPE_NM.SETTING,
             code: resp.code,
             msg: resp.msg,
+            pageInfo: pageInfo,
             svcInfo: svcInfo
           });
         }
@@ -103,6 +104,7 @@ class ProductMobileplanSettingLocation extends TwViewController {
           title: PRODUCT_TYPE_NM.SETTING,
           code: err.code,
           msg: err.msg,
+          pageInfo: pageInfo,
           svcInfo: svcInfo
         });
       });

@@ -431,6 +431,7 @@ skt_landing.widgets = {
         focusOnSelect: false,
         draggable: false,
         touchMove: false,
+        swipe: false,
         vertical:true,
         verticalSwiping:true,
         autoplay:true,

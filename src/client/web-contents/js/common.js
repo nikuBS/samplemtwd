@@ -266,7 +266,7 @@ skt_landing.action = {
             duration: 500
         });
       } else {
-        $('html').stop().animate({
+        $('body, html').stop().animate({
           'scrollTop': 0
         }, {
             queue: false,

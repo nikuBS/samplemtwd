@@ -5,7 +5,7 @@
 * ID: MS_06
 %>
 
-<% include ../../components/start.component.html %>
+<%- include('../../components/start.component.html', { pageInfo: pageInfo }); %>
 
 <body>
     <!-- #skip_navigation -->
@@ -38,7 +38,7 @@
                     <div class="add-prd-wrap">
                         <div class="contents-empty fe-empty <%= additions.length > 0 ? 'none' : '' %>">
                             <span class="ico type1"><span class="blind">느낌표(!)</span></span>
-                            <p class="desc">현재 사용 중인 부가상품이 없습니다.</p>
+                            <p class="desc">현재 사용 중인 부가서비스가 없습니다.</p>
                         </div>
                         <% if (additions.length > 0) { %>
                         <ul class="list-comp-lineinfo">
@@ -95,7 +95,7 @@
                                         <span class="info-title">나의 로밍 요금제 및<br>부가서비스</span>
                                     </div>
                                     <div class="lineinfo-data">
-                                        <span class="info-title"><%= roaming.recentlyJoinsProdNm %><%= roaming.addProdCnt > 0 ? '외 ' + roaming.addProdCnt + '건' : '' %></span>
+                                        <span class="info-title"><%= roaming.recentlyJoinsProdNm %><%= roaming.addRoamingProdCnt > 0 ? '외 ' + roaming.addRoamingProdCnt + '건' : '' %></span>
                                         <span class="ico"><span class="blind">나의 로밍 요금제 및 부가서비스 자세히 보기</span></span>
                                     </div>
                                 </a>
