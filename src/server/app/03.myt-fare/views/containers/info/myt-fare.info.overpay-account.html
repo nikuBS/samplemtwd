@@ -9,13 +9,7 @@
 
     <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <div class="popup-page tw-popup fixed-bottom h60">
-            <div class="header-wrap">
-                <div class="page-header">
-                    <div class="header-ti">
-                        <h1>과납 내역 환불 받기</h1>
-                    </div>
-                </div>
-            </div>
+            <%- include('../components/header.component.html', { title: '과납 내역 환불 불가', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!-- #contents -->
             <div id="contents" class="container-wrap">
                 <h2 class="blind">내용</h2>

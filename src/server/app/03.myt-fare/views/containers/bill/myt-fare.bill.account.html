@@ -26,13 +26,7 @@
         <!--// #contents -->
         <div class="popup-page tw-popup nobg fixed-bottom">
             <!-- #header -->
-            <div class="header-wrap">
-                <div class="page-header">
-                    <div class="header-ti">
-                        <h1>계좌이체 납부</h1>
-                    </div>
-                </div>
-            </div>
+            <%- include('../components/header.component.html', { title: '계좌이체 납부', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
             <!--// #header -->
             <!-- #contents -->
             <div class="container-wrap">

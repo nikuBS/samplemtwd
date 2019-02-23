@@ -17,13 +17,7 @@
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <div class="popup-page nobg tw-popup fixed-btn"><!-- .fixed-btn 하단에 고정된 버튼이 있는 경우 -->
         <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>해지</h1>
-                </div>
-            </div>
-        </div>
+        <%- include('../components/header.component.html', { title: '해지', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
         <!-- .container-wrap -->
         <div class="container-wrap">

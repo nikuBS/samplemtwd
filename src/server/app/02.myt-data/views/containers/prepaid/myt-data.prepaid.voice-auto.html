@@ -19,13 +19,7 @@
 <div class="wrap fe-no-back" data-menuId="<%= pageInfo.menuId %>">
     <div class="popup-page tw-popup fixed-bottom">
         <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>음성 자동 충전</h1>
-                </div>
-            </div>
-        </div>
+        <%- include('../components/header.component.html', { title: '음성 자동 충전', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
     <!-- #contents -->
     <div class="container-wrap">

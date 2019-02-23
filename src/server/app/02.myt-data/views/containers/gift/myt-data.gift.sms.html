@@ -18,13 +18,7 @@
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <div class="popup-page tw-popup fixed-bottom h60">
         <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>문자 보내기</h1>
-                </div>
-            </div>
-        </div>
+        <%- include('../components/header.component.html', { title: '문자 보내기', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">

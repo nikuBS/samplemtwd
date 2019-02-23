@@ -21,13 +21,7 @@
     <!-- .popup hbs -->
     <div class="popup-page tw-popup nobg h60">
         <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>발급 변경내역</h1>
-                </div>
-            </div>
-        </div>
+        <%- include('../components/header.component.html', { title: '발급 변경내역', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
         <!-- .container-wrap -->
         <div class="container-wrap">

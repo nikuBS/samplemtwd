@@ -18,13 +18,7 @@
 <!--// #skip_navigation -->
 <div id="benefit-index-combination-preview-info" class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <div class="popup-page nobg tw-popup">
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>요금절약 예시보기</h1>
-                </div>
-            </div>
-        </div>
+        <%- include('../components/header.component.html', { title: '요금절약 예시보기', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
     <!-- #contents -->
         <div class="container-wrap">
             <h2 class="blind">내용</h2>

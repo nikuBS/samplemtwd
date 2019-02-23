@@ -18,13 +18,7 @@
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <div class="popup-page nobg tw-popup fixed-btn">
         <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>가입 가능한 요금제</h1>
-                </div>
-            </div>
-        </div>
+        <%- include('../components/header.component.html', { title: '가입 가능한 요금제', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
         <!-- .container-wrap -->
         <div class="container-wrap">

@@ -20,13 +20,7 @@
          <!-- .popup hbs -->
          <div class="popup-page nobg tw-popup fixed-btn">
             <!-- #header -->
-            <div class="header-wrap">
-                <div class="page-header">
-                    <div class="header-ti">
-                        <h1>서비스 가능지역 조회</h1>
-                    </div>
-                </div>
-            </div>
+            <%- include('../components/header.component.html', { title: '서비스 가능지역 조회', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
             <!--// #header -->
             <!-- .container-wrap -->
             <div class="container-wrap">

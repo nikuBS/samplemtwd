@@ -20,13 +20,7 @@
     <!-- .popup hbs -->
     <div class="popup-page tw-popup">
         <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>설정</h1>
-                </div>
-            </div>
-        </div>
+        <%- include('../components/header.component.html', { title: '설정', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
         <!-- .container-wrap -->
         <div class="container-wrap">
@@ -96,7 +90,8 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoamingLookup($('.wrap'),<%- JSON.stringify(prodBffInfo) %>,'<%- prodId %>');
+    new Tw.ProductRoamingLookup($('.wrap') < % -JSON.stringify(prodBffInfo) % >, '<%- prodId %>'
+  )
   });
 </script>
 

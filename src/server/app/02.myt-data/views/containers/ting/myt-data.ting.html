@@ -17,13 +17,7 @@
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <div class="popup-page tw-popup nobg fixed-bottom h60">
         <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>팅요금제 충전 선물</h1>
-                </div>
-            </div>
-        </div>
+        <%- include('../components/header.component.html', { title: '팅요금제 충전 선물', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">

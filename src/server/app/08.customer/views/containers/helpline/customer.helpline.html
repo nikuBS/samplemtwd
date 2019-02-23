@@ -20,13 +20,7 @@
         <!-- .popup hbs -->
         <div class="popup-page tw-popup fixed-bottom h60 nobg"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
             <!-- #header -->
-            <div class="header-wrap">
-                <div class="page-header">
-                    <div class="header-ti">
-                        <h1>전화상담 예약</h1>
-                    </div>
-                </div>
-            </div>
+            <%- include('../components/header.component.html', { title: '전화상담 예약', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
             <!--// #header -->
             <!-- .container-wrap -->
             <div class="container-wrap">
@@ -148,7 +142,8 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CustomerHelpline($('.wrap'), <%- JSON.stringify(timeInfo) %>);
+    new Tw.CustomerHelpline($('.wrap') < % -JSON.stringify(timeInfo) % >
+  )
   });
 </script>
 <% include ../../components/end.component.html %>

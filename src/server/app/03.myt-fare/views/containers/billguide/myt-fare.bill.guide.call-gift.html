@@ -25,13 +25,7 @@
     <!-- .popup hbs -->
 
         <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>콜기프트 이용요금 조회</h1>
-                </div>
-            </div>
-        </div>
+        <%- include('../components/header.component.html', { title: '콜기프트 이용요금 조회', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
 
         <!-- .container-wrap -->
@@ -95,7 +89,7 @@
   $(document).ready(function () {
     var oMyTFareGuide = new Tw.MyTFareBillGuideCallGift( $('#fe-wrap'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>
-  } );
+  } )
   });
 </script>
 <% include ../../components/end.component.html %>
