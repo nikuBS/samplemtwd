@@ -20,38 +20,39 @@ class MembershipJoinController extends TwViewController {
       svcInfo: svcInfo,
       pageInfo: pageInfo
     };
-    this.apiService.request(API_CMD.BFF_11_0015, {}).subscribe((createInfo) => {
-      if ( createInfo.code === API_CODE.CODE_00 ) {
-        // 스마트폰 구분 코드
-        if ( createInfo.result.mblCardPsblEqpYn && createInfo.result.mblCardPsblEqpYn === 'Y' ) {
-          // Corporate
-          data.type = 'corporate';
-        } else {
-          // Feature phone
-          data.type = 'feature';
-          data.isFeature = true;
-        }
-        data.createInfo = createInfo.result;
-        // 법인 폰 여부
-        if ( svcInfo.svcGr === 'R' || svcInfo.svcGr === 'D' || svcInfo.svcGr === 'E' ) {
-          data.isCorporateBody = true;
-        }
-        // 본인 명의 폰 여부
-        if (svcInfo.svcGr === 'A' || svcInfo.svcGr === 'Y') {
-          data.isIndividual = true;
-        }
 
-        res.render('join/membership.join.html', { data });
-      } else {
-        return this.error.render(res, {
-          title: CUSTOMER_NOTICE_CATEGORY.MEMBERSHIP,
-          code: createInfo.code,
-          msg: createInfo.msg,
-          pageInfo: pageInfo,
-          svcInfo: svcInfo
-        });
-      }
-    });
+    data.type = 'corporate';
+    res.render('join/membership.join.html', { data });
+    // this.apiService.request(API_CMD.BFF_11_0015, {}).subscribe((createInfo) => {
+    //   if ( createInfo.code === API_CODE.CODE_00 ) {
+    //     // 스마트폰 구분 코드
+    //     if ( createInfo.result.mblCardPsblEqpYn && createInfo.result.mblCardPsblEqpYn === 'Y' ) {
+    //       // Corporate
+    //       data.type = 'corporate';
+    //     } else {
+    //       // Feature phone
+    //       data.type = 'feature';
+    //       data.isFeature = true;
+    //     }
+    //     data.createInfo = createInfo.result;
+    //     // 법인 폰 여부
+    //     if ( svcInfo.svcGr === 'R' || svcInfo.svcGr === 'D' || svcInfo.svcGr === 'E' ) {
+    //       data.isCorporateBody = true;
+    //     }
+    //     // 본인 명의 폰 여부
+    //     if (svcInfo.svcGr === 'A' || svcInfo.svcGr === 'Y') {
+    //       data.isIndividual = true;
+    //     }
+    //   } else {
+    //     return this.error.render(res, {
+    //       title: CUSTOMER_NOTICE_CATEGORY.MEMBERSHIP,
+    //       code: createInfo.code,
+    //       msg: createInfo.msg,
+    //       pageInfo: pageInfo,
+    //       svcInfo: svcInfo
+    //     });
+    //   }
+    // });
   }
 }
 
