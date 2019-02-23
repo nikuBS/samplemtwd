@@ -61,6 +61,7 @@ class MainHome extends TwViewController {
             this.getMembershipData(svcInfo),
             this.getRedisData(noticeCode, svcInfo.svcMgmtNum)
           ).subscribe(([usageData, membershipData, redisData]) => {
+            console.log(usageData);
             homeData.usageData = usageData;
             homeData.membershipData = membershipData;
             const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: svcInfo.noticeType };
@@ -428,6 +429,7 @@ class MainHome extends TwViewController {
       // data.showTotal = this.convFormat(data.total, data.unit);
       data.showRemained = this.convFormat(data.remained, data.unit);
       data.remainedRatio = data.remained / data.total * 100;
+      data.remainedRatio = parseInt(data.remainedRatio, 10);
     } else {
       data.showRemained = UNLIMIT_NAME[data.unlimit];
     }
