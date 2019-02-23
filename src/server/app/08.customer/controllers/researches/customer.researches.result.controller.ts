@@ -17,6 +17,7 @@ export default class CustomerResearchesResult extends TwViewController {
       if (result.code) {
         return this.error.render(res, {
           svcInfo,
+          pageInfo,
           ...result
         });
       }

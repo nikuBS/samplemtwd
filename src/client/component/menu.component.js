@@ -167,7 +167,7 @@ Tw.MenuComponent.prototype = {
       this._tidLanding.goSignup();
     } else {
       var url = e.currentTarget.value;
-      this._historyService.replaceURL(url);
+      this._goOrReplace(url);
     }
   },
   _onGnbBtnClicked: function () {
@@ -259,7 +259,7 @@ Tw.MenuComponent.prototype = {
     if ( url.indexOf('http') !== -1 ) {
       Tw.CommonHelper.openUrlExternal(url);
     } else {
-      this._historyService.replaceURL(url);
+      this._goOrReplace(url);
     }
   },
   _onFreeSMS: function (e) {
@@ -292,10 +292,10 @@ Tw.MenuComponent.prototype = {
       (new Tw.CertificationSelect()).open({
         authClCd: Tw.AUTH_CERTIFICATION_KIND.F
       }, '', null, null, $.proxy(function () {
-        this._historyService.replaceURL(e.currentTarget.value);
+        this._goOrReplace(e.currentTarget.value);
       }, this));
     } else {
-      this._historyService.replaceURL(e.currentTarget.value);
+      this._goOrReplace(e.currentTarget.value);
     }
   },
 
@@ -607,6 +607,13 @@ Tw.MenuComponent.prototype = {
     }
 
     return ret;
+  },
+  _goOrReplace: function (url) {  // History가 1인 경우 replaceURL 하지 말고 goLoad
+    if (history && history.length === 1) {
+      this._historyService.goLoad(url);
+    } else {
+      this._historyService.replaceURL(url);
+    }
   },
 
   isOpened: function () {

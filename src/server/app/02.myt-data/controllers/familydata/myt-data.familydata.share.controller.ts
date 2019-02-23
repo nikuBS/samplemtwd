@@ -23,7 +23,8 @@ export default class MyTDataFamilyShare extends TwViewController {
       if (monthly.code) {
         return this.error.render(res, {
           ...monthly,
-          svcInfo: svcInfo
+          svcInfo: svcInfo,
+          pageInfo
         });
       }
 
