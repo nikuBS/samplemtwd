@@ -12,10 +12,16 @@ Tw.ImmediatelyRechargeLayer = function ($element, prodId) {
   this._prodId = prodId;
   this._historyService = new Tw.HistoryService(this.$container);
   this.immChargeData = {}; // 초기화
+  this._bindEvent();
   this._initialize();
 };
 
 Tw.ImmediatelyRechargeLayer.prototype = {
+
+  _bindEvent: function () {
+    // BPCP 페이지에서 이벤트 받기 위한 처리
+    $(window).on('message', $.proxy(this._getWindowMessage, this));
+  },
 
   _initialize: function () {
     this._readOnlyProductIdList = ['NA00000138', 'NA00000719', 'NA00000720', 'NA00001901', 'NA00002244', 'NA00002373',
@@ -48,18 +54,18 @@ Tw.ImmediatelyRechargeLayer.prototype = {
     ];
     this._apiService.requestArray(apiList)
       .done($.proxy(function (available, refill, ting, etc, limit, optSvc) {
-        if (available.code === Tw.API_CODE.CODE_00) {
-          var availableFunc = available.result.option.reduce(function(memo, item) {
+        if ( available.code === Tw.API_CODE.CODE_00 ) {
+          var availableFunc = available.result.option.reduce(function (memo, item) {
             return (memo + item.dataVoiceClCd);
           }, '');
 
-          if (availableFunc.includes('D') && availableFunc.includes('V')) {
+          if ( availableFunc.includes('D') && availableFunc.includes('V') ) {
             this.immChargeData.available = 'ALL';
           }
-          if (availableFunc.includes('D')) {
+          if ( availableFunc.includes('D') ) {
             this.immChargeData.available = 'DATA';
           }
-          if (_.isEmpty(available.result.option)) {
+          if ( _.isEmpty(available.result.option) ) {
             this.immChargeData.available = 'NONE';
           }
           else {
@@ -265,7 +271,7 @@ Tw.ImmediatelyRechargeLayer.prototype = {
   _getBPCP: function (url) {
     var replaceUrl = url.replace('BPCP:', '');
     this._apiService.request(Tw.API_CMD.BFF_01_0039, { bpcpServiceId: replaceUrl })
-      .done($.proxy(this._responseBPCP, this));
+      .done($.proxy(this._responseBPCP, this)).fail($.proxy(this._responseFail, this));
   },
 
   _responseBPCP: function (resp) {
@@ -279,5 +285,17 @@ Tw.ImmediatelyRechargeLayer.prototype = {
     }
 
     Tw.CommonHelper.openUrlInApp(url);
+  },
+
+  _responseFail: function (err) {
+    Tw.Error(err.code, err.msg).pop();
+  },
+
+  // BPCP 페이지에서 X 버튼 누른 경우에 대한 이벤트 처리
+  _getWindowMessage: function (e) {
+    var data = e.data || e.originalEvent.data;
+    if ( data === 'popup_close' ) {
+      this._popupService.close();
+    }
   }
 };

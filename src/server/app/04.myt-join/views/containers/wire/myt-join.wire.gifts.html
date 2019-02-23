@@ -97,7 +97,7 @@
 </div>
 <script>
   $(document).ready(function () {
-    new Tw.MyTJoinWireGifts($('.wrap'), '<%- JSON.stringify(data) %>');
+    new Tw.MyTJoinWireGifts($('.wrap'), '<%- JSON.stringify(data) %>', '<%- JSON.stringify(svcInfo) %>');
   });
 </script>
 <% include ../../components/end.component.html %>

@@ -3,11 +3,13 @@
  * Author: Lee Gyu-gwang (skt.P134910@partner.sk.com)
  * Date: 2018.10.08
  */
-Tw.MyTJoinWireGifts = function (rootEl, strInitData) {
+Tw.MyTJoinWireGifts = function (rootEl, strInitData, svcInfo) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
+  // svcInfo 값 추가 [DV001-14262]
+  this._svcInfo = JSON.parse(svcInfo);
 
   this._bindEvent();
   this._registerHelper();
@@ -34,17 +36,17 @@ Tw.MyTJoinWireGifts.prototype = {
   /**
    * templates
    */
-  _listContBox : null,
-  _listMoreBtn : null,
-  _listItemTmplt : null,
+  _listContBox: null,
+  _listMoreBtn: null,
+  _listItemTmplt: null,
 
   /**
    * 초기화 데이터 ui로 변경
    * @private
    */
-  _initListUi: function(initData) {
+  _initListUi: function (initData) {
     // hasSKTWire:SK브로드밴드 가입여부(Y/N), resultValue:사은품 여부(Y/N)
-    if('Y' === initData.hasSKTWire ){
+    if ( 'Y' === initData.hasSKTWire ) {
       // sk브로드밴드인 경우 팝업 변경 (myt-join공통함수로 처리)
       (new Tw.MyTJoinCommon()).openSkbdAlertOnInit(this._historyService);
       //return;
@@ -56,10 +58,11 @@ Tw.MyTJoinWireGifts.prototype = {
     this._listItemTmplt = Handlebars.compile($('#list-cont-item-tmplt').html());
 
     this._listTotCnt = initData.totalCnt;
-    if(this._listTotCnt <= 0){
+    if ( this._listTotCnt <= 0 ) {
       $('#divListBox').hide();
       $('#divNoListBox').show();
-    }else{
+    }
+    else {
       $('#divListBox').show();
       $('#divNoListBox').hide();
       this._printList(initData.giftProvideList);
@@ -91,17 +94,28 @@ Tw.MyTJoinWireGifts.prototype = {
    * @private
    */
   _printList: function (list) {
-    if( !list || list.length === 0 ){
+    if ( !list || list.length === 0 ) {
       this._showOrHideMoreBtn();
       return;
     }
 
     var $listBox = $('.history-list ul', this.$container);
 
-    for( var i = 0; i < list.length; i++ ){
+    for ( var i = 0; i < list.length; i++ ) {
+      list[i].giftNm = list[i].giftNm ? list[i].giftNm : (this._svcInfo.prodNm + Tw.MYT_JOIN.WIRE_GIFT);
       list[i].isComp = ('03' === list[i].giftOpStCd);
-      list[i].hasDlvUrl = (['01','05','07'].indexOf(list[i].giftOpStCd) !== -1);
-      $listBox.append(this._listItemTmplt( list[i] ));
+      list[i].hasDlvUrl = (['01', '05', '07'].indexOf(list[i].giftOpStCd) !== -1);
+      if ( ['01', '05', '07'].indexOf(list[i].giftOpStCd) > -1 ) {
+        // 01 배송접수, 05 반품 요청, 07 재배송 접수 건에 한해서 배송조회 버튼 노출 (기존)
+        // 주소지 정보가 없는 경우 추가 (변경) [DV001-14262]
+        if ( list[i].pdlvBasAddr ) {
+          list[i].hasDlvUrl = true;
+        }
+        else {
+          list[i].hasDlvUrl = false;
+        }
+      }
+      $listBox.append(this._listItemTmplt(list[i]));
     }
 
     this._list = this._list.concat(list);
@@ -116,13 +130,13 @@ Tw.MyTJoinWireGifts.prototype = {
   _requestNextData: function () {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
-    this._apiService.request(Tw.API_CMD.BFF_05_0159, { requestPage: String(this._nowPageNum+1) })
+    this._apiService.request(Tw.API_CMD.BFF_05_0159, { requestPage: String(this._nowPageNum + 1) })
       .done($.proxy(function (resp) {
         this._nowPageNum += 1;
 
-        if( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result){
+        if ( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result ) {
           this._showErrorAlert(resp.code, resp.msg);
-          return ;
+          return;
         }
 
         this._printList(resp.result.giftProvideList);
@@ -132,7 +146,7 @@ Tw.MyTJoinWireGifts.prototype = {
     // 결과물 출력
   },
 
-  _showErrorAlert: function(code, msg){
+  _showErrorAlert: function (code, msg) {
     Tw.Error(code, msg).pop();
     Tw.CommonHelper.endLoading('.container');
   },
@@ -146,9 +160,10 @@ Tw.MyTJoinWireGifts.prototype = {
    * @private
    */
   _showOrHideMoreBtn: function () {
-    if( parseInt(this._listTotCnt, 10) > this._list.length ) {
+    if ( parseInt(this._listTotCnt, 10) > this._list.length ) {
       $('.bt-more').show();
-    } else {
+    }
+    else {
       $('.bt-more').hide();
     }
   },
@@ -157,7 +172,7 @@ Tw.MyTJoinWireGifts.prototype = {
    * 배송조회
    * @private
    */
-  _goDelivPage: function(event){
+  _goDelivPage: function (event) {
     var url = event.currentTarget.getAttribute('data-url');
     location.href = url;
   }

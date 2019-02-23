@@ -196,13 +196,22 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       this._checkOkCashbag = true;
     }
     else {
-      if ( !this.$cashbagList.hasClass('blind') ) {
-        this.$cashbagList.addClass('blind');
-      }
-      if ( this.$cAgreeCheckBox.find('input').prop('checked') ) {
-        this.$cAgreeCheckBox.find('input').trigger('click');
-      }
-      this._checkOkCashbag = false;
+      // DV001-15097 OKcashbag 기능 취초 시 알럿 추가
+      this._popupService.openConfirmButton(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A63.MSG, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A63.TITLE,
+        $.proxy(function() {
+          if ( !this.$cashbagList.hasClass('blind') ) {
+            this.$cashbagList.addClass('blind');
+          }
+          if ( this.$cAgreeCheckBox.find('input').prop('checked') ) {
+            this.$cAgreeCheckBox.find('input').trigger('click');
+          }
+          this._checkOkCashbag = false;
+          this._popupService.close();
+        }, this), $.proxy(function() {
+          if (this._checkOkCashbag) {
+            this.$isCashbagCheckbox.find('input').trigger('click');
+          }
+        }, this), Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
     }
   },
 
