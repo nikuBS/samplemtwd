@@ -61,7 +61,6 @@ class MainHome extends TwViewController {
             this.getMembershipData(svcInfo),
             this.getRedisData(noticeCode, svcInfo.svcMgmtNum)
           ).subscribe(([usageData, membershipData, redisData]) => {
-            console.log(usageData);
             homeData.usageData = usageData;
             homeData.membershipData = membershipData;
             const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: svcInfo.noticeType };
