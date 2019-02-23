@@ -751,7 +751,9 @@ Tw.MyTFareSubMain.prototype = {
           }]
         });
       }
-      this._popupService.open(option, $.proxy(this._openedLayerPopup, this), null, 'GR_02');
+      this._popupService.openModalTypeA(title, content, Tw.BUTTON_LABEL.CLOSE, $.proxy(this._openedLayerPopup, this),
+        null, null, 'GR_02');
+      // this._popupService.open(option, $.proxy(this._openedLayerPopup, this), null, 'GR_02');
     }
     else {
       this._historyService.goLoad(url);
