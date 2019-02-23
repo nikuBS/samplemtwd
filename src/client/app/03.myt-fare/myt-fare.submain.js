@@ -684,7 +684,11 @@ Tw.MyTFareSubMain.prototype = {
   __selectSvcType: function (attrCd) {
     var clsNm = 'cellphone';
     if ( attrCd.indexOf('S') > -1 ) {
-      clsNm = 'pc';
+      if ( attrCd === 'S1' ) {
+        clsNm = 'internet';
+      } else {
+        clsNm = 'pc';
+      }
     }
     else if ( ['M3', 'M4'].indexOf(attrCd) > -1 ) {
       clsNm = 'tablet';

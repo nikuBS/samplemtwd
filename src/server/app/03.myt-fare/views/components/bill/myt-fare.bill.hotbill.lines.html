@@ -6,13 +6,13 @@
 <script id="fe-list-template" type="text/x-handlebars-template">
     {{#each list}}
     <li>
-        <button @index data-id="fe-other-line" data-idx={{ data-num={{ svcMgmtNum }} }}>
+        <button data-id="fe-other-line" data-idx="{{ @index }}" data-num="{{ svcMgmtNum }}">
             <span class="ico-wrap">
                 {{#if isCellphone }}
                 <i class="icon-cellphone-80"><span class="blind">{{ eqpMdlNm }}</span></i>
                 {{ else }}
                 <i class="icon-tablet-80"><span class="blind">{{ eqpMdlNm }}</span></i>
-                 {{/if }}
+                {{/if }}
             </span>
             <span class="cont">
                 <span class="info-title">{{ eqpMdlNm }}
@@ -20,7 +20,7 @@
                     <i class="icon-children ml6"><span class="blind">자녀</span></i></span>
                     {{/if}}
                 <span class="info-sub">{{ svcNum }}</span>
-                <span class="price"></span>
+                <span class="price">조회 중</span>
             </span>
         </button>
     </li>
