@@ -54,6 +54,27 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
     ['NA00006157', 20] // 0 plan large
   ]);
 
+  private planAdaptive = {  // 맞춤형 요금제 - '요금상품별 상이' 표기
+    'NA00004153': true,
+    'NA00004154': true,
+    'NA00004155': true,
+    'NA00004156': true,
+    'NA00004157': true,
+    'NA00004158': true,
+    'NA00003310': true,
+    'NA00004098': true,
+    'NA00004099': true,
+    'NA00004100': true,
+    'NA00004101': true,
+    'NA00004102': true,
+    'NA00004145': true,
+    'NA00003517': true,
+    'NA00003518': true,
+    'NA00003519': true,
+    'NA00003520': true,
+    'NA00003521': true
+  };
+
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
          allSvc: any, childInfo: any, pageInfo: any) {
 
@@ -208,7 +229,13 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
           option.isTplan = true;
           return option;
         }
+      } else if (this.planAdaptive[plan]) {
+        if (option.dataVoiceClCd === 'D') {
+          option.qttText = '요금상품별 상이';
+          return option;
+        }
       }
+
       if (option.dataVoiceClCd === 'D') {
         const offer = productInfo.basOfrGbDataQtyCtt ?
           productInfo.basOfrGbDataQtyCtt : productInfo.basOfrMbDataQtyCtt;
