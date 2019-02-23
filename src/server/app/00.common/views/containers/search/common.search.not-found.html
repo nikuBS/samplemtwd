@@ -107,6 +107,7 @@ function recognizeLastChar(keyword){
 
 </div>
 <% include ../../components/javascript.component.html %>
+<% include ../../components/search/search.keyword-list.component.html %>
 <script>
     $(document).ready(function () {
         new Tw.CommonSearchNotFound($('.wrap'),<%- JSON.stringify(svcInfo) %>,<%- JSON.stringify(surveyList) %>,<%- step %>,'<%- from %>','<%- keyword %>');
