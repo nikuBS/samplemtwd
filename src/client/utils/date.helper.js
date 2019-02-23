@@ -291,7 +291,7 @@ Tw.DateHelper = (function () {
   };
 
   var getKoreanTime = function (date) {
-    return moment(this.convDateFormat(date)).locale('ko').format('a hh시 mm분');
+    return moment(this.convDateFormat(date)).locale('ko').format('a h시 m분');
   };
 
   var getDayOfWeek = function (date) {
