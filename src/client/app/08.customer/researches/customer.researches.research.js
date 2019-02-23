@@ -98,7 +98,6 @@ Tw.CustomerResearch.prototype = {
     }
 
     this._nextIdx = this._currentIdx;
-    delete this._answers[prev];
     this._currentIdx = prev;
     this._setProgress(this._nextIdx);
   },
@@ -166,6 +165,16 @@ Tw.CustomerResearch.prototype = {
     }
 
     answer.inqRpsCtt = inqRpsCtt;
+
+    var nAnswers = {};
+    if (answerType === 0 && this._answers[this._currentIdx] && this._answers[this._currentIdx] !== inqRpsCtt) {
+      for (i = 0; i < this._currentIdx; i++) {
+        nAnswers[i] = this._answers[i];
+      }
+
+      this._answers = nAnswers;
+    }
+
     this._answers[this._currentIdx] = answer;
   },
 
