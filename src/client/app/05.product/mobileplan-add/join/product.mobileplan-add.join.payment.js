@@ -258,7 +258,8 @@ Tw.ProductMobileplanAddJoinPayment.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_10_0018, {
       svcNumList: [this._getServiceNumberFormat(this._validatedNumber)]
-    }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this));
+    }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this))
+      .fail(Tw.CommonHelper.endLoading('.container'));
   },
 
   _getServiceNumberFormat: function(number) {

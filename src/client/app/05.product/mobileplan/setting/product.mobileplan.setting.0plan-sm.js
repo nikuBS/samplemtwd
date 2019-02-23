@@ -142,7 +142,8 @@ Tw.ProductMobileplanSetting0planSm.prototype = {
       beforeTDiyGrCd: this._currentOptionProdId,
       afterTDiyGrCd: $checked.val(),
       applyStaTm: $checked.val() === 'NA00006163' ? this._startTime + '00' : ''
-    }, {}, []).done($.proxy(this._procSetupOkRes, this));
+    }, {}, []).done($.proxy(this._procSetupOkRes, this))
+      .fail(Tw.CommonHelper.endLoading('.container'));
   },
 
   _getBasicText: function() {

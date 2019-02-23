@@ -164,7 +164,8 @@ Tw.ProductMobileplanSettingTplan.prototype = {
 
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_10_0014, reqParams,
-      {}, [$checked.val()]).done($.proxy(this._procSetupOkRes, this));
+      {}, [$checked.val()]).done($.proxy(this._procSetupOkRes, this))
+      .fail(Tw.CommonHelper.endLoading('.container'));
   },
 
   _procSetupOkRes: function(resp) {

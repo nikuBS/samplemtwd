@@ -150,7 +150,8 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
     this._overpayRetryCnt++;
     this._isSetOverPayReq = true;
     this._apiService.request(Tw.API_CMD.BFF_10_0010)
-      .done($.proxy(this._resOverpay, this));
+      .done($.proxy(this._resOverpay, this))
+      .fail(Tw.CommonHelper.endLoading('.container'));
   },
 
   _resOverpay: function(resp) {
@@ -228,7 +229,8 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0012, {
       asgnNumList: [this.$inputNumber.val().replace(/[^0-9]/g, '')],
       svcProdGrpId: Tw.FormatHelper.isEmpty(this._confirmOptions.preinfo.svcProdGrpId) ? '' : this._confirmOptions.preinfo.svcProdGrpId
-    }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this));
+    }, {}, [this._prodId]).done($.proxy(this._procJoinRes, this))
+      .fail(Tw.CommonHelper.endLoading('.container'));
   },
 
   _procJoinRes: function(resp) {

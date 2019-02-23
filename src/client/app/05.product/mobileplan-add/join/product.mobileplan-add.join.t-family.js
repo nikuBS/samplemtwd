@@ -292,7 +292,8 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_10_0173, {
       memberSvcNumList: this._getSvcNumList()
-    }, {}, []).done($.proxy(this._procJoinRes, this));
+    }, {}, []).done($.proxy(this._procJoinRes, this))
+      .fail(Tw.CommonHelper.endLoading('.container'));
   },
 
   _procJoinRes: function(resp) {

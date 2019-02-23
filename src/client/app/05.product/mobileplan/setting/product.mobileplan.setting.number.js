@@ -71,7 +71,8 @@ Tw.ProductMobileplanSettingNumber.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0074, {
       opClCd: '1',
       asgnNum: number
-    }, {}).done($.proxy(this._addDelNumRes, this));
+    }, {}).done($.proxy(this._addDelNumRes, this))
+      .fail(Tw.CommonHelper.endLoading('.container'));
   },
 
   _addDelNumRes: function(resp) {
@@ -103,7 +104,8 @@ Tw.ProductMobileplanSettingNumber.prototype = {
       opClCd: '2',
       asgnNum: number.replace(/-/gi, ''),
       auditDtm: auditDtm
-    }, {}, this._prodId).done($.proxy(this._addDelNumRes, this));
+    }, {}, this._prodId).done($.proxy(this._addDelNumRes, this))
+      .fail(Tw.CommonHelper.endLoading('.container'));
   },
 
   _detectInputNumber: function(e) {

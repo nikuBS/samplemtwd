@@ -200,7 +200,8 @@ Tw.ProductMobilePlanComparePlans.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0007, {
       joinTermCd: '01'
     }, null, [this._prodId])
-      .done($.proxy(this._goJoinDone, this, joinUrl));
+      .done($.proxy(this._goJoinDone, this, joinUrl))
+      .fail(Tw.CommonHelper.endLoading('.container'));
   },
 
   _goJoinDone: function (href, resp) {

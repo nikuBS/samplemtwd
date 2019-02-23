@@ -113,7 +113,8 @@ Tw.ProductCommonLineChange.prototype = {
     }
 
     this._apiService.request(preCheckApi, {}, null, [this._targetProdId])
-      .done($.proxy(this._procPreCheckRes, this));
+      .done($.proxy(this._procPreCheckRes, this))
+      .fail(Tw.CommonHelper.endLoading('.container'));
   },
 
   _procPreCheckRes: function(resp) {
