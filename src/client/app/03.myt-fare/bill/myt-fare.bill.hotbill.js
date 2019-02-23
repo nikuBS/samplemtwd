@@ -105,7 +105,6 @@ Tw.MyTFareHotBill.prototype = {
           .request(Tw.API_CMD.BFF_05_0022, params)
           .done($.proxy(this._onReceivedBillData, this, childSvcMgmtNum))
           .fail($.proxy(this._onErrorReceivedBillData, this));
-
       }, this), this._isPrev ? 5000 : 2500);
 
     } else {
@@ -219,7 +218,7 @@ Tw.MyTFareHotBill.prototype = {
     this._historyService.goBack();
   },
   /**
-   * 당월 본인 실시간 이용요금 화면에서 다른 회선 및 자녀회선에 대해 요금과 같이 표시해준다.
+   * Render other(child) lines.
    * @private
    */
   _renderLines: function () {
@@ -228,6 +227,10 @@ Tw.MyTFareHotBill.prototype = {
     var template = Handlebars.compile(source);
     var output = template({ list: items });
     this.$lineList.append(output);
+
+    // 다른회선 요금 조회
+    _.each(items, $.proxy(this._sendBillRequestOtherLine, this));
+
     this._idxLastItem += this.NUM_OF_ITEMS;
     var moreItems = this._lines.length - this._idxLastItem;
     if ( moreItems > 0 ) {
@@ -235,6 +238,73 @@ Tw.MyTFareHotBill.prototype = {
       // this.$btMore.find('span').text('(' + moreItems + ')'); // 더보기 갯수 표시 안 함.
     } else {
       this.$btMore.hide();
+    }
+  },
+  /**
+   * Request to create the hot-bill data for other(child) lines.
+   * @param line
+   * @private
+   */
+  _sendBillRequestOtherLine: function (line) {
+    Tw.CommonHelper.startLoading('[data-num="' + line.svcMgmtNum + '"] .price', 'white');
+    line.count = 0;
+    var params = { count: line.count++ };
+    params.childSvcMgmtNum = line.svcMgmtNum;
+
+    this._apiService
+      .request(Tw.API_CMD.BFF_05_0022, params)
+      .done($.proxy(this._getBillResponseOtherLine, this, line))
+      .fail($.proxy(this._onErrorOtherLine, this));
+  },
+  /**
+   * Success callback for _sendBillRequestOtherLine
+   * @param line
+   * @param resp
+   * @private
+   */
+  _getBillResponseOtherLine: function (line, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      setTimeout($.proxy(function () {
+        var params = { count: line.count++ };
+        params.childSvcMgmtNum = line.svcMgmtNum;
+        this._apiService
+          .request(Tw.API_CMD.BFF_05_0022, params)
+          .done($.proxy(this._onReceiveBillOtherLine, this, line))
+          .fail($.proxy(this._onErrorOtherLine, this));
+      }, this), this._isPrev ? 5000 : 2500);
+
+    } else {
+      this._onErrorOtherLine(line, resp);
+    }
+  },
+  /**
+   * Success callback for _getBillResponseOtherLine
+   * @param line
+   * @param resp
+   * @private
+   */
+  _onReceiveBillOtherLine: function (line, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      var bill = resp.result.hotBillInfo[0].totOpenBal2;
+
+      this.$lineList.find('[data-num="' + line.svcMgmtNum + '"] .price').text(bill + Tw.CURRENCY_UNIT.WON);
+      Tw.CommonHelper.endLoading('[data-num="' + line.svcMgmtNum + '"] .price', 'white');
+    } else {
+      this._onErrorOtherLine(line, resp);
+    }
+  },
+  /**
+   * Error callback for _getBillResponseOtherLine
+   * @param line
+   * @param resp
+   * @private
+   */
+  _onErrorOtherLine: function (line, resp) {
+    if ( line.count === 1 ) {
+      // 2번 시도 필요
+      this._getBillResponseOtherLine(line, resp);
+    } else {
+      Tw.CommonHelper.endLoading('[data-num="' + line.svcMgmtNum + '"] .price', 'white');
     }
   },
   /**
@@ -282,7 +352,7 @@ Tw.MyTFareHotBill.prototype = {
     this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,
       defaultLineInfo + Tw.MYT_TPL.DATA_SUBMAIN.SP_TEMP + selectLineInfo,
       Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._requestSwitchLine, this, target), null
-    , null, 'tc');
+      , null, 'tc');
   },
   /**
    * Request to switch the current line.

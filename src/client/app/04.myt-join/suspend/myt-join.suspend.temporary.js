@@ -96,6 +96,9 @@ Tw.MyTJoinSuspendTemporary.prototype = {
     if ( !notice ) {
       this.$btSuspend.removeAttr('disabled');
     }
+    else if(!this.$checkEmailNoti.attr('checked')  && !this.$checkSMSnoti.attr('checked') ){
+      this.$btSuspend.attr('disabled', '');
+    }
     else if ( (!this.$checkEmailNoti.attr('checked') || !_.isEmpty(this.$inputEmail.val())) &&
       (!this.$checkSMSnoti.attr('checked') || !_.isEmpty(this.$inputTel.val())) ) {
       this.$btSuspend.removeAttr('disabled');
