@@ -36,7 +36,7 @@ interface BranchDetail {
   apple: string;
   agnYn: string;
   authAgnYn: string;
-  talkMapArr?: Array<string>,
+  talkMapArr?: Array<string>;
   star?: string;
 }
 

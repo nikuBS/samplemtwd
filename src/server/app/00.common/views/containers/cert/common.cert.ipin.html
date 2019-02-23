@@ -3,7 +3,7 @@
 * Author: Ara Jo (araara.jo@sk.com)
 * Date: 2018.08.23
 %>
-<%- include('../../components/start.component.html', { pageInfo: pageInfo }); %>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <form id="applyForm" method="post" action="https://cert.vno.co.kr/ipin.cb">
     <input type="hidden" name="m" value="pubmain"/>
     <input type="hidden" name="enc_data" value="<%= data %>"/>

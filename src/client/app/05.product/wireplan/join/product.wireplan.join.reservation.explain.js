@@ -65,6 +65,7 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
 
     this.$container.on('click', 'input[type=file]', $.proxy(this._openCustomFileChooser, this));
     this.$familyAddWrap.on('keyup input', 'input[type=text],input[type=tel]', $.proxy(this._procEnableAddFamilyBtn, this));
+    this.$familyAddWrap.on('keyup', 'input[type=tel]', $.proxy(this._onEnter, this));
     this.$familyAddWrap.on('click', '.fe-btn_cancel', $.proxy(this._procEnableAddFamilyBtn, this));
     this.$familyList.on('change', 'input[type=checkbox]', $.proxy(this._procEnableApplyBtn, this));
     this.$familyList.on('click', '.fe-btn_family_del', $.proxy(this._delFamily, this));
@@ -337,6 +338,14 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
       familyList: this._setFamilyTypeText(this._familyList),
       fileList: this._fileList
     });
+  },
+
+  _onEnter: function(e) {
+    if (!Tw.InputHelper.isEnter(e)) {
+      return;
+    }
+
+    this.$btnFamilyAdd.trigger('click');
   }
 
 };

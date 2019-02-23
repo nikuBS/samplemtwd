@@ -1,5 +1,4 @@
-const GIFT_LIST =
-  {
+const GIFT_LIST = {
     code: '00',
     msg: 'success',
     result: [

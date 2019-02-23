@@ -1,4 +1,6 @@
-<% if ( series && series.list.length > 0 || recommends && recommends.length > 0 ) { %>
+<% if ( series && series.list.length > 0 || recommends && recommends.length > 0 ) {
+const tabStyleClass = series && series.list.length > 0 && recommends && recommends.length > 0 ? '' : 'tab-single';
+%>
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <div class="cont-box nogaps">
@@ -7,7 +9,7 @@
         <div class="component-box tabs">
             <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                 <div class="tab-linker">
-                    <ul role="tablist" class="tab-style01" style="width: 100%;">
+                    <ul role="tablist" class="tab-style01 <%= tabStyleClass %>" style="width: 100%;">
                         <% if ( series && series.list.length > 0 ) { %>
                         <li role="tab" aria-selected="true" aria-controls="tab1-tab2" id="tab12"><button><%= series.prodGrpNm %></button></li>
                         <% } %>
