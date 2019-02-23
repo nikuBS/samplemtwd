@@ -1744,6 +1744,11 @@ Tw.MEMBERSHIP = {
         M: '내 등급'
       }
     },
+    BRAND_BENEFIT: {
+      MOV_TMEM_CONF_TIT: 'T멤버십 앱으로 이동하시겠습니까?',
+      MOV_TMEM_CONF_MSG: '해당 기능은 T멤버십 앱에서 가능합니다.',
+      MOV_TMEM_CONF_URL: 'http://www.sktmembership.co.kr:90/mobile/tm.jsp?m1=00&targetUrl='
+    },
     DEFAULT_AREA: {
       AREA1: '서울',
       AREA2: '중구',

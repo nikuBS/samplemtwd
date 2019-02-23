@@ -16,6 +16,11 @@ Tw.MembershipBenefitBrandBenefit = function (rootEl, options) {
     $('.benefit-list').eq(0).show();
   }
 
+  // DV001-14557 이슈로
+  // 컨텐츠 내 url이 T맴버십의 url이라 T맴버십 앱(url)으로 이동 하도록 링크를 변경
+  $('.benefit-list').eq(0).find('a').each(this._goTmbrshpApp);
+  $('.benefit-list').eq(1).find('a').each(this._goTmbrshpApp);
+
   this.$container = rootEl;
   this._options = options;
   this._historyService = new Tw.HistoryService();
@@ -245,6 +250,30 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
     };
 
     this._historyService.goLoad('/membership/benefit/brand/list?' + $.param(param));
+  },
+
+  /**
+   * T맴버십 앱(url)으로 이동 하도록 링크를 변경
+   * @private
+   */
+  _goTmbrshpApp: function(){
+    var url = $(this).attr('href');
+    $(this).on('click', function(){
+
+      Tw.Popup.openModalTypeATwoButton(
+        Tw.MEMBERSHIP.BENEFIT.BRAND_BENEFIT.MOV_TMEM_CONF_TIT,
+        Tw.MEMBERSHIP.BENEFIT.BRAND_BENEFIT.MOV_TMEM_CONF_MSG,
+        Tw.BUTTON_LABEL.CONFIRM,
+        Tw.BUTTON_LABEL.CANCEL,
+        undefined,
+        function(){
+          Tw.Popup.close();
+          Tw.CommonHelper.openUrlExternal(Tw.MEMBERSHIP.BENEFIT.BRAND_BENEFIT.MOV_TMEM_CONF_URL + url);
+        }
+      );
+
+      return false;
+    });
   }
 
 };
