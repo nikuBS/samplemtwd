@@ -144,7 +144,8 @@ Tw.CustomerSvcInfoNotice.prototype = {
     }
 
     this._apiService.request(this._getApi(), $.extend(customParams, { page: this._page, size: 20 }))
-      .done($.proxy(this._appendMoreList, this));
+      .done($.proxy(this._appendMoreList, this))
+      .fail(Tw.CommonHelper.endLoading('.container'));
   },
 
   _getRemainCount: function(param) {

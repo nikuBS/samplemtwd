@@ -313,9 +313,7 @@ Tw.MyTFareInfoHistory.prototype = {
       targetURL = !Tw.MYT_PAYMENT_HISTORY_TYPE[target.val()] ?
           targetURL : targetURL + '?sortType=' + Tw.MYT_PAYMENT_HISTORY_TYPE[target.val()];
 
-      this._popupService.close();
-      
-      this._historyService.goLoad(targetURL);
+      this._popupService.closeAllAndGo(targetURL);
       
     } else {
       this._popupService.close();

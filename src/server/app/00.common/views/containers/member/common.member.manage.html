@@ -4,7 +4,7 @@
 * Date: 2018.10.31
 %>
 
-<%- include('../../components/start.component.html', { pageInfo: pageInfo }); %>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body>
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
@@ -17,8 +17,7 @@
     <!--// #skip_navigation -->
     <div id="commonMember" class="wrap">
         <!-- #header -->
-        <%- include('../../../../../common/views/components/header.component.html',
-        { title: '회원정보', svcInfo: svcInfo, option:{ line: false } }); %>
+        <%- include('../components/header.component.html', { title: '회원정보', svcInfo: svcInfo }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">

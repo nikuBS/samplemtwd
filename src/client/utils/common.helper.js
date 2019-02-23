@@ -105,7 +105,7 @@ Tw.CommonHelper = (function () {
         if ( res.resultCode === Tw.NTV_CODE.CODE_00 && !res.params.isWifiConnected ) {
           Tw.Popup.openConfirm(
             Tw.POPUP_CONTENTS.NO_WIFI,
-            Tw.POPUP_TITLE.EXTERNAL_LINK,
+            null,
             function () {
               Tw.Popup.close();
               confirmCallback();

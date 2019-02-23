@@ -15,95 +15,87 @@
 </div>
 <!--// #skip_navigation -->
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
-    <div class="popup tw-popup">
-        <div class="popup-page nobg fixed-btn"><!-- .half 화면에서 50%로 보여질때 -->
-            <!-- #header -->
-            <div class="header-wrap">
-                <div class="page-header">
-                    <div class="header-ti align-l">
-                        <h1>세금계산서 팩스 전송</h1>
+    <div class="tw-popup popup-page nobg fixed-bottom h60 nobg"><!-- .half 화면에서 50%로 보여질때 -->
+        <!-- #header -->
+        <%- include('../components/header.component.html', { title: '세금계산서 팩스 전송', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div id="contents" class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- .cont-box -->
+                <div class="cont-box noborder nogaps bgnone">
+                    <div class="myfare-result-wrap">
+                        <div class="myfare-list">
+                            <ul>
+                                <li>
+                                    <dl class="show-data">
+                                        <dt>발행일자</dt>
+                                        <dd class="tx-bold"><span class="number"><%=data.taxBillIsueDt%></span></dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl class="show-data">
+                                        <dt>고객/사업자명</dt>
+                                        <dd class="tx-bold"><%=data.ctzBizName%></dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl class="show-data">
+                                        <dt>사업자 번호</dt>
+                                        <dd class="tx-bold"><span class="number"><%=data.ctzBizNum%></span></dd>
+                                    </dl>
+                                </li>
+                                <li>
+                                    <dl class="show-data">
+                                        <dt>납부 금액</dt>
+                                        <dd></dd>
+                                    </dl>
+                                    <dl class="show-data detail">
+                                        <dt>공급가액</dt>
+                                        <dd><span class="number"><%=data.splyPrc%></span>원</dd>
+                                    </dl>
+                                    <dl class="show-data detail">
+                                        <dt>부가세액</dt>
+                                        <dd><span class="number"><%=data.vatAmt%></span>원</dd>
+                                    </dl>
+                                    <dl class="show-data detail">
+                                        <dt>합계금액</dt>
+                                        <dd><span class="number"><%=data.totAmt%></span>원</dd>
+                                    </dl>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <!-- .popup-closeBtn -->
-                    <button class="prev-step fe-btn-back">취소</button>
-                    <!--// .popup-closeBtn -->
                 </div>
-            </div>
-            <!--// #header -->
-            <!-- .container-wrap -->
-            <div id="contents" class="container-wrap">
-                <h2 class="blind">내용</h2>
-                <div class="container">
-                    <!-- .cont-box -->
-                    <div class="cont-box noborder nogaps bgnone">
-                        <div class="myfare-result-wrap">
-                            <div class="myfare-list">
-                                <ul>
-                                    <li>
-                                        <dl class="show-data">
-                                            <dt>발행일자</dt>
-                                            <dd class="tx-bold"><span class="number"><%=data.taxBillIsueDt%></span></dd>
-                                        </dl>
-                                    </li>
-                                    <li>
-                                        <dl class="show-data">
-                                            <dt>고객/사업자명</dt>
-                                            <dd class="tx-bold"><%=data.ctzBizName%></dd>
-                                        </dl>
-                                    </li>
-                                    <li>
-                                        <dl class="show-data">
-                                            <dt>사업자 번호</dt>
-                                            <dd class="tx-bold"><span class="number"><%=data.ctzBizNum%></span></dd>
-                                        </dl>
-                                    </li>
-                                    <li>
-                                        <dl class="show-data">
-                                            <dt>납부 금액</dt>
-                                            <dd></dd>
-                                        </dl>
-                                        <dl class="show-data detail">
-                                            <dt>공급가액</dt>
-                                            <dd><span class="number"><%=data.splyPrc%></span>원</dd>
-                                        </dl>
-                                        <dl class="show-data detail">
-                                            <dt>부가세액</dt>
-                                            <dd><span class="number"><%=data.vatAmt%></span>원</dd>
-                                        </dl>
-                                        <dl class="show-data detail">
-                                            <dt>합계금액</dt>
-                                            <dd><span class="number"><%=data.totAmt%></span>원</dd>
-                                        </dl>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!--// .cont-box -->
+                <!--// .cont-box -->
 
-                    <!-- .cont-box -->
-                    <div class="cont-box nogaps-top">
-                        <!-- 2018-09-18 info-wrap 삭제 -->
-                        <h3 class="tabcon-title0 pt20">팩스번호</h3>
-                        <div class="inp-tx-wrap">
-                            <div class="inputbox bt-add">
-                                <span class="input">
-                                    <input type="tel" placeholder="숫자만 입력" title="팩스번호" aria-describedby="aria-exp-desc1">
-                                    <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
-                                </span>
-                            </div>
+                <!-- .cont-box -->
+                <div class="cont-box nogaps-top">
+                    <!-- 2018-09-18 info-wrap 삭제 -->
+                    <h3 class="tabcon-title0 pt20">팩스번호</h3>
+                    <div class="inp-tx-wrap">
+                        <div class="inputbox bt-add">
+                            <span class="input">
+                                <input type="tel" placeholder="숫자만 입력" title="팩스번호" aria-describedby="aria-exp-desc1">
+                                <button class="cancel" style="display: none;"><span class="blind">삭제</span></button>
+                            </span>
                         </div>
                     </div>
-                    <!--// .cont-box -->
-                    <div class="bt-fixed-area">
-                        <ul class="bt-slice full">
-                            <li class="bt-red1 fe-submit">
-                                <button>전송하기</button>
-                            </li>
-                        </ul>
-                    </div>
+                </div>
+                <!--// .cont-box -->
+                <div class="bt-fixed-area">
+                    <ul class="bt-slice full">
+                        <li class="bt-red1 fe-submit">
+                            <button>전송하기</button>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-btn-back">취소</button>
+        <!--// .popup-closeBtn -->
     </div>
 </div>
 </body>

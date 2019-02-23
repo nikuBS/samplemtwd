@@ -13052,7 +13052,7 @@ a.bt-link-tx.underline.small {
     font-size: 0.875rem;
     line-height: 1.25rem; }
     .productdetails-wrap .productdetails-text02.img-case {
-      max-width: 70%; }
+      max-width: 55%; }
   .productdetails-wrap .productdetails-text03 {
     margin-top: 0.9375rem;
     color: #fff;
@@ -27848,8 +27848,12 @@ body.apphome {
   .tab-area.new .tab-linker li a {
     font-weight: 400 !important;
     color: #959595 !important; }
+    .tab-area.new .tab-linker li a + .btn-tip {
+      display: none; }
   .tab-area.new .tab-linker li[aria-selected="true"] a {
     color: #ef4b49 !important; }
+    .tab-area.new .tab-linker li[aria-selected="true"] a + .btn-tip {
+      display: inline-block; }
   .tab-area.new .tab-linker li .btn-tip {
     vertical-align: -0.25rem; }
 

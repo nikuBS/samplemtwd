@@ -133,7 +133,8 @@ Tw.ProductWireplanSettingBasicInfo.prototype = {
       email: this.$inputEmail.val(),
       mobileNum: this.$inputCellPhone.val(),
       phoneNum: this.$inputPhone.val()
-    }, {}, [this._prodId]).done($.proxy(this._procSettingRes, this));
+    }, {}, [this._prodId]).done($.proxy(this._procSettingRes, this))
+      .fail(Tw.CommonHelper.endLoading('.container'));
   },
 
   _procSettingRes: function(resp) {

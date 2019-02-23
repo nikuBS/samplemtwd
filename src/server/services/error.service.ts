@@ -7,7 +7,7 @@ interface ErrorOptions {
   msg?: any;
   isBackCheck?: boolean;
   svcInfo: any;
-  pageInfo: any;
+  pageInfo?: any;
 }
 
 class ErrorService {

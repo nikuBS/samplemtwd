@@ -36,7 +36,8 @@
                     </a>
                     <% } else {%>
                     <a class="wrap-link" href="/product/callplan?prod_id=<%= svcInfo.prodId %>">
-                        <i class="icon-badge-plan-my mr8"><span class="blind">my</span></i>
+                        <!-- DV001-14236 뱃지 MY-> 이용중으로 변경 -->
+                        <i class="badge icon-badge-plan-my use"><span class="blind">my</span></i>
                         <span class="stit"><%= svcInfo.prodNm %></span>
                     </a>
                     <% } %>
@@ -86,8 +87,8 @@
             <!--// .cont-box -->
 
             <% } %>
-            <hr class="cont-sp type1" aria-hidden="true"/>
             <% if(preBillAvailable) { %>
+            <hr class="cont-sp type1" aria-hidden="true"/>
             <div class="cont-box nogaps fe-prev-wrapper"  >
                 <ul class="full-link-list">
                     <li>

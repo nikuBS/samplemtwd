@@ -20,15 +20,20 @@ Tw.BiometricsCert = function (target, svcMgmtNum) {
 };
 
 Tw.BiometricsCert.prototype = {
-  open: function (callback) {
+  RESULT: {
+    COMPLETE: '00',
+    CANCEL: '01'
+  },
+  open: function (callback, closeCallback) {
     this._callback = callback;
+    this._closeCallback = closeCallback;
     this._popupService.open({
       hbs: 'MA_03_01_02_01_02',
       layer: true,
       data: {
         isFinger: this._target === Tw.FIDO_TYPE.FINGER
       }
-    }, $.proxy(this._onOpenBioCert, this), null, 'cert');
+    }, $.proxy(this._onOpenBioCert, this), $.proxy(this._onCloseBioCert, this), 'cert');
   },
   _onOpenBioCert: function ($popupContainer) {
     $popupContainer.on('click', '#fe-bt-sk', $.proxy(this._onClickSkSms, this));
@@ -38,8 +43,17 @@ Tw.BiometricsCert.prototype = {
     $popupContainer.on('click', '#fe-bt-public', $.proxy(this._onClickPublic, this));
     $popupContainer.on('click', '#fe-cancel', $.proxy(this._onClickCancel, this));
   },
+  _onCloseBioCert: function () {
+    if ( this._allClose && !Tw.FormatHelper.isEmpty(this._closeCallback) ) {
+      this._closeCallback(this._closeCode);
+    }
+  },
   _onClickCancel: function () {
-    this._popupService.closeAll();
+    // this._popupService.closeAll();
+    this._allClose = true;
+    if ( !Tw.FormatHelper.isEmpty(this._closeCallback) ) {
+      this._closeCallback(this._closeCode);
+    }
   },
   _getSvcInfo: function () {
     this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
@@ -80,12 +94,16 @@ Tw.BiometricsCert.prototype = {
   _completeIdentification: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var biometricsRegister = new Tw.BiometricsRegister(this._target, this._svcMgmtNum);
-      biometricsRegister.open(this._callback);
+      biometricsRegister.open(this._callback, $.proxy(this._onCloseCallback, this));
     } else if ( resp.code === Tw.API_CODE.CERT_SMS_BLOCK ) {
       this._popupService.openAlert(Tw.ALERT_MSG_COMMON.CERT_SMS_BLOCK.MSG, Tw.ALERT_MSG_COMMON.CERT_SMS_BLOCK.TITLE, Tw.BUTTON_LABEL.CLOSE);
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
-
+  },
+  _onCloseCallback: function (code) {
+    this._allClose = true;
+    this._closeCode = code;
+    this._popupService.close();
   }
 };

@@ -207,7 +207,8 @@ Tw.BenefitJoinTbCombination.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0143, {
       choiceSvcMgmtNum: this._svcMgmtNum,
       wireSvcMgmtNum: this._wireSvcMgmtNum
-    }, {}, [this._prodId]).done($.proxy(this._openConfirm, this));
+    }, {}, [this._prodId]).done($.proxy(this._openConfirm, this))
+      .fail(Tw.CommonHelper.endLoading('.container'));
   },
 
   _convertData: function(confirmInfo) {

@@ -42,7 +42,7 @@ Tw.MembershipBenefitBrandMap.prototype = {
   _showDataChargePopupIfNeeded: function (mapEl, coord) {
     if ( Tw.BrowserHelper.isApp() ) {
       setTimeout($.proxy(function() {
-        this._popupService.openConfirm(Tw.POPUP_CONTENTS.NO_WIFI, Tw.POPUP_TITLE.EXTERNAL_LINK,
+        this._popupService.openConfirm(Tw.POPUP_CONTENTS.NO_WIFI, null,
           $.proxy(function () {
             this._dataChargeConfirmed = true;
             this._popupService.close();

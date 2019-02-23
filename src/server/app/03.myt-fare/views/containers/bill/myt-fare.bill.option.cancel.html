@@ -18,13 +18,7 @@
     <div id="myt-fare-bill-option-cancel" class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <div class="popup-page tw-popup fixed-bottom h60">
             <!-- #header -->
-            <div class="header-wrap">
-                <div class="page-header">
-                    <div class="header-ti">
-                        <h1>자동납부 해지</h1>
-                    </div>
-                </div>
-            </div>
+            <%- include('../components/header.component.html', { title: '자동납부 해지', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
             <!--// #header -->
             <!-- .container-wrap -->
             <div class="container-wrap">

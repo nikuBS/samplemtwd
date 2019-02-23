@@ -5,7 +5,7 @@
 * ID: RM_14_03_02_01
 %>
 
-<%- include('../../components/start.component.html', { pageInfo: pageInfo }); %>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <% include ../../components/roaming/product.roaming.fi.inquire.component.html %>
 <body>
 <!-- #skip_navigation -->
@@ -21,13 +21,7 @@
     <!-- .popup hbs -->
     <div class="popup-page nobg tw-popup"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
         <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                	<h1>T파이 조회/취소</h1>
-                </div>
-            </div>
-        </div>
+        <%- include('../components/header.component.html', { title: 'T파이 조회/취소', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
         <!-- .container-wrap -->
         <div class="container-wrap">

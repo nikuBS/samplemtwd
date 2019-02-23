@@ -4,7 +4,7 @@
 * Date: 2018.12.12
 * ViewId: MS_04_08_01
 %>
-<%- include('../../components/start.component.html', { pageInfo: pageInfo }); %>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <% include ../../components/javascript.component.html %>
 
 <!-- #skip_navigation -->
@@ -20,13 +20,7 @@
     <!-- .popup hbs -->
     <div class="popup-page nobg tw-popup fixed-btn"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
         <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>서비스 해지 신청 현황</h1>
-                </div>
-            </div>
-        </div>
+        <%- include('../components/header.component.html', { title: '서비스 해지 신청 현황', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
         <!-- .container-wrap -->
         <div class="container-wrap">
@@ -106,7 +100,8 @@
 d
 <script>
   $(document).ready(function () {
-    new Tw.MyTJoinWireSetWireCancelServiceInfo( $('#fe-wrap'), <%-JSON.stringify(data) %>);
+    new Tw.MyTJoinWireSetWireCancelServiceInfo($('#fe-wrap') < % -JSON.stringify(data) % >
+  )
   });
 </script>
 <% include ../../components/end.component.html %>

@@ -8,10 +8,9 @@ import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
-import { Observable } from 'rxjs';
 import { of } from 'rxjs/observable/of';
-import { min } from 'moment';
 import FormatHelper from '../../../../utils/format.helper';
+import { Observable } from 'rxjs/Observable';
 
 export default class MyTDataFamilyHistory extends TwViewController {
   render(req: Request, res: Response, _next: NextFunction, svcInfo: any, _allSvc: any, _childInfo: any, pageInfo: any) {

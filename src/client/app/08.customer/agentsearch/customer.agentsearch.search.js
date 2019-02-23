@@ -29,6 +29,17 @@ Tw.CustomerAgentsearch.prototype = {
     if (!Tw.FormatHelper.isEmpty(hash) && window.location.hash !== '#name') {
       setTimeout($.proxy(function () {
         this.$container.find('a[href="' + window.location.hash + '"]').eq(0).trigger('click');
+
+        // query에 지역명, 노선명  있을 경우 해당 값들 설정
+        if (hash === '#tube' && window.location.href.indexOf('area') !== -1) {
+          var urlParams = new URLSearchParams(window.location.search);
+          var area = urlParams.get('area').split(':');
+          var line = urlParams.get('line').split(':');
+          this.$container.find('#fe-select-area').text(area[0]);
+          this.$container.find('#fe-select-line').text(line[0]);
+          this._selectedTubeAreaCode = area[1];
+          this._selectedTubeLineCode = line[1];
+        }
       }, this), 0);
     }
 
@@ -75,7 +86,7 @@ Tw.CustomerAgentsearch.prototype = {
     this.$btnSearchName = this.$container.find('#fe-btn-search-name');
     this.$btnSearchAddr = this.$container.find('#fe-btn-search-addr');
     this.$btnSearchTube = this.$container.find('#fe-btn-search-tube');
-    this.$btnOptions = this.$container.find('.bt-dropdown');
+    this.$btnOptions = this.$container.find('.fe-options');
     this.$divNone = this.$container.find('.fe-none');
     this.$divResult = this.$container.find('.fe-result');
     this.$ulResult = this.$container.find('#fe-result-list');
@@ -95,6 +106,8 @@ Tw.CustomerAgentsearch.prototype = {
       $.proxy(this._onCancelInput, this));
     this.$container.on('click', '.fe-go-page,#fe-go-first,#fe-go-prev,#fe-go-next,#fe-go-last',
       $.proxy(this._onPaging, this));
+    this.$container.on('click', '#fe-select-area', $.proxy(this._onTubeArea, this));
+    this.$container.on('click', '#fe-select-line', $.proxy(this._onTubeLine, this));
   },
   _onTabChanged: function (e) {
     if (this._isSearched && this._prevTab !== $(e.currentTarget).attr('href')) {
@@ -201,7 +214,76 @@ Tw.CustomerAgentsearch.prototype = {
       this.$btnOptions.text(text);
     }
   },
+  _onTubeArea: function (e) {
+    var list = Tw.POPUP_TPL.CUSTOMER_AGENTSEARCH_TUBE_AREA;
+    if (this._selectedTubeAreaCode) { // 선택된 항목에 checked 추가
+      list[0].list = _.map(list[0].list, $.proxy(function (item) {
+        if (item['radio-attr'].indexOf('id="' + this._selectedTubeAreaCode) !== -1) {
+          item['radio-attr'] += ' checked';
+        }
+        return item;
+      }, this));
+    }
+
+    this._popupService.open({
+      hbs: 'actionsheet01',
+      layer: true,
+      data: list,
+      btnfloating: { attr: 'type="button"', txt: Tw.BUTTON_LABEL.CLOSE }
+    }, $.proxy(function ($root) {
+      $root.on('click', '.btn-floating', $.proxy(function () {
+        this._popupService.close();
+      }, this));
+      $root.on('click', 'input[type=radio]', $.proxy(function (e) {
+        var selectedAreaName = $(e.currentTarget).data('area');
+        this._selectedTubeAreaCode = $(e.currentTarget).attr('id');
+        this.$container.find('#fe-select-area').text(selectedAreaName);
+        this.$container.find('#fe-select-line').text('노선선택');
+        this._selectedTubeLineCode = null;
+        this._popupService.close();
+      }, this));
+    }, this));
+  },
+  _onTubeLine: function (e) {
+    if (!this._selectedTubeAreaCode) {
+      this._popupService.openAlert('지역을 선택해 주세요.');
+      return;
+    }
+
+    var list = Tw.POPUP_TPL.CUSTOMER_AGENTSEARCH_TUBE_LINE[this._selectedTubeAreaCode];
+    if (this._selectedTubeLineCode) { // 선택된 항목에 checked 추가
+      list[0].list = _.map(list[0].list, $.proxy(function (item) {
+        if (item['radio-attr'].indexOf('id="' + this._selectedTubeLineCode) !== -1) {
+          item['radio-attr'] += ' checked';
+        }
+        return item;
+      }, this));
+    }
+
+    this._popupService.open({
+      hbs: 'actionsheet01',
+      layer: true,
+      data: list,
+      btnfloating: { attr: 'type="button"', txt: Tw.BUTTON_LABEL.CLOSE }
+    }, $.proxy(function ($root) {
+      $root.on('click', '.btn-floating', $.proxy(function () {
+        this._popupService.close();
+      }, this));
+      $root.on('click', 'input[type=radio]', $.proxy(function (e) {
+        var selectedLine = $(e.currentTarget).data('line');
+        this.$container.find('#fe-select-line').text(selectedLine);
+        this._selectedTubeLineCode = $(e.currentTarget).attr('id');
+        this._popupService.close();
+      }, this));
+    }, this));
+  },
   _onSearchRequested: function (e) {
+    if (e && e.currentTarget.id.indexOf('tube') !== -1) {
+      if (!this._selectedTubeAreaCode || !this._selectedTubeLineCode) {
+        this._popupService.openAlert('지역/노선을 선택해 주세요.');
+        return;
+      }
+    }
     this._historyService.replaceURL(this._getSearchUrl(e, true));
   },
   _onPaging: function (e) {
@@ -233,7 +315,11 @@ Tw.CustomerAgentsearch.prototype = {
           hash = '#addr';
           break;
         case 'fe-btn-search-tube':
-          url += 'tube&keyword=' + this.$inputTube.val();
+          var area = this.$container.find('#fe-select-area').text().trim();
+          var line = this.$container.find('#fe-select-line').text().trim();
+          url += 'tube&keyword=' + this.$inputTube.val() +
+            '&area=' + area + ':' + this._selectedTubeAreaCode +
+            '&line=' + line + ':' + this._selectedTubeLineCode;
           hash = '#tube';
           break;
         default:
@@ -250,7 +336,11 @@ Tw.CustomerAgentsearch.prototype = {
           hash = '#addr';
           break;
         case '#tube':
-          url += 'tube&keyword=' + this.$inputTube.val();
+          var area = this.$container.find('#fe-select-area').text().trim();
+          var line = this.$container.find('#fe-select-line').text().trim();
+          url += 'tube&keyword=' + this.$inputTube.val() +
+            '&area=' + area + ':' + this._selectedTubeAreaCode +
+            '&line=' + line + ':' + this._selectedTubeLineCode;
           hash = '#tube';
           break;
         default:
@@ -318,7 +408,7 @@ Tw.CustomerAgentsearch.prototype = {
   _showDataChargePopup: function (onConfirm) {
     this._popupService.openConfirm(
       Tw.POPUP_CONTENTS.NO_WIFI,
-      Tw.POPUP_TITLE.EXTERNAL_LINK,
+      null,
       $.proxy(function () {
         this._popupService.close();
         onConfirm();

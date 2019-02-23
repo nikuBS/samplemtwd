@@ -20,13 +20,7 @@
     <!-- .popup hbs -->
 
         <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>B끼리 무료통화 대상자 조회</h1>
-                </div>
-            </div>
-        </div>
+        <%- include('../components/header.component.html', { title: 'B끼리 무료통화 대상자 조회', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
 
         <!-- .container-wrap -->
@@ -80,7 +74,7 @@
   $(document).ready(function () {
     var oMyTWireInfo = new Tw.MyTJoinWireFreeCallCheck( $('#fe-wrap'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>
-  } );
+  } )
   });
 </script>
 <% include ../../components/end.component.html %>

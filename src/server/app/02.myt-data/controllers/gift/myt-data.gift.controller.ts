@@ -46,25 +46,25 @@ class MyTDataGift extends TwViewController {
           this.getSenderInfo(),
           this.getRemainInfo()
         ).subscribe(([senderInfo, remainInfo]) => {
-          const response = Object.assign({
+          const respComplete = Object.assign({
             remainInfo: remainInfo,
             senderInfo: senderInfo,
             params: ParamsHelper.getQueryParams(req.url)
           }, responseData);
 
-          res.render('gift/myt-data.gift.complete.html', response);
+          res.render('gift/myt-data.gift.complete.html', respComplete);
         });
         break;
       default:
         Observable.combineLatest(
           this.getGiftAutoList()
         ).subscribe(([autoList]) => {
-          const response = Object.assign(
+          const respDefault = Object.assign(
             { autoList: autoList },
             responseData
           );
 
-          res.render('gift/myt-data.gift.html', response);
+          res.render('gift/myt-data.gift.html', respDefault);
         });
     }
   }

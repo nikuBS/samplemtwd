@@ -57,7 +57,8 @@ Tw.ProductMobileplanSettingTing.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0041, {
       beforeLmtGrCd: this._currentTingSettings.beforeLmtGrCd,
       afterLmtGrCd: $checked.val()
-    }, {}, $checked.val()).done($.proxy(this._procSetupOkRes, this));
+    }, {}, $checked.val()).done($.proxy(this._procSetupOkRes, this))
+      .fail(Tw.CommonHelper.endLoading('.container'));
   },
 
   _procSetupOkRes: function(resp) {

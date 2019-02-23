@@ -3,7 +3,7 @@
 * Author: Jiman Park (jiman.park@sk.com)
 * Date: 2018.10.25
 %>
-<%- include('../../components/start.component.html', { pageInfo: pageInfo }); %>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 
 <body>
 <!-- #skip_navigation -->
@@ -18,13 +18,7 @@
 <div class="wrap fe-no-back" data-menuId="<%= pageInfo.menuId %>">
     <div class="popup-page tw-popup fixed-bottom">
         <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>이메일 상담</h1>
-                </div>
-            </div>
-        </div>
+        <%- include('../components/header.component.html', { title: '이메일 상담', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
         <!-- .container-wrap -->
         <div class="container-wrap">

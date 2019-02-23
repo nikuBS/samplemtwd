@@ -16,11 +16,16 @@ Tw.BiometricsRegister = function (target, svcMgmtNum) {
 };
 
 Tw.BiometricsRegister.prototype = {
+  RESULT: {
+    COMPLETE: '00',
+    CANCEL: '01'
+  },
   ERROR_CODE: {
     CANCEL: 9
   },
-  open: function (callback) {
+  open: function (callback, closeCallback) {
     this._callback = callback;
+    this._closeCallback = closeCallback;
     this._popupService.open({
       hbs: 'MA_03_01_02_01_03',
       layer: true,
@@ -39,7 +44,8 @@ Tw.BiometricsRegister.prototype = {
     this._nativeService.send(Tw.NTV_CMD.FIDO_REGISTER, { svcMgmtNum: this._svcMgmtNum }, $.proxy(this._onFidoRegister, this));
   },
   _onClickCancel: function () {
-    this._popupService.closeAll();
+    this._allClose = true;
+    this._popupService.close();
   },
   _onClickRegister: function ($event) {
     $event.preventDefault();
@@ -47,11 +53,14 @@ Tw.BiometricsRegister.prototype = {
     this.$infoClick.addClass('none');
     this.$infoIng.removeClass('none');
     this._nativeService.send(Tw.NTV_CMD.FIDO_REGISTER, { svcMgmtNum: this._svcMgmtNum }, $.proxy(this._onFidoRegister, this));
+    this._complete = true;
+    this._popupService.close();
   },
   _onFidoRegister: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._complete = true;
-      this._popupService.closeAll();
+      // this._popupService.closeAll();
+      this._popupService.close();
       this._nativeService.send(Tw.NTV_CMD.SAVE, {
         key: Tw.NTV_STORAGE.FIDO_USE,
         value: 'Y'
@@ -66,10 +75,13 @@ Tw.BiometricsRegister.prototype = {
   },
   _onCloseBioRegister: function () {
     if ( this._complete ) {
-      setTimeout($.proxy(function () {
-        var biometricsComplete = new Tw.BiometricsComplete(this._target);
-        biometricsComplete.open(this._callback);
-      }, this), 100);
+      if ( !Tw.FormatHelper.isEmpty(this._closeCallback) ) {
+        this._closeCallback(this.RESULT.COMPLETE);
+      }
+    } else {
+      if ( this._allClose && !Tw.FormatHelper.isEmpty(this._closeCallback) ) {
+        this._closeCallback(this.RESULT.CANCEL);
+      }
     }
   }
 };
