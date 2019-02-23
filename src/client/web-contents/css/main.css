@@ -2581,6 +2581,9 @@ body.apphome {
   height: 12.75rem;
   background: #3583e3;
   color: #fff; }
+  .main-charge-box.section-swiper-box {
+    min-height: 12.75rem;
+    height: auto; }
   .main-charge-box > button {
     width: 100%;
     height: 100%;
