@@ -119,6 +119,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
     this.$container.on('blur', '.fe-input_phone_number', $.proxy(this._blurInputNumber, this));
     this.$container.on('focus', '.fe-input_phone_number', $.proxy(this._focusInputNumber, this));
     this.$container.on('click', '.fe-btn_cancel', $.proxy(this._procClearInput, this));
+    this.$container.on('keyup', 'input', $.proxy(this._onEnter, this));
 
     this.$btnAgreeView.on('click', $.proxy(this._openAgreePop, this));
     this.$btnApply.on('click', $.proxy(this._procApplyCheck, this));
@@ -741,5 +742,18 @@ Tw.ProductWireplanJoinReservation.prototype = {
     }
 
     this._historyService.goBack();
+  },
+
+  _onEnter: function(e) {
+    if (!Tw.InputHelper.isEnter(e)) {
+      return;
+    }
+
+    var $elem = $(e.currentTarget),
+      $nextElem = $elem.parents('li').next();
+
+    if ($nextElem.length > 0 && $nextElem.find('input').length > 0) {
+      $nextElem.find('input').focus();
+    }
   }
 };
