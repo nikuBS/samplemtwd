@@ -185,7 +185,7 @@ class MyTJoinSubmainController extends TwViewController {
         data.isInstallement = true;
       }
       // 무약정플랜 노출여부 - 약정할부이 있는 경우에는 보여주지 않도록 수정 (DV001-13767)
-      if ( data.myContractPlan && !data.isInstallement) {
+      if ( data.myContractPlan && !data.isInstallement ) {
         data.myContractPlan.point = FormatHelper.addComma(data.myContractPlan.muPoint);
         data.myContractPlan.count = data.myContractPlan.muPointCnt;
         data.isContractPlan = true;
@@ -344,7 +344,11 @@ class MyTJoinSubmainController extends TwViewController {
         if ( target.svcMgmtNum !== item.svcMgmtNum ) {
           let clsNm = 'cellphone';
           if ( item.svcAttrCd.indexOf('S') > -1 ) {
-            clsNm = 'pc';
+            if ( item.svcAttrCd === 'S1' ) {
+              clsNm = 'internet';
+            } else {
+              clsNm = 'pc';
+            }
           } else if ( ['M3', 'M4'].indexOf(item.svcAttrCd) > -1 ) {
             clsNm = 'tablet';
           }
