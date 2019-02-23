@@ -16,14 +16,8 @@
 <!--// #skip_navigation -->
 <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <div class="tw-popup popup-page nobg fixed-bottom h60 nobg"><!-- .half 화면에서 50%로 보여질때 -->
-        <!-- #header -->  
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>세금계산서 팩스 전송</h1>
-                </div>
-            </div>
-        </div>
+        <!-- #header -->
+        <%- include('../components/header.component.html', { title: '세금계산서 팩스 전송', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
         <!-- .container-wrap -->
         <div id="contents" class="container-wrap">

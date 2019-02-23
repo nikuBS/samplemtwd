@@ -42,13 +42,7 @@
     <!-- .popup hbs -->
 
         <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>기부금/후원금 상세조회</h1>
-                </div>
-            </div>
-        </div>
+        <%- include('../components/header.component.html', { title: '기부금/후원금 상세조회', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
 
         <!-- .container-wrap -->
@@ -126,7 +120,7 @@
   $(document).ready(function () {
     var oMyTFareGuide = new Tw.MyTFareBillGuideDonation( $('#fe-wrap'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>
-  } );
+  } )
   });
 </script>
 <% include ../../components/end.component.html %>

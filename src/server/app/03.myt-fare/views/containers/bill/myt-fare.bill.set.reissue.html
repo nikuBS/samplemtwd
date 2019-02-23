@@ -17,13 +17,7 @@
 <div id="fe-myt-fare-bill-set-reissue" class="wrap" data-menuId="<%= data.pageInfo.menuId %>">
     <div class="popup-page tw-popup fixed-bottom h60 nobg">
         <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>요금안내서 재발행</h1>
-                </div>
-            </div>
-        </div>
+        <%- include('../components/header.component.html', { title: '요금안내서 재발행', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">

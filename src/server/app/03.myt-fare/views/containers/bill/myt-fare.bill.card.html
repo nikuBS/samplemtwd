@@ -15,13 +15,7 @@
     <div id="myt-fare-bill-card" class="wrap fe-no-back" data-menuId="<%= pageInfo.menuId %>">
         <div class="popup-page tw-popup fixed-bottom h60">
             <!-- #header -->
-            <div class="header-wrap">
-                <div class="page-header">
-                    <div class="header-ti">
-                        <h1>체크/신용카드 납부</h1>
-                    </div>
-                </div>
-            </div>
+            <%- include('../components/header.component.html', { title: '체크/신용카드 납부', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
             <!--// #header -->
             <!-- #contents -->
             <div class="container-wrap">

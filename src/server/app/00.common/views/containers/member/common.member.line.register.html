@@ -20,13 +20,7 @@
     <!-- .popup hbs -->
     <div class="popup-page nobg tw-popup fixed-btn"><!-- .no-btn 하단에 버튼이 없을 경우 -->
         <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>회선 등록</h1>
-                </div>
-            </div>
-        </div>
+        <%- include('../components/header.component.html', { title: '회선 등록', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
         <!-- .container-wrap -->
         <div class="container-wrap">

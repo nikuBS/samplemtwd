@@ -20,13 +20,7 @@
 <div id="fe-myt-join-wire-modify-period" class="wrap" data-menuId="<%= pageInfo.menuId %>">
     <!-- .popup hbs -->
     <div class="popup-page nobg tw-popup fixed-btn"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>약정기간 변경</h1>
-                </div>
-            </div>
-        </div>
+        <%- include('../components/header.component.html', { title: '약정기간 변경', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!-- .container-wrap -->
         <div class="container-wrap">
             <h2 class="blind">내용</h2>

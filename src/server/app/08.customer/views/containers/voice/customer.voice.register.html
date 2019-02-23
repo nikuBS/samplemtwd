@@ -18,13 +18,7 @@
 <div class="wrap step">
     <div class="popup-page tw-popup fixed-bottom">
         <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>목소리 등록 신청하기</h1>
-                </div>
-            </div>
-        </div>
+        <%- include('../components/header.component.html', { title: '목소리 등록 신청하기', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
         <!-- #contents -->
         <div class="container-wrap">

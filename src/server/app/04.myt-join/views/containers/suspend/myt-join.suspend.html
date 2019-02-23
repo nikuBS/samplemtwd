@@ -18,13 +18,7 @@
     <!-- #header -->
     <div class="popup-page nobg tw-popup fixed-btn">
         <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>일시정지/해제</h1>
-                </div>
-            </div>
-        </div>
+        <%- include('../components/header.component.html', { title: '일시정지/해제', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
     <!--// #header -->
     <!-- #contents -->
@@ -102,7 +96,8 @@
 <!--// #skip_navigation -->
 <script>
   $(document).ready(function () {
-    new Tw.MyTJoinSuspend($('#fe-myt-join-suspend'), <%- JSON.stringify({ suspend }) %> );
+    new Tw.MyTJoinSuspend($('#fe-myt-join-suspend') < % -JSON.stringify({ suspend }) % >
+  )
   });
 </script>
 <% include ../../components/end.component.html %>

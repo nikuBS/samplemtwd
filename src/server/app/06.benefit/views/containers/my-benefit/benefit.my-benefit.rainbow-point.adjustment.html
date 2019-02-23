@@ -18,13 +18,7 @@
 
 <div id="fe-my-benefit-rainbow-point-adjustment" class="wrap" data-line-to-give="<%= lineToGiveData %>" data-lines="<%= linesData %>" data-menuId="<%= pageInfo.menuId %>">
     <div class="popup-page nobg tw-popup">
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>포인트 합산</h1>
-                </div>
-            </div>
-        </div>
+        <%- include('../components/header.component.html', { title: '포인트 합산', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
     <!-- #contents -->
         <div class="container-wrap">
             <h2 class="blind">내용</h2>

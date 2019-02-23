@@ -17,13 +17,7 @@
 <div class="wrap step" data-menuId="<%= pageInfo.menuId %>">
     <div class="popup-page nobg tw-popup no-btn">
         <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>설정</h1>
-                </div>
-            </div>
-        </div>
+        <%- include('../components/header.component.html', { title: '설정', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
         <!-- .container-wrap -->
         <div class="container-wrap">

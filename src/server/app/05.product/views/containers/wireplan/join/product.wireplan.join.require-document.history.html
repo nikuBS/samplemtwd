@@ -19,13 +19,7 @@
     <!-- .popup hbs -->
     <div class="popup-page nobg tw-popup">
         <!-- #header -->
-        <div class="header-wrap">
-            <div class="page-header">
-                <div class="header-ti">
-                    <h1>가입신청 내역 조회</h1>
-                </div>
-            </div>
-        </div>
+        <%- include('../components/header.component.html', { title: '가입신청 내역 조회', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
         <!--// #header -->
         <!-- .container-wrap -->
         <div class="container-wrap">

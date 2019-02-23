@@ -1,4 +1,22 @@
+<% if(locals.type && locals.type === 'popup') { %>
 <!-- #header -->
+<div class="header-wrap <% if (locals.headerClass) { %> <%= locals.headerClass %> <% } %>">
+    <div class="page-header">
+        <div class="header-ti">
+            <h1><%- title %></h1>
+        </div>
+        <% if (svcInfo && locals.pageInfo && pageInfo.auth && pageInfo.auth.cert && pageInfo.auth.cert.maskAuthYn === 'Y') { %>
+        <div class="header-mask">
+            <% if (!pageInfo.masking) { %>
+            <button type="button" class="btn-mask"><span class="blind">마스킹 해제</span></button><!-- 선택됨 : .seleted,  선택불가 : .disabled // -->
+            <% } else { %>
+            <button type="button" class="btn-mask disabled"><span class="blind">마스킹 해제</span></button><!-- 선택됨 : .seleted,  선택불가 : .disabled // -->
+            <% } %>
+        </div>
+        <% } %>
+    </div>
+</div>
+<% } else { %>
 <div id="header" class="header-wrap <% if(locals.home) { %> home <% } %>">
     <div class="h-belt">
 
@@ -253,14 +271,14 @@
                                     <span class="ico"><img src="<%= CDN %>{{iconImgFilePathNm}}" alt="{{menuNm}} 아이콘"></span>
                                     {{/if}}
                                     <span class="ti-info">
-                        {{menuNm}}
-                        {{#if isRealtime}}
-                        <em class="info fe-menu-realtime" data-value="{{realtimeBFF}}"></em>
-                        {{/if}}
-                        {{#if isDesc}}
-                        <em class="tx">{{menuDesc}}</em>
-                        {{/if}}
-                    </span>
+                                        {{menuNm}}
+                                        {{#if isRealtime}}
+                                        <em class="info fe-menu-realtime" data-value="{{realtimeBFF}}"></em>
+                                        {{/if}}
+                                        {{#if isDesc}}
+                                        <em class="tx">{{menuDesc}}</em>
+                                        {{/if}}
+                                    </span>
                                 </button>
                                 {{#if hasChildren}}
                                 <button class="more">하위메뉴 보기</button>
@@ -287,3 +305,4 @@
     </div>
     {{/each}}
 </script>
+<% } %>

@@ -18,13 +18,7 @@
     <div id="myt-fare-bill-contents-auto-info" class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <div class="popup-page tw-popup">
             <!-- #header -->
-            <div class="header-wrap">
-                <div class="page-header">
-                    <div class="header-ti">
-                        <h1>변경/해지</h1>
-                    </div>
-                </div>
-            </div>
+            <%- include('../components/header.component.html', { title: '변경/해지', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
             <!--// #header -->
             <!-- #contents -->
             <div id="contents" class="container-wrap">
