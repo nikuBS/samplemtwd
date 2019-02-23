@@ -223,6 +223,7 @@ Tw.MenuComponent.prototype = {
       if ( !this._lineComponent ) {
         this._lineComponent = new Tw.LineComponent();
       }
+      this._historyService.goBack();  // #menu hash 제거하기 위해
       this._lineComponent.onClickLine(this._svcMgmtNum);
     }
   },
