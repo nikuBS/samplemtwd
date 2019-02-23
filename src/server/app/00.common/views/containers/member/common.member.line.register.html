@@ -15,7 +15,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div id="commonMemberLineRegister" class="wrap">
+<div id="commonMemberLineRegister" class="wrap">a
     <!-- .popup hbs -->
     <!-- .popup hbs -->
     <div class="popup-page nobg tw-popup fixed-btn"><!-- .no-btn 하단에 버튼이 없을 경우 -->
@@ -33,11 +33,11 @@
                             <% if(lineData.type === '01') { %>
                             <p class="suggest-ti">T world의 회원이 되신 것을 <em class="tx-bold">환영합니다.</em></p>
                             <ul class="suggest-list mt32">
-                                <li>SK텔레콤에 가입하신 {{list_length}}개 회선 중, T world에서 이용하실 회선을 선택해주세요.</li>
+                                <li>SK텔레콤에 가입하신 <%= lineData.totalCnt %>개 회선 중, T world에서 이용하실 회선을 선택해주세요.</li>
                                 <li>선택하신 회선들은 ‘회원정보 > 회선관리’ 메뉴에서 보실 수 있습니다.</li>
                             </ul>
                             <% } else { %>
-                            <p class="suggest-ti">등록되지 않은 회선이<br/><em class="tx-bold">{{list_length}}개</em> 있습니다.</p>
+                            <p class="suggest-ti">등록되지 않은 회선이<br/><em class="tx-bold"><%= lineData.totalCnt %>개</em> 있습니다.</p>
                             <ul class="suggest-list mt32">
                                 <li>아래 가입 회선 중, T world에서 이용하실 회선을 선택해주세요.</li>
                                 <li>선택하신 회선들은 ‘회원정보 > 회선관리’ 메뉴에서 보실 수 있습니다.</li>
