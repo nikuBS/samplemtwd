@@ -42,7 +42,7 @@ class MyTDataPrepaidAlarm extends TwViewController {
       } else {
         return null;
       }
-    });
+    })
   public convertDate = (sDate) => DateHelper.getShortDateNoDot(sDate);
   public convertAmount = (sAmount) => FormatHelper.addComma(sAmount);
 }
