@@ -17,26 +17,53 @@ export default class MembershipSubmain extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
-    if (this.isLogin(svcInfo) && svcInfo.svcGr !== '') {
-      Observable.combineLatest(
-        this.getMembershipCheck(svcInfo),
-        this.getMembershipData(),
-        this.getPopBrandData()
-      ).subscribe(([membershipCheckData, membershipData, popBrandData]) => {
-        const error = {
-          code: membershipData.code || popBrandData.code,
-          msg: membershipData.msg || popBrandData.msg
-        };
+    if (this.isLogin(svcInfo)) {
+      if (svcInfo.svcGr === 'P' || svcInfo.svcGr === 'I' || svcInfo.svcGr === 'T' || svcInfo.svcGr === 'U' || svcInfo.svcGr === '') {
+        Observable.combineLatest(
+            this.getPopBrandData()
+        ).subscribe(([popBrandData]) => {
 
-        if ( error.code ) {
-          return this.error.render(res, { ...error, pageInfo, svcInfo });
-        }
+          const error = {
+            code: popBrandData.code,
+            msg: popBrandData.msg
+          };
 
-        this.logger.info(this, 'membershipCheckData1 : ', membershipCheckData);
+          if ( error.code ) {
+            return this.error.render(res, { ...error, svcInfo, pageInfo });
+          }
 
-        res.render('membership.submain.html',
-            { svcInfo, pageInfo, isLogin: this.isLogin(svcInfo), membershipCheckData, membershipData, popBrandData });
-      });
+          const membershipData = null;
+          const membershipCheckData = {
+            joinYn: 'N',
+            joinCheckData : ''
+          };
+
+          this.logger.info(this, 'membershipCheckData2 : ', membershipCheckData);
+
+          res.render('membership.submain.html',
+              { svcInfo, pageInfo, isLogin: this.isLogin(svcInfo), membershipCheckData, membershipData, popBrandData });
+        });
+      } else {
+        Observable.combineLatest(
+            this.getMembershipCheck(svcInfo),
+            this.getMembershipData(),
+            this.getPopBrandData()
+        ).subscribe(([membershipCheckData, membershipData, popBrandData]) => {
+          const error = {
+            code: membershipData.code || popBrandData.code,
+            msg: membershipData.msg || popBrandData.msg
+          };
+
+          if ( error.code ) {
+            return this.error.render(res, { ...error, pageInfo, svcInfo });
+          }
+
+          this.logger.info(this, 'membershipCheckData1 : ', membershipCheckData);
+
+          res.render('membership.submain.html',
+              { svcInfo, pageInfo, isLogin: this.isLogin(svcInfo), membershipCheckData, membershipData, popBrandData });
+        });
+      }
     } else {
       Observable.combineLatest(
         this.getPopBrandData()
