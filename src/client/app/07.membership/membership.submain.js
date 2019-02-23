@@ -101,7 +101,7 @@ Tw.MembershipSubmain.prototype = {
   },
   _selectTday: function() {
     if (Tw.BrowserHelper.isApp()) {
-      this._popupService.openConfirm(Tw.POPUP_CONTENTS.NO_WIFI, Tw.POPUP_TITLE.EXTERNAL_LINK,
+      this._popupService.openConfirm(Tw.POPUP_CONTENTS.NO_WIFI, null,
           $.proxy(this._goTday, this),
           $.proxy(function () {
             this._popupService.close();
@@ -112,7 +112,7 @@ Tw.MembershipSubmain.prototype = {
   },
   _selectChocolate: function () {
     if (Tw.BrowserHelper.isApp()) {
-      this._popupService.openConfirm(Tw.POPUP_CONTENTS.NO_WIFI, Tw.POPUP_TITLE.EXTERNAL_LINK,
+      this._popupService.openConfirm(Tw.POPUP_CONTENTS.NO_WIFI, null,
           $.proxy(this._goChocolate, this),
           $.proxy(function () {
             this._popupService.close();

@@ -318,7 +318,7 @@ Tw.CustomerAgentsearch.prototype = {
   _showDataChargePopup: function (onConfirm) {
     this._popupService.openConfirm(
       Tw.POPUP_CONTENTS.NO_WIFI,
-      Tw.POPUP_TITLE.EXTERNAL_LINK,
+      null,
       $.proxy(function () {
         this._popupService.close();
         onConfirm();
