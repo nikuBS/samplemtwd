@@ -19,9 +19,9 @@ Tw.MoreViewComponent.prototype = {
       if ( format.isEmpty(_data.btnMore) ) {
         _data.btnMore = $('.wrap').find('.bt-more');
       }
-      if (_data.btnMore.find('button').children('span').length === 0) {
-        _data.btnMore.find('button').append('<span></span>');
-      }
+      /*if (_data.btnMore.find('button').children('span').length === 0) {
+        _data.btnMore.find('button').append('<span>(0)</span>');
+      }*/
       return true;
     }
   },
@@ -123,7 +123,7 @@ Tw.MoreViewComponent.prototype = {
 
     }
     if ( moreData.nextCnt > 0 ) {
-      _data.btnMore.find('span').text( '(0)'.replace('0',moreData.nextCnt) );
+      // _data.btnMore.find('span').text( '(0)'.replace('0',moreData.nextCnt) );
       _data.btnMore.removeClass('none');
     } else {
       _data.btnMore.addClass('none');

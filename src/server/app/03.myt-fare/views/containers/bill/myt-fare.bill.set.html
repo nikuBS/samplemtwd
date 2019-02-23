@@ -55,6 +55,8 @@
                             <dt>우편 주소</dt>
                             <dd><%= '[' + data.zip +'] ' + data.basAddr + data.dtlAddr%></dd>
                         </dl>
+                        <!--우편물 발송주기 표시 일때-->
+                        <%if(data.billSndCyclYn === 'Y'){%>
                         <div class="info-line">
                             <dl class="info-tx1">
                                 <dt>우편물 발송주기</dt>
@@ -71,6 +73,7 @@
                                 </dd>
                             </dl>
                         </div>
+                        <%}%>
                     <%}%>
 
                     <!--안내서가 "이메일"을 포함하는 경우만 보임-->
