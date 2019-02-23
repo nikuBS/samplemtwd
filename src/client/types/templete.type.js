@@ -123,6 +123,70 @@ Tw.POPUP_TPL = {
       ]
     }
   ],
+  CUSTOMER_AGENTSEARCH_TUBE_AREA: [
+    {
+      list: [
+        { 'label-attr': 'id="0"', 'radio-attr': 'id="0" name="r2" data-area="수도권"', txt: '수도권' },
+        { 'label-attr': 'id="1"', 'radio-attr': 'id="1" name="r2" data-area="부산"', txt: '부산' },
+        { 'label-attr': 'id="2"', 'radio-attr': 'id="2" name="r2" data-area="대구"', txt: '대구' },
+        { 'label-attr': 'id="3"', 'radio-attr': 'id="3" name="r2" data-area="대전"', txt: '대전' },
+        { 'label-attr': 'id="4"', 'radio-attr': 'id="4" name="r2" data-area="광주"', txt: '광주' },
+      ]
+    }
+  ],
+  CUSTOMER_AGENTSEARCH_TUBE_LINE: {
+    0: [{
+      list: [
+        { 'label-attr': 'id="0"', 'radio-attr': 'id="0" name="r2" data-line="1호선"', txt: '1호선' },
+        { 'label-attr': 'id="1"', 'radio-attr': 'id="1" name="r2" data-line="2호선"', txt: '2호선' },
+        { 'label-attr': 'id="2"', 'radio-attr': 'id="2" name="r2" data-line="3호선"', txt: '3호선' },
+        { 'label-attr': 'id="3"', 'radio-attr': 'id="3" name="r2" data-line="4호선"', txt: '4호선' },
+        { 'label-attr': 'id="4"', 'radio-attr': 'id="4" name="r2" data-line="5호선"', txt: '5호선' },
+        { 'label-attr': 'id="5"', 'radio-attr': 'id="5" name="r2" data-line="6호선"', txt: '6호선' },
+        { 'label-attr': 'id="6"', 'radio-attr': 'id="6" name="r2" data-line="7호선"', txt: '7호선' },
+        { 'label-attr': 'id="7"', 'radio-attr': 'id="7" name="r2" data-line="8호선"', txt: '8호선' },
+        { 'label-attr': 'id="8"', 'radio-attr': 'id="8" name="r2" data-line="9호선"', txt: '9호선' },
+        { 'label-attr': 'id="9"', 'radio-attr': 'id="9" name="r2" data-line="경강선"', txt: '경강선' },
+        { 'label-attr': 'id="10"', 'radio-attr': 'id="10" name="r2" data-line="경춘선"', txt: '경춘선' },
+        { 'label-attr': 'id="11"', 'radio-attr': 'id="11" name="r2" data-line="분당선"', txt: '분당선' },
+        { 'label-attr': 'id="12"', 'radio-attr': 'id="12" name="r2" data-line="수인선"', txt: '수인선' },
+        { 'label-attr': 'id="13"', 'radio-attr': 'id="13" name="r2" data-line="공항철도"', txt: '공항철도' },
+        { 'label-attr': 'id="14"', 'radio-attr': 'id="14" name="r2" data-line="신분당선"', txt: '신분당선' },
+        { 'label-attr': 'id="15"', 'radio-attr': 'id="15" name="r2" data-line="에버라인"', txt: '에버라인' },
+        { 'label-attr': 'id="16"', 'radio-attr': 'id="16" name="r2" data-line="의정부선"', txt: '의정부선' },
+        { 'label-attr': 'id="17"', 'radio-attr': 'id="17" name="r2" data-line="인천1호선"', txt: '인천1호선' },
+        { 'label-attr': 'id="18"', 'radio-attr': 'id="18" name="r2" data-line="인천2호선"', txt: '인천2호선' },
+        { 'label-attr': 'id="19"', 'radio-attr': 'id="19" name="r2" data-line="경의중앙선"', txt: '경의중앙선' },
+        { 'label-attr': 'id="20"', 'radio-attr': 'id="20" name="r2" data-line="우이신설선"', txt: '우이신설선' }
+      ]
+    }],
+    1: [{
+      list: [
+        { 'label-attr': 'id="0"', 'radio-attr': 'id="0" name="r2" data-line="1호선"', txt: '1호선' },
+        { 'label-attr': 'id="1"', 'radio-attr': 'id="1" name="r2" data-line="2호선"', txt: '2호선' },
+        { 'label-attr': 'id="2"', 'radio-attr': 'id="2" name="r2" data-line="3호선"', txt: '3호선' },
+        { 'label-attr': 'id="3"', 'radio-attr': 'id="3" name="r2" data-line="4호선"', txt: '4호선' },
+        { 'label-attr': 'id="4"', 'radio-attr': 'id="4" name="r2" data-line="부산김해경전철"', txt: '부산김해경전철' }
+      ]
+    }],
+    2: [{
+      list: [
+        { 'label-attr': 'id="0"', 'radio-attr': 'id="0" name="r2" data-line="1호선"', txt: '1호선' },
+        { 'label-attr': 'id="1"', 'radio-attr': 'id="1" name="r2" data-line="2호선"', txt: '2호선' },
+        { 'label-attr': 'id="2"', 'radio-attr': 'id="2" name="r2" data-line="3호선"', txt: '3호선' }
+      ]
+    }],
+    3: [{
+      list: [
+        { 'label-attr': 'id="0"', 'radio-attr': 'id="0" name="r2" data-line="1호선"', txt: '1호선' }
+      ]
+    }],
+    4: [{
+      list: [
+        { 'label-attr': 'id="0"', 'radio-attr': 'id="0" name="r2" data-line="1호선"', txt: '1호선' }
+      ]
+    }]
+  },
   IMMEDIATELY_CHARGE_DATA: {
     TITLE: '충전방법 선택',
     REFILL: {

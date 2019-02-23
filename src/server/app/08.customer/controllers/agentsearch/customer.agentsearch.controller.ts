@@ -29,10 +29,12 @@ class CustomerAgentsearch extends TwViewController {
     } else {
       const type = req.query.type;  // 'name', 'addr', 'tube'
       const storeType = req.query.storeType;  // 0: 전체, 1: 지점, 2: 대리점
+      const area = req.query.area ? req.query.area.split(':')[0] : undefined;
+      const line = req.query.line ? req.query.line.split(':')[0] : undefined;
       const keyword = req.query.keyword;
       const optionsString = req.query.options;
       const page = req.query.page ? parseInt(req.query.page, 10) : 1;
-      this.getQueryResult(type, storeType, keyword, optionsString, page, res, svcInfo, pageInfo).subscribe(
+      this.getQueryResult(type, storeType, keyword, area, line, optionsString, page, res, svcInfo, pageInfo).subscribe(
         (result) => {
           if (FormatHelper.isEmpty(result)) {
             return;
@@ -65,8 +67,9 @@ class CustomerAgentsearch extends TwViewController {
     }
   }
 
-  private getQueryResult(type: string, storeType: string, keyword: string, options: string,
-                         page: number, res: Response, svcInfo: any, pageInfo: any): Observable<any> {
+  private getQueryResult(type: string, storeType: string, keyword: string, area: string | undefined,
+                         line: string | undefined, options: string, page: number, res: Response,
+                         svcInfo: any, pageInfo: any): Observable<any> {
     let api = API_CMD.BFF_08_0004;
     switch (type) {
       case SearchType.NAME:
@@ -87,6 +90,11 @@ class CustomerAgentsearch extends TwViewController {
       storeType,
       currentPage: page
     };
+
+    if (area && line) {
+      params['searchAreaNm'] = encodeURIComponent(area);
+      params['searchLineNm'] = encodeURIComponent(line);
+    }
 
     if (!FormatHelper.isEmpty(options)) {
       options.split('::').map((option) => params[option] = 'Y');
