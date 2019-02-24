@@ -377,6 +377,7 @@ Tw.MenuComponent.prototype = {
               $(elem).remove();
             } else {
               $(elem).text(userInfo.prodNm);
+              $(elem).closest('.bt-depth1').addClass('txt-long');
             }
             break;
           case 'bill':
