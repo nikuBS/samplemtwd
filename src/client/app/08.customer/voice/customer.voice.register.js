@@ -30,7 +30,7 @@ Tw.CustomerVoiceRegister.prototype = {
     this.$btn_register.on('click', $.proxy(this._onClickRegister, this));
     this.$check_voice_term.on('click', $.proxy(this._onClickAgreeTerm, this));
     this.$btn_select_phone.on('click', $.proxy(this._onShowSelectPhoneNumber, this));
-    this.$container.on('click', '[data-service-number]', $.proxy(this._onChoiceNumber, this));
+    this.$container.on('click touchstart touchend', '[data-service-number]', $.proxy(this._onChoiceNumber, this));
     // this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
   },
 
@@ -58,15 +58,20 @@ Tw.CustomerVoiceRegister.prototype = {
         data: [{ list: this._allSvc.m.map($.proxy(fnSelectLine, this)) }]
       },
       null,
-      null
+      $.proxy(function () {
+        this._popupService.close();
+      }, this)
     );
   },
 
   _onChoiceNumber: function (e) {
-    this._popupService.close();
-    this.$btn_select_phone.data('svcmgmtnum', $(e.currentTarget).data('service-number').toString());
+    e.stopPropagation();
+    e.preventDefault();
 
+    this.$btn_select_phone.data('svcmgmtnum', $(e.currentTarget).data('service-number').toString());
     this.$btn_select_phone.text($(e.currentTarget).text().trim());
+
+    this._popupService.close();
   },
 
   _onClickRegister: function () {
@@ -93,7 +98,7 @@ Tw.CustomerVoiceRegister.prototype = {
         this._popupService.close();
       }, this),
       $.proxy(function () {
-        if (confirmed) {
+        if ( confirmed ) {
           this._history.goBack();
         }
       }, this),
