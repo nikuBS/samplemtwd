@@ -102,6 +102,14 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
       $elem.val($elem.val().substr(0, maxLength));
     }
 
+    if ($elem.hasClass('fe-num_input') && Tw.InputHelper.isEnter(e)) {
+      return this.$inputBirth.focus();
+    }
+
+    if ($elem.hasClass('fe-input_birth') && Tw.InputHelper.isEnter(e)) {
+      return this.$btnCheckJoin.trigger('click');
+    }
+
     this._checkError($elem);
     this._toggleClearBtn($elem);
     this._toggleJoinCheckBtn();
@@ -178,6 +186,10 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
   },
 
   _procCheckJoinReq: function() {
+    if (!Tw.ValidationHelper.isCellPhone(this.$inputNumber.val()) || this.$inputBirth.val().length !== 8) {
+      return;
+    }
+
     this._apiService.request(Tw.API_CMD.BFF_10_0172, {
       inputSvcNum: this.$inputNumber.val().replace(/-/gi, ''),
       inputBirthdate: this.$inputBirth.val()
@@ -189,7 +201,7 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
     this.$btnRetry.parent().hide();
 
     this.$layerIsJoinCheck.show();
-    this.$joinCheckProdNm.text(resp.result && Tw.FormatHelper.isEmpty(resp.result.prodNm) ?
+    this.$joinCheckProdNm.text((resp.result && Tw.FormatHelper.isEmpty(resp.result.prodNm) || !resp.result) ?
       Tw.PRODUCT_TFAMILY.NO_INFO : resp.result.prodNm);
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
