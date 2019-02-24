@@ -44,7 +44,7 @@ Tw.CertificationNice.prototype = {
       // Tw.CommonHelper.openUrlInApp('http://150.28.69.23:3000' + path, 'status=1,toolbar=1');
     }
   },
-  _onPopupCallback: function (resp) {
+  _onPopupCallback: function () {
     this._callback({ code: Tw.API_CODE.CODE_00 });
   }
 

@@ -12,7 +12,7 @@ Tw.CustomerAgentsearchDetail = function (mapEl, coord) {
 
   $(window).on(Tw.INIT_COMPLETE, $.proxy(function() {
     this._showDataChargePopupIfNeeded(mapEl, coord);
-  }, this))
+  }, this));
 };
 
 Tw.CustomerAgentsearchDetail.prototype = {

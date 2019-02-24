@@ -24,7 +24,7 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
    * search
    * @private
    */
-  init: function(keyword) {
+  init: function() {
     // if( keyword ){
     //   $('input[type=text]', this.$container).val(keyword);
     //   this._search();
@@ -52,7 +52,7 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
       return;
     }
     for(var i = 0; i < this._listAll.length; i++){
-      if(this._listAll[i].areaNm.indexOf(keyword) != -1){
+      if(this._listAll[i].areaNm.indexOf(keyword) !== -1){
         list.push(this._listAll[i]);
       }
     }

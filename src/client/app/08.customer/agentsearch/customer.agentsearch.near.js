@@ -77,7 +77,7 @@ Tw.CustomerAgentsearchNear.prototype = {
           }
           this._historyService.goBack();
         }, this)
-      )
+      );
     } else {
       callback();
     }

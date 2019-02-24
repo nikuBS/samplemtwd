@@ -69,8 +69,7 @@ Tw.MyTJoinCombinationsTBFree.prototype = {
         .replace(/-/g, '');
 
       if (this._benefit === value) {
-        var ALERT = Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A13;
-        return this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
+        return this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A13.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A13.TITLE);
       }
     }
 
@@ -91,7 +90,7 @@ Tw.MyTJoinCombinationsTBFree.prototype = {
         .parent()
         .contents()
         .filter(function() {
-          return this.nodeType == 3;
+          return this.nodeType === 3;
         })[0];
 
       this.$changeBtn.attr('data-benefit', this._benefit);
@@ -115,7 +114,6 @@ Tw.MyTJoinCombinationsTBFree.prototype = {
 
   _validPhoneNumber: function(value, $error) {
     var number = value.replace(/-/g, '');
-    var validLenth = number.indexOf('010') === 0 ? 11 : 10;
 
     if (number.indexOf('010') === 0) {
       if (number.length !== 11) {

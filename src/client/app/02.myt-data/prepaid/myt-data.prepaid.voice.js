@@ -120,7 +120,8 @@ Tw.MyTDataPrepaidVoice.prototype = {
       $($error.get(1)).removeClass('blind');
     }
 
-    if ( !(this._validation.checkMoreLength(this.$cardY, 4) && this._validation.checkMoreLength(this.$cardM, 2) && this._validation.checkYear(this.$cardY) && this._validation.checkMonth(this.$cardM, this.$cardY)) ) {
+    if ( !(this._validation.checkMoreLength(this.$cardY, 4) && this._validation.checkMoreLength(this.$cardM, 2) &&
+      this._validation.checkYear(this.$cardY) && this._validation.checkMonth(this.$cardM, this.$cardY)) ) {
       $($error.get(0)).removeClass('blind');
       $($error.get(1)).addClass('blind');
     }
@@ -140,7 +141,8 @@ Tw.MyTDataPrepaidVoice.prototype = {
   },
 
   _checkIsAbled: function () {
-    if ( this.$creditAmount.data('amount') && this.$cardNumber.val() !== '' && this.$cardY.val() !== '' && this.$cardM.val() !== '' && this.$cardPwd.val() !== '' ) {
+    if ( this.$creditAmount.data('amount') && this.$cardNumber.val() !== '' &&
+      this.$cardY.val() !== '' && this.$cardM.val() !== '' && this.$cardPwd.val() !== '' ) {
       this.$btnRequestCreditCard.prop('disabled', false);
     } else {
       this.$btnRequestCreditCard.prop('disabled', true);
@@ -152,7 +154,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
       this._validation.checkLength(this.$cardY.val(), 4) &&
       this._validation.checkLength(this.$cardM.val(), 2) &&
       this._validation.checkYear(this.$cardY) &&
-      this._validation.checkMonth(this.$cardM, this.$cardY)
+      this._validation.checkMonth(this.$cardM, this.$cardY);
 
     if ( isValid ) {
       var htParams = {
@@ -282,7 +284,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
     var $error = $($elButton).closest('li').find('.error-txt');
     $error.addClass('blind');
 
-    if ( !!$($elButton).data('amount') === false ) {
+    if ( Tw.FormatHelper.isEmpty($($elButton).data('amount')) ) {
       $($error.get(0)).removeClass('blind');
     }
   },

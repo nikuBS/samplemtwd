@@ -66,7 +66,7 @@ Tw.MyTFareBillSmallHitstoryDetail.prototype = {
       $.proxy(this._execBillBlock,this),
       $.proxy(this._cancelBillBlock,this),
       'confirmBlock'
-    )
+    );
     // this.detailData
   },
 
@@ -91,7 +91,7 @@ Tw.MyTFareBillSmallHitstoryDetail.prototype = {
     Tw.CommonHelper.toast(Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TOAST.BLOCK);
     // 
     $.extend(this.detailData,{
-      cpState:"A1",
+      cpState:'A1',
       blockState:Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TYPE.A1,
       isBlocked:true
     });
@@ -105,4 +105,4 @@ Tw.MyTFareBillSmallHitstoryDetail.prototype = {
     Tw.Logger.info(e);
   }
  
-}
+};

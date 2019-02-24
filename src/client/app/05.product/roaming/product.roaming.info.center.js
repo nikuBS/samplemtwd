@@ -87,7 +87,7 @@ Tw.ProductRoamingInfoCenter.prototype = {
       if($(this).find('label').text().trim() === currentCenter){
         $(this).find('input[type=radio]').prop('checked', true);
       }
-    })
+    });
     $layer.find('[name="r2"]').on('click', $.proxy(this._onSelectCenter, this));
 
     // 닫기 버튼 클릭

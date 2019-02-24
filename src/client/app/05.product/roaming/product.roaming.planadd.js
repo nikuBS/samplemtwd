@@ -112,8 +112,8 @@ Tw.ProductRoamingPlanAdd.prototype = {
           .value();
 
       var currentTag = this._params.searchTagId;
-      var tags = currentTag
-          ? _.map(this._rmAddFilters.tags, function(tag) {
+      var tags = currentTag ?
+        _.map(this._rmAddFilters.tags, function(tag) {
               if (currentTag === tag.tagId) {
                   return $.extend({ checked: true }, tag);
               }
@@ -226,7 +226,8 @@ Tw.ProductRoamingPlanAdd.prototype = {
       var $target = $(e.currentTarget);
       if(this.selectTag){
           var ALERT = Tw.ALERT_MSG_PRODUCT.ALERT_3_A17;
-          this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleResetTag, this, $layer, $target), null, Tw.BUTTON_LABEL.CLOSE);
+          this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleResetTag,
+            this, $layer, $target), null, Tw.BUTTON_LABEL.CLOSE);
       } else {
           this.$filterBtn = $(e.currentTarget);
           this.$selectBtn =  $(e.currentTarget).find('input');
@@ -275,7 +276,7 @@ Tw.ProductRoamingPlanAdd.prototype = {
       this._popupService.open(
           {
               hbs: 'actionsheet01', // hbs의 파일명
-              btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
+              btnfloating: { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
               layer: true,
               data: [{ list: this.orderList }]
           },

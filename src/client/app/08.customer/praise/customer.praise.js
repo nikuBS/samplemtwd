@@ -50,8 +50,8 @@ Tw.CustomerPraise.prototype = {
 
   _openSelectTypePopup: function() {
     var selectedType = this._selectedType,
-      list = selectedType
-        ? _.map(Tw.CUSTOMER_PRAISE_SUBJECT_TYPES, function(item) {
+      list = selectedType ?
+        _.map(Tw.CUSTOMER_PRAISE_SUBJECT_TYPES, function(item) {
             if (item['radio-attr'].indexOf(selectedType) !== -1) {
               return $.extend({}, item, { 'radio-attr': item['radio-attr'] + ' checked' });
             }
@@ -63,7 +63,7 @@ Tw.CustomerPraise.prototype = {
       {
         hbs: 'actionsheet01',
         layer: true,
-        btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
+        btnfloating: { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         data: [{ list: list }]
       },
       $.proxy(this._handleOpenSelectType, this)
@@ -151,8 +151,8 @@ Tw.CustomerPraise.prototype = {
 
   _openSelectAreaPopup: function() {
     var selected = this._selectedArea,
-      list = selected
-        ? _.map(Tw.CUSTOMER_PRAISE_AREAS, function(item) {
+      list = selected ?
+        _.map(Tw.CUSTOMER_PRAISE_AREAS, function(item) {
             if (item['radio-attr'].indexOf(selected) >= 0) {
               return $.extend({}, item, { 'radio-attr': item['radio-attr'] + ' checked' });
             }
@@ -164,7 +164,7 @@ Tw.CustomerPraise.prototype = {
     this._popupService.open(
       {
         hbs: 'actionsheet01',
-        btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
+        btnfloating: { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         layer: true,
         data: [{ list: list }]
       },
@@ -294,13 +294,4 @@ Tw.CustomerPraise.prototype = {
     this._setAvailableSubmit(true);
   }
 
-  // _handleClickCancel: function() {
-  //   this._historyService.goBack();
-  // this._popupService.openConfirmButton(Tw.ALERT_CANCEL, null, $.proxy(this._handleConfirmCancel, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
-  // }
-
-  // _handleConfirmCancel: function() {
-  //   this._clearForm();
-  //   window.history.go(-2);
-  // }
 };

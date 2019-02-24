@@ -1,4 +1,4 @@
-/*
+/**
  * FileName: myt-fare.info.bill-email.js
  * Author: Lee Kirim (kirim@sk.com)
  * Date: 2019. 2. 1
@@ -17,7 +17,7 @@ Tw.MyTFareInfoBillTaxSendEmail = function (rootEl, data) {
   
   this._init();
   this._bindEvent();
-}
+};
 
 Tw.MyTFareInfoBillTaxSendEmail.prototype = {
   _init: function() {
@@ -88,7 +88,7 @@ Tw.MyTFareInfoBillTaxSendEmail.prototype = {
     }
 
     this._popupService.openAlert(
-      this.$emailInput.val()+ " "+ Tw.ALERT_MSG_MYT_FARE.ALERT_2_A29,
+      this.$emailInput.val()+ ' ' + Tw.ALERT_MSG_MYT_FARE.ALERT_2_A29,
       Tw.POPUP_TITLE.NOTIFY, 
       Tw.BUTTON_LABEL.CONFIRM, 
       $.proxy(this._closePopAndBack, this),
@@ -104,4 +104,4 @@ Tw.MyTFareInfoBillTaxSendEmail.prototype = {
   _goBack: function() {
     this._historyService.goBack();
   }
-}
+};

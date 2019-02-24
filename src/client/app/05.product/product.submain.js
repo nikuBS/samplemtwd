@@ -90,7 +90,7 @@ Tw.ProductSubmain.prototype = {
       case 'wireplan': {
         return '0013';
       }
-      case 'mobileplan':
+      // case 'mobileplan':
       default: {
         return '0011';
       }

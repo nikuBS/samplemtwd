@@ -63,12 +63,16 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     this._currentDate = Tw.DateHelper.getCurrentShortDate();
     var setingInfo;
     if(this._popupData.joinType==='setup'){
-      setingInfo = Tw.DateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcStartDt,this._showDateFormat,this._dateFormat)+' '+this._popupData.userJoinInfo.svcStartTm+':00';
-      setingInfo+= ' ~ '+Tw.DateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcEndDt,this._showDateFormat,this._dateFormat)+' '+this._popupData.userJoinInfo.svcEndTm+':00';
+      setingInfo = Tw.DateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcStartDt,
+        this._showDateFormat,this._dateFormat)+' '+this._popupData.userJoinInfo.svcStartTm+':00';
+      setingInfo+= ' ~ '+Tw.DateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcEndDt,
+        this._showDateFormat,this._dateFormat)+' '+this._popupData.userJoinInfo.svcEndTm+':00';
     }else if(this._popupData.joinType==='auto'){
-      setingInfo = Tw.DateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcStartDt,this._showDateFormat,this._dateFormat)+' '+this._popupData.userJoinInfo.svcStartTm+':00';
+      setingInfo = Tw.DateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcStartDt,
+        this._showDateFormat,this._dateFormat)+' '+this._popupData.userJoinInfo.svcStartTm+':00';
     }else if(this._popupData.joinType==='begin'){
-      setingInfo = Tw.DateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcStartDt,this._showDateFormat,this._dateFormat);
+      setingInfo = Tw.DateHelper.getShortDateWithFormat(this._popupData.userJoinInfo.svcStartDt,
+        this._showDateFormat,this._dateFormat);
     }else if(this._popupData.joinType==='alarm'){
       setingInfo = Tw.ROAMING_JOIN_STRING.LINE_NUM.replace(':number',this._popupData.userJoinInfo.svcNumList.length);
     }
@@ -132,7 +136,8 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     $element.parent().attr('aria-checked',value==='checked'?true:false);
   },
   _doJoin : function () {
-    this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.BUTTON, Tw.BUTTON_LABEL.CLOSE,
+    this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.TITLE,
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.BUTTON, Tw.BUTTON_LABEL.CLOSE,
       null,
       $.proxy(this._confirmInfo,this),
       null);

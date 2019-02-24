@@ -110,7 +110,7 @@ Tw.CustomerEmailQualityOption.prototype = {
         'txt': dashNumber,
         'radio-attr': isChecked ? 'checked' : ' '
       });
-    }
+    };
 
     var list = _.map(this.allSvc.m, $.proxy(fnFilter, this, $target));
 

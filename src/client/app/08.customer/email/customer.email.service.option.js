@@ -103,7 +103,7 @@ Tw.CustomerEmailServiceOption.prototype = {
     $('.fe-select-order').prop('disabled', false);
   },
 
-  _setOrderNumber: function (e) {
+  _setOrderNumber: function () {
     var orderNumber = $('.fe-wrap_direct_order li.checked .fe-order-number').text();
     $('.fe-text_order').val(orderNumber);
     this._closeDirectOrder();

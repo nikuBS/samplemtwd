@@ -39,7 +39,7 @@ Tw.MyTFareInfoBillTax.prototype = {
       initedListTemplate = this.$template.$listTaxWrapper({
         limitMonth:this.data.limitMonth,
         listViewMoreHide:this.listViewMoreHide,
-        renderableListData:this.renderableListData,
+        renderableListData:this.renderableListData
       });
     }
 
@@ -57,8 +57,7 @@ Tw.MyTFareInfoBillTax.prototype = {
     this.$btnListViewMorewrapper.css({display: this.listLastIndex >= this.data.items.length ? 'none' : ''});
     this._updateViewMoreBtnRestCounter($(e.currentTarget));
 
-    var insertCompareData = this.data.items[this.listLastIndex - this.listRenderPerPage - 1],
-        $domAppendTarget  = this.$appendListTarget;
+    var $domAppendTarget  = this.$appendListTarget;
 
     this.renderableListData.map($.proxy(function (o) {
       var renderedHTML;

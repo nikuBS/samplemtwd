@@ -27,7 +27,8 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
   _init : function () {
     this._tooltipInit(this._prodId,this.$tooltipHead,this.$tooltipBody);
     if(this._twoMonthFlag){
-      this._dateSelectRange = -1*(Tw.DateHelper.getDiffByUnit(this._currentDate,Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,2,'month',this._dateFormat,this._dateFormat),'day'));
+      this._dateSelectRange = -1*(Tw.DateHelper.getDiffByUnit(this._currentDate,
+        Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,2,'month',this._dateFormat,this._dateFormat),'day'));
       this.$container.find('#aria-dateset1').text(Tw.ROAMING_RANGE_OPTION_STR.TWO_MONTH);
     }else{
       this.$container.find('#aria-dateset1').text(Tw.ROAMING_RANGE_OPTION_STR.ONE_MONTH);
@@ -132,7 +133,8 @@ Tw.ProductRoamingJoinRoamingAuto.prototype = {
       var expireDate = parseInt(this._expireDate,10) + parseInt(startDateElement.attr('data-idx'),10);
       var endDate = Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,expireDate,'days',this._showDateFormat,this._dateFormat);
       endDateElement.text(endDate);
-      endDateElement.attr('data-number',Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,expireDate,'days',this._dateFormat,this._dateFormat));
+      endDateElement.attr('data-number',Tw.DateHelper.getShortDateWithFormatAddByUnit(this._currentDate,
+        expireDate,'days',this._dateFormat,this._dateFormat));
       endTimeElement.text(startTime);
     }else{
       this.$container.find('.bt-fixed-area button').attr('disabled','disabled');

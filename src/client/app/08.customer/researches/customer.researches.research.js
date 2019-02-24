@@ -46,7 +46,9 @@ Tw.CustomerResearch.prototype = {
             break;
           }
           case 0: {
-            this._nextIdx !== this._questionCount && $btn.text(Tw.CUSTOMER_RESEARCHES_BUTTONS.NEXT).switchClass('fe-submit-research', 'fe-go-next');
+            if ( this._nextIdx !== this._questionCount ) {
+              $btn.text(Tw.CUSTOMER_RESEARCHES_BUTTONS.NEXT).switchClass('fe-submit-research', 'fe-go-next');
+            }
             break;
           }
           default: {

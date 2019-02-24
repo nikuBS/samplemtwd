@@ -239,8 +239,8 @@ Tw.MenuComponent.prototype = {
   },
   _checkAndClose: function () {
     if ( window.location.hash.indexOf('menu') === -1 && this._isOpened ) {
-      if (this.$container.find('.fe-menu-section').hasClass('none')) {
-        this._menuSearchComponent && this._menuSearchComponent.cancelSearch();
+      if (this.$container.find('.fe-menu-section').hasClass('none') && this._menuSearchComponent) {
+        this._menuSearchComponent.cancelSearch();
       }
       this.$closeBtn.click();
     } else if (this._tid && !this.$container.hasClass('user-type')) {
@@ -262,7 +262,7 @@ Tw.MenuComponent.prototype = {
       this._goOrReplace(url);
     }
   },
-  _onFreeSMS: function (e) {
+  _onFreeSMS: function () {
     if (this._memberType === 1) {
       this._popupService.openAlert(
         Tw.MENU_STRING.FREE_SMS,
@@ -479,7 +479,7 @@ Tw.MenuComponent.prototype = {
         } else {
           // Modify some menu category by hard coded
           if ( sorted[i].menuId === 'M000344' || sorted[i].menuId === 'M000353' ) {
-            category['M000301'].children.push(sorted[i]);
+            category.M000301.children.push(sorted[i]);
           }
         }
       }
@@ -551,8 +551,8 @@ Tw.MenuComponent.prototype = {
     var subCategory = category[0];
     // subCategory[1].children.push(subCategory[2].children[0]);
     // subCategory[1].children.push(subCategory[3].children[0]);
-    for ( var i = 2; i < subCategory.length - 1; i += 1 ) {
-      subCategory[1].children.push(subCategory[i].children[0]);
+    for ( var j = 2; j < subCategory.length - 1; j += 1 ) {
+      subCategory[1].children.push(subCategory[j].children[0]);
     }
     subCategory = subCategory.slice(0, 2).concat(subCategory.slice(subCategory.length - 1));
     category[0] = subCategory;
@@ -622,7 +622,7 @@ Tw.MenuComponent.prototype = {
   },
 
   // 검색창 포커스 인/아웃 처리
-  _searchFocus: function (focus) {
+  _searchFocus: function () {
     this.$container.find('.fe-menu-section').addClass('none');
     this.$container.find('.fe-search-section').removeClass('none');
     var $menu = $('#common-menu');

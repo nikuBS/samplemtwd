@@ -249,7 +249,8 @@ Tw.CertificationSelect.prototype = {
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.BIO:
         this._certBio = new Tw.CertificationBio();
-        this._certBio.open(this._authUrl, this._authKind, this._prodAuthKey, this._svcInfo, $.proxy(this._completeCert, this), this._registerFido, this._fidoTarget);
+        this._certBio.open(this._authUrl, this._authKind, this._prodAuthKey, this._svcInfo,
+          $.proxy(this._completeCert, this), this._registerFido, this._fidoTarget);
         break;
       case Tw.AUTH_CERTIFICATION_METHOD.FINANCE_AUTH:
         this._certFinance = new Tw.CertificationFinance();

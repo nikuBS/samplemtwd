@@ -75,7 +75,7 @@ Tw.MyTDataHistory.prototype = {
     this._popupService.open(
       {
         hbs: 'actionsheet01',
-        btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
+        btnfloating: { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         layer: true,
         data: [
           {

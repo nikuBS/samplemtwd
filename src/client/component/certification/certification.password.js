@@ -64,7 +64,7 @@ Tw.CertificationPassword.prototype = {
   _successConfirmPasswordCert: function (resp) {
     this._callback(resp);
   },
-  _onPopupCallback: function (resp) {
+  _onPopupCallback: function () {
     this._confirmPasswordCert();
   }
 
