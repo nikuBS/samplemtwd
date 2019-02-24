@@ -79,8 +79,6 @@ Tw.MyTFareBillContentsHitstory.prototype = {
 
   // 월 선택
   _typeActionSheetOpen: function () {
-    /*Tw.POPUP_TITLE.SELECT, ,
-      */
     this._popupService.open({
       hbs: 'actionsheet_select_a_type',// hbs의 파일명
       layer: true,
@@ -124,8 +122,10 @@ Tw.MyTFareBillContentsHitstory.prototype = {
     var month = $(e.currentTarget).data('month') || this.data.curMonth; 
     //선택표기
     $(e.currentTarget).addClass('checked').parent().siblings().find('button').removeClass('checked');
+    $(e.currentTarget).find('input[type=radio]').prop('checked', true);
+    this.$selectMonth.text(month + '월');
     //이동
-    this._historyService.goLoad(this._historyService.pathname + "?year=" + year + "&month=" + month);
+    this._popupService.closeAllAndGo(this._historyService.pathname + "?year=" + year + "&month=" + month);
   },
 
   _closeMonthSelect: function () {
