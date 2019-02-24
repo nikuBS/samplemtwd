@@ -166,7 +166,7 @@ Tw.CertificationSk.prototype = {
         isOnly: methodCnt === 1,
         sLogin: this._svcInfo.loginType === Tw.AUTH_LOGIN_TYPE.EASY,
         masking: this._authKind === Tw.AUTH_CERTIFICATION_KIND.A,
-        svcNum: this._svcInfo.svcNum,
+        svcNum: Tw.FormatHelper.conTelFormatWithDash(this._svcInfo.svcNum),
         enableKeyin: this._enableKeyin
       }
     }, $.proxy(this._onOpenSmsOnly, this), $.proxy(this._onCloseSmsOnly, this), 'cert-sms');
