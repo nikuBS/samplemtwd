@@ -29,14 +29,6 @@ Tw.FormatHelper = (function () {
     return value.toString().replace(regexp, ',');
   };
 
-  var removeZero = function (value) {
-    if ( value.indexOf('.') !== -1 ) {
-      return value.replace(/(0+$)/, '');
-    }
-
-    return value;
-  };
-
   var normalizeNumber = function (num) {
     return num.replace(/(^0+)/, '');
   };
@@ -321,11 +313,6 @@ Tw.FormatHelper = (function () {
     return regex.test(str);
   };
 
-  var is6digitPassSolidNumber = function (str) {
-    var regex = /(012345)|(123456)|(234567)|(345678)|(456789)|(567890)|(678901)|(789012)|(890123)|(901234)|(098765)|(987654)|(876543)|(765432)|(654321)|(543210)|(432109)|(321098)|(210987)|(109876)/;
-    return regex.test(str);
-  };
-
   var removeElement = function (arrayList, element) {
     var index = arrayList.findIndex(function (item) {
       return item === element;
@@ -507,7 +494,6 @@ Tw.FormatHelper = (function () {
     insertColonForTime: insertColonForTime,
     setDecimalPlace: setDecimalPlace,
     is6digitPassSameNumber: is6digitPassSameNumber,
-    is6digitPassSolidNumber: is6digitPassSolidNumber,
     normalizeNumber: normalizeNumber,
     removeElement: removeElement,
     lpad: lpad,

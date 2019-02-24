@@ -46,7 +46,7 @@ Tw.ProductAppsDetail.prototype = {
             {
               appKey: app.prodNm,
               scheme: app.lnkgAppScmCtt,
-              package: app.lnkgAppPkgNm
+              'package': app.lnkgAppPkgNm
             }
           ]
         },
@@ -106,7 +106,7 @@ Tw.ProductAppsDetail.prototype = {
     this.$info.html(this._appTmpl(app));
   },
 
-  _handleOpenImgDetail: function(e) {
+  _handleOpenImgDetail: function() {
     this._popupService.open({
       hbs: 'TA_02_01',
       images: this._images
@@ -119,9 +119,9 @@ Tw.ProductAppsDetail.prototype = {
 
     if (this._stores) {
       if (isIos) {
-        store = this._stores['appStore'] || '';
+        store = this._stores.appStore || '';
       } else {
-        store = this._stores['playStore'] || this._stores['oneStore'] || '';
+        store = this._stores.playStore || this._stores.oneStore || '';
       }
     }
 
@@ -158,7 +158,7 @@ Tw.ProductAppsDetail.prototype = {
 
   _handleOpenApp: function() {
     var app = this._app;
-    this._nativeService.send(Tw.NTV_CMD.OPEN_APP, { scheme: app.lnkgAppScmCtt, package: app.lnkgAppPkgNm });
+    this._nativeService.send(Tw.NTV_CMD.OPEN_APP, { scheme: app.lnkgAppScmCtt, 'package': app.lnkgAppPkgNm });
   },
 
   _handleOpenMarket: function(e) {

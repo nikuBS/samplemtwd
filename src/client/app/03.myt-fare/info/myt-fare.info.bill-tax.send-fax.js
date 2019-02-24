@@ -1,4 +1,4 @@
-/*
+/**
  * FileName: myt-fare.info.bill-tax.js
  * Author: Lee Kirim (kirim@sk.com)
  * Date: 2019. 1. 31
@@ -17,7 +17,7 @@ Tw.MyTFareInfoBillTaxSendFax = function (rootEl, data) {
   
   this._init();
   this._bindEvent();
-}
+};
 
 Tw.MyTFareInfoBillTaxSendFax.prototype = {
   _init: function() {
@@ -76,7 +76,7 @@ Tw.MyTFareInfoBillTaxSendFax.prototype = {
     }
 
     this._popupService.openAlert(
-      Tw.FormatHelper.getDashedPhoneNumber(this.$faxNumberInput.val())+ " "+ Tw.ALERT_MSG_MYT_FARE.ALERT_2_A28,
+      Tw.FormatHelper.getDashedPhoneNumber(this.$faxNumberInput.val())+ ' ' + Tw.ALERT_MSG_MYT_FARE.ALERT_2_A28,
       Tw.POPUP_TITLE.NOTIFY, 
       Tw.BUTTON_LABEL.CONFIRM, 
       $.proxy(this._closePopAndBack, this),
@@ -92,4 +92,4 @@ Tw.MyTFareInfoBillTaxSendFax.prototype = {
   _goBack: function() {
     this._historyService.goBack();
   }
-}
+};

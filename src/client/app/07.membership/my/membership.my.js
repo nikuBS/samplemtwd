@@ -217,7 +217,8 @@ Tw.MembershipMy.prototype = {
 
   _cardChangeAlert: function() {
     var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A58;
-    this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleChangeAlert, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A58.BUTTON);
+    this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE,
+      $.proxy(this._handleChangeAlert, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A58.BUTTON);
   },
 
   _handleChangeAlert: function() {

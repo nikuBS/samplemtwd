@@ -90,8 +90,7 @@ Tw.MyTFareInfoOverpayRefund.prototype = {
     this.$btnListViewMorewrapper.css({display: this.listLastIndex >= this.data.length ? 'none' : ''});
     this._updateViewMoreBtnRestCounter($(e.currentTarget));
 
-    var insertCompareData = this.data[this.listLastIndex - this.listRenderPerPage - 1],
-        $domAppendTarget  = this.$appendListTarget;
+    var $domAppendTarget  = this.$appendListTarget;
 
     this.renderableListData.map($.proxy(function (o) {
       var renderedHTML = this.$template.$templateItemDay({records:[{items:[o], date:o.listDt, yearHeader:o.yearHeader}]});
@@ -112,7 +111,7 @@ Tw.MyTFareInfoOverpayRefund.prototype = {
 
   _updateViewMoreBtnRestCounter: function (e) {
     e.text(e.text().replace(/\((.+?)\)/, '(' + this.renderListData.restCount + ')'));
-  },
+  }
 
   
 };

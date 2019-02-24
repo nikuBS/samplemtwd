@@ -222,7 +222,7 @@ Tw.MyTFareBillGuidePps.prototype = {
         layer: true,
         data: data,
         title: titleStr,
-        btnfloating : { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE }
+        btnfloating : { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE }
       },
       $.proxy(this._selectDatePopEvtInit, this, $target, state),
       $.proxy(this._selectDatePopEvtClose, this, $target),

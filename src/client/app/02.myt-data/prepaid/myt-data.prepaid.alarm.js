@@ -144,7 +144,7 @@ Tw.MyTDataPrepaidAlarm.prototype = {
       term: this.term,
       day: this.day,
       amt: this.amt
-    }
+    };
 
     if ( sListName === 'status_list' ) {
       this.typeCd = $(e.currentTarget).data('value').toString();

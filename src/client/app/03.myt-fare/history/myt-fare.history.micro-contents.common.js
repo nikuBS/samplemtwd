@@ -237,7 +237,7 @@ Tw.MyTFareHistoryMicroContents.prototype = {
 
   _setMonthActionSheetData: function () {
     var tempArr = [];
-    var yearText = ''
+    var yearText = '';
     for (var i = this.monthTermValue, month = this.dateInfo.month; i > 0; i--) {
       if (month === 0) {
         month = 12;
@@ -246,12 +246,14 @@ Tw.MyTFareHistoryMicroContents.prototype = {
       if (month-- <= 0) {
         tempArr.push({
           value: yearText + Math.abs(month) + Tw.PERIOD_UNIT.MONTH,
-          attr: 'data-index=\'' + Math.abs(i - this.monthTermValue) + '\' data-year=\'' + (this.dateInfo.year - 1) + '\'' + ' data-month=\'' + Math.abs(month) + '\''
+          attr: 'data-index=\'' + Math.abs(i - this.monthTermValue) + '\' data-year=\'' +
+            (this.dateInfo.year - 1) + '\'' + ' data-month=\'' + Math.abs(month) + '\''
         });
       } else {
         tempArr.push({
           value: yearText + (month + 1) + Tw.PERIOD_UNIT.MONTH,
-          attr: 'data-index=\'' + Math.abs(i - this.monthTermValue) + '\' data-year=\'' + this.dateInfo.year + '\'' + ' data-month=\'' + (month + 1) + '\''
+          attr: 'data-index=\'' + Math.abs(i - this.monthTermValue) + '\' data-year=\'' +
+            this.dateInfo.year + '\'' + ' data-month=\'' + (month + 1) + '\''
         });
       }
     }

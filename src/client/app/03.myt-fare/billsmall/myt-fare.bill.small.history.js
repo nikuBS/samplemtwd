@@ -106,8 +106,8 @@ Tw.MyTFareBillSmallHistory.prototype = {
       tempArr.push({
         value:year + Tw.PERIOD_UNIT.YEAR + ' ' + month + Tw.PERIOD_UNIT.MONTH,
         attr: 'data-year = \''+ year + '\' data-month=\''+ month + '\'',
-        option:(this.data.selectedYear === year && this.data.selectedMonth === month.toString()) ? "checked" : ""
-      })
+        option:(this.data.selectedYear === year && this.data.selectedMonth === month.toString()) ? 'checked' : ''
+      });
     }
     return [{
       list: tempArr.reverse()
@@ -127,7 +127,7 @@ Tw.MyTFareBillSmallHistory.prototype = {
     $(e.currentTarget).find('input[type=radio]').prop('checked', true);
     this.$selectMonth.text(month + '월');
     //이동
-    this._popupService.closeAllAndGo(this._historyService.pathname + "?year=" + year + "&month=" + month);
+    this._popupService.closeAllAndGo(this._historyService.pathname + '?year=' + year + '&month=' + month);
   },
 
   _closeMonthSelect: function () {

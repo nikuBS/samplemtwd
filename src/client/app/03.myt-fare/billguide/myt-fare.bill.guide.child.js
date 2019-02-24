@@ -144,7 +144,7 @@ Tw.MyTFareBillGuideChild.prototype = {
         layer: true,
         data: [{ list: listData }],
         title: Tw.MYT_FARE_BILL_GUIDE.POP_TITLE_TYPE_0,
-        btnfloating : { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
+        btnfloating : { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE }
       },
       $.proxy(this._conditionChangeEvtInit, this, $target),
       $.proxy(this._conditionChangeEvtClose, this, $target),

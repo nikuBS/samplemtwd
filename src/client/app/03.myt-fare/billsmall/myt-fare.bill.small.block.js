@@ -96,4 +96,4 @@ Tw.MyTFareBillSmallBlock.prototype = {
   }
 
  
-}
+};

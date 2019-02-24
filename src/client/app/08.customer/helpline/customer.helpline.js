@@ -89,15 +89,15 @@ Tw.CustomerHelpline.prototype = {
     }
 
     if (this.$cellphone.hasClass('checked')) {
-      var validLength = number.indexOf('010') === 0 ? 11 : 10;
-      if (!this._isCheckedLen && number.length === validLength) {
+      var validLength0 = number.indexOf('010') === 0 ? 11 : 10;
+      if (!this._isCheckedLen && number.length === validLength0) {
         this._isCheckedLen = true;
       }
 
       isValid = !this._isCheckedLen || Tw.ValidationHelper.isCellPhone(number);
     } else {
-      var validLength = number.indexOf('02') === 0 ? 9 : 10;
-      if (!this._isCheckedLen && number.length === validLength) {
+      var validLength1 = number.indexOf('02') === 0 ? 9 : 10;
+      if (!this._isCheckedLen && number.length === validLength1) {
         this._isCheckedLen = true;
       }
       isValid = !this._isCheckedLen || Tw.ValidationHelper.isTelephone(number);
@@ -137,7 +137,7 @@ Tw.CustomerHelpline.prototype = {
       {
         hbs: 'actionsheet01',
         layer: true,
-        btnfloating: { class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
+        btnfloating: { 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         data: [{ list: data }]
       },
       $.proxy(this._handleOpenSelectTypePopup, this)
@@ -157,7 +157,7 @@ Tw.CustomerHelpline.prototype = {
       {
         hbs: 'actionsheet01',
         layer: true,
-        btnfloating: { class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
+        btnfloating: { 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         data: [{ list: data }]
       },
       $.proxy(this._handleOpenSelectAreaPopup, this)
@@ -182,7 +182,7 @@ Tw.CustomerHelpline.prototype = {
       {
         hbs: 'actionsheet01',
         layer: true,
-        btnfloating: { class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
+        btnfloating: { 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         data: [{ list: times }]
       },
       $.proxy(this._handleOpenSelectTimePopup, this)

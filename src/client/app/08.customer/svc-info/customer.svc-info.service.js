@@ -44,7 +44,7 @@ Tw.CustomerSvcinfoService.prototype = {
     });
     this.$curSelectBtn = this.$selectBtn.filter(function(){
       return $(this).data('selectIndex') === selectIndex && $(this).data('selectSubdex') === selectSubdex;
-    })
+    });
     this._popupService.open({
       hbs: 'actionsheet01',// hbs의 파일명
       layer: true,
@@ -52,7 +52,7 @@ Tw.CustomerSvcinfoService.prototype = {
       data: this._getOptions(this.data.list[selectIndex].sub_list[selectSubdex].dep_list),
       btnfloating: {
         txt: Tw.BUTTON_LABEL.CLOSE,
-        class: 'tw-popup-closeBtn'
+        'class': 'tw-popup-closeBtn'
       }
     }, $.proxy(this._ActionSheetBindEvent, this), $.proxy(this._closeSelect, this));
   },
@@ -66,10 +66,10 @@ Tw.CustomerSvcinfoService.prototype = {
             // option: 'checked', 
             'radio-attr': 'name="selectType" value="'+ el.code +'" id="radio'+el.code+'"',
             'label-attr': 'for="radio'+el.code+'"'
-          }
+          };
         })
       }
-    }
+    };
   },
 
   _ActionSheetBindEvent: function ($container) {

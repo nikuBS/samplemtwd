@@ -579,7 +579,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     // window.location.hash = hash;
   },
   _getShortStr: function(str){
-    if( str && unescape(encodeURIComponent(str)).length > 18 ){
+    if( str && window.unescape(encodeURIComponent(str)).length > 18 ){
       return str.substr(0, 18) + '...';
     }
     return str;

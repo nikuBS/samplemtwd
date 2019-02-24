@@ -27,7 +27,8 @@ Tw.MembershipMyReissue.prototype = {
 
   _openReissueAlert: function() {
     var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A51;
-    this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleReissueAlert, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A51.BUTTON);
+    this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE,
+      $.proxy(this._handleReissueAlert, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A51.BUTTON);
   },
 
   _handleReissueAlert: function() {

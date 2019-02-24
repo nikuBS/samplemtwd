@@ -71,7 +71,7 @@ Tw.ProductApps.prototype = {
             return {
               appKey: app.prodNm,
               scheme: app.lnkgAppScmCtt,
-              package: app.lnkgAppPkgNm
+              'package': app.lnkgAppPkgNm
             };
           })
         },
@@ -139,7 +139,7 @@ Tw.ProductApps.prototype = {
     this._popupService.open(
       {
         hbs: 'actionsheet01', // hbs의 파일명
-        btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
+        btnfloating: { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         data: [{ list: list }],
         layer: true
       },

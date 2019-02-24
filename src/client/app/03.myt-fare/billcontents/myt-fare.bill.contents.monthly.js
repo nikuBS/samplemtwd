@@ -31,7 +31,7 @@ Tw.MyTFareBillContentsMonthly.prototype = {
   _cachedElement: function() {
     this.$domWrapper = this.$container.find('#fe-monthly-wrap'); 
     this.$template = {
-      $monthContent: Handlebars.compile($('#fe-month-contents').html()),
+      $monthContent: Handlebars.compile($('#fe-month-contents').html())
     };
   },
 
@@ -39,4 +39,4 @@ Tw.MyTFareBillContentsMonthly.prototype = {
 
   }
  
-}
+};

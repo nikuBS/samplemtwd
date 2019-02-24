@@ -69,7 +69,7 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     Tw.CommonHelper.openUrlInApp(location.origin + $(e.currentTarget).attr('href'));
   },
 
-  _typeActionSheetOpen: function (e) {
+  _typeActionSheetOpen: function () {
     this._popupService.open({
       hbs: 'actionsheet01',// hbs의 파일명
       layer: true,
@@ -77,7 +77,7 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
       data: this._getOptions(this.data.list),
       btnfloating: {
         txt: Tw.BUTTON_LABEL.CLOSE,
-        class: 'tw-popup-closeBtn'
+        'class': 'tw-popup-closeBtn'
       }
     }, $.proxy(this._ActionSheetBindEvent, this), $.proxy(this._closeSelect, this));
   },
@@ -91,10 +91,10 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
             // option: 'checked', 
             'radio-attr': 'name="selectType" value="'+ el.code +'" id="radio'+el.code+'"',
             'label-attr': 'for="radio'+el.code+'"'
-          }
+          };
         })
       }
-    }
+    };
   },
 
   _ActionSheetBindEvent: function ($container) {
@@ -174,7 +174,7 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
       data: Tw.CUSTOMER_SERVICE_INFO_USIM_DEFINE,
       btnfloating: {
         txt: Tw.BUTTON_LABEL.CLOSE,
-        class: 'tw-popup-closeBtn'
+        'class': 'tw-popup-closeBtn'
       }
     }, $.proxy(this._USIMSelectBindEvent, this), null);
   },
@@ -217,7 +217,7 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
           $tabContents.removeClass('show');
           $tabContents.eq(index).addClass('show');
         });
-      })
+      });
     });
   
     // popup
@@ -233,10 +233,10 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
   
     $('input[type=radio][name=call]', $container).on('click', function() {
       var chkValue = $('input[type=radio][name=call]:checked', $container).val();
-      if (chkValue == '1') {
+      if (chkValue === '1') {
         $('.call-cont01').css('display', 'block');
         $('.call-cont02').css('display', 'none');
-      } else if (chkValue  == '2') {
+      } else if (chkValue  === '2') {
         $('.call-cont01').css('display', 'none');
         $('.call-cont02').css('display', 'block');
       }
@@ -244,10 +244,10 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
   
     $('input[type=radio][name=center]', $container).on('click', function() {
       var chkValue = $('input[type=radio][name=center]:checked', $container).val();
-      if (chkValue == '1') {
+      if (chkValue === '1') {
         $('.center-cont01', $container).css('display', 'block');
         $('.center-cont02', $container).css('display', 'none');
-      } else if (chkValue  == '2') {
+      } else if (chkValue  === '2') {
         $('.center-cont01', $container).css('display', 'none');
         $('.center-cont02', $container).css('display', 'block');
       }
@@ -282,7 +282,7 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
     $('.idpt-toggle-btn', $container).each(function(){
       $(this).click(function(){
         $(this).toggleClass('open').next('.idpt-toggle-cont').slideToggle();
-      })
+      });
     });
   },
 
@@ -314,7 +314,7 @@ Tw.CustomerSvcinfoServiceDetail.prototype = {
   },
 
   _openPagePop: function (e) {
-    var popId = $(e.currentTarget).data('popup') ? "#" + $(e.currentTarget).data('popup') : $(e.currentTarget).attr('href');
+    var popId = $(e.currentTarget).data('popup') ? '#' + $(e.currentTarget).data('popup') : $(e.currentTarget).attr('href');
     e.preventDefault();
     
     this._popupService.open({

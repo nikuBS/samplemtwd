@@ -14,7 +14,7 @@ Tw.CustomerAgentsearch = function (rootEl, params) {
   this._searchedItemTemplate = Handlebars.compile($('#tpl_search_result_item').html());
 
   this._options = {
-    storeType: 0 // 0: 전체, 1: 지점, 2: 대리점
+    storeType: 0 // 0: 전체, 1: 지점, 2: 대리점
   };
 
   this._init(params);
@@ -32,7 +32,7 @@ Tw.CustomerAgentsearch.prototype = {
 
         // query에 지역명, 노선명  있을 경우 해당 값들 설정
         if (hash === '#tube' && window.location.href.indexOf('area') !== -1) {
-          var urlParams = new URLSearchParams(window.location.search);
+          var urlParams = new window.URLSearchParams(window.location.search);
           var area = urlParams.get('area').split(':');
           var line = urlParams.get('line').split(':');
           this.$container.find('#fe-select-area').text(area[0]);
@@ -214,7 +214,7 @@ Tw.CustomerAgentsearch.prototype = {
       this.$btnOptions.text(text);
     }
   },
-  _onTubeArea: function (e) {
+  _onTubeArea: function () {
     var list = Tw.POPUP_TPL.CUSTOMER_AGENTSEARCH_TUBE_AREA;
     if (this._selectedTubeAreaCode) { // 선택된 항목에 checked 추가
       list[0].list = _.map(list[0].list, $.proxy(function (item) {
@@ -244,7 +244,7 @@ Tw.CustomerAgentsearch.prototype = {
       }, this));
     }, this));
   },
-  _onTubeLine: function (e) {
+  _onTubeLine: function () {
     if (!this._selectedTubeAreaCode) {
       this._popupService.openAlert('지역을 선택해 주세요.');
       return;
@@ -292,11 +292,9 @@ Tw.CustomerAgentsearch.prototype = {
       return;
     }
 
-    var page = undefined;
+    var page = $target.data('page');
     if ($target.hasClass('fe-go-page')) {
       page = $target.text();
-    } else {
-      page = $target.data('page');
     }
 
     this._historyService.goLoad(this._getSearchUrl(null, false, page));
@@ -336,11 +334,11 @@ Tw.CustomerAgentsearch.prototype = {
           hash = '#addr';
           break;
         case '#tube':
-          var area = this.$container.find('#fe-select-area').text().trim();
-          var line = this.$container.find('#fe-select-line').text().trim();
+          var areaTube = this.$container.find('#fe-select-area').text().trim();
+          var lineTube = this.$container.find('#fe-select-line').text().trim();
           url += 'tube&keyword=' + this.$inputTube.val() +
-            '&area=' + area + ':' + this._selectedTubeAreaCode +
-            '&line=' + line + ':' + this._selectedTubeLineCode;
+            '&area=' + areaTube + ':' + this._selectedTubeAreaCode +
+            '&line=' + lineTube + ':' + this._selectedTubeLineCode;
           hash = '#tube';
           break;
         default:

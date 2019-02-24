@@ -78,8 +78,17 @@ Tw.ProductRoaming.prototype = {
     }
   },
   _updateFormInfo: function() {
-    this.idxSelect === this.nMax ? this.$nextBtn.hide() : this.$nextBtn.show();
-    this.idxSelect === 0 ? this.$prevBtn.hide() : this.$prevBtn.show();
+    if ( this.idxSelect === this.nMax ) {
+      this.$nextBtn.hide();
+    } else {
+      this.$nextBtn.show();
+    }
+
+    if ( this.idxSelect === 0 ) {
+      this.$prevBtn.hide();
+    } else {
+      this.$prevBtn.show();
+    }
 
     this.$headerContainers.hide().filter('[data-key="' + this.idxSelect + '"]').show();
     this.$contentContainers.hide().filter('[data-key="' + this.idxSelect + '"]').show();
