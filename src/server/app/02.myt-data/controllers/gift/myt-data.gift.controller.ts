@@ -41,6 +41,9 @@ class MyTDataGift extends TwViewController {
 
         res.render('gift/myt-data.gift.auto-complete.html', response);
         break;
+      case 'available':
+        res.render('gift/myt-data.gift.available.html', responseData);
+        break;
       case 'complete':
         Observable.combineLatest(
           this.getSenderInfo(),

@@ -1,0 +1,71 @@
+<%#
+* FileName: myt-data.gift.available.html
+* Author: Jiman Park (jiman.park@sk.com)
+* Date: 2018.09.17
+%>
+
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<body class="bg-white">
+<!-- #skip_navigation -->
+<div id="skipNav" class="skip_navi">
+    <ul>
+        <li><a href="#gnb">메뉴 바로가기</a></li>
+        <li><a href="#contents">본문 바로가기</a></li>
+        <li><a href="#footer">푸터 바로가기</a></li>
+    </ul>
+</div>
+<!--// #skip_navigation -->
+<div class="wrap">
+    <div class="popup-page tw-popup fixed-bottom"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... 기본배경색은 white, 회색배경색은 .nobg -->
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti">
+                    <h1>선물 가능한 대상자 요금제</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap fe-layer_available_product">
+
+        </div>
+        <!-- // .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="prev-step fe-common-back"><span class="blind">팝업 페이지 닫기</span></button>
+        <!--// .popup-closeBtn -->
+    </div>
+</div>
+
+<script type="text/x-handlebars-template" id="tpl-available-product">
+    <!-- .container-wrap -->
+    <div class="container-wrap">
+        <h2 class="blind">내용</h2>
+        <div class="container">
+            {{#each sortedList}}
+            <div class="ti-caption-gray">
+                <span class="tit">{{initial}}</span>
+            </div>
+            <!-- .cont-box -->
+            <div class="cont-box">
+                <ul class="round-dot-list">
+                    {{#each item}}
+                    <li>{{prodNm}}</li>
+                    {{/each}}
+                </ul>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <!-- // .container-wrap -->
+</script>
+
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    new Tw.MyTDataGiftAvailable($('.wrap'));
+  });
+</script>
+
+</body>
+<% include ../../components/end.component.html %>

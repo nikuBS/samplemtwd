@@ -15,7 +15,7 @@
     </ul>
 </div>
 <!--// #skip_navigation -->
-<div class="wrap step">
+<div class="wrap">
     <div class="popup-page tw-popup fixed-bottom">
         <!-- #header -->
         <%- include('../components/header.component.html', { title: '목소리 등록 신청하기', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>
@@ -101,7 +101,7 @@
   $(document).ready(function () {
     new Tw.CustomerVoiceRegister($('.wrap'), JSON.parse('<%-JSON.stringify(allSvc)%>'));
     setTimeout(function () {
-      $('.popup-page').scrollTop(1);
+      $('.termboxscroll').scrollTop(1);
     }, 1000);
   });
 </script>
