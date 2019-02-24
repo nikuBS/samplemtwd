@@ -6,7 +6,6 @@
 Tw.CustomerSvcinfoService = function (rootEl, data) {
   this.$container = rootEl;
   this.data = data ? JSON.parse(data) : '';
-  console.log(this.data);
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService(rootEl);

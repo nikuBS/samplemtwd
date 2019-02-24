@@ -100,7 +100,6 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
   },
 
   _onclickInputDel: function(/*event*/){
-    console.log('_onclickInputDel');
     //this.$inputPhone.val('');
     this.$inputBoxPhone.removeClass('error');
     this.$btnSearch.attr('disabled', true);
@@ -113,7 +112,6 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
   },
 
   _resetPhoneNum: function($input){
-    console.log('_resetPhoneNum ',this );
     var value = $input.val();
     // this.$errNotPhoneNum.hide();
     // if(value.length >= 4 && value.indexOf('-') === -1){

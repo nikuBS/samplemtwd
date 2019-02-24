@@ -54,9 +54,18 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
     this.$confirmPassword.attr('type', 'password');
   },
 
-  _checkIsAbled: function () {
-    var $inputPasswordVal = $.trim(this.$inputPassword.val()),
+  _checkIsAbled: function (e) {
+    var $elem = $(e.currentTarget),
+      $inputPasswordVal = $.trim(this.$inputPassword.val()),
       $confirmPasswordVal = $.trim(this.$confirmPassword.val());
+
+    if ($elem.hasClass('fe-input-password') && Tw.InputHelper.isEnter(e)) {
+      return this.$confirmPassword.focus();
+    }
+
+    if ($elem.hasClass('fe-confirm-password') && Tw.InputHelper.isEnter(e)) {
+      return this.$btnSetupOk.trigger('click');
+    }
 
     this.$btnSetupOk.attr('disabled', 'disabled');
     this.$error0.hide();
@@ -115,6 +124,10 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
   },
 
   _procConfirm: function() {
+    if (this.$btnSetupOk.attr('disabled') === 'disabled') {
+      return;
+    }
+
     new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
       isMobilePlan: false,
       noticeList: this._confirmOptions.preinfo.joinNoticeList,

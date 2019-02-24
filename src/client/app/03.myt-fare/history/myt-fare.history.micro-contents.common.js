@@ -238,7 +238,6 @@ Tw.MyTFareHistoryMicroContents.prototype = {
   _setMonthActionSheetData: function () {
     var tempArr = [];
     var yearText = ''
-    console.log(this.dateInfo, this.monthTermValue);
     for (var i = this.monthTermValue, month = this.dateInfo.month; i > 0; i--) {
       if (month === 0) {
         month = 12;
