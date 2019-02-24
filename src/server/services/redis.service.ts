@@ -139,7 +139,7 @@ class RedisService {
             resp.msg = NODE_API_ERROR[API_CODE.REDIS_ERROR];
           }
         }
-        this.logger.info(this, '[Get Data]', key, resp);
+        // this.logger.info(this, '[Get Data]', key, resp);
         observer.next(resp);
         observer.complete();
       });
