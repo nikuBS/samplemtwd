@@ -310,6 +310,10 @@ Tw.ProductCommonCallplan.prototype = {
     }
 
     var url = resp.result.svcUrl;
+    if (Tw.FormatHelper.isEmpty(url)) {
+      return Tw.Error(null, Tw.ALERT_MSG_PRODUCT.BPCP).pop();
+    }
+
     if (!Tw.FormatHelper.isEmpty(resp.result.tParam)) {
       url += (url.indexOf('?') !== -1 ? '&tParam=' : '?tParam=') + resp.result.tParam;
     }
