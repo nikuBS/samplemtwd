@@ -673,7 +673,7 @@ export const CUSTOMER_DAMAGEINFO_CONTENTS_TITLE = {
   page006: '스팸 문자 대응 방법',
   page007: '로그인 제한 제도',
   page008: '휴면 고객 제도',
-  page009: 'Tworld 비밀번호 관리',
+  page009: 'T월드 비밀번호 관리',
   page010: '개인정보 유효기간',
   page011: '가려진 정보보기(마스킹)',
   page012: '꼭 지켜야 할 정보보호 실천수칙 10가지',

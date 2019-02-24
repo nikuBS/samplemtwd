@@ -17,6 +17,7 @@ Tw.ProductMobileplanAddJoinTFamily = function(rootEl, prodId, displayId, svcMgmt
   this._svcMgmtNum = svcMgmtNum;
   this._displayId = displayId;
   this._confirmOptions = JSON.parse(window.unescape(confirmOptions));
+  this._svcMgmtNumList = [svcMgmtNum];
 
   if (this._historyService.isBack()) {
     this._historyService.goBack();
@@ -200,7 +201,7 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
       return;
     }
 
-    if (this._svcMgmtNum === resp.result.svcMgmtNum) {
+    if (this._svcMgmtNumList.indexOf(resp.result.svcMgmtNum) !== -1) {
       this.$joinCheckResult.text(Tw.PRODUCT_TFAMILY.IS_EXISTS);
       this.$btnRetry.parent().show();
       return;
@@ -215,6 +216,7 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
   },
 
   _addLine: function() {
+    this._svcMgmtNumList.push(this._addData.svcMgmtNum);
     this.$groupList.append(this._itemTemplate($.extend(this._addData, {
       svcNumDash: Tw.FormatHelper.conTelFormatWithDash(this._addData.svcNum),
       groupRepYn: Tw.FormatHelper.isEmpty(this._addData.groupRepYn) ? 'N' : this._addData.groupRepYn,
@@ -240,7 +242,15 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
   },
 
   _onDeleteLineItem: function(e) {
-    $(e.currentTarget).parents('li.list-box').remove();
+    var $elem = $(e.currentTarget),
+      $elemParent = $elem.parents('li.list-box'),
+      svcMgmtNum = $elemParent.data('svc_mgmt_num');
+
+    if (this._svcMgmtNumList.indexOf(svcMgmtNum) !== -1) {
+      this._svcMgmtNumList.splice(this._svcMgmtNumList.indexOf(svcMgmtNum));
+    }
+
+    $elemParent.remove();
     this._checkSetupButton();
   },
 
