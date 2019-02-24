@@ -48,7 +48,7 @@ Tw.MyTFareBillContentsHitstory.prototype = {
     this.$domListWrapper.on('click', '.bt-more', $.proxy(this._updateBillList, this));
   },
 
-  _initBillList: function (data) {
+  _initBillList: function () {
     //리스트 갯수
     var totalDataCounter = this.data.billList.length; 
     var BtnMoreList;
@@ -79,8 +79,6 @@ Tw.MyTFareBillContentsHitstory.prototype = {
 
   // 월 선택
   _typeActionSheetOpen: function () {
-    /*Tw.POPUP_TITLE.SELECT, ,
-      */
     this._popupService.open({
       hbs: 'actionsheet_select_a_type',// hbs의 파일명
       layer: true,
@@ -106,8 +104,8 @@ Tw.MyTFareBillContentsHitstory.prototype = {
       tempArr.push({
         value:year+ Tw.PERIOD_UNIT.YEAR + ' ' + month + Tw.PERIOD_UNIT.MONTH,
         attr: 'data-year = \''+ year + '\' data-month=\''+ month + '\'',
-        option:(this.data.selectedYear === year && this.data.selectedMonth === month.toString()) ? "checked" : ""
-      })
+        option:(this.data.selectedYear === year && this.data.selectedMonth === month.toString()) ? 'checked' : ''
+      });
     }
     return [{
       list: tempArr.reverse()
@@ -124,8 +122,10 @@ Tw.MyTFareBillContentsHitstory.prototype = {
     var month = $(e.currentTarget).data('month') || this.data.curMonth; 
     //선택표기
     $(e.currentTarget).addClass('checked').parent().siblings().find('button').removeClass('checked');
+    $(e.currentTarget).find('input[type=radio]').prop('checked', true);
+    this.$selectMonth.text(month + '월');
     //이동
-    this._historyService.goLoad(this._historyService.pathname + "?year=" + year + "&month=" + month);
+    this._popupService.closeAllAndGo(this._historyService.pathname + '?year=' + year + '&month=' + month);
   },
 
   _closeMonthSelect: function () {

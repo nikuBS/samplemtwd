@@ -33,7 +33,7 @@ Tw.LineLayerComponent.prototype = {
     this._apiService.request(Tw.NODE_CMD.UPDATE_NOTICE_TYPE, {})
       .done($.proxy(this._successUpdateNoticeType, this));
   },
-  _successUpdateNoticeType: function (resp) {
+  _successUpdateNoticeType: function () {
     Tw.CommonHelper.setCookie(Tw.COOKIE_KEY.LAYER_CHECK, '');
   },
   _openLineResisterPopup: function (layerType) {

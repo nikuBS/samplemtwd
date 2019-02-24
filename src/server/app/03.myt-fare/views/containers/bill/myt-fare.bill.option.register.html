@@ -4,7 +4,7 @@
 * Date: 2018.10.02
 %>
 
-<%- include('../../components/start.component.html', { pageInfo: pageInfo }); %>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body>
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
@@ -15,7 +15,7 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div id="myt-fare-bill-option-register" class="wrap fe-no-back" data-menuId="<%= pageInfo.menuId %>">
+    <div id="myt-fare-bill-option-register" class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <div class="popup-page tw-popup fixed-bottom h60">
             <!-- #header -->
             <%- include('../components/header.component.html', { title: paymentOption.title, type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>

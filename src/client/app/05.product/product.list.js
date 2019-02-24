@@ -131,7 +131,7 @@ Tw.ProductList.prototype = {
     this._popupService.open(
       {
         hbs: 'actionsheet01', // hbs의 파일명
-        btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
+        btnfloating: { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         layer: true,
         data: [{ list: list }]
       },
@@ -193,8 +193,8 @@ Tw.ProductList.prototype = {
           prodFltId: filter.prodFltId,
           prodFltNm: filter.prodFltNm,
           subFilters:
-            currentFilters && currentFilters.length > 0
-              ? _.map(filter.subFilters, function(subFilter) {
+            currentFilters && currentFilters.length > 0 ?
+              _.map(filter.subFilters, function(subFilter) {
                   if (currentFilters.indexOf(subFilter.prodFltId) >= 0) {
                     return $.extend({ checked: true }, subFilter);
                   }
@@ -205,8 +205,8 @@ Tw.ProductList.prototype = {
       })
       .value();
 
-    var tags = currentTag
-      ? _.map(this._filters.tags, function(tag) {
+    var tags = currentTag ?
+      _.map(this._filters.tags, function(tag) {
           if (currentTag === tag.tagId) {
             return $.extend({ checked: true }, tag);
           }
@@ -280,7 +280,9 @@ Tw.ProductList.prototype = {
       $(selectedFilters[i].children[0]).removeAttr('checked');
     }
 
-    selectedTag.length > 0 && selectedTag.removeClass('active');
+    if ( selectedTag.length > 0 ) {
+      selectedTag.removeClass('active');
+    }
   },
 
   _openSelectTagPopup: function($layer, e) {

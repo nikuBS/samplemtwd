@@ -3,7 +3,7 @@
 * Author: Jayoon Kong (jayoon.kong@sk.com)
 * Date: 2018.09.18
 %>
-<%- include('../../components/start.component.html', { pageInfo: pageInfo }); %>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body>
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
@@ -12,7 +12,7 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div id="myt-fare-bill-card" class="wrap fe-no-back" data-menuId="<%= pageInfo.menuId %>">
+    <div id="myt-fare-bill-card" class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <div class="popup-page tw-popup fixed-bottom h60">
             <!-- #header -->
             <%- include('../components/header.component.html', { title: '체크/신용카드 납부', type: 'popup', svcInfo: svcInfo, pageInfo: pageInfo }); %>

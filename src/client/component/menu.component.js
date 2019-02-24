@@ -239,8 +239,8 @@ Tw.MenuComponent.prototype = {
   },
   _checkAndClose: function () {
     if ( window.location.hash.indexOf('menu') === -1 && this._isOpened ) {
-      if (this.$container.find('.fe-menu-section').hasClass('none')) {
-        this._menuSearchComponent && this._menuSearchComponent.cancelSearch();
+      if (this.$container.find('.fe-menu-section').hasClass('none') && this._menuSearchComponent) {
+        this._menuSearchComponent.cancelSearch();
       }
       this.$closeBtn.click();
     } else if (this._tid && !this.$container.hasClass('user-type')) {
@@ -262,7 +262,7 @@ Tw.MenuComponent.prototype = {
       this._goOrReplace(url);
     }
   },
-  _onFreeSMS: function (e) {
+  _onFreeSMS: function () {
     if (this._memberType === 1) {
       this._popupService.openAlert(
         Tw.MENU_STRING.FREE_SMS,
@@ -377,18 +377,15 @@ Tw.MenuComponent.prototype = {
               $(elem).remove();
             } else {
               $(elem).text(userInfo.prodNm);
+              $(elem).closest('.bt-depth1').addClass('txt-long');
             }
             break;
           case 'bill':
-            this._apiService.request(Tw.API_CMD.BFF_05_0036, {})
+            this._apiService.request(Tw.API_CMD.BFF_04_0009, {})
               .then($.proxy(function (res) {
                 if ( res.code === Tw.API_CODE.CODE_00 ) {
                   var info = res.result;
-                  if ( info.coClCd === Tw.MYT_FARE_BILL_CO_TYPE.BROADBAND ) {
-                    $(elem).remove();
-                    return;
-                  }
-                  var total = info.useAmtTot ? parseInt(info.useAmtTot, 10) : 0;
+                  var total = info.amt;
                   var month = info.invDt.match(/\d\d\d\d(\d\d)\d\d/);
                   if (month) {
                     month = parseInt(month[1], 10) + Tw.DATE_UNIT.MONTH_S;
@@ -482,7 +479,7 @@ Tw.MenuComponent.prototype = {
         } else {
           // Modify some menu category by hard coded
           if ( sorted[i].menuId === 'M000344' || sorted[i].menuId === 'M000353' ) {
-            category['M000301'].children.push(sorted[i]);
+            category.M000301.children.push(sorted[i]);
           }
         }
       }
@@ -554,8 +551,8 @@ Tw.MenuComponent.prototype = {
     var subCategory = category[0];
     // subCategory[1].children.push(subCategory[2].children[0]);
     // subCategory[1].children.push(subCategory[3].children[0]);
-    for ( var i = 2; i < subCategory.length - 1; i += 1 ) {
-      subCategory[1].children.push(subCategory[i].children[0]);
+    for ( var j = 2; j < subCategory.length - 1; j += 1 ) {
+      subCategory[1].children.push(subCategory[j].children[0]);
     }
     subCategory = subCategory.slice(0, 2).concat(subCategory.slice(subCategory.length - 1));
     category[0] = subCategory;
@@ -625,7 +622,7 @@ Tw.MenuComponent.prototype = {
   },
 
   // 검색창 포커스 인/아웃 처리
-  _searchFocus: function (focus) {
+  _searchFocus: function () {
     this.$container.find('.fe-menu-section').addClass('none');
     this.$container.find('.fe-search-section').removeClass('none');
     var $menu = $('#common-menu');

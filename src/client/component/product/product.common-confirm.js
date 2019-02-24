@@ -106,6 +106,14 @@ Tw.ProductCommonConfirm.prototype = {
 
   _bindTipView: function($popupContainer) {
     $popupContainer.on('click', '.fe-btn_close', $.proxy(this._closeTipView, this));
+    $popupContainer.on('click', '.fe-link-internal', $.proxy(this._onTipInternal, this));
+  },
+
+  _onTipInternal: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this._popupService.closeAllAndGo($(e.currentTarget).attr('href'));
   },
 
   _closeTipView: function() {

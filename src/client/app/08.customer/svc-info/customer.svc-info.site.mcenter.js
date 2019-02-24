@@ -83,10 +83,10 @@ Tw.CustomerSvcInfoMcenter.prototype = {
   
     $('input[type=radio][name=call]', $container).on('click', function() {
       var chkValue = $('input[type=radio][name=call]:checked', $container).val();
-      if (chkValue == '1') {
+      if (chkValue === '1') {
         $('.call-cont01').css('display', 'block');
         $('.call-cont02').css('display', 'none');
-      } else if (chkValue  == '2') {
+      } else if (chkValue  === '2') {
         $('.call-cont01').css('display', 'none');
         $('.call-cont02').css('display', 'block');
       }
@@ -94,10 +94,10 @@ Tw.CustomerSvcInfoMcenter.prototype = {
   
     $('input[type=radio][name=center]', $container).on('click', function() {
       var chkValue = $('input[type=radio][name=center]:checked', $container).val();
-      if (chkValue == '1') {
+      if (chkValue === '1') {
         $('.center-cont01', $container).css('display', 'block');
         $('.center-cont02', $container).css('display', 'none');
-      } else if (chkValue  == '2') {
+      } else if (chkValue  === '2') {
         $('.center-cont01', $container).css('display', 'none');
         $('.center-cont02', $container).css('display', 'block');
       }
@@ -118,7 +118,7 @@ Tw.CustomerSvcInfoMcenter.prototype = {
     $('.idpt-toggle-btn', $container).each(function(){
       $(this).click(function(){
         $(this).toggleClass('open').next('.idpt-toggle-cont').slideToggle();
-      })
+      });
     });
   },
 
@@ -144,5 +144,5 @@ Tw.CustomerSvcInfoMcenter.prototype = {
     }, $.proxy(function($container){
       $container.find('.popup-info').show();
     }, this), null);
-  },
+  }
 };

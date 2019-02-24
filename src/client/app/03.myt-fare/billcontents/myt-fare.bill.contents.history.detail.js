@@ -44,4 +44,4 @@ Tw.MyTFareBillContentsHitstoryDetail.prototype = {
 
   }
  
-}
+};

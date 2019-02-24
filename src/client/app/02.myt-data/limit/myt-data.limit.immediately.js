@@ -17,6 +17,7 @@ Tw.MyTDataLimitImmediately = function (rootEl) {
 
 Tw.MyTDataLimitImmediately.prototype = {
   _init: function () {
+    this._isToggle = false;
   },
 
   _cachedElement: function () {
@@ -33,12 +34,14 @@ Tw.MyTDataLimitImmediately.prototype = {
   _onToggleBlockImmediately: function (e) {
     var isChecked = $(e.currentTarget).attr('checked');
 
-    if ( isChecked ) {
-      this._apiService.request(Tw.API_CMD.BFF_06_0038, {})
-        .done($.proxy(this._onSuccessBlockImmediately, this, 'unblock'));
-    } else {
-      this._apiService.request(Tw.API_CMD.BFF_06_0039, {})
-        .done($.proxy(this._onSuccessBlockImmediately, this, 'block'));
+    if ( !this._isToggle ) {
+      if ( isChecked ) {
+        this._apiService.request(Tw.API_CMD.BFF_06_0038, {})
+          .done($.proxy(this._onSuccessBlockImmediately, this, 'unblock'));
+      } else {
+        this._apiService.request(Tw.API_CMD.BFF_06_0039, {})
+          .done($.proxy(this._onSuccessBlockImmediately, this, 'block'));
+      }
     }
 
     $('#tab1-tab').find('.cont-box').each(this._toggleDisplay);
@@ -52,7 +55,16 @@ Tw.MyTDataLimitImmediately.prototype = {
         Tw.CommonHelper.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_BLOCK);
       }
     } else {
-      this._popupService.openAlert(res.msg + Tw.MYT_DATA_TING.ERROR_LIMIT.CONTENT, Tw.MYT_DATA_TING.ERROR_LIMIT.TITLE, null, $.proxy(this._goSubmain, this));
+      this._isToggle = true;
+      this.$input_block_immediately.click();
+
+      this._popupService.openAlert(
+        res.msg + Tw.MYT_DATA_TING.ERROR_LIMIT.CONTENT,
+        Tw.MYT_DATA_TING.ERROR_LIMIT.TITLE,
+        null,
+        $.proxy(function () {
+          this._isToggle = false;
+        }, this));
     }
   },
 
@@ -76,7 +88,8 @@ Tw.MyTDataLimitImmediately.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.replaceURL('/myt-data/recharge/limit/complete');
     } else {
-      this._popupService.openAlert(res.msg + Tw.MYT_DATA_TING.ERROR_LIMIT.CONTENT, Tw.MYT_DATA_TING.ERROR_LIMIT.TITLE, null, $.proxy(this._goSubmain, this));
+      this._popupService.openAlert(res.msg + Tw.MYT_DATA_TING.ERROR_LIMIT.CONTENT, Tw.MYT_DATA_TING.ERROR_LIMIT.TITLE,
+        null, $.proxy(this._goSubmain, this));
     }
   },
 

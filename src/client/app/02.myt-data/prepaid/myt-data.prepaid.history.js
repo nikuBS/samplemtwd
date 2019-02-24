@@ -43,13 +43,13 @@ Tw.MyTDataPrepaidHistory.prototype = {
     this.$empty = this.$container.find('.contents-empty');
   },
 
-  _openChangeHistories: function(e) {
+  _openChangeHistories: function() {
     var type = this._currentType;
 
     this._popupService.open(
       {
         hbs: 'actionsheet01',
-        btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
+        btnfloating: { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         layer: true,
         data: [
           {

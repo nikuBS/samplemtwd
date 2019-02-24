@@ -3,7 +3,7 @@
 * Author: Hyeryoun Lee (skt.P130712@partner.sk.com)
 * Date: 2018. 9. 21.
 %>
-<% include ../../components/start.component.html %>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <% include ../../components/javascript.component.html %>
 <% include ../../components/bill/myt-fare.bill.hotbill.lines.html %>
 <% include ../../components/bill/myt-fare.bill.hotbill.billgroup.html %>

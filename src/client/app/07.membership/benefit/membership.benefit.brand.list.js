@@ -102,7 +102,7 @@ Tw.MembershipBenefitBrandList.prototype = {
         hbs: 'actionsheet01',
         layer: true,
         data: [{list: this._area1List }],
-        btnfloating : { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE }
+        btnfloating : { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE }
       },
       $.proxy(this._onOpenArea1Actsht, this, $target)
       );
@@ -142,7 +142,7 @@ Tw.MembershipBenefitBrandList.prototype = {
         hbs: 'actionsheet01',
         layer: true,
         data: [{list: this._area2List }],
-        btnfloating : { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE }
+        btnfloating : { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE }
       },
       $.proxy(this._onOpenArea2Actsht, this, $target)
     );

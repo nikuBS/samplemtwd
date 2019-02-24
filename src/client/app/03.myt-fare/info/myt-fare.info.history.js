@@ -119,16 +119,16 @@ Tw.MyTFareInfoHistory.prototype = {
     // 링크가 없다면 return ;
     if(!$(e.currentTarget).data('listId') &&
         $(e.currentTarget).data('listId') !== 0 && 
-        $(e.currentTarget).data('listId') !== "0"
+        $(e.currentTarget).data('listId') !== '0'
       ) return ;
 
     var detailData = this.data.listData.mergedListData[$(e.currentTarget).data('listId')];
     detailData.isPersonalBiz = this.data.isPersonalBiz;
 
     // Tw.CommonHelper.setLocalStorage('detailData', JSON.stringify(detailData));
-    this._historyService.goLoad(this._historyService.pathname + "/detail?type=" + detailData.dataPayMethodCode + 
-      (detailData.innerIndex !== undefined ? "&innerIndex=" + detailData.innerIndex: '') + 
-      (detailData.dataPayMethodCode === "DI"? "&opDt=" + detailData.opDt + "&payOpTm=" + detailData.payOpTm: "")
+    this._historyService.goLoad(this._historyService.pathname + '/detail?type=' + detailData.dataPayMethodCode +
+      (detailData.innerIndex !== undefined ? '&innerIndex=' + detailData.innerIndex: '') +
+      (detailData.dataPayMethodCode === 'DI' ? '&opDt=' + detailData.opDt + '&payOpTm=' + detailData.payOpTm: '')
     );
   },
 
@@ -145,7 +145,8 @@ Tw.MyTFareInfoHistory.prototype = {
 
     if(alertCode) alertType = Tw.ALERT_MSG_MYT_FARE[alertCode];
 
-    if(alertType) this._popupService.openConfirm(alertType.MSG,alertType.TITLE,$.proxy(this._execReserveCancel,this),$.proxy(this._popupService.close,this));
+    if(alertType) this._popupService.openConfirm(alertType.MSG,alertType.TITLE,
+      $.proxy(this._execReserveCancel,this),$.proxy(this._popupService.close,this));
     
   },
 
@@ -163,13 +164,13 @@ Tw.MyTFareInfoHistory.prototype = {
         opDt:this.reserveCancelData.opDt,
         payOpTm:this.reserveCancelData.opTm,//.substring(8),
         rbpSerNum:this.reserveCancelData.rbpSerNum
-      }
+      };
     }
     else if(this.reserveCancelData.listTitle.indexOf(Tw.POINT_NM.RAINBOW)>=0){ 
       apiCode='BFF_07_0050';
       apiBody={
         rbpSerNum:this.reserveCancelData.rbpSerNum
-      }
+      };
     }
 
     if(apiCode){
@@ -214,8 +215,7 @@ Tw.MyTFareInfoHistory.prototype = {
     this.$btnListViewMorewrapper.css({display: this.listLastIndex >= this.data.listData.mergedListData.length ? 'none':''});
     this._updateViewMoreBtnRestCounter($(e.currentTarget));
 
-    var insertCompareData = this.data.listData.mergedListData[this.listLastIndex - this.listRenderPerPage - 1],
-        $domAppendTarget = this.$domListWrapper.find('.inquire-link-list ul');
+    var $domAppendTarget = this.$domListWrapper.find('.inquire-link-list ul');
 
     this.renderableListData.map($.proxy(function(o) {
       var renderedHTML;
@@ -292,7 +292,7 @@ Tw.MyTFareInfoHistory.prototype = {
       data: Tw.POPUP_TPL.PAYMENT_HISTORY_TYPE,
       btnfloating: {
         txt: '닫기',
-        class: 'tw-popup-closeBtn'
+        'class': 'tw-popup-closeBtn'
       }
     }, $.proxy(this._openTypeSelectHandler, this), $.proxy(this._closeTypeSelect, this));
   },

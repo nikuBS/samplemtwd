@@ -64,7 +64,8 @@ Tw.MembershipMyUpdate.prototype = {
       if(selected.name === 'checkbox2'){
         //OK캐시백 기능 추가하기는 알럿 띄운후 체크해제
         var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A63;
-        this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE, $.proxy(this._okCashbagUncheck, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
+        this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE,
+          $.proxy(this._okCashbagUncheck, this), null, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
       }else{
         $(selected).removeAttr('checked');
       }
@@ -127,8 +128,8 @@ Tw.MembershipMyUpdate.prototype = {
       this._myInfoData.ocbAccumAgreeYn = this.$checkFirst.attr('checked') === 'checked' ? 'Y' : 'N';
     }
 
-    var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A53;
-    this._popupService.openConfirmButton(ALERT.MSG, ALERT.TITLE, $.proxy(this._handleUpdateAlert, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A53.BUTTON);
+    this._popupService.openConfirmButton(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A53.MSG, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A53.TITLE,
+      $.proxy(this._handleUpdateAlert, this), null, Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A53.BUTTON);
   },
 
   _handleUpdateAlert: function() {

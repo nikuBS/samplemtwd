@@ -106,7 +106,8 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
       $($error.get(1)).removeClass('blind');
     }
 
-    if ( !(this._validation.checkMoreLength(cardY, 4) && this._validation.checkMoreLength(cardM, 2) && this._validation.checkYear(cardY) && this._validation.checkMonth(cardM, cardY)) ) {
+    if ( !(this._validation.checkMoreLength(cardY, 4) && this._validation.checkMoreLength(cardM, 2) &&
+      this._validation.checkYear(cardY) && this._validation.checkMonth(cardM, cardY)) ) {
       $($error.get(0)).removeClass('blind');
       $($error.get(1)).addClass('blind');
     }
@@ -220,7 +221,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     var $error = $($elButton[0]).closest('li').find('.error-txt');
     $error.addClass('blind');
 
-    if ( !!$($elButton[0]).data('amount') === false ) {
+    if ( Tw.FormatHelper.isEmpty($($elButton[0]).data('amount')) ) {
       $($error.get(0)).removeClass('blind');
     }
   },
@@ -239,7 +240,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     this._validSelectedValue($target);
   },
 
-  _validateForm: function (e) {
+  _validateForm: function () {
     this._checkIsAbled();
   },
 
@@ -252,7 +253,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     }
   },
 
-  _requestRechargeAuto: function (e) {
+  _requestRechargeAuto: function () {
     if ( this.chargeCd || this.amt ) {
       var htParams = {
         amt: $('.fe-select-amount').data('amount'),
@@ -273,7 +274,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
       amt: $('.fe-select-amount').data('amount'),
       chargeCd: this.chargeCd,
       endDt: $('.fe-select-expire').val().replace(/-/g, '')
-    }
+    };
     // this._historyService.replaceURL('/myt-data/recharge/prepaid/voice-complete?type=auto&' + $.param(htParams));
 
     if ( res.code === Tw.API_CODE.CODE_00 ) {

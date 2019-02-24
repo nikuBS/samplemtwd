@@ -236,9 +236,7 @@ class DateHelper {
    * @returns {string} : 2018.6.1 (first date of this month)
    */
   static getShortFirstDateNoDot(date: any): string {
-    const curDate = this.convDateFormat(date);
-    const firstDate = new Date(curDate.setDate(1));
-    return moment(firstDate).format('YYYY.M.D');
+    return moment(this.convDateFormat(date)).date(1).format('YYYY.M.D');
   }
   
   /**
@@ -246,9 +244,15 @@ class DateHelper {
    * @returns {string} : 2018.6.1 (first date of this month)
    */
   static getShortFirstDate(date: any): string {
-    const curDate = this.convDateFormat(date);
-    const firstDate = new Date(curDate.setDate(1));
-    return moment(firstDate).format('YYYY.M.D.');
+    return moment(this.convDateFormat(date)).date(1).format('YYYY.M.D.');
+  }
+
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018.6.1. (last date of this month)
+   */
+  static getShortLastDate(date: any) {
+    return moment(this.convDateFormat(date)).add('months', 1).date(0).format('YYYY.M.D.');
   }
 
    /**

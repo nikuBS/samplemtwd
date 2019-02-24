@@ -57,6 +57,10 @@ Tw.ProductMobileplanAddSettingCombineLine.prototype = {
   },
 
   _addNum: function() {
+    if (this.$inputNumber.val().length < 10) {
+      return;
+    }
+
     var number = this.$inputNumber.val().replace(/-/gi, '');
 
     if (!Tw.ValidationHelper.isCellPhone(number)) {
@@ -89,7 +93,8 @@ Tw.ProductMobileplanAddSettingCombineLine.prototype = {
     }
 
     this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON, Tw.BUTTON_LABEL.CLOSE, null, $.proxy(this._delNumReq, this, $(e.currentTarget).parents('li').data('grp_id')));
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON, Tw.BUTTON_LABEL.CLOSE, null,
+      $.proxy(this._delNumReq, this, $(e.currentTarget).parents('li').data('grp_id')));
   },
 
   _delNumReq: function(grpId) {

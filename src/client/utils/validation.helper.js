@@ -121,7 +121,7 @@ Tw.ValidationHelper = (function () {
 
   /* input 값의 길이가 맞지 않는 경우 */
   function checkIsLength(value, length) {
-    return !($.trim(value).length !== length);
+    return $.trim(value).length === length;
   }
 
   /* input 값의 길이가 기준값보다 적은 경우 */

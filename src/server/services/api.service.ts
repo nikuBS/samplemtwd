@@ -34,11 +34,12 @@ class ApiService {
 
     const apiUrl = this.getServerUri(command);
     const options = this.getOption(command, apiUrl, params, header, pathParams, version);
+    const startTime = new Date().getTime();
     this.logger.info(this, '[API_REQ]', options);
 
     return Observable.create((observer) => {
       axios(options)
-        .then(this.apiCallback.bind(this, observer, command))
+        .then(this.apiCallback.bind(this, observer, command, startTime))
         .catch(this.handleError.bind(this, observer, command));
     });
   }
@@ -118,11 +119,11 @@ class ApiService {
     return path;
   }
 
-  private apiCallback(observer, command, resp) {
+  private apiCallback(observer, command, startTime, resp) {
     const contentType = resp.headers['content-type'];
 
     const respData = resp.data;
-    this.logger.info(this, '[API RESP]', !contentType.includes('json') ? 'No JSON' : respData);
+    this.logger.info(this, '[API RESP]', (new Date().getTime() - startTime) + 'ms', command.path);
 
     if ( command.server === API_SERVER.BFF ) {
       this.setServerSession(resp.headers).subscribe(() => {
@@ -145,7 +146,7 @@ class ApiService {
     if ( !FormatHelper.isEmpty(err.response) && !FormatHelper.isEmpty(err.response.data) ) {
       const error = err.response.data;
       const headers = err.response.headers;
-      this.logger.error(this, '[API ERROR]', error);
+      this.logger.error(this, '[API ERROR]', command.path, error);
 
       if ( command.server === API_SERVER.BFF ) {
         this.setServerSession(headers).subscribe((resp) => {

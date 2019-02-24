@@ -113,8 +113,13 @@ Tw.CommonHelper = (function () {
             closeCallback
           );
         } else {
-          confirmCallback && confirmCallback();
-          closeCallback && closeCallback();
+          if (confirmCallback) {
+            confirmCallback();
+          }
+
+          if (closeCallback) {
+            closeCallback();
+          }
         }
       }, this)
     );

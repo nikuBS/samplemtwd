@@ -75,12 +75,12 @@ Tw.BannerService.prototype = {
                     swipe: false
                   });
                 },
-                beforeChange: function(e) {
+                beforeChange: function() {
                   $mainSlider[0].slick.setOption({
                     swipe: false
                   });
                 },
-                afterChange: function(e) {
+                afterChange: function() {
                   $mainSlider[0].slick.setOption({
                     swipe: true
                   });
@@ -118,7 +118,7 @@ Tw.BannerService.prototype = {
           window.location.href = link;
           break;
         }
-        case Tw.BANNER_LINK_TYPE.OTHER_WEB:
+        // case Tw.BANNER_LINK_TYPE.OTHER_WEB:
         default: {
           if (Tw.BrowserHelper.isApp() && banner.isBill) {
             Tw.CommonHelper.showDataCharge(function() {

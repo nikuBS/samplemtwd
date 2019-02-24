@@ -45,13 +45,14 @@ class ProductCommonCallplan extends TwViewController {
 
   /**
    * 가입여부 확인
+   * @param svcInfo
    * @param prodTypCd
    * @param prodId
    * @param plmProdList
    * @private
    */
-  private _getIsJoined(prodTypCd: any, prodId: any, plmProdList?: any): Observable<any> {
-    if (['C', 'E_I', 'E_P', 'E_T', 'F', 'G', 'H_P', 'H_A'].indexOf(prodTypCd) === -1) {
+  private _getIsJoined(svcInfo: any, prodTypCd: any, prodId: any, plmProdList?: any): Observable<any> {
+    if (['C', 'E_I', 'E_P', 'E_T', 'F', 'G', 'H_P', 'H_A'].indexOf(prodTypCd) === -1 || FormatHelper.isEmpty(svcInfo)) {
       return Observable.of({});
     }
 
@@ -445,7 +446,7 @@ class ProductCommonCallplan extends TwViewController {
    */
   private _convertSeriesAndRecommendInfo (apiInfo, isSeries): any {
     if (FormatHelper.isEmpty(apiInfo)) {
-      return null;
+      return [];
     }
 
     const list = isSeries ? apiInfo.seriesProdList : apiInfo.recommendProdList;
@@ -747,7 +748,7 @@ class ProductCommonCallplan extends TwViewController {
           this._getMyContentsData(basicInfo.result.grpProdScrnConsCd, prodId),
           this._getExtendContentsData(basicInfo.result.prodGrpYn, basicInfo.result.repProdId, basicInfo.result.prodGrpRepYn),
           this._getMobilePlanCompareInfo(basicInfo.result.prodTypCd, svcInfoProdId, prodId),
-          this._getIsJoined(basicInfo.result.prodTypCd, prodId, basicInfo.result.plmProdList),
+          this._getIsJoined(svcInfo, basicInfo.result.prodTypCd, prodId, basicInfo.result.plmProdList),
           this._getAdditionsFilterListByRedis(basicInfo.result.prodTypCd, prodId),
           this._getCombineRequireDocumentStatus(basicInfo.result.prodTypCd, prodId)
         ).subscribe(([

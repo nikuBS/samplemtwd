@@ -4,7 +4,7 @@
 * Date: 2018.09.18
 %>
 
-<%- include('../../components/start.component.html', { pageInfo: pageInfo }); %>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <body>
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
@@ -13,7 +13,7 @@
         </ul>
     </div>
     <!--// #skip_navigation -->
-    <div id="myt-fare-bill-account" class="wrap fe-no-back" data-menuId="<%= pageInfo.menuId %>">
+    <div id="myt-fare-bill-account" class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <!-- #header -->
         <div id="header" class="header-wrap">
         </div>

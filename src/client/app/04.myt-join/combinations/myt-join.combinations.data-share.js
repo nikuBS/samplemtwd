@@ -27,7 +27,7 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
   _handleSelectSubject: function(e) {
     this._subject = {
       number: e.currentTarget.getAttribute('data-svc'),
-      name: (name = e.currentTarget.getAttribute('data-name'))
+      name: e.currentTarget.getAttribute('data-name')
     };
   },
 

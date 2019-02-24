@@ -60,5 +60,5 @@ Tw.CustomerUseguideCommon.prototype = {
 
   _parse_query_string: function () {
     return Tw.UrlHelper.getQueryParams();
-  },
+  }
 };

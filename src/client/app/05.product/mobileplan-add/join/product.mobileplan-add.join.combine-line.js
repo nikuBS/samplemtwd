@@ -71,6 +71,10 @@ Tw.ProductMobileplanAddJoinCombineLine.prototype = {
   },
 
   _addNum: function() {
+    if (this.$inputNumber.val().length < 10) {
+      return;
+    }
+
     var number = this.$inputNumber.val().replace(/-/gi, '');
 
     if (this.$lineList.find('li').length > 3) {

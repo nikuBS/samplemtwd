@@ -69,4 +69,4 @@ Tw.MyTFareInfoCancelDraw.prototype = {
     this._popupService.openAlert(Tw.MSG_COMMON.SERVER_ERROR + '<br />' + err.code + ' : ' + err.msg);
     return false;
   }
-}
+};

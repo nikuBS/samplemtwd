@@ -54,8 +54,8 @@ Tw.CustomerFaqCategory.prototype = {
       var ret = {
         txt: item.ifaqGrpNm,
         'label-attr': 'id="' + item.ifaqGrpCd + '"',
-        'radio-attr': 'id="' + item.ifaqGrpCd + '" name="r2" value="' + item.ifaqGrpCd
-          + '" title="' + item.ifaqGrpNm + '"'
+        'radio-attr': 'id="' + item.ifaqGrpCd + '" name="r2" value="' + item.ifaqGrpCd +
+          '" title="' + item.ifaqGrpNm + '"'
       };
       if (depth === 1 && this._depth1code === item.ifaqGrpCd) {
         ret['radio-attr'] += ' checked';

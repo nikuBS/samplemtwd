@@ -88,7 +88,7 @@ Tw.MytJoinCustpasswordCheck.prototype = {
     }
   },
 
-  _defaultErrorHandler : function(res, unexpectedError){
+  _defaultErrorHandler : function(){
     // this._popupService.openAlert(Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A61.MSG, Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A61.TITLE);
 
     // var errorMsg = unexpectedError ? res.msg : Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A61.MSG;

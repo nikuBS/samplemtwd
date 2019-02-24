@@ -29,6 +29,7 @@ class MyTDataUsageCancelTshareComplete extends TwViewController {
     usimNum = this.convUsimFormat(usimNum);
     res.render('usage/myt-data.usage.cancel-tshare-complete.html', {
       date,
+      pageInfo,
       usimNum
     });
   }
