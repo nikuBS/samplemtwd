@@ -71,7 +71,7 @@ Tw.MyTDataCookizOptions.prototype = {
         null);
     }
     else {
-      Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.MOBILE_TWORLD);
+      Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.TWORLD_TING);
     }
   },
 
@@ -81,7 +81,7 @@ Tw.MyTDataCookizOptions.prototype = {
     var content = Tw.ALERT_MSG_MYT_DATA.TING_PESTER.TITLE +
       Tw.FormatHelper.conTelFormatWithDash(this.svcInfo.svcNum) +
       Tw.ALERT_MSG_MYT_DATA.TING_PESTER.CONTENT +
-      Tw.OUTLINK.MOBILE_TWORLD;
+      Tw.OUTLINK.TWORLD_TING;
 
     Tw.CommonHelper.share(content);
   },
