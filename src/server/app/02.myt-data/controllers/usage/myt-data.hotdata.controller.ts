@@ -54,10 +54,10 @@ class MyTDataHotdata extends TwViewController {
           this._render(res, svcInfo, pageInfo, usageDataResp);
         }
       } else {
-        this._renderError(res, svcInfo, usageDataResp);
+        this._renderError(res, svcInfo, pageInfo, usageDataResp);
       }
     }, (resp) => {
-      this._renderError(res, svcInfo, resp);
+      this._renderError(res, svcInfo, pageInfo, resp);
     });
   }
 
@@ -230,10 +230,11 @@ class MyTDataHotdata extends TwViewController {
    * 에러 화면 렌더링
    * @param res
    * @param svcInfo
+   * @param pageInfo
    * @param resp
    * @private
    */
-  private _renderError(res: any, svcInfo: any, resp: any) {
+  private _renderError(res: any, svcInfo: any, pageInfo: any, resp: any) {
     const error = MYT_DATA_USAGE.ERROR[resp.code] || {};
     error.code = resp.code;
     if (error.code !== 'BLN0001') {
@@ -241,6 +242,7 @@ class MyTDataHotdata extends TwViewController {
     }
     res.render(VIEW.ERROR, {
       svcInfo,
+      pageInfo,
       error
     });
   }

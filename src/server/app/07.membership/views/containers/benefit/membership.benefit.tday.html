@@ -2,7 +2,7 @@
 * FileName: membership.benefit.tday.html
 * Author: 김인환 (skt.P132150@partner.sk.com)
 %>
-<% include ../../components/start.component.html %>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <% include ../../components/javascript.component.html %>
 <!-- #skip_navigation -->
 <div id="skipNav" class="skip_navi">
