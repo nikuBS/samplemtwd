@@ -46,7 +46,7 @@ Tw.CustomerResearch.prototype = {
             break;
           }
           case 0: {
-            if ( this._nextIdx !== this._questionCount ) {
+            if (this._nextIdx !== this._questionCount) {
               $btn.text(Tw.CUSTOMER_RESEARCHES_BUTTONS.NEXT).switchClass('fe-submit-research', 'fe-go-next');
             }
             break;
@@ -100,6 +100,11 @@ Tw.CustomerResearch.prototype = {
     }
 
     this._nextIdx = this._currentIdx;
+
+    for (i = prev + 1; i < this._questionCount; i++) {
+      this._answers[i] && delete this._answers[i];
+    }
+
     this._currentIdx = prev;
     this._setProgress(this._nextIdx);
   },
@@ -168,15 +173,6 @@ Tw.CustomerResearch.prototype = {
 
     answer.inqRpsCtt = inqRpsCtt;
 
-    var nAnswers = {};
-    if (answerType === 0 && this._answers[this._currentIdx] && this._answers[this._currentIdx] !== inqRpsCtt) {
-      for (i = 0; i < this._currentIdx; i++) {
-        nAnswers[i] = this._answers[i];
-      }
-
-      this._answers = nAnswers;
-    }
-
     this._answers[this._currentIdx] = answer;
   },
 
@@ -184,14 +180,15 @@ Tw.CustomerResearch.prototype = {
     // submit
     this._setAnswer();
     var values = Object.values(this._answers);
+    console.log(values);
 
-    this._apiService
-      .request(Tw.API_CMD.BFF_08_0036, {
-        qstnId: this.$container.data('research-id'),
-        totalCnt: this._questionCount,
-        agrmt: values
-      })
-      .done($.proxy(this._successSubmit, this));
+    // this._apiService
+    //   .request(Tw.API_CMD.BFF_08_0036, {
+    //     qstnId: this.$container.data('research-id'),
+    //     totalCnt: this._questionCount,
+    //     agrmt: values
+    //   })
+    //   .done($.proxy(this._successSubmit, this));
   },
 
   _successSubmit: function(resp) {
