@@ -912,7 +912,7 @@ textarea {
   font-size: 0.9375rem;
   color: #8f8f8f;
   outline: 0;
-  background-color: #f5f5f5; }
+  background-color: #f2f2f2; }
   textarea.type-msg {
     padding: 0;
     background: transparent; }
@@ -1307,9 +1307,6 @@ acronym {
 
 iframe, hr {
   border: none; }
-
-strong {
-  font-weight: 700; }
 
 /* common */
 .blind {
@@ -3123,7 +3120,7 @@ html .ui-button.ui-state-disabled:active {
 a.ui-button,
 a:link.ui-button,
 a:visited.ui-button,
-.ui-button {
+.ui-button a:link, a:active {
   color: #454545;
   text-decoration: none; }
 
@@ -6597,7 +6594,7 @@ a.ui-button:active,
   font-size: 1.125rem; }
 
 .option-box > div:last-child {
-  margin-top: 2.5rem; }
+  margin-top: 1.25rem; }
 
 .option-box > div:first-child {
   margin: 0; }

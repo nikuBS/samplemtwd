@@ -249,7 +249,7 @@ body.bg-gray {
           text-decoration: underline; }
       #common-menu .section-userinfo .userinfo .bt {
         position: relative;
-        top: -1px;
+        top: -4px;
         display: inline-block;
         margin-left: 0.5rem;
         color: inherit;
@@ -903,6 +903,8 @@ body.bg-gray {
     padding: 1.25rem 1rem 0; }
   .cont-box.nogaps-ver {
     padding: 1.25rem 0; }
+  .cont-box.nogaps-ver-01 {
+    padding: 0 0 1.25rem 0; }
   .cont-box.nogaps-hoz {
     padding: 0 1rem; }
   .cont-box.nogaps-acco {
