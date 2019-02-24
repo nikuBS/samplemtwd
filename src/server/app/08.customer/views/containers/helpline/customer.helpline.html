@@ -142,7 +142,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.CustomerHelpline($('.wrap') < % -JSON.stringify(timeInfo) % >
+    new Tw.CustomerHelpline($('.wrap'), <%- JSON.stringify(timeInfo) %>
   )
   });
 </script>
