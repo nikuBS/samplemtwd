@@ -44,6 +44,7 @@ Tw.CustomerAgentsearchNear.prototype = {
     this.$resultCount = this.$container.find('#fe-result-count');
     this.$resultList = this.$container.find('#fe-list');
     this.$btnMore = this.$container.find('#fe-btn-more');
+    this.$pshop = this.$container.find('#fe-p-shop');
   },
   _init: function () {
     this.$container.find('.btn-switch').css('z-index', 1000);
@@ -318,7 +319,8 @@ Tw.CustomerAgentsearchNear.prototype = {
     }));
 
     if (currentCount + listToShow >= shops.length) {
-      this.$btnMore.addClass('none');
+      // this.$btnMore.addClass('none');
+      this.$container.find('#fe-more-div').addClass('none');
     }
   },
   _onMarkerClicked: function () {
@@ -412,10 +414,12 @@ Tw.CustomerAgentsearchNear.prototype = {
     this.$divMap.addClass('none');
     this.$divList.removeClass('none');
     this.$divListBtns.removeClass('none');
+    this.$pshop.removeClass('p-shop');
   },
   _switchToMap: function () {
     this.$divList.addClass('none');
     this.$divListBtns.addClass('none');
     this.$divMap.removeClass('none');
+    this.$pshop.addClass('p-shop');
   }
 };

@@ -18,7 +18,6 @@ Tw.MainMenuSettingsNotifications = function (rootEl) {
   };
 
   this._init();
-  this._cacheElements();
   this._bindEvents();
 };
 
@@ -42,10 +41,6 @@ Tw.MainMenuSettingsNotifications.prototype = {
       }, this));
     }
   },
-  _cacheElements: function () {
-    this.$serviceSpan = this.$container.find('#fe-service-msg');
-    this.$recommendSpan = this.$container.find('#fe-recommend-msg');
-  },
   _bindEvents: function () {
     this.$container.on(
       'change', '#fe-chk-service, #fe-chk-recommend', $.proxy(this._onNotiChanged, this));
@@ -67,19 +62,10 @@ Tw.MainMenuSettingsNotifications.prototype = {
       .done($.proxy(function (res) {
         if (res.code !== Tw.API_CODE.CODE_00) {
           this._onFailChangingNoti(id, res);
-        } else {
-          this.$serviceSpan.addClass('none');
-          this.$recommendSpan.addClass('none');
         }
       }, this))
       .fail($.proxy(this._onFailChangingNoti, this, id)
     );
-
-    if (id.indexOf('service') !== -1) {
-      this.$serviceSpan.removeClass('none');
-    } else {
-      this.$recommendSpan.removeClass('none');
-    }
 
     // check and show layer popup for terms
     if (checked) { // When switch changes to on from off
@@ -102,8 +88,6 @@ Tw.MainMenuSettingsNotifications.prototype = {
     } else {
       $switch.addClass('on');
     }
-    this.$serviceSpan.addClass('none');
-    this.$recommendSpan.addClass('none');
 
     Tw.Error(err.code, err.msg).pop();
   },
