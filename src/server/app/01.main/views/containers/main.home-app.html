@@ -1100,7 +1100,7 @@
 <%- include('../components/home/home.quick-menu.component.html', { cdn: CDN }); %>
 <script>
   $(document).ready(function () {
-    new Tw.MainHome($('#mainHome'), '<%-JSON.stringify(redisData.smartCard) %>', '<%= redisData.embNotice !== null %>', '<%= pageInfo.menuId %>', '<%= svcInfo !== null %>', '<%= svcInfo.actRepYn %>');
+    new Tw.MainHome($('#mainHome'), '<%-JSON.stringify(redisData.smartCard) %>', '<%= redisData.embNotice !== null %>', '<%= pageInfo.menuId %>', '<%= svcInfo !== null %>', '<%= svcInfo ? svcInfo.actRepYn : "N" %>');
   });
 </script>
 </body>
