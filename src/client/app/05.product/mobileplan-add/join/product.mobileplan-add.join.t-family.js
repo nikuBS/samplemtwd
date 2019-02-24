@@ -17,6 +17,7 @@ Tw.ProductMobileplanAddJoinTFamily = function(rootEl, prodId, displayId, svcMgmt
   this._svcMgmtNum = svcMgmtNum;
   this._displayId = displayId;
   this._confirmOptions = JSON.parse(window.unescape(confirmOptions));
+  this._svcMgmtNumList = [svcMgmtNum];
 
   if (this._historyService.isBack()) {
     this._historyService.goBack();
@@ -101,6 +102,14 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
       $elem.val($elem.val().substr(0, maxLength));
     }
 
+    if ($elem.hasClass('fe-num_input') && Tw.InputHelper.isEnter(e)) {
+      return this.$inputBirth.focus();
+    }
+
+    if ($elem.hasClass('fe-input_birth') && Tw.InputHelper.isEnter(e)) {
+      return this.$btnCheckJoin.trigger('click');
+    }
+
     this._checkError($elem);
     this._toggleClearBtn($elem);
     this._toggleJoinCheckBtn();
@@ -177,6 +186,10 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
   },
 
   _procCheckJoinReq: function() {
+    if (!Tw.ValidationHelper.isCellPhone(this.$inputNumber.val()) || this.$inputBirth.val().length !== 8) {
+      return;
+    }
+
     this._apiService.request(Tw.API_CMD.BFF_10_0172, {
       inputSvcNum: this.$inputNumber.val().replace(/-/gi, ''),
       inputBirthdate: this.$inputBirth.val()
@@ -188,7 +201,7 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
     this.$btnRetry.parent().hide();
 
     this.$layerIsJoinCheck.show();
-    this.$joinCheckProdNm.text(resp.result && Tw.FormatHelper.isEmpty(resp.result.prodNm) ?
+    this.$joinCheckProdNm.text((resp.result && Tw.FormatHelper.isEmpty(resp.result.prodNm) || !resp.result) ?
       Tw.PRODUCT_TFAMILY.NO_INFO : resp.result.prodNm);
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
@@ -200,7 +213,7 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
       return;
     }
 
-    if (this._svcMgmtNum === resp.result.svcMgmtNum) {
+    if (this._svcMgmtNumList.indexOf(resp.result.svcMgmtNum) !== -1) {
       this.$joinCheckResult.text(Tw.PRODUCT_TFAMILY.IS_EXISTS);
       this.$btnRetry.parent().show();
       return;
@@ -215,6 +228,7 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
   },
 
   _addLine: function() {
+    this._svcMgmtNumList.push(this._addData.svcMgmtNum);
     this.$groupList.append(this._itemTemplate($.extend(this._addData, {
       svcNumDash: Tw.FormatHelper.conTelFormatWithDash(this._addData.svcNum),
       groupRepYn: Tw.FormatHelper.isEmpty(this._addData.groupRepYn) ? 'N' : this._addData.groupRepYn,
@@ -240,7 +254,15 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
   },
 
   _onDeleteLineItem: function(e) {
-    $(e.currentTarget).parents('li.list-box').remove();
+    var $elem = $(e.currentTarget),
+      $elemParent = $elem.parents('li.list-box'),
+      svcMgmtNum = $elemParent.data('svc_mgmt_num');
+
+    if (this._svcMgmtNumList.indexOf(svcMgmtNum) !== -1) {
+      this._svcMgmtNumList.splice(this._svcMgmtNumList.indexOf(svcMgmtNum));
+    }
+
+    $elemParent.remove();
     this._checkSetupButton();
   },
 

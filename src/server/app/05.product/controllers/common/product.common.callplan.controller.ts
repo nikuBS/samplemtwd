@@ -445,7 +445,7 @@ class ProductCommonCallplan extends TwViewController {
    */
   private _convertSeriesAndRecommendInfo (apiInfo, isSeries): any {
     if (FormatHelper.isEmpty(apiInfo)) {
-      return null;
+      return [];
     }
 
     const list = isSeries ? apiInfo.seriesProdList : apiInfo.recommendProdList;
