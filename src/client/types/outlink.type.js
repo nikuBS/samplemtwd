@@ -11,6 +11,7 @@ Tw.OUTLINK = {
   DIRECT_ACCESSORY: 'https://shop.tworld.co.kr/accessory/view',
   BECOME_ANYTHING: 'http://www.skt0.co.kr/mobile/comm/1924MainView',
   T_HONORS_CLUB: 'http://www.thonorsclub.com/',
+  TWORLD_TING: 'https://skt.sh/Gf1q3',
   DATA_COUPON: {
     T_DATA: 'BPCP:0000105171',
     T_COUPON: 'BPCP:0000105151',
