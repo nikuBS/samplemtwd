@@ -11,7 +11,6 @@ import 'rxjs/add/operator/map';
 import { BUILD_TYPE, COOKIE_KEY } from '../types/common.type';
 import { LINE_NAME, LOGIN_TYPE } from '../types/bff.type';
 import { SvcInfoModel } from '../models/svc-info.model';
-import {start} from 'repl';
 
 class ApiService {
   static instance;
