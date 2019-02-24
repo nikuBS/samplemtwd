@@ -64,7 +64,7 @@ Tw.MainMenuSettings.prototype = {
       var versionInfo = _.filter(res.result.ver, function (item) {
         return item.osType === currentOsType;
       });
-      var latestVersion = versionInfo[0]['newVer'];
+      var latestVersion = versionInfo[0].newVer;
       if (latestVersion > this._currentVersion) {
         this.$updateBox.removeClass('none');
       } else {

@@ -35,7 +35,7 @@ Tw.CommonSearch.prototype = {
         if(keyName==='banner'){
           this._showBanner(this._arrangeData(this._searchInfo.search[i][keyName].data,keyName));
         }
-        if(keyName==='immediate'&&this._searchInfo.search[i][keyName].data[0]&&this._searchInfo.search[i][keyName].data[0].DOCID==5){
+        if(keyName==='immediate'&&this._searchInfo.search[i][keyName].data[0]&&this._searchInfo.search[i][keyName].data[0].DOCID===5){
           this._showBarcode(this._searchInfo.search[i][keyName].data[0].barcode,this.$container.find('#membership-barcode'));
         }
         continue;
