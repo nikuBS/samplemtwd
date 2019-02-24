@@ -82,7 +82,7 @@ Tw.MenuComponent.prototype = {
     this.$container.on('click', '.fe-menu-link', $.proxy(this._onMenuLink, this));
     this.$container.on('click', '.fe-bt-free-sms', $.proxy(this._onFreeSMS, this));
     this.$container.on('click', '.fe-t-noti', $.proxy(this._onTNoti, this));
-    this.$container.on('click', '.userinfo', $.proxy(this._onUserInfo, this));
+    this.$container.on('click', '.fe-userinfo', $.proxy(this._onUserInfo, this));
     this.$container.on('click', '.fe-bt-regi-svc', $.proxy(this._onRegisterLine, this));
     this.$gnbBtn.on('click', $.proxy(this._onGnbBtnClicked, this));
     this.$closeBtn.on('click', $.proxy(this._onClose, this));
