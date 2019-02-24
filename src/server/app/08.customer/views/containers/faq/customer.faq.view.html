@@ -3,7 +3,7 @@
 * Author: Hyunkuk Lee (max5500@pineone.com)
 * Date: 2019.02.05
 %>
-<% include ../../components/start.component.html %>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <%
 var categoryArr = category.split('>');
 %>

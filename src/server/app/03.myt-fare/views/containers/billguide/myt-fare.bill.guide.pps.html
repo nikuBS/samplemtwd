@@ -4,7 +4,7 @@
 * Date: 2018.09.12
 %>
 
-<% include ../../components/start.component.html %>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <% include ../../components/javascript.component.html %>
 
 <script id="fe-entryTplList" type="text/x-handlebars-template">

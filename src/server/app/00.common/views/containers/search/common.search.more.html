@@ -14,7 +14,7 @@
         return endCharIdx>0 ? '으' : '';
     }
 %>
-<% include ../../components/start.component.html %>
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 
 <!-- body -->
 <!-- #skip_navigation -->
