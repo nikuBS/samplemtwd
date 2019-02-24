@@ -60,6 +60,10 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
   },
 
   _addNum: function() {
+    if (this.$btnAddNum.attr('disabled') === 'disabled') {
+      return;
+    }
+
     var number = this.$inputNumber.val().replace(/-/gi, '');
 
     if (!Tw.ValidationHelper.isCellPhone(number) && !Tw.ValidationHelper.isTelephone(number)) {

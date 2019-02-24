@@ -112,6 +112,10 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
   },
 
   _addFamily: function() {
+    if (this.$btnFamilyAdd.attr('disabled') === 'disabled') {
+      return;
+    }
+
     if (!Tw.ValidationHelper.isCellPhone(this.$familyAddWrapNumber.val()) && !Tw.ValidationHelper.isTelephone(this.$familyAddWrapNumber.val())) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
     }
