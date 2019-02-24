@@ -779,7 +779,8 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_NUMBER_MIN: '최소 한개의 지정번호는 존재해야 합니다.',
   ALERT_LOCATION_MIN: '최소 한개의 지역은 존재해야 합니다.',
   PREVIEW: '미리보기에서는 해당 기능이 제공되지 않습니다.',
-  NEED_LINE: '등록된 회선이 있어야 이용 가능합니다.\n회선 등록 후 계속하시겠습니까?'
+  NEED_LINE: '등록된 회선이 있어야 이용 가능합니다.\n회선 등록 후 계속하시겠습니까?',
+  BPCP: 'BPCP URL이 설정되어 있지 않습니다.'
 };
 
 Tw.ALERT_MSG_PRODUCT_ROAMING = {
