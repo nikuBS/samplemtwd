@@ -201,12 +201,16 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
     this.$btnRetry.parent().hide();
 
     this.$layerIsJoinCheck.show();
-    this.$joinCheckProdNm.text((resp.result && Tw.FormatHelper.isEmpty(resp.result.prodNm) || !resp.result) ?
-      Tw.PRODUCT_TFAMILY.NO_INFO : resp.result.prodNm);
+    this.$joinCheckProdNm.text(Tw.PRODUCT_TFAMILY.NO_INFO);
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       var resultText = !Tw.FormatHelper.isEmpty(Tw.PRODUCT_TFAMILY[resp.code]) ?
           Tw.PRODUCT_TFAMILY[resp.code] : resp.msg;
+
+      if (resp.code === 'PRD0067') {
+        this.$joinCheckProdNm.text((resp.result && Tw.FormatHelper.isEmpty(resp.result.prodNm) || !resp.result) ?
+          Tw.PRODUCT_TFAMILY.NO_INFO : resp.result.prodNm);
+      }
 
       this.$joinCheckResult.text(resultText);
       this.$btnRetry.parent().show();
@@ -223,6 +227,8 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
       svcNumNoMasq: this.$inputNumber.val().replace(/-/gi, '')
     });
 
+    this.$joinCheckProdNm.text((resp.result && Tw.FormatHelper.isEmpty(resp.result.prodNm) || !resp.result) ?
+      Tw.PRODUCT_TFAMILY.NO_INFO : resp.result.prodNm);
     this.$joinCheckResult.text(Tw.PRODUCT_TFAMILY.IS_JOIN);
     this.$btnAddLine.parent().show();
   },
