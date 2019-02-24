@@ -18,7 +18,7 @@
     <!--// #skip_navigation -->
     <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <!-- #header -->
-        <%- include('../../../common/views/components/header.component.html', { title: '결과 보기', svcInfo: svcInfo }); %>
+        <%- include('../../../common/views/components/header.component.html', { title: '결과 보기', svcInfo: svcInfo, pageInfo: locals.pageInfo }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
