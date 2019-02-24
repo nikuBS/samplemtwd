@@ -319,7 +319,7 @@ class ProductCommonCallplanPreview extends TwViewController {
    */
   private _convertSeriesAndRecommendInfo (list): any {
     if (FormatHelper.isEmpty(list)) {
-      return null;
+      return [];
     }
 
     return list.map((item) => {
@@ -391,15 +391,16 @@ class ProductCommonCallplanPreview extends TwViewController {
       prodIdsLength = prodIds.length;
     }
 
-    const prodFltIds: any = FormatHelper.isEmpty(similarProductInfo.result.list) ? '' : similarProductInfo.result.list.map((item) => {
+    const prodFltIds: any = FormatHelper.isEmpty(similarProductInfo.similarsList) ? '' : similarProductInfo.similarsList.map((item) => {
       return item.prodFltId;
     }).join(',');
 
-    return Object.assign(similarProductInfo.result, {
+    return Object.assign(similarProductInfo, {
       titleNm: titleNm,
       benefitPath: FormatHelper.isEmpty(BENEFIT_SUBMAIN_CATEGORY[prodFltIds]) ? null : BENEFIT_SUBMAIN_CATEGORY[prodFltIds],
       prodFltIds: prodFltIds,
-      prodCnt: ['G', 'F'].indexOf(prodTypCd) !== -1 ? prodIdsLength : similarProductInfo.result.prodCnt
+      prodCnt: ['G', 'F'].indexOf(prodTypCd) !== -1 ? prodIdsLength : similarProductInfo.prodCnt,
+      list: similarProductInfo.similarsList
     });
   }
 
@@ -520,11 +521,13 @@ class ProductCommonCallplanPreview extends TwViewController {
           recommendApps: FormatHelper.isEmpty(convertedProdInfo.recommendAppList) ? null : { recommendAppList: convertedProdInfo.recommendAppList },
           mobilePlanCompareInfo: null, // 요금제 비교하기
           similarProductInfo: convertedProdInfo.similar,  // 모바일 요금제 유사한 상품
-          isJoined: true,  // 가입 여부
+          isJoined: null,  // 가입 여부
           additionsProdFilterInfo: additionsProdFilterInfo.code !== API_CODE.CODE_00 ? null : additionsProdFilterInfo.result,  // 부가서비스 카테고리 필터 리스트
           combineRequireDocumentInfo: null,  // 구비서류 제출 심사내역
           reservationTypeCd: this._getReservationTypeCd(prodInfo.result.baseInfo.prodTypCd),
-          isProductCallplan: true
+          isProductCallplan: true,
+          lineProcessCase: null,
+          isAllowJoinCombine: false
         }].reduce((a, b) => {
           return Object.assign(a, b);
         }));
