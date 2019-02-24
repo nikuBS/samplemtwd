@@ -339,7 +339,7 @@ body.bg-gray {
               display: inline-block;
               position: relative;
               top: 4px;
-              max-width: 86px;
+              max-width: 180px;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap; }
@@ -1047,8 +1047,8 @@ body.bg-gray {
     bottom: -100%;
     min-height: 0;
     max-height: 90%;
-    -webkit-transition: all 1s;
-    transition: all 1s; }
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s; }
     .popup-page.layer .header-wrap {
       position: absolute;
       border: 0;
@@ -2870,3 +2870,18 @@ body.bg-gray {
     background-image: url(/img/svg/icon_48px_titlebar_menu.svg); }
   .bg-tapp.scroll .h-belt .icon-gnb-search {
     background-image: url(/img/svg/icon_48px_titlebar_search.svg); }
+
+.bt-depth1.txt-long > .bt .ti-info .info {
+  max-width: 130px !important; }
+
+@media all and (max-width: 360px) {
+  .bt-depth1 > .bt .ti-info .info {
+    max-width: 145px !important; }
+  .bt-depth1.txt-long > .bt .ti-info .info {
+    max-width: 120px !important; } }
+
+@media all and (max-width: 359px) {
+  .bt-depth1 > .bt .ti-info .info {
+    max-width: 135px !important; }
+  .bt-depth1.txt-long > .bt .ti-info .info {
+    max-width: 88px !important; } }
