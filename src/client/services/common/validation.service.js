@@ -150,7 +150,7 @@ Tw.ValidationService.prototype = {
       var cardY = this.$container.find('.fe-card-y');
       var cardM = this.$container.find('.fe-card-m');
 
-      isWrong = this._validation.checkExpiration(cardY, cardM);
+      isWrong = !this._validation.checkExpiration(cardY, cardM);
       if (isWrong) {
         this.$expirationTarget = cardY;
       }
