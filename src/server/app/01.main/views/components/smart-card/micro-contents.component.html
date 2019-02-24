@@ -8,41 +8,21 @@
     <div class="main-fee-box">
         <div class="fee-cont">
             <strong class="tit">소액결제 및 콘텐츠<br>이용요금을 안내해 드립니다</strong>
-            {{#if micro}}
             <a class="fee-info" tabindex="0" href="/myt-fare/bill/small/history" class="fee-info">
                 <p class="target">
                     <span class="tit">소액결제 이용요금</span>
-                    <span class="date"><span>{{ micro.invStartDt }}</span>~<span>{{ micro.invEndDt }}</span></span>
+                    <span class="date"><span>{{ invStartDt }}</span>~<span>{{ invEndDt }}</span></span>
                 </p>
-                <p class="sum"><span>{{ micro.usedAmtTot }}</span>원</p>
+                <p class="sum"><span>{{ micro }}</span>원</p>
             </a>
-            {{else}}
-            <a href="/myt-fare/bill/small/history" class="fee-info">
-                <p class="target">
-                    <span class="tit">소액결제 이용요금</span>
-                    <span class="date"><span>{{ contents.invStartDt }}</span>~<span>{{ contents.invEndDt }}</span></span>
-                </p>
-                <p class="sum"><span>0</span>원</p>
-            </a>
-            {{/if}}
             <hr class="line">
-            {{#if contents}}
             <a class="fee-info" tabindex="0" href="/myt-fare/bill/contents/history" class="fee-info">
                 <p class="target">
                     <span class="tit">콘텐츠 이용요금</span>
-                    <span class="date"><span>{{ contents.invStartDt }}</span>~<span>{{ contents.invEndDt }}</span></span>
+                    <span class="date"><span>{{ invStartDt }}</span>~<span>{{ invEndDt }}</span></span>
                 </p>
-                <p class="sum"><span>{{ contents.usedAmtTot }}</span>원</p>
+                <p class="sum"><span>{{ contents }}</span>원</p>
             </a>
-            {{else}}
-            <a href="/myt-fare/bill/contents/history" class="fee-info">
-                <p class="target">
-                    <span class="tit">콘텐츠 이용요금</span>
-                    <span class="date"><span>{{ micro.invStartDt }}</span>~<span>{{ micro.invEndDt }}</span></span>
-                </p>
-                <p class="sum"><span>0</span>원</p>
-            </a>
-            {{/if}}
         </div>
     </div>
 </script>

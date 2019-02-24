@@ -4,15 +4,14 @@
 * Date: 2018.10.06
 %>
 <script id="fe-smart-bill" type="text/x-handlebars-template">
+    {{#if showData}}
     <div class="main-fee-box">
         <div class="fee-cont">
-            <a href="/myt-fare/billguide/guide" class="tit">나의 요금을 확인해 보세요</a>
+            <button class="tit">나의 요금을 확인해 보세요</button>
             <div class="fee-info">
                 <p class="target">
-                    {{#if type2}}
+                    {{#if isActRep}}
                     <span class="tit">{{billMonth}}월 청구요금</span>
-                    {{else if type1}}
-                    <span class="tit">{{billMonth}}월 청구요금<i class="icon-whole4"><span class="blind">전체</span></i></span>
                     {{else}}
                     <span class="tit">{{invMonth}}월 이용요금</span>
                     {{/if}}
@@ -22,8 +21,27 @@
             </div>
         </div>
         <div class="btn-area">
+            {{#if isActRep}}
             <button id="fe-bt-payment" class="bt" data-svcattrcd="<%= svcInfo.svcAttrCd %>">납부하기</button>
             <a href="/myt-data/hotdata" class="bt">실시간 사용요금</a>
+            {{else}}
+            <a href="/myt-data/hoddata" class="bt full">실시간 사용요금</a>
+            {{/if}}
         </div>
     </div>
+    {{else}}
+    <div class="main-fee-box">
+        <div class="fee-cont">
+            <button class="tit">나의 요금을 확인해 보세요</button>
+            <div class="fee-info">
+                <p class="target">
+                    지난 달 이용요금이 없습니다<br>요금안내서가 발행되면 알려드릴게요.
+                </p>
+            </div>
+        </div>
+        <div class="btn-area">
+            <a href="/myt-data/hotdata" class="bt full">실시간 사용요금</a>
+        </div>
+    </div>
+    {{/if}}
 </script>

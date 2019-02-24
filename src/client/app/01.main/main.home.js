@@ -4,7 +4,7 @@
  * Date: 2018.10.06
  */
 
-Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
+Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -21,6 +21,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin) {
   this._emrNotice = null;
   this._targetDataLink = '';
   this._membershipBanner = null;
+  this._isActRep = actRepYn === 'Y';
 
   this._lineComponent = new Tw.LineComponent();
 
@@ -365,18 +366,17 @@ Tw.MainHome.prototype = {
 
   },
   _getBillData: function (element) {
-    this._apiService.requestArray([
-      { command: Tw.API_CMD.BFF_05_0036, params: {} },
-      { command: Tw.API_CMD.BFF_05_0047, params: {} }
-    ]).done($.proxy(this._successBillData, this, element))
+    var command = Tw.API_CMD.BFF_04_0008;
+    if ( this._isActRep ) {
+      command = Tw.API_CMD.BFF_04_0009;
+    }
+    this._apiService.request(command, {})
+      .done($.proxy(this._successBillData, this, element))
       .fail($.proxy(this._failBillData, this));
   },
-  _successBillData: function (element, charge, used) {
-    var result = null;
-    if ( charge.code === Tw.API_CODE.CODE_00 && used.code === Tw.API_CODE.CODE_00 &&
-      charge.result.colClCd !== Tw.MYT_FARE_BILL_CO_TYPE.BROADBAND ) {
-      result = this._parseBillData({ charge: charge.result, used: used.result });
-    }
+  _successBillData: function (element, resp) {
+    var result = this._parseBillData(resp);
+
     if ( !Tw.FormatHelper.isEmpty(result) ) {
       var $billTemp = $('#fe-smart-bill');
       var tplBillCard = Handlebars.compile($billTemp.html());
@@ -398,126 +398,54 @@ Tw.MainHome.prototype = {
     new Tw.MyTFareBill(this.$container, svcAttrCd);
   },
   _parseBillData: function (billData) {
-    var repSvc = billData.charge.repSvcYn === 'Y';
-    var totSvc = +billData.charge.paidAmtMonthSvcCnt;
-    var billName = repSvc ? 'charge' : 'used';
-
-    return {
-      isBroadband: false,
-      type1: repSvc,
-      type2: totSvc === 1,
-      type3: !repSvc && totSvc !== 1,
-      useAmtTot: Tw.FormatHelper.addComma(billData[billName].useAmtTot || '0'),
-      deduckTot: Tw.FormatHelper.addComma(billData[billName].deduckTotInvAmt || '0'),
-      invEndDt: Tw.DateHelper.getShortDate(billData[billName].invDt),
-      invStartDt: Tw.DateHelper.getShortFirstDate(billData[billName].invDt),
-      invMonth: Tw.DateHelper.getCurrentMonth(billData[billName].invDt),
-      billMonth: +Tw.DateHelper.getCurrentMonth(billData[billName].invDt) + 1
-    };
-  },
-  _getContentData: function (element) {
-    this._apiService.request(Tw.API_CMD.BFF_05_0064, {})
-      .done($.proxy(this._successContentData, this, element))
-      .fail($.proxy(this._failContentData, this));
-  },
-  _successContentData: function (element, resp) {
-    var result = null;
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      result = this._parseContentsData(resp.result);
-    }
-    if ( !Tw.FormatHelper.isEmpty(result) ) {
-      var $contentsTemp = $('#fe-smart-contents');
-      var tplContentsCard = Handlebars.compile($contentsTemp.html());
-      element.html(tplContentsCard(result));
-      element.removeClass('empty');
-    } else {
-      element.hide();
-    }
-    this._resetHeight();
-
-  },
-  _failContentData: function () {
-
-  },
-  _parseContentsData: function (contents) {
-    if ( contents.useConAmtDetailList.length > 0 ) {
+    if ( billData.code === Tw.API_CODE.CODE_00 ) {
       return {
-        showContents: true,
-        invEndDt: Tw.DateHelper.getShortDate(contents.toDt),
-        invStartDt: Tw.DateHelper.getShortDate(contents.fromDt),
-        invMonth: Tw.DateHelper.getCurrentMonth(contents.fromDt),
-        usedAmtTot: Tw.FormatHelper.addComma(contents.invDtTotalAmtCharge),
-        listLength: contents.useConAmtDetailList.length
+        showData: true,
+        isActRep: this._isActRep,
+        useAmtTot: billData.result.amt,
+        invEndDt: Tw.DateHelper.getShortDate(billData.result.invDt),
+        invStartDt: Tw.DateHelper.getShortFirstDate(billData.result.invDt),
+        invMonth: Tw.DateHelper.getCurrentMonth(billData.result.invDt),
+        billMonth: +Tw.DateHelper.getCurrentMonth(billData.result.invDt) + 1
+      };
+    } else if ( billData.code === Tw.API_CODE.BFF_0006 || billData.code === Tw.API_CODE.BFF_0007 ) {
+      return null;
+    } else {
+      return {
+        showData: false
       };
     }
-    return null;
   },
   _getMicroContentsData: function (element) {
     this._apiService.requestArray([
-      { command: Tw.API_CMD.BFF_05_0079, params: {} },
-      { command: Tw.API_CMD.BFF_05_0064, params: {} }
+      { command: Tw.API_CMD.BFF_04_0006, params: {} },
+      { command: Tw.API_CMD.BFF_04_0007, params: {} }
     ]).done($.proxy(this._successMicroContentsData, this, element));
   },
-  _successMicroContentsData: function (element, microResp, contentsResp) {
+  _successMicroContentsData: function (element, contentsResp, microResp) {
     var result = {
-      micro: null,
-      contents: null
+      micro: 0,
+      contents: 0,
+      invEndDt: Tw.DateHelper.getShortLastDate(new Date()),
+      invStartDt: Tw.DateHelper.getShortFirstDate(new Date())
     };
     if ( microResp.code === Tw.API_CODE.CODE_00 ) {
-      result.micro = this._parseMicroData(microResp.result);
+      result.micro = microResp.result.totalSumPrice;
     }
     if ( contentsResp.code === Tw.API_CODE.CODE_00 ) {
-      result.contents = this._parseContentsData(contentsResp.result);
+      result.contents = contentsResp.result.invDtTotalAmtCharge;
     }
 
-    if ( !Tw.FormatHelper.isEmpty(result.micro) || !Tw.FormatHelper.isEmpty(result.contents) ) {
-      var $microContentsTemp = $('#fe-smart-micro-contents');
-      var tplMicroContentsCard = Handlebars.compile($microContentsTemp.html());
-      element.html(tplMicroContentsCard(result));
-      element.removeClass('empty');
-      element.addClass('nogaps');
-    } else {
-      element.hide();
-    }
+    // if ( !Tw.FormatHelper.isEmpty(result.micro) || !Tw.FormatHelper.isEmpty(result.contents) ) {
+    var $microContentsTemp = $('#fe-smart-micro-contents');
+    var tplMicroContentsCard = Handlebars.compile($microContentsTemp.html());
+    element.html(tplMicroContentsCard(result));
+    element.removeClass('empty');
+    element.addClass('nogaps');
+    // } else {
+    //   element.hide();
+    // }
     this._resetHeight();
-  },
-
-
-  _getMicroPayData: function (element) {
-    // $.ajax('/mock/home.micro-pay.json')
-    this._apiService.request(Tw.API_CMD.BFF_05_0079, {})
-      .done($.proxy(this._successMicroPayData, this, element))
-      .fail($.proxy(this._failMicroPayData, this));
-  },
-  _successMicroPayData: function (element, resp) {
-    var result = null;
-    if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      result = this._parseMicroData(resp.result);
-    }
-    if ( !Tw.FormatHelper.isEmpty(result) ) {
-      var $microTemp = $('#fe-smart-micro-pay');
-      var tplMicroCard = Handlebars.compile($microTemp.html());
-      element.html(tplMicroCard(result));
-      element.removeClass('empty');
-    } else {
-      element.hide();
-    }
-    this._resetHeight();
-  },
-  _failMicroPayData: function () {
-
-  },
-  _parseMicroData: function (microData) {
-    if ( microData.payHistoryCnt > 0 ) {
-      return {
-        invEndDt: Tw.DateHelper.getShortDate(microData.toDt),
-        invStartDt: Tw.DateHelper.getShortDate(microData.fromDt),
-        invMonth: Tw.DateHelper.getCurrentMonth(microData.fromDt),
-        usedAmtTot: Tw.FormatHelper.addComma(microData.totalSumPrice),
-        listLength: microData.payHistoryCnt
-      };
-    }
-    return null;
   },
   _getGiftData: function (element, index) {
     this._apiService.request(Tw.API_CMD.BFF_06_0015, {})
@@ -585,6 +513,8 @@ Tw.MainHome.prototype = {
           var remain = Tw.FormatHelper.convDataFormat(resp.result.dataRemQty, 'MB');
           $textBalance.text(remain.data);
           $textBalance.parent().append(remain.unit);
+
+          $btGoGift.attr('disabled', false);
         } else {
           $loading.parent().addClass('none');
           $btBalance.parent().removeClass('none');
@@ -593,12 +523,15 @@ Tw.MainHome.prototype = {
         this._getGiftBalance(resp.result.reqCnt, $textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance);
       }
     } else {
-      $btGoGift.parent().addClass('none');
-      $textError.text(resp.msg);
-      $textError.removeClass('none');
+      // $btGoGift.parent().addClass('none');
+      // $textError.text(resp.msg);
+      // $textError.removeClass('none');
+      //
+      // $loading.parent().addClass('none');
+      // $textErrorBalance.removeClass('none');
 
       $loading.parent().addClass('none');
-      $textErrorBalance.removeClass('none');
+      $btBalance.parent().removeClass('none');
     }
   },
   _onClickBtGift: function (sender) {
@@ -614,7 +547,10 @@ Tw.MainHome.prototype = {
       this._popupService.openAlert(Tw.ALERT_MSG_HOME.A06);
     }
   },
-  _onClickGiftBalance: function ($textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance) {
+  _onClickGiftBalance: function ($textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance, $event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+
     $loading.parent().removeClass('none');
     $btBalance.parent().addClass('none');
 

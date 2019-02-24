@@ -160,21 +160,24 @@ Tw.DateHelper = (function () {
    * @returns {string} : 2018.6.1 (first date of this month)
    */
   var getShortFirstDateNoDot = function (date) {
-    var curDate = this.convDateFormat(date);
-    var firstDate = new Date(curDate.setDate(1));
-    return moment(firstDate).format('YYYY.M.D');
+    return moment(this.convDateFormat(date)).date(1).format('YYYY.M.D');
   };
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
-   * @returns {string} : 2018.6.1 (first date of this month)
+   * @returns {string} : 2018.6.1. (first date of this month)
    */
   var getShortFirstDate = function (date) {
-    var curDate = this.convDateFormat(date);
-    var firstDate = new Date(curDate.setDate(1));
-    return moment(firstDate).format('YYYY.M.D.');
+    return moment(this.convDateFormat(date)).date(1).format('YYYY.M.D.');
   };
 
+  /**
+   * @param date {Date} or {string} : YYYYMMDDhhmmss
+   * @returns {string} : 2018.6.1. (last date of this month)
+   */
+  var getShortLastDate = function (date) {
+    return moment(this.convDateFormat(date)).add('months', 1).date(0).format('YYYY.M.D.');
+  };
 
   /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
@@ -357,6 +360,7 @@ Tw.DateHelper = (function () {
     getShortFirstDate: getShortFirstDate,
     getShortDateNoDot: getShortDateNoDot,
     getShortFirstDateNoDot: getShortFirstDateNoDot,
+    getShortLastDate: getShortLastDate,
     getShortDateNoDate: getShortDateNoDate,
     getShortDateNoYear: getShortDateNoYear,
     getShortDateAndTime: getShortDateAndTime,
