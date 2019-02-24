@@ -23,7 +23,7 @@ Tw.MainMenuSettingsOss.prototype = {
 
     Tw.CommonHelper.showDataCharge(function () {
       Tw.CommonHelper.openUrlExternal(url);
-    })
+    });
     return false;
   }
 };

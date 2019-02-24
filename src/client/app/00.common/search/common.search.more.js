@@ -153,7 +153,8 @@ Tw.CommonSearchMore.prototype = {
       return;
     }
     var inResult = this.$container.find('#resultsearch').is(':checked');
-    var requestUrl = inResult?'/common/search/in-result?category='+this._category+'&keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
+    var requestUrl = inResult?'/common/search/in-result?category='+this._category+'&keyword='+
+      this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
     requestUrl+=keyword;
     requestUrl+='&step='+(Number(this._step)+1);
     this._addRecentlyKeyword(keyword);
@@ -179,7 +180,8 @@ Tw.CommonSearchMore.prototype = {
     $(popupElement).on('click','.chk-link-list button',$.proxy(this._filterSelectEvent,this));
   },
   _filterSelectEvent : function (btnEvt) {
-    var changeFilterUrl = this._accessQuery.in_keyword?'/common/search/in-result?category='+this._category+'&keyword='+this._accessQuery.keyword:'/common/search/more?category='+this._category+'&keyword='+this._accessQuery.keyword;
+    var changeFilterUrl = this._accessQuery.in_keyword?'/common/search/in-result?category='+this._category+
+      '&keyword='+this._accessQuery.keyword:'/common/search/more?category='+this._category+'&keyword='+this._accessQuery.keyword;
     changeFilterUrl+='&arrange='+$(btnEvt.currentTarget).data('type');
     if(this._accessQuery.in_keyword){
       changeFilterUrl+='&in_keyword='+this._accessQuery.in_keyword;
@@ -307,7 +309,8 @@ Tw.CommonSearchMore.prototype = {
       }
       this.$keywordListBase.find('#recently_keyword_list').empty();
       _.each(this._recentKeyworList[this._nowUser],$.proxy(function (data,idx) {
-        this.$keywordListBase.find('#recently_keyword_list').append(this._recentKeywordTemplate({listData : data , xtractorIndex : idx+1 , index : idx}));
+        this.$keywordListBase.find('#recently_keyword_list')
+          .append(this._recentKeywordTemplate({listData : data , xtractorIndex : idx+1 , index : idx}));
       },this));
       //this.$keywordListBase.find('#recently_keyword_list') list
     }
@@ -350,7 +353,8 @@ Tw.CommonSearchMore.prototype = {
     var returnData = [];
     for(var i=0;i<this._recentKeyworList[this._nowUser].length;i++){
       if(this._recentKeyworList[this._nowUser][i].keyword.indexOf(keyword)>-1||
-        (!Tw.FormatHelper.isEmpty(this._recentKeyworList[this._nowUser][i].initial)&&this._recentKeyworList[this._nowUser][i].initial.indexOf(keyword)>-1)){
+        (!Tw.FormatHelper.isEmpty(this._recentKeyworList[this._nowUser][i].initial)&&
+          this._recentKeyworList[this._nowUser][i].initial.indexOf(keyword)>-1)) {
         if(
           this._nowUser==='logOutUser'&&
           !Tw.FormatHelper.isEmpty(this._recentKeyworList[this._nowUser][i].platForm)&&
@@ -359,7 +363,8 @@ Tw.CommonSearchMore.prototype = {
           continue;
         }
         returnData.push({
-          showStr : this._recentKeyworList[this._nowUser][i].keyword.replace(new RegExp(keyword,'g'),'<span class="highlight-text">'+keyword+'</span>'),
+          showStr : this._recentKeyworList[this._nowUser][i].keyword
+            .replace(new RegExp(keyword,'g'),'<span class="highlight-text">'+keyword+'</span>'),
           linkStr : this._recentKeyworList[this._nowUser][i].keyword
         });
       }

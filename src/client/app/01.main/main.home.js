@@ -281,7 +281,7 @@ Tw.MainHome.prototype = {
       this._openEmrNotice(resp.result.emrNotice, isLogin);
     }
   },
-  _openEmrNotice: function (notice, isLogin) {
+  _openEmrNotice: function (notice) {
     var startTime = Tw.DateHelper.convDateFormat(notice.bltnStaDtm).getTime();
     var endTime = Tw.DateHelper.convDateFormat(notice.bltnEndDtm).getTime();
     var today = new Date().getTime();
@@ -447,7 +447,7 @@ Tw.MainHome.prototype = {
     // }
     this._resetHeight();
   },
-  _getGiftData: function (element, index) {
+  _getGiftData: function (element) {
     this._apiService.request(Tw.API_CMD.BFF_06_0015, {})
       .done($.proxy(this._successGiftData, this, element))
       .fail($.proxy(this._failGiftData, this));

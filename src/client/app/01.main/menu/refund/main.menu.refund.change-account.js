@@ -21,7 +21,7 @@ Tw.MainMenuRefundChangeAccount.prototype = {
   _cacheElements: function () {
     this.$bankInput = this.$container.find('#formInput01');
     this.$accountInput = this.$container.find('#formInput02');
-    this.$accountError = this.$container.find('.fe-account-error')
+    this.$accountError = this.$container.find('.fe-account-error');
     this.$submitBtn = this.$container.find('#fe-submit');
   },
   _bindEvents: function () {

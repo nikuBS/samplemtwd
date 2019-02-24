@@ -180,7 +180,9 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
   _handleRerieveChangable: function(hasClass) {
     this._setDisableChange(true);
 
-    hasClass && this.$retrieveBtn.addClass('none');
+    if (hasClass) {
+      this.$retrieveBtn.addClass('none');
+    }
 
     this.$strong.text(Tw.MYT_DATA_FAMILY_RETRIEVING).switchClass('txt-c2 none', 'txt-c4');
     // setTimeout($.proxy(this._handleDoneRetrieve, this, { code: '00', result: { remGbGty: '1', remMbGty: '0' } }), 1000);
