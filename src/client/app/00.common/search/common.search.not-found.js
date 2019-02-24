@@ -224,7 +224,6 @@ Tw.CommonSearchNotFound.prototype = {
       //makin nowUser's recentlySearchKeyword based on svcMgmtNum
       recentlyKeywordData[this._nowUser] = [];
     }
-    console.log(JSON.stringify(recentlyKeywordData));
     Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(recentlyKeywordData));
     this._recentKeyworList = recentlyKeywordData;
   },
