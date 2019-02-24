@@ -19,7 +19,7 @@
     <!--// #skip_navigation -->
     <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <!-- #header -->
-        <%- include('../../../common/views/components/header.component.html', { title: '나의 결합상품', svcInfo: svcInfo }); %>
+        <%- include('../../../common/views/components/header.component.html', { title: '나의 결합상품', svcInfo: svcInfo, pageInfo: locals.pageInfo }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
