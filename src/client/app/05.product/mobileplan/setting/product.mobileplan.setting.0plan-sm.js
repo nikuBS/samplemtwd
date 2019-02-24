@@ -123,8 +123,6 @@ Tw.ProductMobileplanSetting0planSm.prototype = {
 
     if ($(e.currentTarget).val() === 'NA00006163' && !Tw.FormatHelper.isEmpty(this._startTime)) {
       this.$msg.show();
-    } else {
-      return;
     }
 
     this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
