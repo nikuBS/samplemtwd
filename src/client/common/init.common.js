@@ -33,6 +33,7 @@ Tw.Init.prototype = {
     new Tw.MenuComponent();
     new Tw.FooterComponent();
     new Tw.LineLayerComponent();
+    new Tw.MaskingComponent();
   },
 
   _getEnvironment: function () {

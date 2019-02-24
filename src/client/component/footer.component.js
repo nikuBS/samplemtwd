@@ -6,7 +6,6 @@
 
 Tw.FooterComponent = function () {
   this.$footer = $('#gnb');
-  new Tw.MaskingComponent();
   new Tw.ShareComponent();
   new Tw.QuickMenuComponent();
 

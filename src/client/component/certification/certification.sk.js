@@ -166,7 +166,7 @@ Tw.CertificationSk.prototype = {
         isOnly: methodCnt === 1,
         sLogin: this._svcInfo.loginType === Tw.AUTH_LOGIN_TYPE.EASY,
         masking: this._authKind === Tw.AUTH_CERTIFICATION_KIND.A,
-        svcNum: this._svcInfo.svcNum,
+        svcNum: Tw.FormatHelper.conTelFormatWithDash(this._svcInfo.svcNum),
         enableKeyin: this._enableKeyin
       }
     }, $.proxy(this._onOpenSmsOnly, this), $.proxy(this._onCloseSmsOnly, this), 'cert-sms');
@@ -218,31 +218,37 @@ Tw.CertificationSk.prototype = {
     var mdnLength = this.$inputMdn.val().length;
     if ( mdnLength === Tw.MIN_MDN_LEN || mdnLength === Tw.MAX_MDN_LEN ) {
       this.$btCert.attr('disabled', false);
-      if ( this.$inputCert.val().length >= Tw.DEFAULT_CERT_LEN ) {
-        this.$btConfirm.attr('disabled', false);
-      }
     } else {
       this.$btCert.attr('disabled', true);
-      this.$btConfirm.attr('disabled', true);
     }
+    this._checkEnableConfirmButton();
   },
   _onInputCert: function () {
     var inputCert = this.$inputCert.val();
     if ( inputCert.length >= Tw.DEFAULT_CERT_LEN ) {
       this.$inputCert.val(inputCert.slice(0, Tw.DEFAULT_CERT_LEN));
-      if ( this._onKeyin ) {
-        var inputMdnLength = this.$inputMdn.val().length;
-        if ( inputMdnLength === Tw.MIN_MDN_LEN || inputMdnLength === Tw.MAX_MDN_LEN ) {
-          this.$btConfirm.attr('disabled', false);
-        }
-      } else {
+    }
+    this._checkEnableConfirmButton();
+
+  },
+  _checkEnableConfirmButton: function () {
+    var inputCert = this.$inputCert.val();
+    if ( this._onKeyin ) {
+      var mdnLength = this.$inputMdn.val().length;
+      if ( this.$inputCert.val().length >= Tw.DEFAULT_CERT_LEN && (mdnLength === Tw.MIN_MDN_LEN || mdnLength === Tw.MAX_MDN_LEN) ) {
         this.$btConfirm.attr('disabled', false);
+      } else {
+        this.$btConfirm.attr('disabled', true);
       }
+
     } else {
-      this.$btConfirm.attr('disabled', true);
+      if ( inputCert.length >= Tw.DEFAULT_CERT_LEN ) {
+        this.$btConfirm.attr('disabled', false);
+      } else {
+        this.$btConfirm.attr('disabled', true);
+      }
     }
   },
-
   _onClickOtherCert: function ($event) {
     $event.stopPropagation();
     $event.preventDefault();

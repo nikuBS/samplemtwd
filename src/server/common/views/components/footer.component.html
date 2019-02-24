@@ -106,7 +106,7 @@
             <% } %>
 
             <% } %>
-            <% if (svcInfo && locals.pageInfo && pageInfo.auth && pageInfo.auth.cert && pageInfo.auth.cert.maskAuthYn === 'Y' && !pageInfo.masking) { %>
+            <% if (svcInfo && locals.pageInfo && pageInfo.auth && pageInfo.auth.cert && pageInfo.auth.cert.maskRlseYn === 'Y' && !pageInfo.masking) { %>
             <li><button class="fe-bt-masking" type="button" data-menuid="<%= pageInfo.menuId %>" data-menuurl="<%= pageInfo.menuUrl %>"><i class="icon-fab-lock-n-80"><span class="blind">lock</span></i></button></li>
             <% } %>
             <li><a href="/main/home" type="button"><i class="icon-fab-bi-n-80"><span class="blind">bi</span></i></a></li>
