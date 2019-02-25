@@ -59,8 +59,13 @@ Tw.XtractorService.prototype = {
   _sendXtrCSDummy: function(E_ID, CS_ID, ACTION) {
     var key = E_ID + '|' + CS_ID + '|' + ACTION;
 
-    if (!this._isScript || this._loggedList.indexOf(key) !== -1) {
-      Tw.Logger.warn('[Xtractor] Logger is failed.');
+    if (!this._isScript) {
+      Tw.Logger.warn('[Xtractor] Logger is failed. Xtractor script is not found.');
+      return false;
+    }
+
+    if (this._loggedList.indexOf(key) !== -1) {
+      Tw.Logger.info('[Xtractor] this key already logged.');
       return false;
     }
 
