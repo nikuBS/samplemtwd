@@ -172,9 +172,8 @@
 <% include ../../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductMobileplanSettingLocation($('.wrap') < % -JSON.stringify(data) % >,
-  <%
-    -showNumberSetting % >;
+    new Tw.ProductMobileplanSettingLocation($('.wrap'), <%-JSON.stringify(data) %>,
+  <%-showNumberSetting %>
   )
   });
 </script>
