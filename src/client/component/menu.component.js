@@ -368,6 +368,11 @@ Tw.MenuComponent.prototype = {
       this.$container.find('.fe-remove-when-app').remove();
     }
 
+    // when app and login(Tlogin, not simple login)
+    if (isApp && isLogin && userInfo.loginType === 'T') {
+      this.$container.find('.fe-when-app-and-login').removeClass('none');
+    }
+
     this.$menuArea.find('.section-search').after(this._menuTpl({ list: menu }));
 
     if ( isLogin ) {
