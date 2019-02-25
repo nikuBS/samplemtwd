@@ -60,6 +60,11 @@ class MyTJoinMyPlanAdd extends TwViewController {
       return {
         additions: (resp.result.addProdList || []).map(this.convertAdditions),
         roaming: resp.result.roamingProd
+          ? {
+              ...resp.result.roamingProd,
+              addRoamingProdCnt: Number(resp.result.roamingProd.addRoamingProdCnt) - 1
+            }
+          : {}
       };
     });
   }
