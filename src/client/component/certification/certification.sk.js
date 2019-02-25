@@ -346,21 +346,19 @@ Tw.CertificationSk.prototype = {
   },
   _onSuccessCert: function (reCert, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( resp.result.corpPwdAuthYn === 'Y' ) {
-
-      } else {
-
-
-      }
       this._seqNo = resp.result.seqNo;
       this._clearCertError();
-      this.$validCert.removeClass('none');
-      if ( !reCert ) {
-        this.$btReCert.parent().addClass('none');
-        this.$btCert.parent().addClass('none');
-        this.$btCertAdd.parent().removeClass('none');
-        this._addTimer = setTimeout($.proxy(this._expireAddTime, this), Tw.SMS_CERT_TIME);
-        this._addTime = new Date().getTime();
+      if ( resp.result.corpPwdAuthYn === 'Y' ) {
+        new Tw.CertificationBiz().open();
+      } else {
+        this.$validCert.removeClass('none');
+        if ( !reCert ) {
+          this.$btReCert.parent().addClass('none');
+          this.$btCert.parent().addClass('none');
+          this.$btCertAdd.parent().removeClass('none');
+          this._addTimer = setTimeout($.proxy(this._expireAddTime, this), Tw.SMS_CERT_TIME);
+          this._addTime = new Date().getTime();
+        }
       }
     } else if ( resp.code === this.SMS_ERROR.ATH2003 ) {
       this._clearCertError();

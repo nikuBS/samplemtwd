@@ -6,11 +6,9 @@
 
 Tw.CertificationBiz = function () {
   this._popupService = Tw.Popup;
-  this._callback = null;
 };
 Tw.CertificationBiz.prototype = {
-  open: function (callback) {
-    this._callback = callback;
+  open: function () {
     this._popupService.open({
       hbs: 'CO_CE_02_03_01_01',
       layer: true
@@ -23,7 +21,7 @@ Tw.CertificationBiz.prototype = {
 
   },
   _onClickBizCertComplete: function () {
-
+    this._popupService.close();
   }
 };
 
