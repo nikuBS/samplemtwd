@@ -48,13 +48,11 @@ Tw.LineLayerComponent.prototype = {
   _successGetSvcInfo: function (layerType, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       var cnt = resp.result.totalSvcCnt - resp.result.expsSvcCnt;
-      if ( cnt > 0 )
-        this._historyService.goLoad('/common/member/line/register?type=' + layerType);
-    }
-  },
-  _successExposableLine: function (layerType, resp) {
-    if ( resp.code === Tw.API_CODE.CODE_00 && resp.result.totalCnt > 0 ) {
-      this._historyService.goLoad('/common/member/line/register?type=' + layerType);
+      if ( cnt > 0 ) {
+        setTimeout($.proxy(function () {
+          this._historyService.goLoad('/common/member/line/register?type=' + layerType);
+        }, this), 2000);
+      }
     }
   },
   _openPasswordGuide: function () {
