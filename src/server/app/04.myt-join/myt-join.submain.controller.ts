@@ -299,7 +299,7 @@ class MyTJoinSubmainController extends TwViewController {
   }
 
   isCheckingChgNum(target): boolean {
-    // 010, 012 제외
+    // 010, 012 제외 [DVI001-14863]
     const regexp = /^01([1|3-9]{1})/g;
     return regexp.test(target);
   }
