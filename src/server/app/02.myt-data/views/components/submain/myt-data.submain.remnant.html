@@ -228,7 +228,12 @@
                                         <% if (sdata.isUnlimit) { %>
                                         무제한 </strong>
                                         <% } else { %>
-                                        <%= sdata.showRemained %>원 </strong>남음
+                                            <% if (sdata.showRemained.data) { %>
+                                             <%= sdata.showRemained.data %><%= sdata.showRemained.unit %>
+                                            <% } else { %>
+                                             <%= sdata.showRemained %>원
+                                            <% } %>
+                                            </strong>남음
                                         <% } %>
                                 </span>
                             </div>
@@ -528,7 +533,12 @@
                                         <% if (sdata.isUnlimit) { %>
                                         무제한 </strong>
                                         <% } else { %>
-                                        <%= sdata.showRemained %>원 </strong>남음
+                                            <% if (sdata.showRemained.data) { %>
+                                             <%= sdata.showRemained.data %><%= sdata.showRemained.unit %>
+                                            <% } else { %>
+                                             <%= sdata.showRemained %>원
+                                            <% } %>
+                                            </strong>남음
                                         <% } %>
                                 </span>
                         </div>
