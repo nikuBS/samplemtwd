@@ -124,6 +124,6 @@
 <% include ../../../components/javascript.component.html %>
 <script>$(function () {
   new Tw.ProductMobileplanJoin0planSm($('.wrap'), '<%= prodId %>', 'MP_02_02_03_15', '<%- escape(sktProdBenfCtt) %>',
-    '<%= isOverPayReqYn %>', '<%= settingInfo.useOptionProdId ? settingInfo.useOptionProdId : "" %>', '<%= mobilePlanCompareInfo ? "Y" : "N" %>');
+    '<%= isOverPayReqYn %>', '<%= settingInfo && settingInfo.useOptionProdId ? settingInfo.useOptionProdId : "" %>', '<%= mobilePlanCompareInfo ? "Y" : "N" %>');
 });</script>
 <% include ../../../components/end.component.html %>
