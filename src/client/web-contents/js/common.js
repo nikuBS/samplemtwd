@@ -21,9 +21,9 @@ $(window).on('resize', function () {
     $('.popup-page').removeClass('focusin');
   }
   if($(window).width() + $(window).height() != skt_landing._originalSize){
-    $("#gnb.on .g-wrap").css("position","relative");  
+    $("#gnb.on .g-wrap, .bt-fixed-area").css("position","relative");  
   }else{
-    $("#gnb.on .g-wrap").css("position","fixed");  
+    $("#gnb.on .g-wrap, .bt-fixed-area").css("position","fixed");  
   }
 }).on('scroll', function () {
   for (var fn in scroll_fn) {
@@ -675,6 +675,9 @@ skt_landing.action = {
           speed : 700,
           centerMode: false,
           focusOnSelect: false,
+          draggable: false,
+          touchMove: false,
+          swipe: false,
           vertical:true,
           verticalSwiping:true,
           autoplay:true,

@@ -231,6 +231,10 @@
     display: block;
     border-top: 1px solid #f2f2f2;
     margin-bottom: 1.5625rem; }
+  .bg-gradation.off {
+    padding-top: 0;
+    background-color: transparent;
+    background-image: inherit; }
 
 .main-breakdown-box > .sum {
   display: block;
@@ -320,6 +324,8 @@
     font-size: 0.9375rem;
     line-height: 50px;
     text-align: center; }
+    .main-breakdown-box .btn-area .bt.bt-off {
+      color: #dcdcdc; }
 
 .main-breakdown-box .text_translation {
   display: block;
@@ -623,7 +629,7 @@
     text-align: left;
     margin-top: 0.625rem;
     margin-bottom: 1.5625rem;
-    font-weight: bold; }
+    font-weight: 600; }
   .main-tip-box > a.stit.tit:after, .main-tip-box button.stit.tit:after {
     display: inline-block;
     content: "";
@@ -2085,6 +2091,18 @@ body.apphome {
       width: 3.75rem;
       height: 3.75rem;
       left: 0; }
+      .donut-chart.small .donut-chart-area .c100.type-blue {
+        position: relative; }
+        .donut-chart.small .donut-chart-area .c100.type-blue:after {
+          display: block;
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 3.75rem;
+          height: 3.75rem;
+          background: url(/img/ico/web_dote.png) no-repeat 0 0;
+          background-size: 100% 100%; }
     .donut-chart.small .c100.p51 .slice, .donut-chart.small .c100.p52 .slice, .donut-chart.small .c100.p53 .slice, .donut-chart.small .c100.p54 .slice, .donut-chart.small .c100.p55 .slice, .donut-chart.small .c100.p56 .slice, .donut-chart.small .c100.p57 .slice, .donut-chart.small .c100.p58 .slice, .donut-chart.small .c100.p59 .slice, .donut-chart.small .c100.p60 .slice, .donut-chart.small .c100.p61 .slice, .donut-chart.small .c100.p62 .slice, .donut-chart.small .c100.p63 .slice, .donut-chart.small .c100.p64 .slice, .donut-chart.small .c100.p65 .slice, .donut-chart.small .c100.p66 .slice, .donut-chart.small .c100.p67 .slice, .donut-chart.small .c100.p68 .slice, .donut-chart.small .c100.p69 .slice, .donut-chart.small .c100.p70 .slice, .donut-chart.small .c100.p71 .slice, .donut-chart.small .c100.p72 .slice, .donut-chart.small .c100.p73 .slice, .donut-chart.small .c100.p74 .slice, .donut-chart.small .c100.p75 .slice, .donut-chart.small .c100.p76 .slice, .donut-chart.small .c100.p77 .slice, .donut-chart.small .c100.p78 .slice, .donut-chart.small .c100.p79 .slice, .donut-chart.small .c100.p80 .slice, .donut-chart.small .c100.p81 .slice, .donut-chart.small .c100.p82 .slice, .donut-chart.small .c100.p83 .slice, .donut-chart.small .c100.p84 .slice, .donut-chart.small .c100.p85 .slice, .donut-chart.small .c100.p86 .slice, .donut-chart.small .c100.p87 .slice, .donut-chart.small .c100.p88 .slice, .donut-chart.small .c100.p89 .slice, .donut-chart.small .c100.p90 .slice, .donut-chart.small .c100.p91 .slice, .donut-chart.small .c100.p92 .slice, .donut-chart.small .c100.p93 .slice, .donut-chart.small .c100.p94 .slice, .donut-chart.small .c100.p95 .slice, .donut-chart.small .c100.p96 .slice, .donut-chart.small .c100.p97 .slice, .donut-chart.small .c100.p98 .slice, .donut-chart.small .c100.p99 .slice, .donut-chart.small .c100.p100 .slice {
       clip: rect(auto, auto, auto, auto); }
     .donut-chart.small .c100 .bar, .donut-chart.small .c100.p51 .fill, .donut-chart.small .c100.p52 .fill, .donut-chart.small .c100.p53 .fill, .donut-chart.small .c100.p54 .fill, .donut-chart.small .c100.p55 .fill, .donut-chart.small .c100.p56 .fill, .donut-chart.small .c100.p57 .fill, .donut-chart.small .c100.p58 .fill, .donut-chart.small .c100.p59 .fill, .donut-chart.small .c100.p60 .fill, .donut-chart.small .c100.p61 .fill, .donut-chart.small .c100.p62 .fill, .donut-chart.small .c100.p63 .fill, .donut-chart.small .c100.p64 .fill, .donut-chart.small .c100.p65 .fill, .donut-chart.small .c100.p66 .fill, .donut-chart.small .c100.p67 .fill, .donut-chart.small .c100.p68 .fill, .donut-chart.small .c100.p69 .fill, .donut-chart.small .c100.p70 .fill, .donut-chart.small .c100.p71 .fill, .donut-chart.small .c100.p72 .fill, .donut-chart.small .c100.p73 .fill, .donut-chart.small .c100.p74 .fill, .donut-chart.small .c100.p75 .fill, .donut-chart.small .c100.p76 .fill, .donut-chart.small .c100.p77 .fill, .donut-chart.small .c100.p78 .fill, .donut-chart.small .c100.p79 .fill, .donut-chart.small .c100.p80 .fill, .donut-chart.small .c100.p81 .fill, .donut-chart.small .c100.p82 .fill, .donut-chart.small .c100.p83 .fill, .donut-chart.small .c100.p84 .fill, .donut-chart.small .c100.p85 .fill, .donut-chart.small .c100.p86 .fill, .donut-chart.small .c100.p87 .fill, .donut-chart.small .c100.p88 .fill, .donut-chart.small .c100.p89 .fill, .donut-chart.small .c100.p90 .fill, .donut-chart.small .c100.p91 .fill, .donut-chart.small .c100.p92 .fill, .donut-chart.small .c100.p93 .fill, .donut-chart.small .c100.p94 .fill, .donut-chart.small .c100.p95 .fill, .donut-chart.small .c100.p96 .fill, .donut-chart.small .c100.p97 .fill, .donut-chart.small .c100.p98 .fill, .donut-chart.small .c100.p99 .fill, .donut-chart.small .c100.p100 .fill {
@@ -2647,7 +2665,7 @@ body.apphome {
   .fly .home-tab .home-tab-belt .tab > div {
     display: inline-block; }
   .fly .home-tab .home-tab-belt .tab [class*=icon-home-tab] {
-    top: -0.5625rem; }
+    top: -0.25rem; }
   .fly .home-tab .home-tab-belt.fixed {
     position: fixed;
     left: 0;

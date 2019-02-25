@@ -154,7 +154,7 @@ input.textarea, select, button {
   line-height: 1.4;
   letter-spacing: -0.03em; }
 
-input[type=text], input[type=file], input[type=password], input[type=number], input[type=email] {
+input[type=text], input[type=file], input[type=password], input[type=number], input[type=email], input[type=tel] {
   border: 1px solid #d4d4d4;
   outline: none; }
 
@@ -949,6 +949,9 @@ a, input, label, button {
   -tap-highlight-color: rgba(0, 0, 0, 0.15) !important;
   -moz-tap-highlight-color: rgba(0, 0, 0, 0.15) !important;
   -webkit-appearance: none; }
+
+a {
+  color: #000; }
 
 a, a:link, a:visited, a:active, a:hover {
   text-decoration: none; }
@@ -5803,7 +5806,8 @@ a.ui-button:active,
   .search-didnot-generatehits .title {
     color: #000;
     font-size: 1.5625rem;
-    line-height: 2rem; }
+    line-height: 2rem;
+    word-break: break-all; }
   .search-didnot-generatehits .text {
     margin-top: 1.5625rem;
     color: #000;
@@ -7062,3 +7066,21 @@ a.ui-button:active,
 
 .list-comp-input .select-list.btm-line > li:last-of-type .comp-list-layout:before {
   display: block; }
+
+.protect-pass-wrap {
+  padding: 0 0.8125rem; }
+  .protect-pass-wrap .tit {
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem; }
+    .protect-pass-wrap .tit .str {
+      font-weight: 700; }
+  .protect-pass-wrap .msg-validation {
+    margin: 0.4375rem 0 -0.125rem;
+    font-size: 0.75rem;
+    color: #e84f01; }
+  .protect-pass-wrap .msg-guide {
+    margin-top: 1.0625rem;
+    font-size: 0.75rem; }
+  .protect-pass-wrap.type2 .tit {
+    margin-bottom: 1rem;
+    font-size: 0.9375rem; }

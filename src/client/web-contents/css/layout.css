@@ -2806,7 +2806,7 @@ body.bg-gray {
   padding: 3.75rem 1.25rem 0;
   background: #676767;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   background-position: 100%; }
   .bg-productdetail .productdetails-bg.t-logo {
     background: #676767; }
