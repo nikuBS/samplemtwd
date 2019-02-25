@@ -90,11 +90,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.ProductRoamingLookup(
-      $('.wrap'),
-      <%- JSON.stringify(prodBffInfo) %>,
-      '<%- prodId %>'
-  )
+    new Tw.ProductRoamingLookup($('.wrap'),<%- JSON.stringify(prodBffInfo) %>, '<%- prodId %>' )
   });
 </script>
 
