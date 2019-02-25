@@ -304,13 +304,22 @@ Tw.ProductCommonConfirm.prototype = {
   },
 
   _openConfirmAlert: function() {
+    this._isApplyConfirm = false;
     this._popupService.openModalTypeATwoButton(this._confirmAlert.TITLE, this._confirmAlert.MSG, this._confirmAlert.BUTTON,
-      Tw.BUTTON_LABEL.CLOSE, null, $.proxy(this._setConfirmAlertApply, this), null, 'join_confirm_alert');
+      Tw.BUTTON_LABEL.CLOSE, null, $.proxy(this._setConfirmAlertApply, this), $.proxy(this._onCloseConfirmAlert, this), 'join_confirm_alert');
   },
 
   _setConfirmAlertApply: function() {
+    this._isApplyConfirm = true;
     this._popupService.close();
-    setTimeout($.proxy(this._doCallback, this), 100);
+  },
+
+  _onCloseConfirmAlert: function() {
+    if (!this._isApplyConfirm) {
+      return;
+    }
+
+    this._doCallback();
   },
 
   _toggleApplyBtn: function(toggle) {
