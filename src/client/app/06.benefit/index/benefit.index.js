@@ -49,6 +49,7 @@ Tw.BenefitIndex.prototype = {
     this.$withTax = this.$container.find('#fe-with-tax');
     this.$useCondition = this.$container.find('#fe-use-condition'); // 이용조건
     this.$combinationPreview = this.$container.find('#fe-combination-preview');
+    this.$anotherPage = this.$container.find('#fe-another-page');
     this._G1 = 'G1'; // Giga code값
   },
   /**
@@ -440,6 +441,9 @@ Tw.BenefitIndex.prototype = {
     }
 
     this.$list.empty();
+    // 리스트 수신 후 하단 [다른 페이지를 찾고 계신가요?] 보이기
+    this.$anotherPage.removeClass('none');
+
     // 더보기 설정
     this._moreViewSvc.init({
       list: resp.result.list,

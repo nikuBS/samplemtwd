@@ -18,7 +18,6 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
   _init : function() {
     this._initVariables();
     this._bindEvent();
-    this._registerHelper();
     this._reqReturnHistory();
   },
   /**
@@ -28,6 +27,7 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
   _initVariables: function () {
     this.returnHistory = this.$container.find('#fe-return-history');
     this._totalCount =  this.$container.find('#fe-total-cnt');
+    this._noReturnHistory =  this.$container.find('#fe-no-list');
   },
   /**
    * 이벤트 설정
@@ -58,12 +58,13 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
     Tw.CommonHelper.endLoading('.container');
     // 발행내역 없는 경우
     if ( res.code === 'ZINVN8319' ) {
-      // this._onFail(res);
+      this._noReturnHistory.removeClass('none');
       return;
     } else if ( res.code !== Tw.API_CODE.CODE_00 ) { // 결과가 성공이 아닐경우
       this._onFail(res);
       return;
     } else if (res.result.returnInfoList.length < 1) { // 리스트가 없을때
+      this._noReturnHistory.removeClass('none');
       return;
     }
 
@@ -73,9 +74,6 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
     this._moreViewSvc.init({
       list : res.result.returnInfoList,
       callBack : $.proxy(this._renderList,this),
-      listOption : {
-        groupDateKey : 'undlvRgstDt'
-      },
       isOnMoreView : true
     });
   },
@@ -97,24 +95,6 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
   },
 
   /**
-   * 핸들바스 파일에서 사용할 펑션 등록
-   * @private
-   */
-  _registerHelper : function() {
-    Handlebars.registerHelper('formatDate', this._parseDate);
-  },
-
-  /**
-   * 날짜 포맷팅
-   * @param date : 포맷팅 할 날짜(MMDD)
-   * @returns {Date}
-   * @private
-   */
-  _parseDate : function (date) {
-    return Tw.DateHelper.getShortDateWithFormat(date, 'MM.DD','MMDD');
-  },
-
-  /**
    * 반송내역 리스트 생성
    * @param res
    * @private
@@ -122,7 +102,7 @@ Tw.MyTFareBillSetReturnHistory.prototype = {
   _renderList : function (res) {
     var source = $('#tmplMore').html();
     var template = Handlebars.compile(source);
-    var output = template({data : res});
+    var output = template({list : res.list});
     this.returnHistory.append(output);
   },
 

@@ -6,42 +6,36 @@
 
 <script id="tmplMore" type="text/x-handlebars-template">
     <div class="list-comp-history">
-        <ul class="comp-box info-type last-border">
-            {{#if data.hasYear}}
-                <li class="year-tx">{{data.year}}</li>
-            {{/if}}
-
-            {{#each data.list}}
+        <ul class="comp-box info-type">
+            {{#each list}}
                 <li class="list-box">
                     <p class="list-date">
-                        <span class="date-tx">{{formatDate date}}</span>
+                        <span class="date-tx">{{undlvRgstDt}}</span>
                     </p>
                     <ul class="list-con">
-                        {{#each subList}}
-                            <li>
-                                <p class="list-text disb">
-                                    <span class="mtext">{{billTyp}}</span>
-                                </p>
-                                <div class="list-info">
-                                    <dl>
-                                        <dt>반송사유</dt>
-                                        <dd>{{undlvRsn}}</dd>
-                                    </dl>
-                                    <dl>
-                                        <dt>청구인</dt>
-                                        <dd>{{custNm}}</dd>
-                                    </dl>
-                                    <dl>
-                                        <dt>안내서 청구일</dt>
-                                        <dd>{{invDt}}</dd>
-                                    </dl>
-                                    <dl>
-                                        <dt>안내서 발송일</dt>
-                                        <dd>{{sndDt}}</dd>
-                                    </dl>
-                                </div>
-                            </li>
-                        {{/each}}
+                        <li>
+                            <p class="list-text disb">
+                                <span class="mtext">{{billTyp}}</span>
+                            </p>
+                            <div class="list-info">
+                                <dl>
+                                    <dt>반송사유</dt>
+                                    <dd>{{undlvRsn}}</dd>
+                                </dl>
+                                <dl>
+                                    <dt>청구인</dt>
+                                    <dd>{{custNm}}</dd>
+                                </dl>
+                                <dl>
+                                    <dt>안내서 청구일</dt>
+                                    <dd>{{invDt}}</dd>
+                                </dl>
+                                <dl>
+                                    <dt>안내서 발송일</dt>
+                                    <dd>{{sndDt}}</dd>
+                                </dl>
+                            </div>
+                        </li>
                     </ul>
                 </li>
             {{/each}}
