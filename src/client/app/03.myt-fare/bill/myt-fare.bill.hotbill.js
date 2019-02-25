@@ -204,7 +204,9 @@ Tw.MyTFareHotBill.prototype = {
   _onErrorReceivedBillData: function (resp) {
     Tw.CommonHelper.endLoading('.fe-loading-bill');
     if ( resp.code === Tw.MyTFareHotBill.CODE.ERROR.BILL_NOT_AVAILABLE ) {
-      Tw.Error(resp.code, Tw.HOTBILL_ERROR_ZINVE8106).page();
+      Tw.Error(resp.code, Tw.HOTBILL_ERROR.ZINVE8106).replacePage();
+    } else if ( resp.code === Tw.MyTFareHotBill.CODE.ERROR.BIIL_NOT_REQUESTED ) {
+      Tw.Error(resp.code, Tw.HOTBILL_ERROR.ZINVE8888).replacePage();
     } else {
       // 애러시 노출되는 항목이 없어 alert 후 goBack 처리 필요. 공통함수(Tw.Error) 사용 불가.
       this._popupService.openAlert(resp.msg, resp.code, null, $.proxy(this._goBackOnError, this));
@@ -394,7 +396,8 @@ Tw.MyTFareHotBill.NO_BILL_FIELDS = ['total', 'noVAT', 'is3rdParty', 'showDesc', 
 Tw.MyTFareHotBill.CODE = {
   ERROR: {
     NO_BILL_REQUEST_EXIST: 'ZINVN8888',
-    BILL_NOT_AVAILABLE: 'ZINVE8106'
+    BILL_NOT_AVAILABLE: 'ZINVE8106',
+    BIIL_NOT_REQUESTED: 'ZINVE8888'
   }
 };
 /**
