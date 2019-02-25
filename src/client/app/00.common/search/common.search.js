@@ -350,8 +350,6 @@ Tw.CommonSearch.prototype = {
     return recentKeywordList;
   },
   _showAutoCompleteKeyword : function (autoCompleteList) {
-    console.log('_showAutoCompleteKeyword called');
-    console.log(autoCompleteList);
     this.$keywordListBase.find('#auto_complete_list').empty();
     _.each(autoCompleteList,$.proxy(function (data,idx) {
       if(idx>=10){
