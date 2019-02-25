@@ -81,7 +81,7 @@
                                     <span id="fe-coach-line" class="coach-mark none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
                                     <% } %>
                                 </em>
-                                <strong class="ti"><a href="/product/callplan?prod_id=<%= svcInfo.prodId %>" class="bt" data-xt_eid="CMMA_A2_B6-2" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.prodNm %></a></strong>
+                                <strong class="ti"><a href="/myt-join/myplan" class="bt" data-xt_eid="CMMA_A2_B6-2" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.prodNm %></a></strong>
 
                                 <% if (homeData.usageData.data && homeData.usageData.data.isShow) { %>
                                 <!-- .widget -->
@@ -321,7 +321,7 @@
                                 <% } else { %>
                                 <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button></em>
                                 <% } %>
-                                <strong class="ti"><button class="bt"><%= svcInfo.prodNm %></button></strong>
+                                <strong class="ti"><a href="/myt-join/myplan" class="bt"><%= svcInfo.prodNm %></a></strong>
 
                                 <div class="main-breakdown-box">
                                     <strong class="ti">SK브로드밴드에서 가입한 회선입니다.</strong>
@@ -335,7 +335,7 @@
                                 <% } else { %>
                                 <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button></em>
                                 <% } %>
-                                <strong class="ti"><a href="/product/callplan?prod_id=<%= svcInfo.prodId %>" class="bt"><%= svcInfo.prodNm %></a></strong>
+                                <strong class="ti"><a href="/myt-join/myplan" class="bt"><%= svcInfo.prodNm %></a></strong>
 
                                 <div id="fe-bt-link-billguide" class="main-breakdown-box">
                                     <% if (homeData.billData.type2) { %>
@@ -360,8 +360,12 @@
                             <% } %>
                             <% } else { %>
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt"><%= svcInfo.addr %></button></em>
-                                <strong class="ti"><button class="bt"><%= svcInfo.prodNm %></button></strong>
+                                <% if(svcInfo.svcAttrCd === 'S3') { %>
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button></em>
+                                <% } else { %>
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button></em>
+                                <% } %>
+                                <strong class="ti"><a href="/myt-join/myplan" class="bt"><%= svcInfo.prodNm %></a></strong>
 
                                 <div class="main-breakdown-box">
                                     <strong class="ti">발행된 요금안내서가 없습니다.</strong>
