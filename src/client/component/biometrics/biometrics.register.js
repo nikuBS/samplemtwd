@@ -53,8 +53,6 @@ Tw.BiometricsRegister.prototype = {
     this.$infoClick.addClass('none');
     this.$infoIng.removeClass('none');
     this._nativeService.send(Tw.NTV_CMD.FIDO_REGISTER, { svcMgmtNum: this._svcMgmtNum }, $.proxy(this._onFidoRegister, this));
-    this._complete = true;
-    this._popupService.close();
   },
   _onFidoRegister: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
@@ -70,7 +68,8 @@ Tw.BiometricsRegister.prototype = {
       this.$infoIng.addClass('none');
       this.$infoClick.removeClass('none');
     } else {
-      Tw.Error(resp.resultCode, 'error').pop();
+      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.BIOMETRICS_REGISTER_FAIL);
+      // Tw.Error(resp.resultCode, 'error').pop();
     }
   },
   _onCloseBioRegister: function () {

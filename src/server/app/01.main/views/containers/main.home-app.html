@@ -44,7 +44,7 @@
                         <!-- // .layer-noti -->
                         <% } %>
 
-                        <div class="main-top-group">
+                        <div class="main-top-group <% if(!svcType.login){%>mb0 pb0<% } %>">
                             <!-- 모바일 회선_잔여 데이터 -->
                             <% if (svcType.login) { %>
                             <% if (svcInfo.totalSvcCnt === '0') { %>
@@ -385,7 +385,7 @@
                             </div>
                             <!-- // 비로그인 -->
                             <% } %>
-                            <div id="fe-tmpl-quick">
+                            <div id="fe-tmpl-quick" class="bg-gradation off">
                             </div>
                         </div>
 

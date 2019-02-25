@@ -206,7 +206,8 @@ Tw.CommonSearchMain.prototype = {
     var returnData = [];
     for(var i=0;i<this._recentlyKeywordListData[this._nowUser].length;i++){
       if(this._recentlyKeywordListData[this._nowUser][i].keyword.indexOf(keyword)>-1||
-        (!Tw.FormatHelper.isEmpty(this._recentlyKeywordListData[this._nowUser][i].initial)&&this._recentlyKeywordListData[this._nowUser][i].initial.indexOf(keyword)>-1)){
+        (!Tw.FormatHelper.isEmpty(this._recentlyKeywordListData[this._nowUser][i].initial)&&
+          this._recentlyKeywordListData[this._nowUser][i].initial.indexOf(keyword)>-1)){
         if(
           this._nowUser==='logOutUser'&&
           !Tw.FormatHelper.isEmpty(this._recentlyKeywordListData[this._nowUser][i].platForm)&&
@@ -215,7 +216,8 @@ Tw.CommonSearchMain.prototype = {
           continue;
         }
         returnData.push({
-          showStr : this._recentlyKeywordListData[this._nowUser][i].keyword.replace(new RegExp(keyword,'g'),'<span class="highlight-text">'+keyword+'</span>'),
+          showStr : this._recentlyKeywordListData[this._nowUser][i].keyword
+            .replace(new RegExp(keyword,'g'),'<span class="highlight-text">'+keyword+'</span>'),
           linkStr : this._recentlyKeywordListData[this._nowUser][i].keyword
         });
       }

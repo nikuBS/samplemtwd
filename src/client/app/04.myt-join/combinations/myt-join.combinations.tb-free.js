@@ -137,11 +137,13 @@ Tw.MyTJoinCombinationsTBFree.prototype = {
   },
 
   _handleFocusoutInput: function($input, $error) {
-    var value = $input.val();
-    this._validPhoneNumber(value, $error);
+    var value = $input.val(),
+      isValid = this._validPhoneNumber(value, $error);
 
     $input.attr('type', 'text');
-    $input.val(Tw.FormatHelper.getDashedCellPhoneNumber(value));
+    if (isValid) {
+      $input.val(Tw.FormatHelper.getDashedCellPhoneNumber(value));
+    }
   },
 
   _setInvalidInput: function($error, msg) {

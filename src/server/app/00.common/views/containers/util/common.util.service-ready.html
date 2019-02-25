@@ -1,0 +1,24 @@
+<%#
+* FileName: common.util.service-ready.html
+* Author: Ara Jo (araara.jo@sk.com)
+* Date: 2019.01.25
+%>
+
+<%- include('../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<!-- body -->
+<body style="background:#fff; position:relative;">
+<div class="wrap checking_wrap">
+    <img src="<%= CDN %>/img/common/checking_img02.png" alt="">
+    <p class="tit">서비스 준비 중입니다</p>
+    <p class="txt">이용에 불편을 드려 죄송합니다.<br />보다 나은 서비스로 빠른 시일 내에 찾아 뵙겠습니다.</p>
+</div>
+<div class="checking_btn">
+    <button type="button" class="fe-common-back">닫기</button>
+</div>
+</body>
+<% include ../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+  });
+</script>
+<% include ../components/end.component.html %>

@@ -1,6 +1,7 @@
 /**
  * FileName: membership-info.layer.component.js
  * Author: Kim InHwan (skt.P132150@partner.sk.com)
+ * Editor: 양정규 (skt.P130715@partner.sk.com)
  * Date: 2018.10.29
  *
  */
@@ -70,8 +71,13 @@ Tw.MembershipInfoLayerPopup.prototype = {
       this._onFail(resp);
       return false;
     }
-    this._isJoinOk = resp.result.cardCreatableYn;
-    this._onPopupNoJoin();
+    this._isJoinOk = resp.result && resp.result.cardCreatableYn;
+    if (this._isJoinOk === 'Y') {
+      this.onClickJoinBtn();
+    }
+    else {
+      this._onPopupNoJoin();
+    }
   },
 
   _closeCallback: function () {
@@ -80,43 +86,40 @@ Tw.MembershipInfoLayerPopup.prototype = {
 
   // T멤버십 가입불가 팝업
   _onPopupNoJoin : function () {
-    if (this._isJoinOk === 'N') {
-      var param = Tw.ALERT_MSG_MEMBERSHIP.NO_JOIN;
-      this._popupService.open({
-          title: param.TITLE,
-          title_type: 'sub',
-          cont_align: 'tl',
-          contents: param.CONTENTS,
-          infocopy: [{
-            info_contents: param.TXT,
-            bt_class: 'fe-more bt-blue1'
-          }],
-          bt_b: [{
-            style_class: 'pos-left fe-close',
-            txt: Tw.BUTTON_LABEL.CLOSE
-          }, {
-            style_class: 'bt-red1 pos-right fe-line',
-            txt: Tw.BUTTON_LABEL.LINE
-          }]
-        },
-        $.proxy(function($layer){
-          // 더 알아보기 클릭
-          $layer.on('click', '.fe-more', $.proxy(function(){
-            this.open('BE_04_01_L02');
-          },this));
-          // 닫기 클릭
-          $layer.on('click', '.fe-close', $.proxy(function(){
-            this._popupService.close();
-          },this));
-          // 회선관리 클릭
-          $layer.on('click', '.fe-line', $.proxy(function(){
-            this._popupService.close();
-            this._historyService.goLoad('/common/member/line');
-          },this));
-        }, this)
-      );
-      return;
-    }
+    var param = Tw.ALERT_MSG_MEMBERSHIP.NO_JOIN;
+    this._popupService.open({
+        title: param.TITLE,
+        title_type: 'sub',
+        cont_align: 'tl',
+        contents: param.CONTENTS,
+        infocopy: [{
+          info_contents: param.TXT,
+          bt_class: 'fe-more bt-blue1'
+        }],
+        bt_b: [{
+          style_class: 'pos-left fe-close',
+          txt: Tw.BUTTON_LABEL.CLOSE
+        }, {
+          style_class: 'bt-red1 pos-right fe-line',
+          txt: Tw.BUTTON_LABEL.LINE
+        }]
+      },
+      $.proxy(function($layer){
+        // 더 알아보기 클릭
+        $layer.on('click', '.fe-more', $.proxy(function(){
+          this.open('BE_04_01_L02');
+        },this));
+        // 닫기 클릭
+        $layer.on('click', '.fe-close', $.proxy(function(){
+          this._popupService.close();
+        },this));
+        // 회선관리 클릭
+        $layer.on('click', '.fe-line', $.proxy(function(){
+          this._popupService.close();
+          this._historyService.goLoad('/common/member/line');
+        },this));
+      }, this)
+    );
   },
 
   // 가입하기 버튼 클릭
@@ -128,10 +131,10 @@ Tw.MembershipInfoLayerPopup.prototype = {
         this.reqPossibleJoin();
       } else {
         // 가입불가일 때, 안내 팝업 띄움
-        if (this._isJoinOk === 'N') {
-          this._onPopupNoJoin();
-        } else {
+        if (this._isJoinOk === 'Y') {
           this._historyService.goLoad('/membership/join');
+        } else {
+          this._onPopupNoJoin();
         }
       }
     } else { // 비 로그인시 팝업띄움

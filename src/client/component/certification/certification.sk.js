@@ -234,7 +234,8 @@ Tw.CertificationSk.prototype = {
   _checkEnableConfirmButton: function () {
     var inputCert = this.$inputCert.val();
     if ( this._onKeyin ) {
-      var mdnLength = this.$inputMdn.val().length;
+      var inputMdn = this.$inputMdn.val();
+      var mdnLength = inputMdn ? inputMdn.length : '0';
       if ( this.$inputCert.val().length >= Tw.DEFAULT_CERT_LEN && (mdnLength === Tw.MIN_MDN_LEN || mdnLength === Tw.MAX_MDN_LEN) ) {
         this.$btConfirm.attr('disabled', false);
       } else {
@@ -285,6 +286,7 @@ Tw.CertificationSk.prototype = {
       this.$btCert.parent().addClass('none');
       this.$btReCert.parent().removeClass('none');
     }
+    this._checkEnableConfirmButton();
   },
   _checkCertType: function () {
     if ( this._securityAuth ) {

@@ -19,7 +19,7 @@
     <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <!-- #header -->
         <div id="header" class="header-wrap">
-            <%- include('../../../common/views/components/header.component.html', { title: page, svcInfo: svcInfo }); %>
+            <%- include('../../../common/views/components/header.component.html', { title: page, svcInfo: svcInfo, pageInfo: locals.pageInfo }); %>
         </div>
         <!--// #header -->
         <!-- #contents -->

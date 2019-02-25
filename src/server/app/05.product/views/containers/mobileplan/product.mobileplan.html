@@ -19,7 +19,7 @@
     <!--// #skip_navigation -->
     <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <!-- #header -->
-        <%- include('../../../common/views/components/header.component.html', { title: '요금제', svcInfo: svcInfo }); %>
+        <%- include('../../../common/views/components/header.component.html', { title: '요금제', svcInfo: svcInfo, pageInfo: locals.pageInfo }); %>
         <!--// #header -->
         <!-- #contents -->
         <% const BENEFIT = { type: '데이터', 'money-type': '음성', sms: '문자' }; %>

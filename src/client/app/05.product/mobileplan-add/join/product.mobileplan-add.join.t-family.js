@@ -234,7 +234,7 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
   },
 
   _addLine: function() {
-    this._svcMgmtNumList.push(this._addData.svcMgmtNum);
+    this._svcMgmtNumList.push(this._addData.svcMgmtNum.toString());
     this.$groupList.append(this._itemTemplate($.extend(this._addData, {
       svcNumDash: Tw.FormatHelper.conTelFormatWithDash(this._addData.svcNum),
       groupRepYn: Tw.FormatHelper.isEmpty(this._addData.groupRepYn) ? 'N' : this._addData.groupRepYn,
@@ -264,7 +264,7 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
       $elemParent = $elem.parents('li.list-box'),
       svcMgmtNum = $elemParent.data('svc_mgmt_num');
 
-    if (this._svcMgmtNumList.indexOf(svcMgmtNum) !== -1) {
+    if (this._svcMgmtNumList.indexOf(svcMgmtNum.toString()) !== -1) {
       this._svcMgmtNumList.splice(this._svcMgmtNumList.indexOf(svcMgmtNum));
     }
 

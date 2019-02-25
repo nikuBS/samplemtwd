@@ -21,7 +21,7 @@
         <!-- .popup hbs -->
         <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
             <!-- #header -->
-            <%- include('../components/header.component.html', { title: 'T가족모아데이터 공유 설정', type: 'popup', headerClass: 'noborder', svcInfo: svcInfo, pageInfo: pageInfo }); %>
+            <%- include('../components/header.component.html', { title: 'T가족모아데이터 공유 설정', type: 'popup', headerClass: 'noborder', svcInfo: svcInfo, pageInfo: locals.pageInfo }); %>
             <!--// #header -->
             <!-- .container-wrap -->
             <div class="container-wrap">
@@ -74,8 +74,7 @@
 <script>
     $(document).ready(function () {
         new Tw.MyTDataFamilyShareImmediately($('#tab1-tab'));
-      new Tw.MyTDataFamilyShareMonthly($('#tab2-tab') < %= monthly.regularShrYn === "Y" % >
-    )
+        new Tw.MyTDataFamilyShareMonthly($('#tab2-tab'), <%= monthly.regularShrYn === "Y" %>);
     });
 </script>
 <% include ../../components/end.component.html %>

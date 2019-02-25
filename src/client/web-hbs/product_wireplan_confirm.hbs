@@ -87,17 +87,19 @@
                     </li>
                 </ul>
                 {{/if}}
-                {{#if preinfo.autoJoinTermList}}
-                    <div class="service-info">
-                        <h3><strong class="service-tit">자동 {{joinTypeText}}</strong>서비스</h3>
-                        <span>
-                            <em class="service-add">부가서비스</em>
-                            {{#preinfo.autoJoinTermList}}
+                <div class="service-info">
+                    <h3><strong class="service-tit">자동 {{joinTypeText}}</strong>서비스</h3>
+                    <span>
+                        <em class="service-add">부가서비스</em>
+                        {{#if preinfo.autoJoinTermList}}
+                        {{#preinfo.autoJoinTermList}}
                             <span class="service-txt">{{prodNm}}</span>
-                            {{/preinfo.autoJoinTermList}}
-                        </span>
-                    </div>
-                {{/if}}
+                        {{/preinfo.autoJoinTermList}}
+                        {{else}}
+                            <span class="service-txt">자동 {{joinTypeText}} 서비스가 없습니다.</span>
+                        {{/if}}
+                    </span>
+                </div>
             </div>
             <!--// .cont-box -->
 

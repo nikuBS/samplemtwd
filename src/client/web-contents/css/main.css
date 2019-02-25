@@ -126,7 +126,7 @@
     .section-swiper-box .slider-box.link-full-box .main-box-cont .link-full {
       padding: 0 1.5rem;
       position: relative;
-      padding-bottom: 1.25rem;
+      padding-bottom: 1.875rem;
       height: 100%; }
       .section-swiper-box .slider-box.link-full-box .main-box-cont .link-full .bt {
         position: absolute;
@@ -148,13 +148,13 @@
 .main-top-group {
   position: relative;
   margin-bottom: -0.625rem;
-  padding: 0 1rem 1.875rem;
+  padding: 0 1rem;
   background: #fff; }
   .main-top-group.group-type {
     padding: 0; }
     .main-top-group.group-type .quick-menu-list {
       border: none;
-      margin: 1.125rem 0 2.5rem;
+      margin: 1.125rem 0 3.125rem;
       padding: 0 1rem; }
       .main-top-group.group-type .quick-menu-list li {
         margin-top: 1.375rem;
@@ -172,12 +172,12 @@
         padding-top: 0; }
     .main-top-group .quick-menu-list + .btn-area {
       margin: -0.3125rem;
-      padding-bottom: 0.9375rem; }
+      padding-bottom: 0.5rem; }
   .main-top-group .main-breakdown-box {
     position: relative;
     width: 17.5rem;
     margin: 3.125rem auto 2.5rem;
-    padding: 3.125rem 1.5625rem 2.5rem 1.5625rem;
+    padding: 3.5rem 1.5rem;
     border: 1px solid #f0f0f0;
     border-bottom: none;
     -webkit-box-shadow: 0 0.625rem 1.25rem #e4e4e4;
@@ -215,8 +215,6 @@
       font-size: 2rem; }
     .main-top-group .main-breakdown-box .desc {
       text-align: left; }
-    .main-top-group .main-breakdown-box .ti {
-      font-weight: 500; }
     .main-top-group .main-breakdown-box .text_translation {
       color: #000;
       font-size: 14px;
@@ -238,7 +236,6 @@
   display: block;
   padding: 0.1875rem 0;
   font-size: 1.6875rem;
-  font-weight: 700;
   line-height: 1.875rem; }
   .main-breakdown-box > .sum .ff-tg-medium {
     font-size: 1.6875rem;
@@ -251,11 +248,12 @@
   font-weight: 300; }
 
 .main-breakdown-box > .ti {
-  display: block;
+  display: inline-block;
+  width: auto;
   margin: 0 0 0.1875rem;
   font-size: 1.5625rem;
-  font-weight: 700;
-  line-height: 1.875rem; }
+  text-align: left;
+  font-weight: 600; }
 
 .main-breakdown-box > .tx {
   margin-top: 3.4375rem;
@@ -277,7 +275,7 @@
     .main-breakdown-box .list li .ti {
       float: left;
       font-size: 1rem;
-      font-weight: 300;
+      font-weight: 600;
       line-height: 1.375rem; }
     .main-breakdown-box .list li .tx {
       float: right;
@@ -362,7 +360,7 @@
   .main-error-box .desc2 {
     position: absolute;
     left: 0;
-    bottom: 20px;
+    bottom: 25px;
     width: 100%;
     color: #666666;
     font-size: 0.8125rem;
@@ -518,7 +516,8 @@
       font-size: 0.8125rem;
       text-align: center;
       -webkit-box-sizing: border-box;
-              box-sizing: border-box; }
+              box-sizing: border-box;
+      z-index: 10; }
       .main-chart-box .donutchart .data-add span {
         position: relative;
         display: inline-block;
@@ -623,7 +622,8 @@
     padding-right: 0.9375rem;
     text-align: left;
     margin-top: 0.625rem;
-    margin-bottom: 1.5625rem; }
+    margin-bottom: 1.5625rem;
+    font-weight: bold; }
   .main-tip-box > a.stit.tit:after, .main-tip-box button.stit.tit:after {
     display: inline-block;
     content: "";
@@ -702,7 +702,7 @@
   height: auto;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  padding: 1.875rem 1.25rem 1.875rem 1.25rem;
+  padding: 1.875rem 1.25rem;
   border-radius: 0.3125rem; }
   .main-membershop-box .membership-cont > .ti {
     display: block;
@@ -733,7 +733,7 @@
       background-image: url(/img/main/vip.png); }
   .main-membershop-box .membership-cont .bar-code {
     position: absolute;
-    top: 3.125rem;
+    top: 3.4375rem;
     right: 1.25rem;
     width: 9.375rem;
     height: 3.125rem;
@@ -747,7 +747,8 @@
       line-height: 0.9375rem;
       text-align: center;
       font-size: 0.75rem;
-      display: block; }
+      display: block;
+      margin-top: 0.125rem; }
   .main-membershop-box .membership-cont > .tx {
     position: absolute;
     top: 50%;
@@ -825,8 +826,8 @@
     font-size: 1.4375rem;
     line-height: 120%;
     text-align: left;
-    margin-bottom: 1.5625rem;
-    font-weight: bold; }
+    padding-bottom: 1.5625rem;
+    font-weight: 600; }
     .main-fee-box .fee-cont > .tit + .fee-info {
       padding: 1.5625rem 0 1.25rem; }
   .main-fee-box .fee-cont > a.tit:after, .main-fee-box .fee-cont button.tit:after {
@@ -851,7 +852,8 @@
       .main-fee-box .fee-cont > .fee-info .target .tit {
         display: block;
         color: #000;
-        font-size: 1rem; }
+        font-size: 1rem;
+        font-weight: 400; }
         .main-fee-box .fee-cont > .fee-info .target .tit .icon-whole4 {
           margin: 0 0 0 0.1875rem;
           vertical-align: middle; }
@@ -870,6 +872,84 @@
     background: #f2f2f2; }
     .main-fee-box .fee-cont .line + .fee-info:last-child {
       padding-bottom: 1.25rem; }
+  .main-fee-box .fee-cont > .sum {
+    display: block;
+    padding: 0.1875rem 0;
+    font-size: 1.6875rem;
+    line-height: 1.875rem; }
+    .main-fee-box .fee-cont > .sum .ff-tg-medium {
+      font-size: 1.6875rem;
+      vertical-align: middle; }
+  .main-fee-box .fee-cont > .date {
+    display: block;
+    color: #959595;
+    font-size: 0.8125rem;
+    font-weight: 300; }
+  .main-fee-box .fee-cont > .ti {
+    display: inline-block;
+    width: auto;
+    margin: 0 0 0.1875rem;
+    font-size: 1rem;
+    text-align: left;
+    font-weight: 600; }
+  .main-fee-box .fee-cont > .tx {
+    margin-top: 3.4375rem;
+    font-size: 0.875rem;
+    font-weight: 300;
+    line-height: 1.25rem; }
+    .main-fee-box .fee-cont > .tx .bt {
+      color: #178bce;
+      font-size: inherit;
+      text-decoration: underline; }
+  .main-fee-box .fee-cont .list {
+    margin: 0.9375rem 0; }
+    .main-fee-box .fee-cont .list li {
+      display: inline-block;
+      width: 100%;
+      vertical-align: top;
+      padding: 0.25rem 0; }
+      .main-fee-box .fee-cont .list li .ti {
+        float: left;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.375rem; }
+      .main-fee-box .fee-cont .list li .tx {
+        float: right;
+        font-size: 1rem;
+        font-weight: 700; }
+        .main-fee-box .fee-cont .list li .tx button {
+          color: #ef4b49; }
+      .main-fee-box .fee-cont .list li .c-point {
+        color: #ef4b49; }
+      .main-fee-box .fee-cont .list li .f-type {
+        font-size: 1rem; }
+      .main-fee-box .fee-cont .list li .g-type {
+        color: #959595; }
+      .main-fee-box .fee-cont .list li .font-normal {
+        font-weight: 300; }
+    .main-fee-box .fee-cont .list + .btn-area {
+      margin-top: 1.0625rem; }
+  .main-fee-box .fee-cont .desc {
+    margin-top: 0.625rem;
+    color: #666666;
+    font-size: 0.8125rem;
+    font-weight: 300; }
+    .main-fee-box .fee-cont .desc .btn-tip {
+      width: 1.5rem;
+      height: 0.875rem;
+      margin: -0.1875rem 0 0 0.1875rem;
+      vertical-align: middle; }
+      .main-fee-box .fee-cont .desc .btn-tip .icon-badge-tip {
+        width: 100%;
+        height: 100%;
+        vertical-align: top; }
+  .main-fee-box .fee-cont .text_translation {
+    display: block;
+    padding: 0.625rem 0 0 0;
+    border-radius: 0.3125rem;
+    color: #000;
+    font-size: 0.75rem;
+    line-height: 1.25rem; }
 
 .main-fee-box .btn-area {
   overflow: hidden;
@@ -1280,8 +1360,8 @@ body.apphome {
 .section-box {
   position: relative;
   overflow: hidden;
-  margin: 1.5rem 1rem 0 1rem;
-  padding: 1.25rem 1.5rem;
+  margin: 1.75rem 1rem 0 1rem;
+  padding: 1.75rem 1.5rem;
   background: #fff;
   border-radius: 0.9375rem;
   -webkit-box-shadow: 0 0.625rem 0.9375rem #eaeaea;
@@ -1294,7 +1374,7 @@ body.apphome {
   .section-box.nogaps {
     padding: 0; }
     .section-box.nogaps .stit {
-      margin: 1.5rem 1.5rem 0.625rem 1.5rem; }
+      margin: 1.75rem 1.5rem 0.625rem 1.5rem; }
     .section-box.nogaps .main-charge-box .stit {
       margin-top: 23px; }
   .section-box.nogaps-top {
@@ -1307,8 +1387,7 @@ body.apphome {
     padding: 0 1.5rem; }
   .section-box .stit {
     margin-bottom: 0.3125rem;
-    font-size: 0.875rem;
-    font-weight: 500; }
+    font-size: 0.9375rem; }
     .section-box .stit.no-mt {
       margin-bottom: 0; }
     .section-box .stit .bt {
@@ -1396,7 +1475,7 @@ body.apphome {
       padding: 0.625rem 3.25rem;
       color: #959595;
       font-size: 0.75rem;
-      font-weight: 400; }
+      font-weight: 600; }
     .section-menu-box .menu-depth1 > li .depth2 ul {
       position: relative;
       padding-bottom: 0.9375rem; }
@@ -2658,7 +2737,8 @@ body.apphome {
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       text-overflow: ellipsis;
-      font-size: 1.5625rem; }
+      font-size: 1.4375rem;
+      font-weight: 600; }
     .main-charge-box .main-box-cont .tx {
       font-weight: 300;
       max-height: 2.375rem;
@@ -2734,16 +2814,15 @@ body.apphome {
         background-image: url(/img/main/bg_roaming06.png); }
       .main-charge-box.roaming .main-box-cont .tx {
         color: #959595;
-        width: 70%;
+        width: 80%;
         overflow: hidden;
         display: inline-block;
         white-space: normal;
         word-wrap: break-word;
-        -webkit-line-clamp: 3;
+        -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         text-overflow: ellipsis;
-        margin-top: 0;
-        max-height: 4.1875rem; }
+        margin-top: 0; }
       .main-charge-box.roaming .main-box-cont .bt {
         border: 1px solid #e5e5e5;
         background: #fff;
@@ -3023,6 +3102,30 @@ body.apphome {
   color: #666666;
   font-size: 0.875rem; }
 
+.main-direct-box .tit {
+  overflow: hidden;
+  display: -webkit-box;
+  max-height: 3.75rem;
+  line-height: 1.875rem;
+  white-space: normal;
+  word-wrap: break-word;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  font-size: 1.5625rem; }
+  .main-direct-box .tit span {
+    position: relative;
+    display: inline-block;
+    font-weight: 600; }
+    .main-direct-box .tit span:after {
+      display: inline-block;
+      content: "";
+      width: 0.40625rem;
+      height: 0.6875rem;
+      background: url(/img/ico/icon-link-arrow.png) no-repeat right center;
+      background-size: 6.5px 11px;
+      margin: 0 0 0.1875rem 0.5rem; }
+
 .main-direct-box > .ti {
   overflow: hidden;
   display: -webkit-box;
@@ -3127,6 +3230,21 @@ body.apphome {
         background: url(/img/ico/icon-link-arrow.png) no-repeat right center;
         background-size: 6.5px 11px;
         margin: 0 0 0.1875rem 0.5rem; }
+  .main-direct-box > button .tit,
+  .main-tapp-box > button .tit {
+    display: inline-block;
+    white-space: normal;
+    color: #000 !important;
+    font-size: 1.4375rem;
+    max-height: 3.75rem;
+    line-height: 1.875rem;
+    text-align: left;
+    white-space: normal;
+    word-wrap: break-word;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    font-weight: bold; }
   .main-direct-box > button .tx,
   .main-tapp-box > button .tx {
     display: block;
@@ -3198,7 +3316,7 @@ body.apphome {
       text-overflow: ellipsis;
       white-space: nowrap;
       vertical-align: middle;
-      font-weight: 300;
+      font-weight: 600;
       line-height: 1.375rem; }
       .charge-product .bt-cont-box .ti.ti-type {
         overflow: hidden;
@@ -3274,7 +3392,8 @@ body.apphome {
     background: url(/img/main/icon_category_add_06.png) no-repeat;
     background-size: 100%; }
   .charge-product.type-list .bt-cont-box .ti {
-    width: 63%; }
+    width: 63%;
+    font-weight: 500; }
   .charge-product.type-list .bt-cont-box .tx {
     -webkit-line-clamp: 3; }
 
@@ -3295,7 +3414,7 @@ body.apphome {
       width: 100%; }
   .accessories-box .slider-box .slick-dots {
     position: absolute;
-    top: 1.375rem;
+    top: 1.75rem;
     left: auto;
     right: 1.25rem;
     bottom: auto;
@@ -3330,7 +3449,7 @@ body.apphome {
 
 .main-tapp-box .ti {
   padding-top: 0.1875rem;
-  font-size: 1rem;
+  font-size: 0.875rem;
   overflow: hidden;
   display: -webkit-box;
   line-height: 1.1875rem;
@@ -3382,8 +3501,7 @@ body.apphome {
 
 .member-info-box > .ti {
   display: block;
-  font-size: 1.125rem;
-  font-weight: 500; }
+  font-size: 1.125rem; }
 
 .member-info-box > .tx {
   display: block;

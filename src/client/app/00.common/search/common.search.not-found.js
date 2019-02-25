@@ -276,7 +276,8 @@ Tw.CommonSearchNotFound.prototype = {
       }
       this.$keywordListBase.find('#recently_keyword_list').empty();
       _.each(this._recentKeyworList[this._nowUser],$.proxy(function (data,idx) {
-        this.$keywordListBase.find('#recently_keyword_list').append(this._recentKeywordTemplate({listData : data , xtractorIndex : idx+1 , index : idx}));
+        this.$keywordListBase.find('#recently_keyword_list').append(this._recentKeywordTemplate({listData : data ,
+          xtractorIndex : idx+1 , index : idx}));
       },this));
       //this.$keywordListBase.find('#recently_keyword_list') list
     }
@@ -319,7 +320,8 @@ Tw.CommonSearchNotFound.prototype = {
     var returnData = [];
     for(var i=0;i<this._recentKeyworList[this._nowUser].length;i++){
       if(this._recentKeyworList[this._nowUser][i].keyword.indexOf(keyword)>-1||
-        (!Tw.FormatHelper.isEmpty(this._recentKeyworList[this._nowUser][i].initial)&&this._recentKeyworList[this._nowUser][i].initial.indexOf(keyword)>-1)){
+        (!Tw.FormatHelper.isEmpty(this._recentKeyworList[this._nowUser][i].initial)&&
+          this._recentKeyworList[this._nowUser][i].initial.indexOf(keyword)>-1)) {
         if(
           this._nowUser==='logOutUser'&&
           !Tw.FormatHelper.isEmpty(this._recentKeyworList[this._nowUser][i].platForm)&&
@@ -328,7 +330,8 @@ Tw.CommonSearchNotFound.prototype = {
           continue;
         }
         returnData.push({
-          showStr : this._recentKeyworList[this._nowUser][i].keyword.replace(new RegExp(keyword,'g'),'<span class="highlight-text">'+keyword+'</span>'),
+          showStr : this._recentKeyworList[this._nowUser][i].keyword.replace(new RegExp(keyword,'g'),
+            '<span class="highlight-text">'+keyword+'</span>'),
           linkStr : this._recentKeyworList[this._nowUser][i].keyword
         });
       }

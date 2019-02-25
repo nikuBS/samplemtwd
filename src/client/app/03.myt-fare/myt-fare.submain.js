@@ -510,9 +510,13 @@ Tw.MyTFareSubMain.prototype = {
       }
       else if ( this.data.taxInvoice ) {
         this.$taxInv.parent().removeClass('btn-link-list').addClass('full-link-list');
+        this.$taxInv.find('button').append(Tw.MYT_TPL.FARE_SUBMAIN.TAX_TEMP);
+        this.$contribution.hide();
       }
       else if ( this.data.contribution ) {
         this.$contribution.parent().removeClass('btn-link-list').addClass('full-link-list');
+        this.$contribution.find('button').append(Tw.MYT_TPL.FARE_SUBMAIN.CONTB_TEMP);
+        this.$taxInv.hide();
       }
     }
   },

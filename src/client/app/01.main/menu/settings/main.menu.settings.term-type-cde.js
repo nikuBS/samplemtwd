@@ -83,6 +83,6 @@ Tw.MainMenuSettingsTermTypeCDE.prototype = {
     }, this));
     root.on('click', '.btn-floating', $.proxy(function () {
       this._popupService.close();
-    }, this))
+    }, this));
   }
 };

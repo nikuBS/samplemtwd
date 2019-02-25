@@ -25,7 +25,7 @@
     <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
     <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
     <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
-    <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
+    <script type="text/javascript" src="/js/common.js"></script> 
     <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
     
     <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
@@ -81,7 +81,7 @@
                                 <div class="dialog-ico"><i class="icon-dialog-emoji-56"><span class="blind">emoji</span></i></div>
                                 <button class="dialog-txt">
                                     <span class="name">윤*연 고객님, 안녕하세요.</span>
-                                    <span class="key">이번 달 요금안내서가 발행되었습니다.</span>
+                                    <span class="key">N월 요금안내서가 발행되었습니다.</span>
                                 </button>
                                 <div class="dialog-right-btn"><button class="icon-32px-exit"><span class="blind">닫기</span></button></div>
                             </div>
@@ -154,16 +154,17 @@
                                     </div>
                                 </div>
                                 <!-- //모바일 회선_잔여 데이터 -->
-
-                                <!-- MY 바로가기 -->
-                                <ul class="quick-menu-list"> 
-                                    <li><button class="bt"><i><img src="/img/svg/icon_80px_charge.svg" alt=""></i><span class="tit">나의 요금제</span></button></li><!-- 2019-02-14 말줄임표시 하기 위해 span 추가 -->
-                                    <li><button class="bt"><i><img src="/img/svg/icon_80px_tmembership.svg" alt=""></i><span class="tit">T멤버십</span></button></li><!-- 2019-02-14 말줄임표시 하기 위해 span 추가 -->
-                                    <li><button class="bt"><i><img src="/img/svg/icon_80px_discount2.svg" alt=""></i><span class="tit">혜택 / 할인</span></button></li><!-- 2019-02-14 말줄임표시 하기 위해 span 추가 -->
-                                    <li><button class="bt"><i><img src="/img/svg/icon_80px_immediate.svg" alt=""></i><span class="tit">즉시 납부</span></button></li><!-- 2019-02-14 말줄임표시 하기 위해 span 추가 -->
-                                </ul>
-                                <div class="btn-area"><button class="bt-link-tx underline">바로가기 편집</button></div>
-                                <!-- //MY 바로가기 -->
+                                <div class="bg-gradation off"><!-- 19.02.25 bg-gradation off 추가 -->
+                                    <!-- MY 바로가기 -->
+                                    <ul class="quick-menu-list"> 
+                                        <li><button class="bt"><i><img src="/img/svg/icon_80px_charge.svg" alt=""></i><span class="tit">나의 요금제</span></button></li><!-- 2019-02-14 말줄임표시 하기 위해 span 추가 -->
+                                        <li><button class="bt"><i><img src="/img/svg/icon_80px_tmembership.svg" alt=""></i><span class="tit">T멤버십</span></button></li><!-- 2019-02-14 말줄임표시 하기 위해 span 추가 -->
+                                        <li><button class="bt"><i><img src="/img/svg/icon_80px_discount2.svg" alt=""></i><span class="tit">혜택 / 할인</span></button></li><!-- 2019-02-14 말줄임표시 하기 위해 span 추가 -->
+                                        <li><button class="bt"><i><img src="/img/svg/icon_80px_immediate.svg" alt=""></i><span class="tit">즉시 납부</span></button></li><!-- 2019-02-14 말줄임표시 하기 위해 span 추가 -->
+                                    </ul>
+                                    <div class="btn-area"><button class="bt-link-tx underline">바로가기 편집</button></div>
+                                    <!-- //MY 바로가기 -->
+                                </div>
                             </div>
 
                             <!-- 이번 달 청구요금 -->
@@ -198,7 +199,7 @@
                                         </span>
                                     </button>
                                     <div class="btn-area">
-                                        <button class="bt">멤버십 혜택</button>
+                                        <button class="bt">T멤버십</button>
                                         <button class="bt">제휴 브랜드</button>
                                     </div>
                                 </div>
@@ -211,7 +212,7 @@
                                         <button class="tit">나의 요금을 확인해 보세요</button>
                                         <button class="fee-info"><!-- 2019-02-20 수정 -->
                                             <p class="target">
-                                                <span class="tit">이번 달 청구요금<i class="icon-whole4"><span class="blind">전체</span></i></span>
+                                                <span class="tit">N월 청구요금<i class="icon-whole4"><span class="blind">전체</span></i></span>
                                                 <span class="date"><span>2018.7.1.</span>~<span>2018.7.31.</span></span>
                                             </p>
                                             <p class="sum"><span>82,500</span>원</p>
@@ -316,34 +317,6 @@
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <!-- <div class="slider-box">
-                                                <ul class="slider">
-                                                    <li>
-                                                        <div class="stit">김민정님을 위한 멤버십 혜택</div>
-                                                        <div class="main-box-cont">
-                                                            <strong class="ti">20대 여성 고객님<br>취향저격 혜택</strong>
-                                                            <span class="tx">T멤버십 고객을 위한  혜택 추천</span>
-                                                            <button class="bt">혜택보러 가기</button>
-                                                        </div>
-                                                    </li>
-													<li>
-                                                        <div class="stit">김민정님을 위한 멤버십 혜택</div>
-                                                        <div class="main-box-cont">
-                                                            <strong class="ti">20대 여성 고객님<br>취향저격 혜택</strong>
-                                                            <span class="tx">T멤버십 고객을 위한  혜택 추천</span>
-                                                            <button class="bt">혜택보러 가기</button>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="stit">김민정님을 위한 멤버십 혜택</div>
-                                                        <div class="main-box-cont">
-                                                            <strong class="ti">20대 여성 고객님<br>취향저격 혜택</strong>
-                                                            <span class="tx">T멤버십 고객을 위한  혜택 추천</span>
-                                                            <button class="bt">혜택보러 가기</button>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div> -->
                                         </div>
                                     </div>
                                     <!--// .widget -->
@@ -352,43 +325,45 @@
                             <!-- //멤버십 혜택 -->
 
                             <!-- T끼리 데이터 선물 -->
-                            <div class="section-box">
-                                <div class="main-breakdown-box">
-                                    <!--<div class="stit c-point">T끼리 데이터 선물</div>--><!--2019.02.13 변경-->
-                                    <strong class="ti">잔여 데이터를 가족과 친구에게 선물해 보세요</strong>
-                                    <!--2019-02-20 터치영역수정-->
-                                    <button>
-                                        <ul class="list">
-                                            <li><strong class="ti">선물할 수 있는 데이터</strong> <em class="tx f-type c-point"><span class="ff-tg-medium">36.78</span>GB</em></li>
-                                            <li><strong class="ti">선물하기 남은 횟수</strong> <em class="tx c-point">T끼리 <span class="f-type ff-tg-medium">1</span>회</em></li>
-                                        </ul>
-                                    </button>
-                                    <!--//2019-02-20 터치영역수정-->
-                                    <div class="btn-area">
-                                        <button class="bt">선물하기</button>
+                            <!-- 2019-02-24 markup 구조 변경-->
+                            <div class="section-box nogaps">
+                                <div class="main-fee-box">
+                                    <div class="fee-cont">
+                                        <strong class="tit">잔여 데이터를 가족과<br/> 친구에게 선물해 보세요</strong>
+                                        <button>
+                                            <ul class="list">
+                                                <li><strong class="ti">선물할 수 있는 데이터</strong> <em class="tx f-type c-point"><span class="ff-tg-medium">36.78</span>GB</em></li>
+                                                <li><strong class="ti">선물하기 남은 횟수</strong> <em class="tx c-point">T끼리 <span class="f-type ff-tg-medium">1</span>회</em></li>
+                                            </ul>
+                                        </button>
                                     </div>
+                                    <div class="btn-area">
+                                        <button class="bt full">선물하기</button>
+                                    </div>                                    
                                 </div>
                             </div>
+                            <!-- //2019-02-24 markup 구조 변경-->
                             <!-- //T끼리 데이터 선물 -->
 
                             <!-- 데이터 충전 -->
-                            <div class="section-box">
-                                <div class="main-breakdown-box">
-                                    <!--<div class="stit c-point">데이터 충전</div>--><!--2019.02.13 변경-->
-                                    <strong class="ti">데이터가 부족하시다면 즉시 충전해 보세요</strong>
-                                    <!--2019-02-20 터치영역수정-->
-                                    <button>
-                                        <ul class="list">
-                                            <li><strong class="ti">잔여 데이터</strong> <em class="tx f-type c-point"><span class="ff-tg-medium">500</span>MB</em></li>
-                                            <li><strong class="ti">리필쿠폰 남은 개수</strong> <em class="tx c-point"><span class="f-type ff-tg-medium">2</span>장</em></li>
-                                        </ul>
-                                    </button>
-                                    <!-- //2019-02-20 터치영역수정-->
-                                    <div class="btn-area">
-                                        <button class="bt">충전하기</button>
+                            <!-- 2019-02-24 markup 구조 변경-->
+                            <div class="section-box nogaps">                                
+                                <div class="main-fee-box">
+                                    <div class="fee-cont">
+                                        <strong class="tit">데이터가 부족하시다면<br/> 즉시 충전해 보세요</strong>
+                                        <button>
+                                            <ul class="list">
+                                                <li><strong class="ti">잔여 데이터</strong> <em class="tx f-type c-point"><span class="ff-tg-medium">36.78</span>GB</em></li>
+                                                <li><strong class="ti">리필쿠폰 남은 개수</strong> <em class="tx c-point">T끼리 <span class="f-type ff-tg-medium">1</span>회</em></li>
+                                            </ul>
+                                        </button>
                                     </div>
-                                </div>
+                                    <div class="btn-area">
+                                        <button class="bt full">충전하기</button>
+                                    </div>                                    
+                                </div>                                
                             </div>
+                            <!-- //2019-02-24 markup 구조 변경-->
                             <!-- //데이터 충전 -->
 
                             <!-- 당신을 위한 기획전 -->

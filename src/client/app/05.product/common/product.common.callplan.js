@@ -71,7 +71,7 @@ Tw.ProductCommonCallplan.prototype = {
     this.$container.on('click', '.fe-bpcp', $.proxy(this._detectBpcp, this));
     this.$container.on('click', '.fe-banner_link', $.proxy(this._onBannerLink, this));
     this.$container.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
-    this.$container.on('click', '.fe-link-internal', $.proxy(this._openInternalUrl, this));
+    // this.$container.on('click', '.fe-link-internal', $.proxy(this._openInternalUrl, this));
 
     this.$contents.on('click', '[data-contents]', $.proxy(this._openContentsDetailPop, this, 'contents'));
 

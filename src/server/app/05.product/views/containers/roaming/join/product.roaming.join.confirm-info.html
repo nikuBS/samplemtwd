@@ -299,10 +299,7 @@
 <% include ../../../components/javascript.component.html %>
 <script>
     $(document).ready(function () {
-      new Tw.ProductRoamingJoinConfirmInfo($('.wrap') < % -JSON.stringify(prodBffInfo) % >, null, null, null,
-    <%
-      -JSON.stringify(prodTypeInfo) % >, '<%- prodId %>';
-    )
+      new Tw.ProductRoamingJoinConfirmInfo($('.wrap'),<%- JSON.stringify(prodBffInfo) %>, null, null, null,<%- JSON.stringify(prodTypeInfo) %>, '<%- prodId %>')
     });
 </script>
 <% include ../../../components/end.component.html %>

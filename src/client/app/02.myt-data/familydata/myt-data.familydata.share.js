@@ -55,7 +55,7 @@ Tw.MyTDataFamilyShare.prototype = {
     this._validateShareAmount();
   },
 
-  _validateShareAmount: function(e) {
+  _validateShareAmount: function() {
     var sValue = this.$amountInput
       .val()
       .replace(/^0*/, '')

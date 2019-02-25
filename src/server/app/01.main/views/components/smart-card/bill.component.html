@@ -7,7 +7,7 @@
     {{#if showData}}
     <div class="main-fee-box">
         <div class="fee-cont">
-            <button class="tit">나의 요금을 확인해 보세요</button>
+            <a href="/myt-fare/submain" class="tit">나의 요금을 확인해 보세요</a>
             <div class="fee-info">
                 <p class="target">
                     {{#if isActRep}}
@@ -23,16 +23,16 @@
         <div class="btn-area">
             {{#if isActRep}}
             <button id="fe-bt-payment" class="bt" data-svcattrcd="<%= svcInfo.svcAttrCd %>">납부하기</button>
-            <a href="/myt-data/hotdata" class="bt">실시간 사용요금</a>
+            <a href="/myt-fare/bill/hotbill" class="bt">실시간 사용요금</a>
             {{else}}
-            <a href="/myt-data/hoddata" class="bt full">실시간 사용요금</a>
+            <a href="/myt-fare/bill/hotbill" class="bt full">실시간 사용요금</a>
             {{/if}}
         </div>
     </div>
     {{else}}
     <div class="main-fee-box">
         <div class="fee-cont">
-            <button class="tit">나의 요금을 확인해 보세요</button>
+            <a href="/myt-fare/submain" class="tit">나의 요금을 확인해 보세요</a>
             <div class="fee-info">
                 <p class="target">
                     지난 달 이용요금이 없습니다<br>요금안내서가 발행되면 알려드릴게요.
@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="btn-area">
-            <a href="/myt-data/hotdata" class="bt full">실시간 사용요금</a>
+            <a href="/myt-fare/bill/hotbill" class="bt full">실시간 사용요금</a>
         </div>
     </div>
     {{/if}}

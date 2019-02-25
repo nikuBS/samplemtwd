@@ -71,7 +71,7 @@ class CustomerSvcInfoNotice extends TwViewController {
   private _getReqParams(page: any, tworldChannel: any): any {
     let params = {
       page: (page - 1) < 0 ? 0 : page - 1,
-      size: 20
+      size: 10
     };
 
     if (this._category === 'tworld') {
@@ -139,7 +139,7 @@ class CustomerSvcInfoNotice extends TwViewController {
           category: this._category,
           categoryLabel: CUSTOMER_NOTICE_CATEGORY[this._category.toUpperCase()],
           data: this._convertData(data.result),
-          paging: CommonHelper.getPaging(this._baseUrl, 20, 3, page, data.result.totalElements),
+          paging: CommonHelper.getPaging(this._baseUrl, 10, 3, page, data.result.totalElements),
           tworldChannel: tworldChannel
         }));
       });
