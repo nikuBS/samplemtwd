@@ -231,6 +231,10 @@
     display: block;
     border-top: 1px solid #f2f2f2;
     margin-bottom: 1.5625rem; }
+  .bg-gradation.off {
+    padding-top: 0;
+    background-color: transparent;
+    background-image: inherit; }
 
 .main-breakdown-box > .sum {
   display: block;
@@ -360,7 +364,7 @@
   .main-error-box .desc2 {
     position: absolute;
     left: 0;
-    bottom: 20px;
+    bottom: 22px;
     width: 100%;
     color: #666666;
     font-size: 0.8125rem;
@@ -516,7 +520,8 @@
       font-size: 0.8125rem;
       text-align: center;
       -webkit-box-sizing: border-box;
-              box-sizing: border-box; }
+              box-sizing: border-box;
+      z-index: 10; }
       .main-chart-box .donutchart .data-add span {
         position: relative;
         display: inline-block;
@@ -622,7 +627,7 @@
     text-align: left;
     margin-top: 0.625rem;
     margin-bottom: 1.5625rem;
-    font-weight: bold; }
+    font-weight: 600; }
   .main-tip-box > a.stit.tit:after, .main-tip-box button.stit.tit:after {
     display: inline-block;
     content: "";
@@ -851,7 +856,8 @@
       .main-fee-box .fee-cont > .fee-info .target .tit {
         display: block;
         color: #000;
-        font-size: 1rem; }
+        font-size: 1rem;
+        font-weight: 400; }
         .main-fee-box .fee-cont > .fee-info .target .tit .icon-whole4 {
           margin: 0 0 0 0.1875rem;
           vertical-align: middle; }
@@ -887,7 +893,7 @@
     display: inline-block;
     width: auto;
     margin: 0 0 0.1875rem;
-    font-size: 1.5625rem;
+    font-size: 1rem;
     text-align: left;
     font-weight: 600; }
   .main-fee-box .fee-cont > .tx {
@@ -909,6 +915,7 @@
       .main-fee-box .fee-cont .list li .ti {
         float: left;
         font-size: 1rem;
+        font-weight: 400;
         line-height: 1.375rem; }
       .main-fee-box .fee-cont .list li .tx {
         float: right;
