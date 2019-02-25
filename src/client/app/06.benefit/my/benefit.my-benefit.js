@@ -27,6 +27,8 @@ Tw.BenefitMyBenefit.prototype = {
 
   _bindEvent: function () {
     this.$payBtn.on('click', $.proxy(this._onClickPay, this));
+    // BETA 버젼에서 임시로 외부링크로 이동 (TODO Grand open 시 원복 )
+    this.$container.find('[data-id="fe-membership"]').on('click' , $.proxy(this._onClickMembership, this));
   },
 
   _onClickPay: function () {
@@ -63,5 +65,14 @@ Tw.BenefitMyBenefit.prototype = {
     // back으로 돌아오면 url에 hash 때문에 actionsheet 오동작
     this._historyService.replace('/benefit/my');
     this._historyService.goLoad(settingGoUrl);
+  },
+  /**
+   * BETA 버젼에서 임시로 외부링크로 이동
+   * @param e
+   * @private
+   */
+  _onClickMembership: function (e) {
+    // TODO Grand 버젼에서 삭제 필요
+    Tw.CommonHelper.openUrlExternal("http://m.tmembership.tworld.co.kr/mobileWeb/html/main.jsp");
   }
 };
