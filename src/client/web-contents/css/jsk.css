@@ -1652,7 +1652,8 @@
     width: 3.75rem;
     height: 3.75rem;
     background: url(/img/ico/bg-donut-small.png) no-repeat 0 0;
-    background-size: 100% 100%; }
+    background-size: 100% 100%;
+    position: relative; }
     .donut-chart.small .donut-chart-area {
       width: 3.75rem;
       height: 3.75rem;
@@ -1667,6 +1668,16 @@
               transform: rotate(180deg); }
     .donut-chart.small .c100 .slice {
       clip: rect(0em, 60px, 60px, 30px); }
+    .donut-chart.small:after {
+      display: block;
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 3.75rem;
+      height: 3.75rem;
+      background: url(/img/ico/web_dote.png) no-repeat 0 0;
+      background-size: 100% 100%; }
 
 /* widget */
 .horizon-fullbox .widget-box {

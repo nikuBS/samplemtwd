@@ -556,7 +556,7 @@ skt_landing.action = {
         infinite: false,
         speed: 300,
         slidesToShow: 1,
-        //adaptiveHeight: true,
+        adaptiveHeight: true,
         nextArrow:'.ico-home-tab-store',
         prevArrow:'.ico-home-tab-my',
         touchMove : true,

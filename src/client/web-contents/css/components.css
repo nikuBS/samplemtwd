@@ -6072,6 +6072,7 @@
       margin-top: -0.1875rem;
       vertical-align: middle; }
   .link-list li dd {
+    position: relative;
     display: table-cell;
     width: 60%;
     height: 3.25rem;
@@ -6080,6 +6081,10 @@
     text-align: right; }
     .link-list li dd .val {
       display: inline-block;
+      position: absolute;
+      top: 50%;
+      right: 18px;
+      margin-top: -9px;
       font-size: 0.9375rem; }
     .link-list li dd .str {
       font-weight: 700;
@@ -12139,10 +12144,11 @@ a.bt-link-tx.underline.small {
       left: 0.75rem;
       right: 0.75rem; }
     .productinfoscroll-box .product-info .title {
-      display: block;
+      display: -webkit-box;
       overflow: hidden;
       text-overflow: ellipsis;
-      white-space: nowrap;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
       word-break: break-all;
       color: #000;
       font-size: 0.875rem;
@@ -12158,7 +12164,8 @@ a.bt-link-tx.underline.small {
       .productinfoscroll-box .product-info .info .money {
         display: inline-block;
         margin: 0 0.0625rem 0 0.5rem;
-        font-size: 1rem; }
+        font-size: 1rem;
+        vertical-align: -0.0625rem; }
       .productinfoscroll-box .product-info .info .unit {
         font-size: 1rem; }
     .productinfoscroll-box .product-info .type {
@@ -14833,11 +14840,6 @@ a.bt-link-tx.underline.small {
   font-size: 0.8125rem; }
 
 .add-prd-wrap .list-comp-lineinfo li .lineinfo-data .info-title {
-  display: inline-block;
-  max-width: 92%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   font-size: 1.125rem; }
   .add-prd-wrap .list-comp-lineinfo li .lineinfo-data .info-title .unit {
     font-size: 1.125rem; }
@@ -16497,7 +16499,8 @@ a.bt-link-tx.underline.small {
     width: 3.75rem;
     height: 3.75rem;
     background: url(/img/ico/bg-donut-small.png) no-repeat 0 0;
-    background-size: 100% 100%; }
+    background-size: 100% 100%;
+    position: relative; }
     .donut-chart.small .donut-chart-area {
       width: 3.75rem;
       height: 3.75rem;
@@ -16512,6 +16515,16 @@ a.bt-link-tx.underline.small {
               transform: rotate(180deg); }
     .donut-chart.small .c100 .slice {
       clip: rect(0em, 60px, 60px, 30px); }
+    .donut-chart.small:after {
+      display: block;
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 3.75rem;
+      height: 3.75rem;
+      background: url(/img/ico/web_dote.png) no-repeat 0 0;
+      background-size: 100% 100%; }
 
 /* widget */
 .horizon-fullbox .widget-box {

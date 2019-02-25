@@ -154,7 +154,7 @@ input.textarea, select, button {
   line-height: 1.4;
   letter-spacing: -0.03em; }
 
-input[type=text], input[type=file], input[type=password], input[type=number], input[type=email], input[type=tel] {
+input[type=text], input[type=file], input[type=password], input[type=number], input[type=email] {
   border: 1px solid #d4d4d4;
   outline: none; }
 

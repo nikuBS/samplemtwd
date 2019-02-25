@@ -1030,6 +1030,8 @@ body.bg-gray {
   z-index: 200;
   overflow-x: hidden;
   /* galaxy s2 bug fixed : overflow-x, overflow-y not support */ }
+  .popup-page .page-header {
+    border-bottom: 1px solid #e5e5e5; }
   .popup-page .header-wrap {
     position: fixed;
     border-bottom: 1px solid #e5e5e5; }
@@ -2804,7 +2806,7 @@ body.bg-gray {
   padding: 3.75rem 1.25rem 0;
   background: #676767;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   background-position: 100%; }
   .bg-productdetail .productdetails-bg.t-logo {
     background: #676767; }
