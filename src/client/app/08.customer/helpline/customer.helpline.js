@@ -137,7 +137,7 @@ Tw.CustomerHelpline.prototype = {
       {
         hbs: 'actionsheet01',
         layer: true,
-        btnfloating: { 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
+        btnfloating: { class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         data: [{ list: data }]
       },
       $.proxy(this._handleOpenSelectTypePopup, this)
@@ -157,7 +157,7 @@ Tw.CustomerHelpline.prototype = {
       {
         hbs: 'actionsheet01',
         layer: true,
-        btnfloating: { 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
+        btnfloating: { class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         data: [{ list: data }]
       },
       $.proxy(this._handleOpenSelectAreaPopup, this)
@@ -182,7 +182,7 @@ Tw.CustomerHelpline.prototype = {
       {
         hbs: 'actionsheet01',
         layer: true,
-        btnfloating: { 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
+        btnfloating: { class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         data: [{ list: times }]
       },
       $.proxy(this._handleOpenSelectTimePopup, this)
@@ -258,7 +258,7 @@ Tw.CustomerHelpline.prototype = {
         reserveType: (this._reservationType || 0).toString(),
         reserveArea: (this._reservationArea || 1).toString(),
         reserveTime: this._reservationDate + this._reservationTime,
-        reserveSvcNum: this._reservationPhoneNum
+        reserveSvcNum: this.$areaPhone.find('input').val()
       })
       .done($.proxy(this._successSubmit, this));
   },
