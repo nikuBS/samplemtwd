@@ -136,7 +136,7 @@
     <!-- .cont-box -->
     <div class="cont-box nogaps-btm">
         <div class="statement-cont type2">
-            <div class="single-list">
+            <div class="single-list{{#unless rootItem.prodId }} item1{{/unless}}">
                 <span class="title">
                     {{!-- 주석 아이콘 --}}
                     {{#if_icon rootItem.label }}
@@ -311,7 +311,7 @@
                     </div>
                     <% } %>
 
-                    <div class="detail-bill">
+                    <div class="detail-bill" id="fe-bill-sum-list">
                         <ul data-target="hbPaidAmtSvcCdListArea">
                         </ul>
                     </div>

@@ -39,6 +39,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
     if ( this.resData.reqQuery.line ) {
       //특정 회선 선택
       this.$wrapHbPaidAmtSvcCdListArea.hide();
+      $('#fe-bill-sum-list').hide();
       this._getUseBillsInfo();
       this._searchNmSvcTypeFun();
     }
@@ -47,7 +48,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       this._getBillsDetailInfo();
 
       this._svcHbDetailList(
-        this._sortBySvcType(this.resData.commDataInfo.joinSvcList),
+        this._sortBySvcTypeMain(this.resData.commDataInfo.joinSvcList),
         this.$hbPaidAmtSvcCdListArea,
         this.$entryTplPaidAmtSvcCdList
       );
@@ -392,7 +393,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       });
 
       // Tw.Logger.info('[ rootNodes ] : ', rootNodes);
-      this._svcHbDetailList(this._sortBySvcType(rootNodes), this.$hbDetailListArea, this.$entryTplBill);
+      this._svcHbDetailList(this._sortBySvcTypeDetail(rootNodes), this.$hbDetailListArea, this.$entryTplBill);
 
       //위젯 아코디언 초기화
       skt_landing.widgets.widget_accordion($('.widget'));
@@ -504,12 +505,14 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
   },
 
   /**
-   * svc 이름으로 소팅
+   * svc 이름으로 소팅(상단 메인 요금 부분)
+   * 휴대폰(T Pocket-Fi 포함)→T Login→T WiBro→집전화→IPTV→인터넷
    * @param arr
    * @returns {*} 정렬된 배열
    * @private
    */
-  _sortBySvcType: function(arr){
+  _sortBySvcTypeMain: function(arr){
+    // DV001-14479 이슈로 메인과 상세 부분 정렬을 분기
     arr = _.sortBy(arr, function(obj){
       var sortNo = 0;
       switch ( obj.label || obj.svcNm ) {
@@ -523,6 +526,34 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
         case Tw.MYT_FARE_BILL_GUIDE.SVCNM_TV :
         case Tw.MYT_FARE_BILL_GUIDE.SVCNM_IPTV : sortNo = 5; break;
         case Tw.MYT_FARE_BILL_GUIDE.SVCNM_INET : sortNo = 6; break;
+      }
+      return sortNo;
+    });
+    return arr;
+  },
+
+  /**
+   * svc 이름으로 소팅(하단 상세 요금 부분)
+   * 휴대폰(T Pocket-Fi 포함) → T Login → 인터넷 → 집전화 → IPTV
+   * @param arr
+   * @returns {*} 정렬된 배열
+   * @private
+   */
+  _sortBySvcTypeDetail: function(arr){
+    // DV001-14479 이슈로 메인과 상세 부분 정렬을 분기
+    arr = _.sortBy(arr, function(obj){
+      var sortNo = 0;
+      switch ( obj.label || obj.svcNm ) {
+        case Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_0 :
+        case Tw.MYT_FARE_BILL_GUIDE.PHONE_TYPE_1 : sortNo = 0; break;
+        case Tw.MYT_FARE_BILL_GUIDE.SVCNM_TPOCKET : sortNo = 1; break;
+        case Tw.MYT_FARE_BILL_GUIDE.SVCNM_TLOGIN : sortNo = 2; break;
+        case Tw.MYT_FARE_BILL_GUIDE.SVCNM_TWIBRO : sortNo = 3; break;
+        case Tw.MYT_FARE_BILL_GUIDE.SVCNM_TEL_0 :
+        case Tw.MYT_FARE_BILL_GUIDE.SVCNM_TEL_1 : sortNo = 5; break;
+        case Tw.MYT_FARE_BILL_GUIDE.SVCNM_TV :
+        case Tw.MYT_FARE_BILL_GUIDE.SVCNM_IPTV : sortNo = 6; break;
+        case Tw.MYT_FARE_BILL_GUIDE.SVCNM_INET : sortNo = 4; break;
       }
       return sortNo;
     });
