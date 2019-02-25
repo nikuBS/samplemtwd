@@ -205,7 +205,7 @@ Tw.MyTFareBillGuideIntegratedRep.prototype = {
       date: this.paramDate,
       line: this.paramLine
     };
-    Tw.CommonHelper.startLoading(this.$container, 'grey', true);
+    Tw.CommonHelper.startLoading(this.$container, 'grey');
     // // Tw.Logger.info('[param]', param);
     // // Tw.Logger.info('[param]2', '/myt-fare/billguide/guide?'+ $.param(param));
     this._history.goLoad('/myt-fare/billguide/guide?' + $.param(param));

@@ -146,7 +146,7 @@ Tw.MyTJoinWireInetPhoneNumChange.prototype = {
       return;
     }
 
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading('.container', 'grey');
 
     this._apiService.request(Tw.API_CMD.BFF_05_0164, {phoneNum: phNum})
       .done($.proxy(function (resp) {

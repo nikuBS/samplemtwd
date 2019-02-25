@@ -68,7 +68,7 @@ Tw.ProductMobileplanSettingLocationSearch.prototype = {
     //   return ;
     // }
 
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading('.container', 'grey');
 
     Tw.Api.request(Tw.API_CMD.BFF_10_0044, { areaNm : encodeURIComponent(keyword) })
       .done($.proxy(function (resp) {

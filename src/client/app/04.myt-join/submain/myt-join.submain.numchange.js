@@ -148,7 +148,7 @@ Tw.MyTJoinPhoneNumChange.prototype = {
       num2 : numArr[2]
     };
 
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading('.container', 'grey');
 
     this._apiService.request(Tw.API_CMD.BFF_05_0185, param)
       .done($.proxy(function (resp) {

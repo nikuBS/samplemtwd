@@ -120,7 +120,7 @@ Tw.MyTJoinPhoneNumChgAlarm.prototype = {
       return;
     }
 
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading('.container', 'grey');
     // 신청/변경 call api
     this._apiService.request(Tw.API_CMD.BFF_05_0182, param)
       .done($.proxy(function (resp) {

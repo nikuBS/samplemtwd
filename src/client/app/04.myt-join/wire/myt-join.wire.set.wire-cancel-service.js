@@ -564,7 +564,7 @@ Tw.MyTJoinWireSetWireCancelService.prototype = {
     // var thisMain = this;
     this.dataLoading.show();
     $('#divEmpty').hide();
-    Tw.CommonHelper.startLoading('[data-target="dataLoading"]', 'grey', true);
+    Tw.CommonHelper.startLoading('[data-target="dataLoading"]', 'grey');
     // 스크롤시에 로딩바의 위치가 바뀌므로 조정한다.
     var loadingBarY = parseInt($('.tw-loading').css('top'),0);
     var containerY = $('.container').offset().top;

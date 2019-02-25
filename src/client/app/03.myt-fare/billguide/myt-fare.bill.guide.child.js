@@ -167,7 +167,7 @@ Tw.MyTFareBillGuideChild.prototype = {
         date: this.paramDate,
         line: this.resData.reqQuery.line
       };
-      Tw.CommonHelper.startLoading(this.$container, 'grey', true);
+      Tw.CommonHelper.startLoading(this.$container, 'grey');
       this._history.goLoad('/myt-fare/billguide/child?' + $.param(param));
     }
 

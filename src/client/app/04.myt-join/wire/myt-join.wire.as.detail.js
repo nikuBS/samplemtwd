@@ -39,7 +39,7 @@ Tw.MyTJoinWireASDetail.prototype = {
 
       this._popupService.close();
 
-      Tw.CommonHelper.startLoading('.container', 'grey', true);
+      Tw.CommonHelper.startLoading('.container', 'grey');
 
       this._apiService.request(Tw.API_CMD.BFF_05_0150, { troubleNum: this._troubleNum })
         .done($.proxy(function (resp) {
