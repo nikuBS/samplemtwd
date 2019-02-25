@@ -51,7 +51,7 @@ Tw.LineLayerComponent.prototype = {
       if ( cnt > 0 ) {
         setTimeout($.proxy(function () {
           this._historyService.goLoad('/common/member/line/register?type=' + layerType);
-        }, this), 2000);
+        }, this), 1000);
       }
     }
   },
