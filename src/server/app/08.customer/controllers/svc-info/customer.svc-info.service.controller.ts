@@ -45,7 +45,7 @@ class CustomerUseguideService extends TwViewController {
 
   united: Array<String> = [];
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any): void {
     res.render('svc-info/customer.svc-info.service.html', {
       svcInfo, 
       pageInfo, 
