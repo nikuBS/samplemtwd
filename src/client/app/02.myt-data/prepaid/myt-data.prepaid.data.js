@@ -10,7 +10,7 @@ Tw.MyTDataPrepaidData = function (rootEl) {
   this._popupService = Tw.Popup;
   this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-check-recharge'));
   this._historyService = new Tw.HistoryService(rootEl);
-  this._backAlert = new Tw.BackAlert(rootEl);
+  this._backAlert = new Tw.BackAlert(rootEl, true);
 
   this._cachedElement();
   this._bindEvent();

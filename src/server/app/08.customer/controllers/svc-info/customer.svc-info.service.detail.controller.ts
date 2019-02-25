@@ -19,7 +19,7 @@ class CustomerUseguideService extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any): void {
     const { listIndex, subIndex, code } = {
       code: req.query.code,
       listIndex: this.findIndex(req.query.code, 'listIndex'),
