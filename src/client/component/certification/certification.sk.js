@@ -187,6 +187,7 @@ Tw.CertificationSk.prototype = {
     this.$errorConfirmTime = $popupContainer.find('#aria-sms-exp-desc6');
     this.$errorCertAddTime = $popupContainer.find('#aria-sms-exp-desc7');
     this.$errorConfirmCnt = $popupContainer.find('#aria-sms-exp-desc8');
+    this.$errorCertStop = $popupContainer.find('#aria-sms-exp-desc9');
 
     $popupContainer.on('click', '#fe-other-cert', $.proxy(this._onClickOtherCert, this));
     $popupContainer.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
@@ -470,9 +471,11 @@ Tw.CertificationSk.prototype = {
     this.$errorCertTime.addClass('none');
     this.$errorCertCnt.addClass('none');
     this.$errorCertAddTime.addClass('none');
+    this.$errorCertStop.addClass('none');
   },
   _clearConfirmError: function () {
     this.$errorConfirm.addClass('none');
     this.$errorConfirmTime.addClass('none');
+    this.$errorConfirmCnt.addClass('none');
   }
 };
