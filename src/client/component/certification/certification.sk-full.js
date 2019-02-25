@@ -75,6 +75,7 @@ Tw.CertificationSkFull.prototype = {
     this.$errorCertTime = $popupContainer.find('#aria-cert-num3');
     this.$errorCertCount = $popupContainer.find('#aria-cert-num4');
     this.$errorCertAddTime = $popupContainer.find('#aria-cert-num5');
+    this.$errorCertStop = $popupContainer.find('#aria-cert-num6');
     this.$errorLoginCert = $popupContainer.find('#aria-phone-err1');
     this.$errorLoginTime = $popupContainer.find('#aria-phone-err2');
     this.$errorLoginCnt = $popupContainer.find('#aria-phone-err3');
@@ -313,10 +314,12 @@ Tw.CertificationSkFull.prototype = {
     this.$errorCertTime.addClass('none');
     this.$errorCertCount.addClass('none');
     this.$errorCertAddTime.addClass('none');
+    this.$errorCertStop.addClass('none');
   },
   _clearConfirmError: function () {
     this.$errorLoginCert.addClass('none');
     this.$errorLoginTime.addClass('none');
+    this.$errorLoginCnt.addClass('none');
   }
 };
 

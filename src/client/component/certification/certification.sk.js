@@ -187,6 +187,7 @@ Tw.CertificationSk.prototype = {
     this.$errorConfirmTime = $popupContainer.find('#aria-sms-exp-desc6');
     this.$errorCertAddTime = $popupContainer.find('#aria-sms-exp-desc7');
     this.$errorConfirmCnt = $popupContainer.find('#aria-sms-exp-desc8');
+    this.$errorCertStop = $popupContainer.find('#aria-sms-exp-desc9');
 
     $popupContainer.on('click', '#fe-other-cert', $.proxy(this._onClickOtherCert, this));
     $popupContainer.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
@@ -346,21 +347,19 @@ Tw.CertificationSk.prototype = {
   },
   _onSuccessCert: function (reCert, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      if ( resp.result.corpPwdAuthYn === 'Y' ) {
-
-      } else {
-
-
-      }
       this._seqNo = resp.result.seqNo;
       this._clearCertError();
-      this.$validCert.removeClass('none');
-      if ( !reCert ) {
-        this.$btReCert.parent().addClass('none');
-        this.$btCert.parent().addClass('none');
-        this.$btCertAdd.parent().removeClass('none');
-        this._addTimer = setTimeout($.proxy(this._expireAddTime, this), Tw.SMS_CERT_TIME);
-        this._addTime = new Date().getTime();
+      if ( resp.result.corpPwdAuthYn === 'Y' ) {
+        new Tw.CertificationBiz().open();
+      } else {
+        this.$validCert.removeClass('none');
+        if ( !reCert ) {
+          this.$btReCert.parent().addClass('none');
+          this.$btCert.parent().addClass('none');
+          this.$btCertAdd.parent().removeClass('none');
+          this._addTimer = setTimeout($.proxy(this._expireAddTime, this), Tw.SMS_CERT_TIME);
+          this._addTime = new Date().getTime();
+        }
       }
     } else if ( resp.code === this.SMS_ERROR.ATH2003 ) {
       this._clearCertError();
@@ -472,9 +471,11 @@ Tw.CertificationSk.prototype = {
     this.$errorCertTime.addClass('none');
     this.$errorCertCnt.addClass('none');
     this.$errorCertAddTime.addClass('none');
+    this.$errorCertStop.addClass('none');
   },
   _clearConfirmError: function () {
     this.$errorConfirm.addClass('none');
     this.$errorConfirmTime.addClass('none');
+    this.$errorConfirmCnt.addClass('none');
   }
 };
