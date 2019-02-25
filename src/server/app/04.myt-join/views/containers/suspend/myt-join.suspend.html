@@ -96,8 +96,7 @@
 <!--// #skip_navigation -->
 <script>
   $(document).ready(function () {
-    new Tw.MyTJoinSuspend($('#fe-myt-join-suspend') < % -JSON.stringify({ suspend }) % >
-  )
+    new Tw.MyTJoinSuspend($('#fe-myt-join-suspend'), <%- JSON.stringify({ suspend }) %> );
   });
 </script>
 <% include ../../components/end.component.html %>

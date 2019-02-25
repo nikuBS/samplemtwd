@@ -117,11 +117,16 @@
 </body>
 <% include ../../../components/javascript.component.html %>
 <script>
-  $(document).ready(function () {
-    new Tw.ProductRoamingSettingRoamingAlarm($('.wrap'), '<%- JSON.stringify(prodTypeInfo) %>' < % -JSON.stringify(prodBffInfo) % >,
-  <%
-    -JSON.stringify(svcInfo) % >, '<%- prodId %>';
-  )
-  });
+  $(document).ready(
+    function () {
+      new Tw.ProductRoamingSettingRoamingAlarm(
+        $('.wrap'),
+        '<%- JSON.stringify(prodTypeInfo) %>',
+        <%- JSON.stringify(prodBffInfo) %>,
+        <%-JSON.stringify(svcInfo) %>,
+        '<%- prodId %>'
+      )
+    }
+  );
 </script>
 <% include ../../../components/end.component.html %>

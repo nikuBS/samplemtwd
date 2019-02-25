@@ -74,7 +74,7 @@
 <script>
     $(document).ready(function () {
         new Tw.MyTDataFamilyShareImmediately($('#tab1-tab'));
-      new Tw.MyTDataFamilyShareMonthly($('#tab2-tab') < %= monthly.regularShrYn === "Y" % >
+        new Tw.MyTDataFamilyShareMonthly($('#tab2-tab'), <%= monthly.regularShrYn === "Y" %>);
     )
     });
 </script>
