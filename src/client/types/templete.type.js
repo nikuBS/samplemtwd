@@ -580,7 +580,9 @@ Tw.MYT_TPL = {
       '<span class="info-sub">{{svcNum}}</span>' +
       '{{/if}}' +
     '<span class="price">{{amt}}</span>' +
-    '</span></button></li>'
+    '</span></button></li>',
+    TAX_TEMP: '<span class="inner"><span class="tit">세금계산서 재발행</span></span>',
+    CONTB_TEMP: '<span class="inner"><span class="tit">기부금 / 후원금 납부내역</span></span>'
   },
   JOIN_SUBMAIN: {
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"' +
