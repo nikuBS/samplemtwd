@@ -181,10 +181,10 @@
   $(document).ready(function () {
     var oMyTWireInfo = new Tw.MyTJoinWireModifyAddress( $('#fe-wrap'), {
       reqQuery: <%-JSON.stringify(reqQuery) %>,
-      mbrNm;: <%-JSON.stringify(svcInfo.mbrNm) %>,
-      resDataInfo;: <%-JSON.stringify(resDataInfo) %>,
-      commDataInfo;: <%-JSON.stringify(commDataInfo) %>
-  } )
+      mbrNm: <%-JSON.stringify(svcInfo.mbrNm) %>,
+      resDataInfo: <%-JSON.stringify(resDataInfo) %>,
+      commDataInfo: <%-JSON.stringify(commDataInfo) %>
+  } );
   });
 </script>
 <% include ../../components/end.component.html %>

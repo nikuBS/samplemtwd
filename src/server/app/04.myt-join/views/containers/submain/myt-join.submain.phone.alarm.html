@@ -120,8 +120,7 @@
 
 <script>
   $(document).ready(function () {
-    new Tw.MyTJoinPhoneNumChgAlarm($('.wrap') < % -JSON.stringify(data) % >
-  )
+    new Tw.MyTJoinPhoneNumChgAlarm($('.wrap'), <%- JSON.stringify(data) %>);
   });
 </script>
 <% include ../../components/end.component.html %>
