@@ -184,7 +184,7 @@ Tw.MyTFareBillGuideIntegratedNormal.prototype = {
       var param = {
         date: this.paramDate
       };
-      Tw.CommonHelper.startLoading(this.$container, 'grey', true);
+      Tw.CommonHelper.startLoading(this.$container, 'grey');
       this._history.goLoad('/myt-fare/billguide/guide?' + $.param(param));
     }
 

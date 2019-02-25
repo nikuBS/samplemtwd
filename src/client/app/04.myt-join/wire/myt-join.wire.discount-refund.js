@@ -47,7 +47,7 @@ Tw.MyTJoinWireDiscountRefund.prototype = {
     $('#divEmpty').hide();
     $('.info-list-type1').hide();
     $('#divLoading').show();
-    Tw.CommonHelper.startLoading('#divLoading', 'grey', true);
+    Tw.CommonHelper.startLoading('#divLoading', 'grey');
 
     this._apiService.request(Tw.API_CMD.BFF_05_0158, {})
       .done($.proxy(function (resp) {

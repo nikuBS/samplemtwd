@@ -206,7 +206,7 @@ Tw.MyTJoinWireHistory.prototype = {
    */
   _nextData: function () {
     this._removeMoreBtn();
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading('.container', 'grey');
 
     this._nowPageNum += 1;
     this._printList(this._pagingList[this._nowPageNum]);

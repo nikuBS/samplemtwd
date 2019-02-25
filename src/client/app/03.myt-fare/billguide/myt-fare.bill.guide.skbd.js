@@ -12,7 +12,7 @@ Tw.MyTFareBillGuideSKBD = function (rootEl) {
   // xtractor_script.js에서 popup.hbs가 404오류가나는 현상으로
   // 아래 코드로 변경
   if( !Tw.Environment.init ) {
-    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._openSkbdPopup, this));
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._openSkbdPopup));
   } else {
     this._openSkbdPopup();
   }
