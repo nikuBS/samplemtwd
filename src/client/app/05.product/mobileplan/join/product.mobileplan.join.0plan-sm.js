@@ -4,7 +4,7 @@
  * Date: 2019.01.10
  */
 
-Tw.ProductMobileplanJoin0planSm = function(rootEl, prodId, displayId, sktProdBenfCtt, isOverPayReqYn, isComparePlanYn) {
+Tw.ProductMobileplanJoin0planSm = function(rootEl, prodId, displayId, sktProdBenfCtt, isOverPayReqYn, useOptionProdId, isComparePlanYn) {
   this._popupService = Tw.Popup;
   this._nativeService = Tw.Native;
   this._apiService = Tw.Api;
@@ -16,6 +16,7 @@ Tw.ProductMobileplanJoin0planSm = function(rootEl, prodId, displayId, sktProdBen
   this._isOverPayReq = isOverPayReqYn === 'Y';
   this._isComparePlan = isComparePlanYn === 'Y';
   this._sktProdBenfCtt = window.unescape(sktProdBenfCtt);
+  this._useOptionProdId = useOptionProdId;
   this._isSetOverPayReq = false;
   this._overpayRetryCnt = 0;
   this._startTime = null;
@@ -37,8 +38,7 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
     this.$btnTimeSelect = this.$container.find('.fe-btn_time_select');
     this.$msg = this.$container.find('.fe-msg');
-    this.$startTime = this.$container.find('.fe-start_time');
-    this.$endTime = this.$container.find('.fe-end_time');
+    this.$hour = this.$container.find('.fe-hour');
   },
 
   _bindEvent: function() {
@@ -48,16 +48,10 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
   },
 
   _enableSetupButton: function(e) {
-    this.$msg.hide();
-
     if ($(e.currentTarget).val() === 'NA00006163') {
       this.$btnTimeSelect.prop('disabled', false).removeAttr('disabled');
     } else {
       this.$btnTimeSelect.prop('disabled', true).attr('disabled');
-    }
-
-    if ($(e.currentTarget).val() === 'NA00006163' && !Tw.FormatHelper.isEmpty(this._startTime)) {
-      this.$msg.show();
     }
 
     if ($(e.currentTarget).val() === 'NA00006163' && Tw.FormatHelper.isEmpty(this._startTime)) {
@@ -153,9 +147,7 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
 
     this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
     this.$btnTimeSelect.html(time + ' ' + Tw.PERIOD_UNIT.HOUR + $('<div\>').append(this.$btnTimeSelect.find('.ico')).html());
-    this.$startTime.text(time);
-    this.$endTime.text(endTime < 10 ? '0' + endTime : endTime);
-    this.$msg.show();
+    this.$hour.text(time + Tw.PERIOD_UNIT.HOUR + '~' + (endTime < 10 ? '0' + endTime : endTime) + Tw.PERIOD_UNIT.HOUR);
 
     this._startTime = time;
     this._popupService.close();
@@ -227,8 +219,11 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
   _procConfirm: function() {
     Tw.CommonHelper.startLoading('.container', 'grey', true);
 
+    var joinOptionVal = this.$container.find('.widget-box.radio input[type="radio"]:checked').val();
+
     this._apiService.request(Tw.API_CMD.BFF_10_0008, {
-      option: this.$container.find('.widget-box.radio input[type="radio"]:checked').val()
+      option: Tw.FormatHelper.isEmpty(this._useOptionProdId) ?
+        joinOptionVal : this._useOptionProdId + ',' + joinOptionVal
     }, {}, [this._prodId]).done($.proxy(this._procConfirmRes, this))
       .fail(Tw.CommonHelper.endLoading('.container'));
   },

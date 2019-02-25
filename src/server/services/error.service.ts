@@ -1,5 +1,6 @@
 import { Response } from 'express';
 import { API_CODE } from '../types/api-command.type';
+import FormatHelper from '../utils/format.helper';
 
 interface ErrorOptions {
   title?: string;
@@ -41,6 +42,10 @@ class ErrorService {
    * @private
    */
   private _replaceBreakLines(msg: any): any {
+    if (FormatHelper.isEmpty(msg)) {
+      return '';
+    }
+
     return msg.replace(/\\n/g, '<br>');
   }
 

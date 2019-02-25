@@ -16,6 +16,7 @@ Tw.ProductMobileplanSetting0planSm = function(rootEl, prodId, displayId, zeroPla
   this._zeroPlanInfo = JSON.parse(zeroPlanInfo);
   this._currentOptionProdId = this._zeroPlanInfo.useOptionProdId;
   this._startTime = Tw.FormatHelper.isEmpty(this._zeroPlanInfo.applyStaTm) ? null : this._zeroPlanInfo.applyStaTm.substr(0, 2);
+  this._isChangeTime = true;
 
   this.$container = rootEl;
   this._cachedElement();
@@ -35,8 +36,10 @@ Tw.ProductMobileplanSetting0planSm.prototype = {
     }
 
     if (!Tw.FormatHelper.isEmpty(this._startTime)) {
+      var currentHour = new Date().getHours();
       this._setTimeButton(this._startTime);
       this._setTimeMsg(this._startTime);
+      this._isChangeTime = !(parseInt(this._startTime, 10) <= currentHour && currentHour < (parseInt(this._startTime, 10) + 3));
     }
 
     this.$container.find('input[value="' + this._currentOptionProdId + '"]').trigger('click');
@@ -47,8 +50,7 @@ Tw.ProductMobileplanSetting0planSm.prototype = {
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
     this.$btnTimeSelect = this.$container.find('.fe-btn_time_select');
     this.$msg = this.$container.find('.fe-msg');
-    this.$startTime = this.$container.find('.fe-start_time');
-    this.$endTime = this.$container.find('.fe-end_time');
+    this.$hour = this.$container.find('.fe-hour');
   },
 
   _bindEvent: function() {
@@ -106,23 +108,18 @@ Tw.ProductMobileplanSetting0planSm.prototype = {
 
   _setTimeMsg: function(timeStr) {
     var endTime = parseInt(timeStr, 10) + 3;
-
-    this.$startTime.text(timeStr);
-    this.$endTime.text(endTime < 10 ? '0' + endTime : endTime);
-    this.$msg.show();
+    this.$hour.text(timeStr + Tw.PERIOD_UNIT.HOUR + '~' + (endTime < 10 ? '0' + endTime : endTime) + Tw.PERIOD_UNIT.HOUR);
   },
 
   _enableSetupButton: function(e) {
-    this.$msg.hide();
-
-    if ($(e.currentTarget).val() === 'NA00006163') {
+    if ($(e.currentTarget).val() === 'NA00006163' && this._isChangeTime) {
       this.$btnTimeSelect.prop('disabled', false).removeAttr('disabled');
     } else {
       this.$btnTimeSelect.prop('disabled', true).attr('disabled');
     }
 
-    if ($(e.currentTarget).val() === 'NA00006163' && !Tw.FormatHelper.isEmpty(this._startTime)) {
-      this.$msg.show();
+    if ($(e.currentTarget).val() === 'NA00006163' && !this._isChangeTime) {
+      return this.$btnSetupOk.attr('disabled', 'disabled').prop('disabled', true);
     }
 
     this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
