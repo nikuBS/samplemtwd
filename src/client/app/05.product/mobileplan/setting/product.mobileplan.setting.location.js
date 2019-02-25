@@ -57,6 +57,11 @@ Tw.ProductMobileplanSettingLocation.prototype = {
     if(!this._maskingComp){
       this._maskingComp = new Tw.MaskingComponent();
     }
+
+    // 웹인 경우 주소록버튼 숨김
+    if(!Tw.BrowserHelper.isApp()){
+      $('#btnAddr', this.$container).parent().hide();
+    }
   },
 
   /**
