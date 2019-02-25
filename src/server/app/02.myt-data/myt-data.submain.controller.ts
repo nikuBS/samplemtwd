@@ -214,6 +214,7 @@ class MytDataSubmainController extends TwViewController {
         // 팅요금 선물하기 내역
         // opTypCd: 1 send, 2 recharge
         tpBkd.map((item) => {
+          item['opDt'] = item.opDtm.slice(0, 8);
           item['class'] = (item.opTypCd === '1' ? 'send' : 'recieve');
           item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.TING_GIFT;
           // custNm 명세서에서 제외됨
@@ -227,7 +228,7 @@ class MytDataSubmainController extends TwViewController {
       if ( refuBkd && refuBkd.length > 0 ) {
         // 리필쿠폰 사용이력조회
         refuBkd.map((item) => {
-          item['opDt'] = item.copnUseDt;
+          item['opDt'] = item.copnUseDtm.slice(0, 8);
           item['class'] = 'recharge';
           item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.REFILL_USAGE;
           item['u_sub'] = item.opOrgNm || ETC_CENTER;
@@ -240,7 +241,7 @@ class MytDataSubmainController extends TwViewController {
       if ( refpBkd && refpBkd.length > 0 ) {
         // 리필쿠폰 선물 내역
         refpBkd.map((item) => {
-          item['opDt'] = item.copnOpDt;
+          item['opDt'] = item.copnOpDtm.slice(0, 8);
           item['class'] = (item.type === '1' ? 'send' : 'recieve');
           item['u_title'] = MYT_DATA_CHARGE_TYPE_NAMES.REFILL_GIFT;
           item['u_sub'] = FormatHelper.conTelFormatWithDash(item.svcNum);
