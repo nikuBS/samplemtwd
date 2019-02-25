@@ -38,6 +38,7 @@ Tw.BenefitIndex.prototype = {
     this.$point = this.$container.find('#fe-point');
     this.$benefit = this.$container.find('#fe-benefit');
     this.$list = this.$container.find('#fe-list');
+    this.$prodListArea = this.$container.find('#fe-prod-list-area');
     this.$showDiscountBtn = this.$container.find('#fe-show-discount');
     // 결합할인금액 미리보기 > (인터넷, 이동전화, TV) 설정
     this.$internetType = this.$container.find('[data-name="inetTypCd"]'); // 인터넷
@@ -417,6 +418,16 @@ Tw.BenefitIndex.prototype = {
   },
 
   /**
+   * 더보기 버튼 없는경우 nogaps-top / 더보기 버튼 있는경우 nogaps
+   * @param list        : 상품 리스트
+   * @returns {string}  : 클래스 이름
+   * @private
+   */
+  _getCssMore: function (nextCount) {
+    return nextCount < 1 ? 'nogaps-top' : 'nogaps';
+  },
+
+  /**
    * _reqProductList() 성공시 콜백
    * @param category
    * @param resp
@@ -446,7 +457,7 @@ Tw.BenefitIndex.prototype = {
    */
   _renderList: function (category, res) {
     var source = $('#productList').html();
-
+    this.$prodListArea.removeClass('nogaps-top').addClass(this._getCssMore(res.nextCnt));
     var template = Handlebars.compile(source);
     var output = template({
       list: res.list,
