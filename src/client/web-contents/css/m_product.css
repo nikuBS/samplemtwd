@@ -134,6 +134,11 @@
 .prCont-txt > ul.title-usage > li:after,
 .prCont-txt > ol.title-usage > li:after{content:"" !important;position:absolute !important;top:9px !important;left:5px !important;width:3px !important;height:3px !important;background-color:#000 !important;border-radius:50%;}
 
+.prCont-txt a,
+.prCont-txt a:hover,
+.prCont-txt a:link,
+.prCont-txt a:visited { color:black!important; text-decoration:none!important; }
+
 
 /* 시각화 원장 */
 .clearfix::after { display:block; content:''; clear:both; }
