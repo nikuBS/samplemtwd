@@ -180,15 +180,14 @@ Tw.CustomerResearch.prototype = {
     // submit
     this._setAnswer();
     var values = Object.values(this._answers);
-    console.log(values);
 
-    // this._apiService
-    //   .request(Tw.API_CMD.BFF_08_0036, {
-    //     qstnId: this.$container.data('research-id'),
-    //     totalCnt: this._questionCount,
-    //     agrmt: values
-    //   })
-    //   .done($.proxy(this._successSubmit, this));
+    this._apiService
+      .request(Tw.API_CMD.BFF_08_0036, {
+        qstnId: this.$container.data('research-id'),
+        totalCnt: this._questionCount,
+        agrmt: values
+      })
+      .done($.proxy(this._successSubmit, this));
   },
 
   _successSubmit: function(resp) {
