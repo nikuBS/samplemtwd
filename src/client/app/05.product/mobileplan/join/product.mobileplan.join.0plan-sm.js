@@ -223,7 +223,7 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
 
     this._apiService.request(Tw.API_CMD.BFF_10_0008, {
       option: Tw.FormatHelper.isEmpty(this._useOptionProdId) ?
-        joinOptionVal : this._useOptionProdId + ',' + joinOptionVal
+        joinOptionVal : joinOptionVal + ',' + this._useOptionProdId
     }, {}, [this._prodId]).done($.proxy(this._procConfirmRes, this))
       .fail(Tw.CommonHelper.endLoading('.container'));
   },
