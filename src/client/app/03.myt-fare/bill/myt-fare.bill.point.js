@@ -9,7 +9,7 @@ Tw.MyTFareBillPoint = function (rootEl) {
 
   this._paymentCommon = new Tw.MyTFareBillCommon(rootEl);
   this._historyService = new Tw.HistoryService(rootEl);
-  this._backAlert = new Tw.BackAlert(rootEl);
+  this._backAlert = new Tw.BackAlert(rootEl, true);
   this._validationService = new Tw.ValidationService(rootEl, this.$container.find('.fe-check-pay'));
 
   this._apiService = Tw.Api;
