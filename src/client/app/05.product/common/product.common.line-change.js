@@ -128,7 +128,7 @@ Tw.ProductCommonLineChange.prototype = {
       return Tw.Error(null, Tw.ALERT_MSG_PRODUCT.ALERT_ALREADY_PRODUCT).pop();
     }
 
-    this._historyService.goLoad(this._targetUrl);
+    this._historyService.replaceURL(this._targetUrl);
   }
 
 };

@@ -284,7 +284,7 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
   },
 
   _checkSetupButton: function() {
-    this._toggleSetupButton(this.$groupList.find('li').length > 1 && this.$groupList.find('input[type=checkbox]:checked').length > 0);
+    this._toggleSetupButton(this.$groupList.find('li').length > 1);
   },
 
   _getSvcNumList: function() {
@@ -302,6 +302,10 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
   },
 
   _procConfirm: function() {
+    if (this.$groupList.find('input[type=checkbox]:checked').length < 1) {
+      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A76);
+    }
+
     new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
       isMobilePlan: false,
       noticeList: this._confirmOptions.preinfo.joinNoticeList,
