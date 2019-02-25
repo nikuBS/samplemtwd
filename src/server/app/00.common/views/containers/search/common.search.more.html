@@ -371,6 +371,7 @@
                 </ul>
             </div>
             <% } %>
+            <% if(searchInfo.totalcount>20){ %>
             <div class="newpaging-wrap">
                 <div class="prev">
                     <% if(pageNum==1){ %>
@@ -415,7 +416,7 @@
                     <% } %>
                 </div>
             </div>
-
+            <% } %>
 
 
         </div>
