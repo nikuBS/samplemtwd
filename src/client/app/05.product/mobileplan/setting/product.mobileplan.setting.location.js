@@ -20,6 +20,9 @@ Tw.ProductMobileplanSettingLocation = function(rootEl, options, showNumberSettin
   this._registHelder();
   this._appendLocationLi(this._options.zoneSetInfoList);
   this._appendNumberLi(this._options.snumSetInfoList);
+
+  setTimeout($.proxy(this._onHashChange, this), 0);
+  // this._onHashChange();
 };
 
 Tw.ProductMobileplanSettingLocation.prototype = {
@@ -29,6 +32,8 @@ Tw.ProductMobileplanSettingLocation.prototype = {
    * @private
    */
   _bindEvent: function() {
+    $(window).on('hashchange', $.proxy(this._onHashChange, this));
+
     // 지역할인 tab
     $('.discount-location').on('click', '.fe-bt-loc-cancel', $.proxy(this._removeLocation, this));
     $('#btnSearchPop').click($.proxy(this._onclickLocSchPopup, this));
@@ -50,11 +55,26 @@ Tw.ProductMobileplanSettingLocation.prototype = {
   },
 
   /**
+   * hash change handler
+   * @param event
+   * @private
+   */
+  _onHashChange: function(){
+    if(!this._historyService.getHash() || this._historyService.getHash() === '#tabpanel1'){
+      $('#tab1 a').trigger('click');
+    }else if(this._historyService.getHash() === '#tabpanel2'){
+      $('#tab2 a').trigger('click');
+    }
+  },
+
+
+  /**
    * 지정번호 텝 선택시
    * @private
    */
   _setNumTab: function(){
     if(!this._maskingComp){
+      $('.fe-bt-masking').off('click');
       this._maskingComp = new Tw.MaskingComponent();
     }
 
