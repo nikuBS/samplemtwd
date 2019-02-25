@@ -620,7 +620,6 @@ Tw.MenuComponent.prototype = {
   },
   close: function () {
     this.$closeBtn.click();
-    this._historyService.goBack();
   },
 
   // 검색창 포커스 인/아웃 처리
