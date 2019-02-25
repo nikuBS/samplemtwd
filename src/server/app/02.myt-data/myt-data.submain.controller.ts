@@ -117,7 +117,7 @@ class MytDataSubmainController extends TwViewController {
         // 휴대폰, T-pocketFi, T-Login  경우 노출 - 9차에서 휴대폰인 경우에만 노출
         data.isBenefit = true;
         // 선불쿠폰영역 휴대폰 인 경우에만 노출 (9차) - 11차에서 hidden 처리(190121)
-        // TODO: BPCP 완료 후 enable 처리
+        // TODO: GrandOpen 때 enable 처리
         // data.isPrepayment = true;
       }
 
