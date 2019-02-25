@@ -64,10 +64,12 @@
                   <% if (paging.needPaging) { %>
                   <div class="paging-wrap top-line mt0">
                     <div class="paging">
-                      <% if (paging.curPage.toString() === '1') { %>
-                      <a href="javascript:void(0)" role="button" class="first disabled"><span class="pg-blind">처음 페이지로 이동</span></a><!-- 비활성화시 disabled 클래스 추가 -->
-                      <% } else { %>
-                      <a href="<%= paging.uri%>?category=<%= category %>&page=1" role="button" class="first"><span class="pg-blind">처음 페이지로 이동</span></a><!-- 비활성화시 disabled 클래스 추가 -->
+                      <% if (paging.totalPage > 3) { %>
+                        <% if (paging.curPage.toString() === '1') { %>
+                        <a href="javascript:void(0)" role="button" class="first disabled"><span class="pg-blind">처음 페이지로 이동</span></a><!-- 비활성화시 disabled 클래스 추가 -->
+                        <% } else { %>
+                        <a href="<%= paging.uri%>?category=<%= category %>&page=1" role="button" class="first"><span class="pg-blind">처음 페이지로 이동</span></a><!-- 비활성화시 disabled 클래스 추가 -->
+                        <% } %>
                       <% } %>
                       <% if (paging.curPage.toString() === '1') { %>
                       <a href="javascript:void(0)" role="button" class="prev disabled"><span class="pg-blind">이전 페이지로 이동</span></a>
@@ -82,10 +84,12 @@
                       <% } else { %>
                       <a href="<%= paging.uri%>?category=<%= category %>&page=<%= (parseInt(paging.curPage) + 1) %>" role="button" class="next"><span class="pg-blind">다음 페이지로 이동</span></a>
                       <% } %>
-                      <% if (paging.curPage.toString() === paging.totalPage.toString()) { %>
-                      <a href="javascript:void(0)" role="button" class="last disabled"><span class="pg-blind">마지막 페이지로 이동</span></a><!-- 비활성화시 disabled 클래스 추가 -->
-                      <% } else { %>
-                      <a href="<%= paging.uri%>?category=<%= category %>&page=<%= paging.totalPage %>" role="button" class="last"><span class="pg-blind">마지막 페이지로 이동</span></a><!-- 비활성화시 disabled 클래스 추가 -->
+                      <% if (paging.totalPage > 3) { %>
+                        <% if (paging.curPage.toString() === paging.totalPage.toString()) { %>
+                        <a href="javascript:void(0)" role="button" class="last disabled"><span class="pg-blind">마지막 페이지로 이동</span></a><!-- 비활성화시 disabled 클래스 추가 -->
+                        <% } else { %>
+                        <a href="<%= paging.uri%>?category=<%= category %>&page=<%= paging.totalPage %>" role="button" class="last"><span class="pg-blind">마지막 페이지로 이동</span></a><!-- 비활성화시 disabled 클래스 추가 -->
+                        <% } %>
                       <% } %>
                     </div>
                   </div>

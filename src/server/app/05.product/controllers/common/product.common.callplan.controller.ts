@@ -650,6 +650,10 @@ class ProductCommonCallplan extends TwViewController {
     const allowedSvcAttrInfo: any = this._getAllowedSvcAttrCd(prodTypCd),
       isAllowedCurrentSvcAttrCd: boolean = allowedSvcAttrInfo.svcAttrCds.indexOf(svcAttrCd) !== -1;
 
+    if (FormatHelper.isEmpty(allowedSvcAttrInfo.group)) {
+      return 'D';
+    }
+
     if (isAllowedCurrentSvcAttrCd && allSvc[allowedSvcAttrInfo.group].length > 1) {
       return 'A';
     }

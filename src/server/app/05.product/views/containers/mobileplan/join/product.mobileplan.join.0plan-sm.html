@@ -28,7 +28,7 @@
                 <!-- .cont-box -->
                 <div class="cont-box">
                     <div class="product-tit-wrap">
-                        <span class="tit-small">변경할 상품 옵션 설정하세요.</span>
+                        <span class="tit-small">변경할 상품의 옵션을 설정하세요.</span>
                         <span class="tit-big">0플랜 <%= prodId === 'NA00006155' ? '스몰' : '미디엄' %></span>
                     </div>
                 </div>
@@ -90,7 +90,7 @@
                                     </span>
                                 </span>
                             </span>
-                        <p class="tx-msg fe-msg" style="display: none"><span class="fe-start_time"></span>시 ~ <span class="fe-end_time"></span>시까지 무제한 이용</p>
+                        <p class="tx-msg fe-msg" style="display: none"><span class="tx-point fe-hour"></span>까지 무제한 이용</p>
                     </div>
                 </div>
                 <!--// .cont-box -->
@@ -104,23 +104,10 @@
                 </div>
                 <!--// .cont-box -->
 
-                <!-- .cont-box -->
-                <div class="cont-box nogaps-btm">
-                    <h3 class="tx-bold">꼭 확인해 주세요</h3>
-                    <ul class="noti-list02">
-                        <li>
-                            <button type="button" class="tip-view-btn" id="MP_02_02_03_01_tip_01" page-id="<%= pageInfo.menuId %>" aria-haspopup="true">
-                                서비스 이용안내<span class="tip-view">TIP</span>
-                            </button>
-                        </li>
-                    </ul>
-                </div>
-                <!--// .cont-box -->
-
                 <div class="bt-fixed-area">
                     <ul class="bt-slice full">
                         <li class="bt-red1">
-                            <button class="fe-btn_setup_ok" disabled="disabled">설정 완료</button>
+                            <button class="fe-btn_setup_ok">설정 완료</button>
                         </li>
                     </ul>
                 </div>
@@ -137,6 +124,6 @@
 <% include ../../../components/javascript.component.html %>
 <script>$(function () {
   new Tw.ProductMobileplanJoin0planSm($('.wrap'), '<%= prodId %>', 'MP_02_02_03_15', '<%- escape(sktProdBenfCtt) %>',
-    '<%= isOverPayReqYn %>', '<%= mobilePlanCompareInfo ? "Y" : "N" %>');
+    '<%= isOverPayReqYn %>', '<%= settingInfo.useOptionProdId ? settingInfo.useOptionProdId : "" %>', '<%= mobilePlanCompareInfo ? "Y" : "N" %>');
 });</script>
 <% include ../../../components/end.component.html %>
