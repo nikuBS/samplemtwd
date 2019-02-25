@@ -8,6 +8,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
+import { ETC_CENTER } from '../../../../types/string.type';
 // import { of } from 'rxjs/observable/of';
 // import { Researches, StepResearch } from '../../../../mock/server/customer.researches.mock';
 
@@ -52,18 +53,20 @@ export default class CustomerResearches extends TwViewController {
       return resp.result
         .map(research => {
           const examples: Array<{}> = [];
-          let i = 1;
+          let i = 1,
+            exam = research['exCtt' + i];
 
-          while (research['exCtt' + i]) {
-            const isEtc = research['exCtt' + i] === 'QSTNETC';
+          while (exam) {
+            const isEtc = exam === 'QSTNETC';
 
             examples.push({
-              content: research['exCtt' + i] || '',
+              content: isEtc ? ETC_CENTER : exam || '',
               image: research['exImgFilePathNm' + i],
               motHtml: research['motExCtt' + i],
               isEtc
             });
             i++;
+            exam = research['exCtt' + i];
           }
 
           return {
