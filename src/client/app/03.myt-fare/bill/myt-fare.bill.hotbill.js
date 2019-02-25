@@ -98,8 +98,7 @@ Tw.MyTFareHotBill.prototype = {
         var params = { count: this._requestCount++ };
         if ( this._isPrev ) {
           params.gubun = 'Q';
-        }
-        else if ( childSvcMgmtNum ) {
+        } else if ( childSvcMgmtNum ) {
           params.childSvcMgmtNum = childSvcMgmtNum;
         }
         this._apiService
@@ -108,8 +107,7 @@ Tw.MyTFareHotBill.prototype = {
           .fail($.proxy(this._onErrorReceivedBillData, this));
       }, this), this._isPrev ? 5000 : 2500);
 
-    }
-    else {
+    } else {
       this._onErrorReceivedBillData(resp);
     }
   },
@@ -125,8 +123,7 @@ Tw.MyTFareHotBill.prototype = {
 
     if ( this._isPrev ) {
       params.gubun = 'Q';
-    }
-    else if ( child ) {
+    } else if ( child ) {
       params.childSvcMgmtNum = child.svcMgmtNum;
     }
 
@@ -172,8 +169,7 @@ Tw.MyTFareHotBill.prototype = {
         Tw.CommonHelper.endLoading('.fe-loading-bill');
         this._renderBillGroup(group, false, this.$container);
       }
-    }
-    else {
+    } else {
       if ( resp.code === Tw.MyTFareHotBill.CODE.ERROR.NO_BILL_REQUEST_EXIST ) {
         //Hotbill 요청 내역 존재하지 않는 애러일 경우 재요청한다
         this._sendBillRequest();
@@ -209,8 +205,7 @@ Tw.MyTFareHotBill.prototype = {
     Tw.CommonHelper.endLoading('.fe-loading-bill');
     if ( resp.code === Tw.MyTFareHotBill.CODE.ERROR.BILL_NOT_AVAILABLE ) {
       Tw.Error(resp.code, Tw.HOTBILL_ERROR_ZINVE8106).page();
-    }
-    else {
+    } else {
       // 애러시 노출되는 항목이 없어 alert 후 goBack 처리 필요. 공통함수(Tw.Error) 사용 불가.
       this._popupService.openAlert(resp.msg, resp.code, null, $.proxy(this._goBackOnError, this));
     }
@@ -241,8 +236,7 @@ Tw.MyTFareHotBill.prototype = {
     if ( moreItems > 0 ) {
       this.$btMore.show();
       // this.$btMore.find('span').text('(' + moreItems + ')'); // 더보기 갯수 표시 안 함.
-    }
-    else {
+    } else {
       this.$btMore.hide();
     }
   },
@@ -280,8 +274,7 @@ Tw.MyTFareHotBill.prototype = {
           .fail($.proxy(this._onErrorOtherLine, this));
       }, this), this._isPrev ? 5000 : 2500);
 
-    }
-    else {
+    } else {
       this._onErrorOtherLine(line, resp);
     }
   },
@@ -298,8 +291,7 @@ Tw.MyTFareHotBill.prototype = {
       this.$lineList.find('[data-num="' + line.svcMgmtNum + '"] .price').text(bill + Tw.CURRENCY_UNIT.WON);
       // 임시 로딩 제거 - 조회중 텍스트로 표시
       // Tw.CommonHelper.endLoading('[data-num="' + line.svcMgmtNum + '"] .price', 'white');
-    }
-    else {
+    } else {
       this._onErrorOtherLine(line, resp);
     }
   },
@@ -313,10 +305,10 @@ Tw.MyTFareHotBill.prototype = {
     if ( line.count === 1 ) {
       // 2번 시도 필요
       this._getBillResponseOtherLine(line, resp);
-    }
-    else {
+    } else {
       // 임시 로딩 제거 - 조회중 텍스트로 표시
       // Tw.CommonHelper.endLoading('[data-num="' + line.svcMgmtNum + '"] .price', 'white');
+      this.$lineList.find('[data-num="' + line.svcMgmtNum + '"] .price').text(Tw.MYT_DATA_ERROR_CODE.BLN0004);
     }
   },
   /**
@@ -331,8 +323,7 @@ Tw.MyTFareHotBill.prototype = {
     var targetSvc = this._lines[idx];
     if ( targetSvc.child ) {
       this._onClickChild(targetSvc);
-    }
-    else {
+    } else {
       this._confirmSwitchLine(targetSvc);
     }
   },
@@ -438,8 +429,7 @@ Tw.MyTFareHotBill.arrayToGroup = function (data, fieldInfo) {
     if ( groupS.indexOf('*') > -1 ) {
       groupS = groupS.replace(/\*/g, '');
       noVAT = true;
-    }
-    else if ( groupS.indexOf('#') > -1 ) {
+    } else if ( groupS.indexOf('#') > -1 ) {
       groupS = groupS.replace(/#/g, '');
       is3rdParty = true;
     }
