@@ -346,6 +346,12 @@ Tw.CertificationSk.prototype = {
   },
   _onSuccessCert: function (reCert, resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      if ( resp.result.corpPwdAuthYn === 'Y' ) {
+
+      } else {
+
+
+      }
       this._seqNo = resp.result.seqNo;
       this._clearCertError();
       this.$validCert.removeClass('none');

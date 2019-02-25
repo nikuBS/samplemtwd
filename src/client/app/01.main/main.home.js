@@ -832,6 +832,7 @@ Tw.MainHome.prototype = {
           }
         } else {
           this.$container.find('ul.slider[data-location=' + target.target + ']').parents('div.nogaps').addClass('none');
+          this._resetHeight();
         }
       }, this));
     }
