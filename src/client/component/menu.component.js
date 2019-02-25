@@ -368,6 +368,11 @@ Tw.MenuComponent.prototype = {
       this.$container.find('.fe-remove-when-app').remove();
     }
 
+    // when app and login(Tlogin, not simple login)
+    if (isApp && isLogin && userInfo.loginType === 'T') {
+      this.$container.find('.fe-when-app-and-login').removeClass('none');
+    }
+
     this.$menuArea.find('.section-search').after(this._menuTpl({ list: menu }));
 
     if ( isLogin ) {
@@ -383,16 +388,20 @@ Tw.MenuComponent.prototype = {
             }
             break;
           case 'bill':
-            this._apiService.request(Tw.API_CMD.BFF_04_0009, {})
+            var cmd = Tw.API_CMD.BFF_04_0008;
+            if (userInfo.actRepYn === 'Y') {
+              cmd = Tw.API_CMD.BFF_04_0009;
+            }
+            this._apiService.request(cmd, {})
               .then($.proxy(function (res) {
                 if ( res.code === Tw.API_CODE.CODE_00 ) {
                   var info = res.result;
                   var total = info.amt;
                   var month = info.invDt.match(/\d\d\d\d(\d\d)\d\d/);
                   if (month) {
-                    month = parseInt(month[1], 10) + Tw.DATE_UNIT.MONTH_S;
+                    month = parseInt(month[1], 10) + 1 + Tw.DATE_UNIT.MONTH_S;
                     $(elem).text(
-                      month + ' ' + Tw.FormatHelper.convNumFormat(total) + Tw.CURRENCY_UNIT.WON);
+                      month + ' ' + total + Tw.CURRENCY_UNIT.WON);
                   } else {
                     $(elem).remove();
                   }
