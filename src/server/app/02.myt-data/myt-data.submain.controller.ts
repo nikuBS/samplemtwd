@@ -13,7 +13,7 @@ import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
 import { CURRENCY_UNIT, ETC_CENTER, MYT_DATA_CHARGE_TYPE_NAMES, MYT_DATA_CHARGE_TYPES, MYT_DATA_REFILL_TYPES } from '../../types/string.type';
 import BrowserHelper from '../../utils/browser.helper';
-import { LOGIN_TYPE, PREPAID_PAYMENT_PAY_CD, PREPAID_PAYMENT_TYPE, REFILL_USAGE_DATA_CODES, UNIT, UNIT_E } from '../../types/bff.type';
+import { LOGIN_TYPE, PREPAID_PAYMENT_PAY_CD, PREPAID_PAYMENT_TYPE, REFILL_USAGE_DATA_CODES, SVC_ATTR_NAME, UNIT, UNIT_E } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
 
 // 실시간잔여량 공제항목
@@ -117,7 +117,7 @@ class MytDataSubmainController extends TwViewController {
         // 휴대폰, T-pocketFi, T-Login  경우 노출 - 9차에서 휴대폰인 경우에만 노출
         data.isBenefit = true;
         // 선불쿠폰영역 휴대폰 인 경우에만 노출 (9차) - 11차에서 hidden 처리(190121)
-        // TODO: BPCP 완료 후 enable 처리
+        // TODO: GrandOpen 때 enable 처리
         // data.isPrepayment = true;
       }
 
@@ -467,7 +467,9 @@ class MytDataSubmainController extends TwViewController {
       const nOthers: any = Object.assign([], MOBILE);
       nOthers.filter((item) => {
         if ( target.svcMgmtNum !== item.svcMgmtNum ) {
-          item.nickNm = item.eqpMdlNm || item.nickNm;
+          // 닉네임이 없는 경우 팻네임이 아닌  서비스 그룹명으로 노출 [DV001-14845]
+          // item.nickNm = item.nickNm || item.eqpMdlNm;
+          item.nickNm = item.nickNm || SVC_ATTR_NAME[item.svcAttrCd];
           item.svcNum = StringHelper.phoneStringToDash(item.svcNum);
           list.push(item);
         }

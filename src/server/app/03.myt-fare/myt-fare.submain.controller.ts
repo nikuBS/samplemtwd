@@ -312,7 +312,9 @@ class MyTFareSubmainController extends TwViewController {
       nOthers = nOthers.concat(MOBILE, SPC, OTHER);
       nOthers.filter((item) => {
         if ( target.svcMgmtNum !== item.svcMgmtNum ) {
-          item.nickNm = item.eqpMdlNm || item.nickNm;
+          // 닉네임이 없는 경우 팻네임이 아닌  서비스 그룹명으로 노출 [DV001-14845]
+          // item.nickNm = item.nickNm || item.eqpMdlNm;
+          item.nickNm = item.nickNm || SVC_ATTR_NAME[item.svcAttrCd];
           // PPS, 휴대폰이 아닌 경우는 서비스명 노출
           if ( ['M1', 'M2'].indexOf(item.svcAttrCd) === -1 ) {
             item.nickNm = SVC_ATTR_NAME[item.svcAttrCd];

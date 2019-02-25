@@ -138,8 +138,8 @@ Tw.ImmediatelyRechargeLayer.prototype = {
           }]
         });
       }
-      // TODO: 11차수에서 hidden 처리, 환경설정 및 개발 완료 후 enable 처리
-      data.push(Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.PREPAY);
+      // TODO: GrandOpen 때 enable 처리
+      // data.push(Tw.POPUP_TPL.IMMEDIATELY_CHARGE_DATA.PREPAY);
       var subList = [];
       if ( !_.isEmpty(this.immChargeData.limit) ) {
         var curLimit = parseInt(this.immChargeData.limit.currentTopUpLimit, 10);

@@ -138,7 +138,9 @@ Tw.MyTDataSubMain.prototype = {
 
   _successDrawBanner: function () {
     this.$bannerList = this.$container.find('[data-id=banner-list]');
-    Tw.CommonHelper.resetHeight(this.$bannerList);
+    if ( Tw.BrowserHelper.isApp() ) {
+      Tw.CommonHelper.resetHeight(this.$bannerList[0]);
+    }
   },
 
   _initScroll: function () {
@@ -474,7 +476,7 @@ Tw.MyTDataSubMain.prototype = {
         }
         else {
           data = {
-            data: Tw.MYT_DATA_ERROR_CODE[arguments[idx].code],
+            data: Tw.MYT_DATA_ERROR_CODE.DEFAULT,
             unit: ''
           };
         }
@@ -571,7 +573,7 @@ Tw.MyTDataSubMain.prototype = {
     this._popupService.close();
     // excel 기준 (조르기 : OS 내 페이지 공유화면 제공)
     var content = Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.TITLE + this.data.svcInfo.svcNum +
-          Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.CONTENT + Tw.OUTLINK.TWORLD_DATA_PRESENT;
+      Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.CONTENT + Tw.OUTLINK.TWORLD_DATA_PRESENT;
     Tw.CommonHelper.share(content);
   },
 
@@ -598,7 +600,8 @@ Tw.MyTDataSubMain.prototype = {
         this._historyService.goLoad('/myt-data/submain/child-hotdata?childSvcMgmtNum=' + mgmtNum);
       }
       else {
-        var defaultLineInfo = this.data.svcInfo.svcNum + ' ' + this.data.svcInfo.nickNm;
+        var defaultLineInfo = this.data.svcInfo.svcNum + ' ' +
+          (this.data.svcInfo.nickNm || Tw.SVC_ATTR[this.data.svcInfo.svcAttrCd]);
         var selectLineInfo = number + ' ' + name;
         this.changeLineMgmtNum = mgmtNum;
         this._popupService.openModalTypeA(
