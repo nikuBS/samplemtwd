@@ -74,7 +74,8 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     var type = e.target.value;
     if ( this._files ) {
       this._popupService.openModalTypeA(Tw.POPUP_TITLE.CONFIRM, Tw.MYT_JOIN_SUSPEND.CONFIRM_RESET_FILE.MESSAGE,
-        Tw.MYT_JOIN_SUSPEND.CONFIRM_RESET_FILE.BTNAME, null, $.proxy(this._changeSuspendType, this, type), null);
+        Tw.MYT_JOIN_SUSPEND.CONFIRM_RESET_FILE.BTNAME, $.proxy(this._onOpenTypeChange, this, type),
+        $.proxy(this._changeSuspendType, this, type), null);
     } else {
       this._changeSuspendType(type);
     }
@@ -97,7 +98,26 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
     }
     this.$btSuspend.prop('disabled', true);
   },
-
+  /**
+   * 장기일시정지 사유 변경 확인 alert event binding
+   * @param type
+   * @param $popup
+   * @private
+   */
+  _onOpenTypeChange: function (type, $popup) {
+    $popup.find('.tw-popup-closeBtn').on('click', $.proxy(this._cancelSuspendType, this, type));
+  },
+  /**
+   * 장기일시정지 사유 변경 취소 시 radio 선택 취소
+   * @param type
+   * @private
+   */
+  _cancelSuspendType: function (type) {
+    setTimeout($.proxy(function () {
+      this.$optionType.filter('[value!="' + type + '"]').parent().addClass('checked');
+      this.$optionType.filter('[value="' + type + '"]').parent().removeClass('checked');
+    }, this), 100);
+  },
   /**
    * 파일 업로드 다이얼로그(CS_04_01_L02) open
    * @param e
@@ -257,7 +277,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       if ( diff < 0 ) {
         this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE);
         return;
-      }else if( diff > 30 ){
+      } else if ( diff > 30 ) {
         this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_FROM_DATE_01);
         return;
       }
