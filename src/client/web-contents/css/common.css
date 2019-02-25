@@ -148,7 +148,8 @@ input, select {
   vertical-align: baseline;
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box; }
+  -moz-box-sizing: border-box;
+  outline: none; }
 
 input.textarea, select, button {
   line-height: 1.4;

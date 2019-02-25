@@ -237,6 +237,9 @@
     padding-top: 0;
     background-color: transparent;
     background-image: inherit; }
+  .bg-gradation.on {
+    background-color: transparent;
+    background-image: inherit; }
 
 .main-breakdown-box > .sum {
   display: block;

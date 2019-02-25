@@ -333,16 +333,17 @@ body.bg-gray {
             line-height: 1.1875rem;
             vertical-align: middle; }
             #common-menu .section-cont .section-gnb .bt-depth1 > .bt .ti-info .info {
+              vertical-align: middle;
               margin-left: 0.4375rem;
               color: #f76252;
               font-size: 0.9375rem;
               display: inline-block;
               position: relative;
-              top: 4px;
               max-width: 180px;
               overflow: hidden;
               text-overflow: ellipsis;
-              white-space: nowrap; }
+              white-space: nowrap;
+              line-height: 1.1875rem; }
             #common-menu .section-cont .section-gnb .bt-depth1 > .bt .ti-info .tx {
               display: block;
               margin-top: 0.4375rem;
@@ -1171,19 +1172,21 @@ body.bg-gray {
         text-align: left; }
     .popup-page .header-wrap .page-header .header-mask {
       position: absolute;
-      left: 1rem;
+      left: 0.375rem;
       top: 50%;
-      margin-top: -0.75rem; }
+      margin-top: -1.25rem; }
       .popup-page .header-wrap .page-header .header-mask .btn-mask {
         display: inline-block;
-        width: 1.5rem;
-        height: 1.5rem;
-        background: url(/img/svg/icon_48px_lock_n.svg) no-repeat 0 0;
+        width: 2.75rem;
+        height: 2.5rem;
+        background: url(/img/svg/icon_gnb_lock_n.svg) no-repeat 0 0;
         background-size: 100% 100%; }
         .popup-page .header-wrap .page-header .header-mask .btn-mask.seleted {
-          background: url(/img/svg/icon_48px_lock_s.svg) no-repeat 0 0; }
+          background: url(/img/svg/icon_gnb_lock_s.svg) no-repeat 0 0;
+          background-size: 100% 100%; }
         .popup-page .header-wrap .page-header .header-mask .btn-mask.disabled, .popup-page .header-wrap .page-header .header-mask .btn-mask:disabled {
-          background: url(/img/svg/icon_48px_lock_d.svg) no-repeat 0 0; }
+          background: url(/img/svg/icon_gnb_lock_d.svg) no-repeat 0 0;
+          background-size: 100% 100%; }
   .popup-page.txt2-popup {
     padding: 4.4375rem 0 0; }
     .popup-page.txt2-popup .header-wrap .page-header {
@@ -1892,10 +1895,12 @@ body.bg-gray {
         color: #666;
         font-size: 0.75rem; }
 
-.popup-page.layer .sms-confirm-box {
-  padding: 1.625rem 0.875rem 0; }
-  .popup-page.layer .sms-confirm-box .sms-confirm-des {
-    font-size: 0.75rem; }
+.popup-page.layer {
+  position: relative; }
+  .popup-page.layer .sms-confirm-box {
+    padding: 1.625rem 0.875rem 0; }
+    .popup-page.layer .sms-confirm-box .sms-confirm-des {
+      font-size: 0.75rem; }
 
 .sms-confirm-box {
   min-height: 12.5rem; }
