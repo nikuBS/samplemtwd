@@ -1,17 +1,16 @@
 <%#
-* FileName: common.util.service-block.html
+* FileName: common.util.service-ready.html
 * Author: Ara Jo (araara.jo@sk.com)
-* Date: 2019.01.17
+* Date: 2019.01.25
 %>
 
 <%- include('../components/start.component.html', { pageInfo: locals.pageInfo }); %>
 <!-- body -->
 <body style="background:#fff; position:relative;">
 <div class="wrap checking_wrap">
-    <i class="icon-warning-120"><span class="blind">warning</span></i>
-    <p class="tit">시스템 점검 중입니다</p>
-    <p class="txt">이용에 불편을 드려 죄송합니다.<br />더욱 편리하고 안정된 서비스를 제공하기 위해<br />T world 시스템을 점검하고 있습니다.</p>
-    <p class="subTxt"><%= fromDtm %> ~ <%= toDtm %></p>
+    <img src="<%= CDN %>/img/common/checking_img02.png" alt="">
+    <p class="tit">서비스 준비 중입니다</p>
+    <p class="txt">이용에 불편을 드려 죄송합니다.<br />보다 나은 서비스로 빠른 시일 내에 찾아 뵙겠습니다.</p>
 </div>
 <div class="checking_btn">
     <button type="button" class="fe-common-back">닫기</button>
