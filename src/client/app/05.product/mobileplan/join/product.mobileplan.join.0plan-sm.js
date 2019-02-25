@@ -148,6 +148,7 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
     this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
     this.$btnTimeSelect.html(time + ' ' + Tw.PERIOD_UNIT.HOUR + $('<div\>').append(this.$btnTimeSelect.find('.ico')).html());
     this.$hour.text(time + Tw.PERIOD_UNIT.HOUR + '~' + (endTime < 10 ? '0' + endTime : endTime) + Tw.PERIOD_UNIT.HOUR);
+    this.$msg.show();
 
     this._startTime = time;
     this._popupService.close();
