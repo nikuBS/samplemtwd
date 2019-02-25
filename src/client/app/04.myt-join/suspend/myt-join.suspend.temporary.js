@@ -96,14 +96,15 @@ Tw.MyTJoinSuspendTemporary.prototype = {
     if ( !notice ) {
       this.$btSuspend.removeAttr('disabled');
     }
-    else if(!this.$checkEmailNoti.attr('checked')  && !this.$checkSMSnoti.attr('checked') ){
+    // 이메일 또는 문자로 안내 선택, 둘 다 선택하지 않은 경우
+    else if ( _.isEmpty(this.$checkEmailNoti.attr('checked')) && _.isEmpty(this.$checkSMSnoti.attr('checked')) ) {
       this.$btSuspend.attr('disabled', '');
-    }
-    else if ( (!this.$checkEmailNoti.attr('checked') || !_.isEmpty(this.$inputEmail.val())) &&
-      (!this.$checkSMSnoti.attr('checked') || !_.isEmpty(this.$inputTel.val())) ) {
-      this.$btSuspend.removeAttr('disabled');
+    } else if ( !_.isEmpty(this.$checkEmailNoti.attr('checked')) && _.isEmpty(this.$inputEmail.val()) ) {
+      this.$btSuspend.attr('disabled', '');
+    } else if ( !_.isEmpty(this.$checkSMSnoti.attr('checked')) && _.isEmpty(this.$inputTel.val()) ) {
+      this.$btSuspend.attr('disabled', '');
     } else {
-      this.$btSuspend.attr('disabled', '');
+      this.$btSuspend.removeAttr('disabled');
     }
   },
 
