@@ -126,7 +126,7 @@ export default class MyTDataHistory extends TwViewController {
       }
 
       return resp.result.filter(item => {
-        return item.opTypCd !== 4;
+        return Number(item.opTypCd) !== 4;
       }).map(item => {
         const key = item.opDtm || item.opDt,
           rechargeDate = DateHelper.getShortDate(key),
@@ -155,7 +155,7 @@ export default class MyTDataHistory extends TwViewController {
 
       return resp.result
         .filter(item => {
-          return item.opTypCd !== 4;
+          return Number(item.opTypCd) !== 4;
         })
         .map(item => {
           const key = item.opDtm || item.opDt,
