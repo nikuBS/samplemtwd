@@ -1745,7 +1745,7 @@ Tw.TOOLTIP_TITLE = {
   SERVICE_START_GUIDE: '서비스개시일/시간안내',
   ROAMING_SERVICE_CAUTION: '서비스 유의사항',
   ROAMING_SERVICE_TERM: '로밍 서비스 기간 설정',
-  ROAMING_COMMON_GUIDE: '로밍 요금상품 공통 안내사항'
+  ROAMING_COMMON_GUIDE: '로밍 요금상품 공통 안내'
 };
 
 Tw.MEMBERSHIP = {

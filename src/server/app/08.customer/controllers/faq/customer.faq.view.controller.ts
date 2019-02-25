@@ -15,7 +15,7 @@ class CustomerFaqView extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
 
     const ifaqId = req.query.faq_Id || null;
-    const category = req.query.category || null;
+    const category = req.query.category || '>';
 
     if (FormatHelper.isEmpty(ifaqId) || FormatHelper.isEmpty(category)) {
       return this.error.render(res, {

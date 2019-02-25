@@ -62,7 +62,7 @@ Tw.CommonSearchNotFound.prototype = {
       data: null
     }, $.proxy(this._bindEventForRequestKeyword, this),
       //$.proxy(this._showAndHidePopKeywordList,this), 'requestKeyword');
-      null, 'requestKeyword');
+      $.proxy(this._removeInputDisabled,this), 'requestKeyword');
   },
   _showSelectClaim : function () {
     this._popupService.open({
@@ -71,11 +71,12 @@ Tw.CommonSearchNotFound.prototype = {
       data: this._surveyList.invstQstnAnswItm
     }, $.proxy(this._bindEventForSelectClaim, this),
       //$.proxy(this._showAndHidePopKeywordList,this), 'selectClaim');
-      null, 'selectClaim');
+      $.proxy(this._removeInputDisabled,this), 'selectClaim');
   },
   _bindEventForRequestKeyword : function(popupObj){
     //keyword request
     //this._showAndHidePopKeywordList();
+    this.$inputElement.attr('disabled','disabled');
     this.$requestKeywordPopup = $(popupObj);
     this.$requestKeywordPopup.on('click','.request_claim',$.proxy(this._openAlert,this,Tw.ALERT_MSG_SEARCH.ALERT_4_A40,this._requestKeyword));
     this.$requestKeywordPopup.on('keyup','.input-focus',$.proxy(this._activateRequestKeywordBtn,this));
@@ -84,9 +85,13 @@ Tw.CommonSearchNotFound.prototype = {
   _bindEventForSelectClaim : function(popupObj){
     //claim select
     //this._showAndHidePopKeywordList();
+    this.$inputElement.attr('disabled','disabled');
     this.$selectClaimPopup = $(popupObj);
     this.$selectClaimPopup.on('click','.request_claim',$.proxy(this._openAlert,this,Tw.ALERT_MSG_SEARCH.ALERT_4_A41,this._selectClaim));
     this.$selectClaimPopup.on('click','.custom-form>input',$.proxy(this._activateSelectClaimBtn,this));
+  },
+  _removeInputDisabled : function(){
+    this.$inputElement.removeAttr('disabled');
   },
   _activateRequestKeywordBtn : function(inputEvt){
     var $inputEvt = $(inputEvt.currentTarget);
