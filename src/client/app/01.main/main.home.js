@@ -26,15 +26,15 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn)
   this._lineComponent = new Tw.LineComponent();
 
   if ( location.hash === '#store' ) {
-    setTimeout(function () {
-      skt_landing.action.home_slider({ initialSlide: 1 });
+    setTimeout($.proxy(function () {
+      skt_landing.action.home_slider({ initialSlide: 1, callback: $.proxy(this._onChangeSlider, this) });
       skt_landing.action.notice_slider();
-    }, 40);
+    }, this), 40);
   } else {
-    setTimeout(function () {
-      skt_landing.action.home_slider({ initialSlide: 0 });
+    setTimeout($.proxy(function () {
+      skt_landing.action.home_slider({ initialSlide: 0, callback: $.proxy(this._onChangeSlider, this) });
       skt_landing.action.notice_slider();
-    }, 40);
+    }, this), 40);
   }
 
   this._initEmrNotice(emrNotice, isLogin === 'true');
@@ -902,5 +902,13 @@ Tw.MainHome.prototype = {
   _setCoachMark: function () {
     new Tw.CoachMark(this.$container, '.fe-coach-line', Tw.NTV_STORAGE.COACH_LINE);
     new Tw.CoachMark(this.$container, '#fe-coach-data', Tw.NTV_STORAGE.COACH_DATA);
+  },
+  _onChangeSlider: function (currentSlider) {
+    Tw.Logger.info('[Home Slider] change', currentSlider);
+    if ( currentSlider === 0 ) {
+      this._historyService.replaceURL('#');
+    } else {
+      this._historyService.replaceURL('#store');
+    }
   }
 };
