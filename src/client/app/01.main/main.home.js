@@ -56,6 +56,9 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn)
   }
   new Tw.XtractorService(this.$container);
   this._nativeService.send(Tw.NTV_CMD.CLEAR_HISTORY, {});
+
+  // Still Don't know why. temporal fix for link issue.
+  $('.help-list li a').on('click', $.proxy(this._onClickInternal, this));
 };
 
 Tw.MainHome.prototype = {
