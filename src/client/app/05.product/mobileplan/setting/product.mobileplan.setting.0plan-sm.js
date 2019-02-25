@@ -109,6 +109,7 @@ Tw.ProductMobileplanSetting0planSm.prototype = {
   _setTimeMsg: function(timeStr) {
     var endTime = parseInt(timeStr, 10) + 3;
     this.$hour.text(timeStr + Tw.PERIOD_UNIT.HOUR + '~' + (endTime < 10 ? '0' + endTime : endTime) + Tw.PERIOD_UNIT.HOUR);
+    this.$msg.show();
   },
 
   _enableSetupButton: function(e) {
