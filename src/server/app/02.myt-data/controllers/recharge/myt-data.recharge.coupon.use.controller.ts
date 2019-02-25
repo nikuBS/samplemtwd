@@ -222,7 +222,7 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
         } else if (option.dataVoiceClCd === 'D') {
           const converted = FormatHelper.convDataFormat(this.planType.get(plan), DATA_UNIT.GB);
           option.qttText = converted.data + ' ' + converted.unit;
-          if (plan === 'NA00005957' || plan === 'NA00005958') { // Tplan large/family의 경우 '최대' 삽입
+          if (plan === 'NA00005957' || plan === 'NA00005958' || plan === 'NA00006157') { // Tplan large/family의 경우 '최대' 삽입, 0Plan large 포함
             option.qttText = '최대 ' + option.qttText;
             option.copnDtlClNm = option.copnDtlClNm.replace('100%', '').trim();
           }
