@@ -283,7 +283,9 @@ Tw.MyTFareSubMain.prototype = {
 
   _successDrawBanner: function () {
     this.$bannerList = this.$container.find('[data-id=banner-list]');
-    Tw.CommonHelper.resetHeight(this.$bannerList);
+    if ( Tw.BrowserHelper.isApp() ) {
+      Tw.CommonHelper.resetHeight(this.$bannerList[0]);
+    }
   },
 
   // 사용요금내역조회-1

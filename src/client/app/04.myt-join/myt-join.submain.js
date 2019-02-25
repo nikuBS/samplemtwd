@@ -175,7 +175,9 @@ Tw.MyTJoinSubMain.prototype = {
 
   _successDrawBanner: function () {
     this.$bannerList = this.$container.find('[data-id=banner-list]');
-    Tw.CommonHelper.resetHeight(this.$bannerList);
+    if ( Tw.BrowserHelper.isApp() ) {
+      Tw.CommonHelper.resetHeight(this.$bannerList[0]);
+    }
   },
 
   _onChangeNickName: function () {
