@@ -72,9 +72,9 @@
 
                     <div class="widget-box toggle01">
                         <ul class="representcharge-list">
-                            <% const GROUP_MAX_COUNT = 7;%>
-                            <% for (let i = 0; i < Math.min(groups.length, GROUP_MAX_COUNT); i++) { %>
-                            <% const group = groups[i]; %>
+                        <% const GROUP_MAX_COUNT = 7;
+                        for (let i = 0; i < Math.min(groups.length, GROUP_MAX_COUNT); i++) {
+                            const group = groups[i]; %>
                             <li>
                                 <button role="button" aria-pressed="false" class="representcharge-info">
                                     <h4 class="title"><%= group.prodGrpNm %><% if (group.prodGrpFlagImgUrl) { %><img class="lte" src="<%= group.prodGrpFlagImgUrl %>"><% } %></h4>
@@ -90,20 +90,22 @@
                                                 <ul class="horizontal-list">
                                                     <% group.prodList.map(product => { %>
                                                     <li data-url="/product/callplan?prod_id=<%= product.prodId %>" class="fe-go-plan">
-                                                        <div class="product-info">
-                                                            <h5 class="title"><%= product.prodNm %></h5>
-                                                            <% if (product.basFeeInfo.isNaN) { %>
-                                                                <p class="info"><span class="money"><%= product.basFeeInfo.value %></span></p>
-                                                            <% } else { %>
-                                                                <p class="info">월<span class="money"><%= product.basFeeInfo.value %></span>원</p>
-                                                            <% } %>
+                                                        <button type="button" class="product-info">
+                                                            <div class="product-info-btn">
+                                                                <h5 class="title"><%= product.prodNm %></h5>
+                                                                <% if (product.basFeeInfo.isNaN) { %>
+                                                                    <p class="info"><span class="money"><%= product.basFeeInfo.value %></span></p>
+                                                                <% } else { %>
+                                                                    <p class="info">월<span class="money"><%= product.basFeeInfo.value %></span>원</p>
+                                                                <% } %>
+                                                            </div>
                                                             <% if (product.displayInfo) { %>
                                                             <div class="<%= product.displayInfo.icon %>">
                                                                 <span class="blind"><%= BENEFIT[product.displayInfo.icon] %></span>
                                                                 <span class="str"><%= product.displayInfo.value %></span><%= product.displayInfo.unit %>
                                                             </div>
                                                             <% } %>
-                                                        </div>
+                                                        </button>
                                                     </li>
                                                     <% }); %>
                                                 </ul>
@@ -112,7 +114,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <% } %>
+                        <% } %>
                         </ul>
                     </div>
                 </div>
