@@ -388,15 +388,10 @@
   .main-error-box.welcome {
     padding: 4.375rem 0 6.25rem 0; }
 
-@media all and (max-width: 320px) {
-  .device_android .main-error-box .btn-area {
-    display: block; }
-    .device_android .main-error-box .btn-area .btn-round1 {
-      display: inline-block;
-      width: 45%;
-      max-width: 8.4375rem; }
-      .device_android .main-error-box .btn-area .btn-round1 + .btn-round1 {
-        margin-left: 3%; } }
+@media all and (max-width: 360px) {
+  .main-error-box .btn-area .btn-round1 {
+    display: inline-block;
+    max-width: 8.75rem; } }
 
 .main-chart-box {
   position: relative;
