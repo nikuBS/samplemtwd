@@ -39,7 +39,7 @@ class MyTFareBillRainbow extends TwViewController {
   }
 
   private getRainbowPoint(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_07_0042, {});
+    return this.apiService.request(API_CMD.BFF_05_0132, {});
   }
 
   private getAutoRainbow(): Observable<any> {
@@ -47,7 +47,7 @@ class MyTFareBillRainbow extends TwViewController {
   }
 
   private parseData(data: any): any {
-    data.point = FormatHelper.addComma(data.usableRbpPt);
+    data.point = FormatHelper.addComma(data.usblPoint);
     return data;
   }
 
