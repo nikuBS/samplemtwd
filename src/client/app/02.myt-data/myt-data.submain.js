@@ -563,15 +563,15 @@ Tw.MyTDataSubMain.prototype = {
       );
     }
     else {
-      Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.MOBILE_TWORLD);
+      Tw.CommonHelper.openUrlExternal(Tw.OUTLINK.TWORLD_DATA_PRESENT);
     }
   },
 
   _pesterDetailConfirm: function () {
     this._popupService.close();
     // excel 기준 (조르기 : OS 내 페이지 공유화면 제공)
-    var content =
-          Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.TITLE + this.data.svcInfo.svcNum + Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.CONTENT + Tw.OUTLINK.MOBILE_TWORLD;
+    var content = Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.TITLE + this.data.svcInfo.svcNum +
+          Tw.ALERT_MSG_MYT_DATA.DATA_PESTER.CONTENT + Tw.OUTLINK.TWORLD_DATA_PRESENT;
     Tw.CommonHelper.share(content);
   },
 
