@@ -515,6 +515,7 @@ Tw.MainHome.prototype = {
           $textBalance.parent().append(remain.unit);
 
           $btGoGift.attr('disabled', false);
+          $btGoGift.removeClass('bt-off');
         } else {
           $loading.parent().addClass('none');
           $btBalance.parent().removeClass('none');

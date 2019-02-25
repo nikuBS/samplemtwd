@@ -452,7 +452,8 @@ Tw.ALERT_MSG_COMMON = {
     MSG: 'T world에 로그인하신 계정의 이동전화번호와 일치하는 휴대폰에서만 인증 받으실 수 있습니다.<br />고객센터(114)로 문의주세요.'
   },
   STEP_CANCEL: { TITLE: '화면을 닫고 이동하시겠습니까?', MSG: '입력 및 선택하신 정보는 모두 취소됩니다.' },
-  CHANGE: '변경하시겠습니까?'
+  CHANGE: '변경하시겠습니까?',
+  BIOMETRICS_REGISTER_FAIL: '본인인증에 실패하였습니다.'
 };
 
 Tw.ALERT_MSG_HOME = {

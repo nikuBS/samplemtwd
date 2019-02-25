@@ -68,7 +68,8 @@ Tw.BiometricsRegister.prototype = {
       this.$infoIng.addClass('none');
       this.$infoClick.removeClass('none');
     } else {
-      Tw.Error(resp.resultCode, 'error').pop();
+      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.BIOMETRICS_REGISTER_FAIL);
+      // Tw.Error(resp.resultCode, 'error').pop();
     }
   },
   _onCloseBioRegister: function () {
