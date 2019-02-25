@@ -54,11 +54,6 @@ Tw.MembershipInfoLayerPopup.prototype = {
     if ( !Tw.FormatHelper.isEmpty(this._isJoinOk) ) {
       return;
     }
-    /*
-      $.ajax('/mock/membership.info.BFF_11_0015.json')
-        .done($.proxy(this._onSuccess, this))
-        .fail($.proxy(this._onFail, this));
-    */
 
     this._apiService
       .request(Tw.API_CMD.BFF_11_0015, {})
@@ -71,13 +66,28 @@ Tw.MembershipInfoLayerPopup.prototype = {
       this._onFail(resp);
       return false;
     }
-    this._isJoinOk = resp.result && resp.result.cardCreatableYn;
-    if (this._isJoinOk === 'Y') {
-      this.onClickJoinBtn();
+    var svcInfo = this._svcInfo;
+    this._isJoinOk = 'Y';
+
+    /*
+      가입 가능여부 확인 ( 아래 case 인경우는 가입불가 )
+      1. (회선등급이 P(PPS), S(유선서비스), N(준회원)
+      2. 미성년자인 경우
+      3. 기 발급 카드 보유 상태인 경우
+     */
+    if (resp.result) {
+      if (['S1', 'S2', 'S3'].indexOf(svcInfo.svcAttrCd) > -1 || svcInfo.svcGr === 'P') {
+        this._isJoinOk = 'N';
+      } else if (resp.result.adultYn === 'N') {
+        this._isJoinOk = 'N';
+      } else if (resp.result.hasNotCardYn === 'N') {
+        this._isJoinOk = 'N';
+      }
+    } else {
+      this._isJoinOk = 'N';
     }
-    else {
-      this._onPopupNoJoin();
-    }
+
+    this.onClickJoinBtn();
   },
 
   _closeCallback: function () {
@@ -126,14 +136,18 @@ Tw.MembershipInfoLayerPopup.prototype = {
   onClickJoinBtn: function () {
     // 로그인 유형이 간편 로그인이 아닌경우
     if(this._svcInfo && this._svcInfo.loginType !== Tw.AUTH_LOGIN_TYPE.EASY ) {
+      // 준회원 일때는 BFF_11_0015 호출하면 안됨. 준회원 여부 : TID에 회선이 없는 고객이 준회원입니다.
+      if (this._svcInfo.svcAttrCd === '') {
+        this._onPopupNoJoin();
+      }
       // 가입 가능여부 API 기 호출시 호출하지 않음.
-      if ( Tw.FormatHelper.isEmpty(this._isJoinOk) ) {
+      else if ( Tw.FormatHelper.isEmpty(this._isJoinOk) ) {
         this.reqPossibleJoin();
       } else {
-        // 가입불가일 때, 안내 팝업 띄움
+        // 가입 가능일 때 가입하기 화면 이동
         if (this._isJoinOk === 'Y') {
           this._historyService.goLoad('/membership/join');
-        } else {
+        } else { // 가입불가일 때, 안내 팝업 띄움
           this._onPopupNoJoin();
         }
       }

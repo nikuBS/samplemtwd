@@ -121,7 +121,7 @@ class MyTFareBillSetReissue extends TwViewController {
     for ( let i = 0; i < length; i++ ) {
       const data = {};
       data['type1'] = DateHelper.getShortDateWithFormatAddByUnit(array[i], 1, 'month', 'YYYY년 MM월');
-      data['type2'] = DateHelper.getShortDateNoDot(array[i]);
+      data['type2'] = DateHelper.getShortDate(array[i]);
       data['type3'] = array[i];
       result.push(data);
     }
