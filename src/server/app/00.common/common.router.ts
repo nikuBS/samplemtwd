@@ -57,6 +57,7 @@ import CommonMemberInit from './controllers/member/common.member.init.controller
 import CommonSearchMain from './controllers/search/common.search-main.controller';
 import CommonUtilServiceBlock from './controllers/util/common.util.service-block.controller';
 import CommonSearchInResult from './controllers/search/common.search.in-result.controller';
+import CommonUtilServiceReady from './controllers/util/commin.util.service-ready.controller';
 
 export default class CommonRouter extends TwRouter {
   constructor() {
@@ -116,6 +117,7 @@ export default class CommonRouter extends TwRouter {
     // error
     this.controllers.push({ url: '/error', controller: CommonError });
     this.controllers.push({ url: '/util/service-block', controller: CommonUtilServiceBlock });
+    this.controllers.push({ url: '/util/service-ready', controller: CommonUtilServiceReady });
     // share
     this.controllers.push({ url: '/share/landing', controller: CommonShareLanding });
     this.controllers.push({ url: '/share/bridge', controller: CommonShareBridge });
