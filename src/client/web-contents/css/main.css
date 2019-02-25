@@ -144,6 +144,8 @@
     .section-swiper-box .link-full .ti {
       margin-top: -1.375rem;
       padding-top: 0; }
+  .section-swiper-box a.link-full .ti {
+    margin-top: 2.1875rem; }
 
 .main-top-group {
   position: relative;
@@ -2676,11 +2678,16 @@ body.apphome {
   .main-charge-box.section-swiper-box {
     min-height: 12.75rem;
     height: auto; }
-  .main-charge-box > button {
+  .main-charge-box > button, .main-charge-box a {
+    display: block;
     width: 100%;
     height: 100%;
     color: #fff;
-    text-align: left; }
+    text-align: left;
+    overflow: hidden;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    position: relative; }
   .main-charge-box .slider-box .slick-dots {
     top: -1.1875rem; }
     .main-charge-box .slider-box .slick-dots li span {

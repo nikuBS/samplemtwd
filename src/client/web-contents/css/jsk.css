@@ -1914,23 +1914,33 @@
       width: 3.5rem;
       height: 3.5rem;
       background-size: 100% 100%; }
-    .acco-style.required-doc .widget-box.radio .skin01 .type05.ico01:after {
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.S1001:after {
       background-image: url(/img/customer/bg-filter01-112.png); }
-    .acco-style.required-doc .widget-box.radio .skin01 .type05.ico02:after {
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.W1003:after {
+      background-image: url(/img/customer/bg-filter01-112.png); }
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.S1002:after {
       background-image: url(/img/customer/bg-filter02-112.png); }
-    .acco-style.required-doc .widget-box.radio .skin01 .type05.ico03:after {
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.S1003:after {
       background-image: url(/img/customer/bg-filter03-112.png); }
-    .acco-style.required-doc .widget-box.radio .skin01 .type05.ico04:after {
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.W1002:after {
+      background-image: url(/img/customer/bg-filter03-112.png); }
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.S1004:after {
       background-image: url(/img/customer/bg-filter04-112.png); }
-    .acco-style.required-doc .widget-box.radio .skin01 .type05.ico05:after {
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.W1001:after {
+      background-image: url(/img/customer/bg-filter04-112.png); }
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.S1005:after {
       background-image: url(/img/customer/bg-filter05-112.png); }
-    .acco-style.required-doc .widget-box.radio .skin01 .type05.ico06:after {
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.W1004:after {
+      background-image: url(/img/customer/bg-filter05-112.png); }
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.S1006:after {
       background-image: url(/img/customer/bg-filter06-112.png); }
-    .acco-style.required-doc .widget-box.radio .skin01 .type05.ico07:after {
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.W1005:after {
+      background-image: url(/img/customer/bg-filter06-112.png); }
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.S1007:after {
       background-image: url(/img/customer/bg-filter07-112.png); }
-    .acco-style.required-doc .widget-box.radio .skin01 .type05.ico08:after {
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.S1008:after {
       background-image: url(/img/customer/bg-filter08-112.png); }
-    .acco-style.required-doc .widget-box.radio .skin01 .type05.ico09:after {
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.S1009:after {
       background-image: url(/img/customer/bg-filter09-112.png); }
 
 .acco-style.required-doc .widget-box.radio .skin02 > li {

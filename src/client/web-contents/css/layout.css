@@ -932,6 +932,8 @@ body.bg-gray {
     background: #f5f5f5; }
   .cont-box.x-hidden {
     overflow-x: hidden; }
+  .cont-box.x-scroll {
+    overflow-x: auto; }
   .cont-box.square {
     padding: 1.625rem; }
   .cont-box.inborder {
