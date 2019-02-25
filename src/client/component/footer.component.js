@@ -39,7 +39,7 @@ Tw.FooterComponent.prototype = {
     }
   },
   _setCoachMark: function () {
-    new Tw.CoachMark(this.$footer, 'fe-coach-masking', Tw.NTV_STORAGE.COACH_MASKING);
-    new Tw.CoachMark(this.$footer, 'fe-coach-quick', Tw.NTV_STORAGE.COACH_QUICK);
+    new Tw.CoachMark(this.$footer, '#fe-coach-masking', Tw.NTV_STORAGE.COACH_MASKING);
+    new Tw.CoachMark(this.$footer, '#fe-coach-quick', Tw.NTV_STORAGE.COACH_QUICK);
   }
 };

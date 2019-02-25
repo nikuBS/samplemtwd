@@ -900,7 +900,7 @@ Tw.MainHome.prototype = {
     }, this), 1500);
   },
   _setCoachMark: function () {
-    new Tw.CoachMark(this.$container, 'fe-coach-line', Tw.NTV_STORAGE.COACH_LINE);
-    new Tw.CoachMark(this.$container, 'fe-coach-data', Tw.NTV_STORAGE.COACH_DATA);
+    new Tw.CoachMark(this.$container, '.fe-coach-line', Tw.NTV_STORAGE.COACH_LINE);
+    new Tw.CoachMark(this.$container, '#fe-coach-data', Tw.NTV_STORAGE.COACH_DATA);
   }
 };
