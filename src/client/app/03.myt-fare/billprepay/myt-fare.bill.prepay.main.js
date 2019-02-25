@@ -14,12 +14,30 @@ Tw.MyTFareBillPrepayMain = function (rootEl, title) {
 
   this._historyService = new Tw.HistoryService(rootEl);
 
-  this._initVariables();
-  this._setButtonVisibility();
-  this._bindEvent();
+  this._init();
 };
 
 Tw.MyTFareBillPrepayMain.prototype = {
+  _init: function () {
+    if( !Tw.Environment.init ) {
+      $(window).on(Tw.INIT_COMPLETE, $.proxy(this._checkIsAfterChange, this));
+    } else {
+      this._checkIsAfterChange();
+    }
+    this._initVariables();
+    this._setButtonVisibility();
+    this._bindEvent();
+  },
+  _checkIsAfterChange: function () {
+    var type = Tw.UrlHelper.getQueryParams().type;
+    if (type) {
+      var message = Tw.ALERT_MSG_MYT_FARE.COMPLETE_CANCEL_AUTO_PREPAY;
+
+      if (!this._isBackOrReload() && message !== '') {
+        this._commonHelper.toast(message);
+      }
+    }
+  },
   _initVariables: function () {
     this._maxAmount = this.$container.find('.fe-max-amount').attr('id');
     this._name = this.$container.find('.fe-name').text();
@@ -141,5 +159,12 @@ Tw.MyTFareBillPrepayMain.prototype = {
   },
   _onOpenTworld: function ($layer) {
     new Tw.CommonShareAppInstallInfo($layer);
+  },
+  _isBackOrReload: function () {
+    if (window.performance) {
+      if (performance.navigation.type === 1 || performance.navigation.type === 2) {
+        return true;
+      }
+    }
   }
 };

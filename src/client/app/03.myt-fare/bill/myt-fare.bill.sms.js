@@ -15,7 +15,7 @@ Tw.MyTFareBillSms = function (rootEl) {
 
   this._paymentCommon = new Tw.MyTFareBillCommon(rootEl);
   this._historyService = new Tw.HistoryService(rootEl);
-  this._backAlert = new Tw.BackAlert(rootEl);
+  this._backAlert = new Tw.BackAlert(rootEl, true);
 
   this._init();
 };
