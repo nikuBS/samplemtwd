@@ -19,7 +19,7 @@ class CustomerMain extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo?: any, allSvc?: any, childInfo?: any, pageInfo?: any): void {
     combineLatest(
       this.getBanners(),
-      this.getNotice(),
+      this.getNotice(req),
       this.getResearch()
     ).subscribe(([banners, notice, researchList]) => {
       const noticeList = this.parseNoticeList(BrowserHelper.isApp(req), notice);
@@ -46,7 +46,7 @@ class CustomerMain extends TwViewController {
       }
     })
 
-  // TODO: NOT YET VERIFIED: NOTICE API -> REDIS DATA from <doohj1@sk.com> by SMS
+  // TODO: NOT YET VERIFIED: NOTICE API -> REDIS DATA from <doohj1@sk.com> by SMS 1weeks ago
   // private getBanners = () => this.redisService.getData(REDIS_KEY.SUBMAIN_BANNER)
   //   .map((resp) => {
   //     return resp.result;
@@ -61,14 +61,32 @@ class CustomerMain extends TwViewController {
       }
     })
 
-  private getNotice = () => this.apiService.request(API_CMD.BFF_08_0029, { expsChnlCd: 'M', ntcAreaClCd: 'M' })
-    .map((res) => {
+  private getNotice = (req) => {
+    const expsChnlCd = this._getTworldChannel(req);
+
+    return this.apiService.request(API_CMD.BFF_08_0029, {
+      expsChnlCd: expsChnlCd,
+      ntcAreaClCd: 'M'
+    }).map((res) => {
       if ( res.code === API_CODE.CODE_00 ) {
         return res.result;
       } else {
         return null;
       }
-    })
+    });
+  }
+
+  private _getTworldChannel(req): any {
+    if ( BrowserHelper.isAndroid(req) ) {
+      return 'A';
+    }
+
+    if ( BrowserHelper.isIos(req) ) {
+      return 'I';
+    }
+
+    return 'M';
+  }
 }
 
 export default CustomerMain;
