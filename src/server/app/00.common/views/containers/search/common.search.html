@@ -165,38 +165,20 @@
             </div>
             <% } %>
             <!-- .cont-box -->
-            <% if(searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM1+searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM2+searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM3!=='' ){ %>
-            <div class="cont-box nogaps">
-                <ul class="btn-link-list col3">
-                    <% if(searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM1.length>0){ %>
+            <div class="cont-box nogaps none" id="smart_btn_base">
+                <ul class="btn-link-list">
+                    <script type="text/x-handlebars-template" id="smart_template">
                     <li class="last-line">
-                        <a class="list-data" href="<%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_URL1 %>"
-                           data-id="<%= searchInfo.search[1].smart.data[0].DOCID %>" data-category="smart" data-tit="<%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM1 %>">
-                            <%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM1 %>
+                        <a class="list-data" href="{{data.link}}"
+                           data-id="{{data.docId}}" data-category="smart" data-tit="{{data.title}}">
+                            {{data.title}}
                         </a>
                     </li>
-                    <% } %>
-                    <% if(searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM2.length>0){ %>
-                    <li class="last-line">
-                        <a class="list-data" href="<%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_URL2 %>"
-                           data-id="<%= searchInfo.search[1].smart.data[0].DOCID %>" data-category="smart" data-tit="<%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM2 %>">
-                            <%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM2 %>
-                        </a>
-                    </li>
-                    <% } %>
-                    <% if(searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM3.length>0){ %>
-                    <li class="last-line">
-                        <a class="list-data" href="<%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_URL3 %>"
-                           data-id="<%= searchInfo.search[1].smart.data[0].DOCID %>" data-category="smart" data-tit="<%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM3 %>">
-                            <%= searchInfo.search[1].smart.data[0].BNNR_BOT_BTN_NM3 %>
-                        </a>
-                    </li>
-                    <% } %>
+                    </script>
                 </ul>
             </div>
             <% } %>
-            <% } %>
-
+            <script type="text/x-handlebars-template" id="shortcut_base">
             <hr class="cont-sp type1 shortcut" aria-hidden="true">
 
             <!-- .cont-box -->
@@ -219,9 +201,10 @@
                     </ul>
                 </div>
             </div>
+            </script>
 
 
-
+            <script type="text/x-handlebars-template" id="rate_base">
             <!-- <hr class="cont-sp type1" aria-hidden="true"/>                 -->
             <div class="cont-box bgnone noborder nogaps-btm rate">
                 <div class="searchnumbox-wrap">
@@ -244,7 +227,8 @@
 
                 </ul>
             </div>
-
+            </script>
+            <script type="text/x-handlebars-template" id="service_base">
             <div class="cont-box bgnone noborder nogaps-btm service">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">부가서비스</h2>
@@ -266,7 +250,9 @@
 
                 </ul>
             </div>
-
+            <hr class="cont-sp type1 service" aria-hidden="true">
+            </script>
+            <script type="text/x-handlebars-template" id="tv_base">
             <div class="cont-box bgnone noborder nogaps-btm tv">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">인터넷 · 집전화 · IPTV</h2>
@@ -288,7 +274,8 @@
 
                 </ul>
             </div>
-
+            </script>
+            <script type="text/x-handlebars-template" id="roaming_base">
             <div class="cont-box bgnone noborder nogaps-btm roaming">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">T로밍</h2>
@@ -310,8 +297,10 @@
 
                 </ul>
             </div>
+            </script>
 
             <!-- .cont-box -->
+            <script type="text/x-handlebars-template" id="app_base">
             <hr class="cont-sp type1 app" aria-hidden="true">
             <div class="cont-box list nogaps-btm app">
                 <div class="searchnumbox-wrap">
@@ -329,10 +318,11 @@
                     </div>
                 </div>
             </div>
-
+            </script>
 
 
             <!-- .cont-box -->
+            <script type="text/x-handlebars-template" id="direct_base">
             <hr class="cont-sp type1 direct" aria-hidden="true">
             <div class="cont-box list pb0 direct">
                 <div class="searchnumbox-wrap">
@@ -357,11 +347,13 @@
                     </div>
                 </div>
             </div>
+            </script>
             <!--// .cont-box -->
 
 
 
             <!-- .cont-box -->
+            <script  type="text/x-handlebars-template" id="membership_base" >
             <hr class="cont-sp type1 membership" aria-hidden="true">
             <div class="cont-box list pb0 membership">
                 <div class="searchnumbox-wrap">
@@ -383,9 +375,11 @@
                     </ul>
                 </div>
             </div>
+            </script>
             <!--// .cont-box -->
 
             <!-- .cont-box -->
+            <script type="text/x-handlebars-template" id="event_base">
             <div class="cont-box list nogaps-btm bgnone noborder event">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">진행 중인 이벤트</h2>
@@ -406,9 +400,11 @@
                     </ul>
                 </div>
             </div>
+            </script>
             <!--// .cont-box -->
 
             <!-- 혜택 · 할인 -->
+            <script type="text/x-handlebars-template" id="sale_base">
             <hr class="cont-sp type1 sale" aria-hidden="true">
             <div class="cont-box list nogaps-btm noborder sale">
                 <div class="searchnumbox-wrap">
@@ -433,7 +429,7 @@
             <!-- //혜택 · 할인 -->
 
             <hr class="cont-sp type1" aria-hidden="true">
-
+            </script>
             <!--<div class="search-banner">-->
             <!--<a href=""><img src="http://localhost:3001/img/search/img_banner02.png" alt="내게 맞는 요금제 찾기"></a>-->
             <!--</div>-->
@@ -441,6 +437,7 @@
             <!--<hr class="cont-sp type1" aria-hidden="true">-->
 
             <!-- 지점 · 대리점, A/S센터 -->
+            <script id="as_base" type="text/x-handlebars-template">
             <div class="cont-box list nogaps-btm as">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">지점 · 대리점, A/S센터</h2>
@@ -460,9 +457,11 @@
                 </ul>
             </div>
             <hr class="cont-sp type1 as" aria-hidden="true">
+            </script>
             <!-- //지점 · 대리점, A/S센터 -->
 
             <!-- 자주하는 질문 -->
+            <script type="text/x-handlebars-template" id="question_base">
             <div class="cont-box list nogaps-btm question">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">자주 하는 질문</h2>
@@ -484,8 +483,10 @@
             <!-- //자주하는 질문 -->
 
             <hr class="cont-sp type1 question" aria-hidden="true">
+            </script>
 
             <!-- 공지사항 -->
+            <script type="text/x-handlebars-template" id="notice_base">
             <div class="cont-box list nogaps-btm notice">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">공지사항</h2>
@@ -507,7 +508,9 @@
             <!-- //공지사항 -->
 
             <hr class="cont-sp type1 notice" aria-hidden="true">
+            </script>
 
+            <script type="text/x-handlebars-template" id="prevent_base">
             <!-- 이용자 피해예방 주의보 -->
             <div class="cont-box list nogaps-btm prevent">
                 <div class="searchnumbox-wrap">
@@ -530,7 +533,9 @@
             <!-- //이용자 피해예방 주의보 -->
 
             <hr class="cont-sp type1 prevent" aria-hidden="true">
+            </script>
 
+            <script id="manner_base" type="text/x-handlebars-template">
             <!-- 이럴 땐 이렇게 하세요 -->
             <div class="cont-box list nogaps-btm manner">
                 <div class="searchnumbox-wrap">
@@ -553,8 +558,10 @@
             <!-- //이럴 땐 이렇게 하세요 -->
 
             <hr class="cont-sp type1 manner" aria-hidden="true">
+            </script>
 
             <!-- 서비스 이용안내 -->
+            <script type="text/x-handlebars-template" id="serviceInfo_base">
             <div class="cont-box list nogaps-btm serviceInfo">
                 <div class="searchnumbox-wrap">
                     <h2 class="tit">서비스 이용안내</h2>
@@ -576,7 +583,9 @@
             <!-- //서비스 이용안내 -->
 
             <hr class="cont-sp type1 serviceInfo" aria-hidden="true">
+            </script>
 
+            <script id="siteInfo_base" type="text/x-handlebars-template">
             <!-- 사이트 이용안내 -->
             <div class="cont-box list nogaps-btm siteInfo">
                 <div class="searchnumbox-wrap">
@@ -597,6 +606,7 @@
                 </ul>
             </div>
             <!-- //사이트 이용안내 -->
+            </script>
 
 
 
