@@ -5,9 +5,9 @@ $(document).on('ready', function () {
   if($('body').hasClass('bg-productdetail')){
     skt_landing.action.prd_header();
   }
-  if($('.home-slider').length > 0){
+  /*if($('.home-slider').length > 0){
     skt_landing.action.home_slider();
-  }
+  }*/
   if($('#common-menu').length > 0){
     skt_landing.action.gnb();
   }
@@ -577,11 +577,11 @@ skt_landing.action = {
             homeIndex = $('.home-slider .home-slider-belt').slick('getSlick').currentSlide;
             $("html, body").stop().animate({scrollTop:0}, 1, function(){});
             $('.home-tab-belt .tab').eq(homeIndex).find('button, a').addClass('on').closest('.tab').siblings().find('button, a').removeClass('on');
+            //2019.02.25 콜백추가          
+            if ( callback !== undefined ) {
+              callback(homeIndex);
+            }          
           }
-          //2019.02.25 콜백추가          
-          if ( callback !== undefined ) {
-            callback(homeIndex);
-          }          
       });
     });
 

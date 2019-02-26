@@ -1901,6 +1901,8 @@ body.bg-gray {
     padding: 1.625rem 0.875rem 0; }
     .popup-page.layer .sms-confirm-box .sms-confirm-des {
       font-size: 0.75rem; }
+  .popup-page.layer .cont-actionsheet .btn-floating {
+    position: relative; }
 
 .sms-confirm-box {
   min-height: 12.5rem; }

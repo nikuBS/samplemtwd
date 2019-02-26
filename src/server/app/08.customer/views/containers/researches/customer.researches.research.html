@@ -58,7 +58,7 @@
                                 let etcIdx = -1; %>
                                 <div class="widget">
                                     <div class="widget-box radio">
-                                        <ul class="select-list alignment01 <%= question.inqSortMthdCd === 'D' ? 'division-two' : '' %>" role="radiogroup">
+                                        <ul class="select-list alignment01 <%= question.inqSortMthdCd === 'T' ? 'division-two' : '' %>" role="radiogroup">
                                             <% for (let idx in question.examples) { 
                                                 const exam = question.examples[idx];
                                                 if (exam.isEtc) {
@@ -92,7 +92,7 @@
                                 let etcIdx = -1; %>
                                 <div class="widget">
                                     <div class="widget-box check">
-                                        <ul class="select-list alignment01 <%= question.inqSortMthdCd === 'D' ? 'division-two' : '' %>" role="group">
+                                        <ul class="select-list alignment01 <%= question.inqSortMthdCd === 'T' ? 'division-two' : '' %>" role="group">
                                             <% for (let idx in question.examples) { 
                                                 const exam = question.examples[idx];
                                                 if (exam.isEtc) {
