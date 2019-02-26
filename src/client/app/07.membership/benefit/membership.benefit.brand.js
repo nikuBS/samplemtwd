@@ -275,6 +275,7 @@ Tw.MembershipBenefitBrand.prototype = {
     this.$contentsEmpty.find('.t-point').text(inputVal);
     this.$contentsEmpty.show();
     this.$brandList.hide();
+    this.$btnMore.hide();
   },
 
   _onOpenGradeActionSheet: function ($container) {
