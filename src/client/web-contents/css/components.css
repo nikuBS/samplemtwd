@@ -1434,7 +1434,7 @@
           word-break: break-all; }
   .list-comp-input-agree .select-list > li .agree-view {
     position: absolute;
-    z-index: 2;
+    z-index: 5;
     right: 0.5rem;
     top: 1.125rem;
     width: 1.5625rem;
@@ -1745,7 +1745,7 @@
         .list-comp-lineinfo li button .lineinfo-data .ico {
           position: absolute;
           right: 0;
-          top: 0; }
+          top: -0.125rem; }
     .list-comp-lineinfo li > a {
       overflow: hidden;
       display: block;
@@ -14853,9 +14853,12 @@ a.bt-link-tx.underline.small {
   max-width: 92%;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 1.125rem; }
   .add-prd-wrap .list-comp-lineinfo li .lineinfo-data .info-title .unit {
     font-size: 1.125rem; }
+  .add-prd-wrap .list-comp-lineinfo li .lineinfo-data .info-title .etc-num {
+    display: block; }
 
 /* 임지선 ~ 2018.10.05 */
 /* 김재성 */
