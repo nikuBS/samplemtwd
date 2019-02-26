@@ -265,7 +265,7 @@ class MyTDataHotdata extends TwViewController {
       usageData.totalRemained = SKIP_NAME.UNLIMIT;
     } else {
       const totalRemained = gnrlData.reduce((_memo, _data) => {
-        return _memo + parseInt(_data.remained, 10);
+        return _data.remained ? _memo + parseInt(_data.remained, 10) : _memo +  0;
       }, 0);
       usageData.totalRemained = FormatHelper.convDataFormat(totalRemained, UNIT[UNIT_E.DATA]);
     }
