@@ -30,7 +30,8 @@ export default class MembershipMyUpdate extends TwViewController {
 
       res.render('my/membership.my.update.html', {
         myInfoData: myInfoData,
-        svcInfo: svcInfo
+        svcInfo: svcInfo,
+        pageInfo: pageInfo
       });
     });
   }
