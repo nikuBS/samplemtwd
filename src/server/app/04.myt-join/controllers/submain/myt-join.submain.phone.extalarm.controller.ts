@@ -8,7 +8,6 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import StringHelper from '../../../../utils/string.helper';
-import moment = require('moment');
 
 class MyTJoinPhoneNumChgAlarmExt extends TwViewController {
 
@@ -40,7 +39,7 @@ class MyTJoinPhoneNumChgAlarmExt extends TwViewController {
           const result = resp.result;
 
           // 서비스 종료 후 면 신청으로 이동
-          const today = moment(new Date()).format('YYYYMMDD');
+          const today = DateHelper.getCurrentShortDate(new Date());
           if ( result['notiEndDt'] && result['notiEndDt'] < today ) {
             res.redirect('/myt-join/submain/phone/alarm');
           }
