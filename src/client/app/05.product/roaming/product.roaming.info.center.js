@@ -15,13 +15,24 @@ Tw.ProductRoamingInfoCenter = function(rootEl) {
 
 Tw.ProductRoamingInfoCenter.prototype = {
   _init: function() {
-
     for( var i=1; i<14; i++){
       $('#center'+i).hide();
     }
     $('#center1').show();
     this.presentId = 1;
 
+    //다른 페이지에서 돌아올 경우 탭 상태 초기화
+    setTimeout(function(){
+      $('#fe-center-list li').each(function(index){
+        if(index === 0){
+          $(this).addClass('checked');
+          $(this).attr('aria-checked', 'true');
+        }else{
+          $(this).removeClass('checked');
+          $(this).attr('aria-checked', 'false');
+        }
+      });
+    },10);
   },
 
   _cachedElement: function() {
