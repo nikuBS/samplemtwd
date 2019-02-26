@@ -333,6 +333,7 @@ body.bg-gray {
             line-height: 1.1875rem;
             vertical-align: middle; }
             #common-menu .section-cont .section-gnb .bt-depth1 > .bt .ti-info .info {
+              top: -1px;
               vertical-align: middle;
               margin-left: 0.4375rem;
               color: #f76252;
@@ -1133,9 +1134,19 @@ body.bg-gray {
           left: 1.875rem; }
       .popup-page.layer .list-comp-input-agree .select-list > li .agree-view {
         top: 0.8125rem; }
-    .popup-page.layer.actionsheet .container-wrap .container {
-      padding-top: 0;
-      background: #fff; }
+    .popup-page.layer.actionsheet {
+      /*max-height:rem(400px); // 19.02.26 액션시트 구조변경 및 스타일 수정
+            overflow:hidden;
+            overflow-y:auto;
+            .header-wrap{
+                position:relative;
+                .page-header{
+                    position:relative;
+                }
+            }*/ }
+      .popup-page.layer.actionsheet .container-wrap .container {
+        padding-top: 0;
+        background: #fff; }
   .popup-page .container-wrap {
     -webkit-box-sizing: border-box;
             box-sizing: border-box; }
@@ -2820,7 +2831,7 @@ body.bg-gray {
   padding: 3.75rem 1.25rem 0;
   background: #676767;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   background-position: 100%; }
   .bg-productdetail .productdetails-bg.t-logo {
     background: #676767; }

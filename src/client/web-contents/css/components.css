@@ -1583,6 +1583,8 @@
     .list-comp-history .comp-box .list-box .list-date .date-tx {
       font-size: 0.875rem;
       color: #000; }
+    .list-comp-history .comp-box .list-box .list-date + .list-con {
+      padding: 0 0 0 4.875rem; }
   .list-comp-history .comp-box .list-box .list-con {
     padding: 0 0 0 4rem; }
     .list-comp-history .comp-box .list-box .list-con li {
