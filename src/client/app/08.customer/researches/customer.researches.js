@@ -18,7 +18,7 @@ Tw.CustomerResearches.prototype = {
         examples: _.map(research.examples, function(exam, idx) {
           return $.extend(exam, { idx: idx });
         }),
-        isRadio: research.bnnrRsrchRpsTypCd === 'C',
+        isRadio: research.bnnrRsrchRpsTypCd === 'S',
         isDoubleAlign: research.bnnrRsrchSortMthdCd === 'D',
         hasImage: research.examples[0] && research.examples[0].image,
         hasEtc: research.examples.length ? research.examples[research.examples.length - 1].isEtc : false,
