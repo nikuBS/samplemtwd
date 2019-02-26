@@ -453,7 +453,8 @@ Tw.ALERT_MSG_COMMON = {
   },
   STEP_CANCEL: { TITLE: '화면을 닫고 이동하시겠습니까?', MSG: '입력 및 선택하신 정보는 모두 취소됩니다.' },
   CHANGE: '변경하시겠습니까?',
-  BIOMETRICS_REGISTER_FAIL: '본인인증이 실패하였습니다.'
+  BIOMETRICS_REGISTER_FAIL: '생체인증 등록에 실패하였습니다.',
+  BIOMETRICS_CERT_FAIL: '본인인증이 실패하였습니다.'
 };
 
 Tw.ALERT_MSG_HOME = {
@@ -1016,7 +1017,7 @@ Tw.HOTBILL_ERROR =  {
   ZINVE8106: '실시간 요금조회에서의 전월요금 조회는 매월초 임시제공되며, 정확한 사용요금은 \'사용내역/' +
     '<a href="/myt-fare/billguide/guide" class="bt-link-tx underline">청구요금조회</a>\'에서 확인 가능합니다.',
   ZINVE8888: '핫빌 요청된 자료가 존재하지 않습니다!'
-}
+};
 
 Tw.SETTINGS_MENU = {
   LATEST: '최신'

@@ -109,14 +109,18 @@ Tw.ProductMobileplanSetting0planSm.prototype = {
   _setTimeMsg: function(timeStr) {
     var endTime = parseInt(timeStr, 10) + 3;
     this.$hour.text(timeStr + Tw.PERIOD_UNIT.HOUR + '~' + (endTime < 10 ? '0' + endTime : endTime) + Tw.PERIOD_UNIT.HOUR);
+
     this.$msg.show();
+    this.$msg.removeClass('disabled');
   },
 
   _enableSetupButton: function(e) {
     if ($(e.currentTarget).val() === 'NA00006163' && this._isChangeTime) {
       this.$btnTimeSelect.prop('disabled', false).removeAttr('disabled');
+      this.$msg.removeClass('disabled');
     } else {
       this.$btnTimeSelect.prop('disabled', true).attr('disabled');
+      this.$msg.addClass('disabled');
     }
 
     if ($(e.currentTarget).val() === 'NA00006163' && !this._isChangeTime) {

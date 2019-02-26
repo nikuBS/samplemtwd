@@ -109,6 +109,12 @@ export default class MembershipSubmain extends TwViewController {
         } else {
           membershipCheckData.joinYn = 'Y';
         }
+
+        if ( resp.result.adultYn === 'N' || resp.result.feeProdYn === 'N' ) {
+          membershipCheckData.joinYn = 'N';
+        } else {
+          membershipCheckData.joinYn = 'Y';
+        }
       }
       return membershipCheckData;
     });
