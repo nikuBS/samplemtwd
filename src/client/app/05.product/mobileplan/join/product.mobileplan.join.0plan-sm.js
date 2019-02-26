@@ -50,8 +50,10 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
   _enableSetupButton: function(e) {
     if ($(e.currentTarget).val() === 'NA00006163') {
       this.$btnTimeSelect.prop('disabled', false).removeAttr('disabled');
+      this.$msg.removeClass('disabled');
     } else {
       this.$btnTimeSelect.prop('disabled', true).attr('disabled');
+      this.$msg.addClass('disabled');
     }
 
     if ($(e.currentTarget).val() === 'NA00006163' && Tw.FormatHelper.isEmpty(this._startTime)) {
@@ -148,7 +150,9 @@ Tw.ProductMobileplanJoin0planSm.prototype = {
     this.$btnSetupOk.removeAttr('disabled').prop('disabled', false);
     this.$btnTimeSelect.html(time + ' ' + Tw.PERIOD_UNIT.HOUR + $('<div\>').append(this.$btnTimeSelect.find('.ico')).html());
     this.$hour.text(time + Tw.PERIOD_UNIT.HOUR + '~' + (endTime < 10 ? '0' + endTime : endTime) + Tw.PERIOD_UNIT.HOUR);
+
     this.$msg.show();
+    this.$msg.removeClass('disabled');
 
     this._startTime = time;
     this._popupService.close();
