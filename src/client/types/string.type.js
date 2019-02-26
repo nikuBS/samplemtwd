@@ -1260,10 +1260,6 @@ Tw.MYT_JOIN_SUSPEND = {
   NOT_VALID_FROM_DATE: '시작일은 오늘 이후로 지정할 수 있습니다.',
   NOT_VALID_FROM_DATE_01: '시작 일자는 당일로부터 30일 이내로 선택하실 수 있습니다.',
   NOT_SUPPORT_FILE_UPLOAD: '사용하고 계신 안드로이드 버전에서는 지원하지 않는 기능입니다.',
-  ALERT_EXCEED: {
-    TITLE: '신청불가',
-    MESSAGE: '월 5회 이상 신청이 불가능합니다.'
-  },
   LONG: {
     MILITARY: {
       TITLE: '필요서류 첨부 안내',
@@ -1283,7 +1279,13 @@ Tw.MYT_JOIN_SUSPEND = {
         '</ul>',
       UPLOAD_DESC: '항공권 사본 등 해외체류입증 서류 1종 제출'
     }
-  }
+  },
+  ERROR: {
+    MOD0032: '', // 미성년자 회원
+    MOD0034: '', // 일시정지 지정 횟수 초과
+    MOD0035: ''  // 점검시간
+  },
+  ERROR_TITLE: '신청불가'
 };
 
 Tw.PUBLIC_AUTH_COP = 'SK텔레콤';

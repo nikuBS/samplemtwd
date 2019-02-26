@@ -65,6 +65,8 @@ Tw.MyTJoinSuspendStatus.prototype = {
       params.svcNum = this._svcInfo.svcNum;
       params.toDt = this._params.status.period.to.replace(/\./g, '');
       this._historyService.replaceURL('/myt-join/submain/suspend/complete?' + $.param(params));
+    } else if ( res.code in Tw.MYT_JOIN_SUSPEND.ERROR ) {
+      this._popupService.openAlert(res.msg, Tw.MYT_JOIN_SUSPEND.ERROR_TITLE);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -98,6 +100,8 @@ Tw.MyTJoinSuspendStatus.prototype = {
       params.command = 'cancel-resuspend';
       params.svcInfo = this._svcInfo.svcNum;
       this._historyService.replaceURL('/myt-join/submain/suspend/complete?' + $.param(params));
+    } else if ( res.code in Tw.MYT_JOIN_SUSPEND.ERROR ) {
+      this._popupService.openAlert(res.msg, Tw.MYT_JOIN_SUSPEND.ERROR_TITLE);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -131,8 +135,8 @@ Tw.MyTJoinSuspendStatus.prototype = {
       // update svcInfo
       this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
       this._historyService.replaceURL('/myt-join/submain/suspend/complete?' + $.param({ command: 'reset' }));
-    } else if ( res.code === 'MOD0022' ) {
-      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ALERT_EXCEED.MESSAGE, Tw.MYT_JOIN_SUSPEND.ALERT_EXCEED.TITLE);
+    } else if ( res.code in Tw.MYT_JOIN_SUSPEND.ERROR ) {
+      this._popupService.openAlert(res.msg, Tw.MYT_JOIN_SUSPEND.ERROR_TITLE);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

@@ -322,6 +322,8 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       this._suspendOptions.command = 'longterm';
       this._suspendOptions.svcNum = this._svcInfo.svcNum;
       this._historyService.replaceURL('/myt-join/submain/suspend/complete?' + $.param(this._suspendOptions));
+    } else if ( res.code in Tw.MYT_JOIN_SUSPEND.ERROR ) {
+      this._popupService.openAlert(res.msg, Tw.MYT_JOIN_SUSPEND.ERROR_TITLE);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
