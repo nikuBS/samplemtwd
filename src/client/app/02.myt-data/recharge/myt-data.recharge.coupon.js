@@ -57,7 +57,7 @@ Tw.MyTDataRechargeCoupon.prototype = {
   _onPlans: function () {
     $.when(
       this._apiService.request(Tw.API_CMD.BFF_06_0066, {
-        dataRfilPsblYn: 'Y', voiceRfilPsblYn: 'Y'
+        type: 'R', dataRfilPsblYn: 'Y', voiceRfilPsblYn: 'Y'
       }),
       this._apiService.request(Tw.API_CMD.BFF_06_0066, {
         type: 'R', dataRfilPsblYn: 'Y', voiceRfilPsblYn: 'N'
