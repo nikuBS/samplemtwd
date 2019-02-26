@@ -70,7 +70,7 @@ Tw.BenefitMyBenefitCookiz.prototype = {
         var _items = $.extend(true, [], resp.result.history);
         _.map(_items, $.proxy(function (point) {
           point.point = Tw.FormatHelper.addComma(point.point);
-          point.opDt = Tw.DateHelper.getShortDateWithFormat(point.opDt, 'YYYY.MM.DD.');
+          point.opDt = Tw.DateHelper.getShortDateWithFormat(point.opDt, 'YYYY.M.D.');
           point.type = Tw.BENEFIT.TYPE[point.opClCd];
         }, this));
 

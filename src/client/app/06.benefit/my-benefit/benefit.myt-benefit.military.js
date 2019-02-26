@@ -63,7 +63,7 @@ Tw.BenefitMyBenefitMilitary.prototype = {
         this._items = $.extend(true, [], resp.result);
         _.map(this._items, $.proxy(function (point) {
           point.point = Tw.FormatHelper.addComma(point.point);
-          point.opDt = Tw.DateHelper.getShortDateWithFormat(point.opDt, 'YYYY.MM.DD.');
+          point.opDt = Tw.DateHelper.getShortDateWithFormat(point.opDt, 'YYYY.M.D.');
           point.type = Tw.BENEFIT.TYPE[point.opClCd];
         }, this));
         this._idxLastItem = 0;

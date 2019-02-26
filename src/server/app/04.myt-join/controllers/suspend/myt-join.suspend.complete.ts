@@ -29,8 +29,8 @@ class MyTJoinSuspendComplete extends TwViewController {
         data['mainTitle'] = MYT_SUSPEND_COMPLETE_MSG.APPLY;
         data['centerUrl'] = '/myt-join/submain/suspend/status';
         data['centerName'] = MYT_SUSPEND_COMPLETE_MSG.GO_TO_STATUS;
-        duration = DateHelper.getShortDateWithFormat(params.fromDt, 'YYYY.MM.DD.') + '~' +
-          DateHelper.getShortDateWithFormat(params.toDt, 'YYYY.MM.DD.');
+        duration = DateHelper.getShortDateWithFormat(params.fromDt, 'YYYY.M.D.') + '~' +
+          DateHelper.getShortDateWithFormat(params.toDt, 'YYYY.M.D.');
         data['desc'] = MYT_SUSPEND_COMPLETE_MSG.SUCCESS_LONG_TERM_SUSPEND_MESSAGE_SVC
           .replace('{DURATION}', duration)
           .replace('{SVC_INFO}', FormatHelper.conTelFormatWithDash(params.svcNum));
@@ -40,15 +40,15 @@ class MyTJoinSuspendComplete extends TwViewController {
         data['mainTitle'] = MYT_SUSPEND_COMPLETE_MSG.RESUSPEND;
         data['centerUrl'] = '/myt-join/submain/suspend/status';
         data['centerName'] = MYT_SUSPEND_COMPLETE_MSG.GO_TO_STATUS;
-        duration = DateHelper.getShortDateWithFormat(params.fromDt, 'YYYY.MM.DD.') + '~' +
-          DateHelper.getShortDateWithFormat(params.toDt, 'YYYY.MM.DD.');
+        duration = DateHelper.getShortDateWithFormat(params.fromDt, 'YYYY.M.D.') + '~' +
+          DateHelper.getShortDateWithFormat(params.toDt, 'YYYY.M.D.');
         data['desc'] = MYT_SUSPEND_COMPLETE_MSG.SUCCESS_RESUSPEND_MESSAGE.replace('{DURATION}', duration)
           .replace('{SVC_NUMBER}', FormatHelper.conTelFormatWithDash(params.svcNum));
         break;
 
       case 'cancel-resuspend':
         data['mainTitle'] = MYT_SUSPEND_COMPLETE_MSG.CANCEL_RESUSPEND;
-        duration = DateHelper.getShortDateWithFormat(params.fromDt, 'YYYY.MM.DD.');
+        duration = DateHelper.getShortDateWithFormat(params.fromDt, 'YYYY.M.D.');
         break;
 
       case 'reset':
@@ -57,8 +57,8 @@ class MyTJoinSuspendComplete extends TwViewController {
 
       case 'temporary':
         data['mainTitle'] = MYT_SUSPEND_COMPLETE_MSG.APPLY;
-        duration = DateHelper.getShortDateWithFormat(params.fromDt, 'YYYY.MM.DD.') + '~' +
-          DateHelper.getShortDateWithFormat(params.toDt, 'YYYY.MM.DD.');
+        duration = DateHelper.getShortDateWithFormat(params.fromDt, 'YYYY.M.D.') + '~' +
+          DateHelper.getShortDateWithFormat(params.toDt, 'YYYY.M.D.');
         const type = params.icallPhbYn === 'Y' ?
           MYT_SUSPEND_COMPLETE_MSG.TYPE.ALL : MYT_SUSPEND_COMPLETE_MSG.TYPE.CALL;
         data['desc'] = MYT_SUSPEND_COMPLETE_MSG.SUCCESS_SUSPEND_MESSAGE.replace('{DURATION}', duration)
