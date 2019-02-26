@@ -152,10 +152,10 @@ Tw.MyTFareHotBill.prototype = {
         var total = this._isPrev ? billData.totOpenBal1 : billData.totOpenBal2;
         this.$amount.text(total + Tw.CURRENCY_UNIT.WON);
         var fromDt = Tw.DateHelper.getShortDateWithFormat(
-          this._isPrev ? resp.result.beforeFromDt : resp.result.fromDt, 'YYYY.MM.DD.'
+          this._isPrev ? resp.result.beforeFromDt : resp.result.fromDt, 'YYYY.M.D.'
         );
         var toDt = Tw.DateHelper.getShortDateWithFormat(
-          this._isPrev ? resp.result.beforetoDt : resp.result.toDt, 'YYYY.MM.DD.'
+          this._isPrev ? resp.result.beforetoDt : resp.result.toDt, 'YYYY.M.D.'
         );
         this.$period.text(this.$period.text() + fromDt + ' ~ ' + toDt);
         var fieldInfo = {
