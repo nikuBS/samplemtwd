@@ -120,7 +120,8 @@ Tw.MyTFareBillOptionRegister.prototype = {
   },
   _success: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      this._aftetSuccessGetOption(res);
+      this._historyService.goLoad('/myt-fare/bill/option?type=' + this.$infoWrap.attr('id'));
+      //this._aftetSuccessGetOption(res);
     } else {
       this._fail(res);
     }
