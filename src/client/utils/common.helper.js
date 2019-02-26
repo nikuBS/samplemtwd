@@ -164,7 +164,7 @@ Tw.CommonHelper = (function () {
   };
 
   var resetHeight = function ($element) {
-    $element.slick.animateHeight();
+    $element.slick && $element.slick.animateHeight();
   };
 
   var resetPopupHeight = function () {
