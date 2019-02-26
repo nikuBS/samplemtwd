@@ -1434,7 +1434,7 @@
           word-break: break-all; }
   .list-comp-input-agree .select-list > li .agree-view {
     position: absolute;
-    z-index: 5;
+    z-index: 2;
     right: 0.5rem;
     top: 1.125rem;
     width: 1.5625rem;
@@ -1733,22 +1733,22 @@
     border-top: 1px solid #e1e1e1; }
     .list-comp-lineinfo li:first-child {
       border-top: 0; }
-    .list-comp-lineinfo li button {
+    .list-comp-lineinfo li button, .list-comp-lineinfo li a.link {
       display: block;
       width: 100%;
       padding: 1.375rem 0; }
-      .list-comp-lineinfo li button .lineinfo-data {
+      .list-comp-lineinfo li button .lineinfo-data, .list-comp-lineinfo li a.link .lineinfo-data {
         position: relative;
         padding-right: 1rem;
         -webkit-box-sizing: border-box;
                 box-sizing: border-box; }
-        .list-comp-lineinfo li button .lineinfo-data .ico {
+        .list-comp-lineinfo li button .lineinfo-data .ico, .list-comp-lineinfo li a.link .lineinfo-data .ico {
           position: absolute;
           right: 0;
           top: -0.125rem; }
     .list-comp-lineinfo li > a {
       overflow: hidden;
-      display: block;
+      display: table;
       width: 100%;
       padding: 1.375rem 0 0;
       color: #000; }
@@ -12570,7 +12570,8 @@ a.bt-link-tx.underline.small {
           .recommendedrate-list > li .product-infolink .products-titleinfo .info .money {
             display: inline-block;
             margin: 0 0 0 0.25rem;
-            font-size: 1rem; }
+            font-size: 1rem;
+            vertical-align: -0.0625rem; }
       .recommendedrate-list > li .product-infolink .taglist-wrap {
         white-space: nowrap;
         overflow: hidden;
@@ -28379,9 +28380,7 @@ body.apphome {
   .data-list-type1 .use .bt-link-tx {
     text-align: right;
     font-size: 0.875rem;
-    padding-top: 0.1875rem;
-    color: #325ec1;
-    text-decoration: underline; }
+    padding-top: 0.1875rem; }
 
 .data-list-type1 .type1 li:first-child {
   padding-top: 0;

@@ -1049,8 +1049,6 @@ body.bg-gray {
             box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.05); }
   .popup-page.nobg {
     background: #edeef0; }
-  .popup-page.nogaps-pop {
-    padding: 0; }
   .popup-page.layer {
     padding: 0;
     top: auto;
@@ -1136,19 +1134,23 @@ body.bg-gray {
           left: 1.875rem; }
       .popup-page.layer .list-comp-input-agree .select-list > li .agree-view {
         top: 0.8125rem; }
-    .popup-page.layer.actionsheet {
-      /*max-height:rem(400px); // 19.02.26 액션시트 구조변경 및 스타일 수정
-            overflow:hidden;
-            overflow-y:auto;
-            .header-wrap{
-                position:relative;
-                .page-header{
-                    position:relative;
-                }
-            }*/ }
-      .popup-page.layer.actionsheet .container-wrap .container {
-        padding-top: 0;
-        background: #fff; }
+    .popup-page.layer.actionsheet .container-wrap .container {
+      padding-top: 0;
+      background: #fff; }
+    .popup-page.layer.actionsheet_full {
+      max-height: 100%; }
+      .popup-page.layer.actionsheet_full .header-wrap {
+        position: relative; }
+        .popup-page.layer.actionsheet_full .header-wrap .page-header {
+          position: relative; }
+      .popup-page.layer.actionsheet_full .container-wrap {
+        overflow-y: inherit; }
+        .popup-page.layer.actionsheet_full .container-wrap .container {
+          max-height: 17.5rem;
+          overflow: hidden;
+          overflow-y: auto;
+          padding-top: 0;
+          background: #fff; }
   .popup-page .container-wrap {
     -webkit-box-sizing: border-box;
             box-sizing: border-box; }
