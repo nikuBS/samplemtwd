@@ -135,6 +135,8 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     if ( this._tAllCheck && !$target.prop('checked') ) {
       this.$tAgreeCheckBox.find('input').prop('checked', false);
       this._tAllCheck = false;
+    } else if ( this.$tAgreeItems.find('input').filter(':not(:checked)').length < 1 ) { // 전부 선택 시 모두 자동 선택
+      this.$tAgreeCheckBox.find('input').trigger('click');
     }
   },
 
@@ -143,6 +145,8 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     if ( this._cAllCheck && !$target.prop('checked') ) {
       this.$cAgreeCheckBox.find('input').prop('checked', false);
       this._cAllCheck = false;
+    } else if ( this.$cAgreeItems.find('input').filter(':not(:checked)').length < 1 ) { // 전부 선택 시 모두 자동 선택
+      this.$cAgreeCheckBox.find('input').trigger('click');
     }
   },
 
