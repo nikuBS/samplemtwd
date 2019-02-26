@@ -1785,7 +1785,8 @@ Tw.ROAMING_SVCTIME_SETTING_ERR_CASE = {
   ERR_START_DATE: '서비스 개시일 설정은 당일 이후만 가능합니다.',
   ERR_END_DATE: '서비스 종료일 설정은 당일 이후만 가능합니다.',
   ERR_END_EVT_START: '서비스 개시일 설정은 종료일 이전만 설정 가능합니다.',
-  ERR_END_EVT_END: '서비스 종료일 설정은 개시일 이후만 가능합니다.'
+  ERR_END_EVT_END: '서비스 종료일 설정은 개시일 이후만 가능합니다.',
+  OVER_30_DAYS: '개시일과 종료일의 차이는 30일까지입니다.'
 };
 
 Tw.ROAMING_BPCP = {
