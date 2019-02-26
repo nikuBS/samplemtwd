@@ -23,6 +23,7 @@
 </div>
 <!--// .cont-box -->
 <% } %>
+<% if ((data.isRealTime && data.isNotFirstDate) || data.paymentInfo) { %>
 <hr class="cont-sp type1" aria-hidden="true"/>
 <!-- .cont-box -->
 <div class="cont-box nogaps">
@@ -65,3 +66,4 @@
     </ul>
 </div>
 <!--// .cont-box -->
+<% } %>

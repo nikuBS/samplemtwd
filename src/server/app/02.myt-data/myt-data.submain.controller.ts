@@ -392,6 +392,7 @@ class MytDataSubmainController extends TwViewController {
           tmoaTotal += parseInt(item.total || 0, 10);
         } else {
           result['gdata'].push(item);
+          // 차감중인 공제 항목에 데이터의 합 [DVI001-15208] 참고
           etcRemained += result.totalLimit ? 100 : parseInt(item.remained || 0, 10);
           etcTotal += result.totalLimit ? 100 : parseInt(item.total || 0, 10);
         }

@@ -91,7 +91,7 @@
                         <!-- // .donut-chart.small -->
                     </div>
                     <div class="cont">
-                        <span class="txt1" id="aria-comp-bt1">나의 데이터</span>
+                        <span class="txt1" id="aria-comp-bt1">남은 데이터</span>
                         <div class="date">
                             <span class="remain">
                                 <% if (data.remnantData.totalLimit) { %>
@@ -247,14 +247,14 @@
                 <div class="detail-bill type1">
                     <ul>
                         <% if (data.remnantData && data.remnantData.gdata.length > 0) { %>
-                        <% var rdata = data.remnantData.gdata[0]; %>
+                        <% var rdata = data.remnantData.total %>
                         <li>
-                            <span class="tit"><%= rdata.skipNm %></span>
+                            <span class="tit">나의 데이터</span>
                             <span class="value type1">
                                 <% if (data.remnantData.totalLimit) { %>
                                 <strong>무제한</strong>
                                 <% } else { %>
-                                <strong><%= rdata.showRemained.data %><%= rdata.showRemained.unit %></strong> 남음
+                                <strong><%= rdata.showEtcmoaRemained.data %><%= rdata.showEtcmoaRemained.unit %></strong> 남음
                                 <% } %>
                             </span>
                         </li>
@@ -485,7 +485,7 @@
                         <!-- // .donut-chart.small -->
                     </div>
                     <div class="cont">
-                        <span class="txt1" id="aria-comp-bt6">나의 데이터</span>
+                        <span class="txt1" id="aria-comp-bt6">남은 데이터</span>
                         <div class="date">
                             <span class="remain">
                                 <% if (data.remnantData.totalLimit) { %>
@@ -641,11 +641,15 @@
                 <div class="detail-bill type1">
                     <ul>
                         <% if (data.remnantData && data.remnantData.gdata.length > 0) { %>
-                        <% var rdata = data.remnantData.gdata[0]; %>
+                        <% var rdata = data.remnantData.total %>
                         <li>
-                            <span class="tit"><%= rdata.skipNm %></span>
+                            <span class="tit">나의 데이터</span>
                             <span class="value type1">
-                                <strong><%= rdata.showRemained.data %><%= rdata.showRemained.unit %></strong> 남음
+                                <% if (data.remnantData.totalLimit) { %>
+                                <strong>무제한</strong>
+                                <% } else { %>
+                                <strong><%= rdata.showEtcmoaRemained.data %><%= rdata.showEtcmoaRemained.unit %></strong> 남음
+                                <% } %>
                             </span>
                         </li>
                         <% } %>
@@ -841,7 +845,7 @@
                         <!-- // .donut-chart.small -->
                     </div>
                     <div class="cont">
-                        <span class="txt1" id="aria-comp-bt12">나의 데이터</span>
+                        <span class="txt1" id="aria-comp-bt12">남은 데이터</span>
                         <div class="date">
                             <% if (data.remnantData.totalLimit) { %>
                             <strong>무제한</strong>
@@ -858,12 +862,13 @@
             <div class="user-month-bill mt16">
                 <div class="detail-bill type1">
                     <ul>
+                        <!-- DV001-15208 차감중인 공제 항목의 합한 데이터를 노출한다. -->
                         <% if (data.remnantData && data.remnantData.gdata.length > 0) { %>
-                        <% var rdata = data.remnantData.gdata[0]; %>
+                        <% var rdata = data.remnantData.total %>
                         <li>
-                            <span class="tit"><%= rdata.skipNm %></span>
+                            <span class="tit">나의 데이터</span>
                             <span class="value type1">
-                                <strong><%= rdata.showRemained.data %><%= rdata.showRemained.unit %></strong> 남음
+                                <strong><%= rdata.showEtcmoaRemained.data %><%= rdata.showEtcmoaRemained.unit %></strong> 남음
                             </span>
                         </li>
                         <% } %>
