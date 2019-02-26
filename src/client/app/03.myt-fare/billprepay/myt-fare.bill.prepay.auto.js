@@ -122,6 +122,11 @@ Tw.MyTFareBillPrepayAuto.prototype = {
     $target.attr('id', $selectedValue.attr('id'));
     $target.text($selectedValue.parents('label').text());
 
+    if ($target.hasClass('fe-standard-amount')) {
+      this.$prepayAmount.attr('id', $selectedValue.attr('id'));
+      this.$prepayAmount.text($selectedValue.parents('label').text());
+    }
+
     this._checkSelected();
     this._popupService.close();
   },
