@@ -220,17 +220,15 @@ Tw.MenuComponent.prototype = {
   },
   _onUserInfo: function () {
     if ( this._isMultiLine ) {
-      // if ( !this._lineComponent ) {
-        // this._lineComponent = new Tw.LineComponent();
-      // }
-      // this._historyService.goBack();  // #menu hash 제거하기 위해
-      // this._lineComponent.onClickLine(this._svcMgmtNum);
-
-      this._historyService.replaceURL('/common/member/line/register?type=02');
+      if ( !this._lineComponent ) {
+        this._lineComponent = new Tw.LineComponent();
+      }
+      this._historyService.goBack();  // #menu hash 제거하기 위해
+      this._lineComponent.onClickLine(this._svcMgmtNum);
     }
   },
   _onRegisterLine: function () {
-    (new Tw.LineRegisterComponent()).openRegisterLinePopup();
+    this._historyService.replaceURL('/common/member/line/register?type=02');
     return false;
   },
   _onClose: function () {
