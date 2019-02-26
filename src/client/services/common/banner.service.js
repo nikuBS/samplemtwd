@@ -31,7 +31,7 @@ Tw.BannerService.prototype = {
           } else {
             this.$banners.append(this._bannerTmpl({ banners: this._banners, location: target, CDN: CDN }));
 
-            if (this.$banners.hasClass('slider1-auto')) {
+            if (this.$banners.hasClass('fe-banner-auto')) {
               this.$banners.slick({
                 autoplay: true,
                 autoplaySpeed: 4000,
