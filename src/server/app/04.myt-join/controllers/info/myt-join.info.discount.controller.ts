@@ -493,9 +493,9 @@ class MytJoinInfoDiscount extends TwViewController {
 
     dataObj.totDt = moment(endDt, 'YYYYMMDD').diff(startDt, 'day'); // 전체 일수
     dataObj.curDt = moment(endDt, 'YYYYMMDD').diff(remnantDt, 'day'); // 진행 일수
-    dataObj.remDt = dataObj.totDt - dataObj.curDt; // 잔여일수
+    dataObj.remDt = remnant; // 잔여일수
 
-    dataObj.perDt = 100 - Math.floor((dataObj.curDt / dataObj.totDt) * 100); // 퍼센트
+    dataObj.perDt = Math.floor((Number(remnant) / dataObj.totDt) * 100); // 잔여일수 퍼센트
     dataObj.perDt = this.limitMinMax(dataObj.perDt, 0, 100);
     dataObj.totMt = Math.round(
       moment(endDt, 'YYYYMMDD').diff(startDt, 'months', true)
