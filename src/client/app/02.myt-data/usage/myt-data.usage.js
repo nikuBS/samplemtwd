@@ -345,7 +345,7 @@ Tw.MyTDataUsage.prototype = {
 
     if (data.dataSharing.childList && data.dataSharing.childList.length > 0) {
       data.dataSharing.childList = _.reject(data.dataSharing.childList, function(item){
-        return Tw.FormatHelper.isEmpty(item.used);
+        return item.role === 'Y';
       });
       var childHtml = this._dataToHtml(data.dataSharing.childList, '#fe-troaming-share-child-item');
       $('#fe-list-troaming-share').append(childHtml);
