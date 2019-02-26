@@ -74,9 +74,9 @@ Tw.CommonSearchMore.prototype = {
         // }
         if(category==='direct'&&key==='ALIAS'){
           if(data[i][key]==='shopacc'){
-            data[i].linkUrl = Tw.OUTLINK.DIRECT_ACCESSORY+'?categoryId='+data[i].CATEGORY_ID+'&accessoryId=';
+            data[i].linkUrl = Tw.OUTLINK.DIRECT_ACCESSORY+'?categoryId='+data[i].CATEGORY_ID+'&accessoryId='+data[i].ACCESSORY_ID;
           }else{
-            data[i].linkUrl = Tw.OUTLINK.DIRECT_MOBILE+'?categoryId=20010001&productGrpId=';
+            data[i].linkUrl = Tw.OUTLINK.DIRECT_MOBILE+'?categoryId='+data[i].CATEGORY_ID+'&productGrpId='+data[i].PRODUCT_GRP_ID;
           }
         }
         if(key==='METATAG'){
@@ -162,8 +162,6 @@ Tw.CommonSearchMore.prototype = {
   },
   _showSelectFilter : function () {
     var listData = [
-      {value : Tw.SEARCH_FILTER_STR.RECOMMEND , option : this._searchInfo.search[0].direct.sort==='R'?'checked':'' , attr : 'data-type="R"'},
-      {value : Tw.SEARCH_FILTER_STR.POP , option : this._searchInfo.search[0].direct.sort==='P'?'checked':'' , attr : 'data-type="P"'},
       {value : Tw.SEARCH_FILTER_STR.NEW , option : this._searchInfo.search[0].direct.sort==='D'?'checked':'' , attr : 'data-type="D"'},
       {value : Tw.SEARCH_FILTER_STR.LOW , option : this._searchInfo.search[0].direct.sort==='L'?'checked':'' , attr : 'data-type="L"'},
       {value : Tw.SEARCH_FILTER_STR.HIGH , option : this._searchInfo.search[0].direct.sort==='H'?'checked':'' , attr : 'data-type="H"'}
@@ -281,6 +279,9 @@ Tw.CommonSearchMore.prototype = {
     }
     this.$keywordListBase.on('click','.remove-recently-list',$.proxy(this._removeRecentlyKeywordList,this));
     this.$keywordListBase.on('click','.close',$.proxy(this._closeKeywordListBase,this,true));
+    $('.latelylist-wrap').scroll($.proxy(function () {
+      this.$inputElement.blur();
+    },this));
   },
   _openKeywordListBase : function () {
     if(this._historyService.getHash()==='#input_P'){

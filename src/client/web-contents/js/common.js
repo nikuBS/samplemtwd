@@ -22,8 +22,10 @@ $(window).on('resize', function () {
   }
   if($(window).width() + $(window).height() != skt_landing._originalSize){
     $("#gnb.on .g-wrap, .bt-fixed-area").css("position","relative");  
+    $(".actionsheet_full .container").css("height", $(window).height() - 112+"px") // 19.02.26 팝업구조 변경시
   }else{
     $("#gnb.on .g-wrap, .bt-fixed-area").css("position","fixed");  
+    $(".actionsheet_full .container").css("height", "auto") // 19.02.26 팝업구조 변경시
   }
 }).on('scroll', function () {
   for (var fn in scroll_fn) {
@@ -369,13 +371,11 @@ skt_landing.action = {
               layer = $('.popup .popup-page.layer'),
               layerContainerWrap = $('.popup .popup-page.layer > .container-wrap'),
               layer_h = layer.outerHeight();
-          layer.css({
-            'height':layer_h,
-            'bottom':0
-          });
-          layerContainerWrap.css({
-            'height':layer_h
-          });
+          layer.css({'bottom':0});
+          if ( !layer.hasClass("actionsheet_full") ){ // 19.02.26 팝업구조 변경 필요없음
+            layer.css({'height':layer_h});
+            layerContainerWrap.css({'height':layer_h});
+          }
         }
         //wai-aria
         popups.attr('role','')
@@ -427,17 +427,14 @@ skt_landing.action = {
           layerContainerWrap = $('.popup .popup-page.layer > .container-wrap'),
           layerContainer = $('.popup .popup-page.layer > .container-wrap > .container'),
           layer_h = layerContainer.innerHeight();
-          if(layer_h > (win_h * .90)) {
-            layer_h = win_h * .90;
-          }
-          // console.log(layer_h);
-      layer.css({
-        'height':layer_h,
-        'bottom':0
-      });
-      layerContainerWrap.css({
-        'height':layer_h
-      });
+      if(layer_h > (win_h * .90)) {
+        layer_h = win_h * .90;
+      }
+      layer.css({'bottom':0});
+      if ( !layer.hasClass("actionsheet_full") ){ // 19.02.26 팝업구조 변경 필요없음
+        layer.css({'height':layer_h});
+        layerContainerWrap.css({'height':layer_h});
+      }
     },
     close_layer : function(callback){
       var layer = $('.popup .popup-page.layer');

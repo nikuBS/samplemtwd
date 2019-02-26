@@ -46,11 +46,14 @@ Tw.MyTFareBillChangeAddress.prototype = {
   },
   _checkPhoneNumber: function (event) {
     var $target = $(event.currentTarget);
-    this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 11), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V18);
 
-    if (this.$isValid) {
-      var isPhone = this._validation.isCellPhone($target.val()) || this._validation.isTelephone($target.val());
-      this.$isValid = this._validation.showAndHideErrorMsg($target, isPhone, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V9);
+    if ($target.val().indexOf('*') === -1) {
+      this.$isValid = this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 11), Tw.ALERT_MSG_MYT_FARE.ALERT_2_V18);
+
+      if (this.$isValid) {
+        var isPhone = this._validation.isCellPhone($target.val()) || this._validation.isTelephone($target.val());
+        this.$isValid = this._validation.showAndHideErrorMsg($target, isPhone, Tw.ALERT_MSG_MYT_FARE.ALERT_2_V9);
+      }
     }
   },
   _getPostcode: function () {

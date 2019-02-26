@@ -333,6 +333,7 @@ body.bg-gray {
             line-height: 1.1875rem;
             vertical-align: middle; }
             #common-menu .section-cont .section-gnb .bt-depth1 > .bt .ti-info .info {
+              top: -1px;
               vertical-align: middle;
               margin-left: 0.4375rem;
               color: #f76252;
@@ -1136,6 +1137,20 @@ body.bg-gray {
     .popup-page.layer.actionsheet .container-wrap .container {
       padding-top: 0;
       background: #fff; }
+    .popup-page.layer.actionsheet_full {
+      max-height: 100%; }
+      .popup-page.layer.actionsheet_full .header-wrap {
+        position: relative; }
+        .popup-page.layer.actionsheet_full .header-wrap .page-header {
+          position: relative; }
+      .popup-page.layer.actionsheet_full .container-wrap {
+        overflow-y: inherit; }
+        .popup-page.layer.actionsheet_full .container-wrap .container {
+          max-height: 17.5rem;
+          overflow: hidden;
+          overflow-y: auto;
+          padding-top: 0;
+          background: #fff; }
   .popup-page .container-wrap {
     -webkit-box-sizing: border-box;
             box-sizing: border-box; }
@@ -2820,7 +2835,7 @@ body.bg-gray {
   padding: 3.75rem 1.25rem 0;
   background: #676767;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   background-position: 100%; }
   .bg-productdetail .productdetails-bg.t-logo {
     background: #676767; }

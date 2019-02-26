@@ -1,6 +1,6 @@
 <script id="fe-templ-researches" type="text/x-handlebars-template">
 {{#each researches}}
-<li class="acco-box fe-nResearch{{#if isProceeding}} on{{/if}}" data-research-id="{{bnnrRsrchId}}" data-type-code="{{bnnrRsrchTypCd}}" data-answer-num="{{canswNum}}">
+<li class="acco-box fe-nResearch{{#if isProceeding}} on{{/if}}" data-research-id="{{bnnrRsrchId}}" data-type-code="{{bnnrRsrchTypCd}}" data-answer-num="{{canswNum}}" id="research{{bnnrRsrchId}}">
     <div class="acco-tit">
         <span class="poll-question">{{bnnrRsrchTitleNm}}</span>
         <span class="poll-date">{{staDtm}}<span class="blind">에서</span><span class="vt" aria-hidden="true">-</span> {{endDtm}}</span>
@@ -15,24 +15,7 @@
             {{#if examples.length}}
                 <!-- .widget -->
                 <div class="widget">
-                {{#if isRadio}}
-                    <div class="widget-box radio">
-                        <ul class="select-list alignment01 {{#if isDoubleAlign}}division-two{{/if}}{{#if hasImage}} has-image{{/if}}" role="radiogroup">
-                            {{#each examples}}
-                            <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
-                                {{#if image}}
-                                    <div class="poll-img"><img src="<%= CDN %>{{image}}" /></div>
-                                    <input type="radio" name="radio{{bnnrRsrchId}}" title="{{content}}" aria-labelledby="aria-comp-{{../bnnrRsrchId}}{{idx}}" /><!-- 체크상태일 경우 checked="checked" -->
-                                    <div class="poll-text" id="aria-comp-{{../bnnrRsrchId}}{{idx}}">{{content}}{{#if exam.motHtml}}<br/>{{{exam.motHtml}}}{{/if}}</div>
-                                {{else}}
-                                    <input type="radio" name="radio{{bnnrRsrchId}}" title="{{content}}" /><!-- 체크상태일 경우 checked="checked" -->
-                                    {{content}}{{#if exam.motHtml}}<br/>{{{exam.motHtml}}}{{/if}}
-                                {{/if}}
-                            </li>
-                            {{/each}}
-                        </ul>
-                    </div>
-                {{else}}
+                {{#if isMultiple}}
                     <div class="widget-box check">
                         <ul class="select-list alignment01 {{#if isDoubleAlign}}division-two{{/if}}{{#if hasImage}} has-image{{/if}}" role="group">
                             {{#each examples}}
@@ -49,6 +32,23 @@
                             {{/each}}
                         </ul>
                     </div>
+                {{else}}
+                    <div class="widget-box radio">
+                        <ul class="select-list alignment01 {{#if isDoubleAlign}}division-two{{/if}}{{#if hasImage}} has-image{{/if}}" role="radiogroup">
+                            {{#each examples}}
+                            <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                {{#if image}}
+                                    <div class="poll-img"><img src="<%= CDN %>{{image}}" /></div>
+                                    <input type="radio" name="radio{{bnnrRsrchId}}" title="{{content}}" aria-labelledby="aria-comp-{{../bnnrRsrchId}}{{idx}}" /><!-- 체크상태일 경우 checked="checked" -->
+                                    <div class="poll-text" id="aria-comp-{{../bnnrRsrchId}}{{idx}}">{{content}}{{#if exam.motHtml}}<br/>{{{exam.motHtml}}}{{/if}}</div>
+                                {{else}}
+                                    <input type="radio" name="radio{{bnnrRsrchId}}" title="{{content}}" /><!-- 체크상태일 경우 checked="checked" -->
+                                    {{content}}{{#if exam.motHtml}}<br/>{{{exam.motHtml}}}{{/if}}
+                                {{/if}}
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </div>  
                 {{/if}}
                 </div>
                 <!--// .widget -->

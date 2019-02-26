@@ -37,18 +37,19 @@ class MyTJoinPhoneNumChgAlarmExt extends TwViewController {
 
         if ( resp.code === API_CODE.CODE_00 ) {
           const result = resp.result;
-          result['oldSvcNum'] = StringHelper.phoneStringToDash(result['oldSvcNum']);
-          result['newSvcNum'] = StringHelper.phoneStringToDash(result['newSvcNum']);
-          result['notiStaDt'] = DateHelper.getShortDateNoDot(result['notiStaDt']);
-          result['notiEndDt'] = DateHelper.getShortDateNoDot(result['notiEndDt']);
-          result['freeOfrEndNextDt'] = DateHelper.getShortDateNoDot(DateHelper.getAddDay(result['freeOfrEndDt'] + '235959', 'YYYYMMDD'));
-          result['freeOfrEndDt'] = DateHelper.getShortDateNoDot(result['freeOfrEndDt']);
 
           // 서비스 종료 후 면 신청으로 이동
-          const today = DateHelper.getShortDateNoDot(new Date());
+          const today = DateHelper.getCurrentShortDate(new Date());
           if ( result['notiEndDt'] && result['notiEndDt'] < today ) {
             res.redirect('/myt-join/submain/phone/alarm');
           }
+
+          result['oldSvcNum'] = StringHelper.phoneStringToDash(result['oldSvcNum']);
+          result['newSvcNum'] = StringHelper.phoneStringToDash(result['newSvcNum']);
+          result['notiStaDt'] = DateHelper.getShortDate(result['notiStaDt']);
+          result['notiEndDt'] = DateHelper.getShortDate(result['notiEndDt']);
+          result['freeOfrEndNextDt'] = DateHelper.getShortDate(DateHelper.getAddDay(result['freeOfrEndDt'] + '235959', 'YYYYMMDD'));
+          result['freeOfrEndDt'] = DateHelper.getShortDate(result['freeOfrEndDt']);
 
           const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: result };
           res.render('submain/myt-join.submain.phone.extalarm.html', option);

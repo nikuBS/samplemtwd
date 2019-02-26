@@ -29,6 +29,9 @@ Tw.CommonSearchMain.prototype = {
     this._recentlyKeywordInit();
     this._bindPopupElementEvt();
     this._platForm = Tw.BrowserHelper.isApp()?'app':'web';
+    $('.latelylist-wrap').scroll($.proxy(function () {
+      this.$inputElement.blur();
+    },this));
     new Tw.XtractorService(this.$container);
     //this.$container.find('#recently_keyword_layer').removeClass('none').hide();
   },

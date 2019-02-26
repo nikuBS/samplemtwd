@@ -107,7 +107,7 @@ Tw.MyTDataGiftMonthly.prototype = {
     }
 
     if ( res.code === 'ZNGME0008' ) {
-      this._popupService.openAlert(Tw.MYT_DATA_CANCEL_MONTHLY.ALERT_NOT_SK);
+      this._popupService.openAlert(Tw.MYT_DATA_CANCEL_MONTHLY.ALERT_NOT_SK, Tw.POPUP_TITLE.NOTIFY);
       return false;
     } else {
       Tw.Error(res.code, res.msg).pop();
@@ -131,7 +131,7 @@ Tw.MyTDataGiftMonthly.prototype = {
       this._historyService.replaceURL('/myt-data/giftdata/auto-complete?' + $.param(this.paramData));
       return false;
     } else if ( res.code === 'GFT0008' ) {
-      this._popupService.openAlert(Tw.MYT_DATA_GIFT.GFT0008);
+      this._popupService.openAlert(Tw.MYT_DATA_GIFT.GFT0008, Tw.POPUP_TITLE.NOTIFY);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

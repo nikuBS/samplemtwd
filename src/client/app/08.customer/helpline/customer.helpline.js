@@ -165,9 +165,10 @@ Tw.CustomerHelpline.prototype = {
   },
 
   _openSelectTimePopup: function() {
+    var selectedTime = this._reservationTime;
     var times = _.chain(this._availableTimes)
       .map(function(time) {
-        if (time === this._reservationTime) {
+        if (time === selectedTime) {
           return {
             txt: time + ':00',
             'radio-attr': 'data-time="' + time + '" checked'
