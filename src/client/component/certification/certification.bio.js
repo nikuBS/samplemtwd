@@ -71,7 +71,8 @@ Tw.CertificationBio.prototype = {
     } else if ( resp.resultCode === this.ERROR_CODE.CANCEL ) {
       this._callback({ code: Tw.API_CODE.CERT_SELECT, target: Tw.AUTH_CERTIFICATION_METHOD.BIO });
     } else {
-      Tw.Error(resp.resultCode, '').pop();
+      this._popupService.openAlert(Tw.ALERT_MSG_COMMON.BIOMETRICS_CERT_FAIL);
+      // Tw.Error(resp.resultCode, '').pop();
     }
   },
   _onFidoRegister: function (resp) {
