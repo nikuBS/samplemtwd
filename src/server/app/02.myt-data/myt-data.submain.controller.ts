@@ -184,6 +184,12 @@ class MytDataSubmainController extends TwViewController {
       }
       if ( etcBkd && etcBkd.length > 0 ) {
         // 팅/쿠키즈/안심요금 충전 내역
+        // 자동충전취소내역 제거
+        if (!this.isPPS) {
+          etcBkd = etcBkd.filter((item) => {
+            return item.opTypCd !== '4';
+          });
+        }
         etcBkd.map((item) => {
           if ( this.isPPS ) {
             item['opDt'] = item.chargeDtm || item.chargeDt;
@@ -210,6 +216,7 @@ class MytDataSubmainController extends TwViewController {
             item['unit'] = CURRENCY_UNIT.WON;
           }
         });
+
         breakdownList.push(etcBkd);
       }
       if ( tpBkd && tpBkd.length > 0 ) {
