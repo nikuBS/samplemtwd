@@ -99,6 +99,13 @@ Tw.CustomerResearches.prototype = {
 
   _goHint: function(e) {
     var url = e.target.getAttribute('data-hint-url');
+    if (Tw.BrowserHelper.isApp()) {
+      Tw.CommonHelper.showDataCharge(function() {
+        Tw.CommonHelper.openUrlExternal(url);
+      });
+      return;
+    }
+
     Tw.CommonHelper.openUrlExternal(url);
   },
 
