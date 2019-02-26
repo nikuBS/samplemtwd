@@ -143,6 +143,10 @@ Tw.ValidationService.prototype = {
     var cardY = this.$container.find('.fe-card-y');
     var cardM = this.$container.find('.fe-card-m');
 
+    if (this._isEmpty(cardY) || this._isEmpty(cardM)) {
+      return false;
+    }
+
     isWrong = this._validation.isYearInvalid(cardY);
 
     if (isWrong) {

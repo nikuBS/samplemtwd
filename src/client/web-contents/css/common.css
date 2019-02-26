@@ -822,6 +822,9 @@ input[type='radio'], input[type='text'], input[type='password'], input[type='num
   border-radius: 0;
   text-decoration: none; }
 
+button:disabled {
+  pointer-events: none; }
+
 input::-webkit-scrollbar, textarea::-webkit-scrollbar {
   width: 0;
   height: 0; }

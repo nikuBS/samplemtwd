@@ -217,6 +217,8 @@ Tw.MenuComponent.prototype = {
       this._tNotifyComp = new Tw.TNotifyComponent();
     }
     this._tNotifyComp.openWithHash(this._tid, 'menu');
+    this.$container.find('.fe-t-noti').removeClass('on');
+    $('.h-menu').removeClass('on');
   },
   _onUserInfo: function () {
     if ( this._isMultiLine ) {

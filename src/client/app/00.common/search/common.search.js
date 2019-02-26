@@ -19,6 +19,8 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from) {
 
 Tw.CommonSearch.prototype = {
   _init : function (from) {
+    this.$contents = this.$container.find('.container');
+    this._searchInfo.search = this._setData(this._searchInfo.search);
     this._platForm = Tw.BrowserHelper.isApp()?'app':'web';
     this._nowUser = Tw.FormatHelper.isEmpty(this._svcInfo)?'logOutUser':this._svcInfo.svcMgmtNum;
     if(this._searchInfo.totalcount===0){
@@ -35,8 +37,11 @@ Tw.CommonSearch.prototype = {
         if(keyName==='banner'){
           this._showBanner(this._arrangeData(this._searchInfo.search[i][keyName].data,keyName));
         }
-        if(keyName==='immediate'&&this._searchInfo.search[i][keyName].data[0]&&this._searchInfo.search[i][keyName].data[0].DOCID===5){
+        if(keyName==='immediate'&&this._searchInfo.search[i][keyName].data[0]&&Number(this._searchInfo.search[i][keyName].data[0].DOCID)===5){
           this._showBarcode(this._searchInfo.search[i][keyName].data[0].barcode,this.$container.find('#membership-barcode'));
+        }
+        if(keyName==='smart'){
+          this._showSmart(this._searchInfo.search[i][keyName].data[0]);
         }
         continue;
       }
@@ -63,7 +68,25 @@ Tw.CommonSearch.prototype = {
     }
     new Tw.XtractorService(this.$container);
   },
-
+  _setData : function (data) {
+    var compareKeyName1 , compareKeyName2;
+    for (var i=0;i<data.length;i++) {
+      for(var j=0;j<(data.length-i-1);j++){
+        compareKeyName1 = Object.keys(data[j])[0];
+        compareKeyName2 = Object.keys(data[j+1])[0];
+        if(Tw.FormatHelper.isEmpty(data[j][compareKeyName1].rank)){
+          data[j][compareKeyName1].rank = 0;
+          continue;
+        }
+        if(data[j][compareKeyName1].rank > data[j+1][compareKeyName2].rank) {
+          var tmp = data[j];
+          data[j] = data[j+1];
+          data[j+1] = tmp;
+        }
+      }
+    }
+    return data;
+  },
   _arrangeData : function (data,category) {
     if(!data){
       return [];
@@ -88,9 +111,9 @@ Tw.CommonSearch.prototype = {
         // }
         if(category==='direct'&&key==='ALIAS'){
           if(data[i][key]==='shopacc'){
-            data[i].linkUrl = Tw.OUTLINK.DIRECT_ACCESSORY+'?categoryId='+data[i].CATEGORY_ID+'&accessoryId=';
+            data[i].linkUrl = Tw.OUTLINK.DIRECT_ACCESSORY+'?categoryId='+data[i].CATEGORY_ID+'&accessoryId='+data[i].ACCESSORY_ID;
           }else{
-            data[i].linkUrl = Tw.OUTLINK.DIRECT_MOBILE+'?categoryId=20010001&productGrpId=';
+            data[i].linkUrl = Tw.OUTLINK.DIRECT_MOBILE+'?categoryId='+data[i].CATEGORY_ID+'&productGrpId='+data[i].PRODUCT_GRP_ID;
           }
         }
         if(key==='METATAG'){
@@ -111,6 +134,7 @@ Tw.CommonSearch.prototype = {
     $barcodElement.JsBarcode(Tw.FormatHelper.addCardDash(barcodNum),{background : '#edeef0',height : 60});
   },
   _showShortcutList : function (data,dataKey,cdn) {
+    this.$contents.append(Handlebars.compile(this.$container.find('#'+dataKey+'_base').html()));
     var $template = $('#'+dataKey+'_template');
     var $list = this.$container.find('#'+dataKey+'_list');
     var shortcutTemplate = $template.html();
@@ -291,6 +315,9 @@ Tw.CommonSearch.prototype = {
     }
     this.$keywordListBase.on('click','.remove-recently-list',$.proxy(this._removeRecentlyKeywordList,this));
     this.$keywordListBase.on('click','.close',$.proxy(this._closeKeywordListBase,this,true));
+    $('.latelylist-wrap').scroll($.proxy(function () {
+      this.$inputElement.blur();
+    },this));
   },
   _openKeywordListBase : function () {
     if(this._historyService.getHash()==='#input_P'){
@@ -409,6 +436,33 @@ Tw.CommonSearch.prototype = {
     setTimeout($.proxy(function () {
       this._historyService.goLoad(linkUrl);
     },this));
+  },
+  _showSmart : function (data) {
+    var returnData = [];
+    for(var i=1;i<=3;i++){
+      if(!Tw.FormatHelper.isEmpty(data['BNNR_BOT_BTN_NM'+i])){
+        returnData.push({
+          title : data['BNNR_BOT_BTN_NM'+i],
+          link : data['BNNR_BOT_BTN_URL'+i],
+          docId : data['DOCID']
+        });
+      }
+    }
+    if(returnData.length<=0){
+      return;
+    }else{
+      this.$container.find('#smart_btn_base').removeClass('none');
+      var smartTemplate = Handlebars.compile(this.$container.find('#smart_template').html());
+      var $smartBase = this.$container.find('.btn-link-list');
+      _.each(returnData,function (data) {
+        $smartBase.append(smartTemplate({data : data}));
+      });
+      if(returnData.length===3){
+        $smartBase.addClass('col3');
+      }else if(returnData.length===1){
+        $smartBase.find('.last-line').addClass('full');
+      }
+    }
   }
 
 

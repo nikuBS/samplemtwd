@@ -249,6 +249,9 @@ Tw.CommonSearchNotFound.prototype = {
     }
     this.$keywordListBase.on('click','.remove-recently-list',$.proxy(this._removeRecentlyKeywordList,this));
     this.$keywordListBase.on('click','.close',$.proxy(this._closeKeywordListBase,this,true));
+    $('.latelylist-wrap').scroll($.proxy(function () {
+      this.$inputElement.blur();
+    },this));
   },
   _openKeywordListBase : function () {
     if(this._historyService.getHash()==='#input_P'){

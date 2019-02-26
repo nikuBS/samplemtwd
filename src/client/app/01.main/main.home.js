@@ -236,7 +236,7 @@ Tw.MainHome.prototype = {
         this._historyService.goLoad('/myt-data/familydata');
         break;
       case this.DATA_LINK.TPLAN_PROD:
-        this._popupService.openConfirmButton(Tw.ALERT_MSG_HOME.A08.TITLE, Tw.ALERT_MSG_HOME.A08.MSG,
+        this._popupService.openConfirmButton(Tw.ALERT_MSG_HOME.A08.MSG, Tw.ALERT_MSG_HOME.A08.TITLE,
           $.proxy(this._onConfirmTplanProd, this), $.proxy(this._onCloseTplanProd, this),
           Tw.BUTTON_LABEL.CLOSE, Tw.ALERT_MSG_HOME.A08.BUTTON);
         break;
@@ -433,10 +433,10 @@ Tw.MainHome.prototype = {
       invStartDt: Tw.DateHelper.getShortFirstDate(new Date())
     };
     if ( microResp.code === Tw.API_CODE.CODE_00 ) {
-      result.micro = microResp.result.totalSumPrice;
+      result.micro = Tw.FormatHelper.addComma(microResp.result.totalSumPrice);
     }
     if ( contentsResp.code === Tw.API_CODE.CODE_00 ) {
-      result.contents = contentsResp.result.invDtTotalAmtCharge;
+      result.contents = Tw.FormatHelper.addComma(contentsResp.result.invDtTotalAmtCharge);
     }
 
     // if ( !Tw.FormatHelper.isEmpty(result.micro) || !Tw.FormatHelper.isEmpty(result.contents) ) {
@@ -465,6 +465,9 @@ Tw.MainHome.prototype = {
         this._drawGiftData(element, this._parseGiftData(resp.result), resp);
       }
     } else {
+      this._drawGiftData(element, {
+        sender: false
+      }, resp);
       element.hide();
     }
     this._resetHeight();
@@ -494,6 +497,7 @@ Tw.MainHome.prototype = {
   },
   _parseGiftData: function (sender) {
     return {
+      sender: true,
       dataGiftCnt: sender.dataGiftCnt,
       familyDataGiftCnt: sender.familyDataGiftCnt,
       familyMemberYn: sender.familyMemberYn === 'Y',
@@ -527,15 +531,12 @@ Tw.MainHome.prototype = {
         this._getGiftBalance(resp.result.reqCnt, $textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance);
       }
     } else {
-      // $btGoGift.parent().addClass('none');
-      // $textError.text(resp.msg);
-      // $textError.removeClass('none');
-      //
-      // $loading.parent().addClass('none');
-      // $textErrorBalance.removeClass('none');
+      $btGoGift.parent().addClass('none');
+      $textError.text(resp.msg);
+      $textError.removeClass('none');
 
       $loading.parent().addClass('none');
-      $btBalance.parent().removeClass('none');
+      $textErrorBalance.removeClass('none');
     }
   },
   _onClickBtGift: function (sender) {

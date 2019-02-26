@@ -313,9 +313,10 @@ Tw.MyTDataUsage.prototype = {
   _resultHandlerTRoamingShare: function (data) {
     //console.log('== RESP T로밍 함께쓰기 ==');
     //console.log(data);
-
+    if (!data.dataSharing) {
+      return;
+    }
     var fmtData = { data: '', unit: '' };
-
     // 상단 잔여량
     fmtData = Tw.FormatHelper.convDataFormat(data.dataSharing.data.remained, Tw.DATA_UNIT.KB);
     $('#fe-head-troaming-share .num em').text(fmtData.data);
@@ -342,8 +343,13 @@ Tw.MyTDataUsage.prototype = {
     strTimes = strTimes + times.hours + Tw.PERIOD_UNIT.HOURS + times.minutes + Tw.PERIOD_UNIT.MINUTES;
     $('#fe-cont-troaming-share .fe-chargedate-box span').text(strTimes);
 
-    var childHtml = this._dataToHtml(data.dataSharing.childList, '#fe-troaming-share-child-item');
-    $('#fe-list-troaming-share').append(childHtml);
+    if (data.dataSharing.childList && data.dataSharing.childList.length > 0) {
+      data.dataSharing.childList = _.reject(data.dataSharing.childList, function(item){
+        return item.role === 'Y';
+      });
+      var childHtml = this._dataToHtml(data.dataSharing.childList, '#fe-troaming-share-child-item');
+      $('#fe-list-troaming-share').append(childHtml);
+    }
 
   },
 

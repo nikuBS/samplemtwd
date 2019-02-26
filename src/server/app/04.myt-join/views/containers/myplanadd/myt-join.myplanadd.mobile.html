@@ -89,13 +89,18 @@
                 <div class="cont-box nogaps">
                     <div class="add-prd-wrap">
                         <ul class="list-comp-lineinfo">
-                            <li class="add-con">
-                                <a href="/product/roaming/my-use">
+                            <li>
+                                <a href="/product/roaming/my-use" class="link">
                                     <div class="lineinfo-user">
                                         <span class="info-title">나의 로밍 요금제 및<br>부가서비스</span>
                                     </div>
                                     <div class="lineinfo-data">
-                                        <span class="info-title"><%= roaming.recentlyJoinsProdNm ? roaming.recentlyJoinsProdNm + `${roaming.addRoamingProdCnt > 0 ? '외 ' : ''}` : '' %><%= roaming.addRoamingProdCnt > 0 ? roaming.addRoamingProdCnt + '건' : '' %></span>
+                                        <span class="info-title">
+                                        <% if (roaming.recentlyJoinsProdNm) { %>
+                                            <%= roaming.recentlyJoinsProdNm %><span class="etc-num">외 <%= roaming.addRoamingProdCnt %>건</span>
+                                        <% } else { %>
+                                            <%= roaming.addRoamingProdCnt %>건
+                                        <% } %>
                                         <span class="ico"><span class="blind">나의 로밍 요금제 및 부가서비스 자세히 보기</span></span>
                                     </div>
                                 </a>

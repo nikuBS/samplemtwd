@@ -1583,6 +1583,8 @@
     .list-comp-history .comp-box .list-box .list-date .date-tx {
       font-size: 0.875rem;
       color: #000; }
+    .list-comp-history .comp-box .list-box .list-date + .list-con {
+      padding: 0 0 0 4.875rem; }
   .list-comp-history .comp-box .list-box .list-con {
     padding: 0 0 0 4rem; }
     .list-comp-history .comp-box .list-box .list-con li {
@@ -1731,13 +1733,22 @@
     border-top: 1px solid #e1e1e1; }
     .list-comp-lineinfo li:first-child {
       border-top: 0; }
-    .list-comp-lineinfo li button {
+    .list-comp-lineinfo li button, .list-comp-lineinfo li a.link {
       display: block;
       width: 100%;
       padding: 1.375rem 0; }
+      .list-comp-lineinfo li button .lineinfo-data, .list-comp-lineinfo li a.link .lineinfo-data {
+        position: relative;
+        padding-right: 1rem;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box; }
+        .list-comp-lineinfo li button .lineinfo-data .ico, .list-comp-lineinfo li a.link .lineinfo-data .ico {
+          position: absolute;
+          right: 0;
+          top: -0.125rem; }
     .list-comp-lineinfo li > a {
       overflow: hidden;
-      display: block;
+      display: table;
       width: 100%;
       padding: 1.375rem 0 0;
       color: #000; }
@@ -14847,6 +14858,8 @@ a.bt-link-tx.underline.small {
   font-size: 1.125rem; }
   .add-prd-wrap .list-comp-lineinfo li .lineinfo-data .info-title .unit {
     font-size: 1.125rem; }
+  .add-prd-wrap .list-comp-lineinfo li .lineinfo-data .info-title .etc-num {
+    display: block; }
 
 /* 임지선 ~ 2018.10.05 */
 /* 김재성 */
@@ -28367,9 +28380,7 @@ body.apphome {
   .data-list-type1 .use .bt-link-tx {
     text-align: right;
     font-size: 0.875rem;
-    padding-top: 0.1875rem;
-    color: #325ec1;
-    text-decoration: underline; }
+    padding-top: 0.1875rem; }
 
 .data-list-type1 .type1 li:first-child {
   padding-top: 0;

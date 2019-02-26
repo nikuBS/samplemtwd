@@ -149,9 +149,9 @@ Tw.MyTDataGiftImmediately.prototype = {
       this.paramData = $.extend({}, this.paramData, res.result);
       this._requestSendingData();
     } else if ( res.code === 'ZNGME0008' ) {
-      this._popupService.openAlert(Tw.MYT_DATA_CANCEL_MONTHLY.ALERT_NOT_SK);
+      this._popupService.openAlert(Tw.MYT_DATA_CANCEL_MONTHLY.ALERT_NOT_SK, Tw.POPUP_TITLE.NOTIFY);
     } else if ( res.code === 'GFT0008' ) {
-      this._popupService.openAlert(Tw.MYT_DATA_GIFT.GFT0008);
+      this._popupService.openAlert(Tw.MYT_DATA_GIFT.GFT0008, Tw.POPUP_TITLE.NOTIFY);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -194,7 +194,7 @@ Tw.MyTDataGiftImmediately.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.replaceURL('/myt-data/giftdata/complete?' + $.param(this.paramData));
     } else if ( res.code === 'GFT0008' ) {
-      this._popupService.openAlert(Tw.MYT_DATA_GIFT.GFT0008);
+      this._popupService.openAlert(Tw.MYT_DATA_GIFT.GFT0008, Tw.POPUP_TITLE.NOTIFY);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

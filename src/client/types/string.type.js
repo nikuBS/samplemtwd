@@ -1013,7 +1013,7 @@ Tw.PRODUCT_INFINITY_CATEGORY_DESC = {
 };
 
 Tw.HOTBILL_UNPAID_TITLE = '미납요금';
-Tw.HOTBILL_ERROR =  {
+Tw.HOTBILL_ERROR = {
   ZINVE8106: '실시간 요금조회에서의 전월요금 조회는 매월초 임시제공되며, 정확한 사용요금은 \'사용내역/' +
     '<a href="/myt-fare/billguide/guide" class="bt-link-tx underline">청구요금조회</a>\'에서 확인 가능합니다.',
   ZINVE8888: '핫빌 요청된 자료가 존재하지 않습니다!'
@@ -1260,10 +1260,6 @@ Tw.MYT_JOIN_SUSPEND = {
   NOT_VALID_FROM_DATE: '시작일은 오늘 이후로 지정할 수 있습니다.',
   NOT_VALID_FROM_DATE_01: '시작 일자는 당일로부터 30일 이내로 선택하실 수 있습니다.',
   NOT_SUPPORT_FILE_UPLOAD: '사용하고 계신 안드로이드 버전에서는 지원하지 않는 기능입니다.',
-  ALERT_EXCEED: {
-    TITLE: '신청불가',
-    MESSAGE: '월 5회 이상 신청이 불가능합니다.'
-  },
   LONG: {
     MILITARY: {
       TITLE: '필요서류 첨부 안내',
@@ -1283,7 +1279,12 @@ Tw.MYT_JOIN_SUSPEND = {
         '</ul>',
       UPLOAD_DESC: '항공권 사본 등 해외체류입증 서류 1종 제출'
     }
-  }
+  },
+  ERROR: {
+    MOD0034: '일 3회 이상 신청하실 수 없습니다.',
+    MOD0035: '장기일시정지를 신청하실 수 없습니다.\n(점검시간: 22시~24시)'
+  },
+  ERROR_TITLE: '신청불가'
 };
 
 Tw.PUBLIC_AUTH_COP = 'SK텔레콤';
@@ -1784,7 +1785,8 @@ Tw.ROAMING_SVCTIME_SETTING_ERR_CASE = {
   ERR_START_DATE: '서비스 개시일 설정은 당일 이후만 가능합니다.',
   ERR_END_DATE: '서비스 종료일 설정은 당일 이후만 가능합니다.',
   ERR_END_EVT_START: '서비스 개시일 설정은 종료일 이전만 설정 가능합니다.',
-  ERR_END_EVT_END: '서비스 종료일 설정은 개시일 이후만 가능합니다.'
+  ERR_END_EVT_END: '서비스 종료일 설정은 개시일 이후만 가능합니다.',
+  OVER_30_DAYS: '개시일과 종료일의 차이는 30일까지입니다.'
 };
 
 Tw.ROAMING_BPCP = {

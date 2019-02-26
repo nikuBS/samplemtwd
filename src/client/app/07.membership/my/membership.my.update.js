@@ -13,36 +13,42 @@ Tw.MembershipMyUpdate = function(rootEl, myInfoData) {
   this._okCashbagShown = false;
   this._cachedElement();
   this._bindEvent();
+  this._deleteKeys();
 };
 
 Tw.MembershipMyUpdate.prototype = {
 
   _cachedElement: function() {
-    this.$container.on('click', 'input[type=checkbox]', $.proxy(this._agreeCheck, this));
+    this.$container.on('click', '.fe-agree-check', $.proxy(this._agreeCheck, this));
     this.$container.on('click', '#fe-update', $.proxy(this._requestUpdate, this));
     this.$btnPrevStep = this.$container.find('.prev-step');
     this.$checkAll = this.$container.find('#chk1');
     this.$checkFirst = this.$container.find('#chk2');
     this.$checkSecond = this.$container.find('#chk3');
-    this.$checkTest = this.$container.find('#chk8');
+    this.$checkCashbag = this.$container.find('#chk8');
     this.$smsAgree = this.$container.find('#oka1');
     this.$tmAgree = this.$container.find('#oka2');
     this.$newsAgree = this.$container.find('#oka3');
     this.$toggleOkCashbag = this.$container.find('#fe-ok-toggle');
-
   },
 
   _bindEvent: function() {
     this.$btnPrevStep.on('click', $.proxy(this._goPrevStep, this));
   },
 
+  _deleteKeys: function() {
+    delete this._myInfoData.smsAgreeChecked;
+    delete this._myInfoData.sktNewsChecked;
+    delete this._myInfoData.sktTmChecked;
+  },
+
   _okCashbagUncheck: function() {
-    this.$checkTest.prop('checked', false);
+    this.$checkCashbag.prop('checked', false);
     this.$checkAll.prop('checked', false);
     this.$checkFirst.prop('checked', false);
     this.$checkSecond.prop('checked', false);
 
-    this.$checkTest.removeAttr('checked');
+    this.$checkCashbag.removeAttr('checked');
     this.$checkAll.removeAttr('checked');
     this.$checkFirst.removeAttr('checked');
     this.$checkSecond.removeAttr('checked');
@@ -88,7 +94,7 @@ Tw.MembershipMyUpdate.prototype = {
       if(selected.name === 'checkbox2'){ //OK 캐시백 기능 추가하기
         var self = this;
         setTimeout(function(){
-          self.$checkTest.prop('checked', true);
+          self.$checkCashbag.prop('checked', true);
           $('.toggle-aggrement').show();
           self._okCashbagShown = true;
         },50);

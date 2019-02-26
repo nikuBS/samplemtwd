@@ -61,12 +61,11 @@ class MyTDataPrepaidDataAuto extends TwViewController {
   }
 
   private parseData(result: any): any {
-    if (!FormatHelper.isEmpty(result.remained)) {
-      result.dataObj = FormatHelper.customDataFormat(result.remained, DATA_UNIT.KB, DATA_UNIT.MB);
-      result.dataObj.dataValue = result.dataObj.data.replace(',', '');
+    if (!FormatHelper.isEmpty(result.remained) || result.remained !== '0') {
+      result.remainData = FormatHelper.addComma(result.remained);
     } else {
-      result.dataObj.data = 0;
-      result.dataObj.dataValue = 0;
+      result.remained = 0;
+      result.remainData = 0;
     }
     result.fromDate = DateHelper.getShortDate(result.obEndDt);
     result.toDate = DateHelper.getShortDate(result.inbEndDt);

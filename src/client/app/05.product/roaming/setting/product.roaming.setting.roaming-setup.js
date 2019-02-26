@@ -197,8 +197,10 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
     var returnValue = false;
     var startValue = parseInt(startDate+''+startTime,10);
     var endValue = parseInt(endDate+''+endTime,10);
+    var startDataObj = Tw.DateHelper.convDateFormat(startValue);
+    var endDateObj =Tw.DateHelper.convDateFormat(endValue);
+    var $errorsElement;
     if(startValue>=endValue){
-      var $errorsElement;
       if(selectedTimeTypeId.indexOf('end')>-1){
         $errorsElement = this.$container.find('.error-txt.end');
         $errorsElement.text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_END_EVT_END);
@@ -206,6 +208,10 @@ Tw.ProductRoamingSettingRoamingSetup.prototype = {
         $errorsElement = this.$container.find('.error-txt.start');
         $errorsElement.text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.ERR_END_EVT_START);
       }
+      $errorsElement.removeClass('none');
+    }else if((Tw.DateHelper.getDiffByUnit(startDataObj,endDateObj,'day')*-1)>30){
+      $errorsElement = this.$container.find('.error-txt.end');
+      $errorsElement.text(Tw.ROAMING_SVCTIME_SETTING_ERR_CASE.OVER_30_DAYS);
       $errorsElement.removeClass('none');
     }else{
       returnValue = true;
