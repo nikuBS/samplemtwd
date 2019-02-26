@@ -8,6 +8,7 @@ import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import StringHelper from '../../../../utils/string.helper';
 import DateHelper from '../../../../utils/date.helper';
+import moment = require('moment');
 
 class MyTJoinPhoneNumChgAlarm extends TwViewController {
 
@@ -38,15 +39,16 @@ class MyTJoinPhoneNumChgAlarm extends TwViewController {
 
         if ( resp.code === API_CODE.CODE_00 ) {
           const result = resp.result;
-          result['oldSvcNum'] = StringHelper.phoneStringToDash(result['oldSvcNum']);
-          result['newSvcNum'] = StringHelper.phoneStringToDash(result['newSvcNum']);
 
           // 서비스 이용중(서비스 종료일이 오늘날짜보다 크거나 같으면) 이라면 연장으로 이동
-          const today = DateHelper.getShortDateNoDot(new Date());
-          if ( result['notiEndDt'] && DateHelper.getShortDateNoDot(result['notiEndDt']) >= today ) {
+          const today = moment(new Date()).format('YYYYMMDD');
+          if ( result['notiEndDt'] && result['notiEndDt'] >= today ) {
             res.redirect('/myt-join/submain/phone/extalarm');
             return;
           }
+
+          result['oldSvcNum'] = StringHelper.phoneStringToDash(result['oldSvcNum']);
+          result['newSvcNum'] = StringHelper.phoneStringToDash(result['newSvcNum']);
 
           const option = { svcInfo: svcInfo, pageInfo: pageInfo, data: result};
           res.render('submain/myt-join.submain.phone.alarm.html', option);
