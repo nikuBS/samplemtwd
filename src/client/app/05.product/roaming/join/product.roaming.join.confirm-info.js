@@ -413,16 +413,14 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
   _showBffToolTip : function (evt) {
     var tooltipData = $(evt.currentTarget).data();
     this._popupService.open({
-      url: Tw.Environment.cdn + '/hbs/',
+      url: '/hbs/',
+      hbs: 'popup',
       'pop_name': 'type_tx_scroll',
       'title': tooltipData.tit,
-      'title_type': 'sub',
+      'title_type': 'tit-tooltip',
       'cont_align': 'tl',
       'contents': tooltipData.txt,
-      'bt_b': [{
-        style_class: 'tw-popup-closeBtn bt-red1 pos-right',
-        txt: Tw.BUTTON_LABEL.CONFIRM
-      }]
+      'btn-close':'btn-tooltip-close tw-popup-closeBtn'
     },null,null);
   },
   _convertPrice : function (priceVal) {
