@@ -465,6 +465,9 @@ Tw.MainHome.prototype = {
         this._drawGiftData(element, this._parseGiftData(resp.result), resp);
       }
     } else {
+      this._drawGiftData(element, {
+        sender: false
+      }, resp);
       element.hide();
     }
     this._resetHeight();
@@ -494,6 +497,7 @@ Tw.MainHome.prototype = {
   },
   _parseGiftData: function (sender) {
     return {
+      sender: true,
       dataGiftCnt: sender.dataGiftCnt,
       familyDataGiftCnt: sender.familyDataGiftCnt,
       familyMemberYn: sender.familyMemberYn === 'Y',
@@ -527,15 +531,12 @@ Tw.MainHome.prototype = {
         this._getGiftBalance(resp.result.reqCnt, $textBalance, $btBalance, $loading, $textError, $btGoGift, $textErrorBalance);
       }
     } else {
-      // $btGoGift.parent().addClass('none');
-      // $textError.text(resp.msg);
-      // $textError.removeClass('none');
-      //
-      // $loading.parent().addClass('none');
-      // $textErrorBalance.removeClass('none');
+      $btGoGift.parent().addClass('none');
+      $textError.text(resp.msg);
+      $textError.removeClass('none');
 
       $loading.parent().addClass('none');
-      $btBalance.parent().removeClass('none');
+      $textErrorBalance.removeClass('none');
     }
   },
   _onClickBtGift: function (sender) {
