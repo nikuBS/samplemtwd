@@ -1013,7 +1013,7 @@ Tw.PRODUCT_INFINITY_CATEGORY_DESC = {
 };
 
 Tw.HOTBILL_UNPAID_TITLE = '미납요금';
-Tw.HOTBILL_ERROR =  {
+Tw.HOTBILL_ERROR = {
   ZINVE8106: '실시간 요금조회에서의 전월요금 조회는 매월초 임시제공되며, 정확한 사용요금은 \'사용내역/' +
     '<a href="/myt-fare/billguide/guide" class="bt-link-tx underline">청구요금조회</a>\'에서 확인 가능합니다.',
   ZINVE8888: '핫빌 요청된 자료가 존재하지 않습니다!'
@@ -1282,7 +1282,7 @@ Tw.MYT_JOIN_SUSPEND = {
   },
   ERROR: {
     MOD0034: '일 3회 이상 신청하실 수 없습니다.',
-    MOD0035: '장기일시정지를 신청하실 수 없습니다.\n (점검시간: 22시~24시)'
+    MOD0035: '장기일시정지를 신청하실 수 없습니다.\n(점검시간: 22시~24시)'
   },
   ERROR_TITLE: '신청불가'
 };

@@ -39,6 +39,32 @@ Tw.CommonMemberLineRegister.prototype = {
     this.$allCheck.on('change', $.proxy(this._onClickAllCheck, this));
     this.$btMore.on('click', $.proxy(this._onClickMore, this));
   },
+  _parseLineInfo: function (lineList) {
+    var category = ['MOBILE', 'INTERNET_PHONE_IPTV', 'SECURITY'];
+    var list = [];
+    _.map(category, $.proxy(function (line) {
+      if ( !Tw.FormatHelper.isEmpty(lineList[Tw.LINE_NAME[line]]) ) {
+        list = list.concat(this._convLineData(lineList[Tw.LINE_NAME[line]], Tw.LINE_NAME[line]));
+      }
+    }, this));
+    return list;
+  },
+
+  _convLineData: function (lineData, type) {
+    Tw.FormatHelper.sortObjArrAsc(lineData, 'expsSeq');
+    var result = [];
+    _.map(lineData, $.proxy(function (line) {
+      line.showSvcAttrCd = Tw.SVC_ATTR[line.svcAttrCd];
+      line.showSvcScrbDtm = Tw.DateHelper.getShortDateNoDot(line.svcScrbDt);
+      line.showName = Tw.FormatHelper.isEmpty(line.nickNm) ? Tw.SVC_ATTR[line.svcAttrCd] : line.nickNm;
+      line.showPet = type === Tw.LINE_NAME.MOBILE;
+      line.showDetail = type === Tw.LINE_NAME.MOBILE ? Tw.FormatHelper.conTelFormatWithDash(line.svcNum) :
+        line.svcAttrCd === Tw.SVC_ATTR_E.TELEPHONE ? Tw.FormatHelper.conTelFormatWithDash(line.svcNum) : line.addr;
+      result.push(line);
+    }, this));
+
+    return result;
+  },
   _onClickAllCheck: function ($event) {
     var $currentTarget = $($event.currentTarget);
     if ( $currentTarget.is(':checked') ) {
