@@ -165,7 +165,7 @@ Tw.MyTJoinSuspendTemporary.prototype = {
       // update svcInfo
       this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
     } else if ( res.code in Tw.MYT_JOIN_SUSPEND.ERROR ) {
-      this._popupService.openAlert(res.msg, Tw.MYT_JOIN_SUSPEND.ERROR_TITLE);
+      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR[res.code] || res.msg);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }

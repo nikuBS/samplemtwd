@@ -66,7 +66,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
       params.toDt = this._params.status.period.to.replace(/\./g, '');
       this._historyService.replaceURL('/myt-join/submain/suspend/complete?' + $.param(params));
     } else if ( res.code in Tw.MYT_JOIN_SUSPEND.ERROR ) {
-      this._popupService.openAlert(res.msg, Tw.MYT_JOIN_SUSPEND.ERROR_TITLE);
+      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR[res.code] || res.msg);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -101,7 +101,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
       params.svcInfo = this._svcInfo.svcNum;
       this._historyService.replaceURL('/myt-join/submain/suspend/complete?' + $.param(params));
     } else if ( res.code in Tw.MYT_JOIN_SUSPEND.ERROR ) {
-      this._popupService.openAlert(res.msg, Tw.MYT_JOIN_SUSPEND.ERROR_TITLE);
+      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR[res.code] || res.msg);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
@@ -136,7 +136,7 @@ Tw.MyTJoinSuspendStatus.prototype = {
       this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
       this._historyService.replaceURL('/myt-join/submain/suspend/complete?' + $.param({ command: 'reset' }));
     } else if ( res.code in Tw.MYT_JOIN_SUSPEND.ERROR ) {
-      this._popupService.openAlert(res.msg, Tw.MYT_JOIN_SUSPEND.ERROR_TITLE);
+      this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.ERROR[res.code] || res.msg);
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
