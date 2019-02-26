@@ -38,6 +38,7 @@ export default class MembershipMyHistory extends TwViewController {
       res.render('my/membership.my.history.html', {
         myHistoryData: myHistoryData,
         svcInfo: svcInfo,
+        pageInfo: pageInfo,
         noHistoryData: noHistoryData
       });
     });
