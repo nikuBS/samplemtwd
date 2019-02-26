@@ -58,8 +58,10 @@ Tw.MyTDataPrepaidVoice.prototype = {
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
     $error.addClass('blind');
 
-    if ( !this._validation.checkMoreLength(this.$prepaid_card, 10) ) {
-      $error.removeClass('blind');
+    if ( Tw.FormatHelper.isEmpty(this.$prepaid_card.val()) ) {
+      $($error.get(0)).removeClass('blind');
+    } else if ( !this._validation.checkMoreLength(this.$prepaid_card, 10) ) {
+      $($error.get(1)).removeClass('blind');
     }
   },
 
@@ -67,8 +69,10 @@ Tw.MyTDataPrepaidVoice.prototype = {
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
     $error.addClass('blind');
 
-    if ( !this._validation.checkMoreLength(this.$prepaid_serial, 10) ) {
-      $error.removeClass('blind');
+    if ( Tw.FormatHelper.isEmpty(this.$prepaid_serial.val()) ) {
+      $($error.get(0)).removeClass('blind');
+    } else if ( !this._validation.checkMoreLength(this.$prepaid_serial, 10) ) {
+      $($error.get(1)).removeClass('blind');
     }
   },
 
@@ -116,14 +120,10 @@ Tw.MyTDataPrepaidVoice.prototype = {
     $error.addClass('blind');
 
     if ( this.$cardY.val() === '' || this.$cardM.val() === '' ) {
-      $($error.get(0)).addClass('blind');
       $($error.get(1)).removeClass('blind');
-    }
-
-    if ( !(this._validation.checkMoreLength(this.$cardY, 4) && this._validation.checkMoreLength(this.$cardM, 2) &&
+    } else if ( !(this._validation.checkMoreLength(this.$cardY, 4) && this._validation.checkMoreLength(this.$cardM, 2) &&
       this._validation.checkYear(this.$cardY) && this._validation.checkMonth(this.$cardM, this.$cardY)) ) {
       $($error.get(0)).removeClass('blind');
-      $($error.get(1)).addClass('blind');
     }
   },
 
