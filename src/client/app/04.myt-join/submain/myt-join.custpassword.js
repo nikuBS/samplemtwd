@@ -60,7 +60,7 @@ Tw.MytJoinCustpassword.prototype = {
     this._chkedpwd = this._validatePwdInput('#pwd-input1');
     if(!this._chkedpwd) return;
 
-    Tw.CommonHelper.startLoading(this._currentHash, 'grey', true);
+    Tw.CommonHelper.startLoading(this._currentHash, 'grey');
 
     this._pwdCheckService.check(
       this._chkedpwd,
@@ -248,7 +248,7 @@ Tw.MytJoinCustpassword.prototype = {
       data.svcPwd = this._chkedpwd; // 변경
     }
 
-    Tw.CommonHelper.startLoading(this._currentHash, 'grey', true);
+    Tw.CommonHelper.startLoading(this._currentHash, 'grey');
     this._apiService
       .request(api, data)
       .done($.proxy(this._onApiSuccess, this))

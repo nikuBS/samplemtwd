@@ -62,7 +62,9 @@ class MyTJoinMyPlanAdd extends TwViewController {
         roaming: resp.result.roamingProd
           ? {
               ...resp.result.roamingProd,
-              addRoamingProdCnt: Number(resp.result.roamingProd.addRoamingProdCnt) - 1
+              addRoamingProdCnt: resp.result.roamingProd.recentlyJoinsProdNm ? 
+                Number(resp.result.roamingProd.addRoamingProdCnt) - 1 : 
+                resp.result.roamingProd.addRoamingProdCnt
             }
           : {}
       };

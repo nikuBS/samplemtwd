@@ -283,7 +283,9 @@ Tw.MyTFareSubMain.prototype = {
 
   _successDrawBanner: function () {
     this.$bannerList = this.$container.find('[data-id=banner-list]');
-    Tw.CommonHelper.resetHeight(this.$bannerList);
+    if ( Tw.BrowserHelper.isApp() ) {
+      Tw.CommonHelper.resetHeight(this.$bannerList[0]);
+    }
   },
 
   // 사용요금내역조회-1
@@ -586,10 +588,13 @@ Tw.MyTFareSubMain.prototype = {
         name    = $target.attr('data-name');
     if ( mgmtNum ) {
       // 기준회선변경
-      var defaultLineInfo = this.data.svcInfo.svcNum + ' ' + (this.data.svcInfo.nickNm || this.data.svcInfo.eqpMdlNm);
+      // 닉네임이 없는 경우 팻네임이 아닌  서비스 그룹명으로 노출 [DV001-14845]
+      var defaultLineInfo = this.data.svcInfo.svcNum + ' ' +
+        (this.data.svcInfo.nickNm || Tw.SVC_ATTR[this.data.svcInfo.svcAttrCd]);
       var selectLineInfo = number + ' ' + name;
       if ( ['S1', 'S2'].indexOf(this.data.svcInfo.svcAttrCd) > -1 ) {
-        defaultLineInfo = this.data.svcInfo.addr + ' ' + (this.data.svcInfo.nickNm || this.data.svcInfo.eqpMdlNm);
+        defaultLineInfo = this.data.svcInfo.addr + ' ' +
+          (this.data.svcInfo.nickNm || Tw.SVC_ATTR[this.data.svcInfo.svcAttrCd]);
       }
       this.changeLineMgmtNum = mgmtNum;
       this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,

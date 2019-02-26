@@ -56,8 +56,12 @@ Tw.ErrorService.prototype = {
     }
   },
 
-  page: function() {
+  page: function(replace) {
     this._historyService.goLoad('/common/error?' + $.param(this._data));
+  },
+
+  replacePage: function(replace) {
+    this._historyService.replaceURL('/common/error?' + $.param(this._data));
   }
 
 };

@@ -379,7 +379,7 @@ Tw.MyTJoinWireModifyAddress.prototype = {
 
   //--------------------------------------------------------------------------[API]
   _chgWireAddrInfo: function (param) {
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading('.container', 'grey');
 
     return this._apiService.request(Tw.API_CMD.BFF_05_0163, param)
       .done($.proxy(this._chgWireAddrInfoInit, this))

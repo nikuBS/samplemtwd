@@ -1,0 +1,86 @@
+<script id="fe-templ-researches" type="text/x-handlebars-template">
+{{#each researches}}
+<li class="acco-box fe-nResearch{{#if isProceeding}} on{{/if}}" data-research-id="{{bnnrRsrchId}}" data-type-code="{{bnnrRsrchTypCd}}" data-answer-num="{{canswNum}}">
+    <div class="acco-tit">
+        <span class="poll-question">{{bnnrRsrchTitleNm}}</span>
+        <span class="poll-date">{{staDtm}}<span class="blind">에서</span><span class="vt" aria-hidden="true">-</span> {{endDtm}}</span>
+        <em class="poll-condition">{{#if isProceeding}}진행 중{{else}}종료{{/if}}</em>
+        <button role="button" aria-pressed="true"><span class="blind">{{bnnrRsrchTitleNm}}</span></button><!-- 웹접근성 수정 - 내용이 고정적이지 않으므로 개발 작업 필요 -->
+    </div>
+    <div class="acco-cont">
+        <div class="cont-box">
+            {{#if hasHint}}
+                <div class="mb20"><button class="bt-link-tx underline fe-hint" data-hint-url="{{hintExUrl}}">힌트 보기</button></div>
+            {{/if}}
+            {{#if examples.length}}
+                <!-- .widget -->
+                <div class="widget">
+                {{#if isRadio}}
+                    <div class="widget-box radio">
+                        <ul class="select-list alignment01 {{#if isDoubleAlign}}division-two{{/if}}{{#if hasImage}} has-image{{/if}}" role="radiogroup">
+                            {{#each examples}}
+                            <li class="radiobox type01" role="radio" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                {{#if image}}
+                                    <div class="poll-img"><img src="<%= CDN %>{{image}}" /></div>
+                                    <input type="radio" name="radio{{bnnrRsrchId}}" title="{{content}}" aria-labelledby="aria-comp-{{../bnnrRsrchId}}{{idx}}" /><!-- 체크상태일 경우 checked="checked" -->
+                                    <div class="poll-text" id="aria-comp-{{../bnnrRsrchId}}{{idx}}">{{content}}{{#if exam.motHtml}}<br/>{{{exam.motHtml}}}{{/if}}</div>
+                                {{else}}
+                                    <input type="radio" name="radio{{bnnrRsrchId}}" title="{{content}}" /><!-- 체크상태일 경우 checked="checked" -->
+                                    {{content}}{{#if exam.motHtml}}<br/>{{{exam.motHtml}}}{{/if}}
+                                {{/if}}
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                {{else}}
+                    <div class="widget-box check">
+                        <ul class="select-list alignment01 {{#if isDoubleAlign}}division-two{{/if}}{{#if hasImage}} has-image{{/if}}" role="group">
+                            {{#each examples}}
+                            <li class="checkbox type01" role="checkbox" aria-checked="false"><!-- 체크 상태일 경우 .checked 클래스 추가, aria-checked="true" -->
+                                {{#if image}}
+                                    <div class="poll-img"><img src="<%= CDN %>{{image}}" /></div>
+                                    <input type="checkbox" name="checkbox" title="{{content}}" aria-labelledby="aria-comp-{{../bnnrRsrchId}}{{idx}}" /><!-- 체크상태일 경우 checked="checked" -->
+                                    <div class="poll-text" id="aria-comp-{{../bnnrRsrchId}}{{idx}}">{{content}}{{#if motHtml}}<br/>{{{motHtml}}}{{/if}}</div>
+                                {{else}}
+                                    <input type="checkbox" name="checkbox" title="{{content}}" /><!-- 체크상태일 경우 checked="checked" -->
+                                    {{content}}{{#if motHtml}}<br/>{{{motHtml}}}{{/if}}
+                                {{/if}}
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                {{/if}}
+                </div>
+                <!--// .widget -->
+                {{#if hasEtc}}<textarea class="poll-area mt10 mb10" data-etc-idx="{{examples.length}}" cols="20" rows="3" placeholder="기타항목 선택시 내용을 입력해주세요."></textarea>{{/if}}
+                {{#if motMsgHtmlCtt}}<div class="mb20">{{{motMsgHtmlCtt}}}</div>{{/if}}
+            {{/if}}
+            {{#if isProceeding}}
+                {{#if hasQuestions}}
+                    <ul class="bt-slice mt0">
+                        <li class="bt-blue1">
+                            <a href="/customer/svc-info/researches?id={{hintExUrl}}">설문 시작하기</a>
+                        </li>
+                    </ul>
+                {{else}}
+                    <ul class="bt-slice item-two">
+                        <li class="bt-white2">
+                            <a href="/customer/svc-info/researches/result?id={{bnnrRsrchId}}">결과보기</a>
+                        </li>
+                        <li class="bt-blue1 fe-submit">
+                            <button disabled>참여하기</button>
+                        </li>
+                    </ul>
+                {{/if}}
+            {{else}}
+                <ul class="bt-slice">
+                    <li class="bt-blue1">
+                        <a href="/customer/svc-info/researches/result?id={{bnnrRsrchId}}">결과보기</a>
+                    </li>
+                </ul>
+            {{/if}}
+        </div>
+    </div>
+</li>
+{{/each}}
+</script>

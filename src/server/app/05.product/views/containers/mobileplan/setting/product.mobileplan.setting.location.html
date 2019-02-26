@@ -59,15 +59,15 @@
                         <div class="tab-area type1"><!-- 타입별 탭형태 변환 -->
                             <div class="tab-linker">
                                 <ul role="tablist">
-                                    <li role="tabpanel" aria-selected="true" aria-controls="tab-loc" id="tab1"><a href="#">할인지역</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+                                    <li role="tabpanel1" aria-selected="true" aria-controls="tab-loc" id="tab1"><a href="#tabpanel1">할인지역</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
                                     <% if ( showNumberSetting ) { %>
-                                    <li role="tabpane2" aria-selected="false" aria-controls="tab-num" id="tab2"><a href="#">지정번호</a></li>
+                                    <li role="tabpanel2" aria-selected="false" aria-controls="tab-num" id="tab2"><a href="#tabpanel2">지정번호</a></li>
                                     <% } %>
                                 </ul>
                             </div>
                             <div class="tab-contents">
                                 <ul>
-                                    <li role="tabpanel" id="tab-loc" aria-labelledby="tab1" aria-selected="true">
+                                    <li role="tabpanel1" id="tab-loc" aria-labelledby="tab1" aria-selected="true">
                                         <div class="ti-caption-gray">
                                             <h3 class="tit">할인지역 설정</h3>
                                             <div class="num"><%= data.svcNum %></div>
@@ -102,7 +102,7 @@
                                     </li>
 
                                     <% if ( showNumberSetting ) { %>
-                                    <li role="tabpanel" id="tab-num" aria-labelledby="tab2">
+                                    <li role="tabpanel2" id="tab-num" aria-labelledby="tab2">
                                         <div class="ti-caption-gray">
                                             <h3 class="tit">지정번호 설정</h3>
                                             <div class="num"><%= svcInfo.svcNumDash %></div>

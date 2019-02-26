@@ -55,10 +55,11 @@ class ProductMobileplanJoin0planSm extends TwViewController {
       this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId),
       this._getMobilePlanCompareInfo(svcInfoProdId, prodId)
     ).subscribe(([ basicInfo, settingInfo, overPayReqInfo, prodRedisInfo, mobilePlanCompareInfo ]) => {
-      if (basicInfo.code !== API_CODE.CODE_00) {
+      const apiError = this.error.apiError([basicInfo, settingInfo]);
+      if (!FormatHelper.isEmpty(apiError)) {
         return this.error.render(res, Object.assign(renderCommonInfo, {
-          code: basicInfo.code,
-          msg: basicInfo.msg,
+          code: apiError.code,
+          msg: apiError.msg,
           isBackCheck: true
         }));
       }

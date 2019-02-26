@@ -220,7 +220,11 @@ Tw.CommonSearch.prototype = {
     }else if($linkData.hasClass('direct-element')){
       Tw.CommonHelper.openUrlExternal(linkUrl);
     }else{
-      this._moveUrl(linkUrl);
+      if(linkUrl.indexOf('http')>-1){
+        Tw.CommonHelper.openUrlExternal(linkUrl);
+      }else{
+        this._moveUrl(linkUrl);
+      }
     }
 
   },
@@ -350,8 +354,6 @@ Tw.CommonSearch.prototype = {
     return recentKeywordList;
   },
   _showAutoCompleteKeyword : function (autoCompleteList) {
-    console.log('_showAutoCompleteKeyword called');
-    console.log(autoCompleteList);
     this.$keywordListBase.find('#auto_complete_list').empty();
     _.each(autoCompleteList,$.proxy(function (data,idx) {
       if(idx>=10){

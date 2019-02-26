@@ -1652,12 +1652,23 @@
     width: 3.75rem;
     height: 3.75rem;
     background: url(/img/ico/bg-donut-small.png) no-repeat 0 0;
-    background-size: 100% 100%;
-    position: relative; }
+    background-size: 100% 100%; }
     .donut-chart.small .donut-chart-area {
       width: 3.75rem;
       height: 3.75rem;
       left: 0; }
+      .donut-chart.small .donut-chart-area .c100.type-blue {
+        position: relative; }
+        .donut-chart.small .donut-chart-area .c100.type-blue:after {
+          display: block;
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 3.75rem;
+          height: 3.75rem;
+          background: url(/img/ico/web_dote.png) no-repeat 0 0;
+          background-size: 100% 100%; }
     .donut-chart.small .c100.p51 .slice, .donut-chart.small .c100.p52 .slice, .donut-chart.small .c100.p53 .slice, .donut-chart.small .c100.p54 .slice, .donut-chart.small .c100.p55 .slice, .donut-chart.small .c100.p56 .slice, .donut-chart.small .c100.p57 .slice, .donut-chart.small .c100.p58 .slice, .donut-chart.small .c100.p59 .slice, .donut-chart.small .c100.p60 .slice, .donut-chart.small .c100.p61 .slice, .donut-chart.small .c100.p62 .slice, .donut-chart.small .c100.p63 .slice, .donut-chart.small .c100.p64 .slice, .donut-chart.small .c100.p65 .slice, .donut-chart.small .c100.p66 .slice, .donut-chart.small .c100.p67 .slice, .donut-chart.small .c100.p68 .slice, .donut-chart.small .c100.p69 .slice, .donut-chart.small .c100.p70 .slice, .donut-chart.small .c100.p71 .slice, .donut-chart.small .c100.p72 .slice, .donut-chart.small .c100.p73 .slice, .donut-chart.small .c100.p74 .slice, .donut-chart.small .c100.p75 .slice, .donut-chart.small .c100.p76 .slice, .donut-chart.small .c100.p77 .slice, .donut-chart.small .c100.p78 .slice, .donut-chart.small .c100.p79 .slice, .donut-chart.small .c100.p80 .slice, .donut-chart.small .c100.p81 .slice, .donut-chart.small .c100.p82 .slice, .donut-chart.small .c100.p83 .slice, .donut-chart.small .c100.p84 .slice, .donut-chart.small .c100.p85 .slice, .donut-chart.small .c100.p86 .slice, .donut-chart.small .c100.p87 .slice, .donut-chart.small .c100.p88 .slice, .donut-chart.small .c100.p89 .slice, .donut-chart.small .c100.p90 .slice, .donut-chart.small .c100.p91 .slice, .donut-chart.small .c100.p92 .slice, .donut-chart.small .c100.p93 .slice, .donut-chart.small .c100.p94 .slice, .donut-chart.small .c100.p95 .slice, .donut-chart.small .c100.p96 .slice, .donut-chart.small .c100.p97 .slice, .donut-chart.small .c100.p98 .slice, .donut-chart.small .c100.p99 .slice, .donut-chart.small .c100.p100 .slice {
       clip: rect(auto, auto, auto, auto); }
     .donut-chart.small .c100 .bar, .donut-chart.small .c100.p51 .fill, .donut-chart.small .c100.p52 .fill, .donut-chart.small .c100.p53 .fill, .donut-chart.small .c100.p54 .fill, .donut-chart.small .c100.p55 .fill, .donut-chart.small .c100.p56 .fill, .donut-chart.small .c100.p57 .fill, .donut-chart.small .c100.p58 .fill, .donut-chart.small .c100.p59 .fill, .donut-chart.small .c100.p60 .fill, .donut-chart.small .c100.p61 .fill, .donut-chart.small .c100.p62 .fill, .donut-chart.small .c100.p63 .fill, .donut-chart.small .c100.p64 .fill, .donut-chart.small .c100.p65 .fill, .donut-chart.small .c100.p66 .fill, .donut-chart.small .c100.p67 .fill, .donut-chart.small .c100.p68 .fill, .donut-chart.small .c100.p69 .fill, .donut-chart.small .c100.p70 .fill, .donut-chart.small .c100.p71 .fill, .donut-chart.small .c100.p72 .fill, .donut-chart.small .c100.p73 .fill, .donut-chart.small .c100.p74 .fill, .donut-chart.small .c100.p75 .fill, .donut-chart.small .c100.p76 .fill, .donut-chart.small .c100.p77 .fill, .donut-chart.small .c100.p78 .fill, .donut-chart.small .c100.p79 .fill, .donut-chart.small .c100.p80 .fill, .donut-chart.small .c100.p81 .fill, .donut-chart.small .c100.p82 .fill, .donut-chart.small .c100.p83 .fill, .donut-chart.small .c100.p84 .fill, .donut-chart.small .c100.p85 .fill, .donut-chart.small .c100.p86 .fill, .donut-chart.small .c100.p87 .fill, .donut-chart.small .c100.p88 .fill, .donut-chart.small .c100.p89 .fill, .donut-chart.small .c100.p90 .fill, .donut-chart.small .c100.p91 .fill, .donut-chart.small .c100.p92 .fill, .donut-chart.small .c100.p93 .fill, .donut-chart.small .c100.p94 .fill, .donut-chart.small .c100.p95 .fill, .donut-chart.small .c100.p96 .fill, .donut-chart.small .c100.p97 .fill, .donut-chart.small .c100.p98 .fill, .donut-chart.small .c100.p99 .fill, .donut-chart.small .c100.p100 .fill {
@@ -1668,23 +1679,14 @@
               transform: rotate(180deg); }
     .donut-chart.small .c100 .slice {
       clip: rect(0em, 60px, 60px, 30px); }
-    .donut-chart.small:after {
-      display: block;
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 3.75rem;
-      height: 3.75rem;
-      background: url(/img/ico/web_dote.png) no-repeat 0 0;
-      background-size: 100% 100%; }
 
 /* widget */
 .horizon-fullbox .widget-box {
   margin: 0 -1rem; }
 
 .widget-box .horizontal-slide {
-  overflow-x: auto; }
+  overflow-x: auto;
+  padding-left: 20px; }
   .widget-box .horizontal-slide .horizontal-list {
     padding: 0;
     overflow: hidden; }
@@ -1730,65 +1732,63 @@
       background-position: -0.875rem -25.8125rem; }
 
 /* MV_02_02 : 함께하면 더욱 유용한 상품 */
-.useful-goods {
-  margin-top: 1.25rem; }
-  .useful-goods li {
-    width: 14.5rem;
-    padding-right: 0.4375rem; }
-    .useful-goods li button {
-      width: 100%;
-      color: #fff;
-      height: 8.125rem;
-      border-radius: 0.125rem;
-      position: relative;
-      text-align: left; }
-      .useful-goods li button.bg1 {
-        background: #9979fe; }
-      .useful-goods li button.bg2 {
-        background: #76d275; }
-      .useful-goods li button .located {
-        position: absolute;
+.useful-goods li {
+  width: 14.5rem;
+  padding-right: 0.4375rem; }
+  .useful-goods li button {
+    width: 100%;
+    color: #fff;
+    height: 8.125rem;
+    border-radius: 0.125rem;
+    position: relative;
+    text-align: left; }
+    .useful-goods li button.bg1 {
+      background: #9979fe; }
+    .useful-goods li button.bg2 {
+      background: #76d275; }
+    .useful-goods li button .located {
+      position: absolute;
+      display: block;
+      width: 100%; }
+      .useful-goods li button .located.top {
+        top: 0.9375rem; }
+      .useful-goods li button .located.bottom {
+        bottom: 0.9375rem; }
+      .useful-goods li button .located .txt-tit {
         display: block;
-        width: 100%; }
-        .useful-goods li button .located.top {
-          top: 0.9375rem; }
-        .useful-goods li button .located.bottom {
-          bottom: 0.9375rem; }
-        .useful-goods li button .located .txt-tit {
-          display: block;
-          font-weight: 700;
-          font-size: 0.9375rem;
-          padding: 0 0.9375rem; }
-        .useful-goods li button .located .txt-type {
-          display: block;
-          font-size: 0.6875rem;
-          padding: 0 0.9375rem;
-          opacity: .6; }
-        .useful-goods li button .located .txt-detail {
-          position: absolute;
-          left: 0;
-          bottom: 0.75rem;
-          display: block;
-          display: -webkit-box;
-          font-size: 0.75rem;
-          padding: 0 0.9375rem;
-          line-height: 1rem;
-          max-height: 3rem;
-          -webkit-line-clamp: 3;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          text-overflow: ellipsis; }
-      .useful-goods li button .ico {
-        position: absolute;
-        right: 0.9375rem;
-        top: 0.9375rem;
+        font-weight: 700;
+        font-size: 0.9375rem;
+        padding: 0 0.9375rem; }
+      .useful-goods li button .located .txt-type {
         display: block;
-        width: 1.5rem;
-        height: 1.5rem;
-        background: url(/img/dummy/ico-tbd-48.png) no-repeat 0 0;
-        background-size: 1.5rem 1.5rem; }
-    .useful-goods li:last-child {
-      padding-right: 0rem; }
+        font-size: 0.6875rem;
+        padding: 0 0.9375rem;
+        opacity: .6; }
+      .useful-goods li button .located .txt-detail {
+        position: absolute;
+        left: 0;
+        bottom: 0.75rem;
+        display: block;
+        display: -webkit-box;
+        font-size: 0.75rem;
+        padding: 0 0.9375rem;
+        line-height: 1rem;
+        max-height: 3rem;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis; }
+    .useful-goods li button .ico {
+      position: absolute;
+      right: 0.9375rem;
+      top: 0.9375rem;
+      display: block;
+      width: 1.5rem;
+      height: 1.5rem;
+      background: url(/img/dummy/ico-tbd-48.png) no-repeat 0 0;
+      background-size: 1.5rem 1.5rem; }
+  .useful-goods li:last-child {
+    padding-right: 0rem; }
 
 /* MV_02_02 : 함께하면 더욱 스마트한 상품 */
 .smart-app {
@@ -1914,23 +1914,33 @@
       width: 3.5rem;
       height: 3.5rem;
       background-size: 100% 100%; }
-    .acco-style.required-doc .widget-box.radio .skin01 .type05.ico01:after {
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.S1001:after {
       background-image: url(/img/customer/bg-filter01-112.png); }
-    .acco-style.required-doc .widget-box.radio .skin01 .type05.ico02:after {
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.W1003:after {
+      background-image: url(/img/customer/bg-filter01-112.png); }
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.S1002:after {
       background-image: url(/img/customer/bg-filter02-112.png); }
-    .acco-style.required-doc .widget-box.radio .skin01 .type05.ico03:after {
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.S1003:after {
       background-image: url(/img/customer/bg-filter03-112.png); }
-    .acco-style.required-doc .widget-box.radio .skin01 .type05.ico04:after {
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.W1002:after {
+      background-image: url(/img/customer/bg-filter03-112.png); }
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.S1004:after {
       background-image: url(/img/customer/bg-filter04-112.png); }
-    .acco-style.required-doc .widget-box.radio .skin01 .type05.ico05:after {
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.W1001:after {
+      background-image: url(/img/customer/bg-filter04-112.png); }
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.S1005:after {
       background-image: url(/img/customer/bg-filter05-112.png); }
-    .acco-style.required-doc .widget-box.radio .skin01 .type05.ico06:after {
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.W1004:after {
+      background-image: url(/img/customer/bg-filter05-112.png); }
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.S1006:after {
       background-image: url(/img/customer/bg-filter06-112.png); }
-    .acco-style.required-doc .widget-box.radio .skin01 .type05.ico07:after {
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.W1005:after {
+      background-image: url(/img/customer/bg-filter06-112.png); }
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.S1007:after {
       background-image: url(/img/customer/bg-filter07-112.png); }
-    .acco-style.required-doc .widget-box.radio .skin01 .type05.ico08:after {
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.S1008:after {
       background-image: url(/img/customer/bg-filter08-112.png); }
-    .acco-style.required-doc .widget-box.radio .skin01 .type05.ico09:after {
+    .acco-style.required-doc .widget-box.radio .skin01 .type05.S1009:after {
       background-image: url(/img/customer/bg-filter09-112.png); }
 
 .acco-style.required-doc .widget-box.radio .skin02 > li {

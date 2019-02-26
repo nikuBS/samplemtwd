@@ -40,7 +40,7 @@ Tw.MyTJoinWireSetWireCancelServiceInfo.prototype = {
    * @private
    */
   _requestAbortCancel: function(){
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading('.container', 'grey');
 
     var param = {
       svcMgmtNum : $('.myfare-list').data('svc-mgmt-num')
@@ -67,6 +67,7 @@ Tw.MyTJoinWireSetWireCancelServiceInfo.prototype = {
 
       }, this))
       .fail(function(err){
+        Tw.CommonHelper.endLoading('.container');
         Tw.Error(err.status, err.statusText).pop();
       });
   }

@@ -45,17 +45,15 @@ Tw.CustomerVoice.prototype = {
   },
 
   _onClickRegister: function () {
-    // this._history.goLoad('/customer/svc-info/voice/register');
-
     if ( this.historiesYn === 'N' ) {
       this._history.goLoad('/customer/svc-info/voice/register');
     } else {
       this._popupService.openConfirmButton(
         Tw.CUSTOMER_VOICE.CALL_TO_CUSTOMER_CENTER,
         Tw.CUSTOMER_VOICE.EXIST_PREVIOUS_INFO,
-        $.proxy(this._onCancel, this),
         $.proxy(this._callCustomer, this),
-        null,
+        $.proxy(this._onCancel, this),
+        Tw.BUTTON_LABEL.CLOSE,
         Tw.ALERT_MSG_MYT_DATA.CALL_CUSTOMER_CENTER);
     }
   },

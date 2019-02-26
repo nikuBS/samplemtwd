@@ -483,7 +483,7 @@
                                         <ul class="help-list">
                                             <% help.map((target) => { %>
                                             <li>
-                                                <a href="/customer/faq/do-like-this?id=<%= target.icntsId %>" class="bt">
+                                                <a data-url="/customer/faq/do-like-this?id=<%= target.icntsId %>" class="bt fe-home-internal">
                                                     <span class="ico"><img src="<%= CDN %><%= target.mainExpsImgPathNm %>" alt="<%= target.mainExpsImgAltCtt %>"></span>
                                                     <%- target.mainExpsTitNm %>
                                                 </a>

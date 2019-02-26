@@ -25,8 +25,8 @@
             <div class="home-tab">
                 <div class="home-tab-belt">
                     <ul>
-                        <li class="tab"><div><a href="#" class="icon-home-tab-my fe-replace-history"><span class="blind">my</span></a><span class="bar"></span></div></li>
-                        <li class="tab"><div><a href="#store" class="icon-home-tab-store fe-replace-history"><span class="blind">store</span></a><span class="bar"></span></div></li>
+                        <li class="tab"><div><button class="icon-home-tab-my"><span class="blind">my</span></button><span class="bar"></span></div></li>
+                        <li class="tab"><div><button class="icon-home-tab-store"><span class="blind">store</span></button><span class="bar"></span></div></li>
                     </ul>
                 </div>
             </div>
@@ -78,10 +78,10 @@
                                 <em class="line">
                                     <button class="bt fe-bt-line ff-tg-light" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button>
                                     <% if (svcInfo.expsSvcCnt > 1) { %>
-                                    <span id="fe-coach-line" class="coach-mark none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                    <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
                                     <% } %>
                                 </em>
-                                <strong class="ti"><a href="/product/callplan?prod_id=<%= svcInfo.prodId %>" class="bt" data-xt_eid="CMMA_A2_B6-2" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.prodNm %></a></strong>
+                                <strong class="ti"><a href="/myt-join/myplan" class="bt" data-xt_eid="CMMA_A2_B6-2" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.prodNm %></a></strong>
 
                                 <% if (homeData.usageData.data && homeData.usageData.data.isShow) { %>
                                 <!-- .widget -->
@@ -130,7 +130,7 @@
                                         </a>
                                         <!-- // .donut-chart -->
                                         <button id="fe-bt-data-link" class="data-add" data-tplanuse="<%= homeData.usageData.data.isTplanUse %>" data-tplanprod="<%= homeData.usageData.data.isTplanProd %>" data-xt_eid="CMMA_A2_B6-3" data-xt_csid="NO" data-xt_action="BC"><span>충전/선물</span></button>
-                                        <span id="fe-coach-data" class="coach-mark none"><strong class="point">충전/선물/공유를</strong> 바로 할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                        <!--<span id="fe-coach-data" class="coach-mark fe-coach-data none"><strong class="point">충전/선물/공유를</strong> 바로 할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>-->
                                     </div>
                                 </div>
                                 <!-- // .widget -->
@@ -228,6 +228,9 @@
                             <% } else if (homeData.usageData.code === 'BLN0001') { %>
                             <div class="main-chart-box">
                                 <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button></em>
+                                <% if (svcInfo.expsSvcCnt > 1) { %>
+                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                <% } %>
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잠시 후 다시 이용해 주세요</strong>
@@ -237,6 +240,9 @@
                             <% } else if (homeData.usageData.code === 'BLN0002') { %>
                             <div class="main-chart-box">
                                 <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button></em>
+                                <% if (svcInfo.expsSvcCnt > 1) { %>
+                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                <% } %>
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
@@ -246,6 +252,9 @@
                             <% } else if (homeData.usageData.code === 'BLN0003') { %>
                             <div class="main-chart-box">
                                 <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button></em>
+                                <% if (svcInfo.expsSvcCnt > 1) { %>
+                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                <% } %>
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
@@ -255,6 +264,9 @@
                             <% } else if (homeData.usageData.code === 'BLN0004') { %>
                             <div class="main-chart-box">
                                 <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button></em>
+                                <% if (svcInfo.expsSvcCnt > 1) { %>
+                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                <% } %>
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
@@ -264,6 +276,9 @@
                             <% } else if (homeData.usageData.code === 'BLN0005') { %>
                             <div class="main-chart-box">
                                 <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button></em>
+                                <% if (svcInfo.expsSvcCnt > 1) { %>
+                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                <% } %>
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
@@ -273,6 +288,9 @@
                             <% } else if (homeData.usageData.code === 'BLN0006') { %>
                             <div class="main-chart-box">
                                 <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button></em>
+                                <% if (svcInfo.expsSvcCnt > 1) { %>
+                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                <% } %>
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
@@ -282,6 +300,9 @@
                             <% } else if (homeData.usageData.code === 'BLN0007') { %>
                             <div class="main-chart-box">
                                 <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button></em>
+                                <% if (svcInfo.expsSvcCnt > 1) { %>
+                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                <% } %>
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다.</strong>
@@ -291,6 +312,9 @@
                             <% } else if (homeData.usageData.code === 'BFF0006' || homeData.usageData.code === 'BFF0007') { %>
                             <div class="main-chart-box">
                                 <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button></em>
+                                <% if (svcInfo.expsSvcCnt > 1) { %>
+                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                <% } %>
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">시스템 점검중입니다.</strong>
@@ -301,6 +325,9 @@
                             <% } else { %>
                             <div class="main-chart-box">
                                 <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.usageData.showSvcNum %></button></em>
+                                <% if (svcInfo.expsSvcCnt > 1) { %>
+                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                <% } %>
                                 <div class="main-error-box">
                                     <span class="ico"><i class="icon-warning-120"><span class="blind">warning</span></i></span>
                                     <strong class="ti">잔여량 조회 서비스를<br>이용하실 수 없습니다</strong>
@@ -318,10 +345,16 @@
                             <div class="main-chart-box">
                                 <% if(svcInfo.svcAttrCd === 'S3') { %>
                                 <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button></em>
+                                <% if (svcInfo.expsSvcCnt > 1) { %>
+                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                <% } %>
                                 <% } else { %>
                                 <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button></em>
+                                <% if (svcInfo.expsSvcCnt > 1) { %>
+                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
                                 <% } %>
-                                <strong class="ti"><button class="bt"><%= svcInfo.prodNm %></button></strong>
+                                <% } %>
+                                <strong class="ti"><a href="/myt-join/myplan" class="bt"><%= svcInfo.prodNm %></a></strong>
 
                                 <div class="main-breakdown-box">
                                     <strong class="ti">SK브로드밴드에서 가입한 회선입니다.</strong>
@@ -332,10 +365,16 @@
                             <div class="main-chart-box">
                                 <% if(svcInfo.svcAttrCd === 'S3') { %>
                                 <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button></em>
+                                <% if (svcInfo.expsSvcCnt > 1) { %>
+                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                <% } %>
                                 <% } else { %>
                                 <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button></em>
+                                <% if (svcInfo.expsSvcCnt > 1) { %>
+                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
                                 <% } %>
-                                <strong class="ti"><a href="/product/callplan?prod_id=<%= svcInfo.prodId %>" class="bt"><%= svcInfo.prodNm %></a></strong>
+                                <% } %>
+                                <strong class="ti"><a href="/myt-join/myplan" class="bt"><%= svcInfo.prodNm %></a></strong>
 
                                 <div id="fe-bt-link-billguide" class="main-breakdown-box">
                                     <% if (homeData.billData.type2) { %>
@@ -360,8 +399,18 @@
                             <% } %>
                             <% } else { %>
                             <div class="main-chart-box">
-                                <em class="line"><button class="bt"><%= svcInfo.addr %></button></em>
-                                <strong class="ti"><button class="bt"><%= svcInfo.prodNm %></button></strong>
+                                <% if(svcInfo.svcAttrCd === 'S3') { %>
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= homeData.billData.showSvcNum %></button></em>
+                                <% if (svcInfo.expsSvcCnt > 1) { %>
+                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                <% } %>
+                                <% } else { %>
+                                <em class="line"><button class="bt fe-bt-line" data-svcMgmtNum="<%= svcInfo.svcMgmtNum %>" data-xt_eid="CMMA_A2_B6-1" data-xt_csid="NO" data-xt_action="BC"><%= svcInfo.addr %></button></em>
+                                <% if (svcInfo.expsSvcCnt > 1) { %>
+                                <span class="coach-mark fe-coach-line none"><strong class="point">회선을 변경</strong>할 수 있어요! <button class="close"><span class="blind">닫기</span></button></span>
+                                <% } %>
+                                <% } %>
+                                <strong class="ti"><a href="/myt-join/myplan" class="bt"><%= svcInfo.prodNm %></a></strong>
 
                                 <div class="main-breakdown-box">
                                     <strong class="ti">발행된 요금안내서가 없습니다.</strong>
@@ -395,7 +444,7 @@
                             <div class="main-membershop-box fe-bt-home-login">
                                 <div class="membership-cont">
                                     <strong class="ti">아직 멤버십 카드가 없으신가요?</strong>
-                                    <span class="msg">간편 로그인 상태에서는 이용할 수 없습니다.<br>T아이디(아이디/비밀번호) 로그인 후 이용해주세요.</span>
+                                    <span class="msg">T멤버십은 간편로그인 상태에서 조회할 수 없습니다.<br>T아이디(아이디/비밀번호) 로그인 후 이용해주세요.</span>
                                 </div>
                                 <div class="btn-area">
                                     <!--<a href="/membership/submain" class="bt">T멤버십</a>-->
@@ -648,7 +697,7 @@
                                                     <ul class="help-list">
                                                         <% help.map((target) => { %>
                                                         <li>
-                                                            <a href="/customer/faq/do-like-this?id=<%= target.icntsId %>" class="bt" data-xt_eid="CMMA_A2_B6-8" data-xt_csid="NO" data-xt_action="BC">
+                                                            <a data-url="/customer/faq/do-like-this?id=<%= target.icntsId %>" class="bt fe-home-internal" data-xt_eid="CMMA_A2_B6-8" data-xt_csid="NO" data-xt_action="BC">
                                                                 <span class="ico"><img src="<%= CDN %><%= target.mainExpsImgPathNm %>" alt="<%= target.mainExpsImgAltCtt %>"></span>
                                                                 <%- target.mainExpsTitNm %>
                                                             </a>
@@ -724,10 +773,10 @@
                                 <li><a href="/product/mobileplan-add" class="bt" data-xt_eid="CMMA_A2_B6-68" data-xt_csid="NO" data-xt_action="BC"><i class="icon-vas-80"><span class="blind">vas</span></i>부가서비스</a></li>
                                 <li><a href="/product/wireplan" class="bt" data-xt_eid="CMMA_A2_B6-69" data-xt_csid="NO" data-xt_action="BC"><i class="icon-internet-80"></i>인터넷/<br>전화/IPTV</a></li>
                                 <li><a href="/product/roaming" class="bt" data-xt_eid="CMMA_A2_B6-70" data-xt_csid="NO" data-xt_action="BC"><i class="icon-roaming-80"></i>T로밍</a></li>
-                                <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010001" data-xt_eid="CMMA_A2_B6-71" data-xt_csid="NO" data-xt_action="BC"><i class="icon-cellphone2-80"></i>스마트폰</button></li>
-                                <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010002" data-xt_eid="CMMA_A2_B6-72" data-xt_csid="NO" data-xt_action="BC"><i class="icon-tablet-80-1"></i>태블릿</button></li>
-                                <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010003" data-xt_eid="CMMA_A2_B6-73" data-xt_csid="NO" data-xt_action="BC"><i class="icon-watch-80"></i>스마트워치</button></li>
-                                <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/accessory/submain" data-xt_eid="CMMA_A2_B6-74" data-xt_csid="NO" data-xt_action="BC"><i class="icon-accessory-80"></i>액세서리</button></li>
+                                <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010001&utm_source=tworld&utm_medium=app_menu&utm_campaign=phone&utm_content=store&fSiteCd=1010" data-xt_eid="CMMA_A2_B6-71" data-xt_csid="NO" data-xt_action="BC"><i class="icon-cellphone2-80"></i>스마트폰</button></li>
+                                <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010002&utm_source=tworld&utm_medium=app_menu&utm_campaign=tablet&utm_content=store&fSiteCd=1010" data-xt_eid="CMMA_A2_B6-72" data-xt_csid="NO" data-xt_action="BC"><i class="icon-tablet-80-1"></i>태블릿</button></li>
+                                <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/list?categoryId=20010003&utm_source=tworld&utm_medium=app_menu&utm_campaign=watch&utm_content=store&fSiteCd=1010" data-xt_eid="CMMA_A2_B6-73" data-xt_csid="NO" data-xt_action="BC"><i class="icon-watch-80"></i>스마트워치</button></li>
+                                <li><button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/accessory/submain?utm_source=tworld&utm_medium=app_menu&utm_campaign=accessory&utm_content=store&fSiteCd=1010" data-xt_eid="CMMA_A2_B6-74" data-xt_csid="NO" data-xt_action="BC"><i class="icon-accessory-80"></i>액세서리</button></li>
                             </ul>
                             <!-- //MY 바로가기 -->
                         </div>
@@ -735,23 +784,25 @@
                         <!-- 다이렉트샵 -->
                         <div class="section-box">
                             <div class="main-direct-box">
-                                <div class="stit c-point"><button class="bt fe-home-external" data-url="http://m.shop.tworld.co.kr/shop/main?utm_source=tworld&utm_medium=app_menu&utm_campaign=familysite&utm_content=brand&fSiteCd=1010" data-xt_eid="CMMA_A2_B6-75" data-xt_csid="NO" data-xt_action="BC">다이렉트샵 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></button></div>
-                                <strong class="ti fe-home-external" data-url="http://m.shop.tworld.co.kr/handler/ShopTworldMain-Start">다이렉트샵에서 엄선한<br>프리미엄 스마트폰</strong>
+                                <button class="fe-home-external" data-url="http://m.shop.tworld.co.kr/shop/main?utm_source=tworld&utm_medium=app_menu&utm_campaign=familysite&utm_content=brand&fSiteCd=1010" data-xt_eid="CMMA_A2_B6-75" data-xt_csid="NO" data-xt_action="BC">
+                                    <span class="tit"><span>다이렉트샵</span></span>
+                                    <span class="tx">다이렉트샵에서 엄선한 프리미엄 스마트폰</span>
+                                </button>
                                 <ul class="info"><!-- 190124 가격,태그 영역 제거 -->
                                     <li>
-                                        <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010001&productGrpId=000003292" data-xt_eid="CMMA_A2_B6-76" data-xt_csid="NO" data-xt_action="BC">
+                                        <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010001&productGrpId=000003292&utm_source=tworld&utm_medium=app_list&utm_campaign=iphone_xs&utm_content=store&fSiteCd=1010" data-xt_eid="CMMA_A2_B6-76" data-xt_csid="NO" data-xt_action="BC">
                                             <span class="img"><img src="<%= CDN %>/img/main/img_phone01.png" alt=""></span>
                                             <strong class="ti">iPhone XS</strong>
                                         </button>
                                     </li>
                                     <li>
-                                        <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010001&productGrpId=000003132" data-xt_eid="CMMA_A2_B6-77" data-xt_csid="NO" data-xt_action="BC">
+                                        <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010001&productGrpId=000003132&utm_source=tworld&utm_medium=app_list&utm_campaign=galaxy_note9&utm_content=store&fSiteCd=1010" data-xt_eid="CMMA_A2_B6-77" data-xt_csid="NO" data-xt_action="BC">
                                             <span class="img"><img src="<%= CDN %>/img/main/img_phone02.png" alt=""></span>
                                             <strong class="ti">갤럭시 노트9</strong>
                                         </button>
                                     </li>
                                     <li>
-                                        <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010001&productGrpId=000003472" data-xt_eid="CMMA_A2_B6-78" data-xt_csid="NO" data-xt_action="BC">
+                                        <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/wireless/product/detail?categoryId=20010001&productGrpId=000003472&utm_source=tworld&utm_medium=app_list&utm_campaign=lg_q9&utm_content=store&fSiteCd=1010" data-xt_eid="CMMA_A2_B6-78" data-xt_csid="NO" data-xt_action="BC">
                                             <span class="img"><img src="<%= CDN %>/img/main/img_phone03.png" alt=""></span>
                                             <strong class="ti">엘지 Q9</strong>
                                         </button>
@@ -763,7 +814,7 @@
 
                         <!-- 공시지원금 변동 알림 -->
                         <div class="section-box nogaps">
-                            <button class="main-alarm-box fe-home-external" data-url="https://m.shop.tworld.co.kr/notice" data-xt_eid="CMMA_A2_B6-79" data-xt_csid="NO" data-xt_action="BC">
+                            <button class="main-alarm-box fe-home-external" data-url="https://m.shop.tworld.co.kr/notice?utm_source=tworld&utm_medium=app_banner&utm_campaign=dantong&utm_content=store&fSiteCd=1010" data-xt_eid="CMMA_A2_B6-79" data-xt_csid="NO" data-xt_action="BC">
                                 <i class="icon-alarm-red"><span class="blind">alarm</span></i>
                                 공시지원금 변동 알림을 받아 보세요
                             </button>
@@ -773,8 +824,9 @@
                         <!-- 모바일 요금제 -->
                         <div class="section-box nogaps-btm">
                             <div class="main-direct-box">
-                                <div class="stit c-point"><a href="/product/mobileplan" class="bt" data-xt_eid="CMMA_A2_B6-80" data-xt_csid="NO" data-xt_action="BC">요금제 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
-                                <strong class="ti fe-home-internal" data-url="/product/mobileplan">인기 있는<br/> SK텔레콤의 대표요금제</strong>
+                                <a href="/product/mobileplan" data-xt_eid="CMMA_A2_B6-80" data-xt_csid="NO" data-xt_action="BC">
+                                    <strong class="tit"><span>인기 있는<br/> SK텔레콤의 대표요금제</span></strong>
+                                </a>
                                 <ul class="charge-product">
                                     <li>
                                         <a href="/product/callplan?prod_id=NA00005958" class="bt-cont-box" data-xt_eid="CMMA_A2_B6-81" data-xt_csid="NO" data-xt_action="BC">
@@ -810,18 +862,17 @@
 
                         <!-- 인터넷 · 집전화 · IPTV -->
                         <div class="section-box nogaps">
-                            <!-- <div class="main-banner-img">
-                                <button><img src="/img/main/img-main-banner08.png" alt="인터넷 · 전화 · IPTV 온가족 플랜 휴대폰 월정액 & 인터넷 기본료 결합하면 최대 29,710월 할인 자세히 보기" /></button>
-                            </div> -->
                             <div class="main-charge-box combination">
-                                <div class="stit"><a href="/product/wireplan" class="bt02" data-xt_eid="CMMA_A2_B6-84" data-xt_csid="NO" data-xt_action="BC">인터넷/전화/IPTV <i class="icon-arrowmore-32 white"><span class="blind">more</span></i></a></div>
-                                <div class="main-box-cont main-box-cont-link">
-                                    <a href="/product/callplan?prod_id=TW20000013" class="link-full" data-xt_eid="CMMA_A2_B6-85" data-xt_csid="NO" data-xt_action="BC">
-                                        <strong class="ti">온가족 플랜</strong>
-                                        <span class="tx">휴대폰 월정액 & 인터넷 기본료 결합하면 최대 29,710원 할인</span>
-                                        <p class="bt">자세히 보기</p>
-                                    </a>
-                                </div>
+                                <a href="/product/callplan?prod_id=TW20000013" class="link-full" data-xt_eid="CMMA_A2_B6-85" data-xt_csid="NO" data-xt_action="BC">
+                                    <div class="stit">인터넷/집전화/IPTV</div>
+                                    <div class="main-box-cont main-box-cont-link">
+                                        <div class="link-full">
+                                            <span class="ti">온가족 플랜</span>
+                                            <span class="tx">휴대폰과 인터넷을 결합하면 <br> 최대 29,710원 할인</span>
+                                            <p class="bt">자세히 보기</p>
+                                        </div>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                         <!-- //인터넷 · 집전화 · IPTV -->
@@ -829,14 +880,15 @@
                         <!-- 모바일 부가상품 -->
                         <div class="section-box nogaps-btm">
                             <div class="main-direct-box">
-                                <div class="stit c-point"><a href="/product/mobileplan-add" class="bt" data-xt_eid="CMMA_A2_B6-86" data-xt_csid="NO" data-xt_action="BC">부가서비스<i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
-                                <strong class="ti fe-home-internal" data-url="/product/mobileplan-add">유용한 부가서비스</strong>
+                                <a href="/product/mobileplan-add" data-xt_eid="CMMA_A2_B6-86" data-xt_csid="NO" data-xt_action="BC">
+                                    <strong class="tit"><span>부가서비스</span></strong>
+                                </a>
                                 <ul class="charge-product type-list">
                                     <li>
-                                        <a href="/product/callplan?prod_id=NA00003362" class="bt-cont-box category-add01" data-xt_eid="CMMA_A2_B6-87" data-xt_csid="NO" data-xt_action="BC"
+                                        <a href="/product/callplan?prod_id=NA00003362" class="bt-cont-box category-add01" data-xt_eid="CMMA_A2_B6-87" data-xt_csid="NO" data-xt_action="BC">
                                             <strong class="ti">LTE 안심옵션</strong>
                                             <em class="sum">월 <span class="ff-tg-medium">5,500</span>원</em>
-                                            <span class="tag">#데이터</span>
+                                            <span class="tag">데이터</span>
                                             <span class="tx">데이터 모두 사용한 후 초과 과금 없이 안심하고 데이터 사용 가능한 서비스</span>
                                         </a>
                                     </li>
@@ -844,7 +896,7 @@
                                         <a href="/product/callplan?prod_id=NA00005876" class="bt-cont-box category-add05" data-xt_eid="CMMA_A2_B6-88" data-xt_csid="NO" data-xt_action="BC">
                                             <strong class="ti">oksusu & 안심 팩</strong>
                                             <em class="sum">월 <span class="ff-tg-medium">8,800</span>원</em>
-                                            <span class="tag">#콘텐츠 이용</span>
+                                            <span class="tag">콘텐츠 이용</span>
                                             <span class="tx">실시간 TV 및 최신 영화 등의 동영상 콘텐츠(oksusu)를 마음껏 이용</span>
                                         </a>
                                     </li>
@@ -852,7 +904,7 @@
                                         <a href="/product/callplan?prod_id=NA00006031" class="bt-cont-box category-add01" data-xt_eid="CMMA_A2_B6-89" data-xt_csid="NO" data-xt_action="BC">
                                             <strong class="ti ti-type">T가족모아데이터</strong>
                                             <em class="sum">무료</em>
-                                            <span class="tag">#데이터</span>
+                                            <span class="tag">데이터</span>
                                             <span class="tx">가족이 T플랜 가입하면, 가족과 데이터를 모아서 이용 가능!</span>
                                         </a>
                                     </li>
@@ -867,14 +919,16 @@
                                 <!-- <button>
                                     <img src="/img/main/img-main-banner04.png" alt="할인혜택 선택약정할인 기기 지원금을 받지 않으셨다면 지원금 대신 요금할인혜택 제공 자세히 보기" />
                                 </button> -->
-                                <div class="stit"><a href="/benefit/submain" class="bt02" data-xt_eid="CMMA_A2_B6-90" data-xt_csid="NO" data-xt_action="BC">할인혜택 <i class="icon-arrowmore-32 white"><span class="blind">more</span></i></a></div>
-                                <div class="main-box-cont main-box-cont-link">
-                                    <a href="/product/callplan?prod_id=NA00004430" class="link-full" data-xt_eid="CMMA_A2_B6-91" data-xt_csid="NO" data-xt_action="BC">
-                                        <strong class="ti">선택약정할인</strong>
-                                        <span class="tx">기기 지원금을 받지 않으셨다면 지원금 대신 요금할인혜택 제공</span>
-                                        <p class="bt">자세히 보기</p>
-                                    </a>
-                                </div>
+                                <a href="/product/callplan?prod_id=NA00004430" class="link-full" data-xt_eid="CMMA_A2_B6-91" data-xt_csid="NO" data-xt_action="BC">
+                                    <div class="stit">할인혜택</div>
+                                    <div class="main-box-cont main-box-cont-link">
+                                        <div class="link-full">
+                                            <span class="ti">선택약정할인</span>
+                                            <span class="tx">기기 지원금을 받지 않으셨다면<br/> 지원금 대신 요금할인혜택 제공</span>
+                                            <p class="bt">자세히 보기</p>
+                                        </div>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                         <!-- //할인혜택 -->
@@ -887,69 +941,47 @@
                                 <div class="widget">
                                     <div class="widget-box slider1">
                                         <div class="slider-box link-full-box">
-                                            <!-- <ul class="slider">
-                                                <li>
-                                                    <button>
-                                                        <img src="/img/main/img-main-banner05-1.png" alt="아시아 여행을 계획하셨나요? 아시아 주요 27개국에서 유용한 상품 로밍상품 보기" />
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button>
-                                                        <img src="/img/main/img-main-banner05-1.png" alt="아시아 여행을 계획하셨나요? 아시아 주요 27개국에서 유용한 상품 로밍상품 보기" />
-                                                    </button>
-                                                </li>
-                                                <li>
-                                                    <button>
-                                                        <img src="/img/main/img-main-banner05-1.png" alt="아시아 여행을 계획하셨나요? 아시아 주요 27개국에서 유용한 상품 로밍상품 보기" />
-                                                    </button>
-                                                </li>
-                                            </ul> -->
                                             <ul class="slider">
                                                 <li>
-                                                    <div class="stit type02"><a href="/product/callplan?prod_id=NA00005900" class="bt02" data-xt_eid="CMMA_A2_B6-92" data-xt_csid="NO" data-xt_action="BC">T로밍 아시아패스 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
                                                     <div class="main-box-cont bg-type01">
                                                         <a href="/product/callplan?prod_id=NA00005900" class="link-full" data-xt_eid="CMMA_A2_B6-93" data-xt_csid="NO" data-xt_action="BC">
-                                                            <strong class="ti">아시아 여행을<br/>계획 중이신가요?</strong>
+                                                            <span class="ti">아시아 여행을<br/>계획하셨나요?</span>
                                                             <span class="tx">아시아 주요국에서 5일 동안 LTE/3G 데이터를 부담없이 이용하세요.</span>
                                                             <p class="bt">로밍상품 보기</p>
                                                         </a>
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <div class="stit type02"><a href="/product/callplan?prod_id=NA00006038" class="bt02" data-xt_eid="CMMA_A2_B6-94" data-xt_csid="NO" data-xt_action="BC">T로밍 미주패스 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
                                                     <div class="main-box-cont bg-type02">
                                                         <a href="/product/callplan?prod_id=NA00006038" class="link-full" data-xt_eid="CMMA_A2_B6-95" data-xt_csid="NO" data-xt_action="BC">
-                                                            <strong class="ti">미주 여행을<br/>계획 중이신가요?</strong>
+                                                            <span class="ti">미주 여행을<br/>계획 중이신가요?</span>
                                                             <span class="tx">미주/호주 19개국에서 30일 동안 LTE/3G 데이터를 안심하고 사용하세요.</span>
                                                             <p class="bt">로밍상품 보기</p>
                                                         </a>
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <div class="stit type02"><a href="/product/callplan?prod_id=NA00006046" class="bt02" data-xt_eid="CMMA_A2_B6-96" data-xt_csid="NO" data-xt_action="BC">T로밍 유럽패스 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
                                                     <div class="main-box-cont bg-type03">
                                                         <a href="/product/callplan?prod_id=NA00006046" class="link-full" data-xt_eid="CMMA_A2_B6-97" data-xt_csid="NO" data-xt_action="BC">
-                                                            <strong class="ti">유럽 여행을<br/>계획 중이신가요?</strong>
+                                                            <span class="ti">유럽 여행을<br/>계획 중이신가요?</span>
                                                             <span class="tx">유럽 51개국에서 30일 동안 LTE/3G 데이터를 안심하고 사용하세요.</span>
                                                             <p class="bt">로밍상품 보기</p>
                                                         </a>
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <div class="stit type02"><a href="/product/callplan?prod_id=NA00006226" class="bt02" data-xt_eid="CMMA_A2_B6-98" data-xt_csid="NO" data-xt_action="BC">T괌사이판 국내처럼 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
                                                     <div class="main-box-cont bg-type04">
                                                         <a href="/product/callplan?prod_id=NA00006226" class="link-full" data-xt_eid="CMMA_A2_B6-99" data-xt_csid="NO" data-xt_action="BC">
-                                                            <strong class="ti">괌/사이판도 우리의<br/>데이터를 쓰는 나라다</strong>
+                                                            <span class="ti">괌/사이판도 우리의<br/>데이터를 쓰는 나라다</span>
                                                             <span class="tx">괌/사이판에서 30일 동안, 국내 가입 요금제의 기본제공 데이터를 그대로 사용하세요.</span>
                                                             <p class="bt">로밍상품 보기</p>
                                                         </a>
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <div class="stit type02"><a href="/product/callplan?prod_id=NA00003196" class="bt02" data-xt_eid="CMMA_A2_B6-100" data-xt_csid="NO" data-xt_action="BC">T로밍 OnePass300 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
                                                     <div class="main-box-cont bg-type05">
                                                         <a href="/product/callplan?prod_id=NA00003196" class="link-full" data-xt_eid="CMMA_A2_B6-101" data-xt_csid="NO" data-xt_action="BC">
-                                                            <strong class="ti">짧은 여행을<br/>계획 중이신가요? </strong>
+                                                            <span class="ti">짧은 여행을<br/>계획 중이신가요? </span>
                                                             <span class="tx">전세계 주요국에서 LTE/3G 데이터를 1일 단위로 사용하세요.</span>
                                                             <p class="bt">로밍상품 보기</p>
                                                         </a>
@@ -971,22 +1003,22 @@
                                         <div class="slider-box">
                                             <ul class="slider">
                                                 <li>
-                                                    <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000013" data-xt_eid="CMMA_A2_B6-103" data-xt_csid="NO" data-xt_action="BC">
+                                                    <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000013&utm_source=tworld&utm_medium=app_banner&utm_campaign=marymond&utm_content=store&fSiteCd=1010" data-xt_eid="CMMA_A2_B6-103" data-xt_csid="NO" data-xt_action="BC">
                                                         <img src="<%= CDN %>/img/main/img_accessories.jpg" alt="마리몬드" />
                                                     </button>
                                                 </li>
                                                 <li>
-                                                    <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/iot/nugu/view?productId=N05960&categoryId=70010012&productType=04" data-xt_eid="CMMA_A2_B6-104" data-xt_csid="NO" data-xt_action="BC">
+                                                    <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/iot/nugu/view?productId=N05960&categoryId=70010012&productType=04&utm_source=tworld&utm_medium=app_banner&utm_campaign=nugu&utm_content=store&fSiteCd=1010" data-xt_eid="CMMA_A2_B6-104" data-xt_csid="NO" data-xt_action="BC">
                                                         <img src="<%= CDN %>/img/main/img_accessories02.jpg" alt="누구캔들" />
                                                     </button>
                                                 </li>
                                                 <li>
-                                                    <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000029" data-xt_eid="CMMA_A2_B6-105" data-xt_csid="NO" data-xt_action="BC">
+                                                    <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000029&utm_source=tworld&utm_medium=app_banner&utm_campaign=apple_acc&utm_content=store&fSiteCd=1010" data-xt_eid="CMMA_A2_B6-105" data-xt_csid="NO" data-xt_action="BC">
                                                         <img src="<%= CDN %>/img/main/img_accessories03.jpg" alt="애플 악세서리" />
                                                     </button>
                                                 </li>
                                                 <li>
-                                                    <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000014" data-xt_eid="CMMA_A2_B6-106" data-xt_csid="NO" data-xt_action="BC">
+                                                    <button class="bt fe-home-external" data-url="https://m.shop.tworld.co.kr/exhibition/view?exhibitionId=P00000014&utm_source=tworld&utm_medium=app_banner&utm_campaign=spigen&utm_content=store&fSiteCd=1010" data-xt_eid="CMMA_A2_B6-106" data-xt_csid="NO" data-xt_action="BC">
                                                         <img src="<%= CDN %>/img/main/img_accessories04.jpg" alt="슈피겐" />
                                                     </button>
                                                 </li>
@@ -1001,9 +1033,11 @@
 
                         <!-- T앱 -->
                         <div class="section-box">
-                            <div class="main-tapp-box">
-                                <div class="stit c-point"><a href="/product/apps" class="bt" data-xt_eid="CMMA_A2_B6-107" data-xt_csid="NO" data-xt_action="BC">T앱 <i class="icon-arrowmore-blue-32"><span class="blind">next</span></i></a></div>
-                                <div class="ti fe-home-internal" data-url="/product/apps">함께하면 더욱 좋은 앱</div>
+                            <div class="main-tapp-box main-direct-box">
+                                <a href="/product/apps" data-xt_eid="CMMA_A2_B6-107" data-xt_csid="NO" data-xt_action="BC">
+                                    <strong class="tit"><span>T앱</span></strong>
+                                    <span class="tx">함께하면 더욱 스마트한 앱서비스</span>
+                                </a>
                                 <ul class="app-list">
                                     <li class="t-membership"><a href="/product/apps/app?appId=TW50000020" class="bt" data-xt_eid="CMMA_A2_B6-108" data-xt_csid="NO" data-xt_action="BC">T멤버십</a></li>
                                     <li class="t-map"><a href="/product/apps/app?appId=TW50000044" class="bt" data-xt_eid="CMMA_A2_B6-109" data-xt_csid="NO" data-xt_action="BC">T맵</a></li>
@@ -1029,7 +1063,7 @@
                                                     <ul class="help-list">
                                                         <% help.map((target) => { %>
                                                         <li>
-                                                            <a href="/customer/faq/do-like-this?id=<%= target.icntsId %>" class="bt" data-xt_eid="CMMA_A2_B6-112" data-xt_csid="NO" data-xt_action="BC">
+                                                            <a data-url="/customer/faq/do-like-this?id=<%= target.icntsId %>" class="bt fe-home-internal" data-xt_eid="CMMA_A2_B6-112" data-xt_csid="NO" data-xt_action="BC">
                                                                 <span class="ico"><img src="<%= CDN %><%= target.mainExpsImgPathNm %>" alt="<%= target.mainExpsImgAltCtt %>"></span>
                                                                 <%- target.mainExpsTitNm %>
                                                             </a>

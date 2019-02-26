@@ -313,6 +313,7 @@ Tw.CommonMemberSloginIos.prototype = {
   _clearLoginError: function () {
     this.$errorLoginCert.addClass('none');
     this.$errorLoginTime.addClass('none');
+    this.$errorLoginCnt.addClass('none');
   },
   _checkLoginValidation: function (inputCert) {
     if ( Tw.FormatHelper.isEmpty(inputCert) ) {

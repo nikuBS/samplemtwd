@@ -247,7 +247,7 @@
             {{/ifCond}}
                 <strong class="ti">{{{listData.STORE_NAME}}}</strong>
                 <span class="tx">{{{listData.SEARCH_ADDR}}}<br>({{{listData.JIBUN_ADDR}}})</span>
-                <a href="tel:02-1234-5678" class="tel">{{{listData.TEL}}}</a>
+                <a href="tel:{{removeTag listData.TEL}}" class="tel">{{{listData.TEL}}}</a>
             </a>
         </div>
     </li>

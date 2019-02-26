@@ -21,9 +21,9 @@ $(window).on('resize', function () {
     $('.popup-page').removeClass('focusin');
   }
   if($(window).width() + $(window).height() != skt_landing._originalSize){
-    $("#gnb.on .g-wrap").css("position","relative");  
+    $("#gnb.on .g-wrap, .bt-fixed-area").css("position","relative");  
   }else{
-    $("#gnb.on .g-wrap").css("position","fixed");  
+    $("#gnb.on .g-wrap, .bt-fixed-area").css("position","fixed");  
   }
 }).on('scroll', function () {
   for (var fn in scroll_fn) {
@@ -544,10 +544,10 @@ skt_landing.action = {
       }
     })
   },
-  home_slider : function(opts){ // home 전체 슬라이더
+  home_slider : function(opts, callback){ // home 전체 슬라이더//2019.02.25 콜백추가
     if(opts){
       $('.home-slider > .home-slider-belt').addClass('home-slider-belt-active');
-    }
+    }    
     if($('.home-slider > .slick-initialized').length > 0){
       $('.home-slider > .home-slider-belt').slick('destroy');
     }
@@ -564,6 +564,7 @@ skt_landing.action = {
 	};
 	var options = $.extend({}, defaults, opts);
     var homeIndex = options.initialSlide ? options.initialSlide : 0;
+    var callback = options.callback ? options.callback : undefined;    //2019.02.25 콜백추가
     if(options.initialSlide >= 0){
         $('.home-tab-belt .tab').eq(options.initialSlide).find('button, a').addClass('on').closest('.tab').siblings().find('button, a').removeClass('on');
     }
@@ -577,6 +578,10 @@ skt_landing.action = {
             $("html, body").stop().animate({scrollTop:0}, 1, function(){});
             $('.home-tab-belt .tab').eq(homeIndex).find('button, a').addClass('on').closest('.tab').siblings().find('button, a').removeClass('on');
           }
+          //2019.02.25 콜백추가          
+          if ( callback !== undefined ) {
+            callback(homeIndex);
+          }          
       });
     });
 
@@ -675,6 +680,9 @@ skt_landing.action = {
           speed : 700,
           centerMode: false,
           focusOnSelect: false,
+          draggable: false,
+          touchMove: false,
+          swipe: false,
           vertical:true,
           verticalSwiping:true,
           autoplay:true,

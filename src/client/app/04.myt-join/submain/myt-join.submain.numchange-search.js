@@ -75,7 +75,7 @@ Tw.MyTJoinPhoneNumChangeSearch.prototype = {
       return;
     }
 
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading('.container', 'grey');
 
     // 변경할 번호 search
     this._apiService.request(Tw.API_CMD.BFF_05_0184, param)

@@ -34,7 +34,8 @@ Tw.CertificationSkFull.prototype = {
     ATH1221: 'ATH1221',     // 인증번호 유효시간이 경과되었습니다.
     ATH2011: 'ATH2011',
     ATH2013: 'ATH2013',
-    ATH2014: 'ATH2014'
+    ATH2014: 'ATH2014',
+    ATH8007: 'ATH8007'
   },
   open: function (authUrl, authKind, callback) {
     this._authUrl = authUrl;
@@ -75,6 +76,7 @@ Tw.CertificationSkFull.prototype = {
     this.$errorCertTime = $popupContainer.find('#aria-cert-num3');
     this.$errorCertCount = $popupContainer.find('#aria-cert-num4');
     this.$errorCertAddTime = $popupContainer.find('#aria-cert-num5');
+    this.$errorCertStop = $popupContainer.find('#aria-cert-num6');
     this.$errorLoginCert = $popupContainer.find('#aria-phone-err1');
     this.$errorLoginTime = $popupContainer.find('#aria-phone-err2');
     this.$errorLoginCnt = $popupContainer.find('#aria-phone-err3');
@@ -203,14 +205,15 @@ Tw.CertificationSkFull.prototype = {
     }
   },
   _checkCertError: function (errorCode, errorMsg) {
+    this._clearCertError();
     if ( errorCode === this.SMS_ERROR.ATH2003 ) {
-      this._clearCertError();
       this.$errorCertTime.removeClass('none');
     } else if ( errorCode === this.SMS_ERROR.ATH2006 ) {
-      this._clearCertError();
       this.$errorCertCount.removeClass('none');
     } else if ( errorCode === this.SMS_ERROR.ATH8006 ) {
       this._showError(this.$inputboxName, this.$inputName, this.$errorNameMismatch, 'aria-phone-tx2');
+    } else if ( errorCode === this.SMS_ERROR.ATH8007 ) {
+      this.$errorCertStop.removeClass('none');
     } else {
       Tw.Error(errorCode, errorMsg).pop();
     }
@@ -313,10 +316,12 @@ Tw.CertificationSkFull.prototype = {
     this.$errorCertTime.addClass('none');
     this.$errorCertCount.addClass('none');
     this.$errorCertAddTime.addClass('none');
+    this.$errorCertStop.addClass('none');
   },
   _clearConfirmError: function () {
     this.$errorLoginCert.addClass('none');
     this.$errorLoginTime.addClass('none');
+    this.$errorLoginCnt.addClass('none');
   }
 };
 

@@ -167,5 +167,6 @@ Tw.CertificationRepresentative.prototype = {
   _clearConfirmError: function () {
     this.$errorConfirm.addClass('none');
     this.$errorConfirmTime.addClass('none');
+    this.$errorConfirmCnt.addClass('none');
   }
 };

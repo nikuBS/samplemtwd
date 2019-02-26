@@ -184,7 +184,7 @@ Tw.CustomerResearch.prototype = {
     this._apiService
       .request(Tw.API_CMD.BFF_08_0036, {
         qstnId: this.$container.data('research-id'),
-        totalCnt: this._questionCount,
+        totalCnt: values.length,
         agrmt: values
       })
       .done($.proxy(this._successSubmit, this));

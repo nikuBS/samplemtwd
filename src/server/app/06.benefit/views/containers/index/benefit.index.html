@@ -18,7 +18,7 @@
 <!--// #skip_navigation -->
 <div class="wrap" data-menuId="<%=pageInfo.menuId%>">
     <!-- #header -->
-    <%- include('../../../../../common/views/components/header.component.html', { title: '혜택&middot;할인', svcInfo:svcInfo }) %>
+    <%- include('../../../../../common/views/components/header.component.html', { title: '혜택/할인', svcInfo:svcInfo }) %>
     <!--// #header -->
     <!-- #contents -->
     <div id="contents" class="container-wrap">
@@ -27,18 +27,18 @@
             <div id="fe-my-benefit-area" class="none">
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <!-- cont-box -->
-                <!--나의 혜택&middot;할인 정보-->
+                <!--나의 혜택/할인 정보-->
                 <div class="cont-box nogaps">
                     <div class="calling-plan">
                         <button class="wrap-link" data-url="/benefit/my">
                             <!-- DV001-14236 뱃지 MY-> 이용중으로 변경 -->
                             <i class="icon-badge-plan-use mr8"><span class="blind">my</span></i>
                             <span class="stit">포인트 <span id="fe-point">점</span></span>
-                            <span class="view-tx">혜택 &middot; 할인 <span id="fe-benefit">건</span></span>
+                            <span class="view-tx">혜택 / 할인 <span id="fe-benefit">건</span></span>
                         </button>
                     </div>
                 </div>
-                <!--// 나의 혜택&middot;할인 정보-->
+                <!--// 나의 혜택/할인 정보-->
                 <!-- //cont-box -->
             </div>
 
@@ -46,7 +46,7 @@
 
             <!-- cont-box -->
             <div class="cont-box nogaps-btm">
-                <h3 class="tit-type6 tx-regular pb20">SK텔레콤 혜택 &middot; 할인</h3>
+                <h3 class="tit-type6 tx-regular pb20">SK텔레콤 혜택 / 할인</h3>
                 <!-- .widget -->
                 <div class="widget">
                     <div class="widget-box horizontal">
@@ -166,14 +166,14 @@
                         <li>
                             <button>
                              <span class="inner">
-                                 <span class="tit" data-url="/product/wireplan/join/reservation?type_cd=combine">가입상담예약 신청 &middot; 조회</span>
+                                 <span class="tit" data-url="/product/wireplan/join/reservation?type_cd=combine">가입상담예약 신청 / 조회</span>
                              </span>
                             </button>
                         </li>
                         <li>
                             <button>
                             <span class="inner">
-                                <span class="tit" data-url="/customer/document?type=etc">구비서류 안내 </span>
+                                <span class="tit" data-url="/customer/document?type=etc">필요서류</span>
                             </span>
                             </button>
                         </li>
@@ -186,7 +186,7 @@
 
             <!-- 다른 페이지를 찾고 계신가요? area-->
             <!-- cont-box -->
-            <div class="cont-box noborder bgnone">
+            <div id="fe-another-page" class="cont-box noborder bgnone none">
                 <h3 class="pg-chk-tit">다른 페이지를 찾고 계신가요?</h3>
                 <ul class="pg-link-list">
                     <li>
@@ -201,7 +201,7 @@
                     </li>
                     <li>
                         <button class="bt" data-url="/product/wireplan">
-                            <i class="icon-internet-40"><span class="blind">인터넷∙집전화∙IPTV</span></i>인터넷∙전화∙IPTV
+                            <i class="icon-internet-40"><span class="blind">인터넷/집전화/IPTV</span></i>인터넷/전화/IPTV
                         </button>
                     </li>
                     <li>

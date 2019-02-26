@@ -131,7 +131,7 @@ Tw.MyTJoinWireAS.prototype = {
    */
   _requestNextData: function () {
     this._removeMoreBtn();
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading('.container', 'grey');
 
     this._apiService.request(Tw.API_CMD.BFF_05_0156, { page: String(this._nowPageNum+1) })
       .done($.proxy(function (resp) {

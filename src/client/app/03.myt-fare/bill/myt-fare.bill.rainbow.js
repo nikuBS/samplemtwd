@@ -11,7 +11,7 @@ Tw.MyTFareBillRainbow = function (rootEl) {
   this._popupService = Tw.Popup;
   this._validation = Tw.ValidationHelper;
   this._historyService = new Tw.HistoryService(rootEl);
-  this._backAlert = new Tw.BackAlert(rootEl);
+  this._backAlert = new Tw.BackAlert(rootEl, true);
 
   this._init();
 };

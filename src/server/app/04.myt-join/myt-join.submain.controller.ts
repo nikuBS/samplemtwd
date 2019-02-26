@@ -299,7 +299,8 @@ class MyTJoinSubmainController extends TwViewController {
   }
 
   isCheckingChgNum(target): boolean {
-    const regexp = /^01([1-9]{1})/g;
+    // 010, 012 제외 [DVI001-14863]
+    const regexp = /^01([1|3-9]{1})/g;
     return regexp.test(target);
   }
 
@@ -352,7 +353,9 @@ class MyTJoinSubmainController extends TwViewController {
           } else if ( ['M3', 'M4'].indexOf(item.svcAttrCd) > -1 ) {
             clsNm = 'tablet';
           }
-          item.nickNm = item.eqpMdlNm || item.nickNm;
+          // 닉네임이 없는 경우 팻네임이 아닌  서비스 그룹명으로 노출 [DV001-14845]
+          // item.nickNm = item.nickNm || item.eqpMdlNm;
+          item.nickNm = item.nickNm || SVC_ATTR_NAME[item.svcAttrCd];
           // PPS, 휴대폰이 아닌 경우는 서비스명 노출
           if ( ['M1', 'M2'].indexOf(item.svcAttrCd) === -1 ) {
             item.nickNm = SVC_ATTR_NAME[item.svcAttrCd];

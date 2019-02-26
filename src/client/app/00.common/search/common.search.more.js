@@ -212,7 +212,11 @@ Tw.CommonSearchMore.prototype = {
     }else if($linkData.hasClass('direct-element')){
       Tw.CommonHelper.openUrlExternal(linkUrl);
     }else{
-      this._moveUrl(linkUrl);
+      if(linkUrl.indexOf('http')>-1){
+        Tw.CommonHelper.openUrlExternal(linkUrl);
+      }else{
+        this._moveUrl(linkUrl);
+      }
     }
   },
   _closeSearch : function () {

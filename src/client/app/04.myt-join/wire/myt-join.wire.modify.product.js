@@ -324,7 +324,7 @@ Tw.MyTJoinWireModifyProduct.prototype = {
 
   //--------------------------------------------------------------------------[API]
   _chgProductInfo: function (param) {
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading('.container', 'grey');
     return this._apiService.request(Tw.API_CMD.BFF_05_0165, param)
       .done($.proxy(this._chgProductInfoInit, this))
       .fail(function (err) {

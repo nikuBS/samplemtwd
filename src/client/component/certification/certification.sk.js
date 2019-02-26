@@ -45,7 +45,8 @@ Tw.CertificationSk.prototype = {
     ATH2000: 'ATH2000',
     ATH2011: 'ATH2011',     //
     ATH2013: 'ATH2013',
-    ATH2014: 'ATH2014'
+    ATH2014: 'ATH2014',
+    ATH8007: 'ATH8007'
   },
   checkSmsEnable: function (svcInfo, opMethods, optMethods, methodCnt, callback) {
     if ( Tw.FormatHelper.isEmpty(this._allSvcInfo) ) {
@@ -187,6 +188,7 @@ Tw.CertificationSk.prototype = {
     this.$errorConfirmTime = $popupContainer.find('#aria-sms-exp-desc6');
     this.$errorCertAddTime = $popupContainer.find('#aria-sms-exp-desc7');
     this.$errorConfirmCnt = $popupContainer.find('#aria-sms-exp-desc8');
+    this.$errorCertStop = $popupContainer.find('#aria-sms-exp-desc9');
 
     $popupContainer.on('click', '#fe-other-cert', $.proxy(this._onClickOtherCert, this));
     $popupContainer.on('click', '#fe-bt-cert-delete', $.proxy(this._onInputCert, this));
@@ -345,22 +347,24 @@ Tw.CertificationSk.prototype = {
     }
   },
   _onSuccessCert: function (reCert, resp) {
+    this._clearCertError();
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._seqNo = resp.result.seqNo;
-      this._clearCertError();
-      this.$validCert.removeClass('none');
-      if ( !reCert ) {
-        this.$btReCert.parent().addClass('none');
-        this.$btCert.parent().addClass('none');
-        this.$btCertAdd.parent().removeClass('none');
-        this._addTimer = setTimeout($.proxy(this._expireAddTime, this), Tw.SMS_CERT_TIME);
-        this._addTime = new Date().getTime();
+      if ( resp.result.corpPwdAuthYn === 'Y' ) {
+        new Tw.CertificationBiz().open();
+      } else {
+        this.$validCert.removeClass('none');
+        if ( !reCert ) {
+          this.$btReCert.parent().addClass('none');
+          this.$btCert.parent().addClass('none');
+          this.$btCertAdd.parent().removeClass('none');
+          this._addTimer = setTimeout($.proxy(this._expireAddTime, this), Tw.SMS_CERT_TIME);
+          this._addTime = new Date().getTime();
+        }
       }
     } else if ( resp.code === this.SMS_ERROR.ATH2003 ) {
-      this._clearCertError();
       this.$errorCertTime.removeClass('none');
     } else if ( resp.code === this.SMS_ERROR.ATH2006 ) {
-      this._clearCertError();
       this.$errorCertCnt.removeClass('none');
     } else if ( resp.code === this.SMS_ERROR.ATH2000 ) {
       if ( this._methodCnt === 1 ) {
@@ -370,6 +374,8 @@ Tw.CertificationSk.prototype = {
         this._popupService.openAlert(Tw.SMS_VALIDATION.ATH2000);
       }
 
+    } else if ( resp.code === this.SMS_ERROR.ATH8007 ) {
+      this.$errorCertStop.removeClass('none');
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
@@ -466,9 +472,11 @@ Tw.CertificationSk.prototype = {
     this.$errorCertTime.addClass('none');
     this.$errorCertCnt.addClass('none');
     this.$errorCertAddTime.addClass('none');
+    this.$errorCertStop.addClass('none');
   },
   _clearConfirmError: function () {
     this.$errorConfirm.addClass('none');
     this.$errorConfirmTime.addClass('none');
+    this.$errorConfirmCnt.addClass('none');
   }
 };

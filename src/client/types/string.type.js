@@ -453,7 +453,7 @@ Tw.ALERT_MSG_COMMON = {
   },
   STEP_CANCEL: { TITLE: '화면을 닫고 이동하시겠습니까?', MSG: '입력 및 선택하신 정보는 모두 취소됩니다.' },
   CHANGE: '변경하시겠습니까?',
-  BIOMETRICS_REGISTER_FAIL: '본인인증에 실패하였습니다.'
+  BIOMETRICS_REGISTER_FAIL: '본인인증이 실패하였습니다.'
 };
 
 Tw.ALERT_MSG_HOME = {
@@ -765,6 +765,7 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A70: { TITLE: '해당 상품의 변경예약신청 이력이 있습니다. 변경예약을 취소하시겠습니까?', BUTTON: '취소하기' },
   ALERT_3_A73: { TITLE: '스마트워치 회선이 존재하지 않습니다.\n회선 없이 \'인피니티_스마트워치\' 옵션을 선택하시겠습니까?', MSG: '' },
   ALERT_3_A74: { TITLE: '선택하신 상품 해지를 취소하시겠습니까?', MSG: '', BUTTON: '계속하기' },
+  ALERT_3_A76: { TITLE: '그룹대표를 선택하지 않으셨습니다.\n그룹대표로 등록 가능한 요금제를 확인하시고 선택해 주세요.', MSG: '' },
   ALERT_3_A77: { TITLE: '지역 추가 시, 1개 지역당 1,650원(부가세포함)씩 과금이 추가됩니다. 지역을 추가하시겠습니까?', MSG: '' },
   ALERT_3_A78: { TITLE: '할인지역은 최대 2개까지 등록가능합니다', MSG: '' },
   ALERT_3_A79: { TITLE: '고객님의 휴대폰은 로밍오토다이얼이 가능합니다.', MSG: '' },
@@ -1011,8 +1012,11 @@ Tw.PRODUCT_INFINITY_CATEGORY_DESC = {
 };
 
 Tw.HOTBILL_UNPAID_TITLE = '미납요금';
-Tw.HOTBILL_ERROR_ZINVE8106 = '실시간 요금조회에서의 전월요금 조회는 매월초 임시제공되며, 정확한 사용요금은 \'사용내역/' +
-  '<a href="/myt-fare/billguide/guide" class="bt-link-tx underline">청구요금조회</a>\'에서 확인 가능합니다.';
+Tw.HOTBILL_ERROR =  {
+  ZINVE8106: '실시간 요금조회에서의 전월요금 조회는 매월초 임시제공되며, 정확한 사용요금은 \'사용내역/' +
+    '<a href="/myt-fare/billguide/guide" class="bt-link-tx underline">청구요금조회</a>\'에서 확인 가능합니다.',
+  ZINVE8888: '핫빌 요청된 자료가 존재하지 않습니다!'
+}
 
 Tw.SETTINGS_MENU = {
   LATEST: '최신'
@@ -1744,7 +1748,7 @@ Tw.TOOLTIP_TITLE = {
   SERVICE_START_GUIDE: '서비스개시일/시간안내',
   ROAMING_SERVICE_CAUTION: '서비스 유의사항',
   ROAMING_SERVICE_TERM: '로밍 서비스 기간 설정',
-  ROAMING_COMMON_GUIDE: '로밍 요금상품 공통 안내사항'
+  ROAMING_COMMON_GUIDE: '로밍 요금상품 공통 안내'
 };
 
 Tw.MEMBERSHIP = {

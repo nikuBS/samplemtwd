@@ -175,6 +175,7 @@ class MytJoinInfoDiscount extends TwViewController {
             );
             priceList[i].typeStr = 'fee_type_A';
             priceList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_A.TIT_NM + '(' + month + TIME_UNIT.MONTH + ')';
+            priceList[i].disProdNm2 = this.trimAll(priceList[i].disProdNm);
             priceList[i].svcAgrmtDcObj = {
               svcAgrmtDcId : priceList[i].svcAgrmtDcId || '',
               svcAgrmtDcCd : priceList[i].svcAgrmtDcCd || ''
@@ -195,6 +196,7 @@ class MytJoinInfoDiscount extends TwViewController {
               moment(priceList[i].agrmtDcEndDt, 'YYYYMMDD').diff(priceList[i].agrmtDcStaDt, 'months', true)
             );
             priceList[i].titNm = MYT_JOIN_CONTRACT_TERMINAL.FEE_TYPE_E.TIT_NM + '(' + month2 + TIME_UNIT.MONTH + ')';
+            priceList[i].disProdNm2 = this.trimAll(priceList[i].disProdNm);
             priceList[i].svcAgrmtDcObj = {
               svcAgrmtDcId : priceList[i].svcAgrmtDcId || '',
               svcAgrmtDcCd : priceList[i].svcAgrmtDcCd || ''
@@ -593,6 +595,13 @@ class MytJoinInfoDiscount extends TwViewController {
       return max;
     }
     return num;
+  }
+
+  public trimAll(str): any {
+    if ( !str ) {
+      return '';
+    }
+    return str.replace(/ /g, '');
   }
 }
 

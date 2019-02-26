@@ -128,7 +128,7 @@ Tw.MyTJoinPhoneNumChgAlarmExt.prototype = {
    */
   _requestServices: function(svcCmd, param, svcType){
 
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading('.container', 'grey');
 
     // 연장/해지 call api
     this._apiService.request(svcCmd, param)

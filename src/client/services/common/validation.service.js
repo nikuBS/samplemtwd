@@ -2,6 +2,7 @@ Tw.ValidationService = function (rootEl, submitBtn, change) {
   this.$container = rootEl;
   this.$submitBtn = submitBtn;
   this.$disabled = true;
+  this.$expirationTarget = null;
 
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -124,7 +125,7 @@ Tw.ValidationService.prototype = {
     var isWrong = true;
 
     if ($target.hasClass('fe-card-y') || $target.hasClass('fe-card-m')) {
-      isWrong = this._expirationValid($target, isWrong);
+      isWrong = this._expirationValid(isWrong);
     } else {
       isWrong = $target.val().length < $target.attr('minLength');
 
@@ -138,22 +139,29 @@ Tw.ValidationService.prototype = {
     }
     return isWrong;
   },
-  _expirationValid: function ($target, isWrong) {
-    if ($target.hasClass('fe-card-y')) {
-      isWrong = this._validation.isYearInvalid($target);
-    } else {
-      isWrong = this._validation.isMonthInvalid($target);
+  _expirationValid: function (isWrong) {
+    var cardY = this.$container.find('.fe-card-y');
+    var cardM = this.$container.find('.fe-card-m');
+
+    isWrong = this._validation.isYearInvalid(cardY);
+
+    if (isWrong) {
+      this.$expirationTarget = cardY;
+      return isWrong;
     }
-    this.$expirationTarget = $target;
 
-    if (!isWrong) {
-      var cardY = this.$container.find('.fe-card-y');
-      var cardM = this.$container.find('.fe-card-m');
+    isWrong = this._validation.isMonthInvalid(cardM);
 
-      isWrong = !this._validation.checkExpiration(cardY, cardM);
-      if (isWrong) {
-        this.$expirationTarget = cardY;
-      }
+    if (isWrong) {
+      this.$expirationTarget = cardM;
+      return isWrong;
+    }
+
+    isWrong = !this._validation.checkExpiration(cardY, cardM);
+    if (isWrong) {
+      this.$expirationTarget = cardY;
+    } else {
+      this.$expirationTarget = null;
     }
     return isWrong;
   },
@@ -233,7 +241,10 @@ Tw.ValidationService.prototype = {
       if ($target.text().indexOf(Tw.VALIDATION_LABEL.EXPIRATION) !== -1) {
         $inputTarget = this.$expirationTarget;
       }
-      $inputTarget.focus();
+
+      if ($inputTarget !== null) {
+        $inputTarget.focus();
+      }
       return false;
     } else if (this.$container.find('.fe-bank-error-msg').is(':visible')) {
       this.$container.find('.select-bank').focus();
