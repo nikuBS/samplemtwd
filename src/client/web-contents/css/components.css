@@ -1737,6 +1737,15 @@
       display: block;
       width: 100%;
       padding: 1.375rem 0; }
+      .list-comp-lineinfo li button .lineinfo-data {
+        position: relative;
+        padding-right: 1rem;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box; }
+        .list-comp-lineinfo li button .lineinfo-data .ico {
+          position: absolute;
+          right: 0;
+          top: 0; }
     .list-comp-lineinfo li > a {
       overflow: hidden;
       display: block;
@@ -14844,7 +14853,6 @@ a.bt-link-tx.underline.small {
   max-width: 92%;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
   font-size: 1.125rem; }
   .add-prd-wrap .list-comp-lineinfo li .lineinfo-data .info-title .unit {
     font-size: 1.125rem; }
