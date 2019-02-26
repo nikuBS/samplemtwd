@@ -433,10 +433,10 @@ Tw.MainHome.prototype = {
       invStartDt: Tw.DateHelper.getShortFirstDate(new Date())
     };
     if ( microResp.code === Tw.API_CODE.CODE_00 ) {
-      result.micro = microResp.result.totalSumPrice;
+      result.micro = Tw.FormatHelper.addComma(microResp.result.totalSumPrice);
     }
     if ( contentsResp.code === Tw.API_CODE.CODE_00 ) {
-      result.contents = contentsResp.result.invDtTotalAmtCharge;
+      result.contents = Tw.FormatHelper.addComma(contentsResp.result.invDtTotalAmtCharge);
     }
 
     // if ( !Tw.FormatHelper.isEmpty(result.micro) || !Tw.FormatHelper.isEmpty(result.contents) ) {
