@@ -12561,8 +12561,7 @@ a.bt-link-tx.underline.small {
           .recommendedrate-list > li .product-infolink .products-titleinfo .info .money {
             display: inline-block;
             margin: 0 0 0 0.25rem;
-            font-size: 1rem;
-            vertical-align: -0.0625rem; }
+            font-size: 1rem; }
       .recommendedrate-list > li .product-infolink .taglist-wrap {
         white-space: nowrap;
         overflow: hidden;
