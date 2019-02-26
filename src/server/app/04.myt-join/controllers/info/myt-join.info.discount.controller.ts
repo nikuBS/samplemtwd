@@ -410,8 +410,8 @@ class MytJoinInfoDiscount extends TwViewController {
           installmentList[i].allotStaDt, installmentListEndDt );
 
         // 분할상환금, 분할상환수수료
-        installmentList[i].mthPrnAmt = FormatHelper.addComma(installmentList[i].mthPrnAmt || '0');
-        installmentList[i].mthIntAmt = FormatHelper.addComma(installmentList[i].mthIntAmt || '0');
+        installmentList[i].mthPrnAmt = FormatHelper.addComma(installmentList[i].mthprnAmt || '0');
+        installmentList[i].mthIntAmt = FormatHelper.addComma(installmentList[i].mthintAmt || '0');
 
         // 중도부분납금, 중도부분납일
         installmentList[i].allotPayAmt = FormatHelper.addComma(installmentList[i].allotPayAmt || '0');
