@@ -102,14 +102,10 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     $error.addClass('blind');
 
     if ( cardY.val() === '' || cardM.val() === '' ) {
-      $($error.get(0)).addClass('blind');
       $($error.get(1)).removeClass('blind');
-    }
-
-    if ( !(this._validation.checkMoreLength(cardY, 4) && this._validation.checkMoreLength(cardM, 2) &&
+    } else if ( !(this._validation.checkMoreLength(cardY, 4) && this._validation.checkMoreLength(cardM, 2) &&
       this._validation.checkYear(cardY) && this._validation.checkMonth(cardM, cardY)) ) {
       $($error.get(0)).removeClass('blind');
-      $($error.get(1)).addClass('blind');
     }
   },
 
