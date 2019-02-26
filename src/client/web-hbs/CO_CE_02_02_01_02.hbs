@@ -1,5 +1,5 @@
 <div class="popup tw-popup">
-    <div class="popup-page nobg layer">
+    <div class="popup-page nobg layer actionsheet_full">
         <!-- #header -->
         <div class="header-wrap">
             <div class="page-header">
@@ -14,7 +14,7 @@
             <h2 class="blind">내용</h2>
             <div class="container">
                 <!-- .cont-box -->
-                <div class="cont-box nogaps-top">
+                <div class="cont-box nogaps-top nogaps-btm">
                     <div class="sms-confirm-box">
                         {{#if data.isWelcome}}
                             {{#if data.sLogin}}
@@ -114,12 +114,12 @@
                     </div>
                 </div>
                 <!--// .cont-box -->
-                <ul class="bt-slice full">
-                    <li class="bt-red1">
-                        <button id="fe-bt-confirm" disabled>인증하기</button>
-                    </li>
-                </ul>
             </div>
+            <ul class="bt-slice full">
+                <li class="bt-red1">
+                    <button id="fe-bt-confirm" disabled>인증하기</button>
+                </li>
+            </ul>
         </div>
         <!--// .container-wrap -->
         <!-- .popup-closeBtn -->
