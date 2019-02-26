@@ -132,12 +132,15 @@ Tw.TooltipService.prototype = {
   _onClose: function () {
     if (this._inapp) {
       Tw.CommonHelper.openUrlInApp(this._link);
+      this._inapp = false;
     }
     if (this._isExternal) {
       Tw.CommonHelper.openUrlExternal(this._link);
+      this._isExternal = false;
     }
     if (this._isLink) {
       window.location.href = this._link;
+      this._isLink = false;
     }
   }
 };
