@@ -28350,7 +28350,8 @@ body.apphome {
   position: absolute;
   right: 0;
   top: 1.25rem;
-  font-size: 1rem; }
+  font-size: 1rem;
+  text-align: right; }
   .data-list-type1 .use.btn {
     top: 50% !important;
     transform: translateY(-50%) !important;
@@ -28364,10 +28365,11 @@ body.apphome {
     display: block;
     text-align: right; }
   .data-list-type1 .use .bt-link-tx {
-    display: block;
     text-align: right;
     font-size: 0.875rem;
-    padding-top: 0.1875rem; }
+    padding-top: 0.1875rem;
+    color: #325ec1;
+    text-decoration: underline; }
 
 .data-list-type1 .type1 li:first-child {
   padding-top: 0;
@@ -28912,6 +28914,8 @@ body.apphome {
     height: 1rem; }
     .plan-cont .tx-msg .tx-point {
       color: #178bce; }
+    .plan-cont .tx-msg.disabled {
+      color: #b2b2b2; }
 
 /* 상품상세 */
 .pro-sub-area {

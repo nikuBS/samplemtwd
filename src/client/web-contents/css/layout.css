@@ -1895,15 +1895,20 @@ body.bg-gray {
         color: #666;
         font-size: 0.75rem; }
 
-.popup-page.layer {
-  position: relative; }
-  .popup-page.layer .sms-confirm-box {
-    padding: 1.625rem 0.875rem 0; }
-    .popup-page.layer .sms-confirm-box .sms-confirm-des {
-      font-size: 0.75rem; }
-  .popup-page.layer .cont-actionsheet .btn-floating {
-    position: relative; }
-
+/*.popup-page.layer{
+    position: relative;
+    .sms-confirm-box{
+        padding:rem(26px 14px 0);
+        .sms-confirm-des{
+            font-size:$fs-12;
+        }
+    }
+    .cont-actionsheet{
+        .btn-floating{
+            position: relative;
+        }
+    }
+}*/
 .sms-confirm-box {
   min-height: 12.5rem; }
   .sms-confirm-box + .sms-confirm-box {
