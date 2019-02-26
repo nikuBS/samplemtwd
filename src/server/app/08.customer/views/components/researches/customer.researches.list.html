@@ -1,6 +1,6 @@
 <script id="fe-templ-researches" type="text/x-handlebars-template">
 {{#each researches}}
-<li class="acco-box fe-nResearch{{#if isProceeding}} on{{/if}}" data-research-id="{{bnnrRsrchId}}" data-type-code="{{bnnrRsrchTypCd}}" data-answer-num="{{canswNum}}">
+<li class="acco-box fe-nResearch{{#if isProceeding}} on{{/if}}" data-research-id="{{bnnrRsrchId}}" data-type-code="{{bnnrRsrchTypCd}}" data-answer-num="{{canswNum}}" id="research{{bnnrRsrchId}}">
     <div class="acco-tit">
         <span class="poll-question">{{bnnrRsrchTitleNm}}</span>
         <span class="poll-date">{{staDtm}}<span class="blind">에서</span><span class="vt" aria-hidden="true">-</span> {{endDtm}}</span>
