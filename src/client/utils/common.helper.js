@@ -71,15 +71,15 @@ Tw.CommonHelper = (function () {
     return value;
   };
 
-  var setCookie = function(name, value, days) {
+  var setCookie = function (name, value, days) {
     var expires = '';
-    if (days) {
+    if ( days ) {
       var date = new Date();
-      date.setTime(date.getTime() + (days*24*60*60*1000));
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
       expires = '; expires=' + date.toUTCString();
     }
 
-    document.cookie = name + '=' + (value || '')  + expires + '; path=/';
+    document.cookie = name + '=' + (value || '') + expires + '; path=/';
   };
 
   var removeLocalStorage = function (key) {
@@ -113,11 +113,11 @@ Tw.CommonHelper = (function () {
             closeCallback
           );
         } else {
-          if (confirmCallback) {
+          if ( confirmCallback ) {
             confirmCallback();
           }
 
-          if (closeCallback) {
+          if ( closeCallback ) {
             closeCallback();
           }
         }
@@ -164,7 +164,9 @@ Tw.CommonHelper = (function () {
   };
 
   var resetHeight = function ($element) {
-    $element.slick && $element.slick.animateHeight();
+    if ( !Tw.FormatHelper.isEmpty($element.slick) ) {
+      $element.slick.animateHeight();
+    }
   };
 
   var resetPopupHeight = function () {
@@ -194,13 +196,13 @@ Tw.CommonHelper = (function () {
     return context.replace('/{{cdn}}/gi', Tw.Environment.cdn);
   };
 
-  var setXtSvcInfo = function() {
-    var xtLid = Tw.CommonHelper.getCookie('XTLID'),
-      xtLoginId = Tw.CommonHelper.getCookie('XTLOGINID'),
-      xtLoginType = Tw.CommonHelper.getCookie('XTLOGINTYPE'),
-      xtSvcGr = Tw.CommonHelper.getCookie('XTSVCGR');
+  var setXtSvcInfo = function () {
+    var xtLid       = Tw.CommonHelper.getCookie('XTLID'),
+        xtLoginId   = Tw.CommonHelper.getCookie('XTLOGINID'),
+        xtLoginType = Tw.CommonHelper.getCookie('XTLOGINTYPE'),
+        xtSvcGr     = Tw.CommonHelper.getCookie('XTSVCGR');
 
-    if (!Tw.BrowserHelper.isApp() || xtLoginType === 'Z') {
+    if ( !Tw.BrowserHelper.isApp() || xtLoginType === 'Z' ) {
       return;
     }
 
@@ -211,7 +213,7 @@ Tw.CommonHelper = (function () {
     });
   };
 
-  var isLowerVersionAndroid = function() {
+  var isLowerVersionAndroid = function () {
     var androidVersion = Tw.BrowserHelper.getAndroidVersion();
     return androidVersion && androidVersion.indexOf('4') !== -1;
   };
