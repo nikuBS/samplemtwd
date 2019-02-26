@@ -164,9 +164,14 @@ Tw.CommonHelper = (function () {
   };
 
   var resetHeight = function ($element) {
-    if ( !Tw.FormatHelper.isEmpty($element.slick) ) {
-      $element.slick.animateHeight();
+    if (this._doingAnimateHeight) {
+      clearTimeout(this._doingAnimateHeight);
     }
+    this._doingAnimateHeight = setTimeout(function () {
+      if (!Tw.FormatHelper.isEmpty($element.slick)) {
+        $element.slick && $element.slick.animateHeight();
+      }
+    }, 200);
   };
 
   var resetPopupHeight = function () {
