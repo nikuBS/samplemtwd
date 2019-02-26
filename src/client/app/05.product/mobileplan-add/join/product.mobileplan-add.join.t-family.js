@@ -303,7 +303,7 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
 
   _procConfirm: function() {
     if (this.$groupList.find('input[type=checkbox]:checked').length < 1) {
-      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A76);
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A76.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A76.TITLE);
     }
 
     new Tw.ProductCommonConfirm(true, null, $.extend(this._confirmOptions, {
