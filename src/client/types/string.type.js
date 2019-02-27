@@ -1258,6 +1258,8 @@ Tw.MYT_JOIN_SUSPEND = {
   NOT_VALID_EMAIL: '이메일 주소가 올바르지 않습니다.',
   NOT_VALID_PHONE_NUMBER: '휴대폰 번호가 올바르지 않습니다.',
   NOT_VALID_PERIOD: '일시정지 가능 최대기간을 초과하였습니다.',
+  NOT_VAILD_PERIOD_01: '종료일은 시작일 이후로 지정할 수 있습니다.',
+  NOT_VAILD_PERIOD_02: '종료일은 설정한 시작일로부터 3개월을 초과하여 설정할 수 없습니다.',
   NOT_VALID_LONG_TERM_PERIOD: '종료일은 설정한 시작일로부터 24개월을 초과하여 설정할 수 없습니다.',
   NOT_VALID_FROM_DATE: '시작일은 오늘 이후로 지정할 수 있습니다.',
   NOT_VALID_FROM_DATE_01: '시작 일자는 당일로부터 30일 이내로 선택하실 수 있습니다.',
