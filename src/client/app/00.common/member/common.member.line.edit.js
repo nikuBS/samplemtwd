@@ -103,7 +103,7 @@ Tw.CommonMemberLineEdit.prototype = {
     $target.parents('.fe-item').removeClass('fe-item-active');
     $target.parents('.fe-item').addClass('fe-item-inactive');
     this._resetCount();
-    this._popupService.openAlert(Tw.ALERT_MSG_AUTH.L03);
+    // this._popupService.openAlert(Tw.ALERT_MSG_AUTH.L03);
   },
   _resetCount: function () {
     this.$usedTxt.text(this.$container.find('.fe-item-active').length);
