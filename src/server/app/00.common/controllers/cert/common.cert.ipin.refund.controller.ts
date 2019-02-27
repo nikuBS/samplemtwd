@@ -24,6 +24,13 @@ class CommonCertIpinRefund extends TwViewController {
     this.apiService.request(API_CMD.BFF_01_0047, params).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         res.render('cert/common.cert.ipin.html', { data: resp.result, pageInfo });
+      } else {
+        return this.error.render(res, {
+          code: resp.code,
+          msg: resp.msg,
+          pageInfo,
+          svcInfo
+        });
       }
     });
   }
