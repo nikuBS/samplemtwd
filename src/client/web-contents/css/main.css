@@ -2683,6 +2683,10 @@ body.apphome {
   .main-charge-box.section-swiper-box {
     min-height: 12.75rem;
     height: auto; }
+  .main-charge-box.ti-line2 {
+    height: 14rem; }
+    .main-charge-box.ti-line2 .main-box-cont.main-box-cont-link {
+      height: 10.6875rem; }
   .main-charge-box > button, .main-charge-box a {
     display: block;
     width: 100%;
@@ -2708,6 +2712,8 @@ body.apphome {
     .main-charge-box.bg-white .main-box-cont .ti {
       padding-top: 0;
       color: #000; }
+    .main-charge-box.bg-white .main-box-cont .tx {
+      color: #959595; }
     .main-charge-box.bg-white .main-box-cont .bt {
       position: absolute;
       left: 1.5rem;
