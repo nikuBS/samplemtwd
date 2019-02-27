@@ -16,6 +16,7 @@ Tw.CommonMemberLineBizRegister = function (rootEl) {
   this.$inputCop = null;
   this.$inputCopNum = null;
   this.$inputNickname = null;
+  this._nickName = '';
 
   this._cachedElement();
   this._bindEvent();
@@ -88,9 +89,11 @@ Tw.CommonMemberLineBizRegister.prototype = {
   },
   _sendRegisterBiz: function (svcMgmtNum) {
     var params = {
-      svcMgmtNum: svcMgmtNum,
-      nickNm: this.$inputNickname.val()
+      svcMgmtNum: svcMgmtNum
     };
+    if ( !Tw.FormatHelper.isEmpty(this._nickName) ) {
+      params.nickNm = this._nickName;
+    }
     this._apiService.request(Tw.API_CMD.BFF_03_0013, params)
       .done($.proxy(this._successRegisterBiz, this))
       .fail($.proxy(this._failRegisterBiz, this));
@@ -108,6 +111,7 @@ Tw.CommonMemberLineBizRegister.prototype = {
     Tw.Logger.error(error);
   },
   _onCloseNickname: function (nickname) {
+    this._nickName = nickname;
     this.$inputNickname.val(nickname);
   },
   _handleError: function (code, message) {
