@@ -49,7 +49,7 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn)
 
   if ( isLogin === 'true' ) {
     this._cachedElement();
-    this._initWelcomsMsg();
+    this._initWelcomeMsg();
     this._bindEvent();
     this._initScroll();
     this._setCoachMark();
@@ -205,16 +205,14 @@ Tw.MainHome.prototype = {
   },
   _onClickDataLink: function ($event) {
     var dataLink = $($event.currentTarget);
-    var isTplanUse = dataLink.data('tplanuse');
     var isTplanProd = dataLink.data('tplanprod');
     this._apiService.request(Tw.API_CMD.BFF_06_0015, {})
-      .done($.proxy(this._successGiftSender, this, isTplanUse, isTplanProd));
+      .done($.proxy(this._successGiftSender, this, isTplanProd));
   },
-  _successGiftSender: function (isTplanUse, isTplanProd, resp) {
+  _successGiftSender: function (isTplanProd, resp) {
     this._popupService.open({
       hbs: 'actionsheet_data',
       layer: true,
-      enableTplan: isTplanUse,
       enableGift: resp.code === Tw.API_CODE.CODE_00,
       tplanProd: isTplanProd
     }, $.proxy(this._onOpenDataLink, this), $.proxy(this._onCloseDataLink, this));
@@ -262,13 +260,21 @@ Tw.MainHome.prototype = {
     this._targetDataLink = this.DATA_LINK.GIFT;
     this._popupService.close();
   },
-  _onClickFamilyLink: function ($event) {
-    if ( $($event.currentTarget).data('tplanprod') ) {
+  _onClickFamilyLink: function () {
+    this._apiService.request(Tw.API_CMD.BFF_06_0044, {})
+      .done($.proxy(this._successTplan, this))
+      .fail($.proxy(this._failTplan, this));
+  },
+  _successTplan: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._targetDataLink = this.DATA_LINK.TPLAN_DATA;
     } else {
       this._targetDataLink = this.DATA_LINK.TPLAN_PROD;
     }
     this._popupService.close();
+  },
+  _failTplan: function (resp) {
+
   },
   _initEmrNotice: function (notice, isLogin) {
     if ( notice === 'true' ) {
@@ -647,7 +653,7 @@ Tw.MainHome.prototype = {
       Tw.CommonHelper.resetHeight($('.home-slider .home-slider-belt')[0]);
     }
   },
-  _initWelcomsMsg: function () {
+  _initWelcomeMsg: function () {
     if ( Tw.BrowserHelper.isApp() ) {
       this._nativeService.send(Tw.NTV_CMD.IS_APP_CREATED, { key: Tw.NTV_PAGE_KEY.HOME_WELCOME }, $.proxy(this._onAppCreated, this));
     } else {
@@ -660,14 +666,8 @@ Tw.MainHome.prototype = {
     }
   },
   _getWelcomeMsg: function () {
-    this._nativeService.send(Tw.NTV_CMD.IS_APP_CREATED, { key: Tw.NTV_PAGE_KEY.HOME_WELCOME }, $.proxy(this._onAppCreated, this));
-
-  },
-  _onAppCreated: function (resp) {
-    if ( resp.resultCode === Tw.NTV_CODE.CODE_00 && resp.params.value === 'Y' ) {
-      this._apiService.request(Tw.NODE_CMD.GET_HOME_WELCOME, {})
-        .done($.proxy(this._successWelcomeMsg, this));
-    }
+    this._apiService.request(Tw.NODE_CMD.GET_HOME_WELCOME, {})
+      .done($.proxy(this._successWelcomeMsg, this));
   },
   _successWelcomeMsg: function (resp) {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
