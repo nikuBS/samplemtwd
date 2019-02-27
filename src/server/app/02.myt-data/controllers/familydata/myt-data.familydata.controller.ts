@@ -57,12 +57,15 @@ export default class MyTDataFamily extends TwViewController {
 
       const data = {
           hasLimit: mine.limitedYn === 'Y',
+          used: Number(mine.used),
           remained: Number(mine.remained),
           total: Number(resp.result.total) * 1024,
           totalUsed: Number(resp.result.used),
-          myLimitation: Number(mine.limitation)
+          totalRemained: Number(resp.result.remained),
+          myLimitation: Number(mine.limitation) * 1024 || 0
         },
-        total = data.hasLimit ? Math.min(data.myLimitation, data.total) : data.total;
+        total = data.hasLimit ? Math.min(data.myLimitation, data.total) : data.total,
+        remained = data.hasLimit ? Math.min(total - data.used, data.totalRemained) : data.total - data.totalUsed;
 
       // mine.limitedYn === 'Y'
       //   ? {
@@ -79,7 +82,7 @@ export default class MyTDataFamily extends TwViewController {
         isRepresentation: representation.svcMgmtNum === svcInfo.svcMgmtNum,
         mine: {
           ...mine,
-          remained: FormatHelper.convDataFormat(total - data.totalUsed, DATA_UNIT.MB),
+          remained: FormatHelper.convDataFormat(remained, DATA_UNIT.MB),
           used: FormatHelper.convDataFormat(Number(mine.used), DATA_UNIT.MB),
           shared: FormatHelper.addComma(mine.shared),
           limitation: FormatHelper.addComma(mine.limitation),

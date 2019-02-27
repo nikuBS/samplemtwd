@@ -35,17 +35,23 @@ Tw.MyTDataFamily.prototype = {
           });
 
           var ratio = 0,
+            nRemained = 0,
             remained = {},
             total = 0;
           if (this._limitation === false) {
             total = this._dataInfo.total;
-            ratio = Math.floor(((total - this._dataInfo.totalUsed) / total) * 100);
-            remained = Tw.FormatHelper.convDataFormat(total - this._dataInfo.totalUsed, Tw.DATA_UNIT.MB);
+            nRemained = total - this._dataInfo.totalUsed;
+            ratio = Math.floor((nRemained / total) * 100);
+            remained = nRemained === 0 ? { data: 0, unit: 'KB' } : Tw.FormatHelper.convDataFormat(nRemained, Tw.DATA_UNIT.MB);
             $remained.text(remained.data + remained.unit);
           } else {
             total = Math.min(Number(this._limitation) * 1024, this._dataInfo.total);
-            ratio = Math.floor((this._dataInfo.remained / total) * 100);
-            remained = Tw.FormatHelper.convDataFormat(total - this._dataInfo.totalUsed, Tw.DATA_UNIT.MB);
+            nRemained = Math.min(total - this._dataInfo.used, this._dataInfo.totalRemained);
+            ratio = Math.floor((nRemained / total) * 100);
+            remained =
+              nRemained === 0 ? 
+                { data: 0, unit: 'KB' } : 
+                Tw.FormatHelper.convDataFormat(Math.min(total - this._dataInfo.used, this._dataInfo.totalRemained), Tw.DATA_UNIT.MB);
             $remained.text(remained.data + remained.unit);
           }
 
@@ -98,6 +104,8 @@ Tw.MyTDataFamily.prototype = {
 
   _handleSubmitLimitation: function(mgmtNum, originLimit) {
     var limitation = typeof this._limitation === 'boolean' ? this._limitation : Number(this._limitation);
+
+    // this._successChangeLimitation({ code: '00' });
 
     if (originLimit === limitation) {
       this._popupService.openAlert(Tw.ALERT_MSG_MYT_DATA.A5, undefined, undefined, undefined);
