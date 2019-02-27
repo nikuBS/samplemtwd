@@ -646,6 +646,6 @@ Tw.MenuComponent.prototype = {
       this._menuSearchComponent = new Tw.MenuSearchComponent(this.$container, $menu);
     }
 
-    this._menuSearchComponent.focus();
+    // this._menuSearchComponent.focus();
   }
 };
