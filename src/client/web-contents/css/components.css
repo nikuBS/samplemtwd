@@ -29371,4 +29371,81 @@ body.apphome {
     .tx-exp-dot li dd.tx-black {
       color: #000; }
 
+/* 제휴 브랜드 혜택 BE_04_01_case.html */
+.brand-benefit {
+  padding: 0 1rem; }
+  .brand-benefit li {
+    position: relative;
+    padding: 1.25rem 0 1.25rem 4rem; }
+    .brand-benefit li:first-child {
+      padding-top: 0; }
+      .brand-benefit li:first-child .ico {
+        top: 0; }
+    .brand-benefit li + li {
+      border-top: 1px solid #f2f2f2; }
+    .brand-benefit li .ico {
+      position: absolute;
+      left: 0;
+      top: 20px;
+      width: 2.75rem;
+      height: 2.75rem; }
+      .brand-benefit li .ico.bakery {
+        background: url(/img/benefit/bg-benefit01.png) no-repeat;
+        background-size: 2.75rem auto; }
+      .brand-benefit li .ico.store {
+        background: url(/img/benefit/bg-benefit02.png) no-repeat;
+        background-size: 2.75rem auto; }
+      .brand-benefit li .ico.mobile {
+        background: url(/img/benefit/bg-benefit03.png) no-repeat;
+        background-size: 2.75rem auto; }
+      .brand-benefit li .ico.finance {
+        background: url(/img/benefit/bg-benefit04.png) no-repeat;
+        background-size: 2.75rem auto; }
+      .brand-benefit li .ico.cinema {
+        background: url(/img/benefit/bg-benefit05.png) no-repeat;
+        background-size: 2.75rem auto; }
+      .brand-benefit li .ico.shopping {
+        background: url(/img/benefit/bg-benefit06.png) no-repeat;
+        background-size: 2.75rem auto; }
+      .brand-benefit li .ico.beauty {
+        background: url(/img/benefit/bg-benefit07.png) no-repeat;
+        background-size: 2.75rem auto; }
+      .brand-benefit li .ico.pizza {
+        background: url(/img/benefit/bg-benefit08.png) no-repeat;
+        background-size: 2.75rem auto; }
+      .brand-benefit li .ico.traffic {
+        background: url(/img/benefit/bg-benefit09.png) no-repeat;
+        background-size: 2.75rem auto; }
+      .brand-benefit li .ico.sports {
+        background: url(/img/benefit/bg-benefit10.png) no-repeat;
+        background-size: 2.75rem auto; }
+      .brand-benefit li .ico.coffee {
+        background: url(/img/benefit/bg-benefit11.png) no-repeat;
+        background-size: 2.75rem auto; }
+      .brand-benefit li .ico.show {
+        background: url(/img/benefit/bg-benefit12.png) no-repeat;
+        background-size: 2.75rem auto; }
+      .brand-benefit li .ico.jeju {
+        background: url(/img/benefit/bg-benefit13.png) no-repeat;
+        background-size: 2.75rem auto; }
+      .brand-benefit li .ico.restaurant {
+        background: url(/img/benefit/bg-benefit14.png) no-repeat;
+        background-size: 2.75rem auto; }
+      .brand-benefit li .ico.travel {
+        background: url(/img/benefit/bg-benefit15.png) no-repeat;
+        background-size: 2.75rem auto; }
+      .brand-benefit li .ico.fnb {
+        background: url(/img/benefit/bg-benefit16.png) no-repeat;
+        background-size: 2.75rem auto; }
+      .brand-benefit li .ico.education {
+        background: url(/img/benefit/bg-benefit17.png) no-repeat;
+        background-size: 2.75rem auto; }
+      .brand-benefit li .ico.theme {
+        background: url(/img/benefit/bg-benefit18.png) no-repeat;
+        background-size: 2.75rem auto; }
+    .brand-benefit li dl dd {
+      margin-top: 0.375rem;
+      font-size: 0.8125rem;
+      color: #959595; }
+
 /* 정민수 */
