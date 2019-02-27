@@ -501,9 +501,8 @@ Tw.MyTDataSubMain.prototype = {
   // 최근데이터사용량 월표시 (당해년 제외 년월로 표시)
   _recentChartDate: function (date) {
     var curYear = new Date().getFullYear();
-    var nextMonth = Tw.DateHelper.AddMonth(date);
-    var inputYear = Tw.DateHelper.convDateFormat(nextMonth).getFullYear();
-    return Tw.DateHelper.getShortKoreanAfterMonth(date, (curYear !== inputYear));
+    var inputYear = Tw.DateHelper.convDateFormat(date).getFullYear();
+    return Tw.DateHelper.getShortKoreanMonth(date, (curYear !== inputYear));
   },
 
   _onImmChargeDetail: function () {
