@@ -465,7 +465,7 @@ export const API_CMD = {
   BFF_07_0072: { path: '/core-bill/:version/micro-prepay/auto-prepay-status', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_07_0073: { path: '/core-bill/:version/micro-prepay/requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0074: { path: '/core-bill/:version/micro-prepay/process', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
-  BFF_07_0075: { path: '/core-bill/:version/micro-prepay/auto-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_07_0075: { path: '/core-bill/:version/micro-prepay/auto-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_07_0076: { path: '/core-bill/:version/micro-prepay/auto-process', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0077: { path: '/core-bill/:version/micro-prepay/auto-delete', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_07_0078: { path: '/core-bill/:version/use-contents-prepay/hist-requests', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
