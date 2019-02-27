@@ -11,6 +11,7 @@ Tw.CommonPostcodeDetail = function ($container, $addressObject, $callback) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._inputHelper = Tw.InputHelper;
+  this._validation = Tw.ValidationHelper;
 
   this._init($addressObject);
 };
@@ -86,7 +87,13 @@ Tw.CommonPostcodeDetail.prototype = {
     this.$searchTarget = $target || $(event.currentTarget);
     this._page = 0;
 
-    this._getList();
+    var $searchField = this.$searchTarget.siblings('.fe-input');
+    if (this._isValid($searchField)) {
+      this._getList();
+    }
+  },
+  _isValid: function ($target) {
+    return this._validation.showAndHideErrorMsg($target, this._validation.checkMoreLength($target, 2));
   },
   _getList: function () {
     var $searchValue = this._getSearchValue();
