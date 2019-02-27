@@ -16,7 +16,7 @@ Tw.MainMenuSettingsTermTypeB = function (rootEl) {
 Tw.MainMenuSettingsTermTypeB.prototype = {
   _bindEvents: function () {
     this.$container.on('click', '#fe-btn-view', $.proxy(this._onViewClicked, this));
-    this.$container.on('click', '.fe-external-link', $.proxy(this._onExternalLink, this));
+    this.$container.on('click', '.fe-link-external', $.proxy(this._onExternalLink, this));
   },
   _onViewClicked: function (e) {
     var viewId = e.currentTarget.value;
