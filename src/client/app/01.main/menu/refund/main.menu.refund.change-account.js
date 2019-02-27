@@ -65,7 +65,7 @@ Tw.MainMenuRefundChangeAccount.prototype = {
       }]
     }, $.proxy(function (root) {
       if (!Tw.FormatHelper.isEmpty(selectedBankCode)) {
-        root.find('button[value="' + selectedBankCode + '"]').addClass('checked');
+        root.find('button[value="' + selectedBankCode + '"] input').prop('checked', true);
       }
 
       root.on('click', '.bank', $.proxy(function (e) {
