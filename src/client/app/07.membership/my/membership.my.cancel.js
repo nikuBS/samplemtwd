@@ -50,7 +50,7 @@ Tw.MembershipMyCancel.prototype = {
   },
 
   _goPrevStep: function(){
-    this._historyService.goLoad('/membership/my');
+    this._historyService.goBack();
   },
 
   _onFail: function(err) {
