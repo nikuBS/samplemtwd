@@ -219,6 +219,8 @@ body.bg-gray {
         display: inline-block;
         color: inherit;
         text-align: left; }
+        #common-menu .section-userinfo .userinfo .ti-tx .tx {
+          top: 1px; }
       #common-menu .section-userinfo .userinfo .ti {
         position: relative;
         top: 0;
@@ -233,7 +235,7 @@ body.bg-gray {
                 transition-duration: 0.7s; }
       #common-menu .section-userinfo .userinfo .tx {
         position: relative;
-        top: 0;
+        top: -4px;
         display: inline-block;
         font-size: 0.8125rem;
         font-weight: 300;
