@@ -13,6 +13,7 @@ Tw.BenefitTerminateTbCombination = function(rootEl, prodId, prodNm, svcCd) {
   this._prodId = prodId;
   this._prodNm = prodNm;
   this._svcCd = svcCd;
+  this._reqLock = false;
 
   this._cachedElement();
   this._bindEvent();
@@ -29,6 +30,10 @@ Tw.BenefitTerminateTbCombination.prototype = {
   },
 
   _openConfirmAlert: function() {
+    if (this._reqLock) {
+      return;
+    }
+
     this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.MSG,
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A4.BUTTON, Tw.BUTTON_LABEL.CLOSE, $.proxy(this._bindConfirmAlert, this),
       null, $.proxy(this._onCloseConfirmAlert, this));
@@ -51,11 +56,14 @@ Tw.BenefitTerminateTbCombination.prototype = {
       return;
     }
 
+    this._reqLock = true;
     this._apiService.request(Tw.API_CMD.BFF_05_0144, { svcCd: this._svcCd }, {}, [this._prodId])
       .done($.proxy(this._resTerminate, this));
   },
 
   _resTerminate: function(resp) {
+    this._reqLock = false;
+
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
