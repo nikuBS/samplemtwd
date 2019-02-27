@@ -32,6 +32,7 @@ Tw.MembershipMyCancel.prototype = {
   },
 
   _handleCancelAlert: function() {
+    this._popupService.close();
     this._apiService
       .request(Tw.API_CMD.BFF_11_0014, {})
       .done($.proxy(this._cancleComplete, this))

@@ -222,6 +222,7 @@ Tw.MembershipMy.prototype = {
   },
 
   _handleChangeAlert: function() {
+    this._popupService.close();
     this._apiService
       .request(Tw.API_CMD.BFF_11_0006, {})
       .done($.proxy(this._successCardChange, this))
