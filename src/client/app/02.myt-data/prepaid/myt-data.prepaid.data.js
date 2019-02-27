@@ -71,7 +71,7 @@ Tw.MyTDataPrepaidData.prototype = {
     this.$rechargeBtn.on('click', $.proxy(this._checkPay, this));
   },
   _setData: function (result) {
-    var data, dataText = 0;
+    var data = 0, dataText = 0;
     if (!Tw.FormatHelper.isEmpty(result.remained) && result.remained !== '0') {
       data = result.remained;
       dataText = Tw.FormatHelper.addComma(result.remained);
@@ -182,6 +182,7 @@ Tw.MyTDataPrepaidData.prototype = {
       reqData.emailYn = 'Y';
     }
 
+    console.log(reqData);
     this._apiService.request(Tw.API_CMD.BFF_06_0058, reqData)
       .done($.proxy(this._rechargeSuccess, this))
       .fail($.proxy(this._rechargeFail, this));
