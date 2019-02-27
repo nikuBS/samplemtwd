@@ -45,16 +45,6 @@ gulp.task('server', function () {
     }));
 });
 
-gulp.task('js-jquery-vendor', function () {
-  return gulp.src([
-    'node_modules/jquery/dist/jquery.min.js' ])
-    .on('error', function (err) {
-      gutil.log(gutil.colors.red('[Error]'), err.toString());
-    })
-    .pipe(concat('jquery-vendor.js'))
-    .pipe(gulp.dest(dist + 'js'));
-});
-
 gulp.task('js-vendor', function () {
   return gulp.src([
     'node_modules/jquery/dist/jquery.min.js',
@@ -385,7 +375,7 @@ gulp.task('js-app-client', appNames.map(function (app) {
 }));
 gulp.task('js', ['js-util', 'js-component', 'js-old-app', 'js-app']);
 gulp.task('js-client', ['js-util-client', 'js-component-client', 'js-app-client']);
-gulp.task('vendor', ['js-jquery-vendor', 'js-vendor', 'css-vendor']);
+gulp.task('vendor', ['js-vendor', 'css-vendor']);
 gulp.task('rb', ['js-rb', 'css-rb', 'css-main', 'css-idpt', 'img', 'hbs', 'font']);
 
 gulp.task('task', ['vendor', 'js', 'rb', 'cab']);
