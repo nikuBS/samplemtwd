@@ -28,7 +28,7 @@ Tw.MyTFareBillSmallSetUse.prototype = {
     if (res.code === Tw.API_CODE.CODE_00) {
       this._getUseStatus(tx);
     } else {
-      this._changeFail(res);
+      this._fail(res);
     }
   },
   _fail: function (err) {
