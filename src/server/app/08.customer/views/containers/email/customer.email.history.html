@@ -29,7 +29,7 @@
                 <h3 class="tit noti">접수된 문의는 접수 순서에 따라 순차적으로 진행됩니다.</h3>
             </div>
             <div class="cont-box nogaps">
-                <% if ( inquiryList ) { %>
+                <% if ( inquiryList && inquiryList.length != 0  ) { %>
                 <ul class="email-consult-list">
                 <% inquiryList.map( (inquiry) => { %>
                     <% if ( inquiry.supInqId !== '' ) { %>
