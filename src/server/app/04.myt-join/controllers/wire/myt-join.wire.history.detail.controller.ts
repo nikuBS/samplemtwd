@@ -5,7 +5,6 @@
  */
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
-import { MYT_JOIN_WIRE } from '../../../../types/string.type';
 import DateHelper from '../../../../utils/date.helper';
 import StringHelper from '../../../../utils/string.helper';
 
@@ -14,11 +13,11 @@ class MyTJoinWireHistoryDetail extends TwViewController {
 
   // titles
   private TITLE_MAP: Object = {
-    '167' : '신규가입 상세 내역',
-    '162' : '설치 장소 변경 상세 내역',
-    '168' : '가입 상품 변경 상세 내역',
-    '143' : '약정기간 변경 상세 내역',
-    '153' : '요금 상품 변경 상세 내역'
+    '167' : '신규가입 상세내역',
+    '162' : '설치 장소 변경 상세내역',
+    '168' : '가입 상품 변경 상세내역',
+    '143' : '약정기간 변경 상세내역',
+    '153' : '요금 상품 변경 상세내역'
   };
 
   constructor() {

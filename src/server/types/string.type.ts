@@ -465,13 +465,13 @@ export const MYT_JOIN_WIRE_SVCATTRCD = {
 
 export const MYT_JOIN_WIRE = {
   TITLE: '신청내역',
-  AS: { TITLE: '장애 A/S신청 현황' },
-  AS_DETAIL: { TITLE: '장애 A/S 상세 내역' },
+  AS: { TITLE: '장애 A/S 신청현황' },
+  AS_DETAIL: { TITLE: '장애 A/S 상세내역' },
   DISC_REFUND: { TITLE: '할인 반환금 조회' },
   FREECALL_CHECK: { TITLE: 'B끼리 무료 통화 대상자 조회' },
   GIFTS: { TITLE: '사은품 조회' },
-  HISTORY: { TITLE: '신청 현황' },
-  HISTORY_DETAIL: { TITLE: '신청 현황 상세' },
+  HISTORY: { TITLE: '신청현황' },
+  HISTORY_DETAIL: { TITLE: '신청현황 상세' },
   MODIFY_ADDRESS: { TITLE: '설치 장소 변경' },
   MODIFY_PERIOD: { TITLE: '약정 기간 변경' },
   MODIFY_PRODUCT: { TITLE: '상품 변경' },
