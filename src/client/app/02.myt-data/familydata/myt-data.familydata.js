@@ -65,7 +65,7 @@ Tw.MyTDataFamily.prototype = {
   },
 
   _handleOpenChangeLimitation: function(mgmtNum, limitation, $layer) {
-    $layer.on('click', '.bt-red1', $.proxy(this._handleSubmitLimitation, this, mgmtNum, limitation));
+    $layer.on('click', '#fe-change-limit', $.proxy(this._handleSubmitLimitation, this, mgmtNum, limitation));
     $layer.on('change', 'input[type="radio"]', $.proxy(this._handleChangeLimitType, this, $layer));
     $layer.on('keyup', 'span.input input', $.proxy(this._handleChangeLimitation, this, $layer));
   },
