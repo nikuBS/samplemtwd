@@ -48,7 +48,7 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
   },
   _getFail: function (err) {
     Tw.CommonHelper.endLoading('.container');
-    Tw.Error(err.code, err.msg).page();
+    Tw.Error(err.code, err.msg).replacePage();
   },
   _bindEvent: function () {
     this.$dataSelector.on('click', $.proxy(this._openSelectPop, this));
