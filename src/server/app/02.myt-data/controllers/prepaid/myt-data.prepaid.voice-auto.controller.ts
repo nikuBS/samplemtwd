@@ -30,7 +30,6 @@ class MyTDataPrepaidVoiceAuto extends TwViewController {
 
   public renderPrepaidVoiceAuto = (req: Request, res: Response, next: NextFunction, svcInfo, pageInfo) =>
     this.getAutoPPSInfo().subscribe((AutoInfo) => {
-    if ( AutoInfo.code === API_CODE.CODE_00 ) {
       res.render('prepaid/myt-data.prepaid.voice-auto.html', {
         AutoInfo: this.parseAuto(AutoInfo),
         svcInfo: svcInfo,
@@ -38,14 +37,6 @@ class MyTDataPrepaidVoiceAuto extends TwViewController {
         convertAmount: this.convertAmount,
         convertDashDate: this.convertDashDate
       });
-    } else {
-      this.error.render(res, {
-        code: AutoInfo.code,
-        msg: AutoInfo.msg,
-        pageInfo: pageInfo,
-        svcInfo: svcInfo
-      });
-    }
   })
 
   public getAutoPPSInfo = () => this.apiService.request(API_CMD.BFF_06_0055, {});
