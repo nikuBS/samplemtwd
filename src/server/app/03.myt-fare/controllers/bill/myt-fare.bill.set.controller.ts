@@ -34,7 +34,7 @@ class MyTFareBillSet extends MyTFareBillSetCommon {
   private getData(data: any, integrate: any, svcInfo: any, pageInfo: any): any {
     this.makeBillInfo(data);
     this.makeAnotherBillList(data);
-    this.parseTel(data);
+    this.parseData(data);
     this.makeOptions(data);
     this.makeHpNum(data);
     this.parseIntegration(data, integrate);
