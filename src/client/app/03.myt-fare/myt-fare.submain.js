@@ -526,7 +526,8 @@ Tw.MyTFareSubMain.prototype = {
   // 최근사용요금 월표시 (당해년 제외 년월로 표시)
   _recentChartDate: function (date) {
     var curYear = new Date().getFullYear();
-    var inputYear = Tw.DateHelper.convDateFormat(date).getFullYear();
+    var nextMonth = Tw.DateHelper.AddMonth(date);
+    var inputYear = Tw.DateHelper.convDateFormat(nextMonth).getFullYear();
     return Tw.DateHelper.getShortKoreanAfterMonth(date, (curYear !== inputYear));
   },
 
