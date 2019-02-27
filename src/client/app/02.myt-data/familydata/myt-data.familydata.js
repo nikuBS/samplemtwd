@@ -4,12 +4,13 @@
  * Date: 2018.10.01
  */
 
-Tw.MyTDataFamily = function(rootEl) {
+Tw.MyTDataFamily = function(rootEl, dataInfo) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
 
+  this._dataInfo = dataInfo;
   this._bindEvent();
 };
 
@@ -26,6 +27,31 @@ Tw.MyTDataFamily.prototype = {
     } else {
       this._popupService.toast(Tw.MYT_DATA_FAMILY_TOAST.SUCCESS_CHANGE);
       if (this.$limitBtn) {
+        var $graph = this.$container.find('#fe-data-graph'),
+          $remained = this.$container.find('#fe-remained-data');
+        if (this.$limitBtn.data('is-mine')) {
+          $graph.removeClass(function(_index, className) {
+            return (className.match(/p[0-9]+$/) || []).join(' ');
+          });
+
+          var ratio = 0,
+            remained = {},
+            total = 0;
+          if (this._limitation === false) {
+            total = this._dataInfo.total;
+            ratio = Math.floor(((total - this._dataInfo.totalUsed) / total) * 100);
+            remained = Tw.FormatHelper.convDataFormat(total - this._dataInfo.totalUsed, Tw.DATA_UNIT.MB);
+            $remained.text(remained.data + remained.unit);
+          } else {
+            total = Math.min(Number(this._limitation) * 1024, this._dataInfo.total);
+            ratio = Math.floor((this._dataInfo.remained / total) * 100);
+            remained = Tw.FormatHelper.convDataFormat(total - this._dataInfo.totalUsed, Tw.DATA_UNIT.MB);
+            $remained.text(remained.data + remained.unit);
+          }
+
+          $graph.addClass('p' + ratio);
+        }
+
         this.$limitBtn.data('limitation', this._limitation);
         if (this._limitation === false) {
           this.$limitBtn
