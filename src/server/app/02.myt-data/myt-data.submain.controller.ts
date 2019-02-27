@@ -185,7 +185,7 @@ class MytDataSubmainController extends TwViewController {
       if ( etcBkd && etcBkd.length > 0 ) {
         // 팅/쿠키즈/안심요금 충전 내역
         // 자동충전취소내역 제거
-        if (!this.isPPS) {
+        if ( !this.isPPS ) {
           etcBkd = etcBkd.filter((item) => {
             return item.opTypCd !== '4';
           });
@@ -636,7 +636,8 @@ class MytDataSubmainController extends TwViewController {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result
           .filter(item => {
-            return DateHelper.getDifference(item.copnUseDt, this.fromDt) >= 0;
+            // 1년이내
+            return DateHelper.getDifference((item.copnUseDtm || item.copnUseDt), this.fromDt) >= 0;
           });
       } else {
         // error
@@ -653,7 +654,8 @@ class MytDataSubmainController extends TwViewController {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result
           .filter(item => {
-            return DateHelper.getDifference(item.copnOpDt, this.fromDt) >= 0;
+            // 1년이내
+            return DateHelper.getDifference((item.copnOpDtm || item.copnOpDt).substring(0, 8), this.fromDt) >= 0;
           });
       } else {
         // error
