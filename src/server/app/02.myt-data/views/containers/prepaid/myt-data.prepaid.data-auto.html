@@ -32,8 +32,7 @@
                                 <dt>남은 데이터양
                                     <button id="DC_09_04_tip_03" class="tip-view-btn" title="남은 데이터양 TIP보기" aria-haspopup="true" type="button">TIP</button>
                                 </dt>
-                                <dd class="t-point"><span class="num ff-tg-black fe-data" data-value="<%= ppsInfo.remained %>">
-                                    <%= ppsInfo.remainData %></span><span class="ff-tg-medium">MB</span>
+                                <dd class="t-point"><span class="num ff-tg-black fe-data"></span><span class="ff-tg-medium">MB</span>
                                 </dd>
                             </dl>
                             <p class="ctext3 mb20"><strong>데이터 1MB</strong> 이하 또는 <strong>사용기간 만료 1일 전</strong>일 때 자동충전</p>
@@ -41,19 +40,19 @@
                                 <li>
                                     <dl>
                                         <dt>발신(사용) 기간</dt>
-                                        <dd><%= ppsInfo.fromDate %></dd>
+                                        <dd class="fe-from-date"></dd>
                                     </dl>
                                 </li>
                                 <li>
                                     <dl>
                                         <dt>수신(데이터 유지) 기간</dt>
-                                        <dd><%= ppsInfo.toDate %></dd>
+                                        <dd class="fe-to-date"></dd>
                                     </dl>
                                 </li>
                                 <li>
                                     <dl>
                                         <dt>번호 유지 기간</dt>
-                                        <dd><%= ppsInfo.remainDate %></dd>
+                                        <dd class="fe-remain-date"></dd>
                                     </dl>
                                 </li>
                             </ul>
@@ -77,7 +76,6 @@
                                 <label class="tit" for="formInput01">충전 데이터</label>
                                 <span class="inputbox">
                                     <button id="<%= autoInfo.id %>" data-origin-id="<%= autoInfo.id %>"
-                                            data-code="<%= ppsInfo.dataYn %>"
                                             class="bt-dropdown big fe-select-data fe-required-select"
                                             title="충전 데이터 선택" aria-haspopup="true">
                                         <%= autoInfo.txt %><span class="ico" title="충전 데이터 선택"></span>

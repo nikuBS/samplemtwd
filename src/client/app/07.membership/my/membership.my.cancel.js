@@ -32,6 +32,7 @@ Tw.MembershipMyCancel.prototype = {
   },
 
   _handleCancelAlert: function() {
+    this._popupService.close();
     this._apiService
       .request(Tw.API_CMD.BFF_11_0014, {})
       .done($.proxy(this._cancleComplete, this))
@@ -49,7 +50,7 @@ Tw.MembershipMyCancel.prototype = {
   },
 
   _goPrevStep: function(){
-    this._historyService.goLoad('/membership/my');
+    this._historyService.goBack();
   },
 
   _onFail: function(err) {

@@ -4,53 +4,61 @@
 * Date: 2018.10.06
 %>
 <script id="fe-smart-gift" type="text/x-handlebars-template">
-    {{#if sender}}
-    <div class="main-breakdown-box">
-        <!--<div class="stit c-point">T끼리 데이터 선물</div>--><!--2019.02.13 삭제-->
-        <strong class="ti">잔여 데이터를 가족과 친구에게 선물해 보세요</strong>
-        {{#if blockUsage}}
-        <p class="tx">매월 1일은 데이터 조회량이 많아 데이터를 선물할 수 있는지 실시간으로 알려드리기 어렵습니다.</p>
-        {{else}}
-        <a tabindex="0" href="/myt-data/submain">
-        <ul class="list">
-            <li><strong class="ti">선물할 수 있는 데이터</strong>
-                <em class="tx f-type c-point none"><span id="fe-text-gift-balance" class="ff-tg-medium"></span></em>
-                <em class="tx none"><button id="fe-bt-gift-balance" class="f-type bt-link-tx underline">조회하기</button></em>
-                <em class="tx f-type font-normal g-type"><span id="fe-text-gift-loading">조회 중입니다</span></em>
-                <em id="fe-text-error-balance" class="tx f-type c-point none"><span class="ff-tg-medium">-</span></em>
-            </li>
-            <li><strong class="ti">선물하기 남은 횟수</strong>
-                <em class="tx c-point">T끼리 <span class="f-type ff-tg-medium">{{dataGiftCnt}}</span>회
-                    {{#if goodFamilyMEmberYn}}
-                    / 가족 <span class="f-type">무제한</span>
-                    {{else if familyMemberYn}}
-                    / 가족 <span class="f-type ff-tg-medium">{{familyDataGiftCnt}}</span>회
-                    {{/if}}
-                </em>
-            </li>
-        </ul>
-        </a>
-        {{/if}}
-        <div class="btn-area">
-            <button id="fe-bt-go-gift" class="bt bt-off" disabled>선물하기</button>
+    {{#if blockUsage}}
+    <div class="main-fee-box">
+        <div class="fee-cont">
+            <strong class="tit">잔여 데이터를 가족과 친구에게 선물해 보세요</strong>
+            <p class="tx">매월 1일은 데이터 조회량이 많아 데이터를 선물할 수 있는지 실시간으로 알려드리기 어렵습니다.</p>
         </div>
-        <p id="fe-text-error" class="text_translation none"></p>
+        <div class="btn-area">
+            <button class="fe-bt-go-gift bt full">선물하기</button>
+        </div>
     </div>
     {{else}}
-    <div class="main-breakdown-box">
-        <!--<div class="stit c-point">T끼리 데이터 선물</div>--><!--2019.02.13 삭제-->
-        <strong class="ti">잔여 데이터를 가족과 친구에게 선물해 보세요</strong>
-        <a tabindex="0" href="/myt-data/submain">
-            <ul class="list">
-                <li><strong class="ti">선물할 수 있는 데이터</strong>
-                    <em class="tx f-type c-point"><span class="ff-tg-medium">-</span></em>
-                </li>
-                <li><strong class="ti">선물하기 남은 횟수</strong>
-                    <em class="tx c-point">-</em>
-                </li>
-            </ul>
-        </a>
-        <p class="text_translation">선물 가능한 데이터 또는 횟수가 부족합니다.<br/>선물 후 기본 제공 데이터가 500MB 이상 있어야 합니다.</p>
-    </div>
+        {{#if sender}}
+        <div class="main-fee-box">
+            <div class="fee-cont">
+                <strong class="tit">잔여 데이터를 가족과<br/> 친구에게 선물해 보세요</strong>
+                <a href="/myt-data/submain">
+                    <ul class="list">
+                        <li><strong class="ti">선물할 수 있는 데이터</strong>
+                            <em class="tx f-type c-poin none"><span id="fe-text-gift-balance" class="ff-tg-medium"></span></em>
+                            <em class="tx none"><button id="fe-bt-gift-balance" class="f-type bt-link-tx underline">조회하기</button></em>
+                            <em class="tx f-type font-normal g-type"><span id="fe-text-gift-loading">조회 중입니다</span></em>
+                            <em id="fe-text-error-balance" class="tx f-type c-point none"><span class="ff-tg-medium">-</span></em>
+                        </li>
+                        <li><strong class="ti">선물하기 남은 횟수</strong>
+                            <em class="tx c-point">T끼리 <span class="f-type ff-tg-medium">{{dataGiftCnt}}</span>회
+                                {{#if goodFamilyMEmberYn}}
+                                / 가족 <span class="f-type">무제한</span>
+                                {{else if familyMemberYn}}
+                                / 가족 <span class="f-type ff-tg-medium">{{familyDataGiftCnt}}</span>회
+                                {{/if}}
+                            </em>
+                        </li>
+                    </ul>
+                    <p id="fe-text-error" class="text_translation none"></p>
+                </a>
+                <div class="btn-area">
+                    <button class="fe-bt-go-gift bt bt-off full" disabled>선물하기</button>
+                </div>
+            </div>
+        </div>
+        {{else}}
+        <div class="main-breakdown-box">
+            <div class="main-fee-box">
+                <div class="fee-cont">
+                    <strong class="tit">잔여 데이터를 가족과<br/> 친구에게 선물해 보세요</strong>
+                    <a href="/myt-data/submain">
+                        <ul class="list">
+                            <li><strong class="ti">선물할 수 있는 데이터</strong> <em class="tx f-type c-point"><span class="ff-tg-medium">-</span></em></li>
+                            <li><strong class="ti">선물하기 남은 횟수</strong> <em class="tx c-point"><span class="f-type ff-tg-medium">-</span></em></li>
+                        </ul>
+                        <p class="text_translation">선물 가능한 데이터 또는 횟수가 부족합니다.<br/>선물 후 기본 제공 데이터가 500MB 이상 있어야 합니다.</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {{/if}}
     {{/if}}
 </script>

@@ -13,7 +13,7 @@ Tw.MyTDataPrepaidDataAuto = function (rootEl) {
   this._backAlert = new Tw.BackAlert(rootEl, true);
 
   this._cachedElement();
-  this._bindEvent();
+  this._init();
 };
 
 Tw.MyTDataPrepaidDataAuto.prototype = {
@@ -28,11 +28,46 @@ Tw.MyTDataPrepaidDataAuto.prototype = {
     this.$cardM = this.$container.find('.fe-card-m');
     this.$rechargeBtn = this.$container.find('.fe-recharge');
   },
+  _init: function () {
+    this._getPpsInfo();
+  },
+  _getPpsInfo: function () {
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    this._apiService.request(Tw.API_CMD.BFF_05_0013, {})
+      .done($.proxy(this._getSuccess, this))
+      .fail($.proxy(this._getFail, this));
+  },
+  _getSuccess: function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      Tw.CommonHelper.endLoading('.container');
+      this._bindEvent();
+      this._setData(res.result);
+    } else {
+      this._getFail(res);
+    }
+  },
+  _getFail: function (err) {
+    Tw.CommonHelper.endLoading('.container');
+    Tw.Error(err.code, err.msg).replacePage();
+  },
   _bindEvent: function () {
     this.$dataSelector.on('click', $.proxy(this._openSelectPop, this));
     this.$cancelBtn.on('click', $.proxy(this._cancel, this));
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
     this.$rechargeBtn.on('click', $.proxy(this._recharge, this));
+  },
+  _setData: function (result) {
+    var data, dataText = 0;
+    if (!Tw.FormatHelper.isEmpty(result.remained) && result.remained !== '0') {
+      data = result.remained;
+      dataText = Tw.FormatHelper.addComma(result.remained);
+    }
+    this.$data.attr('data-value', data).text(dataText);
+    this.$dataSelector.attr('data-code', result.dataYn);
+
+    this.$container.find('.fe-from-date').text(Tw.DateHelper.getShortDate(result.obEndDt));
+    this.$container.find('.fe-to-date').text(Tw.DateHelper.getShortDate(result.inbEndDt));
+    this.$container.find('.fe-remain-date').text(Tw.DateHelper.getShortDate(result.numEndDt));
   },
   _cancel: function () {
     this._popupService.openConfirmButton(Tw.ALERT_MSG_MYT_DATA.ALERT_2_A70.MSG, Tw.ALERT_MSG_MYT_DATA.ALERT_2_A70.TITLE,

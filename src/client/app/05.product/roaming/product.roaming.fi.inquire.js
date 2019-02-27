@@ -38,7 +38,6 @@ Tw.ProductRoamingFiInquire.prototype = {
     this.$inquire = this.$container.find('#fe-inquire');
     this.$more = this.$container.find('.bt-more');
     this.$moreCnt = this.$container.find('#fe-more-cnt');
-    this.$btnPopupClose = this.$container.find('.popup-closeBtn');
     this.$certBtn = this.$container.find('#fe-cert');
   },
 
@@ -47,7 +46,6 @@ Tw.ProductRoamingFiInquire.prototype = {
     this.$container.on('click', '#fe-edit', $.proxy(this._clickEditBtn, this));
     this.$container.on('click', '#fe-cancel', $.proxy(this._clickCancelBtn, this));
     this.$container.on('click', '.bt-more', $.proxy(this._onMore, this));
-    this.$btnPopupClose.on('click', $.proxy(this._goRoamingGuide, this));
     this.$container.on('change', '#flab02', $.proxy(this._changeCheck, this));
     this.$container.on('change', '#flab03', $.proxy(this._changeCheck, this));
     this.$certBtn.on('click', $.proxy(this._getTfiResponse, this));
@@ -506,10 +504,6 @@ Tw.ProductRoamingFiInquire.prototype = {
     }else{
       this._onFail(res);
     }
-  },
-
-  _goRoamingGuide: function() {
-    this._historyService.goLoad('/product/roaming/fi/guide');
   },
 
   _goRoamingCenter: function() {

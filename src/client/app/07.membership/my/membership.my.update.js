@@ -139,6 +139,7 @@ Tw.MembershipMyUpdate.prototype = {
   },
 
   _handleUpdateAlert: function() {
+    this._popupService.close();
     this._apiService.request(Tw.API_CMD.BFF_11_0012, this._myInfoData).done($.proxy(this._handleSuccessInfoUpdate, this));
   },
 
@@ -153,7 +154,11 @@ Tw.MembershipMyUpdate.prototype = {
   },
 
   _goPrevStep: function(){
-    this._historyService.goLoad('/membership/my');
+    this._historyService.goBack();
+  },
+
+  _onFail: function(err) {
+    Tw.Error(err.code,err.msg).pop();
   }
 
 };

@@ -13,7 +13,6 @@ Tw.MyTDataPrepaidVoiceAuto = function (rootEl) {
   this._backAlert = new Tw.BackAlert(rootEl, true);
 
   this._cachedElement();
-  this._bindEvent();
   this._init();
 };
 
@@ -22,6 +21,8 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     this.templateIndex = 0;
     this.amt = $('.fe-select-amount').data('amount');
     this.chargeCd = $('.fe-charge').data('amount');
+
+    this._getPpsInfo();
   },
 
   _cachedElement: function () {
@@ -32,6 +33,26 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     this.$cardNumber = this.$container.find('.fe-card-number');
     this.$cardY = this.$container.find('.fe-card-y');
     this.$cardM = this.$container.find('.fe-card-m');
+  },
+
+  _getPpsInfo: function () {
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    this._apiService.request(Tw.API_CMD.BFF_05_0013, {})
+      .done($.proxy(this._getSuccess, this))
+      .fail($.proxy(this._getFail, this));
+  },
+  _getSuccess: function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      Tw.CommonHelper.endLoading('.container');
+      this._bindEvent();
+      this._setData(res.result);
+    } else {
+      this._getFail(res);
+    }
+  },
+  _getFail: function (err) {
+    Tw.CommonHelper.endLoading('.container');
+    Tw.Error(err.code, err.msg).replacePage();
   },
 
   _bindEvent: function () {
@@ -49,6 +70,18 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     this.$container.on('keyup blur', '.fe-card-number', $.proxy(this._validateCard, this));
     this.$container.on('keyup blur', '.fe-card-y', $.proxy(this._validateExpired, this));
     this.$container.on('keyup blur', '.fe-card-m', $.proxy(this._validateExpired, this));
+  },
+
+  _setData: function (result) {
+    var dataText = 0;
+    if (!Tw.FormatHelper.isEmpty(result.prodAmt) && result.prodAmt !== '0') {
+      dataText = Tw.FormatHelper.addComma(result.prodAmt);
+    }
+    this.$container.find('.fe-amount').text(dataText);
+
+    this.$container.find('.fe-from-date').text(Tw.DateHelper.getShortDate(result.obEndDt));
+    this.$container.find('.fe-to-date').text(Tw.DateHelper.getShortDate(result.inbEndDt));
+    this.$container.find('.fe-remain-date').text(Tw.DateHelper.getShortDate(result.numEndDt));
   },
 
   _validateCard: function (e) {

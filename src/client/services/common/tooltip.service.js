@@ -115,18 +115,13 @@ Tw.TooltipService.prototype = {
     var $target = $(event.currentTarget);
     this._link = $target.attr('href');
 
-    if (Tw.BrowserHelper.isApp()) {
-      if ($target.hasClass('fe-link-inapp')) {
-        this._inapp = true;
-      }
-    }
-
-    if ($target.hasClass('fe-link-external')) {
+    if ($target.hasClass('fe-link-inapp')) {
+      this._inapp = true;
+    } else if ($target.hasClass('fe-link-external')) {
       this._isExternal = true;
-    } else {
+    } else if ($target.hasClass('fe-link-internal')) {
       this._isLink = true;
     }
-
     this._popupService.close();
   },
   _onClose: function () {

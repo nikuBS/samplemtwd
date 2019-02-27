@@ -412,9 +412,9 @@ Tw.POPUP_TPL = {
   MEMBERSHIP_CORPORATE_LIST: [
     {
       'list': [
-        { 'option': 'nominal', 'attr': 'id="010"', value: '본인' },
-        { 'option': 'nominal', 'attr': 'id="090"', value: '직원' },
-        { 'option': 'nominal', 'attr': 'id="990"', value: '기타' }
+        { 'option': '', 'attr': 'id="010" class="nominal"', value: '본인' },
+        { 'option': '', 'attr': 'id="090" class="nominal"', value: '직원' },
+        { 'option': '', 'attr': 'id="990" class="nominal"', value: '기타' }
       ]
     }
   ],

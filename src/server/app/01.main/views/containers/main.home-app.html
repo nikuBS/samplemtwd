@@ -105,6 +105,8 @@
                                                     </div>
                                                 </div>
                                                 <!-- // loop -->
+                                                <div class="dot"></div>
+                                                <div class="highlight"></div>
                                                 <% } %>
                                                 <!-- loop 남은 데이터-->
                                                 <div class="c100 p0" data-percent="<%= homeData.usageData.data.myRemainedRatio %>"><!-- data-percent :0 ~ 100 -->
@@ -503,7 +505,7 @@
                         <% if (svcType.login && svcType.mobilePhone) { %>
                         <% if (redisData.smartCard.length > 0 && redisData.smartCard[0]) { %>
                         <div class="section-box empty fe-smart-0 fe-smart-<%= redisData.smartCard[0].no %>" data-smartCard="<%= redisData.smartCard[0].no %>">
-                            <div class="main-breakdown-box">
+                            <div class="main-fee-box">
                                 <!--<div class="stit c-point"><%= redisData.smartCard[0].title %></div>-->
                             </div>
                         </div>
@@ -558,7 +560,7 @@
                         <% if (svcType.login && svcType.mobilePhone) { %>
                         <% if (redisData.smartCard.length > 0 && redisData.smartCard[1]) { %>
                         <div class="section-box empty fe-smart-1 fe-smart-<%= redisData.smartCard[1].no %>" data-smartCard="<%= redisData.smartCard[1].no %>">
-                            <div class="main-breakdown-box">
+                            <div class="main-fee-box">
                                 <!--<div class="stit c-point"><%= redisData.smartCard[1].title %></div>-->
                             </div>
                         </div>
@@ -567,7 +569,7 @@
                         <% if (svcType.login && svcType.mobilePhone) { %>
                         <% if (redisData.smartCard.length > 0 && redisData.smartCard[2]) { %>
                         <div class="section-box empty fe-smart-2 fe-smart-<%= redisData.smartCard[2].no %>" data-smartCard="<%= redisData.smartCard[2].no %>">
-                            <div class="main-breakdown-box">
+                            <div class="main-fee-box">
                                 <!--<div class="stit c-point"><%= redisData.smartCard[2].title %></div>-->
                             </div>
                         </div>
@@ -621,7 +623,7 @@
                         <% if (svcType.login && svcType.mobilePhone) { %>
                         <% if (redisData.smartCard.length > 0 && redisData.smartCard[3]) { %>
                         <div class="section-box empty fe-smart-3 fe-smart-<%= redisData.smartCard[3].no %>" data-smartCard="<%= redisData.smartCard[3].no %>">
-                            <div class="main-breakdown-box">
+                            <div class="main-fee-box">
                                 <!--<div class="stit c-point"><%= redisData.smartCard[3].title %></div>-->
                             </div>
                         </div>
@@ -630,7 +632,7 @@
                         <!--<% if (svcType.login && svcType.mobilePhone) { %>-->
                         <!--<% if (redisData.smartCard.length > 0 && redisData.smartCard[4]) { %>-->
                         <!--<div class="section-box empty fe-smart-4 fe-smart-<%= redisData.smartCard[4].no %>" data-smartCard="<%= redisData.smartCard[4].no %>">-->
-                            <!--<div class="main-breakdown-box">-->
+                            <!--<div class="main-fee-box">-->
                                 <!--<div class="stit c-point"><%= redisData.smartCard[4].title %></div>-->
                             <!--</div>-->
                         <!--</div>-->

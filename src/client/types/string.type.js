@@ -39,6 +39,8 @@ Tw.CURRENCY_UNIT = {
   POINT: '점'
 };
 
+Tw.TIMEOUT_ERROR_MSG = '요청을 처리하는데 시간이 오래 걸리고 있습니다. 잠시 후 다시 시도해주세요.';
+
 Tw.BUTTON_LABEL = {
   CONFIRM: '확인',
   CANCEL: '취소',
@@ -1324,7 +1326,7 @@ Tw.CUSTOMER_PRAISE_OFFICE = '지점';
 Tw.CUSTOMER_VOICE = {
   LINE_CHOICE: '회선선택',
   EXIST_PREVIOUS_INFO: '이미 신청된 내역이 있습니다.',
-  CALL_TO_CUSTOMER_CENTER: '고객센터(114)로 전화하여 <br> 목소리 등록을 진행해주세요.'
+  CALL_TO_CUSTOMER_CENTER: '고객센터(114)로 전화하여 <br> 목소리 등록을 진행해 주세요.'
 };
 Tw.CUSTOMER_EMAIL = {
   SELECT_SERVICE: '서비스 선택',

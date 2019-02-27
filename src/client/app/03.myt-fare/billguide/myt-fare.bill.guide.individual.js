@@ -263,9 +263,9 @@ Tw.MyTFareBillGuideIndividual.prototype = {
   },
 
 
-  // BFF_05_0047 사용요금 조회(본인)
+  // BFF_05_0036 청구요금 조회(본인)
   _getUseBillsInfo: function () {
-    return this._apiService.request(Tw.API_CMD.BFF_05_0047, {
+    return this._apiService.request(Tw.API_CMD.BFF_05_0036, {
       sSvcMgmtNum: this.resData.reqQuery.line,
       invDt: this.resData.reqQuery.date
     }).done($.proxy(this._getUseBillsInfoInit, this));
@@ -273,7 +273,7 @@ Tw.MyTFareBillGuideIndividual.prototype = {
   _getUseBillsInfoInit: function (res) {
     var thisMain = this;
     if ( res.code === Tw.API_CODE.CODE_00 ) {
-      var useAmtDetailInfo = $.extend(true, {}, res.result.useAmtDetailInfo);
+      var useAmtDetailInfo = $.extend(true, {}, res.result.paidAmtDetailInfo);
 
       useAmtDetailInfo = _.map(useAmtDetailInfo, function (item) {
         item.invAmt = Tw.FormatHelper.addComma(item.invAmt);

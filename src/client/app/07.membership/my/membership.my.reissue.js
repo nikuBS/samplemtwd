@@ -38,7 +38,7 @@ Tw.MembershipMyReissue.prototype = {
         mbrChgRsnCd = $(this).attr('data-code');
       }
     });
-
+    this._popupService.close();
     this._apiService
       .request(Tw.API_CMD.BFF_11_0004, { mbrChgRsnCd : mbrChgRsnCd })
       .done($.proxy(this._successReissueRequest, this))
@@ -56,7 +56,7 @@ Tw.MembershipMyReissue.prototype = {
   },
 
   _goPrevStep: function(){
-    this._historyService.goLoad('/membership/my');
+    this._historyService.goBack();
   },
 
   _onFail: function(err) {

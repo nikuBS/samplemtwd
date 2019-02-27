@@ -13,7 +13,7 @@ Tw.MyTDataPrepaidData = function (rootEl) {
   this._backAlert = new Tw.BackAlert(rootEl, true);
 
   this._cachedElement();
-  this._bindEvent();
+  this._init();
 };
 
 Tw.MyTDataPrepaidData.prototype = {
@@ -27,10 +27,61 @@ Tw.MyTDataPrepaidData.prototype = {
     this.$rechargeBtn = this.$container.find('.fe-check-recharge');
     this.$emailAddress = this.$container.find('.fe-email-address');
   },
+  _init: function () {
+    this._getPpsInfo();
+    this._getEmailAddress();
+  },
+  _getPpsInfo: function () {
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    this._apiService.request(Tw.API_CMD.BFF_05_0013, {})
+      .done($.proxy(this._getSuccess, this))
+      .fail($.proxy(this._getFail, this));
+  },
+  _getSuccess: function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      Tw.CommonHelper.endLoading('.container');
+      this._bindEvent();
+      this._setData(res.result);
+    } else {
+      this._getFail(res);
+    }
+  },
+  _getFail: function (err) {
+    Tw.CommonHelper.endLoading('.container');
+    Tw.Error(err.code, err.msg).replacePage();
+  },
+  _getEmailAddress: function () {
+    this._apiService.request(Tw.API_CMD.BFF_01_0061, {})
+      .done($.proxy(this._emailSuccess, this))
+      .fail($.proxy(this._emailFail, this));
+  },
+  _emailSuccess: function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      this.$emailAddress.text(res.result.email);
+    } else {
+      this._emailFail();
+    }
+  },
+  _emailFail: function () {
+    this.$emailAddress.text('');
+  },
   _bindEvent: function () {
     this.$dataSelector.on('click', $.proxy(this._openSelectPop, this));
     this.$container.on('click', '.fe-close', $.proxy(this._onClose, this));
     this.$rechargeBtn.on('click', $.proxy(this._checkPay, this));
+  },
+  _setData: function (result) {
+    var data, dataText = 0;
+    if (!Tw.FormatHelper.isEmpty(result.remained) && result.remained !== '0') {
+      data = result.remained;
+      dataText = Tw.FormatHelper.addComma(result.remained);
+    }
+    this.$data.attr('data-value', data).text(dataText);
+    this.$dataSelector.attr('data-code', result.dataYn);
+
+    this.$container.find('.fe-from-date').text(Tw.DateHelper.getShortDate(result.obEndDt));
+    this.$container.find('.fe-to-date').text(Tw.DateHelper.getShortDate(result.inbEndDt));
+    this.$container.find('.fe-remain-date').text(Tw.DateHelper.getShortDate(result.numEndDt));
   },
   _openSelectPop: function (event) {
     var $target = $(event.currentTarget);

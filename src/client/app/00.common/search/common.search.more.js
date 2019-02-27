@@ -60,6 +60,9 @@ Tw.CommonSearchMore.prototype = {
           data[i][key] = data[i][key].replace(/<!HE>/g, '</span>');
           data[i][key] = data[i][key].replace(/<!HS>/g, '<span class="highlight-text">');
         }
+        if(key==='PR_STA_DT'||key==='PR_END_DT'){
+          data[i][key] = Tw.DateHelper.getShortDate(data[i][key]);
+        }
         if(key==='DEPTH_PATH'){
           if(data[i][key].charAt(0)==='|'){
             data[i][key] = data[i][key].replace('|','');
@@ -149,7 +152,16 @@ Tw.CommonSearchMore.prototype = {
   _doSearch : function () {
     var keyword = this.$inputElement.val();
     if(Tw.FormatHelper.isEmpty(keyword)){
-      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR);
+      var closeCallback;
+      if(this._historyService.getHash()==='#input_P'){
+        closeCallback = $.proxy(function () {
+          setTimeout($.proxy(function () {
+            this.$inputElement.focus();
+          },this),100);
+        },this);
+      }
+      this.$inputElement.blur();
+      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,closeCallback);
       return;
     }
     var inResult = this.$container.find('#resultsearch').is(':checked');
@@ -285,7 +297,12 @@ Tw.CommonSearchMore.prototype = {
   },
   _openKeywordListBase : function () {
     if(this._historyService.getHash()==='#input_P'){
-      this._closeKeywordListBase();
+      if(this.$inputElement.val().trim().length>0){
+        this._getAutoCompleteKeyword();
+      }else{
+        this._showRecentKeyworList();
+      }
+      return;
     }
     setTimeout($.proxy(function () {
       this._popupService.open({

@@ -8,7 +8,7 @@
   visibility: visible; }
 
 .quick-menu-list {
-  text-align: center; }
+  text-align: left; }
   .quick-menu-list:after {
     display: block;
     clear: both;
@@ -144,7 +144,7 @@
       margin-top: -1.375rem;
       padding-top: 0; }
   .section-swiper-box a.link-full .ti {
-    margin-top: 2.1875rem; }
+    margin-top: 1.625rem; }
 
 .main-top-group {
   position: relative;
@@ -291,6 +291,8 @@
       font-weight: 700; }
       .main-breakdown-box .list li .tx button {
         color: #ef4b49; }
+        .main-breakdown-box .list li .tx button.bt-link-tx {
+          color: #178bce; }
     .main-breakdown-box .list li .c-point {
       color: #ef4b49; }
     .main-breakdown-box .list li .f-type {
@@ -450,9 +452,17 @@
       font-size: 0.75rem;
       text-align: center;
       margin: 0 auto;
-      font-weight: 700; }
+      font-weight: 700;
+      text-decoration: underline; }
       .main-chart-box > .line .bt.ff-tg-light {
         font-weight: 300; }
+      .main-chart-box > .line .bt.none-underline {
+        text-decoration: none; }
+      .main-chart-box > .line .bt.none-underline:active {
+        -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important;
+        outline: transparent; }
+      .main-chart-box > .line .bt.none-underline:focus {
+        outline: transparent; }
     .main-chart-box > .line .coach-mark {
       top: 1.4375rem; }
       .main-chart-box > .line .coach-mark:after {
@@ -900,7 +910,7 @@
     text-align: left;
     font-weight: 600; }
   .main-fee-box .fee-cont > .tx {
-    margin-top: 3.4375rem;
+    padding: 1.25rem 0 0.9375rem;
     font-size: 0.875rem;
     font-weight: 300;
     line-height: 1.25rem; }
@@ -929,6 +939,9 @@
           color: #ef4b49; }
       .main-fee-box .fee-cont .list li .c-point {
         color: #ef4b49; }
+      .main-fee-box .fee-cont .list li .button-point {
+        color: #178bce;
+        text-decoration: underline; }
       .main-fee-box .fee-cont .list li .f-type {
         font-size: 1rem; }
       .main-fee-box .fee-cont .list li .g-type {
@@ -953,11 +966,13 @@
         vertical-align: top; }
   .main-fee-box .fee-cont .text_translation {
     display: block;
-    padding: 0.625rem 0 0 0;
     border-radius: 0.3125rem;
     color: #000;
+    font-weight: 300;
     font-size: 0.75rem;
-    line-height: 1.25rem; }
+    line-height: 1.25rem;
+    text-align: left;
+    padding-bottom: 0.875rem; }
 
 .main-fee-box .btn-area {
   overflow: hidden;
@@ -976,6 +991,8 @@
       border-left: 1px solid #f2f2f2; }
     .main-fee-box .btn-area .bt.full {
       width: 100%; }
+    .main-fee-box .btn-area .bt.bt-off {
+      color: #dcdcdc; }
 
 /* popup  2019.02.14 */
 .popup-blind {
@@ -2667,7 +2684,7 @@ body.apphome {
   .fly .home-tab .home-tab-belt .tab > div {
     display: inline-block; }
   .fly .home-tab .home-tab-belt .tab [class*=icon-home-tab] {
-    top: -0.25rem; }
+    top: -0.4375rem; }
   .fly .home-tab .home-tab-belt.fixed {
     position: fixed;
     left: 0;
@@ -2805,20 +2822,16 @@ body.apphome {
     .main-charge-box.combination .bg-type {
       background: url(/img/main/bg_main_combination02.png) no-repeat right bottom;
       background-size: auto 10rem; }
-  .main-charge-box.advice {
-    background: #009bfa; }
-    .main-charge-box.advice .slider-box .slick-dots {
-      top: 1.5rem; }
-    .main-charge-box.advice .main-box-cont {
-      background: url(/img/main/bg_advice.png) no-repeat right bottom;
-      background-size: auto 10rem; }
-  .main-charge-box.benefit {
-    background: #3e9f59; }
-    .main-charge-box.benefit .slider-box .slick-dots {
-      top: 1.5rem; }
-    .main-charge-box.benefit .main-box-cont {
-      background: url(/img/main/bg_benefit.png) no-repeat right bottom;
-      background-size: auto 10rem; }
+  .main-charge-box.advice .slider-box .slick-dots {
+    top: 1.5rem; }
+  .main-charge-box.advice .main-box-cont {
+    background: url(/img/main/bg_advice.png) no-repeat right bottom;
+    background-size: auto 10rem; }
+  .main-charge-box.benefit .slider-box .slick-dots {
+    top: 1.5rem; }
+  .main-charge-box.benefit .main-box-cont {
+    background: url(/img/main/bg_benefit.png) no-repeat right bottom;
+    background-size: auto 10rem; }
   .main-charge-box.roaming {
     background: #fff;
     color: inherit; }

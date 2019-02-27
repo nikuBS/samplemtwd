@@ -17,6 +17,7 @@ Tw.MyTDataLimitMonthly = function (rootEl) {
 
 Tw.MyTDataLimitMonthly.prototype = {
   _init: function () {
+    this._isToggle = false;
   },
 
   _cachedElement: function () {
@@ -35,12 +36,14 @@ Tw.MyTDataLimitMonthly.prototype = {
   _onToggleBlockMonthly: function (e) {
     var isChecked = $(e.currentTarget).attr('checked');
 
-    if ( isChecked ) {
-      this._apiService.request(Tw.API_CMD.BFF_06_0040, {})
-        .done($.proxy(this._onSuccessBlockMonthly, this, 'unblock'));
-    } else {
-      this._apiService.request(Tw.API_CMD.BFF_06_0041, {})
-        .done($.proxy(this._onSuccessBlockMonthly, this, 'block'));
+    if ( !this._isToggle ) {
+      if ( isChecked ) {
+        this._apiService.request(Tw.API_CMD.BFF_06_0040, {})
+          .done($.proxy(this._onSuccessBlockMonthly, this, 'unblock'));
+      } else {
+        this._apiService.request(Tw.API_CMD.BFF_06_0041, {})
+          .done($.proxy(this._onSuccessBlockMonthly, this, 'block'));
+      }
     }
 
     $('#tab2-tab').find('.cont-box').each(this._toggleDisplay);
@@ -54,8 +57,16 @@ Tw.MyTDataLimitMonthly.prototype = {
         Tw.CommonHelper.toast(Tw.TOAST_TEXT.MYT_DATA_LIMIT_MONTHLY_BLOCK);
       }
     } else {
-      this._popupService.openAlert(res.msg + Tw.MYT_DATA_TING.ERROR_LIMIT.CONTENT,
-        Tw.MYT_DATA_TING.ERROR_LIMIT.TITLE, null, $.proxy(this._goSubmain, this));
+      this._isToggle = true;
+      this.$input_block_monthly.click();
+
+      this._popupService.openAlert(
+        res.msg + Tw.MYT_DATA_TING.ERROR_LIMIT.CONTENT,
+        Tw.MYT_DATA_TING.ERROR_LIMIT.TITLE,
+        null,
+        $.proxy(function () {
+          this._isToggle = false;
+        }, this));
     }
   },
 

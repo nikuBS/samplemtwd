@@ -1686,12 +1686,20 @@
 
 .widget-box .horizontal-slide {
   overflow-x: auto;
-  padding-left: 20px; }
+  padding-left: 1.25rem; }
   .widget-box .horizontal-slide .horizontal-list {
     padding: 0;
     overflow: hidden; }
     .widget-box .horizontal-slide .horizontal-list > li {
       float: left; }
+  .widget-box .horizontal-slide.slide-nopd {
+    padding-left: 0; }
+    .widget-box .horizontal-slide.slide-nopd .screen-img-box li:first-child {
+      padding-left: 0; }
+    .widget-box .horizontal-slide.slide-nopd .screen-img-box li:last-child {
+      padding-right: 0; }
+      .widget-box .horizontal-slide.slide-nopd .screen-img-box li:last-child .bt {
+        margin-right: 0; }
 
 /* MV_01_02 : 다른 부가상품 더보기 */
 .add-prod {

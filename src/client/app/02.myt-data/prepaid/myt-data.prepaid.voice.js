@@ -13,14 +13,10 @@ Tw.MyTDataPrepaidVoice = function (rootEl) {
   this._backAlert = new Tw.BackAlert(rootEl, true);
 
   this._cachedElement();
-  this._bindEvent();
   this._init();
 };
 
 Tw.MyTDataPrepaidVoice.prototype = {
-  _init: function () {
-  },
-
   _cachedElement: function () {
     this.$wrapExampleCard = this.$container.find('.fe-wrap-example-card');
     this.$btnRequestCreditCard = this.$container.find('.fe-request-credit-card');
@@ -32,6 +28,32 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$prepaid_card = this.$container.find('.fe-prepaid-card');
     this.$prepaid_serial = this.$container.find('.fe-prepaid-serial');
     this.$creditAmount = this.$container.find('.fe-select-amount');
+  },
+
+  _init: function () {
+    this._getPpsInfo();
+  },
+
+  _getPpsInfo: function () {
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    this._apiService.request(Tw.API_CMD.BFF_05_0013, {})
+      .done($.proxy(this._getSuccess, this))
+      .fail($.proxy(this._getFail, this));
+  },
+
+  _getSuccess: function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      Tw.CommonHelper.endLoading('.container');
+      this._bindEvent();
+      this._setData(res.result);
+    } else {
+      this._getFail(res);
+    }
+  },
+
+  _getFail: function (err) {
+    Tw.CommonHelper.endLoading('.container');
+    Tw.Error(err.code, err.msg).replacePage();
   },
 
   _bindEvent: function () {
@@ -52,6 +74,19 @@ Tw.MyTDataPrepaidVoice.prototype = {
     this.$cardPwd.on('keyup blur', $.proxy(this._validatePwd, this));
     this.$prepaid_card.on('keyup blur', $.proxy(this._validatePrepaidNumber, this));
     this.$prepaid_serial.on('keyup blur', $.proxy(this._validatePrepaidSerial, this));
+  },
+
+  _setData: function (result) {
+    var data, dataText = 0;
+    if (!Tw.FormatHelper.isEmpty(result.prodAmt) && result.prodAmt !== '0') {
+      data = result.prodAmt;
+      dataText = Tw.FormatHelper.addComma(result.prodAmt);
+    }
+    this.$container.find('.fe-remain-amount').attr('data-remain-amount', data).text(dataText);
+
+    this.$container.find('.fe-from-date').text(Tw.DateHelper.getShortDate(result.obEndDt));
+    this.$container.find('.fe-to-date').text(Tw.DateHelper.getShortDate(result.inbEndDt));
+    this.$container.find('.fe-remain-date').text(Tw.DateHelper.getShortDate(result.numEndDt));
   },
 
   _validatePrepaidNumber: function (e) {
