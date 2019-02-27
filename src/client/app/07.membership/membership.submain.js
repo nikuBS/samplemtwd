@@ -125,24 +125,6 @@ Tw.MembershipSubmain.prototype = {
     this._popupService.close();
     Tw.CommonHelper.openUrlExternal(Tw.MEMBERSHIP_URL.TDAY,'');
   },
-  /*_membershipLoginCheck: function () {
-    if(this._svcInfo && this._svcInfo.loginType !== Tw.AUTH_LOGIN_TYPE.EASY ) {
-      this._membershipLayerPopup.onClickJoinBtn();
-    } else {
-      this._popupService.openConfirmButton(
-          Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A68.MSG,
-          Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A68.TITLE,
-          $.proxy(function () {
-            this._goLogin();
-          }, this),
-          $.proxy(function () {
-            this._popupService.close();
-          }, this),
-          Tw.BUTTON_LABEL.CLOSE,
-          Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A68.BUTTON
-      );
-    }
-  },*/
   _goLogin: function () {
     this._tidLanding.goLogin();
   },
@@ -297,21 +279,33 @@ Tw.MembershipSubmain.prototype = {
     }
   },
   _askCurrentLocation: function() {
-    if (Tw.BrowserHelper.isApp() && this._svcInfo) {
-      this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function (res) {
-        if (res.resultCode === Tw.NTV_CODE.CODE_00 ) {
-          this._getAreaByGeo(res.params);
-        } else {
-          var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
-          this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
-              $.proxy(function () {
-                this._getAreaByGeo({
-                  latitude: '37.5600420',
-                  longitude: '126.9858500'
-                });
-              }, this));
+    if(this._svcInfo){
+      if (Tw.BrowserHelper.isApp()){
+        this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function (res) {
+          if (res.resultCode === Tw.NTV_CODE.CODE_00 ) {
+            this._getAreaByGeo(res.params);
+          } else {
+            var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
+            this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
+                $.proxy(function () {
+                  this._getAreaByGeo({
+                    latitude: '37.5600420',
+                    longitude: '126.9858500'
+                  });
+                }, this));
+          }
+        }, this));
+      } else {
+        if ('geolocation' in navigator) {
+          // Only works in secure mode(Https) - for test, use localhost for url
+          navigator.geolocation.getCurrentPosition($.proxy(function (location) {
+            this._getAreaByGeo({
+              longitude: location.coords.longitude,
+              latitude: location.coords.latitude
+            });
+          }, this));
         }
-      }, this));
+      }
     } else {
       this._getAreaByGeo({
         latitude: '37.5600420',
@@ -345,7 +339,14 @@ Tw.MembershipSubmain.prototype = {
           .done($.proxy(this._handleSuccessNeaBrand, this))
           .fail($.proxy(this._handleFailCallBack, this));
     } else {
-      Tw.Error(resp.code, resp.code).pop();
+      var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
+      this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
+          $.proxy(function () {
+            this._getAreaByGeo({
+              latitude: '37.5600420',
+              longitude: '126.9858500'
+            });
+          }, this));
     }
   },
   _changeIcoGrade: function(ico) {
@@ -357,16 +358,27 @@ Tw.MembershipSubmain.prototype = {
     return iconArr;
   },
   _handleSuccessNeaBrand: function (resp) {
-    this.nearBrandData = resp.result.list;
-    for(var idx in this.nearBrandData){
-      this.nearBrandData[idx].showIcoGrd1 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk1);
-      this.nearBrandData[idx].showIcoGrd2 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk2);
-      this.nearBrandData[idx].showIcoGrd3 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk3);
-      this.nearBrandData[idx].showIcoGrd4 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk4);
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this.nearBrandData = resp.result.list;
+      for(var idx in this.nearBrandData){
+        this.nearBrandData[idx].showIcoGrd1 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk1);
+        this.nearBrandData[idx].showIcoGrd2 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk2);
+        this.nearBrandData[idx].showIcoGrd3 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk3);
+        this.nearBrandData[idx].showIcoGrd4 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk4);
+      }
+      Tw.Logger.info('near brand resp :', this.nearBrandData);
+      this.$nearBrand.empty();
+      this.$nearBrand.append(this._nearBrandTmpl({ list : this.nearBrandData }));
+    } else {
+      var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
+      this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
+          $.proxy(function () {
+            this._getAreaByGeo({
+              latitude: '37.5600420',
+              longitude: '126.9858500'
+            });
+          }, this));
     }
-    Tw.Logger.info('near brand resp :', this.nearBrandData);
-    this.$nearBrand.empty();
-    this.$nearBrand.append(this._nearBrandTmpl({ list : this.nearBrandData }));
   },
   _handleFailCallBack: function () {
 
@@ -389,9 +401,7 @@ Tw.MembershipSubmain.prototype = {
         usedAmount: this._usedAmt
       }
     }, $.proxy(this._onOpenBarcode, this, cardNum));
-
   },
-
   _onOpenBarcode: function (cardNum, $popupContainer) {
     var membershipBarcode = $popupContainer.find('#fe-membership-barcode-extend');
     if ( !Tw.FormatHelper.isEmpty(cardNum) ) {
