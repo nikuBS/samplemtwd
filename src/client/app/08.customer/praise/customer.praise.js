@@ -28,7 +28,7 @@ Tw.CustomerPraise.prototype = {
   },
 
   _bindEvent: function() {
-    this.$container.on('keyup', '.input > input', $.proxy(this._setAvailableSubmit, this));
+    this.$container.on('keyup', '.input > input', $.proxy(this._setAvailableSubmit, this, false));
     this.$container.on('click', '.cancel', $.proxy(this._setAvailableSubmit, this, true));
     // this.$container.on('click', '.prev-step', $.proxy(this._handleClickCancel, this));
     this.$typeBtn.on('click', $.proxy(this._openSelectTypePopup, this));

@@ -71,7 +71,7 @@ Tw.ProductApps.prototype = {
             return {
               appKey: app.prodNm,
               scheme: app.lnkgAppScmCtt,
-              'package': app.lnkgAppPkgNm
+              package: app.lnkgAppPkgNm
             };
           })
         },
@@ -87,7 +87,7 @@ Tw.ProductApps.prototype = {
         return app;
       });
 
-      this._appendApps(false);
+      this._appendApps();
     }
   },
 
@@ -118,12 +118,12 @@ Tw.ProductApps.prototype = {
       this.$container.find('div.app-list-top').addClass('none');
     }
 
-    this._appendApps(true);
+    this._appendApps();
   },
 
-  _appendApps: function(isApp) {
+  _appendApps: function() {
     this._sort('storRgstDtm');
-    this.$list.html(this._appsTmpl({ apps: this._apps, isApp: isApp }));
+    this.$list.html(this._appsTmpl({ apps: this._apps }));
     this.$news = this.$list.find('.i-new.none');
   },
 
@@ -139,7 +139,7 @@ Tw.ProductApps.prototype = {
     this._popupService.open(
       {
         hbs: 'actionsheet01', // hbs의 파일명
-        btnfloating: { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
+        btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         data: [{ list: list }],
         layer: true
       },
@@ -171,7 +171,7 @@ Tw.ProductApps.prototype = {
     this.$list.empty();
     this.$list.html(this._appsTmpl({ apps: this._apps }));
     this.$news = this.$list.find('.i-new.none');
-    if (this.$switchBtn) {
+    if (!this.$switchBtn.attr('checked')) {
       this._toggleShowInstalled(false);
     }
     this._popupService.close();
