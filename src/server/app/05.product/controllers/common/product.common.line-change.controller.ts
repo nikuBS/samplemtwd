@@ -10,6 +10,7 @@ import { Request, Response, NextFunction } from 'express';
 import { MYT_JOIN_WIRE_SVCATTRCD, PRODUCT_TYPE_NM } from '../../../../types/string.type';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
+import {Observable} from 'rxjs/Observable';
 
 class ProductCommonLineChange extends TwViewController {
   constructor() {
@@ -122,31 +123,34 @@ class ProductCommonLineChange extends TwViewController {
       return this.error.render(res, renderCommonInfo);
     }
 
-    this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, [targetProdId])
-      .subscribe((basicInfo) => {
-        if (basicInfo.code !== API_CODE.CODE_00) {
-          return this.error.render(res, Object.assign(renderCommonInfo, {
-            code: basicInfo.code,
-            msg: basicInfo.msg
-          }));
-        }
-
-        const allowedLineList: any = this._getAllowedLineList(basicInfo.result.prodTypCd, pageMode,
-          targetProdId, allSvc, svcInfo.svcMgmtNum, svcInfo.svcAttrCd);
-
-        if (FormatHelper.isEmpty(allowedLineList)) {
-          return this.error.render(res, renderCommonInfo);
-        }
-
-        res.render('common/product.common.line-change.html', Object.assign(renderCommonInfo, {
-          allowedLineList: allowedLineList,
-          targetProdId: targetProdId,
-          targetUrl: targetUrl,
-          prodTypCd: basicInfo.result.prodTypCd,
-          currentLine: this._convertCurrentLine(svcInfo),
-          pageMode: pageMode
+    Observable.combineLatest(
+      this.apiService.request(API_CMD.BFF_10_0001, { prodExpsTypCd: 'P' }, {}, [targetProdId]),
+      this.apiService.request(API_CMD.BFF_03_0030, {}, {})
+    ).subscribe(([basicInfo, allSvcInfo]) => {
+      const apiError = this.error.apiError([basicInfo, allSvcInfo]);
+      if (!FormatHelper.isEmpty(apiError)) {
+        return this.error.render(res, Object.assign(renderCommonInfo, {
+          code: apiError.code,
+          msg: apiError.msg
         }));
-      });
+      }
+
+      const allowedLineList: any = this._getAllowedLineList(basicInfo.result.prodTypCd, pageMode,
+        targetProdId, allSvcInfo.result, svcInfo.svcMgmtNum, svcInfo.svcAttrCd);
+
+      if (FormatHelper.isEmpty(allowedLineList)) {
+        return this.error.render(res, renderCommonInfo);
+      }
+
+      res.render('common/product.common.line-change.html', Object.assign(renderCommonInfo, {
+        allowedLineList: allowedLineList,
+        targetProdId: targetProdId,
+        targetUrl: targetUrl,
+        prodTypCd: basicInfo.result.prodTypCd,
+        currentLine: this._convertCurrentLine(svcInfo),
+        pageMode: pageMode
+      }));
+    });
   }
 }
 

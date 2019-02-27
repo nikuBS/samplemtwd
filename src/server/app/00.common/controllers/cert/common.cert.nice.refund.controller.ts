@@ -19,11 +19,18 @@ class CommonCertNiceRefund extends TwViewController {
     const authKind = req.query.authKind;
     this.apiService.request(API_CMD.BFF_01_0049, {
       mobileco,
-      resultUrl:  'https://' + this.loginService.getDns() + '/common/cert/result?type=nice&kind=' + authKind
+      resultUrl: 'https://' + this.loginService.getDns() + '/common/cert/result?type=nice&kind=' + authKind
       // resultUrl: 'http://150.28.69.23:3000' + '/common/cert/result?type=ipin&kind=' + + authKind
     }).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         res.render('cert/common.cert.nice.html', { data: resp.result, pageInfo });
+      } else {
+        return this.error.render(res, {
+          code: resp.code,
+          msg: resp.msg,
+          pageInfo,
+          svcInfo
+        });
       }
     });
   }

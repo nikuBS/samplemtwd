@@ -2034,6 +2034,75 @@ body.bg-gray {
   .ico-certifi-card.type11 {
     background-position: 0 -8rem; }
 
+.submain-findyourplan-wrap.type1:after {
+  display: none; }
+
+.roaming-info-box.noicon .submain-findyourplan-wrap .submain-findyourplan .title {
+  padding-left: 0;
+  background: none; }
+
+.ico-certifi-card.type01 {
+  background: url(/img/ico/ico-certifi01.png) no-repeat;
+  background-size: 100%; }
+
+.ico-certifi-card.type02 {
+  background: url(/img/ico/ico-certifi02.png) no-repeat;
+  background-size: 100%; }
+
+.ico-certifi-card.type03 {
+  background: url(/img/ico/ico-certifi03.png) no-repeat;
+  background-size: 100%; }
+
+.ico-certifi-card.type04 {
+  background: url(/img/ico/ico-certifi04.png) no-repeat;
+  background-size: 100%; }
+
+.ico-certifi-card.type05 {
+  background: url(/img/ico/ico-certifi05.png) no-repeat;
+  background-size: 100%; }
+
+.ico-certifi-card.type06 {
+  background: url(/img/ico/ico-certifi06.png) no-repeat;
+  background-size: 100%; }
+
+.ico-certifi-card.type07 {
+  background: url(/img/ico/ico-certifi07.png) no-repeat;
+  background-size: 100%; }
+
+.ico-certifi-list.type01 {
+  background: url(/img/ico/ico-certifi05.png) no-repeat;
+  background-size: 100%; }
+
+.ico-certifi-list.type02 {
+  background: url(/img/ico/ico-certifi06.png) no-repeat;
+  background-size: 100%; }
+
+.ico-certifi-list.type03 {
+  background: url(/img/ico/ico-certifi07.png) no-repeat;
+  background-size: 100%; }
+
+.ico-certifi-list.type04 {
+  background: url(/img/ico/ico-certifi03.png) no-repeat;
+  background-size: 100%; }
+
+.ico-certifi-list.type05 {
+  background: url(/img/ico/ico-certifi01.png) no-repeat;
+  background-size: 100%; }
+
+.ico-certifi-list.type06 {
+  background: url(/img/ico/ico-certifi02.png) no-repeat;
+  background-size: 100%; }
+
+.box-certifi-register.type01 .register-area .ico {
+  width: 5.625rem;
+  height: 5.625rem; }
+  .box-certifi-register.type01 .register-area .ico.fingerprint {
+    background: url(/img/ico/ico-fingerprint.png) no-repeat !important;
+    background-size: 100% !important; }
+  .box-certifi-register.type01 .register-area .ico.faceid {
+    background: url(/img/ico/ico-faceid.png) no-repeat !important;
+    background-size: 100% !important; }
+
 .certifi-repre {
   padding: 1.5625rem 0;
   font-size: 0; }

@@ -451,6 +451,9 @@ class MainHome extends TwViewController {
           }
           resp += resultVoice.min + TIME_UNIT.MINUTE;
         }
+        if ( FormatHelper.isEmpty(resp) ) {
+          resp = '0' + TIME_UNIT.MINUTE;
+        }
         return resp;
       case UNIT_E.SMS:
       case UNIT_E.SMS_2:

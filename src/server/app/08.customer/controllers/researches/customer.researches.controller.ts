@@ -9,6 +9,7 @@ import { Request, Response, NextFunction } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import { ETC_CENTER } from '../../../../types/string.type';
+import { DEFAULT_LIST_COUNT } from '../../../../types/config.type';
 // import { of } from 'rxjs/observable/of';
 // import { Researches, StepResearch } from '../../../../mock/server/customer.researches.mock';
 
@@ -27,20 +28,21 @@ export default class CustomerResearches extends TwViewController {
         res.render('researches/customer.researches.research.html', { svcInfo, pageInfo, research });
       });
     } else {
-      this.getResearches().subscribe(researches => {
+      this.getResearches(req.query.quiz).subscribe(researches => {
         if (researches.code) {
           return this.error.render(res, {
             pageInfo: pageInfo,
             svcInfo,
-            ...researches
+            code: researches.code,
+            msg: researches.msg
           });
         }
-        res.render('researches/customer.researches.html', { svcInfo, researches, pageInfo });
+        res.render('researches/customer.researches.html', { svcInfo, pageInfo, ...researches });
       });
     }
   }
 
-  private getResearches = () => {
+  private getResearches = quizId => {
     // return of(Researches).map(resp => {
     return this.apiService.request(API_CMD.BFF_08_0023, {}).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
@@ -50,34 +52,43 @@ export default class CustomerResearches extends TwViewController {
         };
       }
 
-      return resp.result
-        .map(research => {
-          const examples: Array<{}> = [];
-          let i = 1,
-            exam = research['exCtt' + i];
+      const quizIdx = quizId ? 
+        resp.result.findIndex(research => {
+          return research.bnnrRsrchId === quizId;
+        }) : 
+        undefined;
 
-          while (exam) {
-            const isEtc = exam === 'QSTNETC';
+      return {
+        researches: resp.result
+          .map(research => {
+            const examples: Array<{}> = [];
+            let i = 1,
+              exam = research['exCtt' + i];
 
-            examples.push({
-              content: isEtc ? ETC_CENTER : exam || '',
-              image: research['exImgFilePathNm' + i],
-              motHtml: research['motExCtt' + i],
-              isEtc
-            });
-            i++;
-            exam = research['exCtt' + i];
-          }
+            while (exam) {
+              const isEtc = exam === 'QSTNETC';
 
-          return {
-            ...research,
-            examples,
-            staDtm: DateHelper.getShortDate(research.staDtm),
-            endDtm: DateHelper.getShortDate(research.endDtm),
-            isProceeding: DateHelper.getDifference(research.endDtm.replace(/\./g, '')) > 0
-          };
-        })
-        .filter((research: any) => research.isProceeding || research.bnnrRsrchTypCd !== 'R');
+              examples.push({
+                content: isEtc ? ETC_CENTER : exam || '',
+                image: research['exImgFilePathNm' + i],
+                motHtml: research['motExCtt' + i],
+                isEtc
+              });
+              i++;
+              exam = research['exCtt' + i];
+            }
+
+            return {
+              ...research,
+              examples,
+              staDtm: DateHelper.getShortDate(research.staDtm),
+              endDtm: DateHelper.getShortDate(research.endDtm),
+              isProceeding: DateHelper.getDifference(research.endDtm.replace(/\./g, '')) > 0
+            };
+          })
+          .filter((research: any) => research.isProceeding || research.bnnrRsrchTypCd !== 'R'),
+        showCount: quizIdx !== -1 ? Math.floor(quizIdx / DEFAULT_LIST_COUNT + 1) * DEFAULT_LIST_COUNT : DEFAULT_LIST_COUNT
+      };
     });
   }
 

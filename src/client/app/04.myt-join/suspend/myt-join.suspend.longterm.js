@@ -259,7 +259,7 @@ Tw.MyTJoinSuspendLongTerm.prototype = {
       to = $period.find('[data-role="fe-to-dt"]').val().replace(/-/g, '');
       diff = Tw.DateHelper.getDiffByUnit(from, to, 'months') * -1;
       if ( diff < 0 ) {
-        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_PERIOD);
+        this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VAILD_PERIOD_01);
         return;
       } else if ( diff > 24 ) {
         this._popupService.openAlert(Tw.MYT_JOIN_SUSPEND.NOT_VALID_LONG_TERM_PERIOD);

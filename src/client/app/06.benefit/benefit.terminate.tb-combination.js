@@ -57,12 +57,15 @@ Tw.BenefitTerminateTbCombination.prototype = {
     }
 
     this._reqLock = true;
+    Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_05_0144, { svcCd: this._svcCd }, {}, [this._prodId])
-      .done($.proxy(this._resTerminate, this));
+      .done($.proxy(this._resTerminate, this))
+      .fail(Tw.CommonHelper.endLoading('.container'));
   },
 
   _resTerminate: function(resp) {
     this._reqLock = false;
+    Tw.CommonHelper.endLoading('.container');
 
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();

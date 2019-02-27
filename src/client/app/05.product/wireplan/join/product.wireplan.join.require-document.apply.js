@@ -29,6 +29,7 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
     this.$fileList = this.$container.find('.fe-file_list');
     this.$explainFile = this.$container.find('.fe-explain_file');
     this.$explainFileView = this.$container.find('.fe-explain_file_view');
+    this.$explainFileViewClone = this.$explainFileView.parents('.file-wrap').clone();
     this.$btnExplainFileAdd = this.$container.find('.fe-btn_explain_file_add');
     this.$btnOpenHistoryDetail = this.$container.find('.fe-btn_open_detail');
     this.$btnApply = this.$container.find('.fe-btn_apply');
@@ -36,9 +37,10 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
 
   _bindEvent: function() {
     this.$container.on('click', 'input[type=file]', $.proxy(this._openCustomFileChooser, this));
-    this.$btnExplainFileAdd.on('click', $.proxy(this._uploadExplainFile, this));
+    this.$container.on('change', '.fe-explain_file', $.proxy(this._onChangeExplainFile, this));
+    this.$container.on('click', '.fe-btn_explain_file_add', $.proxy(this._uploadExplainFile, this));
+
     this.$btnOpenHistoryDetail.on('click', $.proxy(this._openHistoryDetailPop, this));
-    this.$explainFile.on('change', $.proxy(this._onChangeExplainFile, this));
     this.$fileList.on('click', '.fe-btn_explain_file_del', $.proxy(this._delExplainFile, this));
     this.$btnApply.on('click', $.proxy(this._procApply, this));
   },
@@ -92,7 +94,7 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
   },
 
   _uploadExplainFile: function() {
-    var fileInfo = this.$explainFile.get(0).files[0];
+    var fileInfo = this.$container.find('.fe-explain_file').get(0).files[0];
 
     if (fileInfo.size > this._limitFileByteSize) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE);
@@ -152,8 +154,9 @@ Tw.ProductWireplanJoinRequireDocumentApply.prototype = {
   },
 
   _clearExplainFile: function() {
-    this.$explainFileView.val('');
+    this.$container.find('.fe-explain_file_view').parents('.file-wrap').html(this.$explainFileViewClone);
     this._toggleBtn(this.$btnExplainFileAdd, false);
+    skt_landing.widgets.widget_init('.file-wrap');
   },
 
   _toggleBtn: function($btn, isEnable) {

@@ -39,7 +39,8 @@ Tw.CertificationFinance.prototype = {
     this._fidoType();
   },
   _fidoType: function () {
-    this._nativeService.send(Tw.NTV_CMD.FIDO_TYPE, {}, $.proxy(this._onFidoType, this));
+    // this._nativeService.send(Tw.NTV_CMD.FIDO_TYPE, {}, $.proxy(this._onFidoType, this));
+    this._openFinance(false);
   },
   _onFidoType: function (resp) {
     var enableFido = false;

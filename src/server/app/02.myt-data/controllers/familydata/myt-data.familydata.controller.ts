@@ -55,14 +55,21 @@ export default class MyTDataFamily extends TwViewController {
         };
       }
 
-      const limit = Number(mine.limitation),
-        data =
-          mine.limitedYn === 'Y'
-            ? {
-                remained: limit === 0 ? 0 : Math.min(Number(mine.limitation), Number(resp.result.total)) * 1024 - Number(mine.used),
-                total: limit
-              }
-            : { remained: Number(mine.remained), total: Number(resp.result.total) };
+      const data = {
+          hasLimit: mine.limitedYn === 'Y',
+          remained: Number(mine.remained),
+          total: Number(resp.result.total) * 1024,
+          totalUsed: Number(resp.result.used),
+          myLimitation: Number(mine.limitation)
+        },
+        total = data.hasLimit ? Math.min(data.myLimitation, data.total) : data.total;
+
+      // mine.limitedYn === 'Y'
+      //   ? {
+      //       remained: limit === 0 ? 0 : Math.min(Number(mine.limitation), Number(resp.result.total)) * 1024 - Number(mine.used),
+      //       total: limit
+      //     }
+      //   : { remained: Number(mine.remained), total: Number(resp.result.total) };
 
       return {
         ...resp.result,
@@ -72,12 +79,12 @@ export default class MyTDataFamily extends TwViewController {
         isRepresentation: representation.svcMgmtNum === svcInfo.svcMgmtNum,
         mine: {
           ...mine,
-          remained: FormatHelper.convDataFormat(data.remained, DATA_UNIT.MB),
-          ratio: Math.round((data.remained / 1024 / data.total) * 100),
+          remained: FormatHelper.convDataFormat(total - data.totalUsed, DATA_UNIT.MB),
           used: FormatHelper.convDataFormat(Number(mine.used), DATA_UNIT.MB),
           shared: FormatHelper.addComma(mine.shared),
           limitation: FormatHelper.addComma(mine.limitation),
-          svcNum: FormatHelper.conTelFormatWithDash(mine.svcNum)
+          svcNum: FormatHelper.conTelFormatWithDash(mine.svcNum),
+          data: data
         },
         mbrList: resp.result.mbrList.map(member => {
           return {
