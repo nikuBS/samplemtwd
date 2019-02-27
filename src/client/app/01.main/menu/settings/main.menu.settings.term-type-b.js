@@ -16,6 +16,7 @@ Tw.MainMenuSettingsTermTypeB = function (rootEl) {
 Tw.MainMenuSettingsTermTypeB.prototype = {
   _bindEvents: function () {
     this.$container.on('click', '#fe-btn-view', $.proxy(this._onViewClicked, this));
+    this.$container.on('click', '.fe-external-link', $.proxy(this._onExternalLink, this));
   },
   _onViewClicked: function (e) {
     var viewId = e.currentTarget.value;
@@ -36,5 +37,11 @@ Tw.MainMenuSettingsTermTypeB.prototype = {
     }, this)).fail(function (err) {
       Tw.Error(err.code, err.msg).pop();
     });
+  },
+  _onExternalLink: function (e) {
+    var url = $(e.currentTarget).attr('href');
+    Tw.CommonHelper.openUrlExternal(url);
+
+    return false;
   }
 };
