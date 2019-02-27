@@ -225,7 +225,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
   },
 
   _handleSuccessRetrieve: function(share) {
-    var nData = Number(share.remGbGty) + Number(share.remMbGty) / 1000 || 0;
+    var nData = Number(share.remGbGty) + Number(share.remMbGty) / 1024 || 0;
     this.$strong.text(nData + 'GB').switchClass('txt-c4', 'txt-c2');
     this.$retrieveBtn.remove();
     if (nData > 0) {

@@ -297,6 +297,14 @@ class DateHelper {
   }
 
   /**
+   * @param date {Date} or {string} : YYYYMMDDHHmmss
+   * @returns {string} : 2018.6.1 12:00:00
+   */
+  static getFullDateAnd24Time(date) {
+    return moment(this.convDateFormat(date)).format('YYYY.M.D. HH:mm:ss');
+  }
+
+  /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @param format
    * @returns {string} : 2018-06-02 11:59

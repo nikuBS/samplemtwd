@@ -77,7 +77,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
   },
 
   _setData: function (result) {
-    var data, dataText = 0;
+    var data = 0, dataText = 0;
     if (!Tw.FormatHelper.isEmpty(result.prodAmt) && result.prodAmt !== '0') {
       data = result.prodAmt;
       dataText = Tw.FormatHelper.addComma(result.prodAmt);
