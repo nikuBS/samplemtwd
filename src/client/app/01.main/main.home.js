@@ -487,12 +487,13 @@ Tw.MainHome.prototype = {
 
     element.html(tplGiftCard(result));
     element.removeClass('empty');
+    element.addClass('nogaps');
 
     var $textBalance = element.find('#fe-text-gift-balance');
     var $btBalance = element.find('#fe-bt-gift-balance');
     var $loading = element.find('#fe-text-gift-loading');
     var $textError = element.find('#fe-text-error');
-    var $btGoGift = element.find('#fe-bt-go-gift');
+    var $btGoGift = element.find('.fe-bt-go-gift');
     var $textErrorBalance = element.find('#fe-text-error-balance');
 
     $btGoGift.on('click', $.proxy(this._onClickBtGift, this, sender));
@@ -580,6 +581,7 @@ Tw.MainHome.prototype = {
       var tplRechargeCard = Handlebars.compile($rechargeTemp.html());
       element.html(tplRechargeCard({ refillCoupons: refillCoupons }));
       element.removeClass('empty');
+      element.addClass('nogaps');
       element.on('click', '#fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
     } else {
       element.hide();
