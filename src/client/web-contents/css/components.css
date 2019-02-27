@@ -5195,6 +5195,8 @@
       white-space: nowrap;
       width: 100%;
       height: 100%; }
+      .file-wrap .inputbox .bt-box button.del {
+        padding: 0 !important; }
 
 .file-wrap.type1 .input input[type="text"], .file-wrap.type1 .input input[type="file"] {
   background: #fff;
@@ -24010,30 +24012,32 @@ input[type="radio"].formradio-small.type2 + label {
 .btn-more.no-border {
   border-top: none; }
 
-.benefit-link li {
-  padding-left: 33px;
-  position: relative; }
-  .benefit-link li .unit {
-    display: block;
-    color: #959595;
-    height: 3.25rem;
-    line-height: 3.25rem;
-    font-size: 0.875rem; }
-    .benefit-link li .unit.on {
-      color: #ef4b49;
-      font-weight: 700; }
-  .benefit-link li:before {
-    content: '';
-    width: 0.0625rem;
-    height: 1rem;
-    background: #f2f2f2;
-    position: absolute;
-    left: 1rem;
-    top: 1.1875rem; }
-  .benefit-link li:first-of-type {
-    padding-left: 0; }
-    .benefit-link li:first-of-type:before {
-      display: none; }
+.benefit-link {
+  height: 3.1875rem; }
+  .benefit-link li {
+    padding-left: 33px;
+    position: relative; }
+    .benefit-link li .unit {
+      display: block;
+      color: #959595;
+      height: 3.25rem;
+      line-height: 3.25rem;
+      font-size: 0.875rem; }
+      .benefit-link li .unit.on {
+        color: #ef4b49;
+        font-weight: 700; }
+    .benefit-link li:before {
+      content: '';
+      width: 0.0625rem;
+      height: 1rem;
+      background: #f2f2f2;
+      position: absolute;
+      left: 1rem;
+      top: 1.1875rem; }
+    .benefit-link li:first-of-type {
+      padding-left: 0; }
+      .benefit-link li:first-of-type:before {
+        display: none; }
 
 .device_ios .benefit-link li:before {
   top: 1.0625rem; }
