@@ -33,7 +33,7 @@
                     <li>
                         <% const data = familyInfo.mine.data,
                             total = data.hasLimit ? Math.min(data.myLimitation, data.total) : data.total, 
-                            ratio = data.hasLimit && myLimitation === 0 ? 0 : Math.floor((total - data.totalUsed) / total * 100); %>
+                            ratio = data.hasLimit && data.myLimitation === 0 ? 0 : Math.floor(Number(familyInfo.mine.remained) / total * 100); %>
                         <div class="graph">
                             <div class="donut-chart small">
                                 <div class="donut-chart-area">
