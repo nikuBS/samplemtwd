@@ -82,6 +82,7 @@ export default class MyTDataFamily extends TwViewController {
         isRepresentation: representation.svcMgmtNum === svcInfo.svcMgmtNum,
         mine: {
           ...mine,
+          nRemained: remained,
           remained: FormatHelper.convDataFormat(remained, DATA_UNIT.MB),
           used: FormatHelper.convDataFormat(Number(mine.used), DATA_UNIT.MB),
           shared: FormatHelper.addComma(mine.shared),
