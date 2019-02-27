@@ -10,7 +10,7 @@
 const isGoodFamily = prodId === 'TW20000009' || prodId === 'NA00004211' %> 
 <div class="cont-box">
     <div class="bundle-tit-wrap">
-        <h3 class="tit"><%= groupInfo.combProdNm %></h3>
+        <h3 class="tit"><%= groupInfo.combProdNm || groupInfo.svcProdGrpNm %></h3>
     </div>
     <div class="basic-list bg-type mt10">
         <ul>
