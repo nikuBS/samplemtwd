@@ -330,6 +330,7 @@ Tw.API_CMD = {
   BFF_07_0071: { path: '/core-bill/:version/micro-prepay/hist-requests', method: Tw.API_METHOD.GET },
   BFF_07_0073: { path: '/core-bill/:version/micro-prepay/requests', method: Tw.API_METHOD.GET },
   BFF_07_0074: { path: '/core-bill/:version/micro-prepay/process', method: Tw.API_METHOD.POST },
+  BFF_07_0075: { path: '/core-bill/:version/micro-prepay/auto-list', method: Tw.API_METHOD.GET },
   BFF_07_0076: { path: '/core-bill/:version/micro-prepay/auto-process', method: Tw.API_METHOD.POST },
   BFF_07_0077: { path: '/core-bill/:version/micro-prepay/auto-delete', method: Tw.API_METHOD.POST },
   BFF_07_0078: { path: '/core-bill/:version/use-contents-prepay/hist-requests', method: Tw.API_METHOD.GET },
