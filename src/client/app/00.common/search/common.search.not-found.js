@@ -170,7 +170,16 @@ Tw.CommonSearchNotFound.prototype = {
   _doSearch : function () {
     var searchKeyword = this.$container.find('#search_keyword').val();
     if(Tw.FormatHelper.isEmpty(searchKeyword)){
-      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR);
+      var closeCallback;
+      if(this._historyService.getHash()==='#input_P'){
+        closeCallback = $.proxy(function () {
+          setTimeout($.proxy(function () {
+            this.$inputElement.focus();
+          },this),100);
+        },this);
+      }
+      this.$inputElement.blur();
+      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,closeCallback);
       return;
     }
     this._addRecentlyKeyword(searchKeyword);
@@ -255,7 +264,12 @@ Tw.CommonSearchNotFound.prototype = {
   },
   _openKeywordListBase : function () {
     if(this._historyService.getHash()==='#input_P'){
-      this._closeKeywordListBase();
+      if(this.$inputElement.val().trim().length>0){
+        this._getAutoCompleteKeyword();
+      }else{
+        this._showRecentKeyworList();
+      }
+      return;
     }
     setTimeout($.proxy(function () {
       this._popupService.open({

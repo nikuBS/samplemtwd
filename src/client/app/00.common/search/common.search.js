@@ -20,7 +20,7 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from) {
 Tw.CommonSearch.prototype = {
   _init : function (from) {
     this.$contents = this.$container.find('.container');
-    this._searchInfo.search = this._setData(this._searchInfo.search);
+    this._searchInfo.search = this._setRank(this._searchInfo.search);
     this._platForm = Tw.BrowserHelper.isApp()?'app':'web';
     this._nowUser = Tw.FormatHelper.isEmpty(this._svcInfo)?'logOutUser':this._svcInfo.svcMgmtNum;
     if(this._searchInfo.totalcount===0){
@@ -68,7 +68,7 @@ Tw.CommonSearch.prototype = {
     }
     new Tw.XtractorService(this.$container);
   },
-  _setData : function (data) {
+  _setRank : function (data) {
     var compareKeyName1 , compareKeyName2;
     for (var i=0;i<data.length;i++) {
       for(var j=0;j<(data.length-i-1);j++){
@@ -93,6 +93,9 @@ Tw.CommonSearch.prototype = {
     }
     for(var i=0;i<data.length;i++){
       for (var key in data[i]) {
+        if(key==='PR_STA_DT'||key==='PR_END_DT'){
+          data[i][key] = Tw.DateHelper.getShortDate(data[i][key]);
+        }
         if(typeof (data[i][key])==='string'){
           data[i][key] = data[i][key].replace(/<!HE>/g, '</span>');
           data[i][key] = data[i][key].replace(/<!HS>/g, '<span class="highlight-text">');
@@ -166,7 +169,16 @@ Tw.CommonSearch.prototype = {
   _doSearch : function () {
     var keyword = this.$inputElement.val();
     if(Tw.FormatHelper.isEmpty(keyword)){
-      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR);
+      var closeCallback;
+      if(this._historyService.getHash()==='#input_P'){
+        closeCallback = $.proxy(function () {
+          setTimeout($.proxy(function () {
+            this.$inputElement.focus();
+          },this),100);
+        },this);
+      }
+      this.$inputElement.blur();
+      this._popupService.openAlert(null,Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,null,closeCallback);
       return;
     }
     var inResult = this.$container.find('#resultsearch').is(':checked');
@@ -321,7 +333,12 @@ Tw.CommonSearch.prototype = {
   },
   _openKeywordListBase : function () {
     if(this._historyService.getHash()==='#input_P'){
-      this._closeKeywordListBase();
+      if(this.$inputElement.val().trim().length>0){
+        this._getAutoCompleteKeyword();
+      }else{
+        this._showRecentKeyworList();
+      }
+      return;
     }
     setTimeout($.proxy(function () {
       this._popupService.open({

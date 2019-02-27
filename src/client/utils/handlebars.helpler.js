@@ -40,11 +40,11 @@ Tw.HandlebarHelper = (function () {
   });
 
   Handlebars.registerHelper('currencyComma', function(str) {
-      return str.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      return Tw.FormatHelper.addComma(str);
   });
 
   Handlebars.registerHelper('removeTag', function(str) {
-    return str.replace(/<([^>]+)>/ig,'');
+    return Tw.FormatHelper.stripTags(str);
   });
 
   Handlebars.registerHelper('replace', function(targetStr,regEx,replaceStr) {
