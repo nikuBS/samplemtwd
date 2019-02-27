@@ -115,6 +115,10 @@ Tw.QuickMenuEditComponent.prototype = {
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._changeQuickMenu = true;
       this._popupService.close();
+
+      if (Tw.BrowserHelper.isApp()) {
+        Tw.CommonHelper.resetHeight($('.home-slider .home-slider-belt')[0]);
+      }
     } else {
       Tw.Error(resp.code, resp.msg).pop();
     }
