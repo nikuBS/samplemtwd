@@ -5,20 +5,22 @@
 %>
 <script id="fe-smart-recharge" type="text/x-handlebars-template">
     <!-- .cont-box -->
-    <div class="main-breakdown-box">
-        <strong class="ti">데이터가 부족하시다면 즉시 충전해 보세요</strong>
-        <a tabindex="0" href="/myt-data/submain">
-        <ul class="list">
-            <% if(usageData.data && usageData.data.isShow) { %>
-            <li><strong class="ti">잔여 데이터</strong> <em class="tx f-type c-point"><span class="ff-tg-medium"><%= usageData.data.showMyRemained %></span></em></li>
-            <% } else { %>
-            <li><strong class="ti">잔여 데이터</strong> <em class="tx f-type c-point"><span class="ff-tg-medium">0</span>MB</em></li>
-            <% } %>
-            <li><strong class="ti">리필쿠폰 남은 개수</strong> <em class="tx c-point"><span class="f-type ff-tg-medium">{{ refillCoupons }}</span>장</em></li>
-        </ul>
-        </a>
+    <div class="main-fee-box">
+        <div class="fee-cont">
+            <strong class="tit">데이터가 부족하시다면<br/> 즉시 충전해 보세요</strong>
+            <a href="/myt-data/submain">
+                <ul class="list">
+                    <% if(usageData.data && usageData.data.isShow) { %>
+                    <li><strong class="ti">잔여 데이터</strong> <em class="tx f-type c-point"><span class="ff-tg-medium"><%= usageData.data.showMyRemained %></span></em></li>
+                    <% } else { %>
+                    <li><strong class="ti">잔여 데이터</strong> <em class="tx f-type c-point"><span class="ff-tg-medium">0</span>MB</em></li>
+                    <% } %>
+                    <li><strong class="ti">리필쿠폰 남은 개수</strong> <em class="tx c-point">T끼리 <span class="f-type ff-tg-medium">{{ refillCoupons }}</span>회</em></li>
+                </ul>
+            </a>
+        </div>
         <div class="btn-area">
-            <button id="fe-bt-go-recharge" class="bt">충전하기</button>
+            <button class="bt full">충전하기</button>
         </div>
     </div>
 </script>
