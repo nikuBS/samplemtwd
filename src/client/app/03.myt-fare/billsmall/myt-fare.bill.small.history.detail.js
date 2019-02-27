@@ -71,6 +71,7 @@ Tw.MyTFareBillSmallHitstoryDetail.prototype = {
   },
 
   _execBillBlock: function() {
+    this._popupService.close();
     this._apiService.request(Tw.API_CMD.BFF_05_0082, {
       idpg: this.detailData.idpg,
       tySvc: this.detailData.tySvc,
