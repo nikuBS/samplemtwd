@@ -71,7 +71,7 @@ Tw.CustomerEmailUpload.prototype = {
       this._checkUploadButton();
 
     } else if ( response.resultCode === Tw.NTV_CODE.CODE_01 ) {
-      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE);
+      return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG);
     } else if ( response.resultCode === Tw.NTV_CODE.CODE_02 ) {
       return this._popupService.openAlert(Tw.CUSTOMER_EMAIL.INVALID_FILE, Tw.POPUP_TITLE.NOTIFY);
     } else {
