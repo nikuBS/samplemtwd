@@ -107,13 +107,11 @@ export default class MembershipSubmain extends TwViewController {
         if ( svcInfo.svcGr === 'P' || svcInfo.svcGr === 'I' || svcInfo.svcGr === 'T' || svcInfo.svcGr === 'U' || svcInfo.svcGr === '' ) {
           membershipCheckData.joinYn = 'N';
         } else {
-          membershipCheckData.joinYn = 'Y';
-        }
-
-        if ( resp.result.adultYn === 'N' || resp.result.feeProdYn === 'N' ) {
-          membershipCheckData.joinYn = 'N';
-        } else {
-          membershipCheckData.joinYn = 'Y';
+          if ( svcInfo.svcStCd === 'SP' || resp.result.adultYn === 'N' || resp.result.feeProdYn === 'N' ) {
+            membershipCheckData.joinYn = 'N';
+          } else {
+            membershipCheckData.joinYn = 'Y';
+          }
         }
       }
       return membershipCheckData;
