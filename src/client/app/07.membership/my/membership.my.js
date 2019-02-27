@@ -250,7 +250,7 @@ Tw.MembershipMy.prototype = {
       this._popupService.openAlert(ALERT.MSG, ALERT.TITLE);
       return;
     }
-    this._historyService.replaceURL('/membership/my/update');
+    this._historyService.goLoad('/membership/my/update');
   },
 
   _goMyCancel: function() {

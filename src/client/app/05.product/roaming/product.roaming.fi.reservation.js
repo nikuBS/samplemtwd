@@ -21,7 +21,6 @@ Tw.ProductRoamingFiReservation.prototype = {
     this.$btnCountryLink = this.$container.find('.link-area > .bt-link-tx');
     this.$btnTermsAgree = this.$container.find('.comp-list-layout');
     this.$openAgreeView = this.$container.find('.agree-view');
-    this.$btnPopupClose = this.$container.find('.popup-closeBtn');
     this.$agreeCheckOne = this.$container.find('#fe-check1');
     this.$agreeCheckTwo = this.$container.find('#fe-check2');
     this.$inputPhone = this.$container.find('#flab01');
@@ -44,7 +43,6 @@ Tw.ProductRoamingFiReservation.prototype = {
     this.$container.on('keyup paste', '#flab01', $.proxy(this._changeCheck, this, 'keyup'));
     this.$container.on('change', '#flab01', $.proxy(this._changeCheck, this));
     this.$container.on('click', '.cancel', $.proxy(this._changeCheck, this));
-    this.$btnPopupClose.on('click', $.proxy(this._goRoamingGuide, this));
     this.$container.on('change', '#flab02', $.proxy(this._changeCheck, this));
     this.$container.on('change', '#flab03', $.proxy(this._changeCheck, this));
   },
@@ -311,10 +309,6 @@ Tw.ProductRoamingFiReservation.prototype = {
 
     this._changeCheck();
     this._popupService.close();
-  },
-
-  _goRoamingGuide: function() {
-    this._historyService.replaceURL('/product/roaming/fi/guide');
   },
 
   // API Fail
