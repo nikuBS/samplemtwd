@@ -139,6 +139,7 @@ Tw.MembershipMyUpdate.prototype = {
   },
 
   _handleUpdateAlert: function() {
+    this._popupService.close();
     this._apiService.request(Tw.API_CMD.BFF_11_0012, this._myInfoData).done($.proxy(this._handleSuccessInfoUpdate, this));
   },
 
