@@ -77,8 +77,8 @@
                             <div class="horizontal-slide">
                                 <ul class="horizontal-list info-link-box">
                                     <% for (var index in banners.centerBanners) { %>
-                                    <li>
-                                        <button class="info-link-inner" data-index="<%=index%>">
+                                    <li data-xt_eid="<%- banners.centerBanners[index].oferStcCd %>" data-xt_csid="NO" data-xt_action="BV">
+                                        <button class="info-link-inner" data-index="<%=index%>" data-xt_eid="<%- banners.centerBanners[index].oferStcCd %>" data-xt_csid="NO" data-xt_action="BC">
                                             <span class="tit"><%-banners.centerBanners[index].titleNm%></span>
                                         </button>
                                     </li>
