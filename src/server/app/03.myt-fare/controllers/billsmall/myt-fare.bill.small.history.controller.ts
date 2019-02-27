@@ -67,7 +67,7 @@ class MyTFareBillSmallHistory extends TwViewController {
           const plainTime = o.useDt.replace(/-/gi, '').replace(/:/gi, '').replace(/ /gi, ''); // YYYY-MM-DD hh:mm--> YYYYMMDDhhmm
           return Object.assign(o, {
             listId: index, 
-            FullDate: DateHelper.getShortDateAndTime(plainTime),
+            FullDate: DateHelper.getShortDateAnd24Time(plainTime),
             useAmt: FormatHelper.addComma(o.sumPrice), // 이용금액
             payMethodNm: MYT_FARE_HISTORY_MICRO_TYPE[o.payMethod] || '', // 결제구분
           });
