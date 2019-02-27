@@ -83,6 +83,7 @@ Tw.ProductApps.prototype = {
         if (app.iconImg && app.iconImg.indexOf('http') < 0) {
           app.iconImg = Tw.Environment.cdn + app.iconImg;
         }
+        app.idxExpsSeq = Number(app.idxExpsSeq);
 
         return app;
       });
