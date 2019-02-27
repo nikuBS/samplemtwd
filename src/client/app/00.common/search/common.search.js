@@ -438,6 +438,9 @@ Tw.CommonSearch.prototype = {
     },this));
   },
   _showSmart : function (data) {
+    if(Tw.FormatHelper.isEmpty(data)){
+      return;
+    }
     var returnData = [];
     for(var i=1;i<=3;i++){
       if(!Tw.FormatHelper.isEmpty(data['BNNR_BOT_BTN_NM'+i])){

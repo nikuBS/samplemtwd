@@ -167,446 +167,10 @@
             <!-- .cont-box -->
             <div class="cont-box nogaps none" id="smart_btn_base">
                 <ul class="btn-link-list">
-                    <script type="text/x-handlebars-template" id="smart_template">
-                    <li class="last-line">
-                        <a class="list-data" href="{{data.link}}"
-                           data-id="{{data.docId}}" data-category="smart" data-tit="{{data.title}}">
-                            {{data.title}}
-                        </a>
-                    </li>
-                    </script>
                 </ul>
             </div>
             <% } %>
-            <script type="text/x-handlebars-template" id="shortcut_base">
-            <hr class="cont-sp type1 shortcut" aria-hidden="true">
 
-            <!-- .cont-box -->
-            <div class="cont-box nogaps-btm shortcut">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">바로가기</h2>
-                    <div class="numberbox"><span class="num"><%= searchInfo.search[2].shortcut.count %></span>건
-                        <% if(searchInfo.search[2].shortcut.count>10){ %>
-                        <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=shortcut&keyword='+keyword:inResultViewUrl+'?category=shortcut&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                            더보기
-                        </a>
-                        <% } %>
-                    </div>
-                </div>
-                <div class="keyword-search-list">
-                    <ul id="shortcut_list">
-
-                    </ul>
-                </div>
-            </div>
-            </script>
-
-
-            <script type="text/x-handlebars-template" id="rate_base">
-            <!-- <hr class="cont-sp type1" aria-hidden="true"/>                 -->
-            <div class="cont-box bgnone noborder nogaps-btm rate">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">요금제</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.search[3].rate.count %></span>건
-                        <% if(searchInfo.search[3].rate.count>10){%>
-                        <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=rate&keyword='+keyword:inResultViewUrl+'?category=rate&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                            더보기
-                        </a>
-                        <% } %>
-                    </div>
-                </div>
-            </div>
-
-            <div class="cont-box list bgnone noborder gaps-style05 rate">
-                <ul class="extraservice-list" id="rate_list">
-
-                </ul>
-            </div>
-            </script>
-            <script type="text/x-handlebars-template" id="service_base">
-            <div class="cont-box bgnone noborder nogaps-btm service">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">부가서비스</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.search[4].service.count %></span>건
-                        <% if(searchInfo.search[4].service.count>10){ %>
-                        <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=service&keyword='+keyword:inResultViewUrl+'?category=service&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                            더보기
-                        </a>
-                        <% } %>
-                    </div>
-                </div>
-            </div>
-
-            <div class="cont-box list bgnone noborder gaps-style06 service">
-                <ul class="extraservice-list" id="service_list">
-
-                </ul>
-            </div>
-            <hr class="cont-sp type1 service" aria-hidden="true">
-            </script>
-            <script type="text/x-handlebars-template" id="tv_base">
-            <div class="cont-box bgnone noborder nogaps-btm tv">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">인터넷 · 집전화 · IPTV</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.search[5].tv.count %></span>건
-                        <% if(searchInfo.search[5].tv.count>10){ %>
-                        <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=tv&keyword='+keyword:inResultViewUrl+'?category=tv&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                            더보기
-                        </a>
-                        <% } %>
-                    </div>
-                </div>
-            </div>
-
-            <div class="cont-box list bgnone noborder gaps-style06 tv">
-                <ul class="extraservice-list" id="tv_list">
-
-                </ul>
-            </div>
-            </script>
-            <script type="text/x-handlebars-template" id="roaming_base">
-            <div class="cont-box bgnone noborder nogaps-btm roaming">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">T로밍</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.search[6].roaming.count %></span>건
-                        <% if(searchInfo.search[6].roaming.count>10){ %>
-                        <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=roaming&keyword='+keyword:inResultViewUrl+'?category=roaming&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                            더보기
-                        </a>
-                        <% } %>
-                    </div>
-                </div>
-            </div>
-
-            <div class="cont-box list bgnone noborder gaps-style07 roaming">
-                <ul class="extraservice-list" id="roaming_list">
-
-                </ul>
-            </div>
-            </script>
-
-            <!-- .cont-box -->
-            <script type="text/x-handlebars-template" id="app_base">
-            <hr class="cont-sp type1 app" aria-hidden="true">
-            <div class="cont-box list nogaps-btm app">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">T앱</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.search[7].app.count %></span>건
-                    </div>
-                </div>
-                <div class="tapplist-wrap">
-                    <ul class="list" id="app_list">
-
-                    </ul>
-                    <div class="tappbtn-wrap">
-                        <button class="btn list-data" href="/product/apps">T앱 전체보기</button>
-                    </div>
-                </div>
-            </div>
-            </script>
-
-
-            <!-- .cont-box -->
-            <script type="text/x-handlebars-template" id="direct_base">
-            <hr class="cont-sp type1 direct" aria-hidden="true">
-            <div class="cont-box list pb0 direct">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">T월드 다이렉트</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.search[8].direct.count %></span>건
-                        <% if(searchInfo.search[8].direct.count>10){ %>
-                        <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=direct&keyword='+keyword:inResultViewUrl+'?category=direct&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                            더보기
-                        </a>
-                        <% } %>
-                    </div>
-                </div>
-                <div class="direct-shop-wrap">
-                    <ul id="direct_list">
-
-                    </ul>
-                    <div class="btn-more">
-                        <a href="http://shop.tworld.co.kr" class="list-data direct-element home">다이렉트샵 가기</a>
-                    </div>
-                </div>
-            </div>
-            </script>
-            <!--// .cont-box -->
-
-
-
-            <!-- .cont-box -->
-            <script  type="text/x-handlebars-template" id="membership_base" >
-            <hr class="cont-sp type1 membership" aria-hidden="true">
-            <div class="cont-box list pb0 membership">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">T멤버십</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.search[9].membership.count %></span>건
-                        <% if(searchInfo.search[9].membership.count>10){ %>
-                        <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=membership&keyword='+keyword:inResultViewUrl+'?category=membership&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                            더보기
-                        </a>
-                        <% } %>
-                    </div>
-                </div>
-                <div class="t-membership-wrap">
-                    <ul id="membership_list">
-
-                    </ul>
-                </div>
-            </div>
-            </script>
-            <!--// .cont-box -->
-
-            <!-- .cont-box -->
-            <script type="text/x-handlebars-template" id="event_base">
-            <div class="cont-box list nogaps-btm bgnone noborder event">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">진행 중인 이벤트</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.search[10].event.count %></span>건
-                        <% if(searchInfo.search[10].event.count>10){ %>
-                        <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=event&keyword='+keyword:inResultViewUrl+'?category=event&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                            더보기
-                        </a>
-                        <% } %>
-                    </div>
-                </div>
-                <div class="event-list">
-                    <ul id="event_list">
-
-                    </ul>
-                </div>
-            </div>
-            </script>
-            <!--// .cont-box -->
-
-            <!-- 혜택 · 할인 -->
-            <script type="text/x-handlebars-template" id="sale_base">
-            <hr class="cont-sp type1 sale" aria-hidden="true">
-            <div class="cont-box list nogaps-btm noborder sale">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">혜택·할인</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.search[11].sale.count %></span>건
-                        <% if(searchInfo.search[11].sale.count>10){ %>
-                        <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=sale&keyword='+keyword:inResultViewUrl+'?category=sale&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                            더보기
-                        </a>
-                        <% } %>
-                    </div>
-                </div>
-                <div class="benefit-productfilter-type line-none ml0 mr0 mb0">
-                    <ul id="sale_list">
-
-                    </ul>
-                </div>
-            </div>
-            <!-- //혜택 · 할인 -->
-
-            <hr class="cont-sp type1" aria-hidden="true">
-            </script>
-            <!--<div class="search-banner">-->
-            <!--<a href=""><img src="http://localhost:3001/img/search/img_banner02.png" alt="내게 맞는 요금제 찾기"></a>-->
-            <!--</div>-->
-
-            <!--<hr class="cont-sp type1" aria-hidden="true">-->
-
-            <!-- 지점 · 대리점, A/S센터 -->
-            <script id="as_base" type="text/x-handlebars-template">
-            <div class="cont-box list nogaps-btm as">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">지점 · 대리점, A/S센터</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.search[12].as.count %></span>건
-                        <% if(searchInfo.search[12].as.count>10){ %>
-                        <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=as&keyword='+keyword:inResultViewUrl+'?category=as&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                            더보기
-                        </a>
-                        <% } %>
-                    </div>
-                </div>
-                <ul class="service-guide-s" id="as_list">
-
-                </ul>
-            </div>
-            <hr class="cont-sp type1 as" aria-hidden="true">
-            </script>
-            <!-- //지점 · 대리점, A/S센터 -->
-
-            <!-- 자주하는 질문 -->
-            <script type="text/x-handlebars-template" id="question_base">
-            <div class="cont-box list nogaps-btm question">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">자주 하는 질문</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.search[15].question.count %></span>건
-                        <%if(searchInfo.search[15].question.count>10){ %>
-                        <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=question&keyword='+keyword:inResultViewUrl+'?category=question&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                            더보기
-                        </a>
-                        <% } %>
-                    </div>
-                </div>
-                <ul class="service-guide-s" id="question_list">
-
-                </ul>
-            </div>
-            <!-- //자주하는 질문 -->
-
-            <hr class="cont-sp type1 question" aria-hidden="true">
-            </script>
-
-            <!-- 공지사항 -->
-            <script type="text/x-handlebars-template" id="notice_base">
-            <div class="cont-box list nogaps-btm notice">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">공지사항</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.search[13].notice.count %></span>건
-                        <% if(searchInfo.search[13].notice.count>10){  %>
-                        <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=notice&keyword='+keyword:inResultViewUrl+'?category=notice&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                            더보기
-                        </a>
-                        <% } %>
-                    </div>
-                </div>
-                <ul class="service-guide-s" id="notice_list">
-
-                </ul>
-            </div>
-            <!-- //공지사항 -->
-
-            <hr class="cont-sp type1 notice" aria-hidden="true">
-            </script>
-
-            <script type="text/x-handlebars-template" id="prevent_base">
-            <!-- 이용자 피해예방 주의보 -->
-            <div class="cont-box list nogaps-btm prevent">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">이용자 피해예방 주의보</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.search[14].prevent.count %></span>건
-                        <% if(searchInfo.search[14].prevent.count>10){ %>
-                        <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=prevent&keyword='+keyword:inResultViewUrl+'?category=prevent&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                            더보기
-                        </a>
-                        <% } %>
-                    </div>
-                </div>
-                <ul class="service-guide-s" id="prevent_list">
-
-                </ul>
-            </div>
-            <!-- //이용자 피해예방 주의보 -->
-
-            <hr class="cont-sp type1 prevent" aria-hidden="true">
-            </script>
-
-            <script id="manner_base" type="text/x-handlebars-template">
-            <!-- 이럴 땐 이렇게 하세요 -->
-            <div class="cont-box list nogaps-btm manner">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">이럴 땐 이렇게 하세요</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.search[16].manner.count %></span>건
-                        <% if(searchInfo.search[16].manner.count>10){ %>
-                        <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=manner&keyword='+keyword:inResultViewUrl+'?category=manner&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                            더보기
-                        </a>
-                        <% } %>
-                    </div>
-                </div>
-                <ul class="service-guide-s" id="manner_list">
-
-                </ul>
-            </div>
-            <!-- //이럴 땐 이렇게 하세요 -->
-
-            <hr class="cont-sp type1 manner" aria-hidden="true">
-            </script>
-
-            <!-- 서비스 이용안내 -->
-            <script type="text/x-handlebars-template" id="serviceInfo_base">
-            <div class="cont-box list nogaps-btm serviceInfo">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">서비스 이용안내</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.search[17].serviceInfo.count %></span>건
-                        <% if(searchInfo.search[17].serviceInfo.count>10){ %>
-                        <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=serviceInfo&keyword='+keyword:inResultViewUrl+'?category=serviceInfo&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                            더보기
-                        </a>
-                        <% } %>
-                    </div>
-                </div>
-                <ul class="service-guide-s" id="serviceInfo_list">
-
-                </ul>
-            </div>
-            <!-- //서비스 이용안내 -->
-
-            <hr class="cont-sp type1 serviceInfo" aria-hidden="true">
-            </script>
-
-            <script id="siteInfo_base" type="text/x-handlebars-template">
-            <!-- 사이트 이용안내 -->
-            <div class="cont-box list nogaps-btm siteInfo">
-                <div class="searchnumbox-wrap">
-                    <h2 class="tit">사이트 이용방법</h2>
-                    <div class="numberbox">
-                        <span class="num"><%= searchInfo.search[18].siteInfo.count %></span>건
-                        <% if(searchInfo.search[18].siteInfo.count>10){ %>
-                        <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=siteInfo&keyword='+keyword:inResultViewUrl+'?category=siteInfo&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
-                        %>" class="morelink">
-                            더보기
-                        </a>
-                        <% } %>
-                    </div>
-                </div>
-                <ul class="site-guide-s" id="siteInfo_list">
-
-                </ul>
-            </div>
-            <!-- //사이트 이용안내 -->
-            </script>
 
 
 
@@ -615,7 +179,445 @@
 
 
     </div>
+    <script type="text/x-handlebars-template" id="smart_template">
+        <li class="last-line">
+            <a class="list-data" href="{{data.link}}"
+               data-id="{{data.docId}}" data-category="smart" data-tit="{{data.title}}">
+                {{data.title}}
+            </a>
+        </li>
+    </script>
+    <script type="text/x-handlebars-template" id="shortcut_base">
+        <hr class="cont-sp type1 shortcut" aria-hidden="true">
+
+        <!-- .cont-box -->
+        <div class="cont-box nogaps-btm shortcut">
+            <div class="searchnumbox-wrap">
+                <h2 class="tit">바로가기</h2>
+                <div class="numberbox"><span class="num"><%= searchInfo.search[2].shortcut.count %></span>건
+                    <% if(searchInfo.search[2].shortcut.count>10){ %>
+                    <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=shortcut&keyword='+keyword:inResultViewUrl+'?category=shortcut&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                        더보기
+                    </a>
+                    <% } %>
+                </div>
+            </div>
+            <div class="keyword-search-list">
+                <ul id="shortcut_list">
+
+                </ul>
+            </div>
+        </div>
+    </script>
+
+
+    <script type="text/x-handlebars-template" id="rate_base">
+        <!-- <hr class="cont-sp type1" aria-hidden="true"/>                 -->
+        <div class="cont-box bgnone noborder nogaps-btm rate">
+            <div class="searchnumbox-wrap">
+                <h2 class="tit">요금제</h2>
+                <div class="numberbox">
+                    <span class="num"><%= searchInfo.search[3].rate.count %></span>건
+                    <% if(searchInfo.search[3].rate.count>10){%>
+                    <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=rate&keyword='+keyword:inResultViewUrl+'?category=rate&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                        더보기
+                    </a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <div class="cont-box list bgnone noborder gaps-style05 rate">
+            <ul class="extraservice-list" id="rate_list">
+
+            </ul>
+        </div>
+    </script>
+    <script type="text/x-handlebars-template" id="service_base">
+        <div class="cont-box bgnone noborder nogaps-btm service">
+            <div class="searchnumbox-wrap">
+                <h2 class="tit">부가서비스</h2>
+                <div class="numberbox">
+                    <span class="num"><%= searchInfo.search[4].service.count %></span>건
+                    <% if(searchInfo.search[4].service.count>10){ %>
+                    <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=service&keyword='+keyword:inResultViewUrl+'?category=service&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                        더보기
+                    </a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <div class="cont-box list bgnone noborder gaps-style06 service">
+            <ul class="extraservice-list" id="service_list">
+
+            </ul>
+        </div>
+        <hr class="cont-sp type1 service" aria-hidden="true">
+    </script>
+    <script type="text/x-handlebars-template" id="tv_base">
+        <div class="cont-box bgnone noborder nogaps-btm tv">
+            <div class="searchnumbox-wrap">
+                <h2 class="tit">인터넷 · 집전화 · IPTV</h2>
+                <div class="numberbox">
+                    <span class="num"><%= searchInfo.search[5].tv.count %></span>건
+                    <% if(searchInfo.search[5].tv.count>10){ %>
+                    <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=tv&keyword='+keyword:inResultViewUrl+'?category=tv&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                        더보기
+                    </a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <div class="cont-box list bgnone noborder gaps-style06 tv">
+            <ul class="extraservice-list" id="tv_list">
+
+            </ul>
+        </div>
+    </script>
+    <script type="text/x-handlebars-template" id="roaming_base">
+        <div class="cont-box bgnone noborder nogaps-btm roaming">
+            <div class="searchnumbox-wrap">
+                <h2 class="tit">T로밍</h2>
+                <div class="numberbox">
+                    <span class="num"><%= searchInfo.search[6].roaming.count %></span>건
+                    <% if(searchInfo.search[6].roaming.count>10){ %>
+                    <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=roaming&keyword='+keyword:inResultViewUrl+'?category=roaming&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                        더보기
+                    </a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <div class="cont-box list bgnone noborder gaps-style07 roaming">
+            <ul class="extraservice-list" id="roaming_list">
+
+            </ul>
+        </div>
+    </script>
+
+    <!-- .cont-box -->
+    <script type="text/x-handlebars-template" id="app_base">
+        <hr class="cont-sp type1 app" aria-hidden="true">
+        <div class="cont-box list nogaps-btm app">
+            <div class="searchnumbox-wrap">
+                <h2 class="tit">T앱</h2>
+                <div class="numberbox">
+                    <span class="num"><%= searchInfo.search[7].app.count %></span>건
+                </div>
+            </div>
+            <div class="tapplist-wrap">
+                <ul class="list" id="app_list">
+
+                </ul>
+                <div class="tappbtn-wrap">
+                    <button class="btn list-data" href="/product/apps">T앱 전체보기</button>
+                </div>
+            </div>
+        </div>
+    </script>
+
+
+    <!-- .cont-box -->
+    <script type="text/x-handlebars-template" id="direct_base">
+        <hr class="cont-sp type1 direct" aria-hidden="true">
+        <div class="cont-box list pb0 direct">
+            <div class="searchnumbox-wrap">
+                <h2 class="tit">T월드 다이렉트</h2>
+                <div class="numberbox">
+                    <span class="num"><%= searchInfo.search[8].direct.count %></span>건
+                    <% if(searchInfo.search[8].direct.count>10){ %>
+                    <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=direct&keyword='+keyword:inResultViewUrl+'?category=direct&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                        더보기
+                    </a>
+                    <% } %>
+                </div>
+            </div>
+            <div class="direct-shop-wrap">
+                <ul id="direct_list">
+
+                </ul>
+                <div class="btn-more">
+                    <a href="http://shop.tworld.co.kr" class="list-data direct-element home">다이렉트샵 가기</a>
+                </div>
+            </div>
+        </div>
+    </script>
+    <!--// .cont-box -->
+
+
+
+    <!-- .cont-box -->
+    <script  type="text/x-handlebars-template" id="membership_base" >
+        <hr class="cont-sp type1 membership" aria-hidden="true">
+        <div class="cont-box list pb0 membership">
+            <div class="searchnumbox-wrap">
+                <h2 class="tit">T멤버십</h2>
+                <div class="numberbox">
+                    <span class="num"><%= searchInfo.search[9].membership.count %></span>건
+                    <% if(searchInfo.search[9].membership.count>10){ %>
+                    <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=membership&keyword='+keyword:inResultViewUrl+'?category=membership&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                        더보기
+                    </a>
+                    <% } %>
+                </div>
+            </div>
+            <div class="t-membership-wrap">
+                <ul id="membership_list">
+
+                </ul>
+            </div>
+        </div>
+    </script>
+    <!--// .cont-box -->
+
+    <!-- .cont-box -->
+    <script type="text/x-handlebars-template" id="event_base">
+        <div class="cont-box list nogaps-btm bgnone noborder event">
+            <div class="searchnumbox-wrap">
+                <h2 class="tit">진행 중인 이벤트</h2>
+                <div class="numberbox">
+                    <span class="num"><%= searchInfo.search[10].event.count %></span>건
+                    <% if(searchInfo.search[10].event.count>10){ %>
+                    <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=event&keyword='+keyword:inResultViewUrl+'?category=event&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                        더보기
+                    </a>
+                    <% } %>
+                </div>
+            </div>
+            <div class="event-list">
+                <ul id="event_list">
+
+                </ul>
+            </div>
+        </div>
+    </script>
+    <!--// .cont-box -->
+
+    <!-- 혜택 · 할인 -->
+    <script type="text/x-handlebars-template" id="sale_base">
+        <hr class="cont-sp type1 sale" aria-hidden="true">
+        <div class="cont-box list nogaps-btm noborder sale">
+            <div class="searchnumbox-wrap">
+                <h2 class="tit">혜택·할인</h2>
+                <div class="numberbox">
+                    <span class="num"><%= searchInfo.search[11].sale.count %></span>건
+                    <% if(searchInfo.search[11].sale.count>10){ %>
+                    <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=sale&keyword='+keyword:inResultViewUrl+'?category=sale&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                        더보기
+                    </a>
+                    <% } %>
+                </div>
+            </div>
+            <div class="benefit-productfilter-type line-none ml0 mr0 mb0">
+                <ul id="sale_list">
+
+                </ul>
+            </div>
+        </div>
+        <!-- //혜택 · 할인 -->
+
+        <hr class="cont-sp type1" aria-hidden="true">
+    </script>
+    <!--<div class="search-banner">-->
+    <!--<a href=""><img src="http://localhost:3001/img/search/img_banner02.png" alt="내게 맞는 요금제 찾기"></a>-->
+    <!--</div>-->
+
+    <!--<hr class="cont-sp type1" aria-hidden="true">-->
+
+    <!-- 지점 · 대리점, A/S센터 -->
+    <script id="as_base" type="text/x-handlebars-template">
+        <div class="cont-box list nogaps-btm as">
+            <div class="searchnumbox-wrap">
+                <h2 class="tit">지점 · 대리점, A/S센터</h2>
+                <div class="numberbox">
+                    <span class="num"><%= searchInfo.search[12].as.count %></span>건
+                    <% if(searchInfo.search[12].as.count>10){ %>
+                    <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=as&keyword='+keyword:inResultViewUrl+'?category=as&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                        더보기
+                    </a>
+                    <% } %>
+                </div>
+            </div>
+            <ul class="service-guide-s" id="as_list">
+
+            </ul>
+        </div>
+        <hr class="cont-sp type1 as" aria-hidden="true">
+    </script>
+    <!-- //지점 · 대리점, A/S센터 -->
+
+    <!-- 자주하는 질문 -->
+    <script type="text/x-handlebars-template" id="question_base">
+        <div class="cont-box list nogaps-btm question">
+            <div class="searchnumbox-wrap">
+                <h2 class="tit">자주 하는 질문</h2>
+                <div class="numberbox">
+                    <span class="num"><%= searchInfo.search[15].question.count %></span>건
+                    <%if(searchInfo.search[15].question.count>10){ %>
+                    <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=question&keyword='+keyword:inResultViewUrl+'?category=question&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                        더보기
+                    </a>
+                    <% } %>
+                </div>
+            </div>
+            <ul class="service-guide-s" id="question_list">
+
+            </ul>
+        </div>
+        <!-- //자주하는 질문 -->
+
+        <hr class="cont-sp type1 question" aria-hidden="true">
+    </script>
+
+    <!-- 공지사항 -->
+    <script type="text/x-handlebars-template" id="notice_base">
+        <div class="cont-box list nogaps-btm notice">
+            <div class="searchnumbox-wrap">
+                <h2 class="tit">공지사항</h2>
+                <div class="numberbox">
+                    <span class="num"><%= searchInfo.search[13].notice.count %></span>건
+                    <% if(searchInfo.search[13].notice.count>10){  %>
+                    <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=notice&keyword='+keyword:inResultViewUrl+'?category=notice&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                        더보기
+                    </a>
+                    <% } %>
+                </div>
+            </div>
+            <ul class="service-guide-s" id="notice_list">
+
+            </ul>
+        </div>
+        <!-- //공지사항 -->
+
+        <hr class="cont-sp type1 notice" aria-hidden="true">
+    </script>
+
+    <script type="text/x-handlebars-template" id="prevent_base">
+        <!-- 이용자 피해예방 주의보 -->
+        <div class="cont-box list nogaps-btm prevent">
+            <div class="searchnumbox-wrap">
+                <h2 class="tit">이용자 피해예방 주의보</h2>
+                <div class="numberbox">
+                    <span class="num"><%= searchInfo.search[14].prevent.count %></span>건
+                    <% if(searchInfo.search[14].prevent.count>10){ %>
+                    <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=prevent&keyword='+keyword:inResultViewUrl+'?category=prevent&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                        더보기
+                    </a>
+                    <% } %>
+                </div>
+            </div>
+            <ul class="service-guide-s" id="prevent_list">
+
+            </ul>
+        </div>
+        <!-- //이용자 피해예방 주의보 -->
+
+        <hr class="cont-sp type1 prevent" aria-hidden="true">
+    </script>
+
+    <script id="manner_base" type="text/x-handlebars-template">
+        <!-- 이럴 땐 이렇게 하세요 -->
+        <div class="cont-box list nogaps-btm manner">
+            <div class="searchnumbox-wrap">
+                <h2 class="tit">이럴 땐 이렇게 하세요</h2>
+                <div class="numberbox">
+                    <span class="num"><%= searchInfo.search[16].manner.count %></span>건
+                    <% if(searchInfo.search[16].manner.count>10){ %>
+                    <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=manner&keyword='+keyword:inResultViewUrl+'?category=manner&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                        더보기
+                    </a>
+                    <% } %>
+                </div>
+            </div>
+            <ul class="service-guide-s" id="manner_list">
+
+            </ul>
+        </div>
+        <!-- //이럴 땐 이렇게 하세요 -->
+
+        <hr class="cont-sp type1 manner" aria-hidden="true">
+    </script>
+
+    <!-- 서비스 이용안내 -->
+    <script type="text/x-handlebars-template" id="serviceInfo_base">
+        <div class="cont-box list nogaps-btm serviceInfo">
+            <div class="searchnumbox-wrap">
+                <h2 class="tit">서비스 이용안내</h2>
+                <div class="numberbox">
+                    <span class="num"><%= searchInfo.search[17].serviceInfo.count %></span>건
+                    <% if(searchInfo.search[17].serviceInfo.count>10){ %>
+                    <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=serviceInfo&keyword='+keyword:inResultViewUrl+'?category=serviceInfo&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                        더보기
+                    </a>
+                    <% } %>
+                </div>
+            </div>
+            <ul class="service-guide-s" id="serviceInfo_list">
+
+            </ul>
+        </div>
+        <!-- //서비스 이용안내 -->
+
+        <hr class="cont-sp type1 serviceInfo" aria-hidden="true">
+    </script>
+
+    <script id="siteInfo_base" type="text/x-handlebars-template">
+        <!-- 사이트 이용안내 -->
+        <div class="cont-box list nogaps-btm siteInfo">
+            <div class="searchnumbox-wrap">
+                <h2 class="tit">사이트 이용방법</h2>
+                <div class="numberbox">
+                    <span class="num"><%= searchInfo.search[18].siteInfo.count %></span>건
+                    <% if(searchInfo.search[18].siteInfo.count>10){ %>
+                    <a href="<%=
+                            keyword===inKeyword?moreViewUrl+'?category=siteInfo&keyword='+keyword:inResultViewUrl+'?category=siteInfo&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                        %>" class="morelink">
+                        더보기
+                    </a>
+                    <% } %>
+                </div>
+            </div>
+            <ul class="site-guide-s" id="siteInfo_list">
+
+            </ul>
+        </div>
+        <!-- //사이트 이용안내 -->
+    </script>
 </div>
+
 <% include ../../components/javascript.component.html %>
 <% include ../../components/search/search.template.component.html %>
 <% include ../../components/search/search.keyword-list.component.html %>
