@@ -143,7 +143,7 @@ class ApiRouter {
 
   private checkHealth(req: Request, res: Response, next: NextFunction) {
     res.json({
-      description: '',
+      description: 'NODE Health Check',
       status: 'UP'
     });
   }
