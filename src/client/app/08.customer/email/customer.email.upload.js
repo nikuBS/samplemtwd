@@ -168,7 +168,7 @@ Tw.CustomerEmailUpload.prototype = {
   _successUploadFile: function (res) {
     this._hideUploadPopup();
 
-    if ( res.code === Tw.API_CODE.CODE_00 ) {
+    if ( res.code === Tw.API_CODE.CODE_00 || this._isLowerVersionAndroid() ) {
       if ( this._getCurrentType() === 'service' ) {
         this.serviceUploadFiles = this.uploadFiles.slice(0);
         if ( this._isLowerVersionAndroid() ) {
