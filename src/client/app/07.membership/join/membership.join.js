@@ -98,6 +98,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
   _corporateListPopupCallback: function ($layer) {
     var type = this.$copListBtn.attr('data-type');
     $layer.find('#' + type).addClass('checked');
+    $layer.find('#' + type).find('input').prop('checked', true);
     $layer.on('click', '.nominal', $.proxy(this._setCorporateValue, this));
   },
 
