@@ -68,20 +68,6 @@ spec:
         volumeMounts:
         - mountPath: /tworld/uploads                  # (root)/uploads 에 volume mount
           name: upload-volume                            # volumes 의 name과 동일하게 설정
-      #        livenessProbe:
-      #          httpGet:
-      #            path: /api/health
-      #            port: 3000
-      #          initialDelaySeconds: 5
-      #          periodSeconds: 5
-      #        readinessProbe:
-      #          httpGet:
-      #            path: /api/health
-      #            port: 3000
-      #          initialDelaySeconds: 5
-      #          periodSeconds: 5
-      #      nodeSelector:
-      #        kubernetes.io/hostname: 211.188.180.74        # 74번 Host Node 에만 앱을 배포 (현재 74, 75 에 배포 가능)
       volumes:
       - name: upload-volume
         persistentVolumeClaim:
