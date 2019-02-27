@@ -30,7 +30,7 @@
                 <div class="unpaid-charges">
                     <dl class="total-box">
                         <dt>현재 카드 잔액</dt>
-                        <dd class="t-point"><span class="num ff-tg-black"><%-convertAmount(PPSInfo.prodAmt)%></span>
+                        <dd class="t-point"><span class="num ff-tg-black fe-amount"></span>
                             <span class="ff-tg-medium">원</span>
                             <!--<button type="button" class="tip-view" title="현재 카드 잔액" aria-haspopup="true" id="DC_09_02_tip_02" page-id="DC_09_02"><span class="tip-view">TIP</span></button>-->
                         </dd>
@@ -61,19 +61,19 @@
                                 <dt>
                                     <button class="tip-view-btn" id="DC_09_01_tip_02" page-id="DC_09_01">발신 기간<span class="tip-view">TIP</span></button>
                                 </dt>
-                                <dd><%-convertDate(PPSInfo.obEndDt)%></dd>
+                                <dd class="fe-from-date"></dd>
                             </dl>
                         </li>
                         <li>
                             <dl>
                                 <dt>수신 기간</dt>
-                                <dd><%-convertDate(PPSInfo.inbEndDt)%></dd>
+                                <dd class="fe-to-date"></dd>
                             </dl>
                         </li>
                         <li>
                             <dl>
                                 <dt>번호 유지 기간</dt>
-                                <dd><%-convertDate(PPSInfo.numEndDt)%></dd>
+                                <dd class="fe-remain-date"></dd>
                             </dl>
                         </li>
                     </ul>

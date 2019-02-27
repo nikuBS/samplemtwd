@@ -10,9 +10,6 @@ import BrowserHelper from '../../../../utils/browser.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
-import { Observable } from 'rxjs/Observable';
-import { RECHARGE_DATA_CODE } from '../../../../types/bff.type';
-import { MYT_DATA_RECHARGE_MSG } from '../../../../types/string.type';
 
 class MyTDataPrepaidVoiceAuto extends TwViewController {
   constructor() {
@@ -31,32 +28,25 @@ class MyTDataPrepaidVoiceAuto extends TwViewController {
     // this.renderPrepaidVoiceAuto(req, res, next, svcInfo, pageInfo);
   }
 
-  public renderPrepaidVoiceAuto = (req: Request, res: Response, next: NextFunction, svcInfo, pageInfo) => Observable.combineLatest(
-    this.getPPSInfo(),
-    this.getAutoPPSInfo()
-  ).subscribe(([PPSInfo, AutoInfo]) => {
-    if ( PPSInfo.code === API_CODE.CODE_00 ) {
+  public renderPrepaidVoiceAuto = (req: Request, res: Response, next: NextFunction, svcInfo, pageInfo) =>
+    this.getAutoPPSInfo().subscribe((AutoInfo) => {
+    if ( AutoInfo.code === API_CODE.CODE_00 ) {
       res.render('prepaid/myt-data.prepaid.voice-auto.html', {
-        PPSInfo: PPSInfo.result,
         AutoInfo: this.parseAuto(AutoInfo),
         svcInfo: svcInfo,
         pageInfo: pageInfo,
-        isApp: BrowserHelper.isApp(req),
-        convertDate: this.convertDate,
         convertAmount: this.convertAmount,
         convertDashDate: this.convertDashDate
       });
     } else {
       this.error.render(res, {
-        code: PPSInfo.code,
-        msg: PPSInfo.msg,
+        code: AutoInfo.code,
+        msg: AutoInfo.msg,
         pageInfo: pageInfo,
         svcInfo: svcInfo
       });
     }
   })
-
-  public getPPSInfo = () => this.apiService.request(API_CMD.BFF_05_0013, {});
 
   public getAutoPPSInfo = () => this.apiService.request(API_CMD.BFF_06_0055, {});
 
@@ -71,8 +61,6 @@ class MyTDataPrepaidVoiceAuto extends TwViewController {
 
     return result;
   }
-
-  public convertDate = (sDate) => DateHelper.getShortDate(sDate);
 
   public convertDashDate = (sDate) => DateHelper.getDashShortDateNoDot(sDate);
 

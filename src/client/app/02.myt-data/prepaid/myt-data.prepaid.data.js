@@ -73,8 +73,8 @@ Tw.MyTDataPrepaidData.prototype = {
   _setData: function (result) {
     var data, dataText = 0;
     if (!Tw.FormatHelper.isEmpty(result.remained) && result.remained !== '0') {
-      data = Tw.FormatHelper.addComma(result.remained);
-      dataText = result.remained;
+      data = result.remained;
+      dataText = Tw.FormatHelper.addComma(result.remained);
     }
     this.$data.attr('data-value', data).text(dataText);
     this.$dataSelector.attr('data-code', result.dataYn);
