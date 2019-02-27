@@ -41,6 +41,8 @@ Tw.CustomerSvcInfoNotice.prototype = {
     this.$btnCategory.on('click', $.proxy(this._openCategorySelectPopup, this));
     this.$btnMoreList.on('click', $.proxy(this._loadMoreList, this));
 
+    this.$container.on('click', '.fe-link-external', $.proxy(this._confirmExternalUrl, this));
+
     var originalAddClassMethod = $.fn.addClass;
 
     $.fn.addClass = function() {
@@ -64,6 +66,21 @@ Tw.CustomerSvcInfoNotice.prototype = {
           });
       }, 100);
     }
+  },
+
+  _confirmExternalUrl: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!Tw.BrowserHelper.isApp()) {
+      return this._openExternalUrl($(e.currentTarget).attr('href'));
+    }
+
+    Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, $(e.currentTarget).attr('href')));
+  },
+
+  _openExternalUrl: function(href) {
+    Tw.CommonHelper.openUrlExternal(href);
   },
 
   _setContentsReq: function(e) {
