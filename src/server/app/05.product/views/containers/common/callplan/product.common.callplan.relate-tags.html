@@ -9,8 +9,8 @@
     ) {
 
     const tagsClass = relateTags && relateTags.length > 0 && (!isCombine && !isDiscount) ? 'nogaps-btm widget' : '';
-    let similarPath = '/' + basicInfo.prodTypListPath + (similarProductInfo.benefitPath ? '/' + similarProductInfo.benefitPath : '');
-    if ( isMobileplan || isMobileplanAdd || isRoaming ) {
+    let similarPath = '/' + basicInfo.prodTypListPath + (similarProductInfo && similarProductInfo.benefitPath ? '/' + similarProductInfo.benefitPath : '');
+    if ( (isMobileplan || isMobileplanAdd || isRoaming) && similarProductInfo ) {
         similarPath += '?filters=' + similarProductInfo.prodFltIds;
     }
 %>

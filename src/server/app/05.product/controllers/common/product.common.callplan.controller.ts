@@ -491,7 +491,7 @@ class ProductCommonCallplan extends TwViewController {
    * @private
    */
   private _convertSimilarProduct (prodTypCd: any, similarProductInfo: any) {
-    if (similarProductInfo.code !== API_CODE.CODE_00) {
+    if (similarProductInfo.code !== API_CODE.CODE_00 || FormatHelper.isEmpty(similarProductInfo.result)) {
       return null;
     }
 
@@ -775,7 +775,8 @@ class ProductCommonCallplan extends TwViewController {
 
           // 시리즈 상품 처리
           const seriesResult = {
-            prodGrpNm : FormatHelper.isEmpty(seriesInfo.result.prodGrpNm) ? null : seriesInfo.result.prodGrpNm,
+            prodGrpNm : FormatHelper.isEmpty(seriesInfo.result) || FormatHelper.isEmpty(seriesInfo.result.prodGrpNm) ?
+              null : seriesInfo.result.prodGrpNm,
             list: this._convertSeriesAndRecommendInfo(seriesInfo.result, true)
           };
 
