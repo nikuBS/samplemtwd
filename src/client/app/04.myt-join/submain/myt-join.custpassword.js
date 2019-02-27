@@ -266,13 +266,16 @@ Tw.MytJoinCustpassword.prototype = {
     if ( params.code === Tw.API_CODE.CODE_00 ) {
 
       // update svcInfo
-      this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {});
+      this._apiService.request(Tw.NODE_CMD.UPDATE_SVC, {})
+        .done($.proxy(function(){
 
-      var msgObj = this._new ? Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A64 : Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A62;
-      this._popupService.openAlert(msgObj.MSG, msgObj.TITLE, null, $.proxy(function(){
-        // 완료 후 MS페이지로 이동
-        this._historyService.goLoad('/myt-join/submain/');
-      }, this));
+          var msgObj = this._new ? Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A64 : Tw.ALERT_MSG_MYT_JOIN.ALERT_2_A62;
+          this._popupService.openAlert(msgObj.MSG, msgObj.TITLE, null, $.proxy(function(){
+            // 완료 후 MS페이지로 이동
+            this._historyService.goLoad('/myt-join/submain/');
+          }, this));
+        }, this));
+
     }
     else {
       // ICAS3215	고객보호비밀번호 오입력 5회(잠김 예정)
