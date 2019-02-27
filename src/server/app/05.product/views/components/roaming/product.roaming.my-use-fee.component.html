@@ -23,10 +23,10 @@
                         </span>
                     <span class="lineinfo-data">
                         <span class="info-title">
-                            <% if (prodList[keyProd].basFeeTxt === '0') { %>
-                            무료
-                            <% } else { %>
+                            <% if (/^[0-9,]+$/.test(prodList[keyProd].basFeeTxt)) { %>
                             <span class="ff-tg-black"><%= prodList[keyProd].basFeeTxt %></span><span class="unit ff-tg-medium">원</span>
+                            <% } else { %>
+                            <%= prodList[keyProd].basFeeTxt || '무료' %>
                             <% } %>
                         </span>
                     </span>

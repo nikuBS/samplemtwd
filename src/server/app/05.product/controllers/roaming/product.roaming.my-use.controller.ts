@@ -70,7 +70,7 @@ export default class ProductRoamingMyUse extends TwViewController {
         roamingProdList: resp.result.roamingProdList.map(prod => {
           return {
             ...prod,
-            basFeeTxt: (prod.basFeeTxt === '' || prod.basFeeTxt === '무료') ? '0' : FormatHelper.numberWithCommas(Number(prod.basFeeTxt)),
+            basFeeTxt: FormatHelper.getFeeContents(prod.basFeeTxt === '0' ? '무료' : prod.basFeeTxt),
             scrbDt: DateHelper.getShortDate(prod.scrbDt),
             btnList: prod.prodSetYn !== 'Y' ? [] : prod.btnList.filter(btn => btn.btnTypCd === 'SE')
           };
@@ -98,7 +98,7 @@ export default class ProductRoamingMyUse extends TwViewController {
         roamingProdList: resp.result.roamingProdList.map(prod => {
           return {
             ...prod,
-            basFeeTxt: (prod.basFeeTxt === '' || prod.basFeeTxt === '무료') ? '0' : FormatHelper.numberWithCommas(Number(prod.basFeeTxt)),
+            basFeeTxt: FormatHelper.getFeeContents(prod.basFeeTxt === '0' ? '무료' : prod.basFeeTxt),
             scrbDt: DateHelper.getShortDate(prod.scrbDt),
             btnList: prod.prodSetYn !== 'Y' ? [] : prod.btnList.filter(btn => btn.btnTypCd === 'SE')
           };
