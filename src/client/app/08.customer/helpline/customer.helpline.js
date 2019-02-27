@@ -6,7 +6,9 @@
 
 Tw.CustomerHelpline = function(rootEl, timeInfo) {
   this.$container = rootEl;
-  this._availableTimes = timeInfo.availHours;
+  this._availableTimes = _.map(timeInfo.availHours, function(time) {
+    return Number(time);
+  });
   this._reservationDate = Tw.DateHelper.getCurrentShortDate(timeInfo.curDate);
   this._historyService = new Tw.HistoryService(rootEl);
   this._historyService.init('hash');
