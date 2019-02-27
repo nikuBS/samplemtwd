@@ -8,6 +8,7 @@ Tw.MenuSearchComponent = function (container, menu) {
   this.$menu = menu;
 
   this._apiService = Tw.Api;
+  this._popupService = Tw.Popup;
   this._historyService = new Tw.HistoryService();
 
   this._cacheElements();
@@ -57,6 +58,8 @@ Tw.MenuSearchComponent.prototype = {
 
     var keyword = $(e.currentTarget).val();
     if (keyword.trim() === '') {  // 검색어가 비어 있을 경우 취소
+      this._popupService.openAlert(Tw.ALERT_MSG_SEARCH.KEYWORD_ERR,
+        undefined, undefined, undefined, 'menu_search_alert');
       return;
     }
 
