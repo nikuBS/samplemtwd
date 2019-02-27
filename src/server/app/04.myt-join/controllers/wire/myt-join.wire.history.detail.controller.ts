@@ -13,11 +13,11 @@ class MyTJoinWireHistoryDetail extends TwViewController {
 
   // titles
   private TITLE_MAP: Object = {
-    '167' : '신규가입 상세 내역',
-    '162' : '설치 장소 변경 상세 내역',
-    '168' : '가입 상품 변경 상세 내역',
+    '167' : '신규가입 상세내역',
+    '162' : '설치 장소 변경 상세내역',
+    '168' : '가입 상품 변경 상세내역',
     '143' : '약정기간 변경 상세내역',
-    '153' : '요금 상품 변경 상세 내역'
+    '153' : '요금 상품 변경 상세내역'
   };
 
   constructor() {
