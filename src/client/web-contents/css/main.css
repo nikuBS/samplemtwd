@@ -910,7 +910,7 @@
     text-align: left;
     font-weight: 600; }
   .main-fee-box .fee-cont > .tx {
-    margin-top: 2.25rem;
+    padding: 1.25rem 0 0.9375rem;
     font-size: 0.875rem;
     font-weight: 300;
     line-height: 1.25rem; }
@@ -971,7 +971,8 @@
     font-weight: 300;
     font-size: 0.75rem;
     line-height: 1.25rem;
-    text-align: left; }
+    text-align: left;
+    padding-bottom: 0.875rem; }
 
 .main-fee-box .btn-area {
   overflow: hidden;
