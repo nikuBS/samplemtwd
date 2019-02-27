@@ -119,16 +119,25 @@ Tw.CustomerEmailUpload.prototype = {
       this.uploadFiles.map($.proxy(fnMakeUploadForm, this));
 
       var fnSuccessUpload = function () {
+        var fileList = Array.from(arguments);
         var res = { code: Tw.API_CODE.CODE_00, result: [] };
 
-        for ( var i = 0; i < arguments.length; i++ ) {
-          res.result = res.result.concat(arguments[i][0].result);
+        if ( fileList.indexOf('success') !== -1 ) {
+          res.result = res.result.concat(fileList[0].result);
+        } else {
+          for ( var i = 0; i < fileList.length; i++ ) {
+            res.result = res.result.concat(fileList[i][0].result);
+          }
         }
 
         this._successUploadFile(res);
       };
 
-      $.when.apply(undefined, uploadQueue).then($.proxy(fnSuccessUpload, this, arguments));
+      if ( uploadQueue.length === 1 ) {
+        uploadQueue[0].done($.proxy(fnSuccessUpload, this));
+      } else {
+        $.when.apply($, uploadQueue).done($.proxy(fnSuccessUpload, this));
+      }
     }
   },
 
