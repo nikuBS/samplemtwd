@@ -9,8 +9,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import BrowserHelper from '../../../../utils/browser.helper';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
-import DateHelper from '../../../../utils/date.helper';
-import {DATA_UNIT, MYT_DATA_RECHARGE_MSG} from '../../../../types/string.type';
+import {MYT_DATA_RECHARGE_MSG} from '../../../../types/string.type';
 import {RECHARGE_DATA_CODE} from '../../../../types/bff.type';
 import {Observable} from 'rxjs/Observable';
 
@@ -21,25 +20,19 @@ class MyTDataPrepaidDataAuto extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     if (BrowserHelper.isApp(req)) {
-      Observable.combineLatest(
-        this.getPPSInfo(),
-        this.getAutoInfo()
-      ).subscribe(([ppsInfo, autoInfo]) => {
-        if (ppsInfo.code === API_CODE.CODE_00 && autoInfo.code === API_CODE.CODE_00) {
-          const ppsResult = ppsInfo.result;
+      this.getAutoInfo().subscribe((autoInfo) => {
+        if (autoInfo.code === API_CODE.CODE_00) {
           const autoResult = autoInfo.result;
 
           res.render('prepaid/myt-data.prepaid.data-auto.html', {
-            ppsInfo: this.parseData(ppsResult),
             autoInfo: this.parseAuto(autoResult),
             svcInfo: svcInfo,
-            pageInfo: pageInfo,
-            isApp: BrowserHelper.isApp(req)
+            pageInfo: pageInfo
           });
         } else {
           this.error.render(res, {
-            code: ppsInfo.code === API_CODE.CODE_00 ? autoInfo.code : ppsInfo.code,
-            msg: ppsInfo.code === API_CODE.CODE_00 ? autoInfo.msg : ppsInfo.msg,
+            code: autoInfo.code,
+            msg: autoInfo.msg,
             pageInfo: pageInfo,
             svcInfo: svcInfo
           });
@@ -52,26 +45,8 @@ class MyTDataPrepaidDataAuto extends TwViewController {
     }
   }
 
-  private getPPSInfo(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_05_0013, {});
-  }
-
   private getAutoInfo(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_06_0060, {});
-  }
-
-  private parseData(result: any): any {
-    if (!FormatHelper.isEmpty(result.remained) || result.remained !== '0') {
-      result.remainData = FormatHelper.addComma(result.remained);
-    } else {
-      result.remained = 0;
-      result.remainData = 0;
-    }
-    result.fromDate = DateHelper.getShortDate(result.obEndDt);
-    result.toDate = DateHelper.getShortDate(result.inbEndDt);
-    result.remainDate = DateHelper.getShortDate(result.numEndDt);
-
-    return result;
   }
 
   private parseAuto(result: any): any {

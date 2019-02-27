@@ -33,7 +33,7 @@
                                 <button id="DC_09_03_tip_02" class="tip-view" title="남은 데이터 양 TIP보기" aria-haspopup="true" type="button">TIP</button>
                             </dt>
                             <dd class="t-point">
-                                <span class="num ff-tg-black fe-data" data-value="<%= ppsInfo.remained %>"><%= ppsInfo.remainData %></span>
+                                <span class="num ff-tg-black fe-data"></span>
                                 <span class="ff-tg-medium">MB</span>
                             </dd>
                         </dl>
@@ -41,19 +41,19 @@
                             <li>
                                 <dl>
                                     <dt>발신(사용) 기간</dt>
-                                    <dd><%= ppsInfo.fromDate %></dd>
+                                    <dd class="fe-from-date"></dd>
                                 </dl>
                             </li>
                             <li>
                                 <dl>
                                     <dt>수신(데이터 유지) 기간</dt>
-                                    <dd><%= ppsInfo.toDate %></dd>
+                                    <dd class="fe-to-date"></dd>
                                 </dl>
                             </li>
                             <li>
                                 <dl>
                                     <dt>번호 유지 기간</dt>
-                                    <dd><%= ppsInfo.remainDate %></dd>
+                                    <dd class="fe-remain-date"></dd>
                                 </dl>
                             </li>
                         </ul>
@@ -65,12 +65,12 @@
 
                 <!-- .cont-box -->
                 <div class="cont-box">
-                    <p class="fe-email-address none"><%= emailAddress %></p>
+                    <p class="fe-email-address none"></p>
                     <ul class="form-data-list">
                         <li>
                             <label class="tit" for="formInput01">충전 데이터</label>
                             <span class="inputbox">
-                                <button data-code="<%= ppsInfo.dataYn %>" class="bt-dropdown big fe-select-data fe-required-select"
+                                <button class="bt-dropdown big fe-select-data fe-required-select"
                                         title="충전 데이터 선택" aria-haspopup="true">
                                     데이터 선택<span class="ico" title="충전 데이터 선택"></span>
                                 </button>

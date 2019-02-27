@@ -150,7 +150,7 @@ export const API_CMD = {
   BFF_05_0009: { path: '/core-balance/:version/data-sharings/child', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0010: { path: '/core-balance/:version/children', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0011: { path: '/core-balance/:version/tdata-sharings/:args0', method: API_METHOD.DELETE, server: API_SERVER.BFF, bypass: true },
-  BFF_05_0013: { path: '/core-bill/:version/pps-card', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
+  BFF_05_0013: { path: '/core-bill/:version/pps-card', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0014: { path: '/core-balance/:version/pps-histories', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0020: { path: '/core-bill/:version/bill-pay/recent-bills', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0021: { path: '/core-bill/:version/bill-pay/recent-usages', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
