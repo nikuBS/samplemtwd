@@ -39,6 +39,8 @@ Tw.CURRENCY_UNIT = {
   POINT: '점'
 };
 
+Tw.TIMEOUT_ERROR_MSG = '요청을 처리하는데 시간이 오래 걸리고 있습니다. 잠시 후 다시 시도해주세요.';
+
 Tw.BUTTON_LABEL = {
   CONFIRM: '확인',
   CANCEL: '취소',
