@@ -48,7 +48,7 @@ Tw.MyTDataPrepaidData.prototype = {
   },
   _getFail: function (err) {
     Tw.CommonHelper.endLoading('.container');
-    Tw.Error(err.code, err.msg).page();
+    Tw.Error(err.code, err.msg).replacePage();
   },
   _getEmailAddress: function () {
     this._apiService.request(Tw.API_CMD.BFF_01_0061, {})
