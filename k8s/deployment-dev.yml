@@ -6,6 +6,11 @@ metadata:
     app: bff-nodejs-mobile
 spec:
   replicas: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 0
   selector:
     matchLabels:
       app: bff-nodejs-mobile
