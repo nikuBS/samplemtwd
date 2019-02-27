@@ -46,7 +46,7 @@ Tw.MyTDataFamilyHistory.prototype = {
 
   _requestRetrieve: function(requestCount, $before, $parent) {
     var serial = $parent.data('serial-number');
-    // this._handleDoneRetrieve($before, $parent, { code: '00', result: { remGbGty: '1', remMbGty: '0' } });
+    // this._handleDoneRetrieve($before, $parent, { code: '00', result: { remGbGty: '1', remMbGty: '11' } });
     this._apiService
       .request(Tw.API_CMD.BFF_06_0072, { reqCnt: requestCount, shrpotSerNo: serial })
       .done($.proxy(this._handleDoneRetrieve, this, $before, $parent));
@@ -81,7 +81,7 @@ Tw.MyTDataFamilyHistory.prototype = {
     var serial = $parent.data('serial-number');
     $before.siblings('.fe-ing').remove();
 
-    var nData = Number(share.remGbGty) + Number(share.remMbGty) / 1000 || 0;
+    var nData = Number(share.remGbGty) + Tw.FormatHelper.customDataFormat(share.remMbGty, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB).data || 0;
     if (nData > 0) {
       $parent.append(this._afterTmpl({ data: nData, serial: serial, gb: share.remGbGty, mb: share.remMbGty }));
     } else {
@@ -99,7 +99,7 @@ Tw.MyTDataFamilyHistory.prototype = {
         mb: $target.data('mb')
       };
 
-    changable.data = changable.gb + changable.mb / 1000 || 0;
+    changable.data = changable.gb + Tw.FormatHelper.customDataFormat(changable.mb, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB).data || 0;
 
     if (serial) {
       this._apiService

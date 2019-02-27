@@ -21,7 +21,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     this.$container.on('click', '.cancel', $.proxy(this._validateChangeAmount, this));
     this.$retrieveBtn.on('click', $.proxy(this._handleRerieveChangable, this, true));
     this.$input.on('focusout', $.proxy(this._validateChangeAmount, this));
-    this.$input.on('keyup', $.proxy(this._validateChangeAmount, this));
+    this.$input.on('keyup', $.proxy(this._handleTypeAmount, this));
     this.$submitBtn.on('click', $.proxy(this._clickSubmit, this));
   },
 
@@ -61,15 +61,18 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     this._validateChangeAmount();
   },
 
-  _validateChangeAmount: function() {
+  _handleTypeAmount: function() {
     var sValue = this.$input
       .val()
       .replace(/^0*/, '')
       .replace(/[^0-9]/g, '');
 
     this.$input.val(sValue);
+    this._validateChangeAmount();
+  },
 
-    var value = Number(sValue);
+  _validateChangeAmount: function() {
+    var value = Number(this.$input.val());
 
     if (!value) {
       this.$error.text(Tw.VALIDATE_MSG_MYT_DATA.NON_CHANGE_DATA);
