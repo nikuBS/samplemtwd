@@ -49,7 +49,7 @@ Tw.MyTDataPrepaidHistory.prototype = {
     this._popupService.open(
       {
         hbs: 'actionsheet01',
-        btnfloating: { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
+        btnfloating: { attr: 'type="button"', class: 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         layer: true,
         data: [
           {
@@ -229,21 +229,32 @@ Tw.MyTDataPrepaidHistory.prototype = {
   },
 
   _handleCancel: function(id, pageNum, code) {
+    skt_landing.action.loading.on({ ta: this.$container });
     if (Tw.FormatHelper.isEmpty(code)) {
       this._apiService
         .request(Tw.API_CMD.BFF_06_0069, { cancelOrderId: id, pageNum: pageNum, rowNum: Tw.DEFAULT_LIST_COUNT })
-        .done($.proxy(this._handleSuccessCancel, this));
+        .done($.proxy(this._handleSuccessCancel, this))
+        .fail($.proxy(this._fail, this));
     } else {
-      this._apiService.request(Tw.API_CMD.BFF_06_0070, { cancelOrderId: id, dataChargeCd: code }).done($.proxy(this._handleSuccessCancel, this));
+      this._apiService
+        .request(Tw.API_CMD.BFF_06_0070, { cancelOrderId: id, dataChargeCd: code })
+        .done($.proxy(this._handleSuccessCancel, this))
+        .fail($.proxy(this._fail, this));
     }
     this._popupService.close();
   },
 
   _handleSuccessCancel: function(resp) {
+    skt_landing.action.loading.off({ ta: this.$container });
     if (resp.code !== Tw.API_CODE.CODE_00) {
       Tw.Error(resp.code, resp.msg).pop();
     } else {
       Tw.CommonHelper.toast(Tw.ALERT_MSG_MYT_DATA.COMPLETE_CANCEL);
     }
+  },
+
+  _fail: function() {
+    skt_landing.action.loading.off({ ta: this.$container });
+    this._popupService.openAlert(Tw.TIMEOUT_ERROR_MSG);
   }
 };
