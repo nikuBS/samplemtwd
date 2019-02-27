@@ -8,7 +8,7 @@
   visibility: visible; }
 
 .quick-menu-list {
-  text-align: center; }
+  text-align: left; }
   .quick-menu-list:after {
     display: block;
     clear: both;

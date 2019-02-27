@@ -4892,19 +4892,21 @@ a.ui-button:active,
       height: 5rem; }
 
 /* 로딩 css 추가 */
-.profile-main-loader .loader {
-  position: absolute;
-  width: 2.5rem;
-  height: 2.5rem;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto; }
-  .profile-main-loader .loader :before {
-    content: '';
-    display: block;
-    padding-top: 100%; }
+.profile-main-loader {
+  z-index: 9999; }
+  .profile-main-loader .loader {
+    position: absolute;
+    width: 2.5rem;
+    height: 2.5rem;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto; }
+    .profile-main-loader .loader :before {
+      content: '';
+      display: block;
+      padding-top: 100%; }
 
 .circular-loader {
   -webkit-animation: rotate 2s linear infinite;

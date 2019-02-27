@@ -28938,6 +28938,8 @@ body.apphome {
       color: #178bce; }
     .plan-cont .tx-msg.disabled {
       color: #b2b2b2; }
+      .plan-cont .tx-msg.disabled .tx-point {
+        color: #b2b2b2; }
 
 /* 상품상세 */
 .pro-sub-area {
