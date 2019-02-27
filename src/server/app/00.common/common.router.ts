@@ -58,6 +58,7 @@ import CommonSearchMain from './controllers/search/common.search-main.controller
 import CommonUtilServiceBlock from './controllers/util/common.util.service-block.controller';
 import CommonSearchInResult from './controllers/search/common.search.in-result.controller';
 import CommonUtilServiceReady from './controllers/util/commin.util.service-ready.controller';
+import CommonMemberLoginLost from './controllers/member/common.member.login.lost.controller';
 
 export default class CommonRouter extends TwRouter {
   constructor() {
@@ -82,6 +83,7 @@ export default class CommonRouter extends TwRouter {
     this.controllers.push({ url: '/member/login/cust-pwd', controller: CommonMemberLoginCustPwd });
     this.controllers.push({ url: '/member/login/cust-pwdfail', controller: CommonMemberLoginCustPwdFail });
     this.controllers.push({ url: '/member/login/reactive', controller: CommonMemberLoginReactive });
+    this.controllers.push({ url: '/member/login/lost', controller: CommonMemberLoginLost });
     // member - slogin
     this.controllers.push({ url: '/member/slogin/aos', controller: CommonMemberSloginAos });
     this.controllers.push({ url: '/member/slogin/ios', controller: CommonMemberSloginIos });
