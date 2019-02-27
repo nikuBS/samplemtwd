@@ -27,6 +27,7 @@ Tw.MainMenuSettingsTermTypeCDE.prototype = {
   _bindEvents: function () {
     this.$container.on('click', '#fe-btn-view', $.proxy(this._onViewClicked, this));
     this.$container.on('click', '#fe-btn-action', $.proxy(this._onAction, this));
+    this.$container.on('click', '.fe-external-link', $.proxy(this._onExternalLink, this));
   },
   _onViewClicked: function (e) {
     var viewId = e.currentTarget.value;
@@ -84,5 +85,11 @@ Tw.MainMenuSettingsTermTypeCDE.prototype = {
     root.on('click', '.btn-floating', $.proxy(function () {
       this._popupService.close();
     }, this));
+  },
+  _onExternalLink: function (e) {
+    var url = $(e.currentTarget).attr('href');
+    Tw.CommonHelper.openUrlExternal(url);
+
+    return false;
   }
 };
