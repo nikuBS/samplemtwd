@@ -18,6 +18,7 @@ import { NODE_API_ERROR } from '../../types/string.type';
 import { COOKIE_KEY } from '../../types/common.type';
 import { CHANNEL_CODE, MENU_CODE, REDIS_KEY, REDIS_TOS_KEY } from '../../types/redis.type';
 import DateHelper from '../../utils/date.helper';
+const os = require('os');
 
 class ApiRouter {
   public router: Router;
@@ -143,7 +144,7 @@ class ApiRouter {
 
   private checkHealth(req: Request, res: Response, next: NextFunction) {
     res.json({
-      description: '',
+      description: 'NODE Health Check',
       status: 'UP'
     });
   }
@@ -155,7 +156,10 @@ class ApiRouter {
       result: {
         environment: env,
         version: VERSION,
-        cdn: environment[env].CDN
+        cdn: environment[env].CDN,
+        'tag-version': VERSION,
+        'api-version': VERSION,
+        'pod-name': os.hostname()
       }
     };
     res.json(resp);

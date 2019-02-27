@@ -98,8 +98,18 @@ Tw.CustomerResearches.prototype = {
   },
 
   _goHint: function(e) {
-    var url = e.target.getAttribute('data-hint-url');
-    Tw.CommonHelper.openUrlExternal(url);
+    var link = e.target.getAttribute('data-hint-url');
+    if (link.indexOf('http') !== -1) {
+      if (Tw.BrowserHelper.isApp()) {
+        Tw.CommonHelper.showDataCharge(function() {
+          Tw.CommonHelper.openUrlExternal(link);
+        });
+      } else {
+        Tw.CommonHelper.openUrlExternal(link);
+      }
+    } else {
+      window.location.href = link;
+    }
   },
 
   _handleLoadMore: function(e) {

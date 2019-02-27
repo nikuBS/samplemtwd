@@ -17,12 +17,26 @@
     <meta property="og:description" content="SKT framework" />
     <title><%= locals.pageInfo ? locals.pageInfo.seoMetaTagTitNm : 'SKT' %></title>
 </head>
-<script src="<%= CDN %>/js/vendor.js"></script>
-<script src="<%= CDN %>/js/<%= util %>"></script>
-<script src="<%= CDN %>/js/<%= common %>"></script>
 <script>
-  $(document).ready(function () {
-    new Tw.CommonMemberInit();
-  });
+  window.onload = function() {
+    var bridge = '<%= type.android %>' === 'Y' ? window.tworld :'<%= type.ios %>' === 'Y' ? window.webkit.messageHandlers.tworld : null;
+    var cookie = '';
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + 'TWM' + "=");
+    if ( parts.length === 2 ) {
+      cookie = parts.pop().split(";").shift();
+    }
+    if( bridge !== null ) {
+      bridge.postMessage({
+        command: 'session',
+        params: {
+          serverSession: cookie,
+          expired: 60 * 60 * 1000,
+          loginType: 'N'
+        }
+      });
+    }
+
+  };
 </script>
 </html>

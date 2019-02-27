@@ -20,12 +20,15 @@ Tw.PopupService.prototype = {
   _onHashChange: function (hash) {
     var lastHash = this._prevHashList[this._prevHashList.length - 1];
     Tw.Logger.log('[Popup] Hash Change', '#' + hash.base, lastHash);
-    if ( !Tw.FormatHelper.isEmpty(lastHash) && ('#' + hash.base) === lastHash.curHash ) {
-
-      var closeCallback = lastHash.closeCallback;
-      this._prevHashList.pop();
-      Tw.Logger.info('[Popup Close]');
-      this._popupClose(closeCallback);
+    if ( !Tw.FormatHelper.isEmpty(lastHash) ) {
+      if ( ('#' + hash.base) === lastHash.curHash ) {
+        var closeCallback = lastHash.closeCallback;
+        this._prevHashList.pop();
+        Tw.Logger.info('[Popup Close]');
+        this._popupClose(closeCallback);
+      }
+    } else if(hash.base.indexOf('_P') >= 0 || hash.base.indexOf('popup') >= 0) {
+      this._historyService.goBack();
     }
   },
   _onOpenPopup: function () {
