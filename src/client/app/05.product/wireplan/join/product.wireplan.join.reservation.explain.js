@@ -50,6 +50,7 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     this.$fileList = this.$container.find('.fe-file_list');
     this.$explainFile = this.$container.find('.fe-explain_file');
     this.$explainFileView = this.$container.find('.fe-explain_file_view');
+    this.$explainFileViewClone = this.$explainFileView.parents('.file-wrap').html();
 
     this.$btnFamilyType = this.$container.find('.fe-btn_family_type');
     this.$btnFamilyAdd = this.$container.find('.fe-btn_family_add');
@@ -61,16 +62,17 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
     this.$btnFamilyType.on('click', $.proxy(this._openFamilyTypePop, this));
     this.$btnExplainApply.on('click', $.proxy(this._doCallback, this));
     this.$btnFamilyAdd.on('click', $.proxy(this._addFamily, this));
-    this.$btnExplainFileAdd.on('click', $.proxy(this._uploadExplainFile, this));
 
-    this.$container.on('click', 'input[type=file]', $.proxy(this._openCustomFileChooser, this));
     this.$familyAddWrap.on('keyup input', 'input[type=text],input[type=tel]', $.proxy(this._procEnableAddFamilyBtn, this));
     this.$familyAddWrap.on('keyup', 'input[type=tel]', $.proxy(this._onEnter, this));
     this.$familyAddWrap.on('click', '.fe-btn_cancel', $.proxy(this._procEnableAddFamilyBtn, this));
     this.$familyList.on('change', 'input[type=checkbox]', $.proxy(this._procEnableApplyBtn, this));
     this.$familyList.on('click', '.fe-btn_family_del', $.proxy(this._delFamily, this));
 
-    this.$explainFile.on('change', $.proxy(this._onChangeExplainFile, this));
+    this.$container.on('click', 'input[type=file]', $.proxy(this._openCustomFileChooser, this));
+    this.$container.on('click', '.fe-btn_explain_file_add', $.proxy(this._uploadExplainFile, this));
+    this.$container.on('change', '.fe-explain_file', $.proxy(this._onChangeExplainFile, this));
+
     this.$fileList.on('click', '.fe-btn_explain_file_del', $.proxy(this._delExplainFile, this));
   },
 
@@ -280,7 +282,7 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
   },
 
   _uploadExplainFile: function() {
-    var fileInfo = this.$explainFile.get(0).files[0];
+    var fileInfo = this.$container.find('.fe-explain_file').get(0).files[0];
 
     if (fileInfo.size > this._limitFileByteSize) {
       return this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A32.TITLE);
@@ -324,8 +326,9 @@ Tw.ProductWireplanJoinReservationExplain.prototype = {
   },
 
   _clearExplainFile: function() {
-    this.$explainFileView.val('');
+    this.$container.find('.fe-explain_file_view').parents('.file-wrap').html(this.$explainFileViewClone);
     this._toggleBtn(this.$btnExplainFileAdd, false);
+    skt_landing.widgets.widget_init('.file-wrap');
   },
 
   _toggleBtn: function($btn, isEnable) {

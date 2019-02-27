@@ -53,6 +53,7 @@ Tw.ProductMobileplanSettingNumber.prototype = {
     this.$inputNumber.val(res.params.phoneNumber);
     this._toggleClearBtn();
     this._toggleNumAddBtn();
+    this._blurInputNumber();
   },
 
   _addNum: function() {

@@ -55,6 +55,7 @@ Tw.ProductMobileplanJoinShareLine.prototype = {
     this.$inputNumber.val(res.params.phoneNumber);
     this._toggleSetupButton(this.$inputNumber.val().length > 0);
     this._toggleClearBtn();
+    this._blurInputNumber();
   },
 
   _detectInputNumber: function(e) {
