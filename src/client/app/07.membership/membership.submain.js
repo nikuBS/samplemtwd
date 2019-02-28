@@ -298,12 +298,12 @@ Tw.MembershipSubmain.prototype = {
       } else {
         if ('geolocation' in navigator) {
           // Only works in secure mode(Https) - for test, use localhost for url
-          navigator.geolocation.getCurrentPosition($.proxy(function (location) {
-            this._getAreaByGeo({
-              longitude: location.coords.longitude,
-              latitude: location.coords.latitude
-            });
-          }, this));
+          navigator.geolocation.getCurrentPosition($.proxy(this._successGeolocation, this), $.proxy(this._failGeolocation, this));
+        } else {
+          this._getAreaByGeo({
+            latitude: '37.5600420',
+            longitude: '126.9858500'
+          });
         }
       }
     } else {
@@ -312,6 +312,24 @@ Tw.MembershipSubmain.prototype = {
         longitude: '126.9858500'
       });
     }
+  },
+  _failGeolocation: function () {
+    Tw.Logger.info('_fail geolocation getCurrentPosition');
+    var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
+    this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
+        $.proxy(function () {
+          this._getAreaByGeo({
+            latitude: '37.5600420',
+            longitude: '126.9858500'
+          });
+        }, this));
+  },
+  _successGeolocation: function (location) {
+    Tw.Logger.info('_success geolocation getCurrentPosition');
+    this._getAreaByGeo({
+      longitude: location.coords.longitude,
+      latitude: location.coords.latitude
+    });
   },
   _getAreaByGeo: function (location) {
     Tw.Logger.info('current location : ', location);
