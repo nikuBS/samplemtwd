@@ -250,7 +250,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       ocb_accum_agree_yn: 'N', // OKcashbag 기능 추가
       mktg_agree_yn: 'N', // 마케팅활용
       addr_cd: this.addrCd,
-      cust_email_addr: this.$emailAddr.val() // email 주소
+      cust_email_addr: this.$emailAddr.val() || '' // email 주소
     };
 
     var cashbagCnt = 0;
