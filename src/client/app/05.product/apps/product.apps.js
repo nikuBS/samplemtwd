@@ -89,6 +89,7 @@ Tw.ProductApps.prototype = {
       });
 
       this._appendApps();
+      this.$container.find('.etc-page-list').removeClass('none');
     }
   },
 
@@ -121,6 +122,7 @@ Tw.ProductApps.prototype = {
     }
 
     this._appendApps();
+    this.$container.find('.etc-page-list').removeClass('none');
   },
 
   _appendApps: function() {
