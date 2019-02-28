@@ -35,7 +35,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
   },
 
   _getPpsInfo: function () {
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading('.container', 'grey');
     this._apiService.request(Tw.API_CMD.BFF_05_0013, {})
       .done($.proxy(this._getSuccess, this))
       .fail($.proxy(this._getFail, this));
@@ -311,7 +311,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
   },
 
   _selectPopupCallback: function ($target, $layer) {
-    $layer.on('click', '[data-value]', $.proxy(this._setSelectedValue, this, $target));
+    $layer.on('click', 'button', $.proxy(this._setSelectedValue, this, $target));
     // $layer.on('click', '.tw-popup-closeBtn', $.proxy(this._validSelectedValue, this, $target));
   },
 
@@ -319,7 +319,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
     var $error = $($elButton).closest('li').find('.error-txt');
     $error.addClass('blind');
 
-    if ( Tw.FormatHelper.isEmpty($($elButton).data('amount')) ) {
+    if ( Tw.FormatHelper.isEmpty($($elButton).attr('data-amount')) ) {
       $($error.get(0)).removeClass('blind');
     }
   },
@@ -327,7 +327,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
   _setSelectedValue: function ($target, e) {
     this._popupService.close();
     $target.text($(e.currentTarget).text());
-    $target.data('amount', $(e.currentTarget).data('value'));
+    $target.attr('data-amount', $(e.currentTarget).attr('data-value'));
   },
 
   _onShowExampleCard: function () {
