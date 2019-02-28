@@ -84,6 +84,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     else {
       this.$emailError.removeClass('blind');
     }
+    this.isEmailVaild = !isVaild;
   },
 
   _onClickCorporateList: function () {
@@ -136,7 +137,8 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     if ( this._tAllCheck && !$target.prop('checked') ) {
       this.$tAgreeCheckBox.find('input').prop('checked', false);
       this._tAllCheck = false;
-    } else if ( this.$tAgreeItems.find('input').filter(':not(:checked)').length < 1 ) { // 전부 선택 시 모두 자동 선택
+    }
+    else if ( this.$tAgreeItems.find('input').filter(':not(:checked)').length < 1 ) { // 전부 선택 시 모두 자동 선택
       this.$tAgreeCheckBox.find('input').trigger('click');
     }
   },
@@ -146,7 +148,8 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     if ( this._cAllCheck && !$target.prop('checked') ) {
       this.$cAgreeCheckBox.find('input').prop('checked', false);
       this._cAllCheck = false;
-    } else if ( this.$cAgreeItems.find('input').filter(':not(:checked)').length < 1 ) { // 전부 선택 시 모두 자동 선택
+    }
+    else if ( this.$cAgreeItems.find('input').filter(':not(:checked)').length < 1 ) { // 전부 선택 시 모두 자동 선택
       this.$cAgreeCheckBox.find('input').trigger('click');
     }
   },
@@ -191,6 +194,10 @@ Tw.MyTBenefitMembershipJoin.prototype = {
         this.$joinBtn.attr('disabled', 'disabled');
       }
     }
+    // 이메일주소가 잘못된 경우
+    if ( this.data.isCorporateBody && this.isEmailVaild ) {
+      this.$joinBtn.attr('disabled', 'disabled');
+    }
   },
 
   _onClickCashbagCheckbox: function (event) {
@@ -203,7 +210,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     else {
       // DV001-15097 OKcashbag 기능 취초 시 알럿 추가
       this._popupService.openConfirmButton(Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A63.MSG, Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A63.TITLE,
-        $.proxy(function() {
+        $.proxy(function () {
           if ( !this.$cashbagList.hasClass('blind') ) {
             this.$cashbagList.addClass('blind');
           }
@@ -212,8 +219,8 @@ Tw.MyTBenefitMembershipJoin.prototype = {
           }
           this._checkOkCashbag = false;
           this._popupService.close();
-        }, this), $.proxy(function() {
-          if (this._checkOkCashbag) {
+        }, this), $.proxy(function () {
+          if ( this._checkOkCashbag ) {
             this.$isCashbagCheckbox.find('input').trigger('click');
           }
         }, this), Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
@@ -221,6 +228,11 @@ Tw.MyTBenefitMembershipJoin.prototype = {
   },
 
   _onClickJoinBtn: function () {
+    // 이메일주소가 잘못된 경우
+    if ( this.data.isCorporateBody && this.isEmailVaild ) {
+      this.$joinBtn.attr('disabled', 'disabled');
+      return false;
+    }
     this._popupService.openModalTypeA(Tw.ALERT_MSG_MEMBERSHIP.JOIN.TITLE, Tw.ALERT_MSG_MEMBERSHIP.JOIN.CONTENT,
       Tw.ALERT_MSG_MEMBERSHIP.JOIN.OK_BTN, null, $.proxy(this._requestMembershipJoin, this), null);
   },
@@ -237,12 +249,10 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       sms_agree_yn: 'N', // 멤버십 이용내역 안내
       ocb_accum_agree_yn: 'N', // OKcashbag 기능 추가
       mktg_agree_yn: 'N', // 마케팅활용
-      addr_cd: this.addrCd
+      addr_cd: this.addrCd,
+      cust_email_addr: this.$emailAddr.val() || '' // email 주소
     };
 
-    if ( this.data.isCorporateBody ) {
-      params.cust_email_addr = this.$emailAddr.val(); // email 주소
-    }
     var cashbagCnt = 0;
     for ( var i = 0; i < $defaultOpt.length; i++ ) {
       var $item = $defaultOpt.eq(i);
@@ -292,7 +302,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
   _onSuccessJoinMembership: function (resp) {
     this.loadingView(false);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.afterRequestSuccess('/membership/my/history', '/membership/submain',
+      this._popupService.afterRequestSuccess('/membership/my/history?home=Y', '/membership/submain',
         Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.LINK_TITLE, Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.TITLE,
         Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.CONTENT);
       // 완료 팝업이 뜬 이후에 T Pay 관련 팝업 띄우기 위함
