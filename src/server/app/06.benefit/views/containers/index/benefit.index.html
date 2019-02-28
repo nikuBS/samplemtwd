@@ -90,7 +90,7 @@
                             <div class="inner-wrap">
                                 <div class="widget">
                                     <div class="widget-box radio">
-                                        <ul class="select-list" role="radiogroup" data-check-disabled>
+                                        <ul id="fe-preview-internet" class="select-list" role="radiogroup" data-check-disabled>
                                             <li class="radiobox btn-type02" role="radio">
                                                 <input type="radio" name="inetTypCd" value="F1" title="인터넷" data-name="inetTypCd" autocomplete="off" aria-labelledby="aria-comp-radio1"/><!-- 체크상태일 경우 checked="checked" -->
                                                 <span class="radio-txt ff-tb" id="aria-comp-radio1">광랜 1회선</span>
@@ -110,16 +110,16 @@
                             <h4 class="dis-tit">이동전화</h4>
                             <div class="inner-wrap">
                                 <div class="line-control-wrap"><!-- 모든 버튼 비활성화의 경우 all-disabled 클래스 추가 -->
-                                    <button class="minus disabled" type="button" disabled="disabled">회선삭제</button><!-- 비활성화의 경우 disabled 속성,클래스 추가 -->
+                                    <button class="minus fe-minus disabled" type="button" disabled="disabled">회선삭제</button><!-- 비활성화의 경우 disabled 속성,클래스 추가 -->
                                     <span class="txt"><span data-name="mblPhonLineCnt">1</span>회선</span>
-                                    <button class="plus" type="button">회선추가</button>
+                                    <button class="plus fe-plus" type="button">회선추가</button>
                                 </div>
                             </div>
                             <h4 class="dis-tit">TV</h4>
                             <div class="inner-wrap">
                                 <div class="widget">
                                     <div class="widget-box radio">
-                                        <ul class="select-list" role="radiogroup" data-check-disabled>
+                                        <ul id="fe-preview-tv" class="select-list" role="radiogroup" data-check-disabled>
                                             <li class="radiobox btn-type02" role="radio"><!-- 비활성화일경우 .disabled 클래스 추가 , aria-disabled="true" -->
                                                 <input type="radio" name="btvUseYn" value="Y" title="TV" data-name="btvUseYn" autocomplete="off" aria-labelledby="aria-comp-radio4"/><!-- 체크상태일 경우 checked="checked" -->
                                                 <span class="radio-txt ff-tb" id="aria-comp-radio4">있음</span>
@@ -153,6 +153,9 @@
                             <ul id="fe-use-condition" class="bul-text-list">
                                 <!--어드민 통해 가져온 이용조건 노출 영역 -->
                             </ul>
+                        </div>
+                        <div id="fe-clear" class="btn-reset-wrap">
+                            <button type="button" class="btn">초기화</button>
                         </div>
                     </div>
                 </div>

@@ -60,10 +60,11 @@ Tw.BenefitIndex.prototype = {
     // this.$categoryTab.find('button').on('click', $.proxy(this._onClickCategory, this));
     this.$container.on('click', '[data-url]', $.proxy(this._goUrl, this));
     this.$container.on('change', '[data-check-disabled]', $.proxy(this._onCheckDisabled, this));
-    this.$container.on('click', '.plus, .minus', $.proxy(this._onVariations, this));
+    this.$container.on('click', '.fe-plus, .fe-minus', $.proxy(this._onVariations, this));
     this.$internetType.on('click', $.proxy(this._checkStateLine, this));
     this.$showDiscountBtn.on('click', $.proxy(this._reqDiscountAmt, this));
     this.$container.on('click', '[data-benefit-id]', $.proxy(this._onClickProduct, this)); // 카테고리 하위 리스트 클릭
+    this.$container.on('click', '#fe-clear', $.proxy(this._previewClear, this)); // 결합할인금액 미리보기 초기화
     $(window).on(Tw.INIT_COMPLETE, $.proxy(function(){
       this._setScrollLeft(this._convertPathToCategory());
     }, this));
@@ -207,7 +208,7 @@ Tw.BenefitIndex.prototype = {
     $this.siblings('button').prop('disabled', false).removeClass('disabled');
 
     // 감소 클릭
-    if ($this.hasClass('minus')) {
+    if ($this.hasClass('fe-minus')) {
       var _minCnt = 1;
       $lineCnt.text(_cnt-- < _minCnt ? _minCnt : _cnt);
       if (_cnt <= _minCnt) {
@@ -505,6 +506,27 @@ Tw.BenefitIndex.prototype = {
     this.$withTax.text(_data.dcPhrsAddDesc);
     this.$useCondition.html(_data.useCondHtmlCtt);
     this.$discountResult.removeClass('none');
+  },
+
+  /**
+   * 할인금액 미리보기 선택값 초기화
+   * @private
+   */
+  _previewClear: function() {
+    // 인터넷
+    this.$container.find('#fe-preview-internet li').removeClass('checked')
+      .attr('aria-checked', false)
+      .find('[name="inetTypCd"]').prop('checked', false);
+    // 이동전화
+    this.$mblPhonLineCnt.text('1');
+    this.$container.find('.fe-minus').addClass('disabled').prop('disabled', true);
+    this.$container.find('.fe-plus').removeClass('disabled').prop('disabled', false);
+    // TV
+    this.$container.find('#fe-preview-tv li').removeClass('checked')
+      .attr('aria-checked', false)
+      .find('[name="btvUseYn"]').prop('checked', false);
+
+    this._onCheckDisabled();
   },
 
   /**
