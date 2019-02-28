@@ -17,14 +17,15 @@
     </li>
     <li class="pt10">
         <span class="title">세트 구분</span>
-        <span class="tx-cont">세트(유선상품 <%= data.myInfo.wireProdCnt %>개)</span>
+        <span class="tx-cont"><%= data.myInfo.setNm %>(유선상품 <%= data.myInfo.wireProdCnt %>개)</span>
     </li>
     <li class="pt10">
         <span class="title">세트 약정</span>
         <span class="tx-cont">
-            약정만료
             <% if(data.myInfo.setPrdStaDt && data.myInfo.setPrdEndDt) { %>
-            (<%= data.myInfo.setPrdStaDt %> ~ <%= data.myInfo.setPrdEndDt %>)
+            약정만료(<%= data.myInfo.setPrdStaDt %> ~ <%= data.myInfo.setPrdEndDt %>)
+            <% } else {%>
+            무약정
             <% } %>
         </span>
     </li>
