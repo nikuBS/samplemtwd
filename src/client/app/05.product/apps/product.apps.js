@@ -111,6 +111,7 @@ Tw.ProductApps.prototype = {
       app.isNew = Tw.DateHelper.getDiffByUnit(app.newIconExpsEndDtm.substring(0, 8), this._today, 'days') >= 0;
       app.isInstalled = list[app.prodNm] || false;
       app.iconImg = Tw.Environment.cdn + app.iconImg;
+      app.idxExpsSeq = Number(app.idxExpsSeq);
 
       return app;
     });
