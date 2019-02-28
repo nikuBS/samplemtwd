@@ -16,7 +16,8 @@ Tw.TPayJoinLayerPopup.prototype = {
   open: function () {
     this._popupService.open({
         hbs: 'BE_04_02_L08',// hbs의 파일명
-        layer: true
+        layer: true,
+        cdn: Tw.Environment.cdn
       }, $.proxy(this._openCallback, this),
       $.proxy(this._closeCallback, this), 'BE_04_02_L08');
   },
