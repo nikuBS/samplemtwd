@@ -81,11 +81,11 @@ class MyTJoinSubmainController extends TwViewController {
       this._getInstallmentInfo(),
       this._getPausedState(),
       this._getLongPausedState(),
-      this._getWireFreeCall(data.svcInfo.svcNum),
-      // this._getOldNumberInfo(), // 성능이슈로 해당 API 호춯 하지 않도록 변경 (DV001-14167)
+      // this._getWireFreeCall(data.svcInfo.svcNum), // 성능개선건으로 해당 API 호출 하지 않도록 변경[DV001-15523]
+      // this._getOldNumberInfo(), // 성능이슈로 해당 API 호출 하지 않도록 변경 (DV001-14167)
       this._getChangeNumInfoService()
       // this.redisService.getData(REDIS_KEY.BANNER_ADMIN + pageInfo.menuId)
-    ).subscribe(([myline, myif, myhs, myap, mycpp, myinsp, myps, mylps, wirefree, /*oldnum,*/ numSvc/*, banner*/]) => {
+    ).subscribe(([myline, myif, myhs, myap, mycpp, myinsp, myps, mylps, /*wirefree,*/ /*oldnum,*/ numSvc/*, banner*/]) => {
       // 가입정보가 없는 경우에는 에러페이지 이동 (PPS는 가입정보 API로 조회불가하여 무선이력으로 확인)
       if ( this.type === 1 ) {
         if ( myhs.info ) {
@@ -131,7 +131,8 @@ class MyTJoinSubmainController extends TwViewController {
           break;
         case 2:
           data.myInfo = this._convertWireInfo(myif);
-          if ( wirefree === 'Y' ) {
+          // 집전화/인터넷전화인 경우 B끼리 무료통화대상 조회 버튼 노출
+          if ( data.svcInfo.svcAttrCd === 'S3' ) {
             data.isWireFree = true;
           }
           break;
