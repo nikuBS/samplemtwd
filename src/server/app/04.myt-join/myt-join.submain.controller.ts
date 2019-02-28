@@ -57,12 +57,14 @@ class MyTJoinSubmainController extends TwViewController {
       // 다른 회선 항목
       otherLines: this.convertOtherLines(Object.assign({}, svcInfo), Object.assign({}, allSvc))
     };
+    // 상태값 참조 : http://devops.sktelecom.com/myshare/pages/viewpage.action?pageId=53477532
     // 10: 신청/60: 초기화 -> 비밀번호 설정 유도
     // 20: 사용중/21:신청+등록완료 -> 회선 변경 시 비번 입력 필요, 비밀번호 변경 가능
+    // 30: 변경
     // 70: 비밀번호 잠김 -> 지점에서만 초기화 가능
     // 비밀번호 조회 시 최초 설정이 안되어있는 경우와 등록이 된 경우로 구분
     // 비밀번호 사용중 및 등록완료인 상태에서만 노
-    if ( data.svcInfo.pwdStCd === '20' || data.svcInfo.pwdStCd === '21' ) {
+    if ( data.svcInfo.pwdStCd === '20' || data.svcInfo.pwdStCd === '21' || data.svcInfo.pwdStCd === '30' ) {
       this.isPwdSt = true;
     }
     // PPS, 휴대폰이 아닌 경우는 서비스명 노출

@@ -285,7 +285,7 @@ class MytJoinInfoDiscount extends TwViewController {
       tAgree.agreeTotMonth = tAgree.agrmtMthCnt; // 약정 전체 개월수
       tAgree.agreePay = FormatHelper.addComma(tAgree.dcAmt); // 약정 금액
       tAgree.penalty = FormatHelper.addComma(tAgree.penAmt); // 위약금
-      thisMain._proDateRemDt(
+      thisMain._proDate(
         tAgree,
         tAgree.staDt,
         tAgree.agrmtTermDt,
@@ -322,7 +322,7 @@ class MytJoinInfoDiscount extends TwViewController {
       rsvPenTAgree.agreePay = FormatHelper.addComma(rsvPenTAgree.rtenPenStrdAmt); // 약정 금액
       rsvPenTAgree.penalty = FormatHelper.addComma(rsvPenTAgree.rsvPenAmt); // 위약금
 
-      thisMain._proDateRemDt(
+      thisMain._proDate(
         rsvPenTAgree,
         rsvPenTAgree.astamtOpDt,
         rsvPenTAgree.rtenAgrmtEndDt,
@@ -384,7 +384,7 @@ class MytJoinInfoDiscount extends TwViewController {
         sucesAgreeList[i].agreePay = FormatHelper.addComma(sucesAgreeList[i].agrmtDcAmt); // 약정 금액
         sucesAgreeList[i].penalty = FormatHelper.addComma(sucesAgreeList[i].sucesPenAmt); // 위약금
 
-        thisMain._proDateRemDt(sucesAgreeList[i],
+        thisMain._proDate(sucesAgreeList[i],
           sucesAgreeList[i].sucesAgrmtStaDt,
           sucesAgreeList[i].sucesAgrmtEndDt,
           sucesAgreeList[i].sucesRemDayCnt);
@@ -438,69 +438,40 @@ class MytJoinInfoDiscount extends TwViewController {
 
   }
   // -------------------------------------------------------------[SVC]
-  private _proDate(dataObj: any, start: string, end: string) {
+
+  /**
+   * 날짜계산 (날짜계산은 첫날을 포함해서 계산 - 이진영수석, 김용혁 매니저와 legacy 확인 후 협의 정리된 내용(2019.02.28))
+   * @param dataObj 계산된 날짜 넣을 object
+   * @param start - 시작일자
+   * @param end - 종료일자
+   * @param remnant - 남은일수
+   * @private
+   */
+  private _proDate(dataObj: any, start: string, end: string, remnant: any = null) {
+    this.logger.info(this, '[ _proDate ] param stt:', start, ', end:', end, ', rem:', remnant);
     const startDt = start;
     const endDt = end;
-    const useDt = moment().format('YYYYMMDD'); // 진행날짜
-
-    this.logger.info(this, '[ _proDate ]', startDt, endDt);
+    // const useDt = moment().format('YYYYMMDD'); // 진행날짜
+    const useDt = DateHelper.getCurrentShortDate(new Date()); // 진행날짜
 
     dataObj.startDt = DateHelper.getShortDate(startDt);
     dataObj.endDt = DateHelper.getShortDate(endDt);
 
-    dataObj.totDt = moment(endDt, 'YYYYMMDD').diff(startDt, 'day'); // 전체 일수
-    dataObj.curDt = moment(useDt, 'YYYYMMDD').diff(startDt, 'day'); // 진행 일수
+    // dataObj.totDt = moment(endDt, 'YYYYMMDD').diff(startDt, 'day') + 1; // 전체 일수
+    // dataObj.curDt = moment(useDt, 'YYYYMMDD').diff(startDt, 'day'); // 진행 일수
+    dataObj.totDt = DateHelper.getDiffByUnit(endDt, startDt, 'day') + 1;  // 전체 일수(첫날 포함)
+    dataObj.curDt = DateHelper.getDiffByUnit(useDt, startDt, 'day');  // 진행 일수(첫날 미포함, 잔여일수 계산을 위해)
     dataObj.remDt = dataObj.totDt - dataObj.curDt; // 잔여일수
 
-    dataObj.perDt = 100 - Math.floor((dataObj.curDt / dataObj.totDt) * 100); // 퍼센트
-    dataObj.perDt = this.limitMinMax(dataObj.perDt, 0, 100);
-    dataObj.totMt = Math.round(
-      moment(endDt, 'YYYYMMDD').diff(startDt, 'months', true)
-    );
-  }
-
-  /*
-  * _proDateUseDt
-  * useDt : 사용일수
-   */
-  private _proDateUseDt(dataObj: any, start: string, end: string, use: string) {
-    const startDt = start;
-    const endDt = end;
-    const useDt = moment(startDt, 'YYYYMMDD').add(use, 'day').format('YYYYMMDD'); // 진행날짜
-
-    dataObj.startDt = DateHelper.getShortDate(startDt);
-    dataObj.endDt = DateHelper.getShortDate(endDt);
-
-    dataObj.totDt = moment(endDt, 'YYYYMMDD').diff(startDt, 'day'); // 전체 일수
-    dataObj.curDt = moment(useDt, 'YYYYMMDD').diff(startDt, 'day'); // 진행 일수
-    dataObj.remDt = dataObj.totDt - dataObj.curDt; // 잔여 일수
-    dataObj.perDt = Math.floor((dataObj.curDt / dataObj.totDt) * 100); // 퍼센트
-    dataObj.totMt = moment(endDt, 'YYYYMMDD').diff(startDt, 'month'); // + 1;
-
-  }
-
-  /*
-  * _proDateRemDt
-  * remnant : 잔여일수
-   */
-  private _proDateRemDt(dataObj: any, start: string, end: string, remnant: string) {
-    const startDt = start;
-    const endDt = end;
-    const remnantDt = moment(endDt, 'YYYYMMDD').subtract(remnant, 'day').format('YYYYMMDD'); // 진행날짜
-
-    dataObj.startDt = DateHelper.getShortDate(startDt);
-    dataObj.endDt = DateHelper.getShortDate(endDt);
-
-    dataObj.totDt = moment(endDt, 'YYYYMMDD').diff(startDt, 'day'); // 전체 일수
-    dataObj.curDt = moment(endDt, 'YYYYMMDD').diff(remnantDt, 'day'); // 진행 일수
-    dataObj.remDt = remnant; // 잔여일수
-
-    dataObj.perDt = Math.floor((Number(remnant) / dataObj.totDt) * 100); // 잔여일수 퍼센트
-    dataObj.perDt = this.limitMinMax(dataObj.perDt, 0, 100);
+    dataObj.perDt = 100 - Math.floor((dataObj.curDt / dataObj.totDt) * 100); // 퍼센트(잔여일수에 대한..)
+    dataObj.perDt = this.limitMinMax(dataObj.perDt, 0, 100);  // 퍼센트 min:0, max:100
     dataObj.totMt = Math.round(
       moment(endDt, 'YYYYMMDD').diff(startDt, 'months', true)
     );
 
+    this.logger.info(this, '[ _proDate ] stt:', startDt , ', end:', endDt
+      , ', tot:', dataObj.totDt, ', ing:', dataObj.curDt, ', rem:' + dataObj.remDt
+      , ', per(rem):' + dataObj.perDt, ', totMt:' + dataObj.totMt);
   }
 
   /*
