@@ -67,6 +67,14 @@ class MyTDataUsageChild extends TwViewController {
     });
   }
 
+  /**
+   * 에러 화면 렌더링
+   * @param res
+   * @param svcInfo
+   * @param pageInfo
+   * @param err
+   * @private
+   */
   private renderErr(res, svcInfo, pageInfo, err): any {
     const option = {
       title: MYT_DATA_CHILD_USAGE.TITLE,
@@ -79,6 +87,12 @@ class MyTDataUsageChild extends TwViewController {
     return this.error.render(res, option);
   }
 
+
+  /**
+   * 실시간 잔여량
+   * @private
+   * return {Observable}
+   */
   private reqBalances(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0001, {
       childSvcMgmtNum: this.childSvcMgmtNum
@@ -220,12 +234,22 @@ class MyTDataUsageChild extends TwViewController {
     // });
   }
 
+  /**
+   * 팅/쿠키즈/안심음성 가입정보조회
+   * @private
+   * return {Observable}
+   */
   private reqTingSubscriptions(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_06_0028, {
       childSvcMgmtNum: this.childSvcMgmtNum
     });
   }
 
+  /**
+   * 나의 요금제
+   * @private
+   * return {Observable}
+   */
   private reqBaseFeePlan(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_05_0041, {
       childSvcMgmtNum: this.childSvcMgmtNum
