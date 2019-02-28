@@ -125,7 +125,12 @@ Tw.CommonPostcodeDetail.prototype = {
     if (this._selectedTabId === 'tab1') {
       reqData.stNmCd = this.$selectedAddress.attr('id');
       if (this.$searchTarget.hasClass('fe-search-number')) {
-        reqData.bldMainNum = $searchValue;
+        if ($searchValue.indexOf('-') !== -1) {
+          reqData.bldMainNum = $searchValue.split('-')[0];
+          reqData.bldSubNum = $searchValue.split('-')[1];
+        } else {
+          reqData.bldMainNum = $searchValue;
+        }
       } else {
         reqData.bldNm = encodeURI($searchValue);
       }
@@ -181,8 +186,15 @@ Tw.CommonPostcodeDetail.prototype = {
       if ($content[i].bldNm.indexOf('N/A') !== -1) {
         bldNm = '(' + Tw.POSTCODE_MESSAGE.NONE + ')';
       }
+
+      var number = '';
+      if (this.$selectedTab.attr('id') === 'tab1-tab') {
+        number = $content[i].bldTotNum;
+      } else {
+        number = $content[i].totHouse_numCtt;
+      }
       $cloneNode.find('.fe-building').text(bldNm);
-      $cloneNode.find('.fe-number').text($content[i].totHouse_numCtt);
+      $cloneNode.find('.fe-number').text(number);
       $cloneNode.find('.fe-zip').text($content[i].zip);
 
       $cloneNode.on('click', $.proxy(this._goNextPage, this));

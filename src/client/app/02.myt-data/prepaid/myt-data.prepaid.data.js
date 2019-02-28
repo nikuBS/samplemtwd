@@ -32,7 +32,7 @@ Tw.MyTDataPrepaidData.prototype = {
     this._getEmailAddress();
   },
   _getPpsInfo: function () {
-    Tw.CommonHelper.startLoading('.container', 'grey', true);
+    Tw.CommonHelper.startLoading('.container', 'grey');
     this._apiService.request(Tw.API_CMD.BFF_05_0013, {})
       .done($.proxy(this._getSuccess, this))
       .fail($.proxy(this._getFail, this));
