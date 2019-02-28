@@ -81,7 +81,7 @@ class MyTJoinSubmainController extends TwViewController {
       this._getInstallmentInfo(),
       this._getPausedState(),
       this._getLongPausedState(),
-      this._getWireFreeCall(),
+      this._getWireFreeCall(data.svcInfo.svcNum),
       // this._getOldNumberInfo(), // 성능이슈로 해당 API 호춯 하지 않도록 변경 (DV001-14167)
       this._getChangeNumInfoService()
       // this.redisService.getData(REDIS_KEY.BANNER_ADMIN + pageInfo.menuId)
@@ -131,7 +131,7 @@ class MyTJoinSubmainController extends TwViewController {
           break;
         case 2:
           data.myInfo = this._convertWireInfo(myif);
-          if ( wirefree && wirefree.freeCallYn === 'Y' ) {
+          if ( wirefree === 'Y' ) {
             data.isWireFree = true;
           }
           break;
@@ -184,11 +184,14 @@ class MyTJoinSubmainController extends TwViewController {
       if ( data.myInstallement && data.myInstallement.disProdNm ) {
         data.isInstallement = true;
       }
-      // 무약정플랜 노출여부 - 약정할부이 있는 경우에는 보여주지 않도록 수정 (DV001-13767)
-      if ( data.myContractPlan && !data.isInstallement ) {
-        data.myContractPlan.point = FormatHelper.addComma(data.myContractPlan.muPoint);
-        data.myContractPlan.count = data.myContractPlan.muPointCnt;
-        data.isContractPlan = true;
+      // 무약정플랜은 PPS인 경우 비노출 처리[DVI001-15576]
+      if ( this.type !== 1 ) {
+        // 무약정플랜 노출여부 - 약정할부이 있는 경우에는 보여주지 않도록 수정 (DV001-13767)
+        if ( data.myContractPlan && !data.isInstallement ) {
+          data.myContractPlan.point = FormatHelper.addComma(data.myContractPlan.muPoint);
+          data.myContractPlan.count = data.myContractPlan.muPointCnt;
+          data.isContractPlan = true;
+        }
       }
       // AC: 일시정지가 아닌 상태, SP: 일시정지 중인 상태
       if ( data.myPausedState && data.myPausedState.svcStCd === 'SP' ) {
@@ -507,15 +510,20 @@ class MyTJoinSubmainController extends TwViewController {
   }
 
   // B끼리 무료통화 조회
-  _getWireFreeCall() {
+  _getWireFreeCall(number) {
+    const params = {
+      tel01: number.split('-')[0],
+      tel02: number.split('-')[1],
+      tel03: number.split('-')[2]
+    };
     // dummy 전화번호 값으로 요청 하여 freeCallYn 값 체크
-    return this.apiService.request(API_CMD.BFF_05_0160, {
-      tel01: '012',
-      tel02: '345',
-      tel03: '6789'
-    }).map((resp) => {
+    return this.apiService.request(API_CMD.BFF_05_0160, params).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
-        return resp.result;
+        if ( resp.result && resp.freeCallYn === 'Y' && resp.noChargeYn === 'Y' ) {
+          return 'Y';
+        } else {
+          return null;
+        }
       } else {
         // error
         return null;
