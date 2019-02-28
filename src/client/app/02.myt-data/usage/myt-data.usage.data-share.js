@@ -85,7 +85,7 @@ Tw.MyTDataUsageDataShare.prototype = {
 
   },
   _onClickBtnClose: function () {
-    this._historyService.goBack();
+    // this._historyService.goBack();
     this.close();
   }
 };
