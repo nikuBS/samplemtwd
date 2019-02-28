@@ -34,6 +34,12 @@ class MyTDataUsageCancelTshareComplete extends TwViewController {
     });
   }
 
+  /**
+   * 유심 포멧으로 변환
+   * @param {string} v
+   * @private
+   * return {string} ret
+   */
   private convUsimFormat(v: any): any {
     if ( !v || v.replace(/-/g).trim().length < 14 ) {
       return v || '';
