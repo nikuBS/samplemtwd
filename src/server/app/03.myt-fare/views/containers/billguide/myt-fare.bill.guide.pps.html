@@ -22,7 +22,7 @@
             {{#if_eq  rootItem.searchType 'typeVoice'}}
             <span class="info-title"><span class="num ff-tg-black">{{viewData.rate}}</span><span class="ff-tg-medium">원</span></span>
             {{else}}
-            <span class="info-title"><span class="num ff-tg-black">{{viewData.used}}</span><span class="ff-tg-medium">MB</span></span>
+            <span class="info-title"><span class="num ff-tg-black">{{viewData.used}}</span><span class="ff-tg-medium">{{viewData.dataUnit}}</span></span>
             {{/if_eq}}
         </div>
     </li>
