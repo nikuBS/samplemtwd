@@ -434,6 +434,7 @@ export const MYT_FARE_COMPLETE_MSG = {
   CHANGE: '변경 완료',
   CANCEL: '해지 완료',
   CHANGE_HISTORY: '변경내역 보기',
+  CANCEL_HISTORY: '해지내역 보기',
   NUMBER: '번호로',
   SMS: '문자 전송 완료',
   SMS_DESCRIPTION: '전송된 입금전용계좌로 입금하시면<br />즉시 입금이 확인됩니다.'
