@@ -297,7 +297,7 @@ class MyTFareBillGuide extends TwViewController {
       }
 
       thisMain._commDataInfo.ppsProdAmt = FormatHelper.addComma( thisMain._ppsInfo.prodAmt );
-      thisMain._commDataInfo.ppsRemained = FormatHelper.addComma( thisMain._ppsInfo.prodAmt );
+      thisMain._commDataInfo.ppsRemained = FormatHelper.addComma( thisMain._ppsInfo.remained );
 
       // thisMain._commDataInfo.ppsObEndDt = moment(thisMain._ppsInfo.obEndDt).format('YYYY.MM.DD');
       thisMain._commDataInfo.ppsObEndDt = DateHelper.getShortDate(thisMain._ppsInfo.obEndDt);
