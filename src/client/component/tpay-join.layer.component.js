@@ -32,6 +32,7 @@ Tw.TPayJoinLayerPopup.prototype = {
   _closeCallback: function () {
     this.$setupBtn.off('click');
     this.$setupBtn = null;
+    // 팝업 닫힐 때 두번 동작 발생하지 않도록 수정
     // this._popupService.close();
   },
 

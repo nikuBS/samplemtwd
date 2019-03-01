@@ -24,6 +24,7 @@ Tw.BenefitDisPgmCancel.prototype = {
   _init: function() {
     // NA00002079 (2년이상), NA00002082(3년이상), NA00002080(5년이상), NA00002081(10년이상), NA00002246(2년미만)
     switch ( this._prodId ) {
+      // T Plus 요금제
       case 'NA00002079':
       case 'NA00002082':
       case 'NA00002080':
@@ -35,6 +36,7 @@ Tw.BenefitDisPgmCancel.prototype = {
   },
 
   _bindEvent: function() {
+    // window 'env' 이벤트 발생시 페이지를 팝업으로 호출 - 상품 쪽과 동일
     $(window).on('env', $.proxy(this._getJoinConfirmContext, this));
   },
 

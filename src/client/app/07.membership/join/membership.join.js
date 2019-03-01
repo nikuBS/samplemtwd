@@ -87,6 +87,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     this.isEmailVaild = !isVaild;
   },
 
+  // 법인계정인 경우 본인/직장/기타 선택 란 노출
   _onClickCorporateList: function () {
     this._popupService.open({
       hbs: 'actionsheet_select_a_type',
@@ -96,6 +97,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     }, $.proxy(this._corporateListPopupCallback, this), null, 'select_nominee');
   },
 
+  // 액션시트 내용 클릭 시
   _corporateListPopupCallback: function ($layer) {
     var type = this.$copListBtn.attr('data-type');
     $layer.find('#' + type).addClass('checked');
@@ -301,6 +303,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
 
   _onSuccessJoinMembership: function (resp) {
     this.loadingView(false);
+    // 가입하기 성공적으로 끝나면 완료팝업 위로 T Pay 가입 유도 팝업 노출
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._popupService.afterRequestSuccess('/membership/my/history?home=Y', '/membership/submain',
         Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.LINK_TITLE, Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.TITLE,
@@ -323,6 +326,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
   _onItemsAgreeView: function (event) {
     this._agreeViewTarget = $(event.currentTarget).siblings('.custom-form').find('input');
     var type = $(event.currentTarget).attr('data-type');
+    // 멤버십 약관관련 팝업
     if ( type === 'BE_04_02_L09' ) {
       Tw.CommonHelper.openUrlExternal(Tw.POPUP_TPL.MEMBERSHIP_CLAUSE_ITEM['09'].url);
     }
