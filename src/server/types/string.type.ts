@@ -432,6 +432,7 @@ export const MYT_FARE_COMPLETE_MSG = {
   PREPAY_HISTORY: '선결제내역 보기',
   REGISTER: '신청 완료',
   CHANGE: '변경 완료',
+  CANCEL: '해지 완료',
   CHANGE_HISTORY: '변경내역 보기',
   NUMBER: '번호로',
   SMS: '문자 전송 완료',

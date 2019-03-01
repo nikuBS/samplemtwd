@@ -73,6 +73,9 @@ class MyTFareBillPayComplete extends TwViewController {
     if (subType === 'auto') {
       data.mainTitle = MYT_FARE_COMPLETE_MSG.REGISTER;
       data.centerName = '';
+    } else if (subType === 'cancel') {
+      data.mainTitle = MYT_FARE_COMPLETE_MSG.CANCEL;
+      data.centerName = '';
     } else {
       data.mainTitle = MYT_FARE_COMPLETE_MSG.CHANGE;
       data.centerName = MYT_FARE_COMPLETE_MSG.CHANGE_HISTORY;
