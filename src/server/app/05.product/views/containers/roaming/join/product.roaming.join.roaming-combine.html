@@ -58,30 +58,37 @@
                     </ul>
                 </div>
                 <!--// .cont-box -->
-
+                <% if(prodBffInfo.togetherMemList.length>0){ %>
                 <hr class="cont-sp type1 list_contents" aria-hidden="true">
-
                 <!-- .cont-box -->
                 <div class="cont-box nogaps list_contents">
                     <div class="input-number-wrap">
                         <h3 class="tit type1">함께쓰기 신청하신 회선</h3>
                         <div class="list-comp-thumnail">
                             <ul class="comp-box" id="combine_list">
-                                <script type="text/x-handlebars-template" id="combine_list_template">
-                                    <li class="list-box type-main"><!-- 190117 타이틀이 전화번호인 경우 -->
-                                        <p class="list-text">
-                                            <span class="mtext">{{listData.phoneNum}}</span>
-                                        </p>
-                                        <div class="list-btn">
-                                            <div class="bt-alone"><button class="bt-line-gray1" id="list{{listData.idx}}" data-idx="{{listData.idx}}">해지</button></div>
+                                <% for(var i=0;i<prodBffInfo.togetherMemList.length;i++){ %>
+                                <li class="list-box type-main"><!-- 190117 타이틀이 전화번호인 경우 -->
+                                    <p class="list-text">
+                                        <span class="mtext">
+                                            <%= prodBffInfo.togetherMemList[i].svcNum %></span>
+                                    </p>
+                                    <div class="list-btn">
+                                        <div class="bt-alone">
+                                            <% if (svcInfo && locals.pageInfo && pageInfo.auth && pageInfo.auth.cert && pageInfo.auth.cert.maskAuthYn === 'Y' && !pageInfo.masking) { %>
+                                            <button class="bt-line-gray1 fe-bt-masking" type="button" data-menuid="<%= pageInfo.menuId %>" data-menuurl="<%= pageInfo.menuUrl %>">해지</button>
+                                            <% } else { %>
+                                            <button class="bt-line-gray1" id="list<%= i %>" data-idx="<%= i %>">해지</button>
+                                            <% } %>
                                         </div>
-                                    </li>
-                                </script>
+                                    </div>
+                                </li>
+                                <% } %>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <!--// .cont-box -->
+                <% } %>
 
                 <hr class="cont-sp type1" aria-hidden="true">
 

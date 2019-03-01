@@ -145,9 +145,18 @@ Tw.CommonSearch.prototype = {
     if(data.length<=0){
       $list.addClass('none');
     }
-    _.each(data,function (listData,index) {
+    _.each(data,$.proxy(function (listData,index) {
+      if(listData.DOCID==='M000083'&&this._nowUser==='logOutUser'){
+        var removeLength = data.length-1;
+        if(removeLength<=0){
+          $('.'+dataKey).addClass('none');
+        }else{
+          $('.'+dataKey+' .num').text(removeLength);
+        }
+        return;
+      }
       $list.append(templateData({listData : listData , CDN : cdn}));
-    });
+    },this));
   },
   _decodeEscapeChar : function (targetString) {
     var returnStr = targetString.replace(/\\/gi,'/').replace(/\n/g,'');
@@ -253,6 +262,10 @@ Tw.CommonSearch.prototype = {
     }
     if(linkUrl.indexOf('BPCP')>-1){
       this._getBPCP(linkUrl);
+    }else if(linkUrl.indexOf('Native:')>-1){
+      if(linkUrl.indexOf('freeSMS')>-1){
+        this._callFreeSMS();
+      }
     }else if($linkData.hasClass('direct-element')){
       Tw.CommonHelper.openUrlExternal(linkUrl);
     }else{
@@ -483,6 +496,31 @@ Tw.CommonSearch.prototype = {
         $smartBase.find('.last-line').addClass('full');
       }
     }
+  },
+  _callFreeSMS : function () {
+    var memberType = this._svcInfo.totalSvcCnt > 0 ? (this._svcInfo.expsSvcCnt > 0 ? 0 : 1) : 2;
+    if (memberType === 1) {
+      this._popupService.openAlert(
+        Tw.MENU_STRING.FREE_SMS,
+        '',
+        Tw.BUTTON_LABEL.CONFIRM,
+        null,
+        'menu_free_sms'
+      );
+      return ;
+    }
+
+    if (this._svcInfo.svcAttrCd==='M2') {
+      this._popupService.openAlert(
+        Tw.MENU_STRING.FREE_SMS_PPS,
+        '',
+        Tw.BUTTON_LABEL.CONFIRM,
+        null,
+        'menu_free_sms_pps'
+      );
+      return;
+    }
+    Tw.CommonHelper.openFreeSms();
   }
 
 
