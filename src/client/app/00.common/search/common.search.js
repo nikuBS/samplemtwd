@@ -19,6 +19,8 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from) {
 
 Tw.CommonSearch.prototype = {
   _init : function (from) {
+    this._recentKeywordDateFormat = 'YY.M.D.';
+    this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
     this.$contents = this.$container.find('.container');
     this._searchInfo.search = this._setRank(this._searchInfo.search);
     this._platForm = Tw.BrowserHelper.isApp()?'app':'web';
@@ -224,7 +226,8 @@ Tw.CommonSearch.prototype = {
   },
   _addRecentlyKeyword : function (keyword) {
     this._recentKeyworList[this._nowUser].push({
-      keyword : keyword, searchTime : moment().format('YY.M.D.'),
+      keyword : keyword,
+      searchTime : this._todayStr,
       platForm : this._platForm,
       initial : Tw.StringHelper.getKorInitialChar(keyword)
     });
@@ -312,6 +315,7 @@ Tw.CommonSearch.prototype = {
   },
   _recentKeywordInit : function () {
     var recentlyKeywordData = JSON.parse(Tw.CommonHelper.getLocalStorage('recentlySearchKeyword'));
+    var removeIdx = [];
     if(Tw.FormatHelper.isEmpty(recentlyKeywordData)){
       //making recentlySearchKeyword
       recentlyKeywordData = {};
@@ -320,6 +324,15 @@ Tw.CommonSearch.prototype = {
       //makin nowUser's recentlySearchKeyword based on svcMgmtNum
       recentlyKeywordData[this._nowUser] = [];
     }
+    _.each(recentlyKeywordData[this._nowUser],$.proxy(function (data, index) {
+      //recognize 10 days ago data from now
+      if(Tw.DateHelper.getDiffByUnit(Tw.DateHelper.convDateCustomFormat(this._todayStr,this._recentKeywordDateFormat),Tw.DateHelper.convDateCustomFormat(data.searchTime,this._recentKeywordDateFormat),'day')>=10){
+        removeIdx.push(index);
+      }
+    },this));
+    _.each(removeIdx,$.proxy(function (removeIdx) {
+      recentlyKeywordData[this._nowUser].splice(removeIdx,1);
+    },this));
     Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(recentlyKeywordData));
     this._recentKeyworList = recentlyKeywordData;
   },
