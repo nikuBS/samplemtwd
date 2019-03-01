@@ -92,14 +92,20 @@ Tw.CustomerHelpline.prototype = {
 
     if (this.$cellphone.hasClass('checked')) {
       var validLength0 = number.indexOf('010') === 0 ? 11 : 10;
-      if (!this._isCheckedLen && number.length === validLength0) {
+      if (number.length > validLength0) {
+        $input.val(number.substring(0, number.length - 1));
+        return;
+      } else if (!this._isCheckedLen && number.length === validLength0) {
         this._isCheckedLen = true;
       }
 
       isValid = !this._isCheckedLen || Tw.ValidationHelper.isCellPhone(number);
     } else {
-      var validLength1 = number.indexOf('02') === 0 ? 9 : 10;
-      if (!this._isCheckedLen && number.length === validLength1) {
+      var validLength1 = number.indexOf('02') === 0 ? 9 : /^07|8/.test(number) ? 11 : 10;
+      if (number.length > validLength1) {
+        $input.val(number.substring(0, number.length - 1));
+        return;
+      } else if (!this._isCheckedLen && number.length === validLength1) {
         this._isCheckedLen = true;
       }
       isValid = !this._isCheckedLen || Tw.ValidationHelper.isTelephone(number);

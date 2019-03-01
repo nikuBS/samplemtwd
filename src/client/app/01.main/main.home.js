@@ -92,7 +92,7 @@ Tw.MainHome.prototype = {
     this.$container.on('click', '#fe-membership-go', $.proxy(this._onClickBarcodeGo, this));
     this.$container.on('click', '.fe-bt-go-recharge', $.proxy(this._onClickBtRecharge, this));
     this.$container.on('click', '.fe-bt-line', $.proxy(this._onClickLine, this));
-    this.$container.on('click', '#fe-bt-data-link', $.proxy(this._onClickDataLink, this));
+    this.$container.find('#fe-bt-data-link').click(_.debounce($.proxy(this._onClickDataLink, this), 100));
     this.$container.on('click', '#fe-bt-link-broadband', $.proxy(this._onClickGoBroadband, this));
     this.$container.on('click', '#fe-bt-link-billguide', $.proxy(this._onClickGoBillGuide, this));
 

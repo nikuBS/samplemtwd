@@ -17,7 +17,7 @@ Tw.ValidationHelper = (function () {
    * @returns {Boolean}
    */
   function isTelephone(str) {
-    return regExpTest(/^0(2|[3-9]\d?)-?(\d{3,4})-?(\d{4})$/, str);
+    return regExpTest(/^0(2|([3-9]\d))-?(\d{3,4})-?(\d{4})$/, str);
   }
 
   /**
