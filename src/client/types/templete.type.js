@@ -100,7 +100,7 @@ Tw.POPUP_TPL = {
     {
       'title': '포인트 요금 납부 예약',
       'list': [
-        { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백', 'option': 'fe-ok-cashbag' },
+        { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백포인트', 'option': 'fe-ok-cashbag' },
         { 'button-attr': 'type="button"', 'txt': 'T포인트', 'option': 'fe-t-point' },
         { 'button-attr': 'type="button"', 'txt': '레인보우포인트', 'option': 'fe-rainbow-point' }
       ]
