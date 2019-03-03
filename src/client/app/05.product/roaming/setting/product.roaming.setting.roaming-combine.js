@@ -13,7 +13,6 @@ Tw.ProductRoamingSettingRoamingCombine = function (rootEl,prodRedisInfo,prodBffI
   this._nativeService = Tw.Native;
   this._prodRedisInfo = JSON.parse(prodRedisInfo);
   this._prodBffInfo = prodBffInfo;
-  this._combineListTemplate = Handlebars.compile(this.$container.find('#combine_list_template').html());
   this._svcInfo = svcInfo;
   this._prodId = prodId;
   this._apiService = Tw.Api;
@@ -27,7 +26,6 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
       this.$container.find('#phone_book').hide();
     }
     this._bindElementEvt();
-    this._changeList();
   },
   _bindElementEvt : function () {
     this.$container.on('keyup', '#input_phone', $.proxy(this._activateAddBtn, this));
@@ -36,6 +34,7 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
     this.$container.on('click', '#phone_book', $.proxy(this._showPhoneBook, this));
     this.$container.on('click', '#add_list', $.proxy(this._addPhoneNumOnList, this));
     this.$container.on('click','.cancel',$.proxy(this._clearInput,this));
+    this.$container.on('click','.list-btn button',$.proxy(this._removeOnList,this));
     this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._historyService.goBack,this));
     this.$inputElement = this.$container.find('#input_phone');
     this.$addBtn = this.$container.find('#add_list');
@@ -102,20 +101,7 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
       return false;
     }, this));
   },
-  _changeList : function(){
-    this.$container.find('.list-box').remove();
-    for(var i=0;i<this._addedList.length;i++){
-      this._makeTemplate({ fullNm : this._addedList[i].custNm , firstNm : this._addedList[i].custNm.charAt(0)},this._addedList[i].svcNum,i);
-    }
 
-    if(this._addedList.length<=0){
-      this.$container.find('.list_contents').hide();
-    }else{
-      this.$container.find('.list_contents').show();
-    }
-    this._activateAddBtn();
-    this._bindRemoveEvt();
-  },
   _showPhoneBook : function () {
     this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._phoneBookCallBack,this));
   },
@@ -172,7 +158,7 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
     selectedIdx = parseInt(selectedIdx,10);
     var reuqestPhoneNum = this._addedList[selectedIdx].svcMgmtNum;
     if(this._addedList.length<=1){
-      this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_NUMBER_MIN);
+      this._openAlert(null,Tw.ALERT_MSG_PRODUCT.ALERT_NUMBER_MIN);
     }else {
       this._popupService.openConfirmButton(
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
@@ -182,9 +168,6 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
         Tw.BUTTON_LABEL.CLOSE,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON);
     }
-  },
-  _bindRemoveEvt : function () {
-    this.$container.find('.list-btn button').on('click',$.proxy(this._removeOnList,this));
   },
   _sortingSettingData : function (inputData) {
     var tempArr = [];

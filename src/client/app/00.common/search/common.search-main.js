@@ -14,66 +14,43 @@ Tw.CommonSearchMain = function (rootEl,svcInfo,cdn,step) {
 
 Tw.CommonSearchMain.prototype = {
   _init : function () {
+    this._recentKeywordDateFormat = 'YY.M.D.';
+    this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
     this._historyService = new Tw.HistoryService();
+    this._popupService = Tw.Popup;
     this._apiService = Tw.Api;
     this._nowUser = Tw.FormatHelper.isEmpty(this._svcInfo)?'logOutUser':this._svcInfo.svcMgmtNum;
     this._recentlyKeywordListData = this._getRecentlyKeywordList();
     this.$inputElement = this.$container.find('#search_input');
-    this.$autoCompleteList = this.$container.find('#auto_complete_list');
-    this.$recentlyKeywordList = this.$container.find('#recently_keyword_list');
-    this.$autoCompletetTemplate = Handlebars.compile(this.$container.find('#auto_complete_template').html());
-    this.$recentlyKeywordTemplate = Handlebars.compile(this.$container.find('#recently_keyword_template').html());
-    this.$inputElement.val('');
-    window.onhashchange = $.proxy(this._hashChange,this);
-    this._onInput = false;
-    this._recentlyKeywordInit();
-    this._bindPopupElementEvt();
+    this._recentKeywordTemplate = Handlebars.compile($('#recently_keyword_template').html());
+    this._autoCompleteKeywrodTemplate = Handlebars.compile($('#auto_complete_template').html());
+    this._bindEvent();
     this._platForm = Tw.BrowserHelper.isApp()?'app':'web';
-    $('.latelylist-wrap').scroll($.proxy(function () {
-      this.$inputElement.blur();
-    },this));
     new Tw.XtractorService(this.$container);
     //this.$container.find('#recently_keyword_layer').removeClass('none').hide();
   },
   _keyInputEvt : function (inputEvtObj) {
     if(Tw.InputHelper.isEnter(inputEvtObj)){
       this._searchByInputValue();
-      return;
-    }
-    this._selectShowLayer();
-    var requestKeyword = this.$inputElement.val();
-    if(requestKeyword.trim().length<=0){
-      return;
-    }
-    var requestParam = { query : encodeURI(requestKeyword) };
-    var autoCompleteArr = this._getRecentKeywordByInitial(requestKeyword);
-    this._apiService.request(Tw.API_CMD.SEARCH_AUTO_COMPLETE,requestParam)
-      .done($.proxy(function (res) {
-        this.$autoCompleteList.empty();
-        if(res.code===0&&res.result.length>0){
-          _.each(res.result[0].items,$.proxy(function (data) {
-            autoCompleteArr.push(this._convertAutoKeywordData(data.hkeyword));
-          },this));
-          autoCompleteArr = Tw.FormatHelper.removeDuplicateElement(autoCompleteArr);
-          _.each(autoCompleteArr,$.proxy(this._showAutoCompleteKeyword,this));
+    }else{
+      if(this._historyService.getHash()==='#input_P'){
+        if(this.$inputElement.val().trim().length>0){
+          this._getAutoCompleteKeyword();
+        }else{
+          this._showRecentKeyworList();
         }
-      },this));
-  },
-  _showAutoCompleteKeyword : function(data,idx){
-    if(idx>=10){
-      return;
+      }
     }
-    //this.$autoCompleteList.append(this.$autoCompletetTemplate({listData : this._convertAutoKeywordData(data.hkeyword),xtractorIndex : idx+1}));
-    this.$autoCompleteList.append(this.$autoCompletetTemplate({listData : data ,xtractorIndex : idx+1}));
   },
-  _bindPopupElementEvt : function () {
+  _bindEvent : function () {
     this.$container.find('.close-area').on('click',$.proxy(this._closeSearch,this));
     this.$inputElement.on('keyup',$.proxy(this._keyInputEvt,this));
     this.$inputElement.on('focus',$.proxy(this._inputFocusEvt,this));
-    this.$container.on('click','.close',$.proxy(this._inputBlurEvt,this));
     this.$container.on('click','.icon-gnb-search',$.proxy(this._searchByInputValue,this));
     this.$container.on('click','.search-element',$.proxy(this._searchByElement,this));
-    this.$container.on('click','.remove-recently-list',$.proxy(this._removeRecentlyKeywordList,this));
+    $('.latelylist-wrap').scroll($.proxy(function () {
+      this.$inputElement.blur();
+    },this));
   },
   _convertAutoKeywordData : function (listStr) {
     var returnObj = {};
@@ -85,29 +62,7 @@ Tw.CommonSearchMain.prototype = {
     return returnObj;
   },
   _inputFocusEvt : function () {
-    this._onInput = true;
-    this._historyService.goHash('on_input');
-    this.$container.find('#blind_layer').css('display','block');
-    this._selectShowLayer();
-  },
-  _inputBlurEvt : function () {
-    this._onInput = false;
-    if(this._historyService.getHash()==='#on_input'){
-      this._historyService.goBack();
-    }
-    this.$container.find('#blind_layer').css('display','none');
-    this.$container.find('#auto_complete_layer').addClass('none');
-    this.$container.find('#recently_keyword_layer').addClass('none');
-    this.$inputElement.blur();
-  },
-  _selectShowLayer : function () {
-    if(this.$inputElement.val().trim().length<=0){
-      this.$container.find('#recently_keyword_layer').removeClass('none');
-      this.$container.find('#auto_complete_layer').addClass('none');
-    }else{
-      this.$container.find('#recently_keyword_layer').addClass('none');
-      this.$container.find('#auto_complete_layer').removeClass('none');
-    }
+    this._openKeywordListBase();
   },
   _removeRecentlyKeywordList : function (args) {
     var removeIdx = $(args.currentTarget).data('index');
@@ -117,27 +72,13 @@ Tw.CommonSearchMain.prototype = {
       this._recentlyKeywordListData[this._nowUser].splice(removeIdx,1);
     }
     Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(this._recentlyKeywordListData));
-    this._recentlyKeywordInit();
-  },
-  _recentlyKeywordInit : function () {
-    var $recentlyKeywordList = this.$recentlyKeywordList;
-    var $recentlyKeywordTemplate = this.$recentlyKeywordTemplate;
-    var saveBottomLineDate = moment().subtract(10, 'days');
-    $recentlyKeywordList.empty();
-    _.each(this._recentlyKeywordListData[this._nowUser],function (data, index) {
-      //recognize 10 days ago data from now
-      if(moment(data.searchTime, 'YY.M.D.') < saveBottomLineDate){
-        this._recentlyKeywordListData[this._nowUser].splice(index,1);
-      }
-      $recentlyKeywordList.append($recentlyKeywordTemplate({data : data, index : index , xtractorIndex: index+1 }));
-    });
-    Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(this._recentlyKeywordListData));
+    setTimeout($.proxy(this._showRecentKeyworList,this));
   },
   _addRecentlyKeywordList : function (keyword) {
     this._recentlyKeywordListData[this._nowUser].push(
       {
         keyword : keyword,
-        searchTime : moment().format('YY.M.D.'),
+        searchTime : this._todayStr,
         platForm : this._platForm,
         initial : Tw.StringHelper.getKorInitialChar(keyword)
       });
@@ -148,6 +89,7 @@ Tw.CommonSearchMain.prototype = {
   },
   _getRecentlyKeywordList : function () {
     var recentlyKeywordData = JSON.parse(Tw.CommonHelper.getLocalStorage('recentlySearchKeyword'));
+    var removeIdx = [];
     if(Tw.FormatHelper.isEmpty(recentlyKeywordData)){
       //making recentlySearchKeyword
       Tw.CommonHelper.setLocalStorage('recentlySearchKeyword','{}');
@@ -157,6 +99,16 @@ Tw.CommonSearchMain.prototype = {
       //making now user's recentlySearchKeyword
       recentlyKeywordData[this._nowUser] = [];
     }
+    _.each(recentlyKeywordData[this._nowUser],$.proxy(function (data, index) {
+      //recognize 10 days ago data from now
+      if(Tw.DateHelper.getDiffByUnit(Tw.DateHelper.convDateCustomFormat(this._todayStr,this._recentKeywordDateFormat),Tw.DateHelper.convDateCustomFormat(data.searchTime,this._recentKeywordDateFormat),'day')>=10){
+        removeIdx.push(index);
+      }
+    },this));
+    _.each(removeIdx,$.proxy(function (removeIdx) {
+      recentlyKeywordData[this._nowUser].splice(removeIdx,1);
+    },this));
+    Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(recentlyKeywordData));
     return recentlyKeywordData;
   },
   _searchByInputValue : function () {
@@ -169,9 +121,9 @@ Tw.CommonSearchMain.prototype = {
   _searchByElement : function(linkEvt){
     linkEvt.preventDefault();
     var $target = $(linkEvt.currentTarget);
-    if($target.hasClass('link')){
-      if(this._historyService.getHash()==='#on_input'){
-        this._historyService.goBack();
+    if($target.hasClass('link')||$target.hasClass('searchword-text')){
+      if(this._historyService.getHash()==='#input_P'){
+        this._closeKeywordListBase();
       }
       setTimeout($.proxy(function () {
         this._historyService.goLoad($target.attr('href'));
@@ -190,22 +142,13 @@ Tw.CommonSearchMain.prototype = {
       this._historyService.goLoad('/common/search?keyword='+searchKeyword+'&step='+(this._step+1));
     },this));
   },
-  _hashChange : function () {
-    if(Tw.FormatHelper.isEmpty(this._historyService.getHash())&&this._onInput){
-      this._inputBlurEvt();
-    }else if(this._historyService.getHash()==='#on_input'&&!this._onInput){
-      this._onInput = true;
-      this.$container.find('#blind_layer').css('display','block');
-      this._selectShowLayer();
-    }
-  },
   _closeSearch : function () {
-    if(this._historyService.getHash()==='#on_input'){
+    if(this._historyService.getHash()==='#input_P'){
       ++this._step;
     }
     this._historyService.go(this._step*-1);
   },
-  _getRecentKeywordByInitial : function (keyword) {
+  _getRecentKeywordListBySearch : function (keyword) {
     var returnData = [];
     for(var i=0;i<this._recentlyKeywordListData[this._nowUser].length;i++){
       if(this._recentlyKeywordListData[this._nowUser][i].keyword.indexOf(keyword)>-1||
@@ -226,6 +169,94 @@ Tw.CommonSearchMain.prototype = {
       }
     }
     return returnData;
+  },
+  _openKeywordListBase : function () {
+    if(this._historyService.getHash()==='#input_P'){
+      if(this.$inputElement.val().trim().length>0){
+        this._getAutoCompleteKeyword();
+      }else{
+        this._showRecentKeyworList();
+      }
+      return;
+    }
+    setTimeout($.proxy(function () {
+      this._popupService.open({
+          hbs: 'search_keyword_list_base',
+          layer: true,
+          data : null
+        },
+        $.proxy(this._bindKeyworListBaseEvent,this),
+        $.proxy(this._keywordListBaseClassCallback,this),
+        'input');
+    },this));
+  },
+  _closeKeywordListBase  : function () {
+    this._popupService.close();
+    this.$container.find('.keyword-list-base').remove();
+  },
+  _keywordListBaseClassCallback : function () {
+    this._closeKeywordListBase();
+    this.$inputElement.blur();
+  },
+  _showRecentKeyworList : function () {
+    if(this._historyService.getHash()==='#input_P'){
+      this.$keywordListBase.find('#recently_keyword_layer').removeClass('none');
+      if(!this.$keywordListBase.find('#auto_complete_layer').hasClass('none')){
+        this.$keywordListBase.find('#auto_complete_layer').addClass('none');
+      }
+      this.$keywordListBase.find('#recently_keyword_list').empty();
+      _.each(this._recentlyKeywordListData[this._nowUser],$.proxy(function (data,idx) {
+        this.$keywordListBase.find('#recently_keyword_list').append(this._recentKeywordTemplate({listData : data , xtractorIndex : idx+1 , index : idx}));
+      },this));
+      //this.$keywordListBase.find('#recently_keyword_list') list
+    }
+  },
+  _getAutoCompleteKeyword : function () {
+    var keyword = this.$inputElement.val();
+    if(this._historyService.getHash()!=='#input_P'||keyword.trim().length<=0){
+      return;
+    }
+    this.$keywordListBase.find('#auto_complete_layer').removeClass('none');
+    if(!this.$keywordListBase.find('#recently_keyword_layer').hasClass('none')){
+      this.$keywordListBase.find('#recently_keyword_layer').addClass('none');
+    }
+    var requestParam = { query : encodeURI(keyword) };
+    this._apiService.request(Tw.API_CMD.SEARCH_AUTO_COMPLETE,requestParam)
+      .done($.proxy(function (res) {
+        if(res.code===0){
+          var autoCompleteList = this._mergeList(this._getRecentKeywordListBySearch(keyword),res.result.length<=0?[]:res.result[0].items);
+          this._showAutoCompleteKeyword(autoCompleteList);
+        }
+      },this));
+  },
+  _mergeList : function (recentKeywordList,autoCompleteList) {
+    _.each(autoCompleteList,$.proxy(function (data) {
+      recentKeywordList.push(this._convertAutoKeywordData(data.hkeyword));
+    },this));
+    recentKeywordList = Tw.FormatHelper.removeDuplicateElement(recentKeywordList);
+    return recentKeywordList;
+  },
+  _showAutoCompleteKeyword : function (autoCompleteList) {
+    this.$keywordListBase.find('#auto_complete_list').empty();
+    _.each(autoCompleteList,$.proxy(function (data,idx) {
+      if(idx>=10){
+        return;
+      }
+      this.$keywordListBase.find('#auto_complete_list').append(this._autoCompleteKeywrodTemplate({listData : data ,xtractorIndex : idx+1}));
+    },this));
+  },
+  _bindKeyworListBaseEvent : function (layer) {
+    this.$keywordListBase = $(layer);
+    if(this.$inputElement.val().trim().length>0){
+      this._getAutoCompleteKeyword();
+    }else{
+      this._showRecentKeyworList();
+    }
+    this.$keywordListBase.on('click','.remove-recently-list',$.proxy(this._removeRecentlyKeywordList,this));
+    this.$keywordListBase.on('click','.close',$.proxy(this._closeKeywordListBase,this,true));
+    $('.latelylist-wrap').scroll($.proxy(function () {
+      this.$inputElement.blur();
+    },this));
   }
 
 

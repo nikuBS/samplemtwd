@@ -22,6 +22,8 @@ Tw.CommonSearchNotFound = function (rootEl,svcInfo,surveyList,step,from,keywrod)
 
 Tw.CommonSearchNotFound.prototype = {
   _init : function (from,keywrod) {
+    this._recentKeywordDateFormat = 'YY.M.D.';
+    this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
     this._platForm = Tw.BrowserHelper.isApp()?'app':'web';
     this._nowUser = Tw.FormatHelper.isEmpty(this._svcInfo)?'logOutUser':this._svcInfo.svcMgmtNum;
     this.$container.find('.request_keyword').on('click',$.proxy(this._showClaimPopup,this));
@@ -187,7 +189,8 @@ Tw.CommonSearchNotFound.prototype = {
   },
   _addRecentlyKeyword : function (keyword) {
     this._recentKeyworList[this._nowUser].push({
-      keyword : keyword, searchTime : moment().format('YY.M.D.'),
+      keyword : keyword,
+      searchTime : this._todayStr,
       platForm : this._platForm,
       initial : Tw.StringHelper.getKorInitialChar(keyword)
     });
@@ -230,6 +233,7 @@ Tw.CommonSearchNotFound.prototype = {
   },
   _recentKeywordInit : function () {
     var recentlyKeywordData = JSON.parse(Tw.CommonHelper.getLocalStorage('recentlySearchKeyword'));
+    var removeIdx = [];
     if(Tw.FormatHelper.isEmpty(recentlyKeywordData)){
       //making recentlySearchKeyword
       recentlyKeywordData = {};
@@ -238,6 +242,15 @@ Tw.CommonSearchNotFound.prototype = {
       //makin nowUser's recentlySearchKeyword based on svcMgmtNum
       recentlyKeywordData[this._nowUser] = [];
     }
+    _.each(recentlyKeywordData[this._nowUser],$.proxy(function (data, index) {
+      //recognize 10 days ago data from now
+      if(Tw.DateHelper.getDiffByUnit(Tw.DateHelper.convDateCustomFormat(this._todayStr,this._recentKeywordDateFormat),Tw.DateHelper.convDateCustomFormat(data.searchTime,this._recentKeywordDateFormat),'day')>=10){
+        removeIdx.push(index);
+      }
+    },this));
+    _.each(removeIdx,$.proxy(function (removeIdx) {
+      recentlyKeywordData[this._nowUser].splice(removeIdx,1);
+    },this));
     Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(recentlyKeywordData));
     this._recentKeyworList = recentlyKeywordData;
   },
