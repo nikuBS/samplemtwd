@@ -74,8 +74,13 @@ class MyTFareBillPayComplete extends TwViewController {
       data.mainTitle = MYT_FARE_COMPLETE_MSG.REGISTER;
       data.centerName = '';
     } else {
-      data.mainTitle = MYT_FARE_COMPLETE_MSG.CHANGE;
-      data.centerName = MYT_FARE_COMPLETE_MSG.CHANGE_HISTORY;
+      if (subType === 'cancel') {
+        data.mainTitle = MYT_FARE_COMPLETE_MSG.CANCEL;
+        data.centerName = MYT_FARE_COMPLETE_MSG.CANCEL_HISTORY;
+      } else {
+        data.mainTitle = MYT_FARE_COMPLETE_MSG.CHANGE;
+        data.centerName = MYT_FARE_COMPLETE_MSG.CHANGE_HISTORY;
+      }
       data.centerUrl = '/myt-fare/bill/' + type + '/auto/info';
     }
     data.confirmUrl = '/myt-fare/bill/' + type;
