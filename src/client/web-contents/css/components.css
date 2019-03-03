@@ -4148,7 +4148,7 @@
     .history-list ul li .li-elem .title-box {
       display: table-cell;
       vertical-align: top;
-      width: 62%; }
+      width: 64%; }
       .history-list ul li .li-elem .title-box .tit {
         display: block;
         font-size: 1.125rem; }
@@ -4164,7 +4164,7 @@
             content: '';
             position: absolute;
             left: 0;
-            top: 50%;
+            top: 49%;
             width: 0.0625rem;
             height: 0.5625rem;
             background: #e1e1e1;
@@ -4232,7 +4232,7 @@
       vertical-align: top;
       display: table-cell;
       text-align: right;
-      width: 38%; }
+      width: 36%; }
       .history-list ul li .li-elem .price .tx-price {
         font-weight: 700;
         font-size: 1.125rem; }
@@ -5195,8 +5195,6 @@
       white-space: nowrap;
       width: 100%;
       height: 100%; }
-      .file-wrap .inputbox .bt-box button.del {
-        padding: 0 !important; }
 
 .file-wrap.type1 .input input[type="text"], .file-wrap.type1 .input input[type="file"] {
   background: #fff;
@@ -12223,7 +12221,7 @@ a.bt-link-tx.underline.small {
       color: #178bce;
       font-size: 0.6875rem; }
     .productinfoscroll-box .product-info .text-type02 {
-      height: 3.1875rem;
+      height: 2.75rem;
       margin-top: 0.3125rem;
       color: #178bce;
       font-size: 0.6875rem;
@@ -13078,7 +13076,7 @@ a.bt-link-tx.underline.small {
     font-size: 0.875rem;
     line-height: 1.25rem; }
     .productdetails-wrap .productdetails-text02.img-case {
-      max-width: 68%; }
+      max-width: 65%; }
   .productdetails-wrap .productdetails-text03 {
     margin-top: 0.9375rem;
     color: #fff;
@@ -24012,32 +24010,30 @@ input[type="radio"].formradio-small.type2 + label {
 .btn-more.no-border {
   border-top: none; }
 
-.benefit-link {
-  height: 3.1875rem; }
-  .benefit-link li {
-    padding-left: 33px;
-    position: relative; }
-    .benefit-link li .unit {
-      display: block;
-      color: #959595;
-      height: 3.25rem;
-      line-height: 3.25rem;
-      font-size: 0.875rem; }
-      .benefit-link li .unit.on {
-        color: #ef4b49;
-        font-weight: 700; }
-    .benefit-link li:before {
-      content: '';
-      width: 0.0625rem;
-      height: 1rem;
-      background: #f2f2f2;
-      position: absolute;
-      left: 1rem;
-      top: 1.1875rem; }
-    .benefit-link li:first-of-type {
-      padding-left: 0; }
-      .benefit-link li:first-of-type:before {
-        display: none; }
+.benefit-link li {
+  padding-left: 33px;
+  position: relative; }
+  .benefit-link li .unit {
+    display: block;
+    color: #959595;
+    height: 3.25rem;
+    line-height: 3.25rem;
+    font-size: 0.875rem; }
+    .benefit-link li .unit.on {
+      color: #ef4b49;
+      font-weight: 700; }
+  .benefit-link li:before {
+    content: '';
+    width: 0.0625rem;
+    height: 1rem;
+    background: #f2f2f2;
+    position: absolute;
+    left: 1rem;
+    top: 1.1875rem; }
+  .benefit-link li:first-of-type {
+    padding-left: 0; }
+    .benefit-link li:first-of-type:before {
+      display: none; }
 
 .device_ios .benefit-link li:before {
   top: 1.0625rem; }

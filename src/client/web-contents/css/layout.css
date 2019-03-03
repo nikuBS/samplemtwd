@@ -1038,6 +1038,8 @@ body.bg-gray {
   /* galaxy s2 bug fixed : overflow-x, overflow-y not support */ }
   .popup-page .page-header {
     border-bottom: 1px solid #e5e5e5; }
+    .popup-page .page-header.noborder {
+      border-bottom-color: transparent; }
   .popup-page .header-wrap {
     position: fixed;
     border-bottom: 1px solid #e5e5e5; }

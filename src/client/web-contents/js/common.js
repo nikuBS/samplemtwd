@@ -5,6 +5,9 @@ $(document).on('ready', function () {
   if($('body').hasClass('bg-productdetail')){
     skt_landing.action.prd_header();
   }
+  if ( $(window).scrollTop > 0 ){
+    $('body').addClass("scroll");
+  }
   /*if($('.home-slider').length > 0){
     skt_landing.action.home_slider();
   }*/
