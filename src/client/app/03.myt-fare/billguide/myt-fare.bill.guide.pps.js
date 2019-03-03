@@ -92,9 +92,11 @@ Tw.MyTFareBillGuidePps.prototype = {
       // 0보다 작을 경우 데이터 이외 사용 항목(음성/sms/충전 등)
       if ( Number(item.used) < 0 ) {
         item.used = '-';
+        item.dataUnit = '';
       } else {
         item.used = (Number(item.used) / 1024).toFixed();
         item.used = thisMain._comComma(item.used);
+        item.dataUnit = Tw.DATA_UNIT.MB;
       }
 
       item.rate = thisMain._comComma(Number(item.rate||0).toFixed());
