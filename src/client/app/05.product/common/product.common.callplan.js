@@ -547,14 +547,21 @@ Tw.ProductCommonCallplan.prototype = {
       $phoneNum01 = $form.find('#phoneNum01'),
       $phoneNum02 = $form.find('#phoneNum02');
 
-    if (Tw.FormatHelper.isEmpty($phoneNum01.val()) || Tw.FormatHelper.isEmpty($phoneNum02.val())) {
-      return;
-    }
+    this._apiService.request(Tw.NODE_CMD.GET_SVC_INFO, {})
+      .done($.proxy(function(resp) {
+        if (resp.code !== Tw.API_CODE.CODE_00 || Tw.FormatHelper.isEmpty(resp.result)) {
+          return this._tidLanding.goLogin(location.origin + '/product/callplan?prod_id=' + this._prodId);
+        }
 
-    this._apiService.request(Tw.API_CMD.BFF_10_0174, {
-      roamCp1: $phoneNum01.val(),
-      roamCp2: $phoneNum02.val()
-    }).done($.proxy(this._procRoamingAutoRes, this));
+        if (Tw.FormatHelper.isEmpty($phoneNum01.val()) || Tw.FormatHelper.isEmpty($phoneNum02.val())) {
+          return;
+        }
+
+        this._apiService.request(Tw.API_CMD.BFF_10_0174, {
+          roamCp1: $phoneNum01.val(),
+          roamCp2: $phoneNum02.val()
+        }).done($.proxy(this._procRoamingAutoRes, this));
+      }, this));
   },
 
   _procRoamingAutoRes: function(resp) {
@@ -562,15 +569,15 @@ Tw.ProductCommonCallplan.prototype = {
       return Tw.Error(resp.code, resp.msg).pop();
     }
 
-    if (resp.result.mySvcNumYN !== 'Y') {
-      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A81);
+    if (resp.result.mySvcNum !== 'Y' || resp.result.sktChk !== 'SKT') {
+      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A81.TITLE);
     }
 
     if (resp.result.autoDialPhone === '1' || resp.result.autoDialPhone === '3') {
-      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A79);
+      return this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A79.TITLE);
     }
 
-    this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A80);
+    this._popupService.openAlert(null, Tw.ALERT_MSG_PRODUCT.ALERT_3_A80.TITLE);
   }
 
 };
