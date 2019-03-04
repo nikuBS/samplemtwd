@@ -126,7 +126,7 @@ Tw.ProductApps.prototype = {
   },
 
   _appendApps: function() {
-    this._sort('storRgstDtm');
+    this._sortOrder('storRgstDtm');
     this.$list.html(this._appsTmpl({ apps: this._apps }));
     this.$news = this.$list.find('.i-new.none');
   },
@@ -171,7 +171,7 @@ Tw.ProductApps.prototype = {
         .text()
     );
 
-    this._sort(nOrder);
+    this._sortOrder(nOrder);
     this.$list.empty();
     this.$list.html(this._appsTmpl({ apps: this._apps }));
     this.$news = this.$list.find('.i-new.none');
@@ -181,18 +181,29 @@ Tw.ProductApps.prototype = {
     this._popupService.close();
   },
 
-  _sort: function(order) {
+  _sortOrder: function(order) {
     if (this._order === order) {
       return;
     }
 
     this._order = order;
-    this._apps.sort($.proxy(this._compare, this));
+
+    if (order === 'prodNm') {
+      this._apps.sort($.proxy(this._sort, this));
+    } else {
+      this._apps.sort($.proxy(this._sortDescending, this));
+    }
   },
 
-  _compare: function(a, b) {
+  _sort: function(a, b) {
     if (a[this._order] < b[this._order]) return -1;
     if (a[this._order] > b[this._order]) return 1;
+    return 0;
+  },
+
+  _sortDescending: function(a, b) {
+    if (a[this._order] > b[this._order]) return -1;
+    if (a[this._order] < b[this._order]) return 1;
     return 0;
   },
 
