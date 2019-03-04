@@ -75,6 +75,7 @@ Tw.ProductWireplanJoinLettering.prototype = {
 
   _convConfirmOptions: function() {
     this._confirmOptions = $.extend(this._confirmOptions, {
+      pageId: 'M000433',
       isTerm: false,
       isNoticeList: true,
       isWireplan: true,

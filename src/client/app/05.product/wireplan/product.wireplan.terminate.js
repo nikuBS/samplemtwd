@@ -40,6 +40,7 @@ Tw.ProductWireplanTerminate.prototype = {
 
   _convConfirmOptions: function() {
     this._confirmOptions = $.extend(this._confirmOptions, {
+      pageId: 'M000434',
       isTerm: true,
       isWireplan: true,
       isNoticeList: true,
