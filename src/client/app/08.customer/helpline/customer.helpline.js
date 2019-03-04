@@ -31,10 +31,11 @@ Tw.CustomerHelpline.prototype = {
     // this.$container.on('click', '.prev-step', $.proxy(this._openCancelPopup, this));
     this.$container.on('click', 'span.bt-box', $.proxy(this._openContacts, this));
     this.$areaPhone.on('keyup', 'input', $.proxy(this._validatePhoneNumber, this));
-    this.$areaPhone.on('focusout', 'input', $.proxy(this.handleFocusoutInput, this));
     this.$container.on('click', '.cancel', $.proxy(this._validatePhoneNumber, this));
     this.$container.on('change', '.radiobox input', $.proxy(this._validatePhoneNumber, this));
     this.$btnSubmit.on('click', $.proxy(this._handleSubmit, this));
+    this.$phoneInput.on('focusout', $.proxy(this.handleFocusoutInput, this));
+    this.$phoneInput.on('focusin', $.proxy(this.handleFocusinInput, this));
     this.$btnType.on('click', $.proxy(this._openSelectTypePopup, this));
     this.$btnArea.on('click', $.proxy(this._openSelectAreaPopup, this));
     this.$btnTime.on('click', $.proxy(this._openSelectTimePopup, this));
@@ -45,6 +46,7 @@ Tw.CustomerHelpline.prototype = {
     this.$btnArea = this.$container.find('#fe-area');
     this.$btnTime = this.$container.find('#fe-time');
     this.$areaPhone = this.$container.find('.inputbox.bt-add.mt20');
+    this.$phoneInput = this.$areaPhone.find('input');
     this.$btnSubmit = this.$container.find('.bt-red1 button');
     this.$cellphone = this.$container.find('#fe-cellphone');
     this.$telephone = this.$container.find('#fe-telephone');
@@ -58,30 +60,40 @@ Tw.CustomerHelpline.prototype = {
   //   this._historyService.go(-2);
   // },
 
-  _openContacts: function() {
+  _openContacts: function() { // 주소록 native에 요청
     this._nativeService.send(Tw.NTV_CMD.GET_CONTACT, {}, $.proxy(this._handleGetContact, this));
   },
 
-  _handleGetContact: function(resp) {
-    if (resp.params && resp.params.phoneNumber) {
+  _handleGetContact: function(resp) { // 주소록에서 특정 전화번호 선택 시
+    if (resp.params && resp.params.phoneNumber) { 
       var number = resp.params.phoneNumber.replace(/-/g, '');
-      this.$areaPhone.find('input').val(number);
-      if (Tw.ValidationHelper.isCellPhone(number)) {
+      this.$phoneInput.val(number);
+      if (Tw.ValidationHelper.isCellPhone(number)) {  // 선택된 번호가 핸드폰 번호 일 경우 
         this.$cellphone.trigger('click');
-      } else {
+      } else {  // 선택된 번호가 집전화 번호 일 경우 
         this.$telephone.trigger('click');
       }
     }
   },
 
-  handleFocusoutInput: function() {
-    this._isCheckedLen = true;
-    this._validatePhoneNumber();
+  handleFocusinInput: function() {  // 전화번호 입력에 포커스가 들어오면, 숫자만 입력가능하도록 속성 추가
+    this.$phoneInput.val(this.$phoneInput.val().replace(/-/g, ''));
+    this.$phoneInput.attr('type', 'number');
+    this.$phoneInput.attr('pattern', '[0-9]*');
   },
 
-  _validatePhoneNumber: function() {
+  handleFocusoutInput: function() {
+    this._isCheckedLen = true;
+    if (this._validatePhoneNumber()) {  // 입력된 전화번호가 유효하면 dash 추가
+      this.$phoneInput.attr('type', 'text');
+      this.$phoneInput.removeAttr('pattern');
+      this.$phoneInput.val(Tw.FormatHelper.getDashedPhoneNumber(this.$phoneInput.val()));
+    }
+  },
+
+  _validatePhoneNumber: function() {  // 입력된 번호가 유효한 지 검사
     var $errorText = this.$areaPhone.find('#aria-phone-tx1'),
-      $input = this.$areaPhone.find('input'),
+      $input = this.$phoneInput,
       errorState = this.$areaPhone.hasClass('error'),
       number = $input.val(),
       isValid = false;
@@ -90,9 +102,9 @@ Tw.CustomerHelpline.prototype = {
       this._isCheckedLen = false;
     }
 
-    if (this.$cellphone.hasClass('checked')) {
-      var validLength0 = number.indexOf('010') === 0 ? 11 : 10;
-      if (number.length > validLength0) {
+    if (this.$cellphone.hasClass('checked')) {  // 핸드폰 번호로 체크되어 있을 때
+      var validLength0 = number.indexOf('010') === 0 ? 11 : 10; // 핸드폰 번호가 010이면 11자리만 입력가능
+      if (number.length > 11) { // 
         $input.val(number.substring(0, number.length - 1));
         return;
       } else if (!this._isCheckedLen && number.length === validLength0) {
@@ -259,7 +271,7 @@ Tw.CustomerHelpline.prototype = {
 
   _handleSubmit: function() {
     if (!this._validatePhoneNumber()) {
-      return this.$areaPhone.find('input').focus();
+      return this.$phoneInput.focus();
     }
 
     this._apiService
@@ -267,7 +279,7 @@ Tw.CustomerHelpline.prototype = {
         reserveType: (this._reservationType || 0).toString(),
         reserveArea: (this._reservationArea || 1).toString(),
         reserveTime: this._reservationDate + this._reservationTime,
-        reserveSvcNum: this.$areaPhone.find('input').val()
+        reserveSvcNum: this.$phoneInput.val()
       })
       .done($.proxy(this._successSubmit, this));
   },
@@ -277,7 +289,7 @@ Tw.CustomerHelpline.prototype = {
       if (resp.result.historiesYn === 'Y') {
         this._popupService.openAlert(Tw.ALERT_MSG_CUSTOMER.ALERT_HELPLINE_A02);
       } else {
-        this.$areaPhone.find('input').val('');
+        this.$phoneInput.val('');
         this._popupService.open({
           hbs: 'complete_c_type',
           layer: true,
