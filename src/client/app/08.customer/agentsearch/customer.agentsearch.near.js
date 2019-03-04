@@ -374,7 +374,7 @@ Tw.CustomerAgentsearchNear.prototype = {
         list: list
       }]
     }, $.proxy(function (root) {
-      root.on('click', '.fe-type', $.proxy(this._onBranchTypeChanged, this));
+      root.on('click', 'li button', $.proxy(this._onBranchTypeChanged, this));
     }, this));
   },
   _onBranchTypeChanged: function (e) {
