@@ -27,7 +27,7 @@ Tw.MyTFareInfoCancelDraw.prototype = {
     this.$cancelBtn = this.$container.find('.fe-btn-cancel');
 
     // page로 이동해서 정보 없을 가능성 전송버튼 disable
-    if (Tw.FormatHelper.isEmpty(this.data.bankCd) || Tw.FormatHelper.isEmpty(this.data.bankSerNum)) {
+    if (Tw.FormatHelper.isEmpty(this.data.bankCd) || Tw.FormatHelper.isEmpty(this.data.bankAccount)) {
       this.$cancelBtn.find('button').prop('disabled', true);
     } 
   },
@@ -45,7 +45,7 @@ Tw.MyTFareInfoCancelDraw.prototype = {
   },
 
   _successCancelAccount: function (res) {
-    if (res.code === '00') {
+    if (res.code === Tw.API_CODE.CODE_00) {
       this._popupService.openAlert(
         Tw.MYT_FARE_HISTORY_PAYMENT.CANCEL_AUTO_WITHDRAWAL,
         Tw.POPUP_TITLE.NOTIFY, 
@@ -60,7 +60,7 @@ Tw.MyTFareInfoCancelDraw.prototype = {
   },
 
   _closePopAndBack: function() {
-    this._popupService.close();
+    this._popupService.closeAll();
     this._historyService.goBack();
   },
 

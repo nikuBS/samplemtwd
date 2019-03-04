@@ -110,12 +110,23 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     var type = 'R',
       gb = this.$input.val(),
       mb = 0,
-      remain = this._changable.data - Number(gb);
+      data = this._changable.data - Number(gb);
+      remain = data >= 1 ? {
+        data: Number(data.toFixed(2)),
+        unit: Tw.DATA_UNIT.GB
+      } : {
+        data: 0,
+        unit: Tw.DATA_UNIT.MB
+      }
+
     if (this._all) {
       type = 'A';
       gb = this._changable.gb;
       mb = this._changable.mb;
-      remain = 0;
+      remain = {
+        data: 0,
+        unit: Tw.DATA_UNIT.MB
+      };
     }
 
     this._popupService.close();
@@ -134,9 +145,9 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     var ALERT_MSG = '';
     switch (resp.code) {
       case Tw.API_CODE.CODE_00: {
-        this.$item.find('.modify strong').text(remain + 'GB');
-        if (remain > 0) {
-          this.$item.find('.fe-edit').data('gb', remain);
+        this.$item.find('.modify strong').text(remain.data + remain.unit);
+        if (remain.unit === Tw.DATA_UNIT.GB) {
+          this.$item.find('.fe-edit').data('gb', remain.data);
         } else {
           this.$item.find('.fe-edit').remove();
           this.$item.find('.modify span').text(Tw.MYT_DATA_FAMILY_NOT_POSSIBLE_CHANGE);
@@ -225,8 +236,8 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
   },
 
   _handleSuccessRetrieve: function(share) {
-    var nData = Number(share.remGbGty) + Number(share.remMbGty) / 1024 || 0;
-    this.$strong.text(nData + 'GB').switchClass('txt-c4', 'txt-c2');
+    var nData = Number((Number(share.remGbGty) + Number(share.remMbGty) / 1024 || 0).toFixed(2));
+    this.$strong.text(nData > 0 ? nData + 'GB' : '0MB').switchClass('txt-c4', 'txt-c2');
     this.$retrieveBtn.remove();
     if (nData > 0) {
       this._changable.gb = Number(share.remGbGty);

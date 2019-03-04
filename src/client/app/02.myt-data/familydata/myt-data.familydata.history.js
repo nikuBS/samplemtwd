@@ -81,7 +81,7 @@ Tw.MyTDataFamilyHistory.prototype = {
     var serial = $parent.data('serial-number');
     $before.siblings('.fe-ing').remove();
 
-    var nData = Number(share.remGbGty) + Tw.FormatHelper.customDataFormat(share.remMbGty, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB).data || 0;
+    var nData = Number((Number(share.remGbGty) + Number(share.remMbGty) / 1024 || 0).toFixed(2));
     if (nData > 0) {
       $parent.append(this._afterTmpl({ data: nData, serial: serial, gb: share.remGbGty, mb: share.remMbGty }));
     } else {
@@ -99,7 +99,7 @@ Tw.MyTDataFamilyHistory.prototype = {
         mb: $target.data('mb')
       };
 
-    changable.data = changable.gb + Tw.FormatHelper.customDataFormat(changable.mb, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.GB).data || 0;
+    changable.data = Number((Number(changable.gb) + Number(changable.mb) / 1024 || 0).toFixed(2));
 
     if (serial) {
       this._apiService

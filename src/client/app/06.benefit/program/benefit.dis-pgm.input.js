@@ -38,6 +38,7 @@ Tw.BenefitDisPgmInput.prototype = {
   },
 
   _bindEvent: function () {
+    // window 'env' 이벤트 발생시 페이지를 팝업으로 호출 - 상품 쪽과 동일
     $(window).on(Tw.INIT_COMPLETE, $.proxy(this._getJoinConfirmContext, this));
   },
 

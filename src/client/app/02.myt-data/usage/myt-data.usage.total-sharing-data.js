@@ -118,7 +118,7 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
 
   _init: function() {
     this._myTDataUsageDataShare = new Tw.MyTDataUsageDataShare($('#fe-data-share'));
-    this._hashService.initHashNav($.proxy(this._onHashChange, this));
+    this._hashService.initHashNav(_.debounce($.proxy(this._onHashChange, this), 700, true));
   },
 
   _onHashChange: function(hash) {

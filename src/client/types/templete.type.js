@@ -100,7 +100,7 @@ Tw.POPUP_TPL = {
     {
       'title': '포인트 요금 납부 예약',
       'list': [
-        { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백', 'option': 'fe-ok-cashbag' },
+        { 'button-attr': 'type="button"', 'txt': 'OK캐쉬백포인트', 'option': 'fe-ok-cashbag' },
         { 'button-attr': 'type="button"', 'txt': 'T포인트', 'option': 'fe-t-point' },
         { 'button-attr': 'type="button"', 'txt': '레인보우포인트', 'option': 'fe-rainbow-point' }
       ]
@@ -412,9 +412,9 @@ Tw.POPUP_TPL = {
   MEMBERSHIP_CORPORATE_LIST: [
     {
       'list': [
-        { 'option': '', 'attr': 'id="010" class="nominal"', value: '본인' },
-        { 'option': '', 'attr': 'id="090" class="nominal"', value: '직원' },
-        { 'option': '', 'attr': 'id="990" class="nominal"', value: '기타' }
+        { 'option': 'nominal', 'attr': 'id="010"', value: '본인' },
+        { 'option': 'nominal', 'attr': 'id="090"', value: '직원' },
+        { 'option': 'nominal', 'attr': 'id="990"', value: '기타' }
       ]
     }
   ],

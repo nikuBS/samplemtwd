@@ -71,6 +71,7 @@ Tw.MyTFareBillSmallHitstoryDetail.prototype = {
   },
 
   _execBillBlock: function() {
+    this._popupService.close();
     this._apiService.request(Tw.API_CMD.BFF_05_0082, {
       idpg: this.detailData.idpg,
       tySvc: this.detailData.tySvc,
@@ -85,7 +86,11 @@ Tw.MyTFareBillSmallHitstoryDetail.prototype = {
     this._popupService.close();
   },
 
-  _successBillBlock: function() {
+  _successBillBlock: function(resq) {
+    if(resq.code !== Tw.API_CODE.CODE_00) {
+      this._failBillBlock(resq);
+      return Tw.Error(resq.code, resq.msg).pop();
+    }
     // 차단완료
     this._popupService.close();
     Tw.CommonHelper.toast(Tw.MYT_FARE_HISTORY_MICRO_BLOCK_TOAST.BLOCK);

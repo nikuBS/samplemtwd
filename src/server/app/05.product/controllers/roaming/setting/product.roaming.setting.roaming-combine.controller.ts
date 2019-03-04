@@ -43,6 +43,9 @@ class ProductRoamingSettingRoamingCombine extends TwViewController {
           msg: prodBffInfo.msg,
         });
       }
+      for (let i = 0; i < prodBffInfo.result.togetherMemList.length; i++) {
+        prodBffInfo.result.togetherMemList[i].svcNum = StringHelper.phoneStringToDash(prodBffInfo.result.togetherMemList[i].svcNum);
+      }
       res.render('roaming/setting/product.roaming.setting.roaming-combine.html', {
         svcInfo : svcInfo,
         prodRedisInfo : prodRedisInfo.result.summary,

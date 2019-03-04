@@ -19,6 +19,8 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from) {
 
 Tw.CommonSearch.prototype = {
   _init : function (from) {
+    this._recentKeywordDateFormat = 'YY.M.D.';
+    this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
     this.$contents = this.$container.find('.container');
     this._searchInfo.search = this._setRank(this._searchInfo.search);
     this._platForm = Tw.BrowserHelper.isApp()?'app':'web';
@@ -145,9 +147,18 @@ Tw.CommonSearch.prototype = {
     if(data.length<=0){
       $list.addClass('none');
     }
-    _.each(data,function (listData,index) {
+    _.each(data,$.proxy(function (listData,index) {
+      if(listData.DOCID==='M000083'&&this._nowUser==='logOutUser'){
+        var removeLength = data.length-1;
+        if(removeLength<=0){
+          $('.'+dataKey).addClass('none');
+        }else{
+          $('.'+dataKey+' .num').text(removeLength);
+        }
+        return;
+      }
       $list.append(templateData({listData : listData , CDN : cdn}));
-    });
+    },this));
   },
   _decodeEscapeChar : function (targetString) {
     var returnStr = targetString.replace(/\\/gi,'/').replace(/\n/g,'');
@@ -215,7 +226,8 @@ Tw.CommonSearch.prototype = {
   },
   _addRecentlyKeyword : function (keyword) {
     this._recentKeyworList[this._nowUser].push({
-      keyword : keyword, searchTime : moment().format('YY.M.D.'),
+      keyword : keyword,
+      searchTime : this._todayStr,
       platForm : this._platForm,
       initial : Tw.StringHelper.getKorInitialChar(keyword)
     });
@@ -253,6 +265,10 @@ Tw.CommonSearch.prototype = {
     }
     if(linkUrl.indexOf('BPCP')>-1){
       this._getBPCP(linkUrl);
+    }else if(linkUrl.indexOf('Native:')>-1){
+      if(linkUrl.indexOf('freeSMS')>-1){
+        this._callFreeSMS();
+      }
     }else if($linkData.hasClass('direct-element')){
       Tw.CommonHelper.openUrlExternal(linkUrl);
     }else{
@@ -299,6 +315,7 @@ Tw.CommonSearch.prototype = {
   },
   _recentKeywordInit : function () {
     var recentlyKeywordData = JSON.parse(Tw.CommonHelper.getLocalStorage('recentlySearchKeyword'));
+    var removeIdx = [];
     if(Tw.FormatHelper.isEmpty(recentlyKeywordData)){
       //making recentlySearchKeyword
       recentlyKeywordData = {};
@@ -307,6 +324,15 @@ Tw.CommonSearch.prototype = {
       //makin nowUser's recentlySearchKeyword based on svcMgmtNum
       recentlyKeywordData[this._nowUser] = [];
     }
+    _.each(recentlyKeywordData[this._nowUser],$.proxy(function (data, index) {
+      //recognize 10 days ago data from now
+      if(Tw.DateHelper.getDiffByUnit(Tw.DateHelper.convDateCustomFormat(this._todayStr,this._recentKeywordDateFormat),Tw.DateHelper.convDateCustomFormat(data.searchTime,this._recentKeywordDateFormat),'day')>=10){
+        removeIdx.push(index);
+      }
+    },this));
+    _.each(removeIdx,$.proxy(function (removeIdx) {
+      recentlyKeywordData[this._nowUser].splice(removeIdx,1);
+    },this));
     Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(recentlyKeywordData));
     this._recentKeyworList = recentlyKeywordData;
   },
@@ -483,6 +509,31 @@ Tw.CommonSearch.prototype = {
         $smartBase.find('.last-line').addClass('full');
       }
     }
+  },
+  _callFreeSMS : function () {
+    var memberType = this._svcInfo.totalSvcCnt > 0 ? (this._svcInfo.expsSvcCnt > 0 ? 0 : 1) : 2;
+    if (memberType === 1) {
+      this._popupService.openAlert(
+        Tw.MENU_STRING.FREE_SMS,
+        '',
+        Tw.BUTTON_LABEL.CONFIRM,
+        null,
+        'menu_free_sms'
+      );
+      return ;
+    }
+
+    if (this._svcInfo.svcAttrCd==='M2') {
+      this._popupService.openAlert(
+        Tw.MENU_STRING.FREE_SMS_PPS,
+        '',
+        Tw.BUTTON_LABEL.CONFIRM,
+        null,
+        'menu_free_sms_pps'
+      );
+      return;
+    }
+    Tw.CommonHelper.openFreeSms();
   }
 
 

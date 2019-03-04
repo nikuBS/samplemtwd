@@ -48,12 +48,22 @@ class MytDataUsageChildRecharge extends TwViewController {
     });
   }
 
+  /**
+   * 팅/쿠키즈/안심음성 가입정보조회
+   * @private
+   * return {Observable}
+   */
   private reqTingSubscriptions(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_06_0028, {
       childSvcMgmtNum: this.childSvcMgmtNum
     });
   }
 
+  /**
+   * 팅/쿠키즈/안심음성 가입정보조회 결과
+   * @private
+   * return {Observable}
+   */
   private getTingSubscriptions(resp: any): any {
     const result = resp.result;
     result.showTopUpLimit = FormatHelper.addComma(result.topUpLimit);

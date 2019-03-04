@@ -92,6 +92,10 @@ class CommonSearch extends TwViewController {
       searchApi = API_CMD.SEARCH_WEB;
     }
 
+    if (!FormatHelper.isEmpty(svcInfo)) {
+      requestObj.userId = svcInfo.userId;
+    }
+
     Observable.combineLatest(
       this.apiService.request( searchApi , requestObj, {}),
       this.apiService.request(API_CMD.RELATED_KEYWORD, requestObj, {})
@@ -105,8 +109,13 @@ class CommonSearch extends TwViewController {
           msg : searchResult.code !== 0 ? searchResult.msg : relatedKeyword.msg
         });
       }
+      if (FormatHelper.isEmpty(svcInfo) && searchResult.result.totalcount === 1 && searchResult.result.search[2].shortcut.data.length && searchResult.result.search[2].shortcut.data[0].DOCID === 'M000083') {
+        searchResult.result.totalcount = 0;
+      }
       if (searchResult.result.search[0].immediate.data.length <= 0 || svcInfo === null) {
-        searchResult.result.search[0].immediate.data = [];
+        if (!FormatHelper.isEmpty(searchResult.result.search[0].immediate.data)) {
+          searchResult = removeImmediateData(searchResult);
+        }
         showSearchResult(searchResult, relatedKeyword , this);
       } else {
         searchResult.result.search[0].immediate.data[0].mainData = StringHelper.phoneStringToDash(svcInfo.svcNum);
@@ -115,9 +124,7 @@ class CommonSearch extends TwViewController {
             this.apiService.request(API_CMD.BFF_05_0001, {}, {}).
             subscribe((resultData) => {
               if (resultData.code !== API_CODE.CODE_00) {
-                searchResult.result.search[0].immediate.data = [];
-                searchResult.result.search[0].immediate.count = 0;
-                searchResult.result.totalcount = Number(searchResult.result.totalcount) - 1;
+                searchResult = removeImmediateData(searchResult);
               } else {
                 const remainData = new MyTDataHotData().parseCellPhoneUsageData(resultData.result, svcInfo);
                 if ( searchResult.result.search[0].immediate.data[0].subData = remainData.gnrlData[0].showRemained ) {
@@ -132,7 +139,7 @@ class CommonSearch extends TwViewController {
           case 3:
             this._requestHotbillInfo().
             subscribe((resultData) => {
-              if (resultData.resp.code !== API_CODE.CODE_00) {
+              if (FormatHelper.isEmpty(resultData) || resultData.resp.code !== API_CODE.CODE_00) {
                 searchResult = removeImmediateData(searchResult);
               } else {
                 searchResult.result.search[0].immediate.data[0].subData = resultData.resp.result.hotBillInfo[0].totOpenBal2;

@@ -100,7 +100,9 @@ class MytDataSubmainController extends TwViewController {
       }
 
       if ( child && child.length > 0 ) {
-        data.otherLines = Object.assign(this.convertChildLines(child), data.otherLines);
+        // 자녀 회선 추가 수정 [DV001-15520]
+        data.otherLines = data.otherLines.concat(this.convertChildLines(child));
+        // data.otherLines = Object.assign(this.convertChildLines(child), data.otherLines);
       }
       // 9차: PPS, T-Login, T-PocketFi 인 경우 다른회선 잔여량이 노출되지 않도록 변경
       if ( data.svcInfo.svcAttrCd === 'M2' || data.svcInfo.svcAttrCd === 'M3' || data.svcInfo.svcAttrCd === 'M4' ) {
@@ -272,24 +274,26 @@ class MytDataSubmainController extends TwViewController {
 
       // 음성충전알람서비스 신청 내역 - 13차
       if ( this.isPPS ) {
-        Observable.combineLatest(
-          this._getPPSAutoAlarm(),
-          this._getPPSAutoInfo()
-        ).subscribe(([alarm, info]) => {
-          if ( alarm.code === API_CODE.CODE_00 ) {
-            // 음성 자동 충전 되어 있지 않은 경우 버튼 노출
-            if ( alarm.result.typeCd === 0 ) {
-              data.ppsAlarm = true;
-            }
-          }
-          if ( info.code === API_CODE.CODE_00 ) {
-            // 자동알람 신청이 되어 있지 않은 경우 버튼 노출
-            if ( FormatHelper.isEmpty(info.result.amtCd) ) {
-              data.ppsInfo = true;
-            }
-          }
-          res.render('myt-data.submain.html', { data });
-        });
+        // DV001-13280 - 음성자동충전, 자동알림 신청과 관계없이 버튼 노출
+        // Observable.combineLatest(
+        //   this._getPPSAutoAlarm(),
+        //   this._getPPSAutoInfo()
+        // ).subscribe(([alarm, info]) => {
+        //   if ( alarm.code === API_CODE.CODE_00 ) {
+        //     // 음성 자동 충전 되어 있지 않은 경우 버튼 노출
+        //     if ( alarm.result.typeCd === 0 ) {
+        //       data.ppsAlarm = true;
+        //     }
+        //   }
+        //   if ( info.code === API_CODE.CODE_00 ) {
+        //     // 자동알람 신청이 되어 있지 않은 경우 버튼 노출
+        //     if ( FormatHelper.isEmpty(info.result.amtCd) ) {
+        //       data.ppsInfo = true;
+        //     }
+        //   }
+        //   res.render('myt-data.submain.html', { data });
+        // });
+        res.render('myt-data.submain.html', { data });
       } else {
         /**
          * T가족모아 관련 내용 - 공유데이터(실시간잔여량에 조회된 데이터)

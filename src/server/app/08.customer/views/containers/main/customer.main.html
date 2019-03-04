@@ -41,10 +41,18 @@
                                         <%-banner.titleNm%>
                                     </strong>
                                     <ul>
-                                        <% banner.submMenuList.splice(0, 3).map( item => { %>
-                                        <li><a href="/customer/faq/do-like-this?id=<%-item.contsId%>"
-                                               class="banner-bt ico-type01"><%-item.contsNm%></a></li>
-                                        <% }) %>
+                                        <% if(banner.submMenuList) { %>
+                                            <% banner.submMenuList.splice(0, 3).map( item => { %>
+                                            <li><a href="/customer/faq/do-like-this?id=<%-item.contsId%>"
+                                                class="banner-bt ico-type01"><%-item.contsNm%></a></li>
+                                            <% }) %>
+                                        <%} else if (banner.contsList) {%>
+                                            <% banner.contsList.splice(0, 3).map( item => { %>
+                                            <li><a href="/customer/faq/do-like-this?id=<%-item.contsId%>"
+                                                class="banner-bt ico-type01"><%-item.contsNm%></a></li>
+                                            <% }) %>
+                                        <%}%>
+                                        
                                     </ul>
                                     <% if ( !!banner.imgUrl ) { %>
                                     <img src="<%=CDN%><%-banner.imgUrl%>" alt="<%-banner.imgAltCtt%>">
