@@ -38,6 +38,7 @@ Tw.CustomerEmail.prototype = {
     this.$container.on('keyup blur change', '.fe-text_title', $.proxy(this._onChangeTitle, this));
     this.$container.on('keyup blur change', '.fe-text_content', $.proxy(this._onChangeContent, this));
     this.$container.on('keyup', '.fe-numeric', $.proxy(this._onKeyUpValidNumber, this));
+    this.$container.on('keyup', '.fe-numeric-uppercase', $.proxy(this._onKeyUpValidNumberUpperCase, this));
     this.$container.on('keyup', '.fe-service_phone', $.proxy(this._onKeyUpPhoneNumber, this));
     this.$container.on('keyup', '.fe-quality_phone', $.proxy(this._onKeyUpPhoneNumber, this));
     this.$container.on('keyup', '.fe-service_email', $.proxy(this._onKeyUpEmail, this));
@@ -93,6 +94,15 @@ Tw.CustomerEmail.prototype = {
     var sNumber = number.match(/\d+/g);
 
     $elNumber.val(sNumber);
+  },
+
+  // 영문대문자 + 숫자
+  _onKeyUpValidNumberUpperCase: function (e) {
+    var $el = $(e.currentTarget);
+    var value = !!$el.val() ? $el.val() : '';
+    var sValue = value.match(/[\dA-Z]+/gi);
+    
+    $el.val((sValue || []).join().toString().toUpperCase());
   },
 
   _onKeyUpEmail: function (e) {
