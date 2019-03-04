@@ -170,7 +170,8 @@ Tw.CustomerEmail.prototype = {
     if ( $(e.currentTarget).prop('checked') ) {
       this._popupService.openAlert(
         Tw.CUSTOMER_EMAIL.SMS_ALARM,
-        Tw.POPUP_TITLE.NOTIFY,
+        null,
+        //Tw.POPUP_TITLE.NOTIFY,
         Tw.BUTTON_LABEL.CONFIRM
       );
     }
