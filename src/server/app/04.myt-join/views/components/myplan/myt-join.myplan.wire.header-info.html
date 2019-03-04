@@ -1,14 +1,12 @@
 <div class="plan">
     <strong class="tit"><%= feePlan.feeProdNm %></strong>
-    <% if ( feePlan.isDisplayFeeAmt ) { %>
-    <span class="val"><%= feePlan.basFeeAmt %>원</span>
-    <% } %>
+    <span class="val"><%= feePlan.basFeeAmt %></span>
 </div>
 <div class="sub">
-    <% if ( feePlan.isDisplayFeeAmt && (feePlan.feeManlSetYn === 'N' || !feePlan.feeManlSetTitNm) ) { %>
+    <% if ( feePlan.feeManlSetYn === 'N' || !feePlan.feeManlSetTitNm ) { %>
     <span class="rest">월정액(부가세 포함)</span>
     <% } %>
-    <% if ( feePlan.isDisplayFeeAmt && (feePlan.feeManlSetYn === 'Y' && feePlan.feeManlSetTitNm) ) { %>
+    <% if ( feePlan.feeManlSetYn === 'Y' && feePlan.feeManlSetTitNm ) { %>
     <span class="rest"><%= feePlan.feeManlSetTitNm %></span>
     <% } %>
 </div>
