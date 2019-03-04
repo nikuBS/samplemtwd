@@ -360,9 +360,9 @@ Tw.CustomerAgentsearchNear.prototype = {
   },
   _onTypeOption: function () {
     var list = [
-          { value: Tw.BRANCH.SELECT_BRANCH_TYPE[0], attr: 'class="fe-type" value="0"' },
-          { value: Tw.BRANCH.SELECT_BRANCH_TYPE[1], attr: 'class="fe-type" value="1"' },
-          { value: Tw.BRANCH.SELECT_BRANCH_TYPE[2], attr: 'class="fe-type" value="2"' }
+          { value: Tw.BRANCH.SELECT_BRANCH_TYPE[0], option: 'fe-type', attr: 'value="0"' },
+          { value: Tw.BRANCH.SELECT_BRANCH_TYPE[1], option: 'fe-type', attr: 'value="1"' },
+          { value: Tw.BRANCH.SELECT_BRANCH_TYPE[2], option: 'fe-type', attr: 'value="2"' }
     ];
     list[this._currentBranchType].option = 'checked';
 
