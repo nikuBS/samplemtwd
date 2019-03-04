@@ -60,14 +60,22 @@
                                         <% } %>
                                     </div>
 
+                                    <% if (prod.prodBasBenfCtt) { %>
                                     <div class="sub">
                                         <span class="text-type1"><%= prod.prodSmryDesc %></span>
                                     </div>
-                                    <% if (prod.prodBasBenfCtt) { %>
                                     <div class="service-wrap">
                                         <div class="service">
                                             <span class="sv-spec">
                                                 <i class="ico-speed-plan"></i><%= prod.prodBasBenfCtt %>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <% } else { %>
+                                    <div class="service-wrap">
+                                        <div class="service">
+                                            <span class="sv-spec txt">
+                                                <%= prod.prodSmryDesc %>
                                             </span>
                                         </div>
                                     </div>
