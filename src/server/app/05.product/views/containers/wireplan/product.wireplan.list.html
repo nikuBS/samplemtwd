@@ -18,9 +18,7 @@
     <!--// #skip_navigation -->
     <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <!-- #header -->
-        <div id="header" class="header-wrap">
-            <%- include('../../../common/views/components/header.component.html', { title: page, svcInfo: svcInfo, pageInfo: locals.pageInfo }); %>
-        </div>
+        <%- include('../../../common/views/components/header.component.html', { title: page, svcInfo: svcInfo, pageInfo: locals.pageInfo }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
@@ -82,14 +80,12 @@
                                     <% } %>
                                 </a>
                             </div>
-                            <% }); %>
-                        </ul>
+                        <% }); %>
                     <% } %>
 
                     <% if (additions.products.length > 0) { %>
                         <div class="ti-caption-type01 pb12 pt28">
                             <h2 class="tit"><%= page %> 부가서비스 </h2>
-                            <!-- <div class="more"><button class="link">더보기</button></div> -->
                         </div>
                         <% additions.products.map(prod => { %>
                             <div class="plan-compact-info type01">
