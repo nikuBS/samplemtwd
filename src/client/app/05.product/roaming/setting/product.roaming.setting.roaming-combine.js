@@ -70,7 +70,7 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
       this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
     }
   },
-  _requestOrder : function(requestType,phoneNum){
+  _requestOrder : function(requestType,phoneNum,targetEvt){
     this._popupService.close();
     var requestValue = {};
     if(requestType === 'remove'){
@@ -88,7 +88,11 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_10_0092, requestValue, {},[this._prodId]).
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
-        this._historyService.reload();
+        if(requestType === 'remove'){
+          $(targetEvt.currentTarget).parents('li').remove();
+        }else{
+          this._historyService.reload();
+        }
       }else{
         if(res.code==='PRD0027'){
           this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A19.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A19.TITLE);
@@ -164,7 +168,7 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
       this._popupService.openConfirmButton(
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE,
-        $.proxy(this._requestOrder,this,'remove',reuqestPhoneNum),
+        $.proxy(this._requestOrder,this,'remove',reuqestPhoneNum,targetEvt),
         null,
         Tw.BUTTON_LABEL.CLOSE,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON);
