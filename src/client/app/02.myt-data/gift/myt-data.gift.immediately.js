@@ -42,7 +42,7 @@ Tw.MyTDataGiftImmediately.prototype = {
     this.$btnRequestSendingData.on('click', $.proxy(this._getReceiveUserInfo, this));
     this.$wrap_data_select_list.on('click', 'input', $.proxy(this._onClickDataQty, this));
     this.$inputImmediatelyGift.on('keyup', $.proxy(this._onKeyUpImmediatelyGiftNumber, this));
-    this.$inputImmediatelyGift.on('blur', $.proxy(this._onKeyUpImmediatelyGiftNumber, this));
+    // this.$inputImmediatelyGift.on('blur', $.proxy(this._onKeyUpImmediatelyGiftNumber, this));
     this.$wrap.on('showUnableGift', $.proxy(this._showUnableGift, this));
   },
 
@@ -117,7 +117,7 @@ Tw.MyTDataGiftImmediately.prototype = {
     this._hideRecentNumberLayer();
     this._checkValidateSendingButton();
     this._validateInputNumber();
-    this.$inputImmediatelyGift.val(Tw.StringHelper.phoneStringToDash(this.$inputImmediatelyGift.val()));
+    this.$inputImmediatelyGift.val(Tw.FormatHelper.getDashedCellPhoneNumber(this.$inputImmediatelyGift.val(), true));
   },
 
   _onSelectRecentContact: function (e) {
@@ -128,6 +128,7 @@ Tw.MyTDataGiftImmediately.prototype = {
     this.$inputImmediatelyGift.data('opdtm', opdtm);
     this._hideRecentNumberLayer();
     this._checkValidateSendingButton();
+    this._validateInputNumber();
   },
 
   _getReceiveUserInfo: function () {
