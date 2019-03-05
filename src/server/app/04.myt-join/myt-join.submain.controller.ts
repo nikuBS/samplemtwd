@@ -247,6 +247,7 @@ class MyTJoinSubmainController extends TwViewController {
             } else {
               // (번호변경안내서비스 종료 날짜 - 현재 날짜) 기준으로 28일이 넘으면 신청불가
               data.numberChanged = false;
+              data.isNotChangeNumber = false;
             }
           }
         }
