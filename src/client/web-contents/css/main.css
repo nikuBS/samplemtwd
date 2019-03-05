@@ -472,9 +472,9 @@
     .main-chart-box > .ti .bt {
       color: inherit;
       font-size: 1.625rem;
-      font-weight: 400;
+      font-weight: 700;
       line-height: normal;
-      padding-right: 0.6875rem;
+      padding: 0 0.6875rem;
       background: url(/img/ico/chart_tit_arrow.png) no-repeat right 50%;
       background-size: 4.5px 8px; }
   .main-chart-box .donutchart {
@@ -936,6 +936,8 @@
         font-weight: 700; }
         .main-fee-box .fee-cont .list li .tx button {
           color: #ef4b49; }
+          .main-fee-box .fee-cont .list li .tx button.underline {
+            color: #178bce; }
       .main-fee-box .fee-cont .list li .c-point {
         color: #ef4b49; }
       .main-fee-box .fee-cont .list li .button-point {

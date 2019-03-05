@@ -2078,7 +2078,7 @@
   display: inline-block;
   width: 2.5rem;
   height: 2.5rem;
-  background: url(/img/svg/icon_80px_discount1.svg) no-repeat 0 0;
+  background: url(/img/svg/icon_80px_coupon_refill.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
 .icon-tablet-80 {
@@ -2277,6 +2277,7 @@
   background: url(/img/svg/graphic_badge_plan_my.svg) no-repeat 0 0;
   background-size: 100% 100%; }
   .icon-badge-plan-my.use {
+    width: 2.625rem;
     margin-right: 0.5rem !important;
     background: url(/img/svg/badge_plan_my.svg) no-repeat 0 0;
     background-size: 100% 100%; }
@@ -5195,6 +5196,8 @@
       white-space: nowrap;
       width: 100%;
       height: 100%; }
+      .file-wrap .inputbox .bt-box button.del {
+        padding: 0 !important; }
 
 .file-wrap.type1 .input input[type="text"], .file-wrap.type1 .input input[type="file"] {
   background: #fff;
@@ -12179,6 +12182,8 @@ a.bt-link-tx.underline.small {
         display: inline-block;
         margin: 0 0.0625rem 0 0.5rem;
         font-size: 1rem; }
+        .productinfoscroll-box .product-info .info .money.money-noleft {
+          margin: 0 0.0625rem 0 0; }
       .productinfoscroll-box .product-info .info .unit {
         font-size: 1rem; }
     .productinfoscroll-box .product-info .type {
@@ -12221,7 +12226,7 @@ a.bt-link-tx.underline.small {
       color: #178bce;
       font-size: 0.6875rem; }
     .productinfoscroll-box .product-info .text-type02 {
-      height: 2.75rem;
+      height: 3.1875rem;
       margin-top: 0.3125rem;
       color: #178bce;
       font-size: 0.6875rem;
@@ -16556,9 +16561,10 @@ a.bt-link-tx.underline.small {
   padding-left: 1.25rem; }
   .widget-box .horizontal-slide .horizontal-list {
     padding: 0;
-    overflow: hidden; }
-    .widget-box .horizontal-slide .horizontal-list > li {
-      float: left; }
+    overflow: hidden;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex; }
   .widget-box .horizontal-slide.slide-nopd {
     padding-left: 0; }
     .widget-box .horizontal-slide.slide-nopd .screen-img-box li:first-child {
@@ -24010,30 +24016,32 @@ input[type="radio"].formradio-small.type2 + label {
 .btn-more.no-border {
   border-top: none; }
 
-.benefit-link li {
-  padding-left: 33px;
-  position: relative; }
-  .benefit-link li .unit {
-    display: block;
-    color: #959595;
-    height: 3.25rem;
-    line-height: 3.25rem;
-    font-size: 0.875rem; }
-    .benefit-link li .unit.on {
-      color: #ef4b49;
-      font-weight: 700; }
-  .benefit-link li:before {
-    content: '';
-    width: 0.0625rem;
-    height: 1rem;
-    background: #f2f2f2;
-    position: absolute;
-    left: 1rem;
-    top: 1.1875rem; }
-  .benefit-link li:first-of-type {
-    padding-left: 0; }
-    .benefit-link li:first-of-type:before {
-      display: none; }
+.benefit-link {
+  height: 3.1875rem; }
+  .benefit-link li {
+    padding-left: 30px;
+    position: relative; }
+    .benefit-link li .unit {
+      display: block;
+      color: #959595;
+      height: 3.25rem;
+      line-height: 3.25rem;
+      font-size: 0.875rem; }
+      .benefit-link li .unit.on {
+        color: #ef4b49;
+        font-weight: 700; }
+    .benefit-link li:before {
+      content: '';
+      width: 0.0625rem;
+      height: 1rem;
+      background: #f2f2f2;
+      position: absolute;
+      left: 1rem;
+      top: 1.1875rem; }
+    .benefit-link li:first-of-type {
+      padding-left: 0; }
+      .benefit-link li:first-of-type:before {
+        display: none; }
 
 .device_ios .benefit-link li:before {
   top: 1.0625rem; }
@@ -26805,17 +26813,18 @@ body.apphome {
   padding: 1rem 0.8125rem 1.625rem 0.8125rem;
   font-size: 1rem; }
 
+.smart-app-new .horizontal-slide {
+  padding-bottom: 1.25rem; }
+
 .smart-app-new .horizontal-list {
+  margin-left: -1.25rem;
   padding-bottom: 1.375rem; }
-  .smart-app-new .horizontal-list li:first-child {
-    padding-left: 1rem; }
-    .smart-app-new .horizontal-list li:first-child .bt {
-      margin: 0; }
-  .smart-app-new .horizontal-list li:last-child {
-    padding-right: 1rem; }
+  .smart-app-new .horizontal-list li:first-child .bt {
+    margin: 0; }
   .smart-app-new .horizontal-list li .bt {
     display: inline-block;
-    margin-left: 2.8125rem;
+    margin: 0 auto;
+    width: 5.8125rem;
     text-align: center; }
     .smart-app-new .horizontal-list li .bt img {
       width: 3rem;
@@ -26823,16 +26832,13 @@ body.apphome {
       vertical-align: top; }
     .smart-app-new .horizontal-list li .bt span {
       display: block;
-      width: 3rem;
       margin-top: 0.4375rem;
+      padding: 0 0.3125rem;
       font-size: 0.8125rem;
-      overflow: hidden;
-      display: -webkit-box;
       line-height: 1.1875rem;
-      white-space: normal;
       word-wrap: break-word;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
+      overflow: hidden;
+      white-space: nowrap;
       text-overflow: ellipsis; }
   .smart-app-new .horizontal-list li a.bt img {
     margin-top: 0.1875rem; }
@@ -28217,6 +28223,9 @@ body.apphome {
   padding: 0;
   vertical-align: middle; }
 
+.list-input-type1 .input-middle input[type="radio"].formradio-small + label {
+  top: 1.5rem; }
+
 .list-input-type1 .input-middle01 li {
   height: 4.625rem; }
 
@@ -28235,6 +28244,9 @@ body.apphome {
 .list-input-type1 .input-middle01 .cont {
   padding: 0;
   vertical-align: middle; }
+
+.list-input-type1 .input-middle01 input[type="radio"].formradio-small + label {
+  top: 1.5rem; }
 
 .list-input-type1 li {
   display: table;
