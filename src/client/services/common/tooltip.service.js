@@ -133,7 +133,13 @@ Tw.TooltipService.prototype = {
       Tw.CommonHelper.openUrlExternal(this._link);
       this._isExternal = false;
     }
-    if (this._isLink) {
+
+    var $wrap = $('.wrap');
+    if (this._isLink && $wrap.hasClass('fe-tooltip-replaced-link')) {
+      this._popupService.closeAllAndGo(this._link);
+      this._isLink = false;
+    }
+    if (this._isLink && !$wrap.hasClass('fe-tooltip-replaced-link')) {
       window.location.href = this._link;
       this._isLink = false;
     }

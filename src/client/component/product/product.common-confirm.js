@@ -81,6 +81,11 @@ Tw.ProductCommonConfirm.prototype = {
     }
 
     this._confirmAlert = this._data.confirmAlert || Tw.ALERT_MSG_PRODUCT.ALERT_3_A3;
+
+    var $wrap = $('.wrap');
+    if ($wrap.length > 0) {
+      $wrap.addClass('fe-tooltip-replaced-link');
+    }
   },
 
   _convData: function(data) {
