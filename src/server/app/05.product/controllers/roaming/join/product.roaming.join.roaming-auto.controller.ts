@@ -42,7 +42,7 @@ class ProductRoamingJoinRoamingAuto extends TwViewController {
           title: PRODUCT_TYPE_NM.JOIN,
           code: prodTypeInfo.code !== API_CODE.CODE_00 ? prodTypeInfo.code : prodApiInfo.code,
           msg: prodTypeInfo.code !== API_CODE.CODE_00 ? prodTypeInfo.msg : prodApiInfo.msg,
-          isBackCheck : prodApiInfo.code === 'ZINVE8101' ? true : false
+          isBackCheck : true
         });
       }
 
