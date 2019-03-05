@@ -42,12 +42,12 @@ interface Coupon {
 export default class MyTDataRechargeCouponUse extends TwViewController {
 
   private planType: Map<string, number> = new Map([
-    ['NA00004098', 0],
-    ['NA00004099', 0],
-    ['NA00004100', 0],
-    ['NA00004101', 0],
-    ['NA00004145', 0],
-    ['NA00004102', 0],
+    // ['NA00004098', 0],
+    // ['NA00004099', 0],
+    // ['NA00004100', 0],
+    // ['NA00004101', 0],
+    // ['NA00004145', 0],
+    // ['NA00004102', 0],
     ['NA00004705', 0],
     ['NA00005957', 15], // T plan large
     ['NA00005958', 20], // T plan family
