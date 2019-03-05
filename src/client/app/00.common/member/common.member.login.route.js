@@ -13,6 +13,10 @@ Tw.CommonMemberLoginRoute = function (target, type, isLogin) {
 Tw.CommonMemberLoginRoute.prototype = {
   _init: function (target, type, isLogin) {
     var token = window.location.hash.replace(/^#/i, '');
+    if ( /urlQuery/.test(target) ) {
+      target = target.replace(/urlQuery/gi, '&');
+    }
+
     var url = target;
     var hash = '';
     if ( /urlHash/.test(target) ) {
@@ -36,11 +40,6 @@ Tw.CommonMemberLoginRoute.prototype = {
     Tw.Logger.info('[Login Resp]', target, type, resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._historyService.replaceURL(target);
-      // if ( type === 'reload' ) {
-      //   this._historyService.replaceURL(target);
-      // } else {
-      //   this._historyService.goBack();
-      // }
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ICAS3228 ) {
       // 고객보호비밀번호
       this._historyService.goLoad('/common/member/login/cust-pwd?target=' + encodeURIComponent(target));
