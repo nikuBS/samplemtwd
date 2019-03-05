@@ -20,26 +20,26 @@
     <div class="service">
         <% if ( feePlan.feePlanProd.basOfrDataQtyCtt ) { %>
         <span class="sv-spec data">
-                        <% if ( feePlan.feePlanProd.basOfrDataQtyCtt.isNaN ) { %>
-                        <i class="ico-data-plan"></i><%= feePlan.feePlanProd.basOfrDataQtyCtt.value %>
-                        <% } else { %>
-                        <i class="ico-data-plan"></i><%= feePlan.feePlanProd.basOfrDataQtyCtt.value.data + feePlan.feePlanProd.basOfrDataQtyCtt.value.unit %>
-                        <% } %>
-                    </span>
+            <% if ( feePlan.feePlanProd.basOfrDataQtyCtt.isNaN ) { %>
+            <i class="ico-data-plan"></i><%= feePlan.feePlanProd.basOfrDataQtyCtt.value %>
+            <% } else { %>
+            <i class="ico-data-plan"></i><%= feePlan.feePlanProd.basOfrDataQtyCtt.value.data + feePlan.feePlanProd.basOfrDataQtyCtt.value.unit %>
+            <% } %>
+        </span>
         <% } %>
         <% if ( feePlan.feePlanProd.basOfrVcallTmsCtt ) { %>
         <span class="sv-spec">
-                        <i class="ico-phone-plan"></i><%= feePlan.feePlanProd.basOfrVcallTmsCtt.value %>
-                    </span>
+            <i class="ico-phone-plan"></i><%= feePlan.feePlanProd.basOfrVcallTmsCtt.value %>
+        </span>
         <% } %>
         <% if ( feePlan.feePlanProd.basOfrCharCntCtt ) { %>
         <span class="sv-spec">
-                        <% if ( feePlan.feePlanProd.basOfrCharCntCtt.isNaN ) { %>
-                        <i class="ico-msg-plan"></i><%= feePlan.feePlanProd.basOfrCharCntCtt.value %>
-                        <% } else { %>
-                        <i class="ico-msg-plan"></i><%= feePlan.feePlanProd.basOfrCharCntCtt.value + feePlan.feePlanProd.basOfrCharCntCtt.unit %>
-                        <% } %>
-                    </span>
+            <% if ( feePlan.feePlanProd.basOfrCharCntCtt.isNaN ) { %>
+            <i class="ico-msg-plan"></i><%= feePlan.feePlanProd.basOfrCharCntCtt.value %>
+            <% } else { %>
+            <i class="ico-msg-plan"></i><%= feePlan.feePlanProd.basOfrCharCntCtt.value + feePlan.feePlanProd.basOfrCharCntCtt.unit %>
+            <% } %>
+        </span>
         <% } %>
     </div>
 </div>

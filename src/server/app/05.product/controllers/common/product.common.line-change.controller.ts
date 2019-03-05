@@ -97,7 +97,7 @@ class ProductCommonLineChange extends TwViewController {
     return {
       addr: svcInfo.addr,
       svcMgmtNum: svcInfo.svcMgmtNum,
-      svcNum: svcInfo.svcNum,
+      svcNum: FormatHelper.conTelFormatWithDash(svcInfo.svcNum),
       svcAttrCd: svcInfo.svcAttrCd,
       fullNm: svcInfo.svcAttrCd === 'M1' || svcInfo.svcAttrCd === 'M2' ?
         MYT_JOIN_WIRE_SVCATTRCD[svcInfo.svcAttrCd] + ' ' + svcInfo.eqpMdlNm : MYT_JOIN_WIRE_SVCATTRCD[svcInfo.svcAttrCd],

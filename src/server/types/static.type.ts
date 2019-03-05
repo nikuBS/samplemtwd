@@ -2,7 +2,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_1_thumb.gif',
     TITLE: '스팸 관련 정보통신망법',
-    DATE: '2014.12.31',
+    DATE: '2014.12.31.',
     IMG_LIST: [
       {
         IMG: 'webtoon_1_1.jpg',
@@ -200,7 +200,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_2_thumb.gif',
     TITLE: '스미싱 피해 예방',
-    DATE: '2015.05.06',
+    DATE: '2015.5.6.',
     IMG_LIST: [
       {
         IMG: 'webtoon_2.jpg',
@@ -231,7 +231,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_3_thumb.gif',
     TITLE: '파밍 피해 예방',
-    DATE: '2015.06.17',
+    DATE: '2015.6.17.',
     IMG_LIST: [
       {
         IMG: 'webtoon_3.jpg',
@@ -258,7 +258,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_4_thumb.gif',
     TITLE: '명의도용 피해 사례 및 예방②',
-    DATE: '2015.08.05',
+    DATE: '2015.8.5.',
     IMG_LIST: [
       {
         IMG: 'webtoon_4.jpg',
@@ -284,7 +284,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_5_thumb.gif',
     TITLE: '명의도용 피해 사례 및 예방①',
-    DATE: '2015.08.05',
+    DATE: '2015.8.5.',
     IMG_LIST: [
       {
         IMG: 'webtoon_5.jpg',
@@ -311,7 +311,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_6_thumb.gif',
     TITLE: '앱 결재 피해 사례 및 예방',
-    DATE: '2015.09.23',
+    DATE: '2015.9.23.',
     IMG_LIST: [
       {
         IMG: 'webtoon_6.jpg',
@@ -344,7 +344,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_7_thumb.gif',
     TITLE: '데이터 해외로밍 피해 사례 및 예방',
-    DATE: '2015.10.14',
+    DATE: '2015.10.14.',
     IMG_LIST: [
       {
         IMG: 'webtoon_7.jpg',
@@ -369,7 +369,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_8_thumb.gif',
     TITLE: '초고속인터넷 해지 시 유의사항',
-    DATE: '2015.11.18',
+    DATE: '2015.11.18.',
     IMG_LIST: [
       {
         IMG: 'webtoon_8.jpg',
@@ -396,7 +396,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_9_thumb.gif',
     TITLE: '휴대폰 분실 시 개인정보 유출방지 서비스',
-    DATE: '2015.12.23',
+    DATE: '2015.12.23.',
     IMG_LIST: [
       {
         IMG: 'webtoon_9.jpg',
@@ -427,7 +427,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_10_thumb.gif',
     TITLE: '불법메시지를 이용한 스미싱④',
-    DATE: '2016.01.13',
+    DATE: '2016.1.13.',
     IMG_LIST: [
       {
         IMG: 'webtoon_10.jpg',
@@ -448,7 +448,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_11_thumb.gif',
     TITLE: '불법메시지를 이용한 스미싱③',
-    DATE: '2016.01.13',
+    DATE: '2016.1.13.',
     IMG_LIST: [
       {
         IMG: 'webtoon_11.jpg',
@@ -472,7 +472,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_12_thumb.gif',
     TITLE: '불법메시지를 이용한 스미싱②',
-    DATE: '2016.01.13',
+    DATE: '2016.1.13.',
     IMG_LIST: [
       {
         IMG: 'webtoon_12.jpg',
@@ -495,7 +495,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_13_thumb.gif',
     TITLE: '불법메시지를 이용한 스미싱①',
-    DATE: '2016.01.13',
+    DATE: '2016.1.13.',
     IMG_LIST: [
       {
         IMG: 'webtoon_13.jpg',
@@ -518,7 +518,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_14_thumb.gif',
     TITLE: '스마트폰 중독 피해 예방법',
-    DATE: '2016.02.24',
+    DATE: '2016.2.24.',
     IMG_LIST: [
       {
         IMG: 'webtoon_14.jpg',
@@ -546,7 +546,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_15_thumb.gif',
     TITLE: '이동전화 가입 시 주의사항',
-    DATE: '2016.03.16',
+    DATE: '2016.3.16.',
     IMG_LIST: [
       {
         IMG: 'webtoon_15.jpg',
@@ -568,7 +568,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_16_thumb.gif',
     TITLE: '결합상품 가입·해지 시 주의사항',
-    DATE: '2016.04.06',
+    DATE: '2016.4.6.',
     IMG_LIST: [
       {
         IMG: 'webtoon_16.jpg',
@@ -592,7 +592,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_17_thumb.png',
     TITLE: '통신서비스 재정제도 안내2',
-    DATE: '2017.03.31',
+    DATE: '2017.3.31.',
     IMG_LIST: [
       {
         IMG: 'webtoon_17.png',
@@ -640,7 +640,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_18_thumb.gif',
     TITLE: '휴대폰 페이 백 주의보',
-    DATE: '2016.04.27',
+    DATE: '2016.4.27.',
     IMG_LIST: [
       {
         IMG: 'webtoon_18.jpg',
@@ -671,7 +671,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_19_thumb.gif',
     TITLE: '보이스 피싱 예방',
-    DATE: '2016.05.18',
+    DATE: '2016.5.18.',
     IMG_LIST: [
       {
         IMG: 'webtoon_19.jpg',
@@ -703,7 +703,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_20_thumb.gif',
     TITLE: '파밍 예방',
-    DATE: '2016.05.18',
+    DATE: '2016.5.18.',
     IMG_LIST: [
       {
         IMG: 'webtoon_20.jpg',
@@ -738,7 +738,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_21_thumb.png',
     TITLE: '통신사업자 자율준수 프로그램',
-    DATE: '2017.04.02',
+    DATE: '2017.4.2.',
     IMG_LIST: [
       {
         IMG: 'webtoon_21.png',
@@ -765,7 +765,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_22_thumb.png',
     TITLE: '큐싱 예방',
-    DATE: '2017.04.02',
+    DATE: '2017.4.2.',
     IMG_LIST: [
       {
         IMG: 'webtoon_22.png',
@@ -791,7 +791,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_23_thumb.png',
     TITLE: '스마트폰 이용자 건강관리',
-    DATE: '2017.04.03',
+    DATE: '2017.4.3.',
     IMG_LIST: [
       {
         IMG: 'webtoon_23.png',
@@ -819,7 +819,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_24_thumb.png',
     TITLE: '결합상품 이용자를 위한 제도 개선',
-    DATE: '2017.04.02',
+    DATE: '2017.4.2.',
     IMG_LIST: [
       {
         IMG: 'webtoon_24.png',
@@ -846,7 +846,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_25_thumb.png',
     TITLE: '대출빙자형 보이스피싱 주의',
-    DATE: '2017.04.09',
+    DATE: '2017.4.9.',
     IMG_LIST: [
       {
         IMG: 'webtoon_25.png',
@@ -878,7 +878,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_26_thumb.png',
     TITLE: '방송통신서비스 해지시 확인사항',
-    DATE: '2017.04.09',
+    DATE: '2017.4.9.',
     IMG_LIST: [
       {
         IMG: 'webtoon_26.png',
@@ -903,7 +903,7 @@ export const CUSTOMER_PROTECT_GUIDE_WEBTOON = [
   {
     THUMB: 'webtoon_27_thumb.jpg',
     TITLE: '유심 비밀번호 설정',
-    DATE: '2017.12.20',
+    DATE: '2017.12.20.',
     IMG_LIST: [
       {
         IMG: 'webtoon_27.jpg',

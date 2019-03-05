@@ -7,7 +7,7 @@ import TwViewController from '../../../../common/controllers/tw.view.controller'
 import { NextFunction, Request, Response } from 'express';
 import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import { SVC_CDNAME, SVC_CDGROUP } from '../../../../types/bff.type';
-import { DATA_UNIT, MYT_FEEPLAN_BENEFIT, FEE_PLAN_TIP_TXT } from '../../../../types/string.type';
+import {DATA_UNIT, MYT_FEEPLAN_BENEFIT, FEE_PLAN_TIP_TXT, CURRENCY_UNIT} from '../../../../types/string.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
 import ProductHelper from '../../../../utils/product.helper';
@@ -94,8 +94,8 @@ class MyTJoinMyplan extends TwViewController {
     const isNumberBasFeeAmt = !isNaN(Number(wirePlan.basFeeAmt));
 
     return Object.assign(wirePlan, {
-      basFeeAmt: isNumberBasFeeAmt && parseInt(wirePlan.basFeeAmt, 10) > 0 ? FormatHelper.addComma(wirePlan.basFeeAmt.toString()) : 0,
-      isDisplayFeeAmt: (wirePlan.coClCd === 'T' && wirePlan.basFeeAmt > 0),
+      basFeeAmt: isNumberBasFeeAmt && parseInt(wirePlan.basFeeAmt, 10) > 0 ?
+        FormatHelper.addComma(wirePlan.basFeeAmt.toString()) + CURRENCY_UNIT.WON : 0,
       svcScrbDt: DateHelper.getShortDateWithFormat(wirePlan.svcScrbDt, 'YYYY.M.D.'),
       dcBenefits: this._convertWireDcBenefits(wirePlan.dcBenefits)
     });

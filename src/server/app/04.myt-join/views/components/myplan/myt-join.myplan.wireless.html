@@ -3,11 +3,11 @@
 
         <% if (feePlan.feePlanProd.prodLinkYn === 'Y' && feePlan.feePlanProd.linkProdId) { %>
         <a class="plan-compact-info" href="/product/callplan?prod_id=<%= feePlan.feePlanProd.linkProdId %>">
-            <%- include('./myt.join.myplan.wireless.header-info.html') %>
+            <%- include('./myt-join.myplan.wireless.header-info.html') %>
         </a>
         <% } else { %>
         <div class="plan-compact-info">
-            <%- include('./myt.join.myplan.wireless.header-info.html') %>
+            <%- include('./myt-join.myplan.wireless.header-info.html') %>
         </div>
         <% } %>
 

@@ -1,41 +1,15 @@
 <div id="contents" class="container-wrap">
     <div class="container">
 
+        <% if (feePlan.prodDetailLinkYn === 'Y' && feePlan.linkProdId) { %>
+        <a class="plan-compact-info" href="/product/callplan?prod_id=<%= feePlan.linkProdId %>">
+            <%- include('./myt-join.myplan.wire.header-info.html') %>
+        </a>
+        <% } else { %>
         <div class="plan-compact-info">
-            <div class="plan">
-                <% if (feePlan.prodDetailLinkYn === 'Y' && feePlan.linkProdId) { %>
-                <a href="/product/callplan?prod_id=<%= feePlan.linkProdId %>" class="tit"><%= feePlan.feeProdNm %></a>
-                <% } else { %>
-                <span class="tit"><%= feePlan.feeProdNm %></span>
-                <% } %>
-                <% if ( feePlan.isDisplayFeeAmt ) { %>
-                <span class="val"><%= feePlan.basFeeAmt %>원</span>
-                <% } %>
-            </div>
-            <div class="sub">
-                <% if ( feePlan.isDisplayFeeAmt && (feePlan.feeManlSetYn === 'N' || !feePlan.feeManlSetTitNm) ) { %>
-                <span class="rest">월정액(부가세 포함)</span>
-                <% } %>
-                <% if ( feePlan.isDisplayFeeAmt && (feePlan.feeManlSetYn === 'Y' && feePlan.feeManlSetTitNm) ) { %>
-                <span class="rest"><%= feePlan.feeManlSetTitNm %></span>
-                <% } %>
-            </div>
-            <% if ( feePlan.prodBasBenfCtt && (svcInfo.svcAttrCd === 'S1' || svcInfo.svcAttrCd === 'S2') ) { %>
-            <div class="service-wrap">
-                <div class="service">
-                    <span class="sv-spec">
-                        <% if (svcInfo.svcAttrCd === 'S1') { %>
-                        <i class="ico-speed-plan"></i>
-                        <% } %>
-                        <% if (svcInfo.svcAttrCd === 'S2') { %>
-                        <i class="ico-chan-plan"></i>
-                        <% } %>
-                        <%= feePlan.prodBasBenfCtt %>
-                    </span>
-                </div>
-            </div>
-            <% } %>
+            <%- include('./myt-join.myplan.wire.header-info.html') %>
         </div>
+        <% } %>
 
         <% if (feePlan.dcBenefits.length > 0) { %>
         <!-- .cont-box -->
