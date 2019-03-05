@@ -38,14 +38,13 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn)
   }
 
   this._initEmrNotice(emrNotice, isLogin === 'true');
-
-  this._setBanner();
   this._cachedDefaultElement();
 
   this._bindEventStore();
   this._bindEventLogin();
 
   this._getQuickMenu(isLogin === 'true');
+  this._startLazyRendering();
 
   if ( isLogin === 'true' ) {
     this._cachedElement();
@@ -913,5 +912,20 @@ Tw.MainHome.prototype = {
     } else {
       this._historyService.replaceURL('#store');
     }
+  },
+  _startLazyRendering: function () {
+    var $homeStore = $('#fe-home-store');
+    var tplHomeStore = Handlebars.compile($homeStore.html());
+    this.$container.find('#fe-div-home-store').html(tplHomeStore());
+
+    var $doLikeThis = $('#fe-home-do-like-this');
+    var tplDoLikeThis = Handlebars.compile($doLikeThis.html());
+    this.$container.find('.fe-div-home-do-like-this').html(tplDoLikeThis());
+
+    var $notice = $('#fe-home-notice');
+    var tplNotice = Handlebars.compile($notice.html());
+    this.$container.find('.fe-div-home-notice').html(tplNotice());
+
+    this._setBanner();
   }
 };
