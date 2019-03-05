@@ -40,6 +40,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
     this.$container.on('click', '#add_list', $.proxy(this._addPhoneNumOnList, this));
     this.$container.on('click','.cancel',$.proxy(this._clearInput,this));
     this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._historyService.goBack,this));
+    this.$container.on('click','.fe-bt-masking-alert',$.proxy(this._openAuthAlert,this));
   },
   _clearInput : function(){
     this.$inputElement.val('');
@@ -234,6 +235,19 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       returnVal+=phoneString.charAt(i);
     }
     return returnVal;
+  },
+  _openAuthAlert : function () {
+    this._popupService.openConfirmButton(
+      Tw.PRODUCT_AUTH_ALERT_STR.MSG,
+      Tw.PRODUCT_AUTH_ALERT_STR.TITLE,
+      $.proxy(this._showAuth,this),
+      null,
+      Tw.BUTTON_LABEL.CANCEL,
+      Tw.BUTTON_LABEL.CONFIRM);
+  },
+  _showAuth : function () {
+    this._popupService.close();
+    $('.fe-bt-masking').trigger('click');
   }
 
 };
