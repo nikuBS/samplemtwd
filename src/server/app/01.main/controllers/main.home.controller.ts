@@ -412,10 +412,8 @@ class MainHome extends TwViewController {
       data.showAddRemained = this.convFormat(data.addRemained, UNIT_E.DATA);
 
       data.showMyRemained = this.convFormat(data.myRemained, UNIT_E.DATA);
-      data.myRemainedRatio = data.myRemained / data.addTotal * 100;
-      data.shareRemainedRatio = data.addRemained / data.addTotal * 100;
-      data.myRemainedRatio = parseInt(data.myRemainedRatio, 10);
-      data.shareRemainedRatio = parseInt(data.shareRemainedRatio, 10);
+      data.myRemainedRatio = Math.round(data.myRemained / data.addTotal * 100);
+      data.shareRemainedRatio = Math.round(data.addRemained / data.addTotal * 100);
     }
   }
 
