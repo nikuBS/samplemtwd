@@ -47,9 +47,8 @@ Tw.MembershipMyReissue.prototype = {
 
   _successReissueRequest: function(res) {
     if(res.code === Tw.API_CODE.CODE_00){
-      this._popupService.afterRequestSuccess('/membership/my/history', '/membership/my',
-        Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.LINK_TITLE, Tw.ALERT_MSG_MEMBERSHIP.COMPLETE_TITLE.REISSUE,
-        Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.CONTENT);
+      this._popupService.afterRequestSuccess(null, '/membership/my', null,
+        Tw.ALERT_MSG_MEMBERSHIP.COMPLETE_TITLE.REISSUE, Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.CONTENT);
     }else{
       this._onFail(res);
     }
