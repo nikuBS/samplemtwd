@@ -590,7 +590,7 @@ Tw.MyTFareSubMain.prototype = {
     if ( mgmtNum ) {
       // 기준회선변경
       // 닉네임이 없는 경우 팻네임이 아닌  서비스 그룹명으로 노출 [DV001-14845]
-      var defaultLineInfo = this.data.svcInfo.svcNum + ' ' +
+      var defaultLineInfo = Tw.FormatHelper.addLineCommonPhoneNumberFormat(this.data.svcInfo.svcNum) + ' ' +
         (this.data.svcInfo.nickNm || Tw.SVC_ATTR[this.data.svcInfo.svcAttrCd]);
       var selectLineInfo = number + ' ' + name;
       if ( ['S1', 'S2'].indexOf(this.data.svcInfo.svcAttrCd) > -1 ) {
