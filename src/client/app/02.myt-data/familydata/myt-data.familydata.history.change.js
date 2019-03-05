@@ -42,13 +42,13 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
       if (this._all) {
         this.$input.val('');
         this.$input.removeAttr('disabled');
-        $target.siblings('.btn-type01').removeAttr('disabled');
+        $target.siblings('.fe-enable').removeAttr('disabled');
         $target.removeClass('btn-on');
         this._all = false;
       } else {
         this.$input.val(this._changable.data);
         this.$input.attr('disabled', true);
-        $target.siblings('.btn-type01').attr('disabled', true);
+        $target.siblings('.fe-enable').attr('disabled', true);
         $target.addClass('btn-on');
         this.$cancel.css('display', 'none');
         this._all = true;
@@ -110,7 +110,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     var type = 'R',
       gb = this.$input.val(),
       mb = 0,
-      data = this._changable.data - Number(gb);
+      data = this._changable.data - Number(gb),
       remain = data >= 1 ? {
         data: Number(data.toFixed(2)),
         unit: Tw.DATA_UNIT.GB
@@ -145,13 +145,8 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     var ALERT_MSG = '';
     switch (resp.code) {
       case Tw.API_CODE.CODE_00: {
-        this.$item.find('.modify strong').text(remain.data + remain.unit);
-        if (remain.unit === Tw.DATA_UNIT.GB) {
-          this.$item.find('.fe-edit').data('gb', remain.data);
-        } else {
-          this.$item.find('.fe-edit').remove();
-          this.$item.find('.modify span').text(Tw.MYT_DATA_FAMILY_NOT_POSSIBLE_CHANGE);
-        }
+        this.$item.find('.fe-after').remove();
+        this.$item.find('.fe-before').removeClass('none');
 
         setTimeout(
           $.proxy(function() {

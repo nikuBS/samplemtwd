@@ -83,7 +83,11 @@ Tw.MyTDataFamilyHistory.prototype = {
 
     var nData = Number((Number(share.remGbGty) + Number(share.remMbGty) / 1024 || 0).toFixed(2));
     if (nData > 0) {
-      $parent.append(this._afterTmpl({ data: nData, serial: serial, gb: share.remGbGty, mb: share.remMbGty }));
+      if (nData < 1) {
+        $parent.append(this._afterTmpl({ data: share.remMbGty + Tw.DATA_UNIT.MB, serial: serial, gb: share.remGbGty, mb: share.remMbGty }));
+      } else {
+        $parent.append(this._afterTmpl({ data: nData + Tw.DATA_UNIT.GB, serial: serial, gb: share.remGbGty, mb: share.remMbGty }));
+      }
     } else {
       $parent.append(this._noneTmpl({}));
     }
@@ -125,7 +129,8 @@ Tw.MyTDataFamilyHistory.prototype = {
         layer: true,
         detail: detail,
         data: changable.data,
-        histories: histories
+        histories: histories,
+        lessThanOne: changable.data < 1
       },
       $.proxy(this._handleOpenChangePopup, this, $parent, changable),
       $.proxy(this._handleCloseChangePopup, this),
@@ -153,6 +158,7 @@ Tw.MyTDataFamilyHistory.prototype = {
 
   _handleOpenChangePopup: function($parent, changable, $layer) {
     this._historyChange.init($layer, $parent, changable);
+    $layer.find('.fe-all').trigger('click');
     $layer.on('click', '.prev-step', this._popupService.close);
   },
 

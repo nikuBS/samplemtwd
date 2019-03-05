@@ -65,7 +65,7 @@ export default class MyTDataFamily extends TwViewController {
           myLimitation: Number(mine.limitation) * 1024 || 0
         },
         total = data.hasLimit ? Math.min(data.myLimitation, data.total) : data.total,
-        remained = data.hasLimit ? Math.min(total - data.used, data.totalRemained) : data.total - data.totalUsed;
+        remained = data.hasLimit ? Math.min(total - data.used, data.totalRemained) : Math.min(data.total - data.totalUsed, data.totalRemained);
 
       // mine.limitedYn === 'Y'
       //   ? {
