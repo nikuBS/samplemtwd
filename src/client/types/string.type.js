@@ -855,7 +855,8 @@ Tw.ALERT_MSG_MEMBERSHIP = {
     BUTTON: '발급 변경내역'
   },
   ALERT_1_A68: { TITLE: '로그인 하시겠습니까?', MSG: 'T아이디(아이디/비밀번호) 로그인 후 이용 가능합니다.', BUTTON: '로그인' },
-  ALERT_1_A69: { TITLE: '알림', MSG: '현재 위치를 가져오지 못했습니다. 잠시 후 다시 시도해 주세요.' }
+  ALERT_1_A69: { TITLE: '알림', MSG: '현재 위치를 가져오지 못했습니다. 잠시 후 다시 시도해 주세요.' },
+  ALERT_1_A71: { TITLE: '알림', MSG: '멤버십에 가입한 당일에는 해지할 수 없습니다.' }
 };
 
 Tw.ALERT_CANCEL = {
