@@ -43,7 +43,7 @@ class ProductRoamingTerminate extends TwViewController {
           title: PRODUCT_TYPE_NM.TERMINATE,
           code: prodTypeInfo.code !== API_CODE.CODE_00 ? prodTypeInfo.code : prodBffInfo.code,
           msg: prodTypeInfo.code !== API_CODE.CODE_00 ? prodTypeInfo.msg : prodBffInfo.msg,
-          isBackCheck : prodBffInfo.code === 'ZNGME0068' ? true : false
+          isBackCheck : true
         });
       }
 
