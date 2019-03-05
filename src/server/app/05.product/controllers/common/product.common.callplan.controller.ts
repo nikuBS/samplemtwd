@@ -656,15 +656,15 @@ class ProductCommonCallplan extends TwViewController {
 
     const allowedLineLength = this._getAllowedLineLength(allowedSvcAttrInfo.svcAttrCds, allSvc[allowedSvcAttrInfo.group]);
 
-    if (isAllowedCurrentSvcAttrCd && allowedLineLength.length > 1) {
+    if (isAllowedCurrentSvcAttrCd && allowedLineLength > 1) {
       return 'A';
     }
 
-    if (isAllowedCurrentSvcAttrCd && allowedLineLength.length === 1) {
+    if (isAllowedCurrentSvcAttrCd && allowedLineLength === 1) {
       return 'B';
     }
 
-    if (!isAllowedCurrentSvcAttrCd && allowedLineLength.length > 0) {
+    if (!isAllowedCurrentSvcAttrCd && allowedLineLength > 0) {
       return 'C';
     }
 
