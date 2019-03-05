@@ -43,6 +43,7 @@ Tw.CustomerEmail.prototype = {
     this.$container.on('keyup', '.fe-quality_phone', $.proxy(this._onKeyUpPhoneNumber, this));
     this.$container.on('keyup', '.fe-service_email', $.proxy(this._onKeyUpEmail, this));
     this.$container.on('keyup', '.fe-quality_email', $.proxy(this._onKeyUpEmail, this));
+    this.$container.on('click', '.fe-text-cancel', $.proxy(this._onTextInputClear, this));    
     this.$container.on('click', '.fe-btn_addr', $.proxy(this._onClickBtnAddr, this));
     this.$container.on('click', '.fe-email-close', $.proxy(this._stepBack, this));
     this.$container.on('click', '.fe-service_sms', $.proxy(this._openSMSAlert, this));
@@ -81,7 +82,7 @@ Tw.CustomerEmail.prototype = {
     $elPhone.val(Tw.StringHelper.phoneStringToDash($elPhone.val()));
     var $elErrorPhone = $elPhone.closest('.inputbox').siblings('.fe-error-phone');
 
-    if ( this._isValidPhone($elPhone.val()) ) {
+    if ( this._isValidPhone($elPhone.val()) || Tw.FormatHelper.isEmpty($elPhone.val()) ) {
       $elErrorPhone.addClass('blind');
     } else {
       $elErrorPhone.removeClass('blind');
@@ -109,7 +110,7 @@ Tw.CustomerEmail.prototype = {
     var $elEmail = $(e.currentTarget);
     var $elErrorEmail = $elEmail.closest('.inputbox').siblings('.fe-error-email');
 
-    if ( this._isValidEmail($elEmail.val()) ) {
+    if ( this._isValidEmail($elEmail.val()) || Tw.FormatHelper.isEmpty($elEmail.val())) {
       $elErrorEmail.addClass('blind');
     } else {
       $elErrorEmail.removeClass('blind');
@@ -122,6 +123,11 @@ Tw.CustomerEmail.prototype = {
 
   _isValidEmail: function (sEmail) {
     return Tw.ValidationHelper.isEmail(sEmail);
+  },
+
+  // 이메일인풋, 전화번호 삭제버튼 클릭 후 추가 밸리데이션 정보 가리기
+  _onTextInputClear: function (e) {
+    $(e.currentTarget).closest('.inputbox').siblings('.error-txt').addClass('blind');
   },
 
   _onChangeTitle: function (e) {
