@@ -305,9 +305,8 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     this.loadingView(false);
     // 가입하기 성공적으로 끝나면 완료팝업 위로 T Pay 가입 유도 팝업 노출
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this._popupService.afterRequestSuccess('/membership/my/history?home=Y', '/membership/submain',
-        Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.LINK_TITLE, Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.TITLE,
-        Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.CONTENT);
+      this._popupService.afterRequestSuccess(null, '/membership/submain', null,
+        Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.TITLE, Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.CONTENT);
       // 완료 팝업이 뜬 이후에 T Pay 관련 팝업 띄우기 위함
       setTimeout($.proxy(function () {
         new Tw.TPayJoinLayerPopup(this.$container).open();
