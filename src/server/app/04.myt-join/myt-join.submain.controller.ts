@@ -55,7 +55,9 @@ class MyTJoinSubmainController extends TwViewController {
       svcInfo: Object.assign({}, svcInfo),
       pageInfo: pageInfo,
       // 다른 회선 항목
-      otherLines: this.convertOtherLines(Object.assign({}, svcInfo), Object.assign({}, allSvc))
+      otherLines: this.convertOtherLines(Object.assign({}, svcInfo), Object.assign({}, allSvc)),
+      // 현재 회선의 아이콘 클래스 이름
+      currLineIconClass : this.getLineIconClassName(svcInfo.svcAttrCd)
     };
     // 상태값 참조 : http://devops.sktelecom.com/myshare/pages/viewpage.action?pageId=53477532
     // 10: 신청/60: 초기화 -> 비밀번호 설정 유도
@@ -219,6 +221,14 @@ class MyTJoinSubmainController extends TwViewController {
         data.myLongPausedState.state = true;
         // 군입대로 인한 장기 일시정지
         data.myLongPausedState.isArmy = (['5000341', '5000342'].indexOf(data.myLongPausedState.receiveCd) > -1);
+        if ( data.myPausedState.svcStCd === 'AC' && data.myPausedState.armyDt && data.myPausedState.armyDt !== '' ) {
+          const days = DateHelper.getDiffByUnit(data.myPausedState.toDt, DateHelper.getCurrentDate(), 'days');
+          if ( days < 0) {
+            data.myPausedState.state = false;
+            data.myLongPausedState.state = false;
+            delete data.myPausedState.armyDt;
+          }
+        }
       }
 
       if ( numSvc ) {
@@ -237,6 +247,7 @@ class MyTJoinSubmainController extends TwViewController {
             } else {
               // (번호변경안내서비스 종료 날짜 - 현재 날짜) 기준으로 28일이 넘으면 신청불가
               data.numberChanged = false;
+              data.isNotChangeNumber = false;
             }
           }
         }
@@ -336,6 +347,25 @@ class MyTJoinSubmainController extends TwViewController {
     return comparison;
   }
 
+  /**
+   * 선택 회선에 해당하는 아이콘 클래스 이름 반환
+   * @param svcAttrCd : 회선정보
+   */
+  getLineIconClassName(svcAttrCd: string): string {
+    let clsNm = 'cellphone';
+    if ( svcAttrCd.indexOf('S') > -1 ) {
+      if ( svcAttrCd === 'S1' ) {
+        clsNm = 'internet';
+      } else {
+        clsNm = 'pc';
+      }
+    } else if ( ['M3', 'M4'].indexOf(svcAttrCd) > -1 ) {
+      clsNm = 'tablet';
+    }
+
+    return clsNm;
+  }
+
   convertOtherLines(target, items): any {
     const MOBILE = (items && items['m']) || [];
     const SPC = (items && items['s']) || [];
@@ -349,16 +379,6 @@ class MyTJoinSubmainController extends TwViewController {
       nOthers = nOthers.concat(MOBILE, SPC, OTHER);
       nOthers.filter((item) => {
         if ( target.svcMgmtNum !== item.svcMgmtNum ) {
-          let clsNm = 'cellphone';
-          if ( item.svcAttrCd.indexOf('S') > -1 ) {
-            if ( item.svcAttrCd === 'S1' ) {
-              clsNm = 'internet';
-            } else {
-              clsNm = 'pc';
-            }
-          } else if ( ['M3', 'M4'].indexOf(item.svcAttrCd) > -1 ) {
-            clsNm = 'tablet';
-          }
           // 닉네임이 없는 경우 팻네임이 아닌  서비스 그룹명으로 노출 [DV001-14845]
           // item.nickNm = item.nickNm || item.eqpMdlNm;
           item.nickNm = item.nickNm || SVC_ATTR_NAME[item.svcAttrCd];
@@ -367,7 +387,7 @@ class MyTJoinSubmainController extends TwViewController {
             item.nickNm = SVC_ATTR_NAME[item.svcAttrCd];
           }
           item.svcNum = StringHelper.phoneStringToDash(item.svcNum);
-          item.className = clsNm;
+          item.className = this.getLineIconClassName(item.svcAttrCd);
           list.push(item);
         }
       });

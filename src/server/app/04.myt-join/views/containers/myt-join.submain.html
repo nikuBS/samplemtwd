@@ -27,7 +27,11 @@
             <div class="cont-box">
                 <div class="my-subscription-wrap">
                     <div class="my-device-type">
-                        <span class="ico-wrap"><i class="icon-cellphone-48"><span class="blind">cellphone</span></i></span>
+                        <span class="ico-wrap">
+                            <i class="icon-<%= data.currLineIconClass %>-48">
+                                <span class="blind"><%= data.currLineIconClass %></span>
+                            </i>
+                        </span>
                         <div class="user-info">
                             <span class="username"><span class="blind">가입자명</span><%= data.svcInfo.mbrNm %></span>
                             <span class="device"><span class="blind">닉네임 / 디바이스 펜네임</span>
