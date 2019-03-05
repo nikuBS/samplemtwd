@@ -279,6 +279,7 @@ Tw.MembershipSubmain.prototype = {
     }
   },
   _askCurrentLocation: function() {
+    Tw.Logger.info('[_askCurrentLocation]');
     if(this._svcInfo){
       if (Tw.BrowserHelper.isApp()){
         this._nativeService.send(Tw.NTV_CMD.GET_LOCATION, {}, $.proxy(function (res) {
@@ -298,12 +299,17 @@ Tw.MembershipSubmain.prototype = {
       } else {
         if ('geolocation' in navigator) {
           // Only works in secure mode(Https) - for test, use localhost for url
-          navigator.geolocation.getCurrentPosition($.proxy(this._successGeolocation, this), $.proxy(this._failGeolocation, this));
+          var geoOptions = {timeout: 1000};
+          navigator.geolocation.getCurrentPosition($.proxy(this._successGeolocation, this), $.proxy(this._failGeolocation, this), geoOptions);
         } else {
-          this._getAreaByGeo({
-            latitude: '37.5600420',
-            longitude: '126.9858500'
-          });
+          var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
+          this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
+              $.proxy(function () {
+                this._getAreaByGeo({
+                  latitude: '37.5600420',
+                  longitude: '126.9858500'
+                });
+              }, this));
         }
       }
     } else {
@@ -313,8 +319,8 @@ Tw.MembershipSubmain.prototype = {
       });
     }
   },
-  _failGeolocation: function () {
-    Tw.Logger.info('_fail geolocation getCurrentPosition');
+  _failGeolocation: function (resp) {
+    Tw.Logger.info('_fail geolocation getCurrentPosition resp: ', resp);
     var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
     this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,
         $.proxy(function () {
