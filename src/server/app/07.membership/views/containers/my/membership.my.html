@@ -69,12 +69,12 @@
                     </div>
                 </div>
                 <ul class="bt-slice
-                <% if( myInfoData.mbrTypCd !== '8'){ %>
+                <% if( myInfoData.mbrTypCd !== '5'){ %>
                     item-two
                 <% } %>
                 mt20">
                     <li><button id="fe-go-update" data-type="<%= myInfoData.mbrStCd %>" type="button" class="btn-round1 btn-style4" title="나의 멤버십">정보 수정</button></li>
-                    <% if( myInfoData.mbrTypCd === '0' || myInfoData.mbrTypCd === '3' || myInfoData.mbrTypCd === '4' ) { %>
+                    <% if( myInfoData.mbrTypCd !== '5' ) { %>
                     <li><button id="fe-reissue" type="button" class="btn-round1 btn-style4" title="나의 멤버십">재발급 신청</button></li>
                     <% } %>
                 </ul>
@@ -156,7 +156,7 @@
                                 </span>
                         </a>
                     </li>
-                    <% if( myInfoData.mbrTypCd !== '8'){ %>
+                    <% if( myInfoData.mbrTypCd !== '5'){ %>
                     <li>
                         <a href="/membership/my/cancel">
                                 <span class="inner">
