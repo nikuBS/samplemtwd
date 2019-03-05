@@ -46,7 +46,7 @@ Tw.MyTDataGift.prototype = {
     this.$container.on('click', '.fe-available_product', $.proxy(this._onClickShowAvailableProduct, this));
     this.$container.on('click', '.fe-close-available_product', $.proxy(this._hideAvailableProduct, this));
     this.$container.on('click', '.fe-show-more-amount', $.proxy(this._onShowMoreData, this));
-    // this.$inputImmediatelyGift.on('focus', $.proxy(this._onLoadRecently, this));
+    this.$inputImmediatelyGift.on('focus', $.proxy(this._onLoadRecently, this));
     // this.$container.on('click', '.prev-step', $.proxy(this._stepBack, this));
     this.$container.on('currentRemainDataInfo', $.proxy(this._currentRemainDataInfo, this));
     this.$remainBtn.on('click', $.proxy(this._getRemainDataInfo, this));
@@ -140,6 +140,10 @@ Tw.MyTDataGift.prototype = {
   },
 
   _onLoadRecently: function () {
+    if (this.recentGiftSentList && this.recentGiftSentList.length > 0) {
+      this._drawRecentSentList();
+      return;
+    }
     this._apiService.request(Tw.API_CMD.BFF_06_0018, {
       fromDt: Tw.DateHelper.getPastYearShortDate(),
       toDt: Tw.DateHelper.getCurrentShortDate(),
@@ -164,12 +168,18 @@ Tw.MyTDataGift.prototype = {
       var filteredList = list.splice(0, 3).map(function (item) {
         return $.extend(item, { svcNum: Tw.FormatHelper.conTelFormatWithDash(item.svcNum) });
       });
-
-      this.$recent_tel.html(this.tpl_recently_gift({ contactList: filteredList }));
-      this.$recent_tel.show();
+      this.recentGiftSentList = filteredList;
+      if (this.recentGiftSentList && this.recentGiftSentList.length > 0) {
+        this._drawRecentSentList();
+      }
     } else {
       Tw.Error(res.code, res.msg).pop();
     }
+  },
+
+  _drawRecentSentList: function() {
+    this.$recent_tel.html(this.tpl_recently_gift({ contactList: this.recentGiftSentList }));
+    this.$recent_tel.show();
   },
 
   _hideRecently: function () {

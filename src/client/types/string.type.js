@@ -1189,7 +1189,7 @@ Tw.MYT_JOIN_WIRE_SET_PAUSE = {
     COMPLETE_TEXT: '일시 정지'
   },
   CANCEL: {
-    TITLE: '일지정지를 해제 하시겠습니까?',
+    TITLE: '일시정지를 해제 하시겠습니까?',
     BTNAME: '해제하기',
     COMPLETE_TEXT: '일시 정지 해제'
   }
