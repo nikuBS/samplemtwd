@@ -27,10 +27,10 @@ class MyTFareBillAccount extends TwViewController {
       pageInfo: pageInfo
     };
 
-    if (BrowserHelper.isApp(req)) {
+    if (BrowserHelper.isApp(req)) { // 앱 환경 여부 체크
       Observable.combineLatest(
-        this.getUnpaidList(),
-        this.getAutoInfo()
+        this.getUnpaidList(), // 미납요금 대상자 조회
+        this.getAutoInfo() // 자동납부 정보 조회
       ).subscribe(([unpaidList, autoInfo]) => {
         if (unpaidList.code === API_CODE.CODE_00) {
           res.render('bill/myt-fare.bill.account.html', {
@@ -47,13 +47,12 @@ class MyTFareBillAccount extends TwViewController {
     } else {
       res.render('share/common.share.app-install.info.html', {
         svcInfo: svcInfo, pageInfo: pageInfo, isAndroid: BrowserHelper.isAndroid(req)
-      });
+      }); // 앱이 아닐 경우 앱 설치 유도 페이지로 이동
     }
   }
 
   private getUnpaidList(): Observable<any> {
     return this.apiService.request(API_CMD.BFF_07_0021, {});
-    // return Observable.of(UnpaidList);
   }
 
   private getAutoInfo(): Observable<any> {
@@ -73,7 +72,7 @@ class MyTFareBillAccount extends TwViewController {
         data.invMoney = FormatHelper.addComma(data.intMoney);
         data.svcName = SVC_CD[data.svcCd];
         data.svcNumber = data.svcCd === 'I' || data.svcCd === 'T' ? this.getAddr(data.svcMgmtNum, allSvc) :
-          FormatHelper.conTelFormatWithDash(data.svcNum);
+          FormatHelper.conTelFormatWithDash(data.svcNum); // 서비스코드가 M(모바일)일 경우 '-' 추가
 
         if (svcInfo.svcMgmtNum === data.svcMgmtNum && data.invDt > list.invDt) {
           list.invDt = data.invDt;
@@ -84,7 +83,7 @@ class MyTFareBillAccount extends TwViewController {
     return list;
   }
 
-  private removeZero(input: string): string {
+  private removeZero(input: string): string { // 금액 데이터 가공
     let isNotZero = false;
     for (let i = 0; i < input.length; i++) {
       if (!isNotZero) {

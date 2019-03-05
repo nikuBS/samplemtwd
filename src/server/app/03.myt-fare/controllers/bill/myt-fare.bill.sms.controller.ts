@@ -17,8 +17,8 @@ class MyTFareBillSms extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     Observable.combineLatest(
-      this.getUnpaidList(),
-      this.getAccountList()
+      this.getUnpaidList(), // 미납요금 대상자 조회
+      this.getAccountList() // 자동납부 정보 조회
     ).subscribe(([unpaidList, accountList]) => {
       if (unpaidList.code === API_CODE.CODE_00 || unpaidList.code === API_UNPAID_ERROR.BIL0016) {
         const isAllPaid = unpaidList.code === API_UNPAID_ERROR.BIL0016;
@@ -73,7 +73,7 @@ class MyTFareBillSms extends TwViewController {
         data.invMoney = FormatHelper.addComma(data.intMoney);
         data.svcName = SVC_CD[data.svcCd];
         data.svcNumber = data.svcCd === 'I' || data.svcCd === 'T' ? this.getAddr(data.svcMgmtNum, allSvc) :
-          FormatHelper.conTelFormatWithDash(data.svcNum);
+          FormatHelper.conTelFormatWithDash(data.svcNum); // 서비스코드가 M(모바일)일 경우 '-' 추가
 
         if (svcInfo.svcMgmtNum === data.svcMgmtNum && data.invDt > list.invDt) {
           list.invDt = data.invDt;
