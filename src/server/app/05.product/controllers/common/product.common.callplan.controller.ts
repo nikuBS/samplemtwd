@@ -654,19 +654,38 @@ class ProductCommonCallplan extends TwViewController {
       return 'D';
     }
 
-    if (isAllowedCurrentSvcAttrCd && allSvc[allowedSvcAttrInfo.group].length > 1) {
+    const allowedLineLength = this._getAllowedLineLength(allowedSvcAttrInfo.svcAttrCds, allSvc[allowedSvcAttrInfo.group]);
+
+    if (isAllowedCurrentSvcAttrCd && allowedLineLength > 1) {
       return 'A';
     }
 
-    if (isAllowedCurrentSvcAttrCd && allSvc[allowedSvcAttrInfo.group].length === 1) {
+    if (isAllowedCurrentSvcAttrCd && allowedLineLength === 1) {
       return 'B';
     }
 
-    if (!isAllowedCurrentSvcAttrCd && allSvc[allowedSvcAttrInfo.group].length > 0) {
+    if (!isAllowedCurrentSvcAttrCd && allowedLineLength > 0) {
       return 'C';
     }
 
     return 'D';
+  }
+
+  /**
+   * @param svcAttrCds
+   * @param svcGroupList
+   * @private
+   */
+  private _getAllowedLineLength(svcAttrCds: any, svcGroupList: any): any {
+    let length: any = 0;
+
+    svcGroupList.forEach((item) => {
+      if (svcAttrCds.indexOf(item.svcAttrCd) !== -1) {
+        length++;
+      }
+    });
+
+    return length;
   }
 
   /**
