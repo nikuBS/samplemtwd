@@ -34,7 +34,7 @@ Tw.BiometricsDeregister.prototype = {
   _onCloseCancelFido: function () {
     if ( this._cancelFido ) {
       this._nativeService.send(Tw.NTV_CMD.SAVE, {
-        key: Tw.NTV_STORAGE.FIDO_USE,
+        key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._svcMgmtNum,
         value: 'N'
       });
       this._nativeService.send(Tw.NTV_CMD.FIDO_DEREGISTER, { svcMgmtNum: this._svcMgmtNum }, $.proxy(this._onFidoDeRegister, this));
@@ -43,7 +43,7 @@ Tw.BiometricsDeregister.prototype = {
   _onFidoDeRegister: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 || resp.resultCode === this.ERROR_CODE.COMPLETE ) {
       this._nativeService.send(Tw.NTV_CMD.SAVE, {
-        key: Tw.NTV_STORAGE.FIDO_USE,
+        key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._svcMgmtNum,
         value: 'N'
       });
       this._openComplete();
@@ -73,7 +73,7 @@ Tw.BiometricsDeregister.prototype = {
   _onCloseBioDeRegister: function () {
     if ( this._goRegister ) {
       this._biometricsTerm = new Tw.BiometricsTerms(this._target, this._svcMgmtNum);
-      this._biometricsTerm.open();
+      this._biometricsTerm.open(this._callback);
     }
   }
 };

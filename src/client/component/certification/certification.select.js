@@ -107,7 +107,7 @@ Tw.CertificationSelect.prototype = {
     }
   },
   _checkFidoUse: function () {
-    this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.FIDO_USE }, $.proxy(this._onCheckFidoUse, this));
+    this._nativeService.send(Tw.NTV_CMD.LOAD, { key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._svcInfo.svcMgmtNum }, $.proxy(this._onCheckFidoUse, this));
   },
   _onCheckFidoUse: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
