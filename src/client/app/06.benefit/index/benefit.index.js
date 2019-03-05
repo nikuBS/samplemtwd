@@ -39,7 +39,9 @@ Tw.BenefitIndex.prototype = {
     this.$benefit = this.$container.find('#fe-benefit');
     this.$list = this.$container.find('#fe-list');
     this.$prodListArea = this.$container.find('#fe-prod-list-area');
-    this.$showDiscountBtn = this.$container.find('#fe-show-discount');
+    this.$showDiscountBtn = this.$container.find('#fe-show-discount'); // 할인금액 보기 버튼
+    this.$clearBtn = this.$container.find('#fe-clear'); // 할인금액 보기 초기화 버튼
+
     // 결합할인금액 미리보기 > (인터넷, 이동전화, TV) 설정
     this.$internetType = this.$container.find('[data-name="inetTypCd"]'); // 인터넷
     this.$mblPhonLineCnt = this.$container.find('[data-name="mblPhonLineCnt"]'); // 이동전화
@@ -64,7 +66,7 @@ Tw.BenefitIndex.prototype = {
     this.$internetType.on('click', $.proxy(this._checkStateLine, this));
     this.$showDiscountBtn.on('click', $.proxy(this._reqDiscountAmt, this));
     this.$container.on('click', '[data-benefit-id]', $.proxy(this._onClickProduct, this)); // 카테고리 하위 리스트 클릭
-    this.$container.on('click', '#fe-clear', $.proxy(this._previewClear, this)); // 결합할인금액 미리보기 초기화
+    this.$clearBtn.on('click', $.proxy(this._previewClear, this)); // 결합할인금액 미리보기 초기화
     $(window).on(Tw.INIT_COMPLETE, $.proxy(function(){
       this._setScrollLeft(this._convertPathToCategory());
     }, this));
@@ -496,6 +498,9 @@ Tw.BenefitIndex.prototype = {
       this._onFail(resp);
       return;
     }
+    // 버튼명 토글 해준다. (할인금액보기 <-> 초기화)
+    this.$showDiscountBtn.addClass('none');
+    this.$clearBtn.removeClass('none');
     var _data = resp.result;
     // 데이터가 없을때
     if (Tw.FormatHelper.isEmpty(_data)) {
@@ -525,6 +530,10 @@ Tw.BenefitIndex.prototype = {
     this.$container.find('#fe-preview-tv li').removeClass('checked')
       .attr('aria-checked', false)
       .find('[name="btvUseYn"]').prop('checked', false);
+
+    // 버튼명 토글 해준다. (할인금액보기 <-> 초기화)
+    this.$showDiscountBtn.removeClass('none');
+    this.$clearBtn.addClass('none');
 
     this._onCheckDisabled();
   },
