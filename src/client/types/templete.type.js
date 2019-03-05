@@ -774,6 +774,14 @@ Tw.CUSTOMER_EMAIL_QUALITY_QUESTION = {
   }
 };
 
+Tw.CUSTOMER_EMAIL_FILLED_CONTENT_CASE = {
+  '5000275': 'MEMBERSHIP',
+  '010700': 'CHOCO',
+  '010600': 'CHOCO',
+  '010800': 'CHOCO',
+  '010900': 'CHOCO'
+};
+
 Tw.REGION_LIST_ITEM = {
   start: '<li role="radio" aria-checked="false" aria-labelledby="aria-comp-radio">' +
     '<input type="radio" name="senddata" aria-labelledby="aria-comp-radio" value="',
