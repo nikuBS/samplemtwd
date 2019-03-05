@@ -224,7 +224,7 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
           option.qttText = converted.data + ' ' + converted.unit;
           if (plan === 'NA00005957' || plan === 'NA00005958' || plan === 'NA00006157') { // Tplan large/family의 경우 '최대' 삽입, 0Plan large 포함
             option.qttText = '최대 ' + option.qttText;
-            option.copnDtlClNm = option.copnDtlClNm.replace('100%', '').trim();
+            option.copnDtlClNm = option.copnDtlClNm.replace('100%', '');
           }
           option.isTplan = true;
           return option;
@@ -232,6 +232,7 @@ export default class MyTDataRechargeCouponUse extends TwViewController {
       } else if (this.planAdaptive[plan]) {
         if (option.dataVoiceClCd === 'D') {
           option.qttText = '요금상품별 상이';
+          option.copnDtlClNm = option.copnDtlClNm.replace('100%', '');
           return option;
         }
       }
