@@ -183,6 +183,7 @@ Tw.CommonSearchMore.prototype = {
   },
   _showSelectFilter : function () {
     var listData = [
+      {value : Tw.SEARCH_FILTER_STR.ACCURACY , option : this._searchInfo.search[0].direct.sort==='R'?'checked':'' , attr : 'data-type="R"'},
       {value : Tw.SEARCH_FILTER_STR.NEW , option : this._searchInfo.search[0].direct.sort==='D'?'checked':'' , attr : 'data-type="D"'},
       {value : Tw.SEARCH_FILTER_STR.LOW , option : this._searchInfo.search[0].direct.sort==='L'?'checked':'' , attr : 'data-type="L"'},
       {value : Tw.SEARCH_FILTER_STR.HIGH , option : this._searchInfo.search[0].direct.sort==='H'?'checked':'' , attr : 'data-type="H"'}

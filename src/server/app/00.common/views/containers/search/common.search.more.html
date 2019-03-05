@@ -180,10 +180,9 @@
                     <div class="filter-select">
                         <a type="button" class="filterselect-btn" data-type="<%= searchInfo.search[0].direct.sort %>">
                             <%=
-                                searchInfo.search[0].direct.sort==='R'?'추천순':
-                                searchInfo.search[0].direct.sort==='P'?'인기순':
+                                searchInfo.search[0].direct.sort==='R'?'정확도순':
                                 searchInfo.search[0].direct.sort==='D'?'최신순':
-                                searchInfo.search[0].direct.sort==='H'?'낮은가격순':'높은가격순'
+                                searchInfo.search[0].direct.sort==='L'?'낮은가격순':'높은가격순'
                             %>
                         </a>
                     </div>

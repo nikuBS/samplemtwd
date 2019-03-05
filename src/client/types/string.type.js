@@ -1891,7 +1891,7 @@ Tw.VALIDATION_LABEL = {
 Tw.KOR_INITIAL_CHAR_ARR = ['ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'];
 
 Tw.SEARCH_FILTER_STR = {
-  RECOMMEND: '추천순',
+  ACCURACY: '정확도순',
   POP: '인기순',
   NEW: '최신순',
   LOW: '낮은 가격순',
