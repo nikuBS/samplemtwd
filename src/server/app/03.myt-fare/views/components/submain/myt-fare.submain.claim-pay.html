@@ -62,7 +62,9 @@
         </div>
         <% } %>
     </div>
-    <ul class="bt-slice <%= data.isNotAutoPayment? 'item-two': 'solid' %> mt20 mb4">
+    <ul class="bt-slice <%= data.svcInfo.svcAttrCd !== 'M2' &&
+                            data.type !== 'UF' &&
+                            data.isNotAutoPayment ? 'item-two': 'solid' %> mt20 mb4">
         <% if (data.type === 'UF') { %>
             <% if (data.svcInfo.svcAttrCd === 'M2') { %>
                 <li><button data-id="used-brkd" type="button" class="btn-round1 btn-style4">사용내역 확인</button></li>
