@@ -219,6 +219,14 @@ class MyTJoinSubmainController extends TwViewController {
         data.myLongPausedState.state = true;
         // 군입대로 인한 장기 일시정지
         data.myLongPausedState.isArmy = (['5000341', '5000342'].indexOf(data.myLongPausedState.receiveCd) > -1);
+        if ( data.myPausedState.svcStCd === 'AC' && data.myPausedState.armyDt && data.myPausedState.armyDt !== '' ) {
+          const days = DateHelper.getDiffByUnit(data.myPausedState.toDt, DateHelper.getCurrentDate(), 'days');
+          if ( days < 0) {
+            data.myPausedState.state = false;
+            data.myLongPausedState.state = false;
+            delete data.myPausedState.armyDt;
+          }
+        }
       }
 
       if ( numSvc ) {
