@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.account.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.09.17
+ * Annotation: 계좌이체 즉시납부
  */
 
 Tw.MyTFareBillAccount = function (rootEl) {

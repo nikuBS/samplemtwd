@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.account.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.09.18
+ * Annotation: 계좌이체 요금납부
  */
 
 import {NextFunction, Request, Response} from 'express';

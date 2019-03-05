@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.change.address.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.11.13
+ * Annotation: 자동납부 미사용자의 연락처 및 주소 변경
  */
 
 Tw.MyTFareBillChangeAddress = function (rootEl) {

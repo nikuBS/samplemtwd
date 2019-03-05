@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.$banklist.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.09.19
+ * Annotation: 요금납부 [은행 선택] 셀렉트박스 선택 시 은행리스트 가져오는 공통 모듈
  */
 
 Tw.MyTFareBillBankList = function (rootEl, bankList) {
