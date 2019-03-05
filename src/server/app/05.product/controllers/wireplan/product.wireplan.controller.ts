@@ -36,11 +36,14 @@ export default class ProductWire extends TwViewController {
 
   private getMyWireInfo = svcInfo => {
     if (svcInfo && svcInfo.svcAttrCd.startsWith('S')) {
-      return this.apiService.request(API_CMD.BFF_05_0181, {}).map(resp => {
+      return this.apiService.request(API_CMD.BFF_05_0179, {}).map(resp => {
         if (resp.code !== API_CODE.CODE_00) {
           return resp;
         }
-        return resp.result;
+        return {
+          prodNm: svcInfo.prodNm,
+          count: Number(resp.result.additionCount)
+        };
       });
     }
 
