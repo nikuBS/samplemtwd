@@ -189,15 +189,15 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON);
   },
   _removeOnList : function ($args) {
-
-    var selectedIndex = $args.currentTarget.attributes['data-idx'].nodeValue;
+    var $target = $($args.currentTarget);
+    var selectedIndex = $target.data('idx');
     var requestValue = {
       'svcNumList' : [this._addedList[selectedIndex]]
     };
     this._apiService.request(Tw.API_CMD.BFF_10_0019, requestValue, {},[this._prodId]).
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
-        this._historyService.reload();
+        $target.parents('li').remove();
       }else{
         this._openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
       }
