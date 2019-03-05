@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.option.cancel.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.04
+ * Annotation: 자동납부 해지
  */
 
 Tw.MyTFareBillOptionCancel = function (rootEl) {

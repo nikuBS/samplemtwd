@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.get.point.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2019.01.10
+ * Annotation: 포인트 즉시납부 및 OK cashbag 포인트 예약납부 시 카드번호 조회
  */
 
 Tw.MyTFareBillGetPoint = function (rootEl, callbackFunc) {

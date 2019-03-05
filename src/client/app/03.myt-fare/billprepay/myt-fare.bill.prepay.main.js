@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.prepay.main.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.04
+ * Annotation: 소액결제/콘텐츠이용료 메인화면
  */
 
 Tw.MyTFareBillPrepayMain = function (rootEl, title) {

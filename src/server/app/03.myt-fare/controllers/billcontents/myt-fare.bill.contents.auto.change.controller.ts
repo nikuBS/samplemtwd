@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.contents.auto.change.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.08
+ * Annotation: 콘텐츠이용료 자동선결제 변경
  */
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';

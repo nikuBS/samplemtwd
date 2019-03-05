@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.card.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.09.17
+ * Annotation: 체크/신용카드 즉시납부
  */
 
 Tw.MyTFareBillCard = function (rootEl) {
