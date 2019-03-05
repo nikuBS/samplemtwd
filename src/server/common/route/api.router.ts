@@ -64,6 +64,7 @@ class ApiRouter {
     GET_VERSION: { path: '/app-version', method: API_METHOD.GET, target: this.getVersion },
     GET_SPLASH: { path: '/splash', method: API_METHOD.GET, target: this.getSplash },
     GET_APP_NOTICE: { path: '/app-notice', method: API_METHOD.GET, target: this.getAppNotice },
+    GET_XTINFO: { path: '/xtractor-info', method: API_METHOD.GET, target: this.getXtInfo },
 
     GET_URL_META: { path: '/urlMeta', method: API_METHOD.GET, target: this.getUrlMeta },
     GET_MENU: { path: '/menu', method: API_METHOD.GET, target: this.getMenu },
@@ -213,6 +214,18 @@ class ApiRouter {
 
         res.json(resp);
       });
+  }
+
+  private getXtInfo(req: Request, res: Response, next: NextFunction) {
+    const loginService = new LoginService(),
+      svcInfo = loginService.getSvcInfo(req);
+
+    res.json({
+      code: API_CODE.CODE_00,
+      result: FormatHelper.isEmpty(svcInfo.xtInfo) ? {} : Object.assign(svcInfo.xtInfo, {
+        XTLOGINTYPE: svcInfo.loginType === 'S' ? 'Z' : 'A'
+      })
+    });
   }
 
   private getUrlMeta(req: Request, res: Response, next: NextFunction) {

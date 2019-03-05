@@ -1,0 +1,62 @@
+<div class="popup-page nobg tw-popup fixed-bottom">
+    <div class="popup-page no-btn nobg">
+        <!-- .no-btn 하단에 버튼이 없을 경우 -->
+        <!-- #header -->
+        <div class="header-wrap">
+            <div class="page-header">
+                <div class="header-ti align-l">
+                    <h1>데이터 함께쓰기</h1>
+                </div>
+            </div>
+        </div>
+        <!--// #header -->
+        <!-- .container-wrap -->
+        <div class="container-wrap">
+            <h2 class="blind">내용</h2>
+            <div class="container">
+                <!-- 데이터함께쓰기 컨텐츠 -->
+                <div class="cont-box nogaps-hoz">
+                    <ul class="datatogetherlist-wrap fe-children">
+                        {{#each children}}
+                            <li class="datatogether-li">
+                                <div class="datatogether-li-info">
+                                    <p class="datatogether-li-info-title">{{ feeProdNm }}</p>
+                                    <div class="datatogether-li-info-datenum">
+                                        <div class="date">{{ svcNum }}</div>
+                                        <div class="day-num">설정일 <span class="vbl">{{ auditDtm }}</span></div>
+                                    </div>
+                                </div>
+                                <div class="datatogether-li-state">
+                                    <div class="bt-alone"><button class="fe-btn-used-data bt-bg-blue1" data-svcmgmtnum="{{ svcMgmtNum }}">조회</button></div>
+                                    <div class="fe-used-data-result" style="display: none;">
+                                        <div class="type">
+                                            <span class="str fe-data"></span>
+                                            <span class="fe-unit"></span>
+                                        </div>
+                                        <div class="state">사용</div>
+                                    </div>
+                                </div>
+                            </li>
+                        {{/each}}
+                    </ul>
+                </div>
+                <!-- //데이터함께쓰기 컨텐츠 -->
+                <!-- 유의사항 -->
+                <div class="cont-box bgnone nogaps-hoz noborder">
+                    <div class="announcement-box mt20">
+                        <p class="announcement-bullet type02">
+                            데이터 함께쓰기를 설정한 회선의 명의변경·해지·일시정지 등의 변동 사항이 있을 경우, 사용량을 조회할 수 없으며, 이에 따라 데이터 함께쓰기 총 사용량과는 차이가 있을 수 있습니다.
+                        </p>
+                    </div>
+                </div>
+                <!-- //유의사항 -->
+
+            </div>
+        </div>
+        <!--// .container-wrap -->
+        <!-- .popup-closeBtn -->
+        <button class="popup-closeBtn fe-common-back"><span class="blind">팝업 페이지 닫기</span></button>
+        <!--// .popup-closeBtn -->
+    </div>
+    <div class="popup-blind"></div>
+</div>

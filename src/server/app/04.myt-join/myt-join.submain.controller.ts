@@ -396,6 +396,7 @@ class MyTJoinSubmainController extends TwViewController {
       (data.setPrdStaDt ? DateHelper.getShortDateNoDot(data.setPrdStaDt) : data.setPrdStaDt);
     result.setPrdEndDt = this.isMasking(data.setPrdEndDt) ? data.setPrdEndDt :
       (data.setPrdEndDt ? DateHelper.getShortDateNoDot(data.setPrdEndDt) : data.setPrdEndDt);
+    result.setAgrmtMth = data.setAgrmtMth;
     // 유선상품 수
     result.wireProdCnt = data.wireProdCnt;
     // 설치 주소

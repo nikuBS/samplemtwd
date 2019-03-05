@@ -561,7 +561,7 @@ export const BRANCH_SEARCH_OPTIONS = {
   rent: '임대폰',
   skb: 'SK브로드밴드',
   apple: '애플취급점',
-  authAgnYn: '공식인증대리점',
+  authAgnYn: '공식인증 대리점',
   etc: ' 외 ',
   count: '건'
 };

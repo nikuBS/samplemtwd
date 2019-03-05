@@ -23,7 +23,7 @@
         <span class="title">세트 약정</span>
         <span class="tx-cont">
             <% if(data.myInfo.setPrdStaDt && data.myInfo.setPrdEndDt) { %>
-            약정만료(<%= data.myInfo.setPrdStaDt %> ~ <%= data.myInfo.setPrdEndDt %>)
+            <%=data.myInfo.setAgrmtMth%> (<%= data.myInfo.setPrdStaDt %> ~ <%= data.myInfo.setPrdEndDt %>)
             <% } else {%>
             무약정
             <% } %>

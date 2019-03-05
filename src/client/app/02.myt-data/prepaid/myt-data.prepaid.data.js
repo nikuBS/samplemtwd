@@ -32,14 +32,14 @@ Tw.MyTDataPrepaidData.prototype = {
     this._getEmailAddress();
   },
   _getPpsInfo: function () {
-    Tw.CommonHelper.startLoading('.container', 'grey');
+    Tw.CommonHelper.startLoading('.popup-page', 'grey');
     this._apiService.request(Tw.API_CMD.BFF_05_0013, {})
       .done($.proxy(this._getSuccess, this))
       .fail($.proxy(this._getFail, this));
   },
   _getSuccess: function (res) {
     if (res.code === Tw.API_CODE.CODE_00) {
-      Tw.CommonHelper.endLoading('.container');
+      Tw.CommonHelper.endLoading('.popup-page');
       this._bindEvent();
       this._setData(res.result);
     } else {
@@ -47,7 +47,7 @@ Tw.MyTDataPrepaidData.prototype = {
     }
   },
   _getFail: function (err) {
-    Tw.CommonHelper.endLoading('.container');
+    Tw.CommonHelper.endLoading('.popup-page');
     Tw.Error(err.code, err.msg).replacePage();
   },
   _getEmailAddress: function () {

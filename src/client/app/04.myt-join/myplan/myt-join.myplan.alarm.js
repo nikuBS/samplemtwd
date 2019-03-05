@@ -1,5 +1,5 @@
 /**
- * FileName: myt.join.myplan.alarm.js
+ * FileName: myt-join.myplan.alarm.js
  * Author: Ji Hun Yang (jihun202@sk.com)
  * Date: 2018.10.10
  */

@@ -6,7 +6,10 @@ $(document).on('ready', function () {
     skt_landing.action.prd_header();
   }
   if ( $(window).scrollTop > 0 ){
-    $('body').addClass("scroll");
+    $('body').addClass("scroll fly");
+    if(skt_landing.util.win_info.get_scrollT() > 39){
+      $('.home-tab-belt').addClass('fixed');
+    }
   }
   /*if($('.home-slider').length > 0){
     skt_landing.action.home_slider();

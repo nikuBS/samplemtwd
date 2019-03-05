@@ -18,9 +18,7 @@
     <!--// #skip_navigation -->
     <div class="wrap" data-menuId="<%= pageInfo.menuId %>">
         <!-- #header -->
-        <div id="header" class="header-wrap">
-            <%- include('../../../common/views/components/header.component.html', { title: page, svcInfo: svcInfo, pageInfo: locals.pageInfo }); %>
-        </div>
+        <%- include('../../../common/views/components/header.component.html', { title: page, svcInfo: svcInfo, pageInfo: locals.pageInfo }); %>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
@@ -33,7 +31,7 @@
                         <div class="calling-plan">
                             <a class="wrap-link" href="/myt-join/myplan">
                                 <i class="badge icon-badge-plan-use"><span class="blind">이용중</span></i>
-                                <span class="stit"><%= myWire.productJoinsInfo.recentlyJoinsProdNm %><% if (myWire.productJoinsInfo.productCount > 0) { %> 외 <%= myWire.productJoinsInfo.productCount %>건<% } %></span>
+                                <span class="stit"><%= myWire.prodNm %><% if (myWire.count > 0) { %> 외 <%= myWire.count %>건<% } %></span>
                             </a>
                         </div>
                     </div>
@@ -60,10 +58,10 @@
                                         <% } %>
                                     </div>
 
+                                    <% if (prod.prodBasBenfCtt) { %>
                                     <div class="sub">
                                         <span class="text-type1"><%= prod.prodSmryDesc %></span>
                                     </div>
-                                    <% if (prod.prodBasBenfCtt) { %>
                                     <div class="service-wrap">
                                         <div class="service">
                                             <span class="sv-spec">
@@ -71,17 +69,23 @@
                                             </span>
                                         </div>
                                     </div>
+                                    <% } else { %>
+                                    <div class="service-wrap">
+                                        <div class="service">
+                                            <span class="sv-spec txt">
+                                                <%= prod.prodSmryDesc %>
+                                            </span>
+                                        </div>
+                                    </div>
                                     <% } %>
                                 </a>
                             </div>
-                            <% }); %>
-                        </ul>
+                        <% }); %>
                     <% } %>
 
                     <% if (additions.products.length > 0) { %>
                         <div class="ti-caption-type01 pb12 pt28">
                             <h2 class="tit"><%= page %> 부가서비스 </h2>
-                            <!-- <div class="more"><button class="link">더보기</button></div> -->
                         </div>
                         <% additions.products.map(prod => { %>
                             <div class="plan-compact-info type01">

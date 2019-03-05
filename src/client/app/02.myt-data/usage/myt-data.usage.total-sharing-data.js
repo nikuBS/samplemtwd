@@ -3,7 +3,7 @@
  * Author: 이정민 (skt.p130713@partner.sk.com)
  * Date: 2018. 10. 08.
  */
-Tw.SharedDataUsedCalculation = function(options) {
+Tw.SharedDataUsedCalculation = function (options) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._options = options;
@@ -13,24 +13,24 @@ Tw.SharedDataUsedCalculation = function(options) {
 };
 
 Tw.SharedDataUsedCalculation.prototype = {
-  _request: function() {
+  _request: function () {
     var reqList = this._reqList;
     this._apiService.requestArray(reqList).done(
-      $.proxy(function() {
+      $.proxy(function () {
         var totalSum = 0;
-        for (var i = 0; i < reqList.length; i++) {
+        for ( var i = 0; i < reqList.length; i++ ) {
           var resp = arguments[i];
-          if (reqList[i].done) {
+          if ( reqList[i].done ) {
             reqList[i].done(resp);
           }
 
-          if (!resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result) {
+          if ( !resp || resp.code !== Tw.API_CODE.CODE_00 || !resp.result ) {
             totalSum += 0;
             this._popupService.openAlert(resp.msg, resp.code);
             continue;
           }
 
-          switch (reqList[i].command.path) {
+          switch ( reqList[i].command.path ) {
             case Tw.API_CMD.BFF_06_0018.path:
               // resp = {
               //   'code': '00',
@@ -49,7 +49,7 @@ Tw.SharedDataUsedCalculation.prototype = {
               // MB
               var sum = _.reduce(
                 resp.result,
-                function(memo, data) {
+                function (memo, data) {
                   return memo + parseInt(data.dataQty, 10);
                 },
                 0
@@ -75,7 +75,7 @@ Tw.SharedDataUsedCalculation.prototype = {
               //   }
               // };
               // KB
-              if (resp.result.data) {
+              if ( resp.result.data ) {
                 totalSum += parseInt(resp.result.data.used, 10);
               } else {
                 totalSum += 0;
@@ -86,7 +86,7 @@ Tw.SharedDataUsedCalculation.prototype = {
           }
         }
         var totalSumConv = Tw.FormatHelper.convDataFormat(totalSum, Tw.DATA_UNIT.KB);
-        if (this._done) {
+        if ( this._done ) {
           this._done(totalSumConv);
         }
       }, this)
@@ -94,15 +94,13 @@ Tw.SharedDataUsedCalculation.prototype = {
   }
 };
 
-Tw.MyTDataUsageTotalSharingData = function(rootEl, options) {
+Tw.MyTDataUsageTotalSharingData = function (rootEl, options) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
-  this._hashService = Tw.Hash;
   this._historyService = new Tw.HistoryService();
   this._options = options;
 
-  this._init();
   this._cachedElement();
   this._bindEvent();
   this._rendered();
@@ -115,34 +113,23 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
   // _DATA_SHARING_PROD_ID: 'NA00003556',
   _dataGiftSum: 0,
   _tFamilySharingErrCode: null,
+  _DATA_SHARING_POPUP_HBS: 'DC_01_01_01_01',
+  _dataSharingList: null,
 
-  _init: function() {
-    this._myTDataUsageDataShare = new Tw.MyTDataUsageDataShare($('#fe-data-share'));
-    this._hashService.initHashNav(_.debounce($.proxy(this._onHashChange, this), 700, true));
-  },
-
-  _onHashChange: function(hash) {
-    if (hash.raw && hash.raw === 'datashare_P') {
-      this._myTDataUsageDataShare.open();
-    } else {
-      this._myTDataUsageDataShare.close();
-    }
-  },
-
-  _cachedElement: function() {
+  _cachedElement: function () {
     this._$sharedDataUsed = this.$container.find('#sharedDataUsed');
     this._$tfamilySharing = this.$container.find('.fe-tfamily-sharing');
     this._$dataSharing = this.$container.find('.fe-data-sharing');
     this._$dataGift = this.$container.find('.fe-data-gift');
   },
 
-  _bindEvent: function() {
+  _bindEvent: function () {
     this.$container.on('click', '.fe-tfamily-sharing button', $.proxy(this._onClickBtnTFamilySharing, this));
     this.$container.on('click', '.fe-data-gift button', $.proxy(this._onClickBtnDataGift, this));
     this.$container.on('click', '.fe-data-sharing button', $.proxy(this._onClickBtnDataSharing, this));
   },
 
-  _rendered: function() {
+  _rendered: function () {
     this._reqTFamilySharing();
 
     var reqList = [];
@@ -159,7 +146,7 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
       // error: $.proxy(this._onFailReq, this)
     });
     // 데이터 함께쓰기
-    if (this._options.dataSharingJoined === 'Y') {
+    if ( this._options.dataSharingJoined === 'Y' ) {
       reqList.push({
         command: Tw.API_CMD.BFF_05_0004,
         params: {},
@@ -169,8 +156,8 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     }
     new Tw.SharedDataUsedCalculation({
       reqList: reqList,
-      done: $.proxy(function(totalSumConv) {
-        if (_.size(this._$sharedDataUsed)) {
+      done: $.proxy(function (totalSumConv) {
+        if ( _.size(this._$sharedDataUsed) ) {
           // T/O플랜아님 && 기본제공데이터 존재
           this._$sharedDataUsed.text(totalSumConv.data + totalSumConv.unit);
         }
@@ -178,7 +165,7 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     });
   },
 
-  _reqTFamilySharing: function() {
+  _reqTFamilySharing: function () {
     this._apiService
       .requestArray([{ command: Tw.NODE_CMD.GET_SVC_INFO }, { command: Tw.API_CMD.BFF_06_0044 }])
       .done($.proxy(this._onDoneTFamilySharing, this))
@@ -249,14 +236,14 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     // });
   },
 
-  _onDoneTFamilySharing: function(svcInfoResp, tFamilySharingResp) {
-    if (svcInfoResp.code === Tw.API_CODE.CODE_00 && tFamilySharingResp.code === Tw.API_CODE.CODE_00) {
+  _onDoneTFamilySharing: function (svcInfoResp, tFamilySharingResp) {
+    if ( svcInfoResp.code === Tw.API_CODE.CODE_00 && tFamilySharingResp.code === Tw.API_CODE.CODE_00 ) {
       var data = this._getSharedData(svcInfoResp.result.svcMgmtNum, tFamilySharingResp.result.mbrList);
       this._$tfamilySharing.show();
       this._setDataTxt(this._$tfamilySharing, Tw.FormatHelper.convDataFormat(data, Tw.DATA_UNIT.GB));
     } else {
       this._tFamilySharingErrCode = tFamilySharingResp.code;
-      if (this._tFamilySharingErrCode === this._ERROR_CODE.T_FAMILY_SHARE_NOT_JOINED) {
+      if ( this._tFamilySharingErrCode === this._ERROR_CODE.T_FAMILY_SHARE_NOT_JOINED ) {
         // T가족모아 가입 가능한 요금제이나 미가입
         this._$tfamilySharing.show();
         this._$tfamilySharing.find('.fe-data-txt').text(Tw.MYT_DATA_TOTAL_SHARING_DATA.JOIN_T_FAMILY_SHARING);
@@ -266,21 +253,21 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     }
   },
 
-  _onFailTFamilySharing: function() {
+  _onFailTFamilySharing: function () {
     this._$tfamilySharing.hide();
   },
 
-  _onDoneDataGifts: function(resp) {
+  _onDoneDataGifts: function (resp) {
     var usedData;
-    if (resp.code === Tw.API_CODE.CODE_00) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
       this._dataGiftSum = _.reduce(
         resp.result,
-        function(memo, data) {
+        function (memo, data) {
           return memo + parseInt(data.dataQty, 10);
         },
         0
       );
-      if (this._dataGiftSum < 1) {
+      if ( this._dataGiftSum < 1 ) {
         usedData = Tw.FormatHelper.customDataFormat(this._dataGiftSum, Tw.DATA_UNIT.MB, Tw.DATA_UNIT.KB);
       } else {
         usedData = Tw.FormatHelper.convDataFormat(this._dataGiftSum, Tw.DATA_UNIT.MB);
@@ -291,48 +278,51 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     this._setDataTxt(this._$dataGift, usedData);
   },
 
-  _onDoneDataSharing: function(resp) {
-    if (resp.code === Tw.API_CODE.CODE_00) {
-      if (resp.result.data) {
+  _onDoneDataSharing: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      if ( resp.result.data ) {
         var usedData = Tw.FormatHelper.convDataFormat(resp.result.data.used, Tw.DATA_UNIT.KB);
         this._setDataTxt(this._$dataSharing, usedData);
+      }
+      if (resp.result.childList && resp.result.childList.length  > 0) {
+        this._dataSharingList = resp.result.childList;
       }
     }
   },
 
-  _onFailReq: function(err) {
+  _onFailReq: function (err) {
     console.log(err);
   },
 
-  _setDataTxt: function($el, usedData) {
+  _setDataTxt: function ($el, usedData) {
     $el
       .find('.fe-data-txt')
       .html(
         '<strong>' +
-          Tw.MYT_DATA_TOTAL_SHARING_DATA.USED_DATA_PREFIX +
-          usedData.data +
-          (usedData.unit || '') +
-          '</strong>' +
-          Tw.MYT_DATA_TOTAL_SHARING_DATA.USED_DATA_SUFFIX
+        Tw.MYT_DATA_TOTAL_SHARING_DATA.USED_DATA_PREFIX +
+        usedData.data +
+        (usedData.unit || '') +
+        '</strong>' +
+        Tw.MYT_DATA_TOTAL_SHARING_DATA.USED_DATA_SUFFIX
       );
   },
 
-  _onClickBtnTFamilySharing: function() {
-    if (!this._tFamilySharingErrCode) {
+  _onClickBtnTFamilySharing: function () {
+    if ( !this._tFamilySharingErrCode ) {
       // 성공 : T가족모아 메인 페이지로 이동
       this._historyService.goLoad('/myt-data/familydata');
-    } else if (this._tFamilySharingErrCode === this._ERROR_CODE.T_FAMILY_SHARE_NOT_JOINED) {
+    } else if ( this._tFamilySharingErrCode === this._ERROR_CODE.T_FAMILY_SHARE_NOT_JOINED ) {
       // T가족모아 가입 가능한 요금제이나 미가입
       this._historyService.goLoad('/product/callplan?prod_id=NA00006031');
     }
   },
 
-  _tFamilyPopupOpened: function() {
+  _tFamilyPopupOpened: function () {
     // $layer.on('click', '.fe-call-customer-center', $.proxy(this._goSubmain, this));
   },
 
-  _onClickBtnDataGift: function() {
-    if (this._dataGiftSum <= 0) {
+  _onClickBtnDataGift: function () {
+    if ( this._dataGiftSum <= 0 ) {
       // 0이면 T끼리 데이터 선물하기 페이지
       this._historyService.goLoad('/myt-data/giftdata');
     } else {
@@ -340,19 +330,90 @@ Tw.MyTDataUsageTotalSharingData.prototype = {
     }
   },
 
-  _onClickBtnDataSharing: function() {
-    if (this._options.dataSharingJoined === 'Y') {
-      this._historyService.goHash('datashare_P');
+  _onClickBtnDataSharing: function () {
+    if ( this._options.dataSharingJoined === 'Y' ) {
+      // this._historyService.goHash('datashare_P');
+      if (this._dataSharingList && this._dataSharingList.length > 0) {
+        this._openDataSharingPopup(this._dataSharingList);
+      } else {
+        this._apiService.request(Tw.API_CMD.BFF_05_0004)
+          .done($.proxy(this._reqDataSharingsDone, this))
+          .fail($.proxy(this._reqDataSharingsFail, this));
+      }
     } else {
       // this._historyService.goLoad('/product/callplan?prod_id=' + this._DATA_SHARING_PROD_ID); // LTE 데이터 함께쓰기 상품원장 상세 페이지로 이동
-      this._historyService.goLoad('/common/search?keyword='+Tw.MYT_DATA_TOTAL_SHARING_DATA.SEARCH_KEYWORD);
+      this._historyService.goLoad('/common/search?keyword=' + Tw.MYT_DATA_TOTAL_SHARING_DATA.SEARCH_KEYWORD);
     }
   },
 
-  _getSharedData: function(svcMgmtNum, list) {
+  _getSharedData: function (svcMgmtNum, list) {
     var data = _.find(list, {
       svcMgmtNum: svcMgmtNum
     });
     return data ? parseInt(data.shared, 10) : 0;
+  },
+
+  _reqDataSharingsDone: function (resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      var dataSharingList = resp.result && resp.result.childList;
+      if ( dataSharingList && dataSharingList.length > 0 ) {
+        this._openDataSharingPopup(dataSharingList);
+      }
+    } else {
+      this._popupService.openAlert(resp.msg, resp.code);
+    }
+  },
+
+  _reqDataSharingsFail: function (resp) {
+    this._popupService.openAlert(resp.msg, resp.code);
+  },
+
+  _openDataSharingPopup: function(dataSharingList) {
+    var _dataSharingList = _.map(dataSharingList, function (data) {
+      return {
+        feeProdNm: data.feeProdNm,
+        svcNum: Tw.FormatHelper.getDashedCellPhoneNumber(data.svcNum),
+        auditDtm: Tw.DateHelper.getShortDate(data.auditDtm),
+        svcMgmtNum: data.svcMgmtNum
+      };
+    });
+    var option = {
+      hbs: this._DATA_SHARING_POPUP_HBS,
+      layer: true,
+      children: _dataSharingList
+    };
+    Tw.Popup.open(option, $.proxy(function ($layer) {
+      $layer.find('.fe-btn-used-data').click($.proxy(this._onClickBtnDataSharingUsedData, this));
+    }, this), null, 'datashare');
+  },
+
+  _onClickBtnDataSharingUsedData: function (event) {
+    event.preventDefault();
+    var targetSelector = $(event.target);
+    var svcMgmtNum = targetSelector.data('svcmgmtnum');
+    this._apiService.request(Tw.API_CMD.BFF_05_0009, { cSvcMgmtNum: svcMgmtNum })
+      .done($.proxy(this._reqDataSharingDetailDone, this, targetSelector))
+      .fail($.proxy(this._reqDataSharingDetailFail, this));
+  },
+
+  _reqDataSharingDetailDone: function (targetSelector, resp) {
+    if ( resp.code === Tw.API_CODE.CODE_00 ) {
+      this._drawChild(targetSelector, resp);
+    } else {
+      this._popupService.openAlert(resp.msg, resp.code);
+    }
+  },
+
+  _reqDataSharingDetailFail: function (resp) {
+    this._popupService.openAlert(resp.msg, resp.code);
+  },
+
+  _drawChild: function (targetSelector, resp) {
+    var used = Tw.FormatHelper.convDataFormat(resp.result.used, Tw.DATA_UNIT.KB);
+    var $feUsedDataResult = targetSelector.closest('.datatogether-li-state').find('.fe-used-data-result');
+    $feUsedDataResult.find('.fe-data').text(used.data);
+    $feUsedDataResult.find('.fe-unit').text(used.unit);
+    $feUsedDataResult.show();
+    targetSelector.parent().hide();
   }
 };
