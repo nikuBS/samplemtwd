@@ -1114,7 +1114,7 @@
         font-size: 0.875rem;
         word-break: keep-all;
         text-align: center;
-        color: #777; }
+        color: #000 !important; }
       .popup .popup-info .popup-contents .cont-tooltip-li {
         margin-top: 0.1875rem; }
         .popup .popup-info .popup-contents .cont-tooltip-li li {

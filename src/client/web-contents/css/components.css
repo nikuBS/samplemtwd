@@ -3224,6 +3224,13 @@
   background: url(/img/svg/icon_80px_coupon_refill.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
+.icon-bi-skt-80 {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: url(/img/svg/graphic_80px_bi_skt.svg) no-repeat 0 0;
+  background-size: 100% 100%; }
+
 /* 최민규 ~ 2018.10.05 */
 .data-number-wrap {
   display: table;
@@ -4128,6 +4135,9 @@
     font-size: 0.8125rem;
     text-align: center;
     color: #b2b2b2; }
+
+.history-list.type1 .li-elem {
+  padding: 1.25rem 1rem 1.25rem 6.125rem; }
 
 .history-list ul li {
   border-top: 1px solid #e1e1e1;
@@ -7066,6 +7076,7 @@ a.bt-link-tx.underline.small {
   margin-top: 1.25rem; }
   .expect-benefit-slide .horizontal-slide li {
     width: 14.5rem;
+    min-width: 14.5rem;
     padding-right: 0.4375rem; }
     .expect-benefit-slide .horizontal-slide li button, .expect-benefit-slide .horizontal-slide li a {
       display: block;
@@ -11807,6 +11818,23 @@ a.bt-link-tx.underline.small {
     height: 1.5625rem;
     background: url(/img/ico/ico-group.png) no-repeat -1.5625rem -65.625rem;
     background-size: 3.125rem; }
+
+.t-logo-alarm {
+  position: relative;
+  margin-bottom: 0.625rem; }
+  .t-logo-alarm .icon-bi-skt-80 {
+    width: 1.25rem;
+    height: 1.25rem;
+    vertical-align: middle;
+    position: relative;
+    top: -0.125rem;
+    margin-right: 0.3125rem; }
+  .t-logo-alarm .t-date-alarm {
+    position: absolute;
+    right: 0;
+    top: 0.1875rem;
+    font-size: 0.8125rem;
+    color: #171717; }
 
 .fee-info-box {
   overflow: hidden;
