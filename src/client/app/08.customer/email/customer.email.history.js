@@ -38,7 +38,7 @@ Tw.CustomerEmailHistory.prototype = {
       $hideListItem.slice(0, this.nMaxListSize).show();
     }
 
-    if ( $hideListItem.size() === 0 ) {
+    if ( $hideListItem.size() <= this.nMaxListSize ) {
       elTarget.remove();
     }
   },
