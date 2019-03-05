@@ -9,6 +9,7 @@ Tw.CustomerVoiceRegister = function (rootEl, allSvc) {
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
   this._history = new Tw.HistoryService();
+  this._lineComponent = new Tw.LineComponent();
   this._allSvc = allSvc;
 
   this._cachedElement();
@@ -68,10 +69,14 @@ Tw.CustomerVoiceRegister.prototype = {
     e.stopPropagation();
     e.preventDefault();
 
-    this.$btn_select_phone.data('svcmgmtnum', $(e.currentTarget).data('service-number').toString());
+    var svcNum = $(e.currentTarget).data('service-number').toString();
+
+    this.$btn_select_phone.data('svcmgmtnum', svcNum);
     this.$btn_select_phone.text($(e.currentTarget).text().trim());
 
     this._popupService.close();
+
+    this._lineComponent.changeLine(svcNum, null, $.proxy(function(){return null;}, this));
   },
 
   _onClickRegister: function () {
