@@ -174,6 +174,6 @@ Tw.MyTJoinWireGifts.prototype = {
    */
   _goDelivPage: function (event) {
     var url = event.currentTarget.getAttribute('data-url');
-    location.href = url;
+    Tw.CommonHelper.openUrlExternal(url);
   }
 };
