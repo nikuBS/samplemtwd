@@ -32,17 +32,18 @@ Tw.CustomerEmail.prototype = {
   },
 
   _bindEvent: function () {
+    var inputKeyUps = 'keyup input blur';
     this.$btn_faq.on('click', $.proxy(this._openFaq, this));
     this.$close_faq.on('click', $.proxy(this._closeFaq, this));
     this.$container.on('click', '.cancel', $.proxy(this._onChangeContent, this));
     this.$container.on('keyup blur change', '.fe-text_title', $.proxy(this._onChangeTitle, this));
     this.$container.on('keyup blur change', '.fe-text_content', $.proxy(this._onChangeContent, this));
-    this.$container.on('keyup', '.fe-numeric', $.proxy(this._onKeyUpValidNumber, this));
-    this.$container.on('keyup', '.fe-numeric-uppercase', $.proxy(this._onKeyUpValidNumberUpperCase, this));
-    this.$container.on('keyup', '.fe-service_phone', $.proxy(this._onKeyUpPhoneNumber, this));
-    this.$container.on('keyup', '.fe-quality_phone', $.proxy(this._onKeyUpPhoneNumber, this));
-    this.$container.on('keyup', '.fe-service_email', $.proxy(this._onKeyUpEmail, this));
-    this.$container.on('keyup', '.fe-quality_email', $.proxy(this._onKeyUpEmail, this));
+    this.$container.on(inputKeyUps, '.fe-numeric', $.proxy(this._onKeyUpValidNumber, this));
+    this.$container.on(inputKeyUps, '.fe-numeric-uppercase', $.proxy(this._onKeyUpValidNumberUpperCase, this));
+    this.$container.on(inputKeyUps, '.fe-service_phone', $.proxy(this._onKeyUpPhoneNumber, this));
+    this.$container.on(inputKeyUps, '.fe-quality_phone', $.proxy(this._onKeyUpPhoneNumber, this));
+    this.$container.on(inputKeyUps, '.fe-service_email', $.proxy(this._onKeyUpEmail, this));
+    this.$container.on(inputKeyUps, '.fe-quality_email', $.proxy(this._onKeyUpEmail, this));
     this.$container.on('click', '.fe-text-cancel', $.proxy(this._onTextInputClear, this));    
     this.$container.on('click', '.fe-btn_addr', $.proxy(this._onClickBtnAddr, this));
     this.$container.on('click', '.fe-email-close', $.proxy(this._stepBack, this));
