@@ -283,7 +283,7 @@ Tw.CertificationSk.prototype = {
     } else {
       this._onKeyin = false;
       this.$inputMdn.prop('readonly', true);
-      this.$inputMdn.val(this._svcInfo.svcNum);
+      this.$inputMdn.val(Tw.FormatHelper.conTelFormatWithDash(this._svcInfo.svcNum));
       this.$inputMdn.parents('#fe-inputbox-mdn').addClass('readonly');
       this.$btCert.parent().addClass('none');
       this.$btReCert.parent().removeClass('none');
