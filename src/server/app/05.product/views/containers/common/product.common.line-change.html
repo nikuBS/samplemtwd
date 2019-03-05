@@ -91,7 +91,11 @@
                                                      <%= allowedLineList[i].eqpMdlNm %>
                                                     <% } %>
                                                 </span>
+                                                <% if (allowedLineList[i].svcAttrCd === 'S1' || allowedLineList[i].svcAttrCd === 'S2') { %>
+                                                <span class="stext"><%= allowedLineList[i].addr %></span>
+                                                <% } else { %>
                                                 <span class="stext"><%= allowedLineList[i].svcNum %></span>
+                                                <% } %>
                                             </p>
                                         </div>
                                     </li>
