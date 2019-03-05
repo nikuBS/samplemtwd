@@ -310,7 +310,7 @@ Tw.ProductMobileplanJoinTplan.prototype = {
       typeNm: Tw.PRODUCT_TYPE_NM.JOIN,
       isBasFeeInfo: this._confirmOptions.isNumberBasFeeInfo,
       basFeeInfo: this._confirmOptions.isNumberBasFeeInfo ?
-        this._confirmOptions.toProdBasFeeInfo + Tw.CURRENCY_UNIT.WON : ''
+        Tw.DATE_UNIT.MONTH_S + this._confirmOptions.toProdBasFeeInfo + Tw.CURRENCY_UNIT.WON : ''
     };
 
     if ($checked.val() === 'NA00006116') {
