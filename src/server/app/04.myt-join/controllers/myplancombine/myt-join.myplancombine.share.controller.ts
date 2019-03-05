@@ -31,7 +31,7 @@ export default class MyTJoinMyPlanCombineShare extends TwViewController {
     }
   }
 
-  private getCombination = id => {
+  private getCombination = id => {  // 데이터를 나눠쓸 결합 가족 정보 가져오기
     return this.apiService.request(API_CMD.BFF_05_0134, {}, {}, [id]).map(resp => {
       if (resp.code !== API_CODE.CODE_00) {
         return {
