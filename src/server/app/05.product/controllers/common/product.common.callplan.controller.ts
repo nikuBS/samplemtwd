@@ -52,7 +52,7 @@ class ProductCommonCallplan extends TwViewController {
    * @private
    */
   private _getIsJoined(svcInfo: any, prodTypCd: any, prodId: any, plmProdList?: any): Observable<any> {
-    if (['C', 'E_I', 'E_P', 'E_T', 'F', 'G', 'H_P', 'H_A'].indexOf(prodTypCd) === -1 || FormatHelper.isEmpty(svcInfo)) {
+    if (FormatHelper.isEmpty(svcInfo)) {
       return Observable.of({});
     }
 
@@ -420,12 +420,18 @@ class ProductCommonCallplan extends TwViewController {
 
   /**
    * @param prodTypCd
+   * @param plmProdList
    * @param isJoinedInfo
+   * @param svcProdId
    * @private
    */
-  private _isJoined (prodTypCd, isJoinedInfo): boolean {
+  private _isJoined (prodTypCd, plmProdList, isJoinedInfo, svcProdId): boolean {
     if (FormatHelper.isEmpty(isJoinedInfo) || isJoinedInfo.code !== API_CODE.CODE_00) {
       return false;
+    }
+
+    if (['AB', 'D_I', 'D_P', 'D_T'].indexOf(prodTypCd) !== -1) {
+      return plmProdList.indexOf(svcProdId) !== -1;
     }
 
     if (['C', 'H_P', 'H_A'].indexOf(prodTypCd) !== -1) {
@@ -816,11 +822,13 @@ class ProductCommonCallplan extends TwViewController {
             });
 
           // 사용자 svcAttrCd
-          const svcAttrCd = !FormatHelper.isEmpty(svcInfo) && !FormatHelper.isEmpty(svcInfo.svcAttrCd) ? svcInfo.svcAttrCd : null;
+          const svcAttrCd = !FormatHelper.isEmpty(svcInfo) && !FormatHelper.isEmpty(svcInfo.svcAttrCd) ? svcInfo.svcAttrCd : null,
+            svcProdId = !FormatHelper.isEmpty(svcInfo) && !FormatHelper.isEmpty(svcInfo.prodId) ? svcInfo.prodId : null;
 
           res.render('common/callplan/product.common.callplan.html', [renderCommonInfo, isCategory, {
             isPreview: false,
             prodId: prodId,
+            prodTitle: prodRedisInfo.result.summary.prodNm,
             basFeeSubText: basFeeSubText,
             series: seriesResult, // 시리즈 상품
             contents: contentsResult, // 상품 콘텐츠
@@ -832,7 +840,7 @@ class ProductCommonCallplan extends TwViewController {
             relateTags: this._convertRelateTags(relateTagsInfo.result), // 연관 태그
             recommends: this._convertSeriesAndRecommendInfo(recommendsInfo.result, false),  // 함께하면 유용한 상품
             similarProductInfo: this._convertSimilarProduct(basicInfo.result.prodTypCd, similarProductInfo),  // 모바일 요금제 유사한 상품
-            isJoined: this._isJoined(basicInfo.result.prodTypCd, isJoinedInfo),  // 가입 여부
+            isJoined: this._isJoined(basicInfo.result.prodTypCd, [...basicInfo.result.plmProdList, prodId], isJoinedInfo, svcProdId),  // 가입 여부
             combineRequireDocumentInfo: this._convertRequireDocument(combineRequireDocumentInfo),  // 구비서류 제출 심사내역
             reservationTypeCd: this._getReservationTypeCd(basicInfo.result.prodTypCd),
             lineProcessCase: this._getLineProcessCase(basicInfo.result.prodTypCd, allSvc, svcAttrCd), // 가입 가능 회선 타입

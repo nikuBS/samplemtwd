@@ -222,7 +222,7 @@ class ApiRouter {
 
     res.json({
       code: API_CODE.CODE_00,
-      result: FormatHelper.isEmpty(svcInfo.xtInfo) ? {} : Object.assign(svcInfo.xtInfo, {
+      result: !svcInfo || FormatHelper.isEmpty(svcInfo.xtInfo) ? {} : Object.assign(svcInfo.xtInfo, {
         XTLOGINTYPE: svcInfo.loginType === 'S' ? 'Z' : 'A'
       })
     });
