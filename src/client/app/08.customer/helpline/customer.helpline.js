@@ -92,7 +92,7 @@ Tw.CustomerHelpline.prototype = {
   },
 
   _validatePhoneNumber: function() {  // 입력된 번호가 유효한 지 검사
-    var $errorText = this.$areaPhone.find('#aria-phone-tx1'),
+    var $errorText = this.$container.find('#aria-phone-tx1'),
       $input = this.$phoneInput,
       errorState = this.$areaPhone.hasClass('error'),
       number = $input.val().replace(/-/g, ''),
