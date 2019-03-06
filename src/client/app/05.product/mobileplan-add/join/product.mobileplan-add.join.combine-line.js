@@ -88,12 +88,10 @@ Tw.ProductMobileplanAddJoinCombineLine.prototype = {
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
     }
 
-    var numMask = Tw.FormatHelper.getFormattedPhoneNumber(number);
-
     this._data.addList.push(number);
     this.$lineList.append(this._combinationTemplate({
       number: number,
-      numMask: numMask
+      numMask: number
     }));
 
     this._clearNum();
