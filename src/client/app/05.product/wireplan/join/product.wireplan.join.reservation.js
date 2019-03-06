@@ -692,7 +692,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
     this._isGoLogin = false;
     this._setLocalStorage();
-    this._tidLanding.goLogin(location.href + (Tw.FormatHelper.isEmpty(location.search) ? '' : location.search));
+    this._tidLanding.goLogin(location.href);
   },
 
   _setLocalStorage: function() {
