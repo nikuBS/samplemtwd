@@ -24,10 +24,7 @@
     </div>
     <% } %>
     <% } else { %>
-    <% if ( basicInfo.prodScrbYn === 'Y' && (
-    ( isMobileplan || isWireplan ) && (svcInfo && svcInfo.prodId !== prodId || isMobileplan && !svcInfo) ||
-    ( isMobileplanAdd || isWireplanAdd || isRoaming || isDiscount ) && !isJoined)
-    ) { %>
+    <% if ( basicInfo.prodScrbYn === 'Y' && !isJoined ) { %>
     <div class="btn">
         <% if ( basicInfo.linkBtnList.join.length > 0 ) { %>
         <button type="button" class="bt-white1 fe-btn_join fe-btn_ready_on" style="display: none" data-url="<%= basicInfo.linkBtnList.join[0].linkUrl %>"><%= basicInfo.linkBtnList.join[0].linkNm %></button>
@@ -41,10 +38,7 @@
         <% } %>
     </div>
     <% } %>
-    <% if ( basicInfo.prodScrbYn === 'N' && (
-    ( isMobileplan || isWireplan ) && (svcInfo && svcInfo.prodId !== prodId || !svcInfo) ||
-    ( isMobileplanAdd || isWireplanAdd || isRoaming || isDiscount ) && !isJoined)
-    ) { %>
+    <% if ( basicInfo.prodScrbYn === 'N' && !isJoined ) { %>
     <div class="limit">
         <%= (basicInfo.prodStCd === 'F1000' ? '가입제한 상품' : '가입불가 상품') %>
     </div>

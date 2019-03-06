@@ -1,4 +1,4 @@
-<% if (( isWireplan && (!svcInfo || svcInfo && svcInfo.prodId !== prodId) || ( isWireplanAdd || isCombine ) && !isJoined ) && basicInfo.isJoinReservation && !combineRequireDocumentInfo) { %>
+<% if ((( isWireplan || isWireplanAdd || isCombine ) && !isJoined ) && basicInfo.isJoinReservation && !combineRequireDocumentInfo) { %>
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <div class="joinconsulting-wrap">
@@ -23,8 +23,7 @@
 <% } %>
 
 <% // 설정 버튼 영역
-if (( isMobileplan || isWireplan ) && (svcInfo && svcInfo.prodId === prodId) ||
-    ( isMobileplanAdd || isWireplanAdd || isRoaming || isCombine || isDiscount ) && isJoined ) { %>
+if ( isJoined ) { %>
 <hr class="cont-sp type1" aria-hidden="true"/>
 
 <div class="joinconsulting-wrap">
