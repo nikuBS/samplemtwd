@@ -51,7 +51,7 @@
 
             <% if(isLogin && svcInfo.loginType === 'T' && svcInfo.svcGr !== '') { %>
             <% const checkData = membershipCheckData.joinCheckData; %>
-            <% if ( checkData.cardCreatableYn === 'N') { %>
+            <% if ( checkData.cardCreatableYn === 'N' && membershipData.mbrGrade) { %>
             <div class="cont-box nogaps-top">
                 <div class="card-wrap">
                     <button class="solid-link fe-mebership-my">나의 T멤버십
@@ -132,8 +132,8 @@
                         <li><a href="/membership/benefit/brand" class="brand"><span class="ico"></span>제휴브랜드</a></li>
                         <li><a href="/membership/benefit/movieculture" class="movie"><span class="ico"></span>무비/컬처</a>
                         </li>
-                        <li><a class="t-day fe-membership-tday"><span class="ico"></span>T Day</a></li>
-                        <li><a class="data-plus"><span class="ico"></span>초콜릿</a></li>
+                        <li><a href="" class="t-day fe-membership-tday"><span class="ico"></span>T Day</a></li>
+                        <li><a href="" class="data-plus"><span class="ico"></span>초콜릿</a></li>
                         <!-- <li><button class="my-plus"><span class="ico"></span>내맘대로 플러스</button></li> -->
                     </ul>
                 </div>
@@ -179,7 +179,7 @@
                 <div class="benefit-popularity-wrap">
                     <div class="tit-wrap">
                         <h3 class="tit-type7">내 주변 제휴 브랜드</h3>
-                        <button class="bt-gps fe-membership-location" title="제휴브랜드 지도보기">서울 중구</button>
+                        <button class="bt-gps fe-membership-location" title="내 주변 제휴 브랜드 보기">서울 중구</button>
                     </div>
                     <ul class="coalition-brand-list type2" id="fe-memebership-near">
                     </ul>
