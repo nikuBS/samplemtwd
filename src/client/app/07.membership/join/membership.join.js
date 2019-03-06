@@ -122,6 +122,14 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       var $input = item.find('input');
       $input.prop('checked', checked);
     }
+
+    // T멤버십 이용·약관 동의 에서 '모두 동의' 선택 시, 해당 영역으로 자동 스크롤 이동
+    if (checked) {
+      this.$container.find('#fe-anchor-okcashback')[0].scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
   },
 
   _onClickCAgreeCheckbox: function (event) {
