@@ -215,7 +215,7 @@ Tw.CustomerAgentsearchNear.prototype = {
     } else {
       // this._currentMarker.clearMarkers();
     }
-    var size = new Tmap.Size(24, 38);
+    var size = new Tmap.Size(38, 38);
     var offset = new Tmap.Pixel(-(size.w / 2), -(size.h));
     var lonlat = new Tmap.LonLat(location.longitude, location.latitude)
       .transform('EPSG:4326', 'EPSG:3857');
