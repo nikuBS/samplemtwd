@@ -123,7 +123,7 @@ class ApiService {
     const contentType = resp.headers['content-type'];
 
     const respData = resp.data;
-    this.logger.info(this, '[API RESP]', (new Date().getTime() - startTime) + 'ms', command.path);
+    this.logger.info(this, '[API RESP]', (new Date().getTime() - startTime) + 'ms', command.path, respData);
 
     if ( command.server === API_SERVER.BFF ) {
       this.setServerSession(resp.headers).subscribe(() => {
@@ -442,7 +442,12 @@ class ApiService {
         if ( resp.code === API_CODE.CODE_00 ) {
           return this.loginService.setSvcInfo(resp.result);
         } else if ( resp.code === 'BFF0030' ) {
-          return this.loginService.setSvcInfo(new SvcInfoModel({}));
+          const svcInfo = this.loginService.getSvcInfo();
+          return this.loginService.setSvcInfo(new SvcInfoModel({
+            mbrNm: svcInfo.mbrNm,
+            // noticeType: svcInfo.noticeType,
+            loginType: svcInfo.loginType
+          }));
         } else {
           throw resp;
         }
