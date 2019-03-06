@@ -67,7 +67,7 @@
                                 {{/if}}
                                 <span class="inputbox pt20">
                                     <span class="input">
-                                        <input id="fe-input-cert" type="number" placeholder="인증번호 숫자 6자리" title="보호자(수신인) 회선 인증번호 숫자 6자리 입력하세요" aria-describedby="aria-phone-tx2">
+                                        <input id="fe-input-cert" type="number" inputmode="numeric" min="0" pattern="[0-9]*" placeholder="인증번호 숫자 6자리" title="보호자(수신인) 회선 인증번호 숫자 6자리 입력하세요" aria-describedby="aria-phone-tx2">
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                     <span id="fe-error-confirm" class="tx-box none">
