@@ -151,6 +151,14 @@ class DateHelper {
   };
 
   /**
+   * @param date {Date} or {string} : YYYYMMDD
+   * @returns {string} : currentDateTime + 1 day
+   */
+  static getNextDayShortDate = function () {
+    return moment().add(1, 'days').format('YYYY.M.D.');
+  };
+
+  /**
    * @param date {Date} or {string} : YYYYMMDDhhmmss
    * @returns {string} : 2018년 12월 31일
    */
