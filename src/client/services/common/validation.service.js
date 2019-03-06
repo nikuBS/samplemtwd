@@ -21,11 +21,11 @@ Tw.ValidationService.prototype = {
     this.$container.find('input.required-input-field:visible').on('blur', $.proxy(this.checkValidation, this));
   },
   checkIsAbled: function () {
-    this.$container.find('input.required-input-field:visible').each($.proxy(this._checkNull, this,
+    this.$container.find('input.required-input-field:visible:not(:disabled)').each($.proxy(this._checkNull, this,
       $.proxy(this._setButtonAbility, this)));
 
     if (!this.$disabled) {
-      this.$container.find('.fe-required-select:visible').each($.proxy(this._checkNull, this,
+      this.$container.find('.fe-required-select:visible:not(:disabled)').each($.proxy(this._checkNull, this,
         $.proxy(this._setButtonAbility, this)));
     }
   },
@@ -263,5 +263,8 @@ Tw.ValidationService.prototype = {
       }
     }
     return true;
+  },
+  getDisabled: function () {
+    return this.$disabled;
   }
 };
