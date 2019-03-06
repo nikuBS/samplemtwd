@@ -944,16 +944,20 @@ Tw.MainHome.prototype = {
   },
   _startLazyRendering: function () {
     var $homeStore = $('#fe-home-store');
-    var tplHomeStore = Handlebars.compile($homeStore.html());
-    this.$container.find('#fe-div-home-store').html(tplHomeStore());
-
+    if ( $homeStore.length > 0 ) {
+      var tplHomeStore = Handlebars.compile($homeStore.html());
+      this.$container.find('#fe-div-home-store').html(tplHomeStore());
+    }
     var $doLikeThis = $('#fe-home-do-like-this');
-    var tplDoLikeThis = Handlebars.compile($doLikeThis.html());
-    this.$container.find('.fe-div-home-do-like-this').html(tplDoLikeThis());
-
+    if ( $doLikeThis.length > 0 ) {
+      var tplDoLikeThis = Handlebars.compile($doLikeThis.html());
+      this.$container.find('.fe-div-home-do-like-this').html(tplDoLikeThis());
+    }
     var $notice = $('#fe-home-notice');
-    var tplNotice = Handlebars.compile($notice.html());
-    this.$container.find('.fe-div-home-notice').html(tplNotice());
+    if ( $notice.length > 0 ) {
+      var tplNotice = Handlebars.compile($notice.html());
+      this.$container.find('.fe-div-home-notice').html(tplNotice());
+    }
 
     this._setBanner();
   }
