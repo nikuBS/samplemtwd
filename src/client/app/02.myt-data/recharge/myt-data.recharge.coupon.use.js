@@ -109,6 +109,7 @@ Tw.MyTDataRechargeCouponUse.prototype = {
         var number = res.params.phoneNumber.replace(/[^0-9]/gi, '').trim();
         number = Tw.FormatHelper.getDashedCellPhoneNumber(number);
         this.$numberInput.val(number);
+        this.$numberInput.trigger('keyup'); // x버튼 표시되도록 keyup 이벤트 임의로 발생
         this._onNumberChanged();
       }
     }, this));
