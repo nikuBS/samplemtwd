@@ -60,7 +60,7 @@ Tw.BiometricsRegister.prototype = {
       // this._popupService.closeAll();
       this._popupService.close();
       this._nativeService.send(Tw.NTV_CMD.SAVE, {
-        key: Tw.NTV_STORAGE.FIDO_USE,
+        key: Tw.NTV_STORAGE.FIDO_USE + ':' + this._svcMgmtNum,
         value: 'Y'
       });
     } else if ( resp.resultCode === this.ERROR_CODE.CANCEL ) {

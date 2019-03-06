@@ -22,6 +22,9 @@ class CommonTidLogin extends TwViewController {
     if ( /\#/.test(target) ) {
       target = target.replace(/\#/gi, 'urlHash');
     }
+    if ( /\&/.test(target) ) {
+      target = target.replace(/\&/gi, 'urlQuery');
+    }
 
     this.apiService.request(API_CMD.BFF_03_0007, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
