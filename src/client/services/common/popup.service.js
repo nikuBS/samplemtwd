@@ -28,7 +28,15 @@ Tw.PopupService.prototype = {
         this._popupClose(closeCallback);
       }
     } else if(hash.base.indexOf('_P') >= 0 || hash.base.indexOf('popup') >= 0) {
-      this._historyService.goBack();
+      if (Tw.BrowserHelper.isSamsung()) {
+        if (window.performance && performance.navigation.type === 1) {
+          this._emptyHash();
+        } else {
+          this._goBack();
+        }
+      } else {
+        this._goBack();
+      }
     }
   },
   _onOpenPopup: function () {
@@ -420,5 +428,8 @@ Tw.PopupService.prototype = {
   },
   _goBack: function () {
     history.back();
+  },
+  _emptyHash: function () {
+    history.pushState('', document.title, window.location.pathname);
   }
 };
