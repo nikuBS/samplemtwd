@@ -1142,7 +1142,8 @@ body.bg-gray {
       padding-top: 0;
       background: #fff; }
     .popup-page.layer.actionsheet_full {
-      max-height: 100%; }
+      max-height: 100%;
+      -webkit-overflow-scrolling: touch; }
       .popup-page.layer.actionsheet_full .header-wrap {
         position: relative; }
         .popup-page.layer.actionsheet_full .header-wrap .page-header {
@@ -1150,7 +1151,7 @@ body.bg-gray {
       .popup-page.layer.actionsheet_full .container-wrap {
         overflow-y: inherit; }
         .popup-page.layer.actionsheet_full .container-wrap .container {
-          max-height: 17.5rem;
+          max-height: 18.75rem;
           overflow: hidden;
           overflow-y: auto;
           padding-top: 0;
@@ -1353,6 +1354,12 @@ body.bg-gray {
     }
 }*/
 /* ios에서 팝업 타이틀이 살짝 올라가는 부분인데 다른 부분에 영향을 많이줘서 우선 걷어냅니다  */
+.device_ios #common-menu .section-userinfo .userinfo .ti-tx .bt {
+  top: 0; }
+
+.device_ios #common-menu .section-userinfo .userinfo .bt {
+  top: -6px; }
+
 /* 페이지 사이즈 100% */
 .fixed-wrap {
   position: fixed;

@@ -19361,6 +19361,11 @@ a.bt-link-tx.underline.small {
     margin-top: 0.625rem;
     color: #666;
     font-size: 0.8125rem; }
+  .card-wrap .card-desc1 {
+    margin: 0.9375rem 0 1.25rem 0;
+    color: #000000; }
+    .card-wrap .card-desc1 span {
+      color: #f76252; }
   .card-wrap .btn-more {
     position: absolute;
     left: 0;
@@ -23206,7 +23211,8 @@ a.bt-link-tx.underline.small {
       right: 0.8125rem;
       top: 1rem;
       font-size: 1.0625rem;
-      line-height: 1.2; }
+      line-height: 1.2;
+      white-space: nowrap; }
     .calling-plan .wrap-link .right {
       top: 1.5rem; }
 
@@ -24156,6 +24162,8 @@ input[type="radio"].formradio-small.type2 + label {
       color: #666666;
       font-size: 0.875rem; }
       .pg-chk-list02 li .btn-tip i {
+        position: relative;
+        top: -0.0625rem;
         margin: -0.0625rem 0 0 0.25rem;
         vertical-align: middle; }
 
@@ -25283,7 +25291,7 @@ input[type="radio"].formradio-small.type2 + label {
   font-size: 0.875rem;
   color: #fff;
   line-height: 1.1875rem;
-  background: url(/img/benefit/bg-app-down.png) no-repeat 93% bottom #ef4b49;
+  background: url(/img/benefit/bg-app-down.png) no-repeat 93% bottom #f76252;
   background-size: 4.6875rem;
   text-align: left; }
 
