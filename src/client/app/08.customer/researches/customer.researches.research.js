@@ -179,7 +179,9 @@ Tw.CustomerResearch.prototype = {
   _submitResearch: function() {
     // submit
     this._setAnswer();
-    var values = Object.values(this._answers);
+    var values = $.map(this._answers, function(answer, key) {
+      return answer;
+    });
 
     this._apiService
       .request(Tw.API_CMD.BFF_08_0036, {

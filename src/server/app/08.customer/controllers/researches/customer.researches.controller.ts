@@ -59,35 +59,33 @@ export default class CustomerResearches extends TwViewController {
         undefined;
 
       return {
-        researches: resp.result
-          .map(research => {
-            const examples: Array<{}> = [];
-            let i = 1,
-              exam = research['exCtt' + i];
+        researches: resp.result.map(research => {
+          const examples: Array<{}> = [];
+          let i = 1,
+            exam = research['exCtt' + i];
 
-            while (exam) {
-              const isEtc = exam === 'QSTNETC';
+          while (exam) {
+            const isEtc = exam === 'QSTNETC';
 
-              examples.push({
-                content: isEtc ? ETC_CENTER : exam || '',
-                image: research['exImgFilePathNm' + i],
-                motHtml: research['motExCtt' + i],
-                isEtc
-              });
-              i++;
-              exam = research['exCtt' + i];
-            }
+            examples.push({
+              content: isEtc ? ETC_CENTER : exam || '',
+              image: research['exImgFilePathNm' + i],
+              motHtml: research['motExCtt' + i],
+              isEtc
+            });
+            i++;
+            exam = research['exCtt' + i];
+          }
 
-            return {
-              ...research,
-              examples,
-              staDtm: DateHelper.getShortDate(research.staDtm),
-              endDtm: DateHelper.getShortDate(research.endDtm),
-              isProceeding: DateHelper.getDifference(research.endDtm.replace(/\./g, '')) > 0
-            };
-          })
-          .filter((research: any) => research.isProceeding || research.bnnrRsrchTypCd !== 'R'),
-        showCount: quizIdx !== -1 ? Math.floor(quizIdx / DEFAULT_LIST_COUNT + 1) * DEFAULT_LIST_COUNT : DEFAULT_LIST_COUNT
+          return {
+            ...research,
+            examples,
+            staDtm: DateHelper.getShortDate(research.staDtm),
+            endDtm: DateHelper.getShortDate(research.endDtm),
+            isProceeding: DateHelper.getDifference(research.endDtm.replace(/\./g, '')) > 0
+          };
+        }),
+        showCount: quizIdx && quizIdx !== -1 ? Math.floor(quizIdx / DEFAULT_LIST_COUNT + 1) * DEFAULT_LIST_COUNT : DEFAULT_LIST_COUNT
       };
     });
   }
