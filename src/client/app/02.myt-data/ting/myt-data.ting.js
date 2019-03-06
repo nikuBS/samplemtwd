@@ -76,7 +76,7 @@ Tw.MyTDataTing.prototype = {
   _onContact: function (response) {
     if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
       var params = response.params;
-      this.$input_ting_receiver.val(this._convertDashNumber(params.phoneNumber));
+      this.$input_ting_receiver.val(this._convertDashNumber(params.phoneNumber)).trigger('change');
     }
   },
 
