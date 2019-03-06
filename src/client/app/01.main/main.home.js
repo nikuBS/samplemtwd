@@ -435,7 +435,7 @@ Tw.MainHome.prototype = {
     var result = {
       micro: 0,
       contents: 0,
-      invEndDt: Tw.DateHelper.getShortLastDate(new Date()),
+      invEndDt: Tw.DateHelper.getShortDate(new Date()),
       invStartDt: Tw.DateHelper.getShortFirstDate(new Date())
     };
     if ( microResp.code === Tw.API_CODE.BFF_0006 || microResp.code === Tw.API_CODE.BFF_0007 ) {
