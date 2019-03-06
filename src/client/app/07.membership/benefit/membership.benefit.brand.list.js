@@ -90,7 +90,7 @@ Tw.MembershipBenefitBrandList.prototype = {
       arr.push({
         txt : list[i].area,
         'label-attr': 'id="ra'+i+'"',
-        'radio-attr': 'id="ra'+i+'" name="'+radioName+'" value=' + list[i].area
+        'radio-attr': 'id="ra'+i+'" name="'+radioName+'" value="' + list[i].area + '"'
       });
     }
     return arr;
