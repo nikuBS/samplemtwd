@@ -17,7 +17,12 @@ Tw.MembershipBenefitBrandMap = function (container, location, data) {
 
   this._render();
   this._bindEvent();
-  this._init();
+
+  if( !Tw.Environment.init ) {
+    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._init, this));
+  } else {
+    this._init();
+  }
 };
 
 Tw.MembershipBenefitBrandMap.prototype = {
