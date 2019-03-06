@@ -7094,19 +7094,20 @@ a.ui-button:active,
     font-size: 0.9375rem; }
 
 /* 공통 로딩바 */
-.spinner_loading {
+.spinner_loading2 {
   display: inline-block;
   position: relative;
   width: 40px;
   height: 40px;
-  color: #fff; }
+  margin-right: 100px;
+  vertical-align: top; }
 
-.spinner_loading .line {
+.spinner_loading2 .line {
   -webkit-transform-origin: 40px 40px;
           transform-origin: 40px 40px;
   -webkit-animation: spinnerLoading 1.2s linear infinite;
           animation: spinnerLoading 1.2s linear infinite; }
-  .spinner_loading .line:after {
+  .spinner_loading2 .line:after {
     content: " ";
     display: block;
     position: absolute;
@@ -7117,75 +7118,57 @@ a.ui-button:active,
     border-radius: 20%;
     background: #fff; }
 
-.spinner_loading .line:nth-child(1) {
+.spinner_loading2 .line:nth-child(1) {
   -webkit-transform: rotate(0deg);
           transform: rotate(0deg);
   -webkit-animation-delay: -1.1s;
           animation-delay: -1.1s; }
 
-.spinner_loading .line:nth-child(2) {
-  -webkit-transform: rotate(30deg);
-          transform: rotate(30deg);
+.spinner_loading2 .line:nth-child(2) {
+  -webkit-transform: rotate(40deg);
+          transform: rotate(40deg);
   -webkit-animation-delay: -1.1s;
           animation-delay: -1.1s; }
 
-.spinner_loading .line:nth-child(3) {
-  -webkit-transform: rotate(60deg);
-          transform: rotate(60deg);
+.spinner_loading2 .line:nth-child(3) {
+  -webkit-transform: rotate(80deg);
+          transform: rotate(80deg);
   -webkit-animation-delay: -1.1s;
           animation-delay: -1.1s; }
 
-.spinner_loading .line:nth-child(4) {
-  -webkit-transform: rotate(90deg);
-          transform: rotate(90deg);
-  -webkit-animation-delay: -1.1s;
-          animation-delay: -1.1s; }
-
-.spinner_loading .line:nth-child(5) {
+.spinner_loading2 .line:nth-child(4) {
   -webkit-transform: rotate(120deg);
           transform: rotate(120deg);
   -webkit-animation-delay: -1.1s;
           animation-delay: -1.1s; }
 
-.spinner_loading .line:nth-child(6) {
-  -webkit-transform: rotate(150deg);
-          transform: rotate(150deg);
+.spinner_loading2 .line:nth-child(5) {
+  -webkit-transform: rotate(160deg);
+          transform: rotate(160deg);
   -webkit-animation-delay: -1.1s;
           animation-delay: -1.1s; }
 
-.spinner_loading .line:nth-child(7) {
-  -webkit-transform: rotate(180deg);
-          transform: rotate(180deg);
+.spinner_loading2 .line:nth-child(6) {
+  -webkit-transform: rotate(200deg);
+          transform: rotate(200deg);
   -webkit-animation-delay: -1.1s;
           animation-delay: -1.1s; }
 
-.spinner_loading .line:nth-child(8) {
-  -webkit-transform: rotate(210deg);
-          transform: rotate(210deg);
-  -webkit-animation-delay: -1.1s;
-          animation-delay: -1.1s; }
-
-.spinner_loading .line:nth-child(9) {
+.spinner_loading2 .line:nth-child(7) {
   -webkit-transform: rotate(240deg);
           transform: rotate(240deg);
   -webkit-animation-delay: -1.1s;
           animation-delay: -1.1s; }
 
-.spinner_loading .line:nth-child(10) {
-  -webkit-transform: rotate(270deg);
-          transform: rotate(270deg);
+.spinner_loading2 .line:nth-child(8) {
+  -webkit-transform: rotate(280deg);
+          transform: rotate(280deg);
   -webkit-animation-delay: -1.1s;
           animation-delay: -1.1s; }
 
-.spinner_loading .line:nth-child(11) {
-  -webkit-transform: rotate(300deg);
-          transform: rotate(300deg);
-  -webkit-animation-delay: -1.1s;
-          animation-delay: -1.1s; }
-
-.spinner_loading .line:nth-child(12) {
-  -webkit-transform: rotate(330deg);
-          transform: rotate(330deg);
+.spinner_loading2 .line:nth-child(9) {
+  -webkit-transform: rotate(320deg);
+          transform: rotate(320deg);
   -webkit-animation-delay: -1.1s;
           animation-delay: -1.1s; }
 

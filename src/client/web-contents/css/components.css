@@ -3231,7 +3231,6 @@
   background: url(/img/svg/graphic_80px_bi_skt.svg) no-repeat 0 0;
   background-size: 100% 100%; }
 
-/* 최민규 ~ 2018.10.05 */
 .data-number-wrap {
   display: table;
   width: 100%; }
@@ -3499,8 +3498,6 @@
   font-size: 0.8125rem;
   color: #666; }
 
-/* 원지예 ~ 2018.10.08 */
-/* 김예리 */
 .inp-tx-wrap {
   padding-bottom: 5.625rem; }
   .inp-tx-wrap .inputbox.bt-add {
@@ -7689,7 +7686,7 @@ a.bt-link-tx.underline.small {
 .loaming-slide li {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  width: 14.5rem;
+  min-width: 14.5rem;
   height: 11.625rem;
   padding: 1rem 0 1rem 1.25rem;
   background: #e6f2fe;
@@ -9498,7 +9495,6 @@ a.bt-link-tx.underline.small {
       float: left;
       color: #212121; }
 
-/* 전동엽 ~ 2018.10.05 */
 .box-data-family-banner {
   background: #f44333;
   border-radius: 0.3125rem;
@@ -10388,7 +10384,6 @@ a.bt-link-tx.underline.small {
     background-size: 9.375rem;
     background-position: -4.6875rem -23.4375rem; }
 
-/* 김세정 ~ 2018.10.05 */
 .dc-use {
   position: relative;
   margin: 0 0 2.1875rem 0;
@@ -11266,7 +11261,6 @@ a.bt-link-tx.underline.small {
     font-size: 0.875rem;
     color: #178BCE; }
 
-/* 박근수 ~ 2018.10.05 */
 .info-view-ic {
   display: inline-block;
   width: 1.5625rem;
@@ -11924,8 +11918,6 @@ a.bt-link-tx.underline.small {
       float: right;
       font-size: 0.9375rem; }
 
-/* 유준형 ~ 2018.10.05 */
-/* 김태균 */
 /* dc_01_02,dc_01_03,dc_01_04 */
 .graphlist-wrap .graphbox-li {
   padding: 1.25rem 0; }
@@ -14897,8 +14889,6 @@ a.bt-link-tx.underline.small {
   .add-prd-wrap .list-comp-lineinfo li .lineinfo-data .info-title .etc-num {
     display: block; }
 
-/* 임지선 ~ 2018.10.05 */
-/* 김재성 */
 /* list-style */
 .list-style.type1 {
   padding: 0 1rem; }
@@ -16643,6 +16633,7 @@ a.bt-link-tx.underline.small {
 /* MV_02_02 : 함께하면 더욱 유용한 상품 */
 .useful-goods li {
   width: 14.5rem;
+  min-width: 14.5rem;
   padding-right: 0.4375rem; }
   .useful-goods li button {
     width: 100%;
@@ -18236,7 +18227,6 @@ a.bt-link-tx.underline.small {
         bottom: 0.0625rem;
         border-bottom: 3px solid #3b98e6; }
 
-/* 김정훈 */
 .operation-guide-box {
   background: #289cde; }
   .operation-guide-box .slick-prev {
@@ -20924,7 +20914,6 @@ a.bt-link-tx.underline.small {
     .discount-look-ahead.discount-type .board-type > div .select-list li {
       margin-top: 0.625rem; }
 
-/* 권은별 */
 .acco-notice .acco-list {
   padding: 0; }
 
@@ -21159,7 +21148,6 @@ a.bt-link-tx.underline.small {
   padding: 1.125rem;
   border-radius: 0.1875rem; }
 
-/* 박옥미 */
 .my-benefit-info .view {
   position: relative;
   display: block;
@@ -22882,7 +22870,6 @@ a.bt-link-tx.underline.small {
     font-size: 0.75rem;
     margin: 0 0 1.25rem 1rem; }
 
-/* 최은현 */
 .cont-box.rt-bt-type {
   position: relative;
   padding: 1.125rem 1rem; }
@@ -22901,7 +22888,6 @@ a.bt-link-tx.underline.small {
 .agree-chk-type2 .select-list-desc.interval-type .layout-text {
   padding-bottom: 0 !important; }
 
-/* 이은재 */
 .mem-benefit {
   border-top: 1px solid #f2f2f2;
   margin: 0 1.875rem;
@@ -22925,7 +22911,6 @@ a.bt-link-tx.underline.small {
   font-size: 0.875rem;
   padding: 1.5625rem 0; }
 
-/* 주미숙 */
 /* cont-actionsheet */
 /* 앱 다운받기 */
 .ac-list.ac4 {
@@ -23439,7 +23424,6 @@ input[type="radio"].formradio-small.type2 + label {
   .custom-form input[type=checkbox]:checked:disabled + .c-type2 {
     background-image: url(/img/svg/component_check_on_disabled.svg); }
 
-/* 김예리 */
 .tx-red1 {
   color: #ef4b49; }
 
@@ -24096,7 +24080,6 @@ input[type="radio"].formradio-small.type2 + label {
   background: url(/img/svg/badge_plan_used.svg);
   background-size: 2.59375rem 1.25rem; }
 
-/* 김연주 */
 /* 공통 시작 */
 .pd0 {
   padding: 0 !important; }
@@ -25883,7 +25866,6 @@ input[type="radio"].formradio-small.type2 + label {
 .device_android .form-wrap .inputbox.form-address .btn-box .btn-round2.btn-style3 {
   line-height: 1.75rem; }
 
-/* 김태균 */
 .headingbox-wrap {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -26111,8 +26093,6 @@ input[type="radio"].formradio-small.type2 + label {
   .search-barcode img {
     width: 100%; }
 
-/* 김재성 */
-/* 김정훈 */
 .section-box {
   position: relative;
   overflow: hidden;
@@ -26871,7 +26851,6 @@ body.apphome {
   .smart-app-new .horizontal-list li a.bt img {
     margin-top: 0.1875rem; }
 
-/* 권은별 */
 /* 공통(회원) */
 .header-noborder .h-belt {
   border-color: transparent; }
@@ -27291,7 +27270,6 @@ body.apphome {
     .bt-agree-tit .bt-dropdown:after {
       right: 0; }
 
-/* 박옥미 */
 .list-comp-history.type01 .list-con, .shop-info .shop-txt .list-comp-history.type02 .list-con, .shop-info .shop-txt .list-comp-history.type03 .list-con {
   padding: 0 0 0 3.5rem; }
   .list-comp-history.type01 .list-con li, .shop-info .shop-txt .list-comp-history.type02 .list-con li, .shop-info .shop-txt .list-comp-history.type03 .list-con li {
@@ -28919,7 +28897,6 @@ body.apphome {
 .productinfoscroll-box.type01 .product-info .type, .shop-info .shop-txt .productinfoscroll-box.type02 .product-info .type, .shop-info .shop-txt .productinfoscroll-box.type03 .product-info .type {
   font-weight: 700; }
 
-/* 박지우 */
 .plan-cont {
   padding: 0 0 0 2.8125rem; }
   .plan-cont .tx-msg {
@@ -29233,8 +29210,6 @@ body.apphome {
     display: inline-block;
     margin-left: -0.3125rem !important; }
 
-/* 김효진 */
-/* 나은별 */
 /* 인풋 옆에 버튼이 붙는 경우 (주소록, 우편번호 검색 등...) */
 .inputbox.inp-btn {
   display: table;
@@ -29452,5 +29427,3 @@ body.apphome {
       margin-top: 0.375rem;
       font-size: 0.8125rem;
       color: #959595; }
-
-/* 정민수 */
