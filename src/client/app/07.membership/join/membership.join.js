@@ -2,7 +2,7 @@
  * FileName: benefit.membership.join.js
  * Author: Kim InHwan (skt.P132150@partner.sk.com)
  * Date: 2018.10.29
- *
+ * Annotation: T멤버십 가입
  */
 
 Tw.MyTBenefitMembershipJoin = function (params) {
@@ -17,7 +17,11 @@ Tw.MyTBenefitMembershipJoin = function (params) {
 };
 
 Tw.MyTBenefitMembershipJoin.prototype = {
-
+  /**
+   * Progress bar 설정
+   * @param value true: on. false: off
+   * @param selector
+   */
   loadingView: function (value, selector) {
     if ( !selector ) {
       selector = '[data-id="container"]';
@@ -70,8 +74,11 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       this.addrCd = '04'; // 직장
     }
   },
-
-  // 이메일 포커스 아웃 시 밸리데이션 추가
+  /**
+   * 이메일 포커스 아웃 시 밸리데이션 추가
+   * @param event
+   * @private
+   */
   _checkEmailValidation: function (event) {
     var $target = $(event.currentTarget);
     var value = $target.val();
@@ -86,8 +93,10 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     }
     this.isEmailVaild = !isVaild;
   },
-
-  // 법인계정인 경우 본인/직장/기타 선택 란 노출
+  /**
+   * 법인계정인 경우 본인/직장/기타 선택 란 노출
+   * @private
+   */
   _onClickCorporateList: function () {
     this._popupService.open({
       hbs: 'actionsheet_select_a_type',
@@ -96,8 +105,11 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       data: Tw.POPUP_TPL.MEMBERSHIP_CORPORATE_LIST
     }, $.proxy(this._corporateListPopupCallback, this), null, 'select_nominee');
   },
-
-  // 액션시트 내용 클릭 시
+  /**
+   * 액션시트 내용 클릭 시
+   * @param $layer
+   * @private
+   */
   _corporateListPopupCallback: function ($layer) {
     var type = this.$copListBtn.attr('data-type');
     $layer.find('#' + type).addClass('checked');
@@ -113,7 +125,11 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     this.svcNominalRelCd = id;
     this._popupService.close();
   },
-
+  /**
+   * T멤버십 모두 동의 항목 선택시 콜백
+   * @param event
+   * @private
+   */
   _onClickTAgreeCheckbox: function (event) {
     var checked = $(event.currentTarget).find('input').prop('checked');
     this._tAllCheck = checked;
@@ -123,7 +139,11 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       $input.prop('checked', checked);
     }
   },
-
+  /**
+   * 캐쉬백 모두 동의 항목 선택시 콜백
+   * @param event
+   * @private
+   */
   _onClickCAgreeCheckbox: function (event) {
     var checked = $(event.currentTarget).find('input').prop('checked');
     this._cAllCheck = checked;
@@ -133,7 +153,11 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       $input.prop('checked', checked);
     }
   },
-
+  /**
+   * T멤버십 동의 항목 선택시 콜백
+   * @param event
+   * @private
+   */
   _onClickTAgreeItems: function (event) {
     var $target = $(event.currentTarget).find('input');
     if ( this._tAllCheck && !$target.prop('checked') ) {
@@ -144,7 +168,11 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       this.$tAgreeCheckBox.find('input').trigger('click');
     }
   },
-
+  /**
+   * 캐쉬백 동의 항목 선택시 콜백
+   * @param event
+   * @private
+   */
   _onClickCAgreeItems: function (event) {
     var $target = $(event.currentTarget).find('input');
     if ( this._cAllCheck && !$target.prop('checked') ) {
@@ -201,7 +229,11 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       this.$joinBtn.attr('disabled', 'disabled');
     }
   },
-
+  /**
+   * 캐쉬백 기능 추가하기
+   * @param event
+   * @private
+   */
   _onClickCashbagCheckbox: function (event) {
     var $target = $(event.currentTarget).find('input');
     var checked = $target.prop('checked');
@@ -228,7 +260,11 @@ Tw.MyTBenefitMembershipJoin.prototype = {
         }, this), Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES);
     }
   },
-
+  /**
+   * Event listener for the button click on [data-id=join-btn](가입하기)
+   * @returns {boolean}
+   * @private
+   */
   _onClickJoinBtn: function () {
     // 이메일주소가 잘못된 경우
     if ( this.data.isCorporateBody && this.isEmailVaild ) {
@@ -238,7 +274,10 @@ Tw.MyTBenefitMembershipJoin.prototype = {
     this._popupService.openModalTypeA(Tw.ALERT_MSG_MEMBERSHIP.JOIN.TITLE, Tw.ALERT_MSG_MEMBERSHIP.JOIN.CONTENT,
       Tw.ALERT_MSG_MEMBERSHIP.JOIN.OK_BTN, null, $.proxy(this._requestMembershipJoin, this), null);
   },
-
+  /**
+   * 가입하기 API 호출
+   * @private
+   */
   _requestMembershipJoin: function () {
     this.loadingView(true);
     var $defaultOpt = this.$container.find('input[type=checkbox]');
@@ -300,7 +339,11 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       .fail($.proxy(this._onFailJoinMembership, this));
     this._popupService.close();
   },
-
+  /**
+   * Success callback for _requestMembershipJoin
+   * @param resp
+   * @private
+   */
   _onSuccessJoinMembership: function (resp) {
     this.loadingView(false);
     // 가입하기 성공적으로 끝나면 완료팝업 위로 T Pay 가입 유도 팝업 노출
@@ -316,12 +359,20 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       Tw.Error(resp.code, resp.msg).pop();
     }
   },
-
+  /**
+   * Error callback for _requestMembershipJoin
+   * @param resp
+   * @private
+   */
   _onFailJoinMembership: function (resp) {
     this.loadingView(false);
     Tw.Error(resp.code, resp.msg).pop();
   },
-
+  /**
+   * 이용/약관 동의 더보기 클릭 콜백
+   * @param event
+   * @private
+   */
   _onItemsAgreeView: function (event) {
     this._agreeViewTarget = $(event.currentTarget).siblings('.custom-form').find('input');
     var type = $(event.currentTarget).attr('data-type');
@@ -336,10 +387,25 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       }).open(type);
     }
   },
-
+  /**
+   * 약관 페이지에서 약관 동의 시 콜백
+   * @private
+   */
   _agreeViewCallback: function () {
     if ( !this._agreeViewTarget.prop('checked') ) {
       this._agreeViewTarget.prop('checked', true);
+
+      if ( this._agreeViewTarget.parent().data('role') === 'CL' ) {
+        // cashback 모두 동의 체크
+        if ( !this._cAllCheck && this.$cAgreeItems.find('input').filter(':not(:checked)').length < 1 ) {
+          this.$cAgreeCheckBox.find('input').trigger('click');
+        }
+      } else {
+        // T멤버십 모두 동의 체크
+        if ( !this._tAllCheck && this.$tAgreeItems.find('input').filter(':not(:checked)').length < 1 ) {
+          this.$tAgreeCheckBox.find('input').trigger('click');
+        }
+      }
       this._agreeViewTarget = null;
     }
   }
