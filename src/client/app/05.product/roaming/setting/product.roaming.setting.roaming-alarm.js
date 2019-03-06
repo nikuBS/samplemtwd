@@ -40,6 +40,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
     this.$container.on('click', '#add_list', $.proxy(this._addPhoneNumOnList, this));
     this.$container.on('click','.cancel',$.proxy(this._clearInput,this));
     this.$container.on('click','.prev-step.tw-popup-closeBtn',$.proxy(this._historyService.goBack,this));
+    this.$container.on('click','.fe-bt-masking-alert',$.proxy(this._openAuthAlert,this));
   },
   _clearInput : function(){
     this.$inputElement.val('');
@@ -188,15 +189,15 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON);
   },
   _removeOnList : function ($args) {
-
-    var selectedIndex = $args.currentTarget.attributes['data-idx'].nodeValue;
+    var $target = $($args.currentTarget);
+    var selectedIndex = $target.data('idx');
     var requestValue = {
       'svcNumList' : [this._addedList[selectedIndex]]
     };
     this._apiService.request(Tw.API_CMD.BFF_10_0019, requestValue, {},[this._prodId]).
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
-        this._historyService.reload();
+        $target.parents('li').remove();
       }else{
         this._openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
       }
@@ -234,6 +235,19 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
       returnVal+=phoneString.charAt(i);
     }
     return returnVal;
+  },
+  _openAuthAlert : function () {
+    this._popupService.openConfirmButton(
+      Tw.PRODUCT_AUTH_ALERT_STR.MSG,
+      Tw.PRODUCT_AUTH_ALERT_STR.TITLE,
+      $.proxy(this._showAuth,this),
+      null,
+      Tw.BUTTON_LABEL.CANCEL,
+      Tw.BUTTON_LABEL.CONFIRM);
+  },
+  _showAuth : function () {
+    this._popupService.close();
+    $('.fe-bt-masking').trigger('click');
   }
 
 };
