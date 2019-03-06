@@ -416,7 +416,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
     }
 
     // 결합상품, 상품 선택 없이 상담 예약
-    if (this._typeCd === 'combine' && Tw.FormatHelper.isEmpty(this._prodId)) {
+    if (this._typeCd === 'combine' && this.$combineSelected.is(':checked') && Tw.FormatHelper.isEmpty(this._prodId)) {
       this._isNotSelectCombine = true;
       return this._popupService.openConfirmButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A31.MSG,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A31.TITLE,
@@ -692,7 +692,7 @@ Tw.ProductWireplanJoinReservation.prototype = {
 
     this._isGoLogin = false;
     this._setLocalStorage();
-    this._tidLanding.goLogin(location.href + (Tw.FormatHelper.isEmpty(location.search) ? '' : location.search));
+    this._tidLanding.goLogin(location.href);
   },
 
   _setLocalStorage: function() {
