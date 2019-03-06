@@ -37,12 +37,11 @@ Tw.MainHome = function (rootEl, smartCard, emrNotice, menuId, isLogin, actRepYn)
     }, this), 40);
   }
 
-  this._initEmrNotice(emrNotice, isLogin === 'true');
   this._cachedDefaultElement();
-
   this._bindEventStore();
   this._bindEventLogin();
 
+  this._initEmrNotice(emrNotice, isLogin === 'true');
   this._getQuickMenu(isLogin === 'true');
   this._startLazyRendering();
 
@@ -81,6 +80,8 @@ Tw.MainHome.prototype = {
   _cachedElement: function () {
     this.$elBarcode = this.$container.find('#fe-membership-barcode');
     this.$barcodeGr = this.$container.find('#fe-membership-gr');
+    this.$hiddenNotice = this.$container.find('#fe-bt-hidden-notice');
+    this.$hiddenNotice.on('click', $.proxy(this._onHiddenEventNotice, this));
 
     this._cachedSmartCard();
     this._cachedSmartCardTemplate();
@@ -94,12 +95,6 @@ Tw.MainHome.prototype = {
     this.$container.find('#fe-bt-data-link').click(_.debounce($.proxy(this._onClickDataLink, this), 100));
     this.$container.on('click', '#fe-bt-link-broadband', $.proxy(this._onClickGoBroadband, this));
     this.$container.on('click', '#fe-bt-link-billguide', $.proxy(this._onClickGoBillGuide, this));
-
-    this.$hiddenLine = this.$container.find('#fe-bt-hidden-line-register');
-    this.$hiddenPwdGuide = this.$container.find('#fe-bt-hidden-pwd-guide');
-    this.$hiddenNotice = this.$container.find('#fe-bt-hidden-notice');
-    this.$hiddenNewLine = this.$container.find('#fe-bt-hidden-new-line');
-    this.$hiddenNotice.on('click', $.proxy(this._onHiddenEventNotice, this));
   },
   _bindEventStore: function () {
     this.$container.on('click', '.fe-home-external', $.proxy(this._onClickExternal, this));
@@ -290,12 +285,14 @@ Tw.MainHome.prototype = {
     }
   },
   _openEmrNotice: function (notice) {
-    var startTime = Tw.DateHelper.convDateFormat(notice.bltnStaDtm).getTime();
-    var endTime = Tw.DateHelper.convDateFormat(notice.bltnEndDtm).getTime();
-    var today = new Date().getTime();
-    this._emrNotice = notice;
-    if ( today > startTime && today < endTime && this._checkShowEmrNotice(notice, today) ) {
-      this.$hiddenNotice.trigger('click', notice);
+    if ( !Tw.FormatHelper.isEmpty(notice) ) {
+      var startTime = Tw.DateHelper.convDateFormat(notice.bltnStaDtm).getTime();
+      var endTime = Tw.DateHelper.convDateFormat(notice.bltnEndDtm).getTime();
+      var today = new Date().getTime();
+      this._emrNotice = notice;
+      if ( today > startTime && today < endTime && this._checkShowEmrNotice(notice, today) ) {
+        this.$hiddenNotice.trigger('click', notice);
+      }
     }
   },
   _checkShowEmrNotice: function (notice, today) {
@@ -335,8 +332,8 @@ Tw.MainHome.prototype = {
   },
   _onOpenNotice: function ($popupContainer) {
     $popupContainer.on('click', '.fe-bt-oneday', $.proxy(this._confirmNoticeOneday, this));
-    $popupContainer.on('click', '.fe-bt-week', $.proxy(this._confirmNoticeWeek));
-    $popupContainer.on('click', '.fe-bt-never', $.proxy(this._confirmNoticeNever));
+    $popupContainer.on('click', '.fe-bt-week', $.proxy(this._confirmNoticeWeek, this));
+    $popupContainer.on('click', '.fe-bt-never', $.proxy(this._confirmNoticeNever, this));
   },
   _onCloseNotice: function () {
   },
