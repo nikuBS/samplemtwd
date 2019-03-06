@@ -281,6 +281,11 @@ Tw.MyTBenefitMembershipJoin.prototype = {
   _requestMembershipJoin: function () {
     this.loadingView(true);
     var $defaultOpt = this.$container.find('input[type=checkbox]');
+    if(this.$emailAddr){
+      this.emailAddr = this.$emailAddr.val();
+    } else {
+      this.emailAddr = '';
+    }
     var params = {
       mbr_typ_cd: '0', // T 멤버십 리더스카드 만 발급 중
       svc_nominal_rel_cd: this.svcNominalRelCd, // 본인: 010, 직원: 090, 기타: 990
@@ -291,7 +296,7 @@ Tw.MyTBenefitMembershipJoin.prototype = {
       ocb_accum_agree_yn: 'N', // OKcashbag 기능 추가
       mktg_agree_yn: 'N', // 마케팅활용
       addr_cd: this.addrCd,
-      cust_email_addr: this.$emailAddr.val() || '' // email 주소
+      cust_email_addr: this.emailAddr // email 주소
     };
 
     var cashbagCnt = 0;
