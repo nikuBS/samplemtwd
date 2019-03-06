@@ -739,7 +739,7 @@ Tw.ALERT_MSG_PRODUCT = {
   ALERT_3_A6: { TITLE: '선택한 지역을 해지하시겠습니까?', MSG: '해지하시면, 해당 지역은 서비스 이용이 불가합니다.', BUTTON: '해지하기' },
   ALERT_3_A7: { TITLE: '지정번호 5회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
   ALERT_3_A8: { TITLE: '지정번호 3회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
-  ALERT_3_A9: { TITLE: '결합회선 5회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
+  ALERT_3_A9: { TITLE: '결합회선 4회선 모두 등록되었습니다. 기존 신청된 회선 해지 후 추가 신청할 수 있습니다.', MSG: '' },
   ALERT_3_A10: { TITLE: '1회선만 결합된 경우, 회선 해지가 불가합니다.', MSG: '' },
   ALERT_3_A16: { TITLE: '확인을 누르시면 선택된 필터가 해제되고 태그가 선택됩니다.', MSG: '' },
   ALERT_3_A17: { TITLE: '확인을 누르시면 선택된 태그가 해제되고 필터가 선택됩니다.', MSG: '' },
@@ -855,7 +855,8 @@ Tw.ALERT_MSG_MEMBERSHIP = {
     BUTTON: '발급 변경내역'
   },
   ALERT_1_A68: { TITLE: '로그인 하시겠습니까?', MSG: 'T아이디(아이디/비밀번호) 로그인 후 이용 가능합니다.', BUTTON: '로그인' },
-  ALERT_1_A69: { TITLE: '알림', MSG: '현재 위치를 가져오지 못했습니다. 잠시 후 다시 시도해 주세요.' }
+  ALERT_1_A69: { TITLE: '알림', MSG: '현재 위치를 가져오지 못했습니다. 잠시 후 다시 시도해 주세요.' },
+  ALERT_1_A71: { TITLE: '알림', MSG: '멤버십에 가입한 당일에는 해지할 수 없습니다.' }
 };
 
 Tw.ALERT_CANCEL = {
@@ -1189,7 +1190,7 @@ Tw.MYT_JOIN_WIRE_SET_PAUSE = {
     COMPLETE_TEXT: '일시 정지'
   },
   CANCEL: {
-    TITLE: '일지정지를 해제 하시겠습니까?',
+    TITLE: '일시정지를 해제 하시겠습니까?',
     BTNAME: '해제하기',
     COMPLETE_TEXT: '일시 정지 해제'
   }
@@ -1891,10 +1892,14 @@ Tw.VALIDATION_LABEL = {
 Tw.KOR_INITIAL_CHAR_ARR = ['ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'];
 
 Tw.SEARCH_FILTER_STR = {
-  RECOMMEND: '추천순',
+  ACCURACY: '정확도순',
   POP: '인기순',
   NEW: '최신순',
   LOW: '낮은 가격순',
   HIGH: '높은 가격순'
 };
 
+Tw.PRODUCT_AUTH_ALERT_STR = {
+  TITLE: '신청된 회선을 해지하시겠습니까?',
+  MSG: '해지를 위해 가려진 정보를 확인해 주세요'
+};

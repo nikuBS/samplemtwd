@@ -56,9 +56,9 @@ Tw.Init.prototype = {
       // }
 
       // Store tab height issue, toast popup blocks height calculation and scroll does not work properly
-      // if ( Tw.Environment.environment !== 'local' && /\/home/.test(location.href) ) {
-        // Tw.Popup.toast(Tw.Environment.version);
-      // }
+      if ( Tw.Environment.environment !== 'local' && Tw.Environment.environment !== 'prd' && /\/home/.test(location.href) ) {
+        Tw.Popup.toast('QA_v5.0.0');
+      }
     }
   },
 

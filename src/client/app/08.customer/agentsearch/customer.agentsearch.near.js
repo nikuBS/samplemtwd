@@ -293,7 +293,14 @@ Tw.CustomerAgentsearchNear.prototype = {
       marker.events.register('touchstart', marker, this._onMarkerClicked);
     }
 
-    this.$resultCount.text(shops.length);
+    if (this._currentBranchType === 0) {
+      this.$resultCount.text(shops.length);
+    } else {
+      var branchType = this._currentBranchType;
+      this.$resultCount.text(_.filter(this._nearShops, function (item) {
+          return item.storeType === (branchType + '');
+        }).length);
+    }
     this.$resultList.empty();
     this._onMore();
   },

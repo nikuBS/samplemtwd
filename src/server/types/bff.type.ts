@@ -576,8 +576,15 @@ export enum SHORTCUT_LOGIN_TYPE {
 
 export const MEMBERSHIP_TYPE = {
   '0': 'Leaders Club',
+  '1': 'Leaders Club',
+  '2': 'Leaders Club',
   '3': 'T`PLE',
-  '4': 'COUPLE'
+  '4': 'COUPLE',
+  '5': 'SK Family',
+  '6': 'Leaders Club',
+  '7': 'Leaders Club',
+  '8': 'Leaders Club',
+  '9': 'Leaders Club'
 };
 
 export const REFILL_USAGE_DATA_CODES = ['AAA10', 'AAA30'];

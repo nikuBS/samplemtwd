@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.option.cancel-complete.controller.ts
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.12.17
+ * Annotation: 자동납부 해지 완료
  */
 
 import {NextFunction, Request, Response} from 'express';

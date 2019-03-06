@@ -1174,6 +1174,7 @@ body.bg-gray {
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     background: #fff;
+    border-bottom-color: transparent;
     z-index: 20; }
     .popup-page .header-wrap .page-header .header-ti {
       text-align: center;

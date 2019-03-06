@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.option.sms.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.12.17
+ * Annotation: 자동납부 해지 후 문자 알림서비스 신청
  */
 
 Tw.MyTFareBillOptionSms = function (rootEl) {

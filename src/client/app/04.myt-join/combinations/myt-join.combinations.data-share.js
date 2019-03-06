@@ -1,5 +1,5 @@
 /**
- *FileNam: myt.join.product.combinations.data-share.js
+ * FileName: myt.join.product.combinations.data-share.js
  * Author: Jiyoung Jo (jiyoungjo@sk.com)
  * Date: 2018.10.30
  */
@@ -24,26 +24,26 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
     this.$container.on('click', '#fe-submit', $.proxy(this._handleSubmitShare, this));
   },
 
-  _handleSelectSubject: function(e) {
+  _handleSelectSubject: function(e) { // 데이터 나눠쓰기 대상 변경 시
     this._subject = {
       number: e.currentTarget.getAttribute('data-svc'),
       name: e.currentTarget.getAttribute('data-name')
     };
   },
 
-  _handleSelectAmount: function(e) {
+  _handleSelectAmount: function(e) {  // 데이터 나눠쓰기 양 선택 시
     var $target = $(e.currentTarget);
     this._selected = $target.data('amount');
 
-    if (!this._enable) {
+    if (!this._enable) {  // submit 버튼 활성화(나눠쓰기 대상의 경우 default 값이 있어서 데이터 나눠쓰기 변경시에만 submit 버튼 컨트롤)
       this.$container.find('#fe-submit').removeAttr('disabled');
       this._enable = true;
     }
   },
 
-  _handleSubmitShare: function() {
-    if (!this._subject) {
-      var $subject = this.$container.find('.list-comp-input li.checked');
+  _handleSubmitShare: function() {  // 나눠쓰기 버튼 클릭시
+    if (!this._subject) { // 대상 설정 안되어 있는 경우
+      var $subject = this.$container.find('.list-comp-input li.checked'); // 대상 리스트에서 checked된 대상 찾기
       this._subject = {
         number: $subject.data('svc'),
         name: $subject.data('name')
@@ -65,7 +65,7 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
   _successSubmit: function(resp) {
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
-    } else {
+    } else {  // 성공시 완료 화면 띄움
       this._popupService.open(
         {
           hbs: 'MS_07_01_03_01_complete',
@@ -81,7 +81,7 @@ Tw.MyTJoinCombinationsDataShare.prototype = {
     }
   },
 
-  _closeCompletePopup: function() {
+  _closeCompletePopup: function() { // 데이터 나눠쓰기 완료화면 close
     history.back();
   }
 

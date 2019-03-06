@@ -12,12 +12,19 @@ import { API_CMD } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import { Observable } from 'rxjs/Observable';
 
+interface UserAgent {
+  source: string;
+}
+interface AddUserAgent extends Request {
+  useragent: UserAgent;
+}
+
 class CustomerEmail extends TwViewController {
   constructor() {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any): void {
+  render(req: AddUserAgent, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any): void {
     const page = req.params.page;
 
     const responseData = {
@@ -26,7 +33,8 @@ class CustomerEmail extends TwViewController {
       isApp: BrowserHelper.isApp(req),
       svcNum: FormatHelper.conTelFormatWithDash(svcInfo.svcNum),
       allSvc: allSvc,
-      convertTelFormat: this.convertTelFormat
+      convertTelFormat: this.convertTelFormat,
+      userAgent: req.useragent.source || ''
     };
 
     switch ( page ) {

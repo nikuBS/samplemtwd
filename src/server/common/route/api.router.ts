@@ -523,8 +523,8 @@ class ApiRouter {
     const svcMgmtNum = req.body.svcMgmtNum;
 
     loginService.setCurrentReq(req, res);
-    apiService.updateSvcInfo({})
-      .switchMap((resp) => loginService.setMaskingCert(svcMgmtNum))
+    loginService.setMaskingCert(svcMgmtNum)
+      .switchMap((resp) => apiService.updateSvcInfo({}))
       .subscribe((resp) => {
         res.json({
           code: API_CODE.CODE_00

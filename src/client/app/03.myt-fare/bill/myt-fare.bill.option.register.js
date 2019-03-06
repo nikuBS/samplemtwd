@@ -2,6 +2,7 @@
  * FileName: myt-fare.bill.option.register.js
  * Author: Jayoon Kong (jayoon.kong@sk.com)
  * Date: 2018.10.02
+ * Annotation: 자동납부 신청 및 변경
  */
 
 Tw.MyTFareBillOptionRegister = function (rootEl, bankList) {

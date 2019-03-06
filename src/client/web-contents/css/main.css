@@ -8,14 +8,16 @@
   visibility: visible; }
 
 .quick-menu-list {
-  text-align: left; }
+  padding: 0 0.3125rem;
+  text-align: left;
+  font-size: 0; }
   .quick-menu-list:after {
     display: block;
     clear: both;
     content: ""; }
   .quick-menu-list li {
     display: inline-block;
-    width: 24%;
+    width: 25%;
     vertical-align: top; }
     .quick-menu-list li .bt {
       display: block;
@@ -396,7 +398,9 @@
 @media all and (max-width: 360px) {
   .main-error-box .btn-area .btn-round1 {
     display: inline-block;
-    max-width: 8.75rem; } }
+    max-width: 8.75rem; }
+  .member-info-box .call-message .message {
+    padding-left: 0.625rem; } }
 
 .main-chart-box {
   position: relative;
@@ -1114,7 +1118,7 @@
         font-size: 0.875rem;
         word-break: keep-all;
         text-align: center;
-        color: #777; }
+        color: #000 !important; }
       .popup .popup-info .popup-contents .cont-tooltip-li {
         margin-top: 0.1875rem; }
         .popup .popup-info .popup-contents .cont-tooltip-li li {
@@ -1386,7 +1390,7 @@ body.apphome {
 .section-box {
   position: relative;
   overflow: hidden;
-  margin: 1.75rem 1rem 0 1rem;
+  margin: 1.5rem 1rem 0 1rem;
   padding: 1.75rem 1.5rem;
   background: #fff;
   border-radius: 0.9375rem;
@@ -3675,7 +3679,7 @@ body.apphome {
 .member-info-box .call-message {
   overflow: hidden;
   margin-top: 1.25rem;
-  margin-bottom: -1.25rem;
+  margin-bottom: -1.75rem;
   border-top: 1px solid #f2f2f2; }
   .member-info-box .call-message.call-message-top {
     margin-top: 1.75rem; }
@@ -3684,7 +3688,7 @@ body.apphome {
     width: 50%;
     height: 3.75rem;
     font-size: 0.9375rem;
-    font-weight: 300;
+    font-weight: 400;
     text-align: left;
     line-height: 3.75rem; }
     .member-info-box .call-message .call .icon-call-48 {
@@ -3695,7 +3699,7 @@ body.apphome {
     width: 50%;
     height: 3.75rem;
     font-size: 0.9375rem;
-    font-weight: 300;
+    font-weight: 400;
     text-align: left;
     line-height: 3.75rem; }
     .member-info-box .call-message .message .icon-sms-48 {

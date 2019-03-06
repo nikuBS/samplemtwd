@@ -4,7 +4,7 @@
  * Date: 2018.11.16
  */
 
-Tw.CustomerEmailUpload = function (rootEl) {
+Tw.CustomerEmailUpload = function (rootEl, data) {
   this.$container = rootEl;
   this._apiService = Tw.Api;
   this._popupService = Tw.Popup;
@@ -15,7 +15,7 @@ Tw.CustomerEmailUpload = function (rootEl) {
 
   this._cachedElement();
   this._bindEvent();
-  this._init();
+  this._init(data);
 };
 
 Tw.CustomerEmailUpload.prototype = {
@@ -23,7 +23,8 @@ Tw.CustomerEmailUpload.prototype = {
   serviceUploadFiles: [],
   qualityUploadFiles: [],
 
-  _init: function () {
+  _init: function (data) {
+    this.userAgent = data.userAgent;
   },
 
   _cachedElement: function () {
@@ -151,7 +152,7 @@ Tw.CustomerEmailUpload.prototype = {
   },
 
   _onClickServiceUpload: function () {
-    if ( !Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
+    if ( (!Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) || this._isLowerVersionAndroid() ) {
       // Not Supported File Upload
       this._popupService.openAlert(Tw.CUSTOMER_EMAIL.NOT_SUPPORT_FILE_UPLOAD);
       return false;
@@ -246,7 +247,7 @@ Tw.CustomerEmailUpload.prototype = {
   },
 
   _isLowerVersionAndroid: function () {
-    var androidVersion = Tw.BrowserHelper.getAndroidVersion();
+    var androidVersion = Tw.BrowserHelper.getAndroidVersion(this.userAgent);
 
     return androidVersion && androidVersion.indexOf('4.4') !== -1;
   }

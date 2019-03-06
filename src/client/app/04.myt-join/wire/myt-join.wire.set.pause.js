@@ -34,15 +34,6 @@ Tw.MytJoinWireSetPause.prototype = {
   _endDate: null, // 정지 종료일
   // _isDirty: false,
 
-  _openErrorAlert: function () {
-    this._popupService.openModalTypeATwoButton(
-      Tw.MYT_JOIN.BROADBAND_ERROR.TITLE,
-      Tw.MYT_JOIN.BROADBAND_ERROR.CONTENTS,
-      Tw.MYT_JOIN.BROADBAND_ERROR.LINK_TXT,
-      Tw.BUTTON_LABEL.CLOSE, undefined, $.proxy(Tw.CommonHelper.openUrlExternal, this, Tw.MYT_JOIN.BROADBAND_ERROR.LINK)
-    );
-  },
-
   _cachedElement: function () {
     this._$inputEndDate = this.$container.find('.fe-input-end-date');
     this._$pauseRangeInfo = this.$container.find('.fe-pause-range-info');
@@ -50,7 +41,6 @@ Tw.MytJoinWireSetPause.prototype = {
   },
 
   _bindEvent: function () {
-    $(window).on(Tw.INIT_COMPLETE, $.proxy(this._checkBroadbancJoined, this));
     this.$container.on('change', '.fe-input-start-date', $.proxy(this._onChangeInputStartDate, this));
     this.$container.on('change', '.fe-input-end-date', $.proxy(this._onChangeInputEndDate, this));
     this.$container.on('click', '.fe-btn-submit', $.proxy(this._onClickBtnSubmit, this));
@@ -58,14 +48,11 @@ Tw.MytJoinWireSetPause.prototype = {
   },
 
   _init: function () {
+    if ( this._options.isBroadbandJoined === 'Y' ) {
+      (new Tw.MyTJoinCommon()).openSkbdAlertOnInit(this._historyService);
+    }
     this._setStartDate();
     this._setEndDateRange();
-  },
-
-  _checkBroadbancJoined: function() {
-    if ( this._options.isBroadbandJoined === 'Y' ) {
-      this._openErrorAlert();
-    }
   },
 
   _setStartDate: function () {

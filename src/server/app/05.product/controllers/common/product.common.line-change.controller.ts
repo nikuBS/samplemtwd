@@ -37,6 +37,7 @@ class ProductCommonLineChange extends TwViewController {
       }
 
       allowedLineList.push({
+        addr: lineInfo.addr,
         svcMgmtNum: lineInfo.svcMgmtNum,
         svcNum: FormatHelper.conTelFormatWithDash(lineInfo.svcNum),
         svcAttrCd: lineInfo.svcAttrCd,
