@@ -131,7 +131,7 @@
     new Tw.CustomerEmailQualityOption($('.wrap'), { allSvc: JSON.parse('<%-JSON.stringify(allSvc)%>') });
     new Tw.CustomerEmailTemplate($('.wrap'), { allSvc: JSON.parse('<%-JSON.stringify(allSvc)%>') });
     new Tw.CustomerEmailCategory($('.wrap'));
-    new Tw.CustomerEmailUpload($('.wrap'));
+    new Tw.CustomerEmailUpload($('.wrap'), {userAgent: '<%-JSON.stringify(userAgent)%>'});
   });
 </script>
 </body>
