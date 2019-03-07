@@ -221,7 +221,9 @@
                     <ul class="service-bt-list">
                         <li><a href="/customer/document" class="btn-round2 btn-style3">가입 / 변경 / 해지 필요서류 안내</a></li>
                         <li><a href="/customer/emailconsult" class="btn-round2 btn-style3">이메일 상담하기</a></li>
+                        <% if(!isApp) { %>
                         <li><a href="/customer/helpline" class="btn-round2 btn-style3">전화상담 예약하기</a></li>
+                        <% } %>
                         <li><a href="/customer/svc-info/praise" class="btn-round2 btn-style3">칭찬합니다</a></li>
                         <li><a href="/customer/damage-info" class="btn-round2 btn-style3">이용자 피해예방센터</a></li>
                         <li><a href="/customer/svc-info/voice" class="btn-round2 btn-style3">목소리 인증서비스</a></li>
