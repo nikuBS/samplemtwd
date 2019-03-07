@@ -17721,7 +17721,7 @@ a.bt-link-tx.underline.small {
     width: 100%; }
   .search-point .hours-of-business .as-time-list dt {
     font-size: 0.875rem;
-    color: #666;
+    color: #000;
     display: table-cell;
     text-align: left; }
   .search-point .hours-of-business .as-time-list dd {
@@ -17732,9 +17732,10 @@ a.bt-link-tx.underline.small {
       margin-top: 0.625rem;
       display: block; }
   .search-point .hours-of-business .as-time-list .stitle {
-    margin: 1.25rem 0 0.9375rem; }
+    margin: 1.25rem 0 0.9375rem;
+    font-size: 0.875rem; }
   .search-point .hours-of-business .as-time-list .subtext-dl {
-    padding: 0.3125rem 0;
+    padding: 0.3125rem 0 0;
     border-bottom: none; }
     .search-point .hours-of-business .as-time-list .subtext-dl .title {
       color: #666;
@@ -17745,6 +17746,9 @@ a.bt-link-tx.underline.small {
     .search-point .hours-of-business .as-time-list .subtext-dl:last-child {
       padding-bottom: 1.25rem;
       border-bottom: 1px solid #e1e1e1; }
+    .search-point .hours-of-business .as-time-list .subtext-dl + .stitle {
+      padding-top: 1.25rem;
+      border-top: 1px solid #e1e1e1; }
 
 .search-point .hours-of-business .dot {
   font-size: 0.75rem;
