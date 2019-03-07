@@ -76,12 +76,12 @@ Tw.MainHome.prototype = {
   },
   _cachedDefaultElement: function () {
     // this.$tabStore = this.$container.find('.icon-home-tab-store');
+    this.$hiddenNotice = this.$container.find('#fe-bt-hidden-notice');
+    this.$hiddenNotice.on('click', $.proxy(this._onHiddenEventNotice, this));
   },
   _cachedElement: function () {
     this.$elBarcode = this.$container.find('#fe-membership-barcode');
     this.$barcodeGr = this.$container.find('#fe-membership-gr');
-    this.$hiddenNotice = this.$container.find('#fe-bt-hidden-notice');
-    this.$hiddenNotice.on('click', $.proxy(this._onHiddenEventNotice, this));
 
     this._cachedSmartCard();
     this._cachedSmartCardTemplate();
