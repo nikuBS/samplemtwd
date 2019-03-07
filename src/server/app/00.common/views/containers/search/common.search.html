@@ -261,15 +261,15 @@
         </div>
         <hr class="cont-sp type1 service" aria-hidden="true">
     </script>
-    <script type="text/x-handlebars-template" id="tv_base">
-        <div class="cont-box bgnone noborder nogaps-btm tv">
+    <script type="text/x-handlebars-template" id="tv_internet_base">
+        <div class="cont-box bgnone noborder nogaps-btm tv_internet">
             <div class="searchnumbox-wrap">
                 <h2 class="tit">인터넷 · 집전화 · IPTV</h2>
                 <div class="numberbox">
-                    <span class="num"><%= searchInfo.search[5].tv.count %></span>건
-                    <% if(searchInfo.search[5].tv.count>10){ %>
+                    <span class="num"><%= searchInfo.search[5].tv_internet.count %></span>건
+                    <% if(searchInfo.search[5].tv_internet.count>10){ %>
                     <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=tv&keyword='+keyword:inResultViewUrl+'?category=tv&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                            keyword===inKeyword?moreViewUrl+'?category=tv_internet&keyword='+keyword:inResultViewUrl+'?category=tv_internet&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
                         %>" class="morelink">
                         더보기
                     </a>
@@ -278,21 +278,21 @@
             </div>
         </div>
 
-        <div class="cont-box list bgnone noborder gaps-style06 tv">
-            <ul class="extraservice-list" id="tv_list">
+        <div class="cont-box list bgnone noborder gaps-style06 tv_internet">
+            <ul class="extraservice-list" id="tv_internet_list">
 
             </ul>
         </div>
     </script>
-    <script type="text/x-handlebars-template" id="roaming_base">
-        <div class="cont-box bgnone noborder nogaps-btm roaming">
+    <script type="text/x-handlebars-template" id="troaming_base">
+        <div class="cont-box bgnone noborder nogaps-btm troaming">
             <div class="searchnumbox-wrap">
                 <h2 class="tit">T로밍</h2>
                 <div class="numberbox">
-                    <span class="num"><%= searchInfo.search[6].roaming.count %></span>건
-                    <% if(searchInfo.search[6].roaming.count>10){ %>
+                    <span class="num"><%= searchInfo.search[6].troaming.count %></span>건
+                    <% if(searchInfo.search[6].troaming.count>10){ %>
                     <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=roaming&keyword='+keyword:inResultViewUrl+'?category=roaming&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                            keyword===inKeyword?moreViewUrl+'?category=troaming&keyword='+keyword:inResultViewUrl+'?category=troaming&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
                         %>" class="morelink">
                         더보기
                     </a>
@@ -301,25 +301,25 @@
             </div>
         </div>
 
-        <div class="cont-box list bgnone noborder gaps-style07 roaming">
-            <ul class="extraservice-list" id="roaming_list">
+        <div class="cont-box list bgnone noborder gaps-style07 troaming">
+            <ul class="extraservice-list" id="troaming_list">
 
             </ul>
         </div>
     </script>
 
     <!-- .cont-box -->
-    <script type="text/x-handlebars-template" id="app_base">
-        <hr class="cont-sp type1 app" aria-hidden="true">
-        <div class="cont-box list nogaps-btm app">
+    <script type="text/x-handlebars-template" id="tapp_base">
+        <hr class="cont-sp type1 tapp" aria-hidden="true">
+        <div class="cont-box list nogaps-btm tapp">
             <div class="searchnumbox-wrap">
                 <h2 class="tit">T앱</h2>
                 <div class="numberbox">
-                    <span class="num"><%= searchInfo.search[7].app.count %></span>건
+                    <span class="num"><%= searchInfo.search[7].tapp.count %></span>건
                 </div>
             </div>
             <div class="tapplist-wrap">
-                <ul class="list" id="app_list">
+                <ul class="list" id="tapp_list">
 
                 </ul>
                 <div class="tappbtn-wrap">
@@ -362,16 +362,16 @@
 
 
     <!-- .cont-box -->
-    <script  type="text/x-handlebars-template" id="membership_base" >
-        <hr class="cont-sp type1 membership" aria-hidden="true">
-        <div class="cont-box list pb0 membership">
+    <script  type="text/x-handlebars-template" id="tmembership_base" >
+        <hr class="cont-sp type1 tmembership" aria-hidden="true">
+        <div class="cont-box list pb0 tmembership">
             <div class="searchnumbox-wrap">
                 <h2 class="tit">T멤버십</h2>
                 <div class="numberbox">
-                    <span class="num"><%= searchInfo.search[9].membership.count %></span>건
-                    <% if(searchInfo.search[9].membership.count>10){ %>
+                    <span class="num"><%= searchInfo.search[9].tmembership.count %></span>건
+                    <% if(searchInfo.search[9].tmembership.count>10){ %>
                     <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=membership&keyword='+keyword:inResultViewUrl+'?category=membership&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                            keyword===inKeyword?moreViewUrl+'?category=tmembership&keyword='+keyword:inResultViewUrl+'?category=tmembership&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
                         %>" class="morelink">
                         더보기
                     </a>
@@ -379,7 +379,7 @@
                 </div>
             </div>
             <div class="t-membership-wrap">
-                <ul id="membership_list">
+                <ul id="tmembership_list">
 
                 </ul>
             </div>
@@ -409,6 +409,7 @@
                 </ul>
             </div>
         </div>
+        <div class="cont-box list nogaps-btm bgnone noborder event">
     </script>
     <!--// .cont-box -->
 
@@ -446,26 +447,27 @@
     <!--<hr class="cont-sp type1" aria-hidden="true">-->
 
     <!-- 지점 · 대리점, A/S센터 -->
-    <script id="as_base" type="text/x-handlebars-template">
-        <div class="cont-box list nogaps-btm as">
+    <script id="as_outlet_base" type="text/x-handlebars-template">
+        <hr class="cont-sp type1 as_outlet" aria-hidden="true">
+        <div class="cont-box list nogaps-btm as_outlet">
             <div class="searchnumbox-wrap">
                 <h2 class="tit">지점 · 대리점, A/S센터</h2>
                 <div class="numberbox">
-                    <span class="num"><%= searchInfo.search[12].as.count %></span>건
-                    <% if(searchInfo.search[12].as.count>10){ %>
+                    <span class="num"><%= searchInfo.search[12].as_outlet.count %></span>건
+                    <% if(searchInfo.search[12].as_outlet.count>10){ %>
                     <a href="<%=
-                            keyword===inKeyword?moreViewUrl+'?category=as&keyword='+keyword:inResultViewUrl+'?category=as&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
+                            keyword===inKeyword?moreViewUrl+'?category=as_outlet&keyword='+keyword:inResultViewUrl+'?category=as_outlet&keyword='+keyword+'&in_keyword='+inKeyword.replace(keyword,'').trim() %>&step=<%= Number(step)+1
                         %>" class="morelink">
                         더보기
                     </a>
                     <% } %>
                 </div>
             </div>
-            <ul class="service-guide-s" id="as_list">
+            <ul class="service-guide-s" id="as_outlet_list">
 
             </ul>
         </div>
-        <hr class="cont-sp type1 as" aria-hidden="true">
+        <hr class="cont-sp type1 as_outlet" aria-hidden="true">
     </script>
     <!-- //지점 · 대리점, A/S센터 -->
 
