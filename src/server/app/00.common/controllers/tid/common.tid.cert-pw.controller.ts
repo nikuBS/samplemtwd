@@ -17,7 +17,7 @@ class CommonTidCertPw extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     this.apiService.request(API_CMD.BFF_03_0007, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         const params = {
@@ -36,7 +36,12 @@ class CommonTidCertPw extends TwViewController {
         this.logger.info(this, '[redirect]', url);
         res.redirect(url);
       } else {
-        res.send('login fail');
+        this.error.render(res, {
+          code: resp.code,
+          msg: resp.msg,
+          pageInfo: pageInfo,
+          svcInfo: svcInfo
+        });
       }
     });
   }

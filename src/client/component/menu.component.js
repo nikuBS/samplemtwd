@@ -164,7 +164,7 @@ Tw.MenuComponent.prototype = {
   },
   _onSignUp: function (e) {
     if (Tw.BrowserHelper.isApp()) {
-      this._tidLanding.goSignup();
+      this._tidLanding.goSignup(location.pathname + location.search);
     } else {
       var url = e.currentTarget.value;
       this._goOrReplace(url);
