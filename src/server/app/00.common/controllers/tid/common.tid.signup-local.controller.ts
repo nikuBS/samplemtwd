@@ -17,6 +17,15 @@ class CommonTidSignUpLocal extends TwViewController {
   }
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+    let target = req.query.target || '/main/home';
+    const type = req.query.type || 'back';
+    if ( /\#/.test(target) ) {
+      target = target.replace(/\#/gi, 'urlHash');
+    }
+    if ( /\&/.test(target) ) {
+      target = target.replace(/\&/gi, 'urlQuery');
+    }
+
     this.apiService.request(API_CMD.BFF_03_0007, {}).subscribe((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         const params = {
@@ -26,7 +35,7 @@ class CommonTidSignUpLocal extends TwViewController {
           nonce: resp.result.nonce,
           service_type: TID_SVC_TYPE.SIGN_UP,
           redirect_uri: this.loginService.getProtocol() + this.loginService.getDns() +
-          '/common/member/login/route?target=/main/home=' + resp.result.state,
+            '/common/member/login/route?target=' + target + '_type_' + type,
           client_type: TID.CLIENT_TYPE,
           scope: TID.SCOPE,
           response_type: TID.RESP_TYPE
@@ -35,7 +44,7 @@ class CommonTidSignUpLocal extends TwViewController {
         this.logger.info(this, '[redirect]', url);
         res.redirect(url);
       } else {
-        res.send('login fail');
+        res.redirect('/common/member/login/fail?errorCode=' + resp.code + '&target=' + target);
       }
     });
   }
