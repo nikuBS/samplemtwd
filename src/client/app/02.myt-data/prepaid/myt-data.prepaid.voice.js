@@ -311,7 +311,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
   },
 
   _selectPopupCallback: function ($target, $layer) {
-    $layer.on('click', 'button', $.proxy(this._setSelectedValue, this, $target));
+    $layer.on('click', 'li', $.proxy(this._setSelectedValue, this, $target));
     // $layer.on('click', '.tw-popup-closeBtn', $.proxy(this._validSelectedValue, this, $target));
   },
 
@@ -327,7 +327,10 @@ Tw.MyTDataPrepaidVoice.prototype = {
   _setSelectedValue: function ($target, e) {
     this._popupService.close();
     $target.text($(e.currentTarget).text());
-    $target.attr('data-amount', $(e.currentTarget).attr('data-value'));
+    $target.attr('data-amount', $(e.currentTarget).find('button').attr('data-value'));
+
+    this._validSelectedValue($target);
+    this._checkIsAbled();
   },
 
   _onShowExampleCard: function () {
