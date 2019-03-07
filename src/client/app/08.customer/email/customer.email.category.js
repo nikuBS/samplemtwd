@@ -64,7 +64,7 @@ Tw.CustomerEmailCategory.prototype = {
     var fnSelectLine = function (item, index) {
       return {
         txt: item.title, 
-        'radio-attr': 'data-index="' + index + '" data-code="'+ item.category +'"' + (this.service.depth1 === item.category ? item['radio-attr'] + ' checked' : ''), 
+        'radio-attr': 'data-index="' + index + '" data-code="'+ item.category +'"' + (this.service.depth1 === item.category ? ' checked' : ''),
         'label-attr': ' '
       };
     };
@@ -93,7 +93,7 @@ Tw.CustomerEmailCategory.prototype = {
       var fnSelectLine = function (item, index) {
         return {
           txt: item.ctgNm, 
-          'radio-attr': 'data-index="' + index + '" data-code="'+ item.ofrCtgSeq +'"' + (this.service.depth2 === item.ofrCtgSeq ? item['radio-attr'] + ' checked' : ''), 
+          'radio-attr': 'data-index="' + index + '" data-code="'+ item.ofrCtgSeq +'"' + (this.service.depth2 === item.ofrCtgSeq ? ' checked' : ''),
           'label-attr': ' '
         };
       };
@@ -120,7 +120,7 @@ Tw.CustomerEmailCategory.prototype = {
     var fnSelectLine = function (item, index) {
       return {
         txt: item.title, 
-        'radio-attr': 'data-index="' + index + '" data-code="'+ item.category +'"' + (this.service.depth1 === item.category ? item['radio-attr'] + ' checked' : ''), 
+        'radio-attr': 'data-index="' + index + '" data-code="'+ item.category +'"' + (this.quality.depth1 === item.category ? ' checked' : ''), 
         'label-attr': ' '
       };
     };
