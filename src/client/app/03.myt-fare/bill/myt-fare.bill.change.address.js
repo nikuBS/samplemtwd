@@ -37,8 +37,11 @@ Tw.MyTFareBillChangeAddress.prototype = {
 
     if (this._phoneModifyYn === 'N') {
       if (Tw.InputHelper.isDeleteKey(event)) {
-        this._phoneModifyYn = 'Y';
         $target.val('');
+      }
+
+      if ($target.attr('data-origin-value') !== $target.val()) {
+        this._phoneModifyYn = 'Y';
       }
     }
 
