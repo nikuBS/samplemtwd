@@ -31,7 +31,7 @@
                                 <label class="tit" for="flab01">휴대폰번호</label>
                                 <span class="inputbox">
                                     <span class="input">
-                                        <input id="flab01" type="tel" value="<%= addrInfo.phoneNum %>" class="fe-phone required-input-field" maxlength="14" />
+                                        <input id="flab01" type="tel" value="<%= addrInfo.phoneNum %>" class="fe-phone required-input-field" maxlength="13" />
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                     <span class="error-txt fe-error-msg" style="display:none;">휴대폰번호 자릿수를 확인해 주세요. (10~11자리)</span>
@@ -57,7 +57,7 @@
                                 <span class="inputbox mt10">
                                     <span class="input">
                                         <input type="text" class="fe-detail-address required-input-field" value="<%= addrInfo.addr2 %>"
-                                               data-origin-value="<%= addrInfo.addr2 %>" placeholder="상세주소 입력" title="상세 주소" />
+                                               data-origin-value="<%= addrInfo.addr2 %>" placeholder="상세주소 입력" title="상세 주소" disabled />
                                         <button class="cancel"><span class="blind">삭제</span></button>
                                     </span>
                                 </span>
