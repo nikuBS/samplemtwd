@@ -93,7 +93,11 @@ Tw.MyTFareBillAccount.prototype = {
     this._bankList.init(event, $.proxy(this._checkIsAbled, this));
   },
   _checkIsAbled: function () {
-    this._validationService.checkIsAbled();
+    if (this.$accountNumber.attr('disabled') === 'disabled' && this.$refundNumber.attr('disabled') === 'disabled') {
+      this.$payBtn.removeAttr('disabled');
+    } else {
+      this._validationService.checkIsAbled();
+    }
   },
   _onClose: function () {
     this._backAlert.onClose();
