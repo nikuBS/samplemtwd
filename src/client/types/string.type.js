@@ -819,7 +819,7 @@ Tw.ALERT_MSG_MEMBERSHIP = {
     CANCEL_BTN: '취소'
   },
   JOIN_COMPLETE: {
-    TITLE: '멤버십 가입 완료',
+    TITLE: '멤버십 가입',
     CONTENT: '발급 카드 정보 : </br> T멤버십(Leaders Club) 모바일 카드',
     LINK_TITLE: '발급 변경 내역 보기 >'
   },
