@@ -13,12 +13,11 @@ Tw.CommonSearch = function (rootEl,searchInfo,svcInfo,cdn,step,from) {
   this._svcInfo = svcInfo;
   this._searchInfo = searchInfo;
   this._step = Tw.FormatHelper.isEmpty(step)?1:step;
-  this._accessKeyword = this._searchInfo.query;
-  this._init(from);
+  this._from = from;
 };
 
 Tw.CommonSearch.prototype = {
-  _init : function (from) {
+  _init : function () {
     this._recentKeywordDateFormat = 'YY.M.D.';
     this._todayStr = Tw.DateHelper.getDateCustomFormat(this._recentKeywordDateFormat);
     this.$contents = this.$container.find('.container');
@@ -65,8 +64,8 @@ Tw.CommonSearch.prototype = {
     this._recentKeywordTemplate = Handlebars.compile($('#recently_keyword_template').html());
     this._autoCompleteKeywrodTemplate = Handlebars.compile($('#auto_complete_template').html());
     this._removeDuplicatedSpace(this.$container.find('.cont-sp'),'cont-sp');
-    if(from==='menu'&&this._historyService.isReload()===false&&this._historyService.isBack()){
-      this._addRecentlyKeyword(this._accessKeyword);
+    if(this._from==='menu'&&this._historyService.isReload()===false&&this._historyService.isBack()){
+      this._addRecentlyKeyword(this._searchInfo.query);
     }
     new Tw.XtractorService(this.$container);
   },
@@ -193,7 +192,7 @@ Tw.CommonSearch.prototype = {
       return;
     }
     var inResult = this.$container.find('#resultsearch').is(':checked');
-    var requestUrl = inResult?'/common/search/in-result?keyword='+this._accessKeyword+'&in_keyword=':'/common/search?keyword=';
+    var requestUrl = inResult?'/common/search/in-result?keyword='+this._searchInfo.query+'&in_keyword=':'/common/search?keyword=';
     requestUrl+=keyword;
     requestUrl+='&step='+(Number(this._step)+1);
     this._addRecentlyKeyword(keyword);
