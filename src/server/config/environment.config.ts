@@ -11,6 +11,11 @@ const environment = {
       password: '993d2ac0c060da72f0f8298aa4c11ece',
       db: 0
     },
+    REDIS_SENTINEL: {
+      host: '61.250.19.37',
+      name: 'mymaster',
+      port: 31356
+    },
     REDIS_TOS: {
       host: '61.250.19.37',
       port: 32400,
