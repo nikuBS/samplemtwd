@@ -89,7 +89,9 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
         if(requestType === 'remove'){
-          $(targetEvt.currentTarget).parents('li').remove();
+          var $target = $(targetEvt.currentTarget);
+          this._addedList.splice($target.parents('li').index(),1);
+          $target.parents('li').remove();
         }else{
           this._historyService.reload();
         }
@@ -159,7 +161,7 @@ Tw.ProductRoamingSettingRoamingCombine.prototype = {
     this.$container.find('.comp-box').append(this._combineListTemplate({listData : listData}));
   },
   _removeOnList : function (targetEvt) {
-    var selectedIdx = $(targetEvt.currentTarget).data('idx');
+    var selectedIdx = $(targetEvt.currentTarget).parents('li').index();
     selectedIdx = parseInt(selectedIdx,10);
     var reuqestPhoneNum = this._addedList[selectedIdx].svcMgmtNum;
     if(this._addedList.length<=1){
