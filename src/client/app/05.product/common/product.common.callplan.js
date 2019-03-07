@@ -203,6 +203,10 @@ Tw.ProductCommonCallplan.prototype = {
     } else {
       if (this._settingBtnList[0].url.indexOf('BPCP:') !== -1) {
         return this._getBpcp(this._settingBtnList[0].url);
+      } else if (this._settingBtnList[0].url.indexOf('BEU:') !== -1) {
+        return Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, this._settingBtnList[0].url.replace('BEU:', '')));
+      } else if (this._settingBtnList[0].url.indexOf('NEU:') !== -1) {
+        return this._openExternalUrl(this._settingBtnList[0].url.replace('NEU:', ''));
       }
 
       this._historyService.goLoad(this._settingBtnList[0].url + '?prod_id=' + this._prodId);
@@ -272,6 +276,10 @@ Tw.ProductCommonCallplan.prototype = {
     var url = $(e.currentTarget).data('url');
     if (url.indexOf('BPCP:') !== -1) {
       return this._getBpcp(url);
+    } else if (url.indexOf('BEU:') !== -1) {
+      return Tw.CommonHelper.showDataCharge($.proxy(this._openExternalUrl, this, url.replace('BEU:', '')));
+    } else if (url.indexOf('NEU:') !== -1) {
+      return this._openExternalUrl(url.replace('NEU:', ''));
     }
 
     Tw.CommonHelper.startLoading('.container', 'grey', true);
