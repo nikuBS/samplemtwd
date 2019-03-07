@@ -12,6 +12,8 @@ import { PRODUCT_TYPE_NM } from '../../../types/string.type';
 import { SVC_CD } from '../../../types/bff.type';
 import FormatHelper from '../../../utils/format.helper';
 import DateHelper from '../../../utils/date.helper';
+import {Observable} from 'rxjs/Observable';
+import {REDIS_KEY} from '../../../types/redis.type';
 
 class BenefitTerminateTbCombination extends TwViewController {
   constructor() {
@@ -76,21 +78,26 @@ class BenefitTerminateTbCombination extends TwViewController {
       return this.error.render(res, renderCommonInfo);
     }
 
-    this.apiService.request(API_CMD.BFF_10_0114, {}, {}, [prodId])
-      .subscribe((termInfo) => {
-        if (termInfo.code !== API_CODE.CODE_00) {
-          return this.error.render(res, Object.assign(renderCommonInfo, {
-            code: termInfo.code,
-            msg: termInfo.msg,
-            isBackCheck: true
-          }));
-        }
+    Observable.combineLatest(
+      this.redisService.getData(REDIS_KEY.PRODUCT_INFO + prodId),
+      this.apiService.request(API_CMD.BFF_10_0114, {}, {}, [prodId])
+    ).subscribe(([prodInfo, termInfo]) => {
+      const apiError = this.error.apiError([prodInfo, termInfo]);
 
-        res.render('terminate/benefit.terminate.tb-combination.html', Object.assign(renderCommonInfo, {
-          prodId: prodId,
-          termInfo: this._convertTermInfo(termInfo.result)
+      if (!FormatHelper.isEmpty(apiError)) {
+        return this.error.render(res, Object.assign(renderCommonInfo, {
+          code: apiError.code,
+          msg: apiError.msg,
+          isBackCheck: true
         }));
-      });
+      }
+
+      res.render('terminate/benefit.terminate.tb-combination.html', Object.assign(renderCommonInfo, {
+        prodId: prodId,
+        prodNm: prodInfo.result.summary.prodNm,
+        termInfo: this._convertTermInfo(termInfo.result)
+      }));
+    });
   }
 }
 
