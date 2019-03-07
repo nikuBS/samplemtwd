@@ -32,6 +32,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
 
   _init: function () {
     this._getPpsInfo();
+    this._getEmailAddress();
   },
 
   _getPpsInfo: function () {
@@ -54,6 +55,24 @@ Tw.MyTDataPrepaidVoice.prototype = {
   _getFail: function (err) {
     Tw.CommonHelper.endLoading('.popup-page');
     Tw.Error(err.code, err.msg).replacePage();
+  },
+
+  _getEmailAddress: function () {
+    this._apiService.request(Tw.API_CMD.BFF_01_0061, {})
+      .done($.proxy(this._emailSuccess, this))
+      .fail($.proxy(this._emailFail, this));
+  },
+
+  _emailSuccess: function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      this.$emailAddress = res.result.email;
+    } else {
+      this._emailFail();
+    }
+  },
+
+  _emailFail: function () {
+    this.$emailAddress = '';
   },
 
   _bindEvent: function () {
@@ -101,6 +120,8 @@ Tw.MyTDataPrepaidVoice.prototype = {
   },
 
   _validatePrepaidSerial: function (e) {
+    Tw.InputHelper.inputNumberAndAlphabet(e.target);
+
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
     $error.addClass('blind');
 
@@ -250,7 +271,8 @@ Tw.MyTDataPrepaidVoice.prototype = {
           cardCompany: result.prchsCardName,
           previousAmount: Tw.FormatHelper.addComma(previousAmount.toString()),
           afterAmount: Tw.FormatHelper.addComma(afterAmount.toString()),
-          rechargeAmount: Tw.FormatHelper.addComma(rechargeAmount.toString())
+          rechargeAmount: Tw.FormatHelper.addComma(rechargeAmount.toString()),
+          emailAddress: this.$emailAddress
         }
       });
     } else if ( res.code === 'BIL0080' ) {
@@ -311,7 +333,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
   },
 
   _selectPopupCallback: function ($target, $layer) {
-    $layer.on('click', 'button', $.proxy(this._setSelectedValue, this, $target));
+    $layer.on('click', 'li', $.proxy(this._setSelectedValue, this, $target));
     // $layer.on('click', '.tw-popup-closeBtn', $.proxy(this._validSelectedValue, this, $target));
   },
 
@@ -327,7 +349,10 @@ Tw.MyTDataPrepaidVoice.prototype = {
   _setSelectedValue: function ($target, e) {
     this._popupService.close();
     $target.text($(e.currentTarget).text());
-    $target.attr('data-amount', $(e.currentTarget).attr('data-value'));
+    $target.attr('data-amount', $(e.currentTarget).find('button').attr('data-value'));
+
+    this._validSelectedValue($target);
+    this._checkIsAbled();
   },
 
   _onShowExampleCard: function () {
