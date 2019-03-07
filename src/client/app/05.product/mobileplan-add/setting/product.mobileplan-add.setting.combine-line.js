@@ -95,15 +95,15 @@ Tw.ProductMobileplanAddSettingCombineLine.prototype = {
 
     this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.TITLE, Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.MSG,
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON, Tw.BUTTON_LABEL.CLOSE, null,
-      $.proxy(this._delNumReq, this, $(e.currentTarget).parents('li').data('grp_id')));
+      $.proxy(this._delNumReq, this, $(e.currentTarget).parents('li').data('svc_mgmt_num')));
   },
 
-  _delNumReq: function(grpId) {
+  _delNumReq: function(svcMgmtNum) {
     this._popupService.close();
 
     Tw.CommonHelper.startLoading('.container', 'grey', true);
     this._apiService.request(Tw.API_CMD.BFF_10_0019, {
-      chldSvcMgmtNum: grpId
+      chldSvcMgmtNum: svcMgmtNum
     }, {}, [this._prodId]).done($.proxy(this._addDelNumRes, this))
       .fail(Tw.CommonHelper.endLoading('.container'));
   },
