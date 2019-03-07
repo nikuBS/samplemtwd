@@ -70,7 +70,7 @@ class ProductMobileplanJoin0planSm extends TwViewController {
         settingInfo: settingInfo.result,
         isOverPayReqYn: overPayReqInfo.code === API_CODE.CODE_00 ? 'Y' : 'N',
         mobilePlanCompareInfo: mobilePlanCompareInfo.code !== API_CODE.CODE_00 ? null : mobilePlanCompareInfo.result, // 요금제 비교하기
-        sktProdBenfCtt: FormatHelper.isEmpty(prodRedisInfo.result.summary.sktProdBenfCtt) ? null :
+        sktProdBenfCtt: FormatHelper.isEmpty(prodRedisInfo.result.summary.sktProdBenfCtt) ? '' :
           prodRedisInfo.result.summary.sktProdBenfCtt // SKT만의 혜택
       }));
     });

@@ -23,10 +23,12 @@ Tw.BenefitTerminateTbCombination.prototype = {
 
   _cachedElement: function() {
     this.$btnTerminate = this.$container.find('.fe-btn_terminate');
+    this.$btnCancelJoin = this.$container.find('.fe-btn_cancel_join');
   },
 
   _bindEvent: function() {
     this.$btnTerminate.on('click', $.proxy(this._openConfirmAlert, this));
+    this.$btnCancelJoin.on('click', $.proxy(this._joinCancel, this));
   },
 
   _openConfirmAlert: function() {
@@ -61,6 +63,28 @@ Tw.BenefitTerminateTbCombination.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_05_0144, { svcCd: this._svcCd }, {}, [this._prodId])
       .done($.proxy(this._resTerminate, this))
       .fail(Tw.CommonHelper.endLoading('.container'));
+  },
+
+  _joinCancel: function() {
+    this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A74.TITLE,
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A74.MSG, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES,
+      $.proxy(this._bindJoinCancelPopupEvent, this), null, $.proxy(this._bindJoinCancelPopupCloseEvent, this));
+  },
+
+  _bindJoinCancelPopupEvent: function($popupContainer) {
+    $popupContainer.find('.tw-popup-closeBtn').on('click', $.proxy(this._setCancelFlag, this));
+  },
+
+  _setCancelFlag: function() {
+    this._cancelFlag = true;
+  },
+
+  _bindJoinCancelPopupCloseEvent: function() {
+    if (!this._cancelFlag) {
+      return;
+    }
+
+    this._historyService.goBack();
   },
 
   _resTerminate: function(resp) {
