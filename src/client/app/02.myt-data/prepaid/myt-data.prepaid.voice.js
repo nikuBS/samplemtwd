@@ -32,6 +32,7 @@ Tw.MyTDataPrepaidVoice.prototype = {
 
   _init: function () {
     this._getPpsInfo();
+    this._getEmailAddress();
   },
 
   _getPpsInfo: function () {
@@ -54,6 +55,24 @@ Tw.MyTDataPrepaidVoice.prototype = {
   _getFail: function (err) {
     Tw.CommonHelper.endLoading('.popup-page');
     Tw.Error(err.code, err.msg).replacePage();
+  },
+
+  _getEmailAddress: function () {
+    this._apiService.request(Tw.API_CMD.BFF_01_0061, {})
+      .done($.proxy(this._emailSuccess, this))
+      .fail($.proxy(this._emailFail, this));
+  },
+
+  _emailSuccess: function (res) {
+    if (res.code === Tw.API_CODE.CODE_00) {
+      this.$emailAddress = res.result.email;
+    } else {
+      this._emailFail();
+    }
+  },
+
+  _emailFail: function () {
+    this.$emailAddress = '';
   },
 
   _bindEvent: function () {
@@ -250,7 +269,8 @@ Tw.MyTDataPrepaidVoice.prototype = {
           cardCompany: result.prchsCardName,
           previousAmount: Tw.FormatHelper.addComma(previousAmount.toString()),
           afterAmount: Tw.FormatHelper.addComma(afterAmount.toString()),
-          rechargeAmount: Tw.FormatHelper.addComma(rechargeAmount.toString())
+          rechargeAmount: Tw.FormatHelper.addComma(rechargeAmount.toString()),
+          emailAddress: this.$emailAddress
         }
       });
     } else if ( res.code === 'BIL0080' ) {
