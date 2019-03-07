@@ -8,7 +8,7 @@
     <li>
         <a class="brand-inner" href="/membership/benefit/brand-benefit?cateCd={{coCd}}&brandCd={{brandCd}}">
             <span class="inner" id="aria-label-brand0{{@index}}">
-                <span class="logo"><img src="{{appIcoImgUrl}}" alt="CU(구)훼미리마트"></span>
+                <span class="logo"><img src="{{appIcoImgUrl}}" alt=""></span>
                 <span class="intro">
                     <strong class="brand-name">{{coPtnrNm}}</strong>
                     {{#if showIcoGrd1}}
@@ -36,4 +36,11 @@
                                       data-joincd="{{ joinCd }}" aria-labelledby="aria-label-brand0{{@index}}">지도보기</button></div>
     </li>
     {{/each}}
+</script>
+
+
+<script id="tmplList-no-data" type="text/x-handlebars-template">
+    <div class="cont-box">
+        <p class="no-brand">내 주변에 제휴 브랜드가 없습니다.</p>
+    </div>
 </script>
