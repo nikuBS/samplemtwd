@@ -446,6 +446,7 @@ Tw.MyTFareBillSetChange.prototype = {
       var params = resp.params;
       var _inputName = $(e.currentTarget).data('el');
       $(Tw.StringHelper.stringf('input[name="{0}"]', _inputName)).val(Tw.StringHelper.phoneStringToDash(params.phoneNumber));
+      $(Tw.StringHelper.stringf('input[name="{0}"]', _inputName)).trigger('change');
     }
     this._onDisableSubmitButton();
   },
