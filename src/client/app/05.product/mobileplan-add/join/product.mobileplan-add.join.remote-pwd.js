@@ -68,8 +68,8 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
     }
 
     this.$btnSetupOk.attr('disabled', 'disabled');
-    this.$error0.hide();
-    this.$error1.hide();
+    this._toggleError(this.$error0, false);
+    this._toggleError(this.$error1, false);
 
     if (!this._validation.checkIsLength($inputPasswordVal, 4)) {
       return this._setErrorText(this.$error0, Tw.ALERT_MSG_PASSWORD.A16);
@@ -83,7 +83,7 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
       return this._setErrorText(this.$error0, Tw.ALERT_MSG_PASSWORD.A18);
     }
 
-    this.$error0.hide();
+    this._toggleError(this.$error0, false);
 
     if (!this._validation.checkIsLength($confirmPasswordVal, 4)) {
       return this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A16);
@@ -101,12 +101,21 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
       return this._setErrorText(this.$error1, Tw.ALERT_MSG_PASSWORD.A17);
     }
 
-    this.$error1.hide();
+    this._toggleError(this.$error1, false);
     this.$btnSetupOk.removeAttr('disabled');
   },
 
+  _toggleError: function($elem, isError) {
+    if (isError) {
+      $elem.show().attr('aria-hidden', 'false');
+    } else {
+      $elem.hide().attr('aria-hidden', 'true');
+    }
+  },
+
   _setErrorText: function ($elem, text) {
-    $elem.text(text).show();
+    $elem.text(text);
+    this._toggleError($elem, true);
   },
 
   _convConfirmOptions: function() {

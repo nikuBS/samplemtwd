@@ -118,7 +118,11 @@ Tw.MembershipBenefitBrand.prototype = {
       });
       var subTabValue = selectedSubTab ? selectedSubTab.value : this._gradeList[0].value;
       this.$grade.find('button').text(subTabValue);
-      this.$grade.show();
+      if ( this.$inputCoPtnrNm.val() ) {
+        this.$grade.hide();
+      } else {
+        this.$grade.show();
+      }
     } else {
       this.$grade.hide();
     }
@@ -276,6 +280,7 @@ Tw.MembershipBenefitBrand.prototype = {
     this.$contentsEmpty.show();
     this.$brandList.hide();
     this.$btnMore.hide();
+    this.$grade.hide();
   },
 
   _onOpenGradeActionSheet: function ($container) {

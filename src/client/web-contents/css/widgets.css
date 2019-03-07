@@ -876,7 +876,8 @@ li.checkbox.type01 {
 
 .radio-slide {
   overflow: hidden;
-  overflow-x: auto; }
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; }
   .radio-slide .select-list {
     overflow: hidden; }
     .radio-slide .select-list .radiobox {

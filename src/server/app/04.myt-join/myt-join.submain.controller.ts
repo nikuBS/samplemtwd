@@ -15,6 +15,7 @@ import { NEW_NUMBER_MSG } from '../../types/string.type';
 import { MYT_JOIN_SUBMAIN_TITLE } from '../../types/title.type';
 import { SVC_ATTR_NAME } from '../../types/bff.type';
 import StringHelper from '../../utils/string.helper';
+import BrowserHelper from '../../utils/browser.helper';
 
 class MyTJoinSubmainController extends TwViewController {
   private _svcType: number = -1;
@@ -57,7 +58,8 @@ class MyTJoinSubmainController extends TwViewController {
       // 다른 회선 항목
       otherLines: this.convertOtherLines(Object.assign({}, svcInfo), Object.assign({}, allSvc)),
       // 현재 회선의 아이콘 클래스 이름
-      currLineIconClass : this.getLineIconClassName(svcInfo.svcAttrCd)
+      currLineIconClass: this.getLineIconClassName(svcInfo.svcAttrCd),
+      isApp: BrowserHelper.isApp(req) // App 여부
     };
     // 상태값 참조 : http://devops.sktelecom.com/myshare/pages/viewpage.action?pageId=53477532
     // 10: 신청/60: 초기화 -> 비밀번호 설정 유도

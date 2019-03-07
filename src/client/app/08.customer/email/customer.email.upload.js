@@ -163,7 +163,7 @@ Tw.CustomerEmailUpload.prototype = {
   },
 
   _onClickQualityUpload: function () {
-    if ( !Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid() ) {
+    if ( (!Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) || this._isLowerVersionAndroid() ) {
       // Not Supported File Upload
       this._popupService.openAlert(Tw.CUSTOMER_EMAIL.NOT_SUPPORT_FILE_UPLOAD);
       return false;

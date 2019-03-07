@@ -63,7 +63,7 @@ Tw.MyTFareBillChangeAddress.prototype = {
   _setAddress: function (address) {
     this.$container.find('.fe-zip').val(address.zip);
     this.$container.find('.fe-main-address').val(address.main);
-    this.$container.find('.fe-detail-address').val(address.detail);
+    this.$container.find('.fe-detail-address').removeAttr('disabled').val(address.detail);
 
     this._addrModifyYn = 'Y';
     this._setChangeBtnAble();

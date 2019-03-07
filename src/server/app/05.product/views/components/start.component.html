@@ -1,6 +1,11 @@
+<%
+let pageTitle = locals.pageInfo ? locals.pageInfo.seoMetaTagTitNm : 'SKT';
+if ( locals.prodTitle ) {
+    pageTitle = locals.prodTitle + ' < ' + pageTitle;
+}
+%>
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
@@ -11,12 +16,12 @@
     <link rel="apple-touch-icon" href="<%= CDN %>/img/common/favicon.png" />
     <meta name="description" content="페이지설명" />
     <meta name="keywords" content="<%= locals.pageInfo ? locals.pageInfo.seoMetaTagKwdCtt : '' %>" />
-    <meta property="og:title" content="<%= locals.pageInfo ? locals.pageInfo.seoMetaTagTitNm : 'SKT' %>" />
+    <meta property="og:title" content="<%= pageTitle %>" />
     <meta property="og:site_name" content="SKT" />
     <meta property="og:url" content="<%= pageInfo.fullUrl %>" />
     <meta property="og:image" content="<%= CDN %>/img/dummy/kakao_share.jpg" />
     <meta property="og:description" content="SKT framework" />
-    <title><%= locals.pageInfo ? locals.pageInfo.seoMetaTagTitNm : 'SKT' %></title>
+    <title><%= pageTitle %></title>
     <% include ../components/stylesheet.component.html %>
     <script src="https://xtr.tos.sktelecom.com/js/xtractor_script.js"></script>
 </head>

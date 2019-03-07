@@ -101,7 +101,10 @@ class MytDataSubmainController extends TwViewController {
 
       if ( child && child.length > 0 ) {
         // 자녀 회선 추가 수정 [DV001-15520]
-        data.otherLines = data.otherLines.concat(this.convertChildLines(child));
+        const convertedChildLines = this.convertChildLines(child);
+        if (convertedChildLines && convertedChildLines.length > 0) {
+          data.otherLines = convertedChildLines.concat(data.otherLines);
+        }
         // data.otherLines = Object.assign(this.convertChildLines(child), data.otherLines);
       }
       // 9차: PPS, T-Login, T-PocketFi 인 경우 다른회선 잔여량이 노출되지 않도록 변경

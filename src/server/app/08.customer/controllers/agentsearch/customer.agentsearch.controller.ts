@@ -87,7 +87,8 @@ class CustomerAgentsearch extends TwViewController {
 
     const params = {
       searchText: encodeURIComponent(keyword),
-      storeType
+      storeType,
+      currentPage: page
     };
 
     if (area && line) {

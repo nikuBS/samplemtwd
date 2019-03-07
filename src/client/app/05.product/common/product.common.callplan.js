@@ -399,7 +399,10 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _focusContentsDetail: function(contentsIndex, $popupContainer) {
-    $popupContainer.scrollTop($popupContainer.find('[data-anchor="contents_' + contentsIndex + '"]').offset().top - 60);
+    var $target = $popupContainer.find('[data-anchor="contents_' + contentsIndex + '"]');
+    $target.focus();
+
+    $popupContainer.scrollTop($target.offset().top - 60);
   },
 
   _openCombineNeedWireError: function() {

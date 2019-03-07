@@ -46,7 +46,7 @@ Tw.ProductAppsDetail.prototype = {
             {
               appKey: app.prodNm,
               scheme: app.lnkgAppScmCtt,
-              'package': app.lnkgAppPkgNm
+              package: app.lnkgAppPkgNm
             }
           ]
         },
@@ -130,7 +130,7 @@ Tw.ProductAppsDetail.prototype = {
         window.location.replace(store);
       },
       openConfirm = $.proxy(function() {
-        if (document.webkitHidden) {
+        if (document.hidden || document.webkitHidden) {
           return;
         }
 
@@ -149,7 +149,7 @@ Tw.ProductAppsDetail.prototype = {
       }, this);
 
     if (this._app.lnkgAppScmCtt) {
-      setTimeout(openConfirm, 1000);
+      setTimeout(openConfirm, isIos ? 1000 : 500);
       window.location.href = this._app.lnkgAppScmCtt;
     } else if (store.length > 0) {
       openConfirm();
@@ -158,7 +158,7 @@ Tw.ProductAppsDetail.prototype = {
 
   _handleOpenApp: function() {
     var app = this._app;
-    this._nativeService.send(Tw.NTV_CMD.OPEN_APP, { scheme: app.lnkgAppScmCtt, 'package': app.lnkgAppPkgNm });
+    this._nativeService.send(Tw.NTV_CMD.OPEN_APP, { scheme: app.lnkgAppScmCtt, package: app.lnkgAppPkgNm });
   },
 
   _handleOpenMarket: function(e) {

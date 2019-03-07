@@ -17721,7 +17721,7 @@ a.bt-link-tx.underline.small {
     width: 100%; }
   .search-point .hours-of-business .as-time-list dt {
     font-size: 0.875rem;
-    color: #666;
+    color: #000;
     display: table-cell;
     text-align: left; }
   .search-point .hours-of-business .as-time-list dd {
@@ -17732,9 +17732,10 @@ a.bt-link-tx.underline.small {
       margin-top: 0.625rem;
       display: block; }
   .search-point .hours-of-business .as-time-list .stitle {
-    margin: 1.25rem 0 0.9375rem; }
+    margin: 1.25rem 0 0.9375rem;
+    font-size: 0.875rem; }
   .search-point .hours-of-business .as-time-list .subtext-dl {
-    padding: 0.3125rem 0;
+    padding: 0.3125rem 0 0;
     border-bottom: none; }
     .search-point .hours-of-business .as-time-list .subtext-dl .title {
       color: #666;
@@ -17745,6 +17746,9 @@ a.bt-link-tx.underline.small {
     .search-point .hours-of-business .as-time-list .subtext-dl:last-child {
       padding-bottom: 1.25rem;
       border-bottom: 1px solid #e1e1e1; }
+    .search-point .hours-of-business .as-time-list .subtext-dl + .stitle {
+      padding-top: 1.25rem;
+      border-top: 1px solid #e1e1e1; }
 
 .search-point .hours-of-business .dot {
   font-size: 0.75rem;
@@ -19361,6 +19365,11 @@ a.bt-link-tx.underline.small {
     margin-top: 0.625rem;
     color: #666;
     font-size: 0.8125rem; }
+  .card-wrap .card-desc1 {
+    margin: 0.9375rem 0 1.25rem 0;
+    color: #000000; }
+    .card-wrap .card-desc1 span {
+      color: #f76252; }
   .card-wrap .btn-more {
     position: absolute;
     left: 0;
@@ -23206,7 +23215,8 @@ a.bt-link-tx.underline.small {
       right: 0.8125rem;
       top: 1rem;
       font-size: 1.0625rem;
-      line-height: 1.2; }
+      line-height: 1.2;
+      white-space: nowrap; }
     .calling-plan .wrap-link .right {
       top: 1.5rem; }
 
@@ -24156,6 +24166,8 @@ input[type="radio"].formradio-small.type2 + label {
       color: #666666;
       font-size: 0.875rem; }
       .pg-chk-list02 li .btn-tip i {
+        position: relative;
+        top: -0.0625rem;
         margin: -0.0625rem 0 0 0.25rem;
         vertical-align: middle; }
 
@@ -25283,7 +25295,7 @@ input[type="radio"].formradio-small.type2 + label {
   font-size: 0.875rem;
   color: #fff;
   line-height: 1.1875rem;
-  background: url(/img/benefit/bg-app-down.png) no-repeat 93% bottom #ef4b49;
+  background: url(/img/benefit/bg-app-down.png) no-repeat 93% bottom #f76252;
   background-size: 4.6875rem;
   text-align: left; }
 

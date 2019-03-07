@@ -74,7 +74,7 @@ Tw.ProductMobileplanAddJoinSignatureLine.prototype = {
     this._data.addList.push(number);
     this.$lineList.append(this._combinationTemplate({
       number: number,
-      numMask: Tw.FormatHelper.getFormattedPhoneNumber(number)
+      numMask: number
     }));
 
     this._clearNum();

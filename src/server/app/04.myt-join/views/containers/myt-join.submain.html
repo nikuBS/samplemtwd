@@ -127,11 +127,14 @@
                             <i class="icon-member-40"><span class="blind">member</span></i>회원정보관리
                         </a>
                     </li>
+                    <!--DV001-16171-->
+                    <%if(data.isApp){%>
                     <li>
                         <button type="button" data-id="certify-popup" title="공인인증 등록 / 변경" aria-haspopup="true">
                             <i class="icon-certify-40"><span class="blind">certify</span></i>공인인증 등록 / 변경
                         </button>
                     </li>
+                    <%}%>
                     <% if (data.type === 2) { %>
                     <li>
                         <a href="/benefit/submain?filters=F01422">

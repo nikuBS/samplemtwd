@@ -77,7 +77,7 @@ Tw.CommonSearchMore.prototype = {
         // if(category==='prevent'&&key==='DOCID'){
         //   data[i][key] = Number(data[i][key].replace(/[A-Za-z]/g,''));
         // }
-        if(category==='direct'&&key==='ALIAS'){
+        if(category==='direct'&&key==='TYPE'){
           if(data[i][key]==='shopacc'){
             data[i].linkUrl = Tw.OUTLINK.DIRECT_ACCESSORY+'?categoryId='+data[i].CATEGORY_ID+'&accessoryId='+data[i].ACCESSORY_ID;
           }else{

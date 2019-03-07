@@ -21,13 +21,30 @@ Tw.MembershipBenefitBrandList = function (rootEl, options) {
 
   this.DEFAULT_SIGUNGU_TXT = $('#fe-btn-gu').text();
 
+  this._initParamHasArea = false;    // 페이지 진입시 파라메터에 지역이 있는 경우
+
+  // 초기 파라메터로 area가 들어온 경우 지역을 먼저 검색하고 지역을 기반으로 가맹점 검색함
+  if(options.area && options.area.split(' ').length >= 2){
+    this._initParamHasArea = true;
+    var tmpArr = options.area.split(' ');
+    this._options.area1 = tmpArr[0];
+    this._options.area2_1 = tmpArr[1];
+    if(tmpArr.length >= 3){
+      this._options.area2_2 = tmpArr[1] + ' ' + tmpArr[2];
+    }
+  }
+
+
   this._registHbsHelper();
   this._cacheElements();
   this._bindEvent();
 
   this._requestArea1();
-  // 초기데이터는 전체로..
-  this._onSearchRequested();
+
+  // 초기데이터에 지역이 들어오지 않은 경우만 전체 조회
+  if(!this._initParamHasArea){
+    this._onSearchRequested();
+  }
 };
 
 Tw.MembershipBenefitBrandList.prototype = {
@@ -57,6 +74,25 @@ Tw.MembershipBenefitBrandList.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_11_0021, {})
       .done($.proxy(function(resp){
         this._area1List = this._getActionSheet01List('rbt_area1', resp.result);
+
+        // 초기 param에 지역이 들어온 경우
+        if(this._initParamHasArea) {
+
+          for ( var i = 0; i < resp.result.length; i++ ) {
+            var area1 = resp.result[i].area;
+            if(area1 === this._options.area1){
+              this._selectedArea1 = area1;
+              $('#fe-btn-city').text(this._selectedArea1);
+              break;
+            }
+          }
+          if(this._selectedArea1){    // 지역1이 유효한 경우만 지역2검색->가맹점검색
+            this._requestArea2();
+          } else {
+            this._onSearchRequested();
+          }
+        }
+
       }, this))
       .fail(function (err) {
         Tw.Error(err.status, err.statusText).pop();
@@ -71,6 +107,25 @@ Tw.MembershipBenefitBrandList.prototype = {
     this._apiService.request(Tw.API_CMD.BFF_11_0022, {area1: encodeURI(this._selectedArea1) })
       .done($.proxy(function(resp){
         this._area2List = this._getActionSheet01List('rbt_area2', resp.result);
+
+
+        // 초기 param에 지역이 들어온 경우
+        if(this._initParamHasArea){
+
+          for(var i = 0; i < resp.result.length; i++){
+            var area2 = resp.result[i].area;
+            if(area2 === this._options.area2_1 || area2 === this._options.area2_2 ){
+              this._selectedArea2 = area2;
+              $('#fe-btn-gu').text(this._selectedArea2);
+              $('#fe-btn-gu').attr('disabled', false);
+              this.$btnSearch.attr('disabled', false);
+              break;
+            }
+          }
+
+          this._onSearchRequested();
+        }
+
       }, this))
       .fail(function (err) {
         Tw.Error(err.status, err.statusText).pop();
@@ -90,7 +145,7 @@ Tw.MembershipBenefitBrandList.prototype = {
       arr.push({
         txt : list[i].area,
         'label-attr': 'id="ra'+i+'"',
-        'radio-attr': 'id="ra'+i+'" name="'+radioName+'" value=' + list[i].area
+        'radio-attr': 'id="ra'+i+'" name="'+radioName+'" value="' + list[i].area + '"'
       });
     }
     return arr;
@@ -186,6 +241,7 @@ Tw.MembershipBenefitBrandList.prototype = {
    * @private
    */
   _onSearchRequested: function (event) {
+    this._initParamHasArea = false;     // 한번만 타야하므로 무조건 false
 
     if(event){
       var $btn = $(event.currentTarget);
