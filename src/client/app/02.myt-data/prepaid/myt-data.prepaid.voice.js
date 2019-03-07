@@ -101,6 +101,8 @@ Tw.MyTDataPrepaidVoice.prototype = {
   },
 
   _validatePrepaidSerial: function (e) {
+    Tw.InputHelper.inputNumberAndAlphabet(e.target);
+
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
     $error.addClass('blind');
 
