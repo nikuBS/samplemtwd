@@ -101,11 +101,16 @@
                                                             <label class="tit">요금정보 선택</label>
                                                             <span class="inputbox">
 																<span class="input">
-																	<button id="<%= autoInfo.autoFareCode %>" data-origin-id="<%= autoInfo.autoFareCode %>"
+                                                                    <% if (autoInfo.isAuto) { %>
+																	<input id="formInput02" type="text" value="<%= autoInfo.autoFareText %>"
+                                                                           title="요금 정보" readonly="" />
+                                                                    <% } else { %>
+                                                                    <button id="<%= autoInfo.autoFareCode %>" data-origin-id="<%= autoInfo.autoFareCode %>"
                                                                             class="bt-dropdown big fe-select-fare fe-required-select"
                                                                             title="요금 정보 선택" aria-haspopup="true">
                                                                         <%= autoInfo.autoFareText %><span class="ico"></span>
                                                                     </button>
+                                                                    <% } %>
 																</span>
                                                                 <span id="aria-exp-desc1" class="error-txt fe-error-msg" style="display:none;">요금 정보를 선택해 주세요.</span>
 															</span>
