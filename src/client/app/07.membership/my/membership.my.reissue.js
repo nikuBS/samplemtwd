@@ -4,11 +4,12 @@
  * Date: 2018.01.29
  */
 
-Tw.MembershipMyReissue = function(rootEl) {
+Tw.MembershipMyReissue = function(rootEl, mbrTypCd) {
   this.$container = rootEl;
   this._historyService = new Tw.HistoryService();
   this._popupService = Tw.Popup;
   this._apiService = Tw.Api;
+  this._mbrTypCd = mbrTypCd;
   this._cachedElement();
   this._bindEvent();
 };
@@ -47,8 +48,12 @@ Tw.MembershipMyReissue.prototype = {
 
   _successReissueRequest: function(res) {
     if(res.code === Tw.API_CODE.CODE_00){
+      // '발급 카드 정보 : </br> T멤버십(' 과 ') 모바일 카드' 사이에 카드 종류 넣기
+      var reissueComplete = Tw.ALERT_MSG_MEMBERSHIP.REISSUE_COMPLETE.PRE +
+        Tw.MEMBERSHIP_TYPE[this._mbrTypCd] + Tw.ALERT_MSG_MEMBERSHIP.REISSUE_COMPLETE.POST;
+
       this._popupService.afterRequestSuccess(null, '/membership/my', null,
-        Tw.ALERT_MSG_MEMBERSHIP.COMPLETE_TITLE.REISSUE, Tw.ALERT_MSG_MEMBERSHIP.JOIN_COMPLETE.CONTENT);
+        Tw.ALERT_MSG_MEMBERSHIP.COMPLETE_TITLE.REISSUE, reissueComplete );
     }else{
       this._onFail(res);
     }
