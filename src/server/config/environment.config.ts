@@ -11,11 +11,6 @@ const environment = {
       password: '993d2ac0c060da72f0f8298aa4c11ece',
       db: 0
     },
-    REDIS_SENTINEL: {
-      host: '61.250.19.37',
-      name: 'mymaster',
-      port: 31356
-    },
     REDIS_TOS: {
       host: '61.250.19.37',
       port: 32400,
@@ -47,7 +42,7 @@ const environment = {
     },
     REDIS_SENTINEL: {
       host: 'backing-redis-node-ibm-redis-ha-dev-sentinel.mtw-prd-nod',
-      name: 'mymaster',
+      name: 'redis_sentinel_dev',
       port: 26379
     },
     REDIS_TOS: {
@@ -84,7 +79,7 @@ const environment = {
     },
     REDIS_SENTINEL: {
       host: 'stg-backing-redis-node-ibm-redis-ha-dev-sentinel.mtw-stg-nod',
-      name: 'mymaster',
+      name: 'redis_sentinel_stg',
       port: 26379
     },
     REDIS_TOS: {
@@ -120,7 +115,7 @@ const environment = {
     },
     REDIS_SENTINEL: {
       host: 'backing-redis-node-ibm-redis-ha-dev-sentinel.mtw-prd-nod',
-      name: 'mymaster',
+      name: 'redis_sentinel_prd',
       port: 26379
     },
     REDIS_TOS: {
