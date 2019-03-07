@@ -114,7 +114,7 @@ Tw.CommonSearch.prototype = {
         // if(category==='prevent'&&key==='DOCID'){
         //   data[i][key] = Number(data[i][key].replace(/[A-Za-z]/g,''));
         // }
-        if(category==='direct'&&key==='ALIAS'){
+        if(category==='direct'&&key==='TYPE'){
           if(data[i][key]==='shopacc'){
             data[i].linkUrl = Tw.OUTLINK.DIRECT_ACCESSORY+'?categoryId='+data[i].CATEGORY_ID+'&accessoryId='+data[i].ACCESSORY_ID;
           }else{
@@ -201,21 +201,21 @@ Tw.CommonSearch.prototype = {
   },
   _showBanner : function (data) {
     var bannerPositionObj = {
-      AGN	 : 'as',
-      APP	: 'app',
+      AGN	 : 'as_outlet',
+      APP	: 'tapp',
       BENF : 'sale',
       CUG	 : 'manner',
       EVT	 : 'event',
       FAQ	: 'question',
       FEE	: 'rate',
       IUG	: 'siteInfo',
-      MBR	: 'membership',
+      MBR	: 'tmembership',
       NOTI : 'notice',
-      ROM	: 'raoming',
+      ROM	: 'troaming',
       SVC	: 'service',
       TWD	: 'direct',
       VUG	: 'serviceInfo',
-      WIRE : 'tv'
+      WIRE : 'tv_internet'
     };
     var bannerTemplate = Handlebars.compile($('#banner_template').html());
     _.each(data,$.proxy(function (bannerData) {
