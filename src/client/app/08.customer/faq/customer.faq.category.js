@@ -42,6 +42,7 @@ Tw.CustomerFaqCategory.prototype = {
     this.$btnDepth1.on('click', $.proxy(this._onDropDownClicked, this, 1));
     this.$btnDepth2.on('click', $.proxy(this._onDropDownClicked, this, 2));
     this.$btnMore.on('click', $.proxy(this._loadList, this));
+    this.$container.on('click', '.fe-link-external', $.proxy(this._onExternalLink, this));
   },
   _onDropDownClicked: function (depth) {
     var data = depth === 1 ? this._depth1obj : this._depth2obj;
@@ -190,5 +191,11 @@ Tw.CustomerFaqCategory.prototype = {
     this.$result.append(this._faqItemTemplate({
       list: result.content
     }));
+  },
+  _onExternalLink: function (e) {
+    var url = $(e.currentTarget).attr('href');
+    Tw.CommonHelper.openUrlExternal(url);
+
+    return false;
   }
 };
