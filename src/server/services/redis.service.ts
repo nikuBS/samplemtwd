@@ -1,6 +1,6 @@
 import session from 'express-session';
 import connect from 'connect-redis';
-import Redis from 'ioredis';
+import redis from 'redis';
 import EnvHelper from '../utils/env.helper';
 import { COOKIE_KEY } from '../types/common.type';
 import { Observable } from 'rxjs/Observable';
@@ -38,41 +38,16 @@ class RedisService {
       password: password
     });
 
-    let redisConf: any = {
-      port: this.envRedis.port,
-      host: this.envRedis.host,
-      password: password
-    };
-
-    let redisTosConf: any = {
-      port: this.envTosRedis.port,
-      host: this.envTosRedis.host,
-      password: password
-    };
-
-    const redisSentinel = EnvHelper.getEnvironment('REDIS_SENTINEL'),
-      redisSentinelTos = EnvHelper.getEnvironment('REDIS_SENTINEL_TOS');
-
-    if (!FormatHelper.isEmpty(redisSentinel)) {
-      redisConf = Object.assign(redisConf, {
-        sentinels: [{
-          host: redisSentinel.host,
-          port: redisSentinel.port
-        }]
-      });
-    }
-
-    if (!FormatHelper.isEmpty(redisSentinelTos)) {
-      redisTosConf = Object.assign(redisTosConf, {
-        sentinels: [{
-          host: redisSentinelTos.host,
-          port: redisSentinelTos.port
-        }]
-      });
-    }
-
-    this.client = new Redis(redisConf);
-    this.tosClient = new Redis(redisTosConf);
+    this.client = redis.createClient(
+      this.envRedis.port,
+      this.envRedis.host,
+      { password }
+    );
+    this.tosClient = redis.createClient(
+      this.envTosRedis.port,
+      this.envTosRedis.host,
+      { password }
+    );
   }
 
   static getInstance() {
