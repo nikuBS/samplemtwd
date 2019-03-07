@@ -111,7 +111,7 @@
 <% include ../../components/javascript.component.html %>
 <script>
   $(document).ready(function () {
-    new Tw.MembershipMyReissue($('.wrap'));
+    new Tw.MembershipMyReissue($('.wrap'),'<%= myReissueData.mbrTypCd %>');
   });
 </script>
 
