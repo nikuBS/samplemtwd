@@ -357,7 +357,7 @@ Tw.BenefitIndex.prototype = {
 
     this.$membership.text(data.membership);
     this.$point.prepend(Tw.FormatHelper.addComma(data.point.toString()));
-    this.$benefit.prepend(data.benefitDiscount);
+    this.$benefit.text(this.$benefit.text() + ' ' + data.benefitDiscount + Tw.BENEFIT.INDEX.COUNT_SUFFIX);
     this.$benefitArea.removeClass('none');
   },
 
