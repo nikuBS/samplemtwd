@@ -58,7 +58,8 @@ class RedisService {
         sentinels: [{
           host: redisSentinel.host,
           port: redisSentinel.port
-        }]
+        }],
+        name: redisSentinel.name
       });
     }
 
@@ -67,7 +68,8 @@ class RedisService {
         sentinels: [{
           host: redisSentinelTos.host,
           port: redisSentinelTos.port
-        }]
+        }],
+        name: redisSentinelTos.name
       });
     }
 
