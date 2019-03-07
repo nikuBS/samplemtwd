@@ -527,7 +527,9 @@ class ProductCommonCallplanPreview extends TwViewController {
           reservationTypeCd: this._getReservationTypeCd(prodInfo.result.baseInfo.prodTypCd),
           isProductCallplan: true,
           lineProcessCase: null,
-          isAllowJoinCombine: false
+          isAllowJoinCombine: false,
+          bpcpServiceId: '',
+          eParam: ''
         }].reduce((a, b) => {
           return Object.assign(a, b);
         }));

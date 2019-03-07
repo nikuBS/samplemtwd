@@ -736,6 +736,8 @@ class ProductCommonCallplan extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const prodId = req.query.prod_id || null,
       svcInfoProdId = svcInfo ? svcInfo.prodId : null,
+      bpcpServiceId = req.query.bpcpServiceId || '',
+      eParam = req.query.eParam || '',
       renderCommonInfo = {
         svcInfo: svcInfo,
         pageInfo: pageInfo,
@@ -845,7 +847,9 @@ class ProductCommonCallplan extends TwViewController {
             reservationTypeCd: this._getReservationTypeCd(basicInfo.result.prodTypCd),
             lineProcessCase: this._getLineProcessCase(basicInfo.result.prodTypCd, allSvc, svcAttrCd), // 가입 가능 회선 타입
             isProductCallplan: true,
-            isAllowJoinCombine: !FormatHelper.isEmpty(allSvc) && !FormatHelper.isEmpty(allSvc.s)
+            isAllowJoinCombine: !FormatHelper.isEmpty(allSvc) && !FormatHelper.isEmpty(allSvc.s),
+            bpcpServiceId,
+            eParam
           }].reduce((a, b) => {
             return Object.assign(a, b);
           }));

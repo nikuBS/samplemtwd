@@ -60,6 +60,7 @@
     </div>
     <!--// .popup hbs -->
 </div>
+<% include ../components/javascript.component.html %>
 <% if ( isBackCheck ) { %>
 <script type="text/javascript">
   (function() {
@@ -71,5 +72,20 @@
   })();
 </script>
 <% } %>
-<% include ../components/javascript.component.html %>
+<% if ( isBpcp ) { %>
+<script type="text/javascript">
+  $(function() {
+    $('a').on('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      window.postMessage('goLink:' + $(e.currentTarget).attr('href'), location.origin);
+    });
+
+    $('.fe-common-back').on('click', function() {
+      window.postMessage('popup_close', location.origin);
+    });
+  });
+</script>
+<% } %>
 <% include ../components/end.component.html %>

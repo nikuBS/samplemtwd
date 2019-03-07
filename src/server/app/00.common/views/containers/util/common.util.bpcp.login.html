@@ -1,0 +1,14 @@
+<%#
+* FileName: common.util.bpcp.login.html
+* Author: Ji Hun Yang (jihun202@sk.com)
+* Date: 2019.03.07
+%>
+
+<%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+<% include ../../components/javascript.component.html %>
+<script>
+  $(document).ready(function () {
+    window.postMessage('goLogin:<%- JSON.stringify(bpcpInfo) %>', location.origin);
+  });
+</script>
+<% include ../../components/end.component.html %>
