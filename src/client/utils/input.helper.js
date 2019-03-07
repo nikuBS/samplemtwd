@@ -14,11 +14,6 @@ Tw.InputHelper = (function () {
     $input.val($input.val().replace(/[^0-9-]/g, ''));
   }
 
-  function inputNumberAndAlphabet(input) {
-    var $input = $(input);
-    $input.val($input.val().replace(/[^A-Za-z0-9+]/g, ''));
-  }
-
   function inputNumberMaxLength(input) {
     var $input = $(input);
     var nLength = Number($input.attr('maxlength'));
@@ -107,7 +102,6 @@ Tw.InputHelper = (function () {
     inputNumberOnly: inputNumberOnly,
     inputNumberAndAsteriskOnly: inputNumberAndAsteriskOnly,
     inputNumberAndDashOnly: inputNumberAndDashOnly,
-    inputNumberAndAlphabet: inputNumberAndAlphabet,
     validateEmail: validateEmail,
     validateNumber: validateNumber,
     inputNumKeyUp: inputNumKeyUp,

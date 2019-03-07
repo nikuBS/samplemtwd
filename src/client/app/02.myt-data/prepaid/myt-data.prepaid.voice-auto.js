@@ -12,9 +12,6 @@ Tw.MyTDataPrepaidVoiceAuto = function (rootEl) {
   this._historyService = new Tw.HistoryService();
   this._backAlert = new Tw.BackAlert(rootEl, true);
 
-  this._firstChange = true;
-  this._firstBlur = true;
-
   this._cachedElement();
   this._init();
 };
@@ -66,8 +63,8 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     this.$container.on('click', '.fe-select-amount', $.proxy(this._onShowAmount, this));
     this.$container.on('click', '.fe-select-date', $.proxy(this._onShowDate, this));
     this.$container.on('click', '.fe-select-remain-amount', $.proxy(this._onShowRemainAmount, this));
-    this.$container.on('change', '.fe-select-expire', $.proxy(this._validateExpireDate, this, 'change'));
-    this.$container.on('blur', '.fe-select-expire', $.proxy(this._validateExpireDate, this, 'blur'));
+    this.$container.on('change', '.fe-select-expire', $.proxy(this._validateExpireDate, this));
+    this.$container.on('blur', '.fe-select-expire', $.proxy(this._validateExpireDate, this));
     this.$container.on('change input blur click', '.fe-wrap-template [required]', $.proxy(this._validateForm, this));
     this.$container.on('click', '.fe-request-recharge', $.proxy(this._requestRechargeAuto, this));
     this.$container.on('keyup', 'input[type=tel]', $.proxy(this._checkMaxLength, this));
@@ -146,45 +143,19 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     }
   },
 
-  _validateExpireDate: function (type, e) {
-    var isAndroid = Tw.BrowserHelper.isAndroid();
-    var isIos = Tw.BrowserHelper.isIos();
-    var isNotFirst = false;
+  _validateExpireDate: function (e) {
+    var $error = $(e.currentTarget).closest('li').find('.error-txt');
+    var $target = $(e.currentTarget);
 
-    if (isIos) {
-      if (type === 'change') {
-        isNotFirst = !this._firstChange;
-      }
-
-      if (type === 'blur') {
-        isNotFirst = !this._firstBlur;
-      }
+    if ( Tw.DateHelper.isBefore($target.val()) ) {
+      this._popupService.openAlert(Tw.MYT_DATA_PREPAID.INVALID_DATE);
+      $target.val(Tw.DateHelper.getTomorrowDate());
     }
 
-    if (isAndroid || isNotFirst) {
-      var $error = $(e.currentTarget).closest('li').find('.error-txt');
-      var $target = $(e.currentTarget);
-
-      if (Tw.DateHelper.isBefore($target.val())) {
-        this._popupService.openAlert(Tw.MYT_DATA_PREPAID.INVALID_DATE);
-        $target.val(Tw.DateHelper.getTomorrowDate());
-      }
-
-      if (!$target.val()) {
-        $($error.get(0)).removeClass('blind');
-      } else {
-        $($error.get(0)).addClass('blind');
-      }
-    }
-
-    if (isIos) {
-      if (type === 'change') {
-        this._firstChange = false;
-      }
-
-      if (type === 'blur') {
-        this._firstBlur = false;
-      }
+    if ( !$target.val() ) {
+      $($error.get(0)).removeClass('blind');
+    } else {
+      $($error.get(0)).addClass('blind');
     }
   },
 
@@ -193,9 +164,6 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
   },
 
   _changeRechargeType: function (e) {
-    this._firstChange = true;
-    this._firstBlur = true;
-
     var $elTarget = $(e.currentTarget);
     var currentTemplateIndex = $elTarget.parent().find('li').index($elTarget);
 
@@ -275,7 +243,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
   },
 
   _selectPopupCallback: function (arrParams, $layer) {
-    $layer.on('click', 'li', $.proxy(this._setSelectedValue, this, arrParams));
+    $layer.on('click', 'button', $.proxy(this._setSelectedValue, this, arrParams));
     $layer.on('click', '.tw-popup-closeBtn', $.proxy(this._validSelectedValue, this, arrParams));
   },
 
@@ -292,15 +260,14 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     var $target = arrParams[0];
     var isChargeCd = arrParams[1];
     if ( isChargeCd ) {
-      this.chargeCd = $(e.currentTarget).find('button').attr('data-value');
+      this.chargeCd = $(e.currentTarget).attr('data-value');
     }
 
     this._popupService.close();
     $target.text($(e.currentTarget).text());
-    $target.attr('data-amount', $(e.currentTarget).find('button').attr('data-value'));
+    $target.attr('data-amount', $(e.currentTarget).attr('data-value'));
 
     this._validSelectedValue($target);
-    this._validateForm();
   },
 
   _validateForm: function () {
