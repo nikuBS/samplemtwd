@@ -1557,7 +1557,8 @@ Tw.BENEFIT = {
           txt: '제출하기'
         }
       ]
-    }
+    },
+    COUNT_SUFFIX: '건'
   }
 };
 
