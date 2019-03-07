@@ -154,7 +154,18 @@ Tw.CustomerEmailUpload.prototype = {
   _onClickServiceUpload: function () {
     if ( (!Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) || this._isLowerVersionAndroid() ) {
       // Not Supported File Upload
-      this._popupService.openAlert(Tw.CUSTOMER_EMAIL.NOT_SUPPORT_FILE_UPLOAD);
+      // this._popupService.openAlert(Tw.CUSTOMER_EMAIL.NOT_SUPPORT_FILE_UPLOAD);
+      this._popupService.open({
+        hbs: 'popup',// hbs의 파일명
+        title: '',
+        title_type: 'sub',
+        cont_align: 'tl',
+        contents: Tw.CUSTOMER_EMAIL.NOT_SUPPORT_FILE_UPLOAD,
+        bt_b: [{
+          style_class: 'bt-red1 pos-right tw-popup-closeBtn',
+          txt: Tw.BUTTON_LABEL.CONFIRM
+        }]
+      }, $.proxy(this._bindAlertPopupClose, this), null);
       return false;
     }
 
@@ -165,12 +176,36 @@ Tw.CustomerEmailUpload.prototype = {
   _onClickQualityUpload: function () {
     if ( (!Tw.BrowserHelper.isApp() && this._isLowerVersionAndroid()) || this._isLowerVersionAndroid() ) {
       // Not Supported File Upload
-      this._popupService.openAlert(Tw.CUSTOMER_EMAIL.NOT_SUPPORT_FILE_UPLOAD);
+      // this._popupService.openAlert(Tw.CUSTOMER_EMAIL.NOT_SUPPORT_FILE_UPLOAD);
+      this._popupService.open({
+        hbs: 'popup',// hbs의 파일명
+        title: '',
+        title_type: 'sub',
+        cont_align: 'tl',
+        contents: Tw.CUSTOMER_EMAIL.NOT_SUPPORT_FILE_UPLOAD,
+        bt_b: [{
+          style_class: 'bt-red1 pos-right tw-popup-closeBtn',
+          txt: Tw.BUTTON_LABEL.CONFIRM
+        }]
+      }, $.proxy(this._bindAlertPopupClose, this), null);
       return false;
     }
 
     this.uploadFiles = this.qualityUploadFiles.slice(0);
     this._showUploadPopup();
+  },
+
+  _bindAlertPopupClose: function($layer) {
+    $layer.on('click', '.tw-popup-closeBtn button', $.proxy(this._execAlertPopupClose, this));
+    try {
+      $layer.on('touchstart', '.tw-popup-closeBtn button', $.proxy(this._execAlertPopupClose, this));
+    } catch (err) {}
+  },
+
+  _execAlertPopupClose: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    this._popupService.close();
   },
 
   _hideUploadPopup: function () {
