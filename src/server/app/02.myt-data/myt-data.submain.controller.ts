@@ -8,7 +8,7 @@
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../common/controllers/tw.view.controller';
 import { Observable } from 'rxjs/Observable';
-import { API_CMD, API_CODE } from '../../types/api-command.type';
+import { API_CMD, API_CODE, SESSION_CMD } from '../../types/api-command.type';
 import FormatHelper from '../../utils/format.helper';
 import DateHelper from '../../utils/date.helper';
 import { CURRENCY_UNIT, ETC_CENTER, MYT_DATA_CHARGE_TYPE_NAMES, MYT_DATA_CHARGE_TYPES, MYT_DATA_REFILL_TYPES } from '../../types/string.type';
@@ -509,7 +509,7 @@ class MytDataSubmainController extends TwViewController {
 
   // 실시간잔여량
   _getRemnantData(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
+    return this.apiService.requestStore(SESSION_CMD.BFF_05_0001, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         return resp.result;
       } else {

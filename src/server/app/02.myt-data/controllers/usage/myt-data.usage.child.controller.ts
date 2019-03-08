@@ -6,7 +6,7 @@
 
 import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
-import { API_CMD, API_CODE } from '../../../../types/api-command.type';
+import { API_CMD, API_CODE, SESSION_CMD } from '../../../../types/api-command.type';
 import { Observable } from 'rxjs/Observable';
 import MyTDataHotData from './myt-data.hotdata.controller';
 import FormatHelper from '../../../../utils/format.helper';
@@ -94,7 +94,7 @@ class MyTDataUsageChild extends TwViewController {
    * return {Observable}
    */
   private reqBalances(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_05_0001, {
+    return this.apiService.requestStore(SESSION_CMD.BFF_05_0001, {
       childSvcMgmtNum: this.childSvcMgmtNum
     });
     // return Observable.create((observer) => {
