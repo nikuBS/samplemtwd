@@ -39,7 +39,7 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     this._recentKeywordInit();
     this._recentKeywordTemplate = Handlebars.compile($('#recently_keyword_template').html());
     this._autoCompleteKeywrodTemplate = Handlebars.compile($('#auto_complete_template').html());
-    if(from==='menu'){
+    if(from==='menu'&&this._historyService.isReload()===false&&!this._historyService.isBack()){
       this._addRecentlyKeyword(keywrod);
     }
     new Tw.XtractorService(this.$container);

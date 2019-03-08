@@ -64,7 +64,7 @@ Tw.CommonSearch.prototype = {
     this._recentKeywordTemplate = Handlebars.compile($('#recently_keyword_template').html());
     this._autoCompleteKeywrodTemplate = Handlebars.compile($('#auto_complete_template').html());
     this._removeDuplicatedSpace(this.$container.find('.cont-sp'),'cont-sp');
-    if(this._from==='menu'&&this._historyService.isReload()===false&&this._historyService.isBack()){
+    if(this._from==='menu'&&this._historyService.isReload()===false&&!this._historyService.isBack()){
       this._addRecentlyKeyword(this._searchInfo.query);
     }
     new Tw.XtractorService(this.$container);
