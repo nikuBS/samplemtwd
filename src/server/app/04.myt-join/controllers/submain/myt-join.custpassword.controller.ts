@@ -6,6 +6,7 @@
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 import { SVC_ATTR_NAME } from '../../../../types/bff.type';
+import FormatHelper from '../../../../utils/format.helper';
 
 
 class MyTJoinCustpassword extends TwViewController {
@@ -45,7 +46,7 @@ class MyTJoinCustpassword extends TwViewController {
 
     const data = {
       title: svcInfo.svcAttrCd ? SVC_ATTR_NAME[svcInfo.svcAttrCd] : '',
-      number: svcInfo.svcNum || '',
+      number: FormatHelper.conTelFormatWithDash(svcInfo.svcNum) || '',
       svcInfo: svcInfo,
       pageInfo: pageInfo,
       isNew: this.isNew
