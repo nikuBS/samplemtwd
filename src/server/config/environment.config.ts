@@ -40,10 +40,20 @@ const environment = {
       password: 'a935fdca4ac876095bea69cda9ba08c2',
       db: 0
     },
+    REDIS_SENTINEL: {
+      host: 'dev-backing-redis-node-ibm-redis-ha-dev-sentinel.mtw-dev-nod',
+      name: 'mymaster',
+      port: 26379
+    },
     REDIS_TOS: {
       host: 'dev-backing-redis-tos-ibm-redis-ha-dev-master-svc.mtw-dev-tos',
       port: 6379,
       db: 0
+    },
+    REDIS_TOS_SENTINEL: {
+      host: 'dev-backing-redis-tos-ibm-redis-ha-dev-sentinel.mtw-dev-tos',
+      name: 'mymaster',
+      port: 26379
     },
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
     SEARCH_SERVER: 'http://211.188.181.123:8080',
@@ -68,10 +78,20 @@ const environment = {
       password: '993d2ac0c060da72f0f8298aa4c11ece',
       db: 0
     },
+    REDIS_SENTINEL: {
+      host: 'stg-backing-redis-node-ibm-redis-ha-dev-sentinel.mtw-stg-nod',
+      name: 'mymaster',
+      port: 26379
+    },
     REDIS_TOS: {
       host: 'stg-backing-redis-tos-ibm-redis-ha-dev-master-svc.mtw-stg-tos',
       port: 6379,
       db: 0
+    },
+    REDIS_TOS_SENTINEL: {
+      host: 'stg-backing-redis-tos-ibm-redis-ha-dev-sentinel.mtw-stg-tos',
+      name: 'mymaster',
+      port: 26379
     },
     TID_SERVER: 'https://auth-stg.skt-id.co.kr',
     SEARCH_SERVER: 'http://211.188.181.142:8080',
@@ -95,10 +115,20 @@ const environment = {
       password: 'd86fdf7bd110811a08aab1106b1aa217',
       db: 0
     },
+    REDIS_SENTINEL: {
+      host: 'backing-redis-node-ibm-redis-ha-dev-sentinel.mtw-prd-nod',
+      name: 'mymaster',
+      port: 26379
+    },
     REDIS_TOS: {
       host: 'backing-redis-tos-ibm-redis-ha-dev-master-svc.mtw-prd-tos',
       port: 6379,
       db: 0
+    },
+    REDIS_TOS_SENTINEL: {
+      host: 'backing-redis-tos-ibm-redis-ha-dev-sentinel.mtw-prd-tos',
+      name: 'mymaster',
+      port: 26379
     },
     TID_SERVER: 'https://auth.skt-id.co.kr',
     SEARCH_SERVER: 'http://211.188.181.123:8080',
