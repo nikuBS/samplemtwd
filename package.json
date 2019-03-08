@@ -64,6 +64,7 @@
     "gulp-util": "^3.0.8",
     "gulp-webserver": "^0.9.1",
     "http-proxy-middleware": "^0.18.0",
+    "ioredis": "^4.6.2",
     "jshint": "^2.9.6",
     "nodemon": "^1.18.5",
     "pm2": "^2.10.4",
