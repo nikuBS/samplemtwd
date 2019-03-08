@@ -233,7 +233,7 @@ Tw.CommonSearch.prototype = {
     while (this._recentKeyworList[this._nowUser].length>10){
       this._recentKeyworList[this._nowUser].shift();
     }
-    Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(this._recentKeyworList));
+    Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECENT_SEARCH_KEYWORD,JSON.stringify(this._recentKeyworList));
   },
   _searchRelatedKeyword : function (targetEvt) {
     targetEvt.preventDefault();
@@ -313,7 +313,7 @@ Tw.CommonSearch.prototype = {
     });
   },
   _recentKeywordInit : function () {
-    var recentlyKeywordData = JSON.parse(Tw.CommonHelper.getLocalStorage('recentlySearchKeyword'));
+    var recentlyKeywordData = JSON.parse(Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.RECENT_SEARCH_KEYWORD));
     var removeIdx = [];
     if(Tw.FormatHelper.isEmpty(recentlyKeywordData)){
       //making recentlySearchKeyword
@@ -332,7 +332,7 @@ Tw.CommonSearch.prototype = {
     _.each(removeIdx,$.proxy(function (removeIdx) {
       recentlyKeywordData[this._nowUser].splice(removeIdx,1);
     },this));
-    Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(recentlyKeywordData));
+    Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECENT_SEARCH_KEYWORD,JSON.stringify(recentlyKeywordData));
     this._recentKeyworList = recentlyKeywordData;
   },
   _inputFocusEvt : function () {
@@ -467,7 +467,7 @@ Tw.CommonSearch.prototype = {
     }else{
       this._recentKeyworList[this._nowUser].splice(removeIdx,1);
     }
-    Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(this._recentKeyworList));
+    Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECENT_SEARCH_KEYWORD,JSON.stringify(this._recentKeyworList));
     this._recentKeywordInit();
     setTimeout($.proxy(this._showRecentKeyworList,this));
   },
