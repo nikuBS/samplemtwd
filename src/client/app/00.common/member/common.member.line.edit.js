@@ -103,7 +103,11 @@ Tw.CommonMemberLineEdit.prototype = {
     $target.parents('.fe-item').removeClass('fe-item-active');
     $target.parents('.fe-item').addClass('fe-item-inactive');
     this._resetCount();
-    // this._popupService.openAlert(Tw.ALERT_MSG_AUTH.L03);
+
+    var svcGr = $target.parents('.fe-item').data('svcgr');
+    if ( svcGr === 'E' ) {
+      this._popupService.openAlert(Tw.ALERT_MSG_AUTH.L03);
+    }
   },
   _resetCount: function () {
     this.$usedTxt.text(this.$container.find('.fe-item-active').length);
@@ -129,7 +133,7 @@ Tw.CommonMemberLineEdit.prototype = {
     }
   },
   _checkRepSvc: function (result, svcNumList) {
-    if ( svcNumList.length === 0 && this._otherCnt === 0) {
+    if ( svcNumList.length === 0 && this._otherCnt === 0 ) {
       this._popupService.openAlert(Tw.ALERT_MSG_AUTH.L02_1, null, null, $.proxy(this._onCloseChangeRepSvc, this));
     } else if ( result.repSvcChgYn === 'Y' ) {
       this._popupService.openAlert(Tw.ALERT_MSG_AUTH.L02, null, null, $.proxy(this._onCloseChangeRepSvc, this));
