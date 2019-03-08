@@ -44,7 +44,8 @@ Tw.CustomerEmail.prototype = {
     this.$container.on(inputKeyUps, '.fe-quality_phone', $.proxy(this._onKeyUpPhoneNumber, this));
     this.$container.on(inputKeyUps, '.fe-service_email', $.proxy(this._onKeyUpEmail, this));
     this.$container.on(inputKeyUps, '.fe-quality_email', $.proxy(this._onKeyUpEmail, this));
-    this.$container.on('click', '.fe-text-cancel', $.proxy(this._onTextInputClear, this));    
+    this.$container.on('click', '.fe-text-cancel', $.proxy(this._onTextInputClear, this));
+    this.$container.on('keydown', 'input', $.proxy(this._preventDown, this));
     this.$container.on('click', '.fe-btn_addr', $.proxy(this._onClickBtnAddr, this));
     this.$container.on('click', '.fe-email-close', $.proxy(this._stepBack, this));
     this.$container.on('click', '.fe-service_sms', $.proxy(this._openSMSAlert, this));
@@ -53,6 +54,10 @@ Tw.CustomerEmail.prototype = {
     this.$container.on('click', '.fe-term-private-agree', $.proxy(this._openTermLayer, this, '37'));
     this.$container.on('click', '.fe-service-cntcNumClCd', $.proxy(this._onChangeReceiveContact, this));
     this.$container.on('click', '.fe-quality-cntcNumClCd', $.proxy(this._onChangeReceiveContact, this));
+  },
+
+  _preventDown: function(e) {
+    e.preventDefault();
   },
 
   _onChangeReceiveContact: function (e) {
@@ -74,7 +79,7 @@ Tw.CustomerEmail.prototype = {
   _onContact: function ($elInput, response) {
     if ( response.resultCode === Tw.NTV_CODE.CODE_00 ) {
       var params = response.params;
-      $elInput.val(params.phoneNumber);
+      $elInput.val(params.phoneNumber).trigger('keyup');
     }
   },
 
