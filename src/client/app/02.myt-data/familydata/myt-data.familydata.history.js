@@ -158,7 +158,9 @@ Tw.MyTDataFamilyHistory.prototype = {
 
   _handleOpenChangePopup: function($parent, changable, $layer) {
     this._historyChange.init($layer, $parent, changable);
-    $layer.find('.fe-all').trigger('click');
+    if (changable.data < 1) {
+      $layer.find('.fe-all').trigger('click');
+    }
     $layer.on('click', '.prev-step', this._popupService.close);
   },
 
