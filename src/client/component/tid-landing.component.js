@@ -22,7 +22,7 @@ Tw.TidLandingComponent.prototype = {
     this.$container.on('click', '.fe-bt-auth-withdrawal-guide', $.proxy(this._onClickBtnAuthWithdrawalGuide, this));
     this.$container.on('click', '.fe-bt-find-id', $.proxy(this._onClickBtFindId, this));
     this.$container.on('click', '.fe-bt-find-pw', $.proxy(this._onClickBtFindPw, this));
-    this.$container.on('click', '.fe-bt-change-pw', $.proxy(this._onClickBtChangePw, this));
+    this.$container.on('click', '.fe-bt-change-pw', $.proxy(this._onClickBtChangePw, this, redirectTarget));
     this.$container.on('click', '.fe-bt-login', $.proxy(this._onClickLogin, this, redirectTarget));
     this.$container.on('click', '.fe-bt-replace-login', $.proxy(this._onClickReplaceLogin, this, redirectTarget));
     this.$container.on('click', '.fe-bt-logout', $.proxy(this._onClickLogout, this));
@@ -119,8 +119,8 @@ Tw.TidLandingComponent.prototype = {
   _onClickBtFindPw: function () {
     this._goLoad(Tw.NTV_CMD.FIND_PW, '/common/tid/find-pw', $.proxy(this._onNativeFindPw, this));
   },
-  _onClickBtChangePw: function () {
-    this._goLoad(Tw.NTV_CMD.CHANGE_PW, '/common/tid/change-pw', $.proxy(this._onNativeChangePw, this));
+  _onClickBtChangePw: function (target) {
+    this._goLoad(Tw.NTV_CMD.CHANGE_PW, '/common/tid/change-pw?target=' + encodeURIComponent(target), $.proxy(this._onNativeChangePw, this));
   },
   _onNativeAccount: function () {
     this._nativeService.send(Tw.NTV_CMD.LOG, { type: Tw.NTV_LOG_T.DEBUG, message: '_onNativeAccount' });
@@ -166,6 +166,8 @@ Tw.TidLandingComponent.prototype = {
       this._historyService.goLoad('/common/member/login/reactive?target=' + encodeURIComponent(target));
     } else if ( resp.code === Tw.API_LOGIN_ERROR.ATH1003 ) {
       this._historyService.replaceURL('/common/member/login/exceed-fail?');
+    } else if ( resp.code === Tw.API_LOGIN_ERROR.ATH3236) {
+      this._historyService.goLoad('/common/member/login/lost?target=' + encodeURIComponent(target));
     } else {
       this._historyService.replaceURL('/common/member/login/fail?errorCode=' + resp.code + '&target=' + encodeURIComponent(target));
     }
