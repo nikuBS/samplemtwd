@@ -203,9 +203,9 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
   _goFrchAllView: function(){
     var param = {
       brandCd: this._options.brandCd,
-      brandNm: $('.brand-tit').text(),
+      brandNm: encodeURI($('.brand-tit').text()),
       cateCd: this._options.cateCd,
-      area : this._options.area1 + ' ' + this._options.area2
+      area : encodeURI(this._options.area1 + ' ' + this._options.area2)
     };
 
     this._historyService.goLoad('/membership/benefit/brand/list?' + $.param(param));

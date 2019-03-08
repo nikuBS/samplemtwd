@@ -90,10 +90,14 @@ Tw.MembershipBenefitBrandMap.prototype = {
   },
 
   _onClickBenefit: function () {
+    this.data.brandNm = encodeURI(this.data.brandNm);
+    this.data.area = encodeURI(this.data.area);
     this._historyService.goLoad('/membership/benefit/brand-benefit?' + $.param(this.data));
   },
 
   _onClickFranchiseeList: function () {
+    this.data.brandNm = encodeURI(this.data.brandNm);
+    this.data.area = encodeURI(this.data.area);
     this._historyService.goLoad('/membership/benefit/brand/list?' + $.param(this.data));
   },
 
