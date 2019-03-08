@@ -590,30 +590,19 @@ Tw.MyTDataSubMain.prototype = {
   // 다른 회선 잔여량 상세
   _onOtherLinesItemDetail: function (event) {
     var $target = $(event.target).parents('[data-svc-mgmt-num]'),
-        mgmtNum = $target.attr('data-svc-mgmt-num'),
-        number  = $target.attr('data-num'),
-        name    = $target.attr('data-name'),
-        isChild = $target.find('.icon-children').length > 0;
+      mgmtNum = $target.attr('data-svc-mgmt-num'),
+      isChild = $target.find('.icon-children').length > 0;
     if ( mgmtNum ) {
       if ( isChild ) {
         // 자녀회선
         this._historyService.goLoad('/myt-data/submain/child-hotdata?childSvcMgmtNum=' + mgmtNum);
       }
       else {
-        var defaultLineInfo = this.data.svcInfo.svcNum + ' ' +
-          (this.data.svcInfo.nickNm || Tw.SVC_ATTR[this.data.svcInfo.svcAttrCd]);
-        var selectLineInfo = number + ' ' + name;
         this.changeLineMgmtNum = mgmtNum;
-        this._popupService.openModalTypeA(
-          Tw.REMNANT_OTHER_LINE.TITLE,
-          defaultLineInfo + Tw.MYT_TPL.DATA_SUBMAIN.SP_TEMP + selectLineInfo,
-          Tw.REMNANT_OTHER_LINE.BTNAME,
-          null,
-          $.proxy(this._onChangeLineConfirmed, this),
-          null,
-          'change_line',
-          'tc'
-        );
+
+        var target = _.find(this.data.otherLines, { svcMgmtNum: mgmtNum });
+        this._popupService.openSwitchLine(this.data.svcInfo, target, Tw.REMNANT_OTHER_LINE.BTNAME, null,
+          $.proxy(this._onChangeLineConfirmed, this), null, 'change_line');
       }
     }
   },
