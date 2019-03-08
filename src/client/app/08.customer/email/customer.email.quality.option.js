@@ -27,7 +27,7 @@ Tw.CustomerEmailQualityOption.prototype = {
 
   _bindEvent: function () {
     this.$wrap_tpl_quality.on('click', '.fe-select-line', $.proxy(this._onSelectLine, this));
-    this.$wrap_tpl_quality.on('click', 'button.fe-select-phone-line', $.proxy(this._onSelectQualityPhoneLine, this));
+    // this.$wrap_tpl_quality.on('click', 'button.fe-select-phone-line', $.proxy(this._onSelectQualityPhoneLine, this));
     // this.$container.on('click', '.fe-line_internet', $.proxy(this._showLineSheet, this, 'INTERNET'));
     // this.$container.on('click', '.fe-line', $.proxy(this._showLineSheet, this, 'CELL'));
     this.$container.on('click', '.fe-occurrence', $.proxy(this._showOptionSheet, this, 'Q_TYPE01'));
@@ -43,6 +43,7 @@ Tw.CustomerEmailQualityOption.prototype = {
     new Tw.CommonPostcodeMain(this.$container);
   },
 
+  // 사용안함
   _onSelectQualityPhoneLine: function (e) {
     e.stopPropagation();
     e.preventDefault();
@@ -96,6 +97,7 @@ Tw.CustomerEmailQualityOption.prototype = {
     );
   },
 
+  // 품질상담 > 회선변경 
   _onSelectLine: function (e) {
     e.stopPropagation();
     e.preventDefault();
@@ -123,13 +125,13 @@ Tw.CustomerEmailQualityOption.prototype = {
       $.proxy(this._handleOpenSelectType, this, $target));
   },
 
+  // 품질상담 > 회선변경 선택시
   _handleOpenSelectType: function ($target, $layer) {
     $layer.on('click', 'li.type1', $.proxy(this._handleSelectType, this, $target));
   },
 
+  // 품질상담 > 회선변경 처리
   _handleSelectType: function ($target, e) {
-    this._popupService.close();
-
     var $currentTarget = $(e.currentTarget);
     var svcNum = $currentTarget.text().trim();
     var svcMgmtNum = $currentTarget.find('label').data('svcmgmtnum');
@@ -138,6 +140,8 @@ Tw.CustomerEmailQualityOption.prototype = {
     $target.data('svcmgmtnum', svcMgmtNum);
     e.stopPropagation();
     e.preventDefault();
+
+    this._popupService.close();
   },
 
   // _showLineSheet: function (sType, e) {
@@ -166,18 +170,19 @@ Tw.CustomerEmailQualityOption.prototype = {
   _showOptionSheet: function (sType, e) {
     var $elButton = $(e.currentTarget);
 
-    var fnSelectLine = function ($elButton, item) {
+    var fnSelectLine = function ($elButton, item, index) {
       return {
-        value: item.text,
-        option: $elButton.text() === item.text ? 'checked' : '',
-        attr: 'data-type="option_value"'
+        txt: item.text, 
+        'radio-attr': 'data-index="' + index + '"' + ($elButton.text() === item.text ? ' checked' : ''), 
+        'label-attr': ' '
       };
     };
 
     this._popupService.open({
-        hbs: 'actionsheet_select_a_type',
+        hbs: 'actionsheet01',
         layer: true,
-        title: this.quality_options[sType].title,
+        // title: this.quality_options[sType].title,
+        btnfloating: { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         data: [{ list: this.quality_options[sType].list.map($.proxy(fnSelectLine, this, $elButton)) }]
       },
       $.proxy(this._selectPopupCallback, this, $elButton),
@@ -190,12 +195,12 @@ Tw.CustomerEmailQualityOption.prototype = {
   // },
 
   _selectPopupCallback: function ($target, $layer) {
-    $layer.on('click', '[data-type="option_value"]', $.proxy(this._setSelectedValue, this, $target));
+    $layer.on('change', 'li input', $.proxy(this._setSelectedValue, this, $target));
   },
 
   _setSelectedValue: function ($target, el) {
+    $target.text($(el.currentTarget).parents('li').find('.txt').text().trim());
     this._popupService.close();
-    $target.text($(el.currentTarget).text().trim());
   }
 
   // _setSelectedLineValue: function ($target, el) {
