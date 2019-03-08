@@ -78,15 +78,17 @@ Tw.MyTDataFamily.prototype = {
     var $target = $(e.currentTarget),
       $li = $target.parents('li'),
       member = $li.data('member'),
-      limitation = $target.data('limitation');
+      limitation = $target.data('limitation'),
+      hasNotLimit = typeof limitation === 'boolean';
 
-    limitation = typeof limitation === 'boolean' ? limitation : Number(limitation);
+    limitation = hasNotLimit ? limitation : Number(limitation);
 
     this.$limitBtn = $target;
     this._popupService.open(
       {
         hbs: 'DC_02_03',
         member: member,
+        hasLimit: !hasNotLimit,
         limitation: limitation,
         data: $li.find('.r-txt').html()
       },
