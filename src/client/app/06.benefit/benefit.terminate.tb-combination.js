@@ -67,16 +67,13 @@ Tw.BenefitTerminateTbCombination.prototype = {
 
   _joinCancel: function() {
     this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A74.TITLE,
-      Tw.ALERT_MSG_PRODUCT.ALERT_3_A74.MSG, Tw.BUTTON_LABEL.NO, Tw.BUTTON_LABEL.YES,
-      $.proxy(this._bindJoinCancelPopupEvent, this), null, $.proxy(this._bindJoinCancelPopupCloseEvent, this));
-  },
-
-  _bindJoinCancelPopupEvent: function($popupContainer) {
-    $popupContainer.find('.tw-popup-closeBtn').on('click', $.proxy(this._setCancelFlag, this));
+      Tw.ALERT_MSG_PRODUCT.ALERT_3_A74.MSG, Tw.BUTTON_LABEL.YES, Tw.BUTTON_LABEL.NO,
+      null, $.proxy(this._setCancelFlag, this), $.proxy(this._bindJoinCancelPopupCloseEvent, this));
   },
 
   _setCancelFlag: function() {
     this._cancelFlag = true;
+    this._popupService.close();
   },
 
   _bindJoinCancelPopupCloseEvent: function() {
