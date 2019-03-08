@@ -1517,7 +1517,7 @@ Tw.BENEFIT = {
   PAYMENT: {
     TITLE: '포인트 요금 납부',
     TYPE: {
-      OK: 'OK캐쉬백',
+      OK: 'OK캐쉬백포인트',
       T: 'T포인트',
       RAINBOW: '레인보우포인트'
     },
