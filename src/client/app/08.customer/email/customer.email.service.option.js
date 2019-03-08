@@ -27,7 +27,7 @@ Tw.CustomerEmailServiceOption.prototype = {
 
   _bindEvent: function () {
     this.$wrap_tpl_service.on('click', '.fe-select-line', $.proxy(this._selectLine, this));
-    this.$container.on('click', '[data-svcmgmtnum]', $.proxy(this._selectLineCallback, this));
+    // this.$container.on('click', '[data-svcmgmtnum]', $.proxy(this._selectLineCallback, this));
     this.$container.on('click', '.fe-select-brand', $.proxy(this._getDirectBrand, this));
     this.$container.on('click', '.fe-select-device', $.proxy(this._getDirectDevice, this));
     this.$container.on('click', '.fe-search-order', $.proxy(this._getOrderInfo, this));
@@ -37,6 +37,7 @@ Tw.CustomerEmailServiceOption.prototype = {
     this.$container.on('click', '.fe-direct-more', $.proxy(this._onShowMoreList, this));
   },
 
+  // 서비스문의 > 회선변경 
   _selectLine: function (e) {
     e.stopPropagation();
     e.preventDefault();
@@ -52,7 +53,7 @@ Tw.CustomerEmailServiceOption.prototype = {
       lineList = this.allSvc.s;
     }
 
-    var fnSelectLine = function (item) {
+    var fnSelectLine = function (item, index) {
       var sItem;
 
       if ( item.svcGr === 'I' || item.svcGr === 'T' ) {
@@ -62,35 +63,43 @@ Tw.CustomerEmailServiceOption.prototype = {
       }
 
       return {
-        value: sItem,
-        option: $('.fe-select-line').data('svcmgmtnum').toString() === item.svcMgmtNum ? 'checked' : '',
-        attr: 'data-svcmgmtnum=' + item.svcMgmtNum
+        txt: sItem, 
+        'radio-attr': 'data-index="' + index + '" data-svcmgmtnum="'+ item.svcMgmtNum +'"' + 
+                    ($('.fe-select-line').data('svcmgmtnum').toString() === item.svcMgmtNum ? ' checked' : ''),
+        'label-attr': ' '
       };
     };
 
     this._popupService.open({
-        hbs: 'actionsheet_select_a_type',
+        hbs: 'actionsheet01',
         layer: true,
-        title: Tw.CUSTOMER_VOICE.LINE_CHOICE,
+        // title: Tw.CUSTOMER_VOICE.LINE_CHOICE,
+        btnfloating: { attr: 'type="button"', 'class': 'tw-popup-closeBtn', txt: Tw.BUTTON_LABEL.CLOSE },
         data: [{ list: lineList.map($.proxy(fnSelectLine, this)) }]
       },
-      null,
+      $.proxy(this._handleSelectLineChange, this),
       null
     );
   },
 
-  _selectLineCallback: function (e) {
-    this._popupService.close();
-    var $el = $(e.currentTarget);
+  // 서비스문의 > 회선변경 선택시
+  _handleSelectLineChange: function ($layer) {
+    $layer.on('change', 'li input', $.proxy(this._selectLineCallback, this));
+  },
 
+  // 서비스문의 > 회선변경 처리
+  _selectLineCallback: function (e) {
+    var $el = $(e.currentTarget);
     var nTabIndex = this.$container.triggerHandler('getTabIndex');
     if ( nTabIndex === 0 ) {
       $('#tab1-tab .fe-select-line').data('svcmgmtnum', $el.data('svcmgmtnum').toString());
-      $('#tab1-tab .fe-select-line').text($el.text().trim());
+      $('#tab1-tab .fe-select-line').text($el.parents('li').find('.txt').text().trim());
     } else {
       $('#tab2-tab .fe-quality-line').data('svcmgmtnum', $el.data('svcmgmtnum').toString());
       $('#tab2-tab .fe-quality-line').text($el.text().trim());
     }
+
+    this._popupService.close();
   },
 
   _disabledCheckbox: function (e) {
