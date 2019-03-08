@@ -4,7 +4,8 @@ Tw.LSTORE_KEY = {
   HOME_BILL: 'homeBill',
   HOME_MICRO_CONTENTS: 'homeMicroContents',
   CHANGE_LOGIN_STATUS: 'changeLoginStatus',
-  RECENT_SEARCH_KEYWORD : 'recentSearchKeyword'
+  RECENT_SEARCH_KEYWORD : 'recentSearchKeyword',
+  PRODUCT_JOIN_RESERVATION: 'productJoinReservation'
 };
 
 Tw.FIDO_TYPE = {

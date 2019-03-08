@@ -42,6 +42,8 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
 
   _bindEvent: function() {
     this.$container.on('keyup', 'input', $.proxy(this._checkIsAbled, this));
+    this.$container.on('keypress', 'input', $.proxy(this._preventDot, this));
+
     this.$container.on('click', '.fe-btn_cancel', $.proxy(this._clear, this));
     this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
   },
@@ -60,6 +62,14 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
 
     this.$inputPassword.attr('type', 'password');
     this.$confirmPassword.attr('type', 'password');
+  },
+
+  _preventDot: function(e) {
+    var key = e.charCode ? e.charCode : e.keyCode;
+    if (key === 46) {
+      e.preventDefault();
+      return false;
+    }
   },
 
   _checkIsAbled: function (e) {
