@@ -433,7 +433,7 @@ Tw.MenuComponent.prototype = {
               });
             break;
           case 'membership':
-            this._apiService.request(Tw.API_CMD.BFF_04_0001, {})
+            this._apiService.request(Tw.SESSION_CMD.BFF_04_0001, {})
               .then(function (res) {
                 if ( res.code === Tw.API_CODE.CODE_00 ) {
                   var group = {
@@ -447,7 +447,7 @@ Tw.MenuComponent.prototype = {
                   $(elem).remove();
                 }
               })
-              .fail(function () {
+              .fail(function (err) {
                 $(elem).remove();
               });
             break;
