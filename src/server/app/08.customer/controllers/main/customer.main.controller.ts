@@ -61,11 +61,13 @@ class CustomerMain extends TwViewController {
 
   private exceptNullObject = (banners: Array<Banners | null>): Array<Banners | null> => {
     const resultData: Array<Banners | null> = [];
-    banners.map(banner => {
-      if (banner !== null) {
-        resultData.push(banner);        
-      }
-    }) ;
+    if (banners && banners.length) {
+      banners.map(banner => {
+        if (banner !== null) {
+          resultData.push(banner);        
+        }
+      }) ;
+    }
     return resultData;
   }
 
