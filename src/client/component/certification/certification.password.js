@@ -20,6 +20,9 @@ Tw.CertificationPassword = function () {
 
 
 Tw.CertificationPassword.prototype = {
+  ERROR_CODE: {
+    CANCEL: 1500
+  },
   open: function (authUrl, authKind, prodAuthKey, callback) {
     this._authUrl = authUrl;
     this._callback = callback;
@@ -49,6 +52,8 @@ Tw.CertificationPassword.prototype = {
   _onCertResult: function (resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
       this._confirmPasswordCert();
+    } else if ( resp.resultCode === this.ERROR_CODE.CANCEL ) {
+      //
     } else {
       Tw.Error(resp.resultCode, '').pop();
     }
