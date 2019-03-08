@@ -107,27 +107,7 @@ Tw.MenuComponent.prototype = {
       return;
     }
 
-    // Check if there is unread T-Notifications
-    this._nativeService.send(Tw.NTV_CMD.IS_APP_CREATED, { key: Tw.NTV_PAGE_KEY.T_NOTI }, $.proxy(function (res) {
-      // Only if an App is fresh executed
-      if ( res.resultCode === Tw.NTV_CODE.CODE_00 && res.params.value === 'Y' ) {
-        this._apiService.request(Tw.API_CMD.BFF_04_0004, { tid: this._tid })
-          .then($.proxy(function (res) {
-            if ( res.code === Tw.API_CODE.CODE_00 && res.result.length ) {
-              this._nativeService.send(Tw.NTV_CMD.SAVE, {
-                key: Tw.NTV_STORAGE.MOST_RECENT_PUSH_SEQ,
-                value: res.result[0].seq
-              }, $.proxy(function (res) {
-                if ( res.resultCode === Tw.NTV_CODE.CODE_00 ) {
-                  this._checkNewTNoti();
-                }
-              }, this));
-            }
-          }, this));
-      } else {
-        this._checkNewTNoti();
-      }
-    }, this));
+
   },
   _checkNewTNoti: function () {
     var showNotiIfNeeded = function (latestSeq, self) {
@@ -137,11 +117,9 @@ Tw.MenuComponent.prototype = {
             if ( res.params.value !== latestSeq ) {
               // Show red dot!
               self.$container.find('.fe-t-noti').addClass('on');
-              $('.h-menu').addClass('on');
             }
           } else if ( res.resultCode === Tw.NTV_CODE.CODE_ERROR ) {
             self.$container.find('.fe-t-noti').addClass('on');
-            $('.h-menu').addClass('on');
           }
         }, self)
       );
@@ -458,6 +436,28 @@ Tw.MenuComponent.prototype = {
     }
 
     skt_landing.action.gnb();
+
+    // Check if there is unread T-Notifications
+    this._nativeService.send(Tw.NTV_CMD.IS_APP_CREATED, { key: Tw.NTV_PAGE_KEY.T_NOTI }, $.proxy(function (res) {
+      // Only if an App is fresh executed
+      if ( res.resultCode === Tw.NTV_CODE.CODE_00 && res.params.value === 'Y' ) {
+        this._apiService.request(Tw.API_CMD.BFF_04_0004, { tid: this._tid })
+          .then($.proxy(function (res) {
+            if ( res.code === Tw.API_CODE.CODE_00 && res.result.length ) {
+              this._nativeService.send(Tw.NTV_CMD.SAVE, {
+                key: Tw.NTV_STORAGE.MOST_RECENT_PUSH_SEQ,
+                value: res.result[0].seq
+              }, $.proxy(function (res) {
+                if ( res.resultCode === Tw.NTV_CODE.CODE_00 ) {
+                  this._checkNewTNoti();
+                }
+              }, this));
+            }
+          }, this));
+      } else {
+        this._checkNewTNoti();
+      }
+    }, this));
   },
 
   tideUpMenuInfo: function (menuInfo, userInfo) {
