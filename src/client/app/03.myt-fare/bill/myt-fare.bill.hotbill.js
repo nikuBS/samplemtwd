@@ -363,7 +363,7 @@ Tw.MyTFareHotBill.prototype = {
     var lineComponent = new Tw.LineComponent();
     this._popupService.close();
     Tw.CommonHelper.startLoading('.container');
-    lineComponent.changeLine(target.svcMgmtNum, null, $.proxy(this._onChangeSessionSuccess, this));
+    lineComponent.changeLine(target.svcMgmtNum, target.svcNum, $.proxy(this._onChangeSessionSuccess, this));
   },
   /**
    * Success callback for _requestSwitchLine.
