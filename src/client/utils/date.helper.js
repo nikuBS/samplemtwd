@@ -357,6 +357,10 @@ Tw.DateHelper = (function () {
     return moment().format(format);
   };
 
+  var add5min = function(date) {
+    return moment(this.convDateFormat(date)).add(5, 'minutes').format('YYYYMMDDHHmmss');
+  };
+
   return {
     getRemainDate: getRemainDate,
     getNewRemainDate: getNewRemainDate,
@@ -401,6 +405,7 @@ Tw.DateHelper = (function () {
     getTomorrowDate: getTomorrowDate,
     AddMonth: AddMonth,
     isBefore: isBefore,
-    getDateCustomFormat : getDateCustomFormat
+    getDateCustomFormat : getDateCustomFormat,
+    add5min: add5min
   };
 })();

@@ -564,6 +564,11 @@ Tw.NODE_CMD = {
   GET_PRODUCT_INFO: { path: '/product/info', method: Tw.API_METHOD.GET }
 };
 
+Tw.SESSION_CMD = {
+  BFF_04_0001: { path: '/core-membership/:version/card/homeinfo', method: Tw.API_METHOD.GET, command: 'BFF_05_0001' },
+  BFF_05_0001: { path: '/:version/my-t/balances', method: Tw.API_METHOD.GET, command: 'BFF_05_0001' }
+};
+
 Tw.TMAP = {
   URL: 'https://api2.sktelecom.com/tmap',
   PIN: '/img/ico/ico-tmap-pin.png',
@@ -621,6 +626,12 @@ Tw.API_CODE = {
   RCG0101: 'RCG0101', // Ting 요금제 차단 상태
   ZPAYE0077: 'ZPAYE0077', // 제공자가 성인이 아닌 경우 팅충전 선물을 할 수 없습니다.
   RCG0062: 'RCG0062' // 팅,쿠키즈,안심 음성 미사용 상태
+};
+
+Tw.CALLBACK_CODE = {
+  SUCCESS: '00',
+  FAIL: '01',
+  CANCEL: '02'
 };
 
 Tw.API_SVC_PWD_ERROR = {

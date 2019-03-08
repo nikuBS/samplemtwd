@@ -119,18 +119,14 @@ abstract class TwViewController {
   }
 
   private sessionCheck(req, res, next, path) {
-    if ( this._loginService.isNewSession() ) {
-      this.renderPage(req, res, next, path);
+    const loginCookie = req.cookies[COOKIE_KEY.TWM_LOGIN];
+    if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
+      this._logger.info(this, '[Session expired]');
+      res.clearCookie(COOKIE_KEY.TWM_LOGIN);
+      res.redirect('/common/member/logout/expire?target=' + req.baseUrl + req.url);
     } else {
-      const loginCookie = req.cookies[COOKIE_KEY.TWM_LOGIN];
-      if ( !FormatHelper.isEmpty(loginCookie) && loginCookie === 'Y' ) {
-        this._logger.info(this, '[Session expired]');
-        res.clearCookie(COOKIE_KEY.TWM_LOGIN);
-        res.redirect('/common/member/logout/expire?target=' + req.baseUrl + req.url);
-      } else {
-        this._logger.info(this, '[Session empty]');
-        this.renderPage(req, res, next, path);
-      }
+      this._logger.info(this, '[Session empty]');
+      this.renderPage(req, res, next, path);
     }
   }
 

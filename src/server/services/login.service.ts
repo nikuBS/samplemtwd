@@ -7,6 +7,7 @@ import { XTRACTOR_KEY } from '../types/config.type';
 import EnvHelper from '../utils/env.helper';
 import CryptoHelper from '../utils/crypto.helper';
 import BrowserHelper from '../utils/browser.helper';
+import DateHelper from '../utils/date.helper';
 
 class LoginService {
   static instance;
@@ -224,7 +225,7 @@ class LoginService {
   public setMaskingCert(svcMgmtNum: string): Observable<any> {
     return Observable.create((observer) => {
       if ( !FormatHelper.isEmpty(this.request) ) {
-        if ( FormatHelper.isEmpty(this.request.masking) ) {
+        if ( FormatHelper.isEmpty(this.request.session.masking) ) {
           this.request.session.masking = [];
         }
         this.request.session.masking.push(svcMgmtNum);
@@ -247,7 +248,7 @@ class LoginService {
   public setNoticeType(noticeType: string): Observable<any> {
     return Observable.create((observer) => {
       if ( !FormatHelper.isEmpty(this.request) ) {
-        if ( FormatHelper.isEmpty(this.request.masking) ) {
+        if ( FormatHelper.isEmpty(this.request.session.noticeType) ) {
           this.request.session.noticeType = '';
         }
         this.request.session.noticeType = noticeType;
@@ -265,7 +266,40 @@ class LoginService {
       return this.request.session.noticeType;
     }
     return '';
+  }
 
+  public setSessionStore(command: string, svcMgmtNum: string, result: any): Observable<any> {
+    return Observable.create((observer) => {
+      if ( !FormatHelper.isEmpty(this.request) ) {
+        if ( FormatHelper.isEmpty(this.request.session.store) ) {
+          this.request.session.store = {};
+        }
+        if ( FormatHelper.isEmpty(this.request.session.store[svcMgmtNum]) ) {
+          this.request.session.store[svcMgmtNum] = {};
+        }
+        if ( FormatHelper.isEmpty(this.request.session.store[svcMgmtNum][command]) ) {
+          this.request.session.store[svcMgmtNum][command] = {};
+        }
+        this.request.session.store[svcMgmtNum][command] = {
+          data: result,
+          expired: DateHelper.add5min(new Date())
+        };
+        this.request.session.save(() => {
+          this.logger.debug(this, '[setSessionStore]', this.request.session.store);
+          observer.next(this.request.session.store[svcMgmtNum][command]);
+          observer.complete();
+        });
+      }
+    });
+  }
+
+  public getSessionStore(command: string, svcMgmtNum: string): any {
+    if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.store) &&
+      !FormatHelper.isEmpty(this.request.session.store[svcMgmtNum]) && !FormatHelper.isEmpty(this.request.session.store[svcMgmtNum][command]) ) {
+      this.logger.debug(this, '[getSessionStore]', this.request.session.store[svcMgmtNum][command]);
+      return this.request.session.store[svcMgmtNum][command];
+    }
+    return null;
   }
 
   public logoutSession(): Observable<any> {

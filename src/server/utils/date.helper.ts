@@ -414,6 +414,10 @@ class DateHelper {
   static getDday(date: any): number {
     return moment(date).diff(this.getCurrentShortDate(new Date()), 'day');
   }
+
+  static add5min(date: any): any {
+    return moment(this.convDateFormat(date)).add(5, 'minutes').format('YYYYMMDDHHmmss');
+  }
 }
 
 export default DateHelper;
