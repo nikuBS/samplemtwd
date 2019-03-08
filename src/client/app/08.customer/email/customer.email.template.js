@@ -97,7 +97,7 @@ Tw.CustomerEmailTemplate.prototype = {
     this._afterChangeTemp(this.$wrap_tpl_service, serviceCategory.depth2);
 
     skt_landing.widgets.widget_init();
-    Tw.Tooltip.separateInit(this.$wrap_tpl_service.find('.btn-tip'));
+    Tw.Tooltip.separateInit(this.$wrap_tpl_service.find('.bt-link-tx'));
   },
 
   _changeQualityTemplate: function (e, qualityCategory, qualityType) {
@@ -143,7 +143,7 @@ Tw.CustomerEmailTemplate.prototype = {
     this._afterChangeTemp(this.$wrap_tpl_quality, qualityCategory.depth1);
 
     skt_landing.widgets.widget_init();
-    Tw.Tooltip.separateInit(this.$wrap_tpl_quality.find('.btn-tip'));
+    Tw.Tooltip.separateInit(this.$wrap_tpl_quality.find('.bt-link-tx'));
   },
 
 
