@@ -132,7 +132,8 @@ Tw.TidLandingComponent.prototype = {
     this._nativeService.send(Tw.NTV_CMD.LOG, { type: Tw.NTV_LOG_T.DEBUG, message: '_onNativeFindPw' });
   },
   _onNativeChangePw: function () {
-    this._nativeService.send(Tw.NTV_CMD.LOG, { type: Tw.NTV_LOG_T.DEBUG, message: '_onNativeChangePw' });
+    // this._nativeService.send(Tw.NTV_CMD.LOG, { type: Tw.NTV_LOG_T.DEBUG, message: '_onNativeChangePw' });
+    this._historyService.goBack();
   },
   _onNativeLogin: function (target, resp) {
     if ( resp.resultCode === Tw.NTV_CODE.CODE_00 ) {
