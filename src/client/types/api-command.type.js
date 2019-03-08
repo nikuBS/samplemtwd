@@ -564,6 +564,11 @@ Tw.NODE_CMD = {
   GET_PRODUCT_INFO: { path: '/product/info', method: Tw.API_METHOD.GET }
 };
 
+Tw.SESSION_CMD = {
+  BFF_04_0001: { path: '/core-membership/:version/card/homeinfo', method: Tw.API_METHOD.GET, command: 'BFF_05_0001' },
+  BFF_05_0001: { path: '/:version/my-t/balances', method: Tw.API_METHOD.GET, command: 'BFF_05_0001' }
+};
+
 Tw.TMAP = {
   URL: 'https://api2.sktelecom.com/tmap',
   PIN: '/img/ico/ico-tmap-pin.png',

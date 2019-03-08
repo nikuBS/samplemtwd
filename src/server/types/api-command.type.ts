@@ -129,7 +129,7 @@ export const API_CMD = {
   BFF_03_0029: { path: '/core-auth/:version/exposable-services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_03_0030: { path: '/core-auth/:version/exposed-services', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   // MainHome T-Notify
-  BFF_04_0001: { path: '/core-membership/:version/card/homeinfo', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
+  BFF_04_0001: { path: '/core-membership/:version/card/homeinfo', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, store: true },
   BFF_04_0002: { path: '/core-product/:version/t-notice/prod-chg-hst', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: false },
   BFF_04_0003: { path: '/core-modification/:version/quick-menu/saveInfo', method: API_METHOD.POST, server: API_SERVER.BFF, bypass: true },
   BFF_04_0004: { path: '/core-auth/:version/get-fcm-push-list', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -139,7 +139,7 @@ export const API_CMD = {
   BFF_04_0008: { path: '/core-bill/v1/bill-pay/use-amt-main', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_04_0009: { path: '/core-bill/v1/bill-pay/bill-main', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   // MYT
-  BFF_05_0001: { path: '/:version/my-t/balances', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, native: true },
+  BFF_05_0001: { path: '/:version/my-t/balances', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true, native: true, store: true },
   BFF_05_0002: { path: '/core-balance/:version/balance-add-ons', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0003: { path: '/core-balance/:version/troaming-sharings', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
   BFF_05_0004: { path: '/core-balance/:version/data-sharings', method: API_METHOD.GET, server: API_SERVER.BFF, bypass: true },
@@ -916,6 +916,11 @@ export const API_CMD = {
   PUT_PARAM: { path: '/posts/1', method: API_METHOD.PUT, server: API_SERVER.TEST, bypass: true },
   DELETE: { path: '/posts/1', method: API_METHOD.DELETE, server: API_SERVER.TEST, bypass: true },
   DELETE_PARAM: {}
+};
+
+export const SESSION_CMD = {
+  BFF_05_0001: 'BFF_05_0001',
+  BFF_04_0001: 'BFF_04_0001'
 };
 
 export const API_CODE = {

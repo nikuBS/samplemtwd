@@ -57,7 +57,7 @@ import CommonMemberInit from './controllers/member/common.member.init.controller
 import CommonSearchMain from './controllers/search/common.search-main.controller';
 import CommonUtilServiceBlock from './controllers/util/common.util.service-block.controller';
 import CommonSearchInResult from './controllers/search/common.search.in-result.controller';
-import CommonUtilServiceReady from './controllers/util/commin.util.service-ready.controller';
+import CommonUtilServiceReady from './controllers/util/common.util.service-ready.controller';
 import CommonMemberLoginLost from './controllers/member/common.member.login.lost.controller';
 
 export default class CommonRouter extends TwRouter {
