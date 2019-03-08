@@ -18,6 +18,7 @@ Tw.PopupService.prototype = {
     this._hashService.initHashNav($.proxy(this._onHashChange, this));
   },
   _onHashChange: function (hash) {
+    this._historyBack = false;
     var lastHash = this._prevHashList[this._prevHashList.length - 1];
     Tw.Logger.log('[Popup] Hash Change', '#' + hash.base, lastHash);
     if ( !Tw.FormatHelper.isEmpty(lastHash) ) {
@@ -27,9 +28,9 @@ Tw.PopupService.prototype = {
         Tw.Logger.info('[Popup Close]');
         this._popupClose(closeCallback);
       }
-    } else if(hash.base.indexOf('_P') >= 0 || hash.base.indexOf('popup') >= 0) {
-      if (Tw.BrowserHelper.isSamsung()) {
-        if (window.performance && performance.navigation.type === 1) {
+    } else if ( hash.base.indexOf('_P') >= 0 || hash.base.indexOf('popup') >= 0 ) {
+      if ( Tw.BrowserHelper.isSamsung() ) {
+        if ( window.performance && performance.navigation.type === 1 ) {
           this._emptyHash();
         } else {
           this._goBack();
@@ -362,10 +363,25 @@ Tw.PopupService.prototype = {
     });
   },
   close: function () {
-    Tw.Logger.log('[Popup] Call Close', location.hash);
+    Tw.Logger.log('[Popup] Call Close', location.hash, window.history.length, document.referrer, window.history.state, window.history);
     if ( /_P/.test(location.hash) || /popup/.test(location.hash) ) {
       Tw.Logger.log('[Popup] history back');
       history.back();
+      this._historyBack = true;
+
+      if ( /\/main\/home/.test(location.href) ) {
+        setTimeout($.proxy(function () {
+          Tw.Logger.info('[Popup Check]', this._prevHashList, this._historyBack);
+          if ( this._historyBack && this._prevHashList.length > 0) {
+            this._historyBack = false;
+            var lastHash = this._prevHashList[this._prevHashList.length - 1];
+            var closeCallback = lastHash.closeCallback;
+            location.hash = lastHash.curHash;
+            this._prevHashList.pop();
+            this._popupClose(closeCallback);
+          }
+        }, this), 500);
+      }
     }
   },
   closeAll: function () {

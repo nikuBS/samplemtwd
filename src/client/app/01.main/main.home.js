@@ -960,7 +960,7 @@ Tw.MainHome.prototype = {
   _onHiddenEventNotice: function ($event, notice) {
     setTimeout($.proxy(function () {
       this._openEmrNoticePopup(notice);
-    }, this), 1500);
+    }, this), 2000);
   },
   _setCoachMark: function () {
     new Tw.CoachMark(this.$container, '.fe-coach-line', Tw.NTV_STORAGE.COACH_LINE);
