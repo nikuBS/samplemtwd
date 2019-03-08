@@ -332,6 +332,18 @@ Tw.CustomerAgentsearchNear.prototype = {
       // this.$btnMore.addClass('none');
       this.$container.find('#fe-more-div').addClass('none');
     }
+
+    if (shops.length === 0) {
+      this.$container.find('.bt-top').addClass('none');
+      this.$container.find('#fe-empty-result').removeClass('none');
+      if (!this.$divMap.hasClass('none') && this._regionChanged) {
+        this._popupService.openAlert('검색 결과가 없습니다.<br>다른 지역을 선택해 주세요.');
+        this._regionChanged = false;
+      }
+    } else {
+      this.$container.find('.bt-top').removeClass('none');
+      this.$container.find('#fe-empty-result').addClass('none');
+    }
   },
   _onMarkerClicked: function () {
     window.location.href = '/customer/agentsearch/detail?code=' + this.popup.contentHTML;
@@ -353,6 +365,7 @@ Tw.CustomerAgentsearchNear.prototype = {
     this._popupService.close();
 
     this._regions = regions;
+    this._regionChanged = true;
 
     this._apiService.requestAjax(Tw.AJAX_CMD.GET_TMAP_POI, {
       version: 1,

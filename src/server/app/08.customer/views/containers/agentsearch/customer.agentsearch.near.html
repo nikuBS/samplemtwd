@@ -5,6 +5,7 @@
 %>
 
 <%- include('../../components/start.component.html', { pageInfo: locals.pageInfo }); %>
+
 <body>
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
@@ -67,22 +68,31 @@
                                     <li>
                                         <dl class="type02">
                                             <dt>신사대리점 직영점</dt>
-                                            <dd>서울시 중구 만리재로 175, 상가2동 102호<br />(만리동 2가 37-2)<button class="bt-tel"><span role="img" class="blind">매장으로 전화하기</span></button></dd>
+                                            <dd>서울시 중구 만리재로 175, 상가2동 102호<br />(만리동 2가 37-2)<button class="bt-tel"><span
+                                                        role="img" class="blind">매장으로 전화하기</span></button></dd>
                                         </dl>
                                     </li>
                                     <li>
                                         <dl class="type02">
                                             <dt>에스알대리점 모란직영점(수진-태평점)</dt>
-                                            <dd>서울 관악구 관악로 201<br />(봉천동 859-40)<button class="bt-tel"><span role="img" class="blind">매장으로 전화하기</span></button></dd>
+                                            <dd>서울 관악구 관악로 201<br />(봉천동 859-40)<button class="bt-tel"><span role="img"
+                                                        class="blind">매장으로 전화하기</span></button></dd>
                                         </dl>
                                     </li>
                                     <li>
                                         <dl class="type02">
                                             <dt>아이티모바일대리점 수원탑동점</dt>
-                                            <dd>서울시 양천구 목동동로 379, 106호<br />(목동 907-17)<button class="bt-tel"><span role="img" class="blind">매장으로 전화하기</span></button></dd>
+                                            <dd>서울시 양천구 목동동로 379, 106호<br />(목동 907-17)<button class="bt-tel"><span
+                                                        role="img" class="blind">매장으로 전화하기</span></button></dd>
                                         </dl>
                                     </li>
                                 </ul>
+                            </div>
+                            <div class="cont-box nogaps none" id="fe-empty-result">
+                                <div class="contents-empty">
+                                    <span class="ico type1"></span>
+                                    <p class="desc">검색 결과가 없습니다.</p>
+                                </div>
                             </div>
                             <!-- // .shop-txt -->
                         </div>
@@ -92,17 +102,17 @@
                 <!-- // cont-box -->
                 <!-- .cont-box -->
                 <div class="none" id="fe-div-list-btns">
-                  <div class="cont-box nogaps">
-                      <div class="bt-more" id="fe-more-div">
-                          <button role="button" id="fe-btn-more"title="">더보기</button>
-                      </div>
-                  </div>
-                  <!-- // .cont-box -->
-                  <!-- .bt-top -->
-                  <div class="bt-top">
-                      <button>top으로 이동</button>
-                  </div>
-                <!-- // .bt-top -->
+                    <div class="cont-box nogaps">
+                        <div class="bt-more" id="fe-more-div">
+                            <button role="button" id="fe-btn-more" title="">더보기</button>
+                        </div>
+                    </div>
+                    <!-- // .cont-box -->
+                    <!-- .bt-top -->
+                    <div class="bt-top">
+                        <button>top으로 이동</button>
+                    </div>
+                    <!-- // .bt-top -->
                 </div>
             </div>
         </div>
@@ -116,7 +126,7 @@
 <% include ../../components/javascript.component.html %>
 <% include ../../components/tmap.component.html %>
 <script type="text/template" id="tpl_list_item">
-  {{#list}}
+    {{#list}}
   <li class='fe-type-{{storeType}}'>
       <dl class="type02 fe-list" value={{locCode}}>
           <dt>{{storeName}}</dt>
@@ -129,8 +139,8 @@
 </script>
 
 <script>
-  $(document).ready(function () {
-    new Tw.CustomerAgentsearchNear($('.wrap'));
-  });
+    $(document).ready(function () {
+        new Tw.CustomerAgentsearchNear($('.wrap'));
+    });
 </script>
 <% include ../../components/end.component.html %>
