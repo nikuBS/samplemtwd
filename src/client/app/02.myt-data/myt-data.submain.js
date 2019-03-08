@@ -299,6 +299,14 @@ Tw.MyTDataSubMain.prototype = {
     return select;
   },
 
+  __selectSvcType: function (attrCd) {
+    var clsNm = 'cellphone';
+    if ( ['M3', 'M4'].indexOf(attrCd) > -1 ) {
+      clsNm = 'tablet';
+    }
+    return clsNm;
+  },
+
   // chart create
   _requestPattern: function () {
     this._isRequestPattern = true;
@@ -480,6 +488,7 @@ Tw.MyTDataSubMain.prototype = {
             unit: ''
           };
         }
+        data.svcType = this.__selectSvcType(selectLine.svcAttrCd);
         data = _.extend(selectLine, data);
         list.push(data);
       }
