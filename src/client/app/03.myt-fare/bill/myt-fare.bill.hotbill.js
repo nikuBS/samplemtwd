@@ -87,7 +87,7 @@ Tw.MyTFareHotBill.prototype = {
   },
   /**
    * Success callback for _sendBillRequest.
-   * 실시간 이용요금 생성 요청 후 자료를 다시 조회한다.(대기시간 필요: 2.5초)
+   * 실시간 이용요금 생성 요청 후 자료를 다시 조회한다.(대기시간 필요: 전월 5초, 당월 2.5초)
    * @param childSvcMgmtNum
    * @param resp
    * @private
@@ -105,7 +105,7 @@ Tw.MyTFareHotBill.prototype = {
           .request(Tw.API_CMD.BFF_05_0022, params)
           .done($.proxy(this._onReceivedBillData, this, childSvcMgmtNum))
           .fail($.proxy(this._onErrorReceivedBillData, this));
-      }, this), this._requestCount === 1 ? 0 : 2500);
+      }, this), this._isPrev ? 5000 : 2500);
 
     } else {
       this._onErrorReceivedBillData(resp);
@@ -127,12 +127,10 @@ Tw.MyTFareHotBill.prototype = {
       params.childSvcMgmtNum = child.svcMgmtNum;
     }
 
-    setTimeout($.proxy(function () {
-      this._apiService
-        .request(Tw.API_CMD.BFF_05_0022, params)
-        .done($.proxy(this._getBillResponse, this, child))
-        .fail($.proxy(this._onErrorReceivedBillData, this));
-    }, this),  2500 );
+    this._apiService
+      .request(Tw.API_CMD.BFF_05_0022, params)
+      .done($.proxy(this._getBillResponse, this, child))
+      .fail($.proxy(this._onErrorReceivedBillData, this));
   },
 
   /**
@@ -232,9 +230,8 @@ Tw.MyTFareHotBill.prototype = {
     var output = template({ list: items });
     this.$lineList.append(output);
 
-    setTimeout($.proxy(function () {
-      _.each(items, $.proxy(this._sendBillRequestOtherLine, this));
-    }, this),  2500);
+    // 다른회선 요금 조회
+    _.each(items, $.proxy(this._sendBillRequestOtherLine, this));
 
     this._idxLastItem += this.NUM_OF_ITEMS;
     var moreItems = this._lines.length - this._idxLastItem;
@@ -277,7 +274,7 @@ Tw.MyTFareHotBill.prototype = {
           .request(Tw.API_CMD.BFF_05_0022, params)
           .done($.proxy(this._onReceiveBillOtherLine, this, line))
           .fail($.proxy(this._onErrorOtherLine, this));
-      }, this),  line.count === 1 ? 0 : 2500);
+      }, this), this._isPrev ? 5000 : 2500);
 
     } else {
       this._onErrorOtherLine(line, resp);
