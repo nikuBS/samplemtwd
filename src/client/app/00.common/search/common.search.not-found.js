@@ -200,7 +200,7 @@ $.extend(Tw.CommonSearchNotFound.prototype,
     targetEvt.preventDefault();
     var $currentTarget = $(targetEvt.currentTarget);
     if(!$currentTarget.hasClass('searchword-text')){
-      this._addRecentlyKeyword($currentTarget.data('keyword'));
+      this._addRecentlyKeyword($currentTarget.data('keyword')||$currentTarget.data('param'));
     }
     this._moveUrl($currentTarget.attr('href'));
   },
