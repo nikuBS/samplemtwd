@@ -316,6 +316,49 @@ Tw.PopupService.prototype = {
     this._addHash(closeCallback, hashName);
     this._open(option);
   },
+  openSwitchLine: function (from, target, btName, openCallback, confirmCallback, closeCallback, hashName, align) {
+    // 회선 타입
+    var clsNm = 'cellphone';
+    if ( target.svcAttrCd.indexOf('S') > -1 ) {
+      if ( target.svcAttrCd === 'S1' ) {
+        clsNm = 'internet';
+      } else {
+        clsNm = 'pc';
+      }
+    }
+    else if ( ['M3', 'M4'].indexOf(target.svcAttrCd) > -1 ) {
+      clsNm = 'tablet';
+    }
+
+    var template = Handlebars.compile(Tw.MYT_TPL.SWITCH_LINE_POPUP.CONTENTS);
+    var contents = template({
+      svcNum: Tw.FormatHelper.getDashedCellPhoneNumber(target.svcNum.replace(/-/g, '')),
+      desc: _.isEmpty(target.nickNm) ? target.eqpMdlNm : target.nickNm,
+      clsNm: clsNm
+    });
+    template = Handlebars.compile(Tw.MYT_TPL.SWITCH_LINE_POPUP.TITLE);
+    var title = template({
+      svcNum: Tw.FormatHelper.getDashedCellPhoneNumber(from.svcNum.replace(/-/g, ''))
+    });
+
+    // openModalTypeA
+    var option = {
+      title: title,
+      title_type: 'sub',
+      contents: contents,
+      bt_b: [{
+        style_class: 'pos-left tw-popup-closeBtn',
+        txt: Tw.BUTTON_LABEL.CANCEL
+      }, {
+        style_class: 'bt-red1 pos-right tw-popup-confirm',
+        txt: btName || Tw.BUTTON_LABEL.CONFIRM
+      }]
+    };
+    this._setOpenCallback(openCallback);
+    this._setConfirmCallback(confirmCallback);
+    this._addHash(closeCallback, hashName);
+    this._open(option);
+  },
   openModalTypeATwoButton: function (title, contents, btName, closeBtName, openCallback, confirmCallback, closeCallback, hashName) {
     var option = {
       title: title,

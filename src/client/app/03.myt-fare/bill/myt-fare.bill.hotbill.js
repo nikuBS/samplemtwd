@@ -354,14 +354,8 @@ Tw.MyTFareHotBill.prototype = {
    * @private
    */
   _confirmSwitchLine: function (target) {
-    var defaultLineInfo = Tw.FormatHelper.getDashedCellPhoneNumber(this._svcInfo.svcNum.replace(/-/g, '')) + ' ' +
-      (_.isEmpty(this._svcInfo.nickNm) ? this._svcInfo.eqpMdlNm : this._svcInfo.nickNm);
-    var selectLineInfo = Tw.FormatHelper.getDashedCellPhoneNumber(target.svcNum.replace(/-/g, '')) + ' ' +
-      (_.isEmpty(target.nickNm) ? target.eqpMdlNm : target.nickNm);
-    this._popupService.openModalTypeA(Tw.REMNANT_OTHER_LINE.TITLE,
-      defaultLineInfo + Tw.MYT_TPL.DATA_SUBMAIN.SP_TEMP + selectLineInfo,
-      Tw.REMNANT_OTHER_LINE.BTNAME, null, $.proxy(this._requestSwitchLine, this, target),
-      null, null, 'tc');
+    this._popupService.openSwitchLine(this._svcInfo, target,Tw.REMNANT_OTHER_LINE.BTNAME, null,
+      $.proxy(this._requestSwitchLine, this, target), null, null )
   },
   /**
    * Request to switch the current line.
