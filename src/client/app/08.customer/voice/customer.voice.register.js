@@ -69,14 +69,15 @@ Tw.CustomerVoiceRegister.prototype = {
     e.stopPropagation();
     e.preventDefault();
 
-    var svcNum = $(e.currentTarget).data('service-number').toString();
+    var svcMgmtNum = $(e.currentTarget).data('service-number').toString(); // 서비스관리번호
+    var mdn = $(e.currentTarget).text().trim(); // 전화번호
 
-    this.$btn_select_phone.data('svcmgmtnum', svcNum);
-    this.$btn_select_phone.text($(e.currentTarget).text().trim());
+    this.$btn_select_phone.data('svcmgmtnum', svcMgmtNum);
+    this.$btn_select_phone.text(mdn);
 
     this._popupService.close();
 
-    this._lineComponent.changeLine(svcNum, null, $.proxy(function(){return null;}, this));
+    this._lineComponent.changeLine(svcMgmtNum, mdn, $.proxy(function(){return null;}, this));
   },
 
   _onClickRegister: function () {
