@@ -25,7 +25,7 @@ class MyTDataUsageChild extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, children: any, pageInfo: any) {
     const self = this;
     this.childSvcMgmtNum = req.query.childSvcMgmtNum;
     if (FormatHelper.isEmpty(this.childSvcMgmtNum)) {
@@ -33,11 +33,10 @@ class MyTDataUsageChild extends TwViewController {
     }
     Observable.combineLatest(
       this.reqBalances(),
-      this.reqBaseFeePlan(),
       this.reqTingSubscriptions()
-    ).subscribe(([usageDataResp, baseFeePlanResp, tingSubscriptionsResp]) => {
+    ).subscribe(([usageDataResp, tingSubscriptionsResp]) => {
       const apiError = this.error.apiError([
-        usageDataResp, baseFeePlanResp
+        usageDataResp
       ]);
 
       if ( !FormatHelper.isEmpty(apiError) ) {
@@ -45,16 +44,16 @@ class MyTDataUsageChild extends TwViewController {
       }
 
       const usageDataResult = usageDataResp.result;
-      const baseFeePlan = baseFeePlanResp.result;
+      const childInfo = this.getChildInfo(children);
+      if (FormatHelper.isEmpty(childInfo)) {
+        return this.renderErr(res, svcInfo, pageInfo, {});
+      }
       const usageData = self.myTDataHotData.parseUsageData(usageDataResult);
       const tingSubscription = tingSubscriptionsResp.code === API_CODE.CODE_00;
-      const child = childInfo.find((_child) => {
-        return _child.svcMgmtNum === this.childSvcMgmtNum;
-      });
-      usageData['childSvcNum'] = child.svcNum;
-      usageData['childSvcMgmtNum'] = child.svcMgmtNum;
-      usageData['childProdId'] = baseFeePlan.prodId;
-      usageData['childProdNm'] = baseFeePlan.prodName;
+      usageData['childSvcNum'] = childInfo.svcNum;
+      usageData['childSvcMgmtNum'] = childInfo.svcMgmtNum;
+      usageData['childProdId'] = childInfo.prodId;
+      usageData['childProdNm'] = childInfo.prodNm;
       const option = {
         usageData,
         tingSubscription,
@@ -246,13 +245,13 @@ class MyTDataUsageChild extends TwViewController {
   }
 
   /**
-   * 나의 요금제
+   * 자녀회선 정보 반환
    * @private
-   * return {Observable}
+   * return child
    */
-  private reqBaseFeePlan(): Observable<any> {
-    return this.apiService.request(API_CMD.BFF_05_0041, {
-      childSvcMgmtNum: this.childSvcMgmtNum
+  private getChildInfo(children): any {
+    return children.find((_child) => {
+      return _child.svcMgmtNum === this.childSvcMgmtNum;
     });
   }
 }
