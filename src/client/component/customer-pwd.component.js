@@ -191,11 +191,14 @@ Tw.CustomerPwdComponent.prototype = {
   },
   _onPwdPopupClosed: function () {
     if ( !this._isCloseCallbackNeeded ) {
+      if ( this._isPopup ) {
+        this._callback( {code: Tw.CALLBACK_CODE.CANCEL });
+      }
       return;
     }
     if ( this._pwdSuccess ) {
       if ( this._isPopup ) {
-        this._callback();
+        this._callback({ code: Tw.CALLBACK_CODE.SUCCESS });
       }
     } else {
       if ( this._isPopup ) {

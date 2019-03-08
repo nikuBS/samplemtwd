@@ -6,26 +6,14 @@
     <div class="txt">{{{sktProdBenfCtt}}}</div>
     <div class="tx-desc">3G 또는 LTE망 사용 시 데이터 요금이 발생됩니다</div>
     <div class="btn-area">
-        {{#if isApp}}
-            {{#if isInstalled}}
-                <button class="bt action" id="fe-open-btn">앱 실행하기</button>
-            {{else}}
-                {{#if isIos}}
-                    {{#if stores.appStore}}<button class="bt apple" data-market="appStore">앱스토어</button>{{/if}}
-                {{else}}
-                    {{#if stores.playStore}}<button class="bt google" data-market="playStore">구글 Play 스토어</button>{{/if}}
-                    {{#if stores.oneStore}}<button class="bt one-store" data-market="oneStore">원스토어</button>{{/if}}
-                {{/if}}
-            {{/if}}
+        {{#if isInstalled}}
+            <button class="bt action" id="fe-open-btn">앱 실행하기</button>
         {{else}}
             {{#if isIos}}
-                {{#if stores.appStore}}<button class="bt action" id="fe-exe-btn">앱 실행하기</button>{{/if}}
+                {{#if stores.appStore}}<button class="bt apple" data-market="appStore">앱스토어</button>{{/if}}
             {{else}}
-                {{#if stores.playStore}}
-                    <button class="bt action" id="fe-exe-btn">앱 실행하기</button>
-                {{else}}
-                    {{#if stores.oneStore}}<button class="bt action" id="fe-exe-btn">앱 실행하기</button>{{/if}}
-                {{/if}}
+                {{#if stores.playStore}}<button class="bt google" data-market="playStore">구글 Play 스토어</button>{{/if}}
+                {{#if stores.oneStore}}<button class="bt one-store" data-market="oneStore">원스토어</button>{{/if}}
             {{/if}}
         {{/if}}
     </div>

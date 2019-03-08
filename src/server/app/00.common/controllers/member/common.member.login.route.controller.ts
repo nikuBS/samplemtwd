@@ -13,12 +13,17 @@ class CommonMemberLoginRoute extends TwViewController {
     super();
   }
 
-  render(req: Request, res: Response, next: NextFunction, svcInfo: any, pageInfo: any) {
+  render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const query = req.query;
     const params = this.getParams(req.query.target);
 
     if ( !FormatHelper.isEmpty(query.error) ) {
-      res.redirect('/common/member/login/fail?errorCode=' + query.error_description + '&target=' + params.target);
+      if ( query.error === '3541' ) {
+        params.type = 'cancel';
+        res.render('member/common.member.login.route.html', { params, svcInfo, pageInfo });
+      } else {
+        res.redirect('/common/member/login/fail?errorCode=' + query.error_description + '&target=' + params.target);
+      }
     } else {
       res.render('member/common.member.login.route.html', { params, svcInfo, pageInfo });
     }

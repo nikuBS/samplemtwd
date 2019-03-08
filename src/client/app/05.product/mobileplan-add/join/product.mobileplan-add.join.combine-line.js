@@ -91,7 +91,7 @@ Tw.ProductMobileplanAddJoinCombineLine.prototype = {
     this._data.addList.push(number);
     this.$lineList.append(this._combinationTemplate({
       number: number,
-      numMask: number
+      numMask: Tw.FormatHelper.conTelFormatWithDash(number)
     }));
 
     this._clearNum();

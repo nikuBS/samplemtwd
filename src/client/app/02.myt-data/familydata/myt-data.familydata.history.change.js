@@ -18,7 +18,7 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
 
   _bindEvent: function() {
     this.$container.on('click', '.btn-type01', $.proxy(this._addChangeData, this));
-    this.$container.on('click', '.cancel', $.proxy(this._validateChangeAmount, this));
+    this.$cancel.on('click', $.proxy(this._handleClickCancel, this));
     this.$retrieveBtn.on('click', $.proxy(this._handleRerieveChangable, this, true));
     this.$input.on('focusout', $.proxy(this._validateChangeAmount, this));
     this.$input.on('keyup', $.proxy(this._handleTypeAmount, this));
@@ -32,32 +32,42 @@ Tw.MyTDataFamilyHistoryChange.prototype = {
     this.$strong = this.$container.find('strong.txt-c2');
     this.$retrieveBtn = this.$container.find('.fe-retrieve');
     this.$cancel = this.$container.find('.cancel');
+    this.$all = this.$container.find('.fe-all');
   },
 
   _addChangeData: function(e) {
-    var value = e.currentTarget.getAttribute('data-value'),
-      $target = $(e.currentTarget);
+    var value = e.currentTarget.getAttribute('data-value');
 
     if (value === 'all') {
-      if (this._all) {
-        this.$input.val('');
-        this.$input.removeAttr('disabled');
-        $target.siblings('.fe-enable').removeAttr('disabled');
-        $target.removeClass('btn-on');
-        this._all = false;
-      } else {
-        this.$input.val(this._changable.data);
-        this.$input.attr('disabled', true);
-        $target.siblings('.fe-enable').attr('disabled', true);
-        $target.addClass('btn-on');
-        this.$cancel.css('display', 'none');
-        this._all = true;
-      }
+      this._setButtonStatus(this._all);
     } else {
       this.$input.val(Number(this.$input.val()) + Number(value));
       this.$cancel.css('display', 'inline-block');
     }
 
+    this._validateChangeAmount();
+  },
+
+  _setButtonStatus: function(all) {
+    if (all) {
+      this.$input.val('');
+      this.$input.removeAttr('disabled');
+      this.$all.siblings('.fe-enable').removeAttr('disabled');
+      this.$cancel.css('display', 'none');
+      this.$all.removeClass('btn-on');
+      this._all = false;
+    } else {
+      this.$input.val(this._changable.data);
+      this.$input.attr('disabled', true);
+      this.$all.siblings('.fe-enable').attr('disabled', true);
+      this.$all.addClass('btn-on');
+      this.$cancel.css('display', 'inline');
+      this._all = true;
+    }
+  },
+
+  _handleClickCancel: function() {
+    this._setButtonStatus(true);
     this._validateChangeAmount();
   },
 

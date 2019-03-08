@@ -1017,6 +1017,7 @@
   right: 0;
   bottom: 0;
   z-index: 200;
+  -webkit-overflow-scrolling: touch;
   /* popup share */ }
   .popup.dropdown {
     top: 3.75rem;
@@ -1329,7 +1330,8 @@
       -webkit-box-sizing: border-box;
               box-sizing: border-box;
       overflow-y: auto;
-      background: #fff; }
+      background: #fff;
+      -webkit-overflow-scrolling: touch; }
     .popup .popup-dropdown .dropdown-group {
       margin: 1.875rem 0; }
     .popup .popup-dropdown .dropdown-title {
@@ -2762,6 +2764,9 @@ body.apphome {
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     position: relative; }
+    .main-charge-box > button .bt, .main-charge-box a .bt {
+      width: auto;
+      height: auto; }
   .main-charge-box .slider-box .slick-dots {
     top: -1.1875rem; }
     .main-charge-box .slider-box .slick-dots li span {

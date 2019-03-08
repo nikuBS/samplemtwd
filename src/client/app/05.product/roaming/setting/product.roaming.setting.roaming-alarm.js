@@ -174,7 +174,7 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
   },
   _removeEvt : function (btnEvt) {
     if(this._addedList.length<=1){
-      this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_NUMBER_MIN);
+      this._openAlert(null,Tw.ALERT_MSG_PRODUCT.ALERT_NUMBER_MIN);
       return;
     }
     this._popupService.openConfirmButton(
@@ -190,13 +190,15 @@ Tw.ProductRoamingSettingRoamingAlarm.prototype = {
   },
   _removeOnList : function ($args) {
     var $target = $($args.currentTarget);
-    var selectedIndex = $target.data('idx');
+    //var selectedIndex = $target.data('idx');
+    var selectedIndex = $target.parents('li').index();
     var requestValue = {
       'svcNumList' : [this._addedList[selectedIndex]]
     };
     this._apiService.request(Tw.API_CMD.BFF_10_0019, requestValue, {},[this._prodId]).
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){
+        this._addedList.splice(selectedIndex,1);
         $target.parents('li').remove();
       }else{
         this._openAlert(res.msg,Tw.POPUP_TITLE.ERROR);

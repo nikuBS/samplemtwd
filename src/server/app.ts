@@ -1,4 +1,6 @@
 // for APM
+import StoreRouter from './common/route/store.router';
+
 const os = require('os');
 process.env.WHATAP_NAME = os.hostname();
 const WhatapAgent = require('whatap').NodeAgent;
@@ -72,6 +74,7 @@ class App {
     this.setApis();
     this.setBypass();
     this.setNative();
+    this.setStore();
     this.setShortCut();
     this.setGlobalVariables();
     this.setClientMap();
@@ -88,8 +91,12 @@ class App {
 
   private setNative() {
     this.app.use('/native', new NativeRouter().router);
-
   }
+
+  private setStore() {
+    this.app.use('/store', new StoreRouter().router);
+  }
+
 
   private setGlobalVariables() {
     const env = environment[String(process.env.NODE_ENV)];

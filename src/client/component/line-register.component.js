@@ -269,7 +269,7 @@ Tw.LineRegisterComponent.prototype = {
   },
   _onCloseCompletePopup: function () {
     if ( this._goAuth ) {
-      Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
+      // Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.LINE_REFRESH, 'Y');
       this._historyService.goLoad('/common/member/line');
     } else if ( this._registerLength > 0 ) {
       this._historyService.reload();

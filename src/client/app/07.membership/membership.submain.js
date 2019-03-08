@@ -34,6 +34,7 @@ Tw.MembershipSubmain.prototype = {
     this.$barCode = this.$container.find('#fe-barcode-img');
     this.$nearBrand = this.$container.find('#fe-memebership-near');
     this._nearBrandTmpl = Handlebars.compile($('#tmplList').html());
+    this._noBrandTmpl = Handlebars.compile($('#tmplList-no-data').html());
   },
 
   _bindEvent: function() {
@@ -382,17 +383,24 @@ Tw.MembershipSubmain.prototype = {
     return iconArr;
   },
   _handleSuccessNeaBrand: function (resp) {
+    Tw.Logger.info('near brand resp :', resp);
     if ( resp.code === Tw.API_CODE.CODE_00 ) {
-      this.nearBrandData = resp.result.list;
-      for(var idx in this.nearBrandData){
-        this.nearBrandData[idx].showIcoGrd1 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk1);
-        this.nearBrandData[idx].showIcoGrd2 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk2);
-        this.nearBrandData[idx].showIcoGrd3 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk3);
-        this.nearBrandData[idx].showIcoGrd4 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk4);
+      if(Number(resp.result.totalCnt) > 0){
+        this.nearBrandData = resp.result.list;
+        for(var idx in this.nearBrandData){
+          this.nearBrandData[idx].showIcoGrd1 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk1);
+          this.nearBrandData[idx].showIcoGrd2 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk2);
+          this.nearBrandData[idx].showIcoGrd3 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk3);
+          this.nearBrandData[idx].showIcoGrd4 = this._changeIcoGrade(this.nearBrandData[idx].icoGrdChk4);
+        }
+        Tw.Logger.info('near brand resp :', this.nearBrandData);
+        this.$nearBrand.empty();
+        this.$nearBrand.append(this._nearBrandTmpl({ list : this.nearBrandData }));
+      } else {
+        this.$nearBrand.empty();
+        this.$nearBrand.append(this._noBrandTmpl());
       }
-      Tw.Logger.info('near brand resp :', this.nearBrandData);
-      this.$nearBrand.empty();
-      this.$nearBrand.append(this._nearBrandTmpl({ list : this.nearBrandData }));
+
     } else {
       var ALERT = Tw.ALERT_MSG_MEMBERSHIP.ALERT_1_A69;
       this._popupService.openAlert(ALERT.MSG, ALERT.TITLE, Tw.BUTTON_LABEL.CONFIRM,

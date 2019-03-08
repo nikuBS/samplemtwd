@@ -959,20 +959,25 @@ li.checkbox.type01 {
     background-color: #666;
     border-radius: 0.4375rem; }
   .btn-switch.type1 .switch-style {
+    position: relative;
     display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 3rem;
-    height: 1.625rem;
-    border: 1px solid #666;
-    border-radius: 0.875rem;
-    background-color: #fff;
-    overflow: hidden;
-    vertical-align: middle;
-    text-align: center;
-    -webkit-transition: .5s;
-    transition: .5s; }
+    width: 100%;
+    height: 100%; }
+    .btn-switch.type1 .switch-style:after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0.0625rem;
+      top: 0.0625rem;
+      width: 1.625rem;
+      height: 1.625rem;
+      border-radius: 100%;
+      background-color: #fff;
+      overflow: hidden;
+      vertical-align: middle;
+      text-align: center;
+      -webkit-transition: .5s;
+      transition: .5s; }
     .btn-switch.type1 .switch-style > span {
       position: absolute;
       left: 0;
@@ -998,12 +1003,15 @@ li.checkbox.type01 {
   .btn-switch.type1.on:before {
     background-color: #e22f26; }
   .btn-switch.type1.on .switch-style {
-    border-color: #e22f26;
-    left: 0.9375rem; }
+    border-color: #e22f26; }
     .btn-switch.type1.on .switch-style > span.off-tx {
       display: none; }
     .btn-switch.type1.on .switch-style > span.on-tx {
       display: block; }
+  .btn-switch.type1.on .switch-style:after {
+    left: -0.0625rem;
+    -webkit-transform: translateX(100%);
+            transform: translateX(100%); }
 
 .btn-switch.type2 ul {
   position: relative;

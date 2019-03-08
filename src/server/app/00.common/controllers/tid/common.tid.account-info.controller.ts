@@ -34,7 +34,12 @@ class CommonTidAccountInfo extends TwViewController {
         this.logger.info(this, '[redirect]', url);
         res.redirect(url);
       } else {
-        res.send('login fail');
+        this.error.render(res, {
+          code: resp.code,
+          msg: resp.msg,
+          pageInfo: pageInfo,
+          svcInfo: svcInfo
+        });
       }
     });
   }
