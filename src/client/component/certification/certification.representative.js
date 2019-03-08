@@ -55,7 +55,7 @@ Tw.CertificationRepresentative.prototype = {
     this._smsNumbers = smsNumbers;
     return _.map(smsNumbers, $.proxy(function (number) {
       return {
-        txt: number.nameMask + ' ' + number.numberMask
+        txt: number.nameMask + ' ' + Tw.FormatHelper.conTelFormatWithDash(number.numberMask)
         // option: smsNumbers.length === 1 && index === 0 ? 'checked' : ''
       };
     }, this));

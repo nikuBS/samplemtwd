@@ -80,7 +80,7 @@ Tw.NativeService.prototype = {
 
     if ( !Tw.FormatHelper.isEmpty($popupContainer) ) {
       if ( !$popupContainer.hasClass('fe-no-back') ) {
-        history.back();
+        this._popupService.close();
       } else {
         $(window).trigger(Tw.NATIVE_BACK);
       }

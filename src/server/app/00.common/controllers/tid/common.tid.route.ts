@@ -15,15 +15,21 @@ class CommonTidRoute extends TwViewController {
 
   render(req: Request, res: Response, next: NextFunction, svcInfo: any, allSvc: any, childInfo: any, pageInfo: any) {
     const query = req.query;
+    const target = req.query.target;
+
     if ( !FormatHelper.isEmpty(query.error) ) {
-      this.error.render(res, {
-        code: query.error,
-        msg: query.error_description,
-        pageInfo: pageInfo,
-        svcInfo: svcInfo
-      });
+      if ( query.error === '3601' ) {
+        res.render('tid/common.tid.route.html', { pageInfo, target });
+      } else {
+        this.error.render(res, {
+          code: query.error,
+          msg: query.error_description,
+          pageInfo: pageInfo,
+          svcInfo: svcInfo
+        });
+      }
     } else {
-      res.render('tid/common.tid.route.html', { pageInfo });
+      res.render('tid/common.tid.route.html', { pageInfo, target });
     }
   }
 }
