@@ -8,7 +8,7 @@ import { NextFunction, Request, Response } from 'express';
 import TwViewController from '../../../../common/controllers/tw.view.controller';
 import BrowserHelper from '../../../../utils/browser.helper';
 import FormatHelper from '../../../../utils/format.helper';
-import { API_CMD } from '../../../../types/api-command.type';
+import { API_CMD, API_CODE } from '../../../../types/api-command.type';
 import DateHelper from '../../../../utils/date.helper';
 import { Observable } from 'rxjs/Observable';
 
@@ -93,7 +93,13 @@ class CustomerEmail extends TwViewController {
           });
         break;
       default:
-        res.render('email/customer.email.html', responseData);
+        this.getAllSvcInfo()
+          .subscribe(response => {
+            if (response.code === API_CODE.CODE_00) {
+              allSvc = response.result || allSvc;
+            }
+            res.render('email/customer.email.html', Object.assign({}, responseData, {allSvc}));
+          });
     }
   }
 
@@ -109,6 +115,10 @@ class CustomerEmail extends TwViewController {
       inqClCd: inqClCd,
       svcDvcClCd: 'M'
     });
+  }
+
+  private getAllSvcInfo() {
+    return this.apiService.request(API_CMD.BFF_03_0030, {});
   }
 
   private getServiceCategory() {
