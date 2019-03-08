@@ -3,7 +3,8 @@ Tw.LSTORE_KEY = {
   HOME_EMR_NOTICE: 'homeEmrNotice',
   HOME_BILL: 'homeBill',
   HOME_MICRO_CONTENTS: 'homeMicroContents',
-  CHANGE_LOGIN_STATUS: 'changeLoginStatus'
+  CHANGE_LOGIN_STATUS: 'changeLoginStatus',
+  RECENT_SEARCH_KEYWORD : 'recentSearchKeyword'
 };
 
 Tw.FIDO_TYPE = {

@@ -71,7 +71,7 @@ Tw.CommonSearchMain.prototype = {
     }else{
       this._recentlyKeywordListData[this._nowUser].splice(removeIdx,1);
     }
-    Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(this._recentlyKeywordListData));
+    Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECENT_SEARCH_KEYWORD,JSON.stringify(this._recentlyKeywordListData));
     setTimeout($.proxy(this._showRecentKeyworList,this));
   },
   _addRecentlyKeywordList : function (keyword) {
@@ -85,14 +85,14 @@ Tw.CommonSearchMain.prototype = {
     while (this._recentlyKeywordListData[this._nowUser].length>10){
       this._recentlyKeywordListData[this._nowUser].shift();
     }
-    Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(this._recentlyKeywordListData));
+    Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECENT_SEARCH_KEYWORD,JSON.stringify(this._recentlyKeywordListData));
   },
   _getRecentlyKeywordList : function () {
-    var recentlyKeywordData = JSON.parse(Tw.CommonHelper.getLocalStorage('recentlySearchKeyword'));
+    var recentlyKeywordData = JSON.parse(Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.RECENT_SEARCH_KEYWORD));
     var removeIdx = [];
     if(Tw.FormatHelper.isEmpty(recentlyKeywordData)){
       //making recentlySearchKeyword
-      Tw.CommonHelper.setLocalStorage('recentlySearchKeyword','{}');
+      Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECENT_SEARCH_KEYWORD,'{}');
       recentlyKeywordData = {};
     }
     if(Tw.FormatHelper.isEmpty(recentlyKeywordData[this._nowUser])){
@@ -108,7 +108,7 @@ Tw.CommonSearchMain.prototype = {
     _.each(removeIdx,$.proxy(function (removeIdx) {
       recentlyKeywordData[this._nowUser].splice(removeIdx,1);
     },this));
-    Tw.CommonHelper.setLocalStorage('recentlySearchKeyword',JSON.stringify(recentlyKeywordData));
+    Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.RECENT_SEARCH_KEYWORD,JSON.stringify(recentlyKeywordData));
     return recentlyKeywordData;
   },
   _searchByInputValue : function () {
