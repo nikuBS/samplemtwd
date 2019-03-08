@@ -628,6 +628,12 @@ Tw.API_CODE = {
   RCG0062: 'RCG0062' // 팅,쿠키즈,안심 음성 미사용 상태
 };
 
+Tw.CALLBACK_CODE = {
+  SUCCESS: '00',
+  FAIL: '01',
+  CANCEL: '02'
+};
+
 Tw.API_SVC_PWD_ERROR = {
   ATH3000: 'ATH3000', // 변경할 회선 고객보호비밀번호 입력 필요
   BFF9000: 'BFF9000', // 변경할 회선 고객보호비밀번호 입력 필요
