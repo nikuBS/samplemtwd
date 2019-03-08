@@ -644,7 +644,7 @@ class MytDataSubmainController extends TwViewController {
         return resp.result
           .filter(item => {
             // 1년이내
-            return DateHelper.getDifference((item.copnUseDtm || item.copnUseDt), this.fromDt) >= 0;
+            return DateHelper.getDifference((item.copnUseDtm || item.copnUseDt).substring(0, 8), this.fromDt) >= 0;
           });
       } else {
         // error

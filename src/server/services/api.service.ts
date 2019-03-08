@@ -11,6 +11,7 @@ import 'rxjs/add/operator/map';
 import { BUILD_TYPE, COOKIE_KEY } from '../types/common.type';
 import { LINE_NAME, LOGIN_TYPE } from '../types/bff.type';
 import { SvcInfoModel } from '../models/svc-info.model';
+import DateHelper from '../utils/date.helper';
 
 class ApiService {
   static instance;
@@ -481,6 +482,24 @@ class ApiService {
       }).map(() => {
         return { code: API_CODE.CODE_00, result: result };
       });
+  }
+
+  public requestStore(command: any, params: any, header?: any, pathParams?: any[], version?: string): Observable<any> {
+    const svcInfo = this.loginService.getSvcInfo();
+    if ( FormatHelper.isEmpty(svcInfo) ) {
+      // need login
+      return this.request(API_CMD[command], params, header, pathParams, version);
+    }
+    const svcMgmtNum = svcInfo.svcMgmtNum;
+    const storeData = this.loginService.getSessionStore(command, svcMgmtNum);
+    if ( FormatHelper.isEmpty(storeData) || storeData.data.code !== API_CODE.CODE_00 ||
+      DateHelper.convDateFormat(storeData.expired).getTime() < new Date().getTime() ) {
+      return this.request(API_CMD[command], params, header, pathParams, version)
+        .switchMap((resp) => this.loginService.setSessionStore(command, svcMgmtNum, resp))
+        .map((resp) => resp.data);
+    } else {
+      return Observable.of(storeData.data);
+    }
   }
 }
 

@@ -159,7 +159,7 @@ Tw.ProductRoamingJoinRoamingAlarm.prototype = {
   },
   _removeEvt : function (btnEvt) {
     if(this._addedList.length<=1){
-      this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_NUMBER_MIN);
+      this._openAlert(null,Tw.ALERT_MSG_PRODUCT.ALERT_NUMBER_MIN);
       return;
     }
     this._popupService.openConfirmButton(

@@ -61,30 +61,32 @@ class CustomerMain extends TwViewController {
 
   private exceptNullObject = (banners: Array<Banners | null>): Array<Banners | null> => {
     const resultData: Array<Banners | null> = [];
-    banners.map(banner => {
-      if (banner !== null) {
-        resultData.push(banner);        
-      }
-    }) ;
+    if (banners && banners.length) {
+      banners.map(banner => {
+        if (banner !== null) {
+          resultData.push(banner);        
+        }
+      }) ;
+    }
     return resultData;
   }
 
   // GET BANNER THROUGH BFF SERVER
-  private getBanners = () => this.apiService.request(API_CMD.BFF_08_0066, {})
+  /*private getBanners = () => this.apiService.request(API_CMD.BFF_08_0066, {})
     .map((res) => {
       if ( res.code === API_CODE.CODE_00 ) {
         return res.result;
       } else {
         return null;
       }
-    })
+    })*/
 
   // TODO: NOT YET VERIFIED: NOTICE API -> REDIS DATA from <doohj1@sk.com> by SMS 1weeks ago
   // TODO: IF REDIS OPTION IS ENABLE AS ONE CALL, IT COULD BE USED
-  /*private getBanners = () => this.redisService.getData(REDIS_KEY.SUBMAIN_BANNER)
+  private getBanners = () => this.redisService.getData(REDIS_KEY.BANNER_ADMIN + 'M000673')
     .map((resp) => {
-      return resp.result;
-    })*/
+      return resp.result ? resp.result.banners : [];
+    })
 
   // GETBANNER CURRENT REDIS FUNCTION SHOULD CALL 1 ~ N BRING EACH VARIABLES, SO IT SHOULD USE THIS
   /*private getBanners = (): Observable<Banners | any> => combineLatest(this.setBannersNumber(this.bannersNumber)).pipe( map (x => x));

@@ -7,7 +7,7 @@
 import TwViewController from '../../../common/controllers/tw.view.controller';
 import { NextFunction, Request, Response } from 'express';
 import { Observable } from 'rxjs/Observable';
-import { API_CMD, API_CODE } from '../../../types/api-command.type';
+import { API_CMD, API_CODE, SESSION_CMD } from '../../../types/api-command.type';
 import FormatHelper from '../../../utils/format.helper';
 import {
   HOME_SMART_CARD,
@@ -16,7 +16,6 @@ import {
   MEMBERSHIP_GROUP,
   MYT_FARE_BILL_CO_TYPE,
   SVC_ATTR_E,
-  SVC_ATTR_NAME,
   TPLAN_PROD_ID,
   TPLAN_SHARE_LIST,
   UNIT,
@@ -46,13 +45,8 @@ class MainHome extends TwViewController {
 
     const flag = BrowserHelper.isApp(req) ? 'app' : 'web';
 
-    // this.redisService.getStringTos(REDIS_TOS_KEY.BANNER_TOS_KEY + '0001:lee33a:7191046505')
-    //   .subscribe((resp) => {
-    //     console.log('bnnr', resp);
-    //   });
 
     if ( svcType.login ) {
-      // const showSvcInfo = this.parseSvcInfo(svcType, svcInfo);
       if ( svcType.svcCategory === LINE_NAME.MOBILE ) {
         if ( svcType.mobilePhone ) {
           // 모바일 - 휴대폰 회선
@@ -64,7 +58,6 @@ class MainHome extends TwViewController {
             homeData.usageData = usageData;
             homeData.membershipData = membershipData;
             const renderData = { svcInfo, svcType, homeData, redisData, pageInfo, noticeType: svcInfo.noticeType };
-
             res.render(`main.home-${flag}.html`, renderData);
           });
         } else {
@@ -210,7 +203,7 @@ class MainHome extends TwViewController {
       membershipData.code = 'EASY_LOGIN';
       return Observable.of(membershipData);
     } else {
-      return this.apiService.request(API_CMD.BFF_04_0001, {}).map((resp) => {
+      return this.apiService.requestStore(SESSION_CMD.BFF_04_0001, {}).map((resp) => {
         membershipData.code = resp.code;
         if ( resp.code === API_CODE.CODE_00 ) {
           membershipData = Object.assign(membershipData, this.parseMembershipData(resp.result));
@@ -291,46 +284,6 @@ class MainHome extends TwViewController {
     return null;
   }
 
-  private getJoinInfo(): Observable<any> {
-    let joinInfo = null;
-    return this.apiService.request(API_CMD.BFF_05_0068, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        joinInfo = this.parseJoinInfo(resp.result);
-      }
-      return joinInfo;
-    });
-  }
-
-  private parseJoinInfo(joinInfo): any {
-    return {
-      showSet: !(FormatHelper.isEmpty(joinInfo.setPrdStaDt) && FormatHelper.isEmpty(joinInfo.setPrdEndDt)),
-      showSvc: !(FormatHelper.isEmpty(joinInfo.svcPrdStaDt) && FormatHelper.isEmpty(joinInfo.svcPrdEndDt)),
-      setPrdStaDt: DateHelper.getShortDate(joinInfo.setPrdStaDt),
-      setPrdEndDt: DateHelper.getShortDate(joinInfo.setPrdEndDt),
-      svcPrdStaDt: DateHelper.getShortDate(joinInfo.svcPrdStaDt),
-      svcPrdEndDt: DateHelper.getShortDate(joinInfo.svcPrdEndDt)
-    };
-  }
-
-  private getPPSInfo(): Observable<any> {
-    const ppsInfo = {
-      numEndDt: ''
-    };
-    return this.apiService.request(API_CMD.BFF_05_0013, {}).map((resp) => {
-      if ( resp.code === API_CODE.CODE_00 ) {
-        ppsInfo.numEndDt = DateHelper.getShortDateNoDot(resp.result.numEndDt);
-      }
-      return ppsInfo;
-    });
-  }
-
-  private parseSvcInfo(svcType, svcInfo): any {
-    return {
-      showName: FormatHelper.isEmpty(svcInfo.nickNm) ? SVC_ATTR_NAME[svcInfo.svcAttrCd] : svcInfo.nickNm,
-      showSvc: svcType.svcCategory === LINE_NAME.INTERNET_PHONE_IPTV ? svcInfo.addr : svcInfo.svcNum
-    };
-  }
-
   // 사용량 조회
   private getUsageData(svcInfo): Observable<any> {
     let usageData = {
@@ -338,7 +291,7 @@ class MainHome extends TwViewController {
       msg: '',
       showSvcNum: FormatHelper.conTelFormatWithDash(svcInfo.svcNum)
     };
-    return this.apiService.request(API_CMD.BFF_05_0001, {}).map((resp) => {
+    return this.apiService.requestStore(SESSION_CMD.BFF_05_0001, {}).map((resp) => {
       if ( resp.code === API_CODE.CODE_00 ) {
         usageData = Object.assign(usageData, this.parseUsageData(resp.result, svcInfo));
       } else if ( resp.code === API_CODE.BFF_0006 || resp.code === API_CODE.BFF_0007 ) {

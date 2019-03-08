@@ -339,6 +339,25 @@ skt_landing.action = {
     }
   },
   popup: { //popup 
+    //포커스 리턴용 레이어 팝업
+    popupWrap: function (el, popup_info,callback_open,callback_fail,toggle_btn) {
+      var _this = this;
+      _this.open(popup_info,callback_open,callback_fail,toggle_btn);
+
+      //레이어 팝업이 열렸을 경우 해당 첫번째 항목으로 포커스 이동
+      var timer = null;
+      timer = setInterval(function () {
+          var $dialog = $('[role="dialog"]');
+          if($dialog.length > 0)               clearTimeout(timer);
+          $('[role="dialog"]').attr('tabindex', -1).focus();
+      }, 300);
+
+      //닫기 버튼시 포커스 이동
+      $(document).one('click', '.close-modal button, .close-modal a', function () {
+          skt_landing.action.popup.allClose();
+          $(el).focus();      //포커스 리턴
+      });
+    },
     open: function (popup_info,callback_open,callback_fail,toggle_btn) {
       var _this = this;
       popup_info.hbs = popup_info.hbs ? popup_info.hbs : 'popup';

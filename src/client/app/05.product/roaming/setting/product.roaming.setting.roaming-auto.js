@@ -216,6 +216,15 @@ Tw.ProductRoamingSettingRoamingAuto.prototype = {
       'svcEndTm' : this.$container.find('#end_time').attr('data-number'),
       'startEndTerm' : this._expireDate
     };
+    if(
+      userSettingInfo.svcStartDt===this._prodBffInfo.svcStartDt&&
+      userSettingInfo.svcEndDt===this._prodBffInfo.svcEndDt&&
+      userSettingInfo.svcStartTm===this._prodBffInfo.svcStartTm&&
+      userSettingInfo.svcEndTm===this._prodBffInfo.svcStartDt
+    ){
+      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.TITLE);
+      return;
+    }
 
 
     this._apiService.request(Tw.API_CMD.BFF_10_0085, userSettingInfo, {},[this._prodId]).

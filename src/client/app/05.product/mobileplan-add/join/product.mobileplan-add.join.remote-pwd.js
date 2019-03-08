@@ -42,7 +42,15 @@ Tw.ProductMobileplanAddJoinRemotePwd.prototype = {
 
   _bindEvent: function() {
     this.$container.on('keyup', 'input', $.proxy(this._checkIsAbled, this));
+    this.$container.on('click', '.fe-btn_cancel', $.proxy(this._clear, this));
     this.$btnSetupOk.on('click', $.proxy(this._procConfirm, this));
+  },
+
+  _clear: function(e) {
+    var $elem = $(e.currentTarget),
+      $elemParent = $elem.parens('li');
+
+    this._toggleError($elemParent.find('.error-txt'), false);
   },
 
   _procWebkitCheck: function() {

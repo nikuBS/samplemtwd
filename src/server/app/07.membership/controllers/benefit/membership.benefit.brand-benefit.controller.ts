@@ -13,18 +13,17 @@ class MembershipBenefitBrandBenefit extends TwViewController {
   render(req: Request, res: Response, next: NextFunction, svcInfo: any,
          allSvc: any, childInfo: any, pageInfo: any) {
 
-    if ( !req.query.cateCd || !req.query.brandCd ) {
+    if ( !req.query.brandCd ) {
 
       this.error.render(res, {
         code: '',
-        msg: 'not found category or brand code',
+        msg: 'not found brand code',
         pageInfo: pageInfo,
         svcInfo
       });
       return;
     }
 
-    const cateCd = req.query.cateCd;              // '3' 베이커리
     const brandCd = req.query.brandCd;    // '2012001524' 파리바게트
 
     const param = {
@@ -41,9 +40,6 @@ class MembershipBenefitBrandBenefit extends TwViewController {
             data['totLikeCount'] = FormatHelper.addComma(data.totLikeCount);
             data['myLike'] = ( data.myLikeCount && data.myLikeCount !== '0' );
           }
-
-          data['cateCd'] = cateCd;
-          data['brandCd'] = brandCd;
 
           res.render('benefit/membership.benefit.brand-benefit.html', {
             svcInfo: svcInfo,

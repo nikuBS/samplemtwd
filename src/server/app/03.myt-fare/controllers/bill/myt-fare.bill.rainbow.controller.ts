@@ -56,8 +56,8 @@ class MyTFareBillRainbow extends TwViewController {
     if (autoInfo.code === API_CODE.CODE_00) {
       return {
         isAuto: autoInfo.result.reqStateNm === MYT_FARE_PAYMENT_NAME.IS_AUTO,
-        autoFareCode: FormatHelper.isEmpty(autoInfo.result.reqProdNm) ? '' : RAINBOW_FARE_CODE[autoInfo.result.reqProdNm],
-        autoFareText: FormatHelper.isEmpty(autoInfo.result.reqProdNm) ? DEFAULT_SELECT.SELECT : RAINBOW_FARE_NAME[autoInfo.result.reqProdNm]
+        autoFareCode: FormatHelper.isEmpty(autoInfo.result.rbpChgCd) ? '' : RAINBOW_FARE_CODE[autoInfo.result.rbpChgCd],
+        autoFareText: FormatHelper.isEmpty(autoInfo.result.rbpChgCd) ? DEFAULT_SELECT.SELECT : RAINBOW_FARE_NAME[autoInfo.result.rbpChgCd]
       };
     }
     return null;

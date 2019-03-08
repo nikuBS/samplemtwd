@@ -147,7 +147,10 @@ Tw.ProductRoamingSettingRoamingBeginSetup.prototype = {
       'svcEndTm' : '{}',
       'startEndTerm' : '{}'
     };
-
+    if(userSettingInfo.svcStartDt===this._prodBffInfo.svcStartDt){
+      this._popupService.openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A30.TITLE);
+      return;
+    }
     this._apiService.request(Tw.API_CMD.BFF_10_0085, userSettingInfo, {},[this._prodId]).
     done($.proxy(function (res) {
       if(res.code===Tw.API_CODE.CODE_00){

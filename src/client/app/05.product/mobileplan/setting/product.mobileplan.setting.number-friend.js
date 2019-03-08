@@ -29,6 +29,7 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
     this.$btnAddNum = this.$container.find('.fe-btn_add_num');
     this.$btnClearNum = this.$container.find('.fe-btn_clear_num');
     this.$btnAddressBook = this.$container.find('.fe-btn_address_book');
+    this.$btnMaskingAlert = this.$container.find('.fe-bt-masking-alert');
     this.$btnSetupOk = this.$container.find('.fe-btn_setup_ok');
     this.$btnToggleFriend = this.$container.find('.fe-btn_toggle_friend');
   },
@@ -38,6 +39,7 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
     this.$btnClearNum.on('click', $.proxy(this._clearNum, this));
     this.$btnAddressBook.on('click', $.proxy(this._openAppAddressBook, this));
     this.$btnToggleFriend.on('click', $.proxy(this._toggleFriend, this));
+    this.$btnMaskingAlert.on('click', $.proxy(this._openMaskingAlert, this));
     this.$lineList.on('click', '.fe-btn_del_num', $.proxy(this._delNum, this));
 
     this.$inputNumber.on('keyup input', $.proxy(this._detectInputNumber, this));
@@ -254,6 +256,21 @@ Tw.ProductMobileplanSettingNumberFriend.prototype = {
     }.bind(this));
 
     return resultList;
+  },
+
+  _openMaskingAlert: function() {
+    this._popupService.openConfirmButton(
+      Tw.PRODUCT_AUTH_ALERT_STR.MSG,
+      Tw.PRODUCT_AUTH_ALERT_STR.TITLE,
+      $.proxy(this._showAuth,this),
+      null,
+      Tw.BUTTON_LABEL.CANCEL,
+      Tw.BUTTON_LABEL.CONFIRM);
+  },
+
+  _showAuth : function () {
+    this._popupService.close();
+    $('.fe-bt-masking').trigger('click');
   }
 
 };

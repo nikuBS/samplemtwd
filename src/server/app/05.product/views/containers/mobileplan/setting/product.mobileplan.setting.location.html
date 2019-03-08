@@ -12,7 +12,7 @@
         </p>
         <div class="list-btn">
             <% if (svcInfo && locals.pageInfo && pageInfo.auth && pageInfo.auth.cert && pageInfo.auth.cert.maskAuthYn === 'Y' && !pageInfo.masking) { %>
-            <div class="bt-alone"><button class="bt-line-gray1 fe-bt-masking" data-menuid="<%= pageInfo.menuId %>" data-menuurl="<%= pageInfo.menuUrl %>">해지</button></div>
+            <div class="bt-alone"><button class="bt-line-gray1 fe-bt-masking-alert" data-menuid="<%= pageInfo.menuId %>" data-menuurl="<%= pageInfo.menuUrl %>">해지</button></div>
             <% } else { %>
             <div class="bt-alone"><button class="bt-line-gray1 fe-bt-num-cancel">해지</button></div>
             <% } %>

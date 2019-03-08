@@ -13,7 +13,7 @@ Tw.ApiService.prototype = {
     return $.ajax(htOptions)
       .then($.proxy(this._checkAuth, this, command, params, headers, pathParams, version))
       .fail(function (err) {
-        if (err.statusText === 'timeout') {
+        if ( err.statusText === 'timeout' ) {
           err.code = 'timeout';
           err.msg = 'Timeout from ' + command.path;
         }
@@ -130,7 +130,8 @@ Tw.ApiService.prototype = {
       _.map(pathVariables, $.proxy(function (argument, index) {
         path = path.replace(':args' + index, argument);
       }, this));
-    }path = path.replace(':version', version);
+    }
+    path = path.replace(':version', version);
     return path;
   },
 
@@ -147,6 +148,8 @@ Tw.ApiService.prototype = {
       return '/bypass';
     } else if ( !Tw.FormatHelper.isEmpty(_.findKey(Tw.NODE_CMD, command)) ) {
       return '/api';
+    } else if ( !Tw.FormatHelper.isEmpty(_.findKey(Tw.SESSION_CMD, command)) ) {
+      return '/store';
     } else {
       return '';
     }

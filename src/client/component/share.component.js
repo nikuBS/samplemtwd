@@ -11,7 +11,7 @@ Tw.ShareComponent = function () {
   this._menuId = '';
 
   this._bindEvent();
-  this._getDomain();
+  // this._getDomain();
 };
 
 Tw.ShareComponent.prototype = {

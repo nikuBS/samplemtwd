@@ -29,6 +29,7 @@ Tw.CustomerFaqSearch.prototype = {
     this.$inputSearch.on('keyup', $.proxy(this._onSearchInput, this));
     this.$container.on('click', '#fe-more', $.proxy(this._onMoreClicked, this));
     this.$container.on('click', '.cancel', $.proxy(this._onQueryDeleted, this));
+    this.$container.on('click', '.fe-link-external', $.proxy(this._onExternalLink, this));
   },
   _onSearchInput: function (e) {
     if (Tw.FormatHelper.isEmpty(e.currentTarget.value.trim())) {
@@ -71,5 +72,11 @@ Tw.CustomerFaqSearch.prototype = {
   _onSearchRequested: function () {
     var keyword = this.$inputSearch.val().trim();
     this._historyService.replaceURL('/customer/faq/search?keyword=' + keyword);
+  },
+  _onExternalLink: function (e) {
+    var url = $(e.currentTarget).attr('href');
+    Tw.CommonHelper.openUrlExternal(url);
+
+    return false;
   }
 };

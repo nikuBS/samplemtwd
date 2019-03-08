@@ -160,6 +160,14 @@ input[type=text], input[type=file], input[type=password], input[type=number], in
   border: 1px solid #d4d4d4;
   outline: none; }
 
+@media all and (max-width: 360px) {
+  body {
+    font-size: 0.8125rem; }
+  input {
+    font-size: 0.8125rem !important; }
+    input::-webkit-input-placeholder {
+      font-size: 0.8125rem !important; } }
+
 .inputbox {
   position: relative;
   display: block; }
@@ -4364,18 +4372,22 @@ a.ui-button:active,
   display: inline-block; }
   .bt-alone a {
     display: block;
-    padding: 0.4375rem 0.75rem;
+    height: 1.8125rem;
+    padding: 0 0.75rem;
     font-size: 0.8125rem;
-    line-height: 1;
-    vertical-align: baseline;
-    border-radius: 0.875rem; }
+    line-height: 29px;
+    border-radius: 0.875rem;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box; }
   .bt-alone button {
     display: block;
-    padding: 0.4375rem 0.75rem;
+    height: 1.8125rem;
+    padding: 0 0.75rem;
     font-size: 0.8125rem;
-    line-height: 1;
-    vertical-align: baseline;
-    border-radius: 0.875rem; }
+    line-height: 29px;
+    border-radius: 0.875rem;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box; }
   .bt-alone .bt-line-gray1 {
     border: 1px solid #d1d1d1;
     color: #000; }
@@ -4387,7 +4399,7 @@ a.ui-button:active,
     border: 1px solid #178BCE;
     color: #178BCE; }
   .bt-alone .bt-bg-blue1 {
-    padding: 0.375rem 0.9375rem 0.4375rem 0.9375rem;
+    padding: 0 0.9375rem;
     border: 1px solid #ebf5fe;
     background-color: #ebf5fe;
     color: #178BCE; }
@@ -4396,7 +4408,7 @@ a.ui-button:active,
       background: #d1d1d1;
       border: 1px solid #d1d1d1; }
     .bt-alone .bt-bg-blue1.bt-bg-blue-p {
-      padding: 0.4375rem 0.9375rem 0.375rem 0.9375rem; }
+      padding: 0 0.9375rem; }
 
 .bt-close {
   position: relative;
@@ -4448,6 +4460,7 @@ a.ui-button:active,
   right: 0;
   bottom: 0;
   z-index: 200;
+  -webkit-overflow-scrolling: touch;
   /* popup share */ }
   .popup.dropdown {
     top: 3.75rem;
@@ -4537,7 +4550,8 @@ a.ui-button:active,
       .popup .popup-info.scrolling .popup-contents {
         margin: 1rem 0 0;
         max-height: 264px;
-        overflow-y: auto; }
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch; }
       .popup .popup-info.scrolling .bt-bottom {
         margin-top: 0; }
     .popup .popup-info .popup-contents {
@@ -4762,7 +4776,8 @@ a.ui-button:active,
       -webkit-box-sizing: border-box;
               box-sizing: border-box;
       overflow-y: auto;
-      background: #fff; }
+      background: #fff;
+      -webkit-overflow-scrolling: touch; }
     .popup .popup-dropdown .dropdown-group {
       margin: 1.875rem 0; }
     .popup .popup-dropdown .dropdown-title {
@@ -6738,7 +6753,7 @@ a.ui-button:active,
   top: 4.125rem;
   left: 0;
   width: 100%;
-  max-height: 60%;
+  max-height: calc(100% - 4.125rem);
   background: #fff;
   z-index: 99; }
 
@@ -6787,7 +6802,8 @@ a.ui-button:active,
 
 .latelylist-wrap {
   overflow-y: scroll;
-  max-height: 18.75rem; }
+  max-height: 18.75rem;
+  background: #fff; }
   .latelylist-wrap .list li {
     overflow: hidden;
     position: relative;

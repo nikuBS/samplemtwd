@@ -43,7 +43,12 @@ class CommonTidLogout extends TwViewController {
       this.logger.info(this, '[redirect]', url);
       res.redirect(url);
     }, (err) => {
-      res.send('logout fail');
+      this.error.render(res, {
+        code: err.code,
+        msg: err.msg,
+        pageInfo: pageInfo,
+        svcInfo: svcInfo
+      });
     });
   }
 }
