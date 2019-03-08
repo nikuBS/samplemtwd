@@ -54,8 +54,8 @@
                                         <%}%>
                                         
                                     </ul>
-                                    <% if ( !!banner.imgUrl ) { %>
-                                    <img src="<%=CDN%><%-banner.imgUrl%>" alt="<%-banner.imgAltCtt%>">
+                                    <% if ( banner.imgUrl || banner.bnnrFilePathNm ) { %>
+                                    <img src="<%=CDN%><%-banner.imgUrl || banner.bnnrFilePathNm%>" alt="<%-banner.imgAltCtt || banner.bnnrImgAltCtt %>">
                                     <% } %>
                                 </div>
                             </li>
