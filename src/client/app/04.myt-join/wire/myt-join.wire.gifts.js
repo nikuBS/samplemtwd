@@ -108,7 +108,8 @@ Tw.MyTJoinWireGifts.prototype = {
       if ( ['01', '05', '07'].indexOf(list[i].giftOpStCd) > -1 ) {
         // 01 배송접수, 05 반품 요청, 07 재배송 접수 건에 한해서 배송조회 버튼 노출 (기존)
         // 주소지 정보가 없는 경우 추가 (변경) [DV001-14262]
-        if ( list[i].pdlvBasAddr ) {
+        // url이 없는 경우 노출 안함 DV001-15784
+        if ( list[i].pdlvBasAddr && list[i].dlvUrl ) {
           list[i].hasDlvUrl = true;
         }
         else {
