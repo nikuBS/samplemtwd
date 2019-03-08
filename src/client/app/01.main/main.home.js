@@ -375,11 +375,28 @@ Tw.MainHome.prototype = {
     if ( this._isActRep ) {
       command = Tw.API_CMD.BFF_04_0009;
     }
-    this._apiService.request(command, {})
-      .done($.proxy(this._successBillData, this, element))
-      .fail($.proxy(this._failBillData, this));
+    var storeBill = JSON.parse(Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.HOME_BILL));
+    if ( Tw.FormatHelper.isEmpty(storeBill) || Tw.DateHelper.convDateFormat(storeBill.expired).getTime() < new Date().getTime() ) {
+      this._apiService.request(command, {})
+        .done($.proxy(this._successBillData, this, element))
+        .fail($.proxy(this._failBillData, this));
+    } else {
+      this._drawBillData(element, storeBill.data);
+    }
   },
   _successBillData: function (element, resp) {
+    var storeData = {
+      data: resp,
+      expired: Tw.DateHelper.add5min(new Date())
+    };
+    Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.HOME_BILL, JSON.stringify(storeData));
+
+    this._drawBillData(element, resp);
+  },
+  _failBillData: function () {
+
+  },
+  _drawBillData: function (element, resp) {
     var result = this._parseBillData(resp);
 
     if ( !Tw.FormatHelper.isEmpty(result) ) {
@@ -392,11 +409,7 @@ Tw.MainHome.prototype = {
     } else {
       element.hide();
     }
-
     this._resetHeight();
-  },
-  _failBillData: function () {
-
   },
   _onClickPayment: function ($event) {
     var svcAttrCd = $($event.currentTarget).data('svcattrcd');
@@ -422,12 +435,33 @@ Tw.MainHome.prototype = {
     }
   },
   _getMicroContentsData: function (element) {
-    this._apiService.requestArray([
-      { command: Tw.API_CMD.BFF_04_0006, params: {} },
-      { command: Tw.API_CMD.BFF_04_0007, params: {} }
-    ]).done($.proxy(this._successMicroContentsData, this, element));
+    var microContentsStore = JSON.parse(Tw.CommonHelper.getLocalStorage(Tw.LSTORE_KEY.HOME_MICRO_CONTENTS));
+    if ( Tw.FormatHelper.isEmpty(microContentsStore) || Tw.DateHelper.convDateFormat(microContentsStore.expired).getTime() < new Date().getTime() ) {
+      this._apiService.requestArray([
+        { command: Tw.API_CMD.BFF_04_0006, params: {} },
+        { command: Tw.API_CMD.BFF_04_0007, params: {} }
+      ]).done($.proxy(this._successMicroContentsData, this, element))
+        .fail($.proxy(this._failMicroContentsData, this));
+    } else {
+
+      this._drawMicroContentsData(element, microContentsStore.data.contents, microContentsStore.data.micro);
+    }
   },
   _successMicroContentsData: function (element, contentsResp, microResp) {
+    var storeData = {
+      data: {
+        contents: contentsResp,
+        micro: microResp
+      },
+      expired: Tw.DateHelper.add5min(new Date())
+    };
+    Tw.CommonHelper.setLocalStorage(Tw.LSTORE_KEY.HOME_MICRO_CONTENTS, JSON.stringify(storeData));
+    this._drawMicroContentsData(element, contentsResp, microResp);
+  },
+  _failMicroContentsData: function () {
+
+  },
+  _drawMicroContentsData: function (element, contentsResp, microResp) {
     var apiBlock = false;
     var result = {
       micro: 0,
@@ -459,6 +493,7 @@ Tw.MainHome.prototype = {
 
     this._resetHeight();
   },
+
   _getGiftData: function (element) {
     this._apiService.request(Tw.API_CMD.BFF_06_0015, {})
       .done($.proxy(this._successGiftData, this, element))

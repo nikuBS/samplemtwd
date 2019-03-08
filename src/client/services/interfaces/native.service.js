@@ -135,6 +135,8 @@ Tw.NativeService.prototype = {
   _completeLogout: function (isAutoLogin, resp) {
     Tw.Logger.info('[completeLogout]', isAutoLogin, resp);
     if ( isAutoLogin === 'Y' ) {
+      Tw.CommonHelper.removeLocalStorage(Tw.LSTORE_KEY.HOME_BILL);
+      Tw.CommonHelper.removeLocalStorage(Tw.LSTORE_KEY.HOME_MICRO_CONTENTS);
       this._tidLanding.goActionSheetLogin(location.pathname + location.search);
     } else {
       this._historyService.replaceURL('/common/member/logout/expire?target=' + location.pathname + location.search);
