@@ -19,7 +19,7 @@ Tw.ShareComponent.prototype = {
     this.$btShare = $('#fe-bt-share');
     this._url = this.$btShare.data('menuurl');
     this._menuId = this.$btShare.data('menuid');
-    this.$btShare.on('click', $.proxy(this._onClickShare, this));
+    this.$btShare.click(_.debounce($.proxy(this._onClickShare, this), 300));
   },
   _getDomain: function () {
     this._apiService.request(Tw.NODE_CMD.GET_DOMAIN, {})
