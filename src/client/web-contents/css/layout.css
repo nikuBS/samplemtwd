@@ -1035,7 +1035,8 @@ body.bg-gray {
   background: #fff;
   z-index: 200;
   overflow-x: hidden;
-  /* galaxy s2 bug fixed : overflow-x, overflow-y not support */ }
+  /* galaxy s2 bug fixed : overflow-x, overflow-y not support */
+  -webkit-overflow-scrolling: touch; }
   .popup-page .page-header {
     border-bottom: 1px solid #e5e5e5; }
     .popup-page .page-header.noborder {
