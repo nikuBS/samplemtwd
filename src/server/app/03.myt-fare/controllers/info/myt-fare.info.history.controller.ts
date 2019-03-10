@@ -161,9 +161,20 @@ class MyTFareInfoHistory extends TwViewController {
   }
 
   private renderView(req: Request, res: Response, next: NextFunction, data: any) {
-    res.render('info/myt-fare.info.history.html', {
-      svcInfo: data.svcInfo,
-      pageInfo: data.pageInfo,
+    const {pageInfo, svcInfo} = data;
+
+    if (this.returnErrorInfo.code) {
+      return this.error.render(res, {
+        code: this.returnErrorInfo.code,
+        msg: this.returnErrorInfo.msg,
+        pageInfo,
+        svcInfo
+      });
+    }
+
+    return res.render('info/myt-fare.info.history.html', {
+      svcInfo,
+      pageInfo,
       currentString: data.query.sortType ? this.getKorStringWithQuery(data.query.sortType) : MYT_FARE_PAYMENT_HISTORY_TYPE.lastAll,
       data: {
         isAutoWithdrawalUse: this.paymentData.isAutoWithdrawalUse,
@@ -236,8 +247,12 @@ class MyTFareInfoHistory extends TwViewController {
   } */
 
   private getOverAndRefundPaymentData = (opt: {getPayList?: boolean} = {}): Observable<any | null> => {
-    return this.apiService.request(API_CMD.BFF_07_0030, {}).map((resp: { code: string; result: any }) => {
+    return this.apiService.request(API_CMD.BFF_07_0030, {}).map((resp: { code: string; msg: string | null; result: any }) => {
       if (resp.code !== API_CODE.CODE_00) {
+        // 전체납부내역조회 옵션으로 조회에서 에러 반환 시 에러 페이지 처리
+        if (opt.getPayList) {
+          this.setErrorInfo({code: resp.code, msg: resp.msg || '', result: resp.result});
+        }
         return null;
       }
 
@@ -282,8 +297,9 @@ class MyTFareInfoHistory extends TwViewController {
   }
 
   private getDirectPaymentData = (): Observable<any | null> => {
-    return this.apiService.request(API_CMD.BFF_07_0090, {}).map((resp: { code: string; result: any }) => {
+    return this.apiService.request(API_CMD.BFF_07_0090, {}).map((resp: { code: string; msg: string | null; result: any }) => {
       if (resp.code !== API_CODE.CODE_00) {
+        this.setErrorInfo({code: resp.code, msg: resp.msg || '', result: resp.result});
         return null;
       }
 
@@ -304,8 +320,9 @@ class MyTFareInfoHistory extends TwViewController {
   }
 
   private getAutoPaymentData = (): Observable<any | null> => {
-    return this.apiService.request(API_CMD.BFF_07_0092, {}).map((resp: { code: string; result: any }) => {
+    return this.apiService.request(API_CMD.BFF_07_0092, {}).map((resp: { code: string; msg: string | null; result: any }) => {
       if (resp.code !== API_CODE.CODE_00) {
+        this.setErrorInfo({code: resp.code, msg: resp.msg || '', result: resp.result});
         return null;
       }
 
@@ -326,8 +343,9 @@ class MyTFareInfoHistory extends TwViewController {
   }
 
   private getAutoUnitedPaymentData = (): Observable<any | null> => {
-    return this.apiService.request(API_CMD.BFF_07_0089, {}).map((resp: { code: string; result: any }) => {
+    return this.apiService.request(API_CMD.BFF_07_0089, {}).map((resp: { code: string; msg: string | null; result: any }) => {
       if (resp.code !== API_CODE.CODE_00) {
+        this.setErrorInfo({code: resp.code, msg: resp.msg || '', result: resp.result});
         return null;
       }
 
@@ -347,8 +365,9 @@ class MyTFareInfoHistory extends TwViewController {
   }
 
   private getMicroPaymentData = (): Observable<any | null> => {
-    return this.apiService.request(API_CMD.BFF_07_0071, {}).map((resp: { code: string; result: any }) => {
+    return this.apiService.request(API_CMD.BFF_07_0071, {}).map((resp: { code: string; msg: string | null; result: any }) => {
       if (resp.code !== API_CODE.CODE_00) {
+        this.setErrorInfo({code: resp.code, msg: resp.msg || '', result: resp.result});
         return null;
       }
 
@@ -369,8 +388,9 @@ class MyTFareInfoHistory extends TwViewController {
   }
 
   private getContentsPaymentData = (): Observable<any | null> => {
-    return this.apiService.request(API_CMD.BFF_07_0078, {}).map((resp: { code: string; result: any }) => {
+    return this.apiService.request(API_CMD.BFF_07_0078, {}).map((resp: { code: string; msg: string | null; result: any }) => {
       if (resp.code !== API_CODE.CODE_00) {
+        this.setErrorInfo({code: resp.code, msg: resp.msg || '', result: resp.result});
         return null;
       }
 
@@ -392,8 +412,9 @@ class MyTFareInfoHistory extends TwViewController {
 
   // 포인트 납부예약(1회 납부예약)
   private getPointReservePaymentData = (): Observable<any | null> => {
-    return this.apiService.request(API_CMD.BFF_07_0093, {}).map((resp: { code: string; result: any }) => {
+    return this.apiService.request(API_CMD.BFF_07_0093, {}).map((resp: { code: string; msg: string | null; result: any }) => {
       if (resp.code !== API_CODE.CODE_00) {
+        this.setErrorInfo({code: resp.code, msg: resp.msg || '', result: resp.result});
         return null;
       }
 
@@ -418,8 +439,9 @@ class MyTFareInfoHistory extends TwViewController {
 
   // 포인트 자동납부
   private getPointAutoPaymentData = (): Observable<any | null> => {
-    return this.apiService.request(API_CMD.BFF_07_0094, {}).map((resp: { code: string; result: any }) => {
+    return this.apiService.request(API_CMD.BFF_07_0094, {}).map((resp: { code: string; msg: string | null; result: any }) => {
       if (resp.code !== API_CODE.CODE_00) {
+        this.setErrorInfo({code: resp.code, msg: resp.msg || '', result: resp.result});
         return null;
       }
       resp.result.usePointList = resp.result;
