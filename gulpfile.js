@@ -48,8 +48,6 @@ gulp.task('server', function () {
 gulp.task('js-vendor', function () {
   return gulp.src([
     'node_modules/jquery/dist/jquery.min.js',
-    'node_modules/jquery-ui-dist/jquery-ui.min.js',
-    'node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js',
     'node_modules/underscore/underscore-min.js',
     'node_modules/handlebars/dist/handlebars.min.js',
     'node_modules/slick-carousel/slick/slick.min.js',
@@ -60,7 +58,26 @@ gulp.task('js-vendor', function () {
       gutil.log(gutil.colors.red('[Error]'), err.toString());
     })
     .pipe(concat('vendor.js'))
-    .pipe(gulp.dest(dist + 'js'));
+    .pipe(gulp.dest(dist + 'js'))
+    .pipe(rev())
+    .pipe(gulp.dest(dist + 'js'))
+    .pipe(rev.manifest(dist + 'tmp/vendor-manifest.json'))
+    .pipe(gulp.dest('.'));
+});
+
+gulp.task('js-vendor-ex', function () {
+  return gulp.src([
+    'node_modules/jquery-ui-dist/jquery-ui.min.js',
+    'node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js'])
+    .on('error', function (err) {
+      gutil.log(gutil.colors.red('[Error]'), err.toString());
+    })
+    .pipe(concat('vendor-ex.js'))
+    .pipe(gulp.dest(dist + 'js'))
+    .pipe(rev())
+    .pipe(gulp.dest(dist + 'js'))
+    .pipe(rev.manifest(dist + 'tmp/vendor-ex-manifest.json'))
+    .pipe(gulp.dest('.'));
 });
 
 gulp.task('js-component', function () {
@@ -374,7 +391,7 @@ gulp.task('js-app-client', appNames.map(function (app) {
 }));
 gulp.task('js', ['js-util', 'js-component', 'js-old-app', 'js-app']);
 gulp.task('js-client', ['js-util-client', 'js-component-client', 'js-app-client']);
-gulp.task('vendor', ['js-vendor', 'css-vendor']);
+gulp.task('vendor', ['js-vendor', 'js-vendor-ex', 'css-vendor']);
 gulp.task('rb', ['js-rb', 'css-rb', 'css-main', 'css-idpt', 'img', 'hbs', 'font']);
 
 gulp.task('task', ['vendor', 'js', 'rb', 'cab']);
