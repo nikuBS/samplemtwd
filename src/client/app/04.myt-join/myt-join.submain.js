@@ -307,12 +307,14 @@ Tw.MyTJoinSubMain.prototype = {
     // 통합, 개별이면서 대표인 경우만 동작
     var $target = $(event.target).parents('[data-svc-mgmt-num]'),
       type    = $target.find('span.blind').text(),
-      mgmtNum = $target.attr('data-svc-mgmt-num');
+      mgmtNum = $target.attr('data-svc-mgmt-num'),
+      number  = $target.attr('data-num');
     if ( mgmtNum ) {
       // 기준회선변경
       // 닉네임이 없는 경우 팻네임이 아닌  서비스 그룹명으로 노출 [DV001-14845]
       this.changeLineType = type;
       this.changeLineMgmtNum = mgmtNum;
+      this.changeLineMdn = number;
 
       var target  = _.find(this.data.otherLines,  {svcMgmtNum: mgmtNum});
       this._popupService.openSwitchLine(this.data.svcInfo, target, Tw.REMNANT_OTHER_LINE.BTNAME, null,
@@ -323,7 +325,7 @@ Tw.MyTJoinSubMain.prototype = {
   // 다른 회선 팝업에서 변경하기 눌렀을 경우
   _onChangeLineConfirmed: function () {
     var lineService = new Tw.LineComponent();
-    lineService.changeLine(this.changeLineMgmtNum, null, $.proxy(this._onChangeSessionSuccess, this));
+    lineService.changeLine(this.changeLineMgmtNum, this.changeLineMdn, $.proxy(this._onChangeSessionSuccess, this));
   },
 
   // 회선 변경 후 처리

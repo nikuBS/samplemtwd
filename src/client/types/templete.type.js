@@ -554,7 +554,7 @@ Tw.MYT_TPL = {
     SP_TEMP: '<br> ↓ <br>',
     MORE_LINE_TEMP: '<li data-svc-mgmt-num="{{svcMgmtNum}}"' +
     'data-name="{{nickNm}}" data-num="{{svcNum}}"><button>' +
-    '<span class="ico-wrap"><i class="icon-cellphone-80"><span class="blind">cellphone</span></i></span>' +
+    '<span class="ico-wrap"><i class="icon-{{svcType}}-80"><span class="blind">{{svcType}}</span></i></span>' +
     '<span class="cont"><span class="info-title">{{nickNm}}' +
     '{{#if child}}' +
     '<span class="badge-type1"><i class="icon-children"><span class="blind">자녀</span></i></span>' +

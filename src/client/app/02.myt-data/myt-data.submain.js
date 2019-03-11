@@ -299,6 +299,14 @@ Tw.MyTDataSubMain.prototype = {
     return select;
   },
 
+  __selectSvcType: function (attrCd) {
+    var clsNm = 'cellphone';
+    if ( ['M3', 'M4'].indexOf(attrCd) > -1 ) {
+      clsNm = 'tablet';
+    }
+    return clsNm;
+  },
+
   // chart create
   _requestPattern: function () {
     this._isRequestPattern = true;
@@ -480,6 +488,7 @@ Tw.MyTDataSubMain.prototype = {
             unit: ''
           };
         }
+        data.svcType = this.__selectSvcType(selectLine.svcAttrCd);
         data = _.extend(selectLine, data);
         list.push(data);
       }
@@ -591,6 +600,7 @@ Tw.MyTDataSubMain.prototype = {
   _onOtherLinesItemDetail: function (event) {
     var $target = $(event.target).parents('[data-svc-mgmt-num]'),
       mgmtNum = $target.attr('data-svc-mgmt-num'),
+      number  = $target.attr('data-num'),
       isChild = $target.find('.icon-children').length > 0;
     if ( mgmtNum ) {
       if ( isChild ) {
@@ -599,6 +609,7 @@ Tw.MyTDataSubMain.prototype = {
       }
       else {
         this.changeLineMgmtNum = mgmtNum;
+        this.changeLineMdn = number;
 
         var target = _.find(this.data.otherLines, { svcMgmtNum: mgmtNum });
         this._popupService.openSwitchLine(this.data.svcInfo, target, Tw.REMNANT_OTHER_LINE.BTNAME, null,
@@ -637,7 +648,7 @@ Tw.MyTDataSubMain.prototype = {
     // 회선변경 API 호출
     this._popupService.close();
     var lineService = new Tw.LineComponent();
-    lineService.changeLine(this.changeLineMgmtNum, null, $.proxy(this._onChangeSessionSuccess, this));
+    lineService.changeLine(this.changeLineMgmtNum, this.changeLineMdn, $.proxy(this._onChangeSessionSuccess, this));
   },
 
   // 회선 변경 후 처리
