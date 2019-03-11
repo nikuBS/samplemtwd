@@ -101,6 +101,7 @@ Tw.TooltipService.prototype = {
       'btn-close':'btn-tooltip-close tw-popup-closeBtn',
       'title_type': 'tit-tooltip',
       'cont_align': 'tl',
+      'tagStyle-div': 'div',
       'contents': $result.ttipCtt,
       'tooltip': 'tooltip-pd'
     },
