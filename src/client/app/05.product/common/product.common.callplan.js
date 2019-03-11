@@ -327,6 +327,10 @@ Tw.ProductCommonCallplan.prototype = {
   },
 
   _resBpcp: function(resp) {
+    if (resp.code === 'BFF0003') {
+      return this._tidLanding.goLogin(location.origin + '/product/callplan?prod_id=' + this._prodId);
+    }
+
     if (resp.code !== Tw.API_CODE.CODE_00) {
       return Tw.Error(resp.code, resp.msg).pop();
     }
