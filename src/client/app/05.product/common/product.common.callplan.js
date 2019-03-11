@@ -52,6 +52,10 @@ Tw.ProductCommonCallplan.prototype = {
     if (!Tw.FormatHelper.isEmpty(this._bpcpServiceId)) {
       this._initBpcp();
     }
+
+    if (this.$contents.find('.idpt-pc').length > 0) {
+      this.$contents.find('.idpt-pc').remove();
+    }
   },
 
   _initBpcp: function() {
