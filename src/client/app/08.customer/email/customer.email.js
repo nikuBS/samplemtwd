@@ -57,7 +57,7 @@ Tw.CustomerEmail.prototype = {
   },
 
   _preventDown: function(e) {
-    e.preventDefault();
+    e.stopPropagation();
   },
 
   _onChangeReceiveContact: function (e) {
