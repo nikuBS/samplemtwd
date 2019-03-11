@@ -1,0 +1,48 @@
+<body>
+    <div class="cont-box nogaps">
+        <div class="data-info">
+            <p class="sub-title">Data 인피니티를 선택하는 이유?</p>
+            <h2 class="title pt10">영화, 드라마를 데이터<br />걱정 없이 무제한으로</h2>
+            <div class="chart-type pt18">
+                <div class="chart-wrap chart1"></div>
+            </div>
+        </div>
+        <p class="text-box">사용중인 band 데이터 퍼펙트S 요금제 16GB 보다 <br /><span class="tx-bold">데이터가 무제한으로 더 충분히 제공</span>됩니다.</p>
+    </div>
+    <hr class="cont-sp type1" aria-hidden="true"/>
+    <div class="cont-box nogaps-btm">
+        <h3 class="tit-type7">음성 / 문자</h3>
+        <div class="chart-type">
+            <div class="chart-wrap chart2"></div>
+        </div>
+    </div>
+
+    <hr class="cont-sp type1" aria-hidden="true"/>
+
+    <div class="cont-box pt12 pb12">
+        <div class="msg-wrap">
+            <i class="icon-dialog-emoji-56 ico"><span class="blind">dialog emoji</span></i>
+            <span class="tx-msg">T플랜 가입하고 가족결합하면 데이터 공유에<br>추가혜택까지!</span>
+        </div>
+    </div>
+</body>
+<script>
+	$('body').chart2({
+        target:'.chart2',
+        type:'bar1',
+        prdname : ['음성', '문자'],
+        legend : ['현재요금제 기본제공량', 'Data 인피니티 기본제공량'],
+        data_arry : [
+            {
+                u : '분',
+                v : 100,
+                v2 : '무제한'
+            },
+            {
+                u : '건',
+                v : 100,
+                v2 : '기본제공'
+            }
+        ]
+    });
+</script>

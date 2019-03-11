@@ -32,15 +32,15 @@
 
 
 	<body class="bg-gray">
-		<!-- #skip_navigation -->
-		<div id="skipNav" class="skip_navi">
-			<ul>
-				<li><a href="#gnb">메뉴 바로가기</a></li>
-				<li><a href="#contents">본문 바로가기</a></li>
-				<li><a href="#footer">푸터 바로가기</a></li>
-			</ul>
-		</div>
-		<!--// #skip_navigation -->
+    <!-- Grand open 접근성 수정 -->  
+    <!-- #skip_navigation -->
+    <div id="skipNav" class="skip_navi">
+        <ul>
+            <li><a href="#contents">본문 바로가기</a></li>
+        </ul>
+    </div>
+    <!--// #skip_navigation -->
+    <!--// Grand open 접근성 수정 -->  
 		<div class="wrap">
 			<!-- #header -->
 			<div id="header" class="header-wrap">
@@ -99,7 +99,7 @@
 						<ul class="link-list type2">
 	                        <li>
 	                            <dl>
-	                                <dt>포인트 합산<button type="button" class="tip-view" title="포인트 합산 TIP보기" aria-haspopup="true">TIP</button><!--레이어팝업으로 띄울경우 aria-haspopup="true" 속성 추가--><!--웹접근성 수정 --></dt>
+									<dt>포인트 합산<button type="button" class="tip-view" title="포인트 합산 TIP보기" aria-haspopup="true">TIP</button><!--레이어팝업으로 띄울경우 aria-haspopup="true" 속성 추가--><!--웹접근성 수정 --></dt>
 	                                <dd>
 	                                    <button>포인트 합산 화면 이동</button>
 	                                </dd>
@@ -107,7 +107,7 @@
 	                        </li>
 	                        <li>
 	                            <dl>
-	                                <dt>포인트 양도<button type="button" class="tip-view" title="포인트 양도 TIP보기" aria-haspopup="true">TIP</button><!--레이어팝업으로 띄울경우 aria-haspopup="true" 속성 추가--><!--웹접근성 수정 --></dt>
+									<dt>포인트 합산<button type="button" class="tip-view" title="포인트 합산 TIP보기" aria-haspopup="true">TIP</button><!--레이어팝업으로 띄울경우 aria-haspopup="true" 속성 추가--><!--웹접근성 수정 --></dt>
 	                                <dd>
 	                                    <button>포인트 양도 화면 이동</button>
 	                                </dd>
@@ -210,11 +210,13 @@
 					<!-- .cont-box -->
 					<div class="cont-box nogaps-btm">
 						<h3 class="tx-bold">꼭 확인해 주세요</h3>
+						<!-- Grand open 접근성 수정 -->
 						<ul class="noti-list02">
-							<li><button type="button" class="tip-view-btn" title="TIP 보기" aria-haspopup="true">적립안내<span class="tip-view">TIP</span></button></li><!--웹접근성 수정 -->
-							<li><button type="button" class="tip-view-btn" title="TIP 보기" aria-haspopup="true">사용안내<span class="tip-view">TIP</span></button></li><!--웹접근성 수정 -->
-							<li><button type="button" class="tip-view-btn" title="TIP 보기" aria-haspopup="true">소멸예정포인트 안내<span class="tip-view">TIP</span></button></li><!--웹접근성 수정 -->
+							<li><button type="button" class="tip-view-btn" aria-haspopup="true">적립안내<span class="tip-view">TIP</span></button></li><!--웹접근성 수정 -->
+							<li><button type="button" class="tip-view-btn" aria-haspopup="true">사용안내<span class="tip-view">TIP</span></button></li><!--웹접근성 수정 -->
+							<li><button type="button" class="tip-view-btn" aria-haspopup="true">소멸예정포인트 안내<span class="tip-view">TIP</span></button></li><!--웹접근성 수정 -->
 						</ul>
+						<!--// Grand open 접근성 수정 -->
 					</div>
 					<!--// .cont-box -->
 				</div>

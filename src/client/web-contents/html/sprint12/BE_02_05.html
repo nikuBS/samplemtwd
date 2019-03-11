@@ -30,15 +30,17 @@
 
 
 <body>
+    <!-- Grand open 접근성 수정 -->
     <!-- #skip_navigation -->
-    <div id="skipNav" class="skip_navi">
-        <ul>
+    <!--<div id="skipNav" class="skip_navi">
+       <ul>
             <li><a href="#gnb">메뉴 바로가기</a></li>
             <li><a href="#contents">본문 바로가기</a></li>
             <li><a href="#footer">푸터 바로가기</a></li>
         </ul>
-    </div>
+    </div>-->
     <!--// #skip_navigation -->
+    <!--// Grand open 접근성 수정 -->
     <div class="wrap">
         <!-- .popup hbs -->
         <div class="popup-page tw-popup nobg fixed-bottom h60"><!-- 하단에 fixed 버튼으로 여백이 필요할때 .fixed-bottom 기본60여백 / 높이 30단위 class 지원 .h30, .h60, .h90 ... -->
@@ -55,41 +57,56 @@
             <div class="container-wrap">
                 <h2 class="blind">내용</h2>
                 <div class="container">
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+
+                    <!-- .cont-box -->
+                    <div class="cont-box">
+                        <div class="user-level">
+                            <i class="ico vip"><span class="blind">VIP</span></i>
+                            <!--
+                            <i class="ico gold"><span class="blind">gold</span></i>
+                            <i class="ico silver"><span class="blind">silver</span></i>
+                            -->
+                            <div class="info-inner">
+                                <span class="title">리더스클럽</span>
+                                <span class="card-num">1234-5678-0000-7777</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--// .cont-box -->
+
+                    <hr class="cont-sp type1" aria-hidden="true"/>
+
                     <!-- .cont-box -->
                     <div class="cont-box">
                         <div class="membership-cancel-wrap">
-							<div class="card-img">
-								<div class="card-box type-red">
-									<div class="card-inner">
-										<strong class="card-tit">T멤버십</strong>
-										<span class="ico-level">VIP</span>
-										<span class="card-name">리더스클럽</span>
-										<div class="name-num">
-											<strong class="num">1234-5678-0000-7777</strong>
-										</div>
-									</div>
-								</div>
-							</div>
 							<p class="identify-txt">
-								<strong>T멤버십을 해지</strong>하시겠습니까?<br/>해지 전에 <strong>안내사항을 꼭 확인</strong>해 주세요.
+								T멤버십을 해지하시겠습니까?<br />해지 전에 안내사항을 꼭 확인해 주세요.
 							</p>
-							<div class="membership-benefit">
+							<div class="membership-benefit pt20">
 								<ul class="round-dot-list">
 									<li>카드를 해지하면 T멤버십의 다양한 제휴 서비스를 이용하실 수 없습니다.</li>
 									<li>카드를 해지하고 신규로 신청하면, 기존 카드로 이용하신 내역은 그대로 유지되며, 변경 사항만 추가 적용됩니다.</li>
 									<li>카드 해지 취소는 해지 당일 24시까지만 하실 수 있습니다.</li>
 									<li>해지 취소를 하려면 고객님께서 고객센터로 직접 문의해 주셔야 합니다.</li>
 								</ul>
-                                <p class="list-tit pt20">[고객센터]</p>
+							</div>
+                            <div class="membership-benefit top-line pt20">
+                                <p class="list-tit">[고객센터]</p>
                                 <ul class="round-dot-list">
                                     <li>이동전화: 국번 없이 114(무료)</li>
                                     <li>유선전화: 1599-0011(유료)</li>
                                 </ul>
-								<p class="star-bul">*단, T멤버십 체크/신용카드에 연결된 T멤버십 카드를 해지하면, 기존에 발급받은 T멤버십 체크/신용카드를 이용할 때 T멤버십 혜택을 추가로 받지 못하실 수 있습니다.</p>
-							</div>
+                            </div>
 						</div>
                     </div>
                     <!--// .cont-box -->
+
+                    <div class="cont-box noborder bgnone">
+                        <div class="announcement-box">
+                            <div class="announcement-txt">단, T멤버십 체크/신용카드에 연결된 T멤버십 카드를 해지하면, 기존에 발급받은 T멤버십 체크/신용카드를 이용할 때 T멤버십 혜택을 추가로 받지 못하실 수 있습니다.</div>
+                        </div>
+                    </div>
 
 					<div class="bt-fixed-area">
                         <ul class="bt-slice full">

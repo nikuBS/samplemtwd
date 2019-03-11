@@ -23,6 +23,7 @@ $(document).on('ready', function () {
   skt_landing._originalSize = $(window).width() + $(window).height();
 });
 $(window).on('resize', function () {
+  var current_size = $(window).width() + $(window).height();
   if($(window).width() + $(window).height() === skt_landing._originalSize){
     $('.popup-page').removeClass('focusin');
   }
@@ -329,7 +330,21 @@ skt_landing.action = {
           svg = '';
       svg_id = skt_landing.action.loading.svg_id = skt_landing.action.ran_id_create();
 
-      svg = '<svg class="circular-loader"viewBox="25 25 50 50" ><circle class="loader-path" cx="50" cy="50" r="20" fill="none" stroke=#EF4B49" stroke-width="2" /></svg>';
+      //svg = '<svg class="circular-loader"viewBox="25 25 50 50" ><circle class="loader-path" cx="50" cy="50" r="20" fill="none" stroke=#EF4B49" stroke-width="2" /></svg>';
+      svg = [
+        '<div class="spinner_loading">',
+        '    <div class="line"></div>',
+        '    <div class="line"></div>',
+        '    <div class="line"></div>',
+        '    <div class="line"></div>',
+        '    <div class="line"></div>',
+        '    <div class="line"></div>',
+        '    <div class="line"></div>',
+        '    <div class="line"></div>',
+        '    <div class="line"></div>',
+        '</div>'
+      ];
+      svg = svg.join('');
 
       loading_box
         .css({

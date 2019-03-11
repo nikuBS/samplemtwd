@@ -3753,7 +3753,9 @@ body.apphome {
     font-size: 0.9375rem;
     font-weight: 400;
     text-align: left;
-    line-height: 3.75rem; }
+    line-height: 3.75rem;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box; }
     .member-info-box .call-message .message .icon-sms-48 {
       position: relative;
       top: -2px; }

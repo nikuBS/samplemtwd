@@ -21,80 +21,275 @@
     <link rel="stylesheet" type="text/css" href="/css/layout.css" media="all" /><!-- [C] 박스 모델 -->
     <link rel="stylesheet" type="text/css" href="/css/widgets.css" media="all" /><!-- [C] 기능별 위젯 -->
     <link rel="stylesheet" type="text/css" href="/css/components.css" media="all" /><!-- [C] 단락별 컴퍼넌트 -->
+
+    
+    
+
     <script type="text/javascript" src="/lib/jquery-1.12.3.min.js"></script><!--[C] jquery API-->
     <script type="text/javascript" src="/lib/handlebars-v4.0.5.js"></script><!--[C] handlebars tmpl API-->
     <script type="text/javascript" src="/lib/slick.js"></script><!--[C] iscroll API -->
     <script type="text/javascript" src="/js/$vars.js"></script><!--[C] 전역 변수 -->
     <script type="text/javascript" src="/js/common.js"></script><!--[C] 공통 기능 -->
     <script type="text/javascript" src="/js/widgets.js"></script><!--[C] 기능별 위젯 -->
+    
+    <script type="text/javascript" src="/js/chart.js"></script><!-- [C] 단락별 컴퍼넌트 -->
 </head>
 
-<body class="bg-productdetail"><!-- 2017.10.29 수정/추가 상품상세 페이지 BG변경되는 페이지에서 클래스 추가필요 -->
+
+<body class="bg-productdetail">
+    <!-- Grand open 접근성 수정 -->  
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
-        <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
-            <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
-        </ul>
-    </div>
-    <!--// #skip_navigation -->
+		<ul>
+			<li><a href="#contents">본문 바로가기</a></li>
+		</ul>
+	</div>
+	<!--// #skip_navigation -->
+	<!--// Grand open 접근성 수정 --> 
     <div class="wrap">
         <!-- #header -->
         <div id="header" class="header-wrap">
-			<div class="h-belt">
-				<div class="h-default">
-					<div class="h-menu">
+            <div class="h-belt">
+                <div class="h-default">
+                    <div class="h-menu">
                         <button type="button" class="icon-gnb-menu"><span class="blind">메뉴열기</span></button>
                     </div>
-					<div class="h-tit">상품상세</div>
-					<div class="h-serarch">
-						<button class="icon-gnb-search"><span class="blind">검색</span></button>
-					</div>
-				</div>
-			</div>
+                    <div class="h-tit blind">상품상세</div>
+                    <div class="h-serarch">
+                        <button class="icon-gnb-search"><span class="blind">검색</span></button>
+                    </div>
+                </div>
+            </div>
         </div>
         <!--// #header -->
         <!-- #contents -->
         <div id="contents" class="container-wrap">
             <h2 class="blind">내용</h2>
             <div class="container">
+				<div class="pdt-detail-wrap">
+					<!-- 상품타이틀 -->
+					<div class="cont-box nogaps-hoz productdetails-bg" style="background:#3994de;">
+						<div class="productdetails-wrap">
+							<div class="productdetails-title">
+								<div class="title">온가족플랜</div>
+							</div>
+							<p class="productdetails-text02">우리가족 회선수에 따라 점점 커지는 온가족플랜 할인혜택을 확인해 보세요.</p>
+							<div class="productdetails-box">2~5회선 + 인터넷</div>
+						</div>
+						<div class="productdetails-ledgercase">
+							<p class="price-text">
+								이동전화 2~5회선 + 인터넷
+							</p>
+							<div class="btn">
+								<button type="button" class="bt-white1" style="color:#3994de;">가입</button>
+							</div>
+						</div>
+					</div>
+					<!-- //상품타이틀 -->
+					<hr class="cont-sp type1" aria-hidden="true"/>
 
-                <!-- 상품타이틀 -->
-                <div class="cont-box nogaps-hoz productdetails-bg" style="background:#3c408d;">
-
-                    <div class="productdetails-wrap">
-                        <h3 class="productdetails-title">
-                            <strong class="title">온가족플랜</strong>
-                        </h3>
-                        <p class="productdetails-text02">우리가족 회선수에 따라 점점 커지는 온가족플랜 할인혜택을 확인해 보세요.</p>
-                        <div class="productdetails-box">
-                            <!-- 더미지 이미지-->
-                            <img src="/img/product/img_MC_01_01.png" style="width:100%;max-height:90px;">
-                            <!-- //더미지 이미지-->
-                        </div>
+					<div class="joinconsulting-wrap">
+						<p class="text">가입상담을 받아보시겠어요?</p>
+						<div class="btn">
+                        <button type="button" class="btn-round3 btn-style3">예약</button>
                     </div>
-                    <div class="productdetails-ledgercase">
-                        <p class="price-text">
-                            이동전화 (2회선~5회선) + 인터넷
-                        </p>
-                        <div class="btn">
-                            <button type="button" class="bt-white1">가입</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- //상품타이틀 -->
+					</div>
+					<hr class="cont-sp type1" aria-hidden="true"/>
 
-                <hr class="cont-sp type1" aria-hidden="true"/>
+					<div class="product-visualization"><img src="/img/dummy/dmy_BS_02_01.png" alt="" style="width:100%;"></div>
+					<div class="cont-box nogaps noborder">
+						<ul class="link-long-list ntype02">
+							<li>
+								<div class="link-long">
+									<button>
+											이용요금 및 혜택사항
+										<span class="tx-sub">
+											<span class="ico"><span class="blind">보기</span></span>
+										</span>
+									</button>
+								</div>
+							</li>
+							<li>
+								<div class="link-long">
+									<button>
+											가입/해지 유의사항
+										<span class="tx-sub">
+											<span class="ico"><span class="blind">보기</span></span>
+										</span>
+									</button>
+								</div>
+							</li>
+						</ul>
+					</div>
 
-                <!-- 가입상담  -->
-                <div class="joinconsulting-wrap">
-                    <p class="text">가입상담을 받아보시겠어요?</p>
-                    <div class="btn">
-                        <div class="bt-alone"><button class="bt-line-blue1">예약</button></div>
-                    </div>
-                </div>
-                <!-- //가입상담  -->
+					<hr class="cont-sp type1" aria-hidden="true"/>
+
+					<div class="banner-img-wrap">
+						<button><img src="/img/product/img_dmy_BS_02_01.png" alt="" /></button>
+					</div>
+
+					<div class="cont-box nogaps bgnone noborder pt14">
+						<!-- .component -->
+						<div class="component">
+							<div class="component-box tabs">
+								<div class="tab-area new02"><!-- 타입별 탭형태 변환 -->
+									<div class="tab-linker">
+										<ul role="tablist" style="width: 100%;">
+											<li role="tab" aria-selected="true" aria-c0ontrols="tab1-tab" id="tab1"><a href="">T플랜 시리즈</a></li><!-- 링크 이동시 활성화 된 탭에 aria-selected="true" 설정 -->
+											<li role="tab" aria-selected="false" aria-controls="tab3-tab" id="tab2"><a href="">함께하면 유용한 상품</a></li>
+										</ul>
+									</div>
+									<div class="tab-contents">
+										<ul>
+											<li role="tabpanel" id="tab1-tab2" aria-labelledby="tab1">
+												<div class="cont-box nogaps-hoz bgnone">
+													<div class="productinfoscroll-box block-type type01">
+														<!-- .widget -->
+														<div class="widget"> 
+															<div class="widget-box horizontal">
+																<div class="horizontal-slide">
+																	<ul class="horizontal-list">
+																		<li>
+																			<button type="button" class="product-info">
+																				<strong class="stit">스몰</strong>
+																				<p class="info">월<span class="money">33,000</span>원</p>
+																				<div class="type">
+																					<span class="str">1.2</span>GB
+																				</div>
+																			</button>
+																		</li>
+																		<li>
+																			<button type="button" class="product-info">
+																				<strong class="stit">미디엄</strong>
+																				<p class="info">월<span class="money">50,000</span>원</p>
+																				<div class="type">
+																					<span class="str">1.2</span>GB
+																				</div>
+																			</button>
+																		</li>
+																		<li>
+																			<button type="button" class="product-info">
+																				<strong class="stit">스몰</strong>
+																				<p class="info">월<span class="money">33,000</span>원</p>
+																				<div class="type">
+																					<span class="str">1.2</span>GB
+																				</div>
+																			</button>
+																		</li>
+																		<li>
+																			<button type="button" class="product-info">
+																				<strong class="stit">스몰</strong>
+																				<p class="info">월<span class="money">33,000</span>원</p>
+																				<div class="type">
+																					<span class="str">1.2</span>GB
+																				</div>
+																			</button>
+																		</li>
+																	</ul>
+																</div>
+															</div>
+														</div>
+														<!-- .widget -->
+													</div>
+												</div>
+											</li>
+											<li role="tabpanel" id="tab2-tab" aria-labelledby="tab2" aria-selected="false">
+												<div class="cont-box bgnone">
+													함께하면 유용한 상품 내용입니다.
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--// .component -->
+					</div>
+
+					<div class="cont-box">
+						<div class="ti-caption-type01 pb0">
+							<h2 class="tit">연관 태그</h2>
+						</div>
+						<div class="suggest-tag-titlebox">
+							<button class="suggest-tag-link">
+								<p class="text">
+									유사한 상품을 찾아보세요! 
+									<span class="textnumber">(<span class="number">4</span>개) </span>
+								</p>
+								<div class="taglist-wrap">
+									<span class="tag-text">#요금할인</span>
+								</div>
+							</button>
+						</div>
+						<!-- <div class="widget-box toggle02">
+							<div class="suggest-tag-list openlist-wrap">
+								<ul>
+									<li><a href="#" class="link">#여행 갈 때 좋은 부가서비스</a></li>
+									<li><a href="#" class="link">#효도 부가서비스</a></li>
+									<li><a href="#" class="link">#휴식</a></li>
+									<li><a href="#" class="link">#자녀를 위한 부가서비스</a></li>
+									<li><button type="button" class="link">#여행 갈 때 좋은 요금제</button></li>
+									<li><button type="button" class="link">#여행 갈 때 좋은 요금제</button></li>
+								</ul>
+							</div>
+						</div> -->
+					</div>
+					<hr class="cont-sp type1" aria-hidden="true"/>
+
+					<div class="cont-box">
+						<div class="ti-caption-type01 pb20">
+							<h2 class="tit">함께하면 더욱 스마트한 앱서비스</h2>
+						</div>
+						<!-- .widget -->
+						<div class="widget"> 
+							<div class="widget-box horizontal">
+								<div class="horizontal-slide">
+									<ul class="horizontal-list smart-app">
+										<li>
+											<div>
+												<button>
+													<span class="ico type1"></span>
+													<span>T전화</span>
+												</button>
+											</div>
+										</li>
+										<li>
+											<div>
+												<button>
+													<span class="ico type2"></span>
+													<span>T맵</span>
+												</button>
+											</div>
+										</li>
+										<li>
+											<div>
+												<button>
+													<span class="ico type3"></span>
+													<span>oksusu</span>
+												</button>
+											</div>
+										</li>
+										<li>
+											<div>
+												<button>
+													<span class="ico type4"></span>
+													<span>클라우드<br/>베리</span>
+												</button>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<!-- .widget -->
+					</div>
+					<hr class="cont-sp type1" aria-hidden="true"/>
+					<div class="banner-img-wrap">
+						<button><img src="/img/product/img_dmy_BS_02_01.png" alt=""></button>
+					</div>
+
+
+				</div>
 
             </div>
         </div>
