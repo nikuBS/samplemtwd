@@ -8,11 +8,7 @@
     <li>
         <button data-id="fe-other-line" data-idx="{{ @index }}" data-num="{{ svcMgmtNum }}">
             <span class="ico-wrap">
-                {{#if isCellphone }}
-                <i class="icon-cellphone-80"><span class="blind">{{ eqpMdlNm }}</span></i>
-                {{ else }}
-                <i class="icon-tablet-80"><span class="blind">{{ eqpMdlNm }}</span></i>
-                {{/if }}
+               <i class="icon-{{clsNm}}-80"><span class="blind">{{ clsNm }}</span></i>
             </span>
             <span class="cont">
                 <span class="info-title">{{ eqpMdlNm }}
