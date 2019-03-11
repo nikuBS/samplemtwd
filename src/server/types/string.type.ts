@@ -189,6 +189,14 @@ export enum MYT_DATA_RECHARGE_COUPON {
   A20 = '선물받은 리필쿠폰'
 }
 
+export const MYT_DATA_HISTORY = {
+  send: '보냄',
+  recieve: '받음',
+  once: '1회',
+  auto: '자동',
+  recharge: '충전'
+};
+
 export enum PRODUCT_INFINITY_BENEFIT {
   NA00006114 = 'T로밍 OnePass 1개월에 1개,<br>마티나 라운지 이용권 3개월에 1회 제공',
   NA00006115 = '영화예매권 월 2장 무료',
