@@ -259,7 +259,7 @@ Tw.MembershipBenefitBrandBenefit.prototype = {
    * 현재 지역 파악하기
    * @private
    */
-  _getCurrentLocation(){
+  _getCurrentLocation: function(){
     //app인 경우
     if ( Tw.BrowserHelper.isApp() ) {
       this._nativeService.send(
