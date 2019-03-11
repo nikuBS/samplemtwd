@@ -55,7 +55,9 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
       layer: true,
       data : data
     },$.proxy(this._popupOpenCallback,this),
-      null,hash);
+      $.proxy(function () {
+        this.$rootContainer.find('#do_confirm').focus();
+      },this),hash);
   },
   _popupOpenCallback : function($poppContainer){
     this._$popupContainer = $poppContainer;
@@ -135,12 +137,14 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     $element.attr('checked',value==='checked'?true:false);
     $element.parent().attr('aria-checked',value==='checked'?true:false);
   },
-  _doJoin : function () {
+  _doJoin : function (evt) {
     this._popupService.openModalTypeATwoButton(Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.TITLE,
       Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.MSG, Tw.ALERT_MSG_PRODUCT.ALERT_3_A3.BUTTON, Tw.BUTTON_LABEL.CLOSE,
       null,
       $.proxy(this._confirmInfo,this),
-      null);
+      function () {
+        $(evt.currentTarget).focus();
+      });
   },
   _confirmInfo : function () {
     this._popupService.close();
@@ -198,7 +202,10 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
         title: $currentTarget.data('tit'),
         html: $currentTarget.data('txt')
       }
-    },$.proxy(this._bindDetailAgreePopupEvt,this), null, 'agree_pop');
+    },$.proxy(this._bindDetailAgreePopupEvt,this),
+        function () {
+          $currentTarget.focus();
+        }, 'agree_pop');
   },
   _bindDetailAgreePopupEvt : function (popEvt){
     $(popEvt).on('click','.fe-btn_ok',$.proxy(this._detailAgreePopupEvt,this));
@@ -411,17 +418,22 @@ Tw.ProductRoamingJoinConfirmInfo.prototype = {
     }
   },
   _showBffToolTip : function (evt) {
-    var tooltipData = $(evt.currentTarget).data();
+    var $target = $(evt.currentTarget);
+    var tooltipData = $target.data();
+    console.log(tooltipData.txt);
     this._popupService.open({
       url: '/hbs/',
       hbs: 'popup',
-      'pop_name': 'type_tx_scroll',
       'title': tooltipData.tit,
+      'btn-close':'btn-tooltip-close tw-popup-closeBtn',
       'title_type': 'tit-tooltip',
       'cont_align': 'tl',
+      'tagStyle-div': 'div',
       'contents': tooltipData.txt,
-      'btn-close':'btn-tooltip-close tw-popup-closeBtn'
-    },null,null);
+      'tooltip': 'tooltip-pd'
+    },null,function () {
+      $target.focus();
+    });
   },
   _convertPrice : function (priceVal) {
     if(!isNaN(priceVal)){

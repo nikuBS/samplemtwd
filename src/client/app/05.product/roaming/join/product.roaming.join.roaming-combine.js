@@ -57,7 +57,7 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
     this.$inputElement.attr('maxlength','11');
     this.$inputElement.val(tempVal);
   },
-  _addPhoneNumOnList : function () {
+  _addPhoneNumOnList : function (evt) {
     if(this._addedList.length>=4){
       this.$addBtn.css('pointer-events','none');
       this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A9.TITLE);
@@ -66,9 +66,9 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
     var reuqestPhoneNum = this.$inputElement.val().replace(/\-/g,'');
     //var phonReg = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})([0-9]{3,4})([0-9]{4})$/;
     if(Tw.FormatHelper.isPhoneNum(reuqestPhoneNum)){
-      this._requestOrder('add',reuqestPhoneNum);
+      this._requestOrder('add',reuqestPhoneNum,evt);
     }else{
-      this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE);
+      this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A29.TITLE,evt);
     }
   },
   _requestOrder : function(requestType,phoneNum,targetEvt){
@@ -97,13 +97,13 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
         }
       }else{
         if(res.code==='PRD0027'){
-          this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A19.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A19.TITLE);
+          this._openAlert(Tw.ALERT_MSG_PRODUCT.ALERT_3_A19.MSG,Tw.ALERT_MSG_PRODUCT.ALERT_3_A19.TITLE,targetEvt);
         }else{
-          this._openAlert(res.msg,Tw.POPUP_TITLE.ERROR);
+          this._openAlert(res.msg,Tw.POPUP_TITLE.ERROR,targetEvt);
         }
       }
     }, this)).fail($.proxy(function (err) {
-      this._openAlert(err.msg,Tw.POPUP_TITLE.ERROR);
+      this._openAlert(err.msg,Tw.POPUP_TITLE.ERROR,targetEvt);
     }, this));
   },
   _showPhoneBook : function () {
@@ -158,7 +158,8 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
     this.$container.find('.comp-box').append(this._combineListTemplate({listData : listData}));
   },
   _removeOnList : function (targetEvt) {
-    var selectedIdx = $(targetEvt.currentTarget).parents('li').index();
+    var $target = $(targetEvt.currentTarget)
+    var selectedIdx = $target.parents('li').index();
     selectedIdx = parseInt(selectedIdx,10);
     var reuqestPhoneNum = this._addedList[selectedIdx].svcMgmtNum;
     if(this._addedList.length<=1){
@@ -171,7 +172,9 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
           this._popupService.close();
           this._requestOrder('remove',reuqestPhoneNum,targetEvt);
         },this),
-        null,
+        function () {
+          $target.focus();
+        },
         Tw.BUTTON_LABEL.CLOSE,
         Tw.ALERT_MSG_PRODUCT.ALERT_3_A5.BUTTON);
     }
@@ -186,20 +189,21 @@ Tw.ProductRoamingJoinRoamingCombine.prototype = {
     }
     return tempArr;
   },
-  _openAlert : function (msg,title) {
+  _openAlert : function (msg,title,targetEvt) {
     this._popupService.openAlert(
       msg,
       title,
       null,
       $.proxy(function () {
         this.$addBtn.removeAttr('style');
+        $(targetEvt.currentTarget).focus();
       }, this)
     );
     if(!this.$addBtn.attr('disabled')) {
       this.$addBtn.css({'pointer-events': 'none', 'background': '#3b98e6'});
     }
   },
-  _openAuthAlert : function () {
+  _openAuthAlert : function (evt) {
     this._popupService.openConfirmButton(
       Tw.PRODUCT_AUTH_ALERT_STR.MSG,
       Tw.PRODUCT_AUTH_ALERT_STR.TITLE,

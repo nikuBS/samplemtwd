@@ -15,8 +15,7 @@
             <!-- .cont-box -->
             <div class="cont-box">
                 <div class="user-info">
-                    <span class="blind">현재 선택된 회선정보 및 사용중인 요금제 정보 노출</span>
-                    <span class="ico"><span class="blind">선택된 회선정보 아이콘</span></span>
+                    <span class="ico"></span>
                     <div class="in-info oneline">
                         <span class="number"><span class="blind">회선번호</span>{{data.svcNum}}</span>
                     </div>
@@ -254,14 +253,14 @@
                     <ul class="noti-list02">
                         {{#each data.autoInfo.preinfo.joinNoticeList}}
                             <li>
-                                <button title="{{this.noticeTit}} 정보보기" type="button" class="tip-view-btn bff" data-tit="{{this.noticeTit}}" data-txt="{{this.noticeTxt}}" aria-haspopup="true">
+                                <button type="button" class="tip-view-btn bff" data-tit="{{this.noticeTit}}" data-txt="{{this.noticeTxt}}" aria-haspopup="true">
                                     {{this.noticeTit}}<span class="tip-view">TIP</span>
                                 </button>
                             </li>
                         {{/each}}
                         {{#each data.toolTipData}}
                             <li>
-                                <button type="button" title="{{this.tipTitle}} 정보보기" class="tip-view-btn"  id="{{this.tipId}}" aria-haspopup="true">
+                                <button type="button" class="tip-view-btn"  id="{{this.tipId}}" aria-haspopup="true">
                                     {{this.tipTitle}}<span class="tip-view">TIP</span>
                                 </button>
                             </li>
