@@ -137,10 +137,8 @@ Tw.CustomerSvcInfoMcenter.prototype = {
       'title_type': 'sub',
       'cont_align': 'tl',
       'contents': $(popId).find('.popup-title').html().replace(/<br ?\/?>/gi, '\n'),
-      'bt_b': [{
-        style_class: 'tw-popup-closeBtn bt-red1 pos-right',
-        txt: Tw.BUTTON_LABEL.CONFIRM
-      }]
+      'tagStyle-div': 'div',
+      'btn-close':'btn-tooltip-close tw-popup-closeBtn'
     }, $.proxy(function($container){
       $container.find('.popup-info').show();
     }, this), null);
