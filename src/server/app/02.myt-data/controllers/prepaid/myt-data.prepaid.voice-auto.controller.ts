@@ -10,6 +10,7 @@ import BrowserHelper from '../../../../utils/browser.helper';
 import { API_CMD } from '../../../../types/api-command.type';
 import FormatHelper from '../../../../utils/format.helper';
 import DateHelper from '../../../../utils/date.helper';
+import {PREPAID_AMT_CD} from '../../../../types/bff.type';
 
 class MyTDataPrepaidVoiceAuto extends TwViewController {
   constructor() {
@@ -46,6 +47,8 @@ class MyTDataPrepaidVoiceAuto extends TwViewController {
 
     if ( !FormatHelper.isEmpty(AutoInfo.result) ) {
       result = AutoInfo.result;
+      result.amtValue = PREPAID_AMT_CD[result.amtCd];
+      result.endDate = DateHelper.getDashShortDateNoDot(result.endDt);
     } else {
       return null;
     }
