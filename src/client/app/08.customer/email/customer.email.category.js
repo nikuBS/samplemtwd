@@ -220,7 +220,7 @@ Tw.CustomerEmailCategory.prototype = {
     this.$select_quality_depth1.data('quality-depth1', sDepth1Value);
     this.quality.depth1 = sDepth1Value;
 
-    this.$container.trigger('changeQualityTemplate', this.quality);
+    this.$container.trigger('changeQualityTemplate', {qualityCategory: this.quality});
 
     this._popupService.close();
   },

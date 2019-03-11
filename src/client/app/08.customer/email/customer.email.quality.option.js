@@ -27,7 +27,8 @@ Tw.CustomerEmailQualityOption.prototype = {
 
   _bindEvent: function () {
     this.$wrap_tpl_quality.on('click', '.fe-select-line', $.proxy(this._onSelectLine, this));
-    // this.$wrap_tpl_quality.on('click', 'button.fe-select-phone-line', $.proxy(this._onSelectQualityPhoneLine, this));
+    // this.$wrap_tpl_quality.on('click', '.fe-select-addr-line', $.proxy(this._onSelectAddrLine, this)); // 주소
+    this.$wrap_tpl_quality.on('click', 'button.fe-select-phone-line', $.proxy(this._onSelectQualityPhoneLine, this));
     // this.$container.on('click', '.fe-line_internet', $.proxy(this._showLineSheet, this, 'INTERNET'));
     // this.$container.on('click', '.fe-line', $.proxy(this._showLineSheet, this, 'CELL'));
     this.$container.on('click', '.fe-occurrence', $.proxy(this._showOptionSheet, this, 'Q_TYPE01'));
@@ -43,11 +44,12 @@ Tw.CustomerEmailQualityOption.prototype = {
     new Tw.CommonPostcodeMain(this.$container);
   },
 
-  // 사용안함
+  // 품질상담 > 인터넷/집전화/IPTV > 회선변경
   _onSelectQualityPhoneLine: function (e) {
     e.stopPropagation();
     e.preventDefault();
 
+    var $target = $(e.currentTarget);
     var isInternetLine = $('.fe-quality-inqSvcClCd li.checked').index() === 0;
     var filteredLine = [];
     var fnSelectLine;
@@ -57,47 +59,45 @@ Tw.CustomerEmailQualityOption.prototype = {
         return item.svcGr === 'I' || item.svcGr === 'T';
       });
 
-      fnSelectLine = function (item) {
+      fnSelectLine = function (item, index) {
         return {
-          value: item.addr,
-          option: $('.fe-select-phone-line').data('svcmgmtnum').toString() === item.svcMgmtNum ? 'checked' : '',
-          attr: 'data-svcmgmtnum=' + item.svcMgmtNum
+          'txt': item.addr,
+          'radio-attr': 'data-index="' + index + '" data-svcmgmtnum="' + item.svcMgmtNum + '"' + ($('.fe-select-phone-line').data('svcmgmtnum').toString() === item.svcMgmtNum ? ' checked' : ' '),
+          'label-attr': ' '
         };
       };
     } else {
       filteredLine = this.allSvc.s.filter(function (item) {
         return item.svcGr === 'U';
       });
-
-      fnSelectLine = function (item) {
+      fnSelectLine = function (item, index) {
         return {
-          value: Tw.FormatHelper.conTelFormatWithDash(item.svcNum),
-          option: $('.fe-select-phone-line').data('svcmgmtnum').toString() === item.svcMgmtNum ? 'checked' : '',
-          attr: 'data-svcmgmtnum=' + item.svcMgmtNum
+          'txt': Tw.FormatHelper.conTelFormatWithDash(item.svcNum),
+          'radio-attr': 'data-index="' + index + '" data-svcmgmtnum="' + item.svcMgmtNum + '"' + ($('.fe-select-phone-line').data('svcmgmtnum').toString() === item.svcMgmtNum ? ' checked' : ' '),
+          'label-attr': ' '
         };
       };
     }
 
-    // fnSelectLine = function (item) {
-    //   return {
-    //     value: Tw.FormatHelper.conTelFormatWithDash(item.svcNum),
-    //     option: $('.fe-select-phone-line').data('svcmgmtnum').toString() === item.svcMgmtNum ? 'checked' : '',
-    //     attr: 'data-svcmgmtnum=' + item.svcMgmtNum
-    //   };
-    // };
+    var list = filteredLine.map(fnSelectLine);
 
     this._popupService.open({
-        hbs: 'actionsheet_select_a_type',
+        hbs: 'actionsheet01',
         layer: true,
-        title: Tw.CUSTOMER_VOICE.LINE_CHOICE,
-        data: [{ list: filteredLine.map($.proxy(fnSelectLine, this)) }]
+        //title: Tw.CUSTOMER_VOICE.LINE_CHOICE,
+        btnfloating: { 'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE },
+        data: [{ list: list }]
       },
-      null,
+      $.proxy(this._handleQualityPhoneLine, this, $target),
       null
     );
   },
 
-  // 품질상담 > 회선변경 
+  _handleQualityPhoneLine: function ($target, $layer) {
+    $layer.on('change', 'li input', $.proxy(this._handleSelectType, this, $target));
+  },
+
+  // 품질상담 > 휴대폰 > 회선변경 
   _onSelectLine: function (e) {
     e.stopPropagation();
     e.preventDefault();
@@ -108,9 +108,9 @@ Tw.CustomerEmailQualityOption.prototype = {
       var dashNumber = Tw.FormatHelper.conTelFormatWithDash(item.svcNum);
 
       return $.extend({}, item, {
-        'label-attr': 'data-svcmgmtnum=' + item.svcMgmtNum + '',
+        'label-attr': ' ',
         'txt': dashNumber,
-        'radio-attr': isChecked ? 'checked' : ' '
+        'radio-attr': 'data-svcmgmtnum="' + item.svcMgmtNum + '"' + isChecked ? ' checked' : ' '
       });
     };
 
@@ -119,7 +119,7 @@ Tw.CustomerEmailQualityOption.prototype = {
     this._popupService.open({
         hbs: 'actionsheet01',
         layer: true,
-        btnfloating: { 'attr': 'type="button"', 'class': 'fe-popup-close', 'txt': Tw.BUTTON_LABEL.CLOSE },
+        btnfloating: { 'attr': 'type="button"', 'class': 'tw-popup-closeBtn', 'txt': Tw.BUTTON_LABEL.CLOSE },
         data: [{ list: list }]
       },
       $.proxy(this._handleOpenSelectType, this, $target));
@@ -133,8 +133,8 @@ Tw.CustomerEmailQualityOption.prototype = {
   // 품질상담 > 회선변경 처리
   _handleSelectType: function ($target, e) {
     var $currentTarget = $(e.currentTarget);
-    var svcNum = $currentTarget.text().trim();
-    var svcMgmtNum = $currentTarget.find('label').data('svcmgmtnum');
+    var svcNum = $currentTarget.parents('li').find('.txt').text().trim();
+    var svcMgmtNum = $currentTarget.data('svcmgmtnum');
 
     $target.text(svcNum);
     $target.data('svcmgmtnum', svcMgmtNum);
@@ -143,6 +143,7 @@ Tw.CustomerEmailQualityOption.prototype = {
 
     this._popupService.close();
   },
+
 
   // _showLineSheet: function (sType, e) {
   //   var $elButton = $(e.currentTarget);
