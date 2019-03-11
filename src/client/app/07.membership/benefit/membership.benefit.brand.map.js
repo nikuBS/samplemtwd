@@ -38,6 +38,13 @@ Tw.MembershipBenefitBrandMap.prototype = {
     this.$btnTmap.on('click', $.proxy(this._goTmap, this));
     this.$btnBenefit.on('click', $.proxy(this._onClickBenefit, this));
     this.$btnFranchiseeList.on('click', $.proxy(this._onClickFranchiseeList, this));
+
+    $(window).on("orientationchange", $.proxy(function(){
+      setTimeout($.proxy(function() {
+        this.$map.empty();
+        this._initMap(this.$map, this.location);
+      }, this), 300);
+    }, this));
   },
 
   _init: function () {
@@ -69,9 +76,8 @@ Tw.MembershipBenefitBrandMap.prototype = {
     var map = new Tmap.Map({
       div: mapEl[0].id,
       width: '100%',
-      height: mapEl.width() + 'px'
+      height: $(window).height() * 0.6 + 'px'
     });
-
     var shopLon = coord.lon + '';
     var shopLat = coord.lat + '';
 
