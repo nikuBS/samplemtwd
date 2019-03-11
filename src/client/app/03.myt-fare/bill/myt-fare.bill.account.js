@@ -75,8 +75,8 @@ Tw.MyTFareBillAccount.prototype = {
       $target.siblings().removeClass('checked');
       $bankTarget.attr('disabled', 'disabled');
       $numberTarget.attr('disabled', 'disabled');
-      $numberTarget.parents('.fe-bank-wrap').find('.fe-error-msg').hide();
-      $numberTarget.parents('.fe-bank-wrap').find('.fe-bank-error-msg').hide();
+      $numberTarget.parents('.fe-bank-wrap').find('.fe-error-msg').hide().attr('aria-hidden', 'true');
+      $numberTarget.parents('.fe-bank-wrap').find('.fe-bank-error-msg').hide().attr('aria-hidden', 'true');
     }
   },
   _showAndHideAccount: function (event) {

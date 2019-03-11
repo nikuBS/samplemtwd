@@ -110,12 +110,12 @@ Tw.MyTDataPrepaidVoice.prototype = {
 
   _validatePrepaidNumber: function (e) {
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
-    $error.addClass('blind');
+    $error.addClass('blind').attr('aria-hidden', 'true');
 
     if ( Tw.FormatHelper.isEmpty(this.$prepaid_card.val()) ) {
-      $($error.get(0)).removeClass('blind');
+      $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
     } else if ( !this._validation.checkMoreLength(this.$prepaid_card, 10) ) {
-      $($error.get(1)).removeClass('blind');
+      $($error.get(1)).removeClass('blind').attr('aria-hidden', 'false');
     }
   },
 
@@ -123,29 +123,29 @@ Tw.MyTDataPrepaidVoice.prototype = {
     Tw.InputHelper.inputNumberAndAlphabet(e.target);
 
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
-    $error.addClass('blind');
+    $error.addClass('blind').attr('aria-hidden', 'true');
 
     if ( Tw.FormatHelper.isEmpty(this.$prepaid_serial.val()) ) {
-      $($error.get(0)).removeClass('blind');
+      $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
     } else if ( !this._validation.checkMoreLength(this.$prepaid_serial, 10) ) {
-      $($error.get(1)).removeClass('blind');
+      $($error.get(1)).removeClass('blind').attr('aria-hidden', 'false');
     }
   },
 
   _validateCard: function (e) {
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
-    $error.addClass('blind');
+    $error.addClass('blind').attr('aria-hidden', 'true');
 
     if ( !this._validation.checkMoreLength(this.$cardNumber, 15) ) {
-      $($error.get(0)).removeClass('blind');
-      $($error.get(1)).addClass('blind');
+      $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
+      $($error.get(1)).addClass('blind').attr('aria-hidden', 'true');
     } else {
       this._getCardInfo();
     }
 
     if ( this.$cardNumber.val() === '' ) {
-      $($error.get(0)).addClass('blind');
-      $($error.get(1)).removeClass('blind');
+      $($error.get(0)).addClass('blind').attr('aria-hidden', 'true');
+      $($error.get(1)).removeClass('blind').attr('aria-hidden', 'false');
     }
   },
 
@@ -166,29 +166,29 @@ Tw.MyTDataPrepaidVoice.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
     } else {
       var $credit_error = this.$cardNumber.closest('li').find('.error-txt').get(2);
-      $($credit_error).removeClass('blind');
+      $($credit_error).removeClass('blind').attr('aria-hidden', 'false');
       this.$btnRequestCreditCard.prop('disabled', true);
     }
   },
 
   _validateExpired: function (e) {
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
-    $error.addClass('blind');
+    $error.addClass('blind').attr('aria-hidden', 'true');
 
     if ( this.$cardY.val() === '' || this.$cardM.val() === '' ) {
-      $($error.get(1)).removeClass('blind');
+      $($error.get(1)).removeClass('blind').attr('aria-hidden', 'false');
     } else if ( !(this._validation.checkMoreLength(this.$cardY, 4) && this._validation.checkMoreLength(this.$cardM, 2) &&
       this._validation.checkYear(this.$cardY) && this._validation.checkMonth(this.$cardM, this.$cardY)) ) {
-      $($error.get(0)).removeClass('blind');
+      $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
     }
   },
 
   _validatePwd: function (e) {
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
-    $error.addClass('blind');
+    $error.addClass('blind').attr('aria-hidden', 'true');
 
     if ( this.$cardPwd.val() === '' ) {
-      $error.removeClass('blind');
+      $error.removeClass('blind').attr('aria-hidden', 'false');
     }
   },
 
@@ -339,10 +339,10 @@ Tw.MyTDataPrepaidVoice.prototype = {
 
   _validSelectedValue: function ($elButton) {
     var $error = $($elButton).closest('li').find('.error-txt');
-    $error.addClass('blind');
+    $error.addClass('blind').attr('aria-hidden', 'true');
 
     if ( Tw.FormatHelper.isEmpty($($elButton).attr('data-amount')) ) {
-      $($error.get(0)).removeClass('blind');
+      $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
     }
   },
 

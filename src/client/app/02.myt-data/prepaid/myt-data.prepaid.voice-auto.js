@@ -88,18 +88,18 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
   _validateCard: function (e) {
     var $cardNumber = $(e.currentTarget);
     var $error = $(e.currentTarget).closest('li').find('.error-txt');
-    $error.addClass('blind');
+    $error.addClass('blind').attr('aria-hidden', 'true');
 
     if ( !this._validation.checkMoreLength($cardNumber, 15) ) {
-      $($error.get(0)).removeClass('blind');
-      $($error.get(1)).addClass('blind');
+      $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
+      $($error.get(1)).addClass('blind').attr('aria-hidden', 'true');
     } else {
       this._getCardInfo();
     }
 
     if ( $cardNumber.val() === '' ) {
-      $($error.get(0)).addClass('blind');
-      $($error.get(1)).removeClass('blind');
+      $($error.get(0)).addClass('blind').attr('aria-hidden', 'true');
+      $($error.get(1)).removeClass('blind').attr('aria-hidden', 'false');
     }
   },
 
@@ -123,7 +123,7 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     if ( res.code === Tw.API_CODE.CODE_00 ) {
     } else {
       var $credit_error = cardNumber.closest('li').find('.error-txt').get(2);
-      $($credit_error).removeClass('blind');
+      $($credit_error).removeClass('blind').attr('aria-hidden', 'false');
       this.$request_recharge_auto.prop('disabled', true);
     }
   },
@@ -133,13 +133,13 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
     var cardY = $('.fe-card-y');
     var cardM = $('.fe-card-m');
 
-    $error.addClass('blind');
+    $error.addClass('blind').attr('aria-hidden', 'true');
 
     if ( cardY.val() === '' || cardM.val() === '' ) {
-      $($error.get(1)).removeClass('blind');
+      $($error.get(1)).removeClass('blind').attr('aria-hidden', 'false');
     } else if ( !(this._validation.checkMoreLength(cardY, 4) && this._validation.checkMoreLength(cardM, 2) &&
       this._validation.checkYear(cardY) && this._validation.checkMonth(cardM, cardY)) ) {
-      $($error.get(0)).removeClass('blind');
+      $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
     }
   },
 
@@ -168,9 +168,9 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
       }
 
       if (!$target.val()) {
-        $($error.get(0)).removeClass('blind');
+        $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
       } else {
-        $($error.get(0)).addClass('blind');
+        $($error.get(0)).addClass('blind').attr('aria-hidden', 'true');
       }
     }
 
@@ -283,10 +283,10 @@ Tw.MyTDataPrepaidVoiceAuto.prototype = {
 
   _validSelectedValue: function ($elButton) {
     var $error = $($elButton[0]).closest('li').find('.error-txt');
-    $error.addClass('blind');
+    $error.addClass('blind').attr('aria-hidden', 'true');
 
     if ( Tw.FormatHelper.isEmpty($($elButton[0]).attr('data-amount')) ) {
-      $($error.get(0)).removeClass('blind');
+      $($error.get(0)).removeClass('blind').attr('aria-hidden', 'false');
     }
   },
 

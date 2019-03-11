@@ -114,8 +114,10 @@ Tw.ValidationService.prototype = {
 
     if (isValid) {
       $messageTarget.hide();
+      $messageTarget.attr('aria-hidden', 'true');
     } else {
       $messageTarget.text(message).show();
+      $messageTarget.attr('aria-hidden', 'false');
     }
   },
   _isEmpty: function ($target) {
@@ -207,7 +209,7 @@ Tw.ValidationService.prototype = {
       var cardName = res.result.cardNm;
 
       $target.attr({ 'data-code': cardCode, 'data-name': cardName });
-      $target.parent().siblings('.fe-error-msg').hide();
+      $target.parent().siblings('.fe-error-msg').hide().attr('aria-hidden', 'true');
 
       if (Tw.FormatHelper.isEmpty(cardCode)) {
         this._getFail($target);
@@ -217,7 +219,7 @@ Tw.ValidationService.prototype = {
     }
   },
   _getFail: function ($target) {
-    $target.parent().siblings('.fe-error-msg').empty().text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V28).show();
+    $target.parent().siblings('.fe-error-msg').empty().text(Tw.ALERT_MSG_MYT_FARE.ALERT_2_V28).show().attr('aria-hidden', 'false');
   },
   _getPointMessage: function ($target) {
     var $isSelectedPoint = this.$container.find('.fe-select-point').attr('id');

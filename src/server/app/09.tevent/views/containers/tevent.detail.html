@@ -9,9 +9,7 @@
     <!-- #skip_navigation -->
     <div id="skipNav" class="skip_navi">
         <ul>
-            <li><a href="#gnb">메뉴 바로가기</a></li>
-            <li><a href="#contents">본문 바로가기</a></li>
-            <li><a href="#footer">푸터 바로가기</a></li>
+            <li><a href="#contents" class="fe-replace-history">본문 바로가기</a></li>
         </ul>
     </div>
     <!--// #skip_navigation -->
@@ -34,7 +32,7 @@
                 <hr class="cont-sp type1" aria-hidden="true"/>
                 <!-- .cont-box -->
                  <div class="cont-box nogaps">
-                    <iframe src="<%= result.prUrl %>" frameborder="0" width="100%" height="<%= result.height %>"></iframe>
+                    <iframe src="<%= result.prUrl %>" title="<%= result.prNm %>" frameborder="0" width="100%" height="<%= result.height %>"></iframe>
                  </div>
                 <!--// .cont-box -->
             </div>
