@@ -106,6 +106,7 @@ export default class MyTJoinMyPlanCombine extends TwViewController {
         combinationWirelessMemberList: (resp.result.combinationWirelessMemberList || []).map(member => {
           return {
             ...member,
+            auditDtm: member.auditDtm && DateHelper.getShortDate(member.auditDtm),
             aftBasFeeAmtTx: FormatHelper.addComma(String(member.aftBasFeeAmtTx)),
             basFeeAmtTx: FormatHelper.addComma(String(member.basFeeAmtTx)),
             basFeeDcTx: FormatHelper.addComma(String(member.basFeeDcTx)),

@@ -448,6 +448,12 @@ export const MYT_FARE_COMPLETE_MSG = {
   SMS_DESCRIPTION: '전송된 입금전용계좌로 입금하시면<br />즉시 입금이 확인됩니다.'
 };
 
+export const MYT_DATA_HISTORY_BADGE_NAMES = {
+  CHARGE: '충전',
+  RECEIVE: '받음',
+  SEND: '보냄'
+};
+
 export const MYT_DATA_COMPLETE_MSG = {
   DATA_RECHARGE: '데이터 충전 완료',
   DATA_RECHARGE_AUTO: '데이터 자동 충전 신청 완료',
