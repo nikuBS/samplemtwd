@@ -95,7 +95,14 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
   },
 
   _detectInput: function(maxLength, e) {
-    var $elem = $(e.currentTarget);
+    var $elem = $(e.currentTarget),
+      elemVal = $elem.val();
+
+    // input number 에 점(.) 입력 되는 것 차단
+    $elem.val('');
+    $elem.val(elemVal);
+
+    // 숫자만 입력되도록 처리
     $elem.val($elem.val().replace(/[^0-9]/g, ''));
 
     if ($elem.val().length > maxLength) {
