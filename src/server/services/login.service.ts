@@ -297,7 +297,13 @@ class LoginService {
     if ( !FormatHelper.isEmpty(this.request.session) && !FormatHelper.isEmpty(this.request.session.store) &&
       !FormatHelper.isEmpty(this.request.session.store[svcMgmtNum]) && !FormatHelper.isEmpty(this.request.session.store[svcMgmtNum][command]) ) {
       this.logger.debug(this, '[getSessionStore]', this.request.session.store[svcMgmtNum][command]);
-      return this.request.session.store[svcMgmtNum][command];
+      let result = null;
+      try {
+        result = JSON.parse(JSON.stringify(this.request.session.store[svcMgmtNum][command]));
+      } catch ( e ) {
+        this.logger.error(this, '[getSessionStore] JSON parse Error');
+      }
+      return result;
     }
     return null;
   }
