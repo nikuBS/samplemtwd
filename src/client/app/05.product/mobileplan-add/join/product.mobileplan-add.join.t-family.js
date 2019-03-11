@@ -344,11 +344,12 @@ Tw.ProductMobileplanAddJoinTFamily.prototype = {
       hbs: 'complete_product',
       data: {
         prodCtgNm: Tw.PRODUCT_CTG_NM.ADDITIONS,
-        btList: [{ link: '/myt-data/familydata', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.MYTJOIN }],
+        btList: [{ link: '/myt-data/familydata', txt: Tw.PRODUCT_SUCCESS_BTN_TEXT.TFAMILY }],
         btClass: 'item-one',
         prodId: this._prodId,
         prodNm: this._confirmOptions.preinfo.reqProdInfo.prodNm,
         typeNm: Tw.PRODUCT_TYPE_NM.JOIN,
+        basicTxt: Tw.PRODUCT_TFAMILY.SUCCESS_GUIDE,
         isBasFeeInfo: this._confirmOptions.isNumberBasFeeInfo,
         basFeeInfo: this._confirmOptions.isNumberBasFeeInfo ?
           this._confirmOptions.toProdBasFeeInfo + Tw.CURRENCY_UNIT.WON : ''
