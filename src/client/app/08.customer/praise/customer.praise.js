@@ -32,6 +32,7 @@ Tw.CustomerPraise.prototype = {
     this.$container.on('keydown', '.input > input', $.proxy(this._handleKeydownInput, this));
     this.$reasons.on('keydown', $.proxy(this._handleKeydownInput, this));
     this.$container.on('click', '.cancel', $.proxy(this._setAvailableSubmit, this, true));
+    this.$container.on('click', '.textarea-type .cancel', $.proxy(this._resetCount, this));
     // this.$container.on('click', '.prev-step', $.proxy(this._handleClickCancel, this));
     this.$typeBtn.on('click', $.proxy(this._openSelectTypePopup, this));
     this.$reasons.on('keyup', $.proxy(this._handleTypeReasons, this));
@@ -211,6 +212,10 @@ Tw.CustomerPraise.prototype = {
     this._setAvailableSubmit();
   },
 
+  _resetCount: function() {
+    this.$reasonBytes.text('0');
+  },
+
   _setAvailableSubmit: function(disabled) {
     if (disabled) {
       this.$submitBtn.attr('disabled', true);
@@ -293,6 +298,7 @@ Tw.CustomerPraise.prototype = {
     this.$divRole.find('input').val('');
     this.$subject.find('input').val('');
     this.$reasons.val('');
+    this.$container.find('.cancel').css('display', 'none');
     delete this._selectedType;
     delete this._selectedArea;
     this.$typeBtn.text(Tw.CUSTOMER_PRAISE_DEFAULT.TYPE);
